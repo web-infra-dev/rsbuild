@@ -149,13 +149,13 @@ Below are the Rsbuild configs that correspond to the Rspack CLI's `devServer` co
 
 > For more configurations, please refer to [Config Overview](/config/index).
 
-## Middlewares
+## Middleware
 
-Rsbuild's middlewares implementation is built on [connect](https://github.com/senchalabs/connect), a lightweight HTTP server framework, and uses the standard Node.js `request` and `response` objects for handling HTTP interactions.
+Rsbuild's middleware implementation is built on [connect](https://github.com/senchalabs/connect), a lightweight HTTP server framework, and uses the standard Node.js `request` and `response` objects for handling HTTP interactions.
 
-### Register middlewares
+### Register middleware
 
-Rsbuild provides three ways to register middlewares:
+Rsbuild provides three ways to register middleware:
 
 1. Use the [dev.setupMiddlewares](/config/dev/setup-middlewares) configuration.
 
@@ -173,7 +173,7 @@ export default {
 };
 ```
 
-2. In the Rsbuild plugin, you can register middlewares through the [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) hook.
+2. In the Rsbuild plugin, you can register middleware through the [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) hook.
 
 ```ts
 const myPlugin = () => ({
@@ -187,7 +187,7 @@ const myPlugin = () => ({
 });
 ```
 
-3. When using the Rsbuild JavaScript API, you can create a dev server instance through the [rsbuild.createDevServer](/api/javascript-api/instance#rsbuildcreatedevserver) method and use the `use` method to register middlewares.
+3. When using the Rsbuild JavaScript API, you can create a dev server instance through the [rsbuild.createDevServer](/api/javascript-api/instance#rsbuildcreatedevserver) method and use the `use` method to register middleware.
 
 ```ts
 const server = await rsbuild.createDevServer();

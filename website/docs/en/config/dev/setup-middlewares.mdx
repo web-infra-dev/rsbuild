@@ -2,7 +2,7 @@
 
 - **Type:**
 
-```ts title="rsbuild.config.ts"
+```ts
 type SetupMiddlewaresServer = {
   sockWrite: (
     type: string,
@@ -24,11 +24,13 @@ type SetupMiddlewares = Array<
 
 - **Default:** `undefined`
 
-Provides the ability to execute a custom function and apply custom middlewares.
+Provides the ability to execute a custom function and apply custom middleware.
+
+> See [Dev Server - Middleware](/guide/basic/server#middleware) for more information.
 
 ## Execution order
 
-The order among several different types of middleware is: `unshift` => internal middlewares => `push`.
+The order among several different types of middleware is: `unshift` => internal middleware => `push`.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -56,7 +58,7 @@ In the `setupMiddlewares` function, you can access the `server` object, which pr
 
 ### sockWrite
 
-`sockWrite` allows middlewares to send some message to HMR client, and then the HMR client will take different actions depending on the message type.
+`sockWrite` allows middleware to send some message to HMR client, and then the HMR client will take different actions depending on the message type.
 
 For example, if you send a `'static-changed'` message, the page will reload.
 
