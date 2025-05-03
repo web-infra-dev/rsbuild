@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { getRelativePath } from '../helpers';
-import ansiHTML from './ansiHTML';
+import { ansiHTML } from './ansiHTML';
 import { escapeHtml } from './helper';
 
 export function convertLinksInHtml(text: string, root?: string): string {
