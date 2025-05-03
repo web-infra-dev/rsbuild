@@ -26,13 +26,11 @@ type RsbuildPlugin = {
 
 You can import this type from `@rsbuild/core`:
 
-```ts
+```ts title="pluginFoo.ts"
 import type { RsbuildPlugin } from '@rsbuild/core';
 
-export default (): RsbuildPlugin => ({
+export const pluginFoo = (): RsbuildPlugin => ({
   name: 'plugin-foo',
-
-  pre: ['plugin-bar'],
 
   setup(api) {
     api.onAfterBuild(() => {

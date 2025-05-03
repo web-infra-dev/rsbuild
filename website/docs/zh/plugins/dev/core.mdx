@@ -24,13 +24,11 @@ type RsbuildPlugin = {
 
 你可以从 `@rsbuild/core` 中导入该类型：
 
-```ts
+```ts title="pluginFoo.ts"
 import type { RsbuildPlugin } from '@rsbuild/core';
 
-export default (): RsbuildPlugin => ({
+export const pluginFoo = (): RsbuildPlugin => ({
   name: 'plugin-foo',
-
-  pre: ['plugin-bar'],
 
   setup(api) {
     api.onAfterBuild(() => {
