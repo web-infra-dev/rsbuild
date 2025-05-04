@@ -296,7 +296,7 @@ api.transform({ test: /\.md$/, with: { type: 'url' } }, ({ code }) => {
 });
 ```
 
-- `mimetype`: Matches modules based on MIME type instead of file extension. It's primarily useful for data URI modules (like `data:text/javascript,export default 'foo'`), the same as Rspack's [Rule.mimetype](https://rspack.dev/config/module#rulemimetype).
+- `mimetype`: Matches modules based on MIME type instead of file extension. It's primarily useful for data URI module (like `data:text/javascript,...`), the same as Rspack's [Rule.mimetype](https://rspack.dev/config/module#rulemimetype).
 
 ```js
 api.transform({ mimetype: 'text/javascript' }, ({ code }) => {

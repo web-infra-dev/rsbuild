@@ -374,7 +374,7 @@ export type TransformDescriptor = {
   with?: Record<string, Rspack.RuleSetCondition>;
   /**
    * Matches modules based on MIME type instead of file extension. It's primarily
-   * useful for data URI modules (like `data:text/javascript,export default 'foo'`).
+   * useful for data URI module (like `data:text/javascript,...`).
    * @see https://rspack.dev/config/module#rulemimetype
    */
   mimetype?: Rspack.RuleSetCondition;
