@@ -292,6 +292,9 @@ export function initPluginAPI({
           if (descriptor.with) {
             rule.with(descriptor.with);
           }
+          if (descriptor.mimetype) {
+            rule.mimetype(descriptor.mimetype);
+          }
 
           const loaderName = descriptor.raw
             ? 'transformRawLoader.mjs'

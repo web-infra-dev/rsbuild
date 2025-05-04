@@ -216,6 +216,7 @@ type TransformDescriptor = {
   issuer?: RuleSetCondition;
   issuerLayer?: string;
   with?: Record<string, RuleSetCondition>;
+  mimetype?: RuleSetCondition;
 };
 ```
 
@@ -289,6 +290,14 @@ api.transform({ test: /\.md$/, issuer: /\.js$/ }, ({ code }) => {
 
 ```js
 api.transform({ test: /\.md$/, with: { type: 'url' } }, ({ code }) => {
+  // ...
+});
+```
+
+- `mimetype`：根据 MIME 类型（而非文件扩展名）匹配模块。主要用于 data URI 模块（例如 `data:text/javascript,...`），等同于 Rspack 的 [Rule.mimetype](https://rspack.dev/zh/config/module#rulemimetype)。
+
+```js
+api.transform({ mimetype: 'text/javascript' }, ({ code }) => {
   // ...
 });
 ```

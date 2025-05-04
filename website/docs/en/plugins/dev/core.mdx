@@ -218,6 +218,7 @@ type TransformDescriptor = {
   issuer?: RuleSetCondition;
   issuerLayer?: string;
   with?: Record<string, RuleSetCondition>;
+  mimetype?: RuleSetCondition;
 };
 ```
 
@@ -263,7 +264,7 @@ api.transform({ test: /\.node$/, raw: true }, ({ code }) => {
 });
 ```
 
-- `layer`: mark the layer of the matching module, can be used to group a group of modules into one layer, the same as Rspack's [Rule.layer](https://rspack.dev/config/module#rulelayer).
+- `layer`: marks the layer of the matching module, can be used to group a group of modules into one layer, the same as Rspack's [Rule.layer](https://rspack.dev/config/module#rulelayer).
 
 ```js
 api.transform({ test: /\.md$/, layer: 'foo' }, ({ code }) => {
@@ -271,7 +272,7 @@ api.transform({ test: /\.md$/, layer: 'foo' }, ({ code }) => {
 });
 ```
 
-- `issuerLayer`: match the layer of the module that issues the current module, the same as Rspack's [Rule.issuerLayer](https://rspack.dev/config/module#ruleissuerlayer).
+- `issuerLayer`: matches the layer of the module that issues the current module, the same as Rspack's [Rule.issuerLayer](https://rspack.dev/config/module#ruleissuerlayer).
 
 ```js
 api.transform({ test: /\.md$/, issuerLayer: 'foo' }, ({ code }) => {
@@ -279,7 +280,7 @@ api.transform({ test: /\.md$/, issuerLayer: 'foo' }, ({ code }) => {
 });
 ```
 
-- `issuer`: match the absolute path of the module that issues the current module, the same as Rspack's [Rule.issuer](https://rspack.dev/config/module#ruleissuer).
+- `issuer`: matches the absolute path of the module that issues the current module, the same as Rspack's [Rule.issuer](https://rspack.dev/config/module#ruleissuer).
 
 ```js
 api.transform({ test: /\.md$/, issuer: /\.js$/ }, ({ code }) => {
@@ -287,10 +288,18 @@ api.transform({ test: /\.md$/, issuer: /\.js$/ }, ({ code }) => {
 });
 ```
 
-- `with`: match [import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with), the same as Rspack's [Rule.with](https://rspack.dev/config/module#rulewith).
+- `with`: matches [import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with), the same as Rspack's [Rule.with](https://rspack.dev/config/module#rulewith).
 
 ```js
 api.transform({ test: /\.md$/, with: { type: 'url' } }, ({ code }) => {
+  // ...
+});
+```
+
+- `mimetype`: Matches modules based on MIME type instead of file extension. It's primarily useful for data URI module (like `data:text/javascript,...`), the same as Rspack's [Rule.mimetype](https://rspack.dev/config/module#rulemimetype).
+
+```js
+api.transform({ mimetype: 'text/javascript' }, ({ code }) => {
   // ...
 });
 ```

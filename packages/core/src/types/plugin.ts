@@ -349,9 +349,8 @@ export type TransformDescriptor = {
    */
   raw?: boolean;
   /**
-   * Used to mark the layer of the matching module.
-   * A group of modules could be united in one layer which could then be used in
-   * split chunks, stats or entry options.
+   * Marks the layer of the matching module, can be used to group a group of
+   * modules into one layer
    * @see https://rspack.dev/config/module#rulelayer
    */
   layer?: string;
@@ -363,15 +362,22 @@ export type TransformDescriptor = {
   issuerLayer?: string;
   /**
    * Matches all modules that match this resource, and will match against Resource
-   * (the absolute path without query and fragment) of the module that issued the current module.
+   * (the absolute path without query and fragment) of the module that issued the
+   * current module.
    * @see https://rspack.dev/config/module#ruleissuer
    */
   issuer?: Rspack.RuleSetCondition;
   /**
-   * `with` can be used in conjunction with [import attributes](https://github.com/tc39/proposal-import-attributes).
+   * Matches [import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with)
    * @see https://rspack.dev/config/module#rulewith
    */
   with?: Record<string, Rspack.RuleSetCondition>;
+  /**
+   * Matches modules based on MIME type instead of file extension. It's primarily
+   * useful for data URI module (like `data:text/javascript,...`).
+   * @see https://rspack.dev/config/module#rulemimetype
+   */
+  mimetype?: Rspack.RuleSetCondition;
 };
 
 export type TransformHook = (
