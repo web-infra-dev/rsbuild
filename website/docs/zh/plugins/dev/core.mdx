@@ -201,7 +201,7 @@ const pluginPug = () => ({
 
 ### descriptor 参数
 
-descriptor 参数是一个对象，用于描述模块的匹配条件。
+`descriptor` 参数是一个对象，用于描述模块的匹配条件。
 
 - **类型：**
 
@@ -213,15 +213,18 @@ type TransformDescriptor = {
   resourceQuery?: RuleSetCondition;
   raw?: boolean;
   layer?: string;
+  issuer?: RuleSetCondition;
+  issuerLayer?: string;
+  with?: Record<string, RuleSetCondition>;
 };
 ```
 
-descriptor 参数支持设置以下匹配条件：
+`descriptor` 参数支持设置以下匹配条件：
 
 - `test`：匹配模块的路径（不包含 query），等价于 Rspack 的 [Rule.test](https://rspack.dev/zh/config/module#ruletest)。
 
 ```js
-api.transform({ test: /\.pug$/ }, ({ code }) => {
+api.transform({ test: /\.md$/ }, ({ code }) => {
   // ...
 });
 ```
@@ -229,7 +232,7 @@ api.transform({ test: /\.pug$/ }, ({ code }) => {
 - `targets`：匹配 Rsbuild [output.target](/config/output/target)，仅对匹配的 targets 应用当前 transform 函数。
 
 ```js
-api.transform({ test: /\.pug$/, targets: ['web'] }, ({ code }) => {
+api.transform({ test: /\.md$/, targets: ['web'] }, ({ code }) => {
   // ...
 });
 ```
@@ -237,7 +240,7 @@ api.transform({ test: /\.pug$/, targets: ['web'] }, ({ code }) => {
 - `environments`：匹配 Rsbuild [environment](/guide/advanced/environments) name，仅对匹配的 environments 应用当前 transform 函数。
 
 ```js
-api.transform({ test: /\.pug$/, environments: ['web'] }, ({ code }) => {
+api.transform({ test: /\.md$/, environments: ['web'] }, ({ code }) => {
   // ...
 });
 ```
@@ -258,10 +261,37 @@ api.transform({ test: /\.node$/, raw: true }, ({ code }) => {
 });
 ```
 
-- `layer`：等同于 Rspack 的 [Rule.layer](https://rspack.dev/zh/config/module#rulelayer)。
-- `issuerLayer`：等同于 Rspack 的 [Rule.issuerLayer](https://rspack.dev/zh/config/module#ruleissuerlayer)。
-- `issuer`：等同于 Rspack 的 [Rule.issuer](https://rspack.dev/zh/config/module#ruleissuer)。
-- `with`：等同于 Rspack 的 [Rule.with](https://rspack.dev/zh/config/module#rulewith)。
+- `layer`：标识匹配的模块的 [layer](https://rspack.dev/zh/config/experiments#experimentslayers)，可以将一组模块聚合到一个 layer 中，等同于 Rspack 的 [Rule.layer](https://rspack.dev/zh/config/module#rulelayer)。
+
+```js
+api.transform({ test: /\.md$/, layer: 'foo' }, ({ code }) => {
+  // ...
+});
+```
+
+- `issuerLayer`：与"引入当前模块"的模块的 [layer](https://rspack.dev/zh/config/experiments#experimentslayers) 进行匹配，等同于 Rspack 的 [Rule.issuerLayer](https://rspack.dev/zh/config/module#ruleissuerlayer)。
+
+```js
+api.transform({ test: /\.md$/, issuerLayer: 'foo' }, ({ code }) => {
+  // ...
+});
+```
+
+- `issuer`：匹配"引入当前模块"的模块的绝对路径，等同于 Rspack 的 [Rule.issuer](https://rspack.dev/zh/config/module#ruleissuer)。
+
+```js
+api.transform({ test: /\.md$/, issuer: /\.js$/ }, ({ code }) => {
+  // ...
+});
+```
+
+- `with`：匹配 [import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with)，等同于 Rspack 的 [Rule.with](https://rspack.dev/zh/config/module#rulewith)。
+
+```js
+api.transform({ test: /\.md$/, with: { type: 'url' } }, ({ code }) => {
+  // ...
+});
+```
 
 ### handler 参数
 
@@ -316,7 +346,7 @@ handler 函数提供以下参数：
 
 ```js
 api.transform(
-  { test: /\.pug$/ },
+  { test: /\.md$/ },
   ({ code, resource, resourcePath, resourceQuery }) => {
     console.log(code); // -> some code
     console.log(resource); // -> '/home/user/project/src/template.pug?foo=123'
