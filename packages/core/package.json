@@ -98,7 +98,7 @@
     "webpack": "^5.98.0",
     "webpack-bundle-analyzer": "^4.10.2",
     "webpack-merge": "6.0.1",
-    "ws": "^8.18.1"
+    "ws": "^8.18.2"
   },
   "engines": {
     "node": ">=16.10.0"

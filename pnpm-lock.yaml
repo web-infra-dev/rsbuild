@@ -736,8 +736,8 @@ importers:
         specifier: 6.0.1
         version: 6.0.1
       ws:
-        specifier: ^8.18.1
-        version: 8.18.1
+        specifier: ^8.18.2
+        version: 8.18.2
 
   packages/create-rsbuild:
     dependencies:
@@ -7117,8 +7117,8 @@ packages:
       utf-8-validate:
         optional: true
 
-  ws@8.18.1:
-    resolution: {integrity: sha512-RKW2aJZMXeMxVpnZ6bck+RswznaxmzdULiBr6KY7XkTnW8uvt0iT9H5DkHUChXrc+uurzwa0rVI16n/Xzjdz1w==}
+  ws@8.18.2:
+    resolution: {integrity: sha512-DMricUmwGZUVr++AEAe2uiVM7UoO9MAVZMDu05UQOaUII0lp+zOzLLU4Xqh/JvTqklB1T4uELaaPBKyjE1r4fQ==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -13676,7 +13676,7 @@ snapshots:
 
   ws@8.18.0: {}
 
-  ws@8.18.1: {}
+  ws@8.18.2: {}
 
   xml-js@1.6.11:
     dependencies:
