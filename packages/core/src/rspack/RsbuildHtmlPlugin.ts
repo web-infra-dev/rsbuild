@@ -29,7 +29,9 @@ export type TagConfig = {
   publicPath?: HtmlTag['publicPath'];
 };
 
-/** @see {@link https://developer.mozilla.org/en-US/docs/Glossary/Void_element} */
+/**
+ * @see https://developer.mozilla.org/en-US/docs/Glossary/Void_element}
+ */
 const VOID_TAGS = [
   'area',
   'base',
@@ -48,7 +50,9 @@ const VOID_TAGS = [
   'wbr',
 ];
 
-/** @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head#see_also} */
+/**
+ * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head#see_also
+ */
 const HEAD_TAGS = [
   'title',
   'base',

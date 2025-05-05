@@ -583,16 +583,32 @@ function ModifyHTMLTags(
 - **Example:**
 
 ```ts
-const myPlugin = () => ({
+const tagsPlugin = () => ({
+  name: 'tags-plugin',
   setup(api) {
     api.modifyHTMLTags(({ headTags, bodyTags }) => {
-      headTags.push({
+      // Inject a tag into <head>, before other tags
+      headTags.unshift({
         tag: 'script',
         attrs: { src: 'https://example.com/foo.js' },
       });
-      bodyTags.push({
+
+      // Inject a tag into <head>, after other tags
+      headTags.push({
         tag: 'script',
-        children: 'console.log("hello world!");',
+        attrs: { src: 'https://example.com/bar.js' },
+      });
+
+      // Inject a tag into <body>, before other tags
+      bodyTags.unshift({
+        tag: 'div',
+        children: 'before other body tags',
+      });
+
+      // Inject a tag into <body>, after other tags
+      bodyTags.push({
+        tag: 'div',
+        children: 'after other body tags',
       });
 
       return { headTags, bodyTags };

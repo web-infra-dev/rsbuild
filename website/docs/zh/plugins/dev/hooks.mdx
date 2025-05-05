@@ -579,16 +579,32 @@ function ModifyHTMLTags(
 - **示例：**
 
 ```ts
-const myPlugin = () => ({
+const tagsPlugin = () => ({
+  name: 'tags-plugin',
   setup(api) {
     api.modifyHTMLTags(({ headTags, bodyTags }) => {
-      headTags.push({
+      // 在 <head> 中插入一个标签，位于其他标签之前
+      headTags.unshift({
         tag: 'script',
         attrs: { src: 'https://example.com/foo.js' },
       });
-      bodyTags.push({
+
+      // 在 <head> 中插入一个标签，位于其他标签之后
+      headTags.push({
         tag: 'script',
-        children: 'console.log("hello world!");',
+        attrs: { src: 'https://example.com/bar.js' },
+      });
+
+      // 在 <body> 中插入一个标签，位于其他标签之前
+      bodyTags.unshift({
+        tag: 'div',
+        children: 'before other body tags',
+      });
+
+      // 在 <body> 中插入一个标签，位于其他标签之后
+      bodyTags.push({
+        tag: 'div',
+        children: 'after other body tags',
       });
 
       return { headTags, bodyTags };

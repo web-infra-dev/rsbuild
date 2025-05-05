@@ -1248,9 +1248,22 @@ export type HtmlBasicTag = {
 };
 
 export type HtmlTag = HtmlBasicTag & {
+  /** @default false */
   hash?: boolean | string | ((url: string, hash: string) => string);
+  /** @default true */
   publicPath?: boolean | string | ((url: string, publicPath: string) => string);
+  /**
+   * Defines the injection position of the current tag relative to existing tags
+   * - When set to `true`, the tag will be inserted after existing tags
+   * - When set to `false`, the tag will be inserted before existing tags
+   * @default true
+   */
   append?: boolean;
+  /**
+   * Specifies whether to add the current tag to the HTML `<head>` element
+   * @default defaults to `true` for element types allowed in the `<head>`, otherwise `false`
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head#see_also
+   */
   head?: boolean;
 };
 
