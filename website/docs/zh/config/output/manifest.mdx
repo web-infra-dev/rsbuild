@@ -252,3 +252,48 @@ export default {
   },
 };
 ```
+
+## 多个环境
+
+在使用 [environments](/config/environments) 并配置多个环境时，请为每个环境指定独立的 `manifest.filename` 值，以防止不同环境生成的 manifest 文件相互覆盖。
+
+例如，为 `web` 环境使用默认的 `manifest.json`，同时为 `node` 环境使用 `manifest-node.json`：
+
+```ts title="rsbuild.config.ts"
+export default {
+  environments: {
+    web: {
+      output: {
+        manifest: true,
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+        manifest: {
+          filename: 'manifest-node.json',
+        },
+      },
+    },
+  },
+};
+```
+
+你也可以选择性地仅为特定环境生成 manifest 文件：
+
+```ts title="rsbuild.config.ts"
+export default {
+  environments: {
+    web: {
+      output: {
+        manifest: true,
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+      },
+    },
+  },
+};
+```
