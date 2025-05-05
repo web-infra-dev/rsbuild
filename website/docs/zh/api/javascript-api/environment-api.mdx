@@ -163,10 +163,7 @@ api.modifyRspackConfig((config, { environment }) => {
 
 manifest 文件数据。仅在 [output.manifest](/config/output/manifest) 配置被启用时才能访问。
 
-你应该在构建完成后访问 manifest 数据，使用 hooks 如 [onAfterBuild](/plugins/dev/hooks#onafterbuild)、[onDevCompileDone](/plugins/dev/hooks#ondevcompiledone) 和 [onAfterEnvironmentCompile](/plugins/dev/hooks#onafterenvironmentcompile)。
-
 - **类型：** `Record<string, unknown> | ManifestData | undefined`
-
 - **示例：**
 
 ```js
@@ -183,6 +180,15 @@ api.onAfterEnvironmentCompile(({ environment }) => {
   console.log(environment.manifest);
 });
 ```
+
+manifest 数据仅在构建完成后才能被访问，你可以在以下 hooks 中访问：
+
+- [onAfterBuild](/plugins/dev/hooks#onafterbuild)
+- [onAfterEnvironmentCompile](/plugins/dev/hooks#onafterenvironmentcompile)
+- [onCloseBuild](/plugins/dev/hooks#onclosebuild)
+- [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)
+- [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone)
+- [onExit](/plugins/dev/hooks#onexit)
 
 ## Environment API
 
