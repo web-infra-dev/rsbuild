@@ -100,13 +100,11 @@ export const pluginBasic = (): RsbuildPlugin => ({
         // https://github.com/web-infra-dev/rspack/pull/5486
         process.env.WATCHPACK_WATCHER_LIMIT ||= '20';
 
-        // This is temporary, we will remove it after Rspack incremental is stable
-        if (process.env.EXPERIMENTAL_RSPACK_INCREMENTAL) {
-          chain.experiments({
-            ...chain.get('experiments'),
-            incremental: isDev,
-          });
-        }
+        // TODO: we can remove it after Rspack incremental is enabled by default
+        chain.experiments({
+          ...chain.get('experiments'),
+          incremental: true,
+        });
       },
     );
   },
