@@ -24,7 +24,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "incremental": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -483,7 +482,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "incremental": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -937,7 +935,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "incremental": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -1317,7 +1314,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "incremental": true,
   },
   "infrastructureLogging": {
     "level": "error",
