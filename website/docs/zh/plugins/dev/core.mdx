@@ -217,6 +217,7 @@ type TransformDescriptor = {
   issuerLayer?: string;
   with?: Record<string, RuleSetCondition>;
   mimetype?: RuleSetCondition;
+  enforce?: 'pre' | 'post';
 };
 ```
 
@@ -298,6 +299,16 @@ api.transform({ test: /\.md$/, with: { type: 'url' } }, ({ code }) => {
 
 ```js
 api.transform({ mimetype: 'text/javascript' }, ({ code }) => {
+  // ...
+});
+```
+
+- `enforce`：指定 transform 函数的执行顺序，等同于 Rspack 的 [Rule.enforce](https://rspack.dev/zh/config/module#ruleenforce)。
+  - 当 `enforce` 为 `pre` 时，transform 函数会在其他 transform 函数（或 Rspack loader）之前执行。
+  - 当 `enforce` 为 `post` 时，transform 函数会在其他 transform 函数（或 Rspack loader）之后执行。
+
+```js
+api.transform({ test: /\.md$/, enforce: 'pre' }, ({ code }) => {
   // ...
 });
 ```

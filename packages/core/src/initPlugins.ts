@@ -295,6 +295,9 @@ export function initPluginAPI({
           if (descriptor.mimetype) {
             rule.mimetype(descriptor.mimetype);
           }
+          if (descriptor.enforce) {
+            rule.enforce(descriptor.enforce);
+          }
 
           const loaderName = descriptor.raw
             ? 'transformRawLoader.mjs'
