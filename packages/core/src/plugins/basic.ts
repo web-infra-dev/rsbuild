@@ -99,10 +99,12 @@ export const pluginBasic = (): RsbuildPlugin => ({
         process.env.WATCHPACK_WATCHER_LIMIT ||= '20';
 
         // TODO: we can remove it after Rspack incremental is enabled by default
-        chain.experiments({
-          ...chain.get('experiments'),
-          incremental: true,
-        });
+        if (api.context.bundlerType === 'rspack') {
+          chain.experiments({
+            ...chain.get('experiments'),
+            incremental: true,
+          });
+        }
       },
     );
   },
