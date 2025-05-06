@@ -75,7 +75,7 @@
     "deepmerge": "^4.3.1",
     "dotenv": "16.5.0",
     "dotenv-expand": "12.0.2",
-    "html-rspack-plugin": "6.0.5",
+    "html-rspack-plugin": "6.1.0",
     "http-proxy-middleware": "^2.0.9",
     "launch-editor-middleware": "^2.10.0",
     "mrmime": "^2.0.1",
