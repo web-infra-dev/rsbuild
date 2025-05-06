@@ -456,7 +456,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   ],
   "watchOptions": {
     "aggregateTimeout": 0,
-    "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
   },
 }
 `;
@@ -909,7 +908,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
   ],
   "watchOptions": {
     "aggregateTimeout": 0,
-    "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
   },
 }
 `;
@@ -1288,7 +1286,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "target": "node",
   "watchOptions": {
     "aggregateTimeout": 0,
-    "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
   },
 }
 `;
@@ -1656,7 +1653,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   ],
   "watchOptions": {
     "aggregateTimeout": 0,
-    "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
   },
 }
 `;

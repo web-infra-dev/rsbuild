@@ -1715,7 +1715,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     ],
     "watchOptions": {
       "aggregateTimeout": 0,
-      "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
     },
   },
   {
@@ -2092,7 +2091,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     "target": "node",
     "watchOptions": {
       "aggregateTimeout": 0,
-      "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
     },
   },
 ]

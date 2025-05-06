@@ -462,7 +462,6 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
   ],
   "watchOptions": {
     "aggregateTimeout": 0,
-    "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
   },
 }
 `;
