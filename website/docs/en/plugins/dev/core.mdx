@@ -219,6 +219,7 @@ type TransformDescriptor = {
   issuerLayer?: string;
   with?: Record<string, RuleSetCondition>;
   mimetype?: RuleSetCondition;
+  enforce?: 'pre' | 'post';
 };
 ```
 
@@ -300,6 +301,16 @@ api.transform({ test: /\.md$/, with: { type: 'url' } }, ({ code }) => {
 
 ```js
 api.transform({ mimetype: 'text/javascript' }, ({ code }) => {
+  // ...
+});
+```
+
+- `enforce`: Specifies the execution order of the transform function, the same as Rspack's [Rule.enforce](https://rspack.dev/config/module#ruleenforce).
+  - When `enforce` is `pre`, the transform function will be executed before other transform functions (or Rspack loaders).
+  - When `enforce` is `post`, the transform function will be executed after other transform functions (or Rspack loaders).
+
+```js
+api.transform({ test: /\.md$/, enforce: 'pre' }, ({ code }) => {
   // ...
 });
 ```
