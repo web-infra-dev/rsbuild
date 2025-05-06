@@ -493,7 +493,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "incremental": false,
+    "incremental": true,
   },
   "infrastructureLogging": {
     "level": "error",

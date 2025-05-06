@@ -46,7 +46,7 @@ exports[`plugin-basic > should apply basic config correctly in production 1`] = 
   "context": "<ROOT>/packages/core/tests",
   "devtool": false,
   "experiments": {
-    "incremental": false,
+    "incremental": true,
   },
   "infrastructureLogging": {
     "level": "error",

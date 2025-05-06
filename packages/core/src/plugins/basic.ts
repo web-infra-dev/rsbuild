@@ -103,7 +103,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
         // TODO: we can remove it after Rspack incremental is enabled by default
         chain.experiments({
           ...chain.get('experiments'),
-          incremental: isDev,
+          incremental: true,
         });
       },
     );
