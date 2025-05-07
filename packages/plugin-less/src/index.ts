@@ -30,7 +30,14 @@ export type LessLoaderOptions = {
         loaderContext: Rspack.LoaderContext<LessLoaderOptions>,
       ) => string | Promise<string>);
   sourceMap?: boolean;
-  webpackImporter?: boolean;
+  /**
+   * Enables or disables the built-in Rspack resolver.
+   * - If disabled, aliases and `@import` from node_modules will not work.
+   * - If set to `only`, only the built-in Rspack resolver will be used
+   * and `resolve.extensionAlias` can work.
+   * @default true
+   */
+  webpackImporter?: boolean | 'only';
   implementation?: unknown;
 };
 
