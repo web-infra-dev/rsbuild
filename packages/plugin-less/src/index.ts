@@ -22,13 +22,26 @@ export const isPlainObject = (obj: unknown): obj is Record<string, any> => {
 export const PLUGIN_LESS_NAME = 'rsbuild:less';
 
 export type LessLoaderOptions = {
+  /**
+   * Options passed to less.
+   * @see https://lesscss.org/usage/#less-options
+   */
   lessOptions?: import('../compiled/less/index.js').default.Options;
+  /**
+   * Prepends or appends Less code to the actual entry file.
+   * This is especially useful when some of your Less variables
+   * depend on the environment.
+   */
   additionalData?:
     | string
     | ((
         content: string,
         loaderContext: Rspack.LoaderContext<LessLoaderOptions>,
       ) => string | Promise<string>);
+  /**
+   * Whether to source map generation.
+   * @default depends on the `devtool` value of Rspack
+   */
   sourceMap?: boolean;
   /**
    * Enables or disables the built-in Rspack resolver.
@@ -38,6 +51,11 @@ export type LessLoaderOptions = {
    * @default true
    */
   webpackImporter?: boolean | 'only';
+  /**
+   * Determines which implementation of Less to use.
+   * Can be used to override the pre-bundled version of less.
+   * @default "@rsbuild/plugin-less/compiled/less/index.js"
+   */
   implementation?: unknown;
 };
 
