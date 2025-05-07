@@ -26,7 +26,7 @@
     "dev": "rslib build --watch"
   },
   "dependencies": {
-    "@rspack/plugin-react-refresh": "~1.4.1",
+    "@rspack/plugin-react-refresh": "~1.4.2",
     "react-refresh": "^0.17.0"
   },
   "devDependencies": {
