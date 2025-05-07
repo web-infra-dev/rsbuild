@@ -94,10 +94,6 @@ export const pluginBasic = (): RsbuildPlugin => ({
         // enable Rspack config schema validation, unrecognized keys are allowed
         process.env.RSPACK_CONFIG_VALIDATE ||= 'loose-unrecognized-keys';
 
-        // improve kill process performance
-        // https://github.com/web-infra-dev/rspack/pull/5486
-        process.env.WATCHPACK_WATCHER_LIMIT ||= '20';
-
         // TODO: we can remove it after Rspack incremental is enabled by default
         if (api.context.bundlerType === 'rspack') {
           chain.experiments({
