@@ -40,7 +40,7 @@
     "@rsbuild/plugin-vue-jsx": "^1.1.0",
     "@rsbuild/plugin-webpack-swc": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "@rsdoctor/rspack-plugin": "1.0.2",
+    "@rsdoctor/rspack-plugin": "1.1.0",
     "@scripts/test-helper": "workspace:*",
     "@tailwindcss/postcss": "^4.1.5",
     "@types/fs-extra": "^11.0.4",
