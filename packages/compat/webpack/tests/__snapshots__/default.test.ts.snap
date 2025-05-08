@@ -367,12 +367,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     RsbuildHtmlPlugin {
       "getContext": [Function],
       "getEnvironment": [Function],
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "index": {
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
     DefinePlugin {
       "definitions": {
@@ -819,12 +815,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     RsbuildHtmlPlugin {
       "getContext": [Function],
       "getEnvironment": [Function],
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "index": {
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
     DefinePlugin {
       "definitions": {

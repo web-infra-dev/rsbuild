@@ -81,41 +81,8 @@ exports[`plugin-html > should allow to configure html.tags 1`] = `
     RsbuildHtmlPlugin {
       "getContext": [Function],
       "getEnvironment": [Function],
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "foo": {
-          "tagConfig": {
-            "append": true,
-            "hash": false,
-            "publicPath": true,
-            "tags": [
-              {
-                "attrs": {
-                  "src": "jq.js",
-                },
-                "tag": "script",
-              },
-            ],
-          },
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-        "main": {
-          "tagConfig": {
-            "append": true,
-            "hash": false,
-            "publicPath": true,
-            "tags": [
-              {
-                "attrs": {
-                  "src": "jq.js",
-                },
-                "tag": "script",
-              },
-            ],
-          },
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
   ],
 }
@@ -159,12 +126,8 @@ exports[`plugin-html > should allow to modify plugin options by tools.htmlPlugin
     RsbuildHtmlPlugin {
       "getContext": [Function],
       "getEnvironment": [Function],
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "index": {
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
   ],
 }
@@ -216,13 +179,8 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
     RsbuildHtmlPlugin {
       "getContext": [Function],
       "getEnvironment": [Function],
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "index": {
-          "favicon": "./src/favicon.ico",
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
   ],
 }
@@ -274,12 +232,8 @@ exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
     RsbuildHtmlPlugin {
       "getContext": [Function],
       "getEnvironment": [Function],
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "index": {
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
   ],
 }
@@ -331,12 +285,8 @@ exports[`plugin-html > should enable minify in production 1`] = `
     RsbuildHtmlPlugin {
       "getContext": [Function],
       "getEnvironment": [Function],
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "index": {
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
   ],
 }
@@ -388,12 +338,8 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
     RsbuildHtmlPlugin {
       "getContext": [Function],
       "getEnvironment": [Function],
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "index": {
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
   ],
 }
@@ -445,12 +391,8 @@ exports[`plugin-html > should stop injecting <script> if inject is '() => false'
     RsbuildHtmlPlugin {
       "getContext": [Function],
       "getEnvironment": [Function],
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "index": {
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
   ],
 }
@@ -502,12 +444,8 @@ exports[`plugin-html > should stop injecting <script> if inject is 'false' 1`] =
     RsbuildHtmlPlugin {
       "getContext": [Function],
       "getEnvironment": [Function],
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "index": {
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
   ],
 }
@@ -560,12 +498,8 @@ exports[`plugin-html > should support environment html config 1`] = `
       RsbuildHtmlPlugin {
         "getContext": [Function],
         "getEnvironment": [Function],
+        "getExtraData": [Function],
         "name": "RsbuildHtmlPlugin",
-        "options": {
-          "main": {
-            "templateContent": "<!doctype html><html><head></head><body><div id=\\"app\\"></div></body></html>",
-          },
-        },
       },
     ],
   },
@@ -614,12 +548,8 @@ exports[`plugin-html > should support environment html config 1`] = `
       RsbuildHtmlPlugin {
         "getContext": [Function],
         "getEnvironment": [Function],
+        "getExtraData": [Function],
         "name": "RsbuildHtmlPlugin",
-        "options": {
-          "index": {
-            "templateContent": "<!doctype html><html><head></head><body><div id=\\"app1\\"></div></body></html>",
-          },
-        },
       },
     ],
   },
@@ -707,15 +637,8 @@ exports[`plugin-html > should support multi entry 1`] = `
     RsbuildHtmlPlugin {
       "getContext": [Function],
       "getEnvironment": [Function],
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "foo": {
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-        "main": {
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
   ],
 }
