@@ -245,8 +245,8 @@ importers:
         version: 19.1.0(react@19.1.0)
     devDependencies:
       babel-plugin-react-compiler:
-        specifier: ^19.0.0-beta.0
-        version: 19.0.0-beta-e1e972c-20250221
+        specifier: ^19.1.0-rc.1
+        version: 19.1.0-rc.1
 
   e2e/cases/resolve/pkg-imports: {}
 
@@ -3552,8 +3552,8 @@ packages:
     peerDependencies:
       '@babel/core': ^7.20.12
 
-  babel-plugin-react-compiler@19.0.0-beta-e1e972c-20250221:
-    resolution: {integrity: sha512-m3Y8KdwBwKj9l6bf1XPO2xm0WWzv/cYJPurkwP5j8SADGor6l9CdQVksrcOGzU/4Rylfa+tXW6+xaR3vAKs7Hg==}
+  babel-plugin-react-compiler@19.1.0-rc.1:
+    resolution: {integrity: sha512-M4fpG+Hfq5gWzsJeeMErdRokzg0fdJ8IAk+JDhfB/WLT+U3WwJWR8edphypJrk447/JEvYu6DBFwsTn10bMW4Q==}
 
   babel-plugin-vue-jsx-hmr@1.0.0:
     resolution: {integrity: sha512-XRq+XTD4bub6HkavELMhihvLX2++JkSBAxRXlqQK32b+Tb0S9PEqxrDSMpOEZ1iGyOaJZj9Y0uU/FzICdyL9MA==}
@@ -9835,9 +9835,9 @@ snapshots:
       parse5: 7.2.1
       validate-html-nesting: 1.2.2
 
-  babel-plugin-react-compiler@19.0.0-beta-e1e972c-20250221:
+  babel-plugin-react-compiler@19.1.0-rc.1:
     dependencies:
-      '@babel/types': 7.26.9
+      '@babel/types': 7.27.1
 
   babel-plugin-vue-jsx-hmr@1.0.0:
     dependencies:
