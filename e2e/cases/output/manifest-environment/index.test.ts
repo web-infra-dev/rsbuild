@@ -12,14 +12,18 @@ test('should allow to access manifest data in environment context after prod bui
     cwd: fixtures,
     rsbuildConfig: {
       output: {
-        manifest: true,
         filenameHash: false,
       },
       environments: {
-        web: {},
+        web: {
+          output: {
+            manifest: true,
+          },
+        },
         node: {
           output: {
             target: 'node',
+            manifest: 'manifest-node.json',
           },
         },
       },
@@ -70,14 +74,18 @@ test('should allow to access manifest data in environment context after dev buil
     page,
     rsbuildConfig: {
       output: {
-        manifest: true,
         filenameHash: false,
       },
       environments: {
-        web: {},
+        web: {
+          output: {
+            manifest: true,
+          },
+        },
         node: {
           output: {
             target: 'node',
+            manifest: 'manifest-node.json',
           },
         },
       },
