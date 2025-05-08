@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path, { isAbsolute } from 'node:path';
-import type { EntryDescription } from '@rspack/core';
+import type { EntryDescription, RspackPluginInstance } from '@rspack/core';
 import {
   reduceConfigsMergeContext,
   reduceConfigsWithContext,
@@ -315,7 +315,7 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
           }),
         );
 
-        const extraDataMap = new WeakMap<object, HtmlExtraData>();
+        const extraDataMap = new WeakMap<RspackPluginInstance, HtmlExtraData>();
 
         // keep html entry plugin registration order stable based on entryNames
         entryNames.forEach((entryName, index) => {
@@ -333,7 +333,7 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
           }
         });
 
-        const getExtraData = (pluginInstance: object) =>
+        const getExtraData = (pluginInstance: RspackPluginInstance) =>
           extraDataMap.get(pluginInstance);
 
         chain

@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { promisify } from 'node:util';
-import type { Compilation, Compiler } from '@rspack/core';
+import type { Compilation, Compiler, RspackPluginInstance } from '@rspack/core';
 import {
   addCompilationError,
   color,
@@ -239,12 +239,16 @@ export class RsbuildHtmlPlugin {
 
   readonly getEnvironment: () => EnvironmentContext;
 
-  readonly getExtraData: (pluginInstance: object) => HtmlExtraData | undefined;
+  readonly getExtraData: (
+    pluginInstance: RspackPluginInstance,
+  ) => HtmlExtraData | undefined;
 
   readonly getContext: () => InternalContext;
 
   constructor(
-    getExtraData: (pluginInstance: object) => HtmlExtraData | undefined,
+    getExtraData: (
+      pluginInstance: RspackPluginInstance,
+    ) => HtmlExtraData | undefined,
     getEnvironment: () => EnvironmentContext,
     getContext: () => InternalContext,
   ) {
