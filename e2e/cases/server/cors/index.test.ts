@@ -1,5 +1,10 @@
 import { build, dev, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
+import { defaultAllowedOrigins } from '@rsbuild/core';
+
+test('should expose `defaultAllowedOrigins`', async () => {
+  expect(defaultAllowedOrigins).toBeInstanceOf(RegExp);
+});
 
 test('should include CORS headers for dev server if `cors` is `true`', async ({
   page,
