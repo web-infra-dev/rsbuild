@@ -69,13 +69,12 @@ export const FILE_ATTRS = {
   script: 'src',
 };
 
-export type HtmlInfo = {
+export type HtmlExtraData = {
+  entryName: string;
   favicon?: string;
   tagConfig?: TagConfig;
   templateContent?: string;
 };
-
-export type RsbuildHtmlPluginOptions = Record<string, HtmlInfo>;
 
 export type AlterAssetTagGroupsData = {
   headTags: HtmlTagObject[];
@@ -240,17 +239,17 @@ export class RsbuildHtmlPlugin {
 
   readonly getEnvironment: () => EnvironmentContext;
 
-  readonly options: RsbuildHtmlPluginOptions;
+  readonly getExtraData: (pluginInstance: object) => HtmlExtraData | undefined;
 
   readonly getContext: () => InternalContext;
 
   constructor(
-    options: RsbuildHtmlPluginOptions,
+    getExtraData: (pluginInstance: object) => HtmlExtraData | undefined,
     getEnvironment: () => EnvironmentContext,
     getContext: () => InternalContext,
   ) {
     this.name = 'RsbuildHtmlPlugin';
-    this.options = options;
+    this.getExtraData = getExtraData;
     this.getEnvironment = getEnvironment;
     this.getContext = getContext;
   }
@@ -342,14 +341,14 @@ export class RsbuildHtmlPlugin {
       const hooks = getHTMLPlugin().getCompilationHooks(compilation);
 
       hooks.alterAssetTagGroups.tapPromise(this.name, async (data) => {
-        const entryName = data.plugin.options?.entryName;
+        const extraData = this.getExtraData(data.plugin);
 
-        if (!entryName) {
+        if (!extraData) {
           return data;
         }
 
         const { headTags, bodyTags } = data;
-        const { favicon, tagConfig, templateContent } = this.options[entryName];
+        const { favicon, tagConfig, entryName, templateContent } = extraData;
 
         if (!hasTitle(templateContent)) {
           addTitleTag(headTags, data.plugin.options?.title);
