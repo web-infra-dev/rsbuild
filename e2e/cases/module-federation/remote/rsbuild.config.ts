@@ -5,6 +5,9 @@ import { mfConfig } from './moduleFederation.config';
 export default defineConfig({
   plugins: [pluginReact()],
   server: {
+    cors: {
+      origin: 'https://localhost',
+    },
     port: Number(process.env.REMOTE_PORT) || 3002,
   },
   moduleFederation: {
