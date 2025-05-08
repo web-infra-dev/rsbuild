@@ -30,19 +30,15 @@ rspackOnlyTest(
     // quit process
     devProcess.stdin?.write('q\n');
     await expectPoll(() =>
-      logs.some((log) => log.includes('profile files saved to')),
+      logs.some((log) => log.includes('profile file saved to')),
     ).toBeTruthy();
 
     const profileDir = logs
-      .find((log) => log.includes('profile files saved to'))
-      ?.split('profile files saved to')[1]
+      .find((log) => log.includes('profile file saved to'))
+      ?.split('profile file saved to')[1]
       ?.trim();
 
     expect(fs.existsSync(path.join(profileDir!, 'trace.json'))).toBeTruthy();
-    expect(
-      fs.existsSync(path.join(profileDir!, 'jscpuprofile.json')),
-    ).toBeTruthy();
-
     devProcess.kill();
   },
 );
@@ -70,19 +66,15 @@ rspackOnlyTest(
     ).toBeTruthy();
 
     await expectPoll(() =>
-      logs.some((log) => log.includes('profile files saved to')),
+      logs.some((log) => log.includes('profile file saved to')),
     ).toBeTruthy();
 
     const profileDir = logs
-      .find((log) => log.includes('profile files saved to'))
-      ?.split('profile files saved to')[1]
+      .find((log) => log.includes('profile file saved to'))
+      ?.split('profile file saved to')[1]
       ?.trim();
 
     expect(fs.existsSync(path.join(profileDir!, 'trace.json'))).toBeTruthy();
-    expect(
-      fs.existsSync(path.join(profileDir!, 'jscpuprofile.json')),
-    ).toBeTruthy();
-
     buildProcess.kill();
   },
 );
