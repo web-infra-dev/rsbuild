@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path, { isAbsolute } from 'node:path';
-import type { EntryDescription } from '@rspack/core';
+import type { EntryDescription, RspackPluginInstance } from '@rspack/core';
 import {
   reduceConfigsMergeContext,
   reduceConfigsWithContext,
@@ -13,7 +13,7 @@ import {
   isPlainObject,
 } from '../helpers';
 import {
-  type HtmlInfo,
+  type HtmlExtraData,
   RsbuildHtmlPlugin,
   type TagConfig,
 } from '../rspack/RsbuildHtmlPlugin';
@@ -229,7 +229,7 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
         const entryNames = Object.keys(entries).filter((entryName) =>
           Boolean(htmlPaths[entryName]),
         );
-        const htmlInfoMap: Record<string, HtmlInfo> = {};
+        const extraDataList: HtmlExtraData[] = [];
 
         const finalOptions = await Promise.all(
           entryNames.map(async (entryName) => {
@@ -275,23 +275,28 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
               pluginOptions.chunksSortMode = 'manual';
             }
 
-            const htmlInfo: HtmlInfo = {};
-            htmlInfoMap[entryName] = htmlInfo;
+            const extraData: HtmlExtraData = {
+              entryName,
+              context,
+              environment,
+            };
+
+            extraDataList.push(extraData);
 
             if (templateContent) {
-              htmlInfo.templateContent = templateContent;
+              extraData.templateContent = templateContent;
             }
 
             const tagConfig = getTagConfig(environment.config);
             if (tagConfig) {
-              htmlInfo.tagConfig = tagConfig;
+              extraData.tagConfig = tagConfig;
             }
 
             pluginOptions.title = getTitle(entryName, config);
 
             const favicon = getFavicon(entryName, config);
             if (favicon) {
-              htmlInfo.favicon = favicon;
+              extraData.favicon = favicon;
             }
 
             const finalOptions = reduceConfigsWithContext({
@@ -313,20 +318,30 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
           }),
         );
 
+        const extraDataMap = new WeakMap<RspackPluginInstance, HtmlExtraData>();
+
         // keep html entry plugin registration order stable based on entryNames
         entryNames.forEach((entryName, index) => {
+          const pluginInstance = new HtmlPlugin(finalOptions[index]);
+          const extraData = extraDataList.find(
+            (item) => item.entryName === entryName,
+          );
+
           chain
             .plugin(`${CHAIN_ID.PLUGIN.HTML}-${entryName}`)
-            .use(HtmlPlugin, [finalOptions[index]]);
+            .use(pluginInstance);
+
+          if (extraData) {
+            extraDataMap.set(pluginInstance, extraData);
+          }
         });
+
+        const getExtraData = (pluginInstance: RspackPluginInstance) =>
+          extraDataMap.get(pluginInstance);
 
         chain
           .plugin('rsbuild-html-plugin')
-          .use(RsbuildHtmlPlugin, [
-            htmlInfoMap,
-            () => environment,
-            () => context,
-          ]);
+          .use(RsbuildHtmlPlugin, [getExtraData]);
 
         if (config.html) {
           const { crossorigin } = config.html;
