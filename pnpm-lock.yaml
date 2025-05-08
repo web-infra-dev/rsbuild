@@ -667,8 +667,8 @@ importers:
         specifier: 12.0.2
         version: 12.0.2
       html-rspack-plugin:
-        specifier: 6.1.1
-        version: 6.1.1(@rspack/core@1.3.9(@swc/helpers@0.5.17))
+        specifier: 6.1.2
+        version: 6.1.2(@rspack/core@1.3.9(@swc/helpers@0.5.17))
       http-proxy-middleware:
         specifier: ^2.0.9
         version: 2.0.9
@@ -4648,8 +4648,8 @@ packages:
     engines: {node: ^14.13.1 || >=16.0.0}
     hasBin: true
 
-  html-rspack-plugin@6.1.1:
-    resolution: {integrity: sha512-/W5SdElUUgEmV9UDKpME+tcIt2tVt7ZVs7wzIbhzO6TKHJjFsIaYejx08cpPkG6YuVvbZXQ09uW6dVkNBb8Bvg==}
+  html-rspack-plugin@6.1.2:
+    resolution: {integrity: sha512-30xlM6snYGpHJQnrE83miP0MaZEDAsmqEJj0I2IOPbzUSxU5Cct9D+6cM1bOZfc+C9XQZ9syB/ATKimyz2hWcw==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       '@rspack/core': 0.x || 1.x
@@ -11018,7 +11018,7 @@ snapshots:
       relateurl: 0.2.7
       terser: 5.39.0
 
-  html-rspack-plugin@6.1.1(@rspack/core@1.3.9(@swc/helpers@0.5.17)):
+  html-rspack-plugin@6.1.2(@rspack/core@1.3.9(@swc/helpers@0.5.17)):
     dependencies:
       '@rspack/lite-tapable': 1.0.1
     optionalDependencies:
