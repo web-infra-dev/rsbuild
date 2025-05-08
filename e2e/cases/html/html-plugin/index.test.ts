@@ -3,10 +3,9 @@ import { join } from 'node:path';
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('tools.htmlPlugin', async ({ page }) => {
+test('should allow to use tools.htmlPlugin to modify HTML plugin options', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    page,
     rsbuildConfig: {
       tools: {
         htmlPlugin(config, { entryName }) {
@@ -18,14 +17,43 @@ test('tools.htmlPlugin', async ({ page }) => {
     },
   });
 
-  const pagePath = join(rsbuild.distPath, 'index.html');
-  const content = await fs.promises.readFile(pagePath, 'utf-8');
+  const htmlPath = join(rsbuild.distPath, 'index.html');
+  const content = await fs.promises.readFile(htmlPath, 'utf-8');
 
   const allScripts = /(<script [\s\S]*?>)/g.exec(content);
 
   expect(
     allScripts?.every((data) => data.includes('type="module"')),
   ).toBeTruthy();
+});
 
-  await rsbuild.close();
+test('should allow to use tools.htmlPlugin to return a new config object', async () => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    rsbuildConfig: {
+      html: {
+        crossorigin: true,
+        tags: [
+          {
+            tag: 'div',
+            children: 'extra div',
+          },
+        ],
+      },
+      tools: {
+        htmlPlugin() {
+          return {
+            title: 'Hello',
+          };
+        },
+      },
+    },
+  });
+
+  const htmlPath = join(rsbuild.distPath, 'index.html');
+  const content = await fs.promises.readFile(htmlPath, 'utf-8');
+
+  expect(content).toContain('<title>Hello</title>');
+  expect(content).toContain('crossorigin="anonymous"');
+  expect(content).toContain('<div>extra div</div>');
 });
