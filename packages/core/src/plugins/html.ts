@@ -277,7 +277,10 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
 
             const extraData: HtmlExtraData = {
               entryName,
+              context,
+              environment,
             };
+
             extraDataList.push(extraData);
 
             if (templateContent) {
@@ -338,11 +341,7 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
 
         chain
           .plugin('rsbuild-html-plugin')
-          .use(RsbuildHtmlPlugin, [
-            getExtraData,
-            () => environment,
-            () => context,
-          ]);
+          .use(RsbuildHtmlPlugin, [getExtraData]);
 
         if (config.html) {
           const { crossorigin } = config.html;

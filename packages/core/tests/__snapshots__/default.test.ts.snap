@@ -418,8 +418,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "version": 6,
     },
     RsbuildHtmlPlugin {
-      "getContext": [Function],
-      "getEnvironment": [Function],
       "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
     },
@@ -923,8 +921,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       "version": 6,
     },
     RsbuildHtmlPlugin {
-      "getContext": [Function],
-      "getEnvironment": [Function],
       "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
     },
@@ -1822,8 +1818,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
       "version": 6,
     },
     RsbuildHtmlPlugin {
-      "getContext": [Function],
-      "getEnvironment": [Function],
       "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
     },

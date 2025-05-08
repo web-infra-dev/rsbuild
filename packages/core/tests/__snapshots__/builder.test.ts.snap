@@ -418,8 +418,6 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
       "version": 6,
     },
     RsbuildHtmlPlugin {
-      "getContext": [Function],
-      "getEnvironment": [Function],
       "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
     },

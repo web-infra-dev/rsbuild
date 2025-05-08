@@ -71,6 +71,8 @@ export const FILE_ATTRS = {
 
 export type HtmlExtraData = {
   entryName: string;
+  context: InternalContext;
+  environment: EnvironmentContext;
   favicon?: string;
   tagConfig?: TagConfig;
   templateContent?: string;
@@ -237,25 +239,17 @@ const addTitleTag = (headTags: HtmlTagObject[], title = '') => {
 export class RsbuildHtmlPlugin {
   readonly name: string;
 
-  readonly getEnvironment: () => EnvironmentContext;
-
   readonly getExtraData: (
     pluginInstance: RspackPluginInstance,
   ) => HtmlExtraData | undefined;
-
-  readonly getContext: () => InternalContext;
 
   constructor(
     getExtraData: (
       pluginInstance: RspackPluginInstance,
     ) => HtmlExtraData | undefined,
-    getEnvironment: () => EnvironmentContext,
-    getContext: () => InternalContext,
   ) {
     this.name = 'RsbuildHtmlPlugin';
     this.getExtraData = getExtraData;
-    this.getEnvironment = getEnvironment;
-    this.getContext = getContext;
   }
 
   apply(compiler: Compiler): void {
@@ -346,13 +340,19 @@ export class RsbuildHtmlPlugin {
 
       hooks.alterAssetTagGroups.tapPromise(this.name, async (data) => {
         const extraData = this.getExtraData(data.plugin);
-
         if (!extraData) {
           return data;
         }
 
         const { headTags, bodyTags } = data;
-        const { favicon, tagConfig, entryName, templateContent } = extraData;
+        const {
+          favicon,
+          context,
+          tagConfig,
+          entryName,
+          environment,
+          templateContent,
+        } = extraData;
 
         if (!hasTitle(templateContent)) {
           addTitleTag(headTags, data.plugin.options?.title);
@@ -367,8 +367,6 @@ export class RsbuildHtmlPlugin {
           bodyTags: bodyTags.map(formatBasicTag),
         };
 
-        const context = this.getContext();
-        const environment = this.getEnvironment();
         const [modified] = await context.hooks.modifyHTMLTags.callChain({
           environment: environment.name,
           args: [
@@ -397,8 +395,12 @@ export class RsbuildHtmlPlugin {
       });
 
       hooks.beforeEmit.tapPromise(this.name, async (data) => {
-        const context = this.getContext();
-        const environment = this.getEnvironment();
+        const extraData = this.getExtraData(data.plugin);
+        if (!extraData) {
+          return data;
+        }
+
+        const { context, environment } = extraData;
         const [modified] = await context.hooks.modifyHTML.callChain({
           environment: environment.name,
           args: [
