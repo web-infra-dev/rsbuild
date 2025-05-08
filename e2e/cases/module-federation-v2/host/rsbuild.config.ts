@@ -13,6 +13,11 @@ export default defineConfig({
       shared: ['react', 'react-dom'],
     }),
   ],
+  server: {
+    cors: {
+      origin: 'https://localhost',
+    },
+  },
   dev: {
     writeToDisk: true,
   },

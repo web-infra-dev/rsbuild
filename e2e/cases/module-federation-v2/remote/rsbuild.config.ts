@@ -14,6 +14,9 @@ export default defineConfig({
     }),
   ],
   server: {
+    cors: {
+      origin: 'https://localhost',
+    },
     port: Number(process.env.REMOTE_PORT) || 3002,
   },
   dev: {
