@@ -32,6 +32,14 @@ export type RsbuildContext = {
    * The bundler type, can be `rspack` or `webpack`.
    */
   bundlerType: BundlerType;
+  /**
+   * The name of the framework or tool that is currently invoking Rsbuild,
+   * same as the `callerName` option in the `createRsbuild` method.
+   * @example
+   * - `rslib` is set when Rslib calls Rsbuild.
+   * - `rspress` is set when Rspress calls Rsbuild.
+   */
+  callerName: string;
 };
 
 /** The inner context. */

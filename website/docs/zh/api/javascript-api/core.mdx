@@ -33,16 +33,18 @@ const rsbuild = await createRsbuild({
 ```ts
 type CreateRsbuildOptions = {
   cwd?: string;
+  callerName?: string;
   environment?: string[];
-  rsbuildConfig?: RsbuildConfig | (() => Promise<RsbuildConfig>);
   loadEnv?: boolean | LoadEnvOptions;
+  rsbuildConfig?: RsbuildConfig | (() => Promise<RsbuildConfig>);
 };
 ```
 
 - `cwd`：当前执行构建的根路径，默认值为 `process.cwd()`
+- `callerName`：当前调用者的名称，默认值为 `rsbuild`，详见 [指定调用者名称](#指定调用者名称)。
 - `environment`：只构建指定的 [environments](/guide/advanced/environments)，如果未指定或传入空数组，则构建所有环境。
-- `rsbuildConfig`：Rsbuild 配置对象。参考 [配置总览](/config/) 查看所有可用的配置项。
 - `loadEnv`：是否调用 [loadEnv](/api/javascript-api/core#loadenv) 方法来加载环境变量，并通过 [source.define](/config/source/define) 定义为全局变量。
+- `rsbuildConfig`：Rsbuild 配置对象。参考 [配置总览](/config/) 查看所有可用的配置项。
 
 ### 异步加载配置
 
@@ -85,6 +87,36 @@ const rsbuild = await createRsbuild({
     prefixes: ['PUBLIC_', 'REACT_APP_'],
   },
 });
+```
+
+### 指定调用者名称
+
+你可以通过 `callerName` 选项来指定当前调用 Rsbuild 的框架或工具的名称，该名称可以被 Rsbuild 插件通过 [context.callerName](/api/javascript-api/instance#contextcallername) 访问到，并基于这个标识符来执行不同的逻辑。
+
+```ts
+import { myPlugin } from './myPlugin';
+
+const rsbuild = await createRsbuild({
+  callerName: 'rslib',
+  rsbuildConfig: {
+    plugins: [myPlugin],
+  },
+});
+```
+
+```ts title="myPlugin.ts"
+export const myPlugin = {
+  name: 'my-plugin',
+  setup(api) {
+    const { callerName } = api.context;
+
+    if (callerName === 'rslib') {
+      // ...
+    } else if (callerName === 'rsbuild') {
+      // ...
+    }
+  },
+};
 ```
 
 ## loadConfig

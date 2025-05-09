@@ -160,6 +160,7 @@ export function createPublicContext(
     'distPath',
     'devServer',
     'cachePath',
+    'callerName',
     'bundlerType',
   ];
 
@@ -207,6 +208,7 @@ export async function createContext(
     rootPath,
     distPath: '',
     cachePath,
+    callerName: options.callerName,
     bundlerType,
     environments: {},
     hooks: initHooks(),
