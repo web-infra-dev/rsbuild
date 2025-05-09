@@ -171,6 +171,7 @@ export async function createRsbuild(
 
   const resolvedOptions: ResolvedCreateRsbuildOptions = {
     cwd: process.cwd(),
+    callerName: 'rsbuild',
     ...options,
     rsbuildConfig: config,
   };

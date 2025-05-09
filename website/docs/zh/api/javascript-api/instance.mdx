@@ -50,6 +50,29 @@ type DistPath = string;
 type CachePath = string;
 ```
 
+### context.callerName
+
+当前调用 Rsbuild 的框架或工具的名称，与 [createRsbuild](/api/javascript-api/core#creatersbuild) 方法中的 [callerName](/api/javascript-api/core#指定调用者名称) 选项相同。
+
+- **类型：** `string`
+- **默认值：** `rsbuild`
+- **示例：**
+
+```ts title="myPlugin.ts"
+export const myPlugin = {
+  name: 'my-plugin',
+  setup(api) {
+    const { callerName } = api.context;
+
+    if (callerName === 'rslib') {
+      // ...
+    } else if (callerName === 'rsbuild') {
+      // ...
+    }
+  },
+};
+```
+
 ### context.devServer
 
 Dev server 相关信息，包含了当前 dev server 的 hostname 和端口号。
