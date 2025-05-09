@@ -2,7 +2,6 @@ import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginClientRedirects } from '@rspress/plugin-client-redirects';
 import { pluginLlms } from '@rspress/plugin-llms';
 import { pluginRss } from '@rspress/plugin-rss';
-import { pluginShiki } from '@rspress/plugin-shiki';
 import {
   transformerNotationDiff,
   transformerNotationFocus,
@@ -20,14 +19,6 @@ const siteUrl = 'https://rsbuild.dev';
 export default defineConfig({
   plugins: [
     pluginLlms(),
-    pluginShiki({
-      langs: ['styl', 'html', 'toml'],
-      transformers: [
-        transformerNotationDiff(),
-        transformerNotationHighlight(),
-        transformerNotationFocus(),
-      ],
-    }),
     pluginSitemap({
       domain: siteUrl,
     }),
@@ -135,6 +126,14 @@ export default defineConfig({
   },
   markdown: {
     checkDeadLinks: true,
+    shiki: {
+      langs: ['styl', 'html', 'toml'],
+      transformers: [
+        transformerNotationDiff(),
+        transformerNotationHighlight(),
+        transformerNotationFocus(),
+      ],
+    },
   },
   route: {
     cleanUrls: true,
