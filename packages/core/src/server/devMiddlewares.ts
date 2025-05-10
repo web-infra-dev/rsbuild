@@ -1,17 +1,17 @@
 import { isAbsolute, join } from 'node:path';
 import rspack from '@rspack/core';
 import { normalizePublicDirs } from '../config';
-import { isMultiCompiler } from '../helpers';
+import { isMultiCompiler, pick } from '../helpers';
 import { logger } from '../logger';
 import type {
   DevConfig,
-  EnvironmentAPI,
   InternalContext,
   RequestHandler,
   ServerConfig,
   SetupMiddlewaresServer,
 } from '../types';
 import type { CompilationManager } from './compilationManager';
+import type { RsbuildDevServer } from './devServer';
 import { gzipMiddleware } from './gzipMiddleware';
 import type { UpgradeEvent } from './helper';
 import {
@@ -28,9 +28,9 @@ import { createProxyMiddleware } from './proxy';
 export type RsbuildDevMiddlewareOptions = {
   pwd: string;
   dev: DevConfig;
+  devServerAPI: RsbuildDevServer;
   server: ServerConfig;
   context: InternalContext;
-  environments: EnvironmentAPI;
   compilationManager?: CompilationManager;
   /**
    * Callbacks returned by the `onBeforeStartDevServer` hook.
@@ -40,19 +40,14 @@ export type RsbuildDevMiddlewareOptions = {
 
 const applySetupMiddlewares = (
   dev: RsbuildDevMiddlewareOptions['dev'],
-  environments: EnvironmentAPI,
-  compilationManager?: CompilationManager,
+  devServerAPI: RsbuildDevServer,
 ) => {
   const setupMiddlewares = dev.setupMiddlewares || [];
 
-  const serverOptions: SetupMiddlewaresServer = {
-    sockWrite: (type, data) =>
-      compilationManager?.socketServer.sockWrite({
-        type,
-        data,
-      }),
-    environments,
-  };
+  const serverOptions: SetupMiddlewaresServer = pick(devServerAPI, [
+    'sockWrite',
+    'environments',
+  ]);
 
   const before: RequestHandler[] = [];
   const after: RequestHandler[] = [];
@@ -74,12 +69,12 @@ export type Middlewares = Array<RequestHandler | [string, RequestHandler]>;
 
 const applyDefaultMiddlewares = async ({
   dev,
+  devServerAPI,
   middlewares,
   server,
   compilationManager,
   context,
   pwd,
-  environments,
   postCallbacks,
 }: RsbuildDevMiddlewareOptions & {
   middlewares: Middlewares;
@@ -165,7 +160,11 @@ const applyDefaultMiddlewares = async ({
   );
   middlewares.push(['/__open-in-editor', launchEditorMiddleware()]);
 
-  middlewares.push(viewingServedFilesMiddleware({ environments }));
+  middlewares.push(
+    viewingServedFilesMiddleware({
+      environments: devServerAPI.environments,
+    }),
+  );
 
   if (compilationManager) {
     middlewares.push(compilationManager.middleware);
@@ -263,7 +262,7 @@ export const getDevMiddlewares = async (
   options: RsbuildDevMiddlewareOptions,
 ): Promise<GetDevMiddlewaresResult> => {
   const middlewares: Middlewares = [];
-  const { environments, compilationManager } = options;
+  const { compilationManager } = options;
 
   if (logger.level === 'verbose') {
     middlewares.push(await getRequestLoggerMiddleware());
@@ -272,8 +271,7 @@ export const getDevMiddlewares = async (
   // Order: setupMiddlewares.unshift => internal middleware => setupMiddlewares.push
   const { before, after } = applySetupMiddlewares(
     options.dev,
-    environments,
-    compilationManager,
+    options.devServerAPI,
   );
 
   middlewares.push(...before);

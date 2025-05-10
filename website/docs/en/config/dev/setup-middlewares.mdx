@@ -58,9 +58,7 @@ In the `setupMiddlewares` function, you can access the `server` object, which pr
 
 ### sockWrite
 
-- **Type:** `(type: 'static-changed') => void`
-
-`sockWrite` allows middleware to send some message to HMR client, and then the HMR client will take different actions depending on the message type.
+Sends some message to HMR client, see [Dev server API - sockWrite](/api/javascript-api/dev-server-api#sockwrite) for more details.
 
 For example, if you send a `'static-changed'` message, the page will reload.
 
@@ -77,8 +75,6 @@ export default {
   },
 };
 ```
-
-> Sending `content-changed` and `static-changed` have the same effect. Since `content-changed` has been deprecated, please use `static-changed` instead.
 
 ### environments
 
