@@ -44,6 +44,13 @@ import { type WatchFilesResult, setupWatchFiles } from './watchFiles';
 
 type HTTPServer = Server | Http2SecureServer;
 
+export type SockWriteType = 'static-changed' | (string & {});
+
+export type SockWrite = (
+  type: SockWriteType,
+  data?: string | boolean | Record<string, any>,
+) => void;
+
 export type RsbuildDevServer = {
   /**
    * The `connect` app instance.
@@ -101,6 +108,12 @@ export type RsbuildDevServer = {
    * Open URL in the browser after starting the server.
    */
   open: () => Promise<void>;
+  /**
+   * Allows middleware to send some message to HMR client, and then the HMR
+   * client will take different actions depending on the message type.
+   * - `static-changed`: The page will reload.
+   */
+  sockWrite: SockWrite;
 };
 
 const formatDevConfig = (config: NormalizedDevConfig, port: number) => {
@@ -322,11 +335,18 @@ export async function createDevServer<
         middlewares,
       });
 
+  const sockWrite: SockWrite = (type, data) =>
+    compilationManager?.socketServer.sockWrite({
+      type,
+      data,
+    });
+
   const devServerAPI: RsbuildDevServer = {
     port,
     middlewares,
     environments: environmentAPI,
     httpServer,
+    sockWrite,
     listen: async () => {
       if (!httpServer) {
         throw new Error(
@@ -423,9 +443,9 @@ export async function createDevServer<
     pwd: root,
     compilationManager,
     dev: devConfig,
+    devServerAPI,
     context,
     server: config.server,
-    environments: environmentAPI,
     postCallbacks,
   });
 

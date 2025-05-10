@@ -9,7 +9,8 @@ import {
 } from '../helpers';
 import { formatStatsMessages } from '../helpers/format';
 import { logger } from '../logger';
-import type { DevConfig, Rspack, SockWriteType } from '../types';
+import type { DevConfig, Rspack } from '../types';
+import type { SockWriteType } from './devServer';
 import { getCompilationId } from './helper';
 import { genOverlayHTML } from './overlay';
 

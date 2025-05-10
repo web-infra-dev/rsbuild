@@ -20,6 +20,7 @@ import type {
 import type RspackChain from '../../compiled/rspack-chain';
 import type { FileDescriptor } from '../../compiled/rspack-manifest-plugin';
 import type { BundleAnalyzerPlugin } from '../../compiled/webpack-bundle-analyzer/index.js';
+import type { RsbuildDevServer } from '../server/devServer';
 import type {
   ModifyBundlerChainUtils,
   ModifyChainUtils,
@@ -1446,20 +1447,10 @@ export type EnvironmentAPI = {
   };
 };
 
-export type SockWriteType = 'static-changed' | (string & {});
-
-export type SetupMiddlewaresServer = {
-  /**
-   * Allows middleware to send some message to HMR client, and then the HMR
-   * client will take different actions depending on the message type.
-   * - `static-changed`: The page will reload.
-   */
-  sockWrite: (
-    type: SockWriteType,
-    data?: string | boolean | Record<string, any>,
-  ) => void;
-  environments: EnvironmentAPI;
-};
+export type SetupMiddlewaresServer = Pick<
+  RsbuildDevServer,
+  'sockWrite' | 'environments'
+>;
 
 export type SetupMiddlewaresFn = (
   middlewares: {

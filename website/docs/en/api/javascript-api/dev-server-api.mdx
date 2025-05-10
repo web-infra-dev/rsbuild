@@ -104,6 +104,12 @@ type RsbuildDevServer = {
    * Open URL in the browser after starting the server.
    */
   open: () => Promise<void>;
+  /**
+   * Allows middleware to send some message to HMR client, and then the HMR
+   * client will take different actions depending on the message type.
+   * - `static-changed`: The page will reload.
+   */
+  sockWrite: SockWrite;
 };
 
 type CreateDevServerOptions = {
@@ -127,6 +133,23 @@ function CreateDevServer(
   options?: CreateDevServerOptions,
 ): Promise<RsbuildDevServer>;
 ```
+
+### sockWrite
+
+- **Type:** `(type: 'static-changed') => void`
+
+Sends some message to HMR client, and then the HMR client will take different actions depending on the message type.
+
+For example, if you send a `'static-changed'` message, the page will reload.
+
+```ts
+const rsbuildServer = await rsbuild.createDevServer();
+if (someCondition) {
+  rsbuildServer.sockWrite('static-changed');
+}
+```
+
+> Sending `content-changed` and `static-changed` have the same effect. Since `content-changed` has been deprecated, please use `static-changed` instead.
 
 ## Example
 
