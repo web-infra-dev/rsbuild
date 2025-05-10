@@ -1446,9 +1446,16 @@ export type EnvironmentAPI = {
   };
 };
 
+export type SockWriteType = 'static-changed' | (string & {});
+
 export type SetupMiddlewaresServer = {
+  /**
+   * Allows middleware to send some message to HMR client, and then the HMR
+   * client will take different actions depending on the message type.
+   * - `static-changed`: The page will reload.
+   */
   sockWrite: (
-    type: string,
+    type: SockWriteType,
     data?: string | boolean | Record<string, any>,
   ) => void;
   environments: EnvironmentAPI;

@@ -58,6 +58,8 @@ export default {
 
 ### sockWrite
 
+- **类型:** `(type: 'static-changed') => void`
+
 `sockWrite` 允许中间件向 HMR 客户端传递一些消息，HMR 客户端将根据接收到的消息类型进行不同的处理。
 
 例如，如果你发送一个 `'static-changed'` 的消息，页面将会重新加载。
@@ -79,6 +81,8 @@ export default {
 > 发送 `content-changed` 与 `static-changed` 具有相同的效果。由于 `content-changed` 已经被弃用，请优先使用 `static-changed`。
 
 ### environments
+
+- **类型:** [EnvironmentAPI](/api/javascript-api/environment-api#environment-api)
 
 `environments` 包含 Rsbuild 的 [environment API](/api/javascript-api/environment-api#environment-api)，这允许你在服务端获取特定环境下的构建产物信息。
 

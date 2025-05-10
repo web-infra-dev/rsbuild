@@ -9,7 +9,7 @@ import {
 } from '../helpers';
 import { formatStatsMessages } from '../helpers/format';
 import { logger } from '../logger';
-import type { DevConfig, Rspack } from '../types';
+import type { DevConfig, Rspack, SockWriteType } from '../types';
 import { getCompilationId } from './helper';
 import { genOverlayHTML } from './overlay';
 
@@ -24,7 +24,7 @@ function isEqualSet(a: Set<string>, b: Set<string>): boolean {
 const CHECK_SOCKETS_INTERVAL = 30000;
 
 interface SocketMessage {
-  type: string;
+  type: SockWriteType;
   compilationId?: string;
   data?: Record<string, any> | string | boolean;
 }
