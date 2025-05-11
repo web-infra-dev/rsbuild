@@ -177,7 +177,6 @@ function onMessage(e: MessageEvent<string>) {
         clearOverlay();
       }
       break;
-    case 'still-ok':
     case 'ok':
       handleSuccess();
       break;
