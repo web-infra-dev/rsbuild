@@ -314,7 +314,7 @@ export class SocketServer {
 
     if (shouldEmit) {
       return this.sockWrite({
-        type: 'still-ok',
+        type: 'ok',
         compilationId,
       });
     }
