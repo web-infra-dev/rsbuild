@@ -56,6 +56,26 @@ export default {
 
 In the `setupMiddlewares` function, you can access the `server` object, which provides some server APIs.
 
+### environments
+
+Provides Rsbuild's [environment API](/api/javascript-api/environment-api#environment-api), see [Dev server API - environments](/api/javascript-api/dev-server-api#environments) for more details.
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    setupMiddlewares: [
+      (middlewares, { environments }) => {
+        middlewares.unshift(async (req, _res, next) => {
+          const webStats = await environments.web.getStats();
+          console.log(webStats.toJson({ all: false }));
+          next();
+        });
+      },
+    ],
+  },
+};
+```
+
 ### sockWrite
 
 Sends some message to HMR client, see [Dev server API - sockWrite](/api/javascript-api/dev-server-api#sockwrite) for more details.
@@ -66,34 +86,10 @@ For example, if you send a `'static-changed'` message, the page will reload.
 export default {
   dev: {
     setupMiddlewares: [
-      (middlewares, server) => {
+      (middlewares, { sockWrite }) => {
         if (someCondition) {
-          server.sockWrite('static-changed');
+          sockWrite('static-changed');
         }
-      },
-    ],
-  },
-};
-```
-
-### environments
-
-- **Type:** [EnvironmentAPI](/api/javascript-api/environment-api#environment-api)
-
-`environments` includes Rsbuild's [environment API](/api/javascript-api/environment-api#environment-api), which allows you to get the build outputs information for a specific environment in the server side.
-
-```ts title="rsbuild.config.ts"
-export default {
-  dev: {
-    setupMiddlewares: [
-      (middlewares, server) => {
-        middlewares.unshift(async (req, _res, next) => {
-          const webStats = await server.environments.web.getStats();
-
-          console.log(webStats.toJson({ all: false }));
-
-          next();
-        });
       },
     ],
   },
