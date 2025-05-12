@@ -100,11 +100,11 @@ Rsbuild 会将以下配置文件作为默认的构建依赖：
 
 - `package.json`
 - `tsconfig.json`
-- `rsbuild.config.*`
+- `env`, `.env.*`
 - `.browserslistrc`
 - `tailwindcss.config.*`
 
-在使用 Rsbuild CLI 时，它还会自动将 `.env` 和 `.env.*` 文件添加到构建依赖中。
+在使用 Rsbuild CLI 时，它还会自动将 Rsbuild 配置文件（`rsbuild.config.*`）添加到构建依赖中。
 
 当你添加其他构建依赖时，Rsbuild 会将这些自定义依赖与默认依赖合并，并传递给 Rspack。
 

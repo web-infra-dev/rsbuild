@@ -100,11 +100,11 @@ Rsbuild will use the following configuration files as the default build dependen
 
 - `package.json`
 - `tsconfig.json`
-- `rsbuild.config.*`
+- `.env`, `.env.*`
 - `.browserslistrc`
 - `tailwindcss.config.*`
 
-When using Rsbuild CLI, it will also automatically add `.env` and `.env.*` files to the build dependencies.
+When using Rsbuild CLI, it will also automatically add the Rsbuild configuration file (`rsbuild.config.*`) to the build dependencies.
 
 When you add other build dependencies, Rsbuild merges these custom dependencies with the default dependencies and passes them to Rspack.
 
