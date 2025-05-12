@@ -58,10 +58,10 @@
     "jiti": "^2.4.2"
   },
   "devDependencies": {
-    "@rslib/core": "0.6.8",
+    "@rslib/core": "0.6.9",
     "@types/connect": "3.4.38",
-    "@types/cors": "^2.8.17",
-    "@types/node": "^22.15.3",
+    "@types/cors": "^2.8.18",
+    "@types/node": "^22.15.17",
     "@types/on-finished": "2.3.4",
     "@types/webpack-bundle-analyzer": "4.7.0",
     "@types/ws": "^8.18.1",
