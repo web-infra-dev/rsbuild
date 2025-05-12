@@ -221,29 +221,19 @@ For example, the `RULE.STYLUS` rule exists only when the Stylus plugin is regist
 
 `USE.[ID]` can match a certain loader.
 
-| ID                | Description                                                                            |
-| ----------------- | -------------------------------------------------------------------------------------- |
-| `USE.SWC`         | correspond to `builtin:swc-loader`                                                     |
-| `USE.STYLE`       | correspond to `style-loader`                                                           |
-| `USE.POSTCSS`     | correspond to `postcss-loader`                                                         |
-| `USE.LESS`        | correspond to `less-loader` (requires [Less plugin](/plugins/list/plugin-less))        |
-| `USE.SASS`        | correspond to `sass-loader` (requires [Sass plugin](/plugins/list/plugin-sass))        |
-| `USE.RESOLVE_URL` | correspond to `resolve-url-loader` (requires [Sass plugin](/plugins/list/plugin-sass)) |
-| `USE.VUE`         | correspond to `vue-loader` (requires [Vue plugin](/plugins/list/plugin-vue))           |
-| `USE.SVGR`        | correspond to `svgr-loader` (requires [Svgr plugin](/plugins/list/plugin-svgr))        |
-| `USE.BABEL`       | correspond to `babel-loader` (requires [Babel plugin](/plugins/list/plugin-babel))     |
-| `USE.SVELTE`      | correspond to `svelte-loader` (requires [Svelte plugin](/plugins/list/plugin-svelte))  |
-| `USE.STYLUS`      | correspond to `stylus-loader` (requires [Stylus plugin](/plugins/list/plugin-stylus))  |
+| ID            | Description                        |
+| ------------- | ---------------------------------- |
+| `USE.SWC`     | correspond to `builtin:swc-loader` |
+| `USE.STYLE`   | correspond to `style-loader`       |
+| `USE.POSTCSS` | correspond to `postcss-loader`     |
+
+See [Custom loader](/guide/configuration/rspack#custom-loader) for more details.
 
 ### CHAIN_ID.PLUGIN
 
 `PLUGIN.[ID]` can match a certain Rspack or webpack plugin.
 
-| ID                             | Description                                                                                                                                                         |
-| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `PLUGIN.HTML`                  | correspond to [HtmlRspackPlugin](https://rspack.dev/plugins/rspack/html-rspack-plugin), you need to concat the entry name when using: `${PLUGIN.HTML}-${entryName}` |
-| `PLUGIN.SUBRESOURCE_INTEGRITY` | correspond to [SubresourceIntegrityPlugin](https://rspack.dev/plugins/rspack/subresource-integrity-plugin)                                                          |
-| `PLUGIN.BUNDLE_ANALYZER`       | correspond to [BundleAnalyzerPlugin](https://github.com/webpack-contrib/webpack-bundle-analyzer)                                                                    |
+See [Custom plugin](/guide/configuration/rspack#custom-plugin) for more details.
 
 ### CHAIN_ID.MINIMIZER
 
