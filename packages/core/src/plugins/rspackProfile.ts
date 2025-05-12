@@ -30,8 +30,8 @@ async function ensureFileDir(outputFilePath: string) {
 }
 
 /**
- * `RSPACK_PROFILE=ALL` overview trace events
- * `RSPACK_PROFILE=OVERVIEW` // all trace event
+ * `RSPACK_PROFILE=ALL` // all trace events
+ * `RSPACK_PROFILE=OVERVIEW` // overview trace events
  * `RSPACK_PROFILE=warn,tokio::net=info` // trace filter from  https://docs.rs/tracing-subscriber/latest/tracing_subscriber/filter/struct.EnvFilter.html#example-syntax
  */
 async function applyProfile(

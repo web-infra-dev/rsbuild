@@ -1,6 +1,5 @@
 import { exec } from 'node:child_process';
 import fs from 'node:fs';
-import path from 'node:path';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import { expectPoll, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
@@ -12,7 +11,7 @@ rspackOnlyTest(
       cwd: __dirname,
       env: {
         ...process.env,
-        RSPACK_PROFILE: 'ALL',
+        RSPACK_PROFILE: 'OVERVIEW',
       },
     });
 
@@ -50,7 +49,7 @@ rspackOnlyTest(
       cwd: __dirname,
       env: {
         ...process.env,
-        RSPACK_PROFILE: 'ALL',
+        RSPACK_PROFILE: 'OVERVIEW',
       },
     });
 

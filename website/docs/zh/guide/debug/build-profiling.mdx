@@ -42,8 +42,8 @@ Rsbuild 支持使用 `RSPACK_PROFILE` 环境变量来对 Rspack 进行构建性�
 ```json title="package.json"
 {
   "scripts": {
-    "dev:profile": "RSPACK_PROFILE=ALL rsbuild dev",
-    "build:profile": "RSPACK_PROFILE=ALL rsbuild build"
+    "dev:profile": "RSPACK_PROFILE=OVERVIEW rsbuild dev",
+    "build:profile": "RSPACK_PROFILE=OVERVIEW rsbuild build"
   }
 }
 ```
@@ -53,8 +53,8 @@ Rsbuild 支持使用 `RSPACK_PROFILE` 环境变量来对 Rspack 进行构建性�
 ```json title="package.json"
 {
   "scripts": {
-    "dev:profile": "cross-env RSPACK_PROFILE=ALL rsbuild dev",
-    "build:profile": "cross-env RSPACK_PROFILE=ALL rsbuild build"
+    "dev:profile": "cross-env RSPACK_PROFILE=OVERVIEW rsbuild dev",
+    "build:profile": "cross-env RSPACK_PROFILE=OVERVIEW rsbuild build"
   },
   "devDependencies": {
     "cross-env": "^7.0.0"
