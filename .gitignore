@@ -12,6 +12,7 @@ doc_build/
 playwright-report/
 tsconfig.tsbuildinfo
 .swc
+.rspack-profile-*/
 
 # CSS Modules dist files
 *.css.d.ts

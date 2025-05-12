@@ -33,12 +33,12 @@ rspackOnlyTest(
       logs.some((log) => log.includes('profile file saved to')),
     ).toBeTruthy();
 
-    const profileDir = logs
+    const profileFile = logs
       .find((log) => log.includes('profile file saved to'))
       ?.split('profile file saved to')[1]
       ?.trim();
 
-    expect(fs.existsSync(path.join(profileDir!, 'trace.json'))).toBeTruthy();
+    expect(fs.existsSync(profileFile!)).toBeTruthy();
     devProcess.kill();
   },
 );
@@ -69,12 +69,12 @@ rspackOnlyTest(
       logs.some((log) => log.includes('profile file saved to')),
     ).toBeTruthy();
 
-    const profileDir = logs
+    const profileFile = logs
       .find((log) => log.includes('profile file saved to'))
       ?.split('profile file saved to')[1]
       ?.trim();
 
-    expect(fs.existsSync(path.join(profileDir!, 'trace.json'))).toBeTruthy();
+    expect(fs.existsSync(profileFile!)).toBeTruthy();
     buildProcess.kill();
   },
 );
