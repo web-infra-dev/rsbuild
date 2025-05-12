@@ -42,8 +42,8 @@ Rsbuild supports the use of the `RSPACK_PROFILE` environment variable for Rspack
 ```json title="package.json"
 {
   "scripts": {
-    "dev:profile": "RSPACK_PROFILE=ALL rsbuild dev",
-    "build:profile": "RSPACK_PROFILE=ALL rsbuild build"
+    "dev:profile": "RSPACK_PROFILE=OVERVIEW rsbuild dev",
+    "build:profile": "RSPACK_PROFILE=OVERVIEW rsbuild build"
   }
 }
 ```
@@ -53,8 +53,8 @@ As Windows does not support the above usage, you can also use [cross-env](https:
 ```json title="package.json"
 {
   "scripts": {
-    "dev:profile": "cross-env RSPACK_PROFILE=ALL rsbuild dev",
-    "build:profile": "cross-env RSPACK_PROFILE=ALL rsbuild build"
+    "dev:profile": "cross-env RSPACK_PROFILE=OVERVIEW rsbuild dev",
+    "build:profile": "cross-env RSPACK_PROFILE=OVERVIEW rsbuild build"
   },
   "devDependencies": {
     "cross-env": "^7.0.0"
