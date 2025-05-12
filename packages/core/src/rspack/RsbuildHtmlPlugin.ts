@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { promisify } from 'node:util';
-import type { Compilation, Compiler, RspackPluginInstance } from '@rspack/core';
+import type { Compilation, Compiler } from '@rspack/core';
 import {
   addCompilationError,
   color,
@@ -28,6 +28,11 @@ export type TagConfig = {
   append?: HtmlTag['append'];
   publicPath?: HtmlTag['publicPath'];
 };
+
+/**
+ * A unique identifier for providing extra data to RsbuildHtmlPlugin
+ */
+export const entryNameSymbol: unique symbol = Symbol('rsbuildEntryName');
 
 /**
  * @see https://developer.mozilla.org/en-US/docs/Glossary/Void_element}
@@ -239,15 +244,9 @@ const addTitleTag = (headTags: HtmlTagObject[], title = '') => {
 export class RsbuildHtmlPlugin {
   readonly name: string;
 
-  readonly getExtraData: (
-    pluginInstance: RspackPluginInstance,
-  ) => HtmlExtraData | undefined;
+  readonly getExtraData: (entryName: string) => HtmlExtraData | undefined;
 
-  constructor(
-    getExtraData: (
-      pluginInstance: RspackPluginInstance,
-    ) => HtmlExtraData | undefined,
-  ) {
+  constructor(getExtraData: (entryName: string) => HtmlExtraData | undefined) {
     this.name = 'RsbuildHtmlPlugin';
     this.getExtraData = getExtraData;
   }
@@ -335,11 +334,26 @@ export class RsbuildHtmlPlugin {
       headTags.unshift(tag);
     };
 
+    const getExtraDataByPlugin = (plugin: HtmlRspackPlugin) => {
+      if (!plugin.options) {
+        return undefined;
+      }
+
+      const entryName = (plugin.options as Record<symbol, string>)[
+        entryNameSymbol
+      ];
+      if (!entryName) {
+        return undefined;
+      }
+
+      return this.getExtraData(entryName);
+    };
+
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
       const hooks = getHTMLPlugin().getCompilationHooks(compilation);
 
       hooks.alterAssetTagGroups.tapPromise(this.name, async (data) => {
-        const extraData = this.getExtraData(data.plugin);
+        const extraData = getExtraDataByPlugin(data.plugin);
         if (!extraData) {
           return data;
         }
@@ -395,7 +409,7 @@ export class RsbuildHtmlPlugin {
       });
 
       hooks.beforeEmit.tapPromise(this.name, async (data) => {
-        const extraData = this.getExtraData(data.plugin);
+        const extraData = getExtraDataByPlugin(data.plugin);
         if (!extraData) {
           return data;
         }
