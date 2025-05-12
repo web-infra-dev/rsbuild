@@ -32,7 +32,7 @@ export type TagConfig = {
 /**
  * A unique identifier for providing extra data to RsbuildHtmlPlugin
  */
-export const entryNameSymbol: unique symbol = Symbol('rsbuildEntryName');
+export const entryNameSymbol: unique symbol = Symbol('entryName');
 
 /**
  * @see https://developer.mozilla.org/en-US/docs/Glossary/Void_element}
