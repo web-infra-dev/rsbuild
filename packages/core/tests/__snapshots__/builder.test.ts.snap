@@ -414,6 +414,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
+        Symbol(entryName): "index",
       },
       "version": 6,
     },

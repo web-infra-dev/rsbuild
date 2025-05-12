@@ -342,6 +342,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
+        Symbol(entryName): "index",
       },
       "userOptions": {
         "chunks": [
@@ -361,6 +362,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
+        Symbol(entryName): "index",
       },
       "version": 5,
     },
@@ -788,6 +790,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
+        Symbol(entryName): "index",
       },
       "userOptions": {
         "chunks": [
@@ -807,6 +810,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
+        Symbol(entryName): "index",
       },
       "version": 5,
     },

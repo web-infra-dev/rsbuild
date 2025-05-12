@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path, { isAbsolute } from 'node:path';
-import type { EntryDescription, RspackPluginInstance } from '@rspack/core';
+import type { EntryDescription } from '@rspack/core';
 import {
   reduceConfigsMergeContext,
   reduceConfigsWithContext,
@@ -16,6 +16,7 @@ import {
   type HtmlExtraData,
   RsbuildHtmlPlugin,
   type TagConfig,
+  entryNameSymbol,
 } from '../rspack/RsbuildHtmlPlugin';
 import type {
   HtmlConfig,
@@ -229,7 +230,7 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
         const entryNames = Object.keys(entries).filter((entryName) =>
           Boolean(htmlPaths[entryName]),
         );
-        const extraDataList: HtmlExtraData[] = [];
+        const extraDataMap = new Map<string, HtmlExtraData>();
 
         const finalOptions = await Promise.all(
           entryNames.map(async (entryName) => {
@@ -281,7 +282,7 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
               environment,
             };
 
-            extraDataList.push(extraData);
+            extraDataMap.set(entryName, extraData);
 
             if (templateContent) {
               extraData.templateContent = templateContent;
@@ -318,26 +319,17 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
           }),
         );
 
-        const extraDataMap = new WeakMap<RspackPluginInstance, HtmlExtraData>();
-
-        // keep html entry plugin registration order stable based on entryNames
+        // Follow the order of the entryNames array to keep the HTML plugin registration order stable
         entryNames.forEach((entryName, index) => {
-          const pluginInstance = new HtmlPlugin(finalOptions[index]);
-          const extraData = extraDataList.find(
-            (item) => item.entryName === entryName,
-          );
-
-          chain
-            .plugin(`${CHAIN_ID.PLUGIN.HTML}-${entryName}`)
-            .use(pluginInstance);
-
-          if (extraData) {
-            extraDataMap.set(pluginInstance, extraData);
-          }
+          chain.plugin(`${CHAIN_ID.PLUGIN.HTML}-${entryName}`).use(HtmlPlugin, [
+            {
+              ...finalOptions[index],
+              [entryNameSymbol]: entryName,
+            },
+          ]);
         });
 
-        const getExtraData = (pluginInstance: RspackPluginInstance) =>
-          extraDataMap.get(pluginInstance);
+        const getExtraData = (entryName: string) => extraDataMap.get(entryName);
 
         chain
           .plugin('rsbuild-html-plugin')
