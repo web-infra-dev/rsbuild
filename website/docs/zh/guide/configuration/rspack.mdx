@@ -124,14 +124,13 @@ export default {
 
 Rsbuild 将内部定义的全部 id 都通过 `CHAIN_ID` 对象导出，因此你可以通过这些导出的 id，快速定位到你想要修改的 Loader 或 Plugin，而不需要在 Rspack 配置对象里通过复杂的遍历寻找。
 
-比如通过 `CHAIN_ID.PLUGIN.HTML` 来删除内置的 HTML 插件：
+比如通过 `CHAIN_ID.RULE.CSS` 来删除内置的 CSS 处理规则：
 
 ```ts title="rsbuild.config.ts"
 export default {
   tools: {
     bundlerChain: (chain, { CHAIN_ID }) => {
-      //
-      chain.plugins.delete(CHAIN_ID.PLUGIN.HTML);
+      chain.module.rules.delete(CHAIN_ID.RULE.CSS);
     },
   },
 };
@@ -141,17 +140,16 @@ export default {
 
 `CHAIN_ID` 对象包含了多种 id，对应的含义如下：
 
-| CHAIN_ID 字段             | 对应的配置               | 描述                                  |
-| ------------------------- | ------------------------ | ------------------------------------- |
-| `CHAIN_ID.PLUGIN`         | `plugins[i]`             | 对应 Rspack 配置中的一个插件          |
-| `CHAIN_ID.RULE`           | `module.rules[i]`        | 对应 Rspack 配置中的一个 Rule         |
-| `CHAIN_ID.USE`            | `module.rules[i].loader` | 对应 Rspack 配置中的一个 Loader       |
-| `CHAIN_ID.MINIMIZER`      | `optimization.minimizer` | 对应 Rspack 配置中的一个压缩工具      |
-| `CHAIN_ID.RESOLVE_PLUGIN` | `resolve.plugins[i]`     | 对应 Rspack 配置中的一个 Resolve 插件 |
+| CHAIN_ID 字段        | 对应的配置               | 描述                             |
+| -------------------- | ------------------------ | -------------------------------- |
+| `CHAIN_ID.PLUGIN`    | `plugins[i]`             | 对应 Rspack 配置中的一个插件     |
+| `CHAIN_ID.RULE`      | `module.rules[i]`        | 对应 Rspack 配置中的一个 Rule    |
+| `CHAIN_ID.USE`       | `module.rules[i].loader` | 对应 Rspack 配置中的一个 Loader  |
+| `CHAIN_ID.MINIMIZER` | `optimization.minimizer` | 对应 Rspack 配置中的一个压缩工具 |
 
 ### 示例
 
-#### 配置 loader
+#### 自定义 loader
 
 下面是新增、修改和删除 Rspack loader 的示例。
 
@@ -257,7 +255,7 @@ export default {
 };
 ```
 
-#### 配置 Plugin
+#### 自定义 Plugin
 
 下面是新增、修改和删除 Rspack 插件的示例。
 
@@ -286,6 +284,12 @@ export default {
   },
 };
 ```
+
+:::tip
+在绝大部分情况下，你应该通过 Rsbuild 提供的配置项来修改插件的选项，而不是通过 `CHAIN_ID.PLUGIN` 来修改，否则可能导致预期之外的行为。
+
+例如，通过 [tools.htmlPlugin](/config/tools/html-plugin) 来修改 HtmlPlugin 的选项。
+:::
 
 #### 根据环境修改
 
