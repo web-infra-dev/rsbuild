@@ -54,7 +54,6 @@ export default {
 export default {
   tools: {
     rspack: (config) => {
-      config.resolve ||= {};
       config.resolve.alias ||= {};
       config.resolve.alias['@util'] = 'src/util';
       return config;
@@ -74,7 +73,7 @@ export default {
   tools: {
     rspack: async (config) => {
       const { default: ESLintPlugin } = await import('eslint-webpack-plugin');
-      config.plugins?.push(new ESLintPlugin());
+      config.plugins.push(new ESLintPlugin());
       return config;
     },
   },
@@ -208,7 +207,7 @@ export default {
 export default {
   tools: {
     rspack: (config, { rspack }) => {
-      config.plugins?.push(new rspack.BannerPlugin());
+      config.plugins.push(new rspack.BannerPlugin());
       return config;
     },
   },

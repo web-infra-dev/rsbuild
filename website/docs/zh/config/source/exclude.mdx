@@ -33,7 +33,7 @@ export default {
 export default {
   tools: {
     rspack: (config, { rspack }) => {
-      config.plugins?.push(
+      config.plugins.push(
         new rspack.IgnorePlugin({
           resourceRegExp: /^\.\/locale$/,
           contextRegExp: /moment$/,

@@ -10,7 +10,7 @@ rspackOnlyTest(
       rsbuildConfig: {
         tools: {
           rspack: (config, { rspack }) => {
-            config.plugins?.push(
+            config.plugins.push(
               new rspack.DefinePlugin({
                 ENABLE_TEST: JSON.stringify(true),
               }),
@@ -38,7 +38,7 @@ rspackOnlyTest(
           rspack: async (config, { rspack }) => {
             return new Promise<void>((resolve) => {
               setTimeout(() => {
-                config.plugins?.push(
+                config.plugins.push(
                   new rspack.DefinePlugin({
                     ENABLE_TEST: JSON.stringify(true),
                   }),
