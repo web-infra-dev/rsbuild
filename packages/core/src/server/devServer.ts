@@ -87,8 +87,8 @@ export type RsbuildDevServer = {
    */
   port: number;
   /**
-   * Notify that the Rsbuild server has been started.
-   * Rsbuild will trigger `onAfterStartDevServer` hook in this stage.
+   * Notifies Rsbuild that the custom server has successfully started.
+   * Rsbuild will trigger the `onAfterStartDevServer` hook at this stage.
    */
   afterListen: () => Promise<void>;
   /**

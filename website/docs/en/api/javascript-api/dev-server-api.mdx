@@ -127,8 +127,8 @@ type RsbuildDevServer = {
    */
   port: number;
   /**
-   * Notify that the Rsbuild server has been started.
-   * Rsbuild will trigger `onAfterStartDevServer` hook in this stage.
+   * Notifies Rsbuild that the custom server has successfully started.
+   * Rsbuild will trigger the `onAfterStartDevServer` hook at this stage.
    */
   afterListen: () => Promise<void>;
   /**
@@ -180,6 +180,29 @@ function CreateDevServer(
 ): Promise<RsbuildDevServer>;
 ```
 
+### afterListen
+
+- **Type:** `() => Promise<void>`
+
+Notifies Rsbuild that the custom server has successfully started. Rsbuild will trigger the [onAfterStartDevServer](/plugins/dev/hooks#onafterstartdevserver) hook at this stage.
+
+For example:
+
+```ts
+import express from 'express';
+import { createRsbuild } from '@rsbuild/core';
+
+const rsbuild = await createRsbuild();
+const rsbuildServer = await rsbuild.createDevServer();
+const app = express();
+
+const server = app.listen(rsbuildServer.port, async () => {
+  await rsbuildServer.afterListen();
+});
+
+rsbuildServer.connectWebSocket({ server });
+```
+
 ### connectWebSocket
 
 - **Type:**
@@ -204,7 +227,13 @@ When you use custom server, you may encounter HMR connection error problems. Thi
 At this time, you need to use the `connectWebSocket` method to enable Rsbuild to sense and process the WebSocket connection request from the browser.
 
 ```ts
+import express from 'express';
+import { createRsbuild } from '@rsbuild/core';
+
+const rsbuild = await createRsbuild();
 const rsbuildServer = await rsbuild.createDevServer();
+const app = express();
+
 const httpServer = app.listen(rsbuildServer.port);
 
 rsbuildServer.connectWebSocket({ server: httpServer });
