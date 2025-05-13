@@ -53,7 +53,7 @@ const rsbuildPlugin = () => ({
   name: 'example',
   setup(api) {
     api.modifyRspackConfig((config) => {
-      config.plugins?.push(new RspackExamplePlugin());
+      config.plugins.push(new RspackExamplePlugin());
     });
   },
 });
@@ -212,7 +212,6 @@ export const pluginUploadDist = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyRsbuildConfig((config) => {
       // try to disable minimize.
-      config.output ||= {};
       config.output.minify = false;
       // but also can be enable by other plugins...
     });
@@ -292,7 +291,7 @@ export const pluginEslint = (options?: Options): RsbuildPlugin => ({
   name: 'plugin-eslint',
   setup(api) {
     api.modifyRspackConfig((config) => {
-      config.plugins?.push(
+      config.plugins.push(
         new ESLintRspackPlugin({
           // plugins options
         }),

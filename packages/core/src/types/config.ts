@@ -45,7 +45,6 @@ import type {
 } from './thirdParty';
 import type {
   ConfigChain,
-  ConfigChainAsyncWithContext,
   ConfigChainMergeContext,
   ConfigChainWithContext,
   DeepReadonly,
@@ -77,10 +76,10 @@ export type ToolsHtmlPluginConfig = ConfigChainWithContext<
 >;
 
 // equivalent to import('webpack-merge').merge
-export type WebpackMerge = <Configuration extends object>(
-  firstConfiguration: Configuration | Configuration[],
-  ...configurations: Configuration[]
-) => Configuration;
+export type RspackMerge = (
+  firstConfiguration: Rspack.Configuration | Rspack.Configuration[],
+  ...configurations: Rspack.Configuration[]
+) => Rspack.Configuration;
 
 export type ModifyRspackConfigUtils = ModifyChainUtils & {
   addRules: (rules: RspackRule | RspackRule[]) => void;
@@ -92,12 +91,65 @@ export type ModifyRspackConfigUtils = ModifyChainUtils & {
     plugins: BundlerPluginInstance | BundlerPluginInstance[],
   ) => void;
   removePlugin: (pluginName: string) => void;
-  mergeConfig: WebpackMerge;
+  mergeConfig: RspackMerge;
 };
 
-export type ToolsRspackConfig = ConfigChainAsyncWithContext<
+/**
+ * Narrow the type of Rspack.Configuration to make it easier
+ * to use `tools.rspack` function. These properties are set
+ * by Rsbuild by default so they are non-nullable.
+ *
+ * - With `Rspack.Configuration`, the `plugins` property is nullable:
+ *
+ * ```js
+ * tools: {
+ *   rspack(config) {
+ *     if (!config.plugins) {
+ *       config.plugins = [];
+ *     }
+ *     config.plugins.push(new SomePlugin());
+ *   }
+ * }
+ * ```
+ *
+ * - With `NarrowedRspackConfig`, the `plugins` property is non-nullable:
+ *
+ * ```js
+ * tools: {
+ *   rspack(config) {
+ *     config.plugins.push(new SomePlugin());
+ *   }
+ * }
+ * ```
+ */
+export type NarrowedRspackConfig = Omit<
   Rspack.Configuration,
-  ModifyRspackConfigUtils
+  'plugins' | 'module' | 'resolve' | 'output'
+> & {
+  /**
+   * Plugins to use during compilation.
+   */
+  plugins: NonNullable<Rspack.Configuration['plugins']>;
+  /**
+   * Options for module configuration.
+   */
+  module: NonNullable<Rspack.Configuration['module']>;
+  /**
+   * Options for resolving modules.
+   */
+  resolve: NonNullable<Rspack.Configuration['resolve']>;
+  /**
+   * Configuration for the output of the compilation.
+   */
+  output: NonNullable<Rspack.Configuration['output']>;
+};
+
+export type ToolsRspackConfig = OneOrMany<
+  | Rspack.Configuration
+  | ((
+      config: NarrowedRspackConfig,
+      ctx: ModifyRspackConfigUtils,
+    ) => MaybePromise<Rspack.Configuration | void>)
 >;
 
 export type ToolsWebpackConfig = ConfigChainWithContext<

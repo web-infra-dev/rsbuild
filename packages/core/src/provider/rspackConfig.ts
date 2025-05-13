@@ -1,5 +1,8 @@
 import { rspack } from '@rspack/core';
-import { reduceConfigsAsyncWithContext } from 'reduce-configs';
+import {
+  type ConfigChainAsyncWithContext,
+  reduceConfigsAsyncWithContext,
+} from 'reduce-configs';
 import { merge } from 'webpack-merge';
 import { CHAIN_ID, modifyBundlerChain } from '../configChain';
 import { castArray, color, getNodeEnv } from '../helpers';
@@ -10,6 +13,7 @@ import type {
   InternalContext,
   ModifyChainUtils,
   ModifyRspackConfigUtils,
+  NarrowedRspackConfig,
   RsbuildTarget,
   Rspack,
 } from '../types';
@@ -41,13 +45,19 @@ async function modifyRspackConfig(
 
   [currentConfig] = await context.hooks.modifyRspackConfig.callChain({
     environment: utils.environment.name,
-    args: [rspackConfig, utils],
+    args: [rspackConfig as NarrowedRspackConfig, utils],
   });
 
   if (utils.environment.config.tools?.rspack) {
+    const toolsRspackConfig = utils.environment.config.tools
+      .rspack as ConfigChainAsyncWithContext<
+      NarrowedRspackConfig,
+      ModifyRspackConfigUtils
+    >;
+
     currentConfig = await reduceConfigsAsyncWithContext({
-      initial: currentConfig,
-      config: utils.environment.config.tools.rspack,
+      initial: currentConfig as NarrowedRspackConfig,
+      config: toolsRspackConfig,
       ctx: utils,
       mergeFn: (...args: Rspack.Configuration[]) => {
         // Update the reference of the current config

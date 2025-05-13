@@ -8,10 +8,11 @@ import type RspackChain from '../../compiled/rspack-chain';
 import type { ChainIdentifier } from '../configChain';
 import type {
   ModifyRspackConfigUtils,
+  NarrowedRspackConfig,
   NormalizedConfig,
   NormalizedEnvironmentConfig,
   RsbuildConfig,
-  WebpackMerge,
+  RspackMerge,
 } from './config';
 import type { RsbuildContext } from './context';
 import type {
@@ -135,7 +136,7 @@ export type AsyncHook<Callback extends (...args: any[]) => T, T = any> = {
 };
 
 export type ModifyRspackConfigFn = (
-  config: Rspack.Configuration,
+  config: NarrowedRspackConfig,
   utils: ModifyRspackConfigUtils,
 ) => MaybePromise<Rspack.Configuration | void>;
 
@@ -163,7 +164,7 @@ export type ModifyWebpackConfigUtils = ModifyWebpackChainUtils & {
     plugins: WebpackPluginInstance | WebpackPluginInstance[],
   ) => void;
   removePlugin: (pluginName: string) => void;
-  mergeConfig: WebpackMerge;
+  mergeConfig: RspackMerge;
 };
 
 export type ModifyWebpackChainFn = (
