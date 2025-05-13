@@ -92,19 +92,27 @@ export default {
 ### buildDependencies
 
 - **类型：** `string[]`
-- **默认值：** `undefined`
 
 `buildDependencies` 是一个包含构建依赖的文件数组，Rspack 将使用其中每个文件的哈希值来判断持久化缓存是否失效。
+
+等价于 Rspack 的 [cache.buildDependencies](https://rspack.dev/zh/config/experiments#cachebuilddependencies) 选项。
+
+#### 默认值
 
 Rsbuild 会将以下配置文件作为默认的构建依赖：
 
 - `package.json`
 - `tsconfig.json`
-- `env`, `.env.*`
+- `.env`, `.env.*`
 - `.browserslistrc`
 - `tailwindcss.config.*`
 
-在使用 Rsbuild CLI 时，它还会自动将 Rsbuild 配置文件（`rsbuild.config.*`）添加到构建依赖中。
+此外：
+
+- 在使用 Rsbuild CLI 时，它会自动将 Rsbuild 配置文件（`rsbuild.config.*`）添加到构建依赖中。
+- 在使用 Rsbuild 的 [loadConfig](/api/javascript-api/core#loadconfig) JS API 时，它会将配置文件的路径添加到构建依赖中。
+
+#### 示例
 
 当你添加其他构建依赖时，Rsbuild 会将这些自定义依赖与默认依赖合并，并传递给 Rspack。
 
