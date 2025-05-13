@@ -56,6 +56,7 @@ async function startDevServer() {
     await rsbuildServer.afterListen();
   });
 
+  // Activate WebSocket connection
   rsbuildServer.connectWebSocket({ server });
 }
 ```
@@ -199,8 +200,6 @@ const app = express();
 const server = app.listen(rsbuildServer.port, async () => {
   await rsbuildServer.afterListen();
 });
-
-rsbuildServer.connectWebSocket({ server });
 ```
 
 ### connectWebSocket
