@@ -56,6 +56,7 @@ async function startDevServer() {
     await rsbuildServer.afterListen();
   });
 
+  // 激活 WebSocket 连接
   rsbuildServer.connectWebSocket({ server });
 }
 ```
@@ -179,6 +180,27 @@ function CreateDevServer(
 ): Promise<RsbuildDevServer>;
 ```
 
+### afterListen
+
+- **类型:** `() => Promise<void>`
+
+通知 Rsbuild 自定义的开发服务器已成功启动，Rsbuild 将在这个阶段触发 [onAfterStartDevServer](/plugins/dev/hooks#onafterstartdevserver) 钩子。
+
+例如：
+
+```ts
+import express from 'express';
+import { createRsbuild } from '@rsbuild/core';
+
+const rsbuild = await createRsbuild();
+const rsbuildServer = await rsbuild.createDevServer();
+const app = express();
+
+const server = app.listen(rsbuildServer.port, async () => {
+  await rsbuildServer.afterListen();
+});
+```
+
 ### connectWebSocket
 
 - **类型:**
@@ -201,7 +223,13 @@ Rsbuild 内置了 WebSocket 处理器以支持 HMR 功能：
 当你使用自定义 server 时，可能会遇到 HMR 连接失败的问题。这是因为自定义 server 未能将 WebSocket 连接请求正确转发至 Rsbuild 的 WebSocket 处理器。此时，你需要调用 `connectWebSocket` 方法来让 Rsbuild 能够接收并处理来自浏览器的 WebSocket 连接请求。
 
 ```ts
+import express from 'express';
+import { createRsbuild } from '@rsbuild/core';
+
+const rsbuild = await createRsbuild();
 const rsbuildServer = await rsbuild.createDevServer();
+const app = express();
+
 const httpServer = app.listen(rsbuildServer.port);
 
 rsbuildServer.connectWebSocket({ server: httpServer });
