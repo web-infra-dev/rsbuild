@@ -26,7 +26,7 @@ export default {
   tools: {
     lightningcssLoader: {
       exclude: {
-        vendorPrefixes: false,
+        vendorPrefixes: true,
       },
     },
   },
@@ -42,7 +42,7 @@ export default {
   tools: {
     lightningcssLoader: (config) => {
       config.exclude = {
-        vendorPrefixes: false,
+        vendorPrefixes: true,
       };
       return config;
     },
