@@ -335,7 +335,7 @@ console.log(port); // 3000
 
 ### Close server
 
-Calling the `close()` method will close the dev server and trigger the [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) hook to perform cleanup operations.
+Calling the `close()` method to close the dev server, trigger the [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) hook and perform necessary cleanup operations.
 
 ```ts
 const { server } = await rsbuild.startDevServer();

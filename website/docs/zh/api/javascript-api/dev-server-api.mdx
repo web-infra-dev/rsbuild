@@ -201,6 +201,21 @@ const server = app.listen(rsbuildServer.port, async () => {
 });
 ```
 
+### close
+
+- **类型:** `() => Promise<void>`
+
+调用 `close()` 方法来触发 [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) 钩子，并执行必要的清理操作。
+
+```ts
+import { createRsbuild } from '@rsbuild/core';
+
+const rsbuild = await createRsbuild();
+const rsbuildServer = await rsbuild.createDevServer();
+
+await rsbuildServer.close();
+```
+
 ### connectWebSocket
 
 - **类型:**
