@@ -202,6 +202,21 @@ const server = app.listen(rsbuildServer.port, async () => {
 });
 ```
 
+### close
+
+- **Type:** `() => Promise<void>`
+
+Calling the `close()` method to trigger the [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) hook and perform necessary cleanup operations.
+
+```ts
+import { createRsbuild } from '@rsbuild/core';
+
+const rsbuild = await createRsbuild();
+const rsbuildServer = await rsbuild.createDevServer();
+
+await rsbuildServer.close();
+```
+
 ### connectWebSocket
 
 - **Type:**

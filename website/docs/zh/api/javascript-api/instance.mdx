@@ -358,7 +358,7 @@ console.log(port); // 3000
 
 ### 关闭 server
 
-调用 `close()` 方法会关闭开发服务器，并触发 [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) 钩子，执行清理操作。
+调用 `close()` 方法会关闭开发服务器，触发 [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) 钩子，并执行必要的清理操作。
 
 ```ts
 const { server } = await rsbuild.startDevServer();
