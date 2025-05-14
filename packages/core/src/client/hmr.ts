@@ -109,6 +109,25 @@ function handleErrors({ text, html }: { text: string[]; html: string }) {
 // It's a global variable injected by Rspack.
 const isUpdateAvailable = () => lastCompilationHash !== WEBPACK_HASH;
 
+const handleApplyUpdates = (
+  err: unknown,
+  updatedModules: (string | number)[] | null,
+) => {
+  const forcedReload = err || !updatedModules;
+  if (forcedReload) {
+    if (err) {
+      console.error('[HMR] Forced reload caused by: ', err);
+    }
+    reloadPage();
+    return;
+  }
+
+  if (isUpdateAvailable()) {
+    // While we were updating, there was a new update! Do it again.
+    tryApplyUpdates();
+  }
+};
+
 // Attempt to update code on the fly, fall back to a hard reload.
 function tryApplyUpdates() {
   // detect is there a newer version of this code available
@@ -116,41 +135,23 @@ function tryApplyUpdates() {
     return;
   }
 
-  if (!import.meta.webpackHot) {
-    // HotModuleReplacementPlugin is not in Rspack configuration.
-    reloadPage();
-    return;
-  }
-
-  // Rspack disallows updates in other states.
-  if (import.meta.webpackHot.status() !== 'idle') {
-    return;
-  }
-
-  const handleApplyUpdates = (
-    err: unknown,
-    updatedModules: (string | number)[] | null,
-  ) => {
-    const forcedReload = err || !updatedModules;
-    if (forcedReload) {
-      if (err) {
-        console.error('[HMR] Forced reload caused by: ', err);
-      }
-      reloadPage();
+  if (import.meta.webpackHot) {
+    // Rspack disallows updates in other states.
+    if (import.meta.webpackHot.status() !== 'idle') {
       return;
     }
 
-    if (isUpdateAvailable()) {
-      // While we were updating, there was a new update! Do it again.
-      tryApplyUpdates();
-    }
-  };
+    // https://rspack.dev/api/runtime-api/module-variables#importmetawebpackhot
+    import.meta.webpackHot.check(true).then(
+      (updatedModules) => handleApplyUpdates(null, updatedModules),
+      (err) => handleApplyUpdates(err, null),
+    );
+    return;
+  }
 
-  // https://rspack.dev/api/runtime-api/module-variables#importmetawebpackhot
-  import.meta.webpackHot.check(true).then(
-    (updatedModules) => handleApplyUpdates(null, updatedModules),
-    (err) => handleApplyUpdates(err, null),
-  );
+  // HotModuleReplacementPlugin is not registered in Rspack configuration
+  // fallback to reload page
+  reloadPage();
 }
 
 let connection: WebSocket | null = null;
