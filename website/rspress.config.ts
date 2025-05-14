@@ -15,6 +15,7 @@ import { defineConfig } from 'rspress/config';
 import { rsbuildPluginOverview } from './theme/rsbuildPluginOverview';
 
 const siteUrl = 'https://rsbuild.dev';
+const description = 'The Rspack-based build tool';
 
 export default defineConfig({
   plugins: [
@@ -167,7 +168,7 @@ export default defineConfig({
       {
         lang: 'en',
         label: 'English',
-        description: 'The Rspack-based build tool for the web',
+        description,
         editLink: {
           docRepoBaseUrl:
             'https://github.com/web-infra-dev/rsbuild/tree/main/website/docs',
@@ -201,9 +202,6 @@ export default defineConfig({
     },
   ],
   builderConfig: {
-    dev: {
-      lazyCompilation: true,
-    },
     plugins: [
       rsbuildPluginOverview,
       pluginSass(),
@@ -212,7 +210,7 @@ export default defineConfig({
         title: 'Rsbuild',
         type: 'website',
         url: siteUrl,
-        description: 'The Rspack-based build tool',
+        description,
         twitter: {
           site: '@rspack_dev',
           card: 'summary_large_image',
