@@ -94,7 +94,6 @@ async function getBuildDependencies(
     buildDependencies.browserslistrc = [browserslistConfig];
   }
 
-  console.time('find tailwind config');
   const tailwindExts = ['ts', 'js', 'cjs', 'mjs'];
   const configs = tailwindExts.map((ext) =>
     join(context.rootPath, `tailwind.config.${ext}`),
@@ -104,7 +103,6 @@ async function getBuildDependencies(
   if (tailwindConfig) {
     buildDependencies.tailwindcss = [tailwindConfig];
   }
-  console.timeEnd('find tailwind config');
 
   return {
     ...buildDependencies,
