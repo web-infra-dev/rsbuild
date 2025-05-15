@@ -45,10 +45,9 @@ async function validateWebpackCache(
   await fs.promises.writeFile(configFile, JSON.stringify(buildDependencies));
 }
 
-function getDigestHash(digest: Array<string | undefined>) {
-  const fsHash = crypto.createHash('md5');
-  const md5 = fsHash.update(JSON.stringify(digest)).digest('hex').slice(0, 8);
-  return md5;
+function hash(digest: Array<string | undefined>) {
+  const hasher = crypto.createHash('sha256');
+  return hasher.update(JSON.stringify(digest)).digest('hex').slice(0, 16);
 }
 
 function getCacheDirectory(
@@ -95,6 +94,7 @@ async function getBuildDependencies(
     buildDependencies.browserslistrc = [browserslistConfig];
   }
 
+  console.time('find tailwind config');
   const tailwindExts = ['ts', 'js', 'cjs', 'mjs'];
   const configs = tailwindExts.map((ext) =>
     join(context.rootPath, `tailwind.config.${ext}`),
@@ -104,6 +104,7 @@ async function getBuildDependencies(
   if (tailwindConfig) {
     buildDependencies.tailwindcss = [tailwindConfig];
   }
+  console.timeEnd('find tailwind config');
 
   return {
     ...buildDependencies,
@@ -156,7 +157,7 @@ export const pluginCache = (): RsbuildPlugin => ({
 
       // set cache name to avoid cache conflicts between different environments
       const cacheVersion = useDigest
-        ? `${environment.name}-${env}-${getDigestHash(cacheConfig.cacheDigest!)}`
+        ? `${environment.name}-${env}-${hash(cacheConfig.cacheDigest!)}`
         : `${environment.name}-${env}`;
 
       if (bundlerType === 'rspack') {
