@@ -102,6 +102,7 @@ rsfamily
 rslib
 rslog
 rspack
+rspeedy
 rspress
 rstack
 rstest

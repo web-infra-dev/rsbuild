@@ -55,7 +55,7 @@ type CachePath = string;
 The name of the framework or tool that is currently invoking Rsbuild, same as the [callerName](/api/javascript-api/core#specify-caller-name) option in the [createRsbuild](/api/javascript-api/core#creatersbuild) method.
 
 - **Type:** `string`
-- **Default:** `rsbuild`
+- **Default:** `'rsbuild'`
 - **Example:**
 
 ```ts title="myPlugin.ts"
@@ -72,6 +72,14 @@ export const myPlugin = {
   },
 };
 ```
+
+Here are some tools based on Rsbuild that have already set the `callerName` value:
+
+| Name                                                | callerName  |
+| --------------------------------------------------- | ----------- |
+| [Rslib](https://github.com/web-infra-dev/rslib)     | `'rslib'`   |
+| [Rspress](https://github.com/web-infra-dev/rspress) | `'rspress'` |
+| [Rspeedy](https://lynxjs.org/rspeedy)               | `'rspeedy'` |
 
 ### context.devServer
 

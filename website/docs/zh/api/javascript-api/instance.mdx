@@ -55,7 +55,7 @@ type CachePath = string;
 当前调用 Rsbuild 的框架或工具的名称，与 [createRsbuild](/api/javascript-api/core#creatersbuild) 方法中的 [callerName](/api/javascript-api/core#指定调用者名称) 选项相同。
 
 - **类型：** `string`
-- **默认值：** `rsbuild`
+- **默认值：** `'rsbuild'`
 - **示例：**
 
 ```ts title="myPlugin.ts"
@@ -72,6 +72,14 @@ export const myPlugin = {
   },
 };
 ```
+
+一些基于 Rsbuild 的工具已经设置了 `callerName` 的值：
+
+| 名称                                                | callerName  |
+| --------------------------------------------------- | ----------- |
+| [Rslib](https://github.com/web-infra-dev/rslib)     | `'rslib'`   |
+| [Rspress](https://github.com/web-infra-dev/rspress) | `'rspress'` |
+| [Rspeedy](https://lynxjs.org/rspeedy)               | `'rspeedy'` |
 
 ### context.devServer
 

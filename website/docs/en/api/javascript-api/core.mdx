@@ -41,7 +41,7 @@ type CreateRsbuildOptions = {
 ```
 
 - `cwd`: The root path of the current build, defaults to `process.cwd()`.
-- `callerName`: The name of the framework or tool that is currently invoking Rsbuild, defaults to `rsbuild`, see [Specify caller name](#specify-caller-name).
+- `callerName`: The name of the framework or tool that is currently invoking Rsbuild, defaults to `'rsbuild'`, see [Specify caller name](#specify-caller-name).
 - `environment`: Only build specified [environments](/guide/advanced/environments). If not specified or passing an empty array, all environments will be built.
 - `loadEnv`：Whether to call the [loadEnv](/api/javascript-api/core#loadenv) method to load env variables and define them as global variables via [source.define](/config/source/define).
 - `rsbuildConfig`: Rsbuild configuration object. Refer to [Configuration Overview](/config/) for all available configuration options.
