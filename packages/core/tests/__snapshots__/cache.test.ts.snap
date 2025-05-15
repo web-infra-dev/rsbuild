@@ -37,7 +37,7 @@ exports[`plugin-cache > 'should apply cacheDigest' 1`] = `
         "type": "filesystem",
       },
       "type": "persistent",
-      "version": "web-test-c29a5747",
+      "version": "web-test-fa1844c2988ad15a",
     },
   },
   "plugins": [
