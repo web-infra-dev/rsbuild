@@ -1,3 +1,4 @@
+import crypto from 'node:crypto';
 import { posix } from 'node:path';
 import { URL } from 'node:url';
 import deepmerge from 'deepmerge';
@@ -356,3 +357,13 @@ export const addCompilationError = (
     new compilation.compiler.webpack.WebpackError(message),
   );
 };
+
+export function hash(data: string): string {
+  // Available in Node.js v20.12.0
+  // faster than `crypto.createHash()` when hashing a smaller amount of data (<= 5MB)
+  if (crypto.hash) {
+    return crypto.hash('sha256', data, 'hex').slice(0, 16);
+  }
+  const hasher = crypto.createHash('sha256');
+  return hasher.update(data).digest('hex').slice(0, 16);
+}

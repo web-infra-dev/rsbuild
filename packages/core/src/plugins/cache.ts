@@ -1,7 +1,6 @@
-import crypto from 'node:crypto';
 import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
-import { color, findExists, isFileExists } from '../helpers';
+import { color, findExists, hash, isFileExists } from '../helpers';
 import { logger } from '../logger';
 import type {
   BuildCacheOptions,
@@ -43,11 +42,6 @@ async function validateWebpackCache(
 
   await fs.promises.mkdir(cacheDirectory, { recursive: true });
   await fs.promises.writeFile(configFile, JSON.stringify(buildDependencies));
-}
-
-function hash(digest: Array<string | undefined>) {
-  const hasher = crypto.createHash('sha256');
-  return hasher.update(JSON.stringify(digest)).digest('hex').slice(0, 16);
 }
 
 function getCacheDirectory(
@@ -155,7 +149,7 @@ export const pluginCache = (): RsbuildPlugin => ({
 
       // set cache name to avoid cache conflicts between different environments
       const cacheVersion = useDigest
-        ? `${environment.name}-${env}-${hash(cacheConfig.cacheDigest!)}`
+        ? `${environment.name}-${env}-${hash(JSON.stringify(cacheConfig.cacheDigest))}`
         : `${environment.name}-${env}`;
 
       if (bundlerType === 'rspack') {
