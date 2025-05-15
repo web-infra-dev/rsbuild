@@ -358,7 +358,7 @@ export const addCompilationError = (
   );
 };
 
-export function hash(data: string) {
+export function hash(data: string): string {
   // Available in Node.js v20.12.0
   // faster than `crypto.createHash()` when hashing a smaller amount of data (<= 5MB)
   if (crypto.hash) {
