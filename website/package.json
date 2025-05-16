@@ -14,7 +14,7 @@
     "@rspress/plugin-client-redirects": "2.0.0-beta.5",
     "@rspress/plugin-rss": "2.0.0-beta.5",
     "@rspress/plugin-shiki": "2.0.0-beta.5",
-    "@rstack-dev/doc-ui": "1.8.0",
+    "@rstack-dev/doc-ui": "1.10.0",
     "@shikijs/transformers": "^3.4.0",
     "@types/node": "^22.15.17",
     "@types/react": "^19.1.3",
