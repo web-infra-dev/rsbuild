@@ -2,7 +2,7 @@
   margin-top: 64px;
 
   h2 {
-    font-size: 23px;
+    font-size: 21px;
     font-weight: 600;
     line-height: 1;
     margin: 0 0 20px;
@@ -36,7 +36,7 @@
   margin-bottom: 28px;
   background-color: var(--rp-c-bg-soft);
   border-radius: 12px;
-  padding: 28px 32px;
+  padding: 24px 28px;
   transition: background-color 0.5s;
 }
 
@@ -49,13 +49,11 @@
 @media (min-width: 768px) {
   .root {
     columns: 2;
-    min-width: 648px;
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1300px) {
   .root {
     columns: 3;
-    min-width: 904px;
   }
 }
