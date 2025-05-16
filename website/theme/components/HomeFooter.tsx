@@ -71,6 +71,10 @@ function useFooterData() {
           title: 'Rslib',
           link: 'https://lib.rsbuild.dev/',
         },
+        {
+          title: 'Rstest',
+          link: 'https://github.com/web-infra-dev/rstest',
+        },
       ],
     },
     {
@@ -87,6 +91,10 @@ function useFooterData() {
         {
           title: 'Twitter (X)',
           link: 'https://twitter.com/rspack_dev',
+        },
+        {
+          title: 'Bluesky',
+          link: 'https://bsky.app/profile/rspack.dev',
         },
         {
           title: 'Awesome Rspack',
