@@ -98,10 +98,7 @@ export async function updateEnvironmentContext(
   context.environments ||= {};
 
   for (const [index, [name, config]] of Object.entries(configs).entries()) {
-    const tsconfigPath = config.source.tsconfigPath
-      ? getAbsolutePath(context.rootPath, config.source.tsconfigPath)
-      : undefined;
-
+    const { tsconfigPath } = config.source;
     const browserslist = await getBrowserslistByEnvironment(
       context.rootPath,
       config,
