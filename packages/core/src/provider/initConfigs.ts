@@ -4,7 +4,7 @@ import {
   updateContextByNormalizedConfig,
   updateEnvironmentContext,
 } from '../createContext';
-import { camelCase, color, getAbsolutePath, pick } from '../helpers';
+import { camelCase, color, ensureAbsolutePath, pick } from '../helpers';
 import { isDebug, logger } from '../logger';
 import { mergeRsbuildConfig } from '../mergeConfig';
 import { initPlugins } from '../pluginManager';
@@ -229,7 +229,7 @@ export async function initRsbuildConfig({
 
     // Ensure the `tsconfigPath` is an absolute path
     if (tsconfigPath) {
-      normalizedEnvironmentConfig.source.tsconfigPath = getAbsolutePath(
+      normalizedEnvironmentConfig.source.tsconfigPath = ensureAbsolutePath(
         context.rootPath,
         tsconfigPath,
       );

@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { loadConfig as baseLoadConfig } from '../config';
 import { createRsbuild } from '../createRsbuild';
-import { castArray, getAbsolutePath } from '../helpers';
+import { castArray, ensureAbsolutePath } from '../helpers';
 import { logger } from '../logger';
 import { watchFilesForRestart } from '../restart';
 import type { RsbuildInstance } from '../types';
@@ -86,7 +86,9 @@ export async function init({
 
   try {
     const cwd = process.cwd();
-    const root = commonOpts.root ? getAbsolutePath(cwd, commonOpts.root) : cwd;
+    const root = commonOpts.root
+      ? ensureAbsolutePath(cwd, commonOpts.root)
+      : cwd;
 
     const rsbuild = await createRsbuild({
       cwd: root,

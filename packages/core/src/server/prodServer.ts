@@ -1,7 +1,7 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
 import type Connect from '../../compiled/connect/index.js';
-import { pathnameParse } from '../helpers/path';
+import { getPathnameFromUrl } from '../helpers/path';
 import { logger } from '../logger';
 import type {
   InternalContext,
@@ -193,7 +193,7 @@ export async function startProdServer(
       output: {
         path: context.distPath,
         assetPrefixes: Object.values(context.environments).map((e) =>
-          pathnameParse(e.config.output.assetPrefix),
+          getPathnameFromUrl(e.config.output.assetPrefix),
         ),
       },
       serverConfig,

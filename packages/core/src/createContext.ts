@@ -2,7 +2,7 @@ import { join } from 'node:path';
 import { loadConfig } from 'browserslist-load-config';
 import { withDefaultConfig } from './config';
 import { DEFAULT_BROWSERSLIST, ROOT_DIST_DIR } from './constants';
-import { getAbsolutePath, getCommonParentPath } from './helpers/path';
+import { ensureAbsolutePath, getCommonParentPath } from './helpers/path';
 import { initHooks } from './hooks';
 import { getHTMLPathByEntry } from './initPlugins';
 import { logger } from './logger';
@@ -22,7 +22,7 @@ function getAbsoluteDistPath(
   config: RsbuildConfig | NormalizedConfig | NormalizedEnvironmentConfig,
 ) {
   const dirRoot = config.output?.distPath?.root ?? ROOT_DIST_DIR;
-  return getAbsolutePath(cwd, dirRoot);
+  return ensureAbsolutePath(cwd, dirRoot);
 }
 
 // using cache to avoid multiple calls to loadConfig
@@ -188,7 +188,7 @@ export async function createContext(
 ): Promise<InternalContext> {
   const { cwd } = options;
   const rootPath = userConfig.root
-    ? getAbsolutePath(cwd, userConfig.root)
+    ? ensureAbsolutePath(cwd, userConfig.root)
     : cwd;
   const rsbuildConfig = await withDefaultConfig(rootPath, userConfig);
   const cachePath = join(rootPath, 'node_modules', '.cache');
