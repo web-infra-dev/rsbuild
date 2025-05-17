@@ -1,5 +1,5 @@
 import { rspack } from '@rspack/core';
-import { stringifyConfig } from '../src/config';
+import { stringifyConfig } from '../src/inspectConfig';
 
 describe('stringifyConfig', () => {
   it('should stringify Rspack config correctly', async () => {

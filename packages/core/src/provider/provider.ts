@@ -1,9 +1,9 @@
+import { inspectConfig } from '../inspectConfig';
 import { createDevServer } from '../server/devServer';
 import type { CreateCompiler, RsbuildProvider } from '../types';
 import { build } from './build';
 import { createCompiler as baseCreateCompiler } from './createCompiler';
 import { initConfigs, initRsbuildConfig } from './initConfigs';
-import { inspectConfig } from './inspectConfig';
 
 export const rspackProvider: RsbuildProvider = async ({
   context,
@@ -60,11 +60,20 @@ export const rspackProvider: RsbuildProvider = async ({
     },
 
     async inspectConfig(inspectOptions) {
+      const bundlerConfigs = (
+        await initConfigs({
+          context,
+          pluginManager,
+          rsbuildOptions,
+        })
+      ).rspackConfigs;
+
       return inspectConfig({
         context,
         pluginManager,
         rsbuildOptions,
         inspectOptions,
+        bundlerConfigs,
       });
     },
   };

@@ -98,13 +98,12 @@ export async function updateEnvironmentContext(
   context.environments ||= {};
 
   for (const [index, [name, config]] of Object.entries(configs).entries()) {
-    const { tsconfigPath } = config.source;
     const browserslist = await getBrowserslistByEnvironment(
       context.rootPath,
       config,
     );
 
-    const entry = config.source.entry ?? {};
+    const { entry = {}, tsconfigPath } = config.source;
     const htmlPaths = getEnvironmentHTMLPaths(entry, config);
 
     const environmentContext: EnvironmentContext = {

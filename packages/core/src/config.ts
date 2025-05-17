@@ -2,7 +2,6 @@ import fs from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, isAbsolute, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import RspackChain from '../compiled/rspack-chain';
 import {
   ASSETS_DIST_DIR,
   CSS_DIST_DIR,
@@ -28,16 +27,12 @@ import {
   getNodeEnv,
   isFileExists,
   isObject,
-  upperFirst,
 } from './helpers';
 import { logger } from './logger';
 import { mergeRsbuildConfig } from './mergeConfig';
 import type {
-  InspectConfigOptions,
-  InspectConfigResult,
   NormalizedConfig,
   NormalizedDevConfig,
-  NormalizedEnvironmentConfig,
   NormalizedHtmlConfig,
   NormalizedOutputConfig,
   NormalizedPerformanceConfig,
@@ -46,13 +41,11 @@ import type {
   NormalizedServerConfig,
   NormalizedSourceConfig,
   NormalizedToolsConfig,
-  PluginManager,
   PublicDir,
   PublicDirOptions,
   RsbuildConfig,
   RsbuildEntry,
   RsbuildMode,
-  RsbuildPlugin,
 } from './types';
 
 const require = createRequire(import.meta.url);
@@ -530,160 +523,6 @@ export async function loadConfig({
     content: applyMetaInfo(configExport),
     filePath: configFilePath,
   };
-}
-
-const normalizePluginObject = (plugin: RsbuildPlugin): RsbuildPlugin => {
-  const { setup: _, ...rest } = plugin;
-  return {
-    ...rest,
-    // use empty `setup` function as it's not meaningful in inspect config
-    setup() {},
-  };
-};
-
-export const getRsbuildInspectConfig = ({
-  normalizedConfig,
-  inspectOptions,
-  pluginManager,
-}: {
-  normalizedConfig: NormalizedConfig;
-  inspectOptions: InspectConfigOptions;
-  pluginManager: PluginManager;
-}): {
-  rawRsbuildConfig: string;
-  rsbuildConfig: InspectConfigResult['origin']['rsbuildConfig'];
-  rawEnvironmentConfigs: Array<{
-    name: string;
-    content: string;
-  }>;
-  environmentConfigs: InspectConfigResult['origin']['environmentConfigs'];
-} => {
-  const { environments, ...rsbuildConfig } = normalizedConfig;
-
-  const debugConfig: Omit<NormalizedConfig, 'environments'> = {
-    ...rsbuildConfig,
-    plugins: pluginManager.getPlugins().map(normalizePluginObject),
-  };
-
-  const rawRsbuildConfig = stringifyConfig(debugConfig, inspectOptions.verbose);
-  const environmentConfigs: Record<string, NormalizedEnvironmentConfig> = {};
-
-  const rawEnvironmentConfigs: Array<{
-    name: string;
-    content: string;
-  }> = [];
-
-  for (const [name, config] of Object.entries(environments)) {
-    const debugConfig = {
-      ...config,
-      plugins: pluginManager
-        .getPlugins({ environment: name })
-        .map(normalizePluginObject),
-    };
-    rawEnvironmentConfigs.push({
-      name,
-      content: stringifyConfig(debugConfig, inspectOptions.verbose),
-    });
-    environmentConfigs[name] = debugConfig;
-  }
-
-  return {
-    rsbuildConfig,
-    rawRsbuildConfig,
-    environmentConfigs: environments,
-    rawEnvironmentConfigs,
-  };
-};
-
-export async function outputInspectConfigFiles({
-  rawBundlerConfigs,
-  rawEnvironmentConfigs,
-  inspectOptions,
-  configType,
-}: {
-  configType: string;
-  rawEnvironmentConfigs: Array<{
-    name: string;
-    content: string;
-  }>;
-  rawBundlerConfigs: Array<{
-    name: string;
-    content: string;
-  }>;
-  inspectOptions: InspectConfigOptions & {
-    outputPath: string;
-  };
-}): Promise<void> {
-  const { outputPath } = inspectOptions;
-
-  const files = [
-    ...rawEnvironmentConfigs.map(({ name, content }) => {
-      if (rawEnvironmentConfigs.length === 1) {
-        const outputFile = 'rsbuild.config.mjs';
-        const outputFilePath = join(outputPath, outputFile);
-
-        return {
-          path: outputFilePath,
-          label: 'Rsbuild config',
-          content,
-        };
-      }
-      const outputFile = `rsbuild.config.${name}.mjs`;
-      const outputFilePath = join(outputPath, outputFile);
-
-      return {
-        path: outputFilePath,
-        label: `Rsbuild config (${name})`,
-        content,
-      };
-    }),
-    ...rawBundlerConfigs.map(({ name, content }) => {
-      const outputFile = `${configType}.config.${name}.mjs`;
-      let outputFilePath = join(outputPath, outputFile);
-
-      // if filename is conflict, add a random id to the filename.
-      if (fs.existsSync(outputFilePath)) {
-        outputFilePath = outputFilePath.replace(/\.mjs$/, `.${Date.now()}.mjs`);
-      }
-
-      return {
-        path: outputFilePath,
-        label: `${upperFirst(configType)} Config (${name})`,
-        content,
-      };
-    }),
-  ];
-
-  await fs.promises.mkdir(outputPath, { recursive: true });
-
-  await Promise.all(
-    files.map(async (item) => {
-      return fs.promises.writeFile(item.path, `export default ${item.content}`);
-    }),
-  );
-
-  const fileInfos = files
-    .map(
-      (item) =>
-        `  - ${color.bold(color.yellow(item.label))}: ${color.underline(
-          item.path,
-        )}`,
-    )
-    .join('\n');
-
-  logger.success(
-    `config inspection completed, generated files: \n\n${fileInfos}\n`,
-  );
-}
-
-export function stringifyConfig(config: unknown, verbose?: boolean): string {
-  // webpackChain.toString can be used as a common stringify method
-  const stringify = RspackChain.toString as (
-    config: unknown,
-    options: { verbose?: boolean },
-  ) => string;
-
-  return stringify(config, { verbose });
 }
 
 export const normalizePublicDirs = (

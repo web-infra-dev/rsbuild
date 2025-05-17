@@ -4,11 +4,7 @@
 
 export { setCssExtractPlugin, setHTMLPlugin } from '../pluginHelper';
 export { initRsbuildConfig } from './initConfigs';
-export {
-  stringifyConfig,
-  getRsbuildInspectConfig,
-  outputInspectConfigFiles,
-} from '../config';
+export { inspectConfig } from '../inspectConfig';
 export { getHTMLPlugin } from '../pluginHelper';
 export { formatStats, getStatsOptions, prettyTime } from '../helpers';
 export { registerBuildHook, registerDevHook } from '../hooks';

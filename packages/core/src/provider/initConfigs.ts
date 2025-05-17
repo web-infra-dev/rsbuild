@@ -5,6 +5,7 @@ import {
   updateEnvironmentContext,
 } from '../createContext';
 import { camelCase, color, ensureAbsolutePath, pick } from '../helpers';
+import { inspectConfig } from '../inspectConfig';
 import { isDebug, logger } from '../logger';
 import { mergeRsbuildConfig } from '../mergeConfig';
 import { initPlugins } from '../pluginManager';
@@ -20,7 +21,6 @@ import type {
   RsbuildEntry,
   Rspack,
 } from '../types';
-import { inspectConfig } from './inspectConfig';
 import { generateRspackConfig } from './rspackConfig';
 
 async function modifyRsbuildConfig(context: InternalContext) {

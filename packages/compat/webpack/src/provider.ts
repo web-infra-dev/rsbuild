@@ -2,7 +2,6 @@ import type { CreateCompiler, RsbuildProvider } from '@rsbuild/core';
 import { build } from './build.js';
 import { createCompiler as baseCreateCompiler } from './createCompiler.js';
 import { initConfigs } from './initConfigs.js';
-import { inspectConfig } from './inspectConfig.js';
 import { pluginAdaptor } from './plugin.js';
 
 export const webpackProvider: RsbuildProvider<'webpack'> = async ({
@@ -88,12 +87,22 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
     },
 
     async inspectConfig(inspectOptions) {
-      return await inspectConfig({
+      const bundlerConfigs = (
+        await initConfigs({
+          context,
+          pluginManager,
+          rsbuildOptions,
+          helpers,
+        })
+      ).webpackConfigs;
+
+      return await helpers.inspectConfig<'webpack'>({
         context,
         pluginManager,
+        bundler: 'webpack',
+        bundlerConfigs,
         rsbuildOptions,
         inspectOptions,
-        helpers,
       });
     },
   };
