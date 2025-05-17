@@ -1,11 +1,7 @@
-import { isAbsolute, join, relative, resolve, sep } from 'node:path';
+import { isAbsolute, join, relative, sep } from 'node:path';
 import { COMPILED_PATH } from '../constants';
 
-export function getAbsolutePath(base: string, filepath: string): string {
-  return isAbsolute(filepath) ? filepath : join(base, filepath);
-}
-
-export function getRelativePath(base: string, filepath: string): string {
+export function toRelativePath(base: string, filepath: string): string {
   const relativePath = relative(base, filepath);
 
   if (relativePath === '') {
@@ -48,9 +44,9 @@ export const getCompiledPath = (packageName: string): string =>
  * @returns Resolved absolute file path.
  */
 export const ensureAbsolutePath = (base: string, filePath: string): string =>
-  isAbsolute(filePath) ? filePath : resolve(base, filePath);
+  isAbsolute(filePath) ? filePath : join(base, filePath);
 
-export const pathnameParse = (publicPath: string): string => {
+export const getPathnameFromUrl = (publicPath: string): string => {
   try {
     return publicPath ? new URL(publicPath).pathname : publicPath;
   } catch (err) {

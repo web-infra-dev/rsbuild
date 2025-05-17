@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { getRelativePath } from '../helpers';
+import { toRelativePath } from '../helpers';
 import { ansiHTML } from './ansiHTML';
 import { escapeHtml } from './helper';
 
@@ -31,7 +31,7 @@ export function convertLinksInHtml(text: string, root?: string): string {
       const absolutePath =
         root && !isAbsolute ? path.join(root, filePath) : filePath;
       const relativePath =
-        root && isAbsolute ? getRelativePath(root, filePath) : filePath;
+        root && isAbsolute ? toRelativePath(root, filePath) : filePath;
 
       return `<a class="file-link" data-file="${absolutePath}">${relativePath}</a>${suffix}`;
     });
