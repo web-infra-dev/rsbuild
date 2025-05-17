@@ -4,7 +4,30 @@
 
 ## rsbuild.context
 
-`rsbuild.context` 是一个只读对象，提供一些上下文信息。
+`context` 是一个只读对象，提供一些上下文信息，能够通过两种方式访问：
+
+1. 通过 Rsbuild 实例的 `context` 属性访问：
+
+```ts
+import { createRsbuild } from '@rsbuild/core';
+
+const rsbuild = createRsbuild({
+  // ...
+});
+
+console.log(rsbuild.context);
+```
+
+2. 通过 Rsbuild 插件的 [api.context](/plugins/dev/core#apicontext) 访问：
+
+```ts
+export const myPlugin = {
+  name: 'my-plugin',
+  setup(api) {
+    console.log(api.context);
+  },
+};
+```
 
 ### context.version
 
