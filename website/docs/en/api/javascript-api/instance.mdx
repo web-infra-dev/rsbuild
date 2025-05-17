@@ -4,7 +4,30 @@ This section describes all the properties and methods on the Rsbuild instance ob
 
 ## rsbuild.context
 
-`rsbuild.context` is a read-only object that provides some context information.
+`rsbuild.context` is a read-only object that provides some context information, which can be accessed in two ways:
+
+1. Access through the `context` property of the Rsbuild instance:
+
+```ts
+import { createRsbuild } from '@rsbuild/core';
+
+const rsbuild = createRsbuild({
+  // ...
+});
+
+console.log(rsbuild.context);
+```
+
+2. Access through the [api.context](/plugins/dev/core#apicontext) of the Rsbuild plugin:
+
+```ts
+export const myPlugin = {
+  name: 'my-plugin',
+  setup(api) {
+    console.log(api.context);
+  },
+};
+```
 
 ### context.version
 
