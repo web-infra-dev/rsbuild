@@ -4,7 +4,7 @@ import {
   updateContextByNormalizedConfig,
   updateEnvironmentContext,
 } from '../createContext';
-import { camelCase, color, pick } from '../helpers';
+import { camelCase, color, getAbsolutePath, pick } from '../helpers';
 import { isDebug, logger } from '../logger';
 import { mergeRsbuildConfig } from '../mergeConfig';
 import { initPlugins } from '../pluginManager';
@@ -160,6 +160,15 @@ const validateRsbuildConfig = (config: NormalizedConfig) => {
   }
 };
 
+/**
+ * Initialize the Rsbuild config
+ * 1. Initialize the Rsbuild plugins
+ * 2. Run all the `modifyRsbuildConfig` hooks
+ * 3. Normalize the Rsbuild config, merge with the default config
+ * 4. Initialize the configs for each environment
+ * 5. Run all the `modifyEnvironmentConfig` hooks
+ * 6. Validate the final Rsbuild config
+ */
 export async function initRsbuildConfig({
   context,
   pluginManager,
@@ -207,7 +216,7 @@ export async function initRsbuildConfig({
       name,
     );
 
-    environments[name] = {
+    const normalizedEnvironmentConfig = {
       ...environmentConfig,
       dev: {
         ...environmentConfig.dev,
@@ -215,6 +224,18 @@ export async function initRsbuildConfig({
       },
       server,
     };
+
+    const { tsconfigPath } = normalizedEnvironmentConfig.source;
+
+    // Ensure the `tsconfigPath` is an absolute path
+    if (tsconfigPath) {
+      normalizedEnvironmentConfig.source.tsconfigPath = getAbsolutePath(
+        context.rootPath,
+        tsconfigPath,
+      );
+    }
+
+    environments[name] = normalizedEnvironmentConfig;
   }
 
   context.normalizedConfig = {
