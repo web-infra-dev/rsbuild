@@ -79,6 +79,11 @@ const compareSemver = (version1: string, version2: string) => {
   return 0;
 };
 
+/**
+ * If the application overrides the Rspack version to a lower one,
+ * we should check that the Rspack version is greater than the minimum
+ * supported version.
+ */
 export const isSatisfyRspackVersion = async (
   originalVersion: string,
 ): Promise<boolean> => {
