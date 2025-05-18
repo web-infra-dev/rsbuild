@@ -19,7 +19,8 @@ export * from './stats';
 
 export { color };
 
-export const rspackMinVersion = '1.0.0';
+// `SubresourceIntegrityPlugin` added in Rspack v1.2.4
+export const rspackMinVersion = '1.2.4';
 
 export const getNodeEnv = () => process.env.NODE_ENV as string;
 export const setNodeEnv = (env: string): void => {
