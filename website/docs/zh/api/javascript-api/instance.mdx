@@ -106,7 +106,7 @@ export const myPlugin = {
 
 ### context.devServer
 
-Dev server 相关信息，包含了当前 dev server 的 hostname 和端口号。
+在开发模式下运行时的 dev server 信息。仅在 dev server 创建后可访问。
 
 - **类型：**
 
@@ -114,7 +114,23 @@ Dev server 相关信息，包含了当前 dev server 的 hostname 和端口号�
 type DevServer = {
   hostname: string;
   port: number;
+  https: boolean;
 };
+```
+
+- **示例：**
+
+```ts
+import { createRsbuild } from '@rsbuild/core';
+
+async function main() {
+  const rsbuild = createRsbuild({
+    // ...
+  });
+  await rsbuild.startDevServer();
+
+  console.log(rsbuild.context.devServer); // { hostname: 'localhost', port: 3000, https: false }
+}
 ```
 
 ### context.action

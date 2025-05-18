@@ -106,7 +106,7 @@ Here are some tools based on Rsbuild that have already set the `callerName` valu
 
 ### context.devServer
 
-Dev server information, including the current dev server hostname and port number.
+Dev server information when running in dev mode. Available after the dev server has been created.
 
 - **Type:**
 
@@ -114,7 +114,23 @@ Dev server information, including the current dev server hostname and port numbe
 type DevServer = {
   hostname: string;
   port: number;
+  https: boolean;
 };
+```
+
+- **Example:**
+
+```ts
+import { createRsbuild } from '@rsbuild/core';
+
+async function main() {
+  const rsbuild = createRsbuild({
+    // ...
+  });
+  await rsbuild.startDevServer();
+
+  console.log(rsbuild.context.devServer); // { hostname: 'localhost', port: 3000, https: false }
+}
 ```
 
 ### context.action

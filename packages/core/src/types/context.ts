@@ -15,10 +15,29 @@ export type RsbuildContext = {
   distPath: string;
   /** Absolute path of cache files. */
   cachePath: string;
-  /** Info of dev server  */
+  /**
+   * Dev server information when running in dev mode.
+   * Available after the dev server has been created.
+   *
+   * @example
+   * ```ts
+   * import { createRsbuild } from '@rsbuild/core';
+   *
+   * async function main() {
+   *   const rsbuild = createRsbuild({
+   *     // ...
+   *   });
+   *   await rsbuild.startDevServer();
+   *   console.log(rsbuild.context.devServer); // { hostname: 'localhost', port: 3000, https: false }
+   * }
+   * ```
+   */
   devServer?: {
+    /** The hostname the server is running on. */
     hostname: string;
+    /** The port number the server is listening on. */
     port: number;
+    /** Whether the server is using HTTPS protocol. */
     https: boolean;
   };
   /**
