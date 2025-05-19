@@ -6,7 +6,7 @@ describe('rspack version', () => {
 
     expect(await isSatisfyRspackVersion(rspackMinVersion)).toBeTruthy();
 
-    expect(await isSatisfyRspackVersion('1.0.0')).toBeTruthy();
+    expect(await isSatisfyRspackVersion('10.0.0')).toBeTruthy();
 
     expect(
       await isSatisfyRspackVersion('0.2.7-canary-efa0dc6-20230817005622'),

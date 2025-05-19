@@ -19,7 +19,8 @@ export * from './stats';
 
 export { color };
 
-export const rspackMinVersion = '1.0.0';
+// `SubresourceIntegrityPlugin` added in Rspack v1.2.4
+export const rspackMinVersion = '1.2.4';
 
 export const getNodeEnv = () => process.env.NODE_ENV as string;
 export const setNodeEnv = (env: string): void => {
@@ -78,6 +79,11 @@ const compareSemver = (version1: string, version2: string) => {
   return 0;
 };
 
+/**
+ * If the application overrides the Rspack version to a lower one,
+ * we should check that the Rspack version is greater than the minimum
+ * supported version.
+ */
 export const isSatisfyRspackVersion = async (
   originalVersion: string,
 ): Promise<boolean> => {
