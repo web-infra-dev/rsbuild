@@ -114,16 +114,26 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
             },
           };
 
-          chain.module
+          const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
+          const swcUse = jsRule.uses.get(CHAIN_ID.USE.SWC);
+          const svelteRule = chain.module
             .rule(CHAIN_ID.RULE.SVELTE)
-            .test(/\.svelte$/)
+            .test(/\.svelte$/);
+
+          if (svelte5 && jsRule) {
+            svelteRule
+              .use(CHAIN_ID.USE.SWC)
+              .loader(swcUse.get('loader'))
+              .options(swcUse.get('options'));
+          }
+
+          svelteRule
             .use(CHAIN_ID.USE.SVELTE)
             .loader(loaderPath)
-            .options(svelteLoaderOptions);
+            .options(svelteLoaderOptions)
+            .end();
 
-          const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
           if (svelte5 && jsRule) {
-            const swcUse = jsRule.uses.get(CHAIN_ID.USE.SWC);
             const regexp = /\.(?:svelte\.js|svelte\.ts)$/;
 
             jsRule.exclude.add(regexp);
