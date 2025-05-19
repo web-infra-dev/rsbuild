@@ -2,7 +2,7 @@ import { promises } from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { logger } from '@rsbuild/core';
-import type { RsbuildPlugin } from '@rsbuild/core';
+import type { EnvironmentConfig, RsbuildPlugin } from '@rsbuild/core';
 import { sveltePreprocess } from 'svelte-preprocess';
 import type { CompileOptions } from 'svelte/compiler';
 
@@ -73,6 +73,17 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
           cause: err,
         });
       }
+
+      api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
+        const extraConfig: EnvironmentConfig = {
+          source: {
+            // transpile the Svelte package to downgrade the syntax
+            include: [/node_modules[\\/]svelte[\\/]/],
+          },
+        };
+
+        return mergeEnvironmentConfig(extraConfig, config);
+      });
 
       api.modifyBundlerChain(
         async (chain, { CHAIN_ID, environment, isDev, isProd }) => {
