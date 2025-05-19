@@ -314,9 +314,9 @@ export const normalizeConfig = (config: RsbuildConfig): NormalizedConfig => {
     config,
   ) as Required<RsbuildConfig>;
 
-  const { watchFiles } = mergedConfig.dev;
+  const { watchFiles } = mergedConfig.dev as NormalizedDevConfig;
   if (!Array.isArray(watchFiles)) {
-    mergedConfig.dev.watchFiles = [watchFiles!];
+    mergedConfig.dev.watchFiles = [watchFiles];
   }
 
   return mergedConfig as unknown as NormalizedConfig;
