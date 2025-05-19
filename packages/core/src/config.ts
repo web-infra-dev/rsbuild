@@ -53,6 +53,7 @@ const require = createRequire(import.meta.url);
 const getDefaultDevConfig = (): NormalizedDevConfig => ({
   hmr: true,
   liveReload: true,
+  watchFiles: [],
   // Temporary placeholder, default: `${server.base}`
   assetPrefix: DEFAULT_ASSET_PREFIX,
   writeToDisk: false,
@@ -305,13 +306,20 @@ export const normalizeConfig = (config: RsbuildConfig): NormalizedConfig => {
       : 'none';
   };
 
-  return mergeRsbuildConfig(
+  const mergedConfig = mergeRsbuildConfig(
     {
       ...createDefaultConfig(),
       mode: getMode(),
     },
     config,
-  ) as unknown as NormalizedConfig;
+  ) as Required<RsbuildConfig>;
+
+  const { watchFiles } = mergedConfig.dev;
+  if (!Array.isArray(watchFiles)) {
+    mergedConfig.dev.watchFiles = [watchFiles!];
+  }
+
+  return mergedConfig as unknown as NormalizedConfig;
 };
 
 export type ConfigParams = {

@@ -112,19 +112,21 @@ export async function init({
       const files: string[] = [];
       const config = rsbuild.getNormalizedConfig();
 
-      if (config.dev?.watchFiles) {
-        for (const watchFilesConfig of castArray(config.dev.watchFiles)) {
-          if (watchFilesConfig.type !== 'reload-server') {
+      if (config.dev.watchFiles) {
+        for (const watchConfig of config.dev.watchFiles) {
+          if (watchConfig.type !== 'reload-server') {
             continue;
           }
 
-          const paths = castArray(watchFilesConfig.paths);
-          if (watchFilesConfig.options) {
+          const paths = Array.isArray(watchConfig.paths)
+            ? watchConfig.paths
+            : [watchConfig.paths];
+          if (watchConfig.options) {
             watchFilesForRestart({
               files: paths,
               rsbuild,
               isBuildWatch,
-              watchOptions: watchFilesConfig.options,
+              watchOptions: watchConfig.options,
             });
           } else {
             files.push(...paths);
