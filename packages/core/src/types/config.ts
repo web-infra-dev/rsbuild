@@ -47,9 +47,9 @@ import type {
   ConfigChain,
   ConfigChainMergeContext,
   ConfigChainWithContext,
-  DeepReadonly,
   MaybePromise,
   OneOrMany,
+  TwoLevelReadonly,
 } from './utils';
 
 export type ToolsSwcConfig = ConfigChain<SwcLoaderOptions>;
@@ -1802,7 +1802,7 @@ export type MergedEnvironmentConfig = {
 /**
  * The normalized Rsbuild environment config.
  */
-export type NormalizedEnvironmentConfig = DeepReadonly<
+export type NormalizedEnvironmentConfig = TwoLevelReadonly<
   Omit<MergedEnvironmentConfig, 'dev'> & {
     dev: NormalizedDevConfig;
     server: NormalizedServerConfig;
