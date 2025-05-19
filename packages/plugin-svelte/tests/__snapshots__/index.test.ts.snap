@@ -232,6 +232,37 @@ exports[`plugin-svelte > should add svelte loader and resolve config properly 1`
     "test": /\\\\\\.svelte\\$/,
     "use": [
       {
+        "loader": "builtin:swc-loader",
+        "options": {
+          "env": {
+            "mode": undefined,
+            "targets": [
+              "chrome >= 87",
+              "edge >= 88",
+              "firefox >= 78",
+              "safari >= 14",
+            ],
+          },
+          "isModule": "unknown",
+          "jsc": {
+            "experimental": {
+              "cacheRoot": "<ROOT>/packages/plugin-svelte/tests/node_modules/.cache/.swc",
+              "keepImportAttributes": true,
+            },
+            "externalHelpers": true,
+            "parser": {
+              "decorators": true,
+              "syntax": "typescript",
+              "tsx": false,
+            },
+            "transform": {
+              "decoratorVersion": "2022-03",
+              "legacyDecorator": false,
+            },
+          },
+        },
+      },
+      {
         "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
         "options": {
           "compilerOptions": {
@@ -297,6 +328,37 @@ exports[`plugin-svelte > should override default svelte-loader options throw opt
     "test": /\\\\\\.svelte\\$/,
     "use": [
       {
+        "loader": "builtin:swc-loader",
+        "options": {
+          "env": {
+            "mode": undefined,
+            "targets": [
+              "chrome >= 87",
+              "edge >= 88",
+              "firefox >= 78",
+              "safari >= 14",
+            ],
+          },
+          "isModule": "unknown",
+          "jsc": {
+            "experimental": {
+              "cacheRoot": "<ROOT>/packages/plugin-svelte/tests/node_modules/.cache/.swc",
+              "keepImportAttributes": true,
+            },
+            "externalHelpers": true,
+            "parser": {
+              "decorators": true,
+              "syntax": "typescript",
+              "tsx": false,
+            },
+            "transform": {
+              "decoratorVersion": "2022-03",
+              "legacyDecorator": false,
+            },
+          },
+        },
+      },
+      {
         "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
         "options": {
           "compilerOptions": {
@@ -317,6 +379,37 @@ exports[`plugin-svelte > should set dev and hotReload to false in production mod
   {
     "test": /\\\\\\.svelte\\$/,
     "use": [
+      {
+        "loader": "builtin:swc-loader",
+        "options": {
+          "env": {
+            "mode": undefined,
+            "targets": [
+              "chrome >= 87",
+              "edge >= 88",
+              "firefox >= 78",
+              "safari >= 14",
+            ],
+          },
+          "isModule": "unknown",
+          "jsc": {
+            "experimental": {
+              "cacheRoot": "<ROOT>/packages/plugin-svelte/tests/node_modules/.cache/.swc",
+              "keepImportAttributes": true,
+            },
+            "externalHelpers": true,
+            "parser": {
+              "decorators": true,
+              "syntax": "typescript",
+              "tsx": false,
+            },
+            "transform": {
+              "decoratorVersion": "2022-03",
+              "legacyDecorator": false,
+            },
+          },
+        },
+      },
       {
         "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
         "options": {
@@ -343,6 +436,37 @@ exports[`plugin-svelte > should support pass custom preprocess options 1`] = `
     "test": /\\\\\\.svelte\\$/,
     "use": [
       {
+        "loader": "builtin:swc-loader",
+        "options": {
+          "env": {
+            "mode": undefined,
+            "targets": [
+              "chrome >= 87",
+              "edge >= 88",
+              "firefox >= 78",
+              "safari >= 14",
+            ],
+          },
+          "isModule": "unknown",
+          "jsc": {
+            "experimental": {
+              "cacheRoot": "<ROOT>/packages/plugin-svelte/tests/node_modules/.cache/.swc",
+              "keepImportAttributes": true,
+            },
+            "externalHelpers": true,
+            "parser": {
+              "decorators": true,
+              "syntax": "typescript",
+              "tsx": false,
+            },
+            "transform": {
+              "decoratorVersion": "2022-03",
+              "legacyDecorator": false,
+            },
+          },
+        },
+      },
+      {
         "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
         "options": {
           "compilerOptions": {
@@ -367,6 +491,37 @@ exports[`plugin-svelte > should turn off HMR by hand correctly 1`] = `
   {
     "test": /\\\\\\.svelte\\$/,
     "use": [
+      {
+        "loader": "builtin:swc-loader",
+        "options": {
+          "env": {
+            "mode": undefined,
+            "targets": [
+              "chrome >= 87",
+              "edge >= 88",
+              "firefox >= 78",
+              "safari >= 14",
+            ],
+          },
+          "isModule": "unknown",
+          "jsc": {
+            "experimental": {
+              "cacheRoot": "<ROOT>/packages/plugin-svelte/tests/node_modules/.cache/.swc",
+              "keepImportAttributes": true,
+            },
+            "externalHelpers": true,
+            "parser": {
+              "decorators": true,
+              "syntax": "typescript",
+              "tsx": false,
+            },
+            "transform": {
+              "decoratorVersion": "2022-03",
+              "legacyDecorator": false,
+            },
+          },
+        },
+      },
       {
         "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
         "options": {
