@@ -118,9 +118,7 @@ export async function init({
             continue;
           }
 
-          const paths = Array.isArray(watchConfig.paths)
-            ? watchConfig.paths
-            : [watchConfig.paths];
+          const paths = castArray(watchConfig.paths);
           if (watchConfig.options) {
             watchFilesForRestart({
               files: paths,
