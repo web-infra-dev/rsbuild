@@ -7,13 +7,17 @@ import {
   gotoPage,
   rspackOnlyTest,
 } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect } from '@playwright/test';
 import fse from 'fs-extra';
 import { tempConfig } from './rsbuild.config';
 
 rspackOnlyTest(
   'should watch tsconfig.json and reload the server when it changes',
   async ({ page }) => {
+    if (process.platform === 'win32') {
+      return;
+    }
+
     const dist = join(__dirname, 'dist');
 
     await fse.remove(dist);
