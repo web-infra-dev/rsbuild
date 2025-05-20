@@ -81,7 +81,7 @@ Rstack is a unified JavaScript toolchain built around Rspack, with high performa
 
 To get started with Rsbuild, see the [Quick start](https://rsbuild.dev/guide/start/quick-start).
 
-## 🦀 Links
+## 🔗 Links
 
 - [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack): A curated list of awesome things related to Rstack.
 - [rstack-examples](https://github.com/rspack-contrib/rstack-examples): Examples showcasing Rstack tools (Rspack, Rsbuild, Rspress, Rsdoctor).
