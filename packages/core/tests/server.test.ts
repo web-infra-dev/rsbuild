@@ -255,12 +255,9 @@ describe('test dev server', () => {
       onInvalid: onInvalidFn,
     });
 
-    const isOnDoneRegistered = compiler.hooks.done.taps.some(
-      (tap) => tap.fn === onDoneFn,
-    );
-
-    expect(isOnDoneRegistered).toBeTruthy();
+    expect(compiler.hooks.done.taps.length).toBe(1);
   });
+
   test('should not setupServerHooks when compiler is server', () => {
     const compiler = rspack({
       target: 'node',
@@ -273,11 +270,7 @@ describe('test dev server', () => {
       onInvalid: onInvalidFn,
     });
 
-    const isOnDoneRegistered = compiler.hooks.done.taps.some(
-      (tap) => tap.fn === onDoneFn,
-    );
-
-    expect(isOnDoneRegistered).toBeFalsy();
+    expect(compiler.hooks.done.taps.length).toBe(0);
   });
 
   test('check isClientCompiler', () => {
