@@ -1633,13 +1633,14 @@ export interface DevConfig {
   lazyCompilation?: boolean | Rspack.LazyCompilationOptions;
 }
 
-export type NormalizedDevConfig = DevConfig &
+export type NormalizedDevConfig = Omit<DevConfig, 'watchFiles'> &
   Required<
     Pick<
       DevConfig,
       'hmr' | 'liveReload' | 'assetPrefix' | 'writeToDisk' | 'cliShortcuts'
     >
   > & {
+    watchFiles: WatchFiles[];
     client: NormalizedClientConfig;
   };
 

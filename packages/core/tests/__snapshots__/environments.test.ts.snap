@@ -15,6 +15,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "hmr": true,
     "lazyCompilation": true,
     "liveReload": true,
+    "watchFiles": [],
     "writeToDisk": false,
   },
   "html": {
@@ -159,6 +160,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "hmr": true,
     "lazyCompilation": false,
     "liveReload": true,
+    "watchFiles": [],
     "writeToDisk": false,
   },
   "html": {
@@ -303,6 +305,7 @@ exports[`environment config > should print environment config when inspect confi
       },
       "hmr": true,
       "liveReload": true,
+      "watchFiles": [],
       "writeToDisk": false,
     },
     "html": {
@@ -443,6 +446,7 @@ exports[`environment config > should print environment config when inspect confi
       },
       "hmr": true,
       "liveReload": true,
+      "watchFiles": [],
       "writeToDisk": false,
     },
     "html": {
@@ -603,6 +607,7 @@ exports[`environment config > should support modify environment config by api.mo
       },
       "hmr": true,
       "liveReload": true,
+      "watchFiles": [],
       "writeToDisk": false,
     },
     "html": {
@@ -743,6 +748,7 @@ exports[`environment config > should support modify environment config by api.mo
       },
       "hmr": true,
       "liveReload": true,
+      "watchFiles": [],
       "writeToDisk": false,
     },
     "html": {
@@ -884,6 +890,7 @@ exports[`environment config > should support modify environment config by api.mo
       },
       "hmr": true,
       "liveReload": true,
+      "watchFiles": [],
       "writeToDisk": false,
     },
     "html": {
@@ -1028,6 +1035,7 @@ exports[`environment config > should support modify single environment config by
       },
       "hmr": true,
       "liveReload": true,
+      "watchFiles": [],
       "writeToDisk": false,
     },
     "html": {
@@ -1168,6 +1176,7 @@ exports[`environment config > should support modify single environment config by
       },
       "hmr": true,
       "liveReload": true,
+      "watchFiles": [],
       "writeToDisk": false,
     },
     "html": {
