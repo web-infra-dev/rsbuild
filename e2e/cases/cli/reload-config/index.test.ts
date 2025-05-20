@@ -30,7 +30,7 @@ rspackOnlyTest(
     };`,
     );
 
-    const process = exec('npx rsbuild dev', {
+    const childProcess = exec('npx rsbuild dev', {
       cwd: __dirname,
     });
 
@@ -53,6 +53,6 @@ rspackOnlyTest(
 
     await expectFile(dist2);
 
-    process.kill();
+    childProcess.kill();
   },
 );
