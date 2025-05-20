@@ -246,8 +246,7 @@ export async function initRsbuildConfig({
   // to ensure `paths` alias can be updated
   if (
     tsconfigPaths.size &&
-    normalizedBaseConfig.resolve.aliasStrategy === 'prefer-tsconfig' &&
-    Array.isArray(normalizedBaseConfig.dev.watchFiles)
+    normalizedBaseConfig.resolve.aliasStrategy === 'prefer-tsconfig'
   ) {
     normalizedBaseConfig.dev.watchFiles.push({
       paths: Array.from(tsconfigPaths),
