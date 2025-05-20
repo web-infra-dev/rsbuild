@@ -64,35 +64,30 @@ Rsbuild 具备以下特性：
 
 - **框架无关**：Rsbuild 不与前端 UI 框架耦合，并通过插件来支持 React、Vue、Svelte、Solid、Preact 等框架，未来也计划支持社区中更多的 UI 框架。
 
-## 🎯 生态
+## 🦀 Rstack
 
-Rsbuild 为上层的框架和工具提供了 JavaScript API 和 plugin API。例如，我们基于 Rsbuild 实现了 [Rspress](https://github.com/web-infra-dev/rspress) 和 [Rslib](https://github.com/web-infra-dev/rslib)，并充分复用 Rsbuild 的能力和生态。
+Rstack 是一个围绕 Rspack 打造的 JavaScript 统一工具链，具有优秀的性能和一致的架构。
 
-下图说明了 Rsbuild 在 Rstack 生态中的位置：
-
-<img
-  src="https://assets.rspack.dev/rstack/rstack-overview.png"
-  alt="Rstack"
-  width="820"
-/>
+| 名称                                                  | 描述           |
+| ----------------------------------------------------- | -------------- |
+| [Rspack](https://github.com/web-infra-dev/rspack)     | 打包工具       |
+| [Rsbuild](https://github.com/web-infra-dev/rsbuild)   | 构建工具       |
+| [Rslib](https://github.com/web-infra-dev/rslib)       | 库开发工具     |
+| [Rspress](https://github.com/web-infra-dev/rspress)   | 静态站点生成器 |
+| [Rsdoctor](https://github.com/web-infra-dev/rsdoctor) | 构建分析工具   |
+| [Rstest](https://github.com/web-infra-dev/rstest)     | 测试框架       |
 
 ## 📚 快速上手
 
 你可以参考 [快速上手](https://rsbuild.dev/zh/guide/start/quick-start) 来开始体验 Rsbuild。
 
-## 🦀 链接
+## 🔗 链接
 
-- [Rspack](https://github.com/web-infra-dev/rspack)：基于 Rust 的高性能打包工具。
-- [Rspress](https://github.com/web-infra-dev/rspress)：基于 Rsbuild 的静态站点生成器。
-- [Rsdoctor](https://github.com/web-infra-dev/rsdoctor)：针对 Rspack 的构建分析工具。
-- [Rslib](https://github.com/web-infra-dev/rslib): 基于 Rsbuild 的库开发工具。
-- [Rstest](https://github.com/web-infra-dev/rstest): 基于 Rspack 的测试框架。
-- [Modern.js](https://github.com/web-infra-dev/modern.js)：基于 Rsbuild 的渐进式 React 框架。
-- [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack)：与 Rspack 和 Rsbuild 相关的精彩内容列表。
-- [rstack-examples](https://github.com/rspack-contrib/rstack-examples)：Rstack 生态（Rspack、Rsbuild、Rspress、Rsdoctor）的示例。
+- [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack)：与 Rstack 相关的精彩内容列表。
+- [rstack-examples](https://github.com/rspack-contrib/rstack-examples)：Rstack 的示例项目。
 - [storybook-rsbuild](https://github.com/rspack-contrib/storybook-rsbuild): 基于 Rsbuild 构建的 Storybook。
 - [rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template)：使用此模板创建你的 Rsbuild 插件。
-- [rstack-design-resources](https://github.com/rspack-contrib/rstack-design-resources)：Rspack、Rsbuild、Rspress 和 Rsdoctor 的设计资源。
+- [rstack-design-resources](https://github.com/rspack-contrib/rstack-design-resources)：Rstack 的设计资源。
 
 ## 🤝 参与贡献
 
@@ -113,7 +108,7 @@ Rsbuild 为上层的框架和工具提供了 JavaScript API 和 plugin API。例
 
 ## 🧑‍💻 社区
 
-欢迎加入我们的 [Discord](https://discord.gg/XsaKEEk4mW) 交流频道！Rspack / Rsbuild 团队和用户都在那里活跃，并且我们一直期待着各种贡献。
+欢迎加入我们的 [Discord](https://discord.gg/XsaKEEk4mW) 交流频道！Rstack 团队和用户都在那里活跃，并且我们一直期待着各种贡献。
 
 你也可以加入 [飞书群](https://applink.feishu.cn/client/chat/chatter/add_by_link?link_token=3c3vca77-bfc0-4ef5-b62b-9c5c9c92f1b4) 与大家一起交流。
 
