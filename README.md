@@ -64,17 +64,18 @@ Rsbuild has the following features:
 
 - **Framework Agnostic**: Rsbuild is not coupled with any front-end UI framework. It supports frameworks like React, Vue, Svelte, Solid, and Preact through plugins, and plans to support more UI frameworks from the community in the future.
 
-## 🎯 Ecosystem
+## 🦀 Rstack
 
-Rsbuild provides JavaScript API and plugin API for higher-level frameworks and tools. For example, we have implemented [Rspress](https://github.com/web-infra-dev/rspress) and [Rslib](https://github.com/web-infra-dev/rslib) based on Rsbuild, taking full advantage of its capabilities and ecosystem.
+Rstack is a unified JavaScript toolchain built around Rspack, with high performance and consistent architecture.
 
-The following diagram illustrates Rsbuild's position in the Rstack ecosystem:
-
-<img
-  src="https://assets.rspack.dev/rstack/rstack-overview.png"
-  alt="Rstack"
-  width="820"
-/>
+| Name                                                  | Description              |
+| ----------------------------------------------------- | ------------------------ |
+| [Rspack](https://github.com/web-infra-dev/rspack)     | Bundler                  |
+| [Rsbuild](https://github.com/web-infra-dev/rsbuild)   | Build tool               |
+| [Rslib](https://github.com/web-infra-dev/rslib)       | Library development tool |
+| [Rspress](https://github.com/web-infra-dev/rspress)   | Static site generator    |
+| [Rsdoctor](https://github.com/web-infra-dev/rsdoctor) | Build analyzer           |
+| [Rstest](https://github.com/web-infra-dev/rstest)     | Testing framework        |
 
 ## 📚 Getting started
 
@@ -82,13 +83,7 @@ To get started with Rsbuild, see the [Quick start](https://rsbuild.dev/guide/sta
 
 ## 🦀 Links
 
-- [Rspack](https://github.com/web-infra-dev/rspack): Fast Rust-based web bundler.
-- [Rspress](https://github.com/web-infra-dev/rspress): Static site generator based on Rsbuild.
-- [Rsdoctor](https://github.com/web-infra-dev/rsdoctor): Build analyzer for Rspack.
-- [Rslib](https://github.com/web-infra-dev/rslib): Library development tool powered by Rsbuild.
-- [Rstest](https://github.com/web-infra-dev/rstest): Testing framework powered by Rspack.
-- [Modern.js](https://github.com/web-infra-dev/modern.js): A progressive React framework based on Rsbuild.
-- [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack): A curated list of awesome things related to Rspack and Rsbuild.
+- [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack): A curated list of awesome things related to Rstack.
 - [rstack-examples](https://github.com/rspack-contrib/rstack-examples): Examples showcasing Rstack tools (Rspack, Rsbuild, Rspress, Rsdoctor).
 - [storybook-rsbuild](https://github.com/rspack-contrib/storybook-rsbuild): Storybook builder powered by Rsbuild.
 - [rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template)：Use this template to create your own Rsbuild plugin.
@@ -113,7 +108,7 @@ This repo has adopted the ByteDance open source code of conduct. Please check [C
 
 ## 🧑‍💻 Community
 
-Come and chat with us on [Discord](https://discord.gg/XsaKEEk4mW)! The Rspack / Rsbuild team and users are active there, and we're always looking for contributions.
+Come and chat with us on [Discord](https://discord.gg/XsaKEEk4mW)! The Rstack team and users are active there, and we're always looking for contributions.
 
 ## 🌟 Quality
 
