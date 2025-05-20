@@ -39,13 +39,18 @@ Configure the behavior of SWC to transform React code, the same as SWC's [jsc.tr
 - **Type:**
 
 ```ts
-interface SwcReactOptions {
+interface ReactConfig {
   pragma?: string;
   pragmaFrag?: string;
   throwIfNamespace?: boolean;
   development?: boolean;
-  useBuiltins?: boolean;
-  refresh?: boolean;
+  refresh?:
+    | boolean
+    | {
+        refreshReg?: string;
+        refreshSig?: string;
+        emitFullSignatures?: boolean;
+      };
   runtime?: 'automatic' | 'classic';
   importSource?: string;
 }
