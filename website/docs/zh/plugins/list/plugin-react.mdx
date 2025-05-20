@@ -39,13 +39,18 @@ export default {
 - **类型：**
 
 ```ts
-interface SwcReactOptions {
+interface ReactConfig {
   pragma?: string;
   pragmaFrag?: string;
   throwIfNamespace?: boolean;
   development?: boolean;
-  useBuiltins?: boolean;
-  refresh?: boolean;
+  refresh?:
+    | boolean
+    | {
+        refreshReg?: string;
+        refreshSig?: string;
+        emitFullSignatures?: boolean;
+      };
   runtime?: 'automatic' | 'classic';
   importSource?: string;
 }
