@@ -1,0 +1,12 @@
+{
+  "extends": "@rsbuild/config/tsconfig",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "paths": {
+      "@/content": ["src/foo/test.ts"]
+    }
+  },
+  "include": ["src"]
+}

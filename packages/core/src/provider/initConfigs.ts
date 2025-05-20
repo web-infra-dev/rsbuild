@@ -209,6 +209,8 @@ export async function initRsbuildConfig({
     server,
   } = normalizedBaseConfig;
 
+  const tsconfigPaths = new Set<string>();
+
   for (const [name, config] of Object.entries(mergedEnvironments)) {
     const environmentConfig = await modifyEnvironmentConfig(
       context,
@@ -229,13 +231,28 @@ export async function initRsbuildConfig({
 
     // Ensure the `tsconfigPath` is an absolute path
     if (tsconfigPath) {
-      normalizedEnvironmentConfig.source.tsconfigPath = ensureAbsolutePath(
+      const absoluteTsconfigPath = ensureAbsolutePath(
         context.rootPath,
         tsconfigPath,
       );
+      normalizedEnvironmentConfig.source.tsconfigPath = absoluteTsconfigPath;
+      tsconfigPaths.add(absoluteTsconfigPath);
     }
 
     environments[name] = normalizedEnvironmentConfig;
+  }
+
+  // watch tsconfig files and restart server when tsconfig files changed
+  // to ensure `paths` alias can be updated
+  if (
+    tsconfigPaths.size &&
+    normalizedBaseConfig.resolve.aliasStrategy === 'prefer-tsconfig' &&
+    Array.isArray(normalizedBaseConfig.dev.watchFiles)
+  ) {
+    normalizedBaseConfig.dev.watchFiles.push({
+      paths: Array.from(tsconfigPaths),
+      type: 'reload-server',
+    });
   }
 
   context.normalizedConfig = {
