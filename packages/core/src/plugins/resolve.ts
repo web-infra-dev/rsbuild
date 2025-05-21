@@ -1,7 +1,7 @@
 import { createRequire } from 'node:module';
 import { dirname, sep } from 'node:path';
 import { reduceConfigs } from 'reduce-configs';
-import { castArray } from '../helpers';
+import { castArray, color } from '../helpers';
 import { ensureAbsolutePath } from '../helpers/path';
 import { logger } from '../logger';
 import type {
@@ -27,10 +27,15 @@ function applyAlias({
   });
 
   // TODO: remove `source.alias` in the next major version
-  mergedAlias = reduceConfigs({
-    initial: mergedAlias,
-    config: config.source.alias,
-  });
+  if (config.source.alias) {
+    logger.warn(
+      `[rsbuild:config] ${color.yellow('"source.alias"')} config is deprecated, use ${color.yellow('"resolve.alias"')} instead.`,
+    );
+    mergedAlias = reduceConfigs({
+      initial: mergedAlias,
+      config: config.source.alias,
+    });
+  }
 
   if (config.resolve.dedupe) {
     for (const pkgName of config.resolve.dedupe) {
@@ -135,6 +140,12 @@ export const pluginResolve = (): RsbuildPlugin => ({
           .rule(CHAIN_ID.RULE.MJS)
           .test(/\.m?js/)
           .resolve.set('fullySpecified', false);
+
+        if (config.source.aliasStrategy) {
+          logger.warn(
+            `[rsbuild:config] ${color.yellow('"source.aliasStrategy"')} config is deprecated, use ${color.yellow('"resolve.aliasStrategy"')} instead.`,
+          );
+        }
 
         const aliasStrategy =
           config.source.aliasStrategy ?? config.resolve.aliasStrategy;

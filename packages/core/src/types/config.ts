@@ -321,11 +321,6 @@ type TransformImportFn = (
 
 export interface NormalizedSourceConfig extends SourceConfig {
   define: Define;
-  /**
-   * @deprecated Use `resolve.alias` instead.
-   * `source.alias` will be removed in v2.0.0.
-   */
-  alias: ConfigChain<Alias>;
   preEntry: string[];
   decorators: Required<Decorators>;
 }

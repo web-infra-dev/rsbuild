@@ -1,7 +1,8 @@
-import { build } from '@e2e/helper';
+import { build, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should allow to use the legacy `source.alias` config', async () => {
+  const { logs, restore } = proxyConsole();
   const rsbuild = await build({
     cwd: __dirname,
   });
@@ -17,4 +18,9 @@ test('should allow to use the legacy `source.alias` config', async () => {
 
   expect(files[webIndex!]).toContain('for web target');
   expect(files[nodeIndex!]).toContain('for node target');
+
+  expect(
+    logs.some((log) => log.includes('"source.alias" config is deprecated')),
+  ).toBeTruthy();
+  restore();
 });
