@@ -4,7 +4,7 @@
   "private": true,
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.7.1",
+    "@rslib/core": "0.8.0",
     "@types/node": "^22.15.19",
     "typescript": "^5.8.3"
   }
