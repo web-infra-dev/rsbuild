@@ -64,6 +64,10 @@ O Rsbuild tem os seguintes recursos:
 
 - **Framework Agnóstico**: Rsbuild não está acoplado a nenhuma estrutura de interface do usuário de frontend. Ele oferece suporte a estruturas como React, Vue, Svelte, Solid e Preact por meio de plug-ins, e planeja oferecer suporte a mais estruturas de IU da comunidade no futuro.
 
+## 📚 Primeiros passos
+
+Para começar a usar o Rsbuild, consulte a seção [Início Rápido](https://rsbuild.dev/guide/start/quick-start).
+
 ## 🦀 Rstack
 
 Rstack é uma cadeia de ferramentas JavaScript unificada construída em torno do Rspack, com alto desempenho e arquitetura consistente.
@@ -76,10 +80,6 @@ Rstack é uma cadeia de ferramentas JavaScript unificada construída em torno do
 | [Rspress](https://github.com/web-infra-dev/rspress)   | Gerador de site estático                       |
 | [Rsdoctor](https://github.com/web-infra-dev/rsdoctor) | Analisador de build                            |
 | [Rstest](https://github.com/web-infra-dev/rstest)     | Framework de testes                            |
-
-## 📚 Primeiros passos
-
-Para começar a usar o Rsbuild, consulte a seção [Início Rápido](https://rsbuild.dev/guide/start/quick-start).
 
 ## 🔗 Links
 
