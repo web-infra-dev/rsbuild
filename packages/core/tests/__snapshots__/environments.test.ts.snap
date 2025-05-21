@@ -124,7 +124,6 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "strictPort": false,
   },
   "source": {
-    "alias": {},
     "decorators": {
       "version": "2022-03",
     },
@@ -269,7 +268,6 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "strictPort": false,
   },
   "source": {
-    "alias": {},
     "decorators": {
       "version": "2022-03",
     },
@@ -414,7 +412,6 @@ exports[`environment config > should print environment config when inspect confi
       "strictPort": false,
     },
     "source": {
-      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -555,7 +552,6 @@ exports[`environment config > should print environment config when inspect confi
       "strictPort": false,
     },
     "source": {
-      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -716,7 +712,6 @@ exports[`environment config > should support modify environment config by api.mo
       "strictPort": false,
     },
     "source": {
-      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -858,7 +853,6 @@ exports[`environment config > should support modify environment config by api.mo
       "strictPort": false,
     },
     "source": {
-      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -1000,7 +994,6 @@ exports[`environment config > should support modify environment config by api.mo
       "strictPort": false,
     },
     "source": {
-      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -1144,7 +1137,6 @@ exports[`environment config > should support modify single environment config by
       "strictPort": false,
     },
     "source": {
-      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -1286,7 +1278,6 @@ exports[`environment config > should support modify single environment config by
       "strictPort": false,
     },
     "source": {
-      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
