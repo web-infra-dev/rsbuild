@@ -64,6 +64,10 @@ O Rsbuild tem os seguintes recursos:
 
 - **Framework Agnóstico**: Rsbuild não está acoplado a nenhuma estrutura de interface do usuário de frontend. Ele oferece suporte a estruturas como React, Vue, Svelte, Solid e Preact por meio de plug-ins, e planeja oferecer suporte a mais estruturas de IU da comunidade no futuro.
 
+## 📚 Primeiros passos
+
+Para começar a usar o Rsbuild, consulte a seção [Início Rápido](https://rsbuild.dev/guide/start/quick-start).
+
 ## 🦀 Rstack
 
 Rstack é uma cadeia de ferramentas JavaScript unificada construída em torno do Rspack, com alto desempenho e arquitetura consistente.
@@ -77,17 +81,13 @@ Rstack é uma cadeia de ferramentas JavaScript unificada construída em torno do
 | [Rsdoctor](https://github.com/web-infra-dev/rsdoctor) | Analisador de build                            |
 | [Rstest](https://github.com/web-infra-dev/rstest)     | Framework de testes                            |
 
-## 📚 Primeiros passos
-
-Para começar a usar o Rsbuild, consulte a seção [Início Rápido](https://rsbuild.dev/guide/start/quick-start).
-
 ## 🔗 Links
 
 - [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack): Uma lista com curadoria de coisas incríveis relacionadas ao Rspack e ao Rsbuild.
-- [rstack-examples](https://github.com/rspack-contrib/rstack-examples): Exemplos demonstrando ferramentas do Rstack (Rspack, Rsbuild, Rspress, Rsdoctor).
+- [rstack-examples](https://github.com/rspack-contrib/rstack-examples): Exemplos demonstrando ferramentas do Rstack.
 - [storybook-rsbuild](https://github.com/rspack-contrib/storybook-rsbuild): Construtor de livros de histórias desenvolvido pelo Rsbuild.
 - [rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template)：Use esse modelo para criar seu próprio plug-in do Rsbuild.
-- [rstack-design-resources](https://github.com/rspack-contrib/rstack-design-resources)：Recursos de design para Rspack, Rsbuild, Rspress e Rsdoctor.
+- [rstack-design-resources](https://github.com/rspack-contrib/rstack-design-resources)：Recursos de design para Rstack.
 
 ## 🤝 Contribuição
 

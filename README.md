@@ -64,6 +64,10 @@ Rsbuild has the following features:
 
 - **Framework Agnostic**: Rsbuild is not coupled with any front-end UI framework. It supports frameworks like React, Vue, Svelte, Solid, and Preact through plugins, and plans to support more UI frameworks from the community in the future.
 
+## 📚 Getting started
+
+To get started with Rsbuild, see the [Quick start](https://rsbuild.dev/guide/start/quick-start).
+
 ## 🦀 Rstack
 
 Rstack is a unified JavaScript toolchain built around Rspack, with high performance and consistent architecture.
@@ -77,17 +81,13 @@ Rstack is a unified JavaScript toolchain built around Rspack, with high performa
 | [Rsdoctor](https://github.com/web-infra-dev/rsdoctor) | Build analyzer           |
 | [Rstest](https://github.com/web-infra-dev/rstest)     | Testing framework        |
 
-## 📚 Getting started
-
-To get started with Rsbuild, see the [Quick start](https://rsbuild.dev/guide/start/quick-start).
-
 ## 🔗 Links
 
 - [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack): A curated list of awesome things related to Rstack.
-- [rstack-examples](https://github.com/rspack-contrib/rstack-examples): Examples showcasing Rstack tools (Rspack, Rsbuild, Rspress, Rsdoctor).
+- [rstack-examples](https://github.com/rspack-contrib/rstack-examples): Examples showcasing Rstack.
 - [storybook-rsbuild](https://github.com/rspack-contrib/storybook-rsbuild): Storybook builder powered by Rsbuild.
 - [rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template)：Use this template to create your own Rsbuild plugin.
-- [rstack-design-resources](https://github.com/rspack-contrib/rstack-design-resources)：Design resources for Rspack, Rsbuild, Rspress and Rsdoctor.
+- [rstack-design-resources](https://github.com/rspack-contrib/rstack-design-resources)：Design resources for Rstack.
 
 ## 🤝 Contribution
 
