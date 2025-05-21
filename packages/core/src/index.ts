@@ -14,7 +14,7 @@ export {
   type ConfigParams,
   type LoadConfigOptions,
   type LoadConfigResult,
-} from './config';
+} from './loadConfig';
 export { runCLI } from './cli';
 
 // Rsbuild version
@@ -28,7 +28,7 @@ export type { Rspack };
 export { logger } from './logger';
 export { mergeRsbuildConfig } from './mergeConfig';
 export { ensureAssetPrefix } from './helpers';
-export { defaultAllowedOrigins } from './config';
+export { defaultAllowedOrigins } from './defaultConfig';
 
 // Constants
 export { PLUGIN_SWC_NAME, PLUGIN_CSS_NAME } from './constants';

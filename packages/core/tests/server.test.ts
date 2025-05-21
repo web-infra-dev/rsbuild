@@ -1,5 +1,5 @@
 import { rspack } from '@rspack/core';
-import { defaultAllowedOrigins } from '../src/config';
+import { defaultAllowedOrigins } from '../src/defaultConfig';
 import {
   isClientCompiler,
   setupServerHooks,

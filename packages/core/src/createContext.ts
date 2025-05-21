@@ -1,7 +1,7 @@
 import { join } from 'node:path';
 import { loadConfig } from 'browserslist-load-config';
-import { withDefaultConfig } from './config';
 import { DEFAULT_BROWSERSLIST, ROOT_DIST_DIR } from './constants';
+import { withDefaultConfig } from './defaultConfig';
 import { ensureAbsolutePath, getCommonParentPath } from './helpers/path';
 import { initHooks } from './hooks';
 import { getHTMLPathByEntry } from './initPlugins';

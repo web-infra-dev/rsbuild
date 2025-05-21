@@ -1,9 +1,9 @@
-import { getDefaultEntry, normalizeConfig } from '../config';
 import { JS_DIST_DIR } from '../constants';
 import {
   updateContextByNormalizedConfig,
   updateEnvironmentContext,
 } from '../createContext';
+import { getDefaultEntry, normalizeConfig } from '../defaultConfig';
 import { camelCase, color, ensureAbsolutePath, pick } from '../helpers';
 import { inspectConfig } from '../inspectConfig';
 import { isDebug, logger } from '../logger';
