@@ -31,9 +31,12 @@ rspackOnlyTest(
     };`,
     );
 
-    delete process.env.NODE_ENV;
     const devProcess = exec('npx rsbuild dev', {
       cwd: __dirname,
+      env: {
+        ...process.env,
+        NODE_ENV: 'development',
+      },
     });
 
     await expectFile(distIndex);
