@@ -1,6 +1,6 @@
 import { isAbsolute, join } from 'node:path';
 import rspack from '@rspack/core';
-import { normalizePublicDirs } from '../config';
+import { normalizePublicDirs } from '../defaultConfig';
 import { isMultiCompiler, pick } from '../helpers';
 import { logger } from '../logger';
 import type {
