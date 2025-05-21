@@ -64,6 +64,10 @@ Rsbuild 具备以下特性：
 
 - **框架无关**：Rsbuild 不与前端 UI 框架耦合，并通过插件来支持 React、Vue、Svelte、Solid、Preact 等框架，未来也计划支持社区中更多的 UI 框架。
 
+## 📚 快速上手
+
+你可以参考 [快速上手](https://rsbuild.dev/zh/guide/start/quick-start) 来开始体验 Rsbuild。
+
 ## 🦀 Rstack
 
 Rstack 是一个围绕 Rspack 打造的 JavaScript 统一工具链，具有优秀的性能和一致的架构。
@@ -76,10 +80,6 @@ Rstack 是一个围绕 Rspack 打造的 JavaScript 统一工具链，具有优�
 | [Rspress](https://github.com/web-infra-dev/rspress)   | 静态站点生成器 |
 | [Rsdoctor](https://github.com/web-infra-dev/rsdoctor) | 构建分析工具   |
 | [Rstest](https://github.com/web-infra-dev/rstest)     | 测试框架       |
-
-## 📚 快速上手
-
-你可以参考 [快速上手](https://rsbuild.dev/zh/guide/start/quick-start) 来开始体验 Rsbuild。
 
 ## 🔗 链接
 
