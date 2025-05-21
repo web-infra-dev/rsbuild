@@ -96,7 +96,6 @@ let swcHelpersPath: string;
 
 const getDefaultSourceConfig = (): NormalizedSourceConfig => {
   return {
-    alias: {},
     define: {},
     preEntry: [],
     decorators: {
