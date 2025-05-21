@@ -26,7 +26,7 @@ test('should render conditional statement correctly', async () => {
   expect(indexHtml).toContain('Outer true');
   expect(indexHtml).toContain('Inner true');
 
-  // Conditional expression (showResult: true, result: 'Success!')
+  // Conditional expression (showResult: true, result: 'Success')
   expect(indexHtml).toContain('Result: Success');
   expect(indexHtml).not.toContain('Result: N/A');
 });
