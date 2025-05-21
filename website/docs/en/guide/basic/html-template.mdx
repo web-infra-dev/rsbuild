@@ -204,6 +204,97 @@ For example, if the value of the parameter `text` is `'<script>'`, it will be es
 Note that Rsbuild's default escape syntax is different from EJS. In EJS, the default escape syntax is `<%= text %>`, whereas Rsbuild's default escape syntax is `<%- text %>`.
 :::
 
+### Conditional statements
+
+- if condition:
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    templateParameters: {
+      show: true,
+    },
+  },
+};
+```
+
+```ejs
+<% if (show) { %>
+<p>show is true</p>
+<% } %>
+```
+
+- if/else condition:
+
+```ejs
+<% if (show) { %>
+<p>show is true</p>
+<% } else { %>
+<p>show is false</p>
+<% } %>
+```
+
+- else if condition:
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    templateParameters: {
+      count: 7,
+    },
+  },
+};
+```
+
+```ejs
+<% if (count > 10) { %>
+<p>count > 10</p>
+<% } else if (count > 5) { %>
+<p>count > 5</p>
+<% } else { %>
+<p>count ≤ 5</p>
+<% } %>
+```
+
+- Nested conditions:
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    templateParameters: {
+      parent: true,
+      child: true,
+    },
+  },
+};
+```
+
+```ejs
+<% if (parent) { %>
+<p>parent is true</p>
+  <% if (child) { %>
+  <p>child is true</p>
+  <% } %>
+<% } %>
+```
+
+- Ternary operator:
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    templateParameters: {
+      show: true,
+      value: 'success',
+    },
+  },
+};
+```
+
+```ejs
+<p>result: <%= show ? value : 'none' %></p>
+```
+
 ## Other template engines
 
 Rsbuild also supports using other template engines via plugins, such as [EJS](https://ejs.co/) and [Pug](https://pugjs.org/).
