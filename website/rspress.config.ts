@@ -129,6 +129,9 @@ export default defineConfig({
     checkDeadLinks: true,
     shiki: {
       langs: ['styl', 'html', 'toml'],
+      langAlias: {
+        ejs: 'js',
+      },
       transformers: [
         transformerNotationDiff(),
         transformerNotationHighlight(),
