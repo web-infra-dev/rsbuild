@@ -204,6 +204,97 @@ export default {
 注意，Rsbuild 默认的转义语法是与 EJS 不同的。在 EJS 中，默认的转义语法是 `<%= text %>`，而 Rsbuild 的默认转义语法是 `<%- text %>`。
 :::
 
+### 条件语句
+
+- if 条件：
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    templateParameters: {
+      show: true,
+    },
+  },
+};
+```
+
+```ejs
+<% if (show) { %>
+<p>show is true</p>
+<% } %>
+```
+
+- if/else 条件：
+
+```ejs
+<% if (show) { %>
+<p>show is true</p>
+<% } else { %>
+<p>show is false</p>
+<% } %>
+```
+
+- else if 条件：
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    templateParameters: {
+      count: 7,
+    },
+  },
+};
+```
+
+```ejs
+<% if (count > 10) { %>
+<p>count > 10</p>
+<% } else if (count > 5) { %>
+<p>count > 5</p>
+<% } else { %>
+<p>count ≤ 5</p>
+<% } %>
+```
+
+- 嵌套条件：
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    templateParameters: {
+      parent: true,
+      child: true,
+    },
+  },
+};
+```
+
+```ejs
+<% if (parent) { %>
+<p>parent is true</p>
+  <% if (child) { %>
+  <p>child is true</p>
+  <% } %>
+<% } %>
+```
+
+- 三元运算符：
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    templateParameters: {
+      show: true,
+      value: 'success',
+    },
+  },
+};
+```
+
+```ejs
+<p>result: <%= show ? value : 'none' %></p>
+```
+
 ## 其他模板引擎
 
 Rsbuild 也支持通过插件来使用其他模板引擎，如 [EJS](https://ejs.co/)、[Pug](https://pugjs.org/) 等。
