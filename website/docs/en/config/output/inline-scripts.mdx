@@ -3,17 +3,17 @@
 - **Type:**
 
 ```ts
-type InlineScriptsTest =
-  | RegExp
-  | ((params: { size: number; name: string }) => boolean);
+type InlineChunkTestFunction = (params: {
+  size: number;
+  name: string;
+}) => boolean;
 
-type InlineScripts =
+type InlineChunkTest = RegExp | InlineChunkTestFunction;
+
+type InlineChunkConfig =
   | boolean
-  | InlineScriptsTest
-  | {
-      enable?: boolean | 'auto';
-      test: InlineScriptsTest;
-    };
+  | InlineChunkTest
+  | { enable?: boolean | 'auto'; test: InlineChunkTest };
 ```
 
 - **Default:** `false`
