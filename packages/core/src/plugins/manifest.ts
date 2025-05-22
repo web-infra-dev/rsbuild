@@ -1,5 +1,5 @@
 import type { FileDescriptor } from '../../compiled/rspack-manifest-plugin';
-import { isObject } from '../helpers';
+import { color, isObject } from '../helpers';
 import { logger } from '../logger';
 import { recursiveChunkEntryNames } from '../rspack/resource-hints/doesChunkBelongToHtml';
 import type {
@@ -133,7 +133,7 @@ const generateManifest =
       }
 
       throw new Error(
-        '[rsbuild:manifest] `manifest.generate` function must return a valid manifest object.',
+        `${color.dim('[rsbuild:manifest]')} \`manifest.generate\` function must return a valid manifest object.`,
       );
     }
 
@@ -217,7 +217,11 @@ export const pluginManifest = (): RsbuildPlugin => ({
 
       if (uniqueFilenames.size !== filenames.length) {
         logger.warn(
-          `[rsbuild:manifest] The \`manifest.filename\` option must be unique when there are multiple environments (${environmentNames.join(', ')}), otherwise the manifest file will be overwritten.`,
+          `${color.dim('[rsbuild:manifest]')} The ${color.yellow(
+            '"manifest.filename"',
+          )} option must be unique when there are multiple environments (${environmentNames.join(
+            ', ',
+          )}), otherwise the manifest file will be overwritten.`,
         );
       }
 

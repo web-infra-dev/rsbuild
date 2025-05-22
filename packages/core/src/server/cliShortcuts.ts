@@ -65,7 +65,9 @@ export function setupCliShortcuts({
 
     if (!Array.isArray(shortcuts)) {
       throw new Error(
-        '[rsbuild:config] `dev.cliShortcuts` must return an array of shortcuts.',
+        `${color.dim('[rsbuild:config]')} ${color.yellow(
+          'dev.cliShortcuts',
+        )} option must return an array of shortcuts.`,
       );
     }
   }

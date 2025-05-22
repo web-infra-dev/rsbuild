@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import { join } from 'node:path';
 import { parse } from 'dotenv';
 import { expand } from 'dotenv-expand';
-import { getNodeEnv, isFileSync } from './helpers';
+import { color, getNodeEnv, isFileSync } from './helpers';
 import { logger } from './logger';
 
 export type LoadEnvOptions = {
@@ -77,7 +77,9 @@ export function loadEnv({
 }: LoadEnvOptions = {}): LoadEnvResult {
   if (mode === 'local') {
     throw new Error(
-      `[rsbuild:loadEnv] 'local' cannot be used as a value for env mode, because ".env.local" represents a temporary local file. Please use another value.`,
+      `${color.dim('[rsbuild:loadEnv]')} ${color.yellow('local')} cannot be used as a value for env mode, because ${color.yellow(
+        '.env.local',
+      )} represents a temporary local file. Please use another value.`,
     );
   }
 

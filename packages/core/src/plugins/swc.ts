@@ -9,7 +9,13 @@ import {
   PLUGIN_SWC_NAME,
   SCRIPT_REGEX,
 } from '../constants';
-import { castArray, cloneDeep, isFunction, isWebTarget } from '../helpers';
+import {
+  castArray,
+  cloneDeep,
+  color,
+  isFunction,
+  isWebTarget,
+} from '../helpers';
 import type {
   NormalizedEnvironmentConfig,
   NormalizedSourceConfig,
@@ -262,6 +268,10 @@ export function applySwcDecoratorConfig(
       swcConfig.jsc.transform.decoratorVersion = '2022-03';
       break;
     default:
-      throw new Error(`[rsbuild:swc] Unknown decorators version: ${version}`);
+      throw new Error(
+        `${color.dim('[rsbuild:swc]')} Unknown decorators version: ${color.yellow(
+          version,
+        )}`,
+      );
   }
 }

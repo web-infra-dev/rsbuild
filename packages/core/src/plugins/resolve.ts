@@ -29,7 +29,9 @@ function applyAlias({
   // TODO: remove `source.alias` in the next major version
   if (config.source.alias) {
     logger.warn(
-      `[rsbuild:config] ${color.yellow('"source.alias"')} config is deprecated, use ${color.yellow('"resolve.alias"')} instead.`,
+      `${color.dim('[rsbuild:config]')} The ${color.yellow(
+        '"source.alias"',
+      )} config is deprecated, use ${color.yellow('"resolve.alias"')} instead.`,
     );
     mergedAlias = reduceConfigs({
       initial: mergedAlias,
@@ -41,7 +43,11 @@ function applyAlias({
     for (const pkgName of config.resolve.dedupe) {
       if (mergedAlias[pkgName]) {
         logger.debug(
-          `[rsbuild:resolve] The package "${pkgName}" is already in the alias config, dedupe option for "${pkgName}" will be ignored.`,
+          `${color.dim('[rsbuild:resolve]')} The package ${color.yellow(
+            pkgName,
+          )} is already in the alias config, dedupe option for ${color.yellow(
+            pkgName,
+          )} will be ignored.`,
         );
         continue;
       }
@@ -73,7 +79,11 @@ function applyAlias({
           }
         } catch (e) {
           logger.debug(
-            `[rsbuild:resolve] The package "${pkgName}" is not resolved in the project, dedupe option for "${pkgName}" will be ignored.`,
+            `${color.dim('[rsbuild:resolve]')} The package ${color.yellow(
+              pkgName,
+            )} is not resolved in the project, dedupe option for ${color.yellow(
+              pkgName,
+            )} will be ignored.`,
           );
           continue;
         }
@@ -143,7 +153,9 @@ export const pluginResolve = (): RsbuildPlugin => ({
 
         if (config.source.aliasStrategy) {
           logger.warn(
-            `[rsbuild:config] ${color.yellow('"source.aliasStrategy"')} config is deprecated, use ${color.yellow('"resolve.aliasStrategy"')} instead.`,
+            `${color.dim('[rsbuild:config]')} The ${color.yellow(
+              '"source.aliasStrategy"',
+            )} config is deprecated, use ${color.yellow('"resolve.aliasStrategy"')} instead.`,
           );
         }
 

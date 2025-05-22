@@ -102,7 +102,11 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
           if (icon.target === 'web-app-manifest' && !appIcon.name) {
             addCompilationError(
               compilation,
-              `[rsbuild:app-icon] "appIcon.name" is required when "target" is "web-app-manifest".`,
+              `${color.dim('[rsbuild:app-icon]')} ${color.yellow(
+                '"appIcon.name"',
+              )} is required when ${color.yellow('"target"')} is ${color.yellow(
+                '"web-app-manifest"',
+              )}.`,
             );
             continue;
           }
@@ -111,7 +115,9 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
             if (!compilation.inputFileSystem) {
               addCompilationError(
                 compilation,
-                `[rsbuild:app-icon] Failed to read the icon file as "compilation.inputFileSystem" is not available.`,
+                `${color.dim('[rsbuild:app-icon]')} Failed to read the icon file as ${color.yellow(
+                  '"compilation.inputFileSystem"',
+                )} is not available.`,
               );
               continue;
             }
@@ -121,7 +127,9 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
             ) {
               addCompilationError(
                 compilation,
-                `[rsbuild:app-icon] Failed to find the icon file at "${color.cyan(icon.absolutePath)}".`,
+                `${color.dim('[rsbuild:app-icon]')} Failed to find the icon file at ${color.yellow(
+                  icon.absolutePath,
+                )}.`,
               );
               continue;
             }
@@ -133,7 +141,9 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
             if (!source) {
               addCompilationError(
                 compilation,
-                `[rsbuild:app-icon] Failed to read the icon file at "${color.cyan(icon.absolutePath)}".`,
+                `${color.dim('[rsbuild:app-icon]')} Failed to read the icon file at ${color.yellow(
+                  icon.absolutePath,
+                )}.`,
               );
               continue;
             }

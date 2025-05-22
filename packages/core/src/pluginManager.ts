@@ -14,7 +14,9 @@ function validatePlugin(plugin: unknown) {
 
   if (type !== 'object' || plugin === null) {
     throw new Error(
-      `[rsbuild:plugin] Expect Rsbuild plugin instance to be an object, but got ${type}.`,
+      `${color.dim('[rsbuild:plugin]')} Expect Rsbuild plugin instance to be an object, but got ${color.yellow(
+        type,
+      )}.`,
     );
   }
 
@@ -48,7 +50,9 @@ function validatePlugin(plugin: unknown) {
   }
 
   throw new Error(
-    `[rsbuild:plugin] Expect the setup function of Rsbuild plugin to be a function, but got ${type}.`,
+    `${color.dim('[rsbuild:plugin]')} Expect the setup function of Rsbuild plugin to be a function, but got ${color.yellow(
+      type,
+    )}.`,
   );
 }
 
@@ -156,7 +160,11 @@ export const pluginDagSort = (plugins: PluginMeta[]): PluginMeta[] => {
   function getPlugin(name: string) {
     const targets = plugins.filter((item) => item.instance.name === name);
     if (!targets.length) {
-      throw new Error(`[rsbuild:plugin] Plugin "${name}" not existed`);
+      throw new Error(
+        `${color.dim('[rsbuild:plugin]')} Plugin "${color.yellow(
+          name,
+        )}" not existed`,
+      );
     }
     return targets;
   }
@@ -211,9 +219,9 @@ export const pluginDagSort = (plugins: PluginMeta[]): PluginMeta[] => {
     }
 
     throw new Error(
-      `[rsbuild:plugin] Plugins dependencies has loop: ${Object.keys(
-        restInRingPoints,
-      ).join(',')}`,
+      `${color.dim('[rsbuild:plugin]')} Plugins dependencies has loop: ${color.yellow(
+        Object.keys(restInRingPoints).join(','),
+      )}`,
     );
   }
 

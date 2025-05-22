@@ -1,7 +1,7 @@
 import { exec } from 'node:child_process';
 import { promisify } from 'node:util';
 import { STATIC_PATH } from '../constants';
-import { canParse, castArray } from '../helpers';
+import { canParse, castArray, color } from '../helpers';
 import { logger } from '../logger';
 import type { NormalizedConfig, Routes } from '../types';
 import { getHostInUrl } from './helper';
@@ -139,7 +139,9 @@ export function resolveUrl(str: string, base: string): string {
     return url.href;
   } catch (e) {
     throw new Error(
-      '[rsbuild:open]: Invalid input: not a valid URL or pathname',
+      `${color.dim('[rsbuild:open]')} Invalid input: ${color.yellow(
+        str,
+      )} is not a valid URL or pathname`,
     );
   }
 }

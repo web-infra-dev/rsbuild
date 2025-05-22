@@ -1,4 +1,5 @@
 import { join } from 'node:path';
+import { color } from '../helpers';
 import type { EnvironmentContext, Rspack } from '../types';
 import { run } from './runner';
 
@@ -20,7 +21,11 @@ export const loadBundle = async <T>(
   });
 
   if (!entrypoints?.[entryName]) {
-    throw new Error(`[rsbuild:loadBundle] Can't find entry: "${entryName}"`);
+    throw new Error(
+      `${color.dim('[rsbuild:loadBundle]')} Can't find entry: ${color.yellow(
+        entryName,
+      )}`,
+    );
   }
 
   const { chunks: entryChunks = [] } = entrypoints[entryName];
@@ -38,14 +43,18 @@ export const loadBundle = async <T>(
 
   if (files.length === 0) {
     throw new Error(
-      `[rsbuild:loadBundle] Failed to get bundle by entryName: "${entryName}"`,
+      `${color.dim('[rsbuild:loadBundle]')} Failed to get bundle by entryName: ${color.yellow(
+        entryName,
+      )}`,
     );
   }
 
   // An entrypoint should have only one entryChunk, but there may be some boundary cases
   if (files.length > 1) {
     throw new Error(
-      `[rsbuild:loadBundle] Only support load single entry chunk, but got ${files.length}: ${files.join(',')}`,
+      `${color.dim('[rsbuild:loadBundle]')} Only support load single entry chunk, but got ${color.yellow(
+        files.length,
+      )}: ${files.join(',')}`,
     );
   }
 
@@ -73,7 +82,9 @@ export const getTransformedHtml = async (
 
   if (!htmlPath) {
     throw new Error(
-      `[rsbuild:getTransformedHtml] Failed to get HTML file by entryName: "${entryName}"`,
+      `${color.dim('[rsbuild:getTransformedHtml]')} Failed to get HTML file by entryName: ${color.yellow(
+        entryName,
+      )}`,
     );
   }
 

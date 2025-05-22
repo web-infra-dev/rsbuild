@@ -1,7 +1,7 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
 import type Connect from '../../compiled/connect/index.js';
-import { getPublicPathFromCompiler, isMultiCompiler } from '../helpers';
+import { color, getPublicPathFromCompiler, isMultiCompiler } from '../helpers';
 import { logger } from '../logger';
 import { onBeforeRestartServer, restartDevServer } from '../restart';
 import type {
@@ -175,7 +175,9 @@ export async function createDevServer<
     const compiler = customCompiler || (await createCompiler());
 
     if (!compiler) {
-      throw new Error('[rsbuild:server] Failed to get compiler instance.');
+      throw new Error(
+        `${color.dim('[rsbuild:server]')} Failed to get compiler instance.`,
+      );
     }
 
     const publicPaths = isMultiCompiler(compiler)
@@ -282,7 +284,9 @@ export async function createDevServer<
           getStats: async () => {
             if (!compilationManager) {
               throw new Error(
-                '[rsbuild:server] Can not call `getStats` when `runCompile` is false',
+                `${color.dim('[rsbuild:server]')} Can not call ` +
+                  `${color.yellow('getStats')} when ` +
+                  `${color.yellow('runCompile')} is false`,
               );
             }
             await waitFirstCompileDone;
@@ -291,7 +295,9 @@ export async function createDevServer<
           loadBundle: async <T>(entryName: string) => {
             if (!compilationManager) {
               throw new Error(
-                '[rsbuild:server] Can not call `loadBundle` when `runCompile` is false',
+                `${color.dim('[rsbuild:server]')} Can not call ` +
+                  `${color.yellow('loadBundle')} when ` +
+                  `${color.yellow('runCompile')} is false`,
               );
             }
             await waitFirstCompileDone;
@@ -307,7 +313,9 @@ export async function createDevServer<
           getTransformedHtml: async (entryName: string) => {
             if (!compilationManager) {
               throw new Error(
-                '[rsbuild:server] Can not call `getTransformedHtml` when `runCompile` is false',
+                `${color.dim('[rsbuild:server]')} Can not call ` +
+                  `${color.yellow('getTransformedHtml')} when ` +
+                  `${color.yellow('runCompile')} is false`,
               );
             }
             await waitFirstCompileDone;
@@ -350,7 +358,8 @@ export async function createDevServer<
     listen: async () => {
       if (!httpServer) {
         throw new Error(
-          '[rsbuild:server] Can not listen dev server as `server.middlewareMode` is enabled.',
+          `${color.dim('[rsbuild:server]')} Can not listen dev server as ` +
+            `${color.yellow('server.middlewareMode')} is enabled.`,
         );
       }
 
