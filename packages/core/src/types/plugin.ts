@@ -59,7 +59,7 @@ export type EnvironmentAsyncHook<
    * Registers a callback function to be executed when the hook is triggered.
    * The callback can be a plain function or a HookDescriptor that includes execution order.
    * The callback will be executed in all environments by default.
-   * If you need to specify the environment, please use `tapEnvironment`
+   * If you need to specify the environment, use `tapEnvironment`
    * @param cb The callback function or hook descriptor to register
    */
   tap: (cb: Callback | HookDescriptor<Callback>) => void;
