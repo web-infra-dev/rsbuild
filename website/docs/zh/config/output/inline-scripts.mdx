@@ -3,14 +3,14 @@
 - **类型：**
 
 ```ts
-export type InlineChunkTestFunction = (params: {
+type InlineChunkTestFunction = (params: {
   size: number;
   name: string;
 }) => boolean;
 
-export type InlineChunkTest = RegExp | InlineChunkTestFunction;
+type InlineChunkTest = RegExp | InlineChunkTestFunction;
 
-export type InlineChunkConfig =
+type InlineChunkConfig =
   | boolean
   | InlineChunkTest
   | { enable?: boolean | 'auto'; test: InlineChunkTest };
