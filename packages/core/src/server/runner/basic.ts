@@ -2,7 +2,7 @@ import path from 'node:path';
 
 import type { CompilerOptions, Runner } from './type';
 
-import { color } from 'src/helpers';
+import { color } from '../../helpers';
 import type {
   BasicGlobalContext,
   BasicModuleScope,

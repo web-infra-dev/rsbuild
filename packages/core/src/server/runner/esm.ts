@@ -3,7 +3,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import vm, { type SourceTextModule } from 'node:vm';
 import { asModule } from './asModule';
 
-import { color } from 'src/helpers';
+import { color } from '../../helpers';
 import { CommonJsRunner } from './cjs';
 import { EsmMode, type RunnerRequirer } from './type';
 

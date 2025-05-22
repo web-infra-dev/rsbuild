@@ -1,8 +1,7 @@
 /**
  * The following code is modified based on @rspack/test-tools/runner
- *
  */
-import { color } from 'src/helpers';
+import { color } from '../../helpers';
 import { EsmRunner } from './esm';
 import type { Runner, RunnerFactory, RunnerFactoryOptions } from './type';
 

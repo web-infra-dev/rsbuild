@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { color } from 'src/helpers';
+import { color } from '../helpers';
 import type { EnvironmentContext, Rspack } from '../types';
 import { run } from './runner';
 
