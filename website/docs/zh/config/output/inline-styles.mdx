@@ -3,17 +3,17 @@
 - **类型：**
 
 ```ts
-type InlineStylesTest =
-  | RegExp
-  | ((params: { size: number; name: string }) => boolean);
+export type InlineChunkTestFunction = (params: {
+  size: number;
+  name: string;
+}) => boolean;
 
-type InlineStyles =
+export type InlineChunkTest = RegExp | InlineChunkTestFunction;
+
+export type InlineChunkConfig =
   | boolean
-  | InlineStylesTest
-  | {
-      enable?: boolean | 'auto';
-      test: InlineStylesTest;
-    };
+  | InlineChunkTest
+  | { enable?: boolean | 'auto'; test: InlineChunkTest };
 ```
 
 - **默认值：** `false`
