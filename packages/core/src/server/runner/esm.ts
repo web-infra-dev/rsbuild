@@ -3,6 +3,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import vm, { type SourceTextModule } from 'node:vm';
 import { asModule } from './asModule';
 
+import { color } from 'src/helpers';
 import { CommonJsRunner } from './cjs';
 import { EsmMode, type RunnerRequirer } from './type';
 
@@ -40,7 +41,7 @@ export class EsmRunner extends CommonJsRunner {
     return (currentDirectory, modulePath, context = {}) => {
       if (!vm.SourceTextModule) {
         throw new Error(
-          '[rsbuild:runner] Running ESM bundle needs add Node.js option "--experimental-vm-modules".',
+          `${color.dim('[rsbuild:runner]')} Running ESM bundle needs add Node.js option ${color.yellow('--experimental-vm-modules')}.`,
         );
       }
       const _require = this.getRequire();

@@ -165,7 +165,7 @@ function validateRspackConfig(config: Rspack.Configuration) {
       ) {
         const name = color.bold(color.yellow(plugin.name));
         throw new Error(
-          `[rsbuild:plugin] "${name}" appears to be an Rsbuild plugin. It cannot be used as an Rspack plugin.`,
+          `${color.dim('[rsbuild:plugin]')} "${color.yellow(name)}" appears to be an Rsbuild plugin. It cannot be used as an Rspack plugin.`,
         );
       }
     }
@@ -173,7 +173,9 @@ function validateRspackConfig(config: Rspack.Configuration) {
 
   if (config.devServer) {
     logger.warn(
-      `[rsbuild:config] Find invalid Rspack config: "${color.yellow('devServer')}". Note that Rspack's "devServer" config is not supported by Rsbuild. You can use Rsbuild's "dev" config to configure the Rsbuild dev server.`,
+      `${color.dim('[rsbuild:config]')} Find invalid Rspack config: "${color.yellow(
+        'devServer',
+      )}". Note that Rspack's "devServer" config is not supported by Rsbuild. You can use Rsbuild's "dev" config to configure the Rsbuild dev server.`,
     );
   }
 }

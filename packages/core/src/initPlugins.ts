@@ -2,7 +2,7 @@ import { join, posix } from 'node:path';
 import type { Compiler } from '@rspack/core';
 import { LOADER_PATH } from './constants';
 import { createPublicContext } from './createContext';
-import { removeLeadingSlash } from './helpers';
+import { color, removeLeadingSlash } from './helpers';
 import { exitHook } from './helpers/exitHook';
 import type { TransformLoaderOptions } from './loader/transformLoader';
 import { logger } from './logger';
@@ -42,7 +42,7 @@ export function getHTMLPathByEntry(
 
   if (prefix.startsWith('/')) {
     logger.warn(
-      `Absolute path is not recommended at \`output.distPath.html\`: "${prefix}", please use relative path instead.`,
+      `${color.dim('[rsbuild:config]')} Absolute path is not recommended at ${color.yellow(`output.distPath.html: "${prefix}"`)}, use relative path instead.`,
     );
   }
 
@@ -88,7 +88,9 @@ const mapProcessAssetsStage = (
     case 'report':
       return Compilation.PROCESS_ASSETS_STAGE_REPORT;
     default:
-      throw new Error(`[rsbuild] Invalid process assets stage: ${stage}`);
+      throw new Error(
+        `${color.dim('[rsbuild]')} Invalid process assets stage: ${stage}`,
+      );
   }
 };
 
@@ -114,7 +116,7 @@ export function initPluginAPI({
 
         if (!config) {
           throw new Error(
-            `[rsbuild] Cannot find normalized config by environment: ${options.environment}.`,
+            `${color.dim('[rsbuild]')} Cannot find normalized config by environment: ${options.environment}.`,
           );
         }
         return config;
@@ -122,7 +124,9 @@ export function initPluginAPI({
       return context.normalizedConfig;
     }
     throw new Error(
-      '[rsbuild] Cannot access normalized config until modifyRsbuildConfig is called.',
+      `${color.dim('[rsbuild]')} Cannot access normalized config until ${color.yellow(
+        'modifyRsbuildConfig',
+      )} is called.`,
     );
   }
 
@@ -135,7 +139,9 @@ export function initPluginAPI({
       case 'normalized':
         return getNormalizedConfig();
     }
-    throw new Error('[rsbuild] `getRsbuildConfig` get an invalid type param.');
+    throw new Error(
+      `${color.dim('[rsbuild]')} ${color.yellow('getRsbuildConfig')} get an invalid type param.`,
+    );
   }) as GetRsbuildConfig;
 
   const exposed: Array<{ id: string | symbol; api: any }> = [];

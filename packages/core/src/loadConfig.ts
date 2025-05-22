@@ -191,7 +191,7 @@ export async function loadConfig({
 
     if (result === undefined) {
       throw new Error(
-        '[rsbuild:loadConfig] The config function must return a config object.',
+        `${color.dim('[rsbuild:loadConfig]')} The config function must return a config object.`,
       );
     }
 
@@ -203,7 +203,7 @@ export async function loadConfig({
 
   if (!isObject(configExport)) {
     throw new Error(
-      `[rsbuild:loadConfig] The config must be an object or a function that returns an object, get ${color.yellow(
+      `${color.dim('[rsbuild:loadConfig]')} The config must be an object or a function that returns an object, get ${color.yellow(
         configExport,
       )}`,
     );

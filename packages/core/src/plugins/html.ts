@@ -76,7 +76,7 @@ export async function getTemplate(
     // Check if custom template exists
     if (!(await isFileExists(absolutePath))) {
       throw new Error(
-        `[rsbuild:html] Failed to resolve HTML template, please check if the file exists: ${color.cyan(
+        `${color.dim('[rsbuild:html]')} Failed to resolve HTML template, check if the file exists: ${color.yellow(
           absolutePath,
         )}`,
       );

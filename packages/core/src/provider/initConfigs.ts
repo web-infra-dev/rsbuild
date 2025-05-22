@@ -35,7 +35,9 @@ async function modifyRsbuildConfig(context: InternalContext) {
 
   if (modified.plugins?.length !== pluginsCount) {
     logger.warn(
-      '[rsbuild] Cannot change plugins via `modifyRsbuildConfig` as plugins are already initialized when it executes.',
+      `${color.dim('[rsbuild]')} Cannot change plugins via ${color.yellow(
+        'modifyRsbuildConfig',
+      )} as plugins are already initialized when it executes.`,
     );
   }
 
@@ -132,7 +134,9 @@ const initEnvironmentConfigs = (
 
     if (!Object.keys(resolvedEnvironments).length) {
       throw new Error(
-        `[rsbuild:config] The current build is specified to run only in the ${color.yellow(specifiedEnvironments?.join(','))} environment, but the configuration of the specified environment was not found.`,
+        `${color.dim('[rsbuild:config]')} The current build is specified to run only in the ${color.yellow(
+          specifiedEnvironments?.join(','),
+        )} environment, but the configuration of the specified environment was not found.`,
       );
     }
     return resolvedEnvironments;
@@ -142,7 +146,9 @@ const initEnvironmentConfigs = (
 
   if (!isEnvironmentEnabled(defaultEnvironmentName)) {
     throw new Error(
-      `[rsbuild:config] The current build is specified to run only in the ${color.yellow(specifiedEnvironments?.join(','))} environment, but the configuration of the specified environment was not found.`,
+      `${color.dim('[rsbuild:config]')} The current build is specified to run only in the ${color.yellow(
+        specifiedEnvironments?.join(','),
+      )} environment, but the configuration of the specified environment was not found.`,
     );
   }
 
@@ -163,7 +169,9 @@ const initEnvironmentConfigs = (
 const validateRsbuildConfig = (config: NormalizedConfig) => {
   if (config.server.base && !config.server.base.startsWith('/')) {
     throw new Error(
-      `[rsbuild:config] The "server.base" option should start with a slash, for example: "/base"`,
+      `${color.dim('[rsbuild:config]')} The ${color.yellow(
+        '"server.base"',
+      )} option should start with a slash, for example: "/base"`,
     );
   }
 };

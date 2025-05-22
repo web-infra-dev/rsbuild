@@ -3,7 +3,7 @@ import deepmerge from 'deepmerge';
 import { reduceConfigs, reduceConfigsWithContext } from 'reduce-configs';
 import type { AcceptedPlugin, PluginCreator } from '../../compiled/postcss';
 import { CSS_REGEX, LOADER_PATH } from '../constants';
-import { castArray, getFilename } from '../helpers';
+import { castArray, color, getFilename } from '../helpers';
 import { getCompiledPath } from '../helpers/path';
 import { getCssExtractPlugin } from '../pluginHelper';
 import type {
@@ -197,7 +197,9 @@ const getPostcssLoaderOptions = async ({
 
       if (typeof options !== 'object' || options === null) {
         throw new Error(
-          `[rsbuild:css] \`postcssOptions\` function must return a PostCSSOptions object, got "${typeof options}".`,
+          `${color.dim('[rsbuild:css]')} \`postcssOptions\` function must return a PostCSSOptions object, got ${color.yellow(
+            typeof options,
+          )}.`,
         );
       }
 

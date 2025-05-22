@@ -256,7 +256,9 @@ export function getFilename(
       return filename.assets ?? `[name]${hash}[ext]`;
     default:
       throw new Error(
-        `[rsbuild:config] unknown key ${type} in "output.filename"`,
+        `${color.dim('[rsbuild:config]')} unknown key ${color.yellow(
+          type,
+        )} in ${color.yellow('output.filename')}`,
       );
   }
 }
