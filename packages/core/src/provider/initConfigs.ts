@@ -25,11 +25,19 @@ import { generateRspackConfig } from './rspackConfig';
 
 async function modifyRsbuildConfig(context: InternalContext) {
   logger.debug('modify Rsbuild config');
+
+  const pluginsCount = context.config.plugins?.length ?? 0;
   const [modified] = await context.hooks.modifyRsbuildConfig.callChain(
     context.config,
     { mergeRsbuildConfig },
   );
   context.config = modified;
+
+  if (modified.plugins?.length !== pluginsCount) {
+    logger.warn(
+      '[rsbuild] Cannot change plugins via `modifyRsbuildConfig` as plugins are already initialized when it executes.',
+    );
+  }
 
   logger.debug('modify Rsbuild config done');
 }
