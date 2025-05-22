@@ -295,6 +295,48 @@ export default {
 <p>result: <%= show ? value : 'none' %></p>
 ```
 
+### 循环语句
+
+- for 循环：
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    templateParameters: {
+      items: ['Item 1', 'Item 2', 'Item 3'],
+    },
+  },
+};
+```
+
+```ejs title="index.html"
+<ul>
+  <% for (let i = 0; i < items.length; i++) { %>
+  <li><%= items[i] %></li>
+  <% } %>
+</ul>
+```
+
+- forEach 循环：
+
+```ejs title="index.html"
+<ul>
+  <% items.forEach(function(item, index) { %>
+  <li><%= item %></li>
+  <% }); %>
+</ul>
+```
+
+- for...of 循环：
+
+```ejs title="index.html"
+<ul>
+  <% for (let item of items) { %>
+  <li><%= item %></li>
+  <% } %>
+</ul>
+```
+
 ## 其他模板引擎
 
 Rsbuild 也支持通过插件来使用其他模板引擎，如 [EJS](https://ejs.co/)、[Pug](https://pugjs.org/) 等。
