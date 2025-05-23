@@ -295,6 +295,48 @@ export default {
 <p>result: <%= show ? value : 'none' %></p>
 ```
 
+### Loop statements
+
+- for loop:
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    templateParameters: {
+      items: ['Item 1', 'Item 2', 'Item 3'],
+    },
+  },
+};
+```
+
+```ejs title="index.html"
+<ul>
+  <% for (let i = 0; i < items.length; i++) { %>
+  <li><%= items[i] %></li>
+  <% } %>
+</ul>
+```
+
+- forEach loop:
+
+```ejs title="index.html"
+<ul>
+  <% items.forEach(function(item, index) { %>
+  <li><%= item %> <%= index %></li>
+  <% }); %>
+</ul>
+```
+
+- for...of loop:
+
+```ejs title="index.html"
+<ul>
+  <% for (let item of items) { %>
+  <li><%= item %></li>
+  <% } %>
+</ul>
+```
+
 ## Other template engines
 
 Rsbuild also supports using other template engines via plugins, such as [EJS](https://ejs.co/) and [Pug](https://pugjs.org/).
