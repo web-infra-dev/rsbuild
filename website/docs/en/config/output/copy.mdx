@@ -34,3 +34,18 @@ export default {
   },
 };
 ```
+
+When copying files from the public directory to the dist directory during a production build, the `public/someDir` directory will be ignored:
+
+```js
+export default {
+  output: {
+    copy: [{ from: './public', globOptions: { ignore: ['**/someDir/**'] } }],
+  },
+  server: {
+    publicDir: {
+      copyOnBuild: false,
+    },
+  },
+};
+```
