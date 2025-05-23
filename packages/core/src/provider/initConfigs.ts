@@ -33,7 +33,8 @@ async function modifyRsbuildConfig(context: InternalContext) {
   );
   context.config = modified;
 
-  if (modified.plugins?.length !== pluginsCount) {
+  const newPluginsCount = modified.plugins?.length ?? 0;
+  if (newPluginsCount !== pluginsCount) {
     logger.warn(
       `${color.dim('[rsbuild]')} Cannot change plugins via ${color.yellow(
         'modifyRsbuildConfig',
