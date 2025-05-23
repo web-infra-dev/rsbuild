@@ -1002,19 +1002,23 @@ export type Minify =
   | boolean
   | {
       /**
-       * Whether to enable JavaScript minification.
+       * Whether to enable minification for JavaScript code in production mode.
+       * @default true
        */
       js?: boolean;
       /**
        * Minimizer options of JavaScript, which will be passed to SWC.
+       * @default {}
        */
       jsOptions?: SwcJsMinimizerRspackPluginOptions;
       /**
-       * Whether to enable CSS minimization.
+       * Whether to enable minification for CSS code in production mode.
+       * @default true
        */
       css?: boolean;
       /**
        * Minimizer options of CSS, which will be passed to LightningCSS.
+       * @default inherit from `tools.lightningcssLoader` config
        */
       cssOptions?: LightningCssMinimizerRspackPluginOptions;
     };
@@ -1161,7 +1165,8 @@ export interface OutputConfig {
    */
   cssModules?: CSSModules;
   /**
-   * Whether to disable code minification in production build.
+   * Configure whether to enable code minification in production mode, or to configure
+   * minimizer options.
    * @default true
    */
   minify?: Minify;
