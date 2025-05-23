@@ -15,7 +15,7 @@ type Minify =
 
 - **Default:** `true`
 
-Configure whether to enable code minification in production mode, or to configure minimizer options.
+Configure whether to enable code minification in production mode, and to configure minimizer options.
 
 By default, JS and CSS code will be automatically minimized in production mode to improve page performance. If you do not want to minify the code, you can set `minify` to `false` to disable minification for all code. Alternatively, you can control the behavior of code minification through detailed configuration of the `minify` option. Below are detailed explanations for each configuration option:
 
@@ -46,9 +46,9 @@ This usage is usually used for debugging and troubleshooting. It is not recommen
 ### minify.js
 
 - **Type:** `boolean`
-- **Default:** `mode === 'production'`
+- **Default:** `true`
 
-Whether to enable minification for JavaScript code.
+Whether to enable minification for JavaScript code in production mode.
 
 For example, disable JavaScript minification:
 
@@ -90,9 +90,9 @@ export default {
 ### minify.css
 
 - **Type:** `boolean`
-- **Default:** `mode === 'production'`
+- **Default:** `true`
 
-Whether to enable minification for CSS code.
+Whether to enable minification for CSS code in production mode.
 
 For example, disable CSS minification:
 
@@ -111,7 +111,7 @@ export default {
 - **Type:** `Rspack.LightningcssMinimizerRspackPluginOptions`
 - **Default:** inherit from [tools.lightningcssLoader](/config/tools/lightningcss-loader)
 
-`output.minify.cssOptions` is used to configure Lightning CSS's minification options. For specific configuration items, please refer to [LightningCssMinimizerRspackPlugin Documentation](https://rspack.dev/plugins/rspack/lightning-css-minimizer-rspack-plugin).
+`output.minify.cssOptions` is used to configure Lightning CSS's minification options. For detailed configuration options, please refer to [LightningCssMinimizerRspackPlugin Documentation](https://rspack.dev/plugins/rspack/lightning-css-minimizer-rspack-plugin).
 
 For example, disable error recovery:
 
