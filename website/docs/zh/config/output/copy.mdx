@@ -34,3 +34,18 @@ export default {
   },
 };
 ```
+
+在拷贝 `public` 下的文件到构建产物目录时，将忽略 `public/someDir` 目录：
+
+```js
+export default {
+  output: {
+    copy: [{ from: './public', globOptions: { ignore: ['**/someDir/**'] } }],
+  },
+  server: {
+    publicDir: {
+      copyOnBuild: false,
+    },
+  },
+};
+```
