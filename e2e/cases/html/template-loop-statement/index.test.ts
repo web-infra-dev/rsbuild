@@ -18,9 +18,9 @@ test('should render loop statements correctly', async () => {
 
   // forEach loop
   expect(indexHtml).toContain('<div id="for-each">');
-  expect(indexHtml).toContain('<li>for each: Item 1</li>');
-  expect(indexHtml).toContain('<li>for each: Item 2</li>');
-  expect(indexHtml).toContain('<li>for each: Item 3</li>');
+  expect(indexHtml).toContain('<li>for each: Item 1 0</li>');
+  expect(indexHtml).toContain('<li>for each: Item 2 1</li>');
+  expect(indexHtml).toContain('<li>for each: Item 3 2</li>');
 
   // for...of loop
   expect(indexHtml).toContain('<div id="for-of">');
