@@ -1,4 +1,5 @@
 import { pluginSass } from '@rsbuild/plugin-sass';
+import { pluginAlgolia } from '@rspress/plugin-algolia';
 import { pluginClientRedirects } from '@rspress/plugin-client-redirects';
 import { pluginLlms } from '@rspress/plugin-llms';
 import { pluginRss } from '@rspress/plugin-rss';
@@ -19,6 +20,7 @@ const description = 'The Rspack-based build tool';
 
 export default defineConfig({
   plugins: [
+    pluginAlgolia(),
     pluginLlms(),
     pluginSitemap({
       domain: siteUrl,
