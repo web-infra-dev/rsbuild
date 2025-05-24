@@ -15,7 +15,7 @@ export function setupCliShortcuts({
   restartServer,
   customShortcuts,
 }: {
-  help?: boolean;
+  help?: boolean | string;
   openPage: () => Promise<void>;
   closeServer: () => Promise<void>;
   printUrls: () => void;
@@ -74,7 +74,9 @@ export function setupCliShortcuts({
 
   if (help) {
     logger.log(
-      `  ➜ ${color.dim('press')} ${color.bold('h + enter')} ${color.dim('to show shortcuts')}\n`,
+      help === true
+        ? `  ➜ ${color.dim('press')} ${color.bold('h + enter')} ${color.dim('to show shortcuts')}\n`
+        : `  ➜ ${help}`,
     );
   }
 
