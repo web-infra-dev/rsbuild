@@ -1608,9 +1608,12 @@ export interface DevConfig {
         custom?: (shortcuts: CliShortcut[]) => CliShortcut[];
         /**
          * Whether to print the help hint when the server is started.
+         * - `true`: Print the default help hint.
+         * - `false`: Disable the help hint.
+         * - `string`: Print a custom help hint.
          * @default true
          */
-        help?: boolean;
+        help?: boolean | string;
       };
   /**
    * Provides the ability to execute a custom function and apply custom middlewares.

@@ -33,7 +33,7 @@ Press `h + Enter` to show all shortcuts:
 
 - Enable:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     cliShortcuts: true,
@@ -43,7 +43,7 @@ export default {
 
 - Disable:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     cliShortcuts: false,
@@ -57,7 +57,7 @@ export default {
 
 - Add custom shortcuts:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     cliShortcuts: {
@@ -80,7 +80,7 @@ export default {
 
 - Disable some shortcuts:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     cliShortcuts: {
@@ -94,19 +94,31 @@ export default {
 
 ## Print help
 
-`help` option can be used to control whether to print the help hint when the server is started:
+`help` option can be used to control whether to print the help hint when the server is started, the default help hint is:
 
 ```bash
   ➜ press h + enter to show shortcuts
 ```
 
-- Disable:
+- Disable the help hint:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     cliShortcuts: {
       help: false,
+    },
+  },
+};
+```
+
+- Print a custom help hint:
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    cliShortcuts: {
+      help: 'type "h + enter" to view available commands',
     },
   },
 };
