@@ -1,12 +1,8 @@
-import { exec } from 'node:child_process';
-import { promisify } from 'node:util';
 import { STATIC_PATH } from '../constants';
 import { canParse, castArray, color } from '../helpers';
 import { logger } from '../logger';
 import type { NormalizedConfig, Routes } from '../types';
 import { getHostInUrl } from './helper';
-
-const execAsync = promisify(exec);
 
 /**
  * browsers on darwin that are supported by `openChrome.applescript`
@@ -21,14 +17,6 @@ const supportedChromiumBrowsers = [
   'Vivaldi',
   'Chromium',
 ];
-
-/**
- * Find the browser that is currently running
- */
-const getDefaultBrowserForAppleScript = async () => {
-  const { stdout: ps } = await execAsync('ps cax');
-  return supportedChromiumBrowsers.find((b) => ps.includes(b));
-};
 
 /**
  * Map the browser name to the name used in `openChrome.applescript`
@@ -75,6 +63,18 @@ async function openBrowser(url: string): Promise<boolean> {
   // a Chromium browser with AppleScript. This lets us reuse an
   // existing tab when possible instead of creating a new one.
   if (shouldTryAppleScript(browser, browserArgs)) {
+    const { exec } = await import('node:child_process');
+    const { promisify } = await import('node:util');
+    const execAsync = promisify(exec);
+
+    /**
+     * Find the browser that is currently running
+     */
+    const getDefaultBrowserForAppleScript = async () => {
+      const { stdout: ps } = await execAsync('ps cax');
+      return supportedChromiumBrowsers.find((b) => ps.includes(b));
+    };
+
     try {
       const chromiumBrowser = browser
         ? mapChromiumBrowserName(browser)
