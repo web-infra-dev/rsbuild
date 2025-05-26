@@ -469,9 +469,9 @@ export function getServerTerminator(
   server: Server | Http2SecureServer,
 ): () => Promise<void> {
   let listened = false;
-  const pendingSockets = new Set<net.Socket>();
+  const pendingSockets = new Set<Socket>();
 
-  const onConnection = (socket: net.Socket) => {
+  const onConnection = (socket: Socket) => {
     pendingSockets.add(socket);
     socket.on('close', () => {
       pendingSockets.delete(socket);

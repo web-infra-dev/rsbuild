@@ -1,4 +1,3 @@
-import { promises as dns } from 'node:dns';
 import type { DevConfig, ServerConfig } from '../types/config';
 import { isWildcardHost } from './helper';
 
@@ -12,6 +11,7 @@ import { isWildcardHost } from './helper';
 export async function getLocalhostResolvedAddress(): Promise<
   string | undefined
 > {
+  const { promises: dns } = await import('node:dns');
   const [defaultLookup, explicitLookup] = await Promise.all([
     dns.lookup('localhost'),
     dns.lookup('localhost', { verbatim: true }),
