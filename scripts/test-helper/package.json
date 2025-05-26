@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@rsbuild/core": "workspace:*",
-    "@types/node": "^22.15.19",
+    "@types/node": "^22.15.21",
     "path-serializer": "0.4.0",
     "typescript": "^5.8.3",
     "upath": "2.0.1"
