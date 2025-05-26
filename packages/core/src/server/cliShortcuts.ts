@@ -1,4 +1,3 @@
-import readline from 'node:readline';
 import { color, isTTY } from '../helpers';
 import { logger } from '../logger';
 import type { CliShortcut, NormalizedDevConfig } from '../types/config';
@@ -7,7 +6,7 @@ export const isCliShortcutsEnabled = (
   devConfig: NormalizedDevConfig,
 ): boolean => devConfig.cliShortcuts && isTTY('stdin');
 
-export function setupCliShortcuts({
+export async function setupCliShortcuts({
   help = true,
   openPage,
   closeServer,
@@ -21,7 +20,7 @@ export function setupCliShortcuts({
   printUrls: () => void;
   restartServer?: () => Promise<boolean>;
   customShortcuts?: (shortcuts: CliShortcut[]) => CliShortcut[];
-}): () => void {
+}): Promise<() => void> {
   let shortcuts = [
     {
       key: 'c',
@@ -80,7 +79,8 @@ export function setupCliShortcuts({
     );
   }
 
-  const rl = readline.createInterface({
+  const { createInterface } = await import('node:readline');
+  const rl = createInterface({
     input: process.stdin,
   });
 
