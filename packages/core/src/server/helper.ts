@@ -1,6 +1,5 @@
 import type { IncomingMessage, Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
-import net from 'node:net';
 import type { Socket } from 'node:net';
 import os from 'node:os';
 import { posix, relative, sep } from 'node:path';
@@ -265,14 +264,16 @@ export const getPort = async ({
     tryLimits = 1;
   }
 
+  const { createServer } = await import('node:net');
   const original = port;
 
   let found = false;
   let attempts = 0;
+
   while (!found && attempts <= tryLimits) {
     try {
       await new Promise((resolve, reject) => {
-        const server = net.createServer();
+        const server = createServer();
         server.unref();
         server.on('error', reject);
         server.listen({ port, host }, () => {
@@ -372,11 +373,13 @@ const isLoopbackHost = (host: string) => {
   return loopbackHosts.has(host);
 };
 
-export const getHostInUrl = (host: string): string => {
+export const getHostInUrl = async (host: string): Promise<string> => {
   if (host === DEFAULT_DEV_HOST) {
     return 'localhost';
   }
-  if (net.isIPv6(host)) {
+
+  const { isIPv6 } = await import('node:net');
+  if (isIPv6(host)) {
     return host === '::' ? '[::1]' : `[${host}]`;
   }
   return host;
@@ -406,7 +409,7 @@ const getUrlLabel = (url: string) => {
 
 type AddressUrl = { label: string; url: string };
 
-export const getAddressUrls = ({
+export const getAddressUrls = async ({
   protocol = 'http',
   port,
   host,
@@ -414,16 +417,17 @@ export const getAddressUrls = ({
   protocol?: string;
   port: number;
   host?: string;
-}): AddressUrl[] => {
+}): Promise<AddressUrl[]> => {
   if (host && host !== DEFAULT_DEV_HOST) {
+    const url = concatUrl({
+      port,
+      host: await getHostInUrl(host),
+      protocol,
+    });
     return [
       {
         label: isLoopbackHost(host) ? LOCAL_LABEL : NETWORK_LABEL,
-        url: concatUrl({
-          port,
-          host: getHostInUrl(host),
-          protocol,
-        }),
+        url,
       },
     ];
   }
