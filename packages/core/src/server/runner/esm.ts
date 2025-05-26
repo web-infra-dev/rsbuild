@@ -1,11 +1,13 @@
+import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import vm, { type SourceTextModule } from 'node:vm';
-import { asModule } from './asModule';
-
+import type { SourceTextModule } from 'node:vm';
 import { color } from '../../helpers';
+import { asModule } from './asModule';
 import { CommonJsRunner } from './cjs';
 import { EsmMode, type RunnerRequirer } from './type';
+
+const require = createRequire(import.meta.url);
 
 export class EsmRunner extends CommonJsRunner {
   protected createRunner(): void {
@@ -38,6 +40,8 @@ export class EsmRunner extends CommonJsRunner {
   protected createEsmRequirer(): RunnerRequirer {
     const esmCache = new Map<string, SourceTextModule>();
     const esmIdentifier = this._options.name;
+    const vm = require('node:vm') as typeof import('node:vm');
+
     return (currentDirectory, modulePath, context = {}) => {
       if (!vm.SourceTextModule) {
         throw new Error(
