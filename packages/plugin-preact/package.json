@@ -34,8 +34,8 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rslib/core": "0.8.0",
-    "@types/node": "^22.15.19",
-    "preact": "^10.26.6",
+    "@types/node": "^22.15.21",
+    "preact": "^10.26.7",
     "typescript": "^5.8.3"
   },
   "peerDependencies": {
