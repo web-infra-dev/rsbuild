@@ -268,7 +268,7 @@ export async function startProdServer(
               ? {}
               : config.dev.cliShortcuts;
 
-          setupCliShortcuts({
+          await setupCliShortcuts({
             openPage,
             closeServer,
             printUrls,

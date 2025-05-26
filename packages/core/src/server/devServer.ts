@@ -246,7 +246,7 @@ export async function createDevServer<
     registerCleanup(closeServer);
   }
 
-  const beforeCreateCompiler = () => {
+  const beforeCreateCompiler = async () => {
     printUrls();
 
     if (cliShortcutsEnabled) {
@@ -255,7 +255,7 @@ export async function createDevServer<
           ? {}
           : devConfig.cliShortcuts;
 
-      const cleanup = setupCliShortcuts({
+      const cleanup = await setupCliShortcuts({
         openPage,
         closeServer,
         printUrls,
@@ -436,7 +436,7 @@ export async function createDevServer<
     // print server url should between listen and beforeCompile
     context.hooks.onBeforeCreateCompiler.tap(beforeCreateCompiler);
   } else {
-    beforeCreateCompiler();
+    await beforeCreateCompiler();
   }
 
   const compilationManager = runCompile ? await startCompile() : undefined;
