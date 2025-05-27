@@ -84,7 +84,7 @@ const coloringAssetName = (assetName: string) => {
 };
 
 const COMPRESSIBLE_REGEX =
-  /\.(?:js|css|html|json|svg|txt|xml|xhtml|wasm|manifest)$/i;
+  /\.(?:js|css|html|json|svg|txt|xml|xhtml|wasm|manifest|md)$/i;
 
 const isCompressible = (assetName: string) =>
   COMPRESSIBLE_REGEX.test(assetName);
