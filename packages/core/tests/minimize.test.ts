@@ -112,7 +112,7 @@ describe('plugin-minimize', () => {
     process.env.NODE_ENV = 'test';
   });
 
-  it('should not minimizer for CSS when output.minify.css is false', async () => {
+  it('should not apply minimizer for CSS when output.minify.css is false', async () => {
     process.env.NODE_ENV = 'production';
 
     const rsbuild = await createStubRsbuild({

@@ -75,8 +75,8 @@ export const parseMinifyOptions = (
   }
 
   return {
-    minifyJs: (minify.js === true && isProd) || minify.js === 'always',
-    minifyCss: (minify.css === true && isProd) || minify.css === 'always',
+    minifyJs: minify.js !== false && (minify.js === 'always' || isProd),
+    minifyCss: minify.css !== false && (minify.css === 'always' || isProd),
     jsOptions: minify.jsOptions,
     cssOptions: minify.cssOptions,
   };
