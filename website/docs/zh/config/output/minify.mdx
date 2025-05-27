@@ -48,7 +48,11 @@ export default {
 - **类型：** `boolean`
 - **默认值：** `true`
 
-是否在生产模式下开启对 JavaScript 代码的压缩。
+是否在开启对 JavaScript 代码的压缩：
+
+- `true`: 在生产模式下开启压缩。
+- `false`: 在所有模式下禁用压缩。
+- `'always'`: 在所有模式下开启压缩。
 
 例如禁用 JavaScript 压缩：
 
@@ -57,6 +61,18 @@ export default {
   output: {
     minify: {
       js: false,
+    },
+  },
+};
+```
+
+在开发和生产模式下开启 JavaScript 压缩：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    minify: {
+      js: 'always',
     },
   },
 };
@@ -92,7 +108,11 @@ export default {
 - **类型：** `boolean`
 - **默认值：** `true`
 
-是否在生产模式下开启对 CSS 代码的压缩。
+是否在开启对 CSS 代码的压缩：
+
+- `true`: 在生产模式下开启压缩。
+- `false`: 在所有模式下禁用压缩。
+- `'always'`: 在所有模式下开启压缩。
 
 例如禁用 CSS 压缩：
 
@@ -101,6 +121,18 @@ export default {
   output: {
     minify: {
       css: false,
+    },
+  },
+};
+```
+
+在开发和生产模式下开启 CSS 压缩：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    minify: {
+      css: 'always',
     },
   },
 };
