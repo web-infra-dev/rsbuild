@@ -69,11 +69,11 @@ function useFooterData() {
         },
         {
           title: 'Rslib',
-          link: 'https://lib.rsbuild.dev/',
+          link: 'https://rslib.rs/',
         },
         {
           title: 'Rstest',
-          link: 'https://github.com/web-infra-dev/rstest',
+          link: 'https://rstest.rs',
         },
       ],
     },
