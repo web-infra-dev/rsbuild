@@ -1004,8 +1004,8 @@ export type Minify =
       /**
        * Whether to enable minification for JavaScript bundles.
        * - `true`: Enabled in production mode.
-       * - `false`: Disabled in all mode.
-       * - `'always'`: Enabled in all mode.
+       * - `false`: Disabled in all modes.
+       * - `'always'`: Enabled in all modes.
        * @default true
        */
       js?: boolean | 'always';
@@ -1017,8 +1017,8 @@ export type Minify =
       /**
        * Whether to enable minification for CSS bundles.
        * - `true`: Enabled in production mode.
-       * - `false`: Disabled in all mode.
-       * - `'always'`: Enabled in all mode.
+       * - `false`: Disabled in all modes.
+       * - `'always'`: Enabled in all modes.
        * @default true
        */
       css?: boolean | 'always';
