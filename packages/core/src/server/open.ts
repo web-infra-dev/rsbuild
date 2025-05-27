@@ -196,7 +196,7 @@ export async function open({
 
   const urls: string[] = [];
   const protocol = https ? 'https' : 'http';
-  const host = getHostInUrl(config.server.host);
+  const host = await getHostInUrl(config.server.host);
   const baseUrl = `${protocol}://${host}:${port}`;
 
   if (!targets.length) {

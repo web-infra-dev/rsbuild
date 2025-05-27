@@ -202,7 +202,7 @@ export async function createDevServer<
   };
 
   const protocol = https ? 'https' : 'http';
-  const urls = getAddressUrls({ protocol, port, host });
+  const urls = await getAddressUrls({ protocol, port, host });
 
   const cliShortcutsEnabled = isCliShortcutsEnabled(devConfig);
 
