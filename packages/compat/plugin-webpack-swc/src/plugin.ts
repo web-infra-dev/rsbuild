@@ -117,9 +117,9 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
 
       const { minify } = environmentConfig.output;
       const minifyJs =
-        minify === true || (typeof minify === 'object' && minify.js);
+        minify === true || (typeof minify === 'object' && minify.js === true);
       const minifyCss =
-        minify === true || (typeof minify === 'object' && minify.css);
+        minify === true || (typeof minify === 'object' && minify.css === true);
 
       if (minifyJs) {
         chain.optimization

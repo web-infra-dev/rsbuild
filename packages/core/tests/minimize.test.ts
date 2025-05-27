@@ -66,7 +66,7 @@ describe('plugin-minimize', () => {
     process.env.NODE_ENV = 'test';
   });
 
-  it('should not minimizer for JS when output.minify.js is false', async () => {
+  it('should not apply minimizer for JS when output.minify.js is false', async () => {
     process.env.NODE_ENV = 'production';
 
     const rsbuild = await createStubRsbuild({

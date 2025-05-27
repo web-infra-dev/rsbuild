@@ -350,14 +350,14 @@ export const pluginCss = (): RsbuildPlugin => ({
           ) {
             importLoaders++;
 
-            const { minifyCss } = parseMinifyOptions(config, isProd);
+            const { minifyCss } = parseMinifyOptions(config);
 
             updateRules((rule, type) => {
               // Inline styles are not processed by Rspack's minimizers,
               // so we need to minify them via `builtin:lightningcss-loader`
               const inlineStyle =
                 type === 'inline' || config.output.injectStyles;
-              const minify = inlineStyle && isProd && minifyCss;
+              const minify = inlineStyle && minifyCss;
 
               const lightningcssOptions = getLightningCSSLoaderOptions(
                 config,
