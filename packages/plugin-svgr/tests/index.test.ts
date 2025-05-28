@@ -1,7 +1,6 @@
 import { createRsbuild } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { matchRules } from '@scripts/test-helper';
-import { describe, expect, it } from 'vitest';
 import { type PluginSvgrOptions, pluginSvgr } from '../src';
 
 describe('svgr', () => {

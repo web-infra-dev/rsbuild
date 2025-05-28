@@ -1,6 +1,5 @@
 import { createRsbuild } from '@rsbuild/core';
 import { matchRules } from '@scripts/test-helper';
-import { describe, expect, it } from 'vitest';
 import { pluginBabel } from '../src';
 
 describe('plugins/babel', () => {
