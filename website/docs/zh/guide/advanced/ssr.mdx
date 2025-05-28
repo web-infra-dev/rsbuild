@@ -190,3 +190,54 @@ async function renderHtmlPage(): Promise<string> {
 
 - [SSR + Express Example](https://github.com/rspack-contrib/rstack-examples/blob/main/rsbuild/ssr-express)
 - [SSR + Express + Manifest Example](https://github.com/rspack-contrib/rstack-examples/blob/main/rsbuild/ssr-express-with-manifest)
+
+## 在插件中适配 SSR
+
+在开发 Rsbuild 插件时，如果需要针对 SSR 添加特定的逻辑，可以根据 `target` 进行区分。
+
+- 通过 [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig) 修改 SSR 场景下的 Rsbuild 配置：
+
+```js
+export const myPlugin = () => ({
+  name: 'my-plugin',
+  setup(api) {
+    api.modifyEnvironmentConfig((config) => {
+      if (config.target === 'node') {
+        // SSR 特有的 Rsbuild 配置
+      }
+    });
+  },
+});
+```
+
+- 通过 [modifyRspackConfig](/plugins/dev/hooks#modifyrspackconfig) 修改 SSR 场景下的 Rspack 配置：
+
+```js
+export const myPlugin = () => ({
+  name: 'my-plugin',
+  setup(api) {
+    api.modifyRspackConfig((config, { target }) => {
+      if (target === 'node') {
+        // SSR 特有的 Rspack 配置
+      }
+    });
+  },
+});
+```
+
+- 通过 [transform](/plugins/dev/core#apitransform) 为 SSR 和客户端分别进行代码转换：
+
+```js
+export const myPlugin = () => ({
+  name: 'my-plugin',
+  setup(api) {
+    api.transform({ test: /foo\.js$/, targets: ['web'] }, ({ code }) => {
+      // 转换 client 代码
+    });
+
+    api.transform({ test: /foo\.js$/, targets: ['node'] }, ({ code }) => {
+      // 转换 server 代码
+    });
+  },
+});
+```

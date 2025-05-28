@@ -190,3 +190,54 @@ async function renderHtmlPage(): Promise<string> {
 
 - [SSR + Express Example](https://github.com/rspack-contrib/rstack-examples/blob/main/rsbuild/ssr-express)
 - [SSR + Express + Manifest Example](https://github.com/rspack-contrib/rstack-examples/blob/main/rsbuild/ssr-express-with-manifest)
+
+## SSR-specific plugins
+
+When developing Rsbuild plugins, if you need to add specific logic for SSR, you can distinguish it by `target`.
+
+- Modify Rsbuild configuration for SSR via [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig):
+
+```js
+export const myPlugin = () => ({
+  name: 'my-plugin',
+  setup(api) {
+    api.modifyEnvironmentConfig((config) => {
+      if (config.target === 'node') {
+        // SSR-specific Rsbuild config
+      }
+    });
+  },
+});
+```
+
+- Modify Rspack configuration for SSR via [modifyRspackConfig](/plugins/dev/hooks#modifyrspackconfig):
+
+```js
+export const myPlugin = () => ({
+  name: 'my-plugin',
+  setup(api) {
+    api.modifyRspackConfig((config, { target }) => {
+      if (target === 'node') {
+        // SSR-specific Rspack config
+      }
+    });
+  },
+});
+```
+
+- Transform code for SSR and client separately via [transform](/plugins/dev/core#apitransform):
+
+```js
+export const myPlugin = () => ({
+  name: 'my-plugin',
+  setup(api) {
+    api.transform({ test: /foo\.js$/, targets: ['web'] }, ({ code }) => {
+      // transform client code
+    });
+
+    api.transform({ test: /foo\.js$/, targets: ['node'] }, ({ code }) => {
+      // transform server code
+    });
+  },
+});
+```
