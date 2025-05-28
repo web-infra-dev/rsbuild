@@ -1,13 +1,13 @@
 # source.exclude
 
-- **类型：** [RuleSetCondition](https://rspack.dev/zh/config/module#condition)
+- **类型：** [RuleSetCondition](https://rspack.rs/zh/config/module#condition)
 - **默认值：** `[]`
 
 排除不需要被 [SWC](/guide/configuration/swc) 编译的 JavaScript 或 TypeScript 文件。
 
 ## 用法
 
-`source.exclude` 的用法与 Rspack 中的 [Rule.exclude](https://rspack.dev/zh/config/module#ruleexclude) 一致，支持传入字符串或正则表达式来匹配模块的路径。
+`source.exclude` 的用法与 Rspack 中的 [Rule.exclude](https://rspack.rs/zh/config/module#ruleexclude) 一致，支持传入字符串或正则表达式来匹配模块的路径。
 
 比如:
 
@@ -27,7 +27,7 @@ export default {
 
 `source.exclude` 用于指定不需要编译的 JavaScript/TypeScript 文件。这意味着这些文件不会经过 SWC 转译，但被引用的文件仍然会被打包到产物中。
 
-如果你希望某些文件在打包过程中被排除，不被打包到产物中，可以使用 Rspack 的 [IgnorePlugin](https://rspack.dev/zh/plugins/webpack/ignore-plugin)。
+如果你希望某些文件在打包过程中被排除，不被打包到产物中，可以使用 Rspack 的 [IgnorePlugin](https://rspack.rs/zh/plugins/webpack/ignore-plugin)。
 
 ```ts title="rsbuild.config.ts"
 export default {

@@ -13,7 +13,7 @@ Rsbuild 支持同时为多个环境构建产物。你可以使用 [environments]
 - 定义 `rsc` 和 `ssr` 两个环境，它们的构建目标都是 `node`，分别用于 React Server Components 和 SSR。
 - 定义 `desktop` 和 `mobile` 两个环境，它们的构建目标都是 ` web`，分别用于桌面端浏览器和移动端浏览器。
 
-如果没有 `environments` 配置，你需要为这些场景定义多份配置，并执行多次独立的 Rsbuild 构建。现在通过 `environments` 配置，你可以在一次 Rsbuild 构建中完成多种产物的构建（Rsbuild 基于 Rspack 的 [MultiCompiler](https://rspack.dev/zh/api/javascript-api/compiler#multicompiler) 来实现这一点）。
+如果没有 `environments` 配置，你需要为这些场景定义多份配置，并执行多次独立的 Rsbuild 构建。现在通过 `environments` 配置，你可以在一次 Rsbuild 构建中完成多种产物的构建（Rsbuild 基于 Rspack 的 [MultiCompiler](https://rspack.rs/zh/api/javascript-api/compiler#multicompiler) 来实现这一点）。
 
 Rsbuild 中的每个 `environment` 关联一份 Rsbuild 配置、一份 Rspack 配置和一份构建产物。Rsbuild 插件的开发者可以基于 `environment` 名称，对指定环境的构建流程进行定制，如修改 Rsbuild 或 Rspack 配置、注册或移除插件、调整 Rspack 规则和查看静态资源信息等。
 
@@ -303,7 +303,7 @@ export async function startDevServer() {
 
 默认情况下，Rsbuild 会并行构建所有环境。
 
-如果你需要控制不同环境之间的构建顺序，可以通过 Rspack 的 [dependencies](https://rspack.dev/zh/config/other-options#dependencies) 配置来设置构建依赖关系。
+如果你需要控制不同环境之间的构建顺序，可以通过 Rspack 的 [dependencies](https://rspack.rs/zh/config/other-options#dependencies) 配置来设置构建依赖关系。
 
 例如，假设你需要先完成 `web` 环境的构建，再开始构建 `node` 环境，可以添加如下配置：
 

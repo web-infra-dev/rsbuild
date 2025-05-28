@@ -191,7 +191,7 @@ export interface ToolsConfig {
    */
   lightningcssLoader?: boolean | ConfigChain<Rspack.LightningcssLoaderOptions>;
   /**
-   * Modify the options of [CssExtractRspackPlugin](https://rspack.dev/plugins/rspack/css-extract-rspack-plugin).
+   * Modify the options of [CssExtractRspackPlugin](https://rspack.rs/plugins/rspack/css-extract-rspack-plugin).
    */
   cssExtract?: CSSExtractOptions;
   /**
@@ -251,7 +251,7 @@ export interface SourceConfig {
    * Specify additional JavaScript files that need to be compiled by SWC.
    * Through the `source.include` config, you can specify directories or modules
    * that need to be compiled by Rsbuild. The usage of `source.include` is
-   * consistent with [Rule.include](https://rspack.dev/config/module#ruleinclude)
+   * consistent with [Rule.include](https://rspack.rs/config/module#ruleinclude)
    * in Rspack, which supports passing in strings or regular expressions to match
    * the module path.
    * @default
@@ -752,7 +752,7 @@ export interface PerformanceConfig {
 
   /**
    * Whether capture timing information for each module,
-   * same as the [profile](https://rspack.dev/config/other-options#profile) config of Rspack.
+   * same as the [profile](https://rspack.rs/config/other-options#profile) config of Rspack.
    */
   profile?: boolean;
 }
@@ -1115,7 +1115,7 @@ export interface OutputConfig {
   /**
    * At build time, prevent some `import` dependencies from being packed into bundles in
    * your code, and instead fetch them externally at runtime.
-   * For more information, please see: [Rspack Externals](https://rspack.dev/config/externals)
+   * For more information, please see: [Rspack Externals](https://rspack.rs/config/externals)
    * @default undefined
    */
   externals?: Externals;
@@ -1588,7 +1588,7 @@ export interface DevConfig {
   liveReload?: boolean;
   /**
    * Set the URL prefix of static assets in development mode,
-   * similar to the [output.publicPath](https://rspack.dev/config/output#outputpublicpath)
+   * similar to the [output.publicPath](https://rspack.rs/config/output#outputpublicpath)
    * config of Rspack.
    */
   assetPrefix?: string | boolean;
@@ -1662,7 +1662,7 @@ export interface ResolveConfig {
   /**
    * Set the alias for the module path, which is used to simplify the import path or
    * redirect the module reference.
-   * Similar to the [resolve.alias](https://rspack.dev/config/resolve) config of Rspack.
+   * Similar to the [resolve.alias](https://rspack.rs/config/resolve) config of Rspack.
    */
   alias?: ConfigChain<Alias>;
   /**

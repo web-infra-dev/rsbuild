@@ -2,7 +2,7 @@
   "name": "@rsbuild/plugin-less",
   "version": "1.2.4",
   "description": "Less plugin for Rsbuild",
-  "homepage": "https://rsbuild.dev",
+  "homepage": "https://rsbuild.rs",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",

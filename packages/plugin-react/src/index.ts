@@ -35,7 +35,7 @@ export type PluginReactOptions = {
   enableProfiler?: boolean;
   /**
    * Options passed to `@rspack/plugin-react-refresh`
-   * @see https://rspack.dev/guide/tech/react#rspackplugin-react-refresh
+   * @see https://rspack.rs/guide/tech/react#rspackplugin-react-refresh
    */
   reactRefreshOptions?: ReactRefreshOptions;
   /**

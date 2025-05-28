@@ -2,7 +2,7 @@
   "name": "@rsbuild/core",
   "version": "1.3.22",
   "description": "The Rspack-based build tool.",
-  "homepage": "https://rsbuild.dev",
+  "homepage": "https://rsbuild.rs",
   "bugs": {
     "url": "https://github.com/web-infra-dev/rsbuild/issues"
   },

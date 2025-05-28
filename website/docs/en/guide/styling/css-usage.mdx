@@ -10,7 +10,7 @@ Rsbuild also provides several configurations that allow customization of the pro
 [Lightning CSS](https://lightningcss.dev) is a high performance CSS parser, transformer and minifier written in Rust. It supports parsing and transforming many modern CSS features into syntax supported by target browsers, and also provides a better compression ratio.
 :::
 
-Rsbuild uses Rspack's built-in [lightningcss-loader](https://rspack.dev/guide/features/builtin-lightningcss-loader) to transform CSS code. It automatically reads the project's [browserslist](/guide/advanced/browserslist) config and converts the CSS code to syntax supported by target browsers.
+Rsbuild uses Rspack's built-in [lightningcss-loader](https://rspack.rs/guide/features/builtin-lightningcss-loader) to transform CSS code. It automatically reads the project's [browserslist](/guide/advanced/browserslist) config and converts the CSS code to syntax supported by target browsers.
 
 ### Features
 
@@ -46,7 +46,7 @@ export default {
 
 ## CSS minification
 
-When building for production, Rsbuild enables Rspack's built-in [LightningCssMinimizerRspackPlugin](https://rspack.dev/plugins/rspack/lightning-css-minimizer-rspack-plugin) plugin to minify CSS assets for better transmission efficiency.
+When building for production, Rsbuild enables Rspack's built-in [LightningCssMinimizerRspackPlugin](https://rspack.rs/plugins/rspack/lightning-css-minimizer-rspack-plugin) plugin to minify CSS assets for better transmission efficiency.
 
 - You can disable CSS minification through the [output.minify](/config/output/minify) option or customize the options for `LightningCssMinimizerRspackPlugin`.
 - You can use [@rsbuild/plugin-css-minimizer](https://github.com/rspack-contrib/rsbuild-plugin-css-minimizer) to customize the CSS minimizer, switching to [cssnano](https://github.com/cssnano/cssnano) or other CSS minimizer.

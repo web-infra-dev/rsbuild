@@ -213,7 +213,7 @@ type BuildOptions = {
 
 function Build(options?: BuildOptions): Promise<{
   /**
-   * Rspack 的 [stats](https://rspack.dev/zh/api/javascript-api/stats) 对象。
+   * Rspack 的 [stats](https://rspack.rs/zh/api/javascript-api/stats) 对象。
    */
   stats?: Rspack.Stats | Rspack.MultiStats;
   /**
@@ -286,7 +286,7 @@ await buildResult.close();
 
 ### Stats 对象
 
-在非 watch 模式下，`rsbuild.build()` 会返回一个 Rspack 的 [stats](https://rspack.dev/zh/api/javascript-api/stats) 对象。
+在非 watch 模式下，`rsbuild.build()` 会返回一个 Rspack 的 [stats](https://rspack.rs/zh/api/javascript-api/stats) 对象。
 
 例如，使用 `stats.toJson()` 方法获取所有 assets 信息：
 
@@ -532,7 +532,7 @@ await server.close();
 
 ## rsbuild.createCompiler
 
-创建一个 Rspack [Compiler](https://rspack.dev/zh/api/javascript-api/compiler) 实例；如果本次构建存在多个 [environments](/config/environments)，则返回值为 [MultiCompiler](https://rspack.dev/zh/api/javascript-api/compiler#multicompiler)。
+创建一个 Rspack [Compiler](https://rspack.rs/zh/api/javascript-api/compiler) 实例；如果本次构建存在多个 [environments](/config/environments)，则返回值为 [MultiCompiler](https://rspack.rs/zh/api/javascript-api/compiler#multicompiler)。
 
 - **类型：**
 

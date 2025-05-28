@@ -1,12 +1,12 @@
 # source.include
 
-- **Type:** [Rspack.RuleSetCondition](https://rspack.dev/config/module#condition)
+- **Type:** [Rspack.RuleSetCondition](https://rspack.rs/config/module#condition)
 
 Specify additional JavaScript files that need to be compiled by [SWC](/guide/configuration/swc).
 
 ## Default value
 
-To avoid double compilation, by default, Rsbuild's built-in [swc-loader](https://rspack.dev/guide/features/builtin-swc-loader) compiles the following files:
+To avoid double compilation, by default, Rsbuild's built-in [swc-loader](https://rspack.rs/guide/features/builtin-swc-loader) compiles the following files:
 
 - TypeScript and JSX files in any directory, matching file extensions `.ts`, `.tsx`, `.jsx`, `.mts`, `.cts`.
 - JavaScript files in the [root](/config/root) directory, excluding the `node_modules` directory, matching file extensions `.js`, `.mjs`, `.cjs`.
@@ -24,7 +24,7 @@ const defaultInclude = [
 
 ## Usage
 
-Through the `source.include` config, you can specify directories or modules that need to be compiled by Rsbuild. The usage of `source.include` is consistent with [Rule.include](https://rspack.dev/config/module#ruleinclude) in Rspack, which supports passing in strings or regular expressions to match the module path.
+Through the `source.include` config, you can specify directories or modules that need to be compiled by Rsbuild. The usage of `source.include` is consistent with [Rule.include](https://rspack.rs/config/module#ruleinclude) in Rspack, which supports passing in strings or regular expressions to match the module path.
 
 For example:
 

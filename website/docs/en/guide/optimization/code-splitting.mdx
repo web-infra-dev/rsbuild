@@ -4,7 +4,7 @@ A great chunk splitting strategy is very important to improve the loading perfor
 
 Several [chunk splitting strategies](/guide/optimization/code-splitting) are built into Rsbuild. These should meet the needs of most applications. You can also customize the chunk splitting config to suit your own usage scenario.
 
-> See [Rspack - Code Splitting](https://rspack.dev/guide/optimization/code-splitting) for more details.
+> See [Rspack - Code Splitting](https://rspack.rs/guide/optimization/code-splitting) for more details.
 
 ## Strategies
 
@@ -97,7 +97,7 @@ export default {
 - This configuration will bundle all the generated JS code into one file (except for dynamically imported chunks).
 - The size of a single JS file may be very large, leading to a decrease in page loading performance.
 
-If you need to bundle the chunks split by dynamic import into the single file, you can set the [output.asyncChunks](https://rspack.dev/config/output#outputasyncchunks) option in Rspack to `false`:
+If you need to bundle the chunks split by dynamic import into the single file, you can set the [output.asyncChunks](https://rspack.rs/config/output#outputasyncchunks) option in Rspack to `false`:
 
 ```js
 export default defineConfig({
@@ -232,7 +232,7 @@ export default {
 };
 ```
 
-The `override` config will be merged with Rspack's `splitChunks` config. For specific config details, please refer to [Rspack - splitChunks](https://rspack.dev/config/optimization#optimization-splitchunks).
+The `override` config will be merged with Rspack's `splitChunks` config. For specific config details, please refer to [Rspack - splitChunks](https://rspack.rs/config/optimization#optimization-splitchunks).
 
 ## Using dynamic import for code splitting
 

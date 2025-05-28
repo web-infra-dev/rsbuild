@@ -3,7 +3,7 @@
 - **Type:** `Rspack.Configuration | Function | undefined`
 - **Default:** `undefined`
 
-`tools.rspack` is used to configure [Rspack](https://rspack.dev/config/index).
+`tools.rspack` is used to configure [Rspack](https://rspack.rs/config/index).
 
 :::tip
 The built-in Rspack config in Rsbuild may change with iterations, and these changes won't be reflected in semver. Therefore, your custom config may become invalid when you upgrade Rsbuild.
@@ -234,7 +234,7 @@ export default {
 
 - **Type:** `(rules: RuleSetRule | RuleSetRule[]) => void`
 
-Add additional [Rspack rules](https://rspack.dev/config/module#modulerules) to the head of the internal Rspack module rules array.
+Add additional [Rspack rules](https://rspack.rs/config/module#modulerules) to the head of the internal Rspack module rules array.
 
 It should be noted that Rspack loaders will be executed in right-to-left order. If you want the loader you added to be executed before other loaders (Normal Phase), you should use [appendRules](#appendrules) to add the rule to the end.
 
@@ -270,7 +270,7 @@ export default {
 
 - **Type:** `(rules: RuleSetRule | RuleSetRule[]) => void`
 
-Add additional [Rspack rules](https://rspack.dev/config/module#modulerules) to the end of the internal Rspack module rules array.
+Add additional [Rspack rules](https://rspack.rs/config/module#modulerules) to the end of the internal Rspack module rules array.
 
 For example:
 

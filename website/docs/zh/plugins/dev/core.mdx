@@ -163,7 +163,7 @@ export default () => ({
 
 ## api.transform
 
-`api.transform` 是 [Rspack loader](https://rspack.dev/zh/guide/features/loader) 的简化封装，让你能够在构建过程中轻松转换特定模块的代码。
+`api.transform` 是 [Rspack loader](https://rspack.rs/zh/guide/features/loader) 的简化封装，让你能够在构建过程中轻松转换特定模块的代码。
 
 你可以通过模块路径、查询参数或其他条件匹配文件，并对其内容应用自定义转换。
 
@@ -223,7 +223,7 @@ type TransformDescriptor = {
 
 `descriptor` 参数支持设置以下匹配条件：
 
-- `test`：匹配模块的路径（不包含 query），等价于 Rspack 的 [Rule.test](https://rspack.dev/zh/config/module#ruletest)。
+- `test`：匹配模块的路径（不包含 query），等价于 Rspack 的 [Rule.test](https://rspack.rs/zh/config/module#ruletest)。
 
 ```js
 api.transform({ test: /\.md$/ }, ({ code }) => {
@@ -247,7 +247,7 @@ api.transform({ test: /\.md$/, environments: ['web'] }, ({ code }) => {
 });
 ```
 
-- `resourceQuery`：匹配模块的 query，等价于 Rspack 的 [Rule.resourceQuery](https://rspack.dev/zh/config/module#ruleresourcequery)。
+- `resourceQuery`：匹配模块的 query，等价于 Rspack 的 [Rule.resourceQuery](https://rspack.rs/zh/config/module#ruleresourcequery)。
 
 ```js
 api.transform({ resourceQuery: /raw/ }, ({ code }) => {
@@ -263,7 +263,7 @@ api.transform({ test: /\.node$/, raw: true }, ({ code }) => {
 });
 ```
 
-- `layer`：标识匹配的模块的 [layer](https://rspack.dev/zh/config/experiments#experimentslayers)，可以将一组模块聚合到一个 layer 中，等同于 Rspack 的 [Rule.layer](https://rspack.dev/zh/config/module#rulelayer)。
+- `layer`：标识匹配的模块的 [layer](https://rspack.rs/zh/config/experiments#experimentslayers)，可以将一组模块聚合到一个 layer 中，等同于 Rspack 的 [Rule.layer](https://rspack.rs/zh/config/module#rulelayer)。
 
 ```js
 api.transform({ test: /\.md$/, layer: 'foo' }, ({ code }) => {
@@ -271,7 +271,7 @@ api.transform({ test: /\.md$/, layer: 'foo' }, ({ code }) => {
 });
 ```
 
-- `issuerLayer`：与"引入当前模块"的模块的 [layer](https://rspack.dev/zh/config/experiments#experimentslayers) 进行匹配，等同于 Rspack 的 [Rule.issuerLayer](https://rspack.dev/zh/config/module#ruleissuerlayer)。
+- `issuerLayer`：与"引入当前模块"的模块的 [layer](https://rspack.rs/zh/config/experiments#experimentslayers) 进行匹配，等同于 Rspack 的 [Rule.issuerLayer](https://rspack.rs/zh/config/module#ruleissuerlayer)。
 
 ```js
 api.transform({ test: /\.md$/, issuerLayer: 'foo' }, ({ code }) => {
@@ -279,7 +279,7 @@ api.transform({ test: /\.md$/, issuerLayer: 'foo' }, ({ code }) => {
 });
 ```
 
-- `issuer`：匹配"引入当前模块"的模块的绝对路径，等同于 Rspack 的 [Rule.issuer](https://rspack.dev/zh/config/module#ruleissuer)。
+- `issuer`：匹配"引入当前模块"的模块的绝对路径，等同于 Rspack 的 [Rule.issuer](https://rspack.rs/zh/config/module#ruleissuer)。
 
 ```js
 api.transform({ test: /\.md$/, issuer: /\.js$/ }, ({ code }) => {
@@ -287,7 +287,7 @@ api.transform({ test: /\.md$/, issuer: /\.js$/ }, ({ code }) => {
 });
 ```
 
-- `with`：匹配 [import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with)，等同于 Rspack 的 [Rule.with](https://rspack.dev/zh/config/module#rulewith)。
+- `with`：匹配 [import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with)，等同于 Rspack 的 [Rule.with](https://rspack.rs/zh/config/module#rulewith)。
 
 ```js
 api.transform({ test: /\.md$/, with: { type: 'url' } }, ({ code }) => {
@@ -295,7 +295,7 @@ api.transform({ test: /\.md$/, with: { type: 'url' } }, ({ code }) => {
 });
 ```
 
-- `mimetype`：根据 MIME 类型（而非文件扩展名）匹配模块。主要用于 data URI 模块（例如 `data:text/javascript,...`），等同于 Rspack 的 [Rule.mimetype](https://rspack.dev/zh/config/module#rulemimetype)。
+- `mimetype`：根据 MIME 类型（而非文件扩展名）匹配模块。主要用于 data URI 模块（例如 `data:text/javascript,...`），等同于 Rspack 的 [Rule.mimetype](https://rspack.rs/zh/config/module#rulemimetype)。
 
 ```js
 api.transform({ mimetype: 'text/javascript' }, ({ code }) => {
@@ -303,7 +303,7 @@ api.transform({ mimetype: 'text/javascript' }, ({ code }) => {
 });
 ```
 
-- `enforce`：指定 transform 函数的执行顺序，等同于 Rspack 的 [Rule.enforce](https://rspack.dev/zh/config/module#ruleenforce)。
+- `enforce`：指定 transform 函数的执行顺序，等同于 Rspack 的 [Rule.enforce](https://rspack.rs/zh/config/module#ruleenforce)。
   - 当 `enforce` 为 `pre` 时，transform 函数会在其他 transform 函数（或 Rspack loader）之前执行。
   - 当 `enforce` 为 `post` 时，transform 函数会在其他 transform 函数（或 Rspack loader）之后执行。
 
@@ -350,17 +350,17 @@ type TransformHandler = (
 handler 函数提供以下参数：
 
 - `code`：模块的代码。
-- `context`：当前被处理的模块所在的目录路径。与 Rspack loader 的 [this.context](https://rspack.dev/zh/api/loader-api/context#thiscontext) 相同。
-- `resolve`：解析一个模块标识符。与 Rspack loader 的 [this.resolve](https://rspack.dev/zh/api/loader-api/context#thisresolve) 相同。
+- `context`：当前被处理的模块所在的目录路径。与 Rspack loader 的 [this.context](https://rspack.rs/zh/api/loader-api/context#thiscontext) 相同。
+- `resolve`：解析一个模块标识符。与 Rspack loader 的 [this.resolve](https://rspack.rs/zh/api/loader-api/context#thisresolve) 相同。
 - `resource`：模块的绝对路径，包含 query。
 - `resourcePath`：模块的绝对路径，不包含 query。
 - `resourceQuery`：模块路径上的 query。
 - `environment`: 当前构建的 [environment 上下文](/api/javascript-api/environment-api#environment-context).
-- `addDependency`：添加一个额外的文件作为依赖。该文件将被监听，并在发生变更时触发重新构建。与 Rspack loader 的 [this.addDependency](https://rspack.dev/zh/api/loader-api/context#thisadddependency) 相同。
-- `addMissingDependency`：添加一个不存在的文件作为依赖。该文件将被监听，并在发生变更时触发重新构建。与 Rspack loader 的 [this.addMissingDependency](https://rspack.dev/zh/api/loader-api/context#thisaddmissingdependency) 相同。
-- `addContextDependency`：添加一个额外的目录作为依赖。该目录将被监听，并在发生变更时触发重新构建。与 Rspack loader 的 [this.addContextDependency](https://rspack.dev/zh/api/loader-api/context#thisaddcontextdependency) 相同。
-- `emitFile`：将一个文件输出到构建结果中。与 Rspack loader 的 [this.emitFile](https://rspack.dev/zh/api/loader-api/context#thisemitfile) 相同。
-- `importModule`：在构建时编译并执行一个模块。与 Rspack loader 的 [this.importModule](https://rspack.dev/zh/api/loader-api/context#thisimportmodule) 相同。
+- `addDependency`：添加一个额外的文件作为依赖。该文件将被监听，并在发生变更时触发重新构建。与 Rspack loader 的 [this.addDependency](https://rspack.rs/zh/api/loader-api/context#thisadddependency) 相同。
+- `addMissingDependency`：添加一个不存在的文件作为依赖。该文件将被监听，并在发生变更时触发重新构建。与 Rspack loader 的 [this.addMissingDependency](https://rspack.rs/zh/api/loader-api/context#thisaddmissingdependency) 相同。
+- `addContextDependency`：添加一个额外的目录作为依赖。该目录将被监听，并在发生变更时触发重新构建。与 Rspack loader 的 [this.addContextDependency](https://rspack.rs/zh/api/loader-api/context#thisaddcontextdependency) 相同。
+- `emitFile`：将一个文件输出到构建结果中。与 Rspack loader 的 [this.emitFile](https://rspack.rs/zh/api/loader-api/context#thisemitfile) 相同。
+- `importModule`：在构建时编译并执行一个模块。与 Rspack loader 的 [this.importModule](https://rspack.rs/zh/api/loader-api/context#thisimportmodule) 相同。
 
 比如：
 
@@ -386,7 +386,7 @@ api.transform(
 
 ## api.resolve
 
-在模块解析开始之前，拦截并修改模块的请求信息。等价于 Rspack 的 [normalModuleFactory.hooks.resolve](https://rspack.dev/zh/api/plugin-api/normal-module-factory-hooks#resolve) hook。
+在模块解析开始之前，拦截并修改模块的请求信息。等价于 Rspack 的 [normalModuleFactory.hooks.resolve](https://rspack.rs/zh/api/plugin-api/normal-module-factory-hooks#resolve) hook。
 
 - **版本：** `>= 1.0.17`
 - **类型：**
@@ -424,14 +424,14 @@ type ResolveHandler = (context: {
 
 handler 函数提供以下参数：
 
-- `resolveData`：当前模块请求信息，详情可参考 [Rspack - resolve 钩子](https://rspack.dev/zh/api/plugin-api/normal-module-factory-hooks#resolve)。
+- `resolveData`：当前模块请求信息，详情可参考 [Rspack - resolve 钩子](https://rspack.rs/zh/api/plugin-api/normal-module-factory-hooks#resolve)。
 - `compiler`：Rspack 的 Compiler 对象。
 - `compilation`：Rspack 的 Compilation 对象。
 - `environment`: 当前构建的 [environment 上下文](/api/javascript-api/environment-api#environment-context)。
 
 ## api.processAssets
 
-在输出产物之前对 assets 进行修改，等价于 Rspack 的 [compilation.hooks.processAssets](https://rspack.dev/zh/api/plugin-api/compilation-hooks#processassets) hook。
+在输出产物之前对 assets 进行修改，等价于 Rspack 的 [compilation.hooks.processAssets](https://rspack.rs/zh/api/plugin-api/compilation-hooks#processassets) hook。
 
 - **版本：** `>= 1.0.0`
 - **类型：**

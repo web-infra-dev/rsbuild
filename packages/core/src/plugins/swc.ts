@@ -169,7 +169,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
         /**
          * If a script is imported with data URI, it can be compiled by babel too.
          * This is used by some frameworks to create virtual entry.
-         * https://rspack.dev/api/runtime-api/module-methods#import
+         * https://rspack.rs/api/runtime-api/module-methods#import
          * @example: import x from 'data:text/javascript,export default 1;';
          */
         dataUriRule.resolve

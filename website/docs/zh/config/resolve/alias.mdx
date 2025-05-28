@@ -82,7 +82,7 @@ export default {
 
 ## 与 Rspack 配置的差异
 
-Rsbuild 的 `resolve.alias` 与 Rspack 的 [resolve.alias](https://rspack.dev/zh/config/resolve#resolvealias) 配置的用法基本一致，它们的差异是：
+Rsbuild 的 `resolve.alias` 与 Rspack 的 [resolve.alias](https://rspack.rs/zh/config/resolve#resolvealias) 配置的用法基本一致，它们的差异是：
 
 - 如果 `resolve.alias` 的值是一个相对路径，Rsbuild 会自动将其转换为绝对路径，以保证路径是相对于项目根目录的。
 
@@ -200,7 +200,7 @@ export default {
 
 ## 处理 Loader
 
-`resolve.alias` 不支持为 loader 设置别名。如果你需要为 loader 设置别名，可以使用 Rspack 的 [resolveLoader](https://rspack.dev/zh/config/resolve-loader) 配置项。
+`resolve.alias` 不支持为 loader 设置别名。如果你需要为 loader 设置别名，可以使用 Rspack 的 [resolveLoader](https://rspack.rs/zh/config/resolve-loader) 配置项。
 
 ```ts title="rsbuild.config.ts"
 export default {

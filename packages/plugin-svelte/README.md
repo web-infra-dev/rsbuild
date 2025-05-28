@@ -12,7 +12,7 @@ An Rsbuild plugin to provide support for Svelte.
 
 ## Documentation
 
-See [Documentation](https://rsbuild.dev/plugins/list/plugin-svelte).
+See [Documentation](https://rsbuild.rs/plugins/list/plugin-svelte).
 
 ## License
 

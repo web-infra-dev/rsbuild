@@ -123,7 +123,7 @@ export default {
 
 当你在 JavaScript 中使用 [dynamic import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) 时，Rspack 会生成一个异步 Chunk。默认情况下，`output.inlineScripts` 不会将异步 Chunk 内联到 HTML 中。
 
-如果你希望将异步 Chunks 内联到 HTML 中，你可以通过 [tools.rspack](/config/tools/rspack) 配置项来实现修改 Rspack 的默认行为，将 [module.parser.javascript.dynamicImportMode](https://rspack.dev/zh/config/module#moduleparserjavascriptdynamicimportmode) 设置为 `'eager'`，此时 Rspack 不会为 dynamic import 生成单独的 JS 文件。
+如果你希望将异步 Chunks 内联到 HTML 中，你可以通过 [tools.rspack](/config/tools/rspack) 配置项来实现修改 Rspack 的默认行为，将 [module.parser.javascript.dynamicImportMode](https://rspack.rs/zh/config/module#moduleparserjavascriptdynamicimportmode) 设置为 `'eager'`，此时 Rspack 不会为 dynamic import 生成单独的 JS 文件。
 
 ```js
 export default {

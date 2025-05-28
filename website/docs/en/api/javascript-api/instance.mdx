@@ -190,7 +190,7 @@ type BuildOptions = {
 
 function Build(options?: BuildOptions): Promise<{
   /**
-   * Rspack's [stats](https://rspack.dev/api/javascript-api/stats) object.
+   * Rspack's [stats](https://rspack.rs/api/javascript-api/stats) object.
    */
   stats?: Rspack.Stats | Rspack.MultiStats;
   /**
@@ -263,7 +263,7 @@ await buildResult.close();
 
 ### Stats object
 
-In non-watch mode, the `rsbuild.build()` returns an Rspack [stats](https://rspack.dev/api/javascript-api/stats) object.
+In non-watch mode, the `rsbuild.build()` returns an Rspack [stats](https://rspack.rs/api/javascript-api/stats) object.
 
 For example, use the `stats.toJson()` method to get all assets information:
 
@@ -509,7 +509,7 @@ await server.close();
 
 ## rsbuild.createCompiler
 
-Create an Rspack [Compiler](https://rspack.dev/api/javascript-api/compiler) instance. If there are multiple [environments](/config/environments) for this build, the return value is [MultiCompiler](https://rspack.dev/api/javascript-api/compiler#multicompiler).
+Create an Rspack [Compiler](https://rspack.rs/api/javascript-api/compiler) instance. If there are multiple [environments](/config/environments) for this build, the return value is [MultiCompiler](https://rspack.rs/api/javascript-api/compiler#multicompiler).
 
 - **Type:**
 
