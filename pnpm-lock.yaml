@@ -1183,8 +1183,8 @@ importers:
         specifier: 2.0.0-beta.6
         version: 2.0.0-beta.6(rspress@2.0.0-beta.6(@types/react@19.1.5)(acorn@8.14.0)(webpack@5.99.9))
       '@rstack-dev/doc-ui':
-        specifier: 1.10.4
-        version: 1.10.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        specifier: 1.10.5
+        version: 1.10.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@shikijs/transformers':
         specifier: ^3.4.2
         version: 3.4.2
@@ -3015,8 +3015,8 @@ packages:
     resolution: {integrity: sha512-JaIbF2Ohuucx8HirpqvkrF8ap17GobUr02GejowdJ3zK0tR2EkcgjAy6kjBAn4P4gr6cHhbqyFxqRTImVad2rg==}
     engines: {node: '>=18.0.0'}
 
-  '@rstack-dev/doc-ui@1.10.4':
-    resolution: {integrity: sha512-NJmJJFKE/nJDUFx/4sLsfGLzv+QGDlV5foUNYy4GshsCmefWhMYV/1GT/TfqHjIkKyXo0x5fPNVypMUiHpARPg==}
+  '@rstack-dev/doc-ui@1.10.5':
+    resolution: {integrity: sha512-bZZcO1UMfYnNsmiJvM2U/DgD5zw0Mo91mYrmBlqI85i8ArtfoPGHoiZ2vFVIn6eDWVG77B0J8VxMM5ecSEfPNg==}
 
   '@selderee/plugin-htmlparser2@0.11.0':
     resolution: {integrity: sha512-P33hHGdldxGabLFjPPpaTxVolMrzrcegejx+0GxjrIb9Zv48D8yAIA/QTDR2dFl7Uz7urX8aX6+5bCZslr+gWQ==}
@@ -9327,7 +9327,7 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
-  '@rstack-dev/doc-ui@1.10.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@rstack-dev/doc-ui@1.10.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       framer-motion: 12.11.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     transitivePeerDependencies:
