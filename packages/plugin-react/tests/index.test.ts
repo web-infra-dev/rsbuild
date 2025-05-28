@@ -1,5 +1,4 @@
 import { createStubRsbuild, matchRules } from '@scripts/test-helper';
-import { describe, expect, it } from 'vitest';
 import { pluginReact } from '../src';
 
 describe('plugins/react', () => {
