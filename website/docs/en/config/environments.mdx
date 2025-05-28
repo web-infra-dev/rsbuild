@@ -124,3 +124,18 @@ const nodeConfig = {
   },
 };
 ```
+
+## Environment name
+
+Since environment names are used for directory names and object property names, it is recommended to only include letters, numbers, `-`, `_`, and `$`. When using other characters, Rsbuild will output a warning to prompt you.
+
+```ts
+export default {
+  environments: {
+    someName: {}, // ✅
+    some_name: {}, // ✅
+    'some-name': {}, // ✅
+    'some:name': {}, // ❌
+  },
+};
+```

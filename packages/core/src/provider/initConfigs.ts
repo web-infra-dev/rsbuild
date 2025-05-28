@@ -178,11 +178,12 @@ const validateRsbuildConfig = (config: NormalizedConfig) => {
 
   if (config.environments) {
     const names = Object.keys(config.environments);
+    const validRegex = /^[\w$-]+$/;
     for (const name of names) {
       // ensure environment names are filesystem and property access safe
-      if (!/^[\w$]+$/.test(name)) {
+      if (!validRegex.test(name)) {
         logger.warn(
-          `${color.dim('[rsbuild:config]')} Environment name "${color.yellow(name)}" contains invalid characters. Only letters, numbers, "$", and "_" are allowed.`,
+          `${color.dim('[rsbuild:config]')} Environment name "${color.yellow(name)}" contains invalid characters. Only letters, numbers, "-", "_", and "$" are allowed.`,
         );
       }
     }
