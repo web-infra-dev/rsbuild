@@ -4,8 +4,8 @@
 
 Rsbuild enables the following SWC features by default:
 
-- Transform JavaScript and TypeScript code using Rspack's [builtin:swc-loader](https://rspack.dev/guide/features/builtin-swc-loader), which is the Rust version of [swc-loader](https://github.com/swc-project/pkgs/tree/main/packages/swc-loader).
-- Minify JavaScript code using Rspack's [SwcJsMinimizerRspackPlugin](https://rspack.dev/plugins/rspack/swc-js-minimizer-rspack-plugin).
+- Transform JavaScript and TypeScript code using Rspack's [builtin:swc-loader](https://rspack.rs/guide/features/builtin-swc-loader), which is the Rust version of [swc-loader](https://github.com/swc-project/pkgs/tree/main/packages/swc-loader).
+- Minify JavaScript code using Rspack's [SwcJsMinimizerRspackPlugin](https://rspack.rs/plugins/rspack/swc-js-minimizer-rspack-plugin).
 
 ## Loader options
 
@@ -41,7 +41,7 @@ export default {
 
 Please note that the SWC plugin is still an experimental feature, and the SWC Wasm plugin is currently not backward compatible. The version of the SWC plugin is closely tied to the version of `swc_core` that Rspack depends on.
 
-This means that you must to choose an SWC plugin that matches the current version of `swc_core` to ensure that it works properly. If the version of the SWC plugin you are using does not match the version of `swc_core` that Rspack depends on, Rspack will throw an error during the build process. Please refer to [Rspack FAQ - SWC Plugin Version Unmatched](https://rspack.dev/errors/swc-plugin-version) for more information.
+This means that you must to choose an SWC plugin that matches the current version of `swc_core` to ensure that it works properly. If the version of the SWC plugin you are using does not match the version of `swc_core` that Rspack depends on, Rspack will throw an error during the build process. Please refer to [Rspack FAQ - SWC Plugin Version Unmatched](https://rspack.rs/errors/swc-plugin-version) for more information.
 
 ### Enable Emotion support
 

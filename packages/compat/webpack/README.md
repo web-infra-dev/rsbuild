@@ -33,7 +33,7 @@ export default defineConfig({
 
 ## Documentation
 
-See [Documentation](https://rsbuild.dev).
+See [Documentation](https://rsbuild.rs).
 
 ## License
 

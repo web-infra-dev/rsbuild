@@ -6,7 +6,7 @@ _September 10, 2024_
 
 # Rsbuild 1.0 发布
 
-![](https://assets.rspack.dev/rsbuild/assets/rsbuild-1-0-banner.png)
+![](https://assets.rspack.rs/rsbuild/assets/rsbuild-1-0-banner.png)
 
 我们很高兴地宣布 Rsbuild 1.0 已经正式发布！
 
@@ -30,7 +30,7 @@ _September 10, 2024_
 
 在开发 Rspack 的过程中，我们意识到了上述问题，并决定在 Rspack 的基础上开发一个现代的构建工具 —— **Rsbuild**。
 
-![](https://assets.rspack.dev/rsbuild/assets/rsbuild-1-0-build-tools.png)
+![](https://assets.rspack.rs/rsbuild/assets/rsbuild-1-0-build-tools.png)
 
 Rsbuild 是以 Rspack 为核心实现的，我们为 Rsbuild 设计了易于使用、TypeScript 友好的 API，并内置一套精心设计的构建配置，使它既能充分发挥出 Rspack 的性能优势，也能解决配置复杂、上手成本高的问题。
 
@@ -58,7 +58,7 @@ Rsbuild 是以 Rspack 为核心实现的，我们为 Rsbuild 设计了易于使�
 
 ## 谁在使用
 
-在 [Rspack 1.0 发布公告](https://rspack.dev/zh/blog/announcing-1-0) 中，我们介绍了 Rspack 正在取得快速增长，这其中约有一半的 Rspack 用户已经在使用 Rsbuild，并给予我们很多正向的反馈。
+在 [Rspack 1.0 发布公告](https://rspack.rs/zh/blog/announcing-1-0) 中，我们介绍了 Rspack 正在取得快速增长，这其中约有一半的 Rspack 用户已经在使用 Rsbuild，并给予我们很多正向的反馈。
 
 在字节跳动，我们将 Rsbuild 作为内部研发框架的基石，支持了数千个 web 项目，这些项目涵盖了不同的使用场景，包括 desktop Web 应用、mobile Web 应用、跨平台 Web 应用、文档站等。
 
@@ -74,7 +74,7 @@ Rsbuild 的插件生态正在不断发展，目前社区中已经有超过 50 �
 
 例如，我们来实现一个插件，它的功能是输出一个文件到产物目录，在 Rspack 和 Rsbuild 中的实现对比如下：
 
-![](https://assets.rspack.dev/rsbuild/assets/rsbuild-1-0-plugin-compare.png)
+![](https://assets.rspack.rs/rsbuild/assets/rsbuild-1-0-plugin-compare.png)
 
 可以看到，Rsbuild 插件的 API 风格与 esbuild 类似，可以通过一个函数来定义。插件的 hooks 经过简化，避免了冗长的 API，使插件的编写更符合直觉。
 
@@ -90,8 +90,8 @@ Rsbuild 的插件生态正在不断发展，目前社区中已经有超过 50 �
 
 Rsbuild 1.0 为企业级应用和上层工具开发提供了一些高级特性，例如 [多环境构建 API](/zh/guide/advanced/environments)、[服务端渲染 API](/zh/guide/advanced/ssr)、[插件 API](/plugins/dev/)、[模块联邦支持](/zh/guide/advanced/module-federation) 和 [Library 构建（Rslib）](https://github.com/web-infra-dev/rslib)，我们计划继续完善这些特性，更好地支持 Rsbuild 生态发展。
 
-在接下来的 12～18 个月里，Rsbuild 将与 Rspack 共同演进，在第一时间应用 Rspack 的新特性，例如持久化缓存、更快的 HMR、基于 TypeScript 的优化等。请参考 [Rspack - 下一步](https://rspack.dev/zh/blog/announcing-1-0#%E4%B8%8B%E4%B8%80%E6%AD%A5) 了解更多。
+在接下来的 12～18 个月里，Rsbuild 将与 Rspack 共同演进，在第一时间应用 Rspack 的新特性，例如持久化缓存、更快的 HMR、基于 TypeScript 的优化等。请参考 [Rspack - 下一步](https://rspack.rs/zh/blog/announcing-1-0#%E4%B8%8B%E4%B8%80%E6%AD%A5) 了解更多。
 
 最后，感谢所有为 Rsbuild 贡献过的开发者 ❤️：
 
-![](https://assets.rspack.dev/rsbuild/assets/rsbuild-1-0-contributors.png)
+![](https://assets.rspack.rs/rsbuild/assets/rsbuild-1-0-contributors.png)

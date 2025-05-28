@@ -5,7 +5,7 @@
 
 Specify the build mode for Rsbuild, as each mode has different default behavior and optimizations. For example, the `production` mode will minify code by default.
 
-The value of Rsbuild `mode` is also be passed to the [mode](https://rspack.dev/config/mode) configuration of Rspack.
+The value of Rsbuild `mode` is also be passed to the [mode](https://rspack.rs/config/mode) configuration of Rspack.
 
 :::tip
 The value of `mode` does not affect the loading results of the `.env` file, as the `.env` file is resolved before the Rsbuild configuration file.
@@ -47,7 +47,7 @@ When using Rsbuild's JavaScript API:
 
 If the value of `mode` is `development`:
 
-- Enable HMR and register the [HotModuleReplacementPlugin](https://rspack.dev/plugins/webpack/hot-module-replacement-plugin).
+- Enable HMR and register the [HotModuleReplacementPlugin](https://rspack.rs/plugins/webpack/hot-module-replacement-plugin).
 - Generate JavaScript source maps, but do not generate CSS source maps. See [output.sourceMap](/config/output/source-map) for details.
 - The `process.env.NODE_ENV` in the source code will be replaced with `'development'`.
 - The `import.meta.env.MODE` in the source code will be replaced with `'development'`.
@@ -58,8 +58,8 @@ If the value of `mode` is `development`:
 
 If the value of `mode` is `production`:
 
-- Enable JavaScript code minification and register the [SwcJsMinimizerRspackPlugin](https://rspack.dev/plugins/rspack/swc-js-minimizer-rspack-plugin).
-- Enable CSS code minification and register the [LightningCssMinimizerRspackPlugin](https://rspack.dev/plugins/rspack/lightning-css-minimizer-rspack-plugin).
+- Enable JavaScript code minification and register the [SwcJsMinimizerRspackPlugin](https://rspack.rs/plugins/rspack/swc-js-minimizer-rspack-plugin).
+- Enable CSS code minification and register the [LightningCssMinimizerRspackPlugin](https://rspack.rs/plugins/rspack/lightning-css-minimizer-rspack-plugin).
 - Generated JavaScript and CSS filenames will have hash suffixes, see [output.filenameHash](/config/output/filename-hash).
 - Generated CSS Modules classnames will be shorter, see [cssModules.localIdentName](/config/output/css-modules#cssmoduleslocalidentname).
 - Do not generate JavaScript and CSS source maps, see [output.sourceMap](/config/output/source-map).

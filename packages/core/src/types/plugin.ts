@@ -323,60 +323,60 @@ export type TransformHandler = (
 export type TransformDescriptor = {
   /**
    * Include modules that match the test assertion, the same as `rule.test`
-   * @see https://rspack.dev/config/module#ruletest
+   * @see https://rspack.rs/config/module#ruletest
    */
   test?: Rspack.RuleSetCondition;
   /**
    * A condition that matches the resource query.
-   * @see https://rspack.dev/config/module#ruleresourcequery
+   * @see https://rspack.rs/config/module#ruleresourcequery
    */
   resourceQuery?: Rspack.RuleSetCondition;
   /**
    * Match based on the Rsbuild targets and only apply the transform to
    * certain targets.
-   * @see https://rsbuild.dev/config/output/target
+   * @see https://rsbuild.rs/config/output/target
    */
   targets?: RsbuildTarget[];
   /**
    * Match based on the Rsbuild environment names and only apply the transform
    * to certain environments.
-   * @see https://rsbuild.dev/config/environments
+   * @see https://rsbuild.rs/config/environments
    */
   environments?: string[];
   /**
    * If raw is `true`, the transform handler will receive the Buffer type code
    * instead of the string type.
-   * @see https://rspack.dev/api/loader-api/examples#raw-loader
+   * @see https://rspack.rs/api/loader-api/examples#raw-loader
    */
   raw?: boolean;
   /**
    * Marks the layer of the matching module, can be used to group a group of
    * modules into one layer
-   * @see https://rspack.dev/config/module#rulelayer
+   * @see https://rspack.rs/config/module#rulelayer
    */
   layer?: string;
   /**
    * Matches all modules that match this resource, and will match against layer of
    * the module that issued the current module.
-   * @see https://rspack.dev/config/module#ruleissuerlayer
+   * @see https://rspack.rs/config/module#ruleissuerlayer
    */
   issuerLayer?: string;
   /**
    * Matches all modules that match this resource, and will match against Resource
    * (the absolute path without query and fragment) of the module that issued the
    * current module.
-   * @see https://rspack.dev/config/module#ruleissuer
+   * @see https://rspack.rs/config/module#ruleissuer
    */
   issuer?: Rspack.RuleSetCondition;
   /**
    * Matches [import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with)
-   * @see https://rspack.dev/config/module#rulewith
+   * @see https://rspack.rs/config/module#rulewith
    */
   with?: Record<string, Rspack.RuleSetCondition>;
   /**
    * Matches modules based on MIME type instead of file extension. It's primarily
    * useful for data URI module (like `data:text/javascript,...`).
-   * @see https://rspack.dev/config/module#rulemimetype
+   * @see https://rspack.rs/config/module#rulemimetype
    */
   mimetype?: Rspack.RuleSetCondition;
   /**
@@ -385,7 +385,7 @@ export type TransformDescriptor = {
    * transform functions (or Rspack loaders).
    * - When specified as 'post', the transform function will execute after other
    * transform functions (or Rspack loaders).
-   * @see https://rspack.dev/config/module#ruleenforce
+   * @see https://rspack.rs/config/module#ruleenforce
    */
   enforce?: 'pre' | 'post';
 };
@@ -420,12 +420,12 @@ export type ProcessAssetsDescriptor = {
   stage: ProcessAssetsStage;
   /**
    * Match based on the Rsbuild targets and only process the assets of certain targets.
-   * @see https://rsbuild.dev/config/output/target
+   * @see https://rsbuild.rs/config/output/target
    */
   targets?: RsbuildTarget[];
   /**
    * Match based on the Rsbuild environment names and only process the assets of certain environments.
-   * @see https://rsbuild.dev/config/environments
+   * @see https://rsbuild.rs/config/environments
    */
   environments?: string[];
 };
@@ -560,7 +560,7 @@ export type RsbuildPluginAPI = Readonly<{
   /**
    * A callback function that is triggered after running the production build.
    * You can access the build result information via the
-   * [stats](https://rspack.dev/api/javascript-api/stats) parameter.
+   * [stats](https://rspack.rs/api/javascript-api/stats) parameter.
    */
   onAfterBuild: PluginHook<OnAfterBuildFn>;
   /**
@@ -572,7 +572,7 @@ export type RsbuildPluginAPI = Readonly<{
   /**
    * A callback function that is triggered after the compilation of a single environment.
    * You can access the build result information via the
-   * [stats](https://rspack.dev/api/javascript-api/stats) parameter.
+   * [stats](https://rspack.rs/api/javascript-api/stats) parameter.
    */
   onAfterEnvironmentCompile: PluginHook<OnAfterEnvironmentCompileFn>;
   /**
@@ -630,12 +630,12 @@ export type RsbuildPluginAPI = Readonly<{
   onExit: PluginHook<OnExitFn>;
   /**
    * Modify assets before emitting, the same as Rspack's
-   * [compilation.hooks.processAssets](https://rspack.dev/api/plugin-api/compilation-hooks#processassets) hook.
+   * [compilation.hooks.processAssets](https://rspack.rs/api/plugin-api/compilation-hooks#processassets) hook.
    */
   processAssets: ProcessAssetsHook;
   /**
    * Intercept and modify module request information before module resolution begins.
-   * The same as Rspack's [normalModuleFactory.hooks.resolve](https://rspack.dev/api/plugin-api/normal-module-factory-hooks#resolve) hook.
+   * The same as Rspack's [normalModuleFactory.hooks.resolve](https://rspack.rs/api/plugin-api/normal-module-factory-hooks#resolve) hook.
    */
   resolve: ResolveHook;
   /**

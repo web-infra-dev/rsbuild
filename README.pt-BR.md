@@ -1,5 +1,5 @@
 <picture>
-  <img alt="Rsbuild Banner" src="https://assets.rspack.dev/rsbuild/rsbuild-banner.png">
+  <img alt="Rsbuild Banner" src="https://assets.rspack.rs/rsbuild/rsbuild-banner.png">
 </picture>
 
 # Rsbuild
@@ -16,7 +16,7 @@
 
 Rsbuild é uma ferramenta de build de alta performance com base no Rspack. Ele fornece um conjunto de configurações de compilação padrão cuidadosamente projetadas, oferecendo uma experiência de desenvolvimento pronta para uso e pode liberar totalmente as vantagens de desempenho do Rspack.
 
-Rsbuild provê [ricas funcionalidades de build](https://rsbuild.dev/guide/start/features), incluindo a compilação de TypeScript, JSX, Sass, Less, CSS Modules, Wasm, e outros. Ele também suporta Module Federation, compressão de imagem, checagem de tipos, PostCSS, Lightning CSS, e mais.
+Rsbuild provê [ricas funcionalidades de build](https://rsbuild.rs/guide/start/features), incluindo a compilação de TypeScript, JSX, Sass, Less, CSS Modules, Wasm, e outros. Ele também suporta Module Federation, compressão de imagem, checagem de tipos, PostCSS, Lightning CSS, e mais.
 
 ## 🚀 Desempenho
 
@@ -24,7 +24,7 @@ Alimentado pela arquitetura baseada em Rust do Rspack, o Rsbuild oferece um dese
 
 ⚡️ **Construa 1000 componentes React:**
 
-![benchmark](https://assets.rspack.dev/rsbuild/assets/benchmark-latest.jpeg)
+![benchmark](https://assets.rspack.rs/rsbuild/assets/benchmark-latest.jpeg)
 
 > 📊 Resultados do benchmark do [build-tools-performance](https://github.com/rspack-contrib/build-tools-performance).
 
@@ -32,15 +32,15 @@ Alimentado pela arquitetura baseada em Rust do Rspack, o Rsbuild oferece um dese
 
 Rsbuild é uma ferramenta de build que está no mesmo patamar do [Vite](https://vitejs.dev/), [Create React App](https://github.com/facebook/create-react-app), ou [Vue CLI](https://github.com/vuejs/vue-cli). Todos eles possuem um servidor de desenvolvimento imbutido, ferramentas de linha de comando, e configurações de build que provê uma experiência pronta para uso.
 
-![](https://assets.rspack.dev/rsbuild/assets/rsbuild-1-0-build-tools.png)
+![](https://assets.rspack.rs/rsbuild/assets/rsbuild-1-0-build-tools.png)
 
 ### CRA / Vue CLI
 
 Você pode imaginar o Rsbuild como uma versão moderna do Create React App ou Vue CLI, com estas principais diferenças:
 
 - O bundler por baixo é trocado de webpack para Rspack, provendo 5 à 10 vezes mais rápido o desempenho de build.
-- É desacoplado de frameworks de frontend e suporta todos os frameworks de interface, por meio de [plugins](https://rsbuild.dev/plugins/list/), incluíndo React, Vue, Svelte, Solid, etc.
-- Oferece melhor extensibilidade. Você pode extender o Rsbuild flexivelmente via [Configurações](https://rsbuild.dev/config/), [Plugin API](https://rsbuild.dev/plugins/dev/), e [JavaScript API](https://rsbuild.dev/api/start/).
+- É desacoplado de frameworks de frontend e suporta todos os frameworks de interface, por meio de [plugins](https://rsbuild.rs/plugins/list/), incluíndo React, Vue, Svelte, Solid, etc.
+- Oferece melhor extensibilidade. Você pode extender o Rsbuild flexivelmente via [Configurações](https://rsbuild.rs/config/), [Plugin API](https://rsbuild.rs/plugins/dev/), e [JavaScript API](https://rsbuild.rs/api/start/).
 
 ### Vite
 
@@ -48,7 +48,7 @@ Rsbuild compartilha muitas similaridades com Vite, assim como ambos miram em mel
 
 - **Compatibilidade do ecossistema**: Rsbuild é compatível com a maioria dos plug-ins para webpack e todos os plug-ins do Rspack, enquanto Vite é compatível com plug-ins do Rollup. Se você estiver usando mais plug-ins e carregadores do ecossistema do webpack, a migração para o Rsbuild será relativamente fácil.
 - **Consistência em produção**: Rsbuild usa o Rspack para empacotamento durante as compilações de desenvolvimento e produção, garantindo assim um alto nível de consistência entre os resultados de desenvolvimento e produção. Esse também é um dos objetivos que a Vite pretende alcançar com o Rolldown.
-- **Module Federation**: O time do Rsbuild trabalha próximo com o time de [Module Federation](https://rsbuild.dev/guide/advanced/module-federation), fornecendo suporte de primeira classe para o Module Federation para ajudá-lo a desenvolver grandes aplicativos da Web com arquitetura de micro frontend.
+- **Module Federation**: O time do Rsbuild trabalha próximo com o time de [Module Federation](https://rsbuild.rs/guide/advanced/module-federation), fornecendo suporte de primeira classe para o Module Federation para ajudá-lo a desenvolver grandes aplicativos da Web com arquitetura de micro frontend.
 
 ## 🔥 Recursos
 
@@ -56,7 +56,7 @@ O Rsbuild tem os seguintes recursos:
 
 - **Fácil de Configurar**: Um dos objetivos do Rsbuild é fornecer recursos de compilação prontos para uso para os usuários do Rspack, permitindo que os desenvolvedores iniciem um projeto da Web com configuração zero. Além disso, o Rsbuild fornece configuração de compilação semântica para reduzir a curva de aprendizado da configuração do Rspack.
 
-- **Orientado para o desempenho**: Rsbuild integra ferramentas de alto desempenho baseadas em Rust da comunidade, incluindo [Rspack](https://rspack.dev), [SWC](https://swc.rs/) e [Lightning CSS](https://lightningcss.dev/), para oferecer velocidade de compilação e experiência de desenvolvimento de primeira classe.
+- **Orientado para o desempenho**: Rsbuild integra ferramentas de alto desempenho baseadas em Rust da comunidade, incluindo [Rspack](https://rspack.rs), [SWC](https://swc.rs/) e [Lightning CSS](https://lightningcss.dev/), para oferecer velocidade de compilação e experiência de desenvolvimento de primeira classe.
 
 - **Ecossistema de plug-ins**: Rsbuild tem um sistema de plug-ins leve e inclui uma variedade de plug-ins oficiais de alta qualidade. Além disso, o Rsbuild é compatível com a maioria dos plug-ins do webpack e todos os plug-ins do Rspack, permitindo que os usuários aproveitem os plug-ins existentes da comunidade ou internos no Rsbuild sem a necessidade de reescrever o código.
 
@@ -66,7 +66,7 @@ O Rsbuild tem os seguintes recursos:
 
 ## 📚 Primeiros passos
 
-Para começar a usar o Rsbuild, consulte a seção [Início Rápido](https://rsbuild.dev/guide/start/quick-start).
+Para começar a usar o Rsbuild, consulte a seção [Início Rápido](https://rsbuild.rs/guide/start/quick-start).
 
 ## 🦀 Rstack
 

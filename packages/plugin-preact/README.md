@@ -12,7 +12,7 @@ An Rsbuild plugin to provide support for Preact.
 
 ## Documentation
 
-See [Documentation](https://rsbuild.dev/plugins/list/plugin-preact).
+See [Documentation](https://rsbuild.rs/plugins/list/plugin-preact).
 
 ## License
 

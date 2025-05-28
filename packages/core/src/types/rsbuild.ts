@@ -65,7 +65,7 @@ export type Build = (options?: BuildOptions) => Promise<{
    */
   close: () => Promise<void>;
   /**
-   * Rspack's [stats](https://rspack.dev/api/javascript-api/stats) object.
+   * Rspack's [stats](https://rspack.rs/api/javascript-api/stats) object.
    */
   stats?: Rspack.Stats | Rspack.MultiStats;
 }>;
@@ -259,7 +259,7 @@ export type RsbuildInstance = {
     options?: InspectConfigOptions,
   ) => Promise<InspectConfigResult>;
   /**
-   * Create an Rspack [Compiler](https://rspack.dev/api/javascript-api/compiler)
+   * Create an Rspack [Compiler](https://rspack.rs/api/javascript-api/compiler)
    * instance. If there are multiple [environments](/config/environments) for
    * this build, the return value is `MultiCompiler`.
    */

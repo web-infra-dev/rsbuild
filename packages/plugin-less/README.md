@@ -12,7 +12,7 @@ An Rsbuild plugin to use Less as the CSS preprocessor.
 
 ## Documentation
 
-See [Documentation](https://rsbuild.dev/plugins/list/plugin-less).
+See [Documentation](https://rsbuild.rs/plugins/list/plugin-less).
 
 ## License
 

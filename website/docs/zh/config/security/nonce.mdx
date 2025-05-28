@@ -42,7 +42,7 @@ export default {
 - 由 Rsbuild 生成的所有 `<script>` 标签
 - 由 Rsbuild 生成的所有 `<style>` 标签
 - 由 Rsbuild 生成的所有 [`<link rel="preload" as="script">`](/config/performance/preload) 标签
-- 由 Rspack 动态生成的 `<script>` 标签（通过 [\_\_webpack_nonce\_\_](https://rspack.dev/zh/api/runtime-api/module-variables#__webpack_nonce__) 变量实现）
+- 由 Rspack 动态生成的 `<script>` 标签（通过 [\_\_webpack_nonce\_\_](https://rspack.rs/zh/api/runtime-api/module-variables#__webpack_nonce__) 变量实现）
 
 对于 HTML 模板文件中已存在的 `<script>` 或 `<style>` 标签，Rsbuild 不会对其进行修改，你可以直接在模板中添加 `nonce` 属性。
 

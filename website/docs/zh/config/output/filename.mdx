@@ -114,7 +114,7 @@ export default {
 - `[contenthash:<length>]` - 基于文件内容生成的 hash 值，并指定 hash 长度。
 - `[ext]` - 文件后缀名，包含点号。
 
-> 更多模板字符串可以参考 [Rspack - Template String](https://rspack.dev/zh/config/output#template-string)。
+> 更多模板字符串可以参考 [Rspack - Template String](https://rspack.rs/zh/config/output#template-string)。
 
 :::tip
 
@@ -134,7 +134,7 @@ export default {
 const { add } = await import('./add.ts');
 ```
 
-如果你希望为异步模块指定一个固定的名称，可以通过 Rspack 提供的 [magic comments](https://rspack.dev/zh/api/runtime-api/module-methods#magic-comments) 来实现，通过 `webpackChunkName` 指定模块名称：
+如果你希望为异步模块指定一个固定的名称，可以通过 Rspack 提供的 [magic comments](https://rspack.rs/zh/api/runtime-api/module-methods#magic-comments) 来实现，通过 `webpackChunkName` 指定模块名称：
 
 ```js title="src/index.ts"
 const { add } = await import(

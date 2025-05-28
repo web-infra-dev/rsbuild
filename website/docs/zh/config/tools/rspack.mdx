@@ -3,7 +3,7 @@
 - **类型：** `Rspack.Configuration | Function | undefined`
 - **默认值：** `undefined`
 
-`tools.rspack` 选项用于修改 [Rspack](https://rspack.dev/zh/config/index) 的配置项。
+`tools.rspack` 选项用于修改 [Rspack](https://rspack.rs/zh/config/index) 的配置项。
 
 :::tip
 Rsbuild 内置的 Rspack 配置会随着迭代而发生变化，这些变化不会反映在 semver 中，因此在升级 Rsbuild 时，你的自定义配置可能会失效。
@@ -234,7 +234,7 @@ export default {
 
 - **类型：** `(rules: RuleSetRule | RuleSetRule[]) => void`
 
-添加额外的 [Rspack rules](https://rspack.dev/zh/config/module#modulerules) 到 Rspack rules 列表的最前面。
+添加额外的 [Rspack rules](https://rspack.rs/zh/config/module#modulerules) 到 Rspack rules 列表的最前面。
 
 需要注意的是，Rspack loaders 会按照从右到左的顺序执行，如果你希望你添加的 loader（Normal Phase）先于其他 loader 执行，应使用 [appendRules](#appendrules) 将该规则添加到最后面。
 
@@ -270,7 +270,7 @@ export default {
 
 - **类型：** `(rules: RuleSetRule | RuleSetRule[]) => void`
 
-添加额外的 [Rspack rules](https://rspack.dev/zh/config/module#modulerules) 到 Rspack rules 列表的最后面。
+添加额外的 [Rspack rules](https://rspack.rs/zh/config/module#modulerules) 到 Rspack rules 列表的最后面。
 
 示例：
 

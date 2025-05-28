@@ -122,7 +122,7 @@ export default {
 };
 ```
 
-相比直接配置 Rspack 的 [splitChunks](https://rspack.dev/zh/config/optimization#optimizationsplitchunks)，这是一个更加简便的方式。
+相比直接配置 Rspack 的 [splitChunks](https://rspack.rs/zh/config/optimization#optimizationsplitchunks)，这是一个更加简便的方式。
 
 :::tip
 注意，通过 `forceSplitting` 配置拆分的 chunk 会通过 `<script>` 标签插入到 HTML 文件中，作为首屏请求的资源。因此，请根据实际场景来进行适当地拆分，避免首屏资源体积过大。
@@ -177,7 +177,7 @@ export default {
 
 `performance.chunkSplit` 仅在 [output.target](/config/output/target) 为 `web` 时生效。这意味着，当 `output.target` 为 `node` 或 `web-worker` 时，`performance.chunkSplit` 配置项不会生效。
 
-通常 Node bundles 不需要通过 split chunks 来优化加载性能，如果你需要对 Node bundles 进行拆包，可以使用 [tools.rspack](/config/tools/rspack) 来配置 Rspack 的 [optimization.splitChunks](https://rspack.dev/zh/plugins/webpack/split-chunks-plugin#optimizationsplitchunks) 选项：
+通常 Node bundles 不需要通过 split chunks 来优化加载性能，如果你需要对 Node bundles 进行拆包，可以使用 [tools.rspack](/config/tools/rspack) 来配置 Rspack 的 [optimization.splitChunks](https://rspack.rs/zh/plugins/webpack/split-chunks-plugin#optimizationsplitchunks) 选项：
 
 ```ts
 export default {

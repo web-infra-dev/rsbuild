@@ -165,7 +165,7 @@ export default () => ({
 
 ## api.transform
 
-A simplified wrapper around [Rspack loaders](https://rspack.dev/guide/features/loader), `api.transform` lets you easily transform the code of specific modules during the build process.
+A simplified wrapper around [Rspack loaders](https://rspack.rs/guide/features/loader), `api.transform` lets you easily transform the code of specific modules during the build process.
 
 You can match files by module path, query, or other conditions, and apply custom transformations to their contents.
 
@@ -225,7 +225,7 @@ type TransformDescriptor = {
 
 The `descriptor` param supports the following matching conditions:
 
-- `test`: matches module's path (without query), the same as Rspack's [Rule.test](https://rspack.dev/config/module#ruletest).
+- `test`: matches module's path (without query), the same as Rspack's [Rule.test](https://rspack.rs/config/module#ruletest).
 
 ```js
 api.transform({ test: /\.md$/ }, ({ code }) => {
@@ -249,7 +249,7 @@ api.transform({ test: /\.md$/, environments: ['web'] }, ({ code }) => {
 });
 ```
 
-- `resourceQuery`: matches module's query, the same as Rspack's [Rule.resourceQuery](https://rspack.dev/config/module#ruleresourcequery).
+- `resourceQuery`: matches module's query, the same as Rspack's [Rule.resourceQuery](https://rspack.rs/config/module#ruleresourcequery).
 
 ```js
 api.transform({ resourceQuery: /raw/ }, ({ code }) => {
@@ -265,7 +265,7 @@ api.transform({ test: /\.node$/, raw: true }, ({ code }) => {
 });
 ```
 
-- `layer`: marks the layer of the matching module, can be used to group a group of modules into one layer, the same as Rspack's [Rule.layer](https://rspack.dev/config/module#rulelayer).
+- `layer`: marks the layer of the matching module, can be used to group a group of modules into one layer, the same as Rspack's [Rule.layer](https://rspack.rs/config/module#rulelayer).
 
 ```js
 api.transform({ test: /\.md$/, layer: 'foo' }, ({ code }) => {
@@ -273,7 +273,7 @@ api.transform({ test: /\.md$/, layer: 'foo' }, ({ code }) => {
 });
 ```
 
-- `issuerLayer`: matches the layer of the module that issues the current module, the same as Rspack's [Rule.issuerLayer](https://rspack.dev/config/module#ruleissuerlayer).
+- `issuerLayer`: matches the layer of the module that issues the current module, the same as Rspack's [Rule.issuerLayer](https://rspack.rs/config/module#ruleissuerlayer).
 
 ```js
 api.transform({ test: /\.md$/, issuerLayer: 'foo' }, ({ code }) => {
@@ -281,7 +281,7 @@ api.transform({ test: /\.md$/, issuerLayer: 'foo' }, ({ code }) => {
 });
 ```
 
-- `issuer`: matches the absolute path of the module that issues the current module, the same as Rspack's [Rule.issuer](https://rspack.dev/config/module#ruleissuer).
+- `issuer`: matches the absolute path of the module that issues the current module, the same as Rspack's [Rule.issuer](https://rspack.rs/config/module#ruleissuer).
 
 ```js
 api.transform({ test: /\.md$/, issuer: /\.js$/ }, ({ code }) => {
@@ -289,7 +289,7 @@ api.transform({ test: /\.md$/, issuer: /\.js$/ }, ({ code }) => {
 });
 ```
 
-- `with`: matches [import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with), the same as Rspack's [Rule.with](https://rspack.dev/config/module#rulewith).
+- `with`: matches [import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with), the same as Rspack's [Rule.with](https://rspack.rs/config/module#rulewith).
 
 ```js
 api.transform({ test: /\.md$/, with: { type: 'url' } }, ({ code }) => {
@@ -297,7 +297,7 @@ api.transform({ test: /\.md$/, with: { type: 'url' } }, ({ code }) => {
 });
 ```
 
-- `mimetype`: Matches modules based on MIME type instead of file extension. It's primarily useful for data URI module (like `data:text/javascript,...`), the same as Rspack's [Rule.mimetype](https://rspack.dev/config/module#rulemimetype).
+- `mimetype`: Matches modules based on MIME type instead of file extension. It's primarily useful for data URI module (like `data:text/javascript,...`), the same as Rspack's [Rule.mimetype](https://rspack.rs/config/module#rulemimetype).
 
 ```js
 api.transform({ mimetype: 'text/javascript' }, ({ code }) => {
@@ -305,7 +305,7 @@ api.transform({ mimetype: 'text/javascript' }, ({ code }) => {
 });
 ```
 
-- `enforce`: Specifies the execution order of the transform function, the same as Rspack's [Rule.enforce](https://rspack.dev/config/module#ruleenforce).
+- `enforce`: Specifies the execution order of the transform function, the same as Rspack's [Rule.enforce](https://rspack.rs/config/module#ruleenforce).
   - When `enforce` is `pre`, the transform function will be executed before other transform functions (or Rspack loaders).
   - When `enforce` is `post`, the transform function will be executed after other transform functions (or Rspack loaders).
 
@@ -352,17 +352,17 @@ type TransformHandler = (
 The `handler` function provides the following params:
 
 - `code`: The code of the module.
-- `context`: The directory path of the currently processed module. The same as Rspack loader's [this.context](https://rspack.dev/api/loader-api/context#thiscontext).
-- `resolve`: Resolve a module specifier. The same as Rspack loader's [this.resolve](https://rspack.dev/api/loader-api/context#thisresolve).
+- `context`: The directory path of the currently processed module. The same as Rspack loader's [this.context](https://rspack.rs/api/loader-api/context#thiscontext).
+- `resolve`: Resolve a module specifier. The same as Rspack loader's [this.resolve](https://rspack.rs/api/loader-api/context#thisresolve).
 - `resource`: The absolute path of the module, including the query.
 - `resourcePath`: The absolute path of the module, without the query.
 - `resourceQuery`: The query of the module.
 - `environment`: The [environment context](/api/javascript-api/environment-api#environment-context) for current build.
-- `addDependency`: Add an additional file as the dependency. The file will be watched and changes to the file will trigger rebuild. The same as Rspack loader's [this.addDependency](https://rspack.dev/api/loader-api/context#thisadddependency).
-- `addMissingDependency`: Add an non-existing file as the dependency. The file will be watched and changes to the file will trigger rebuild. The same as Rspack loader's [this.addMissingDependency](https://rspack.dev/api/loader-api/context#thisaddmissingdependency).
-- `addContextDependency`: Add an additional directory as the dependency. The directory will be watched and changes to the directory will trigger rebuild. The same as Rspack loader's [this.addContextDependency](https://rspack.dev/api/loader-api/context#thisaddcontextdependency).
-- `emitFile`: Emits a file to the build output. The same as Rspack loader's [this.emitFile](https://rspack.dev/api/loader-api/context#thisemitfile).
-- `importModule`: Compile and execute a module at the build time. The same as Rspack loader's [this.importModule](https://rspack.dev/api/loader-api/context#thisimportmodule).
+- `addDependency`: Add an additional file as the dependency. The file will be watched and changes to the file will trigger rebuild. The same as Rspack loader's [this.addDependency](https://rspack.rs/api/loader-api/context#thisadddependency).
+- `addMissingDependency`: Add an non-existing file as the dependency. The file will be watched and changes to the file will trigger rebuild. The same as Rspack loader's [this.addMissingDependency](https://rspack.rs/api/loader-api/context#thisaddmissingdependency).
+- `addContextDependency`: Add an additional directory as the dependency. The directory will be watched and changes to the directory will trigger rebuild. The same as Rspack loader's [this.addContextDependency](https://rspack.rs/api/loader-api/context#thisaddcontextdependency).
+- `emitFile`: Emits a file to the build output. The same as Rspack loader's [this.emitFile](https://rspack.rs/api/loader-api/context#thisemitfile).
+- `importModule`: Compile and execute a module at the build time. The same as Rspack loader's [this.importModule](https://rspack.rs/api/loader-api/context#thisimportmodule).
 
 For example:
 
@@ -388,7 +388,7 @@ Note that for some complex code transformation scenarios, `api.transform` may no
 
 ## api.resolve
 
-Intercept and modify module request information before module resolution begins. The same as Rspack's [normalModuleFactory.hooks.resolve](https://rspack.dev/api/plugin-api/normal-module-factory-hooks#resolve) hook.
+Intercept and modify module request information before module resolution begins. The same as Rspack's [normalModuleFactory.hooks.resolve](https://rspack.rs/api/plugin-api/normal-module-factory-hooks#resolve) hook.
 
 - **Version:** `>= 1.0.17`
 - **Type:**
@@ -426,14 +426,14 @@ type ResolveHandler = (context: {
 
 The `handler` function provides the following parameters:
 
-- `resolveData`: Module request information. For details, please refer to [Rspack - resolve hook](https://rspack.dev/api/plugin-api/normal-module-factory-hooks#resolve).
+- `resolveData`: Module request information. For details, please refer to [Rspack - resolve hook](https://rspack.rs/api/plugin-api/normal-module-factory-hooks#resolve).
 - `compiler`: The Compiler object of Rspack.
 - `compilation`: The Compilation object of Rspack.
 - `environment`: The environment context of the current build.
 
 ## api.processAssets
 
-Modify assets before emitting, the same as Rspack's [compilation.hooks.processAssets](https://rspack.dev/api/plugin-api/compilation-hooks#processassets) hook.
+Modify assets before emitting, the same as Rspack's [compilation.hooks.processAssets](https://rspack.rs/api/plugin-api/compilation-hooks#processassets) hook.
 
 - **Version:** `>= 1.0.0`
 - **Type:**

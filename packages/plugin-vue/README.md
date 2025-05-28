@@ -12,7 +12,7 @@ An Rsbuild plugin to provide support for Vue 3.
 
 ## Documentation
 
-See [Documentation](https://rsbuild.dev/plugins/list/plugin-vue).
+See [Documentation](https://rsbuild.rs/plugins/list/plugin-vue).
 
 ## License
 

@@ -123,7 +123,7 @@ export default {
 
 When you use [dynamic import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) in JavaScript, Rspack will generate an async chunk. By default, `output.inlineScripts` will not inline async chunks into the HTML.
 
-To inline async chunks into the HTML, change Rspack's default behavior using the [tools.rspack](/config/tools/rspack) config by setting [module.parser.javascript.dynamicImportMode](https://rspack.dev/config/module#moduleparserjavascriptdynamicimportmode) to `'eager'`. In this case, Rspack will not generate separate JS files for dynamic imports.
+To inline async chunks into the HTML, change Rspack's default behavior using the [tools.rspack](/config/tools/rspack) config by setting [module.parser.javascript.dynamicImportMode](https://rspack.rs/config/module#moduleparserjavascriptdynamicimportmode) to `'eager'`. In this case, Rspack will not generate separate JS files for dynamic imports.
 
 ```js
 export default {

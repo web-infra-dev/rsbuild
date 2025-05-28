@@ -4,8 +4,8 @@
 
 Rsbuild 默认启用 SWC 的以下功能：
 
-- 通过 Rspack 的 [builtin:swc-loader](https://rspack.dev/zh/guide/features/builtin-swc-loader) 来转换 JavaScript 和 TypeScript 代码，它是 [swc-loader](https://github.com/swc-project/pkgs/tree/main/packages/swc-loader) 的 Rust 版本。
-- 通过 Rspack 的 [SwcJsMinimizerRspackPlugin](https://rspack.dev/zh/plugins/rspack/swc-js-minimizer-rspack-plugin) 来压缩 JavaScript 代码。
+- 通过 Rspack 的 [builtin:swc-loader](https://rspack.rs/zh/guide/features/builtin-swc-loader) 来转换 JavaScript 和 TypeScript 代码，它是 [swc-loader](https://github.com/swc-project/pkgs/tree/main/packages/swc-loader) 的 Rust 版本。
+- 通过 Rspack 的 [SwcJsMinimizerRspackPlugin](https://rspack.rs/zh/plugins/rspack/swc-js-minimizer-rspack-plugin) 来压缩 JavaScript 代码。
 
 ## Loader 选项
 
@@ -41,7 +41,7 @@ export default {
 
 请注意，SWC 的插件仍然是一个实验性功能，目前 SWC 的 Wasm 插件是不向后兼容的，SWC 插件的版本与 Rspack 依赖的 `swc_core` 版本存在强耦合关系。
 
-这意味着，你需要选择和当前 `swc_core` 版本匹配的 SWC 插件，才能使它正常执行。如果你使用的 SWC 插件版本与 Rspack 依赖的 `swc_core` 版本不匹配，Rspack 在执行构建时会抛出错误，请参考 [Rspack 常见问题 - SWC 插件版本不匹配](https://rspack.dev/zh/errors/swc-plugin-version) 进行处理。
+这意味着，你需要选择和当前 `swc_core` 版本匹配的 SWC 插件，才能使它正常执行。如果你使用的 SWC 插件版本与 Rspack 依赖的 `swc_core` 版本不匹配，Rspack 在执行构建时会抛出错误，请参考 [Rspack 常见问题 - SWC 插件版本不匹配](https://rspack.rs/zh/errors/swc-plugin-version) 进行处理。
 
 ### 启用 Emotion 支持
 

@@ -12,7 +12,7 @@ An Rsbuild plugin to use SVGR to transform SVG to React components via SVGR.
 
 ## Documentation
 
-See [Documentation](https://rsbuild.dev/plugins/list/plugin-svgr).
+See [Documentation](https://rsbuild.rs/plugins/list/plugin-svgr).
 
 ## License
 

@@ -1,12 +1,12 @@
 # source.include
 
-- **类型：** [RuleSetCondition](https://rspack.dev/zh/config/module#condition)
+- **类型：** [RuleSetCondition](https://rspack.rs/zh/config/module#condition)
 
 用于指定额外需要被 [SWC](/guide/configuration/swc) 编译的 JavaScript 文件。
 
 ## 默认值
 
-为了避免二次编译，默认情况下，Rsbuild 内置的 [swc-loader](https://rspack.dev/zh/guide/features/builtin-swc-loader) 会编译以下文件：
+为了避免二次编译，默认情况下，Rsbuild 内置的 [swc-loader](https://rspack.rs/zh/guide/features/builtin-swc-loader) 会编译以下文件：
 
 - 任意目录下的 TypeScript 和 JSX 文件，匹配的文件后缀为 `.ts`、`.tsx`、`.jsx`、`.mts`、`.cts`。
 - [root](/config/root) 目录下的 JavaScript 文件，但不包含 `node_modules` 目录，匹配的文件后缀为 `.js`、`.mjs`、`.cjs`。
@@ -24,7 +24,7 @@ const defaultInclude = [
 
 ## 用法
 
-通过 `source.include` 配置项，你可以指定需要 Rsbuild 额外进行编译的目录或模块。`source.include` 的用法与 Rspack 中的 [Rule.include](https://rspack.dev/zh/config/module#ruleinclude) 一致，支持传入字符串、正则表达式来匹配模块的路径。
+通过 `source.include` 配置项，你可以指定需要 Rsbuild 额外进行编译的目录或模块。`source.include` 的用法与 Rspack 中的 [Rule.include](https://rspack.rs/zh/config/module#ruleinclude) 一致，支持传入字符串、正则表达式来匹配模块的路径。
 
 比如:
 
