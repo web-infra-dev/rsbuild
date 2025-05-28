@@ -72,7 +72,7 @@ export default defineConfig({
   },
   lib: [
     {
-      id: 'esm:index',
+      id: 'esm_index',
       format: 'esm',
       syntax: 'es2021',
       plugins: [pluginFixDtsTypes],
@@ -84,7 +84,7 @@ export default defineConfig({
       },
     },
     {
-      id: 'esm:loaders',
+      id: 'esm_loaders',
       format: 'esm',
       syntax: 'es2021',
       source: {
@@ -102,7 +102,7 @@ export default defineConfig({
       },
     },
     {
-      id: 'cjs:index',
+      id: 'cjs_index',
       format: 'cjs',
       syntax: 'es2021',
       source: {
@@ -115,7 +115,7 @@ export default defineConfig({
       },
     },
     {
-      id: 'esm:client',
+      id: 'esm_client',
       format: 'esm',
       syntax: 'es2017',
       source: {
