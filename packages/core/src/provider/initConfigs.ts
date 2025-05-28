@@ -175,6 +175,19 @@ const validateRsbuildConfig = (config: NormalizedConfig) => {
       )} option should start with a slash, for example: "/base"`,
     );
   }
+
+  if (config.environments) {
+    const names = Object.keys(config.environments);
+    const regexp = /^[\w$-]+$/;
+    for (const name of names) {
+      // ensure environment names are filesystem and property access safe
+      if (!regexp.test(name)) {
+        logger.warn(
+          `${color.dim('[rsbuild:config]')} Environment name "${color.yellow(name)}" contains invalid characters. Only letters, numbers, "-", "_", and "$" are allowed.`,
+        );
+      }
+    }
+  }
 };
 
 /**
