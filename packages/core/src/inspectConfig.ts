@@ -101,6 +101,8 @@ export async function outputInspectConfigFiles({
 }): Promise<void> {
   const { outputPath } = inspectOptions;
 
+  const escapeOutputName = (name: string) => name.replace(/[:]/g, '_');
+
   const files = [
     ...rawEnvironmentConfigs.map(({ name, content }) => {
       if (rawEnvironmentConfigs.length === 1) {
@@ -113,7 +115,7 @@ export async function outputInspectConfigFiles({
           content,
         };
       }
-      const outputFile = `rsbuild.config.${name}.mjs`;
+      const outputFile = `rsbuild.config.${escapeOutputName(name)}.mjs`;
       const outputFilePath = join(outputPath, outputFile);
 
       return {
@@ -123,7 +125,7 @@ export async function outputInspectConfigFiles({
       };
     }),
     ...rawBundlerConfigs.map(({ name, content }) => {
-      const outputFile = `${configType}.config.${name}.mjs`;
+      const outputFile = `${configType}.config.${escapeOutputName(name)}.mjs`;
       let outputFilePath = join(outputPath, outputFile);
 
       // if filename is conflict, add a random id to the filename.
