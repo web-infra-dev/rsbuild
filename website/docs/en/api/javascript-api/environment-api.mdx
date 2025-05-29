@@ -180,7 +180,7 @@ api.onAfterEnvironmentCompile(({ environment }) => {
 });
 ```
 
-The manifest data is only available after the build has completed, you can access it in the following hooks:
+The manifest data is only available after the build has completed, you can access it in the following hooks and APIs:
 
 - [onAfterBuild](/plugins/dev/hooks#onafterbuild)
 - [onAfterEnvironmentCompile](/plugins/dev/hooks#onafterenvironmentcompile)
@@ -188,6 +188,7 @@ The manifest data is only available after the build has completed, you can acces
 - [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)
 - [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone)
 - [onExit](/plugins/dev/hooks#onexit)
+- [getManifest](/api/javascript-api/environment-api#getmanifest)
 
 ## Environment API
 
@@ -201,6 +202,9 @@ type EnvironmentAPI = {
     getStats: () => Promise<Stats>;
     loadBundle: <T = unknown>(entryName: string) => Promise<T>;
     getTransformedHtml: (entryName: string) => Promise<string>;
+    getManifest: <
+      T extends Record<string, unknown> = ManifestData,
+    >() => Promise<T | undefined>;
   };
 };
 ```
@@ -262,3 +266,25 @@ const html = await environments.web.getTransformedHtml('main');
 ```
 
 This method returns the complete HTML string, including all resources and content injected through HTML plugins.
+
+### getManifest
+
+When the [output.manifest](/config/output/manifest) configuration is enabled, the manifest of the current environment can be available through the `getManifest` API.
+
+- **Type:**
+
+```ts
+type GetManifest: <
+      T extends Record<string, unknown> = ManifestData,
+    >() => Promise<T | undefined>;
+```
+
+- **Example:**
+
+```ts
+const webManifest = await environments.web.getManifest();
+
+console.log(webManifest.entries);
+```
+
+The return value of this method refers to [Manifest structure](/config/output/manifest#manifest-structure).

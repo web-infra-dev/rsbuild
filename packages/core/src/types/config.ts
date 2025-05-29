@@ -1502,6 +1502,13 @@ export type EnvironmentAPI = {
      * Get the compiled HTML template.
      */
     getTransformedHtml: (entryName: string) => Promise<string>;
+
+    /**
+     * Manifest data. Only available when `output.manifest` config option is enabled
+     */
+    getManifest: <
+      T extends Record<string, unknown> = ManifestData,
+    >() => Promise<T>;
   };
 };
 
