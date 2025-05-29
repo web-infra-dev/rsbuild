@@ -28,7 +28,7 @@
     "prebundle": "prebundle"
   },
   "dependencies": {
-    "@babel/core": "^7.27.1",
+    "@babel/core": "^7.27.3",
     "@babel/plugin-proposal-decorators": "^7.27.1",
     "@babel/plugin-transform-class-properties": "^7.27.1",
     "@babel/preset-typescript": "^7.27.1",
@@ -41,7 +41,7 @@
     "@rsbuild/core": "workspace:*",
     "@rslib/core": "0.9.0",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.15.21",
+    "@types/node": "^22.15.24",
     "babel-loader": "10.0.0",
     "prebundle": "1.3.3",
     "typescript": "^5.8.3"
