@@ -181,7 +181,7 @@ api.onAfterEnvironmentCompile(({ environment }) => {
 });
 ```
 
-manifest 数据仅在构建完成后才能被访问，你可以在以下 hooks 和 APIs 中访问：
+manifest 数据仅在构建完成后才能被访问，你可以在以下 hooks 中访问：
 
 - [onAfterBuild](/plugins/dev/hooks#onafterbuild)
 - [onAfterEnvironmentCompile](/plugins/dev/hooks#onafterenvironmentcompile)
@@ -189,7 +189,6 @@ manifest 数据仅在构建完成后才能被访问，你可以在以下 hooks �
 - [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)
 - [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone)
 - [onExit](/plugins/dev/hooks#onexit)
-- [getManifest](/api/javascript-api/environment-api#getmanifest)
 
 ## Environment API
 
@@ -200,14 +199,26 @@ Environment API 提供一些与多环境构建相关的 API。
 ```ts
 type EnvironmentAPI = {
   [name: string]: {
+    context: EnvironmentContext;
     getStats: () => Promise<Stats>;
     loadBundle: <T = unknown>(entryName: string) => Promise<T>;
     getTransformedHtml: (entryName: string) => Promise<string>;
-    getManifest: <
-      T extends Record<string, unknown> = ManifestData,
-    >() => Promise<T | undefined>;
   };
 };
+```
+
+### context
+
+你可以通过 Environment API 获取和当前环境有关的上下文信息。
+
+- **类型：** `EnvironmentContext`
+
+- **示例：**
+
+```ts
+const webManifest = environments.web.context.manifest;
+
+console.log(webManifest.entries);
 ```
 
 ### getStats
@@ -267,25 +278,3 @@ const html = await environments.web.getTransformedHtml('main');
 ```
 
 该方法会返回完整的 HTML 字符串，包含了所有通过 HTML 插件注入的资源和内容。
-
-### getManifest
-
-当开启 [output.manifest](/config/output/manifest) 配置时，可通过 `getManifest` API 获取当前环境的产物清单。
-
-- **类型：**
-
-```ts
-type GetManifest: <
-      T extends Record<string, unknown> = ManifestData,
-    >() => Promise<T | undefined>;
-```
-
-- **示例：**
-
-```ts
-const webManifest = await environments.web.getManifest();
-
-console.log(webManifest.entries);
-```
-
-该方法的返回结果参考 [Manifest 结构](/config/output/manifest#manifest-结构)。

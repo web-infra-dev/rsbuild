@@ -22,6 +22,7 @@ import type { FileDescriptor } from '../../compiled/rspack-manifest-plugin';
 import type { BundleAnalyzerPlugin } from '../../compiled/webpack-bundle-analyzer/index.js';
 import type { RsbuildDevServer } from '../server/devServer';
 import type {
+  EnvironmentContext,
   ModifyBundlerChainUtils,
   ModifyChainUtils,
   Routes,
@@ -1504,11 +1505,9 @@ export type EnvironmentAPI = {
     getTransformedHtml: (entryName: string) => Promise<string>;
 
     /**
-     * Manifest data. Only available when `output.manifest` config option is enabled
+     * Provides some context information about the current environment
      */
-    getManifest: <
-      T extends Record<string, unknown> = ManifestData,
-    >() => Promise<T>;
+    context: EnvironmentContext;
   };
 };
 

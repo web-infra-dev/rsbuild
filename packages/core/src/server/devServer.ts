@@ -292,17 +292,7 @@ export async function createDevServer<
             await waitFirstCompileDone;
             return lastStats[environment.index];
           },
-          getManifest: async <T>() => {
-            if (!environment.config.output.manifest) {
-              throw new Error(
-                `${color.dim('[rsbuild:server]')} Can not call ` +
-                  `${color.yellow('getManifest')} when ` +
-                  `${color.yellow('output.manifest')} is not enabled`,
-              );
-            }
-            await waitFirstCompileDone;
-            return context.environments[name].manifest as T;
-          },
+          context: environment,
           loadBundle: async <T>(entryName: string) => {
             if (!compilationManager) {
               throw new Error(
