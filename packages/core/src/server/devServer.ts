@@ -292,6 +292,7 @@ export async function createDevServer<
             await waitFirstCompileDone;
             return lastStats[environment.index];
           },
+          context: environment,
           loadBundle: async <T>(entryName: string) => {
             if (!compilationManager) {
               throw new Error(

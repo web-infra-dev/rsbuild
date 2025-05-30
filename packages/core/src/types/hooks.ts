@@ -214,7 +214,7 @@ export type EnvironmentContext = {
    * Manifest data. Only available when:
    * - The `output.manifest` config is enabled
    * - The build has completed, accessible in hooks like `onAfterBuild`,
-   * `onDevCompileDone` and `onAfterEnvironmentCompile`
+   * `onDevCompileDone` and `onAfterEnvironmentCompile` or via the environment API
    */
   manifest?: Record<string, unknown> | ManifestData;
 };

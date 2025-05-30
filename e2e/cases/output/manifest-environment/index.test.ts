@@ -126,3 +126,66 @@ test('should allow to access manifest data in environment context after dev buil
 
   await rsbuild.close();
 });
+
+test('should allow to access manifest data in environment API', async ({
+  page,
+}) => {
+  let webManifest: Record<string, any> | undefined = {};
+  let nodeManifest: Record<string, any> | undefined = {};
+
+  const rsbuild = await dev({
+    cwd: fixtures,
+    page,
+    rsbuildConfig: {
+      output: {
+        filenameHash: false,
+      },
+      environments: {
+        web: {
+          output: {
+            manifest: true,
+          },
+        },
+        node: {
+          output: {
+            target: 'node',
+            manifest: 'manifest-node.json',
+          },
+        },
+      },
+      dev: {
+        setupMiddlewares: [
+          (middlewares, { environments }) => {
+            middlewares.unshift(async (_req, _res, next) => {
+              webManifest = environments.web.context.manifest;
+              nodeManifest = environments.node.context.manifest;
+              next();
+            });
+          },
+        ],
+      },
+    },
+  });
+
+  // should visit base url correctly
+  await page.goto(`http://localhost:${rsbuild.port}`);
+
+  // main.js, main.js.map, index.html
+  expect(Object.keys(webManifest.allFiles).length).toBe(3);
+  expect(webManifest.entries.index).toMatchObject({
+    initial: {
+      js: ['/static/js/index.js'],
+    },
+    html: ['/index.html'],
+  });
+
+  // main.js, main.js.map
+  expect(Object.keys(nodeManifest.allFiles).length).toBe(2);
+  expect(nodeManifest.entries.index).toMatchObject({
+    initial: {
+      js: ['/index.js'],
+    },
+  });
+
+  await rsbuild.close();
+});

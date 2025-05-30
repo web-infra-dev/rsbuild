@@ -22,6 +22,7 @@ import type { FileDescriptor } from '../../compiled/rspack-manifest-plugin';
 import type { BundleAnalyzerPlugin } from '../../compiled/webpack-bundle-analyzer/index.js';
 import type { RsbuildDevServer } from '../server/devServer';
 import type {
+  EnvironmentContext,
   ModifyBundlerChainUtils,
   ModifyChainUtils,
   Routes,
@@ -1502,6 +1503,11 @@ export type EnvironmentAPI = {
      * Get the compiled HTML template.
      */
     getTransformedHtml: (entryName: string) => Promise<string>;
+
+    /**
+     * Provides some context information about the current environment
+     */
+    context: EnvironmentContext;
   };
 };
 

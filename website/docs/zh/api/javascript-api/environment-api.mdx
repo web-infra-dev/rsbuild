@@ -192,18 +192,33 @@ manifest 数据仅在构建完成后才能被访问，你可以在以下 hooks �
 
 ## Environment API
 
-Environment API 包了一些与多环境构建相关的 API。
+Environment API 提供一些与多环境构建相关的 API。
 
 你可以通过 [rsbuild.createDevServer()](/api/javascript-api/instance#rsbuildcreatedevserver) 或 [dev.setupMiddlewares](/config/dev/setup-middlewares) 使用 environment API，这允许你在服务端获取特定环境下的构建产物信息。
 
 ```ts
 type EnvironmentAPI = {
   [name: string]: {
+    context: EnvironmentContext;
     getStats: () => Promise<Stats>;
     loadBundle: <T = unknown>(entryName: string) => Promise<T>;
     getTransformedHtml: (entryName: string) => Promise<string>;
   };
 };
+```
+
+### context
+
+你可以通过 Environment API 获取和当前环境有关的上下文信息。
+
+- **类型：** `EnvironmentContext`
+
+- **示例：**
+
+```ts
+const webManifest = environments.web.context.manifest;
+
+console.log(webManifest.entries);
 ```
 
 ### getStats

@@ -198,11 +198,26 @@ You can use environment API via [rsbuild.createDevServer()](/api/javascript-api/
 ```ts
 type EnvironmentAPI = {
   [name: string]: {
+    context: EnvironmentContext;
     getStats: () => Promise<Stats>;
     loadBundle: <T = unknown>(entryName: string) => Promise<T>;
     getTransformedHtml: (entryName: string) => Promise<string>;
   };
 };
+```
+
+### context
+
+You can get context information related to the current environment through the Environment API.
+
+- **Type:** `EnvironmentContext`
+
+- **Example:**
+
+```ts
+const webManifest = environments.web.context.manifest;
+
+console.log(webManifest.entries);
 ```
 
 ### getStats
