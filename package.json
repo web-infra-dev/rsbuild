@@ -11,8 +11,6 @@
   "scripts": {
     "build": "cross-env NX_DAEMON=false nx run-many -t build --exclude @examples/* @e2e/* rsbuild-* --parallel=10",
     "build:doc": "cd website && pnpm run build",
-    "change": "changeset",
-    "changeset": "changeset",
     "check-dependency-version": "pnpx check-dependency-version-consistency . --ignore-dep loader-utils",
     "check-spell": "pnpx cspell && heading-case",
     "dev:doc": "cd website && pnpm run dev",
@@ -40,7 +38,6 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "@changesets/cli": "^2.29.4",
     "@rsbuild/config": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "cross-env": "^7.0.3",
