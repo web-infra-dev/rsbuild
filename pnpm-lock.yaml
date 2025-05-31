@@ -1174,8 +1174,8 @@ importers:
         specifier: 2.0.0-beta.8
         version: 2.0.0-beta.8(@rspress/runtime@2.0.0-beta.8)
       '@rspress/plugin-llms':
-        specifier: ^2.0.0-beta.8
-        version: 2.0.0-beta.9(@rspress/core@2.0.0-beta.8(@types/react@19.1.6)(acorn@8.14.1)(webpack@5.99.9))
+        specifier: 2.0.0-beta.8
+        version: 2.0.0-beta.8(@rspress/core@2.0.0-beta.8(@types/react@19.1.6)(acorn@8.14.1)(webpack@5.99.9))
       '@rspress/plugin-rss':
         specifier: 2.0.0-beta.8
         version: 2.0.0-beta.8(rspress@2.0.0-beta.8(@types/react@19.1.6)(acorn@8.14.1)(webpack@5.99.9))
@@ -2748,11 +2748,11 @@ packages:
     resolution: {integrity: sha512-wjPtXAmeK8Zc9supwh4QyhfNjnpKJ4JSaJoOG5NKCQuOMrL4Z2wGPR65rLYm+l1Et3Fh0vNNf7ERW6+TjqEcDA==}
     engines: {node: '>=18.0.0'}
 
-  '@rspress/plugin-llms@2.0.0-beta.9':
-    resolution: {integrity: sha512-i9ccwilSqvgo/CdBkQaO0r7OoqmS54mdeHh6tndiRH15EHh+RfCGtVumHRRJ7qeJGRDUaOICaazAYEIq1JWjoA==}
+  '@rspress/plugin-llms@2.0.0-beta.8':
+    resolution: {integrity: sha512-4gjtQxvyGdTQ1r+d2O4lvntm13j2HwnrVwRyH2cysP+CbcVS1Nuu5vDSsFJJGXzvmC8+ebpXi+qkHGysmFtCfg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      '@rspress/core': ^2.0.0-beta.9
+      '@rspress/core': ^2.0.0-beta.8
 
   '@rspress/plugin-medium-zoom@2.0.0-beta.8':
     resolution: {integrity: sha512-WZgMTVgrxiyFkKSuucUlmwAyRaLl2Lmy9VSn/4rpkAFZav1kV396vvZjolA/oLM+zQKtgZUGPGr5DZ7qk6y3+w==}
@@ -2776,9 +2776,6 @@ packages:
 
   '@rspress/shared@2.0.0-beta.8':
     resolution: {integrity: sha512-vPifnCt3gevnUT9kSnkzkpSlL5FNr6uTzd+9Sx50FHy+y7aXERhi5L55KABCGA4htBZzBAdRlmXD1N0URaOKBg==}
-
-  '@rspress/shared@2.0.0-beta.9':
-    resolution: {integrity: sha512-2WAQMlQALGPvKvtU2AoPcy3AseYctFl0fS60LJxpmLaCwb4az6wl115VmviVjuBNLgqlQFLkMqBsyBM0Irxb2A==}
 
   '@rspress/theme-default@2.0.0-beta.8':
     resolution: {integrity: sha512-WHxCawwsLc7CaRjeTqP5KCpptnJmKuSdCWwqt+hC8bkcdrbfCU1xC+yHqw0CDLM2ve8z6/pPdTF2c5NYlJpH9g==}
@@ -8376,10 +8373,10 @@ snapshots:
     dependencies:
       '@rspress/shared': 2.0.0-beta.8
 
-  '@rspress/plugin-llms@2.0.0-beta.9(@rspress/core@2.0.0-beta.8(@types/react@19.1.6)(acorn@8.14.1)(webpack@5.99.9))':
+  '@rspress/plugin-llms@2.0.0-beta.8(@rspress/core@2.0.0-beta.8(@types/react@19.1.6)(acorn@8.14.1)(webpack@5.99.9))':
     dependencies:
       '@rspress/core': 2.0.0-beta.8(@types/react@19.1.6)(acorn@8.14.1)(webpack@5.99.9)
-      '@rspress/shared': 2.0.0-beta.9
+      '@rspress/shared': 2.0.0-beta.8
       remark-mdx: 3.1.0
       remark-parse: 11.0.0
       remark-stringify: 11.0.0
@@ -8416,14 +8413,6 @@ snapshots:
       react-router-dom: 6.30.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
 
   '@rspress/shared@2.0.0-beta.8':
-    dependencies:
-      '@rsbuild/core': 1.3.22
-      '@shikijs/rehype': 3.4.2
-      gray-matter: 4.0.3
-      lodash-es: 4.17.21
-      unified: 11.0.5
-
-  '@rspress/shared@2.0.0-beta.9':
     dependencies:
       '@rsbuild/core': 1.3.22
       '@shikijs/rehype': 3.4.2
