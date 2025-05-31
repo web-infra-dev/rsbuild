@@ -65,7 +65,9 @@ describe('plugin-resolve', () => {
     });
     const bundlerConfigs = await rsbuild.initConfigs();
 
-    expect(bundlerConfigs[0].resolve?.alias?.foo).toEqual('bar');
+    expect(
+      (bundlerConfigs[0].resolve?.alias as Record<string, string>)?.foo,
+    ).toEqual('bar');
   });
 
   it('should allow resolve.alias to be a function', async () => {

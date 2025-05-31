@@ -162,7 +162,9 @@ it('should ensure isolation of PostCSS config objects between different builds',
           tools: {
             postcss(config) {
               config.postcssOptions ||= {};
-              config.postcssOptions.plugins = [{ postcssPlugin: 'foo' }];
+              if (typeof config.postcssOptions === 'object') {
+                config.postcssOptions.plugins = [{ postcssPlugin: 'foo' }];
+              }
             },
           },
         },
@@ -170,7 +172,9 @@ it('should ensure isolation of PostCSS config objects between different builds',
           tools: {
             postcss(config) {
               config.postcssOptions ||= {};
-              config.postcssOptions.plugins = [{ postcssPlugin: 'bar' }];
+              if (typeof config.postcssOptions === 'object') {
+                config.postcssOptions.plugins = [{ postcssPlugin: 'bar' }];
+              }
             },
           },
         },
