@@ -4,5 +4,5 @@
     "baseUrl": "./",
     "types": ["vitest/globals"]
   },
-  "include": ["./**/*.ts"]
+  "include": ["./**/*.ts", "../src/env.d.ts"]
 }
