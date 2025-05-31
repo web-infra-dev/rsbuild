@@ -263,7 +263,14 @@ export interface SourceConfig {
    */
   include?: RuleSetCondition[];
   /**
-   * Set the entry modules.
+   * Set the entry modules for building.
+   *
+   * The value of `source.entry` is an object, the key is the entry name, and the
+   * value is the path of the entry module or a description object.
+   *
+   * If the value is a path, it can be an absolute path or a relative path, the
+   * relative path will be resolved based on `root`.
+   *
    * @default
    * {
    *   // Rsbuild also supports other suffixes by default, such as ts,
