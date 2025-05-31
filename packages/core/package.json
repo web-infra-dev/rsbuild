@@ -48,7 +48,8 @@
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build --watch",
-    "prebundle": "prebundle"
+    "prebundle": "prebundle",
+    "bump": "npx bumpp --no-tag"
   },
   "dependencies": {
     "@rspack/core": "1.3.12",
