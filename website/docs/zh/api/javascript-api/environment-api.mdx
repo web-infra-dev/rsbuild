@@ -6,9 +6,9 @@
 
 ## Environment context
 
-Environment context 是一个只读对象，提供一些和当前环境有关的上下文信息。
+Environment context 是一个只读对象，提供一些和当前 environment 有关的上下文信息。
 
-在 Rsbuild 的 [Plugin hooks](/plugins/dev/hooks#plugin-hooks) 中，你可以通过 `environment` 或 `environments` 入参获取 environment context 对象。
+- **类型：**
 
 ```ts
 type EnvironmentContext = {
@@ -22,6 +22,11 @@ type EnvironmentContext = {
   manifest?: Record<string, unknown> | ManifestData;
 };
 ```
+
+Environment context 可以通过以下方式获取：
+
+1. 在 Rsbuild 的 [Plugin hooks](/plugins/dev/hooks#plugin-hooks) 中，你可以通过 `environment` 或 `environments` 入参获取 environment context 对象。
+2. 在 [Environment API](#environment-api-1) 中，可以通过 `environments.context` 获取。
 
 ### name
 
@@ -211,8 +216,7 @@ type EnvironmentAPI = {
 
 你可以通过 Environment API 获取和当前环境有关的上下文信息。
 
-- **类型：** `EnvironmentContext`
-
+- **类型：** [EnvironmentContext](#environment-context)
 - **示例：**
 
 ```ts

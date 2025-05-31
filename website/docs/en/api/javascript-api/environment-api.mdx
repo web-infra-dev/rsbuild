@@ -8,7 +8,7 @@ Here you can find all the environment related APIs.
 
 Environment context is a read-only object that provides some context information about the current environment.
 
-In Rsbuild's [Plugin hooks](/plugins/dev/hooks#plugin-hooks), you can get the environment context object through the `environment` or `environments` parameter.
+- **Type:**
 
 ```ts
 type EnvironmentContext = {
@@ -22,6 +22,11 @@ type EnvironmentContext = {
   manifest?: Record<string, unknown> | ManifestData;
 };
 ```
+
+You can get the environment context through the following ways:
+
+1. In Rsbuild's [Plugin hooks](/plugins/dev/hooks#plugin-hooks), you can get the environment context object through the `environment` or `environments` parameter.
+2. In the [Environment API](#environment-api-1), it is available via `environments.context`.
 
 ### name
 
@@ -210,8 +215,7 @@ type EnvironmentAPI = {
 
 You can get context information related to the current environment through the Environment API.
 
-- **Type:** `EnvironmentContext`
-
+- **Type:** [EnvironmentContext](#environment-context)
 - **Example:**
 
 ```ts
