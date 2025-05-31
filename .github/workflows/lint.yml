@@ -39,8 +39,5 @@ jobs:
       - name: Lint
         run: pnpm run lint
 
-      - name: Check Changeset
-        run: pnpx disallow-major-changeset
-
       - name: Check Dependency Version
         run: pnpm run check-dependency-version
