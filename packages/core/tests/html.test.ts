@@ -1,5 +1,5 @@
 import { createStubRsbuild } from '@scripts/test-helper';
-import type { HtmlConfig } from '../src';
+import type { HtmlConfig, InternalContext } from '../src';
 import { pluginEntry } from '../src/plugins/entry';
 import { pluginHtml } from '../src/plugins/html';
 
@@ -12,9 +12,11 @@ vi.mock('../src/helpers.js', async (importOriginal) => {
 });
 
 describe('plugin-html', () => {
+  const stubContext = {} as InternalContext;
+
   it('should register html plugin correctly', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
+      plugins: [pluginEntry(), pluginHtml(stubContext)],
     });
     const config = await rsbuild.unwrapConfig();
 
@@ -24,7 +26,7 @@ describe('plugin-html', () => {
 
   it('should not register html plugin when target is node', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
+      plugins: [pluginEntry(), pluginHtml(stubContext)],
       rsbuildConfig: {
         output: {
           target: 'node',
@@ -36,7 +38,7 @@ describe('plugin-html', () => {
 
   it('should not register html plugin when target is web-worker', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
+      plugins: [pluginEntry(), pluginHtml(stubContext)],
       rsbuildConfig: {
         output: {
           target: 'web-worker',
@@ -48,7 +50,7 @@ describe('plugin-html', () => {
 
   it('should allow to set favicon by html.favicon option', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
+      plugins: [pluginEntry(), pluginHtml(stubContext)],
       rsbuildConfig: {
         html: {
           favicon: './src/favicon.ico',
@@ -62,7 +64,7 @@ describe('plugin-html', () => {
 
   it('should allow to set inject by html.inject option', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
+      plugins: [pluginEntry(), pluginHtml(stubContext)],
       rsbuildConfig: {
         html: {
           inject: 'body',
@@ -79,7 +81,7 @@ describe('plugin-html', () => {
     process.env.NODE_ENV = 'production';
 
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
+      plugins: [pluginEntry(), pluginHtml(stubContext)],
     });
     const config = await rsbuild.unwrapConfig();
 
@@ -90,7 +92,7 @@ describe('plugin-html', () => {
 
   it('should allow to modify plugin options by tools.htmlPlugin', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
+      plugins: [pluginEntry(), pluginHtml(stubContext)],
       rsbuildConfig: {
         tools: {
           htmlPlugin(_config, utils) {
@@ -109,7 +111,7 @@ describe('plugin-html', () => {
 
   it('should allow to disable html plugin', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
+      plugins: [pluginEntry(), pluginHtml(stubContext)],
       rsbuildConfig: {
         tools: {
           htmlPlugin: false,
@@ -122,7 +124,7 @@ describe('plugin-html', () => {
 
   it('should support multi entry', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
+      plugins: [pluginEntry(), pluginHtml(stubContext)],
       rsbuildConfig: {
         source: {
           entry: {
@@ -144,7 +146,7 @@ describe('plugin-html', () => {
 
   it('should allow to configure html.tags', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
+      plugins: [pluginEntry(), pluginHtml(stubContext)],
       rsbuildConfig: {
         source: {
           entry: {
@@ -163,7 +165,7 @@ describe('plugin-html', () => {
 
   it('should support environment html config', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
+      plugins: [pluginEntry(), pluginHtml(stubContext)],
       rsbuildConfig: {
         environments: {
           web: {
@@ -208,7 +210,7 @@ describe('plugin-html', () => {
     'should stop injecting <script> if inject is $message',
     async ({ value }) => {
       const rsbuild = await createStubRsbuild({
-        plugins: [pluginEntry(), pluginHtml()],
+        plugins: [pluginEntry(), pluginHtml(stubContext)],
         rsbuildConfig: { html: { inject: value } },
       });
       const config = await rsbuild.unwrapConfig();
