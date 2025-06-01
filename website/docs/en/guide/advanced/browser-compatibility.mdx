@@ -128,7 +128,7 @@ Rsbuild categorizes modules into three types:
 2. Third-party dependency installed via npm
 3. Modules outside the current project (such as modules from other directories in a monorepo)
 
-By default, Rsbuild uses [SWC](/guide/configuration/swc) to compile and transform source code in the current project, as well as all TS and JSX modules in all directories. Other modules are not processed by SWC.
+By default, Rsbuild uses [SWC](/guide/configuration/swc) to transform source code in the current project, as well as all TS and JSX modules in all directories. Other modules are not processed by SWC.
 
 The rationale behind this design:
 
