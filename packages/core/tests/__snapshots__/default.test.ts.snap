@@ -941,15 +941,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       "affectedHooks": "compilation",
       "name": "DefinePlugin",
     },
-    ProgressPlugin {
-      "_args": [
-        {
-          "prefix": "web",
-        },
-      ],
-      "affectedHooks": undefined,
-      "name": "ProgressPlugin",
-    },
   ],
   "resolve": {
     "alias": {
