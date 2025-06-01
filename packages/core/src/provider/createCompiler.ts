@@ -119,7 +119,10 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
   });
 
   if (context.action === 'build') {
-    compiler.hooks.run.tap('rsbuild:run', logRspackVersion);
+    compiler.hooks.run.tap('rsbuild:run', () => {
+      logger.info('build started...');
+      logRspackVersion();
+    });
   }
 
   const done = (stats: Rspack.Stats | Rspack.MultiStats) => {

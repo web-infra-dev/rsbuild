@@ -12,10 +12,7 @@ export const pluginProgress = (): RsbuildPlugin => ({
 
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
       const { config } = environment;
-      const options =
-        config.dev.progressBar ??
-        // enable progress bar in production mode by default
-        config.mode === 'production';
+      const options = config.dev.progressBar;
 
       if (!options) {
         return;
