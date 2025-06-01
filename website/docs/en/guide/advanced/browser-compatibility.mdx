@@ -120,33 +120,33 @@ if (!String.prototype.replaceAll) {
 
 > This technique of providing implementations for legacy environments to align new APIs is called polyfill.
 
-## Downgrade method
+## Compilation scope
 
-In Rsbuild, we divide code into three categories:
+Rsbuild categorizes modules into three types:
 
-- The first category is the source code in the current project.
-- The second category is third-party dependencies installed through npm.
-- The third category is the code out of the current project, such as the code in other directories in the monorepo.
+1. Source code in the current project
+2. Third-party dependency installed via npm
+3. Modules outside the current project (such as modules from other directories in a monorepo)
 
-By default, Rsbuild will only compile and downgrade the first category, other categories will not be downgraded by default.
+By default, Rsbuild uses [SWC](/guide/configuration/swc) to transform source code in the current project, as well as all TS and JSX modules in all directories. Other modules are not processed by SWC.
 
-There are several considerations for this approach:
+The rationale behind this design:
 
-- Downgrading all third-party party dependencies will **significantly reduce build performance**.
-- Most third-party dependencies have been downgraded before release, and the second downgrade may introduce new problems.
-- The code out of the current project may have been compiled, or the compilation config may be different.
+- Transforming all third-party dependencies would impact build performance
+- Most third-party dependencies are already pre-compiled, and redundant transformation may introduce issues
+- Code outside the current project may already be compiled or require different compilation configs
 
-### Downgrade the current project code
+### Source code
 
-The code of the current project will be downgraded by default, so you don't need to add additional config, just make sure that the browserslist config is set correctly.
+The source code of the current project will be downgraded by default, so you don't need to add additional config, just make sure that the browserslist config is set correctly.
 
-### Downgrade third-party dependencies
+### Third-party dependencies
 
-When you find that a third-party dependencies causes compatibility issues, you can add this dependency to Rsbuild's [source.include](/config/source/include) config, Make Rsbuild do extra compilation for this dependency.
+When you find that a third-party dependency causes compatibility issues, you can add this dependency to Rsbuild's [source.include](/config/source/include) config, Make Rsbuild do extra compilation for this dependency.
 
 Taking the npm package `query-string` as an example, you can add the following config:
 
-```ts
+```ts title="rsbuild.config.ts"
 import path from 'node:path';
 
 export default {
@@ -156,28 +156,27 @@ export default {
 };
 ```
 
-Please refer to [source.include](/config/source/include) document for detailed usage guide.
+Refer to [source.include](/config/source/include) document for detailed usage.
 
-### Downgrade the code out of the current project
+### Non-current project modules
 
-When you import the code out of the current project, if the code has not been compiled, then you also need to configure [source.include](/config/source/include) to it to compile.
+When you need to compile a JavaScript module outside the current project, then you also need to configure [source.include](/config/source/include).
 
-For example, if you need to reference a module under the `packages` directory in the monorepo, you can add the following config:
+For example, to compile a module under the `packages` directory in the monorepo, add the following config:
 
-```ts
+```ts title="rsbuild.config.ts"
 import path from 'node:path';
+
+const packagesDir = path.resolve(__dirname, '../../packages');
 
 export default {
   source: {
     include: [
-      // method one:
-      // Compile all files in the package directory of Monorepo
-      path.resolve(__dirname, '../../packages'),
-
-      // Method Two:
-      // Compile the source code of a package in the Monorepo's package directory
-      // The matching range of this writing method is more precise, and has less impact on the overall compilation performance
-      path.resolve(__dirname, '../../packages/abc/src'),
+      // Compile all files in monorepo's package directory
+      // It is recommended to exclude the node_modules
+      {
+        and: [packagesDir, { not: /[\\/]node_modules[\\/]/ }],
+      },
     ],
   },
 };

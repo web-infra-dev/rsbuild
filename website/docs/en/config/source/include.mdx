@@ -92,7 +92,7 @@ export default {
 
 ## Compile libraries in monorepo
 
-When developing in Monorepo, if you need to refer to the source code of other libraries in Monorepo, you can add the corresponding library to `source.include`:
+When developing in monorepo, if you need to refer to other modules in monorepo, you can add the corresponding module to `source.include`:
 
 ```ts title="rsbuild.config.ts"
 import path from 'node:path';
@@ -102,7 +102,7 @@ const packagesDir = path.resolve(__dirname, '../../packages');
 export default {
   source: {
     include: [
-      // Compile all files in Monorepo's package directory
+      // Compile all files in monorepo's package directory
       // It is recommended to exclude the node_modules
       {
         and: [packagesDir, { not: /[\\/]node_modules[\\/]/ }],

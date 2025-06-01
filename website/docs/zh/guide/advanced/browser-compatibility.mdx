@@ -120,33 +120,33 @@ if (!String.prototype.replaceAll) {
 
 > 这种为旧环境提供实现来对齐新 API 的技术被称作 polyfill。
 
-## 降级方式
+## 编译范围
 
-在 Rsbuild 中，我们将代码分为三类：
+Rsbuild 将模块分为三类：
 
-- 第一类是当前项目中的源代码。
-- 第二类是通过 npm 安装的第三方依赖代码。
-- 第三类是非当前项目的代码，比如 monorepo 中其他目录下的代码。
+1. 当前项目中的源代码
+2. 通过 npm 安装的第三方依赖
+3. 非当前项目的模块（如 monorepo 中其他目录的模块）
 
-默认情况下，Rsbuild 只会对第一类代码进行编译和降级，而其他类型的代码默认是不进行降级处理的。
+默认情况下，Rsbuild 使用 [SWC](/guide/configuration/swc) 对当前项目中的源代码，以及所有目录下的 TS 和 JSX 模块进行编译，其他模块不会经过 SWC 处理。
 
-之所以这样处理，主要有几个考虑：
+这样设计的原因：
 
-- 将所有第三方依赖代码都进行降级的话会**导致构建性能显著下降**。
-- 大部分第三方依赖在发布前已经进行了降级处理，二次降级可能会引入新问题。
-- 非当前项目的代码可能已经经过了编译处理，或者编译所需的配置与当前项目并不相同。
+- 对所有第三方依赖降级会影响构建性能
+- 大多数第三方依赖已预编译，重复降级可能引入问题
+- 非当前项目的模块可能已编译完成，或需要不同的编译配置
 
-### 降级当前项目代码
+### 源代码
 
-当前项目的代码会被默认降级，因此你不需要添加额外的配置，只需要保证正确设置了浏览器范围即可。
+当前项目的源代码会被默认降级，因此你不需要添加额外的配置，只需要保证正确设置了浏览器范围即可。
 
-### 降级第三方依赖
+### 第三方依赖
 
-当你发现某个第三方依赖的代码导致了兼容性问题时，你可以将这个依赖添加到 Rsbuild 的 [source.include](/config/source/include) 配置中，使 Rsbuild 对该依赖进行额外的编译。
+当你发现某个第三方依赖导致了兼容性问题时，你可以将这个依赖添加到 Rsbuild 的 [source.include](/config/source/include) 配置中，使 Rsbuild 对该依赖进行额外的编译。
 
 以 `query-string` 这个 npm 包为例，你可以做如下的配置：
 
-```ts
+```ts title="rsbuild.config.ts"
 import path from 'node:path';
 
 export default {
@@ -156,28 +156,27 @@ export default {
 };
 ```
 
-请查看 [source.include](/config/source/include) 文档来查看更详细的用法说明。
+查看 [source.include](/config/source/include) 文档来了解更详细的用法。
 
-### 降级非当前项目的代码
+### 非当前项目的模块
 
-当你引用非当前项目的代码时，如果该代码未经过编译处理，那么你也需要配置 [source.include](/config/source/include) 来对它进行编译。
+当你需要编译非当前项目的 JavaScript 模块，那么也需要配置 [source.include](/config/source/include)。
 
-比如，你需要引用 monorepo 中 `packages` 目录下的某个模块，可以添加如下的配置：
+比如，编译 monorepo 中 `packages` 目录下的某个模块，可以添加如下配置：
 
-```ts
+```ts title="rsbuild.config.ts"
 import path from 'node:path';
+
+const packagesDir = path.resolve(__dirname, '../../packages');
 
 export default {
   source: {
     include: [
-      // 方法一:
-      // 编译 Monorepo 的 package 目录下的所有文件
-      path.resolve(__dirname, '../../packages'),
-
-      // 方法二:
-      // 编译 Monorepo 的 package 目录里某个包的源代码
-      // 这种写法匹配的范围更加精准，对整体编译性能的影响更小
-      path.resolve(__dirname, '../../packages/abc/src'),
+      // Compile all files in monorepo's package directory
+      // It is recommended to exclude the node_modules
+      {
+        and: [packagesDir, { not: /[\\/]node_modules[\\/]/ }],
+      },
     ],
   },
 };
