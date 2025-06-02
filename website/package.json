@@ -11,12 +11,12 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-sass": "^1.3.1",
-    "@rspress/plugin-client-redirects": "2.0.0-beta.8",
-    "@rspress/plugin-algolia": "2.0.0-beta.8",
-    "@rspress/plugin-rss": "2.0.0-beta.8",
+    "@rspress/plugin-client-redirects": "2.0.0-beta.9",
+    "@rspress/plugin-algolia": "2.0.0-beta.9",
+    "@rspress/plugin-rss": "2.0.0-beta.9",
     "@rstack-dev/doc-ui": "1.10.5",
     "@shikijs/transformers": "^3.4.2",
-    "@types/node": "^22.15.24",
+    "@types/node": "^22.15.29",
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.5",
     "fast-glob": "^3.3.3",
@@ -24,10 +24,10 @@
     "react-dom": "^19.1.0",
     "rsbuild-plugin-google-analytics": "^1.0.3",
     "rsbuild-plugin-open-graph": "^1.0.2",
-    "rspress": "2.0.0-beta.8",
+    "rspress": "2.0.0-beta.9",
     "rspress-plugin-font-open-sans": "^1.0.0",
     "rspress-plugin-sitemap": "^1.1.2",
-    "@rspress/plugin-llms": "2.0.0-beta.8",
+    "@rspress/plugin-llms": "2.0.0-beta.9",
     "typescript": "^5.8.3"
   }
 }
