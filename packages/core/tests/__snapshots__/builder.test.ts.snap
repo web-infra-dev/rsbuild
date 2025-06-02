@@ -118,12 +118,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         },
         "include": [
           {
-            "and": [
-              "<ROOT>",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
+            "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,

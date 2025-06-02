@@ -1413,12 +1413,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           },
           "include": [
             {
-              "and": [
-                "<ROOT>",
-                {
-                  "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-                },
-              ],
+              "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
             /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
@@ -1806,12 +1801,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           },
           "include": [
             {
-              "and": [
-                "<ROOT>",
-                {
-                  "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-                },
-              ],
+              "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           ],

@@ -14,12 +14,7 @@ exports[`plugins/react > should configuring \`tools.swc\` to override react runt
     },
     "include": [
       {
-        "and": [
-          "<ROOT>/packages/plugin-react/tests",
-          {
-            "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-          },
-        ],
+        "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
       },
       /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
       /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
@@ -97,12 +92,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
     },
     "include": [
       {
-        "and": [
-          "<ROOT>/packages/plugin-react/tests",
-          {
-            "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-          },
-        ],
+        "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
       },
       /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
       /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,

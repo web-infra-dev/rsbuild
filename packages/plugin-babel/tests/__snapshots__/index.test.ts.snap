@@ -10,12 +10,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
   ],
   "include": [
     {
-      "and": [
-        "<ROOT>/packages/plugin-babel/tests",
-        {
-          "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-        },
-      ],
+      "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
     },
     /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
     /node_modules\\[\\\\\\\\/\\]query-string\\[\\\\\\\\/\\]/,
@@ -96,12 +91,7 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
   ],
   "include": [
     {
-      "and": [
-        "<ROOT>/packages/plugin-babel/tests",
-        {
-          "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-        },
-      ],
+      "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
     },
     /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
   ],
@@ -181,12 +171,7 @@ exports[`plugins/babel > should apply environment config correctly 2`] = `
   ],
   "include": [
     {
-      "and": [
-        "<ROOT>/packages/plugin-babel/tests",
-        {
-          "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-        },
-      ],
+      "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
     },
     /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
   ],
@@ -261,12 +246,7 @@ exports[`plugins/babel > should set babel-loader 1`] = `
   },
   "include": [
     {
-      "and": [
-        "<ROOT>/packages/plugin-babel/tests",
-        {
-          "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-        },
-      ],
+      "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
     },
     /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
   ],
@@ -343,12 +323,7 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
   },
   "include": [
     {
-      "and": [
-        "<ROOT>/packages/plugin-babel/tests",
-        {
-          "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-        },
-      ],
+      "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
     },
     /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
   ],

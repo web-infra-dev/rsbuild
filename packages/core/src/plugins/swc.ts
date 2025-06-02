@@ -20,7 +20,6 @@ import type {
   NormalizedEnvironmentConfig,
   NormalizedSourceConfig,
   Polyfill,
-  RsbuildContext,
   RsbuildPlugin,
   RsbuildTarget,
   RspackChain,
@@ -35,19 +34,15 @@ function applyScriptCondition({
   rule,
   isDev,
   config,
-  context,
   rsbuildTarget,
 }: {
   rule: RspackChain.Rule;
   isDev: boolean;
   config: NormalizedEnvironmentConfig;
-  context: RsbuildContext;
   rsbuildTarget: RsbuildTarget;
 }): void {
   // compile all modules in the app directory, exclude node_modules
-  rule.include.add({
-    and: [context.rootPath, { not: NODE_MODULES_REGEX }],
-  });
+  rule.include.add({ not: NODE_MODULES_REGEX });
 
   // always compile TS and JSX files.
   // otherwise, it may cause compilation errors and incorrect output
@@ -125,7 +120,6 @@ export const pluginSwc = (): RsbuildPlugin => ({
           rule,
           isDev,
           config,
-          context: api.context,
           rsbuildTarget: target,
         });
 
