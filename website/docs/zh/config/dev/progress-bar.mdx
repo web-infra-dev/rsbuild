@@ -10,15 +10,19 @@ type ProgressBar =
     };
 ```
 
-- **默认值：** `rsbuildConfig.mode === 'production'`
+- **默认值：** `false`
 
-是否在编译过程中展示进度条。
+是否渲染进度条来显示构建进度。
 
-默认情况下，Rsbuild 仅会在生产模式构建时开启进度条。
+:::tip
+在 `@rsbuild/core < 1.4.0` 版本中，进度条在生产模式下默认开启。
+:::
 
-- **示例：** 开启进度条。
+## 示例
 
-```js
+开启进度条：
+
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     progressBar: true,
@@ -26,9 +30,9 @@ export default {
 };
 ```
 
-- **示例：** 禁用进度条。
+禁用进度条：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     progressBar: false,
@@ -36,15 +40,53 @@ export default {
 };
 ```
 
-- **示例：** 修改进度条 `id`
+仅在开发模式下开启进度条：
+
+```ts title="rsbuild.config.ts"
+const isDev = process.env.NODE_ENV === 'development';
+
+export default {
+  dev: {
+    progressBar: isDev,
+  },
+};
+```
+
+## 修改进度条 `id`
 
 如果你需要修改进度条左侧显示的文本内容，可以设置 `id` 选项：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     progressBar: {
       id: 'Some Text',
+    },
+  },
+};
+```
+
+在 [多环境构建](/guide/advanced/environments) 时，可以为不同的 environment 设置不同的进度条 `id`：
+
+```ts title="rsbuild.config.ts"
+export default {
+  environments: {
+    web: {
+      dev: {
+        progressBar: {
+          id: 'Web',
+        },
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+      },
+      dev: {
+        progressBar: {
+          id: 'Node',
+        },
+      },
     },
   },
 };

@@ -1606,7 +1606,8 @@ export interface DevConfig {
    */
   assetPrefix?: string | boolean;
   /**
-   * Whether to display progress bar during compilation.
+   * Whether to render progress bars to display the build progress.
+   * @default false
    */
   progressBar?: boolean | ProgressBarConfig;
   /**
