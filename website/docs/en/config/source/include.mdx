@@ -6,18 +6,16 @@ Specify additional JavaScript files that need to be compiled by [SWC](/guide/con
 
 ## Default value
 
-To avoid double compilation, by default, Rsbuild's built-in [swc-loader](https://rspack.rs/guide/features/builtin-swc-loader) compiles the following files:
+By default, Rsbuild's built-in [swc-loader](https://rspack.rs/guide/features/builtin-swc-loader) compiles the following files:
 
 - TypeScript and JSX files in any directory, matching file extensions `.ts`, `.tsx`, `.jsx`, `.mts`, `.cts`.
-- JavaScript files in the [root](/config/root) directory, excluding the `node_modules` directory, matching file extensions `.js`, `.mjs`, `.cjs`.
+- JavaScript files that are not in the `node_modules` directory, matching file extensions `.js`, `.mjs`, `.cjs`.
 
 The default value of `source.include` can be expressed as:
 
 ```ts
 const defaultInclude = [
-  {
-    and: [rootPath, { not: /[\\/]node_modules[\\/]/ }],
-  },
+  { not: /[\\/]node_modules[\\/]/ },
   /\.(?:ts|tsx|jsx|mts|cts)$/,
 ];
 ```
@@ -85,28 +83,6 @@ export default {
     include: [
       /node_modules[\\/]query-string[\\/]/,
       /node_modules[\\/]decode-uri-component[\\/]/,
-    ],
-  },
-};
-```
-
-## Compile libraries in monorepo
-
-When developing in monorepo, if you need to refer to other modules in monorepo, you can add the corresponding module to `source.include`:
-
-```ts title="rsbuild.config.ts"
-import path from 'node:path';
-
-const packagesDir = path.resolve(__dirname, '../../packages');
-
-export default {
-  source: {
-    include: [
-      // Compile all files in monorepo's package directory
-      // It is recommended to exclude the node_modules
-      {
-        and: [packagesDir, { not: /[\\/]node_modules[\\/]/ }],
-      },
     ],
   },
 };

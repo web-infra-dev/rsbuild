@@ -122,19 +122,9 @@ if (!String.prototype.replaceAll) {
 
 ## 编译范围
 
-Rsbuild 将模块分为三类：
+默认情况下，Rsbuild 使用 [SWC](/guide/configuration/swc) 编译所有 JavaScript 和 TypeScript 模块，但排除了 `node_modules` 目录下的 JavaScript 模块。
 
-1. 当前项目中的源代码
-2. 通过 npm 安装的第三方依赖
-3. 非当前项目的模块（如 monorepo 中其他目录的模块）
-
-默认情况下，Rsbuild 使用 [SWC](/guide/configuration/swc) 对当前项目中的源代码，以及所有目录下的 TS 和 JSX 模块进行编译，其他模块不会经过 SWC 处理。
-
-这样设计的原因：
-
-- 对所有第三方依赖降级会影响构建性能
-- 大多数第三方依赖已预编译，重复降级可能引入问题
-- 非当前项目的模块可能已编译完成，或需要不同的编译配置
+采用这种设计，是为了避免对所有第三方依赖进行降级时影响构建性能，同时防止对已预编译的第三方依赖进行重复降级而引入潜在问题。
 
 ### 源代码
 
@@ -157,30 +147,6 @@ export default {
 ```
 
 查看 [source.include](/config/source/include) 文档来了解更详细的用法。
-
-### 非当前项目的模块
-
-当你需要编译非当前项目的 JavaScript 模块，那么也需要配置 [source.include](/config/source/include)。
-
-比如，编译 monorepo 中 `packages` 目录下的某个模块，可以添加如下配置：
-
-```ts title="rsbuild.config.ts"
-import path from 'node:path';
-
-const packagesDir = path.resolve(__dirname, '../../packages');
-
-export default {
-  source: {
-    include: [
-      // Compile all files in monorepo's package directory
-      // It is recommended to exclude the node_modules
-      {
-        and: [packagesDir, { not: /[\\/]node_modules[\\/]/ }],
-      },
-    ],
-  },
-};
-```
 
 ## Polyfill 方案
 
