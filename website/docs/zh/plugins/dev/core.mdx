@@ -350,11 +350,11 @@ type TransformHandler = (
 handler 函数提供以下参数：
 
 - `code`：模块的代码。
-- `context`：当前被处理的模块所在的目录路径。与 Rspack loader 的 [this.context](https://rspack.rs/zh/api/loader-api/context#thiscontext) 相同。
+- `context`：当前被处理的模块所在的目录路径，与 Rspack loader 的 [this.context](https://rspack.rs/zh/api/loader-api/context#thiscontext) 相同。
 - `resolve`：解析一个模块标识符。与 Rspack loader 的 [this.resolve](https://rspack.rs/zh/api/loader-api/context#thisresolve) 相同。
-- `resource`：模块的绝对路径，包含 query。
-- `resourcePath`：模块的绝对路径，不包含 query。
-- `resourceQuery`：模块路径上的 query。
+- `resource`：模块的绝对路径，包含 query，与 Rspack loader 的 [this.resource](https://rspack.rs/zh/api/loader-api/context#thisresource) 相同。
+- `resourcePath`：模块的绝对路径，不包含 query，与 Rspack loader 的 [this.resourcePath](https://rspack.rs/zh/api/loader-api/context#thisresourcepath) 相同。
+- `resourceQuery`：模块路径上的 query，与 Rspack loader 的 [this.resourceQuery](https://rspack.rs/zh/api/loader-api/context#thisresourcequery) 相同。
 - `environment`: 当前构建的 [environment 上下文](/api/javascript-api/environment-api#environment-context).
 - `addDependency`：添加一个额外的文件作为依赖。该文件将被监听，并在发生变更时触发重新构建。与 Rspack loader 的 [this.addDependency](https://rspack.rs/zh/api/loader-api/context#thisadddependency) 相同。
 - `addMissingDependency`：添加一个不存在的文件作为依赖。该文件将被监听，并在发生变更时触发重新构建。与 Rspack loader 的 [this.addMissingDependency](https://rspack.rs/zh/api/loader-api/context#thisaddmissingdependency) 相同。
