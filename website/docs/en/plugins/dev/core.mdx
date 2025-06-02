@@ -354,9 +354,9 @@ The `handler` function provides the following params:
 - `code`: The code of the module.
 - `context`: The directory path of the currently processed module. The same as Rspack loader's [this.context](https://rspack.rs/api/loader-api/context#thiscontext).
 - `resolve`: Resolve a module specifier. The same as Rspack loader's [this.resolve](https://rspack.rs/api/loader-api/context#thisresolve).
-- `resource`: The absolute path of the module, including the query.
-- `resourcePath`: The absolute path of the module, without the query.
-- `resourceQuery`: The query of the module.
+- `resource`: The absolute path of the module, including the query. The same as Rspack loader's [this.resource](https://rspack.rs/api/loader-api/context#thisresource).
+- `resourcePath`: The absolute path of the module, without the query. The same as Rspack loader's [this.resourcePath](https://rspack.rs/api/loader-api/context#thisresourcepath).
+- `resourceQuery`: The query of the module. The same as Rspack loader's [this.resourceQuery](https://rspack.rs/api/loader-api/context#thisresourcequery).
 - `environment`: The [environment context](/api/javascript-api/environment-api#environment-context) for current build.
 - `addDependency`: Add an additional file as the dependency. The file will be watched and changes to the file will trigger rebuild. The same as Rspack loader's [this.addDependency](https://rspack.rs/api/loader-api/context#thisadddependency).
 - `addMissingDependency`: Add an non-existing file as the dependency. The file will be watched and changes to the file will trigger rebuild. The same as Rspack loader's [this.addMissingDependency](https://rspack.rs/api/loader-api/context#thisaddmissingdependency).
