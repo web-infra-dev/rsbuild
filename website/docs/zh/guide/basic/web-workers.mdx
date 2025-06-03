@@ -35,17 +35,16 @@ worker.postMessage(10);
 
 ### 使用 worker-loader
 
-> `worker-loader` 已不再维护，推荐使用 `new Worker()` 语法。
+如果你的项目已经在使用 `worker-loader`，或者希望使用 `worker-loader` 的 `inline` 等能力，在 Rsbuild 项目中可以使用 `worker-loader` 的替代方案 [worker-rspack-loader](https://github.com/rspack-contrib/worker-rspack-loader)。
 
-如果你的项目已经在使用 `worker-loader`，或者希望使用 `worker-loader` 内的 `inline` 等配置能力，在 Rsbuild / Rspack 项目中可以使用 `worker-loader` 的替代方案 [worker-rspack-loader](https://github.com/rspack-contrib/worker-rspack-loader)。
-
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: {
       resolveLoader: {
         alias: {
-          // 修改内联 loader 中 worker-loader 的指向，如 `worker-loader!pdfjs-dist/es5/build/pdf.worker.js`
+          // 修改内联 loader 中 worker-loader 的指向
+          // 如 `worker-loader!pdfjs-dist/es5/build/pdf.worker.js`
           'worker-loader': require.resolve('worker-rspack-loader'),
         },
       },
@@ -61,6 +60,18 @@ export default {
   },
 };
 ```
+
+使用 `worker-rspack-loader` 时，需要使用 `import` 来引入 Web Worker 文件，而不是 `new Worker('/path/to/worker.js')`。
+
+```js
+import Worker from './file.worker.js';
+
+const worker = new Worker();
+
+worker.postMessage({ a: 1 });
+```
+
+> `worker-loader` 已不再维护，如果你没有内联 Web Workers 的需求，推荐使用 `new Worker()` 语法。
 
 ### 从远程 URL 加载脚本（跨域）
 
