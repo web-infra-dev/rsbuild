@@ -20,6 +20,9 @@ exports[`plugin-swc > should add browserslist 1`] = `
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           ],
+          "resourceQuery": {
+            "not": /raw\\|inline/,
+          },
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "type": "javascript/auto",
           "use": [
@@ -52,6 +55,11 @@ exports[`plugin-swc > should add browserslist 1`] = `
               },
             },
           ],
+        },
+        {
+          "resourceQuery": /raw/,
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "asset/source",
         },
         {
           "mimetype": {
@@ -125,6 +133,9 @@ exports[`plugin-swc > should add pluginImport 1`] = `
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           ],
+          "resourceQuery": {
+            "not": /raw\\|inline/,
+          },
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "type": "javascript/auto",
           "use": [
@@ -167,6 +178,11 @@ exports[`plugin-swc > should add pluginImport 1`] = `
               },
             },
           ],
+        },
+        {
+          "resourceQuery": /raw/,
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "asset/source",
         },
         {
           "mimetype": {
@@ -242,6 +258,9 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to be function type 1`] 
       },
       /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
     ],
+    "resourceQuery": {
+      "not": /raw\\|inline/,
+    },
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
     "type": "javascript/auto",
     "use": [
@@ -254,6 +273,11 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to be function type 1`] 
         },
       },
     ],
+  },
+  {
+    "resourceQuery": /raw/,
+    "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+    "type": "asset/source",
   },
   {
     "mimetype": {
@@ -291,6 +315,9 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader 
       },
       /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
     ],
+    "resourceQuery": {
+      "not": /raw\\|inline/,
+    },
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
     "type": "javascript/auto",
     "use": [
@@ -326,6 +353,11 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader 
         },
       },
     ],
+  },
+  {
+    "resourceQuery": /raw/,
+    "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+    "type": "asset/source",
   },
   {
     "mimetype": {
@@ -394,6 +426,9 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
         "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
       },
     },
+    "resourceQuery": {
+      "not": /raw\\|inline/,
+    },
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
     "type": "javascript/auto",
     "use": [
@@ -438,6 +473,11 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
         },
       },
     ],
+  },
+  {
+    "resourceQuery": /raw/,
+    "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+    "type": "asset/source",
   },
   {
     "mimetype": {
@@ -513,6 +553,9 @@ exports[`plugin-swc > should apply environment config correctly 2`] = `
       },
       /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
     ],
+    "resourceQuery": {
+      "not": /raw\\|inline/,
+    },
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
     "type": "javascript/auto",
     "use": [
@@ -551,6 +594,11 @@ exports[`plugin-swc > should apply environment config correctly 2`] = `
         },
       },
     ],
+  },
+  {
+    "resourceQuery": /raw/,
+    "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+    "type": "asset/source",
   },
   {
     "mimetype": {
@@ -622,6 +670,9 @@ exports[`plugin-swc > should apply pluginImport correctly when ConfigChain 1`] =
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           ],
+          "resourceQuery": {
+            "not": /raw\\|inline/,
+          },
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "type": "javascript/auto",
           "use": [
@@ -667,6 +718,11 @@ exports[`plugin-swc > should apply pluginImport correctly when ConfigChain 1`] =
               },
             },
           ],
+        },
+        {
+          "resourceQuery": /raw/,
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "asset/source",
         },
         {
           "mimetype": {
@@ -753,6 +809,9 @@ exports[`plugin-swc > should disable pluginImport when return undefined 1`] = `
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           ],
+          "resourceQuery": {
+            "not": /raw\\|inline/,
+          },
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "type": "javascript/auto",
           "use": [
@@ -788,6 +847,11 @@ exports[`plugin-swc > should disable pluginImport when return undefined 1`] = `
               },
             },
           ],
+        },
+        {
+          "resourceQuery": /raw/,
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "asset/source",
         },
         {
           "mimetype": {
@@ -864,6 +928,9 @@ exports[`plugin-swc > should disable preset_env in target other than web 1`] = `
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           ],
+          "resourceQuery": {
+            "not": /raw\\|inline/,
+          },
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "type": "javascript/auto",
           "use": [
@@ -895,6 +962,11 @@ exports[`plugin-swc > should disable preset_env in target other than web 1`] = `
               },
             },
           ],
+        },
+        {
+          "resourceQuery": /raw/,
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "asset/source",
         },
         {
           "mimetype": {
@@ -967,6 +1039,9 @@ exports[`plugin-swc > should disable preset_env mode 1`] = `
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           ],
+          "resourceQuery": {
+            "not": /raw\\|inline/,
+          },
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "type": "javascript/auto",
           "use": [
@@ -1002,6 +1077,11 @@ exports[`plugin-swc > should disable preset_env mode 1`] = `
               },
             },
           ],
+        },
+        {
+          "resourceQuery": /raw/,
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "asset/source",
         },
         {
           "mimetype": {
@@ -1084,6 +1164,9 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
               "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
             },
           },
+          "resourceQuery": {
+            "not": /raw\\|inline/,
+          },
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "type": "javascript/auto",
           "use": [
@@ -1120,6 +1203,11 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
               },
             },
           ],
+        },
+        {
+          "resourceQuery": /raw/,
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "asset/source",
         },
         {
           "mimetype": {
@@ -1205,6 +1293,9 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
               "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
             },
           },
+          "resourceQuery": {
+            "not": /raw\\|inline/,
+          },
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "type": "javascript/auto",
           "use": [
@@ -1242,6 +1333,11 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
               },
             },
           ],
+        },
+        {
+          "resourceQuery": /raw/,
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "asset/source",
         },
         {
           "mimetype": {
@@ -1329,6 +1425,9 @@ exports[`plugin-swc > should has correct core-js 1`] = `
               "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
             },
           },
+          "resourceQuery": {
+            "not": /raw\\|inline/,
+          },
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "type": "javascript/auto",
           "use": [
@@ -1365,6 +1464,11 @@ exports[`plugin-swc > should has correct core-js 1`] = `
               },
             },
           ],
+        },
+        {
+          "resourceQuery": /raw/,
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "asset/source",
         },
         {
           "mimetype": {
@@ -1445,6 +1549,9 @@ exports[`plugin-swc > should has correct core-js 2`] = `
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           ],
+          "resourceQuery": {
+            "not": /raw\\|inline/,
+          },
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "type": "javascript/auto",
           "use": [
@@ -1476,6 +1583,11 @@ exports[`plugin-swc > should has correct core-js 2`] = `
               },
             },
           ],
+        },
+        {
+          "resourceQuery": /raw/,
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "asset/source",
         },
         {
           "mimetype": {
