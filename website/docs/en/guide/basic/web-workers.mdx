@@ -63,7 +63,7 @@ export default {
 };
 ```
 
-When using `worker-rspack-loader`, you need to use the `import` to import the Web Worker file, instead of the `new Worker()`.
+When using `worker-rspack-loader`, you need to use the `import` to import the Web Worker file, instead of the `new Worker('/path/to/worker.js')`.
 
 ```js
 import Worker from './file.worker.js';

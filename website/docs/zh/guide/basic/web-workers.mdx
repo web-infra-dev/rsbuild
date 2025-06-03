@@ -61,7 +61,7 @@ export default {
 };
 ```
 
-使用 `worker-rspack-loader` 时，需要使用 `import` 来引入 Web Worker 文件，而不是 `new Worker()`。
+使用 `worker-rspack-loader` 时，需要使用 `import` 来引入 Web Worker 文件，而不是 `new Worker('/path/to/worker.js')`。
 
 ```js
 import Worker from './file.worker.js';
