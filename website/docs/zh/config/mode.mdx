@@ -53,6 +53,7 @@ export default {
 - 源代码中的 `import.meta.env.MODE` 会被替换为 `'development'`。
 - 源代码中的 `import.meta.env.DEV` 会被替换为 `true`。
 - 源代码中的 `import.meta.env.PROD` 会被替换为 `false`。
+- 使用 [dev.assetPrefix](/config/dev/asset-prefix) 的值作为静态资源的 URL 前缀。
 
 ## Production 模式
 
@@ -67,6 +68,7 @@ export default {
 - 源代码中的 `import.meta.env.MODE` 会被替换为 `'production'`。
 - 源代码中的 `import.meta.env.DEV` 会被替换为 `false`。
 - 源代码中的 `import.meta.env.PROD` 会被替换为 `true`。
+- 使用 [output.assetPrefix](/config/output/asset-prefix) 的值作为静态资源的 URL 前缀。
 
 ## None 模式
 
@@ -77,3 +79,4 @@ export default {
 - 源代码中的 `import.meta.env.MODE` 会被替换为 `'none'`。
 - 源代码中的 `import.meta.env.DEV` 会被替换为 `false`。
 - 源代码中的 `import.meta.env.PROD` 会被替换为 `false`。
+- 使用 [output.assetPrefix](/config/output/asset-prefix) 的值作为静态资源的 URL 前缀。

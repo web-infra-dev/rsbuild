@@ -53,6 +53,7 @@ If the value of `mode` is `development`:
 - The `import.meta.env.MODE` in the source code will be replaced with `'development'`.
 - The `import.meta.env.DEV` in the source code will be replaced with `true`.
 - The `import.meta.env.PROD` in the source code will be replaced with `false`.
+- Use the value of [dev.assetPrefix](/config/dev/asset-prefix) as the URL prefix for static assets.
 
 ## Production mode
 
@@ -67,6 +68,7 @@ If the value of `mode` is `production`:
 - The `import.meta.env.MODE` in the source code will be replaced with `'production'`.
 - The `import.meta.env.DEV` in the source code will be replaced with `false`.
 - The `import.meta.env.PROD` in the source code will be replaced with `true`.
+- Use the value of [output.assetPrefix](/config/output/asset-prefix) as the URL prefix for static assets.
 
 ## None mode
 
@@ -77,3 +79,4 @@ If the value of `mode` is `none`:
 - The `import.meta.env.MODE` in the source code will be replaced with `'none'`.
 - The `import.meta.env.DEV` in the source code will be replaced with `false`.
 - The `import.meta.env.PROD` in the source code will be replaced with `false`.
+- Use the value of [output.assetPrefix](/config/output/asset-prefix) as the URL prefix for static assets.
