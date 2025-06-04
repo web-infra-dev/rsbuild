@@ -1418,6 +1418,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
             /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
           ],
+          "resourceQuery": {
+            "not": /raw\\|inline/,
+          },
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "type": "javascript/auto",
           "use": [
@@ -1453,6 +1456,11 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               },
             },
           ],
+        },
+        {
+          "resourceQuery": /raw/,
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "asset/source",
         },
         {
           "mimetype": {
@@ -1805,6 +1813,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           ],
+          "resourceQuery": {
+            "not": /raw\\|inline/,
+          },
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "type": "javascript/auto",
           "use": [
@@ -1836,6 +1847,11 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               },
             },
           ],
+        },
+        {
+          "resourceQuery": /raw/,
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "asset/source",
         },
         {
           "mimetype": {

@@ -108,7 +108,16 @@ export const pluginSwc = (): RsbuildPlugin => ({
           .type('javascript/auto')
           // When using `new URL('./path/to/foo.js', import.meta.url)`,
           // the module should be treated as an asset module rather than a JS module.
-          .dependency({ not: 'url' });
+          .dependency({ not: 'url' })
+          // exclude `import './foo.css?raw'` and `import './foo.css?inline'`
+          .resourceQuery({ not: /raw|inline/ });
+
+        // Support for `import rawJs from "a.js?raw"`
+        chain.module
+          .rule(CHAIN_ID.RULE.JS_RAW)
+          .test(SCRIPT_REGEX)
+          .type('asset/source')
+          .resourceQuery(/raw/);
 
         const dataUriRule = chain.module
           .rule(CHAIN_ID.RULE.JS_DATA_URI)
