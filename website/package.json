@@ -15,7 +15,7 @@
     "@rspress/plugin-algolia": "2.0.0-beta.9",
     "@rspress/plugin-rss": "2.0.0-beta.9",
     "@rstack-dev/doc-ui": "1.10.5",
-    "@shikijs/transformers": "^3.4.2",
+    "@shikijs/transformers": "^3.5.0",
     "@types/node": "^22.15.29",
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.5",
