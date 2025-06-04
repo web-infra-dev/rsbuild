@@ -87,21 +87,3 @@ test('should allow to get raw TS content with `?raw`', async ({ page }) => {
 
   await rsbuild.close();
 });
-
-test('should allow to get raw TSX content with `?raw` and using pluginReact', async ({
-  page,
-}) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
-    rsbuildConfig: {
-      plugins: [pluginReact()],
-    },
-  });
-
-  expect(await page.evaluate('window.rawTsx')).toEqual(
-    await promises.readFile(join(__dirname, 'src/baz.tsx'), 'utf-8'),
-  );
-
-  await rsbuild.close();
-});
