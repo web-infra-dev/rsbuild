@@ -122,19 +122,9 @@ if (!String.prototype.replaceAll) {
 
 ## Compilation scope
 
-Rsbuild categorizes modules into three types:
+By default, Rsbuild uses [SWC](/guide/configuration/swc) to compile all JavaScript and TypeScript modules, but excludes JavaScript modules in the `node_modules` directory.
 
-1. Source code in the current project
-2. Third-party dependency installed via npm
-3. Modules outside the current project (such as modules from other directories in a monorepo)
-
-By default, Rsbuild uses [SWC](/guide/configuration/swc) to transform source code in the current project, as well as all TS and JSX modules in all directories. Other modules are not processed by SWC.
-
-The rationale behind this design:
-
-- Transforming all third-party dependencies would impact build performance
-- Most third-party dependencies are already pre-compiled, and redundant transformation may introduce issues
-- Code outside the current project may already be compiled or require different compilation configs
+This approach is designed to avoid impacting build performance when downgrading all third-party dependencies while also preventing potential issues arising from redundantly downgrading pre-compiled third-party dependencies.
 
 ### Source code
 
@@ -156,31 +146,7 @@ export default {
 };
 ```
 
-Refer to [source.include](/config/source/include) document for detailed usage.
-
-### Non-current project modules
-
-When you need to compile a JavaScript module outside the current project, then you also need to configure [source.include](/config/source/include).
-
-For example, to compile a module under the `packages` directory in the monorepo, add the following config:
-
-```ts title="rsbuild.config.ts"
-import path from 'node:path';
-
-const packagesDir = path.resolve(__dirname, '../../packages');
-
-export default {
-  source: {
-    include: [
-      // Compile all files in monorepo's package directory
-      // It is recommended to exclude the node_modules
-      {
-        and: [packagesDir, { not: /[\\/]node_modules[\\/]/ }],
-      },
-    ],
-  },
-};
-```
+See [source.include](/config/source/include) for detailed usage.
 
 ## Polyfill mode
 
