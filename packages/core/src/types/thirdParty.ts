@@ -19,7 +19,7 @@ export type { WebpackConfig };
 
 export type PostCSSOptions = ProcessOptions & {
   config?: boolean;
-  plugins?: unknown[];
+  plugins?: AcceptedPlugin[];
 };
 
 export type PostCSSLoaderOptions = {
