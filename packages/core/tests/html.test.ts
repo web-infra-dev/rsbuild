@@ -3,14 +3,6 @@ import type { HtmlConfig, InternalContext } from '../src';
 import { pluginEntry } from '../src/plugins/entry';
 import { pluginHtml } from '../src/plugins/html';
 
-vi.mock('../src/helpers.js', async (importOriginal) => {
-  const mod = await importOriginal<any>();
-  return {
-    ...mod,
-    isFileExists: async () => true,
-  };
-});
-
 describe('plugin-html', () => {
   const stubContext = {} as InternalContext;
 
