@@ -144,10 +144,10 @@ const getPostcssLoaderOptions = async ({
   root: string;
   postcssrcCache: PostcssrcCache;
 }): Promise<PostCSSLoaderOptions> => {
-  const extraPlugins: unknown[] = [];
+  const extraPlugins: AcceptedPlugin[] = [];
 
   const utils = {
-    addPlugins(plugins: unknown | unknown[]) {
+    addPlugins(plugins: AcceptedPlugin | AcceptedPlugin[]) {
       extraPlugins.push(...castArray(plugins));
     },
   };
@@ -181,9 +181,7 @@ const getPostcssLoaderOptions = async ({
     // initialize the plugin to avoid multiple initialization
     // https://github.com/web-infra-dev/rsbuild/issues/3618
     options.plugins = options.plugins.map((plugin) =>
-      isPostcssPluginCreator(plugin as AcceptedPlugin)
-        ? (plugin as PluginCreator<unknown>)()
-        : plugin,
+      isPostcssPluginCreator(plugin) ? plugin() : plugin,
     );
 
     // always use postcss-load-config to load external config
