@@ -81,17 +81,6 @@ jobs:
           node-version: 22
           cache: 'pnpm'
 
-      - name: Send Failure Notification
-        if: steps.eco_ci.outcome == 'failure'
-        shell: bash
-        run: ./scripts/alert/lark.js
-        env:
-          TITLE: Rsbuild Ecosystem CI failed
-          DESCRIPTION: |
-            commitID: [${{github.sha}}](${{github.server_url}}/${{github.repository}}/commit/${{github.sha}})
-          URL: ${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}
-          LARK_WEBHOOK_URL: ${{ secrets.LARK_WEBHOOK_URL }}
-
       - name: Get CI Result
         id: eco-ci-result
         if: steps.eco_ci.outcome == 'failure'
