@@ -40,7 +40,6 @@ import type {
   CSSLoaderOptions,
   HtmlRspackPlugin,
   PostCSSLoaderOptions,
-  PostCSSPlugin,
   StyleLoaderOptions,
   WebpackConfig,
 } from './thirdParty';
@@ -61,7 +60,7 @@ export type ToolsBundlerChainConfig = OneOrMany<
 
 export type ToolsPostCSSLoaderConfig = ConfigChainWithContext<
   PostCSSLoaderOptions,
-  { addPlugins: (plugins: PostCSSPlugin | PostCSSPlugin[]) => void }
+  { addPlugins: (plugins: unknown | unknown[]) => void }
 >;
 
 export type ToolsCSSLoaderConfig = ConfigChain<CSSLoaderOptions>;
