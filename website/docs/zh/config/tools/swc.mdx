@@ -1,6 +1,13 @@
 # tools.swc
 
-- **类型：** `Object | Function`
+- **类型：**
+
+```ts
+type ToolsSwc =
+  | Rspack.SwcLoaderOptions
+  | ((config: Rspack.SwcLoaderOptions) => Rspack.SwcLoaderOptions | undefined);
+```
+
 - **默认值：**
 
 ```js
@@ -13,7 +20,15 @@ const defaultOptions = {
       decorators: true,
     },
   },
+  experimental: {
+    cacheRoot: './node_modules/.cache/.swc',
+    keepImportAttributes: true,
+  },
   isModule: 'unknown',
+  env: {
+    // 读取项目的 browserslist 配置
+    targets: browserslist,
+  },
   // ...some other conditional options
 };
 ```
