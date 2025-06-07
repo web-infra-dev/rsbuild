@@ -657,9 +657,6 @@ importers:
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
-      dotenv:
-        specifier: 16.5.0
-        version: 16.5.0
       dotenv-expand:
         specifier: 12.0.2
         version: 12.0.2
