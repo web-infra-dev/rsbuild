@@ -74,7 +74,6 @@
     "cors": "^2.8.5",
     "css-loader": "7.1.2",
     "deepmerge": "^4.3.1",
-    "dotenv": "16.5.0",
     "dotenv-expand": "12.0.2",
     "html-rspack-plugin": "6.1.2",
     "http-proxy-middleware": "^2.0.9",

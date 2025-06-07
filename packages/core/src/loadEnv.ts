@@ -1,9 +1,59 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { parse } from 'dotenv';
 import { expand } from 'dotenv-expand';
 import { color, getNodeEnv, isFileSync } from './helpers';
 import { logger } from './logger';
+
+const DOTENV_LINE =
+  /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/gm;
+
+/**
+ * This method is modified based on source found in
+ * https://github.com/motdotla/dotenv/blob/v16.5.0/lib/main.js#L9-L48
+ *
+ * Copyright (c) 2015, Scott Motte
+ *
+ * We copied this method because Rsbuild only uses the `parse` method
+ * in dotenv and most of the other code is redundant.
+ */
+function parse(src: Buffer) {
+  const obj: Record<string, string> = {};
+
+  // Convert buffer to string
+  let lines = src.toString();
+
+  // Convert line breaks to same format
+  lines = lines.replace(/\r\n?/gm, '\n');
+
+  let match: any;
+  // biome-ignore lint/suspicious/noAssignInExpressions: allowed
+  while ((match = DOTENV_LINE.exec(lines)) != null) {
+    const key = match[1];
+
+    // Default undefined or null to empty string
+    let value = match[2] || '';
+
+    // Remove whitespace
+    value = value.trim();
+
+    // Check if double quoted
+    const maybeQuote = value[0];
+
+    // Remove surrounding quotes
+    value = value.replace(/^(['"`])([\s\S]*)\1$/gm, '$2');
+
+    // Expand newlines if double quoted
+    if (maybeQuote === '"') {
+      value = value.replace(/\\n/g, '\n');
+      value = value.replace(/\\r/g, '\r');
+    }
+
+    // Add to object
+    obj[key] = value;
+  }
+
+  return obj;
+}
 
 export type LoadEnvOptions = {
   /**
