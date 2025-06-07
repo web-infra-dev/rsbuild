@@ -39,7 +39,7 @@
     "@rsbuild/plugin-solid": "workspace:*",
     "@rsbuild/plugin-svelte": "workspace:*",
     "@rsbuild/plugin-vue": "workspace:*",
-    "@rslib/core": "0.9.1",
+    "@rslib/core": "0.9.2",
     "@types/node": "^22.15.30",
     "typescript": "^5.8.3"
   },

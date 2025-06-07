@@ -59,7 +59,7 @@
     "jiti": "^2.4.2"
   },
   "devDependencies": {
-    "@rslib/core": "0.9.1",
+    "@rslib/core": "0.9.2",
     "@types/connect": "3.4.38",
     "@types/cors": "^2.8.18",
     "@types/node": "^22.15.30",
