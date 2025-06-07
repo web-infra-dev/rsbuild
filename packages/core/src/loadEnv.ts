@@ -25,7 +25,7 @@ function parse(src: Buffer) {
   // Convert line breaks to same format
   lines = lines.replace(/\r\n?/gm, '\n');
 
-  let match: any;
+  let match: RegExpExecArray | null;
   // biome-ignore lint/suspicious/noAssignInExpressions: allowed
   while ((match = DOTENV_LINE.exec(lines)) != null) {
     const key = match[1];
