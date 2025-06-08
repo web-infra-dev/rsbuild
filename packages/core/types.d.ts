@@ -310,7 +310,7 @@ declare module '*.scss' {}
  */
 declare module '*.sass' {}
 /**
- * @requires [@rsbuild/plugin-stylus](https://npmjs.com/package/@rsbuild/plugin-stylus)
+ * @requires [@rsbuild/plugin-less](https://npmjs.com/package/@rsbuild/plugin-less)
  */
 declare module '*.less' {}
 /**
