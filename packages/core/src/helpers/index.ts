@@ -1,4 +1,3 @@
-import crypto from 'node:crypto';
 import { posix } from 'node:path';
 import { URL } from 'node:url';
 import deepmerge from 'deepmerge';
@@ -366,7 +365,8 @@ export const addCompilationError = (
   );
 };
 
-export function hash(data: string): string {
+export async function hash(data: string): Promise<string> {
+  const crypto = await import('node:crypto');
   // Available in Node.js v20.12.0
   // faster than `crypto.createHash()` when hashing a smaller amount of data (<= 5MB)
   if (crypto.hash) {
