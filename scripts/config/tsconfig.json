@@ -6,14 +6,12 @@
     "skipLibCheck": true,
     "useDefineForClassFields": true,
 
-    /* modules */
     "module": "ES2020",
     "esModuleInterop": true,
     "isolatedModules": true,
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
 
-    /* type checking */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,

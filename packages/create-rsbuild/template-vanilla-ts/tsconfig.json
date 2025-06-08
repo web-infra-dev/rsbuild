@@ -6,14 +6,12 @@
     "skipLibCheck": true,
     "useDefineForClassFields": true,
 
-    /* modules */
     "module": "ESNext",
     "moduleResolution": "bundler",
     "isolatedModules": true,
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
 
-    /* type checking */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true
