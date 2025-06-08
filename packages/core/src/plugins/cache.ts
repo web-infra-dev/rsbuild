@@ -149,7 +149,7 @@ export const pluginCache = (): RsbuildPlugin => ({
 
       // set cache name to avoid cache conflicts between different environments
       const cacheVersion = useDigest
-        ? `${environment.name}-${env}-${hash(JSON.stringify(cacheConfig.cacheDigest))}`
+        ? `${environment.name}-${env}-${await hash(JSON.stringify(cacheConfig.cacheDigest))}`
         : `${environment.name}-${env}`;
 
       if (bundlerType === 'rspack') {
