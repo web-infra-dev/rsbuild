@@ -296,3 +296,28 @@ declare module '*.module.stylus' {
   const classes: CSSModuleClasses;
   export default classes;
 }
+
+/**
+ * CSS
+ */
+declare module '*.css' {}
+/**
+ * @requires [@rsbuild/plugin-sass](https://npmjs.com/package/@rsbuild/plugin-sass)
+ */
+declare module '*.scss' {}
+/**
+ * @requires [@rsbuild/plugin-sass](https://npmjs.com/package/@rsbuild/plugin-sass)
+ */
+declare module '*.sass' {}
+/**
+ * @requires [@rsbuild/plugin-stylus](https://npmjs.com/package/@rsbuild/plugin-stylus)
+ */
+declare module '*.less' {}
+/**
+ * @requires [@rsbuild/plugin-stylus](https://npmjs.com/package/@rsbuild/plugin-stylus)
+ */
+declare module '*.styl' {}
+/**
+ * @requires [@rsbuild/plugin-stylus](https://npmjs.com/package/@rsbuild/plugin-stylus)
+ */
+declare module '*.stylus' {}
