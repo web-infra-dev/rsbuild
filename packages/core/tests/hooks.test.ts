@@ -42,7 +42,7 @@ describe('initHooks', () => {
 describe('onExit hook', () => {
   test('should listen to process exit when calling api.onExit', async () => {
     const exitCbs: Array<(...args: any[]) => void> = [];
-    const spy = vi.spyOn(process, 'on');
+    const spy = rstest.spyOn(process, 'on');
     spy.mockImplementation((event, cb) => {
       if (event === 'exit') {
         exitCbs.push(cb);
@@ -50,7 +50,7 @@ describe('onExit hook', () => {
       return process;
     });
 
-    const onExit = vi.fn();
+    const onExit = rstest.fn();
     const rsbuild = await createStubRsbuild({
       plugins: [
         {
