@@ -247,8 +247,8 @@ describe('test dev server', () => {
     const compiler = rspack({
       target: 'web',
     });
-    const onDoneFn = vi.fn();
-    const onInvalidFn = vi.fn();
+    const onDoneFn = rstest.fn();
+    const onInvalidFn = rstest.fn();
 
     setupServerHooks(compiler, {
       onDone: onDoneFn,
@@ -262,8 +262,8 @@ describe('test dev server', () => {
     const compiler = rspack({
       target: 'node',
     });
-    const onDoneFn = vi.fn();
-    const onInvalidFn = vi.fn();
+    const onDoneFn = rstest.fn();
+    const onInvalidFn = rstest.fn();
 
     setupServerHooks(compiler, {
       onDone: onDoneFn,

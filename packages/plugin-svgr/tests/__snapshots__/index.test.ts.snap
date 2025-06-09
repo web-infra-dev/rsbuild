@@ -1,6 +1,6 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Snapshot v1
 
-exports[`svgr > 'configure SVGR options' 1`] = `
+exports[`svgr > configure SVGR options 1`] = `
 {
   "oneOf": [
     {
@@ -97,7 +97,7 @@ exports[`svgr > 'configure SVGR options' 1`] = `
 }
 `;
 
-exports[`svgr > 'exportType default / mixedImport false' 1`] = `
+exports[`svgr > exportType default / mixedImport false 1`] = `
 {
   "oneOf": [
     {
@@ -258,7 +258,7 @@ exports[`svgr > 'exportType default / mixedImport false' 1`] = `
 }
 `;
 
-exports[`svgr > 'exportType default / mixedImport true' 1`] = `
+exports[`svgr > exportType default / mixedImport true 1`] = `
 {
   "oneOf": [
     {
@@ -419,7 +419,7 @@ exports[`svgr > 'exportType default / mixedImport true' 1`] = `
 }
 `;
 
-exports[`svgr > 'exportType named / mixedImport false' 1`] = `
+exports[`svgr > exportType named / mixedImport false 1`] = `
 {
   "oneOf": [
     {
@@ -580,7 +580,7 @@ exports[`svgr > 'exportType named / mixedImport false' 1`] = `
 }
 `;
 
-exports[`svgr > 'exportType named / mixedImport true' 1`] = `
+exports[`svgr > exportType named / mixedImport true 1`] = `
 {
   "oneOf": [
     {

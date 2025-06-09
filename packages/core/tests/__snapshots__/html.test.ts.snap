@@ -1,4 +1,4 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Snapshot v1
 
 exports[`plugin-html > should allow to configure html.tags 1`] = `
 {
@@ -340,7 +340,7 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
 }
 `;
 
-exports[`plugin-html > should stop injecting <script> if inject is '() => false' 1`] = `
+exports[`plugin-html > should stop injecting <script> if inject is () => false 1`] = `
 {
   "entry": {
     "index": [
@@ -392,7 +392,7 @@ exports[`plugin-html > should stop injecting <script> if inject is '() => false'
 }
 `;
 
-exports[`plugin-html > should stop injecting <script> if inject is 'false' 1`] = `
+exports[`plugin-html > should stop injecting <script> if inject is false 1`] = `
 {
   "entry": {
     "index": [

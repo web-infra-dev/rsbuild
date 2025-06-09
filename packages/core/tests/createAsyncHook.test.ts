@@ -3,8 +3,8 @@ import { createAsyncHook } from '../src/hooks';
 describe('createAsyncHook', () => {
   test('should execute callback functions in order', async () => {
     const myHook = createAsyncHook();
-    const callback1 = vi.fn();
-    const callback2 = vi.fn();
+    const callback1 = rstest.fn();
+    const callback2 = rstest.fn();
 
     myHook.tap(callback1);
     myHook.tap(callback2);
@@ -15,8 +15,8 @@ describe('createAsyncHook', () => {
 
   test('should keep params if callback function return void', async () => {
     const myHook = createAsyncHook();
-    const callback1 = vi.fn();
-    const callback2 = vi.fn();
+    const callback1 = rstest.fn();
+    const callback2 = rstest.fn();
 
     myHook.tap(callback1);
     myHook.tap(callback2);
