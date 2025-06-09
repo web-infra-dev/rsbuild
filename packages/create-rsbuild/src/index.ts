@@ -70,7 +70,7 @@ function mapESLintTemplate(templateName: string): ESLintTemplateName {
     case 'react18-js':
       return 'react-js';
     case 'react18-ts':
-      return 'react-js';
+      return 'react-ts';
   }
   const language = templateName.split('-')[1];
   return `vanilla-${language}` as ESLintTemplateName;
