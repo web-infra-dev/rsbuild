@@ -61,9 +61,9 @@
   "devDependencies": {
     "@rslib/core": "0.9.2",
     "@types/connect": "3.4.38",
-    "@types/cors": "^2.8.18",
+    "@types/cors": "^2.8.19",
     "@types/node": "^22.15.30",
-    "@types/on-finished": "2.3.4",
+    "@types/on-finished": "2.3.5",
     "@types/webpack-bundle-analyzer": "4.7.0",
     "@types/ws": "^8.18.1",
     "browserslist-load-config": "1.0.0",
