@@ -18,6 +18,9 @@ changelog:
     - title: Bug Fixes 🐞
       labels:
         - 'release: bug fix'
+    - title: Refactor 🔨
+      labels:
+        - 'release: refactor'
     - title: Document 📖
       labels:
         - 'release: document'
