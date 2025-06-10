@@ -3,6 +3,10 @@ import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
 import { Layout as BaseLayout } from 'rspress/theme';
 import { HomeLayout } from './pages';
 import './index.scss';
+import {
+  Search as PluginAlgoliaSearch,
+  ZH_LOCALES,
+} from '@rspress/plugin-algolia/runtime';
 import { NoSSR, useLang, usePageData } from 'rspress/runtime';
 
 // Enable announcement when we have something to announce
@@ -36,7 +40,23 @@ const Layout = () => {
     />
   );
 };
+const Search = () => {
+  const lang = useLang();
+  return (
+    <PluginAlgoliaSearch
+      docSearchProps={{
+        appId: 'LBYJGZQY5U', // cspell:disable-line
+        apiKey: 'ecb541ceb2b67d7f23e12e6fb4772c0f', // cspell:disable-line
+        indexName: 'rsbuild',
+        searchParameters: {
+          facetFilters: [`lang:${lang}`],
+        },
+      }}
+      locales={ZH_LOCALES}
+    />
+  );
+};
 
-export { Layout, HomeLayout };
+export { Layout, HomeLayout, Search };
 
 export * from 'rspress/theme';

@@ -2,6 +2,7 @@ import path from 'node:path';
 
 import type { CompilerOptions, Runner } from './type';
 
+import { color } from '../../helpers';
 import type {
   BasicGlobalContext,
   BasicModuleScope,
@@ -125,7 +126,7 @@ export abstract class BasicRunner implements Runner {
     this.requirers.set(
       'entry',
       (_currentDirectory, _modulePath, _context = {}) => {
-        throw new Error('[rsbuild:runner] Not implement');
+        throw new Error(`${color.dim('[rsbuild:runner]')} Not implemented`);
       },
     );
   }

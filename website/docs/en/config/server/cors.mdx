@@ -1,15 +1,18 @@
 # server.cors
 
 - **Type:** `boolean | import('cors').CorsOptions`
+- **Default:**
 
 ```ts
-const defaultCorsOptions = {
+const defaultAllowedOrigins =
+  /^https?:\/\/(?:(?:[^:]+\.)?localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/;
+
+const defaultOptions = {
   // Default allowed:
   // - localhost
   // - 127.0.0.1
   // - [::1]
-  origin:
-    /^https?:\/\/(?:(?:[^:]+\.)?localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/,
+  origin: defaultAllowedOrigins,
 };
 ```
 
@@ -35,6 +38,21 @@ export default {
     cors: {
       // Configures the `Access-Control-Allow-Origin` CORS response header
       origin: 'https://example.com',
+    },
+  },
+};
+```
+
+- Keep the default origin config of Rsbuild and add additional origins:
+
+```ts title="rsbuild.config.ts"
+// `defaultAllowedOrigins` is the default origin value of Rsbuild
+import { defaultAllowedOrigins } from '@rsbuild/core';
+
+export default {
+  server: {
+    cors: {
+      origin: [defaultAllowedOrigins, 'https://example.com'],
     },
   },
 };

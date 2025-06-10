@@ -39,13 +39,18 @@ Configure the behavior of SWC to transform React code, the same as SWC's [jsc.tr
 - **Type:**
 
 ```ts
-interface SwcReactOptions {
+interface ReactConfig {
   pragma?: string;
   pragmaFrag?: string;
   throwIfNamespace?: boolean;
   development?: boolean;
-  useBuiltins?: boolean;
-  refresh?: boolean;
+  refresh?:
+    | boolean
+    | {
+        refreshReg?: string;
+        refreshSig?: string;
+        emitFullSignatures?: boolean;
+      };
   runtime?: 'automatic' | 'classic';
   importSource?: string;
 }
@@ -216,10 +221,11 @@ type ReactRefreshOptions = {
 const defaultOptions = {
   include: [/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/],
   exclude: [/[\\/]node_modules[\\/]/],
+  resourceQuery: { not: /raw/ },
 };
 ```
 
-Set the options for [@rspack/plugin-react-refresh](https://rspack.dev/guide/tech/react#rspackplugin-react-refresh). The passed value will be shallowly merged with the default value.
+Set the options for [@rspack/plugin-react-refresh](https://github.com/rspack-contrib/rspack-plugin-react-refresh). The passed value will be shallowly merged with the default value.
 
 - **Example:**
 
@@ -238,7 +244,7 @@ pluginReact({
 
 Whether to enable [React Fast Refresh](https://npmjs.com/package/react-refresh) in development mode.
 
-If `fastRefresh` is set to `true`, `@rsbuild/plugin-react` will automatically register the [@rspack/plugin-react-refresh](https://npmjs.com/package/@rspack/plugin-react-refresh) plugin.
+If `fastRefresh` is set to `true`, `@rsbuild/plugin-react` will automatically register the [@rspack/plugin-react-refresh](https://github.com/rspack-contrib/rspack-plugin-react-refresh) plugin.
 
 To disable Fast Refresh, set it to `false`:
 

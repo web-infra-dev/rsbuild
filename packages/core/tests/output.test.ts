@@ -150,22 +150,8 @@ describe('plugin-output', () => {
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
-  it('should allow dev.assetPrefix to be `auto`', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginOutput()],
-      rsbuildConfig: {
-        dev: {
-          assetPrefix: 'auto',
-        },
-      },
-    });
-
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0]?.output?.publicPath).toEqual('auto');
-  });
-
   it('should replace `<port>` placeholder with default port', async () => {
-    vi.stubEnv('NODE_ENV', 'development');
+    rstest.stubEnv('NODE_ENV', 'development');
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
       rsbuildConfig: {
@@ -180,7 +166,7 @@ describe('plugin-output', () => {
   });
 
   it('should replace `<port>` placeholder with server.port', async () => {
-    vi.stubEnv('NODE_ENV', 'development');
+    rstest.stubEnv('NODE_ENV', 'development');
     const rsbuild = await createRsbuild({
       rsbuildConfig: {
         server: { port: 4000 },
@@ -191,11 +177,11 @@ describe('plugin-output', () => {
     });
     const [config] = await rsbuild.initConfigs();
     expect(config?.output?.publicPath).toEqual('http://example-4000.com:4000/');
-    vi.unstubAllEnvs();
+    rstest.unstubAllEnvs();
   });
 
   it('should replace `<port>` placeholder of `output.assetPrefix` with default port', async () => {
-    vi.stubEnv('NODE_ENV', 'production');
+    rstest.stubEnv('NODE_ENV', 'production');
     const rsbuild = await createRsbuild({
       rsbuildConfig: {
         output: {
@@ -206,6 +192,6 @@ describe('plugin-output', () => {
 
     const [config] = await rsbuild.initConfigs();
     expect(config?.output?.publicPath).toEqual('http://example.com:3000/');
-    vi.unstubAllEnvs();
+    rstest.unstubAllEnvs();
   });
 });

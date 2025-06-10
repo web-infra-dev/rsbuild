@@ -4,7 +4,8 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "rootDir": "src",
-    "composite": true
+    "composite": true,
+    "types": ["@rstest/core/globals"]
   },
   "references": [
     {

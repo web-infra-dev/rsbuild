@@ -8,10 +8,11 @@ import type RspackChain from '../../compiled/rspack-chain';
 import type { ChainIdentifier } from '../configChain';
 import type {
   ModifyRspackConfigUtils,
+  NarrowedRspackConfig,
   NormalizedConfig,
   NormalizedEnvironmentConfig,
   RsbuildConfig,
-  WebpackMerge,
+  RspackMerge,
 } from './config';
 import type { RsbuildContext } from './context';
 import type {
@@ -19,6 +20,7 @@ import type {
   ModifyBundlerChainFn,
   ModifyChainUtils,
   ModifyEnvironmentConfigFn,
+  ModifyHTMLFn,
   ModifyHTMLTagsFn,
   ModifyRsbuildConfigFn,
   OnAfterBuildFn,
@@ -57,7 +59,7 @@ export type EnvironmentAsyncHook<
    * Registers a callback function to be executed when the hook is triggered.
    * The callback can be a plain function or a HookDescriptor that includes execution order.
    * The callback will be executed in all environments by default.
-   * If you need to specify the environment, please use `tapEnvironment`
+   * If you need to specify the environment, use `tapEnvironment`
    * @param cb The callback function or hook descriptor to register
    */
   tap: (cb: Callback | HookDescriptor<Callback>) => void;
@@ -134,7 +136,7 @@ export type AsyncHook<Callback extends (...args: any[]) => T, T = any> = {
 };
 
 export type ModifyRspackConfigFn = (
-  config: Rspack.Configuration,
+  config: NarrowedRspackConfig,
   utils: ModifyRspackConfigUtils,
 ) => MaybePromise<Rspack.Configuration | void>;
 
@@ -162,7 +164,7 @@ export type ModifyWebpackConfigUtils = ModifyWebpackChainUtils & {
     plugins: WebpackPluginInstance | WebpackPluginInstance[],
   ) => void;
   removePlugin: (pluginName: string) => void;
-  mergeConfig: WebpackMerge;
+  mergeConfig: RspackMerge;
 };
 
 export type ModifyWebpackChainFn = (
@@ -321,59 +323,74 @@ export type TransformHandler = (
 export type TransformDescriptor = {
   /**
    * Include modules that match the test assertion, the same as `rule.test`
-   * @see https://rspack.dev/config/module#ruletest
+   * @see https://rspack.rs/config/module#ruletest
    */
   test?: Rspack.RuleSetCondition;
   /**
    * A condition that matches the resource query.
-   * @see https://rspack.dev/config/module#ruleresourcequery
+   * @see https://rspack.rs/config/module#ruleresourcequery
    */
   resourceQuery?: Rspack.RuleSetCondition;
   /**
    * Match based on the Rsbuild targets and only apply the transform to
    * certain targets.
-   * @see https://rsbuild.dev/config/output/target
+   * @see https://rsbuild.rs/config/output/target
    */
   targets?: RsbuildTarget[];
   /**
    * Match based on the Rsbuild environment names and only apply the transform
    * to certain environments.
-   * @see https://rsbuild.dev/config/environments
+   * @see https://rsbuild.rs/config/environments
    */
   environments?: string[];
   /**
    * If raw is `true`, the transform handler will receive the Buffer type code
    * instead of the string type.
-   * @see https://rspack.dev/api/loader-api/examples#raw-loader
+   * @see https://rspack.rs/api/loader-api/examples#raw-loader
    */
   raw?: boolean;
   /**
-   * Used to mark the layer of the matching module.
-   * A group of modules could be united in one layer which could then be used in
-   * split chunks, stats or entry options.
-   * @see https://rspack.dev/config/module#rulelayer
+   * Marks the layer of the matching module, can be used to group a group of
+   * modules into one layer
+   * @see https://rspack.rs/config/module#rulelayer
    */
   layer?: string;
   /**
    * Matches all modules that match this resource, and will match against layer of
    * the module that issued the current module.
-   * @see https://rspack.dev/config/module#ruleissuerlayer
+   * @see https://rspack.rs/config/module#ruleissuerlayer
    */
   issuerLayer?: string;
   /**
    * Matches all modules that match this resource, and will match against Resource
-   * (the absolute path without query and fragment) of the module that issued the current module.
-   * @see https://rspack.dev/config/module#ruleissuer
+   * (the absolute path without query and fragment) of the module that issued the
+   * current module.
+   * @see https://rspack.rs/config/module#ruleissuer
    */
   issuer?: Rspack.RuleSetCondition;
   /**
-   * `with` can be used in conjunction with [import attributes](https://github.com/tc39/proposal-import-attributes).
-   * @see https://rspack.dev/config/module#rulewith
+   * Matches [import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with)
+   * @see https://rspack.rs/config/module#rulewith
    */
   with?: Record<string, Rspack.RuleSetCondition>;
+  /**
+   * Matches modules based on MIME type instead of file extension. It's primarily
+   * useful for data URI module (like `data:text/javascript,...`).
+   * @see https://rspack.rs/config/module#rulemimetype
+   */
+  mimetype?: Rspack.RuleSetCondition;
+  /**
+   * Specifies the execution order of the transform function.
+   * - When specified as 'pre', the transform function will execute before other
+   * transform functions (or Rspack loaders).
+   * - When specified as 'post', the transform function will execute after other
+   * transform functions (or Rspack loaders).
+   * @see https://rspack.rs/config/module#ruleenforce
+   */
+  enforce?: 'pre' | 'post';
 };
 
-export type TransformFn = (
+export type TransformHook = (
   descriptor: TransformDescriptor,
   handler: TransformHandler,
 ) => void;
@@ -403,12 +420,12 @@ export type ProcessAssetsDescriptor = {
   stage: ProcessAssetsStage;
   /**
    * Match based on the Rsbuild targets and only process the assets of certain targets.
-   * @see https://rsbuild.dev/config/output/target
+   * @see https://rsbuild.rs/config/output/target
    */
   targets?: RsbuildTarget[];
   /**
    * Match based on the Rsbuild environment names and only process the assets of certain environments.
-   * @see https://rsbuild.dev/config/environments
+   * @see https://rsbuild.rs/config/environments
    */
   environments?: string[];
 };
@@ -450,9 +467,9 @@ export type ResolveHandler = (context: {
   compilation: Rspack.Compilation;
 }) => Promise<void> | void;
 
-export type ResolveFn = (handler: ResolveHandler) => void;
+export type ResolveHook = (handler: ResolveHandler) => void;
 
-export type ProcessAssetsFn = (
+export type ProcessAssetsHook = (
   descriptor: ProcessAssetsDescriptor,
   handler: ProcessAssetsHandler,
 ) => void;
@@ -509,7 +526,15 @@ export type RsbuildPluginAPI = Readonly<{
    */
   modifyEnvironmentConfig: PluginHook<ModifyEnvironmentConfigFn>;
   /**
+   * Modify the final HTML content. The hook receives a HTML string
+   * and a context object, and you can return a new HTML string to
+   * replace the original one. This hook is triggered after the
+   * `modifyHTMLTags` hook.
+   */
+  modifyHTML: PluginHook<ModifyHTMLFn>;
+  /**
    * Modify the tags that are injected into the HTML.
+   * This hook is triggered before the `modifyHTML` hook.
    */
   modifyHTMLTags: PluginHook<ModifyHTMLTagsFn>;
   /**
@@ -535,7 +560,7 @@ export type RsbuildPluginAPI = Readonly<{
   /**
    * A callback function that is triggered after running the production build.
    * You can access the build result information via the
-   * [stats](https://rspack.dev/api/javascript-api/stats) parameter.
+   * [stats](https://rspack.rs/api/javascript-api/stats) parameter.
    */
   onAfterBuild: PluginHook<OnAfterBuildFn>;
   /**
@@ -547,7 +572,7 @@ export type RsbuildPluginAPI = Readonly<{
   /**
    * A callback function that is triggered after the compilation of a single environment.
    * You can access the build result information via the
-   * [stats](https://rspack.dev/api/javascript-api/stats) parameter.
+   * [stats](https://rspack.rs/api/javascript-api/stats) parameter.
    */
   onAfterEnvironmentCompile: PluginHook<OnAfterEnvironmentCompileFn>;
   /**
@@ -605,18 +630,21 @@ export type RsbuildPluginAPI = Readonly<{
   onExit: PluginHook<OnExitFn>;
   /**
    * Modify assets before emitting, the same as Rspack's
-   * [compilation.hooks.processAssets](https://rspack.dev/api/plugin-api/compilation-hooks#processassets) hook.
+   * [compilation.hooks.processAssets](https://rspack.rs/api/plugin-api/compilation-hooks#processassets) hook.
    */
-  processAssets: ProcessAssetsFn;
+  processAssets: ProcessAssetsHook;
   /**
    * Intercept and modify module request information before module resolution begins.
-   * The same as Rspack's [normalModuleFactory.hooks.resolve](https://rspack.dev/api/plugin-api/normal-module-factory-hooks#resolve) hook.
+   * The same as Rspack's [normalModuleFactory.hooks.resolve](https://rspack.rs/api/plugin-api/normal-module-factory-hooks#resolve) hook.
    */
-  resolve: ResolveFn;
+  resolve: ResolveHook;
   /**
-   * Used to transform the code of modules.
+   * A simplified wrapper around Rspack loaders, `api.transform` lets you
+   * easily transform the code of specific modules during the build process.
+   * You can match files by module path, query, or other conditions, and
+   * apply custom transformations to their contents.
    */
-  transform: TransformFn;
+  transform: TransformHook;
   /**
    * Get the properties or methods exposed by other plugins.
    */

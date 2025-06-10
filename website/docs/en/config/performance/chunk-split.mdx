@@ -122,7 +122,7 @@ export default {
 };
 ```
 
-This is an easier way than configuring Rspack's [splitChunks](https://rspack.dev/config/optimization#optimizationsplitchunks) directly.
+This is an easier way than configuring Rspack's [splitChunks](https://rspack.rs/config/optimization#optimizationsplitchunks) directly.
 
 :::tip
 Chunks split using the `forceSplitting` configuration will be inserted into the HTML file as resources requested for the initial screen using `<script>` tags. Therefore, please split them appropriately based on the actual scenario to avoid excessive size of initial screen resources.
@@ -177,7 +177,7 @@ export default {
 
 `performance.chunkSplit` only works when [output.target](/config/output/target) is `web`. This means that when `output.target` is `node` or `web-worker`, `performance.chunkSplit` will not take effect.
 
-Typically, Node bundles do not need to be split to optimize loading performance, if you need to split Node bundles, you can use the [tools.rspack](/config/tools/rspack) configuration to configure Rspack's [optimization.splitChunks](https://rspack.dev/plugins/webpack/split-chunks-plugin#optimizationsplitchunks) option:
+Typically, Node bundles do not need to be split to optimize loading performance, if you need to split Node bundles, you can use the [tools.rspack](/config/tools/rspack) configuration to configure Rspack's [optimization.splitChunks](https://rspack.rs/plugins/webpack/split-chunks-plugin#optimizationsplitchunks) option:
 
 ```ts
 export default {

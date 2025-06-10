@@ -1,7 +1,7 @@
 import path from 'node:path';
-import { loadConfig as baseLoadConfig } from '../config';
 import { createRsbuild } from '../createRsbuild';
-import { castArray, getAbsolutePath } from '../helpers';
+import { castArray, ensureAbsolutePath } from '../helpers';
+import { loadConfig as baseLoadConfig } from '../loadConfig';
 import { logger } from '../logger';
 import { watchFilesForRestart } from '../restart';
 import type { RsbuildInstance } from '../types';
@@ -86,7 +86,9 @@ export async function init({
 
   try {
     const cwd = process.cwd();
-    const root = commonOpts.root ? getAbsolutePath(cwd, commonOpts.root) : cwd;
+    const root = commonOpts.root
+      ? ensureAbsolutePath(cwd, commonOpts.root)
+      : cwd;
 
     const rsbuild = await createRsbuild({
       cwd: root,
@@ -110,19 +112,19 @@ export async function init({
       const files: string[] = [];
       const config = rsbuild.getNormalizedConfig();
 
-      if (config.dev?.watchFiles) {
-        for (const watchFilesConfig of castArray(config.dev.watchFiles)) {
-          if (watchFilesConfig.type !== 'reload-server') {
+      if (config.dev.watchFiles) {
+        for (const watchConfig of config.dev.watchFiles) {
+          if (watchConfig.type !== 'reload-server') {
             continue;
           }
 
-          const paths = castArray(watchFilesConfig.paths);
-          if (watchFilesConfig.options) {
+          const paths = castArray(watchConfig.paths);
+          if (watchConfig.options) {
             watchFilesForRestart({
               files: paths,
               rsbuild,
               isBuildWatch,
-              watchOptions: watchFilesConfig.options,
+              watchOptions: watchConfig.options,
             });
           } else {
             files.push(...paths);

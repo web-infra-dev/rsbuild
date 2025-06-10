@@ -1,7 +1,7 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
 import type Connect from '../../compiled/connect/index.js';
-import { pathnameParse } from '../helpers/path';
+import { getPathnameFromUrl } from '../helpers/path';
 import { logger } from '../logger';
 import type {
   InternalContext,
@@ -90,7 +90,7 @@ export class RsbuildProdServer {
       });
     }
 
-    // Apply proxy middlewares
+    // Apply proxy middleware
     // each proxy configuration creates its own middleware instance
     if (proxy) {
       const { middlewares, upgrade } = await createProxyMiddleware(proxy);
@@ -193,7 +193,7 @@ export async function startProdServer(
       output: {
         path: context.distPath,
         assetPrefixes: Object.values(context.environments).map((e) =>
-          pathnameParse(e.config.output.assetPrefix),
+          getPathnameFromUrl(e.config.output.assetPrefix),
         ),
       },
       serverConfig,
@@ -226,7 +226,7 @@ export async function startProdServer(
         });
 
         const protocol = https ? 'https' : 'http';
-        const urls = getAddressUrls({ protocol, port, host });
+        const urls = await getAddressUrls({ protocol, port, host });
         const cliShortcutsEnabled = isCliShortcutsEnabled(config.dev);
 
         const cleanupGracefulShutdown = setupGracefulShutdown();
@@ -268,7 +268,7 @@ export async function startProdServer(
               ? {}
               : config.dev.cliShortcuts;
 
-          setupCliShortcuts({
+          await setupCliShortcuts({
             openPage,
             closeServer,
             printUrls,

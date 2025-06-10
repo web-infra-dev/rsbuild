@@ -20,7 +20,9 @@ import type {
 import type RspackChain from '../../compiled/rspack-chain';
 import type { FileDescriptor } from '../../compiled/rspack-manifest-plugin';
 import type { BundleAnalyzerPlugin } from '../../compiled/webpack-bundle-analyzer/index.js';
+import type { RsbuildDevServer } from '../server/devServer';
 import type {
+  EnvironmentContext,
   ModifyBundlerChainUtils,
   ModifyChainUtils,
   Routes,
@@ -44,12 +46,11 @@ import type {
 } from './thirdParty';
 import type {
   ConfigChain,
-  ConfigChainAsyncWithContext,
   ConfigChainMergeContext,
   ConfigChainWithContext,
-  DeepReadonly,
   MaybePromise,
   OneOrMany,
+  TwoLevelReadonly,
 } from './utils';
 
 export type ToolsSwcConfig = ConfigChain<SwcLoaderOptions>;
@@ -76,10 +77,10 @@ export type ToolsHtmlPluginConfig = ConfigChainWithContext<
 >;
 
 // equivalent to import('webpack-merge').merge
-export type WebpackMerge = <Configuration extends object>(
-  firstConfiguration: Configuration | Configuration[],
-  ...configurations: Configuration[]
-) => Configuration;
+export type RspackMerge = (
+  firstConfiguration: Rspack.Configuration | Rspack.Configuration[],
+  ...configurations: Rspack.Configuration[]
+) => Rspack.Configuration;
 
 export type ModifyRspackConfigUtils = ModifyChainUtils & {
   addRules: (rules: RspackRule | RspackRule[]) => void;
@@ -91,12 +92,65 @@ export type ModifyRspackConfigUtils = ModifyChainUtils & {
     plugins: BundlerPluginInstance | BundlerPluginInstance[],
   ) => void;
   removePlugin: (pluginName: string) => void;
-  mergeConfig: WebpackMerge;
+  mergeConfig: RspackMerge;
 };
 
-export type ToolsRspackConfig = ConfigChainAsyncWithContext<
+/**
+ * Narrow the type of Rspack.Configuration to make it easier
+ * to use `tools.rspack` function. These properties are set
+ * by Rsbuild by default so they are non-nullable.
+ *
+ * - With `Rspack.Configuration`, the `plugins` property is nullable:
+ *
+ * ```js
+ * tools: {
+ *   rspack(config) {
+ *     if (!config.plugins) {
+ *       config.plugins = [];
+ *     }
+ *     config.plugins.push(new SomePlugin());
+ *   }
+ * }
+ * ```
+ *
+ * - With `NarrowedRspackConfig`, the `plugins` property is non-nullable:
+ *
+ * ```js
+ * tools: {
+ *   rspack(config) {
+ *     config.plugins.push(new SomePlugin());
+ *   }
+ * }
+ * ```
+ */
+export type NarrowedRspackConfig = Omit<
   Rspack.Configuration,
-  ModifyRspackConfigUtils
+  'plugins' | 'module' | 'resolve' | 'output'
+> & {
+  /**
+   * Plugins to use during compilation.
+   */
+  plugins: NonNullable<Rspack.Configuration['plugins']>;
+  /**
+   * Options for module configuration.
+   */
+  module: NonNullable<Rspack.Configuration['module']>;
+  /**
+   * Options for resolving modules.
+   */
+  resolve: NonNullable<Rspack.Configuration['resolve']>;
+  /**
+   * Configuration for the output of the compilation.
+   */
+  output: NonNullable<Rspack.Configuration['output']>;
+};
+
+export type ToolsRspackConfig = OneOrMany<
+  | Rspack.Configuration
+  | ((
+      config: NarrowedRspackConfig,
+      ctx: ModifyRspackConfigUtils,
+    ) => MaybePromise<Rspack.Configuration | void>)
 >;
 
 export type ToolsWebpackConfig = ConfigChainWithContext<
@@ -138,7 +192,7 @@ export interface ToolsConfig {
    */
   lightningcssLoader?: boolean | ConfigChain<Rspack.LightningcssLoaderOptions>;
   /**
-   * Modify the options of [CssExtractRspackPlugin](https://rspack.dev/plugins/rspack/css-extract-rspack-plugin).
+   * Modify the options of [CssExtractRspackPlugin](https://rspack.rs/plugins/rspack/css-extract-rspack-plugin).
    */
   cssExtract?: CSSExtractOptions;
   /**
@@ -198,7 +252,7 @@ export interface SourceConfig {
    * Specify additional JavaScript files that need to be compiled by SWC.
    * Through the `source.include` config, you can specify directories or modules
    * that need to be compiled by Rsbuild. The usage of `source.include` is
-   * consistent with [Rule.include](https://rspack.dev/config/module#ruleinclude)
+   * consistent with [Rule.include](https://rspack.rs/config/module#ruleinclude)
    * in Rspack, which supports passing in strings or regular expressions to match
    * the module path.
    * @default
@@ -209,7 +263,14 @@ export interface SourceConfig {
    */
   include?: RuleSetCondition[];
   /**
-   * Set the entry modules.
+   * Set the entry modules for building.
+   *
+   * The value of `source.entry` is an object, the key is the entry name, and the
+   * value is the path of the entry module or a description object.
+   *
+   * If the value is a path, it can be an absolute path or a relative path, the
+   * relative path will be resolved based on `root`.
+   *
    * @default
    * {
    *   // Rsbuild also supports other suffixes by default, such as ts,
@@ -268,11 +329,6 @@ type TransformImportFn = (
 
 export interface NormalizedSourceConfig extends SourceConfig {
   define: Define;
-  /**
-   * @deprecated Use `resolve.alias` instead.
-   * `source.alias` will be removed in v2.0.0.
-   */
-  alias: ConfigChain<Alias>;
   preEntry: string[];
   decorators: Required<Decorators>;
 }
@@ -704,7 +760,7 @@ export interface PerformanceConfig {
 
   /**
    * Whether capture timing information for each module,
-   * same as the [profile](https://rspack.dev/config/other-options#profile) config of Rspack.
+   * same as the [profile](https://rspack.rs/config/other-options#profile) config of Rspack.
    */
   profile?: boolean;
 }
@@ -954,19 +1010,29 @@ export type Minify =
   | boolean
   | {
       /**
-       * Whether to enable JavaScript minification.
+       * Whether to enable minification for JavaScript bundles.
+       * - `true`: Enabled in production mode.
+       * - `false`: Disabled in all modes.
+       * - `'always'`: Enabled in all modes.
+       * @default true
        */
-      js?: boolean;
+      js?: boolean | 'always';
       /**
        * Minimizer options of JavaScript, which will be passed to SWC.
+       * @default {}
        */
       jsOptions?: SwcJsMinimizerRspackPluginOptions;
       /**
-       * Whether to enable CSS minimization.
+       * Whether to enable minification for CSS bundles.
+       * - `true`: Enabled in production mode.
+       * - `false`: Disabled in all modes.
+       * - `'always'`: Enabled in all modes.
+       * @default true
        */
-      css?: boolean;
+      css?: boolean | 'always';
       /**
        * Minimizer options of CSS, which will be passed to LightningCSS.
+       * @default inherit from `tools.lightningcssLoader` config
        */
       cssOptions?: LightningCssMinimizerRspackPluginOptions;
     };
@@ -1057,7 +1123,7 @@ export interface OutputConfig {
   /**
    * At build time, prevent some `import` dependencies from being packed into bundles in
    * your code, and instead fetch them externally at runtime.
-   * For more information, please see: [Rspack Externals](https://rspack.dev/config/externals)
+   * For more information, please see: [Rspack Externals](https://rspack.rs/config/externals)
    * @default undefined
    */
   externals?: Externals;
@@ -1113,7 +1179,8 @@ export interface OutputConfig {
    */
   cssModules?: CSSModules;
   /**
-   * Whether to disable code minification in production build.
+   * Configure whether to enable code minification in production mode, or to configure
+   * minimizer options.
    * @default true
    */
   minify?: Minify;
@@ -1248,9 +1315,22 @@ export type HtmlBasicTag = {
 };
 
 export type HtmlTag = HtmlBasicTag & {
+  /** @default false */
   hash?: boolean | string | ((url: string, hash: string) => string);
+  /** @default true */
   publicPath?: boolean | string | ((url: string, publicPath: string) => string);
+  /**
+   * Defines the injection position of the current tag relative to existing tags
+   * - When set to `true`, the tag will be inserted after existing tags
+   * - When set to `false`, the tag will be inserted before existing tags
+   * @default true
+   */
   append?: boolean;
+  /**
+   * Specifies whether to add the current tag to the HTML `<head>` element
+   * @default defaults to `true` for element types allowed in the `<head>`, otherwise `false`
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head#see_also
+   */
   head?: boolean;
 };
 
@@ -1430,16 +1510,18 @@ export type EnvironmentAPI = {
      * Get the compiled HTML template.
      */
     getTransformedHtml: (entryName: string) => Promise<string>;
+
+    /**
+     * Provides some context information about the current environment
+     */
+    context: EnvironmentContext;
   };
 };
 
-export type SetupMiddlewaresServer = {
-  sockWrite: (
-    type: string,
-    data?: string | boolean | Record<string, any>,
-  ) => void;
-  environments: EnvironmentAPI;
-};
+export type SetupMiddlewaresServer = Pick<
+  RsbuildDevServer,
+  'sockWrite' | 'environments'
+>;
 
 export type SetupMiddlewaresFn = (
   middlewares: {
@@ -1519,12 +1601,13 @@ export interface DevConfig {
   liveReload?: boolean;
   /**
    * Set the URL prefix of static assets in development mode,
-   * similar to the [output.publicPath](https://rspack.dev/config/output#outputpublicpath)
+   * similar to the [output.publicPath](https://rspack.rs/config/output#outputpublicpath)
    * config of Rspack.
    */
   assetPrefix?: string | boolean;
   /**
-   * Whether to display progress bar during compilation.
+   * Whether to render progress bars to display the build progress.
+   * @default false
    */
   progressBar?: boolean | ProgressBarConfig;
   /**
@@ -1545,9 +1628,12 @@ export interface DevConfig {
         custom?: (shortcuts: CliShortcut[]) => CliShortcut[];
         /**
          * Whether to print the help hint when the server is started.
+         * - `true`: Print the default help hint.
+         * - `false`: Disable the help hint.
+         * - `string`: Print a custom help hint.
          * @default true
          */
-        help?: boolean;
+        help?: boolean | string;
       };
   /**
    * Provides the ability to execute a custom function and apply custom middlewares.
@@ -1570,13 +1656,14 @@ export interface DevConfig {
   lazyCompilation?: boolean | Rspack.LazyCompilationOptions;
 }
 
-export type NormalizedDevConfig = DevConfig &
+export type NormalizedDevConfig = Omit<DevConfig, 'watchFiles'> &
   Required<
     Pick<
       DevConfig,
       'hmr' | 'liveReload' | 'assetPrefix' | 'writeToDisk' | 'cliShortcuts'
     >
   > & {
+    watchFiles: WatchFiles[];
     client: NormalizedClientConfig;
   };
 
@@ -1589,7 +1676,7 @@ export interface ResolveConfig {
   /**
    * Set the alias for the module path, which is used to simplify the import path or
    * redirect the module reference.
-   * Similar to the [resolve.alias](https://rspack.dev/config/resolve) config of Rspack.
+   * Similar to the [resolve.alias](https://rspack.rs/config/resolve) config of Rspack.
    */
   alias?: ConfigChain<Alias>;
   /**
@@ -1739,7 +1826,7 @@ export type MergedEnvironmentConfig = {
 /**
  * The normalized Rsbuild environment config.
  */
-export type NormalizedEnvironmentConfig = DeepReadonly<
+export type NormalizedEnvironmentConfig = TwoLevelReadonly<
   Omit<MergedEnvironmentConfig, 'dev'> & {
     dev: NormalizedDevConfig;
     server: NormalizedServerConfig;

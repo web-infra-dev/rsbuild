@@ -12,7 +12,7 @@ An Rsbuild plugin to use Sass as the CSS preprocessor.
 
 ## Documentation
 
-See [Documentation](https://rsbuild.dev/plugins/list/plugin-sass).
+See [Documentation](https://rsbuild.rs/plugins/list/plugin-sass).
 
 ## License
 

@@ -224,7 +224,7 @@ Vite 通过 `vite-env.d.ts` 文件提供了一些预设的类型定义，迁移�
 
 Vite 提供了 `import.meta.glob()` 来批量导入模块。
 
-迁移到 Rsbuild 时，你可以使用 Rspack 的 [import.meta.webpackContext](https://rspack.dev/zh/api/runtime-api/module-variables#importmetawebpackcontext) 函数代替：
+迁移到 Rsbuild 时，你可以使用 Rspack 的 [import.meta.webpackContext](https://rspack.rs/zh/api/runtime-api/module-variables#importmetawebpackcontext) 函数代替：
 
 - Vite:
 
@@ -257,16 +257,17 @@ for (const path of context.keys()) {
 
 Rsbuild 的插件 API 覆盖了大部分的 Vite 和 Rollup 插件 hooks，例如：
 
-| Vite 插件 hooks   | Rsbuild 插件 API                                                                                                       |
-| ----------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `resolveId`       | [resolve](/plugins/dev/core#apiresolve)                                                                                |
-| `transform`       | [transform](/plugins/dev/core#apitransform)                                                                            |
-| `config`          | [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig)                                                          |
-| `configResolved`  | [getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig)                                                        |
-| `configureServer` | [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver)                                                    |
-| `buildStart`      | [onBeforeBuild](/plugins/dev/hooks#onbeforebuild), [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) |
-| `buildEnd`        | [onAfterBuild](/plugins/dev/hooks#onafterbuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
-| `closeBundle`     | [onCloseBuild](/plugins/dev/hooks#onclosebuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
+| Vite 插件 hooks      | Rsbuild 插件 API                                                                                                       |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `resolveId`          | [resolve](/plugins/dev/core#apiresolve)                                                                                |
+| `transform`          | [transform](/plugins/dev/core#apitransform)                                                                            |
+| `config`             | [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig)                                                          |
+| `configResolved`     | [getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig)                                                        |
+| `configureServer`    | [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver)                                                    |
+| `buildStart`         | [onBeforeBuild](/plugins/dev/hooks#onbeforebuild), [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) |
+| `buildEnd`           | [onAfterBuild](/plugins/dev/hooks#onafterbuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
+| `closeBundle`        | [onCloseBuild](/plugins/dev/hooks#onclosebuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
+| `transformIndexHtml` | [modifyHTML](/plugins/dev/hooks#modifyhtml)                                                                            |
 
 请参考 [插件系统](/plugins/dev/index) 文档来了解更多。
 

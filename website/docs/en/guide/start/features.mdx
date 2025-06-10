@@ -54,14 +54,14 @@ Here are all the main features supported by Rsbuild.
 
 ## Server
 
-| Features          | Description                                                                    | Links                                                            |
-| ----------------- | ------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| Public dir        | Use the public directory as the directory for serving public assets by default | <ul><li>[server.publicDir](/config/server/public-dir)</li></ul>  |
-| SSR               | Optional feature, implement server-side rendering                              | <ul><li>[SSR](/guide/advanced/ssr)</li></ul>                     |
-| Proxy             | Optional feature, proxy requests to the specified service                      | <ul><li>[server.proxy](/config/server/proxy)</li></ul>           |
-| Open page         | Optional feature, automatically open page in browser when starting server      | <ul><li>[server.open](/config/server/open)</li></ul>             |
-| HTTPS             | Optional feature, enable HTTPS server                                          | <ul><li>[server.https](/config/server/https)</li></ul>           |
-| Custom middleware | Optional feature, use custom middlewares                                       | <ul><li>[Middlewares](/guide/basic/server#middlewares)</li></ul> |
+| Features          | Description                                                                    | Links                                                           |
+| ----------------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------- |
+| Public dir        | Use the public directory as the directory for serving public assets by default | <ul><li>[server.publicDir](/config/server/public-dir)</li></ul> |
+| SSR               | Optional feature, implement server-side rendering                              | <ul><li>[SSR](/guide/advanced/ssr)</li></ul>                    |
+| Proxy             | Optional feature, proxy requests to the specified service                      | <ul><li>[server.proxy](/config/server/proxy)</li></ul>          |
+| Open page         | Optional feature, automatically open page in browser when starting server      | <ul><li>[server.open](/config/server/open)</li></ul>            |
+| HTTPS             | Optional feature, enable HTTPS server                                          | <ul><li>[server.https](/config/server/https)</li></ul>          |
+| Custom middleware | Optional feature, use custom middleware                                        | <ul><li>[Middleware](/guide/basic/server#middleware)</li></ul>  |
 
 ## UI framework
 
@@ -97,7 +97,7 @@ Here are all the main features supported by Rsbuild.
 | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | Chunk splitting            | A variety of chunk splitting strategies are built into Rsbuild to automatically split the bundle into files of moderate size | <ul><li>[Code splitting](/guide/optimization/code-splitting)</li><li>[performance.chunkSplit](/config/performance/chunk-split)</li></ul> |
 | Print file size            | After the production build, All bundle sizes is displayed by default                                                         | <ul><li>[performance.printFileSize](/config/performance/print-file-size)</li></ul>                                                       |
-| Analyze build process      | Optional feature, use Rsdoctor to analyze build process                                                                      | <ul><li>[使用 Rsdoctor](/guide/debug/rsdoctor)</li></ul>                                                                                 |
+| Analyze build process      | Optional feature, use Rsdoctor to analyze build process                                                                      | <ul><li>[Use Rsdoctor](/guide/debug/rsdoctor)</li></ul>                                                                                  |
 | Analyze bundle size        | Optional feature, analyze bundle size through Bundle Analyzer                                                                | <ul><li>[performance.bundleAnalyze](/config/performance/bundle-analyze)</li></ul>                                                        |
 | Remove console             | Optional feature, remove `console.[methodName]` in code                                                                      | <ul><li>[performance.removeConsole](/config/performance/remove-console)</li ></ul>                                                       |
 | Optimize moment.js size    | Optional feature, remove the redundant locale files of moment.js                                                             | <ul><li>[performance.removeMomentLocale](/config/performance/remove-moment-locale)</li></ul>                                             |

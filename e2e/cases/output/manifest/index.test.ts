@@ -30,7 +30,7 @@ test('should generate manifest file in output', async () => {
 
   const manifest = JSON.parse(manifestContent);
 
-  // main.js、index.html
+  // main.js, index.html
   expect(Object.keys(manifest.allFiles).length).toBe(2);
 
   expect(manifest.entries.index).toMatchObject({
@@ -63,7 +63,7 @@ test('should generate manifest file at specified path', async () => {
 
   const parsed = JSON.parse(manifestContent);
 
-  // main.js、index.html
+  // main.js, index.html
   expect(Object.keys(parsed.allFiles).length).toBe(2);
 });
 
@@ -91,7 +91,7 @@ test('should generate manifest file when target is node', async () => {
 
   const manifest = JSON.parse(manifestContent);
 
-  // main.js、index.html
+  // main.js, index.html
   expect(Object.keys(manifest.allFiles).length).toBe(1);
 
   expect(manifest.entries.index).toMatchObject({

@@ -13,7 +13,7 @@ rspackOnlyTest('should support watch mode for build command', async () => {
 
   fse.outputFileSync(indexFile, `console.log('hello!');`);
 
-  const process = exec('npx rsbuild build --watch', {
+  const childProcess = exec('npx rsbuild build --watch', {
     cwd: __dirname,
   });
 
@@ -25,5 +25,5 @@ rspackOnlyTest('should support watch mode for build command', async () => {
   await expectFile(distIndexFile);
   expect(fs.readFileSync(distIndexFile, 'utf-8')).toContain('hello2!');
 
-  process.kill();
+  childProcess.kill();
 });

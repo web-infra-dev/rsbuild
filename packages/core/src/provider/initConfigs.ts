@@ -1,10 +1,11 @@
-import { getDefaultEntry, normalizeConfig } from '../config';
 import { JS_DIST_DIR } from '../constants';
 import {
   updateContextByNormalizedConfig,
   updateEnvironmentContext,
 } from '../createContext';
-import { camelCase, color, pick } from '../helpers';
+import { getDefaultEntry, normalizeConfig } from '../defaultConfig';
+import { camelCase, color, ensureAbsolutePath, pick } from '../helpers';
+import { inspectConfig } from '../inspectConfig';
 import { isDebug, logger } from '../logger';
 import { mergeRsbuildConfig } from '../mergeConfig';
 import { initPlugins } from '../pluginManager';
@@ -20,16 +21,26 @@ import type {
   RsbuildEntry,
   Rspack,
 } from '../types';
-import { inspectConfig } from './inspectConfig';
 import { generateRspackConfig } from './rspackConfig';
 
 async function modifyRsbuildConfig(context: InternalContext) {
   logger.debug('modify Rsbuild config');
+
+  const pluginsCount = context.config.plugins?.length ?? 0;
   const [modified] = await context.hooks.modifyRsbuildConfig.callChain(
     context.config,
     { mergeRsbuildConfig },
   );
   context.config = modified;
+
+  const newPluginsCount = modified.plugins?.length ?? 0;
+  if (newPluginsCount !== pluginsCount) {
+    logger.warn(
+      `${color.dim('[rsbuild]')} Cannot change plugins via ${color.yellow(
+        'modifyRsbuildConfig',
+      )} as plugins are already initialized when it executes.`,
+    );
+  }
 
   logger.debug('modify Rsbuild config done');
 }
@@ -124,7 +135,9 @@ const initEnvironmentConfigs = (
 
     if (!Object.keys(resolvedEnvironments).length) {
       throw new Error(
-        `[rsbuild:config] The current build is specified to run only in the ${color.yellow(specifiedEnvironments?.join(','))} environment, but the configuration of the specified environment was not found.`,
+        `${color.dim('[rsbuild:config]')} The current build is specified to run only in the ${color.yellow(
+          specifiedEnvironments?.join(','),
+        )} environment, but the configuration of the specified environment was not found.`,
       );
     }
     return resolvedEnvironments;
@@ -134,7 +147,9 @@ const initEnvironmentConfigs = (
 
   if (!isEnvironmentEnabled(defaultEnvironmentName)) {
     throw new Error(
-      `[rsbuild:config] The current build is specified to run only in the ${color.yellow(specifiedEnvironments?.join(','))} environment, but the configuration of the specified environment was not found.`,
+      `${color.dim('[rsbuild:config]')} The current build is specified to run only in the ${color.yellow(
+        specifiedEnvironments?.join(','),
+      )} environment, but the configuration of the specified environment was not found.`,
     );
   }
 
@@ -155,11 +170,35 @@ const initEnvironmentConfigs = (
 const validateRsbuildConfig = (config: NormalizedConfig) => {
   if (config.server.base && !config.server.base.startsWith('/')) {
     throw new Error(
-      `[rsbuild:config] The "server.base" option should start with a slash, for example: "/base"`,
+      `${color.dim('[rsbuild:config]')} The ${color.yellow(
+        '"server.base"',
+      )} option should start with a slash, for example: "/base"`,
     );
+  }
+
+  if (config.environments) {
+    const names = Object.keys(config.environments);
+    const regexp = /^[\w$-]+$/;
+    for (const name of names) {
+      // ensure environment names are filesystem and property access safe
+      if (!regexp.test(name)) {
+        logger.warn(
+          `${color.dim('[rsbuild:config]')} Environment name "${color.yellow(name)}" contains invalid characters. Only letters, numbers, "-", "_", and "$" are allowed.`,
+        );
+      }
+    }
   }
 };
 
+/**
+ * Initialize the Rsbuild config
+ * 1. Initialize the Rsbuild plugins
+ * 2. Run all the `modifyRsbuildConfig` hooks
+ * 3. Normalize the Rsbuild config, merge with the default config
+ * 4. Initialize the configs for each environment
+ * 5. Run all the `modifyEnvironmentConfig` hooks
+ * 6. Validate the final Rsbuild config
+ */
 export async function initRsbuildConfig({
   context,
   pluginManager,
@@ -200,6 +239,8 @@ export async function initRsbuildConfig({
     server,
   } = normalizedBaseConfig;
 
+  const tsconfigPaths = new Set<string>();
+
   for (const [name, config] of Object.entries(mergedEnvironments)) {
     const environmentConfig = await modifyEnvironmentConfig(
       context,
@@ -207,7 +248,7 @@ export async function initRsbuildConfig({
       name,
     );
 
-    environments[name] = {
+    const normalizedEnvironmentConfig = {
       ...environmentConfig,
       dev: {
         ...environmentConfig.dev,
@@ -215,6 +256,32 @@ export async function initRsbuildConfig({
       },
       server,
     };
+
+    const { tsconfigPath } = normalizedEnvironmentConfig.source;
+
+    // Ensure the `tsconfigPath` is an absolute path
+    if (tsconfigPath) {
+      const absoluteTsconfigPath = ensureAbsolutePath(
+        context.rootPath,
+        tsconfigPath,
+      );
+      normalizedEnvironmentConfig.source.tsconfigPath = absoluteTsconfigPath;
+      tsconfigPaths.add(absoluteTsconfigPath);
+    }
+
+    environments[name] = normalizedEnvironmentConfig;
+  }
+
+  // watch tsconfig files and restart server when tsconfig files changed
+  // to ensure `paths` alias can be updated
+  if (
+    tsconfigPaths.size &&
+    normalizedBaseConfig.resolve.aliasStrategy === 'prefer-tsconfig'
+  ) {
+    normalizedBaseConfig.dev.watchFiles.push({
+      paths: Array.from(tsconfigPaths),
+      type: 'reload-server',
+    });
   }
 
   context.normalizedConfig = {

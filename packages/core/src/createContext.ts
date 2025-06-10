@@ -1,8 +1,8 @@
 import { join } from 'node:path';
 import { loadConfig } from 'browserslist-load-config';
-import { withDefaultConfig } from './config';
 import { DEFAULT_BROWSERSLIST, ROOT_DIST_DIR } from './constants';
-import { getAbsolutePath, getCommonParentPath } from './helpers/path';
+import { withDefaultConfig } from './defaultConfig';
+import { ensureAbsolutePath, getCommonParentPath } from './helpers/path';
 import { initHooks } from './hooks';
 import { getHTMLPathByEntry } from './initPlugins';
 import { logger } from './logger';
@@ -22,7 +22,7 @@ function getAbsoluteDistPath(
   config: RsbuildConfig | NormalizedConfig | NormalizedEnvironmentConfig,
 ) {
   const dirRoot = config.output?.distPath?.root ?? ROOT_DIST_DIR;
-  return getAbsolutePath(cwd, dirRoot);
+  return ensureAbsolutePath(cwd, dirRoot);
 }
 
 // using cache to avoid multiple calls to loadConfig
@@ -98,19 +98,15 @@ export async function updateEnvironmentContext(
   context.environments ||= {};
 
   for (const [index, [name, config]] of Object.entries(configs).entries()) {
-    const tsconfigPath = config.source.tsconfigPath
-      ? getAbsolutePath(context.rootPath, config.source.tsconfigPath)
-      : undefined;
-
     const browserslist = await getBrowserslistByEnvironment(
       context.rootPath,
       config,
     );
 
-    const entry = config.source.entry ?? {};
+    const { entry = {}, tsconfigPath } = config.source;
     const htmlPaths = getEnvironmentHTMLPaths(entry, config);
 
-    const environmentContext = {
+    const environmentContext: EnvironmentContext = {
       index,
       name,
       distPath: getAbsoluteDistPath(context.rootPath, config),
@@ -126,10 +122,14 @@ export async function updateEnvironmentContext(
       get(target, prop: keyof EnvironmentContext) {
         return target[prop];
       },
-      set(_, prop: keyof EnvironmentContext) {
-        logger.error(
-          `EnvironmentContext is readonly, you can not assign to the "environment.${prop}" prop.`,
-        );
+      set(target, prop: keyof EnvironmentContext, newValue) {
+        if (prop === 'manifest') {
+          target[prop] = newValue;
+        } else {
+          logger.error(
+            `EnvironmentContext is readonly, you can not assign to the "environment.${prop}" prop.`,
+          );
+        }
         return true;
       },
     });
@@ -156,6 +156,7 @@ export function createPublicContext(
     'distPath',
     'devServer',
     'cachePath',
+    'callerName',
     'bundlerType',
   ];
 
@@ -186,7 +187,7 @@ export async function createContext(
 ): Promise<InternalContext> {
   const { cwd } = options;
   const rootPath = userConfig.root
-    ? getAbsolutePath(cwd, userConfig.root)
+    ? ensureAbsolutePath(cwd, userConfig.root)
     : cwd;
   const rsbuildConfig = await withDefaultConfig(rootPath, userConfig);
   const cachePath = join(rootPath, 'node_modules', '.cache');
@@ -203,6 +204,7 @@ export async function createContext(
     rootPath,
     distPath: '',
     cachePath,
+    callerName: options.callerName,
     bundlerType,
     environments: {},
     hooks: initHooks(),

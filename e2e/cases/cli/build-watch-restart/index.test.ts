@@ -24,7 +24,7 @@ rspackOnlyTest('should support restart build when config changed', async () => {
 
   fse.outputFileSync(indexFile, `console.log('hello!');`);
 
-  const process = exec(`npx rsbuild build --watch -c ${tempConfigFile}`, {
+  const childProcess = exec(`npx rsbuild build --watch -c ${tempConfigFile}`, {
     cwd: __dirname,
   });
 
@@ -51,5 +51,5 @@ rspackOnlyTest('should support restart build when config changed', async () => {
   await expectFile(distIndexFile);
   expect(fs.readFileSync(distIndexFile, 'utf-8')).toContain('hello2!');
 
-  process.kill();
+  childProcess.kill();
 });

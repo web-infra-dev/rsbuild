@@ -1,6 +1,13 @@
 # tools.swc
 
-- **类型：** `Object | Function`
+- **类型：**
+
+```ts
+type ToolsSwc =
+  | Rspack.SwcLoaderOptions
+  | ((config: Rspack.SwcLoaderOptions) => Rspack.SwcLoaderOptions | undefined);
+```
+
 - **默认值：**
 
 ```js
@@ -13,12 +20,20 @@ const defaultOptions = {
       decorators: true,
     },
   },
+  experimental: {
+    cacheRoot: './node_modules/.cache/.swc',
+    keepImportAttributes: true,
+  },
   isModule: 'unknown',
+  env: {
+    // 读取项目的 browserslist 配置
+    targets: browserslist,
+  },
   // ...some other conditional options
 };
 ```
 
-通过 `tools.swc` 可以设置 [builtin:swc-loader](https://rspack.dev/guide/features/builtin-swc-loader) 的选项。
+通过 `tools.swc` 可以设置 [builtin:swc-loader](https://rspack.rs/zh/guide/features/builtin-swc-loader) 的选项。
 
 > 参考 [配置 SWC](/guide/configuration/swc) 了解更多。
 

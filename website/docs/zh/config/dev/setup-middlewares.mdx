@@ -26,6 +26,8 @@ type SetupMiddlewares = Array<
 
 提供执行自定义函数和应用自定义中间件的能力。
 
+> 查看 [开发服务器 - 中间件](/guide/basic/server#中间件) 了解更多。
+
 ## 执行顺序
 
 中间件的执行顺序是: `unshift` => 内置中间件 => `push`。
@@ -54,9 +56,29 @@ export default {
 
 在 `setupMiddlewares` 函数中，你可以访问到 `server` 对象，该对象提供了一些服务器 API。
 
+### environments
+
+提供 Rsbuild 的 [environment API](/api/javascript-api/environment-api#environment-api)，详见 [Dev server API - environments](/api/javascript-api/dev-server-api#environments)。
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    setupMiddlewares: [
+      (middlewares, { environments }) => {
+        middlewares.unshift(async (req, _res, next) => {
+          const webStats = await environments.web.getStats();
+          console.log(webStats.toJson({ all: false }));
+          next();
+        });
+      },
+    ],
+  },
+};
+```
+
 ### sockWrite
 
-`sockWrite` 允许中间件向 HMR 客户端传递一些消息，HMR 客户端将根据接收到的消息类型进行不同的处理。
+向 HMR 客户端传递一些消息，详见 [Dev server API - sockWrite](/api/javascript-api/dev-server-api#sockwrite)。
 
 例如，如果你发送一个 `'static-changed'` 的消息，页面将会重新加载。
 
@@ -64,34 +86,10 @@ export default {
 export default {
   dev: {
     setupMiddlewares: [
-      (middlewares, server) => {
+      (middlewares, { sockWrite }) => {
         if (someCondition) {
-          server.sockWrite('static-changed');
+          sockWrite('static-changed');
         }
-      },
-    ],
-  },
-};
-```
-
-> 发送 `content-changed` 与 `static-changed` 具有相同的效果。由于 `content-changed` 已经被弃用，请优先使用 `static-changed`。
-
-### environments
-
-`environments` 包含 Rsbuild 的 [environment API](/api/javascript-api/environment-api#environment-api)，这允许你在服务端获取特定环境下的构建产物信息。
-
-```ts title="rsbuild.config.ts"
-export default {
-  dev: {
-    setupMiddlewares: [
-      (middlewares, server) => {
-        middlewares.unshift(async (req, _res, next) => {
-          const webStats = await server.environments.web.getStats();
-
-          console.log(webStats.toJson({ all: false }));
-
-          next();
-        });
       },
     ],
   },

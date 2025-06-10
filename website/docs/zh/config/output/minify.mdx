@@ -15,7 +15,7 @@ type Minify =
 
 - **默认值：** `true`
 
-用于设置是否在生产模式下开启代码压缩，或是配置压缩工具的选项。
+用于设置是否在生产模式下开启代码压缩，以及配置压缩工具的选项。
 
 默认情况下，JS 和 CSS 代码会在生产模式构建时被自动压缩，从而提升页面性能。如果你不希望执行代码压缩，可以将 `minify` 设置为 `false` 关闭对所有代码的压缩。或者可以通过 `minify` 选项的详细配置来控制代码压缩的行为。
 
@@ -46,9 +46,13 @@ export default {
 ### minify.js
 
 - **类型：** `boolean`
-- **默认值：** `mode === 'production'`
+- **默认值：** `true`
 
-是否开启对 JavaScript 代码的压缩。
+是否在开启对 JavaScript 代码的压缩：
+
+- `true`: 在生产模式下开启压缩。
+- `false`: 在所有模式下禁用压缩。
+- `'always'`: 在所有模式下开启压缩。
 
 例如禁用 JavaScript 压缩：
 
@@ -62,12 +66,24 @@ export default {
 };
 ```
 
+在开发和生产模式下开启 JavaScript 压缩：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    minify: {
+      js: 'always',
+    },
+  },
+};
+```
+
 ### minify.jsOptions
 
 - **类型：** `Rspack.SwcJsMinimizerRspackPluginOptions`
 - **默认值：** `{}`
 
-`output.minify.jsOptions` 用于配置 SWC 的压缩选项，具体配置项请参考 [SwcJsMinimizerRspackPlugin 文档](https://rspack.dev/zh/plugins/rspack/swc-js-minimizer-rspack-plugin)。
+`output.minify.jsOptions` 用于配置 SWC 的压缩选项，具体配置项请参考 [SwcJsMinimizerRspackPlugin 文档](https://rspack.rs/zh/plugins/rspack/swc-js-minimizer-rspack-plugin)。
 
 例如，关闭变量和函数名的重命名：
 
@@ -90,9 +106,13 @@ export default {
 ### minify.css
 
 - **类型：** `boolean`
-- **默认值：** `mode === 'production'`
+- **默认值：** `true`
 
-是否开启对 CSS 代码的压缩。
+是否在开启对 CSS 代码的压缩：
+
+- `true`: 在生产模式下开启压缩。
+- `false`: 在所有模式下禁用压缩。
+- `'always'`: 在所有模式下开启压缩。
 
 例如禁用 CSS 压缩：
 
@@ -106,12 +126,24 @@ export default {
 };
 ```
 
+在开发和生产模式下开启 CSS 压缩：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    minify: {
+      css: 'always',
+    },
+  },
+};
+```
+
 ### minify.cssOptions
 
 - **类型：** `Rspack.LightningcssMinimizerRspackPluginOptions`
 - **默认值：** 继承 [tools.lightningcssLoader](/config/tools/lightningcss-loader) 的值
 
-`output.minify.cssOptions` 用于配置 Lightning CSS 的压缩选项，具体配置项请参考 [LightningCssMinimizerRspackPlugin 文档](https://rspack.dev/zh/plugins/rspack/lightning-css-minimizer-rspack-plugin)。
+`output.minify.cssOptions` 用于配置 Lightning CSS 的压缩选项，具体配置项请参考 [LightningCssMinimizerRspackPlugin 文档](https://rspack.rs/zh/plugins/rspack/lightning-css-minimizer-rspack-plugin)。
 
 例如，关闭 `errorRecovery` 选项：
 

@@ -12,7 +12,7 @@ An Rsbuild plugin to use Stylus as the CSS preprocessor.
 
 ## Documentation
 
-See [Documentation](https://rsbuild.dev/plugins/list/plugin-stylus).
+See [Documentation](https://rsbuild.rs/plugins/list/plugin-stylus).
 
 ## License
 

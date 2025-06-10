@@ -65,7 +65,7 @@ export type Build = (options?: BuildOptions) => Promise<{
    */
   close: () => Promise<void>;
   /**
-   * Rspack's [stats](https://rspack.dev/api/javascript-api/stats) object.
+   * Rspack's [stats](https://rspack.rs/api/javascript-api/stats) object.
    */
   stats?: Rspack.Stats | Rspack.MultiStats;
 }>;
@@ -118,6 +118,13 @@ export type CreateRsbuildOptions = {
    */
   cwd?: string;
   /**
+   * The name of the framework or tool that is currently invoking Rsbuild.
+   * This allows plugins to tailor their behavior based on the calling context.
+   * Rsbuild plugins can access this value via `api.context.callerName`.
+   * @default 'rsbuild'
+   */
+  callerName?: string;
+  /**
    * Only build specified environments.
    * For example, passing `['web']` will only build the `web` environment.
    * If not specified or passing an empty array, all environments will be built.
@@ -137,7 +144,7 @@ export type CreateRsbuildOptions = {
 };
 
 export type ResolvedCreateRsbuildOptions = Required<
-  Pick<CreateRsbuildOptions, 'cwd'>
+  Pick<CreateRsbuildOptions, 'cwd' | 'callerName'>
 > &
   Pick<CreateRsbuildOptions, 'loadEnv' | 'environment'> & {
     rsbuildConfig: RsbuildConfig;
@@ -252,7 +259,7 @@ export type RsbuildInstance = {
     options?: InspectConfigOptions,
   ) => Promise<InspectConfigResult>;
   /**
-   * Create an Rspack [Compiler](https://rspack.dev/api/javascript-api/compiler)
+   * Create an Rspack [Compiler](https://rspack.rs/api/javascript-api/compiler)
    * instance. If there are multiple [environments](/config/environments) for
    * this build, the return value is `MultiCompiler`.
    */

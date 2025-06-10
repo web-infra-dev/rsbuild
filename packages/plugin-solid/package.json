@@ -2,7 +2,7 @@
   "name": "@rsbuild/plugin-solid",
   "version": "1.0.5",
   "description": "Solid plugin for Rsbuild",
-  "homepage": "https://rsbuild.dev",
+  "homepage": "https://rsbuild.rs",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
@@ -24,16 +24,17 @@
   ],
   "scripts": {
     "build": "rslib build",
-    "dev": "rslib build --watch"
+    "dev": "rslib build --watch",
+    "bump": "npx bumpp --no-tag"
   },
   "dependencies": {
     "@rsbuild/plugin-babel": "workspace:*",
-    "babel-preset-solid": "^1.9.5",
+    "babel-preset-solid": "^1.9.6",
     "solid-refresh": "0.6.3"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.6.7",
+    "@rslib/core": "0.9.2",
     "@scripts/test-helper": "workspace:*",
     "@types/babel__core": "^7.20.5",
     "typescript": "^5.8.3"

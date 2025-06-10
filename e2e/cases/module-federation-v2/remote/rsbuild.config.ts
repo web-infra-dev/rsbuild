@@ -1,5 +1,5 @@
 import { pluginModuleFederation } from '@module-federation/rsbuild-plugin';
-import { defineConfig } from '@rsbuild/core';
+import { defaultAllowedOrigins, defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 export default defineConfig({
@@ -14,6 +14,9 @@ export default defineConfig({
     }),
   ],
   server: {
+    cors: {
+      origin: defaultAllowedOrigins,
+    },
     port: Number(process.env.REMOTE_PORT) || 3002,
   },
   dev: {

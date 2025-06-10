@@ -1,5 +1,5 @@
 import type { rspack } from '@rspack/core';
-import type { ChainIdentifier } from '..';
+import type { ChainIdentifier, ManifestData } from '..';
 import type RspackChain from '../../compiled/rspack-chain';
 import type { RsbuildDevServer } from '../server/devServer';
 import type {
@@ -103,12 +103,7 @@ export type OnAfterCreateCompilerFn<
 
 export type OnExitFn = (context: { exitCode: number }) => void;
 
-type HTMLTags = {
-  headTags: HtmlBasicTag[];
-  bodyTags: HtmlBasicTag[];
-};
-
-export type ModifyHTMLTagsContext = {
+export type ModifyHTMLContext = {
   /**
    * The Compilation object of Rspack.
    */
@@ -118,11 +113,6 @@ export type ModifyHTMLTagsContext = {
    */
   compiler: Rspack.Compiler;
   /**
-   * URL prefix of assets.
-   * @example 'https://example.com/'
-   */
-  assetPrefix: string;
-  /**
    * The name of the HTML file, relative to the dist directory.
    * @example 'index.html'
    */
@@ -131,6 +121,27 @@ export type ModifyHTMLTagsContext = {
    * The environment context for current build.
    */
   environment: EnvironmentContext;
+};
+
+export type ModifyHTMLFn = (
+  html: string,
+  context: ModifyHTMLContext,
+) => MaybePromise<string>;
+
+type HTMLTags = {
+  headTags: HtmlBasicTag[];
+  bodyTags: HtmlBasicTag[];
+};
+
+export type ModifyHTMLTagsContext = Pick<
+  ModifyHTMLContext,
+  'compilation' | 'compiler' | 'filename' | 'environment'
+> & {
+  /**
+   * URL prefix of assets.
+   * @example 'https://example.com/'
+   */
+  assetPrefix: string;
 };
 
 export type ModifyHTMLTagsFn = (
@@ -199,6 +210,13 @@ export type EnvironmentContext = {
    * The normalized Rsbuild config for the current environment.
    */
   config: NormalizedEnvironmentConfig;
+  /**
+   * Manifest data. Only available when:
+   * - The `output.manifest` config is enabled
+   * - The build has completed, accessible in hooks like `onAfterBuild`,
+   * `onDevCompileDone` and `onAfterEnvironmentCompile` or via the environment API
+   */
+  manifest?: Record<string, unknown> | ManifestData;
 };
 
 export type ModifyChainUtils = {

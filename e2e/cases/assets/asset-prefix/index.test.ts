@@ -96,3 +96,24 @@ test('should inject assetPrefix to env var and template correctly', async ({
   await expect(page.locator('#prefix2')).toHaveText('http://example.com');
   await rsbuild.close();
 });
+
+test('should use output.assetPrefix in none mode', async () => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    rsbuildConfig: {
+      mode: 'none',
+      dev: {
+        assetPrefix: 'http://dev.com',
+      },
+      output: {
+        assetPrefix: 'http://prod.com',
+      },
+    },
+  });
+
+  const files = await rsbuild.getDistFiles();
+  const indexHtml =
+    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+  expect(indexHtml).toContain('http://prod.com');
+  expect(indexHtml).not.toContain('http://dev.com');
+});

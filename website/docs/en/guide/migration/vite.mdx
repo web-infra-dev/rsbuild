@@ -224,7 +224,7 @@ Vite provides some preset type definitions through the `vite-env.d.ts` file. Whe
 
 Vite provides `import.meta.glob()` for importing multiple modules.
 
-When migrating to Rsbuild, you can use the [import.meta.webpackContext()](https://rspack.dev/api/runtime-api/module-variables#importmetawebpackcontext) function of Rspack instead:
+When migrating to Rsbuild, you can use the [import.meta.webpackContext()](https://rspack.rs/api/runtime-api/module-variables#importmetawebpackcontext) function of Rspack instead:
 
 - Vite:
 
@@ -257,16 +257,17 @@ for (const path of context.keys()) {
 
 Rsbuild's plugin API covers most of the Vite and Rollup plugin hooks, for example:
 
-| Vite plugin hooks | Rsbuild plugin API                                                                                                     |
-| ----------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `resolveId`       | [resolve](/plugins/dev/core#apiresolve)                                                                                |
-| `transform`       | [transform](/plugins/dev/core#apitransform)                                                                            |
-| `config`          | [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig)                                                          |
-| `configResolved`  | [getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig)                                                        |
-| `configureServer` | [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver)                                                    |
-| `buildStart`      | [onBeforeBuild](/plugins/dev/hooks#onbeforebuild), [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) |
-| `buildEnd`        | [onAfterBuild](/plugins/dev/hooks#onafterbuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
-| `closeBundle`     | [onCloseBuild](/plugins/dev/hooks#onclosebuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
+| Vite plugin hooks    | Rsbuild plugin API                                                                                                     |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `resolveId`          | [resolve](/plugins/dev/core#apiresolve)                                                                                |
+| `transform`          | [transform](/plugins/dev/core#apitransform)                                                                            |
+| `config`             | [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig)                                                          |
+| `configResolved`     | [getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig)                                                        |
+| `configureServer`    | [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver)                                                    |
+| `buildStart`         | [onBeforeBuild](/plugins/dev/hooks#onbeforebuild), [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) |
+| `buildEnd`           | [onAfterBuild](/plugins/dev/hooks#onafterbuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
+| `closeBundle`        | [onCloseBuild](/plugins/dev/hooks#onclosebuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
+| `transformIndexHtml` | [modifyHTML](/plugins/dev/hooks#modifyhtml)                                                                            |
 
 See [Plugin system](/plugins/dev/index) for more details.
 

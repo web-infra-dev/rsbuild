@@ -43,6 +43,8 @@ export const CHAIN_ID = {
     ADDITIONAL_ASSETS: 'additional-assets',
     /** Rule for js */
     JS: 'js',
+    /** Rule for raw js */
+    JS_RAW: 'js-raw',
     /** Rule for data uri encoded javascript */
     JS_DATA_URI: 'js-data-uri',
     /** Rule for ts */

@@ -97,8 +97,6 @@
     'cli-truncate',
     'patch-console',
     'node',
-    // does not follow semver
-    'babel-plugin-react-compiler',
     // require Node 18
     'copy-webpack-plugin',
     // major version contains breaking changes

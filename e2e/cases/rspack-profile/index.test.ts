@@ -1,6 +1,5 @@
 import { exec } from 'node:child_process';
 import fs from 'node:fs';
-import path from 'node:path';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import { expectPoll, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
@@ -12,7 +11,7 @@ rspackOnlyTest(
       cwd: __dirname,
       env: {
         ...process.env,
-        RSPACK_PROFILE: 'ALL',
+        RSPACK_PROFILE: 'OVERVIEW',
       },
     });
 
@@ -30,19 +29,15 @@ rspackOnlyTest(
     // quit process
     devProcess.stdin?.write('q\n');
     await expectPoll(() =>
-      logs.some((log) => log.includes('profile files saved to')),
+      logs.some((log) => log.includes('profile file saved to')),
     ).toBeTruthy();
 
-    const profileDir = logs
-      .find((log) => log.includes('profile files saved to'))
-      ?.split('profile files saved to')[1]
+    const profileFile = logs
+      .find((log) => log.includes('profile file saved to'))
+      ?.split('profile file saved to')[1]
       ?.trim();
 
-    expect(fs.existsSync(path.join(profileDir!, 'trace.json'))).toBeTruthy();
-    expect(
-      fs.existsSync(path.join(profileDir!, 'jscpuprofile.json')),
-    ).toBeTruthy();
-
+    expect(fs.existsSync(profileFile!)).toBeTruthy();
     devProcess.kill();
   },
 );
@@ -54,7 +49,7 @@ rspackOnlyTest(
       cwd: __dirname,
       env: {
         ...process.env,
-        RSPACK_PROFILE: 'ALL',
+        RSPACK_PROFILE: 'OVERVIEW',
       },
     });
 
@@ -70,19 +65,15 @@ rspackOnlyTest(
     ).toBeTruthy();
 
     await expectPoll(() =>
-      logs.some((log) => log.includes('profile files saved to')),
+      logs.some((log) => log.includes('profile file saved to')),
     ).toBeTruthy();
 
-    const profileDir = logs
-      .find((log) => log.includes('profile files saved to'))
-      ?.split('profile files saved to')[1]
+    const profileFile = logs
+      .find((log) => log.includes('profile file saved to'))
+      ?.split('profile file saved to')[1]
       ?.trim();
 
-    expect(fs.existsSync(path.join(profileDir!, 'trace.json'))).toBeTruthy();
-    expect(
-      fs.existsSync(path.join(profileDir!, 'jscpuprofile.json')),
-    ).toBeTruthy();
-
+    expect(fs.existsSync(profileFile!)).toBeTruthy();
     buildProcess.kill();
   },
 );

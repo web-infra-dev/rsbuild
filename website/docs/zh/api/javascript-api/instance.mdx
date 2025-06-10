@@ -4,7 +4,30 @@
 
 ## rsbuild.context
 
-`rsbuild.context` 是一个只读对象，提供一些上下文信息。
+`context` 是一个只读对象，提供一些上下文信息，能够通过两种方式访问：
+
+1. 通过 Rsbuild 实例的 `context` 属性访问：
+
+```ts
+import { createRsbuild } from '@rsbuild/core';
+
+const rsbuild = createRsbuild({
+  // ...
+});
+
+console.log(rsbuild.context);
+```
+
+2. 通过 Rsbuild 插件的 [api.context](/plugins/dev/core#apicontext) 访问：
+
+```ts
+export const myPlugin = {
+  name: 'my-plugin',
+  setup(api) {
+    console.log(api.context);
+  },
+};
+```
 
 ### context.version
 
@@ -50,9 +73,40 @@ type DistPath = string;
 type CachePath = string;
 ```
 
+### context.callerName
+
+当前调用 Rsbuild 的框架或工具的名称，与 [createRsbuild](/api/javascript-api/core#creatersbuild) 方法中的 [callerName](/api/javascript-api/core#指定调用者名称) 选项相同。
+
+- **类型：** `string`
+- **默认值：** `'rsbuild'`
+- **示例：**
+
+```ts title="myPlugin.ts"
+export const myPlugin = {
+  name: 'my-plugin',
+  setup(api) {
+    const { callerName } = api.context;
+
+    if (callerName === 'rslib') {
+      // ...
+    } else if (callerName === 'rsbuild') {
+      // ...
+    }
+  },
+};
+```
+
+一些基于 Rsbuild 的工具已经设置了 `callerName` 的值：
+
+| 名称                                                | callerName  |
+| --------------------------------------------------- | ----------- |
+| [Rslib](https://github.com/web-infra-dev/rslib)     | `'rslib'`   |
+| [Rspress](https://github.com/web-infra-dev/rspress) | `'rspress'` |
+| [Rspeedy](https://lynxjs.org/rspeedy)               | `'rspeedy'` |
+
 ### context.devServer
 
-Dev server 相关信息，包含了当前 dev server 的 hostname 和端口号。
+在开发模式下运行时的 dev server 信息。仅在 dev server 创建后可访问。
 
 - **类型：**
 
@@ -60,7 +114,23 @@ Dev server 相关信息，包含了当前 dev server 的 hostname 和端口号�
 type DevServer = {
   hostname: string;
   port: number;
+  https: boolean;
 };
+```
+
+- **示例：**
+
+```ts
+import { createRsbuild } from '@rsbuild/core';
+
+async function main() {
+  const rsbuild = createRsbuild({
+    // ...
+  });
+  await rsbuild.startDevServer();
+
+  console.log(rsbuild.context.devServer); // { hostname: 'localhost', port: 3000, https: false }
+}
 ```
 
 ### context.action
@@ -143,7 +213,7 @@ type BuildOptions = {
 
 function Build(options?: BuildOptions): Promise<{
   /**
-   * Rspack 的 [stats](https://rspack.dev/api/javascript-api/stats) 对象。
+   * Rspack 的 [stats](https://rspack.rs/zh/api/javascript-api/stats) 对象。
    */
   stats?: Rspack.Stats | Rspack.MultiStats;
   /**
@@ -216,7 +286,7 @@ await buildResult.close();
 
 ### Stats 对象
 
-在非 watch 模式下，`rsbuild.build()` 会返回一个 Rspack 的 [stats](https://rspack.dev/api/javascript-api/stats) 对象。
+在非 watch 模式下，`rsbuild.build()` 会返回一个 Rspack 的 [stats](https://rspack.rs/zh/api/javascript-api/stats) 对象。
 
 例如，使用 `stats.toJson()` 方法获取所有 assets 信息：
 
@@ -335,7 +405,7 @@ console.log(port); // 3000
 
 ### 关闭 server
 
-调用 `close()` 方法会关闭开发服务器，并触发 [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) 钩子，执行清理操作。
+调用 `close()` 方法会关闭开发服务器，触发 [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) 钩子，并执行必要的清理操作。
 
 ```ts
 const { server } = await rsbuild.startDevServer();
@@ -462,7 +532,7 @@ await server.close();
 
 ## rsbuild.createCompiler
 
-创建一个 Rspack [Compiler](https://rspack.dev/api/javascript-api/compiler) 实例；如果本次构建存在多个 [environments](/config/environments)，则返回值为 [MultiCompiler](https://rspack.dev/zh/api/javascript-api/compiler#multicompiler)。
+创建一个 Rspack [Compiler](https://rspack.rs/zh/api/javascript-api/compiler) 实例；如果本次构建存在多个 [environments](/config/environments)，则返回值为 [MultiCompiler](https://rspack.rs/zh/api/javascript-api/compiler#multicompiler)。
 
 - **类型：**
 
@@ -680,6 +750,8 @@ await rsbuild.inspectConfig({
 
 ## rsbuild.onBeforeCreateCompiler
 
+> 功能与 [onBeforeCreateCompiler](/plugins/dev/hooks#onbeforecreatecompiler) 插件 hook 一致。
+
 import OnBeforeCreateCompiler from '@zh/shared/onBeforeCreateCompiler.mdx';
 
 <OnBeforeCreateCompiler />
@@ -693,6 +765,8 @@ rsbuild.onBeforeCreateCompiler(({ bundlerConfigs }) => {
 ```
 
 ## rsbuild.onAfterCreateCompiler
+
+> 功能与 [onAfterCreateCompiler](/plugins/dev/hooks#onaftercreatecompiler) 插件 hook 一致。
 
 import OnAfterCreateCompiler from '@zh/shared/onAfterCreateCompiler.mdx';
 
@@ -708,6 +782,8 @@ rsbuild.onAfterCreateCompiler(({ compiler }) => {
 
 ## rsbuild.onBeforeBuild
 
+> 功能与 [onBeforeBuild](/plugins/dev/hooks#onbeforebuild) 插件 hook 一致。
+
 import OnBeforeBuild from '@zh/shared/onBeforeBuild.mdx';
 
 <OnBeforeBuild />
@@ -721,6 +797,8 @@ rsbuild.onBeforeBuild(({ bundlerConfigs }) => {
 ```
 
 ## rsbuild.onAfterBuild
+
+> 功能与 [onAfterBuild](/plugins/dev/hooks#onafterbuild) 插件 hook 一致。
 
 import OnAfterBuild from '@zh/shared/onAfterBuild.mdx';
 
@@ -736,6 +814,8 @@ rsbuild.onAfterBuild(({ stats }) => {
 
 ## rsbuild.onCloseBuild
 
+> 功能与 [onCloseBuild](/plugins/dev/hooks#onclosebuild) 插件 hook 一致。
+
 import OnCloseBuild from '@zh/shared/onCloseBuild.mdx';
 
 <OnCloseBuild />
@@ -749,6 +829,8 @@ rsbuild.onCloseBuild(async () => {
 ```
 
 ## rsbuild.onBeforeStartDevServer
+
+> 功能与 [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) 插件 hook 一致。
 
 import OnBeforeStartDevServer from '@zh/shared/onBeforeStartDevServer.mdx';
 
@@ -768,6 +850,8 @@ rsbuild.onBeforeStartDevServer(({ server, environments }) => {
 
 ## rsbuild.onAfterStartDevServer
 
+> 功能与 [onAfterStartDevServer](/plugins/dev/hooks#onafterstartdevserver) 插件 hook 一致。
+
 import OnAfterStartDevServer from '@zh/shared/onAfterStartDevServer.mdx';
 
 <OnAfterStartDevServer />
@@ -783,6 +867,8 @@ rsbuild.onAfterStartDevServer(({ port, routes }) => {
 
 ## rsbuild.onCloseDevServer
 
+> 功能与 [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) 插件 hook 一致。
+
 import OnCloseDevServer from '@zh/shared/onCloseDevServer.mdx';
 
 <OnCloseDevServer />
@@ -796,6 +882,8 @@ rsbuild.onCloseDevServer(async () => {
 ```
 
 ## rsbuild.onBeforeStartProdServer
+
+> 功能与 [onBeforeStartProdServer](/plugins/dev/hooks#onbeforestartprodserver) 插件 hook 一致。
 
 import OnBeforeStartProdServer from '@zh/shared/onBeforeStartProdServer.mdx';
 
@@ -811,6 +899,8 @@ rsbuild.onBeforeStartProdServer(() => {
 
 ## rsbuild.onAfterStartProdServer
 
+> 功能与 [onAfterStartProdServer](/plugins/dev/hooks#onafterstartprodserver) 插件 hook 一致。
+
 import OnAfterStartProdServer from '@zh/shared/onAfterStartProdServer.mdx';
 
 <OnAfterStartProdServer />
@@ -825,6 +915,8 @@ rsbuild.onAfterStartProdServer(({ port, routes }) => {
 ```
 
 ## rsbuild.onDevCompileDone
+
+> 功能与 [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone) 插件 hook 一致。
 
 import OnDevCompileDone from '@zh/shared/onDevCompileDone.mdx';
 
@@ -844,6 +936,8 @@ rsbuild.onDevCompileDone(({ isFirstCompile }) => {
 
 ## rsbuild.onExit
 
+> 功能与 [onExit](/plugins/dev/hooks#onexit) 插件 hook 一致。
+
 import OnExit from '@zh/shared/onExit.mdx';
 
 <OnExit />
@@ -857,6 +951,8 @@ rsbuild.onExit(({ exitCode }) => {
 ```
 
 ## rsbuild.getRsbuildConfig
+
+> 功能与 [getRsbuildConfig](/plugins/dev/core#apigetrsbuildconfig) 插件 API 一致。
 
 import GetRsbuildConfig from '@zh/shared/getRsbuildConfig.mdx';
 
@@ -872,6 +968,8 @@ rsbuild.onBeforeBuild(() => {
 ```
 
 ## rsbuild.getNormalizedConfig
+
+> 功能与 [getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig) 插件 API 一致。
 
 import GetNormalizedConfig from '@zh/shared/getNormalizedConfig.mdx';
 

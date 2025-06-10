@@ -74,6 +74,7 @@ export const applyBasicReactSupport = (
           {
             include: [SCRIPT_REGEX],
             exclude: [NODE_MODULES_REGEX],
+            resourceQuery: { not: /raw/ },
             ...options.reactRefreshOptions,
           },
         ]);

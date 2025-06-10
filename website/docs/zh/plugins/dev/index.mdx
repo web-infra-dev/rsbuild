@@ -53,7 +53,7 @@ const rsbuildPlugin = () => ({
   name: 'example',
   setup(api) {
     api.modifyRspackConfig((config) => {
-      config.plugins?.push(new RspackExamplePlugin());
+      config.plugins.push(new RspackExamplePlugin());
     });
   },
 });
@@ -191,7 +191,7 @@ Rsbuild 在内部按照约定的生命周期进行任务调度，插件可以通
 
 Rsbuild 生命周期钩子的完整列表参考 [API 文档](/plugins/dev/hooks)。
 
-Rsbuild 不会接管底层 Rspack 的生命周期，相关生命周期钩子的使用方式见对应文档：[Rspack Plugin API](https://rspack.dev/api/plugin-api)。
+Rsbuild 不会接管底层 Rspack 的生命周期，相关生命周期钩子的使用方式见对应文档：[Rspack Plugin API](https://rspack.rs/zh/api/plugin-api)。
 
 ## 使用配置项
 
@@ -211,7 +211,6 @@ export const pluginUploadDist = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyRsbuildConfig((config) => {
       // 关闭代码压缩
-      config.output ||= {};
       config.output.minify = false;
       // 轮到其它插件修改配置...
     });
@@ -291,7 +290,7 @@ export const pluginEslint = (options?: Options): RsbuildPlugin => ({
   name: 'plugin-eslint',
   setup(api) {
     api.modifyRspackConfig((config) => {
-      config.plugins?.push(
+      config.plugins.push(
         new ESLintRspackPlugin({
           // plugins options
         }),

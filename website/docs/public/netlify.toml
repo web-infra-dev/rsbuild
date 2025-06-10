@@ -1,3 +1,10 @@
+# Redirect rsbuild.dev to rsbuild.rs
+[[redirects]]
+from = "https://rsbuild.dev/*"
+to = "https://rsbuild.rs/:splat"
+status = 301
+force = true
+
 [[redirects]]
 from = "/*"
 to = "/404.html"

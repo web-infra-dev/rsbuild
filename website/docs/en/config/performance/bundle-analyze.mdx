@@ -48,7 +48,7 @@ As Windows does not support the above usage, you can also use [cross-env](https:
 
 Configure `performance.bundleAnalyze` to enable it permanently:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     bundleAnalyze: {},
@@ -66,13 +66,13 @@ Webpack Bundle Analyzer saved report to /Project/my-project/dist/report-web.html
 
 You can manually open the file in the browser and view the detail of the bundle size. When an area is larger, it indicates that its corresponding bundle size is larger.
 
-![](https://assets.rspack.dev/rsbuild/assets/bundle-analyzer-example.png)
+![](https://assets.rspack.rs/rsbuild/assets/bundle-analyzer-example.png)
 
 ## Override default configuration
 
 You can override the default configuration through `performance.bundleAnalyze`, such as enabling the server mode:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     bundleAnalyze: process.env.BUNDLE_ANALYZE
@@ -97,7 +97,7 @@ In the `webpack-bundle-analyzer` panel, you can control size types in the upper 
 
 By setting `generateStatsFile` to true, stats JSON file will be generated in bundle output directory.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     bundleAnalyze: {
@@ -117,7 +117,7 @@ In the output directory, you will see `stats.json` and `report-web.html` files.
 
 If you don't need the `report-web.html`, you can set `analyzerMode` to `disabled`.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     bundleAnalyze: {

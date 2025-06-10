@@ -1,5 +1,5 @@
 import cac, { type CAC, type Command } from 'cac';
-import type { ConfigLoader } from '../config';
+import type { ConfigLoader } from '../loadConfig';
 import { logger } from '../logger';
 import { RSPACK_BUILD_ERROR } from '../provider/build';
 import { onBeforeRestartServer } from '../restart';

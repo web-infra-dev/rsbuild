@@ -18,7 +18,8 @@ export * from './stats';
 
 export { color };
 
-export const rspackMinVersion = '1.0.0';
+// `SubresourceIntegrityPlugin` added in Rspack v1.2.4
+export const rspackMinVersion = '1.2.4';
 
 export const getNodeEnv = () => process.env.NODE_ENV as string;
 export const setNodeEnv = (env: string): void => {
@@ -77,6 +78,11 @@ const compareSemver = (version1: string, version2: string) => {
   return 0;
 };
 
+/**
+ * If the application overrides the Rspack version to a lower one,
+ * we should check that the Rspack version is greater than the minimum
+ * supported version.
+ */
 export const isSatisfyRspackVersion = async (
   originalVersion: string,
 ): Promise<boolean> => {
@@ -249,7 +255,9 @@ export function getFilename(
       return filename.assets ?? `[name]${hash}[ext]`;
     default:
       throw new Error(
-        `[rsbuild:config] unknown key ${type} in "output.filename"`,
+        `${color.dim('[rsbuild:config]')} unknown key ${color.yellow(
+          type,
+        )} in ${color.yellow('output.filename')}`,
       );
   }
 }
@@ -356,3 +364,14 @@ export const addCompilationError = (
     new compilation.compiler.webpack.WebpackError(message),
   );
 };
+
+export async function hash(data: string): Promise<string> {
+  const crypto = await import('node:crypto');
+  // Available in Node.js v20.12.0
+  // faster than `crypto.createHash()` when hashing a smaller amount of data (<= 5MB)
+  if (crypto.hash) {
+    return crypto.hash('sha256', data, 'hex').slice(0, 16);
+  }
+  const hasher = crypto.createHash('sha256');
+  return hasher.update(data).digest('hex').slice(0, 16);
+}

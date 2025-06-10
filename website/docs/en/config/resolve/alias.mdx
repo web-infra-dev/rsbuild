@@ -82,7 +82,7 @@ export default {
 
 ## Differences with Rspack
 
-Rsbuild's `resolve.alias` is similar to Rspack's [resolve.alias](https://rspack.dev/config/resolve#resolvealias) configuration, but there are some differences:
+Rsbuild's `resolve.alias` is similar to Rspack's [resolve.alias](https://rspack.rs/config/resolve#resolvealias) configuration, but there are some differences:
 
 - If the value of `resolve.alias` is a relative path, Rsbuild will automatically convert it to an absolute path to ensure that the path is relative to the project root.
 
@@ -202,7 +202,7 @@ For example, if a module or npm dependency in your project uses the React 19 API
 
 `resolve.alias` does not support creating aliases for loaders.
 
-To create aliases for loaders, use Rspack's [resolveLoader](https://rspack.dev/config/resolve-loader) configuration.
+To create aliases for loaders, use Rspack's [resolveLoader](https://rspack.rs/config/resolve-loader) configuration.
 
 ```ts title="rsbuild.config.ts"
 export default {

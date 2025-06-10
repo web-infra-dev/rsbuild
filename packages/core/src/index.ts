@@ -14,7 +14,7 @@ export {
   type ConfigParams,
   type LoadConfigOptions,
   type LoadConfigResult,
-} from './config';
+} from './loadConfig';
 export { runCLI } from './cli';
 
 // Rsbuild version
@@ -28,6 +28,7 @@ export type { Rspack };
 export { logger } from './logger';
 export { mergeRsbuildConfig } from './mergeConfig';
 export { ensureAssetPrefix } from './helpers';
+export { defaultAllowedOrigins } from './defaultConfig';
 
 // Constants
 export { PLUGIN_SWC_NAME, PLUGIN_CSS_NAME } from './constants';
@@ -88,6 +89,8 @@ export type {
   ModifyChainUtils,
   ModifyEnvironmentConfigFn,
   ModifyEnvironmentConfigUtils,
+  ModifyHTMLContext,
+  ModifyHTMLFn,
   ModifyHTMLTagsContext,
   ModifyHTMLTagsFn,
   ModifyRsbuildConfigUtils,
@@ -135,6 +138,9 @@ export type {
   PostCSSPlugin,
   PreviewOptions,
   PreconnectOption,
+  ProcessAssetsDescriptor,
+  ProcessAssetsHook,
+  ProcessAssetsHandler,
   ProxyBypass,
   ProxyConfig,
   ProxyFilter,
@@ -144,6 +150,8 @@ export type {
   PublicDirOptions,
   ProgressBarConfig,
   RequestHandler,
+  ResolveHook,
+  ResolveHandler,
   ResolvedCreateRsbuildOptions,
   RsbuildConfig,
   RsbuildContext,
@@ -176,7 +184,7 @@ export type {
   TransformContext,
   TransformDescriptor,
   ToolsConfig,
-  TransformFn,
+  TransformHook,
   TransformHandler,
   TransformImport,
   WatchFiles,

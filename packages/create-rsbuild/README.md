@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://rsbuild.dev" target="blank"><img src="https://assets.rspack.dev/rsbuild/rsbuild-banner.png" alt="Rsbuild Logo" /></a>
+  <a href="https://rsbuild.rs" target="blank"><img src="https://assets.rspack.rs/rsbuild/rsbuild-banner.png" alt="Rsbuild Logo" /></a>
 </p>
 
 # create-rsbuild
@@ -33,7 +33,7 @@ npx create-rsbuild -d my-project -t react
 
 ## Documentation
 
-See [Documentation](https://rsbuild.dev/guide/start/quick-start).
+See [Documentation](https://rsbuild.rs/guide/start/quick-start).
 
 ## License
 

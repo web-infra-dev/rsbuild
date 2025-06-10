@@ -2,7 +2,7 @@ import { promises } from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { logger } from '@rsbuild/core';
-import type { RsbuildPlugin } from '@rsbuild/core';
+import type { EnvironmentConfig, RsbuildPlugin } from '@rsbuild/core';
 import { sveltePreprocess } from 'svelte-preprocess';
 import type { CompileOptions } from 'svelte/compiler';
 
@@ -74,6 +74,17 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
         });
       }
 
+      api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
+        const extraConfig: EnvironmentConfig = {
+          source: {
+            // transpile the Svelte package to downgrade the syntax
+            include: [/node_modules[\\/]svelte[\\/]/],
+          },
+        };
+
+        return mergeEnvironmentConfig(extraConfig, config);
+      });
+
       api.modifyBundlerChain(
         async (chain, { CHAIN_ID, environment, isDev, isProd }) => {
           const svelte5 = await isSvelte5(sveltePath);
@@ -114,16 +125,26 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
             },
           };
 
-          chain.module
+          const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
+          const swcUse = jsRule.uses.get(CHAIN_ID.USE.SWC);
+          const svelteRule = chain.module
             .rule(CHAIN_ID.RULE.SVELTE)
-            .test(/\.svelte$/)
+            .test(/\.svelte$/);
+
+          if (svelte5 && jsRule) {
+            svelteRule
+              .use(CHAIN_ID.USE.SWC)
+              .loader(swcUse.get('loader'))
+              .options(swcUse.get('options'));
+          }
+
+          svelteRule
             .use(CHAIN_ID.USE.SVELTE)
             .loader(loaderPath)
-            .options(svelteLoaderOptions);
+            .options(svelteLoaderOptions)
+            .end();
 
-          const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
           if (svelte5 && jsRule) {
-            const swcUse = jsRule.uses.get(CHAIN_ID.USE.SWC);
             const regexp = /\.(?:svelte\.js|svelte\.ts)$/;
 
             jsRule.exclude.add(regexp);

@@ -35,9 +35,9 @@ export const pluginEntry = (): RsbuildPlugin => ({
     api.onBeforeCreateCompiler(({ bundlerConfigs }) => {
       if (bundlerConfigs.every((config) => !config.entry)) {
         throw new Error(
-          `[rsbuild:config] Could not find any entry module, please make sure that ${color.cyan(
+          `${color.dim('[rsbuild:config]')} Could not find any entry module, please make sure that ${color.yellow(
             'src/index.(ts|js|tsx|jsx|mts|cts|mjs|cjs)',
-          )} exists, or customize entry through the ${color.cyan(
+          )} exists, or customize entry through the ${color.yellow(
             'source.entry',
           )} configuration.`,
         );

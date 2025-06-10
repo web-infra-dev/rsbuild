@@ -67,7 +67,7 @@ export default {
 
 :::tip
 
-- Refer to [Rspack plugins](https://rspack.dev/plugins/) and [Rspack JavaScript API](https://rspack.dev/api/javascript-api/) to learn more about the available Rspack APIs.
+- Refer to [Rspack plugins](https://rspack.rs/plugins/) and [Rspack JavaScript API](https://rspack.rs/api/javascript-api/) to learn more about the available Rspack APIs.
 - It's not recommended to manually install the `@rspack/core` package, as it may conflict with the version that Rsbuild depends on.
 
 :::
@@ -122,14 +122,13 @@ In short, the rspack-chain requires users to set a unique ID for each rule, load
 
 Rsbuild exports all internally defined IDs through the `CHAIN_ID` object, so you can quickly locate the loader or plugin you want to modify using these exported IDs, without the need for complex traversal in the Rspack configuration object.
 
-For example, you can remove the built-in HTML plugin using `CHAIN_ID.PLUGIN.HTML`:
+For example, you can remove the built-in CSS rule using `CHAIN_ID.RULE.CSS`:
 
 ```ts title="rsbuild.config.ts"
 export default {
   tools: {
     bundlerChain: (chain, { CHAIN_ID }) => {
-      //
-      chain.plugins.delete(CHAIN_ID.PLUGIN.HTML);
+      chain.module.rules.delete(CHAIN_ID.RULE.CSS);
     },
   },
 };
@@ -139,17 +138,16 @@ export default {
 
 The `CHAIN_ID` object contains various IDs, which correspond to the following configurations:
 
-| CHAIN_ID Field            | Corresponding Configuration | Description                                                 |
-| ------------------------- | --------------------------- | ----------------------------------------------------------- |
-| `CHAIN_ID.PLUGIN`         | `plugins[i]`                | Corresponds to a plugin in the Rspack configuration         |
-| `CHAIN_ID.RULE`           | `module.rules[i]`           | Corresponds to a rule in the Rspack configuration           |
-| `CHAIN_ID.USE`            | `module.rules[i].loader`    | Corresponds to a loader in the Rspack configuration         |
-| `CHAIN_ID.MINIMIZER`      | `optimization.minimizer`    | Corresponds to a minimizer in the Rspack configuration      |
-| `CHAIN_ID.RESOLVE_PLUGIN` | `resolve.plugins[i]`        | Corresponds to a resolve plugin in the Rspack configuration |
+| CHAIN_ID Field       | Corresponding Configuration | Description                                            |
+| -------------------- | --------------------------- | ------------------------------------------------------ |
+| `CHAIN_ID.PLUGIN`    | `plugins[i]`                | Corresponds to a plugin in the Rspack configuration    |
+| `CHAIN_ID.RULE`      | `module.rules[i]`           | Corresponds to a rule in the Rspack configuration      |
+| `CHAIN_ID.USE`       | `module.rules[i].loader`    | Corresponds to a loader in the Rspack configuration    |
+| `CHAIN_ID.MINIMIZER` | `optimization.minimizer`    | Corresponds to a minimizer in the Rspack configuration |
 
 ### Examples
 
-#### Configure loader
+#### Custom loader
 
 Here are examples of adding, modifying, and removing Rspack loaders.
 
@@ -255,7 +253,7 @@ export default {
 };
 ```
 
-#### Configure plugin
+#### Custom plugin
 
 Here are examples of adding, modifying, and deleting Rspack plugins.
 
@@ -284,6 +282,12 @@ export default {
   },
 };
 ```
+
+:::tip
+In most cases, you should change the plugin options using the configurations provided by Rsbuild, rather than using `CHAIN_ID.PLUGIN`, as this may lead to unexpected behavior.
+
+For example, use [tools.htmlPlugin](/config/tools/html-plugin) to change the options of HtmlPlugin.
+:::
 
 #### Modify based on environment
 

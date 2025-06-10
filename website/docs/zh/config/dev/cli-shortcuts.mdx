@@ -6,7 +6,7 @@
 type CliShortcuts =
   | boolean
   | {
-      help?: boolean;
+      help?: boolean | string;
       custom?: (shortcuts: CliShortcut[]) => CliShortcut[];
     };
 ```
@@ -33,7 +33,7 @@ type CliShortcuts =
 
 - 启用：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     cliShortcuts: true,
@@ -43,7 +43,7 @@ export default {
 
 - 禁用：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     cliShortcuts: false,
@@ -57,7 +57,7 @@ export default {
 
 - 添加自定义快捷键：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     cliShortcuts: {
@@ -80,7 +80,7 @@ export default {
 
 - 禁用部分快捷键：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     cliShortcuts: {
@@ -94,19 +94,31 @@ export default {
 
 ## 打印帮助
 
-`help` 选项可以控制是否在启动服务器时打印帮助提示：
+`help` 选项可以控制是否在启动服务器时打印帮助提示，默认打印的帮助提示为：
 
 ```bash
   ➜ press h + enter to show shortcuts
 ```
 
-- 禁用：
+- 禁用帮助提示：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     cliShortcuts: {
       help: false,
+    },
+  },
+};
+```
+
+- 输出自定义的帮助提示：
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    cliShortcuts: {
+      help: 'type "h + enter" to view available commands',
     },
   },
 };

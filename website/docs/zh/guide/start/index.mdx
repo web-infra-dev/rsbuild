@@ -1,6 +1,6 @@
 # 介绍
 
-Rsbuild 是由 [Rspack](https://rspack.dev/) 驱动的高性能构建工具，它默认包含了一套精心设计的构建配置，提供开箱即用的开发体验，并能够充分发挥出 Rspack 的性能优势。
+Rsbuild 是由 [Rspack](https://rspack.rs/zh/) 驱动的高性能构建工具，它默认包含了一套精心设计的构建配置，提供开箱即用的开发体验，并能够充分发挥出 Rspack 的性能优势。
 
 Rsbuild 提供 [丰富的构建功能](/guide/start/features)，包括编译 TypeScript、JSX、Sass、Less、CSS Modules、Wasm，以及其他资源，也支持模块联邦、图片压缩、类型检查、PostCSS、Lightning CSS 等功能。
 
@@ -20,7 +20,7 @@ import { BenchmarkGraph } from '@components/Benchmark';
 
 Rsbuild 是与 [Vite](https://vitejs.dev/)、[Create React App](https://github.com/facebook/create-react-app) 或 [Vue CLI](https://github.com/vuejs/vue-cli) 相似的构建工具，它们都默认包含了开发服务器、命令行工具和合理的构建配置，以此来提供开箱即用的体验。
 
-![](https://assets.rspack.dev/rsbuild/assets/rsbuild-1-0-build-tools.png)
+![](https://assets.rspack.rs/rsbuild/assets/rsbuild-1-0-build-tools.png)
 
 ### CRA / Vue CLI
 
@@ -44,7 +44,7 @@ Rsbuild 具备以下特性：
 
 - **易于配置**：Rsbuild 的目标之一，是为 Rspack 用户提供开箱即用的构建能力，使开发者能够在零配置的情况下开发 web 项目。同时，Rsbuild 提供一套语义化的构建配置，以降低 Rspack 配置的学习成本。
 
-- **性能优先**：Rsbuild 集成了社区中基于 Rust 的高性能工具，包括 [Rspack](https://rspack.dev)、[SWC](https://swc.rs/) 和 [Lightning CSS](https://lightningcss.dev/)，以提供一流的构建速度和开发体验。
+- **性能优先**：Rsbuild 集成了社区中基于 Rust 的高性能工具，包括 [Rspack](https://rspack.rs)、[SWC](https://swc.rs/) 和 [Lightning CSS](https://lightningcss.dev/)，以提供一流的构建速度和开发体验。
 
 - **插件生态**：Rsbuild 内置一个轻量级的插件系统，提供一系列高质量的官方插件。此外，Rsbuild 兼容大部分的 webpack 插件和所有的 Rspack 插件，这意味着你可以在 Rsbuild 中使用社区或公司内现有的插件，而无须重写相关代码。
 
@@ -52,35 +52,38 @@ Rsbuild 具备以下特性：
 
 - **框架无关**：Rsbuild 不与前端 UI 框架耦合，并通过插件来支持 React、Vue、Svelte、Solid、Preact 等框架，未来也计划支持社区中更多的 UI 框架。
 
-## 🎯 生态
+## 🦀 Rstack
 
-Rsbuild 为上层的框架和工具提供了 JavaScript API 和 plugin API。例如，我们基于 Rsbuild 实现了 [Rspress](https://github.com/web-infra-dev/rspress) 和 [Rslib](https://github.com/web-infra-dev/rslib)，并充分复用 Rsbuild 的能力和生态。
-
-下图说明了 Rsbuild 在 Rstack 生态中的位置：
+Rstack 是一个围绕 Rspack 打造的 JavaScript 统一工具链，具有优秀的性能和一致的架构。
 
 <img
-  src="https://assets.rspack.dev/rstack/rstack-overview.png"
+  src="https://assets.rspack.rs/rstack/rstack-overview.png"
   alt="Rstack"
   width="820"
 />
 
-## 🦀 链接
+Rstack 包含以下工具：
 
-- [Rspack](https://github.com/web-infra-dev/rspack)：基于 Rust 的高性能打包工具。
-- [Rspress](https://github.com/web-infra-dev/rspress)：基于 Rsbuild 的静态站点生成器。
-- [Rsdoctor](https://github.com/web-infra-dev/rsdoctor)：针对 Rspack 的构建分析工具。
-- [Rslib](https://github.com/web-infra-dev/rslib): 基于 Rsbuild 的库开发工具。
-- [Rstest](https://github.com/web-infra-dev/rstest): 基于 Rspack 的测试框架。
-- [Modern.js](https://github.com/web-infra-dev/modern.js)：基于 Rsbuild 的渐进式 React 框架。
-- [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack)：与 Rspack 和 Rsbuild 相关的精彩内容列表。
-- [rstack-examples](https://github.com/rspack-contrib/rstack-examples)：Rspack、Rsbuild、Rspress 和 Rsdoctor 的示例项目。
+| 名称                                                  | 描述           |
+| ----------------------------------------------------- | -------------- |
+| [Rspack](https://github.com/web-infra-dev/rspack)     | 打包工具       |
+| [Rsbuild](https://github.com/web-infra-dev/rsbuild)   | 构建工具       |
+| [Rslib](https://github.com/web-infra-dev/rslib)       | 库开发工具     |
+| [Rspress](https://github.com/web-infra-dev/rspress)   | 静态站点生成器 |
+| [Rsdoctor](https://github.com/web-infra-dev/rsdoctor) | 构建分析工具   |
+| [Rstest](https://github.com/web-infra-dev/rstest)     | 测试框架       |
+
+## 🔗 链接
+
+- [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack)：与 Rstack 相关的精彩内容列表。
+- [rstack-examples](https://github.com/rspack-contrib/rstack-examples)：Rstack 的示例项目。
 - [storybook-rsbuild](https://github.com/rspack-contrib/storybook-rsbuild): 基于 Rsbuild 构建的 Storybook。
 - [rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template)：使用此模板创建你的 Rsbuild 插件。
-- [rstack-design-resources](https://github.com/rspack-contrib/rstack-design-resources)：Rspack、Rsbuild、Rspress 和 Rsdoctor 的设计资源。
+- [rstack-design-resources](https://github.com/rspack-contrib/rstack-design-resources)：Rstack 的设计资源。
 
 ## 🧑‍💻 社区
 
-欢迎加入我们的 [Discord](https://discord.gg/XsaKEEk4mW) 交流频道！Rspack / Rsbuild 团队和用户都在那里活跃，并且我们一直期待着各种贡献。
+欢迎加入我们的 [Discord](https://discord.gg/XsaKEEk4mW) 交流频道！Rstack 团队和用户都在那里活跃，并且我们一直期待着各种贡献。
 
 你也可以加入 [飞书群](https://applink.feishu.cn/client/chat/chatter/add_by_link?link_token=3c3vca77-bfc0-4ef5-b62b-9c5c9c92f1b4) 与大家一起交流。
 

@@ -10,6 +10,8 @@ type TagsConfig = HtmlTag | HtmlTagHandler | Array<HtmlTag | HtmlTagHandler>;
 
 添加和修改最终注入到 HTML 页面的标签。
 
+> 在 Rsbuild 插件中，可以通过 [api.modifyHTMLTags](/plugins/dev/hooks#modifyhtmltags) hook 来修改标签。
+
 ## 对象形式
 
 ```ts
@@ -22,14 +24,16 @@ type HtmlTag = {
   /** @default true */
   publicPath?: boolean | string | ((url: string, publicPath: string) => string);
   /**
-   * 定义当前标签相对于原有标签的插入位置。
-   * 设为 `true` 时，将被插入原有标签之后；设为 `false` 时，将被插入原有标签之前。
+   * 定义当前标签相对于已有标签的插入位置
+   * - 当设置为 `true` 时，标签将被插入到已有标签之后
+   * - 当设置为 `false` 时，标签将被插入到已有标签之前
    * @default true
    */
   append?: boolean;
   /**
-   * 是否将标签添加到 head 中 (仅对于允许包含在 head 中的元素会默认启用)
-   * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head#see_also}
+   * 指定是否将当前标签添加到 HTML 的 `<head>` 元素中
+   * @default 对于允许在 `<head>` 中包含的元素类型，默认为 `true`，否则为 `false`
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head#see_also
    */
   head?: boolean;
 };
@@ -37,7 +41,7 @@ type HtmlTag = {
 
 对象形式的配置项可以用于描述需要注入的标签，并可以通过参数控制注入的位置：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     assetPrefix: 'https://example.com/',
@@ -77,26 +81,26 @@ export default {
 
 用户也可以向这两个配置传入函数，以自行控制路径拼接的逻辑。
 
-### 设置标签插入位置
+### 插入位置
 
-标签最终的插入位置由 `head` 和 `append` 选项决定，当两个元素的 `head` 和 `append` 配置相同时，将被插入到相同区域，并且维持彼此之间的相对位置。
+标签插入位置由 `head` 和 `append` 选项决定，当两个元素的 `head` 和 `append` 配置相同时，将被插入到相同区域，并且维持彼此之间的相对位置。
 
-- `append` 用于描述是将该标签添加到原有标签的末尾还是开头
-- `head` 用于描述是否将该标签添加到页面 `<head>` 中
+- `append` 定义当前标签相对于已有标签的插入位置，默认值为 `true`
+- `head` 指定是否将当前标签添加到 HTML 的 `<head>` 元素中，对于允许在 `<head>` 中包含的元素类型，默认为 `true`，否则为 `false`
 
-最终在页面中的插入位置如下：
+最终在 HTML 中的插入位置如下：
 
 ```html
 <html>
   <head>
-    <!-- tags with `{ head: true, append: false }` here. -->
-    <!-- some other headTags... -->
-    <!-- tags with `{ head: true, append: true }` here. -->
+    <!-- 设置了 `{ head: true, append: false }` 的标签。 -->
+    <!-- 已有的 headTags... -->
+    <!-- 设置了 `{ head: true, append: true }` 的标签。 -->
   </head>
   <body>
-    <!-- tags with `{ head: false, append: false }` here. -->
-    <!-- some other bodyTags... -->
-    <!-- tags with `{ head: false, append: true }` here. -->
+    <!-- 设置了 `{ head: false, append: false }` 的标签。 -->
+    <!-- 已有的 bodyTags... -->
+    <!-- 设置了 `{ head: false, append: true }` 的标签。 -->
   </body>
 </html>
 ```

@@ -83,13 +83,7 @@ async function applyDefaultPlugins(
     // cleanOutput plugin should before the html plugin
     pluginCleanOutput(),
     pluginAsset(),
-    pluginHtml((environment: string) => async (...args) => {
-      const result = await context.hooks.modifyHTMLTags.callChain({
-        environment,
-        args,
-      });
-      return result[0];
-    }),
+    pluginHtml(context),
     pluginAppIcon(),
     pluginWasm(),
     pluginMoment(),
@@ -177,6 +171,7 @@ export async function createRsbuild(
 
   const resolvedOptions: ResolvedCreateRsbuildOptions = {
     cwd: process.cwd(),
+    callerName: 'rsbuild',
     ...options,
     rsbuildConfig: config,
   };
@@ -216,7 +211,7 @@ export async function createRsbuild(
     if (checkDistDir) {
       if (!existsSync(distPath)) {
         throw new Error(
-          `[rsbuild:preview] The output directory ${color.yellow(
+          `${color.dim('[rsbuild:preview]')} The output directory ${color.yellow(
             distPath,
           )} does not exist, please build the project before previewing.`,
         );
@@ -224,7 +219,7 @@ export async function createRsbuild(
 
       if (isEmptyDir(distPath)) {
         throw new Error(
-          `[rsbuild:preview] The output directory ${color.yellow(
+          `${color.dim('[rsbuild:preview]')} The output directory ${color.yellow(
             distPath,
           )} is empty, please build the project before previewing.`,
         );

@@ -1,4 +1,3 @@
-import readline from 'node:readline';
 import { color, isTTY } from '../helpers';
 import { logger } from '../logger';
 import type { CliShortcut, NormalizedDevConfig } from '../types/config';
@@ -7,7 +6,7 @@ export const isCliShortcutsEnabled = (
   devConfig: NormalizedDevConfig,
 ): boolean => devConfig.cliShortcuts && isTTY('stdin');
 
-export function setupCliShortcuts({
+export async function setupCliShortcuts({
   help = true,
   openPage,
   closeServer,
@@ -15,13 +14,13 @@ export function setupCliShortcuts({
   restartServer,
   customShortcuts,
 }: {
-  help?: boolean;
+  help?: boolean | string;
   openPage: () => Promise<void>;
   closeServer: () => Promise<void>;
   printUrls: () => void;
   restartServer?: () => Promise<boolean>;
   customShortcuts?: (shortcuts: CliShortcut[]) => CliShortcut[];
-}): () => void {
+}): Promise<() => void> {
   let shortcuts = [
     {
       key: 'c',
@@ -65,18 +64,23 @@ export function setupCliShortcuts({
 
     if (!Array.isArray(shortcuts)) {
       throw new Error(
-        '[rsbuild:config] `dev.cliShortcuts` must return an array of shortcuts.',
+        `${color.dim('[rsbuild:config]')} ${color.yellow(
+          'dev.cliShortcuts',
+        )} option must return an array of shortcuts.`,
       );
     }
   }
 
   if (help) {
     logger.log(
-      `  ➜ ${color.dim('press')} ${color.bold('h + enter')} ${color.dim('to show shortcuts')}\n`,
+      help === true
+        ? `  ➜ ${color.dim('press')} ${color.bold('h + enter')} ${color.dim('to show shortcuts')}\n`
+        : `  ➜ ${help}\n`,
     );
   }
 
-  const rl = readline.createInterface({
+  const { createInterface } = await import('node:readline');
+  const rl = createInterface({
     input: process.stdin,
   });
 

@@ -31,7 +31,7 @@ test('should generate preload link when preload is defined', async () => {
     name.endsWith('.html'),
   )!;
 
-  // test.js、test.css、image.png
+  // test.js, test.css, image.png
   expect(content.match(/rel="preload"/g)?.length).toBe(3);
 
   expect(
@@ -115,7 +115,7 @@ test('should generate preload link with crossOrigin', async () => {
     name.endsWith('.html'),
   )!;
 
-  // test.js、test.css、image.png
+  // test.js, test.css, image.png
   expect(content.match(/rel="preload"/g)?.length).toBe(3);
 
   expect(
@@ -156,7 +156,7 @@ test('should generate preload link without crossOrigin when same origin', async 
     name.endsWith('.html'),
   )!;
 
-  // test.js、test.css、image.png
+  // test.js, test.css, image.png
   expect(content.match(/rel="preload"/g)?.length).toBe(3);
 
   expect(

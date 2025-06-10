@@ -39,13 +39,18 @@ export default {
 - **类型：**
 
 ```ts
-interface SwcReactOptions {
+interface ReactConfig {
   pragma?: string;
   pragmaFrag?: string;
   throwIfNamespace?: boolean;
   development?: boolean;
-  useBuiltins?: boolean;
-  refresh?: boolean;
+  refresh?:
+    | boolean
+    | {
+        refreshReg?: string;
+        refreshSig?: string;
+        emitFullSignatures?: boolean;
+      };
   runtime?: 'automatic' | 'classic';
   importSource?: string;
 }
@@ -218,10 +223,11 @@ type ReactRefreshOptions = {
 const defaultOptions = {
   include: [/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/],
   exclude: [/[\\/]node_modules[\\/]/],
+  resourceQuery: { not: /raw/ },
 };
 ```
 
-设置 [@rspack/plugin-react-refresh](https://rspack.dev/guide/tech/react#rspackplugin-react-refresh) 的选项，传入的值会与默认值进行浅合并。
+设置 [@rspack/plugin-react-refresh](https://github.com/rspack-contrib/rspack-plugin-react-refresh) 的选项，传入的值会与默认值进行浅合并。
 
 - **示例：**
 
@@ -240,7 +246,7 @@ pluginReact({
 
 是否在开发模式下启用 [React Fast Refresh](https://npmjs.com/package/react-refresh)。
 
-当 `fastRefresh` 设置为 `true` 时，`@rsbuild/plugin-react` 会自动注册 [@rspack/plugin-react-refresh](https://npmjs.com/package/@rspack/plugin-react-refresh) 插件。
+当 `fastRefresh` 设置为 `true` 时，`@rsbuild/plugin-react` 会自动注册 [@rspack/plugin-react-refresh](https://github.com/rspack-contrib/rspack-plugin-react-refresh) 插件。
 
 如果你需要禁用 Fast Refresh，可以将其设置为 `false`：
 

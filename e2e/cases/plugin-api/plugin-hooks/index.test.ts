@@ -23,6 +23,10 @@ const createPlugin = () => {
       api.modifyBundlerChain(() => {
         names.push('ModifyBundlerChain');
       });
+      api.modifyHTML((html) => {
+        names.push('ModifyHTML');
+        return html;
+      });
       api.modifyHTMLTags((tags) => {
         names.push('ModifyHTMLTags');
         return tags;
@@ -100,6 +104,7 @@ rspackOnlyTest(
       'BeforeBuild',
       'BeforeEnvironmentCompile',
       'ModifyHTMLTags',
+      'ModifyHTML',
       'AfterEnvironmentCompile',
       'AfterBuild',
       'OnCloseBuild',
@@ -136,6 +141,7 @@ rspackOnlyTest(
       'BeforeBuild',
       'BeforeEnvironmentCompile',
       'ModifyHTMLTags',
+      'ModifyHTML',
       'AfterEnvironmentCompile',
       'AfterBuild',
       'OnCloseBuild',
@@ -183,6 +189,7 @@ rspackOnlyTest(
       'AfterCreateCompiler',
       'BeforeEnvironmentCompile',
       'ModifyHTMLTags',
+      'ModifyHTML',
       'AfterEnvironmentCompile',
       'OnDevCompileDone',
       'OnCloseDevServer',

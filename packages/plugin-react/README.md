@@ -12,7 +12,7 @@ An Rsbuild plugin to provide support for React, integrating features such as JSX
 
 ## Documentation
 
-See [Documentation](https://rsbuild.dev/plugins/list/plugin-react).
+See [Documentation](https://rsbuild.rs/plugins/list/plugin-react).
 
 ## License
 

@@ -17,7 +17,7 @@ export function Hero() {
       title="Rsbuild"
       subTitle={t('subtitle')}
       description={t('slogan')}
-      logoUrl="https://assets.rspack.dev/rsbuild/rsbuild-logo.svg"
+      logoUrl="https://assets.rspack.rs/rsbuild/rsbuild-logo.svg"
       getStartedButtonText={t('quickStart')}
       githubURL="https://github.com/web-infra-dev/rsbuild"
     />

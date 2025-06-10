@@ -14,6 +14,10 @@ Please refer to the [Performance Building Analysis](/guide/debug/build-profiling
 
 The following are some general optimization methods, which can speed up the development build and production build.
 
+### Upgrade Rsbuild
+
+Upgrading to the latest version of Rsbuild can benefit from the latest performance optimizations, see [Upgrade Rsbuild](/guide/basic/upgrade-rsbuild) section for more details.
+
 ### Enable persistent cache
 
 Rsbuild provides [performance.buildCache](/config/performance/build-cache) configuration, which can significantly improve the speed of rebuilding.
@@ -24,9 +28,9 @@ Optimizing the number of modules referenced by the application can reduce the bu
 
 ### Optimize Tailwind CSS
 
-When using Tailwind CSS, if the `content` field in `tailwind.config.js` is not correctly configured, this can lead to poor build performance and HMR performance.
+When using Tailwind CSS v3, if the `content` field in `tailwind.config.js` is not correctly configured, this can lead to poor build performance and HMR performance.
 
-Please refer to [Tailwind CSS - Optimize Build Performance](/guide/styling/tailwindcss#optimize-build-performance) for more details.
+Refer to [Tailwind CSS v3 - Optimize build performance](/guide/styling/tailwindcss-v3#optimize-build-performance) for more details.
 
 ## Development optimization
 
@@ -45,24 +49,6 @@ export default {
 ```
 
 > Please refer to [dev.lazyCompilation](/config/dev/lazy-compilation) for more information.
-
-### Enable incremental build
-
-Rspack provides experimental [experiments.incremental](https://rspack.dev/config/experiments#experimentsincremental) configuration, which can improve the HMR speed in development mode.
-
-```ts title="rsbuild.config.ts"
-const isDev = process.env.NODE_ENV === 'development';
-
-export default {
-  tools: {
-    rspack: {
-      experiments: {
-        incremental: isDev,
-      },
-    },
-  },
-};
-```
 
 ### Source map format
 
@@ -94,7 +80,7 @@ export default {
 };
 ```
 
-> For detailed differences between different source map formats, see [Rspack - devtool](https://rspack.dev/config/devtool).
+> For detailed differences between different source map formats, see [Rspack - devtool](https://rspack.rs/config/devtool).
 
 ### Browserslist for development
 

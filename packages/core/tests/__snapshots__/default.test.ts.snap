@@ -1,4 +1,4 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
 {
@@ -11,6 +11,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "incremental": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -117,16 +118,14 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         },
         "include": [
           {
-            "and": [
-              "<ROOT>/packages/core/tests",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
+            "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
         ],
+        "resourceQuery": {
+          "not": /raw\\|inline/,
+        },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
@@ -162,6 +161,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
           },
         ],
+      },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "type": "asset/source",
       },
       {
         "mimetype": {
@@ -413,18 +417,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
+        Symbol(entryName): "index",
       },
       "version": 6,
     },
     RsbuildHtmlPlugin {
-      "getEnvironment": [Function],
-      "modifyTagsFn": [Function],
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "index": {
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
     DefinePlugin {
       "_args": [
@@ -476,7 +475,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   ],
   "watchOptions": {
     "aggregateTimeout": 0,
-    "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
   },
 }
 `;
@@ -492,6 +490,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "incremental": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -599,15 +598,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         },
         "include": [
           {
-            "and": [
-              "<ROOT>/packages/core/tests",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
+            "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
+        "resourceQuery": {
+          "not": /raw\\|inline/,
+        },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
@@ -643,6 +640,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             },
           },
         ],
+      },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "type": "asset/source",
       },
       {
         "mimetype": {
@@ -922,18 +924,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
+        Symbol(entryName): "index",
       },
       "version": 6,
     },
     RsbuildHtmlPlugin {
-      "getEnvironment": [Function],
-      "modifyTagsFn": [Function],
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "index": {
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
     DefinePlugin {
       "_args": [
@@ -949,15 +946,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       ],
       "affectedHooks": "compilation",
       "name": "DefinePlugin",
-    },
-    ProgressPlugin {
-      "_args": [
-        {
-          "prefix": "web",
-        },
-      ],
-      "affectedHooks": undefined,
-      "name": "ProgressPlugin",
     },
   ],
   "resolve": {
@@ -994,7 +982,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   ],
   "watchOptions": {
     "aggregateTimeout": 0,
-    "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
   },
 }
 `;
@@ -1010,6 +997,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "incremental": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -1093,15 +1081,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         },
         "include": [
           {
-            "and": [
-              "<ROOT>/packages/core/tests",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
+            "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
+        "resourceQuery": {
+          "not": /raw\\|inline/,
+        },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
@@ -1133,6 +1119,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
           },
         ],
+      },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "type": "asset/source",
       },
       {
         "mimetype": {
@@ -1392,7 +1383,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "target": "node",
   "watchOptions": {
     "aggregateTimeout": 0,
-    "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
   },
 }
 `;
@@ -1408,6 +1398,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "incremental": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -1522,16 +1513,14 @@ exports[`tools.rspack > should match snapshot 1`] = `
         },
         "include": [
           {
-            "and": [
-              "<ROOT>/packages/core/tests",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
+            "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
         ],
+        "resourceQuery": {
+          "not": /raw\\|inline/,
+        },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
@@ -1567,6 +1556,11 @@ exports[`tools.rspack > should match snapshot 1`] = `
             },
           },
         ],
+      },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "type": "asset/source",
       },
       {
         "mimetype": {
@@ -1825,18 +1819,13 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
+        Symbol(entryName): "index",
       },
       "version": 6,
     },
     RsbuildHtmlPlugin {
-      "getEnvironment": [Function],
-      "modifyTagsFn": [Function],
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "index": {
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
     DefinePlugin {
       "_args": [
@@ -1888,7 +1877,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
   ],
   "watchOptions": {
     "aggregateTimeout": 0,
-    "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
   },
 }
 `;

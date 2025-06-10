@@ -1,6 +1,5 @@
 import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
-import { parse } from 'node:querystring';
 import type Ws from '../../compiled/ws/index.js';
 import {
   getAllStatsErrors,
@@ -10,6 +9,7 @@ import {
 import { formatStatsMessages } from '../helpers/format';
 import { logger } from '../logger';
 import type { DevConfig, Rspack } from '../types';
+import type { SockWriteType } from './devServer';
 import { getCompilationId } from './helper';
 import { genOverlayHTML } from './overlay';
 
@@ -24,7 +24,7 @@ function isEqualSet(a: Set<string>, b: Set<string>): boolean {
 const CHECK_SOCKETS_INTERVAL = 30000;
 
 interface SocketMessage {
-  type: string;
+  type: SockWriteType;
   compilationId?: string;
   data?: Record<string, any> | string | boolean;
 }
@@ -95,6 +95,7 @@ export class SocketServer {
     this.clearHeartbeatTimer();
 
     const { default: ws } = await import('../../compiled/ws/index.js');
+
     this.wsServer = new ws.Server({
       noServer: true,
       path: this.options.client?.path,
@@ -116,7 +117,7 @@ export class SocketServer {
 
       this.onConnect(
         socket,
-        queryStr ? (parse(queryStr) as Record<string, string>) : {},
+        queryStr ? Object.fromEntries(new URLSearchParams(queryStr)) : {},
       );
     });
   }
@@ -313,7 +314,7 @@ export class SocketServer {
 
     if (shouldEmit) {
       return this.sockWrite({
-        type: 'still-ok',
+        type: 'ok',
         compilationId,
       });
     }

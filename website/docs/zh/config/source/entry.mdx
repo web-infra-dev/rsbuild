@@ -20,7 +20,13 @@ const defaultEntry = {
 
 用于设置构建的入口模块。
 
-`source.entry` 的用法与 Rspack 的 [entry](https://rspack.dev/config/entry) 选项类似，它们的主要区别在于，Rsbuild 会为 `source.entry` 中的每一个入口注册 [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin)，从而生成对应的 HTML 文件。
+`source.entry` 的值是一个对象，key 是入口名称，value 是入口模块的路径，或是一个 [描述对象](#描述对象)。
+
+当 value 为路径时，它可以为绝对路径或相对路径，相对路径会基于 [root](/config/root) 进行解析。
+
+## HTML 生成
+
+Rsbuild 会为 `source.entry` 中的每一个入口注册 [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin)，并生成对应的 HTML 文件。
 
 - **示例：**
 
@@ -50,7 +56,10 @@ export default {
         └── bar.js
 ```
 
-如果你不需要生成 HTML 文件，可以将 [tools.htmlPlugin](/config/tools/html-plugin) 设置为 `false` 来禁用这一行为。
+如果你不需要生成 HTML 文件：
+
+- 将入口描述对象中的 [html](/config/source/entry#html-属性) 属性设置为 `false` 来禁用单个入口的 HTML 生成。
+- 将 [tools.htmlPlugin](/config/tools/html-plugin) 设置为 `false` 来禁用所有入口的 HTML 生成。
 
 ## 描述对象
 
@@ -73,6 +82,8 @@ export default {
 };
 ```
 
+### `html` 属性
+
 Rsbuild 为描述对象添加了 `html` 属性，用于控制是否生成 HTML 文件。
 
 例如，`bar` 入口不生成 HTML 文件：
@@ -91,7 +102,9 @@ export default {
 };
 ```
 
-> 关于描述对象的完整用法，请参考 [Rspack - 入口描述对象](https://rspack.dev/config/entry#%E5%85%A5%E5%8F%A3%E6%8F%8F%E8%BF%B0%E5%AF%B9%E8%B1%A1)。
+在上述例子中，构建时会生成 `foo.html` 文件，而 `bar.html` 文件不会生成。
+
+> 关于描述对象的完整用法，请参考 [Rspack - 入口描述对象](https://rspack.rs/zh/config/entry#%E5%85%A5%E5%8F%A3%E6%8F%8F%E8%BF%B0%E5%AF%B9%E8%B1%A1)。
 
 ## 基于 environment 设置
 

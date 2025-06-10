@@ -1,6 +1,5 @@
 import { createRequire } from 'node:module';
 import path from 'node:path';
-import vm from 'node:vm';
 import { BasicRunner } from './basic';
 import type {
   BasicGlobalContext,
@@ -87,6 +86,7 @@ export class CommonJsRunner extends BasicRunner {
 
   protected createCjsRequirer(): RunnerRequirer {
     const requireCache = Object.create(null);
+    const vm = require('node:vm') as typeof import('node:vm');
 
     return (currentDirectory, modulePath, context = {}) => {
       const file = context.file || this.getFile(modulePath, currentDirectory);

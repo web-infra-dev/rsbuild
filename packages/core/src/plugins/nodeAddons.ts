@@ -1,6 +1,6 @@
 import path from 'node:path';
+import { color } from '../helpers';
 import type { RsbuildPlugin } from '../types';
-
 const getFilename = (resourcePath: string) => {
   let basename = '';
 
@@ -29,7 +29,7 @@ export const pluginNodeAddons = (): RsbuildPlugin => ({
 
         if (name === null) {
           throw new Error(
-            `[rsbuild:node-addons] Failed to load Node.js addon: "${resourcePath}"`,
+            `${color.dim('[rsbuild:node-addons]')} Failed to load Node.js addon: ${color.yellow(resourcePath)}`,
           );
         }
 

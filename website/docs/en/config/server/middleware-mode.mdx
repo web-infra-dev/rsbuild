@@ -31,7 +31,7 @@ async function startDevServer() {
   // Create Rsbuild dev server instance
   const rsbuildServer = await rsbuild.createDevServer();
 
-  // Apply Rsbuild's built-in middlewares
+  // Apply Rsbuild's built-in middleware
   app.use(rsbuildServer.middlewares);
 }
 ```

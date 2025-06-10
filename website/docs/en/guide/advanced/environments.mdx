@@ -13,7 +13,7 @@ You can also define different environments for the same build target, for exampl
 - Define `rsc` and `ssr` environments, both targeting `node`, used separately for React Server Components and SSR.
 - Define `desktop` and `mobile` environments, both targeting `web`, used separately for desktop and mobile browsers.
 
-Without the `environments` configuration, you would need to define multiple configurations for these scenarios and run multiple independent Rsbuild builds. Now, with the `environments` configuration, you can complete the build for multiple outputs in a single Rsbuild run (Rsbuild achieves this using Rspack's [MultiCompiler](https://rspack.dev/api/javascript-api/compiler#multicompiler)).
+Without the `environments` configuration, you would need to define multiple configurations for these scenarios and run multiple independent Rsbuild builds. Now, with the `environments` configuration, you can complete the build for multiple outputs in a single Rsbuild run (Rsbuild achieves this using Rspack's [MultiCompiler](https://rspack.rs/api/javascript-api/compiler#multicompiler)).
 
 In Rsbuild, each `environment` is associated with an Rsbuild configuration, an Rspack configuration, and a set of build outputs. Rsbuild plugin developers can customize the build process for a specified environment based on the `environment` name, such as modifying Rsbuild or Rspack configurations, registering or removing plugins, adjusting Rspack rules, and viewing assets information.
 
@@ -290,7 +290,7 @@ export async function startDevServer() {
     }
   });
 
-  // Apply Rsbuild’s built-in middlewares
+  // Apply Rsbuild’s built-in middleware
   app.use(rsbuildServer.middlewares);
 
   // ...
@@ -303,7 +303,7 @@ For detailed usage, please refer to: [SSR + Express Example](https://github.com/
 
 By default, Rsbuild builds all environments in parallel.
 
-To control the build order between different environments, you can set build dependencies through Rspack's [dependencies](https://rspack.dev/config/other-options#dependencies) configuration.
+To control the build order between different environments, you can set build dependencies through Rspack's [dependencies](https://rspack.rs/config/other-options#dependencies) configuration.
 
 For example, if you need to build the `web` environment first, then build the `node` environment, you can add the following configuration:
 

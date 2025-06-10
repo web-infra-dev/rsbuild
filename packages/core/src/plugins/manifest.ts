@@ -1,7 +1,9 @@
 import type { FileDescriptor } from '../../compiled/rspack-manifest-plugin';
-import { isObject } from '../helpers';
+import { color, isObject } from '../helpers';
+import { logger } from '../logger';
 import { recursiveChunkEntryNames } from '../rspack/resource-hints/doesChunkBelongToHtml';
 import type {
+  EnvironmentContext,
   ManifestByEntry,
   ManifestConfig,
   ManifestData,
@@ -10,7 +12,11 @@ import type {
 } from '../types';
 
 const generateManifest =
-  (htmlPaths: Record<string, string>, manifestOptions: ManifestObjectConfig) =>
+  (
+    htmlPaths: Record<string, string>,
+    manifestOptions: ManifestObjectConfig,
+    environment: EnvironmentContext,
+  ) =>
   (_seed: Record<string, any>, files: FileDescriptor[]) => {
     const chunkEntries = new Map<string, FileDescriptor[]>();
 
@@ -122,29 +128,31 @@ const generateManifest =
       });
 
       if (isObject(generatedManifest)) {
+        environment.manifest = generatedManifest;
         return generatedManifest;
       }
 
       throw new Error(
-        '[rsbuild:manifest] `manifest.generate` function must return a valid manifest object.',
+        `${color.dim('[rsbuild:manifest]')} \`manifest.generate\` function must return a valid manifest object.`,
       );
     }
 
+    environment.manifest = manifestData;
     return manifestData;
   };
 
 function normalizeManifestObjectConfig(
   manifest?: ManifestConfig,
-): ManifestObjectConfig {
+): ManifestObjectConfig & { filename: string } {
   if (typeof manifest === 'string') {
     return {
       filename: manifest,
     };
   }
 
-  const defaultOptions: ManifestObjectConfig = {
+  const defaultOptions = {
     filename: 'manifest.json',
-  };
+  } satisfies ManifestObjectConfig;
 
   if (typeof manifest === 'boolean') {
     return defaultOptions;
@@ -160,6 +168,8 @@ export const pluginManifest = (): RsbuildPlugin => ({
   name: 'rsbuild:manifest',
 
   setup(api) {
+    const manifestFilenames = new Map<string, string>();
+
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment, isDev }) => {
       const {
         output: { manifest },
@@ -182,14 +192,40 @@ export const pluginManifest = (): RsbuildPlugin => ({
         manifestOptions.filter ??
         ((file: FileDescriptor) => !file.name.endsWith('.LICENSE.txt'));
 
+      manifestFilenames.set(environment.name, manifestOptions.filename);
+
       chain.plugin(CHAIN_ID.PLUGIN.MANIFEST).use(RspackManifestPlugin, [
         {
           fileName: manifestOptions.filename,
           filter,
           writeToFileEmit: isDev && writeToDisk !== true,
-          generate: generateManifest(htmlPaths, manifestOptions),
+          generate: generateManifest(htmlPaths, manifestOptions, environment),
         },
       ]);
+    });
+
+    // validate duplicated manifest filenames and throw a warning
+    api.onAfterCreateCompiler(() => {
+      if (manifestFilenames.size <= 1) {
+        manifestFilenames.clear();
+        return;
+      }
+
+      const environmentNames = Array.from(manifestFilenames.keys());
+      const filenames = Array.from(manifestFilenames.values());
+      const uniqueFilenames = new Set(filenames);
+
+      if (uniqueFilenames.size !== filenames.length) {
+        logger.warn(
+          `${color.dim('[rsbuild:manifest]')} The ${color.yellow(
+            '"manifest.filename"',
+          )} option must be unique when there are multiple environments (${environmentNames.join(
+            ', ',
+          )}), otherwise the manifest file will be overwritten.`,
+        );
+      }
+
+      manifestFilenames.clear();
     });
   },
 });

@@ -56,6 +56,39 @@ rspackOnlyTest(
 );
 
 rspackOnlyTest(
+  'should allow to set `server.cors` config',
+  async ({ request }) => {
+    writeButtonCode();
+
+    const remotePort = await getRandomPort();
+    process.env.REMOTE_PORT = remotePort.toString();
+
+    const remoteApp = await dev({
+      cwd: remote,
+    });
+    const hostApp = await dev({
+      cwd: host,
+    });
+
+    // Check CORS headers
+    const remoteResponse = await request.get(
+      `http://127.0.0.1:${remoteApp.port}`,
+    );
+    expect(remoteResponse.headers()['access-control-allow-origin']).toEqual(
+      'https://localhost',
+    );
+
+    const hostResponse = await request.get(`http://127.0.0.1:${hostApp.port}`);
+    expect(hostResponse.headers()['access-control-allow-origin']).toEqual(
+      'https://localhost',
+    );
+
+    await hostApp.close();
+    await remoteApp.close();
+  },
+);
+
+rspackOnlyTest(
   'should run module federation in development mode with server.base',
   async ({ page }) => {
     writeButtonCode();

@@ -77,6 +77,20 @@ type ManifestList = {
 };
 ```
 
+## Access via hooks
+
+You can access the generated manifest data through Rsbuild's [hooks](/plugins/dev/hooks) and [Environment API](/api/javascript-api/environment-api).
+
+For example:
+
+```ts
+api.onAfterBuild(({ environments }) => {
+  console.log(environments.web.manifest);
+});
+```
+
+> See [Environment API - manifest](/api/javascript-api/environment-api#manifest) for more details.
+
 ## Options
 
 `output.manifest` can be an object, here are all the options:
@@ -234,6 +248,51 @@ export default {
   output: {
     manifest: {
       filter: () => true,
+    },
+  },
+};
+```
+
+## Multiple environments
+
+When using [environments](/config/environments) and configuring multiple environments, please specify an unique `manifest.filename` value for each environment to prevent manifest files from different environments from overwriting each other.
+
+For example, use the default `manifest.json` for the `web` environment and use `manifest-node.json` for the `node` environment:
+
+```ts title="rsbuild.config.ts"
+export default {
+  environments: {
+    web: {
+      output: {
+        manifest: true,
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+        manifest: {
+          filename: 'manifest-node.json',
+        },
+      },
+    },
+  },
+};
+```
+
+You can also choose to generate the manifest file for a specific environment:
+
+```ts title="rsbuild.config.ts"
+export default {
+  environments: {
+    web: {
+      output: {
+        manifest: true,
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+      },
     },
   },
 };

@@ -114,7 +114,7 @@ Common template strings include:
 - `[contenthash:<length>]` - hash value generated based on file content, with specified hash length.
 - `[ext]` - file extension, including the dot.
 
-> For more template strings, refer to [Rspack - Template String](https://rspack.dev/config/output#template-string).
+> For more template strings, refer to [Rspack - Template String](https://rspack.rs/config/output#template-string).
 
 :::tip
 
@@ -134,7 +134,7 @@ When you import a module via dynamic import, the module will be bundled into a s
 const { add } = await import('./add.ts');
 ```
 
-To specify a fixed name for the async module, use the [magic comments](https://rspack.dev/api/modules#magic-comments) provided by Rspack, using `webpackChunkName ` to specify the module name:
+To specify a fixed name for the async module, use the [magic comments](https://rspack.rs/api/runtime-api/module-methods#magic-comments) provided by Rspack, using `webpackChunkName ` to specify the module name:
 
 ```js title="src/index.ts"
 const { add } = await import(

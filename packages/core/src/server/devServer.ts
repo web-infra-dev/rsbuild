@@ -1,7 +1,7 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
 import type Connect from '../../compiled/connect/index.js';
-import { getPublicPathFromCompiler, isMultiCompiler } from '../helpers';
+import { color, getPublicPathFromCompiler, isMultiCompiler } from '../helpers';
 import { logger } from '../logger';
 import { onBeforeRestartServer, restartDevServer } from '../restart';
 import type {
@@ -44,6 +44,13 @@ import { type WatchFilesResult, setupWatchFiles } from './watchFiles';
 
 type HTTPServer = Server | Http2SecureServer;
 
+export type SockWriteType = 'static-changed' | (string & {});
+
+export type SockWrite = (
+  type: SockWriteType,
+  data?: string | boolean | Record<string, any>,
+) => void;
+
 export type RsbuildDevServer = {
   /**
    * The `connect` app instance.
@@ -80,8 +87,8 @@ export type RsbuildDevServer = {
    */
   port: number;
   /**
-   * Notify that the Rsbuild server has been started.
-   * Rsbuild will trigger `onAfterStartDevServer` hook in this stage.
+   * Notifies Rsbuild that the custom server has successfully started.
+   * Rsbuild will trigger the `onAfterStartDevServer` hook at this stage.
    */
   afterListen: () => Promise<void>;
   /**
@@ -101,6 +108,12 @@ export type RsbuildDevServer = {
    * Open URL in the browser after starting the server.
    */
   open: () => Promise<void>;
+  /**
+   * Allows middleware to send some message to HMR client, and then the HMR
+   * client will take different actions depending on the message type.
+   * - `static-changed`: The page will reload.
+   */
+  sockWrite: SockWrite;
 };
 
 const formatDevConfig = (config: NormalizedDevConfig, port: number) => {
@@ -162,7 +175,9 @@ export async function createDevServer<
     const compiler = customCompiler || (await createCompiler());
 
     if (!compiler) {
-      throw new Error('[rsbuild:server] Failed to get compiler instance.');
+      throw new Error(
+        `${color.dim('[rsbuild:server]')} Failed to get compiler instance.`,
+      );
     }
 
     const publicPaths = isMultiCompiler(compiler)
@@ -187,7 +202,7 @@ export async function createDevServer<
   };
 
   const protocol = https ? 'https' : 'http';
-  const urls = getAddressUrls({ protocol, port, host });
+  const urls = await getAddressUrls({ protocol, port, host });
 
   const cliShortcutsEnabled = isCliShortcutsEnabled(devConfig);
 
@@ -231,7 +246,7 @@ export async function createDevServer<
     registerCleanup(closeServer);
   }
 
-  const beforeCreateCompiler = () => {
+  const beforeCreateCompiler = async () => {
     printUrls();
 
     if (cliShortcutsEnabled) {
@@ -240,7 +255,7 @@ export async function createDevServer<
           ? {}
           : devConfig.cliShortcuts;
 
-      const cleanup = setupCliShortcuts({
+      const cleanup = await setupCliShortcuts({
         openPage,
         closeServer,
         printUrls,
@@ -269,16 +284,21 @@ export async function createDevServer<
           getStats: async () => {
             if (!compilationManager) {
               throw new Error(
-                '[rsbuild:server] Can not call `getStats` when `runCompile` is false',
+                `${color.dim('[rsbuild:server]')} Can not call ` +
+                  `${color.yellow('getStats')} when ` +
+                  `${color.yellow('runCompile')} is false`,
               );
             }
             await waitFirstCompileDone;
             return lastStats[environment.index];
           },
+          context: environment,
           loadBundle: async <T>(entryName: string) => {
             if (!compilationManager) {
               throw new Error(
-                '[rsbuild:server] Can not call `loadBundle` when `runCompile` is false',
+                `${color.dim('[rsbuild:server]')} Can not call ` +
+                  `${color.yellow('loadBundle')} when ` +
+                  `${color.yellow('runCompile')} is false`,
               );
             }
             await waitFirstCompileDone;
@@ -294,7 +314,9 @@ export async function createDevServer<
           getTransformedHtml: async (entryName: string) => {
             if (!compilationManager) {
               throw new Error(
-                '[rsbuild:server] Can not call `getTransformedHtml` when `runCompile` is false',
+                `${color.dim('[rsbuild:server]')} Can not call ` +
+                  `${color.yellow('getTransformedHtml')} when ` +
+                  `${color.yellow('runCompile')} is false`,
               );
             }
             await waitFirstCompileDone;
@@ -322,15 +344,23 @@ export async function createDevServer<
         middlewares,
       });
 
+  const sockWrite: SockWrite = (type, data) =>
+    compilationManager?.socketServer.sockWrite({
+      type,
+      data,
+    });
+
   const devServerAPI: RsbuildDevServer = {
     port,
     middlewares,
     environments: environmentAPI,
     httpServer,
+    sockWrite,
     listen: async () => {
       if (!httpServer) {
         throw new Error(
-          '[rsbuild:server] Can not listen dev server as `server.middlewareMode` is enabled.',
+          `${color.dim('[rsbuild:server]')} Can not listen dev server as ` +
+            `${color.yellow('server.middlewareMode')} is enabled.`,
         );
       }
 
@@ -407,7 +437,7 @@ export async function createDevServer<
     // print server url should between listen and beforeCompile
     context.hooks.onBeforeCreateCompiler.tap(beforeCreateCompiler);
   } else {
-    beforeCreateCompiler();
+    await beforeCreateCompiler();
   }
 
   const compilationManager = runCompile ? await startCompile() : undefined;
@@ -423,9 +453,9 @@ export async function createDevServer<
     pwd: root,
     compilationManager,
     dev: devConfig,
+    devServerAPI,
     context,
     server: config.server,
-    environments: environmentAPI,
     postCallbacks,
   });
 

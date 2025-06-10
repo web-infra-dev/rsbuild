@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
-import { normalizePublicDirs } from '../config';
+import { normalizePublicDirs } from '../defaultConfig';
 import { dedupeNestedPaths } from '../helpers';
 import { open } from '../server/open';
 import type { OnAfterStartDevServerFn, RsbuildPlugin } from '../types';
