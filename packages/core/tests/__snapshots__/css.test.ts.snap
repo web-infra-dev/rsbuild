@@ -1,4 +1,4 @@
-// Snapshot v1
+// Rstest Snapshot v1
 
 exports[`plugin-css > should use custom cssModules rule when using output.cssModules config 1`] = `
 {

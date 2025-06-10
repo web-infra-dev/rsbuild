@@ -1,4 +1,4 @@
-// Snapshot v1
+// Rstest Snapshot v1
 
 exports[`plugin-entry > should apply different environments entry config correctly 1`] = `
 [

@@ -39,7 +39,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@rsbuild/config": "workspace:*",
-    "@rstest/core": "https://pkg.pr.new/web-infra-dev/rstest/@rstest/core@1b40438",
+    "@rstest/core": "0.0.1",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^22.15.30",
     "cross-env": "^7.0.3",

@@ -1,4 +1,4 @@
-// Snapshot v1
+// Rstest Snapshot v1
 
 exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` as expected 1`] = `
 [

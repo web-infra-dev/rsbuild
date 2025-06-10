@@ -1,4 +1,4 @@
-// Snapshot v1
+// Rstest Snapshot v1
 
 exports[`environment config > tools.webpack / bundlerChain can be used in environment config 1`] = `
 [

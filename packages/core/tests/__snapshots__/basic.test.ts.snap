@@ -1,4 +1,4 @@
-// Snapshot v1
+// Rstest Snapshot v1
 
 exports[`plugin-basic > should apply basic config correctly in development 1`] = `
 {
