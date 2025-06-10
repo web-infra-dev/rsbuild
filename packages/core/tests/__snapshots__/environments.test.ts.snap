@@ -1,4 +1,4 @@
-// Snapshot v1
+// Rstest Snapshot v1
 
 exports[`environment config > should normalize environment config correctly 1`] = `
 {

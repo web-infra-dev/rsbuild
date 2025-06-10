@@ -1,4 +1,4 @@
-// Snapshot v1
+// Rstest Snapshot v1
 
 exports[`splitChunks > should apply antd/semi/... splitChunks rule when pkg is installed 1`] = `
 {

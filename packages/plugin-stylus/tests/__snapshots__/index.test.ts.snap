@@ -1,4 +1,4 @@
-// Snapshot v1
+// Rstest Snapshot v1
 
 exports[`plugin-stylus > should add stylus loader config correctly 1`] = `
 [

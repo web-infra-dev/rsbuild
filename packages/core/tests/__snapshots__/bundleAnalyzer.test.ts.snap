@@ -1,4 +1,4 @@
-// Snapshot v1
+// Rstest Snapshot v1
 
 exports[`plugin-bundle-analyze > should add bundle analyze plugin 1`] = `
 {

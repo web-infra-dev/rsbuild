@@ -1,4 +1,4 @@
-// Snapshot v1
+// Rstest Snapshot v1
 
 exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] = `
 {

@@ -1,4 +1,4 @@
-// Snapshot v1
+// Rstest Snapshot v1
 
 exports[`plugin-module-federation > should set environment module federation config correctly 1`] = `
 [

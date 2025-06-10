@@ -1,4 +1,4 @@
-// Snapshot v1
+// Rstest Snapshot v1
 
 exports[`plugin-define > should register define plugin correctly 1`] = `
 {

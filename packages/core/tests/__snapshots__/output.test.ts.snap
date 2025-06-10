@@ -1,4 +1,4 @@
-// Snapshot v1
+// Rstest Snapshot v1
 
 exports[`plugin-output > output config should works when target is node 1`] = `
 {

@@ -1,4 +1,4 @@
-// Snapshot v1
+// Rstest Snapshot v1
 
 exports[`plugins/react > should configuring \`tools.swc\` to override react runtime 1`] = `
 [
