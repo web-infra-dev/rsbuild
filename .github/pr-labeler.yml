@@ -8,3 +8,5 @@
   - '/^breaking change/'
 'release: document':
   - '/^docs/'
+'release: refactor':
+  - '/^refactor/'
