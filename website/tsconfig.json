@@ -9,8 +9,7 @@
       "@zh/*": ["./docs/zh/*"],
       "@en/*": ["./docs/en/*"],
       "i18n": ["./i18n.json"]
-    },
-    "baseUrl": "./"
+    }
   },
   "mdx": {
     "checkMdx": true
