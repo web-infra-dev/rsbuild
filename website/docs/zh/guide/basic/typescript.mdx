@@ -4,11 +4,23 @@ Rsbuild 默认支持 TypeScript，你可以直接在项目中使用 `.ts` 和 `.
 
 ## TypeScript 转译
 
-Rsbuild 默认使用 SWC 来转译 TypeScript 代码，也支持切换到 Babel 进行转译。
+Rsbuild 默认使用 [SWC](/guide/configuration/swc) 来转译 TypeScript 代码，也支持切换到 [Babel](plugins/list/plugin-babel) 进行转译。
 
-### isolatedModules
+### 模块隔离
 
-与 TypeScript 原生编译器不同，像 SWC 和 Babel 这样的工具会将每个文件单独编译，它无法确定导入的名称是一个类型还是一个值。因此，当你在 Rsbuild 中使用 TypeScript 时，需要启用 `tsconfig.json` 中的 [isolatedModules](https://typescriptlang.org/tsconfig/#isolatedModules) 选项：
+与 TypeScript 原生编译器不同，像 SWC 和 Babel 这样的工具会将每个文件单独编译，它无法确定导入的名称是一个类型还是一个值。因此，当你在 Rsbuild 中使用 TypeScript 时，需要启用 `tsconfig.json` 中的 [verbatimModuleSyntax](https://www.typescriptlang.org/tsconfig/#verbatimModuleSyntax) 或 [isolatedModules](https://typescriptlang.org/tsconfig/#isolatedModules) 选项：
+
+- 如果 `typescript` >= 5.0.0，使用 `verbatimModuleSyntax` 选项，它会默认启用 `isolatedModules` 选项：
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "verbatimModuleSyntax": true
+  }
+}
+```
+
+- 如果 `typescript` < 5.0.0，使用 `isolatedModules` 选项：
 
 ```json title="tsconfig.json"
 {
@@ -18,7 +30,7 @@ Rsbuild 默认使用 SWC 来转译 TypeScript 代码，也支持切换到 Babel 
 }
 ```
 
-该选项可以帮助你避免使用一些 SWC 和 Babel 无法正确编译的写法，比如跨文件的类型引用问题，它会引导你更正对应的用法：
+开启 `isolatedModules` 选项可以帮助你避免使用一些 SWC 和 Babel 无法正确编译的写法，比如跨文件的类型引用问题，它会引导你更正对应的用法：
 
 ```ts
 // 错误
@@ -32,7 +44,7 @@ export type { SomeType } from './types';
 
 ## 预设类型
 
-`@rsbuild/core` 提供了一些预设的类型定义，包含 CSS Modules、静态资源、`import.meta` 等类型。
+`@rsbuild/core` 提供了一些预设的类型定义，包含 CSS 文件、CSS Modules、静态资源、`import.meta` 等类型。
 
 你可以创建一个 `src/env.d.ts` 文件来引用：
 
