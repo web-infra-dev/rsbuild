@@ -9,7 +9,7 @@
     /* modules */
     "module": "ES2020",
     "esModuleInterop": true,
-    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
 
