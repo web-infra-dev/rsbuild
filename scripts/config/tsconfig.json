@@ -3,6 +3,7 @@
     "lib": ["DOM", "ESNext"],
     "jsx": "preserve",
     "target": "ES2021",
+    "types": ["node"],
     "skipLibCheck": true,
     "useDefineForClassFields": true,
 
