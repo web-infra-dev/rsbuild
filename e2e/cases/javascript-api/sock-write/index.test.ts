@@ -1,5 +1,5 @@
+import { expectPoll, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { createRsbuild } from '@rsbuild/core';
-import { expectPoll, gotoPage, rspackOnlyTest } from 'scripts';
 
 rspackOnlyTest(
   'should allow to call `sockWrite` after creating dev server',

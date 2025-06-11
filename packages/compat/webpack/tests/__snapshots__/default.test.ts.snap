@@ -425,7 +425,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "plugins": [
       TsconfigPathsPlugin {
         "absoluteBaseUrl": "<ROOT>/packages/compat/webpack/tests",
-        "baseUrl": "./",
+        "baseUrl": undefined,
         "extensions": [
           ".ts",
           ".tsx",
@@ -876,7 +876,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     "plugins": [
       TsconfigPathsPlugin {
         "absoluteBaseUrl": "<ROOT>/packages/compat/webpack/tests",
-        "baseUrl": "./",
+        "baseUrl": undefined,
         "extensions": [
           ".ts",
           ".tsx",
@@ -1260,7 +1260,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "plugins": [
       TsconfigPathsPlugin {
         "absoluteBaseUrl": "<ROOT>/packages/compat/webpack/tests",
-        "baseUrl": "./",
+        "baseUrl": undefined,
         "extensions": [
           ".ts",
           ".tsx",
@@ -1627,7 +1627,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "plugins": [
       TsconfigPathsPlugin {
         "absoluteBaseUrl": "<ROOT>/packages/compat/webpack/tests",
-        "baseUrl": "./",
+        "baseUrl": undefined,
         "extensions": [
           ".ts",
           ".tsx",
