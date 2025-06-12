@@ -37,10 +37,10 @@ async function ensureFileDir(outputFilePath: string) {
 async function applyProfile(
   root: string,
   filterValue: string,
-  traceLayer = 'chrome',
+  traceLayer = 'perfetto',
   traceOutput?: string,
 ) {
-  if (traceLayer !== 'chrome' && traceLayer !== 'logger') {
+  if (traceLayer !== 'perfetto' && traceLayer !== 'logger') {
     throw new Error(`unsupported trace layer: ${traceLayer}`);
   }
 
@@ -50,15 +50,15 @@ async function applyProfile(
       root,
       `.rspack-profile-${timestamp}-${process.pid}`,
     );
-    const defaultRustTraceChromeOutput = path.join(
+    const defaultRustTracePerfettoOutput = path.join(
       defaultOutputDir,
-      'trace.json',
+      'rspack.pftrace',
     );
     const defaultRustTraceLoggerOutput = 'stdout';
 
     const defaultTraceOutput =
-      traceLayer === 'chrome'
-        ? defaultRustTraceChromeOutput
+      traceLayer === 'perfetto'
+        ? defaultRustTracePerfettoOutput
         : defaultRustTraceLoggerOutput;
 
     // biome-ignore lint/style/noParameterAssign: setting default value makes sense

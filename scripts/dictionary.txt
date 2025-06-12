@@ -82,6 +82,7 @@ pageerror
 pathinfo
 pcss
 perfetto
+pftrace
 picocolors
 pjpeg
 pluggable

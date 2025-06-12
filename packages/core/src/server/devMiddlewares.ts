@@ -147,7 +147,7 @@ const applyDefaultMiddlewares = async ({
         // TODO: support for multi compiler
         isMultiCompiler(compiler) ? compiler.compilers[0] : compiler,
         dev.lazyCompilation,
-      ),
+      ) as RequestHandler,
     );
   }
 
