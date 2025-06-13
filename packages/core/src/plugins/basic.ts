@@ -93,14 +93,6 @@ export const pluginBasic = (): RsbuildPlugin => ({
 
         // enable Rspack config schema validation, unrecognized keys are allowed
         process.env.RSPACK_CONFIG_VALIDATE ||= 'loose-unrecognized-keys';
-
-        // TODO: we can remove it after Rspack incremental is enabled by default
-        if (api.context.bundlerType === 'rspack') {
-          chain.experiments({
-            ...chain.get('experiments'),
-            incremental: true,
-          });
-        }
       },
     );
   },
