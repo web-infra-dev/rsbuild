@@ -15,7 +15,7 @@ Rsbuild 默认支持使用 CSS Modules，无需添加额外的配置。我们约
 
 ## 用法示例
 
-- 编写样式：
+在 `*.module.css` 文件中编写样式：
 
 ```css title="button.module.css"
 .red {
@@ -23,7 +23,7 @@ Rsbuild 默认支持使用 CSS Modules，无需添加额外的配置。我们约
 }
 ```
 
-- 使用样式：
+在 JavaScript 文件中导入样式：
 
 ```tsx title="Button.tsx"
 import styles from './button.module.css';
@@ -32,6 +32,24 @@ export default () => {
   return <button className={styles.red}>Button</button>;
 };
 ```
+
+经过编译后，CSS Modules 中的类名会自动添加一个哈希值，以避免类名冲突：
+
+```css
+/* 开发模式下生成的类名 */
+.src-App-module__red-hiQIE4 {
+  background: red;
+}
+
+/* 生产模式下生成的类名 */
+.red-hiQIE4 {
+  background: red;
+}
+```
+
+:::tip
+参考 [自定义类名](#自定义类名) 来修改生成类名的规则。
+:::
 
 ## 具名导入
 

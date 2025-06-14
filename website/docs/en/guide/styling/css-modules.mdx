@@ -15,7 +15,7 @@ The following style files are considered CSS Modules:
 
 ## Usage example
 
-- Write style:
+Write style in `*.module.css` file:
 
 ```css title="button.module.css"
 .red {
@@ -23,7 +23,7 @@ The following style files are considered CSS Modules:
 }
 ```
 
-- Using styles:
+Import styles in JavaScript file:
 
 ```tsx title="Button.tsx"
 import styles from './button.module.css';
@@ -32,6 +32,24 @@ export default () => {
   return <button className={styles.red}>Button</button>;
 };
 ```
+
+After compilation, CSS Modules class names are automatically appended with a hash value to prevent class name conflicts:
+
+```css
+/* classnames generated in development mode */
+.src-App-module__red-hiQIE4 {
+  background: red;
+}
+
+/* classnames generated in production mode */
+.red-hiQIE4 {
+  background: red;
+}
+```
+
+:::tip
+See [Custom Class Names](#custom-class-names) to modify the class name generation rules.
+:::
 
 ## Named import
 
