@@ -118,6 +118,40 @@ export default {
 
 If you need to customize other configs of CSS Modules, you can set them via [output.cssModules](/config/output/css-modules).
 
+## Global styles
+
+In some cases, you may need to use global styles in CSS Modules, such as overriding the styles of third-party libraries or setting global styles for specific elements.
+
+CSS Modules provides the `:global()` pseudo-class selector to achieve this functionality, and the selectors inside `:global()` will remain the original class names, allowing them to correctly match global elements.
+
+```css title="styles.module.css"
+/* Local selectors, will be hashed */
+.container {
+  padding: 20px;
+}
+
+/* Global selectors, will not be hashed */
+:global(.foo) {
+  color: red;
+}
+
+/* Use local and global selectors together, only .wrapper will be hashed */
+.wrapper :global(.bar) {
+  margin: 10px;
+}
+```
+
+You can also nest `:global()`:
+
+```css title="card.module.css"
+.card {
+  /* Only affects .btn elements inside .card */
+  :global(.btn) {
+    background: blue;
+  }
+}
+```
+
 ## Type declaration
 
 When you import CSS Modules in TypeScript code, TypeScript may prompt that the module is missing a type definition:
