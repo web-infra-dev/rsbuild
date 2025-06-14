@@ -118,6 +118,40 @@ export default {
 
 如果你需要自定义 CSS Modules 的其他配置，可以通过 [output.cssModules](/config/output/css-modules) 进行设置。
 
+## 全局样式
+
+在某些情况下，你可能需要在 CSS Modules 中使用全局样式，比如覆盖第三方库的样式，或者为特定元素设置全局样式。
+
+CSS Modules 提供了 `:global()` 伪类选择器来实现这个功能，`:global()` 内的选择器会保持原始的类名，使它能够正确地匹配全局元素。
+
+```css title="styles.module.css"
+/* 本地选择器，会被哈希化 */
+.container {
+  padding: 20px;
+}
+
+/* 全局选择器，不会被哈希化 */
+:global(.foo) {
+  color: red;
+}
+
+/* 组合使用本地和全局选择器，只有 .wrapper 会被哈希化 */
+.wrapper :global(.bar) {
+  margin: 10px;
+}
+```
+
+你也可以嵌套使用 `:global()`：
+
+```css title="card.module.css"
+.card {
+  /* 只影响 .card 内部的 .btn 元素 */
+  :global(.btn) {
+    background: blue;
+  }
+}
+```
+
 ## 类型声明
 
 当你在 TypeScript 代码中引用 CSS Modules 时，TypeScript 可能会提示该模块缺少类型定义：
