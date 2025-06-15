@@ -1,8 +1,17 @@
 import fs from 'node:fs';
-import path from 'node:path';
+import path, { join } from 'node:path';
 import { createRsbuild, proxyConsole, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
-import { remove } from 'fs-extra';
+import { expect, test } from '@playwright/test';
+import { remove, removeSync } from 'fs-extra';
+
+test.afterAll(() => {
+  const files = fs.readdirSync(__dirname);
+  for (const file of files) {
+    if (file.startsWith('test-temp') || file.startsWith('dist')) {
+      removeSync(join(__dirname, file));
+    }
+  }
+});
 
 const rsbuildConfig = path.resolve(
   __dirname,
