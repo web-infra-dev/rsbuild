@@ -207,8 +207,6 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
 
-  e2e/cases/babel/decorator: {}
-
   e2e/cases/browserslist/browserslist-config-mock: {}
 
   e2e/cases/browserslist/extends-browserslist:
@@ -235,7 +233,9 @@ importers:
         specifier: 0.7.4
         version: 0.7.4
 
-  e2e/cases/react/react-compiler-babel:
+  e2e/cases/plugin-babel/decorator: {}
+
+  e2e/cases/plugin-react/react-compiler-babel:
     dependencies:
       react:
         specifier: ^19.1.0
@@ -248,17 +248,7 @@ importers:
         specifier: ^19.1.0-rc.2
         version: 19.1.0-rc.2
 
-  e2e/cases/resolve/pkg-imports: {}
-
-  e2e/cases/server/custom-server: {}
-
-  e2e/cases/server/multi-server: {}
-
-  e2e/cases/server/ssr: {}
-
-  e2e/cases/server/ssr-type-module: {}
-
-  e2e/cases/svelte:
+  e2e/cases/plugin-svelte:
     dependencies:
       svelte:
         specifier: ^5.34.1
@@ -274,17 +264,27 @@ importers:
         specifier: 0.64.0
         version: 0.64.0
 
+  e2e/cases/plugin-vue:
+    dependencies:
+      vue:
+        specifier: ^3.5.16
+        version: 3.5.16(typescript@5.8.3)
+
+  e2e/cases/resolve/pkg-imports: {}
+
+  e2e/cases/server/custom-server: {}
+
+  e2e/cases/server/multi-server: {}
+
+  e2e/cases/server/ssr: {}
+
+  e2e/cases/server/ssr-type-module: {}
+
   e2e/cases/swc-plugin:
     dependencies:
       '@swc/plugin-remove-console':
         specifier: ^7.0.4
         version: 7.0.4
-
-  e2e/cases/vue:
-    dependencies:
-      vue:
-        specifier: ^3.5.16
-        version: 3.5.16(typescript@5.8.3)
 
   e2e/scripts: {}
 
