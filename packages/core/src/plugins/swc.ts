@@ -62,10 +62,15 @@ function applyScriptCondition({
   }
 }
 
-function getDefaultSwcConfig(
-  browserslist: string[],
-  cacheRoot: string,
-): SwcLoaderOptions {
+function getDefaultSwcConfig({
+  browserslist,
+  cacheRoot,
+  config,
+}: {
+  browserslist: string[];
+  cacheRoot: string;
+  config: NormalizedEnvironmentConfig;
+}): SwcLoaderOptions {
   return {
     jsc: {
       externalHelpers: true,
@@ -80,6 +85,9 @@ function getDefaultSwcConfig(
          * Preserve `with` in imports and exports.
          */
         keepImportAttributes: true,
+      },
+      output: {
+        charset: config.output.charset,
       },
     },
     isModule: 'unknown',
@@ -137,7 +145,11 @@ export const pluginSwc = (): RsbuildPlugin => ({
           return;
         }
 
-        const swcConfig = getDefaultSwcConfig(browserslist, cacheRoot);
+        const swcConfig = getDefaultSwcConfig({
+          browserslist,
+          cacheRoot,
+          config,
+        });
 
         applyTransformImport(swcConfig, config.source.transformImport);
         applySwcDecoratorConfig(swcConfig, config);
