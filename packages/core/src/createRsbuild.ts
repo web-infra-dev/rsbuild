@@ -167,6 +167,10 @@ export async function createRsbuild(
     ? await options.rsbuildConfig()
     : options.rsbuildConfig || {};
 
+  if (config.logLevel) {
+    logger.level = config.logLevel;
+  }
+
   applyEnvsToConfig(config, envs);
 
   const resolvedOptions: ResolvedCreateRsbuildOptions = {
