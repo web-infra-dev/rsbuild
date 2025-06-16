@@ -35,7 +35,7 @@
     "@rsbuild/core": "workspace:*",
     "@rslib/core": "0.9.2",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.15.30",
+    "@types/node": "^22.15.31",
     "typescript": "^5.8.3",
     "vue": "^3.5.16",
     "webpack": "^5.99.9"
