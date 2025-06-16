@@ -57,6 +57,17 @@ export type LessLoaderOptions = {
    * @default "@rsbuild/plugin-less/compiled/less/index.js"
    */
   implementation?: unknown;
+  /**
+   * If enabled, Less warnings and errors will be treated as Rspack warnings
+   * and errors, instead of being logged silently.
+   *
+   * If `lessLogAsWarnOrErr` is set to false it will be just a log and Rspack
+   * will compile successfully, but if you set this option to true, Rspack
+   * will compile fail with a warning(or error), and can break the build if
+   * configured accordingly.
+   * @default false
+   */
+  lessLogAsWarnOrErr?: boolean;
 };
 
 export type PluginLessOptions = {
