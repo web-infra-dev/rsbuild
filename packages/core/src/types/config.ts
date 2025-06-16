@@ -1776,6 +1776,14 @@ export interface RsbuildConfig extends EnvironmentConfig {
    */
   root?: string;
   /**
+   * Specify the log level.
+   * - 'info': show 'info', 'start', 'success', 'ready', 'warn' and 'error' logs.
+   * - 'warn': show 'warn' and 'error' logs.
+   * - 'error': only show 'error' logs.
+   * @default 'info'
+   */
+  logLevel?: 'info' | 'warn' | 'error';
+  /**
    * Options for local development.
    */
   dev?: DevConfig;

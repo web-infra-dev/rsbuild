@@ -24,7 +24,7 @@ export async function runCLI(): Promise<void> {
     npm_execpath.includes('npx-cli.js') ||
     npm_execpath.includes('.bun')
   ) {
-    console.log();
+    logger.log();
   }
 
   logger.greet(`  ${`Rsbuild v${RSBUILD_VERSION}`}\n`);
