@@ -40,6 +40,10 @@ const loadConfig = async (root: string) => {
     config.mode = commonOpts.mode;
   }
 
+  if (commonOpts.logLevel) {
+    config.logLevel = commonOpts.logLevel;
+  }
+
   if (commonOpts.open && !config.server?.open) {
     config.server.open = commonOpts.open;
   }

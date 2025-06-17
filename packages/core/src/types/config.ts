@@ -1762,6 +1762,8 @@ export interface EnvironmentConfig {
   plugins?: RsbuildPlugins;
 }
 
+export type LogLevel = 'info' | 'warn' | 'error' | 'silent';
+
 /**
  * The Rsbuild config.
  * */
@@ -1783,7 +1785,7 @@ export interface RsbuildConfig extends EnvironmentConfig {
    * - 'silent': disable all logs.
    * @default 'info'
    */
-  logLevel?: 'info' | 'warn' | 'error' | 'silent';
+  logLevel?: LogLevel;
   /**
    * Options for local development.
    */
