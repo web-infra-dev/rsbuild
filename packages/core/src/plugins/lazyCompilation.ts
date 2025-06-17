@@ -16,10 +16,26 @@ export const pluginLazyCompilation = (): RsbuildPlugin => ({
         return;
       }
 
-      chain.experiments({
-        ...chain.get('experiments'),
-        lazyCompilation: options,
-      });
+      if (options === true) {
+        const entries = chain.entryPoints.entries() || {};
+
+        // If there is only one entry, do not enable lazy compilation for entries
+        // this can reduce the rebuild time
+        if (Object.keys(entries).length <= 1) {
+          chain.experiments({
+            ...chain.get('experiments'),
+            lazyCompilation: {
+              entries: false,
+              imports: true,
+            },
+          });
+        }
+      } else {
+        chain.experiments({
+          ...chain.get('experiments'),
+          lazyCompilation: options,
+        });
+      }
     });
   },
 });
