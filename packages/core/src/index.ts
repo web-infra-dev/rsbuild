@@ -78,6 +78,7 @@ export type {
   InlineChunkTestFunction,
   InternalContext,
   LegalComments,
+  LogLevel,
   ManifestData,
   ManifestConfig,
   ManifestObjectConfig,
