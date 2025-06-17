@@ -1,0 +1,36 @@
+# logLevel
+
+- **类型：** `'info' | 'warn' | 'error' | 'silent'`
+- **默认值：** `'info'`
+- **版本：** `>= 1.4.0`
+
+指定 Rsbuild 的日志级别，默认值为 `info`。
+
+## 示例
+
+将 `logLevel` 配置为 `warn` 后，Rsbuild 只会输出 `warn` 和 `error` 级别的日志：
+
+```ts title="rsbuild.config.ts"
+export default {
+  logLevel: 'warn',
+};
+```
+
+将 `logLevel` 配置为 `error` 后，Rsbuild 只会输出 `error` 级别的日志：
+
+```ts title="rsbuild.config.ts"
+export default {
+  logLevel: 'error',
+};
+```
+
+## 可选值
+
+- `info`：输出所有日志
+- `warn`：输出 `warn` 和 `error` 级别的日志
+- `error`：输出 `error` 级别的日志
+- `silent`：不输出任何日志
+
+## 局限性
+
+目前你无法为每一个 Rsbuild 实例设置不同的日志级别，因为 Rsbuild 内部有一个全局共享的 [logger](/api/javascript-api/core#logger) 实例，所有 Rsbuild 实例都会共享这个 logger 实例。
