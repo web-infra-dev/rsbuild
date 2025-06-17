@@ -703,8 +703,8 @@ importers:
         specifier: 0.2.0
         version: 0.2.0(webpack@5.99.9)
       rslog:
-        specifier: ^1.2.6
-        version: 1.2.6
+        specifier: ^1.2.7
+        version: 1.2.7
       rspack-chain:
         specifier: ^1.2.5
         version: 1.2.5
@@ -5763,8 +5763,8 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  rslog@1.2.6:
-    resolution: {integrity: sha512-TGqKQNWVdVTQBG8dtIhdzJheYMCQy4JNG778OmyQAHc3NksEPK0ESexnHm/5EHC7BYAjYkc0r9SDI9PnKtzodw==}
+  rslog@1.2.7:
+    resolution: {integrity: sha512-8fnO9sQfJ4wxg1rCoden42V9A1TloS8HfgvSXZg8lZjgP74iM+PnlV8Sj4+9ouRP8juWx5qkO/+GFjTKAf2s0Q==}
 
   rspack-chain@1.2.5:
     resolution: {integrity: sha512-wF5yv3Z4hz5yE4ynx9XMBCfV57DzLH5YvUGpZoba815EqZX2frX/4hyhTJMO4qBYw91ifLQi+O5G+c34YJVY/g==}
@@ -7473,7 +7473,7 @@ snapshots:
       '@swc/helpers': 0.5.17
       caniuse-lite: 1.0.30001721
       lodash: 4.17.21
-      rslog: 1.2.6
+      rslog: 1.2.7
 
   '@module-federation/bridge-react-webpack-plugin@0.15.0':
     dependencies:
@@ -8118,7 +8118,7 @@ snapshots:
       json-stream-stringify: 3.0.1
       lines-and-columns: 2.0.4
       picocolors: 1.1.1
-      rslog: 1.2.6
+      rslog: 1.2.7
       strip-ansi: 6.0.1
     transitivePeerDependencies:
       - '@rspack/core'
@@ -12033,7 +12033,7 @@ snapshots:
       mrmime: 2.0.1
       on-finished: 2.4.1
       range-parser: 1.2.1
-      rslog: 1.2.6
+      rslog: 1.2.7
     optionalDependencies:
       webpack: 5.99.9
 
@@ -12056,7 +12056,7 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': link:packages/core
 
-  rslog@1.2.6: {}
+  rslog@1.2.7: {}
 
   rspack-chain@1.2.5:
     dependencies:
