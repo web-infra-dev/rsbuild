@@ -42,6 +42,9 @@ exports[`plugin-swc > should add browserslist 1`] = `
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -88,6 +91,9 @@ exports[`plugin-swc > should add browserslist 1`] = `
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -158,6 +164,9 @@ exports[`plugin-swc > should add pluginImport 1`] = `
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -214,6 +223,9 @@ exports[`plugin-swc > should add pluginImport 1`] = `
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -340,6 +352,9 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader 
               "keepImportAttributes": true,
             },
             "externalHelpers": false,
+            "output": {
+              "charset": "utf8",
+            },
             "parser": {
               "decorators": true,
               "syntax": "typescript",
@@ -389,6 +404,9 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader 
               "keepImportAttributes": true,
             },
             "externalHelpers": false,
+            "output": {
+              "charset": "utf8",
+            },
             "parser": {
               "decorators": true,
               "syntax": "typescript",
@@ -453,6 +471,9 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
               "keepImportAttributes": true,
             },
             "externalHelpers": true,
+            "output": {
+              "charset": "utf8",
+            },
             "parser": {
               "decorators": true,
               "syntax": "typescript",
@@ -514,6 +535,9 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
               "keepImportAttributes": true,
             },
             "externalHelpers": true,
+            "output": {
+              "charset": "utf8",
+            },
             "parser": {
               "decorators": true,
               "syntax": "typescript",
@@ -574,6 +598,9 @@ exports[`plugin-swc > should apply environment config correctly 2`] = `
               "keepImportAttributes": true,
             },
             "externalHelpers": true,
+            "output": {
+              "charset": "utf8",
+            },
             "parser": {
               "decorators": true,
               "syntax": "typescript",
@@ -626,6 +653,9 @@ exports[`plugin-swc > should apply environment config correctly 2`] = `
               "keepImportAttributes": true,
             },
             "externalHelpers": true,
+            "output": {
+              "charset": "utf8",
+            },
             "parser": {
               "decorators": true,
               "syntax": "typescript",
@@ -695,6 +725,9 @@ exports[`plugin-swc > should apply pluginImport correctly when ConfigChain 1`] =
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -754,6 +787,9 @@ exports[`plugin-swc > should apply pluginImport correctly when ConfigChain 1`] =
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -834,6 +870,9 @@ exports[`plugin-swc > should disable pluginImport when return undefined 1`] = `
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -883,6 +922,9 @@ exports[`plugin-swc > should disable pluginImport when return undefined 1`] = `
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -949,6 +991,9 @@ exports[`plugin-swc > should disable preset_env in target other than web 1`] = `
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -994,6 +1039,9 @@ exports[`plugin-swc > should disable preset_env in target other than web 1`] = `
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -1064,6 +1112,9 @@ exports[`plugin-swc > should disable preset_env mode 1`] = `
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -1113,6 +1164,9 @@ exports[`plugin-swc > should disable preset_env mode 1`] = `
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -1190,6 +1244,9 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -1243,6 +1300,9 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -1320,6 +1380,9 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -1374,6 +1437,9 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -1451,6 +1517,9 @@ exports[`plugin-swc > should has correct core-js 1`] = `
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -1504,6 +1573,9 @@ exports[`plugin-swc > should has correct core-js 1`] = `
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -1570,6 +1642,9 @@ exports[`plugin-swc > should has correct core-js 2`] = `
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -1615,6 +1690,9 @@ exports[`plugin-swc > should has correct core-js 2`] = `
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",

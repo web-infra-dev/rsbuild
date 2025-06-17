@@ -147,6 +147,9 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
                   "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
+                "output": {
+                  "charset": "utf8",
+                },
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
@@ -196,6 +199,9 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
                   "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
+                "output": {
+                  "charset": "utf8",
+                },
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
