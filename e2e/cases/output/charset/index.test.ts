@@ -1,37 +1,38 @@
-import { build, dev } from '@e2e/helper';
+import { build, dev, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('should allow to set output.charset to ascii in development mode', async ({
-  page,
-}) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
-    rsbuildConfig: {
-      dev: {
-        writeToDisk: true,
+rspackOnlyTest(
+  'should allow to set output.charset to ascii in development mode',
+  async ({ page }) => {
+    const rsbuild = await dev({
+      cwd: __dirname,
+      page,
+      rsbuildConfig: {
+        dev: {
+          writeToDisk: true,
+        },
+        output: {
+          charset: 'ascii',
+        },
       },
-      output: {
-        charset: 'ascii',
-      },
-    },
-  });
+    });
 
-  expect(await page.evaluate('window.a')).toBe('你好 world!');
+    expect(await page.evaluate('window.a')).toBe('你好 world!');
 
-  const files = await rsbuild.getDistFiles();
+    const files = await rsbuild.getDistFiles();
 
-  const [, content] = Object.entries(files).find(
-    ([name]) => name.endsWith('.js') && name.includes('static/js/index'),
-  )!;
+    const [, content] = Object.entries(files).find(
+      ([name]) => name.endsWith('.js') && name.includes('static/js/index'),
+    )!;
 
-  // in Rspack is: \\u4f60\\u597D world!
-  expect(
-    content.toLocaleLowerCase().includes('\\u4f60\\u597d world!'),
-  ).toBeTruthy();
+    // in Rspack is: \\u4f60\\u597D world!
+    expect(
+      content.toLocaleLowerCase().includes('\\u4f60\\u597d world!'),
+    ).toBeTruthy();
 
-  await rsbuild.close();
-});
+    await rsbuild.close();
+  },
+);
 
 test('should allow to set output.charset to ascii in production mode', async ({
   page,
