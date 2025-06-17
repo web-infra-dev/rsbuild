@@ -31,6 +31,10 @@ export const rsbuildPluginOverview: RsbuildPlugin = {
             link: '/config/plugins',
           },
           {
+            text: 'logLevel',
+            link: '/config/log-level',
+          },
+          {
             text: 'environments',
             link: '/config/environments',
           },

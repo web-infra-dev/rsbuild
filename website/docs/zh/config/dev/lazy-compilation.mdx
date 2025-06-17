@@ -63,6 +63,7 @@ export default {
   dev: {
     lazyCompilation: {
       imports: true,
+      // 如果只有一个入口，则 Rsbuild 默认不启用 entries 选项
       entries: true,
     },
   },

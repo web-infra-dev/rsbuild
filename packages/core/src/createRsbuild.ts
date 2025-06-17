@@ -27,6 +27,7 @@ import { pluginExternals } from './plugins/externals';
 import { pluginFileSize } from './plugins/fileSize';
 import { pluginHtml } from './plugins/html';
 import { pluginInlineChunk } from './plugins/inlineChunk';
+import { pluginLazyCompilation } from './plugins/lazyCompilation';
 import { pluginManifest } from './plugins/manifest';
 import { pluginMinimize } from './plugins/minimize';
 import { pluginModuleFederation } from './plugins/moduleFederation';
@@ -104,6 +105,7 @@ async function applyDefaultPlugins(
     pluginManifest(),
     pluginModuleFederation(),
     pluginRspackProfile(),
+    pluginLazyCompilation(),
     pluginSri(),
     pluginNonce(),
   ]);
@@ -166,6 +168,10 @@ export async function createRsbuild(
   const config = isFunction(options.rsbuildConfig)
     ? await options.rsbuildConfig()
     : options.rsbuildConfig || {};
+
+  if (config.logLevel) {
+    logger.level = config.logLevel;
+  }
 
   applyEnvsToConfig(config, envs);
 

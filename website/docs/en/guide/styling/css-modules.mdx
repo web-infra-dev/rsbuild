@@ -15,7 +15,7 @@ The following style files are considered CSS Modules:
 
 ## Usage example
 
-- Write style:
+Write style in `*.module.css` file:
 
 ```css title="button.module.css"
 .red {
@@ -23,7 +23,7 @@ The following style files are considered CSS Modules:
 }
 ```
 
-- Using styles:
+Import styles in JavaScript file:
 
 ```tsx title="Button.tsx"
 import styles from './button.module.css';
@@ -32,6 +32,24 @@ export default () => {
   return <button className={styles.red}>Button</button>;
 };
 ```
+
+After compilation, CSS Modules class names are automatically appended with a hash value to prevent class name conflicts:
+
+```css
+/* classnames generated in development mode */
+.src-App-module__red-hiQIE4 {
+  background: red;
+}
+
+/* classnames generated in production mode */
+.red-hiQIE4 {
+  background: red;
+}
+```
+
+:::tip
+See [Custom Class Names](#custom-class-names) to modify the class name generation rules.
+:::
 
 ## Named import
 
@@ -99,6 +117,40 @@ export default {
 ```
 
 If you need to customize other configs of CSS Modules, you can set them via [output.cssModules](/config/output/css-modules).
+
+## Global styles
+
+In some cases, you may need to use global styles in CSS Modules, such as overriding the styles of third-party libraries or setting global styles for specific elements.
+
+CSS Modules provides the `:global()` pseudo-class selector to achieve this functionality, and the selectors inside `:global()` will remain the original class names, allowing them to correctly match global elements.
+
+```css title="styles.module.css"
+/* Local selectors, will be hashed */
+.container {
+  padding: 20px;
+}
+
+/* Global selectors, will not be hashed */
+:global(.foo) {
+  color: red;
+}
+
+/* Use local and global selectors together, only .wrapper will be hashed */
+.wrapper :global(.bar) {
+  margin: 10px;
+}
+```
+
+You can also nest `:global()`:
+
+```css title="card.module.css"
+.card {
+  /* Only affects .btn elements inside .card */
+  :global(.btn) {
+    background: blue;
+  }
+}
+```
 
 ## Type declaration
 

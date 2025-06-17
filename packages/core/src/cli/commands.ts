@@ -3,7 +3,7 @@ import type { ConfigLoader } from '../loadConfig';
 import { logger } from '../logger';
 import { RSPACK_BUILD_ERROR } from '../provider/build';
 import { onBeforeRestartServer } from '../restart';
-import type { RsbuildMode } from '../types';
+import type { LogLevel, RsbuildMode } from '../types';
 import { init } from './init';
 
 export type CommonOptions = {
@@ -19,6 +19,7 @@ export type CommonOptions = {
   host?: string;
   port?: number;
   environment?: string[];
+  logLevel?: LogLevel;
 };
 
 export type BuildOptions = CommonOptions & {
@@ -56,6 +57,10 @@ const applyCommonOptions = (cli: CAC) => {
     .option(
       '-m, --mode <mode>',
       'specify the build mode, can be `development`, `production` or `none`',
+    )
+    .option(
+      '--log-level <level>',
+      'specify the log level, can be `info`, `warn`, `error` or `silent`',
     )
     .option(
       '--env-mode <mode>',
