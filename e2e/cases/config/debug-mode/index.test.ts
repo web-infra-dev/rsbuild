@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { build, dev, gotoPage } from '@e2e/helper';
+import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { logger } from '@rsbuild/core';
 
@@ -13,7 +13,7 @@ const getBundlerConfig = (dist: string) =>
     `./${dist}/.rsbuild/${process.env.PROVIDE_TYPE || 'rspack'}.config.web.mjs`,
   );
 
-test('should generate config files when build (with DEBUG)', async () => {
+test('should generate config files in debug mode when build', async () => {
   const { level } = logger;
   logger.level = 'verbose';
   process.env.DEBUG = 'rsbuild';
@@ -26,7 +26,6 @@ test('should generate config files when build (with DEBUG)', async () => {
         distPath: {
           root: distRoot,
         },
-        cleanDistPath: true,
       },
     },
   });
@@ -45,7 +44,9 @@ test('should generate config files when build (with DEBUG)', async () => {
   await close();
 });
 
-test('should generate config files when dev (with DEBUG)', async ({ page }) => {
+test('should generate config files in debug mode when dev', async ({
+  page,
+}) => {
   const { level } = logger;
   process.env.DEBUG = 'rsbuild';
   logger.level = 'verbose';
@@ -58,14 +59,10 @@ test('should generate config files when dev (with DEBUG)', async ({ page }) => {
         distPath: {
           root: distRoot,
         },
-        cleanDistPath: true,
       },
     },
+    page,
   });
-
-  const res = await gotoPage(page, rsbuild);
-
-  expect(res?.status()).toBe(200);
 
   expect(fs.existsSync(getRsbuildConfig(distRoot))).toBeTruthy();
   expect(fs.existsSync(getBundlerConfig(distRoot))).toBeTruthy();
