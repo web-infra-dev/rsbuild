@@ -1,20 +1,18 @@
-import { build, proxyConsole } from '@e2e/helper';
+import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should throw error by default (exportsPresence error)', async () => {
-  const { logs, restore } = proxyConsole();
+  const rsbuild = await build({
+    cwd: __dirname,
+    catchBuildError: true,
+  });
 
-  await expect(
-    build({
-      cwd: __dirname,
-    }),
-  ).rejects.toThrowError();
-
-  restore();
-
+  expect(rsbuild.buildError).toBeTruthy();
   expect(
-    logs.find((log) =>
+    rsbuild.logs.find((log) =>
       log.includes(`export 'aa' (imported as 'aa') was not found in './test'`),
     ),
   ).toBeTruthy();
+
+  await rsbuild.close();
 });

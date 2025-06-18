@@ -1,12 +1,9 @@
-import { dev, proxyConsole, rspackOnlyTest } from '@e2e/helper';
+import { dev, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest('support SSR', async ({ page }) => {
-  const { logs, restore } = proxyConsole('log');
-
   const rsbuild = await dev({
     cwd: __dirname,
-    rsbuildConfig: {},
   });
 
   const url = new URL(`http://localhost:${rsbuild.port}`);
@@ -18,16 +15,12 @@ rspackOnlyTest('support SSR', async ({ page }) => {
   await page.goto(url.href);
 
   // bundle result should cacheable and only load once.
-  expect(logs.filter((log) => log.includes('load SSR')).length).toBe(1);
+  expect(rsbuild.logs.filter((log) => log.includes('load SSR')).length).toBe(1);
 
   await rsbuild.close();
-
-  restore();
 });
 
 rspackOnlyTest('support SSR with external', async ({ page }) => {
-  const { logs, restore } = proxyConsole('log');
-
   const rsbuild = await dev({
     cwd: __dirname,
     rsbuildConfig: {
@@ -49,11 +42,9 @@ rspackOnlyTest('support SSR with external', async ({ page }) => {
   await page.goto(url.href);
 
   // bundle result should cacheable and only load once.
-  expect(logs.filter((log) => log.includes('load SSR')).length).toBe(1);
+  expect(rsbuild.logs.filter((log) => log.includes('load SSR')).length).toBe(1);
 
   await rsbuild.close();
-
-  restore();
 });
 
 rspackOnlyTest('support SSR with esm target', async ({ page }) => {

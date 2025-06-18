@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { dev, expectPoll, proxyConsole } from '@e2e/helper';
+import { dev, expectPoll } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
@@ -10,8 +10,6 @@ test('should show overlay correctly', async ({ page }) => {
   if (process.platform === 'win32') {
     test.skip();
   }
-
-  const { restore } = proxyConsole();
 
   await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
     recursive: true,
@@ -56,6 +54,4 @@ test('should show overlay correctly', async ({ page }) => {
   await expect(errorOverlay.locator('.title')).toHaveText('Build failed');
 
   await rsbuild.close();
-
-  restore();
 });

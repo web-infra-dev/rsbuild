@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { dev, proxyConsole } from '@e2e/helper';
+import { dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const prj1 = join(__dirname, 'project1');
@@ -42,8 +42,7 @@ test('should apply basic proxy rules correctly', async ({ page }) => {
 });
 
 test('should handle proxy error correctly', async ({ page }) => {
-  const { logs, restore } = proxyConsole();
-  const rsbuild1 = await dev({
+  const rsbuild = await dev({
     cwd: prj1,
     rsbuildConfig: {
       source: {
@@ -65,15 +64,15 @@ test('should handle proxy error correctly', async ({ page }) => {
     },
   });
 
-  const res = await page.goto(`http://localhost:${rsbuild1.port}/api`);
+  const res = await page.goto(`http://localhost:${rsbuild.port}/api`);
 
   expect(res?.status()).toBe(504);
 
   expect(
-    logs.some((log) => log.includes('Error occurred while proxying request')),
+    rsbuild.logs.some((log) =>
+      log.includes('Error occurred while proxying request'),
+    ),
   ).toBeTruthy();
 
-  await rsbuild1.close();
-
-  restore();
+  await rsbuild.close();
 });

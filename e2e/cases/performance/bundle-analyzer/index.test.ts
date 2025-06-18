@@ -1,12 +1,10 @@
 import { join } from 'node:path';
-import { build, dev, proxyConsole, readDirContents } from '@e2e/helper';
+import { build, dev, readDirContents } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should emit bundle analyze report correctly when dev', async ({
   page,
 }) => {
-  const { logs, restore } = proxyConsole();
-
   const rsbuild = await dev({
     cwd: __dirname,
   });
@@ -22,17 +20,15 @@ test('should emit bundle analyze report correctly when dev', async ({
   expect(filePaths.length).toBe(1);
 
   expect(
-    logs.some((log) => log.includes('Webpack Bundle Analyzer saved report to')),
+    rsbuild.logs.some((log) =>
+      log.includes('Webpack Bundle Analyzer saved report to'),
+    ),
   ).toBeTruthy();
 
   await rsbuild.close();
-
-  restore();
 });
 
 test('should emit bundle analyze report correctly when build', async () => {
-  const { logs, restore } = proxyConsole();
-
   const rsbuild = await build({
     cwd: __dirname,
   });
@@ -43,10 +39,10 @@ test('should emit bundle analyze report correctly when build', async () => {
   );
 
   expect(
-    logs.some((log) => log.includes('Webpack Bundle Analyzer saved report to')),
+    rsbuild.logs.some((log) =>
+      log.includes('Webpack Bundle Analyzer saved report to'),
+    ),
   ).toBeTruthy();
 
   expect(filePaths.length).toBe(1);
-
-  restore();
 });
