@@ -3,7 +3,7 @@ import { platform } from 'node:os';
 import { join } from 'node:path';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import { expect, test } from '@playwright/test';
-import type { ConsoleType } from '@rsbuild/core';
+import type { ConsoleType, LogLevel } from '@rsbuild/core';
 import glob, {
   convertPathToPattern,
   type Options as GlobOptions,
@@ -74,13 +74,24 @@ export const readDirContents = async (path: string, options?: GlobOptions) => {
 export const expectFile = (dir: string) =>
   expectPoll(() => fs.existsSync(dir)).toBeTruthy();
 
+export type ProxyConsoleOptions = {
+  types?: ConsoleType | ConsoleType[];
+  keepAnsi?: boolean;
+  logLevel?: LogLevel | 'verbose';
+};
+
+export type ProxyConsoleResult = {
+  logs: string[];
+  restore: () => void;
+};
+
 /**
  * Proxy the console methods to capture the logs
  */
-export const proxyConsole = (
-  types: ConsoleType | ConsoleType[] = ['log', 'warn', 'info', 'error'],
+export const proxyConsole = ({
+  types = ['log', 'warn', 'info', 'error'],
   keepAnsi = false,
-) => {
+}: ProxyConsoleOptions = {}): ProxyConsoleResult => {
   const logs: string[] = [];
   const restores: Array<() => void> = [];
 
