@@ -1,22 +1,20 @@
-import { build, proxyConsole, rspackOnlyTest } from '@e2e/helper';
+import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest('should print Stylus plugin hints as expected', async () => {
-  const { logs, restore } = proxyConsole();
+  const rsbuild = await build({
+    cwd: __dirname,
+    catchBuildError: true,
+  });
 
-  await expect(
-    build({
-      cwd: __dirname,
-    }),
-  ).rejects.toThrowError('build failed');
-
+  expect(rsbuild.buildError).toBeTruthy();
   expect(
-    logs.some((log) =>
+    rsbuild.logs.some((log) =>
       log.includes(
         'To enable support for Stylus, use "@rsbuild/plugin-stylus"',
       ),
     ),
   ).toBeTruthy();
 
-  restore();
+  await rsbuild.close();
 });

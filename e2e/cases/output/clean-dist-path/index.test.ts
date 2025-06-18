@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { build, dev, proxyConsole } from '@e2e/helper';
+import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import fse, { remove } from 'fs-extra';
 
@@ -50,11 +50,10 @@ test('should clean dist path in dev mode when writeToDisk is true', async () => 
 });
 
 test('should not clean dist path if it is outside root', async () => {
-  const { logs, restore } = proxyConsole();
   const testOutsideFile = join(cwd, '../node_modules/test.json');
   await fse.outputFile(testOutsideFile, `{ "test": 1 }`);
 
-  await build({
+  const rsbuild = await build({
     cwd,
     rsbuildConfig: {
       output: {
@@ -66,13 +65,15 @@ test('should not clean dist path if it is outside root', async () => {
   });
 
   expect(
-    logs.find((log) => log.includes('dist path is not a subdir of root path')),
+    rsbuild.logs.find((log) =>
+      log.includes('dist path is not a subdir of root path'),
+    ),
   ).toBeTruthy();
 
   expect(fs.existsSync(testOutsideFile)).toBeTruthy();
 
   await remove(testOutsideFile);
-  restore();
+  await rsbuild.close();
 });
 
 test('should allow to disable cleanDistPath', async () => {

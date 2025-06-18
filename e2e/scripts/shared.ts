@@ -9,7 +9,11 @@ import type {
 } from '@rsbuild/core';
 import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
 import type { Page } from 'playwright';
-import { readDirContents } from './helper';
+import {
+  type ProxyConsoleOptions,
+  proxyConsole,
+  readDirContents,
+} from './helper';
 
 /**
  * Build an URL based on the entry name and port
@@ -135,7 +139,13 @@ const updateConfigForTest = async (
     },
   };
 
-  return mergeRsbuildConfig(baseConfig, loadedConfig, originalConfig);
+  const mergedConfig = mergeRsbuildConfig(
+    baseConfig,
+    loadedConfig,
+    originalConfig,
+  );
+
+  return mergedConfig;
 };
 
 /**
@@ -155,6 +165,7 @@ const getDistFiles = async (distPath: string, ignoreMap = true) => {
 export async function dev({
   plugins,
   page,
+  captureLogs = true,
   waitFirstCompileDone = true,
   ...options
 }: CreateRsbuildOptions & {
@@ -166,6 +177,10 @@ export async function dev({
    */
   page?: Page;
   /**
+   * Call `proxyConsole` to capture the console logs.
+   */
+  captureLogs?: ProxyConsoleOptions | boolean;
+  /**
    * The done of `dev` does not mean the compile is done.
    * If your test relies on the completion of compilation you should `waitFirstCompileDone`
    * @default true
@@ -173,6 +188,11 @@ export async function dev({
   waitFirstCompileDone?: boolean;
 }) {
   process.env.NODE_ENV = 'development';
+
+  const proxyConsoleResult =
+    captureLogs === false
+      ? null
+      : proxyConsole(captureLogs === true ? {} : captureLogs);
 
   options.rsbuildConfig = await updateConfigForTest(
     options.rsbuildConfig || {},
@@ -223,10 +243,14 @@ export async function dev({
 
   return {
     ...result,
+    logs: proxyConsoleResult?.logs || [],
     instance: rsbuild,
     getDistFiles: (ignoreMap?: boolean) =>
       getDistFiles(rsbuild.context.distPath, ignoreMap),
-    close: async () => result.server.close(),
+    close: async () => {
+      await result.server.close();
+      proxyConsoleResult?.restore();
+    },
   };
 }
 
@@ -235,12 +259,19 @@ export async function dev({
  */
 export async function build({
   plugins,
+  captureLogs = true,
+  catchBuildError = false,
   runServer = false,
   page,
   ...options
 }: CreateRsbuildOptions & {
   plugins?: RsbuildPlugins;
   rsbuildConfig?: RsbuildConfig;
+  /**
+   * Whether to catch the build error.
+   * @default false
+   */
+  catchBuildError?: boolean;
   /**
    * Whether to run the server.
    */
@@ -250,8 +281,17 @@ export async function build({
    * This method will automatically run the server and goto the page.
    */
   page?: Page;
+  /**
+   * Call `proxyConsole` to capture the console logs.
+   */
+  captureLogs?: ProxyConsoleOptions | boolean;
 }) {
   process.env.NODE_ENV = 'production';
+
+  const proxyConsoleResult =
+    captureLogs === false
+      ? null
+      : proxyConsole(captureLogs === true ? {} : captureLogs);
 
   options.rsbuildConfig = await updateConfigForTest(
     options.rsbuildConfig || {},
@@ -260,7 +300,17 @@ export async function build({
 
   const rsbuild = await createRsbuild(options, plugins);
 
-  await rsbuild.build();
+  let buildError: Error | undefined;
+
+  try {
+    await rsbuild.build();
+  } catch (error) {
+    buildError = error as Error;
+
+    if (!catchBuildError) {
+      throw buildError;
+    }
+  }
 
   const { distPath } = rsbuild.context;
 
@@ -293,9 +343,14 @@ export async function build({
   }
 
   return {
+    logs: proxyConsoleResult?.logs || [],
     distPath,
     port,
-    close: server.close,
+    close: async () => {
+      await server.close();
+      proxyConsoleResult?.restore();
+    },
+    buildError,
     getDistFiles: (ignoreMap?: boolean) => getDistFiles(distPath, ignoreMap),
     getIndexFile,
     instance: rsbuild,

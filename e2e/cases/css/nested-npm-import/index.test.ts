@@ -1,11 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { build, proxyConsole, rspackOnlyTest } from '@e2e/helper';
+import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest('should compile nested npm import correctly', async () => {
-  const { restore, logs } = proxyConsole();
-
   fs.cpSync(
     path.resolve(__dirname, '_node_modules'),
     path.resolve(__dirname, 'node_modules'),
@@ -25,8 +23,10 @@ rspackOnlyTest('should compile nested npm import correctly', async () => {
 
   // there will be a deprecation log for `~`.
   expect(
-    logs.some((log) => log.includes(`a request starts with '~' is deprecated`)),
+    rsbuild.logs.some((log) =>
+      log.includes(`a request starts with '~' is deprecated`),
+    ),
   );
 
-  restore();
+  await rsbuild.close();
 });

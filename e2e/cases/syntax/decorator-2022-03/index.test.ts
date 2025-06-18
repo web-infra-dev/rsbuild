@@ -1,4 +1,4 @@
-import { build, proxyConsole, rspackOnlyTest } from '@e2e/helper';
+import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 
@@ -35,8 +35,6 @@ rspackOnlyTest(
 test.fail(
   'stage 3 decorators do not support decoratorBeforeExport',
   async ({ page }) => {
-    const { logs, restore } = proxyConsole();
-
     // SyntaxError: Decorators must be placed *after* the 'export' keyword
     const rsbuild = await build({
       cwd: __dirname,
@@ -57,13 +55,13 @@ test.fail(
     await rsbuild.close();
 
     expect(
-      logs.find((log) =>
+      rsbuild.logs.find((log) =>
         log.includes(
           'Using the export keyword between a decorator and a class is not allowed',
         ),
       ),
     ).toBeTruthy();
 
-    restore();
+    await rsbuild.close();
   },
 );

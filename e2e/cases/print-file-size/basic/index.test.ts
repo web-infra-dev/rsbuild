@@ -1,4 +1,4 @@
-import { build, proxyConsole } from '@e2e/helper';
+import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
@@ -37,21 +37,8 @@ function extractFileSizeLogs(logs: string[]) {
 }
 
 test.describe('should print file size correctly', async () => {
-  let logs: string[];
-  let restore: () => void;
-
-  test.beforeEach(() => {
-    const result = proxyConsole();
-    logs = result.logs;
-    restore = result.restore;
-  });
-
-  test.afterEach(() => {
-    restore();
-  });
-
   test('printFileSize: true should work', async () => {
-    await build({
+    const rsbuild = await build({
       cwd,
       rsbuildConfig: {
         performance: {
@@ -60,7 +47,7 @@ test.describe('should print file size correctly', async () => {
       },
     });
 
-    expect(extractFileSizeLogs(logs)).toEqual(`
+    expect(extractFileSizeLogs(rsbuild.logs)).toEqual(`
 File (web)                             Size       Gzip
 dist/static/css/index.[[hash]].css     X.X kB    X.X kB
 dist/index.html                        X.X kB    X.X kB
@@ -68,10 +55,12 @@ dist/static/js/index.[[hash]].js       X.X kB     X.X kB
 dist/static/image/icon.[[hash]].png    X.X kB
 dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
                               Total:   X.X kB   X.X kB`);
+
+    await rsbuild.close();
   });
 
   test('should print size of multiple environments correctly', async () => {
-    await build({
+    const rsbuild = await build({
       cwd,
       rsbuildConfig: {
         output: {
@@ -98,7 +87,7 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
       },
     });
 
-    expect(extractFileSizeLogs(logs)).toEqual(`
+    expect(extractFileSizeLogs(rsbuild.logs)).toEqual(`
 File (node)                         Size
 dist/server/static/image/icon.png   X.X kB
 dist/server/index.js                X.X kB
@@ -110,10 +99,12 @@ dist/static/js/index.js       X.X kB     X.X kB
 dist/static/image/icon.png    X.X kB
 dist/static/js/lib-react.js   X.X kB   X.X kB
                      Total:   X.X kB   X.X kB`);
+
+    await rsbuild.close();
   });
 
   test('printFileSize: false should not print logs', async () => {
-    await build({
+    const rsbuild = await build({
       cwd,
       rsbuildConfig: {
         performance: {
@@ -122,11 +113,13 @@ dist/static/js/lib-react.js   X.X kB   X.X kB
       },
     });
 
-    expect(extractFileSizeLogs(logs)).toEqual('');
+    expect(extractFileSizeLogs(rsbuild.logs)).toEqual('');
+
+    await rsbuild.close();
   });
 
   test('printFileSize.detail: false should work', async () => {
-    await build({
+    const rsbuild = await build({
       cwd,
       rsbuildConfig: {
         performance: {
@@ -137,12 +130,14 @@ dist/static/js/lib-react.js   X.X kB   X.X kB
       },
     });
 
-    expect(extractFileSizeLogs(logs)).toEqual(`
+    expect(extractFileSizeLogs(rsbuild.logs)).toEqual(`
 Total size (web): X.X kB (X.X kB gzipped)`);
+
+    await rsbuild.close();
   });
 
   test('printFileSize.total: false should work', async () => {
-    await build({
+    const rsbuild = await build({
       cwd,
       rsbuildConfig: {
         performance: {
@@ -153,17 +148,19 @@ Total size (web): X.X kB (X.X kB gzipped)`);
       },
     });
 
-    expect(extractFileSizeLogs(logs)).toEqual(`
+    expect(extractFileSizeLogs(rsbuild.logs)).toEqual(`
 File (web)                             Size       Gzip
 dist/static/css/index.[[hash]].css     X.X kB    X.X kB
 dist/index.html                        X.X kB    X.X kB
 dist/static/js/index.[[hash]].js       X.X kB     X.X kB
 dist/static/image/icon.[[hash]].png    X.X kB
 dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB`);
+
+    await rsbuild.close();
   });
 
   test('should print dist folder correctly if it is not a subdir of root', async () => {
-    await build({
+    const rsbuild = await build({
       cwd,
       rsbuildConfig: {
         performance: {
@@ -177,7 +174,7 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB`);
       },
     });
 
-    expect(extractFileSizeLogs(logs)).toEqual(`
+    expect(extractFileSizeLogs(rsbuild.logs)).toEqual(`
 File (web)                                                 Size       Gzip
 ../test-temp-folder/dist/static/css/index.[[hash]].css     X.X kB    X.X kB
 ../test-temp-folder/dist/index.html                        X.X kB    X.X kB
@@ -185,10 +182,12 @@ File (web)                                                 Size       Gzip
 ../test-temp-folder/dist/static/image/icon.[[hash]].png    X.X kB
 ../test-temp-folder/dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
                                                   Total:   X.X kB   X.X kB`);
+
+    await rsbuild.close();
   });
 
   test('should allow to disable gzip-compressed size', async () => {
-    await build({
+    const rsbuild = await build({
       cwd,
       rsbuildConfig: {
         performance: {
@@ -199,7 +198,7 @@ File (web)                                                 Size       Gzip
       },
     });
 
-    expect(extractFileSizeLogs(logs)).toEqual(`
+    expect(extractFileSizeLogs(rsbuild.logs)).toEqual(`
 File (web)                             Size
 dist/static/css/index.[[hash]].css     X.X kB
 dist/index.html                        X.X kB
@@ -207,10 +206,12 @@ dist/static/js/index.[[hash]].js       X.X kB
 dist/static/image/icon.[[hash]].png    X.X kB
 dist/static/js/lib-react.[[hash]].js   X.X kB
                               Total:   X.X kB`);
+
+    await rsbuild.close();
   });
 
   test('should allow to filter assets by name', async () => {
-    await build({
+    const rsbuild = await build({
       cwd,
       rsbuildConfig: {
         performance: {
@@ -221,15 +222,17 @@ dist/static/js/lib-react.[[hash]].js   X.X kB
       },
     });
 
-    expect(extractFileSizeLogs(logs)).toEqual(`
+    expect(extractFileSizeLogs(rsbuild.logs)).toEqual(`
 File (web)                             Size       Gzip
 dist/static/js/index.[[hash]].js       X.X kB     X.X kB
 dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
                               Total:   X.X kB   X.X kB`);
+
+    await rsbuild.close();
   });
 
   test('should allow to filter assets by size', async () => {
-    await build({
+    const rsbuild = await build({
       cwd,
       rsbuildConfig: {
         performance: {
@@ -240,13 +243,15 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
       },
     });
 
-    expect(extractFileSizeLogs(logs)).toEqual(`
+    expect(extractFileSizeLogs(rsbuild.logs)).toEqual(`
 File (web)                             Size       Gzip
 dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB`);
+
+    await rsbuild.close();
   });
 
   test('should allow to custom exclude function', async () => {
-    await build({
+    const rsbuild = await build({
       cwd,
       rsbuildConfig: {
         performance: {
@@ -259,17 +264,19 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB`);
       },
     });
 
-    expect(extractFileSizeLogs(logs)).toEqual(`
+    expect(extractFileSizeLogs(rsbuild.logs)).toEqual(`
 File (web)                             Size       Gzip
 dist/static/css/index.[[hash]].css     X.X kB    X.X kB
 dist/static/js/index.[[hash]].js       X.X kB     X.X kB
 dist/static/image/icon.[[hash]].png    X.X kB
 dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
                               Total:   X.X kB   X.X kB`);
+
+    await rsbuild.close();
   });
 
   test('should not calculate gzip size if the asset is not compressible', async () => {
-    await build({
+    const rsbuild = await build({
       cwd,
       rsbuildConfig: {
         performance: {
@@ -278,7 +285,7 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
       },
     });
 
-    expect(extractFileSizeLogs(logs)).toEqual(`
+    expect(extractFileSizeLogs(rsbuild.logs)).toEqual(`
 File (web)                             Size       Gzip
 dist/static/css/index.[[hash]].css     X.X kB    X.X kB
 dist/index.html                        X.X kB    X.X kB
@@ -286,5 +293,7 @@ dist/static/js/index.[[hash]].js       X.X kB     X.X kB
 dist/static/image/icon.[[hash]].png    X.X kB
 dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
                               Total:   X.X kB   X.X kB`);
+
+    await rsbuild.close();
   });
 });
