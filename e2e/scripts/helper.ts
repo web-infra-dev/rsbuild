@@ -3,7 +3,7 @@ import { platform } from 'node:os';
 import { join } from 'node:path';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import { expect, test } from '@playwright/test';
-import type { ConsoleType, LogLevel } from '@rsbuild/core';
+import type { ConsoleType } from '@rsbuild/core';
 import glob, {
   convertPathToPattern,
   type Options as GlobOptions,
@@ -77,7 +77,6 @@ export const expectFile = (dir: string) =>
 export type ProxyConsoleOptions = {
   types?: ConsoleType | ConsoleType[];
   keepAnsi?: boolean;
-  logLevel?: LogLevel | 'verbose';
 };
 
 export type ProxyConsoleResult = {

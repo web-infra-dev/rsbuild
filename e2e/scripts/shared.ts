@@ -201,27 +201,6 @@ export async function dev({
 
   const rsbuild = await createRsbuild(options, plugins);
 
-  rsbuild.addPlugins([
-    {
-      // fix HMR problem temporary (only appears in rsbuild repo, because css-loader is not in node_modules/ )
-      // https://github.com/web-infra-dev/rspack/issues/5723
-      name: 'fix-react-refresh-in-rsbuild',
-      setup(api) {
-        api.modifyBundlerChain({
-          order: 'post',
-          handler: (chain, { CHAIN_ID }) => {
-            if (chain.plugins.has(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)) {
-              chain.plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH).tap((config) => {
-                config[0].exclude = [/node_modules/, /css-loader/];
-                return config;
-              });
-            }
-          },
-        });
-      },
-    },
-  ]);
-
   const wait = waitFirstCompileDone
     ? new Promise<void>((resolve) => {
         rsbuild.onDevCompileDone(({ isFirstCompile }) => {
