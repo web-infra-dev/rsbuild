@@ -24,7 +24,6 @@ test('should emit bundle analyze report correctly when dev', async ({
       log.includes('Webpack Bundle Analyzer saved report to'),
     ),
   ).toBeTruthy();
-
   await rsbuild.close();
 });
 
@@ -45,4 +44,5 @@ test('should emit bundle analyze report correctly when build', async () => {
   ).toBeTruthy();
 
   expect(filePaths.length).toBe(1);
+  await rsbuild.close();
 });
