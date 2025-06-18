@@ -41,6 +41,9 @@ exports[`svgr > configure SVGR options 1`] = `
                 "keepImportAttributes": true,
               },
               "externalHelpers": true,
+              "output": {
+                "charset": "utf8",
+              },
               "parser": {
                 "decorators": true,
                 "syntax": "typescript",
@@ -138,6 +141,9 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
                 "keepImportAttributes": true,
               },
               "externalHelpers": true,
+              "output": {
+                "charset": "utf8",
+              },
               "parser": {
                 "decorators": true,
                 "syntax": "typescript",
@@ -203,6 +209,9 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
                 "keepImportAttributes": true,
               },
               "externalHelpers": true,
+              "output": {
+                "charset": "utf8",
+              },
               "parser": {
                 "decorators": true,
                 "syntax": "typescript",
@@ -299,6 +308,9 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
                 "keepImportAttributes": true,
               },
               "externalHelpers": true,
+              "output": {
+                "charset": "utf8",
+              },
               "parser": {
                 "decorators": true,
                 "syntax": "typescript",
@@ -364,6 +376,9 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
                 "keepImportAttributes": true,
               },
               "externalHelpers": true,
+              "output": {
+                "charset": "utf8",
+              },
               "parser": {
                 "decorators": true,
                 "syntax": "typescript",
@@ -460,6 +475,9 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
                 "keepImportAttributes": true,
               },
               "externalHelpers": true,
+              "output": {
+                "charset": "utf8",
+              },
               "parser": {
                 "decorators": true,
                 "syntax": "typescript",
@@ -525,6 +543,9 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
                 "keepImportAttributes": true,
               },
               "externalHelpers": true,
+              "output": {
+                "charset": "utf8",
+              },
               "parser": {
                 "decorators": true,
                 "syntax": "typescript",
@@ -621,6 +642,9 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
                 "keepImportAttributes": true,
               },
               "externalHelpers": true,
+              "output": {
+                "charset": "utf8",
+              },
               "parser": {
                 "decorators": true,
                 "syntax": "typescript",
@@ -686,6 +710,9 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
                 "keepImportAttributes": true,
               },
               "externalHelpers": true,
+              "output": {
+                "charset": "utf8",
+              },
               "parser": {
                 "decorators": true,
                 "syntax": "typescript",

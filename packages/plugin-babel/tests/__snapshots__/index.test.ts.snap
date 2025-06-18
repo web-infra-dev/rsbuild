@@ -40,6 +40,9 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
             "keepImportAttributes": true,
           },
           "externalHelpers": true,
+          "output": {
+            "charset": "utf8",
+          },
           "parser": {
             "decorators": true,
             "syntax": "typescript",
@@ -123,6 +126,9 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
             "keepImportAttributes": true,
           },
           "externalHelpers": true,
+          "output": {
+            "charset": "utf8",
+          },
           "parser": {
             "decorators": true,
             "syntax": "typescript",
@@ -202,6 +208,9 @@ exports[`plugins/babel > should apply environment config correctly 2`] = `
             "keepImportAttributes": true,
           },
           "externalHelpers": true,
+          "output": {
+            "charset": "utf8",
+          },
           "parser": {
             "decorators": true,
             "syntax": "typescript",
@@ -284,6 +293,9 @@ exports[`plugins/babel > should set babel-loader 1`] = `
             "keepImportAttributes": true,
           },
           "externalHelpers": true,
+          "output": {
+            "charset": "utf8",
+          },
           "parser": {
             "decorators": true,
             "syntax": "typescript",
@@ -364,6 +376,9 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
             "keepImportAttributes": true,
           },
           "externalHelpers": true,
+          "output": {
+            "charset": "utf8",
+          },
           "parser": {
             "decorators": true,
             "syntax": "typescript",

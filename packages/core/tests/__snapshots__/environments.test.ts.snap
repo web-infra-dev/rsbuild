@@ -1442,6 +1442,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -1491,6 +1494,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -1832,6 +1838,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -1877,6 +1886,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",

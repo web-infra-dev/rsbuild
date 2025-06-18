@@ -147,6 +147,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
+                "output": {
+                  "charset": "utf8",
+                },
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
@@ -196,6 +199,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
+                "output": {
+                  "charset": "utf8",
+                },
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
@@ -625,6 +631,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                   "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
+                "output": {
+                  "charset": "utf8",
+                },
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
@@ -674,6 +683,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                   "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
+                "output": {
+                  "charset": "utf8",
+                },
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
@@ -1103,6 +1115,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
+                "output": {
+                  "charset": "utf8",
+                },
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
@@ -1148,6 +1163,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
+                "output": {
+                  "charset": "utf8",
+                },
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
@@ -1539,6 +1557,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
+                "output": {
+                  "charset": "utf8",
+                },
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
@@ -1588,6 +1609,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
+                "output": {
+                  "charset": "utf8",
+                },
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
