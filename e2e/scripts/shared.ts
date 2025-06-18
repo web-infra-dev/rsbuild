@@ -80,7 +80,7 @@ function isPortAvailable(port: number) {
         resolve(false);
       });
     });
-  } catch (err) {
+  } catch {
     return false;
   }
 }

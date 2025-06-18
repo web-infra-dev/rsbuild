@@ -402,7 +402,7 @@ const getUrlLabel = (url: string) => {
   try {
     const { host } = new URL(url);
     return isLoopbackHost(host) ? LOCAL_LABEL : NETWORK_LABEL;
-  } catch (err) {
+  } catch {
     return NETWORK_LABEL;
   }
 };

@@ -228,7 +228,7 @@ const getCoreJsVersion = (corejsPkgPath: string) => {
     const { version } = JSON.parse(rawJson);
     const [major, minor] = version.split('.');
     return `${major}.${minor}`;
-  } catch (err) {
+  } catch {
     return '3';
   }
 };

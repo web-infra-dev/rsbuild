@@ -89,8 +89,13 @@ const initEnvironmentConfigs = (
     return defaultEntry;
   };
 
-  const { environments, dev, server, provider, ...rsbuildSharedConfig } =
-    normalizedConfig;
+  const {
+    environments,
+    dev,
+    server: _server,
+    provider: _provider,
+    ...rsbuildSharedConfig
+  } = normalizedConfig;
 
   const isEnvironmentEnabled = (name: string) =>
     !specifiedEnvironments || specifiedEnvironments.includes(name);
@@ -229,11 +234,11 @@ export async function initRsbuildConfig({
 
   const {
     dev: {
-      hmr,
-      assetPrefix,
-      progressBar,
-      lazyCompilation,
-      writeToDisk,
+      hmr: _hmr,
+      assetPrefix: _assetPrefix,
+      progressBar: _progressBar,
+      lazyCompilation: _lazyCompilation,
+      writeToDisk: _writeToDisk,
       ...rsbuildSharedDev
     },
     server,

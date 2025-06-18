@@ -47,7 +47,7 @@ const isSvelte5 = async (sveltePath: string) => {
     const pkgRaw = await promises.readFile(pkgPath, 'utf-8');
     const pkgJson = JSON.parse(pkgRaw);
     return pkgJson.version.startsWith('5.');
-  } catch (err) {
+  } catch {
     return false;
   }
 };

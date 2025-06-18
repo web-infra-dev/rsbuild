@@ -6,7 +6,7 @@ test('should print tips if resolve Node.js builtin module failed', async () => {
 
   try {
     await build({ cwd: __dirname });
-  } catch (err) {}
+  } catch {}
 
   restore();
   expect(

@@ -59,7 +59,7 @@ function applyAlias({
             paths: [rootPath],
           }),
         );
-      } catch (e) {}
+      } catch {}
 
       // some package does not export `package.json`,
       // so we try to resolve the package by its name
@@ -77,7 +77,7 @@ function applyAlias({
           ) {
             pkgPath = dirname(pkgPath);
           }
-        } catch (e) {
+        } catch {
           logger.debug(
             `${color.dim('[rsbuild:resolve]')} The package ${color.yellow(
               pkgName,

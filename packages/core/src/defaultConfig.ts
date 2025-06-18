@@ -1,7 +1,6 @@
 import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 import {
-  __filename,
   ASSETS_DIST_DIR,
   CSS_DIST_DIR,
   DEFAULT_ASSET_PREFIX,
