@@ -38,7 +38,7 @@ function checkProcessEnvSecurity(define: Define) {
   if (typeof value === 'string') {
     try {
       check(JSON.parse(value));
-    } catch (error) {}
+    } catch {}
   }
 }
 

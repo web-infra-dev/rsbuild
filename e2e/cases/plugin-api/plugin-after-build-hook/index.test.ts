@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
-import { type RsbuildPlugin, createRsbuild } from '@rsbuild/core';
+import { createRsbuild, type RsbuildPlugin } from '@rsbuild/core';
 import fse, { remove } from 'fs-extra';
 
 const distFile = path.join(__dirname, 'node_modules/hooksTempFile');

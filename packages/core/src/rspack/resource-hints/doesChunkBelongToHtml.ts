@@ -17,8 +17,7 @@
  */
 
 import type { Chunk, ChunkGroup, Compilation } from '@rspack/core';
-import type { ResourceHintsOptions } from '../../types';
-import type { HtmlRspackPlugin } from '../../types';
+import type { HtmlRspackPlugin, ResourceHintsOptions } from '../../types';
 
 interface DoesChunkBelongToHtmlOptions {
   chunk: Chunk;

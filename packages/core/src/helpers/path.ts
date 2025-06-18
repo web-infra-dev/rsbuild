@@ -49,7 +49,7 @@ export const ensureAbsolutePath = (base: string, filePath: string): string =>
 export const getPathnameFromUrl = (publicPath: string): string => {
   try {
     return publicPath ? new URL(publicPath).pathname : publicPath;
-  } catch (err) {
+  } catch {
     return publicPath;
   }
 };

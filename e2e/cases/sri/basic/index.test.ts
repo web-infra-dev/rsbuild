@@ -14,11 +14,11 @@ rspackOnlyTest(
       files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
 
     expect(html).toMatch(
-      /<script defer src="\/static\/js\/index\.\w{8}\.js" integrity="sha384-[A-Za-z0-9+\/=]+"/,
+      /<script defer src="\/static\/js\/index\.\w{8}\.js" integrity="sha384-[A-Za-z0-9+/=]+"/,
     );
 
     expect(html).toMatch(
-      /link href="\/static\/css\/index\.\w{8}\.css" rel="stylesheet" integrity="sha384-[A-Za-z0-9+\/=]+"/,
+      /link href="\/static\/css\/index\.\w{8}\.css" rel="stylesheet" integrity="sha384-[A-Za-z0-9+/=]+"/,
     );
 
     const testEl = page.locator('#root');

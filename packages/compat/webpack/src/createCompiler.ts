@@ -1,4 +1,4 @@
-import { type Rspack, logger } from '@rsbuild/core';
+import { logger, type Rspack } from '@rsbuild/core';
 import WebpackMultiStats from 'webpack/lib/MultiStats.js';
 import { type InitConfigsOptions, initConfigs } from './initConfigs.js';
 

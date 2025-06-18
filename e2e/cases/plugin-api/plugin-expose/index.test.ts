@@ -1,6 +1,6 @@
 import { rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
-import { type RsbuildPlugin, createRsbuild } from '@rsbuild/core';
+import { createRsbuild, type RsbuildPlugin } from '@rsbuild/core';
 
 type ParentAPI = {
   initial: number;

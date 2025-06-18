@@ -8,9 +8,9 @@ import type {
 import type _ from 'lodash';
 
 export type {
+  JsMinifyOptions,
   Output,
   TransformConfig,
-  JsMinifyOptions,
 } from '@modern-js/swc-plugins';
 
 export type OuterExtensions = Omit<Extensions, 'ssrLoaderId' | 'configRoutes'>;

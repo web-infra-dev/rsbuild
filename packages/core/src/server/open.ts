@@ -137,7 +137,7 @@ export function resolveUrl(str: string, base: string): string {
   try {
     const url = new URL(str, base);
     return url.href;
-  } catch (e) {
+  } catch {
     throw new Error(
       `${color.dim('[rsbuild:open]')} Invalid input: ${color.yellow(
         str,

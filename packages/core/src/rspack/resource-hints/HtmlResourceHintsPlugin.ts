@@ -37,7 +37,7 @@ import type {
 } from '../../types';
 import { doesChunkBelongToHtml } from './doesChunkBelongToHtml';
 import { extractChunks } from './extractChunks';
-import { type ResourceType, getResourceType } from './getResourceType';
+import { getResourceType, type ResourceType } from './getResourceType';
 
 const defaultOptions: ResourceHintsOptions = {
   type: 'async-chunks',

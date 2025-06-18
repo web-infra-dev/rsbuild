@@ -14,7 +14,7 @@ rspackOnlyTest(
       files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
 
     expect(html).toMatch(
-      /<link href="\/static\/js\/async\/foo\.\w{8}\.js" rel="preload" as="script" integrity="sha384-[A-Za-z0-9+\/=]+"/,
+      /<link href="\/static\/js\/async\/foo\.\w{8}\.js" rel="preload" as="script" integrity="sha384-[A-Za-z0-9+/=]+"/,
     );
 
     const testEl = page.locator('#root');

@@ -18,12 +18,12 @@ import {
 } from './gracefulShutdown';
 import { gzipMiddleware } from './gzipMiddleware';
 import {
-  type StartServerResult,
   getAddressUrls,
   getRoutes,
   getServerConfig,
   getServerTerminator,
   printServerURLs,
+  type StartServerResult,
 } from './helper';
 import { createHttpServer } from './httpServer';
 import {

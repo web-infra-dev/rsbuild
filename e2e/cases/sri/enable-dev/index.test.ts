@@ -18,7 +18,7 @@ rspackOnlyTest(
       await page.evaluate(
         'document.querySelector("script")?.getAttribute("integrity")',
       ),
-    ).toMatch(/sha384-[A-Za-z0-9+\/=]+/);
+    ).toMatch(/sha384-[A-Za-z0-9+/=]+/);
 
     await rsbuild.close();
 

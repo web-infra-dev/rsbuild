@@ -13,7 +13,7 @@ export function convertLinksInHtml(text: string, root?: string): string {
    * 4. `C:\Users\username\project\src\index.js:1:1`
    * 5. `/home/user/project/src/index.js:1:1`
    */
-  const pathRegex = /(?:\.\.?[\/\\]|[a-zA-Z]:\\|\/)[^:]*:\d+:\d+/g;
+  const pathRegex = /(?:\.\.?[/\\]|[a-zA-Z]:\\|\/)[^:]*:\d+:\d+/g;
 
   const urlRegex =
     /(https?:\/\/(?:[\w-]+\.)+[a-z0-9](?:[\w-.~:/?#[\]@!$&'*+,;=])*)/gi;

@@ -10,5 +10,6 @@ test('should compile template with es template correctly', async () => {
 
   const indexHtml =
     files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+  // biome-ignore lint/suspicious/noTemplateCurlyInString: should ignore string
   expect(indexHtml).toContain("const baseUrl = match ? `${match[0]}/` : '/'");
 });

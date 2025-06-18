@@ -1,5 +1,5 @@
-import { logger } from '@rsbuild/core';
 import type { Build, BuildOptions, Rspack } from '@rsbuild/core';
+import { logger } from '@rsbuild/core';
 import type { Configuration as WebpackConfig } from 'webpack';
 import WebpackMultiStats from 'webpack/lib/MultiStats.js';
 import { createCompiler } from './createCompiler.js';

@@ -12,7 +12,7 @@ function resolveFileName(stats: StatsError) {
   // Get the real source file path with stats.moduleIdentifier.
   // e.g. moduleIdentifier is "builtin:react-refresh-loader!/Users/x/src/App.jsx"
   if (stats.moduleIdentifier) {
-    const regex = /(?:\!|^)([^!]+)$/;
+    const regex = /(?:!|^)([^!]+)$/;
     const matched = stats.moduleIdentifier.match(regex);
     if (matched) {
       const fileName = matched.pop();

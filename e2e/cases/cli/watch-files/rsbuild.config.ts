@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { type RsbuildPlugin, defineConfig } from '@rsbuild/core';
+import { defineConfig, type RsbuildPlugin } from '@rsbuild/core';
 import fse from 'fs-extra';
 import content from './test-temp-config';
 

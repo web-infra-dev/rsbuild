@@ -11,13 +11,15 @@ import {
 } from '../helpers';
 import { logger } from '../logger';
 import { getHTMLPlugin } from '../pluginHelper';
-import type { HtmlRspackPlugin, InternalContext, Rspack } from '../types';
 import type {
   EnvironmentContext,
   HtmlBasicTag,
+  HtmlRspackPlugin,
   HtmlTag,
   HtmlTagContext,
   HtmlTagDescriptor,
+  InternalContext,
+  Rspack,
 } from '../types';
 
 type HtmlTagObject = HtmlRspackPlugin.HtmlTagObject;

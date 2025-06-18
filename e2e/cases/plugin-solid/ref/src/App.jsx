@@ -1,7 +1,7 @@
 import { createSignal } from 'solid-js';
 
 const App = () => {
-  const [el, setEl] = createSignal();
+  const [_el, setEl] = createSignal();
   return (
     <div id="test" ref={setEl}>
       abc

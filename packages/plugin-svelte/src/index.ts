@@ -1,10 +1,10 @@
 import { promises } from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
-import { logger } from '@rsbuild/core';
 import type { EnvironmentConfig, RsbuildPlugin } from '@rsbuild/core';
-import { sveltePreprocess } from 'svelte-preprocess';
+import { logger } from '@rsbuild/core';
 import type { CompileOptions } from 'svelte/compiler';
+import { sveltePreprocess } from 'svelte-preprocess';
 
 const require = createRequire(import.meta.url);
 
@@ -47,7 +47,7 @@ const isSvelte5 = async (sveltePath: string) => {
     const pkgRaw = await promises.readFile(pkgPath, 'utf-8');
     const pkgJson = JSON.parse(pkgRaw);
     return pkgJson.version.startsWith('5.');
-  } catch (err) {
+  } catch {
     return false;
   }
 };
