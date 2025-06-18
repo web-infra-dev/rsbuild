@@ -1,6 +1,6 @@
 import { proxyConsole, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
-import { type Rspack, createRsbuild } from '@rsbuild/core';
+import { createRsbuild, type Rspack } from '@rsbuild/core';
 import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
 import { matchPlugin } from '@scripts/test-helper';
 

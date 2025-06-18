@@ -93,7 +93,7 @@ export const isSatisfyRspackVersion = async (
     version = version.split('-canary')[0];
   }
 
-  if (version && /^[\d\.]+$/.test(version)) {
+  if (version && /^[\d.]+$/.test(version)) {
     return compareSemver(version, rspackMinVersion) >= 0;
   }
 

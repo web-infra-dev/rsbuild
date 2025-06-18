@@ -1,6 +1,6 @@
 export { webpackProvider } from './provider.js';
 export type {
+  WebpackConfig,
   // Third Party Types
   webpack,
-  WebpackConfig,
 } from './types.js';

@@ -1,10 +1,10 @@
 import { promises } from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
-import { logger } from '@rsbuild/core';
 import type { EnvironmentConfig, RsbuildPlugin } from '@rsbuild/core';
-import { sveltePreprocess } from 'svelte-preprocess';
+import { logger } from '@rsbuild/core';
 import type { CompileOptions } from 'svelte/compiler';
+import { sveltePreprocess } from 'svelte-preprocess';
 
 const require = createRequire(import.meta.url);
 

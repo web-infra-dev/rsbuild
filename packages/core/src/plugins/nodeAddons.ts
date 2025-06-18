@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { color } from '../helpers';
 import type { RsbuildPlugin } from '../types';
+
 const getFilename = (resourcePath: string) => {
   let basename = '';
 

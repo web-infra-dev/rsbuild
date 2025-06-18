@@ -13,10 +13,10 @@ import {
   isPlainObject,
 } from '../helpers';
 import {
+  entryNameSymbol,
   type HtmlExtraData,
   RsbuildHtmlPlugin,
   type TagConfig,
-  entryNameSymbol,
 } from '../rspack/RsbuildHtmlPlugin';
 import type {
   HtmlConfig,

@@ -1,6 +1,7 @@
 import {
   type EnvironmentContext,
   type InternalContext,
+  logger,
   type ModifyRspackConfigUtils,
   type ModifyWebpackChainUtils,
   type ModifyWebpackConfigUtils,
@@ -8,7 +9,6 @@ import {
   type RsbuildTarget,
   type Rspack,
   type RspackChain,
-  logger,
 } from '@rsbuild/core';
 import { reduceConfigsWithContext } from 'reduce-configs';
 import { castArray } from './shared.js';

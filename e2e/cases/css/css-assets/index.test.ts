@@ -1,6 +1,5 @@
 import path from 'node:path';
-import { build } from '@e2e/helper';
-import { readDirContents } from '@e2e/helper';
+import { build, readDirContents } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should build CSS assets correctly', async () => {

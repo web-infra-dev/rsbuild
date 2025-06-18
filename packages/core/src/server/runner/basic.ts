@@ -1,13 +1,12 @@
 import path from 'node:path';
-
-import type { CompilerOptions, Runner } from './type';
-
 import { color } from '../../helpers';
 import type {
   BasicGlobalContext,
   BasicModuleScope,
   BasicRunnerFile,
+  CompilerOptions,
   ModuleObject,
+  Runner,
   RunnerRequirer,
 } from './type';
 

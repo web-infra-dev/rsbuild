@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import { join } from 'node:path';
 import { expectFile, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
-import { type RsbuildPlugin, createRsbuild } from '@rsbuild/core';
+import { createRsbuild, type RsbuildPlugin } from '@rsbuild/core';
 import fse, { remove } from 'fs-extra';
 
 const createPlugin = () => {

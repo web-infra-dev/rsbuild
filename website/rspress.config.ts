@@ -10,9 +10,9 @@ import {
 } from '@shikijs/transformers';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
+import { defineConfig } from 'rspress/config';
 import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
 import pluginSitemap from 'rspress-plugin-sitemap';
-import { defineConfig } from 'rspress/config';
 import { rsbuildPluginOverview } from './theme/rsbuildPluginOverview';
 
 const siteUrl = 'https://rsbuild.rs';

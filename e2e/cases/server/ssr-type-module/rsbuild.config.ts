@@ -1,8 +1,8 @@
 import {
-  type RequestHandler,
-  type SetupMiddlewaresServer,
   defineConfig,
   logger,
+  type RequestHandler,
+  type SetupMiddlewaresServer,
 } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 

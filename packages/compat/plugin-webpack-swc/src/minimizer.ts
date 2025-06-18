@@ -1,7 +1,7 @@
 import {
+  logger,
   type NormalizedEnvironmentConfig,
   type Rspack,
-  logger,
 } from '@rsbuild/core';
 import type { webpack } from '@rsbuild/webpack';
 import deepmerge from 'deepmerge';

@@ -1,6 +1,6 @@
 import type { rspack } from '@rspack/core';
-import type { ChainIdentifier, ManifestData } from '..';
 import type RspackChain from '../../compiled/rspack-chain';
+import type { ChainIdentifier, ManifestData } from '..';
 import type { RsbuildDevServer } from '../server/devServer';
 import type {
   EnvironmentConfig,

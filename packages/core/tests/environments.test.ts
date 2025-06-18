@@ -1,6 +1,6 @@
 import { join } from 'node:path';
 import { matchPlugin } from '@scripts/test-helper';
-import { type RsbuildPlugin, createRsbuild } from '../src';
+import { createRsbuild, type RsbuildPlugin } from '../src';
 
 describe('environment config', () => {
   it('should normalize context correctly', async () => {

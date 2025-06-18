@@ -1,15 +1,11 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.8.0/schema.json",
-  "organizeImports": {
-    "enabled": true,
-    "include": [
-      "./**/*.js",
-      "./**/*.jsx",
-      "./**/*.ts",
-      "./**/*.tsx",
-      "./**/*.mjs",
-      "./**/*.cjs"
-    ]
+  "$schema": "https://biomejs.dev/schemas/2.0.0/schema.json",
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
   },
   "vcs": {
     "enabled": true,
@@ -18,12 +14,13 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignore": [
-      "*.vue",
-      "*.svelte",
-      "template-lit-*/src/my-element.*",
-      "tsconfig.json",
-      "tsconfig.*.json"
+    "includes": [
+      "**",
+      "!**/*.vue",
+      "!**/*.svelte",
+      "!**/template-lit-*/src/my-element.*",
+      "!**/tsconfig.json",
+      "!**/tsconfig.*.json"
     ],
     "ignoreUnknown": true
   },
@@ -46,7 +43,17 @@
           "options": {
             "filenameCases": ["camelCase", "PascalCase", "export"]
           }
-        }
+        },
+        "noParameterAssign": "error",
+        "useAsConstAssertion": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "error",
+        "useSelfClosingElements": "error",
+        "useSingleVarDeclarator": "error",
+        "noUnusedTemplateLiteral": "error",
+        "useNumberNamespace": "error",
+        "noInferrableTypes": "error",
+        "noUselessElse": "error"
       },
       "suspicious": {
         "noExplicitAny": "off",
@@ -54,6 +61,12 @@
       },
       "performance": {
         "noDelete": "off"
+      },
+      "nursery": {
+        "useUniqueElementIds": "off"
+      },
+      "correctness": {
+        "useHookAtTopLevel": "off"
       }
     }
   }

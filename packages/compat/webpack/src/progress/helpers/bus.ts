@@ -2,8 +2,8 @@ import { Console } from 'node:console';
 import cliTruncate from 'cli-truncate';
 import patchConsole from 'patch-console';
 import { FULL_WIDTH, renderBar } from './bar.js';
-import { create } from './log.js';
 import type { LogUpdate } from './log.js';
+import { create } from './log.js';
 import type { Colors, Props } from './types.js';
 
 const colorList: Colors[] = ['green', 'cyan', 'yellow', 'blue', 'magenta'];

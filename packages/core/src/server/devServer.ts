@@ -30,17 +30,17 @@ import {
   setupGracefulShutdown,
 } from './gracefulShutdown';
 import {
-  type StartServerResult,
   getAddressUrls,
   getRoutes,
   getServerConfig,
   getServerTerminator,
   printServerURLs,
+  type StartServerResult,
 } from './helper';
 import { createHttpServer } from './httpServer';
 import { notFoundMiddleware, optionsFallbackMiddleware } from './middlewares';
 import { open } from './open';
-import { type WatchFilesResult, setupWatchFiles } from './watchFiles';
+import { setupWatchFiles, type WatchFilesResult } from './watchFiles';
 
 type HTTPServer = Server | Http2SecureServer;
 

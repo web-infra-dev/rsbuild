@@ -1,6 +1,7 @@
 import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 import {
+  __filename,
   ASSETS_DIST_DIR,
   CSS_DIST_DIR,
   DEFAULT_ASSET_PREFIX,
@@ -17,7 +18,6 @@ import {
   SVG_DIST_DIR,
   TS_CONFIG_FILE,
   WASM_DIST_DIR,
-  __filename,
 } from './constants';
 import { findExists, getNodeEnv, isFileExists } from './helpers';
 import { mergeRsbuildConfig } from './mergeConfig';

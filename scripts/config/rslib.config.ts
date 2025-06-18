@@ -1,5 +1,5 @@
 import type { Minify } from '@rsbuild/core';
-import { type LibConfig, defineConfig } from '@rslib/core';
+import { defineConfig, type LibConfig } from '@rslib/core';
 
 export const commonExternals: Array<string | RegExp> = [
   'webpack',

@@ -1,6 +1,6 @@
 import { isRegExp } from 'node:util/types';
-import { rspack } from '@rspack/core';
 import type { RspackPluginInstance } from '@rspack/core';
+import { rspack } from '@rspack/core';
 import type { RsbuildPlugin, Rspack } from '../types';
 
 /**

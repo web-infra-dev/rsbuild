@@ -3,8 +3,11 @@ import type { LoadEnvOptions } from '../loadEnv';
 import type * as providerHelpers from '../provider/helpers';
 import type { RsbuildDevServer } from '../server/devServer';
 import type { StartServerResult } from '../server/helper';
-import type { RsbuildConfig } from './config';
-import type { NormalizedConfig, NormalizedEnvironmentConfig } from './config';
+import type {
+  NormalizedConfig,
+  NormalizedEnvironmentConfig,
+  RsbuildConfig,
+} from './config';
 import type { InternalContext } from './context';
 import type { PluginManager, RsbuildPlugin, RsbuildPluginAPI } from './plugin';
 import type { Rspack } from './rspack';

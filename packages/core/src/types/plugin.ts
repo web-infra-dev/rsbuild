@@ -41,8 +41,7 @@ import type {
 import type { RsbuildInstance, RsbuildTarget } from './rsbuild';
 import type { Rspack } from './rspack';
 import type { HtmlRspackPlugin } from './thirdParty';
-import type { Falsy } from './utils';
-import type { MaybePromise } from './utils';
+import type { Falsy, MaybePromise } from './utils';
 
 type HookOrder = 'pre' | 'post' | 'default';
 

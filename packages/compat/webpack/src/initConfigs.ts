@@ -1,10 +1,10 @@
 import {
   type InspectConfigOptions,
   type InternalContext,
+  logger,
   type PluginManager,
   type ResolvedCreateRsbuildOptions,
   type RsbuildProviderHelpers,
-  logger,
 } from '@rsbuild/core';
 import type { WebpackConfig } from './types.js';
 import { generateWebpackConfig } from './webpackConfig.js';
