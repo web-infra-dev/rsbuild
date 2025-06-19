@@ -1,6 +1,6 @@
 import { getRandomPort, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
-import { type RsbuildPlugin, createRsbuild } from '@rsbuild/core';
+import { createRsbuild, type RsbuildPlugin } from '@rsbuild/core';
 
 const createPlugin = () => {
   const names: string[] = [];
@@ -22,6 +22,10 @@ const createPlugin = () => {
       });
       api.modifyBundlerChain(() => {
         names.push('ModifyBundlerChain');
+      });
+      api.modifyHTML((html) => {
+        names.push('ModifyHTML');
+        return html;
       });
       api.modifyHTMLTags((tags) => {
         names.push('ModifyHTMLTags');
@@ -100,6 +104,7 @@ rspackOnlyTest(
       'BeforeBuild',
       'BeforeEnvironmentCompile',
       'ModifyHTMLTags',
+      'ModifyHTML',
       'AfterEnvironmentCompile',
       'AfterBuild',
       'OnCloseBuild',
@@ -136,6 +141,7 @@ rspackOnlyTest(
       'BeforeBuild',
       'BeforeEnvironmentCompile',
       'ModifyHTMLTags',
+      'ModifyHTML',
       'AfterEnvironmentCompile',
       'AfterBuild',
       'OnCloseBuild',
@@ -183,6 +189,7 @@ rspackOnlyTest(
       'AfterCreateCompiler',
       'BeforeEnvironmentCompile',
       'ModifyHTMLTags',
+      'ModifyHTML',
       'AfterEnvironmentCompile',
       'OnDevCompileDone',
       'OnCloseDevServer',

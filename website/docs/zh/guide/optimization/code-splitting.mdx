@@ -4,7 +4,7 @@
 
 在 Rsbuild 中内置了多种拆包策略，可以满足大部分应用的需求，你也可以根据自己的使用场景，自定义拆包配置。
 
-> 参考：[Rspack - 代码拆分](https://rspack.dev/zh/guide/optimization/code-splitting) 了解更多细节。
+> 参考：[Rspack - 代码拆分](https://rspack.rs/zh/guide/optimization/code-splitting) 了解更多细节。
 
 ## 拆包策略
 
@@ -93,7 +93,7 @@ export default {
 - 这个配置会将构建生成的 JS 代码全部打包到一个文件里（除了 dynamic import 拆分的 chunk）。
 - 单个 JS 文件的体积可能会非常大，使页面加载性能下降。
 
-如果你需要将 dynamic import 拆分的 chunk 也打包到单个文件中，可以将 Rspack 的 [output.asyncChunks](https://rspack.dev/config/output#outputasyncchunks) 选项设置为 `false`：
+如果你需要将 dynamic import 拆分的 chunk 也打包到单个文件中，可以将 Rspack 的 [output.asyncChunks](https://rspack.rs/zh/config/output#outputasyncchunks) 选项设置为 `false`：
 
 ```js
 export default defineConfig({
@@ -228,7 +228,7 @@ export default {
 };
 ```
 
-其中，`override` 配置会与 Rspack 的 `splitChunks` 配置进行合并，具体配置项请参考 [Rspack - splitChunks](https://rspack.dev/zh/config/optimization#optimization-splitchunks)。
+其中，`override` 配置会与 Rspack 的 `splitChunks` 配置进行合并，具体配置项请参考 [Rspack - splitChunks](https://rspack.rs/zh/config/optimization#optimization-splitchunks)。
 
 ## 使用 Dynamic import 拆包
 

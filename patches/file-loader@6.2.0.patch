@@ -1,0 +1,29 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+deleted file mode 100644
+index 1390102e57cacd2f334ccd8992bea23d40817b88..0000000000000000000000000000000000000000
+diff --git a/dist/index.js b/dist/index.js
+index ec5d5b0eda115042642d64b8873021db24aba9f3..939d5bf423dd831c268bfa0f581e2c598a455b2f 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -10,20 +10,12 @@ var _path = _interopRequireDefault(require("path"));
+ 
+ var _loaderUtils = require("loader-utils");
+ 
+-var _schemaUtils = require("schema-utils");
+-
+-var _options = _interopRequireDefault(require("./options.json"));
+-
+ var _utils = require("./utils");
+ 
+ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+ 
+ function loader(content) {
+-  const options = (0, _loaderUtils.getOptions)(this);
+-  (0, _schemaUtils.validate)(_options.default, options, {
+-    name: 'File Loader',
+-    baseDataPath: 'options'
+-  });
++  const options = this.getOptions() || {};
+   const context = options.context || this.rootContext;
+   const name = options.name || '[contenthash].[ext]';
+   const url = (0, _loaderUtils.interpolateName)(this, name, {

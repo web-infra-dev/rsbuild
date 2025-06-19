@@ -18,9 +18,15 @@ const defaultEntry = {
 };
 ```
 
-Used to set the entry modules for building.
+Set the entry modules for building.
 
-The usage of `source.entry` is similar to the `entry` option in [Rspack](https://rspack.dev/config/entry). The main difference is that Rsbuild will register [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin) for each entry in `source.entry` to generate the corresponding HTML files.
+The value of `source.entry` is an object, the key is the entry name, and the value is the path of the entry module or a [description object](#description-object).
+
+If the value is a path, it can be an absolute path or a relative path, the relative path will be resolved based on [root](/config/root).
+
+## HTML generation
+
+Rsbuild will register [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin) for each entry in `source.entry` and generate the corresponding HTML files.
 
 - **Example:**
 
@@ -28,8 +34,8 @@ The usage of `source.entry` is similar to the `entry` option in [Rspack](https:/
 export default {
   source: {
     entry: {
-      foo: './src/pages/foo/index.ts',
-      bar: './src/pages/bar/index.ts',
+      foo: './src/pages/foo/index.ts', // generate foo.html
+      bar: './src/pages/bar/index.ts', // generate bar.html
     },
   },
 };
@@ -37,7 +43,7 @@ export default {
 
 The generated directory structure is as follows:
 
-```text
+```
 .
 ├── foo.html
 ├── bar.html
@@ -50,7 +56,10 @@ The generated directory structure is as follows:
         └── bar.js
 ```
 
-If you do not need to generate HTML files, you can set [tools.htmlPlugin](/config/tools/html-plugin) to `false` to disable this behavior.
+If you do not need to generate HTML files:
+
+- Set the [html](/config/source/entry#html-property) property to `false` in the entry description object to disable the HTML generation for a single entry.
+- Set [tools.htmlPlugin](/config/tools/html-plugin) to `false` to disable the HTML generation for all entries.
 
 ## Description object
 
@@ -73,7 +82,9 @@ export default {
 };
 ```
 
-Rsbuild has added an `html` attribute for the description object, which is used to control whether an HTML file is generated.
+### `html` property
+
+Rsbuild has added an `html` property for the description object, which is used to control whether an HTML file is generated.
 
 For example, the `bar` entry does not generate an HTML file:
 
@@ -91,7 +102,9 @@ export default {
 };
 ```
 
-> For the complete usage of the description object, please refer to [Rspack - Entry Description Object](https://rspack.dev/config/entry#entry-description-object).
+In the above example, `foo.html` will be generated, while `bar.html` will not be generated.
+
+> For detailed usage of the description object, refer to [Rspack - Entry description object](https://rspack.rs/config/entry#entry-description-object).
 
 ## Set by environment
 
@@ -128,7 +141,7 @@ export default {
 
 ## Asynchronous setting
 
-To set entry asynchronously, for example, use [glob](https://www.npmjs.com/package/glob) to scan the directory, you can export an async function in `rsbuild.config.ts`:
+To set entry asynchronously, for example, use [glob](https://npmjs.com/package/glob) to scan the directory, you can export an async function in `rsbuild.config.ts`:
 
 ```ts title="rsbuild.config.ts"
 import path from 'node:path';

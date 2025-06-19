@@ -6,7 +6,7 @@ test('should inject tags correctly', async () => {
     cwd: __dirname,
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const indexHtml =
     files[Object.keys(files).find((file) => file.endsWith('index.html'))!];

@@ -1,6 +1,6 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
-exports[`plugin-cache > 'should add cache config correctly' 1`] = `
+exports[`plugin-cache > should add cache config correctly 1`] = `
 {
   "cache": true,
   "experiments": {
@@ -24,7 +24,7 @@ exports[`plugin-cache > 'should add cache config correctly' 1`] = `
 }
 `;
 
-exports[`plugin-cache > 'should apply cacheDigest' 1`] = `
+exports[`plugin-cache > should apply cacheDigest 1`] = `
 {
   "cache": true,
   "experiments": {
@@ -37,7 +37,7 @@ exports[`plugin-cache > 'should apply cacheDigest' 1`] = `
         "type": "filesystem",
       },
       "type": "persistent",
-      "version": "web-test-c29a5747",
+      "version": "web-test-fa1844c2988ad15a",
     },
   },
   "plugins": [
@@ -48,7 +48,7 @@ exports[`plugin-cache > 'should apply cacheDigest' 1`] = `
 }
 `;
 
-exports[`plugin-cache > 'should custom cache directory by user' 1`] = `
+exports[`plugin-cache > should custom cache directory by user 1`] = `
 {
   "cache": true,
   "experiments": {
@@ -72,7 +72,7 @@ exports[`plugin-cache > 'should custom cache directory by user' 1`] = `
 }
 `;
 
-exports[`plugin-cache > 'should disable cache' 1`] = `
+exports[`plugin-cache > should disable cache 1`] = `
 {
   "plugins": [
     {
@@ -82,7 +82,7 @@ exports[`plugin-cache > 'should disable cache' 1`] = `
 }
 `;
 
-exports[`plugin-cache > 'should not apply cacheDigest' 1`] = `
+exports[`plugin-cache > should not apply cacheDigest 1`] = `
 {
   "cache": true,
   "experiments": {
@@ -106,7 +106,7 @@ exports[`plugin-cache > 'should not apply cacheDigest' 1`] = `
 }
 `;
 
-exports[`plugin-cache > 'should watch tsconfig change' 1`] = `
+exports[`plugin-cache > should watch tsconfig change 1`] = `
 {
   "cache": true,
   "experiments": {

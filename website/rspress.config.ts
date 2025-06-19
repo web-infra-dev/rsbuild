@@ -1,17 +1,27 @@
 import { pluginSass } from '@rsbuild/plugin-sass';
+import { pluginAlgolia } from '@rspress/plugin-algolia';
 import { pluginClientRedirects } from '@rspress/plugin-client-redirects';
+import { pluginLlms } from '@rspress/plugin-llms';
 import { pluginRss } from '@rspress/plugin-rss';
+import {
+  transformerNotationDiff,
+  transformerNotationFocus,
+  transformerNotationHighlight,
+} from '@shikijs/transformers';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
+import { defineConfig } from 'rspress/config';
 import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
 import pluginSitemap from 'rspress-plugin-sitemap';
-import { defineConfig } from 'rspress/config';
 import { rsbuildPluginOverview } from './theme/rsbuildPluginOverview';
 
-const siteUrl = 'https://rsbuild.dev';
+const siteUrl = 'https://rsbuild.rs';
+const description = 'The Rspack-based build tool';
 
 export default defineConfig({
   plugins: [
+    pluginAlgolia(),
+    pluginLlms(),
     pluginSitemap({
       domain: siteUrl,
     }),
@@ -73,29 +83,68 @@ export default defineConfig({
           from: '/plugins/list/plugin-assets-retry',
           to: 'https://github.com/rspack-contrib/rsbuild-plugin-assets-retry',
         },
+        {
+          from: '/guide/basic/css-usage',
+          to: '/guide/styling/css-usage',
+        },
+        {
+          from: '/guide/basic/css-modules',
+          to: '/guide/styling/css-modules',
+        },
+        {
+          from: '/guide/basic/tailwindcss',
+          to: '/guide/styling/tailwindcss',
+        },
+        {
+          from: '/guide/basic/tailwindcss-v3',
+          to: '/guide/styling/tailwindcss-v3',
+        },
+        {
+          from: '/guide/basic/unocss',
+          to: '/guide/styling/unocss',
+        },
+        {
+          from: '/guide/basic/configure-rspack',
+          to: '/guide/configuration/rspack',
+        },
+        {
+          from: '/guide/basic/configure-rsbuild',
+          to: '/guide/configuration/rsbuild',
+        },
+        {
+          from: '/guide/basic/configure-swc',
+          to: '/guide/configuration/swc',
+        },
       ],
     }),
   ],
   lang: 'en',
   title: 'Rsbuild',
-  icon: 'https://assets.rspack.dev/rsbuild/favicon-128x128.png',
+  description:
+    'Rsbuild is a high-performance build tool powered by Rspack. It provides out-of-the-box setup for enjoyable development experience.',
+  icon: 'https://assets.rspack.rs/rsbuild/favicon-128x128.png',
   logo: {
-    light: 'https://assets.rspack.dev/rsbuild/navbar-logo-light.png',
-    dark: 'https://assets.rspack.dev/rsbuild/navbar-logo-dark.png',
-  },
-  ssg: {
-    strict: true,
-  },
-  search: {
-    codeBlocks: true,
+    light: 'https://assets.rspack.rs/rsbuild/navbar-logo-light.png',
+    dark: 'https://assets.rspack.rs/rsbuild/navbar-logo-dark.png',
   },
   markdown: {
     checkDeadLinks: true,
+    shiki: {
+      langs: ['styl', 'html', 'toml'],
+      langAlias: {
+        ejs: 'js',
+      },
+      transformers: [
+        transformerNotationDiff(),
+        transformerNotationHighlight(),
+        transformerNotationFocus(),
+      ],
+    },
   },
   route: {
     cleanUrls: true,
     // exclude document fragments from routes
-    exclude: ['**/zh/shared/**', '**/en/shared/**', './theme', './src'],
+    exclude: ['**/zh/shared/**', '**/en/shared/**'],
   },
   themeConfig: {
     socialLinks: [
@@ -117,14 +166,14 @@ export default defineConfig({
       {
         icon: 'bluesky',
         mode: 'link',
-        content: 'https://bsky.app/profile/rspack.dev',
+        content: 'https://bsky.app/profile/rspack.rs',
       },
     ],
     locales: [
       {
         lang: 'en',
         label: 'English',
-        description: 'The Rspack-based build tool for the web',
+        description,
         editLink: {
           docRepoBaseUrl:
             'https://github.com/web-infra-dev/rsbuild/tree/main/website/docs',
@@ -154,13 +203,10 @@ export default defineConfig({
         }
         return 'rsbuild-og-image.png';
       };
-      return `<meta property="og:image" content="https://assets.rspack.dev/rsbuild/${getOgImage()}">`;
+      return `<meta property="og:image" content="https://assets.rspack.rs/rsbuild/${getOgImage()}">`;
     },
   ],
   builderConfig: {
-    dev: {
-      lazyCompilation: true,
-    },
     plugins: [
       rsbuildPluginOverview,
       pluginSass(),
@@ -169,7 +215,7 @@ export default defineConfig({
         title: 'Rsbuild',
         type: 'website',
         url: siteUrl,
-        description: 'The Rspack-based build tool',
+        description,
         twitter: {
           site: '@rspack_dev',
           card: 'summary_large_image',
@@ -194,11 +240,11 @@ export default defineConfig({
         name: 'Rsbuild',
         icons: [
           {
-            src: 'https://assets.rspack.dev/rsbuild/rsbuild-logo-192x192.png',
+            src: 'https://assets.rspack.rs/rsbuild/rsbuild-logo-192x192.png',
             size: 192,
           },
           {
-            src: 'https://assets.rspack.dev/rsbuild/rsbuild-logo-512x512.png',
+            src: 'https://assets.rspack.rs/rsbuild/rsbuild-logo-512x512.png',
             size: 512,
           },
         ],

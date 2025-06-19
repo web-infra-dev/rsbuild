@@ -16,7 +16,6 @@ export default {
   externals: {
     '@rspack/core': '@rspack/core',
     '@rspack/lite-tapable': '@rspack/lite-tapable',
-    webpack: 'webpack',
     typescript: 'typescript',
   },
   dependencies: [
@@ -67,14 +66,7 @@ export default {
     },
     {
       name: 'rspack-chain',
-      ignoreDts: true,
-      afterBundle(task) {
-        // copy types to dist because prebundle will break the types
-        fs.cpSync(
-          join(task.depPath, 'types/index.d.ts'),
-          join(task.distPath, 'index.d.ts'),
-        );
-      },
+      copyDts: true,
     },
     {
       name: 'http-proxy-middleware',
@@ -101,6 +93,7 @@ export default {
             `${content
               .replace('express.Request', 'http.IncomingMessage')
               .replace('express.Response', 'http.ServerResponse')
+              .replace("import * as express from 'express';", '')
               .replace(
                 'extends express.RequestHandler {',
                 `{
@@ -111,6 +104,15 @@ export default {
     },
     {
       name: 'webpack-bundle-analyzer',
+      externals: {
+        webpack: 'webpack',
+      },
+      afterBundle(task) {
+        // webpack type does not exist, use `@rspack/core` instead
+        replaceFileContent(join(task.distPath, 'index.d.ts'), (content) =>
+          content.replace("from 'webpack'", 'from "@rspack/core"'),
+        );
+      },
     },
     {
       name: 'rsbuild-dev-middleware',
@@ -133,9 +135,28 @@ export default {
     },
     {
       name: 'postcss',
-      ignoreDts: true,
+      copyDts: true,
       externals: {
         picocolors: '../picocolors',
+      },
+      afterBundle(task) {
+        // source-map-js type does not exist, use a stub instead
+        replaceFileContent(join(task.distPath, 'lib/postcss.d.ts'), (content) =>
+          content.replace("from 'source-map-js'", 'from "./source-map-js"'),
+        );
+        replaceFileContent(
+          join(task.distPath, 'lib/previous-map.d.ts'),
+          (content) =>
+            content.replace("from 'source-map-js'", 'from "./source-map-js"'),
+        );
+        fs.writeFileSync(
+          join(task.distPath, 'lib/source-map-js.d.ts'),
+          `
+export type RawSourceMap = unknown;
+export type SourceMapConsumer = unknown;
+export type SourceMapGenerator = unknown;
+`,
+        );
       },
     },
     {

@@ -1,4 +1,3 @@
-import assert from 'node:assert';
 import { NODE_MODULES_REGEX } from '../constants';
 import type {
   ChunkSplit,
@@ -6,6 +5,7 @@ import type {
   Polyfill,
   RsbuildPlugin,
   Rspack,
+  SplitBySize,
   SplitChunks,
 } from '../types';
 
@@ -150,8 +150,8 @@ function splitByModule(ctx: SplitChunksContext): SplitChunks {
 }
 
 function splitBySize(ctx: SplitChunksContext): SplitChunks {
-  const { override, forceSplittingGroups, defaultConfig, userConfig } = ctx;
-  assert(userConfig.strategy === 'split-by-size');
+  const { override, forceSplittingGroups, defaultConfig, userConfig } =
+    ctx as SplitChunksContext & { userConfig: SplitBySize };
 
   return {
     ...defaultConfig,

@@ -40,7 +40,7 @@ test('inline all scripts should work and emit all source maps', async ({
   // test runtime
   expect(await page.evaluate('window.test')).toBe('aaaa');
 
-  const files = await rsbuild.unwrapOutputJSON(false);
+  const files = await rsbuild.getDistFiles(false);
 
   // no entry chunks or runtime chunks in output
   expect(
@@ -68,7 +68,7 @@ test('using RegExp to inline scripts', async () => {
       tools: toolsConfig,
     },
   });
-  const files = await rsbuild.unwrapOutputJSON(false);
+  const files = await rsbuild.getDistFiles(false);
 
   // no index.js in output
   expect(
@@ -96,7 +96,7 @@ test('inline scripts by filename and file size', async () => {
       tools: toolsConfig,
     },
   });
-  const files = await rsbuild.unwrapOutputJSON(false);
+  const files = await rsbuild.getDistFiles(false);
 
   // no index.js in output
   expect(
@@ -122,7 +122,7 @@ test('using RegExp to inline styles', async () => {
       tools: toolsConfig,
     },
   });
-  const files = await rsbuild.unwrapOutputJSON(false);
+  const files = await rsbuild.getDistFiles(false);
 
   // no index.css in output
   expect(
@@ -144,7 +144,7 @@ test('inline styles by filename and file size', async () => {
       tools: toolsConfig,
     },
   });
-  const files = await rsbuild.unwrapOutputJSON(false);
+  const files = await rsbuild.getDistFiles(false);
 
   // no index.css in output
   expect(
@@ -242,7 +242,7 @@ test('inline scripts does not work when enable is false', async () => {
       tools: toolsConfig,
     },
   });
-  const files = await rsbuild.unwrapOutputJSON(false);
+  const files = await rsbuild.getDistFiles(false);
 
   // all index.js in output
   expect(
@@ -271,7 +271,7 @@ test('inline styles does not work when enable is false', async () => {
       tools: toolsConfig,
     },
   });
-  const files = await rsbuild.unwrapOutputJSON(false);
+  const files = await rsbuild.getDistFiles(false);
 
   // all index.css in output
   expect(
@@ -298,7 +298,7 @@ test('inline chunk works in production mode when enable is auto', async () => {
       tools: toolsConfig,
     },
   });
-  const files = await rsbuild.unwrapOutputJSON(false);
+  const files = await rsbuild.getDistFiles(false);
 
   // no index.js in output
   expect(

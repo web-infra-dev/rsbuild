@@ -8,7 +8,7 @@ Here you can find all the environment related APIs.
 
 Environment context is a read-only object that provides some context information about the current environment.
 
-In Rsbuild's [Plugin hooks](/plugins/dev/hooks#plugin-hooks), you can get the environment context object through the `environment` or `environments` parameter.
+- **Type:**
 
 ```ts
 type EnvironmentContext = {
@@ -19,8 +19,14 @@ type EnvironmentContext = {
   entry: RsbuildEntry;
   htmlPaths: Record<string, string>;
   tsconfigPath?: string;
+  manifest?: Record<string, unknown> | ManifestData;
 };
 ```
+
+You can get the environment context through the following ways:
+
+1. In Rsbuild's [Plugin hooks](/plugins/dev/hooks#plugin-hooks), you can get the environment context object through the `environment` or `environments` parameter.
+2. In the [Environment API](#environment-api-1), it is available via `environments.context`.
 
 ### name
 
@@ -157,6 +163,37 @@ api.modifyRspackConfig((config, { environment }) => {
 });
 ```
 
+### manifest
+
+The manifest data. Only available when the [output.manifest](/config/output/manifest) config is enabled.
+
+- **Type:** `Record<string, unknown> | ManifestData | undefined`
+- **Example:**
+
+```js
+api.onAfterBuild(({ environments }) => {
+  // Get the manifest data of web environment
+  console.log(environments.web.manifest);
+});
+
+api.onDevCompileDone(({ environments }) => {
+  console.log(environments.web.manifest);
+});
+
+api.onAfterEnvironmentCompile(({ environment }) => {
+  console.log(environment.manifest);
+});
+```
+
+The manifest data is only available after the build has completed, you can access it in the following hooks:
+
+- [onAfterBuild](/plugins/dev/hooks#onafterbuild)
+- [onAfterEnvironmentCompile](/plugins/dev/hooks#onafterenvironmentcompile)
+- [onCloseBuild](/plugins/dev/hooks#onclosebuild)
+- [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)
+- [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone)
+- [onExit](/plugins/dev/hooks#onexit)
+
 ## Environment API
 
 Environment API provides some APIs related to the multi-environment build.
@@ -166,11 +203,25 @@ You can use environment API via [rsbuild.createDevServer()](/api/javascript-api/
 ```ts
 type EnvironmentAPI = {
   [name: string]: {
+    context: EnvironmentContext;
     getStats: () => Promise<Stats>;
     loadBundle: <T = unknown>(entryName: string) => Promise<T>;
     getTransformedHtml: (entryName: string) => Promise<string>;
   };
 };
+```
+
+### context
+
+You can get context information related to the current environment through the Environment API.
+
+- **Type:** [EnvironmentContext](#environment-context)
+- **Example:**
+
+```ts
+const webManifest = environments.web.context.manifest;
+
+console.log(webManifest.entries);
 ```
 
 ### getStats

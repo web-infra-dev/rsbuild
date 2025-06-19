@@ -1,4 +1,4 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] = `
 {
@@ -63,6 +63,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
+              "errorRecovery": true,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -94,6 +95,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
+              "errorRecovery": true,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -115,16 +117,14 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         },
         "include": [
           {
-            "and": [
-              "<ROOT>",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
+            "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
         ],
+        "resourceQuery": {
+          "not": /raw\\|inline/,
+        },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
@@ -147,6 +147,9 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
                   "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
+                "output": {
+                  "charset": "utf8",
+                },
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
@@ -160,6 +163,11 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
             },
           },
         ],
+      },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "type": "asset/source",
       },
       {
         "mimetype": {
@@ -191,6 +199,9 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
                   "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
+                "output": {
+                  "charset": "utf8",
+                },
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
@@ -379,6 +390,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
       "name": "RsbuildCorePlugin",
     },
     HotModuleReplacementPlugin {
+      "affectedHooks": undefined,
       "name": "HotModuleReplacementPlugin",
     },
     HtmlRspackPlugin {
@@ -410,18 +422,13 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
+        Symbol(entryName): "index",
       },
       "version": 6,
     },
     RsbuildHtmlPlugin {
-      "getEnvironment": [Function],
-      "modifyTagsFn": [Function],
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "index": {
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
     DefinePlugin {
       "_args": [
@@ -458,7 +465,6 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
   ],
   "watchOptions": {
     "aggregateTimeout": 0,
-    "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
   },
 }
 `;

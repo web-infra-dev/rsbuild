@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { globContentJSON, rspackOnlyTest } from '@e2e/helper';
+import { readDirContents, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { createRsbuild } from '@rsbuild/core';
 import { pluginVue } from '@rsbuild/plugin-vue';
@@ -16,7 +16,7 @@ rspackOnlyTest(
 
     await rsbuild.build();
 
-    const outputs = await globContentJSON(path.join(__dirname, 'dist'));
+    const outputs = await readDirContents(path.join(__dirname, 'dist'));
     const outputFiles = Object.keys(outputs);
 
     expect(

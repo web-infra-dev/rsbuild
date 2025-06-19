@@ -6,7 +6,7 @@ rspackOnlyTest('should allow plugin to transform code', async () => {
     cwd: __dirname,
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
   const indexJs = Object.keys(files).find(
     (file) => file.includes('index') && file.endsWith('.js'),
   );

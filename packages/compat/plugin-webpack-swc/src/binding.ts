@@ -3,9 +3,9 @@ import type { TransformConfig } from './types.js';
 
 export {
   minify,
-  minifySync,
   minifyCss,
   minifyCssSync,
+  minifySync,
 } from '@modern-js/swc-plugins';
 
 export class Compiler extends RawCompiler {

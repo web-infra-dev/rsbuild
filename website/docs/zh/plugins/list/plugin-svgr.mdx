@@ -4,7 +4,7 @@ import { SourceCode } from 'rspress/theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-svgr" />
 
-默认情况下，Rsbuild 会将 SVG 图片当作静态资源处理，处理规则可参考：[引用静态资源](/guide/basic/static-assets)。
+默认情况下，Rsbuild 会将 SVG 图片当作静态资源处理，处理规则可参考：[静态资源](/guide/basic/static-assets)。
 
 通过添加 SVGR 插件，Rsbuild 支持调用 [SVGR](https://react-svgr.com/)，将 SVG 图片转换为一个 React 组件使用。
 
@@ -43,7 +43,7 @@ import Logo from './logo.svg?react';
 export const App = () => <Logo />;
 ```
 
-如果导入的路径不包含 `?react` 后缀，那么 SVG 会被当做普通的静态资源来处理，你会得到一个 URL 字符串或 base64 URL，参考 [引用静态资源](/guide/basic/static-assets)。
+如果导入的路径不包含 `?react` 后缀，那么 SVG 会被当做普通的静态资源来处理，你会得到一个 URL 字符串或 base64 URL，参考 [静态资源](/guide/basic/static-assets)。
 
 ```js
 import logoURL from './static/logo.svg';
@@ -271,7 +271,7 @@ export const App = () => <Logo />;
 
 ### exclude
 
-- **类型：** [RuleSetCondition](https://rspack.dev/config/module#condition)
+- **类型：** [RuleSetCondition](https://rspack.rs/zh/config/module#condition)
 - **默认值：** `undefined`
 
 用于排除一部分 SVG 模块，这些 SVG 模块不会经过 SVGR 处理。
@@ -299,7 +299,7 @@ console.log(url); // => 资源 url
 
 ### excludeImporter
 
-- **类型：** [RuleSetCondition](https://rspack.dev/config/module#condition)
+- **类型：** [RuleSetCondition](https://rspack.rs/zh/config/module#condition)
 - **默认值：** `undefined`
 
 用于排除一部分模块，这些模块引用的 SVG 文件不会经过 SVGR 处理。

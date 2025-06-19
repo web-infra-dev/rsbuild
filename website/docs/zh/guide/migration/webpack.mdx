@@ -20,13 +20,13 @@ import { PackageManagerTabs } from '@theme';
 
 下一步，你需要把 package.json 中的 npm scripts 更新为 Rsbuild 的 CLI 命令。
 
-```diff title="package.json"
+```json title="package.json"
 {
   "scripts": {
--   "serve": "webpack serve -c webpack.config.js",
--   "build": "webpack build -c webpack.config.js",
-+   "dev": "rsbuild dev",
-+   "build": "rsbuild build"
+    "serve": "webpack serve -c webpack.config.js", // [!code --]
+    "build": "webpack build -c webpack.config.js", // [!code --]
+    "dev": "rsbuild dev", // [!code ++]
+    "build": "rsbuild build" // [!code ++]
   }
 }
 ```
@@ -43,7 +43,7 @@ export default defineConfig({
 });
 ```
 
-> 查看 [配置 Rsbuild](/guide/basic/configure-rsbuild) 了解更多。
+> 查看 [配置 Rsbuild](/guide/configuration/rsbuild) 了解更多。
 
 ## 配置迁移
 
@@ -67,7 +67,7 @@ export default {
 
 - 使用 Rsbuild 封装的配置项，比如 css-loader 的选项可以通过 [tools.cssLoader](/config/tools/css-loader) 设置。
 
-> 参考 [配置 Rspack](/guide/basic/configure-rspack) 了解更多。
+> 参考 [配置 Rspack](/guide/configuration/rspack) 了解更多。
 
 ### 构建入口
 
@@ -117,42 +117,42 @@ Rsbuild 提供了丰富的插件，对常见的使用场景提供开箱即用的
 
 然后参考 [React 插件](/plugins/list/plugin-react) 文档，注册并使用即可：
 
-```diff
+```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
-+import { pluginReact } from '@rsbuild/plugin-react';
+import { pluginReact } from '@rsbuild/plugin-react'; // [!code highlight]
 
-export default {
-+  plugins: [pluginReact()],
-};
+export default defineConfig({
+  plugins: [pluginReact()], // [!code highlight]
+});
 ```
 
 大部分常见的 webpack loaders 和 plugins 都能在 Rsbuild 中继续使用，但我们推荐你优先使用 Rsbuild 提供的插件，这能够进一步简化你的配置。下面是它们的映射关系：
 
-| webpack                                                                                        | Rsbuild                                                                                                     |
-| ---------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| [@babel/preset-react](https://www.npmjs.com/package/@babel/preset-react)                       | [React 插件](/plugins/list/plugin-react)                                                                    |
-| [vue-loader](https://www.npmjs.com/package/vue-loader)                                         | [Vue 插件](/plugins/list/plugin-vue) 或 [Vue 2 插件](https://github.com/rspack-contrib/rsbuild-plugin-vue2) |
-| [svelte-loader](https://www.npmjs.com/package/svelte-loader)                                   | [Svelte 插件](/plugins/list/plugin-svelte)                                                                  |
-| [babel-preset-solid](https://www.npmjs.com/package/babel-preset-solid)                         | [Solid 插件](/plugins/list/plugin-solid)                                                                    |
-| [babel-loader](https://www.npmjs.com/package/babel-loader)                                     | [Babel 插件](/plugins/list/plugin-babel)                                                                    |
-| [sass-loader](https://www.npmjs.com/package/sass-loader)                                       | [Sass 插件](/plugins/list/plugin-sass)                                                                      |
-| [less-loader](https://www.npmjs.com/package/less-loader)                                       | [Less 插件](/plugins/list/plugin-less)                                                                      |
-| [stylus-loader](https://www.npmjs.com/package/stylus-loader)                                   | [Stylus 插件](/plugins/list/plugin-stylus)                                                                  |
-| [mdx-loader](https://www.npmjs.com/package/mdx-loader)                                         | [MDX 插件](https://github.com/rspack-contrib/rsbuild-plugin-mdx)                                            |
-| [pug-loader](https://www.npmjs.com/package/pug-loader)                                         | [Pug 插件](https://github.com/rspack-contrib/rsbuild-plugin-pug)                                            |
-| [yaml-loader](https://www.npmjs.com/package/yaml-loader)                                       | [Yaml 插件](https://github.com/rspack-contrib/rsbuild-plugin-yaml)                                          |
-| [toml-loader](https://www.npmjs.com/package/toml-loader)                                       | [Toml 插件](https://github.com/rspack-contrib/rsbuild-plugin-toml)                                          |
-| [@svgr/webpack](https://www.npmjs.com/package/@svgr/webpack)                                   | [SVGR 插件](/plugins/list/plugin-svgr)                                                                      |
-| [fork-ts-checker-webpack-plugin](https://www.npmjs.com/package/fork-ts-checker-webpack-plugin) | [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check)                   |
-| [node-polyfill-webpack-plugin](https://www.npmjs.com/package/node-polyfill-webpack-plugin)     | [Node Polyfill 插件](https://github.com/rspack-contrib/rsbuild-plugin-node-polyfill)                        |
-| [@vue/babel-plugin-jsx](https://www.npmjs.com/package/@vue/babel-plugin-jsx)                   | [Vue JSX 插件](https://github.com/rspack-contrib/rsbuild-plugin-vue-jsx)                                    |
-| [@vue/babel-preset-jsx](https://www.npmjs.com/package/@vue/babel-preset-jsx)                   | [Vue 2 JSX 插件](https://github.com/rspack-contrib/rsbuild-plugin-vue2-jsx)                                 |
-| [eslint-webpack-plugin](https://www.npmjs.com/package/eslint-webpack-plugin)                   | [ESLint 插件](https://github.com/rspack-contrib/rsbuild-plugin-eslint)                                      |
-| [babel-plugin-styled-components](https://www.npmjs.com/package/babel-plugin-styled-components) | [Styled Components 插件](https://github.com/rspack-contrib/rsbuild-plugin-styled-components)                |
+| webpack                                                                                    | Rsbuild                                                                                                     |
+| ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| [@babel/preset-react](https://npmjs.com/package/@babel/preset-react)                       | [React 插件](/plugins/list/plugin-react)                                                                    |
+| [vue-loader](https://npmjs.com/package/vue-loader)                                         | [Vue 插件](/plugins/list/plugin-vue) 或 [Vue 2 插件](https://github.com/rspack-contrib/rsbuild-plugin-vue2) |
+| [svelte-loader](https://npmjs.com/package/svelte-loader)                                   | [Svelte 插件](/plugins/list/plugin-svelte)                                                                  |
+| [babel-preset-solid](https://npmjs.com/package/babel-preset-solid)                         | [Solid 插件](/plugins/list/plugin-solid)                                                                    |
+| [babel-loader](https://npmjs.com/package/babel-loader)                                     | [Babel 插件](/plugins/list/plugin-babel)                                                                    |
+| [sass-loader](https://npmjs.com/package/sass-loader)                                       | [Sass 插件](/plugins/list/plugin-sass)                                                                      |
+| [less-loader](https://npmjs.com/package/less-loader)                                       | [Less 插件](/plugins/list/plugin-less)                                                                      |
+| [stylus-loader](https://npmjs.com/package/stylus-loader)                                   | [Stylus 插件](/plugins/list/plugin-stylus)                                                                  |
+| [mdx-loader](https://npmjs.com/package/mdx-loader)                                         | [MDX 插件](https://github.com/rspack-contrib/rsbuild-plugin-mdx)                                            |
+| [pug-loader](https://npmjs.com/package/pug-loader)                                         | [Pug 插件](https://github.com/rspack-contrib/rsbuild-plugin-pug)                                            |
+| [yaml-loader](https://npmjs.com/package/yaml-loader)                                       | [Yaml 插件](https://github.com/rspack-contrib/rsbuild-plugin-yaml)                                          |
+| [toml-loader](https://npmjs.com/package/toml-loader)                                       | [Toml 插件](https://github.com/rspack-contrib/rsbuild-plugin-toml)                                          |
+| [@svgr/webpack](https://npmjs.com/package/@svgr/webpack)                                   | [SVGR 插件](/plugins/list/plugin-svgr)                                                                      |
+| [fork-ts-checker-webpack-plugin](https://npmjs.com/package/fork-ts-checker-webpack-plugin) | [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check)                   |
+| [node-polyfill-webpack-plugin](https://npmjs.com/package/node-polyfill-webpack-plugin)     | [Node Polyfill 插件](https://github.com/rspack-contrib/rsbuild-plugin-node-polyfill)                        |
+| [@vue/babel-plugin-jsx](https://npmjs.com/package/@vue/babel-plugin-jsx)                   | [Vue JSX 插件](https://github.com/rspack-contrib/rsbuild-plugin-vue-jsx)                                    |
+| [@vue/babel-preset-jsx](https://npmjs.com/package/@vue/babel-preset-jsx)                   | [Vue 2 JSX 插件](https://github.com/rspack-contrib/rsbuild-plugin-vue2-jsx)                                 |
+| [eslint-webpack-plugin](https://npmjs.com/package/eslint-webpack-plugin)                   | [ESLint 插件](https://github.com/rspack-contrib/rsbuild-plugin-eslint)                                      |
+| [babel-plugin-styled-components](https://npmjs.com/package/babel-plugin-styled-components) | [Styled Components 插件](https://github.com/rspack-contrib/rsbuild-plugin-styled-components)                |
 
 ### 配置 Dev server
 
-Rsbuild 不支持使用 Rspack 的 [devServer](https://rspack.dev/config/dev-server) 配置项，请参考 [Rspack Dev Server](/guide/basic/server#rspack-dev-server) 进行替换。
+Rsbuild 不支持使用 Rspack 的 [devServer](https://rspack.rs/zh/config/dev-server) 配置项，请参考 [Rspack Dev Server](/guide/basic/server#rspack-dev-server) 进行替换。
 
 ## Babel 迁移
 

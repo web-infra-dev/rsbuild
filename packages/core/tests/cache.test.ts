@@ -1,19 +1,6 @@
 import { createStubRsbuild } from '@scripts/test-helper';
 import { pluginCache } from '../src/plugins/cache';
 
-vi.mock('../src/helpers.js', async (importOriginal) => {
-  const mod = await importOriginal<any>();
-  return {
-    ...mod,
-    findExists: (files: string[]) => {
-      if (files.some((file) => file.includes('tailwind'))) {
-        return '/root/tailwind.config.ts';
-      }
-      return mod.findExists(files);
-    },
-  };
-});
-
 describe('plugin-cache', () => {
   const cases = [
     {

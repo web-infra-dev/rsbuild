@@ -11,6 +11,7 @@
 - [modifyRspackConfig](#modifyrspackconfig)：修改传递给 Rspack 的配置。
 - [modifyBundlerChain](#modifybundlerchain)：通过 chain API 修改 Rspack 的配置。
 - [modifyHTMLTags](#modifyhtmltags)：修改注入到 HTML 中的标签。
+- [modifyHTML](#modifyhtml)：修改最终的 HTML 内容。
 - [onBeforeCreateCompiler](#onbeforecreatecompiler)：在创建 compiler 实例前调用。
 - [onAfterCreateCompiler](#onaftercreatecompiler)：在创建 compiler 实例后、执行构建前调用。
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile): 在每次执行单个 environment 的构建前调用。
@@ -63,6 +64,7 @@
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [onAfterStartDevServer](#onafterstartdevserver)
 - [modifyHTMLTags](#modifyhtmltags)
+- [modifyHTML](#modifyhtml)
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onDevCompileDone](#ondevcompiledone)
 - [onCloseDevServer](#onclosedevserver)
@@ -72,6 +74,7 @@
 
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [modifyHTMLTags](#modifyhtmltags)
+- [modifyHTML](#modifyhtml)
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onDevCompileDone](#ondevcompiledone)
 
@@ -88,6 +91,7 @@
 - [onBeforeBuild](#onbeforebuild)
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [modifyHTMLTags](#modifyhtmltags)
+- [modifyHTML](#modifyhtml)
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onAfterBuild](#onafterbuild)
 - [onCloseBuild](#onclosebuild)
@@ -98,6 +102,7 @@
 - [onBeforeBuild](#onbeforebuild)
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [modifyHTMLTags](#modifyhtmltags)
+- [modifyHTML](#modifyhtml)
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onAfterBuild](#onafterbuild)
 
@@ -116,7 +121,7 @@
 在 Rsbuild 中，有一些插件 hooks 是全局 hooks，这些 hook 的执行往往和 Rsbuild 自身的启动流程或全局逻辑相关，在所有 environment 下共享。如：
 
 - `modifyRsbuildConfig` 用来修改 Rsbuild 的基础配置，基础配置最终会和 environment 配置合并；
-- `onBeforeStartDevServer`、`onAfterStartDevServer` 和 Rsbuild dev server 启动流程相关，所有 environments 共享 Rsbuild 的 dev server、middlewares、WebSocket。
+- `onBeforeStartDevServer`、`onAfterStartDevServer` 和 Rsbuild dev server 启动流程相关，所有 environments 共享 Rsbuild 的开发服务器、中间件、WebSocket。
 
 与之对应的，有一些插件 hooks 是和当前 environment 相关的 hook，这些 hook 执行时会带有特定的 environment 上下文，并根据 environment 的不同而触发多次。
 
@@ -142,6 +147,7 @@
 - [modifyBundlerChain](#modifybundlerchain)
 - [modifyRspackConfig](#modifyrspackconfig)
 - [modifyHTMLTags](#modifyhtmltags)
+- [modifyHTML](#modifyhtml)
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 
@@ -437,9 +443,89 @@ const myPlugin = () => ({
 
 回调函数的第二个参数 `utils` 是一个对象，包含了一些工具函数和属性，详见 [tools.bundlerChain - 工具对象](/config/tools/bundler-chain#工具对象)。
 
+### modifyHTML
+
+修改最终的 HTML 内容。该钩子接收一个 HTML 字符串和上下文对象，你可以返回一个新的 HTML 字符串来替换原始内容。
+
+这个钩子在 [modifyHTMLTags](#modifyhtmltags) 钩子之后触发。
+
+- **类型：**
+
+```ts
+type Context = {
+  /**
+   * Rspack 的 Compiler 对象
+   */
+  compiler: Rspack.Compiler;
+  /**
+   * Rspack 的 Compilation 对象
+   */
+  compilation: Rspack.Compilation;
+  /**
+   * HTML 文件的名称，相对于 dist 目录
+   * @example 'index.html'
+   */
+  filename: string;
+  /**
+   * 当前构建的 environment 上下文
+   */
+  environment: EnvironmentContext;
+};
+
+function ModifyHTML(
+  callback: (html: string, context: Context) => MaybePromise<string>,
+): void;
+```
+
+- **示例：**
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.modifyHTML((html) => {
+      return html.replace('foo', 'bar');
+    });
+  },
+});
+```
+
+基于 `filename` 来修改 HTML 内容：
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.modifyHTML((html, { filename }) => {
+      if (filename === 'foo.html') {
+        return html.replace('foo', 'bar');
+      }
+      return html;
+    });
+  },
+});
+```
+
+与直接操作 HTML 字符串相比，你可以借助 [cheerio](https://github.com/cheeriojs/cheerio) 或 [htmlparser2](https://github.com/fb55/htmlparser2) 等库来更便捷地修改 HTML 内容。
+
+以 `cheerio` 为例，它提供了类似 jQuery 的 API 来操作 HTML：
+
+```ts
+import cheerio from 'cheerio';
+
+const myPlugin = () => ({
+  setup(api) {
+    api.modifyHTML((html) => {
+      const $ = cheerio.load(html);
+      $('h2.title').text('Hello there!');
+      $('h2').addClass('welcome');
+      return $.html();
+    });
+  },
+});
+```
+
 ### modifyHTMLTags
 
-修改注入到 HTML 中的标签。
+修改注入到 HTML 中的标签。这个钩子在 [modifyHTML](#modifyhtml) 钩子之前触发。
 
 - **类型：**
 
@@ -493,16 +579,32 @@ function ModifyHTMLTags(
 - **示例：**
 
 ```ts
-const myPlugin = () => ({
+const tagsPlugin = () => ({
+  name: 'tags-plugin',
   setup(api) {
     api.modifyHTMLTags(({ headTags, bodyTags }) => {
-      headTags.push({
+      // 在 <head> 中插入一个标签，位于其他标签之前
+      headTags.unshift({
         tag: 'script',
         attrs: { src: 'https://example.com/foo.js' },
       });
-      bodyTags.push({
+
+      // 在 <head> 中插入一个标签，位于其他标签之后
+      headTags.push({
         tag: 'script',
-        children: 'console.log("hello world!");',
+        attrs: { src: 'https://example.com/bar.js' },
+      });
+
+      // 在 <body> 中插入一个标签，位于其他标签之前
+      bodyTags.unshift({
+        tag: 'div',
+        children: 'before other body tags',
+      });
+
+      // 在 <body> 中插入一个标签，位于其他标签之后
+      bodyTags.push({
+        tag: 'div',
+        children: 'after other body tags',
       });
 
       return { headTags, bodyTags };
@@ -689,7 +791,7 @@ const myPlugin = () => ({
   setup(api) {
     api.onBeforeStartDevServer(({ server }) => {
       // the returned callback will be called when the default
-      // middlewares are registered
+      // middleware are registered
       return () => {
         server.middlewares.use((req, res, next) => {
           next();
@@ -862,8 +964,8 @@ import OnExit from '@zh/shared/onExit.mdx';
 ```ts
 const myPlugin = () => ({
   setup(api) {
-    api.onExit(() => {
-      console.log('exit!');
+    api.onExit(({ exitCode }) => {
+      console.log('exit: ', exitCode);
     });
   },
 });

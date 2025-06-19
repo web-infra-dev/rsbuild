@@ -12,7 +12,7 @@ An Rsbuild plugin to use Babel to transpile the code.
 
 ## Documentation
 
-See [Documentation](https://rsbuild.dev/plugins/list/plugin-babel).
+See [Documentation](https://rsbuild.rs/plugins/list/plugin-babel).
 
 ## License
 

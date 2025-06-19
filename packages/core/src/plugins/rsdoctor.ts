@@ -56,7 +56,7 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
         packagePath = require.resolve(packageName, {
           paths: [api.context.rootPath],
         });
-      } catch (err) {
+      } catch {
         logger.warn(
           `\`process.env.RSDOCTOR\` enabled, please install ${color.bold(color.yellow(packageName))} package.`,
         );
@@ -70,7 +70,7 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
             ? pathToFileURL(packagePath).href
             : packagePath;
         module = await import(moduleURL);
-      } catch (err) {
+      } catch {
         logger.error(
           `\`process.env.RSDOCTOR\` enabled, but failed to load ${color.bold(color.yellow(packageName))} module.`,
         );

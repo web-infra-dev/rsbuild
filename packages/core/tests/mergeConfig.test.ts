@@ -390,4 +390,32 @@ describe('mergeRsbuildConfig', () => {
       },
     });
   });
+
+  test('should merge output.filename.js as expected', async () => {
+    const fn = () => 'custom-output2.js';
+    expect(
+      mergeRsbuildConfig(
+        {
+          output: {
+            filename: {
+              js: 'custom-output.js',
+            },
+          },
+        },
+        {
+          output: {
+            filename: {
+              js: fn,
+            },
+          },
+        },
+      ),
+    ).toEqual({
+      output: {
+        filename: {
+          js: fn,
+        },
+      },
+    });
+  });
 });

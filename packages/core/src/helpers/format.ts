@@ -5,14 +5,14 @@ const formatFileName = (fileName: string) => {
   // add default column add lines for linking
   return /:\d+:\d+/.test(fileName)
     ? `File: ${color.cyan(fileName)}\n`
-    : `File: ${color.cyan(fileName)}:1:1\n`;
+    : `File: ${color.cyan(`${fileName}:1:1`)}\n`;
 };
 
 function resolveFileName(stats: StatsError) {
   // Get the real source file path with stats.moduleIdentifier.
   // e.g. moduleIdentifier is "builtin:react-refresh-loader!/Users/x/src/App.jsx"
   if (stats.moduleIdentifier) {
-    const regex = /(?:\!|^)([^!]+)$/;
+    const regex = /(?:!|^)([^!]+)$/;
     const matched = stats.moduleIdentifier.match(regex);
     if (matched) {
       const fileName = matched.pop();
@@ -52,7 +52,7 @@ function hintUnknownFiles(message: string): string {
     return `To enable support for ${keyword}, use "${color.yellow(
       `@rsbuild/plugin-${packageName}`,
     )}" ${color.dim(
-      `(https://www.npmjs.com/package/@rsbuild/plugin-${packageName})`,
+      `(https://npmjs.com/package/@rsbuild/plugin-${packageName})`,
     )}.`;
   };
 
@@ -106,11 +106,13 @@ function hintUnknownFiles(message: string): string {
 const hintNodePolyfill = (message: string): string => {
   const getTips = (moduleName: string) => {
     const tips = [
-      `Tip: "${moduleName}" is a built-in Node.js module. It cannot be imported in client-side code.`,
-      `Check if you need to import Node.js module. If needed, you can use "${color.cyan('@rsbuild/plugin-node-polyfill')}" to polyfill it.`,
+      `Error: "${moduleName}" is a built-in Node.js module and cannot be imported in client-side code.\n`,
+      'Solution: Check if you need to import Node.js module.',
+      '  - If not needed, remove the import.',
+      `  - If needed, use "${color.yellow('@rsbuild/plugin-node-polyfill')}" to polyfill it. (See ${color.yellow('https://npmjs.com/package/@rsbuild/plugin-node-polyfill')})`,
     ];
 
-    return `${message}\n\n${color.yellow(tips.join('\n'))}`;
+    return `${message}\n\n${color.red(tips.join('\n'))}`;
   };
 
   const isNodeProtocolError = message.includes(

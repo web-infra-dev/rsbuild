@@ -14,20 +14,20 @@ import type {
 } from '../types';
 
 function getPublicPath({
-  isProd,
+  isDev,
   config,
   context,
 }: {
-  isProd: boolean;
+  isDev: boolean;
   config: NormalizedEnvironmentConfig;
   context: RsbuildContext;
 }) {
   const { dev, output, server } = config;
 
   let publicPath = DEFAULT_ASSET_PREFIX;
-  const port = context.devServer?.port || server.port || DEFAULT_PORT;
 
-  if (isProd) {
+  // If `mode` is `production` or `none`, use `output.assetPrefix`
+  if (!isDev) {
     if (typeof output.assetPrefix === 'string') {
       publicPath = output.assetPrefix;
     }
@@ -53,6 +53,8 @@ function getPublicPath({
     }
   }
 
+  const defaultPort = server.port ?? DEFAULT_PORT;
+  const port = isDev ? (context.devServer?.port ?? defaultPort) : defaultPort;
   return formatPublicPath(replacePortPlaceholder(publicPath, port));
 }
 
@@ -76,12 +78,12 @@ export const pluginOutput = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(
-      async (chain, { CHAIN_ID, isProd, isServer, environment }) => {
+      async (chain, { CHAIN_ID, isDev, isProd, isServer, environment }) => {
         const { distPath, config } = environment;
 
         const publicPath = getPublicPath({
           config,
-          isProd,
+          isDev,
           context: api.context,
         });
 

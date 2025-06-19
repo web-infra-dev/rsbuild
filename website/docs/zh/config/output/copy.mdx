@@ -3,9 +3,9 @@
 - **类型：** `Rspack.CopyRspackPluginOptions | Rspack.CopyRspackPluginOptions['patterns']`
 - **默认值：** `undefined`
 
-将指定的文件或目录拷贝到构建输出目录中，基于 [rspack.CopyRspackPlugin](https://rspack.dev/zh/plugins/rspack/copy-rspack-plugin) 实现。
+将指定的文件或目录拷贝到构建输出目录中，基于 [rspack.CopyRspackPlugin](https://rspack.rs/zh/plugins/rspack/copy-rspack-plugin) 实现。
 
-> 配置项请参考：[rspack.CopyRspackPlugin](https://rspack.dev/zh/plugins/rspack/copy-rspack-plugin)。
+> 配置项请参考：[rspack.CopyRspackPlugin](https://rspack.rs/zh/plugins/rspack/copy-rspack-plugin)。
 
 ## 示例
 
@@ -31,6 +31,21 @@ export default {
       // `./src/assets/image.png` -> `./dist/assets/image.png`
       { from: './src/assets', to: 'assets' },
     ],
+  },
+};
+```
+
+在拷贝 `public` 下的文件到构建产物目录时，将忽略 `public/someDir` 目录：
+
+```js
+export default {
+  output: {
+    copy: [{ from: './public', globOptions: { ignore: ['**/someDir/**'] } }],
+  },
+  server: {
+    publicDir: {
+      copyOnBuild: false,
+    },
   },
 };
 ```

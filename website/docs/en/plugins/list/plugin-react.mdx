@@ -39,13 +39,18 @@ Configure the behavior of SWC to transform React code, the same as SWC's [jsc.tr
 - **Type:**
 
 ```ts
-interface SwcReactOptions {
+interface ReactConfig {
   pragma?: string;
   pragmaFrag?: string;
   throwIfNamespace?: boolean;
   development?: boolean;
-  useBuiltins?: boolean;
-  refresh?: boolean;
+  refresh?:
+    | boolean
+    | {
+        refreshReg?: string;
+        refreshSig?: string;
+        emitFullSignatures?: boolean;
+      };
   runtime?: 'automatic' | 'classic';
   importSource?: string;
 }
@@ -115,7 +120,7 @@ pluginReact({
 - **Type:** `boolean`
 - **Default:** based on [fastRefresh](#fastrefresh) and [dev.hmr](/config/dev/hmr)
 
-Whether to enable [React Fast Refresh](https://www.npmjs.com/package/react-refresh).
+Whether to enable [React Fast Refresh](https://npmjs.com/package/react-refresh).
 
 Most of the time, you should use the plugin's [fastRefresh](#fastrefresh) option to enable or disable Fast Refresh.
 
@@ -182,7 +187,7 @@ Set `REACT_PROFILER=true` when running build script:
 }
 ```
 
-Since the Windows system does not support the above usage, you can also use [cross-env](https://www.npmjs.com/package/cross-env) to set environment variables. This ensures compatibility across different systems:
+As Windows does not support the above usage, you can also use [cross-env](https://npmjs.com/package/cross-env) to set environment variables. This ensures compatibility across different systems:
 
 ```json title="package.json"
 {
@@ -216,10 +221,11 @@ type ReactRefreshOptions = {
 const defaultOptions = {
   include: [/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/],
   exclude: [/[\\/]node_modules[\\/]/],
+  resourceQuery: { not: /raw/ },
 };
 ```
 
-Set the options for [@rspack/plugin-react-refresh](https://www.rspack.dev/guide/tech/react#rspackplugin-react-refresh). The passed value will be shallowly merged with the default value.
+Set the options for [@rspack/plugin-react-refresh](https://github.com/rspack-contrib/rspack-plugin-react-refresh). The passed value will be shallowly merged with the default value.
 
 - **Example:**
 
@@ -236,9 +242,9 @@ pluginReact({
 - **Type:** `boolean`
 - **Default:** `true`
 
-Whether to enable [React Fast Refresh](https://www.npmjs.com/package/react-refresh) in development mode.
+Whether to enable [React Fast Refresh](https://npmjs.com/package/react-refresh) in development mode.
 
-If `fastRefresh` is set to `true`, `@rsbuild/plugin-react` will automatically register the [@rspack/plugin-react-refresh](https://www.npmjs.com/package/@rspack/plugin-react-refresh) plugin.
+If `fastRefresh` is set to `true`, `@rsbuild/plugin-react` will automatically register the [@rspack/plugin-react-refresh](https://github.com/rspack-contrib/rspack-plugin-react-refresh) plugin.
 
 To disable Fast Refresh, set it to `false`:
 

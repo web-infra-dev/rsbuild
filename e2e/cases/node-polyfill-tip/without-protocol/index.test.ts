@@ -1,19 +1,20 @@
-import { build, proxyConsole } from '@e2e/helper';
+import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should print tips if resolve Node.js builtin module failed', async () => {
-  const { logs, restore } = proxyConsole();
+  const rsbuild = await build({
+    cwd: __dirname,
+    catchBuildError: true,
+  });
 
-  try {
-    await build({ cwd: __dirname });
-  } catch (err) {}
-
-  restore();
+  expect(rsbuild.buildError).toBeTruthy();
   expect(
-    logs.some((log) =>
+    rsbuild.logs.some((log) =>
       log.includes(
-        '"querystring" is a built-in Node.js module. It cannot be imported in client-side code.',
+        '"querystring" is a built-in Node.js module and cannot be imported in client-side code.',
       ),
     ),
   );
+
+  await rsbuild.close();
 });

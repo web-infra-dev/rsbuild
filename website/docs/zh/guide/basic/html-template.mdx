@@ -1,8 +1,25 @@
-# 配置 HTML 模板
+# HTML
 
 在构建的过程中，Rsbuild 会基于 HTML 模板文件和模板参数进行编译，生成若干份 HTML 文件。
 
 Rsbuild 提供了一些配置项来对 HTML 模板进行设置。通过本章节你可以了解到这些配置项的基本用法。
+
+## HTML 生成
+
+Rsbuild 会为 [source.entry](/config/source/entry) 中定义的每个入口生成一个 HTML 文件。
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    entry: {
+      foo: './src/pages/foo/index.ts', // 生成 foo.html
+      bar: './src/pages/bar/index.ts', // 生成 bar.html
+    },
+  },
+};
+```
+
+参考 [source.entry - HTML 生成](/config/source/entry#html-生成) 了解如何控制 HTML 生成。
 
 ## 设置模板文件
 
@@ -16,7 +33,7 @@ export default {
 };
 ```
 
-未设置 `html.template` 时，Rsbuild 会使用内置的 HTML 模板：
+未设置 `html.template` 时，Rsbuild 会使用内置的 HTML 模板，内容如下：
 
 ```html title="defaultTemplate.html"
 <!doctype html>
@@ -27,6 +44,8 @@ export default {
   </body>
 </html>
 ```
+
+在默认模板中，`id="<%= mountId %>"` 会被替换为 `id="root"`，你可以通过 [html.mountId](/config/html/mount-id) 选项来修改这个值。
 
 ## 设置页面标题
 
@@ -203,6 +222,139 @@ export default {
 :::tip
 注意，Rsbuild 默认的转义语法是与 EJS 不同的。在 EJS 中，默认的转义语法是 `<%= text %>`，而 Rsbuild 的默认转义语法是 `<%- text %>`。
 :::
+
+### 条件语句
+
+- if 条件：
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    templateParameters: {
+      show: true,
+    },
+  },
+};
+```
+
+```ejs
+<% if (show) { %>
+<p>show is true</p>
+<% } %>
+```
+
+- if/else 条件：
+
+```ejs
+<% if (show) { %>
+<p>show is true</p>
+<% } else { %>
+<p>show is false</p>
+<% } %>
+```
+
+- else if 条件：
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    templateParameters: {
+      count: 7,
+    },
+  },
+};
+```
+
+```ejs
+<% if (count > 10) { %>
+<p>count > 10</p>
+<% } else if (count > 5) { %>
+<p>count > 5</p>
+<% } else { %>
+<p>count ≤ 5</p>
+<% } %>
+```
+
+- 嵌套条件：
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    templateParameters: {
+      parent: true,
+      child: true,
+    },
+  },
+};
+```
+
+```ejs
+<% if (parent) { %>
+<p>parent is true</p>
+  <% if (child) { %>
+  <p>child is true</p>
+  <% } %>
+<% } %>
+```
+
+- 三元运算符：
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    templateParameters: {
+      show: true,
+      value: 'success',
+    },
+  },
+};
+```
+
+```ejs
+<p>result: <%= show ? value : 'none' %></p>
+```
+
+### 循环语句
+
+- for 循环：
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    templateParameters: {
+      items: ['Item 1', 'Item 2', 'Item 3'],
+    },
+  },
+};
+```
+
+```ejs title="index.html"
+<ul>
+  <% for (let i = 0; i < items.length; i++) { %>
+  <li><%= items[i] %></li>
+  <% } %>
+</ul>
+```
+
+- forEach 循环：
+
+```ejs title="index.html"
+<ul>
+  <% items.forEach(function(item, index) { %>
+  <li><%= item %> <%= index %></li>
+  <% }); %>
+</ul>
+```
+
+- for...of 循环：
+
+```ejs title="index.html"
+<ul>
+  <% for (let item of items) { %>
+  <li><%= item %></li>
+  <% } %>
+</ul>
+```
 
 ## 其他模板引擎
 

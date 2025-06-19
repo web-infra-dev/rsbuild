@@ -1,17 +1,17 @@
 import { isAbsolute, join } from 'node:path';
-import rspack from '@rspack/core';
-import { normalizePublicDirs } from '../config';
-import { isMultiCompiler } from '../helpers';
+import { rspack } from '@rspack/core';
+import { normalizePublicDirs } from '../defaultConfig';
+import { isMultiCompiler, pick } from '../helpers';
 import { logger } from '../logger';
 import type {
   DevConfig,
-  EnvironmentAPI,
   InternalContext,
   RequestHandler,
   ServerConfig,
   SetupMiddlewaresServer,
 } from '../types';
 import type { CompilationManager } from './compilationManager';
+import type { RsbuildDevServer } from './devServer';
 import { gzipMiddleware } from './gzipMiddleware';
 import type { UpgradeEvent } from './helper';
 import {
@@ -22,14 +22,15 @@ import {
   getRequestLoggerMiddleware,
   viewingServedFilesMiddleware,
 } from './middlewares';
+import { replacePortPlaceholder } from './open';
 import { createProxyMiddleware } from './proxy';
 
 export type RsbuildDevMiddlewareOptions = {
   pwd: string;
   dev: DevConfig;
+  devServerAPI: RsbuildDevServer;
   server: ServerConfig;
   context: InternalContext;
-  environments: EnvironmentAPI;
   compilationManager?: CompilationManager;
   /**
    * Callbacks returned by the `onBeforeStartDevServer` hook.
@@ -39,19 +40,14 @@ export type RsbuildDevMiddlewareOptions = {
 
 const applySetupMiddlewares = (
   dev: RsbuildDevMiddlewareOptions['dev'],
-  environments: EnvironmentAPI,
-  compilationManager?: CompilationManager,
+  devServerAPI: RsbuildDevServer,
 ) => {
   const setupMiddlewares = dev.setupMiddlewares || [];
 
-  const serverOptions: SetupMiddlewaresServer = {
-    sockWrite: (type, data) =>
-      compilationManager?.socketServer.sockWrite({
-        type,
-        data,
-      }),
-    environments,
-  };
+  const serverOptions: SetupMiddlewaresServer = pick(devServerAPI, [
+    'sockWrite',
+    'environments',
+  ]);
 
   const before: RequestHandler[] = [];
   const after: RequestHandler[] = [];
@@ -73,12 +69,12 @@ export type Middlewares = Array<RequestHandler | [string, RequestHandler]>;
 
 const applyDefaultMiddlewares = async ({
   dev,
+  devServerAPI,
   middlewares,
   server,
   compilationManager,
   context,
   pwd,
-  environments,
   postCallbacks,
 }: RsbuildDevMiddlewareOptions & {
   middlewares: Middlewares;
@@ -86,10 +82,6 @@ const applyDefaultMiddlewares = async ({
   onUpgrade: UpgradeEvent;
 }> => {
   const upgradeEvents: UpgradeEvent[] = [];
-  // compression should be the first middleware
-  if (server.compress) {
-    middlewares.push(gzipMiddleware());
-  }
 
   if (server.cors) {
     const { default: corsMiddleware } = await import(
@@ -112,29 +104,8 @@ const applyDefaultMiddlewares = async ({
     });
   }
 
-  if (
-    context.action === 'dev' &&
-    context.bundlerType === 'rspack' &&
-    compilationManager
-  ) {
-    const { compiler } = compilationManager;
-
-    // TODO: support for multi compiler
-    const firstCompiler = isMultiCompiler(compiler)
-      ? compiler.compilers[0]
-      : compiler;
-
-    const options =
-      dev.lazyCompilation ?? firstCompiler.options.experiments?.lazyCompilation;
-
-    if (options) {
-      middlewares.push(
-        rspack.experiments.lazyCompilationMiddleware(firstCompiler, options),
-      );
-    }
-  }
-
-  // dev proxy handler, each proxy has own handler
+  // Apply proxy middleware
+  // each proxy configuration creates its own middleware instance
   if (server.proxy) {
     const { middlewares: proxyMiddlewares, upgrade } =
       await createProxyMiddleware(server.proxy);
@@ -143,6 +114,40 @@ const applyDefaultMiddlewares = async ({
     for (const middleware of proxyMiddlewares) {
       middlewares.push(middleware);
     }
+  }
+
+  // compression is placed after proxy middleware to avoid breaking SSE (Server-Sent Events),
+  // but before other middleware to ensure responses are properly compressed
+  if (server.compress) {
+    middlewares.push(gzipMiddleware());
+  }
+
+  // enable lazy compilation
+  if (
+    context.action === 'dev' &&
+    context.bundlerType === 'rspack' &&
+    dev.lazyCompilation &&
+    compilationManager
+  ) {
+    const { compiler } = compilationManager;
+
+    if (
+      typeof dev.lazyCompilation === 'object' &&
+      typeof dev.lazyCompilation.serverUrl === 'string' &&
+      context.devServer
+    ) {
+      dev.lazyCompilation.serverUrl = replacePortPlaceholder(
+        dev.lazyCompilation.serverUrl,
+        context.devServer.port,
+      );
+    }
+
+    middlewares.push(
+      rspack.experiments.lazyCompilationMiddleware(
+        // TODO: support for multi compiler
+        isMultiCompiler(compiler) ? compiler.compilers[0] : compiler,
+      ) as RequestHandler,
+    );
   }
 
   if (server.base && server.base !== '/') {
@@ -154,7 +159,11 @@ const applyDefaultMiddlewares = async ({
   );
   middlewares.push(['/__open-in-editor', launchEditorMiddleware()]);
 
-  middlewares.push(viewingServedFilesMiddleware({ environments }));
+  middlewares.push(
+    viewingServedFilesMiddleware({
+      environments: devServerAPI.environments,
+    }),
+  );
 
   if (compilationManager) {
     middlewares.push(compilationManager.middleware);
@@ -197,9 +206,9 @@ const applyDefaultMiddlewares = async ({
   }
 
   // Execute callbacks returned by the `onBeforeStartDevServer` hook.
-  // This is the ideal place for users to add custom middlewares because:
-  // 1. It runs after most of the default middlewares
-  // 2. It runs before fallback middlewares
+  // This is the ideal place for users to add custom middleware because:
+  // 1. It runs after most of the default middleware
+  // 2. It runs before fallback middleware
   // This ensures custom middleware can intercept requests before any fallback handling
   for (const callback of postCallbacks) {
     callback();
@@ -252,17 +261,16 @@ export const getDevMiddlewares = async (
   options: RsbuildDevMiddlewareOptions,
 ): Promise<GetDevMiddlewaresResult> => {
   const middlewares: Middlewares = [];
-  const { environments, compilationManager } = options;
+  const { compilationManager } = options;
 
   if (logger.level === 'verbose') {
     middlewares.push(await getRequestLoggerMiddleware());
   }
 
-  // Order: setupMiddlewares.unshift => internal middlewares => setupMiddlewares.push
+  // Order: setupMiddlewares.unshift => internal middleware => setupMiddlewares.push
   const { before, after } = applySetupMiddlewares(
     options.dev,
-    environments,
-    compilationManager,
+    options.devServerAPI,
   );
 
   middlewares.push(...before);

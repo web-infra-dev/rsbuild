@@ -12,7 +12,7 @@ An Rsbuild plugin to provide support for Solid.
 
 ## Documentation
 
-See [Documentation](https://rsbuild.dev/plugins/list/plugin-solid).
+See [Documentation](https://rsbuild.rs/plugins/list/plugin-solid).
 
 ## License
 

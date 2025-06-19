@@ -6,9 +6,9 @@
 
 ## Environment context
 
-Environment context 是一个只读对象，提供一些和当前环境有关的上下文信息。
+Environment context 是一个只读对象，提供一些和当前 environment 有关的上下文信息。
 
-在 Rsbuild 的 [Plugin hooks](/plugins/dev/hooks#plugin-hooks) 中，你可以通过 `environment` 或 `environments` 入参获取 environment context 对象。
+- **类型：**
 
 ```ts
 type EnvironmentContext = {
@@ -19,8 +19,14 @@ type EnvironmentContext = {
   entry: RsbuildEntry;
   htmlPaths: Record<string, string>;
   tsconfigPath?: string;
+  manifest?: Record<string, unknown> | ManifestData;
 };
 ```
+
+Environment context 可以通过以下方式获取：
+
+1. 在 Rsbuild 的 [Plugin hooks](/plugins/dev/hooks#plugin-hooks) 中，你可以通过 `environment` 或 `environments` 入参获取 environment context 对象。
+2. 在 [Environment API](#environment-api-1) 中，可以通过 `environments.context` 获取。
 
 ### name
 
@@ -40,7 +46,7 @@ api.modifyRspackConfig((config, { environment }) => {
 
 ### browserslist
 
-当前环境设置的目标浏览器范围。详见 [设置浏览器范围](/guide/advanced/browserslist)。
+当前环境设置的目标浏览器范围。详见 [浏览器范围](/guide/advanced/browserslist)。
 
 - **类型：** `string[]`
 - **示例：**
@@ -158,20 +164,65 @@ api.modifyRspackConfig((config, { environment }) => {
 });
 ```
 
+### manifest
+
+manifest 文件数据。仅在 [output.manifest](/config/output/manifest) 配置被启用时才能访问。
+
+- **类型：** `Record<string, unknown> | ManifestData | undefined`
+- **示例：**
+
+```js
+api.onAfterBuild(({ environments }) => {
+  // Get the manifest data of web environment
+  console.log(environments.web.manifest);
+});
+
+api.onDevCompileDone(({ environments }) => {
+  console.log(environments.web.manifest);
+});
+
+api.onAfterEnvironmentCompile(({ environment }) => {
+  console.log(environment.manifest);
+});
+```
+
+manifest 数据仅在构建完成后才能被访问，你可以在以下 hooks 中访问：
+
+- [onAfterBuild](/plugins/dev/hooks#onafterbuild)
+- [onAfterEnvironmentCompile](/plugins/dev/hooks#onafterenvironmentcompile)
+- [onCloseBuild](/plugins/dev/hooks#onclosebuild)
+- [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)
+- [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone)
+- [onExit](/plugins/dev/hooks#onexit)
+
 ## Environment API
 
-Environment API 包了一些与多环境构建相关的 API。
+Environment API 提供一些与多环境构建相关的 API。
 
 你可以通过 [rsbuild.createDevServer()](/api/javascript-api/instance#rsbuildcreatedevserver) 或 [dev.setupMiddlewares](/config/dev/setup-middlewares) 使用 environment API，这允许你在服务端获取特定环境下的构建产物信息。
 
 ```ts
 type EnvironmentAPI = {
   [name: string]: {
+    context: EnvironmentContext;
     getStats: () => Promise<Stats>;
     loadBundle: <T = unknown>(entryName: string) => Promise<T>;
     getTransformedHtml: (entryName: string) => Promise<string>;
   };
 };
+```
+
+### context
+
+你可以通过 Environment API 获取和当前环境有关的上下文信息。
+
+- **类型：** [EnvironmentContext](#environment-context)
+- **示例：**
+
+```ts
+const webManifest = environments.web.context.manifest;
+
+console.log(webManifest.entries);
 ```
 
 ### getStats

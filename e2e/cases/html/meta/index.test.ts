@@ -15,7 +15,7 @@ rspackOnlyTest(
         },
       },
     });
-    const files = await rsbuild.unwrapOutputJSON();
+    const files = await rsbuild.getDistFiles();
 
     const html =
       files[Object.keys(files).find((file) => file.endsWith('index.html'))!];

@@ -1,12 +1,11 @@
 import {
   type InspectConfigOptions,
   type InternalContext,
+  logger,
   type PluginManager,
   type ResolvedCreateRsbuildOptions,
   type RsbuildProviderHelpers,
-  logger,
 } from '@rsbuild/core';
-import { inspectConfig } from './inspectConfig.js';
 import type { WebpackConfig } from './types.js';
 import { generateWebpackConfig } from './webpackConfig.js';
 
@@ -48,13 +47,13 @@ export async function initConfigs({
         verbose: true,
         writeToDisk: true,
       };
-      await inspectConfig({
+      await helpers.inspectConfig<'webpack'>({
         context,
+        bundler: 'webpack',
         pluginManager,
         inspectOptions,
         rsbuildOptions,
         bundlerConfigs: webpackConfigs,
-        helpers,
       });
     };
 

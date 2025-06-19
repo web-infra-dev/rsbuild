@@ -57,32 +57,26 @@ export const getSwcMinimizerOptions = (
 
 export const parseMinifyOptions = (
   config: NormalizedEnvironmentConfig,
-  isProd: boolean,
 ): {
   minifyJs: boolean;
   minifyCss: boolean;
   jsOptions?: SwcJsMinimizerRspackPluginOptions;
   cssOptions?: LightningCssMinimizerRspackPluginOptions;
 } => {
+  const isProd = config.mode === 'production';
   const { minify } = config.output;
 
-  if (minify === false || !isProd) {
+  if (typeof minify === 'boolean') {
+    const shouldMinify = minify === true && isProd;
     return {
-      minifyJs: false,
-      minifyCss: false,
-    };
-  }
-
-  if (minify === true) {
-    return {
-      minifyJs: true,
-      minifyCss: true,
+      minifyJs: shouldMinify,
+      minifyCss: shouldMinify,
     };
   }
 
   return {
-    minifyJs: minify.js !== false,
-    minifyCss: minify.css !== false,
+    minifyJs: minify.js !== false && (minify.js === 'always' || isProd),
+    minifyCss: minify.css !== false && (minify.css === 'always' || isProd),
     jsOptions: minify.jsOptions,
     cssOptions: minify.cssOptions,
   };
@@ -94,12 +88,10 @@ export const pluginMinimize = (): RsbuildPlugin => ({
   setup(api) {
     const isRspack = api.context.bundlerType === 'rspack';
 
-    api.modifyBundlerChain(async (chain, { isProd, environment, CHAIN_ID }) => {
+    api.modifyBundlerChain(async (chain, { environment, CHAIN_ID }) => {
       const { config } = environment;
-      const { minifyJs, minifyCss, jsOptions, cssOptions } = parseMinifyOptions(
-        config,
-        isProd,
-      );
+      const { minifyJs, minifyCss, jsOptions, cssOptions } =
+        parseMinifyOptions(config);
 
       chain.optimization.minimize(minifyJs || minifyCss);
 

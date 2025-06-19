@@ -27,6 +27,7 @@ darkgrey
 datauri
 deepmerge
 docgen
+dotenvx
 dppx
 envinfo
 estree
@@ -52,6 +53,7 @@ kaios
 koppers
 lightningcss
 liyincode
+Llms
 longpaths
 manypkg
 mattcompiles
@@ -59,11 +61,14 @@ menlo
 Mergeable
 microfrontend
 microfrontends
+minifiers
 modularly
 mrmime
 mYbzBtlg6o
 napi
 nolyfill
+noopener
+noreferrer
 nosources
 ntqry
 nuxt
@@ -77,6 +82,7 @@ pageerror
 pathinfo
 pcss
 perfetto
+pftrace
 picocolors
 pjpeg
 pluggable
@@ -97,11 +103,15 @@ rsfamily
 rslib
 rslog
 rspack
+rspeedy
 rspress
 rstack
+rstest
 ruleset
 selfsign
 selfsigned
+shiki
+shikijs
 sirv
 sokra
 speedscope
@@ -129,6 +139,7 @@ unocss
 unpatch
 unplugin
 unshift
+unstub
 upath
 vitest
 vnode

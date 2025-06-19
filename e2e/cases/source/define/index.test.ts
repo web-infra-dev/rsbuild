@@ -1,4 +1,4 @@
-import { build, dev, gotoPage, proxyConsole } from '@e2e/helper';
+import { build, dev, gotoPage } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should allow to define global variables in development', async ({
@@ -34,8 +34,7 @@ test('should allow to define global variables in production build', async ({
 });
 
 test('should warn when define `process.env`', async ({ page }) => {
-  const { logs, restore } = proxyConsole();
-  await build({
+  const rsbuild = await build({
     cwd: __dirname,
     page,
     rsbuildConfig: {
@@ -48,17 +47,16 @@ test('should warn when define `process.env`', async ({ page }) => {
   });
 
   expect(
-    logs.some((log) =>
+    rsbuild.logs.some((log) =>
       log.includes('The "source.define" option includes an object'),
     ),
   ).toBe(true);
 
-  restore();
+  await rsbuild.close();
 });
 
 test('should warn when define stringified `process.env`', async ({ page }) => {
-  const { logs, restore } = proxyConsole();
-  await build({
+  const rsbuild = await build({
     cwd: __dirname,
     page,
     rsbuildConfig: {
@@ -71,10 +69,10 @@ test('should warn when define stringified `process.env`', async ({ page }) => {
   });
 
   expect(
-    logs.some((log) =>
+    rsbuild.logs.some((log) =>
       log.includes('The "source.define" option includes an object'),
     ),
   ).toBe(true);
 
-  restore();
+  await rsbuild.close();
 });

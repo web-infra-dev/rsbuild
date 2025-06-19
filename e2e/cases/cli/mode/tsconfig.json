@@ -2,7 +2,6 @@
   "extends": "@rsbuild/config/tsconfig",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"]
     }

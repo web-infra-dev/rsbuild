@@ -20,7 +20,7 @@ Rsbuild by default injects the some env variables into the code using [source.de
 
 - [process.env.BASE_URL](#processenvbase_url)
 - [process.env.ASSET_PREFIX](#processenvasset_prefix)
-- [process.env.NODE_ENV](#processenvnode_env): This variable is injected by Rspack. For details, please refer to [Rspack - optimization.nodeEnv](https://rspack.dev/config/optimization#optimizationnodeenv))
+- [process.env.NODE_ENV](#processenvnode_env)
 
 ### import.meta.env.MODE
 
@@ -184,6 +184,18 @@ if (false) {
 
 During code minification, `if (false) { ... }` will be recognized as invalid code and removed automatically.
 
+#### Custom NODE_ENV
+
+`process.env.NODE_ENV` is injected by Rspack by default. If you need to disable the injection or custom the value, use the [optimization.nodeEnv](https://rspack.rs/config/optimization#optimizationnodeenv) option of Rspack:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: { optimization: { nodeEnv: false } },
+  },
+};
+```
+
 ## `.env` File
 
 When a `.env` file exists in the project root directory, Rsbuild CLI will automatically use [dotenv](https://npmjs.com/package/dotenv) to load these env variables and add them to the current Node.js process. The [Public Variables](#public-variables) will be exposed in the client code.
@@ -293,6 +305,16 @@ const mergedConfig = mergeRsbuildConfig(
 );
 ```
 
+### Disable loading
+
+You can disable loading `.env` files by using the `--no-env` flag in the CLI.
+
+```bash
+npx rsbuild dev --no-env
+```
+
+When using the `--no-env` flag, Rsbuild CLI will not read any `.env` files, and you can manage environment variables using other tools like [dotenvx](https://dotenvx.com/).
+
 ## Public variables
 
 All env variables starting with `PUBLIC_` can be accessed in client code. For example, if the following variables are defined:
@@ -326,7 +348,7 @@ Public variables will replace identifiers in the client code, with the replaceme
 - JavaScript files, and files that can be converted into JavaScript code, such as `.js`, `.ts`, `.tsx`, etc.
 - HTML template files, for example:
 
-```ejs title="template.html"
+```xml title="template.html"
 <div><%= process.env.PUBLIC_NAME %></div>
 ```
 
@@ -463,7 +485,7 @@ interface ImportMeta {
 
 ### process.env
 
-If the type for `process.env` is missing, please install the dependency [@types/node](https://www.npmjs.com/package/@types/node):
+If the type for `process.env` is missing, please install the dependency [@types/node](https://npmjs.com/package/@types/node):
 
 import { PackageManagerTabs } from '@theme';
 

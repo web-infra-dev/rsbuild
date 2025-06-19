@@ -1,6 +1,6 @@
 import path from 'node:path';
-import { getRelativePath } from '../helpers';
-import ansiHTML from './ansiHTML';
+import { toRelativePath } from '../helpers';
+import { ansiHTML } from './ansiHTML';
 import { escapeHtml } from './helper';
 
 export function convertLinksInHtml(text: string, root?: string): string {
@@ -13,22 +13,37 @@ export function convertLinksInHtml(text: string, root?: string): string {
    * 4. `C:\Users\username\project\src\index.js:1:1`
    * 5. `/home/user/project/src/index.js:1:1`
    */
-  const pathRegex = /(?:\.\.?[\/\\]|[a-zA-Z]:\\|\/)[^:]*:\d+:\d+/g;
+  const pathRegex = /(?:\.\.?[/\\]|[a-zA-Z]:\\|\/)[^:]*:\d+:\d+/g;
 
-  return text.replace(pathRegex, (file) => {
-    // If the file contains `</span>`, it means the file path contains ANSI codes.
-    // We need to move the `</span>` to the end of the file path.
-    const hasClosingSpan = file.includes('</span>') && !file.includes('<span');
-    const filePath = hasClosingSpan ? file.replace('</span>', '') : file;
-    const suffix = hasClosingSpan ? '</span>' : '';
-    const isAbsolute = path.isAbsolute(filePath);
-    const absolutePath =
-      root && !isAbsolute ? path.join(root, filePath) : filePath;
-    const relativePath =
-      root && isAbsolute ? getRelativePath(root, filePath) : filePath;
+  const urlRegex =
+    /(https?:\/\/(?:[\w-]+\.)+[a-z0-9](?:[\w-.~:/?#[\]@!$&'*+,;=])*)/gi;
 
-    return `<a class="file-link" data-file="${absolutePath}">${relativePath}</a>${suffix}`;
+  const lines = text.split('\n');
+  const replacedLines = lines.map((line) => {
+    let replacedLine = line.replace(pathRegex, (file) => {
+      // If the file contains `</span>`, it means the file path contains ANSI codes.
+      // We need to move the `</span>` to the end of the file path.
+      const hasClosingSpan =
+        file.includes('</span>') && !file.includes('<span');
+      const filePath = hasClosingSpan ? file.replace('</span>', '') : file;
+      const suffix = hasClosingSpan ? '</span>' : '';
+      const isAbsolute = path.isAbsolute(filePath);
+      const absolutePath =
+        root && !isAbsolute ? path.join(root, filePath) : filePath;
+      const relativePath =
+        root && isAbsolute ? toRelativePath(root, filePath) : filePath;
+
+      return `<a class="file-link" data-file="${absolutePath}">${relativePath}</a>${suffix}`;
+    });
+
+    replacedLine = replacedLine.replace(urlRegex, (url) => {
+      return `<a class="url-link" href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+    });
+
+    return replacedLine;
   });
+
+  return replacedLines.join('\n');
 }
 
 // HTML template for error overlay
@@ -86,9 +101,10 @@ export function genOverlayHTML(errors: string[], root?: string) {
 .content::-webkit-scrollbar {
   display: none;
 }
-.file-link {
+.file-link,
+.url-link,
+.config-link {
   cursor: pointer;
-  color: #6eecf7;
   text-decoration: underline;
   text-underline-offset: 3px;
   &:hover {
@@ -97,6 +113,16 @@ export function genOverlayHTML(errors: string[], root?: string) {
   &:active {
     opacity: 0.6;
   }
+}
+.file-link {
+  color: #6eecf7;
+}
+.url-link {
+  color: #eff986;
+}
+.config-link {
+  color: inherit;
+  text-decoration: none;
 }
 .close {
   position: absolute;
@@ -151,7 +177,7 @@ export function genOverlayHTML(errors: string[], root?: string) {
     <pre class="content">${htmlItems.join('\n\n').trim()}</pre>
     <footer class="footer">
       <p><span>Fix error</span>, click outside, or press Esc to close the overlay.</p>
-      <p>Disable overlay by setting Rsbuild's <span>dev.client.overlay</span> config to false.<p>
+      <p>Disable overlay by setting Rsbuild's <span><a class="config-link" target="_blank" rel="noopener noreferrer" href="https://rsbuild.rs/config/dev/client">dev.client.overlay</a></span> config to false.<p>
     </footer>
   </div>
 </div>

@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { dev, expectPoll, proxyConsole, rspackOnlyTest } from '@e2e/helper';
+import { dev, expectPoll, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
@@ -13,8 +13,6 @@ rspackOnlyTest('should print changed files in logs', async ({ page }) => {
   await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
     recursive: true,
   });
-
-  const { logs, restore } = proxyConsole();
 
   const rsbuild = await dev({
     cwd,
@@ -41,11 +39,10 @@ rspackOnlyTest('should print changed files in logs', async ({ page }) => {
   );
 
   await expectPoll(() =>
-    logs.some((log) => log.includes('building test-temp-src/App.tsx')),
+    rsbuild.logs.some((log) => log.includes('building test-temp-src/App.tsx')),
   ).toBeTruthy();
 
   await rsbuild.close();
-  restore();
 });
 
 rspackOnlyTest('should print removed files in logs', async ({ page }) => {
@@ -56,8 +53,6 @@ rspackOnlyTest('should print removed files in logs', async ({ page }) => {
   await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
     recursive: true,
   });
-
-  const { logs, restore } = proxyConsole();
 
   const rsbuild = await dev({
     cwd,
@@ -79,9 +74,10 @@ rspackOnlyTest('should print removed files in logs', async ({ page }) => {
   await fs.promises.unlink(appPath);
 
   await expectPoll(() =>
-    logs.some((log) => log.includes('building removed test-temp-src/App.tsx')),
+    rsbuild.logs.some((log) =>
+      log.includes('building removed test-temp-src/App.tsx'),
+    ),
   ).toBeTruthy();
 
   await rsbuild.close();
-  restore();
 });

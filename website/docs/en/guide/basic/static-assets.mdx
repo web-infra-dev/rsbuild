@@ -1,4 +1,4 @@
-# Import static assets
+# Static assets
 
 Rsbuild supports import static assets, including images, fonts, audio and video.
 
@@ -163,8 +163,24 @@ import rawSvg from './static/logo.svg?raw';
 console.log(rawSvg); // The raw content of the SVG file
 ```
 
+Rsbuild also supports importing the raw content of JavaScript, TypeScript, and JSX files through the `?raw` query parameter.
+
+```ts
+import rawJs from './script1.js?raw';
+import rawTs from './script2.ts?raw';
+import rawJsx from './script3.jsx?raw';
+import rawTsx from './script4.tsx?raw';
+
+console.log(rawJs); // The raw content of the JS file
+console.log(rawTs); // The raw content of the TS file
+console.log(rawJsx); // The raw content of the JSX file
+console.log(rawTsx); // The raw content of the TSX file
+```
+
+You can also use the `?raw` query parameter to import the raw content of CSS files, see [CSS](/guide/styling/css-usage#raw).
+
 :::tip
-Rsbuild >= 1.3.0 supports the `?raw` query parameter.
+Rsbuild >= 1.3.0 supports the `?raw` query parameter, and >= 1.4.0 supports importing the raw content of JS and TS files.
 :::
 
 ## Output files
@@ -322,7 +338,7 @@ export default {
 };
 ```
 
-For more information about asset modules, please refer to [Rspack - Asset modules](https://rspack.dev/guide/features/asset-module).
+For more information about asset modules, please refer to [Rspack - Asset modules](https://rspack.rs/guide/features/asset-module).
 
 ### Related configurations
 

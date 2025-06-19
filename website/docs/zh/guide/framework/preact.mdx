@@ -2,9 +2,9 @@
 
 在这篇文档中，你可以了解到如何基于 Rsbuild 来构建一个 Preact 应用。
 
-## 创建 Preact 项目
+## 创建 Preact 应用
 
-你可以使用 `create-rsbuild` 来创建一个 Rsbuild + Preact 的项目，调用以下命令：
+使用 [create-rsbuild](/guide/start/quick-start#创建-rsbuild-应用) 来创建一个基于 Rsbuild 的 Preact 应用，运行以下命令：
 
 import { PackageManagerTabs } from '@theme';
 
@@ -38,7 +38,7 @@ export default defineConfig({
 
 Preact 插件使用 [@preact/prefresh](https://github.com/preactjs/prefresh) 和 [@rspack/plugin-preact-refresh](https://github.com/rspack-contrib/rspack-plugin-preact-refresh) 来热替换 Preact 组件。
 
-### 识别
+### 识别组件
 
 Prefresh 需要能够识别你的组件，这意味着组件名称应该以大写字母开头，hook 名称应该以 `use` 开头，后跟一个大写字母。这使得插件能够有效地识别这些内容。
 

@@ -1,26 +1,84 @@
 import fs from 'node:fs';
-import inspector from 'node:inspector';
 import path from 'node:path';
-import rspack from '@rspack/core';
+import { rspack } from '@rspack/core';
+import { color } from '../helpers';
 import { logger } from '../logger';
 import type { RsbuildPlugin } from '../types';
 
-const stopProfiler = (output: string, profileSession?: inspector.Session) => {
-  if (!profileSession) {
-    return;
+enum TracePreset {
+  OVERVIEW = 'OVERVIEW', // contains overview trace events
+  ALL = 'ALL', // contains all trace events
+}
+
+function resolveLayer(value: string): string {
+  const overviewTraceFilter = 'info';
+  const allTraceFilter = 'trace';
+
+  if (value === TracePreset.OVERVIEW) {
+    return overviewTraceFilter;
+  }
+  if (value === TracePreset.ALL) {
+    return allTraceFilter;
   }
 
-  profileSession.post('Profiler.stop', (error, param) => {
-    if (error) {
-      logger.error('Failed to generate JS CPU profile:', error);
-      return;
-    }
-    fs.writeFileSync(output, JSON.stringify(param.profile));
-  });
-};
+  return value;
+}
 
-// Reference rspack-cli
-// https://github.com/web-infra-dev/rspack/blob/509abcfc523bc20125459f5d428dc1645751700c/packages/rspack-cli/src/utils/profile.ts
+async function ensureFileDir(outputFilePath: string) {
+  const dir = path.dirname(outputFilePath);
+  await fs.promises.mkdir(dir, { recursive: true });
+}
+
+/**
+ * `RSPACK_PROFILE=ALL` // all trace events
+ * `RSPACK_PROFILE=OVERVIEW` // overview trace events
+ * `RSPACK_PROFILE=warn,tokio::net=info` // trace filter from  https://docs.rs/tracing-subscriber/latest/tracing_subscriber/filter/struct.EnvFilter.html#example-syntax
+ */
+async function applyProfile(
+  root: string,
+  filterValue: string,
+  traceLayer = 'perfetto',
+  traceOutput?: string,
+) {
+  if (traceLayer !== 'perfetto' && traceLayer !== 'logger') {
+    throw new Error(`unsupported trace layer: ${traceLayer}`);
+  }
+
+  if (!traceOutput) {
+    const timestamp = Date.now();
+    const defaultOutputDir = path.join(
+      root,
+      `.rspack-profile-${timestamp}-${process.pid}`,
+    );
+    const defaultRustTracePerfettoOutput = path.join(
+      defaultOutputDir,
+      'rspack.pftrace',
+    );
+    const defaultRustTraceLoggerOutput = 'stdout';
+
+    const defaultTraceOutput =
+      traceLayer === 'perfetto'
+        ? defaultRustTracePerfettoOutput
+        : defaultRustTraceLoggerOutput;
+
+    // biome-ignore lint/style/noParameterAssign: setting default value makes sense
+    traceOutput = defaultTraceOutput;
+  }
+
+  const filter = resolveLayer(filterValue);
+
+  await ensureFileDir(traceOutput);
+  await rspack.experiments.globalTrace.register(
+    filter,
+    traceLayer,
+    traceOutput,
+  );
+
+  return traceOutput;
+}
+
+// Referenced from Rspack CLI
+// https://github.com/web-infra-dev/rspack/blob/v1.3.9/packages/rspack-cli/src/utils/profile.ts
 export const pluginRspackProfile = (): RsbuildPlugin => ({
   name: 'rsbuild:rspack-profile',
 
@@ -29,54 +87,20 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
       return;
     }
 
-    /**
-     * RSPACK_PROFILE=ALL
-     * RSPACK_PROFILE=TRACE|CPU|LOGGING
-     */
-    const RSPACK_PROFILE = process.env.RSPACK_PROFILE?.toUpperCase();
-
+    const { RSPACK_PROFILE } = process.env;
     if (!RSPACK_PROFILE) {
       return;
     }
 
-    const timestamp = Date.now();
-    const profileDirName = `rspack-profile-${timestamp}`;
+    let traceOutput: string;
 
-    let profileSession: inspector.Session | undefined;
-
-    const enableProfileTrace =
-      RSPACK_PROFILE === 'ALL' || RSPACK_PROFILE.includes('TRACE');
-
-    const enableCPUProfile =
-      RSPACK_PROFILE === 'ALL' || RSPACK_PROFILE.includes('CPU');
-
-    const enableLogging =
-      RSPACK_PROFILE === 'ALL' || RSPACK_PROFILE.includes('LOGGING');
-
-    const onStart = () => {
-      // can't get precise api.context.distPath before config init
-      const profileDir = path.join(api.context.distPath, profileDirName);
-
-      const traceFilePath = path.join(profileDir, 'trace.json');
-
-      if (!fs.existsSync(profileDir)) {
-        fs.mkdirSync(profileDir, { recursive: true });
-      }
-
-      if (enableProfileTrace) {
-        rspack.experiments.globalTrace.register(
-          'trace',
-          'chrome',
-          traceFilePath,
-        );
-      }
-
-      if (enableCPUProfile) {
-        profileSession = new inspector.Session();
-        profileSession.connect();
-        profileSession.post('Profiler.enable');
-        profileSession.post('Profiler.start');
-      }
+    const onStart = async () => {
+      traceOutput = await applyProfile(
+        api.context.rootPath,
+        RSPACK_PROFILE,
+        process.env.RSPACK_TRACE_LAYER,
+        process.env.RSPACK_TRACE_OUTPUT,
+      );
     };
 
     api.onBeforeBuild(({ isFirstCompile }) => {
@@ -86,34 +110,13 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
     });
     api.onBeforeStartDevServer(onStart);
 
-    api.onAfterBuild(async ({ stats }) => {
-      const loggingFilePath = path.join(
-        api.context.distPath,
-        profileDirName,
-        'logging.json',
-      );
-
-      if (enableLogging && stats) {
-        const logging = stats.toJson({
-          all: false,
-          logging: 'verbose',
-          loggingTrace: true,
-        });
-        fs.writeFileSync(loggingFilePath, JSON.stringify(logging));
-      }
-    });
-
     api.onExit(() => {
-      if (enableProfileTrace) {
-        rspack.experiments.globalTrace.cleanup();
+      if (!traceOutput) {
+        return;
       }
-      const profileDir = path.join(api.context.distPath, profileDirName);
 
-      const cpuProfilePath = path.join(profileDir, 'jscpuprofile.json');
-
-      stopProfiler(cpuProfilePath, profileSession);
-
-      logger.info(`saved Rspack profile file to ${profileDir}`);
+      rspack.experiments.globalTrace.cleanup();
+      logger.info(`profile file saved to ${color.cyan(traceOutput)}`);
     });
   },
 });

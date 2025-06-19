@@ -5,6 +5,7 @@
 
 ```ts
 const defaultOptions = {
+  errorRecovery: true,
   // 使用当前项目的 browserslist 配置
   targets: browserslist,
   // 在生产模式，且 output.injectStyles 为 true 时，minify 会被启用
@@ -12,9 +13,7 @@ const defaultOptions = {
 };
 ```
 
-- **版本：** `>= 1.0.0`
-
-通过 `tools.lightningcssLoader` 可以设置 [builtin:lightningcss-loader](https://rspack.dev/guide/features/builtin-lightningcss-loader) 的选项。
+通过 `tools.lightningcssLoader` 可以设置 [builtin:lightningcss-loader](https://rspack.rs/zh/guide/features/builtin-lightningcss-loader) 的选项。
 
 ## Object 类型
 
@@ -27,7 +26,7 @@ export default {
   tools: {
     lightningcssLoader: {
       exclude: {
-        vendorPrefixes: false,
+        vendorPrefixes: true,
       },
     },
   },
@@ -43,7 +42,7 @@ export default {
   tools: {
     lightningcssLoader: (config) => {
       config.exclude = {
-        vendorPrefixes: false,
+        vendorPrefixes: true,
       };
       return config;
     },
@@ -64,5 +63,5 @@ export default {
 ```
 
 :::tip
-将 `tools.lightningcssLoader` 设置为 `false` 仅用于禁用 `lightningcss-loader`。如果你需要禁用 Lightning CSS 完整功能，请参考 [禁用 Lightning CSS](/guide/basic/css-usage#禁用-lightning-css)。
+将 `tools.lightningcssLoader` 设置为 `false` 仅用于禁用 `lightningcss-loader`。如果你需要禁用 Lightning CSS 完整功能，请参考 [禁用 Lightning CSS](/guide/styling/css-usage#禁用-lightning-css)。
 :::

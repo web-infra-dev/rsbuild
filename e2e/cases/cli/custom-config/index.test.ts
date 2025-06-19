@@ -1,6 +1,6 @@
 import { execSync } from 'node:child_process';
 import path from 'node:path';
-import { globContentJSON, rspackOnlyTest } from '@e2e/helper';
+import { readDirContents, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest(
@@ -10,7 +10,7 @@ rspackOnlyTest(
       cwd: __dirname,
     });
 
-    const outputs = await globContentJSON(path.join(__dirname, 'dist-custom'));
+    const outputs = await readDirContents(path.join(__dirname, 'dist-custom'));
     const outputFiles = Object.keys(outputs);
 
     expect(outputFiles.length > 1).toBeTruthy();
@@ -24,7 +24,7 @@ rspackOnlyTest(
     execSync(`npx rsbuild build --config ${absPath}`, {
       cwd: __dirname,
     });
-    const outputs = await globContentJSON(path.join(__dirname, 'dist-custom'));
+    const outputs = await readDirContents(path.join(__dirname, 'dist-custom'));
     const outputFiles = Object.keys(outputs);
 
     expect(outputFiles.length > 1).toBeTruthy();

@@ -1,12 +1,8 @@
 import { posix } from 'node:path';
 import { URL } from 'node:url';
 import deepmerge from 'deepmerge';
-import type {
-  Compiler as WebpackCompiler,
-  MultiCompiler as WebpackMultiCompiler,
-} from 'webpack';
 import color from '../../compiled/picocolors/index.js';
-import type RspackChain from '../../compiled/rspack-chain/index.js';
+import type RspackChain from '../../compiled/rspack-chain';
 import { DEFAULT_ASSET_PREFIX } from '../constants';
 import type {
   FilenameConfig,
@@ -22,7 +18,8 @@ export * from './stats';
 
 export { color };
 
-export const rspackMinVersion = '1.0.0';
+// `SubresourceIntegrityPlugin` added in Rspack v1.2.4
+export const rspackMinVersion = '1.2.4';
 
 export const getNodeEnv = () => process.env.NODE_ENV as string;
 export const setNodeEnv = (env: string): void => {
@@ -81,6 +78,11 @@ const compareSemver = (version1: string, version2: string) => {
   return 0;
 };
 
+/**
+ * If the application overrides the Rspack version to a lower one,
+ * we should check that the Rspack version is greater than the minimum
+ * supported version.
+ */
 export const isSatisfyRspackVersion = async (
   originalVersion: string,
 ): Promise<boolean> => {
@@ -91,7 +93,7 @@ export const isSatisfyRspackVersion = async (
     version = version.split('-canary')[0];
   }
 
-  if (version && /^[\d\.]+$/.test(version)) {
+  if (version && /^[\d.]+$/.test(version)) {
     return compareSemver(version, rspackMinVersion) >= 0;
   }
 
@@ -253,7 +255,9 @@ export function getFilename(
       return filename.assets ?? `[name]${hash}[ext]`;
     default:
       throw new Error(
-        `[rsbuild:config] unknown key ${type} in "output.filename"`,
+        `${color.dim('[rsbuild:config]')} unknown key ${color.yellow(
+          type,
+        )} in ${color.yellow('output.filename')}`,
       );
   }
 }
@@ -302,12 +306,9 @@ export function isWebTarget(target: RsbuildTarget | RsbuildTarget[]): boolean {
   return targets.includes('web') || target.includes('web-worker');
 }
 
-export const isMultiCompiler = <
-  C extends Rspack.Compiler | WebpackCompiler = Rspack.Compiler,
-  M extends Rspack.MultiCompiler | WebpackMultiCompiler = Rspack.MultiCompiler,
->(
-  compiler: C | M,
-): compiler is M => {
+export const isMultiCompiler = (
+  compiler: Rspack.Compiler | Rspack.MultiCompiler,
+): compiler is Rspack.MultiCompiler => {
   return 'compilers' in compiler && Array.isArray(compiler.compilers);
 };
 
@@ -363,3 +364,14 @@ export const addCompilationError = (
     new compilation.compiler.webpack.WebpackError(message),
   );
 };
+
+export async function hash(data: string): Promise<string> {
+  const crypto = await import('node:crypto');
+  // Available in Node.js v20.12.0
+  // faster than `crypto.createHash()` when hashing a smaller amount of data (<= 5MB)
+  if (crypto.hash) {
+    return crypto.hash('sha256', data, 'hex').slice(0, 16);
+  }
+  const hasher = crypto.createHash('sha256');
+  return hasher.update(data).digest('hex').slice(0, 16);
+}

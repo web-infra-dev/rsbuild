@@ -30,6 +30,10 @@ type Environments = {
 
 - **Default:** `undefined`
 
+:::tip
+`environments` does not support configuring `server` options and some `dev` options, because multiple environments share the same server instance.
+:::
+
 ## Example
 
 Configure Rsbuild configuration for `web` (client) and `node` (SSR) environments:
@@ -117,6 +121,21 @@ const nodeConfig = {
       '@common': './src/common',
       '@common1': './src/ssr/common1',
     },
+  },
+};
+```
+
+## Environment name
+
+Since environment names are used for directory names and object property names, it is recommended to only include letters, numbers, `-`, `_`, and `$`. When using other characters, Rsbuild will output a warning to prompt you.
+
+```ts
+export default {
+  environments: {
+    someName: {}, // ✅
+    some_name: {}, // ✅
+    'some-name': {}, // ✅
+    'some:name': {}, // ❌
   },
 };
 ```

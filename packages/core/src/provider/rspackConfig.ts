@@ -1,5 +1,8 @@
 import { rspack } from '@rspack/core';
-import { reduceConfigsAsyncWithContext } from 'reduce-configs';
+import {
+  type ConfigChainAsyncWithContext,
+  reduceConfigsAsyncWithContext,
+} from 'reduce-configs';
 import { merge } from 'webpack-merge';
 import { CHAIN_ID, modifyBundlerChain } from '../configChain';
 import { castArray, color, getNodeEnv } from '../helpers';
@@ -10,6 +13,7 @@ import type {
   InternalContext,
   ModifyChainUtils,
   ModifyRspackConfigUtils,
+  NarrowedRspackConfig,
   RsbuildTarget,
   Rspack,
 } from '../types';
@@ -41,13 +45,19 @@ async function modifyRspackConfig(
 
   [currentConfig] = await context.hooks.modifyRspackConfig.callChain({
     environment: utils.environment.name,
-    args: [rspackConfig, utils],
+    args: [rspackConfig as NarrowedRspackConfig, utils],
   });
 
   if (utils.environment.config.tools?.rspack) {
+    const toolsRspackConfig = utils.environment.config.tools
+      .rspack as ConfigChainAsyncWithContext<
+      NarrowedRspackConfig,
+      ModifyRspackConfigUtils
+    >;
+
     currentConfig = await reduceConfigsAsyncWithContext({
-      initial: currentConfig,
-      config: utils.environment.config.tools.rspack,
+      initial: currentConfig as NarrowedRspackConfig,
+      config: toolsRspackConfig,
       ctx: utils,
       mergeFn: (...args: Rspack.Configuration[]) => {
         // Update the reference of the current config
@@ -67,8 +77,6 @@ export async function getConfigUtils(
 ): Promise<ModifyRspackConfigUtils> {
   return {
     ...chainUtils,
-
-    rspack,
 
     mergeConfig: merge,
 
@@ -132,6 +140,7 @@ export function getChainUtils(
   const nodeEnv = getNodeEnv();
 
   return {
+    rspack,
     environment,
     env: nodeEnv,
     target,
@@ -156,7 +165,7 @@ function validateRspackConfig(config: Rspack.Configuration) {
       ) {
         const name = color.bold(color.yellow(plugin.name));
         throw new Error(
-          `[rsbuild:plugin] "${name}" appears to be an Rsbuild plugin. It cannot be used as an Rspack plugin.`,
+          `${color.dim('[rsbuild:plugin]')} "${color.yellow(name)}" appears to be an Rsbuild plugin. It cannot be used as an Rspack plugin.`,
         );
       }
     }
@@ -164,7 +173,9 @@ function validateRspackConfig(config: Rspack.Configuration) {
 
   if (config.devServer) {
     logger.warn(
-      `[rsbuild:config] Find invalid Rspack config: "${color.yellow('devServer')}". Note that Rspack's "devServer" config is not supported by Rsbuild. You can use Rsbuild's "dev" config to configure the Rsbuild dev server.`,
+      `${color.dim('[rsbuild:config]')} Find invalid Rspack config: "${color.yellow(
+        'devServer',
+      )}". Note that Rspack's "devServer" config is not supported by Rsbuild. You can use Rsbuild's "dev" config to configure the Rsbuild dev server.`,
     );
   }
 }

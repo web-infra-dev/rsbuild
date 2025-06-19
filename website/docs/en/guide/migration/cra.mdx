@@ -29,15 +29,15 @@ import { PackageManagerTabs } from '@theme';
 
 Next, you need to update the npm scripts in package.json to Rsbuild's CLI commands.
 
-```diff title="package.json"
+```json title="package.json"
 {
   "scripts": {
--   "start": "react-scripts start",
--   "build": "react-scripts build",
--   "eject": "react-scripts eject"
-+   "start": "rsbuild dev",
-+   "build": "rsbuild build",
-+   "preview": "rsbuild preview"
+    "start": "react-scripts start", // [!code --]
+    "build": "react-scripts build", // [!code --]
+    "eject": "react-scripts eject", // [!code --]
+    "start": "rsbuild dev", // [!code ++]
+    "build": "rsbuild build", // [!code ++]
+    "preview": "rsbuild preview" // [!code ++]
   }
 }
 ```
@@ -73,9 +73,11 @@ export default defineConfig({
 
 In the HTML template, if you are using the `%PUBLIC_URL%` variable from CRA, replace it with Rsbuild's [assetPrefix variable](/config/html/template-parameters) and use a forward slash for concatenation:
 
-```diff
--  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-+  <link rel="icon" href="<%= assetPrefix %>/favicon.ico" />
+```html
+<!-- [!code --] -->
+<link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+<!-- [!code ++] -->
+<link rel="icon" href="<%= assetPrefix %>/favicon.ico" />
 ```
 
 This completes the basic migration from CRA to Rsbuild. You can now run the `npm run start` command to try starting the dev server.
@@ -226,14 +228,14 @@ import document from './document.pdf';
 
 In Rsbuild, when importing unrecognized assets, Rsbuild will logs errors:
 
-```text
+```
 You may need an appropriate loader to handle this file type.
 ```
 
 To resolve this error, you can use the following methods:
 
 - Configure a suitable loader to handle this type of asset via [tools.rspack](/config/tools/rspack).
-- Configure [asset modules](https://rspack.dev/guide/features/asset-module) rule to handle this type of asset via [tools.rspack](/config/tools/rspack).
+- Configure [asset modules](https://rspack.rs/guide/features/asset-module) rule to handle this type of asset via [tools.rspack](/config/tools/rspack).
 
 For example, you can add the following asset modules config to get the same output result as CRA:
 
@@ -261,15 +263,15 @@ export default {
 
 ## Remove react-app-polyfill
 
-CRA provides [react-app-polyfill](https://www.npmjs.com/package/react-app-polyfill) to manually inject polyfill code.
+CRA provides [react-app-polyfill](https://npmjs.com/package/react-app-polyfill) to manually inject polyfill code.
 
 In the Rsbuild project, you can remove the dependency and code related to react-app-polyfill, as Rsbuild will automatically read the browserslist config and allow you to enable polyfill injection through the [output.polyfill](/config/output/polyfill) config.
 
 1. Remove the `react-app-polyfill` reference:
 
-```diff title="src/index.js"
-- import 'react-app-polyfill/ie11';
-- import 'react-app-polyfill/stable';
+```ts title="src/index.js"
+import 'react-app-polyfill/ie11'; // [!code --]
+import 'react-app-polyfill/stable'; // [!code --]
 ```
 
 2. Configure [output.polyfill](/config/output/polyfill):
@@ -288,7 +290,7 @@ export default {
 
 CRA uses ESLint to lint the code by default. Rsbuild does not include linting by default, but you can add a separate npm script to run ESLint in `package.json`.
 
-First, install [eslint](https://eslint.org/) and [eslint-config-react-app](https://www.npmjs.com/package/eslint-config-react-app), you need to install ESLint v8 to keep consistent with CRA:
+First, install [eslint](https://eslint.org/) and [eslint-config-react-app](https://npmjs.com/package/eslint-config-react-app), you need to install ESLint v8 to keep consistent with CRA:
 
 <PackageManagerTabs command="add eslint@8 eslint-config-react-app -D" />
 

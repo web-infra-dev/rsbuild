@@ -25,7 +25,7 @@ test('should set template via function correctly', async () => {
       },
     },
   });
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const fooHtml =
     files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
@@ -85,7 +85,7 @@ test('should set template via tools.htmlPlugin correctly', async () => {
       },
     },
   });
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const fooHtml =
     files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];

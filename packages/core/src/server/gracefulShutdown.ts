@@ -1,3 +1,5 @@
+import { constants } from 'node:os';
+
 /**
  * A set to store all cleanup callbacks that should be executed before process termination
  */
@@ -6,16 +8,12 @@ const cleanupCallbacks = new Set<() => Promise<void>>();
 /**
  * Run all registered cleanup functions and terminates the process
  */
-const handleTermination = async (
-  _?: string,
-  exitCode?: number,
-): Promise<void> => {
+const handleTermination = async (exitCode: number): Promise<void> => {
   try {
     await Promise.all([...cleanupCallbacks].map((cb) => cb()));
   } finally {
     // Set exit code and terminate process
-    // Add 128 to signal number as per POSIX convention for signal-terminated processes
-    process.exitCode ??= exitCode ? 128 + exitCode : undefined;
+    process.exitCode ??= exitCode;
     process.exit();
   }
 };
@@ -41,12 +39,19 @@ export const setupGracefulShutdown = (): (() => void) => {
 
   // Listen for SIGTERM signal. Sent by container orchestrators like Docker/Kubernetes,
   // or manually via 'kill -15 <pid>' or 'kill -TERM <pid>' command.
-  process.once('SIGTERM', handleTermination);
+  // Add 128 to signal number as per POSIX convention for signal-terminated processes.
+  const onSigterm = () => {
+    handleTermination(constants.signals.SIGTERM + 128);
+  };
+  process.once('SIGTERM', onSigterm);
 
   // Listen for CTRL+D (stdin end) in non-CI environments
   const isCI = process.env.CI === 'true';
+  const onStdinEnd = () => {
+    handleTermination(0);
+  };
   if (!isCI) {
-    process.stdin.on('end', handleTermination);
+    process.stdin.on('end', onStdinEnd);
   }
 
   // Return a cleanup function to remove the listeners
@@ -56,9 +61,9 @@ export const setupGracefulShutdown = (): (() => void) => {
       return;
     }
 
-    process.removeListener('SIGTERM', handleTermination);
+    process.removeListener('SIGTERM', onSigterm);
     if (!isCI) {
-      process.stdin.removeListener('end', handleTermination);
+      process.stdin.removeListener('end', onStdinEnd);
     }
   };
 };

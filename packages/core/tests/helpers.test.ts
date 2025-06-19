@@ -1,8 +1,8 @@
 import { sep } from 'node:path';
 import { ensureAssetPrefix, pick, prettyTime } from '../src/helpers';
 import { dedupeNestedPaths, getCommonParentPath } from '../src/helpers/path';
-import type { InternalContext } from '../src/internal';
 import { getRoutes, normalizeUrl } from '../src/server/helper';
+import type { InternalContext } from '../src/types';
 
 test('should getRoutes correctly', () => {
   expect(
@@ -64,7 +64,7 @@ test('should getRoutes correctly', () => {
           },
         },
       },
-    } as InternalContext),
+    } as unknown as InternalContext),
   ).toEqual([
     {
       entryName: 'index',

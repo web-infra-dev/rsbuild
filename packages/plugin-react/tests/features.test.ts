@@ -1,5 +1,4 @@
 import { createStubRsbuild } from '@scripts/test-helper';
-import { describe, expect, it, vi } from 'vitest';
 import { pluginReact } from '../src';
 
 describe('splitChunks', () => {

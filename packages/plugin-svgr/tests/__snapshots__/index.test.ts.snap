@@ -1,6 +1,6 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
-exports[`svgr > 'configure SVGR options' 1`] = `
+exports[`svgr > configure SVGR options 1`] = `
 {
   "oneOf": [
     {
@@ -13,6 +13,10 @@ exports[`svgr > 'configure SVGR options' 1`] = `
     {
       "resourceQuery": /inline/,
       "type": "asset/inline",
+    },
+    {
+      "resourceQuery": /raw/,
+      "type": "asset/source",
     },
     {
       "resourceQuery": /react/,
@@ -37,6 +41,9 @@ exports[`svgr > 'configure SVGR options' 1`] = `
                 "keepImportAttributes": true,
               },
               "externalHelpers": true,
+              "output": {
+                "charset": "utf8",
+              },
               "parser": {
                 "decorators": true,
                 "syntax": "typescript",
@@ -93,7 +100,7 @@ exports[`svgr > 'configure SVGR options' 1`] = `
 }
 `;
 
-exports[`svgr > 'exportType default / mixedImport false' 1`] = `
+exports[`svgr > exportType default / mixedImport false 1`] = `
 {
   "oneOf": [
     {
@@ -106,6 +113,10 @@ exports[`svgr > 'exportType default / mixedImport false' 1`] = `
     {
       "resourceQuery": /inline/,
       "type": "asset/inline",
+    },
+    {
+      "resourceQuery": /raw/,
+      "type": "asset/source",
     },
     {
       "resourceQuery": /react/,
@@ -130,6 +141,9 @@ exports[`svgr > 'exportType default / mixedImport false' 1`] = `
                 "keepImportAttributes": true,
               },
               "externalHelpers": true,
+              "output": {
+                "charset": "utf8",
+              },
               "parser": {
                 "decorators": true,
                 "syntax": "typescript",
@@ -195,6 +209,9 @@ exports[`svgr > 'exportType default / mixedImport false' 1`] = `
                 "keepImportAttributes": true,
               },
               "externalHelpers": true,
+              "output": {
+                "charset": "utf8",
+              },
               "parser": {
                 "decorators": true,
                 "syntax": "typescript",
@@ -250,7 +267,7 @@ exports[`svgr > 'exportType default / mixedImport false' 1`] = `
 }
 `;
 
-exports[`svgr > 'exportType default / mixedImport true' 1`] = `
+exports[`svgr > exportType default / mixedImport true 1`] = `
 {
   "oneOf": [
     {
@@ -263,6 +280,10 @@ exports[`svgr > 'exportType default / mixedImport true' 1`] = `
     {
       "resourceQuery": /inline/,
       "type": "asset/inline",
+    },
+    {
+      "resourceQuery": /raw/,
+      "type": "asset/source",
     },
     {
       "resourceQuery": /react/,
@@ -287,6 +308,9 @@ exports[`svgr > 'exportType default / mixedImport true' 1`] = `
                 "keepImportAttributes": true,
               },
               "externalHelpers": true,
+              "output": {
+                "charset": "utf8",
+              },
               "parser": {
                 "decorators": true,
                 "syntax": "typescript",
@@ -352,6 +376,9 @@ exports[`svgr > 'exportType default / mixedImport true' 1`] = `
                 "keepImportAttributes": true,
               },
               "externalHelpers": true,
+              "output": {
+                "charset": "utf8",
+              },
               "parser": {
                 "decorators": true,
                 "syntax": "typescript",
@@ -407,7 +434,7 @@ exports[`svgr > 'exportType default / mixedImport true' 1`] = `
 }
 `;
 
-exports[`svgr > 'exportType named / mixedImport false' 1`] = `
+exports[`svgr > exportType named / mixedImport false 1`] = `
 {
   "oneOf": [
     {
@@ -420,6 +447,10 @@ exports[`svgr > 'exportType named / mixedImport false' 1`] = `
     {
       "resourceQuery": /inline/,
       "type": "asset/inline",
+    },
+    {
+      "resourceQuery": /raw/,
+      "type": "asset/source",
     },
     {
       "resourceQuery": /react/,
@@ -444,6 +475,9 @@ exports[`svgr > 'exportType named / mixedImport false' 1`] = `
                 "keepImportAttributes": true,
               },
               "externalHelpers": true,
+              "output": {
+                "charset": "utf8",
+              },
               "parser": {
                 "decorators": true,
                 "syntax": "typescript",
@@ -509,6 +543,9 @@ exports[`svgr > 'exportType named / mixedImport false' 1`] = `
                 "keepImportAttributes": true,
               },
               "externalHelpers": true,
+              "output": {
+                "charset": "utf8",
+              },
               "parser": {
                 "decorators": true,
                 "syntax": "typescript",
@@ -564,7 +601,7 @@ exports[`svgr > 'exportType named / mixedImport false' 1`] = `
 }
 `;
 
-exports[`svgr > 'exportType named / mixedImport true' 1`] = `
+exports[`svgr > exportType named / mixedImport true 1`] = `
 {
   "oneOf": [
     {
@@ -577,6 +614,10 @@ exports[`svgr > 'exportType named / mixedImport true' 1`] = `
     {
       "resourceQuery": /inline/,
       "type": "asset/inline",
+    },
+    {
+      "resourceQuery": /raw/,
+      "type": "asset/source",
     },
     {
       "resourceQuery": /react/,
@@ -601,6 +642,9 @@ exports[`svgr > 'exportType named / mixedImport true' 1`] = `
                 "keepImportAttributes": true,
               },
               "externalHelpers": true,
+              "output": {
+                "charset": "utf8",
+              },
               "parser": {
                 "decorators": true,
                 "syntax": "typescript",
@@ -666,6 +710,9 @@ exports[`svgr > 'exportType named / mixedImport true' 1`] = `
                 "keepImportAttributes": true,
               },
               "externalHelpers": true,
+              "output": {
+                "charset": "utf8",
+              },
               "parser": {
                 "decorators": true,
                 "syntax": "typescript",

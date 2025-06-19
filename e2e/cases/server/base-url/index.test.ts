@@ -1,9 +1,7 @@
-import { build, dev, proxyConsole } from '@e2e/helper';
+import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('server.base when dev', async ({ page }) => {
-  const { logs, restore } = proxyConsole('log');
-
   const rsbuild = await dev({
     cwd: __dirname,
     page,
@@ -21,7 +19,7 @@ test('server.base when dev', async ({ page }) => {
   expect(page.url().includes('/base/')).toBeTruthy();
 
   // should print url with base path
-  const baseUrlLog = logs.find(
+  const baseUrlLog = rsbuild.logs.find(
     (log) =>
       log.includes('Local:') && log.includes(`localhost:${rsbuild.port}/base`),
   );
@@ -45,7 +43,6 @@ test('server.base when dev', async ({ page }) => {
 
   expect(await page.content()).toContain('aaaa');
 
-  restore();
   await rsbuild.close();
 });
 
@@ -75,8 +72,6 @@ test('server.base with dev.assetPrefix: true', async ({ page }) => {
 });
 
 test('server.base when build & preview', async ({ page }) => {
-  const { logs, restore } = proxyConsole('log');
-
   const rsbuild = await build({
     cwd: __dirname,
     page,
@@ -94,7 +89,7 @@ test('server.base when build & preview', async ({ page }) => {
   expect(page.url().includes('/base/')).toBeTruthy();
 
   // should print url with base path
-  const baseUrlLog = logs.find(
+  const baseUrlLog = rsbuild.logs.find(
     (log) =>
       log.includes('Local:') && log.includes(`localhost:${rsbuild.port}/base`),
   );
@@ -118,7 +113,6 @@ test('server.base when build & preview', async ({ page }) => {
 
   expect(await page.content()).toContain('aaaa');
 
-  restore();
   await rsbuild.close();
 });
 

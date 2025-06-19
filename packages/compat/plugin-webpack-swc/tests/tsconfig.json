@@ -1,8 +1,7 @@
 {
   "extends": "@rsbuild/config/tsconfig",
   "compilerOptions": {
-    "baseUrl": "./",
-    "types": ["vitest/globals"]
+    "types": ["@rstest/core/globals"]
   },
   "include": ["./**/*.ts"]
 }

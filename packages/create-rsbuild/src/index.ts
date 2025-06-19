@@ -2,9 +2,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   type Argv,
-  type ESLintTemplateName,
   checkCancel,
   create,
+  type ESLintTemplateName,
   select,
 } from 'create-rstack';
 
@@ -58,15 +58,19 @@ function mapESLintTemplate(templateName: string): ESLintTemplateName {
   switch (templateName) {
     case 'react-js':
     case 'react-ts':
-    case 'vue-js':
-    case 'vue-ts':
     case 'svelte-js':
     case 'svelte-ts':
       return templateName;
+    case 'vue2-js':
+    case 'vue3-js':
+      return 'vue-js';
+    case 'vue2-ts':
+    case 'vue3-ts':
+      return 'vue-ts';
     case 'react18-js':
       return 'react-js';
     case 'react18-ts':
-      return 'react-js';
+      return 'react-ts';
   }
   const language = templateName.split('-')[1];
   return `vanilla-${language}` as ESLintTemplateName;

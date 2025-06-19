@@ -27,6 +27,7 @@ import { pluginExternals } from './plugins/externals';
 import { pluginFileSize } from './plugins/fileSize';
 import { pluginHtml } from './plugins/html';
 import { pluginInlineChunk } from './plugins/inlineChunk';
+import { pluginLazyCompilation } from './plugins/lazyCompilation';
 import { pluginManifest } from './plugins/manifest';
 import { pluginMinimize } from './plugins/minimize';
 import { pluginModuleFederation } from './plugins/moduleFederation';
@@ -83,13 +84,7 @@ async function applyDefaultPlugins(
     // cleanOutput plugin should before the html plugin
     pluginCleanOutput(),
     pluginAsset(),
-    pluginHtml((environment: string) => async (...args) => {
-      const result = await context.hooks.modifyHTMLTags.callChain({
-        environment,
-        args,
-      });
-      return result[0];
-    }),
+    pluginHtml(context),
     pluginAppIcon(),
     pluginWasm(),
     pluginMoment(),
@@ -110,6 +105,7 @@ async function applyDefaultPlugins(
     pluginManifest(),
     pluginModuleFederation(),
     pluginRspackProfile(),
+    pluginLazyCompilation(),
     pluginSri(),
     pluginNonce(),
   ]);
@@ -173,10 +169,15 @@ export async function createRsbuild(
     ? await options.rsbuildConfig()
     : options.rsbuildConfig || {};
 
+  if (config.logLevel) {
+    logger.level = config.logLevel;
+  }
+
   applyEnvsToConfig(config, envs);
 
   const resolvedOptions: ResolvedCreateRsbuildOptions = {
     cwd: process.cwd(),
+    callerName: 'rsbuild',
     ...options,
     rsbuildConfig: config,
   };
@@ -216,7 +217,7 @@ export async function createRsbuild(
     if (checkDistDir) {
       if (!existsSync(distPath)) {
         throw new Error(
-          `[rsbuild:preview] The output directory ${color.yellow(
+          `${color.dim('[rsbuild:preview]')} The output directory ${color.yellow(
             distPath,
           )} does not exist, please build the project before previewing.`,
         );
@@ -224,7 +225,7 @@ export async function createRsbuild(
 
       if (isEmptyDir(distPath)) {
         throw new Error(
-          `[rsbuild:preview] The output directory ${color.yellow(
+          `${color.dim('[rsbuild:preview]')} The output directory ${color.yellow(
             distPath,
           )} is empty, please build the project before previewing.`,
         );

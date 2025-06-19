@@ -67,7 +67,7 @@ To avoid `client.port` becoming invalid due to port changes, you can use one of 
 - Enable [server.strictPort](/config/server/strict-port).
 - Use the `<port>` placeholder to refer to the current port number. Rsbuild will replace the placeholder with the actual port number it is listening on.
 
-```js title="rsbuild.config.ts"
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     client: {
@@ -89,7 +89,7 @@ The `dev.client.overlay` option allows you to choose whether or not to enable th
 
 By default, Rsbuild will display an error overlay in the browser when a compilation error occurs, providing error messages and stacks:
 
-![error overlay](https://assets.rspack.dev/rsbuild/assets/rsbuild-error-overlay.png)
+![error overlay](https://assets.rspack.rs/rsbuild/assets/rsbuild-error-overlay.png)
 
 To disable the error overlay, set it to `false`:
 

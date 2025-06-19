@@ -6,7 +6,9 @@ import { isMultiCompiler } from './';
 import { formatStatsMessages } from './format.js';
 
 function formatErrorMessage(errors: string[]) {
-  const title = color.bold(color.red('Build error: '));
+  const title = color.bold(
+    color.red(errors.length > 1 ? 'Build errors: ' : 'Build error: '),
+  );
 
   if (!errors.length) {
     return `${title}\n${color.yellow(`For more details, please setting 'stats.errors: true' `)}`;
@@ -102,7 +104,11 @@ export function formatStats(
   );
 
   if (warnings.length) {
-    const title = color.bold(color.yellow('Compile warning: \n'));
+    const title = color.bold(
+      color.yellow(
+        warnings.length > 1 ? 'Build warnings: \n' : 'Build warning: \n',
+      ),
+    );
 
     return {
       message: `${title}${warnings.join('\n\n')}\n`,

@@ -6,8 +6,8 @@ Here are all the main features supported by Rsbuild.
 
 | Features             | Description                                                                                                                    | Links                                                                                                                               |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
-| Rspack               | Use Rspack as the bundler by default                                                                                           | <ul><li>[Configure Rspack](/guide/basic/configure-rspack)</li></ul>                                                                 |
-| SWC compilation      | Transform and minify JavaScript and TypeScript code with SWC by default                                                        | <ul><li>[Configure SWC](/guide/basic/configure-swc)</li></ul>                                                                       |
+| Rspack               | Use Rspack as the bundler by default                                                                                           | <ul><li>[Configure Rspack](/guide/configuration/rspack)</li></ul>                                                                   |
+| SWC compilation      | Transform and minify JavaScript and TypeScript code with SWC by default                                                        | <ul><li>[Configure SWC](/guide/configuration/swc)</li></ul>                                                                         |
 | TS compilation       | TS files are compiled by SWC by default                                                                                        | <ul><li>[TypeScript compilation](/guide/basic/typescript#typescript-compilation)</li></ul>                                          |
 | Code minification    | Code minification is enabled by default in production mode                                                                     | <ul><li>[output.minify](/config/output/minify)</li></ul>                                                                            |
 | Polyfill injection   | Optional feature, inject core-js and other polyfills                                                                           | <ul><li>[Browser compatibility](/guide/advanced/browser-compatibility)</li><li>[output.polyfill](/config/output/polyfill)</li></ul> |
@@ -15,7 +15,7 @@ Here are all the main features supported by Rsbuild.
 | Alias                | Optional feature, set import alias                                                                                             | <ul><li>[resolve.alias](/config/resolve/alias)</li></ul>                                                                            |
 | Babel compilation    | Optional feature, use Babel to transform JavaScript and TypeScript code                                                        | <ul><li>[Babel plugin](/plugins/list/plugin-babel)</li></ul>                                                                        |
 | Node outputs         | Optional feature, building bundles that run in Node.js environment                                                             | <ul><li>[Node target](/config/output/target#node-target)</li></ul>                                                                  |
-| Web Workers          | Optional feature, use Web Workers                                                                                              | <ul><li>[Use Web Workers](/guide/basic/web-workers)</li></ul>                                                                       |
+| Web Workers          | Optional feature, use Web Workers                                                                                              | <ul><li>[Web Workers](/guide/basic/web-workers)</li></ul>                                                                           |
 | Browserslist         | Optional feature, using browserslist (opens new window) to specify which browsers should be supported in your web application. | <ul><li>[Browserslist](/guide/advanced/browserslist)</li></ul>                                                                      |
 | Compatibility check  | Optional feature, analyze if there are incompatible advanced syntax in the outputs within the current browser scope            | <ul><li>[@rsbuild/plugin-check-syntax](https://github.com/rspack-contrib/rsbuild-plugin-check-syntax)</li></ul>                     |
 | Environment variable | Optional feature, inject environment variables or expressions into the code                                                    | <ul><li>[Environment variables](/guide/advanced/env-vars)</li></ul>                                                                 |
@@ -25,19 +25,19 @@ Here are all the main features supported by Rsbuild.
 
 ## CSS
 
-| Features                | Description                                                | Links                                                                                                             |
-| ----------------------- | ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| Lightning CSS           | Use Lightning CSS to downgrade CSS syntax by default       | <ul><li>[CSS usage](/guide/basic/css-usage)</li></ul>                                                             |
-| PostCSS transformation  | Optional feature, use PostCSS to transform CSS files       | <ul><li>[CSS usage](/guide/basic/css-usage)</li><li>[tools.postcss](/config/tools/postcss)</li></ul>              |
-| Tailwind CSS            | Optional feature, use Tailwind CSS                         | <ul><li>[Use Tailwind CSS](/guide/basic/tailwindcss)</li></ul>                                                    |
-| UnoCSS                  | Optional feature, use UnoCSS                               | <ul><li>[Use UnoCSS](/guide/basic/unocss)</li></ul>                                                               |
-| Sass preprocessing      | Optional feature, compile Sass/Scss files                  | <ul><li>[CSS usage](/guide/basic/css-usage)</li><li>[Sass plugin](/plugins/list/plugin-sass)</li></ul>            |
-| Less preprocessing      | Optional feature, compile Less files                       | <ul><li>[CSS usage](/guide/basic/css-usage)</li><li>[Less plugin](/plugins/list/plugin-less)</li></ul>            |
-| Stylus preprocessing    | Optional feature, compile Stylus files                     | <ul><li>[CSS usage](/guide/basic/css-usage)</li><li>[Stylus plugin](/plugins/list/plugin-stylus)</li></ul>        |
-| CSS Modules compilation | Support compiling `*.module.*` files by default            | <ul><li>[Use CSS Modules](/guide/basic/css-modules)</li><li>[tools.cssLoader](/config/tools/css-loader)</li></ul> |
-| CSS Modules type        | Optional feature, generate type definition for CSS Modules | <ul><li>[Typed CSS Modules plugin](https://github.com/rspack-contrib/rsbuild-plugin-typed-css-modules)</li></ul>  |
-| CSS minification        | CSS minification is enabled by default in production build | <ul><li>[CSS usage](/guide/basic/css-usage)</li></ul>                                                             |
-| Inline CSS into JS      | Optional feature, inline CSS files to JavaScript files     | <ul><li>[CSS usage](/guide/basic/css-usage)</li><li>[output.injectStyles](/config/output/inject-styles)</li></ul> |
+| Features                | Description                                                | Links                                                                                                            |
+| ----------------------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Lightning CSS           | Use Lightning CSS to downgrade CSS syntax by default       | <ul><li>[CSS](/guide/styling/css-usage)</li></ul>                                                                |
+| PostCSS transformation  | Optional feature, use PostCSS to transform CSS files       | <ul><li>[CSS](/guide/styling/css-usage)</li><li>[tools.postcss](/config/tools/postcss)</li></ul>                 |
+| Tailwind CSS            | Optional feature, use Tailwind CSS                         | <ul><li>[Tailwind CSS](/guide/styling/tailwindcss)</li></ul>                                                     |
+| UnoCSS                  | Optional feature, use UnoCSS                               | <ul><li>[UnoCSS](/guide/styling/unocss)</li></ul>                                                                |
+| Sass preprocessing      | Optional feature, compile Sass/Scss files                  | <ul><li>[CSS](/guide/styling/css-usage)</li><li>[Sass plugin](/plugins/list/plugin-sass)</li></ul>               |
+| Less preprocessing      | Optional feature, compile Less files                       | <ul><li>[CSS](/guide/styling/css-usage)</li><li>[Less plugin](/plugins/list/plugin-less)</li></ul>               |
+| Stylus preprocessing    | Optional feature, compile Stylus files                     | <ul><li>[CSS](/guide/styling/css-usage)</li><li>[Stylus plugin](/plugins/list/plugin-stylus)</li></ul>           |
+| CSS Modules compilation | Support compiling `*.module.*` files by default            | <ul><li>[CSS Modules](/guide/styling/css-modules)</li><li>[tools.cssLoader](/config/tools/css-loader)</li></ul>  |
+| CSS Modules type        | Optional feature, generate type definition for CSS Modules | <ul><li>[Typed CSS Modules plugin](https://github.com/rspack-contrib/rsbuild-plugin-typed-css-modules)</li></ul> |
+| CSS minification        | CSS minification is enabled by default in production build | <ul><li>[CSS](/guide/styling/css-usage)</li></ul>                                                                |
+| Inline CSS into JS      | Optional feature, inline CSS files to JavaScript files     | <ul><li>[CSS](/guide/styling/css-usage)</li><li>[output.injectStyles](/config/output/inject-styles)</li></ul>    |
 
 ## HTML
 
@@ -54,14 +54,14 @@ Here are all the main features supported by Rsbuild.
 
 ## Server
 
-| Features          | Description                                                                    | Links                                                            |
-| ----------------- | ------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| Public dir        | Use the public directory as the directory for serving public assets by default | <ul><li>[server.publicDir](/config/server/public-dir)</li></ul>  |
-| SSR               | Optional feature, implement server-side rendering                              | <ul><li>[SSR](/guide/advanced/ssr)</li></ul>                     |
-| Proxy             | Optional feature, proxy requests to the specified service                      | <ul><li>[server.proxy](/config/server/proxy)</li></ul>           |
-| Open page         | Optional feature, automatically open page in browser when starting server      | <ul><li>[server.open](/config/server/open)</li></ul>             |
-| HTTPS             | Optional feature, enable HTTPS server                                          | <ul><li>[server.https](/config/server/https)</li></ul>           |
-| Custom middleware | Optional feature, use custom middlewares                                       | <ul><li>[Middlewares](/guide/basic/server#middlewares)</li></ul> |
+| Features          | Description                                                                    | Links                                                           |
+| ----------------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------- |
+| Public dir        | Use the public directory as the directory for serving public assets by default | <ul><li>[server.publicDir](/config/server/public-dir)</li></ul> |
+| SSR               | Optional feature, implement server-side rendering                              | <ul><li>[SSR](/guide/advanced/ssr)</li></ul>                    |
+| Proxy             | Optional feature, proxy requests to the specified service                      | <ul><li>[server.proxy](/config/server/proxy)</li></ul>          |
+| Open page         | Optional feature, automatically open page in browser when starting server      | <ul><li>[server.open](/config/server/open)</li></ul>            |
+| HTTPS             | Optional feature, enable HTTPS server                                          | <ul><li>[server.https](/config/server/https)</li></ul>          |
+| Custom middleware | Optional feature, use custom middleware                                        | <ul><li>[Middleware](/guide/basic/server#middleware)</li></ul>  |
 
 ## UI framework
 
@@ -81,11 +81,11 @@ Here are all the main features supported by Rsbuild.
 
 | Features               | Description                                                                  | Links                                                                                                                                    |
 | ---------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| Import image assets    | Support for import image assets in code                                      | <ul><li>[Import static assets](/guide/basic/static-assets)</li></ul>                                                                     |
-| Import font assets     | Support for import font assets in code                                       | <ul><li>[Import static assets](/guide/basic/static-assets)</li></ul>                                                                     |
-| Import video assets    | Support for import video assets in code                                      | <ul><li>[Import static assets](/guide/basic/static-assets)</li></ul>                                                                     |
-| Import Wasm assets     | Support for import WebAssembly assets in code                                | <ul><li>[Import Wasm assets](/guide/basic/wasm-assets)</li></ul>                                                                         |
-| Import node addons     | Support for import Node.js addons in code                                    | <ul><li>[Node addons](/config/output/target#node-addons)</li></ul>                                                                       |
+| Image assets           | Support for import image assets in code                                      | <ul><li>[Static assets](/guide/basic/static-assets)</li></ul>                                                                            |
+| Font assets            | Support for import font assets in code                                       | <ul><li>[Static assets](/guide/basic/static-assets)</li></ul>                                                                            |
+| Video assets           | Support for import video assets in code                                      | <ul><li>[Static assets](/guide/basic/static-assets)</li></ul>                                                                            |
+| Wasm assets            | Support for import WebAssembly assets in code                                | <ul><li>[Static assets](/guide/basic/static-assets)</li></ul>                                                                            |
+| Node addons            | Support for import Node.js addons in code                                    | <ul><li>[Static assets](/guide/basic/static-assets)</li></ul>                                                                            |
 | Inline static assets   | Small assets are inlined into JS by default                                  | <ul><li>[Inline static assets](/guide/optimization/inline-assets)</li><li>[output.dataUriLimit](/config/output/data-uri-limit)</li></ul> |
 | Clean up static assets | Automatically clean up static assets in the dist directory before each build | <ul><li>[output.cleanDistPath](/config/output/clean-dist-path)</li ></ul>                                                                |
 | Copy static assets     | Optional feature, copy static assets to the dist directory                   | <ul><li>[output.copy](/config/output/copy)</li></ul>                                                                                     |
@@ -97,7 +97,7 @@ Here are all the main features supported by Rsbuild.
 | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | Chunk splitting            | A variety of chunk splitting strategies are built into Rsbuild to automatically split the bundle into files of moderate size | <ul><li>[Code splitting](/guide/optimization/code-splitting)</li><li>[performance.chunkSplit](/config/performance/chunk-split)</li></ul> |
 | Print file size            | After the production build, All bundle sizes is displayed by default                                                         | <ul><li>[performance.printFileSize](/config/performance/print-file-size)</li></ul>                                                       |
-| Analyze build process      | Optional feature, use Rsdoctor to analyze build process                                                                      | <ul><li>[使用 Rsdoctor](/guide/debug/rsdoctor)</li></ul>                                                                                 |
+| Analyze build process      | Optional feature, use Rsdoctor to analyze build process                                                                      | <ul><li>[Use Rsdoctor](/guide/debug/rsdoctor)</li></ul>                                                                                  |
 | Analyze bundle size        | Optional feature, analyze bundle size through Bundle Analyzer                                                                | <ul><li>[performance.bundleAnalyze](/config/performance/bundle-analyze)</li></ul>                                                        |
 | Remove console             | Optional feature, remove `console.[methodName]` in code                                                                      | <ul><li>[performance.removeConsole](/config/performance/remove-console)</li ></ul>                                                       |
 | Optimize moment.js size    | Optional feature, remove the redundant locale files of moment.js                                                             | <ul><li>[performance.removeMomentLocale](/config/performance/remove-moment-locale)</li></ul>                                             |

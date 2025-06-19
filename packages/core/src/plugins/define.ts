@@ -20,9 +20,11 @@ function checkProcessEnvSecurity(define: Define) {
     }
 
     logger.warn(
-      color.yellow(
-        `[rsbuild:config] The "source.define" option includes an object with the key ${JSON.stringify(pathKey)} under "process.env", indicating potential exposure of all environment variables. This can lead to security risks and should be avoided.`,
-      ),
+      `${color.dim('[rsbuild:config]')} The ${color.yellow(
+        '"source.define"',
+      )} option includes an object with the key ${color.yellow(
+        JSON.stringify(pathKey),
+      )} under ${color.yellow('"process.env"')}, indicating potential exposure of all environment variables. This can lead to security risks and should be avoided.`,
     );
   };
 
@@ -36,7 +38,7 @@ function checkProcessEnvSecurity(define: Define) {
   if (typeof value === 'string') {
     try {
       check(JSON.parse(value));
-    } catch (error) {}
+    } catch {}
   }
 }
 

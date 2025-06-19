@@ -13,14 +13,15 @@ import {
   isPlainObject,
 } from '../helpers';
 import {
-  type HtmlInfo,
+  entryNameSymbol,
+  type HtmlExtraData,
   RsbuildHtmlPlugin,
   type TagConfig,
 } from '../rspack/RsbuildHtmlPlugin';
 import type {
   HtmlConfig,
   HtmlRspackPlugin,
-  ModifyHTMLTagsFn,
+  InternalContext,
   NormalizedEnvironmentConfig,
   RsbuildPlugin,
 } from '../types';
@@ -75,7 +76,7 @@ export async function getTemplate(
     // Check if custom template exists
     if (!(await isFileExists(absolutePath))) {
       throw new Error(
-        `[rsbuild:html] Failed to resolve HTML template, please check if the file exists: ${color.cyan(
+        `${color.dim('[rsbuild:html]')} Failed to resolve HTML template, check if the file exists: ${color.yellow(
           absolutePath,
         )}`,
       );
@@ -212,9 +213,7 @@ const getTagConfig = (
   };
 };
 
-export const pluginHtml = (
-  modifyTagsFn?: (environment: string) => ModifyHTMLTagsFn,
-): RsbuildPlugin => ({
+export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
   name: 'rsbuild:html',
 
   setup(api) {
@@ -231,7 +230,7 @@ export const pluginHtml = (
         const entryNames = Object.keys(entries).filter((entryName) =>
           Boolean(htmlPaths[entryName]),
         );
-        const htmlInfoMap: Record<string, HtmlInfo> = {};
+        const extraDataMap = new Map<string, HtmlExtraData>();
 
         const finalOptions = await Promise.all(
           entryNames.map(async (entryName) => {
@@ -277,23 +276,28 @@ export const pluginHtml = (
               pluginOptions.chunksSortMode = 'manual';
             }
 
-            const htmlInfo: HtmlInfo = {};
-            htmlInfoMap[entryName] = htmlInfo;
+            const extraData: HtmlExtraData = {
+              entryName,
+              context,
+              environment,
+            };
+
+            extraDataMap.set(entryName, extraData);
 
             if (templateContent) {
-              htmlInfo.templateContent = templateContent;
+              extraData.templateContent = templateContent;
             }
 
             const tagConfig = getTagConfig(environment.config);
             if (tagConfig) {
-              htmlInfo.tagConfig = tagConfig;
+              extraData.tagConfig = tagConfig;
             }
 
             pluginOptions.title = getTitle(entryName, config);
 
             const favicon = getFavicon(entryName, config);
             if (favicon) {
-              htmlInfo.favicon = favicon;
+              extraData.favicon = favicon;
             }
 
             const finalOptions = reduceConfigsWithContext({
@@ -315,20 +319,21 @@ export const pluginHtml = (
           }),
         );
 
-        // keep html entry plugin registration order stable based on entryNames
+        // Follow the order of the entryNames array to keep the HTML plugin registration order stable
         entryNames.forEach((entryName, index) => {
-          chain
-            .plugin(`${CHAIN_ID.PLUGIN.HTML}-${entryName}`)
-            .use(HtmlPlugin, [finalOptions[index]]);
+          chain.plugin(`${CHAIN_ID.PLUGIN.HTML}-${entryName}`).use(HtmlPlugin, [
+            {
+              ...finalOptions[index],
+              [entryNameSymbol]: entryName,
+            },
+          ]);
         });
+
+        const getExtraData = (entryName: string) => extraDataMap.get(entryName);
 
         chain
           .plugin('rsbuild-html-plugin')
-          .use(RsbuildHtmlPlugin, [
-            htmlInfoMap,
-            () => environment,
-            modifyTagsFn?.(environment.name),
-          ]);
+          .use(RsbuildHtmlPlugin, [getExtraData]);
 
         if (config.html) {
           const { crossorigin } = config.html;

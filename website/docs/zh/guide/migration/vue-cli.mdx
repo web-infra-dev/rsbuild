@@ -24,14 +24,14 @@ import { PackageManagerTabs } from '@theme';
 
 下一步，你需要把 package.json 中的 npm scripts 更新为 Rsbuild 的 CLI 命令。
 
-```diff title="package.json"
+```json title="package.json"
 {
   "scripts": {
--   "serve": "vue-cli-service serve",
--   "build": "vue-cli-service build",
-+   "serve": "rsbuild dev",
-+   "build": "rsbuild build",
-+   "preview": "rsbuild preview"
+    "serve": "vue-cli-service serve", // [!code --]
+    "build": "vue-cli-service build", // [!code --]
+    "serve": "rsbuild dev", // [!code ++]
+    "build": "rsbuild build", // [!code ++]
+    "preview": "rsbuild preview" // [!code ++]
   }
 }
 ```
@@ -77,9 +77,11 @@ export default defineConfig({
 
 在 HTML 模板中，如果使用了 Vue CLI 的 `BASE_URL` 变量，请替换为 Rsbuild 的 [assetPrefix 变量](/config/html/template-parameters)，并使用斜杠进行连接：
 
-```diff
--  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-+  <link rel="icon" href="<%= assetPrefix %>/favicon.ico">
+```html
+<link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+<!-- [!code --] -->
+<link rel="icon" href="<%= assetPrefix %>/favicon.ico" />
+<!-- [!code ++] -->
 ```
 
 这样就完成了从 Vue CLI 到 Rsbuild 的基本迁移，此时你可以执行 `npm run serve` 命令来尝试启动开发服务器。

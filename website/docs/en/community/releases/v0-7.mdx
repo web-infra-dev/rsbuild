@@ -6,7 +6,7 @@ _May 28, 2024_
 
 # Announcing Rsbuild 0.7
 
-![](https://assets.rspack.dev/rsbuild/rsbuild-banner-v0-7.png)
+![](https://assets.rspack.rs/rsbuild/rsbuild-banner-v0-7.png)
 
 Rsbuild 0.7 has been released with Rspack 0.7!
 
@@ -27,7 +27,7 @@ Rsbuild now supports Storybook!
 
 [storybook-builder-rsbuild](https://github.com/rspack-contrib/storybook-rsbuild) is a Storybook builder based on Storybook v8 and Rsbuild that allows you to quickly build your components and stories.
 
-![](https://assets.rspack.dev/rsbuild/rsbuild-banner-with-storybook.png)
+![](https://assets.rspack.rs/rsbuild/rsbuild-banner-with-storybook.png)
 
 - For projects using Rsbuild, you can now quickly integrate Storybook and reuse your existing Rsbuild config.
 - For projects using the Storybook webpack builder, you can now upgrade to Rsbuild and **get ~5x faster build performance**.
@@ -44,7 +44,7 @@ const config: StorybookConfig = {
 export default config;
 ```
 
-![](https://assets.rspack.dev/rsbuild/assets/storybook-rsbuild-preview.png)
+![](https://assets.rspack.rs/rsbuild/assets/storybook-rsbuild-preview.png)
 
 > For more usage, please refer to [storybook-rsbuild repository](https://github.com/rspack-contrib/storybook-rsbuild).
 
@@ -54,15 +54,15 @@ In Rsbuild 0.7, **Sass compilation is 3~10 times faster**. The performance impro
 
 Comparison of build times for Rsbuild 0.6 and 0.7 when compiling Bootstrap's Sass code:
 
-![](https://assets.rspack.dev/rsbuild/assets/sass-embedded-compare.jpeg)
+![](https://assets.rspack.rs/rsbuild/assets/sass-embedded-compare.jpeg)
 
-This improvement is due to Rsbuild's default use of [sass-embedded](https://www.npmjs.com/package/sass-embedded), a JavaScript wrapper around the native Dart Sass executable that provides a consistent API and superior performance.
+This improvement is due to Rsbuild's default use of [sass-embedded](https://npmjs.com/package/sass-embedded), a JavaScript wrapper around the native Dart Sass executable that provides a consistent API and superior performance.
 
 Rsbuild has also enabled the latest sass-loader's [modern-compiler](https://github.com/webpack-contrib/sass-loader/releases/tag/v14.2.0) API. This can enable Sass's shared resources feature, which allows the same compiler process to be reused when compiling multiple files, improving build performance.
 
 ## Better CSS supports
 
-Rsbuild now uses [CssExtractRspackPlugin](https://www.rspack.dev/plugins/rspack/css-extract-rspack-plugin) to extract CSS into separate files, rather than using the [experimental.css](https://www.rspack.dev/config/experiments#experimentscss) config to do so.
+Rsbuild now uses [CssExtractRspackPlugin](https://rspack.rs/plugins/rspack/css-extract-rspack-plugin) to extract CSS into separate files, rather than using the [experimental.css](https://rspack.rs/config/experiments#experimentscss) config to do so.
 
 This allows Rsbuild to support more CSS features, including:
 
@@ -137,7 +137,7 @@ Now when you open the `src/index.ts` file, you can see that the `styles` object 
 
 Now, all packages of Rsbuild provide exports in both ES modules and CommonJS formats, and ["type"="module"](https://nodejs.org/api/packages.html#type) has been declared in the package.json.
 
-![](https://assets.rspack.dev/rsbuild/assets/rsbuild-dual-package-example.png)
+![](https://assets.rspack.rs/rsbuild/assets/rsbuild-dual-package-example.png)
 
 This allows you to use `import` or `require` to use the JavaScript API of Rsbuild:
 
@@ -157,7 +157,7 @@ ESM/CJS interop is a tricky issue, so we will provide both formats for a long ti
 
 Rsbuild has upgraded the dependent Rspack to version 0.7 and adapted to the breaking changes included in it. Typically, these breaking changes will not affect you.
 
-In the new version, Rspack supports lazy compilation, which can significantly improve the dev startup time for large projects. Please refer to [Announcing Rspack 0.7](https://rspack.dev/blog/announcing-0-7) to learn more.
+In the new version, Rspack supports lazy compilation, which can significantly improve the dev startup time for large projects. Please refer to [Announcing Rspack 0.7](https://rspack.rs/blog/announcing-0-7) to learn more.
 
 In Rsbuild, you can use [dev.lazyCompilation](/config/dev/lazy-compilation) to enable lazy compilation.
 
@@ -195,7 +195,7 @@ This is because more applications are currently using HTTP 2.0, so splitting ass
 
 If you prefer the previous defaults, add the following config:
 
-```js title="rsbuild.config.ts"
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     dataUriLimit: 10000,

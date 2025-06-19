@@ -1,6 +1,6 @@
+import { rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { createRsbuild } from '@rsbuild/core';
-import { rspackOnlyTest } from 'scripts';
 
 rspackOnlyTest('should not load env by default', async () => {
   const rsbuild = await createRsbuild({

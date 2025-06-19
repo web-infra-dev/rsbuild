@@ -3,5 +3,5 @@ Called when the process is going to exit, this hook can only execute synchronous
 - **Type:**
 
 ```ts
-function OnExit(callback: () => void): void;
+function OnExit(callback: (context: { exitCode: number }) => void): void;
 ```

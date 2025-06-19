@@ -1,9 +1,19 @@
 import { exec } from 'node:child_process';
 import fs from 'node:fs';
-import path from 'node:path';
+import { join } from 'node:path';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import { expectPoll, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
+import { removeSync } from 'fs-extra';
+
+test.afterAll(() => {
+  const files = fs.readdirSync(__dirname);
+  for (const file of files) {
+    if (file.startsWith('.rspack-profile')) {
+      removeSync(join(__dirname, file));
+    }
+  }
+});
 
 rspackOnlyTest(
   'should generator rspack profile as expected in dev',
@@ -12,7 +22,7 @@ rspackOnlyTest(
       cwd: __dirname,
       env: {
         ...process.env,
-        RSPACK_PROFILE: 'ALL',
+        RSPACK_PROFILE: 'OVERVIEW',
       },
     });
 
@@ -30,19 +40,15 @@ rspackOnlyTest(
     // quit process
     devProcess.stdin?.write('q\n');
     await expectPoll(() =>
-      logs.some((log) => log.includes('saved Rspack profile file to')),
+      logs.some((log) => log.includes('profile file saved to')),
     ).toBeTruthy();
 
-    const profileDir = logs
-      .find((log) => log.includes('saved Rspack profile file to'))
-      ?.split('saved Rspack profile file to')[1]
+    const profileFile = logs
+      .find((log) => log.includes('profile file saved to'))
+      ?.split('profile file saved to')[1]
       ?.trim();
 
-    expect(fs.existsSync(path.join(profileDir!, 'trace.json'))).toBeTruthy();
-    expect(
-      fs.existsSync(path.join(profileDir!, 'jscpuprofile.json')),
-    ).toBeTruthy();
-
+    expect(fs.existsSync(profileFile!)).toBeTruthy();
     devProcess.kill();
   },
 );
@@ -54,7 +60,7 @@ rspackOnlyTest(
       cwd: __dirname,
       env: {
         ...process.env,
-        RSPACK_PROFILE: 'ALL',
+        RSPACK_PROFILE: 'OVERVIEW',
       },
     });
 
@@ -70,20 +76,15 @@ rspackOnlyTest(
     ).toBeTruthy();
 
     await expectPoll(() =>
-      logs.some((log) => log.includes('saved Rspack profile file to')),
+      logs.some((log) => log.includes('profile file saved to')),
     ).toBeTruthy();
 
-    const profileDir = logs
-      .find((log) => log.includes('saved Rspack profile file to'))
-      ?.split('saved Rspack profile file to')[1]
+    const profileFile = logs
+      .find((log) => log.includes('profile file saved to'))
+      ?.split('profile file saved to')[1]
       ?.trim();
 
-    expect(fs.existsSync(path.join(profileDir!, 'trace.json'))).toBeTruthy();
-    expect(
-      fs.existsSync(path.join(profileDir!, 'jscpuprofile.json')),
-    ).toBeTruthy();
-    expect(fs.existsSync(path.join(profileDir!, 'logging.json'))).toBeTruthy();
-
+    expect(fs.existsSync(profileFile!)).toBeTruthy();
     buildProcess.kill();
   },
 );

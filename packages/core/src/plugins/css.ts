@@ -1,9 +1,9 @@
 import path, { posix } from 'node:path';
 import deepmerge from 'deepmerge';
-import type { AcceptedPlugin, PluginCreator } from 'postcss';
 import { reduceConfigs, reduceConfigsWithContext } from 'reduce-configs';
+import type { AcceptedPlugin, PluginCreator } from '../../compiled/postcss';
 import { CSS_REGEX, LOADER_PATH } from '../constants';
-import { castArray, getFilename } from '../helpers';
+import { castArray, color, getFilename } from '../helpers';
 import { getCompiledPath } from '../helpers/path';
 import { getCssExtractPlugin } from '../pluginHelper';
 import type {
@@ -40,6 +40,7 @@ export const getLightningCSSLoaderOptions = (
 
   const initialOptions: Rspack.LightningcssLoaderOptions = {
     targets,
+    errorRecovery: true,
   };
 
   if (minify) {
@@ -196,7 +197,9 @@ const getPostcssLoaderOptions = async ({
 
       if (typeof options !== 'object' || options === null) {
         throw new Error(
-          `[rsbuild:css] \`postcssOptions\` function must return a PostCSSOptions object, got "${typeof options}".`,
+          `${color.dim('[rsbuild:css]')} \`postcssOptions\` function must return a PostCSSOptions object, got ${color.yellow(
+            typeof options,
+          )}.`,
         );
       }
 
@@ -347,14 +350,14 @@ export const pluginCss = (): RsbuildPlugin => ({
           ) {
             importLoaders++;
 
-            const { minifyCss } = parseMinifyOptions(config, isProd);
+            const { minifyCss } = parseMinifyOptions(config);
 
             updateRules((rule, type) => {
               // Inline styles are not processed by Rspack's minimizers,
               // so we need to minify them via `builtin:lightningcss-loader`
               const inlineStyle =
                 type === 'inline' || config.output.injectStyles;
-              const minify = inlineStyle && isProd && minifyCss;
+              const minify = inlineStyle && minifyCss;
 
               const lightningcssOptions = getLightningCSSLoaderOptions(
                 config,

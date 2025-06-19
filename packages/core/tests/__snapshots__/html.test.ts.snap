@@ -1,4 +1,4 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`plugin-html > should allow to configure html.tags 1`] = `
 {
@@ -43,6 +43,7 @@ exports[`plugin-html > should allow to configure html.tags 1`] = `
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
+        Symbol(entryName): "main",
       },
       "version": 6,
     },
@@ -75,47 +76,13 @@ exports[`plugin-html > should allow to configure html.tags 1`] = `
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
+        Symbol(entryName): "foo",
       },
       "version": 6,
     },
     RsbuildHtmlPlugin {
-      "getEnvironment": [Function],
-      "modifyTagsFn": undefined,
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "foo": {
-          "tagConfig": {
-            "append": true,
-            "hash": false,
-            "publicPath": true,
-            "tags": [
-              {
-                "attrs": {
-                  "src": "jq.js",
-                },
-                "tag": "script",
-              },
-            ],
-          },
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-        "main": {
-          "tagConfig": {
-            "append": true,
-            "hash": false,
-            "publicPath": true,
-            "tags": [
-              {
-                "attrs": {
-                  "src": "jq.js",
-                },
-                "tag": "script",
-              },
-            ],
-          },
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
   ],
 }
@@ -153,18 +120,13 @@ exports[`plugin-html > should allow to modify plugin options by tools.htmlPlugin
         "templateParameters": [Function],
         "title": "Rspack App",
         "xhtml": false,
+        Symbol(entryName): "index",
       },
       "version": 6,
     },
     RsbuildHtmlPlugin {
-      "getEnvironment": [Function],
-      "modifyTagsFn": undefined,
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "index": {
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
   ],
 }
@@ -210,19 +172,13 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
+        Symbol(entryName): "index",
       },
       "version": 6,
     },
     RsbuildHtmlPlugin {
-      "getEnvironment": [Function],
-      "modifyTagsFn": undefined,
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "index": {
-          "favicon": "./src/favicon.ico",
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
   ],
 }
@@ -268,18 +224,13 @@ exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
+        Symbol(entryName): "index",
       },
       "version": 6,
     },
     RsbuildHtmlPlugin {
-      "getEnvironment": [Function],
-      "modifyTagsFn": undefined,
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "index": {
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
   ],
 }
@@ -325,18 +276,13 @@ exports[`plugin-html > should enable minify in production 1`] = `
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
+        Symbol(entryName): "index",
       },
       "version": 6,
     },
     RsbuildHtmlPlugin {
-      "getEnvironment": [Function],
-      "modifyTagsFn": undefined,
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "index": {
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
   ],
 }
@@ -382,24 +328,19 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
+        Symbol(entryName): "index",
       },
       "version": 6,
     },
     RsbuildHtmlPlugin {
-      "getEnvironment": [Function],
-      "modifyTagsFn": undefined,
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "index": {
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
   ],
 }
 `;
 
-exports[`plugin-html > should stop injecting <script> if inject is '() => false' 1`] = `
+exports[`plugin-html > should stop injecting <script> if inject is () => false 1`] = `
 {
   "entry": {
     "index": [
@@ -439,24 +380,19 @@ exports[`plugin-html > should stop injecting <script> if inject is '() => false'
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
+        Symbol(entryName): "index",
       },
       "version": 6,
     },
     RsbuildHtmlPlugin {
-      "getEnvironment": [Function],
-      "modifyTagsFn": undefined,
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "index": {
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
   ],
 }
 `;
 
-exports[`plugin-html > should stop injecting <script> if inject is 'false' 1`] = `
+exports[`plugin-html > should stop injecting <script> if inject is false 1`] = `
 {
   "entry": {
     "index": [
@@ -496,18 +432,13 @@ exports[`plugin-html > should stop injecting <script> if inject is 'false' 1`] =
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
+        Symbol(entryName): "index",
       },
       "version": 6,
     },
     RsbuildHtmlPlugin {
-      "getEnvironment": [Function],
-      "modifyTagsFn": undefined,
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "index": {
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
   ],
 }
@@ -554,18 +485,13 @@ exports[`plugin-html > should support environment html config 1`] = `
           "templateParameters": [Function],
           "title": "web",
           "xhtml": false,
+          Symbol(entryName): "main",
         },
         "version": 6,
       },
       RsbuildHtmlPlugin {
-        "getEnvironment": [Function],
-        "modifyTagsFn": undefined,
+        "getExtraData": [Function],
         "name": "RsbuildHtmlPlugin",
-        "options": {
-          "main": {
-            "templateContent": "<!doctype html><html><head></head><body><div id=\\"app\\"></div></body></html>",
-          },
-        },
       },
     ],
   },
@@ -608,18 +534,13 @@ exports[`plugin-html > should support environment html config 1`] = `
           "templateParameters": [Function],
           "title": "web1",
           "xhtml": false,
+          Symbol(entryName): "index",
         },
         "version": 6,
       },
       RsbuildHtmlPlugin {
-        "getEnvironment": [Function],
-        "modifyTagsFn": undefined,
+        "getExtraData": [Function],
         "name": "RsbuildHtmlPlugin",
-        "options": {
-          "index": {
-            "templateContent": "<!doctype html><html><head></head><body><div id=\\"app1\\"></div></body></html>",
-          },
-        },
       },
     ],
   },
@@ -669,6 +590,7 @@ exports[`plugin-html > should support multi entry 1`] = `
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
+        Symbol(entryName): "main",
       },
       "version": 6,
     },
@@ -701,21 +623,13 @@ exports[`plugin-html > should support multi entry 1`] = `
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
+        Symbol(entryName): "foo",
       },
       "version": 6,
     },
     RsbuildHtmlPlugin {
-      "getEnvironment": [Function],
-      "modifyTagsFn": undefined,
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "foo": {
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-        "main": {
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
   ],
 }

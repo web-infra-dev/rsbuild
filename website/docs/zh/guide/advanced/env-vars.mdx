@@ -20,7 +20,7 @@ Rsbuild 默认通过 [source.define](#使用-define) 向代码中注入以下环
 
 - [process.env.BASE_URL](#processenvbase_url)
 - [process.env.ASSET_PREFIX](#processenvasset_prefix)
-- [process.env.NODE_ENV](#processenvnode_env)：该变量由 Rspack 注入，如需关闭或修改，可参考 [Rspack - optimization.nodeEnv](https://rspack.dev/zh/config/optimization#optimizationnodeenv)
+- [process.env.NODE_ENV](#processenvnode_env)
 
 ### import.meta.env.MODE
 
@@ -184,6 +184,20 @@ if (false) {
 
 在代码压缩过程中，`if (false) { ... }` 会被识别为无效代码，并被自动移除。
 
+#### 自定义 NODE_ENV
+
+`process.env.NODE_ENV` 是由 Rspack 默认注入的，如果需要关闭注入或自定义它的值，可以使用 Rspack 的 [optimization.nodeEnv](https://rspack.rs/zh/config/optimization#optimizationnodeenv) 选项：
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: {
+      optimization: { nodeEnv: false },
+    },
+  },
+};
+```
+
 ## `.env` 文件
 
 当项目根目录存在 `.env` 文件时，Rsbuild CLI 会自动使用 [dotenv](https://npmjs.com/package/dotenv) 来加载这些环境变量，并添加到当前 Node.js 进程中，其中的 [public 变量](#public-变量) 会被暴露在 `client` 代码中。
@@ -293,6 +307,16 @@ const mergedConfig = mergeRsbuildConfig(
 );
 ```
 
+### 禁用加载
+
+你可以通过 CLI 的 `--no-env` 选项来禁用加载 `.env` 文件。
+
+```bash
+npx rsbuild dev --no-env
+```
+
+在使用 `--no-env` 选项时，Rsbuild CLI 不会读取任何 `.env` 文件，你可以自行使用其他工具来管理环境变量，例如 [dotenvx](https://dotenvx.com/)。
+
 ## public 变量
 
 所有以 `PUBLIC_` 开头的环境变量可以在 client 代码中访问，比如定义了以下变量：
@@ -326,7 +350,7 @@ public 变量会替换 client 代码中的标识符，替换范围包含：
 - JavaScript 文件，以及能转换为 JavaScript 代码的文件，比如 `.js`，`.ts`，`.tsx` 等。
 - HTML 模板文件，比如：
 
-```ejs title="template.html"
+```xml title="template.html"
 <div><%= process.env.PUBLIC_NAME %></div>
 ```
 
@@ -463,7 +487,7 @@ interface ImportMeta {
 
 ### process.env
 
-如果缺少 `process.env` 的类型，请安装 [@types/node](https://www.npmjs.com/package/@types/node) 依赖：
+如果缺少 `process.env` 的类型，请安装 [@types/node](https://npmjs.com/package/@types/node) 依赖：
 
 import { PackageManagerTabs } from '@theme';
 

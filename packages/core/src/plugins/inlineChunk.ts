@@ -52,15 +52,61 @@ function updateSourceMappingURL({
   return source;
 }
 
-function matchTests(name: string, source: string, tests: InlineChunkTest[]) {
+function matchTests(
+  name: string,
+  asset: Rspack.sources.Source,
+  tests: InlineChunkTest[],
+) {
   return tests.some((test) => {
     if (isFunction(test)) {
-      const size = source.length;
+      const size = asset.size();
       return test({ name, size });
     }
     return test.exec(name);
   });
 }
+
+export const getInlineTests = (
+  config: NormalizedEnvironmentConfig,
+): {
+  scriptTests: InlineChunkTest[];
+  styleTests: InlineChunkTest[];
+} => {
+  const isProd = config.mode === 'production';
+  const { inlineStyles, inlineScripts } = config.output;
+  const scriptTests: InlineChunkTest[] = [];
+  const styleTests: InlineChunkTest[] = [];
+
+  if (inlineScripts) {
+    if (inlineScripts === true) {
+      isProd && scriptTests.push(JS_REGEX);
+    } else if (isRegExp(inlineScripts) || isFunction(inlineScripts)) {
+      isProd && scriptTests.push(inlineScripts);
+    } else {
+      const enabled =
+        inlineScripts.enable === 'auto' ? isProd : inlineScripts.enable;
+      if (enabled) {
+        scriptTests.push(inlineScripts.test);
+      }
+    }
+  }
+
+  if (inlineStyles) {
+    if (inlineStyles === true) {
+      isProd && styleTests.push(CSS_REGEX);
+    } else if (isRegExp(inlineStyles) || isFunction(inlineStyles)) {
+      isProd && styleTests.push(inlineStyles);
+    } else {
+      const enable =
+        inlineStyles.enable === 'auto' ? isProd : inlineStyles.enable;
+      if (enable) {
+        styleTests.push(inlineStyles.test);
+      }
+    }
+  }
+
+  return { scriptTests, styleTests };
+};
 
 export const pluginInlineChunk = (): RsbuildPlugin => ({
   name: 'rsbuild:inline-chunk',
@@ -91,12 +137,12 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
         return tag;
       }
 
-      const source = asset.source().toString();
-      const shouldInline = matchTests(scriptName, source, scriptTests);
+      const shouldInline = matchTests(scriptName, asset, scriptTests);
       if (!shouldInline) {
         return tag;
       }
 
+      const source = asset.source().toString();
       const ret: HtmlBasicTag = {
         tag: 'script',
         children: updateSourceMappingURL({
@@ -141,12 +187,12 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
         return tag;
       }
 
-      const source = asset.source().toString();
-      const shouldInline = matchTests(linkName, source, styleTests);
+      const shouldInline = matchTests(linkName, asset, styleTests);
       if (!shouldInline) {
         return tag;
       }
 
+      const source = asset.source().toString();
       const ret: HtmlBasicTag = {
         tag: 'style',
         children: updateSourceMappingURL({
@@ -232,41 +278,7 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
           return { headTags, bodyTags };
         }
 
-        const { inlineStyles, inlineScripts } = config.output;
-
-        const scriptTests: InlineChunkTest[] = [];
-        const styleTests: InlineChunkTest[] = [];
-        const isProdMode = environment.config.mode === 'production';
-
-        if (inlineScripts) {
-          if (inlineScripts === true) {
-            isProdMode && scriptTests.push(JS_REGEX);
-          } else if (isRegExp(inlineScripts) || isFunction(inlineScripts)) {
-            isProdMode && scriptTests.push(inlineScripts);
-          } else {
-            const enable =
-              inlineScripts.enable === 'auto'
-                ? isProdMode
-                : inlineScripts.enable;
-            if (enable) {
-              scriptTests.push(inlineScripts.test);
-            }
-          }
-        }
-
-        if (inlineStyles) {
-          if (inlineStyles === true) {
-            isProdMode && styleTests.push(CSS_REGEX);
-          } else if (isRegExp(inlineStyles) || isFunction(inlineStyles)) {
-            isProdMode && styleTests.push(inlineStyles);
-          } else {
-            const enable =
-              inlineStyles.enable === 'auto' ? isProdMode : inlineStyles.enable;
-            if (enable) {
-              styleTests.push(inlineStyles.test);
-            }
-          }
-        }
+        const { scriptTests, styleTests } = getInlineTests(config);
 
         if (!scriptTests.length && !styleTests.length) {
           return { headTags, bodyTags };

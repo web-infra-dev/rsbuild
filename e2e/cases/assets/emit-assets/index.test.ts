@@ -10,7 +10,7 @@ test('should allow to disable emit assets for node target', async () => {
     cwd: __dirname,
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
   const filenames = Object.keys(files);
 
   expect(isIncludeFile(filenames, 'dist/static/image/icon.png')).toBeTruthy();
@@ -25,7 +25,7 @@ test('should allow to disable emit assets for json assets', async () => {
     cwd: __dirname,
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
   const filenames = Object.keys(files);
 
   expect(isIncludeFile(filenames, 'dist/static/assets/test.json')).toBeTruthy();

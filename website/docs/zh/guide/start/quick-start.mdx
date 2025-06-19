@@ -31,9 +31,9 @@ nvm install --lts
 nvm use --lts
 ```
 
-## 创建 Rsbuild 项目
+## 创建 Rsbuild 应用
 
-你可以使用 `create-rsbuild` 来创建一个 Rsbuild 项目，调用以下命令：
+使用 [create-rsbuild](https://www.npmjs.com/package/create-rsbuild) 来创建一个 Rsbuild 应用，运行以下命令：
 
 import { PackageManagerTabs } from '@theme';
 
@@ -48,15 +48,15 @@ import { PackageManagerTabs } from '@theme';
 
 按照提示一步步操作即可。在创建过程中，你可以选择是否需要 TypeScript、ESLint 等额外的工具。
 
-项目创建完成后，你可以执行以下步骤：
+在创建完成后，你可以执行以下步骤：
 
 - 执行 `git init` 来初始化 Git 仓库。
-- 执行 `npm install`（或其他包管理器的 install 命令）安装项目依赖。
+- 执行 `npm install`（或其他包管理器的 install 命令）安装 npm 依赖。
 - 执行 `npm run dev` 启动开发服务器，服务器默认运行在 `localhost:5173`。
 
 ### 模板
 
-在创建项目时，你可以选择 `create-rsbuild` 提供的下列模板：
+在创建应用时，你可以选择 `create-rsbuild` 提供的下列模板：
 
 | 模板    | 描述                            | 可选功能   |
 | ------- | ------------------------------- | ---------- |
@@ -72,14 +72,14 @@ import { PackageManagerTabs } from '@theme';
 
 `create-rsbuild` 提供了开箱即用的基础模板，你还可以通过以下方式获取更丰富的模板：
 
-- 前往 [Rspack - 生态](https://rspack.dev/zh/guide/start/quick-start#%E7%94%9F%E6%80%81) 了解基于 Rsbuild 的各种上层工具。
+- 前往 [Rspack - 生态](https://rspack.rs/zh/guide/start/quick-start#%E7%94%9F%E6%80%81) 了解基于 Rsbuild 的各种上层工具。
 - 前往 [awesome-rspack - Starter](https://github.com/web-infra-dev/awesome-rspack?tab=readme-ov-file#starter) 获取更多社区维护的模板。
 
 ### 可选工具
 
 `create-rsbuild` 能够帮助你设置一些常用的工具，包括 [Biome](https://github.com/biomejs/biome)、[ESLint](https://github.com/eslint/eslint) 和 [prettier](https://github.com/prettier/prettier)，你可以使用上下箭头和空格进行选择。如果你不需要这些工具，可以直接按回车跳过。
 
-```text
+```
 ◆  Select additional tools (Use <space> to select, <enter> to continue)
 │  ◻ Add Biome for code linting and formatting
 │  ◻ Add ESLint for code linting
@@ -93,9 +93,9 @@ Biome 提供与 ESLint 和 Prettier 相似的代码检查和格式化功能。�
 
 ### 当前目录
 
-如果你需要在当前目录下创建项目，可以将 target folder 设置为 `.`：
+如果你需要在当前目录下创建应用，可以将 target folder 设置为 `.`：
 
-```text
+```
 ◆  Create Rsbuild Project
 │
 ◇  Project name or path
@@ -107,20 +107,23 @@ Biome 提供与 ESLint 和 Prettier 相似的代码检查和格式化功能。�
 
 ### 快速创建
 
-[create-rsbuild](https://www.npmjs.com/package/create-rsbuild) 提供了一些 CLI 选项。通过设置这些 CLI 选项，你可以跳过交互式的选择步骤，一键创建项目。
+[create-rsbuild](https://npmjs.com/package/create-rsbuild) 提供了一些 CLI 选项。通过设置这些 CLI 选项，你可以跳过交互式的选择步骤，一键创建应用。
 
-比如，一键创建 React 项目到 `my-project` 目录：
+比如，一键创建 React 应用到 `my-app` 目录：
 
 ```bash
-npx create-rsbuild --dir my-project --template react
+npx create-rsbuild --dir my-app --template react
 
 # 使用缩写
-npx create-rsbuild -d my-project -t react
+npx create-rsbuild -d my-app -t react
+
+# 指定多个 tools
+npx create-rsbuild -d my-app -t react --tools eslint --tools prettier
 ```
 
 `create-rsbuild` 完整的 CLI 选项如下：
 
-```text
+```
 Usage: create-rsbuild [options]
 
 Options:
@@ -145,12 +148,12 @@ Templates:
 - [从 Vue CLI 迁移](/guide/migration/vue-cli)
 - [从 Vite 迁移](/guide/migration/vite)
 - [从 Modern.js Builder 迁移](/guide/migration/modern-builder)
-- [从 Tsup 迁移到 Rslib](https://lib.rsbuild.dev/zh/guide/migration/tsup)
-- [从 Storybook 迁移到 Storybook Rsbuild](https://rspack.dev/zh/guide/migration/storybook)
+- [从 Tsup 迁移到 Rslib](https://rslib.rs/zh/guide/migration/tsup)
+- [从 Storybook 迁移到 Storybook Rsbuild](https://rspack.rs/zh/guide/migration/storybook)
 
 ### 其他项目
 
-如果你的项目不属于上述迁移指南中提到的类型，你也可以直接安装 [@rsbuild/core](https://www.npmjs.com/package/@rsbuild/core) 包：
+如果你的项目不属于上述迁移指南中提到的类型，你也可以直接安装 [@rsbuild/core](https://npmjs.com/package/@rsbuild/core) 包：
 
 <PackageManagerTabs command="add @rsbuild/core -D" />
 
@@ -158,7 +161,7 @@ Templates:
 
 - 参考 [CLI 工具](/guide/basic/cli) 来了解可用的 CLI 命令。
 - 参考 [插件列表](/plugins/list/index) 来选择 Rsbuild 插件。
-- 参考 [配置 Rsbuild](/guide/basic/configure-rsbuild) 进行配置。
+- 参考 [配置 Rsbuild](/guide/configuration/rsbuild) 进行配置。
 
 ## 命令行工具
 
@@ -242,7 +245,7 @@ import Step from '@components/Step';
     description="了解 Rsbuild 提供的所有功能"
   />
   <Step
-    href="/guide/basic/configure-rsbuild"
+    href="/guide/configuration/rsbuild"
     title="查阅配置"
     description="了解如何配置 Rsbuild"
   />

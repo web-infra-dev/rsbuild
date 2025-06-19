@@ -1,4 +1,4 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
 {
@@ -106,18 +106,21 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         },
         "include": [
           {
-            "and": [
-              "<ROOT>/packages/compat/webpack/tests",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
+            "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
         ],
+        "resourceQuery": {
+          "not": /raw\\|inline/,
+        },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
+      },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "type": "asset/source",
       },
       {
         "mimetype": {
@@ -309,9 +312,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     {
       "name": "RsbuildCorePlugin",
     },
-    HotModuleReplacementPlugin {
-      "options": {},
-    },
+    HotModuleReplacementPlugin {},
     HtmlWebpackPlugin {
       "options": {
         "base": false,
@@ -342,6 +343,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
+        Symbol(entryName): "index",
       },
       "userOptions": {
         "chunks": [
@@ -361,18 +363,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
+        Symbol(entryName): "index",
       },
       "version": 5,
     },
     RsbuildHtmlPlugin {
-      "getEnvironment": [Function],
-      "modifyTagsFn": [Function],
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "index": {
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
     DefinePlugin {
       "definitions": {
@@ -428,7 +425,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "plugins": [
       TsconfigPathsPlugin {
         "absoluteBaseUrl": "<ROOT>/packages/compat/webpack/tests",
-        "baseUrl": "./",
+        "baseUrl": undefined,
         "extensions": [
           ".ts",
           ".tsx",
@@ -456,7 +453,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   ],
   "watchOptions": {
     "aggregateTimeout": 0,
-    "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
   },
 }
 `;
@@ -564,17 +560,20 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         },
         "include": [
           {
-            "and": [
-              "<ROOT>/packages/compat/webpack/tests",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
+            "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
+        "resourceQuery": {
+          "not": /raw\\|inline/,
+        },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
+      },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "type": "asset/source",
       },
       {
         "mimetype": {
@@ -795,6 +794,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
+        Symbol(entryName): "index",
       },
       "userOptions": {
         "chunks": [
@@ -814,18 +814,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
+        Symbol(entryName): "index",
       },
       "version": 5,
     },
     RsbuildHtmlPlugin {
-      "getEnvironment": [Function],
-      "modifyTagsFn": [Function],
+      "getExtraData": [Function],
       "name": "RsbuildHtmlPlugin",
-      "options": {
-        "index": {
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        },
-      },
     },
     DefinePlugin {
       "definitions": {
@@ -881,7 +876,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     "plugins": [
       TsconfigPathsPlugin {
         "absoluteBaseUrl": "<ROOT>/packages/compat/webpack/tests",
-        "baseUrl": "./",
+        "baseUrl": undefined,
         "extensions": [
           ".ts",
           ".tsx",
@@ -909,7 +904,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
   ],
   "watchOptions": {
     "aggregateTimeout": 0,
-    "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
   },
 }
 `;
@@ -1018,17 +1012,20 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         },
         "include": [
           {
-            "and": [
-              "<ROOT>/packages/compat/webpack/tests",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
+            "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
+        "resourceQuery": {
+          "not": /raw\\|inline/,
+        },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
+      },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "type": "asset/source",
       },
       {
         "mimetype": {
@@ -1263,7 +1260,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "plugins": [
       TsconfigPathsPlugin {
         "absoluteBaseUrl": "<ROOT>/packages/compat/webpack/tests",
-        "baseUrl": "./",
+        "baseUrl": undefined,
         "extensions": [
           ".ts",
           ".tsx",
@@ -1288,7 +1285,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "target": "node",
   "watchOptions": {
     "aggregateTimeout": 0,
-    "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
   },
 }
 `;
@@ -1398,17 +1394,20 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         },
         "include": [
           {
-            "and": [
-              "<ROOT>/packages/compat/webpack/tests",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
+            "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
+        "resourceQuery": {
+          "not": /raw\\|inline/,
+        },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
+      },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "type": "asset/source",
       },
       {
         "mimetype": {
@@ -1628,7 +1627,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "plugins": [
       TsconfigPathsPlugin {
         "absoluteBaseUrl": "<ROOT>/packages/compat/webpack/tests",
-        "baseUrl": "./",
+        "baseUrl": undefined,
         "extensions": [
           ".ts",
           ".tsx",
@@ -1656,7 +1655,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   ],
   "watchOptions": {
     "aggregateTimeout": 0,
-    "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
   },
 }
 `;

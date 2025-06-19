@@ -1,6 +1,6 @@
 import { isRegExp } from 'node:util/types';
-import { rspack } from '@rspack/core';
 import type { RspackPluginInstance } from '@rspack/core';
+import { rspack } from '@rspack/core';
 import type { RsbuildPlugin, Rspack } from '../types';
 
 /**
@@ -101,26 +101,22 @@ export function pluginModuleFederation(): RsbuildPlugin {
       api.modifyRsbuildConfig((config) => {
         const { moduleFederation } = config;
 
-        if (api.isPluginExists('rsbuild:module-federation-enhanced')) {
-          // Allow remote modules to be loaded by setting CORS headers
-          // This is required for MF to work properly across different origins
-          // TODO: remove this after https://github.com/module-federation/core/pull/3635 is released
-          config.server ||= {};
-          config.server.cors = true;
-        }
-
         if (!moduleFederation?.options) {
           return;
         }
 
         // Change some default configs for remote modules
         if (moduleFederation.options.exposes) {
+          const userConfig = api.getRsbuildConfig('original');
+
           config.dev ||= {};
           config.server ||= {};
 
           // Allow remote modules to be loaded by setting CORS headers
           // This is required for MF to work properly across different origins
-          config.server.cors = true;
+          if (userConfig.server?.cors === undefined) {
+            config.server.cors = true;
+          }
 
           // For remote modules, Rsbuild should send the ws request to the provider's dev server.
           // This allows the provider to do HMR when the provider module is loaded in the consumer's page.
@@ -131,9 +127,8 @@ export function pluginModuleFederation(): RsbuildPlugin {
 
           // Change the default assetPrefix to `true` for remote modules.
           // This ensures that the remote module's assets can be requested by consumer apps with the correct URL.
-          const originalConfig = api.getRsbuildConfig('original');
           if (
-            originalConfig.dev?.assetPrefix === undefined &&
+            userConfig.dev?.assetPrefix === undefined &&
             config.dev.assetPrefix === config.server?.base
           ) {
             config.dev.assetPrefix = true;

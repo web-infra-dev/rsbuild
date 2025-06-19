@@ -86,7 +86,7 @@ pluginSass({
 
 ### include
 
-- **Type:** [RuleSetCondition](https://rspack.dev/config/module#condition)
+- **Type:** [RuleSetCondition](https://rspack.rs/config/module#condition)
 - **Default:** `/\.s(?:a|c)ss$/`
 - **Version:** `>= 1.1.0`
 
@@ -102,7 +102,7 @@ pluginSass({
 
 ### exclude
 
-- **Type:** [RuleSetCondition](https://rspack.dev/config/module#condition)
+- **Type:** [RuleSetCondition](https://rspack.rs/config/module#condition)
 - **Default:** `undefined`
 
 Exclude some `.sass` or `.scss` files, they will not be transformed by `sass-loader`.
@@ -137,7 +137,7 @@ pluginSass({
 
 ### Modify Sass implementation
 
-Sass provides several implementations, including [sass](https://www.npmjs.com/package/sass), [sass-embedded](https://www.npmjs.com/package/sass-embedded), and [node-sass](https://www.npmjs.com/package/node-sass).
+Sass provides several implementations, including [sass](https://npmjs.com/package/sass), [sass-embedded](https://npmjs.com/package/sass-embedded), and [node-sass](https://npmjs.com/package/node-sass).
 
 Rsbuild uses the latest `sass-embedded` implementation by default. `sass-embedded` is a JavaScript wrapper around the native Dart Sass executable, providing a consistent API and optimal performance.
 

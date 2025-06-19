@@ -2,9 +2,9 @@
 
 In this document, you will learn how to build a React application using Rsbuild.
 
-## Create React project
+## Create a React application
 
-You can use `create-rsbuild` to create a project with Rsbuild + React. Just execute the following command:
+Use [create-rsbuild](/guide/start/quick-start#create-an-rsbuild-application) to create a React application with Rsbuild. Run the following command:
 
 import { PackageManagerTabs } from '@theme';
 
@@ -46,7 +46,7 @@ To use SVGR, you also need to register the [SVGR plugin](/plugins/list/plugin-sv
 
 ## React Fast Refresh
 
-Rsbuild uses React's official [Fast Refresh](https://www.npmjs.com/package/react-refresh) capability to perform component hot updates.
+Rsbuild uses React's official [Fast Refresh](https://npmjs.com/package/react-refresh) capability to perform component hot updates.
 
 Note that React Refresh requires components to be written according to the standards. Otherwise HMR may not work. You can use [eslint-plugin-react-refresh](https://github.com/ArnaudBarre/eslint-plugin-react-refresh) for validation.
 
@@ -88,8 +88,8 @@ Before you start using React Compiler, it's recommended to read the [React Compi
 
 The steps to use React Compiler in Rsbuild:
 
-1. Upgrade versions of `react` and `react-dom` to 19. If you are unable to upgrade, you can install the extra [react-compiler-runtime](https://www.npmjs.com/package/react-compiler-runtime) package which will allow the compiled code to run on versions prior to 19.
-2. React Compiler currently only provides a Babel plugin, you need to install [@rsbuild/plugin-babel](/plugins/list/plugin-babel) and [babel-plugin-react-compiler](https://www.npmjs.com/package/babel-plugin-react-compiler).
+1. Upgrade versions of `react` and `react-dom` to 19. If you are unable to upgrade, you can install the extra [react-compiler-runtime](https://npmjs.com/package/react-compiler-runtime) package which will allow the compiled code to run on versions prior to 19.
+2. React Compiler currently only provides a Babel plugin, you need to install [@rsbuild/plugin-babel](/plugins/list/plugin-babel) and [babel-plugin-react-compiler](https://npmjs.com/package/babel-plugin-react-compiler).
 3. Register the Babel plugin in your Rsbuild config file:
 
 ```ts title="rsbuild.config.ts"
@@ -141,7 +141,7 @@ export default defineConfig({
 });
 ```
 
-For React 17 and 18 projects, you need to install [react-compiler-runtime](https://www.npmjs.com/package/react-compiler-runtime) and specify the `target`:
+For React 17 and 18 projects, you need to install [react-compiler-runtime](https://npmjs.com/package/react-compiler-runtime) and specify the `target`:
 
 ```ts title="rsbuild.config.ts"
 const ReactCompilerConfig = {
@@ -169,120 +169,7 @@ TanStack Router provides `@tanstack/router-plugin` to integrate with Rsbuild, wh
 
 ## CSS-in-JS
 
-### Use styled-components
-
-Rsbuild supports compiling [styled-components](https://github.com/styled-components/styled-components), improve the debugging experience and add server-side rendering support to styled-components.
-
-To use styled-components, we recommend using the [@rsbuild/plugin-styled-components](https://github.com/rsbuild-contrib/rsbuild-plugin-styled-components).
-
-> You can refer to this example: [styled-components](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/styled-components).
-
-### Using Emotion
-
-Rsbuild supports compiling [Emotion](https://github.com/emotion-js/emotion), you can add the following configuration to use:
-
-- [swcReactOptions.importSource](/plugins/list/plugin-react#swcreactoptions)
-- [@swc/plugin-emotion](https://www.npmjs.com/package/@swc/plugin-emotion)
-
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-import { pluginReact } from '@rsbuild/plugin-react';
-
-export default defineConfig({
-  plugins: [
-    pluginReact({
-      swcReactOptions: {
-        importSource: '@emotion/react',
-      },
-    }),
-  ],
-  tools: {
-    swc: {
-      jsc: {
-        experimental: {
-          plugins: [['@swc/plugin-emotion', {}]],
-        },
-      },
-    },
-  },
-});
-```
-
-> You can refer to this example: [emotion](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/emotion).
-
-### Use styled-jsx
-
-You can use [styled-jsx](https://github.com/vercel/styled-jsx) through [@swc/plugin-styled-jsx](https://www.npmjs.com/package/@swc/plugin-styled-jsx):
-
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-import { pluginReact } from '@rsbuild/plugin-react';
-
-export default defineConfig({
-  plugins: [pluginReact()],
-  tools: {
-    swc: {
-      jsc: {
-        experimental: {
-          plugins: [['@swc/plugin-styled-jsx', {}]],
-        },
-      },
-    },
-  },
-});
-```
-
-Please note, you must select the SWC plugin that matches the current version of `@swc/core` for SWC to work, see [tools.swc](/config/tools/swc).
-
-> You can refer to this example: [styled-jsx](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/styled-jsx).
-
-### Use vanilla-extract
-
-Rsbuild supports [@vanilla-extract/webpack-plugin](https://www.npmjs.com/package/@vanilla-extract/webpack-plugin). You can add the following config to use [vanilla-extract](https://github.com/vanilla-extract-css/vanilla-extract):
-
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-import { pluginReact } from '@rsbuild/plugin-react';
-import { VanillaExtractPlugin } from '@vanilla-extract/webpack-plugin';
-
-export default defineConfig({
-  plugins: [
-    pluginReact({
-      reactRefreshOptions: {
-        exclude: [/\.css\.ts$/],
-      },
-    }),
-  ],
-  tools: {
-    rspack: {
-      plugins: [new VanillaExtractPlugin()],
-    },
-  },
-});
-```
-
-> You can refer to this example: [vanilla-extract](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/vanilla-extract).
-
-### Use StyleX
-
-You can use [StyleX](https://github.com/facebook/stylex) via [unplugin-stylex](https://github.com/eryue0220/unplugin-stylex):
-
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-import { pluginReact } from '@rsbuild/plugin-react';
-import stylexPlugin from 'unplugin-stylex/rspack';
-
-export default defineConfig({
-  plugins: [pluginReact()],
-  tools: {
-    rspack: {
-      plugins: [stylexPlugin()],
-    },
-  },
-});
-```
-
-> You can refer to this example: [stylex](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/stylex).
+See [CSS-in-JS](/guide/styling/css-in-js) for how to use CSS-in-JS in Rsbuild.
 
 ## Customize JSX
 
@@ -358,3 +245,11 @@ const App = () => {
   return <div>Hello World</div>;
 };
 ```
+
+## Performance profiling
+
+### React Scan
+
+React Scan can automatically detect performance issues in your React app.
+
+See [React Scan - Rsbuild Guide](https://github.com/aidenybai/react-scan/blob/main/docs/installation/rsbuild.md) to learn how to use React Scan with Rsbuild.

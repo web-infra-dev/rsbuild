@@ -13,7 +13,7 @@
 
 大多数场景下，推荐优先使用 `.browserslistrc` 文件，而不是使用 `overrideBrowserslist` 配置。因为 `.browserslistrc` 文件是官方定义的配置文件，通用性更强，可以被社区中的其他库识别。
 
-> 详见 [设置浏览器范围](/guide/advanced/browserslist)。
+> 详见 [浏览器范围](/guide/advanced/browserslist)。
 
 ## 默认值
 
@@ -25,9 +25,9 @@
 
 ## 示例
 
-下面是兼容移动端 H5 场景的示例：
+下面是移动端 Web 应用的示例：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     overrideBrowserslist: [
@@ -49,7 +49,7 @@ export default {
 
 比如为 `web` 和 `node` 环境设置不同的 browserslist：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   environments: {
     web: {

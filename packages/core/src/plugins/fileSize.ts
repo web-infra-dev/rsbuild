@@ -20,7 +20,7 @@ const gzip = promisify(zlib.gzip);
 
 async function gzipSize(input: Buffer) {
   const data = await gzip(input);
-  return data.length;
+  return Buffer.byteLength(data);
 }
 
 const EXCLUDE_ASSET_REGEX = /\.(?:map|LICENSE\.txt|d\.ts)$/;
@@ -40,27 +40,27 @@ const getAssetColor = (size: number) => {
 };
 
 function getHeader(
-  longestFileLength: number,
-  longestLabelLength: number,
-  environmentName: string,
+  maxFileLength: number,
+  maxSizeLength: number,
+  fileHeader: string,
   showGzipHeader: boolean,
 ) {
-  const longestLengths = [longestFileLength, longestLabelLength];
-  const rowTypes = [`File (${environmentName})`, 'Size'];
+  const lengths = [maxFileLength, maxSizeLength];
+  const rowTypes = [fileHeader, 'Size'];
 
   if (showGzipHeader) {
     rowTypes.push('Gzip');
   }
 
   const headerRow = rowTypes.reduce((prev, cur, index) => {
-    const length = longestLengths[index];
+    const length = lengths[index];
     let curLabel = cur;
     if (length) {
       curLabel =
         cur.length < length ? cur + ' '.repeat(length - cur.length) : cur;
     }
-    return `${prev + curLabel}    `;
-  }, '  ');
+    return `${prev + curLabel}   `;
+  }, '');
 
   return color.blue(headerRow);
 }
@@ -84,7 +84,7 @@ const coloringAssetName = (assetName: string) => {
 };
 
 const COMPRESSIBLE_REGEX =
-  /\.(?:js|css|html|json|svg|txt|xml|xhtml|wasm|manifest)$/i;
+  /\.(?:js|css|html|json|svg|txt|xml|xhtml|wasm|manifest|md)$/i;
 
 const isCompressible = (assetName: string) =>
   COMPRESSIBLE_REGEX.test(assetName);
@@ -96,7 +96,12 @@ async function printFileSizes(
   environmentName: string,
 ) {
   const logs: string[] = [];
-  if (options.detail === false && options.total === false) {
+
+  let showTotal = options.total !== false;
+  const showDetail = options.detail !== false;
+  const exclude = options.exclude ?? excludeAsset;
+
+  if (!showTotal && !showDetail) {
     return logs;
   }
 
@@ -107,7 +112,7 @@ async function printFileSizes(
   ) => {
     const fileName = asset.name.split('?')[0];
     const contents = await fs.promises.readFile(path.join(distPath, fileName));
-    const size = contents.length;
+    const size = Buffer.byteLength(contents);
     const compressible = options.compressed && isCompressible(fileName);
     const gzippedSize = compressible ? await gzipSize(contents) : null;
     const gzipSizeLabel = gzippedSize
@@ -142,7 +147,6 @@ async function printFileSizes(
       groupAssetsByEmitStatus: false,
     });
 
-    const exclude = options.exclude ?? excludeAsset;
     const filteredAssets = (origin.assets || []).filter((asset) => {
       const assetInfo: PrintFileSizeAsset = {
         name: asset.name,
@@ -173,72 +177,95 @@ async function printFileSizes(
 
   assets.sort((a, b) => a.size - b.size);
 
-  const longestLabelLength = Math.max(...assets.map((a) => a.sizeLabel.length));
-  const longestFileLength = Math.max(
-    ...assets.map((a) => (a.folder + path.sep + a.name).length),
-  );
-
-  if (options.detail !== false) {
-    const showGzipHeader = Boolean(
-      options.compressed && assets.some((item) => item.gzippedSize !== null),
-    );
-    logs.push(
-      getHeader(
-        longestFileLength,
-        longestLabelLength,
-        environmentName,
-        showGzipHeader,
-      ),
-    );
-  }
-
   let totalSize = 0;
   let totalGzipSize = 0;
 
+  // No need to print total size if there is only one asset and detail is true
+  showTotal = showTotal && !(showDetail && assets.length === 1);
+
   for (const asset of assets) {
-    let { sizeLabel } = asset;
-    const { name, folder, gzipSizeLabel } = asset;
-    const fileNameLength = (folder + path.sep + name).length;
-    const sizeLength = sizeLabel.length;
-
     totalSize += asset.size;
-
     if (options.compressed) {
       totalGzipSize += asset.gzippedSize ?? asset.size;
     }
+  }
 
-    if (options.detail !== false) {
-      if (sizeLength < longestLabelLength) {
-        const rightPadding = ' '.repeat(longestLabelLength - sizeLength);
+  const fileHeader = showDetail ? `File (${environmentName})` : '';
+  const totalSizeLabel = showTotal
+    ? showDetail
+      ? 'Total:'
+      : `Total size (${environmentName}):`
+    : '';
+  const totalSizeStr = showTotal ? calcFileSize(totalSize) : '';
+
+  if (showDetail) {
+    const maxFileLength = Math.max(
+      ...assets.map((a) => (a.folder + path.sep + a.name).length),
+      showTotal ? totalSizeLabel.length : 0,
+      fileHeader.length,
+    );
+
+    const maxSizeLength = Math.max(
+      ...assets.map((a) => a.sizeLabel.length),
+      totalSizeStr.length,
+    );
+
+    const showGzipHeader = Boolean(
+      options.compressed && assets.some((item) => item.gzippedSize !== null),
+    );
+
+    logs.push(
+      getHeader(maxFileLength, maxSizeLength, fileHeader, showGzipHeader),
+    );
+
+    for (const asset of assets) {
+      let { sizeLabel } = asset;
+      const { name, folder, gzipSizeLabel } = asset;
+      const fileNameLength = (folder + path.sep + name).length;
+      const sizeLength = sizeLabel.length;
+
+      if (sizeLength < maxSizeLength) {
+        const rightPadding = ' '.repeat(maxSizeLength - sizeLength);
         sizeLabel += rightPadding;
       }
 
       let fileNameLabel =
         color.dim(asset.folder + path.sep) + coloringAssetName(asset.name);
 
-      if (fileNameLength < longestFileLength) {
-        const rightPadding = ' '.repeat(longestFileLength - fileNameLength);
+      if (fileNameLength < maxFileLength) {
+        const rightPadding = ' '.repeat(maxFileLength - fileNameLength);
         fileNameLabel += rightPadding;
       }
 
-      let log = `  ${fileNameLabel}    ${sizeLabel}`;
+      let log = `${fileNameLabel}   ${sizeLabel}`;
 
       if (gzipSizeLabel) {
-        log += `    ${gzipSizeLabel}`;
+        log += `   ${gzipSizeLabel}`;
       }
 
       logs.push(log);
     }
-  }
 
-  // only print total size if there are more than one asset
-  if (options.total !== false && assets.length > 1) {
-    const totalSizeLabel = `${color.blue('Total:')} ${calcFileSize(totalSize)}`;
+    if (showTotal) {
+      logs.push('');
+      let log = '';
+      log += ' '.repeat(maxFileLength - totalSizeLabel.length);
+      log += color.magenta(totalSizeLabel);
+      log += `   ${totalSizeStr}`;
 
-    let log = `\n  ${totalSizeLabel}`;
+      if (options.compressed) {
+        const colorFn = getAssetColor(totalGzipSize / assets.length);
+        log += ' '.repeat(maxSizeLength - totalSizeStr.length);
+        log += `   ${colorFn(calcFileSize(totalGzipSize))}`;
+      }
+
+      logs.push(log);
+    }
+  } else if (showTotal) {
+    let log = `${color.magenta(totalSizeLabel)} ${totalSizeStr}`;
 
     if (options.compressed) {
-      log += color.dim(` (gzip: ${calcFileSize(totalGzipSize)})`);
+      log += color.green(` (${calcFileSize(totalGzipSize)} gzipped)`);
     }
 
     logs.push(log);
@@ -293,10 +320,6 @@ export const pluginFileSize = (): RsbuildPlugin => ({
             environment.name,
           );
 
-          // log a separator line after the previous print
-          if (logs.length) {
-            logs.push(color.dim('  -----'));
-          }
           logs.push(...statsLogs);
         }),
       ).catch((err) => {

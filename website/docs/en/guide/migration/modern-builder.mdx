@@ -28,15 +28,15 @@ import { PackageManagerTabs } from '@theme';
 
 Next, you need to update the npm scripts in the package.json to Rsbuild's CLI commands.
 
-```diff title="package.json"
+```json title="package.json"
 {
   "scripts": {
--   "dev": "builder dev",
--   "build": "builder build",
--   "serve": "builder serve"
-+   "dev": "rsbuild dev",
-+   "build": "rsbuild build",
-+   "preview": "rsbuild preview"
+    "dev": "builder dev", // [!code --]
+    "build": "builder build", // [!code --]
+    "serve": "builder serve", // [!code --]
+    "dev": "rsbuild dev", // [!code ++]
+    "build": "rsbuild build", // [!code ++]
+    "preview": "rsbuild preview" // [!code ++]
   }
 }
 ```
@@ -47,13 +47,13 @@ Next, you need to update the npm scripts in the package.json to Rsbuild's CLI co
 - Change the import of the `defineConfig` method from `@modern-js/builder-cli` to `@rsbuild/core`.
 - Change the `builderPlugins` field to `plugins`.
 
-```diff title="rsbuild.config.ts"
-- import { defineConfig } from '@modern-js/builder-cli';
-+ import { defineConfig } from '@rsbuild/core';
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@modern-js/builder-cli'; // [!code --]
+import { defineConfig } from '@rsbuild/core'; // [!code ++]
 
 export default defineConfig({
--  builderPlugins: [],
-+  plugins: [],
+  builderPlugins: [], // [!code --]
+  plugins: [], // [!code ++]
 });
 ```
 
@@ -75,13 +75,13 @@ The following table shows the correspondence between Builder plugins and Rsbuild
 
 For example, if you were using `@modern-js/builder-plugin-vue`, you need to first install `@rsbuild/plugin-vue`, then import the plugin in `rsbuild.config.ts` and add it to the `plugins` field.
 
-```diff title="rsbuild.config.ts"
-- import { builderPluginVue } from '@modern-js/builder-plugin-vue';
-+ import { pluginVue } from '@rsbuild/plugin-vue';
+```ts title="rsbuild.config.ts"
+import { builderPluginVue } from '@modern-js/builder-plugin-vue'; // [!code --]
+import { pluginVue } from '@rsbuild/plugin-vue'; // [!code ++]
 
 export default defineConfig({
--  builderPlugins: [builderPluginVue()],
-+  plugins: [pluginVue()],
+  builderPlugins: [builderPluginVue()], // [!code --]
+  plugins: [pluginVue()], // [!code ++]
 });
 ```
 

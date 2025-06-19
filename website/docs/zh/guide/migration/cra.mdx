@@ -29,15 +29,15 @@ import { PackageManagerTabs } from '@theme';
 
 下一步，你需要把 package.json 中的 npm scripts 更新为 Rsbuild 的 CLI 命令。
 
-```diff title="package.json"
+```json title="package.json"
 {
   "scripts": {
--   "start": "react-scripts start",
--   "build": "react-scripts build",
--   "eject": "react-scripts eject"
-+   "start": "rsbuild dev",
-+   "build": "rsbuild build",
-+   "preview": "rsbuild preview"
+    "start": "react-scripts start", // [!code --]
+    "build": "react-scripts build", // [!code --]
+    "eject": "react-scripts eject", // [!code --]
+    "start": "rsbuild dev", // [!code ++]
+    "build": "rsbuild build", // [!code ++]
+    "preview": "rsbuild preview" // [!code ++]
   }
 }
 ```
@@ -73,9 +73,11 @@ export default defineConfig({
 
 在 HTML 模板中，如果使用了 CRA 的 `%PUBLIC_URL%` 变量，请替换为 Rsbuild 的 [assetPrefix 变量](/config/html/template-parameters)，并使用斜杠进行连接：
 
-```diff
--  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-+  <link rel="icon" href="<%= assetPrefix %>/favicon.ico" />
+```html
+<!-- [!code --] -->
+<link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+<!-- [!code ++] -->
+<link rel="icon" href="<%= assetPrefix %>/favicon.ico" />
 ```
 
 这样就完成了从 CRA 到 Rsbuild 的基本迁移，此时你可以执行 `npm run start` 命令来尝试启动开发服务器。
@@ -96,7 +98,7 @@ export default {
 };
 ```
 
-> 更多细节请参考[构建产物目录](/guide/basic/output-files)章节。
+> 更多细节请参考[构建产物](/guide/basic/output-files)章节。
 
 ## 使用 CSS 预处理器
 
@@ -226,14 +228,14 @@ import document from './document.pdf';
 
 在 Rsbuild 中，遇到无法识别的资源时，Rsbuild 会输出报错日志，类似于：
 
-```text
+```
 You may need an appropriate loader to handle this file type.
 ```
 
 为了解决该错误，你可以采用以下方法：
 
 - 使用 [tools.rspack](/config/tools/rspack) 配置一个合适的 loader 来处理该类型的资源。
-- 使用 [tools.rspack](/config/tools/rspack) 配置 [asset modules](https://rspack.dev/guide/features/asset-module) 规则来处理该类型的资源。
+- 使用 [tools.rspack](/config/tools/rspack) 配置 [asset modules](https://rspack.rs/zh/guide/features/asset-module) 规则来处理该类型的资源。
 
 比如，你可以添加以下 asset modules 配置，来保持与 CRA 相同的输出结果：
 
@@ -261,15 +263,15 @@ export default {
 
 ## 移除 react-app-polyfill
 
-CRA 提供了 [react-app-polyfill](https://www.npmjs.com/package/react-app-polyfill) 来手动注入 polyfill 代码。
+CRA 提供了 [react-app-polyfill](https://npmjs.com/package/react-app-polyfill) 来手动注入 polyfill 代码。
 
 在 Rsbuild 项目中，你可以移除 react-app-polyfill 相关的依赖和代码，因为 Rsbuild 会自动读取 browserslist 配置，并允许你通过 [output.polyfill](/config/output/polyfill) 配置项来启用 polyfill 注入。
 
 1. 移除 `react-app-polyfill` 引用：
 
-```diff title="src/index.js"
-- import 'react-app-polyfill/ie11';
-- import 'react-app-polyfill/stable';
+```ts title="src/index.js"
+import 'react-app-polyfill/ie11'; // [!code --]
+import 'react-app-polyfill/stable'; // [!code --]
 ```
 
 2. 配置 [output.polyfill](/config/output/polyfill)：
@@ -288,7 +290,7 @@ export default {
 
 CRA 默认使用 ESLint 来检查代码质量。Rsbuild 默认不包含代码检查功能，但你可以在 `package.json` 中添加单独的 npm script 来运行 ESLint。
 
-首先安装 [eslint](https://eslint.org/) 和 [eslint-config-react-app](https://www.npmjs.com/package/eslint-config-react-app)，你需要安装 ESLint v8 来与 CRA 保持一致：
+首先安装 [eslint](https://eslint.org/) 和 [eslint-config-react-app](https://npmjs.com/package/eslint-config-react-app)，你需要安装 ESLint v8 来与 CRA 保持一致：
 
 <PackageManagerTabs command="add eslint@8 eslint-config-react-app -D" />
 

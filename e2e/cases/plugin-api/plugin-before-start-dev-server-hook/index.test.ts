@@ -1,4 +1,4 @@
-import { dev, getHrefByEntryName } from '@e2e/helper';
+import { buildEntryUrl, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import type { RsbuildPlugin } from '@rsbuild/core';
 
@@ -38,8 +38,8 @@ test('should run onBeforeStartDevServer hooks and add custom middleware', async 
     },
   });
 
-  const testUrl = getHrefByEntryName('test', rsbuild.port);
-  const test2Url = getHrefByEntryName('test2', rsbuild.port);
+  const testUrl = buildEntryUrl('test', rsbuild.port);
+  const test2Url = buildEntryUrl('test2', rsbuild.port);
 
   await page.goto(testUrl);
   await expect(page.content()).resolves.toContain('Hello, world!');

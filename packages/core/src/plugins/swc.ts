@@ -9,12 +9,17 @@ import {
   PLUGIN_SWC_NAME,
   SCRIPT_REGEX,
 } from '../constants';
-import { castArray, cloneDeep, isFunction, isWebTarget } from '../helpers';
+import {
+  castArray,
+  cloneDeep,
+  color,
+  isFunction,
+  isWebTarget,
+} from '../helpers';
 import type {
   NormalizedEnvironmentConfig,
   NormalizedSourceConfig,
   Polyfill,
-  RsbuildContext,
   RsbuildPlugin,
   RsbuildTarget,
   RspackChain,
@@ -29,19 +34,15 @@ function applyScriptCondition({
   rule,
   isDev,
   config,
-  context,
   rsbuildTarget,
 }: {
   rule: RspackChain.Rule;
   isDev: boolean;
   config: NormalizedEnvironmentConfig;
-  context: RsbuildContext;
   rsbuildTarget: RsbuildTarget;
 }): void {
   // compile all modules in the app directory, exclude node_modules
-  rule.include.add({
-    and: [context.rootPath, { not: NODE_MODULES_REGEX }],
-  });
+  rule.include.add({ not: NODE_MODULES_REGEX });
 
   // always compile TS and JSX files.
   // otherwise, it may cause compilation errors and incorrect output
@@ -61,10 +62,15 @@ function applyScriptCondition({
   }
 }
 
-function getDefaultSwcConfig(
-  browserslist: string[],
-  cacheRoot: string,
-): SwcLoaderOptions {
+function getDefaultSwcConfig({
+  browserslist,
+  cacheRoot,
+  config,
+}: {
+  browserslist: string[];
+  cacheRoot: string;
+  config: NormalizedEnvironmentConfig;
+}): SwcLoaderOptions {
   return {
     jsc: {
       externalHelpers: true,
@@ -79,6 +85,9 @@ function getDefaultSwcConfig(
          * Preserve `with` in imports and exports.
          */
         keepImportAttributes: true,
+      },
+      output: {
+        charset: config.output.charset,
       },
     },
     isModule: 'unknown',
@@ -107,7 +116,16 @@ export const pluginSwc = (): RsbuildPlugin => ({
           .type('javascript/auto')
           // When using `new URL('./path/to/foo.js', import.meta.url)`,
           // the module should be treated as an asset module rather than a JS module.
-          .dependency({ not: 'url' });
+          .dependency({ not: 'url' })
+          // exclude `import './foo.css?raw'` and `import './foo.css?inline'`
+          .resourceQuery({ not: /raw|inline/ });
+
+        // Support for `import rawJs from "a.js?raw"`
+        chain.module
+          .rule(CHAIN_ID.RULE.JS_RAW)
+          .test(SCRIPT_REGEX)
+          .type('asset/source')
+          .resourceQuery(/raw/);
 
         const dataUriRule = chain.module
           .rule(CHAIN_ID.RULE.JS_DATA_URI)
@@ -119,7 +137,6 @@ export const pluginSwc = (): RsbuildPlugin => ({
           rule,
           isDev,
           config,
-          context: api.context,
           rsbuildTarget: target,
         });
 
@@ -128,7 +145,11 @@ export const pluginSwc = (): RsbuildPlugin => ({
           return;
         }
 
-        const swcConfig = getDefaultSwcConfig(browserslist, cacheRoot);
+        const swcConfig = getDefaultSwcConfig({
+          browserslist,
+          cacheRoot,
+          config,
+        });
 
         applyTransformImport(swcConfig, config.source.transformImport);
         applySwcDecoratorConfig(swcConfig, config);
@@ -163,7 +184,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
         /**
          * If a script is imported with data URI, it can be compiled by babel too.
          * This is used by some frameworks to create virtual entry.
-         * https://rspack.dev/api/runtime-api/module-methods#import
+         * https://rspack.rs/api/runtime-api/module-methods#import
          * @example: import x from 'data:text/javascript,export default 1;';
          */
         dataUriRule.resolve
@@ -186,7 +207,7 @@ const getCoreJsVersion = (corejsPkgPath: string) => {
     const { version } = JSON.parse(rawJson);
     const [major, minor] = version.split('.');
     return `${major}.${minor}`;
-  } catch (err) {
+  } catch {
     return '3';
   }
 };
@@ -262,6 +283,10 @@ export function applySwcDecoratorConfig(
       swcConfig.jsc.transform.decoratorVersion = '2022-03';
       break;
     default:
-      throw new Error(`[rsbuild:swc] Unknown decorators version: ${version}`);
+      throw new Error(
+        `${color.dim('[rsbuild:swc]')} Unknown decorators version: ${color.yellow(
+          version,
+        )}`,
+      );
   }
 }

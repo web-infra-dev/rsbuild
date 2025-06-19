@@ -4,9 +4,13 @@
 - **默认值：** `'prefer-tsconfig'`
 - **版本：** `>=1.1.7`
 
-控制 `tsconfig.json` 中的 `paths` 选项与 Rsbuild 的 [resolve.alias](/config/resolve/alias) 选项的优先级。
+设置路径别名解析的策略，用于控制 `tsconfig.json` 中的 `paths` 选项与 Rsbuild 的 [resolve.alias](/config/resolve/alias) 选项之间的优先级关系。
 
-### prefer-tsconfig
+:::tip
+参考 [路径别名](/guide/advanced/alias) 了解 `tsconfig.json` 的 `paths` 选项与 `resolve.alias` 选项的区别。
+:::
+
+## prefer-tsconfig
 
 `resolve.aliasStrategy` 默认为 `'prefer-tsconfig'`，此时 `tsconfig.json` 中的 `paths` 选项和打包工具的 `alias` 选项都会生效，但 tsconfig paths 选项的优先级更高。
 
@@ -42,7 +46,7 @@ export default {
 - `@common` 会使用 tsconfig paths 定义的值，指向 `./src/common-1`
 - `@utils` 会使用 `resolve.alias` 定义的值，指向 `./src/utils`
 
-### prefer-alias
+## prefer-alias
 
 当 `resolve.aliasStrategy` 的值为 `prefer-alias` 时，`tsconfig.json` 中的 `paths` 选项只用于提供 TypeScript 类型定义，而不会对打包结果产生任何影响。此时，构建工具只会读取 `alias` 选项作为路径别名。
 

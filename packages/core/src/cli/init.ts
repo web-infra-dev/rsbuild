@@ -1,7 +1,7 @@
 import path from 'node:path';
-import { loadConfig as baseLoadConfig } from '../config';
 import { createRsbuild } from '../createRsbuild';
-import { castArray, getAbsolutePath } from '../helpers';
+import { castArray, ensureAbsolutePath } from '../helpers';
+import { loadConfig as baseLoadConfig } from '../loadConfig';
 import { logger } from '../logger';
 import { watchFilesForRestart } from '../restart';
 import type { RsbuildInstance } from '../types';
@@ -38,6 +38,10 @@ const loadConfig = async (root: string) => {
 
   if (commonOpts.mode) {
     config.mode = commonOpts.mode;
+  }
+
+  if (commonOpts.logLevel) {
+    config.logLevel = commonOpts.logLevel;
   }
 
   if (commonOpts.open && !config.server?.open) {
@@ -86,16 +90,21 @@ export async function init({
 
   try {
     const cwd = process.cwd();
-    const root = commonOpts.root ? getAbsolutePath(cwd, commonOpts.root) : cwd;
+    const root = commonOpts.root
+      ? ensureAbsolutePath(cwd, commonOpts.root)
+      : cwd;
 
     const rsbuild = await createRsbuild({
       cwd: root,
       rsbuildConfig: () => loadConfig(root),
       environment: commonOpts.environment,
-      loadEnv: {
-        cwd: getEnvDir(root, commonOpts.envDir),
-        mode: commonOpts.envMode,
-      },
+      loadEnv:
+        commonOpts.env === false
+          ? false
+          : {
+              cwd: getEnvDir(root, commonOpts.envDir),
+              mode: commonOpts.envMode,
+            },
     });
 
     rsbuild.onBeforeCreateCompiler(() => {
@@ -107,19 +116,19 @@ export async function init({
       const files: string[] = [];
       const config = rsbuild.getNormalizedConfig();
 
-      if (config.dev?.watchFiles) {
-        for (const watchFilesConfig of castArray(config.dev.watchFiles)) {
-          if (watchFilesConfig.type !== 'reload-server') {
+      if (config.dev.watchFiles) {
+        for (const watchConfig of config.dev.watchFiles) {
+          if (watchConfig.type !== 'reload-server') {
             continue;
           }
 
-          const paths = castArray(watchFilesConfig.paths);
-          if (watchFilesConfig.options) {
+          const paths = castArray(watchConfig.paths);
+          if (watchConfig.options) {
             watchFilesForRestart({
               files: paths,
               rsbuild,
               isBuildWatch,
-              watchOptions: watchFilesConfig.options,
+              watchOptions: watchConfig.options,
             });
           } else {
             files.push(...paths);

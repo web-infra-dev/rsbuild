@@ -2,8 +2,6 @@
 
 用于注册 Rsbuild 插件。
 
-插件数组中的异步插件（promise）会自动被 resolve，falsy value 会被忽略。
-
 - **类型：**
 
 ```ts
@@ -23,22 +21,22 @@ type RsbuildPlugins = (
 
 ## 示例
 
-比如注册 Rsbuild 的 Stylus 插件。
+比如注册 Rsbuild 的 [Sass 插件](/plugins/list/plugin-sass)。
 
 - 安装插件：
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @rsbuild/plugin-stylus -D" />
+<PackageManagerTabs command="add @rsbuild/plugin-sass -D" />
 
 - 注册插件：
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
-import { pluginStylus } from '@rsbuild/plugin-stylus';
+import { pluginSass } from '@rsbuild/plugin-sass';
 
 export default defineConfig({
-  plugins: [pluginStylus()],
+  plugins: [pluginSass()],
 });
 ```
 
@@ -48,6 +46,18 @@ export default defineConfig({
 
 当插件内部使用了控制顺序的相关字段，比如 `pre`、`post` 时，执行顺序会基于它们进行调整，详见 [前置插件](/plugins/dev/core#前置插件)。
 
+## 条件注册
+
+`plugins` 数组中的 falsy value 会被忽略，这允许你方便地根据一些判断条件来注册插件：
+
+```ts title="rsbuild.config.ts"
+const isProd = process.env.NODE_ENV === 'production';
+
+export default {
+  plugins: [isProd && somePlugin()],
+};
+```
+
 ## 嵌套插件
 
 Rsbuild 还支持添加嵌套插件，你可以传入一个包含多个插件的数组，类似于一个插件预设集合，这对于实现需要多个插件组合的复杂功能（例如框架集成）很有帮助。
@@ -55,6 +65,26 @@ Rsbuild 还支持添加嵌套插件，你可以传入一个包含多个插件的
 ```ts title="rsbuild.config.ts"
 function myPlugin() {
   return [fooPlugin(), barPlugin()];
+}
+
+export default {
+  plugins: [myPlugin()],
+};
+```
+
+## 异步插件
+
+如果插件是异步的，你可以返回一个 `Promise` 对象或使用 `async` 函数，Rsbuild 会自动等待 `Promise` 被 resolve：
+
+```ts title="rsbuild.config.ts"
+async function myPlugin() {
+  await someAsyncOperation();
+  return {
+    name: 'my-plugin',
+    setup(api) {
+      // ...
+    },
+  };
 }
 
 export default {
@@ -98,7 +128,7 @@ export default defineConfig({
 
 需要注意的是，插件的注册只能在 Rsbuild 初始化阶段进行，你不能在一个插件内通过插件 API 动态地添加其他插件：
 
-```ts title=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 // 错误
 function myPlugin() {
   return {
@@ -143,7 +173,7 @@ export default {
 
 [unplugin](https://github.com/unjs/unplugin) 是一个适用于不同构建工具的统一插件系统。你可以在 Rsbuild 中使用基于 unplugin 实现的插件，只需要引入插件的 `/rspack` 子路径，并通过 [tools.rspack](/config/tools/rspack) 注册即可。
 
-下面是使用 [unplugin-vue-components](https://www.npmjs.com/package/unplugin-vue-components) 的示例：
+下面是使用 [unplugin-vue-components](https://npmjs.com/package/unplugin-vue-components) 的示例：
 
 ```ts
 import { defineConfig } from '@rsbuild/core';

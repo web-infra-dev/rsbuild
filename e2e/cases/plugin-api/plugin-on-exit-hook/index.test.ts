@@ -12,11 +12,11 @@ rspackOnlyTest('should run onExit hook before process exit', async () => {
 
   await new Promise<void>((resolve, reject) => {
     const timeoutId = setTimeout(() => {
-      process.kill();
+      childProcess.kill();
       reject(new Error('Process timeout'));
     }, 3000);
 
-    const process = exec('node ./run.mjs', { cwd: __dirname }, (error) => {
+    const childProcess = exec('node ./run.mjs', { cwd: __dirname }, (error) => {
       if (error) {
         clearTimeout(timeoutId);
         reject(error);
@@ -24,7 +24,7 @@ rspackOnlyTest('should run onExit hook before process exit', async () => {
       }
 
       try {
-        expect(fs.readFileSync(distFile, 'utf-8')).toEqual('1');
+        expect(fs.readFileSync(distFile, 'utf-8')).toEqual('0');
         clearTimeout(timeoutId);
         resolve();
       } catch (err) {

@@ -14,6 +14,10 @@ Rsbuild 默认对构建性能进行了充分优化，但是随着使用场景变
 
 以下是一些通用的优化方法，对开发模式和生产模式均有提速效果。
 
+### 升级 Rsbuild
+
+升级 Rsbuild 到最新版本，可以获得最新的性能优化，参考 [升级 Rsbuild](/guide/basic/upgrade-rsbuild) 章节。
+
 ### 开启持久化缓存
 
 Rsbuild 提供了 [performance.buildCache](/config/performance/build-cache) 配置，开启后可以显著提升重构建的速度。
@@ -24,9 +28,9 @@ Rsbuild 提供了 [performance.buildCache](/config/performance/build-cache) 配�
 
 ### 优化 Tailwind CSS
 
-在使用 Tailwind CSS 时，如果没有正确地配置 `tailwind.config.js` 中的 `content` 字段，可能会导致构建性能和热更新性能下降。
+在使用 Tailwind CSS v3 时，如果没有正确地配置 `tailwind.config.js` 中的 `content` 字段，可能会导致构建性能和热更新性能下降。
 
-请参考 [Tailwind CSS - 优化构建性能](/guide/basic/tailwindcss#优化构建性能) 了解更多。
+参考 [Tailwind CSS v3 - 优化构建性能](/guide/styling/tailwindcss-v3#优化构建性能) 了解更多。
 
 ## 开发模式优化
 
@@ -45,24 +49,6 @@ export default {
 ```
 
 > 请参考 [dev.lazyCompilation](/config/dev/lazy-compilation) 了解更多。
-
-### 开启增量构建
-
-Rspack 提供了实验性的 [experiments.incremental](https://rspack.dev/zh/config/experiments#experimentsincremental) 配置，开启后可以提升开发阶段 HMR 的速度。
-
-```ts title="rsbuild.config.ts"
-const isDev = process.env.NODE_ENV === 'development';
-
-export default {
-  tools: {
-    rspack: {
-      experiments: {
-        incremental: isDev,
-      },
-    },
-  },
-};
-```
 
 ### Source map 格式
 
@@ -94,7 +80,7 @@ export default {
 };
 ```
 
-> 关于不同 source map 格式之间的详细差异，请查看 [Rspack - devtool](https://rspack.dev/zh/config/devtool)。
+> 关于不同 source map 格式之间的详细差异，请查看 [Rspack - devtool](https://rspack.rs/zh/config/devtool)。
 
 ### Browserslist 范围
 

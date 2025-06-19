@@ -11,22 +11,20 @@
   "scripts": {
     "build": "cross-env NX_DAEMON=false nx run-many -t build --exclude @examples/* @e2e/* rsbuild-* --parallel=10",
     "build:doc": "cd website && pnpm run build",
-    "change": "changeset",
-    "changeset": "changeset",
-    "check-dependency-version": "pnpx check-dependency-version-consistency .",
+    "check-dependency-version": "pnpx check-dependency-version-consistency . --ignore-dep loader-utils",
     "check-spell": "pnpx cspell && heading-case",
     "dev:doc": "cd website && pnpm run dev",
-    "e2e": "cd ./e2e && pnpm test",
-    "e2e:rspack": "cd ./e2e && pnpm test:rspack",
-    "e2e:webpack": "cd ./e2e && pnpm test:webpack",
+    "e2e": "cd ./e2e && pnpm e2e",
+    "e2e:rspack": "cd ./e2e && pnpm e2e:rspack",
+    "e2e:webpack": "cd ./e2e && pnpm e2e:webpack",
     "format": "prettier --write . && heading-case --write",
     "lint": "biome check . --diagnostic-level=warn && pnpm run check-spell",
     "prebundle": "nx run-many -t prebundle",
     "prepare": "pnpm run build && simple-git-hooks",
     "sort-package-json": "pnpx sort-package-json \"./package.json\" \"packages/*/package.json\" \"packages/compat/*/package.json\"",
     "test": "pnpm run ut",
-    "ut": "vitest run",
-    "ut:watch": "vitest"
+    "ut": "rstest run",
+    "ut:watch": "rstest"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm exec nano-staged"
@@ -39,30 +37,32 @@
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
-    "@changesets/cli": "^2.28.1",
+    "@biomejs/biome": "^2.0.0",
     "@rsbuild/config": "workspace:*",
+    "@rstest/core": "0.0.1",
     "@scripts/test-helper": "workspace:*",
+    "@types/node": "^22.15.31",
     "cross-env": "^7.0.3",
     "cspell-ban-words": "^0.0.4",
-    "heading-case": "^0.1.4",
+    "heading-case": "^0.1.6",
     "nano-staged": "^0.8.0",
-    "nx": "^20.6.4",
+    "nx": "^21.2.0",
     "prettier": "^3.5.3",
-    "simple-git-hooks": "^2.12.1",
-    "typescript": "^5.8.2",
-    "vitest": "^3.0.9"
+    "simple-git-hooks": "^2.13.0",
+    "typescript": "^5.8.3"
   },
-  "packageManager": "pnpm@10.7.0",
+  "packageManager": "pnpm@10.12.1",
   "engines": {
     "node": ">=18.0.0",
-    "pnpm": ">=10.7.0"
+    "pnpm": ">=10.12.1"
   },
   "pnpm": {
     "patchedDependencies": {
       "css-loader@7.1.2": "patches/css-loader@7.1.2.patch",
+      "file-loader": "patches/file-loader@6.2.0.patch",
       "http-proxy@1.18.1": "patches/http-proxy@1.18.1.patch",
-      "postcss-loader@8.1.1": "patches/postcss-loader@8.1.1.patch"
+      "postcss-loader@8.1.1": "patches/postcss-loader@8.1.1.patch",
+      "url-loader": "patches/url-loader@4.1.1.patch"
     }
   }
 }

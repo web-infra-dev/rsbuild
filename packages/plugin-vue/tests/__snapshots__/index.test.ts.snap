@@ -1,77 +1,56 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`plugin-vue > should add vue-loader and VueLoaderPlugin correctly 1`] = `
 {
-  "module": {
-    "rules": [
-      {
-        "test": /\\\\\\.vue\\$/,
-        "use": [
-          {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/vue-loader/dist/index.js",
-            "options": {
-              "compilerOptions": {
-                "preserveWhitespace": false,
-              },
-              "experimentalInlineMatchResource": true,
-            },
-          },
-        ],
-      },
-      {
-        "test": /\\\\\\.\\(\\?:css\\|postcss\\|pcss\\)\\$/,
-      },
-    ],
-  },
-  "plugins": [
+  "test": /\\\\\\.vue\\$/,
+  "use": [
     {
-      "name": "RsbuildCorePlugin",
+      "loader": "<ROOT>/node_modules/<PNPM_INNER>/vue-loader/dist/index.js",
+      "options": {
+        "compilerOptions": {
+          "preserveWhitespace": false,
+        },
+        "experimentalInlineMatchResource": true,
+      },
     },
-    Plugin {},
   ],
-  "resolve": {
-    "extensions": [
-      ".vue",
-    ],
+}
+`;
+
+exports[`plugin-vue > should add vue-loader and VueLoaderPlugin correctly 2`] = `null`;
+
+exports[`plugin-vue > should add vue-loader and VueLoaderPlugin correctly 3`] = `
+{
+  "alias": {
+    "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
   },
+  "extensions": [
+    ".ts",
+    ".tsx",
+    ".mjs",
+    ".js",
+    ".jsx",
+    ".json",
+    ".vue",
+  ],
 }
 `;
 
 exports[`plugin-vue > should allow to configure vueLoader options 1`] = `
 {
-  "module": {
-    "rules": [
-      {
-        "test": /\\\\\\.vue\\$/,
-        "use": [
-          {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/vue-loader/dist/index.js",
-            "options": {
-              "compilerOptions": {
-                "preserveWhitespace": false,
-              },
-              "experimentalInlineMatchResource": true,
-              "hotReload": false,
-            },
-          },
-        ],
-      },
-      {
-        "test": /\\\\\\.\\(\\?:css\\|postcss\\|pcss\\)\\$/,
-      },
-    ],
-  },
-  "plugins": [
+  "test": /\\\\\\.vue\\$/,
+  "use": [
     {
-      "name": "RsbuildCorePlugin",
+      "loader": "<ROOT>/node_modules/<PNPM_INNER>/vue-loader/dist/index.js",
+      "options": {
+        "compilerOptions": {
+          "preserveWhitespace": false,
+        },
+        "experimentalInlineMatchResource": true,
+        "hotReload": false,
+      },
     },
-    Plugin {},
   ],
-  "resolve": {
-    "extensions": [
-      ".vue",
-    ],
-  },
 }
 `;
 

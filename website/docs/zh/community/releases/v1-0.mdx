@@ -6,7 +6,7 @@ _September 10, 2024_
 
 # Rsbuild 1.0 发布
 
-![](https://assets.rspack.dev/rsbuild/assets/rsbuild-1-0-banner.png)
+![](https://assets.rspack.rs/rsbuild/assets/rsbuild-1-0-banner.png)
 
 我们很高兴地宣布 Rsbuild 1.0 已经正式发布！
 
@@ -30,14 +30,14 @@ _September 10, 2024_
 
 在开发 Rspack 的过程中，我们意识到了上述问题，并决定在 Rspack 的基础上开发一个现代的构建工具 —— **Rsbuild**。
 
-![](https://assets.rspack.dev/rsbuild/assets/rsbuild-1-0-build-tools.png)
+![](https://assets.rspack.rs/rsbuild/assets/rsbuild-1-0-build-tools.png)
 
 Rsbuild 是以 Rspack 为核心实现的，我们为 Rsbuild 设计了易于使用、TypeScript 友好的 API，并内置一套精心设计的构建配置，使它既能充分发挥出 Rspack 的性能优势，也能解决配置复杂、上手成本高的问题。
 
 在实现 Rsbuild 的过程中，我们向社区中优秀的工具学习最佳实践，并聚焦于两个使用场景来设计 Rsbuild：
 
 - 作为一个轻量的构建工具：帮助开发者快速搭建 Web 应用，为 CSR 应用提供开箱即用的支持。
-- 作为一个共享的基础设施：为上层工具和框架提供 [JavaScript API](https://rsbuild.dev/api/start/) 和 [插件 API](https://rsbuild.dev/plugins/dev/)，允许开发者基于 Rsbuild 来开发属于自己的工具或框架，轻松实现 SSR、SSG 等特性。
+- 作为一个共享的基础设施：为上层工具和框架提供 [JavaScript API](/api/start/) 和 [插件 API](/plugins/dev/)，允许开发者基于 Rsbuild 来开发属于自己的工具或框架，轻松实现 SSR、SSG 等特性。
 
 ## 性能
 
@@ -50,15 +50,15 @@ Rsbuild 是以 Rspack 为核心实现的，我们为 Rsbuild 设计了易于使�
 | npm 依赖数量                  | 1241             | 15              | 283        | 14      | **减少 99%**   |
 | npm 安装体积                  | 146.6MB          | 56.3MB          | 75.1MB     | 59.1MB  | **减少 60%**   |
 
-与 [Rspack CLI](https://www.npmjs.com/package/@rspack/cli) 相比，Rsbuild 内置了更丰富的功能，同时具备更好的性能表现。
+与 [Rspack CLI](https://npmjs.com/package/@rspack/cli) 相比，Rsbuild 内置了更丰富的功能，同时具备更好的性能表现。
 
-这是因为 Rspack CLI 需要保持对 [webpack-cli](https://www.npmjs.com/package/webpack-cli) 的兼容性，它依赖了 `webpack-dev-server`，并提供与 webpack 一致的默认行为，因此性能受到了一定限制。而 Rsbuild 是面向现代 web 开发设计的，我们为 Rsbuild 重新实现了更轻量的 CLI、开发服务器和构建流程，使其具备更快的启动速度和更少的 npm 依赖。
+这是因为 Rspack CLI 需要保持对 [webpack-cli](https://npmjs.com/package/webpack-cli) 的兼容性，它依赖了 `webpack-dev-server`，并提供与 webpack 一致的默认行为，因此性能受到了一定限制。而 Rsbuild 是面向现代 web 开发设计的，我们为 Rsbuild 重新实现了更轻量的 CLI、开发服务器和构建流程，使其具备更快的启动速度和更少的 npm 依赖。
 
-> 参考 [Rsbuild 介绍](https://rsbuild.dev/zh/guide/start/index) 了解 Rsbuild 与 webpack、Vue CLI、Vite 的对比。
+> 参考 [Rsbuild 介绍](/zh/guide/start/index) 了解 Rsbuild 与 webpack、Vue CLI、Vite 的对比。
 
 ## 谁在使用
 
-在 [Rspack 1.0 发布公告](https://rspack.dev/zh/blog/announcing-1-0) 中，我们介绍了 Rspack 正在取得快速增长，这其中约有一半的 Rspack 用户已经在使用 Rsbuild，并给予我们很多正向的反馈。
+在 [Rspack 1.0 发布公告](https://rspack.rs/zh/blog/announcing-1-0) 中，我们介绍了 Rspack 正在取得快速增长，这其中约有一半的 Rspack 用户已经在使用 Rsbuild，并给予我们很多正向的反馈。
 
 在字节跳动，我们将 Rsbuild 作为内部研发框架的基石，支持了数千个 web 项目，这些项目涵盖了不同的使用场景，包括 desktop Web 应用、mobile Web 应用、跨平台 Web 应用、文档站等。
 
@@ -74,24 +74,24 @@ Rsbuild 的插件生态正在不断发展，目前社区中已经有超过 50 �
 
 例如，我们来实现一个插件，它的功能是输出一个文件到产物目录，在 Rspack 和 Rsbuild 中的实现对比如下：
 
-![](https://assets.rspack.dev/rsbuild/assets/rsbuild-1-0-plugin-compare.png)
+![](https://assets.rspack.rs/rsbuild/assets/rsbuild-1-0-plugin-compare.png)
 
 可以看到，Rsbuild 插件的 API 风格与 esbuild 类似，可以通过一个函数来定义。插件的 hooks 经过简化，避免了冗长的 API，使插件的编写更符合直觉。
 
 ## 如何使用 1.0
 
-- 如果你还未使用过 Rsbuild，可以通过 [CodeSandbox 示例](https://codesandbox.io/p/github/rspack-contrib/rsbuild-codesandbox-example) 来体验，也可以参考 [快速上手](https://rsbuild.dev/zh/guide/start/quick-start) 来接入 Rsbuild。
-- 如果你正在使用 Rsbuild 0.7 或更早的版本，请留意 1.0 版本包含一些不兼容更新，可参考 [从 Rsbuild 0.x 迁移](https://rsbuild.dev/zh/guide/migration/rsbuild-0-x) 文档进行升级。
-- Rsbuild 也提供了 webpack、CRA、Vue CLI 等项目的迁移指南，详见 [从现有项目迁移](https://rsbuild.dev/zh/guide/start/quick-start#%E4%BB%8E%E7%8E%B0%E6%9C%89%E9%A1%B9%E7%9B%AE%E8%BF%81%E7%A7%BB)。
+- 如果你还未使用过 Rsbuild，可以通过 [CodeSandbox 示例](https://codesandbox.io/p/github/rspack-contrib/rsbuild-codesandbox-example) 来体验，也可以参考 [快速上手](/zh/guide/start/quick-start) 来接入 Rsbuild。
+- 如果你正在使用 Rsbuild 0.7 或更早的版本，请留意 1.0 版本包含一些不兼容更新，可参考 [从 Rsbuild 0.x 迁移](/zh/guide/migration/rsbuild-0-x) 文档进行升级。
+- Rsbuild 也提供了 webpack、CRA、Vue CLI 等项目的迁移指南，详见 [从现有项目迁移](/zh/guide/start/quick-start#%E4%BB%8E%E7%8E%B0%E6%9C%89%E9%A1%B9%E7%9B%AE%E8%BF%81%E7%A7%BB)。
 
 > 欢迎为 [Rsbuild GitHub 仓库](https://github.com/web-infra-dev/rsbuild) 点亮一颗 Star 🌟。
 
 ## 下一步
 
-Rsbuild 1.0 为企业级应用和上层工具开发提供了一些高级特性，例如 [多环境构建 API](https://rsbuild.dev/zh/guide/advanced/environments)、[服务端渲染 API](https://rsbuild.dev/zh/guide/advanced/ssr)、[插件 API](https://rsbuild.dev/plugins/dev/)、[模块联邦支持](https://rsbuild.dev/zh/guide/advanced/module-federation) 和 [Library 构建（Rslib）](https://github.com/web-infra-dev/rslib)，我们计划继续完善这些特性，更好地支持 Rsbuild 生态发展。
+Rsbuild 1.0 为企业级应用和上层工具开发提供了一些高级特性，例如 [多环境构建 API](/zh/guide/advanced/environments)、[服务端渲染 API](/zh/guide/advanced/ssr)、[插件 API](/plugins/dev/)、[模块联邦支持](/zh/guide/advanced/module-federation) 和 [Library 构建（Rslib）](https://github.com/web-infra-dev/rslib)，我们计划继续完善这些特性，更好地支持 Rsbuild 生态发展。
 
-在接下来的 12～18 个月里，Rsbuild 将与 Rspack 共同演进，在第一时间应用 Rspack 的新特性，例如持久化缓存、更快的 HMR、基于 TypeScript 的优化等。请参考 [Rspack - 下一步](https://rspack.dev/zh/blog/announcing-1-0#%E4%B8%8B%E4%B8%80%E6%AD%A5) 了解更多。
+在接下来的 12～18 个月里，Rsbuild 将与 Rspack 共同演进，在第一时间应用 Rspack 的新特性，例如持久化缓存、更快的 HMR、基于 TypeScript 的优化等。请参考 [Rspack - 下一步](https://rspack.rs/zh/blog/announcing-1-0#%E4%B8%8B%E4%B8%80%E6%AD%A5) 了解更多。
 
 最后，感谢所有为 Rsbuild 贡献过的开发者 ❤️：
 
-![](https://assets.rspack.dev/rsbuild/assets/rsbuild-1-0-contributors.png)
+![](https://assets.rspack.rs/rsbuild/assets/rsbuild-1-0-contributors.png)

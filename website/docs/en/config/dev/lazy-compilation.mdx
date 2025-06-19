@@ -18,13 +18,21 @@ type LazyCompilationOptions =
        * Specify which imported modules should be lazily compiled.
        */
       test?: RegExp | ((m: Module) => boolean);
+      /**
+       * The path to a custom runtime code that overrides the default lazy compilation client.
+       */
+      client?: string;
+      /**
+       * Tells the client the server URL that needs to be requested.
+       */
+      serverUrl?: string;
     };
 ```
 
 - **Default:** `false`
 - **Version:** `>= 1.3.0`
 
-Enable lazy compilation (compilation on demand), implemented based on Rspack's [lazy compilation](https://rspack.dev/guide/features/lazy-compilation) feature.
+Enable lazy compilation (compilation on demand), implemented based on Rspack's [lazy compilation](https://rspack.rs/guide/features/lazy-compilation) feature.
 
 ## Introduction
 
@@ -55,6 +63,7 @@ export default {
   dev: {
     lazyCompilation: {
       imports: true,
+      // If there is only one entry, Rsbuild will not enable the entries option by default
       entries: true,
     },
   },
@@ -97,3 +106,21 @@ export default {
 ```
 
 When the `imports` option is enabled, all async modules will only be compiled when requested. If your project is a single-page application (SPA) and you have split the routes using dynamic import, this will significantly speed up the startup time.
+
+### Server URL
+
+Use [lazyCompilation.serverUrl](https://rspack.rs/config/experiments#lazycompilationserverurl) to tell the client the server URL that needs to be requested.
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    lazyCompilation: {
+      serverUrl: 'http://localhost:<port>',
+    },
+  },
+};
+```
+
+:::tip
+Rsbuild will replace the `<port>` placeholder with the actual port number the server is listening on.
+:::

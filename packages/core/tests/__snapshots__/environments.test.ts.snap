@@ -1,4 +1,4 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`environment config > should normalize environment config correctly 1`] = `
 {
@@ -15,6 +15,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "hmr": true,
     "lazyCompilation": true,
     "liveReload": true,
+    "watchFiles": [],
     "writeToDisk": false,
   },
   "html": {
@@ -123,7 +124,6 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "strictPort": false,
   },
   "source": {
-    "alias": {},
     "decorators": {
       "version": "2022-03",
     },
@@ -159,6 +159,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "hmr": true,
     "lazyCompilation": false,
     "liveReload": true,
+    "watchFiles": [],
     "writeToDisk": false,
   },
   "html": {
@@ -267,7 +268,6 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "strictPort": false,
   },
   "source": {
-    "alias": {},
     "decorators": {
       "version": "2022-03",
     },
@@ -303,6 +303,7 @@ exports[`environment config > should print environment config when inspect confi
       },
       "hmr": true,
       "liveReload": true,
+      "watchFiles": [],
       "writeToDisk": false,
     },
     "html": {
@@ -411,7 +412,6 @@ exports[`environment config > should print environment config when inspect confi
       "strictPort": false,
     },
     "source": {
-      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -443,6 +443,7 @@ exports[`environment config > should print environment config when inspect confi
       },
       "hmr": true,
       "liveReload": true,
+      "watchFiles": [],
       "writeToDisk": false,
     },
     "html": {
@@ -551,7 +552,6 @@ exports[`environment config > should print environment config when inspect confi
       "strictPort": false,
     },
     "source": {
-      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -603,6 +603,7 @@ exports[`environment config > should support modify environment config by api.mo
       },
       "hmr": true,
       "liveReload": true,
+      "watchFiles": [],
       "writeToDisk": false,
     },
     "html": {
@@ -711,7 +712,6 @@ exports[`environment config > should support modify environment config by api.mo
       "strictPort": false,
     },
     "source": {
-      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -743,6 +743,7 @@ exports[`environment config > should support modify environment config by api.mo
       },
       "hmr": true,
       "liveReload": true,
+      "watchFiles": [],
       "writeToDisk": false,
     },
     "html": {
@@ -852,7 +853,6 @@ exports[`environment config > should support modify environment config by api.mo
       "strictPort": false,
     },
     "source": {
-      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -884,6 +884,7 @@ exports[`environment config > should support modify environment config by api.mo
       },
       "hmr": true,
       "liveReload": true,
+      "watchFiles": [],
       "writeToDisk": false,
     },
     "html": {
@@ -993,7 +994,6 @@ exports[`environment config > should support modify environment config by api.mo
       "strictPort": false,
     },
     "source": {
-      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -1028,6 +1028,7 @@ exports[`environment config > should support modify single environment config by
       },
       "hmr": true,
       "liveReload": true,
+      "watchFiles": [],
       "writeToDisk": false,
     },
     "html": {
@@ -1136,7 +1137,6 @@ exports[`environment config > should support modify single environment config by
       "strictPort": false,
     },
     "source": {
-      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -1168,6 +1168,7 @@ exports[`environment config > should support modify single environment config by
       },
       "hmr": true,
       "liveReload": true,
+      "watchFiles": [],
       "writeToDisk": false,
     },
     "html": {
@@ -1277,7 +1278,6 @@ exports[`environment config > should support modify single environment config by
       "strictPort": false,
     },
     "source": {
-      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -1358,6 +1358,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             {
               "loader": "builtin:lightningcss-loader",
               "options": {
+                "errorRecovery": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1389,6 +1390,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             {
               "loader": "builtin:lightningcss-loader",
               "options": {
+                "errorRecovery": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1410,16 +1412,14 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           },
           "include": [
             {
-              "and": [
-                "<ROOT>",
-                {
-                  "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-                },
-              ],
+              "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
             /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
           ],
+          "resourceQuery": {
+            "not": /raw\\|inline/,
+          },
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "type": "javascript/auto",
           "use": [
@@ -1442,6 +1442,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -1455,6 +1458,11 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               },
             },
           ],
+        },
+        {
+          "resourceQuery": /raw/,
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "asset/source",
         },
         {
           "mimetype": {
@@ -1486,6 +1494,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -1674,6 +1685,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
         "name": "RsbuildCorePlugin",
       },
       HotModuleReplacementPlugin {
+        "affectedHooks": undefined,
         "name": "HotModuleReplacementPlugin",
       },
       DefinePlugin {
@@ -1711,7 +1723,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     ],
     "watchOptions": {
       "aggregateTimeout": 0,
-      "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
     },
   },
   {
@@ -1802,15 +1813,13 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           },
           "include": [
             {
-              "and": [
-                "<ROOT>",
-                {
-                  "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-                },
-              ],
+              "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           ],
+          "resourceQuery": {
+            "not": /raw\\|inline/,
+          },
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "type": "javascript/auto",
           "use": [
@@ -1829,6 +1838,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -1842,6 +1854,11 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               },
             },
           ],
+        },
+        {
+          "resourceQuery": /raw/,
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "asset/source",
         },
         {
           "mimetype": {
@@ -1869,6 +1886,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
                   "parser": {
                     "decorators": true,
                     "syntax": "typescript",
@@ -2087,7 +2107,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     "target": "node",
     "watchOptions": {
       "aggregateTimeout": 0,
-      "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
     },
   },
 ]

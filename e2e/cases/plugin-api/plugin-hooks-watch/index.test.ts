@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import { join } from 'node:path';
 import { expectFile, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
-import { type RsbuildPlugin, createRsbuild } from '@rsbuild/core';
+import { createRsbuild, type RsbuildPlugin } from '@rsbuild/core';
 import fse, { remove } from 'fs-extra';
 
 const createPlugin = () => {
@@ -22,6 +22,10 @@ const createPlugin = () => {
       });
       api.modifyBundlerChain(() => {
         names.push('ModifyBundlerChain');
+      });
+      api.modifyHTML((html) => {
+        names.push('ModifyHTML');
+        return html;
       });
       api.modifyHTMLTags((tags) => {
         names.push('ModifyHTMLTags');
@@ -66,7 +70,6 @@ const createPlugin = () => {
 rspackOnlyTest(
   'should run plugin hooks correctly when running build with watch',
   async () => {
-    console.log('==== ', process.env.NODE_ENV);
     const cwd = __dirname;
     fse.ensureDirSync(join(cwd, 'test-temp-src'));
 
@@ -110,10 +113,12 @@ rspackOnlyTest(
       'AfterCreateCompiler',
       'BeforeBuild',
       'ModifyHTMLTags',
+      'ModifyHTML',
       'AfterBuild',
       // below hooks should called when rebuild
       'BeforeBuild',
       'ModifyHTMLTags',
+      'ModifyHTML',
       'AfterBuild',
     ]);
 

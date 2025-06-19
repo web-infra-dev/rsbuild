@@ -3,7 +3,7 @@ import type { IncomingMessage, ServerResponse } from 'node:http';
 import { createRequire } from 'node:module';
 import { HTML_REGEX } from '../constants';
 import { isMultiCompiler } from '../helpers';
-import { pathnameParse } from '../helpers/path';
+import { getPathnameFromUrl } from '../helpers/path';
 import type {
   EnvironmentContext,
   NextFunction,
@@ -185,7 +185,7 @@ export class CompilationManager {
 
     const { base } = serverConfig;
     const assetPrefixes = publicPaths
-      .map(pathnameParse)
+      .map(getPathnameFromUrl)
       .map((prefix) =>
         base && base !== '/' ? stripBase(prefix, base) : prefix,
       );

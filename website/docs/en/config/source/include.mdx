@@ -1,30 +1,28 @@
 # source.include
 
-- **Type:** [Rspack.RuleSetCondition](https://rspack.dev/config/module#condition)
+- **Type:** [Rspack.RuleSetCondition](https://rspack.rs/config/module#condition)
 
-Specify additional JavaScript files that need to be compiled by [SWC](/guide/basic/configure-swc).
+Specify additional JavaScript files that need to be compiled by [SWC](/guide/configuration/swc).
 
 ## Default value
 
-To avoid double compilation, by default, Rsbuild's built-in [swc-loader](https://rspack.dev/guide/features/builtin-swc-loader) compiles the following files:
+By default, Rsbuild's built-in [swc-loader](https://rspack.rs/guide/features/builtin-swc-loader) compiles the following files:
 
 - TypeScript and JSX files in any directory, matching file extensions `.ts`, `.tsx`, `.jsx`, `.mts`, `.cts`.
-- JavaScript files in the [root](/config/root) directory, excluding the `node_modules` directory, matching file extensions `.js`, `.mjs`, `.cjs`.
+- JavaScript files that are not in the `node_modules` directory, matching file extensions `.js`, `.mjs`, `.cjs`.
 
 The default value of `source.include` can be expressed as:
 
 ```ts
 const defaultInclude = [
-  {
-    and: [rootPath, { not: /[\\/]node_modules[\\/]/ }],
-  },
+  { not: /[\\/]node_modules[\\/]/ },
   /\.(?:ts|tsx|jsx|mts|cts)$/,
 ];
 ```
 
 ## Usage
 
-Through the `source.include` config, you can specify directories or modules that need to be compiled by Rsbuild. The usage of `source.include` is consistent with [Rule.include](https://rspack.dev/config/module#ruleinclude) in Rspack, which supports passing in strings or regular expressions to match the module path.
+Through the `source.include` config, you can specify directories or modules that need to be compiled by Rsbuild. The usage of `source.include` is consistent with [Rule.include](https://rspack.rs/config/module#ruleinclude) in Rspack, which supports passing in strings or regular expressions to match the module path.
 
 For example:
 
@@ -85,28 +83,6 @@ export default {
     include: [
       /node_modules[\\/]query-string[\\/]/,
       /node_modules[\\/]decode-uri-component[\\/]/,
-    ],
-  },
-};
-```
-
-## Compile libraries in monorepo
-
-When developing in Monorepo, if you need to refer to the source code of other libraries in Monorepo, you can add the corresponding library to `source.include`:
-
-```ts title="rsbuild.config.ts"
-import path from 'node:path';
-
-const packagesDir = path.resolve(__dirname, '../../packages');
-
-export default {
-  source: {
-    include: [
-      // Compile all files in Monorepo's package directory
-      // It is recommended to exclude the node_modules
-      {
-        and: [packagesDir, { not: /[\\/]node_modules[\\/]/ }],
-      },
     ],
   },
 };

@@ -6,7 +6,7 @@ _May 28, 2024_
 
 # Rsbuild 0.7 发布
 
-![](https://assets.rspack.dev/rsbuild/rsbuild-banner-v0-7.png)
+![](https://assets.rspack.rs/rsbuild/rsbuild-banner-v0-7.png)
 
 Rsbuild 0.7 已与 Rspack 0.7 同步发布！
 
@@ -27,7 +27,7 @@ Rsbuild 现已支持 Storybook！
 
 [storybook-builder-rsbuild](https://github.com/rspack-contrib/storybook-rsbuild) 是基于 Storybook v8 和 Rsbuild 实现的 Storybook builder，能够快速构建你的 components 和 stories。
 
-![](https://assets.rspack.dev/rsbuild/rsbuild-banner-with-storybook.png)
+![](https://assets.rspack.rs/rsbuild/rsbuild-banner-with-storybook.png)
 
 - 对于使用 Rsbuild 的项目，现在你可以快速集成 Storybook，并复用已有的 Rsbuild 配置。
 - 对于使用 Storybook webpack builder 的项目，现在即可升级到 Rsbuild，**并获得约 5 倍的构建性能提升**。
@@ -44,7 +44,7 @@ const config: StorybookConfig = {
 export default config;
 ```
 
-![](https://assets.rspack.dev/rsbuild/assets/storybook-rsbuild-preview.png)
+![](https://assets.rspack.rs/rsbuild/assets/storybook-rsbuild-preview.png)
 
 > 更多用法请参考 [storybook-rsbuild 仓库](https://github.com/rspack-contrib/storybook-rsbuild)。
 
@@ -54,15 +54,15 @@ export default config;
 
 以编译 Bootstrap 的 Sass 代码为例，Rsbuild 0.6 和 0.7 的构建时间对比：
 
-![](https://assets.rspack.dev/rsbuild/assets/sass-embedded-compare.jpeg)
+![](https://assets.rspack.rs/rsbuild/assets/sass-embedded-compare.jpeg)
 
-这得益于 Rsbuild 默认启用了 [sass-embedded](https://www.npmjs.com/package/sass-embedded)，sass-embedded 是一个围绕原生 Dart Sass 可执行文件的 JavaScript wrapper，具备一致的 API 和更优秀的性能。
+这得益于 Rsbuild 默认启用了 [sass-embedded](https://npmjs.com/package/sass-embedded)，sass-embedded 是一个围绕原生 Dart Sass 可执行文件的 JavaScript wrapper，具备一致的 API 和更优秀的性能。
 
 此外，Rsbuild 还启用了 `sass-loader` 最新的 [modern-compiler](https://github.com/webpack-contrib/sass-loader/releases/tag/v14.2.0) API，这能够开启 Sass 的 shared resources 能力，在编译多个文件时重复利用相同的 compiler 进程，从而提升构建速度。
 
 ## 更好的 CSS 支持
 
-Rsbuild 现在使用 [CssExtractRspackPlugin](https://www.rspack.dev/plugins/rspack/css-extract-rspack-plugin) 来提取 CSS 到单独的文件中，而不是使用 [experiments.css](https://www.rspack.dev/config/experiments#experimentscss) 配置来实现。
+Rsbuild 现在使用 [CssExtractRspackPlugin](https://rspack.rs/zh/plugins/rspack/css-extract-rspack-plugin) 来提取 CSS 到单独的文件中，而不是使用 [experiments.css](https://rspack.rs/zh/config/experiments#experimentscss) 配置来实现。
 
 这允许 Rsbuild 支持更多 CSS 特性，包括：
 
@@ -137,7 +137,7 @@ export default cssExports;
 
 现在，Rsbuild 的所有包均提供了 ES modules 和 CommonJS 两种格式的导出，并在 package.json 中声明了 ["type"="module"`](https://nodejs.org/api/packages.html#type)。
 
-![](https://assets.rspack.dev/rsbuild/assets/rsbuild-dual-package-example.png)
+![](https://assets.rspack.rs/rsbuild/assets/rsbuild-dual-package-example.png)
 
 这使你能够使用 `import` 或 `require` 来调用 Rsbuild 的 JavaScript API：
 
@@ -157,7 +157,7 @@ ESM/CJS 互操作是一个棘手的问题，因此我们计划长期提供这两
 
 Rsbuild 已将依赖的 Rspack 升级至 0.7 版本，并适配了其中包含的不兼容更新，通常你不会受到这些不兼容更新的影响。
 
-在新版本中，Rspack 支持了 lazy compilation，可以显著提升大型项目的 dev 启动速度。请参考 [Rspack 0.7 发布公告](https://rspack.dev/zh/blog/announcing-0-7) 了解更多。
+在新版本中，Rspack 支持了 lazy compilation，可以显著提升大型项目的 dev 启动速度。请参考 [Rspack 0.7 发布公告](https://rspack.rs/zh/blog/announcing-0-7) 了解更多。
 
 在 Rsbuild 中，你可以使用 [dev.lazyCompilation](/config/dev/lazy-compilation) 来启用 lazy compilation。
 
@@ -195,7 +195,7 @@ export default {
 
 如果你倾向于之前的默认设置，可以添加以下配置：
 
-```js title="rsbuild.config.ts"
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     dataUriLimit: 10000,

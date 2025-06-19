@@ -62,7 +62,7 @@ export const applyBasicReactSupport = (
         path.dirname(REACT_REFRESH_PATH),
       );
 
-      const { default: ReactRefreshRspackPlugin } = await import(
+      const { ReactRefreshRspackPlugin } = await import(
         '@rspack/plugin-react-refresh'
       );
       const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
@@ -74,6 +74,7 @@ export const applyBasicReactSupport = (
           {
             include: [SCRIPT_REGEX],
             exclude: [NODE_MODULES_REGEX],
+            resourceQuery: { not: /raw/ },
             ...options.reactRefreshOptions,
           },
         ]);

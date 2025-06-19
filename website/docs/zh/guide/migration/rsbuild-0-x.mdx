@@ -6,7 +6,7 @@
 
 ## [重要] Lightning CSS loader
 
-Rsbuild 现在默认启用 [lightningcss-loader](https://rspack.dev/guide/features/builtin-lightningcss-loader) 来转换 CSS 文件，它取代了 `autoprefixer` 来添加 vendor prefixes，并提供了更好的性能。
+Rsbuild 现在默认启用 [lightningcss-loader](https://rspack.rs/zh/guide/features/builtin-lightningcss-loader) 来转换 CSS 文件，它取代了 `autoprefixer` 来添加 vendor prefixes，并提供了更好的性能。
 
 - `@rsbuild/plugin-lightningcss` 已被废弃且不再需要。
 - `tools.autoprefixer` 配置已被移除。
@@ -99,7 +99,7 @@ Rsbuild 现在默认启用 Rspack 的 scheme 校验，以确保 Rspack 配置的
 - 当 Rspack 配置的类型错误时，会抛出错误并终止构建。
 - 当 Rspack 配置中存在多余的字段时，会抛出错误，但不会终止构建。
 
-> 详见 [Rspack - RSPACK_CONFIG_VALIDATE](https://rspack.dev/guide/migration/webpack#updating-configuration)。
+> 详见 [Rspack - RSPACK_CONFIG_VALIDATE](https://rspack.rs/zh/guide/migration/webpack#%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE)。
 
 ## source.alias
 
@@ -313,7 +313,7 @@ Rsbuild v1 移除了 `output.minify.html` 和 `output.minify.htmlOptions` 选项
 
 目前，Rsbuild 不再内置 `html-minifier-terser`，因此我们提供了一个独立的插件 [rsbuild-plugin-html-minifier-terser](https://github.com/rspack-contrib/rsbuild-plugin-html-minifier-terser) 来支持 HTML 压缩。
 
-```js title="rsbuild.config.ts"
+```ts title="rsbuild.config.ts"
 import { pluginHtmlMinifierTerser } from 'rsbuild-plugin-html-minifier-terser';
 
 export default {
@@ -341,14 +341,17 @@ export default {
 
 `dev.startUrl` 被重命名为 [server.open](/config/server/open)：
 
-```diff
+```js
 export default {
--  dev: {
-+  server: {
--   startUrl: true,
-+   open: true,
-  }
-}
+  // [!code --]
+  dev: {
+    startUrl: true, // [!code --]
+  }, // [!code --]
+  // [!code ++]
+  server: {
+    open: true, // [!code ++]
+  }, // [!code ++]
+};
 ```
 
 ## dev.client.port

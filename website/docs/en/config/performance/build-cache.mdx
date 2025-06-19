@@ -21,7 +21,7 @@ When enabled, Rspack will store the build snapshots in the cache directory. In s
 
 :::tip
 
-Rspack's persistent cache is [experimental](https://rspack.dev/config/experiments#experimentscache) and may change in the future.
+Rspack's persistent cache is [experimental](https://rspack.rs/config/experiments#experimentscache) and may change in the future.
 
 :::
 
@@ -92,19 +92,27 @@ export default defineConfig({
 ### buildDependencies
 
 - **Type:** `string[]`
-- **Default:** `undefined`
 
 `buildDependencies` is an arrays of additional code dependencies for the build. Rspack will use a hash of each of these items and all dependencies to invalidate the filesystem cache.
+
+Equivalent to Rspack's [cache.buildDependencies](https://rspack.rs/config/experiments#cachebuilddependencies) option.
+
+#### Default value
 
 Rsbuild will use the following configuration files as the default build dependencies:
 
 - `package.json`
 - `tsconfig.json`
-- `rsbuild.config.*`
+- `.env`, `.env.*`
 - `.browserslistrc`
 - `tailwindcss.config.*`
 
-When using Rsbuild CLI, it will also automatically add `.env` and `.env.*` files to the build dependencies.
+Additionally:
+
+- When using Rsbuild CLI, it will also automatically add the Rsbuild configuration file (`rsbuild.config.*`) to the build dependencies.
+- When using Rsbuild's [loadConfig](/api/javascript-api/core#loadconfig) JS API, it will also automatically add the configuration file path to the build dependencies.
+
+#### Example
 
 When you add other build dependencies, Rsbuild merges these custom dependencies with the default dependencies and passes them to Rspack.
 

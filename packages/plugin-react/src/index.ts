@@ -35,7 +35,13 @@ export type PluginReactOptions = {
   enableProfiler?: boolean;
   /**
    * Options passed to `@rspack/plugin-react-refresh`
-   * @see https://rspack.dev/guide/tech/react#rspackplugin-react-refresh
+   * @default
+   * {
+   *   include: [/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/],
+   *   exclude: [/[\\/]node_modules[\\/]/],
+   *   resourceQuery: { not: /raw/ },
+   * }
+   * @see https://rspack.rs/guide/tech/react#rspackplugin-react-refresh
    */
   reactRefreshOptions?: ReactRefreshOptions;
   /**

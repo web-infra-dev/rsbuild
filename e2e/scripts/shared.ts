@@ -9,21 +9,31 @@ import type {
 } from '@rsbuild/core';
 import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
 import type { Page } from 'playwright';
-import { globContentJSON } from './helper';
+import {
+  type ProxyConsoleOptions,
+  proxyConsole,
+  readDirContents,
+} from './helper';
 
-export const getHrefByEntryName = (entryName: string, port: number) => {
+/**
+ * Build an URL based on the entry name and port
+ */
+export const buildEntryUrl = (entryName: string, port: number) => {
   const htmlRoot = new URL(`http://localhost:${port}`);
   const homeUrl = new URL(`${entryName}.html`, htmlRoot);
 
   return homeUrl.href;
 };
 
+/**
+ * Build the entry URL and navigate to it
+ */
 export const gotoPage = async (
   page: Page,
   rsbuild: { port: number },
   path = 'index',
 ) => {
-  const url = getHrefByEntryName(path, rsbuild.port);
+  const url = buildEntryUrl(path, rsbuild.port);
   return page.goto(url);
 };
 
@@ -74,16 +84,19 @@ function isPortAvailable(port: number) {
         resolve(false);
       });
     });
-  } catch (err) {
+  } catch {
     return false;
   }
 }
 
 const portMap = new Map();
 
-// Available port ranges: 1024 ～ 65535
-// `10080` is not available on macOS CI, `> 50000` get 'permission denied' on Windows.
-// so we use `15000` ~ `45000`.
+/**
+ * Get a random port
+ * Available port ranges: 1024 ～ 65535
+ * `10080` is not available on macOS CI, `> 50000` get 'permission denied' on Windows.
+ * so we use `15000` ~ `45000`.
+ */
 export async function getRandomPort(
   defaultPort = Math.ceil(Math.random() * 30000) + 15000,
 ) {
@@ -126,19 +139,33 @@ const updateConfigForTest = async (
     },
   };
 
-  return mergeRsbuildConfig(baseConfig, loadedConfig, originalConfig);
+  const mergedConfig = mergeRsbuildConfig(
+    baseConfig,
+    loadedConfig,
+    originalConfig,
+  );
+
+  return mergedConfig;
 };
 
-const unwrapOutputJSON = async (distPath: string, ignoreMap = true) => {
-  return globContentJSON(distPath, {
+/**
+ * Read the contents of a dist directory and return a map of
+ * file paths to their contents.
+ */
+const getDistFiles = async (distPath: string, ignoreMap = true) => {
+  return readDirContents(distPath, {
     absolute: true,
     ignore: ignoreMap ? [join(distPath, '/**/*.map')] : [],
   });
 };
 
+/**
+ * Start the dev server and return the server instance.
+ */
 export async function dev({
   plugins,
   page,
+  captureLogs = true,
   waitFirstCompileDone = true,
   ...options
 }: CreateRsbuildOptions & {
@@ -150,6 +177,10 @@ export async function dev({
    */
   page?: Page;
   /**
+   * Call `proxyConsole` to capture the console logs.
+   */
+  captureLogs?: ProxyConsoleOptions | boolean;
+  /**
    * The done of `dev` does not mean the compile is done.
    * If your test relies on the completion of compilation you should `waitFirstCompileDone`
    * @default true
@@ -158,33 +189,17 @@ export async function dev({
 }) {
   process.env.NODE_ENV = 'development';
 
+  const proxyConsoleResult =
+    captureLogs === false
+      ? null
+      : proxyConsole(captureLogs === true ? {} : captureLogs);
+
   options.rsbuildConfig = await updateConfigForTest(
     options.rsbuildConfig || {},
     options.cwd,
   );
 
   const rsbuild = await createRsbuild(options, plugins);
-
-  rsbuild.addPlugins([
-    {
-      // fix HMR problem temporary (only appears in rsbuild repo, because css-loader is not in node_modules/ )
-      // https://github.com/web-infra-dev/rspack/issues/5723
-      name: 'fix-react-refresh-in-rsbuild',
-      setup(api) {
-        api.modifyBundlerChain({
-          order: 'post',
-          handler: (chain, { CHAIN_ID }) => {
-            if (chain.plugins.has(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)) {
-              chain.plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH).tap((config) => {
-                config[0].exclude = [/node_modules/, /css-loader/];
-                return config;
-              });
-            }
-          },
-        });
-      },
-    },
-  ]);
 
   const wait = waitFirstCompileDone
     ? new Promise<void>((resolve) => {
@@ -207,21 +222,35 @@ export async function dev({
 
   return {
     ...result,
+    logs: proxyConsoleResult?.logs || [],
     instance: rsbuild,
-    unwrapOutputJSON: (ignoreMap?: boolean) =>
-      unwrapOutputJSON(rsbuild.context.distPath, ignoreMap),
-    close: async () => result.server.close(),
+    getDistFiles: (ignoreMap?: boolean) =>
+      getDistFiles(rsbuild.context.distPath, ignoreMap),
+    close: async () => {
+      await result.server.close();
+      proxyConsoleResult?.restore();
+    },
   };
 }
 
+/**
+ * Build the project and return the build result.
+ */
 export async function build({
   plugins,
+  captureLogs = true,
+  catchBuildError = false,
   runServer = false,
   page,
   ...options
 }: CreateRsbuildOptions & {
   plugins?: RsbuildPlugins;
   rsbuildConfig?: RsbuildConfig;
+  /**
+   * Whether to catch the build error.
+   * @default false
+   */
+  catchBuildError?: boolean;
   /**
    * Whether to run the server.
    */
@@ -231,8 +260,17 @@ export async function build({
    * This method will automatically run the server and goto the page.
    */
   page?: Page;
+  /**
+   * Call `proxyConsole` to capture the console logs.
+   */
+  captureLogs?: ProxyConsoleOptions | boolean;
 }) {
   process.env.NODE_ENV = 'production';
+
+  const proxyConsoleResult =
+    captureLogs === false
+      ? null
+      : proxyConsole(captureLogs === true ? {} : captureLogs);
 
   options.rsbuildConfig = await updateConfigForTest(
     options.rsbuildConfig || {},
@@ -241,7 +279,19 @@ export async function build({
 
   const rsbuild = await createRsbuild(options, plugins);
 
-  await rsbuild.build();
+  let buildError: Error | undefined;
+  let closeBuild: () => Promise<void> | undefined;
+
+  try {
+    const result = await rsbuild.build();
+    closeBuild = result.close;
+  } catch (error) {
+    buildError = error as Error;
+
+    if (!catchBuildError) {
+      throw buildError;
+    }
+  }
 
   const { distPath } = rsbuild.context;
 
@@ -255,7 +305,7 @@ export async function build({
   }
 
   const getIndexFile = async () => {
-    const files = await unwrapOutputJSON(distPath);
+    const files = await getDistFiles(distPath);
     const [name, content] =
       Object.entries(files).find(
         ([file]) => file.includes('index') && file.endsWith('.js'),
@@ -274,11 +324,16 @@ export async function build({
   }
 
   return {
+    logs: proxyConsoleResult?.logs || [],
     distPath,
     port,
-    close: server.close,
-    unwrapOutputJSON: (ignoreMap?: boolean) =>
-      unwrapOutputJSON(distPath, ignoreMap),
+    close: async () => {
+      await closeBuild?.();
+      await server.close();
+      proxyConsoleResult?.restore();
+    },
+    buildError,
+    getDistFiles: (ignoreMap?: boolean) => getDistFiles(distPath, ignoreMap),
     getIndexFile,
     instance: rsbuild,
   };

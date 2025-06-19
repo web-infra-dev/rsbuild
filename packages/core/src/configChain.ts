@@ -1,4 +1,4 @@
-import RspackChain from '../compiled/rspack-chain/index.js';
+import RspackChain from '../compiled/rspack-chain';
 import { castArray } from './helpers';
 import { logger } from './logger';
 import type { InternalContext, ModifyBundlerChainUtils } from './types';
@@ -43,6 +43,8 @@ export const CHAIN_ID = {
     ADDITIONAL_ASSETS: 'additional-assets',
     /** Rule for js */
     JS: 'js',
+    /** Rule for raw js */
+    JS_RAW: 'js-raw',
     /** Rule for data uri encoded javascript */
     JS_DATA_URI: 'js-data-uri',
     /** Rule for ts */
@@ -85,6 +87,7 @@ export const CHAIN_ID = {
   /** Predefined rule groups */
   ONE_OF: {
     SVG: 'svg',
+    SVG_RAW: 'svg-asset-raw',
     SVG_URL: 'svg-asset-url',
     SVG_ASSET: 'svg-asset',
     SVG_REACT: 'svg-react',
@@ -151,9 +154,9 @@ export const CHAIN_ID = {
     BUNDLE_ANALYZER: 'bundle-analyze',
     /** ModuleFederationPlugin */
     MODULE_FEDERATION: 'module-federation',
-    /** htmlPrefetchPlugin */
+    /** HtmlResourceHintsPlugin (prefetch) */
     HTML_PREFETCH: 'html-prefetch-plugin',
-    /** htmlPreloadPlugin */
+    /** HtmlResourceHintsPlugin (preload) */
     HTML_PRELOAD: 'html-preload-plugin',
     /** CssExtractRspackPlugin */
     MINI_CSS_EXTRACT: 'mini-css-extract',

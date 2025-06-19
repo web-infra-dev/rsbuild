@@ -5,16 +5,15 @@
 
 ```ts
 const defaultOptions = {
-  // use current browserslist config
+  errorRecovery: true,
+  // use current project's browserslist config
   targets: browserslist,
   // minify is enabled when output.injectStyles is true and in production mode
   minify: config.mode === 'production' && config.output.injectStyles,
 };
 ```
 
-- **Version:** `>= 1.0.0`
-
-You can set the options for [builtin:lightningcss-loader](https://rspack.dev/guide/features/builtin-lightningcss-loader) through `tools.lightningcssLoader`.
+You can set the options for [builtin:lightningcss-loader](https://rspack.rs/guide/features/builtin-lightningcss-loader) through `tools.lightningcssLoader`.
 
 ## Object type
 
@@ -27,7 +26,7 @@ export default {
   tools: {
     lightningcssLoader: {
       exclude: {
-        vendorPrefixes: false,
+        vendorPrefixes: true,
       },
     },
   },
@@ -43,7 +42,7 @@ export default {
   tools: {
     lightningcssLoader: (config) => {
       config.exclude = {
-        vendorPrefixes: false,
+        vendorPrefixes: true,
       };
       return config;
     },
@@ -64,5 +63,5 @@ export default {
 ```
 
 :::tip
-Set `tools.lightningcssLoader` to `false` only disables the `lightningcss-loader`. If you need to disable the full functionality of Lightning CSS, please refer to [Disabling Lightning CSS](/guide/basic/css-usage#disabling-lightning-css).
+Set `tools.lightningcssLoader` to `false` only disables the `lightningcss-loader`. If you need to disable the full functionality of Lightning CSS, please refer to [Disabling Lightning CSS](/guide/styling/css-usage#disabling-lightning-css).
 :::

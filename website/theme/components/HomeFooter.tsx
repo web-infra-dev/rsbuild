@@ -1,6 +1,5 @@
 import { memo } from 'react';
-import { useLang } from 'rspress/runtime';
-import { useI18n } from 'rspress/runtime';
+import { useI18n, useLang } from 'rspress/runtime';
 import { Link } from 'rspress/theme';
 import styles from './HomeFooter.module.scss';
 
@@ -40,7 +39,7 @@ function useFooterData() {
         },
         {
           title: t('configuration'),
-          link: getLink('/guide/basic/configure-rsbuild'),
+          link: getLink('/guide/configuration/rsbuild'),
         },
         {
           title: t('pluginApi'),
@@ -57,19 +56,23 @@ function useFooterData() {
       items: [
         {
           title: 'Rspack',
-          link: 'https://rspack.dev/',
+          link: 'https://rspack.rs/',
         },
         {
           title: 'Rspress',
-          link: 'https://rspress.dev/',
+          link: 'https://rspress.rs/',
         },
         {
           title: 'Rsdoctor',
-          link: 'https://rsdoctor.dev/',
+          link: 'https://rsdoctor.rs/',
         },
         {
           title: 'Rslib',
-          link: 'https://lib.rsbuild.dev/',
+          link: 'https://rslib.rs/',
+        },
+        {
+          title: 'Rstest',
+          link: 'https://rstest.rs',
         },
       ],
     },
@@ -87,6 +90,10 @@ function useFooterData() {
         {
           title: 'Twitter (X)',
           link: 'https://twitter.com/rspack_dev',
+        },
+        {
+          title: 'Bluesky',
+          link: 'https://bsky.app/profile/rspack.rs',
         },
         {
           title: 'Awesome Rspack',

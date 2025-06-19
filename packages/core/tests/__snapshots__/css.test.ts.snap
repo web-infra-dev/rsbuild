@@ -1,4 +1,4 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`plugin-css > should use custom cssModules rule when using output.cssModules config 1`] = `
 {
@@ -38,6 +38,7 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
+              "errorRecovery": true,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -69,6 +70,7 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
+              "errorRecovery": true,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -212,6 +214,7 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
+              "errorRecovery": true,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -243,6 +246,7 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
+              "errorRecovery": true,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -304,6 +308,7 @@ exports[`should ensure isolation of PostCSS config objects between different bui
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -350,6 +355,7 @@ exports[`should ensure isolation of PostCSS config objects between different bui
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -419,6 +425,7 @@ exports[`should ensure isolation of PostCSS config objects between different bui
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -465,6 +472,7 @@ exports[`should ensure isolation of PostCSS config objects between different bui
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",

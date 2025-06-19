@@ -21,7 +21,7 @@ test('should generate manifest file in output', async () => {
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const manifestContent =
     files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];
@@ -30,7 +30,7 @@ test('should generate manifest file in output', async () => {
 
   const manifest = JSON.parse(manifestContent);
 
-  // main.js、index.html
+  // main.js, index.html
   expect(Object.keys(manifest.allFiles).length).toBe(2);
 
   expect(manifest.entries.index).toMatchObject({
@@ -63,7 +63,7 @@ test('should generate manifest file at specified path', async () => {
 
   const parsed = JSON.parse(manifestContent);
 
-  // main.js、index.html
+  // main.js, index.html
   expect(Object.keys(parsed.allFiles).length).toBe(2);
 });
 
@@ -82,7 +82,7 @@ test('should generate manifest file when target is node', async () => {
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const manifestContent =
     files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];
@@ -91,7 +91,7 @@ test('should generate manifest file when target is node', async () => {
 
   const manifest = JSON.parse(manifestContent);
 
-  // main.js、index.html
+  // main.js, index.html
   expect(Object.keys(manifest.allFiles).length).toBe(1);
 
   expect(manifest.entries.index).toMatchObject({
@@ -123,7 +123,7 @@ test('should always write manifest to disk when in dev mode', async ({
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const manifestContent =
     files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];
@@ -151,7 +151,7 @@ test('should allow to filter files in manifest', async () => {
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const manifestContent =
     files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];
@@ -187,7 +187,7 @@ rspackOnlyTest(
       },
     });
 
-    const files = await rsbuild.unwrapOutputJSON();
+    const files = await rsbuild.getDistFiles();
 
     const manifestContent =
       files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];

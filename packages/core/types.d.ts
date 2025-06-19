@@ -194,21 +194,21 @@ declare module '*.opus' {
 }
 
 /**
- * @requires [@rsbuild/plugin-yaml](https://www.npmjs.com/package/@rsbuild/plugin-yaml)
+ * @requires [@rsbuild/plugin-yaml](https://npmjs.com/package/@rsbuild/plugin-yaml)
  */
 declare module '*.yaml' {
   const content: Record<string, any>;
   export default content;
 }
 /**
- * @requires [@rsbuild/plugin-yaml](https://www.npmjs.com/package/@rsbuild/plugin-yaml)
+ * @requires [@rsbuild/plugin-yaml](https://npmjs.com/package/@rsbuild/plugin-yaml)
  */
 declare module '*.yml' {
   const content: Record<string, any>;
   export default content;
 }
 /**
- * @requires [@rsbuild/plugin-toml](https://www.npmjs.com/package/@rsbuild/plugin-toml)
+ * @requires [@rsbuild/plugin-toml](https://npmjs.com/package/@rsbuild/plugin-toml)
  */
 declare module '*.toml' {
   const content: Record<string, any>;
@@ -262,37 +262,62 @@ declare module '*.module.css' {
   export default classes;
 }
 /**
- * @requires [@rsbuild/plugin-sass](https://www.npmjs.com/package/@rsbuild/plugin-sass)
+ * @requires [@rsbuild/plugin-sass](https://npmjs.com/package/@rsbuild/plugin-sass)
  */
 declare module '*.module.scss' {
   const classes: CSSModuleClasses;
   export default classes;
 }
 /**
- * @requires [@rsbuild/plugin-sass](https://www.npmjs.com/package/@rsbuild/plugin-sass)
+ * @requires [@rsbuild/plugin-sass](https://npmjs.com/package/@rsbuild/plugin-sass)
  */
 declare module '*.module.sass' {
   const classes: CSSModuleClasses;
   export default classes;
 }
 /**
- * @requires [@rsbuild/plugin-less](https://www.npmjs.com/package/@rsbuild/plugin-less)
+ * @requires [@rsbuild/plugin-less](https://npmjs.com/package/@rsbuild/plugin-less)
  */
 declare module '*.module.less' {
   const classes: CSSModuleClasses;
   export default classes;
 }
 /**
- * @requires [@rsbuild/plugin-stylus](https://www.npmjs.com/package/@rsbuild/plugin-stylus)
+ * @requires [@rsbuild/plugin-stylus](https://npmjs.com/package/@rsbuild/plugin-stylus)
  */
 declare module '*.module.styl' {
   const classes: CSSModuleClasses;
   export default classes;
 }
 /**
- * @requires [@rsbuild/plugin-stylus](https://www.npmjs.com/package/@rsbuild/plugin-stylus)
+ * @requires [@rsbuild/plugin-stylus](https://npmjs.com/package/@rsbuild/plugin-stylus)
  */
 declare module '*.module.stylus' {
   const classes: CSSModuleClasses;
   export default classes;
 }
+
+/**
+ * CSS
+ */
+declare module '*.css' {}
+/**
+ * @requires [@rsbuild/plugin-sass](https://npmjs.com/package/@rsbuild/plugin-sass)
+ */
+declare module '*.scss' {}
+/**
+ * @requires [@rsbuild/plugin-sass](https://npmjs.com/package/@rsbuild/plugin-sass)
+ */
+declare module '*.sass' {}
+/**
+ * @requires [@rsbuild/plugin-less](https://npmjs.com/package/@rsbuild/plugin-less)
+ */
+declare module '*.less' {}
+/**
+ * @requires [@rsbuild/plugin-stylus](https://npmjs.com/package/@rsbuild/plugin-stylus)
+ */
+declare module '*.styl' {}
+/**
+ * @requires [@rsbuild/plugin-stylus](https://npmjs.com/package/@rsbuild/plugin-stylus)
+ */
+declare module '*.stylus' {}

@@ -16,6 +16,13 @@
   }
 }
 
+@media (max-width: 768px) {
+  .step {
+    flex: 0 100%;
+    margin-bottom: 20px;
+  }
+}
+
 .title {
   font-size: 20px;
   line-height: 1.4;

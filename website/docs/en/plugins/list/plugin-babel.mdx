@@ -32,7 +32,7 @@ export default {
 
 After using the Babel plugin, Rsbuild will perform the Babel transpilation in addition to the standard SWC transpilation, which adds additional compilation overhead. This can cause a noticeable decrease in build speed.
 
-To reduce the overhead of Babel transpilation, the `@rsbuild/plugin-babel` enables Babel compilation cache by default. If you want to disable the cache, you can set `performance.buildCache` to `false`:
+To reduce the overhead of Babel transpilation, the `@rsbuild/plugin-babel` enables Babel compilation cache by default. If you want to disable the cache, you can set [performance.buildCache](/config/performance/build-cache) to `false`:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -230,6 +230,22 @@ This separate rule is completely independent of the SWC rule built into Rsbuild 
 Used to specify the files that do not need to be compiled by Babel.
 
 Due to the performance overhead of Babel compilation, excluding certain files through `exclude` can reduce the number of modules compiled by Babel, thereby improving build performance.
+
+## Execution order
+
+After using `@rsbuild/plugin-babel`, Rsbuild will use both `babel-loader` and `builtin:swc-loader` to compile JavaScript files, with Babel running before SWC.
+
+This means that if you are using some new ECMAScript features in your code, you may need to add Babel plugins to ensure that Babel can correctly compile these new features.
+
+For example, add the [@babel/plugin-transform-private-methods](https://www.npmjs.com/package/@babel/plugin-transform-private-methods) plugin to enable Babel to correctly compile [private properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties):
+
+```ts
+pluginBabel({
+  babelLoaderOptions: {
+    plugins: ['@babel/plugin-transform-private-methods'],
+  },
+});
+```
 
 ## Debugging configs
 

@@ -1,27 +1,22 @@
-import { build, proxyConsole } from '@e2e/helper';
+import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should log warning by default', async () => {
-  const { restore, logs } = proxyConsole();
-
-  await build({
+  const rsbuild = await build({
     cwd: __dirname,
-    rsbuildConfig: {},
   });
 
   expect(
-    logs.some((log) =>
+    rsbuild.logs.some((log) =>
       log.includes('Using / for division outside of calc() is deprecated'),
     ),
   ).toBeTruthy();
 
-  restore();
+  await rsbuild.close();
 });
 
 test('should not log warning when set stats.warnings false', async () => {
-  const { restore, logs } = proxyConsole();
-
-  await build({
+  const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
       tools: {
@@ -35,10 +30,10 @@ test('should not log warning when set stats.warnings false', async () => {
   });
 
   expect(
-    logs.some((log) =>
+    rsbuild.logs.some((log) =>
       log.includes('Using / for division outside of calc() is deprecated'),
     ),
   ).toBeFalsy();
 
-  restore();
+  await rsbuild.close();
 });

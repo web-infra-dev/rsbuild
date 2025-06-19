@@ -1,4 +1,5 @@
 import { logger } from '../logger';
+import type { LogLevel } from '../types';
 import { setupCommands } from './commands';
 
 function initNodeEnv() {
@@ -16,6 +17,17 @@ export async function runCLI(): Promise<void> {
   // make it easier to identify the process via activity monitor or other tools
   process.title = 'rsbuild-node';
 
+  // ensure log level is set before any log is printed
+  const logLevelIndex = process.argv.findIndex(
+    (item) => item === '--log-level' || item === '--logLevel',
+  );
+  if (logLevelIndex !== -1) {
+    const level = process.argv[logLevelIndex + 1];
+    if (level && ['warn', 'error', 'silent'].includes(level)) {
+      logger.level = level as LogLevel;
+    }
+  }
+
   // Print a blank line to keep the greet log nice.
   // Some package managers automatically output a blank line, some do not.
   const { npm_execpath } = process.env;
@@ -24,7 +36,7 @@ export async function runCLI(): Promise<void> {
     npm_execpath.includes('npx-cli.js') ||
     npm_execpath.includes('.bun')
   ) {
-    console.log();
+    logger.log();
   }
 
   logger.greet(`  ${`Rsbuild v${RSBUILD_VERSION}`}\n`);

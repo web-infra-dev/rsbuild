@@ -1,10 +1,10 @@
 import { promises } from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
+import type { EnvironmentConfig, RsbuildPlugin } from '@rsbuild/core';
 import { logger } from '@rsbuild/core';
-import type { RsbuildPlugin } from '@rsbuild/core';
-import { sveltePreprocess } from 'svelte-preprocess';
 import type { CompileOptions } from 'svelte/compiler';
+import { sveltePreprocess } from 'svelte-preprocess';
 
 const require = createRequire(import.meta.url);
 
@@ -47,7 +47,7 @@ const isSvelte5 = async (sveltePath: string) => {
     const pkgRaw = await promises.readFile(pkgPath, 'utf-8');
     const pkgJson = JSON.parse(pkgRaw);
     return pkgJson.version.startsWith('5.');
-  } catch (err) {
+  } catch {
     return false;
   }
 };
@@ -73,6 +73,17 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
           cause: err,
         });
       }
+
+      api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
+        const extraConfig: EnvironmentConfig = {
+          source: {
+            // transpile the Svelte package to downgrade the syntax
+            include: [/node_modules[\\/]svelte[\\/]/],
+          },
+        };
+
+        return mergeEnvironmentConfig(extraConfig, config);
+      });
 
       api.modifyBundlerChain(
         async (chain, { CHAIN_ID, environment, isDev, isProd }) => {
@@ -114,16 +125,26 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
             },
           };
 
-          chain.module
+          const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
+          const swcUse = jsRule.uses.get(CHAIN_ID.USE.SWC);
+          const svelteRule = chain.module
             .rule(CHAIN_ID.RULE.SVELTE)
-            .test(/\.svelte$/)
+            .test(/\.svelte$/);
+
+          if (svelte5 && jsRule) {
+            svelteRule
+              .use(CHAIN_ID.USE.SWC)
+              .loader(swcUse.get('loader'))
+              .options(swcUse.get('options'));
+          }
+
+          svelteRule
             .use(CHAIN_ID.USE.SVELTE)
             .loader(loaderPath)
-            .options(svelteLoaderOptions);
+            .options(svelteLoaderOptions)
+            .end();
 
-          const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
           if (svelte5 && jsRule) {
-            const swcUse = jsRule.uses.get(CHAIN_ID.USE.SWC);
             const regexp = /\.(?:svelte\.js|svelte\.ts)$/;
 
             jsRule.exclude.add(regexp);

@@ -67,7 +67,7 @@ Rsbuild server 监听的端口号可能会发生变更。比如，当端口被�
 - 开启 [server.strictPort](/config/server/strict-port)。
 - 使用 `<port>` 占位符来指代当前端口号，Rsbuild 会将占位符替换为实际监听的端口号。
 
-```js title="rsbuild.config.ts"
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     client: {
@@ -89,7 +89,7 @@ hot-update 文件属于静态资源，如果你需要配置 hot-update 文件的
 
 默认情况下，当编译发生错误时，Rsbuild会在浏览器中显示 error overlay，并提供错误信息和错误堆栈：
 
-![error overlay](https://assets.rspack.dev/rsbuild/assets/rsbuild-error-overlay.png)
+![error overlay](https://assets.rspack.rs/rsbuild/assets/rsbuild-error-overlay.png)
 
 如果需要禁用 error overlay，可以将其设置为 `false`：
 

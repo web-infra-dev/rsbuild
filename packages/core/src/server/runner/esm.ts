@@ -1,10 +1,13 @@
+import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import vm, { type SourceTextModule } from 'node:vm';
+import type { SourceTextModule } from 'node:vm';
+import { color } from '../../helpers';
 import { asModule } from './asModule';
-
 import { CommonJsRunner } from './cjs';
 import { EsmMode, type RunnerRequirer } from './type';
+
+const require = createRequire(import.meta.url);
 
 export class EsmRunner extends CommonJsRunner {
   protected createRunner(): void {
@@ -35,15 +38,14 @@ export class EsmRunner extends CommonJsRunner {
   }
 
   protected createEsmRequirer(): RunnerRequirer {
-    const esmContext = vm.createContext(this.baseModuleScope!, {
-      name: 'context for esm',
-    });
     const esmCache = new Map<string, SourceTextModule>();
     const esmIdentifier = this._options.name;
+    const vm = require('node:vm') as typeof import('node:vm');
+
     return (currentDirectory, modulePath, context = {}) => {
       if (!vm.SourceTextModule) {
         throw new Error(
-          '[rsbuild:runner] Running ESM bundle needs add Node.js option "--experimental-vm-modules".',
+          `${color.dim('[rsbuild:runner]')} Running ESM bundle needs add Node.js option ${color.yellow('--experimental-vm-modules')}.`,
         );
       }
       const _require = this.getRequire();
@@ -58,7 +60,7 @@ export class EsmRunner extends CommonJsRunner {
           identifier: `${esmIdentifier}-${file.path}`,
           // no attribute
           url: `${pathToFileURL(file.path).href}?${esmIdentifier}`,
-          context: esmContext,
+          // run in current execution context
           initializeImportMeta: (meta: { url: string }, _: any) => {
             meta.url = pathToFileURL(file!.path).href;
           },

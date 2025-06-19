@@ -4,13 +4,15 @@
 - **默认值：**
 
 ```ts
-const defaultCorsOptions = {
+const defaultAllowedOrigins =
+  /^https?:\/\/(?:(?:[^:]+\.)?localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/;
+
+const defaultOptions = {
   // 默认允许：
   // - localhost
   // - 127.0.0.1
   // - [::1]
-  origin:
-    /^https?:\/\/(?:(?:[^:]+\.)?localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/,
+  origin: defaultAllowedOrigins,
 };
 ```
 
@@ -36,6 +38,21 @@ export default {
     cors: {
       // 配置 `Access-Control-Allow-Origin` CORS 响应头
       origin: 'https://example.com',
+    },
+  },
+};
+```
+
+- 保留 Rsbuild 默认的 origin 配置，并添加额外的 origin：
+
+```ts title="rsbuild.config.ts"
+// `defaultAllowedOrigins` 为 Rsbuild 默认的 origin 值
+import { defaultAllowedOrigins } from '@rsbuild/core';
+
+export default {
+  server: {
+    cors: {
+      origin: [defaultAllowedOrigins, 'https://example.com'],
     },
   },
 };

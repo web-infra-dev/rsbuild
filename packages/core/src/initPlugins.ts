@@ -2,7 +2,8 @@ import { join, posix } from 'node:path';
 import type { Compiler } from '@rspack/core';
 import { LOADER_PATH } from './constants';
 import { createPublicContext } from './createContext';
-import { removeLeadingSlash } from './helpers';
+import { color, removeLeadingSlash } from './helpers';
+import { exitHook } from './helpers/exitHook';
 import type { TransformLoaderOptions } from './loader/transformLoader';
 import { logger } from './logger';
 import { isPluginMatchEnvironment } from './pluginManager';
@@ -13,14 +14,14 @@ import type {
   NormalizedEnvironmentConfig,
   PluginManager,
   ProcessAssetsDescriptor,
-  ProcessAssetsFn,
   ProcessAssetsHandler,
+  ProcessAssetsHook,
   ProcessAssetsStage,
-  ResolveFn,
   ResolveHandler,
+  ResolveHook,
   RsbuildPluginAPI,
-  TransformFn,
   TransformHandler,
+  TransformHook,
 } from './types';
 
 export function getHTMLPathByEntry(
@@ -41,7 +42,7 @@ export function getHTMLPathByEntry(
 
   if (prefix.startsWith('/')) {
     logger.warn(
-      `Absolute path is not recommended at \`output.distPath.html\`: "${prefix}", please use relative path instead.`,
+      `${color.dim('[rsbuild:config]')} Absolute path is not recommended at ${color.yellow(`output.distPath.html: "${prefix}"`)}, use relative path instead.`,
     );
   }
 
@@ -87,7 +88,9 @@ const mapProcessAssetsStage = (
     case 'report':
       return Compilation.PROCESS_ASSETS_STAGE_REPORT;
     default:
-      throw new Error(`[rsbuild] Invalid process assets stage: ${stage}`);
+      throw new Error(
+        `${color.dim('[rsbuild]')} Invalid process assets stage: ${stage}`,
+      );
   }
 };
 
@@ -113,7 +116,7 @@ export function initPluginAPI({
 
         if (!config) {
           throw new Error(
-            `[rsbuild] Cannot find normalized config by environment: ${options.environment}.`,
+            `${color.dim('[rsbuild]')} Cannot find normalized config by environment: ${options.environment}.`,
           );
         }
         return config;
@@ -121,7 +124,9 @@ export function initPluginAPI({
       return context.normalizedConfig;
     }
     throw new Error(
-      '[rsbuild] Cannot access normalized config until modifyRsbuildConfig is called.',
+      `${color.dim('[rsbuild]')} Cannot access normalized config until ${color.yellow(
+        'modifyRsbuildConfig',
+      )} is called.`,
     );
   }
 
@@ -134,7 +139,9 @@ export function initPluginAPI({
       case 'normalized':
         return getNormalizedConfig();
     }
-    throw new Error('[rsbuild] `getRsbuildConfig` get an invalid type param.');
+    throw new Error(
+      `${color.dim('[rsbuild]')} ${color.yellow('getRsbuildConfig')} get an invalid type param.`,
+    );
   }) as GetRsbuildConfig;
 
   const exposed: Array<{ id: string | symbol; api: any }> = [];
@@ -249,7 +256,7 @@ export function initPluginAPI({
     chain.plugin(pluginName).use(RsbuildCorePlugin);
   });
 
-  const getTransformFn: (environment?: string) => TransformFn =
+  const getTransformHook: (environment?: string) => TransformHook =
     (environment) => (descriptor, handler) => {
       const id = `rsbuild-transform-${transformId++}`;
 
@@ -291,6 +298,12 @@ export function initPluginAPI({
           if (descriptor.with) {
             rule.with(descriptor.with);
           }
+          if (descriptor.mimetype) {
+            rule.mimetype(descriptor.mimetype);
+          }
+          if (descriptor.enforce) {
+            rule.enforce(descriptor.enforce);
+          }
 
           const loaderName = descriptor.raw
             ? 'transformRawLoader.mjs'
@@ -308,12 +321,12 @@ export function initPluginAPI({
       });
     };
 
-  const setProcessAssets: (environment?: string) => ProcessAssetsFn =
+  const setProcessAssets: (environment?: string) => ProcessAssetsHook =
     (environment) => (descriptor, handler) => {
       processAssetsFns.push({ environment, descriptor, handler });
     };
 
-  const setResolve: (environment?: string) => ResolveFn =
+  const setResolve: (environment?: string) => ResolveHook =
     (environment) => (handler) => {
       resolveFns.push({ environment, handler });
     };
@@ -322,8 +335,8 @@ export function initPluginAPI({
 
   const onExit: typeof hooks.onExit.tap = (cb) => {
     if (!onExitListened) {
-      process.on('exit', () => {
-        hooks.onExit.callBatch();
+      exitHook((exitCode) => {
+        hooks.onExit.callBatch({ exitCode });
       });
       onExitListened = true;
     }
@@ -334,7 +347,7 @@ export function initPluginAPI({
   return (environment?: string) => ({
     context: publicContext,
     expose,
-    transform: getTransformFn(environment),
+    transform: getTransformHook(environment),
     useExposed,
     processAssets: setProcessAssets(environment),
     resolve: setResolve(environment),
@@ -356,6 +369,11 @@ export function initPluginAPI({
     onAfterStartProdServer: hooks.onAfterStartProdServer.tap,
     onBeforeStartProdServer: hooks.onBeforeStartProdServer.tap,
     modifyRsbuildConfig: hooks.modifyRsbuildConfig.tap,
+    modifyHTML: (handler) =>
+      hooks.modifyHTML.tapEnvironment({
+        environment,
+        handler,
+      }),
     modifyHTMLTags: (handler) =>
       hooks.modifyHTMLTags.tapEnvironment({
         environment,

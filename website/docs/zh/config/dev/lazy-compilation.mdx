@@ -18,13 +18,21 @@ type LazyCompilationOptions =
        * 指定哪些导入的模块应该被延迟编译
        */
       test?: RegExp | ((m: Module) => boolean);
+      /**
+       * 指定一个自定义的运行时代码路径，用于覆盖默认的 lazy compilation client
+       */
+      client?: string;
+      /**
+       * 指定 client 需要请求的 server URL
+       */
+      serverUrl?: string;
     };
 ```
 
 - **默认值：** `false`
 - **版本：** `>= 1.3.0`
 
-用于开启 lazy compilation（即按需编译），基于 Rspack 的 [lazy compilation](https://rspack.dev/zh/guide/features/lazy-compilation) 特性实现。
+用于开启 lazy compilation（即按需编译），基于 Rspack 的 [lazy compilation](https://rspack.rs/zh/guide/features/lazy-compilation) 特性实现。
 
 ## 介绍
 
@@ -55,6 +63,7 @@ export default {
   dev: {
     lazyCompilation: {
       imports: true,
+      // 如果只有一个入口，则 Rsbuild 默认不启用 entries 选项
       entries: true,
     },
   },
@@ -97,3 +106,21 @@ export default {
 ```
 
 开启 `imports` 选项后，所有的异步模块只有在被请求时才触发编译。如果你的项目是一个单页应用（SPA），并通过 dynamic import 进行了路由拆分，那么 dev 启动时间会有明显提升。
+
+### Server URL
+
+通过 [lazyCompilation.serverUrl](https://rspack.rs/zh/config/experiments#lazycompilationserverurl) 指定 client 需要请求的 server URL：
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    lazyCompilation: {
+      serverUrl: 'http://localhost:<port>',
+    },
+  },
+};
+```
+
+:::tip
+Rsbuild 会自动将 `<port>` 占位符替换为 server 实际监听的端口号。
+:::

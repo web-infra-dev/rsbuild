@@ -7,4 +7,9 @@ export default defineConfig({
   moduleFederation: {
     options: mfConfig,
   },
+  server: {
+    cors: {
+      origin: 'https://localhost',
+    },
+  },
 });

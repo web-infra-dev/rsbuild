@@ -9,7 +9,7 @@ import type {
   RsbuildPlugin,
 } from '@rsbuild/core';
 import deepmerge from 'deepmerge';
-import { BABEL_JS_RULE, applyUserBabelConfig, castArray } from './helper.js';
+import { applyUserBabelConfig, BABEL_JS_RULE, castArray } from './helper.js';
 import type { BabelLoaderOptions, PluginBabelOptions } from './types.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

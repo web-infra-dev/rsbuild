@@ -11,14 +11,15 @@ import {
 } from '../helpers';
 import { logger } from '../logger';
 import { getHTMLPlugin } from '../pluginHelper';
-import type { HtmlRspackPlugin, Rspack } from '../types';
 import type {
   EnvironmentContext,
   HtmlBasicTag,
+  HtmlRspackPlugin,
   HtmlTag,
   HtmlTagContext,
   HtmlTagDescriptor,
-  ModifyHTMLTagsFn,
+  InternalContext,
+  Rspack,
 } from '../types';
 
 type HtmlTagObject = HtmlRspackPlugin.HtmlTagObject;
@@ -30,7 +31,14 @@ export type TagConfig = {
   publicPath?: HtmlTag['publicPath'];
 };
 
-/** @see {@link https://developer.mozilla.org/en-US/docs/Glossary/Void_element} */
+/**
+ * A unique identifier for providing extra data to RsbuildHtmlPlugin
+ */
+export const entryNameSymbol: unique symbol = Symbol('entryName');
+
+/**
+ * @see https://developer.mozilla.org/en-US/docs/Glossary/Void_element}
+ */
 const VOID_TAGS = [
   'area',
   'base',
@@ -49,7 +57,9 @@ const VOID_TAGS = [
   'wbr',
 ];
 
-/** @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head#see_also} */
+/**
+ * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head#see_also
+ */
 const HEAD_TAGS = [
   'title',
   'base',
@@ -66,13 +76,14 @@ export const FILE_ATTRS = {
   script: 'src',
 };
 
-export type HtmlInfo = {
+export type HtmlExtraData = {
+  entryName: string;
+  context: InternalContext;
+  environment: EnvironmentContext;
   favicon?: string;
   tagConfig?: TagConfig;
   templateContent?: string;
 };
-
-export type RsbuildHtmlPluginOptions = Record<string, HtmlInfo>;
 
 export type AlterAssetTagGroupsData = {
   headTags: HtmlTagObject[];
@@ -235,21 +246,11 @@ const addTitleTag = (headTags: HtmlTagObject[], title = '') => {
 export class RsbuildHtmlPlugin {
   readonly name: string;
 
-  readonly getEnvironment: () => EnvironmentContext;
+  readonly getExtraData: (entryName: string) => HtmlExtraData | undefined;
 
-  readonly options: RsbuildHtmlPluginOptions;
-
-  readonly modifyTagsFn?: ModifyHTMLTagsFn;
-
-  constructor(
-    options: RsbuildHtmlPluginOptions,
-    getEnvironment: () => EnvironmentContext,
-    modifyTagsFn?: ModifyHTMLTagsFn,
-  ) {
+  constructor(getExtraData: (entryName: string) => HtmlExtraData | undefined) {
     this.name = 'RsbuildHtmlPlugin';
-    this.options = options;
-    this.modifyTagsFn = modifyTagsFn;
-    this.getEnvironment = getEnvironment;
+    this.getExtraData = getExtraData;
   }
 
   apply(compiler: Compiler): void {
@@ -266,7 +267,9 @@ export class RsbuildHtmlPlugin {
       if (!compilation.inputFileSystem) {
         addCompilationError(
           compilation,
-          `[rsbuild:html] Failed to read the favicon file as "compilation.inputFileSystem" is not available.`,
+          `${color.dim('[rsbuild:html]')} Failed to read the favicon file as ${color.yellow(
+            'compilation.inputFileSystem',
+          )} is not available.`,
         );
         return null;
       }
@@ -289,7 +292,9 @@ export class RsbuildHtmlPlugin {
 
         addCompilationError(
           compilation,
-          `[rsbuild:html] Failed to read the favicon file at "${color.cyan(filename)}".`,
+          `${color.dim('[rsbuild:html]')} Failed to read the favicon file at ${color.yellow(
+            filename,
+          )}.`,
         );
         return null;
       }
@@ -335,55 +340,105 @@ export class RsbuildHtmlPlugin {
       headTags.unshift(tag);
     };
 
+    const getExtraDataByPlugin = (plugin: HtmlRspackPlugin) => {
+      if (!plugin.options) {
+        return undefined;
+      }
+
+      const entryName = (plugin.options as Record<symbol, string>)[
+        entryNameSymbol
+      ];
+      if (!entryName) {
+        return undefined;
+      }
+
+      return this.getExtraData(entryName);
+    };
+
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
-      getHTMLPlugin()
-        .getCompilationHooks(compilation)
-        .alterAssetTagGroups.tapPromise(this.name, async (data) => {
-          const entryName = data.plugin.options?.entryName;
+      const hooks = getHTMLPlugin().getCompilationHooks(compilation);
 
-          if (!entryName) {
-            return data;
-          }
-
-          const { headTags, bodyTags } = data;
-          const { favicon, tagConfig, templateContent } =
-            this.options[entryName];
-
-          if (!hasTitle(templateContent)) {
-            addTitleTag(headTags, data.plugin.options?.title);
-          }
-
-          if (favicon) {
-            await addFavicon(headTags, favicon, compilation, data.publicPath);
-          }
-
-          const tags = {
-            headTags: headTags.map(formatBasicTag),
-            bodyTags: bodyTags.map(formatBasicTag),
-          };
-
-          const modified = this.modifyTagsFn
-            ? await this.modifyTagsFn(tags, {
-                compiler,
-                compilation,
-                assetPrefix: data.publicPath,
-                filename: data.outputName,
-                environment: this.getEnvironment(),
-              })
-            : tags;
-
-          Object.assign(data, {
-            headTags: modified.headTags.map(fromBasicTag),
-            bodyTags: modified.bodyTags.map(fromBasicTag),
-          });
-
-          if (tagConfig) {
-            const hash = compilation.hash ?? '';
-            applyTagConfig(data, tagConfig, hash, entryName);
-          }
-
+      hooks.alterAssetTagGroups.tapPromise(this.name, async (data) => {
+        const extraData = getExtraDataByPlugin(data.plugin);
+        if (!extraData) {
           return data;
+        }
+
+        const { headTags, bodyTags } = data;
+        const {
+          favicon,
+          context,
+          tagConfig,
+          entryName,
+          environment,
+          templateContent,
+        } = extraData;
+
+        if (!hasTitle(templateContent)) {
+          addTitleTag(headTags, data.plugin.options?.title);
+        }
+
+        if (favicon) {
+          await addFavicon(headTags, favicon, compilation, data.publicPath);
+        }
+
+        const tags = {
+          headTags: headTags.map(formatBasicTag),
+          bodyTags: bodyTags.map(formatBasicTag),
+        };
+
+        const [modified] = await context.hooks.modifyHTMLTags.callChain({
+          environment: environment.name,
+          args: [
+            tags,
+            {
+              compiler,
+              compilation,
+              assetPrefix: data.publicPath,
+              filename: data.outputName,
+              environment,
+            },
+          ],
         });
+
+        Object.assign(data, {
+          headTags: modified.headTags.map(fromBasicTag),
+          bodyTags: modified.bodyTags.map(fromBasicTag),
+        });
+
+        if (tagConfig) {
+          const hash = compilation.hash ?? '';
+          applyTagConfig(data, tagConfig, hash, entryName);
+        }
+
+        return data;
+      });
+
+      hooks.beforeEmit.tapPromise(this.name, async (data) => {
+        const extraData = getExtraDataByPlugin(data.plugin);
+        if (!extraData) {
+          return data;
+        }
+
+        const { context, environment } = extraData;
+        const [modified] = await context.hooks.modifyHTML.callChain({
+          environment: environment.name,
+          args: [
+            data.html,
+            {
+              compiler,
+              compilation,
+              filename: data.outputName,
+              environment,
+            },
+          ],
+        });
+
+        return {
+          ...data,
+          html: modified,
+        };
+      });
     });
   }
 }

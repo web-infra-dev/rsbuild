@@ -6,7 +6,7 @@ _February 06, 2024_
 
 # Announcing Rsbuild 0.4
 
-![](https://assets.rspack.dev/rsbuild/rsbuild-banner-v0-4.png)
+![](https://assets.rspack.rs/rsbuild/rsbuild-banner-v0-4.png)
 
 Rsbuild 0.4 provides built-in support for module federation. It also contains some incompatible API updates. Please refer to the current document for upgrading.
 
@@ -95,7 +95,7 @@ module.exports = {
 
 ## Pure React plugin
 
-The React plugin has removed default [source.transformImport](/config/source/transform-import) config for [antd](https://www.npmjs.com/package/antd) v4 and [@arco-design/web-react](https://www.npmjs.com/package/@arco-design/web-react).
+The React plugin has removed default [source.transformImport](/config/source/transform-import) config for [antd](https://npmjs.com/package/antd) v4 and [@arco-design/web-react](https://npmjs.com/package/@arco-design/web-react).
 
 Configurations related to the UI library should be provided in the UI library-specific plugins, such as `rsbuild-plugin-antd` or `rsbuild-plugin-arco`, and the React plugin will concentrate on providing fundamental abilities for React.
 

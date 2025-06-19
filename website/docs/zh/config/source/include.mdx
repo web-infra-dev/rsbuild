@@ -1,30 +1,28 @@
 # source.include
 
-- **类型：** [RuleSetCondition](https://rspack.dev/zh/config/module#condition)
+- **类型：** [RuleSetCondition](https://rspack.rs/zh/config/module#condition)
 
-用于指定额外需要被 [SWC](/guide/basic/configure-swc) 编译的 JavaScript 文件。
+用于指定额外需要被 [SWC](/guide/configuration/swc) 编译的 JavaScript 文件。
 
 ## 默认值
 
-为了避免二次编译，默认情况下，Rsbuild 内置的 [swc-loader](https://rspack.dev/guide/features/builtin-swc-loader) 会编译以下文件：
+默认情况下，Rsbuild 内置的 [swc-loader](https://rspack.rs/zh/guide/features/builtin-swc-loader) 会编译以下文件：
 
 - 任意目录下的 TypeScript 和 JSX 文件，匹配的文件后缀为 `.ts`、`.tsx`、`.jsx`、`.mts`、`.cts`。
-- [root](/config/root) 目录下的 JavaScript 文件，但不包含 `node_modules` 目录，匹配的文件后缀为 `.js`、`.mjs`、`.cjs`。
+- 非 `node_modules` 目录下的 JavaScript 文件，匹配的文件后缀为 `.js`、`.mjs`、`.cjs`。
 
 `source.include` 的默认值可以表示为：
 
 ```ts
 const defaultInclude = [
-  {
-    and: [rootPath, { not: /[\\/]node_modules[\\/]/ }],
-  },
+  { not: /[\\/]node_modules[\\/]/ }
   /\.(?:ts|tsx|jsx|mts|cts)$/,
 ];
 ```
 
 ## 用法
 
-通过 `source.include` 配置项，你可以指定需要 Rsbuild 额外进行编译的目录或模块。`source.include` 的用法与 Rspack 中的 [Rule.include](https://rspack.dev/zh/config/module#ruleinclude) 一致，支持传入字符串、正则表达式来匹配模块的路径。
+通过 `source.include` 配置项，你可以指定需要 Rsbuild 额外进行编译的目录或模块。`source.include` 的用法与 Rspack 中的 [Rule.include](https://rspack.rs/zh/config/module#ruleinclude) 一致，支持传入字符串、正则表达式来匹配模块的路径。
 
 比如:
 
@@ -85,28 +83,6 @@ export default {
     include: [
       /node_modules[\\/]query-string[\\/]/,
       /node_modules[\\/]decode-uri-component[\\/]/,
-    ],
-  },
-};
-```
-
-## 编译 Monorepo 中的其他库
-
-在 Monorepo 中进行开发时，如果需要引用 Monorepo 中其他库的 JavaScript 代码，也可以直接在 `source.include` 进行配置:
-
-```ts title="rsbuild.config.ts"
-import path from 'node:path';
-
-const packagesDir = path.resolve(__dirname, '../../packages');
-
-export default {
-  source: {
-    include: [
-      // 编译 Monorepo 的 package 目录下的所有文件
-      // 建议排除 node_modules
-      {
-        and: [packagesDir, { not: /[\\/]node_modules[\\/]/ }],
-      },
     ],
   },
 };

@@ -56,11 +56,11 @@ jobs:
         continue-on-error: true
         uses: convictional/trigger-workflow-and-wait@f69fa9eedd3c62a599220f4d5745230e237904be # v1.6.5
         with:
-          owner: "rspack-contrib"
-          repo: "rsbuild-ecosystem-ci"
-          workflow_file_name: "ecosystem-ci-from-commit.yml"
+          owner: 'rspack-contrib'
+          repo: 'rsbuild-ecosystem-ci'
+          workflow_file_name: 'ecosystem-ci-from-commit.yml'
           github_token: ${{ secrets.REPO_RSBUILD_ECO_CI_GITHUB_TOKEN }}
-          ref: "main"
+          ref: 'main'
           client_payload: '{"commitSHA":"${{ github.sha }}","updateComment":true,"repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'
 
       - name: Checkout
@@ -76,21 +76,10 @@ jobs:
 
       - name: Setup Node.js
         if: steps.eco_ci.outcome == 'failure'
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
           cache: 'pnpm'
-
-      - name: Send Failure Notification
-        if: steps.eco_ci.outcome == 'failure'
-        shell: bash
-        run: ./scripts/alert/lark.js
-        env:
-          TITLE: Rsbuild Ecosystem CI failed
-          DESCRIPTION: |
-            commitID: [${{github.sha}}](${{github.server_url}}/${{github.repository}}/commit/${{github.sha}})
-          URL: ${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}
-          LARK_WEBHOOK_URL: ${{ secrets.LARK_WEBHOOK_URL }}
 
       - name: Get CI Result
         id: eco-ci-result
@@ -165,11 +154,11 @@ jobs:
         uses: convictional/trigger-workflow-and-wait@f69fa9eedd3c62a599220f4d5745230e237904be # v1.6.5
         continue-on-error: true
         with:
-          owner: "rspack-contrib"
-          repo: "rsbuild-ecosystem-ci"
-          workflow_file_name: "ecosystem-ci-selected.yml"
+          owner: 'rspack-contrib'
+          repo: 'rsbuild-ecosystem-ci'
+          workflow_file_name: 'ecosystem-ci-selected.yml'
           github_token: ${{ secrets.REPO_RSBUILD_ECO_CI_GITHUB_TOKEN }}
-          ref: "main"
+          ref: 'main'
           client_payload: '{"ref":"${{ github.event.inputs.branch }}","repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'
 
       - name: Checkout
@@ -195,4 +184,3 @@ jobs:
               comment_id: ${{ steps.create-comment.outputs.result }},
               body: ${{ steps.eco-ci-result.outputs.result }}
             })
-

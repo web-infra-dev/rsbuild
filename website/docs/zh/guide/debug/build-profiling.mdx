@@ -42,16 +42,32 @@ Rsbuild 支持使用 `RSPACK_PROFILE` 环境变量来对 Rspack 进行构建性�
 ```json title="package.json"
 {
   "scripts": {
-    "dev:profile": "RSPACK_PROFILE=ALL rsbuild dev",
-    "build:profile": "RSPACK_PROFILE=ALL rsbuild build"
+    "dev:profile": "RSPACK_PROFILE=OVERVIEW rsbuild dev",
+    "build:profile": "RSPACK_PROFILE=OVERVIEW rsbuild build"
   }
 }
 ```
 
-执行该命令后，会在产物目录下生成一个 `rspack-profile-${timestamp}` 文件夹，该文件夹下会包含 `logging.json`、`trace.json` 和 `jscpuprofile.json` 三个文件：
+由于 Windows 不支持上述用法，你也可以使用 [cross-env](https://npmjs.com/package/cross-env) 来设置环境变量，这可以确保在不同的操作系统中都能正常使用：
 
-- `trace.json`：使用 tracing 细粒度地记录了 Rust 侧各个阶段的耗时，可以使用 [ui.perfetto.dev](https://ui.perfetto.dev/) 进行查看。
-- `jscpuprofile.json`：使用 [Node.js inspector](https://nodejs.org/dist/latest-v18.x/docs/api/inspector.html) 细粒度地记录了 JavaScript 侧的各个阶段的耗时，可以使用 [speedscope.app](https://www.speedscope.app/) 进行查看。开发模式下仅在通过 [`h + Enter`](/config/dev/cli-shortcuts) 退出时生成。
-- `logging.json`：包含一些日志信息，粗粒度地记录了构建的各个阶段耗时（开发模式下暂不支持）。
+```json title="package.json"
+{
+  "scripts": {
+    "dev:profile": "cross-env RSPACK_PROFILE=OVERVIEW rsbuild dev",
+    "build:profile": "cross-env RSPACK_PROFILE=OVERVIEW rsbuild build"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.0"
+  }
+}
+```
 
-> 更多 Rspack 构建性能分析用法，可参考 [Rspack - Profiling](https://rspack.dev/contribute/development/profiling)。
+当 build 命令执行完成，或是 dev server 被关闭时，Rsbuild 会在当前目录下生成一个 `.rspack-profile-${timestamp}-${pid}` 文件夹，其中包含 `rspack.pftrace` 文件（在 1.4.0 之前的版本中为 `trace.json`），该文件由 Rspack 基于 [tracing](https://github.com/tokio-rs/tracing) 细粒度地记录了各个阶段的耗时，可以使用 [ui.perfetto.dev](https://ui.perfetto.dev/) 进行查看。
+
+:::tip
+
+- 在关闭 dev server 时，优先使用 `CTRL + D` 关闭，而不是 `CTRL + C`，这可以确保 Rspack 能够完整地记录性能数据。
+- 生成的 `trace.json` 文件体积较大，如果需要分享给他人查看，可以压缩为 zip 文件来减小体积。
+- 关于 Rspack 性能分析的更多用法，可参考 [Rspack - Tracing](https://rspack.rs/zh/contribute/development/tracing)。
+
+:::

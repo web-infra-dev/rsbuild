@@ -114,7 +114,7 @@ pnpm run build
 
 If you've fixed a bug or added code that should be tested, then add some tests.
 
-You can add unit test cases in the `<PACKAGE_DIR>/tests` folder. The test runner is based on [Vitest](https://vitest.dev/).
+You can add unit test cases in the `<PACKAGE_DIR>/tests` folder. The test runner is based on [Rstest](https://rstest.rs/).
 
 ### Run unit tests
 
@@ -200,7 +200,7 @@ feat(core): Add `myOption` config
 Repository maintainers can publish a new version of changed packages to npm.
 
 1. Checkout a new release branch, for example `release_v1.2.0`
-2. Run [changesets](https://github.com/changesets/changesets) to bump changed packages and commit the changes.
+2. Run `pnpm bump` in the package directory to update the version of each package.
 3. Create a pull request, the title should be `release: v1.2.0`.
 4. Run the [release action](https://github.com/web-infra-dev/rsbuild/actions/workflows/release.yml) to publish packages to npm.
 5. Merge the release pull request to `main`.

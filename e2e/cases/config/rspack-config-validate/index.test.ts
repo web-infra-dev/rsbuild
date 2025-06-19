@@ -1,5 +1,5 @@
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
-import { build, proxyConsole, rspackOnlyTest } from '@e2e/helper';
+import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
 
@@ -23,8 +23,7 @@ rspackOnlyTest('should validate Rspack config by default', async () => {
 });
 
 rspackOnlyTest('should warn when passing unrecognized keys', async () => {
-  const { logs, restore } = proxyConsole();
-  await build({
+  const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
       tools: {
@@ -37,20 +36,18 @@ rspackOnlyTest('should warn when passing unrecognized keys', async () => {
   });
 
   expect(
-    logs.some((log) =>
+    rsbuild.logs.some((log) =>
       log.includes(`Unrecognized key(s) in object: 'unrecognized'`),
     ),
   );
-  restore();
+  await rsbuild.close();
 });
 
 rspackOnlyTest('should allow to override Rspack config validate', async () => {
   const { RSPACK_CONFIG_VALIDATE } = process.env;
   process.env.RSPACK_CONFIG_VALIDATE = 'loose';
 
-  const { logs, restore } = proxyConsole();
-
-  await build({
+  const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
       tools: {
@@ -62,10 +59,14 @@ rspackOnlyTest('should allow to override Rspack config validate', async () => {
     },
   });
 
-  expect(logs.some((log) => log.includes('Expected object, received number')));
+  expect(
+    rsbuild.logs.some((log) =>
+      log.includes('Expected object, received number'),
+    ),
+  );
 
   process.env.RSPACK_CONFIG_VALIDATE = RSPACK_CONFIG_VALIDATE;
-  restore();
+  await rsbuild.close();
 });
 
 rspackOnlyTest(

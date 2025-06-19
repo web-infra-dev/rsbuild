@@ -1,5 +1,5 @@
 import type { FSWatcher } from '../../compiled/chokidar/index.js';
-import { normalizePublicDirs } from '../config';
+import { normalizePublicDirs } from '../defaultConfig.js';
 import { castArray } from '../helpers';
 import type {
   ChokidarOptions,

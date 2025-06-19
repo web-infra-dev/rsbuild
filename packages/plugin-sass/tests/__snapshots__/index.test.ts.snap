@@ -1,4 +1,4 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+// Rstest Snapshot v1
 
 exports[`plugin-sass > should add sass-loader 1`] = `
 [
@@ -35,6 +35,7 @@ exports[`plugin-sass > should add sass-loader 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -82,6 +83,7 @@ exports[`plugin-sass > should add sass-loader 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -156,6 +158,7 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -203,6 +206,7 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -280,6 +284,7 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -330,6 +335,7 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -404,6 +410,7 @@ exports[`plugin-sass > should allow to use legacy API and mute deprecation warni
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -452,6 +459,7 @@ exports[`plugin-sass > should allow to use legacy API and mute deprecation warni
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",

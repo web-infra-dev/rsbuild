@@ -1,31 +1,34 @@
-import vm from 'node:vm';
-
-const SYNTHETIC_MODULES_STORE = '__SYNTHETIC_MODULES_STORE';
+import type { ModuleLinker, SourceTextModule } from 'node:vm';
 
 export const asModule = async (
   something: Record<string, any>,
   context: Record<string, any>,
   unlinked?: boolean,
-): Promise<vm.SourceTextModule> => {
-  if (something instanceof vm.Module) {
+): Promise<SourceTextModule> => {
+  const { Module, SyntheticModule } = await import('node:vm');
+
+  if (something instanceof Module) {
     return something;
   }
-  context[SYNTHETIC_MODULES_STORE] = context[SYNTHETIC_MODULES_STORE] || [];
-  const i = context[SYNTHETIC_MODULES_STORE].length;
-  context[SYNTHETIC_MODULES_STORE].push(something);
-  const code = [...new Set(['default', ...Object.keys(something)])]
-    .map(
-      (name) =>
-        `const _${name} = ${SYNTHETIC_MODULES_STORE}[${i}]${
-          name === 'default' ? '' : `[${JSON.stringify(name)}]`
-        }; export { _${name} as ${name}};`,
-    )
-    .join('\n');
-  const m = new vm.SourceTextModule(code, {
-    context,
-  });
+
+  const exports = [...new Set(['default', ...Object.keys(something)])];
+
+  const m = new SyntheticModule(
+    exports,
+    () => {
+      for (const name of exports) {
+        m.setExport(name, name === 'default' ? something : something[name]);
+      }
+    },
+    {
+      context,
+    },
+  );
+
   if (unlinked) return m;
-  await m.link((() => {}) as () => vm.Module);
+
+  await m.link((() => {}) as unknown as ModuleLinker);
+
   // @ts-expect-error copy from webpack
   if (m.instantiate) m.instantiate();
   await m.evaluate();

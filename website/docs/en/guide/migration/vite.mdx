@@ -20,15 +20,15 @@ import { PackageManagerTabs } from '@theme';
 
 Next, you need to update the npm scripts in your package.json to use Rsbuild's CLI commands.
 
-```diff title="package.json"
+```json title="package.json"
 {
   "scripts": {
--   "dev": "vite",
--   "build": "vite build",
--   "preview": "vite preview"
-+   "dev": "rsbuild dev",
-+   "build": "rsbuild build",
-+   "preview": "rsbuild preview"
+    "dev": "vite", // [!code --]
+    "build": "vite build", // [!code --]
+    "preview": "vite preview", // [!code --]
+    "dev": "rsbuild dev", // [!code ++]
+    "build": "rsbuild build", // [!code ++]
+    "preview": "rsbuild preview" // [!code ++]
   }
 }
 ```
@@ -53,8 +53,9 @@ When migrating from Vite to Rsbuild, you can use Rsbuild's [source.entry](/confi
 
 Using a newly created Vite project as an example, first delete the `<script>` tags from `index.html`:
 
-```diff title="index.html"
-- <script type="module" src="/src/main.ts"></script>
+```html title="index.html"
+<!-- [!code --] -->
+<script type="module" src="/src/main.ts"></script>
 ```
 
 Then add the following config.
@@ -78,24 +79,24 @@ Rsbuild will automatically inject the `<script>` tags into the generated HTML fi
 
 Most common Vite plugins can be easily migrated to Rsbuild plugins, such as:
 
-| Vite                                                                                       | Rsbuild                                                                                         |
-| ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
-| [@vitejs/plugin-react](https://www.npmjs.com/package/@vitejs/plugin-react)                 | [@rsbuild/plugin-react](/plugins/list/plugin-react)                                             |
-| [@vitejs/plugin-react-swc](https://www.npmjs.com/package/@vitejs/plugin-react-swc)         | [@rsbuild/plugin-react](/plugins/list/plugin-react)                                             |
-| [@vitejs/plugin-vue](https://www.npmjs.com/package/@vitejs/plugin-vue)                     | [@rsbuild/plugin-vue](/plugins/list/plugin-vue)                                                 |
-| [@vitejs/plugin-vue2](https://www.npmjs.com/package/@vitejs/plugin-vue2)                   | [@rsbuild/plugin-vue2](https://github.com/rspack-contrib/rsbuild-plugin-vue2)                   |
-| [@vitejs/plugin-vue-jsx](https://www.npmjs.com/package/@vitejs/plugin-vue-jsx)             | [@rsbuild/plugin-vue-jsx](https://github.com/rspack-contrib/rsbuild-plugin-vue-jsx)             |
-| [@vitejs/plugin-vue2-jsx](https://www.npmjs.com/package/@vitejs/plugin-vue2-jsx)           | [@rsbuild/plugin-vue2-jsx](https://github.com/rspack-contrib/rsbuild-plugin-vue2-jsx)           |
-| [@vitejs/plugin-basic-ssl](https://www.npmjs.com/package/@vitejs/plugin-basic-ssl)         | [@rsbuild/plugin-basic-ssl](https://github.com/rspack-contrib/rsbuild-plugin-basic-ssl)         |
-| [@vitejs/plugin-legacy](https://www.npmjs.com/package/@vitejs/plugin-legacy)               | No need to use, see [Browser Compatibility](/guide/advanced/browser-compatibility) for details  |
-| [@sveltejs/vite-plugin-svelte](https://www.npmjs.com/package/@sveltejs/vite-plugin-svelte) | [@rsbuild/plugin-svelte](/plugins/list/plugin-svelte)                                           |
-| [vite-plugin-svgr](https://www.npmjs.com/package/vite-plugin-svgr)                         | [@rsbuild/plugin-svgr](/plugins/list/plugin-svgr)                                               |
-| [vite-plugin-checker](https://www.npmjs.com/package/vite-plugin-checker)                   | [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check)       |
-| [vite-plugin-eslint](https://www.npmjs.com/package/vite-plugin-eslint)                     | [@rsbuild/plugin-eslint](https://github.com/rspack-contrib/rsbuild-plugin-eslint)               |
-| [vite-plugin-static-copy](https://www.npmjs.com/package/vite-plugin-static-copy)           | [output.copy](/config/output/copy)                                                              |
-| [vite-plugin-node-polyfills](https://www.npmjs.com/package/vite-plugin-node-polyfills)     | [@rsbuild/plugin-node-polyfill](https://github.com/rspack-contrib/rsbuild-plugin-node-polyfill) |
-| [vite-plugin-solid](https://www.npmjs.com/package/vite-plugin-solid)                       | [@rsbuild/plugin-solid](/plugins/list/plugin-solid)                                             |
-| [@preact/preset-vite](https://www.npmjs.com/package/@preact/preset-vite)                   | [@rsbuild/plugin-preact](/plugins/list/plugin-preact)                                           |
+| Vite                                                                                   | Rsbuild                                                                                         |
+| -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| [@vitejs/plugin-react](https://npmjs.com/package/@vitejs/plugin-react)                 | [@rsbuild/plugin-react](/plugins/list/plugin-react)                                             |
+| [@vitejs/plugin-react-swc](https://npmjs.com/package/@vitejs/plugin-react-swc)         | [@rsbuild/plugin-react](/plugins/list/plugin-react)                                             |
+| [@vitejs/plugin-vue](https://npmjs.com/package/@vitejs/plugin-vue)                     | [@rsbuild/plugin-vue](/plugins/list/plugin-vue)                                                 |
+| [@vitejs/plugin-vue2](https://npmjs.com/package/@vitejs/plugin-vue2)                   | [@rsbuild/plugin-vue2](https://github.com/rspack-contrib/rsbuild-plugin-vue2)                   |
+| [@vitejs/plugin-vue-jsx](https://npmjs.com/package/@vitejs/plugin-vue-jsx)             | [@rsbuild/plugin-vue-jsx](https://github.com/rspack-contrib/rsbuild-plugin-vue-jsx)             |
+| [@vitejs/plugin-vue2-jsx](https://npmjs.com/package/@vitejs/plugin-vue2-jsx)           | [@rsbuild/plugin-vue2-jsx](https://github.com/rspack-contrib/rsbuild-plugin-vue2-jsx)           |
+| [@vitejs/plugin-basic-ssl](https://npmjs.com/package/@vitejs/plugin-basic-ssl)         | [@rsbuild/plugin-basic-ssl](https://github.com/rspack-contrib/rsbuild-plugin-basic-ssl)         |
+| [@vitejs/plugin-legacy](https://npmjs.com/package/@vitejs/plugin-legacy)               | No need to use, see [Browser Compatibility](/guide/advanced/browser-compatibility) for details  |
+| [@sveltejs/vite-plugin-svelte](https://npmjs.com/package/@sveltejs/vite-plugin-svelte) | [@rsbuild/plugin-svelte](/plugins/list/plugin-svelte)                                           |
+| [vite-plugin-svgr](https://npmjs.com/package/vite-plugin-svgr)                         | [@rsbuild/plugin-svgr](/plugins/list/plugin-svgr)                                               |
+| [vite-plugin-checker](https://npmjs.com/package/vite-plugin-checker)                   | [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check)       |
+| [vite-plugin-eslint](https://npmjs.com/package/vite-plugin-eslint)                     | [@rsbuild/plugin-eslint](https://github.com/rspack-contrib/rsbuild-plugin-eslint)               |
+| [vite-plugin-static-copy](https://npmjs.com/package/vite-plugin-static-copy)           | [output.copy](/config/output/copy)                                                              |
+| [vite-plugin-node-polyfills](https://npmjs.com/package/vite-plugin-node-polyfills)     | [@rsbuild/plugin-node-polyfill](https://github.com/rspack-contrib/rsbuild-plugin-node-polyfill) |
+| [vite-plugin-solid](https://npmjs.com/package/vite-plugin-solid)                       | [@rsbuild/plugin-solid](/plugins/list/plugin-solid)                                             |
+| [@preact/preset-vite](https://npmjs.com/package/@preact/preset-vite)                   | [@rsbuild/plugin-preact](/plugins/list/plugin-preact)                                           |
 
 You can refer to [Plugin List](/plugins/list/index) to learn more about available plugins.
 
@@ -112,6 +113,7 @@ Here is the corresponding Rsbuild configuration for Vite configuration:
 | plugins                               | [plugins](/config/plugins)                                       |
 | appType                               | [server.historyApiFallback](/config/server/history-api-fallback) |
 | envDir                                | [Env directory](/guide/advanced/env-vars#env-directory)          |
+| logLevel                              | [logLevel](/config/log-level)                                    |
 | cacheDir                              | [buildCache](/config/performance/build-cache)                    |
 | publicDir                             | [server.publicDir](/config/server/public-dir)                    |
 | assetsInclude                         | [source.assetsInclude](/config/source/assets-include)            |
@@ -212,16 +214,18 @@ export default defineConfig({
 
 Vite provides some preset type definitions through the `vite-env.d.ts` file. When migrating to Rsbuild, you can use the [preset types](/guide/basic/typescript#preset-types) provided by `@rsbuild/core`:
 
-```diff title="src/env.d.ts"
-- /// <reference types="vite/client" />
-+ /// <reference types="@rsbuild/core/types" />
+```ts title="src/env.d.ts"
+// [!code --]
+/// <reference types="vite/client" />
+// [!code ++]
+/// <reference types="@rsbuild/core/types" />
 ```
 
 ## Glob import
 
 Vite provides `import.meta.glob()` for importing multiple modules.
 
-When migrating to Rsbuild, you can use the [import.meta.webpackContext()](https://rspack.dev/api/runtime-api/module-variables#importmetawebpackcontext) function of Rspack instead:
+When migrating to Rsbuild, you can use the [import.meta.webpackContext()](https://rspack.rs/api/runtime-api/module-variables#importmetawebpackcontext) function of Rspack instead:
 
 - Vite:
 
@@ -254,16 +258,18 @@ for (const path of context.keys()) {
 
 Rsbuild's plugin API covers most of the Vite and Rollup plugin hooks, for example:
 
-| Vite plugin hooks | Rsbuild plugin API                                                                                                     |
-| ----------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `resolveId`       | [resolve](/plugins/dev/core#apiresolve)                                                                                |
-| `transform`       | [transform](/plugins/dev/core#apitransform)                                                                            |
-| `config`          | [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig)                                                          |
-| `configResolved`  | [getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig)                                                        |
-| `configureServer` | [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver)                                                    |
-| `buildStart`      | [onBeforeBuild](/plugins/dev/hooks#onbeforebuild), [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) |
-| `buildEnd`        | [onAfterBuild](/plugins/dev/hooks#onafterbuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
-| `closeBundle`     | [onCloseBuild](/plugins/dev/hooks#onclosebuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
+| Vite plugin hooks    | Rsbuild plugin API                                                                                                     |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `resolveId`          | [resolve](/plugins/dev/core#apiresolve)                                                                                |
+| `transform`          | [transform](/plugins/dev/core#apitransform)                                                                            |
+| `config`             | [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig)                                                          |
+| `configResolved`     | [getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig)                                                        |
+| `configEnvironment`  | [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig)                                                  |
+| `configureServer`    | [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver)                                                    |
+| `buildStart`         | [onBeforeBuild](/plugins/dev/hooks#onbeforebuild), [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) |
+| `buildEnd`           | [onAfterBuild](/plugins/dev/hooks#onafterbuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
+| `closeBundle`        | [onCloseBuild](/plugins/dev/hooks#onclosebuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
+| `transformIndexHtml` | [modifyHTML](/plugins/dev/hooks#modifyhtml), [modifyHTMLTags](/plugins/dev/hooks#modifyhtmltags)                       |
 
 See [Plugin system](/plugins/dev/index) for more details.
 

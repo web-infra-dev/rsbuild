@@ -4,7 +4,30 @@ This section describes all the properties and methods on the Rsbuild instance ob
 
 ## rsbuild.context
 
-`rsbuild.context` is a read-only object that provides some context information.
+`rsbuild.context` is a read-only object that provides some context information, which can be accessed in two ways:
+
+1. Access through the `context` property of the Rsbuild instance:
+
+```ts
+import { createRsbuild } from '@rsbuild/core';
+
+const rsbuild = createRsbuild({
+  // ...
+});
+
+console.log(rsbuild.context);
+```
+
+2. Access through the [api.context](/plugins/dev/core#apicontext) of the Rsbuild plugin:
+
+```ts
+export const myPlugin = {
+  name: 'my-plugin',
+  setup(api) {
+    console.log(api.context);
+  },
+};
+```
 
 ### context.version
 
@@ -50,9 +73,40 @@ The absolute path of the build cache files.
 type CachePath = string;
 ```
 
+### context.callerName
+
+The name of the framework or tool that is currently invoking Rsbuild, same as the [callerName](/api/javascript-api/core#specify-caller-name) option in the [createRsbuild](/api/javascript-api/core#creatersbuild) method.
+
+- **Type:** `string`
+- **Default:** `'rsbuild'`
+- **Example:**
+
+```ts title="myPlugin.ts"
+export const myPlugin = {
+  name: 'my-plugin',
+  setup(api) {
+    const { callerName } = api.context;
+
+    if (callerName === 'rslib') {
+      // ...
+    } else if (callerName === 'rsbuild') {
+      // ...
+    }
+  },
+};
+```
+
+Here are some tools based on Rsbuild that have already set the `callerName` value:
+
+| Name                                                | callerName  |
+| --------------------------------------------------- | ----------- |
+| [Rslib](https://github.com/web-infra-dev/rslib)     | `'rslib'`   |
+| [Rspress](https://github.com/web-infra-dev/rspress) | `'rspress'` |
+| [Rspeedy](https://lynxjs.org/rspeedy)               | `'rspeedy'` |
+
 ### context.devServer
 
-Dev server information, including the current dev server hostname and port number.
+Dev server information when running in dev mode. Available after the dev server has been created.
 
 - **Type:**
 
@@ -60,7 +114,23 @@ Dev server information, including the current dev server hostname and port numbe
 type DevServer = {
   hostname: string;
   port: number;
+  https: boolean;
 };
+```
+
+- **Example:**
+
+```ts
+import { createRsbuild } from '@rsbuild/core';
+
+async function main() {
+  const rsbuild = createRsbuild({
+    // ...
+  });
+  await rsbuild.startDevServer();
+
+  console.log(rsbuild.context.devServer); // { hostname: 'localhost', port: 3000, https: false }
+}
 ```
 
 ### context.action
@@ -120,7 +190,7 @@ type BuildOptions = {
 
 function Build(options?: BuildOptions): Promise<{
   /**
-   * Rspack's [stats](https://rspack.dev/api/javascript-api/stats) object.
+   * Rspack's [stats](https://rspack.rs/api/javascript-api/stats) object.
    */
   stats?: Rspack.Stats | Rspack.MultiStats;
   /**
@@ -193,7 +263,7 @@ await buildResult.close();
 
 ### Stats object
 
-In non-watch mode, the `rsbuild.build()` returns an Rspack [stats](https://rspack.dev/api/javascript-api/stats) object.
+In non-watch mode, the `rsbuild.build()` returns an Rspack [stats](https://rspack.rs/api/javascript-api/stats) object.
 
 For example, use the `stats.toJson()` method to get all assets information:
 
@@ -312,7 +382,7 @@ console.log(port); // 3000
 
 ### Close server
 
-Calling the `close()` method will close the dev server and trigger the [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) hook to perform cleanup operations.
+Calling the `close()` method to close the dev server, trigger the [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) hook and perform necessary cleanup operations.
 
 ```ts
 const { server } = await rsbuild.startDevServer();
@@ -439,7 +509,7 @@ await server.close();
 
 ## rsbuild.createCompiler
 
-Create an Rspack [Compiler](https://rspack.dev/api/javascript-api/compiler) instance. If there are multiple [environments](/config/environments) for this build, the return value is [MultiCompiler](https://rspack.dev/api/javascript-api/compiler#multicompiler).
+Create an Rspack [Compiler](https://rspack.rs/api/javascript-api/compiler) instance. If there are multiple [environments](/config/environments) for this build, the return value is [MultiCompiler](https://rspack.rs/api/javascript-api/compiler#multicompiler).
 
 - **Type:**
 
@@ -658,6 +728,8 @@ await rsbuild.inspectConfig({
 
 ## rsbuild.onBeforeCreateCompiler
 
+> Provides the same functionality as the [onBeforeCreateCompiler](/plugins/dev/hooks#onbeforecreatecompiler) plugin hook.
+
 import OnBeforeCreateCompiler from '@en/shared/onBeforeCreateCompiler.mdx';
 
 <OnBeforeCreateCompiler />
@@ -671,6 +743,8 @@ rsbuild.onBeforeCreateCompiler(({ bundlerConfigs }) => {
 ```
 
 ## rsbuild.onAfterCreateCompiler
+
+> Provides the same functionality as the [onAfterCreateCompiler](/plugins/dev/hooks#onaftercreatecompiler) plugin hook.
 
 import OnAfterCreateCompiler from '@en/shared/onAfterCreateCompiler.mdx';
 
@@ -686,6 +760,8 @@ rsbuild.onAfterCreateCompiler(({ compiler }) => {
 
 ## rsbuild.onBeforeBuild
 
+> Provides the same functionality as the [onBeforeBuild](/plugins/dev/hooks#onbeforebuild) plugin hook.
+
 import OnBeforeBuild from '@en/shared/onBeforeBuild.mdx';
 
 <OnBeforeBuild />
@@ -699,6 +775,8 @@ rsbuild.onBeforeBuild(({ bundlerConfigs }) => {
 ```
 
 ## rsbuild.onAfterBuild
+
+> Provides the same functionality as the [onAfterBuild](/plugins/dev/hooks#onafterbuild) plugin hook.
 
 import OnAfterBuild from '@en/shared/onAfterBuild.mdx';
 
@@ -714,6 +792,8 @@ rsbuild.onAfterBuild(({ stats }) => {
 
 ## rsbuild.onCloseBuild
 
+> Provides the same functionality as the [onCloseBuild](/plugins/dev/hooks#onclosebuild) plugin hook.
+
 import OnCloseBuild from '@en/shared/onCloseBuild.mdx';
 
 <OnCloseBuild />
@@ -727,6 +807,8 @@ rsbuild.onCloseBuild(async () => {
 ```
 
 ## rsbuild.onBeforeStartDevServer
+
+> Provides the same functionality as the [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) plugin hook.
 
 import OnBeforeStartDevServer from '@en/shared/onBeforeStartDevServer.mdx';
 
@@ -746,6 +828,8 @@ rsbuild.onBeforeStartDevServer(({ server, environments }) => {
 
 ## rsbuild.onAfterStartDevServer
 
+> Provides the same functionality as the [onAfterStartDevServer](/plugins/dev/hooks#onafterstartdevserver) plugin hook.
+
 import OnAfterStartDevServer from '@en/shared/onAfterStartDevServer.mdx';
 
 <OnAfterStartDevServer />
@@ -761,6 +845,8 @@ rsbuild.onAfterStartDevServer(({ port, routes }) => {
 
 ## rsbuild.onCloseDevServer
 
+> Provides the same functionality as the [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) plugin hook.
+
 import OnCloseDevServer from '@en/shared/onCloseDevServer.mdx';
 
 <OnCloseDevServer />
@@ -774,6 +860,8 @@ rsbuild.onCloseDevServer(async () => {
 ```
 
 ## rsbuild.onBeforeStartProdServer
+
+> Provides the same functionality as the [onBeforeStartProdServer](/plugins/dev/hooks#onbeforestartprodserver) plugin hook.
 
 import OnBeforeStartProdServer from '@en/shared/onBeforeStartProdServer.mdx';
 
@@ -789,6 +877,8 @@ rsbuild.onBeforeStartProdServer(() => {
 
 ## rsbuild.onAfterStartProdServer
 
+> Provides the same functionality as the [onAfterStartProdServer](/plugins/dev/hooks#onafterstartprodserver) plugin hook.
+
 import OnAfterStartProdServer from '@en/shared/onAfterStartProdServer.mdx';
 
 <OnAfterStartProdServer />
@@ -803,6 +893,8 @@ rsbuild.onAfterStartProdServer(({ port, routes }) => {
 ```
 
 ## rsbuild.onDevCompileDone
+
+> Provides the same functionality as the [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone) plugin hook.
 
 import OnDevCompileDone from '@en/shared/onDevCompileDone.mdx';
 
@@ -822,6 +914,8 @@ rsbuild.onDevCompileDone(({ isFirstCompile }) => {
 
 ## rsbuild.onExit
 
+> Provides the same functionality as the [onExit](/plugins/dev/hooks#onexit) plugin hook.
+
 import OnExit from '@en/shared/onExit.mdx';
 
 <OnExit />
@@ -829,12 +923,14 @@ import OnExit from '@en/shared/onExit.mdx';
 - **Example:**
 
 ```ts
-rsbuild.onExit(() => {
-  console.log('exit!');
+rsbuild.onExit(({ exitCode }) => {
+  console.log('exit: ', exitCode);
 });
 ```
 
 ## rsbuild.getRsbuildConfig
+
+> Provides the same functionality as the [getRsbuildConfig](/plugins/dev/core#apigetrsbuildconfig) plugin API.
 
 import GetRsbuildConfig from '@en/shared/getRsbuildConfig.mdx';
 
@@ -850,6 +946,8 @@ rsbuild.onBeforeBuild(() => {
 ```
 
 ## rsbuild.getNormalizedConfig
+
+> Provides the same functionality as the [getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig) plugin API.
 
 import GetNormalizedConfig from '@en/shared/getNormalizedConfig.mdx';
 

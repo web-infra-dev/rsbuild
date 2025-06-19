@@ -1,11 +1,9 @@
-import { dev, expectPoll, proxyConsole } from '@e2e/helper';
+import { dev, expectPoll } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
 
 test('should display type errors on overlay correctly', async ({ page }) => {
-  const { restore } = proxyConsole();
-
   const logs: string[] = [];
   page.on('console', (consoleMessage) => {
     logs.push(consoleMessage.text());
@@ -38,6 +36,4 @@ test('should display type errors on overlay correctly', async ({ page }) => {
   ).toBeTruthy();
 
   await rsbuild.close();
-
-  restore();
 });

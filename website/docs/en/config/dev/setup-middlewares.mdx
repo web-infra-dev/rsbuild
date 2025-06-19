@@ -2,7 +2,7 @@
 
 - **Type:**
 
-```ts title="rsbuild.config.ts"
+```ts
 type SetupMiddlewaresServer = {
   sockWrite: (
     type: string,
@@ -24,11 +24,13 @@ type SetupMiddlewares = Array<
 
 - **Default:** `undefined`
 
-Provides the ability to execute a custom function and apply custom middlewares.
+Provides the ability to execute a custom function and apply custom middleware.
+
+> See [Dev Server - Middleware](/guide/basic/server#middleware) for more information.
 
 ## Execution order
 
-The order among several different types of middleware is: `unshift` => internal middlewares => `push`.
+The order among several different types of middleware is: `unshift` => internal middleware => `push`.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -54,9 +56,29 @@ export default {
 
 In the `setupMiddlewares` function, you can access the `server` object, which provides some server APIs.
 
+### environments
+
+Provides Rsbuild's [environment API](/api/javascript-api/environment-api#environment-api), see [Dev server API - environments](/api/javascript-api/dev-server-api#environments) for more details.
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    setupMiddlewares: [
+      (middlewares, { environments }) => {
+        middlewares.unshift(async (req, _res, next) => {
+          const webStats = await environments.web.getStats();
+          console.log(webStats.toJson({ all: false }));
+          next();
+        });
+      },
+    ],
+  },
+};
+```
+
 ### sockWrite
 
-`sockWrite` allows middlewares to send some message to HMR client, and then the HMR client will take different actions depending on the message type.
+Sends some message to HMR client, see [Dev server API - sockWrite](/api/javascript-api/dev-server-api#sockwrite) for more details.
 
 For example, if you send a `'static-changed'` message, the page will reload.
 
@@ -64,34 +86,10 @@ For example, if you send a `'static-changed'` message, the page will reload.
 export default {
   dev: {
     setupMiddlewares: [
-      (middlewares, server) => {
+      (middlewares, { sockWrite }) => {
         if (someCondition) {
-          server.sockWrite('static-changed');
+          sockWrite('static-changed');
         }
-      },
-    ],
-  },
-};
-```
-
-> Sending `content-changed` and `static-changed` have the same effect. Since `content-changed` has been deprecated, please use `static-changed` instead.
-
-### environments
-
-`environments` includes Rsbuild's [environment API](/api/javascript-api/environment-api#environment-api), which allows you to get the build outputs information for a specific environment in the server side.
-
-```ts title="rsbuild.config.ts"
-export default {
-  dev: {
-    setupMiddlewares: [
-      (middlewares, server) => {
-        middlewares.unshift(async (req, _res, next) => {
-          const webStats = await server.environments.web.getStats();
-
-          console.log(webStats.toJson({ all: false }));
-
-          next();
-        });
       },
     ],
   },

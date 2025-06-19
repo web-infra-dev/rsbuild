@@ -19,12 +19,12 @@ By default, the target is set to 'web' and will build outputs for running in the
 
 Rsbuild will read the [Browserslist config](https://github.com/browserslist/browserslist) in the project to determine the range of browsers.
 
-## Optional targets
+## Optional values
 
 In addition to `'web'`, `target` can also be set to the following values:
 
 - `'node'`: Build for Node.js environment, usually used in SSR or other scenarios.
-- `'web-worker'`: Build for web worker environment.
+- `'web-worker'`: Build for Web Workers environment.
 
 For example, to build for the Node.js environment:
 
@@ -65,7 +65,7 @@ Refers to the build target running in the Node.js environment, usually used in s
 
 When `target` is set to `'node'`, Rsbuild will:
 
-- Set Rspack's [target](https://rspack.dev/config/target) to `'node'`.
+- Set Rspack's [target](https://rspack.rs/config/target) to `'node'`.
 - No HTML files will be generated, and HTML-related logic will not be executed, since HTML is not required by the Node.js environment.
 - The default code split strategy will be disabled, but dynamic import can still work.
 - Disable the HMR.
@@ -97,7 +97,7 @@ Refers to the build target running in the [Web Worker](https://developer.mozilla
 
 When `target` is set to `'web-worker'`, Rsbuild will:
 
-- Set Rspack's [target](https://rspack.dev/config/target) to `'webworker'`.
+- Set Rspack's [target](https://rspack.rs/config/target) to `'webworker'`.
 - No HTML files will be generated, and HTML-related logic will not be executed, since HTML is not required by the Web Worker environment.
 - CSS code will not be bundled or extracted, but the id information of CSS Modules will be included in the bundle (the default value of [output.emitCss](/config/output/emit-css) is `false`).
 - The default code split strategy will be disabled, and **dynamic import can not work**, because the Web Worker only runs a single JavaScript file.
@@ -108,7 +108,7 @@ For more information, please refer to: [Using Web Workers](/guide/basic/web-work
 
 ## Other targets
 
-[Rspack](https://rspack.dev/config/target) supports other target types, such as `electron-main` and `electron-renderer`.
+[Rspack](https://rspack.rs/config/target) supports other target types, such as `electron-main` and `electron-renderer`.
 
 Rsbuild currently does not support these targets. You can configure these targets using [tools.rspack](/config/tools/rspack).
 

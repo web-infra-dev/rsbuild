@@ -11,7 +11,7 @@ test('should build web-worker target correctly', async () => {
       },
     },
   });
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
   const filenames = Object.keys(files);
   const jsFiles = filenames.filter((item) => item.endsWith('.js'));
 
@@ -31,7 +31,7 @@ test('should build web-worker target with dynamicImport correctly', async () => 
       },
     },
   });
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
   const filenames = Object.keys(files);
   const jsFiles = filenames.filter((item) => item.endsWith('.js'));
 

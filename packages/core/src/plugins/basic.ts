@@ -60,8 +60,6 @@ export const pluginBasic = (): RsbuildPlugin => ({
         });
 
         chain.watchOptions({
-          // Ignore watching files in node_modules to reduce memory usage and make startup faster
-          ignored: /[\\/](?:\.git|node_modules)[\\/]/,
           // Remove the delay before rebuilding once the first file changed
           aggregateTimeout: 0,
         });
@@ -95,18 +93,6 @@ export const pluginBasic = (): RsbuildPlugin => ({
 
         // enable Rspack config schema validation, unrecognized keys are allowed
         process.env.RSPACK_CONFIG_VALIDATE ||= 'loose-unrecognized-keys';
-
-        // improve kill process performance
-        // https://github.com/web-infra-dev/rspack/pull/5486
-        process.env.WATCHPACK_WATCHER_LIMIT ||= '20';
-
-        // This is temporary, we will remove it after Rspack incremental is stable
-        if (process.env.EXPERIMENTAL_RSPACK_INCREMENTAL) {
-          chain.experiments({
-            ...chain.get('experiments'),
-            incremental: isDev,
-          });
-        }
       },
     );
   },

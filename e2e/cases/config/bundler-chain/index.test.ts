@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { build } from '@e2e/helper';
+import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should allow to use tools.bundlerChain to set alias config', async ({
@@ -46,3 +46,31 @@ test('should allow to use async tools.bundlerChain to set alias config', async (
 
   await rsbuild.close();
 });
+
+rspackOnlyTest(
+  'should allow to use rspack in tools.bundlerChain',
+  async ({ page }) => {
+    const rsbuild = await build({
+      cwd: __dirname,
+      page,
+      rsbuildConfig: {
+        tools: {
+          bundlerChain: (chain, { rspack }) => {
+            chain.resolve.alias.set('@common', join(__dirname, 'src/common'));
+
+            chain.plugin('extra-define').use(rspack.DefinePlugin, [
+              {
+                ENABLE_TEST: JSON.stringify(true),
+              },
+            ]);
+          },
+        },
+      },
+    });
+
+    const testEl = page.locator('#test-define');
+    await expect(testEl).toHaveText('aaaaa');
+
+    await rsbuild.close();
+  },
+);

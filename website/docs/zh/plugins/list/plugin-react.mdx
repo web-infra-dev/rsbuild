@@ -39,13 +39,18 @@ export default {
 - **类型：**
 
 ```ts
-interface SwcReactOptions {
+interface ReactConfig {
   pragma?: string;
   pragmaFrag?: string;
   throwIfNamespace?: boolean;
   development?: boolean;
-  useBuiltins?: boolean;
-  refresh?: boolean;
+  refresh?:
+    | boolean
+    | {
+        refreshReg?: string;
+        refreshSig?: string;
+        emitFullSignatures?: boolean;
+      };
   runtime?: 'automatic' | 'classic';
   importSource?: string;
 }
@@ -117,7 +122,7 @@ pluginReact({
 - **类型：** `boolean`
 - **默认值：** 基于 [fastRefresh](#fastrefresh) 和 [dev.hmr](/config/dev/hmr)
 
-是否启用 [React Fast Refresh](https://www.npmjs.com/package/react-refresh)。
+是否启用 [React Fast Refresh](https://npmjs.com/package/react-refresh)。
 
 大多数情况下，你应该使用插件的 [fastRefresh](#fastrefresh) 选项来启用或禁用 Fast Refresh。
 
@@ -184,7 +189,7 @@ pluginReact({
 }
 ```
 
-由于 Windows 系统不支持上述用法，你也可以使用 [cross-env](https://www.npmjs.com/package/cross-env) 来设置环境变量，这可以确保在不同的操作系统中都能正常使用：
+由于 Windows 不支持上述用法，你也可以使用 [cross-env](https://npmjs.com/package/cross-env) 来设置环境变量，这可以确保在不同的操作系统中都能正常使用：
 
 ```json title="package.json"
 {
@@ -218,10 +223,11 @@ type ReactRefreshOptions = {
 const defaultOptions = {
   include: [/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/],
   exclude: [/[\\/]node_modules[\\/]/],
+  resourceQuery: { not: /raw/ },
 };
 ```
 
-设置 [@rspack/plugin-react-refresh](https://www.rspack.dev/guide/tech/react#rspackplugin-react-refresh) 的选项，传入的值会与默认值进行浅合并。
+设置 [@rspack/plugin-react-refresh](https://github.com/rspack-contrib/rspack-plugin-react-refresh) 的选项，传入的值会与默认值进行浅合并。
 
 - **示例：**
 
@@ -238,9 +244,9 @@ pluginReact({
 - **类型：** `boolean`
 - **默认值：** `true`
 
-是否在开发模式下启用 [React Fast Refresh](https://www.npmjs.com/package/react-refresh)。
+是否在开发模式下启用 [React Fast Refresh](https://npmjs.com/package/react-refresh)。
 
-当 `fastRefresh` 设置为 `true` 时，`@rsbuild/plugin-react` 会自动注册 [@rspack/plugin-react-refresh](https://www.npmjs.com/package/@rspack/plugin-react-refresh) 插件。
+当 `fastRefresh` 设置为 `true` 时，`@rsbuild/plugin-react` 会自动注册 [@rspack/plugin-react-refresh](https://github.com/rspack-contrib/rspack-plugin-react-refresh) 插件。
 
 如果你需要禁用 Fast Refresh，可以将其设置为 `false`：
 

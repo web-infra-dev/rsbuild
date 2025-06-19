@@ -6,7 +6,7 @@ test('should allow to use the legacy `source.alias` config', async () => {
     cwd: __dirname,
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
   const fileNames = Object.keys(files);
   const webIndex = fileNames.find(
     (file) => file.includes('static/js') && file.endsWith('index.js'),
@@ -17,4 +17,11 @@ test('should allow to use the legacy `source.alias` config', async () => {
 
   expect(files[webIndex!]).toContain('for web target');
   expect(files[nodeIndex!]).toContain('for node target');
+
+  expect(
+    rsbuild.logs.some((log) =>
+      log.includes('"source.alias" config is deprecated'),
+    ),
+  ).toBeTruthy();
+  await rsbuild.close();
 });

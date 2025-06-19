@@ -1,7 +1,7 @@
 import { createRequire } from 'node:module';
 import { dirname, sep } from 'node:path';
 import { reduceConfigs } from 'reduce-configs';
-import { castArray } from '../helpers';
+import { castArray, color } from '../helpers';
 import { ensureAbsolutePath } from '../helpers/path';
 import { logger } from '../logger';
 import type {
@@ -27,16 +27,27 @@ function applyAlias({
   });
 
   // TODO: remove `source.alias` in the next major version
-  mergedAlias = reduceConfigs({
-    initial: mergedAlias,
-    config: config.source.alias,
-  });
+  if (config.source.alias) {
+    logger.warn(
+      `${color.dim('[rsbuild:config]')} The ${color.yellow(
+        '"source.alias"',
+      )} config is deprecated, use ${color.yellow('"resolve.alias"')} instead.`,
+    );
+    mergedAlias = reduceConfigs({
+      initial: mergedAlias,
+      config: config.source.alias,
+    });
+  }
 
   if (config.resolve.dedupe) {
     for (const pkgName of config.resolve.dedupe) {
       if (mergedAlias[pkgName]) {
         logger.debug(
-          `[rsbuild:resolve] The package "${pkgName}" is already in the alias config, dedupe option for "${pkgName}" will be ignored.`,
+          `${color.dim('[rsbuild:resolve]')} The package ${color.yellow(
+            pkgName,
+          )} is already in the alias config, dedupe option for ${color.yellow(
+            pkgName,
+          )} will be ignored.`,
         );
         continue;
       }
@@ -48,7 +59,7 @@ function applyAlias({
             paths: [rootPath],
           }),
         );
-      } catch (e) {}
+      } catch {}
 
       // some package does not export `package.json`,
       // so we try to resolve the package by its name
@@ -66,9 +77,13 @@ function applyAlias({
           ) {
             pkgPath = dirname(pkgPath);
           }
-        } catch (e) {
+        } catch {
           logger.debug(
-            `[rsbuild:resolve] The package "${pkgName}" is not resolved in the project, dedupe option for "${pkgName}" will be ignored.`,
+            `${color.dim('[rsbuild:resolve]')} The package ${color.yellow(
+              pkgName,
+            )} is not resolved in the project, dedupe option for ${color.yellow(
+              pkgName,
+            )} will be ignored.`,
           );
           continue;
         }
@@ -135,6 +150,14 @@ export const pluginResolve = (): RsbuildPlugin => ({
           .rule(CHAIN_ID.RULE.MJS)
           .test(/\.m?js/)
           .resolve.set('fullySpecified', false);
+
+        if (config.source.aliasStrategy) {
+          logger.warn(
+            `${color.dim('[rsbuild:config]')} The ${color.yellow(
+              '"source.aliasStrategy"',
+            )} config is deprecated, use ${color.yellow('"resolve.aliasStrategy"')} instead.`,
+          );
+        }
 
         const aliasStrategy =
           config.source.aliasStrategy ?? config.resolve.aliasStrategy;

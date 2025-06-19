@@ -1,7 +1,7 @@
 {
   "name": "@rsbuild/webpack",
-  "version": "1.3.0",
-  "homepage": "https://rsbuild.dev",
+  "version": "1.3.2",
+  "homepage": "https://rsbuild.rs",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
@@ -24,7 +24,8 @@
   ],
   "scripts": {
     "build": "rslib build",
-    "dev": "rslib build --watch"
+    "dev": "rslib build --watch",
+    "bump": "npx bumpp --no-tag"
   },
   "dependencies": {
     "copy-webpack-plugin": "11.0.0",
@@ -33,20 +34,20 @@
     "picocolors": "^1.1.1",
     "reduce-configs": "^1.1.0",
     "tsconfig-paths-webpack-plugin": "4.2.0",
-    "webpack": "^5.98.0"
+    "webpack": "^5.99.9"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.6.0",
+    "@rslib/core": "0.10.1",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.13.14",
+    "@types/node": "^22.15.31",
     "ansi-escapes": "4.3.2",
     "cli-truncate": "2.1.0",
     "patch-console": "1.0.0",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.3"
   },
   "peerDependencies": {
-    "@rsbuild/core": "^1.1.3"
+    "@rsbuild/core": "^1.3.21"
   },
   "publishConfig": {
     "access": "public",

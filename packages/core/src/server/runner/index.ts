@@ -1,7 +1,7 @@
 /**
  * The following code is modified based on @rspack/test-tools/runner
- *
  */
+import { color } from '../../helpers';
 import { EsmRunner } from './esm';
 import type { Runner, RunnerFactory, RunnerFactoryOptions } from './type';
 
@@ -24,7 +24,9 @@ export class BasicRunnerFactory implements RunnerFactory {
       compilerOptions.target === 'webworker'
     ) {
       throw new Error(
-        `[rsbuild:runner] Not support run "${compilerOptions.target}" resource in Rsbuild server`,
+        `${color.dim('[rsbuild:runner]')} Not support run ${color.yellow(
+          compilerOptions.target,
+        )} resource in Rsbuild server`,
       );
     }
     return new EsmRunner(runnerOptions);

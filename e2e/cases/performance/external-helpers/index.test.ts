@@ -21,7 +21,7 @@ test('should externalHelpers by default', async () => {
       },
     },
   });
-  const files = await rsbuild.unwrapOutputJSON(false);
+  const files = await rsbuild.getDistFiles(false);
 
   const content =
     files[

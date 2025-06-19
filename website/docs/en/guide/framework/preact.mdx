@@ -2,9 +2,9 @@
 
 In this document, you will learn how to build a Preact application using Rsbuild.
 
-## Create Preact project
+## Create a Preact application
 
-You can use `create-rsbuild` to create a project with Rsbuild + Preact. Just execute the following command:
+Use [create-rsbuild](/guide/start/quick-start#create-an-rsbuild-application) to create a Preact application with Rsbuild. Run the following command:
 
 import { PackageManagerTabs } from '@theme';
 
@@ -38,7 +38,7 @@ export default defineConfig({
 
 Preact plugin uses [@preact/prefresh](https://github.com/preactjs/prefresh) and [@rspack/plugin-preact-refresh](https://github.com/rspack-contrib/rspack-plugin-preact-refresh) to hot reload Preact components.
 
-### Recognition
+### Component recognition
 
 Prefresh need to be able to recognize your components, this means that components should
 start with a capital letter and hook should start with `use` followed by a capital letter.

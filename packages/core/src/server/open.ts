@@ -1,13 +1,12 @@
-import { exec } from 'node:child_process';
-import { promisify } from 'node:util';
 import { STATIC_PATH } from '../constants';
-import { canParse, castArray } from '../helpers';
+import { canParse, castArray, color } from '../helpers';
 import { logger } from '../logger';
 import type { NormalizedConfig, Routes } from '../types';
 import { getHostInUrl } from './helper';
 
-const execAsync = promisify(exec);
-
+/**
+ * browsers on darwin that are supported by `openChrome.applescript`
+ */
 const supportedChromiumBrowsers = [
   'Google Chrome Canary',
   'Google Chrome Dev',
@@ -19,15 +18,32 @@ const supportedChromiumBrowsers = [
   'Chromium',
 ];
 
-const getTargetBrowser = async () => {
-  // Use user setting first
-  let targetBrowser = process.env.BROWSER;
-  // If user setting not found or not support, use opening browser first
-  if (!targetBrowser || !supportedChromiumBrowsers.includes(targetBrowser)) {
-    const { stdout: ps } = await execAsync('ps cax');
-    targetBrowser = supportedChromiumBrowsers.find((b) => ps.includes(b));
+/**
+ * Map the browser name to the name used in `openChrome.applescript`
+ */
+const mapChromiumBrowserName = (browser: string) => {
+  if (browser === 'chrome' || browser === 'google chrome') {
+    return 'Google Chrome';
   }
-  return targetBrowser;
+  return browser;
+};
+
+/**
+ * Determine if we should try to open the browser with `openChrome.applescript`
+ */
+const shouldTryAppleScript = (browser?: string, browserArgs?: string) => {
+  if (process.platform !== 'darwin') {
+    return false;
+  }
+  // AppleScript does not support passing arguments
+  // fallback to `open` library
+  if (browser && browserArgs) {
+    return false;
+  }
+  if (!browser) {
+    return true;
+  }
+  return supportedChromiumBrowsers.includes(mapChromiumBrowserName(browser));
 };
 
 /**
@@ -39,26 +55,39 @@ const getTargetBrowser = async () => {
  * https://github.com/facebook/create-react-app/blob/master/LICENSE
  */
 async function openBrowser(url: string): Promise<boolean> {
+  const browser = process.env.BROWSER;
+  const browserArgs = process.env.BROWSER_ARGS;
+
   // If we're on OS X, the user hasn't specifically
   // requested a different browser, we can try opening
   // a Chromium browser with AppleScript. This lets us reuse an
   // existing tab when possible instead of creating a new one.
-  const shouldTryOpenChromeWithAppleScript = process.platform === 'darwin';
+  if (shouldTryAppleScript(browser, browserArgs)) {
+    const { exec } = await import('node:child_process');
+    const { promisify } = await import('node:util');
+    const execAsync = promisify(exec);
 
-  if (shouldTryOpenChromeWithAppleScript) {
+    /**
+     * Find the browser that is currently running
+     */
+    const getDefaultBrowserForAppleScript = async () => {
+      const { stdout: ps } = await execAsync('ps cax');
+      return supportedChromiumBrowsers.find((b) => ps.includes(b));
+    };
+
     try {
-      const targetBrowser = await getTargetBrowser();
-      if (targetBrowser) {
+      const chromiumBrowser = browser
+        ? mapChromiumBrowserName(browser)
+        : await getDefaultBrowserForAppleScript();
+
+      if (chromiumBrowser) {
         // Try to reuse existing tab with AppleScript
         await execAsync(
-          `osascript openChrome.applescript "${encodeURI(
-            url,
-          )}" "${targetBrowser}"`,
+          `osascript openChrome.applescript "${encodeURI(url)}" "${chromiumBrowser}"`,
           {
             cwd: STATIC_PATH,
           },
         );
-
         return true;
       }
       logger.debug('failed to find the target browser.');
@@ -69,10 +98,20 @@ async function openBrowser(url: string): Promise<boolean> {
   }
 
   // Fallback to open
-  // (It will always open new tab)
+  // It will always open new tab
   try {
     const { default: open } = await import('../../compiled/open/index.js');
-    await open(url);
+    const { apps } = open;
+
+    const options = browser
+      ? {
+          app: {
+            name: apps[browser as keyof typeof apps] ?? browser,
+            arguments: browserArgs?.split(' '),
+          },
+        }
+      : {};
+    await open(url, options);
     return true;
   } catch (err) {
     logger.error('Failed to open start URL.');
@@ -98,9 +137,11 @@ export function resolveUrl(str: string, base: string): string {
   try {
     const url = new URL(str, base);
     return url.href;
-  } catch (e) {
+  } catch {
     throw new Error(
-      '[rsbuild:open]: Invalid input: not a valid URL or pathname',
+      `${color.dim('[rsbuild:open]')} Invalid input: ${color.yellow(
+        str,
+      )} is not a valid URL or pathname`,
     );
   }
 }
@@ -155,7 +196,7 @@ export async function open({
 
   const urls: string[] = [];
   const protocol = https ? 'https' : 'http';
-  const host = getHostInUrl(config.server.host);
+  const host = await getHostInUrl(config.server.host);
   const baseUrl = `${protocol}://${host}:${port}`;
 
   if (!targets.length) {

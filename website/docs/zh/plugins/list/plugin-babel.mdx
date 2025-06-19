@@ -32,7 +32,7 @@ export default {
 
 使用 Babel 插件后，Rsbuild 除了执行默认的 SWC 转译，还会执行 Babel 转译，存在额外的编译开销，这可能导致构建速度明显降低。
 
-为了降低 Babel 转译的开销，`@rsbuild/plugin-babel` 默认开启了 Babel 编译缓存。如果你希望禁用缓存，可以将 `performance.buildCache` 设置为 `false`：
+为了降低 Babel 转译的开销，`@rsbuild/plugin-babel` 默认开启了 Babel 编译缓存。如果你希望禁用缓存，可以将 [performance.buildCache](/config/performance/build-cache) 设置为 `false`：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -229,6 +229,22 @@ pluginBabel({
 用于指定不需要 Babel 编译的文件。
 
 由于 Babel 编译存在性能开销，通过 `exclude` 来排除部分文件可以减少 Babel 编译的模块数量，从而提升构建性能。
+
+## 执行顺序
+
+使用 `@rsbuild/plugin-babel` 后，Rsbuild 会使用 `babel-loader` 和 `builtin:swc-loader` 分别对 JavaScript 文件进行编译，且 Babel 的执行时机早于 SWC。
+
+这意味着，当代码中使用某些 ECMAScript 新特性时，你可能需要添加 Babel 插件，使 Babel 能够正确编译这些新特性。
+
+例如，添加 [@babel/plugin-transform-private-methods](https://www.npmjs.com/package/@babel/plugin-transform-private-methods) 插件，使 Babel 能够正确编译 [private properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties)：
+
+```ts
+pluginBabel({
+  babelLoaderOptions: {
+    plugins: ['@babel/plugin-transform-private-methods'],
+  },
+});
+```
 
 ## 调试配置
 

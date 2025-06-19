@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { dev, expectPoll, proxyConsole, rspackOnlyTest } from '@e2e/helper';
+import { dev, expectPoll, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
@@ -15,8 +15,6 @@ rspackOnlyTest(
     await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
       recursive: true,
     });
-
-    const { logs, restore } = proxyConsole();
 
     const rsbuild = await dev({
       cwd,
@@ -46,7 +44,7 @@ rspackOnlyTest(
     );
 
     await expectPoll(() =>
-      logs.some((log) => log.includes('Module build failed')),
+      rsbuild.logs.some((log) => log.includes('Module build failed')),
     ).toBeTruthy();
 
     await fs.promises.writeFile(
@@ -61,7 +59,5 @@ rspackOnlyTest(
 
     await expect(locator).toHaveText('Hello Rsbuild2!');
     await rsbuild.close();
-
-    restore();
   },
 );

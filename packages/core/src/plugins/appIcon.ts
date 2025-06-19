@@ -12,20 +12,24 @@ import {
 import type { AppIconItem, HtmlBasicTag, RsbuildPlugin } from '../types';
 
 type IconExtra = {
+  src: string;
   sizes: string;
-  isURL?: boolean;
-  absolutePath: string;
-  relativePath: string;
-  requestPath: string;
   mimeType?: string;
-};
+} & (
+  | { isURL: true }
+  | {
+      isURL: false;
+      absolutePath: string;
+      relativePath: string;
+    }
+);
 
 export const pluginAppIcon = (): RsbuildPlugin => ({
   name: 'rsbuild:app-icon',
 
   setup(api) {
     const htmlTagsMap = new Map<string, HtmlBasicTag[]>();
-    const iconFormatMap = new Map<string, IconExtra>();
+    const iconFormatMap = new Map<string, AppIconItem & IconExtra>();
 
     const formatIcon = (
       icon: AppIconItem,
@@ -36,24 +40,22 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
       const cached = iconFormatMap.get(src);
 
       if (cached) {
-        return { ...cached, ...icon };
+        return cached;
       }
 
       const sizes = `${size}x${size}`;
 
       if (isURL(src)) {
-        const paths = {
+        const formatted = {
+          ...icon,
+          src,
           sizes,
-          isURL: true,
-          requestPath: src,
-          absolutePath: src,
-          relativePath: src,
+          isURL: true as const,
           mimeType: lookup(src),
         };
 
-        iconFormatMap.set(src, paths);
-
-        return { ...paths, ...icon };
+        iconFormatMap.set(src, formatted);
+        return formatted;
       }
 
       const absolutePath = path.isAbsolute(src)
@@ -63,19 +65,19 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
         distDir,
         path.basename(absolutePath),
       );
-      const requestPath = ensureAssetPrefix(relativePath, publicPath);
 
-      const paths = {
+      const formatted = {
+        ...icon,
         sizes,
-        requestPath,
+        src: ensureAssetPrefix(relativePath, publicPath),
+        isURL: false as const,
         absolutePath,
         relativePath,
         mimeType: lookup(absolutePath),
       };
 
-      iconFormatMap.set(src, paths);
-
-      return { ...paths, ...icon };
+      iconFormatMap.set(src, formatted);
+      return formatted;
     };
 
     api.processAssets(
@@ -100,7 +102,11 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
           if (icon.target === 'web-app-manifest' && !appIcon.name) {
             addCompilationError(
               compilation,
-              `[rsbuild:app-icon] "appIcon.name" is required when "target" is "web-app-manifest".`,
+              `${color.dim('[rsbuild:app-icon]')} ${color.yellow(
+                '"appIcon.name"',
+              )} is required when ${color.yellow('"target"')} is ${color.yellow(
+                '"web-app-manifest"',
+              )}.`,
             );
             continue;
           }
@@ -109,7 +115,9 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
             if (!compilation.inputFileSystem) {
               addCompilationError(
                 compilation,
-                `[rsbuild:app-icon] Failed to read the icon file as "compilation.inputFileSystem" is not available.`,
+                `${color.dim('[rsbuild:app-icon]')} Failed to read the icon file as ${color.yellow(
+                  '"compilation.inputFileSystem"',
+                )} is not available.`,
               );
               continue;
             }
@@ -119,7 +127,9 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
             ) {
               addCompilationError(
                 compilation,
-                `[rsbuild:app-icon] Failed to find the icon file at "${color.cyan(icon.absolutePath)}".`,
+                `${color.dim('[rsbuild:app-icon]')} Failed to find the icon file at ${color.yellow(
+                  icon.absolutePath,
+                )}.`,
               );
               continue;
             }
@@ -131,7 +141,9 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
             if (!source) {
               addCompilationError(
                 compilation,
-                `[rsbuild:app-icon] Failed to read the icon file at "${color.cyan(icon.absolutePath)}".`,
+                `${color.dim('[rsbuild:app-icon]')} Failed to read the icon file at ${color.yellow(
+                  icon.absolutePath,
+                )}.`,
               );
               continue;
             }
@@ -151,7 +163,7 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
               attrs: {
                 rel: 'apple-touch-icon',
                 sizes: icon.sizes,
-                href: icon.requestPath,
+                href: icon.src,
               },
             });
           }
@@ -164,7 +176,7 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
             )
             .map((icon) => {
               const result = {
-                src: icon.requestPath,
+                src: icon.src,
                 sizes: icon.sizes,
               };
               if (icon.mimeType) {
@@ -206,9 +218,12 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
       return { headTags, bodyTags };
     });
 
-    api.onCloseDevServer(() => {
+    const clean = () => {
       htmlTagsMap.clear();
       iconFormatMap.clear();
-    });
+    };
+
+    api.onCloseDevServer(clean);
+    api.onCloseBuild(clean);
   },
 });

@@ -86,7 +86,7 @@ pluginSass({
 
 ### include
 
-- **类型：** [RuleSetCondition](https://rspack.dev/config/module#condition)
+- **类型：** [RuleSetCondition](https://rspack.rs/zh/config/module#condition)
 - **默认值：** `/\.s(?:a|c)ss$/`
 - **版本：** `>= 1.1.0`
 
@@ -102,7 +102,7 @@ pluginSass({
 
 ### exclude
 
-- **类型：** [RuleSetCondition](https://rspack.dev/config/module#condition)
+- **类型：** [RuleSetCondition](https://rspack.rs/zh/config/module#condition)
 - **默认值：** `undefined`
 
 用于排除一部分 `.sass` 或 `.scss` 模块，这些模块不会被 `sass-loader` 编译。
@@ -137,7 +137,7 @@ pluginSass({
 
 ### 修改 Sass implementation
 
-Sass 提供了多种实现，包括 [sass](https://www.npmjs.com/package/sass)、[sass-embedded](https://www.npmjs.com/package/sass-embedded) 和 [node-sass](https://www.npmjs.com/package/node-sass)。
+Sass 提供了多种实现，包括 [sass](https://npmjs.com/package/sass)、[sass-embedded](https://npmjs.com/package/sass-embedded) 和 [node-sass](https://npmjs.com/package/node-sass)。
 
 Rsbuild 默认使用最新的 `sass-embedded` 实现。`sass-embedded` 是一个围绕原生 Dart Sass 可执行文件的 JavaScript wrapper，具备一致的 API 和最佳的性能。
 
@@ -152,7 +152,7 @@ pluginSass({
 ```
 
 :::tip
-将 `sass-embedded` 修改为其他 Sass 实现，可能会构建性能显著下降。
+从 `sass-embedded` 修改为其他 Sass 实现，可能会导致构建性能显著下降。
 :::
 
 ### 选择 Sass API

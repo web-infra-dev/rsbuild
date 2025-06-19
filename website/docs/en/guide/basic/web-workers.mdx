@@ -1,4 +1,4 @@
-# Use Web Workers
+# Web Workers
 
 This chapter introduces how to configure and use [Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers) in Rsbuild project.
 
@@ -33,21 +33,20 @@ worker.onmessage = (event) => {
 worker.postMessage(10);
 ```
 
-For more details, please refer to [Rspack - Web Workers](https://rspack.dev/guide/features/web-workers).
+For more details, please refer to [Rspack - Web Workers](https://rspack.rs/guide/features/web-workers).
 
 ### Using worker-loader
 
-> `worker-loader` is no longer maintained, it is recommended to use the `new Worker()` syntax.
+If your project already uses `worker-loader`, or you want to use the `inline` and other features provided by `worker-loader`, you can use [worker-rspack-loader](https://github.com/rspack-contrib/worker-rspack-loader) as an alternative to `worker-loader` in Rsbuild projects.
 
-If your project already uses `worker-loader`, or you want to use the `inline` and other features provided by `worker-loader`, you can use [worker-rspack-loader](https://github.com/rspack-contrib/worker-rspack-loader) as an alternative to `worker-loader` in the Rsbuild or Rspack project.
-
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: {
       resolveLoader: {
         alias: {
-          // Modify the resolution of worker-loader in the inline loader, such as `worker-loader!pdfjs-dist/es5/build/pdf.worker.js`
+          // Modify the resolution of worker-loader in the inline loader
+          // such as `worker-loader!pdfjs-dist/es5/build/pdf.worker.js`
           'worker-loader': require.resolve('worker-rspack-loader'),
         },
       },
@@ -63,6 +62,18 @@ export default {
   },
 };
 ```
+
+When using `worker-rspack-loader`, you need to use the `import` to import the Web Worker file, instead of the `new Worker('/path/to/worker.js')`.
+
+```js
+import Worker from './file.worker.js';
+
+const worker = new Worker();
+
+worker.postMessage({ a: 1 });
+```
+
+> `worker-loader` is no longer maintained, if you don't need to inline Web Workers, it is recommended to use the `new Worker()` syntax.
 
 ### Loading scripts from remote URLs (cross-origin)
 

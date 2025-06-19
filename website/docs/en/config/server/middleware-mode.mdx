@@ -6,7 +6,7 @@
 
 Whether to create Rsbuild's server in middleware mode, which is useful for integrating with other servers.
 
-When this option is enabled, Rsbuild will not create an HTTP server. This option is usually only needed when using the JavaScript API of Rsbuild.
+When this option is enabled, Rsbuild will not create an HTTP server. This option is usually only needed when using the [JavaScript API](/api/start/) of Rsbuild.
 
 ## Example
 
@@ -31,7 +31,7 @@ async function startDevServer() {
   // Create Rsbuild dev server instance
   const rsbuildServer = await rsbuild.createDevServer();
 
-  // Apply Rsbuild's built-in middlewares
+  // Apply Rsbuild's built-in middleware
   app.use(rsbuildServer.middlewares);
 }
 ```

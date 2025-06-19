@@ -31,9 +31,9 @@ nvm install --lts
 nvm use --lts
 ```
 
-## Creating an Rsbuild project
+## Create an Rsbuild application
 
-You can use the `create-rsbuild` to create a new Rsbuild project. Just execute the following command:
+Use [create-rsbuild](https://www.npmjs.com/package/create-rsbuild) to create a new Rsbuild application. Run the following command:
 
 import { PackageManagerTabs } from '@theme';
 
@@ -48,15 +48,15 @@ import { PackageManagerTabs } from '@theme';
 
 Follow the prompts step by step. During the creation process, you can choose whether you need additional tools like TypeScript, ESLint, etc.
 
-After the project is created, you can follow these steps:
+After the application is created, you can follow these steps:
 
 - Run `git init` to initialize the Git repository.
-- Run `npm install` (or the install command of your package manager) to install project dependencies.
+- Run `npm install` (or the install command of your package manager) to install npm dependencies.
 - Run `npm run dev` to start the development server, which runs on `localhost:5173` by default.
 
 ### Templates
 
-When creating a project, you can choose from the following templates provided by `create-rsbuild`:
+When creating an application, you can choose from the following templates provided by `create-rsbuild`:
 
 | Template | Description                     | Optional Features |
 | -------- | ------------------------------- | ----------------- |
@@ -72,14 +72,14 @@ When creating a project, you can choose from the following templates provided by
 
 `create-rsbuild` provides out-of-the-box basic templates. You can also get more templates through the following ways:
 
-- Visit [Rspack - Ecosystem](https://rspack.dev/guide/start/quick-start#ecosystem) to learn about various higher-level tools based on Rsbuild.
+- Visit [Rspack - Ecosystem](https://rspack.rs/guide/start/quick-start#ecosystem) to learn about various higher-level tools based on Rsbuild.
 - Visit [awesome-rspack - Starter](https://github.com/web-infra-dev/awesome-rspack?tab=readme-ov-file#starter) to get more community-maintained templates.
 
 ### Optional tools
 
 `create-rsbuild` can help you set up some commonly used tools, including [Biome](https://github.com/biomejs/biome), [ESLint](https://github.com/eslint/eslint), and [prettier](https://github.com/prettier/prettier). You can use the arrow keys and the space bar to make your selections. If you don't need these tools, you can simply press Enter to skip.
 
-```text
+```
 ◆  Select additional tools (Use <space> to select, <enter> to continue)
 │  ◻ Add Biome for code linting and formatting
 │  ◻ Add ESLint for code linting
@@ -93,9 +93,9 @@ Biome provides similar linting and formatting features to ESLint and Prettier. I
 
 ### Current directory
 
-To create a project in the current directory, set the target folder to `.`:
+To create an application in the current directory, set the target folder to `.`:
 
-```text
+```
 ◆  Create Rsbuild Project
 │
 ◇  Project name or path
@@ -107,20 +107,23 @@ To create a project in the current directory, set the target folder to `.`:
 
 ### Quick creation
 
-[create-rsbuild](https://www.npmjs.com/package/create-rsbuild) provides some CLI flags. By setting these CLI flags, you can skip the interactive selection steps and create the project with one command.
+[create-rsbuild](https://npmjs.com/package/create-rsbuild) provides some CLI flags. By setting these CLI flags, you can skip the interactive selection steps and create the application with one command.
 
-For example, to create a React project in the `my-project` directory with one command:
+For example, to create a React application in the `my-app` directory with one command:
 
 ```bash
-npx create-rsbuild --dir my-project --template react
+npx create-rsbuild --dir my-app --template react
 
 # Using abbreviations
-npx create-rsbuild -d my-project -t react
+npx create-rsbuild -d my-app -t react
+
+# Specify multiple tools
+npx create-rsbuild -d my-app -t react --tools eslint --tools prettier
 ```
 
 All the CLI flags of `create-rsbuild`:
 
-```text
+```
 Usage: create-rsbuild [options]
 
 Options:
@@ -145,12 +148,12 @@ To migrate from an existing project to Rsbuild, refer to the following guides:
 - [Migrate from Vue CLI](/guide/migration/vue-cli)
 - [Migrate from Vite](/guide/migration/vite)
 - [Migrate from Modern.js Builder](/guide/migration/modern-builder)
-- [Migrate from Tsup to Rslib](https://lib.rsbuild.dev/guide/migration/tsup)
-- [Migrate from Storybook to Storybook Rsbuild](https://rspack.dev/guide/migration/storybook)
+- [Migrate from Tsup to Rslib](https://rslib.rs/guide/migration/tsup)
+- [Migrate from Storybook to Storybook Rsbuild](https://rspack.rs/guide/migration/storybook)
 
 ### Other projects
 
-If your project does not belong to the above migration guides, you can manually install the [@rsbuild/core](https://www.npmjs.com/package/@rsbuild/core) package:
+If your project does not belong to the above migration guides, you can manually install the [@rsbuild/core](https://npmjs.com/package/@rsbuild/core) package:
 
 <PackageManagerTabs command="add @rsbuild/core -D" />
 
@@ -158,7 +161,7 @@ After installation, you can refer to the following documents to configure your p
 
 - See [CLI](/guide/basic/cli) to learn about available CLI commands.
 - See [Plugin List](/plugins/list/index) to select Rsbuild plugins.
-- See [Configure Rsbuild](/guide/basic/configure-rsbuild) to configure Rsbuild.
+- See [Configure Rsbuild](/guide/configuration/rsbuild) to configure Rsbuild.
 
 ## CLI
 
@@ -242,7 +245,7 @@ import Step from '@components/Step';
     description="Learn all features of Rsbuild"
   />
   <Step
-    href="/guide/basic/configure-rsbuild"
+    href="/guide/configuration/rsbuild"
     title="Config"
     description="Learn how to configure Rsbuild"
   />

@@ -8,7 +8,7 @@ test('should compile Node addons correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
   });
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
   const addonFile = Object.keys(files).find((file) =>
     file.endsWith('test.darwin.node'),
   );
@@ -21,7 +21,7 @@ test('should compile Node addons correctly', async () => {
 
   // the `test.darwin.node` is only compatible with darwin
   if (process.platform === 'darwin') {
-    const content = await import('./dist/index.js' as string);
+    const { default: content } = await import('./dist/index.js' as string);
     expect(typeof content.default.readLength).toEqual('function');
   }
 });
@@ -56,7 +56,7 @@ test('should compile Node addons in the node_modules correctly', async () => {
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
   const addonFile = Object.keys(files).find((file) =>
     file.endsWith('other.node'),
   );
@@ -66,7 +66,7 @@ test('should compile Node addons in the node_modules correctly', async () => {
   expect(fs.existsSync(join(__dirname, 'dist', 'other.node'))).toBeTruthy();
 
   if (process.platform === 'darwin') {
-    const content = await import('./dist/index.js' as string);
+    const { default: content } = await import('./dist/index.js' as string);
     expect(typeof content.default.readLength).toEqual('function');
   }
 });

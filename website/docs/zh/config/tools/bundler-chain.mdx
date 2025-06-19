@@ -28,7 +28,7 @@ Rsbuild 内置的 Rspack 配置会随着迭代而发生变化，这些变化不�
 
 ## 示例
 
-参考：[RspackChain 示例](/guide/basic/configure-rspack#使用-rspack-chain)。
+参考：[RspackChain 示例](/guide/configuration/rspack#使用-rspack-chain)。
 
 ## 工具对象
 
@@ -141,6 +141,28 @@ export default {
 };
 ```
 
+### rspack
+
+- **类型：** `Rspack`
+
+通过这个参数你可以拿到 Rspack 实例。比如：
+
+```js
+export default {
+  tools: {
+    bundlerChain: (chain, { rspack }) => {
+      chain.plugin('extra-define').use(rspack.DefinePlugin, [
+        {
+          'process.env': {
+            NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+          },
+        },
+      ]);
+    },
+  },
+};
+```
+
 ### HtmlPlugin
 
 - **类型：** `typeof import('html-rspack-plugin')`
@@ -198,35 +220,25 @@ Rsbuild 中预先定义了一些常用的 Chain ID，你可以通过这些 ID �
 
 通过 `USE.[ID]` 可以匹配到对应的 loader。
 
-| ID                | 描述                                                                     |
-| ----------------- | ------------------------------------------------------------------------ |
-| `USE.SWC`         | 对应 `builtin:swc-loader`                                                |
-| `USE.POSTCSS`     | 对应 `postcss-loader`                                                    |
-| `USE.STYLE`       | 对应 `style-loader`                                                      |
-| `USE.LESS`        | 对应 `less-loader`（依赖 [Less 插件](/plugins/list/plugin-less)）        |
-| `USE.SASS`        | 对应 `sass-loader`（依赖 [Sass 插件](/plugins/list/plugin-sass)）        |
-| `USE.RESOLVE_URL` | 对应 `resolve-url-loader`（依赖 [Sass 插件](/plugins/list/plugin-sass)） |
-| `USE.VUE`         | 对应 `vue-loader`（依赖 [Vue 插件](/plugins/list/plugin-vue)）           |
-| `USE.SVGR`        | 对应 `svgr-loader`（依赖 [Svgr 插件](/plugins/list/plugin-svgr)）        |
-| `USE.BABEL`       | 对应 `babel-loader`（依赖 [Babel 插件](/plugins/list/plugin-babel)）     |
-| `USE.SVELTE`      | 对应 `svelte-loader`（依赖 [Svelte 插件](/plugins/list/plugin-svelte)）  |
-| `USE.STYLUS`      | 对应 `stylus-loader`（依赖 [Stylus 插件](/plugins/list/plugin-stylus)）  |
+| ID            | 描述                      |
+| ------------- | ------------------------- |
+| `USE.SWC`     | 对应 `builtin:swc-loader` |
+| `USE.POSTCSS` | 对应 `postcss-loader`     |
+| `USE.STYLE`   | 对应 `style-loader`       |
+
+详见 [自定义 loader](/guide/configuration/rspack#自定义-loader)
 
 ### CHAIN_ID.PLUGIN
 
 通过 `PLUGIN.[ID]` 可以匹配到特定的 Rspack 或 webpack plugin。
 
-| ID                             | 描述                                                                                                                                       |
-| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `PLUGIN.HTML`                  | 对应 [HtmlRspackPlugin](https://rspack.dev/zh/plugins/rspack/html-rspack-plugin)，使用时需要拼接 entry 名称：`${PLUGIN.HTML}-${entryName}` |
-| `PLUGIN.SUBRESOURCE_INTEGRITY` | 对应 [SubresourceIntegrityPlugin](https://rspack.dev/zh/plugins/rspack/subresource-integrity-plugin)                                       |
-| `PLUGIN.BUNDLE_ANALYZER`       | 对应 [BundleAnalyzerPlugin](https://github.com/webpack-contrib/webpack-bundle-analyzer)                                                    |
+详见 [自定义 Plugin](/guide/configuration/rspack#自定义-plugin)
 
 ### CHAIN_ID.MINIMIZER
 
 通过 `MINIMIZER.[ID]` 可以匹配到对应的压缩工具。
 
-| ID              | 描述                                                                                                                 |
-| --------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `MINIMIZER.JS`  | 对应 [SwcJsMinimizerRspackPlugin](https://rspack.dev/zh/plugins/rspack/swc-js-minimizer-rspack-plugin)               |
-| `MINIMIZER.CSS` | 对应 [LightningCssMinimizerRspackPlugin](https://rspack.dev/zh/plugins/rspack/lightning-css-minimizer-rspack-plugin) |
+| ID              | 描述                                                                                                                |
+| --------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `MINIMIZER.JS`  | 对应 [SwcJsMinimizerRspackPlugin](https://rspack.rs/zh/plugins/rspack/swc-js-minimizer-rspack-plugin)               |
+| `MINIMIZER.CSS` | 对应 [LightningCssMinimizerRspackPlugin](https://rspack.rs/zh/plugins/rspack/lightning-css-minimizer-rspack-plugin) |

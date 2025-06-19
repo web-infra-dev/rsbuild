@@ -33,16 +33,18 @@ The first parameter of `createRsbuild` is an `options` object, you can pass in t
 ```ts
 type CreateRsbuildOptions = {
   cwd?: string;
+  callerName?: string;
   environment?: string[];
-  rsbuildConfig?: RsbuildConfig | (() => Promise<RsbuildConfig>);
   loadEnv?: boolean | LoadEnvOptions;
+  rsbuildConfig?: RsbuildConfig | (() => Promise<RsbuildConfig>);
 };
 ```
 
 - `cwd`: The root path of the current build, defaults to `process.cwd()`.
+- `callerName`: The name of the framework or tool that is currently invoking Rsbuild, defaults to `'rsbuild'`, see [Specify caller name](#specify-caller-name).
 - `environment`: Only build specified [environments](/guide/advanced/environments). If not specified or passing an empty array, all environments will be built.
-- `rsbuildConfig`: Rsbuild configuration object. Refer to [Configuration Overview](/config/) for all available configuration options.
 - `loadEnv`：Whether to call the [loadEnv](/api/javascript-api/core#loadenv) method to load env variables and define them as global variables via [source.define](/config/source/define).
+- `rsbuildConfig`: Rsbuild configuration object. Refer to [Configuration Overview](/config/) for all available configuration options.
 
 ### Load configuration async
 
@@ -85,6 +87,36 @@ const rsbuild = await createRsbuild({
     prefixes: ['PUBLIC_', 'REACT_APP_'],
   },
 });
+```
+
+### Specify caller name
+
+You can specify the name of the framework or tool that is currently invoking Rsbuild, which can be accessed by Rsbuild plugins through [context.callerName](/api/javascript-api/instance#contextcallername), and execute different logic based on this identifier.
+
+```ts
+import { myPlugin } from './myPlugin';
+
+const rsbuild = await createRsbuild({
+  callerName: 'rslib',
+  rsbuildConfig: {
+    plugins: [myPlugin],
+  },
+});
+```
+
+```ts title="myPlugin.ts"
+export const myPlugin = {
+  name: 'my-plugin',
+  setup(api) {
+    const { callerName } = api.context;
+
+    if (callerName === 'rslib') {
+      // ...
+    } else if (callerName === 'rsbuild') {
+      // ...
+    }
+  },
+};
 ```
 
 ## loadConfig
@@ -449,21 +481,26 @@ logger.info('hello'); // [info] hello
 
 ## rspack
 
-The `rspack` object exported from `@rspack/core`.
-
-You can import to the `rspack` object from `@rsbuild/core` without the need to install the `@rspack/core` dependency.
+If you need to access the API or plugins exported by [@rspack/core](https://npmjs.com/package/@rspack/core), you can directly import the `rspack` object from `@rsbuild/core` without installing the `@rspack/core` package separately.
 
 - **Type:** `Rspack`
 - **Example:**
 
 ```ts
+// the same as `import { rspack } from '@rspack/core'`
 import { rspack } from '@rsbuild/core';
 
-console.log(rspack.rspackVersion); // 1.0.0
+console.log(rspack.rspackVersion); // a.b.c
 console.log(rspack.util.createHash);
+console.log(rspack.BannerPlugin);
 ```
 
-> Please refer to [Rspack - JavaScript API](https://rspack.dev/api/javascript-api/) for more information.
+:::tip
+
+- Refer to [Rspack plugins](https://rspack.rs/plugins/) and [Rspack JavaScript API](https://rspack.rs/api/javascript-api/) to learn more about the available Rspack APIs.
+- It's not recommended to manually install the `@rspack/core` package, as it may conflict with the version that Rsbuild depends on.
+
+:::
 
 ## version
 

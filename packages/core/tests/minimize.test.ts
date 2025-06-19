@@ -46,6 +46,7 @@ describe('plugin-minimize', () => {
           "_args": [
             {
               "minimizerOptions": {
+                "errorRecovery": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -65,7 +66,7 @@ describe('plugin-minimize', () => {
     process.env.NODE_ENV = 'test';
   });
 
-  it('should not minimizer for JS when output.minify.js is false', async () => {
+  it('should not apply minimizer for JS when output.minify.js is false', async () => {
     process.env.NODE_ENV = 'production';
 
     const rsbuild = await createStubRsbuild({
@@ -111,7 +112,7 @@ describe('plugin-minimize', () => {
     process.env.NODE_ENV = 'test';
   });
 
-  it('should not minimizer for CSS when output.minify.css is false', async () => {
+  it('should not apply minimizer for CSS when output.minify.css is false', async () => {
     process.env.NODE_ENV = 'production';
 
     const rsbuild = await createStubRsbuild({
@@ -204,6 +205,7 @@ describe('plugin-minimize', () => {
           "_args": [
             {
               "minimizerOptions": {
+                "errorRecovery": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -264,6 +266,7 @@ describe('plugin-minimize', () => {
           "_args": [
             {
               "minimizerOptions": {
+                "errorRecovery": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -318,6 +321,7 @@ describe('plugin-minimize', () => {
           "_args": [
             {
               "minimizerOptions": {
+                "errorRecovery": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",

@@ -68,7 +68,6 @@ function createOverlay(html: string) {
 
 function clearOverlay() {
   // use NodeList's forEach api instead of dom.iterable
-  // biome-ignore lint/complexity/noForEach: <explanation>
   document
     .querySelectorAll<ErrorOverlay>(overlayId)
     // close overlay immediately to avoid multiple overlays at the same time

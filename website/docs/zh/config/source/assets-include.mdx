@@ -1,14 +1,14 @@
 # source.assetsInclude
 
-- **类型：** [Rspack.RuleSetCondition](https://rspack.dev/config/module#condition)
+- **类型：** [Rspack.RuleSetCondition](https://rspack.rs/zh/config/module#condition)
 - **默认值：** `undefined`
 - **版本：** `>= 1.0.18`
 
 指定需要被视为静态资源的额外文件类型。
 
-Rsbuild 默认会将常见的图片、字体、音频、视频等文件视为静态资源。通过配置 `source.assetsInclude`，你可以添加更多的文件类型，这些新增的静态资源将按照与内置静态资源相同的规则进行处理，详见 [引用静态资源](/guide/basic/static-assets)。
+Rsbuild 默认会将常见的图片、字体、音频、视频等文件视为静态资源。通过配置 `source.assetsInclude`，你可以添加更多的文件类型，这些新增的静态资源将按照与内置静态资源相同的规则进行处理，详见 [静态资源](/guide/basic/static-assets)。
 
-`source.assetsInclude` 的值与 Rspack loader 的 `test` 选项相同，可以是正则表达式、字符串、数组、逻辑条件等，详见 [Rspack RuleSetCondition](https://rspack.dev/config/module#condition)。
+`source.assetsInclude` 的值与 Rspack loader 的 `test` 选项相同，可以是正则表达式、字符串、数组、逻辑条件等，详见 [Rspack RuleSetCondition](https://rspack.rs/zh/config/module#condition)。
 
 ## 示例
 

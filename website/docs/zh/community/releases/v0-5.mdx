@@ -6,7 +6,7 @@ _March 19, 2024_
 
 # Rsbuild 0.5 发布
 
-![](https://assets.rspack.dev/rsbuild/rsbuild-banner-v0-5.png)
+![](https://assets.rspack.rs/rsbuild/rsbuild-banner-v0-5.png)
 
 Rsbuild 0.5 是一个重要的里程碑，从该版本开始，Rsbuild 的绝大部分 API 已经达到稳定状态，我们预计在 2024 年 Q3 发布 Rsbuild v1.0。
 
@@ -25,7 +25,7 @@ Rsbuild 提供了 Lightning CSS 插件，用于按需开启 Lightning CSS 能力
 
 只需要在 Rsbuild 配置中注册 Lightning CSS 插件，即可完成切换：
 
-```js title="rsbuild.config.ts"
+```ts title="rsbuild.config.ts"
 import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
 
 export default {
@@ -33,7 +33,7 @@ export default {
 };
 ```
 
-在一个真实的大型 Web 应用中，我们接入了 Rsbuild Lightning CSS 插件，并使用 [Rsdoctor](https://rsdoctor.dev/) 分析构建耗时的变化：
+在一个真实的大型 Web 应用中，我们接入了 Rsbuild Lightning CSS 插件，并使用 [Rsdoctor](https://rsdoctor.rs/) 分析构建耗时的变化：
 
 - CSS 编译耗时由 8.4s 降低到 0.12s，提升 70 倍。
 - 整体构建耗时由 33.1s 降低到 25.4s，提升 30%。
@@ -64,7 +64,7 @@ async function startCustomServer() {
 }
 ```
 
-详情可参考 [Rsbuild - createDevServer](https://rsbuild.dev/zh/api/javascript-api/instance#rsbuildcreatedevserver)。
+详情可参考 [Rsbuild - createDevServer](/api/javascript-api/instance#rsbuildcreatedevserver)。
 
 ## 🍭 重构 SVGR 插件
 
@@ -120,11 +120,11 @@ export default {
 
 使用 `output.disableMinimize` 的项目可以参考以下示例：
 
-```diff
+```ts
 export default {
   output: {
--    disableMinimize: true,
-+    minify: false,
+    disableMinimize: true, // [!code --]
+    minify: false, // [!code ++]
   },
 };
 ```

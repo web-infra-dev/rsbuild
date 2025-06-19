@@ -3,20 +3,22 @@
     "lib": ["DOM", "ESNext"],
     "jsx": "preserve",
     "target": "ES2021",
+    "types": ["node"],
     "skipLibCheck": true,
     "useDefineForClassFields": true,
 
     /* modules */
     "module": "ES2020",
     "esModuleInterop": true,
-    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
 
     /* type checking */
     "strict": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "noUncheckedSideEffectImports": true
   },
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Base"

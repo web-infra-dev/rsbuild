@@ -6,7 +6,7 @@ The document lists all breaking changes from Rsbuild 0.7 to 1.0. You can refer t
 
 ## [Important] Lightning CSS loader
 
-Rsbuild now enables [lightningcss-loader](https://rspack.dev/guide/features/builtin-lightningcss-loader) by default to transform CSS files, it replaces `autoprefixer` to add vendor prefixes and provides better performance.
+Rsbuild now enables [lightningcss-loader](https://rspack.rs/guide/features/builtin-lightningcss-loader) by default to transform CSS files, it replaces `autoprefixer` to add vendor prefixes and provides better performance.
 
 - `@rsbuild/plugin-lightningcss` has been deprecated and no longer needed.
 - `tools.autoprefixer` config has been removed.
@@ -99,7 +99,7 @@ Rsbuild now enables Rspack's scheme validation by default to ensure the Rspack c
 - If there is a type error in the Rspack config object, an error will be thrown and the build will be aborted.
 - If there are extra fields in the Rspack config object, an error will be thrown, but the build will not fail.
 
-> For more details, see [Rspack - RSPACK_CONFIG_VALIDATE](https://rspack.dev/guide/migration/webpack#updating-configuration).
+> For more details, see [Rspack - RSPACK_CONFIG_VALIDATE](https://rspack.rs/guide/migration/webpack#updating-configuration).
 
 ## source.alias
 
@@ -313,7 +313,7 @@ Previously Rsbuild uses `html-minifier-terser` to minify the HTML files. But the
 
 At this stage, Rsbuild will not built-in `html-minifier-terser`, so we provide a standalone [rsbuild-plugin-html-minifier-terser](https://github.com/rspack-contrib/rsbuild-plugin-html-minifier-terser) to support HTML minification.
 
-```js title="rsbuild.config.ts"
+```ts title="rsbuild.config.ts"
 import { pluginHtmlMinifierTerser } from 'rsbuild-plugin-html-minifier-terser';
 
 export default {
@@ -341,14 +341,17 @@ export default {
 
 `dev.startUrl` has been renamed to [server.open](/config/server/open):
 
-```diff
+```js
 export default {
--  dev: {
-+  server: {
--   startUrl: true,
-+   open: true,
-  }
-}
+  // [!code --]
+  dev: {
+    startUrl: true, // [!code --]
+  }, // [!code --]
+  // [!code ++]
+  server: {
+    open: true, // [!code ++]
+  }, // [!code ++]
+};
 ```
 
 ## dev.client.port
