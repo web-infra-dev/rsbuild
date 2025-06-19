@@ -1,7 +1,7 @@
 import { isAbsolute, join } from 'node:path';
 import { rspack } from '@rspack/core';
 import { normalizePublicDirs } from '../defaultConfig';
-import { isMultiCompiler, pick } from '../helpers';
+import { pick } from '../helpers';
 import { logger } from '../logger';
 import type {
   DevConfig,
@@ -143,10 +143,7 @@ const applyDefaultMiddlewares = async ({
     }
 
     middlewares.push(
-      rspack.experiments.lazyCompilationMiddleware(
-        // TODO: support for multi compiler
-        isMultiCompiler(compiler) ? compiler.compilers[0] : compiler,
-      ) as RequestHandler,
+      rspack.experiments.lazyCompilationMiddleware(compiler) as RequestHandler,
     );
   }
 
