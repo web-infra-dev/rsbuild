@@ -280,9 +280,11 @@ export async function build({
   const rsbuild = await createRsbuild(options, plugins);
 
   let buildError: Error | undefined;
+  let closeBuild: () => Promise<void> | undefined;
 
   try {
-    await rsbuild.build();
+    const result = await rsbuild.build();
+    closeBuild = result.close;
   } catch (error) {
     buildError = error as Error;
 
@@ -326,6 +328,7 @@ export async function build({
     distPath,
     port,
     close: async () => {
+      await closeBuild?.();
       await server.close();
       proxyConsoleResult?.restore();
     },
