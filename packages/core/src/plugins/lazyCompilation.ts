@@ -29,13 +29,13 @@ export const pluginLazyCompilation = (): RsbuildPlugin => ({
               imports: true,
             },
           });
+          return;
         }
-      } else {
-        chain.experiments({
-          ...chain.get('experiments'),
-          lazyCompilation: options,
-        });
       }
+      chain.experiments({
+        ...chain.get('experiments'),
+        lazyCompilation: options,
+      });
     });
   },
 });
