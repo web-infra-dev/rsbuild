@@ -7,6 +7,7 @@
   "root",
   "mode",
   "plugins",
+  "log-level",
   "environments",
   {
     "type": "dir",
