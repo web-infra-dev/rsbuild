@@ -1,0 +1,221 @@
+# Rsbuild 插件开发指南
+
+## 插件开发
+
+启动一个基本的插件项目：
+
+```typescript
+import { RsbuildPlugin } from '@rsbuild/core';
+export default function plugin(): RsbuildPlugin {
+  return {
+    name: 'plugin',
+    setup(api) {
+      // api 对象上的方法即是 plugin hooks，存在的方法可以再这里进行查找
+      // https://rsbuild.rs/plugins/dev/hooks
+    }
+  };
+}
+```
+
+这时候在 rsbuild 配置(rsbuild.config.ts)中，就可以引入这个插件了：
+
+```typescript
+import { defineConfig } from '@rsbuild/core';
+import customPlugin from './plugin';
+export default defineConfig({
+  plugins: [customPlugin()],
+});
+```
+
+## 为插件增加配置选项 PluginOptions
+
+如下，增加一个 PluginOptions 的 inteface，可以作为参数传给 plugin 函数。建议同时导出 PluginOptions 类型，方便插件使用者阅读类型信息
+
+```typescript
+import { RsbuildPlugin } from '@rsbuild/core';
+export interface PluginOptions {
+  foo: string;
+}
+export default function plugin(options: PluginOptions): RsbuildPlugin {
+  return {
+    name: 'plugin',
+    setup(api) {
+      // 这里可以通过 options 拿到用户传入的配置
+      console.log(options.foo);
+    }
+  }
+}
+```
+
+## 了解插件的 API
+
+Rsbuild api 一共提供了以下属性，这些 hook 会按照顺序执行。
+
+- modifyRsbuildConfig
+- modifyEnvironmentConfig
+- onBeforeStartDevServer
+- modifyBundlerChain
+- modifyRspackConfig
+- onBeforeCreateCompiler
+- onAfterCreateCompiler
+- onBeforeEnvironmentCompile
+- onAfterStartDevServer
+- modifyHTMLTags
+- modifyHTML
+- onAfterEnvironmentCompile
+- onDevCompileDone
+- onCloseDevServer
+- onExit
+
+一些注意事项：
+1. 真实的 Rsbuild 实例会在 `modifyRsbuildConfig` `modifyEnvironmentConfig` `onBeforeStartDevServer` 之后创建，所以在这三个 API 内并没有明确的 mode 是 development 还是 production。在这三个 API 内可以通过 `process.node.NODE_ENV` 来判断是否为 development，在此之后的 API 中可以通过 hooks 参数中的 isDev isProd 来判断
+2. Rsbuild 依赖的 Rspack 实例是在 `modifyRsbuildConfig` `modifyEnvironmentConfig` `onBeforeStartDevServer` `modifyRspackConfig` `modifyBundlerChain` `onBeforeCreateCompiler` 这些 API 之后创建的。所以在此之后的 API 才可以有 rspack 的实例
+
+
+## 判断环境是 development 还是 production
+
+可以通过 api.modifyRsbuildConfig 方法拿到 Rsbuild 的配置，然后根据配置的 mode 来判断环境：
+
+```typescript
+import { RsbuildPlugin } from '@rsbuild/core';
+export default function plugin(): RsbuildPlugin {
+  return {
+    name: 'plugin',
+    setup(api) {
+      // 在 modifyRsbuildConfig 中还没有最终的 mode
+      api.modifyRsbuildConfig((config) => {
+        const isDev = process.env.NODE_ENV === 'development';
+        const isProd = process.env.NODE_ENV === 'production';
+      });
+      // 在 modifyRspackConfig 中可以通过 isDev 和 isProd 来判断环境
+      api.modifyRspackConfig((config, { isDev, isProd }) => {
+        if (isDev) {
+          console.log('development');
+        } else if (isProd) {
+          console.log('production');
+        }
+      });
+    }
+  }
+}
+```
+
+## 修改 Rsbuild 的基本配置
+
+### 思路
+
+如果需求可以通过配置 Rsbuild 配置来达到，都推荐使用 modifyRsbuildConfig 来实现，并且最终通过 mergeRsbuildConfig 来更新 Rsbuild 的配置。
+
+1. 通过阅读 [RsbuildConfig](https://rsbuild.rs/config/) 了解哪个配置项目可以满足插件的需求
+2. 通过 `api.modifyRsbuildConfig` 方法修改 Rsbuild 的基本配置
+
+### 例子 1: 修改输出目录
+
+例如，我们需要开发一个插件，修改输出目录的位置：
+
+1. 在 Rsbuild 配置中了解可以修改输出目录的配置项目，找到为 output.distPath 可以[参考文档](https://rsbuild.rs/config/output/dist-path)
+2. 编写插件，通过 `api.modifyRsbuildConfig` 方法修改输出目录的位置，代码示例如下：
+
+```typescript
+import { RsbuildPlugin } from '@rsbuild/core';
+interface OutputOptions {
+  path: string;
+}
+export default function plugin(options: OutputOptions): RsbuildPlugin {
+  return {
+    name: 'plugin',
+    setup(api) {
+      if(options.path) {
+        // userConfig 即为 Rsbuild 的配置
+        // 可以在这里查看配置的全部内容 https://rsbuild.rs/config/
+        api.modifyRsbuildConfig((userConfig, { mergeRsbuildConfig }) => {
+          const outputConfig: RsbuildConfig = {
+            output: {
+              distPath: {
+                root: options.path,
+              }
+            },
+          };
+
+          // outputConfig 会覆盖用户的配置
+          // 如果不希望覆盖用户的配置，可以使用 `mergeRsbuildConfig` 方法反过来传递
+          // 例如： mergeRsbuildConfig(outputConfig, userConfig)
+          return mergeRsbuildConfig(userConfig, outputConfig);
+        });
+      }
+    }
+  };
+}
+```
+
+### 例子 2: 增加 devServer 能力
+
+同样的方法可以开发一个插件来为 devServer 增加一些服务处理能力：
+
+1. 在 Rsbuild 配置中了解可以修改 devServer 的配置项目，找到为 devServer.setupMiddlewares 可以[参考文档](https://rsbuild.rs/config/dev/setup-middlewares)
+2. 编写插件，通过 `api.modifyRsbuildConfig` 方法修改 devServer 的配置，代码示例如下：
+
+```typescript
+import { RsbuildPlugin, RequestHandler } from '@rsbuild/core';
+interface DevServerOptions {
+  middleware: RequestHandler;
+}
+export default function plugin(options: DevServerOptions): RsbuildPlugin {
+  return {
+    name: 'plugin',
+    setup(api) {
+      if(options.middleware) {
+        api.modifyRsbuildConfig((userConfig, { mergeRsbuildConfig }) => {
+          const devServerConfig: RsbuildConfig = {
+            dev: {
+              setupMiddlewares: [
+                (middlewares, devServer) => {
+                  // 可以拿到 middlewares 数组，可以对数组进行操作，例如在尾部增加一个处理函数
+                  middlewares.push(options.middleware)
+
+                  // server 参数的使用可以[参考文档](https://rsbuild.rs/config/dev/setup-middlewares#server-api)
+                  // server 内只有，[environments](https://rsbuild.rs/config/dev/setup-middlewares#environments) 和 [sockWrite](https://rsbuild.rs/config/dev/setup-middlewares#sockwrite) 两个属性
+
+                  // 其中 environments 为：https://rsbuild.rs/api/javascript-api/environment-api#environment-api 可以基于 rsbuild 的 environment 来处理不同环境的请求
+                }
+              ]
+            },
+          };
+
+          return mergeRsbuildConfig(userConfig, devServerConfig);
+        })
+      }
+    }
+  }
+}
+```
+
+该 Plugin 的使用方法如下：
+
+```typescript
+import MiddlewarePlugin from 'middleware-plugin';
+
+export default {
+  plugins: [
+    MiddlewarePlugin({
+      middleware: (req, res, next) => {
+        // req 是 http IncomingMessage
+        // res 是 http ServerResponse
+        // 可以在这里处理请求和响应
+        // 例如，针对获取 json 的内容返回一个 404 响应
+        if(req.url === '/json'){
+          res.writeHead(404);
+          res.end('Not Found');
+          return;
+        } else {
+          next()
+        }
+      }
+    })
+  ]
+}
+
+```
+
+
+
