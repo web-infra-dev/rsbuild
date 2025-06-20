@@ -225,3 +225,13 @@ export default {
   ]
 }
 ```
+
+## 插件的日志打印
+
+默认情况下插件可以直接使用 `console.log` 和 `console.error` 等标准方法进行日志输出。如果你希望打印跟 Rsbuild 主题更接近的 log 可以使用 logger。
+
+```typescript
+import { logger } from "@rsbuild/core";
+
+logger.log("hello world");
+```
