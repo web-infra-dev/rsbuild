@@ -34,7 +34,7 @@
     "@rsbuild/core": "workspace:*",
     "@rslib/core": "0.10.1",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.15.31",
+    "@types/node": "^22.15.32",
     "typescript": "^5.8.3"
   },
   "peerDependencies": {
