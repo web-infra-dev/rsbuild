@@ -39,7 +39,7 @@
     "@rsbuild/core": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
     "@rslib/core": "0.10.1",
-    "@types/lodash": "^4.17.17",
+    "@types/lodash": "^4.17.18",
     "@types/semver": "^7.7.0",
     "typescript": "^5.8.3",
     "webpack": "^5.99.9"
