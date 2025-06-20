@@ -1,16 +1,19 @@
 import { Link } from 'rspress/theme';
 import styles from './Step.module.scss';
-import { useUrl } from './utils';
+import { useI18nUrl } from './utils';
 
-const Step = (props: { href: string; title: string; description: string }) => {
-  const isExternal = props.href.startsWith('http');
+interface StepProps {
+  href: string;
+  title: string;
+  description: string;
+}
+const Step = ({ href, title, description }: StepProps) => {
+  const tUrl = useI18nUrl();
+  const isExternal = href.startsWith('http');
   return (
-    <Link
-      className={styles.step}
-      href={isExternal ? props.href : useUrl(props.href)}
-    >
-      <p className={styles.title}>{props.title}</p>
-      <p className={styles.description}>{props.description}</p>
+    <Link className={styles.step} href={isExternal ? href : tUrl(href)}>
+      <p className={styles.title}>{title}</p>
+      <p className={styles.description}>{description}</p>
     </Link>
   );
 };
