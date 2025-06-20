@@ -64,9 +64,6 @@
       },
       "nursery": {
         "useUniqueElementIds": "off"
-      },
-      "correctness": {
-        "useHookAtTopLevel": "off"
       }
     }
   }
