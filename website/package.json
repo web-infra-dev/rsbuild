@@ -26,7 +26,7 @@
     "rsbuild-plugin-open-graph": "^1.0.2",
     "rspress": "2.0.0-beta.14",
     "rspress-plugin-font-open-sans": "^1.0.0",
-    "rspress-plugin-sitemap": "^1.1.4",
+    "rspress-plugin-sitemap": "^1.2.0",
     "@rspress/plugin-llms": "2.0.0-beta.14",
     "typescript": "^5.8.3"
   }
