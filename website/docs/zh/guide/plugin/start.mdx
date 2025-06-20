@@ -104,8 +104,6 @@ export default function plugin(): RsbuildPlugin {
 
 ### 思路
 
-如果需求可以通过配置 Rsbuild 配置来达到，都推荐使用 modifyRsbuildConfig 来实现，并且最终通过 mergeRsbuildConfig 来更新 Rsbuild 的配置。
-
 1. 通过阅读 [RsbuildConfig](https://rsbuild.rs/config/) 了解哪个配置项目可以满足插件的需求
 2. 通过 `api.modifyRsbuildConfig` 方法修改 Rsbuild 的基本配置
 
@@ -147,75 +145,83 @@ export default function plugin(options: OutputOptions): RsbuildPlugin {
   };
 }
 ```
+### 例子 2: 自定义页面入口
 
-### 例子 2: 增加 devServer 能力
+例如，我们需要开发一个插件，自定义页面入口：
 
-同样的方法可以开发一个插件来为 devServer 增加一些服务处理能力：
-
-1. 在 Rsbuild 配置中了解可以修改 devServer 的配置项目，找到为 devServer.setupMiddlewares 可以[参考文档](https://rsbuild.rs/config/dev/setup-middlewares)
-2. 编写插件，通过 `api.modifyRsbuildConfig` 方法修改 devServer 的配置，代码示例如下：
+1. 在 Rsbuild 配置中了解可以修改页面入口的配置项目，找到为 source.entry 可以[参考文档](https://rsbuild.rs/config/source/entry)
+2. 编写插件，通过 `api.modifyRsbuildConfig` 方法修改页面入口的位置，代码示例如下：
 
 ```typescript
-import { RsbuildPlugin, RequestHandler } from '@rsbuild/core';
-interface DevServerOptions {
-  middleware: RequestHandler;
+import { RsbuildPlugin } from '@rsbuild/core';
+
+interface EntryOptions {
+  entry: string;
 }
+export default function plugin(options: EntryOptions): RsbuildPlugin {
+  return {
+    name: 'rsbuild-source-plugin',
+    setup(api) {
+      if(options.entry) {
+        api.modifyRsbuildConfig((userConfig, { mergeRsbuildConfig }) => {
+          let entry = "./src/index.ts"; // config you own entry, custom your logic here
+          const sourceConfig: RsbuildConfig = {
+            source:{
+              entry: entry || options.entry,
+            },
+          };
+
+          return mergeRsbuildConfig(userConfig, sourceConfig);
+        });
+      }
+    }
+  };
+}
+```
+
+
+## 自定义 DevServer 的行为
+
+可以通过 [onBeforeStartDevServer](https://rsbuild.rs/zh/plugins/dev/hooks#onbeforestartdevserver) 来自定义 DevServer 的行为。
+
+例如，我们需要自定义 DevServer 来处理一些请求，代码示例如下：
+
+```typescript
+
+import { RsbuildPlugin } from '@rsbuild/core';
+import { RequestHandler } from 'express';
+
+type DevServerOptions = Record<string, string>;
+
 export default function plugin(options: DevServerOptions): RsbuildPlugin {
   return {
     name: 'plugin',
     setup(api) {
-      if(options.middleware) {
-        api.modifyRsbuildConfig((userConfig, { mergeRsbuildConfig }) => {
-          const devServerConfig: RsbuildConfig = {
-            dev: {
-              setupMiddlewares: [
-                (middlewares, devServer) => {
-                  // 可以拿到 middlewares 数组，可以对数组进行操作，例如在尾部增加一个处理函数
-                  middlewares.push(options.middleware)
-
-                  // server 参数的使用可以[参考文档](https://rsbuild.rs/config/dev/setup-middlewares#server-api)
-                  // server 内只有，[environments](https://rsbuild.rs/config/dev/setup-middlewares#environments) 和 [sockWrite](https://rsbuild.rs/config/dev/setup-middlewares#sockwrite) 两个属性
-
-                  // 其中 environments 为：https://rsbuild.rs/api/javascript-api/environment-api#environment-api 可以基于 rsbuild 的 environment 来处理不同环境的请求
-                }
-              ]
-            },
-          };
-
-          return mergeRsbuildConfig(userConfig, devServerConfig);
-        })
-      }
-    }
-  }
+      api.onBeforeStartDevServer(({ server }) => {
+        server.middlewares.use((req, res, next) => {
+          const urls = Object.keys(options);
+          if(urls.includes(req.url)) {
+            res.end(options[req.url]);
+          }else{
+            next();
+          }
+        });
+      });
+    },
+  };
 }
 ```
 
-该 Plugin 的使用方法如下：
+该插件的使用例子：
 
 ```typescript
-import MiddlewarePlugin from 'middleware-plugin';
+import staticContent from './plugin';
 
 export default {
   plugins: [
-    MiddlewarePlugin({
-      middleware: (req, res, next) => {
-        // req 是 http IncomingMessage
-        // res 是 http ServerResponse
-        // 可以在这里处理请求和响应
-        // 例如，针对获取 json 的内容返回一个 404 响应
-        if(req.url === '/json'){
-          res.writeHead(404);
-          res.end('Not Found');
-          return;
-        } else {
-          next()
-        }
-      }
+    staticContent({
+      '/json': '{"name": "rsbuild"}',
     })
   ]
 }
-
 ```
-
-
-
