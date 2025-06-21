@@ -1638,7 +1638,7 @@ export interface DevConfig {
   /**
    * Provides the ability to execute a custom function and apply custom middlewares.
    */
-  setupMiddlewares?: SetupMiddlewaresFn[];
+  setupMiddlewares?: SetupMiddlewaresFn | SetupMiddlewaresFn[];
   /**
    * Controls whether the build output from development mode is written to disk.
    * @default false

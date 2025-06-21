@@ -12,20 +12,18 @@ export async function startDevServerPure(fixtures) {
       },
       dev: {
         printUrls: false,
-        setupMiddlewares: [
-          (middlewares) => {
-            middlewares.unshift((req, res, next) => {
-              if (req.url === '/test') {
-                res.writeHead(302, {
-                  Location: '/bbb',
-                });
-                res.end();
-              } else {
-                next();
-              }
-            });
-          },
-        ],
+        setupMiddlewares: (middlewares) => {
+          middlewares.unshift((req, res, next) => {
+            if (req.url === '/test') {
+              res.writeHead(302, {
+                Location: '/bbb',
+              });
+              res.end();
+            } else {
+              next();
+            }
+          });
+        },
       },
     },
   });

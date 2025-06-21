@@ -154,15 +154,13 @@ test('should allow to access manifest data in environment API', async ({
         },
       },
       dev: {
-        setupMiddlewares: [
-          (middlewares, { environments }) => {
-            middlewares.unshift(async (_req, _res, next) => {
-              webManifest = environments.web.context.manifest;
-              nodeManifest = environments.node.context.manifest;
-              next();
-            });
-          },
-        ],
+        setupMiddlewares: (middlewares, { environments }) => {
+          middlewares.unshift(async (_req, _res, next) => {
+            webManifest = environments.web.context.manifest;
+            nodeManifest = environments.node.context.manifest;
+            next();
+          });
+        },
       },
     },
   });
