@@ -162,13 +162,11 @@ Rsbuild 提供了三种方式来注册中间件：
 ```ts title="rsbuild.config.ts"
 export default {
   dev: {
-    setupMiddlewares: [
-      (middlewares, server) => {
-        middlewares.push((req, res, next) => {
-          next();
-        });
-      },
-    ],
+    setupMiddlewares: (middlewares, server) => {
+      middlewares.push((req, res, next) => {
+        next();
+      });
+    },
   },
 };
 ```
@@ -214,11 +212,9 @@ app.use(expressMiddleware);
 
 export default {
   dev: {
-    setupMiddlewares: [
-      (middleware) => {
-        middleware.unshift(app);
-      },
-    ],
+    setupMiddlewares: (middlewares) => {
+      middlewares.unshift(app);
+    },
   },
 };
 ```
