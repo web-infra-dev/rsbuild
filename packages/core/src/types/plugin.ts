@@ -6,6 +6,7 @@ import type {
 } from 'webpack';
 import type RspackChain from '../../compiled/rspack-chain';
 import type { ChainIdentifier } from '../configChain';
+import type { Logger } from '../logger';
 import type {
   ModifyRspackConfigUtils,
   NarrowedRspackConfig,
@@ -502,6 +503,12 @@ export type RsbuildPluginAPI = Readonly<{
    * `modifyRsbuildConfig` hook is executed.
    */
   getNormalizedConfig: typeof getNormalizedConfig;
+  /**
+   * A logger instance used to output log information in a unified format.
+   * Use this instead of `console.log` to maintain consistent logging with Rsbuild.
+   * Equivalent to `import { logger } from '@rsbuild/core'`.
+   */
+  logger: Logger;
   /**
    * Determines if a plugin has been registered in the current Rsbuild instance.
    */
