@@ -347,6 +347,7 @@ export function initPluginAPI({
   return (environment?: string) => ({
     context: publicContext,
     expose,
+    logger,
     transform: getTransformHook(environment),
     useExposed,
     processAssets: setProcessAssets(environment),

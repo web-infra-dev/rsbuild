@@ -31,7 +31,7 @@ export { PLUGIN_CSS_NAME, PLUGIN_SWC_NAME } from './constants';
 export { defaultAllowedOrigins } from './defaultConfig';
 export { ensureAssetPrefix } from './helpers';
 // Helpers
-export { logger } from './logger';
+export { type Logger, logger } from './logger';
 export { mergeRsbuildConfig } from './mergeConfig';
 export type { RsbuildDevServer } from './server/devServer';
 export type { StartServerResult } from './server/helper';
