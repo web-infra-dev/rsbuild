@@ -45,12 +45,12 @@ test('should apply to trigger page reload via the `static-changed` type of sockW
     page,
     rsbuildConfig: {
       dev: {
-        setupMiddlewares: (middlewares, server) => {
+        setupMiddlewares: (middlewares, { sockWrite }) => {
           middlewares.unshift((_req, _res, next) => {
             count++;
             next();
           });
-          reloadPage = () => server.sockWrite('static-changed');
+          reloadPage = () => sockWrite('static-changed');
         },
       },
     },
