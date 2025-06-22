@@ -25,24 +25,22 @@ export const serverRender =
 export default defineConfig({
   plugins: [pluginReact()],
   dev: {
-    setupMiddlewares: [
-      ({ unshift }, serverAPI) => {
-        const serverRenderMiddleware = serverRender(serverAPI);
+    setupMiddlewares: ({ unshift }, serverAPI) => {
+      const serverRenderMiddleware = serverRender(serverAPI);
 
-        unshift(async (req, res, next) => {
-          if (req.method === 'GET' && req.url === '/') {
-            try {
-              await serverRenderMiddleware(req, res, next);
-            } catch (err) {
-              logger.error('SSR render error, downgrade to CSR...\n', err);
-              next();
-            }
-          } else {
+      unshift(async (req, res, next) => {
+        if (req.method === 'GET' && req.url === '/') {
+          try {
+            await serverRenderMiddleware(req, res, next);
+          } catch (err) {
+            logger.error('SSR render error, downgrade to CSR...\n', err);
             next();
           }
-        });
-      },
-    ],
+        } else {
+          next();
+        }
+      });
+    },
   },
   environments: {
     web: {

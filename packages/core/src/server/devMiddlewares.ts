@@ -1,7 +1,7 @@
 import { isAbsolute, join } from 'node:path';
 import { rspack } from '@rspack/core';
 import { normalizePublicDirs } from '../defaultConfig';
-import { pick } from '../helpers';
+import { castArray, pick } from '../helpers';
 import { logger } from '../logger';
 import type {
   DevConfig,
@@ -52,7 +52,7 @@ const applySetupMiddlewares = (
   const before: RequestHandler[] = [];
   const after: RequestHandler[] = [];
 
-  for (const handler of setupMiddlewares) {
+  for (const handler of castArray(setupMiddlewares)) {
     handler(
       {
         unshift: (...handlers) => before.unshift(...handlers),

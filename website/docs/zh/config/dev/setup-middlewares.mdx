@@ -11,15 +11,15 @@ type SetupMiddlewaresServer = {
   environments: EnvironmentAPI;
 };
 
-type SetupMiddlewares = Array<
-  (
-    middlewares: {
-      unshift: (...handlers: RequestHandler[]) => void;
-      push: (...handlers: RequestHandler[]) => void;
-    },
-    server: SetupMiddlewaresServer,
-  ) => void
->;
+type SetupMiddlewaresFn = (
+  middlewares: {
+    unshift: (...handlers: RequestHandler[]) => void;
+    push: (...handlers: RequestHandler[]) => void;
+  },
+  server: SetupMiddlewaresServer,
+) => void;
+
+type SetupMiddlewares = SetupMiddlewaresFn | SetupMiddlewaresFn[];
 ```
 
 - **默认值：** `undefined`
@@ -35,19 +35,17 @@ type SetupMiddlewares = Array<
 ```ts title="rsbuild.config.ts"
 export default {
   dev: {
-    setupMiddlewares: [
-      (middlewares, server) => {
-        middlewares.unshift((req, res, next) => {
-          console.log('first');
-          next();
-        });
+    setupMiddlewares: (middlewares, server) => {
+      middlewares.unshift((req, res, next) => {
+        console.log('first');
+        next();
+      });
 
-        middlewares.push((req, res, next) => {
-          console.log('last');
-          next();
-        });
-      },
-    ],
+      middlewares.push((req, res, next) => {
+        console.log('last');
+        next();
+      });
+    },
   },
 };
 ```
@@ -63,15 +61,13 @@ export default {
 ```ts title="rsbuild.config.ts"
 export default {
   dev: {
-    setupMiddlewares: [
-      (middlewares, { environments }) => {
-        middlewares.unshift(async (req, _res, next) => {
-          const webStats = await environments.web.getStats();
-          console.log(webStats.toJson({ all: false }));
-          next();
-        });
-      },
-    ],
+    setupMiddlewares: (middlewares, { environments }) => {
+      middlewares.unshift(async (req, _res, next) => {
+        const webStats = await environments.web.getStats();
+        console.log(webStats.toJson({ all: false }));
+        next();
+      });
+    },
   },
 };
 ```
@@ -85,13 +81,11 @@ export default {
 ```ts title="rsbuild.config.ts"
 export default {
   dev: {
-    setupMiddlewares: [
-      (middlewares, { sockWrite }) => {
-        if (someCondition) {
-          sockWrite('static-changed');
-        }
-      },
-    ],
+    setupMiddlewares: (middlewares, { sockWrite }) => {
+      if (someCondition) {
+        sockWrite('static-changed');
+      }
+    },
   },
 };
 ```
