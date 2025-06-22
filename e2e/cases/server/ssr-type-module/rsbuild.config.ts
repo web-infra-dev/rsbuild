@@ -2,12 +2,12 @@ import {
   defineConfig,
   logger,
   type RequestHandler,
-  type SetupMiddlewaresServer,
+  type SetupMiddlewaresContext,
 } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 export const serverRender =
-  ({ environments }: SetupMiddlewaresServer): RequestHandler =>
+  ({ environments }: SetupMiddlewaresContext): RequestHandler =>
   async (_req, res, _next) => {
     const bundle = await environments.node.loadBundle<{
       render: () => string;
@@ -25,8 +25,8 @@ export const serverRender =
 export default defineConfig({
   plugins: [pluginReact()],
   dev: {
-    setupMiddlewares: ({ unshift }, serverAPI) => {
-      const serverRenderMiddleware = serverRender(serverAPI);
+    setupMiddlewares: ({ unshift }, context) => {
+      const serverRenderMiddleware = serverRender(context);
 
       unshift(async (req, res, next) => {
         if (req.method === 'GET' && req.url === '/') {

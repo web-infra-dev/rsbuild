@@ -162,7 +162,7 @@ Rsbuild provides three ways to register middleware:
 ```ts title="rsbuild.config.ts"
 export default {
   dev: {
-    setupMiddlewares: (middlewares, server) => {
+    setupMiddlewares: (middlewares) => {
       middlewares.push((req, res, next) => {
         next();
       });

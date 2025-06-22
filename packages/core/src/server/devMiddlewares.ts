@@ -8,7 +8,7 @@ import type {
   InternalContext,
   RequestHandler,
   ServerConfig,
-  SetupMiddlewaresServer,
+  SetupMiddlewaresContext,
 } from '../types';
 import type { CompilationManager } from './compilationManager';
 import type { RsbuildDevServer } from './devServer';
@@ -44,7 +44,7 @@ const applySetupMiddlewares = (
 ) => {
   const setupMiddlewares = dev.setupMiddlewares || [];
 
-  const serverOptions: SetupMiddlewaresServer = pick(devServerAPI, [
+  const serverOptions: SetupMiddlewaresContext = pick(devServerAPI, [
     'sockWrite',
     'environments',
   ]);

@@ -1518,7 +1518,7 @@ export type EnvironmentAPI = {
   };
 };
 
-export type SetupMiddlewaresServer = Pick<
+export type SetupMiddlewaresContext = Pick<
   RsbuildDevServer,
   'sockWrite' | 'environments'
 >;
@@ -1528,7 +1528,7 @@ export type SetupMiddlewaresFn = (
     unshift: (...handlers: RequestHandler[]) => void;
     push: (...handlers: RequestHandler[]) => void;
   },
-  server: SetupMiddlewaresServer,
+  server: SetupMiddlewaresContext,
 ) => void;
 
 export type ClientConfig = {

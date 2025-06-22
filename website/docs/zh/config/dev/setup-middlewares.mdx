@@ -3,7 +3,7 @@
 - **类型：**
 
 ```ts
-type SetupMiddlewaresServer = {
+type SetupMiddlewaresContext = {
   sockWrite: (
     type: string,
     data?: string | boolean | Record<string, any>,
@@ -16,7 +16,7 @@ type SetupMiddlewaresFn = (
     unshift: (...handlers: RequestHandler[]) => void;
     push: (...handlers: RequestHandler[]) => void;
   },
-  server: SetupMiddlewaresServer,
+  context: SetupMiddlewaresContext,
 ) => void;
 
 type SetupMiddlewares = SetupMiddlewaresFn | SetupMiddlewaresFn[];
@@ -35,7 +35,7 @@ type SetupMiddlewares = SetupMiddlewaresFn | SetupMiddlewaresFn[];
 ```ts title="rsbuild.config.ts"
 export default {
   dev: {
-    setupMiddlewares: (middlewares, server) => {
+    setupMiddlewares: (middlewares) => {
       middlewares.unshift((req, res, next) => {
         console.log('first');
         next();
@@ -50,9 +50,9 @@ export default {
 };
 ```
 
-## Server API
+## Context 对象
 
-在 `setupMiddlewares` 函数中，你可以访问到 `server` 对象，该对象提供了一些服务器 API。
+在 `setupMiddlewares` 函数中，你可以访问到 `context` 对象，该对象提供了一些服务器上下文和 API。
 
 ### environments
 
