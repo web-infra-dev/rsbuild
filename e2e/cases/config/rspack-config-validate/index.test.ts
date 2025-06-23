@@ -18,7 +18,7 @@ rspackOnlyTest('should validate Rspack config by default', async () => {
     });
   } catch (e) {
     expect(e).toBeTruthy();
-    expect((e as Error).message).toContain('Expected object, received number');
+    expect((e as Error).message).toContain('received object at "entry"');
   }
 });
 
