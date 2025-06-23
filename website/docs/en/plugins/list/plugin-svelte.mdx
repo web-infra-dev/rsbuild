@@ -132,7 +132,9 @@ export default {
           ],
         },
         less: {
-          // use less preprocessing to handle alias imports
+          // recommend simple alias handling for Less files
+          replace: [['@/style', 'style']],
+          // use less plugin to handle alias imports
           plugins: [],
         },
       },

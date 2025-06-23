@@ -132,7 +132,9 @@ export default {
           ],
         },
         less: {
-          // 使用 less preprocessing 来处理别名导入
+          // 推荐使用 replace 来处理别名导入，更简单
+          replace: [['@/style', 'style']],
+          // 使用 less plugin 来处理别名导入
           plugins: [],
         },
       },
