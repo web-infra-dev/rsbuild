@@ -279,9 +279,6 @@ export const getDevMiddlewares = async (
 
   middlewares.push(...after);
 
-  // start watching
-  compilationManager?.watch();
-
   return {
     close: async () => {
       await compilationManager?.close();
