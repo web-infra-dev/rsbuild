@@ -22,7 +22,6 @@ import {
   getRequestLoggerMiddleware,
   viewingServedFilesMiddleware,
 } from './middlewares';
-import { replacePortPlaceholder } from './open';
 import { createProxyMiddleware } from './proxy';
 
 export type RsbuildDevMiddlewareOptions = {
@@ -129,21 +128,10 @@ const applyDefaultMiddlewares = async ({
     dev.lazyCompilation &&
     compilationManager
   ) {
-    const { compiler } = compilationManager;
-
-    if (
-      typeof dev.lazyCompilation === 'object' &&
-      typeof dev.lazyCompilation.serverUrl === 'string' &&
-      context.devServer
-    ) {
-      dev.lazyCompilation.serverUrl = replacePortPlaceholder(
-        dev.lazyCompilation.serverUrl,
-        context.devServer.port,
-      );
-    }
-
     middlewares.push(
-      rspack.experiments.lazyCompilationMiddleware(compiler) as RequestHandler,
+      rspack.experiments.lazyCompilationMiddleware(
+        compilationManager.compiler,
+      ) as RequestHandler,
     );
   }
 

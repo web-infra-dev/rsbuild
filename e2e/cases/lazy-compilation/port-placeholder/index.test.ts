@@ -1,10 +1,7 @@
 import { dev, expectPoll, gotoPage } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-// TODO: fixme
-test.skip('should replace port placeholder with actual port', async ({
-  page,
-}) => {
+test('should replace port placeholder with actual port', async ({ page }) => {
   if (process.platform === 'win32') {
     test.skip();
   }

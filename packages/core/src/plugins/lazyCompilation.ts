@@ -1,3 +1,4 @@
+import { replacePortPlaceholder } from '../server/open';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginLazyCompilation = (): RsbuildPlugin => ({
@@ -32,6 +33,26 @@ export const pluginLazyCompilation = (): RsbuildPlugin => ({
           return;
         }
       }
+
+      // replace port placeholder in `serverUrl` with actual port
+      if (
+        typeof options === 'object' &&
+        typeof options.serverUrl === 'string' &&
+        api.context.devServer
+      ) {
+        chain.experiments({
+          ...chain.get('experiments'),
+          lazyCompilation: {
+            ...options,
+            serverUrl: replacePortPlaceholder(
+              options.serverUrl,
+              api.context.devServer.port,
+            ),
+          },
+        });
+        return;
+      }
+
       chain.experiments({
         ...chain.get('experiments'),
         lazyCompilation: options,
