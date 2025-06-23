@@ -235,3 +235,18 @@ import { logger } from "@rsbuild/core";
 
 logger.log("hello world");
 ```
+
+## 自定义 resolver 
+
+当插件有需求要自定义 resolver 的行为时，可以使用 @rspack/resolver 来创建新的 resolver，可以在[这里](https://github.com/web-infra-dev/rspack-resolver/blob/main/README.md)了解更多的信息
+
+```typescript
+import { ResolverFactory } from "@rspack/resolver";
+
+const resolver = new ResolverFactory({
+  alias: [],
+  mainFields: ["main", "module"],
+});
+
+const indexJsPath = resolver.async(__dirname, "./index.js").path; // resolve specifier at an absolute path to a directory.
+```
