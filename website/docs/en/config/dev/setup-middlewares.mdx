@@ -23,14 +23,18 @@ type SetupMiddlewares = SetupMiddlewaresFn | SetupMiddlewaresFn[];
 ```
 
 - **Default:** `undefined`
+- **Version:** `>= 1.4.0`
 
-Provides the ability to execute a custom function and apply custom middleware.
+Used to add custom middleware to the dev server.
 
-> See [Dev Server - Middleware](/guide/basic/server#middleware) for more information.
+> See [Dev server - Middleware](/guide/basic/server#middleware) for more information.
 
-## Execution order
+## Basic Usage
 
-The order among several different types of middleware is: `unshift` => internal middleware => `push`.
+`setupMiddlewares` function receives a `middlewares` array, you can add custom middleware by `unshift` and `push` methods:
+
+- Use `unshift` to prepend middleware to the array, executed earlier than the built-in middleware.
+- Use `push` to append middleware to the array, executed later than the built-in middleware.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -50,9 +54,30 @@ export default {
 };
 ```
 
+`setupMiddlewares` also supports passing an array, each item of which is a function to setup middlewares:
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    setupMiddlewares: [
+      (middlewares) => {
+        // ...
+      },
+      (middlewares) => {
+        // ...
+      },
+    ],
+  },
+};
+```
+
+:::tip
+In versions before Rsbuild 1.4.0, `setupMiddlewares` must pass an array.
+:::
+
 ## Context object
 
-In the `setupMiddlewares` function, you can access the `context` object, which provides some server context and APIs.
+The second parameter of the `setupMiddlewares` function is the `context` object, which provides some server context and APIs.
 
 ### environments
 

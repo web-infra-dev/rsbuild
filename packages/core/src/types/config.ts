@@ -1636,7 +1636,7 @@ export interface DevConfig {
         help?: boolean | string;
       };
   /**
-   * Provides the ability to execute a custom function and apply custom middlewares.
+   * Used to add custom middleware to the dev server.
    */
   setupMiddlewares?: SetupMiddlewaresFn | SetupMiddlewaresFn[];
   /**
