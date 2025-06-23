@@ -5,7 +5,6 @@ import { expect, test } from '@playwright/test';
 rspackOnlyTest(
   'should render pages correctly when using lazy compilation and add new initial chunk',
   async ({ page }) => {
-    // TODO fix this case on Windows
     if (process.platform === 'win32') {
       test.skip();
     }

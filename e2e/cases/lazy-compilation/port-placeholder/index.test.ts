@@ -5,7 +5,6 @@ import { expect, test } from '@playwright/test';
 test.skip('should replace port placeholder with actual port', async ({
   page,
 }) => {
-  // TODO fix this case on Windows
   if (process.platform === 'win32') {
     test.skip();
   }

@@ -4,7 +4,6 @@ import { expect, test } from '@playwright/test';
 rspackOnlyTest(
   'should lazy compile dynamic imported modules',
   async ({ page }) => {
-    // TODO fix this case on Windows
     if (process.platform === 'win32') {
       test.skip();
     }
