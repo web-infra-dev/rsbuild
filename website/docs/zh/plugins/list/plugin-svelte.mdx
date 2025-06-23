@@ -106,3 +106,39 @@ pluginSvelte({
 ## 注意事项
 
 目前 `svelte-loader` 暂不支持 Svelte v5 热更新，详见 [svelte-loader - Hot Reload](https://github.com/sveltejs/svelte-loader?tab=readme-ov-file#hot-reload)。
+
+### Less/Sass 中的别名处理
+
+在 Svelte 组件中使用别名来引入 Less 或 Sass 文件时，需要手动处理别名的路径解析，否则会出现 `"file not found"` 的错误。
+
+- **示例：**
+
+```ts title="rsbuild.config.ts"
+import { pluginSvelte } from '@rsbuild/plugin-svelte';
+
+export default {
+  plugins: [
+    pluginSvelte({
+      preprocessOptions: {
+        scss: {
+          importer: [
+            // 处理 SCSS 文件的别名导入
+            (url, prev) => {
+              if (url.startsWith('@/')) {
+                return { file: url.replace('@/', 'src/') };
+              }
+              return null;
+            },
+          ],
+        },
+        less: {
+          // 使用 less preprocessing 来处理别名导入
+          plugins: [],
+        },
+      },
+    }),
+  ],
+};
+```
+
+通过配置 `preprocessOptions`，可以保证在 Svelte 组件中引入的 `@import '@/styles/variables.scss` 或者 `@import '@/styles/variables.less'` 能够被正确解析。
