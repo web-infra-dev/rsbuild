@@ -1,12 +1,10 @@
 import { dev, expectPoll, gotoPage } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-// TODO: failed to run this case after updating playwright
-// https://github.com/web-infra-dev/rsbuild/pull/4331
+// TODO: fixme
 test.skip('should replace port placeholder with actual port', async ({
   page,
 }) => {
-  // TODO fix this case on Windows
   if (process.platform === 'win32') {
     test.skip();
   }
