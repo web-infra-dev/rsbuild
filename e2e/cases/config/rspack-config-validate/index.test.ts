@@ -23,6 +23,9 @@ rspackOnlyTest('should validate Rspack config by default', async () => {
 });
 
 rspackOnlyTest('should warn when passing unrecognized keys', async () => {
+  const value = process.env.RSPACK_CONFIG_VALIDATE;
+  process.env.RSPACK_CONFIG_VALIDATE = 'loose-unrecognized-keys';
+
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
@@ -41,6 +44,8 @@ rspackOnlyTest('should warn when passing unrecognized keys', async () => {
     ),
   );
   await rsbuild.close();
+
+  process.env.RSPACK_CONFIG_VALIDATE = value;
 });
 
 rspackOnlyTest('should allow to override Rspack config validate', async () => {
