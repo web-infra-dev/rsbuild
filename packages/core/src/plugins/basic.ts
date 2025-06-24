@@ -91,6 +91,17 @@ export const pluginBasic = (): RsbuildPlugin => ({
           );
         }
 
+        if (api.context.bundlerType === 'rspack') {
+          chain.experiments({
+            ...chain.get('experiments'),
+            rspackFuture: {
+              bundlerInfo: {
+                force: false,
+              },
+            },
+          });
+        }
+
         // Disable Rspack's config schema validation to improve performance.
         // Rsbuild has ensured that the built-in Rspack configuration is correct
         // through TypeScript, so we no longer need to perform schema validation
