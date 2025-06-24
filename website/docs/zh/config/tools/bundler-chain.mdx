@@ -98,13 +98,11 @@ export default {
 ```js
 export default {
   tools: {
-    rspack: (config, { target }) => {
+    bundlerChain: (chain, { target }) => {
       if (target === 'node') {
         // ...
-        config.plugins.push(new SomePluginForNode());
-        return config;
+        return;
       }
-      return config;
     },
   },
 };
