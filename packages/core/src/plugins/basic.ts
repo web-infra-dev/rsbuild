@@ -91,6 +91,19 @@ export const pluginBasic = (): RsbuildPlugin => ({
           );
         }
 
+        if (api.context.bundlerType === 'rspack') {
+          chain.experiments({
+            ...chain.get('experiments'),
+            rspackFuture: {
+              bundlerInfo: {
+                // TODO: SRI requires `__webpack_require__`
+                // https://github.com/web-infra-dev/rspack/issues/10783
+                force: Boolean(config.security.sri.enable),
+              },
+            },
+          });
+        }
+
         // Disable Rspack's config schema validation to improve performance.
         // Rsbuild has ensured that the built-in Rspack configuration is correct
         // through TypeScript, so we no longer need to perform schema validation
