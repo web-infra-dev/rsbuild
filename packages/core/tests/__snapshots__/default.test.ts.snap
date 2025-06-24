@@ -1349,6 +1349,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "output": {
     "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
     "chunkFilename": "[name].js",
+    "devtoolModuleFilenameTemplate": [Function],
     "filename": "[name].js",
     "hashFunction": "xxhash64",
     "library": {

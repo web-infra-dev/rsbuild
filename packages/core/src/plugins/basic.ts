@@ -29,7 +29,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(
-      (chain, { env, isDev, target, bundler, environment, CHAIN_ID }) => {
+      (chain, { isDev, target, bundler, environment, CHAIN_ID }) => {
         const { config } = environment;
 
         chain.name(environment.name);
@@ -82,7 +82,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
             .use(bundler.HotModuleReplacementPlugin);
         }
 
-        if (env === 'development') {
+        if (isDev) {
           // Set correct path for source map
           // this helps VS Code break points working correctly in monorepo
           chain.output.devtoolModuleFilenameTemplate(
