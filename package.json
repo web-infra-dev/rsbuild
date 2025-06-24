@@ -47,7 +47,7 @@
     "heading-case": "^0.1.6",
     "nano-staged": "^0.8.0",
     "nx": "^21.2.1",
-    "prettier": "^3.5.3",
+    "prettier": "^3.6.0",
     "simple-git-hooks": "^2.13.0",
     "typescript": "^5.8.3"
   },
