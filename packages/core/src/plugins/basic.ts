@@ -91,8 +91,11 @@ export const pluginBasic = (): RsbuildPlugin => ({
           );
         }
 
-        // enable Rspack config schema validation, unrecognized keys are allowed
-        process.env.RSPACK_CONFIG_VALIDATE ||= 'loose-unrecognized-keys';
+        // Disable Rspack's config schema validation to improve performance.
+        // Rsbuild has ensured that the built-in Rspack configuration is correct
+        // through TypeScript, so we no longer need to perform schema validation
+        // at runtime. This can be manually enabled via `RSPACK_CONFIG_VALIDATE=strict'
+        process.env.RSPACK_CONFIG_VALIDATE ||= 'loose-silent';
       },
     );
   },
