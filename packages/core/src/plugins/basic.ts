@@ -97,6 +97,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
             rspackFuture: {
               bundlerInfo: {
                 // TODO: SRI requires `__webpack_require__`
+                // https://github.com/web-infra-dev/rspack/issues/10783
                 force: Boolean(config.security.sri.enable),
               },
             },
