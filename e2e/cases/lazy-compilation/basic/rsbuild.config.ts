@@ -9,14 +9,4 @@ export default defineConfig({
       page2: './src/page2/index.js',
     },
   },
-  dev: {
-    lazyCompilation: false,
-  },
-  tools: {
-    rspack: {
-      experiments: {
-        lazyCompilation: true,
-      },
-    },
-  },
 });
