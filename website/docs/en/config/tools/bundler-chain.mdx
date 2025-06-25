@@ -54,7 +54,7 @@ export default {
 
 - **Type:** `boolean`
 
-Used to determine whether the current build is a development build, such as:
+A boolean value indicating whether this is a development build. Set to `true` when the [mode](/config/mode) is `development`.
 
 ```js
 export default {
@@ -73,7 +73,7 @@ export default {
 
 - **Type:** `boolean`
 
-Used to determine whether the current build is a production build, such as:
+A boolean value indicating whether this is a production build. Set to `true` when the [mode](/config/mode) is `production`.
 
 ```js
 export default {
@@ -91,7 +91,9 @@ export default {
 
 - **Type:** `'web' | 'node' | 'web-worker'`
 
-The `target` parameter can be used to determine the build target environment. For example:
+The current [build target](/config/output/target).
+
+You can set different Rspack configurations for different build targets, for example:
 
 ```js
 export default {
@@ -99,6 +101,7 @@ export default {
     bundlerChain: (chain, { target }) => {
       if (target === 'node') {
         // ...
+        return;
       }
     },
   },
@@ -109,7 +112,7 @@ export default {
 
 - **Type:** `boolean`
 
-Determines whether the target environment is `node`, equivalent to `target === 'node'`.
+A boolean value indicating whether the [build target](/config/output/target) is `node`, equivalent to `target === 'node'`.
 
 ```js
 export default {
@@ -127,7 +130,7 @@ export default {
 
 - **Type:** `boolean`
 
-Determines whether the target environment is `web-worker`, equivalent to `target === 'web-worker'`.
+A boolean value indicating whether the [build target](/config/output/target) is `web-worker`, equivalent to `target === 'web-worker'`.
 
 ```js
 export default {
@@ -145,7 +148,7 @@ export default {
 
 - **Type:** `Rspack`
 
-The Rspack instance. For example:
+The Rspack instance, same as `import { rspack } from '@rsbuild/core'`.
 
 ```js
 export default {
@@ -181,7 +184,7 @@ export default {
 
 ## CHAIN_ID
 
-Some common Chain IDs are predefined in the Rsbuild, and you can use these IDs to locate the built-in Rule or Plugin.
+Some common chain IDs are predefined in the Rsbuild, and you can use these IDs to locate the built-in Rule or Plugin.
 
 :::tip
 Please note that some of the rules or plugins listed below are not available by default. They will only be included in the Rspack or webpack configuration when you enable specific options or register certain plugins.
