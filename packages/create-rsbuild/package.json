@@ -1,6 +1,6 @@
 {
   "name": "create-rsbuild",
-  "version": "1.3.2",
+  "version": "1.3.4",
   "description": "Create a new Rsbuild project",
   "homepage": "https://rsbuild.rs",
   "repository": {
@@ -29,7 +29,7 @@
     "bump": "npx bumpp --no-tag"
   },
   "dependencies": {
-    "create-rstack": "1.5.0"
+    "create-rstack": "1.5.1"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
@@ -39,8 +39,8 @@
     "@rsbuild/plugin-solid": "workspace:*",
     "@rsbuild/plugin-svelte": "workspace:*",
     "@rsbuild/plugin-vue": "workspace:*",
-    "@rslib/core": "0.10.1",
-    "@types/node": "^22.15.31",
+    "@rslib/core": "0.10.2",
+    "@types/node": "^22.15.32",
     "typescript": "^5.8.3"
   },
   "engines": {

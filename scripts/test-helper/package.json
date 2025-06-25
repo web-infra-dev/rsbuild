@@ -26,13 +26,13 @@
   },
   "dependencies": {
     "@rsbuild/core": "workspace:*",
-    "@types/node": "^22.15.31",
+    "@types/node": "^22.15.32",
     "path-serializer": "0.5.0",
     "typescript": "^5.8.3",
     "upath": "2.0.1"
   },
   "devDependencies": {
-    "@rslib/core": "0.10.1"
+    "@rslib/core": "0.10.2"
   },
   "publishConfig": {
     "access": "public",

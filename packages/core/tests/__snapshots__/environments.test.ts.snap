@@ -1306,6 +1306,11 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     "devtool": "eval-source-map",
     "experiments": {
       "asyncWebAssembly": true,
+      "rspackFuture": {
+        "bundlerInfo": {
+          "force": false,
+        },
+      },
     },
     "infrastructureLogging": {
       "level": "error",
@@ -1730,6 +1735,11 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     "devtool": "eval",
     "experiments": {
       "asyncWebAssembly": true,
+      "rspackFuture": {
+        "bundlerInfo": {
+          "force": false,
+        },
+      },
     },
     "infrastructureLogging": {
       "level": "error",

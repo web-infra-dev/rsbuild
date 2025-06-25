@@ -29,7 +29,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(
-      (chain, { env, isDev, target, bundler, environment, CHAIN_ID }) => {
+      (chain, { isDev, target, bundler, environment, CHAIN_ID }) => {
         const { config } = environment;
 
         chain.name(environment.name);
@@ -82,7 +82,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
             .use(bundler.HotModuleReplacementPlugin);
         }
 
-        if (env === 'development') {
+        if (isDev) {
           // Set correct path for source map
           // this helps VS Code break points working correctly in monorepo
           chain.output.devtoolModuleFilenameTemplate(
@@ -91,8 +91,24 @@ export const pluginBasic = (): RsbuildPlugin => ({
           );
         }
 
-        // enable Rspack config schema validation, unrecognized keys are allowed
-        process.env.RSPACK_CONFIG_VALIDATE ||= 'loose-unrecognized-keys';
+        if (api.context.bundlerType === 'rspack') {
+          chain.experiments({
+            ...chain.get('experiments'),
+            rspackFuture: {
+              bundlerInfo: {
+                // TODO: SRI requires `__webpack_require__`
+                // https://github.com/web-infra-dev/rspack/issues/10783
+                force: Boolean(config.security.sri.enable),
+              },
+            },
+          });
+        }
+
+        // Disable Rspack's config schema validation to improve performance.
+        // Rsbuild has ensured that the built-in Rspack configuration is correct
+        // through TypeScript, so we no longer need to perform schema validation
+        // at runtime. This can be manually enabled via `RSPACK_CONFIG_VALIDATE=strict'
+        process.env.RSPACK_CONFIG_VALIDATE ||= 'loose-silent';
       },
     );
   },

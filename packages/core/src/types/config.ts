@@ -39,8 +39,8 @@ import type {
   CSSLoaderModulesOptions,
   CSSLoaderOptions,
   HtmlRspackPlugin,
+  LoosePostCSSPlugin,
   PostCSSLoaderOptions,
-  PostCSSPlugin,
   StyleLoaderOptions,
   WebpackConfig,
 } from './thirdParty';
@@ -61,7 +61,7 @@ export type ToolsBundlerChainConfig = OneOrMany<
 
 export type ToolsPostCSSLoaderConfig = ConfigChainWithContext<
   PostCSSLoaderOptions,
-  { addPlugins: (plugins: PostCSSPlugin | PostCSSPlugin[]) => void }
+  { addPlugins: (plugins: LoosePostCSSPlugin | LoosePostCSSPlugin[]) => void }
 >;
 
 export type ToolsCSSLoaderConfig = ConfigChain<CSSLoaderOptions>;
@@ -1518,7 +1518,7 @@ export type EnvironmentAPI = {
   };
 };
 
-export type SetupMiddlewaresServer = Pick<
+export type SetupMiddlewaresContext = Pick<
   RsbuildDevServer,
   'sockWrite' | 'environments'
 >;
@@ -1528,7 +1528,7 @@ export type SetupMiddlewaresFn = (
     unshift: (...handlers: RequestHandler[]) => void;
     push: (...handlers: RequestHandler[]) => void;
   },
-  server: SetupMiddlewaresServer,
+  server: SetupMiddlewaresContext,
 ) => void;
 
 export type ClientConfig = {
@@ -1636,9 +1636,9 @@ export interface DevConfig {
         help?: boolean | string;
       };
   /**
-   * Provides the ability to execute a custom function and apply custom middlewares.
+   * Used to add custom middleware to the dev server.
    */
-  setupMiddlewares?: SetupMiddlewaresFn[];
+  setupMiddlewares?: SetupMiddlewaresFn | SetupMiddlewaresFn[];
   /**
    * Controls whether the build output from development mode is written to disk.
    * @default false

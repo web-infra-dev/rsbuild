@@ -224,14 +224,45 @@ export type ModifyChainUtils = {
    * The value of `process.env.NODE_ENV`
    */
   env: string;
+  /**
+   * A boolean value indicating whether this is a development build.
+   * Set to `true` when the `mode` is `development`.
+   */
   isDev: boolean;
+  /**
+   * A boolean value indicating whether this is a production build.
+   * Set to `true` when the `mode` is `production`.
+   */
   isProd: boolean;
+  /**
+   * The current build target.
+   */
   target: RsbuildTarget;
+  /**
+   * A boolean value indicating whether the build target is `node`.
+   * Equivalent to `target === 'node'`.
+   */
   isServer: boolean;
+  /**
+   * A boolean value indicating whether the build target is `web-worker`.
+   * Equivalent to `target === 'web-worker'`.
+   */
   isWebWorker: boolean;
+  /**
+   * Predefined chain IDs.
+   */
   CHAIN_ID: ChainIdentifier;
+  /**
+   * The environment context for current build.
+   */
   environment: EnvironmentContext;
+  /**
+   * The Rspack instance, same as `import { rspack } from '@rsbuild/core'`.
+   */
   rspack: typeof rspack;
+  /**
+   * The default export of `html-rspack-plugin`.
+   */
   HtmlPlugin: typeof HtmlRspackPlugin;
 };
 

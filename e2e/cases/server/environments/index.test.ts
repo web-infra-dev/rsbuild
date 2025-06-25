@@ -44,32 +44,32 @@ test('should serve multiple environments correctly', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('server environment api', async ({ page }) => {
+test('should allow to access environment API in setupMiddlewares', async ({
+  page,
+}) => {
   let assertionsCount = 0;
 
   const rsbuild = await dev({
     cwd,
     rsbuildConfig: {
       dev: {
-        setupMiddlewares: [
-          (middlewares, server) => {
-            middlewares.unshift(async (req, _res, next) => {
-              if (req.url === '/') {
-                const webStats = await server.environments.web.getStats();
+        setupMiddlewares: (middlewares, { environments }) => {
+          middlewares.unshift(async (req, _res, next) => {
+            if (req.url === '/') {
+              const webStats = await environments.web.getStats();
 
-                expect(webStats.toJson().name).toBe('web');
+              expect(webStats.toJson().name).toBe('web');
 
-                assertionsCount++;
-                const web1Stats = await server.environments.web1.getStats();
+              assertionsCount++;
+              const web1Stats = await environments.web1.getStats();
 
-                expect(web1Stats.toJson().name).toBe('web1');
-                assertionsCount++;
-              }
+              expect(web1Stats.toJson().name).toBe('web1');
+              assertionsCount++;
+            }
 
-              next();
-            });
-          },
-        ],
+            next();
+          });
+        },
       },
       environments: {
         web: {},

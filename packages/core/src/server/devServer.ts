@@ -467,6 +467,9 @@ export async function createDevServer<
     }
   }
 
+  // start watching
+  compilationManager?.watch();
+
   logger.debug('create dev server done');
 
   return devServerAPI;

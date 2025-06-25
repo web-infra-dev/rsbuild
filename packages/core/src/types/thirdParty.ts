@@ -17,9 +17,16 @@ export interface CSSExtractOptions {
 
 export type { WebpackConfig };
 
+/**
+ * A loose PostCSS plugin type that accepts plugins from different
+ * PostCSS versions. This helps avoid type conflicts when user
+ * projects use different PostCSS versions.
+ */
+export type LoosePostCSSPlugin = any;
+
 export type PostCSSOptions = ProcessOptions & {
   config?: boolean;
-  plugins?: AcceptedPlugin[];
+  plugins?: LoosePostCSSPlugin[];
 };
 
 export type PostCSSLoaderOptions = {

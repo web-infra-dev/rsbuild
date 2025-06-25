@@ -108,6 +108,7 @@ export type CompilationMiddlewareOptions = {
 
 export type CompilationMiddleware = Middleware & {
   close: (callback: (err: Error | null | undefined) => void) => any;
+  watch: () => void;
 };
 
 /**

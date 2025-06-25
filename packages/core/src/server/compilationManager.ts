@@ -121,6 +121,13 @@ export class CompilationManager {
         : compiler.outputFileSystem) || fs;
   }
 
+  /**
+   * Call `compiler.watch()` to start compiling.
+   */
+  public watch(): void {
+    this.middleware.watch();
+  }
+
   public async close(): Promise<void> {
     // socketServer close should before app close
     await this.socketServer.close();
@@ -213,6 +220,7 @@ export class CompilationManager {
     };
 
     wrapper.close = middleware.close;
+    wrapper.watch = middleware.watch;
 
     // wrap rsbuild-dev-middleware to handle HTML file（without publicPath）
     // maybe we should serve HTML file by sirv

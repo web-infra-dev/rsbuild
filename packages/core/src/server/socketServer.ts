@@ -85,7 +85,7 @@ export class SocketServer {
 
   private clearHeartbeatTimer(): void {
     if (this.heartbeatTimer) {
-      clearInterval(this.heartbeatTimer);
+      clearTimeout(this.heartbeatTimer);
       this.heartbeatTimer = null;
     }
   }

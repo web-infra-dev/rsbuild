@@ -404,7 +404,9 @@ const mergedConfig = {
 
 ## logger
 
-用于输出格式统一的日志信息，基于 [rslog](https://github.com/rspack-contrib/rslog)。
+提供统一日志输出格式的实例，可以用于代替 `console.log`，保持与 Rsbuild 一致的日志输出格式。
+
+基于 [rslog](https://github.com/rspack-contrib/rslog)。
 
 - **示例：**
 
@@ -415,13 +417,13 @@ import { logger } from '@rsbuild/core';
 logger.greet(`\n➜ Rsbuild v1.0.0\n`);
 
 // Info
-logger.info('This is a info message');
+logger.info('This is an info message');
 
 // Start
 logger.start('This is a start message');
 
 // Warn
-logger.warn('This is a warn message');
+logger.warn('This is a warning message');
 
 // Ready
 logger.ready('This is a ready message');
@@ -430,8 +432,8 @@ logger.ready('This is a ready message');
 logger.success('This is a success message');
 
 // Error
-logger.error('This is a error message');
-logger.error(new Error('This is a error message with stack'));
+logger.error('This is an error message');
+logger.error(new Error('This is an error message with stack'));
 
 // Debug
 logger.debug('This is a debug message');

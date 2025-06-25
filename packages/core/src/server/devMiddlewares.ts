@@ -1,14 +1,14 @@
 import { isAbsolute, join } from 'node:path';
 import { rspack } from '@rspack/core';
 import { normalizePublicDirs } from '../defaultConfig';
-import { isMultiCompiler, pick } from '../helpers';
+import { castArray, pick } from '../helpers';
 import { logger } from '../logger';
 import type {
   DevConfig,
   InternalContext,
   RequestHandler,
   ServerConfig,
-  SetupMiddlewaresServer,
+  SetupMiddlewaresContext,
 } from '../types';
 import type { CompilationManager } from './compilationManager';
 import type { RsbuildDevServer } from './devServer';
@@ -22,7 +22,6 @@ import {
   getRequestLoggerMiddleware,
   viewingServedFilesMiddleware,
 } from './middlewares';
-import { replacePortPlaceholder } from './open';
 import { createProxyMiddleware } from './proxy';
 
 export type RsbuildDevMiddlewareOptions = {
@@ -44,7 +43,7 @@ const applySetupMiddlewares = (
 ) => {
   const setupMiddlewares = dev.setupMiddlewares || [];
 
-  const serverOptions: SetupMiddlewaresServer = pick(devServerAPI, [
+  const serverOptions: SetupMiddlewaresContext = pick(devServerAPI, [
     'sockWrite',
     'environments',
   ]);
@@ -52,7 +51,7 @@ const applySetupMiddlewares = (
   const before: RequestHandler[] = [];
   const after: RequestHandler[] = [];
 
-  for (const handler of setupMiddlewares) {
+  for (const handler of castArray(setupMiddlewares)) {
     handler(
       {
         unshift: (...handlers) => before.unshift(...handlers),
@@ -129,23 +128,9 @@ const applyDefaultMiddlewares = async ({
     dev.lazyCompilation &&
     compilationManager
   ) {
-    const { compiler } = compilationManager;
-
-    if (
-      typeof dev.lazyCompilation === 'object' &&
-      typeof dev.lazyCompilation.serverUrl === 'string' &&
-      context.devServer
-    ) {
-      dev.lazyCompilation.serverUrl = replacePortPlaceholder(
-        dev.lazyCompilation.serverUrl,
-        context.devServer.port,
-      );
-    }
-
     middlewares.push(
       rspack.experiments.lazyCompilationMiddleware(
-        // TODO: support for multi compiler
-        isMultiCompiler(compiler) ? compiler.compilers[0] : compiler,
+        compilationManager.compiler,
       ) as RequestHandler,
     );
   }

@@ -3,7 +3,7 @@
 - **Type:**
 
 ```ts
-type SetupMiddlewaresServer = {
+type SetupMiddlewaresContext = {
   sockWrite: (
     type: string,
     data?: string | boolean | Record<string, any>,
@@ -11,50 +11,73 @@ type SetupMiddlewaresServer = {
   environments: EnvironmentAPI;
 };
 
-type SetupMiddlewares = Array<
-  (
-    middlewares: {
-      unshift: (...handlers: RequestHandler[]) => void;
-      push: (...handlers: RequestHandler[]) => void;
-    },
-    server: SetupMiddlewaresServer,
-  ) => void
->;
+type SetupMiddlewaresFn = (
+  middlewares: {
+    unshift: (...handlers: RequestHandler[]) => void;
+    push: (...handlers: RequestHandler[]) => void;
+  },
+  context: SetupMiddlewaresContext,
+) => void;
+
+type SetupMiddlewares = SetupMiddlewaresFn | SetupMiddlewaresFn[];
 ```
 
 - **Default:** `undefined`
+- **Version:** `>= 1.4.0`
 
-Provides the ability to execute a custom function and apply custom middleware.
+Used to add custom middleware to the dev server.
 
-> See [Dev Server - Middleware](/guide/basic/server#middleware) for more information.
+> See [Dev server - Middleware](/guide/basic/server#middleware) for more information.
 
-## Execution order
+## Basic usage
 
-The order among several different types of middleware is: `unshift` => internal middleware => `push`.
+`setupMiddlewares` function receives a `middlewares` array, you can add custom middleware by `unshift` and `push` methods:
+
+- Use `unshift` to prepend middleware to the array, executed earlier than the built-in middleware.
+- Use `push` to append middleware to the array, executed later than the built-in middleware.
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    setupMiddlewares: (middlewares) => {
+      middlewares.unshift((req, res, next) => {
+        console.log('first');
+        next();
+      });
+
+      middlewares.push((req, res, next) => {
+        console.log('last');
+        next();
+      });
+    },
+  },
+};
+```
+
+`setupMiddlewares` also supports passing an array, each item of which is a function to setup middlewares:
 
 ```ts title="rsbuild.config.ts"
 export default {
   dev: {
     setupMiddlewares: [
-      (middlewares, server) => {
-        middlewares.unshift((req, res, next) => {
-          console.log('first');
-          next();
-        });
-
-        middlewares.push((req, res, next) => {
-          console.log('last');
-          next();
-        });
+      (middlewares) => {
+        // ...
+      },
+      (middlewares) => {
+        // ...
       },
     ],
   },
 };
 ```
 
-## Server API
+:::tip
+In versions before Rsbuild 1.4.0, `setupMiddlewares` must pass an array.
+:::
 
-In the `setupMiddlewares` function, you can access the `server` object, which provides some server APIs.
+## Context object
+
+The second parameter of the `setupMiddlewares` function is the `context` object, which provides some server context and APIs.
 
 ### environments
 
@@ -63,15 +86,13 @@ Provides Rsbuild's [environment API](/api/javascript-api/environment-api#environ
 ```ts title="rsbuild.config.ts"
 export default {
   dev: {
-    setupMiddlewares: [
-      (middlewares, { environments }) => {
-        middlewares.unshift(async (req, _res, next) => {
-          const webStats = await environments.web.getStats();
-          console.log(webStats.toJson({ all: false }));
-          next();
-        });
-      },
-    ],
+    setupMiddlewares: (middlewares, { environments }) => {
+      middlewares.unshift(async (req, _res, next) => {
+        const webStats = await environments.web.getStats();
+        console.log(webStats.toJson({ all: false }));
+        next();
+      });
+    },
   },
 };
 ```
@@ -85,13 +106,11 @@ For example, if you send a `'static-changed'` message, the page will reload.
 ```ts title="rsbuild.config.ts"
 export default {
   dev: {
-    setupMiddlewares: [
-      (middlewares, { sockWrite }) => {
-        if (someCondition) {
-          sockWrite('static-changed');
-        }
-      },
-    ],
+    setupMiddlewares: (middlewares, { sockWrite }) => {
+      if (someCondition) {
+        sockWrite('static-changed');
+      }
+    },
   },
 };
 ```

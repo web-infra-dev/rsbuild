@@ -106,3 +106,41 @@ pluginSvelte({
 ## Notes
 
 Currently, `svelte-loader` does not support HMR for Svelte v5, see [svelte-loader - Hot Reload](https://github.com/sveltejs/svelte-loader?tab=readme-ov-file#hot-reload).
+
+### Alias handling in Less/Sass
+
+When using aliases to import Less or Sass files within Svelte components, you need to manually configure the preprocessor to handle alias resolution. Otherwise, you may encounter `"file not found"` errors.
+
+- **Example:**
+
+```ts title="rsbuild.config.ts"
+import { pluginSvelte } from '@rsbuild/plugin-svelte';
+
+export default {
+  plugins: [
+    pluginSvelte({
+      preprocessOptions: {
+        scss: {
+          importer: [
+            // Handle alias imports for SCSS files
+            (url, prev) => {
+              if (url.startsWith('@/')) {
+                return { file: url.replace('@/', 'src/') };
+              }
+              return null;
+            },
+          ],
+        },
+        less: {
+          // recommend simple alias handling for Less files
+          replace: [['@/style', 'style']],
+          // use less plugin to handle alias imports
+          plugins: [],
+        },
+      },
+    }),
+  ],
+};
+```
+
+This ensures that alias imports like `@import '@/styles/variables.scss'` or `@import '@/styles/variables.less'` are properly resolved within Svelte components.

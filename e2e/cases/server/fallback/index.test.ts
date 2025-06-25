@@ -32,22 +32,20 @@ test('OPTIONS request should response correctly with middleware responses', asyn
         cors: false,
       },
       dev: {
-        setupMiddlewares: [
-          (middlewares) => {
-            middlewares.push((req, res, next) => {
-              if (req.method === 'OPTIONS') {
-                res.statusCode = 200;
-                res.setHeader(
-                  'access-control-allow-origin',
-                  'https://example.com',
-                );
-                res.end();
-                return;
-              }
-              next();
-            });
-          },
-        ],
+        setupMiddlewares: (middlewares) => {
+          middlewares.push((req, res, next) => {
+            if (req.method === 'OPTIONS') {
+              res.statusCode = 200;
+              res.setHeader(
+                'access-control-allow-origin',
+                'https://example.com',
+              );
+              res.end();
+              return;
+            }
+            next();
+          });
+        },
       },
     },
   });

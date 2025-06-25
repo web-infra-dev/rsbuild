@@ -404,7 +404,9 @@ In Rsbuild, most options that support function values use this rule, such as `to
 
 ## logger
 
-Used to output log information in a unified format, based on [rslog](https://github.com/rspack-contrib/rslog).
+A logger instance used to output log information in a unified format. Use this instead of `console.log` to maintain consistent logging with Rsbuild.
+
+Based on [rslog](https://github.com/rspack-contrib/rslog).
 
 - **Example:**
 
@@ -415,13 +417,13 @@ import { logger } from '@rsbuild/core';
 logger.greet(`\n➜ Rsbuild v1.0.0\n`);
 
 // Info
-logger.info('This is a info message');
+logger.info('This is an info message');
 
 // Start
 logger.start('This is a start message');
 
 // Warn
-logger.warn('This is a warn message');
+logger.warn('This is a warning message');
 
 // Ready
 logger.ready('This is a ready message');
@@ -430,8 +432,8 @@ logger.ready('This is a ready message');
 logger.success('This is a success message');
 
 // Error
-logger.error('This is a error message');
-logger.error(new Error('This is a error message with stack'));
+logger.error('This is an error message');
+logger.error(new Error('This is an error message with stack'));
 
 // Debug
 logger.debug('This is a debug message');

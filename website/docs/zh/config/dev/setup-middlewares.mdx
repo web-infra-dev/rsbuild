@@ -3,7 +3,7 @@
 - **类型：**
 
 ```ts
-type SetupMiddlewaresServer = {
+type SetupMiddlewaresContext = {
   sockWrite: (
     type: string,
     data?: string | boolean | Record<string, any>,
@@ -11,50 +11,73 @@ type SetupMiddlewaresServer = {
   environments: EnvironmentAPI;
 };
 
-type SetupMiddlewares = Array<
-  (
-    middlewares: {
-      unshift: (...handlers: RequestHandler[]) => void;
-      push: (...handlers: RequestHandler[]) => void;
-    },
-    server: SetupMiddlewaresServer,
-  ) => void
->;
+type SetupMiddlewaresFn = (
+  middlewares: {
+    unshift: (...handlers: RequestHandler[]) => void;
+    push: (...handlers: RequestHandler[]) => void;
+  },
+  context: SetupMiddlewaresContext,
+) => void;
+
+type SetupMiddlewares = SetupMiddlewaresFn | SetupMiddlewaresFn[];
 ```
 
 - **默认值：** `undefined`
+- **版本：** `>= 1.4.0`
 
-提供执行自定义函数和应用自定义中间件的能力。
+用于在开发服务器中添加自定义的中间件。
 
 > 查看 [开发服务器 - 中间件](/guide/basic/server#中间件) 了解更多。
 
-## 执行顺序
+## 基本用法
 
-中间件的执行顺序是: `unshift` => 内置中间件 => `push`。
+`setupMiddlewares` 函数接收一个 `middlewares` 数组，你可以通过 `unshift` 和 `push` 方法来添加自定义的中间件：
+
+- 使用 `unshift` 在数组开头添加中间件，早于内置中间件执行。
+- 使用 `push` 在数组末尾添加中间件，晚于内置中间件执行。
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    setupMiddlewares: (middlewares) => {
+      middlewares.unshift((req, res, next) => {
+        console.log('first');
+        next();
+      });
+
+      middlewares.push((req, res, next) => {
+        console.log('last');
+        next();
+      });
+    },
+  },
+};
+```
+
+`setupMiddlewares` 也支持传入一个数组，数组中的每一项都是一个用于配置中间件的函数：
 
 ```ts title="rsbuild.config.ts"
 export default {
   dev: {
     setupMiddlewares: [
-      (middlewares, server) => {
-        middlewares.unshift((req, res, next) => {
-          console.log('first');
-          next();
-        });
-
-        middlewares.push((req, res, next) => {
-          console.log('last');
-          next();
-        });
+      (middlewares) => {
+        // ...
+      },
+      (middlewares) => {
+        // ...
       },
     ],
   },
 };
 ```
 
-## Server API
+:::tip
+在 Rsbuild 1.4.0 之前的版本中，`setupMiddlewares` 必须传入一个数组。
+:::
 
-在 `setupMiddlewares` 函数中，你可以访问到 `server` 对象，该对象提供了一些服务器 API。
+## Context 对象
+
+`setupMiddlewares` 函数的第二个参数是 `context` 对象，该对象提供了一些服务器上下文和 API。
 
 ### environments
 
@@ -63,15 +86,13 @@ export default {
 ```ts title="rsbuild.config.ts"
 export default {
   dev: {
-    setupMiddlewares: [
-      (middlewares, { environments }) => {
-        middlewares.unshift(async (req, _res, next) => {
-          const webStats = await environments.web.getStats();
-          console.log(webStats.toJson({ all: false }));
-          next();
-        });
-      },
-    ],
+    setupMiddlewares: (middlewares, { environments }) => {
+      middlewares.unshift(async (req, _res, next) => {
+        const webStats = await environments.web.getStats();
+        console.log(webStats.toJson({ all: false }));
+        next();
+      });
+    },
   },
 };
 ```
@@ -85,13 +106,11 @@ export default {
 ```ts title="rsbuild.config.ts"
 export default {
   dev: {
-    setupMiddlewares: [
-      (middlewares, { sockWrite }) => {
-        if (someCondition) {
-          sockWrite('static-changed');
-        }
-      },
-    ],
+    setupMiddlewares: (middlewares, { sockWrite }) => {
+      if (someCondition) {
+        sockWrite('static-changed');
+      }
+    },
   },
 };
 ```
