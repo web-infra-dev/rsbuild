@@ -32,8 +32,8 @@ importers:
         specifier: workspace:*
         version: link:scripts/config
       '@rstest/core':
-        specifier: 0.0.2
-        version: 0.0.2
+        specifier: 0.0.3
+        version: 0.0.3
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:scripts/test-helper
@@ -2312,8 +2312,8 @@ packages:
     engines: {node: '>=16.10.0'}
     hasBin: true
 
-  '@rsbuild/core@1.4.0-beta.5':
-    resolution: {integrity: sha512-p9/ShPxTo0Jc/umZOHKOefBLydCKXnBxck50y1bLjwpiiK13+vN09l8L/GM9G7sALhVIzWxcMFBt39IdV1ePFA==}
+  '@rsbuild/core@1.4.0-rc.0':
+    resolution: {integrity: sha512-GgiHay9R5AdYXgboMwhKoaCZibfy39pZ+jlnAA9YQiorIgvPDZe58U/RWMx4q7amWzgTyge/wvMkNM1ifZR/3w==}
     engines: {node: '>=16.10.0'}
     hasBin: true
 
@@ -2778,8 +2778,8 @@ packages:
   '@rstack-dev/doc-ui@1.10.6':
     resolution: {integrity: sha512-lO5zRhQsLfiDuoIw0DnI/xLdG17N4RKcBO3MIW2H1R1XFGxcpdIfFVQI56/J4LaTMgVj7S2D00xnXMikwKm42w==}
 
-  '@rstest/core@0.0.2':
-    resolution: {integrity: sha512-kfGna2vjMAOYAUYxRMH1iZ6iu7bvRVfSjJa7yBvn3I+WtwWaserr3nrTShmH27NRTJCE/C/h+KHr7x6cth+5cA==}
+  '@rstest/core@0.0.3':
+    resolution: {integrity: sha512-VnjJNlMLQQYOf3yr3Sd1xQzoBT3OC2D87ZcZHUFMLIbl5Da4j7Kmv6SRYgFtNnWLpJ0j4YyCG1DwrBIDnSkzDQ==}
     engines: {node: '>=18.0.0'}
     hasBin: true
     peerDependencies:
@@ -5002,9 +5002,6 @@ packages:
 
   longest-streak@3.1.0:
     resolution: {integrity: sha512-9Ri+o0JYgehTaVBBDoMqIl8GXtbWg711O3srftcHhZ0dqnETqLaoIK0x17fUw9rFSlK/0NlsKe0Ahhyl5pXE2g==}
-
-  loupe@3.1.3:
-    resolution: {integrity: sha512-kkIp7XSkP78ZxJEsSxW3712C6teJVoeHHwgo9zJ380de7IYyJ2ISlxojcH2pC5OFLewESmnRi/+XCDIEEVyoug==}
 
   loupe@3.1.4:
     resolution: {integrity: sha512-wJzkKwJrheKtknCOKNEtDK4iqg/MxmZheEMtSTYvnzRdEYaZzmgH976nenp8WdJRdx5Vc1X/9MO0Oszl6ezeXg==}
@@ -8043,9 +8040,9 @@ snapshots:
       core-js: 3.43.0
       jiti: 2.4.2
 
-  '@rsbuild/core@1.4.0-beta.5':
+  '@rsbuild/core@1.4.0-rc.0':
     dependencies:
-      '@rspack/core': 1.4.0-beta.1(@swc/helpers@0.5.17)
+      '@rspack/core': 1.4.0-rc.0(@swc/helpers@0.5.17)
       '@rspack/lite-tapable': 1.0.1
       '@swc/helpers': 0.5.17
       core-js: 3.43.0
@@ -8643,9 +8640,9 @@ snapshots:
       - react
       - react-dom
 
-  '@rstest/core@0.0.2':
+  '@rstest/core@0.0.3':
     dependencies:
-      '@rsbuild/core': 1.4.0-beta.5
+      '@rsbuild/core': 1.4.0-rc.0
       '@types/chai': 5.2.2
       '@vitest/expect': 3.2.4
       '@vitest/snapshot': 3.2.4
@@ -9634,7 +9631,7 @@ snapshots:
       assertion-error: 2.0.1
       check-error: 2.1.1
       deep-eql: 5.0.2
-      loupe: 3.1.3
+      loupe: 3.1.4
       pathval: 2.0.0
 
   chalk@3.0.0:
@@ -11092,8 +11089,6 @@ snapshots:
   long-timeout@0.1.1: {}
 
   longest-streak@3.1.0: {}
-
-  loupe@3.1.3: {}
 
   loupe@3.1.4: {}
 
