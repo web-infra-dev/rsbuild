@@ -67,7 +67,6 @@ const applySetupMiddlewares = (
 export type Middlewares = Array<RequestHandler | [string, RequestHandler]>;
 
 const applyDefaultMiddlewares = async ({
-  dev,
   devServerAPI,
   middlewares,
   server,
@@ -129,10 +128,11 @@ const applyDefaultMiddlewares = async ({
   ) {
     const { compiler } = compilationManager;
 
+    // We check the compiler options to determine whether lazy compilation is enabled.
+    // Rsbuild users can enable lazy compilation in two ways:
+    // 1. Use Rsbuild's `dev.lazyCompilation` option
+    // 2. Use Rspack's `experiments.lazyCompilation` option
     const isLazyCompilationEnabled = () => {
-      if (dev.lazyCompilation) {
-        return true;
-      }
       if (isMultiCompiler(compiler)) {
         return compiler.compilers.some(
           (childCompiler) => childCompiler.options.experiments?.lazyCompilation,
