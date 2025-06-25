@@ -1,7 +1,7 @@
 import { isAbsolute, join } from 'node:path';
 import { rspack } from '@rspack/core';
 import { normalizePublicDirs } from '../defaultConfig';
-import { castArray, pick } from '../helpers';
+import { castArray, isMultiCompiler, pick } from '../helpers';
 import { logger } from '../logger';
 import type {
   DevConfig,
@@ -67,7 +67,6 @@ const applySetupMiddlewares = (
 export type Middlewares = Array<RequestHandler | [string, RequestHandler]>;
 
 const applyDefaultMiddlewares = async ({
-  dev,
   devServerAPI,
   middlewares,
   server,
@@ -125,14 +124,30 @@ const applyDefaultMiddlewares = async ({
   if (
     context.action === 'dev' &&
     context.bundlerType === 'rspack' &&
-    dev.lazyCompilation &&
     compilationManager
   ) {
-    middlewares.push(
-      rspack.experiments.lazyCompilationMiddleware(
-        compilationManager.compiler,
-      ) as RequestHandler,
-    );
+    const { compiler } = compilationManager;
+
+    // We check the compiler options to determine whether lazy compilation is enabled.
+    // Rsbuild users can enable lazy compilation in two ways:
+    // 1. Use Rsbuild's `dev.lazyCompilation` option
+    // 2. Use Rspack's `experiments.lazyCompilation` option
+    const isLazyCompilationEnabled = () => {
+      if (isMultiCompiler(compiler)) {
+        return compiler.compilers.some(
+          (childCompiler) => childCompiler.options.experiments?.lazyCompilation,
+        );
+      }
+      return compiler.options.experiments?.lazyCompilation;
+    };
+
+    if (isLazyCompilationEnabled()) {
+      middlewares.push(
+        rspack.experiments.lazyCompilationMiddleware(
+          compiler,
+        ) as RequestHandler,
+      );
+    }
   }
 
   if (server.base && server.base !== '/') {

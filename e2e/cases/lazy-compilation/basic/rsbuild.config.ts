@@ -9,7 +9,4 @@ export default defineConfig({
       page2: './src/page2/index.js',
     },
   },
-  dev: {
-    lazyCompilation: true,
-  },
 });
