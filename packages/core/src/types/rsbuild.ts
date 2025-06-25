@@ -96,6 +96,11 @@ export type InspectConfigOptions = {
    * @default false
    */
   writeToDisk?: boolean;
+
+  /**
+   * extra configurations to be output.
+   */
+  extraConfigs?: Record<string, unknown>;
 };
 
 export type InspectConfigResult<B extends 'rspack' | 'webpack' = 'rspack'> = {

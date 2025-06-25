@@ -80,21 +80,22 @@ export const getRsbuildInspectConfig = ({
   };
 };
 
+type RawConfig = {
+  name: string;
+  content: string;
+};
+
 export async function outputInspectConfigFiles({
   rawBundlerConfigs,
   rawEnvironmentConfigs,
   inspectOptions,
+  rawExtraConfigs,
   configType,
 }: {
   configType: string;
-  rawEnvironmentConfigs: Array<{
-    name: string;
-    content: string;
-  }>;
-  rawBundlerConfigs: Array<{
-    name: string;
-    content: string;
-  }>;
+  rawExtraConfigs?: RawConfig[];
+  rawEnvironmentConfigs: RawConfig[];
+  rawBundlerConfigs: RawConfig[];
   inspectOptions: InspectConfigOptions & {
     outputPath: string;
   };
@@ -137,6 +138,11 @@ export async function outputInspectConfigFiles({
         content,
       };
     }),
+    ...(rawExtraConfigs || []).map(({ name, content }) => ({
+      path: join(outputPath, `${name}.config.mjs`),
+      label: `${upperFirst(name)} Config`,
+      content,
+    })),
   ];
 
   await fs.promises.mkdir(outputPath, { recursive: true });
@@ -221,10 +227,21 @@ export async function inspectConfig<B extends 'rspack' | 'webpack' = 'rspack'>({
 
   const outputPath = getInspectOutputPath(context, inspectOptions);
 
+  const rawExtraConfigs = inspectOptions.extraConfigs
+    ? Object.entries(inspectOptions.extraConfigs).map(([name, content]) => ({
+        name,
+        content:
+          typeof content === 'string'
+            ? content
+            : stringifyConfig(content, inspectOptions.verbose),
+      }))
+    : undefined;
+
   if (inspectOptions.writeToDisk) {
     await outputInspectConfigFiles({
       rawBundlerConfigs,
       rawEnvironmentConfigs,
+      rawExtraConfigs,
       inspectOptions: {
         ...inspectOptions,
         outputPath,

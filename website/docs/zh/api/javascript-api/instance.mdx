@@ -697,6 +697,10 @@ type InspectConfigOptions = {
    * @default false
    */
   writeToDisk?: boolean;
+  /**
+   * 需要额外输出的配置
+   */
+  extraConfigs?: Record<string, unknown>;
 };
 
 async function InspectConfig(options?: InspectConfigOptions): Promise<{

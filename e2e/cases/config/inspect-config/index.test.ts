@@ -177,3 +177,32 @@ rspackOnlyTest('should allow to specify absolute output path', async () => {
 
   restore();
 });
+
+rspackOnlyTest('should generate extra config files', async () => {
+  const { logs, restore } = proxyConsole();
+
+  const rsbuild = await createRsbuild({
+    cwd: __dirname,
+  });
+  await rsbuild.inspectConfig({
+    writeToDisk: true,
+    extraConfigs: {
+      rstest: {
+        include: ['**/*.test.ts'],
+      },
+    },
+  });
+
+  const rstestConfig = path.resolve(
+    __dirname,
+    './dist/.rsbuild/rstest.config.mjs',
+  );
+
+  expect(fs.existsSync(rstestConfig)).toBeTruthy();
+
+  expect(logs.some((log) => log.includes('Rstest Config:'))).toBeTruthy();
+
+  await remove(rstestConfig);
+
+  restore();
+});

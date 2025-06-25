@@ -675,6 +675,10 @@ type InspectConfigOptions = {
    * @default false
    */
   writeToDisk?: boolean;
+  /**
+   * extra configurations to be output.
+   */
+  extraConfigs?: Record<string, unknown>;
 };
 
 async function InspectConfig(options?: InspectConfigOptions): Promise<{
