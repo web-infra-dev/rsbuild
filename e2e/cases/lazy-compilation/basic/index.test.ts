@@ -10,6 +10,11 @@ rspackOnlyTest(
 
     const rsbuild = await dev({
       cwd: __dirname,
+      rsbuildConfig: {
+        dev: {
+          lazyCompilation: true,
+        },
+      },
     });
 
     await gotoPage(page, rsbuild, 'page1');
@@ -41,9 +46,6 @@ rspackOnlyTest(
     const rsbuild = await dev({
       cwd: __dirname,
       rsbuildConfig: {
-        dev: {
-          lazyCompilation: false,
-        },
         tools: {
           rspack: {
             experiments: {
