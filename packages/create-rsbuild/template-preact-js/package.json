@@ -13,6 +13,6 @@
   },
   "devDependencies": {
     "@rsbuild/core": "^1.3.22",
-    "@rsbuild/plugin-preact": "^1.4.0"
+    "@rsbuild/plugin-preact": "^1.5.0"
   }
 }
