@@ -55,5 +55,16 @@
   "engines": {
     "node": ">=18.0.0",
     "pnpm": ">=10.12.1"
+  },
+  "pnpm": {
+    "overrides": {
+      "@rspack/core": "npm:@rspack-canary/core@1.4.0-canary-4b6a7099-20250626075252",
+      "@rspack/cli": "npm:@rspack-canary/cli@1.4.0-canary-4b6a7099-20250626075252"
+    },
+    "peerDependencyRules": {
+      "allowAny": [
+        "@rspack/*"
+      ]
+    }
   }
 }

@@ -108,7 +108,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
         // Rsbuild has ensured that the built-in Rspack configuration is correct
         // through TypeScript, so we no longer need to perform schema validation
         // at runtime. This can be manually enabled via `RSPACK_CONFIG_VALIDATE=strict'
-        process.env.RSPACK_CONFIG_VALIDATE ||= 'loose-silent';
+        process.env.RSPACK_CONFIG_VALIDATE ||= 'strict';
       },
     );
   },
