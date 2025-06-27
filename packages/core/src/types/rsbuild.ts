@@ -96,6 +96,19 @@ export type InspectConfigOptions = {
    * @default false
    */
   writeToDisk?: boolean;
+  /**
+   * Extra configurations to be output.
+   * - key: The name of the configuration
+   * - value: The configuration object
+   * @example
+   * extraConfigs: {
+   *   // Output `rstest.config.mjs` file
+   *   'rstest': {
+   *     // ...
+   *   },
+   * }
+   */
+  extraConfigs?: Record<string, unknown>;
 };
 
 export type InspectConfigResult<B extends 'rspack' | 'webpack' = 'rspack'> = {
