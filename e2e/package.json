@@ -42,10 +42,10 @@
     "@rsbuild/webpack": "workspace:*",
     "@rsdoctor/rspack-plugin": "1.1.4",
     "@scripts/test-helper": "workspace:*",
-    "@tailwindcss/postcss": "^4.1.10",
+    "@tailwindcss/postcss": "^4.1.11",
     "@types/fs-extra": "^11.0.4",
-    "@types/lodash": "^4.17.18",
-    "@types/node": "^22.15.32",
+    "@types/lodash": "^4.17.19",
+    "@types/node": "^22.15.33",
     "@types/polka": "^0.5.7",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
@@ -54,7 +54,7 @@
     "fs-extra": "^11.3.0",
     "playwright": "1.53.1",
     "polka": "^0.5.2",
-    "tailwindcss": "^4.1.10",
+    "tailwindcss": "^4.1.11",
     "typescript": "^5.8.3"
   }
 }
