@@ -676,7 +676,9 @@ type InspectConfigOptions = {
    */
   writeToDisk?: boolean;
   /**
-   * extra configurations to be output.
+   * Extra configurations to be output.
+   * - key: The name of the configuration
+   * - value: The configuration object
    */
   extraConfigs?: Record<string, unknown>;
 };
