@@ -1,3 +1,4 @@
+import { apps, default as baseOpen } from 'open';
 import { STATIC_PATH } from '../constants';
 import { canParse, castArray, color } from '../helpers';
 import { logger } from '../logger';
@@ -100,9 +101,6 @@ async function openBrowser(url: string): Promise<boolean> {
   // Fallback to open
   // It will always open new tab
   try {
-    const { default: open } = await import('../../compiled/open/index.js');
-    const { apps } = open;
-
     const options = browser
       ? {
           app: {
@@ -111,10 +109,15 @@ async function openBrowser(url: string): Promise<boolean> {
           },
         }
       : {};
-    await open(url, options);
+
+    const childProcess = await baseOpen(url, options);
+    childProcess.on('error', (err) => {
+      logger.error('Failed to launch browser in child process', err);
+    });
+
     return true;
   } catch (err) {
-    logger.error('Failed to open start URL.');
+    logger.error('Failed to launch browser.');
     logger.error(err);
     return false;
   }
@@ -181,14 +184,6 @@ export async function open({
   clearCache?: boolean;
 }): Promise<void> {
   const { targets, before } = normalizeOpenConfig(config);
-
-  // Skip open in codesandbox. After being bundled, the `open` package will
-  // try to call system xdg-open, which will cause an error on codesandbox.
-  // https://github.com/codesandbox/codesandbox-client/issues/6642
-  const isCodesandbox = process.env.CSB === 'true';
-  if (isCodesandbox) {
-    return;
-  }
 
   if (clearCache) {
     clearOpenedURLs();

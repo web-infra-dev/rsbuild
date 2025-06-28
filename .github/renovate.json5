@@ -92,7 +92,6 @@
     // some loaders still depend on loader-utils v2
     'loader-utils',
     // pure ESM packages can not be used now
-    'open',
     'ansi-escapes',
     'cli-truncate',
     'patch-console',

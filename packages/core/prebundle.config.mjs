@@ -19,7 +19,6 @@ export default {
     typescript: 'typescript',
   },
   dependencies: [
-    'open',
     'ws',
     'on-finished',
     'connect',
