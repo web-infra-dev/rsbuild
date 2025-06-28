@@ -16,7 +16,7 @@
   "exports": {
     ".": {
       "types": "./dist-types/index.d.ts",
-      "import": "./dist/index.cjs",
+      "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
     "./client/hmr": {
