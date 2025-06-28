@@ -1,3 +1,4 @@
+import { apps, default as baseOpen } from 'open';
 import { STATIC_PATH } from '../constants';
 import { canParse, castArray, color } from '../helpers';
 import { logger } from '../logger';
@@ -100,8 +101,6 @@ async function openBrowser(url: string): Promise<boolean> {
   // Fallback to open
   // It will always open new tab
   try {
-    const { default: open, apps } = await import('open');
-
     const options = browser
       ? {
           app: {
@@ -111,7 +110,7 @@ async function openBrowser(url: string): Promise<boolean> {
         }
       : {};
 
-    const childProcess = await open(url, options);
+    const childProcess = await baseOpen(url, options);
     childProcess.on('error', (err) => {
       logger.error('Failed to launch browser in child process', err);
     });
