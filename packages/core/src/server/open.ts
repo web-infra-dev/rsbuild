@@ -181,14 +181,6 @@ export async function open({
 }): Promise<void> {
   const { targets, before } = normalizeOpenConfig(config);
 
-  // Skip open in codesandbox. After being bundled, the `open` package will
-  // try to call system xdg-open, which will cause an error on codesandbox.
-  // https://github.com/codesandbox/codesandbox-client/issues/6642
-  const isCodesandbox = process.env.CSB === 'true';
-  if (isCodesandbox) {
-    return;
-  }
-
   if (clearCache) {
     clearOpenedURLs();
   }
