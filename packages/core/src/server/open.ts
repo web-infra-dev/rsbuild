@@ -110,10 +110,15 @@ async function openBrowser(url: string): Promise<boolean> {
           },
         }
       : {};
-    await open(url, options);
+
+    const childProcess = await open(url, options);
+    childProcess.on('error', (err) => {
+      logger.error('Failed to launch browser in child process', err);
+    });
+
     return true;
   } catch (err) {
-    logger.error('Failed to open start URL.');
+    logger.error('Failed to launch browser.');
     logger.error(err);
     return false;
   }
