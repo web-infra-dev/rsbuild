@@ -100,8 +100,7 @@ async function openBrowser(url: string): Promise<boolean> {
   // Fallback to open
   // It will always open new tab
   try {
-    const { default: open } = await import('../../compiled/open/index.js');
-    const { apps } = open;
+    const { default: open, apps } = await import('open');
 
     const options = browser
       ? {
