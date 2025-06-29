@@ -20,7 +20,7 @@ exports[`plugins/react > should configuring \`tools.swc\` to override react runt
       /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
     ],
     "resourceQuery": {
-      "not": /raw\\|inline/,
+      "not": /raw/,
     },
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
     "type": "javascript/auto",
@@ -109,7 +109,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
       /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
     ],
     "resourceQuery": {
-      "not": /raw\\|inline/,
+      "not": /raw/,
     },
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
     "type": "javascript/auto",
