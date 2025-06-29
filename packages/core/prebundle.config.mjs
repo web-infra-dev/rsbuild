@@ -103,6 +103,7 @@ export default {
     },
     {
       name: 'webpack-bundle-analyzer',
+      minify: true,
       externals: {
         webpack: 'webpack',
       },
