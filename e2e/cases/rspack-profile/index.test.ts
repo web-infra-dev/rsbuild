@@ -64,6 +64,7 @@ rspackOnlyTest(
         RSPACK_PROFILE: 'OVERVIEW',
       },
       stdio: ['pipe', 'pipe', 'pipe'],
+      shell: true,
     });
 
     await expectProfileFile(buildProcess);
