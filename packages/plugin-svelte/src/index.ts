@@ -152,13 +152,13 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
             chain.module
               .rule('svelte-js')
               .test(regexp)
-              .use(CHAIN_ID.USE.SVELTE)
-              .loader(loaderPath)
-              .options(svelteLoaderOptions)
-              .end()
               .use(CHAIN_ID.USE.SWC)
               .loader(swcUse.get('loader'))
-              .options(swcUse.get('options'));
+              .options(swcUse.get('options'))
+              .end()
+              .use(CHAIN_ID.USE.SVELTE)
+              .loader(loaderPath)
+              .options(svelteLoaderOptions);
           }
         },
       );

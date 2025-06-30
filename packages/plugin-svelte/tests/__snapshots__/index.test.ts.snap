@@ -73,21 +73,6 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
     "test": /\\\\\\.\\(\\?:svelte\\\\\\.js\\|svelte\\\\\\.ts\\)\\$/,
     "use": [
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
-        "options": {
-          "compilerOptions": {
-            "dev": false,
-          },
-          "emitCss": false,
-          "hotReload": false,
-          "preprocess": {
-            "markup": [Function],
-            "script": [Function],
-            "style": [Function],
-          },
-        },
-      },
-      {
         "loader": "builtin:swc-loader",
         "options": {
           "env": {
@@ -118,6 +103,21 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
             },
+          },
+        },
+      },
+      {
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
+        "options": {
+          "compilerOptions": {
+            "dev": false,
+          },
+          "emitCss": false,
+          "hotReload": false,
+          "preprocess": {
+            "markup": [Function],
+            "script": [Function],
+            "style": [Function],
           },
         },
       },
@@ -193,21 +193,6 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
     "test": /\\\\\\.\\(\\?:svelte\\\\\\.js\\|svelte\\\\\\.ts\\)\\$/,
     "use": [
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
-        "options": {
-          "compilerOptions": {
-            "dev": false,
-          },
-          "emitCss": false,
-          "hotReload": false,
-          "preprocess": {
-            "markup": [Function],
-            "script": [Function],
-            "style": [Function],
-          },
-        },
-      },
-      {
         "loader": "builtin:swc-loader",
         "options": {
           "env": {
@@ -238,6 +223,21 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
             },
+          },
+        },
+      },
+      {
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
+        "options": {
+          "compilerOptions": {
+            "dev": false,
+          },
+          "emitCss": false,
+          "hotReload": false,
+          "preprocess": {
+            "markup": [Function],
+            "script": [Function],
+            "style": [Function],
           },
         },
       },
