@@ -22,6 +22,10 @@ async function main() {
     },
   });
 
+  rsbuild.onDevCompileDone(() => {
+    process.exit(0);
+  });
+
   await rsbuild.startDevServer();
 }
 
