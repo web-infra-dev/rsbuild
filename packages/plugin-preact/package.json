@@ -27,15 +27,15 @@
     "bump": "npx bumpp --no-tag"
   },
   "dependencies": {
-    "@prefresh/core": "^1.5.3",
-    "@prefresh/utils": "^1.2.0",
+    "@prefresh/core": "^1.5.4",
+    "@prefresh/utils": "^1.2.1",
     "@rspack/plugin-preact-refresh": "^1.1.2",
     "@swc/plugin-prefresh": "^8.0.2"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.10.3",
-    "@types/node": "^22.15.33",
+    "@rslib/core": "0.10.4",
+    "@types/node": "^22.15.34",
     "preact": "^10.26.9",
     "typescript": "^5.8.3"
   },
