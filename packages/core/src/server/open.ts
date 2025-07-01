@@ -183,6 +183,13 @@ export async function open({
   config: NormalizedConfig;
   clearCache?: boolean;
 }): Promise<void> {
+  // Skip auto-opening browser in CodeSandbox since it's already
+  // a web-based environment.
+  const isCodesandbox = process.env.CSB === 'true';
+  if (isCodesandbox) {
+    return;
+  }
+
   const { targets, before } = normalizeOpenConfig(config);
 
   if (clearCache) {
