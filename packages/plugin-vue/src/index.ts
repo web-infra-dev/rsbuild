@@ -59,7 +59,10 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
         // Support `<style module>` in Vue SFC
         if (merged.output.cssModules.auto === true) {
           merged.output.cssModules.auto = (path, query) => {
-            if (VUE_REGEXP.test(path)) {
+            // For Vue style block, the path might be like:
+            // 1. `/path/to/Foo.vue`
+            // 2. `/path/to/Foo.vue.css?query=...`
+            if (VUE_REGEXP.test(path) || path.includes('.vue.css')) {
               return (
                 query.includes('type=style') && query.includes('module=true')
               );
