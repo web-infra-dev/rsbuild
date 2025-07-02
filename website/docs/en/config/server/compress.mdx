@@ -43,7 +43,7 @@ export default {
   server: {
     compress: {
       filter: (req) => {
-        if (req.url.includes('/foo')) {
+        if (req.url?.includes('/foo')) {
           return false;
         }
         return true;
