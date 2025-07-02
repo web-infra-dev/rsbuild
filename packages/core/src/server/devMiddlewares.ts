@@ -116,8 +116,11 @@ const applyDefaultMiddlewares = async ({
 
   // compression is placed after proxy middleware to avoid breaking SSE (Server-Sent Events),
   // but before other middleware to ensure responses are properly compressed
-  if (server.compress) {
-    middlewares.push(gzipMiddleware());
+  const { compress } = server;
+  if (compress) {
+    middlewares.push(
+      gzipMiddleware(typeof compress === 'object' ? compress : undefined),
+    );
   }
 
   // enable lazy compilation

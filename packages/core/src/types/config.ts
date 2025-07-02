@@ -415,6 +415,19 @@ export type PublicDirOptions = {
 
 export type PublicDir = false | PublicDirOptions | PublicDirOptions[];
 
+/**
+ * The options for `server.compress`.
+ */
+export type CompressOptions = {
+  /**
+   * Determines whether a response should be compressed.
+   * @param req - The incoming HTTP request
+   * @param res - The outgoing HTTP response
+   * @returns `true` to compress the response, `false` to skip compression
+   */
+  filter?: (req: IncomingMessage, res: ServerResponse) => boolean;
+};
+
 export interface ServerConfig {
   /**
    * Configure the base path of the server.
@@ -423,9 +436,10 @@ export interface ServerConfig {
   base?: string;
   /**
    * Whether to enable gzip compression for served static assets.
+   * Pass an object to customize the compression behavior.
    * @default true
    */
-  compress?: boolean;
+  compress?: boolean | CompressOptions;
   /**
    * Serving static files from the directory (by default 'public' directory)
    */
