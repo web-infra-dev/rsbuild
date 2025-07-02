@@ -420,7 +420,7 @@ export type PublicDir = false | PublicDirOptions | PublicDirOptions[];
  */
 export type CompressOptions = {
   /**
-   * Determines whether a response should be compressed.
+   * A function that determines whether a response should be compressed.
    * @param req - The incoming HTTP request
    * @param res - The outgoing HTTP response
    * @returns `true` to compress the response, `false` to skip compression

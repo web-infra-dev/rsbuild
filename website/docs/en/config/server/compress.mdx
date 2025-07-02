@@ -1,6 +1,15 @@
 # server.compress
 
-- **Type:** `boolean`
+- **Type:**
+
+```ts
+type Compress =
+  | boolean
+  | {
+      filter?: (req: IncomingMessage, res: ServerResponse) => boolean;
+    };
+```
+
 - **Default:** `true`
 
 Configure whether to enable [gzip compression](https://developer.mozilla.org/en-US/docs/Glossary/gzip_compression) for static assets served by the dev server or preview server.
@@ -13,6 +22,33 @@ To disable the gzip compression, set `compress` to `false`:
 export default {
   server: {
     compress: false,
+  },
+};
+```
+
+## Options
+
+### filter
+
+- **Type:** `(req: IncomingMessage, res: ServerResponse) => boolean`
+- **Default:** `undefined`
+- **Version:** `>= v1.4.4`
+
+A function that determines whether a response should be compressed.
+
+Returns `true` to compress the response, `false` to skip compression.
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    compress: {
+      filter: (req) => {
+        if (req.url.includes('/foo')) {
+          return false;
+        }
+        return true;
+      },
+    },
   },
 };
 ```

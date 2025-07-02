@@ -1,6 +1,15 @@
 # server.compress
 
-- **类型：** `boolean`
+- **类型：**
+
+```ts
+type Compress =
+  | boolean
+  | {
+      filter?: (req: IncomingMessage, res: ServerResponse) => boolean;
+    };
+```
+
 - **默认值：** `true`
 
 配置开发和预览服务器是否对静态资源启用 [gzip 压缩](https://developer.mozilla.org/en-US/docs/Glossary/gzip_compression)。
@@ -13,6 +22,33 @@
 export default {
   server: {
     compress: false,
+  },
+};
+```
+
+## 选项
+
+### filter
+
+- **类型：** `(req: IncomingMessage, res: ServerResponse) => boolean`
+- **默认值：** `undefined`
+- **版本：** `>= v1.4.4`
+
+用于决定 response 是否需要被压缩的函数。
+
+返回 `true` 表示需要压缩该 response，返回 `false` 表示跳过压缩。
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    compress: {
+      filter: (req) => {
+        if (req.url.includes('/foo')) {
+          return false;
+        }
+        return true;
+      },
+    },
   },
 };
 ```
