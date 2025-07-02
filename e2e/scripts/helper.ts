@@ -102,7 +102,7 @@ export const proxyConsole = ({
     });
 
     console[type] = (log) => {
-      logs.push(keepAnsi ? log : stripAnsi(log));
+      logs.push(keepAnsi || typeof log !== 'string' ? log : stripAnsi(log));
     };
   }
 

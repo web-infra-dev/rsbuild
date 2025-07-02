@@ -1,6 +1,6 @@
 import type { ServerResponse } from 'node:http';
 import zlib from 'node:zlib';
-import type { RequestHandler } from '../types';
+import type { CompressOptions, RequestHandler } from '../types';
 
 const ENCODING_REGEX = /\bgzip\b/;
 const CONTENT_TYPE_REGEX = /text|javascript|\/json|xml/i;
@@ -22,11 +22,17 @@ const shouldCompress = (res: ServerResponse) => {
 
 export const gzipMiddleware =
   ({
+    filter,
     level = zlib.constants.Z_BEST_SPEED,
   }: {
     level?: number;
-  } = {}): RequestHandler =>
+  } & CompressOptions = {}): RequestHandler =>
   (req, res, next): void => {
+    if (filter && filter(req, res) === false) {
+      next();
+      return;
+    }
+
     const accept = req.headers['accept-encoding'];
     const encoding = typeof accept === 'string' && ENCODING_REGEX.test(accept);
 

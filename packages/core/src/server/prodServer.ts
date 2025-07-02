@@ -109,6 +109,7 @@ export class RsbuildProdServer {
         gzipMiddleware({
           // simulates the common gzip compression rates
           level: 6,
+          ...(typeof compress === 'object' ? compress : undefined),
         }),
       );
     }

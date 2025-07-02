@@ -48,6 +48,7 @@ export type {
   CleanDistPathObject,
   ClientConfig,
   CliShortcut,
+  CompressOptions,
   ConfigChain,
   ConfigChainWithContext,
   ConsoleType,
