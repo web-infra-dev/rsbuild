@@ -1,49 +1,49 @@
-# HMR FAQ
+# Perguntas Frequentes sobre HMR
 
-### How to troubleshooting HMR ineffective issues?
+### Como solucionar problemas de ineficácia do HMR?
 
-There are several possible reasons why HMR may not be work. This document will cover most common causes and provide guidance for troubleshooting. Please refer to the following content for troubleshooting.
+Existem várias razões possíveis pelas quais o HMR pode não funcionar. Este documento abordará as causas mais comuns e fornecerá orientações para a solução de problemas. Consulte o conteúdo a seguir para solucionar problemas.
 
-Before starting the troubleshooting process, it is helpful to have a basic understanding of how HMR works:
+Antes de iniciar o processo de solução de problemas, é útil ter uma compreensão básica de como o HMR funciona:
 
-:::tip HMR Principle
+:::tip Princípio do HMR
 
-1. The browser establishes a WebSocket connection with the dev server for real-time communication.
-2. Whenever the dev server finishes recompiling, it sends a notification to the browser via the WebSocket. The browser then sends a `hot-update.(js|json)` request to the dev server to load the newly compiled module.
-3. After receiving the new module, if it is a React project, React Refresh, an official React tool, is used to update React components. Other frameworks have similar tools.
+1.  O navegador estabelece uma conexão WebSocket com o servidor de desenvolvimento para comunicação em tempo real.
+2.  Sempre que o servidor de desenvolvimento termina a recompilação, ele envia uma notificação ao navegador via WebSocket. O navegador então envia uma requisição `hot-update.(js|json)` para o servidor de desenvolvimento para carregar o módulo recém-compilado.
+3.  Após receber o novo módulo, se for um projeto React, o React Refresh, uma ferramenta oficial do React, é usado para atualizar os componentes React. Outros frameworks possuem ferramentas semelhantes.
 
 :::
 
-After understanding the principle of HMR, you can follow these steps for basic troubleshooting:
+Após entender o princípio do HMR, você pode seguir estas etapas para a solução básica de problemas:
 
-#### 1. Check the WebSocket connection
+#### 1. Verificar a conexão WebSocket
 
-Open the browser console and check for the presence of the `[HMR] connected.` log.
+Abra o console do navegador e verifique a presença do log `[HMR] connected.`.
 
-- If it is present, the WebSocket connection is working correctly. You can continue with the following steps.
-- If it is not present, open the Network panel in Chrome and check the status of the `ws://[host]:[port]/rsbuild-hmr` request. If the request is failed, this indicates that the HMR failed because the WebSocket connection was not successfully established.
+- Se estiver presente, a conexão WebSocket está funcionando corretamente. Você pode continuar com as etapas a seguir.
+- Se não estiver presente, abra o painel Network no Chrome e verifique o status da requisição `ws://[host]:[port]/rsbuild-hmr`. Se a requisição falhar, isso indica que o HMR falhou porque a conexão WebSocket não foi estabelecida com sucesso.
 
-There can be various reasons why the WebSocket connection fails to establish, such as using a network proxy that prevents the WebSocket request from reaching the dev server. You can check whether the WebSocket request address matches your dev server address. If it does not match, you can configure the WebSocket request address using [dev.client](/config/dev/client).
+Pode haver várias razões pelas quais a conexão WebSocket falha ao ser estabelecida, como o uso de um proxy de rede que impede que a requisição WebSocket chegue ao servidor de desenvolvimento. Você pode verificar se o endereço da requisição WebSocket corresponde ao endereço do seu servidor de desenvolvimento. Se não corresponder, você pode configurar o endereço da requisição WebSocket usando [dev.client](/config/dev/client).
 
-#### 2. Check the hot-update requests
+#### 2. Verificar as requisições hot-update
 
-When you modify the code of a module and trigger a recompilation, the browser sends several `hot-update.json` and `hot-update.js` requests to the dev server to fetch the updated code.
+Quando você modifica o código de um módulo e aciona uma recompilação, o navegador envia várias requisições `hot-update.json` e `hot-update.js` para o servidor de desenvolvimento para buscar o código atualizado.
 
 You can try modifying a module and inspect the content of the `hot-update.(js|json)` requests. If the content of the request is the latest code, it indicates that the hot update request is working correctly.
 
 If the content of the request is incorrect, it is likely due to a network proxy. Check whether the address of the `hot-update.(js|json)` request matches your dev server address. If it does not match, you need to adjust the proxy rules to route the `hot-update.(js|json)` request to the dev server address.
 
-#### 3. Check for other causes
+#### 3. Verificar outras causas
 
-If the above two steps do not reveal any issues, it is possible that other factors are causing the HMR to fail. For example, it could be that the code does not meet React's requirements for HMR. You can refer to the following questions for further troubleshooting.
+Se as duas etapas acima não revelarem nenhum problema, é possível que outros fatores estejam causando a falha do HMR. Por exemplo, pode ser que o código não atenda aos requisitos do React para HMR. Você pode consultar as seguintes perguntas para solucionar problemas adicionais.
 
 ---
 
-### HMR not working when external React?
+### HMR não funciona ao usar React externo?
 
-To ensure that HMR works properly, we need to use the development builds of React and ReactDOM.
+Para garantir que o HMR funcione corretamente, precisamos usar as builds de desenvolvimento do React e ReactDOM.
 
-If you exclude React via `externals` when bundling, the production build of React is usually injected through CDN, and this can cause HMR to fail.
+Se você excluir o React via `externals` ao empacotar, a build de produção do React geralmente é injetada através de CDN, e isso pode fazer com que o HMR falhe.
 
 ```js
 export default {
@@ -56,19 +56,19 @@ export default {
 };
 ```
 
-To solve this problem, you need to reference the React development artifacts and install React DevTools, then hot reloading will work properly.
+Para resolver este problema, você precisa referenciar os artefatos de desenvolvimento do React e instalar o React DevTools, então o hot reloading funcionará corretamente.
 
-If you are unsure about the type of React build you are using, you can refer to the [React documentation - Use the Production Build](https://legacy.reactjs.org/docs/optimizing-performance.html#use-the-production-build).
+Se você não tiver certeza sobre o tipo de build do React que está usando, você pode consultar a [documentação do React - Usar a Build de Produção](https://legacy.reactjs.org/docs/optimizing-performance.html#use-the-production-build).
 
 ---
 
-### HMR not working when setting filename hash in development mode?
+### HMR não funciona ao definir hash de nome de arquivo no modo de desenvolvimento?
 
-Usually, we only set the filename hash in the production mode (i.e., when `process.env.NODE_ENV === 'production'`).
+Generally, we only set the filename hash in the production mode (i.e., when `process.env.NODE_ENV === 'production'`).
 
 If you set the filename hash in the development mode, it may cause HMR to fail (especially for CSS files). This is because every time the file content changes, the hash value changes, preventing tools like [mini-css-extract-plugin](https://npmjs.com/package/mini-css-extract-plugin) from reading the latest file content.
 
-- Correct usage:
+- Uso correto:
 
 ```js
 export default {
@@ -83,7 +83,7 @@ export default {
 };
 ```
 
-- Incorrect usage:
+- Uso incorreto:
 
 ```js
 export default {
@@ -97,15 +97,15 @@ export default {
 
 ---
 
-### HMR not working when use https?
+### HMR não funciona ao usar https?
 
-If https is enabled, the HMR connection may fail due to a certificate issue, and if you open the console, you will get an HMR connect failed error.
+Se o https estiver habilitado, a conexão HMR pode falhar devido a um problema de certificado, e se você abrir o console, receberá um erro de falha de conexão HMR.
 
 ```
 » WebSocket connection to 'wss://localhost:3000/rsbuild-hmr' failed:
 [HMR] disconnected. Attempting to reconnect.
 ```
 
-The solution to this problem is to click on "Advanced" -> "Proceed to some page (unsafe)" on the Chrome problem page.
+A solução para este problema é clicar em "Avançado" -> "Prosseguir para alguma página (não segura)" na página de problema do Chrome.
 
-> Tips: When accessing the page through Localhost, the words "Your connection is not private" may not appear and can be handled by visiting the Network domain.
+> Dicas: Ao acessar a página via Localhost, as palavras "Sua conexão não é particular" podem não aparecer e podem ser tratadas visitando o domínio da Rede.
