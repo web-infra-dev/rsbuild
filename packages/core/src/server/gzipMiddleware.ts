@@ -24,9 +24,7 @@ export const gzipMiddleware =
   ({
     filter,
     level = zlib.constants.Z_BEST_SPEED,
-  }: {
-    level?: number;
-  } & CompressOptions = {}): RequestHandler =>
+  }: CompressOptions = {}): RequestHandler =>
   (req, res, next): void => {
     if (filter && filter(req, res) === false) {
       next();

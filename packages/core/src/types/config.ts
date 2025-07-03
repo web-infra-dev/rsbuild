@@ -426,6 +426,16 @@ export type CompressOptions = {
    * @returns `true` to compress the response, `false` to skip compression
    */
   filter?: (req: IncomingMessage, res: ServerResponse) => boolean;
+  /**
+   * The level of zlib compression to apply to responses.
+   * A higher level will result in better compression, but will take longer to complete.
+   * A lower level will result in less compression, but will be much faster.
+   * This is an integer in the range of 0 (no compression) to 9 (maximum compression).
+   * @default
+   * - 1 (fastest) for dev server (also known as `zlib.constants.Z_BEST_SPEED`)
+   * - 6 for preview server (also known as `zlib.constants.Z_DEFAULT_COMPRESSION`)
+   */
+  level?: number;
 };
 
 export interface ServerConfig {
