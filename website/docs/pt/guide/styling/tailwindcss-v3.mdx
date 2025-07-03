@@ -1,20 +1,20 @@
 # Tailwind CSS v3
 
-[Tailwind CSS](https://v3.tailwindcss.com/) is a CSS framework and design system based on utility class, which can quickly add common styles to components, and support flexible extension of theme styles.
+[Tailwind CSS](https://v3.tailwindcss.com/) é um framework CSS e sistema de design baseado em classes utilitárias, que pode adicionar rapidamente estilos comuns a componentes e suportar a extensão flexível de estilos de tema.
 
-You can integrate Tailwind CSS in Rsbuild via PostCSS plugins.
+Você pode integrar o Tailwind CSS no Rsbuild via plugins PostCSS.
 
-## Installing Tailwind CSS
+## Instalando Tailwind CSS
 
-Rsbuild has built-in support for PostCSS, you can install `tailwindcss` package to integrate Tailwind CSS:
+O Rsbuild tem suporte embutido para PostCSS, você pode instalar o pacote `tailwindcss` para integrar o Tailwind CSS:
 
 import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add tailwindcss@^3 -D" />
 
-## Configuring PostCSS
+## Configurando PostCSS
 
-You can register the `tailwindcss` PostCSS plugin through [postcss.config.cjs](https://npmjs.com/package/postcss-loader#config) or [tools.postcss](/config/tools/postcss).
+Você pode registrar o plugin PostCSS do `tailwindcss` através de [postcss.config.cjs](https://npmjs.com/package/postcss-loader#config) ou [tools.postcss](/config/tools/postcss).
 
 ```js title="postcss.config.cjs"
 module.exports = {
@@ -24,9 +24,9 @@ module.exports = {
 };
 ```
 
-## Configuring Tailwind CSS
+## Configurando Tailwind CSS
 
-Create a `tailwind.config.js` file in the root directory of your project and add the following content:
+Crie um arquivo `tailwind.config.js` no diretório raiz do seu projeto e adicione o seguinte conteúdo:
 
 ```js title="tailwind.config.js"
 /** @type {import('tailwindcss').Config} */
@@ -40,10 +40,10 @@ module.exports = {
 ```
 
 :::tip
-The above configuration is for reference only and can be modified to suit the needs of your project. For example, non-TypeScript projects do not need to include ts and tsx files.
+A configuração acima é apenas para referência e pode ser modificada para atender às necessidades do seu projeto. Por exemplo, projetos não-TypeScript não precisam incluir arquivos ts e tsx.
 :::
 
-It should be noted that the `content` option should include the paths to all source files that contain Tailwind class names. For details, please refer to [tailwindcss - Content Configuration](https://v3.tailwindcss.com/docs/content-configuration).
+Deve-se notar que a opção `content` deve incluir os caminhos para todos os arquivos de origem que contêm nomes de classe Tailwind. Para detalhes, consulte [tailwindcss - Configuração de Conteúdo](https://v3.tailwindcss.com/docs/content-configuration).
 
 ```js title="tailwind.config.js"
 /** @type {import('tailwindcss').Config} */
@@ -59,22 +59,22 @@ module.exports = {
 };
 ```
 
-### Other configuration methods
+### Outros métodos de configuração
 
-- You can directly pass the Tailwind CSS configuration to `postcss.config.cjs`:
+- Você pode passar diretamente a configuração do Tailwind CSS para `postcss.config.cjs`:
 
 ```js title="postcss.config.cjs"
 module.exports = {
   plugins: {
     tailwindcss: {
       content: ['./src/**/*.{html,js,ts,jsx,tsx}'],
-      // ...other options
+      // ...outras opções
     },
   },
 };
 ```
 
-- You can also set the Tailwind CSS configuration through [tools.postcss](/config/tools/postcss):
+- Você também pode definir a configuração do Tailwind CSS através de [tools.postcss](/config/tools/postcss):
 
 ```js title="rsbuild.config.js"
 import tailwindcss from 'tailwindcss';
@@ -86,7 +86,7 @@ export default {
         plugins: [
           tailwindcss({
             content: ['./src/**/*.{html,js,ts,jsx,tsx}'],
-            // ...other options
+            // ...outras opções
           }),
         ],
       },
@@ -95,11 +95,11 @@ export default {
 };
 ```
 
-But we recommend placing the Tailwind CSS configuration in `tailwind.config.*` because other methods may cause the Tailwind CSS build performance to degrade, refer to [tailwindcss/issues/14229](https://github.com/tailwindlabs/tailwindcss/issues/14229).
+Mas recomendamos colocar a configuração do Tailwind CSS em `tailwind.config.*` porque outros métodos podem fazer com que o desempenho da build do Tailwind CSS se degrade, consulte [tailwindcss/issues/14229](https://github.com/tailwindlabs/tailwindcss/issues/14229).
 
-## Importing CSS
+## Importando CSS
 
-Add the `@tailwind` directives in your CSS entry file:
+Adicione as diretivas `@tailwind` ao seu arquivo de entrada CSS:
 
 ```css title="main.css"
 @tailwind base;
@@ -107,63 +107,63 @@ Add the `@tailwind` directives in your CSS entry file:
 @tailwind utilities;
 ```
 
-Depending on your needs, you can selectively import the CSS styles provided by Tailwind CSS. Please refer to the [@tailwind documentation](https://v3.tailwindcss.com/docs/functions-and-directives#tailwind) for detailed usage of the `@tailwind` directives.
+Dependendo das suas necessidades, você pode importar seletivamente os estilos CSS fornecidos pelo Tailwind CSS. Consulte a [documentação @tailwind](https://v3.tailwindcss.com/docs/functions-and-directives#tailwind) para uso detalhado das diretivas `@tailwind`.
 
-## Done
+## Concluído
 
-You have now completed all the steps to integrate Tailwind CSS in Rsbuild!
+Você concluiu todas as etapas para integrar o Tailwind CSS no Rsbuild!
 
-You can use Tailwind's utility classes in any component or HTML, such as:
+Você pode usar as classes utilitárias do Tailwind em qualquer componente ou HTML, como:
 
 ```html
 <h1 class="text-3xl font-bold underline">Hello world!</h1>
 ```
 
-For more usage details, refer to the [Tailwind CSS documentation](https://v3.tailwindcss.com/).
+Para mais detalhes de uso, consulte a [documentação do Tailwind CSS](https://v3.tailwindcss.com/).
 
-## VS Code extension
+## Extensão do VS Code
 
-Tailwind CSS provides a [Tailwind CSS IntelliSense](https://github.com/tailwindlabs/tailwindcss-intellisense) plugin for VS Code to automatically complete Tailwind CSS class names, CSS functions, and directives.
+O Tailwind CSS fornece um plugin [Tailwind CSS IntelliSense](https://github.com/tailwindlabs/tailwindcss-intellisense) para VS Code para autocompletar nomes de classes, funções CSS e diretivas do Tailwind CSS.
 
-You can install this plugin in VS Code to enable the autocompletion feature.
+Você pode instalar este plugin no VS Code para habilitar o recurso de autocompletar.
 
-## Optimize build performance
+## Otimizar o desempenho da build
 
-When using Tailwind CSS, if the `content` field in `tailwind.config.js` is not correctly configured, this can lead to poor build performance and HMR performance. This is because Tailwind CSS internally matches files based on the glob defined in `content`. The more files it matches, the greater the performance overhead.
+Ao usar o Tailwind CSS, se o campo `content` em `tailwind.config.js` não estiver configurado corretamente, isso pode levar a um desempenho de build e HMR ruim. Isso ocorre porque o Tailwind CSS internamente corresponde a arquivos com base no glob definido em `content`. Quanto mais arquivos ele corresponder, maior será a sobrecarga de desempenho.
 
-Therefore, we recommend that you specify the paths to be scanned accurately to avoid unnecessary performance overhead. For example, only include HTML or JS files in the project source code that actually contain Tailwind class names, and avoid including irrelevant files or directories, especially the `node_modules` directory.
+Portanto, recomendamos que você especifique os caminhos a serem escaneados com precisão para evitar sobrecarga de desempenho desnecessária. Por exemplo, inclua apenas arquivos HTML ou JS no código-fonte do projeto que realmente contêm nomes de classe Tailwind, e evite incluir arquivos ou diretórios irrelevantes, especialmente o diretório `node_modules`.
 
-Here is an bad example of scanning the `node_modules`:
+Aqui está um exemplo ruim de escaneamento do `node_modules`:
 
 ```js title="tailwind.config.js"
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     './src/**/*.{html,js,ts,jsx,tsx}',
-    // Scanning a large number of files, leading to performance degradation
+    // Escaneando um grande número de arquivos, levando à degradação do desempenho
     './node_modules/**/*.js',
   ],
 };
 ```
 
-Sometimes, you may accidentally scan the `node_modules` directory, for example, when scanning files in a monorepo:
+Às vezes, você pode acidentalmente escanear o diretório `node_modules`, por exemplo, ao escanear arquivos em um monorepo:
 
 ```js title="tailwind.config.js"
 module.exports = {
   content: [
     './src/**/*.{html,js,ts,jsx,tsx}',
-    // Incorrectly includes the `packages/ui/node_modules` directory
-    // Should be '../../packages/ui/src/**/*.{html,js,ts,jsx,tsx}'
+    // Inclui incorretamente o diretório `packages/ui/node_modules`
+    // Deveria ser '../../packages/ui/src/**/*.{html,js,ts,jsx,tsx}'
     '../../packages/ui/**/*.{html,js,ts,jsx,tsx}',
   ],
 };
 ```
 
-## Optimize CSS size
+## Otimizar o tamanho do CSS
 
-To optimize the size of Tailwind CSS styles, you can try [rsbuild-plugin-tailwindcss](https://github.com/rspack-contrib/rsbuild-plugin-tailwindcss).
+Para otimizar o tamanho dos estilos do Tailwind CSS, você pode tentar [rsbuild-plugin-tailwindcss](https://github.com/rspack-contrib/rsbuild-plugin-tailwindcss).
 
-This plugin reads the module graph information of Rspack, automatically sets the accurate `content` configuration to generate minimal Tailwind CSS styles.
+Este plugin lê as informações do grafo de módulos do Rspack, define automaticamente a configuração `content` precisa para gerar estilos Tailwind CSS mínimos.
 
 ```ts title="rsbuild.config.ts"
 import { pluginTailwindCSS } from 'rsbuild-plugin-tailwindcss';
@@ -173,4 +173,4 @@ export default {
 };
 ```
 
-> See [rsbuild-plugin-tailwindcss](https://github.com/rspack-contrib/rsbuild-plugin-tailwindcss) for more information.
+> Consulte [rsbuild-plugin-tailwindcss](https://github.com/rspack-contrib/rsbuild-plugin-tailwindcss) para mais informações.
