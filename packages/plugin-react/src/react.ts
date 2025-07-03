@@ -107,15 +107,22 @@ export const applyReactProfiler = (api: RsbuildPluginAPI): void => {
   });
 
   // react-dom/client was introduced in React 18
+  let hasReactDomClientCache: boolean | undefined;
   const hasReactDomClient = () => {
+    if (hasReactDomClientCache !== undefined) {
+      return hasReactDomClientCache;
+    }
+
     try {
       require.resolve('react-dom/client', {
         paths: [api.context.rootPath],
       });
-      return true;
+      hasReactDomClientCache = true;
     } catch {
-      return false;
+      hasReactDomClientCache = false;
     }
+
+    return hasReactDomClientCache;
   };
 
   api.modifyBundlerChain((chain, { isProd }) => {
