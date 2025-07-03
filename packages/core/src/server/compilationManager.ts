@@ -7,9 +7,9 @@ import { getPathnameFromUrl } from '../helpers/path';
 import type {
   EnvironmentContext,
   NextFunction,
-  DevConfig as OriginDevConfig,
+  NormalizedDevConfig,
+  NormalizedServerConfig,
   Rspack,
-  ServerConfig,
 } from '../types';
 import {
   type CompilationMiddleware,
@@ -23,22 +23,16 @@ const require = createRequire(import.meta.url);
 type Options = {
   publicPaths: string[];
   environments: Record<string, EnvironmentContext>;
-  dev: OriginDevConfig;
-  server: ServerConfig;
+  dev: NormalizedDevConfig;
+  server: NormalizedServerConfig;
   compiler: Rspack.Compiler | Rspack.MultiCompiler;
-};
-
-type DevConfig = Omit<OriginDevConfig, 'writeToDisk'> & {
-  writeToDisk?:
-    | boolean
-    | ((filename: string, compilationName?: string) => boolean);
 };
 
 // allow to configure dev.writeToDisk in environments
 const formatDevConfig = (
-  config: OriginDevConfig,
+  config: NormalizedDevConfig,
   environments: Record<string, EnvironmentContext>,
-): DevConfig => {
+): NormalizedDevConfig => {
   const writeToDiskValues = Object.values(environments).map(
     (env) => env.config.dev.writeToDisk,
   );
@@ -64,7 +58,7 @@ const formatDevConfig = (
   };
 };
 
-function getClientPaths(devConfig: DevConfig) {
+function getClientPaths(devConfig: NormalizedDevConfig) {
   const clientPaths: string[] = [];
 
   if (!devConfig.hmr && !devConfig.liveReload) {
@@ -90,9 +84,9 @@ export class CompilationManager {
 
   public outputFileSystem: Rspack.OutputFileSystem;
 
-  private devConfig: DevConfig;
+  private devConfig: NormalizedDevConfig;
 
-  private serverConfig: ServerConfig;
+  private serverConfig: NormalizedServerConfig;
 
   public compiler: Rspack.Compiler | Rspack.MultiCompiler;
 
