@@ -529,7 +529,7 @@ const myPlugin = () => ({
 
 ### modifyHTMLTags
 
-Modify the tags that are injected into the HTML. This hook is triggered before the [modifyHTML](#modifyhtml) hook.
+Modify the tags that are injected into the HTML.
 
 - **Type:**
 
@@ -616,6 +616,16 @@ const tagsPlugin = () => ({
   },
 });
 ```
+
+:::tip
+
+When using `modifyHTML`, `modifyHTMLTags`, and `html.tags` options together, the execution order is as follows:
+
+1. [modifyHTML](#modifyhtml)
+2. [modifyHTMLTags](#modifyhtmltags)
+3. [html.tags](/config/html/tags)
+
+:::
 
 ### onBeforeCreateCompiler
 

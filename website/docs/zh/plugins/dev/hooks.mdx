@@ -525,7 +525,7 @@ const myPlugin = () => ({
 
 ### modifyHTMLTags
 
-修改注入到 HTML 中的标签。这个钩子在 [modifyHTML](#modifyhtml) 钩子之前触发。
+修改注入到 HTML 中的标签。
 
 - **类型：**
 
@@ -612,6 +612,16 @@ const tagsPlugin = () => ({
   },
 });
 ```
+
+:::tip
+
+当同时使用 `modifyHTML`，`modifyHTMLTags` 和 `html.tags` 选项时，执行顺序如下：
+
+1. [modifyHTML](#modifyhtml)
+2. [modifyHTMLTags](#modifyhtmltags)
+3. [html.tags](/config/html/tags)
+
+:::
 
 ### onBeforeCreateCompiler
 
