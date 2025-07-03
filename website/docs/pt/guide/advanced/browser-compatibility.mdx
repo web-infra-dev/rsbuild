@@ -1,42 +1,42 @@
-# Browser compatibility
+# Compatibilidade do navegador
 
-Rsbuild supports [modern browsers](/guide/advanced/browserslist#default-browserslist) by default, and provides syntax and API downgrade capabilities to ensure compatibility with legacy browsers that support ES5 (such as IE11).
+O Rsbuild suporta [navegadores modernos](/guide/advanced/browserslist#default-browserslist) por padrão e oferece recursos de downgrade de sintaxe e API para garantir a compatibilidade com navegadores legados que suportam ES5 (como o IE11).
 
-This chapter introduces how to use the capabilities provided by Rsbuild to deal with browser compatibility issues.
+Este capítulo apresenta como usar os recursos fornecidos pelo Rsbuild para lidar com problemas de compatibilidade do navegador.
 
-## Set browserslist
+## Definir browserslist
 
-Before dealing with compatibility issues, you first need to clarify which browsers your project needs to support, and add the corresponding browserslist config.
+Antes de lidar com problemas de compatibilidade, você precisa primeiro esclarecer quais navegadores seu projeto precisa suportar e adicionar a configuração de browserslist correspondente.
 
-- If you haven't set browserslist yet, please read the [Browserslist](/guide/advanced/browserslist) chapter first.
+- Se você ainda não definiu o browserslist, leia primeiro o capítulo [Browserslist](/guide/advanced/browserslist).
 
-- If you have set a browserslist, Rsbuild will automatically compile according to that scope, downgrade JavaScript syntax and CSS syntax, and inject the required polyfill. In most cases, you can safely use modern ECMAScript features without worrying about compatibility issues.
+- Se você definiu um browserslist, o Rsbuild compilará automaticamente de acordo com esse escopo, fará o downgrade da sintaxe JavaScript e CSS e injetará o polyfill necessário. Na maioria dos casos, você pode usar com segurança os recursos modernos do ECMAScript sem se preocupar com problemas de compatibilidade.
 
-After setting the browserslist, if you still encountered some compatibility issues, please continue reading below contents to find some solutions.
+Após definir o browserslist, se você ainda encontrar alguns problemas de compatibilidade, continue lendo o conteúdo abaixo para encontrar algumas soluções.
 
-:::tip What is polyfill
-A polyfill is a piece of code that provides the functionality of a newer feature to older browsers that do not support that feature natively. It is used to fill in the gaps in older browsers' implementations of web standards, allowing developers to use newer features safely without having to worry about whether or not they will work in older browsers. For example, if a browser does not support the Array.map() method, a polyfill can be used to provide that functionality, allowing code that uses `Array.prototype.flat()` to work in that browser. Polyfills are commonly used to ensure that web applications can work on a wide range of browsers, including older ones.
+:::tip O que é polyfill
+Um polyfill é um pedaço de código que fornece a funcionalidade de um recurso mais recente para navegadores mais antigos que não suportam esse recurso nativamente. Ele é usado para preencher as lacunas nas implementações de padrões da web de navegadores mais antigos, permitindo que os desenvolvedores usem recursos mais recentes com segurança, sem ter que se preocupar se eles funcionarão ou não em navegadores mais antigos. Por exemplo, se um navegador não suporta o Array.map() method, um polyfill can be used to provide that functionality, allowing code that uses `Array.prototype.flat()` to work in that browser. Polyfills are commonly used to ensure that web applications can work on a wide range of browsers, including older ones.
 :::
 
-## Background knowledge
+## Conhecimento básico
 
 Before dealing with compatibility issues, it is recommended that you understand the following background knowledge to better handle related issues.
 
-### Syntax downgrade and API downgrade
+### Downgrade de sintaxe e downgrade de API
 
-When you use higher-version syntax and API in your project, in order to make the compiled code run stably in lower-version browsers, we need to downgrade two parts: syntax downgrade and API downgrade.
+Quando você usa sintaxe e API de versão superior em seu projeto, para fazer com que o código compilado seja executado de forma estável em navegadores de versão inferior, precisamos fazer o downgrade de duas partes: downgrade de sintaxe e downgrade de API.
 
-**Rsbuild downgrades syntax through syntax transpilation, and downgrades API through inject polyfill.**
+**O Rsbuild faz o downgrade da sintaxe através da transpilação de sintaxe e o downgrade da API através da injeção de polyfill.**
 
-> Grammar and API are not strongly bound. When browser manufacturers implement the engine, they will support some syntax or implement some APIs in advance according to the specification or their own needs. Therefore, browsers from different manufacturers in the same period are not necessarily compatible with syntax and API. So in general practice, syntax and API are handled in two parts.
+> Gramática e API não estão fortemente ligadas. Quando os fabricantes de navegadores implementam o motor, eles suportarão algumas sintaxes ou implementarão algumas APIs antecipadamente de acordo com a especificação ou suas próprias necessidades. Portanto, navegadores de diferentes fabricantes no mesmo período não são necessariamente compatíveis com sintaxe e API. Assim, na prática geral, sintaxe e API são tratadas em duas partes.
 
-### Syntax transpilation
+### Transpilação de sintaxe
 
-**Syntax is a series of rules for how a programming language organizes code**, and code that does not follow these rules cannot be correctly recognized by the programming language's engine and therefore cannot be run. In JavaScript, the following examples are syntax rules:
+**Sintaxe é uma série de regras sobre como uma linguagem de programação organiza o código**, e o código que não segue essas regras não pode ser reconhecido corretamente pelo motor da linguagem de programação e, portanto, não pode ser executado. Em JavaScript, os exemplos a seguir são regras de sintaxe:
 
-- In `const foo = 1`, `const` means to declare an immutable constant.
-- In `foo?.bar?.baz`, `?.` indicates optional chaining of access properties.
-- In `async function () {}`, `async` means to declare an asynchronous function.
+- Em `const foo = 1`, `const` means to declare an immutable constant.
+- Em `foo?.bar?.baz`, `?.` indicates optional chaining of access properties.
+- Em `async function () {}`, `async` means to declare an asynchronous function.
 
 Because the parsers of different browsers can support different syntax, especially the old version of the browser engine can support less grammar, so when some syntax are run in the lower version of the browser engine, an error will be reported at the stage of parsing the AST .
 
@@ -76,7 +76,7 @@ If the engine encounters an unrecognized syntax when converting to AST, it will 
 
 If the code is successfully converted to AST, the engine will convert the AST into executable code and execute it normally inside the engine.
 
-### API polyfill
+### Polyfill de API
 
 JavaScript is an interpreted scripting language, unlike compiled languages like Rust. Rust will check the calls in the code during the compilation phase, and JavaScript does not know whether the function called by this line of code exists before it actually runs to a certain line of code, so some errors will only appear at runtime.
 
@@ -120,21 +120,21 @@ if (!String.prototype.replaceAll) {
 
 > This technique of providing implementations for legacy environments to align new APIs is called polyfill.
 
-## Compilation scope
+## Escopo de compilação
 
-By default, Rsbuild uses [SWC](/guide/configuration/swc) to compile all JavaScript and TypeScript modules, but excludes JavaScript modules in the `node_modules` directory.
+Por padrão, o Rsbuild usa [SWC](/guide/configuration/swc) para compilar todos os módulos JavaScript e TypeScript, mas exclui módulos JavaScript no diretório `node_modules`.
 
-This approach is designed to avoid impacting build performance when downgrading all third-party dependencies while also preventing potential issues arising from redundantly downgrading pre-compiled third-party dependencies.
+Essa abordagem é projetada para evitar impactar o desempenho da build ao fazer o downgrade de todas as dependências de terceiros, ao mesmo tempo em que evita possíveis problemas decorrentes do downgrade redundante de dependências de terceiros pré-compiladas.
 
-### Source code
+### Código-fonte
 
-The source code of the current project will be downgraded by default, so you don't need to add additional config, just make sure that the browserslist config is set correctly.
+O código-fonte do projeto atual será rebaixado por padrão, então você não precisa adicionar configuração adicional, apenas certifique-se de que a configuração do browserslist esteja definida corretamente.
 
-### Third-party dependencies
+### Dependências de terceiros
 
-When you find that a third-party dependency causes compatibility issues, you can add this dependency to Rsbuild's [source.include](/config/source/include) config, Make Rsbuild do extra compilation for this dependency.
+Quando você descobrir que uma dependência de terceiros causa problemas de compatibilidade, você pode adicionar essa dependência à configuração [source.include](/config/source/include) do Rsbuild, fazendo com que o Rsbuild faça uma compilação extra para essa dependência.
 
-Taking the npm package `query-string` as an example, you can add the following config:
+Tomando o pacote npm `query-string` as an example, you can add the following config:
 
 ```ts title="rsbuild.config.ts"
 import path from 'node:path';
@@ -146,17 +146,17 @@ export default {
 };
 ```
 
-See [source.include](/config/source/include) for detailed usage.
+Consulte [source.include](/config/source/include) para uso detalhado.
 
-## Polyfill mode
+## Modo Polyfill
 
-Rsbuild compiles JavaScript code using SWC and supports injecting polyfills such as [core-js](https://github.com/zloirock/core-js) and [@swc/helpers](https://npmjs.com/package/@swc/helpers).
+O Rsbuild compila código JavaScript usando SWC e suporta a injeção de polyfills como [core-js](https://github.com/zloirock/core-js) e [@swc/helpers](https://npmjs.com/package/@swc/helpers).
 
-In different usage scenarios, you may need different polyfill solutions. Rsbuild provides [output.polyfill](/config/output/polyfill) config to switch between different polyfill modes.
+Em diferentes cenários de uso, você pode precisar de diferentes soluções de polyfill. O Rsbuild fornece a configuração [output.polyfill](/config/output/polyfill) para alternar entre diferentes modos de polyfill.
 
-### Default behavior
+### Comportamento padrão
 
-Rsbuild does not inject any polyfills by default:
+O Rsbuild não injeta nenhum polyfill por padrão:
 
 ```ts
 export default {
@@ -166,24 +166,24 @@ export default {
 };
 ```
 
-### Usage mode
+### Modo de uso
 
-When you enable the usage mode, Rsbuild will analyze the source code in the project and determine which polyfills need to be injected.
+Quando você habilita o modo de uso, o Rsbuild analisará o código-fonte no projeto e determinará quais polyfills precisam ser injetados.
 
-For example, the code uses the `Map` object:
+Por exemplo, o código usa o objeto `Map`:
 
 ```js
 var b = new Map();
 ```
 
-After compilation, only the polyfills for `Map` will be injected into this file:
+Após a compilação, apenas os polyfills para `Map` serão injetados neste arquivo:
 
 ```js
 import 'core-js/modules/es.map';
 var b = new Map();
 ```
 
-The advantage of this method is that the size of the injected polyfill is smaller, which is suitable for projects with higher requirements on bundle size. The disadvantage is that polyfill may not be fully injected, because third-party dependencies will not be compiled and downgraded by default, so the polyfill required by third-party dependencies will not be analyzed. If you need to analyze a third-party dependency, you also need to add it to [source.include](/config/source/include) config.
+A vantagem deste método é que o tamanho do polyfill injetado é menor, o que é adequado para projetos com maiores requisitos de tamanho de bundle. A desvantagem é que polyfill pode not be fully injected, because third-party dependencies will not be compiled and downgraded by default, so the polyfill required by third-party dependencies will not be analyzed. If you need to analyze a third-party dependency, you also need to add it to [source.include](/config/source/include) config.
 
 The config of usage mode is:
 
@@ -195,7 +195,7 @@ export default {
 };
 ```
 
-### Entry mode
+### Modo de entrada
 
 When using the entry mode, Rsbuild will analyze which `core-js` methods need to be injected according to the browserslist set by the current project, and inject them to the entry file of each page. The polyfill injected in this way is more comprehensive, and there is no need to worry about the project source code and third-party dependencies polyfill issues. However, because some unused polyfill codes are included, the bundle size may increase.
 
@@ -209,7 +209,7 @@ export default {
 };
 ```
 
-### UA polyfill
+### Polyfill de UA
 
 Cloudflare provides a [polyfill service](https://cdnjs.cloudflare.com/polyfill/) that can automatically generate polyfill bundle based on the user's browser User-Agent.
 
