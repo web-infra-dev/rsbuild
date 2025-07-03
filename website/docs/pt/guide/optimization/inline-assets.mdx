@@ -1,14 +1,14 @@
-# Inline static assets
+# Inlining de ativos estáticos
 
-Inline static assets refer to the practice of including the content of a static asset directly in a HTML or JS file, instead of linking to an external file. This can improve the performance of a website by reducing the number of HTTP requests that the browser has to make to load the page.
+O inlining de ativos estáticos refere-se à prática de incluir o conteúdo de um ativo estático diretamente em um arquivo HTML ou JS, em vez de vincular a um arquivo externo. Isso pode melhorar o desempenho de um site, reduzindo o número de requisições HTTP que o navegador precisa fazer para carregar a página.
 
-However, static assets inlining also has some disadvantages, such as increasing the size of a single file, which may lead to slower loading. Therefore, in the actual scenario, it is necessary to decide whether to use static assets inlining according to the specific situation.
+No entanto, o inlining de ativos estáticos também tem algumas desvantagens, como o aumento do tamanho de um único arquivo, o que pode levar a um carregamento mais lento. Portanto, no cenário real, é necessário decidir se deve usar o inlining de ativos estáticos de acordo com a situação específica.
 
-Rsbuild will automatically inline static assets that are less than 4KiB, but sometimes you may need to manually control assets to force them to be inlined or not, and this document explains how to precisely control the inlining behavior of static assets.
+O Rsbuild fará o inlining automático de ativos estáticos com menos de 4KiB, mas às vezes você pode precisar controlar manualmente os ativos para forçá-los a serem inlined ou não, e este documento explica como controlar precisamente o comportamento de inlining de ativos estáticos.
 
-## Automatic inlining
+## Inlining automático
 
-By default, Rsbuild will inline assets when the file size of is less than a threshold (the default is 4KiB). When inlined, the asset will be converted to a Base64 encoded string and will no longer send a separate HTTP request. When the file size is greater than this threshold, it is loaded as a separate file with a separate HTTP request.
+Por padrão, o Rsbuild fará o inlining de ativos quando o tamanho do arquivo for menor que um limite (o padrão é 4KiB). Quando inlined, o ativo será convertido para uma string codificada em Base64 e não enviará mais uma requisição HTTP separada. Quando o tamanho do arquivo for maior que este limite, ele será carregado como um arquivo separado com uma requisição HTTP separada.
 
 ```js
 import smallImage from './static/smallImage.png';
@@ -16,7 +16,7 @@ import smallImage from './static/smallImage.png';
 console.log(smallImage); // "data:image/png;base64,iVBORw0KGgo..."
 ```
 
-The threshold can be modified with the [output.dataUriLimit](/config/output/data-uri-limit) config. For example, set the threshold of images to 5000 Bytes, and set media assets not to be inlined:
+O limite pode ser modificado com a configuração [output.dataUriLimit](/config/output/data-uri-limit). Por exemplo, defina o limite de imagens para 5000 Bytes e defina que os ativos de mídia não devem ser inlined:
 
 ```ts
 export default {
@@ -29,69 +29,69 @@ export default {
 };
 ```
 
-## Force inlining
+## Forçar inlining
 
-You can force an asset to be inlined by adding the `inline` query when importing the asset, regardless of whether the asset's size is smaller than the size threshold.
+Você pode forçar um ativo a ser inlined adicionando a query `inline` ao importar o ativo, independentemente de o tamanho do ativo ser menor que o limite de tamanho.
 
 ```tsx
 import React from 'react';
-import img from '. /foo.png?inline';
+import img from './foo.png?inline';
 
 export default function Foo() {
   return <img src={img} />;
 }
 ```
 
-In the above example, the `foo.png` image will always be inlined, regardless of whether the size of the image is larger than the threshold.
+No exemplo acima, a imagem `foo.png` sempre será inlined, independentemente de o tamanho da imagem ser maior que o limite.
 
-### Referenced from CSS file
+### Referenciado de arquivo CSS
 
-When you reference a static asset in your CSS file, you can also force inline the asset with the `inline` query.
+Quando você referencia um ativo estático em seu arquivo CSS, você também pode forçar o inlining do ativo com a query `inline`.
 
 ```css
 .foo {
-  background-image: url('. /icon.png?inline');
+  background-image: url('./icon.png?inline');
 }
 ```
 
-:::tip Impact of forcing inlining
-Inlining large assets will significantly increase the first paint time or first content paint time of a page, which will degrade the user experience. And if you inline a static asset multiple times in a CSS file, the base64 content will be injected repeatedly, increasing the bundle size. Please use forced inlining with care.
+:::tip Impacto de forçar o inlining
+O inlining de ativos grandes aumentará significativamente o tempo de primeira pintura ou tempo de primeira pintura de conteúdo de uma página, o que degradará a experiência do usuário. E se você fizer o inlining de um ativo estático várias vezes em um arquivo CSS, o conteúdo base64 será injetado repetidamente, aumentando o tamanho do bundle. Por favor, use o inlining forçado com cuidado.
 :::
 
-## Disable inlining
+## Desabilitar inlining
 
-To prevent assets from being inlined and ensure they're always loaded as separate files, regardless of their size, you can add the `url` query parameter.
+Para evitar que os ativos sejam inlined e garantir que eles sejam sempre carregados como arquivos separados, independentemente do seu tamanho, você pode adicionar o parâmetro de consulta `url`.
 
 ```tsx
 import React from 'react';
-import img from '. /foo.png?url';
+import img from './foo.png?url';
 
 export default function Foo() {
   return <img src={img} />;
 }
 ```
 
-In the above example, the `foo.png` image will always be loaded as a separate file, even if the size of the image is smaller than the threshold.
+No exemplo acima, a imagem `foo.png` sempre será carregada como um arquivo separado, mesmo que o tamanho da imagem seja menor que o limite.
 
-### Referenced from CSS file
+### Referenciado de arquivo CSS
 
-When you reference a static asset in your CSS file, you can also force the asset not to be inlined with `url` query.
+Quando você referencia um ativo estático em seu arquivo CSS, você também pode forçar o ativo a não ser inlined com a query `url`.
 
 ```css
 .foo {
-  background-image: url('. /icon.png?url');
+  background-image: url('./icon.png?url');
 }
 ```
 
-:::tip Impact of disabling inlining
-Disabling asset inlining will increase the number of assets that the web application needs to load. This will reduce the efficiency of loading assets in a weak network environment or in scenarios where HTTP2 is not enabled. Please disable asset inlining with care.
+:::tip Impacto de desabilitar o inlining
+Desabilitar o inlining de ativos aumentará o número de ativos que a aplicação web precisa carregar. Isso reduzirá a eficiência do carregamento de ativos em um ambiente de rede fraca ou em cenários onde o HTTP2 não está habilitado. Por favor, desabilite o inlining de ativos com cuidado.
 :::
 
-## Inline JS files
+## Inlining de arquivos JS
 
-In addition to inlining static assets into JS files, Rsbuild also supports inlining JS files into HTML files.
+Além de inlining de ativos estáticos em arquivos JS, o Rsbuild também suporta inlining de arquivos JS em arquivos HTML.
 
-Just enable the [output.inlineScripts](/config/output/inline-scripts) config, and the generated JS files will not be written into the output directory, but will be directly inlined to the corresponding in the HTML file.
+Basta habilitar a configuração [output.inlineScripts](/config/output/inline-scripts), e os arquivos JS gerados não serão gravados no diretório de saída, mas serão diretamente inlined no arquivo HTML correspondente.
 
 ```ts
 export default {
@@ -102,14 +102,14 @@ export default {
 ```
 
 :::tip
-Inline JS files may cause the single HTML file to be too large, and it will break the HTTP caching. Please use it with caution.
+O inlining de arquivos JS pode fazer com que o arquivo HTML único seja muito grande, e isso quebrará o cache HTTP. Por favor, use com cautela.
 :::
 
-## Inline CSS files
+## Inlining de arquivos CSS
 
 You can also inline CSS files into HTML files.
 
-Just enable the [output.inlineStyles](/config/output/inline-styles) config, the generated CSS file will not be written into the output directory, but will be directly inlined to the corresponding in the HTML file.
+Basta habilitar a configuração [output.inlineStyles](/config/output/inline-styles), o arquivo CSS gerado não será gravado no diretório de saída, mas será diretamente inlined no arquivo HTML correspondente.
 
 ```ts
 export default {
@@ -119,23 +119,23 @@ export default {
 };
 ```
 
-## Type declaration
+## Declaração de tipo
 
-When you use URL queries such as `?inline` and `?url` in TypeScript code, TypeScript may prompt that the module is missing a type definition:
+Quando você usa queries de URL como `?inline` e `?url` em código TypeScript, o TypeScript pode avisar que o módulo está faltando uma definição de tipo:
 
 ```
 TS2307: Cannot find module './logo.png?inline' or its corresponding type declarations.
 ```
 
-To fix this, you can add type declarations for these URL queries, please create `src/env.d.ts` file and add the following type declarations.
+Para corrigir isso, você pode adicionar declarações de tipo para essas queries de URL. Crie um arquivo `src/env.d.ts` e adicione as seguintes declarações de tipo.
 
-- Method 1: If the `@rsbuild/core` package is installed, you can reference the [preset types](/guide/basic/typescript#preset-types) provided by `@rsbuild/core`:
+- Método 1: Se o pacote `@rsbuild/core` estiver instalado, você pode referenciar os [tipos predefinidos](/guide/basic/typescript#preset-types) fornecidos por `@rsbuild/core`:
 
 ```ts
 /// <reference types="@rsbuild/core/types" />
 ```
 
-- Method 2: Manually add the required type declarations:
+- Método 2: Adicione manualmente as declarações de tipo necessárias:
 
 ```ts
 declare module '*?url' {
