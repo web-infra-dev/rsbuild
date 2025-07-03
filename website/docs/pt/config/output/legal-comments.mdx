@@ -1,0 +1,70 @@
+# output.legalComments
+
+- **Type:** `'linked' | 'inline' | 'none'`
+- **Default:** `'linked'`
+
+Configure how to handle the legal comments.
+
+## What are legal comments?
+
+A "legal comment" is considered to be any statement-level comment in JS or rule-level comment in CSS that contains @license or @preserve or that starts with //! or /\*!. These comments are preserved in output files by default since that follows the intent of the original authors of the code.
+
+For example, the `LICENSE` comment in React:
+
+```js
+/**
+ * @license React
+ * react.production.js
+ *
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+```
+
+## Optional values
+
+You can configure how to handle legal comments by using one of the following options:
+
+### `linked`
+
+Extract all legal comments to `*.LICENSE.txt` files and link to them with a comment.
+
+```js title="rsbuild.config.js"
+export default {
+  output: {
+    legalComments: 'linked',
+  },
+};
+```
+
+`.LICENSE.txt` files are not loaded by the page, so they won't affect the page's performance.
+
+### `inline`
+
+Preserve all legal comments in the original position. This may increase the size of the output bundles.
+
+```js title="rsbuild.config.js"
+export default {
+  output: {
+    legalComments: 'inline',
+  },
+};
+```
+
+### `none`
+
+Remove all legal comments.
+
+```js title="rsbuild.config.js"
+export default {
+  output: {
+    legalComments: 'none',
+  },
+};
+```
+
+:::tip
+Removing license comments may violate the terms of some software licenses. Please ensure you have the right to remove these comments before using this option.
+:::

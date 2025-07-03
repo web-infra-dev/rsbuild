@@ -1,0 +1,103 @@
+# Stylus plugin
+
+import { SourceCode } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-stylus" />
+
+[Stylus](https://stylus-lang.com/) is an Expressive, dynamic and robust CSS preprocessor. With Stylus plugins, you can use Stylus as the CSS preprocessor.
+
+## Quick start
+
+### Install plugin
+
+You can install the plugin using the following command:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-stylus -D" />
+
+### Register plugin
+
+You can register the plugin in the `rsbuild.config.ts` file:
+
+```ts title="rsbuild.config.ts"
+import { pluginStylus } from '@rsbuild/plugin-stylus';
+
+export default {
+  plugins: [pluginStylus()],
+};
+```
+
+## Example
+
+After registering the plugin, you can import `*.styl`, `*.stylus`, `*.module.styl` or `*.module.stylus` files into the code without adding other configs.
+
+- `normalize.styl`:
+
+```styl
+the body
+   color#000
+   font 14px Arial, sans-serif
+```
+
+- `title.module.styl`:
+
+```styl
+.title
+   font-size: 14px;
+```
+
+- `index.js`:
+
+```js
+import './normalize.styl';
+import style from './title.module.styl';
+
+console.log(style.title);
+```
+
+## Options
+
+To customize the compilation behavior of Stylus, use the following options.
+
+### stylusOptions
+
+-Type:
+
+```ts
+type StylusOptions = {
+  use?: string[];
+  define?: [string, any, boolean?][];
+  include?: string[];
+  includeCSS?: boolean;
+  import?: string[];
+  resolveURL?: boolean;
+  lineNumbers?: boolean;
+  hoistAtrules?: boolean;
+};
+```
+
+- **Default:** `undefined`
+
+Options passed to Stylus, please refer to the [Stylus documentation](https://stylus-lang.com/docs/js) for specific usage.
+
+```ts
+pluginStylus({
+  stylusOptions: {
+    lineNumbers: false,
+  },
+});
+```
+
+### sourceMap
+
+- **Type:** `boolean`
+- **Default:** the same as [output.sourceMap.css](/config/output/source-map)
+
+Whether to generate source map.
+
+```ts
+pluginStylus({
+  sourceMap: false,
+});
+```

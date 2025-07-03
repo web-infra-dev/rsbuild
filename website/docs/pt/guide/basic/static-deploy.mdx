@@ -1,0 +1,217 @@
+# Deploy static site
+
+This section introduces how to deploy the build outputs of Rsbuild as a static site.
+
+## Background information
+
+Before starting the deployment, you need to understand some background information:
+
+- The CLI commands used for building and previewing outputs.
+- The directory structure of the build outputs.
+- The URL prefix of static assets.
+
+### Build commands
+
+The build commands provided by Rsbuild:
+
+- [build command](/guide/basic/cli#rsbuild-build), used to generate the build outputs for production deployment.
+- [preview command](/guide/basic/cli#rsbuild-preview), used to preview the production build outputs locally. Note that you need to execute the `rsbuild build` command beforehand to generate the build outputs.
+
+```json title="package.json"
+{
+  "scripts": {
+    "build": "rsbuild build",
+    "preview": "rsbuild preview"
+  }
+}
+```
+
+:::tip
+The preview command is only used for local preview. Do not use it for production servers, as it is not designed for that.
+:::
+
+### Output directory
+
+Rsbuild's build outputs typically includes HTML, JS, CSS, and other assets, and is output to the `dist` directory by default. The name and structure of the dist directory can be changed using some configuration options. See the [Output Files](/guide/basic/output-files) section for more information.
+
+```bash
+dist
+├── static
+│   ├── image
+│   ├── css
+│   └── js
+└── [name].html
+```
+
+### Asset prefix
+
+We can divide the build output into two parts: **HTML files** and **static assets**.
+
+- HTML files refer to files with the `.html` suffix in the output directory, which usually need to be deployed on the server.
+- Static assets are located in the `static` directory of the output folder, which contains assets such as JavaScript, CSS, and images. They can be deployed either on the server or on a CDN.
+
+If the static assets are deployed in a subdirectory of the server, you can configure [output.assetPrefix](/config/output/asset-prefix) as the base path:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  output: {
+    assetPrefix: '/some-base-folder/',
+  },
+});
+```
+
+If you want to place these static assets on a CDN for better performance, rather than directly on the server like HTML, you will need to configure the [output.assetPrefix](/config/output/asset-prefix) to the CDN address to allow the application to properly reference these static assets.
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  output: {
+    assetPrefix: 'https://cdn.com/path/',
+  },
+});
+```
+
+In this way, when referencing static assets in HTML, the specified prefix will be automatically added, for example:
+
+```html
+<script src="https://cdn.com/path/static/js/index.some-hash.js"></script>
+```
+
+## GitHub pages
+
+[GitHub Pages](https://pages.github.com/) is a static site hosting service that takes HTML, CSS, and JavaScript files straight from a repository on GitHub
+
+The following are step-by-step examples on how to deploy on GitHub Pages.
+
+1. Set the URL prefix for static assets through [output.assetPrefix](/config/output/asset-prefix).
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  output: {
+    // Please replace <REPO_NAME> with the repository name.
+    // For example, "/my-project/"
+    assetPrefix: '/<REPO_NAME>/',
+  },
+});
+```
+
+2. Open the "Settings" page of GitHub repository, click "Pages" from the left menu to access the configuration page of GitHub Pages.
+3. Select "Source" -> "GitHub Actions" and click "create your own" to create a GitHub Action config file.
+4. Paste the following content into the input box and name the file `github-pages.yml` (you can adjust the content and name of the file as needed).
+
+```yaml title="github-pages.yml"
+# Sample workflow for building and deploying a Rsbuild site to GitHub Pages
+name: Rsbuild Deployment
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ['main']
+  # Allows you to run this workflow manually from the actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # If you use other package managers like yarn or pnpm,
+      # you will need to install them first
+      - name: Install dependencies
+        run: npm i
+
+      - name: Build
+        run: npm run build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+```
+
+5. Commit and wait for GitHub Actions to execute. Once it's done, you can visit `https://<USERNAME>.github.io/<REPO_NAME>/` to view the deployed page.
+
+## Netlify
+
+[Netlify Core](https://netlify.com/) is a frontend cloud solution for developers to build and deploy future-proof digital solutions with modern, composable tooling.
+
+### Add new site
+
+Netlify provides a detailed guide, you can follow the instructions in [Netlify - Add new site](https://docs.netlify.com/welcome/add-new-site/), set up some basic information, and then you can start the deployment.
+
+You need to configure the following two fields:
+
+- **Build command**: fill in the build command of the project, it is typically `npm run build`.
+- **Publish directory**: fill in the output directory in the project, the default is `dist`.
+
+Then click on the **Deploy site** button to start the deployment.
+
+### Custom domains
+
+If you want to make your sites accessible at your own domain names, you can configure it in the "Domain management" section of Netlify.
+
+> Detailed guide: [Netlify - Custom domains](https://docs.netlify.com/domains-https/custom-domains/).
+
+## Vercel
+
+[Vercel](https://vercel.com/) is a platform for developers that provides the tools, workflows, and infrastructure you need to build and deploy your web apps faster, without the need for additional configuration.
+
+### Add new site
+
+Vercel provides a detailed guide that you can follow [Vercel - Projects](https://vercel.com/docs/projects/overview) to create a project in your dashboard and configure some basic information to start deployment.
+
+You only need to configure the fields under "Build and Output Settings":
+
+- **Output directory**: fill in the output directory in the project, the default is `dist`.
+
+Then click the **Deploy** button to start the deployment.
+
+### Configure domains
+
+If you want to make your sites accessible at your own domain names, you can configure it in the "Domains" section of Vercel.
+
+> Detailed guide: [Vercel - Domains](https://vercel.com/docs/projects/domains).
+
+## Cloudflare Pages
+
+[Cloudflare Pages](https://developers.cloudflare.com/pages/) is a static site hosting platform provided by Cloudflare.
+
+You can follow the [Cloudflare Pages - Git integration guide](https://developers.cloudflare.com/pages/get-started/git-integration/) to integrate with Git and deploy your site to Cloudflare Pages.
+
+When configuring, you need to fill in the following fields in the "Build settings":
+
+- **Build command**: fill in the build command of the project, it is typically `npm run build`.
+- **Build output directory**: fill in the output directory in the project, the default is `dist`.
+
+Then click on the **Save and Deploy** button to start the deployment.

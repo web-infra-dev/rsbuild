@@ -1,0 +1,116 @@
+# TypeScript
+
+Rsbuild supports TypeScript by default, allowing you to directly use `.ts` and `.tsx` files in your projects.
+
+## TypeScript transpilation
+
+Rsbuild uses [SWC](/guide/configuration/swc) by default for transpiling TypeScript code, and it also supports switching to [Babel](plugins/list/plugin-babel) for transpilation.
+
+### Isolated modules
+
+Unlike the native TypeScript compiler, tools like SWC and Babel compile each file separately and cannot determine whether an imported name is a type or a value. Therefore, when using TypeScript in Rsbuild, you need to enable the [verbatimModuleSyntax](https://www.typescriptlang.org/tsconfig/#verbatimModuleSyntax) or [isolatedModules](https://typescriptlang.org/tsconfig/#isolatedModules) option in your `tsconfig.json` file:
+
+- If `typescript` >= 5.0.0, use the `verbatimModuleSyntax` option, it will enable `isolatedModules` option by default:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "verbatimModuleSyntax": true
+  }
+}
+```
+
+- If `typescript` < 5.0.0, use the `isolatedModules` option:
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "verbatimModuleSyntax": true
+  }
+}
+```
+
+Enabling `isolatedModules` option can help you avoid using certain syntax that cannot be correctly compiled by SWC and Babel, such as cross-file type references. It will guide you to correct the corresponding usage:
+
+```ts
+// Wrong
+export { SomeType } from './types';
+
+// Correct
+export type { SomeType } from './types';
+```
+
+> See [SWC - Migrating from tsc](https://swc.rs/docs/migrating-from-tsc) for more details about the differences between SWC and tsc.
+
+## Preset types
+
+`@rsbuild/core` provides some preset type definitions, including CSS files, CSS Modules, static assets, `import.meta` and other types.
+
+You can create a `src/env.d.ts` file to reference it:
+
+```ts title="src/env.d.ts"
+/// <reference types="@rsbuild/core/types" />
+```
+
+## Type checking
+
+When transpiling TypeScript code using tools like SWC and Babel, type checking is not performed.
+
+Rsbuild provides the Type Check plugin, which runs TypeScript type checking in a separate process. The plugin internally integrates [ts-checker-rspack-plugin](https://github.com/rspack-contrib/ts-checker-rspack-plugin).
+
+Please refer to the [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check) for usage instructions.
+
+## tsconfig.json Path
+
+Rsbuild by default reads the `tsconfig.json` file from the root directory. You can use the [source.tsconfigPath](/config/source/tsconfig-path) to configure a custom tsconfig.json file path.
+
+```ts
+export default {
+  source: {
+    tsconfigPath: './tsconfig.custom.json',
+  },
+};
+```
+
+## Path extensions
+
+When importing another module in a TypeScript module, TypeScript allows using the `.js` file extension:
+
+```ts title="src/index.ts"
+// The actual referenced module could be `./some-module.ts` or `./some-module.tsx`
+import { someFn } from './some-module.js';
+```
+
+Rsbuild supports this feature through Rspack's [extensionAlias](https://rspack.rs/config/resolve#resolveextensionalias) configuration. In TypeScript projects, Rsbuild adds the following configuration by default:
+
+```js
+const rspackConfig = {
+  resolve: {
+    extensionAlias: {
+      '.js': ['.js', '.ts', '.tsx'],
+      '.jsx': ['.jsx', '.tsx'],
+    },
+  },
+};
+```
+
+This means:
+
+- You can use the `.js` extension to import `.ts` or `.tsx` files.
+- You can use the `.jsx` extension to import `.tsx` files.
+
+## Decorators version
+
+Rsbuild does not read the `experimentalDecorators` option in `tsconfig.json`, instead, it provides the [decorators.version](/config/source/decorators#decoratorsversion) configuration to specify the decorator version.
+
+By default, Rsbuild uses the `2022-03` version of the decorators, you can also set it to `legacy` to use the legacy decorators:
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    decorators: {
+      version: 'legacy',
+    },
+  },
+};
+```

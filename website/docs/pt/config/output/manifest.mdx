@@ -1,0 +1,299 @@
+# output.manifest
+
+- **Type:** `string | boolean`
+- **Default:** `false`
+
+Configure how to generate the manifest file.
+
+- `true`: Generate a manifest file named `manifest.json` in the output directory.
+- `false`: Do not generate the manifest file.
+- `string`: Generate a manifest file with the specified filename or path.
+- `object`: Generate a manifest file with the specified options.
+
+The manifest file contains the information of all assets, and the mapping relationship between [entry module](/config/source/entry) and assets.
+
+## Basic example
+
+Enable the asset manifest:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    manifest: true,
+  },
+};
+```
+
+After building, Rsbuild will generate a `dist/manifest.json` file:
+
+```json title="dist/manifest.json"
+{
+  "allFiles": [
+    "/static/css/index.[hash].css",
+    "/static/js/index.[hash].js",
+    "/static/images/logo.[hash].png",
+    "/index.html"
+  ],
+  "entries": {
+    "index": {
+      "initial": {
+        "js": ["/static/js/index.[hash].js"],
+        "css": ["/static/css/index.[hash].css"]
+      },
+      "assets": ["/static/images/logo.[hash].png"],
+      "html": ["/index.html"]
+    }
+  }
+}
+```
+
+## Manifest structure
+
+By default, the manifest file will be output in the following structure:
+
+```ts
+type FilePath = string;
+
+type ManifestList = {
+  entries: {
+    /** The key is the entry name, from Rsbuild's source.entry config. */
+    [entryName: string]: {
+      initial?: {
+        js?: FilePath[];
+        css?: FilePath[];
+      };
+      async?: {
+        js?: FilePath[];
+        css?: FilePath[];
+      };
+      /** HTML files related to the current entry */
+      html?: FilePath[];
+      /** other assets (e.g. png、svg、source map) related to the current entry */
+      assets?: FilePath[];
+    };
+  };
+  /** Flatten all assets */
+  allFiles: FilePath[];
+};
+```
+
+## Access via hooks
+
+You can access the generated manifest data through Rsbuild's [hooks](/plugins/dev/hooks) and [Environment API](/api/javascript-api/environment-api).
+
+For example:
+
+```ts
+api.onAfterBuild(({ environments }) => {
+  console.log(environments.web.manifest);
+});
+```
+
+> See [Environment API - manifest](/api/javascript-api/environment-api#manifest) for more details.
+
+## Options
+
+`output.manifest` can be an object, here are all the options:
+
+### filename
+
+- **Type:** `string`
+- **Default:** `'manifest.json'`
+
+Specify the name or path of the manifest file.
+
+`filename` can be a path relative to the `dist` directory, for example, output to `dist/static/my-manifest.json`:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    manifest: {
+      filename: './static/my-manifest.json',
+    },
+  },
+};
+```
+
+This can be simplified as:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    manifest: './static/my-manifest.json',
+  },
+};
+```
+
+### generate
+
+- **Type:**
+
+```ts
+type ManifestGenerate = (params: {
+  files: FileDescriptor[];
+  manifestData: ManifestData;
+}) => Record<string, unknown>;
+```
+
+- **Default:** `undefined`
+- **Version:** `>= 1.2.0`
+
+With the `manifest.generate` function, you can customize the content of the manifest file. The function receives the following parameters:
+
+- `files`: The description information of all output files.
+- `manifestData`: The default manifest data.
+
+For example, only keep the `allAssets` field:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    manifest: {
+      generate: ({ manifestData }) => {
+        return {
+          allAssets: manifestData.allFiles,
+        };
+      },
+    },
+  },
+};
+```
+
+You can also customize the content of the manifest file based on `files`. The `files` structure is as follows:
+
+```ts
+interface FileDescriptor {
+  name: string;
+  path: string;
+  isAsset: boolean;
+  isChunk: boolean;
+  isInitial: boolean;
+  isModuleAsset: boolean;
+  chunk?: import('@rspack/core').Chunk;
+}
+```
+
+Here is an example of `files`:
+
+```ts
+const files = [
+  {
+    name: 'index.js',
+    path: '/static/js/index.[hash].js',
+    isAsset: false,
+    isChunk: true,
+    isInitial: true,
+    isModuleAsset: false,
+    chunk: {
+      // Chunk info...
+    },
+  },
+  {
+    name: 'index.html',
+    path: '/index.html',
+    isAsset: true,
+    isChunk: false,
+    isInitial: false,
+    isModuleAsset: false,
+  },
+];
+```
+
+### filter
+
+- **Type:**
+
+```ts
+type ManifestFilter = (file: FileDescriptor) => boolean;
+```
+
+- **Default:** `file => !file.name.endsWith('.LICENSE.txt')`
+- **Version:** `>= 1.2.0`
+
+Allows you to filter the files included in the manifest. The function receives a `file` parameter and returns `true` to keep the file, or `false` to exclude it.
+
+By default, `*.LICENSE.txt` files are excluded from the manifest, as these license files are only used to declare open source licenses and are not used at runtime.
+
+For example, to only keep `*.js` files:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    manifest: {
+      filter: (file) => file.name.endsWith('.js'),
+    },
+  },
+};
+```
+
+The generated manifest file will only include `*.js` files:
+
+```json title="dist/manifest.json"
+{
+  "allFiles": ["/static/js/index.[hash].js"],
+  "entries": {
+    "index": {
+      "initial": {
+        "js": ["/static/js/index.[hash].js"]
+      }
+    }
+  }
+}
+```
+
+Or include all files:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    manifest: {
+      filter: () => true,
+    },
+  },
+};
+```
+
+## Multiple environments
+
+When using [environments](/config/environments) and configuring multiple environments, please specify an unique `manifest.filename` value for each environment to prevent manifest files from different environments from overwriting each other.
+
+For example, use the default `manifest.json` for the `web` environment and use `manifest-node.json` for the `node` environment:
+
+```ts title="rsbuild.config.ts"
+export default {
+  environments: {
+    web: {
+      output: {
+        manifest: true,
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+        manifest: {
+          filename: 'manifest-node.json',
+        },
+      },
+    },
+  },
+};
+```
+
+You can also choose to generate the manifest file for a specific environment:
+
+```ts title="rsbuild.config.ts"
+export default {
+  environments: {
+    web: {
+      output: {
+        manifest: true,
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+      },
+    },
+  },
+};
+```

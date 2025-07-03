@@ -1,0 +1,90 @@
+# Preact plugin
+
+import { SourceCode } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-preact" />
+
+The Preact plugin provides support for Preact, integrating features such as JSX compilation and React aliasing.
+
+## Quick start
+
+### Install plugin
+
+You can install the plugin using the following command:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-preact -D" />
+
+### Register plugin
+
+You can register the plugin in the `rsbuild.config.ts` file:
+
+```ts title="rsbuild.config.ts"
+import { pluginPreact } from '@rsbuild/plugin-preact';
+
+export default {
+  plugins: [pluginPreact()],
+};
+```
+
+After registering the plugin, you can directly develop Preact.
+
+## Options
+
+### reactAliasesEnabled
+
+Whether to aliases `react`, `react-dom` to `preact/compat`.
+
+- **Type:** `boolean`
+- **Default:** `true`
+- **Example:** Disable aliases.
+
+```ts
+pluginPreact({
+  reactAliasesEnabled: false,
+});
+```
+
+### prefreshEnabled
+
+Whether to inject [Prefresh](https://github.com/preactjs/prefresh) for HMR.
+
+- **Type:** `boolean`
+- **Default:** `true`
+- **Version:** `>= v1.1.0`
+- **Example:** Disable Prefresh.
+
+```ts
+pluginPreact({
+  prefreshEnabled: false,
+});
+```
+
+### include
+
+Include files to be processed by the [@rspack/plugin-preact-refresh](https://github.com/rspack-contrib/rspack-plugin-preact-refresh) plugin. The value is the same as the `rule.test` option in Rspack.
+
+- **Type:** [RuleSetCondition](https://rspack.rs/config/module#condition)
+- **Default:** `/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/`
+- **Version:** `>= v1.1.0`
+
+```ts
+pluginPreact({
+  include: [/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/, /some-other-module/],
+});
+```
+
+### exclude
+
+Exclude files from being processed by the [@rspack/plugin-preact-refresh](https://github.com/rspack-contrib/rspack-plugin-preact-refresh) plugin. The value is the same as the `rule.exclude` option in Rspack.
+
+- **Type:** [RuleSetCondition](https://rspack.rs/config/module#condition)
+- **Default:** `/[\\/]node_modules[\\/]/`
+- **Version:** `>= v1.1.0`
+
+```ts
+pluginPreact({
+  exclude: [/[\\/]node_modules[\\/]/, /some-other-module/],
+});
+```

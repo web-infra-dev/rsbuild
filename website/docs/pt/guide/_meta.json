@@ -1,0 +1,52 @@
+[
+  {
+    "type": "dir",
+    "name": "start",
+    "label": "Getting Started"
+  },
+  {
+    "type": "dir",
+    "name": "framework",
+    "label": "Framework"
+  },
+  {
+    "type": "dir",
+    "name": "basic",
+    "label": "Basic"
+  },
+  {
+    "type": "dir",
+    "name": "configuration",
+    "label": "Configuration"
+  },
+  {
+    "type": "dir",
+    "name": "styling",
+    "label": "Styling"
+  },
+  {
+    "type": "dir",
+    "name": "advanced",
+    "label": "Advanced"
+  },
+  {
+    "type": "dir",
+    "name": "optimization",
+    "label": "Optimization"
+  },
+  {
+    "type": "dir",
+    "name": "migration",
+    "label": "Migration"
+  },
+  {
+    "type": "dir",
+    "name": "debug",
+    "label": "Debug"
+  },
+  {
+    "type": "dir",
+    "name": "faq",
+    "label": "FAQ"
+  }
+]

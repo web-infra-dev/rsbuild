@@ -67,6 +67,25 @@ export default defineConfig({
             type: 'atom',
           },
         },
+        {
+          id: 'releases-rss-pt',
+          test: '/pt/community/releases/v',
+          title: 'Rsbuild Releases',
+          language: 'pt-BR',
+          output: {
+            type: 'rss',
+            filename: 'releases-rss-pt.xml',
+          },
+        },
+        {
+          id: 'releases-atom-pt',
+          test: '/pt/community/releases/v',
+          title: 'Rsbuild Releases',
+          language: 'pt-BR',
+          output: {
+            type: 'atom',
+          },
+        },
       ],
     }),
     pluginClientRedirects({
@@ -118,7 +137,7 @@ export default defineConfig({
       ],
     }),
   ],
-  lang: 'en',
+  lang: 'pt',
   title: 'Rsbuild',
   description:
     'Rsbuild is a high-performance build tool powered by Rspack. It provides out-of-the-box setup for enjoyable development experience.',
@@ -144,7 +163,7 @@ export default defineConfig({
   route: {
     cleanUrls: true,
     // exclude document fragments from routes
-    exclude: ['**/zh/shared/**', '**/en/shared/**'],
+    exclude: ['**/zh/shared/**', '**/en/shared/**', '**/pt/shared/**'],
   },
   themeConfig: {
     socialLinks: [
@@ -191,6 +210,19 @@ export default defineConfig({
           docRepoBaseUrl:
             'https://github.com/web-infra-dev/rsbuild/tree/main/website/docs',
           text: '📝 在 GitHub 上编辑此页',
+        },
+      },
+      {
+        lang: 'pt',
+        label: 'Português',
+        outlineTitle: 'Índice',
+        prevPageText: 'Página anterior',
+        nextPageText: 'Próxima página',
+        description: 'A ferramenta de compilação com tecnologia Rspack',
+        editLink: {
+          docRepoBaseUrl:
+            'https://github.com/web-infra-dev/rsbuild/tree/main/website/docs',
+          text: '📝 Edite esta página no GitHub',
         },
       },
     ],

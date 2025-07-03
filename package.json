@@ -15,7 +15,7 @@
     "check-spell": "pnpx cspell && heading-case",
     "dev:doc": "cd website && pnpm run dev",
     "e2e": "cd ./e2e && pnpm e2e",
-    "e2e:rspack": "cd ./e2e && pnpm e2e:rspack",
+    "e2e:rspack": "cdcom ./e2e && pnpm e2e:rspack",
     "e2e:webpack": "cd ./e2e && pnpm e2e:webpack",
     "format": "prettier --write . && heading-case --write",
     "lint": "biome check . --diagnostic-level=warn && pnpm run check-spell",

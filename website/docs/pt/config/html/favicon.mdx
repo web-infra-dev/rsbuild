@@ -1,0 +1,87 @@
+# html.favicon
+
+- **Type:** `string ｜ Function`
+- **Default:** `undefined`
+
+Set the favicon icon path for all pages, can be set as:
+
+- a URL.
+- an absolute file path.
+- a relative path relative to the project [root](/config/root).
+
+After config this option, the favicon will be automatically copied to the dist directory during the compilation, and the corresponding `link` tag will be added to the HTML.
+
+:::tip
+Rsbuild also provides [html.appIcon](/config/html/app-icon) to set the icon of the web application.
+:::
+
+## Example
+
+Set as a relative path:
+
+```js
+export default {
+  html: {
+    favicon: './src/assets/icon.png',
+  },
+};
+```
+
+Set to an absolute path:
+
+```js
+import path from 'node:path';
+
+export default {
+  html: {
+    favicon: path.resolve(__dirname, './src/assets/icon.png'),
+  },
+};
+```
+
+Set to a URL:
+
+```js
+import path from 'node:path';
+
+export default {
+  html: {
+    favicon: 'https://foo.com/favicon.ico',
+  },
+};
+```
+
+After recompiling, the following tags are automatically generated in the HTML:
+
+```html
+<link rel="icon" href="/favicon.ico" />
+```
+
+## Function usage
+
+- **Type:**
+
+```ts
+type FaviconFunction = ({ value: string; entryName: string }) => string | void;
+```
+
+When `html.favicon` is of type Function, the function receives an object as input, with the following properties:
+
+- `value`: the default favicon configuration for Rsbuild.
+- `entryName`: the name of the current entry.
+
+In the context of MPA (Multi-Page Application), you can return different `favicon` based on the entry name, thus generating different tags for each page:
+
+```js
+export default {
+  html: {
+    favicon({ entryName }) {
+      const icons = {
+        foo: 'https://example.com/foo.ico',
+        bar: 'https://example.com/bar.ico',
+      };
+      return icons[entryName] || 'https://example.com/default.ico';
+    },
+  },
+};
+```

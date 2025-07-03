@@ -1,0 +1,173 @@
+# Output files
+
+This chapter will introduces the directory structure of output files and how to control the output directory of different types of files.
+
+If you want to know how to deploy the build outputs of Rsbuild as a static site, please refer to [Deploy Static Site](/guide/basic/static-deploy).
+
+## Default directory structure
+
+The following is a basic directory for output files. By default, the compiled files will be output in the `dist` directory of current project.
+
+```bash
+dist
+├── static
+│   ├── css
+│   │   ├── [name].[hash].css
+│   │   └── [name].[hash].css.map
+│   │
+│   └── js
+│       ├── [name].[hash].js
+│       ├── [name].[hash].js.LICENSE.txt
+│       └── [name].[hash].js.map
+│
+└── [name].html
+```
+
+The most common output files are HTML files, JS files, and CSS files:
+
+- HTML files: default output to the root of dist directory.
+- JS files: default output to `static/js` directory,
+- CSS files: default output to the `static/css` directory.
+
+In addition, JS files and CSS files sometimes generate some related files:
+
+- License files: contains open source license, which is output to the same level directory of the JS file, and adds `.LICENSE.txt` suffix.
+- Source Map files: contains the source code mappings, which is output to the same level directory of JS files and CSS files, and adds a `.map` suffix.
+
+In the filename, `[name]` represents the entry name corresponding to this file, such as `index`, `main`. `[hash]` is the hash value generated based on the content of the file.
+
+## Development mode output
+
+In development mode, Rsbuild stores the build outputs in memory on the dev server by default, rather than writing then to disk. This can reduce the overhead of fs operations. You can refer to [View Static Assets](/guide/basic/server#view-static-assets) to view all static assets generated in the current build.
+
+You can choose to write the output files to disk, which is typically used for inspecting the contents of the build artifacts or configuring proxy rules for static assets.
+
+Just set the [dev.writeToDisk](/config/dev/write-to-disk) configuration to `true`:
+
+```ts
+export default {
+  dev: {
+    writeToDisk: true,
+  },
+};
+```
+
+## Modify the directory
+
+Rsbuild provides some configs to modify the directory or filename, you can:
+
+- Modify the filename through [output.filename](/config/output/filename).
+- Modify the output path of through [output.distPath](/config/output/dist-path).
+- Modify the license file through [output.legalComments](/config/output/legal-comments).
+- Modify Source Map file through [output.sourceMap](/config/output/source-map).
+- Modify the output structure of the HTML files through [html.outputStructure](/config/html/output-structure).
+
+## Static assets
+
+When you import static assets such as images, SVG, fonts, media, etc. in the code, they will also be output to the `dist/static` directory, and automatically assigned to the corresponding subdirectories according to the file type:
+
+```bash
+dist
+└── static
+    ├── image
+    │   └── foo.[hash].png
+    │
+    ├── svg
+    │   └── bar.[hash].svg
+    │
+    ├── font
+    │   └── baz.[hash].woff2
+    │
+    └── media
+        └── qux.[hash].mp4
+```
+
+You can use the [output.distPath](/config/output/dist-path) config to uniformly input these static assets into a directory, for example, output to the `assets` directory:
+
+```ts
+export default {
+  output: {
+    distPath: {
+      image: 'assets',
+      svg: 'assets',
+      font: 'assets',
+      media: 'assets',
+    },
+  },
+};
+```
+
+The above config will generate the following directory structure:
+
+```bash
+dist
+└── assets
+    ├── foo.[hash].png
+    ├── bar.[hash].svg
+    ├── baz.[hash].woff2
+    └── qux.[hash].mp4
+```
+
+## Node.js output directory
+
+When the [output.target](/config/output/target) of Rsbuild is `'node'`, Rsbuild will generate output files for Node.js:
+
+```bash
+dist
+├── static
+└── [name].js
+```
+
+Node.js outputs usually only contain JS files, no HTML or CSS. And the JS file names will not contain hash.
+
+You can modify the output path of Node.js files via the [environments](/config/environments) config.
+
+For example, output Node.js files to the `server` directory:
+
+```ts
+export default {
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+        distPath: {
+          root: 'dist/server',
+        },
+      },
+    },
+  },
+};
+```
+
+## Flatten the directory
+
+Sometimes you don't want the dist directory to have too many levels, you can set the directory to an empty string to flatten the generated directory.
+
+See the example below:
+
+```ts
+export default {
+  output: {
+    distPath: {
+      js: '',
+      css: '',
+    },
+  },
+};
+```
+
+The above config will generate the following directory structure:
+
+```bash
+dist
+├── [name].[hash].css
+├── [name].[hash].css.map
+├── [name].[hash].js
+├── [name].[hash].js.map
+└── [name].html
+```

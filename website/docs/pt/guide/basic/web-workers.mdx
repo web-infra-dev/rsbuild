@@ -1,0 +1,113 @@
+# Web Workers
+
+This chapter introduces how to configure and use [Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers) in Rsbuild project.
+
+:::tip Web Workers
+Web Workers are a type of JavaScript program that runs in the background, independently of other scripts, without affecting the performance of the page. This makes it possible to run long-running scripts, such as ones that handle complex calculations or access remote resources, without blocking the user interface or other scripts. Web workers provide an easy way to run tasks in the background and improve the overall performance of web applications.
+:::
+
+## Use Web Workers
+
+### Import with constructors
+
+Web Workers are first-class citizens of Rspack, which means you don't need any loader to use web workers directly in Rspack or Rsbuild projects.
+
+For example, create a file called `worker.js`:
+
+```js title=worker.js
+self.onmessage = (event) => {
+  const result = event.data * 2;
+  self.postMessage(result);
+};
+```
+
+Then use this worker in the main thread:
+
+```js title=index.js
+const worker = new Worker(new URL('./worker.js', import.meta.url));
+
+worker.onmessage = (event) => {
+  console.log('The results from Workers:', event.data);
+};
+
+worker.postMessage(10);
+```
+
+For more details, please refer to [Rspack - Web Workers](https://rspack.rs/guide/features/web-workers).
+
+### Using worker-loader
+
+If your project already uses `worker-loader`, or you want to use the `inline` and other features provided by `worker-loader`, you can use [worker-rspack-loader](https://github.com/rspack-contrib/worker-rspack-loader) as an alternative to `worker-loader` in Rsbuild projects.
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: {
+      resolveLoader: {
+        alias: {
+          // Modify the resolution of worker-loader in the inline loader
+          // such as `worker-loader!pdfjs-dist/es5/build/pdf.worker.js`
+          'worker-loader': require.resolve('worker-rspack-loader'),
+        },
+      },
+      module: {
+        rules: [
+          {
+            test: /\.worker\.js$/,
+            loader: 'worker-rspack-loader',
+          },
+        ],
+      },
+    },
+  },
+};
+```
+
+When using `worker-rspack-loader`, you need to use the `import` to import the Web Worker file, instead of the `new Worker('/path/to/worker.js')`.
+
+```js
+import Worker from './file.worker.js';
+
+const worker = new Worker();
+
+worker.postMessage({ a: 1 });
+```
+
+> `worker-loader` is no longer maintained, if you don't need to inline Web Workers, it is recommended to use the `new Worker()` syntax.
+
+### Loading scripts from remote URLs (cross-origin)
+
+By default, the worker script will be emitted as a separate chunk. This script supports uploading to CDN, but must obey the [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
+
+If you want your worker scripts to be accessible across domains, a common solution is to load via [importScripts](https://developer.mozilla.org/en-US/docs/Web/API/WorkerGlobalScope/importScripts) (not subject to CORS), you can refer to the following code:
+
+```js title=index.js {2}
+// https://github.com/jantimon/remote-web-worker
+import 'remote-web-worker';
+
+const worker = new Worker(new URL('./worker.js', import.meta.url), {
+  type: 'classic',
+});
+
+worker.onmessage = (event) => {
+  console.log('The results from Workers:', event.data);
+};
+
+worker.postMessage(10);
+```
+
+For detailed discussions on cross-domain issues, please refer to [Discussions - webpack 5 web worker support for CORS?](https://github.com/webpack/webpack/discussions/14648)
+
+## Build Web Workers outputs
+
+Rsbuild supports building Web Workers outputs independently, which is helpful when you need to provide Web Workers outputs for use by other applications.
+
+You can set Rsbuild's [output.target](/config/output/target) configuration to `'web-worker'`, and Rsbuild will generate build outputs suitable for the Web Workers environment.
+
+```ts
+export default {
+  output: {
+    target: 'web-worker',
+  },
+};
+```

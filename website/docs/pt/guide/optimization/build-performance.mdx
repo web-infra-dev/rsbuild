@@ -1,0 +1,104 @@
+# Improve build performance
+
+Rsbuild optimizes build performance by default, but as the project becomes larger, you may encounter some build performance problems.
+
+This document provides some optional speed-up methods, developers can choose some of them to improve the build performance.
+
+## Performance profiling
+
+Performing a performance analysis can help you identify performance bottlenecks in your project, allowing for targeted optimization.
+
+Please refer to the [Performance Building Analysis](/guide/debug/build-profiling) section for more information.
+
+## General optimization
+
+The following are some general optimization methods, which can speed up the development build and production build.
+
+### Upgrade Rsbuild
+
+Upgrading to the latest version of Rsbuild can benefit from the latest performance optimizations, see [Upgrade Rsbuild](/guide/basic/upgrade-rsbuild) section for more details.
+
+### Enable persistent cache
+
+Rsbuild provides [performance.buildCache](/config/performance/build-cache) configuration, which can significantly improve the speed of rebuilding.
+
+### Reducing modules
+
+Optimizing the number of modules referenced by the application can reduce the bundle size and improve build performance. Please read the [Bundle Size Optimization](/guide/optimization/optimize-bundle) section to learn some optimization methods.
+
+### Optimize Tailwind CSS
+
+When using Tailwind CSS v3, if the `content` field in `tailwind.config.js` is not correctly configured, this can lead to poor build performance and HMR performance.
+
+Refer to [Tailwind CSS v3 - Optimize build performance](/guide/styling/tailwindcss-v3#optimize-build-performance) for more details.
+
+## Development optimization
+
+The following are methods for improving performance in development mode.
+
+### Enable lazy compilation
+
+Enabling lazy compilation can significantly reduce the number of modules compiled at dev startup and improve startup time.
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    lazyCompilation: true,
+  },
+};
+```
+
+> Please refer to [dev.lazyCompilation](/config/dev/lazy-compilation) for more information.
+
+### Source map format
+
+In order to provide a good debugging experience, Rsbuild uses the `cheap-module-source-map` format source map by default in development mode, which is a high-quality source map format and will bring certain performance overhead.
+
+You can improve build speed by adjusting the source map format in development mode through [output.sourceMap](/config/output/source-map).
+
+For example to disable source map:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    sourceMap: {
+      js: false,
+    },
+  },
+};
+```
+
+Or set the source map format of the development mode to the cheapest `eval` format:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    sourceMap: {
+      js: process.env.NODE_ENV === 'development' ? 'eval' : false,
+    },
+  },
+};
+```
+
+> For detailed differences between different source map formats, see [Rspack - devtool](https://rspack.rs/config/devtool).
+
+### Browserslist for development
+
+This strategy is similar to ["Adjust Browserslist"](/guide/optimization/optimize-bundle#adjust-browserslist), the difference is that we can set different browserslist for development and production mode, thereby reducing the compilation overhead in development mode.
+
+For example, you can add the following config to `.browserslistrc`, which means that only the latest browsers are compatible in development mode, and the actual browsers are compatible in the production mode:
+
+```yaml title=".browserslistrc"
+[production]
+chrome >= 87
+edge >= 88
+firefox >= 78
+safari >= 14
+
+[development]
+last 1 chrome version
+last 1 firefox version
+last 1 safari version
+```
+
+Note that this can lead to some differences in the build result between development and production modes.

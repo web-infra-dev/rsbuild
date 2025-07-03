@@ -1,0 +1,214 @@
+# output.minify
+
+- **Type:**
+
+```ts
+type Minify =
+  | boolean
+  | {
+      js?: boolean;
+      jsOptions?: Rspack.SwcJsMinimizerRspackPluginOptions;
+      css?: boolean;
+      cssOptions?: Rspack.LightningcssMinimizerRspackPluginOptions;
+    };
+```
+
+- **Default:** `true`
+
+Configure whether to enable code minification in production mode, and to configure minimizer options.
+
+By default, JS and CSS code will be automatically minimized in production mode to improve page performance. If you do not want to minify the code, you can set `minify` to `false` to disable minification for all code. Alternatively, you can control the behavior of code minification through detailed configuration of the `minify` option. Below are detailed explanations for each configuration option:
+
+:::tip
+Rsbuild uses [SWC](/guide/configuration/swc) to minify JS code and [Lightning CSS](/guide/styling/css-usage#lightning-css) to minify CSS code by default.
+:::
+
+## Example
+
+### Disable minification
+
+Set `minify` to `false` to disable JS and CSS code minification:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    minify: false,
+  },
+};
+```
+
+:::tip
+This usage is usually used for debugging and troubleshooting. It is not recommended to disable code minification in production builds, as it will significantly degrade the page performance.
+:::
+
+## Options
+
+### minify.js
+
+- **Type:** `boolean | 'always'`
+- **Default:** `true`
+
+Whether to enable minification for JavaScript bundles:
+
+- `true`: Enabled in production mode.
+- `false`: Disabled in all modes.
+- `'always'`: Enabled in all modes.
+
+For example, disable JavaScript minification:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    minify: {
+      js: false,
+    },
+  },
+};
+```
+
+Enable JavaScript minification in both development and production mode:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    minify: {
+      js: 'always',
+    },
+  },
+};
+```
+
+### minify.jsOptions
+
+- **Type:** `Rspack.SwcJsMinimizerRspackPluginOptions`
+- **Default:** `{}`
+
+`output.minify.jsOptions` is used to configure SWC's minification options. For detailed configurations, please refer to [SwcJsMinimizerRspackPlugin](https://rspack.rs/plugins/rspack/swc-js-minimizer-rspack-plugin). The following configuration will override the default settings, disable the mangle feature.
+
+For example, disable the mangle feature:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    minify: {
+      jsOptions: {
+        minimizerOptions: {
+          mangle: false,
+        },
+      },
+    },
+  },
+};
+```
+
+> Refer to [Configure SWC](/guide/configuration/swc) for more details.
+
+### minify.css
+
+- **Type:** `boolean | 'always'`
+- **Default:** `true`
+
+Whether to enable minification for CSS bundles:
+
+- `true`: Enabled in production mode.
+- `false`: Disabled in all modes.
+- `'always'`: Enabled in all modes.
+
+For example, disable CSS minification:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    minify: {
+      css: false,
+    },
+  },
+};
+```
+
+Enable CSS minification in both development and production mode:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    minify: {
+      css: 'always',
+    },
+  },
+};
+```
+
+### minify.cssOptions
+
+- **Type:** `Rspack.LightningcssMinimizerRspackPluginOptions`
+- **Default:** inherit from [tools.lightningcssLoader](/config/tools/lightningcss-loader)
+
+`output.minify.cssOptions` is used to configure Lightning CSS's minification options. For detailed configuration options, please refer to [LightningCssMinimizerRspackPlugin Documentation](https://rspack.rs/plugins/rspack/lightning-css-minimizer-rspack-plugin).
+
+For example, disable error recovery:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    minify: {
+      cssOptions: {
+        minimizerOptions: {
+          errorRecovery: false,
+        },
+      },
+    },
+  },
+};
+```
+
+:::tip
+When you configure some options in [tools.lightningcssLoader](/config/tools/lightningcss-loader), `output.minify.cssOptions` will automatically inherit these options, which ensures that the CSS code transformation behavior in the development build is consistent with that in the production build.
+:::
+
+## Switching minifier
+
+### JS minifier
+
+If the default SWC minifier does not meet your needs, you can switch to other minifiers through the [tools.bundlerChain](/config/tools/bundler-chain) option.
+
+For example, use [terser-webpack-plugin](https://github.com/terser/terser-webpack-plugin) to switch to Terser or esbuild.
+
+- Use [terser](https://github.com/terser/terser) to minify JS code:
+
+```ts title="rsbuild.config.ts"
+import TerserPlugin from 'terser-webpack-plugin';
+
+export default {
+  tools: {
+    bundlerChain(chain, { CHAIN_ID }) {
+      chain.optimization.minimizer(CHAIN_ID.MINIMIZER.JS).use(TerserPlugin, [
+        {
+          // options
+        },
+      ]);
+    },
+  },
+};
+```
+
+- Use [esbuild](https://github.com/evanw/esbuild) to minify JS code, you need to install the `esbuild` package and set `esbuildMinify`:
+
+```ts title="rsbuild.config.ts"
+import TerserPlugin from 'terser-webpack-plugin';
+
+export default {
+  tools: {
+    bundlerChain(chain, { CHAIN_ID }) {
+      chain.optimization.minimizer(CHAIN_ID.MINIMIZER.JS).use(TerserPlugin, [
+        {
+          minify: TerserPlugin.esbuildMinify,
+        },
+      ]);
+    },
+  },
+};
+```
+
+:::tip
+When using a custom JS minifier, the `minify.jsOptions` option will no longer take effect.
+:::

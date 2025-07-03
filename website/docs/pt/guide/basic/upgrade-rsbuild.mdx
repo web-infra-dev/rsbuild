@@ -1,0 +1,64 @@
+# Upgrade Rsbuild
+
+This section explains how to upgrade the project's Rsbuild dependencies to the latest version.
+
+:::tip
+
+- See [Releases](/community/releases/index) to learn about Rsbuild's release strategy.
+- See [npm - @rsbuild/core](https://npmjs.com/package/@rsbuild/core) to view the latest version.
+
+:::
+
+## Using taze
+
+We recommend using [Taze](https://github.com/antfu-collective/taze) to upgrade the Rsbuild version. Taze is a CLI tool for updating npm dependencies.
+
+### Usage
+
+Run the following command to upgrade all dependencies that include `rsbuild` in their names:
+
+```bash
+npx taze --include /rsbuild/ -w
+```
+
+The result will look similar to:
+
+```bash
+rsbuild - 3 patch
+
+  @rsbuild/core               dev  ~1mo  ^1.0.0  →  ^1.2.0
+  @rsbuild/plugin-react       dev  ~1mo  ^1.0.0  →  ^1.2.0
+  @rsbuild/plugin-type-check  dev  ~1mo  ^1.0.0  →  ^1.2.0
+
+ℹ changes written to package.json, run npm i to install updates.
+```
+
+You can also adjust the `include` pattern to match specific packages, for example, to upgrade only packages under the `@rsbuild` scope:
+
+```bash
+npx taze --include /@rsbuild/ -w
+```
+
+### Options
+
+Here are some examples of using taze options.
+
+- In a monorepo, you can add the `-r` option to upgrade recursively:
+
+```bash
+npx taze --include /rsbuild/ -w -r
+```
+
+- Add `-l` to upgrade locked versions:
+
+```bash
+npx taze --include /rsbuild/ -w -l
+```
+
+- To upgrade to a major version:
+
+```bash
+npx taze major --include /rsbuild/ -w
+```
+
+> For more options, please refer to the [taze documentation](https://github.com/antfu-collective/taze).

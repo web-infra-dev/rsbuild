@@ -1,0 +1,60 @@
+# Glossário
+
+## Bundler
+
+Refere-se a empacotadores de módulos como [Rspack](https://rspack.rs/) e [webpack](https://webpack.js.org/).
+
+O principal objetivo dos empacotadores é agrupar arquivos JavaScript, CSS e outros, e os arquivos agrupados podem ser usados no navegador, Node.js ou outros ambientes. Quando o empacotador processa a aplicação web, ele constrói um gráfico de dependências e, em seguida, combina cada módulo em um ou mais pacotes.
+
+## CSR
+
+CSR significa "Renderização do Lado do Cliente". Isso significa que a página é renderizada no navegador usando JavaScript, e lógicas como busca de dados, templates e roteamento são concluídas no lado do cliente, em vez do servidor.
+
+No CSR, o servidor envia um esqueleto HTML vazio e alguns scripts JavaScript para o navegador, e o navegador busca os dados da API do servidor e renderiza o conteúdo dinâmico na página.
+
+## Environment
+
+O ambiente de tempo de execução para a saída da compilação, consulte [Compilações multi-ambiente](/guide/advanced/environments).
+
+## Micro-frontend
+
+Micro-frontend (MFE) é um estilo de arquitetura semelhante aos microsserviços. É uma composição de várias aplicações de frontend entregues de forma independente, formando um todo coeso. O MFE decompõe as aplicações de frontend em aplicações menores e mais simples que podem ser desenvolvidas, testadas e implantadas de forma independente, enquanto ainda aparecem como um único produto coeso para os usuários.
+
+Ele aborda principalmente dois problemas:
+
+- Dificuldade em manter aplicações grandes e complexas à medida que evoluem ao longo do tempo.
+- Ineficiência causada pela colaboração entre equipes ou departamentos no desenvolvimento de projetos.
+
+## Modern.js
+
+[Modern.js](https://github.com/web-infra-dev/modern.js) é um sistema de engenharia web de código aberto da ByteDance, que fornece várias soluções para ajudar os desenvolvedores a resolver problemas em diferentes cenários de desenvolvimento.
+
+## Module Federation
+
+A Federação de Módulos é um padrão de arquitetura para a decomposição de aplicações JavaScript (semelhante aos microsserviços no lado do servidor), permitindo que você compartilhe código e recursos entre várias aplicações JavaScript (ou micro-frontends).
+
+Consulte [Federação de Módulos](/guide/advanced/module-federation) para mais detalhes.
+
+## Rspack
+
+[Rspack](https://rspack.rs/) é um empacotador JavaScript de alto desempenho escrito em Rust. Ele oferece forte compatibilidade com o ecossistema do webpack, permitindo a substituição transparente do webpack e fornecendo velocidades de compilação extremamente rápidas.
+
+## Rspress
+
+[Rspress](https://github.com/web-infra-dev/rspress) é um gerador de site estático rápido baseado no Rsbuild.
+
+## SSR
+
+SSR significa "Renderização do Lado do Servidor". Isso significa que o HTML da página da web é gerado pelo servidor e enviado ao cliente, em vez de enviar apenas um esqueleto HTML vazio e depender do JavaScript para gerar o conteúdo da página.
+
+Consulte [Renderização do Lado do Servidor (SSR)](/guide/advanced/ssr) para mais detalhes.
+
+## SWC
+
+SWC (Speedy Web Compiler) é um transformador e minificador para JavaScript and TypeScript baseado em Rust.
+
+Consulte [Configurar SWC](/guide/configuration/swc) para mais detalhes.
+
+## Mais
+
+Consulte mais glossário em [Rspack - Glossário](https://rspack.rs/pt-BR/misc/glossary).

@@ -1,0 +1,22 @@
+[
+  {
+    "type": "file",
+    "name": "index",
+    "title": "Introdução"
+  },
+  {
+    "type": "file",
+    "name": "quick-start",
+    "title": "Início Rápido"
+  },
+  {
+    "type": "file",
+    "name": "features",
+    "title": "Recursos"
+  },
+  {
+    "type": "file",
+    "name": "glossary",
+    "title": "Glossário"
+  }
+]

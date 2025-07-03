@@ -1,0 +1,62 @@
+[
+  {
+    "type": "file",
+    "name": "index",
+    "label": "Overview"
+  },
+  "root",
+  "mode",
+  "plugins",
+  "log-level",
+  "environments",
+  {
+    "type": "dir",
+    "name": "dev",
+    "label": "dev"
+  },
+  {
+    "type": "dir",
+    "name": "resolve",
+    "label": "resolve"
+  },
+  {
+    "type": "dir",
+    "name": "source",
+    "label": "source"
+  },
+  {
+    "type": "dir",
+    "name": "output",
+    "label": "output"
+  },
+  {
+    "type": "dir",
+    "name": "html",
+    "label": "html"
+  },
+  {
+    "type": "dir",
+    "name": "server",
+    "label": "server"
+  },
+  {
+    "type": "dir",
+    "name": "security",
+    "label": "security"
+  },
+  {
+    "type": "dir",
+    "name": "tools",
+    "label": "tools"
+  },
+  {
+    "type": "dir",
+    "name": "performance",
+    "label": "performance"
+  },
+  {
+    "type": "dir",
+    "name": "module-federation",
+    "label": "moduleFederation"
+  }
+]

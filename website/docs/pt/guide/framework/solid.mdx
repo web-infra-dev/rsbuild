@@ -1,0 +1,41 @@
+# Solid
+
+In this document, you will learn how to build a Solid application using Rsbuild.
+
+## Create a Solid application
+
+Use [create-rsbuild](/guide/start/quick-start#create-an-rsbuild-application) to create a Solid application with Rsbuild. Run the following command:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs
+  command={{
+    npm: 'npm create rsbuild@latest',
+    yarn: 'yarn create rsbuild',
+    pnpm: 'pnpm create rsbuild@latest',
+    bun: 'bun create rsbuild@latest',
+  }}
+/>
+
+Then select `Solid` when prompted to "Select framework".
+
+## Use Solid in an existing project
+
+To compile Solid components, you need to register the Rsbuild [Solid plugin](/plugins/list/plugin-solid). The plugin will automatically add the necessary configuration for Solid builds.
+
+For example, register in `rsbuild.config.ts`:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginBabel } from '@rsbuild/plugin-babel';
+import { pluginSolid } from '@rsbuild/plugin-solid';
+
+export default defineConfig({
+  plugins: [
+    pluginBabel({
+      include: /\.(?:jsx|tsx)$/,
+    }),
+    pluginSolid(),
+  ],
+});
+```

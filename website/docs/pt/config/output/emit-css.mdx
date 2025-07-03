@@ -1,0 +1,27 @@
+# output.emitCss
+
+- **Type:** `boolean`
+- **Default:** `true` when [output.target](/config/output/target) is `web`, otherwise `false`
+
+Whether to emit CSS to the output bundles.
+
+If `false`, the CSS will not be extracted to separate files or injected into the JavaScript bundles via [output.injectStyles](/config/output/inject-styles).
+
+:::tip
+
+When `output.emitCss` is `false`, the class name information of CSS Modules will still be injected into the JS bundles, which helps to ensure the correctness of CSS Modules class names in SSR.
+
+:::
+
+## Example
+
+When building Node.js bundles, if you need to output CSS files, you can set `output.emitCss` to `true`:
+
+```js
+export default {
+  output: {
+    target: 'node',
+    emitCss: true,
+  },
+};
+```

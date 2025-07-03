@@ -1,0 +1,13 @@
+[
+  "cli",
+  "server",
+  "output-files",
+  "static-assets",
+  "html-template",
+  "json-files",
+  "wasm-assets",
+  "typescript",
+  "web-workers",
+  "static-deploy",
+  "upgrade-rsbuild"
+]

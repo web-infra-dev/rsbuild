@@ -1,0 +1,65 @@
+# Use Rsdoctor
+
+[Rsdoctor](https://rsdoctor.rs/) is a build analyzer tailored for the Rspack ecosystem.
+
+Rsdoctor is committed to being a one-stop, intelligent build analyzer that makes the build process transparent, predictable, and optimizable through visualization and smart analysis, helping development teams precisely identify bottlenecks, optimize performance, and improve engineering quality.
+
+To debug the build outputs or build process, you can use Rsdoctor for troubleshooting.
+
+## Quick start
+
+In a Rsbuild-based project, you can enable Rsdoctor as follows:
+
+1. Install the Rsdoctor plugin:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsdoctor/rspack-plugin -D" />
+
+2. Add `RSDOCTOR=true` env variable before the CLI command:
+
+```json title="package.json"
+{
+  "scripts": {
+    "dev:rsdoctor": "RSDOCTOR=true rsbuild dev",
+    "build:rsdoctor": "RSDOCTOR=true rsbuild build"
+  }
+}
+```
+
+As Windows does not support the above usage, you can also use [cross-env](https://npmjs.com/package/cross-env) to set environment variables. This ensures compatibility across different systems:
+
+```json title="package.json"
+{
+  "scripts": {
+    "dev:rsdoctor": "cross-env RSDOCTOR=true rsbuild dev",
+    "build:rsdoctor": "cross-env RSDOCTOR=true rsbuild build"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.0"
+  }
+}
+```
+
+After running the above commands, Rsbuild will automatically register the Rsdoctor plugin, and after the build is completed, it will open the build analysis page. For complete features, please refer to [Rsdoctor document](https://rsdoctor.rs/).
+
+## Options
+
+To configure the [options](https://rsdoctor.rs/config/options/options) provided by the Rsdoctor plugin, please manually register the Rsdoctor plugin:
+
+```ts title="rsbuild.config.ts"
+import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
+
+export default {
+  tools: {
+    rspack: {
+      plugins: [
+        process.env.RSDOCTOR === 'true' &&
+          new RsdoctorRspackPlugin({
+            // plugin options
+          }),
+      ],
+    },
+  },
+};
+```

@@ -1,0 +1,170 @@
+# CLI
+
+O Rsbuild vem com uma CLI leve que inclui comandos como [rsbuild dev](#rsbuild-dev) e [rsbuild build](#rsbuild-build).
+
+## Todos os comandos
+
+Para visualizar todos os comandos da CLI disponíveis, execute o seguinte comando no diretório do projeto:
+
+```bash
+npx rsbuild -h
+```
+
+A saída é mostrada abaixo:
+
+```
+Uso:
+  $ rsbuild <comando> [opções]
+
+Comandos:
+  dev      iniciando o servidor de desenvolvimento
+  build    compila o aplicativo para produção
+  preview  pré-visualiza a compilação de produção localmente
+  inspect  inspeciona as configurações do Rspack e do Rsbuild
+```
+
+## Flags comuns
+
+A CLI do Rsbuild fornece várias flags comuns que podem ser usadas com todos os comandos:
+
+| Flag                       | Descrição                                                                                                                                                                        |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--base <base>`            | Especifica o caminho base do servidor, consulte [server.base](/config/server/base)                                                                                               |
+| `-c, --config <config>`    | Especifica o arquivo de configuração, pode ser um caminho relativo ou absoluto, consulte [Especificar arquivo de configuração](/guide/configuration/rsbuild#specify-config-file) |
+| `--config-loader <loader>` | Especifica o carregador de configuração, pode ser `jiti` ou `native`, consulte [Especificar carregador de configuração](/guide/configuration/rsbuild#specify-config-loader)      |
+| `--env-mode <mode>`        | Especifica o modo de ambiente para carregar o arquivo `.env.[mode]`, consulte [Modo de ambiente](/guide/advanced/env-vars#env-mode)                                              |
+| `--env-dir <dir>`          | Especifica o diretório para carregar arquivos `.env`, consulte [Diretório de ambiente](/guide/advanced/env-vars#env-directory)                                                   |
+| `--environment <name>`     | Especifica o nome do ambiente a ser compilado, consulte [Compilar ambiente especificado](/guide/advanced/environments#build-specified-environment)                               |
+| `-h, --help`               | Exibe ajuda para o comando                                                                                                                                                       |
+| `--log-level <level>`      | Especifica o nível de log, pode ser `info`, `warn`, `error` ou `silent`, consulte [logLevel](/config/log-level)                                                                  |
+| `-m, --mode <mode>`        | Especifica o modo de compilação (`development`, `production` ou `none`), consulte [mode](/config/mode)                                                                           |
+| `--no-env`                 | Desabilita o carregamento de arquivos `.env`                                                                                                                                     |
+| `-r, --root <root>`        | Especifica o diretório raiz do projeto                                                                                                                                           |
+
+## rsbuild dev
+
+O comando `rsbuild dev` é usado para iniciar um servidor de desenvolvimento local e compilar o código-fonte para desenvolvimento.
+
+```bash
+Uso: rsbuild dev [opções]
+
+Opções:
+  -o, --open [url]      abre a página no navegador na inicialização
+  --port <port>         especifica um número de porta para o servidor Rsbuild escutar
+  --host <host>         especifica o host que o servidor Rsbuild escuta
+```
+
+Você também pode iniciar o servidor de desenvolvimento executando `rsbuild` diretamente, o que é equivalente a executar `rsbuild dev`.
+
+```bash
+npx rsbuild
+```
+
+### Abrindo a página
+
+A opção `--open` permite que você abra automaticamente uma página ao iniciar o servidor de desenvolvimento, o que é equivalente a definir [server.open](/config/server/open) como `true`.
+
+```bash
+rsbuild dev --open
+```
+
+A opção `--open` também suporta a especificação da URL a ser aberta, por exemplo:
+
+```bash
+rsbuild dev --open http://localhost:3000/foo
+```
+
+A opção `--open` também pode ser abreviada para `-o`:
+
+```bash
+rsbuild dev -o
+```
+
+:::tip
+Ao usar [server.open](/config/server/open) e `--open` ao mesmo tempo, `--open` tem precedência.
+:::
+
+## rsbuild build
+
+O comando `rsbuild build` compilará as saídas para produção no diretório `dist/` por padrão.
+
+```bash
+Uso: rsbuild build [opções]
+
+Opções:
+  -w --watch            ativa o modo de observação, observa as alterações e recompila
+```
+
+## rsbuild preview
+
+O comando `rsbuild preview` é usado para pré-visualizar as saídas da compilação de produção localmente. Observe que você precisa executar o comando `rsbuild build` de antemão para gerar as saídas da compilação.
+
+```bash
+Uso: rsbuild preview [opções]
+
+Opções:
+  -o, --open [url]      abre a página no navegador na inicialização
+  --port <port>         especifica um número de porta para o servidor Rsbuild escutar
+  --host <host>         especifica o host que o servidor Rsbuild escuta
+```
+
+:::tip
+O comando de visualização é usado apenas para visualização local. Não o use para servidores de produção, pois não foi projetado para isso.
+:::
+
+## rsbuild inspect
+
+O comando `rsbuild inspect` é usado para visualizar a configuração do Rsbuild e a configuração do Rspack do projeto.
+
+```bash
+Uso: rsbuild inspect [opções]
+
+Opções:
+  --output <output>     especifica o caminho para a saída no dist (padrão: ".rsbuild")
+  --verbose             mostra a função completa no resultado
+```
+
+Quando você executa o comando `npx rsbuild inspect` no diretório raiz do projeto, os seguintes arquivos serão gerados no diretório `dist/.rsbuild` do projeto:
+
+- `rsbuild.config.mjs`: Representa a configuração do Rsbuild usada durante a compilação.
+- `rspack.config.web.mjs`: Representa a configuração do Rspack usada durante a compilação.
+
+```bash
+➜ npx rsbuild inspect
+
+inspeção de configuração concluída, arquivos gerados:
+
+  - Configuração do Rsbuild: /project/dist/.rsbuild/rsbuild.config.mjs
+  - Configuração do Rspack (web): /project/dist/.rsbuild/rspack.config.web.mjs
+```
+
+### Especificando o modo
+
+Por padrão, o comando inspect gera a configuração para o modo de desenvolvimento. Você pode adicionar a opção `--env production` para gerar a configuração para o modo de produção:
+
+```bash
+rsbuild inspect --mode production
+```
+
+### Conteúdo verboso
+
+Por padrão, o comando inspect omite o conteúdo das funções no objeto de configuração. Você pode adicionar a opção `--verbose` para gerar o conteúdo completo das funções:
+
+```bash
+rsbuild inspect --verbose
+```
+
+### Múltiplos alvos
+
+Se o projeto atual tiver vários alvos de compilação, como a compilação de artefatos do navegador e do Node.js simultaneamente, vários arquivos de configuração do Rspack serão gerados no diretório `dist/.rsbuild`.
+
+```bash
+➜ npx rsbuild inspect
+
+inspeção de configuração concluída, arquivos gerados:
+
+  - Configuração do Rsbuild (web): /project/dist/.rsbuild/rsbuild.config.web.mjs
+  - Configuração do Rsbuild (node): /project/dist/.rsbuild/rsbuild.config.node.mjs
+  - Configuração do Rspack (web): /project/dist/.rsbuild/rspack.config.web.mjs
+  - Configuração do Rspack (node): /project/dist/.rsbuild/rspack.config.node.mjs
+```
