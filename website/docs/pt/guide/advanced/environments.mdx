@@ -1,32 +1,32 @@
-# Multi-environment builds
+# Builds Multi-ambiente
 
-Rsbuild supports building outputs for multiple environments at the same time. You can use [environments](/config/environments) to build multiple environments in parallel and set a different Rsbuild config for each environment.
+O Rsbuild suporta a construção de saídas para múltiplos ambientes ao mesmo tempo. Você pode usar [environments](/config/environments) para construir múltiplos ambientes em paralelo e definir uma configuração Rsbuild diferente para cada ambiente.
 
-## What is environment
+## O que é ambiente
 
-The `environment` refers to the runtime environment for build output. Common environments include browsers, Node.js, and Workers. Rsbuild allows you to define any environment names and set build options for each environment individually.
+O `ambiente` refere-se ao ambiente de tempo de execução para a saída da build. Ambientes comuns incluem navegadores, Node.js e Workers. O Rsbuild permite que você defina quaisquer nomes de ambiente e defina opções de build para cada ambiente individualmente.
 
-A typical scenario is server-side rendering (SSR). You can define two environments, `web` and `node`, where the build targets ([output.target](/config/output/target)) are `web` and `node`. These are used for client-side rendering (CSR) and server-side rendering (SSR) scenarios.
+Um cenário típico é a renderização no lado do servidor (SSR). Você pode definir dois ambientes, `web` e `node`, onde os alvos de build ([output.target](/config/output/target)) são `web` e `node`. Estes são usados para cenários de renderização no lado do cliente (CSR) e renderização no lado do servidor (SSR).
 
-You can also define different environments for the same build target, for example:
+Você também pode definir diferentes ambientes para o mesmo alvo de build, por exemplo:
 
-- Define `rsc` and `ssr` environments, both targeting `node`, used separately for React Server Components and SSR.
-- Define `desktop` and `mobile` environments, both targeting `web`, used separately for desktop and mobile browsers.
+- Definir ambientes `rsc` e `ssr`, ambos visando `node`, usados separadamente para React Server Components e SSR.
+- Definir ambientes `desktop` e `mobile`, ambos visando `web`, usados separadamente para navegadores de desktop e mobile.
 
-Without the `environments` configuration, you would need to define multiple configurations for these scenarios and run multiple independent Rsbuild builds. Now, with the `environments` configuration, you can complete the build for multiple outputs in a single Rsbuild run (Rsbuild achieves this using Rspack's [MultiCompiler](https://rspack.rs/api/javascript-api/compiler#multicompiler)).
+Sem a configuração `environments`, você precisaria definir múltiplas configurações para esses cenários e executar múltiplas builds Rsbuild independentes. Agora, com a configuração `environments`, você pode completar a build para múltiplas saídas em uma única execução do Rsbuild (o Rsbuild consegue isso usando o [MultiCompiler](https://rspack.rs/api/javascript-api/compiler#multicompiler) do Rspack).
 
-In Rsbuild, each `environment` is associated with an Rsbuild configuration, an Rspack configuration, and a set of build outputs. Rsbuild plugin developers can customize the build process for a specified environment based on the `environment` name, such as modifying Rsbuild or Rspack configurations, registering or removing plugins, adjusting Rspack rules, and viewing assets information.
+No Rsbuild, cada `ambiente` está associado a uma configuração Rsbuild, uma configuração Rspack e um conjunto de saídas de build. Desenvolvedores de plugins Rsbuild podem personalizar o processo de build para um ambiente especificado com base no nome do `ambiente`, como modificar configurações Rsbuild ou Rspack, registrar ou remover plugins, ajustar regras Rspack e visualizar informações de ativos.
 
-## Environment configs
+## Configurações de ambiente
 
-Rsbuild supports defining different Rsbuild configs for each environment through [environments](/config/environments).
+O Rsbuild suporta a definição de diferentes configurações Rsbuild para cada ambiente através de [environments](/config/environments).
 
-For example, if your project wants to support the SSR function, you need to define different configs for client and SSR respectively. You can define a web and node environment respectively.
+Por exemplo, se o seu projeto deseja suportar a função SSR, você precisa definir configurações diferentes para o cliente e para o SSR, respectivamente. Você pode definir um ambiente web e um ambiente node, respectivamente.
 
 ```ts title="rsbuild.config.ts"
 export default {
   environments: {
-    // Configure the web environment for browsers
+    // Configura o ambiente web para navegadores
     web: {
       source: {
         entry: {
@@ -34,7 +34,7 @@ export default {
         },
       },
       output: {
-        // Use 'web' target for the browser outputs
+        // Usa o target 'web' para as saídas do navegador
         target: 'web',
       },
       resolve: {
@@ -43,7 +43,7 @@ export default {
         },
       },
     },
-    // Configure the node environment for SSR
+    // Configura o ambiente node para SSR
     node: {
       source: {
         entry: {
@@ -51,7 +51,7 @@ export default {
         },
       },
       output: {
-        // Use 'node' target for the Node.js outputs
+        // Usa o target 'node' para as saídas do Node.js
         target: 'node',
       },
       resolve: {
@@ -64,23 +64,23 @@ export default {
 };
 ```
 
-### Config merging
+### Fusão de configurações
 
-If you configure `environments`, Rsbuild will merge the config in `environments` with the outer base config. When merging, the config in `environments` has higher priority.
+Se você configurar `environments`, o Rsbuild mesclará a configuração em `environments` com a configuração base externa. Ao mesclar, a configuração em `environments` tem prioridade maior.
 
-In the example above, after merging the configs, Rsbuild generates two standalone environment configs for building web and node environments.
+No exemplo acima, após mesclar as configurações, o Rsbuild gera duas configurações de ambiente autônomas para construir ambientes web e node.
 
-- **web environments config**: Generated by merging base config with `environments.web`
-- **node environments config**: Generated by merging base config with `environments.node`
+- **Configuração de ambientes web**: Gerada pela fusão da configuração base com `environments.web`
+- **Configuração de ambientes node**: Gerada pela fusão da configuração base com `environments.node`
 
-Then, Rsbuild will use these environments configs to internally generate two Rspack configs and execute a single build using Rspack’s MultiCompiler.
+Então, o Rsbuild usará essas configurações de ambiente para gerar internamente duas configurações Rspack e executar uma única build usando o MultiCompiler do Rspack.
 
-### Debug config
+### Configuração de depuração
 
-When you execute the command `npx rsbuild inspect` in the project root directory, you will find the following output:
+Ao executar o comando `npx rsbuild inspect` no diretório raiz do projeto, você encontrará a seguinte saída:
 
-- `rsbuild.config.[name].mjs`: The Rsbuild config used for a certain environment during build.
-- `rspack.config.[name].mjs`: The Rspack config corresponding to a certain environment when building.
+- `rsbuild.config.[name].mjs`: A configuração do Rsbuild usada para um determinado ambiente durante a build.
+- `rspack.config.[name].mjs`: A configuração do Rspack correspondente a um determinado ambiente durante a build.
 
 ```bash
 ➜ npx rsbuild inspect
@@ -93,9 +93,9 @@ config inspection completed, generated files:
   - Rspack config (node): /project/dist/.rsbuild/rspack.config.node.mjs
 ```
 
-## Default environment
+## Ambiente padrão
 
-When environments is not specified, Rsbuild will by default create an environment with the same name based on the currently target type (the value of [output.target](/config/output/target)).
+Quando `environments` não é especificado, o Rsbuild, por padrão, criará um ambiente com o mesmo nome com base no tipo de alvo atual (o valor de [output.target](/config/output/target)).
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -105,7 +105,7 @@ export default {
 };
 ```
 
-The above config is equivalent to a simplification of the following config:
+A configuração acima é equivalente a uma simplificação da seguinte configuração:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -119,34 +119,34 @@ export default {
 };
 ```
 
-## Build specified environment
+## Construir ambiente especificado
 
-By default, Rsbuild will build all environments in the Rsbuild configuration when you execute `rsbuild dev` or `rsbuild build`. You can build only the specified environment via `--environment <name>`.
+Por padrão, o Rsbuild construirá todos os ambientes na configuração do Rsbuild quando você executar `rsbuild dev` ou `rsbuild build`. Você pode construir apenas o ambiente especificado via `--environment <name>`.
 
 ```bash
-# Build for all environments by default
+# Construir para todos os ambientes por padrão
 rsbuild dev
 
-# Build for the web environment
+# Construir para o ambiente web
 rsbuild dev --environment web
 
-# Build for the web and ssr environments
+# Construir para os ambientes web e ssr
 rsbuild dev --environment web --environment node
 
-# Build multiple environments can be shortened to:
+# Construir múltiplos ambientes pode ser abreviado para:
 rsbuild dev --environment web,node
 ```
 
-## Add plugins for specified environment
+## Adicionar plugins para ambiente especificado
 
-Plugins configured through the [plugins](/config/plugins) field support running in all environments. If you want a plugin to run only in a specified environment, you can configure the plugin in the specified `environment`.
+Plugins configurados através do campo [plugins](/config/plugins) suportam a execução em todos os ambientes. Se você quiser que um plugin seja executado apenas em um ambiente especificado, você pode configurar o plugin no `environment` especificado.
 
-For example, enable the React plugin only in the web environment:
+Por exemplo, habilite o plugin React apenas no ambiente web:
 
 ```ts title="rsbuild.config.ts"
 import { pluginReact } from '@rsbuild/plugin-react';
 
-export default {
+export default defineConfig({
   environments: {
     web: {
       output: {
@@ -160,16 +160,16 @@ export default {
       },
     },
   },
-};
+});
 ```
 
-If you are a plugin developer, you can view [Developing environment plugins](/plugins/dev/index#environment-plugin) for details.
+Se você é um desenvolvedor de plugins, pode consultar [Desenvolvendo plugins de ambiente](/plugins/dev/index#environment-plugin) para detalhes.
 
-## Plugin API
+## API do Plugin
 
-### Update environment config
+### Atualizar configuração do ambiente
 
-Rsbuild supports modifying or adding environment config through the [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) hook.
+O Rsbuild suporta a modificação ou adição de configuração de ambiente através do hook [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig).
 
 ```ts
 const myPlugin = () => ({
@@ -191,9 +191,9 @@ const myPlugin = () => ({
 });
 ```
 
-### Configuring a specific environment
+### Configurando um ambiente específico
 
-Rsbuild supports modifying the Rsbuild config of a specific environment through the [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig) hook.
+O Rsbuild suporta a modificação da configuração do Rsbuild de um ambiente específico através do hook [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig).
 
 ```ts
 const myPlugin = () => ({
@@ -208,25 +208,25 @@ const myPlugin = () => ({
 });
 ```
 
-## Environment context
+## Contexto do ambiente
 
-[Environment context](/api/javascript-api/environment-api#environment-context) is a read-only object that provides some context infos about the current environment. Rsbuild supports obtaining environment context information in plugin hooks.
+[Contexto do ambiente](/api/javascript-api/environment-api#environment-context) é um objeto somente leitura que fornece algumas informações de contexto sobre o ambiente atual. O Rsbuild suporta a obtenção de informações de contexto do ambiente em hooks de plugin.
 
-For some plugin hooks related to the build environment (such as [modifyRspackConfig](/plugins/dev/hooks#modifyrspackconfig) and [modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain)), Rsbuild supports obtaining the current environment context through the `environment` parameter.
+Para alguns hooks de plugin relacionados ao ambiente de build (como [modifyRspackConfig](/plugins/dev/hooks#modifyrspackconfig) e [modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain)), o Rsbuild suporta a obtenção do contexto do ambiente atual através do parâmetro `environment`.
 
 ```ts
 const myPlugin = () => ({
   setup(api) {
     api.modifyRspackConfig((rspackConfig, { environment }) => {
       if (environment.name === 'node') {
-        // do some thing
+        // fazer algo
       }
     });
   },
 });
 ```
 
-For some global plugin hooks (such as [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone), [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver), etc.), Rsbuild supports obtaining the context of all environments through the `environments` parameter.
+Para alguns hooks de plugin globais (como [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone), [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver), etc.), o Rsbuild suporta a obtenção do contexto de todos os ambientes através do parâmetro `environments`.
 
 ```ts
 const myPlugin = () => ({
@@ -240,13 +240,13 @@ const myPlugin = () => ({
 });
 ```
 
-## Environment API
+## API do Ambiente
 
-Rsbuild server provides a series of APIs related to the build environment. Users can operate the build artifacts in a specific environment on the server side through the Rsbuild [environment API](/api/javascript-api/environment-api#environment-api).
+O servidor Rsbuild fornece uma série de APIs relacionadas ao ambiente de build. Os usuários podem operar os artefatos de build em um ambiente específico no lado do servidor através da [API de ambiente](/api/javascript-api/environment-api#environment-api) do Rsbuild.
 
-You can use the environment API in [Rsbuild DevMiddleware](/config/dev/setup-middlewares) or [Custom Server](/api/javascript-api/instance#rsbuildcreatedevserver).
+Você pode usar a API de ambiente em [Rsbuild DevMiddleware](/config/dev/setup-middlewares) ou [Custom Server](/api/javascript-api/instance#rsbuildcreatedevserver).
 
-For example, you can quickly implement an SSR function through the Rsbuild environment API in development mode:
+Por exemplo, você pode implementar rapidamente uma função SSR através da API de ambiente do Rsbuild no modo de desenvolvimento:
 
 ```ts
 import express from 'express';
@@ -269,14 +269,14 @@ const serverRender =
 export async function startDevServer() {
   const { content } = await loadConfig();
 
-  // Init Rsbuild
+  // Inicializa Rsbuild
   const rsbuild = await createRsbuild({
     rsbuildConfig: content,
   });
 
   const app = express();
 
-  // Create Rsbuild dev server instance
+  // Cria instância do servidor de desenvolvimento Rsbuild
   const rsbuildServer = await rsbuild.createDevServer();
 
   const serverRenderMiddleware = serverRender(rsbuildServer);
@@ -290,22 +290,22 @@ export async function startDevServer() {
     }
   });
 
-  // Apply Rsbuild’s built-in middleware
+  // Aplica o middleware embutido do Rsbuild
   app.use(rsbuildServer.middlewares);
 
   // ...
 }
 ```
 
-For detailed usage, please refer to: [SSR + Express Example](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/ssr-express).
+Para uso detalhado, consulte: [Exemplo de SSR + Express](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/ssr-express).
 
-## Build order
+## Ordem de build
 
-By default, Rsbuild builds all environments in parallel.
+Por padrão, o Rsbuild constrói todos os ambientes em paralelo.
 
-To control the build order between different environments, you can set build dependencies through Rspack's [dependencies](https://rspack.rs/config/other-options#dependencies) configuration.
+Para controlar a ordem de build entre diferentes ambientes, você pode definir dependências de build através da configuração [dependencies](https://rspack.rs/config/other-options#dependencies) do Rspack.
 
-For example, if you need to build the `web` environment first, then build the `node` environment, you can add the following configuration:
+Por exemplo, se você precisar construir o ambiente `web` primeiro, e depois construir o ambiente `node`, você pode adicionar a seguinte configuração:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -328,7 +328,7 @@ export default {
 };
 ```
 
-We can use a simple plugin to test the build order of multiple environments:
+Podemos usar um plugin simples para testar a ordem de build de múltiplos ambientes:
 
 ```ts
 const testPlugin: RsbuildPlugin = {
@@ -345,7 +345,7 @@ const testPlugin: RsbuildPlugin = {
   },
 };
 
-// The plugin will output:
+// O plugin exibirá:
 // - build start: web
 // - build done: web
 // - stats: { ... }
