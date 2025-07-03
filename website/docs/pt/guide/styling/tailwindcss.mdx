@@ -1,28 +1,28 @@
 # Tailwind CSS v4
 
-[Tailwind CSS](https://tailwindcss.com/) is a CSS framework and design system based on utility class, which can quickly add common styles to components, and support flexible extension of theme styles.
+[Tailwind CSS](https://tailwindcss.com/) é um framework CSS e sistema de design baseado em classes utilitárias, que pode adicionar rapidamente estilos comuns a componentes e suportar a extensão flexível de estilos de tema.
 
-You can integrate Tailwind CSS in Rsbuild via PostCSS plugins.
+Você pode integrar o Tailwind CSS no Rsbuild via plugins PostCSS.
 
-## Choosing Tailwind CSS version
+## Escolhendo a versão do Tailwind CSS
 
-This document introduces the integration of Tailwind CSS v4.
+Este documento apresenta a integração do Tailwind CSS v4.
 
-Please note that Tailwind CSS v4 uses many modern CSS features, such as [Cascade Layers](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Cascade_layers), if your target browser does not support these features, please use Tailwind CSS v3 first, see [Using Tailwind CSS v3](/guide/styling/tailwindcss-v3) for more details.
+Observe que o Tailwind CSS v4 usa muitos recursos CSS modernos, como [Cascade Layers](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Cascade_layers). Se o seu navegador de destino não suportar esses recursos, use o Tailwind CSS v3 primeiro, consulte [Usando Tailwind CSS v3](/guide/styling/tailwindcss-v3) para mais detalhes.
 
-More information can be found in [Tailwind CSS - Compatibility](https://tailwindcss.com/docs/compatibility).
+Mais informações podem ser encontradas em [Tailwind CSS - Compatibilidade](https://tailwindcss.com/docs/compatibility).
 
-## Installing Tailwind CSS
+## Instalando Tailwind CSS
 
-Rsbuild has built-in support for PostCSS, you can install `tailwindcss` and `@tailwindcss/postcss` packages to integrate Tailwind CSS:
+O Rsbuild tem suporte embutido para PostCSS, você pode instalar os pacotes `tailwindcss` e `@tailwindcss/postcss` para integrar o Tailwind CSS:
 
 import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add tailwindcss @tailwindcss/postcss -D" />
 
-## Configuring PostCSS
+## Configurando PostCSS
 
-You can register the Tailwind CSS PostCSS plugin through [postcss.config.cjs](https://npmjs.com/package/postcss-loader#config) or [tools.postcss](/config/tools/postcss).
+Você pode registrar o plugin PostCSS do Tailwind CSS através de [postcss.config.cjs](https://npmjs.com/package/postcss-loader#config) ou [tools.postcss](/config/tools/postcss).
 
 ```js title="postcss.config.mjs"
 export default {
@@ -32,32 +32,32 @@ export default {
 };
 ```
 
-## Importing CSS
+## Importando CSS
 
-Add an `@import` to your CSS entry file that imports Tailwind CSS.
+Adicione um `@import` ao seu arquivo de entrada CSS que importa o Tailwind CSS.
 
 ```css title="src/index.css"
 @import 'tailwindcss';
 ```
 
 :::tip
-Tailwind CSS v4 cannot be used with CSS preprocessors like Sass, Less, or Stylus. You need to place the `@tailwind` directive at the beginning of your `.css` file, see [Tailwind CSS - Compatibility](https://tailwindcss.com/docs/compatibility#sass-less-and-stylus) for more details.
+O Tailwind CSS v4 não pode ser usado com pré-processadores CSS como Sass, Less ou Stylus. Você precisa colocar a diretiva `@tailwind` no início do seu arquivo `.css`, consulte [Tailwind CSS - Compatibilidade](https://tailwindcss.com/docs/compatibility#sass-less-and-stylus) para mais detalhes.
 :::
 
-## Done
+## Concluído
 
-You have now completed all the steps to integrate Tailwind CSS in Rsbuild!
+Você concluiu todas as etapas para integrar o Tailwind CSS no Rsbuild!
 
-You can use Tailwind's utility classes in any component or HTML, such as:
+Você pode usar as classes utilitárias do Tailwind em qualquer componente ou HTML, como:
 
 ```html
 <h1 class="text-3xl font-bold underline">Hello world!</h1>
 ```
 
-For more usage details, refer to the [Tailwind CSS documentation](https://tailwindcss.com/).
+Para mais detalhes de uso, consulte a [documentação do Tailwind CSS](https://tailwindcss.com/).
 
-## VS Code extension
+## Extensão do VS Code
 
-Tailwind CSS provides a [Tailwind CSS IntelliSense](https://github.com/tailwindlabs/tailwindcss-intellisense) plugin for VS Code to automatically complete Tailwind CSS class names, CSS functions, and directives.
+O Tailwind CSS fornece um plugin [Tailwind CSS IntelliSense](https://github.com/tailwindlabs/tailwindcss-intellisense) para VS Code para autocompletar nomes de classes, funções CSS e diretivas do Tailwind CSS.
 
-You can install this plugin in VS Code to enable the autocompletion feature.
+Você pode instalar este plugin no VS Code para habilitar o recurso de autocompletar.
