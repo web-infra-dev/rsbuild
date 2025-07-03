@@ -1,36 +1,36 @@
-# Code splitting
+# Divisão de Código (Code Splitting)
 
-A great chunk splitting strategy is very important to improve the loading performance of the application. It can make full use of the browser's caching mechanism to reduce the number of requests and improve the loading speed of the application.
+Uma ótima estratégia de divisão de chunks é muito importante para melhorar o desempenho de carregamento da aplicação. Ela pode fazer uso total do mecanismo de cache do navegador para reduzir o número de requisições e melhorar a velocidade de carregamento da aplicação.
 
-Several [chunk splitting strategies](/guide/optimization/code-splitting) are built into Rsbuild. These should meet the needs of most applications. You can also customize the chunk splitting config to suit your own usage scenario.
+Várias [estratégias de divisão de chunks](/guide/optimization/code-splitting) são incorporadas ao Rsbuild. Elas devem atender às necessidades da maioria das aplicações. Você também pode personalizar a configuração de divisão de chunks para se adequar ao seu próprio cenário de uso.
 
-> See [Rspack - Code Splitting](https://rspack.rs/guide/optimization/code-splitting) for more details.
+> Consulte [Rspack - Code Splitting](https://rspack.rs/guide/optimization/code-splitting) para mais detalhes.
 
-## Strategies
+## Estratégias
 
-> The chunk splitting config of Rsbuild is in [performance.chunkSplit](/config/performance/chunk-split).
+> A configuração de divisão de chunks do Rsbuild é em [performance.chunkSplit](/config/performance/chunk-split).
 
-Rsbuild supports the following chunk splitting strategies:
+O Rsbuild suporta as seguintes estratégias de divisão de chunks:
 
-- `split-by-experience`: an empirical splitting strategy, automatically splits some commonly used npm packages into chunks of moderate size.
-- `split-by-module`: split by NPM package granularity, each NPM package corresponds to a chunk.
-- `split-by-size`: automatically split according to module size.
-- `all-in-one`: bundle all codes into one chunk.
-- `single-vendor`: bundle all NPM packages into a single chunk.
-- `custom`: custom chunk splitting strategy.
+- `split-by-experience`: uma estratégia de divisão empírica, divide automaticamente alguns pacotes npm comumente usados em chunks de tamanho moderado.
+- `split-by-module`: divide por granularidade de pacote NPM, cada pacote NPM corresponde a um chunk.
+- `split-by-size`: divide automaticamente de acordo com o tamanho do módulo.
+- `all-in-one`: agrupa todo o código em um único chunk.
+- `single-vendor`: agrupa todos os pacotes NPM em um único chunk.
+- `custom`: estratégia de divisão de chunks personalizada.
 
 ## split-by-experience
 
-### Behavior
+### Comportamento
 
-Rsbuild adopts the `split-by-experience` strategy by default, which is a strategy we have developed from experience. Specifically, when the following npm packages are referenced in your project, they will automatically be split into separate chunks:
+O Rsbuild adota a estratégia `split-by-experience` por padrão, que é uma estratégia que desenvolvemos a partir da experiência. Especificamente, quando os seguintes pacotes npm são referenciados em seu projeto, eles serão automaticamente divididos em chunks separados:
 
-- `lib-polyfill.js`: includes `core-js`, `@swc/helpers`, `tslib`.
-- `lib-axios.js`: includes `axios` and related packages.
+- `lib-polyfill.js`: inclui `core-js`, `@swc/helpers`, `tslib`.
+- `lib-axios.js`: inclui `axios` e pacotes relacionados.
 
-Grouping commonly used packages in this way and then splitting them into individual chunks helps with browser caching.
+Agrupar pacotes comumente usados dessa forma e depois dividi-los em chunks individuais ajuda no cache do navegador.
 
-### Config
+### Configuração
 
 ```ts
 export default {
@@ -42,21 +42,21 @@ export default {
 };
 ```
 
-### Notes
+### Observações
 
-- If the npm packages mentioned above are not installed or used in the project, the corresponding chunk will not be generated.
+- Se os pacotes npm mencionados acima não estiverem instalados ou usados no projeto, o chunk correspondente não será gerado.
 
 ## split-by-module
 
-### Behavior
+### Comportamento
 
-Split each NPM package into a Chunk.
+Divide cada pacote NPM em um Chunk.
 
 ::: warning
-This strategy will split the node_modules in the most granular way, and at the same time, under HTTP/2, multiplexing will speed up the loading time of resources.However, in non-HTTP/2 environments, it needs to be used with caution because of HTTP head-of-line blocking problem.
+Esta estratégia dividirá o `node_modules` da maneira mais granular e, ao mesmo tempo, sob HTTP/2, a multiplexação acelerará o tempo de carregamento dos recursos. No entanto, em ambientes não-HTTP/2, ela precisa ser usada com cautela devido ao problema de bloqueio de cabeçalho de linha HTTP.
 :::
 
-### Config
+### Configuração
 
 ```ts
 export default {
@@ -68,19 +68,19 @@ export default {
 };
 ```
 
-### Notes
+### Observações
 
-- This configuration will split the node_modules into smaller chunks, resulting in a large number of file requests.
-- When using HTTP/2, resource loading time will be accelerated and cache hit rate will be improved due to multiplexing.
-- When not using HTTP/2, the performance of page loading may be reduced due to HTTP head-of-line blocking. Please use with caution.
+- Esta configuração dividirá o `node_modules` em chunks menores, resultando em um grande número de requisições de arquivo.
+- Ao usar HTTP/2, o tempo de carregamento de recursos será acelerado e a taxa de acertos do cache será melhorada devido à multiplexação.
+- Quando não estiver usando HTTP/2, o desempenho do carregamento da página pode ser reduzido devido ao bloqueio de cabeçalho de linha HTTP. Use com cautela.
 
 ## all-in-one
 
-### Behavior
+### Comportamento
 
-This strategy puts all source code and third-party dependencies in the same Chunk.
+Esta estratégia coloca todo o código-fonte e dependências de terceiros no mesmo Chunk.
 
-### Config
+### Configuração
 
 ```ts
 export default {
@@ -92,12 +92,12 @@ export default {
 };
 ```
 
-### Notes
+### Observações
 
-- This configuration will bundle all the generated JS code into one file (except for dynamically imported chunks).
-- The size of a single JS file may be very large, leading to a decrease in page loading performance.
+- Esta configuração agrupará todo o código JS gerado em um único arquivo (exceto para chunks importados dinamicamente).
+- O tamanho de um único arquivo JS pode ser muito grande, levando a uma diminuição no desempenho de carregamento da página.
 
-If you need to bundle the chunks split by dynamic import into the single file, you can set the [output.asyncChunks](https://rspack.rs/config/output#outputasyncchunks) option in Rspack to `false`:
+Se você precisar agrupar os chunks divididos por importação dinâmica em um único arquivo, você pode definir a opção [output.asyncChunks](https://rspack.rs/config/output#outputasyncchunks) no Rspack como `false`:
 
 ```js
 export default defineConfig({
@@ -118,11 +118,11 @@ export default defineConfig({
 
 ## single-vendor
 
-### Behavior
+### Comportamento
 
-This strategy puts third-party dependencies in one Chunk, and source code in another chunk.
+Esta estratégia coloca as dependências de terceiros em um Chunk e o código-fonte em outro chunk.
 
-### Config
+### Configuração
 
 ```ts
 export default {
@@ -134,17 +134,17 @@ export default {
 };
 ```
 
-### Notes
+### Observações
 
-- The size of a single vendor file may be very large, leading to a decrease in page loading performance.
+- O tamanho de um único arquivo de fornecedor pode ser muito grande, levando a uma diminuição no desempenho de carregamento da página.
 
 ## split-by-size
 
-### Behavior
+### Comportamento
 
-Under this strategy, after setting `minSize`, `maxSize` to a fixed value, Rsbuild will automatically split them without extra config.
+Sob esta estratégia, após definir `minSize` e `maxSize` para um valor fixo, o Rsbuild os dividirá automaticamente sem configuração extra.
 
-### Config
+### Configuração
 
 ```ts
 export default {
@@ -158,44 +158,44 @@ export default {
 };
 ```
 
-## Custom splitting strategy
+## Estratégia de divisão personalizada
 
-In addition to using the built-in strategies, you can also customize the splitting strategy to meet more customization needs. Custom strategy is divided into two parts:
+Além de usar as estratégias embutidas, você também pode personalizar a estratégia de divisão para atender a mais necessidades de personalização. A estratégia personalizada é dividida em duas partes:
 
-- Custom group
-- Custom Rspack `splitChunks` config
+- Grupo personalizado
+- Configuração `splitChunks` personalizada do Rspack
 
-It is worth noting that these two custom capabilities can be used together with the built-in strategy, that is, you can use the built-in strategy to split commonly used packages, and then use the custom function to split other packages.
+É importante notar que essas duas capacidades personalizadas podem ser usadas em conjunto com a estratégia embutida, ou seja, você pode usar a estratégia embutida para dividir pacotes comumente usados e, em seguida, usar a função personalizada para dividir outros pacotes.
 
-### Custom group
+### Grupo personalizado
 
-Rsbuild supports custom group, which is more flexible than the built-in strategies, and simpler than writing Rspack's `splitChunks` config.
+O Rsbuild suporta grupo personalizado, que é mais flexível do que as estratégias embutidas e mais simples do que escrever a configuração `splitChunks` do Rspack.
 
-For example, split the `axios` library under node_modules into `axios.js`:
+Por exemplo, divida a biblioteca `axios` em `node_modules` em `axios.js`:
 
 ```js
 export default {
   performance: {
     chunkSplit: {
       forceSplitting: {
-        axios: /node_modules[\\/]axios/,
+        axios: /node_modules[\/]axios/,
       },
     },
   },
 };
 ```
 
-Through `forceSplitting` config, you can easily split some packages into a Chunk.
+Através da configuração `forceSplitting`, você pode facilmente dividir alguns pacotes em um Chunk.
 
-#### Notes
+#### Observações
 
-Chunks split using the `forceSplitting` configuration will be inserted into the HTML file as resources requested for the initial screen using `<script>` tags. Therefore, please split them appropriately based on the actual scenario to avoid excessive size of initial screen resources.
+Chunks divididos usando a configuração `forceSplitting` serão inseridos no arquivo HTML como recursos solicitados para a tela inicial usando tags `<script>`. Portanto, divida-os apropriadamente com base no cenário real para evitar tamanho excessivo dos recursos da tela inicial.
 
-### Custom config
+### Configuração personalizada
 
-In addition to using custom grouping, you can also customize Rspack's `splitChunks` config through `override`, for example:
+Além de usar o agrupamento personalizado, você também pode personalizar a configuração `splitChunks` do Rspack através de `override`, por exemplo:
 
-- Set `minSize` to 30,000, meaning modules smaller than 30,000 bytes will not be split.
+- Defina `minSize` para 30.000, o que significa que módulos menores que 30.000 bytes não serão divididos.
 
 ```ts
 export default {
@@ -210,7 +210,7 @@ export default {
 };
 ```
 
-- Bundle all CSS files into a single `styles.css`.
+- Agrupe todos os arquivos CSS em um único `styles.css`.
 
 ```ts
 export default {
@@ -232,25 +232,25 @@ export default {
 };
 ```
 
-The `override` config will be merged with Rspack's `splitChunks` config. For specific config details, please refer to [Rspack - splitChunks](https://rspack.rs/config/optimization#optimization-splitchunks).
+A configuração `override` será mesclada com a configuração `splitChunks` do Rspack. Para detalhes específicos da configuração, consulte [Rspack - splitChunks](https://rspack.rs/config/optimization#optimization-splitchunks).
 
-## Using dynamic import for code splitting
+## Usando importação dinâmica para divisão de código
 
-In addition to the `chunkSplit` configurations, using [dynamic import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) for code splitting is also an important optimization technique that can effectively reduce the initial bundle size.
+Além das configurações `chunkSplit`, usar [importação dinâmica](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) para divisão de código também é uma técnica de otimização importante que pode efetivamente reduzir o tamanho inicial do bundle.
 
-:::tip About dynamic import
-Dynamic import is a new feature introduced in ECMAScript 2020 that allows you to dynamically load JavaScript modules. The underlying Rspack used by the Rsbuild supports dynamic import by default, so you can use it directly in your code.
+:::tip Sobre importação dinâmica
+A importação dinâmica é um novo recurso introduzido no ECMAScript 2020 que permite carregar módulos JavaScript dinamicamente. O Rspack subjacente usado pelo Rsbuild suporta importação dinâmica por padrão, então você pode usá-lo diretamente em seu código.
 :::
 
-When the bundler encounters the `import()` syntax, it automatically splits the relevant code into a new chunk and loads it on-demand at runtime.
+Quando o empacotador encontra a sintaxe `import()`, ele divide automaticamente o código relevante em um novo chunk e o carrega sob demanda em tempo de execução.
 
-For example, if your project has a large module called `bigModule.ts` (which can also be a third-party dependency), you can use dynamic import to load it on-demand:
+Por exemplo, se o seu projeto tiver um módulo grande chamado `bigModule.ts` (que também pode ser uma dependência de terceiros), você pode usar a importação dinâmica para carregá-lo sob demanda:
 
 ```js
-// Somewhere in your code where you need to use bigModule
+// Em algum lugar do seu código onde você precisa usar bigModule
 import('./bigModule.ts').then((bigModule) => {
-  // Use bigModule here
+  // Use bigModule aqui
 });
 ```
 
-When you run the build command, `bigModule.ts` will be automatically split into a new chunk and loaded on-demand at runtime.
+Quando você executa o comando de build, `bigModule.ts` será automaticamente dividido em um novo chunk e carregado sob demanda em tempo de execução.
