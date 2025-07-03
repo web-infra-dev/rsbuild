@@ -3,8 +3,7 @@ import { expect, test } from '@playwright/test';
 
 const fixtures = __dirname;
 
-// TODO: broken by React 19
-test.skip('should render element with enabled profiler correctly', async ({
+test('should render element with enabled profiler correctly', async ({
   page,
 }) => {
   const rsbuild = await build({

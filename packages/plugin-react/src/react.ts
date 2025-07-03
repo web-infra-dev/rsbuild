@@ -106,14 +106,30 @@ export const applyReactProfiler = (api: RsbuildPluginAPI): void => {
     return mergeEnvironmentConfig(config, enableProfilerConfig);
   });
 
+  // react-dom/client was introduced in React 18
+  const hasReactDomClient = () => {
+    try {
+      require.resolve('react-dom/client', {
+        paths: [api.context.rootPath],
+      });
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
   api.modifyBundlerChain((chain, { isProd }) => {
     if (!isProd) {
       return;
     }
 
     // Replace react-dom with the profiling version.
+    // For React 18+, we need to replace `react-dom/client` with `react-dom/profiling`.
     // Reference: https://gist.github.com/bvaughn/25e6233aeb1b4f0cdb8d8366e54a3977
-    chain.resolve.alias.set('react-dom$', 'react-dom/profiling');
+    chain.resolve.alias.set(
+      hasReactDomClient() ? 'react-dom/client$' : 'react-dom$',
+      'react-dom/profiling',
+    );
     chain.resolve.alias.set('scheduler/tracing', 'scheduler/tracing-profiling');
   });
 };
