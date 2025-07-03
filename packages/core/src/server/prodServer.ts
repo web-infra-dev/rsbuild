@@ -105,10 +105,11 @@ export class RsbuildProdServer {
     // compression is placed after proxy middleware to avoid breaking SSE (Server-Sent Events),
     // but before other middlewares to ensure responses are properly compressed
     if (compress) {
+      const { constants } = await import('node:zlib');
       this.middlewares.use(
         gzipMiddleware({
           // simulates the common gzip compression rates
-          level: 6,
+          level: constants.Z_DEFAULT_COMPRESSION,
           ...(typeof compress === 'object' ? compress : undefined),
         }),
       );
