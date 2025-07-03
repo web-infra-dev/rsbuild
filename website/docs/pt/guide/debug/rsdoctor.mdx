@@ -1,22 +1,22 @@
-# Use Rsdoctor
+# Usar Rsdoctor
 
-[Rsdoctor](https://rsdoctor.rs/) is a build analyzer tailored for the Rspack ecosystem.
+[Rsdoctor](https://rsdoctor.rs/) é um analisador de build feito sob medida para o ecossistema Rspack.
 
-Rsdoctor is committed to being a one-stop, intelligent build analyzer that makes the build process transparent, predictable, and optimizable through visualization and smart analysis, helping development teams precisely identify bottlenecks, optimize performance, and improve engineering quality.
+O Rsdoctor está empenhado em ser um analisador de build inteligente e completo que torna o processo de build transparente, previsível e otimizável através de visualização e análise inteligente, ajudando as equipes de desenvolvimento a identificar precisamente gargalos, otimizar o desempenho e melhorar a qualidade da engenharia.
 
-To debug the build outputs or build process, you can use Rsdoctor for troubleshooting.
+Para depurar as saídas de build ou o processo de build, você pode usar o Rsdoctor para solucionar problemas.
 
-## Quick start
+## Início Rápido
 
-In a Rsbuild-based project, you can enable Rsdoctor as follows:
+Em um projeto baseado em Rsbuild, você pode habilitar o Rsdoctor da seguinte forma:
 
-1. Install the Rsdoctor plugin:
+1.  Instale o plugin Rsdoctor:
 
 import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rsdoctor/rspack-plugin -D" />
 
-2. Add `RSDOCTOR=true` env variable before the CLI command:
+2.  Adicione a variável de ambiente `RSDOCTOR=true` antes do comando CLI:
 
 ```json title="package.json"
 {
@@ -27,7 +27,7 @@ import { PackageManagerTabs } from '@theme';
 }
 ```
 
-As Windows does not support the above usage, you can also use [cross-env](https://npmjs.com/package/cross-env) to set environment variables. This ensures compatibility across different systems:
+Como o Windows não suporta o uso acima, você também pode usar [cross-env](https://npmjs.com/package/cross-env) para definir variáveis de ambiente. Isso garante compatibilidade entre diferentes sistemas:
 
 ```json title="package.json"
 {
@@ -41,11 +41,11 @@ As Windows does not support the above usage, you can also use [cross-env](https:
 }
 ```
 
-After running the above commands, Rsbuild will automatically register the Rsdoctor plugin, and after the build is completed, it will open the build analysis page. For complete features, please refer to [Rsdoctor document](https://rsdoctor.rs/).
+Após executar os comandos acima, o Rsbuild registrará automaticamente o plugin Rsdoctor, e após a conclusão da build, ele abrirá a página de análise da build. Para recursos completos, consulte a [documentação do Rsdoctor](https://rsdoctor.rs/).
 
-## Options
+## Opções
 
-To configure the [options](https://rsdoctor.rs/config/options/options) provided by the Rsdoctor plugin, please manually register the Rsdoctor plugin:
+Para configurar as [opções](https://rsdoctor.rs/config/options/options) fornecidas pelo plugin Rsdoctor, registre manualmente o plugin Rsdoctor:
 
 ```ts title="rsbuild.config.ts"
 import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
@@ -56,7 +56,7 @@ export default {
       plugins: [
         process.env.RSDOCTOR === 'true' &&
           new RsdoctorRspackPlugin({
-            // plugin options
+            // opções do plugin
           }),
       ],
     },
