@@ -1,31 +1,31 @@
-# General FAQ
+# Perguntas Frequentes Gerais
 
-### What is the relationship between Rsbuild and Rspack?
+### Qual é a relação entre Rsbuild e Rspack?
 
-Rspack is the base bundler for Rsbuild. The goal of Rsbuild is to provide out-of-the-box building capabilities for Rspack users, allowing developers to start a web project with zero configuration.
+Rspack é o empacotador base para o Rsbuild. O objetivo do Rsbuild é fornecer capacidades de construção prontas para uso para usuários do Rspack, permitindo que os desenvolvedores iniciem um projeto web com configuração zero.
 
-The main differences between Rspack and Rsbuild are:
+As principais diferenças entre Rspack e Rsbuild são:
 
-- Rspack projects need to be configured from scratch, while Rsbuild provides default best practice configurations and supports extending Rspack configurations.
-- Rspack projects require integration with loaders and plugins from the community to support different scenarios, while Rsbuild provides official plugins and default support for common frontend frameworks and build capabilities.
-- The capabilities of Rspack CLI are comparable to webpack CLI, with relatively streamlined functionality, while Rsbuild provides a more powerful CLI and a more complete dev server.
-
----
-
-### Can Rsbuild be used to build libraries or UI components?
-
-Rsbuild is out-of-the-box for building web applications.
-
-For libraries and UI components, it is recommended to use [Rslib](https://github.com/web-infra-dev/rslib), which is a library development tool based on Rsbuild, and can reuse the configuration and plugins of Rsbuild.
+- Projetos Rspack precisam ser configurados do zero, enquanto o Rsbuild fornece configurações padrão de melhores práticas e suporta a extensão de configurações do Rspack.
+- Projetos Rspack exigem integração com loaders e plugins da comunidade para suportar diferentes cenários, enquanto o Rsbuild fornece plugins oficiais e suporte padrão para frameworks frontend comuns e capacidades de construção.
+- As capacidades da CLI do Rspack são comparáveis à CLI do webpack, com funcionalidade relativamente simplificada, enquanto o Rsbuild fornece uma CLI mais poderosa e um servidor de desenvolvimento mais completo.
 
 ---
 
-### What is the relationship between Rsbuild and Modern.js?
+### O Rsbuild pode ser usado para construir bibliotecas ou componentes de UI?
 
-Modern.js is a progressive web development framework built on top of Rsbuild. The building capabilities of Modern.js are based on Rsbuild.
+O Rsbuild é pronto para uso na construção de aplicações web.
 
-The main differences between Modern.js and Rsbuild are:
+Para bibliotecas e componentes de UI, é recomendado usar o [Rslib](https://github.com/web-infra-dev/rslib), que é uma ferramenta de desenvolvimento de bibliotecas baseada no Rsbuild, e pode reutilizar a configuração e os plugins do Rsbuild.
 
-- Modern.js is based on React, while Rsbuild is not coupled with any frontend UI framework.
-- Modern.js is a full-stack solution, providing runtime and server-side capabilities, while Rsbuild is a build tool with other capabilities extendable through plugins.
-- Modern.js has more built-in features, while Rsbuild pursues lightweight and flexibility.
+---
+
+### Qual é a relação entre Rsbuild e Modern.js?
+
+Modern.js é um framework de desenvolvimento web progressivo construído sobre o Rsbuild. As capacidades de construção do Modern.js são baseadas no Rsbuild.
+
+As principais diferenças entre Modern.js e Rsbuild são:
+
+- Modern.js é baseado em React, enquanto o Rsbuild não é acoplado a nenhum framework de UI frontend.
+- Modern.js é uma solução full-stack, fornecendo capacidades de runtime e server-side, enquanto o Rsbuild é uma ferramenta de construção com outras capacidades extensíveis através de plugins.
+- Modern.js tem mais recursos embutidos, enquanto o Rsbuild busca leveza e flexibilidade.
