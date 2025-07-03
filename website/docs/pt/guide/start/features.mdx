@@ -5,7 +5,7 @@ Aqui estão todos os principais recursos suportados pelo Rsbuild.
 ## JavaScript
 
 | Recursos                       | Descrição                                                                                                                                  | Links                                                                                                                                      |
-| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| :----------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------- |
 | Rspack                         | Usa o Rspack como o empacotador por padrão                                                                                                 | <ul><li>[Configurar Rspack](/guide/configuration/rspack)</li></ul>                                                                         |
 | Compilação SWC                 | Transforma e minifica o código JavaScript e TypeScript com SWC por padrão                                                                  | <ul><li>[Configurar SWC](/guide/configuration/swc)</li></ul>                                                                               |
 | Compilação TS                  | Arquivos TS são compilados pelo SWC por padrão                                                                                             | <ul><li>[Compilação TypeScript](/guide/basic/typescript#typescript-compilation)</li></ul>                                                  |
@@ -25,24 +25,24 @@ Aqui estão todos os principais recursos suportados pelo Rsbuild.
 
 ## CSS
 
-| Recursos                  | Descrição                                                           | Links                                                                                                                 |
-| ------------------------- | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| Lightning CSS             | Usa Lightning CSS para rebaixar a sintaxe CSS por padrão            | <ul><li>[CSS](/guide/styling/css-usage)</li></ul>                                                                     |
-| Transformação PostCSS     | Recurso opcional, usa PostCSS para transformar arquivos CSS         | <ul><li>[CSS](/guide/styling/css-usage)</li><li>[tools.postcss](/config/tools/postcss)</li></ul>                      |
-| Tailwind CSS              | Recurso opcional, usa Tailwind CSS                                  | <ul><li>[Tailwind CSS](/guide/styling/tailwindcss)</li></ul>                                                          |
-| UnoCSS                    | Recurso opcional, usa UnoCSS                                        | <ul><li>[UnoCSS](/guide/styling/unocss)</li></ul>                                                                     |
-| Pré-processamento Sass    | Recurso opcional, compila arquivos Sass/Scss                        | <ul><li>[CSS](/guide/styling/css-usage)</li><li>[Plugin Sass](/plugins/list/plugin-sass)</li></ul>                    |
-| Pré-processamento Less    | Recurso opcional, compila arquivos Less                             | <ul><li>[CSS](/guide/styling/css-usage)</li><li>[Plugin Less](/plugins/list/plugin-less)</li></ul>                    |
-| Pré-processamento Stylus  | Recurso opcional, compila arquivos Stylus                           | <ul><li>[CSS](/guide/styling/css-usage)</li><li>[Plugin Stylus](/plugins/list/plugin-stylus)</li></ul>                |
-| Compilação de Módulos CSS | Suporta a compilação de arquivos `*.module.*` por padrão            | <ul><li>[Módulos CSS](/guide/styling/css-modules)</li><li>[tools.cssLoader](/config/tools/css-loader)</li></ul>       |
-| Tipo de Módulos CSS       | Recurso opcional, gera definição de tipo para Módulos CSS           | <ul><li>[Plugin de Módulos CSS Tipados](https://github.com/rspack-contrib/rsbuild-plugin-typed-css-modules)</li></ul> |
-| Minificação de CSS        | A minificação de CSS é ativada por padrão na compilação de produção | <ul><li>[CSS](/guide/styling/css-usage)</li></ul>                                                                     |
-| Inserir CSS no JS         | Recurso opcional, insere arquivos CSS em arquivos JavaScript        | <ul><li>[CSS](/guide/styling/css-usage)</li><li>[output.injectStyles](/config/output/inject-styles)</li></ul>         |
+| Recursos                  | Descrição                                                           | Links                                                                                                                                       |
+| :------------------------ | :------------------------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------ |
+| Lightning CSS             | Usa Lightning CSS para rebaixar a sintaxe CSS por padrão            | <ul><li>[CSS](/guide/styling/css-usage)</li></ul>                                                                                           |
+| Transformação PostCSS     | Recurso opcional, usa PostCSS para transformar arquivos CSS         | <ul><li>[CSS](/guide/styling/css-usage)</li><li>[tools.postcss](/config/tools/postcss)</li></ul>                                            |
+| Tailwind CSS              | Recurso opcional, usa Tailwind CSS                                  | <ul><li>[Tailwind CSS](/guide/styling/tailwindcss)</li></ul>                                                                                |
+| UnoCSS                    | Recurso opcional, usa UnoCSS                                        | <ul><li>[UnoCSS](/guide/styling/unocss)</li></ul>                                                                                           |
+| Pré-processamento Sass    | Recurso opcional, compila arquivos Sass/Scss                        | <ul><li>[CSS](/guide/styling/css-usage)</li><li>[Plugin Sass](/plugins/list/plugin-sass)</li></ul>                                          |
+| Pré-processamento Less    | Recurso opcional, compila arquivos Less                             | <ul><li>[CSS](/guide/styling/css-usage)</li><li>[Plugin Less](/plugins/list/plugin-less)</li></ul>                                          |
+| Pré-processamento Stylus  | Recurso opcional, compila arquivos Stylus                           | <ul><li>[CSS](/guide/styling/css-usage)</li><li>[Plugin Stylus](/plugins/list/plugin-stylus)</li></ul>                                      |
+| Compilação de Módulos CSS | Suporta a compilação de arquivos `*.module.*` por padrão            | <ul><li>[Módulos CSS](/guide/styling/css-modules)</li><li>[tools.cssLoader](/config/tools/css-loader)</li></ul>                             |
+| Tipo de Módulos CSS       | Recurso opcional, gera definição de tipo para Módulos CSS           | <ul><li>[Plugin de Módulos CSS Tipados](https://github.com/rspack-contrib/rsbuild-plugin-typed-css-modules)</li></ul>                       |
+| Minificação de CSS        | A minificação de CSS é ativada por padrão na compilação de produção | <ul><li>[CSS](/guide/styling/css-usage)</li></ul>                                                                                           |
+| Inserir CSS no JS         | Recurso opcional, insere arquivos CSS em arquivos JavaScript        | <ul><li>[Inserir ativos estáticos](/guide/optimization/inline-assets)</li><li>[output.injectStyles](/config/output/inject-styles)</li></ul> |
 
 ## HTML
 
 | Recursos                    | Descrição                                     | Links                                                                                                                                         |
-| --------------------------- | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| :-------------------------- | :-------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------- |
 | Definir título              | Define a tag `<title>` do HTML                | <ul><li>[Definir título da página](/guide/basic/html-template#set-page-title)</li><li>[html.title](/config/html/title)</li></ul>              |
 | Definir meta                | Define a tag `<meta>` do HTML                 | <ul><li>[Definir meta tags](/guide/basic/html-template#set-meta-tags)</li><li>[html.meta](/config/html/meta)</li></ul>                        |
 | Definir favicon             | Define o favicon                              | <ul><li>[Definir ícone da página](/guide/basic/html-template#set-page-icon)</li><li>[html.favicon](/config/html/favicon)</li></ul>            |
@@ -55,7 +55,7 @@ Aqui estão todos os principais recursos suportados pelo Rsbuild.
 ## Servidor
 
 | Recursos                 | Descrição                                                                          | Links                                                           |
-| ------------------------ | ---------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| :----------------------- | :--------------------------------------------------------------------------------- | :-------------------------------------------------------------- |
 | Diretório público        | Usa o diretório público como o diretório para servir ativos públicos por padrão    | <ul><li>[server.publicDir](/config/server/public-dir)</li></ul> |
 | SSR                      | Recurso opcional, implementa a renderização do lado do servidor                    | <ul><li>[SSR](/guide/advanced/ssr)</li></ul>                    |
 | Proxy                    | Recurso opcional, solicitações de proxy para o serviço especificado                | <ul><li>[server.proxy](/config/server/proxy)</li></ul>          |
@@ -66,7 +66,7 @@ Aqui estão todos os principais recursos suportados pelo Rsbuild.
 ## Framework de UI
 
 | Recursos      | Descrição                                                                     | Links                                                                                              |
-| ------------- | ----------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| :------------ | :---------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------- |
 | React         | Recurso opcional, habilita a compilação de React JSX                          | <ul><li>[Plugin React](/plugins/list/plugin-react)</li></ul>                                       |
 | React Refresh | Recurso opcional, habilita o React Refresh                                    | <ul><li>[Hot module replacement](/guide/advanced/hmr)</li><li>[dev.hmr](/config/dev/hmr)</li></ul> |
 | SVGR          | Recurso opcional, transforma SVG em componente React                          | <ul><li>[Plugin SVGR](/plugins/list/plugin-svgr)</li></ul>                                         |
@@ -80,7 +80,7 @@ Aqui estão todos os principais recursos suportados pelo Rsbuild.
 ## Ativos estáticos
 
 | Recursos                   | Descrição                                                                            | Links                                                                                                                                        |
-| -------------------------- | ------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| :------------------------- | :----------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------- |
 | Ativos de imagem           | Suporte para importar ativos de imagem no código                                     | <ul><li>[Ativos estáticos](/guide/basic/static-assets)</li></ul>                                                                             |
 | Ativos de fonte            | Suporte para importar ativos de fonte no código                                      | <ul><li>[Ativos estáticos](/guide/basic/static-assets)</li></ul>                                                                             |
 | Ativos de vídeo            | Suporte para importar ativos de vídeo no código                                      | <ul><li>[Ativos estáticos](/guide/basic/static-assets)</li></ul>                                                                             |
@@ -94,7 +94,7 @@ Aqui estão todos os principais recursos suportados pelo Rsbuild.
 ## Desempenho e depuração
 
 | Recursos                              | Descrição                                                                                                                                           | Links                                                                                                                                       |
-| ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| :------------------------------------ | :-------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------ |
 | Divisão de Chunks                     | Uma variedade de estratégias de divisão de chunks são incorporadas ao Rsbuild para dividir automaticamente o pacote em arquivos de tamanho moderado | <ul><li>[Divisão de código](/guide/optimization/code-splitting)</li><li>[performance.chunkSplit](/config/performance/chunk-split)</li></ul> |
 | Imprimir tamanho do arquivo           | Após a compilação de produção, todos os tamanhos dos pacotes são exibidos por padrão                                                                | <ul><li>[performance.printFileSize](/config/performance/print-file-size)</li></ul>                                                          |
 | Analisar processo de compilação       | Recurso opcional, usa o Rsdoctor para analisar o processo de compilação                                                                             | <ul><li>[Usar Rsdoctor](/guide/debug/rsdoctor)</li></ul>                                                                                    |
@@ -112,7 +112,7 @@ Aqui estão todos os principais recursos suportados pelo Rsbuild.
 ## Outros
 
 | Recursos              | Descrição                                                                                              | Links                                                                                                       |
-| --------------------- | ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| :-------------------- | :----------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------- |
 | Multi-ambiente        | Recurso opcional, constrói saídas diferentes para ambientes diferentes                                 | <ul><li>[Modos e Variáveis de Ambiente](/guide/advanced/env-vars#modes-and-environment-variables)</li></ul> |
 | Compilação preguiçosa | Recurso opcional, compila rotas ou módulos sob demanda                                                 | <ul><li>[Compilação Lenta](/guide/optimization/lazy-compilation)</li></ul>                                  |
 | Ativos de subcaminho  | Recurso opcional, implanta a aplicação em um subcaminho do domínio                                     | <ul><li>[output.assetPrefix](/config/output/asset-prefix)</li></ul>                                         |
