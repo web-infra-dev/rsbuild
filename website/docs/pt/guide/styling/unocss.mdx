@@ -1,20 +1,20 @@
 # UnoCSS
 
-[UnoCSS](https://unocss.dev/) is the instant atomic CSS engine, that is designed to be flexible and extensible. The core is un-opinionated, and all the CSS utilities are provided via presets.
+[UnoCSS](https://unocss.dev/) é o motor CSS atômico instantâneo, projetado para ser flexível e extensível. O núcleo não tem opinião, e todas as utilidades CSS são fornecidas via presets.
 
-You can integrate UnoCSS in Rsbuild via [@unocss/webpack](https://npmjs.com/package/@unocss/webpack).
+Você pode integrar o UnoCSS no Rsbuild via [@unocss/webpack](https://npmjs.com/package/@unocss/webpack).
 
-## Installing UnoCSS
+## Instalando UnoCSS
 
-You need to install `@unocss/webpack` first.
+Você precisa instalar `@unocss/webpack` primeiro.
 
 import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @unocss/webpack -D" />
 
-## Configuring plugin
+## Configurando plugin
 
-Register the `UnoCSSRspackPlugin` plugin in [tools.rspack](/config/tools/rspack):
+Registre o plugin `UnoCSSRspackPlugin` em [tools.rspack](/config/tools/rspack):
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -25,7 +25,7 @@ export default defineConfig({
     rspack: {
       plugins: [
         UnoCSSRspackPlugin({
-          // options
+          // opções
         }),
       ],
     },
@@ -33,7 +33,7 @@ export default defineConfig({
 });
 ```
 
-You can add UnoCSS Presets via the options of `UnoCSSRspackPlugin`, for example:
+Você pode adicionar UnoCSS Presets via as opções de `UnoCSSRspackPlugin`, por exemplo:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -57,31 +57,31 @@ export default defineConfig({
 ```
 
 :::tip
-The above configuration is for reference only and can be modified to suit the needs of your project.
+A configuração acima é apenas para referência e pode ser modificada para atender às necessidades do seu projeto.
 :::
 
-## Importing CSS
+## Importando CSS
 
-In the JavaScript entry file, import `uno.css`:
+No arquivo de entrada JavaScript, importe `uno.css`:
 
 ```js title="main.js"
 import 'uno.css';
 ```
 
-## Done
+## Concluído
 
-You have now completed all the steps to integrate UnoCSS in Rsbuild!
+Você concluiu todas as etapas para integrar o UnoCSS no Rsbuild!
 
-You can use UnoCSS's utility classes in any component or HTML, such as:
+Você pode usar as classes utilitárias do UnoCSS em qualquer componente ou HTML, como:
 
 ```html
 <h1 class="px-2 items-center justify-between">Hello world!</h1>
 ```
 
-For more usage details, refer to the [UnoCSS documentation](https://unocss.dev/).
+Para mais detalhes de uso, consulte a [documentação do UnoCSS](https://unocss.dev/).
 
-## VS Code extension
+## Extensão do VS Code
 
-UnoCSS provides a [VS Code Extension](https://unocss.dev/integrations/vscode) plugin for VS Code to decoration and tooltip for matched utilities.
+O UnoCSS fornece um plugin [VS Code Extension](https://unocss.dev/integrations/vscode) para VS Code para decoração e tooltip para utilitários correspondentes.
 
-You can install this plugin in VS Code to enable more intelligent features.
+Você pode instalar este plugin no VS Code para habilitar recursos mais inteligentes.
