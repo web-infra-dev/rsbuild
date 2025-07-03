@@ -1,10 +1,10 @@
 # Svelte
 
-In this document, you will learn how to build a Svelte application using Rsbuild.
+Neste documento, você aprenderá como construir uma aplicação Svelte usando o Rsbuild.
 
-## Create a Svelte application
+## Criar uma aplicação Svelte
 
-Use [create-rsbuild](/guide/start/quick-start#create-an-rsbuild-application) to create a Svelte application with Rsbuild. Run the following command:
+Use o [create-rsbuild](/guide/start/quick-start#create-an-rsbuild-application) para criar uma aplicação Svelte com o Rsbuild. Execute o seguinte comando:
 
 import { PackageManagerTabs } from '@theme';
 
@@ -17,13 +17,16 @@ import { PackageManagerTabs } from '@theme';
   }}
 />
 
-Then select `Svelte` when prompted to "Select framework".
+Em seguida, selecione `Svelte` quando for solicitado "Select framework" (Selecionar framework).
 
-## Use Svelte in an existing project
+## Usar Svelte em um projeto existente
 
-To compile Svelte components (`.svelte` files), you need to register the Rsbuild [Svelte plugin](/plugins/list/plugin-svelte). The plugin will automatically add the necessary configuration for Svelte builds.
+Para compilar componentes Svelte (arquivos `.svelte`), você precisa registrar o [plugin Svelte](/plugins/list/plugin-svelte) do Rsbuild. O plugin adicionará automaticamente a configuração necessária para builds do Svelte.
 
-For example, register in `rsbuild.config.ts`:
+**O que são Componentes Svelte (.svelte files)?**
+Componentes Svelte são arquivos com a extensão `.svelte` que contêm a lógica (JavaScript), a marcação (HTML) e o estilo (CSS) de um componente em um único arquivo. Svelte é um compilador que transforma esses componentes em JavaScript imperativo e otimizado em tempo de compilação, em vez de usar um runtime no navegador. Isso resulta em pacotes menores e desempenho mais rápido.
+
+Por exemplo, registre em `rsbuild.config.ts`:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';

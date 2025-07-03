@@ -1,10 +1,10 @@
 # Vue
 
-In this document, you will learn how to build a Vue 3 or Vue 2 application using Rsbuild.
+Neste documento, você aprenderá como construir uma aplicação Vue 3 ou Vue 2 usando o Rsbuild.
 
-## Create a Vue application
+## Criar uma aplicação Vue
 
-Use [create-rsbuild](/guide/start/quick-start#create-an-rsbuild-application) to create a Vue application with Rsbuild. Run the following command:
+Use o [create-rsbuild](/guide/start/quick-start#create-an-rsbuild-application) para criar uma aplicação Vue com o Rsbuild. Execute o seguinte comando:
 
 import { PackageManagerTabs } from '@theme';
 
@@ -17,15 +17,18 @@ import { PackageManagerTabs } from '@theme';
   }}
 />
 
-Then select `Vue 3` or `Vue 2` when prompted to "Select framework".
+Em seguida, selecione `Vue 3` ou `Vue 2` quando for solicitado "Select framework" (Selecionar framework).
 
 ## Vue 3
 
-### Use Vue in an existing project
+### Usar Vue em um projeto existente
 
-To compile Vue SFC (Single File Components), you need to register the Rsbuild [Vue plugin](/plugins/list/plugin-vue). The plugin will automatically add the necessary configuration for Vue builds.
+Para compilar Vue SFC (Single File Components), você precisa registrar o [plugin Vue](/plugins/list/plugin-vue) do Rsbuild. O plugin adicionará automaticamente a configuração necessária para builds do Vue.
 
-For example, register in `rsbuild.config.ts`:
+**O que são SFCs (Single File Components)?**
+SFCs, ou Single File Components (Componentes de Arquivo Único), são um formato de arquivo `.vue` que permite encapsular o template (HTML), o script (JavaScript/TypeScript) e o estilo (CSS/SCSS/etc.) de um componente Vue em um único arquivo. Isso melhora a organização do código, a legibilidade e a manutenção, pois tudo o que se refere a um componente específico está contido em um só lugar.
+
+Por exemplo, registre em `rsbuild.config.ts`:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -37,26 +40,26 @@ export default defineConfig({
 ```
 
 :::tip
-For projects using Vue CLI, you can refer to the [Vue CLI Migration Guide](/guide/migration/vue-cli).
+Para projetos que usam Vue CLI, você pode consultar o [Guia de Migração do Vue CLI](/guide/migration/vue-cli).
 :::
 
-### Use the JSX syntax of Vue
+### Usar a sintaxe JSX do Vue
 
-To use the JSX syntax of Vue, you also need to register the [@rsbuild/plugin-vue-jsx](https://github.com/rspack-contrib/rsbuild-plugin-vue-jsx).
+Para usar a sintaxe JSX do Vue, você também precisa registrar o [@rsbuild/plugin-vue-jsx](https://github.com/rspack-contrib/rsbuild-plugin-vue-jsx).
 
-### TypeScript support
+### Suporte a TypeScript
 
-Rsbuild supports compiling TypeScript by default.
+O Rsbuild suporta a compilação de TypeScript por padrão.
 
-Please refer to the [TypeScript - IDE Support](https://vuejs.org/guide/typescript/overview.html#ide-support) section of the Vue documentation to learn how to set up Vue TypeScript support in your IDE.
+Consulte a seção [TypeScript - Suporte a IDE](https://vuejs.org/guide/typescript/overview.html#ide-support) da documentação do Vue para aprender como configurar o suporte a Vue TypeScript em sua IDE.
 
 ## Vue 2
 
-### Use Vue 2 in an existing project
+### Usar Vue 2 em um projeto existente
 
-To compile Vue SFC (Single File Components), you need to register the Rsbuild [Vue 2 plugin](https://github.com/rspack-contrib/rsbuild-plugin-vue2). The plugin will automatically add the necessary configuration for Vue builds.
+Para compilar Vue SFC (Single File Components), você precisa registrar o [plugin Vue 2](https://github.com/rspack-contrib/rsbuild-plugin-vue2) do Rsbuild. O plugin adicionará automaticamente a configuração necessária para builds do Vue.
 
-For example, register in `rsbuild.config.ts`:
+Por exemplo, registre em `rsbuild.config.ts`:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -69,20 +72,20 @@ export default defineConfig({
 
 :::tip
 
-- The Vue 2 plugin only supports Vue >= 2.7.0.
-- For projects using Vue CLI, you can refer to the [Vue CLI Migration Guide](/guide/migration/vue-cli).
+- O plugin Vue 2 suporta apenas Vue >= 2.7.0.
+- Para projetos que usam Vue CLI, você pode consultar o [Guia de Migração do Vue CLI](/guide/migration/vue-cli).
 
 :::
 
-### Use the JSX syntax of Vue
+### Usar a sintaxe JSX do Vue
 
-To use the JSX syntax of Vue, you also need to register the [@rsbuild/plugin-vue2-jsx](https://github.com/rspack-contrib/rsbuild-plugin-vue2-jsx).
+Para usar a sintaxe JSX do Vue, você também precisa registrar o [@rsbuild/plugin-vue2-jsx](https://github.com/rspack-contrib/rsbuild-plugin-vue2-jsx).
 
-### Type declarations
+### Declarações de tipo
 
-In a TypeScript project, you need to add type definitions for `*.vue` files so that TypeScript can recognize them correctly.
+Em um projeto TypeScript, você precisa adicionar definições de tipo para arquivos `*.vue` para que o TypeScript possa reconhecê-los corretamente.
 
-Create `env.d.ts` in the `src` directory and add the following content:
+Crie `env.d.ts` no diretório `src` e adicione o seguinte conteúdo:
 
 ```ts title="src/env.d.ts"
 declare module '*.vue' {

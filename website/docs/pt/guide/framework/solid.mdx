@@ -1,10 +1,10 @@
 # Solid
 
-In this document, you will learn how to build a Solid application using Rsbuild.
+Neste documento, você aprenderá como construir uma aplicação Solid usando o Rsbuild.
 
-## Create a Solid application
+## Criar uma aplicação Solid
 
-Use [create-rsbuild](/guide/start/quick-start#create-an-rsbuild-application) to create a Solid application with Rsbuild. Run the following command:
+Use o [create-rsbuild](/guide/start/quick-start#create-an-rsbuild-application) para criar uma aplicação Solid com o Rsbuild. Execute o seguinte comando:
 
 import { PackageManagerTabs } from '@theme';
 
@@ -17,13 +17,16 @@ import { PackageManagerTabs } from '@theme';
   }}
 />
 
-Then select `Solid` when prompted to "Select framework".
+Em seguida, selecione `Solid` quando for solicitado "Select framework" (Selecionar framework).
 
-## Use Solid in an existing project
+## Usar Solid em um projeto existente
 
-To compile Solid components, you need to register the Rsbuild [Solid plugin](/plugins/list/plugin-solid). The plugin will automatically add the necessary configuration for Solid builds.
+Para compilar componentes Solid, você precisa registrar o [plugin Solid](/plugins/list/plugin-solid) do Rsbuild. O plugin adicionará automaticamente a configuração necessária para builds do Solid.
 
-For example, register in `rsbuild.config.ts`:
+**O que são Componentes Solid?**
+Solid é uma biblioteca JavaScript declarativa para criar interfaces de usuário, conhecida por seu desempenho e reatividade fina. Diferente de React ou Vue, Solid não usa um Virtual DOM. Em vez disso, ele compila seus componentes (escritos em JSX/TSX) diretamente para nós DOM reais e atualiza apenas as partes do DOM que realmente mudaram, resultando em um desempenho muito eficiente. A reatividade em Solid é baseada em sinais (signals), que são valores reativos que notificam automaticamente os consumidores quando mudam.
+
+Por exemplo, registre em `rsbuild.config.ts`:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';

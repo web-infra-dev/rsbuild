@@ -1,10 +1,10 @@
 # Preact
 
-In this document, you will learn how to build a Preact application using Rsbuild.
+Neste documento, você aprenderá como construir uma aplicação Preact usando o Rsbuild.
 
-## Create a Preact application
+## Criar uma aplicação Preact
 
-Use [create-rsbuild](/guide/start/quick-start#create-an-rsbuild-application) to create a Preact application with Rsbuild. Run the following command:
+Use o [create-rsbuild](/guide/start/quick-start#create-an-rsbuild-application) para criar uma aplicação Preact com o Rsbuild. Execute o seguinte comando:
 
 import { PackageManagerTabs } from '@theme';
 
@@ -17,13 +17,13 @@ import { PackageManagerTabs } from '@theme';
   }}
 />
 
-Then select `Preact` when prompted to "Select framework".
+Em seguida, selecione `Preact` quando for solicitado "Select framework" (Selecionar framework).
 
-## Use Preact in an existing project
+## Usar Preact em um projeto existente
 
-To compile Preact, you need to register the Rsbuild [Preact Plugin](/plugins/list/plugin-preact). The plugin will automatically add the necessary configuration for Preact builds.
+Para compilar Preact, você precisa registrar o [Plugin Preact](/plugins/list/plugin-preact) do Rsbuild. O plugin adicionará automaticamente a configuração necessária para builds do Preact.
 
-For example, register in `rsbuild.config.ts`:
+Por exemplo, registre em `rsbuild.config.ts`:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -36,15 +36,13 @@ export default defineConfig({
 
 ## Preact Fast Refresh
 
-Preact plugin uses [@preact/prefresh](https://github.com/preactjs/prefresh) and [@rspack/plugin-preact-refresh](https://github.com/rspack-contrib/rspack-plugin-preact-refresh) to hot reload Preact components.
+O plugin Preact usa [@preact/prefresh](https://github.com/preactjs/prefresh) e [@rspack/plugin-preact-refresh](https://github.com/rspack-contrib/rspack-plugin-preact-refresh) para recarregar componentes Preact a quente.
 
-### Component recognition
+### Reconhecimento de componentes
 
-Prefresh need to be able to recognize your components, this means that components should
-start with a capital letter and hook should start with `use` followed by a capital letter.
-This allows the plugin to effectively recognize these.
+O Prefresh precisa ser capaz de reconhecer seus componentes, o que significa que os componentes devem começar com uma letra maiúscula e os hooks devem começar com `use` seguido de uma letra maiúscula. Isso permite que o plugin os reconheça de forma eficaz.
 
-Do note that a component as seen below is not named:
+Observe que um componente como o mostrado abaixo não é nomeado:
 
 ```jsx
 export default () => {
@@ -52,7 +50,7 @@ export default () => {
 };
 ```
 
-Instead do:
+Em vez disso, faça:
 
 ```jsx
 const MyComponent = () => {
@@ -62,5 +60,7 @@ const MyComponent = () => {
 export default MyComponent;
 ```
 
-When you are working with HOC's be sure to lift up the `displayName` so the plugin can
-recognize it as a component.
+Quando você estiver trabalhando com HOCs (Higher-Order Components), certifique-se de elevar o `displayName` para que o plugin possa reconhecê-lo como um componente.
+
+**O que são HOCs (Higher-Order Components)?**
+HOCs (Higher-Order Components) são uma técnica avançada em React para reutilizar a lógica de componentes. Um HOC é uma função que recebe um componente como entrada e retorna um novo componente com funcionalidades adicionais. Eles são úteis para compartilhar comportamentos entre componentes sem duplicar código, abstrair lógicas complexas e lidar com preocupações transversais como busca de dados, autenticação ou logging.
