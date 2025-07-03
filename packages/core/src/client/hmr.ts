@@ -10,7 +10,7 @@ function formatURL(config: NormalizedClientConfig) {
   const port = config.port || location.port;
   const protocol =
     config.protocol || (location.protocol === 'https:' ? 'wss' : 'ws');
-  const pathname = config.path || '/rsbuild-hmr';
+  const pathname = config.path;
 
   if (typeof URL !== 'undefined') {
     const url = new URL('http://localhost');
