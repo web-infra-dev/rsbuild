@@ -1,60 +1,60 @@
-# Configure Rsbuild
+# Configurar Rsbuild
 
-Rsbuild provides a wide range of configuration options and sets a common default value for each option, which can meet the requirements of most use cases. Therefore, in most cases, you don't need to declare any Rsbuild configurations and can use it out of the box.
+O Rsbuild oferece uma ampla gama de opções de configuração e define um valor padrão comum para cada opção, o que pode atender aos requisitos da maioria dos casos de uso. Portanto, na maioria dos casos, você não precisa declarar nenhuma configuração do Rsbuild e pode usá-lo pronto para uso.
 
-If you need to customize build behaviors, you can use these configuration options.
+Se você precisar personalizar os comportamentos de build, pode usar essas opções de configuração.
 
-## Configuration structure
+## Estrutura da Configuração
 
-The configuration structure of Rsbuild looks like this:
+A estrutura de configuração do Rsbuild se parece com isto:
 
 ```js title="rsbuild.config.mjs"
 export default {
   plugins: [
-    // configure Rsbuild plugins
+    // configurar plugins do Rsbuild
   ],
   dev: {
-    // options for local development
+    // opções para desenvolvimento local
   },
   html: {
-    // options for HTML generation
+    // opções para geração de HTML
   },
   tools: {
-    // options for the low-level tools
+    // opções para as ferramentas de baixo nível
   },
   output: {
-    // options for build outputs
+    // opções para as saídas de build
   },
   resolve: {
-    // options for module resolution
+    // opções para resolução de módulos
   },
   source: {
-    // options for input source code
+    // opções para o código-fonte de entrada
   },
   server: {
-    // options for the Rsbuild server,
-    // will take effect during local development and preview
+    // opções para o servidor Rsbuild,
+    // terá efeito durante o desenvolvimento local e visualização
   },
   security: {
-    // options for Web security
+    // opções para segurança da Web
   },
   performance: {
-    // options for build performance and runtime performance
+    // opções para desempenho de build e desempenho de tempo de execução
   },
   moduleFederation: {
-    // options for module federation
+    // opções para federação de módulos
   },
   environments: {
-    // define different Rsbuild configurations for each environment
+    // definir diferentes configurações do Rsbuild para cada ambiente
   },
 };
 ```
 
-You can find detailed descriptions of all configs on the [Configure Overview](/config/) page.
+Você pode encontrar descrições detalhadas de todas as configurações na página [Visão Geral da Configuração](/config/).
 
-## Configuration file
+## Arquivo de Configuração
 
-When you use the CLI of Rsbuild, Rsbuild will automatically read the configuration file in the root directory of the current project and resolve it in the following order:
+Quando você usa a CLI do Rsbuild, o Rsbuild lerá automaticamente o arquivo de configuração no diretório raiz do projeto atual e o resolverá na seguinte ordem:
 
 - rsbuild.config.mjs
 - rsbuild.config.ts
@@ -63,9 +63,9 @@ When you use the CLI of Rsbuild, Rsbuild will automatically read the configurati
 - rsbuild.config.mts
 - rsbuild.config.cts
 
-We recommend using the `.mjs` or `.ts` format for the configuration file and importing the `defineConfig` utility function from `@rsbuild/core`. It provides friendly TypeScript type hints and autocompletion, which can help you avoid errors in the configuration.
+Recomendamos usar o formato `.mjs` ou `.ts` para o arquivo de configuração e importar a função utilitária `defineConfig` de `@rsbuild/core`. Ela fornece dicas de tipo TypeScript amigáveis e autocompletar, o que pode ajudá-lo a evitar erros na configuração.
 
-For example, in `rsbuild.config.ts`, you can define the Rsbuild [resolve.alias](/config/resolve/alias) configuration:
+Por exemplo, em `rsbuild.config.ts`, você pode definir a configuração [resolve.alias](/config/resolve/alias) do Rsbuild:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -79,7 +79,7 @@ export default defineConfig({
 });
 ```
 
-If you are developing a non-TypeScript project, you can use the `.mjs` format for the configuration file:
+Se você estiver desenvolvendo um projeto não-TypeScript, pode usar o formato `.mjs` para o arquivo de configuração:
 
 ```js title="rsbuild.config.mjs"
 import { defineConfig } from '@rsbuild/core';
@@ -93,11 +93,11 @@ export default defineConfig({
 });
 ```
 
-## Specify config file
+## Especificar arquivo de configuração
 
-Rsbuild CLI uses the `--config` option to specify the config file, which can be set to a relative path or an absolute path.
+A CLI do Rsbuild usa a opção `--config` para especificar o arquivo de configuração, que pode ser definido como um caminho relativo ou um caminho absoluto.
 
-For example, if you need to use the `rsbuild.prod.config.mjs` file when running `build`, you can add the following scripts to `package.json`:
+Por exemplo, se você precisar usar o arquivo `rsbuild.prod.config.mjs` ao executar `build`, você pode adicionar os seguintes scripts ao `package.json`:
 
 ```json title="package.json"
 {
@@ -113,29 +113,29 @@ You can also abbreviate the `--config` option to `-c`:
 rsbuild build -c rsbuild.prod.config.mjs
 ```
 
-## Specify config loader
+## Especificar carregador de configuração
 
-When you use a configuration file with the `.ts`, `.mts`, and `.cts` extensions, Rsbuild will use [jiti](https://github.com/unjs/jiti) to load configuration files, providing interoperability between ESM and CommonJS. The behavior of module resolution differs slightly from the native behavior of Node.js.
+Quando você usa um arquivo de configuração com as extensões `.ts`, `.mts`, e `.cts`, o Rsbuild usará [jiti](https://github.com/unjs/jiti) para carregar arquivos de configuração, proporcionando interoperabilidade entre ESM e CommonJS. O comportamento da resolução de módulos difere ligeiramente do comportamento nativo do Node.js.
 
-If your JavaScript runtime already natively supports TypeScript, you can use the `--config-loader native` option to use the Node.js native loader to load the configuration file. This can ensure that the module resolution behavior is consistent with the native behavior of Node.js and has better performance.
+Se o seu runtime JavaScript já suporta nativamente TypeScript, você pode usar a opção `--config-loader native` para usar o carregador nativo do Node.js para carregar o arquivo de configuração. Isso pode garantir que o comportamento de resolução de módulos seja consistente com o comportamento nativo do Node.js e tenha melhor desempenho.
 
-For example, Node.js v22.6.0+ already natively supports TypeScript, you can use the following command to use the Node.js native loader to load the configuration file:
+Por exemplo, o Node.js v22.6.0+ já suporta nativamente TypeScript, você pode usar o seguinte comando para usar o carregador nativo do Node.js para carregar o arquivo de configuração:
 
 ```bash
 # Node.js v23.6.0+
-# No need to set --experimental-strip-types
+# Não é necessário definir --experimental-strip-types
 npx rsbuild build --config-loader native
 
 # Node.js v22.6.0 - v23.5.0
-# Need to set --experimental-strip-types
+# É necessário definir --experimental-strip-types
 NODE_OPTIONS="--experimental-strip-types" npx rsbuild build --config-loader native
 ```
 
-> See [Node.js - Running TypeScript Natively](https://nodejs.org/en/learn/typescript/run-natively#running-typescript-natively) for more details.
+> Consulte [Node.js - Executando TypeScript Nativamente](https://nodejs.org/en/learn/typescript/run-natively#running-typescript-natively) para mais detalhes.
 
-## Using environment variables
+## Usando variáveis de ambiente
 
-In the configuration file, you can use Node.js environment variables such as `process.env.NODE_ENV` to dynamically set different configurations:
+No arquivo de configuração, você pode usar variáveis de ambiente do Node.js, como `process.env.NODE_ENV`, para definir dinamicamente diferentes configurações:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -152,9 +152,9 @@ export default defineConfig({
 });
 ```
 
-## Export function
+## Exportar função
 
-Rsbuild supports the export of a function in the config file, where you can dynamically compute the config and return it to Rsbuild.
+O Rsbuild suporta a exportação de uma função no arquivo de configuração, onde você pode calcular dinamicamente a configuração e retorná-la ao Rsbuild.
 
 ```js title="rsbuild.config.js"
 import { defineConfig } from '@rsbuild/core';
@@ -169,39 +169,39 @@ export default defineConfig(({ env, command, envMode }) => ({
 ```
 
 :::tip
-The exported config function must provide a return value. If you do not need to return any config, you can return an empty object.
+A função de configuração exportada deve fornecer um valor de retorno. Se você não precisar retornar nenhuma configuração, pode retornar um objeto vazio.
 :::
 
-The function accepts the following parameters:
+A função aceita os seguintes parâmetros:
 
 ### env
 
-- **Type:** `string`
-- **Default:** `process.env.NODE_ENV`
+- **Tipo:** `string`
+- **Padrão:** `process.env.NODE_ENV`
 
-The current running environment.
+O ambiente de execução atual.
 
-- When running `rsbuild dev`, the default value of env is `development`.
-- When running `rsbuild build` or `rsbuild preview`, the default value of env is `production`.
+- Ao executar `rsbuild dev`, o valor padrão de `env` é `development`.
+- Ao executar `rsbuild build` ou `rsbuild preview`, o valor padrão de `env` é `production`.
 
 ### envMode
 
-- **Type:** `string`
-- **Default:** `process.env.NODE_ENV`
+- **Tipo:** `string`
+- **Padrão:** `process.env.NODE_ENV`
 
-The current value of the CLI parameter `--env-mode`.
+O valor atual do parâmetro CLI `--env-mode`.
 
-For example, when running `rsbuild build --env-mode test`, the value of `envMode` is `test`.
+Por exemplo, ao executar `rsbuild build --env-mode test`, o valor de `envMode` é `test`.
 
 ### command
 
-- **Type:** `string`
+- **Tipo:** `string`
 
-The current running CLI command, such as `dev`, `build`, `preview`.
+O comando CLI de execução atual, como `dev`, `build`, `preview`.
 
-## Export async function
+## Exportar função assíncrona
 
-Rsbuild also supports the export of an async function in the config file, where you can perform some async operations:
+O Rsbuild também suporta a exportação de uma função assíncrona no arquivo de configuração, onde você pode realizar algumas operações assíncronas:
 
 ```js title="rsbuild.config.js"
 import { defineConfig } from '@rsbuild/core';
@@ -217,7 +217,7 @@ export default defineConfig(async ({ env, command }) => {
 });
 ```
 
-## Merge configurations
+## Mesclar configurações
 
 You can use the [mergeRsbuildConfig](/api/javascript-api/core#mergersbuildconfig) function exported by `@rsbuild/core` to merge multiple configurations.
 
@@ -235,7 +235,7 @@ const config2 = defineConfig({
 export default mergeRsbuildConfig(config1, config2);
 ```
 
-## Debug the config
+## Depurar a configuração
 
 You can enable Rsbuild's debug mode by adding the `DEBUG=rsbuild` environment variable when executing a build.
 
@@ -243,7 +243,7 @@ You can enable Rsbuild's debug mode by adding the `DEBUG=rsbuild` environment va
 DEBUG=rsbuild pnpm dev
 ```
 
-In debug mode, Rsbuild will write the Rsbuild config to the dist directory, which is convenient for developers to view and debug.
+No modo de depuração, o Rsbuild gravará a configuração do Rsbuild no diretório `dist`, o que é conveniente para os desenvolvedores visualizarem e depurarem.
 
 ```
 config inspection completed, open the following files to view the content:
@@ -252,6 +252,6 @@ config inspection completed, open the following files to view the content:
    - Rspack config (web): /Project/demo/dist/.rsbuild/rspack.config.web.mjs
 ```
 
-Open the generated `/dist/.rsbuild/rsbuild.config.mjs` file to see the complete content of the Rsbuild config.
+Abra o arquivo `/dist/.rsbuild/rsbuild.config.mjs` gerado para ver o conteúdo completo da configuração do Rsbuild.
 
-For a complete introduction to debug mode, see the [Debug Mode](/guide/debug/debug-mode) chapter.
+Para uma introdução completa ao modo de depuração, consulte o capítulo [Modo de Depuração](/guide/debug/debug-mode).
