@@ -1,63 +1,63 @@
 # CSS
 
-Rsbuild provides out-of-the-box support for CSS, including PostCSS, CSS Modules, CSS preprocessors, CSS inlining, and CSS compression.
+O Rsbuild oferece suporte pronto para uso para CSS, incluindo PostCSS, CSS Modules, pré-processadores CSS, inlining de CSS e compressão de CSS.
 
-Rsbuild also provides several configurations that allow customization of the processing rules for CSS files.
+O Rsbuild também fornece várias configurações que permitem a personalização das regras de processamento para arquivos CSS.
 
 ## Lightning CSS
 
 :::tip
-[Lightning CSS](https://lightningcss.dev) is a high performance CSS parser, transformer and minifier written in Rust. It supports parsing and transforming many modern CSS features into syntax supported by target browsers, and also provides a better compression ratio.
+[Lightning CSS](https://lightningcss.dev) é um parser, transformador e minificador de CSS de alta performance escrito em Rust. Ele suporta a análise e transformação de muitos recursos CSS modernos em sintaxe suportada por navegadores de destino, e também oferece uma melhor taxa de compressão.
 :::
 
-Rsbuild uses Rspack's built-in [lightningcss-loader](https://rspack.rs/guide/features/builtin-lightningcss-loader) to transform CSS code. It automatically reads the project's [browserslist](/guide/advanced/browserslist) config and converts the CSS code to syntax supported by target browsers.
+O Rsbuild usa o [lightningcss-loader](https://rspack.rs/guide/features/builtin-lightningcss-loader) embutido do Rspack para transformar o código CSS. Ele lê automaticamente a configuração [browserslist](/guide/advanced/browserslist) do projeto e converte o código CSS para a sintaxe suportada pelos navegadores de destino.
 
-### Features
+### Recursos
 
-- Lightning CSS automatically adds vendor prefixes like `-webkit-`, `-moz-`, `-ms-`, etc., so you don't need to manually add prefixes or use the [autoprefixer](https://github.com/postcss/autoprefixer) plugin.
-- Lightning CSS automatically downgrades CSS syntax, allowing you to use modern CSS features such as CSS nesting and custom media queries in your code without worrying about browser compatibility issues.
-- You can use [tools.lightningcssLoader](/config/tools/lightningcss-loader) to customize the options for `lightningcss-loader`.
+- O Lightning CSS adiciona automaticamente prefixos de fornecedor como `-webkit-`, `-moz-`, `-ms-`, etc., então você não precisa adicionar prefixos manualmente ou usar o plugin [autoprefixer](https://github.com/postcss/autoprefixer).
+- O Lightning CSS faz o downgrade automático da sintaxe CSS, permitindo que você use recursos CSS modernos, como aninhamento de CSS e consultas de mídia personalizadas em seu código, sem se preocupar com problemas de compatibilidade do navegador.
+- Você pode usar [tools.lightningcssLoader](/config/tools/lightningcss-loader) para personalizar as opções para `lightningcss-loader`.
 
-### Disabling Lightning CSS
+### Desabilitando o Lightning CSS
 
-If Lightning CSS does not meet your needs, you can disable Lightning CSS and use [PostCSS](#using-postcss) to transform your CSS code.
+Se o Lightning CSS não atender às suas necessidades, você pode desabilitar o Lightning CSS e usar o [PostCSS](#using-postcss) para transformar seu código CSS.
 
-Steps:
+Passos:
 
-1. Set [tools.lightningcssLoader](/config/tools/lightningcss-loader) to `false` to disable the Lightning CSS loader.
-2. Use [@rsbuild/plugin-css-minimizer](https://github.com/rspack-contrib/rsbuild-plugin-css-minimizer) to switch the CSS minifier from Lightning CSS to cssnano or another CSS minifier.
+1.  Defina [tools.lightningcssLoader](/config/tools/lightningcss-loader) como `false` para desabilitar o loader Lightning CSS.
+2.  Use [@rsbuild/plugin-css-minimizer](https://github.com/rspack-contrib/rsbuild-plugin-css-minimizer) para trocar o minificador CSS de Lightning CSS para cssnano ou outro minificador CSS.
 
 ```ts title="rsbuild.config.ts"
 import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
 
-export default {
+export default defineConfig({
   plugins: [pluginCssMinimizer()],
   tools: {
     lightningcssLoader: false,
   },
-};
+});
 ```
 
-3. Refer to [PostCSS](#postcss) to configure the PostCSS plugins you need. Here are some commonly used PostCSS plugins:
+3.  Consulte [PostCSS](#postcss) para configurar os plugins PostCSS que você precisa. Aqui estão alguns plugins PostCSS comumente usados:
 
-- [autoprefixer](https://github.com/postcss/autoprefixer): Adds vendor prefixes.
-- [postcss-preset-env](https://github.com/csstools/postcss-plugins/tree/main/plugin-packs/postcss-preset-env): Converts modern CSS into something most browsers can understand.
-- [postcss-nesting](https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-nesting): Supports CSS nesting.
+- [autoprefixer](https://github.com/postcss/autoprefixer): Adiciona prefixos de fornecedor.
+- [postcss-preset-env](https://github.com/csstools/postcss-plugins/tree/main/plugin-packs/postcss-preset-env): Converte CSS moderno em algo que a maioria dos navegadores pode entender.
+- [postcss-nesting](https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-nesting): Suporta aninhamento de CSS.
 
-## CSS minification
+## Minificação de CSS
 
-When building for production, Rsbuild enables Rspack's built-in [LightningCssMinimizerRspackPlugin](https://rspack.rs/plugins/rspack/lightning-css-minimizer-rspack-plugin) plugin to minify CSS assets for better transmission efficiency.
+Ao construir para produção, o Rsbuild habilita o plugin [LightningCssMinimizerRspackPlugin](https://rspack.rs/plugins/rspack/lightning-css-minimizer-rspack-plugin) embutido do Rspack para minificar ativos CSS para melhor eficiência de transmissão.
 
-- You can disable CSS minification through the [output.minify](/config/output/minify) option or customize the options for `LightningCssMinimizerRspackPlugin`.
-- You can use [@rsbuild/plugin-css-minimizer](https://github.com/rspack-contrib/rsbuild-plugin-css-minimizer) to customize the CSS minimizer, switching to [cssnano](https://github.com/cssnano/cssnano) or other CSS minimizer.
+- Você pode desabilitar a minificação de CSS através da opção [output.minify](/config/output/minify) ou personalizar as opções para `LightningCssMinimizerRspackPlugin`.
+- Você pode usar [@rsbuild/plugin-css-minimizer](https://github.com/rspack-contrib/rsbuild-plugin-css-minimizer) para personalizar o minificador CSS, trocando para [cssnano](https://github.com/cssnano/cssnano) ou outro minificador CSS.
 
 ## PostCSS
 
-Rsbuild supports transforming CSS code through [PostCSS](https://postcss.org/). You can configure PostCSS in the following ways:
+O Rsbuild suporta a transformação de código CSS através do [PostCSS](https://postcss.org/). Você pode configurar o PostCSS das seguintes maneiras:
 
-### Configuration file
+### Arquivo de configuração
 
-Rsbuild uses [postcss-load-config](https://github.com/postcss/postcss-load-config) to load the PostCSS configuration file in the root directory of the current project, such as `postcss.config.js`:
+O Rsbuild usa [postcss-load-config](https://github.com/postcss/postcss-load-config) para carregar o arquivo de configuração do PostCSS no diretório raiz do projeto atual, como `postcss.config.js`:
 
 ```js title="postcss.config.cjs"
 module.exports = {
@@ -67,7 +67,7 @@ module.exports = {
 };
 ```
 
-`postcss-load-config` supports multiple file formats, including but not limited to the following file names:
+`postcss-load-config` suporta vários formatos de arquivo, incluindo, mas não se limitando aos seguintes nomes de arquivo:
 
 - postcss.config.js
 - postcss.config.mjs
@@ -92,32 +92,32 @@ export default {
 };
 ```
 
-### Configuration priority
+### Prioridade de configuração
 
-- When you configure both the `postcss.config.js` file and the `tools.postcss` option, both will take effect, and the `tools.postcss` option will take precedence.
-- If there is no `postcss.config.js` file in the project and the `tools.postcss` option is not configured, Rsbuild will not register `postcss-loader`.
+- Quando você configura tanto o arquivo `postcss.config.js` quanto a opção `tools.postcss`, ambos terão efeito, e a opção `tools.postcss` terá precedência.
+- Se não houver um arquivo `postcss.config.js` no projeto e a opção `tools.postcss` não estiver configurada, o Rsbuild não registrará o `postcss-loader`.
 
 ## CSS Modules
 
-Rsbuild supports CSS Modules by default, please read the [CSS Modules](/guide/styling/css-modules) chapter for the complete usage of CSS Modules.
+O Rsbuild suporta CSS Modules por padrão, por favor, leia o capítulo [CSS Modules](/guide/styling/css-modules) para o uso completo de CSS Modules.
 
-## CSS preprocessors
+## Pré-processadores CSS
 
-Rsbuild supports popular CSS preprocessors through plugins, including Sass, Less and Stylus. See how to use them:
+O Rsbuild suporta pré-processadores CSS populares através de plugins, incluindo Sass, Less e Stylus. Veja como usá-los:
 
-- [Sass Plugin](/plugins/list/plugin-sass)
-- [Less Plugin](/plugins/list/plugin-less)
-- [Stylus Plugin](/plugins/list/plugin-stylus)
+- [Plugin Sass](/plugins/list/plugin-sass)
+- [Plugin Less](/plugins/list/plugin-less)
+- [Plugin Stylus](/plugins/list/plugin-stylus)
 
 ## CSS-in-JS
 
-See [CSS-in-JS](/guide/styling/css-in-js) to learn how to use common CSS-in-JS libraries in Rsbuild.
+Consulte [CSS-in-JS](/guide/styling/css-in-js) para saber como usar bibliotecas CSS-in-JS comuns no Rsbuild.
 
-## Inline CSS files
+## Inlining de arquivos CSS
 
-By default, Rsbuild will extract CSS into a separate `.css` file and output it to the dist directory.
+Por padrão, o Rsbuild extrairá o CSS para um arquivo `.css` separado e o enviará para o diretório `dist`.
 
-To inline styles into your JS file, set [output.injectStyles](/config/output/inject-styles) to true to disable CSS extraction logic. When the JS file is requested by the browser, JS dynamically inserts the `<style>` tag into the Html to load the CSS styles.
+Para incorporar estilos em seu arquivo JS, defina [output.injectStyles](/config/output/inject-styles) como `true` para desabilitar a lógica de extração de CSS. Quando o arquivo JS é solicitado pelo navegador, o JS insere dinamicamente a tag `<style>` no HTML para carregar os estilos CSS.
 
 ```ts
 export default {
@@ -127,13 +127,13 @@ export default {
 };
 ```
 
-This will increase the size of your JS Bundle, so it is usually not recommended to disable the CSS extraction.
+Isso aumentará o tamanho do seu JS Bundle, portanto, geralmente não é recomendado desabilitar a extração de CSS.
 
-## Import from node_modules
+## Importar de node_modules
 
-Rsbuild supports importing CSS files in `node_modules`.
+O Rsbuild suporta a importação de arquivos CSS em `node_modules`.
 
-- Import in a JS file:
+- Importar em um arquivo JS:
 
 ```ts title="src/index.js"
 /* reference normalize.css */
@@ -141,7 +141,7 @@ Rsbuild supports importing CSS files in `node_modules`.
 import 'normalize.css';
 ```
 
-- Import in a CSS file:
+- Importar em um arquivo CSS:
 
 ```css title="src/index.css"
 @import 'normalize.css';
@@ -151,56 +151,56 @@ body {
 }
 ```
 
-In Sass and Less files, it is also allowed to add the `~` prefix to resolve style files in `node_modules`. However, this is a **deprecated feature** and it is recommended to remove the `~` prefix from the code.
+Em arquivos Sass e Less, também é permitido adicionar o prefixo `~` para resolver arquivos de estilo em `node_modules`. No entanto, este é um **recurso obsoleto** e é recomendado remover o prefixo `~` do código.
 
 ```scss title="src/index.scss"
 @import 'normalize.css';
 ```
 
-## Query parameters
+## Parâmetros de consulta
 
 ### inline
 
-Rsbuild supports importing compiled CSS files as strings in JavaScript by using the `?inline` query parameter.
+O Rsbuild suporta a importação de arquivos CSS compilados como strings em JavaScript usando o parâmetro de consulta `?inline`.
 
 ```js
 import inlineCss from './style.css?inline';
 
-console.log(inlineCss); // Output the compiled CSS file content
+console.log(inlineCss); // Saída do conteúdo do arquivo CSS compilado
 ```
 
-Using `import "*.css?inline"` has the following behaviors:
+Usar `import "*.css?inline"` tem os seguintes comportamentos:
 
-- Get the compiled text content of the CSS file, processed by Lightning CSS, PostCSS and CSS preprocessors
-- The content will be inlined into the final JavaScript bundle
-- No separate CSS file will be generated
+- Obtém o conteúdo de texto compilado do arquivo CSS, processado por Lightning CSS, PostCSS e pré-processadores CSS
+- O conteúdo será incorporado ao bundle JavaScript final
+- Nenhum arquivo CSS separado será gerado
 
 :::tip
 
-- Rsbuild's Sass, Less, and Stylus plugins also support the `?inline` query parameter.
-- Rsbuild >= 1.3.0 supports the `?inline` query parameter.
+- Os plugins Sass, Less e Stylus do Rsbuild também suportam o parâmetro de consulta `?inline`.
+- O Rsbuild >= 1.3.0 suporta o parâmetro de consulta `?inline`.
 
 :::
 
 ### raw
 
-Rsbuild supports importing raw CSS files as strings in JavaScript by using the `?raw` query parameter.
+O Rsbuild suporta a importação de arquivos CSS brutos como strings em JavaScript usando o parâmetro de consulta `?raw`.
 
 ```ts title="src/index.js"
 import rawCss from './style.css?raw';
 
-console.log(rawCss); // Output the raw content of the CSS file
+console.log(rawCss); // Saída do conteúdo bruto do arquivo CSS
 ```
 
-Using `import "*.css?raw"` has the following behaviors:
+Usar `import "*.css?raw"` tem os seguintes comportamentos:
 
-- Get the raw text content of the CSS file, without any preprocessing or compilation
-- The content of the CSS file will be inlined into the final JavaScript bundle
-- No separate CSS file will be generated
+- Obtém o conteúdo de texto bruto do arquivo CSS, sem qualquer pré-processamento ou compilação
+- O conteúdo do arquivo CSS será incorporado ao bundle JavaScript final
+- Nenhum arquivo CSS separado será gerado
 
 :::tip
 
-- Rsbuild's Sass, Less, and Stylus plugins also support the `?raw` query parameter.
-- Rsbuild >= 1.3.0 supports the `?raw` query parameter.
+- Os plugins Sass, Less e Stylus do Rsbuild também suportam o parâmetro de consulta `?raw`.
+- O Rsbuild >= 1.3.0 suporta o parâmetro de consulta `?raw`.
 
 :::
