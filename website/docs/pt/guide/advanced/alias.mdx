@@ -1,23 +1,23 @@
-# Path aliases
+# Aliases de Caminho
 
-Path aliases allow developers to define aliases for modules, making it easier to reference them in code. This can be useful when you want to use a short, easy-to-remember name for a module instead of a long, complex path.
+Aliases de caminho permitem que os desenvolvedores definam aliases para módulos, tornando mais fácil referenciá-los no código. Isso pode ser útil quando você deseja usar um nome curto e fácil de lembrar para um módulo, em vez de um caminho longo e complexo.
 
-For example, if you frequently reference the `src/common/request.ts` module in your project, you can define an alias for it as `@request` and then use `import request from '@request'` in your code instead of writing the full relative path every time. This also allows you to move the module to a different location without needing to update all the import statements in your code.
+Por exemplo, se você frequentemente referencia o módulo `src/common/request.ts` em seu projeto, você pode definir um alias para ele como `@request` e então usar `import request from '@request'` em seu código em vez de escrever o caminho relativo completo toda vez. Isso também permite que você mova o módulo para um local diferente sem precisar atualizar todas as declarações de importação em seu código.
 
 ```ts title="src/index.ts"
-import request from '@request'; // resolve to `src/common/request.ts`
+import request from '@request'; // resolve para `src/common/request.ts`
 ```
 
-In Rsbuild, there are two ways to set up path aliases:
+No Rsbuild, existem duas maneiras de configurar aliases de caminho:
 
-- Use the `paths` configuration in [tsconfig.json](https://typescriptlang.org/docs/handbook/tsconfig-json.html).
-- Use the [resolve.alias](/config/resolve/alias) configuration.
+- Use a configuração `paths` em [tsconfig.json](https://typescriptlang.org/docs/handbook/tsconfig-json.html).
+- Use a configuração [resolve.alias](/config/resolve/alias).
 
-## `paths` in tsconfig.json
+## `paths` em tsconfig.json
 
-You can configure aliases through the `paths` configuration in `tsconfig.json`, which is the recommended approach in TypeScript projects as it also resolves the TS type issues related to path aliases.
+Você pode configurar aliases através da configuração `paths` em `tsconfig.json`, que é a abordagem recomendada em projetos TypeScript, pois também resolve os problemas de tipo TS relacionados a aliases de caminho.
 
-For example:
+Por exemplo:
 
 ```json title="tsconfig.json"
 {
@@ -29,17 +29,17 @@ For example:
 }
 ```
 
-After configuring, if you reference `@common/Foo.tsx` in your code, it will be mapped to the `<project>/src/common/Foo.tsx` path.
+Após a configuração, se você referenciar `@common/Foo.tsx` em seu código, ele será mapeado para o caminho `<project>/src/common/Foo.tsx`.
 
 :::tip
-You can refer to the [TypeScript - paths](https://typescriptlang.org/tsconfig#paths) documentation for more details.
+Você pode consultar a documentação [TypeScript - paths](https://typescriptlang.org/tsconfig#paths) para mais detalhes.
 :::
 
 ## jsconfig.json
 
-In non-TypeScript projects, if you need to set path aliases through the `paths` field in [jsconfig.json](https://code.visualstudio.com/docs/languages/jsconfig), you can use the [source.tsconfigPath](/config/source/tsconfig-path) option to set it.
+Em projetos não-TypeScript, se você precisar definir aliases de caminho através do campo `paths` em [jsconfig.json](https://code.visualstudio.com/docs/languages/jsconfig), você pode usar a opção [source.tsconfigPath](/config/source/tsconfig-path) para configurá-lo.
 
-After adding the following configuration, Rsbuild will recognize the `paths` field in `jsconfig.json`.
+Após adicionar a seguinte configuração, o Rsbuild reconhecerá o campo `paths` em `jsconfig.json`.
 
 ```js title="rsbuild.config.mjs"
 export default {
@@ -49,21 +49,21 @@ export default {
 };
 ```
 
-## `resolve.alias` Configuration
+## Configuração `resolve.alias`
 
-Rsbuild provides the [resolve.alias](/config/resolve/alias) configuration option, which corresponds to the webpack/Rspack native [resolve.alias](https://rspack.rs/config/resolve#resolvealias) configuration. You can configure this option using an object or a function.
+O Rsbuild fornece a opção de configuração [resolve.alias](/config/resolve/alias), que corresponde à configuração nativa do webpack/Rspack [resolve.alias](https://rspack.rs/config/resolve#resolvealias). Você pode configurar esta opção usando um objeto ou uma função.
 
-### Use cases
+### Casos de uso
 
-Since the `paths` configuration in `tsconfig.json` is written in a static JSON file, it lacks dynamism.
+Como a configuração `paths` em `tsconfig.json` é escrita em um arquivo JSON estático, ela carece de dinamismo.
 
-The `resolve.alias` configuration can address this limitation by allowing you to dynamically set the `resolve.alias` using JavaScript code, such as based on environment variables.
+A configuração `resolve.alias` pode resolver essa limitação, permitindo que você defina dinamicamente o `resolve.alias` usando código JavaScript, como com base em variáveis de ambiente.
 
-### Object usage
+### Uso de objeto
 
-You can configure `resolve.alias` using an object, where the relative paths will be automatically resolved to absolute paths.
+Você pode configurar `resolve.alias` usando um objeto, onde os caminhos relativos serão automaticamente resolvidos para caminhos absolutos.
 
-For example:
+Por exemplo:
 
 ```js
 export default {
@@ -75,13 +75,13 @@ export default {
 };
 ```
 
-After configuring, if you reference `@common/Foo.tsx` in your code, it will be mapped to the `<project>/src/common/Foo.tsx` path.
+Após a configuração, se você referenciar `@common/Foo.tsx` em seu código, ele será mapeado para o caminho `<project>/src/common/Foo.tsx`.
 
-### Function usage
+### Uso de função
 
-You can also configure `resolve.alias` as a function, which receives the built-in `alias` object and allows you to modify it.
+Você também pode configurar `resolve.alias` como uma função, que recebe o objeto `alias` embutido e permite que você o modifique.
 
-For example:
+Por exemplo:
 
 ```js
 export default {
@@ -94,8 +94,8 @@ export default {
 };
 ```
 
-### Priority
+### Prioridade
 
-The `paths` configuration in `tsconfig.json` takes precedence over the `resolve.alias` configuration. When a path matches the rules defined in both `paths` and `resolve.alias`, the value defined in `paths` will be used.
+A configuração `paths` em `tsconfig.json` tem precedência sobre a configuração `resolve.alias`. Quando um caminho corresponde às regras definidas em `paths` e `resolve.alias`, o valor definido em `paths` será usado.
 
-You can adjust the priority of these two options using [resolve.aliasStrategy](/config/resolve/alias-strategy).
+Você pode ajustar a prioridade dessas duas opções usando [resolve.aliasStrategy](/config/resolve/alias-strategy).
