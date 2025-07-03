@@ -1,16 +1,16 @@
 # Hot module replacement
 
-Hot Module Replacement (HMR) exchanges, adds, or removes modules while an application is running, without a full reload. This can significantly speed up development in a few ways:
+Hot Module Replacement (HMR) troca, adiciona ou remove módulos enquanto uma aplicação está em execução, sem uma recarga completa. Isso pode acelerar significativamente o desenvolvimento de algumas maneiras:
 
-- Retain application state which is lost during a full reload.
-- Save valuable development time by only updating what's changed.
-- Instantly update the browser when modifications are made to CSS / JS in the source code, which is almost comparable to changing styles directly in the browser's dev tools.
+- Retém o estado da aplicação que é perdido durante uma recarga completa.
+- Economiza tempo valioso de desenvolvimento, atualizando apenas o que foi alterado.
+- Atualiza instantaneamente o navegador quando modificações são feitas no CSS / JS no código-fonte, o que é quase comparável a alterar estilos diretamente nas ferramentas de desenvolvimento do navegador.
 
-## HMR toggle
+## Alternar HMR
 
-Rsbuild has built-in support for HMR, which is enabled by default in development mode.
+O Rsbuild tem suporte embutido para HMR, que é habilitado por padrão no modo de desenvolvimento.
 
-If you do not need to use HMR, set [dev.hmr](/config/dev/hmr) to `false`. This will disable HMR and react-refresh will, and Rsbuild will automatically fallback to [dev.liveReload](/config/dev/live-reload).
+Se você não precisar usar o HMR, defina [dev.hmr](/config/dev/hmr) como `false`. Isso desabilitará o HMR e o react-refresh, e o Rsbuild automaticamente fará o fallback para [dev.liveReload](/config/dev/live-reload).
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -20,7 +20,7 @@ export default {
 };
 ```
 
-To disable both HMR and liveReload, set both [dev.hmr](/config/dev/hmr) and [dev.liveReload](/config/dev/live-reload) to `false`. Then, no WebSocket requests will be made to the dev server on the page, and the page will not automatically refresh when files change.
+Para desabilitar tanto o HMR quanto o liveReload, defina [dev.hmr](/config/dev/hmr) e [dev.liveReload](/config/dev/live-reload) como `false`. Então, nenhuma requisição WebSocket será feita para o servidor de desenvolvimento na página, e a página não será atualizada automaticamente quando os arquivos mudarem.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -31,11 +31,11 @@ export default {
 };
 ```
 
-## Specify HMR URL
+## Especificar URL do HMR
 
-By default, Rsbuild uses the host and port number of the current page to splice the WebSocket URL for HMR.
+Por padrão, o Rsbuild usa o host e o número da porta da página atual para unir a URL do WebSocket para HMR.
 
-When the HMR connection fails, you can specify the WebSocket URL by customizing [dev.client](/config/dev/client) config.
+Quando a conexão HMR falha, você pode especificar a URL do WebSocket personalizando a configuração [dev.client](/config/dev/client).
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -48,13 +48,13 @@ export default {
 };
 ```
 
-## File watching
+## Observação de arquivos
 
-By default, Rsbuild does not watch files in the `.git/` and `node_modules/` directories. When files in these directories changed, Rsbuild will not trigger a rebuild. This helps to reduce memory usage and improve build performance.
+Por padrão, o Rsbuild não observa arquivos nos diretórios `.git/` e `node_modules/`. Quando arquivos nesses diretórios são alterados, o Rsbuild não acionará uma reconstrução. Isso ajuda a reduzir o uso de memória e melhorar o desempenho da build.
 
-If you want to watch these directories, you can manually configure Rspack's [watchOptions.ignored](https://rspack.rs/config/watch#watchoptionsignored) to override the default behavior.
+Se você quiser observar esses diretórios, pode configurar manualmente o [watchOptions.ignored](https://rspack.rs/config/watch#watchoptionsignored) do Rspack para substituir o comportamento padrão.
 
-For example, to watch the `node_modules/` directory and ignore the `.git/` directory, you can configure it as follows:
+Por exemplo, para observar o diretório `node_modules/` e ignorar o diretório `.git/`, você pode configurá-lo da seguinte forma:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -68,6 +68,6 @@ export default {
 };
 ```
 
-## FAQ
+## Perguntas Frequentes
 
-Please refer to [HMR FAQ](/guide/faq/hmr).
+Consulte [Perguntas Frequentes sobre HMR](/guide/faq/hmr).
