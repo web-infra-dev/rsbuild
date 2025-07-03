@@ -1,20 +1,20 @@
-# Debug mode
+# Modo de Depuração
 
-Rsbuild provides a debug mode to troubleshoot problems, you can add the `DEBUG=rsbuild` environment variable when building to enable Rsbuild's debug mode.
+O Rsbuild fornece um modo de depuração para solucionar problemas. Você pode adicionar a variável de ambiente `DEBUG=rsbuild` ao construir para habilitar o modo de depuração do Rsbuild.
 
 ```bash
-# Debug in development mode
+# Depurar no modo de desenvolvimento
 DEBUG=rsbuild pnpm dev
 
-# Debug in production mode
+# Depurar no modo de produção
 DEBUG=rsbuild pnpm build
 ```
 
-In debug mode, Rsbuild will output some additional log information, and write the Rsbuild config and Rspack config to the dist directory, which is convenient for developers to view and debug.
+No modo de depuração, o Rsbuild exibirá algumas informações de log adicionais e gravará a configuração do Rsbuild e a configuração do Rspack no diretório `dist`, o que é conveniente para os desenvolvedores visualizarem e depurarem.
 
-## Log information
+## Informações de Log
 
-In debug mode, you will see some logs in the terminal starting with `rsbuild`, including internal operations performed by Rsbuild and the current version of Rspack being used.
+No modo de depuração, você verá alguns logs no terminal começando com `rsbuild`, incluindo operações internas realizadas pelo Rsbuild e a versão atual do Rspack sendo usada.
 
 ```bash
 $ DEBUG=rsbuild pnpm dev
@@ -26,7 +26,7 @@ $ DEBUG=rsbuild pnpm dev
   ...
 ```
 
-In addition, the following logs will be output in the terminal, indicating that the Rsbuild has written the internally generated build configs to disk, and you can open these config files to view the corresponding content.
+Além disso, os seguintes logs serão exibidos no terminal, indicando que o Rsbuild gravou as configurações de build geradas internamente no disco, e você pode abrir esses arquivos de configuração para visualizar o conteúdo correspondente.
 
 ```bash
 config inspection completed, generated files:
@@ -35,45 +35,45 @@ config inspection completed, generated files:
    - Rspack config (web): /Project/demo/dist/.rsbuild/rspack.config.web.mjs
 ```
 
-## Rsbuild config file
+## Arquivo de Configuração do Rsbuild
 
-In debug mode, Rsbuild will automatically generate `dist/.rsbuild/rsbuild.config.mjs` file, which contains the final generated Rsbuild config. In this file, you can know the final result of the Rsbuild config you passed in after being processed by the framework and Rsbuild.
+No modo de depuração, o Rsbuild gerará automaticamente o arquivo `dist/.rsbuild/rsbuild.config.mjs`, que contém a configuração final do Rsbuild gerada. Neste arquivo, você pode saber o resultado final da configuração do Rsbuild que você passou após ser processada pelo framework e pelo Rsbuild.
 
-The structure of the file is as follows:
+A estrutura do arquivo é a seguinte:
 
 ```js title="rsbuild.config.mjs"
 export default {
   dev: {
-    // some configs...
+    // algumas configurações...
   },
   source: {
-    // some configs...
+    // algumas configurações...
   },
-  // other configs...
+  // outras configurações...
 };
 ```
 
-For a complete introduction to Rsbuild config, please see the [Configure Rsbuild](/guide/configuration/rsbuild) chapter.
+Para uma introdução completa à configuração do Rsbuild, consulte o capítulo [Configurar Rsbuild](/guide/configuration/rsbuild).
 
-## Rspack config file
+## Arquivo de Configuração do Rspack
 
-Rsbuild will also automatically generate `dist/.rsbuild/rspack.config.web.mjs` file, which contains the final generated Rspack config. In this file, you can see what is included in the config that Rsbuild finally passes to Rspack.
+O Rsbuild também gerará automaticamente o arquivo `dist/.rsbuild/rspack.config.web.mjs`, que contém a configuração final do Rspack gerada. Neste arquivo, você pode ver o que está incluído na configuração que o Rsbuild finalmente passa para o Rspack.
 
-The structure of the file is as follows:
+A estrutura do arquivo é a seguinte:
 
 ```js title="rspack.config.web.mjs"
 export default {
   resolve: {
-    // some resolve configs...
+    // algumas configurações de resolução...
   },
   module: {
-    // some Rspack loaders...
+    // alguns loaders do Rspack...
   },
   plugins: [
-    // some Rspack plugins...
+    // alguns plugins do Rspack...
   ],
-  // other configs...
+  // outras configurações...
 };
 ```
 
-For a complete introduction to Rspack configs, please see [Rspack official documentation](https://rspack.rs/config/).
+Para uma introdução completa às configurações do Rspack, consulte a [documentação oficial do Rspack](https://rspack.rs/config/).
