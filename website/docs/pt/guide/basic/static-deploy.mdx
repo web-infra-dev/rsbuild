@@ -1,21 +1,21 @@
-# Deploy static site
+# Implantar site estático
 
-This section introduces how to deploy the build outputs of Rsbuild as a static site.
+Esta seção apresenta como implantar as saídas de build do Rsbuild como um site estático.
 
-## Background information
+## Informações básicas
 
-Before starting the deployment, you need to understand some background information:
+Antes de iniciar a implantação, você precisa entender algumas informações básicas:
 
-- The CLI commands used for building and previewing outputs.
-- The directory structure of the build outputs.
-- The URL prefix of static assets.
+- Os comandos CLI usados para construir e visualizar as saídas.
+- A estrutura de diretórios das saídas de build.
+- O prefixo URL de ativos estáticos.
 
-### Build commands
+### Comandos de build
 
-The build commands provided by Rsbuild:
+Os comandos de build fornecidos pelo Rsbuild:
 
-- [build command](/guide/basic/cli#rsbuild-build), used to generate the build outputs for production deployment.
-- [preview command](/guide/basic/cli#rsbuild-preview), used to preview the production build outputs locally. Note that you need to execute the `rsbuild build` command beforehand to generate the build outputs.
+- [comando build](/guide/basic/cli#rsbuild-build), usado para gerar as saídas de build para implantação em produção.
+- [comando preview](/guide/basic/cli#rsbuild-preview), usado para visualizar as saídas de build de produção localmente. Observe que você precisa executar o comando `rsbuild build` de antemão para gerar as saídas de build.
 
 ```json title="package.json"
 {
@@ -27,12 +27,12 @@ The build commands provided by Rsbuild:
 ```
 
 :::tip
-The preview command is only used for local preview. Do not use it for production servers, as it is not designed for that.
+O comando de visualização é usado apenas para visualização local. Não o use para servidores de produção, pois não foi projetado para isso.
 :::
 
-### Output directory
+### Diretório de saída
 
-Rsbuild's build outputs typically includes HTML, JS, CSS, and other assets, and is output to the `dist` directory by default. The name and structure of the dist directory can be changed using some configuration options. See the [Output Files](/guide/basic/output-files) section for more information.
+As saídas de build do Rsbuild tipicamente incluem HTML, JS, CSS e outros ativos, e são geradas para o diretório `dist` por padrão. O nome e a estrutura do diretório `dist` podem ser alterados usando algumas opções de configuração. Consulte a seção [Arquivos de Saída](/guide/basic/output-files) para mais informações.
 
 ```bash
 dist
@@ -43,14 +43,14 @@ dist
 └── [name].html
 ```
 
-### Asset prefix
+### Prefixo de ativo
 
-We can divide the build output into two parts: **HTML files** and **static assets**.
+Podemos dividir a saída da build em duas partes: **arquivos HTML** e **ativos estáticos**.
 
-- HTML files refer to files with the `.html` suffix in the output directory, which usually need to be deployed on the server.
-- Static assets are located in the `static` directory of the output folder, which contains assets such as JavaScript, CSS, and images. They can be deployed either on the server or on a CDN.
+- Arquivos HTML referem-se a arquivos com o sufixo `.html` no diretório de saída, que geralmente precisam ser implantados no servidor.
+- Ativos estáticos estão localizados no diretório `static` da pasta de saída, que contém ativos como JavaScript, CSS e imagens. Eles podem ser implantados no servidor ou em uma CDN.
 
-If the static assets are deployed in a subdirectory of the server, you can configure [output.assetPrefix](/config/output/asset-prefix) as the base path:
+Se os ativos estáticos forem implantados em um subdiretório do servidor, você pode configurar [output.assetPrefix](/config/output/asset-prefix) como o caminho base:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -62,7 +62,7 @@ export default defineConfig({
 });
 ```
 
-If you want to place these static assets on a CDN for better performance, rather than directly on the server like HTML, you will need to configure the [output.assetPrefix](/config/output/asset-prefix) to the CDN address to allow the application to properly reference these static assets.
+Se você quiser colocar esses ativos estáticos em uma CDN para melhor desempenho, em vez de diretamente no servidor como HTML, você precisará configurar o [output.assetPrefix](/config/output/asset-prefix) para o endereço da CDN para permitir que a aplicação referencie corretamente esses ativos estáticos.
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -74,38 +74,38 @@ export default defineConfig({
 });
 ```
 
-In this way, when referencing static assets in HTML, the specified prefix will be automatically added, for example:
+Dessa forma, ao referenciar ativos estáticos em HTML, o prefixo especificado será adicionado automaticamente, por exemplo:
 
 ```html
 <script src="https://cdn.com/path/static/js/index.some-hash.js"></script>
 ```
 
-## GitHub pages
+## GitHub Pages
 
-[GitHub Pages](https://pages.github.com/) is a static site hosting service that takes HTML, CSS, and JavaScript files straight from a repository on GitHub
+[GitHub Pages](https://pages.github.com/) é um serviço de hospedagem de sites estáticos que pega arquivos HTML, CSS e JavaScript diretamente de um repositório no GitHub.
 
-The following are step-by-step examples on how to deploy on GitHub Pages.
+A seguir estão exemplos passo a passo de como implantar no GitHub Pages.
 
-1. Set the URL prefix for static assets through [output.assetPrefix](/config/output/asset-prefix).
+1.  Defina o prefixo URL para ativos estáticos através de [output.assetPrefix](/config/output/asset-prefix).
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
   output: {
-    // Please replace <REPO_NAME> with the repository name.
-    // For example, "/my-project/"
+    // Por favor, substitua <REPO_NAME> pelo nome do repositório.
+    // Por exemplo, "/my-project/"
     assetPrefix: '/<REPO_NAME>/',
   },
 });
 ```
 
-2. Open the "Settings" page of GitHub repository, click "Pages" from the left menu to access the configuration page of GitHub Pages.
-3. Select "Source" -> "GitHub Actions" and click "create your own" to create a GitHub Action config file.
-4. Paste the following content into the input box and name the file `github-pages.yml` (you can adjust the content and name of the file as needed).
+2.  Abra a página "Settings" do repositório GitHub, clique em "Pages" no menu esquerdo para acessar a página de configuração do GitHub Pages.
+3.  Selecione "Source" -> "GitHub Actions" e clique em "create your own" para criar um arquivo de configuração do GitHub Action.
+4.  Cole o seguinte conteúdo na caixa de entrada e nomeie o arquivo `github-pages.yml` (você pode ajustar o conteúdo e o nome do arquivo conforme necessário).
 
 ```yaml title="github-pages.yml"
-# Sample workflow for building and deploying a Rsbuild site to GitHub Pages
+# Workflow de exemplo para construir e implantar um site Rsbuild no GitHub Pages
 name: Rsbuild Deployment
 
 on:
@@ -160,58 +160,58 @@ jobs:
         uses: actions/deploy-pages@v4
 ```
 
-5. Commit and wait for GitHub Actions to execute. Once it's done, you can visit `https://<USERNAME>.github.io/<REPO_NAME>/` to view the deployed page.
+5.  Faça o commit e aguarde a execução do GitHub Actions. Assim que terminar, você pode visitar `https://<USERNAME>.github.io/<REPO_NAME>/` para visualizar a página implantada.
 
 ## Netlify
 
-[Netlify Core](https://netlify.com/) is a frontend cloud solution for developers to build and deploy future-proof digital solutions with modern, composable tooling.
+[Netlify Core](https://netlify.com/) é uma solução de nuvem frontend para desenvolvedores construírem e implantarem soluções digitais à prova de futuro com ferramentas modernas e composíveis.
 
-### Add new site
+### Adicionar novo site
 
-Netlify provides a detailed guide, you can follow the instructions in [Netlify - Add new site](https://docs.netlify.com/welcome/add-new-site/), set up some basic information, and then you can start the deployment.
+O Netlify fornece um guia detalhado, you can follow the instructions in [Netlify - Adicionar novo site](https://docs.netlify.com/welcome/add-new-site/), set up some basic information, and then you can start the deployment.
 
 You need to configure the following two fields:
 
-- **Build command**: fill in the build command of the project, it is typically `npm run build`.
-- **Publish directory**: fill in the output directory in the project, the default is `dist`.
+- **Comando de build**: preencha o comando de build do projeto, tipicamente `npm run build`.
+- **Diretório de publicação**: preencha o diretório de saída no projeto, o padrão é `dist`.
 
-Then click on the **Deploy site** button to start the deployment.
+Em seguida, clique no botão **Deploy site** para iniciar a implantação.
 
-### Custom domains
+### Domínios personalizados
 
-If you want to make your sites accessible at your own domain names, you can configure it in the "Domain management" section of Netlify.
+Se você quiser que seus sites sejam acessíveis em seus próprios nomes de domínio, você pode configurá-lo na seção "Domain management" do Netlify.
 
-> Detailed guide: [Netlify - Custom domains](https://docs.netlify.com/domains-https/custom-domains/).
+> Guia detalhado: [Netlify - Domínios personalizados](https://docs.netlify.com/domains-https/custom-domains/).
 
 ## Vercel
 
-[Vercel](https://vercel.com/) is a platform for developers that provides the tools, workflows, and infrastructure you need to build and deploy your web apps faster, without the need for additional configuration.
+[Vercel](https://vercel.com/) é uma plataforma para desenvolvedores que fornece as ferramentas, fluxos de trabalho e infraestrutura que você precisa para construir e implantar seus aplicativos web mais rapidamente, sem a necessidade de configuração adicional.
 
-### Add new site
+### Adicionar novo site
 
-Vercel provides a detailed guide that you can follow [Vercel - Projects](https://vercel.com/docs/projects/overview) to create a project in your dashboard and configure some basic information to start deployment.
+O Vercel fornece um guia detalhado que você pode seguir [Vercel - Projetos](https://vercel.com/docs/projects/overview) para criar um projeto em seu painel e configurar algumas informações básicas para iniciar a implantação.
 
 You only need to configure the fields under "Build and Output Settings":
 
-- **Output directory**: fill in the output directory in the project, the default is `dist`.
+- **Diretório de saída**: preencha o diretório de saída no projeto, o padrão é `dist`.
 
-Then click the **Deploy** button to start the deployment.
+Em seguida, clique no botão **Deploy** para iniciar a implantação.
 
-### Configure domains
+### Configurar domínios
 
-If you want to make your sites accessible at your own domain names, you can configure it in the "Domains" section of Vercel.
+Se você quiser que seus sites sejam acessíveis em seus próprios nomes de domínio, você pode configurá-lo na seção "Domains" do Vercel.
 
-> Detailed guide: [Vercel - Domains](https://vercel.com/docs/projects/domains).
+> Guia detalhado: [Vercel - Domínios](https://vercel.com/docs/projects/domains).
 
 ## Cloudflare Pages
 
-[Cloudflare Pages](https://developers.cloudflare.com/pages/) is a static site hosting platform provided by Cloudflare.
+[Cloudflare Pages](https://developers.cloudflare.com/pages/) é uma plataforma de hospedagem de sites estáticos fornecida pela Cloudflare.
 
 You can follow the [Cloudflare Pages - Git integration guide](https://developers.cloudflare.com/pages/get-started/git-integration/) to integrate with Git and deploy your site to Cloudflare Pages.
 
 When configuring, you need to fill in the following fields in the "Build settings":
 
-- **Build command**: fill in the build command of the project, it is typically `npm run build`.
-- **Build output directory**: fill in the output directory in the project, the default is `dist`.
+- **Comando de build**: preencha o comando de build do projeto, tipicamente `npm run build`.
+- **Diretório de saída da build**: preencha o diretório de saída no projeto, o padrão é `dist`.
 
-Then click on the **Save and Deploy** button to start the deployment.
+Em seguida, clique no botão **Save and Deploy** para iniciar a implantação.
