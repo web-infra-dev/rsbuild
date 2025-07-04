@@ -250,9 +250,13 @@ describe('test dev server', () => {
     const onDoneFn = rstest.fn();
     const onInvalidFn = rstest.fn();
 
-    setupServerHooks(compiler, {
-      onDone: onDoneFn,
-      onInvalid: onInvalidFn,
+    setupServerHooks({
+      compiler,
+      token: 'test',
+      callbacks: {
+        onDone: onDoneFn,
+        onInvalid: onInvalidFn,
+      },
     });
 
     expect(compiler.hooks.done.taps.length).toBe(1);
@@ -265,9 +269,13 @@ describe('test dev server', () => {
     const onDoneFn = rstest.fn();
     const onInvalidFn = rstest.fn();
 
-    setupServerHooks(compiler, {
-      onDone: onDoneFn,
-      onInvalid: onInvalidFn,
+    setupServerHooks({
+      compiler,
+      token: 'test',
+      callbacks: {
+        onDone: onDoneFn,
+        onInvalid: onInvalidFn,
+      },
     });
 
     expect(compiler.hooks.done.taps.length).toBe(0);
