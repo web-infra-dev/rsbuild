@@ -1,27 +1,27 @@
-# Upgrade Rsbuild
+# Atualizar Rsbuild
 
-This section explains how to upgrade the project's Rsbuild dependencies to the latest version.
+Esta seção explica como atualizar as dependências do Rsbuild do projeto para a versão mais recente.
 
 :::tip
 
-- See [Releases](/community/releases/index) to learn about Rsbuild's release strategy.
-- See [npm - @rsbuild/core](https://npmjs.com/package/@rsbuild/core) to view the latest version.
+- Consulte [Lançamentos](/community/releases/index) para saber mais sobre a estratégia de lançamento do Rsbuild.
+- Consulte [npm - @rsbuild/core](https://npmjs.com/package/@rsbuild/core) para visualizar a versão mais recente.
 
 :::
 
-## Using taze
+## Usando taze
 
-We recommend using [Taze](https://github.com/antfu-collective/taze) to upgrade the Rsbuild version. Taze is a CLI tool for updating npm dependencies.
+Recomendamos usar [Taze](https://github.com/antfu-collective/taze) para atualizar a versão do Rsbuild. Taze é uma ferramenta CLI para atualizar dependências npm.
 
-### Usage
+### Uso
 
-Run the following command to upgrade all dependencies that include `rsbuild` in their names:
+Execute o seguinte comando para atualizar todas as dependências que incluem `rsbuild` em seus nomes:
 
 ```bash
 npx taze --include /rsbuild/ -w
 ```
 
-The result will look similar to:
+O resultado será semelhante a:
 
 ```bash
 rsbuild - 3 patch
@@ -33,32 +33,32 @@ rsbuild - 3 patch
 ℹ changes written to package.json, run npm i to install updates.
 ```
 
-You can also adjust the `include` pattern to match specific packages, for example, to upgrade only packages under the `@rsbuild` scope:
+Você também pode ajustar o padrão `include` para corresponder a pacotes específicos, por exemplo, para atualizar apenas pacotes sob o escopo `@rsbuild`:
 
 ```bash
 npx taze --include /@rsbuild/ -w
 ```
 
-### Options
+### Opções
 
-Here are some examples of using taze options.
+Aqui estão alguns exemplos de uso das opções do taze.
 
-- In a monorepo, you can add the `-r` option to upgrade recursively:
+- Em um monorepo, você pode adicionar a opção `-r` para atualizar recursivamente:
 
 ```bash
 npx taze --include /rsbuild/ -w -r
 ```
 
-- Add `-l` to upgrade locked versions:
+- Adicione `-l` para atualizar versões bloqueadas:
 
 ```bash
 npx taze --include /rsbuild/ -w -l
 ```
 
-- To upgrade to a major version:
+- Para atualizar para uma versão principal:
 
 ```bash
 npx taze major --include /rsbuild/ -w
 ```
 
-> For more options, please refer to the [taze documentation](https://github.com/antfu-collective/taze).
+> Para mais opções, consulte a [documentação do taze](https://github.com/antfu-collective/taze).
