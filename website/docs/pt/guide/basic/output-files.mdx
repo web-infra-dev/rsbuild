@@ -1,12 +1,12 @@
-# Output files
+# Arquivos de Saída
 
-This chapter will introduces the directory structure of output files and how to control the output directory of different types of files.
+Este capítulo apresentará a estrutura de diretórios dos arquivos de saída e como controlar o diretório de saída de diferentes tipos de arquivos.
 
-If you want to know how to deploy the build outputs of Rsbuild as a static site, please refer to [Deploy Static Site](/guide/basic/static-deploy).
+Se você quiser saber como implantar as saídas de build do Rsbuild como um site estático, consulte [Implantar Site Estático](/guide/basic/static-deploy).
 
-## Default directory structure
+## Estrutura de diretório padrão
 
-The following is a basic directory for output files. By default, the compiled files will be output in the `dist` directory of current project.
+A seguir está um diretório básico para arquivos de saída. Por padrão, os arquivos compilados serão gerados no diretório `dist` do projeto atual.
 
 ```bash
 dist
@@ -23,7 +23,7 @@ dist
 └── [name].html
 ```
 
-The most common output files are HTML files, JS files, and CSS files:
+Os arquivos de saída mais comuns são HTML files, JS files, and CSS files:
 
 - HTML files: default output to the root of dist directory.
 - JS files: default output to `static/js` directory,
@@ -36,13 +36,13 @@ In addition, JS files and CSS files sometimes generate some related files:
 
 In the filename, `[name]` represents the entry name corresponding to this file, such as `index`, `main`. `[hash]` is the hash value generated based on the content of the file.
 
-## Development mode output
+## Saída do modo de desenvolvimento
 
-In development mode, Rsbuild stores the build outputs in memory on the dev server by default, rather than writing then to disk. This can reduce the overhead of fs operations. You can refer to [View Static Assets](/guide/basic/server#view-static-assets) to view all static assets generated in the current build.
+No modo de desenvolvimento, o Rsbuild armazena as saídas de build na memória do servidor de desenvolvimento por padrão, em vez de gravá-las no disco. Isso pode reduzir a sobrecarga das operações de sistema de arquivos. Você pode consultar [Visualizar Ativos Estáticos](/guide/basic/server#view-static-assets) para visualizar todos os ativos estáticos gerados na build atual.
 
 You can choose to write the output files to disk, which is typically used for inspecting the contents of the build artifacts or configuring proxy rules for static assets.
 
-Just set the [dev.writeToDisk](/config/dev/write-to-disk) configuration to `true`:
+Basta definir a configuração [dev.writeToDisk](/config/dev/write-to-disk) como `true`:
 
 ```ts
 export default {
@@ -52,19 +52,19 @@ export default {
 };
 ```
 
-## Modify the directory
+## Modificar o diretório
 
-Rsbuild provides some configs to modify the directory or filename, you can:
+O Rsbuild fornece algumas configurações para modificar o diretório ou nome do arquivo, você pode:
 
-- Modify the filename through [output.filename](/config/output/filename).
-- Modify the output path of through [output.distPath](/config/output/dist-path).
-- Modify the license file through [output.legalComments](/config/output/legal-comments).
-- Modify Source Map file through [output.sourceMap](/config/output/source-map).
-- Modify the output structure of the HTML files through [html.outputStructure](/config/html/output-structure).
+- Modificar o nome do arquivo através de [output.filename](/config/output/filename).
+- Modificar o caminho de saída através de [output.distPath](/config/output/dist-path).
+- Modificar o arquivo de licença através de [output.legalComments](/config/output/legal-comments).
+- Modificar o arquivo Source Map através de [output.sourceMap](/config/output/source-map).
+- Modificar a estrutura de saída dos arquivos HTML através de [html.outputStructure](/config/html/output-structure).
 
-## Static assets
+## Ativos estáticos
 
-When you import static assets such as images, SVG, fonts, media, etc. in the code, they will also be output to the `dist/static` directory, and automatically assigned to the corresponding subdirectories according to the file type:
+Quando você importa ativos estáticos como imagens, SVG, fontes, mídia, etc. no código, eles também serão gerados para o diretório `dist/static`, e automaticamente atribuídos aos subdiretórios correspondentes de acordo com o tipo de arquivo:
 
 ```bash
 dist
@@ -82,7 +82,7 @@ dist
         └── qux.[hash].mp4
 ```
 
-You can use the [output.distPath](/config/output/dist-path) config to uniformly input these static assets into a directory, for example, output to the `assets` directory:
+Você pode usar a configuração [output.distPath](/config/output/dist-path) para agrupar uniformemente esses ativos estáticos em um diretório, por exemplo, gerar para o diretório `assets`:
 
 ```ts
 export default {
@@ -97,7 +97,7 @@ export default {
 };
 ```
 
-The above config will generate the following directory structure:
+A configuração acima gerará a seguinte estrutura de diretórios:
 
 ```bash
 dist
@@ -108,9 +108,9 @@ dist
     └── qux.[hash].mp4
 ```
 
-## Node.js output directory
+## Diretório de saída do Node.js
 
-When the [output.target](/config/output/target) of Rsbuild is `'node'`, Rsbuild will generate output files for Node.js:
+Quando o [output.target](/config/output/target) do Rsbuild é `'node'`, o Rsbuild gerará arquivos de saída para o Node.js:
 
 ```bash
 dist
@@ -144,11 +144,11 @@ export default {
 };
 ```
 
-## Flatten the directory
+## Achatar o diretório
 
-Sometimes you don't want the dist directory to have too many levels, you can set the directory to an empty string to flatten the generated directory.
+Às vezes, você não quer que o diretório `dist` tenha muitos níveis, você pode definir o diretório como uma string vazia para achatar o diretório gerado.
 
-See the example below:
+Veja o exemplo abaixo:
 
 ```ts
 export default {
@@ -161,7 +161,7 @@ export default {
 };
 ```
 
-The above config will generate the following directory structure:
+A configuração acima gerará a seguinte estrutura de diretórios:
 
 ```bash
 dist
