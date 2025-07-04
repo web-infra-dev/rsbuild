@@ -1,14 +1,14 @@
 # Wasm
 
-Rsbuild provides native support for WebAssembly (WASM) modules, allowing you to import and use `.wasm` files directly in your project.
+O Rsbuild oferece suporte nativo para módulos WebAssembly (WASM), permitindo que você importe e use arquivos `.wasm` diretamente em seu projeto.
 
-:::tip What is WebAssembly
-WebAssembly (Wasm) is a portable, high-performance binary format designed to execute CPU-intensive computing tasks in modern web browsers, bringing performance and reliability similar to native compiled code to the web platform.
+:::tip O que é WebAssembly
+WebAssembly (Wasm) é um formato binário portátil e de alta performance projetado para executar tarefas de computação intensivas em CPU em navegadores web modernos, trazendo desempenho e confiabilidade semelhantes ao código compilado nativo para a plataforma web.
 :::
 
-## Import
+## Importar
 
-You can reference a WebAssembly module in a JavaScript file using named imports:
+Você pode referenciar um módulo WebAssembly em um arquivo JavaScript usando importações nomeadas:
 
 ```js title="index.js"
 import { add } from './add.wasm';
@@ -17,17 +17,17 @@ console.log(add); // [native code]
 console.log(add(1, 2)); // 3
 ```
 
-WebAssembly modules can also be imported via dynamic import:
+Módulos WebAssembly também podem ser importados via importação dinâmica:
 
 ```js title="index.js"
 import('./add.wasm').then(({ add }) => {
-  console.log('---- Async Wasm Module');
+  console.log('---- Módulo Wasm Assíncrono');
   console.log(add); // [native code]
   console.log(add(1, 2)); // 3
 });
 ```
 
-You can also get the path of a WebAssembly module using the `new URL` syntax:
+Você também pode obter o caminho de um módulo WebAssembly usando a sintaxe `new URL`:
 
 ```js title="index.js"
 const wasmURL = new URL('./add.wasm', import.meta.url);
@@ -35,11 +35,11 @@ const wasmURL = new URL('./add.wasm', import.meta.url);
 console.log(wasmURL).pathname; // "/static/wasm/[hash].module.wasm"
 ```
 
-## Output directory
+## Diretório de saída
 
-When a `.wasm` asset is imported, it will be output by Rsbuild to the `dist/static/wasm` directory by default.
+Quando um ativo `.wasm` é importado, ele será gerado pelo Rsbuild para o diretório `dist/static/wasm` por padrão.
 
-You can change the output directory of `.wasm` files via [output.distPath](/config/output/dist-path) config.
+Você pode alterar o diretório de saída de arquivos `.wasm` através da configuração [output.distPath](/config/output/dist-path).
 
 ```ts
 export default {
@@ -51,11 +51,11 @@ export default {
 };
 ```
 
-## Type declaration
+## Declaração de tipo
 
-When you import a Wasm file in TypeScript code, you usually need to add the corresponding type declaration.
+Quando você importa um arquivo Wasm em código TypeScript, você geralmente precisa adicionar a declaração de tipo correspondente.
 
-For example, the `add.wasm` file exports an `add()` method, then you can create an `add.wasm.d.ts` file in the same directory and add the corresponding type declaration:
+Por exemplo, o arquivo `add.wasm` exporta um método `add()`, então você pode criar um arquivo `add.wasm.d.ts` no mesmo diretório e adicionar a declaração de tipo correspondente:
 
 ```ts title="add.wasm.d.ts"
 export const add = (num1: number, num2: number) => number;
