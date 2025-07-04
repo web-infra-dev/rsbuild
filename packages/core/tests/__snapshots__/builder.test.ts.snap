@@ -128,7 +128,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
           /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
         ],
         "resourceQuery": {
-          "not": /raw/,
+          "not": /\\^\\\\\\?raw\\$/,
         },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
@@ -170,7 +170,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         ],
       },
       {
-        "resourceQuery": /raw/,
+        "resourceQuery": /\\^\\\\\\?raw\\$/,
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "asset/source",
       },
