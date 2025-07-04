@@ -16,7 +16,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
     /node_modules\\[\\\\\\\\/\\]query-string\\[\\\\\\\\/\\]/,
   ],
   "resourceQuery": {
-    "not": /raw/,
+    "not": /\\^\\\\\\?raw\\$/,
   },
   "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
   "type": "javascript/auto",
@@ -102,7 +102,7 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
     /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
   ],
   "resourceQuery": {
-    "not": /raw/,
+    "not": /\\^\\\\\\?raw\\$/,
   },
   "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
   "type": "javascript/auto",
@@ -188,7 +188,7 @@ exports[`plugins/babel > should apply environment config correctly 2`] = `
     /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
   ],
   "resourceQuery": {
-    "not": /raw/,
+    "not": /\\^\\\\\\?raw\\$/,
   },
   "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
   "type": "javascript/auto",
@@ -269,7 +269,7 @@ exports[`plugins/babel > should set babel-loader 1`] = `
     /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
   ],
   "resourceQuery": {
-    "not": /raw/,
+    "not": /\\^\\\\\\?raw\\$/,
   },
   "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
   "type": "javascript/auto",
@@ -352,7 +352,7 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
     /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
   ],
   "resourceQuery": {
-    "not": /raw/,
+    "not": /\\^\\\\\\?raw\\$/,
   },
   "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
   "type": "javascript/auto",

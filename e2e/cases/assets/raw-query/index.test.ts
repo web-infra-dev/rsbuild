@@ -105,3 +105,14 @@ test('should allow to get raw TSX content with `?raw` and using pluginReact', as
 
   await rsbuild.close();
 });
+
+test('should not get raw JS content with query other than `?raw`', async ({
+  page,
+}) => {
+  const rsbuild = await dev({
+    cwd: __dirname,
+    page,
+  });
+  expect(await page.evaluate('window.normalJs')).toEqual('foo');
+  await rsbuild.close();
+});
