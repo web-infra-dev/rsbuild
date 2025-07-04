@@ -1,12 +1,12 @@
 # JSON
 
-Rsbuild supports import JSON files in code, and also supports import [YAML](https://yaml.org/) and [Toml](https://toml.io/en/) files and converting them to JSON format.
+O Rsbuild suporta a importação de arquivos JSON no código, e também suporta a importação de arquivos [YAML](https://yaml.org/) e [Toml](https://toml.io/en/) e a conversão deles para o formato JSON.
 
-## JSON file
+## Arquivo JSON
 
 You can import JSON files directly in JavaScript files.
 
-### Example
+### Exemplo
 
 ```json title="example.json"
 {
@@ -22,9 +22,9 @@ console.log(example.name); // 'foo';
 console.log(example.items); // [1, 2];
 ```
 
-### Named import
+### Importação nomeada
 
-Rsbuild also supports importing JSON files via named import:
+O Rsbuild também suporta a importação de arquivos JSON via importação nomeada:
 
 ```js
 import { name } from './example.json';
@@ -32,11 +32,11 @@ import { name } from './example.json';
 console.log(name); // 'foo';
 ```
 
-## YAML file
+## Arquivo YAML
 
-[YAML](https://yaml.org/) is a data serialization language commonly used for writing configuration files.
+[YAML](https://yaml.org/) é uma linguagem de serialização de dados comumente usada para escrever arquivos de configuração.
 
-Rsbuild provides the [@rsbuild/plugin-yaml](https://github.com/rspack-contrib/rsbuild-plugin-yaml). After registering the plugin, you can import `.yaml` or `.yml` files in JavaScript and they will be automatically converted to JavaScript objects.
+O Rsbuild fornece o [@rsbuild/plugin-yaml](https://github.com/rspack-contrib/rsbuild-plugin-yaml). Após registrar o plugin, você pode importar arquivos `.yaml` ou `.yml` em JavaScript e eles serão automaticamente convertidos para objetos JavaScript.
 
 ```ts title="rsbuild.config.ts"
 import { pluginYaml } from '@rsbuild/plugin-yaml';
@@ -46,7 +46,7 @@ export default {
 };
 ```
 
-### Example
+### Exemplo
 
 ```yaml title="example.yaml"
 ---
@@ -62,11 +62,11 @@ console.log(example.hello); // 'world';
 console.log(example.foo); // { bar: 'baz' };
 ```
 
-## TOML file
+## Arquivo TOML
 
-[TOML](https://toml.io/) is a semantically explicit, easy-to-read configuration file format.
+[TOML](https://toml.io/) é um formato de arquivo de configuração semanticamente explícito e fácil de ler.
 
-Rsbuild provides the [@rsbuild/plugin-toml](https://github.com/rspack-contrib/rsbuild-plugin-toml). After registering the plugin, you can import `.toml` files in JavaScript and it will be automatically converted to JavaScript objects.
+O Rsbuild fornece o [@rsbuild/plugin-toml](https://github.com/rspack-contrib/rsbuild-plugin-toml). Após registrar o plugin, você pode importar arquivos `.toml` em JavaScript e eles serão automaticamente convertidos para objetos JavaScript.
 
 ```ts title="rsbuild.config.ts"
 import { pluginToml } from '@rsbuild/plugin-toml';
@@ -76,7 +76,7 @@ export default {
 };
 ```
 
-### Example
+### Exemplo
 
 ```toml title="example.toml"
 hello = "world"
@@ -92,17 +92,17 @@ console.log(example.hello); // 'world';
 console.log(example.foo); // { bar: 'baz' };
 ```
 
-## Type declaration
+## Declaração de tipo
 
-When you import YAML or Toml files in TypeScript code, please create a `src/env.d.ts` file in your project and add the corresponding type declarations.
+Quando você importa arquivos YAML ou Toml em código TypeScript, crie um arquivo `src/env.d.ts` em seu projeto e adicione as declarações de tipo correspondentes.
 
-- Method 1: If the `@rsbuild/core` package is installed, you can reference the [preset types](/guide/basic/typescript#preset-types) provided by `@rsbuild/core`:
+- Método 1: Se o pacote `@rsbuild/core` estiver instalado, você pode referenciar os [tipos predefinidos](/guide/basic/typescript#preset-types) fornecidos por `@rsbuild/core`:
 
 ```ts title="src/env.d.ts"
 /// <reference types="@rsbuild/core/types" />
 ```
 
-- Method 2: Manually add the required type declarations:
+- Método 2: Adicione manualmente as declarações de tipo necessárias:
 
 ```ts title="src/env.d.ts"
 declare module '*.yaml' {
