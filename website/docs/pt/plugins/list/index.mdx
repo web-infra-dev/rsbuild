@@ -1,86 +1,86 @@
-# Plugin list
+# Lista de Plugins
 
-## Plugin system
+## Sistema de Plugins
 
-You can read about the functionality of Rsbuild plugins and how to develop an Rsbuild plugin in the [Plugin System](/plugins/dev/index) documentation.
+Você pode ler sobre a funcionalidade dos plugins do Rsbuild e como desenvolver um plugin Rsbuild na documentação [Sistema de Plugins](/plugins/dev/index).
 
-## Using plugins
+## Usando plugins
 
-You can register Rsbuild plugins in the `rsbuild.config.ts` file using the `plugins` option. For more details, refer to [plugins](/config/plugins).
+Você pode registrar plugins Rsbuild no arquivo `rsbuild.config.ts` usando a opção `plugins`. Para mais detalhes, consulte [plugins](/config/plugins).
 
-If you are using Rsbuild's JavaScript API, you can register the plugin using the [addPlugins](/api/javascript-api/instance#rsbuildaddplugins) method.
+Se você estiver usando a API JavaScript do Rsbuild, você pode registrar o plugin usando o método [addPlugins](/api/javascript-api/instance#rsbuildaddplugins).
 
-## Official plugins
+## Plugins oficiais
 
-The following are official plugins that can be used in Rsbuild.
+A seguir estão os plugins oficiais que podem ser usados no Rsbuild.
 
 ### React
 
-Plugins available for the React:
+Plugins disponíveis para o React:
 
-- [@rsbuild/plugin-react](/plugins/list/plugin-react): Provides support for React.
-- [@rsbuild/plugin-svgr](/plugins/list/plugin-svgr): Support convert SVG to React components.
-- [@rsbuild/plugin-styled-components](https://github.com/rsbuild-contrib/rsbuild-plugin-styled-components): Provide compile-time support for styled-components.
+- [@rsbuild/plugin-react](/plugins/list/plugin-react): Fornece suporte para React.
+- [@rsbuild/plugin-svgr](/plugins/list/plugin-svgr): Suporta a conversão de SVG para componentes React.
+- [@rsbuild/plugin-styled-components](https://github.com/rsbuild-contrib/rsbuild-plugin-styled-components): Fornece suporte em tempo de compilação para styled-components.
 
 ### Vue
 
-Plugins available for the Vue:
+Plugins disponíveis para o Vue:
 
-- [@rsbuild/plugin-vue](/plugins/list/plugin-vue): Provides support for Vue 3 SFC (Single File Components).
-- [@rsbuild/plugin-vue-jsx](https://github.com/rspack-contrib/rsbuild-plugin-vue-jsx): Provides support for Vue 3 JSX / TSX syntax.
-- [@rsbuild/plugin-vue2](https://github.com/rspack-contrib/rsbuild-plugin-vue2): Provides support for Vue 2 SFC (Single File Components).
-- [@rsbuild/plugin-vue2-jsx](https://github.com/rspack-contrib/rsbuild-plugin-vue2-jsx): Provides support for Vue 2 JSX / TSX syntax.
+- [@rsbuild/plugin-vue](/plugins/list/plugin-vue): Fornece suporte para Vue 3 SFC (Single File Components).
+- [@rsbuild/plugin-vue-jsx](https://github.com/rspack-contrib/rsbuild-plugin-vue-jsx): Fornece suporte para sintaxe Vue 3 JSX / TSX.
+- [@rsbuild/plugin-vue2](https://github.com/rspack-contrib/rsbuild-plugin-vue2): Fornece suporte para Vue 2 SFC (Single File Components).
+- [@rsbuild/plugin-vue2-jsx](https://github.com/rspack-contrib/rsbuild-plugin-vue2-jsx): Fornece suporte para sintaxe Vue 2 JSX / TSX.
 
 ### Preact
 
-Plugins available for the Preact:
+Plugins disponíveis para o Preact:
 
-- [@rsbuild/plugin-preact](/plugins/list/plugin-preact): Provides support for Preact.
+- [@rsbuild/plugin-preact](/plugins/list/plugin-preact): Fornece suporte para Preact.
 
 ### Svelte
 
-Plugins available for the Svelte:
+Plugins disponíveis para o Svelte:
 
-- [@rsbuild/plugin-svelte](/plugins/list/plugin-svelte): Provides support for Svelte components (`.svelte` files).
+- [@rsbuild/plugin-svelte](/plugins/list/plugin-svelte): Fornece suporte para componentes Svelte (arquivos `.svelte`).
 
 ### Solid
 
-Plugins available for the Solid:
+Plugins disponíveis para o Solid:
 
-- [@rsbuild/plugin-solid](/plugins/list/plugin-solid): Provides support for Solid.
+- [@rsbuild/plugin-solid](/plugins/list/plugin-solid): Fornece suporte para Solid.
 
-### Common
+### Comum
 
-The following are common framework-agnostic plugins:
+Os seguintes são plugins comuns agnósticos de framework:
 
-- [@rsbuild/plugin-assets-retry](https://github.com/rspack-contrib/rsbuild-plugin-assets-retry): Used to automatically resend requests when static assets fail to load.
-- [@rsbuild/plugin-babel](/plugins/list/plugin-babel): Provides support for Babel transpilation capabilities.
-- [@rsbuild/plugin-sass](/plugins/list/plugin-sass): Use Sass as the CSS preprocessor.
-- [@rsbuild/plugin-less](/plugins/list/plugin-less): Use Less as the CSS preprocessor.
-- [@rsbuild/plugin-stylus](/plugins/list/plugin-stylus): Use Stylus as the CSS preprocessor.
-- [@rsbuild/plugin-basic-ssl](https://github.com/rspack-contrib/rsbuild-plugin-basic-ssl): Generate an untrusted, self-signed certificate for the HTTPS server.
-- [@rsbuild/plugin-eslint](https://github.com/rspack-contrib/rsbuild-plugin-eslint): Run ESLint checks during the compilation.
-- [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check): Run TypeScript type checker on a separate process.
-- [@rsbuild/plugin-image-compress](https://github.com/rspack-contrib/rsbuild-plugin-image-compress): Compress the image assets.
-- [@rsbuild/plugin-mdx](https://github.com/rspack-contrib/rsbuild-plugin-mdx): Provide support for MDX.
-- [@rsbuild/plugin-node-polyfill](https://github.com/rspack-contrib/rsbuild-plugin-node-polyfill): Used to inject polyfills of Node core modules in the browser side.
-- [@rsbuild/plugin-source-build](https://github.com/rspack-contrib/rsbuild-plugin-source-build): This plugin is designed for the monorepo scenario. It supports referencing source code from other subdirectories and performs build and hot update.
-- [@rsbuild/plugin-check-syntax](https://github.com/rspack-contrib/rsbuild-plugin-check-syntax): Check the syntax compatibility of output files and determine if there are any advanced syntaxes that could cause compatibility issues.
-- [@rsbuild/plugin-css-minimizer](https://github.com/rspack-contrib/rsbuild-plugin-css-minimizer): Used to customize CSS minimizer, switch to [cssnano](https://github.com/cssnano/cssnano) or other tools for CSS compression.
-- [@rsbuild/plugin-typed-css-modules](https://github.com/rspack-contrib/rsbuild-plugin-typed-css-modules): Generate TypeScript declaration file for CSS Modules.
-- [@rsbuild/plugin-pug](https://github.com/rspack-contrib/rsbuild-plugin-pug): Provides support for the Pug template engine.
-- [@rsbuild/plugin-rem](https://github.com/rspack-contrib/rsbuild-plugin-rem): Implements the rem adaptive layout for mobile pages.
-- [@rsbuild/plugin-umd](https://github.com/rspack-contrib/rsbuild-plugin-umd): Generate outputs in UMD format.
-- [@rsbuild/plugin-yaml](https://github.com/rspack-contrib/rsbuild-plugin-yaml): Import YAML files and convert them into JavaScript objects.
-- [@rsbuild/plugin-toml](https://github.com/rspack-contrib/rsbuild-plugin-toml): Import TOML files and convert them into JavaScript objects.
+- [@rsbuild/plugin-assets-retry](https://github.com/rspack-contrib/rsbuild-plugin-assets-retry): Usado para reenviar automaticamente requisições quando ativos estáticos falham ao carregar.
+- [@rsbuild/plugin-babel](/plugins/list/plugin-babel): Fornece suporte para capacidades de transpilação Babel.
+- [@rsbuild/plugin-sass](/plugins/list/plugin-sass): Usa Sass como pré-processador CSS.
+- [@rsbuild/plugin-less](/plugins/list/plugin-less): Usa Less como pré-processador CSS.
+- [@rsbuild/plugin-stylus](/plugins/list/plugin-stylus): Usa Stylus como pré-processador CSS.
+- [@rsbuild/plugin-basic-ssl](https://github.com/rspack-contrib/rsbuild-plugin-basic-ssl): Gera um certificado autoassinado não confiável para o servidor HTTPS.
+- [@rsbuild/plugin-eslint](https://github.com/rspack-contrib/rsbuild-plugin-eslint): Executa verificações ESLint durante a compilação.
+- [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check): Executa o verificador de tipo TypeScript em um processo separado.
+- [@rsbuild/plugin-image-compress](https://github.com/rspack-contrib/rsbuild-plugin-image-compress): Comprime os ativos de imagem.
+- [@rsbuild/plugin-mdx](https://github.com/rspack-contrib/rsbuild-plugin-mdx): Fornece suporte para MDX.
+- [@rsbuild/plugin-node-polyfill](https://github.com/rspack-contrib/rsbuild-plugin-node-polyfill): Usado para injetar polyfills de módulos principais do Node no lado do navegador.
+- [@rsbuild/plugin-source-build](https://github.com/rspack-contrib/rsbuild-plugin-source-build): Este plugin é projetado para o cenário monorepo. Ele suporta a referência de código-fonte de outros subdiretórios e executa a build e a atualização a quente.
+- [@rsbuild/plugin-check-syntax](https://github.com/rspack-contrib/rsbuild-plugin-check-syntax): Verifica a compatibilidade de sintaxe dos arquivos de saída e determina se há alguma sintaxe avançada que possa causar problemas de compatibilidade.
+- [@rsbuild/plugin-css-minimizer](https://github.com/rspack-contrib/rsbuild-plugin-css-minimizer): Usado para personalizar o minificador CSS, alternar para [cssnano](https://github.com/cssnano/cssnano) ou outras ferramentas para compressão CSS.
+- [@rsbuild/plugin-typed-css-modules](https://github.com/rspack-contrib/rsbuild-plugin-typed-css-modules): Gera arquivo de declaração TypeScript para CSS Modules.
+- [@rsbuild/plugin-pug](https://github.com/rspack-contrib/rsbuild-plugin-pug): Fornece suporte para o motor de template Pug.
+- [@rsbuild/plugin-rem](https://github.com/rspack-contrib/rsbuild-plugin-rem): Implementa o layout adaptativo rem para páginas móveis.
+- [@rsbuild/plugin-umd](https://github.com/rspack-contrib/rsbuild-plugin-umd): Gera saídas no formato UMD.
+- [@rsbuild/plugin-yaml](https://github.com/rspack-contrib/rsbuild-plugin-yaml): Importa arquivos YAML e os converte em objetos JavaScript.
+- [@rsbuild/plugin-toml](https://github.com/rspack-contrib/rsbuild-plugin-toml): Importa arquivos TOML e os converte em objetos JavaScript.
 
 :::tip
-You can find the source code of all official plugins in [web-infra-dev/rsbuild](https://github.com/web-infra-dev/rsbuild) and [rspack-contrib](https://github.com/rspack-contrib).
+Você pode encontrar o código-fonte de todos os plugins oficiais em [web-infra-dev/rsbuild](https://github.com/web-infra-dev/rsbuild) e [rspack-contrib](https://github.com/rspack-contrib).
 :::
 
-## Community plugins
+## Plugins da comunidade
 
-You can check out the Rsbuild plugins provided by the community at [awesome-rspack - Rsbuild Plugins](https://github.com/web-infra-dev/awesome-rspack?tab=readme-ov-file#rsbuild-plugins).
+Você pode verificar os plugins Rsbuild fornecidos pela comunidade em [awesome-rspack - Rsbuild Plugins](https://github.com/web-infra-dev/awesome-rspack?tab=readme-ov-file#rsbuild-plugins).
 
 You can also discover more Rsbuild plugins on npm by searching for the keyword [rsbuild-plugin](https://npmjs.com/search?q=rsbuild-plugin&ranking=popularity).
 
