@@ -8,9 +8,8 @@ import {
 } from '../helpers';
 import { formatStatsMessages } from '../helpers/format';
 import { logger } from '../logger';
-import type { DevConfig, Rspack } from '../types';
+import type { DevConfig, EnvironmentContext, Rspack } from '../types';
 import type { SockWriteType } from './devServer';
-import { getCompilationId } from './helper';
 import { genOverlayHTML } from './overlay';
 
 interface ExtWebSocket extends Ws {
@@ -25,36 +24,61 @@ const CHECK_SOCKETS_INTERVAL = 30000;
 
 interface SocketMessage {
   type: SockWriteType;
-  compilationId?: string;
   data?: Record<string, any> | string | boolean;
 }
+
+const parseQueryString = (req: IncomingMessage) => {
+  const queryStr = req.url ? req.url.split('?')[1] : '';
+  return queryStr ? Object.fromEntries(new URLSearchParams(queryStr)) : {};
+};
 
 export class SocketServer {
   private wsServer!: Ws.Server;
 
-  private readonly sockets: Ws[] = [];
+  private readonly sockets: Map<string, Ws> = new Map();
 
   private readonly options: DevConfig;
 
   private stats: Record<string, Rspack.Stats>;
+
   private initialChunks: Record<string, Set<string>>;
 
   private heartbeatTimer: NodeJS.Timeout | null = null;
 
-  constructor(options: DevConfig) {
+  private environments: Record<string, EnvironmentContext>;
+
+  constructor(
+    options: DevConfig,
+    environments: Record<string, EnvironmentContext>,
+  ) {
     this.options = options;
     this.stats = {};
     this.initialChunks = {};
+    this.environments = environments;
   }
 
-  public upgrade = (req: IncomingMessage, sock: Socket, head: any): void => {
-    // subscribe upgrade event to handle socket
-
+  // subscribe upgrade event to handle socket
+  public upgrade = (
+    req: IncomingMessage,
+    socket: Socket,
+    head: Buffer,
+  ): void => {
     if (!this.wsServer.shouldHandle(req)) {
       return;
     }
 
-    this.wsServer.handleUpgrade(req, sock, head, (connection) => {
+    const query = parseQueryString(req);
+    const tokens = Object.values(this.environments).map(
+      (env) => env.webSocketToken,
+    );
+
+    // If the request does not contain a valid token, reject the request.
+    if (!tokens.includes(query.token)) {
+      socket.destroy();
+      return;
+    }
+
+    this.wsServer.handleUpgrade(req, socket, head, (connection) => {
       this.wsServer.emit('connection', connection, req);
     });
   };
@@ -112,42 +136,47 @@ export class SocketServer {
     ).unref();
 
     this.wsServer.on('connection', (socket, req) => {
-      // /rsbuild-hmr?compilationId=web
-      const queryStr = req.url ? req.url.split('?')[1] : '';
+      // /rsbuild-hmr?token=...
+      const query = parseQueryString(req);
 
-      this.onConnect(
-        socket,
-        queryStr ? Object.fromEntries(new URLSearchParams(queryStr)) : {},
-      );
+      this.onConnect(socket, query.token);
     });
   }
 
-  public updateStats(stats: Rspack.Stats): void {
-    const compilationId = getCompilationId(stats.compilation);
+  public updateStats(stats: Rspack.Stats, token: string): void {
+    this.stats[token] = stats;
 
-    this.stats[compilationId] = stats;
-
-    if (!this.sockets.length) {
+    if (!this.sockets.size) {
       return;
     }
 
     this.sendStats({
-      compilationId,
+      token,
     });
   }
 
-  // write message to each socket
-  public sockWrite({ type, compilationId, data }: SocketMessage): void {
-    for (const socket of this.sockets) {
-      this.send(socket, JSON.stringify({ type, data, compilationId }));
+  /**
+   * Write message to each socket
+   * @param message - The message to send
+   * @param token - The token of the socket to send the message to,
+   * if not provided, the message will be sent to all sockets
+   */
+  public sockWrite(message: SocketMessage, token?: string): void {
+    const messageStr = JSON.stringify(message);
+    if (token) {
+      const socket = this.sockets.get(token);
+      if (socket) {
+        this.send(socket, messageStr);
+      }
+    } else {
+      for (const socket of this.sockets.values()) {
+        this.send(socket, messageStr);
+      }
     }
   }
 
-  private singleWrite(
-    socket: Ws,
-    { type, data, compilationId }: SocketMessage,
-  ) {
-    this.send(socket, JSON.stringify({ type, data, compilationId }));
+  private singleWrite(socket: Ws, message: SocketMessage) {
+    this.send(socket, JSON.stringify(message));
   }
 
   public async close(): Promise<void> {
@@ -161,14 +190,14 @@ export class SocketServer {
       socket.terminate();
     }
     // Close all tracked sockets
-    for (const socket of this.sockets) {
+    for (const socket of this.sockets.values()) {
       socket.close();
     }
 
     // Reset all properties
     this.stats = {};
     this.initialChunks = {};
-    this.sockets.length = 0;
+    this.sockets.clear();
 
     return new Promise<void>((resolve, reject) => {
       this.wsServer.close((err) => {
@@ -181,7 +210,7 @@ export class SocketServer {
     });
   }
 
-  private onConnect(socket: Ws, params: Record<string, string>) {
+  private onConnect(socket: Ws, token: string) {
     const connection = socket as ExtWebSocket;
 
     connection.isAlive = true;
@@ -191,19 +220,15 @@ export class SocketServer {
       connection.isAlive = true;
     });
 
-    this.sockets.push(connection);
+    this.sockets.set(token, connection);
 
     connection.on('close', () => {
-      const index = this.sockets.indexOf(connection);
-      if (index >= 0) {
-        this.sockets.splice(index, 1);
-      }
+      this.sockets.delete(token);
     });
 
     if (this.options.hmr || this.options.liveReload) {
       this.singleWrite(connection, {
         type: 'hot',
-        compilationId: params.compilationId,
       });
     }
 
@@ -211,7 +236,7 @@ export class SocketServer {
     if (this.stats) {
       this.sendStats({
         force: true,
-        compilationId: params.compilationId,
+        token,
       });
     }
   }
@@ -255,12 +280,12 @@ export class SocketServer {
   // determine what message should send by stats
   private sendStats({
     force = false,
-    compilationId,
+    token,
   }: {
-    compilationId: string;
+    token: string;
     force?: boolean;
   }) {
-    const result = this.getStats(compilationId);
+    const result = this.getStats(token);
 
     // this should never happened
     if (!result) {
@@ -290,19 +315,16 @@ export class SocketServer {
       }
     }
 
-    const initialChunks = this.initialChunks[compilationId];
+    const initialChunks = this.initialChunks[token];
     const shouldReload =
       Boolean(statsJson.entrypoints) &&
       Boolean(initialChunks) &&
       !isEqualSet(initialChunks, newInitialChunks);
 
-    this.initialChunks[compilationId] = newInitialChunks;
+    this.initialChunks[token] = newInitialChunks;
 
     if (shouldReload) {
-      return this.sockWrite({
-        type: 'static-changed',
-        compilationId,
-      });
+      return this.sockWrite({ type: 'static-changed' }, token);
     }
 
     const shouldEmit =
@@ -313,17 +335,16 @@ export class SocketServer {
       statsJson.assets.every((asset: any) => !asset.emitted);
 
     if (shouldEmit) {
-      return this.sockWrite({
-        type: 'ok',
-        compilationId,
-      });
+      return this.sockWrite({ type: 'ok' }, token);
     }
 
-    this.sockWrite({
-      type: 'hash',
-      compilationId,
-      data: statsJson.hash,
-    });
+    this.sockWrite(
+      {
+        type: 'hash',
+        data: statsJson.hash,
+      },
+      token,
+    );
 
     if (statsJson.errorsCount) {
       const errors = getAllStatsErrors(statsJson);
@@ -332,14 +353,16 @@ export class SocketServer {
         warnings: [],
       });
 
-      return this.sockWrite({
-        type: 'errors',
-        compilationId,
-        data: {
-          text: formattedErrors,
-          html: genOverlayHTML(formattedErrors, root),
+      return this.sockWrite(
+        {
+          type: 'errors',
+          data: {
+            text: formattedErrors,
+            html: genOverlayHTML(formattedErrors, root),
+          },
         },
-      });
+        token,
+      );
     }
 
     if (statsJson.warningsCount) {
@@ -348,19 +371,18 @@ export class SocketServer {
         warnings,
         errors: [],
       });
-      return this.sockWrite({
-        type: 'warnings',
-        compilationId,
-        data: {
-          text: formattedWarnings,
+      return this.sockWrite(
+        {
+          type: 'warnings',
+          data: {
+            text: formattedWarnings,
+          },
         },
-      });
+        token,
+      );
     }
 
-    return this.sockWrite({
-      type: 'ok',
-      compilationId,
-    });
+    return this.sockWrite({ type: 'ok' }, token);
   }
 
   // send message to connecting socket

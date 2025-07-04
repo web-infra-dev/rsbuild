@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { createRequire } from 'node:module';
+import type { Stats } from '@rspack/core';
 import { HTML_REGEX } from '../constants';
 import { isMultiCompiler } from '../helpers';
 import { getPathnameFromUrl } from '../helpers/path';
@@ -14,6 +15,7 @@ import type {
 import {
   type CompilationMiddleware,
   getCompilationMiddleware,
+  type ServerCallbacks,
 } from './compilationMiddleware';
 import { stripBase } from './helper';
 import { SocketServer } from './socketServer';
@@ -90,6 +92,8 @@ export class CompilationManager {
 
   public compiler: Rspack.Compiler | Rspack.MultiCompiler;
 
+  private environments: Record<string, EnvironmentContext>;
+
   private publicPaths: string[];
 
   public socketServer: SocketServer;
@@ -98,9 +102,10 @@ export class CompilationManager {
     this.devConfig = formatDevConfig(dev, environments);
     this.serverConfig = server;
     this.compiler = compiler;
+    this.environments = environments;
     this.publicPaths = publicPaths;
     this.outputFileSystem = fs;
-    this.socketServer = new SocketServer(dev);
+    this.socketServer = new SocketServer(dev, environments);
   }
 
   public async init(): Promise<void> {
@@ -153,25 +158,20 @@ export class CompilationManager {
   };
 
   private async setupCompilationMiddleware(): Promise<void> {
-    const { devConfig, serverConfig, publicPaths } = this;
+    const { devConfig, serverConfig, publicPaths, environments } = this;
 
-    const callbacks = {
-      onInvalid: (compilationId?: string, fileName?: string | null) => {
+    const callbacks: ServerCallbacks = {
+      onInvalid: (token: string, fileName?: string | null) => {
         // reload page when HTML template changed
         if (typeof fileName === 'string' && HTML_REGEX.test(fileName)) {
-          this.socketServer.sockWrite({
-            type: 'static-changed',
-            compilationId,
-          });
+          this.socketServer.sockWrite({ type: 'static-changed' }, token);
           return;
         }
-        this.socketServer.sockWrite({
-          type: 'invalid',
-          compilationId,
-        });
+
+        this.socketServer.sockWrite({ type: 'invalid' }, token);
       },
-      onDone: (stats: any) => {
-        this.socketServer.updateStats(stats);
+      onDone: (token: string, stats: Stats) => {
+        this.socketServer.updateStats(stats, token);
       },
     };
 
@@ -182,6 +182,7 @@ export class CompilationManager {
       clientPaths,
       devConfig,
       serverConfig,
+      environments,
     });
 
     const { base } = serverConfig;

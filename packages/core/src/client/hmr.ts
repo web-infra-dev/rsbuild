@@ -1,6 +1,5 @@
 import type { NormalizedClientConfig } from '../types';
 
-const compilationId = RSBUILD_COMPILATION_NAME;
 const config: NormalizedClientConfig = RSBUILD_CLIENT_CONFIG;
 const resolvedConfig: NormalizedClientConfig = RSBUILD_RESOLVED_CLIENT_CONFIG;
 
@@ -18,7 +17,7 @@ function formatURL(config: NormalizedClientConfig) {
     url.hostname = hostname;
     url.protocol = protocol;
     url.pathname = pathname;
-    url.searchParams.append('compilationId', compilationId);
+    url.searchParams.append('token', RSBUILD_WEB_SOCKET_TOKEN);
     return url.toString();
   }
 
@@ -164,10 +163,6 @@ function onOpen() {
 
 function onMessage(e: MessageEvent<string>) {
   const message = JSON.parse(e.data);
-
-  if (message.compilationId && message.compilationId !== compilationId) {
-    return;
-  }
 
   switch (message.type) {
     case 'hash':
