@@ -1,18 +1,18 @@
 # Web Workers
 
-This chapter introduces how to configure and use [Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers) in Rsbuild project.
+Este capítulo apresenta como configurar e usar [Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers) em projetos Rsbuild.
 
-:::tip Web Workers
-Web Workers are a type of JavaScript program that runs in the background, independently of other scripts, without affecting the performance of the page. This makes it possible to run long-running scripts, such as ones that handle complex calculations or access remote resources, without blocking the user interface or other scripts. Web workers provide an easy way to run tasks in the background and improve the overall performance of web applications.
+:::tip O que são Web Workers
+Web Workers são um tipo de programa JavaScript que é executado em segundo plano, independentemente de outros scripts, sem afetar o desempenho da página. Isso torna possível executar scripts de longa duração, como aqueles que lidam com cálculos complexos ou acessam recursos remotos, sem bloquear a interface do usuário ou outros scripts. Web workers fornecem uma maneira fácil de executar tarefas em segundo plano e melhorar o desempenho geral de aplicações web.
 :::
 
-## Use Web Workers
+## Usar Web Workers
 
-### Import with constructors
+### Importar com construtores
 
-Web Workers are first-class citizens of Rspack, which means you don't need any loader to use web workers directly in Rspack or Rsbuild projects.
+Web Workers são cidadãos de primeira classe do Rspack, o que significa que você não precisa de nenhum loader para usar web workers diretamente em projetos Rspack ou Rsbuild.
 
-For example, create a file called `worker.js`:
+Por exemplo, crie um arquivo chamado `worker.js`:
 
 ```js title=worker.js
 self.onmessage = (event) => {
@@ -21,23 +21,23 @@ self.onmessage = (event) => {
 };
 ```
 
-Then use this worker in the main thread:
+Em seguida, use este worker no thread principal:
 
 ```js title=index.js
 const worker = new Worker(new URL('./worker.js', import.meta.url));
 
 worker.onmessage = (event) => {
-  console.log('The results from Workers:', event.data);
+  console.log('Os resultados dos Workers:', event.data);
 };
 
 worker.postMessage(10);
 ```
 
-For more details, please refer to [Rspack - Web Workers](https://rspack.rs/guide/features/web-workers).
+Para mais detalhes, consulte [Rspack - Web Workers](https://rspack.rs/guide/features/web-workers).
 
-### Using worker-loader
+### Usando worker-loader
 
-If your project already uses `worker-loader`, or you want to use the `inline` and other features provided by `worker-loader`, you can use [worker-rspack-loader](https://github.com/rspack-contrib/worker-rspack-loader) as an alternative to `worker-loader` in Rsbuild projects.
+Se o seu projeto já usa `worker-loader`, ou você quer usar os recursos `inline` e outros fornecidos por `worker-loader`, você pode usar [worker-rspack-loader](https://github.com/rspack-contrib/worker-rspack-loader) como uma alternativa ao `worker-loader` em projetos Rsbuild.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -45,8 +45,8 @@ export default {
     rspack: {
       resolveLoader: {
         alias: {
-          // Modify the resolution of worker-loader in the inline loader
-          // such as `worker-loader!pdfjs-dist/es5/build/pdf.worker.js`
+          // Modifica a resolução de worker-loader no loader inline
+          // como `worker-loader!pdfjs-dist/es5/build/pdf.worker.js`
           'worker-loader': require.resolve('worker-rspack-loader'),
         },
       },
@@ -63,7 +63,7 @@ export default {
 };
 ```
 
-When using `worker-rspack-loader`, you need to use the `import` to import the Web Worker file, instead of the `new Worker('/path/to/worker.js')`.
+Ao usar `worker-rspack-loader`, você precisa usar o `import` para importar o arquivo Web Worker, em vez de `new Worker('/path/to/worker.js')`.
 
 ```js
 import Worker from './file.worker.js';
@@ -73,13 +73,13 @@ const worker = new Worker();
 worker.postMessage({ a: 1 });
 ```
 
-> `worker-loader` is no longer maintained, if you don't need to inline Web Workers, it is recommended to use the `new Worker()` syntax.
+> `worker-loader` não é mais mantido, se você não precisa incorporar Web Workers, é recomendado usar a sintaxe `new Worker()`.
 
-### Loading scripts from remote URLs (cross-origin)
+### Carregando scripts de URLs remotas (cross-origin)
 
-By default, the worker script will be emitted as a separate chunk. This script supports uploading to CDN, but must obey the [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
+Por padrão, o script do worker será emitido como um chunk separado. Este script suporta upload para CDN, mas deve obedecer à [política de mesma origem](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
 
-If you want your worker scripts to be accessible across domains, a common solution is to load via [importScripts](https://developer.mozilla.org/en-US/docs/Web/API/WorkerGlobalScope/importScripts) (not subject to CORS), you can refer to the following code:
+Se você quiser que seus scripts de worker sejam acessíveis entre domínios, uma solução comum é carregar via [importScripts](https://developer.mozilla.org/en-US/docs/Web/API/WorkerGlobalScope/importScripts) (não sujeito a CORS), você pode consultar o seguinte código:
 
 ```js title=index.js {2}
 // https://github.com/jantimon/remote-web-worker
@@ -90,17 +90,17 @@ const worker = new Worker(new URL('./worker.js', import.meta.url), {
 });
 
 worker.onmessage = (event) => {
-  console.log('The results from Workers:', event.data);
+  console.log('Os resultados dos Workers:', event.data);
 };
 
 worker.postMessage(10);
 ```
 
-For detailed discussions on cross-domain issues, please refer to [Discussions - webpack 5 web worker support for CORS?](https://github.com/webpack/webpack/discussions/14648)
+Para discussões detalhadas sobre problemas de cross-domain, consulte [Discussões - suporte a web worker do webpack 5 para CORS?](https://github.com/webpack/webpack/discussions/14648)
 
-## Build Web Workers outputs
+## Construir saídas de Web Workers
 
-Rsbuild supports building Web Workers outputs independently, which is helpful when you need to provide Web Workers outputs for use by other applications.
+O Rsbuild suporta a construção de saídas de Web Workers independentemente, o que é útil quando você precisa fornecer saídas de Web Workers para uso por outras aplicações.
 
 You can set Rsbuild's [output.target](/config/output/target) configuration to `'web-worker'`, and Rsbuild will generate build outputs suitable for the Web Workers environment.
 
