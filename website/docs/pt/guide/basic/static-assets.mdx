@@ -1,32 +1,32 @@
-# Static assets
+# Ativos estáticos
 
-Rsbuild supports import static assets, including images, fonts, audio and video.
+O Rsbuild suporta a importação de ativos estáticos, incluindo imagens, fontes, áudio e vídeo.
 
-:::tip What is Static Assets
-Static assets are files that are part of a web application and do not change, even when the application is being used. Examples of static assets include images, fonts, medias, stylesheets, and JavaScript files. These assets are typically stored on a web server or CDN, and delivered to the user's web browser when the web application is accessed. Because they do not change, static assets can be cached by the browser, which helps to improve the performance of the web application.
+:::tip O que são Ativos Estáticos
+Ativos estáticos são arquivos que fazem parte de uma aplicação web e não mudam, mesmo quando a aplicação está sendo usada. Exemplos de ativos estáticos incluem imagens, fontes, mídias, folhas de estilo e arquivos JavaScript. Esses ativos são tipicamente armazenados em um servidor web ou CDN, e entregues ao navegador do usuário quando a aplicação web é acessada. Como eles não mudam, os ativos estáticos podem ser armazenados em cache pelo navegador, o que ajuda a melhorar o desempenho da aplicação web.
 :::
 
-## Assets format
+## Formato dos Ativos
 
-The following are the formats supported by Rsbuild by default:
+Os seguintes são os formatos suportados pelo Rsbuild por padrão:
 
-- **images**: png, jpg, jpeg, gif, svg, bmp, webp, ico, apng, avif, tif, tiff, jfif, pjpeg, pjp, cur.
-- **fonts**: woff, woff2, eot, ttf, otf, ttc.
-- **audio**: mp3, wav, flac, aac, m4a, opus.
-- **video**: mp4, webm, ogg, mov.
+- **imagens**: png, jpg, jpeg, gif, svg, bmp, webp, ico, apng, avif, tif, tiff, jfif, pjpeg, pjp, cur.
+- **fontes**: woff, woff2, eot, ttf, otf, ttc.
+- **áudio**: mp3, wav, flac, aac, m4a, opus.
+- **vídeo**: mp4, webm, ogg, mov.
 
-To import assets in other formats, refer to [Extend Asset Types](#extend-asset-types).
+Para importar ativos em outros formatos, consulte [Estender Tipos de Ativos](#extend-asset-types).
 
-:::tip SVG images
-SVG image is a special case. Rsbuild support convert SVG to React components, so SVG is processed separately. For details, see [SVGR Plugin](/plugins/list/plugin-svgr).
+:::tip Imagens SVG
+A imagem SVG é um caso especial. O Rsbuild suporta a conversão de SVG para componentes React, então o SVG é processado separadamente. Para detalhes, consulte [Plugin SVGR](/plugins/list/plugin-svgr).
 :::
 
-## Import assets in JS file
+## Importar ativos em arquivo JS
 
-In JS files, you can import static assets with relative paths:
+Em arquivos JS, você pode importar ativos estáticos com caminhos relativos:
 
 ```tsx
-// Import the logo.png image in the static directory
+// Importa a imagem logo.png no diretório static
 import logo from './static/logo.png';
 
 console.log(logo); // "/static/logo.[hash].png"
@@ -34,7 +34,7 @@ console.log(logo); // "/static/logo.[hash].png"
 export default = () => <img src={logo} />;
 ```
 
-Import with [alias](/guide/advanced/alias) is also available:
+A importação com [alias](/guide/advanced/alias) também está disponível:
 
 ```tsx
 import logo from '@/static/logo.png';
@@ -44,9 +44,9 @@ console.log(logo); // "/static/logo.[hash].png"
 export default = () => <img src={logo} />;
 ```
 
-### URL assets
+### Ativos URL
 
-Rsbuild supports using JavaScript's native [URL](https://developer.mozilla.org/docs/Web/API/URL) and [import.meta.url](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/import.meta) to import static assets.
+O Rsbuild suporta o uso de [URL](https://developer.mozilla.org/docs/Web/API/URL) nativo do JavaScript e [import.meta.url](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/import.meta) para importar ativos estáticos.
 
 ```tsx
 const logo = new URL('./static/logo.png', import.meta.url).href;
@@ -56,27 +56,27 @@ console.log(logo); // "/static/logo.[hash].png"
 export default = () => <img src={logo} />;
 ```
 
-If you use `new URL()` to reference `.js` or `.ts` files, they will be treated as URL assets and will not be processed by Rsbuild's built-in `swc-loader`.
+Se você usar `new URL()` para referenciar arquivos `.js` ou `.ts`, eles serão tratados como ativos URL e não serão processados pelo `swc-loader` embutido do Rsbuild.
 
 ```tsx
-// foo.ts will remain the original content and be output to the dist directory
+// foo.ts manterá o conteúdo original e será gerado para o diretório dist
 const fooTs = new URL('./foo.ts', import.meta.url).href;
 
 console.log(fooTs); // "/static/foo.[hash].ts"
 ```
 
-Similarly, when using `new URL()` to reference `.css` or `.scss` files, they will be treated as URL assets and will not be processed by Rsbuild's built-in CSS loaders.
+Da mesma forma, ao usar `new URL()` para referenciar arquivos `.css` ou `.scss`, eles serão tratados como ativos URL e não serão processados pelos loaders CSS embutidos do Rsbuild.
 
 ```tsx
-// foo.css will remain the original content and be output to the dist directory
+// foo.css manterá o conteúdo original e será gerado para o diretório dist
 const fooCss = new URL('./foo.css', import.meta.url).href;
 
 console.log(fooCss); // "/static/foo.[hash].css"
 ```
 
-## Import assets in CSS file
+## Importar ativos em arquivo CSS
 
-In CSS files, you can reference static assets in relative paths:
+Em arquivos CSS, você pode referenciar ativos estáticos em caminhos relativos:
 
 ```css
 .logo {
@@ -92,7 +92,7 @@ Import with [alias](/guide/advanced/alias) are also supported:
 }
 ```
 
-If you want to reference static assets in absolute paths in CSS files:
+Se você quiser referenciar ativos estáticos em caminhos absolutos em arquivos CSS:
 
 ```css
 @font-face {
@@ -101,7 +101,7 @@ If you want to reference static assets in absolute paths in CSS files:
 }
 ```
 
-By default, the built-in `css-loader` in Rsbuild will resolve absolute paths in `url()` and look for the specified modules. If you want to skip resolving absolute paths, you can configure [`tools.cssLoader`](/config/tools/css-loader#toolscssloader) to filter out the specified paths. The filtered paths are left as they are in the code.
+Por padrão, o `css-loader` embutido no Rsbuild resolverá caminhos absolutos em `url()` e procurará os módulos especificados. Se você quiser pular a resolução de caminhos absolutos, você pode configurar [`tools.cssLoader`](/config/tools/css-loader#toolscssloader) para filtrar os caminhos especificados. Os caminhos filtrados são mantidos como estão no código.
 
 ```ts
 export default {
@@ -109,7 +109,7 @@ export default {
     cssLoader: {
       url: {
         filter: (url) => {
-          if (/\/image\/font/.test(url)) {
+          if (/\\/image\\/font/.test(url)) {
             return false;
           }
           return true;
@@ -120,12 +120,12 @@ export default {
 };
 ```
 
-## Inline assets
+## Ativos inline
 
-The result of importing static assets depends on the file size:
+O resultado da importação de ativos estáticos depende do tamanho do arquivo:
 
-- If the file size is less than 4KiB, it will be converted to a base64 string and inlined in the code.
-- If the file size is larger than 4KiB, a URL will be returned, and the file will be emitted to the output directory.
+- Se o tamanho do arquivo for menor que 4KiB, ele será convertido para uma string base64 e incorporado ao código.
+- Se o tamanho do arquivo for maior que 4KiB, uma URL será retornada, e o arquivo será emitido para o diretório de saída.
 
 ```js
 import largeImage from './static/largeImage.png';
@@ -135,7 +135,7 @@ console.log(largeImage); // "/static/largeImage.[hash].png"
 console.log(smallImage); // "data:image/png;base64,iVBORw0KGgo..."
 ```
 
-Adding the `?url` query ensures that the asset is always loaded as a separate file and returns a URL:
+Adicionar a query `?url` garante que o ativo seja sempre carregado como um arquivo separado e retorne uma URL:
 
 ```js
 import image from './static/image.png?url';
@@ -143,7 +143,7 @@ import image from './static/image.png?url';
 console.log(image); // "/static/image.[hash].png"
 ```
 
-Adding the `?inline` query ensures that the asset is always inlined in the code, regardless of the file size:
+Adicionar a query `?inline` garante que o ativo seja sempre incorporado ao código, independentemente do tamanho do arquivo:
 
 ```js
 import image from './static/image.png?inline';
@@ -151,48 +151,48 @@ import image from './static/image.png?inline';
 console.log(image); // "data:image/png;base64,iVBORw0KGgo..."
 ```
 
-For a more detailed introduction to asset inlining, please refer to the [Static Asset Inlining](/guide/optimization/inline-assets) chapter.
+Para uma introdução mais detalhada ao inlining de ativos, consulte o capítulo [Inlining de Ativos Estáticos](/guide/optimization/inline-assets).
 
-## Import as string
+## Importar como string
 
-Rsbuild supports using the `?raw` query parameter to import the raw content of static assets as a string in JavaScript.
+O Rsbuild suporta o uso do parâmetro de consulta `?raw` para importar o conteúdo bruto de ativos estáticos como uma string em JavaScript.
 
 ```ts
 import rawSvg from './static/logo.svg?raw';
 
-console.log(rawSvg); // The raw content of the SVG file
+console.log(rawSvg); // O conteúdo bruto do arquivo SVG
 ```
 
-Rsbuild also supports importing the raw content of JavaScript, TypeScript, and JSX files through the `?raw` query parameter.
+O Rsbuild também suporta a importação do conteúdo bruto de arquivos JavaScript, TypeScript, e JSX através do parâmetro de consulta `?raw`.
 
 ```ts
 import rawJs from './script1.js?raw';
-import rawTs from './script2.ts?raw';
-import rawJsx from './script3.jsx?raw';
-import rawTsx from './script4.tsx?raw';
+import rawTs from './script1.ts?raw';
+import rawJsx from './script1.jsx?raw';
+import rawTsx from './script1.tsx?raw';
 
-console.log(rawJs); // The raw content of the JS file
-console.log(rawTs); // The raw content of the TS file
-console.log(rawJsx); // The raw content of the JSX file
-console.log(rawTsx); // The raw content of the TSX file
+console.log(rawJs); // O conteúdo bruto do arquivo JS
+console.log(rawTs); // O conteúdo bruto do arquivo TS
+console.log(rawJsx); // O conteúdo bruto do arquivo JSX
+console.log(rawTsx); // O conteúdo bruto do arquivo TSX
 ```
 
 You can also use the `?raw` query parameter to import the raw content of CSS files, see [CSS](/guide/styling/css-usage#raw).
 
 :::tip
-Rsbuild >= 1.3.0 supports the `?raw` query parameter, and >= 1.4.0 supports importing the raw content of JS and TS files.
+O Rsbuild >= 1.3.0 suporta o parâmetro de consulta `?raw`, e >= 1.4.0 suporta a importação do conteúdo bruto de arquivos JS e TS.
 :::
 
-## Output files
+## Arquivos de saída
 
-When static assets are imported, they will be output to the dist directory. You can:
+Quando ativos estáticos são importados, eles serão gerados para o diretório dist. Você pode:
 
-- Modify the output filename through [output.filename](/config/output/filename).
-- Modify the output path through [output.distPath](/config/output/dist-path).
+- Modificar o nome do arquivo de saída através de [output.filename](/config/output/filename).
+- Modificar o caminho de saída através de [output.distPath](/config/output/dist-path).
 
-Please read [Output Files](/guide/basic/output-files) for details.
+Please read [Arquivos de Saída](/guide/basic/output-files) for details.
 
-## URL prefix
+## Prefixo URL
 
 The URL returned after importing a asset will automatically include the path prefix:
 
@@ -252,9 +252,9 @@ import logo from './assets/logo.png';
 
 - During the production build, the files in public folder will be copied to the output folder (default is `dist`). Please be careful to avoid name conflicts with the output files. When files in the `public` folder have the same name as outputs, the outputs have higher priority and will overwrite the files with the same name in the `public` folder. This feature can be disabled by setting [server.publicDir.copyOnBuild](/config/server/public-dir) to `false`.
 
-### Custom behavior
+### Comportamento personalizado
 
-Rsbuild provides the [server.publicDir](/config/server/public-dir) option which can be used to customize the name and behavior of the public folder, as well as to disable it.
+O Rsbuild fornece a opção [server.publicDir](/config/server/public-dir) que pode ser usada para personalizar o nome e o comportamento da pasta pública, bem como para desabilitá-la.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -264,7 +264,7 @@ export default {
 };
 ```
 
-## Type declaration
+## Declaração de tipo
 
 When you import static assets in TypeScript code, TypeScript may prompt that the module is missing a type definition:
 
@@ -272,25 +272,23 @@ When you import static assets in TypeScript code, TypeScript may prompt that the
 TS2307: Cannot find module './logo.png' or its corresponding type declarations.
 ```
 
-To fix this, you need to add a type declaration file for the static assets, please create a `src/env.d.ts` file, and add the corresponding type declaration.
+Para corrigir isso, você precisa adicionar um arquivo de declaração de tipo para os ativos estáticos. Crie um arquivo `src/env.d.ts` e adicione a declaração de tipo correspondente.
 
-- Method 1: If the `@rsbuild/core` package is installed, you can reference the [preset types](/guide/basic/typescript#preset-types) provided by `@rsbuild/core`:
+- Método 1: Se o pacote `@rsbuild/core` estiver instalado, você pode referenciar os [tipos predefinidos](/guide/basic/typescript#preset-types) fornecidos por `@rsbuild/core`:
 
 ```ts
 /// <reference types="@rsbuild/core/types" />
 ```
 
-- Method 2: Manually add the required type declarations:
+- Método 2: Adicione manualmente as declarações de tipo necessárias:
 
 ```ts title="src/env.d.ts"
-// Taking png images as an example
+// Tomando imagens png como exemplo
 declare module '*.png' {
   const content: string;
   export default content;
 }
 ```
-
-After adding the type declaration, if the type error still exists, you can try to restart the current IDE, or adjust the directory where `env.d.ts` is located, making sure the TypeScript can correctly identify the type definition.
 
 ## Extend asset types
 
@@ -364,12 +362,12 @@ export default {
       chain.module
         // Use `CHAIN_ID.RULE.IMAGE` to locate the built-in image rule
         .rule(CHAIN_ID.RULE.IMAGE)
-        .exclude.add(/\.png$/);
+        .exclude.add(/\\.png$/);
     },
     rspack(config, { addRules }) {
       addRules([
         {
-          test: /\.png$/,
+          test: /\\.png$/,
           // Add a custom loader to handle png images
           loader: 'custom-png-loader',
         },
