@@ -23,7 +23,7 @@ function formatURL(config: NormalizedClientConfig) {
 
   // compatible with IE11
   const colon = protocol.indexOf(':') === -1 ? ':' : '';
-  return `${protocol}${colon}//${hostname}:${port}${pathname}`;
+  return `${protocol}${colon}//${hostname}:${port}${pathname}?token=${RSBUILD_WEB_SOCKET_TOKEN}`;
 }
 
 // Remember some state related to hot module replacement.
