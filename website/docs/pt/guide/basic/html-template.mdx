@@ -1,29 +1,29 @@
 # HTML
 
-During the build process, Rsbuild will compile based on the HTML template and template parameters to generate several HTML files.
+Durante o processo de build, o Rsbuild compilará com base no template HTML e nos parâmetros do template para gerar vários arquivos HTML.
 
-Rsbuild provides some configs to set the HTML template. Through this chapter, you can learn the basic usage of these configs.
+O Rsbuild fornece algumas configurações para definir o template HTML. Através deste capítulo, você pode aprender o uso básico dessas configurações.
 
-## HTML generation
+## Geração de HTML
 
-Rsbuild will generate an HTML file for each entry defined in [source.entry](/config/source/entry).
+O Rsbuild gerará um arquivo HTML para cada entrada definida em [source.entry](/config/source/entry).
 
 ```ts title="rsbuild.config.ts"
 export default {
   source: {
     entry: {
-      foo: './src/pages/foo/index.ts', // generate foo.html
-      bar: './src/pages/bar/index.ts', // generate bar.html
+      foo: './src/pages/foo/index.ts', // gera foo.html
+      bar: './src/pages/bar/index.ts', // gera bar.html
     },
   },
 };
 ```
 
-See [source.entry - HTML generation](/config/source/entry#html-generation) for more details on how to control HTML generation.
+Consulte [source.entry - Geração de HTML](/config/source/entry#html-generation) para mais detalhes sobre como controlar a geração de HTML.
 
-## Set template
+## Definir template
 
-In Rsbuild, you can use [html.template](/config/html/template) config to define the path to the custom HTML template.
+No Rsbuild, você pode usar a configuração [html.template](/config/html/template) para definir o caminho para o template HTML personalizado.
 
 ```ts
 export default {
@@ -33,7 +33,7 @@ export default {
 };
 ```
 
-If `html.template` is not set, Rsbuild will use the built-in HTML template, the content is as follows:
+Se `html.template` não for definido, o Rsbuild usará o template HTML embutido, o conteúdo é o seguinte:
 
 ```html title="defaultTemplate.html"
 <!doctype html>
@@ -45,9 +45,9 @@ If `html.template` is not set, Rsbuild will use the built-in HTML template, the 
 </html>
 ```
 
-In the default template, `id="<%= mountId %>"` will be replaced with `id="root"`, you can modify this value through the [html.mountId](/config/html/mount-id) option.
+No template padrão, `id="<%= mountId %>"` será substituído por `id="root"`, você pode modificar este valor através da opção [html.mountId](/config/html/mount-id).
 
-## Set page title
+## Definir título da página
 
 You can set the HTML `<title>` tag through the [html.title](/config/html/title) config.
 
@@ -81,7 +81,7 @@ export default {
 For single-page applications (SPA), Rsbuild will include an initial title in the HTML page, but you usually need to dynamically update the page title on route switching, for example using some routing libraries or libraries like [React Helmet](https://github.com/nfl/react-helmet).
 :::
 
-## Set page icon
+## Definir ícone da página
 
 Rsbuild supports setting [favicon](https://developer.mozilla.org/en-US/docs/Glossary/Favicon) icon and [apple-touch-icon](https://webhint.io/docs/user-guide/hints/hint-apple-touch-icons/) icon.
 
@@ -111,7 +111,7 @@ export default {
 };
 ```
 
-## Set meta tags
+## Definir meta tags
 
 You can set the meta tags through the [html.meta](/config/html/meta) config.
 
@@ -140,9 +140,9 @@ The generated meta tag in HTML is:
 <meta name="description" content="a description of the page" />
 ```
 
-## Default template engine
+## Motor de template padrão
 
-Rsbuild comes with a built-in default template engine to handle HTML template files, and its syntax is similar to a subset of EJS, but it has some differences. When the suffix of an HTML template file is `.html`, Rsbuild will use the built-in template engine to parse the HTML template.
+O Rsbuild vem com um motor de template padrão embutido para lidar com arquivos de template HTML, e sua sintaxe é semelhante a um subconjunto de EJS, mas tem algumas diferenças. Quando o sufixo de um arquivo de template HTML é `.html`, o Rsbuild usará o motor de template embutido para analisar o template HTML.
 
 For example, if a `text` param is defined in the template with the value `'world'`, Rsbuild will automatically replace `<%= text %>` with the specified value during the build process.
 
@@ -154,18 +154,18 @@ For example, if a `text` param is defined in the template with the value `'world
 <div>hello world!</div>
 ```
 
-### Template parameters
+### Parâmetros do template
 
-In HTML templates, you can use a variety of template parameters. The template parameters injected by Rsbuild by default include:
+Em templates HTML, você pode usar uma variedade de parâmetros de template. Os parâmetros de template injetados pelo Rsbuild por padrão incluem:
 
 ```ts
 type DefaultParameters = {
-  mountId: string; // the value of `html.mountId` config
-  entryName: string; // entry name
-  assetPrefix: string; // the value of dev.assetPrefix or output.assetPrefix configs
-  compilation: Compilation; // Compilation object of Rspack
-  rspackConfig: Rspack.Configuration; // Rspack config object
-  // generated by html-rspack-plugin
+  mountId: string; // o valor da configuração `html.mountId`
+  entryName: string; // nome da entrada
+  assetPrefix: string; // o valor das configurações dev.assetPrefix ou output.assetPrefix
+  compilation: Compilation; // Objeto de compilação do Rspack
+  rspackConfig: Rspack.Configuration; // Objeto de configuração do Rspack
+  // gerado por html-rspack-plugin
   htmlPlugin: {
     tags: {
       headTags: HtmlTagObject[];
@@ -205,7 +205,7 @@ The compiled HTML code will be:
 <div>hello world!</div>
 ```
 
-### Parameter escaping
+### Escapando parâmetros
 
 When using `<%= text %>`, the parameters will not be escaped. You can use `<%- text %>` to escape parameters.
 
@@ -220,12 +220,12 @@ For example, if the value of the parameter `text` is `'<script>'`, it will be es
 ```
 
 :::tip
-Note that Rsbuild's default escape syntax is different from EJS. In EJS, the default escape syntax is `<%= text %>`, whereas Rsbuild's default escape syntax is `<%- text %>`.
+Observe que a sintaxe de escape padrão do Rsbuild é diferente do EJS. No EJS, a sintaxe de escape padrão é `<%= text %>`, enquanto a sintaxe de escape padrão do Rsbuild é `<%- text %>`.
 :::
 
-### Conditional statements
+### Declarações condicionais
 
-- if condition:
+- condição if:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -243,7 +243,7 @@ export default {
 <% } %>
 ```
 
-- if/else condition:
+- condição if/else:
 
 ```ejs
 <% if (show) { %>
@@ -253,7 +253,7 @@ export default {
 <% } %>
 ```
 
-- else if condition:
+- condição else if:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -275,7 +275,7 @@ export default {
 <% } %>
 ```
 
-- Nested conditions:
+- Condições aninhadas:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -297,7 +297,7 @@ export default {
 <% } %>
 ```
 
-- Ternary operator:
+- Operador ternário:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -314,9 +314,9 @@ export default {
 <p>result: <%= show ? value : 'none' %></p>
 ```
 
-### Loop statements
+### Declarações de loop
 
-- for loop:
+- loop for:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -336,7 +336,7 @@ export default {
 </ul>
 ```
 
-- forEach loop:
+- loop forEach:
 
 ```ejs title="index.html"
 <ul>
@@ -346,7 +346,7 @@ export default {
 </ul>
 ```
 
-- for...of loop:
+- loop for...of:
 
 ```ejs title="index.html"
 <ul>
@@ -356,19 +356,19 @@ export default {
 </ul>
 ```
 
-## Other template engines
+## Outros motores de template
 
-Rsbuild also supports using other template engines via plugins, such as [EJS](https://ejs.co/) and [Pug](https://pugjs.org/).
+O Rsbuild também suporta o uso de outros motores de template via plugins, como [EJS](https://ejs.co/) e [Pug](https://pugjs.org/).
 
 ### EJS
 
-Rsbuild's built-in template syntax has some differences from [EJS](https://ejs.co/). To use the full EJS syntax, you can support it through a plugin. See [rsbuild-plugin-ejs](https://github.com/rspack-contrib/rsbuild-plugin-ejs) for more details.
+A sintaxe de template embutida do Rsbuild tem algumas diferenças do [EJS](https://ejs.co/). Para usar a sintaxe EJS completa, você pode suportá-la através de um plugin. Consulte [rsbuild-plugin-ejs](https://github.com/rspack-contrib/rsbuild-plugin-ejs) para mais detalhes.
 
 ### Pug
 
-Rsbuild supports the [Pug](https://pugjs.org/) template engine via a plugin. See [@rsbuild/plugin-pug](https://github.com/rspack-contrib/rsbuild-plugin-pug) for more details.
+O Rsbuild suporta o motor de template [Pug](https://pugjs.org/) via um plugin. Consulte [@rsbuild/plugin-pug](https://github.com/rspack-contrib/rsbuild-plugin-pug) para mais detalhes.
 
-## Injecting tags
+## Injetando tags
 
 You can insert any tags into the HTML files generated by Rsbuild by configuring [html.tags](/config/html/tags).
 
@@ -386,7 +386,7 @@ In the HTML template, the `htmlPlugin.tags` variable gives you access to all the
 </html>
 ```
 
-The purpose of the `html.tags` is to update these tag variables to modify the tags in the HTML. Here is a basic example:
+O objetivo de `html.tags` é atualizar essas variáveis de tag para modificar as tags no HTML. Aqui está um exemplo básico:
 
 ```ts
 export default {
@@ -398,7 +398,7 @@ export default {
 };
 ```
 
-- The generated HTML file looks like this:
+- O arquivo HTML gerado se parece com isto:
 
 ```html
 <html>
@@ -412,15 +412,15 @@ export default {
 </html>
 ```
 
-> For more usage, please refer to: [html.tags](/config/html/tags).
+> Para mais uso, consulte: [html.tags](/config/html/tags).
 
 :::tip
-Typically, you do not need to manually use the `htmlPlugin.tags.headTags` and `htmlPlugin.tags.bodyTags` template parameters, because Rsbuild will automatically inject these tags. See [html.inject](/config/html/inject) for more details on adjusting the injection location.
+Normalmente, você não precisa usar manualmente os parâmetros de template `htmlPlugin.tags.headTags` e `htmlPlugin.tags.bodyTags`, porque o Rsbuild injetará automaticamente essas tags. Consulte [html.inject](/config/html/inject) para mais detalhes sobre o ajuste do local de injeção.
 :::
 
-## HTML plugin
+## Plugin HTML
 
-Rsbuild internally implements HTML-related features based on [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin). It is a fork of [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin), with the same features and options.
+O Rsbuild implementa internamente recursos relacionados a HTML com base em [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin). É um fork de [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin), com os mesmos recursos e opções.
 
 You can modify the html-rspack-plugin options via [tools.htmlPlugin](/config/tools/html-plugin), or disable the default html-rspack-plugin.
 
@@ -438,6 +438,6 @@ export default {
 };
 ```
 
-## HTML minification
+## Minificação de HTML
 
-Rsbuild currently does not minify HTML files. If you need to minify HTML files, you can use the [rsbuild-plugin-html-minifier-terser plugin](https://github.com/rspack-contrib/rsbuild-plugin-html-minifier-terser).
+O Rsbuild atualmente não minifica arquivos HTML. Se você precisar minificar arquivos HTML, você pode usar o plugin [rsbuild-plugin-html-minifier-terser](https://github.com/rspack-contrib/rsbuild-plugin-html-minifier-terser).
