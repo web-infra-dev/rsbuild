@@ -1,28 +1,28 @@
 # Vue CLI
 
-This chapter introduces how to migrate a [Vue CLI](https://github.com/vuejs/vue-cli) project to Rsbuild.
+Este capítulo apresenta como migrar um projeto [Vue CLI](https://github.com/vuejs/vue-cli) para o Rsbuild.
 
-## Install dependencies
+## Instalar dependências
 
-First, you need to replace the npm dependencies of Vue CLI with Rsbuild's dependencies.
+Primeiro, você precisa substituir as dependências npm do Vue CLI pelas dependências do Rsbuild.
 
 import { PackageManagerTabs } from '@theme';
 
-- Remove Vue CLI dependencies:
+- Remover dependências do Vue CLI:
 
 <PackageManagerTabs command="remove @vue/cli-service @vue/cli-plugin-babel @vue/cli-plugin-eslint core-js" />
 
-- Install Rsbuild dependencies:
+- Instalar dependências do Rsbuild:
 
 <PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-vue -D" />
 
 :::tip
-If your project is based on Vue 2, replace `@rsbuild/plugin-vue` with `@rsbuild/plugin-vue2`.
+Se o seu projeto for baseado em Vue 2, substitua `@rsbuild/plugin-vue` por `@rsbuild/plugin-vue2`.
 :::
 
-## Update npm scripts
+## Atualizar scripts npm
 
-Next, you need to update the npm scripts in the package.json file to Rsbuild's CLI commands.
+Em seguida, você precisa atualizar os scripts npm no arquivo package.json para os comandos CLI do Rsbuild.
 
 ```json title="package.json"
 {
@@ -37,12 +37,12 @@ Next, you need to update the npm scripts in the package.json file to Rsbuild's C
 ```
 
 :::tip
-Rsbuild does not integrate ESLint, so it does not provide a command to replace `vue-cli-service lint`. You can directly use ESLint's [CLI commands](https://eslint.org/docs/latest/use/command-line-interface) as an alternative.
+O Rsbuild não integra ESLint, então ele não fornece um comando para substituir `vue-cli-service lint`. Você pode usar diretamente os [comandos CLI](https://eslint.org/docs/latest/use/command-line-interface) do ESLint como uma alternativa.
 :::
 
-## Create configuration file
+## Criar arquivo de configuração
 
-Create a Rsbuild configuration file `rsbuild.config.ts` in the same directory as package.json, and add the following content:
+Crie um arquivo de configuração do Rsbuild `rsbuild.config.ts` no mesmo diretório do package.json e adicione o seguinte conteúdo:
 
 ```typescript
 import { defineConfig } from '@rsbuild/core';
@@ -51,7 +51,7 @@ import { pluginVue } from '@rsbuild/plugin-vue';
 export default defineConfig({
   plugins: [pluginVue()],
   source: {
-    // Specify the entry file
+    // Especifique o arquivo de entrada
     entry: {
       index: './src/main.js',
     },
@@ -60,12 +60,12 @@ export default defineConfig({
 ```
 
 :::tip
-If your project is based on Vue 2, use `import { pluginVue2 } from '@rsbuild/plugin-vue2';`.
+Se o seu projeto for baseado em Vue 2, use `import { pluginVue2 } from '@rsbuild/plugin-vue2';`.
 :::
 
-## HTML template
+## Template HTML
 
-Vue CLI uses the `public/index.html` file as the default HTML template. In Rsbuild, you can specify the HTML template through [html.template](/config/html/template):
+O Vue CLI usa o arquivo `public/index.html` como o template HTML padrão. No Rsbuild, você pode especificar o template HTML através de [html.template](/config/html/template):
 
 ```ts title="rsbuild.config.ts"
 export default defineConfig({
@@ -75,7 +75,7 @@ export default defineConfig({
 });
 ```
 
-In the HTML template, if you are using the `BASE_URL` variable from Vue CLI, replace it with Rsbuild's [assetPrefix variable](/config/html/template-parameters) and use a forward slash for concatenation:
+No template HTML, se você estiver usando a variável `BASE_URL` do Vue CLI, substitua-a pela [variável assetPrefix](/config/html/template-parameters) do Rsbuild e use uma barra para concatenação:
 
 ```html
 <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
@@ -84,14 +84,14 @@ In the HTML template, if you are using the `BASE_URL` variable from Vue CLI, rep
 <!-- [!code ++] -->
 ```
 
-This completes the basic migration from Vue CLI to Rsbuild. You can now run the `npm run serve` command to try starting the dev server.
+Isso completa a migração básica do Vue CLI para o Rsbuild. Agora você pode executar o comando `npm run serve` para tentar iniciar o servidor de desenvolvimento.
 
-## Configuration migration
+## Migração de configuração
 
-Here is the corresponding Rsbuild configuration for Vue CLI configuration:
+Hera is the corresponding Rsbuild configuration for Vue CLI configuration:
 
 | Vue CLI                                                                                                                                 | Rsbuild                                                                                                                                                |
-| --------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| :-------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [publicPath](https://cli.vuejs.org/config/#publicpath)                                                                                  | [dev.assetPrefix](/config/dev/asset-prefix) / [output.assetPrefix](/config/output/asset-prefix)                                                        |
 | [outputDir](https://cli.vuejs.org/config/#outputdir) / [assetsDir](https://cli.vuejs.org/config/#assetsdir)                             | [output.distPath](/config/output/dist-path)                                                                                                            |
 | [filenameHashing](https://cli.vuejs.org/config/#filenamehashing)                                                                        | [output.filenameHash](/config/output/filename-hash)                                                                                                    |
@@ -105,16 +105,16 @@ Here is the corresponding Rsbuild configuration for Vue CLI configuration:
 | [css.loaderOptions](https://cli.vuejs.org/config/#css-loaderoptions)                                                                    | [tools.cssLoader](/config/tools/css-loader) / [less](/plugins/list/plugin-less) / [sass](/plugins/list/plugin-sass) / [postcss](/config/tools/postcss) |
 | [devServer.proxy](https://cli.vuejs.org/config/#devserver-proxy)                                                                        | [server.proxy](/config/server/proxy)                                                                                                                   |
 
-Notes:
+Notas:
 
-- When migrating `configureWebpack`, note that most of the webpack and Rsbuild configs are the same, but there are also some differences or functionalities not implemented in Rsbuild.
-- The above table does not cover all configurations of Vue CLI, feel free to add more.
+- Ao migrar `configureWebpack`, observe que a maioria das configurações do webpack e do Rsbuild são as mesmas, mas também existem algumas diferenças ou funcionalidades não implementadas no Rsbuild.
+- A tabela acima não cobre todas as configurações do Vue CLI, sinta-se à vontade para adicionar mais.
 
-## Environment variables
+## Variáveis de ambiente
 
-Vue CLI injects environment variables starting with `VUE_APP_` into the client code by default, while Rsbuild injects environment variables starting with `PUBLIC_` by default (see [public variables](/guide/advanced/env-vars#public-variables)).
+O Vue CLI injeta variáveis de ambiente que começam com `VUE_APP_` no código do cliente por padrão, enquanto o Rsbuild injeta variáveis de ambiente que começam com `PUBLIC_` por padrão (consulte [variáveis públicas](/guide/advanced/env-vars#public-variables)).
 
-To be compatible with Vue CLI's behavior, you can manually call Rsbuild's [loadEnv](/api/javascript-api/core#loadenv) method to read environment variables starting with `VUE_APP_`, and inject them into the client code through the [source.define](/config/source/define) config.
+Para ser compatível com o comportamento do Vue CLI, você pode chamar manualmente o método [loadEnv](/api/javascript-api/core#loadenv) do Rsbuild para ler variáveis de ambiente que começam com `VUE_APP_` e injetá-las no código do cliente através da configuração [source.define](/config/source/define).
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig, loadEnv } from '@rsbuild/core';
@@ -128,8 +128,8 @@ export default defineConfig({
 });
 ```
 
-## Contents supplement
+## Suplemento de conteúdo
 
-The current document only covers part of the migration process. If you find suitable content to add, feel free to contribute to the documentation via pull request 🤝.
+O documento atual cobre apenas parte do processo de migração. Se você encontrar conteúdo adequado para adicionar, sinta-se à vontade para contribuir com a documentação via pull request 🤝.
 
-> The documentation for rsbuild can be found in the [rsbuild/website](https://github.com/web-infra-dev/rsbuild/tree/main/website) directory.
+> A documentação para rsbuild can be found in the [rsbuild/website](https://github.com/web-infra-dev/rsbuild/tree/main/website) directory.
