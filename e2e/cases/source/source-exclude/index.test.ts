@@ -14,7 +14,7 @@ test('should not compile specified file when source.exclude', async () => {
         exclude: [path.resolve(__dirname, './src/test.js')],
       },
       output: {
-        overrideBrowserslist: ['ie 11'],
+        overrideBrowserslist: ['android >= 4.4'],
       },
     },
   });
