@@ -1,0 +1,181 @@
+# Less plugin
+
+import { SourceCode } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-less" />
+
+Use [Less](https://lesscss.org/) as the CSS preprocessor, implemented based on [less-loader](https://github.com/webpack-contrib/less-loader).
+
+## Quick start
+
+### Install plugin
+
+You can install the plugin using the following command:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-less -D" />
+
+:::tip
+
+- The Less plugin only supports @rsbuild/core versions >= 0.7.0.
+- If the @rsbuild/core version is lower than 0.7.0, it has builtin support for the Less plugin, you do not need to install it.
+
+:::
+
+### Register plugin
+
+You can register the plugin in the `rsbuild.config.ts` file:
+
+```ts title="rsbuild.config.ts"
+import { pluginLess } from '@rsbuild/plugin-less';
+
+export default {
+  plugins: [pluginLess()],
+};
+```
+
+After registering the plugin, you can import `*.less` or `*.module.less` files into the code without adding other configs.
+
+## Options
+
+To customize the compilation behavior of Less, use the following options.
+
+### lessLoaderOptions
+
+You can modify the config of [less-loader](https://github.com/webpack-contrib/less-loader) via `lessLoaderOptions`.
+
+- **Type:** `Object | Function`
+- **Default:**
+
+```js
+const defaultOptions = {
+  lessOptions: {
+    javascriptEnabled: true,
+    paths: [path.join(rootPath, 'node_modules')],
+  },
+  implementation: require.resolve('less'),
+  sourceMap: rsbuildConfig.output.sourceMap.css,
+};
+```
+
+- **Example:**
+
+If `lessLoaderOptions` is an object, it is merged with the default config through `Object.assign` in a shallow way. It should be noted that `lessOptions` is merged through deepMerge in a deep way.
+
+```js
+pluginLess({
+  lessLoaderOptions: {
+    lessOptions: {
+      javascriptEnabled: false,
+    },
+  },
+});
+```
+
+If `lessLoaderOptions` is a function, the default config is passed as the first parameter, which can be directly modified or returned as the final result.
+
+```js
+pluginLess({
+  lessLoaderOptions(config) {
+    config.lessOptions = {
+      javascriptEnabled: false,
+    };
+  },
+});
+```
+
+:::tip
+The `lessLoaderOptions.lessOptions` config is passed to Less. See the [Less documentation](https://lesscss.org/usage/#command-line-usage-options) for all available options.
+:::
+
+### include
+
+- **Type:** [RuleSetCondition](https://rspack.rs/config/module#condition)
+- **Default:** `/\.less$/`
+- **Version:** `>= 1.1.0`
+
+Include some `.less` files, they will be transformed by `less-loader`. The value is the same as the `rule.test` option in Rspack.
+
+For example:
+
+```ts
+pluginLess({
+  include: /\.custom\.less$/,
+});
+```
+
+### exclude
+
+- **Type:** [RuleSetCondition](https://rspack.rs/config/module#condition)
+- **Default:** `undefined`
+
+Exclude some `.less` files, they will not be transformed by `less-loader`.
+
+For example:
+
+```ts
+pluginLess({
+  exclude: /some-folder[\\/]foo\.less/,
+});
+```
+
+## Modifying Less version
+
+In some scenarios, if you need to use a specific version of Less instead of the built-in Less v4 in Rsbuild, you can install the desired Less version in your project and set it up using the `implementation` option of the `less-loader`.
+
+```js
+pluginLess({
+  lessLoaderOptions: {
+    implementation: require('less'),
+  },
+});
+```
+
+## Practices
+
+### Configure multiple Less plugins
+
+By using the `include` and `exclude` options, you can register multiple Less plugins and specify different options for each plugin.
+
+For example:
+
+```ts
+export default {
+  plugins: [
+    pluginLess({
+      exclude: /\.another\.less$/,
+    }),
+    pluginLess({
+      include: /\.another\.less$/,
+      lessLoaderOptions: {
+        // some custom options
+      },
+    }),
+  ],
+};
+```
+
+## FAQ
+
+### Division in Less file doesn't work?
+
+The built-in Less version for `@rsbuild/plugin-less` is v4. Compared to v3, there are some differences in the division syntax in Less v4:
+
+```less
+// Less v3
+.math {
+  width: 2px / 2; // 1px
+  width: 2px ./ 2; // 1px
+  width: (2px / 2); // 1px
+}
+
+// Less v4
+.math {
+  width: 2px / 2; // 2px / 2
+  width: 2px ./ 2; // 1px
+  width: (2px / 2); // 1px
+}
+```
+
+The division syntax in Less can be modified through configuration. For more details, see [Less - Math](https://lesscss.org/usage/#less-options-math).

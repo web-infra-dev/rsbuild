@@ -1,0 +1,111 @@
+# Perguntas Frequentes sobre HMR
+
+### Como solucionar problemas de ineficácia do HMR?
+
+Existem várias razões possíveis pelas quais o HMR pode não funcionar. Este documento abordará as causas mais comuns e fornecerá orientações para a solução de problemas. Consulte o conteúdo a seguir para solucionar problemas.
+
+Antes de iniciar o processo de solução de problemas, é útil ter uma compreensão básica de como o HMR funciona:
+
+:::tip Princípio do HMR
+
+1.  O navegador estabelece uma conexão WebSocket com o servidor de desenvolvimento para comunicação em tempo real.
+2.  Sempre que o servidor de desenvolvimento termina a recompilação, ele envia uma notificação ao navegador via WebSocket. O navegador então envia uma requisição `hot-update.(js|json)` para o servidor de desenvolvimento para carregar o módulo recém-compilado.
+3.  Após receber o novo módulo, se for um projeto React, o React Refresh, uma ferramenta oficial do React, é usado para atualizar os componentes React. Outros frameworks possuem ferramentas semelhantes.
+
+:::
+
+Após entender o princípio do HMR, você pode seguir estas etapas para a solução básica de problemas:
+
+#### 1. Verificar a conexão WebSocket
+
+Abra o console do navegador e verifique a presença do log `[HMR] connected.`.
+
+- Se estiver presente, a conexão WebSocket está funcionando corretamente. Você pode continuar com as etapas a seguir.
+- Se não estiver presente, abra o painel Network no Chrome e verifique o status da requisição `ws://[host]:[port]/rsbuild-hmr`. Se a requisição falhar, isso indica que o HMR falhou porque a conexão WebSocket não foi estabelecida com sucesso.
+
+Pode haver várias razões pelas quais a conexão WebSocket falha ao ser estabelecida, como o uso de um proxy de rede que impede que a requisição WebSocket chegue ao servidor de desenvolvimento. Você pode verificar se o endereço da requisição WebSocket corresponde ao endereço do seu servidor de desenvolvimento. Se não corresponder, você pode configurar o endereço da requisição WebSocket usando [dev.client](/config/dev/client).
+
+#### 2. Verificar as requisições hot-update
+
+Quando você modifica o código de um módulo e aciona uma recompilação, o navegador envia várias requisições `hot-update.json` e `hot-update.js` para o servidor de desenvolvimento para buscar o código atualizado.
+
+You can try modifying a module and inspect the content of the `hot-update.(js|json)` requests. If the content of the request is the latest code, it indicates that the hot update request is working correctly.
+
+If the content of the request is incorrect, it is likely due to a network proxy. Check whether the address of the `hot-update.(js|json)` request matches your dev server address. If it does not match, you need to adjust the proxy rules to route the `hot-update.(js|json)` request to the dev server address.
+
+#### 3. Verificar outras causas
+
+Se as duas etapas acima não revelarem nenhum problema, é possível que outros fatores estejam causando a falha do HMR. Por exemplo, pode ser que o código não atenda aos requisitos do React para HMR. Você pode consultar as seguintes perguntas para solucionar problemas adicionais.
+
+---
+
+### HMR não funciona ao usar React externo?
+
+Para garantir que o HMR funcione corretamente, precisamos usar as builds de desenvolvimento do React e ReactDOM.
+
+Se você excluir o React via `externals` ao empacotar, a build de produção do React geralmente é injetada através de CDN, e isso pode fazer com que o HMR falhe.
+
+```js
+export default {
+  output: {
+    externals: {
+      react: 'React',
+      'react-dom': 'ReactDOM',
+    },
+  },
+};
+```
+
+Para resolver este problema, você precisa referenciar os artefatos de desenvolvimento do React e instalar o React DevTools, então o hot reloading funcionará corretamente.
+
+Se você não tiver certeza sobre o tipo de build do React que está usando, você pode consultar a [documentação do React - Usar a Build de Produção](https://legacy.reactjs.org/docs/optimizing-performance.html#use-the-production-build).
+
+---
+
+### HMR não funciona ao definir hash de nome de arquivo no modo de desenvolvimento?
+
+Generally, we only set the filename hash in the production mode (i.e., when `process.env.NODE_ENV === 'production'`).
+
+If you set the filename hash in the development mode, it may cause HMR to fail (especially for CSS files). This is because every time the file content changes, the hash value changes, preventing tools like [mini-css-extract-plugin](https://npmjs.com/package/mini-css-extract-plugin) from reading the latest file content.
+
+- Uso correto:
+
+```js
+export default {
+  output: {
+    filename: {
+      css:
+        process.env.NODE_ENV === 'production'
+          ? '[name].[contenthash:8].css'
+          : '[name].css',
+    },
+  },
+};
+```
+
+- Uso incorreto:
+
+```js
+export default {
+  output: {
+    filename: {
+      css: '[name].[contenthash:8].css',
+    },
+  },
+};
+```
+
+---
+
+### HMR não funciona ao usar https?
+
+Se o https estiver habilitado, a conexão HMR pode falhar devido a um problema de certificado, e se você abrir o console, receberá um erro de falha de conexão HMR.
+
+```
+» WebSocket connection to 'wss://localhost:3000/rsbuild-hmr' failed:
+[HMR] disconnected. Attempting to reconnect.
+```
+
+A solução para este problema é clicar em "Avançado" -> "Prosseguir para alguma página (não segura)" na página de problema do Chrome.
+
+> Dicas: Ao acessar a página via Localhost, as palavras "Sua conexão não é particular" podem não aparecer e podem ser tratadas visitando o domínio da Rede.

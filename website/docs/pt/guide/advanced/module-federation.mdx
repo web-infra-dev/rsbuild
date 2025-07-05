@@ -1,0 +1,76 @@
+# Federação de Módulos
+
+A Federação de Módulos é um padrão arquitetural para decomposição de aplicações JavaScript (semelhante a microsserviços no lado do servidor), permitindo que você compartilhe código e recursos entre múltiplas aplicações JavaScript (ou micro-frontends).
+
+A equipe do Rspack trabalha em estreita colaboração com a equipe de desenvolvimento da Federação de Módulos e oferece suporte de primeira classe para a Federação de Módulos.
+
+## Casos de uso
+
+A Federação de Módulos possui vários casos de uso típicos, incluindo:
+
+- Permitir que aplicações independentes (chamadas de "micro-frontends" na arquitetura de micro-frontends) compartilhem módulos sem recompilar a aplicação inteira.
+- Diferentes equipes trabalhando em diferentes partes da mesma aplicação sem a necessidade de recompilar a aplicação inteira.
+- Carregamento e compartilhamento dinâmico de código entre aplicações em tempo de execução.
+
+A Federação de Módulos pode ajudá-lo a:
+
+- Reduzir a duplicação de código
+- Melhorar a manutenibilidade do código
+- Reduzir o tamanho total das aplicações
+- Melhorar o desempenho da aplicação
+
+## Como usar
+
+A Federação de Módulos (MF) atualmente possui múltiplas versões principais, e você pode escolher uma com base em suas necessidades.
+
+Aqui estão as características de várias versões:
+
+| Versão  | Descrição                                                                                     | Recursos                                                                                                                                                                                                                                                                                                      | Casos de Uso                                                |
+| :------ | :-------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :---------------------------------------------------------- |
+| MF v2.0 | Versão aprimorada da Federação de Módulos, implementada com base na Federação de Módulos v1.5 | - Fornece recursos adicionais prontos para uso, como dicas de tipo TS dinâmicas, Chrome DevTools, pré-carregamento, etc.<br />- Mais adequado para arquitetura de micro-frontends que suporta aplicações web em larga escala <br />- Inclui todos os recursos da Federação de Módulos 1.5 <br />              | Projetos que precisam usar recursos avançados da MF 2.0     |
+| MF v1.5 | Versão embutida no Rspack                                                                     | - Suporta exportação de módulos, carregamento de módulos, capacidades de compartilhamento de dependências da Federação de Módulos v1.0<br />- Adicionada funcionalidade de plugin de tempo de execução, permitindo que os usuários estendam o comportamento e a funcionalidade da federação de módulos <br /> | Projetos que não precisam usar os recursos extras da MF 2.0 |
+
+### Federação de Módulos v2.0
+
+[Module Federation 2.0](https://module-federation.io/blog/announcement.html) fornece alguns recursos adicionais prontos para uso baseados na Federação de Módulos, como dicas de tipo TS dinâmicas, Chrome devtools, plugins de tempo de execução, pré-carregamento, tornando a Federação de Módulos mais adequada para arquitetura de micro-frontends que suporta aplicações web em larga escala. A Federação de Módulos v2.0 é implementada com base na v1.5.
+
+Você precisa instalar o plugin adicional [@module-federation/rsbuild-plugin](https://npmjs.com/package/@module-federation/rsbuild-plugin) para usar a Federação de Módulos v2.0.
+
+```ts title="rsbuild.config.ts"
+import { pluginModuleFederation } from '@module-federation/rsbuild-plugin';
+
+export default defineConfig({
+  plugins: {
+    pluginModuleFederation({
+      name: 'remote',
+     // outras opções
+    }),
+  },
+});
+```
+
+Consulte a [documentação oficial da Federação de Módulos v2.0](https://module-federation.io/) para uso detalhado.
+
+### Federação de Módulos v1.5
+
+Esta é a versão embutida no Rspack. Além de suportar as capacidades da Federação de Módulos v1.0, como exportação de módulos, carregamento de módulos e compartilhamento de dependências, ela também adiciona funcionalidade de plugin de tempo de execução, permitindo que os usuários estendam o comportamento e a funcionalidade da federação de módulos.
+
+Você pode usá-lo através de [moduleFederation.options](/config/module-federation/options) do Rsbuild, sem a necessidade de instalar nenhum plugin.
+
+```ts title="rsbuild.config.ts"
+export default defineConfig({
+  moduleFederation: {
+    options: {
+      name: 'remote',
+      // outras opções
+    },
+  },
+});
+```
+
+## Repositórios de exemplo
+
+O Rsbuild forneceu alguns projetos de exemplo da Federação de Módulos, você pode consultar:
+
+- [Exemplo de Federação de Módulos v2.0](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/module-federation-enhanced)
+- [Exemplo de Federação de Módulos v1.5](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/module-federation)

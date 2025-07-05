@@ -1,0 +1,79 @@
+# Modo de Depuração
+
+O Rsbuild fornece um modo de depuração para solucionar problemas. Você pode adicionar a variável de ambiente `DEBUG=rsbuild` ao construir para habilitar o modo de depuração do Rsbuild.
+
+```bash
+# Depurar no modo de desenvolvimento
+DEBUG=rsbuild pnpm dev
+
+# Depurar no modo de produção
+DEBUG=rsbuild pnpm build
+```
+
+No modo de depuração, o Rsbuild exibirá algumas informações de log adicionais e gravará a configuração do Rsbuild e a configuração do Rspack no diretório `dist`, o que é conveniente para os desenvolvedores visualizarem e depurarem.
+
+## Informações de Log
+
+No modo de depuração, você verá alguns logs no terminal começando com `rsbuild`, incluindo operações internas realizadas pelo Rsbuild e a versão atual do Rspack sendo usada.
+
+```bash
+$ DEBUG=rsbuild pnpm dev
+
+  ...
+  rsbuild init plugins
+  rsbuild init plugins done
+  rsbuild use Rspack v1.0.0
+  ...
+```
+
+Além disso, os seguintes logs serão exibidos no terminal, indicando que o Rsbuild gravou as configurações de build geradas internamente no disco, e você pode abrir esses arquivos de configuração para visualizar o conteúdo correspondente.
+
+```bash
+config inspection completed, generated files:
+
+   - Rsbuild config: /Project/demo/dist/.rsbuild/rsbuild.config.mjs
+   - Rspack config (web): /Project/demo/dist/.rsbuild/rspack.config.web.mjs
+```
+
+## Arquivo de Configuração do Rsbuild
+
+No modo de depuração, o Rsbuild gerará automaticamente o arquivo `dist/.rsbuild/rsbuild.config.mjs`, que contém a configuração final do Rsbuild gerada. Neste arquivo, você pode saber o resultado final da configuração do Rsbuild que você passou após ser processada pelo framework e pelo Rsbuild.
+
+A estrutura do arquivo é a seguinte:
+
+```js title="rsbuild.config.mjs"
+export default {
+  dev: {
+    // algumas configurações...
+  },
+  source: {
+    // algumas configurações...
+  },
+  // outras configurações...
+};
+```
+
+Para uma introdução completa à configuração do Rsbuild, consulte o capítulo [Configurar Rsbuild](/guide/configuration/rsbuild).
+
+## Arquivo de Configuração do Rspack
+
+O Rsbuild também gerará automaticamente o arquivo `dist/.rsbuild/rspack.config.web.mjs`, que contém a configuração final do Rspack gerada. Neste arquivo, você pode ver o que está incluído na configuração que o Rsbuild finalmente passa para o Rspack.
+
+A estrutura do arquivo é a seguinte:
+
+```js title="rspack.config.web.mjs"
+export default {
+  resolve: {
+    // algumas configurações de resolução...
+  },
+  module: {
+    // alguns loaders do Rspack...
+  },
+  plugins: [
+    // alguns plugins do Rspack...
+  ],
+  // outras configurações...
+};
+```
+
+Para uma introdução completa às configurações do Rspack, consulte a [documentação oficial do Rspack](https://rspack.rs/config/).

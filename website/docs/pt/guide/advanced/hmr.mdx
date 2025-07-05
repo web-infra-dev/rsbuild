@@ -1,0 +1,73 @@
+# Hot module replacement
+
+Hot Module Replacement (HMR) troca, adiciona ou remove módulos enquanto uma aplicação está em execução, sem uma recarga completa. Isso pode acelerar significativamente o desenvolvimento de algumas maneiras:
+
+- Retém o estado da aplicação que é perdido durante uma recarga completa.
+- Economiza tempo valioso de desenvolvimento, atualizando apenas o que foi alterado.
+- Atualiza instantaneamente o navegador quando modificações são feitas no CSS / JS no código-fonte, o que é quase comparável a alterar estilos diretamente nas ferramentas de desenvolvimento do navegador.
+
+## Alternar HMR
+
+O Rsbuild tem suporte embutido para HMR, que é habilitado por padrão no modo de desenvolvimento.
+
+Se você não precisar usar o HMR, defina [dev.hmr](/config/dev/hmr) como `false`. Isso desabilitará o HMR e o react-refresh, e o Rsbuild automaticamente fará o fallback para [dev.liveReload](/config/dev/live-reload).
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    hmr: false,
+  },
+};
+```
+
+Para desabilitar tanto o HMR quanto o liveReload, defina [dev.hmr](/config/dev/hmr) e [dev.liveReload](/config/dev/live-reload) como `false`. Então, nenhuma requisição WebSocket será feita para o servidor de desenvolvimento na página, e a página não será atualizada automaticamente quando os arquivos mudarem.
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    hmr: false,
+    liveReload: false,
+  },
+};
+```
+
+## Especificar URL do HMR
+
+Por padrão, o Rsbuild usa o host e o número da porta da página atual para unir a URL do WebSocket para HMR.
+
+Quando a conexão HMR falha, você pode especificar a URL do WebSocket personalizando a configuração [dev.client](/config/dev/client).
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      host: 'localhost',
+      protocol: 'ws',
+    },
+  },
+};
+```
+
+## Observação de arquivos
+
+Por padrão, o Rsbuild não observa arquivos nos diretórios `.git/` e `node_modules/`. Quando arquivos nesses diretórios são alterados, o Rsbuild não acionará uma reconstrução. Isso ajuda a reduzir o uso de memória e melhorar o desempenho da build.
+
+Se você quiser observar esses diretórios, pode configurar manualmente o [watchOptions.ignored](https://rspack.rs/config/watch#watchoptionsignored) do Rspack para substituir o comportamento padrão.
+
+Por exemplo, para observar o diretório `node_modules/` e ignorar o diretório `.git/`, você pode configurá-lo da seguinte forma:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: {
+      watchOptions: {
+        ignored: /\.git/,
+      },
+    },
+  },
+};
+```
+
+## Perguntas Frequentes
+
+Consulte [Perguntas Frequentes sobre HMR](/guide/faq/hmr).

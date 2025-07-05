@@ -1,0 +1,104 @@
+# Melhorar o desempenho da build
+
+O Rsbuild otimiza o desempenho da build por padrão, mas à medida que o projeto cresce, você pode encontrar alguns problemas de desempenho da build.
+
+Este documento fornece alguns métodos opcionais de aceleração, os desenvolvedores podem escolher alguns deles para melhorar o desempenho da build.
+
+## Análise de desempenho
+
+Realizar uma análise de desempenho pode ajudá-lo a identificar gargalos de desempenho em seu projeto, permitindo uma otimização direcionada.
+
+Consulte a seção [Análise de Desempenho da Build](/guide/debug/build-profiling) para mais informações.
+
+## Otimização geral
+
+A seguir estão alguns métodos gerais de otimização, que podem acelerar a build de desenvolvimento e a build de produção.
+
+### Atualizar Rsbuild
+
+A atualização para a versão mais recente do Rsbuild pode se beneficiar das últimas otimizações de desempenho, consulte a seção [Atualizar Rsbuild](/guide/basic/upgrade-rsbuild) para mais detalhes.
+
+### Habilitar cache persistente
+
+O Rsbuild fornece a configuração [performance.buildCache](/config/performance/build-cache), que pode melhorar significativamente a velocidade da reconstrução.
+
+### Reduzindo módulos
+
+Otimizar o número de módulos referenciados pela aplicação pode reduzir o tamanho do bundle e melhorar o desempenho da build. Por favor, leia a seção [Otimização do Tamanho do Bundle](/guide/optimization/optimize-bundle) para aprender alguns métodos de otimização.
+
+### Otimizar Tailwind CSS
+
+Ao usar o Tailwind CSS v3, se o campo `content` em `tailwind.config.js` não estiver configurado corretamente, isso pode levar a um desempenho de build e HMR ruim.
+
+Consulte [Tailwind CSS v3 - Otimizar o desempenho da build](/guide/styling/tailwindcss-v3#optimize-build-performance) para mais detalhes.
+
+## Otimização de desenvolvimento
+
+A seguir estão os métodos para melhorar o desempenho no modo de desenvolvimento.
+
+### Habilitar compilação preguiçosa
+
+Habilitar a compilação preguiçosa pode reduzir significativamente o número de módulos compilados na inicialização do desenvolvimento e melhorar o tempo de inicialização.
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    lazyCompilation: true,
+  },
+};
+```
+
+> Consulte [dev.lazyCompilation](/config/dev/lazy-compilation) para mais informações.
+
+### Formato do Source Map
+
+Para fornecer uma boa experiência de depuração, o Rsbuild usa o formato de source map `cheap-module-source-map` por padrão no modo de desenvolvimento, que é um formato de source map de alta qualidade e trará uma certa sobrecarga de desempenho.
+
+You can improve build speed by adjusting the source map format in development mode through [output.sourceMap](/config/output/source-map).
+
+For example, to disable source map:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    sourceMap: {
+      js: false,
+    },
+  },
+};
+```
+
+Or set the source map format of the development mode to the cheapest `eval` format:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    sourceMap: {
+      js: process.env.NODE_ENV === 'development' ? 'eval' : false,
+    },
+  },
+};
+```
+
+> Para diferenças detalhadas entre diferentes formatos de source map, consulte [Rspack - devtool](https://rspack.rs/config/devtool).
+
+### Browserslist para desenvolvimento
+
+Esta estratégia é semelhante a ["Ajustar Browserslist"](/guide/optimization/optimize-bundle#adjust-browserslist), a diferença é que podemos definir diferentes browserslist para o modo de desenvolvimento e produção, reduzindo assim a sobrecarga de compilação no modo de desenvolvimento.
+
+Por exemplo, você pode adicionar a seguinte configuração ao `.browserslistrc`, o que significa que apenas os navegadores mais recentes são compatíveis no modo de desenvolvimento, e os navegadores reais são compatíveis no modo de produção:
+
+```yaml title=".browserslistrc"
+[production]
+chrome >= 87
+edge >= 88
+firefox >= 78
+safari >= 14
+
+[development]
+last 1 chrome version
+last 1 firefox version
+last 1 safari version
+```
+
+Observe que isso pode levar a algumas diferenças no resultado da build entre os modos de desenvolvimento e produção.

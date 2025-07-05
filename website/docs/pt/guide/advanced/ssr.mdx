@@ -1,0 +1,243 @@
+# Renderização no lado do servidor (SSR)
+
+Este capítulo apresenta como implementar a funcionalidade SSR usando o Rsbuild.
+
+Observe que o Rsbuild em si não fornece funcionalidade SSR pronta para uso, mas sim APIs e configurações de baixo nível para permitir que os desenvolvedores de frameworks implementem o SSR. Se você precisar de suporte SSR pronto para uso, pode considerar usar frameworks full-stack baseados no Rsbuild, como [Modern.js](https://github.com/web-infra-dev/modern.js).
+
+## O que é SSR
+
+SSR significa "Server-side rendering" (Renderização no lado do servidor). Isso significa que o HTML da página da web é gerado pelo servidor e enviado para o cliente, em vez de enviar apenas um shell HTML vazio e depender do JavaScript para gerar o conteúdo da página.
+
+Na renderização tradicional no lado do cliente, o servidor envia um shell HTML vazio e alguns scripts JavaScript para o cliente, e então busca dados da API do servidor e preenche a página com conteúdo dinâmico. Isso leva a tempos de carregamento inicial da página lentos e não é propício para a experiência do usuário e SEO.
+
+Com o SSR, o servidor gera HTML que já contém conteúdo dinâmico e o envia para o cliente. Isso torna o carregamento inicial da página mais rápido e mais amigável ao SEO, pois os mecanismos de busca podem rastrear a página renderizada.
+
+## Estrutura de arquivos
+
+Uma aplicação SSR típica terá os seguintes arquivos:
+
+```
+- index.html
+- server.js          # servidor principal da aplicação
+- src/
+  - App.js           # exporta o código da aplicação
+  - index.client.js  # entrada do cliente, monta a aplicação em um elemento DOM
+  - index.server.js  # entrada do servidor, renderiza a aplicação usando a API SSR do framework
+```
+
+O `index.html` precisará incluir um placeholder onde o conteúdo renderizado pelo servidor deve ser injetado:
+
+```html
+<div id="root"><!--app-content--></div>
+```
+
+## Criar configuração SSR
+
+No cenário SSR, dois tipos de saídas (alvos web e node), precisam ser gerados ao mesmo tempo, para renderização no lado do cliente (CSR) e renderização no lado do servidor (SSR) respectivamente.
+
+Neste momento, você pode usar a capacidade de [builds multi-ambiente](/guide/advanced/environments) do Rsbuild, defina a seguinte configuração:
+
+```ts title="rsbuild.config.ts"
+export default {
+  environments: {
+    // Configura o ambiente web para navegadores
+    web: {
+      source: {
+        entry: {
+          index: './src/index.client.js',
+        },
+      },
+      output: {
+        // Usa o target 'web' para as saídas do navegador
+        target: 'web',
+      },
+      html: {
+        // Template HTML personalizado
+        template: './index.html',
+      },
+    },
+    // Configura o ambiente node para SSR
+    node: {
+      source: {
+        entry: {
+          index: './src/index.server.js',
+        },
+      },
+      output: {
+        // Usa o target 'node' para as saídas do Node.js
+        target: 'node',
+      },
+    },
+  },
+};
+```
+
+## Servidor personalizado
+
+O Rsbuild fornece a [API do servidor de desenvolvimento](/api/javascript-api/dev-server-api) e a [API do ambiente](/guide/advanced/environments#environment-api) para permitir que você implemente o SSR.
+
+Aqui está um exemplo básico:
+
+```ts title="server.mjs"
+import express from 'express';
+import { createRsbuild } from '@rsbuild/core';
+
+async function initRsbuild() {
+  const rsbuild = await createRsbuild({
+    rsbuildConfig: {
+      server: {
+        middlewareMode: true,
+      },
+    },
+  });
+  return rsbuild.createDevServer();
+}
+
+async function startDevServer() {
+  const app = express();
+  const rsbuild = await initRsbuild();
+  const { environments } = rsbuild;
+
+  // SSR ao acessar /index.html
+  app.get('/', async (req, res, next) => {
+    try {
+      // Carrega o bundle do servidor
+      const bundle = await environments.node.loadBundle('index');
+      const template = await environments.web.getTransformedHtml('index');
+      const rendered = bundle.render();
+      // Insere o conteúdo renderizado no template HTML
+      const html = template.replace('<!--app-content-->', rendered);
+
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(html);
+    } catch (err) {
+      logger.error('SSR failed: ', err);
+      next();
+    }
+  });
+  app.use(rsbuild.middlewares);
+
+  const server = app.listen(rsbuild.port, async () => {
+    await rsbuild.afterListen();
+  });
+  rsbuild.connectWebSocket({ server });
+}
+
+startDevServer();
+```
+
+## Modificar script de inicialização
+
+Após usar um servidor personalizado, você precisa alterar o comando de inicialização de `rsbuild dev` para `node ./server.mjs`.
+
+Se você precisar visualizar o efeito online do SSR, também precisará modificar o comando de visualização. Exemplo de servidor de produção SSR: [Exemplo](https://github.com/rspack-contrib/rstack-examples/blob/main/rsbuild/ssr-express/prod-server.mjs).
+
+```json title="package.json"
+{
+  "scripts": {
+    "build": "rsbuild build",
+    "dev": "node ./server.mjs",
+    "preview": "node ./prod-server.mjs"
+  }
+}
+```
+
+Agora, você pode executar o comando `npm run dev` para iniciar o servidor de desenvolvimento com a função SSR e visitar `http://localhost:3000/` para ver que o conteúdo SSR foi renderizado na página HTML.
+
+## Obter manifest
+
+Por padrão, scripts e links associados à página atual são automaticamente inseridos no template HTML. Neste momento, o conteúdo do template HTML compilado pode ser obtido através de [getTransformedHtml](/api/javascript-api/environment-api#gettransformedhtml).
+
+Quando você precisa gerar HTML dinamicamente no lado do servidor, você precisará injetar as URLs dos ativos JavaScript e CSS no HTML. Ao configurar [output.manifest](/config/output/manifest), você pode facilmente obter as informações de manifest desses ativos. Aqui está um exemplo:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    manifest: true,
+  },
+};
+```
+
+```ts title="server.ts"
+async function renderHtmlPage(): Promise<string> {
+  const manifest = await fs.promises.readFile('./dist/manifest.json', 'utf-8');
+  const { entries } = JSON.parse(manifest);
+
+  const { js, css } = entries['index'].initial;
+
+  const scriptTags = js
+    .map((url) => `<script src="${url}" defer></script>`)
+    .join('\n');
+  const styleTags = css
+    .map((file) => `<link rel="stylesheet" href="${file}">`)
+    .join('\n');
+
+  return `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        ${scriptTags}
+        ${styleTags}
+      </head>
+      <body>
+        <div id="root"></div>
+      </body>
+    </html>`;
+}
+```
+
+## Exemplos
+
+- [Exemplo de SSR + Express](https://github.com/rspack-contrib/rstack-examples/blob/main/rsbuild/ssr-express)
+- [Exemplo de SSR + Express + Manifest](https://github.com/rspack-contrib/rstack-examples/blob/main/rsbuild/ssr-express-with-manifest)
+
+## Plugins específicos para SSR
+
+Ao desenvolver plugins Rsbuild, se você precisar adicionar lógica específica para SSR, você pode distingui-la por `target`.
+
+- Modificar a configuração do Rsbuild para SSR via [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig):
+
+```js
+export const myPlugin = () => ({
+  name: 'my-plugin',
+  setup(api) {
+    api.modifyEnvironmentConfig((config) => {
+      if (config.target === 'node') {
+        // Configuração do Rsbuild específica para SSR
+      }
+    });
+  },
+});
+```
+
+- Modificar a configuração do Rspack para SSR via [modifyRspackConfig](/plugins/dev/hooks#modifyrspackconfig):
+
+```js
+export const myPlugin = () => ({
+  name: 'my-plugin',
+  setup(api) {
+    api.modifyRspackConfig((config, { target }) => {
+      if (target === 'node') {
+        // Configuração do Rspack específica para SSR
+      }
+    });
+  },
+});
+```
+
+- Transformar código para SSR e cliente separadamente via [transform](/plugins/dev/core#apitransform):
+
+```js
+export const myPlugin = () => ({
+  name: 'my-plugin',
+  setup(api) {
+    api.transform({ test: /foo\.js$/, targets: ['web'] }, ({ code }) => {
+      // transformar código do cliente
+    });
+
+    api.transform({ test: /foo\.js$/, targets: ['node'] }, ({ code }) => {
+      // transformar código do servidor
+    });
+  },
+});
+```

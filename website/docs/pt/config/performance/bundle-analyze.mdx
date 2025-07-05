@@ -1,0 +1,136 @@
+# performance.bundleAnalyze
+
+- **Type:** `Object | undefined`
+
+Used to enable the [webpack-bundle-analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer) plugin to analyze the size of the output.
+
+By default, Rsbuild does not enable `webpack-bundle-analyzer`. When this feature is enabled, the default configuration is as follows:
+
+```js
+const defaultConfig = {
+  analyzerMode: 'static',
+  openAnalyzer: false,
+  // Distinguish by environment names, such as `web`, `node`, etc.
+  reportFilename: `report-${environment}.html`,
+};
+```
+
+## Enable bundle analyze
+
+You have two ways to enable `webpack-bundle-analyzer` to analyze the size of the output files.
+
+### Via environment variable
+
+Add the environment variable `BUNDLE_ANALYZE=true`, for example:
+
+```json title="package.json"
+{
+  "scripts": {
+    "build:analyze": "BUNDLE_ANALYZE=true rsbuild build"
+  }
+}
+```
+
+As Windows does not support the above usage, you can also use [cross-env](https://npmjs.com/package/cross-env) to set environment variables. This ensures compatibility across different systems:
+
+```json title="package.json"
+{
+  "scripts": {
+    "build:analyze": "cross-env BUNDLE_ANALYZE=true rsbuild build"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.0"
+  }
+}
+```
+
+### Via configuration
+
+Configure `performance.bundleAnalyze` to enable it permanently:
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    bundleAnalyze: {},
+  },
+};
+```
+
+### Analysis result
+
+After enabling it, Rsbuild will generate an HTML file that analyzes the size of the output files, and print the following log in the Terminal:
+
+```bash
+Webpack Bundle Analyzer saved report to /Project/my-project/dist/report-web.html
+```
+
+You can manually open the file in the browser and view the detail of the bundle size. When an area is larger, it indicates that its corresponding bundle size is larger.
+
+![](https://assets.rspack.rs/rsbuild/assets/bundle-analyzer-example.png)
+
+## Override default configuration
+
+You can override the default configuration through `performance.bundleAnalyze`, such as enabling the server mode:
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    bundleAnalyze: process.env.BUNDLE_ANALYZE
+      ? {
+          analyzerMode: 'server',
+          openAnalyzer: true,
+        }
+      : {},
+  },
+};
+```
+
+## Size types
+
+In the `webpack-bundle-analyzer` panel, you can control size types in the upper left corner (default is `Parsed`):
+
+- `Stat`: The size obtained from the `stats` object of the bundler, which reflects the size of the code before minification.
+- `Parsed`: The size of the file on the disk, which reflects the size of the code after minification.
+- `Gzipped`: The file size requested in the browser reflects the size of the code after minification and gzip.
+
+## Generate stats.json
+
+By setting `generateStatsFile` to true, stats JSON file will be generated in bundle output directory.
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    bundleAnalyze: {
+      generateStatsFile: true,
+    },
+  },
+};
+```
+
+In the output directory, you will see `stats.json` and `report-web.html` files.
+
+```
+└── dist
+    ├── stats.json
+    └── report-web.html
+```
+
+If you don't need the `report-web.html`, you can set `analyzerMode` to `disabled`.
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    bundleAnalyze: {
+      analyzerMode: 'disabled',
+      generateStatsFile: true,
+    },
+  },
+};
+```
+
+## Notes
+
+1. Enabling the server mode will cause the `build` process to not exit normally.
+2. Enabling `bundleAnalyzer` will reduce build speed. Therefore, this configuration should not be enabled during daily development, and it is recommended to enable it on demand through the `BUNDLE_ANALYZE` environment variable.
+3. Since no code minification and other optimizations are performed in the `dev` phase, the real output size cannot be reflected, so it is recommended to analyze the output size in the `build` phase.
+4. If the bundleAnalyzer is enabled during the `dev` phase, in order to ensure that webpack-bundle-analyzer can access the contents of static assets, Rsbuild will automatically enable the [dev.writeToDisk](/config/dev/write-to-disk) option.

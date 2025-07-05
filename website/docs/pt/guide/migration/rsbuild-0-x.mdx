@@ -1,0 +1,412 @@
+# Migrando do Rsbuild 0.x
+
+O documento lista todas as mudanças que quebram a compatibilidade do Rsbuild 0.7 para 1.0. Você pode consultar este documento para a migração.
+
+> Consulte [Mudanças que quebram a compatibilidade no Rsbuild v1.0.0](https://github.com/web-infra-dev/rsbuild/discussions/2508) para detalhes.
+
+## [Importante] Loader Lightning CSS
+
+O Rsbuild agora habilita o [lightningcss-loader](https://rspack.rs/guide/features/builtin-lightningcss-loader) por padrão para transformar arquivos CSS, ele substitui o `autoprefixer` para adicionar prefixos de fornecedor e oferece melhor desempenho.
+
+- `@rsbuild/plugin-lightningcss` foi descontinuado e não é mais necessário.
+- A configuração `tools.autoprefixer` foi removida.
+
+Considerando que o Lightning CSS tem alguns casos de borda não cobertos, você ainda pode habilitar o autoprefixer via o arquivo de configuração postcss:
+
+```js title="postcss.config.cjs"
+module.exports = {
+  plugins: {
+    autoprefixer: {},
+  },
+};
+```
+
+## [Importante] output.polyfill
+
+O Rsbuild v1 definiu [output.polyfill](/config/output/polyfill) como `'off'` por padrão, isso pode reduzir o código polyfill e gerar bundles menores por padrão.
+
+Se sua aplicação precisar de polyfill, defina `output.polyfill` como `'usage'` ou `'entry'`:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    polyfill: 'usage',
+  },
+};
+```
+
+## [Importante] source.decorators
+
+O Rsbuild agora usa a versão `2022-11` de decorators por padrão. Isso permite que o Rsbuild alinhe o comportamento padrão com TypeScript >= 5.0 e esbuild >= 0.21.0.
+
+Se você estiver usando os decorators legados, pode adicionar a seguinte configuração:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  source: {
+    decorators: {
+      version: 'legacy',
+    },
+  },
+});
+```
+
+## [Importante] output.targets
+
+:::tip
+O Rsbuild v1 remove a opção `output.targets` e os parâmetros `target` de `source.alias` / `source.entry` e outras configurações, e em vez disso, configura-o através de `environments` para fornecer capacidades de configuração multi-ambiente mais flexíveis.
+
+Comparado com as opções originais, `environments` tem uma cobertura mais ampla e pode realizar configurações diferenciadas de mais configurações em múltiplos ambientes. Para detalhes, consulte [Builds Multi-ambiente](/guide/advanced/environments).
+:::
+
+Removida a configuração `output.targets`, use as configurações [output.target](/config/output/target) e [environments](/config/environments) em vez disso.
+
+- antes:
+
+```js
+export default {
+  output: {
+    targets: ['web', 'node'],
+  },
+};
+```
+
+- depois:
+
+```js
+export default {
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+      },
+    },
+  },
+};
+```
+
+## [Importante] Validação de configuração do Rspack
+
+O Rsbuild agora habilita a validação de esquema do Rspack por padrão para garantir que a configuração do Rspack esteja correta.
+
+- Se houver um erro de tipo no objeto de configuração do Rspack, um erro será lançado e a build será abortada.
+- Se houver campos extras no objeto de configuração do Rspack, um erro será lançado, mas a build não falhará.
+
+> Para mais detalhes, consulte [Rspack - RSPACK_CONFIG_VALIDATE](https://rspack.rs/guide/migration/webpack#updating-configuration).
+
+## source.alias
+
+Removido o parâmetro `target` para a função `source.alias`, use a configuração [environments](/config/environments) em vez disso.
+
+- antes:
+
+```js
+export default {
+  source: {
+    alias: (alias, { target }) => {
+      if (target === 'node') {
+        alias['@common'] = './src/node/common';
+      } else if (target === 'web') {
+        alias['@common'] = './src/web/common';
+      }
+    },
+  },
+  output: {
+    targets: ['web', 'node'],
+  },
+};
+```
+
+- depois:
+
+```js
+export default {
+  environments: {
+    web: {
+      source: {
+        alias: {
+          '@common': './src/web/common',
+        },
+      },
+      output: {
+        target: 'web',
+      },
+    },
+    node: {
+      source: {
+        alias: {
+          '@common': './src/node/common',
+        },
+      },
+      output: {
+        target: 'node',
+      },
+    },
+  },
+};
+```
+
+## source.entry
+
+Removido o uso de função de `source.entry`, use a configuração [environments](/config/environments) em vez disso.
+
+- antes:
+
+```js
+export default {
+  source: {
+    entry({ target }) {
+      if (target === 'web') {
+        return {
+          index: './src/index.client.js',
+        };
+      }
+      if (target === 'node') {
+        return {
+          index: './src/index.server.js',
+        };
+      }
+    },
+  },
+  output: {
+    targets: ['web', 'node'],
+  },
+};
+```
+
+- depois:
+
+```js
+export default {
+  environments: {
+    web: {
+      source: {
+        entry: {
+          index: './src/index.client.js',
+        },
+      },
+      output: {
+        target: 'web',
+      },
+    },
+    node: {
+      source: {
+        entry: {
+          index: './src/index.server.js',
+        },
+      },
+      output: {
+        target: 'node',
+      },
+    },
+  },
+};
+```
+
+## output.overrideBrowserslist
+
+`output.overrideBrowserslist` não suporta mais o tipo `Record<RsbuildTarget, string[]`, use a configuração [environments](/config/environments) em vez disso.
+
+- antes:
+
+```js
+export default {
+  output: {
+    overrideBrowserslist: {
+      web: ['iOS >= 9', 'Android >= 4.4'],
+      node: ['node >= 20'],
+    },
+  },
+};
+```
+
+- depois:
+
+```js
+export default defineConfig({
+  environments: {
+    web: {
+      output: {
+        overrideBrowserslist: ['iOS >= 9', 'Android >= 4.4'],
+      },
+    },
+    node: {
+      output: {
+        overrideBrowserslist: ['node >= 20'],
+      },
+    },
+  },
+});
+```
+
+## output.emitAssets
+
+`output.emitAssets` mudou para o tipo booleano, use a configuração [environments](/config/environments) em vez disso.
+
+- antes:
+
+```js
+export default {
+  output: {
+    targets: ['web', 'node'],
+    emitAssets: ({ target }) => target !== 'node',
+  },
+};
+```
+
+- depois:
+
+```js
+export default {
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+        emitAssets: false,
+      },
+    },
+  },
+};
+```
+
+## output.distPath.server
+
+Removido `output.distPath.server`, use a configuração [environments](/config/environments) em vez disso.
+
+```js
+export default {
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+        distPath: {
+          root: 'dist/server',
+        },
+      },
+    },
+  },
+};
+```
+
+## output.minify.html
+
+O Rsbuild v1 removeu as opções `output.minify.html` e `output.minify.htmlOptions`, e não minifica mais os arquivos HTML.
+
+Anteriormente, o Rsbuild usava `html-minifier-terser` para minificar os arquivos HTML. Mas o desempenho de `html-minifier-terser` não atende às necessidades das aplicações Rsbuild, e na maioria dos casos, há pouco benefício em compactar HTML.
+
+Nesta fase, o Rsbuild não terá `html-minifier-terser` embutido, então fornecemos um [rsbuild-plugin-html-minifier-terser](https://github.com/rspack-contrib/rsbuild-plugin-html-minifier-terser) autônomo para suportar a minificação de HTML.
+
+```ts title="rsbuild.config.ts"
+import { pluginHtmlMinifierTerser } from 'rsbuild-plugin-html-minifier-terser';
+
+export default {
+  plugins: [pluginHtmlMinifierTerser()],
+};
+```
+
+E planejamos usar um minificador HTML baseado em Rust mais rápido no futuro.
+
+## output.charset
+
+O valor padrão de [output.charset](/config/output/charset) foi alterado de `ascii` para `utf8`.
+
+Para usar `ascii`, adicione a seguinte configuração:
+
+```ts
+export default {
+  output: {
+    charset: 'ascii',
+  },
+};
+```
+
+## dev.startUrl
+
+`dev.startUrl` foi renomeado para [server.open](/config/server/open):
+
+```js
+export default {
+  // [!code --]
+  dev: {
+    startUrl: true, // [!code --]
+  }, // [!code --]
+  // [!code ++]
+  server: {
+    open: true, // [!code ++]
+  }, // [!code ++]
+};
+```
+
+## dev.client.port
+
+O valor padrão de [dev.client.port](/config/dev/client) mudou de `<port>` para `''` (usa `location.port`).
+
+Use o valor anterior se quiser manter o comportamento:
+
+```js
+export default {
+  dev: {
+    client: {
+      port: '<port>',
+    },
+  },
+};
+```
+
+## html.appIcon
+
+Anteriormente, [html.appIcon](/config/html/app-icon) não suportava manifestos de aplicativos web, o que significa que estava disponível apenas no iOS.
+
+Agora `html.appIcon` suporta a geração de manifestos de aplicativos web, e o tipo de `html.appIcon` foi alterado.
+
+- antes:
+
+```js
+export default {
+  html: {
+    appIcon: './src/icon.png',
+  },
+};
+```
+
+- depois:
+
+```js
+export default {
+  html: {
+    appIcon: {
+      icons: [{ src: './src/icon.png', size: 180 }],
+    },
+  },
+};
+```
+
+## Outros
+
+O Rsbuild 1.0 fez alguns ajustes e otimizações nas APIs de plugins e na API do servidor de desenvolvimento.
+
+Inclui:
+
+- O hook `onBeforeBuild` suporta o acionamento múltiplas vezes no modo de observação.
+- Adicionados os hooks `onBeforeEnvironmentCompile` e `onAfterEnvironmentCompile`, que são acionados antes/depois da execução da build de um único ambiente, respectivamente.
+- Removido `api.getHtmlPaths` e substituído por `environment.htmlPaths`.
+- Removido `api.context.entry` e substituído por `environment.entry`.
+- Removido `api.context.targets` e substituído por `environment.target`.
+- Removido `rsbuildServer.onHTTPUpgrade` e substituído por `rsbuildServer.connectWebSocket`.

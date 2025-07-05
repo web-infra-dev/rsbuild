@@ -1,0 +1,270 @@
+# Início Rápido
+
+## Exemplos Online
+
+Nós fornecemos exemplos online baseados no Rsbuild. Os exemplos dão uma noção intuitiva do desempenho de compilação do Rspack e da experiência de desenvolvimento do Rsbuild:
+
+- [Exemplo no StackBlitz](https://stackblitz.com/~/github.com/rspack-contrib/rsbuild-stackblitz-example)
+- [Exemplo no CodeSandbox](https://codesandbox.io/p/github/rspack-contrib/rsbuild-codesandbox-example)
+
+> **O que são StackBlitz e CodeSandbox?**
+> São ambientes de desenvolvimento online que permitem que você execute projetos de código diretamente no seu navegador, sem precisar instalar nada na sua máquina. São ótimos para experimentar novas tecnologias e compartilhar exemplos de código.
+
+## Configuração do Ambiente
+
+O Rsbuild suporta o uso de [Node.js](https://nodejs.org/pt-br), [Deno](https://deno.com/) ou [Bun](https://bun.sh/) como ambiente de execução.
+
+### Node.js
+
+Para o Node.js, você precisará instalar a versão 16 ou superior. É recomendado usar a versão [LTS (Long-Term Support)](https://nodejs.org/pt-br/about/releases/), que oferece maior estabilidade.
+
+Verifique a versão atual do Node.js com o seguinte comando:
+
+```bash
+node -v
+```
+
+Se você não tiver o Node.js instalado ou a versão for muito antiga, você pode usar o [nvm](https://github.com/nvm-sh/nvm) ou o [fnm](https://github.com/Schniz/fnm) para instalar.
+
+> **O que são nvm e fnm?**
+> São gerenciadores de versão do Node.js. Eles permitem que você instale e alterne entre diferentes versões do Node.js facilmente, o que é muito útil quando se trabalha em múltiplos projetos com diferentes requisitos de versão.
+
+Aqui está um exemplo de como instalar via nvm:
+
+```bash
+# Instalar a versão LTS do Node.js
+nvm install --lts
+# Mudar para a versão LTS do Node.js
+nvm use --lts
+```
+
+## Criar uma aplicação Rsbuild
+
+Use o [create-rsbuild](https://www.npmjs.com/package/create-rsbuild) para criar uma nova aplicação Rsbuild. Execute o seguinte comando:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs
+  command={{
+    npm: 'npm create rsbuild@latest',
+    yarn: 'yarn create rsbuild',
+    pnpm: 'pnpm create rsbuild@latest',
+    bun: 'bun create rsbuild@latest',
+  }}
+/>
+
+Siga as instruções passo a passo. Durante o processo de criação, você pode escolher se precisa de ferramentas adicionais como TypeScript, ESLint, etc.
+
+Após a criação da aplicação, você pode seguir estes passos:
+
+- Execute `git init` para inicializar o repositório Git.
+- Execute `npm install` (ou o comando de instalação do seu gerenciador de pacotes) para instalar as dependências npm.
+- Execute `npm run dev` para iniciar o servidor de desenvolvimento, que por padrão roda em `localhost:5173`.
+
+### Templates
+
+Ao criar uma aplicação, você pode escolher entre os seguintes templates fornecidos pelo `create-rsbuild`:
+
+| Template | Descrição                       | Recursos Opcionais |
+| -------- | ------------------------------- | ------------------ |
+| vanilla  | JavaScript puro (Vanilla)       | TypeScript         |
+| react    | [React 19](https://react.dev/)  | TypeScript         |
+| react18  | [React 18](https://react.dev/)  | TypeScript         |
+| vue      | [Vue 3](https://vuejs.org/)     | TypeScript         |
+| vue2     | [Vue 2](https://v2.vuejs.org/)  | TypeScript         |
+| lit      | [Lit](https://lit.dev/)         | TypeScript         |
+| preact   | [Preact](https://preactjs.com/) | TypeScript         |
+| svelte   | [Svelte 5](https://svelte.dev/) | TypeScript         |
+| solid    | [Solid](https://solidjs.com/)   | TypeScript         |
+
+`create-rsbuild` fornece templates básicos prontos para uso. Você também pode obter mais templates das seguintes maneiras:
+
+- Visite [Rspack - Ecossistema](https://rspack.rs/pt-BR/guide/start/quick-start#ecosystem) para conhecer várias ferramentas de nível superior baseadas no Rsbuild.
+- Visite [awesome-rspack - Starter](https://github.com/web-infra-dev/awesome-rspack?tab=readme-ov-file#starter) para obter mais templates mantidos pela comunidade.
+
+### Ferramentas opcionais
+
+`create-rsbuild` pode ajudá-lo a configurar algumas ferramentas comumente usadas, incluindo [Biome](https://github.com/biomejs/biome), [ESLint](https://github.com/eslint/eslint) e [Prettier](https://github.com/prettier/prettier). Você pode usar as setas do teclado e a barra de espaço para fazer suas seleções. Se não precisar dessas ferramentas, pode simplesmente pressionar Enter para pular.
+
+```
+◆  Selecione ferramentas adicionais (Use <espaço> para selecionar, <enter> para continuar)
+│  ◻ Adicionar Biome para linting e formatação de código
+│  ◻ Adicionar ESLint para linting de código
+│  ◻ Adicionar Prettier para formatação de código
+└
+```
+
+> **O que são Biome, ESLint e Prettier?**
+>
+> - **ESLint**: É uma ferramenta de _linting_ que analisa seu código para encontrar e corrigir problemas de estilo e erros comuns.
+> - **Prettier**: É um formatador de código opinativo que garante um estilo de código consistente em todo o projeto.
+> - **Biome**: É uma ferramenta mais nova que combina as funcionalidades de _linting_ e formatação em uma única ferramenta de alta performance, sendo uma alternativa ao ESLint e Prettier.
+
+:::tip
+O Biome oferece recursos de _linting_ e formatação semelhantes ao ESLint e Prettier. Se você selecionar o Biome, geralmente não precisará escolher também o ESLint ou o Prettier.
+:::
+
+### Diretório atual
+
+Para criar uma aplicação no diretório atual, defina a pasta de destino como `.`:
+
+```
+◆  Criar Projeto Rsbuild
+│
+◇  Nome ou caminho do projeto
+│  .
+│
+◇  "." não está vazio, por favor escolha:
+│  Continuar e sobrescrever arquivos
+```
+
+### Criação rápida
+
+[create-rsbuild](https://npmjs.com/package/create-rsbuild) fornece alguns sinalizadores (flags) de linha de comando. Ao definir esses sinalizadores, você pode pular as etapas de seleção interativa e criar a aplicação com um único comando.
+
+Por exemplo, para criar uma aplicação React no diretório `my-app` com um comando:
+
+```bash
+npx create-rsbuild --dir my-app --template react
+
+# Usando abreviações
+npx create-rsbuild -d my-app -t react
+
+# Especificar múltiplas ferramentas
+npx create-rsbuild -d my-app -t react --tools eslint --tools prettier
+```
+
+Todos os sinalizadores de linha de comando do `create-rsbuild`:
+
+```
+Uso: create-rsbuild [opções]
+
+Opções:
+
+  -h, --help       exibir ajuda para o comando
+  -d, --dir        criar projeto no diretório especificado
+  -t, --template   especificar o template a ser usado
+  --tools          selecionar ferramentas adicionais (biome, eslint, prettier)
+  --override       sobrescrever arquivos no diretório de destino
+
+Templates:
+
+  react-js, react-ts, vue3-js, vue3-ts, vue2-js, vue2-ts, svelte-js, svelte-ts, solid-js, solid-ts, vanilla-js, vanilla-ts
+```
+
+## Migrar de projetos existentes
+
+Para migrar de um projeto existente para o Rsbuild, consulte os seguintes guias:
+
+- [Migrar do webpack](/guide/migration/webpack)
+- [Migrar do Create React App](/guide/migration/cra)
+- [Migrar do Vue CLI](/guide/migration/vue-cli)
+- [Migrar do Vite](/guide/migration/vite)
+- [Migrar do Modern.js Builder](/guide/migration/modern-builder)
+- [Migrar do Tsup para o Rslib](https://rslib.rs/guide/migration/tsup)
+- [Migrar do Storybook para o Storybook Rsbuild](https://rspack.rs/guide/migration/storybook)
+
+### Outros projetos
+
+Se o seu projeto não se enquadra nos guias de migração acima, você pode instalar manualmente o pacote [@rsbuild/core](https://npmjs.com/package/@rsbuild/core):
+
+<PackageManagerTabs command="add @rsbuild/core -D" />
+
+Após a instalação, você pode consultar os seguintes documentos para configurar seu projeto:
+
+- Veja [CLI](/guide/basic/cli) para aprender sobre os comandos CLI disponíveis.
+- Veja [Lista de Plugins](/plugins/list/index) para selecionar plugins do Rsbuild.
+- Veja [Configurar o Rsbuild](/guide/configuration/rsbuild) para configurar o Rsbuild.
+
+## CLI
+
+O Rsbuild vem com uma CLI leve que inclui comandos como `dev` e `build`.
+
+```json title="package.json"
+{
+  "scripts": {
+    // iniciando o servidor de desenvolvimento
+    "dev": "rsbuild dev",
+    // compila a aplicação para produção
+    "build": "rsbuild build",
+    // pré-visualiza a compilação de produção localmente
+    "preview": "rsbuild preview"
+  }
+}
+```
+
+Consulte a [CLI](/guide/basic/cli) para aprender sobre todos os comandos e opções disponíveis.
+
+## Módulo de Entrada
+
+Por padrão, a CLI do Rsbuild usa `src/index.(js|ts|jsx|tsx)` como o módulo de entrada. Você pode modificar o módulo de entrada usando a opção [source.entry](/config/source/entry).
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    entry: {
+      foo: './src/pages/foo/index.ts',
+      bar: './src/pages/bar/index.ts',
+    },
+  },
+};
+```
+
+## Pacotes Principais
+
+### @rsbuild/core
+
+<a
+  href="https://npmjs.com/package/@rsbuild/core"
+  target="_blank"
+  style={{ display: 'block', marginTop: '16px' }}
+>
+  <img
+    src="https://img.shields.io/npm/v/@rsbuild/core?style=flat-square&colorA=564341&colorB=EDED91"
+    alt="@rsbuild/core"
+    style={{ pointerEvents: 'none' }}
+  />
+</a>
+
+Pacote principal do Rsbuild, fornecendo comandos CLI e API JavaScript.
+
+### create-rsbuild
+
+<a
+  href="https://npmjs.com/package/create-rsbuild"
+  target="_blank"
+  style={{ display: 'block', marginTop: '16px' }}
+>
+  <img
+    src="https://img.shields.io/npm/v/create-rsbuild?style=flat-square&colorA=564341&colorB=EDED91"
+    alt="create-rsbuild"
+    style={{ pointerEvents: 'none' }}
+  />
+</a>
+
+Cria um novo projeto Rsbuild.
+
+## Próximo passo
+
+Você pode querer:
+
+import NextSteps from '@components/NextSteps';
+import Step from '@components/Step';
+
+<NextSteps>
+  <Step
+    href="/guide/start/features"
+    title="Todos os recursos"
+    description="Conheça todos os recursos do Rsbuild"
+  />
+  <Step
+    href="/guide/configuration/rsbuild"
+    title="Configuração"
+    description="Aprenda a configurar o Rsbuild"
+  />
+  <Step
+    href="https://github.com/web-infra-dev/rsbuild"
+    title="Apoie o Rsbuild"
+    description="Apoie-nos com uma estrela ⭐️"
+  />
+</NextSteps>

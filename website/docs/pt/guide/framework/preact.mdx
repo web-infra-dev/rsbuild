@@ -1,0 +1,66 @@
+# Preact
+
+Neste documento, você aprenderá como construir uma aplicação Preact usando o Rsbuild.
+
+## Criar uma aplicação Preact
+
+Use o [create-rsbuild](/guide/start/quick-start#create-an-rsbuild-application) para criar uma aplicação Preact com o Rsbuild. Execute o seguinte comando:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs
+  command={{
+    npm: 'npm create rsbuild@latest',
+    yarn: 'yarn create rsbuild',
+    pnpm: 'pnpm create rsbuild@latest',
+    bun: 'bun create rsbuild@latest',
+  }}
+/>
+
+Em seguida, selecione `Preact` quando for solicitado "Select framework" (Selecionar framework).
+
+## Usar Preact em um projeto existente
+
+Para compilar Preact, você precisa registrar o [Plugin Preact](/plugins/list/plugin-preact) do Rsbuild. O plugin adicionará automaticamente a configuração necessária para builds do Preact.
+
+Por exemplo, registre em `rsbuild.config.ts`:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginPreact } from '@rsbuild/plugin-preact';
+
+export default defineConfig({
+  plugins: [pluginPreact()],
+});
+```
+
+## Preact Fast Refresh
+
+O plugin Preact usa [@preact/prefresh](https://github.com/preactjs/prefresh) e [@rspack/plugin-preact-refresh](https://github.com/rspack-contrib/rspack-plugin-preact-refresh) para recarregar componentes Preact a quente.
+
+### Reconhecimento de componentes
+
+O Prefresh precisa ser capaz de reconhecer seus componentes, o que significa que os componentes devem começar com uma letra maiúscula e os hooks devem começar com `use` seguido de uma letra maiúscula. Isso permite que o plugin os reconheça de forma eficaz.
+
+Observe que um componente como o mostrado abaixo não é nomeado:
+
+```jsx
+export default () => {
+  return <p>Want to refresh</p>;
+};
+```
+
+Em vez disso, faça:
+
+```jsx
+const MyComponent = () => {
+  return <p>Want to refresh</p>;
+};
+
+export default MyComponent;
+```
+
+Quando você estiver trabalhando com HOCs (Higher-Order Components), certifique-se de elevar o `displayName` para que o plugin possa reconhecê-lo como um componente.
+
+**O que são HOCs (Higher-Order Components)?**
+HOCs (Higher-Order Components) são uma técnica avançada em React para reutilizar a lógica de componentes. Um HOC é uma função que recebe um componente como entrada e retorna um novo componente com funcionalidades adicionais. Eles são úteis para compartilhar comportamentos entre componentes sem duplicar código, abstrair lógicas complexas e lidar com preocupações transversais como busca de dados, autenticação ou logging.

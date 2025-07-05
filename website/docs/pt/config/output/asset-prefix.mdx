@@ -1,0 +1,97 @@
+# output.assetPrefix
+
+- **Type:** `string | 'auto'`
+- **Default:** [server.base](/config/server/base)
+
+In [production mode](/config/mode), use this option to set the URL prefix for static assets, such as setting it to a CDN URL.
+
+`assetPrefix` will affect the URLs of most of the static assets, including JavaScript files, CSS files, images, videos, etc. If an incorrect value is specified, you'll receive 404 errors while loading these resources.
+
+This config is only used in `production` mode or `none` mode. In `development` mode, use the [dev.assetPrefix](/config/dev/asset-prefix) to set the URL prefix.
+
+## Example
+
+Setting `output.assetPrefix` will add the value as a prefix to the URLs of all static assets like JavaScript, CSS, images, etc.
+
+- For example, setting it to a CDN address:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    assetPrefix: 'https://cdn.example.com/assets/',
+  },
+};
+```
+
+After the build, the URL of the JS bundle in the HTML file will be:
+
+```html
+<script
+  defer
+  src="https://cdn.example.com/assets/static/js/index.ebc4ff4f.js"
+></script>
+```
+
+- Setting it to a relative path:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    assetPrefix: './',
+  },
+};
+```
+
+After the build, the URL of the JS bundle in the HTML file will be:
+
+```html
+<script defer src="./static/js/index.ebc4ff4f.js"></script>
+```
+
+## Default value
+
+The default value of `output.assetPrefix` is the same as [server.base](/config/server/base).
+
+When `server.base` is `/foo`, `index.html` and static assets can be accessed through `http://localhost:3000/foo/`.
+
+It should be noted that when customizing the `output.assetPrefix` option, if you want static assets to be accessible normally during [Rsbuild preview](/guide/basic/cli#rsbuild-preview), `output.assetPrefix` should contain the same URL prefix as `server.base`, such as:
+
+```ts
+export default {
+  output: {
+    assetPrefix: '/foo/bar/',
+  },
+  server: {
+    base: '/foo',
+  },
+};
+```
+
+## Path types
+
+assetPrefix can be set to the following types of paths:
+
+- **absolute path**: This is the most common practice, can be specific server paths, like `/assets/`, or setting to CDN paths, like `https://cdn.example.com/assets/`.
+- **relative path**: such as `./assets/`.
+- **'auto'**: Rspack will automatically calculate the path and generate relative paths based on file location.
+
+:::tip
+It's not recommended to set assetPrefix as a relative path, such as `'./assets/'`. This is because when assets are at different path depths, using relative paths may cause assets to load incorrectly.
+:::
+
+## Compare with `publicPath`
+
+The functionality of `output.assetPrefix` is basically the same as the [output.publicPath](https://rspack.rs/config/output#outputpublicpath) config in Rspack.
+
+The differences from the native configuration are as follows:
+
+- `output.assetPrefix` only takes effect in production mode.
+- `output.assetPrefix` default value is the same as [server.base](/config/server/base).
+- `output.assetPrefix` automatically appends a trailing `/` by default.
+- The value of `output.assetPrefix` is written to the [process.env.ASSET_PREFIX](/guide/advanced/env-vars#processenvasset_prefix) environment variable (can only be accessed in client code).
+
+## Dynamic asset prefix
+
+Use the `__webpack_public_path__` variable provided by Rspack to dynamically set the URL prefix of static assets in JavaScript code.
+
+See [Rspack - Dynamically set publicPath](https://rspack.rs/config/output#dynamically-set-publicpath).

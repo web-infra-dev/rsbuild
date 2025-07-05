@@ -1,0 +1,120 @@
+# JSON
+
+O Rsbuild suporta a importação de arquivos JSON no código, e também suporta a importação de arquivos [YAML](https://yaml.org/) e [Toml](https://toml.io/en/) e a conversão deles para o formato JSON.
+
+## Arquivo JSON
+
+You can import JSON files directly in JavaScript files.
+
+### Exemplo
+
+```json title="example.json"
+{
+  "name": "foo",
+  "items": [1, 2]
+}
+```
+
+```js title="index.js"
+import example from './example.json';
+
+console.log(example.name); // 'foo';
+console.log(example.items); // [1, 2];
+```
+
+### Importação nomeada
+
+O Rsbuild também suporta a importação de arquivos JSON via importação nomeada:
+
+```js
+import { name } from './example.json';
+
+console.log(name); // 'foo';
+```
+
+## Arquivo YAML
+
+[YAML](https://yaml.org/) é uma linguagem de serialização de dados comumente usada para escrever arquivos de configuração.
+
+O Rsbuild fornece o [@rsbuild/plugin-yaml](https://github.com/rspack-contrib/rsbuild-plugin-yaml). Após registrar o plugin, você pode importar arquivos `.yaml` ou `.yml` em JavaScript e eles serão automaticamente convertidos para objetos JavaScript.
+
+```ts title="rsbuild.config.ts"
+import { pluginYaml } from '@rsbuild/plugin-yaml';
+
+export default {
+  plugins: [pluginYaml()],
+};
+```
+
+### Exemplo
+
+```yaml title="example.yaml"
+---
+hello: world
+foo:
+  bar: baz
+```
+
+```js
+import example from './example.yaml';
+
+console.log(example.hello); // 'world';
+console.log(example.foo); // { bar: 'baz' };
+```
+
+## Arquivo TOML
+
+[TOML](https://toml.io/) é um formato de arquivo de configuração semanticamente explícito e fácil de ler.
+
+O Rsbuild fornece o [@rsbuild/plugin-toml](https://github.com/rspack-contrib/rsbuild-plugin-toml). Após registrar o plugin, você pode importar arquivos `.toml` em JavaScript e eles serão automaticamente convertidos para objetos JavaScript.
+
+```ts title="rsbuild.config.ts"
+import { pluginToml } from '@rsbuild/plugin-toml';
+
+export default {
+  plugins: [pluginToml()],
+};
+```
+
+### Exemplo
+
+```toml title="example.toml"
+hello = "world"
+
+[foo]
+bar = "baz"
+```
+
+```js title="src/env.d.ts"
+import example from './example.toml';
+
+console.log(example.hello); // 'world';
+console.log(example.foo); // { bar: 'baz' };
+```
+
+## Declaração de tipo
+
+Quando você importa arquivos YAML ou Toml em código TypeScript, crie um arquivo `src/env.d.ts` em seu projeto e adicione as declarações de tipo correspondentes.
+
+- Método 1: Se o pacote `@rsbuild/core` estiver instalado, você pode referenciar os [tipos predefinidos](/guide/basic/typescript#preset-types) fornecidos por `@rsbuild/core`:
+
+```ts title="src/env.d.ts"
+/// <reference types="@rsbuild/core/types" />
+```
+
+- Método 2: Adicione manualmente as declarações de tipo necessárias:
+
+```ts title="src/env.d.ts"
+declare module '*.yaml' {
+  const content: Record<string, any>;
+  export default content;
+}
+declare module '*.yml' {
+  const content: Record<string, any>;
+  export default content;
+}
+declare module '*.toml' {
+  const content: Record<string, any>;
+  export default content;
+}
+```

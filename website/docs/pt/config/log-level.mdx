@@ -1,0 +1,36 @@
+# logLevel
+
+- **Type:** `'info' | 'warn' | 'error' | 'silent'`
+- **Default:** `'info'`
+- **Version:** `>= 1.4.0`
+
+Specify the log level of Rsbuild, the default value is `info`.
+
+## Example
+
+Set `logLevel` to `warn` and Rsbuild will only output `warn` and `error` level logs:
+
+```ts title="rsbuild.config.ts"
+export default {
+  logLevel: 'warn',
+};
+```
+
+Set `logLevel` to `error` and Rsbuild will only output `error` level logs:
+
+```ts title="rsbuild.config.ts"
+export default {
+  logLevel: 'error',
+};
+```
+
+## Optional values
+
+- `info`: Output all logs
+- `warn`: Output `warn` and `error` level logs
+- `error`: Output `error` level logs
+- `silent`: Do not output any logs
+
+## Limitations
+
+Currently, you cannot set different log levels for each Rsbuild instance, because Rsbuild has a global shared [logger](/api/javascript-api/core#logger) instance, and all Rsbuild instances will share this logger instance.

@@ -1,0 +1,78 @@
+# server.historyApiFallback
+
+- **Type:** `boolean | ConnectHistoryApiFallbackOptions`
+- **Default:** `false`
+
+When Rsbuild's default [page routing](/guide/basic/server#page-routing) behavior cannot meet your needs, for example, if you want to be able to access `main.html` when accessing `/`, you can achieve this through the `server.historyApiFallback` configuration.
+
+## Example
+
+`server.historyApiFallback` is implemented based on [connect-history-api-fallback](https://github.com/bripkens/connect-history-api-fallback), and setting `server.historyApiFallback` to `true` is equivalent to using the default options of `connect-history-api-fallback`.
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    historyApiFallback: true,
+  },
+};
+```
+
+By default, `connect-history-api-fallback` will redirect all HTML GET requests to `index.html`.
+
+## Options
+
+`server.historyApiFallback` also supports passing an object to configure the behavior of `connect-history-api-fallback`.
+
+Here are some commonly used options, and more options and detailed information can be found in the [connect-history-api-fallback](https://github.com/bripkens/connect-history-api-fallback) documentation.
+
+### index
+
+- **Type:** `string`
+- **Default:** `'index.html'`
+
+By setting `historyApiFallback.index` to `main.html`, when accessing the root path `/` or other routes that may result in a 404, the page will automatically redirect to `main.html`.
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    entry: {
+      main: './src/index.ts',
+    },
+  },
+  server: {
+    htmlFallback: false,
+    historyApiFallback: {
+      index: '/main.html',
+    },
+  },
+};
+```
+
+### rewrites
+
+- **Type:**
+
+```ts
+type Rewrites = Array<{
+  from: RegExp;
+  to: string | RegExp | ((context: HistoryApiFallbackContext) => string);
+}>;
+```
+
+- **Default:** `[]`
+
+When your application contains multiple entries, you may need to redirect different paths to different pages. In this case, you can configure more flexible redirection rules through the `rewrites` option:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    historyApiFallback: {
+      rewrites: [
+        { from: /^\/$/, to: '/views/landing.html' },
+        { from: /^\/subpage/, to: '/views/subpage.html' },
+        { from: /./, to: '/views/404.html' },
+      ],
+    },
+  },
+};
+```

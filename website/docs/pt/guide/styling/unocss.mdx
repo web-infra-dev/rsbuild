@@ -1,0 +1,87 @@
+# UnoCSS
+
+[UnoCSS](https://unocss.dev/) é o motor CSS atômico instantâneo, projetado para ser flexível e extensível. O núcleo não tem opinião, e todas as utilidades CSS são fornecidas via presets.
+
+Você pode integrar o UnoCSS no Rsbuild via [@unocss/webpack](https://npmjs.com/package/@unocss/webpack).
+
+## Instalando UnoCSS
+
+Você precisa instalar `@unocss/webpack` primeiro.
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @unocss/webpack -D" />
+
+## Configurando plugin
+
+Registre o plugin `UnoCSSRspackPlugin` em [tools.rspack](/config/tools/rspack):
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { UnoCSSRspackPlugin } from '@unocss/webpack/rspack';
+
+export default defineConfig({
+  tools: {
+    rspack: {
+      plugins: [
+        UnoCSSRspackPlugin({
+          // opções
+        }),
+      ],
+    },
+  },
+});
+```
+
+Você pode adicionar UnoCSS Presets via as opções de `UnoCSSRspackPlugin`, por exemplo:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+import { UnoCSSRspackPlugin } from '@unocss/webpack/rspack';
+import { presetAttributify } from '@unocss/preset-attributify';
+import { presetUno } from '@unocss/preset-uno';
+
+export default defineConfig({
+  plugins: [pluginReact()],
+  tools: {
+    rspack: {
+      plugins: [
+        UnoCSSRspackPlugin({
+          presets: [presetUno(), presetAttributify()],
+        }),
+      ],
+    },
+  },
+});
+```
+
+:::tip
+A configuração acima é apenas para referência e pode ser modificada para atender às necessidades do seu projeto.
+:::
+
+## Importando CSS
+
+No arquivo de entrada JavaScript, importe `uno.css`:
+
+```js title="main.js"
+import 'uno.css';
+```
+
+## Concluído
+
+Você concluiu todas as etapas para integrar o UnoCSS no Rsbuild!
+
+Você pode usar as classes utilitárias do UnoCSS em qualquer componente ou HTML, como:
+
+```html
+<h1 class="px-2 items-center justify-between">Hello world!</h1>
+```
+
+Para mais detalhes de uso, consulte a [documentação do UnoCSS](https://unocss.dev/).
+
+## Extensão do VS Code
+
+O UnoCSS fornece um plugin [VS Code Extension](https://unocss.dev/integrations/vscode) para VS Code para decoração e tooltip para utilitários correspondentes.
+
+Você pode instalar este plugin no VS Code para habilitar recursos mais inteligentes.

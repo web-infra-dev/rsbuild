@@ -1,0 +1,125 @@
+# Introdução
+
+O Rsbuild é uma ferramenta de compilação de alta performance desenvolvida com base no [Rspack](https://rspack.rs/pt-BR). Ele fornece um conjunto de configurações de compilação padrão cuidadosamente projetadas, oferecendo uma experiência de desenvolvimento pronta para uso e que aproveita ao máximo as vantagens de desempenho do Rspack.
+
+O Rsbuild oferece [ricos recursos de compilação](/guide/start/features), incluindo a compilação de TypeScript, JSX, Sass, Less, CSS Modules, Wasm e outros. Ele também suporta Module Federation, compressão de imagem, verificação de tipos, PostCSS, Lightning CSS e muito mais.
+
+## 🚀 Desempenho
+
+Impulsionado pela arquitetura baseada em [Rust](https://www.rust-lang.org/) do Rspack, o Rsbuild oferece um desempenho ultrarrápido que irá remodelar seu fluxo de trabalho de desenvolvimento.
+
+> **O que é Rust?**
+> Rust é uma linguagem de programação de sistemas focada em segurança, velocidade e concorrência. Sua capacidade de gerenciar memória sem um coletor de lixo (garbage collector) a torna ideal para ferramentas de build de alta performance como o Rspack. Saiba mais no [site oficial do Rust](https://www.rust-lang.org/).
+
+⚡️ **Construindo 1000 componentes React:**
+
+import { BenchmarkGraph } from '@components/Benchmark';
+
+<BenchmarkGraph />
+
+> 📊 Resultados de benchmark de [build-tools-performance](https://github.com/rspack-contrib/build-tools-performance).
+
+## 💡 Comparações
+
+O Rsbuild é uma ferramenta de compilação que está no mesmo nível de ferramentas como [Vite](https://vitejs.dev/), [Create React App](https://github.com/facebook/create-react-app) ou [Vue CLI](https://github.com/vuejs/vue-cli). Todas elas vêm com servidores de desenvolvimento embutidos, ferramentas de linha de comando e configurações de compilação sensatas para proporcionar uma experiência pronta para uso.
+
+![](https://assets.rspack.rs/rsbuild/assets/rsbuild-1-0-build-tools.png)
+
+### CRA / Vue CLI
+
+Você pode pensar no Rsbuild como uma versão modernizada do Create React App ou do Vue CLI, com estas principais diferenças:
+
+- O empacotador (_bundler_) subjacente foi trocado do [webpack](https://webpack.js.org/) para o Rspack, proporcionando um desempenho de compilação de 5 a 10 vezes maior.
+- Ele é desacoplado de frameworks de UI (Interface de Usuário) e suporta todos os frameworks de UI através de [plugins](/plugins/list/index), incluindo React, Vue, Svelte, Solid, etc.
+- Oferece melhor extensibilidade. Você pode estender o Rsbuild de forma flexível através de [Configurações](/config/index), [API de Plugin](/plugins/dev/index) e [API JavaScript](/api/start/index).
+
+> **O que é um Bundler?**
+> Um empacotador (ou _bundler_) como o webpack ou o Rspack é uma ferramenta que pega seu código JavaScript e suas dependências e os agrupa em um ou mais arquivos otimizados para o navegador.
+
+### Vite
+
+O Rsbuild compartilha muitas semelhanças com o Vite, pois ambos visam melhorar a experiência de desenvolvimento front-end. As principais diferenças são:
+
+- **Consistência de produção**: O Rsbuild usa o Rspack para empacotar tanto no desenvolvimento quanto na produção, garantindo assim um alto nível de consistência entre os resultados. O Vite, por outro lado, usa [módulos ES (ESM)](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Modules) nativos durante o desenvolvimento, o que melhora a velocidade de inicialização, mas pode levar a inconsistências entre os ambientes.
+- **Compatibilidade de ecossistema**: O Rsbuild é compatível com a maioria dos plugins do webpack e todos os plugins do Rspack, enquanto o Vite é compatível com os plugins do [Rollup](https://rollupjs.org/). Se você usa muitos plugins e loaders do ecossistema webpack, migrar para o Rsbuild seria relativamente fácil.
+- **Module Federation**: A equipe do Rsbuild trabalha em estreita colaboração com a equipe de desenvolvimento do [Module Federation](/guide/advanced/module-federation), fornecendo suporte de primeira classe para ajudar você a desenvolver grandes aplicações web com arquitetura de micro-frontends.
+
+> **O que é Module Federation?**
+> Module Federation é uma tecnologia que permite que uma aplicação JavaScript carregue dinamicamente código de outra aplicação, compartilhando dependências. É uma abordagem poderosa para construir micro-frontends. Saiba mais na [documentação do webpack](https://webpack.js.org/concepts/module-federation/).
+
+## 🔥 Recursos
+
+O Rsbuild possui os seguintes recursos:
+
+- **Fácil de Configurar**: Um dos objetivos do Rsbuild é fornecer capacidades de compilação prontas para uso para usuários do Rspack, permitindo que os desenvolvedores iniciem um projeto web com configuração zero. Além disso, o Rsbuild fornece configuração de compilação semântica para reduzir a curva de aprendizado da configuração do Rspack.
+
+- **Orientado a Desempenho**: O Rsbuild integra ferramentas de alta performance baseadas em Rust da comunidade, incluindo [Rspack](https://rspack.rs/pt-BR), [SWC](https://swc.rs/) e [Lightning CSS](https://lightningcss.dev/), para oferecer velocidade de compilação e experiência de desenvolvimento de primeira classe.
+
+> **O que são SWC e Lightning CSS?**
+>
+> - **SWC**: É um compilador super-rápido de TypeScript / JavaScript escrito em Rust. Ele é usado para transpilar código moderno para ser compatível com navegadores mais antigos.
+> - **Lightning CSS**: É um processador e minificador de CSS extremamente rápido, também escrito em Rust.
+
+- **Ecossistema de Plugins**: O Rsbuild possui um sistema de plugins leve e inclui uma gama de plugins oficiais de alta qualidade. Além disso, o Rsbuild é compatível com a maioria dos plugins do webpack e todos os plugins do Rspack, permitindo que os usuários aproveitem plugins existentes da comunidade ou internos no Rsbuild sem a necessidade de reescrever o código.
+
+- **Artefatos Estáveis**: O Rsbuild é projetado com um forte foco na estabilidade dos artefatos de compilação. Ele garante alta consistência entre os artefatos nos builds de desenvolvimento e produção, e completa automaticamente o downgrade de sintaxe e a injeção de polyfills. O Rsbuild também fornece plugins para verificação de tipos e validação de sintaxe de artefatos para prevenir problemas de qualidade e compatibilidade no código de produção.
+
+- **Agnóstico de Framework**: O Rsbuild não está acoplado a nenhum framework de UI front-end. Ele suporta frameworks como React, Vue, Svelte, Solid e Preact através de plugins, e planeja suportar mais frameworks de UI da comunidade no futuro.
+
+## 🦀 Rstack
+
+Rstack é uma toolchain JavaScript unificada construída em torno do Rspack, com alta performance e arquitetura consistente.
+
+<img
+  src="https://assets.rspack.rs/rstack/rstack-overview.png"
+  alt="Rstack"
+  width="820"
+/>
+
+O Rstack inclui as seguintes ferramentas:
+
+| Nome                                                  | Descrição                                    |
+| :---------------------------------------------------- | :------------------------------------------- |
+| [Rspack](https://github.com/web-infra-dev/rspack)     | Empacotador (Bundler)                        |
+| [Rsbuild](https://github.com/web-infra-dev/rsbuild)   | Ferramenta de Compilação                     |
+| [Rslib](https://github.com/web-infra-dev/rslib)       | Ferramenta de desenvolvimento de bibliotecas |
+| [Rspress](https://github.com/web-infra-dev/rspress)   | Gerador de site estático                     |
+| [Rsdoctor](https://github.com/web-infra-dev/rsdoctor) | Analisador de Compilação                     |
+| [Rstest](https://github.com/web-infra-dev/rstest)     | Framework de Testes                          |
+
+## 🔗 Links
+
+- [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack): Uma lista curada de coisas incríveis relacionadas ao Rstack.
+- [rstack-examples](https://github.com/rspack-contrib/rstack-examples): Exemplos que demonstram as ferramentas Rstack.
+- [storybook-rsbuild](https://github.com/rspack-contrib/storybook-rsbuild): Construtor do Storybook com a tecnologia Rsbuild.
+- [rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template): Use este template para criar seu próprio plugin Rsbuild.
+- [rstack-design-resources](https://github.com/rspack-contrib/rstack-design-resources): Recursos de design para o Rstack.
+
+## 🧑‍💻 Comunidade
+
+Venha conversar conosco no [Discord](https://discord.gg/XsaKEEk4mW)! A equipe do Rstack e os usuários são ativos lá, e estamos sempre procurando por contribuições.
+
+## ✨ Próximo passo
+
+You can want:
+
+import NextSteps from '@components/NextSteps';
+import Step from '@components/Step';
+
+<NextSteps>
+  <Step
+    href="/guide/start/quick-start"
+    title="Início Rápido"
+    description="Aprenda a usar o Rsbuild"
+  />
+  <Step
+    href="/guide/start/features"
+    title="Todos os recursos"
+    description="Conheça todos os recursos do Rsbuild"
+  />
+  <Step
+    href="https://github.com/web-infra-dev/rsbuild"
+    title="Apoie o Rsbuild"
+    description="Apoie-nos com uma estrela ⭐️"
+  />
+</NextSteps>

@@ -1,0 +1,353 @@
+# Create React App
+
+Este capítulo apresenta como migrar um projeto [Create React App](https://github.com/facebook/create-react-app) (CRA) ou [CRACO](https://craco.js.org/) para o Rsbuild.
+
+:::tip CRA eject
+Se o seu projeto já executou o comando `eject` do CRA, então a maior parte do conteúdo deste documento não será mais aplicável.
+
+Após ejetar um projeto CRA, ele se torna mais parecido com um projeto que usa diretamente o webpack, então você pode consultar o [guia de migração do webpack](/guide/migration/webpack).
+:::
+
+## Instalando dependências
+
+Primeiro, você precisa substituir as dependências npm do CRA pelas dependências do Rsbuild.
+
+import { PackageManagerTabs } from '@theme';
+
+- Remover dependências do CRA:
+
+<PackageManagerTabs command="remove react-scripts" />
+
+> Para projetos que usam CRACO, você também pode remover a dependência @craco/craco.
+
+- Instalar dependências do Rsbuild:
+
+<PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-react -D" />
+
+## Atualizando scripts npm
+
+Em seguida, você precisa atualizar os scripts npm em package.json para os comandos CLI do Rsbuild.
+
+```json title="package.json"
+{
+  "scripts": {
+    "start": "react-scripts start", // [!code --]
+    "build": "react-scripts build", // [!code --]
+    "eject": "react-scripts eject", // [!code --]
+    "start": "rsbuild dev", // [!code ++]
+    "build": "rsbuild build", // [!code ++]
+    "preview": "rsbuild preview" // [!code ++]
+  }
+}
+```
+
+:::tip
+O Rsbuild não integra frameworks de teste, então ele não fornece um comando para substituir `react-scripts test`. Você pode usar diretamente frameworks de teste como Jest ou Vitest. Você pode consultar o projeto de exemplo [Rsbuild react-jest](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/react-jest) para configuração.
+:::
+
+## Criando arquivo de configuração
+
+Crie um arquivo de configuração do Rsbuild `rsbuild.config.ts` no mesmo diretório do package.json e adicione o seguinte conteúdo:
+
+```typescript title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [pluginReact()],
+});
+```
+
+## Template HTML
+
+O CRA usa o arquivo `public/index.html` como o template HTML padrão. No Rsbuild, você pode especificar o template HTML através de [html.template](/config/html/template):
+
+```ts title="rsbuild.config.ts"
+export default defineConfig({
+  html: {
+    template: './public/index.html',
+  },
+});
+```
+
+No template HTML, se você estiver usando a variável `%PUBLIC_URL%` do CRA, substitua-a pela [variável assetPrefix](/config/html/template-parameters) do Rsbuild e use uma barra para concatenação:
+
+```html
+<!-- [!code --] -->
+<link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+<!-- [!code ++] -->
+<link rel="icon" href="<%= assetPrefix %>/favicon.ico" />
+```
+
+Isso completa a migração básica do CRA para o Rsbuild. Agora você pode executar o comando `npm run start` para tentar iniciar o servidor de desenvolvimento.
+
+## Diretório de saída
+
+Por padrão, o CRA gera a saída para o diretório `build`, enquanto o diretório de saída padrão do Rsbuild é `dist`.
+
+You can configure Rsbuild's [output.distPath.root](/config/output/dist-path) option to change the directory to `build`, in line with CRA:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    distPath: {
+      root: 'build',
+    },
+  },
+};
+```
+
+> Para mais detalhes, consulte a seção [Arquivos de Saída](/guide/basic/output-files).
+
+## Usando pré-processadores CSS
+
+O Rsbuild suporta pré-processadores CSS como Sass e Less através de plugins. Consulte:
+
+- [Sass Plugin](/plugins/list/plugin-sass)
+- [Less Plugin](/plugins/list/plugin-less)
+- [Stylus Plugin](/plugins/list/plugin-stylus)
+
+## Usando SVGR
+
+Se você estiver usando o recurso "SVG para Componente React" do CRA (ou seja, [SVGR](https://react-svgr.com/)), você também precisará instalar o plugin SVGR para o Rsbuild.
+
+Por exemplo, se você estiver usando o seguinte:
+
+```jsx
+import { ReactComponent as Logo } from './logo.svg';
+
+const App = () => (
+  <div>
+    <Logo />
+  </div>
+);
+```
+
+You only need to install and register `@rsbuild/plugin-svgr`:
+
+```ts title="rsbuild.config.ts"
+import { pluginSvgr } from '@rsbuild/plugin-svgr';
+
+export default {
+  plugins: [pluginSvgr({ mixedImport: true })],
+};
+```
+
+Consulte a documentação [plugin SVGR](/plugins/list/plugin-svgr) para saber como usar o SVGR no Rsbuild.
+
+## Migração de configuração
+
+Hera is the corresponding Rsbuild configuration for [CRA configuration](https://create-react-app.dev/docs/advanced-configuration/):
+
+| CRA                     | Rsbuild                                                                                         |
+| :---------------------- | :---------------------------------------------------------------------------------------------- |
+| HOST                    | [server.host](/config/server/host)                                                              |
+| PORT                    | [server.port](/config/server/port)                                                              |
+| HTTPS                   | [server.https](/config/server/https)                                                            |
+| WDS_SOCKET_HOST         | [dev.client.host](/config/dev/client)                                                           |
+| WDS_SOCKET_PATH         | [dev.client.path](/config/dev/client)                                                           |
+| WDS_SOCKET_PORT         | [dev.client.port](/config/dev/client)                                                           |
+| PUBLIC_URL              | [dev.assetPrefix](/config/dev/asset-prefix) / [output.assetPrefix](/config/output/asset-prefix) |
+| BUILD_PATH              | [output.distPath](/config/output/dist-path)                                                     |
+| GENERATE_SOURCEMAP      | [output.sourceMap](/config/output/source-map)                                                   |
+| IMAGE_INLINE_SIZE_LIMIT | [output.dataUriLimit](/config/output/data-uri-limit)                                            |
+| FAST_REFRESH            | [dev.hmr](/config/dev/hmr)                                                                      |
+| TSC_COMPILE_ON_ERROR    | [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check)       |
+
+Notas:
+
+- A tabela acima não cobre todas as configurações do CRA, sinta-se à vontade para adicionar mais.
+
+## Compilar node_modules
+
+Por padrão, o CRA usa Babel para compilar dependências em node_modules, mas o Rsbuild não, para evitar a sobrecarga de desempenho e possíveis erros de compilação causados pela compilação secundária.
+
+Para lidar com problemas de compatibilidade de sintaxe causados por dependências em node_modules, você pode usar a configuração [source.include](/config/source/include#compile-node_modules) para compilar node_modules.
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    // Compila todos os arquivos JS e exclui core-js
+    include: [{ not: /[\\/]core-js[\\/]/ }],
+  },
+};
+```
+
+## Variáveis de ambiente
+
+O CRA injeta variáveis de ambiente que começam com `REACT_APP_` no código do cliente por padrão, enquanto o Rsbuild injeta variáveis de ambiente que começam com `PUBLIC_` por padrão (consulte [variáveis públicas](/guide/advanced/env-vars#public-variables)).
+
+Para ser compatível com o comportamento do CRA, você pode chamar manualmente o método [loadEnv](/api/javascript-api/core#loadenv) do Rsbuild para ler variáveis de ambiente que começam com `REACT_APP_` e injetá-las no código do cliente através da configuração [source.define](/config/source/define).
+
+```ts title="rsbuild.config.ts"
+import { defineConfig, loadEnv } from '@rsbuild/core';
+
+const { publicVars } = loadEnv({ prefixes: ['REACT_APP_'] });
+
+export default defineConfig({
+  source: {
+    define: publicVars,
+  },
+});
+```
+
+Observe que o CRA permite o acesso ao objeto `process.env` completo no código e também permite a desestruturação de `process.env`. No entanto, o Rsbuild não define o objeto `process.env` devido a preocupações com o tamanho do bundle e segurança.
+
+```ts title="src/index.js"
+// No CRA, você pode acessá-lo assim
+const { PUBLIC_URL } = process.env;
+console.log(PUBLIC_URL);
+console.log(process.env);
+```
+
+No Rsbuild, você pode usar a configuração [source.define](/config/source/define) para definir `process.env` e ler o `rawPublicVars` retornado pelo método `loadEnv` para permitir o uso acima:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig, loadEnv } from '@rsbuild/core';
+
+const { publicVars, rawPublicVars } = loadEnv({ prefixes: ['REACT_APP_'] });
+
+export default defineConfig({
+  source: {
+    define: {
+      ...publicVars,
+      'process.env': JSON.stringify(rawPublicVars),
+    },
+  },
+});
+```
+
+## Remover react-app-polyfill
+
+O CRA fornece [react-app-polyfill](https://npmjs.com/package/react-app-polyfill) para injetar manualmente o código polyfill.
+
+No projeto Rsbuild, você pode remover a dependência e o código relacionados ao react-app-polyfill, pois o Rsbuild lerá automaticamente a configuração do browserslist e permitirá que você habilite a injeção de polyfill através da configuração [output.polyfill](/config/output/polyfill).
+
+1.  Remova a referência `react-app-polyfill`:
+
+```ts title="src/index.js"
+import 'react-app-polyfill/ie11'; // [!code --]
+import 'react-app-polyfill/stable'; // [!code --]
+```
+
+2.  Configure [output.polyfill](/config/output/polyfill):
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    polyfill: 'usage',
+  },
+};
+```
+
+> Leia [Compatibilidade do Navegador](/guide/advanced/browser-compatibility) para entender como o Rsbuild lida com polyfills.
+
+## Configurar ESLint
+
+O CRA uses ESLint to lint the code by default. Rsbuild does not include linting by default, but you can add a separate npm script to run ESLint in `package.json`.
+
+First, install [eslint](https://eslint.org/) and [eslint-config-react-app](https://npmjs.com/package/eslint-config-react-app), you need to install ESLint v8 to keep consistent with CRA:
+
+<PackageManagerTabs command="add eslint@8 eslint-config-react-app -D" />
+
+Then, add the `lint` command in `package.json`, and confirm that the project contains an `eslintConfig` configuration or an independent ESLint configuration file:
+
+```json title="package.json"
+{
+  "scripts": {
+    "lint": "eslint src"
+  },
+  "eslintConfig": {
+    "extends": ["react-app", "react-app/jest"]
+  }
+}
+```
+
+Then, you can use the `npm run lint` command to run ESLint.
+
+### Executar ESLint durante a build
+
+Além de adicionar o comando `lint` em `package.json`, você também pode adicionar o plugin [@rsbuild/plugin-eslint](https://github.com/rspack-contrib/rsbuild-plugin-eslint) para manter o mesmo comportamento do CRA.
+
+`@rsbuild/plugin-eslint` allows you to run ESLint during the build process.
+
+```ts title="rsbuild.config.ts"
+import { pluginEslint } from '@rsbuild/plugin-eslint';
+
+export default {
+  plugins: [pluginEslint()],
+};
+```
+
+Após registrar o plugin, o ESLint será executado automaticamente durante o desenvolvimento (`npm run dev`) e as builds de produção (`npm run build`). O plugin exibirá avisos e erros do ESLint na saída do console.
+
+:::warning
+Não recomendamos usar o plugin `@rsbuild/plugin-eslint`, pois executar o ESLint durante o processo de build aumentará significativamente o tempo de build. Em vez disso, recomendamos usar um comando `lint` separado para executar as verificações do ESLint.
+:::
+
+## Lendo jsconfig.json
+
+Em projetos não-TypeScript, o CRA suporta a leitura do campo `paths` em jsconfig.json como o alias de caminho.
+
+Para usar este recurso no Rsbuild, consulte [Alias de Caminho - jsconfig.json](/guide/advanced/alias#jsconfigjson).
+
+## Migração CRACO
+
+Se o seu projeto estiver usando [CRACO](https://craco.js.org) para sobrescrever a configuração do CRA, você pode consultar a tabela abaixo para migração:
+
+| CRACO                                                                                           | Rsbuild                                                                                   |
+| :---------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------- |
+| [webpack.configure](https://craco.js.org/docs/configuration/webpack/#webpackconfigure)          | [tools.rspack](/config/tools/rspack)                                                      |
+| [webpack.alias](https://craco.js.org/docs/configuration/webpack/#webpackalias)                  | [resolve.alias](/config/resolve/alias)                                                    |
+| [webpack.plugins.add](https://craco.js.org/docs/configuration/webpack/#webpackplugins)          | [appendPlugins de tools.rspack](/config/tools/rspack#appendplugins)                       |
+| [webpack.plugins.remove](https://craco.js.org/docs/configuration/webpack/#webpackpluginsremove) | [removePlugin de tools.rspack](/config/tools/rspack#removeplugin)                         |
+| [style.modules](https://craco.js.org/docs/configuration/style/#stylemodules)                    | [output.cssModules](/config/output/css-modules)                                           |
+| [style.css](https://craco.js.org/docs/configuration/style/#stylecss)                            | [tools.cssLoader](/config/tools/css-loader)                                               |
+| [style.sass](https://craco.js.org/docs/configuration/style/#stylesass)                          | [Plugin Sass](/plugins/list/plugin-sass)                                                  |
+| [style.postcss](https://craco.js.org/docs/configuration/style/#stylepostcss)                    | [tools.postcss](/config/tools/postcss)                                                    |
+| [babel](https://craco.js.org/docs/configuration/babel/)                                         | [Plugin Babel](/plugins/list/plugin-babel)                                                |
+| [typescript](https://craco.js.org/docs/configuration/typescript/)                               | [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check) |
+| [devServer](https://craco.js.org/docs/configuration/devserver/)                                 | [configurações do servidor](/config/index)                                                |
+
+### Exemplo
+
+Aqui está um exemplo de migração de `webpack.configure` para `tools.rspack`:
+
+- Antes da migração:
+
+```js title="craco.config.js"
+const { whenDev } = require('@craco/craco');
+
+module.exports = {
+  webpack: {
+    configure: {
+      resolve: {
+        mainFields: ['browser', 'module', 'main'],
+      },
+    },
+    plugins: [...whenDev(() => [new MyWebpackPlugin()], [])],
+  },
+};
+```
+
+- Após a migração:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: {
+      resolve: {
+        mainFields: ['browser', 'module', 'main'],
+      },
+      plugins:
+        process.env.NODE_ENV === 'development' ? [new MyWebpackPlugin()] : [],
+    },
+  },
+};
+```
+
+## Suplemento de conteúdo
+
+O documento atual cobre apenas parte do processo de migração. Se você encontrar conteúdo adequado para adicionar, sinta-se à vontade para contribuir com a documentação via pull request 🤝.
+
+> A documentação para rsbuild can be found in the [rsbuild/website](https://github.com/web-infra-dev/rsbuild/tree/main/website) directory.

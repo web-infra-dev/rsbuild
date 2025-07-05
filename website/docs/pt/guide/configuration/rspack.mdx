@@ -1,0 +1,330 @@
+# Configurar Rspack
+
+O Rsbuild suporta a modificação direta do objeto de configuração do Rspack, e também suporta a modificação da configuração Rspack embutida do Rsbuild através de `rspack-chain`.
+
+:::tip
+A configuração Rspack embutida no Rsbuild pode mudar com as iterações, e essas mudanças não serão refletidas no semver. Portanto, sua configuração personalizada pode se tornar inválida ao atualizar o Rsbuild.
+:::
+
+## Visualizar configuração Rspack
+
+O Rsbuild fornece o comando [rsbuild inspect](/guide/basic/cli#rsbuild-inspect) para visualizar a configuração Rspack final gerada pelo Rsbuild.
+
+Você também pode visualizá-la através do [modo de depuração](/guide/debug/debug-mode).
+
+## Modificar objeto de configuração
+
+Você pode usar a opção [tools.rspack](/config/tools/rspack) do Rsbuild para modificar o objeto de configuração do Rspack.
+
+Por exemplo, registrar plugins Rspack ou plugins webpack:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: {
+      plugins: [SomeWebpackPlugin()],
+    },
+  },
+};
+```
+
+Ou modificar a configuração Rspack com uma função:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: (config, { env }) => {
+      if (env === 'development') {
+        config.devtool = 'cheap-module-eval-source-map';
+      }
+      return config;
+    },
+  },
+};
+```
+
+> Consulte a [documentação tools.rspack](/config/tools/rspack) para uso detalhado.
+
+## Acessar API do Rspack
+
+Se você precisar acessar a API ou plugins exportados por [@rspack/core](https://npmjs.com/package/@rspack/core), você pode importar diretamente o objeto [rspack](/api/javascript-api/core#rspack) de `@rsbuild/core` sem instalar o pacote `@rspack/core` separadamente.
+
+```ts title="rsbuild.config.ts"
+import { rspack } from '@rsbuild/core';
+
+export default {
+  tools: {
+    rspack: {
+      plugins: [
+        new rspack.BannerPlugin({
+          // ...
+        }),
+      ],
+    },
+  },
+};
+```
+
+:::tip
+
+- Consulte [plugins do Rspack](https://rspack.rs/plugins/) e [API JavaScript do Rspack](https://rspack.rs/api/javascript-api/) para saber mais sobre as APIs Rspack disponíveis.
+- Não é recomendado instalar manualmente o pacote `@rspack/core`, pois isso pode entrar em conflito com a versão da qual o Rsbuild depende.
+
+:::
+
+## Usar cadeia de empacotadores
+
+import RspackChain from '@en/shared/rspackChain.mdx';
+
+<RspackChain />
+
+### tools.bundlerChain
+
+O Rsbuild fornece a configuração [tools.bundlerChain](/config/tools/bundler-chain) para modificar o rspack-chain. Seu valor é uma função que recebe dois argumentos:
+
+- O primeiro argumento é uma instância `rspack-chain`, que você pode usar para modificar a configuração do Rspack.
+- O segundo argumento é um objeto de utilitários, incluindo `env`, `isProd`, `CHAIN_ID`, etc.
+
+Aqui está um exemplo básico:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    bundlerChain: (chain, { env }) => {
+      if (env === 'development') {
+        chain.devtool('cheap-module-eval-source-map');
+      }
+    },
+  },
+};
+```
+
+`tools.bundlerChain` também pode ser uma função assíncrona:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    bundlerChain: (chain, { env }) => {
+      const value = await fetchValue();
+      chain.devtool(value);
+    },
+  },
+};
+```
+
+### Conceitos Básicos
+
+Antes de usar o rspack-chain para modificar a configuração do Rspack, é recomendável familiarizar-se com alguns conceitos básicos.
+
+#### Sobre o ID
+
+Em suma, o rspack-chain exige que os usuários definam um ID único para cada regra, loader, plugin e minimizador. Com este ID, você pode facilmente encontrar o objeto desejado em objetos aninhados.
+
+O Rsbuild exporta todos os IDs definidos internamente através do objeto `CHAIN_ID`, para que você possa localizar rapidamente o loader ou plugin que deseja modificar usando esses IDs exportados, sem a necessidade de travessia complexa no objeto de configuração do Rspack.
+
+Por exemplo, você pode remover a regra CSS embutida usando `CHAIN_ID.RULE.CSS`:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    bundlerChain: (chain, { CHAIN_ID }) => {
+      chain.module.rules.delete(CHAIN_ID.RULE.CSS);
+    },
+  },
+};
+```
+
+#### Tipos de ID
+
+O objeto `CHAIN_ID` contém vários IDs, que correspondem às seguintes configurações:
+
+| Campo CHAIN_ID       | Configuração Correspondente | Descrição                                              |
+| :------------------- | :-------------------------- | :----------------------------------------------------- |
+| `CHAIN_ID.PLUGIN`    | `plugins[i]`                | Corresponde a um plugin na configuração do Rspack      |
+| `CHAIN_ID.RULE`      | `module.rules[i]`           | Corresponde a uma regra na configuração do Rspack      |
+| `CHAIN_ID.USE`       | `module.rules[i].loader`    | Corresponde a um loader na configuração do Rspack      |
+| `CHAIN_ID.MINIMIZER` | `optimization.minimizer`    | Corresponde a um minimizador na configuração do Rspack |
+
+### Exemplos
+
+#### Loader personalizado
+
+Aqui estão exemplos de como adicionar, modificar e remover loaders do Rspack.
+
+- Adicionar um loader para lidar com arquivos `.md`:
+
+```js title="rsbuild.config.mjs"
+export default {
+  tools: {
+    bundlerChain: (chain) => {
+      chain.module
+        .rule('md')
+        .test(/\.md$/)
+        .use('md-loader')
+        // O nome do pacote ou caminho do módulo do loader
+        .loader('md-loader');
+    },
+  },
+};
+```
+
+- Modificar opções do loader SWC embutido:
+
+```js title="rsbuild.config.mjs"
+export default {
+  tools: {
+    bundlerChain: (chain, { CHAIN_ID }) => {
+      chain.module
+        .rule(CHAIN_ID.RULE.JS)
+        .use(CHAIN_ID.USE.SWC)
+        .tap((options) => {
+          console.log(options);
+          return options;
+        });
+    },
+  },
+};
+```
+
+- Remover o loader SWC embutido:
+
+```js title="rsbuild.config.mjs"
+export default {
+  tools: {
+    bundlerChain: (chain, { CHAIN_ID }) => {
+      chain.module.rule(CHAIN_ID.RULE.JS).uses.delete(CHAIN_ID.USE.SWC);
+    },
+  },
+};
+```
+
+- Inserir um loader após o loader SWC embutido que é executado antes:
+
+```js title="rsbuild.config.mjs"
+export default {
+  tools: {
+    bundlerChain: (chain, { CHAIN_ID }) => {
+      chain.module
+        .rule(CHAIN_ID.RULE.JS)
+        .use('my-loader')
+        .after(CHAIN_ID.USE.SWC)
+        // O nome do pacote ou caminho do módulo do loader
+        .loader('my-loader')
+        .options({
+          // algumas opções
+        });
+    },
+  },
+};
+```
+
+> Nota: Os loaders do Rspack são executados em ordem inversa.
+
+- Inserir um loader antes do loader SWC embutido que é executado depois:
+
+```js title="rsbuild.config.mjs"
+export default {
+  tools: {
+    bundlerChain: (chain, { CHAIN_ID }) => {
+      chain.module
+        .rule(CHAIN_ID.RULE.JS)
+        // ID do Loader, não é realmente significativo, apenas para localização
+        .use('my-loader')
+        .before(CHAIN_ID.USE.SWC)
+        // O nome do pacote ou caminho do módulo do loader
+        .loader('my-loader')
+        .options({
+          // algumas opções
+        });
+    },
+  },
+};
+```
+
+- Remover a regra de tratamento de CSS embutida:
+
+```js title="rsbuild.config.mjs"
+export default {
+  tools: {
+    bundlerChain: (chain, { CHAIN_ID }) => {
+      chain.module.rules.delete(CHAIN_ID.RULE.CSS);
+    },
+  },
+};
+```
+
+#### Plugin personalizado
+
+Aqui estão exemplos de como adicionar, modificar e excluir plugins do Rspack.
+
+```js title="rsbuild.config.mjs"
+export default {
+  tools: {
+    bundlerChain: (chain, { bundler, CHAIN_ID }) => {
+      // Adicionar plugin
+      chain.plugin('custom-define').use(bundler.DefinePlugin, [
+        {
+          'process.env': {
+            NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+          },
+        },
+      ]);
+
+      // Modificar plugin
+      chain.plugin(CHAIN_ID.PLUGIN.HMR).tap((options) => {
+        options[0].fullBuildTimeout = 200;
+        return options;
+      });
+
+      // Excluir plugin
+      chain.plugins.delete(CHAIN_ID.PLUGIN.HMR);
+    },
+  },
+};
+```
+
+:::tip
+Na maioria dos casos, você deve alterar as opções do plugin usando as configurações fornecidas pelo Rsbuild, em vez de usar `CHAIN_ID.PLUGIN`, pois isso pode levar a um comportamento inesperado.
+
+Por exemplo, use [tools.htmlPlugin](/config/tools/html-plugin) para alterar as opções do HtmlPlugin.
+:::
+
+#### Modificar com base no ambiente
+
+Na função `tools.bundlerChain`, você pode acessar vários identificadores de ambiente no segundo parâmetro, como build de desenvolvimento/produção, build SSR, build Web Worker, para conseguir modificações de configuração para diferentes ambientes.
+
+```js title="rsbuild.config.mjs"
+export default {
+  tools: {
+    bundlerChain: (chain, { env, isProd, target, isServer, isWebWorker }) => {
+      if (env === 'development' || env === 'test') {
+        // ...
+      }
+      if (isProd) {
+        // ...
+      }
+      if (target === 'node') {
+        // ...
+      }
+      if (isServer) {
+        // ...
+      }
+      if (isWebWorker) {
+        // ...
+      }
+    },
+};
+```
+
+Os exemplos acima são alguns exemplos de configuração comuns. Para a API completa do rspack-chain, consulte a [documentação do rspack-chain](https://github.com/rspack-contrib/rspack-chain).
+
+## Ordem de modificação da configuração
+
+O Rsbuild suporta a modificação do objeto de configuração do Rspack através de `tools.rspack`, `tools.bundlerChain`, `modifyBundlerChain`, etc.
+
+A ordem de execução entre eles é:
+
+- [modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain)
+- [tools.bundleChain](/config/tools/bundler-chain)
+- [modifyRspackConfig](/plugins/dev/hooks#modifyrspackconfig)
+- [tools.rspack](/config/tools/rspack)
