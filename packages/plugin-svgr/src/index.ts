@@ -6,6 +6,8 @@ import type { Config as BaseSvgrOptions } from '@svgr/core';
 import deepmerge from 'deepmerge';
 import type { Config as SvgoConfig } from 'svgo';
 
+// @svgr/core does not have the svgo dependency, so we need to
+// manually specify the svgoConfig type
 type SvgrOptions = Omit<BaseSvgrOptions, 'svgoConfig'> & {
   svgoConfig?: SvgoConfig;
 };
