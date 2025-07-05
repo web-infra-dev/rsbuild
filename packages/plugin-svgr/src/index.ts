@@ -2,9 +2,15 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
 import { PLUGIN_REACT_NAME } from '@rsbuild/plugin-react';
-import type { Config as SvgrOptions } from '@svgr/core';
+import type { Config as BaseSvgrOptions } from '@svgr/core';
 import deepmerge from 'deepmerge';
 import type { Config as SvgoConfig } from 'svgo';
+
+// @svgr/core does not have the svgo dependency, so we need to
+// manually specify the svgoConfig type
+type SvgrOptions = Omit<BaseSvgrOptions, 'svgoConfig'> & {
+  svgoConfig?: SvgoConfig;
+};
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -156,7 +162,9 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
 
       const rule = chain.module.rule(CHAIN_ID.RULE.SVG).test(SVG_REGEX);
 
-      const svgrOptions = deepmerge<SvgrOptions>(
+      const svgrOptions = deepmerge<
+        SvgrOptions & Pick<Required<SvgrOptions>, 'svgo' | 'svgoConfig'>
+      >(
         {
           svgo: true,
           svgoConfig: getSvgoDefaultConfig(),
