@@ -233,6 +233,9 @@ declare module '*?url' {
  * @example
  * import logo from './logo.svg?inline'
  * console.log(logo) // 'data:image/svg+xml;base64,...'
+ *
+ * import inlineCss from './style.css?inline';
+ * console.log(inlineCss); // Compiled CSS content
  */
 declare module '*?inline' {
   const content: string;
@@ -241,10 +244,17 @@ declare module '*?inline' {
 
 /**
  * Imports the raw content of the file as a string.
- * @note Only works for static assets and CSS files by default.
+ * @note Only works for static assets, CSS files, and scripts
+ * (JS, TS, JSX, TSX) by default.
  * @example
  * import raw from './logo.svg?raw'
  * console.log(raw) // '<svg viewBox="0 0 24 24">...</svg>'
+ *
+ * import rawJs from './script.js?raw'
+ * console.log(rawJs) // 'console.log("Hello world");'
+ *
+ * import rawCss from './style.css?raw'
+ * console.log(rawCss) // 'body { background: red; }'
  */
 declare module '*?raw' {
   const content: string;
