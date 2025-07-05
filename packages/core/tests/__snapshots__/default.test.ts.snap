@@ -42,7 +42,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           "preferRelative": true,
         },
         "resourceQuery": {
-          "not": /raw\\|inline/,
+          "not": [
+            /\\^\\\\\\?raw\\$/,
+            /\\^\\\\\\?inline\\$/,
+          ],
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
@@ -83,7 +86,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "resolve": {
           "preferRelative": true,
         },
-        "resourceQuery": /inline/,
+        "resourceQuery": /\\^\\\\\\?inline\\$/,
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -112,7 +115,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         ],
       },
       {
-        "resourceQuery": /raw/,
+        "resourceQuery": /\\^\\\\\\?raw\\$/,
         "test": /\\\\\\.css\\$/,
         "type": "asset/source",
       },
@@ -531,7 +534,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           "preferRelative": true,
         },
         "resourceQuery": {
-          "not": /raw\\|inline/,
+          "not": [
+            /\\^\\\\\\?raw\\$/,
+            /\\^\\\\\\?inline\\$/,
+          ],
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
@@ -572,7 +578,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "resolve": {
           "preferRelative": true,
         },
-        "resourceQuery": /inline/,
+        "resourceQuery": /\\^\\\\\\?inline\\$/,
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -602,7 +608,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         ],
       },
       {
-        "resourceQuery": /raw/,
+        "resourceQuery": /\\^\\\\\\?raw\\$/,
         "test": /\\\\\\.css\\$/,
         "type": "asset/source",
       },
@@ -1048,7 +1054,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           "preferRelative": true,
         },
         "resourceQuery": {
-          "not": /raw\\|inline/,
+          "not": [
+            /\\^\\\\\\?raw\\$/,
+            /\\^\\\\\\?inline\\$/,
+          ],
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
@@ -1078,7 +1087,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "resolve": {
           "preferRelative": true,
         },
-        "resourceQuery": /inline/,
+        "resourceQuery": /\\^\\\\\\?inline\\$/,
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -1095,7 +1104,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         ],
       },
       {
-        "resourceQuery": /raw/,
+        "resourceQuery": /\\^\\\\\\?raw\\$/,
         "test": /\\\\\\.css\\$/,
         "type": "asset/source",
       },
@@ -1468,7 +1477,10 @@ exports[`tools.rspack > should match snapshot 1`] = `
           "preferRelative": true,
         },
         "resourceQuery": {
-          "not": /raw\\|inline/,
+          "not": [
+            /\\^\\\\\\?raw\\$/,
+            /\\^\\\\\\?inline\\$/,
+          ],
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
@@ -1509,7 +1521,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "resolve": {
           "preferRelative": true,
         },
-        "resourceQuery": /inline/,
+        "resourceQuery": /\\^\\\\\\?inline\\$/,
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -1538,7 +1550,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         ],
       },
       {
-        "resourceQuery": /raw/,
+        "resourceQuery": /\\^\\\\\\?raw\\$/,
         "test": /\\\\\\.css\\$/,
         "type": "asset/source",
       },

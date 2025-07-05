@@ -50,7 +50,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           "preferRelative": true,
         },
         "resourceQuery": {
-          "not": /raw\\|inline/,
+          "not": [
+            /\\^\\\\\\?raw\\$/,
+            /\\^\\\\\\?inline\\$/,
+          ],
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
@@ -79,7 +82,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "resolve": {
           "preferRelative": true,
         },
-        "resourceQuery": /inline/,
+        "resourceQuery": /\\^\\\\\\?inline\\$/,
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -96,7 +99,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         ],
       },
       {
-        "resourceQuery": /raw/,
+        "resourceQuery": /\\^\\\\\\?raw\\$/,
         "test": /\\\\\\.css\\$/,
         "type": "asset/source",
       },
@@ -504,7 +507,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
           "preferRelative": true,
         },
         "resourceQuery": {
-          "not": /raw\\|inline/,
+          "not": [
+            /\\^\\\\\\?raw\\$/,
+            /\\^\\\\\\?inline\\$/,
+          ],
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
@@ -533,7 +539,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "resolve": {
           "preferRelative": true,
         },
-        "resourceQuery": /inline/,
+        "resourceQuery": /\\^\\\\\\?inline\\$/,
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -550,7 +556,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         ],
       },
       {
-        "resourceQuery": /raw/,
+        "resourceQuery": /\\^\\\\\\?raw\\$/,
         "test": /\\\\\\.css\\$/,
         "type": "asset/source",
       },
@@ -955,7 +961,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           "preferRelative": true,
         },
         "resourceQuery": {
-          "not": /raw\\|inline/,
+          "not": [
+            /\\^\\\\\\?raw\\$/,
+            /\\^\\\\\\?inline\\$/,
+          ],
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
@@ -985,7 +994,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "resolve": {
           "preferRelative": true,
         },
-        "resourceQuery": /inline/,
+        "resourceQuery": /\\^\\\\\\?inline\\$/,
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -1002,7 +1011,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         ],
       },
       {
-        "resourceQuery": /raw/,
+        "resourceQuery": /\\^\\\\\\?raw\\$/,
         "test": /\\\\\\.css\\$/,
         "type": "asset/source",
       },
@@ -1337,7 +1346,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           "preferRelative": true,
         },
         "resourceQuery": {
-          "not": /raw\\|inline/,
+          "not": [
+            /\\^\\\\\\?raw\\$/,
+            /\\^\\\\\\?inline\\$/,
+          ],
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
@@ -1367,7 +1379,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "resolve": {
           "preferRelative": true,
         },
-        "resourceQuery": /inline/,
+        "resourceQuery": /\\^\\\\\\?inline\\$/,
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -1384,7 +1396,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         ],
       },
       {
-        "resourceQuery": /raw/,
+        "resourceQuery": /\\^\\\\\\?raw\\$/,
         "test": /\\\\\\.css\\$/,
         "type": "asset/source",
       },

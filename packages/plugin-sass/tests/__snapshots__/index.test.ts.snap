@@ -10,7 +10,10 @@ exports[`plugin-sass > should add sass-loader 1`] = `
       "preferRelative": true,
     },
     "resourceQuery": {
-      "not": /raw\\|inline/,
+      "not": [
+        /\\^\\\\\\?raw\\$/,
+        /\\^\\\\\\?inline\\$/,
+      ],
     },
     "sideEffects": true,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
@@ -68,7 +71,7 @@ exports[`plugin-sass > should add sass-loader 1`] = `
     ],
   },
   {
-    "resourceQuery": /inline/,
+    "resourceQuery": /\\^\\\\\\?inline\\$/,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
     "use": [
       {
@@ -116,7 +119,7 @@ exports[`plugin-sass > should add sass-loader 1`] = `
     ],
   },
   {
-    "resourceQuery": /raw/,
+    "resourceQuery": /\\^\\\\\\?raw\\$/,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
     "type": "asset/source",
   },
@@ -133,7 +136,10 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
       "preferRelative": true,
     },
     "resourceQuery": {
-      "not": /raw\\|inline/,
+      "not": [
+        /\\^\\\\\\?raw\\$/,
+        /\\^\\\\\\?inline\\$/,
+      ],
     },
     "sideEffects": true,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
@@ -191,7 +197,7 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
     ],
   },
   {
-    "resourceQuery": /inline/,
+    "resourceQuery": /\\^\\\\\\?inline\\$/,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
     "use": [
       {
@@ -239,7 +245,7 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
     ],
   },
   {
-    "resourceQuery": /raw/,
+    "resourceQuery": /\\^\\\\\\?raw\\$/,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
     "type": "asset/source",
   },
@@ -259,7 +265,10 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
       "preferRelative": true,
     },
     "resourceQuery": {
-      "not": /raw\\|inline/,
+      "not": [
+        /\\^\\\\\\?raw\\$/,
+        /\\^\\\\\\?inline\\$/,
+      ],
     },
     "sideEffects": true,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
@@ -320,7 +329,7 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
     "exclude": [
       /node_modules/,
     ],
-    "resourceQuery": /inline/,
+    "resourceQuery": /\\^\\\\\\?inline\\$/,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
     "use": [
       {
@@ -368,7 +377,7 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
     ],
   },
   {
-    "resourceQuery": /raw/,
+    "resourceQuery": /\\^\\\\\\?raw\\$/,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
     "type": "asset/source",
   },
@@ -385,7 +394,10 @@ exports[`plugin-sass > should allow to use legacy API and mute deprecation warni
       "preferRelative": true,
     },
     "resourceQuery": {
-      "not": /raw\\|inline/,
+      "not": [
+        /\\^\\\\\\?raw\\$/,
+        /\\^\\\\\\?inline\\$/,
+      ],
     },
     "sideEffects": true,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
@@ -444,7 +456,7 @@ exports[`plugin-sass > should allow to use legacy API and mute deprecation warni
     ],
   },
   {
-    "resourceQuery": /inline/,
+    "resourceQuery": /\\^\\\\\\?inline\\$/,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
     "use": [
       {
@@ -493,7 +505,7 @@ exports[`plugin-sass > should allow to use legacy API and mute deprecation warni
     ],
   },
   {
-    "resourceQuery": /raw/,
+    "resourceQuery": /\\^\\\\\\?raw\\$/,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
     "type": "asset/source",
   },

@@ -11,6 +11,8 @@ rspackOnlyTest(
 
     const aInline: string = await page.evaluate('window.aInline');
     const bInline: string = await page.evaluate('window.bInline');
+    const bStyles: Record<string, string> =
+      await page.evaluate('window.bStyles');
 
     expect(
       aInline.includes('.header-class') && aInline.includes('color: red'),
@@ -18,6 +20,7 @@ rspackOnlyTest(
     expect(
       bInline.includes('.title-class') && bInline.includes('font-size: 14px'),
     ).toBe(true);
+    expect(bStyles['title-class']).toBeTruthy();
 
     await rsbuild.close();
   },
@@ -31,12 +34,14 @@ rspackOnlyTest(
       page,
     });
 
-    expect(await page.evaluate('window.aInline')).toBe(
-      '.header-class{color:red}',
-    );
-    expect(await page.evaluate('window.bInline')).toBe(
-      '.title-class{font-size:14px}',
-    );
+    const aInline: string = await page.evaluate('window.aInline');
+    const bInline: string = await page.evaluate('window.bInline');
+    const bStyles: Record<string, string> =
+      await page.evaluate('window.bStyles');
+
+    expect(aInline).toBe('.header-class{color:red}');
+    expect(bInline).toBe('.title-class{font-size:14px}');
+    expect(bStyles['title-class']).toBeTruthy();
 
     await rsbuild.close();
   },

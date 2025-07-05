@@ -42,7 +42,10 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
           "preferRelative": true,
         },
         "resourceQuery": {
-          "not": /raw\\|inline/,
+          "not": [
+            /\\^\\\\\\?raw\\$/,
+            /\\^\\\\\\?inline\\$/,
+          ],
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
@@ -83,7 +86,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         "resolve": {
           "preferRelative": true,
         },
-        "resourceQuery": /inline/,
+        "resourceQuery": /\\^\\\\\\?inline\\$/,
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -112,7 +115,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         ],
       },
       {
-        "resourceQuery": /raw/,
+        "resourceQuery": /\\^\\\\\\?raw\\$/,
         "test": /\\\\\\.css\\$/,
         "type": "asset/source",
       },

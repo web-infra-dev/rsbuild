@@ -172,15 +172,17 @@ export const pluginLess = (
 
   setup(api) {
     const { include = /\.less$/ } = pluginOptions;
+    const RAW_QUERY_REGEX: RegExp = /^\?raw$/;
+    const INLINE_QUERY_REGEX: RegExp = /^\?inline$/;
 
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
       const { config } = environment;
 
-      const rule = chain.module
+      const lessRule = chain.module
         .rule(findRuleId(chain, CHAIN_ID.RULE.LESS))
         .test(include)
         // exclude `import './foo.less?raw'` and `import './foo.less?inline'`
-        .resourceQuery({ not: /raw|inline/ })
+        .resourceQuery({ not: [RAW_QUERY_REGEX, INLINE_QUERY_REGEX] })
         .sideEffects(true)
         .resolve.preferRelative(true)
         .end();
@@ -194,7 +196,7 @@ export const pluginLess = (
         ? chain.module
             .rule(findRuleId(chain, CHAIN_ID.RULE.LESS_INLINE))
             .test(include)
-            .resourceQuery(/inline/)
+            .resourceQuery(INLINE_QUERY_REGEX)
         : null;
 
       // Support for importing raw Less files
@@ -202,7 +204,7 @@ export const pluginLess = (
         .rule(CHAIN_ID.RULE.LESS_RAW)
         .test(include)
         .type('asset/source')
-        .resourceQuery(/raw/);
+        .resourceQuery(RAW_QUERY_REGEX);
 
       const { sourceMap } = config.output;
       const { excludes, options } = getLessLoaderOptions(
@@ -215,7 +217,7 @@ export const pluginLess = (
       const updateRules = (
         callback: (rule: RspackChain.Rule, type: 'normal' | 'inline') => void,
       ) => {
-        callback(rule, 'normal');
+        callback(lessRule, 'normal');
         if (inlineRule) {
           callback(inlineRule, 'inline');
         }
