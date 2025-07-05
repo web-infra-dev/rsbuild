@@ -1,8 +1,12 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import type { Compiler, MultiCompiler } from '@rspack/core';
+import type { Compiler, MultiCompiler, Stats } from '@rspack/core';
 import { applyToCompiler } from '../helpers';
-import type { DevConfig, NextFunction, ServerConfig } from '../types';
-import { getCompilationId } from './helper';
+import type {
+  DevConfig,
+  EnvironmentContext,
+  NextFunction,
+  ServerConfig,
+} from '../types';
 import { getResolvedClientConfig } from './hmrFallback';
 
 export const isClientCompiler = (compiler: {
@@ -33,15 +37,20 @@ const isNodeCompiler = (compiler: {
   return false;
 };
 
-type ServerCallbacks = {
-  onInvalid: (compilationId?: string, fileName?: string | null) => void;
-  onDone: (stats: any) => void;
+export type ServerCallbacks = {
+  onInvalid: (token: string, fileName?: string | null) => void;
+  onDone: (token: string, stats: Stats) => void;
 };
 
-export const setupServerHooks = (
-  compiler: Compiler,
-  { onDone, onInvalid }: ServerCallbacks,
-): void => {
+export const setupServerHooks = ({
+  compiler,
+  token,
+  callbacks: { onDone, onInvalid },
+}: {
+  compiler: Compiler;
+  token: string;
+  callbacks: ServerCallbacks;
+}): void => {
   // TODO: node SSR HMR is not supported yet
   if (isNodeCompiler(compiler)) {
     return;
@@ -50,12 +59,14 @@ export const setupServerHooks = (
   const { compile, invalid, done } = compiler.hooks;
 
   compile.tap('rsbuild-dev-server', () => {
-    onInvalid(getCompilationId(compiler));
+    onInvalid(token);
   });
   invalid.tap('rsbuild-dev-server', (fileName) => {
-    onInvalid(getCompilationId(compiler), fileName);
+    onInvalid(token, fileName);
   });
-  done.tap('rsbuild-dev-server', onDone);
+  done.tap('rsbuild-dev-server', (stats) => {
+    onDone(token, stats);
+  });
 };
 
 function applyHMREntry({
@@ -63,18 +74,20 @@ function applyHMREntry({
   clientPaths,
   devConfig,
   resolvedClientConfig,
+  token,
 }: {
   compiler: Compiler;
   clientPaths: string[];
   devConfig: DevConfig;
   resolvedClientConfig: DevConfig['client'];
+  token: string;
 }) {
   if (!isClientCompiler(compiler)) {
     return;
   }
 
   new compiler.webpack.DefinePlugin({
-    RSBUILD_COMPILATION_NAME: JSON.stringify(getCompilationId(compiler)),
+    RSBUILD_WEB_SOCKET_TOKEN: JSON.stringify(token),
     RSBUILD_CLIENT_CONFIG: JSON.stringify(devConfig.client),
     RSBUILD_RESOLVED_CLIENT_CONFIG: JSON.stringify(resolvedClientConfig),
     RSBUILD_DEV_LIVE_RELOAD: devConfig.liveReload,
@@ -104,6 +117,7 @@ export type CompilationMiddlewareOptions = {
   callbacks: ServerCallbacks;
   devConfig: DevConfig;
   serverConfig: ServerConfig;
+  environments: Record<string, EnvironmentContext>;
 };
 
 export type CompilationMiddleware = Middleware & {
@@ -131,17 +145,30 @@ export const getCompilationMiddleware = async (
     serverConfig,
   );
 
-  const setupCompiler = (compiler: Compiler) => {
+  const setupCompiler = (compiler: Compiler, index: number) => {
+    const token = Object.values(options.environments).find(
+      (env) => env.index === index,
+    )?.webSocketToken;
+
+    if (!token) {
+      return;
+    }
+
     if (clientPaths) {
       applyHMREntry({
         compiler,
         clientPaths,
         devConfig,
         resolvedClientConfig,
+        token,
       });
     }
     // register hooks for each compilation, update socket stats if recompiled
-    setupServerHooks(compiler, callbacks);
+    setupServerHooks({
+      compiler,
+      callbacks,
+      token,
+    });
   };
 
   applyToCompiler(compiler, setupCompiler);

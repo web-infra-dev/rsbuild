@@ -217,6 +217,12 @@ export type EnvironmentContext = {
    * `onDevCompileDone` and `onAfterEnvironmentCompile` or via the environment API
    */
   manifest?: Record<string, unknown> | ManifestData;
+  /**
+   * WebSocket authentication token - cryptographically secure random identifier
+   * used to authenticate WebSocket connections and prevent unauthorized access.
+   * Only generated in the development mode, and is empty string in the production mode.
+   */
+  webSocketToken: string;
 };
 
 export type ModifyChainUtils = {

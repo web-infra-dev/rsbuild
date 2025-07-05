@@ -91,6 +91,14 @@ const getEnvironmentHTMLPaths = (
   }, {});
 };
 
+/**
+ * Generates a secure WebSocket authentication token using 64-bit entropy.
+ */
+const generateWebSocketToken = async () => {
+  const crypto = await import('node:crypto');
+  return crypto.randomBytes(8).toString('base64url');
+};
+
 export async function updateEnvironmentContext(
   context: InternalContext,
   configs: Record<string, NormalizedEnvironmentConfig>,
@@ -105,6 +113,8 @@ export async function updateEnvironmentContext(
 
     const { entry = {}, tsconfigPath } = config.source;
     const htmlPaths = getEnvironmentHTMLPaths(entry, config);
+    const webSocketToken =
+      context.action === 'dev' ? await generateWebSocketToken() : '';
 
     const environmentContext: EnvironmentContext = {
       index,
@@ -115,6 +125,7 @@ export async function updateEnvironmentContext(
       htmlPaths,
       tsconfigPath,
       config,
+      webSocketToken,
     };
 
     // EnvironmentContext is readonly.
