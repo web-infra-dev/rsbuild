@@ -234,11 +234,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /inline/,
+            "resourceQuery": /\\^\\\\\\?inline\\$/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /raw/,
+            "resourceQuery": /\\^\\\\\\?raw\\$/,
             "type": "asset/source",
           },
           {
@@ -265,11 +265,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /inline/,
+            "resourceQuery": /\\^\\\\\\?inline\\$/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /raw/,
+            "resourceQuery": /\\^\\\\\\?raw\\$/,
             "type": "asset/source",
           },
           {
@@ -296,11 +296,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /inline/,
+            "resourceQuery": /\\^\\\\\\?inline\\$/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /raw/,
+            "resourceQuery": /\\^\\\\\\?raw\\$/,
             "type": "asset/source",
           },
           {
@@ -327,11 +327,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /inline/,
+            "resourceQuery": /\\^\\\\\\?inline\\$/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /raw/,
+            "resourceQuery": /\\^\\\\\\?raw\\$/,
             "type": "asset/source",
           },
           {
@@ -726,11 +726,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /inline/,
+            "resourceQuery": /\\^\\\\\\?inline\\$/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /raw/,
+            "resourceQuery": /\\^\\\\\\?raw\\$/,
             "type": "asset/source",
           },
           {
@@ -757,11 +757,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /inline/,
+            "resourceQuery": /\\^\\\\\\?inline\\$/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /raw/,
+            "resourceQuery": /\\^\\\\\\?raw\\$/,
             "type": "asset/source",
           },
           {
@@ -788,11 +788,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /inline/,
+            "resourceQuery": /\\^\\\\\\?inline\\$/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /raw/,
+            "resourceQuery": /\\^\\\\\\?raw\\$/,
             "type": "asset/source",
           },
           {
@@ -819,11 +819,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /inline/,
+            "resourceQuery": /\\^\\\\\\?inline\\$/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /raw/,
+            "resourceQuery": /\\^\\\\\\?raw\\$/,
             "type": "asset/source",
           },
           {
@@ -1214,11 +1214,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /inline/,
+            "resourceQuery": /\\^\\\\\\?inline\\$/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /raw/,
+            "resourceQuery": /\\^\\\\\\?raw\\$/,
             "type": "asset/source",
           },
           {
@@ -1245,11 +1245,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /inline/,
+            "resourceQuery": /\\^\\\\\\?inline\\$/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /raw/,
+            "resourceQuery": /\\^\\\\\\?raw\\$/,
             "type": "asset/source",
           },
           {
@@ -1276,11 +1276,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /inline/,
+            "resourceQuery": /\\^\\\\\\?inline\\$/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /raw/,
+            "resourceQuery": /\\^\\\\\\?raw\\$/,
             "type": "asset/source",
           },
           {
@@ -1307,11 +1307,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /inline/,
+            "resourceQuery": /\\^\\\\\\?inline\\$/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /raw/,
+            "resourceQuery": /\\^\\\\\\?raw\\$/,
             "type": "asset/source",
           },
           {
@@ -1669,11 +1669,11 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /inline/,
+            "resourceQuery": /\\^\\\\\\?inline\\$/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /raw/,
+            "resourceQuery": /\\^\\\\\\?raw\\$/,
             "type": "asset/source",
           },
           {
@@ -1700,11 +1700,11 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /inline/,
+            "resourceQuery": /\\^\\\\\\?inline\\$/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /raw/,
+            "resourceQuery": /\\^\\\\\\?raw\\$/,
             "type": "asset/source",
           },
           {
@@ -1731,11 +1731,11 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /inline/,
+            "resourceQuery": /\\^\\\\\\?inline\\$/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /raw/,
+            "resourceQuery": /\\^\\\\\\?raw\\$/,
             "type": "asset/source",
           },
           {
@@ -1762,11 +1762,11 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /inline/,
+            "resourceQuery": /\\^\\\\\\?inline\\$/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /raw/,
+            "resourceQuery": /\\^\\\\\\?raw\\$/,
             "type": "asset/source",
           },
           {

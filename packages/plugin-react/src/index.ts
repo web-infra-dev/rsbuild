@@ -39,7 +39,7 @@ export type PluginReactOptions = {
    * {
    *   include: [/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/],
    *   exclude: [/[\\/]node_modules[\\/]/],
-   *   resourceQuery: { not: /raw/ },
+   *   resourceQuery: { not: /^\?raw$/ },
    * }
    * @see https://rspack.rs/guide/tech/react#rspackplugin-react-refresh
    */

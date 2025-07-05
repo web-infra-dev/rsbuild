@@ -8,6 +8,8 @@ import {
   AUDIO_EXTENSIONS,
   FONT_EXTENSIONS,
   IMAGE_EXTENSIONS,
+  INLINE_QUERY_REGEX,
+  RAW_QUERY_REGEX,
   VIDEO_EXTENSIONS,
 } from '../constants';
 import { getFilename } from '../helpers';
@@ -40,20 +42,20 @@ const chainStaticAssetRule = ({
   rule
     .oneOf(`${assetType}-asset-url`)
     .type('asset/resource')
-    .resourceQuery(/(__inline=false|url)/)
+    .resourceQuery(/^\?(__inline=false|url)$/)
     .set('generator', generatorOptions);
 
   // get inlined base64 content: "foo.png?inline"
   rule
     .oneOf(`${assetType}-asset-inline`)
     .type('asset/inline')
-    .resourceQuery(/inline/);
+    .resourceQuery(INLINE_QUERY_REGEX);
 
   // get raw content: "foo.png?raw"
   rule
     .oneOf(`${assetType}-asset-raw`)
     .type('asset/source')
-    .resourceQuery(/raw/);
+    .resourceQuery(RAW_QUERY_REGEX);
 
   // the asset will be inlined if fileSize < dataUrlCondition.maxSize
   rule
