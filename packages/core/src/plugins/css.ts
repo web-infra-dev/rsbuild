@@ -2,7 +2,12 @@ import path, { posix } from 'node:path';
 import deepmerge from 'deepmerge';
 import { reduceConfigs, reduceConfigsWithContext } from 'reduce-configs';
 import type { AcceptedPlugin, PluginCreator } from '../../compiled/postcss';
-import { CSS_REGEX, LOADER_PATH } from '../constants';
+import {
+  CSS_REGEX,
+  INLINE_QUERY_REGEX,
+  LOADER_PATH,
+  RAW_QUERY_REGEX,
+} from '../constants';
 import { castArray, color, getFilename } from '../helpers';
 import { getCompiledPath } from '../helpers/path';
 import { getCssExtractPlugin } from '../pluginHelper';
@@ -282,20 +287,20 @@ export const pluginCss = (): RsbuildPlugin => ({
           // the module should be treated as an asset module rather than a JS module.
           .dependency({ not: 'url' })
           // exclude `import './foo.css?raw'` and `import './foo.css?inline'`
-          .resourceQuery({ not: /raw|inline/ });
+          .resourceQuery({ not: [RAW_QUERY_REGEX, INLINE_QUERY_REGEX] });
 
         // Support for `import inlineCss from "a.css?inline"`
         inlineRule
           .test(CSS_REGEX)
           .type('javascript/auto')
-          .resourceQuery(/inline/);
+          .resourceQuery(INLINE_QUERY_REGEX);
 
         // Support for `import rawCss from "a.css?raw"`
         chain.module
           .rule(CHAIN_ID.RULE.CSS_RAW)
           .test(CSS_REGEX)
           .type('asset/source')
-          .resourceQuery(/raw/);
+          .resourceQuery(RAW_QUERY_REGEX);
 
         const emitCss = config.output.emitCss ?? target === 'web';
 

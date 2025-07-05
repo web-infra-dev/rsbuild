@@ -99,6 +99,8 @@ export const pluginSass = (
 
   setup(api) {
     const { rewriteUrls = true, include = /\.s(?:a|c)ss$/ } = pluginOptions;
+    const RAW_QUERY_REGEX: RegExp = /^\?raw$/;
+    const INLINE_QUERY_REGEX: RegExp = /^\?inline$/;
 
     api.onAfterCreateCompiler(({ compiler }) => {
       patchCompilerGlobalLocation(compiler);
@@ -121,7 +123,7 @@ export const pluginSass = (
         .rule(findRuleId(chain, CHAIN_ID.RULE.SASS))
         .test(include)
         // exclude `import './foo.scss?raw'` and `import './foo.scss?inline'`
-        .resourceQuery({ not: /raw|inline/ })
+        .resourceQuery({ not: [RAW_QUERY_REGEX, INLINE_QUERY_REGEX] })
         .sideEffects(true)
         .resolve.preferRelative(true)
         .end();
@@ -135,7 +137,7 @@ export const pluginSass = (
         ? chain.module
             .rule(findRuleId(chain, CHAIN_ID.RULE.SASS_INLINE))
             .test(include)
-            .resourceQuery(/inline/)
+            .resourceQuery(INLINE_QUERY_REGEX)
         : null;
 
       // Support for importing raw Sass files
@@ -143,7 +145,7 @@ export const pluginSass = (
         .rule(CHAIN_ID.RULE.SASS_RAW)
         .test(include)
         .type('asset/source')
-        .resourceQuery(/raw/);
+        .resourceQuery(RAW_QUERY_REGEX);
 
       // Update the normal rule and the inline rule
       const updateRules = (

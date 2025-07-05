@@ -72,6 +72,9 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
   name: PLUGIN_STYLUS_NAME,
 
   setup(api) {
+    const RAW_QUERY_REGEX: RegExp = /^\?raw$/;
+    const INLINE_QUERY_REGEX: RegExp = /^\?inline$/;
+
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
       const { config } = environment;
 
@@ -90,7 +93,7 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
         .rule(CHAIN_ID.RULE.STYLUS)
         .test(test)
         // exclude `import './foo.styl?raw'` and `import './foo.stylus?inline'`
-        .resourceQuery({ not: /raw|inline/ })
+        .resourceQuery({ not: [RAW_QUERY_REGEX, INLINE_QUERY_REGEX] })
         .sideEffects(true)
         .resolve.preferRelative(true)
         .end();
@@ -104,7 +107,7 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
         ? chain.module
             .rule(CHAIN_ID.RULE.STYLUS_INLINE)
             .test(test)
-            .resourceQuery(/inline/)
+            .resourceQuery(INLINE_QUERY_REGEX)
         : null;
 
       // Support for importing raw Stylus files
@@ -112,7 +115,7 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
         .rule(CHAIN_ID.RULE.STYLUS_RAW)
         .test(test)
         .type('asset/source')
-        .resourceQuery(/raw/);
+        .resourceQuery(RAW_QUERY_REGEX);
 
       // Update the normal rule and the inline rule
       const updateRules = (

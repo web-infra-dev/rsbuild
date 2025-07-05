@@ -1337,7 +1337,10 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             "preferRelative": true,
           },
           "resourceQuery": {
-            "not": /raw\\|inline/,
+            "not": [
+              /\\^\\\\\\?raw\\$/,
+              /\\^\\\\\\?inline\\$/,
+            ],
           },
           "sideEffects": true,
           "test": /\\\\\\.css\\$/,
@@ -1378,7 +1381,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "resolve": {
             "preferRelative": true,
           },
-          "resourceQuery": /inline/,
+          "resourceQuery": /\\^\\\\\\?inline\\$/,
           "sideEffects": true,
           "test": /\\\\\\.css\\$/,
           "type": "javascript/auto",
@@ -1407,7 +1410,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           ],
         },
         {
-          "resourceQuery": /raw/,
+          "resourceQuery": /\\^\\\\\\?raw\\$/,
           "test": /\\\\\\.css\\$/,
           "type": "asset/source",
         },
@@ -1766,7 +1769,10 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             "preferRelative": true,
           },
           "resourceQuery": {
-            "not": /raw\\|inline/,
+            "not": [
+              /\\^\\\\\\?raw\\$/,
+              /\\^\\\\\\?inline\\$/,
+            ],
           },
           "sideEffects": true,
           "test": /\\\\\\.css\\$/,
@@ -1796,7 +1802,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "resolve": {
             "preferRelative": true,
           },
-          "resourceQuery": /inline/,
+          "resourceQuery": /\\^\\\\\\?inline\\$/,
           "sideEffects": true,
           "test": /\\\\\\.css\\$/,
           "type": "javascript/auto",
@@ -1813,7 +1819,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           ],
         },
         {
-          "resourceQuery": /raw/,
+          "resourceQuery": /\\^\\\\\\?raw\\$/,
           "test": /\\\\\\.css\\$/,
           "type": "asset/source",
         },
