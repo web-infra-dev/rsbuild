@@ -7,6 +7,7 @@ import { reduceConfigs } from 'reduce-configs';
 import {
   NODE_MODULES_REGEX,
   PLUGIN_SWC_NAME,
+  RAW_QUERY_REGEX,
   SCRIPT_REGEX,
 } from '../constants';
 import {
@@ -118,14 +119,14 @@ export const pluginSwc = (): RsbuildPlugin => ({
           // the module should be treated as an asset module rather than a JS module.
           .dependency({ not: 'url' })
           // exclude `import './foo.js?raw'`
-          .resourceQuery({ not: /raw/ });
+          .resourceQuery({ not: RAW_QUERY_REGEX });
 
         // Support for `import rawJs from "a.js?raw"`
         chain.module
           .rule(CHAIN_ID.RULE.JS_RAW)
           .test(SCRIPT_REGEX)
           .type('asset/source')
-          .resourceQuery(/raw/);
+          .resourceQuery(RAW_QUERY_REGEX);
 
         const dataUriRule = chain.module
           .rule(CHAIN_ID.RULE.JS_DATA_URI)

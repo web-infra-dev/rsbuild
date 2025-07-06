@@ -52,7 +52,11 @@ rspackOnlyTest('support SSR with esm target', async ({ page }) => {
 
   const rsbuild = await dev({
     cwd: __dirname,
-    rsbuildConfig: {},
+    rsbuildConfig: {
+      dev: {
+        assetPrefix: './',
+      },
+    },
   });
 
   const url1 = new URL(`http://localhost:${rsbuild.port}`);
@@ -72,6 +76,9 @@ rspackOnlyTest('support SSR with esm target & external', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
     rsbuildConfig: {
+      dev: {
+        assetPrefix: './',
+      },
       output: {
         externals: {
           react: 'react',

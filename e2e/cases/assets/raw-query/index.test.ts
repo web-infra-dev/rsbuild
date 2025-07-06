@@ -13,7 +13,7 @@ test('should allow to get raw asset content with `?raw` in development mode', as
     page,
   });
 
-  expect(await page.evaluate('window.rawImg')).toEqual(
+  expect(await page.evaluate('window.rawSvg')).toEqual(
     await promises.readFile(
       join(__dirname, '../../../assets/circle.svg'),
       'utf-8',
@@ -31,7 +31,7 @@ test('should allow to get raw asset content with `?raw` in production mode', asy
     page,
   });
 
-  expect(await page.evaluate('window.rawImg')).toEqual(
+  expect(await page.evaluate('window.rawSvg')).toEqual(
     await promises.readFile(
       join(__dirname, '../../../assets/circle.svg'),
       'utf-8',
@@ -52,7 +52,7 @@ test('should allow to get raw SVG content with `?raw` when using pluginSvgr', as
     },
   });
 
-  expect(await page.evaluate('window.rawImg')).toEqual(
+  expect(await page.evaluate('window.rawSvg')).toEqual(
     await promises.readFile(
       join(__dirname, '../../../assets/circle.svg'),
       'utf-8',
@@ -103,5 +103,33 @@ test('should allow to get raw TSX content with `?raw` and using pluginReact', as
     await promises.readFile(join(__dirname, 'src/baz.tsx'), 'utf-8'),
   );
 
+  await rsbuild.close();
+});
+
+test('should not get raw SVG content with query other than `?raw`', async ({
+  page,
+}) => {
+  const rsbuild = await dev({
+    cwd: __dirname,
+    page,
+  });
+
+  expect(
+    (await page.evaluate<string>('window.normalSvg')).startsWith(
+      'data:image/svg+xml',
+    ),
+  ).toBe(true);
+
+  await rsbuild.close();
+});
+
+test('should not get raw JS content with query other than `?raw`', async ({
+  page,
+}) => {
+  const rsbuild = await dev({
+    cwd: __dirname,
+    page,
+  });
+  expect(await page.evaluate('window.normalJs')).toEqual('foo');
   await rsbuild.close();
 });

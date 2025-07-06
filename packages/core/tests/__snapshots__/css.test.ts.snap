@@ -12,7 +12,10 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
           "preferRelative": true,
         },
         "resourceQuery": {
-          "not": /raw\\|inline/,
+          "not": [
+            /\\^\\\\\\?raw\\$/,
+            /\\^\\\\\\?inline\\$/,
+          ],
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
@@ -53,7 +56,7 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
         "resolve": {
           "preferRelative": true,
         },
-        "resourceQuery": /inline/,
+        "resourceQuery": /\\^\\\\\\?inline\\$/,
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -82,7 +85,7 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
         ],
       },
       {
-        "resourceQuery": /raw/,
+        "resourceQuery": /\\^\\\\\\?raw\\$/,
         "test": /\\\\\\.css\\$/,
         "type": "asset/source",
       },
@@ -115,7 +118,10 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
           "preferRelative": true,
         },
         "resourceQuery": {
-          "not": /raw\\|inline/,
+          "not": [
+            /\\^\\\\\\?raw\\$/,
+            /\\^\\\\\\?inline\\$/,
+          ],
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
@@ -145,7 +151,7 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
         "resolve": {
           "preferRelative": true,
         },
-        "resourceQuery": /inline/,
+        "resourceQuery": /\\^\\\\\\?inline\\$/,
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -162,7 +168,7 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
         ],
       },
       {
-        "resourceQuery": /raw/,
+        "resourceQuery": /\\^\\\\\\?raw\\$/,
         "test": /\\\\\\.css\\$/,
         "type": "asset/source",
       },
@@ -188,7 +194,10 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
           "preferRelative": true,
         },
         "resourceQuery": {
-          "not": /raw\\|inline/,
+          "not": [
+            /\\^\\\\\\?raw\\$/,
+            /\\^\\\\\\?inline\\$/,
+          ],
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
@@ -229,7 +238,7 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
         "resolve": {
           "preferRelative": true,
         },
-        "resourceQuery": /inline/,
+        "resourceQuery": /\\^\\\\\\?inline\\$/,
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -258,7 +267,7 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
         ],
       },
       {
-        "resourceQuery": /raw/,
+        "resourceQuery": /\\^\\\\\\?raw\\$/,
         "test": /\\\\\\.css\\$/,
         "type": "asset/source",
       },
@@ -282,7 +291,10 @@ exports[`should ensure isolation of PostCSS config objects between different bui
       "preferRelative": true,
     },
     "resourceQuery": {
-      "not": /raw\\|inline/,
+      "not": [
+        /\\^\\\\\\?raw\\$/,
+        /\\^\\\\\\?inline\\$/,
+      ],
     },
     "sideEffects": true,
     "test": /\\\\\\.css\\$/,
@@ -338,7 +350,7 @@ exports[`should ensure isolation of PostCSS config objects between different bui
     "resolve": {
       "preferRelative": true,
     },
-    "resourceQuery": /inline/,
+    "resourceQuery": /\\^\\\\\\?inline\\$/,
     "sideEffects": true,
     "test": /\\\\\\.css\\$/,
     "type": "javascript/auto",
@@ -382,7 +394,7 @@ exports[`should ensure isolation of PostCSS config objects between different bui
     ],
   },
   {
-    "resourceQuery": /raw/,
+    "resourceQuery": /\\^\\\\\\?raw\\$/,
     "test": /\\\\\\.css\\$/,
     "type": "asset/source",
   },
@@ -399,7 +411,10 @@ exports[`should ensure isolation of PostCSS config objects between different bui
       "preferRelative": true,
     },
     "resourceQuery": {
-      "not": /raw\\|inline/,
+      "not": [
+        /\\^\\\\\\?raw\\$/,
+        /\\^\\\\\\?inline\\$/,
+      ],
     },
     "sideEffects": true,
     "test": /\\\\\\.css\\$/,
@@ -455,7 +470,7 @@ exports[`should ensure isolation of PostCSS config objects between different bui
     "resolve": {
       "preferRelative": true,
     },
-    "resourceQuery": /inline/,
+    "resourceQuery": /\\^\\\\\\?inline\\$/,
     "sideEffects": true,
     "test": /\\\\\\.css\\$/,
     "type": "javascript/auto",
@@ -499,7 +514,7 @@ exports[`should ensure isolation of PostCSS config objects between different bui
     ],
   },
   {
-    "resourceQuery": /raw/,
+    "resourceQuery": /\\^\\\\\\?raw\\$/,
     "test": /\\\\\\.css\\$/,
     "type": "asset/source",
   },

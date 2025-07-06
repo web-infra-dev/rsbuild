@@ -271,7 +271,8 @@ api.transform({ test: /\.md$/, environments: ['web'] }, ({ code }) => {
 - `resourceQuery`：匹配模块的 query，等价于 Rspack 的 [Rule.resourceQuery](https://rspack.rs/zh/config/module#ruleresourcequery)。
 
 ```js
-api.transform({ resourceQuery: /raw/ }, ({ code }) => {
+// 匹配 raw query: "foo.ext?raw"
+api.transform({ resourceQuery: /^\?raw$/ }, ({ code }) => {
   // ...
 });
 ```

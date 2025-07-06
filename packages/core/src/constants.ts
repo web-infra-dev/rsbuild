@@ -47,6 +47,8 @@ export const HTML_REGEX: RegExp = /\.html$/;
 export const JS_REGEX: RegExp = /\.(?:js|mjs|cjs|jsx)$/;
 export const SCRIPT_REGEX: RegExp = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
 export const CSS_REGEX: RegExp = /\.css$/;
+export const RAW_QUERY_REGEX: RegExp = /^\?raw$/;
+export const INLINE_QUERY_REGEX: RegExp = /^\?inline$/;
 export const NODE_MODULES_REGEX: RegExp = /[\\/]node_modules[\\/]/;
 
 // Plugins
