@@ -223,7 +223,7 @@ type ReactRefreshOptions = {
 const defaultOptions = {
   include: [/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/],
   exclude: [/[\\/]node_modules[\\/]/],
-  resourceQuery: { not: /raw/ },
+  resourceQuery: { not: /^\?raw$/ },
 };
 ```
 

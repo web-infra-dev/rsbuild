@@ -7,15 +7,15 @@ exports[`svgr > configure SVGR options 1`] = `
       "generator": {
         "filename": "static/svg/[name].[contenthash:8].svg",
       },
-      "resourceQuery": /\\(__inline=false\\|url\\)/,
+      "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
       "type": "asset/resource",
     },
     {
-      "resourceQuery": /inline/,
+      "resourceQuery": /\\^\\\\\\?inline\\$/,
       "type": "asset/inline",
     },
     {
-      "resourceQuery": /raw/,
+      "resourceQuery": /\\^\\\\\\?raw\\$/,
       "type": "asset/source",
     },
     {
@@ -107,15 +107,15 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
       "generator": {
         "filename": "static/svg/[name].[contenthash:8].svg",
       },
-      "resourceQuery": /\\(__inline=false\\|url\\)/,
+      "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
       "type": "asset/resource",
     },
     {
-      "resourceQuery": /inline/,
+      "resourceQuery": /\\^\\\\\\?inline\\$/,
       "type": "asset/inline",
     },
     {
-      "resourceQuery": /raw/,
+      "resourceQuery": /\\^\\\\\\?raw\\$/,
       "type": "asset/source",
     },
     {
@@ -274,15 +274,15 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
       "generator": {
         "filename": "static/svg/[name].[contenthash:8].svg",
       },
-      "resourceQuery": /\\(__inline=false\\|url\\)/,
+      "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
       "type": "asset/resource",
     },
     {
-      "resourceQuery": /inline/,
+      "resourceQuery": /\\^\\\\\\?inline\\$/,
       "type": "asset/inline",
     },
     {
-      "resourceQuery": /raw/,
+      "resourceQuery": /\\^\\\\\\?raw\\$/,
       "type": "asset/source",
     },
     {
@@ -441,15 +441,15 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
       "generator": {
         "filename": "static/svg/[name].[contenthash:8].svg",
       },
-      "resourceQuery": /\\(__inline=false\\|url\\)/,
+      "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
       "type": "asset/resource",
     },
     {
-      "resourceQuery": /inline/,
+      "resourceQuery": /\\^\\\\\\?inline\\$/,
       "type": "asset/inline",
     },
     {
-      "resourceQuery": /raw/,
+      "resourceQuery": /\\^\\\\\\?raw\\$/,
       "type": "asset/source",
     },
     {
@@ -608,15 +608,15 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
       "generator": {
         "filename": "static/svg/[name].[contenthash:8].svg",
       },
-      "resourceQuery": /\\(__inline=false\\|url\\)/,
+      "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
       "type": "asset/resource",
     },
     {
-      "resourceQuery": /inline/,
+      "resourceQuery": /\\^\\\\\\?inline\\$/,
       "type": "asset/inline",
     },
     {
-      "resourceQuery": /raw/,
+      "resourceQuery": /\\^\\\\\\?raw\\$/,
       "type": "asset/source",
     },
     {

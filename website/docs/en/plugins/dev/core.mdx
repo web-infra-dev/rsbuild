@@ -273,7 +273,8 @@ api.transform({ test: /\.md$/, environments: ['web'] }, ({ code }) => {
 - `resourceQuery`: matches module's query, the same as Rspack's [Rule.resourceQuery](https://rspack.rs/config/module#ruleresourcequery).
 
 ```js
-api.transform({ resourceQuery: /raw/ }, ({ code }) => {
+// match raw query: "foo.ext?raw"
+api.transform({ resourceQuery: /^\?raw$/ }, ({ code }) => {
   // ...
 });
 ```
