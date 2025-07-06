@@ -2,6 +2,7 @@ import { join } from 'node:path';
 import { loadConfig } from 'browserslist-load-config';
 import { DEFAULT_BROWSERSLIST, ROOT_DIST_DIR } from './constants';
 import { withDefaultConfig } from './defaultConfig';
+import { hash } from './helpers';
 import { ensureAbsolutePath, getCommonParentPath } from './helpers/path';
 import { initHooks } from './hooks';
 import { getHTMLPathByEntry } from './initPlugins';
@@ -105,6 +106,8 @@ export async function updateEnvironmentContext(
 
     const { entry = {}, tsconfigPath } = config.source;
     const htmlPaths = getEnvironmentHTMLPaths(entry, config);
+    const webSocketToken =
+      context.action === 'dev' ? await hash(context.rootPath + name) : '';
 
     const environmentContext: EnvironmentContext = {
       index,
@@ -115,6 +118,7 @@ export async function updateEnvironmentContext(
       htmlPaths,
       tsconfigPath,
       config,
+      webSocketToken,
     };
 
     // EnvironmentContext is readonly.
