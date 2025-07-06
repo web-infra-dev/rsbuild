@@ -195,6 +195,22 @@ manifest 数据仅在构建完成后才能被访问，你可以在以下 hooks �
 - [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone)
 - [onExit](/plugins/dev/hooks#onexit)
 
+### webSocketToken
+
+WebSocket 认证 token，用于认证 WebSocket 连接，防止未授权访问。
+
+仅在开发模式下可用，生产模式下为空字符串。
+
+- **类型：** `string`
+
+当你需要在浏览器中建立与 Rsbuild dev server 的 WebSocket 连接时，需要使用这个 token 作为 query 参数。
+
+```js
+const { webSocketToken } = environments.web.context;
+
+const webSocketUrl = `ws://localhost:${port}${pathname}?token=${webSocketToken}`;
+```
+
 ## Environment API
 
 Environment API 提供一些与多环境构建相关的 API。

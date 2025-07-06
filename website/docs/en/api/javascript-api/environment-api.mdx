@@ -194,6 +194,22 @@ The manifest data is only available after the build has completed, you can acces
 - [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone)
 - [onExit](/plugins/dev/hooks#onexit)
 
+### webSocketToken
+
+WebSocket authentication token, used to authenticate WebSocket connections and prevent unauthorized access.
+
+Only available in the development mode, and is empty string in the production mode.
+
+- **Type:** `string`
+
+When you need to establish a WebSocket connection with the Rsbuild dev server in the browser, you need to use this token as a query parameter.
+
+```js
+const { webSocketToken } = environments.web.context;
+
+const webSocketUrl = `ws://localhost:${port}${pathname}?token=${webSocketToken}`;
+```
+
 ## Environment API
 
 Environment API provides some APIs related to the multi-environment build.
