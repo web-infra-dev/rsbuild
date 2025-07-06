@@ -139,7 +139,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "generator": {
               "filename": "static/image/[name].[contenthash:8][ext]",
             },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
             "type": "asset/resource",
           },
           {
@@ -170,7 +170,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "generator": {
               "filename": "static/svg/[name].[contenthash:8].svg",
             },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
             "type": "asset/resource",
           },
           {
@@ -201,7 +201,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "generator": {
               "filename": "static/media/[name].[contenthash:8][ext]",
             },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
             "type": "asset/resource",
           },
           {
@@ -232,7 +232,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "generator": {
               "filename": "static/font/[name].[contenthash:8][ext]",
             },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
             "type": "asset/resource",
           },
           {
@@ -595,7 +595,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "generator": {
               "filename": "static/image/[name].[contenthash:8][ext]",
             },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
             "type": "asset/resource",
           },
           {
@@ -626,7 +626,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "generator": {
               "filename": "static/svg/[name].[contenthash:8].svg",
             },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
             "type": "asset/resource",
           },
           {
@@ -657,7 +657,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "generator": {
               "filename": "static/media/[name].[contenthash:8][ext]",
             },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
             "type": "asset/resource",
           },
           {
@@ -688,7 +688,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "generator": {
               "filename": "static/font/[name].[contenthash:8][ext]",
             },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
             "type": "asset/resource",
           },
           {
@@ -1050,7 +1050,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "generator": {
               "filename": "static/image/[name].[contenthash:8][ext]",
             },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
             "type": "asset/resource",
           },
           {
@@ -1081,7 +1081,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "generator": {
               "filename": "static/svg/[name].[contenthash:8].svg",
             },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
             "type": "asset/resource",
           },
           {
@@ -1112,7 +1112,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "generator": {
               "filename": "static/media/[name].[contenthash:8][ext]",
             },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
             "type": "asset/resource",
           },
           {
@@ -1143,7 +1143,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "generator": {
               "filename": "static/font/[name].[contenthash:8][ext]",
             },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
             "type": "asset/resource",
           },
           {
@@ -1435,7 +1435,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "generator": {
               "filename": "static/image/[name].[contenthash:8][ext]",
             },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
             "type": "asset/resource",
           },
           {
@@ -1466,7 +1466,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "generator": {
               "filename": "static/svg/[name].[contenthash:8].svg",
             },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
             "type": "asset/resource",
           },
           {
@@ -1497,7 +1497,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "generator": {
               "filename": "static/media/[name].[contenthash:8][ext]",
             },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
             "type": "asset/resource",
           },
           {
@@ -1528,7 +1528,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "generator": {
               "filename": "static/font/[name].[contenthash:8][ext]",
             },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
+            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
             "type": "asset/resource",
           },
           {
