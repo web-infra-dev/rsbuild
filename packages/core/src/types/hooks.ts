@@ -220,7 +220,7 @@ export type EnvironmentContext = {
   /**
    * WebSocket authentication token, used to authenticate WebSocket connections and
    * prevent unauthorized access. Only available in the development mode, and is
-   * empty string in the production mode.
+   * an empty string in the production mode.
    */
   webSocketToken: string;
 };
