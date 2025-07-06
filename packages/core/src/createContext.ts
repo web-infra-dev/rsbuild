@@ -2,6 +2,7 @@ import { join } from 'node:path';
 import { loadConfig } from 'browserslist-load-config';
 import { DEFAULT_BROWSERSLIST, ROOT_DIST_DIR } from './constants';
 import { withDefaultConfig } from './defaultConfig';
+import { hash } from './helpers';
 import { ensureAbsolutePath, getCommonParentPath } from './helpers/path';
 import { initHooks } from './hooks';
 import { getHTMLPathByEntry } from './initPlugins';
@@ -91,14 +92,6 @@ const getEnvironmentHTMLPaths = (
   }, {});
 };
 
-/**
- * Generates a secure WebSocket authentication token using 64-bit entropy.
- */
-const generateWebSocketToken = async () => {
-  const crypto = await import('node:crypto');
-  return crypto.randomBytes(8).toString('base64url');
-};
-
 export async function updateEnvironmentContext(
   context: InternalContext,
   configs: Record<string, NormalizedEnvironmentConfig>,
@@ -114,7 +107,7 @@ export async function updateEnvironmentContext(
     const { entry = {}, tsconfigPath } = config.source;
     const htmlPaths = getEnvironmentHTMLPaths(entry, config);
     const webSocketToken =
-      context.action === 'dev' ? await generateWebSocketToken() : '';
+      context.action === 'dev' ? await hash(context.rootPath + name) : '';
 
     const environmentContext: EnvironmentContext = {
       index,
