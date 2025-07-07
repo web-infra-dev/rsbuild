@@ -119,7 +119,11 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
   });
 
   if (context.action === 'build') {
-    compiler.hooks.run.tap('rsbuild:run', () => {
+    // When there are multiple compilers, we only need to print the start log once
+    const firstCompiler = isMultiCompiler
+      ? (compiler as Rspack.MultiCompiler).compilers[0]
+      : compiler;
+    firstCompiler.hooks.run.tap('rsbuild:run', () => {
       logger.info('build started...');
       logRspackVersion();
     });
