@@ -342,8 +342,19 @@ export const prettyTime = (seconds: number): string => {
     return `${format(seconds.toFixed(1))} s`;
   }
 
-  const minutes = seconds / 60;
-  return `${format(minutes.toFixed(2))} m`;
+  const minutes = Math.floor(seconds / 60);
+  const minutesLabel = `${format(minutes.toFixed(0))} m`;
+  const remainingSeconds = seconds % 60;
+
+  if (remainingSeconds === 0) {
+    return minutesLabel;
+  }
+
+  const secondsLabel = `${format(
+    remainingSeconds.toFixed(remainingSeconds % 1 === 0 ? 0 : 1),
+  )} s`;
+
+  return `${minutesLabel} ${secondsLabel}`;
 };
 
 /**
