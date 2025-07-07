@@ -218,9 +218,9 @@ export type EnvironmentContext = {
    */
   manifest?: Record<string, unknown> | ManifestData;
   /**
-   * WebSocket authentication token - cryptographically secure random identifier
-   * used to authenticate WebSocket connections and prevent unauthorized access.
-   * Only generated in the development mode, and is empty string in the production mode.
+   * WebSocket authentication token, used to authenticate WebSocket connections and
+   * prevent unauthorized access. Only available in the development mode, and is
+   * an empty string in the production mode.
    */
   webSocketToken: string;
 };
