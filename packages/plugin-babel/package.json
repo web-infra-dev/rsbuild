@@ -29,8 +29,8 @@
     "bump": "npx bumpp --no-tag"
   },
   "dependencies": {
-    "@babel/core": "^7.27.7",
-    "@babel/plugin-proposal-decorators": "^7.27.1",
+    "@babel/core": "^7.28.0",
+    "@babel/plugin-proposal-decorators": "^7.28.0",
     "@babel/plugin-transform-class-properties": "^7.27.1",
     "@babel/preset-typescript": "^7.27.1",
     "@types/babel__core": "^7.20.5",
