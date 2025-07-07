@@ -1,7 +1,6 @@
 import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
-// TODO: fix this test
 rspackOnlyTest(
   'generate integrity for preload tags in prod build',
   async ({ page }) => {
