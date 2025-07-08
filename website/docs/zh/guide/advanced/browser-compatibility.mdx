@@ -148,7 +148,7 @@ export default {
 
 查看 [source.include](/config/source/include) 文档来了解更详细的用法。
 
-## Polyfill 方案
+## Polyfills
 
 Rsbuild 通过 SWC 编译 JavaScript 代码，并支持注入 [core-js](https://github.com/zloirock/core-js)、[@swc/helpers](https://npmjs.com/package/@swc/helpers) 等 polyfills。
 
@@ -231,3 +231,11 @@ export default {
   },
 };
 ```
+
+### 缺少的 polyfill
+
+需要注意的是，core-js 并不能提供所有 JavaScript API 的 polyfill。有一些 API 由于其底层实现的复杂性或者性能考虑，是无法通过 polyfill 来完全模拟的。
+
+最典型的例子是 `Proxy` 对象。由于 `Proxy` 需要引擎级别的支持来实现对象操作的拦截，无法通过纯 JavaScript 代码来完全模拟其行为，因此 core-js 并不提供 `Proxy` 的 polyfill。
+
+请查看 [core-js - Missing polyfills](https://github.com/zloirock/core-js?tab=readme-ov-file#missing-polyfills) 来了解 core-js 无法提供哪些 API 的 polyfill。

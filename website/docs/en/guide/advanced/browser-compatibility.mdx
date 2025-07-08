@@ -148,7 +148,7 @@ export default {
 
 See [source.include](/config/source/include) for detailed usage.
 
-## Polyfill mode
+## Polyfills
 
 Rsbuild compiles JavaScript code using SWC and supports injecting polyfills such as [core-js](https://github.com/zloirock/core-js) and [@swc/helpers](https://npmjs.com/package/@swc/helpers).
 
@@ -231,3 +231,11 @@ export default {
   },
 };
 ```
+
+### Missing polyfills
+
+It should be noted that core-js cannot provide polyfills for all JavaScript APIs. Some APIs cannot be fully simulated through polyfills due to the complexity of their underlying implementation or performance considerations.
+
+The most typical example is the `Proxy` object. Since `Proxy` requires engine-level support to implement object operation interception, its behavior cannot be fully simulated through pure JavaScript code, so core-js does not provide a polyfill for `Proxy`.
+
+See [core-js - Missing polyfills](https://github.com/zloirock/core-js?tab=readme-ov-file#missing-polyfills) to understand which APIs core-js cannot provide polyfills for.
