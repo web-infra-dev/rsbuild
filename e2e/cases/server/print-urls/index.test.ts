@@ -163,11 +163,11 @@ test('should allow to modify and return new urls', async ({ page }) => {
     (log) =>
       log.includes('Network:') &&
       log.includes('http://') &&
-      log.endsWith('/test/'),
+      log.includes('/test/'),
   );
 
-  expect(localLog).toBeFalsy();
-  expect(networkLog).toBeFalsy();
+  expect(localLog).toBeTruthy();
+  expect(networkLog).toBeTruthy();
 
   await rsbuild.close();
 });
@@ -266,7 +266,7 @@ test('should print server urls when HTML is disabled but printUrls is a custom f
   });
 
   const localLog = rsbuild.logs.find((log) =>
-    log.includes(`➜ Network:  http://localhost:${rsbuild.port}`),
+    log.includes(`➜ Local:    http://localhost:${rsbuild.port}`),
   );
 
   expect(localLog).toBeTruthy();
