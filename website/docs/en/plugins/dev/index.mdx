@@ -1,15 +1,8 @@
-# Plugin system
+# Plugin development
 
-Rsbuild provides a lightweight yet powerful plugin system to implement most of its functionality and allows for user extension.
+Rsbuild's architecture is built around a plugin system. Most of Rsbuild's functionality is implemented through plugins, which keeps the core lightweight while providing flexible extensibility.
 
-Plugins written by developers can modify the default behavior of Rsbuild and add various additional features, including but not limited to:
-
-- Get context information
-- Register lifecycle hooks
-- Transform module source code
-- Modify Rspack configuration
-- Modify Rsbuild configuration
-- ...
+Rsbuild plugins are functions that can register hooks at different stages, listen to events, and execute custom logic. If you want to modify the default behavior, add new features, or integrate third-party tools, plugins provide a comprehensive API to fulfill these requirements.
 
 ## Comparison
 
