@@ -399,8 +399,8 @@ const NETWORK_LABEL = 'Network:  ';
 
 const getUrlLabel = (url: string) => {
   try {
-    const { host } = new URL(url);
-    return isLoopbackHost(host) ? LOCAL_LABEL : NETWORK_LABEL;
+    const { hostname } = new URL(url);
+    return isLoopbackHost(hostname) ? LOCAL_LABEL : NETWORK_LABEL;
   } catch {
     return NETWORK_LABEL;
   }
