@@ -13,6 +13,9 @@ export default defineConfig({
     // TODO: try to find closest tsconfig.json
     tsconfigPath: 'packages/core/tsconfig.json',
   },
+  output: {
+    externals: ['@rsbuild/core'],
+  },
   name: 'node',
   globals: true,
   restoreMocks: true,
