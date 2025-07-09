@@ -1333,26 +1333,77 @@ export type MetaOptions = {
 };
 
 export type HtmlBasicTag = {
+  /**
+   * The HTML tag name to be generated. Should be a valid HTML element name.
+   * @example
+   * - `'script'` for JavaScript files
+   * - `'link'` for stylesheets or external resources
+   * - `'meta'` for metadata
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element
+   */
   tag: string;
+  /**
+   * HTML attributes to be applied to the tag.
+   * - `string` values will be rendered as `attribute="value"`
+   * - `true` renders as boolean attribute (e.g., `<input disabled>`)
+   * - `false` or `null` or `undefined` values will omit the attribute
+   * 
+   * @example
+   * // String attributes
+   * attrs: {
+   *   src: 'https://example.com/script.js',
+   *   type: 'text/javascript',
+   * }
+   * // Result: <script src="https://example.com/script.js" type="text/javascript">
+
+   * // Boolean attributes
+   * attrs: {
+   *   async: true,      // <script async>
+   *   defer: false,     // attribute omitted
+   * }
+   * // Result: <script async>
+   */
   attrs?: Record<string, string | boolean | null | undefined>;
+  /**
+   * The innerHTML content of the tag. The content is inserted as-is without
+   * HTML escaping, so ensure it's safe to prevent XSS vulnerabilities.
+   */
   children?: string;
 };
 
 export type HtmlTag = HtmlBasicTag & {
-  /** @default false */
+  /**
+   * Controls whether to add a hash query parameter to asset URLs for cache busting.
+   * Only affects path attributes like `src` (script) and `href` (link).
+   * - `false`: No hash query
+   * - `true`: Adds the same hash as the HTML file
+   * - `string`: Uses custom hash string
+   * - `function`: Custom hash generation
+   * @default false
+   */
   hash?: boolean | string | ((url: string, hash: string) => string);
-  /** @default true */
+  /**
+   * Controls whether to prepend the asset prefix to resource URLs.
+   * Only affects path attributes like `src` (script) and `href` (link).
+   * - `true`: Prepends asset prefix to the URL (default)
+   * - `false`: Uses the URL as-is
+   * - `string`: Uses custom prefix
+   * - `function`: Custom path transformation
+   * @default true
+   */
   publicPath?: boolean | string | ((url: string, publicPath: string) => string);
   /**
-   * Defines the injection position of the current tag relative to existing tags
-   * - When set to `true`, the tag will be inserted after existing tags
-   * - When set to `false`, the tag will be inserted before existing tags
+   * Defines the injection position relative to existing tags.
+   * - `true`: Insert after existing tags
+   * - `false`: Insert before existing tags
    * @default true
    */
   append?: boolean;
   /**
-   * Specifies whether to add the current tag to the HTML `<head>` element
-   * @default defaults to `true` for element types allowed in the `<head>`, otherwise `false`
+   * Specifies whether to inject the tag into the HTML `<head>` element.
+   * - `true`: Inject into `<head>`
+   * - `false`: Inject into `<body>`
+   * @default Auto-detect: `true` for head-allowed elements, `false` otherwise
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head#see_also
    */
   head?: boolean;
