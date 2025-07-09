@@ -77,7 +77,7 @@ It will add a `script` tag to the end of the `head` of the HTML:
 
 Fields in the tag that indicate the path to the external assets are affected by the `publicPath` and `hash` options. These fields include `src` for the `script` tag and `href` for the `link` tag.
 
-Enabling `publicPath` will splice the [output.assetPrefix](/config/output/asset-prefix) field before the attribute representing the path in the tag. And the `hash` field causes the filename to be followed by an additional hash query to control browser caching, with the same hash string as the HTML file product.
+Enabling `publicPath` will splice the [output.assetPrefix](/config/output/asset-prefix) field before the attribute representing the path in the tag. And the `hash` field causes the filename to be followed by an additional hash query to control browser caching, with the same hash string as the HTML file.
 
 You can also pass functions to those fields to control the path joining.
 
