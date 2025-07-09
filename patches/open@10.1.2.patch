@@ -1,0 +1,14 @@
+diff --git a/index.js b/index.js
+index 6b55785fc17441f784da3681d3a5234d9eb97290..560a78112ddd8ae6f26f914de55a10a540a61f7b 100644
+--- a/index.js
++++ b/index.js
+@@ -4,7 +4,8 @@ import path from 'node:path';
+ import {fileURLToPath} from 'node:url';
+ import util from 'node:util';
+ import childProcess from 'node:child_process';
+-import fs, {constants as fsConstants} from 'node:fs/promises';
++import fs from 'node:fs/promises';
++import {constants as fsConstants} from 'node:fs';
+ import isWsl from 'is-wsl';
+ import defineLazyProperty from 'define-lazy-prop';
+ import defaultBrowser from 'default-browser';

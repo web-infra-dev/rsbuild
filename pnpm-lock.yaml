@@ -14,6 +14,9 @@ patchedDependencies:
   http-proxy@1.18.1:
     hash: 424b689da454f1f336d635615733f30568882789c1173f861c30f95ba8b05723
     path: patches/http-proxy@1.18.1.patch
+  open@10.1.2:
+    hash: 0c2b5a73ded8138281dec15e6b97b8c9671e376ffe1946f5c9294489ca6a4a96
+    path: patches/open@10.1.2.patch
   postcss-loader@8.1.1:
     hash: 7f10237e1665e9913e0f735a822545af08363f5cc67eacc2c37408aee7553d47
     path: patches/postcss-loader@8.1.1.patch
@@ -680,7 +683,7 @@ importers:
         version: 2.4.1
       open:
         specifier: ^10.1.2
-        version: 10.1.2
+        version: 10.1.2(patch_hash=0c2b5a73ded8138281dec15e6b97b8c9671e376ffe1946f5c9294489ca6a4a96)
       picocolors:
         specifier: ^1.1.1
         version: 1.1.1
@@ -8176,7 +8179,7 @@ snapshots:
       fs-extra: 11.3.0
       json-cycle: 1.5.0
       lodash: 4.17.21
-      open: 10.1.2
+      open: 10.1.2(patch_hash=0c2b5a73ded8138281dec15e6b97b8c9671e376ffe1946f5c9294489ca6a4a96)
       sirv: 2.0.4
       socket.io: 4.8.1
       source-map: 0.7.4
@@ -11684,7 +11687,7 @@ snapshots:
 
   only@0.0.2: {}
 
-  open@10.1.2:
+  open@10.1.2(patch_hash=0c2b5a73ded8138281dec15e6b97b8c9671e376ffe1946f5c9294489ca6a4a96):
     dependencies:
       default-browser: 5.2.1
       define-lazy-prop: 3.0.0
