@@ -1373,7 +1373,7 @@ export type HtmlBasicTag = {
 
 export type HtmlTag = HtmlBasicTag & {
   /**
-   * Controls whether to add a hash query parameter to asset URLs for cache invalidation,
+   * Controls whether to add a hash query parameter to asset URLs for cache invalidation.
    * Only affects the `src` attribute of the `script` tag and the `href` attribute of the `link` tag.
    * - `false`: No hash query
    * - `true`: Generate hash based on HTML content
