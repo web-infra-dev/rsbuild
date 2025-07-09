@@ -1373,22 +1373,22 @@ export type HtmlBasicTag = {
 
 export type HtmlTag = HtmlBasicTag & {
   /**
-   * Controls whether to add a hash query parameter to asset URLs for cache busting.
-   * Only affects path attributes like `src` (script) and `href` (link).
+   * Controls whether to add a hash query parameter to asset URLs for cache invalidation,
+   * Only affects the `src` attribute of the `script` tag and the `href` attribute of the `link` tag.
    * - `false`: No hash query
-   * - `true`: Adds the same hash as the HTML file
-   * - `string`: Uses custom hash string
-   * - `function`: Custom hash generation
+   * - `true`: Generate hash based on HTML content
+   * - `string`: Uses a custom hash string
+   * - `function`: Custom hash generation via a function
    * @default false
    */
   hash?: boolean | string | ((url: string, hash: string) => string);
   /**
    * Controls whether to prepend the asset prefix to resource URLs.
-   * Only affects path attributes like `src` (script) and `href` (link).
-   * - `true`: Prepends asset prefix to the URL (default)
+   * Only affects the `src` attribute of the `script` tag and the `href` attribute of the `link` tag.
+   * - `true`: Prepends asset prefix to the URL
    * - `false`: Uses the URL as-is
-   * - `string`: Uses custom prefix
-   * - `function`: Custom path transformation
+   * - `string`: Uses a custom prefix
+   * - `function`: Custom path transformation via a function
    * @default true
    */
   publicPath?: boolean | string | ((url: string, publicPath: string) => string);
