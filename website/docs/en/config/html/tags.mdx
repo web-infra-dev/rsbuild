@@ -12,48 +12,153 @@ Modifies the tags that are injected into the HTML page.
 
 > In Rsbuild plugins, you can modify tags by using [api.modifyHTMLTags](/plugins/dev/hooks#modifyhtmltags) hook.
 
+## 基础示例
+
+例如，在 `head` 中添加 `script` 标签，并插入到已有标签之后：
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    tags: [
+      {
+        tag: 'script',
+        attrs: { src: 'https://example.com/script.js' },
+      },
+    ],
+  },
+};
+```
+
+生成的 HTML 文件：
+
+```html
+<html>
+  <head>
+    <!-- some other head tags... -->
+    <script src="https://example.com/script.js"></script>
+  </head>
+  <body>
+    <!-- some other body tags... -->
+  </body>
+</html>
+```
+
 ## Tag object
+
+`html.tags` can accept an array, and each element in the array is a `HtmlTag` object, which is used to describe the tag to be injected.
 
 ```ts
 type HtmlTag = {
   tag: string;
   attrs?: Record<string, string | boolean | null | undefined>;
   children?: string;
-  /** @default false */
   hash?: boolean | string | ((url: string, hash: string) => string);
-  /** @default true */
   publicPath?: boolean | string | ((url: string, publicPath: string) => string);
-  /**
-   * Defines the injection position of the current tag relative to existing tags
-   * - When set to `true`, the tag will be inserted after existing tags
-   * - When set to `false`, the tag will be inserted before existing tags
-   * @default true
-   */
   append?: boolean;
-  /**
-   * Specifies whether to add the current tag to the HTML `<head>` element
-   * @default defaults to `true` for element types allowed in the `<head>`, otherwise `false`
-   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head#see_also
-   */
   head?: boolean;
 };
 ```
 
-A tag object can be used to describe the tag to be injected and the location of the injection can be controlled by the parameters.
+### tag
+
+- **Type:** `string`
+- **Default:** `undefined`
+
+The HTML tag name to be generated. Should be a valid HTML element name.
+
+For example, inject a `script` tag and a `link` tag:
 
 ```ts title="rsbuild.config.ts"
 export default {
-  output: {
-    assetPrefix: 'https://example.com/',
-  },
   html: {
     tags: [
+      // Result: <script src="https://example.com/script.js"></script>
       {
         tag: 'script',
-        attrs: { src: 'a.js' },
-        head: true,
-        append: true,
-        publicPath: true,
+        attrs: { src: 'https://example.com/script.js' },
+      },
+      // Result: <link href="https://example.com/style.css" rel="stylesheet">
+      {
+        tag: 'link',
+        attrs: { href: 'https://example.com/style.css', rel: 'stylesheet' },
+      },
+    ],
+  },
+};
+```
+
+### attrs
+
+- **Type:** `Record<string, string | boolean | null | undefined>`
+- **Default:** `undefined`
+
+HTML attributes to be applied to the tag.
+
+- `string` values will be rendered as `attribute="value"`
+- `true` renders as boolean attribute (e.g., `<input disabled>`)
+- `false` or `null` or `undefined` values will omit the attribute
+
+For example, inject a `script` tag with `src` and `type` attributes:
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    tags: [
+      // Result: <script src="https://example.com/script.js" type="text/javascript" defer></script>
+      {
+        tag: 'script',
+        attrs: {
+          src: 'https://example.com/script.js',
+          type: 'text/javascript',
+          defer: true,
+        },
+      },
+    ],
+  },
+};
+```
+
+### children
+
+- **Type:** `string`
+- **Default:** `undefined`
+
+The innerHTML content of the tag. The content is inserted as-is without HTML escaping, so ensure it's safe to prevent XSS vulnerabilities.
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    tags: [
+      // Result: <script>console.log("Hello, world!");</script>
+      {
+        tag: 'script',
+        children: 'console.log("Hello, world!");',
+      },
+    ],
+  },
+};
+```
+
+### hash
+
+- **Type:** `boolean | string | ((url: string, hash: string) => string)`
+- **Default:** `false`
+
+Controls whether to add a hash query parameter to asset URLs for cache invalidation, only affects the `src` attribute of the `script` tag and the `href` attribute of the `link` tag.
+
+- `false`: No hash query
+- `true`: Generate hash based on HTML content
+- `string`: Uses a custom hash string
+- `function`: Custom hash generation via a function
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    tags: [
+      // Result: <script src="https://example.com/script.js?8327ec63"></script>
+      {
+        tag: 'script',
+        attrs: { src: 'https://example.com/script.js' },
         hash: true,
       },
     ],
@@ -61,46 +166,92 @@ export default {
 };
 ```
 
-It will add a `script` tag to the end of the `head` of the HTML:
+### publicPath
 
-```html
-<html>
-  <head>
-    <!-- some other headTags... -->
-    <script src="https://example.com/a.js?8327ec63"></script>
-  </head>
-  <body>
-    <!-- some other bodyTags... -->
-  </body>
-</html>
+- **Type:** `boolean | string | ((url: string, publicPath: string) => string)`
+- **Default:** `true`
+
+Controls whether to prepend the asset prefix to resource URLs. Only affects the `src` attribute of the `script` tag and the `href` attribute of the `link` tag.
+
+- `true`: Prepends asset prefix to the URL
+- `false`: Uses the URL as-is
+- `string`: Uses a custom prefix
+- `function`: Custom path transformation via a function
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    assetPrefix: 'https://cdn.example.com/',
+  },
+  html: {
+    tags: [
+      // Result: <script src="https://cdn.example.com/script.js"></script>
+      {
+        tag: 'script',
+        attrs: { src: '/script.js' },
+        publicPath: true,
+      },
+    ],
+  },
+};
 ```
 
-Fields in the tag that indicate the path to the external assets are affected by the `publicPath` and `hash` options. These fields include `src` for the `script` tag and `href` for the `link` tag.
+### append
 
-Enabling `publicPath` will splice the [output.assetPrefix](/config/output/asset-prefix) field before the attribute representing the path in the tag. And the `hash` field causes the filename to be followed by an additional hash query to control browser caching, with the same hash string as the HTML file.
+- **Type:** `boolean`
+- **Default:** `true`
 
-You can also pass functions to those fields to control the path joining.
+Controls whether to insert the tag after existing tags.
+
+- `true`: Insert after existing tags
+- `false`: Insert before existing tags
+
+See [Injection position](#injection-position) for more details.
+
+### head
+
+- **Type:** `boolean`
+- **Default:** auto-detect
+
+Specifies whether to inject the tag into the HTML `<head>` element.
+
+- `true`: Inject into `<head>`
+- `false`: Inject into `<body>`
+
+For elements allowed in the `<head>`, the default is `true`; for other elements, the default is `false`.
+
+Allowed element types in the `<head>` include:
+
+- `title`
+- `base`
+- `link`
+- `style`
+- `meta`
+- `script`
+- `noscript`
+- `template`
+
+See [Injection position](#injection-position) for more details.
 
 ### Injection position
 
-The final injection position of the tag is determined by the `head` and `append` options, and two elements with the same configuration will be inserted into the same area and hold their relative positions to each other.
+The final injection position of the tag is determined by the [head](#head) and [append](#append) options.
 
 - `append`: Defines the injection position of the current tag relative to existing tags, defaults to `true`
-- `head`: Specifies whether to add the current tag to the HTML `<head>` element, defaults to `true` for element types allowed in the `<head>`, otherwise `false`
-
-The final injection position in HTML is as follows:
+- `head`: Specifies whether to add the current tag to the HTML `<head>` element, defaults to `true` for element types allowed in the `<head>`, otherwise `false`.
+- If two tag objects have the same `head` and `append` options, they will be inserted into the same area and hold their relative positions to each other.
 
 ```html
 <html>
   <head>
-    <!-- tags with `{ head: true, append: false }` here. -->
-    <!-- existing headTags... -->
-    <!-- tags with `{ head: true, append: true }` here. -->
+    <!-- tags with `{ head: true, append: false }` here -->
+    <!-- existing head tags... -->
+    <!-- tags with `{ head: true, append: true }` here -->
   </head>
   <body>
-    <!-- tags with `{ head: false, append: false }` here. -->
-    <!-- existing bodyTags... -->
-    <!-- tags with `{ head: false, append: true }` here. -->
+    <!-- tags with `{ head: false, append: false }` here -->
+    <!-- existing body tags... -->
+    <!-- tags with `{ head: false, append: true }` here -->
   </body>
 </html>
 ```
@@ -159,10 +310,10 @@ The HTML file will look like:
   <head>
     <script src="/a.js" defer></script>
     <script src="/d.js"></script>
-    <!-- some other headTags... -->
+    <!-- some other head tags... -->
   </head>
   <body>
-    <!-- some bodyTags... -->
+    <!-- some body tags... -->
   </body>
 </html>
 ```

@@ -12,48 +12,153 @@ type TagsConfig = HtmlTag | HtmlTagHandler | Array<HtmlTag | HtmlTagHandler>;
 
 > 在 Rsbuild 插件中，可以通过 [api.modifyHTMLTags](/plugins/dev/hooks#modifyhtmltags) hook 来修改标签。
 
-## 对象形式
+## 基础示例
+
+例如，在 `head` 中添加 `script` 标签，并插入到已有标签之后：
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    tags: [
+      {
+        tag: 'script',
+        attrs: { src: 'https://example.com/script.js' },
+      },
+    ],
+  },
+};
+```
+
+生成的 HTML 文件：
+
+```html
+<html>
+  <head>
+    <!-- some other head tags... -->
+    <script src="https://example.com/script.js"></script>
+  </head>
+  <body>
+    <!-- some other body tags... -->
+  </body>
+</html>
+```
+
+## Tag 对象
+
+`html.tags` 可以传入一个数组，数组中的每个元素都是一个 `HtmlTag` 对象，用于描述需要注入的标签。
 
 ```ts
 type HtmlTag = {
   tag: string;
   attrs?: Record<string, string | boolean | null | undefined>;
   children?: string;
-  /** @default false */
   hash?: boolean | string | ((url: string, hash: string) => string);
-  /** @default true */
   publicPath?: boolean | string | ((url: string, publicPath: string) => string);
-  /**
-   * 定义当前标签相对于已有标签的插入位置
-   * - 当设置为 `true` 时，标签将被插入到已有标签之后
-   * - 当设置为 `false` 时，标签将被插入到已有标签之前
-   * @default true
-   */
   append?: boolean;
-  /**
-   * 指定是否将当前标签添加到 HTML 的 `<head>` 元素中
-   * @default 对于允许在 `<head>` 中包含的元素类型，默认为 `true`，否则为 `false`
-   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head#see_also
-   */
   head?: boolean;
 };
 ```
 
-对象形式的配置项可以用于描述需要注入的标签，并可以通过参数控制注入的位置：
+### tag
+
+- **类型：** `string`
+- **默认值：** `undefined`
+
+要生成的 HTML 标签名称，需要设置为一个有效的 HTML 元素名称。
+
+例如，注入一个 `script` 标签和一个 `link` 标签：
 
 ```ts title="rsbuild.config.ts"
 export default {
-  output: {
-    assetPrefix: 'https://example.com/',
-  },
   html: {
     tags: [
+      // 结果: <script src="https://example.com/script.js"></script>
       {
         tag: 'script',
-        attrs: { src: 'a.js' },
-        head: true,
-        append: true,
-        publicPath: true,
+        attrs: { src: 'https://example.com/script.js' },
+      },
+      // 结果: <link href="https://example.com/style.css" rel="stylesheet">
+      {
+        tag: 'link',
+        attrs: { href: 'https://example.com/style.css', rel: 'stylesheet' },
+      },
+    ],
+  },
+};
+```
+
+### attrs
+
+- **类型：** `Record<string, string | boolean | null | undefined>`
+- **默认值：** `undefined`
+
+标签的 HTML 属性。
+
+- `string` 值将渲染为 `attribute="value"`
+- `true` 渲染为布尔属性（例如，`<input disabled>`）
+- `false`、`null` 或 `undefined` 值将不渲染该属性
+
+例如，注入一个带有 `src` 和 `type` 属性的 `script` 标签：
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    tags: [
+      // 结果: <script src="https://example.com/script.js" type="text/javascript" defer></script>
+      {
+        tag: 'script',
+        attrs: {
+          src: 'https://example.com/script.js',
+          type: 'text/javascript',
+          defer: true,
+        },
+      },
+    ],
+  },
+};
+```
+
+### children
+
+- **类型：** `string`
+- **默认值：** `undefined`
+
+标签的 innerHTML 内容，内容会按原样插入，不进行 HTML 转义，因此请确保内容安全以避免 XSS 漏洞。
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    tags: [
+      // 结果: <script>console.log("Hello, world!");</script>
+      {
+        tag: 'script',
+        children: 'console.log("Hello, world!");',
+      },
+    ],
+  },
+};
+```
+
+### hash
+
+- **类型：** `boolean | string | ((url: string, hash: string) => string)`
+- **默认值：** `false`
+
+控制是否为资源的 URL 添加 hash 作为 query 参数，以进行缓存失效，仅影响 `script` 标签的 `src` 属性和 `link` 标签的 `href` 属性。
+
+- `false`：不添加 hash query 参数
+- `true`：基于 HTML 内容生成 hash
+- `string`：使用自定义的 hash 字符串
+- `function`：通过函数自定义 hash 生成
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    tags: [
+      // 结果: <script src="https://example.com/script.js?8327ec63"></script>
+      {
+        tag: 'script',
+        attrs: { src: 'https://example.com/script.js' },
         hash: true,
       },
     ],
@@ -61,46 +166,92 @@ export default {
 };
 ```
 
-这样的配置将会在 HTML 的 `head` 最后添加一个 `script` 标签：
+### publicPath
 
-```html
-<html>
-  <head>
-    <!-- some other headTags... -->
-    <script src="https://example.com/a.js?8327ec63"></script>
-  </head>
-  <body>
-    <!-- some other bodyTags... -->
-  </body>
-</html>
+- **类型：** `boolean | string | ((url: string, publicPath: string) => string)`
+- **默认值：** `true`
+
+控制是否为资源的 URL 添加资源前缀，仅影响 `script` 标签的 `src` 属性和 `link` 标签的 `href` 属性。
+
+- `true`：为 URL 添加资源前缀
+- `false`：不添加资源前缀
+- `string`：使用自定义的前缀
+- `function`：通过函数自定义路径转换
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    assetPrefix: 'https://cdn.example.com/',
+  },
+  html: {
+    tags: [
+      // 结果: <script src="https://cdn.example.com/script.js"></script>
+      {
+        tag: 'script',
+        attrs: { src: '/script.js' },
+        publicPath: true,
+      },
+    ],
+  },
+};
 ```
 
-标签中表示外部资源文件路径的字段会受到 `publicPath` 和 `hash` 选项的影响，这些字段包括 `script` 标签的 `src` 和 `link` 标签的 `href`。
+### append
 
-启用 `publicPath` 会让标签中表示路径的属性被拼接上 [output.assetPrefix](/config/output/asset-prefix) 字段。而 `hash` 字段会让文件名后多出一个哈希查询用于控制浏览器缓存，哈希字符串与 HTML 文件产物的哈希值相同。
+- **类型：** `boolean`
+- **默认值：** `true`
 
-用户也可以向这两个配置传入函数，以自行控制路径拼接的逻辑。
+控制是否在现有标签之后插入标签。
 
-### 插入位置
+- `true`：在现有标签之后插入
+- `false`：在现有标签之前插入
 
-标签插入位置由 `head` 和 `append` 选项决定，当两个元素的 `head` 和 `append` 配置相同时，将被插入到相同区域，并且维持彼此之间的相对位置。
+查看 [插入位置](#插入位置) 了解更多。
+
+### head
+
+- **类型：** `boolean`
+- **默认值：** 自动检测
+
+指定是否将标签注入到 HTML `<head>` 元素中。
+
+- `true`：注入到 `<head>` 中
+- `false`：注入到 `<body>` 中
+
+对于允许包含在 `<head>` 中的元素，默认值为 `true`；其他元素默认值为 `false`。
+
+允许在 `<head>` 中包含的元素类型包括：
+
+- `title`
+- `base`
+- `link`
+- `style`
+- `meta`
+- `script`
+- `noscript`
+- `template`
+
+查看 [插入位置](#插入位置) 了解更多。
+
+## 插入位置
+
+标签的插入位置由 [head](#head) 和 [append](#append) 选项决定。
 
 - `append` 定义当前标签相对于已有标签的插入位置，默认值为 `true`
 - `head` 指定是否将当前标签添加到 HTML 的 `<head>` 元素中，对于允许在 `<head>` 中包含的元素类型，默认为 `true`，否则为 `false`
-
-最终在 HTML 中的插入位置如下：
+- 如果两个标签对象的 `head` 和 `append` 选项一致，它们将被插入到相同区域，并且维持彼此之间的相对位置。
 
 ```html
 <html>
   <head>
-    <!-- 设置了 `{ head: true, append: false }` 的标签。 -->
-    <!-- 已有的 headTags... -->
-    <!-- 设置了 `{ head: true, append: true }` 的标签。 -->
+    <!-- 设置了 `{ head: true, append: false }` 的标签 -->
+    <!-- 已有的 head tags... -->
+    <!-- 设置了 `{ head: true, append: true }` 的标签 -->
   </head>
   <body>
-    <!-- 设置了 `{ head: false, append: false }` 的标签。 -->
-    <!-- 已有的 bodyTags... -->
-    <!-- 设置了 `{ head: false, append: true }` 的标签。 -->
+    <!-- 设置了 `{ head: false, append: false }` 的标签 -->
+    <!-- 已有的 body tags... -->
+    <!-- 设置了 `{ head: false, append: true }` 的标签 -->
   </body>
 </html>
 ```
@@ -139,7 +290,7 @@ export default {
         }
       },
       (tags) => {
-        // 将 'b.js' 插入到 'a.js' 之后
+        // 将 'd.js' 插入到 'a.js' 之后
         const targetIndex = tags.findIndex((tag) => tag.attrs?.src === 'a.js');
 
         tags.splice(targetIndex + 1, 0, {
@@ -159,10 +310,10 @@ export default {
   <head>
     <script src="/a.js" defer></script>
     <script src="/d.js"></script>
-    <!-- some other headTags... -->
+    <!-- 其他 head 标签... -->
   </head>
   <body>
-    <!-- some bodyTags... -->
+    <!-- 其他 body 标签... -->
   </body>
 </html>
 ```
