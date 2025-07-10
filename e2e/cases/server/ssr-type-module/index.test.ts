@@ -4,11 +4,6 @@ import { expect } from '@playwright/test';
 rspackOnlyTest('support SSR load esm with type module', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
-    rsbuildConfig: {
-      dev: {
-        assetPrefix: './',
-      },
-    },
   });
 
   const url1 = new URL(`http://localhost:${rsbuild.port}`);
