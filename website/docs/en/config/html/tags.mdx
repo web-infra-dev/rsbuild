@@ -12,9 +12,9 @@ Modifies the tags that are injected into the HTML page.
 
 > In Rsbuild plugins, you can modify tags by using [api.modifyHTMLTags](/plugins/dev/hooks#modifyhtmltags) hook.
 
-## 基础示例
+## Basic example
 
-例如，在 `head` 中添加 `script` 标签，并插入到已有标签之后：
+For example, add a `script` tag to the `head` and inject it after the existing tags:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -29,7 +29,7 @@ export default {
 };
 ```
 
-生成的 HTML 文件：
+The generated HTML file will look like:
 
 ```html
 <html>
