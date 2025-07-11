@@ -67,7 +67,7 @@ rspackOnlyTest(
       },
     );
     expect(pkgJson.devDependencies.eslint).toBeTruthy();
-    expect(pkgJson.devDependencies['eslint-plugin-react']).toBeTruthy();
+    expect(pkgJson.devDependencies['eslint-plugin-react-hooks']).toBeTruthy();
     expect(existsSync(join(dir, 'eslint.config.mjs'))).toBeTruthy();
     await clean();
   },
