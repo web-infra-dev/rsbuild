@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
-import { color, findExists, hash, isFileExists } from '../helpers';
+import { findExists, hash, isFileExists } from '../helpers';
 import { logger } from '../logger';
 import type {
   BuildCacheOptions,
@@ -177,11 +177,8 @@ export const pluginCache = (): RsbuildPlugin => ({
     });
 
     api.onAfterCreateCompiler(() => {
-      // Tell user that the cache is enabled and it's experimental
       if (cacheEnabled && api.context.bundlerType === 'rspack') {
-        logger.info(
-          `Rspack persistent cache enabled ${color.dim('(experimental)')}`,
-        );
+        logger.debug('Rspack persistent cache enabled');
       }
     });
   },
