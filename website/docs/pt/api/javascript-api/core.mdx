@@ -1,0 +1,551 @@
+# Rsbuild core
+
+This section describes some of the core methods provided by Rsbuild.
+
+## createRsbuild
+
+Create an [Rsbuild instance](/api/javascript-api/instance).
+
+- **Type:**
+
+```ts
+function createRsbuild(
+  options?: CreateRsbuildOptions,
+): Promise<RsbuildInstance>;
+```
+
+- **Example:**
+
+```ts
+import { createRsbuild } from '@rsbuild/core';
+
+const rsbuild = await createRsbuild({
+  rsbuildConfig: {
+    // Rsbuild configuration
+  },
+});
+```
+
+### Options
+
+The first parameter of `createRsbuild` is an `options` object, you can pass in the following options:
+
+```ts
+type CreateRsbuildOptions = {
+  cwd?: string;
+  callerName?: string;
+  environment?: string[];
+  loadEnv?: boolean | LoadEnvOptions;
+  rsbuildConfig?: RsbuildConfig | (() => Promise<RsbuildConfig>);
+};
+```
+
+- `cwd`: The root path of the current build, defaults to `process.cwd()`.
+- `callerName`: The name of the framework or tool that is currently invoking Rsbuild, defaults to `'rsbuild'`, see [Specify caller name](#specify-caller-name).
+- `environment`: Only build specified [environments](/guide/advanced/environments). If not specified or passing an empty array, all environments will be built.
+- `loadEnv`：Whether to call the [loadEnv](/api/javascript-api/core#loadenv) method to load env variables and define them as global variables via [source.define](/config/source/define).
+- `rsbuildConfig`: Rsbuild configuration object. Refer to [Configuration Overview](/config/) for all available configuration options.
+
+### Load configuration async
+
+`rsbuildConfig` can also be an async function, which allows you to dynamically load Rsbuild configuration and perform some custom operations.
+
+```ts
+import { createRsbuild, loadConfig } from '@rsbuild/core';
+
+const rsbuild = await createRsbuild({
+  rsbuildConfig: async () => {
+    const { content } = await loadConfig();
+    someFunctionToUpdateConfig(content);
+    return content;
+  },
+});
+```
+
+### Load env variables
+
+The `loadEnv` option in `createRsbuild` helps you call the [loadEnv](/api/javascript-api/core#loadenv) method to load env variables:
+
+```ts
+const rsbuild = await createRsbuild({
+  loadEnv: true,
+});
+```
+
+Passing `loadEnv: true` will automatically complete the following steps:
+
+1. Call the `loadEnv` method to load env variables.
+2. Add [source.define](/config/source/define) configuration, define the `publicVars` returned by `loadEnv` as global variables.
+3. Watch the `.env` file for changes, and restart the dev server when the file changes, and invalidate the build cache.
+4. Automatically call the `cleanup` method returned by `loadEnv` when closing the build or dev server.
+
+You can also pass in the options of the [loadEnv](/api/javascript-api/core#loadenv) method, for example:
+
+```ts
+const rsbuild = await createRsbuild({
+  loadEnv: {
+    prefixes: ['PUBLIC_', 'REACT_APP_'],
+  },
+});
+```
+
+### Specify caller name
+
+You can specify the name of the framework or tool that is currently invoking Rsbuild, which can be accessed by Rsbuild plugins through [context.callerName](/api/javascript-api/instance#contextcallername), and execute different logic based on this identifier.
+
+```ts
+import { myPlugin } from './myPlugin';
+
+const rsbuild = await createRsbuild({
+  callerName: 'rslib',
+  rsbuildConfig: {
+    plugins: [myPlugin],
+  },
+});
+```
+
+```ts title="myPlugin.ts"
+export const myPlugin = {
+  name: 'my-plugin',
+  setup(api) {
+    const { callerName } = api.context;
+
+    if (callerName === 'rslib') {
+      // ...
+    } else if (callerName === 'rsbuild') {
+      // ...
+    }
+  },
+};
+```
+
+## loadConfig
+
+Load Rsbuild configuration file.
+
+- **Type:**
+
+```ts
+function loadConfig(params?: {
+  // Default is process.cwd()
+  cwd?: string;
+  // Specify the configuration file, can be a relative or absolute path
+  path?: string;
+  meta?: Record<string, unknown>;
+  envMode?: string;
+  loader?: 'jiti' | 'native';
+}): Promise<{
+  content: RsbuildConfig;
+  filePath: string | null;
+}>;
+```
+
+- **Example:**
+
+```ts
+import { loadConfig } from '@rsbuild/core';
+
+// Load `rsbuild.config.*` file by default
+const { content } = await loadConfig();
+
+console.log(content); // -> Rsbuild config object
+
+const rsbuild = await createRsbuild({
+  rsbuildConfig: content,
+});
+```
+
+If the Rsbuild config file does not exist in the cwd directory, the return value of the loadConfig method is `{ content: {}, filePath: null }`.
+
+### Specify the configuration file
+
+Use the `path` option to load the `my-config.ts` configuration file:
+
+```ts
+import { join } from 'node:path';
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  path: join(__dirname, 'my-config.ts'),
+});
+```
+
+### Passing meta object
+
+Load the configuration file and pass in a custom meta object:
+
+```ts
+import { join } from 'node:path';
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  meta: {
+    foo: 'bar',
+  },
+});
+```
+
+In the `defineConfig` configuration function, you can access the `foo` variable through the `meta` object:
+
+```ts title="rsbuild.config.ts"
+export default defineConfig(({ meta }) => {
+  console.log(meta.foo); // bar
+  return config;
+});
+```
+
+## loadEnv
+
+Load the [.env](/guide/advanced/env-vars#env-file) file and return all environment variables starting with the specified prefixes.
+
+- **Type:**
+
+````ts
+type LoadEnvOptions = {
+  /**
+   * The root path to load the env file
+   * @default process.cwd()
+   */
+  cwd?: string;
+  /**
+   * Used to specify the name of the .env.[mode] file
+   * Equivalent to Rsbuild CLI's `--env-mode` option
+   * @default process.env.NODE_ENV
+   */
+  mode?: string;
+  /**
+   * The prefix of public variables
+   * @default ['PUBLIC_']
+   */
+  prefixes?: string[];
+  /**
+   * Specify a target object to store environment variables.
+   * If not provided, variables will be written to `process.env`.
+   * @default process.env
+   */
+  processEnv?: Record<string, string>;
+};
+
+type LoadEnvResult = {
+  /** All env variables in the .env file */
+  parsed: Record<string, string>;
+  /** The absolute paths to all env files */
+  filePaths: string[];
+  /**
+   * Env variables that start with prefixes.
+   *
+   * @example
+   * ```ts
+   * {
+   *   PUBLIC_FOO: 'bar',
+   * }
+   * ```
+   **/
+  rawPublicVars: Record<string, string | undefined>;
+  /**
+   * Formatted env variables that start with prefixes.
+   * The keys contain the prefixes `process.env.*` and `import.meta.env.*`.
+   * The values are processed by `JSON.stringify`.
+   *
+   * @example
+   * ```ts
+   * {
+   *   'process.env.PUBLIC_FOO': '"bar"',
+   *   'import.meta.env.PUBLIC_FOO': '"bar"',
+   * }
+   * ```
+   **/
+  publicVars: Record<string, string>;
+  /** Clear the env variables mounted on `process.env` */
+  cleanup: () => void;
+};
+
+function loadEnv(options: LoadEnvOptions): LoadEnvResult;
+````
+
+- **Example:**
+
+```ts
+import { loadEnv, mergeRsbuildConfig } from '@rsbuild/core';
+
+const { parsed, publicVars } = loadEnv();
+
+const mergedConfig = mergeRsbuildConfig(
+  {
+    source: {
+      define: publicVars,
+    },
+  },
+  userConfig,
+);
+```
+
+This method will also load files such as `.env.local` and `.env.[mode]`, see [Environment Variables](/guide/advanced/env-vars) for details.
+
+:::tip
+
+- Rsbuild CLI will automatically call the `loadEnv()` method. If you are using the Rsbuild CLI, you can set the `mode` parameter through the [--env-mode](/guide/advanced/env-vars#env-mode) option.
+- The `loadEnv` option in [createRsbuild](#creatersbuild) will help you call the `loadEnv()` method and handle related operations.
+
+:::
+
+### Specify the target object
+
+By default, `loadEnv` uses the `process.env` object to store environment variables. You can specify a target object to store environment variables through the `processEnv` option:
+
+```ts
+import { loadEnv } from '@rsbuild/core';
+
+// Pass an empty object to avoid modifying `process.env`
+loadEnv({ processEnv: {} });
+
+// Pass a copy of the `process.env` object to avoid modifying the original object
+loadEnv({ processEnv: { ...process.env } });
+```
+
+## mergeRsbuildConfig
+
+Used to merge multiple Rsbuild configuration objects.
+
+The `mergeRsbuildConfig` function takes multiple configuration objects as parameters. It deep merges each configuration object, automatically combining multiple function values into an array of sequentially executed functions, and returns a merged configuration object.
+
+- **Type:**
+
+```ts
+function mergeRsbuildConfig(...configs: RsbuildConfig[]): RsbuildConfig;
+```
+
+### Basic example
+
+```ts
+import { mergeRsbuildConfig } from '@rsbuild/core';
+
+const config1 = {
+  dev: {
+    https: false,
+  },
+};
+const config2 = {
+  dev: {
+    https: true,
+  },
+};
+
+const mergedConfig = mergeRsbuildConfig(config1, config2);
+
+console.log(mergedConfig); // { dev: { https: true } }
+```
+
+> This method will not modify the config object in the input parameter.
+
+### Merge rules
+
+In addition to deep merging, the `mergeRsbuildConfig` function also handles some options in a special way.
+
+For example, [tools.rspack](/config/tools/rspack) can be set as a function. When multiple configuration objects contain `tools.rspack`, `mergeRsbuildConfig` will not simply retain the last function. On the contrary, it will merge all `tools.rspack` functions or objects into an array.
+
+```ts
+import { mergeRsbuildConfig } from '@rsbuild/core';
+
+const config1 = {
+  tools: {
+    rspack: {
+      someOption: true,
+    },
+  },
+};
+const config2 = {
+  tools: {
+    rspack: (config) => {
+      console.log('function 1');
+      return config;
+    },
+  },
+};
+const config3 = {
+  tools: {
+    rspack: (config) => {
+      console.log('function 2');
+      return config;
+    },
+  },
+};
+
+const mergedConfig = mergeRsbuildConfig(config1, config2, config3);
+```
+
+In the above example, the merged configuration is in the following format. The array first contains an object `{ someOption: true }`, followed by two functions in the order they were merged.
+
+Each item in the array will be executed in sequence, and the output of the previous function will serve as the input to the next one, ultimately generating an Rspack configuration.
+
+```ts
+const mergedConfig = {
+  tools: {
+    rspack: [
+      {
+        someOption: true,
+      },
+      (config) => {
+        console.log('function 1');
+        return config;
+      },
+      (config) => {
+        console.log('function 2');
+        return config;
+      },
+    ],
+  },
+};
+```
+
+By this way, we can ensure that when merging multiple configuration objects, the same multiple `tools.rspack` fields can all be effective.
+
+In Rsbuild, most options that support function values use this rule, such as `tools.postcss`, `tools.less`, `tools.bundlerChain`, etc.
+
+## logger
+
+A logger instance used to output log information in a unified format. Use this instead of `console.log` to maintain consistent logging with Rsbuild.
+
+Based on [rslog](https://github.com/rspack-contrib/rslog).
+
+- **Example:**
+
+```ts
+import { logger } from '@rsbuild/core';
+
+// A gradient welcome log
+logger.greet(`\n➜ Rsbuild v1.0.0\n`);
+
+// Info
+logger.info('This is an info message');
+
+// Start
+logger.start('This is a start message');
+
+// Warn
+logger.warn('This is a warning message');
+
+// Ready
+logger.ready('This is a ready message');
+
+// Success
+logger.success('This is a success message');
+
+// Error
+logger.error('This is an error message');
+logger.error(new Error('This is an error message with stack'));
+
+// Debug
+logger.debug('This is a debug message');
+
+// Same as console.log
+logger.log('This is a log message');
+```
+
+### Custom logger
+
+You can use the `logger.override` method to override partial or all methods of the default logger:
+
+```ts
+import { logger } from '@rsbuild/core';
+
+logger.override({
+  log: (message) => {
+    console.log(`[log] ${message}`);
+  },
+  info: (message) => {
+    console.log(`[info] ${message}`);
+  },
+  warn: (message) => {
+    console.warn(`[warn] ${message}`);
+  },
+  start: (message) => {
+    console.log(`[start] ${message}`);
+  },
+  ready: (message) => {
+    console.log(`[ready] ${message}`);
+  },
+  error: (message) => {
+    console.error(`[error] ${message}`);
+  },
+  success: (message) => {
+    console.error(`[success] ${message}`);
+  },
+  debug: (message) => {
+    if (process.env.DEBUG) {
+      console.log(`[debug] ${message}`);
+    }
+  },
+});
+
+logger.info('hello'); // [info] hello
+```
+
+## rspack
+
+If you need to access the API or plugins exported by [@rspack/core](https://npmjs.com/package/@rspack/core), you can directly import the `rspack` object from `@rsbuild/core` without installing the `@rspack/core` package separately.
+
+- **Type:** `Rspack`
+- **Example:**
+
+```ts
+// the same as `import { rspack } from '@rspack/core'`
+import { rspack } from '@rsbuild/core';
+
+console.log(rspack.rspackVersion); // a.b.c
+console.log(rspack.util.createHash);
+console.log(rspack.BannerPlugin);
+```
+
+:::tip
+
+- Refer to [Rspack plugins](https://rspack.rs/plugins/) and [Rspack JavaScript API](https://rspack.rs/api/javascript-api/) to learn more about the available Rspack APIs.
+- It's not recommended to manually install the `@rspack/core` package, as it may conflict with the version that Rsbuild depends on.
+
+:::
+
+## version
+
+The version of `@rsbuild/core` currently in use.
+
+- **Type:** `string`
+- **Example:**
+
+```ts
+import { version } from '@rsbuild/core';
+
+console.log(version); // 1.0.0
+```
+
+## ensureAssetPrefix
+
+The `ensureAssetPrefix` function is used to prepend a given `assetPrefix` to a string that might be a URL. If the input string is already a complete URL, it returns the string directly.
+
+- **Type:**
+
+```ts
+function ensureAssetPrefix(
+  // URL string to be processed, can be a relative path or an absolute URL
+  url: string,
+  // URL prefix to be appended
+  assetPrefix: string
+) => string;
+```
+
+- **Example:**
+
+```ts
+import { ensureAssetPrefix } from '@rsbuild/core';
+
+ensureAssetPrefix('foo/bar.js', '/static/');
+// -> '/static/foo/bar.js'
+
+ensureAssetPrefix('foo/bar.js', 'https://example.com/static/');
+// -> 'https://example.com/static/foo/bar.js'
+
+ensureAssetPrefix(
+  'https://example.com/index.html',
+  'https://example.com/static/',
+);
+// -> 'https://example.com/index.html'
+```

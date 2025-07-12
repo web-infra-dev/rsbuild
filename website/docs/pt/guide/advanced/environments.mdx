@@ -1,0 +1,355 @@
+# Builds Multi-ambiente
+
+O Rsbuild suporta a construção de saídas para múltiplos ambientes ao mesmo tempo. Você pode usar [environments](/config/environments) para construir múltiplos ambientes em paralelo e definir uma configuração Rsbuild diferente para cada ambiente.
+
+## O que é ambiente
+
+O `ambiente` refere-se ao ambiente de tempo de execução para a saída da build. Ambientes comuns incluem navegadores, Node.js e Workers. O Rsbuild permite que você defina quaisquer nomes de ambiente e defina opções de build para cada ambiente individualmente.
+
+Um cenário típico é a renderização no lado do servidor (SSR). Você pode definir dois ambientes, `web` e `node`, onde os alvos de build ([output.target](/config/output/target)) são `web` e `node`. Estes são usados para cenários de renderização no lado do cliente (CSR) e renderização no lado do servidor (SSR).
+
+Você também pode definir diferentes ambientes para o mesmo alvo de build, por exemplo:
+
+- Definir ambientes `rsc` e `ssr`, ambos visando `node`, usados separadamente para React Server Components e SSR.
+- Definir ambientes `desktop` e `mobile`, ambos visando `web`, usados separadamente para navegadores de desktop e mobile.
+
+Sem a configuração `environments`, você precisaria definir múltiplas configurações para esses cenários e executar múltiplas builds Rsbuild independentes. Agora, com a configuração `environments`, você pode completar a build para múltiplas saídas em uma única execução do Rsbuild (o Rsbuild consegue isso usando o [MultiCompiler](https://rspack.rs/api/javascript-api/compiler#multicompiler) do Rspack).
+
+No Rsbuild, cada `ambiente` está associado a uma configuração Rsbuild, uma configuração Rspack e um conjunto de saídas de build. Desenvolvedores de plugins Rsbuild podem personalizar o processo de build para um ambiente especificado com base no nome do `ambiente`, como modificar configurações Rsbuild ou Rspack, registrar ou remover plugins, ajustar regras Rspack e visualizar informações de ativos.
+
+## Configurações de ambiente
+
+O Rsbuild suporta a definição de diferentes configurações Rsbuild para cada ambiente através de [environments](/config/environments).
+
+Por exemplo, se o seu projeto deseja suportar a função SSR, você precisa definir configurações diferentes para o cliente e para o SSR, respectivamente. Você pode definir um ambiente web e um ambiente node, respectivamente.
+
+```ts title="rsbuild.config.ts"
+export default {
+  environments: {
+    // Configura o ambiente web para navegadores
+    web: {
+      source: {
+        entry: {
+          index: './src/index.client.js',
+        },
+      },
+      output: {
+        // Usa o target 'web' para as saídas do navegador
+        target: 'web',
+      },
+      resolve: {
+        alias: {
+          '@common': './src/client/common',
+        },
+      },
+    },
+    // Configura o ambiente node para SSR
+    node: {
+      source: {
+        entry: {
+          index: './src/index.server.js',
+        },
+      },
+      output: {
+        // Usa o target 'node' para as saídas do Node.js
+        target: 'node',
+      },
+      resolve: {
+        alias: {
+          '@common': './src/server/common',
+        },
+      },
+    },
+  },
+};
+```
+
+### Fusão de configurações
+
+Se você configurar `environments`, o Rsbuild mesclará a configuração em `environments` com a configuração base externa. Ao mesclar, a configuração em `environments` tem prioridade maior.
+
+No exemplo acima, após mesclar as configurações, o Rsbuild gera duas configurações de ambiente autônomas para construir ambientes web e node.
+
+- **Configuração de ambientes web**: Gerada pela fusão da configuração base com `environments.web`
+- **Configuração de ambientes node**: Gerada pela fusão da configuração base com `environments.node`
+
+Então, o Rsbuild usará essas configurações de ambiente para gerar internamente duas configurações Rspack e executar uma única build usando o MultiCompiler do Rspack.
+
+### Configuração de depuração
+
+Ao executar o comando `npx rsbuild inspect` no diretório raiz do projeto, você encontrará a seguinte saída:
+
+- `rsbuild.config.[name].mjs`: A configuração do Rsbuild usada para um determinado ambiente durante a build.
+- `rspack.config.[name].mjs`: A configuração do Rspack correspondente a um determinado ambiente durante a build.
+
+```bash
+➜ npx rsbuild inspect
+
+config inspection completed, generated files:
+
+  - Rsbuild config (web): /project/dist/.rsbuild/rsbuild.config.web.mjs
+  - Rsbuild config (node): /project/dist/.rsbuild/rsbuild.config.node.mjs
+  - Rspack config (web): /project/dist/.rsbuild/rspack.config.web.mjs
+  - Rspack config (node): /project/dist/.rsbuild/rspack.config.node.mjs
+```
+
+## Ambiente padrão
+
+Quando `environments` não é especificado, o Rsbuild, por padrão, criará um ambiente com o mesmo nome com base no tipo de alvo atual (o valor de [output.target](/config/output/target)).
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'web',
+  },
+};
+```
+
+A configuração acima é equivalente a uma simplificação da seguinte configuração:
+
+```ts title="rsbuild.config.ts"
+export default {
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+      },
+    },
+  },
+};
+```
+
+## Construir ambiente especificado
+
+Por padrão, o Rsbuild construirá todos os ambientes na configuração do Rsbuild quando você executar `rsbuild dev` ou `rsbuild build`. Você pode construir apenas o ambiente especificado via `--environment <name>`.
+
+```bash
+# Construir para todos os ambientes por padrão
+rsbuild dev
+
+# Construir para o ambiente web
+rsbuild dev --environment web
+
+# Construir para os ambientes web e ssr
+rsbuild dev --environment web --environment node
+
+# Construir múltiplos ambientes pode ser abreviado para:
+rsbuild dev --environment web,node
+```
+
+## Adicionar plugins para ambiente especificado
+
+Plugins configurados através do campo [plugins](/config/plugins) suportam a execução em todos os ambientes. Se você quiser que um plugin seja executado apenas em um ambiente especificado, você pode configurar o plugin no `environment` especificado.
+
+Por exemplo, habilite o plugin React apenas no ambiente web:
+
+```ts title="rsbuild.config.ts"
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+      },
+      plugins: [pluginReact()],
+    },
+    node: {
+      output: {
+        target: 'node',
+      },
+    },
+  },
+});
+```
+
+Se você é um desenvolvedor de plugins, pode consultar [Desenvolvendo plugins de ambiente](/plugins/dev/index#environment-plugin) para detalhes.
+
+## API do Plugin
+
+### Atualizar configuração do ambiente
+
+O Rsbuild suporta a modificação ou adição de configuração de ambiente através do hook [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig).
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
+      return mergeRsbuildConfig(config, {
+        environments: {
+          web1: {
+            source: {
+              entry: {
+                index: './src/web1/index',
+              },
+            },
+          },
+        },
+      });
+    });
+  },
+});
+```
+
+### Configurando um ambiente específico
+
+O Rsbuild suporta a modificação da configuração do Rsbuild de um ambiente específico através do hook [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig).
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.modifyEnvironmentConfig((config, { name }) => {
+      if (name !== 'web') {
+        return config;
+      }
+      config.html.title = 'My Default Title';
+    });
+  },
+});
+```
+
+## Contexto do ambiente
+
+[Contexto do ambiente](/api/javascript-api/environment-api#environment-context) é um objeto somente leitura que fornece algumas informações de contexto sobre o ambiente atual. O Rsbuild suporta a obtenção de informações de contexto do ambiente em hooks de plugin.
+
+Para alguns hooks de plugin relacionados ao ambiente de build (como [modifyRspackConfig](/plugins/dev/hooks#modifyrspackconfig) e [modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain)), o Rsbuild suporta a obtenção do contexto do ambiente atual através do parâmetro `environment`.
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.modifyRspackConfig((rspackConfig, { environment }) => {
+      if (environment.name === 'node') {
+        // fazer algo
+      }
+    });
+  },
+});
+```
+
+Para alguns hooks de plugin globais (como [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone), [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver), etc.), o Rsbuild suporta a obtenção do contexto de todos os ambientes através do parâmetro `environments`.
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.onDevCompileDone(({ environments }) => {
+      environments.forEach((environment) => {
+        console.log('environment', environment);
+      });
+    });
+  },
+});
+```
+
+## API do Ambiente
+
+O servidor Rsbuild fornece uma série de APIs relacionadas ao ambiente de build. Os usuários podem operar os artefatos de build em um ambiente específico no lado do servidor através da [API de ambiente](/api/javascript-api/environment-api#environment-api) do Rsbuild.
+
+Você pode usar a API de ambiente em [Rsbuild DevMiddleware](/config/dev/setup-middlewares) ou [Custom Server](/api/javascript-api/instance#rsbuildcreatedevserver).
+
+Por exemplo, você pode implementar rapidamente uma função SSR através da API de ambiente do Rsbuild no modo de desenvolvimento:
+
+```ts
+import express from 'express';
+import { createRsbuild, loadConfig } from '@rsbuild/core';
+
+const serverRender =
+  ({ environments }) =>
+  async (_req, res) => {
+    const bundle = await environments.node.loadBundle('index');
+    const rendered = bundle.render();
+    const template = await environments.web.getTransformedHtml('index');
+    const html = template.replace('<!--app-content-->', rendered);
+
+    res.writeHead(200, {
+      'Content-Type': 'text/html',
+    });
+    res.end(html);
+  };
+
+export async function startDevServer() {
+  const { content } = await loadConfig();
+
+  // Inicializa Rsbuild
+  const rsbuild = await createRsbuild({
+    rsbuildConfig: content,
+  });
+
+  const app = express();
+
+  // Cria instância do servidor de desenvolvimento Rsbuild
+  const rsbuildServer = await rsbuild.createDevServer();
+
+  const serverRenderMiddleware = serverRender(rsbuildServer);
+
+  app.get('/', async (req, res, next) => {
+    try {
+      await serverRenderMiddleware(req, res, next);
+    } catch (err) {
+      logger.error('SSR render error, downgrade to CSR...\n', err);
+      next();
+    }
+  });
+
+  // Aplica o middleware embutido do Rsbuild
+  app.use(rsbuildServer.middlewares);
+
+  // ...
+}
+```
+
+Para uso detalhado, consulte: [Exemplo de SSR + Express](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/ssr-express).
+
+## Ordem de build
+
+Por padrão, o Rsbuild constrói todos os ambientes em paralelo.
+
+Para controlar a ordem de build entre diferentes ambientes, você pode definir dependências de build através da configuração [dependencies](https://rspack.rs/config/other-options#dependencies) do Rspack.
+
+Por exemplo, se você precisar construir o ambiente `web` primeiro, e depois construir o ambiente `node`, você pode adicionar a seguinte configuração:
+
+```ts title="rsbuild.config.ts"
+export default {
+  environments: {
+    web: {
+      tools: {
+        rspack: {
+          name: 'foo',
+        },
+      },
+    },
+    node: {
+      tools: {
+        rspack: {
+          dependencies: ['foo'],
+        },
+      },
+    },
+  },
+};
+```
+
+Podemos usar um plugin simples para testar a ordem de build de múltiplos ambientes:
+
+```ts
+const testPlugin: RsbuildPlugin = {
+  name: 'test-plugin',
+  setup(api) {
+    api.onBeforeEnvironmentCompile(({ environment }) => {
+      console.log('build start:', environment.name);
+    });
+
+    api.onAfterEnvironmentCompile(({ stats, environment }) => {
+      console.log('build done:', environment.name);
+      console.log('stats', stats);
+    });
+  },
+};
+
+// O plugin exibirá:
+// - build start: web
+// - build done: web
+// - stats: { ... }
+// - build start: node
+// - build done: node
+// - stats: { ... }
+```

@@ -1,0 +1,149 @@
+# Inlining de ativos estáticos
+
+O inlining de ativos estáticos refere-se à prática de incluir o conteúdo de um ativo estático diretamente em um arquivo HTML ou JS, em vez de vincular a um arquivo externo. Isso pode melhorar o desempenho de um site, reduzindo o número de requisições HTTP que o navegador precisa fazer para carregar a página.
+
+No entanto, o inlining de ativos estáticos também tem algumas desvantagens, como o aumento do tamanho de um único arquivo, o que pode levar a um carregamento mais lento. Portanto, no cenário real, é necessário decidir se deve usar o inlining de ativos estáticos de acordo com a situação específica.
+
+O Rsbuild fará o inlining automático de ativos estáticos com menos de 4KiB, mas às vezes você pode precisar controlar manualmente os ativos para forçá-los a serem inlined ou não, e este documento explica como controlar precisamente o comportamento de inlining de ativos estáticos.
+
+## Inlining automático
+
+Por padrão, o Rsbuild fará o inlining de ativos quando o tamanho do arquivo for menor que um limite (o padrão é 4KiB). Quando inlined, o ativo será convertido para uma string codificada em Base64 e não enviará mais uma requisição HTTP separada. Quando o tamanho do arquivo for maior que este limite, ele será carregado como um arquivo separado com uma requisição HTTP separada.
+
+```js
+import smallImage from './static/smallImage.png';
+
+console.log(smallImage); // "data:image/png;base64,iVBORw0KGgo..."
+```
+
+O limite pode ser modificado com a configuração [output.dataUriLimit](/config/output/data-uri-limit). Por exemplo, defina o limite de imagens para 5000 Bytes e defina que os ativos de mídia não devem ser inlined:
+
+```ts
+export default {
+  output: {
+    dataUriLimit: {
+      image: 5000,
+      media: 0,
+    },
+  },
+};
+```
+
+## Forçar inlining
+
+Você pode forçar um ativo a ser inlined adicionando a query `inline` ao importar o ativo, independentemente de o tamanho do ativo ser menor que o limite de tamanho.
+
+```tsx
+import React from 'react';
+import img from './foo.png?inline';
+
+export default function Foo() {
+  return <img src={img} />;
+}
+```
+
+No exemplo acima, a imagem `foo.png` sempre será inlined, independentemente de o tamanho da imagem ser maior que o limite.
+
+### Referenciado de arquivo CSS
+
+Quando você referencia um ativo estático em seu arquivo CSS, você também pode forçar o inlining do ativo com a query `inline`.
+
+```css
+.foo {
+  background-image: url('./icon.png?inline');
+}
+```
+
+:::tip Impacto de forçar o inlining
+O inlining de ativos grandes aumentará significativamente o tempo de primeira pintura ou tempo de primeira pintura de conteúdo de uma página, o que degradará a experiência do usuário. E se você fizer o inlining de um ativo estático várias vezes em um arquivo CSS, o conteúdo base64 será injetado repetidamente, aumentando o tamanho do bundle. Por favor, use o inlining forçado com cuidado.
+:::
+
+## Desabilitar inlining
+
+Para evitar que os ativos sejam inlined e garantir que eles sejam sempre carregados como arquivos separados, independentemente do seu tamanho, você pode adicionar o parâmetro de consulta `url`.
+
+```tsx
+import React from 'react';
+import img from './foo.png?url';
+
+export default function Foo() {
+  return <img src={img} />;
+}
+```
+
+No exemplo acima, a imagem `foo.png` sempre será carregada como um arquivo separado, mesmo que o tamanho da imagem seja menor que o limite.
+
+### Referenciado de arquivo CSS
+
+Quando você referencia um ativo estático em seu arquivo CSS, você também pode forçar o ativo a não ser inlined com a query `url`.
+
+```css
+.foo {
+  background-image: url('./icon.png?url');
+}
+```
+
+:::tip Impacto de desabilitar o inlining
+Desabilitar o inlining de ativos aumentará o número de ativos que a aplicação web precisa carregar. Isso reduzirá a eficiência do carregamento de ativos em um ambiente de rede fraca ou em cenários onde o HTTP2 não está habilitado. Por favor, desabilite o inlining de ativos com cuidado.
+:::
+
+## Inlining de arquivos JS
+
+Além de inlining de ativos estáticos em arquivos JS, o Rsbuild também suporta inlining de arquivos JS em arquivos HTML.
+
+Basta habilitar a configuração [output.inlineScripts](/config/output/inline-scripts), e os arquivos JS gerados não serão gravados no diretório de saída, mas serão diretamente inlined no arquivo HTML correspondente.
+
+```ts
+export default {
+  output: {
+    inlineScripts: true,
+  },
+};
+```
+
+:::tip
+O inlining de arquivos JS pode fazer com que o arquivo HTML único seja muito grande, e isso quebrará o cache HTTP. Por favor, use com cautela.
+:::
+
+## Inlining de arquivos CSS
+
+You can also inline CSS files into HTML files.
+
+Basta habilitar a configuração [output.inlineStyles](/config/output/inline-styles), o arquivo CSS gerado não será gravado no diretório de saída, mas será diretamente inlined no arquivo HTML correspondente.
+
+```ts
+export default {
+  output: {
+    inlineStyles: true,
+  },
+};
+```
+
+## Declaração de tipo
+
+Quando você usa queries de URL como `?inline` e `?url` em código TypeScript, o TypeScript pode avisar que o módulo está faltando uma definição de tipo:
+
+```
+TS2307: Cannot find module './logo.png?inline' or its corresponding type declarations.
+```
+
+Para corrigir isso, você pode adicionar declarações de tipo para essas queries de URL. Crie um arquivo `src/env.d.ts` e adicione as seguintes declarações de tipo.
+
+- Método 1: Se o pacote `@rsbuild/core` estiver instalado, você pode referenciar os [tipos predefinidos](/guide/basic/typescript#preset-types) fornecidos por `@rsbuild/core`:
+
+```ts
+/// <reference types="@rsbuild/core/types" />
+```
+
+- Método 2: Adicione manualmente as declarações de tipo necessárias:
+
+```ts
+declare module '*?url' {
+  const content: string;
+  export default content;
+}
+declare module '*?inline' {
+  const content: string;
+  export default content;
+}
+```

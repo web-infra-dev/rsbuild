@@ -1,0 +1,73 @@
+# Criação de Perfil de Build
+
+Realizar uma análise de desempenho pode ajudá-lo a identificar gargalos de desempenho em seu projeto, permitindo uma otimização direcionada.
+
+## Usando Rsdoctor
+
+Rsdoctor é um analisador de build que pode exibir visualmente o tempo de compilação de cada loader e plugin.
+
+Consulte [Usar Rsdoctor](/guide/debug/rsdoctor) para mais informações.
+
+## Criação de Perfil do Node.js
+
+Quando o Rsbuild executa uma build, ele incluirá a sobrecarga de tempo de execução tanto do código JavaScript quanto do Rust, e a sobrecarga da comunicação de dados entre JavaScript e Rust.
+
+Em geral, a sobrecarga de desempenho no lado JavaScript será maior do que no lado Rust. Você pode usar a criação de perfil do Node.js para analisar a sobrecarga no lado JS, o que ajuda a identificar gargalos de desempenho no lado JS.
+
+Por exemplo, para realizar a análise de [criação de perfil de CPU](https://nodejs.org/docs/v20.17.0/api/cli.html#--cpu-prof), execute o seguinte comando no diretório raiz do seu projeto:
+
+```bash
+# dev
+node --cpu-prof ./node_modules/@rsbuild/core/bin/rsbuild.js dev
+
+# build
+node --cpu-prof ./node_modules/@rsbuild/core/bin/rsbuild.js build
+```
+
+Os comandos acima gerarão um arquivo `*.cpuprofile`. Podemos usar [speedscope](https://github.com/jlfwong/speedscope) para visualizar este arquivo:
+
+```bash
+# Instalar speedscope
+npm install -g speedscope
+
+# Visualizar conteúdo do cpuprofile
+# Substitua o nome pelo nome do arquivo local
+speedscope CPU.date.000000.00000.0.001.cpuprofile
+```
+
+## Criação de Perfil do Rspack
+
+O Rsbuild suporta o uso da variável de ambiente `RSPACK_PROFILE` para o perfil de desempenho de build do Rspack.
+
+```json title="package.json"
+{
+  "scripts": {
+    "dev:profile": "RSPACK_PROFILE=OVERVIEW rsbuild dev",
+    "build:profile": "RSPACK_PROFILE=OVERVIEW rsbuild build"
+  }
+}
+```
+
+Como o Windows não suporta o uso acima, você também pode usar [cross-env](https://npmjs.com/package/cross-env) para definir variáveis de ambiente. Isso garante compatibilidade entre diferentes sistemas:
+
+```json title="package.json"
+{
+  "scripts": {
+    "dev:profile": "cross-env RSPACK_PROFILE=OVERVIEW rsbuild dev",
+    "build:profile": "cross-env RSPACK_PROFILE=OVERVIEW rsbuild build"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.0"
+  }
+}
+```
+
+Quando o comando de build for concluído, ou o servidor de desenvolvimento for desligado, o Rsbuild criará uma pasta `.rspack-profile-${timestamp}-${pid}` no diretório atual, contendo um arquivo `rspack.pftrace` (em versões anteriores a 1.4.0, era `trace.json`), que é gerado pelo Rspack com base em [tracing](https://github.com/tokio-rs/tracing) e registra o tempo gasto em cada fase em um nível granular, e pode ser visualizado usando [ui.perfetto.dev](https://ui.perfetto.dev/).
+
+:::tip
+
+- Ao desligar o servidor de desenvolvimento, use `CTRL + D` em vez de `CTRL + C` para garantir que o Rspack possa registrar os dados de desempenho completamente.
+- O arquivo `trace.json` gerado é grande, se você precisar compartilhá-lo com outras pessoas, pode compactá-lo em um arquivo zip para reduzir o tamanho.
+- Para mais informações sobre a criação de perfil do Rspack, consulte [Rspack - Tracing](https://rspack.rs/contribute/development/tracing).
+
+:::

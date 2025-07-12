@@ -1,0 +1,543 @@
+# Variáveis de Ambiente
+
+O Rsbuild suporta a injeção de variáveis de ambiente ou expressões no código durante a build, o que é útil para distinguir o ambiente de execução ou substituir constantes.
+
+Este capítulo apresenta como usar variáveis de ambiente no Rsbuild.
+
+## Variáveis Padrão
+
+O Rsbuild, por padrão, injeta algumas variáveis de ambiente no código usando [source.define](#using-define). Elas serão substituídas por valores especificados durante a build:
+
+`import.meta.env` contém estas variáveis de ambiente:
+
+- [import.meta.env.MODE](#importmetaenvmode)
+- [import.meta.env.DEV](#importmetaenvdev)
+- [import.meta.env.PROD](#importmetaenvprod)
+- [import.meta.env.BASE_URL](#importmetaenvbase_url)
+- [import.meta.env.ASSET_PREFIX](#importmetaenvasset_prefix)
+
+`process.env` contém estas variáveis de ambiente:
+
+- [process.env.BASE_URL](#processenvbase_url)
+- [process.env.ASSET_PREFIX](#processenvasset_prefix)
+- [process.env.NODE_ENV](#processenvnode_env)
+
+### import.meta.env.MODE
+
+Você pode usar `import.meta.env.MODE` no código do cliente para ler o valor da configuração [mode](/config/mode).
+
+```ts
+if (import.meta.env.MODE === 'development') {
+  console.log('this is development mode');
+}
+```
+
+No modo de desenvolvimento, o código acima será compilado para:
+
+```js
+if (true) {
+  console.log('this is development mode');
+}
+```
+
+No modo de produção, o código acima será compilado para:
+
+```js
+if (false) {
+  console.log('this is development mode');
+}
+```
+
+Durante a minificação do código, `if (false) { ... }` será reconhecido como código inválido e removido automaticamente.
+
+### import.meta.env.DEV
+
+Se [mode](/config/mode) for `'development'`, o valor é `true`; caso contrário, é `false`.
+
+```ts
+if (import.meta.env.DEV) {
+  console.log('this is development mode');
+}
+```
+
+### import.meta.env.PROD
+
+Se [mode](/config/mode) for `'production'`, o valor é `true`; caso contrário, é `false`.
+
+```ts
+if (import.meta.env.PROD) {
+  console.log('this is production mode');
+}
+```
+
+### import.meta.env.BASE_URL
+
+Você pode usar `import.meta.env.BASE_URL` no código do cliente para acessar o [caminho base](/guide/basic/server#base-path) do servidor, que é determinado pela configuração [server.base](/config/server/base), o que é útil para referenciar ativos da [pasta pública](/guide/basic/static-assets#public-folder) no código.
+
+Por exemplo, definimos o caminho base do servidor para `/foo` através da configuração [server.base](/config/server/base):
+
+```ts
+export default {
+  server: {
+    base: '/foo',
+  },
+};
+```
+
+Então, a URL de acesso ao arquivo `favicon.ico` no diretório público é `http://localhost:3000/foo/favicon.ico`. Você pode usar `import.meta.env.BASE_URL` para concatenar a URL em arquivos JS:
+
+```js title="index.js"
+const image = new Image();
+// Equivalente a "/foo/favicon.ico"
+image.src = `${import.meta.env.BASE_URL}/favicon.ico`;
+```
+
+### import.meta.env.ASSET_PREFIX
+
+Você pode usar `import.meta.env.ASSET_PREFIX` no código do cliente para acessar o prefixo da URL de ativos estáticos.
+
+- No desenvolvimento, é equivalente ao valor definido por [dev.assetPrefix](/config/dev/asset-prefix).
+- Na produção, é equivalente ao valor definido por [output.assetPrefix](/config/output/asset-prefix).
+- O Rsbuild removerá automaticamente a barra final de `assetPrefix` para facilitar a concatenação de strings.
+
+Por exemplo, copiamos a imagem `static/icon.png` para o diretório `dist` através da configuração [output.copy](/config/output/copy):
+
+```ts
+export default {
+  dev: {
+    assetPrefix: '/',
+  },
+  output: {
+    copy: [{ from: './static', to: 'static' }],
+    assetPrefix: 'https://example.com',
+  },
+};
+```
+
+Então podemos acessar a URL da imagem no código do cliente:
+
+```jsx
+const Image = <img src={`${import.meta.env.ASSET_PREFIX}/static/icon.png`} />;
+```
+
+No modo de desenvolvimento, o código acima será compilado para:
+
+```jsx
+const Image = <img src={`/static/icon.png`} />;
+```
+
+No modo de produção, o código acima será compilado para:
+
+```jsx
+const Image = <img src={`https://example.com/static/icon.png`} />;
+```
+
+### process.env.BASE_URL
+
+O Rsbuild também permite usar `process.env.BASE_URL`, que é um alias de [import.meta.env.BASE_URL](#importmetaenvbase_url).
+
+Por exemplo, no template HTML, você pode usar `process.env.BASE_URL` para concatenar a URL:
+
+```html title="index.html"
+<!-- Equivalente a "/foo/favicon.ico" -->
+<link rel="icon" href="<%= process.env.BASE_URL %>/favicon.ico" />
+```
+
+### process.env.ASSET_PREFIX
+
+O Rsbuild também permite usar `process.env.ASSET_PREFIX`, que é um alias de [import.meta.env.ASSET_PREFIX](#importmetaenvasset_prefix).
+
+Por exemplo, no template HTML, você pode usar `process.env.ASSET_PREFIX` para concatenar a URL:
+
+```html title="index.html"
+<!-- Equivalente a "https://example.com/static/icon.png" -->
+<link rel="icon" href="<%= process.env.ASSET_PREFIX %>/static/icon.png" />
+```
+
+### process.env.NODE_ENV
+
+Por padrão, o Rsbuild definirá automaticamente a variável de ambiente `process.env.NODE_ENV` como `'development'` no modo de desenvolvimento e `'production'` no modo de produção.
+
+Você pode usar `process.env.NODE_ENV` diretamente no Node.js e no código do cliente.
+
+```ts
+if (process.env.NODE_ENV === 'development') {
+  console.log('this is a development log');
+}
+```
+
+No modo de desenvolvimento, o código acima será compilado para:
+
+```js
+if (true) {
+  console.log('this is a development log');
+}
+```
+
+No modo de produção, o código acima será compilado para:
+
+```js
+if (false) {
+  console.log('this is a development log');
+}
+```
+
+Durante a minificação do código, `if (false) { ... }` será reconhecido como código inválido e removido automaticamente.
+
+#### NODE_ENV Personalizado
+
+`process.env.NODE_ENV` é injetado pelo Rspack por padrão. Se você precisar desabilitar a injeção ou personalizar o valor, use a opção [optimization.nodeEnv](https://rspack.rs/config/optimization#optimizationnodeenv) do Rspack:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: { optimization: { nodeEnv: false } },
+  },
+};
+```
+
+## Arquivo `.env`
+
+Quando um arquivo `.env` existe no diretório raiz do projeto, a CLI do Rsbuild usará automaticamente [dotenv](https://npmjs.com/package/dotenv) para carregar essas variáveis de ambiente e adicioná-las ao processo Node.js atual. As [Variáveis Públicas](#public-variables) serão expostas no código do cliente.
+
+Você pode acessar essas variáveis de ambiente através de `import.meta.env.[name]` ou `process.env.[name]`.
+
+### Tipos de Arquivo
+
+O Rsbuild suporta a leitura dos seguintes tipos de arquivos de ambiente:
+
+| Nome do Arquivo          | Descrição                                                                   |
+| :----------------------- | :-------------------------------------------------------------------------- |
+| `.env`                   | Carregado por padrão em todos os cenários.                                  |
+| `.env.local`             | Uso local do arquivo `.env`, deve ser adicionado ao .gitignore.             |
+| `.env.development`       | Lido quando `process.env.NODE_ENV` é `'development'`.                       |
+| `.env.production`        | Lido quando `process.env.NODE_ENV` é `'production'`.                        |
+| `.env.development.local` | Uso local do arquivo `.env.development`, deve ser adicionado ao .gitignore. |
+| `.env.production.local`  | Uso local do arquivo `.env.production`, deve ser adicionado ao .gitignore.  |
+
+Se vários dos arquivos acima existirem ao mesmo tempo, todos serão carregados, com os arquivos listados na parte inferior da tabela tendo maior prioridade.
+
+### Modo de Ambiente
+
+O Rsbuild também suporta a leitura de arquivos `.env.[mode]` e `.env.[mode].local` files. Você pode especificar o modo de ambiente usando a flag `--env-mode <mode>`.
+
+Por exemplo, defina o modo de ambiente como `test`:
+
+```bash
+npx rsbuild dev --env-mode test
+```
+
+O Rsbuild lerá esses arquivos na seguinte ordem e mesclará seus conteúdos. Se a mesma variável de ambiente for definida em vários arquivos, os valores dos arquivos carregados posteriormente substituirão os dos arquivos carregados anteriormente:
+
+- .env
+- .env.local
+- .env.test
+- .env.test.local
+
+:::tip
+A opção `--env-mode` tem precedência sobre `process.env.NODE_ENV`.
+
+É recomendado usar `--env-mode` para definir o modo de ambiente, e não modificar `process.env.NODE_ENV`.
+:::
+
+### Diretório de Ambiente
+
+Por padrão, o arquivo `.env` está localizado no diretório raiz do projeto. Você pode especificar o diretório de ambiente usando a opção `--env-dir <dir>` na CLI.
+
+Por exemplo, para especificar o diretório de ambiente como `config`:
+
+```bash
+npx rsbuild dev --env-dir config
+```
+
+Neste caso, o Rsbuild lerá o `./config/.env` e outros arquivos de ambiente.
+
+### Exemplo
+
+Por exemplo, crie um arquivo `.env` e adicione o seguinte conteúdo:
+
+```shell title=".env"
+FOO=hello
+BAR=1
+```
+
+Então, no arquivo `rsbuild.config.ts`, você pode acessar as variáveis de ambiente acima usando `import.meta.env.[name]` ou `process.env.[name]`:
+
+```ts title="rsbuild.config.ts"
+console.log(import.meta.env.FOO); // 'hello'
+console.log(import.meta.env.BAR); // '1'
+
+console.log(process.env.FOO); // 'hello'
+console.log(process.env.BAR); // '1'
+```
+
+Agora, crie um arquivo `.env.local` e adicione o seguinte conteúdo:
+
+```shell title=".env.local"
+BAR=2
+```
+
+O valor de `BAR` é sobrescrito para `'2'`:
+
+```ts title="rsbuild.config.ts"
+console.log(import.meta.env.BAR); // '2'
+console.log(process.env.BAR); // '2'
+```
+
+### Carregar env manualmente
+
+Se você não estiver usando a CLI do Rsbuild e estiver usando a [API JavaScript](/api/start/index) do Rsbuild, você precisará chamar manualmente o método [loadEnv](/api/javascript-api/core#loadenv) para ler as variáveis de ambiente e injetá-las no código através da configuração [source.define](/config/source/define).
+
+```ts
+import { loadEnv, mergeRsbuildConfig } from '@rsbuild/core';
+
+// Por padrão, `publicVars` são variáveis prefixadas com `PUBLIC_`
+const { parsed, publicVars } = loadEnv();
+
+const mergedConfig = mergeRsbuildConfig(
+  {
+    source: {
+      define: publicVars,
+    },
+  },
+  userConfig,
+);
+```
+
+### Desabilitar carregamento
+
+You can disable loading `.env` files by using the `--no-env` flag in the CLI.
+
+```bash
+npx rsbuild dev --no-env
+```
+
+Ao usar a flag `--no-env`, a CLI do Rsbuild não lerá nenhum arquivo `.env`, e você pode gerenciar as variáveis de ambiente usando outras ferramentas como [dotenvx](https://dotenvx.com/).
+
+## Variáveis Públicas
+
+Todas as variáveis de ambiente que começam com `PUBLIC_` podem ser acessadas no código do cliente. Por exemplo, se as seguintes variáveis forem definidas:
+
+```bash title=".env"
+PUBLIC_NAME=jack
+PASSWORD=123
+```
+
+No código do cliente, você pode acessar essas variáveis de ambiente através de `import.meta.env.PUBLIC_*` ou `process.env.PUBLIC_*`. O Rsbuild corresponderá aos identificadores e os substituirá pelos valores correspondentes.
+
+```ts title="src/index.ts"
+console.log(import.meta.env.PUBLIC_NAME); // -> 'jack'
+console.log(import.meta.env.PASSWORD); // -> undefined
+
+console.log(process.env.PUBLIC_NAME); // -> 'jack'
+console.log(process.env.PASSWORD); // -> undefined
+```
+
+:::tip
+
+- O conteúdo das variáveis públicas será exposto ao seu código cliente, portanto, evite incluir informações sensíveis em variáveis públicas.
+- As variáveis públicas são substituídas através de [source.define](/config/source/define). Por favor, leia ["Usando define"](#using-define) para entender os princípios e notas de define.
+
+:::
+
+### Escopo de Substituição
+
+As variáveis públicas substituirão identificadores no código do cliente, com o escopo de substituição incluindo:
+
+- Arquivos JavaScript e arquivos que podem ser convertidos em código JavaScript, como `.js`, `.ts`, `.tsx`, etc.
+- Arquivos de template HTML, por exemplo:
+
+```xml title="template.html"
+<div><%= process.env.PUBLIC_NAME %></div>
+```
+
+Observe que as variáveis públicas não substituirão identificadores nos seguintes arquivos:
+
+- Arquivos CSS, como `.css`, `.scss`, `.less`, etc.
+
+### Prefixo Personalizado
+
+O Rsbuild fornece o método [loadEnv](/api/javascript-api/core#loadenv), que pode injetar variáveis de ambiente com qualquer prefixo no código do cliente.
+
+Por exemplo, ao migrar um projeto Create React App para o Rsbuild, você pode ler variáveis de ambiente que começam com `REACT_APP_` e injetá-las através da configuração [source.define](/config/source/define) da seguinte forma:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig, loadEnv } from '@rsbuild/core';
+
+const { publicVars } = loadEnv({ prefixes: ['REACT_APP_'] });
+
+export default defineConfig({
+  source: {
+    define: publicVars,
+  },
+});
+```
+
+## Usando define
+
+Ao usar [source.define](/config/source/define), você pode substituir identificadores globais por algumas expressões ou valores em tempo de compilação.
+
+`define` é semelhante às capacidades de definição de macro fornecidas por outras linguagens. É frequentemente usado para injetar variáveis de ambiente e outras informações no código durante o tempo de build.
+
+### Substituir identificadores
+
+O caso de uso mais básico para `define` é substituir identificadores globais em tempo de compilação.
+
+O valor da variável de ambiente `NODE_ENV` mudará o comportamento de muitos pacotes de fornecedores. Geralmente, precisamos defini-lo como `production`.
+
+```js
+export default {
+  source: {
+    define: {
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+    },
+  },
+};
+```
+
+Observe que o valor fornecido aqui deve ser uma string JSON, por exemplo, `process.env.NODE_ENV` com um valor de `"production"` deve ser passado como `"\"production\""` para ser processado corretamente.
+
+Da mesma forma, `{ foo: "bar" }` deve ser convertido para `"{\"foo\":\"bar\"}"`, o que, se passado diretamente para o objeto original, significaria substituir o identificador `process.env.NODE_ENV.foo` pelo identificador `bar`.
+
+Para mais informações sobre `source.define`, consulte [Referências da API](/config/source/define).
+
+:::tip
+A variável de ambiente `NODE_ENV` mostrada no exemplo acima já é injetada pelo Rsbuild, e você geralmente não precisa configurá-la manualmente.
+:::
+
+### Correspondência de identificadores
+
+Observe que `source.define` só pode corresponder a identificadores globais completos. Você pode pensar nisso como um processo de substituição de texto.
+
+Se o identificador no código não corresponder exatamente à chave definida em `define`, o Rsbuild não conseguirá substituí-lo.
+
+```js
+// Bom
+console.log(process.env.NODE_ENV); // 'production'
+
+// Ruim
+console.log(process.env['NODE_ENV']); // process is not defined!
+
+// Ruim
+console.log(process.env?.NODE_ENV); // process is not defined!
+
+// Ruim
+const { NODE_ENV } = process.env;
+console.log(NODE_ENV); // process is not defined!
+
+// Ruim
+const env = process.env;
+console.log(env.NODE_ENV); // process is not defined!
+```
+
+### Substituição de process.env
+
+Ao usar `source.define`, evite substituir todo o objeto `process.env`, por exemplo, o uso a seguir não é recomendado:
+
+```js
+export default {
+  source: {
+    define: {
+      'process.env': JSON.stringify(process.env),
+    },
+  },
+};
+```
+
+Se o uso acima for adotado, os seguintes problemas serão causados:
+
+1.  Algumas variáveis de ambiente não utilizadas são injetadas adicionalmente, fazendo com que as variáveis de ambiente do servidor de desenvolvimento vazem para o código front-end.
+2.  Como cada código `process.env` será substituído por um objeto de variável de ambiente completo, o tamanho do bundle do código front-end aumentará e o desempenho diminuirá.
+
+Portanto, injete as variáveis de ambiente em `process.env` de acordo com as necessidades reais e evite substituí-las por completo.
+
+## Declarações de Tipo
+
+Quando você acessa uma variável de ambiente em um arquivo TypeScript, o TypeScript pode avisar que a variável não possui uma definição de tipo, e você precisa adicionar a declaração de tipo correspondente.
+
+Por exemplo, se você referenciar uma variável `PUBLIC_FOO`, o seguinte aviso aparecerá no arquivo TypeScript:
+
+```
+TS2304: Cannot find name 'PUBLIC_FOO'.
+```
+
+Para corrigir isso, você pode criar um arquivo `src/env.d.ts` em seu projeto e adicionar o seguinte conteúdo:
+
+```ts title="src/env.d.ts"
+declare const PUBLIC_FOO: string;
+```
+
+### import.meta.env
+
+Você pode estender o tipo de `import.meta.env` assim:
+
+```ts title="src/env.d.ts"
+interface ImportMetaEnv {
+  // import.meta.env.PUBLIC_FOO
+  readonly PUBLIC_FOO: string;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
+```
+
+### process.env
+
+Se o tipo para `process.env` estiver faltando, instale a dependência [@types/node](https://npmjs.com/package/@types/node):
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @types/node -D" />
+
+Em seguida, estenda o tipo de `process.env`:
+
+```ts title="src/env.d.ts"
+declare namespace NodeJS {
+  interface ProcessEnv {
+    // process.env.PUBLIC_FOO
+    PUBLIC_FOO: string;
+  }
+}
+```
+
+## Tree shaking
+
+`define` também pode ser usado para marcar código morto para auxiliar o Rspack na otimização de tree shaking.
+
+Artefatos de build para diferentes linguagens são alcançados substituindo `import.meta.env.LANGUAGE` por um valor específico, por exemplo.
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    define: {
+      'import.meta.env.LANGUAGE': JSON.stringify(import.meta.env.LANGUAGE),
+    },
+  },
+};
+```
+
+Para um código internacionalizado:
+
+```js
+const App = () => {
+  if (import.meta.env.LANGUAGE === 'en') {
+    return <EntryFoo />;
+  } else if (import.meta.env.LANGUAGE === 'zh') {
+    return <EntryBar />;
+  }
+};
+```
+
+Especificar a variável de ambiente `LANGUAGE=zh` e então executar a build eliminará o código morto.
+
+```js
+const App = () => {
+  if (false) {
+  } else if (true) {
+    return <EntryBar />;
+  }
+};
+```
+
+Componentes não utilizados não serão empacotados, e suas dependências serão removidas de acordo, resultando em saídas de build menores.

@@ -1,0 +1,132 @@
+# Modern.js Builder
+
+Este capítulo apresenta como migrar um projeto Modern.js Builder (ou EdenX Builder) para o Rsbuild.
+
+## Principais diferenças
+
+O Rsbuild é a nova versão do Modern.js Builder, com as seguintes principais diferenças:
+
+- O Rsbuild tem melhor desempenho. Ao usar o Rspack simultaneamente, **a velocidade de inicialização e a velocidade de build do Rsbuild são de 1.5 a 2 vezes mais rápidas que o Builder**.
+- O Rsbuild suporta apenas o Rspack como empacotador e não suporta mais o webpack.
+- A ferramenta CLI e o servidor de desenvolvimento do Rsbuild são mais poderosos e suportam mais recursos.
+
+## Instalando dependências
+
+Primeiro, você precisa substituir as dependências npm relacionadas ao Builder pelas dependências do Rsbuild.
+
+import { PackageManagerTabs } from '@theme';
+
+- Remover dependências do Builder:
+
+<PackageManagerTabs command="remove @modern-js/builder-cli @modern-js/builder-webpack-provider @modern-js/builder-rspack-provider" />
+
+- Instalar dependências do Rsbuild:
+
+<PackageManagerTabs command="add @rsbuild/core -D" />
+
+## Atualizando scripts npm
+
+Em seguida, você precisa atualizar os scripts npm no package.json para os comandos CLI do Rsbuild.
+
+```json title="package.json"
+{
+  "scripts": {
+    "dev": "builder dev", // [!code --]
+    "build": "builder build", // [!code --]
+    "serve": "builder serve", // [!code --]
+    "dev": "rsbuild dev", // [!code ++]
+    "build": "rsbuild build", // [!code ++]
+    "preview": "rsbuild preview" // [!code ++]
+  }
+}
+```
+
+## Modificando arquivos de configuração
+
+- Renomeie `builder.config.ts` para `rsbuild.config.ts`.
+- Altere a importação do método `defineConfig` de `@modern-js/builder-cli` para `@rsbuild/core`.
+- Altere o campo `builderPlugins` para `plugins`.
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@modern-js/builder-cli'; // [!code --]
+import { defineConfig } from '@rsbuild/core'; // [!code ++]
+
+export default defineConfig({
+  builderPlugins: [], // [!code --]
+  plugins: [], // [!code ++]
+});
+```
+
+## Substituindo plugins
+
+O Rsbuild e o Builder possuem sistemas de plugins incompatíveis, então você precisa substituir os plugins do Builder pelos plugins do Rsbuild.
+
+A tabela a seguir mostra a correspondência entre os plugins do Builder e os plugins do Rsbuild:
+
+| Builder                                  | Rsbuild                                                                                           |
+| :--------------------------------------- | :------------------------------------------------------------------------------------------------ |
+| @modern-js/builder-plugin-vue            | [@rsbuild/plugin-vue](/plugins/list/plugin-vue)                                                   |
+| @modern-js/builder-plugin-vue2           | [@rsbuild/plugin-vue2](https://github.com/rspack-contrib/rsbuild-plugin-vue2)                     |
+| @modern-js/builder-plugin-stylus         | [@rsbuild/plugin-stylus](/plugins/list/plugin-stylus)                                             |
+| @modern-js/builder-plugin-node-polyfill  | [@rsbuild/plugin-node-polyfill](https://github.com/rspack-contrib/rsbuild-plugin-node-polyfill)   |
+| @modern-js/builder-plugin-image-compress | [@rsbuild/plugin-image-compress](https://github.com/rspack-contrib/rsbuild-plugin-image-compress) |
+| @modern-js/builder-plugin-swc            | Habilitado por padrão, não é necessário usar                                                      |
+| @modern-js/builder-plugin-esbuild        | Não é mais suportado                                                                              |
+
+Por exemplo, se você estava usando `@modern-js/builder-plugin-vue`, você precisa primeiro instalar `@rsbuild/plugin-vue`, então importar o plugin em `rsbuild.config.ts` e adicioná-lo ao campo `plugins`.
+
+```ts title="rsbuild.config.ts"
+import { builderPluginVue } from '@modern-js/builder-plugin-vue'; // [!code --]
+import { pluginVue } from '@rsbuild/plugin-vue'; // [!code ++]
+
+export default defineConfig({
+  builderPlugins: [builderPluginVue()], // [!code --]
+  plugins: [pluginVue()], // [!code ++]
+});
+```
+
+## Adicionar plugins relacionados ao React
+
+O Rsbuild não é acoplado a nenhum framework de UI front-end. Portanto, se você é um projeto React, precisa adicionar manualmente [React Plugin](/plugins/list/plugin-react):
+
+```ts title="rsbuild.config.ts"
+export default {
+  plugins: [pluginReact()],
+};
+```
+
+Se você estiver usando SVGR em seu projeto atual, também precisará registrar [SVGR Plugin](/plugins/list/plugin-svgr):
+
+```ts title="rsbuild.config.ts"
+export default {
+  plugins: [pluginSvgr()],
+};
+```
+
+Se você é um usuário de outros frameworks, pode consultar [Lista de Plugins do Rsbuild](/plugins/list/index) para selecionar o plugin de framework correspondente.
+
+## Migração de configuração
+
+A maioria das configurações no Rsbuild e no Builder são consistentes, com apenas alguns ajustes.
+
+You can refer to the [Rsbuild options](/config/index) to view the configs of Rsbuild.
+
+É importante notar que, em comparação com o Builder, **existem algumas diferenças nos valores padrão e comportamentos no Rsbuild**:
+
+- **Browserslist:** O padrão é compatível minimamente com navegadores que suportam [Módulos ES Nativos](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules), consulte [Browserslist Padrão](/guide/advanced/browserslist#default-browserslist).
+- **Caminho de saída do arquivo HTML:** saída padrão para a raiz do diretório dist, consulte [Estrutura de Diretório Padrão](/guide/basic/output-files#default-directory-structure).
+- **Método de injeção de Polyfill:** Injetar sob demanda por padrão, consulte [output.polyfill](/config/output/polyfill).
+- **Verificação de tipo TypeScript:** não habilitado por padrão, você precisa registrar manualmente o [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check).
+- **Modificar configuração do DevServer:** Modifique as configurações `dev` e `server` em vez disso.
+
+## Validando resultados
+
+Após concluir as etapas acima, você migrou do Modern.js Builder para o Rsbuild. Agora você pode tentar iniciar o servidor de desenvolvimento executando o comando `npm run dev`.
+
+Se você encontrar algum problema durante o processo de build, depure de acordo com os logs de erro.
+
+## Suplemento de conteúdo
+
+O documento atual cobre apenas parte do processo de migração. Se você encontrar conteúdo adequado para adicionar, sinta-se à vontade para contribuir com a documentação via pull request 🤝.
+
+> A documentação para rsbuild can be found in the [rsbuild/website](https://github.com/web-infra-dev/rsbuild/tree/main/website) directory.

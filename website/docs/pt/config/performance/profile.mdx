@@ -1,0 +1,27 @@
+# performance.profile
+
+- **Type:** `boolean`
+- **Default:** `false`
+
+Whether capture timing information for each module, same as the [profile](https://rspack.rs/config/other-options#profile) config of Rspack.
+
+After enabled:
+
+- Rsbuild will auto-generate `dist/stats.json` file through [bundle analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer).
+- Rspack will include the build time information when generating stats.json or other statistics files.
+
+## Example
+
+```js
+export default {
+  performance: {
+    profile: true,
+  },
+};
+```
+
+When enabled, Rspack generates a JSON file with some statistics about the module that includes information about timing information for each module.
+
+## Guide
+
+Please refer to the [Build profiling](/guide/debug/build-profiling) page for more methods to analyze build performance.

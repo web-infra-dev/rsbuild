@@ -1,0 +1,173 @@
+# Arquivos de Saída
+
+Este capítulo apresentará a estrutura de diretórios dos arquivos de saída e como controlar o diretório de saída de diferentes tipos de arquivos.
+
+Se você quiser saber como implantar as saídas de build do Rsbuild como um site estático, consulte [Implantar Site Estático](/guide/basic/static-deploy).
+
+## Estrutura de diretório padrão
+
+A seguir está um diretório básico para arquivos de saída. Por padrão, os arquivos compilados serão gerados no diretório `dist` do projeto atual.
+
+```bash
+dist
+├── static
+│   ├── css
+│   │   ├── [name].[hash].css
+│   │   └── [name].[hash].css.map
+│   │
+│   └── js
+│       ├── [name].[hash].js
+│       ├── [name].[hash].js.LICENSE.txt
+│       └── [name].[hash].js.map
+│
+└── [name].html
+```
+
+Os arquivos de saída mais comuns são HTML files, JS files, and CSS files:
+
+- HTML files: default output to the root of dist directory.
+- JS files: default output to `static/js` directory,
+- CSS files: default output to the `static/css` directory.
+
+In addition, JS files and CSS files sometimes generate some related files:
+
+- License files: contains open source license, which is output to the same level directory of the JS file, and adds `.LICENSE.txt` suffix.
+- Source Map files: contains the source code mappings, which is output to the same level directory of JS files and CSS files, and adds a `.map` suffix.
+
+In the filename, `[name]` represents the entry name corresponding to this file, such as `index`, `main`. `[hash]` is the hash value generated based on the content of the file.
+
+## Saída do modo de desenvolvimento
+
+No modo de desenvolvimento, o Rsbuild armazena as saídas de build na memória do servidor de desenvolvimento por padrão, em vez de gravá-las no disco. Isso pode reduzir a sobrecarga das operações de sistema de arquivos. Você pode consultar [Visualizar Ativos Estáticos](/guide/basic/server#view-static-assets) para visualizar todos os ativos estáticos gerados na build atual.
+
+You can choose to write the output files to disk, which is typically used for inspecting the contents of the build artifacts or configuring proxy rules for static assets.
+
+Basta definir a configuração [dev.writeToDisk](/config/dev/write-to-disk) como `true`:
+
+```ts
+export default {
+  dev: {
+    writeToDisk: true,
+  },
+};
+```
+
+## Modificar o diretório
+
+O Rsbuild fornece algumas configurações para modificar o diretório ou nome do arquivo, você pode:
+
+- Modificar o nome do arquivo através de [output.filename](/config/output/filename).
+- Modificar o caminho de saída através de [output.distPath](/config/output/dist-path).
+- Modificar o arquivo de licença através de [output.legalComments](/config/output/legal-comments).
+- Modificar o arquivo Source Map através de [output.sourceMap](/config/output/source-map).
+- Modificar a estrutura de saída dos arquivos HTML através de [html.outputStructure](/config/html/output-structure).
+
+## Ativos estáticos
+
+Quando você importa ativos estáticos como imagens, SVG, fontes, mídia, etc. no código, eles também serão gerados para o diretório `dist/static`, e automaticamente atribuídos aos subdiretórios correspondentes de acordo com o tipo de arquivo:
+
+```bash
+dist
+└── static
+    ├── image
+    │   └── foo.[hash].png
+    │
+    ├── svg
+    │   └── bar.[hash].svg
+    │
+    ├── font
+    │   └── baz.[hash].woff2
+    │
+    └── media
+        └── qux.[hash].mp4
+```
+
+Você pode usar a configuração [output.distPath](/config/output/dist-path) para agrupar uniformemente esses ativos estáticos em um diretório, por exemplo, gerar para o diretório `assets`:
+
+```ts
+export default {
+  output: {
+    distPath: {
+      image: 'assets',
+      svg: 'assets',
+      font: 'assets',
+      media: 'assets',
+    },
+  },
+};
+```
+
+A configuração acima gerará a seguinte estrutura de diretórios:
+
+```bash
+dist
+└── assets
+    ├── foo.[hash].png
+    ├── bar.[hash].svg
+    ├── baz.[hash].woff2
+    └── qux.[hash].mp4
+```
+
+## Diretório de saída do Node.js
+
+Quando o [output.target](/config/output/target) do Rsbuild é `'node'`, o Rsbuild gerará arquivos de saída para o Node.js:
+
+```bash
+dist
+├── static
+└── [name].js
+```
+
+Node.js outputs usually only contain JS files, no HTML or CSS. And the JS file names will not contain hash.
+
+You can modify the output path of Node.js files via the [environments](/config/environments) config.
+
+For example, output Node.js files to the `server` directory:
+
+```ts
+export default {
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+        distPath: {
+          root: 'dist/server',
+        },
+      },
+    },
+  },
+};
+```
+
+## Achatar o diretório
+
+Às vezes, você não quer que o diretório `dist` tenha muitos níveis, você pode definir o diretório como uma string vazia para achatar o diretório gerado.
+
+Veja o exemplo abaixo:
+
+```ts
+export default {
+  output: {
+    distPath: {
+      js: '',
+      css: '',
+    },
+  },
+};
+```
+
+A configuração acima gerará a seguinte estrutura de diretórios:
+
+```bash
+dist
+├── [name].[hash].css
+├── [name].[hash].css.map
+├── [name].[hash].js
+├── [name].[hash].js.map
+└── [name].html
+```

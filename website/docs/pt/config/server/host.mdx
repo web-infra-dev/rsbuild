@@ -1,0 +1,44 @@
+# server.host
+
+- **Type:** `string`
+- **Default:** `0.0.0.0`
+
+Specify the host that the Rsbuild server listens to.
+
+By default, the Rsbuild server will listen to `0.0.0.0`, which means listening to all IPv4 network interfaces, including `localhost` and public network addresses.
+
+You can use `server.host` or the `--host` CLI param to set the host (The priority of `--host` option is higher than `server.host`).
+
+If you want the Rsbuild server to listen only on `localhost`, you can set it to:
+
+```ts
+export default {
+  server: {
+    host: 'localhost',
+  },
+};
+```
+
+## IPv6 Support
+
+If you want the Rsbuild server to listen all IPv6 network interfaces, you can set it to:
+
+```ts
+export default {
+  server: {
+    host: '::',
+  },
+};
+```
+
+If you want the Rsbuild server to listen a specified IPv6 host, you can set it to:
+
+```ts
+export default {
+  server: {
+    host: '::1',
+  },
+};
+```
+
+At this point, you can access the page via `http://[::1]:3000/`.

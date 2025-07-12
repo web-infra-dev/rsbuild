@@ -1,0 +1,90 @@
+# Perguntas Frequentes sobre Recursos
+
+### Como importar bibliotecas de componentes de UI sob demanda?
+
+Para configurar a importação sob demanda da biblioteca de componentes, você pode configurá-la através de [source.transformImport](/config/source/transform-import), que é equivalente a [babel-plugin-import](https://npmjs.com/package/babel-plugin-import).
+
+```ts
+export default {
+  source: {
+    transformImport: [
+      {
+        libraryName: 'my-components',
+        libraryDirectory: 'es',
+        style: true,
+      },
+    ],
+  },
+};
+```
+
+---
+
+### Como executar o ESLint durante a compilação?
+
+Para fins de desempenho de compilação, o Rsbuild não realizará a verificação do ESLint durante o processo de compilação por padrão. Se você precisar desse recurso, pode usar o [plugin ESLint](https://github.com/rspack-contrib/rsbuild-plugin-eslint) do Rsbuild.
+
+---
+
+### Como configurar o caminho CDN para ativos estáticos?
+
+Para fazer upload de ativos estáticos como JS e CSS para CDN para uso, defina o prefixo da URL dos ativos estáticos através da configuração [output.assetPrefix](/config/output/asset-prefix).
+
+```js
+export default {
+  output: {
+    assetPrefix: 'https://cdn.example.com/assets/',
+  },
+};
+```
+
+---
+
+### Como remover o console após a build de produção?
+
+Para a build de produção, podemos remover o `console` do código, a fim de evitar que o log do modo de desenvolvimento seja exibido na produção.
+
+O Rsbuild fornece uma opção de configuração para remover o console por padrão, consulte [performance.removeConsole](/config/performance/remove-console).
+
+---
+
+### Como visualizar a configuração final do Rspack gerada?
+
+Ao usar o modo de depuração do Rsbuild, você pode visualizar a configuração do Rspack gerada pelo Rsbuild.
+
+Você pode habilitar o modo de depuração do Rsbuild adicionando a variável de ambiente `DEBUG=rsbuild` ao realizar a build. Neste modo, a configuração do Rspack gerada internamente será exibida no diretório "dist".
+
+```bash
+➜ DEBUG=rsbuild pnpm dev
+
+  ...
+  rsbuild init plugins
+  rsbuild init plugins done
+  rsbuild use Rspack v1.0.0
+  ...
+
+config inspection completed, generated files:
+
+  - Rsbuild config: /root/my-project/dist/.rsbuild/rsbuild.config.mjs
+  - Rspack config (web): /root/my-project/dist/.rsbuild/rspack.config.web.mjs
+```
+
+---
+
+### Como ignorar avisos específicos?
+
+Por padrão, o Rsbuild imprimirá todos os logs de erro e aviso gerados pelo processo de build.
+
+Se um grande número de logs de aviso for gerado devido ao pacote de terceiros, ele não poderá ser processado temporariamente, e você deseja ignorá-lo. Logs de aviso específicos podem ser ignorados através da configuração `ignoreWarnings` fornecida pelo Rspack.
+
+```ts
+export default {
+  tools: {
+    rspack: {
+      ignoreWarnings: [/Using \/ for division outside of calc()/],
+    },
+  },
+};
+```
+
+Para detalhes, consulte: [ignoreWarnings](https://rspack.rs/config/other-options#ignorewarnings).

@@ -1,0 +1,135 @@
+# Vue CLI
+
+Este capítulo apresenta como migrar um projeto [Vue CLI](https://github.com/vuejs/vue-cli) para o Rsbuild.
+
+## Instalar dependências
+
+Primeiro, você precisa substituir as dependências npm do Vue CLI pelas dependências do Rsbuild.
+
+import { PackageManagerTabs } from '@theme';
+
+- Remover dependências do Vue CLI:
+
+<PackageManagerTabs command="remove @vue/cli-service @vue/cli-plugin-babel @vue/cli-plugin-eslint core-js" />
+
+- Instalar dependências do Rsbuild:
+
+<PackageManagerTabs command="add @rsbuild/core @rsbuild/plugin-vue -D" />
+
+:::tip
+Se o seu projeto for baseado em Vue 2, substitua `@rsbuild/plugin-vue` por `@rsbuild/plugin-vue2`.
+:::
+
+## Atualizar scripts npm
+
+Em seguida, você precisa atualizar os scripts npm no arquivo package.json para os comandos CLI do Rsbuild.
+
+```json title="package.json"
+{
+  "scripts": {
+    "serve": "vue-cli-service serve", // [!code --]
+    "build": "vue-cli-service build", // [!code --]
+    "serve": "rsbuild dev", // [!code ++]
+    "build": "rsbuild build", // [!code ++]
+    "preview": "rsbuild preview" // [!code ++]
+  }
+}
+```
+
+:::tip
+O Rsbuild não integra ESLint, então ele não fornece um comando para substituir `vue-cli-service lint`. Você pode usar diretamente os [comandos CLI](https://eslint.org/docs/latest/use/command-line-interface) do ESLint como uma alternativa.
+:::
+
+## Criar arquivo de configuração
+
+Crie um arquivo de configuração do Rsbuild `rsbuild.config.ts` no mesmo diretório do package.json e adicione o seguinte conteúdo:
+
+```typescript
+import { defineConfig } from '@rsbuild/core';
+import { pluginVue } from '@rsbuild/plugin-vue';
+
+export default defineConfig({
+  plugins: [pluginVue()],
+  source: {
+    // Especifique o arquivo de entrada
+    entry: {
+      index: './src/main.js',
+    },
+  },
+});
+```
+
+:::tip
+Se o seu projeto for baseado em Vue 2, use `import { pluginVue2 } from '@rsbuild/plugin-vue2';`.
+:::
+
+## Template HTML
+
+O Vue CLI usa o arquivo `public/index.html` como o template HTML padrão. No Rsbuild, você pode especificar o template HTML através de [html.template](/config/html/template):
+
+```ts title="rsbuild.config.ts"
+export default defineConfig({
+  html: {
+    template: './public/index.html',
+  },
+});
+```
+
+No template HTML, se você estiver usando a variável `BASE_URL` do Vue CLI, substitua-a pela [variável assetPrefix](/config/html/template-parameters) do Rsbuild e use uma barra para concatenação:
+
+```html
+<link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+<!-- [!code --] -->
+<link rel="icon" href="<%= assetPrefix %>/favicon.ico" />
+<!-- [!code ++] -->
+```
+
+Isso completa a migração básica do Vue CLI para o Rsbuild. Agora você pode executar o comando `npm run serve` para tentar iniciar o servidor de desenvolvimento.
+
+## Migração de configuração
+
+Hera is the corresponding Rsbuild configuration for Vue CLI configuration:
+
+| Vue CLI                                                                                                                                 | Rsbuild                                                                                                                                                |
+| :-------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [publicPath](https://cli.vuejs.org/config/#publicpath)                                                                                  | [dev.assetPrefix](/config/dev/asset-prefix) / [output.assetPrefix](/config/output/asset-prefix)                                                        |
+| [outputDir](https://cli.vuejs.org/config/#outputdir) / [assetsDir](https://cli.vuejs.org/config/#assetsdir)                             | [output.distPath](/config/output/dist-path)                                                                                                            |
+| [filenameHashing](https://cli.vuejs.org/config/#filenamehashing)                                                                        | [output.filenameHash](/config/output/filename-hash)                                                                                                    |
+| [pages](https://cli.vuejs.org/config/#pages)                                                                                            | [source.entry](/config/source/entry) / [html.template](/config/html/template) / [html.title](/config/html/title)                                       |
+| [transpileDependencies](https://cli.vuejs.org/config/#transpiledependencies)                                                            | [source.include](/config/source/include)                                                                                                               |
+| [productionSourceMap](https://cli.vuejs.org/config/#productionsourcemap) / [css.sourceMap](https://cli.vuejs.org/config/#css-sourcemap) | [output.sourceMap](/config/output/source-map)                                                                                                          |
+| [crossorigin](https://cli.vuejs.org/config/#crossorigin)                                                                                | [html.crossorigin](/config/html/crossorigin)                                                                                                           |
+| [configureWebpack](https://cli.vuejs.org/config/#configurewebpack)                                                                      | [tools.rspack](/config/tools/rspack)                                                                                                                   |
+| [chainWebpack](https://cli.vuejs.org/config/#chainwebpack)                                                                              | [tools.bundlerChain](/config/tools/bundler-chain)                                                                                                      |
+| [css.extract](https://cli.vuejs.org/config/#css-extract)                                                                                | [output.injectStyles](/config/output/inject-styles)                                                                                                    |
+| [css.loaderOptions](https://cli.vuejs.org/config/#css-loaderoptions)                                                                    | [tools.cssLoader](/config/tools/css-loader) / [less](/plugins/list/plugin-less) / [sass](/plugins/list/plugin-sass) / [postcss](/config/tools/postcss) |
+| [devServer.proxy](https://cli.vuejs.org/config/#devserver-proxy)                                                                        | [server.proxy](/config/server/proxy)                                                                                                                   |
+
+Notas:
+
+- Ao migrar `configureWebpack`, observe que a maioria das configurações do webpack e do Rsbuild são as mesmas, mas também existem algumas diferenças ou funcionalidades não implementadas no Rsbuild.
+- A tabela acima não cobre todas as configurações do Vue CLI, sinta-se à vontade para adicionar mais.
+
+## Variáveis de ambiente
+
+O Vue CLI injeta variáveis de ambiente que começam com `VUE_APP_` no código do cliente por padrão, enquanto o Rsbuild injeta variáveis de ambiente que começam com `PUBLIC_` por padrão (consulte [variáveis públicas](/guide/advanced/env-vars#public-variables)).
+
+Para ser compatível com o comportamento do Vue CLI, você pode chamar manualmente o método [loadEnv](/api/javascript-api/core#loadenv) do Rsbuild para ler variáveis de ambiente que começam com `VUE_APP_` e injetá-las no código do cliente através da configuração [source.define](/config/source/define).
+
+```ts title="rsbuild.config.ts"
+import { defineConfig, loadEnv } from '@rsbuild/core';
+
+const { publicVars } = loadEnv({ prefixes: ['VUE_APP_'] });
+
+export default defineConfig({
+  source: {
+    define: publicVars,
+  },
+});
+```
+
+## Suplemento de conteúdo
+
+O documento atual cobre apenas parte do processo de migração. Se você encontrar conteúdo adequado para adicionar, sinta-se à vontade para contribuir com a documentação via pull request 🤝.
+
+> A documentação para rsbuild can be found in the [rsbuild/website](https://github.com/web-infra-dev/rsbuild/tree/main/website) directory.

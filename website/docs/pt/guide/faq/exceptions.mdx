@@ -1,0 +1,151 @@
+# Perguntas Frequentes sobre Exceções
+
+### Encontrar código ESNext nos arquivos compilados?
+
+Por padrão, o Rsbuild não compila arquivos JavaScript em `node_modules`. Se um pacote npm usado no projeto contiver sintaxe ESNext, ele será incluído no output.
+
+Quando isso acontece, você pode especificar diretórios ou módulos que precisam ser compilados adicionalmente através da opção de configuração [source.include](/config/source/include).
+
+---
+
+### Erro de build `Error: [object Object] is not a PostCSS plugin`?
+
+Atualmente, o Rsbuild está usando o PostCSS v8. Se você encontrar o erro `Error: [object Object] is not a PostCSS plugin` durante o processo de compilação, geralmente é causado pela referência à versão errada do PostCSS, por exemplo, a versão do `postcss` (peerDependencies) em `cssnano` não atende às expectativas.
+
+You can find the dependencies of `UNMET PEER DEPENDENCY` through `npm ls postcss`, and then install the correct version of dependencies by specifying the PostCSS version in package.json.
+
+```
+npm ls postcss
+
+ ├─┬ css-loader@6.3.0
+ │ └── UNMET PEER DEPENDENCY postcss@8.3.9
+ ├─┬ css-minimizer-webpack-plugin@3.0.0
+ │ └── UNMET PEER DEPENDENCY postcss@8.3.9
+```
+
+---
+
+### Erro de build `You may need additional loader`?
+
+Se a seguinte mensagem de erro for encontrada durante o processo de compilação, significa que existem arquivos individuais que não podem ser compilados corretamente.
+
+```bash
+Module parse failed: Unexpected token
+File was processed with these loaders:
+ * some-loader/index.js
+
+You may need an additional loader to handle the result of these loaders.
+```
+
+Verifique se algum formato de arquivo não suportado pelo Rsbuild está sendo referenciado e configure o loader Rspack correspondente para compilá-los.
+
+---
+
+### Erro de compilação `export 'foo' (imported as 'foo') was not found in './utils'`?
+
+Se você encontrar este erro durante o processo de compilação, significa que seu código está referenciando uma exportação que não existe.
+
+Por exemplo, no código a seguir, `index.ts` está importando a variável `foo` de `utils.ts`, mas `utils.ts` exporta apenas a variável `bar`.
+
+```ts
+// utils.ts
+export const bar = 'bar';
+
+// index.ts
+import { foo } from './utils';
+```
+
+Neste caso, o Rsbuild lançará o seguinte erro:
+
+```bash
+Compile Error:
+File: ./src/index.ts
+export 'foo' (imported as 'foo') was not found in './utils' (possible exports: bar)
+```
+
+Se você encontrar este problema, o primeiro passo é verificar as declarações de importação/exportação em seu código e corrigir qualquer código inválido.
+
+Existem alguns erros comuns:
+
+- Importando uma variável inexistente:
+
+```ts
+// utils.ts
+export const bar = 'bar';
+
+// index.ts
+import { foo } from './utils';
+```
+
+- Reexportando um tipo sem adicionar o modificador `type`, fazendo com que transpiladores como SWC ou Babel falhem em reconhecer a exportação de tipo, resultando em erros de compilação.
+
+```ts
+// utils.ts
+export type Foo = 'bar';
+
+// index.ts
+export { Foo } from './utils'; // Incorreto
+export type { Foo } from './utils'; // Correto
+```
+
+Em alguns casos, o erro pode ser causado por uma dependência de terceiros que você não pode modificar diretamente. Nesta situação, se você tiver certeza de que o problema não afeta sua aplicação, você pode adicionar a seguinte configuração para alterar o nível de log de `error` para `warn`:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: {
+      module: {
+        parser: {
+          javascript: {
+            exportsPresence: 'warn',
+          },
+        },
+      },
+    },
+  },
+};
+```
+
+No entanto, é importante entrar em contato com o desenvolvedor da dependência de terceiros imediatamente para corrigir o problema.
+
+> Você pode consultar a documentação do Rspack para mais detalhes sobre [module.parser.javascript.exportsPresence](https://rspack.rs/config/module#moduleparserjavascriptexportspresence).
+
+---
+
+### Tree shaking não está funcionando?
+
+O Rsbuild habilitará o tree shaking do Rspack por padrão durante a build de produção. Se o tree shaking pode ter efeito depende se o código pode atender às condições do tree shaking do Rspack.
+
+Se você descobrir que o tree shaking não está funcionando como esperado, você pode verificar se a configuração `sideEffects` do pacote npm relacionado está correta. Se você não entender o papel de `sideEffects`, ou se estiver interessado nos princípios por trás do tree shaking, você pode ler [Documentação Oficial do Rspack - Tree Shaking](https://rspack.rs/guide/optimization/tree-shaking).
+
+---
+
+### `JavaScript heap out of memory` ao compilar?
+
+Este erro indica que há um problema de estouro de memória durante o processo de empacotamento. Na maioria dos casos, é porque o conteúdo empacotado excede o limite de memória padrão do Node.js.
+
+Em caso de problemas de OOM (Out Of Memory), a maneira mais fácil de corrigir isso é aumentando o limite de memória. O Node.js fornece a opção `--max-old-space-size` para definir isso. Você pode definir este parâmetro adicionando [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions) antes do comando CLI.
+
+Por exemplo, adicione parâmetros antes do comando `rsbuild build`:
+
+```json title="package.json"
+{
+  "scripts": {
+    "build": "rsbuild build" // [!code --]
+    "build": "NODE_OPTIONS=--max_old_space_size=16384 rsbuild build" // [!code ++]
+  }
+}
+```
+
+Se você estiver executando outros comandos, como `rsbuild dev`, adicione os parâmetros antes do comando correspondente.
+
+O valor do parâmetro `max_old_space_size` representa o limite superior do tamanho da memória (MB). Geralmente, pode ser definido como `16384` (16GB).
+
+Os seguintes parâmetros são explicados em mais detalhes na documentação oficial do Node.js:
+
+- [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions)
+- [--max-old-space-size](https://nodejs.org/api/cli.html#--max-old-space-sizesize-in-megabytes)
+
+Além de aumentar o limite de memória, também é uma solução melhorar a eficiência habilitando algumas estratégias de compilação, consulte [Melhorar o Desempenho da Build](/guide/optimization/build-performance).
+
+Se os métodos acima não puderem resolver seu problema, pode ser que alguma lógica anormal no projeto tenha causado o estouro de memória. Você pode depurar as alterações recentes do código e localizar a causa raiz dos problemas. Se não puder ser localizado, entre em contato conosco.

@@ -1,0 +1,65 @@
+# Usar Rsdoctor
+
+[Rsdoctor](https://rsdoctor.rs/) é um analisador de build feito sob medida para o ecossistema Rspack.
+
+O Rsdoctor está empenhado em ser um analisador de build inteligente e completo que torna o processo de build transparente, previsível e otimizável através de visualização e análise inteligente, ajudando as equipes de desenvolvimento a identificar precisamente gargalos, otimizar o desempenho e melhorar a qualidade da engenharia.
+
+Para depurar as saídas de build ou o processo de build, você pode usar o Rsdoctor para solucionar problemas.
+
+## Início Rápido
+
+Em um projeto baseado em Rsbuild, você pode habilitar o Rsdoctor da seguinte forma:
+
+1.  Instale o plugin Rsdoctor:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsdoctor/rspack-plugin -D" />
+
+2.  Adicione a variável de ambiente `RSDOCTOR=true` antes do comando CLI:
+
+```json title="package.json"
+{
+  "scripts": {
+    "dev:rsdoctor": "RSDOCTOR=true rsbuild dev",
+    "build:rsdoctor": "RSDOCTOR=true rsbuild build"
+  }
+}
+```
+
+Como o Windows não suporta o uso acima, você também pode usar [cross-env](https://npmjs.com/package/cross-env) para definir variáveis de ambiente. Isso garante compatibilidade entre diferentes sistemas:
+
+```json title="package.json"
+{
+  "scripts": {
+    "dev:rsdoctor": "cross-env RSDOCTOR=true rsbuild dev",
+    "build:rsdoctor": "cross-env RSDOCTOR=true rsbuild build"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.0"
+  }
+}
+```
+
+Após executar os comandos acima, o Rsbuild registrará automaticamente o plugin Rsdoctor, e após a conclusão da build, ele abrirá a página de análise da build. Para recursos completos, consulte a [documentação do Rsdoctor](https://rsdoctor.rs/).
+
+## Opções
+
+Para configurar as [opções](https://rsdoctor.rs/config/options/options) fornecidas pelo plugin Rsdoctor, registre manualmente o plugin Rsdoctor:
+
+```ts title="rsbuild.config.ts"
+import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
+
+export default {
+  tools: {
+    rspack: {
+      plugins: [
+        process.env.RSDOCTOR === 'true' &&
+          new RsdoctorRspackPlugin({
+            // opções do plugin
+          }),
+      ],
+    },
+  },
+};
+```

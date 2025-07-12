@@ -1,0 +1,226 @@
+# Servidor de Desenvolvimento
+
+O Rsbuild vem com um servidor de desenvolvimento embutido projetado para melhorar a experiência de desenvolvimento. Ao executar os comandos `rsbuild dev` ou `rsbuild preview`, o servidor será iniciado, fornecendo recursos como visualização de página, roteamento e recarregamento de módulo a quente.
+
+## Caminho base
+
+Por padrão, o caminho base do servidor Rsbuild é `/`. Você pode acessar arquivos de saída como `index.html` e ativos na [pasta pública](/guide/basic/static-assets#public-folder) através de `http://localhost:3000/`.
+
+O Rsbuild suporta a modificação do caminho base do servidor através de [server.base](/config/server/base). Se você quiser acessar esses arquivos através de `http://localhost:3000/foo/`, você pode configurar o seguinte:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    base: '/foo',
+  },
+};
+```
+
+## Visualizar ativos estáticos
+
+Após iniciar o servidor de desenvolvimento, você pode acessar `/rsbuild-dev-server` para visualizar todos os ativos estáticos gerados durante a build atual.
+
+Por exemplo, abra `http://localhost:3000/rsbuild-dev-server` no navegador, você verá:
+
+<img
+  src="https://assets.rspack.rs/rsbuild/assets/assets-report-page.png"
+  alt="rsbuild-dev-server"
+  width="600"
+/>
+
+## Roteamento de página
+
+O servidor Rsbuild oferece um conjunto de convenções de roteamento padrão e permite que os usuários o personalizem através de configurações.
+
+### Comportamento padrão
+
+O servidor Rsbuild gerará a rota de página correspondente com base nas configurações [server.base](/config/server/base) e [source.entry](/config/source/entry).
+
+Quando a entrada é `index`, a página pode ser acessada através de `/`; quando a entrada é `foo`, a página pode ser acessada através de `/foo`.
+
+Quando server.base é `/base`, a página index pode ser acessada através de `/base` e a página foo pode ser acessada através de `/base/foo`.
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    entry: {
+      index: './src/index.ts',
+      foo: './src/pages/foo/index.ts',
+    },
+  },
+};
+```
+
+### Comportamento de fallback
+
+Por padrão, quando a requisição atende às seguintes condições e o recurso correspondente não é encontrado, ela fará o fallback para `index.html`:
+
+- A requisição é uma requisição `GET` ou `HEAD`
+- Que aceita `text/html` (o tipo de aceitação do cabeçalho da requisição é `text/html` ou `*/*`)
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    htmlFallback: 'index',
+  },
+};
+```
+
+### Comportamento de fallback personalizado
+
+Quando a configuração padrão [server.htmlFallback](/config/server/html-fallback) do Rsbuild não pode atender às suas necessidades, por exemplo, se você quiser poder acessar `main.html` ao acessar `/`, você pode configurá-lo usando [server.historyApiFallback](/config/server/history-api-fallback).
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    entry: {
+      main: './src/index.ts',
+    },
+  },
+  server: {
+    htmlFallback: false,
+    historyApiFallback: {
+      index: '/main.html',
+    },
+  },
+};
+```
+
+### Caminho de saída HTML
+
+Normalmente, `/` aponta para o diretório raiz `dist`, e o arquivo HTML é gerado para o diretório raiz `dist`. Neste momento, a página HTML correspondente pode ser acessada através de `/some-path`.
+
+Se você gerar arquivos HTML para outros subdiretórios modificando [output.distPath.html](/config/output/dist-path), você precisará acessar a página HTML correspondente através de `/[htmlPath]/some-path`.
+
+Por exemplo, se você definir o arquivo HTML para ser gerado no diretório `HTML`, index.html será acessado através de `/html/`, e foo.html será acessado através de `/html/foo`.
+
+```ts
+export default {
+  source: {
+    entry: {
+      index: './src/index.ts',
+      foo: './src/pages/foo/index.ts',
+    },
+  },
+  output: {
+    distPath: {
+      html: 'html',
+    },
+  },
+};
+```
+
+## Servidor de desenvolvimento Rspack
+
+O Rsbuild possui um servidor de desenvolvimento leve embutido, que é diferente dos servidores de desenvolvimento embutidos na CLI do Rspack ou na CLI do webpack. Existem algumas diferenças entre eles, incluindo diferentes opções de configuração.
+
+### Comparação
+
+Comparado com o servidor de desenvolvimento embutido na CLI do Rspack, o servidor de desenvolvimento do Rsbuild tem as seguintes diferenças:
+
+- **Configuração**: O Rsbuild oferece opções de configuração de servidor mais ricas.
+- **Formato de Log**: O formato de log da CLI do Rspack é basicamente consistente com a CLI do webpack, enquanto os logs do Rsbuild são mais claros e legíveis.
+- **Dependências**: O Rsbuild é implementado com base em bibliotecas leves como `connect`, que tem menos dependências e velocidade de inicialização mais rápida em comparação com o `express` usado por `@rspack/dev-server`.
+
+### Configuração
+
+O Rsbuild não suporta o uso da configuração [devServer](https://rspack.rs/config/dev-server) do Rspack. Em vez disso, você pode usar as configurações `dev` e `server` do Rsbuild.
+
+No Rsbuild, `dev` contém algumas configurações que funcionam apenas no modo de desenvolvimento, enquanto a configuração `server` funciona para ambos os servidores de desenvolvimento e visualização.
+
+Abaixo estão as configurações do Rsbuild que correspondem à configuração `devServer` da CLI do Rspack:
+
+| CLI do Rspack                                                                                     | Rsbuild                                                          |
+| :------------------------------------------------------------------------------------------------ | :--------------------------------------------------------------- |
+| [devServer.client](https://rspack.rs/config/dev-server#devserverclient)                           | [dev.client](/config/dev/client)                                 |
+| [devServer.compress](https://rspack.rs/config/dev-server#devservercompress)                       | [server.compress](/config/server/compress)                       |
+| [devServer.devMiddleware.writeToDisk](https://rspack.rs/config/dev-server#devserverdevmiddleware) | [dev.writeToDisk](/config/dev/write-to-disk)                     |
+| [devServer.headers](https://rspack.rs/config/dev-server#devserverheaders)                         | [server.headers](/config/server/headers)                         |
+| [devServer.historyApiFallback](https://rspack.rs/config/dev-server#devserverhistoryapifallback)   | [server.historyApiFallback](/config/server/history-api-fallback) |
+| [devServer.host](https://rspack.rs/config/dev-server#devserverhost)                               | [server.host](/config/server/host)                               |
+| [devServer.hot](https://rspack.rs/config/dev-server#devserverhot)                                 | [dev.hmr](/config/dev/hmr)                                       |
+| [devServer.liveReload](https://rspack.rs/config/dev-server#devserverlivereload)                   | [dev.liveReload](/config/dev/live-reload)                        |
+| [devServer.open](https://rspack.rs/config/dev-server#devserveropen)                               | [server.open](/config/server/open)                               |
+| [devServer.port](https://rspack.rs/config/dev-server#devserverport)                               | [server.port](/config/server/port)                               |
+| [devServer.proxy](https://rspack.rs/config/dev-server#devserverproxy)                             | [server.proxy](/config/server/proxy)                             |
+| [devServer.setupMiddlewares](https://rspack.rs/config/dev-server#devserversetupmiddlewares)       | [dev.setupMiddlewares](/config/dev/setup-middlewares)            |
+| [devServer.static](https://rspack.rs/config/dev-server#devserverstatic)                           | [server.publicDir](/config/server/public-dir)                    |
+| [devServer.watchFiles](https://rspack.rs/config/dev-server#devserverwatchfiles)                   | [dev.watchFiles](/config/dev/watch-files)                        |
+
+> Para mais configurações, consulte [Visão Geral da Configuração](/config/index).
+
+## Middleware
+
+A implementação de middleware do Rsbuild é construída sobre [connect](https://github.com/senchalabs/connect), um framework de servidor HTTP leve, e usa os objetos `request` e `response` padrão do Node.js para lidar com interações HTTP.
+
+### Registrar middleware
+
+O Rsbuild oferece três maneiras de registrar middleware:
+
+1.  Use a configuração [dev.setupMiddlewares](/config/dev/setup-middlewares).
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    setupMiddlewares: (middlewares) => {
+      middlewares.push((req, res, next) => {
+        next();
+      });
+    },
+  },
+};
+```
+
+2.  No plugin Rsbuild, você pode registrar middleware através do hook [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver).
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.onBeforeStartDevServer(({ server }) => {
+      server.middlewares.use((req, res, next) => {
+        next();
+      });
+    });
+  },
+});
+```
+
+3.  Ao usar a API JavaScript do Rsbuild, você pode criar uma instância do servidor de desenvolvimento através do método [rsbuild.createDevServer](/api/javascript-api/instance#rsbuildcreatedevserver) e usar o método `use` para registrar middleware.
+
+```ts
+const server = await rsbuild.createDevServer();
+
+server.middlewares.use((req, res, next) => {
+  next();
+});
+```
+
+### Integrar frameworks de servidor de terceiros
+
+Ao migrar de outros frameworks de servidor (como Express), o middleware original pode não ser usado diretamente no Rsbuild. Por exemplo, as propriedades `req.params`, `req.path`, `req.search`, `req.query` e outras fornecidas pelo Express não podem ser acessadas no middleware do Rsbuild.
+
+Se você precisar reutilizar o middleware existente no Rsbuild, você pode usar o seguinte método para introduzir a aplicação do servidor como um todo como middleware:
+
+```ts title="rsbuild.config.ts"
+import express from 'express';
+import expressMiddleware from 'my-express-middleware';
+
+// Inicializa o aplicativo Express
+const app = express();
+
+app.use(expressMiddleware);
+
+export default {
+  dev: {
+    setupMiddlewares: (middlewares) => {
+      middlewares.unshift(app);
+    },
+  },
+};
+```
+
+## Servidor personalizado
+
+Se você deseja integrar o servidor de desenvolvimento do Rsbuild em um servidor personalizado, você pode obter os métodos de instância do servidor de desenvolvimento do Rsbuild através do método `createDevServer` do Rsbuild e chamá-los sob demanda.
+
+Para detalhes, consulte [Rsbuild - createDevServer](/api/javascript-api/instance#rsbuildcreatedevserver).

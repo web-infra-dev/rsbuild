@@ -1,0 +1,69 @@
+# html.title
+
+- **Type:** `string ｜ Function`
+- **Default:** `'Rsbuild App'`
+
+Set the title tag of the HTML page.
+
+:::tip
+If the HTML template used in the current project already includes the `<title>` tag, the `html.title` will not take effect.
+:::
+
+## String usage
+
+`html.title` can be directly set as a string:
+
+```js
+export default {
+  html: {
+    title: 'Example',
+  },
+};
+```
+
+The `title` tag generated in HTML will be:
+
+```html
+<title>Example</title>
+```
+
+## Function usage
+
+- **Type:**
+
+```ts
+type TitleFunction = ({ value: string; entryName: string }) => string | void;
+```
+
+When `html.title` is of type Function, the function receives an object as the argument, and the object's values include:
+
+- `value`: the default title configuration of Rsbuild.
+- `entryName`: the name of the current entry.
+
+In the MPA (multi-page application) scenario, you can return different `title` strings based on the entry name, thus generating different `title` tags for each page:
+
+```js
+export default {
+  html: {
+    title({ entryName }) {
+      const titles = {
+        foo: 'Foo Page',
+        bar: 'Bar Page',
+      };
+      return titles[entryName] || 'Other Page';
+    },
+  },
+};
+```
+
+## Unset `<title>` tag
+
+When `html.title` is set to an empty string, Rsbuild will not inject the `<title>` tag:
+
+```js
+export default {
+  html: {
+    title: '',
+  },
+};
+```

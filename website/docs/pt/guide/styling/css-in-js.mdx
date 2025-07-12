@@ -1,0 +1,135 @@
+# CSS-in-JS
+
+Este documento descreve como usar bibliotecas CSS-in-JS comuns no Rsbuild.
+
+Embora os exemplos sejam baseados em React, algumas bibliotecas CSS-in-JS (como [vanilla-extract](#vanilla-extract)) também suportam outros frameworks.
+
+### Usando Emotion
+
+O Rsbuild suporta a compilação de [Emotion](https://github.com/emotion-js/emotion), você pode adicionar a seguinte configuração para usar:
+
+- [swcReactOptions.importSource](/plugins/list/plugin-react#swcreactoptions)
+- [@swc/plugin-emotion](https://npmjs.com/package/@swc/plugin-emotion)
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [
+    pluginReact({
+      swcReactOptions: {
+        importSource: '@emotion/react',
+      },
+    }),
+  ],
+  tools: {
+    swc: {
+      jsc: {
+        experimental: {
+          plugins: [['@swc/plugin-emotion', {}]],
+        },
+      },
+    },
+  },
+});
+```
+
+> Consulte este exemplo: [emotion](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/emotion).
+
+### Usar styled-jsx
+
+You can use [styled-jsx](https://github.com/vercel/styled-jsx) through [@swc/plugin-styled-jsx](https://npmjs.com/package/@swc/plugin-styled-jsx):
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [pluginReact()],
+  tools: {
+    swc: {
+      jsc: {
+        experimental: {
+          plugins: [['@swc/plugin-styled-jsx', {}]],
+        },
+      },
+    },
+  },
+});
+```
+
+Observe que você deve selecionar o plugin SWC que corresponde à versão atual de `@swc/core` para que o SWC funcione, consulte [tools.swc](/config/tools/swc).
+
+> Consulte este exemplo: [styled-jsx](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/styled-jsx).
+
+### Usar vanilla-extract
+
+O Rsbuild suporta [@vanilla-extract/webpack-plugin](https://npmjs.com/package/@vanilla-extract/webpack-plugin). Você pode adicionar a seguinte configuração para usar [vanilla-extract](https://github.com/vanilla-extract-css/vanilla-extract):
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+import { VanillaExtractPlugin } from '@vanilla-extract/webpack-plugin';
+
+export default defineConfig({
+  plugins: [
+    pluginReact({
+      reactRefreshOptions: {
+        exclude: [/\.css\.ts$/],
+      },
+    }),
+  ],
+  tools: {
+    rspack: {
+      plugins: [new VanillaExtractPlugin()],
+    },
+  },
+});
+```
+
+> Consulte este exemplo: [vanilla-extract](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/vanilla-extract).
+
+### Usar StyleX
+
+You can use [StyleX](https://github.com/facebook/stylex) via [unplugin-stylex](https://github.com/eryue0220/unplugin-stylex):
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+import stylexPlugin from 'unplugin-stylex/rspack';
+
+export default defineConfig({
+  plugins: [pluginReact()],
+  tools: {
+    rspack: {
+      plugins: [stylexPlugin()],
+    },
+  },
+});
+```
+
+> Consulte este exemplo: [stylex](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/stylex).
+
+### Usar styled-components
+
+[styled-components](https://github.com/styled-components/styled-components) é uma biblioteca de tempo de execução, você pode usá-la diretamente sem nenhuma configuração adicional.
+
+O Rsbuild suporta a compilação de styled-components, melhorando a experiência de depuração e adicionando suporte a SSR para styled-components.
+
+Para usar styled-components, recomendamos usar o [@rsbuild/plugin-styled-components](https://github.com/rsbuild-contrib/rsbuild-plugin-styled-components).
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginStyledComponents } from '@rsbuild/plugin-styled-components';
+
+export default defineConfig({
+  plugins: [pluginStyledComponents()],
+});
+```
+
+> Consulte este exemplo: [styled-components](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/styled-components).
+
+:::tip
+styled-components não é mais recomendado para novos projetos, pois está em [modo de manutenção](https://opencollective.com/styled-components/updates/thank-you).
+:::

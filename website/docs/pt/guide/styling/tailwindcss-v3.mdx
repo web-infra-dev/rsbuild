@@ -1,0 +1,176 @@
+# Tailwind CSS v3
+
+[Tailwind CSS](https://v3.tailwindcss.com/) é um framework CSS e sistema de design baseado em classes utilitárias, que pode adicionar rapidamente estilos comuns a componentes e suportar a extensão flexível de estilos de tema.
+
+Você pode integrar o Tailwind CSS no Rsbuild via plugins PostCSS.
+
+## Instalando Tailwind CSS
+
+O Rsbuild tem suporte embutido para PostCSS, você pode instalar o pacote `tailwindcss` para integrar o Tailwind CSS:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add tailwindcss@^3 -D" />
+
+## Configurando PostCSS
+
+Você pode registrar o plugin PostCSS do `tailwindcss` através de [postcss.config.cjs](https://npmjs.com/package/postcss-loader#config) ou [tools.postcss](/config/tools/postcss).
+
+```js title="postcss.config.cjs"
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+  },
+};
+```
+
+## Configurando Tailwind CSS
+
+Crie um arquivo `tailwind.config.js` no diretório raiz do seu projeto e adicione o seguinte conteúdo:
+
+```js title="tailwind.config.js"
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ['./src/**/*.{html,js,ts,jsx,tsx}'],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
+
+:::tip
+A configuração acima é apenas para referência e pode ser modificada para atender às necessidades do seu projeto. Por exemplo, projetos não-TypeScript não precisam incluir arquivos ts e tsx.
+:::
+
+Deve-se notar que a opção `content` deve incluir os caminhos para todos os arquivos de origem que contêm nomes de classe Tailwind. Para detalhes, consulte [tailwindcss - Configuração de Conteúdo](https://v3.tailwindcss.com/docs/content-configuration).
+
+```js title="tailwind.config.js"
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    './src/**/*.{html,js,ts,jsx,tsx}',
+    '../../lib1/src/**/*.{js,ts,jsx,tsx}',
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
+
+### Outros métodos de configuração
+
+- Você pode passar diretamente a configuração do Tailwind CSS para `postcss.config.cjs`:
+
+```js title="postcss.config.cjs"
+module.exports = {
+  plugins: {
+    tailwindcss: {
+      content: ['./src/**/*.{html,js,ts,jsx,tsx}'],
+      // ...outras opções
+    },
+  },
+};
+```
+
+- Você também pode definir a configuração do Tailwind CSS através de [tools.postcss](/config/tools/postcss):
+
+```js title="rsbuild.config.js"
+import tailwindcss from 'tailwindcss';
+
+export default {
+  tools: {
+    postcss: {
+      postcssOptions: {
+        plugins: [
+          tailwindcss({
+            content: ['./src/**/*.{html,js,ts,jsx,tsx}'],
+            // ...outras opções
+          }),
+        ],
+      },
+    },
+  },
+};
+```
+
+Mas recomendamos colocar a configuração do Tailwind CSS em `tailwind.config.*` porque outros métodos podem fazer com que o desempenho da build do Tailwind CSS se degrade, consulte [tailwindcss/issues/14229](https://github.com/tailwindlabs/tailwindcss/issues/14229).
+
+## Importando CSS
+
+Adicione as diretivas `@tailwind` ao seu arquivo de entrada CSS:
+
+```css title="main.css"
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+Dependendo das suas necessidades, você pode importar seletivamente os estilos CSS fornecidos pelo Tailwind CSS. Consulte a [documentação @tailwind](https://v3.tailwindcss.com/docs/functions-and-directives#tailwind) para uso detalhado das diretivas `@tailwind`.
+
+## Concluído
+
+Você concluiu todas as etapas para integrar o Tailwind CSS no Rsbuild!
+
+Você pode usar as classes utilitárias do Tailwind em qualquer componente ou HTML, como:
+
+```html
+<h1 class="text-3xl font-bold underline">Hello world!</h1>
+```
+
+Para mais detalhes de uso, consulte a [documentação do Tailwind CSS](https://v3.tailwindcss.com/).
+
+## Extensão do VS Code
+
+O Tailwind CSS fornece um plugin [Tailwind CSS IntelliSense](https://github.com/tailwindlabs/tailwindcss-intellisense) para VS Code para autocompletar nomes de classes, funções CSS e diretivas do Tailwind CSS.
+
+Você pode instalar este plugin no VS Code para habilitar o recurso de autocompletar.
+
+## Otimizar o desempenho da build
+
+Ao usar o Tailwind CSS, se o campo `content` em `tailwind.config.js` não estiver configurado corretamente, isso pode levar a um desempenho de build e HMR ruim. Isso ocorre porque o Tailwind CSS internamente corresponde a arquivos com base no glob definido em `content`. Quanto mais arquivos ele corresponder, maior será a sobrecarga de desempenho.
+
+Portanto, recomendamos que você especifique os caminhos a serem escaneados com precisão para evitar sobrecarga de desempenho desnecessária. Por exemplo, inclua apenas arquivos HTML ou JS no código-fonte do projeto que realmente contêm nomes de classe Tailwind, e evite incluir arquivos ou diretórios irrelevantes, especialmente o diretório `node_modules`.
+
+Aqui está um exemplo ruim de escaneamento do `node_modules`:
+
+```js title="tailwind.config.js"
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    './src/**/*.{html,js,ts,jsx,tsx}',
+    // Escaneando um grande número de arquivos, levando à degradação do desempenho
+    './node_modules/**/*.js',
+  ],
+};
+```
+
+Às vezes, você pode acidentalmente escanear o diretório `node_modules`, por exemplo, ao escanear arquivos em um monorepo:
+
+```js title="tailwind.config.js"
+module.exports = {
+  content: [
+    './src/**/*.{html,js,ts,jsx,tsx}',
+    // Inclui incorretamente o diretório `packages/ui/node_modules`
+    // Deveria ser '../../packages/ui/src/**/*.{html,js,ts,jsx,tsx}'
+    '../../packages/ui/**/*.{html,js,ts,jsx,tsx}',
+  ],
+};
+```
+
+## Otimizar o tamanho do CSS
+
+Para otimizar o tamanho dos estilos do Tailwind CSS, você pode tentar [rsbuild-plugin-tailwindcss](https://github.com/rspack-contrib/rsbuild-plugin-tailwindcss).
+
+Este plugin lê as informações do grafo de módulos do Rspack, define automaticamente a configuração `content` precisa para gerar estilos Tailwind CSS mínimos.
+
+```ts title="rsbuild.config.ts"
+import { pluginTailwindCSS } from 'rsbuild-plugin-tailwindcss';
+
+export default {
+  plugins: [pluginTailwindCSS()],
+};
+```
+
+> Consulte [rsbuild-plugin-tailwindcss](https://github.com/rspack-contrib/rsbuild-plugin-tailwindcss) para mais informações.

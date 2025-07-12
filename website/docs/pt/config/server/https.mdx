@@ -1,0 +1,67 @@
+# server.https
+
+- **Type:**
+
+```ts
+import type { ServerOptions } from 'node:https';
+import type { SecureServerSessionOptions } from 'node:http2';
+
+type Https = ServerOptions | SecureServerSessionOptions;
+```
+
+- **Default:** `undefined`
+
+Configure HTTPS options to enable HTTPS server. When enabled, HTTP server will be disabled.
+
+HTTP:
+
+```
+  ➜ Local: http://localhost:3000/
+  ➜ Network: http://192.168.0.1:3000/
+```
+
+HTTPS:
+
+```
+  ➜ Local: https://localhost:3000/
+  ➜ Network: https://192.168.0.1:3000/
+```
+
+:::tip
+Rsbuild enables HTTP/2 server by default. However, when you use [server.proxy](/config/server/proxy), the server will downgrade to HTTP/1, because the underlying [http-proxy](https://www.npmjs.com/package/http-proxy) does not support HTTP/2.
+:::
+
+## Set certificate
+
+You can manually pass in the certificate and the private key required in the `server.https` option. This parameter will be directly passed to the `createServer` method of the https module in Node.js.
+
+For details, please refer to [https.createServer](https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener).
+
+```ts
+import fs from 'node:fs';
+
+export default {
+  server: {
+    https: {
+      key: fs.readFileSync('certificates/private.pem'),
+      cert: fs.readFileSync('certificates/public.pem'),
+    },
+  },
+};
+```
+
+:::tip
+The certificates used for local development are typically generated using [mkcert](https://github.com/FiloSottile/mkcert). Please read ["How to use HTTPS for local development"](https://web.dev/articles/how-to-use-local-https?hl=en) to learn how to use it.
+:::
+
+## Self-signed Certificate
+
+For basic configuration requirements, you can add the [@rsbuild/plugin-basic-ssl](https://github.com/rspack-contrib/rsbuild-plugin-basic-ssl) plugin, which will automatically create a self-signed certificate and set `server.https` option by default.
+
+```ts
+import { pluginBasicSsl } from '@rsbuild/plugin-basic-ssl';
+
+export default {
+  plugins: [pluginBasicSsl()],
+};
+```

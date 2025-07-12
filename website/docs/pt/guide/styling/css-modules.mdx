@@ -1,0 +1,254 @@
+# CSS Modules
+
+[CSS Modules](https://github.com/css-modules/css-modules) nos permite escrever código CSS de forma modular, e esses estilos podem ser importados e usados em arquivos JavaScript. Usar CSS Modules pode gerar automaticamente nomes de classe únicos, isolar estilos entre diferentes módulos e evitar conflitos de nomes de classe.
+
+O Rsbuild suporta CSS Modules por padrão, você não precisa adicionar configuração adicional. Nossa convenção é usar o nome de arquivo `[name].module.css` para habilitar CSS Modules.
+
+Os seguintes arquivos de estilo são considerados CSS Modules:
+
+- `*.module.css`
+- `*.module.less`
+- `*.module.sass`
+- `*.module.scss`
+- `*.module.styl`
+- `*.module.stylus`
+
+## Exemplo de uso
+
+Escreva o estilo no arquivo `*.module.css`:
+
+```css title="button.module.css"
+.red {
+  background: red;
+}
+```
+
+Importe estilos no arquivo JavaScript:
+
+```tsx title="Button.tsx"
+import styles from './button.module.css';
+
+export default () => {
+  return <button className={styles.red}>Button</button>;
+};
+```
+
+Após a compilação, os nomes de classe dos CSS Modules são automaticamente anexados com um valor hash para evitar conflitos de nomes de classe:
+
+```css
+/* nomes de classe gerados no modo de desenvolvimento */
+.src-App-module__red-hiQIE4 {
+  background: red;
+}
+
+/* nomes de classe gerados no modo de produção */
+.red-hiQIE4 {
+  background: red;
+}
+```
+
+:::tip
+Consulte [Nomes de Classe Personalizados](#custom-class-names) para modificar as regras de geração de nomes de classe.
+:::
+
+## Importação nomeada
+
+Se você preferir usar importações nomeadas em CSS Modules, pode habilitá-lo através da configuração [output.cssModules.namedExport](/config/output/css-modules#cssmodulesnamedexport).
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    cssModules: {
+      namedExport: true,
+    },
+  },
+};
+```
+
+Se habilitado, você pode referenciar nomes de classe usando importações nomeadas:
+
+```tsx title="Button.tsx"
+import { red } from './button.module.css';
+
+export default () => {
+  return <button className={red}>Button</button>;
+};
+```
+
+## Regras de reconhecimento de CSS Modules
+
+Por padrão, apenas arquivos terminados em `*.module.css` são reconhecidos como CSS Modules.
+
+Se você quiser tratar outros arquivos CSS como CSS Modules também, pode conseguir isso configurando [output.cssModules.auto](/config/output/css-modules#cssmodulesauto).
+
+Por exemplo:
+
+```ts
+export default {
+  output: {
+    cssModules: {
+      auto: (resource) => {
+        return resource.includes('.module.') || resource.includes('shared/');
+      },
+    },
+  },
+};
+```
+
+Após esta configuração, os dois arquivos a seguir serão reconhecidos como CSS Modules:
+
+```ts
+import styles1 from './foo.module.css';
+import styles2 from './shared/bar.css';
+```
+
+## Nomes de classe personalizados
+
+Personalizar os nomes de classe gerados por CSS Modules também é uma função comumente usada, você pode usar [output.cssModules.localIdentName](/config/output/css-modules#cssmoduleslocalidentname) para configurá-lo.
+
+```ts
+export default {
+  output: {
+    cssModules: {
+      localIdentName: '[hash:base64:4]',
+    },
+  },
+};
+```
+
+Se você precisar personalizar outras configurações de CSS Modules, pode defini-las via [output.cssModules](/config/output/css-modules).
+
+## Estilos globais
+
+Em alguns casos, você pode precisar usar estilos globais em CSS Modules, como sobrescrever os estilos de bibliotecas de terceiros ou definir estilos globais para elementos específicos.
+
+CSS Modules fornece o seletor de pseudo-classe `:global()` para alcançar essa funcionalidade, e os seletores dentro de `:global()` manterão os nomes de classe originais, permitindo que eles correspondam corretamente aos elementos globais.
+
+```css title="styles.module.css"
+/* Seletores locais, serão hashed */
+.container {
+  padding: 20px;
+}
+
+/* Seletores globais, não serão hashed */
+:global(.foo) {
+  color: red;
+}
+
+/* Use seletores locais e globais juntos, apenas .wrapper será hashed */
+.wrapper :global(.bar) {
+  margin: 10px;
+}
+```
+
+You can also nest `:global()`:
+
+```css title="card.module.css"
+.card {
+  /* Afeta apenas elementos .btn dentro de .card */
+  :global(.btn) {
+    background: blue;
+  }
+}
+```
+
+## Declaração de tipo
+
+Quando você importa CSS Modules em código TypeScript, o TypeScript pode avisar que o módulo está faltando uma definição de tipo:
+
+```
+TS2307: Cannot find module './index.module.css' or its corresponding type declarations.
+```
+
+Para corrigir isso, você precisa adicionar um arquivo de declaração de tipo para os CSS Modules. Crie um arquivo `src/env.d.ts` e adicione a declaração de tipo correspondente.
+
+- Método 1: Se o pacote `@rsbuild/core` estiver instalado, você pode referenciar os [tipos predefinidos](/guide/basic/typescript#preset-types) fornecidos por `@rsbuild/core`:
+
+```ts
+/// <reference types="@rsbuild/core/types" />
+```
+
+- Método 2: Adicione manualmente as declarações de tipo necessárias:
+
+```ts title="src/env.d.ts"
+declare module '*.module.css' {
+  const classes: { readonly [key: string]: string };
+  export default classes;
+}
+declare module '*.module.scss' {
+  const classes: { readonly [key: string]: string };
+  export default classes;
+}
+declare module '*.module.sass' {
+  const classes: { readonly [key: string]: string };
+  export default classes;
+}
+declare module '*.module.less' {
+  const classes: { readonly [key: string]: string };
+  export default classes;
+}
+declare module '*.module.styl' {
+  const classes: { readonly [key: string]: string };
+  export default classes;
+}
+declare module '*.module.stylus' {
+  const classes: { readonly [key: string]: string };
+  export default classes;
+}
+```
+
+- Método 3: Se você precisar usar **importações nomeadas** para referenciar nomes de classe, pode usar uma declaração de tipo mais flexível:
+
+```ts title="src/env.d.ts"
+declare module '*.module.css';
+declare module '*.module.scss';
+declare module '*.module.sass';
+declare module '*.module.less';
+declare module '*.module.styl';
+declare module '*.module.stylus';
+```
+
+Após adicionar a declaração de tipo, se o erro de tipo ainda existir, você pode tentar reiniciar a IDE atual ou ajustar o diretório onde `env.d.ts` está localizado, garantindo que o TypeScript possa identificar corretamente a definição de tipo.
+
+## Geração de tipo
+
+Embora o método acima possa fornecer o tipo de CSS Modules, ele não pode indicar com precisão quais `classNames` são exportados por um determinado arquivo CSS.
+
+O Rsbuild suporta a geração de declarações de tipo precisas para CSS Modules, você só precisa registrar o [@rsbuild/plugin-typed-css-modules](https://github.com/rspack-contrib/rsbuild-plugin-typed-css-modules), e então executar a build, o Rsbuild gerará arquivos de declaração de tipo para todos os CSS Modules.
+
+```ts file=rsbuild.config.ts
+import { pluginTypedCSSModules } from '@rsbuild/plugin-typed-css-modules';
+
+export default {
+  plugins: [pluginTypedCSSModules()],
+};
+```
+
+### Exemplo
+
+Por exemplo, crie dois arquivos chamados `src/index.ts` e `src/index.module.css`:
+
+```tsx title="src/index.ts"
+import styles from './index.module.css';
+
+console.log(styles.pageHeader);
+```
+
+```css title="src/index.module.css"
+.page-header {
+  color: black;
+}
+```
+
+Após a build, o Rsbuild gerará um arquivo de declaração de tipo `src/index.module.css.d.ts`:
+
+```ts title="src/index.module.css.d.ts"
+interface CssExports {
+  'page-header': string;
+  pageHeader: string;
+}
+declare const cssExports: CssExports;
+export default cssExports;
+```
+
+Agora, ao abrir o arquivo `src/index.ts`, você pode ver que o objeto `styles` já possui um tipo preciso.

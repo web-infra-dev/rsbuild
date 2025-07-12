@@ -1,0 +1,108 @@
+# Configurar SWC
+
+[SWC](https://github.com/swc-project/swc) (Speedy Web Compiler) é um transformador e minimizador para JavaScript e TypeScript baseado em Rust. O SWC oferece funcionalidade semelhante ao Babel e ao Terser, e é 20 vezes mais rápido que o Babel em um único thread e 70 vezes mais rápido em quatro núcleos.
+
+O Rsbuild habilita os seguintes recursos do SWC por padrão:
+
+- Transforma código JavaScript e TypeScript usando o [builtin:swc-loader](https://rspack.rs/guide/features/builtin-swc-loader) do Rspack, que é a versão Rust do [swc-loader](https://github.com/swc-project/pkgs/tree/main/packages/swc-loader).
+- Minifica código JavaScript usando o [SwcJsMinimizerRspackPlugin](https://rspack.rs/plugins/rspack/swc-js-minimizer-rspack-plugin) do Rspack.
+
+## Opções do Loader
+
+As opções para `builtin:swc-loader` são as mesmas que para a versão JS do `swc-loader`. O Rsbuild expõe algumas opções para configurar o `builtin:swc-loader`:
+
+- [tools.swc](/config/tools/swc): para configurar as opções para `builtin:swc-loader`.
+- [source.include](/config/source/include): para especificar arquivos que precisam ser compilados pelo SWC.
+- [source.exclude](/config/source/exclude): para excluir arquivos que não precisam ser compilados pelo SWC.
+
+Aqui estão alguns exemplos:
+
+### Registrar plugin SWC
+
+`tools.swc` pode ser usado para registrar plugins Wasm do SWC, por exemplo, registrando [@swc/plugin-styled-components](https://npmjs.com/package/@swc/plugin-styled-components):
+
+```js
+export default {
+  tools: {
+    swc: {
+      jsc: {
+        experimental: {
+          plugins: [['@swc/plugin-styled-components', {}]],
+        },
+      },
+    },
+  },
+};
+```
+
+> Você pode verificar o repositório [awesome-swc](https://github.com/swc-contrib/awesome-swc) para ver os plugins SWC disponíveis na comunidade.
+
+### Versão do plugin SWC
+
+Observe que o plugin SWC ainda é um recurso experimental, e o plugin SWC Wasm atualmente não é compatível com versões anteriores. A versão do plugin SWC está intimamente ligada à versão do `swc_core` da qual o Rspack depende.
+
+Isso significa que você deve escolher um plugin SWC que corresponda à versão atual do `swc_core` para garantir que ele funcione corretamente. Se a versão do plugin SWC que você está usando não corresponder à versão do `swc_core` da qual o Rspack depende, o Rspack lançará um erro durante o processo de build. Consulte [Rspack FAQ - SWC Plugin Version Unmatched](https://rspack.rs/errors/swc-plugin-version) para mais informações.
+
+### Habilitar suporte a Emotion
+
+Exemplo de como habilitar o suporte a Emotion usando o `builtin:swc-loader`:
+
+```js
+export default {
+  tools: {
+    swc: {
+      jsc: {
+        experimental: {
+          plugins: [['@swc/plugin-emotion', {}]],
+        },
+      },
+    },
+  },
+};
+```
+
+Para mais opções, consulte [@swc/plugin-emotion](https://npmjs.com/package/@swc/plugin-emotion).
+
+### Habilitar suporte a Relay
+
+Exemplo de como habilitar o suporte a Relay usando o `builtin:swc-loader`:
+
+```js
+export default {
+  tools: {
+    swc: {
+      jsc: {
+        experimental: {
+          plugins: [['@swc/plugin-relay', {}]],
+        },
+      },
+    },
+  },
+};
+```
+
+Para mais opções, consulte [@swc/plugin-relay](https://npmjs.com/package/@swc/plugin-relay).
+
+## Opções do Minificador
+
+O Rsbuild fornece a opção [output.minify.js](/config/output/minify) para configurar o SwcJsMinimizerRspackPlugin. Aqui estão alguns exemplos:
+
+### Excluir arquivos
+
+You can exclude certain files from being minified using the `exclude` option:
+
+```ts
+export default {
+  output: {
+    minify: {
+      jsOptions: {
+        exclude: /foo\/bar/,
+      },
+    },
+  },
+};
+```
+
+## Trocar de minificador
+
+Consulte [output.minify - Trocar de minificador](/config/output/minify#switching-minifier) para saber como trocar para outro minificador JavaScript.
