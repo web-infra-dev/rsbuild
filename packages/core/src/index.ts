@@ -71,6 +71,7 @@ export type {
   HtmlConfig,
   HtmlFallback,
   HtmlRspackPlugin,
+  HtmlTag,
   HtmlTagContext,
   HtmlTagDescriptor,
   HtmlTagHandler,
