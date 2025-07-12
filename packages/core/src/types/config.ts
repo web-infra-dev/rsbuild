@@ -1369,6 +1369,12 @@ export type HtmlBasicTag = {
    * HTML escaping, so ensure it's safe to prevent XSS vulnerabilities.
    */
   children?: string;
+  /**
+   * The metadata object for tags, used to store additional information about tags.
+   * `metadata` does not affect the generated HTML content.
+   * @default undefined
+   */
+  metadata?: Record<string, any>;
 };
 
 export type HtmlTag = HtmlBasicTag & {
