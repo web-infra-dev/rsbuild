@@ -537,6 +537,8 @@ type HtmlBasicTag = {
   attrs?: Record<string, string | boolean | null | undefined>;
   // 标签的 innerHTML
   children?: string;
+  // 额外的元信息
+  metadata?: Record<string, any>;
 };
 
 type HTMLTags = {

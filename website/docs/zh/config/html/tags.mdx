@@ -56,6 +56,7 @@ type HtmlTag = {
   publicPath?: boolean | string | ((url: string, publicPath: string) => string);
   append?: boolean;
   head?: boolean;
+  metadata?: Record<string, any>;
 };
 ```
 
@@ -232,6 +233,53 @@ export default {
 - `template`
 
 查看 [插入位置](#插入位置) 了解更多。
+
+### metadata
+
+- **类型：** `Record<string, any>`
+- **默认值：** `undefined`
+- **版本：** 添加于 v1.4.7
+
+标签的元信息对象，用于存储标签的附加信息。`metadata` 不会影响生成的 HTML 内容。
+
+例如，Rsbuild 插件可以为标签添加元信息，用于标识标签的来源；在后续的流程中，你可以基于元信息对标签进行特殊处理：
+
+```ts title="rsbuild.config.ts"
+const myPlugin = {
+  name: 'my-plugin',
+  setup(api) {
+    api.modifyHTMLTags(({ headTags, bodyTags }) => {
+      headTags.push({
+        tag: 'script',
+        attrs: { src: 'https://example.com/script.js' },
+        metadata: {
+          from: 'my-plugin',
+        },
+      });
+      return { headTags, bodyTags };
+    });
+  },
+};
+
+export default {
+  plugins: [myPlugin],
+  html: {
+    tags: [
+      (tags) => {
+        return tags.map((tag) => {
+          if (tag.metadata?.from === 'my-plugin') {
+            return {
+              ...tag,
+              // ...extra options
+            };
+          }
+          return tag;
+        });
+      },
+    ],
+  },
+};
+```
 
 ## 插入位置
 
