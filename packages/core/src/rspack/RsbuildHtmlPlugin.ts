@@ -115,13 +115,14 @@ const formatBasicTag = (tag: HtmlTagObject): HtmlBasicTag => ({
   tag: tag.tagName,
   attrs: tag.attributes,
   children: tag.innerHTML,
+  metadata: tag.meta,
 });
 
 /**
  * `HtmlBasicTag` -> `HtmlTagObject`
  */
 const fromBasicTag = (tag: HtmlBasicTag): HtmlTagObject => ({
-  meta: {},
+  meta: tag.metadata ?? {},
   tagName: tag.tag,
   attributes: tag.attrs ?? {},
   voidTag: VOID_TAGS.includes(tag.tag),

@@ -56,6 +56,7 @@ type HtmlTag = {
   publicPath?: boolean | string | ((url: string, publicPath: string) => string);
   append?: boolean;
   head?: boolean;
+  metadata?: Record<string, any>;
 };
 ```
 
@@ -232,6 +233,53 @@ Allowed element types in the `<head>` include:
 - `template`
 
 See [Injection position](#injection-position) for more details.
+
+### metadata
+
+- **Type:** `Record<string, any>`
+- **Default:** `undefined`
+- **Version:** Added in v1.4.7
+
+The metadata object for tags, used to store additional information about tags. `metadata` does not affect the generated HTML content.
+
+For example, Rsbuild plugins can add metadata to tags to identify their source; in subsequent processes, you can perform special handling on tags based on the metadata:
+
+```ts title="rsbuild.config.ts"
+const myPlugin = {
+  name: 'my-plugin',
+  setup(api) {
+    api.modifyHTMLTags(({ headTags, bodyTags }) => {
+      headTags.push({
+        tag: 'script',
+        attrs: { src: 'https://example.com/script.js' },
+        metadata: {
+          from: 'my-plugin',
+        },
+      });
+      return { headTags, bodyTags };
+    });
+  },
+};
+
+export default {
+  plugins: [myPlugin],
+  html: {
+    tags: [
+      (tags) => {
+        return tags.map((tag) => {
+          if (tag.metadata?.from === 'my-plugin') {
+            return {
+              ...tag,
+              // ...extra options
+            };
+          }
+          return tag;
+        });
+      },
+    ],
+  },
+};
+```
 
 ### Injection position
 
