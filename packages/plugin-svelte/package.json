@@ -32,10 +32,10 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.10.4",
+    "@rslib/core": "0.10.5",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.16.0",
-    "svelte": "^5.35.2",
+    "@types/node": "^22.16.3",
+    "svelte": "^5.35.6",
     "typescript": "^5.8.3"
   },
   "peerDependencies": {
