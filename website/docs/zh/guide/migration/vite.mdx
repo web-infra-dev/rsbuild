@@ -254,6 +254,12 @@ for (const path of context.keys()) {
 }
 ```
 
+## vite-tsconfig-paths
+
+Rsbuild 开箱即用地支持 TypeScript 的 `paths` 选项作为 alias 别名，因此你可以直接移除 `vite-tsconfig-paths` 依赖。
+
+参考 [路径别名](/guide/advanced/alias) 来了解更多。
+
 ## 迁移 Vite 插件
 
 Rsbuild 的插件 API 覆盖了大部分的 Vite 和 Rollup 插件 hooks，例如：
