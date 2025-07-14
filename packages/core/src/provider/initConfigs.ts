@@ -187,6 +187,7 @@ const validateRsbuildConfig = (config: NormalizedConfig) => {
 
   const environmentNames = Object.keys(config.environments);
   const environmentNameRegexp = /^[\w$-]+$/;
+  const validTargets = ['web', 'node', 'web-worker'];
 
   for (const name of environmentNames) {
     // ensure environment names are filesystem and property access safe
@@ -198,7 +199,6 @@ const validateRsbuildConfig = (config: NormalizedConfig) => {
 
     const outputConfig = config.environments[name].output;
     if (outputConfig.target) {
-      const validTargets = ['web', 'node', 'web-worker'];
       if (!validTargets.includes(outputConfig.target)) {
         throw new Error(
           `${color.dim('[rsbuild:config]')} Invalid value of ${color.yellow(
