@@ -181,14 +181,29 @@ const validateRsbuildConfig = (config: NormalizedConfig) => {
     );
   }
 
-  if (config.environments) {
-    const names = Object.keys(config.environments);
-    const regexp = /^[\w$-]+$/;
-    for (const name of names) {
-      // ensure environment names are filesystem and property access safe
-      if (!regexp.test(name)) {
-        logger.warn(
-          `${color.dim('[rsbuild:config]')} Environment name "${color.yellow(name)}" contains invalid characters. Only letters, numbers, "-", "_", and "$" are allowed.`,
+  if (!config.environments) {
+    return;
+  }
+
+  const environmentNames = Object.keys(config.environments);
+  const environmentNameRegexp = /^[\w$-]+$/;
+
+  for (const name of environmentNames) {
+    // ensure environment names are filesystem and property access safe
+    if (!environmentNameRegexp.test(name)) {
+      logger.warn(
+        `${color.dim('[rsbuild:config]')} Environment name "${color.yellow(name)}" contains invalid characters. Only letters, numbers, "-", "_", and "$" are allowed.`,
+      );
+    }
+
+    const outputConfig = config.environments[name].output;
+    if (outputConfig.target) {
+      const validTargets = ['web', 'node', 'web-worker'];
+      if (!validTargets.includes(outputConfig.target)) {
+        throw new Error(
+          `${color.dim('[rsbuild:config]')} Invalid value of ${color.yellow(
+            'output.target',
+          )} config: ${color.yellow(`"${outputConfig.target}"`)}`,
         );
       }
     }
