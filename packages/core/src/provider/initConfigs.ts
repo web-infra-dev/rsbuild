@@ -203,7 +203,9 @@ const validateRsbuildConfig = (config: NormalizedConfig) => {
         throw new Error(
           `${color.dim('[rsbuild:config]')} Invalid value of ${color.yellow(
             'output.target',
-          )} config: ${color.yellow(`"${outputConfig.target}"`)}`,
+          )}: ${color.yellow(`"${outputConfig.target}"`)}, valid values are: ${color.yellow(
+            validTargets.join(', '),
+          )}`,
         );
       }
     }
