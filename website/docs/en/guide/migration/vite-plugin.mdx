@@ -1,0 +1,29 @@
+# Vite plugin
+
+This chapter introduces how to migrate a Vite plugin to Rsbuild plugin.
+
+## Existing plugins
+
+Before migrating a Vite plugin, it is recommended to check if there is a corresponding plugin in the Rsbuild ecosystem. You can find the plugins through the following pages:
+
+- [Rsbuild official plugins](/plugins/list)
+- [Rsbuild community plugins](https://github.com/web-infra-dev/awesome-rspack?tab=readme-ov-file#rsbuild-plugins)
+
+## Plugin hooks
+
+Rsbuild's plugin API covers most of the Vite and Rollup plugin hooks, for example:
+
+| Vite plugin hooks    | Rsbuild plugin API                                                                                                     |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `resolveId`          | [resolve](/plugins/dev/core#apiresolve)                                                                                |
+| `transform`          | [transform](/plugins/dev/core#apitransform)                                                                            |
+| `config`             | [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig)                                                          |
+| `configResolved`     | [getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig)                                                        |
+| `configEnvironment`  | [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig)                                                  |
+| `configureServer`    | [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver)                                                    |
+| `buildStart`         | [onBeforeBuild](/plugins/dev/hooks#onbeforebuild), [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) |
+| `buildEnd`           | [onAfterBuild](/plugins/dev/hooks#onafterbuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
+| `closeBundle`        | [onCloseBuild](/plugins/dev/hooks#onclosebuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
+| `transformIndexHtml` | [modifyHTML](/plugins/dev/hooks#modifyhtml), [modifyHTMLTags](/plugins/dev/hooks#modifyhtmltags)                       |
+
+See [Plugin system](/plugins/dev/index) for more details.

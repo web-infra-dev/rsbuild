@@ -262,22 +262,7 @@ Rsbuild 开箱即用地支持 TypeScript 的 `paths` 选项作为 alias 别名�
 
 ## 迁移 Vite 插件
 
-Rsbuild 的插件 API 覆盖了大部分的 Vite 和 Rollup 插件 hooks，例如：
-
-| Vite 插件 hooks      | Rsbuild 插件 API                                                                                                       |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `resolveId`          | [resolve](/plugins/dev/core#apiresolve)                                                                                |
-| `transform`          | [transform](/plugins/dev/core#apitransform)                                                                            |
-| `config`             | [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig)                                                          |
-| `configResolved`     | [getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig)                                                        |
-| `configEnvironment`  | [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig)                                                  |
-| `configureServer`    | [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver)                                                    |
-| `buildStart`         | [onBeforeBuild](/plugins/dev/hooks#onbeforebuild), [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) |
-| `buildEnd`           | [onAfterBuild](/plugins/dev/hooks#onafterbuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
-| `closeBundle`        | [onCloseBuild](/plugins/dev/hooks#onclosebuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
-| `transformIndexHtml` | [modifyHTML](/plugins/dev/hooks#modifyhtml), [modifyHTMLTags](/plugins/dev/hooks#modifyhtmltags)                       |
-
-请参考 [插件系统](/plugins/dev/index) 文档来了解更多。
+参考 [Vite 插件](/guide/migration/vite-plugin) 了解如何迁移 Vite 插件。
 
 ## 验证结果
 
