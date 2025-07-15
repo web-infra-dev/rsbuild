@@ -14,9 +14,9 @@ patchedDependencies:
   http-proxy@1.18.1:
     hash: 424b689da454f1f336d635615733f30568882789c1173f861c30f95ba8b05723
     path: patches/http-proxy@1.18.1.patch
-  open@10.1.2:
-    hash: 0c2b5a73ded8138281dec15e6b97b8c9671e376ffe1946f5c9294489ca6a4a96
-    path: patches/open@10.1.2.patch
+  open@10.2.0:
+    hash: 7bcf8172c4cfec5e484422abed097de4fb7a5a9b62c79bc06d6460e7fc879581
+    path: patches/open@10.2.0.patch
   postcss-loader@8.1.1:
     hash: 7f10237e1665e9913e0f735a822545af08363f5cc67eacc2c37408aee7553d47
     path: patches/postcss-loader@8.1.1.patch
@@ -682,8 +682,8 @@ importers:
         specifier: 2.4.1
         version: 2.4.1
       open:
-        specifier: ^10.1.2
-        version: 10.1.2(patch_hash=0c2b5a73ded8138281dec15e6b97b8c9671e376ffe1946f5c9294489ca6a4a96)
+        specifier: ^10.2.0
+        version: 10.2.0(patch_hash=7bcf8172c4cfec5e484422abed097de4fb7a5a9b62c79bc06d6460e7fc879581)
       picocolors:
         specifier: ^1.1.1
         version: 1.1.1
@@ -5295,8 +5295,8 @@ packages:
   only@0.0.2:
     resolution: {integrity: sha512-Fvw+Jemq5fjjyWz6CpKx6w9s7xxqo3+JCyM0WXWeCSOboZ8ABkyvP8ID4CZuChA/wxSx+XSJmdOm8rGVyJ1hdQ==}
 
-  open@10.1.2:
-    resolution: {integrity: sha512-cxN6aIDPz6rm8hbebcP7vrQNhvRcveZoJU72Y7vskh4oIm+BZwBECnx5nTmrlres1Qapvx27Qo1Auukpf8PKXw==}
+  open@10.2.0:
+    resolution: {integrity: sha512-YgBpdJHPyQ2UE5x+hlSXcnejzAvD0b22U2OuAP+8OnlJT+PjWPxtgmGqKKc+RgTM63U9gN0YzrYc71R2WT/hTA==}
     engines: {node: '>=18'}
 
   open@8.4.2:
@@ -6640,6 +6640,10 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
+
+  wsl-utils@0.1.0:
+    resolution: {integrity: sha512-h3Fbisa2nKGPxCpm89Hk33lBLsnaGBvctQopaBSOW/uIs6FTe1ATyAnKFJrzVs9vpGdsTe73WF3V4lIsk4Gacw==}
+    engines: {node: '>=18'}
 
   xml-js@1.6.11:
     resolution: {integrity: sha512-7rVi2KMfwfWFl+GpPg6m80IVMWXLRjO+PxTq7V2CDhoGak0wzYzFgUY2m4XJ47OGdXd8eLE8EmwfAmdjw7lC1g==}
@@ -11448,12 +11452,12 @@ snapshots:
 
   only@0.0.2: {}
 
-  open@10.1.2(patch_hash=0c2b5a73ded8138281dec15e6b97b8c9671e376ffe1946f5c9294489ca6a4a96):
+  open@10.2.0(patch_hash=7bcf8172c4cfec5e484422abed097de4fb7a5a9b62c79bc06d6460e7fc879581):
     dependencies:
       default-browser: 5.2.1
       define-lazy-prop: 3.0.0
       is-inside-container: 1.0.0
-      is-wsl: 3.1.0
+      wsl-utils: 0.1.0
 
   open@8.4.2:
     dependencies:
@@ -12815,6 +12819,10 @@ snapshots:
   ws@8.18.0: {}
 
   ws@8.18.3: {}
+
+  wsl-utils@0.1.0:
+    dependencies:
+      is-wsl: 3.1.0
 
   xml-js@1.6.11:
     dependencies:

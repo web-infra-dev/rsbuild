@@ -80,7 +80,7 @@
     "launch-editor-middleware": "^2.10.0",
     "mrmime": "^2.0.1",
     "on-finished": "2.4.1",
-    "open": "^10.1.2",
+    "open": "^10.2.0",
     "picocolors": "^1.1.1",
     "postcss": "^8.5.6",
     "postcss-load-config": "6.0.1",
