@@ -254,8 +254,8 @@ importers:
   e2e/cases/plugin-svelte:
     dependencies:
       svelte:
-        specifier: ^5.35.6
-        version: 5.35.6
+        specifier: ^5.36.0
+        version: 5.36.0
     devDependencies:
       less:
         specifier: ^4.3.0
@@ -451,8 +451,8 @@ importers:
   examples/svelte:
     dependencies:
       svelte:
-        specifier: ^5.35.6
-        version: 5.35.6
+        specifier: ^5.36.0
+        version: 5.36.0
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1024,10 +1024,10 @@ importers:
     dependencies:
       svelte-loader:
         specifier: 3.2.4
-        version: 3.2.4(svelte@5.35.6)
+        version: 3.2.4(svelte@5.36.0)
       svelte-preprocess:
         specifier: ^6.0.3
-        version: 6.0.3(@babel/core@7.28.0)(less@4.3.0)(postcss-load-config@6.0.1(jiti@2.4.2)(postcss@8.5.6)(yaml@2.8.0))(postcss@8.5.6)(sass@1.89.2)(stylus@0.64.0)(svelte@5.35.6)(typescript@5.8.3)
+        version: 6.0.3(@babel/core@7.28.0)(less@4.3.0)(postcss-load-config@6.0.1(jiti@2.4.2)(postcss@8.5.6)(yaml@2.8.0))(postcss@8.5.6)(sass@1.89.2)(stylus@0.64.0)(svelte@5.36.0)(typescript@5.8.3)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1042,8 +1042,8 @@ importers:
         specifier: ^22.16.3
         version: 22.16.3
       svelte:
-        specifier: ^5.35.6
-        version: 5.35.6
+        specifier: ^5.36.0
+        version: 5.36.0
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -1186,8 +1186,8 @@ importers:
         specifier: 1.10.6
         version: 1.10.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@shikijs/transformers':
-        specifier: ^3.7.0
-        version: 3.7.0
+        specifier: ^3.8.0
+        version: 3.8.0
       '@types/node':
         specifier: ^22.16.3
         version: 22.16.3
@@ -2695,8 +2695,8 @@ packages:
   '@shikijs/core@3.6.0':
     resolution: {integrity: sha512-9By7Xb3olEX0o6UeJyPLI1PE1scC4d3wcVepvtv2xbuN9/IThYN4Wcwh24rcFeASzPam11MCq8yQpwwzCgSBRw==}
 
-  '@shikijs/core@3.7.0':
-    resolution: {integrity: sha512-yilc0S9HvTPyahHpcum8eonYrQtmGTU0lbtwxhA6jHv4Bm1cAdlPFRCJX4AHebkCm75aKTjjRAW+DezqD1b/cg==}
+  '@shikijs/core@3.8.0':
+    resolution: {integrity: sha512-gWt8NNZFurL6FMESO4lEsmspDh0H1fyUibhx1NnEH/S3kOXgYiWa6ZFqy+dcjBLhZqCXsepuUaL1QFXk6PrpsQ==}
 
   '@shikijs/engine-javascript@3.6.0':
     resolution: {integrity: sha512-7YnLhZG/TU05IHMG14QaLvTW/9WiK8SEYafceccHUSXs2Qr5vJibUwsDfXDLmRi0zHdzsxrGKpSX6hnqe0k8nA==}
@@ -2713,14 +2713,14 @@ packages:
   '@shikijs/themes@3.6.0':
     resolution: {integrity: sha512-Fq2j4nWr1DF4drvmhqKq8x5vVQ27VncF8XZMBuHuQMZvUSS3NBgpqfwz/FoGe36+W6PvniZ1yDlg2d4kmYDU6w==}
 
-  '@shikijs/transformers@3.7.0':
-    resolution: {integrity: sha512-VplaqIMRNsNOorCXJHkbF5S0pT6xm8Z/s7w7OPZLohf8tR93XH0krvUafpNy/ozEylrWuShJF0+ftEB+wFRwGA==}
+  '@shikijs/transformers@3.8.0':
+    resolution: {integrity: sha512-EleKVjNH5Me8yhTtnYD5QGFtY7Acu2HJAWNmDjuOC/Egwt7n31p2nbyBhBqGz5cpdwa1wZkLdVgj/LsZ3ReyAQ==}
 
   '@shikijs/types@3.6.0':
     resolution: {integrity: sha512-cLWFiToxYu0aAzJqhXTQsFiJRTFDAGl93IrMSBNaGSzs7ixkLfdG6pH11HipuWFGW5vyx4X47W8HDQ7eSrmBUg==}
 
-  '@shikijs/types@3.7.0':
-    resolution: {integrity: sha512-MGaLeaRlSWpnP0XSAum3kP3a8vtcTsITqoEPYdt3lQG3YCdQH4DnEhodkYcNMcU0uW0RffhoD1O3e0vG5eSBBg==}
+  '@shikijs/types@3.8.0':
+    resolution: {integrity: sha512-I/b/aNg0rP+kznVDo7s3UK8jMcqEGTtoPDdQ+JlQ2bcJIyu/e2iRvl42GLIDMK03/W1YOHOuhlhQ7aM+XbKUeg==}
 
   '@shikijs/vscode-textmate@10.0.2':
     resolution: {integrity: sha512-83yeghZ2xxin3Nj8z1NMd/NCuca+gsYXswywDy5bHvwlWL8tpTQmzGeUuHd9FC3E/SBEMvzJRwWEOz5gGes9Qg==}
@@ -6250,8 +6250,8 @@ packages:
       typescript:
         optional: true
 
-  svelte@5.35.6:
-    resolution: {integrity: sha512-p7PVLQYrvCxJuxzGfOv/l71hVuHC6EZk5UDjbt/bndMYaBcUV5sFjDsj+PSIYvz1vcfbG6inX83/xIUeik1xGA==}
+  svelte@5.36.0:
+    resolution: {integrity: sha512-mQwp864P/ipJTElwU8L1LzkbzdUHfrn1su/R8mTJrH7M9mSi42hsgfHA0JU0f4OSkiznlWixan5FcUdR85G3BQ==}
     engines: {node: '>=18'}
 
   svg-parser@2.0.4:
@@ -8362,9 +8362,9 @@ snapshots:
       '@types/hast': 3.0.4
       hast-util-to-html: 9.0.5
 
-  '@shikijs/core@3.7.0':
+  '@shikijs/core@3.8.0':
     dependencies:
-      '@shikijs/types': 3.7.0
+      '@shikijs/types': 3.8.0
       '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.4
       hast-util-to-html: 9.0.5
@@ -8397,17 +8397,17 @@ snapshots:
     dependencies:
       '@shikijs/types': 3.6.0
 
-  '@shikijs/transformers@3.7.0':
+  '@shikijs/transformers@3.8.0':
     dependencies:
-      '@shikijs/core': 3.7.0
-      '@shikijs/types': 3.7.0
+      '@shikijs/core': 3.8.0
+      '@shikijs/types': 3.8.0
 
   '@shikijs/types@3.6.0':
     dependencies:
       '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.4
 
-  '@shikijs/types@3.7.0':
+  '@shikijs/types@3.8.0':
     dependencies:
       '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.4
@@ -12409,20 +12409,20 @@ snapshots:
 
   svelte-dev-helper@1.1.9: {}
 
-  svelte-hmr@0.14.12(svelte@5.35.6):
+  svelte-hmr@0.14.12(svelte@5.36.0):
     dependencies:
-      svelte: 5.35.6
+      svelte: 5.36.0
 
-  svelte-loader@3.2.4(svelte@5.35.6):
+  svelte-loader@3.2.4(svelte@5.36.0):
     dependencies:
       loader-utils: 2.0.4
-      svelte: 5.35.6
+      svelte: 5.36.0
       svelte-dev-helper: 1.1.9
-      svelte-hmr: 0.14.12(svelte@5.35.6)
+      svelte-hmr: 0.14.12(svelte@5.36.0)
 
-  svelte-preprocess@6.0.3(@babel/core@7.28.0)(less@4.3.0)(postcss-load-config@6.0.1(jiti@2.4.2)(postcss@8.5.6)(yaml@2.8.0))(postcss@8.5.6)(sass@1.89.2)(stylus@0.64.0)(svelte@5.35.6)(typescript@5.8.3):
+  svelte-preprocess@6.0.3(@babel/core@7.28.0)(less@4.3.0)(postcss-load-config@6.0.1(jiti@2.4.2)(postcss@8.5.6)(yaml@2.8.0))(postcss@8.5.6)(sass@1.89.2)(stylus@0.64.0)(svelte@5.36.0)(typescript@5.8.3):
     dependencies:
-      svelte: 5.35.6
+      svelte: 5.36.0
     optionalDependencies:
       '@babel/core': 7.28.0
       less: 4.3.0
@@ -12432,7 +12432,7 @@ snapshots:
       stylus: 0.64.0
       typescript: 5.8.3
 
-  svelte@5.35.6:
+  svelte@5.36.0:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@jridgewell/sourcemap-codec': 1.5.0
