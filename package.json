@@ -1,13 +1,11 @@
 {
   "name": "rsbuild-monorepo",
   "private": true,
-  "workspaces": {
-    "packages": [
-      "packages/*",
-      "packages/compat/*",
-      "scripts/*"
-    ]
-  },
+  "workspaces": [
+    "packages/*",
+    "packages/compat/*",
+    "scripts/*"
+  ],
   "scripts": {
     "build": "cross-env NX_DAEMON=false nx run-many -t build --exclude @examples/* @e2e/* rsbuild-* --parallel=10",
     "build:doc": "cd website && pnpm run build",
