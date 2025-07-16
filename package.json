@@ -35,7 +35,7 @@
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.1.1",
+    "@biomejs/biome": "2.0.6",
     "@rsbuild/config": "workspace:*",
     "@rstest/core": "0.0.7",
     "@scripts/test-helper": "workspace:*",

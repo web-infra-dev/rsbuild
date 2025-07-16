@@ -101,5 +101,7 @@
     // major version contains breaking changes
     'style-loader',
     'http-proxy-middleware',
+    // Temporary ignore
+    '@biomejs/biome',
   ],
 }
