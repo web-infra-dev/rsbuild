@@ -1102,9 +1102,6 @@ importers:
       vue-loader:
         specifier: ^17.4.2
         version: 17.4.2(vue@3.5.17(typescript@5.8.3))(webpack@5.99.9)
-      webpack:
-        specifier: ^5.99.9
-        version: 5.99.9
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
