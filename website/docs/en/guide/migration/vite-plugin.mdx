@@ -27,3 +27,44 @@ Rsbuild's plugin API covers most of the Vite and Rollup plugin hooks, for exampl
 | `transformIndexHtml` | [modifyHTML](/plugins/dev/hooks#modifyhtml), [modifyHTMLTags](/plugins/dev/hooks#modifyhtmltags)                       |
 
 See [Plugin system](/plugins/dev/index) for more details.
+
+## Update config
+
+Rsbuild and Vite provide different configuration options. When migrating Vite plugins, you need to adjust them according to Rsbuild's configuration options.
+
+For example, replace Vite's `define` option with Rsbuild's [source.define](/config/source/define) option.
+
+- Vite plugin:
+
+```ts title="vite.config.ts"
+const vitePlugin = {
+  name: 'my-plugin',
+  config: (config) => {
+    config.define = {
+      ...config.define,
+      FOO: '"foo"',
+    };
+  },
+};
+```
+
+- Rsbuild plugin:
+
+```ts title="rsbuild.config.ts"
+const rsbuildPlugin = {
+  name: 'my-plugin',
+  setup(api) {
+    api.modifyRsbuildConfig((config) => {
+      config.source ||= {};
+      config.source.define = {
+        ...config.source.define,
+        FOO: '"foo"',
+      };
+    });
+  },
+};
+```
+
+:::tip
+See [Config migration](/guide/migration/vite#config-migration) to learn how to migrate Vite configurations to Rsbuild.
+:::
