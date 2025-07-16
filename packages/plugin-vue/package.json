@@ -28,7 +28,8 @@
     "bump": "npx bumpp --no-tag"
   },
   "dependencies": {
-    "vue-loader": "^17.4.2"
+    "vue-loader": "^17.4.2",
+    "webpack": "^5.99.9"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
