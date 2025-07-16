@@ -41,7 +41,7 @@
     "@rsbuild/config": "workspace:*",
     "@rstest/core": "0.0.7",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.16.3",
+    "@types/node": "^22.16.4",
     "cross-env": "^7.0.3",
     "cspell-ban-words": "^0.0.4",
     "heading-case": "^0.1.6",

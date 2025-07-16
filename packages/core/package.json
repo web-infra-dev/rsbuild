@@ -62,7 +62,7 @@
     "@rslib/core": "0.10.5",
     "@types/connect": "3.4.38",
     "@types/cors": "^2.8.19",
-    "@types/node": "^22.16.3",
+    "@types/node": "^22.16.4",
     "@types/on-finished": "2.3.5",
     "@types/webpack-bundle-analyzer": "4.7.0",
     "@types/ws": "^8.18.1",
