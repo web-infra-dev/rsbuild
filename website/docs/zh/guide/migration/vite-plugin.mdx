@@ -36,7 +36,7 @@ Rsbuild 与 Vite 提供了不同的配置项，在迁移 Vite 插件时，需要
 
 - Vite 插件：
 
-```ts title="vite.config.ts"
+```ts title="vitePlugin.ts"
 const vitePlugin = {
   name: 'my-plugin',
   config: (config) => {
@@ -50,7 +50,7 @@ const vitePlugin = {
 
 - Rsbuild 插件：
 
-```ts title="rsbuild.config.ts"
+```ts title="rsbuildPlugin.ts"
 const rsbuildPlugin = {
   name: 'my-plugin',
   setup(api) {
@@ -68,3 +68,44 @@ const rsbuildPlugin = {
 :::tip
 查看 [配置迁移](/guide/migration/vite#配置迁移) 了解如何将 Vite 的配置迁移到 Rsbuild。
 :::
+
+## `transformIndexHtml` 钩子
+
+Vite 的 `transformIndexHtml` 钩子对应了 Rsbuild 的两个钩子：
+
+- [modifyHTML](/plugins/dev/hooks#modifyhtml)：用于修改 HTML 内容
+- [modifyHTMLTags](/plugins/dev/hooks#modifyhtmltags)：用于修改 HTML 标签
+
+下面一个是替换 HTML 标题的示例。
+
+- Vite 插件：
+
+```ts title="vitePlugin.ts"
+const htmlPlugin = () => {
+  return {
+    name: 'html-plugin',
+    transformIndexHtml(html) {
+      return html.replace(
+        /<title>(.*?)<\/title>/,
+        `<title>Title replaced!</title>`,
+      );
+    },
+  };
+};
+```
+
+- Rsbuild 插件：
+
+```ts title="rsbuildPlugin.ts"
+const rsbuildPlugin = {
+  name: 'html-plugin',
+  setup(api) {
+    api.modifyHTML((html) => {
+      return html.replace(
+        /<title>(.*?)<\/title>/,
+        `<title>Title replaced!</title>`,
+      );
+    });
+  },
+};
+```

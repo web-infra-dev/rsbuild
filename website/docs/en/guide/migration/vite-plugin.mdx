@@ -36,7 +36,7 @@ For example, replace Vite's `define` option with Rsbuild's [source.define](/conf
 
 - Vite plugin:
 
-```ts title="vite.config.ts"
+```ts title="vitePlugin.ts"
 const vitePlugin = {
   name: 'my-plugin',
   config: (config) => {
@@ -50,7 +50,7 @@ const vitePlugin = {
 
 - Rsbuild plugin:
 
-```ts title="rsbuild.config.ts"
+```ts title="rsbuildPlugin.ts"
 const rsbuildPlugin = {
   name: 'my-plugin',
   setup(api) {
@@ -68,3 +68,44 @@ const rsbuildPlugin = {
 :::tip
 See [Config migration](/guide/migration/vite#config-migration) to learn how to migrate Vite configurations to Rsbuild.
 :::
+
+## `transformIndexHtml` hook
+
+Vite's `transformIndexHtml` hook corresponds to two hooks in Rsbuild:
+
+- [modifyHTML](/plugins/dev/hooks#modifyhtml): for modifying HTML content
+- [modifyHTMLTags](/plugins/dev/hooks#modifyhtmltags): for modifying HTML tags
+
+Here's an example of replacing the HTML title.
+
+- Vite Plugin:
+
+```ts title="vitePlugin.ts"
+const htmlPlugin = () => {
+  return {
+    name: 'html-plugin',
+    transformIndexHtml(html) {
+      return html.replace(
+        /<title>(.*?)<\/title>/,
+        `<title>Title replaced!</title>`,
+      );
+    },
+  };
+};
+```
+
+- Rsbuild Plugin:
+
+```ts title="rsbuildPlugin.ts"
+const rsbuildPlugin = {
+  name: 'html-plugin',
+  setup(api) {
+    api.modifyHTML((html) => {
+      return html.replace(
+        /<title>(.*?)<\/title>/,
+        `<title>Title replaced!</title>`,
+      );
+    });
+  },
+};
+```
