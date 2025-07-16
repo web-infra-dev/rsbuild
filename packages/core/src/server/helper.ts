@@ -146,7 +146,7 @@ function getURLMessages(
     return urls
       .map(({ label, url }) => {
         const normalizedPathname = normalizeUrl(`${url}${pathname}`);
-        const prefix = `➜ ${color.dim(label.padEnd(10))}`;
+        const prefix = `➜  ${color.dim(label.padEnd(10))}`;
         return `  ${prefix}${color.cyan(normalizedPathname)}\n`;
       })
       .join('');
@@ -158,7 +158,7 @@ function getURLMessages(
     if (index > 0) {
       message += '\n';
     }
-    message += `  ${`➜ ${label}`}\n`;
+    message += `  ${`➜  ${label}`}\n`;
 
     for (const r of routes) {
       message += `  ${color.dim('-')} ${color.dim(

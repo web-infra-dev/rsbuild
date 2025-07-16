@@ -185,8 +185,8 @@ test('printServerURLs', () => {
   });
 
   expect(message!).toMatchInlineSnapshot(`
-    "  ➜ local     http://localhost:3000/
-      ➜ network   http://192.168.0.1:3000/
+    "  ➜  local     http://localhost:3000/
+      ➜  network   http://192.168.0.1:3000/
     "
   `);
 
@@ -220,12 +220,12 @@ test('printServerURLs', () => {
   });
 
   expect(message!).toMatchInlineSnapshot(`
-    "  ➜ local
+    "  ➜  local
       - index    http://localhost:3000/
       - foo      http://localhost:3000/html/foo
       - bar      http://localhost:3000/bar
 
-      ➜ network
+      ➜  network
       - index    http://192.168.0.1:3000/
       - foo      http://192.168.0.1:3000/html/foo
       - bar      http://192.168.0.1:3000/bar

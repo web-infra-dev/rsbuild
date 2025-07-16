@@ -27,7 +27,7 @@ rspackOnlyTest('should display shortcuts as expected in dev', async () => {
   logs = [];
   devProcess.stdin?.write('u\n');
   await expectPoll(() =>
-    logs.some((log) => log.includes('➜ Local:    http://localhost:')),
+    logs.some((log) => log.includes('➜  Local:    http://localhost:')),
   ).toBeTruthy();
 
   // restart server
@@ -37,7 +37,7 @@ rspackOnlyTest('should display shortcuts as expected in dev', async () => {
     logs.some((log) => log.includes('restarting server')),
   ).toBeTruthy();
   await expectPoll(() =>
-    logs.some((log) => log.includes('➜ Local:    http://localhost:')),
+    logs.some((log) => log.includes('➜  Local:    http://localhost:')),
   ).toBeTruthy();
 
   devProcess.kill();
@@ -68,7 +68,7 @@ rspackOnlyTest('should display shortcuts as expected in preview', async () => {
   logs = [];
   devProcess.stdin?.write('u\n');
   await expectPoll(() =>
-    logs.some((log) => log.includes('➜ Local:    http://localhost:')),
+    logs.some((log) => log.includes('➜  Local:    http://localhost:')),
   ).toBeTruthy();
 
   devProcess.kill();
