@@ -1,4 +1,5 @@
 {
+  "name": "@e2e/browserslist-package-config-array",
   "private": true,
   "browserslist": "Chrome >= 40, Edge >= 79"
 }
