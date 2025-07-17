@@ -57,16 +57,14 @@ function validatePlugin(plugin: unknown) {
 }
 
 /**
- * Determines whether the two environments match.
- * If the value is undefined, it means it can match any environment.
+ * Determines whether the plugin is registered in the specified environment.
+ * If the pluginEnvironment is undefined, it means it can match any environment.
  */
 export const isEnvironmentMatch = (
-  environmentA?: string,
-  environmentB?: string,
+  pluginEnvironment?: string,
+  specifiedEnvironment?: string,
 ): boolean =>
-  environmentA === environmentB ||
-  environmentA === undefined ||
-  environmentB === undefined;
+  pluginEnvironment === specifiedEnvironment || pluginEnvironment === undefined;
 
 export function createPluginManager(): PluginManager {
   let plugins: PluginMeta[] = [];
