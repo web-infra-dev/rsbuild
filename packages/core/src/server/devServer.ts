@@ -161,6 +161,11 @@ export async function createDevServer<
   let waitLastCompileDone: Promise<void> = Promise.resolve();
 
   const resetWaitLastCompileDone = () => {
+    // Resolve the previous promise if it exists
+    if (waitLastCompileDoneResolve) {
+      waitLastCompileDoneResolve();
+      waitLastCompileDoneResolve = null;
+    }
     waitLastCompileDone = new Promise<void>((resolve) => {
       waitLastCompileDoneResolve = resolve;
     });
