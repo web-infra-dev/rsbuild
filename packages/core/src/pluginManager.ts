@@ -56,10 +56,17 @@ function validatePlugin(plugin: unknown) {
   );
 }
 
+/**
+ * Determines whether the two environments match.
+ * If the value is undefined, it means it can match any environment.
+ */
 export const isEnvironmentMatch = (
   environmentA?: string,
   environmentB?: string,
-): boolean => environmentA === environmentB && environmentA !== undefined;
+): boolean =>
+  environmentA === environmentB ||
+  environmentA === undefined ||
+  environmentB === undefined;
 
 export function createPluginManager(): PluginManager {
   let plugins: PluginMeta[] = [];
@@ -126,8 +133,10 @@ export function createPluginManager(): PluginManager {
 
   const getPlugins = (options: { environment?: string } = {}) => {
     return plugins
-      .filter((p) => isEnvironmentMatch(p.environment, options.environment))
-      .map((p) => p.instance);
+      .filter((plugin) =>
+        isEnvironmentMatch(plugin.environment, options.environment),
+      )
+      .map(({ instance }) => instance);
   };
 
   return {
