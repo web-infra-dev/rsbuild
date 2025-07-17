@@ -194,6 +194,8 @@ export type PluginManager = Pick<
   getAllPluginsWithMeta: () => PluginMeta[];
 };
 
+export type RsbuildPluginApply = 'serve' | 'build';
+
 /**
  * The type of the Rsbuild plugin object.
  */
@@ -202,6 +204,13 @@ export type RsbuildPlugin = {
    * The name of the plugin, a unique identifier.
    */
   name: string;
+  /**
+   * Conditional apply the plugin during serve or build.
+   * - `'serve'`: Apply the plugin when starting the dev server or preview server.
+   * - `'build'`: Apply the plugin during build.
+   * - If not specified, the plugin will be applied during both serve and build.
+   */
+  apply?: RsbuildPluginApply;
   /**
    * The setup function of the plugin, which can be an async function.
    * This function is called once when the plugin is initialized.

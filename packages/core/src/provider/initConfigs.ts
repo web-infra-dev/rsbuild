@@ -234,7 +234,7 @@ export async function initRsbuildConfig({
   }
 
   await initPlugins({
-    getPluginAPI: context.getPluginAPI!,
+    context,
     pluginManager,
   });
 
