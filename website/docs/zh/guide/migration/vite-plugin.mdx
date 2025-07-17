@@ -109,3 +109,35 @@ const rsbuildPlugin = {
   },
 };
 ```
+
+## `configureServer` 钩子
+
+Rsbuild 提供了 `onBeforeStartDevServer` 钩子来替代 Vite 的 `configureServer` 钩子，它允许你获取 dev server 实例和添加自定义的中间件。
+
+- Vite 插件：
+
+```ts title="vitePlugin.ts"
+const vitePlugin = () => ({
+  name: 'setup-middleware',
+  configureServer(server) {
+    server.middlewares.use((req, res, next) => {
+      // custom handle request...
+    });
+  },
+});
+```
+
+- Rsbuild 插件：
+
+```ts title="rsbuildPlugin.ts"
+const rsbuildPlugin = {
+  name: 'setup-middleware',
+  setup(api) {
+    api.onBeforeStartDevServer(({ server }) => {
+      server.middlewares.use((req, res, next) => {
+        // custom handle request...
+      });
+    });
+  },
+};
+```
