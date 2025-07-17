@@ -160,6 +160,12 @@ export async function createDevServer<
   let waitLastCompileDoneResolve: (() => void) | null = null;
   let waitLastCompileDone: Promise<void> = Promise.resolve();
 
+  const resetWaitLastCompileDone = () => {
+    waitLastCompileDone = new Promise<void>((resolve) => {
+      waitLastCompileDoneResolve = resolve;
+    });
+  };
+
   // should register onDevCompileDone hook before startCompile
   context.hooks.onDevCompileDone.tap(({ stats }) => {
     lastStats = 'stats' in stats ? stats.stats : [stats];
@@ -178,11 +184,12 @@ export async function createDevServer<
       );
     }
 
-    compiler.hooks.beforeCompile.tap('rsbuild:beforeCompile', () => {
-      // reset waitLastCompileDone
-      waitLastCompileDone = new Promise<void>((resolve) => {
-        waitLastCompileDoneResolve = resolve;
-      });
+    compiler?.hooks.run.tap('rsbuild:run', () => {
+      resetWaitLastCompileDone();
+    });
+
+    compiler?.hooks.watchRun.tap('rsbuild:watchRun', () => {
+      resetWaitLastCompileDone();
     });
 
     const publicPaths = isMultiCompiler(compiler)
