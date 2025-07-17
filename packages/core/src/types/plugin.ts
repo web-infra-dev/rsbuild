@@ -39,7 +39,11 @@ import type {
   OnDevCompileDoneFn,
   OnExitFn,
 } from './hooks';
-import type { RsbuildInstance, RsbuildTarget } from './rsbuild';
+import type {
+  AddPluginsOptions,
+  RsbuildInstance,
+  RsbuildTarget,
+} from './rsbuild';
 import type { Rspack } from './rspack';
 import type { HtmlRspackPlugin } from './thirdParty';
 import type { Falsy, MaybePromise } from './utils';
@@ -178,11 +182,7 @@ export type ModifyWebpackConfigFn = (
 ) => Promise<WebpackConfig | void> | WebpackConfig | void;
 
 export type PluginMeta = {
-  /**
-   * Specify the environment that the plugin will be applied to.
-   * If not specified, the plugin will be applied to all environments.
-   */
-  environment?: string;
+  environment?: AddPluginsOptions['environment'];
   instance: RsbuildPlugin;
 };
 

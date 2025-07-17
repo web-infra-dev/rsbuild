@@ -1,8 +1,8 @@
 import { color, isFunction } from './helpers';
 import { logger } from './logger';
 import type {
+  AddPlugins,
   BundlerPluginInstance,
-  Falsy,
   PluginManager,
   PluginMeta,
   RsbuildPlugin,
@@ -64,10 +64,7 @@ export const isEnvironmentMatch = (
 export function createPluginManager(): PluginManager {
   let plugins: PluginMeta[] = [];
 
-  const addPlugins = (
-    newPlugins: Array<RsbuildPlugin | Falsy>,
-    options?: { before?: string; environment?: string },
-  ) => {
+  const addPlugins: AddPlugins = (newPlugins, options) => {
     const { before, environment } = options || {};
 
     for (const newPlugin of newPlugins) {
