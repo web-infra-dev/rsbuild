@@ -178,7 +178,11 @@ export type ModifyWebpackConfigFn = (
 ) => Promise<WebpackConfig | void> | WebpackConfig | void;
 
 export type PluginMeta = {
-  environment: string;
+  /**
+   * Specify the environment that the plugin will be applied to.
+   * If not specified, the plugin will be applied to all environments.
+   */
+  environment?: string;
   instance: RsbuildPlugin;
 };
 

@@ -56,14 +56,11 @@ function validatePlugin(plugin: unknown) {
   );
 }
 
-export const RSBUILD_ALL_ENVIRONMENT_SYMBOL = 'RSBUILD_ALL_ENVIRONMENT_SYMBOL';
-
 export const isPluginMatchEnvironment = (
-  pluginEnvironment: string,
-  currentEnvironment: string,
+  pluginEnvironment: string | undefined,
+  currentEnvironment: string | undefined,
 ): boolean =>
-  pluginEnvironment === currentEnvironment ||
-  pluginEnvironment === RSBUILD_ALL_ENVIRONMENT_SYMBOL;
+  pluginEnvironment === currentEnvironment || pluginEnvironment === undefined;
 
 export function createPluginManager(): PluginManager {
   let plugins: PluginMeta[] = [];
@@ -72,8 +69,7 @@ export function createPluginManager(): PluginManager {
     newPlugins: Array<RsbuildPlugin | Falsy>,
     options?: { before?: string; environment?: string },
   ) => {
-    const { before, environment = RSBUILD_ALL_ENVIRONMENT_SYMBOL } =
-      options || {};
+    const { before, environment } = options || {};
 
     for (const newPlugin of newPlugins) {
       if (!newPlugin) {
@@ -122,9 +118,7 @@ export function createPluginManager(): PluginManager {
 
   const isPluginExists = (
     pluginName: string,
-    options: { environment: string } = {
-      environment: RSBUILD_ALL_ENVIRONMENT_SYMBOL,
-    },
+    options: { environment?: string } = {},
   ) =>
     Boolean(
       plugins.find(
@@ -134,17 +128,14 @@ export function createPluginManager(): PluginManager {
       ),
     );
 
-  const getPlugins = (
-    options: { environment: string } = {
-      environment: RSBUILD_ALL_ENVIRONMENT_SYMBOL,
-    },
-  ) => {
+  const getPlugins = (options: { environment?: string } = {}) => {
     return plugins
       .filter((p) =>
         isPluginMatchEnvironment(p.environment, options.environment),
       )
       .map((p) => p.instance);
   };
+
   return {
     getPlugins,
     getAllPluginsWithMeta: () => plugins,
@@ -239,32 +230,32 @@ export async function initPlugins({
 
   const plugins = pluginDagSort(pluginManager.getAllPluginsWithMeta());
 
-  const removedPlugins = plugins.reduce<Record<string, string[]>>(
-    (ret, plugin) => {
-      if (plugin.instance.remove) {
-        ret[plugin.environment] ??= [];
-        ret[plugin.environment].push(...plugin.instance.remove);
-      }
-      return ret;
-    },
-    {},
-  );
+  const removedPlugins = new Set<string>();
+  const removedEnvPlugins: Record<string, Set<string>> = {};
 
-  for (const plugin of plugins) {
-    const isGlobalPlugin =
-      plugin.environment === 'RSBUILD_ALL_ENVIRONMENT_SYMBOL';
-
-    if (
-      removedPlugins[plugin.environment]?.includes(plugin.instance.name) ||
-      (!isGlobalPlugin &&
-        removedPlugins[RSBUILD_ALL_ENVIRONMENT_SYMBOL]?.includes(
-          plugin.instance.name,
-        ))
-    ) {
+  for (const { environment, instance } of plugins) {
+    if (!instance.remove) {
       continue;
     }
-    const { instance, environment } = plugin;
-    await instance.setup(getPluginAPI(environment));
+    if (environment) {
+      removedEnvPlugins[environment] ??= new Set();
+      removedEnvPlugins[environment].add(instance.name);
+    } else {
+      removedPlugins.add(instance.name);
+    }
+  }
+
+  for (const { instance, environment } of plugins) {
+    const { name, setup } = instance;
+
+    if (removedPlugins.has(name)) {
+      continue;
+    }
+    if (environment && removedEnvPlugins[environment]?.has(name)) {
+      continue;
+    }
+
+    await setup(getPluginAPI(environment));
   }
 
   logger.debug('init plugins done');
