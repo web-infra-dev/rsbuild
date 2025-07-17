@@ -178,7 +178,7 @@ export async function createDevServer<
       );
     }
 
-    compiler.hooks.beforeCompile.tap('rsbuild:before', () => {
+    compiler.hooks.beforeCompile.tap('rsbuild:beforeCompile', () => {
       // reset waitLastCompileDone
       waitLastCompileDone = new Promise<void>((resolve) => {
         waitLastCompileDoneResolve = resolve;
