@@ -247,14 +247,12 @@ export async function initPlugins({
 
   for (const { instance, environment } of plugins) {
     const { name, setup } = instance;
-
-    if (removedPlugins.has(name)) {
+    if (
+      removedPlugins.has(name) ||
+      (environment && removedEnvPlugins[environment]?.has(name))
+    ) {
       continue;
     }
-    if (environment && removedEnvPlugins[environment]?.has(name)) {
-      continue;
-    }
-
     await setup(getPluginAPI(environment));
   }
 
