@@ -123,12 +123,10 @@ export function createPluginManager(): PluginManager {
     pluginName: string,
     options: { environment?: string } = {},
   ) =>
-    Boolean(
-      plugins.find(
-        (plugin) =>
-          plugin.instance.name === pluginName &&
-          isEnvironmentMatch(plugin.environment, options.environment),
-      ),
+    plugins.some(
+      (plugin) =>
+        plugin.instance.name === pluginName &&
+        isEnvironmentMatch(plugin.environment, options.environment),
     );
 
   const getPlugins = (options: { environment?: string } = {}) => {
@@ -242,9 +240,13 @@ export async function initPlugins({
     }
     if (environment) {
       removedEnvPlugins[environment] ??= new Set();
-      instance.remove.forEach(removedEnvPlugins[environment].add);
+      for (const item of instance.remove) {
+        removedEnvPlugins[environment].add(item);
+      }
     } else {
-      instance.remove.forEach(removedPlugins.add);
+      for (const item of instance.remove) {
+        removedPlugins.add(item);
+      }
     }
   }
 
