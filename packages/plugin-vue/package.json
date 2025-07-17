@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "vue-loader": "^17.4.2",
-    "webpack": "^5.99.9"
+    "webpack": "^5.100.2"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
