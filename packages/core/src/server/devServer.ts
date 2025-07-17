@@ -189,10 +189,6 @@ export async function createDevServer<
       );
     }
 
-    compiler?.hooks.run.tap('rsbuild:run', () => {
-      resetWaitLastCompileDone();
-    });
-
     compiler?.hooks.watchRun.tap('rsbuild:watchRun', () => {
       resetWaitLastCompileDone();
     });
