@@ -56,11 +56,10 @@ function validatePlugin(plugin: unknown) {
   );
 }
 
-export const isPluginMatchEnvironment = (
-  pluginEnvironment: string | undefined,
-  currentEnvironment: string | undefined,
-): boolean =>
-  pluginEnvironment === currentEnvironment || pluginEnvironment === undefined;
+export const isEnvironmentMatch = (
+  environmentA?: string,
+  environmentB?: string,
+): boolean => environmentA === environmentB && environmentA !== undefined;
 
 export function createPluginManager(): PluginManager {
   let plugins: PluginMeta[] = [];
@@ -124,15 +123,13 @@ export function createPluginManager(): PluginManager {
       plugins.find(
         (plugin) =>
           plugin.instance.name === pluginName &&
-          isPluginMatchEnvironment(plugin.environment, options.environment),
+          isEnvironmentMatch(plugin.environment, options.environment),
       ),
     );
 
   const getPlugins = (options: { environment?: string } = {}) => {
     return plugins
-      .filter((p) =>
-        isPluginMatchEnvironment(p.environment, options.environment),
-      )
+      .filter((p) => isEnvironmentMatch(p.environment, options.environment))
       .map((p) => p.instance);
   };
 
