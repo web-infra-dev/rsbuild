@@ -54,6 +54,21 @@ export default {
 };
 ```
 
+中间件可以是一个异步函数：
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    setupMiddlewares: (middlewares) => {
+      middlewares.unshift(async (req, res, next) => {
+        await someAsyncOperation();
+        next();
+      });
+    },
+  },
+};
+```
+
 `setupMiddlewares` 也支持传入一个数组，数组中的每一项都是一个用于配置中间件的函数：
 
 ```ts title="rsbuild.config.ts"

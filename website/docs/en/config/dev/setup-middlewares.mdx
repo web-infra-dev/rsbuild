@@ -54,6 +54,21 @@ export default {
 };
 ```
 
+The middleware can be an async function:
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    setupMiddlewares: (middlewares) => {
+      middlewares.unshift(async (req, res, next) => {
+        await someAsyncOperation();
+        next();
+      });
+    },
+  },
+};
+```
+
 `setupMiddlewares` also supports passing an array, each item of which is a function to setup middlewares:
 
 ```ts title="rsbuild.config.ts"
