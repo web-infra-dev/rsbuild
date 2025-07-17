@@ -1,5 +1,4 @@
 import { isFunction, isMultiCompiler } from './helpers';
-import { isPluginMatchEnvironment } from './pluginManager';
 import type {
   AsyncHook,
   EnvironmentAsyncHook,
@@ -84,9 +83,9 @@ export function createEnvironmentAsyncHook<
     for (const callback of callbacks) {
       // If this callback is not a global callback, the environment info should match
       if (
-        callback.environment &&
         environment &&
-        !isPluginMatchEnvironment(callback.environment, environment)
+        callback.environment &&
+        callback.environment !== environment
       ) {
         continue;
       }
@@ -114,9 +113,9 @@ export function createEnvironmentAsyncHook<
     for (const callback of callbacks) {
       // If this callback is not a global callback, the environment info should match
       if (
-        callback.environment &&
         environment &&
-        !isPluginMatchEnvironment(callback.environment, environment)
+        callback.environment &&
+        callback.environment !== environment
       ) {
         continue;
       }

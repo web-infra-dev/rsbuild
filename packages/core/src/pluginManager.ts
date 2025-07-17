@@ -1,8 +1,8 @@
 import { color, isFunction } from './helpers';
 import { logger } from './logger';
 import type {
+  AddPlugins,
   BundlerPluginInstance,
-  Falsy,
   PluginManager,
   PluginMeta,
   RsbuildPlugin,
@@ -56,24 +56,21 @@ function validatePlugin(plugin: unknown) {
   );
 }
 
-export const RSBUILD_ALL_ENVIRONMENT_SYMBOL = 'RSBUILD_ALL_ENVIRONMENT_SYMBOL';
-
-export const isPluginMatchEnvironment = (
-  pluginEnvironment: string,
-  currentEnvironment: string,
+/**
+ * Determines whether the plugin is registered in the specified environment.
+ * If the pluginEnvironment is undefined, it means it can match any environment.
+ */
+export const isEnvironmentMatch = (
+  pluginEnvironment?: string,
+  specifiedEnvironment?: string,
 ): boolean =>
-  pluginEnvironment === currentEnvironment ||
-  pluginEnvironment === RSBUILD_ALL_ENVIRONMENT_SYMBOL;
+  pluginEnvironment === specifiedEnvironment || pluginEnvironment === undefined;
 
 export function createPluginManager(): PluginManager {
   let plugins: PluginMeta[] = [];
 
-  const addPlugins = (
-    newPlugins: Array<RsbuildPlugin | Falsy>,
-    options?: { before?: string; environment?: string },
-  ) => {
-    const { before, environment = RSBUILD_ALL_ENVIRONMENT_SYMBOL } =
-      options || {};
+  const addPlugins: AddPlugins = (newPlugins, options) => {
+    const { before, environment } = options || {};
 
     for (const newPlugin of newPlugins) {
       if (!newPlugin) {
@@ -122,29 +119,22 @@ export function createPluginManager(): PluginManager {
 
   const isPluginExists = (
     pluginName: string,
-    options: { environment: string } = {
-      environment: RSBUILD_ALL_ENVIRONMENT_SYMBOL,
-    },
+    options: { environment?: string } = {},
   ) =>
-    Boolean(
-      plugins.find(
-        (plugin) =>
-          plugin.instance.name === pluginName &&
-          isPluginMatchEnvironment(plugin.environment, options.environment),
-      ),
+    plugins.some(
+      (plugin) =>
+        plugin.instance.name === pluginName &&
+        isEnvironmentMatch(plugin.environment, options.environment),
     );
 
-  const getPlugins = (
-    options: { environment: string } = {
-      environment: RSBUILD_ALL_ENVIRONMENT_SYMBOL,
-    },
-  ) => {
+  const getPlugins = (options: { environment?: string } = {}) => {
     return plugins
-      .filter((p) =>
-        isPluginMatchEnvironment(p.environment, options.environment),
+      .filter((plugin) =>
+        isEnvironmentMatch(plugin.environment, options.environment),
       )
-      .map((p) => p.instance);
+      .map(({ instance }) => instance);
   };
+
   return {
     getPlugins,
     getAllPluginsWithMeta: () => plugins,
@@ -239,32 +229,34 @@ export async function initPlugins({
 
   const plugins = pluginDagSort(pluginManager.getAllPluginsWithMeta());
 
-  const removedPlugins = plugins.reduce<Record<string, string[]>>(
-    (ret, plugin) => {
-      if (plugin.instance.remove) {
-        ret[plugin.environment] ??= [];
-        ret[plugin.environment].push(...plugin.instance.remove);
+  const removedPlugins = new Set<string>();
+  const removedEnvPlugins: Record<string, Set<string>> = {};
+
+  for (const { environment, instance } of plugins) {
+    if (!instance.remove) {
+      continue;
+    }
+    if (environment) {
+      removedEnvPlugins[environment] ??= new Set();
+      for (const item of instance.remove) {
+        removedEnvPlugins[environment].add(item);
       }
-      return ret;
-    },
-    {},
-  );
+    } else {
+      for (const item of instance.remove) {
+        removedPlugins.add(item);
+      }
+    }
+  }
 
-  for (const plugin of plugins) {
-    const isGlobalPlugin =
-      plugin.environment === 'RSBUILD_ALL_ENVIRONMENT_SYMBOL';
-
+  for (const { instance, environment } of plugins) {
+    const { name, setup } = instance;
     if (
-      removedPlugins[plugin.environment]?.includes(plugin.instance.name) ||
-      (!isGlobalPlugin &&
-        removedPlugins[RSBUILD_ALL_ENVIRONMENT_SYMBOL]?.includes(
-          plugin.instance.name,
-        ))
+      removedPlugins.has(name) ||
+      (environment && removedEnvPlugins[environment]?.has(name))
     ) {
       continue;
     }
-    const { instance, environment } = plugin;
-    await instance.setup(getPluginAPI(environment));
+    await setup(getPluginAPI(environment));
   }
 
   logger.debug('init plugins done');

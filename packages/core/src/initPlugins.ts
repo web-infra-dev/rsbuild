@@ -6,7 +6,7 @@ import { color, removeLeadingSlash } from './helpers';
 import { exitHook } from './helpers/exitHook';
 import type { TransformLoaderOptions } from './loader/transformLoader';
 import { logger } from './logger';
-import { isPluginMatchEnvironment } from './pluginManager';
+import { isEnvironmentMatch } from './pluginManager';
 import type {
   GetRsbuildConfig,
   InternalContext,
@@ -184,7 +184,7 @@ export function initPluginAPI({
         for (const { handler, environment: pluginEnvironment } of resolveFns) {
           if (
             pluginEnvironment &&
-            !isPluginMatchEnvironment(pluginEnvironment, environment.name)
+            !isEnvironmentMatch(pluginEnvironment, environment.name)
           ) {
             continue;
           }
@@ -229,7 +229,7 @@ export function initPluginAPI({
                 !descriptor.environments.includes(environment.name)) ||
               // the plugin is registered in a specific environment config
               (pluginEnvironment &&
-                !isPluginMatchEnvironment(pluginEnvironment, environment.name))
+                !isEnvironmentMatch(pluginEnvironment, environment.name))
             ) {
               continue;
             }
