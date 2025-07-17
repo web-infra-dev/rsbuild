@@ -242,9 +242,9 @@ export async function initPlugins({
     }
     if (environment) {
       removedEnvPlugins[environment] ??= new Set();
-      removedEnvPlugins[environment].add(instance.name);
+      instance.remove.forEach(removedEnvPlugins[environment].add);
     } else {
-      removedPlugins.add(instance.name);
+      instance.remove.forEach(removedPlugins.add);
     }
   }
 
