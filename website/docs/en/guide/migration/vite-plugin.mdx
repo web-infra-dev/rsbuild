@@ -9,6 +9,36 @@ Before migrating a Vite plugin, it is recommended to check if there is a corresp
 - [Rsbuild official plugins](/plugins/list)
 - [Rsbuild community plugins](https://github.com/web-infra-dev/awesome-rspack?tab=readme-ov-file#rsbuild-plugins)
 
+## Define a plugin
+
+Rsbuild plugin is defined in a way similar to Vite, usually a function that accepts plugin options as a parameter and returns a plugin description object.
+
+The main difference is that Vite's hooks are defined directly on the plugin description object, while Rsbuild's hooks are accessed and called through the `api` object. This allows you to control the timing of plugin API calls more flexibly.
+
+- Vite plugin:
+
+```ts title="vitePlugin.ts"
+const vitePlugin = (options) => ({
+  name: 'vite-plugin',
+  transform() {
+    // ...
+  },
+});
+```
+
+- Rsbuild plugin:
+
+```ts title="rsbuildPlugin.ts"
+const rsbuildPlugin = (options) => ({
+  name: 'rsbuild-plugin',
+  setup(api) {
+    api.transform(() => {
+      // ...
+    });
+  },
+});
+```
+
 ## Plugin hooks
 
 Rsbuild's plugin API covers most of the Vite and Rollup plugin hooks, for example:
