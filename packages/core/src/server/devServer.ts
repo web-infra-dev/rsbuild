@@ -157,19 +157,28 @@ export async function createDevServer<
 
   let lastStats: Rspack.Stats[];
 
-  // should register onDevCompileDone hook before startCompile
-  const waitFirstCompileDone = runCompile
-    ? new Promise<void>((resolve) => {
-        context.hooks.onDevCompileDone.tap(({ stats, isFirstCompile }) => {
-          lastStats = 'stats' in stats ? stats.stats : [stats];
+  let waitLastCompileDoneResolve: (() => void) | null = null;
+  let waitLastCompileDone: Promise<void> = Promise.resolve();
 
-          if (!isFirstCompile) {
-            return;
-          }
-          resolve();
-        });
-      })
-    : Promise.resolve();
+  const resetWaitLastCompileDone = () => {
+    // Resolve the previous promise if it exists
+    if (waitLastCompileDoneResolve) {
+      waitLastCompileDoneResolve();
+      waitLastCompileDoneResolve = null;
+    }
+    waitLastCompileDone = new Promise<void>((resolve) => {
+      waitLastCompileDoneResolve = resolve;
+    });
+  };
+
+  // should register onDevCompileDone hook before startCompile
+  context.hooks.onDevCompileDone.tap(({ stats }) => {
+    lastStats = 'stats' in stats ? stats.stats : [stats];
+    if (waitLastCompileDoneResolve) {
+      waitLastCompileDoneResolve();
+      waitLastCompileDoneResolve = null;
+    }
+  });
 
   const startCompile: () => Promise<CompilationManager> = async () => {
     const compiler = customCompiler || (await createCompiler());
@@ -179,6 +188,10 @@ export async function createDevServer<
         `${color.dim('[rsbuild:server]')} Failed to get compiler instance.`,
       );
     }
+
+    compiler?.hooks.watchRun.tap('rsbuild:watchRun', () => {
+      resetWaitLastCompileDone();
+    });
 
     const publicPaths = isMultiCompiler(compiler)
       ? compiler.compilers.map(getPublicPathFromCompiler)
@@ -289,7 +302,7 @@ export async function createDevServer<
                   `${color.yellow('runCompile')} is false`,
               );
             }
-            await waitFirstCompileDone;
+            await waitLastCompileDone;
             return lastStats[environment.index];
           },
           context: environment,
@@ -301,7 +314,7 @@ export async function createDevServer<
                   `${color.yellow('runCompile')} is false`,
               );
             }
-            await waitFirstCompileDone;
+            await waitLastCompileDone;
             return cacheableLoadBundle(
               lastStats[environment.index],
               entryName,
@@ -319,7 +332,7 @@ export async function createDevServer<
                   `${color.yellow('runCompile')} is false`,
               );
             }
-            await waitFirstCompileDone;
+            await waitLastCompileDone;
             return cacheableTransformedHtml(
               lastStats[environment.index],
               entryName,
