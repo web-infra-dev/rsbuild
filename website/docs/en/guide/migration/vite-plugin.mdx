@@ -109,3 +109,35 @@ const rsbuildPlugin = {
   },
 };
 ```
+
+## `configureServer` hook
+
+Rsbuild provides the `onBeforeStartDevServer` hook to replace Vite's `configureServer` hook, which allows you to get the dev server instance and add custom middleware.
+
+- Vite plugin:
+
+```ts title="vitePlugin.ts"
+const vitePlugin = () => ({
+  name: 'setup-middleware',
+  configureServer(server) {
+    server.middlewares.use((req, res, next) => {
+      // custom handle request...
+    });
+  },
+});
+```
+
+- Rsbuild plugin:
+
+```ts title="rsbuildPlugin.ts"
+const rsbuildPlugin = {
+  name: 'setup-middleware',
+  setup(api) {
+    api.onBeforeStartDevServer(({ server }) => {
+      server.middlewares.use((req, res, next) => {
+        // custom handle request...
+      });
+    });
+  },
+};
+```
