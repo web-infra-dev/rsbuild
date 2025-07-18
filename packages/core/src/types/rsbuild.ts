@@ -152,7 +152,7 @@ export type CreateRsbuildOptions = {
    */
   rsbuildConfig?: RsbuildConfig | (() => Promise<RsbuildConfig>);
   /**
-   * Whether to call `loadEnv` to load env variables and define them
+   * Whether to call `loadEnv` to load environment variables and define them
    * as global variables via `source.define`.
    * @default false
    */

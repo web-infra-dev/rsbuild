@@ -116,7 +116,7 @@ function applyEnvsToConfig(config: RsbuildConfig, envs: LoadEnvResult | null) {
     return;
   }
 
-  // define the public env variables
+  // define the public environment variables
   config.source ||= {};
   config.source.define = {
     ...envs.publicVars,
