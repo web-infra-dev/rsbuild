@@ -1,4 +1,4 @@
-# Environment variables
+# Env variables
 
 Rsbuild supports injecting env variables or expressions into the code during build, which is helpful for distinguishing the running environment or replacing constants.
 
@@ -156,7 +156,7 @@ For example, in the HTML template, you can use `process.env.ASSET_PREFIX` to con
 
 ### process.env.NODE_ENV
 
-By default, Rsbuild will automatically set the `process.env.NODE_ENV` environment variable to `'development'` in development mode and `'production'` in production mode.
+By default, Rsbuild will automatically set the `process.env.NODE_ENV` env variable to `'development'` in development mode and `'production'` in production mode.
 
 You can use `process.env.NODE_ENV` directly in Node.js and in the client code.
 
@@ -227,7 +227,7 @@ For example, set the env mode as `test`:
 npx rsbuild dev --env-mode test
 ```
 
-Rsbuild will read these files in the following order and merge their contents. If the same environment variable is defined in multiple files, values from files loaded later will override those from files loaded earlier:
+Rsbuild will read these files in the following order and merge their contents. If the same env variable is defined in multiple files, values from files loaded later will override those from files loaded earlier:
 
 - .env
 - .env.local
@@ -313,7 +313,7 @@ You can disable loading `.env` files by using the `--no-env` flag in the CLI.
 npx rsbuild dev --no-env
 ```
 
-When using the `--no-env` flag, Rsbuild CLI will not read any `.env` files, and you can manage environment variables using other tools like [dotenvx](https://dotenvx.com/).
+When using the `--no-env` flag, Rsbuild CLI will not read any `.env` files, and you can manage env variables using other tools like [dotenvx](https://dotenvx.com/).
 
 ## Public variables
 
@@ -384,7 +384,7 @@ By using [source.define](/config/source/define), you can replace global identifi
 
 The most basic use case for `define` is to replace global identifiers in compile time.
 
-The value of the environment variable `NODE_ENV` will change the behavior of many vendor packages. Usually, we need to set it to `production`.
+The value of the env variable `NODE_ENV` will change the behavior of many vendor packages. Usually, we need to set it to `production`.
 
 ```js
 export default {
@@ -403,7 +403,7 @@ Similarly `{ foo: "bar" }` should be converted to `"{\"foo\":\"bar\"}"`, which i
 For more about `source.define`, just refer to [API References](/config/source/define).
 
 :::tip
-The environment variable `NODE_ENV` shown in the example above is already injected by the Rsbuild, and you usually do not need to configure it manually.
+The env variable `NODE_ENV` shown in the example above is already injected by the Rsbuild, and you usually do not need to configure it manually.
 :::
 
 ### Identifiers matching
@@ -448,13 +448,15 @@ export default {
 If the above usage is adopted, the following problems will be caused:
 
 1. Some unused env variables are additionally injected, causing the env variables of the dev server to be leaked into the front-end code.
-2. As each `process.env` code will be replaced by a complete environment variable object, the bundle size of the front-end code will increase and the performance will decrease.
+2. As each `process.env` code will be replaced by a complete env variable object, the bundle size of the front-end code will increase and the performance will decrease.
 
 Therefore, please inject the env variables on `process.env` according to actual needs and avoid replacing them in its entirety.
 
 ## Type declarations
 
-When you access an environment variable in a TypeScript file, TypeScript may prompt that the variable lacks a type definition, and you need to add the corresponding type declaration.
+### Public variables
+
+When you access a public env variable in a TypeScript file, TypeScript may prompt that the variable lacks a type definition, and you need to add the corresponding type declaration.
 
 For example, if you reference a `PUBLIC_FOO` variable, the following prompt will appear in the TypeScript file:
 
@@ -470,7 +472,13 @@ declare const PUBLIC_FOO: string;
 
 ### import.meta.env
 
-You can extend the type of `import.meta.env` like this:
+Rsbuild provides default TypeScript type definitions for `import.meta.env` through [Preset types](/guide/basic/typescript#preset-types).
+
+```ts title="src/env.d.ts"
+/// <reference types="@rsbuild/core/types" />
+```
+
+If you have customized env variables starting with `import.meta.env`, you can extend the `ImportMetaEnv` interface:
 
 ```ts title="src/env.d.ts"
 interface ImportMetaEnv {
@@ -530,7 +538,7 @@ const App = () => {
 };
 ```
 
-Specifying the environment variable `LANGUAGE=zh` and then running build will eliminate the dead code.
+Specifying the env variable `LANGUAGE=zh` and then running build will eliminate the dead code.
 
 ```js
 const App = () => {

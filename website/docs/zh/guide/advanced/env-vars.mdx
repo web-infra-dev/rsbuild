@@ -456,7 +456,9 @@ export default {
 
 ## 类型声明
 
-当你在 TypeScript 代码中访问环境变量时，TypeScript 可能会提示该变量缺少类型定义，此时你需要添加相应的类型声明。
+### Public 变量
+
+当你在 TypeScript 代码中访问 Public 环境变量时，TypeScript 可能会提示该变量缺少类型定义，此时你需要添加相应的类型声明。
 
 比如你引用了一个 `PUBLIC_FOO` 变量，在 TypeScript 文件中会出现如下提示：
 
@@ -472,7 +474,13 @@ declare const PUBLIC_FOO: string;
 
 ### import.meta.env
 
-你可以像这样来扩展 `import.meta.env` 的类型：
+Rsbuild 通过 [预设类型](/guide/basic/typescript#预设类型) 为 `import.meta.env` 提供了默认的 TypeScript 类型定义。
+
+```ts title="src/env.d.ts"
+/// <reference types="@rsbuild/core/types" />
+```
+
+如果你自定义了以 `import.meta.env` 开头的环境变量，可以通过扩展 `ImportMetaEnv` interface 来实现：
 
 ```ts title="src/env.d.ts"
 interface ImportMetaEnv {
