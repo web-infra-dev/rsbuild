@@ -612,9 +612,38 @@ import IsPluginExists from '@en/shared/isPluginExists.mdx';
 - **Example:**
 
 ```ts
-rsbuild.addPlugins([pluginFoo()]);
+const pluginFoo = {
+  name: 'plugin-foo',
+  setup(api) {
+    // ...
+  },
+};
 
-rsbuild.isPluginExists(pluginFoo().name); // true
+const rsbuild = createRsbuild({
+  rsbuildConfig: {
+    plugins: [pluginFoo],
+  },
+});
+
+rsbuild.isPluginExists(pluginFoo.name); // true
+```
+
+Or check if a plugin exists in a specified environment:
+
+```ts
+const rsbuild = createRsbuild({
+  rsbuildConfig: {
+    environments: {
+      web: {
+        plugins: [pluginFoo],
+      },
+    },
+  },
+});
+
+rsbuild.isPluginExists(pluginFoo.name, {
+  environment: 'web',
+}); // true
 ```
 
 ## rsbuild.initConfigs
