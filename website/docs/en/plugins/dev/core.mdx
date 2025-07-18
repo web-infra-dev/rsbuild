@@ -184,6 +184,16 @@ export default () => ({
 });
 ```
 
+Or check if a plugin exists in a specified environment:
+
+```ts
+export default () => ({
+  setup(api) {
+    console.log(api.isPluginExists('plugin-foo', { environment: 'web' }));
+  },
+});
+```
+
 ## api.transform
 
 A simplified wrapper around [Rspack loaders](https://rspack.rs/guide/features/loader), `api.transform` lets you easily transform the code of specific modules during the build process.
