@@ -43,7 +43,7 @@ type CreateRsbuildOptions = {
 - `cwd`: The root path of the current build, defaults to `process.cwd()`.
 - `callerName`: The name of the framework or tool that is currently invoking Rsbuild, defaults to `'rsbuild'`, see [Specify caller name](#specify-caller-name).
 - `environment`: Only build specified [environments](/guide/advanced/environments). If not specified or passing an empty array, all environments will be built.
-- `loadEnv`：Whether to call the [loadEnv](/api/javascript-api/core#loadenv) method to load env variables and define them as global variables via [source.define](/config/source/define).
+- `loadEnv`：Whether to call the [loadEnv](/api/javascript-api/core#loadenv) method to load environment variables and define them as global variables via [source.define](/config/source/define).
 - `rsbuildConfig`: Rsbuild configuration object. Refer to [Configuration Overview](/config/) for all available configuration options.
 
 ### Load configuration async
@@ -62,9 +62,9 @@ const rsbuild = await createRsbuild({
 });
 ```
 
-### Load env variables
+### Load environment variables
 
-The `loadEnv` option in `createRsbuild` helps you call the [loadEnv](/api/javascript-api/core#loadenv) method to load env variables:
+The `loadEnv` option in `createRsbuild` helps you call the [loadEnv](/api/javascript-api/core#loadenv) method to load environment variables:
 
 ```ts
 const rsbuild = await createRsbuild({
@@ -74,7 +74,7 @@ const rsbuild = await createRsbuild({
 
 Passing `loadEnv: true` will automatically complete the following steps:
 
-1. Call the `loadEnv` method to load env variables.
+1. Call the `loadEnv` method to load environment variables.
 2. Add [source.define](/config/source/define) configuration, define the `publicVars` returned by `loadEnv` as global variables.
 3. Watch the `.env` file for changes, and restart the dev server when the file changes, and invalidate the build cache.
 4. Automatically call the `cleanup` method returned by `loadEnv` when closing the build or dev server.
@@ -227,12 +227,12 @@ type LoadEnvOptions = {
 };
 
 type LoadEnvResult = {
-  /** All env variables in the .env file */
+  /** All environment variables in the .env file */
   parsed: Record<string, string>;
   /** The absolute paths to all env files */
   filePaths: string[];
   /**
-   * Env variables that start with prefixes.
+   * Environment variables that start with prefixes.
    *
    * @example
    * ```ts
@@ -243,7 +243,7 @@ type LoadEnvResult = {
    **/
   rawPublicVars: Record<string, string | undefined>;
   /**
-   * Formatted env variables that start with prefixes.
+   * Formatted environment variables that start with prefixes.
    * The keys contain the prefixes `process.env.*` and `import.meta.env.*`.
    * The values are processed by `JSON.stringify`.
    *
@@ -256,7 +256,7 @@ type LoadEnvResult = {
    * ```
    **/
   publicVars: Record<string, string>;
-  /** Clear the env variables mounted on `process.env` */
+  /** Clear the environment variables mounted on `process.env` */
   cleanup: () => void;
 };
 
