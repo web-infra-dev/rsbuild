@@ -6,7 +6,7 @@
     "svelte": "^5.36.2"
   },
   "devDependencies": {
-    "less": "^4.3.0",
+    "less": "^4.4.0",
     "sass": "^1.89.2",
     "stylus": "0.64.0"
   }
