@@ -493,6 +493,20 @@ interface ImportMeta {
 }
 ```
 
+默认情况下，Rsbuild 预设的类型允许你访问 `import.meta.env` 上的任何属性，而不会出现 TypeScript 类型错误。
+
+如果希望获得更严格的类型安全，你可以通过扩展 `RsbuildTypeOptions` interface 来开启 `strictImportMetaEnv` 选项。开启后，只有 Rsbuild 预定义或你在项目中明确声明的属性才能被访问，访问其他属性会导致 TypeScript 类型错误。
+
+你可以在 `src/env.d.ts` 文件中添加以下代码：
+
+```ts title="src/env.d.ts"
+/// <reference types="@rsbuild/core/types" />
+
+interface RsbuildTypeOptions {
+  strictImportMetaEnv: true;
+}
+```
+
 ### process.env
 
 如果缺少 `process.env` 的类型，请安装 [@types/node](https://npmjs.com/package/@types/node) 依赖：
