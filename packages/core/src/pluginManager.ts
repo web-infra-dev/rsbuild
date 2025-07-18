@@ -3,10 +3,10 @@ import { logger } from './logger';
 import type {
   AddPlugins,
   BundlerPluginInstance,
+  InternalContext,
   PluginManager,
   PluginMeta,
   RsbuildPlugin,
-  RsbuildPluginAPI,
 } from './types';
 
 function validatePlugin(plugin: unknown) {
@@ -219,10 +219,10 @@ export const pluginDagSort = (plugins: PluginMeta[]): PluginMeta[] => {
 };
 
 export async function initPlugins({
-  getPluginAPI,
+  context,
   pluginManager,
 }: {
-  getPluginAPI: (environment?: string) => RsbuildPluginAPI;
+  context: InternalContext;
   pluginManager: PluginManager;
 }): Promise<void> {
   logger.debug('init plugins');
@@ -256,7 +256,21 @@ export async function initPlugins({
     ) {
       continue;
     }
-    await setup(getPluginAPI(environment));
+
+    if (instance.apply && context.action) {
+      const applyMap = {
+        build: 'build',
+        dev: 'serve',
+        preview: 'serve',
+      } as const;
+
+      const expected = applyMap[context.action];
+      if (expected && instance.apply !== expected) {
+        continue;
+      }
+    }
+
+    await setup(context.getPluginAPI!(environment));
   }
 
   logger.debug('init plugins done');
