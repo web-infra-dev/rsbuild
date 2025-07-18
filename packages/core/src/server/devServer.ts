@@ -158,9 +158,16 @@ export async function createDevServer<
   let lastStats: Rspack.Stats[];
 
   let waitLastCompileDoneResolve: (() => void) | null = null;
-  let waitLastCompileDone: Promise<void> = Promise.resolve();
+  let waitLastCompileDone = new Promise<void>((resolve) => {
+    waitLastCompileDoneResolve = resolve;
+  });
 
   const resetWaitLastCompileDone = () => {
+    // No need to reset if lastStats is not set
+    if (!lastStats) {
+      return;
+    }
+
     // Resolve the previous promise if it exists
     if (waitLastCompileDoneResolve) {
       waitLastCompileDoneResolve();
