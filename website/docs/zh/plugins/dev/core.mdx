@@ -182,6 +182,16 @@ export default () => ({
 });
 ```
 
+或者检查指定环境中是否存在插件：
+
+```ts
+export default () => ({
+  setup(api) {
+    console.log(api.isPluginExists('plugin-foo', { environment: 'web' }));
+  },
+});
+```
+
 ## api.transform
 
 `api.transform` 是 [Rspack loader](https://rspack.rs/zh/guide/features/loader) 的简化封装，让你能够在构建过程中轻松转换特定模块的代码。
