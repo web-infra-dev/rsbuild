@@ -4,9 +4,11 @@ import type { RsbuildPlugin } from '../types';
 export const pluginLazyCompilation = (): RsbuildPlugin => ({
   name: 'rsbuild:lazy-compilation',
 
+  apply: 'serve',
+
   setup(api) {
-    api.modifyBundlerChain((chain, { environment, isProd, target }) => {
-      if (isProd || target !== 'web') {
+    api.modifyBundlerChain((chain, { environment, target }) => {
+      if (target !== 'web') {
         return;
       }
 
