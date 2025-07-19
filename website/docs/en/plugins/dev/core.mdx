@@ -8,6 +8,7 @@ The type of the plugin object. The plugin object contains the following properti
 
 - `name`: The name of the plugin, a unique identifier.
 - `setup`: The setup function of the plugin, which can be an async function. This function is called once when the plugin is initialized. The plugin API provides the context info, utility functions and lifecycle hooks. For a complete introduction to lifecycle hooks, please read the [Plugin Hooks](/plugins/dev/hooks) chapter.
+- `apply`: Conditional apply the plugin during serve or build.
 - `pre`: Declare the names of pre-plugins, which will be executed before the current plugin.
 - `post`: Declare the names of post-plugins, which will be executed after the current plugin.
 - `remove`: Declare the plugins that need to be removed, you can pass an array of plugin names.
@@ -17,6 +18,7 @@ The type of the plugin object, which contains the following properties:
 ```ts
 type RsbuildPlugin = {
   name: string;
+  apply?: 'serve' | 'build';
   pre?: string[];
   post?: string[];
   remove?: string[];
@@ -39,6 +41,37 @@ export const pluginFoo = (): RsbuildPlugin => ({
   },
 });
 ```
+
+### Conditional application
+
+By default, plugins are applied for both the dev server and production builds. If you want a plugin to apply only in a specific scenario, you can use the `apply` property to specify when it should be activated:
+
+- `serve`: Applies when running the dev or preview server.
+- `build`: Applies when running a production build.
+
+```ts
+// This plugin only applies during serve
+const pluginServe = () => ({
+  name: 'plugin-serve',
+  apply: 'serve',
+  setup(api) {
+    // ...
+  },
+});
+
+// This plugin only applies during build
+const pluginBuild = () => ({
+  name: 'plugin-build',
+  apply: 'build',
+  setup(api) {
+    // ...
+  },
+});
+```
+
+:::tip
+The `apply` property was introduced in `@rsbuild/core` v1.4.8.
+:::
 
 ### Pre-Plugins
 

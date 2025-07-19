@@ -8,6 +8,7 @@
 
 - `name`：插件的名称，唯一标识符。
 - `setup`：插件逻辑的主入口函数，可以是一个异步函数。该函数仅会在初始化插件时执行一次。插件 API 对象上挂载了提供给插件使用的上下文数据、工具函数和注册生命周期钩子的函数，关于生命周期钩子的完整介绍，请阅读 [Plugin Hooks](/plugins/dev/hooks) 章节。
+- `apply`: 控制插件在 `serve` 或 `build` 时生效。
 - `pre`：声明前置插件的名称，这些插件会在当前插件之前执行。
 - `post`：声明后置插件的名称，这些插件会在当前插件之后执行。
 - `remove`：声明需要移除的插件，可以传入插件 name 的数组。
@@ -15,6 +16,7 @@
 ```ts
 type RsbuildPlugin = {
   name: string;
+  apply?: 'serve' | 'build';
   pre?: string[];
   post?: string[];
   remove?: string[];
@@ -37,6 +39,37 @@ export const pluginFoo = (): RsbuildPlugin => ({
   },
 });
 ```
+
+### 条件启用
+
+默认情况下，插件在运行开发服务器和生产构建时都会生效。如果你希望一个插件只在其中某个场景下生效，你可以通过 `apply` 属性来指定插件的生效时机：
+
+- `serve`：运行开发或预览服务器时生效
+- `build`：运行生产构建时生效
+
+```ts
+// 该插件只在 serve 时生效
+const pluginServe = () => ({
+  name: 'plugin-serve',
+  apply: 'serve',
+  setup(api) {
+    // ...
+  },
+});
+
+// 该插件只在 build 时生效
+const pluginBuild = () => ({
+  name: 'plugin-build',
+  apply: 'build',
+  setup(api) {
+    // ...
+  },
+});
+```
+
+:::tip
+`apply` 属性是在 `@rsbuild/core` v1.4.8 版本中引入的。
+:::
 
 ### 前置插件
 
