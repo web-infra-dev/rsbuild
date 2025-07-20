@@ -13,7 +13,7 @@
 
 Rsbuild 插件的定义方式与 Vite 相似，通常都是一个接收插件选项作为参数的函数，并返回插件的描述对象。
 
-两者的主要区别在于：Vite 的 hooks 直接定义在插件描述对象上，而 Rsbuild 的 hooks 是通过 `api` 对象来访问和调用，这允许你更灵活地控制插件 API 的调用时机。
+两者的主要区别在于：Vite 的 hooks 直接定义在插件描述对象上，而 Rsbuild 的 hooks 是通过 [api 对象](/plugins/dev/core) 来访问和调用，这允许你更灵活地控制插件 API 的调用时机。
 
 - Vite 插件：
 
@@ -60,9 +60,9 @@ Rsbuild 的插件 API 覆盖了大部分的 Vite 和 Rollup 插件 hooks，例�
 
 ## `config` 钩子
 
-Rsbuild 与 Vite 提供了不同的配置项，在迁移 Vite 插件时，需要根据 Rsbuild 的配置项进行调整。
+Rsbuild 提供了 [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) 钩子来修改 Rsbuild 配置。由于 Rsbuild 与 Vite 的配置结构存在差异，在迁移 Vite 插件时，需要对配置进行调整。
 
-例如，将 Vite 的 `define` 选项替换为 Rsbuild 的 [source.define](/config/source/define) 选项。
+例如，需要将 Vite 的 `define` 选项替换为 Rsbuild 的 [source.define](/config/source/define) 选项。
 
 - Vite 插件：
 
@@ -98,6 +98,43 @@ const rsbuildPlugin = {
 :::tip
 查看 [配置迁移](/guide/migration/vite#配置迁移) 了解如何将 Vite 的配置迁移到 Rsbuild。
 :::
+
+## `configResolved` 钩子
+
+Rsbuild 提供了 [api.getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig) 方法来获取已解析的配置。这个方法与 Vite 的 `configResolved` 钩子的使用场景类似。
+
+- Vite 插件：
+
+```ts title="vitePlugin.ts"
+const vitePlugin = () => {
+  let config;
+  return {
+    name: 'read-config',
+    configResolved(resolvedConfig) {
+      config = resolvedConfig;
+    },
+    transform() {
+      console.log(config);
+      // ...
+    },
+  };
+};
+```
+
+- Rsbuild 插件：
+
+```ts title="rsbuildPlugin.ts"
+const rsbuildPlugin = () => ({
+  name: 'read-config',
+  setup(api) {
+    api.transform(() => {
+      const config = api.getNormalizedConfig();
+      console.log(config);
+      // ...
+    });
+  },
+});
+```
 
 ## `transformIndexHtml` 钩子
 
@@ -169,5 +206,27 @@ const rsbuildPlugin = {
       });
     });
   },
+};
+```
+
+## `apply` 属性
+
+Rsbuild 插件提供了与 Vite 插件一致的 [apply 属性](/plugins/dev/core#条件启用)。
+
+- Vite 插件：
+
+```ts title="vitePlugin.ts"
+const vitePlugin = {
+  name: 'vite-plugin',
+  apply: 'build',
+};
+```
+
+- Rsbuild 插件：
+
+```ts title="rsbuildPlugin.ts"
+const rsbuildPlugin = {
+  name: 'rsbuild-plugin',
+  apply: 'build',
 };
 ```
