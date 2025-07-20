@@ -13,7 +13,7 @@ Before migrating a Vite plugin, it is recommended to check if there is a corresp
 
 Rsbuild plugin is defined in a way similar to Vite, usually a function that accepts plugin options as a parameter and returns a plugin description object.
 
-The main difference is that Vite's hooks are defined directly on the plugin description object, while Rsbuild's hooks are accessed and called through the `api` object. This allows you to control the timing of plugin API calls more flexibly.
+The main difference is that Vite's hooks are defined directly on the plugin description object, while Rsbuild's hooks are accessed and called through the [api object](/plugins/dev/core). This allows you to control the timing of plugin API calls more flexibly.
 
 - Vite plugin:
 
@@ -60,9 +60,9 @@ See [Plugin system](/plugins/dev/index) for more details.
 
 ## `config` hook
 
-Rsbuild and Vite provide different configuration options. When migrating Vite plugins, you need to adjust them according to Rsbuild's configuration options.
+Rsbuild provides the [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) hook to modify Rsbuild configuration. Since Rsbuild and Vite have different configuration structures, you'll need to adjust your configuration when migrating Vite plugins.
 
-For example, replace Vite's `define` option with Rsbuild's [source.define](/config/source/define) option.
+For example, you should replace Vite's `define` option with Rsbuild's [source.define](/config/source/define) option.
 
 - Vite plugin:
 
@@ -98,6 +98,43 @@ const rsbuildPlugin = {
 :::tip
 See [Config migration](/guide/migration/vite#config-migration) to learn how to migrate Vite configurations to Rsbuild.
 :::
+
+## `configResolved` hook
+
+Rsbuild provides the [api.getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig) method to get the resolved configuration. This method serves a similar purpose to Vite's `configResolved` hook.
+
+- Vite plugin:
+
+```ts title="vitePlugin.ts"
+const vitePlugin = () => {
+  let config;
+  return {
+    name: 'read-config',
+    configResolved(resolvedConfig) {
+      config = resolvedConfig;
+    },
+    transform() {
+      console.log(config);
+      // ...
+    },
+  };
+};
+```
+
+- Rsbuild plugin:
+
+```ts title="rsbuildPlugin.ts"
+const rsbuildPlugin = () => ({
+  name: 'read-config',
+  setup(api) {
+    api.transform(() => {
+      const config = api.getNormalizedConfig();
+      console.log(config);
+      // ...
+    });
+  },
+});
+```
 
 ## `transformIndexHtml` hook
 
@@ -169,5 +206,27 @@ const rsbuildPlugin = {
       });
     });
   },
+};
+```
+
+## `apply` property
+
+Rsbuild plugin provides the same [apply property](/plugins/dev/core#conditional-application) as Vite plugins.
+
+- Vite plugin:
+
+```ts title="vitePlugin.ts"
+const vitePlugin = {
+  name: 'vite-plugin',
+  apply: 'build',
+};
+```
+
+- Rsbuild plugin:
+
+```ts title="rsbuildPlugin.ts"
+const rsbuildPlugin = {
+  name: 'rsbuild-plugin',
+  apply: 'build',
 };
 ```
