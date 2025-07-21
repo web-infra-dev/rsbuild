@@ -99,6 +99,42 @@ const rsbuildPlugin = {
 See [Config migration](/guide/migration/vite#config-migration) to learn how to migrate Vite configurations to Rsbuild.
 :::
 
+## `configEnvironment` hook
+
+Rsbuild provides the [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig) hook to modify the configuration of a specific environment.
+
+- Vite plugin:
+
+```ts
+const vitePlugin = {
+  name: 'config-environment',
+  config: (name, config) => {
+    if (name === 'web') {
+      config.resolve.alias = {
+        // ...
+      };
+    }
+  },
+};
+```
+
+- Rsbuild plugin:
+
+```js
+const rsbuildPlugin = {
+  name: 'config-environment',
+  setup(api) {
+    api.modifyEnvironmentConfig((config, { name }) => {
+      if (name === 'web') {
+        config.resolve.alias = {
+          // ...
+        };
+      }
+    });
+  },
+};
+```
+
 ## `configResolved` hook
 
 Rsbuild provides the [api.getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig) method to get the resolved configuration. This method serves a similar purpose to Vite's `configResolved` hook.
