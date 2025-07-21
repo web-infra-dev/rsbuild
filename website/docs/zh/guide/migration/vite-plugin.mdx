@@ -99,6 +99,42 @@ const rsbuildPlugin = {
 查看 [配置迁移](/guide/migration/vite#配置迁移) 了解如何将 Vite 的配置迁移到 Rsbuild。
 :::
 
+## `configEnvironment` 钩子
+
+Rsbuild 提供了 [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig) 钩子来修改特定 environment 的配置。
+
+- Vite 插件：
+
+```ts
+const vitePlugin = {
+  name: 'config-environment',
+  configEnvironment(name, config) {
+    if (name === 'web') {
+      config.resolve.alias = {
+        // ...
+      };
+    }
+  },
+};
+```
+
+- Rsbuild 插件：
+
+```js
+const rsbuildPlugin = {
+  name: 'config-environment',
+  setup(api) {
+    api.modifyEnvironmentConfig((config, { name }) => {
+      if (name === 'web') {
+        config.resolve.alias = {
+          // ...
+        };
+      }
+    });
+  },
+};
+```
+
 ## `configResolved` 钩子
 
 Rsbuild 提供了 [api.getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig) 方法来获取已解析的配置。这个方法与 Vite 的 `configResolved` 钩子的使用场景类似。
