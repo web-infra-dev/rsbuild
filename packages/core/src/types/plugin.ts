@@ -393,7 +393,7 @@ export type TransformDescriptor = {
    */
   mimetype?: Rspack.RuleSetCondition;
   /**
-   * An alias for `order` property.
+   * The original property for specifying execution order, now deprecated in favor of `order`.
    * @deprecated Use `order` instead.
    */
   enforce?: 'pre' | 'post';
