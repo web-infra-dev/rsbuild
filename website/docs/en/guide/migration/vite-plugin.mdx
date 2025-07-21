@@ -108,7 +108,7 @@ Rsbuild provides the [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironm
 ```ts
 const vitePlugin = {
   name: 'config-environment',
-  config: (name, config) => {
+  configEnvironment(name, config) {
     if (name === 'web') {
       config.resolve.alias = {
         // ...
