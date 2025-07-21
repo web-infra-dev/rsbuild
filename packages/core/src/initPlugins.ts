@@ -301,7 +301,10 @@ export function initPluginAPI({
           if (descriptor.mimetype) {
             rule.mimetype(descriptor.mimetype);
           }
-          if (descriptor.enforce) {
+
+          if (descriptor.order && descriptor.order !== 'default') {
+            rule.enforce(descriptor.order);
+          } else if (descriptor.enforce) {
             rule.enforce(descriptor.enforce);
           }
 
