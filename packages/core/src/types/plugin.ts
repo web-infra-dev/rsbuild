@@ -393,6 +393,11 @@ export type TransformDescriptor = {
    */
   mimetype?: Rspack.RuleSetCondition;
   /**
+   * An alias for `order` property.
+   * @deprecated Use `order` instead.
+   */
+  enforce?: 'pre' | 'post';
+  /**
    * Specifies the execution order of the transform function.
    * - When specified as 'pre', the transform function will execute before other
    * transform functions (or Rspack loaders).
@@ -400,7 +405,7 @@ export type TransformDescriptor = {
    * transform functions (or Rspack loaders).
    * @see https://rspack.rs/config/module#ruleenforce
    */
-  enforce?: 'pre' | 'post';
+  order?: HookOrder;
 };
 
 export type TransformHook = (

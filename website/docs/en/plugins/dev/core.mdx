@@ -283,7 +283,7 @@ type TransformDescriptor = {
   issuerLayer?: string;
   with?: Record<string, RuleSetCondition>;
   mimetype?: RuleSetCondition;
-  enforce?: 'pre' | 'post';
+  order?: 'pre' | 'post' | 'default';
 };
 ```
 
