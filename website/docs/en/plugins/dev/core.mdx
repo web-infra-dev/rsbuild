@@ -9,6 +9,7 @@ The type of the plugin object. The plugin object contains the following properti
 - `name`: The name of the plugin, a unique identifier.
 - `setup`: The setup function of the plugin, which can be an async function. This function is called once when the plugin is initialized. The plugin API provides the context info, utility functions and lifecycle hooks. For a complete introduction to lifecycle hooks, please read the [Plugin Hooks](/plugins/dev/hooks) chapter.
 - `apply`: Conditional apply the plugin during serve or build.
+- `enforce`: Specify the execution order of the plugin.
 - `pre`: Declare the names of pre-plugins, which will be executed before the current plugin.
 - `post`: Declare the names of post-plugins, which will be executed after the current plugin.
 - `remove`: Declare the plugins that need to be removed, you can pass an array of plugin names.
@@ -18,11 +19,12 @@ The type of the plugin object, which contains the following properties:
 ```ts
 type RsbuildPlugin = {
   name: string;
+  setup: (api: RsbuildPluginAPI) => Promise<void> | void;
   apply?: 'serve' | 'build';
+  enforce?: 'pre' | 'post';
   pre?: string[];
   post?: string[];
   remove?: string[];
-  setup: (api: RsbuildPluginAPI) => Promise<void> | void;
 };
 ```
 
@@ -73,9 +75,40 @@ const pluginBuild = () => ({
 The `apply` property was introduced in `@rsbuild/core` v1.4.8.
 :::
 
+### `enforce` property
+
+By default, plugins are executed in the order they are added. Plugins can adjust their execution order by adding an `enforce` property:
+
+- `pre`: Execute the plugin before other plugins
+- `post`: Execute the plugin after other plugins
+
+```js
+const pluginFoo = () => ({
+  name: 'plugin-foo',
+  enforce: 'pre',
+  setup(api) {
+    // ...
+  },
+});
+
+const pluginBar = () => ({
+  name: 'plugin-bar',
+  enforce: 'post',
+  setup(api) {
+    // ...
+  },
+});
+```
+
+This affects the order in which hooks are registered, but if a hook specifies an [order](/plugins/dev/hooks#callback-order) property, the `order` takes higher precedence.
+
+:::tip
+The `enforce` property was introduced in `@rsbuild/core` v1.4.9.
+:::
+
 ### Pre-Plugins
 
-By default, plugins are executed in the order they are added. You can declare pre-execution plugins using the `pre` field.
+By setting the `pre` property, you can force some specific plugins to execute before the current plugin. The `pre` property takes higher precedence than the `enforce` property.
 
 For example, consider the following two plugins:
 
@@ -90,11 +123,11 @@ const pluginBar = {
 };
 ```
 
-The Bar plugin is configured with the Foo plugin in its `pre` field, so the Foo plugin will always be executed before the Bar plugin.
+The Bar plugin is configured with the Foo plugin in its `pre` property, so the Foo plugin will always be executed before the Bar plugin.
 
 ### Post-Plugins
 
-Similarly, you can declare post-execution plugins using the `post` field.
+By setting the `post` property, you can force some specific plugins to execute after the current plugin. The `post` property takes higher precedence than the `enforce` property.
 
 ```ts
 const pluginFoo = {
@@ -107,11 +140,11 @@ const pluginBar = {
 };
 ```
 
-The Bar plugin is configured with the Foo plugin in its `post` field, so the Foo plugin will always be executed after the Bar plugin.
+The Bar plugin is configured with the Foo plugin in its `post` property, so the Foo plugin will always be executed after the Bar plugin.
 
 ### Removing plugins
 
-You can remove other plugins within a plugin using the `remove` field.
+You can remove other plugins within a plugin using the `remove` property.
 
 ```ts
 const pluginFoo = {
