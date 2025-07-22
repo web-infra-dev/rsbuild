@@ -144,7 +144,37 @@ export function createPluginManager(): PluginManager {
   };
 }
 
-export const pluginDagSort = (plugins: PluginMeta[]): PluginMeta[] => {
+/**
+ * Sorts plugins by their `enforce` property.
+ */
+export const sortPluginsByEnforce = (plugins: PluginMeta[]): PluginMeta[] => {
+  const prePlugins: PluginMeta[] = [];
+  const normalPlugins: PluginMeta[] = [];
+  const postPlugins: PluginMeta[] = [];
+
+  for (const plugin of plugins) {
+    const { enforce } = plugin.instance;
+
+    if (enforce === 'pre') {
+      prePlugins.push(plugin);
+    } else if (enforce === 'post') {
+      postPlugins.push(plugin);
+    } else {
+      normalPlugins.push(plugin);
+    }
+  }
+
+  return [...prePlugins, ...normalPlugins, ...postPlugins];
+};
+
+/**
+ * Performs topological sorting on plugins based on their dependencies.
+ * Uses the `pre` and `post` properties of plugins to determine the correct
+ * execution order.
+ */
+export const sortPluginsByDependencies = (
+  plugins: PluginMeta[],
+): PluginMeta[] => {
   let allLines: [string, string][] = [];
 
   function getPlugin(name: string) {
@@ -227,7 +257,9 @@ export async function initPlugins({
 }): Promise<void> {
   logger.debug('init plugins');
 
-  const plugins = pluginDagSort(pluginManager.getAllPluginsWithMeta());
+  let plugins = pluginManager.getAllPluginsWithMeta();
+  plugins = sortPluginsByEnforce(plugins);
+  plugins = sortPluginsByDependencies(plugins);
 
   const removedPlugins = new Set<string>();
   const removedEnvPlugins: Record<string, Set<string>> = {};
