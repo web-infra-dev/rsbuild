@@ -24,6 +24,9 @@ Rsbuild 默认通过 [source.define](#使用-define) 向代码中注入以下环
 
 ### import.meta.env.MODE
 
+- **类型：** `'production' | 'development' | 'none'`
+- **使用范围：** 源代码中可用，构建时通过 [define](/guide/advanced/env-vars#使用-define) 替换
+
 你可以在 client 代码中使用 `import.meta.env.MODE` 来读取 [mode](/config/mode) 配置项的值。
 
 ```ts
@@ -52,6 +55,9 @@ if (false) {
 
 ### import.meta.env.DEV
 
+- **类型：** `boolean`
+- **使用范围：** 源代码中可用，构建时通过 [define](/guide/advanced/env-vars#使用-define) 替换
+
 当 [mode](/config/mode) 为 `'development'` 时，值为 `true`，否则为 `false`。
 
 ```ts
@@ -62,6 +68,9 @@ if (import.meta.env.DEV) {
 
 ### import.meta.env.PROD
 
+- **类型：** `boolean`
+- **使用范围：** 源代码中可用，构建时通过 [define](/guide/advanced/env-vars#使用-define) 替换
+
 当 [mode](/config/mode) 为 `'production'` 时，值为 `true`，否则为 `false`。
 
 ```ts
@@ -71,6 +80,9 @@ if (import.meta.env.PROD) {
 ```
 
 ### import.meta.env.BASE_URL
+
+- **类型：** `string`
+- **使用范围：** 源代码中可用，构建时通过 [define](/guide/advanced/env-vars#使用-define) 替换
 
 你可以在 client 代码中使用 `import.meta.env.BASE_URL` 来访问服务端的[基础路径](/guide/basic/server#服务端基础路径)，它由 [server.base](/config/server/base) 配置项决定，这有助于在代码中引用 [public 目录](/guide/basic/static-assets#public-目录) 下的资源。
 
@@ -93,6 +105,9 @@ image.src = `${import.meta.env.BASE_URL}/favicon.ico`;
 ```
 
 ### import.meta.env.ASSET_PREFIX
+
+- **类型：** `string`
+- **使用范围：** 源代码中可用，构建时通过 [define](/guide/advanced/env-vars#使用-define) 替换
 
 你可以在 client 代码中使用 `import.meta.env.ASSET_PREFIX` 来访问静态资源的前缀。
 
@@ -134,6 +149,9 @@ const Image = <img src={`https://example.com/static/icon.png`} />;
 
 ### process.env.BASE_URL
 
+- **类型：** `string`
+- **使用范围：** 源代码中可用，构建时通过 [define](/guide/advanced/env-vars#使用-define) 替换
+
 Rsbuild 也允许使用 `process.env.BASE_URL`，它是 [import.meta.env.BASE_URL](#importmetaenvbase_url) 的别名。
 
 例如，在 HTML 模板中，可以使用 `process.env.BASE_URL` 来拼接 URL：
@@ -145,6 +163,9 @@ Rsbuild 也允许使用 `process.env.BASE_URL`，它是 [import.meta.env.BASE_UR
 
 ### process.env.ASSET_PREFIX
 
+- **类型：** `string`
+- **使用范围：** 源代码中可用，构建时通过 [define](/guide/advanced/env-vars#使用-define) 替换
+
 Rsbuild 也允许使用 `process.env.ASSET_PREFIX`，它是 [import.meta.env.ASSET_PREFIX](#importmetaenvasset_prefix) 的别名。
 
 例如，在 HTML 模板中，可以使用 `process.env.ASSET_PREFIX` 来拼接 URL：
@@ -155,6 +176,9 @@ Rsbuild 也允许使用 `process.env.ASSET_PREFIX`，它是 [import.meta.env.ASS
 ```
 
 ### process.env.NODE_ENV
+
+- **类型：** `string`
+- **使用范围：** 在 Node.js 进程和源代码中均可用
 
 默认情况下，Rsbuild 会自动设置 `process.env.NODE_ENV` 环境变量，在开发模式为 `'development'`，生产模式为 `'production'`。
 
