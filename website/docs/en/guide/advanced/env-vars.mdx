@@ -24,6 +24,9 @@ Rsbuild by default injects the some environment variables into the code using [s
 
 ### import.meta.env.MODE
 
+- **Type:** `'production' | 'development' | 'none'`
+- **Scope:** Available in source code, replaced at build time via [define](/guide/advanced/env-vars#using-define)
+
 You can use `import.meta.env.MODE` in the client code to read the value of the [mode](/config/mode) configuration.
 
 ```ts
@@ -52,6 +55,9 @@ During code minification, `if (false) { ... }` will be recognized as invalid cod
 
 ### import.meta.env.DEV
 
+- **Type:** `boolean`
+- **Scope:** Available in source code, replaced at build time via [define](/guide/advanced/env-vars#using-define)
+
 If [mode](/config/mode) is `'development'`, the value is `true`; otherwise, it is `false`.
 
 ```ts
@@ -62,6 +68,9 @@ if (import.meta.env.DEV) {
 
 ### import.meta.env.PROD
 
+- **Type:** `boolean`
+- **Scope:** Available in source code, replaced at build time via [define](/guide/advanced/env-vars#using-define)
+
 If [mode](/config/mode) is `'production'`, the value is `true`; otherwise, it is `false`.
 
 ```ts
@@ -71,6 +80,9 @@ if (import.meta.env.PROD) {
 ```
 
 ### import.meta.env.BASE_URL
+
+- **Type:** `string`
+- **Scope:** Available in source code, replaced at build time via [define](/guide/advanced/env-vars#using-define)
 
 You can use `import.meta.env.BASE_URL` in the client code to access the server's [base path](/guide/basic/server#base-path), which is determined by the [server.base](/config/server/base) configuration, which is helpful for referencing [public folder](/guide/basic/static-assets#public-folder) assets in the code.
 
@@ -93,6 +105,9 @@ image.src = `${import.meta.env.BASE_URL}/favicon.ico`;
 ```
 
 ### import.meta.env.ASSET_PREFIX
+
+- **Type:** `string`
+- **Scope:** Available in source code, replaced at build time via [define](/guide/advanced/env-vars#using-define)
 
 You can use `import.meta.env.ASSET_PREFIX` in the client code to access the URL prefix of static assets.
 
@@ -134,6 +149,9 @@ const Image = <img src={`https://example.com/static/icon.png`} />;
 
 ### process.env.BASE_URL
 
+- **Type:** `string`
+- **Scope:** Available in source code, replaced at build time via [define](/guide/advanced/env-vars#using-define)
+
 Rsbuild also allows using `process.env.BASE_URL`, which is an alias of [import.meta.env.BASE_URL](#importmetaenvbase_url).
 
 For example, in the HTML template, you can use `process.env.BASE_URL` to concatenate the URL:
@@ -145,6 +163,9 @@ For example, in the HTML template, you can use `process.env.BASE_URL` to concate
 
 ### process.env.ASSET_PREFIX
 
+- **Type:** `string`
+- **Scope:** Available in source code, replaced at build time via [define](/guide/advanced/env-vars#using-define)
+
 Rsbuild also allows using `process.env.ASSET_PREFIX`, which is an alias of [import.meta.env.ASSET_PREFIX](#importmetaenvasset_prefix).
 
 For example, in the HTML template, you can use `process.env.ASSET_PREFIX` to concatenate the URL:
@@ -155,6 +176,9 @@ For example, in the HTML template, you can use `process.env.ASSET_PREFIX` to con
 ```
 
 ### process.env.NODE_ENV
+
+- **Type:** `string`
+- **Scope:** Available in both Node.js process and source code
 
 By default, Rsbuild will automatically set the `process.env.NODE_ENV` environment variable to `'development'` in development mode and `'production'` in production mode.
 
