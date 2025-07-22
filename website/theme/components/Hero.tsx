@@ -1,5 +1,5 @@
+import { useI18n, useNavigate } from '@rspress/core/runtime';
 import { Hero as BaseHero } from '@rstack-dev/doc-ui/hero';
-import { useI18n, useNavigate } from 'rspress/runtime';
 import { useI18nUrl } from './utils';
 import './Hero.module.scss';
 

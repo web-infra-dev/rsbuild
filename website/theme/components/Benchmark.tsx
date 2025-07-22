@@ -1,3 +1,4 @@
+import { useI18n } from '@rspress/core/runtime';
 import {
   Benchmark as BaseBenchmark,
   type BenchmarkData,
@@ -9,7 +10,6 @@ import {
   titleAndDescStyle,
   titleStyle,
 } from '@rstack-dev/doc-ui/section-style';
-import { useI18n } from 'rspress/runtime';
 
 // Benchmark data for different cases
 // Unit: second
