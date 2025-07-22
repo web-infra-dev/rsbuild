@@ -9,6 +9,7 @@
 - `name`：插件的名称，唯一标识符。
 - `setup`：插件逻辑的主入口函数，可以是一个异步函数。该函数仅会在初始化插件时执行一次。插件 API 对象上挂载了提供给插件使用的上下文数据、工具函数和注册生命周期钩子的函数，关于生命周期钩子的完整介绍，请阅读 [Plugin Hooks](/plugins/dev/hooks) 章节。
 - `apply`: 控制插件在 `serve` 或 `build` 时生效。
+- `enforce`: 指定插件的执行顺序。
 - `pre`：声明前置插件的名称，这些插件会在当前插件之前执行。
 - `post`：声明后置插件的名称，这些插件会在当前插件之后执行。
 - `remove`：声明需要移除的插件，可以传入插件 name 的数组。
@@ -16,11 +17,12 @@
 ```ts
 type RsbuildPlugin = {
   name: string;
+  setup: (api: RsbuildPluginAPI) => Promise<void> | void;
   apply?: 'serve' | 'build';
+  enforce?: 'pre' | 'post';
   pre?: string[];
   post?: string[];
   remove?: string[];
-  setup: (api: RsbuildPluginAPI) => Promise<void> | void;
 };
 ```
 
@@ -71,9 +73,40 @@ const pluginBuild = () => ({
 `apply` 属性是在 `@rsbuild/core` v1.4.8 版本中引入的。
 :::
 
+## `enforce` 属性
+
+默认情况下，插件会按照添加顺序依次执行，插件可以通过添加 `enforce` 属性来调整执行顺序：
+
+- `pre`：在其他插件之前执行当前插件
+- `post`：在其他插件之后执行当前插件
+
+```js
+const pluginFoo = () => ({
+  name: 'plugin-foo',
+  enforce: 'pre',
+  setup(api) {
+    // ...
+  },
+});
+
+const pluginBar = () => ({
+  name: 'plugin-bar',
+  enforce: 'post',
+  setup(api) {
+    // ...
+  },
+});
+```
+
+`enforce` 会影响钩子注册的顺序，但如果钩子指定了 [order](/plugins/dev/hooks#回调函数顺序) 属性，则 `order` 具有更高的优先级。
+
+:::tip
+`enforce` 属性是在 `@rsbuild/core` v1.4.9 版本中引入的。
+:::
+
 ### 前置插件
 
-默认情况下，插件会按照添加顺序依次执行，通过 `pre` 字段可以声明前置执行的插件。
+通过设置 `pre` 属性可以强制指定某些插件在当前插件之前执行，`pre` 属性的优先级高于 `enforce` 属性。
 
 比如有下面两个插件：
 
@@ -88,11 +121,11 @@ const pluginBar = {
 };
 ```
 
-Bar 插件在 `pre` 字段中配置了 Foo 插件，因此 Foo 插件一定会在 Bar 插件之前执行。
+Bar 插件在 `pre` 属性中配置了 Foo 插件，因此 Foo 插件一定会在 Bar 插件之前执行。
 
 ### 后置插件
 
-同样的，通过 `post` 字段可以声明后置执行的插件。
+通过设置 `post` 属性可以强制指定某些插件在当前插件之后执行，`post` 属性的优先级高于 `enforce` 属性。
 
 ```ts
 const pluginFoo = {
@@ -105,11 +138,11 @@ const pluginBar = {
 };
 ```
 
-Bar 插件在 `post` 字段中配置了 Foo 插件，因此 Foo 插件一定会在 Bar 插件之后执行。
+Bar 插件在 `post` 属性中配置了 Foo 插件，因此 Foo 插件一定会在 Bar 插件之后执行。
 
 ### 移除插件
 
-通过 `remove` 字段可以在一个插件中移除其他插件。
+通过 `remove` 属性可以在一个插件中移除其他插件。
 
 ```ts
 const pluginFoo = {
