@@ -218,11 +218,23 @@ export type RsbuildPlugin = {
    */
   setup: (api: RsbuildPluginAPI) => MaybePromise<void>;
   /**
+   * Specifies the execution order of the plugin.
+   * - `'pre'`: Execute the plugin before other plugins.
+   * - `'post'`: Execute the plugin after other plugins.
+   * - If not specified, the plugin will execute in the order they were registered.
+   *
+   * This affects the order in which hooks are registered, but if a hook specifies
+   * an `order` property, the `order` takes higher precedence.
+   */
+  enforce?: 'pre' | 'post';
+  /**
    * Declare the names of pre-plugins, which will be executed before the current plugin.
+   * This has higher precedence than the `enforce` property.
    */
   pre?: string[];
   /**
    * Declare the names of post-plugins, which will be executed after the current plugin.
+   * This has higher precedence than the `enforce` property.
    */
   post?: string[];
   /**

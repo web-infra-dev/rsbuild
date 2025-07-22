@@ -1,7 +1,7 @@
 import type { RsbuildPlugin } from '../src';
-import { pluginDagSort } from '../src/pluginManager';
+import { sortPluginsByDependencies } from '../src/pluginManager';
 
-describe('sort plugins', () => {
+describe('sort plugins by dependencies', () => {
   it('should verify each plugin', () => {
     const cases = [
       { name: '1' },
@@ -12,7 +12,7 @@ describe('sort plugins', () => {
       { name: '6', pre: [], post: [] },
     ] as RsbuildPlugin[];
 
-    const result = pluginDagSort(
+    const result = sortPluginsByDependencies(
       cases.map((c) => ({
         instance: c,
         environment: '',
@@ -63,7 +63,7 @@ describe('sort plugins', () => {
       { name: '4' },
     ] as RsbuildPlugin[];
 
-    const result = pluginDagSort(
+    const result = sortPluginsByDependencies(
       cases.map((c) => ({
         instance: c,
         environment: '',
@@ -90,7 +90,7 @@ describe('sort plugins', () => {
       { name: undefined },
     ] as RsbuildPlugin[];
 
-    const result = pluginDagSort(
+    const result = sortPluginsByDependencies(
       cases.map((c) => ({
         instance: c,
         environment: '',
@@ -132,7 +132,7 @@ describe('sort plugins', () => {
     ] as RsbuildPlugin[];
 
     expect(() => {
-      pluginDagSort(
+      sortPluginsByDependencies(
         cases.map((c) => ({
           instance: c,
           environment: '',
