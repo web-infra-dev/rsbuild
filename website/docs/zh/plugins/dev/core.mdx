@@ -8,17 +8,17 @@
 
 - `name`：插件的名称，唯一标识符。
 - `setup`：插件逻辑的主入口函数，可以是一个异步函数。该函数仅会在初始化插件时执行一次。插件 API 对象上挂载了提供给插件使用的上下文数据、工具函数和注册生命周期钩子的函数，关于生命周期钩子的完整介绍，请阅读 [Plugin Hooks](/plugins/dev/hooks) 章节。
-- `apply`: 控制插件在 `serve` 或 `build` 时生效。
-- `enforce`: 指定插件的执行顺序。
-- `pre`：声明前置插件的名称，这些插件会在当前插件之前执行。
-- `post`：声明后置插件的名称，这些插件会在当前插件之后执行。
-- `remove`：声明需要移除的插件，可以传入插件 name 的数组。
+- `apply`: 控制插件在 `serve` 或 `build` 时生效，详见 [条件启用](#条件启用)。
+- `enforce`: 指定插件的执行顺序，详见 [enforce 属性](#enforce-属性)。
+- `pre`：声明前置插件的名称，这些插件会在当前插件之前执行，详见 [前置插件](#前置插件)。
+- `post`：声明后置插件的名称，这些插件会在当前插件之后执行，详见 [后置插件](#后置插件)。
+- `remove`：声明需要移除的插件，可以传入插件 name 的数组，详见 [移除插件](#移除插件)。
 
 ```ts
 type RsbuildPlugin = {
   name: string;
   setup: (api: RsbuildPluginAPI) => Promise<void> | void;
-  apply?: 'serve' | 'build';
+  apply?: 'serve' | 'build' | Function;
   enforce?: 'pre' | 'post';
   pre?: string[];
   post?: string[];
@@ -63,6 +63,35 @@ const pluginServe = () => ({
 const pluginBuild = () => ({
   name: 'plugin-build',
   apply: 'build',
+  setup(api) {
+    // ...
+  },
+});
+```
+
+`apply` 属性也可以是一个函数，函数接收 `config` 和 `context` 两个参数。
+
+```ts
+type RsbuildPluginApplyFn = (
+  this: void,
+  // 原始的 Rsbuild 配置对象（未经过插件处理）
+  config: RsbuildConfig,
+  // 上下文对象
+  context: {
+    // 当前操作的类型
+    action: 'dev' | 'build' | 'preview';
+  },
+) => boolean;
+```
+
+`apply` 函数返回 `true` 来应用插件，返回 `false` 来跳过插件。
+
+```ts
+const pluginBuild = () => ({
+  name: 'plugin-build',
+  apply(config, { action }) {
+    return action === 'build' && config.output?.target === 'web';
+  },
   setup(api) {
     // ...
   },

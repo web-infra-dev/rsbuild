@@ -197,7 +197,7 @@ export type PluginManager = Pick<
 export type RsbuildPluginApplyFn = (
   this: void,
   /**
-   * The original Rsbuild configuration that has not been modified by any plugins.
+   * The original Rsbuild configuration object (before plugin processing)
    */
   config: RsbuildConfig,
   context: Pick<RsbuildContext, 'action'>,

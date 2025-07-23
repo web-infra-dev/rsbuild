@@ -8,11 +8,11 @@ The type of the plugin object. The plugin object contains the following properti
 
 - `name`: The name of the plugin, a unique identifier.
 - `setup`: The setup function of the plugin, which can be an async function. This function is called once when the plugin is initialized. The plugin API provides the context info, utility functions and lifecycle hooks. For a complete introduction to lifecycle hooks, please read the [Plugin Hooks](/plugins/dev/hooks) chapter.
-- `apply`: Conditional apply the plugin during serve or build.
-- `enforce`: Specify the execution order of the plugin.
-- `pre`: Declare the names of pre-plugins, which will be executed before the current plugin.
-- `post`: Declare the names of post-plugins, which will be executed after the current plugin.
-- `remove`: Declare the plugins that need to be removed, you can pass an array of plugin names.
+- `apply`: Conditional apply the plugin during serve or build, see [Conditional application](#conditional-application).
+- `enforce`: Specify the execution order of the plugin, see [enforce property](#enforce-property).
+- `pre`: Declare the names of pre-plugins, which will be executed before the current plugin, see [Pre-Plugins](#pre-plugins).
+- `post`: Declare the names of post-plugins, which will be executed after the current plugin, see [Post-Plugins](#post-plugins).
+- `remove`: Declare the plugins that need to be removed, you can pass an array of plugin names, see [Removing plugins](#removing-plugins).
 
 The type of the plugin object, which contains the following properties:
 
@@ -20,7 +20,7 @@ The type of the plugin object, which contains the following properties:
 type RsbuildPlugin = {
   name: string;
   setup: (api: RsbuildPluginAPI) => Promise<void> | void;
-  apply?: 'serve' | 'build';
+  apply?: 'serve' | 'build' | Function;
   enforce?: 'pre' | 'post';
   pre?: string[];
   post?: string[];
@@ -65,6 +65,35 @@ const pluginServe = () => ({
 const pluginBuild = () => ({
   name: 'plugin-build',
   apply: 'build',
+  setup(api) {
+    // ...
+  },
+});
+```
+
+The `apply` property can also be a function that receives two parameters: `config` and `context`.
+
+```ts
+type RsbuildPluginApplyFn = (
+  this: void,
+  // The original Rsbuild configuration object (before plugin processing)
+  config: RsbuildConfig,
+  // Context object
+  context: {
+    // The current action type
+    action: 'dev' | 'build' | 'preview';
+  },
+) => boolean;
+```
+
+The `apply` function returns `true` to apply the plugin or `false` to skip it.
+
+```ts
+const pluginBuild = () => ({
+  name: 'plugin-build',
+  apply(config, { action }) {
+    return action === 'build' && config.output?.target === 'web';
+  },
   setup(api) {
     // ...
   },
