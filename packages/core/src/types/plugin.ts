@@ -194,7 +194,16 @@ export type PluginManager = Pick<
   getAllPluginsWithMeta: () => PluginMeta[];
 };
 
-export type RsbuildPluginApply = 'serve' | 'build';
+export type RsbuildPluginApplyFn = (
+  this: void,
+  /**
+   * The original Rsbuild configuration that has not been modified by any plugins.
+   */
+  config: RsbuildConfig,
+  context: Pick<RsbuildContext, 'action'>,
+) => boolean;
+
+export type RsbuildPluginApply = 'serve' | 'build' | RsbuildPluginApplyFn;
 
 /**
  * The type of the Rsbuild plugin object.
@@ -208,6 +217,7 @@ export type RsbuildPlugin = {
    * Conditional apply the plugin during serve or build.
    * - `'serve'`: Apply the plugin when starting the dev server or preview server.
    * - `'build'`: Apply the plugin during build.
+   * - Can be a function that returns `true` to apply the plugin or `false` to skip it.
    * - If not specified, the plugin will be applied during both serve and build.
    */
   apply?: RsbuildPluginApply;
