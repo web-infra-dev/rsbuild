@@ -1,13 +1,13 @@
+import { Layout as BaseLayout } from '@rspress/core/theme';
 import { Announcement } from '@rstack-dev/doc-ui/announcement';
 import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
-import { Layout as BaseLayout } from 'rspress/theme';
 import { HomeLayout } from './pages';
 import './index.scss';
+import { NoSSR, useLang, usePageData } from '@rspress/core/runtime';
 import {
   Search as PluginAlgoliaSearch,
   ZH_LOCALES,
 } from '@rspress/plugin-algolia/runtime';
-import { NoSSR, useLang, usePageData } from 'rspress/runtime';
 
 // Enable announcement when we have something to announce
 const ANNOUNCEMENT_URL = '';
@@ -59,4 +59,4 @@ const Search = () => {
 
 export { Layout, HomeLayout, Search };
 
-export * from 'rspress/theme';
+export * from '@rspress/core/theme';

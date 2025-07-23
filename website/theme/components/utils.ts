@@ -1,5 +1,5 @@
+import { useLang, usePageData, withBase } from '@rspress/core/runtime';
 import { useCallback } from 'react';
-import { useLang, usePageData, withBase } from 'rspress/runtime';
 
 export function useI18nUrl() {
   const lang = useLang();
