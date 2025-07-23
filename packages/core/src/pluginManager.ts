@@ -289,16 +289,27 @@ export async function initPlugins({
       continue;
     }
 
+    // Skip plugin if it has `apply` property and doesn't match the current
+    // action type
     if (instance.apply && context.action) {
-      const applyMap = {
-        build: 'build',
-        dev: 'serve',
-        preview: 'serve',
-      } as const;
+      if (isFunction(instance.apply)) {
+        const result = instance.apply(context.originalConfig, {
+          action: context.action,
+        });
+        if (result === false) {
+          continue;
+        }
+      } else {
+        const applyMap = {
+          build: 'build',
+          dev: 'serve',
+          preview: 'serve',
+        } as const;
 
-      const expected = applyMap[context.action];
-      if (expected && instance.apply !== expected) {
-        continue;
+        const expected = applyMap[context.action];
+        if (expected && instance.apply !== expected) {
+          continue;
+        }
       }
     }
 
