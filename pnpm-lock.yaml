@@ -23,6 +23,9 @@ patchedDependencies:
   url-loader:
     hash: 4ed67f741914e665ed1dcef907caaa2acc85269026674133f7b987661de3591f
     path: patches/url-loader@4.1.1.patch
+  wsl-utils@0.1.0:
+    hash: 1c69517d3c0eaa676375b19345ddca3fbb36647f7cf2d9709dccc69f8e134bbe
+    path: patches/wsl-utils@0.1.0.patch
 
 importers:
 
@@ -11484,7 +11487,7 @@ snapshots:
       default-browser: 5.2.1
       define-lazy-prop: 3.0.0
       is-inside-container: 1.0.0
-      wsl-utils: 0.1.0
+      wsl-utils: 0.1.0(patch_hash=1c69517d3c0eaa676375b19345ddca3fbb36647f7cf2d9709dccc69f8e134bbe)
 
   open@8.4.2:
     dependencies:
@@ -12832,7 +12835,7 @@ snapshots:
 
   ws@8.18.3: {}
 
-  wsl-utils@0.1.0:
+  wsl-utils@0.1.0(patch_hash=1c69517d3c0eaa676375b19345ddca3fbb36647f7cf2d9709dccc69f8e134bbe):
     dependencies:
       is-wsl: 3.1.0
 

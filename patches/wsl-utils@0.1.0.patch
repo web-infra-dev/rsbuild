@@ -1,0 +1,12 @@
+diff --git a/index.js b/index.js
+index 8ae51879d98b2aad27b80a77e0a04436ea42ceb6..f91794b0a8c1de8b059b1ef579fa47ef35762556 100644
+--- a/index.js
++++ b/index.js
+@@ -1,5 +1,6 @@
+ import process from 'node:process';
+-import fs, {constants as fsConstants} from 'node:fs/promises';
++import fs from 'node:fs/promises';
++import {constants as fsConstants} from 'fs';
+ import isWsl from 'is-wsl';
+ 
+ export const wslDrivesMountPoint = (() => {

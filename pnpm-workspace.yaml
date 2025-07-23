@@ -18,5 +18,6 @@ patchedDependencies:
   open@10.2.0: patches/open@10.2.0.patch
   postcss-loader@8.1.1: patches/postcss-loader@8.1.1.patch
   url-loader: patches/url-loader@4.1.1.patch
+  wsl-utils@0.1.0: patches/wsl-utils@0.1.0.patch
 
 strictPeerDependencies: false
