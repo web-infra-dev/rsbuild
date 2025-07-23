@@ -264,8 +264,8 @@ importers:
         specifier: ^1.89.2
         version: 1.89.2
       stylus:
-        specifier: 0.64.0
-        version: 0.64.0
+        specifier: github:stylus/stylus#0.64.0
+        version: https://codeload.github.com/stylus/stylus/tar.gz/1086c6c1fbd7a7fd0ce9ad94f6cf4a62fc79a6e9
 
   e2e/cases/plugin-vue:
     dependencies:
@@ -12415,6 +12415,7 @@ snapshots:
       source-map: 0.7.4
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   stylus@https://codeload.github.com/stylus/stylus/tar.gz/1086c6c1fbd7a7fd0ce9ad94f6cf4a62fc79a6e9:
     dependencies:

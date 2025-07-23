@@ -8,6 +8,6 @@
   "devDependencies": {
     "less": "^4.4.0",
     "sass": "^1.89.2",
-    "stylus": "0.64.0"
+    "stylus": "github:stylus/stylus#0.64.0"
   }
 }
