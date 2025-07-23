@@ -998,11 +998,11 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0
       stylus:
-        specifier: 0.64.0
-        version: 0.64.0
+        specifier: github:stylus/stylus#0.64.0
+        version: https://codeload.github.com/stylus/stylus/tar.gz/1086c6c1fbd7a7fd0ce9ad94f6cf4a62fc79a6e9
       stylus-loader:
         specifier: 8.1.1
-        version: 8.1.1(@rspack/core@1.4.9(@swc/helpers@0.5.17))(stylus@0.64.0)(webpack@5.99.9)
+        version: 8.1.1(@rspack/core@1.4.9(@swc/helpers@0.5.17))(stylus@https://codeload.github.com/stylus/stylus/tar.gz/1086c6c1fbd7a7fd0ce9ad94f6cf4a62fc79a6e9)(webpack@5.99.9)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -6182,6 +6182,7 @@ packages:
 
   stylus-loader@8.1.1:
     resolution: {integrity: sha512-Ohe29p3gwJiu1kxq16P80g1qq0FxGtwQevKctLE4su8KUq+Ea06Q6lp7SpcJjaKNrWIuEZQGvESUPt8JpukKVw==}
+    version: 8.1.1
     engines: {node: '>= 18.12.0'}
     peerDependencies:
       '@rspack/core': 0.x || 1.x
@@ -6195,6 +6196,12 @@ packages:
 
   stylus@0.64.0:
     resolution: {integrity: sha512-ZIdT8eUv8tegmqy1tTIdJv9We2DumkNZFdCF5mz/Kpq3OcTaxSuCAYZge6HKK2CmNC02G1eJig2RV7XTw5hQrA==}
+    engines: {node: '>=16'}
+    hasBin: true
+
+  stylus@https://codeload.github.com/stylus/stylus/tar.gz/1086c6c1fbd7a7fd0ce9ad94f6cf4a62fc79a6e9:
+    resolution: {tarball: https://codeload.github.com/stylus/stylus/tar.gz/1086c6c1fbd7a7fd0ce9ad94f6cf4a62fc79a6e9}
+    version: 0.64.0
     engines: {node: '>=16'}
     hasBin: true
 
@@ -12390,16 +12397,26 @@ snapshots:
     dependencies:
       inline-style-parser: 0.2.4
 
-  stylus-loader@8.1.1(@rspack/core@1.4.9(@swc/helpers@0.5.17))(stylus@0.64.0)(webpack@5.99.9):
+  stylus-loader@8.1.1(@rspack/core@1.4.9(@swc/helpers@0.5.17))(stylus@https://codeload.github.com/stylus/stylus/tar.gz/1086c6c1fbd7a7fd0ce9ad94f6cf4a62fc79a6e9)(webpack@5.99.9):
     dependencies:
       fast-glob: 3.3.3
       normalize-path: 3.0.0
-      stylus: 0.64.0
+      stylus: https://codeload.github.com/stylus/stylus/tar.gz/1086c6c1fbd7a7fd0ce9ad94f6cf4a62fc79a6e9
     optionalDependencies:
       '@rspack/core': 1.4.9(@swc/helpers@0.5.17)
       webpack: 5.99.9
 
   stylus@0.64.0:
+    dependencies:
+      '@adobe/css-tools': 4.3.3
+      debug: 4.4.1
+      glob: 10.4.5
+      sax: 1.4.1
+      source-map: 0.7.4
+    transitivePeerDependencies:
+      - supports-color
+
+  stylus@https://codeload.github.com/stylus/stylus/tar.gz/1086c6c1fbd7a7fd0ce9ad94f6cf4a62fc79a6e9:
     dependencies:
       '@adobe/css-tools': 4.3.3
       debug: 4.4.1

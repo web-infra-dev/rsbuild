@@ -30,7 +30,7 @@
   "dependencies": {
     "deepmerge": "^4.3.1",
     "reduce-configs": "^1.1.0",
-    "stylus": "0.64.0",
+    "stylus": "github:stylus/stylus#0.64.0",
     "stylus-loader": "8.1.1"
   },
   "devDependencies": {
