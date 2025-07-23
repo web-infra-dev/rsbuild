@@ -264,8 +264,8 @@ importers:
         specifier: ^1.89.2
         version: 1.89.2
       stylus:
-        specifier: github:stylus/stylus#0.64.0
-        version: https://codeload.github.com/stylus/stylus/tar.gz/1086c6c1fbd7a7fd0ce9ad94f6cf4a62fc79a6e9
+        specifier: https://github.com/stylus/stylus/archive/refs/tags/0.64.0.tar.gz
+        version: https://github.com/stylus/stylus/archive/refs/tags/0.64.0.tar.gz
 
   e2e/cases/plugin-vue:
     dependencies:
@@ -998,11 +998,11 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0
       stylus:
-        specifier: github:stylus/stylus#0.64.0
-        version: https://codeload.github.com/stylus/stylus/tar.gz/1086c6c1fbd7a7fd0ce9ad94f6cf4a62fc79a6e9
+        specifier: https://github.com/stylus/stylus/archive/refs/tags/0.64.0.tar.gz
+        version: https://github.com/stylus/stylus/archive/refs/tags/0.64.0.tar.gz
       stylus-loader:
         specifier: 8.1.1
-        version: 8.1.1(@rspack/core@1.4.9(@swc/helpers@0.5.17))(stylus@https://codeload.github.com/stylus/stylus/tar.gz/1086c6c1fbd7a7fd0ce9ad94f6cf4a62fc79a6e9)(webpack@5.99.9)
+        version: 8.1.1(@rspack/core@1.4.9(@swc/helpers@0.5.17))(stylus@https://github.com/stylus/stylus/archive/refs/tags/0.64.0.tar.gz)(webpack@5.99.9)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -6199,8 +6199,8 @@ packages:
     engines: {node: '>=16'}
     hasBin: true
 
-  stylus@https://codeload.github.com/stylus/stylus/tar.gz/1086c6c1fbd7a7fd0ce9ad94f6cf4a62fc79a6e9:
-    resolution: {tarball: https://codeload.github.com/stylus/stylus/tar.gz/1086c6c1fbd7a7fd0ce9ad94f6cf4a62fc79a6e9}
+  stylus@https://github.com/stylus/stylus/archive/refs/tags/0.64.0.tar.gz:
+    resolution: {tarball: https://github.com/stylus/stylus/archive/refs/tags/0.64.0.tar.gz}
     version: 0.64.0
     engines: {node: '>=16'}
     hasBin: true
@@ -12397,11 +12397,11 @@ snapshots:
     dependencies:
       inline-style-parser: 0.2.4
 
-  stylus-loader@8.1.1(@rspack/core@1.4.9(@swc/helpers@0.5.17))(stylus@https://codeload.github.com/stylus/stylus/tar.gz/1086c6c1fbd7a7fd0ce9ad94f6cf4a62fc79a6e9)(webpack@5.99.9):
+  stylus-loader@8.1.1(@rspack/core@1.4.9(@swc/helpers@0.5.17))(stylus@https://github.com/stylus/stylus/archive/refs/tags/0.64.0.tar.gz)(webpack@5.99.9):
     dependencies:
       fast-glob: 3.3.3
       normalize-path: 3.0.0
-      stylus: https://codeload.github.com/stylus/stylus/tar.gz/1086c6c1fbd7a7fd0ce9ad94f6cf4a62fc79a6e9
+      stylus: https://github.com/stylus/stylus/archive/refs/tags/0.64.0.tar.gz
     optionalDependencies:
       '@rspack/core': 1.4.9(@swc/helpers@0.5.17)
       webpack: 5.99.9
@@ -12417,7 +12417,7 @@ snapshots:
       - supports-color
     optional: true
 
-  stylus@https://codeload.github.com/stylus/stylus/tar.gz/1086c6c1fbd7a7fd0ce9ad94f6cf4a62fc79a6e9:
+  stylus@https://github.com/stylus/stylus/archive/refs/tags/0.64.0.tar.gz:
     dependencies:
       '@adobe/css-tools': 4.3.3
       debug: 4.4.1
