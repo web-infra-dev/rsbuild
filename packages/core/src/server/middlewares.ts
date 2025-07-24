@@ -3,12 +3,12 @@ import path from 'node:path';
 import { addTrailingSlash, color } from '../helpers';
 import { logger } from '../logger';
 import type {
+  Connect,
   EnvironmentAPI,
   HtmlFallback,
   RequestHandler,
   Rspack,
 } from '../types';
-import type { Connect } from '../types';
 import type { CompilationManager } from './compilationManager';
 import { joinUrlSegments, stripBase } from './helper';
 
