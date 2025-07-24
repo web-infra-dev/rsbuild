@@ -3,8 +3,7 @@ import path from 'node:path';
 import { dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-// TODO: broken since preact 10.26.4
-test.skip('HMR should work properly with `createContext`', async ({ page }) => {
+test('HMR should work properly with `createContext`', async ({ page }) => {
   // HMR cases will fail on Windows
   if (process.platform === 'win32') {
     test.skip();
