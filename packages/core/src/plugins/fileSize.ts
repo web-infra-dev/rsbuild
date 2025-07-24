@@ -6,7 +6,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { promisify } from 'node:util';
 import zlib from 'node:zlib';
-import { CSS_REGEX, HTML_REGEX, JS_REGEX } from '../constants';
+import { JS_REGEX } from '../constants';
 import { color } from '../helpers';
 import { logger } from '../logger';
 import type {
@@ -74,10 +74,10 @@ const coloringAssetName = (assetName: string) => {
   if (JS_REGEX.test(assetName)) {
     return color.cyan(assetName);
   }
-  if (CSS_REGEX.test(assetName)) {
+  if (assetName.endsWith('.css')) {
     return color.yellow(assetName);
   }
-  if (HTML_REGEX.test(assetName)) {
+  if (assetName.endsWith('.html')) {
     return color.green(assetName);
   }
   return color.magenta(assetName);

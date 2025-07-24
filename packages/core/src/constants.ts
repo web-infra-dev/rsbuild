@@ -43,7 +43,6 @@ export const DEFAULT_BROWSERSLIST: Record<string, string[]> = {
 };
 
 // RegExp
-export const HTML_REGEX: RegExp = /\.html$/;
 export const JS_REGEX: RegExp = /\.(?:js|mjs|cjs|jsx)$/;
 export const SCRIPT_REGEX: RegExp = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
 export const CSS_REGEX: RegExp = /\.css$/;
