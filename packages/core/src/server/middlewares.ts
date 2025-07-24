@@ -8,7 +8,7 @@ import type {
   RequestHandler,
   Rspack,
 } from '../types';
-import type { Connect } from '../types/';
+import type { Connect } from '../types';
 import type { CompilationManager } from './compilationManager';
 import { joinUrlSegments, stripBase } from './helper';
 
