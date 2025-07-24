@@ -172,6 +172,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
+                  "exportedEnum": false,
                   "typeExports": true,
                 },
               },
@@ -229,6 +230,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
+                  "exportedEnum": false,
                   "typeExports": true,
                 },
               },

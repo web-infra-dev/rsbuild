@@ -62,6 +62,7 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
           },
           "rspackExperiments": {
             "collectTypeScriptInfo": {
+              "exportedEnum": false,
               "typeExports": true,
             },
           },
@@ -126,6 +127,7 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
           },
           "rspackExperiments": {
             "collectTypeScriptInfo": {
+              "exportedEnum": false,
               "typeExports": true,
             },
           },
@@ -192,6 +194,7 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
           },
           "rspackExperiments": {
             "collectTypeScriptInfo": {
+              "exportedEnum": false,
               "typeExports": true,
             },
           },
@@ -256,6 +259,7 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
           },
           "rspackExperiments": {
             "collectTypeScriptInfo": {
+              "exportedEnum": false,
               "typeExports": true,
             },
           },
@@ -305,6 +309,7 @@ exports[`plugin-svelte > should add svelte loader and resolve config properly 1`
           },
           "rspackExperiments": {
             "collectTypeScriptInfo": {
+              "exportedEnum": false,
               "typeExports": true,
             },
           },
@@ -409,6 +414,7 @@ exports[`plugin-svelte > should override default svelte-loader options throw opt
           },
           "rspackExperiments": {
             "collectTypeScriptInfo": {
+              "exportedEnum": false,
               "typeExports": true,
             },
           },
@@ -469,6 +475,7 @@ exports[`plugin-svelte > should set dev and hotReload to false in production mod
           },
           "rspackExperiments": {
             "collectTypeScriptInfo": {
+              "exportedEnum": false,
               "typeExports": true,
             },
           },
@@ -533,6 +540,7 @@ exports[`plugin-svelte > should support pass custom preprocess options 1`] = `
           },
           "rspackExperiments": {
             "collectTypeScriptInfo": {
+              "exportedEnum": false,
               "typeExports": true,
             },
           },
@@ -597,6 +605,7 @@ exports[`plugin-svelte > should turn off HMR by hand correctly 1`] = `
           },
           "rspackExperiments": {
             "collectTypeScriptInfo": {
+              "exportedEnum": false,
               "typeExports": true,
             },
           },

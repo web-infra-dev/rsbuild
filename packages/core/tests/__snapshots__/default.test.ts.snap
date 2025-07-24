@@ -172,6 +172,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
+                  "exportedEnum": false,
                   "typeExports": true,
                 },
               },
@@ -229,6 +230,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
+                  "exportedEnum": false,
                   "typeExports": true,
                 },
               },
@@ -676,6 +678,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
+                  "exportedEnum": false,
                   "typeExports": true,
                 },
               },
@@ -733,6 +736,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
+                  "exportedEnum": false,
                   "typeExports": true,
                 },
               },
@@ -1180,6 +1184,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
+                  "exportedEnum": false,
                   "typeExports": true,
                 },
               },
@@ -1233,6 +1238,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
+                  "exportedEnum": false,
                   "typeExports": true,
                 },
               },
@@ -1643,6 +1649,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
+                  "exportedEnum": false,
                   "typeExports": true,
                 },
               },
@@ -1700,6 +1707,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
+                  "exportedEnum": false,
                   "typeExports": true,
                 },
               },

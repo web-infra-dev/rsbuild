@@ -55,6 +55,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
         },
         "rspackExperiments": {
           "collectTypeScriptInfo": {
+            "exportedEnum": false,
             "typeExports": true,
           },
         },
@@ -146,6 +147,7 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
         },
         "rspackExperiments": {
           "collectTypeScriptInfo": {
+            "exportedEnum": false,
             "typeExports": true,
           },
         },
@@ -234,6 +236,7 @@ exports[`plugins/babel > should apply environment config correctly 2`] = `
         },
         "rspackExperiments": {
           "collectTypeScriptInfo": {
+            "exportedEnum": false,
             "typeExports": true,
           },
         },
@@ -323,6 +326,7 @@ exports[`plugins/babel > should set babel-loader 1`] = `
         },
         "rspackExperiments": {
           "collectTypeScriptInfo": {
+            "exportedEnum": false,
             "typeExports": true,
           },
         },
@@ -411,6 +415,7 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
         },
         "rspackExperiments": {
           "collectTypeScriptInfo": {
+            "exportedEnum": false,
             "typeExports": true,
           },
         },

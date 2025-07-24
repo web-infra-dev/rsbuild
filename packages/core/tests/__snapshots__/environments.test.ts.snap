@@ -1467,6 +1467,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                 },
                 "rspackExperiments": {
                   "collectTypeScriptInfo": {
+                    "exportedEnum": false,
                     "typeExports": true,
                   },
                 },
@@ -1524,6 +1525,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                 },
                 "rspackExperiments": {
                   "collectTypeScriptInfo": {
+                    "exportedEnum": false,
                     "typeExports": true,
                   },
                 },
@@ -1883,6 +1885,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                 },
                 "rspackExperiments": {
                   "collectTypeScriptInfo": {
+                    "exportedEnum": false,
                     "typeExports": true,
                   },
                 },
@@ -1936,6 +1939,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                 },
                 "rspackExperiments": {
                   "collectTypeScriptInfo": {
+                    "exportedEnum": false,
                     "typeExports": true,
                   },
                 },
