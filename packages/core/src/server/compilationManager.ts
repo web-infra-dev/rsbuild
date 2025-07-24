@@ -1,5 +1,4 @@
 import fs from 'node:fs';
-import type { IncomingMessage, ServerResponse } from 'node:http';
 import { createRequire } from 'node:module';
 import type { Stats } from '@rspack/core';
 import { HTML_REGEX } from '../constants';
@@ -7,7 +6,6 @@ import { isMultiCompiler } from '../helpers';
 import { getPathnameFromUrl } from '../helpers/path';
 import type {
   EnvironmentContext,
-  NextFunction,
   NormalizedDevConfig,
   NormalizedServerConfig,
   Rspack,
@@ -192,11 +190,7 @@ export class CompilationManager {
         base && base !== '/' ? stripBase(prefix, base) : prefix,
       );
 
-    const wrapper = async (
-      req: IncomingMessage,
-      res: ServerResponse,
-      next: NextFunction,
-    ) => {
+    const wrapper: CompilationMiddleware = async (req, res, next) => {
       const { url } = req;
       const assetPrefix =
         url && assetPrefixes.find((prefix) => url.startsWith(prefix));

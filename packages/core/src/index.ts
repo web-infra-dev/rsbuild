@@ -51,6 +51,7 @@ export type {
   CompressOptions,
   ConfigChain,
   ConfigChainWithContext,
+  Connect,
   ConsoleType,
   CreateCompiler,
   CreateRsbuildOptions,

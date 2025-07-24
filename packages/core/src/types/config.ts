@@ -35,6 +35,7 @@ import type {
 import type { RsbuildEntry, RsbuildMode, RsbuildTarget } from './rsbuild';
 import type { BundlerPluginInstance, Rspack, RspackRule } from './rspack';
 import type {
+  Connect,
   CSSExtractOptions,
   CSSLoaderModulesOptions,
   CSSLoaderOptions,
@@ -1564,13 +1565,7 @@ export type ProgressBarConfig = {
   id?: string;
 };
 
-export type NextFunction = () => void;
-
-export type RequestHandler = (
-  req: IncomingMessage,
-  res: ServerResponse,
-  next: NextFunction,
-) => void;
+export type RequestHandler = Connect.NextHandleFunction;
 
 export type EnvironmentAPI = {
   [name: string]: {

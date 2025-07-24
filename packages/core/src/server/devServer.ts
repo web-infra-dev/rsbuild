@@ -1,10 +1,10 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
-import type Connect from '../../compiled/connect/index.js';
 import { color, getPublicPathFromCompiler, isMultiCompiler } from '../helpers';
 import { logger } from '../logger';
 import { onBeforeRestartServer, restartDevServer } from '../restart';
 import type {
+  Connect,
   CreateCompiler,
   CreateDevServerOptions,
   EnvironmentAPI,
