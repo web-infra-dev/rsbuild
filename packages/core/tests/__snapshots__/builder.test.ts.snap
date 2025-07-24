@@ -16,6 +16,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         "force": false,
       },
     },
+    "typeReexportsPresence": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -25,6 +26,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
     "parser": {
       "javascript": {
         "exportsPresence": "error",
+        "typeReexportsPresence": "tolerant",
       },
     },
     "rules": [
@@ -168,6 +170,11 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
                   "legacyDecorator": false,
                 },
               },
+              "rspackExperiments": {
+                "collectTypeScriptInfo": {
+                  "typeExports": true,
+                },
+              },
             },
           },
         ],
@@ -218,6 +225,11 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
+                },
+              },
+              "rspackExperiments": {
+                "collectTypeScriptInfo": {
+                  "typeExports": true,
                 },
               },
             },

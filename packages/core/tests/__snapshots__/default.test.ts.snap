@@ -16,6 +16,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "force": false,
       },
     },
+    "typeReexportsPresence": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -25,6 +26,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "parser": {
       "javascript": {
         "exportsPresence": "error",
+        "typeReexportsPresence": "tolerant",
       },
     },
     "rules": [
@@ -168,6 +170,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "legacyDecorator": false,
                 },
               },
+              "rspackExperiments": {
+                "collectTypeScriptInfo": {
+                  "typeExports": true,
+                },
+              },
             },
           },
         ],
@@ -218,6 +225,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
+                },
+              },
+              "rspackExperiments": {
+                "collectTypeScriptInfo": {
+                  "typeExports": true,
                 },
               },
             },
@@ -508,6 +520,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "force": false,
       },
     },
+    "typeReexportsPresence": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -517,6 +530,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "parser": {
       "javascript": {
         "exportsPresence": "error",
+        "typeReexportsPresence": "tolerant",
       },
     },
     "rules": [
@@ -660,6 +674,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                   "legacyDecorator": false,
                 },
               },
+              "rspackExperiments": {
+                "collectTypeScriptInfo": {
+                  "typeExports": true,
+                },
+              },
             },
           },
         ],
@@ -710,6 +729,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
+                },
+              },
+              "rspackExperiments": {
+                "collectTypeScriptInfo": {
+                  "typeExports": true,
                 },
               },
             },
@@ -1028,6 +1052,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "force": false,
       },
     },
+    "typeReexportsPresence": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -1037,6 +1062,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "parser": {
       "javascript": {
         "exportsPresence": "error",
+        "typeReexportsPresence": "tolerant",
       },
     },
     "rules": [
@@ -1152,6 +1178,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "legacyDecorator": false,
                 },
               },
+              "rspackExperiments": {
+                "collectTypeScriptInfo": {
+                  "typeExports": true,
+                },
+              },
             },
           },
         ],
@@ -1198,6 +1229,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
+                },
+              },
+              "rspackExperiments": {
+                "collectTypeScriptInfo": {
+                  "typeExports": true,
                 },
               },
             },
@@ -1443,6 +1479,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "force": false,
       },
     },
+    "typeReexportsPresence": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -1452,6 +1489,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
     "parser": {
       "javascript": {
         "exportsPresence": "error",
+        "typeReexportsPresence": "tolerant",
       },
     },
     "rules": [
@@ -1603,6 +1641,11 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "legacyDecorator": false,
                 },
               },
+              "rspackExperiments": {
+                "collectTypeScriptInfo": {
+                  "typeExports": true,
+                },
+              },
             },
           },
         ],
@@ -1653,6 +1696,11 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
+                },
+              },
+              "rspackExperiments": {
+                "collectTypeScriptInfo": {
+                  "typeExports": true,
                 },
               },
             },

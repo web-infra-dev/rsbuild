@@ -59,6 +59,11 @@ exports[`svgr > configure SVGR options 1`] = `
                 },
               },
             },
+            "rspackExperiments": {
+              "collectTypeScriptInfo": {
+                "typeExports": true,
+              },
+            },
           },
         },
         {
@@ -159,6 +164,11 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
                 },
               },
             },
+            "rspackExperiments": {
+              "collectTypeScriptInfo": {
+                "typeExports": true,
+              },
+            },
           },
         },
         {
@@ -225,6 +235,11 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
                   "refresh": false,
                   "runtime": "automatic",
                 },
+              },
+            },
+            "rspackExperiments": {
+              "collectTypeScriptInfo": {
+                "typeExports": true,
               },
             },
           },
@@ -326,6 +341,11 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
                 },
               },
             },
+            "rspackExperiments": {
+              "collectTypeScriptInfo": {
+                "typeExports": true,
+              },
+            },
           },
         },
         {
@@ -392,6 +412,11 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
                   "refresh": false,
                   "runtime": "automatic",
                 },
+              },
+            },
+            "rspackExperiments": {
+              "collectTypeScriptInfo": {
+                "typeExports": true,
               },
             },
           },
@@ -493,6 +518,11 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
                 },
               },
             },
+            "rspackExperiments": {
+              "collectTypeScriptInfo": {
+                "typeExports": true,
+              },
+            },
           },
         },
         {
@@ -559,6 +589,11 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
                   "refresh": false,
                   "runtime": "automatic",
                 },
+              },
+            },
+            "rspackExperiments": {
+              "collectTypeScriptInfo": {
+                "typeExports": true,
               },
             },
           },
@@ -660,6 +695,11 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
                 },
               },
             },
+            "rspackExperiments": {
+              "collectTypeScriptInfo": {
+                "typeExports": true,
+              },
+            },
           },
         },
         {
@@ -726,6 +766,11 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
                   "refresh": false,
                   "runtime": "automatic",
                 },
+              },
+            },
+            "rspackExperiments": {
+              "collectTypeScriptInfo": {
+                "typeExports": true,
               },
             },
           },

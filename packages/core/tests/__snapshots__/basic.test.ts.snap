@@ -10,6 +10,7 @@ exports[`plugin-basic > should apply basic config correctly in development 1`] =
         "force": false,
       },
     },
+    "typeReexportsPresence": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -19,6 +20,7 @@ exports[`plugin-basic > should apply basic config correctly in development 1`] =
     "parser": {
       "javascript": {
         "exportsPresence": "error",
+        "typeReexportsPresence": "tolerant",
       },
     },
   },
@@ -54,6 +56,7 @@ exports[`plugin-basic > should apply basic config correctly in production 1`] = 
         "force": false,
       },
     },
+    "typeReexportsPresence": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -63,6 +66,7 @@ exports[`plugin-basic > should apply basic config correctly in production 1`] = 
     "parser": {
       "javascript": {
         "exportsPresence": "error",
+        "typeReexportsPresence": "tolerant",
       },
     },
   },
