@@ -1,18 +1,18 @@
 import type { IncomingMessage } from 'node:http';
 import path from 'node:path';
-import type Connect from '../../compiled/connect/index.js';
 import { addTrailingSlash, color } from '../helpers';
 import { logger } from '../logger';
 import type {
   EnvironmentAPI,
   HtmlFallback,
-  RequestHandler as Middleware,
+  RequestHandler,
   Rspack,
 } from '../types';
+import type { Connect } from '../types/';
 import type { CompilationManager } from './compilationManager';
 import { joinUrlSegments, stripBase } from './helper';
 
-export const faviconFallbackMiddleware: Middleware = (req, res, next) => {
+export const faviconFallbackMiddleware: RequestHandler = (req, res, next) => {
   if (req.url === '/favicon.ico') {
     res.statusCode = 204;
     res.end();
@@ -73,12 +73,12 @@ export const getRequestLoggerMiddleware: () => Promise<Connect.NextHandleFunctio
     };
   };
 
-export const notFoundMiddleware: Middleware = (_req, res, _next) => {
+export const notFoundMiddleware: RequestHandler = (_req, res, _next) => {
   res.statusCode = 404;
   res.end();
 };
 
-export const optionsFallbackMiddleware: Middleware = (req, res, next) => {
+export const optionsFallbackMiddleware: RequestHandler = (req, res, next) => {
   if (req.method === 'OPTIONS') {
     // Use 204 as no content to send in the response body
     res.statusCode = 204;
@@ -130,7 +130,7 @@ const getUrlPathname = (url: string): string => {
 export const getHtmlCompletionMiddleware: (params: {
   distPath: string;
   compilationManager: CompilationManager;
-}) => Middleware = ({ distPath, compilationManager }) => {
+}) => RequestHandler = ({ distPath, compilationManager }) => {
   return async (req, res, next) => {
     if (!maybeHTMLRequest(req)) {
       return next();
@@ -172,9 +172,9 @@ export const getHtmlCompletionMiddleware: (params: {
 /**
  * handle `server.base`
  */
-export const getBaseMiddleware: (params: { base: string }) => Middleware = ({
-  base,
-}) => {
+export const getBaseMiddleware: (params: {
+  base: string;
+}) => RequestHandler = ({ base }) => {
   return async (req, res, next) => {
     const url = req.url!;
     const pathname = getUrlPathname(url);
@@ -227,7 +227,7 @@ export const getHtmlFallbackMiddleware: (params: {
   distPath: string;
   compilationManager: CompilationManager;
   htmlFallback?: HtmlFallback;
-}) => Middleware = ({ htmlFallback, distPath, compilationManager }) => {
+}) => RequestHandler = ({ htmlFallback, distPath, compilationManager }) => {
   return async (req, res, next) => {
     if (
       !maybeHTMLRequest(req) ||
@@ -264,7 +264,7 @@ export const getHtmlFallbackMiddleware: (params: {
  */
 export const viewingServedFilesMiddleware: (params: {
   environments: EnvironmentAPI;
-}) => Middleware =
+}) => RequestHandler =
   ({ environments }) =>
   async (req, res, next) => {
     const url = req.url!;

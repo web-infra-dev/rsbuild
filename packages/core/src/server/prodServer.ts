@@ -1,9 +1,9 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
-import type Connect from '../../compiled/connect/index.js';
 import { getPathnameFromUrl } from '../helpers/path';
 import { logger } from '../logger';
 import type {
+  Connect,
   InternalContext,
   NormalizedConfig,
   PreviewOptions,

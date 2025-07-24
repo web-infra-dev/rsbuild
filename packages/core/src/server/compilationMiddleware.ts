@@ -1,10 +1,9 @@
-import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Compiler, MultiCompiler, Stats } from '@rspack/core';
 import { applyToCompiler } from '../helpers';
 import type {
+  Connect,
   DevConfig,
   EnvironmentContext,
-  NextFunction,
   ServerConfig,
 } from '../types';
 import { getResolvedClientConfig } from './hmrFallback';
@@ -100,12 +99,6 @@ function applyHMREntry({
   }
 }
 
-type Middleware = (
-  req: IncomingMessage,
-  res: ServerResponse,
-  next: NextFunction,
-) => Promise<void>;
-
 export type CompilationMiddlewareOptions = {
   /**
    * To ensure HMR works, the devMiddleware need inject the HMR client path into page when HMR enable.
@@ -120,7 +113,7 @@ export type CompilationMiddlewareOptions = {
   environments: Record<string, EnvironmentContext>;
 };
 
-export type CompilationMiddleware = Middleware & {
+export type CompilationMiddleware = Connect.NextHandleFunction & {
   close: (callback: (err: Error | null | undefined) => void) => any;
   watch: () => void;
 };
