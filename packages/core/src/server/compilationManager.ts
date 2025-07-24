@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
 import type { Stats } from '@rspack/core';
-import { HTML_REGEX } from '../constants';
 import { isMultiCompiler } from '../helpers';
 import { getPathnameFromUrl } from '../helpers/path';
 import type {
@@ -161,7 +160,7 @@ export class CompilationManager {
     const callbacks: ServerCallbacks = {
       onInvalid: (token: string, fileName?: string | null) => {
         // reload page when HTML template changed
-        if (typeof fileName === 'string' && HTML_REGEX.test(fileName)) {
+        if (typeof fileName === 'string' && fileName.endsWith('.html')) {
           this.socketServer.sockWrite({ type: 'static-changed' }, token);
           return;
         }
