@@ -10,8 +10,7 @@ export default defineConfig({
         require('./packages/core/package.json').version,
       ),
     },
-    // TODO: try to find closest tsconfig.json
-    tsconfigPath: 'packages/core/tsconfig.json',
+    tsconfigPath: './scripts/config/tsconfig.json',
   },
   output: {
     externals: ['@rsbuild/core'],
