@@ -9,6 +9,7 @@ type FilenameConfig = {
   css?: string | Function;
   svg?: string | Function;
   font?: string | Function;
+  wasm?: string;
   image?: string | Function;
   media?: string | Function;
   assets?: string | Function;
@@ -25,6 +26,7 @@ const devDefaultFilename = {
   css: '[name].css',
   svg: '[name].[contenthash:8].svg',
   font: '[name].[contenthash:8][ext]',
+  wasm: '[hash].module.wasm',
   image: '[name].[contenthash:8][ext]',
   media: '[name].[contenthash:8][ext]',
   assets: '[name].[contenthash:8][ext]',
@@ -37,6 +39,7 @@ const prodDefaultFilename = {
   css: '[name].[contenthash:8].css',
   svg: '[name].[contenthash:8].svg',
   font: '[name].[contenthash:8][ext]',
+  wasm: '[hash].module.wasm',
   image: '[name].[contenthash:8][ext]',
   media: '[name].[contenthash:8][ext]',
   assets: '[name].[contenthash:8][ext]',
@@ -65,6 +68,7 @@ Here are the details of each `output.filename` option:
 - `css`: The name of the CSS files.
 - `svg`: The name of the SVG images.
 - `font`: The name of the font files.
+- `wasm: The name of the Wasm files.
 - `image`: The name of non-SVG images.
 - `media`: The name of media assets, such as video.
 - `assets`: The name of other static assets. Such as the assets defined in [Extend Asset Types](/guide/basic/static-assets#extend-asset-types).

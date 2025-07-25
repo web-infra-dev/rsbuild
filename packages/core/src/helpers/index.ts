@@ -217,6 +217,11 @@ export function getFilename(
 ): Rspack.CssFilename;
 export function getFilename(
   config: NormalizedConfig | NormalizedEnvironmentConfig,
+  type: 'wasm',
+  isProd: boolean,
+): Rspack.WebassemblyModuleFilename;
+export function getFilename(
+  config: NormalizedConfig | NormalizedEnvironmentConfig,
   type: Exclude<keyof FilenameConfig, 'js' | 'css'>,
   isProd: boolean,
   isServer?: boolean,
@@ -253,6 +258,8 @@ export function getFilename(
       return filename.media ?? `[name]${hash}[ext]`;
     case 'assets':
       return filename.assets ?? `[name]${hash}[ext]`;
+    case 'wasm':
+      return filename.wasm ?? '[hash].module.wasm';
     default:
       throw new Error(
         `${color.dim('[rsbuild:config]')} unknown key ${color.yellow(
