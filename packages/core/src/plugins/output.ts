@@ -1,5 +1,4 @@
 import { posix } from 'node:path';
-import { rspack } from '@rspack/core';
 import {
   DEFAULT_ASSET_PREFIX,
   DEFAULT_DEV_HOST,
@@ -78,7 +77,10 @@ export const pluginOutput = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(
-      async (chain, { CHAIN_ID, isDev, isProd, isServer, environment }) => {
+      async (
+        chain,
+        { CHAIN_ID, isDev, isProd, isServer, environment, rspack },
+      ) => {
         const { distPath, config } = environment;
 
         const publicPath = getPublicPath({

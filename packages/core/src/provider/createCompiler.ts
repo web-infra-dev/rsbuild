@@ -1,6 +1,5 @@
 import { sep } from 'node:path';
 import type { StatsCompilation } from '@rspack/core';
-import { rspack } from '@rspack/core';
 import {
   color,
   formatStats,
@@ -11,6 +10,7 @@ import {
 } from '../helpers';
 import { registerDevHook } from '../hooks';
 import { logger } from '../logger';
+import { rspack } from '../rspack';
 import type { InternalContext, Rspack } from '../types';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 

@@ -1,6 +1,6 @@
-import { rspack } from '@rspack/core';
 import { registerBuildHook } from '../hooks';
 import { logger } from '../logger';
+import { rspack } from '../rspack';
 import type { Build, BuildOptions, Rspack } from '../types';
 import { createCompiler } from './createCompiler';
 import type { InitConfigsOptions } from './initConfigs';

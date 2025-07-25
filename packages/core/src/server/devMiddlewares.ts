@@ -1,8 +1,8 @@
 import { isAbsolute, join } from 'node:path';
-import { rspack } from '@rspack/core';
 import { normalizePublicDirs } from '../defaultConfig';
 import { castArray, isMultiCompiler, pick } from '../helpers';
 import { logger } from '../logger';
+import { rspack } from '../rspack';
 import type {
   DevConfig,
   InternalContext,
