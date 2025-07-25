@@ -95,6 +95,12 @@ function getDefaultSwcConfig({
     env: {
       targets: browserslist,
     },
+    rspackExperiments: {
+      collectTypeScriptInfo: {
+        typeExports: true,
+        exportedEnum: false,
+      },
+    },
   };
 }
 

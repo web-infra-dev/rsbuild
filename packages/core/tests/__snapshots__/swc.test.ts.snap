@@ -55,6 +55,12 @@ exports[`plugin-swc > should add browserslist 1`] = `
                     "legacyDecorator": false,
                   },
                 },
+                "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
+                  },
+                },
               },
             },
           ],
@@ -102,6 +108,12 @@ exports[`plugin-swc > should add browserslist 1`] = `
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
+                  },
+                },
+                "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
                   },
                 },
               },
@@ -178,6 +190,10 @@ exports[`plugin-swc > should add pluginImport 1`] = `
                   },
                 },
                 "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
+                  },
                   "import": [
                     {
                       "libraryName": "foo",
@@ -237,6 +253,10 @@ exports[`plugin-swc > should add pluginImport 1`] = `
                   },
                 },
                 "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
+                  },
                   "import": [
                     {
                       "libraryName": "foo",
@@ -365,6 +385,12 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader 
               "legacyDecorator": false,
             },
           },
+          "rspackExperiments": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
+          },
         },
       },
     ],
@@ -415,6 +441,12 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader 
             "transform": {
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
+            },
+          },
+          "rspackExperiments": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
             },
           },
         },
@@ -485,6 +517,10 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
             },
           },
           "rspackExperiments": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
             "import": [
               {
                 "libraryName": "foo",
@@ -549,6 +585,10 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
             },
           },
           "rspackExperiments": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
             "import": [
               {
                 "libraryName": "foo",
@@ -612,6 +652,10 @@ exports[`plugin-swc > should apply environment config correctly 2`] = `
             },
           },
           "rspackExperiments": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
             "import": [
               {
                 "libraryName": "bar",
@@ -667,6 +711,10 @@ exports[`plugin-swc > should apply environment config correctly 2`] = `
             },
           },
           "rspackExperiments": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
             "import": [
               {
                 "libraryName": "bar",
@@ -739,6 +787,10 @@ exports[`plugin-swc > should apply pluginImport correctly when ConfigChain 1`] =
                   },
                 },
                 "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
+                  },
                   "import": [
                     {
                       "libraryName": "foo",
@@ -801,6 +853,10 @@ exports[`plugin-swc > should apply pluginImport correctly when ConfigChain 1`] =
                   },
                 },
                 "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
+                  },
                   "import": [
                     {
                       "libraryName": "foo",
@@ -883,6 +939,12 @@ exports[`plugin-swc > should disable pluginImport when return undefined 1`] = `
                     "legacyDecorator": false,
                   },
                 },
+                "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
+                  },
+                },
               },
             },
           ],
@@ -933,6 +995,12 @@ exports[`plugin-swc > should disable pluginImport when return undefined 1`] = `
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
+                  },
+                },
+                "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
                   },
                 },
               },
@@ -1004,6 +1072,12 @@ exports[`plugin-swc > should disable preset_env in target other than web 1`] = `
                     "legacyDecorator": false,
                   },
                 },
+                "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
+                  },
+                },
               },
             },
           ],
@@ -1050,6 +1124,12 @@ exports[`plugin-swc > should disable preset_env in target other than web 1`] = `
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
+                  },
+                },
+                "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
                   },
                 },
               },
@@ -1125,6 +1205,12 @@ exports[`plugin-swc > should disable preset_env mode 1`] = `
                     "legacyDecorator": false,
                   },
                 },
+                "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
+                  },
+                },
               },
             },
           ],
@@ -1175,6 +1261,12 @@ exports[`plugin-swc > should disable preset_env mode 1`] = `
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
+                  },
+                },
+                "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
                   },
                 },
               },
@@ -1257,6 +1349,12 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
                     "legacyDecorator": false,
                   },
                 },
+                "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
+                  },
+                },
               },
             },
           ],
@@ -1311,6 +1409,12 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
+                  },
+                },
+                "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
                   },
                 },
               },
@@ -1393,6 +1497,12 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
                     "legacyDecorator": false,
                   },
                 },
+                "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
+                  },
+                },
               },
             },
           ],
@@ -1448,6 +1558,12 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
+                  },
+                },
+                "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
                   },
                 },
               },
@@ -1530,6 +1646,12 @@ exports[`plugin-swc > should has correct core-js 1`] = `
                     "legacyDecorator": false,
                   },
                 },
+                "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
+                  },
+                },
               },
             },
           ],
@@ -1584,6 +1706,12 @@ exports[`plugin-swc > should has correct core-js 1`] = `
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
+                  },
+                },
+                "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
                   },
                 },
               },
@@ -1655,6 +1783,12 @@ exports[`plugin-swc > should has correct core-js 2`] = `
                     "legacyDecorator": false,
                   },
                 },
+                "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
+                  },
+                },
               },
             },
           ],
@@ -1701,6 +1835,12 @@ exports[`plugin-swc > should has correct core-js 2`] = `
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
+                  },
+                },
+                "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
                   },
                 },
               },

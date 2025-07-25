@@ -1311,6 +1311,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "force": false,
         },
       },
+      "typeReexportsPresence": true,
     },
     "infrastructureLogging": {
       "level": "error",
@@ -1320,6 +1321,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "parser": {
         "javascript": {
           "exportsPresence": "error",
+          "typeReexportsPresence": "tolerant",
         },
       },
       "rules": [
@@ -1463,6 +1465,12 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                     "legacyDecorator": false,
                   },
                 },
+                "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
+                  },
+                },
               },
             },
           ],
@@ -1513,6 +1521,12 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
+                  },
+                },
+                "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
                   },
                 },
               },
@@ -1743,6 +1757,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "force": false,
         },
       },
+      "typeReexportsPresence": true,
     },
     "infrastructureLogging": {
       "level": "error",
@@ -1752,6 +1767,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "parser": {
         "javascript": {
           "exportsPresence": "error",
+          "typeReexportsPresence": "tolerant",
         },
       },
       "rules": [
@@ -1867,6 +1883,12 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                     "legacyDecorator": false,
                   },
                 },
+                "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
+                  },
+                },
               },
             },
           ],
@@ -1913,6 +1935,12 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
+                  },
+                },
+                "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
                   },
                 },
               },

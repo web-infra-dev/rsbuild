@@ -71,6 +71,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
         chain.module.parser.merge({
           javascript: {
             exportsPresence: 'error',
+            typeReexportsPresence: 'tolerant',
           },
         });
 
@@ -94,6 +95,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
         if (api.context.bundlerType === 'rspack') {
           chain.experiments({
             ...chain.get('experiments'),
+            typeReexportsPresence: true,
             rspackFuture: {
               bundlerInfo: {
                 force: false,

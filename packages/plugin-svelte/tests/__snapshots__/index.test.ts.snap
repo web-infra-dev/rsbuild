@@ -60,6 +60,12 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
               "legacyDecorator": false,
             },
           },
+          "rspackExperiments": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
+          },
         },
       },
     ],
@@ -117,6 +123,12 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
             "transform": {
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
+            },
+          },
+          "rspackExperiments": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
             },
           },
         },
@@ -180,6 +192,12 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
               "legacyDecorator": false,
             },
           },
+          "rspackExperiments": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
+          },
         },
       },
     ],
@@ -239,6 +257,12 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
               "legacyDecorator": false,
             },
           },
+          "rspackExperiments": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
+          },
         },
       },
     ],
@@ -281,6 +305,12 @@ exports[`plugin-svelte > should add svelte loader and resolve config properly 1`
             "transform": {
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
+            },
+          },
+          "rspackExperiments": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
             },
           },
         },
@@ -382,6 +412,12 @@ exports[`plugin-svelte > should override default svelte-loader options throw opt
               "legacyDecorator": false,
             },
           },
+          "rspackExperiments": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
+          },
         },
       },
       {
@@ -435,6 +471,12 @@ exports[`plugin-svelte > should set dev and hotReload to false in production mod
             "transform": {
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
+            },
+          },
+          "rspackExperiments": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
             },
           },
         },
@@ -496,6 +538,12 @@ exports[`plugin-svelte > should support pass custom preprocess options 1`] = `
               "legacyDecorator": false,
             },
           },
+          "rspackExperiments": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
+          },
         },
       },
       {
@@ -553,6 +601,12 @@ exports[`plugin-svelte > should turn off HMR by hand correctly 1`] = `
             "transform": {
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
+            },
+          },
+          "rspackExperiments": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
             },
           },
         },
