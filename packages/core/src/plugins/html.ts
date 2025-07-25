@@ -17,7 +17,7 @@ import {
   type HtmlExtraData,
   RsbuildHtmlPlugin,
   type TagConfig,
-} from '../rspack/RsbuildHtmlPlugin';
+} from '../rspack-plugins/RsbuildHtmlPlugin';
 import type {
   HtmlConfig,
   HtmlRspackPlugin,

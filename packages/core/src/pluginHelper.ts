@@ -1,7 +1,7 @@
-import { createRequire } from 'node:module';
 /**
  * This file is used to get/set the global instance for html-plugin and css-extract plugin.
  */
+import { createRequire } from 'node:module';
 import { rspack } from '@rspack/core';
 import type { HtmlRspackPlugin } from './types';
 
