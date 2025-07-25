@@ -936,7 +936,12 @@ export type FilenameConfig = {
    */
   media?: Rspack.AssetModuleFilename;
   /**
-   * the name of other assets, except for above (image, svg, font, html, wasm...)
+   * The name of Wasm files.
+   * @default '[hash].module.wasm'
+   */
+  wasm?: Rspack.WebassemblyModuleFilename;
+  /**
+   * The name of other assets, except for above (image, svg, font, html, wasm...)
    * @default '[name].[contenthash:8][ext]'
    */
   assets?: Rspack.AssetModuleFilename;
