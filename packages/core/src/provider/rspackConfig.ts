@@ -1,4 +1,3 @@
-import { rspack } from '@rspack/core';
 import {
   type ConfigChainAsyncWithContext,
   reduceConfigsAsyncWithContext,
@@ -8,6 +7,7 @@ import { CHAIN_ID, modifyBundlerChain } from '../configChain';
 import { castArray, color, getNodeEnv } from '../helpers';
 import { logger } from '../logger';
 import { getHTMLPlugin } from '../pluginHelper';
+import { rspack } from '../rspack';
 import type {
   EnvironmentContext,
   InternalContext,

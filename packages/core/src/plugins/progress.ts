@@ -1,4 +1,3 @@
-import { rspack } from '@rspack/core';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginProgress = (): RsbuildPlugin => ({
@@ -10,7 +9,7 @@ export const pluginProgress = (): RsbuildPlugin => ({
       return;
     }
 
-    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment, rspack }) => {
       const { config } = environment;
       const options = config.dev.progressBar;
 
