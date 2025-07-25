@@ -1,3 +1,4 @@
+import type { WatchOptions } from '@rspack/core';
 import { registerBuildHook } from '../hooks';
 import { logger } from '../logger';
 import { rspack } from '../rspack';
@@ -33,11 +34,20 @@ export const build = async (
   });
 
   if (watch) {
-    compiler.watch({}, (err) => {
-      if (err) {
-        logger.error(err);
-      }
-    });
+    const watchOptions: WatchOptions[] = bundlerConfigs
+      ? bundlerConfigs.map((options) => options.watchOptions || {})
+      : [];
+
+    compiler.watch(
+      // @ts-expect-error
+      // TODO: https://github.com/web-infra-dev/rspack/pull/11174
+      watchOptions.length > 1 ? watchOptions : watchOptions[0] || {},
+      (err) => {
+        if (err) {
+          logger.error(err);
+        }
+      },
+    );
 
     return {
       close: () =>
