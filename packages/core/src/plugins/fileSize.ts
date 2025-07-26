@@ -7,7 +7,7 @@ import path from 'node:path';
 import { promisify } from 'node:util';
 import zlib from 'node:zlib';
 import { JS_REGEX } from '../constants';
-import { color } from '../helpers';
+import { color, getAssetsFromStats } from '../helpers';
 import { logger } from '../logger';
 import type {
   PrintFileSizeAsset,
@@ -136,18 +136,7 @@ async function printFileSizes(
       return [];
     }
 
-    const origin = stats.toJson({
-      all: false,
-      assets: true,
-      cachedAssets: true,
-      groupAssetsByInfo: false,
-      groupAssetsByPath: false,
-      groupAssetsByChunk: false,
-      groupAssetsByExtension: false,
-      groupAssetsByEmitStatus: false,
-    });
-
-    const filteredAssets = (origin.assets || []).filter((asset) => {
+    const filteredAssets = getAssetsFromStats(stats).filter((asset) => {
       const assetInfo: PrintFileSizeAsset = {
         name: asset.name,
         size: asset.size,
