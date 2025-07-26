@@ -270,10 +270,14 @@ export const viewingServedFilesMiddleware: (params: {
     const url = req.url!;
     const pathname = getUrlPathname(url);
 
-    if (pathname === '/rsbuild-dev-server') {
-      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-      res.write(
-        `<!DOCTYPE html>
+    if (pathname !== '/rsbuild-dev-server') {
+      next();
+      return;
+    }
+
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    res.write(
+      `<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8"/>
@@ -316,31 +320,37 @@ export const viewingServedFilesMiddleware: (params: {
     <h1>Assets Report</h1>
   </body>
 </html>`,
-      );
-      try {
-        for (const key in environments) {
-          const list = [];
-          res.write(`<h2>Environment: ${key}</h2>`);
-          const environment = environments[key];
-          const stats = await environment.getStats();
-          const statsForPrint = stats.toJson();
-          const { assets = [] } = statsForPrint;
-          res.write('<ul>');
-          for (const asset of assets) {
-            list.push(
-              `<li><a target="_blank" href="${asset?.name}">${asset?.name}</a></li>`,
-            );
-          }
-          res.write(list?.join(''));
-          res.write('</ul>');
+    );
+
+    try {
+      for (const key in environments) {
+        res.write(`<h2>Environment: ${key}</h2>`);
+
+        const list = [];
+        const environment = environments[key];
+        const stats = await environment.getStats();
+        const statsJson = stats.toJson({
+          all: false,
+          assets: true,
+          cachedAssets: true,
+        });
+        const { assets = [] } = statsJson;
+
+        res.write('<ul>');
+
+        for (const asset of assets) {
+          list.push(
+            `<li><a target="_blank" href="${asset?.name}">${asset?.name}</a></li>`,
+          );
         }
-        res.end('</body></html>');
-      } catch (err) {
-        logger.error(err);
-        res.writeHead(500);
-        res.end('Failed to list the files');
+
+        res.write(list?.join(''));
+        res.write('</ul>');
       }
-    } else {
-      next();
+      res.end('</body></html>');
+    } catch (err) {
+      logger.error(err);
+      res.writeHead(500);
+      res.end('Failed to list the files');
     }
   };
