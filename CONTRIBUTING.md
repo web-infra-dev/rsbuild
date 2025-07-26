@@ -121,13 +121,13 @@ You can add unit test cases in the `<PACKAGE_DIR>/tests` folder. The test runner
 Before submitting a pull request, it's important to make sure that the changes haven't introduced any regressions or bugs. You can run the unit tests for the project by executing the following command:
 
 ```sh
-pnpm run ut
+pnpm test
 ```
 
 You can also run the unit tests of single package:
 
 ```sh
-pnpm run ut packages/core
+pnpm test core
 ```
 
 ### Run E2E tests

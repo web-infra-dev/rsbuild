@@ -61,7 +61,7 @@ jobs:
 
       - name: Unit Test
         if: steps.changes.outputs.changed == 'true'
-        run: pnpm run ut
+        run: pnpm test
 
   # ======== e2e ========
   e2e:

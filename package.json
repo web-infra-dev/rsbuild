@@ -19,9 +19,8 @@
     "prebundle": "nx run-many -t prebundle",
     "prepare": "simple-git-hooks && pnpm run build &&",
     "sort-package-json": "pnpx sort-package-json \"./package.json\" \"packages/*/package.json\" \"packages/compat/*/package.json\"",
-    "test": "pnpm run ut",
-    "ut": "rstest run",
-    "ut:watch": "rstest"
+    "test": "rstest run",
+    "test:watch": "rstest"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm exec nano-staged"
