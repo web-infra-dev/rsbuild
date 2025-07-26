@@ -1,6 +1,5 @@
 import path from 'node:path';
 import { promisify } from 'node:util';
-import { lookup } from '../../compiled/mrmime/index.js';
 import {
   addCompilationError,
   color,
@@ -35,6 +34,7 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
       icon: AppIconItem,
       distDir: string,
       publicPath: string,
+      lookup: (extension: string) => string | undefined,
     ): AppIconItem & IconExtra => {
       const { src, size } = icon;
       const cached = iconFormatMap.get(src);
@@ -90,11 +90,13 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
           return;
         }
 
+        const { lookup } = await import('../../compiled/mrmime/index.js');
+
         const distDir = config.output.distPath.image;
         const manifestFile = appIcon.filename ?? 'manifest.webmanifest';
         const publicPath = getPublicPathFromCompiler(compilation);
         const icons = appIcon.icons.map((icon) =>
-          formatIcon(icon, distDir, publicPath),
+          formatIcon(icon, distDir, publicPath, lookup),
         );
         const tags: HtmlBasicTag[] = [];
 
