@@ -1,6 +1,6 @@
 import type { IncomingMessage } from 'node:http';
 import path from 'node:path';
-import { addTrailingSlash, color } from '../helpers';
+import { addTrailingSlash, color, getAssetsFromStats } from '../helpers';
 import { logger } from '../logger';
 import type {
   Connect,
@@ -329,12 +329,7 @@ export const viewingServedFilesMiddleware: (params: {
         const list = [];
         const environment = environments[key];
         const stats = await environment.getStats();
-        const statsJson = stats.toJson({
-          all: false,
-          assets: true,
-          cachedAssets: true,
-        });
-        const { assets = [] } = statsJson;
+        const assets = getAssetsFromStats(stats);
 
         res.write('<ul>');
 
