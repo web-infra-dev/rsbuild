@@ -8,21 +8,19 @@
   ],
   "scripts": {
     "build": "cross-env NX_DAEMON=false nx run-many -t build --exclude @examples/* @e2e/* rsbuild-* --parallel=10",
-    "build:doc": "cd website && pnpm run build",
     "check-dependency-version": "pnpx check-dependency-version-consistency . --ignore-dep loader-utils",
     "check-spell": "pnpx cspell && heading-case",
-    "dev:doc": "cd website && pnpm run dev",
+    "doc": "cd website && pnpm run dev",
     "e2e": "cd ./e2e && pnpm e2e",
     "e2e:rspack": "cd ./e2e && pnpm e2e:rspack",
     "e2e:webpack": "cd ./e2e && pnpm e2e:webpack",
     "format": "prettier --write . && heading-case --write",
     "lint": "biome check . --diagnostic-level=warn && pnpm run check-spell",
     "prebundle": "nx run-many -t prebundle",
-    "prepare": "pnpm run build && simple-git-hooks",
+    "prepare": "simple-git-hooks && pnpm run build",
     "sort-package-json": "pnpx sort-package-json \"./package.json\" \"packages/*/package.json\" \"packages/compat/*/package.json\"",
-    "test": "pnpm run ut",
-    "ut": "rstest run",
-    "ut:watch": "rstest"
+    "test": "rstest run",
+    "test:watch": "rstest"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm exec nano-staged"
@@ -30,7 +28,7 @@
   "nano-staged": {
     "*.{md,mdx,json,css,less,scss}": "prettier --write",
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
-      "biome check --write --formatter-enabled=false --linter-enabled=false --no-errors-on-unmatched",
+      "biome check --write --no-errors-on-unmatched",
       "prettier --write"
     ]
   },
