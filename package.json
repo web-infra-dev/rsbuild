@@ -17,7 +17,7 @@
     "format": "prettier --write . && heading-case --write",
     "lint": "biome check . --diagnostic-level=warn && pnpm run check-spell",
     "prebundle": "nx run-many -t prebundle",
-    "prepare": "simple-git-hooks && pnpm run build &&",
+    "prepare": "simple-git-hooks && pnpm run build",
     "sort-package-json": "pnpx sort-package-json \"./package.json\" \"packages/*/package.json\" \"packages/compat/*/package.json\"",
     "test": "rstest run",
     "test:watch": "rstest"
