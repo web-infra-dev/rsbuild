@@ -6,8 +6,13 @@ import { defineConfig } from '@rslib/core';
 import pkgJson from './package.json';
 import prebundleConfig from './prebundle.config.mjs';
 
-const define = {
+export const define = {
   RSBUILD_VERSION: JSON.stringify(pkgJson.version),
+};
+
+export const alias = {
+  // Bundle rspack-chain to the main JS bundle and use the pre-bundled types
+  '../../compiled/rspack-chain': 'rspack-chain',
 };
 
 const regexpMap: Record<string, RegExp> = {};
@@ -77,10 +82,7 @@ export default defineConfig({
     externals,
   },
   resolve: {
-    alias: {
-      // Bundle rspack-chain to the main JS bundle and use the pre-bundled types
-      '../../compiled/rspack-chain': 'rspack-chain',
-    },
+    alias,
   },
   lib: [
     {
