@@ -1,8 +1,13 @@
 import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
-import RspackChain from '../compiled/rspack-chain';
 import { RSBUILD_OUTPUTS_PATH } from './constants';
-import { color, getNodeEnv, setNodeEnv, upperFirst } from './helpers';
+import {
+  color,
+  getNodeEnv,
+  RspackChain,
+  setNodeEnv,
+  upperFirst,
+} from './helpers';
 import { logger } from './logger';
 import type { InitConfigsOptions } from './provider/initConfigs';
 import type {

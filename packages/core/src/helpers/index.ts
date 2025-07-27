@@ -2,7 +2,7 @@ import { posix } from 'node:path';
 import { URL } from 'node:url';
 import deepmerge from 'deepmerge';
 import color from '../../compiled/picocolors/index.js';
-import type RspackChain from '../../compiled/rspack-chain';
+import RspackChain from '../../compiled/rspack-chain';
 import { DEFAULT_ASSET_PREFIX } from '../constants';
 import type {
   FilenameConfig,
@@ -16,7 +16,7 @@ export * from './fs';
 export * from './path';
 export * from './stats';
 
-export { color };
+export { color, RspackChain };
 
 // `SubresourceIntegrityPlugin` added in Rspack v1.2.4
 export const rspackMinVersion = '1.2.4';

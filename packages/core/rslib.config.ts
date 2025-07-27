@@ -14,6 +14,12 @@ const regexpMap: Record<string, RegExp> = {};
 
 for (const item of prebundleConfig.dependencies) {
   const depName = typeof item === 'string' ? item : item.name;
+
+  // Skip dtsOnly dependencies
+  if (typeof item !== 'string' && item.dtsOnly) {
+    continue;
+  }
+
   regexpMap[depName] = new RegExp(`compiled[\\/]${depName}(?:[\\/]|$)`);
 }
 
@@ -23,6 +29,7 @@ const externals: Rspack.Configuration['externals'] = [
   '@rsbuild/core',
   '@rsbuild/core/client/hmr',
   '@rsbuild/core/client/overlay',
+  // externalize pre-bundled dependencies
   ({ request }, callback) => {
     const entries = Object.entries(regexpMap);
     if (request) {
@@ -68,6 +75,12 @@ export default defineConfig({
   },
   output: {
     externals,
+  },
+  resolve: {
+    alias: {
+      // Bundle rspack-chain to the main JS bundle and use the pre-bundled types
+      '../../compiled/rspack-chain': 'rspack-chain',
+    },
   },
   lib: [
     {

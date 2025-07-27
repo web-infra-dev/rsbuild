@@ -66,6 +66,7 @@ export default {
     {
       name: 'rspack-chain',
       copyDts: true,
+      dtsOnly: true,
     },
     {
       name: 'http-proxy-middleware',
