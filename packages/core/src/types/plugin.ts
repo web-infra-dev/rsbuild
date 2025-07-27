@@ -4,7 +4,6 @@ import type {
   Configuration as WebpackConfig,
   WebpackPluginInstance,
 } from 'webpack';
-import type RspackChain from '../../compiled/rspack-chain';
 import type { ChainIdentifier } from '../configChain';
 import type { Logger } from '../logger';
 import type {
@@ -44,7 +43,7 @@ import type {
   RsbuildInstance,
   RsbuildTarget,
 } from './rsbuild';
-import type { Rspack } from './rspack';
+import type { Rspack, RspackChain } from './rspack';
 import type { HtmlRspackPlugin } from './thirdParty';
 import type { Falsy, MaybePromise } from './utils';
 

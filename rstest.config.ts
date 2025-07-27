@@ -1,16 +1,16 @@
 import { defineConfig } from '@rstest/core';
+import { alias, define } from './packages/core/rslib.config';
 
 // Disable color in test
 process.env.NO_COLOR = '1';
 
 export default defineConfig({
   source: {
-    define: {
-      RSBUILD_VERSION: JSON.stringify(
-        require('./packages/core/package.json').version,
-      ),
-    },
+    define,
     tsconfigPath: './scripts/config/tsconfig.json',
+  },
+  resolve: {
+    alias,
   },
   output: {
     externals: ['@rsbuild/core'],

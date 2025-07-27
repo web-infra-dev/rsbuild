@@ -1,7 +1,7 @@
 import type { rspack } from '@rspack/core';
-import type RspackChain from '../../compiled/rspack-chain';
 import type { ChainIdentifier, ManifestData } from '..';
 import type { RsbuildDevServer } from '../server/devServer';
+import type { RspackChain } from '../types';
 import type {
   EnvironmentConfig,
   HtmlBasicTag,
