@@ -70,7 +70,6 @@
     "cac": "^6.7.14",
     "chokidar": "^4.0.3",
     "connect": "3.7.0",
-    "connect-history-api-fallback": "^2.0.0",
     "cors": "^2.8.5",
     "css-loader": "7.1.2",
     "deepmerge": "^4.3.1",

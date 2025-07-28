@@ -14,6 +14,7 @@ import type { CompilationManager } from './compilationManager';
 import type { RsbuildDevServer } from './devServer';
 import { gzipMiddleware } from './gzipMiddleware';
 import type { UpgradeEvent } from './helper';
+import { historyApiFallbackMiddleware } from './historyApiFallback';
 import {
   faviconFallbackMiddleware,
   getBaseMiddleware,
@@ -228,14 +229,11 @@ const applyDefaultMiddlewares = async ({
   }
 
   if (server.historyApiFallback) {
-    const { default: connectHistoryApiFallback } = await import(
-      '../../compiled/connect-history-api-fallback/index.js'
+    middlewares.push(
+      historyApiFallbackMiddleware(
+        server.historyApiFallback === true ? {} : server.historyApiFallback,
+      ),
     );
-    const historyApiFallbackMiddleware = connectHistoryApiFallback(
-      server.historyApiFallback === true ? {} : server.historyApiFallback,
-    ) as RequestHandler;
-
-    middlewares.push(historyApiFallbackMiddleware);
 
     // ensure fallback request can be handled by compilation middleware
     if (compilationManager?.middleware) {
