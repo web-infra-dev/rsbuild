@@ -35,14 +35,14 @@
   "devDependencies": {
     "@biomejs/biome": "2.0.6",
     "@rsbuild/config": "workspace:*",
-    "@rstest/core": "0.0.8",
+    "@rstest/core": "0.0.10",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^22.16.5",
     "cross-env": "^10.0.0",
     "cspell-ban-words": "^0.0.4",
     "heading-case": "^0.1.6",
     "nano-staged": "^0.8.0",
-    "nx": "^21.3.1",
+    "nx": "^21.3.7",
     "prettier": "^3.6.2",
     "simple-git-hooks": "^2.13.0",
     "typescript": "^5.8.3"
