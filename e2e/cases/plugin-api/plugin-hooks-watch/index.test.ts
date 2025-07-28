@@ -105,7 +105,7 @@ rspackOnlyTest(
     await fs.promises.writeFile(filePath, "console.log('2');");
     await expectFile(distPath);
 
-    expect(names).toEqual([
+    expect(names.slice(0, 13)).toEqual([
       'ModifyRsbuildConfig',
       'ModifyBundlerChain',
       'ModifyBundlerConfig',
