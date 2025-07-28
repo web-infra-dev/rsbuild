@@ -55,13 +55,11 @@ export function historyApiFallbackMiddleware(
       return next();
     }
 
-    options.rewrites = options.rewrites || [];
-    options.htmlAcceptHeaders = options.htmlAcceptHeaders || [
-      'text/html',
-      '*/*',
-    ];
+    const rewrites = options.rewrites || [];
+    const htmlAcceptHeaders = options.htmlAcceptHeaders || ['text/html', '*/*'];
+    const { accept } = headers;
 
-    if (!acceptsHtml(headers.accept, options.htmlAcceptHeaders)) {
+    if (!htmlAcceptHeaders.some((item) => accept.includes(item))) {
       logger.debug(
         'Not rewriting',
         req.method,
@@ -82,7 +80,7 @@ export function historyApiFallbackMiddleware(
 
     let rewriteTarget: string;
 
-    for (const rewrite of options.rewrites) {
+    for (const rewrite of rewrites) {
       const match = parsedUrl.pathname?.match(rewrite.from);
       if (match) {
         rewriteTarget = evaluateRewriteRule(parsedUrl, match, rewrite.to, req);
@@ -142,8 +140,4 @@ function evaluateRewriteRule(
     match: match,
     request: req,
   });
-}
-
-function acceptsHtml(header: string, htmlAcceptHeaders: string[]) {
-  return htmlAcceptHeaders.some((item) => header.includes(item));
 }
