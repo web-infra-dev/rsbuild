@@ -1,9 +1,10 @@
 {
   "name": "@examples/react",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "rsbuild dev --open",
     "build": "rsbuild build",
+    "dev": "rsbuild dev --open",
     "preview": "rsbuild preview"
   },
   "dependencies": {

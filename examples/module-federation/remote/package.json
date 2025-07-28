@@ -1,6 +1,7 @@
 {
   "name": "@examples/module-federation-remote",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "rsbuild dev",
     "build": "rsbuild build"
