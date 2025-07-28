@@ -60,10 +60,6 @@ export default {
       ignoreDts: true,
     },
     {
-      name: 'connect-history-api-fallback',
-      ignoreDts: true,
-    },
-    {
       name: 'rspack-chain',
       copyDts: true,
       dtsOnly: true,

@@ -369,18 +369,21 @@ export type ProxyConfig =
 export type HistoryApiFallbackContext = {
   match: RegExpMatchArray;
   parsedUrl: import('node:url').Url;
-  request: Request;
+  request: IncomingMessage;
 };
+
+export type HistoryApiFallbackTo =
+  | string
+  | RegExp
+  | ((context: HistoryApiFallbackContext) => string);
 
 export type HistoryApiFallbackOptions = {
   index?: string;
-  verbose?: boolean;
-  logger?: typeof console.log;
   htmlAcceptHeaders?: string[];
   disableDotRule?: true;
   rewrites?: Array<{
     from: RegExp;
-    to: string | RegExp | ((context: HistoryApiFallbackContext) => string);
+    to: HistoryApiFallbackTo;
   }>;
 };
 

@@ -654,9 +654,6 @@ importers:
       connect:
         specifier: 3.7.0
         version: 3.7.0
-      connect-history-api-fallback:
-        specifier: ^2.0.0
-        version: 2.0.0
       cors:
         specifier: ^2.8.5
         version: 2.8.5
@@ -3721,10 +3718,6 @@ packages:
   commander@8.3.0:
     resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==}
     engines: {node: '>= 12'}
-
-  connect-history-api-fallback@2.0.0:
-    resolution: {integrity: sha512-U73+6lQFmfiNPrYbXqr6kZ1i1wiRqXnp2nhMsINseWXO8lDau0LGEffJ8kQi4EjLZympVgRdvqjAgiZ1tgzDDA==}
-    engines: {node: '>=0.8'}
 
   connect@3.7.0:
     resolution: {integrity: sha512-ZqRXc+tZukToSNmh5C2iWMSoV3X1YUcPbqEM4DkEG5tNQXrQUZCNVGGv3IuicnkMtPfGf3Xtp8WCXs295iQ1pQ==}
@@ -9606,8 +9599,6 @@ snapshots:
   commander@7.2.0: {}
 
   commander@8.3.0: {}
-
-  connect-history-api-fallback@2.0.0: {}
 
   connect@3.7.0:
     dependencies:
