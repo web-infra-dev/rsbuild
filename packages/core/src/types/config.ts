@@ -1,6 +1,7 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { SecureServerSessionOptions } from 'node:http2';
 import type { ServerOptions as HttpsServerOptions } from 'node:https';
+import type { URL } from 'node:url';
 import type {
   Configuration,
   CopyRspackPluginOptions,
@@ -368,7 +369,7 @@ export type ProxyConfig =
 
 export type HistoryApiFallbackContext = {
   match: RegExpMatchArray;
-  parsedUrl: import('node:url').Url;
+  parsedUrl: URL;
   request: IncomingMessage;
 };
 

@@ -7,7 +7,7 @@
  * https://github.com/bripkens/connect-history-api-fallback/blob/master/LICENSE
  */
 import type { IncomingMessage } from 'node:http';
-import url from 'node:url';
+import { URL } from 'node:url';
 import { logger } from '../logger';
 import type {
   HistoryApiFallbackOptions,
@@ -55,7 +55,13 @@ export function historyApiFallbackMiddleware(
       return next();
     }
 
-    if (!acceptsHtml(headers.accept, options)) {
+    options.rewrites = options.rewrites || [];
+    options.htmlAcceptHeaders = options.htmlAcceptHeaders || [
+      'text/html',
+      '*/*',
+    ];
+
+    if (!acceptsHtml(headers.accept, options.htmlAcceptHeaders)) {
       logger.debug(
         'Not rewriting',
         req.method,
@@ -65,10 +71,16 @@ export function historyApiFallbackMiddleware(
       return next();
     }
 
-    const parsedUrl = url.parse(req.url);
-    let rewriteTarget: string;
+    let parsedUrl: URL;
+    try {
+      const host = req.headers.host || 'localhost';
+      parsedUrl = new URL(req.url, `http://${host}`);
+    } catch {
+      // skip invalid request
+      return next();
+    }
 
-    options.rewrites = options.rewrites || [];
+    let rewriteTarget: string;
 
     for (const rewrite of options.rewrites) {
       const match = parsedUrl.pathname?.match(rewrite.from);
@@ -106,15 +118,15 @@ export function historyApiFallbackMiddleware(
       return next();
     }
 
-    rewriteTarget = options.index || '/index.html';
-    logger.debug('Rewriting', req.method, req.url, 'to', rewriteTarget);
-    req.url = rewriteTarget;
+    const index = options.index || '/index.html';
+    logger.debug('Rewriting', req.method, req.url, 'to', index);
+    req.url = index;
     next();
   };
 }
 
 function evaluateRewriteRule(
-  parsedUrl: import('node:url').Url,
+  parsedUrl: URL,
   match: RegExpMatchArray,
   rule: HistoryApiFallbackTo,
   req: IncomingMessage,
@@ -125,7 +137,6 @@ function evaluateRewriteRule(
   if (typeof rule !== 'function') {
     throw new Error('Rewrite rule can only be of type string or function.');
   }
-
   return rule({
     parsedUrl: parsedUrl,
     match: match,
@@ -133,12 +144,6 @@ function evaluateRewriteRule(
   });
 }
 
-function acceptsHtml(header: string, options: HistoryApiFallbackOptions) {
-  options.htmlAcceptHeaders = options.htmlAcceptHeaders || ['text/html', '*/*'];
-  for (const item of options.htmlAcceptHeaders) {
-    if (header.indexOf(item) !== -1) {
-      return true;
-    }
-  }
-  return false;
+function acceptsHtml(header: string, htmlAcceptHeaders: string[]) {
+  return htmlAcceptHeaders.some((item) => header.includes(item));
 }
