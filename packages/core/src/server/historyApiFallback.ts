@@ -69,12 +69,10 @@ export function historyApiFallbackMiddleware(
       return next();
     }
 
-    let parsedUrl: URL;
-    try {
-      const host = req.headers.host || 'localhost';
-      parsedUrl = new URL(req.url, `http://${host}`);
-    } catch {
-      // skip invalid request
+    const parsedUrl = parseReqUrl(req);
+
+    // skip invalid request
+    if (parsedUrl === null) {
       return next();
     }
 
@@ -127,7 +125,7 @@ function evaluateRewriteRule(
   parsedUrl: URL,
   match: RegExpMatchArray,
   rule: HistoryApiFallbackTo,
-  req: IncomingMessage,
+  request: IncomingMessage,
 ) {
   if (typeof rule === 'string') {
     return rule;
@@ -136,8 +134,19 @@ function evaluateRewriteRule(
     throw new Error('Rewrite rule can only be of type string or function.');
   }
   return rule({
-    parsedUrl: parsedUrl,
-    match: match,
-    request: req,
+    parsedUrl,
+    match,
+    request,
   });
+}
+
+function parseReqUrl(req: IncomingMessage) {
+  const proto = req.headers['x-forwarded-proto'] || 'http';
+  const host =
+    req.headers['x-forwarded-host'] || req.headers.host || 'localhost';
+  try {
+    return new URL(req.url || '/', `${proto}://${host}`);
+  } catch {
+    return null;
+  }
 }
