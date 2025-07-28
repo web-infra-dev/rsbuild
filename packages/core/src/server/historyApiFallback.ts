@@ -9,11 +9,7 @@
 import type { IncomingMessage } from 'node:http';
 import { URL } from 'node:url';
 import { logger } from '../logger';
-import type {
-  HistoryApiFallbackOptions,
-  HistoryApiFallbackTo,
-  RequestHandler,
-} from '../types';
+import type { HistoryApiFallbackOptions, RequestHandler } from '../types';
 
 export function historyApiFallbackMiddleware(
   options: HistoryApiFallbackOptions = {},
