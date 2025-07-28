@@ -261,8 +261,8 @@ importers:
         version: 5.37.0
     devDependencies:
       less:
-        specifier: ^4.4.0
-        version: 4.4.0
+        specifier: 4.3.0
+        version: 4.3.0
       sass:
         specifier: ^1.89.2
         version: 1.89.2
@@ -850,11 +850,11 @@ importers:
         specifier: ^3.0.8
         version: 3.0.8
       less:
-        specifier: ^4.4.0
-        version: 4.4.0
+        specifier: 4.3.0
+        version: 4.3.0
       less-loader:
         specifier: ^12.3.0
-        version: 12.3.0(@rspack/core@1.4.10(@swc/helpers@0.5.17))(less@4.4.0)(webpack@5.99.9)
+        version: 12.3.0(@rspack/core@1.4.10(@swc/helpers@0.5.17))(less@4.3.0)(webpack@5.99.9)
       prebundle:
         specifier: 1.4.0
         version: 1.4.0(typescript@5.8.3)
@@ -4854,6 +4854,11 @@ packages:
         optional: true
       webpack:
         optional: true
+
+  less@4.3.0:
+    resolution: {integrity: sha512-X9RyH9fvemArzfdP8Pi3irr7lor2Ok4rOttDXBhlwDg+wKQsXOXgHWduAJE1EsF7JJx0w0bcO6BC6tCKKYnXKA==}
+    engines: {node: '>=14'}
+    hasBin: true
 
   less@4.4.0:
     resolution: {integrity: sha512-kdTwsyRuncDfjEs0DlRILWNvxhDG/Zij4YLO4TMJgDLW+8OzpfkdPnRgrsRuY1o+oaxJGWsps5f/RVBgGmmN0w==}
@@ -10819,12 +10824,26 @@ snapshots:
 
   leac@0.6.0: {}
 
-  less-loader@12.3.0(@rspack/core@1.4.10(@swc/helpers@0.5.17))(less@4.4.0)(webpack@5.99.9):
+  less-loader@12.3.0(@rspack/core@1.4.10(@swc/helpers@0.5.17))(less@4.3.0)(webpack@5.99.9):
     dependencies:
-      less: 4.4.0
+      less: 4.3.0
     optionalDependencies:
       '@rspack/core': 1.4.10(@swc/helpers@0.5.17)
       webpack: 5.99.9
+
+  less@4.3.0:
+    dependencies:
+      copy-anything: 2.0.6
+      parse-node-version: 1.0.1
+      tslib: 2.8.1
+    optionalDependencies:
+      errno: 0.1.8
+      graceful-fs: 4.2.11
+      image-size: 0.5.5
+      make-dir: 2.1.0
+      mime: 1.6.0
+      needle: 3.3.1
+      source-map: 0.6.1
 
   less@4.4.0:
     dependencies:
@@ -10839,6 +10858,7 @@ snapshots:
       mime: 1.6.0
       needle: 3.3.1
       source-map: 0.6.1
+    optional: true
 
   lightningcss-darwin-arm64@1.30.1:
     optional: true
