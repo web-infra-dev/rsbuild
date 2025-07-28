@@ -232,7 +232,7 @@ export class SwcMinimizerPlugin {
                     asset.name,
                     minifyResult.map,
                     source.toString(),
-                    map,
+                    map || undefined,
                     true,
                   )
                 : new RawSource(minifyResult.code || '');
