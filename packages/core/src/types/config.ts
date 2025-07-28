@@ -375,7 +375,6 @@ export type HistoryApiFallbackContext = {
 
 export type HistoryApiFallbackTo =
   | string
-  | RegExp
   | ((context: HistoryApiFallbackContext) => string);
 
 export type HistoryApiFallbackOptions = {

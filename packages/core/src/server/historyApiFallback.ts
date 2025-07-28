@@ -80,23 +80,29 @@ export function historyApiFallbackMiddleware(
 
     for (const rewrite of rewrites) {
       const match = parsedUrl.pathname?.match(rewrite.from);
-      if (match) {
-        rewriteTarget = evaluateRewriteRule(parsedUrl, match, rewrite.to, req);
-
-        if (rewriteTarget.charAt(0) !== '/') {
-          logger.debug(
-            'We recommend using an absolute path for the rewrite target.',
-            'Received a non-absolute rewrite target',
-            rewriteTarget,
-            'for URL',
-            req.url,
-          );
-        }
-
-        logger.debug('Rewriting', req.method, req.url, 'to', rewriteTarget);
-        req.url = rewriteTarget;
-        return next();
+      if (!match) {
+        continue;
       }
+
+      const rule = rewrite.to;
+      rewriteTarget =
+        typeof rule === 'string'
+          ? rule
+          : rule({ parsedUrl, match, request: req });
+
+      if (rewriteTarget.charAt(0) !== '/') {
+        logger.debug(
+          'We recommend using an absolute path for the rewrite target.',
+          'Received a non-absolute rewrite target',
+          rewriteTarget,
+          'for URL',
+          req.url,
+        );
+      }
+
+      logger.debug('Rewriting', req.method, req.url, 'to', rewriteTarget);
+      req.url = rewriteTarget;
+      return next();
     }
 
     const { pathname } = parsedUrl;
@@ -119,25 +125,6 @@ export function historyApiFallbackMiddleware(
     req.url = index;
     next();
   };
-}
-
-function evaluateRewriteRule(
-  parsedUrl: URL,
-  match: RegExpMatchArray,
-  rule: HistoryApiFallbackTo,
-  request: IncomingMessage,
-) {
-  if (typeof rule === 'string') {
-    return rule;
-  }
-  if (typeof rule !== 'function') {
-    throw new Error('Rewrite rule can only be of type string or function.');
-  }
-  return rule({
-    parsedUrl,
-    match,
-    request,
-  });
 }
 
 function parseReqUrl(req: IncomingMessage) {
