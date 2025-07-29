@@ -1,0 +1,11 @@
+[
+  {
+    "language": "javascript",
+    "languageOptions": {
+      "parserOptions": {
+        "project": ["./packages/core/tsconfig.json"]
+      }
+    },
+    "plugins": ["@typescript-eslint"]
+  }
+]
