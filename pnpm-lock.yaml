@@ -1174,20 +1174,23 @@ importers:
         specifier: ^1.3.3
         version: 1.3.3(@rsbuild/core@packages+core)
       '@rspress/core':
-        specifier: 2.0.0-beta.22
-        version: 2.0.0-beta.22(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2)
+        specifier: 2.0.0-beta.23
+        version: 2.0.0-beta.23(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2)
       '@rspress/plugin-algolia':
-        specifier: 2.0.0-beta.22
-        version: 2.0.0-beta.22(@algolia/client-search@5.27.0)(@rspress/core@2.0.0-beta.22(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(search-insights@2.17.3)
+        specifier: 2.0.0-beta.23
+        version: 2.0.0-beta.23(@algolia/client-search@5.27.0)(@rspress/core@2.0.0-beta.23(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(search-insights@2.17.3)
       '@rspress/plugin-client-redirects':
-        specifier: 2.0.0-beta.22
-        version: 2.0.0-beta.22(@rspress/core@2.0.0-beta.22(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2))
+        specifier: 2.0.0-beta.23
+        version: 2.0.0-beta.23(@rspress/core@2.0.0-beta.23(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2))
       '@rspress/plugin-llms':
-        specifier: 2.0.0-beta.22
-        version: 2.0.0-beta.22(@rspress/core@2.0.0-beta.22(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2))
+        specifier: 2.0.0-beta.23
+        version: 2.0.0-beta.23(@rspress/core@2.0.0-beta.23(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2))
       '@rspress/plugin-rss':
-        specifier: 2.0.0-beta.22
-        version: 2.0.0-beta.22(@rspress/core@2.0.0-beta.22(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2))
+        specifier: 2.0.0-beta.23
+        version: 2.0.0-beta.23(@rspress/core@2.0.0-beta.23(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2))
+      '@rspress/plugin-sitemap':
+        specifier: 2.0.0-beta.23
+        version: 2.0.0-beta.23(@rspress/core@2.0.0-beta.23(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2))
       '@rstack-dev/doc-ui':
         specifier: 1.10.8
         version: 1.10.8(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -2380,6 +2383,11 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@rsbuild/core@1.4.11':
+    resolution: {integrity: sha512-G5x7jUGxVw0Z984IEKmOP/tW8gslhUjN81D3fuogKb95hlESWpc+LuckuA5iO1ydbLVrhuYKLv1tC8wTAIDsqA==}
+    engines: {node: '>=16.10.0'}
+    hasBin: true
+
   '@rsbuild/core@1.4.8':
     resolution: {integrity: sha512-IJhpLl8lrp5ynlf04V5l7rMrVTNuGLG36ZDadHiBIC5qLRGSS3rMF8cVLSkSA6qM1OiRlPpMgwQbqFYh325RvQ==}
     engines: {node: '>=16.10.0'}
@@ -2720,8 +2728,8 @@ packages:
       webpack-hot-middleware:
         optional: true
 
-  '@rspress/core@2.0.0-beta.22':
-    resolution: {integrity: sha512-rzFNwUuctoS0yvdo/5yJV7QfrFhTTB0o7QkJYkrsNG5L50fvPxOYkxPxn52L83q76anoEdNlVrQGxKOX5f32Bg==}
+  '@rspress/core@2.0.0-beta.23':
+    resolution: {integrity: sha512-p3k1C3oBd9ggM1nCVDQOsFWqGHB3ExCbybtOxSi6m6e5FgeZ8i+pg8BXRTlyHm63UYGzy7CcB2hcKaE3MbSUZw==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -2777,39 +2785,45 @@ packages:
     resolution: {integrity: sha512-NpNhTKBIlV3O6ADhoZkgHvBFvXMW2TYlIWmIT1ysJESUBqDpaN9H3Teve5fugjU2pQ2ORBZO6SQGKliMw/8m/Q==}
     engines: {node: '>= 10'}
 
-  '@rspress/plugin-algolia@2.0.0-beta.22':
-    resolution: {integrity: sha512-FkMlFAZD4oteCWTH6f620TqPkZSDDfR7HzgGeP0GEdZo0BRtBbxv5duP/JdV/YnUa4vn3QyWnYE0bjppjpw7Vw==}
+  '@rspress/plugin-algolia@2.0.0-beta.23':
+    resolution: {integrity: sha512-1cBsoxrO/Hp0kLOMS0pPDVnisgJXoSf9TGnugL0lOcuOzt1NUojfrqc+du6WiA+HUqnLapF2meXn35Qu29J3xg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      '@rspress/core': ^2.0.0-beta.22
+      '@rspress/core': ^2.0.0-beta.23
 
-  '@rspress/plugin-client-redirects@2.0.0-beta.22':
-    resolution: {integrity: sha512-o8en63ntnA9OLD+M2rnOgLK2VrGDl/EFeQSPUuiYfGYw6+XqJEC1yMTOunSN/G2dUVOYOEJ1I8RmL12Mc6ycrw==}
+  '@rspress/plugin-client-redirects@2.0.0-beta.23':
+    resolution: {integrity: sha512-aolOzgWyAa58AAFeWDRqXQS/KKN1yjL3h8Mz4sp6TayvHltZS30xQpHryrhxEnllHUM87++rKmvwOjMqZB3XNw==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      '@rspress/core': ^2.0.0-beta.22
+      '@rspress/core': ^2.0.0-beta.23
 
-  '@rspress/plugin-llms@2.0.0-beta.22':
-    resolution: {integrity: sha512-eEMb60CuA1mbu3qUKl+np/Ic8nHFFAchLEfhqOYbeq/8e3GSb2gYBxRNEJ+x4TINI6wgpqP36klf59a+2pxlTw==}
+  '@rspress/plugin-llms@2.0.0-beta.23':
+    resolution: {integrity: sha512-Sim+BFWqxNOekMSnnDH0QHeoeOZPu3Jgqf0nWdglkZTQFfbPHuERXcDgo5uW28/wVXXRg/Ke/1X3G0NE2ssZjw==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      '@rspress/core': ^2.0.0-beta.22
+      '@rspress/core': ^2.0.0-beta.23
 
-  '@rspress/plugin-rss@2.0.0-beta.22':
-    resolution: {integrity: sha512-le8Gyjmz7pZiXMB6rYUze/A2D07o0svEfct6SQIXKY6yrAFPiNbOY4ikQ7Ve8elXd+m5ZPnkHxgr5/Q1E5qcbg==}
+  '@rspress/plugin-rss@2.0.0-beta.23':
+    resolution: {integrity: sha512-n2KjLWBkyLhU4rsUTyg2VyTktpxvLJpP2ukq042tM4sout/TuZAUKK6y2pW50drRFInLJsYICcGHHeZI7bCv3A==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      '@rspress/core': ^2.0.0-beta.22
+      '@rspress/core': ^2.0.0-beta.23
 
-  '@rspress/runtime@2.0.0-beta.22':
-    resolution: {integrity: sha512-Z/lharbTJ6vP+ITw1mhuJHk9MMNBU7He3c2C+qe8HcaSIuN0iVUiZJSM9tatSJhCkylyEvY2B6smc1e3I43RBg==}
+  '@rspress/plugin-sitemap@2.0.0-beta.23':
+    resolution: {integrity: sha512-2mn8QTigaKCVjfRmI0o9uaJZ7fhDnOJ8cOhuX4cwMgRBHbT5aVcYJcCfvZ612S79l/55ONOSOoG8D1b36qcdlQ==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      '@rspress/core': ^2.0.0-beta.23
+
+  '@rspress/runtime@2.0.0-beta.23':
+    resolution: {integrity: sha512-uDmvsZtQc8L8okzL++Rps5h1fYiIvLchp7qMUIRipc3lVIEDIdf+TOucZrYtTAgCfMUFaX/a/h6rWNyF63+50g==}
     engines: {node: '>=18.0.0'}
 
-  '@rspress/shared@2.0.0-beta.22':
-    resolution: {integrity: sha512-JLVda5YBoeABoeJukUp3AX6+qNY52sv8HPKZHNytLnmpr/kTpSS1dANp1UODMVK0aluVu3t6VnrcoICSIyOC3g==}
+  '@rspress/shared@2.0.0-beta.23':
+    resolution: {integrity: sha512-xYZMm8kGUA5OjkuNsB+CINuWJXdFoJfiAz+odC3OwelmKIXwkKNo79KtDbJQDP/BZgSikxVCkeYsSayp+VuhEQ==}
 
-  '@rspress/theme-default@2.0.0-beta.22':
-    resolution: {integrity: sha512-hRPITak6Ncoxg3BB/dpSJfKADVgW4E5P00eaZbor30/Qky9E9utekJiv3m+7OEunlGFoz9mfpTCHV8L0/aDBBw==}
+  '@rspress/theme-default@2.0.0-beta.23':
+    resolution: {integrity: sha512-wmiaR504zExQaSt3Q4Z1nlBIZcUIqKqRGqUcwkYXscGVkwvc3iW+DLin+codF2FM9fvox3JAtU6J9AVuiigZfw==}
     engines: {node: '>=18.0.0'}
 
   '@rstack-dev/doc-ui@1.10.8':
@@ -8013,6 +8027,14 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.45.1':
     optional: true
 
+  '@rsbuild/core@1.4.11':
+    dependencies:
+      '@rspack/core': 1.4.10(@swc/helpers@0.5.17)
+      '@rspack/lite-tapable': 1.0.1
+      '@swc/helpers': 0.5.17
+      core-js: 3.44.0
+      jiti: 2.5.1
+
   '@rsbuild/core@1.4.8':
     dependencies:
       '@rspack/core': 1.4.8(@swc/helpers@0.5.17)
@@ -8053,9 +8075,9 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': link:packages/core
 
-  '@rsbuild/plugin-react@1.3.4(@rsbuild/core@1.4.8)':
+  '@rsbuild/plugin-react@1.3.4(@rsbuild/core@1.4.11)':
     dependencies:
-      '@rsbuild/core': 1.4.8
+      '@rsbuild/core': 1.4.11
       '@rspack/plugin-react-refresh': 1.4.3(react-refresh@0.17.0)
       react-refresh: 0.17.0
     transitivePeerDependencies:
@@ -8426,17 +8448,17 @@ snapshots:
       html-entities: 2.6.0
       react-refresh: 0.17.0
 
-  '@rspress/core@2.0.0-beta.22(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2)':
+  '@rspress/core@2.0.0-beta.23(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2)':
     dependencies:
       '@mdx-js/loader': 3.1.0(acorn@8.15.0)(webpack@5.100.2)
       '@mdx-js/mdx': 3.1.0(acorn@8.15.0)
       '@mdx-js/react': 3.1.0(@types/react@19.1.8)(react@19.1.0)
-      '@rsbuild/core': 1.4.8
-      '@rsbuild/plugin-react': 1.3.4(@rsbuild/core@1.4.8)
+      '@rsbuild/core': 1.4.11
+      '@rsbuild/plugin-react': 1.3.4(@rsbuild/core@1.4.11)
       '@rspress/mdx-rs': 0.6.6
-      '@rspress/runtime': 2.0.0-beta.22
-      '@rspress/shared': 2.0.0-beta.22
-      '@rspress/theme-default': 2.0.0-beta.22
+      '@rspress/runtime': 2.0.0-beta.23
+      '@rspress/shared': 2.0.0-beta.23
+      '@rspress/theme-default': 2.0.0-beta.23
       '@shikijs/rehype': 3.8.1
       '@types/unist': 3.0.3
       '@unhead/react': 2.0.12(react@19.1.0)
@@ -8508,11 +8530,11 @@ snapshots:
       '@rspress/mdx-rs-win32-arm64-msvc': 0.6.6
       '@rspress/mdx-rs-win32-x64-msvc': 0.6.6
 
-  '@rspress/plugin-algolia@2.0.0-beta.22(@algolia/client-search@5.27.0)(@rspress/core@2.0.0-beta.22(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(search-insights@2.17.3)':
+  '@rspress/plugin-algolia@2.0.0-beta.23(@algolia/client-search@5.27.0)(@rspress/core@2.0.0-beta.23(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(search-insights@2.17.3)':
     dependencies:
       '@docsearch/css': 3.9.0
       '@docsearch/react': 3.9.0(@algolia/client-search@5.27.0)(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(search-insights@2.17.3)
-      '@rspress/core': 2.0.0-beta.22(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2)
+      '@rspress/core': 2.0.0-beta.23(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2)
     transitivePeerDependencies:
       - '@algolia/client-search'
       - '@types/react'
@@ -8520,13 +8542,13 @@ snapshots:
       - react-dom
       - search-insights
 
-  '@rspress/plugin-client-redirects@2.0.0-beta.22(@rspress/core@2.0.0-beta.22(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2))':
+  '@rspress/plugin-client-redirects@2.0.0-beta.23(@rspress/core@2.0.0-beta.23(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2))':
     dependencies:
-      '@rspress/core': 2.0.0-beta.22(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2)
+      '@rspress/core': 2.0.0-beta.23(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2)
 
-  '@rspress/plugin-llms@2.0.0-beta.22(@rspress/core@2.0.0-beta.22(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2))':
+  '@rspress/plugin-llms@2.0.0-beta.23(@rspress/core@2.0.0-beta.23(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2))':
     dependencies:
-      '@rspress/core': 2.0.0-beta.22(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2)
+      '@rspress/core': 2.0.0-beta.23(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2)
       remark-mdx: 3.1.0
       remark-parse: 11.0.0
       remark-stringify: 11.0.0
@@ -8536,32 +8558,36 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rspress/plugin-rss@2.0.0-beta.22(@rspress/core@2.0.0-beta.22(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2))':
+  '@rspress/plugin-rss@2.0.0-beta.23(@rspress/core@2.0.0-beta.23(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2))':
     dependencies:
-      '@rspress/core': 2.0.0-beta.22(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2)
+      '@rspress/core': 2.0.0-beta.23(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2)
       feed: 4.2.2
 
-  '@rspress/runtime@2.0.0-beta.22':
+  '@rspress/plugin-sitemap@2.0.0-beta.23(@rspress/core@2.0.0-beta.23(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2))':
     dependencies:
-      '@rspress/shared': 2.0.0-beta.22
+      '@rspress/core': 2.0.0-beta.23(@types/react@19.1.8)(acorn@8.15.0)(webpack@5.100.2)
+
+  '@rspress/runtime@2.0.0-beta.23':
+    dependencies:
+      '@rspress/shared': 2.0.0-beta.23
       '@unhead/react': 2.0.12(react@19.1.0)
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
       react-router-dom: 6.30.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
 
-  '@rspress/shared@2.0.0-beta.22':
+  '@rspress/shared@2.0.0-beta.23':
     dependencies:
-      '@rsbuild/core': 1.4.8
+      '@rsbuild/core': 1.4.11
       '@shikijs/rehype': 3.8.1
       gray-matter: 4.0.3
       lodash-es: 4.17.21
       unified: 11.0.5
 
-  '@rspress/theme-default@2.0.0-beta.22':
+  '@rspress/theme-default@2.0.0-beta.23':
     dependencies:
       '@mdx-js/react': 2.3.0(react@19.1.0)
-      '@rspress/runtime': 2.0.0-beta.22
-      '@rspress/shared': 2.0.0-beta.22
+      '@rspress/runtime': 2.0.0-beta.23
+      '@rspress/shared': 2.0.0-beta.23
       '@unhead/react': 2.0.12(react@19.1.0)
       body-scroll-lock: 4.0.0-beta.0
       copy-to-clipboard: 3.3.3
