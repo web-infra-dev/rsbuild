@@ -16,6 +16,7 @@
     "e2e:webpack": "cd ./e2e && pnpm e2e:webpack",
     "format": "prettier --write . && heading-case --write",
     "lint": "biome check && pnpm run check-spell",
+    "lint:type": "rslint --config rslint.json",
     "prebundle": "nx run-many -t prebundle",
     "prepare": "simple-git-hooks && pnpm run build",
     "sort-package-json": "pnpx sort-package-json \"./package.json\" \"packages/*/package.json\" \"packages/compat/*/package.json\"",
@@ -35,6 +36,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.0.6",
     "@rsbuild/config": "workspace:*",
+    "@rslint/core": "^0.0.15",
     "@rstest/core": "0.0.10",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^22.16.5",
