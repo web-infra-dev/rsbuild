@@ -22,9 +22,7 @@
       "**/website/**",
       "!**/*.vue",
       "!**/*.svelte",
-      "!**/template-lit-*/src/my-element.*",
-      "!**/tsconfig.json",
-      "!**/tsconfig.*.json"
+      "!**/template-lit-*/src/my-element.*"
     ],
     "ignoreUnknown": true
   },
