@@ -4,6 +4,7 @@
     "outDir": "./dist",
     "rootDir": "src",
     "composite": true,
+    "tsBuildInfoFile": "./node_modules/.cache/.tsbuildinfo",
     "isolatedDeclarations": true
   },
   "references": [

@@ -5,6 +5,7 @@
     "rootDir": "src",
     "declarationDir": "./dist-types",
     "composite": true,
+    "tsBuildInfoFile": "./node_modules/.cache/.tsbuildinfo",
     "isolatedDeclarations": true,
     "types": ["@rspack/core/module"]
   },
