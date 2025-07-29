@@ -67,7 +67,7 @@ function getClientPaths(devConfig: NormalizedDevConfig) {
   clientPaths.push(require.resolve('@rsbuild/core/client/hmr'));
 
   if (devConfig.client?.overlay) {
-    clientPaths.push(`${require.resolve('@rsbuild/core/client/overlay')}`);
+    clientPaths.push(require.resolve('@rsbuild/core/client/overlay'));
   }
 
   return clientPaths;
