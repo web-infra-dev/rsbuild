@@ -4,6 +4,7 @@ import { pluginAlgolia } from '@rspress/plugin-algolia';
 import { pluginClientRedirects } from '@rspress/plugin-client-redirects';
 import { pluginLlms } from '@rspress/plugin-llms';
 import { pluginRss } from '@rspress/plugin-rss';
+import { pluginSitemap } from '@rspress/plugin-sitemap';
 import {
   transformerNotationDiff,
   transformerNotationFocus,
@@ -12,7 +13,6 @@ import {
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
-import pluginSitemap from 'rspress-plugin-sitemap';
 import { rsbuildPluginOverview } from './theme/rsbuildPluginOverview';
 
 const siteUrl = 'https://rsbuild.rs';
@@ -23,7 +23,7 @@ export default defineConfig({
     pluginAlgolia(),
     pluginLlms(),
     pluginSitemap({
-      domain: siteUrl,
+      siteUrl,
     }),
     pluginFontOpenSans(),
     pluginRss({
@@ -128,7 +128,6 @@ export default defineConfig({
     dark: 'https://assets.rspack.rs/rsbuild/navbar-logo-dark.png',
   },
   markdown: {
-    checkDeadLinks: true,
     shiki: {
       langs: ['styl', 'html', 'toml'],
       langAlias: {
