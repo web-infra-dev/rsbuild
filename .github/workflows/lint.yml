@@ -37,7 +37,10 @@ jobs:
         run: pnpm install --ignore-scripts
 
       - name: Lint
-        run: pnpm run lint
+        run: pnpm lint
+
+      - name: Check Spell
+        run: pnpm check-spell
 
       - name: Check Dependency Version
-        run: pnpm run check-dependency-version
+        run: pnpm check-dependency-version
