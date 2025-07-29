@@ -7,13 +7,9 @@
  * https://github.com/bripkens/connect-history-api-fallback/blob/master/LICENSE
  */
 import type { IncomingMessage } from 'node:http';
-import url from 'node:url';
+import { URL } from 'node:url';
 import { logger } from '../logger';
-import type {
-  HistoryApiFallbackOptions,
-  HistoryApiFallbackTo,
-  RequestHandler,
-} from '../types';
+import type { HistoryApiFallbackOptions, RequestHandler } from '../types';
 
 export function historyApiFallbackMiddleware(
   options: HistoryApiFallbackOptions = {},
@@ -55,7 +51,11 @@ export function historyApiFallbackMiddleware(
       return next();
     }
 
-    if (!acceptsHtml(headers.accept, options)) {
+    const rewrites = options.rewrites || [];
+    const htmlAcceptHeaders = options.htmlAcceptHeaders || ['text/html', '*/*'];
+    const { accept } = headers;
+
+    if (!htmlAcceptHeaders.some((item) => accept.includes(item))) {
       logger.debug(
         'Not rewriting',
         req.method,
@@ -65,30 +65,40 @@ export function historyApiFallbackMiddleware(
       return next();
     }
 
-    const parsedUrl = url.parse(req.url);
+    const parsedUrl = parseReqUrl(req);
+
+    // skip invalid request
+    if (parsedUrl === null) {
+      return next();
+    }
+
     let rewriteTarget: string;
 
-    options.rewrites = options.rewrites || [];
-
-    for (const rewrite of options.rewrites) {
+    for (const rewrite of rewrites) {
       const match = parsedUrl.pathname?.match(rewrite.from);
-      if (match) {
-        rewriteTarget = evaluateRewriteRule(parsedUrl, match, rewrite.to, req);
-
-        if (rewriteTarget.charAt(0) !== '/') {
-          logger.debug(
-            'We recommend using an absolute path for the rewrite target.',
-            'Received a non-absolute rewrite target',
-            rewriteTarget,
-            'for URL',
-            req.url,
-          );
-        }
-
-        logger.debug('Rewriting', req.method, req.url, 'to', rewriteTarget);
-        req.url = rewriteTarget;
-        return next();
+      if (!match) {
+        continue;
       }
+
+      const rule = rewrite.to;
+      rewriteTarget =
+        typeof rule === 'string'
+          ? rule
+          : rule({ parsedUrl, match, request: req });
+
+      if (rewriteTarget.charAt(0) !== '/') {
+        logger.debug(
+          'We recommend using an absolute path for the rewrite target.',
+          'Received a non-absolute rewrite target',
+          rewriteTarget,
+          'for URL',
+          req.url,
+        );
+      }
+
+      logger.debug('Rewriting', req.method, req.url, 'to', rewriteTarget);
+      req.url = rewriteTarget;
+      return next();
     }
 
     const { pathname } = parsedUrl;
@@ -106,39 +116,20 @@ export function historyApiFallbackMiddleware(
       return next();
     }
 
-    rewriteTarget = options.index || '/index.html';
-    logger.debug('Rewriting', req.method, req.url, 'to', rewriteTarget);
-    req.url = rewriteTarget;
+    const index = options.index || '/index.html';
+    logger.debug('Rewriting', req.method, req.url, 'to', index);
+    req.url = index;
     next();
   };
 }
 
-function evaluateRewriteRule(
-  parsedUrl: import('node:url').Url,
-  match: RegExpMatchArray,
-  rule: HistoryApiFallbackTo,
-  req: IncomingMessage,
-) {
-  if (typeof rule === 'string') {
-    return rule;
+function parseReqUrl(req: IncomingMessage) {
+  const proto = req.headers['x-forwarded-proto'] || 'http';
+  const host =
+    req.headers['x-forwarded-host'] || req.headers.host || 'localhost';
+  try {
+    return new URL(req.url || '/', `${proto}://${host}`);
+  } catch {
+    return null;
   }
-  if (typeof rule !== 'function') {
-    throw new Error('Rewrite rule can only be of type string or function.');
-  }
-
-  return rule({
-    parsedUrl: parsedUrl,
-    match: match,
-    request: req,
-  });
-}
-
-function acceptsHtml(header: string, options: HistoryApiFallbackOptions) {
-  options.htmlAcceptHeaders = options.htmlAcceptHeaders || ['text/html', '*/*'];
-  for (const item of options.htmlAcceptHeaders) {
-    if (header.indexOf(item) !== -1) {
-      return true;
-    }
-  }
-  return false;
 }
