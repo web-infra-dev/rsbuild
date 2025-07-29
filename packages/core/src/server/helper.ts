@@ -158,7 +158,7 @@ function getURLMessages(
     if (index > 0) {
       message += '\n';
     }
-    message += `  ${`➜  ${label}`}\n`;
+    message += `  ➜  ${label}\n`;
 
     for (const r of routes) {
       message += `  ${color.dim('-')} ${color.dim(

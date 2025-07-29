@@ -39,7 +39,7 @@ export async function runCLI(): Promise<void> {
     logger.log();
   }
 
-  logger.greet(`  ${`Rsbuild v${RSBUILD_VERSION}`}\n`);
+  logger.greet(`  Rsbuild v${RSBUILD_VERSION}\n`);
 
   try {
     setupCommands();
