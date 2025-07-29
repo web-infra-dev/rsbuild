@@ -37,15 +37,12 @@
       "@typescript-eslint/no-unnecessary-boolean-literal-compare": "off",
       "@typescript-eslint/unbound-method": "off",
       "@typescript-eslint/no-redundant-type-constituents": "off",
-      "@typescript-eslint/return-await": "off",
       "@typescript-eslint/no-implied-eval": "off",
       "@typescript-eslint/no-unnecessary-type-assertion": "off",
       "@typescript-eslint/switch-exhaustiveness-check": "off",
       "@typescript-eslint/use-unknown-in-catch-callback-variable": "off",
-      "@typescript-eslint/no-unnecessary-type-arguments": "off",
       "@typescript-eslint/non-nullable-type-assertion-style": "off",
-      "@typescript-eslint/prefer-promise-reject-errors": "off",
-      "@typescript-eslint/no-misused-spread": "off"
+      "@typescript-eslint/prefer-promise-reject-errors": "off"
     }
   }
 ]
