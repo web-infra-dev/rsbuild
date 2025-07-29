@@ -15,7 +15,11 @@
   },
   "files": {
     "includes": [
-      "**",
+      "**/packages/**",
+      "**/examples/**",
+      "**/e2e/**",
+      "**/scripts/**",
+      "**/website/**",
       "!**/*.vue",
       "!**/*.svelte",
       "!**/template-lit-*/src/my-element.*",
@@ -43,27 +47,11 @@
           "options": {
             "filenameCases": ["camelCase", "PascalCase", "export"]
           }
-        },
-        "noParameterAssign": "error",
-        "useAsConstAssertion": "error",
-        "useDefaultParameterLast": "error",
-        "useEnumInitializers": "error",
-        "useSelfClosingElements": "error",
-        "useSingleVarDeclarator": "error",
-        "noUnusedTemplateLiteral": "error",
-        "useNumberNamespace": "error",
-        "noInferrableTypes": "error",
-        "noUselessElse": "error"
+        }
       },
       "suspicious": {
         "noExplicitAny": "off",
         "noConfusingVoidType": "off"
-      },
-      "performance": {
-        "noDelete": "off"
-      },
-      "nursery": {
-        "useUniqueElementIds": "off"
       }
     }
   }

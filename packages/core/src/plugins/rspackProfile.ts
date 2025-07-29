@@ -61,7 +61,6 @@ async function applyProfile(
         ? defaultRustTracePerfettoOutput
         : defaultRustTraceLoggerOutput;
 
-    // biome-ignore lint/style/noParameterAssign: setting default value makes sense
     traceOutput = defaultTraceOutput;
   }
 

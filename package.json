@@ -15,7 +15,7 @@
     "e2e:rspack": "cd ./e2e && pnpm e2e:rspack",
     "e2e:webpack": "cd ./e2e && pnpm e2e:webpack",
     "format": "prettier --write . && heading-case --write",
-    "lint": "biome check . --diagnostic-level=warn && pnpm run check-spell",
+    "lint": "biome check && pnpm run check-spell",
     "prebundle": "nx run-many -t prebundle",
     "prepare": "simple-git-hooks && pnpm run build",
     "sort-package-json": "pnpx sort-package-json \"./package.json\" \"packages/*/package.json\" \"packages/compat/*/package.json\"",
