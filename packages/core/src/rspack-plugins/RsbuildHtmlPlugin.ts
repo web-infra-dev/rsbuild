@@ -279,7 +279,7 @@ export class RsbuildHtmlPlugin {
         ? favicon
         : path.join(compilation.compiler.context, favicon);
 
-      let buffer: Buffer<ArrayBufferLike> | undefined;
+      let buffer: Buffer | undefined;
 
       try {
         buffer = await promisify(compilation.inputFileSystem.readFile)(

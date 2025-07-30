@@ -19,7 +19,8 @@ export const applySplitChunksRule = (
       return;
     }
 
-    const currentConfig = chain.optimization.splitChunks.values();
+    const currentConfig =
+      chain.optimization.splitChunks.values() as Rspack.Optimization['splitChunks'];
     if (!isPlainObject(currentConfig)) {
       return;
     }

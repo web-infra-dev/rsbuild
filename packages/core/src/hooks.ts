@@ -388,7 +388,7 @@ export const registerBuildHook = ({
   }, []);
 
   const beforeCompile = async () =>
-    await context.hooks.onBeforeBuild.callBatch({
+    context.hooks.onBeforeBuild.callBatch({
       bundlerConfigs,
       environments: context.environments,
       isWatch,
@@ -396,7 +396,7 @@ export const registerBuildHook = ({
     });
 
   const beforeEnvironmentCompiler = async (buildIndex: number) =>
-    await context.hooks.onBeforeEnvironmentCompile.callBatch({
+    context.hooks.onBeforeEnvironmentCompile.callBatch({
       environment: environmentList[buildIndex].name,
       args: [
         {
@@ -469,7 +469,7 @@ export const registerDevHook = ({
   }, []);
 
   const beforeEnvironmentCompiler = async (buildIndex: number) =>
-    await context.hooks.onBeforeEnvironmentCompile.callBatch({
+    context.hooks.onBeforeEnvironmentCompile.callBatch({
       environment: environmentList[buildIndex].name,
       args: [
         {
