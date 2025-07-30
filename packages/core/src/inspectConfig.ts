@@ -173,13 +173,8 @@ export async function outputInspectConfigFiles({
 }
 
 export function stringifyConfig(config: unknown, verbose?: boolean): string {
-  // webpackChain.toString can be used as a common stringify method
-  const stringify = RspackChain.toString as (
-    config: unknown,
-    options: { verbose?: boolean },
-  ) => string;
-
-  return stringify(config, { verbose });
+  // rspackChain.toString can be used as a common stringify method
+  return RspackChain.toString(config, { verbose });
 }
 
 const getInspectOutputPath = (

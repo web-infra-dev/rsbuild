@@ -88,7 +88,7 @@
     "reduce-configs": "^1.1.0",
     "rsbuild-dev-middleware": "0.3.0",
     "rslog": "^1.2.9",
-    "rspack-chain": "^1.3.0",
+    "rspack-chain": "^1.3.1",
     "rspack-manifest-plugin": "5.0.3",
     "sirv": "^3.0.1",
     "style-loader": "3.3.4",
