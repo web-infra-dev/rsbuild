@@ -133,7 +133,8 @@ export const getHtmlCompletionMiddleware: (params: {
 }) => RequestHandler = ({ distPath, compilationManager }) => {
   return async (req, res, next) => {
     if (!maybeHTMLRequest(req)) {
-      return next();
+      next();
+      return;
     }
 
     const url = req.url!;
@@ -141,9 +142,10 @@ export const getHtmlCompletionMiddleware: (params: {
 
     const rewrite = (newUrl: string) => {
       req.url = newUrl;
-      return compilationManager.middleware(req, res, (...args) => {
+      compilationManager.middleware(req, res, (...args) => {
         next(...args);
       });
+      return;
     };
 
     // '/' => '/index.html'
@@ -152,7 +154,8 @@ export const getHtmlCompletionMiddleware: (params: {
       const filePath = path.join(distPath, newUrl);
 
       if (await isFileExists(filePath, compilationManager.outputFileSystem)) {
-        return rewrite(newUrl);
+        rewrite(newUrl);
+        return;
       }
     }
     // '/main' => '/main.html'
@@ -161,7 +164,8 @@ export const getHtmlCompletionMiddleware: (params: {
       const filePath = path.join(distPath, newUrl);
 
       if (await isFileExists(filePath, compilationManager.outputFileSystem)) {
-        return rewrite(newUrl);
+        rewrite(newUrl);
+        return;
       }
     }
 
@@ -181,7 +185,8 @@ export const getBaseMiddleware: (params: {
 
     if (pathname.startsWith(base)) {
       req.url = stripBase(url, base);
-      return next();
+      next();
+      return;
     }
 
     const redirectPath =
@@ -234,7 +239,8 @@ export const getHtmlFallbackMiddleware: (params: {
       '/favicon.ico' === req.url ||
       htmlFallback !== 'index'
     ) {
-      return next();
+      next();
+      return;
     }
 
     const filePath = path.join(distPath, 'index.html');
@@ -250,9 +256,10 @@ export const getHtmlFallbackMiddleware: (params: {
       }
 
       req.url = newUrl;
-      return compilationManager.middleware(req, res, (...args) =>
-        next(...args),
-      );
+      compilationManager.middleware(req, res, (...args) => {
+        next(...args);
+      });
+      return;
     }
 
     next();

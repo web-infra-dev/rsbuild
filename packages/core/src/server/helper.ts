@@ -484,7 +484,9 @@ export function getServerTerminator(
         socket.destroy();
       }
       if (listened) {
-        server.close((err) => (err ? reject(err) : resolve()));
+        server.close((err) => {
+          err ? reject(err) : resolve();
+        });
       } else {
         resolve();
       }

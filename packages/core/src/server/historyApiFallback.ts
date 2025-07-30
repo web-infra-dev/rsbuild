@@ -18,7 +18,8 @@ export function historyApiFallbackMiddleware(
     const { headers } = req;
 
     if (!req.url) {
-      return next();
+      next();
+      return;
     }
 
     if (req.method !== 'GET' && req.method !== 'HEAD') {
@@ -28,7 +29,8 @@ export function historyApiFallbackMiddleware(
         req.url,
         'because the method is not GET or HEAD.',
       );
-      return next();
+      next();
+      return;
     }
 
     if (!headers || typeof headers.accept !== 'string') {
@@ -38,7 +40,8 @@ export function historyApiFallbackMiddleware(
         req.url,
         'because the client did not send an HTTP accept header.',
       );
-      return next();
+      next();
+      return;
     }
 
     if (headers.accept.indexOf('application/json') === 0) {
@@ -48,7 +51,8 @@ export function historyApiFallbackMiddleware(
         req.url,
         'because the client prefers JSON.',
       );
-      return next();
+      next();
+      return;
     }
 
     const rewrites = options.rewrites || [];
@@ -62,14 +66,16 @@ export function historyApiFallbackMiddleware(
         req.url,
         'because the client does not accept HTML.',
       );
-      return next();
+      next();
+      return;
     }
 
     const parsedUrl = parseReqUrl(req);
 
     // skip invalid request
     if (parsedUrl === null) {
-      return next();
+      next();
+      return;
     }
 
     let rewriteTarget: string;
@@ -98,7 +104,8 @@ export function historyApiFallbackMiddleware(
 
       logger.debug('Rewriting', req.method, req.url, 'to', rewriteTarget);
       req.url = rewriteTarget;
-      return next();
+      next();
+      return;
     }
 
     const { pathname } = parsedUrl;
@@ -113,7 +120,8 @@ export function historyApiFallbackMiddleware(
         req.url,
         'because the path includes a dot (.) character.',
       );
-      return next();
+      next();
+      return;
     }
 
     const index = options.index || '/index.html';

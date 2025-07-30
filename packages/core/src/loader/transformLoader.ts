@@ -12,16 +12,20 @@ export default async function transform(
   map?: string | Rspack.sources.RawSourceMap,
 ): Promise<void> {
   const callback = this.async();
-  const bypass = () => callback(null, source, map);
+  const bypass = () => {
+    callback(null, source, map);
+  };
 
   const { id: transformId, getEnvironment } = this.getOptions();
   if (!transformId) {
-    return bypass();
+    bypass();
+    return;
   }
 
   const transform = this._compiler?.__rsbuildTransformer?.[transformId];
   if (!transform) {
-    return bypass();
+    bypass();
+    return;
   }
 
   try {
@@ -41,11 +45,13 @@ export default async function transform(
     });
 
     if (result === null || result === undefined) {
-      return bypass();
+      bypass();
+      return;
     }
 
     if (typeof result === 'string') {
-      return callback(null, result, map);
+      callback(null, result, map);
+      return;
     }
 
     const useMap = map !== undefined && map !== null;
