@@ -38,8 +38,6 @@
       "@typescript-eslint/no-implied-eval": "off",
       "@typescript-eslint/no-unnecessary-type-assertion": "off",
       "@typescript-eslint/switch-exhaustiveness-check": "off",
-      "@typescript-eslint/use-unknown-in-catch-callback-variable": "off",
-      "@typescript-eslint/non-nullable-type-assertion-style": "off",
       "@typescript-eslint/prefer-promise-reject-errors": "off"
     }
   }
