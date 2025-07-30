@@ -228,7 +228,7 @@ export function printServerURLs({
 
   let message = getURLMessages(urls, routes);
 
-  if (trailingLineBreak === false && message.endsWith('\n')) {
+  if (!trailingLineBreak && message.endsWith('\n')) {
     message = message.slice(0, -1);
   }
 
