@@ -484,8 +484,9 @@ export interface ServerConfig {
    */
   htmlFallback?: HtmlFallback;
   /**
-   * Provide alternative pages for some 404 responses or other requests.
-   * see https://github.com/bripkens/connect-history-api-fallback
+   * Used to support routing based on the history API.
+   * When a user visits a path that does not exist, it will automatically
+   * return a specified HTML file to avoid a 404 error.
    */
   historyApiFallback?: boolean | HistoryApiFallbackOptions;
   /**
