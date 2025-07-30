@@ -32,7 +32,7 @@ function getPublicPath({
     }
   } else if (typeof dev.assetPrefix === 'string') {
     publicPath = dev.assetPrefix;
-  } else if (dev.assetPrefix === true) {
+  } else if (dev.assetPrefix) {
     const protocol = context.devServer?.https ? 'https' : 'http';
     const hostname = context.devServer?.hostname || DEFAULT_DEV_HOST;
 

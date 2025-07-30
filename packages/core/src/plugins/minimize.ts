@@ -66,7 +66,7 @@ export const parseMinifyOptions = (
   const { minify } = config.output;
 
   if (typeof minify === 'boolean') {
-    const shouldMinify = minify === true && isProd;
+    const shouldMinify = minify && isProd;
     return {
       minifyJs: shouldMinify,
       minifyCss: shouldMinify,

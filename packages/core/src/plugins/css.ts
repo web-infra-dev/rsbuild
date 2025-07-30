@@ -137,8 +137,7 @@ async function loadUserPostcssrc(
 const isPostcssPluginCreator = (
   plugin: AcceptedPlugin,
 ): plugin is PluginCreator<unknown> =>
-  typeof plugin === 'function' &&
-  (plugin as PluginCreator<unknown>).postcss === true;
+  typeof plugin === 'function' && (plugin as PluginCreator<unknown>).postcss;
 
 const getPostcssLoaderOptions = async ({
   config,

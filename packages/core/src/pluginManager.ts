@@ -296,7 +296,7 @@ export async function initPlugins({
         const result = instance.apply(context.originalConfig, {
           action: context.action,
         });
-        if (result === false) {
+        if (!result) {
           continue;
         }
       } else {

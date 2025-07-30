@@ -26,7 +26,7 @@ export const gzipMiddleware =
     level = zlib.constants.Z_BEST_SPEED,
   }: CompressOptions = {}): RequestHandler =>
   (req, res, next): void => {
-    if (filter && filter(req, res) === false) {
+    if (filter && !filter(req, res)) {
       next();
       return;
     }
@@ -59,9 +59,7 @@ export const gzipMiddleware =
         gzip = zlib.createGzip({ level });
 
         gzip.on('data', (chunk) => {
-          if (
-            (write as (chunk: unknown) => boolean).call(res, chunk) === false
-          ) {
+          if (!(write as (chunk: unknown) => boolean).call(res, chunk)) {
             gzip!.pause();
           }
         });
