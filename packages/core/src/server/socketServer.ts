@@ -324,7 +324,8 @@ export class SocketServer {
     this.initialChunks[token] = newInitialChunks;
 
     if (shouldReload) {
-      return this.sockWrite({ type: 'static-changed' }, token);
+      this.sockWrite({ type: 'static-changed' }, token);
+      return;
     }
 
     const shouldEmit =
@@ -335,7 +336,8 @@ export class SocketServer {
       statsJson.assets.every((asset: any) => !asset.emitted);
 
     if (shouldEmit) {
-      return this.sockWrite({ type: 'ok' }, token);
+      this.sockWrite({ type: 'ok' }, token);
+      return;
     }
 
     this.sockWrite(
@@ -353,7 +355,7 @@ export class SocketServer {
         warnings: [],
       });
 
-      return this.sockWrite(
+      this.sockWrite(
         {
           type: 'errors',
           data: {
@@ -363,6 +365,7 @@ export class SocketServer {
         },
         token,
       );
+      return;
     }
 
     if (statsJson.warningsCount) {
@@ -371,7 +374,7 @@ export class SocketServer {
         warnings,
         errors: [],
       });
-      return this.sockWrite(
+      this.sockWrite(
         {
           type: 'warnings',
           data: {
@@ -380,9 +383,11 @@ export class SocketServer {
         },
         token,
       );
+      return;
     }
 
-    return this.sockWrite({ type: 'ok' }, token);
+    this.sockWrite({ type: 'ok' }, token);
+    return;
   }
 
   // send message to connecting socket

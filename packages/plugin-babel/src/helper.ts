@@ -133,21 +133,29 @@ export const getBabelUtils = (
   const noop = () => {};
 
   return {
-    addPlugins: (plugins: BabelPlugin[]) => addPlugins(plugins, config),
-    addPresets: (presets: BabelPlugin[]) => addPresets(presets, config),
-    removePlugins: (plugins: string | string[]) =>
-      removePlugins(plugins, config),
-    removePresets: (presets: string | string[]) =>
-      removePresets(presets, config),
+    addPlugins: (plugins: BabelPlugin[]) => {
+      addPlugins(plugins, config);
+    },
+    addPresets: (presets: BabelPlugin[]) => {
+      addPresets(presets, config);
+    },
+    removePlugins: (plugins: string | string[]) => {
+      removePlugins(plugins, config);
+    },
+    removePresets: (presets: string | string[]) => {
+      removePresets(presets, config);
+    },
     // `addIncludes` and `addExcludes` are noop functions by default,
     // It can be overridden by `extraBabelUtils`.
     addIncludes: noop,
     addExcludes: noop,
     // Compat `presetEnvOptions` and `presetReactOptions` in Modern.js
-    modifyPresetEnvOptions: (options: PresetEnvOptions) =>
-      modifyPresetOptions('@babel/preset-env', options, config.presets || []),
-    modifyPresetReactOptions: (options: PresetReactOptions) =>
-      modifyPresetOptions('@babel/preset-react', options, config.presets || []),
+    modifyPresetEnvOptions: (options: PresetEnvOptions) => {
+      modifyPresetOptions('@babel/preset-env', options, config.presets || []);
+    },
+    modifyPresetReactOptions: (options: PresetReactOptions) => {
+      modifyPresetOptions('@babel/preset-react', options, config.presets || []);
+    },
   };
 };
 

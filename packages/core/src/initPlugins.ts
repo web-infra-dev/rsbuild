@@ -373,50 +373,59 @@ export function initPluginAPI({
     onAfterStartProdServer: hooks.onAfterStartProdServer.tap,
     onBeforeStartProdServer: hooks.onBeforeStartProdServer.tap,
     modifyRsbuildConfig: hooks.modifyRsbuildConfig.tap,
-    modifyHTML: (handler) =>
+    modifyHTML: (handler) => {
       hooks.modifyHTML.tapEnvironment({
         environment,
         handler,
-      }),
-    modifyHTMLTags: (handler) =>
+      });
+    },
+    modifyHTMLTags: (handler) => {
       hooks.modifyHTMLTags.tapEnvironment({
         environment,
         handler,
-      }),
-    modifyBundlerChain: (handler) =>
+      });
+    },
+    modifyBundlerChain: (handler) => {
       hooks.modifyBundlerChain.tapEnvironment({
         environment,
         handler,
-      }),
-    modifyRspackConfig: (handler) =>
+      });
+    },
+    modifyRspackConfig: (handler) => {
       hooks.modifyRspackConfig.tapEnvironment({
         environment,
         handler,
-      }),
-    modifyWebpackChain: (handler) =>
+      });
+    },
+    modifyWebpackChain: (handler) => {
       hooks.modifyWebpackChain.tapEnvironment({
         environment,
         handler,
-      }),
-    modifyWebpackConfig: (handler) =>
+      });
+    },
+    modifyWebpackConfig: (handler) => {
       hooks.modifyWebpackConfig.tapEnvironment({
         environment,
         handler,
-      }),
-    modifyEnvironmentConfig: (handler) =>
+      });
+    },
+    modifyEnvironmentConfig: (handler) => {
       hooks.modifyEnvironmentConfig.tapEnvironment({
         environment,
         handler,
-      }),
-    onAfterEnvironmentCompile: (handler) =>
+      });
+    },
+    onAfterEnvironmentCompile: (handler) => {
       hooks.onAfterEnvironmentCompile.tapEnvironment({
         environment,
         handler,
-      }),
-    onBeforeEnvironmentCompile: (handler) =>
+      });
+    },
+    onBeforeEnvironmentCompile: (handler) => {
       hooks.onBeforeEnvironmentCompile.tapEnvironment({
         environment,
         handler,
-      }),
+      });
+    },
   });
 }

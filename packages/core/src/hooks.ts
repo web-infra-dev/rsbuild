@@ -129,8 +129,9 @@ export function createEnvironmentAsyncHook<
 
   return {
     tapEnvironment,
-    tap: (handler: Callback | HookDescriptor<Callback>) =>
-      tapEnvironment({ handler }),
+    tap: (handler: Callback | HookDescriptor<Callback>) => {
+      tapEnvironment({ handler });
+    },
     callChain,
     callBatch,
   };
