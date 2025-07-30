@@ -145,7 +145,7 @@ function tryApplyUpdates() {
       (updatedModules) => {
         handleApplyUpdates(null, updatedModules);
       },
-      (err) => {
+      (err: unknown) => {
         handleApplyUpdates(err, null);
       },
     );

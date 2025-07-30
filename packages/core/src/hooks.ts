@@ -401,7 +401,7 @@ export const registerBuildHook = ({
       environment: environmentList[buildIndex].name,
       args: [
         {
-          bundlerConfig: bundlerConfigs?.[buildIndex] as Rspack.Configuration,
+          bundlerConfig: bundlerConfigs?.[buildIndex]!,
           environment: environmentList[buildIndex],
           isWatch,
           isFirstCompile,
@@ -474,7 +474,7 @@ export const registerDevHook = ({
       environment: environmentList[buildIndex].name,
       args: [
         {
-          bundlerConfig: bundlerConfigs?.[buildIndex] as Rspack.Configuration,
+          bundlerConfig: bundlerConfigs?.[buildIndex]!,
           environment: environmentList[buildIndex],
           isWatch: true,
           isFirstCompile,
