@@ -153,7 +153,9 @@ async function printFileSizes(
     const distFolder = path.relative(rootPath, distPath);
 
     return Promise.all(
-      filteredAssets.map((asset) => formatAsset(asset, distPath, distFolder)),
+      filteredAssets.map(async (asset) =>
+        formatAsset(asset, distPath, distFolder),
+      ),
     );
   };
   const assets = await getAssets();

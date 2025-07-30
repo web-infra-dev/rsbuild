@@ -50,7 +50,7 @@ export const build = async (
     );
 
     return {
-      close: () =>
+      close: async () =>
         new Promise((resolve) => {
           compiler.close(() => {
             resolve();

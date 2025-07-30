@@ -18,23 +18,26 @@ export class EsmRunner extends CommonJsRunner {
     const outputModule =
       this._options.compilerOptions.experiments?.outputModule;
 
-    this.requirers.set('entry', (currentDirectory, modulePath, context) => {
-      const file = this.getFile(modulePath, currentDirectory);
-      if (!file) {
-        return this.requirers.get('miss')!(currentDirectory, modulePath);
-      }
+    this.requirers.set(
+      'entry',
+      async (currentDirectory, modulePath, context) => {
+        const file = this.getFile(modulePath, currentDirectory);
+        if (!file) {
+          return this.requirers.get('miss')!(currentDirectory, modulePath);
+        }
 
-      if (outputModule && !file.path.endsWith('.cjs')) {
-        return this.requirers.get('esm')!(currentDirectory, modulePath, {
+        if (outputModule && !file.path.endsWith('.cjs')) {
+          return this.requirers.get('esm')!(currentDirectory, modulePath, {
+            ...context,
+            file,
+          });
+        }
+        return this.requirers.get('cjs')!(currentDirectory, modulePath, {
           ...context,
           file,
         });
-      }
-      return this.requirers.get('cjs')!(currentDirectory, modulePath, {
-        ...context,
-        file,
-      });
-    });
+      },
+    );
   }
 
   protected createEsmRequirer(): RunnerRequirer {
@@ -42,7 +45,7 @@ export class EsmRunner extends CommonJsRunner {
     const esmIdentifier = this._options.name;
     const vm = require('node:vm') as typeof import('node:vm');
 
-    return (currentDirectory, modulePath, context = {}) => {
+    return async (currentDirectory, modulePath, context = {}) => {
       if (!vm.SourceTextModule) {
         throw new Error(
           `${color.dim('[rsbuild:runner]')} Running ESM bundle needs add Node.js option ${color.yellow('--experimental-vm-modules')}.`,

@@ -82,7 +82,7 @@ async function watchDevFiles(
   };
 }
 
-function watchServerFiles(
+async function watchServerFiles(
   serverConfig: ServerConfig,
   compilationManager: CompilationManager,
   root: string,
