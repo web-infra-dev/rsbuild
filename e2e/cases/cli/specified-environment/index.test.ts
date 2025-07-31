@@ -21,3 +21,22 @@ rspackOnlyTest(
     ).toBeTruthy();
   },
 );
+
+rspackOnlyTest(
+  'should build specified environments when using --environment shorten option',
+  async () => {
+    execSync('npx rsbuild build --environment web1,web2', {
+      cwd: __dirname,
+    });
+
+    const files = await readDirContents(path.join(__dirname, 'dist'));
+    const outputFiles = Object.keys(files);
+
+    expect(
+      outputFiles.find((item) => item.includes('web1/index.html')),
+    ).toBeTruthy();
+    expect(
+      outputFiles.find((item) => item.includes('web2/index.html')),
+    ).toBeTruthy();
+  },
+);
