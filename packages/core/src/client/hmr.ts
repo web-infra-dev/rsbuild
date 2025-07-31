@@ -169,11 +169,7 @@ function onOpen() {
   // send a periodic ping message to keep the connection alive.
   pingIntervalId = setInterval(() => {
     if (connection && connection.readyState === connection.OPEN) {
-      connection.send(
-        JSON.stringify({
-          type: 'ping',
-        }),
-      );
+      connection.send(JSON.stringify({ type: 'ping' }));
     }
   }, 30000);
 }
