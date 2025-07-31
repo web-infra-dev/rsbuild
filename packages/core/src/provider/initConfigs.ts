@@ -328,12 +328,13 @@ export async function initConfigs({
   const normalizedConfig = await initRsbuildConfig({ context, pluginManager });
 
   const rspackConfigs = await Promise.all(
-    Object.entries(normalizedConfig.environments).map(([environment, config]) =>
-      generateRspackConfig({
-        target: config.output.target,
-        context,
-        environment,
-      }),
+    Object.entries(normalizedConfig.environments).map(
+      async ([environment, config]) =>
+        generateRspackConfig({
+          target: config.output.target,
+          context,
+          environment,
+        }),
     ),
   );
 

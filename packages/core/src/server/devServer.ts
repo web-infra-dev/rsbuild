@@ -279,7 +279,7 @@ export async function createDevServer<
         openPage,
         closeServer,
         printUrls,
-        restartServer: () => restartDevServer({ clear: false }),
+        restartServer: async () => restartDevServer({ clear: false }),
         help: shortcutsOptions.help,
         customShortcuts: shortcutsOptions.custom,
       });
@@ -293,7 +293,7 @@ export async function createDevServer<
 
   const cacheableLoadBundle = createCacheableFunction(loadBundle);
   const cacheableTransformedHtml = createCacheableFunction<string>(
-    (_stats, entryName, utils) => getTransformedHtml(entryName, utils),
+    async (_stats, entryName, utils) => getTransformedHtml(entryName, utils),
   );
 
   const environmentAPI = Object.fromEntries(

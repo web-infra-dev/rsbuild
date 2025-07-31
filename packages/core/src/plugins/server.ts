@@ -60,7 +60,7 @@ export const pluginServer = (): RsbuildPlugin => ({
           // async errors will missing error stack on copy, move
           // https://github.com/jprichardson/node-fs-extra/issues/769
           await Promise.all(
-            distPaths.map((distPath) =>
+            distPaths.map(async (distPath) =>
               fs.promises.cp(normalizedPath, distPath, {
                 recursive: true,
                 // dereference symlinks
