@@ -39,8 +39,6 @@ export const build = async (
       : [];
 
     compiler.watch(
-      // @ts-expect-error
-      // TODO: https://github.com/web-infra-dev/rspack/pull/11174
       watchOptions.length > 1 ? watchOptions : watchOptions[0] || {},
       (err) => {
         if (err) {
