@@ -159,10 +159,23 @@ function tryApplyUpdates() {
 
 let connection: WebSocket | null = null;
 let reconnectCount = 0;
+let pingIntervalId: ReturnType<typeof setInterval>;
 
 function onOpen() {
   // Notify users that the HMR has successfully connected.
   console.info('[HMR] connected.');
+
+  // To prevent WebSocket timeouts caused by proxies (e.g., nginx, docker),
+  // send a periodic ping message to keep the connection alive.
+  pingIntervalId = setInterval(() => {
+    if (connection && connection.readyState === connection.OPEN) {
+      connection.send(
+        JSON.stringify({
+          type: 'ping',
+        }),
+      );
+    }
+  }, 30000);
 }
 
 function onMessage(e: MessageEvent<string>) {
@@ -238,6 +251,7 @@ function connect(fallback = false) {
 }
 
 function removeListeners() {
+  clearInterval(pingIntervalId);
   if (connection) {
     connection.removeEventListener('open', onOpen);
     connection.removeEventListener('close', onClose);
