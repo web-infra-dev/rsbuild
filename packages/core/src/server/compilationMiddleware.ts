@@ -1,12 +1,41 @@
+import { createRequire } from 'node:module';
 import type { Compiler, MultiCompiler, Stats } from '@rspack/core';
 import { applyToCompiler } from '../helpers';
 import type {
   Connect,
   DevConfig,
   EnvironmentContext,
+  NormalizedDevConfig,
+  NormalizedEnvironmentConfig,
   ServerConfig,
 } from '../types';
 import { getResolvedClientConfig } from './hmrFallback';
+
+const require = createRequire(import.meta.url);
+let hmrClientPath: string;
+let overlayClientPath: string;
+
+function getClientPaths(devConfig: NormalizedDevConfig) {
+  const clientPaths: string[] = [];
+
+  if (!devConfig.hmr && !devConfig.liveReload) {
+    return clientPaths;
+  }
+
+  if (!hmrClientPath) {
+    hmrClientPath = require.resolve('@rsbuild/core/client/hmr');
+  }
+  clientPaths.push(hmrClientPath);
+
+  if (devConfig.client?.overlay) {
+    if (!overlayClientPath) {
+      overlayClientPath = require.resolve('@rsbuild/core/client/overlay');
+    }
+    clientPaths.push(overlayClientPath);
+  }
+
+  return clientPaths;
+}
 
 export const isClientCompiler = (compiler: {
   options: {
@@ -69,19 +98,24 @@ export const setupServerHooks = ({
 };
 
 function applyHMREntry({
+  config,
   compiler,
-  clientPaths,
   devConfig,
   resolvedClientConfig,
   token,
 }: {
+  config: NormalizedEnvironmentConfig;
   compiler: Compiler;
-  clientPaths: string[];
   devConfig: DevConfig;
   resolvedClientConfig: DevConfig['client'];
   token: string;
 }) {
   if (!isClientCompiler(compiler)) {
+    return;
+  }
+
+  const clientPaths = getClientPaths(config.dev);
+  if (!clientPaths.length) {
     return;
   }
 
@@ -100,10 +134,6 @@ function applyHMREntry({
 }
 
 export type CompilationMiddlewareOptions = {
-  /**
-   * To ensure HMR works, the devMiddleware need inject the HMR client path into page when HMR enable.
-   */
-  clientPaths?: string[];
   /**
    * Should trigger when compiler hook called
    */
@@ -132,30 +162,33 @@ export const getCompilationMiddleware = async (
     '../../compiled/rsbuild-dev-middleware/index.js'
   );
 
-  const { clientPaths, callbacks, devConfig, serverConfig } = options;
+  const { callbacks, devConfig, serverConfig } = options;
   const resolvedClientConfig = await getResolvedClientConfig(
     devConfig.client,
     serverConfig,
   );
 
   const setupCompiler = (compiler: Compiler, index: number) => {
-    const token = Object.values(options.environments).find(
+    const environment = Object.values(options.environments).find(
       (env) => env.index === index,
-    )?.webSocketToken;
+    );
+    if (!environment) {
+      return;
+    }
 
+    const token = environment.webSocketToken;
     if (!token) {
       return;
     }
 
-    if (clientPaths) {
-      applyHMREntry({
-        compiler,
-        clientPaths,
-        devConfig,
-        resolvedClientConfig,
-        token,
-      });
-    }
+    applyHMREntry({
+      compiler,
+      devConfig,
+      resolvedClientConfig,
+      token,
+      config: environment.config,
+    });
+
     // register hooks for each compilation, update socket stats if recompiled
     setupServerHooks({
       compiler,

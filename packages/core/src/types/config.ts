@@ -1799,16 +1799,24 @@ export type RsbuildConfigMeta = {
 };
 
 /**
+ * Only some dev options can be defined in the environment config
+ */
+export type AllowedEnvironmentDevKeys =
+  | 'hmr'
+  | 'liveReload'
+  | 'assetPrefix'
+  | 'progressBar'
+  | 'lazyCompilation'
+  | 'writeToDisk';
+
+/**
  * The Rsbuild config to run in the specified environment.
  * */
 export interface EnvironmentConfig {
   /**
    * Options for local development.
    */
-  dev?: Pick<
-    DevConfig,
-    'hmr' | 'assetPrefix' | 'progressBar' | 'lazyCompilation' | 'writeToDisk'
-  >;
+  dev?: Pick<DevConfig, AllowedEnvironmentDevKeys>;
   /**
    * Options for HTML generation.
    */
@@ -1899,10 +1907,7 @@ export interface RsbuildConfig extends EnvironmentConfig {
 export type MergedEnvironmentConfig = {
   mode: RsbuildMode;
   root: string;
-  dev: Pick<
-    NormalizedDevConfig,
-    'hmr' | 'assetPrefix' | 'progressBar' | 'lazyCompilation' | 'writeToDisk'
-  >;
+  dev: Pick<NormalizedDevConfig, AllowedEnvironmentDevKeys>;
   html: NormalizedHtmlConfig;
   tools: NormalizedToolsConfig;
   resolve: NormalizedResolveConfig;
