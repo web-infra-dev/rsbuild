@@ -48,6 +48,9 @@ const getDefaultDevConfig = (): NormalizedDevConfig => ({
   assetPrefix: DEFAULT_ASSET_PREFIX,
   writeToDisk: false,
   cliShortcuts: false,
+  lazyCompilation: {
+    imports: true,
+  },
   client: {
     path: HMR_SOCKET_PATH,
     port: '',
