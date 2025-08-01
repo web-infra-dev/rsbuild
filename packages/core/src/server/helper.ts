@@ -189,6 +189,8 @@ export function printServerURLs({
     return null;
   }
 
+  console.log('test'); // not work
+
   let urls = originalUrls;
   const useCustomUrl = isFunction(printUrls);
 
