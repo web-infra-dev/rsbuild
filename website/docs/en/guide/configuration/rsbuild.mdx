@@ -122,11 +122,11 @@ If your JavaScript runtime already natively supports TypeScript, you can use the
 For example, Node.js v22.6.0+ already natively supports TypeScript, you can use the following command to use the Node.js native loader to load the configuration file:
 
 ```bash
-# Node.js v23.6.0+
+# Node.js >= v22.18.0
 # No need to set --experimental-strip-types
 npx rsbuild build --config-loader native
 
-# Node.js v22.6.0 - v23.5.0
+# Node.js v22.6.0 - v22.17.0
 # Need to set --experimental-strip-types
 NODE_OPTIONS="--experimental-strip-types" npx rsbuild build --config-loader native
 ```
