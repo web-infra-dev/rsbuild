@@ -9,7 +9,6 @@ import {
 import { formatStatsMessages } from '../helpers/format';
 import { logger } from '../logger';
 import type { DevConfig, EnvironmentContext, Rspack } from '../types';
-import type { SockWriteType } from './devServer';
 import { genOverlayHTML } from './overlay';
 
 interface ExtWebSocket extends Ws {
@@ -22,10 +21,45 @@ function isEqualSet(a: Set<string>, b: Set<string>): boolean {
 
 const CHECK_SOCKETS_INTERVAL = 30000;
 
-interface SocketMessage {
-  type: SockWriteType;
-  data?: Record<string, any> | string | boolean;
-}
+export type SocketMessageStaticChanged = {
+  type: 'static-changed' | 'content-changed';
+};
+
+export type SocketMessageHash = {
+  type: 'hash';
+  data: string;
+};
+
+export type SocketMessageOk = {
+  type: 'ok';
+};
+
+export type SocketMessageInvalid = {
+  type: 'invalid';
+};
+
+export type SocketMessageHot = {
+  type: 'hot';
+};
+
+export type SocketMessageWarnings = {
+  type: 'warnings';
+  data: { text: string[] };
+};
+
+export type SocketMessageErrors = {
+  type: 'errors';
+  data: { text: string[]; html: string };
+};
+
+export type SocketMessage =
+  | SocketMessageOk
+  | SocketMessageHot
+  | SocketMessageInvalid
+  | SocketMessageStaticChanged
+  | SocketMessageHash
+  | SocketMessageWarnings
+  | SocketMessageErrors;
 
 const parseQueryString = (req: IncomingMessage) => {
   const queryStr = req.url ? req.url.split('?')[1] : '';
@@ -340,13 +374,15 @@ export class SocketServer {
       return;
     }
 
-    this.sockWrite(
-      {
-        type: 'hash',
-        data: statsJson.hash,
-      },
-      token,
-    );
+    if (statsJson.hash) {
+      this.sockWrite(
+        {
+          type: 'hash',
+          data: statsJson.hash,
+        },
+        token,
+      );
+    }
 
     if (statsJson.errorsCount) {
       const errors = getAllStatsErrors(statsJson);
