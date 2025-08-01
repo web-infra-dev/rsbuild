@@ -1,5 +1,4 @@
 import fs from 'node:fs';
-import { createRequire } from 'node:module';
 import type { Stats } from '@rspack/core';
 import { isMultiCompiler } from '../helpers';
 import { getPathnameFromUrl } from '../helpers/path';
@@ -16,8 +15,6 @@ import {
 } from './compilationMiddleware';
 import { stripBase } from './helper';
 import { SocketServer } from './socketServer';
-
-const require = createRequire(import.meta.url);
 
 type Options = {
   publicPaths: string[];
@@ -56,22 +53,6 @@ const formatDevConfig = (
     },
   };
 };
-
-function getClientPaths(devConfig: NormalizedDevConfig) {
-  const clientPaths: string[] = [];
-
-  if (!devConfig.hmr && !devConfig.liveReload) {
-    return clientPaths;
-  }
-
-  clientPaths.push(require.resolve('@rsbuild/core/client/hmr'));
-
-  if (devConfig.client?.overlay) {
-    clientPaths.push(require.resolve('@rsbuild/core/client/overlay'));
-  }
-
-  return clientPaths;
-}
 
 /**
  * Setup compiler-related logic:
@@ -172,11 +153,8 @@ export class CompilationManager {
       },
     };
 
-    const clientPaths = getClientPaths(devConfig);
-
     const middleware = await getCompilationMiddleware(this.compiler, {
       callbacks,
-      clientPaths,
       devConfig,
       serverConfig,
       environments,
