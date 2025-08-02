@@ -6,6 +6,7 @@
 type DistPathConfig = {
   root?: string;
   html?: string;
+  favicon?: string;
   js?: string;
   jsAsync?: string;
   css?: string;
@@ -25,6 +26,7 @@ type DistPathConfig = {
 const defaultDistPath = {
   root: 'dist',
   html: './',
+  favicon: './',
   js: output.target === 'node' ? '' : 'static/js',
   jsAsync: output.target === 'node' ? '' : 'static/js/async',
   css: 'static/css',
@@ -50,6 +52,7 @@ const defaultDistPath = {
 
 - `root`: 所有构建产物输出的根目录。
 - `html`：HTML 文件的输出目录。
+- `favicon`：favicon 文件的输出目录。
 - `js`：JavaScript 文件的输出目录。
 - `jsAsync`：异步 JavaScript 文件的输出目录，默认会输出到 `distPath.js` 的 `async` 子目录。
 - `css`：CSS 文件的输出目录。
