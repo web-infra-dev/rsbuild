@@ -874,7 +874,7 @@ export type DistPathConfig = {
   font?: string;
   /**
    * The output directory of HTML files.
-   * @default '/'
+   * @default './'
    */
   html?: string;
   /**
@@ -899,7 +899,7 @@ export type DistPathConfig = {
   assets?: string;
   /**
    * The output directory of favicon.
-   * @default '/'
+   * @default './'
    */
   favicon?: string;
 };
