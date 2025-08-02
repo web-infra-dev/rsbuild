@@ -1,7 +1,12 @@
 import { execSync } from 'node:child_process';
-import path from 'node:path';
+import path, { join } from 'node:path';
 import { readDirContents, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
+import { remove } from 'fs-extra';
+
+test.beforeEach(async () => {
+  await remove(join(__dirname, 'dist'));
+});
 
 rspackOnlyTest(
   'should only build specified environment when using --environment option',
