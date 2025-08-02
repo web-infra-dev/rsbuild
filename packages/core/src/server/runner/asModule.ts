@@ -13,11 +13,11 @@ export const asModule = async (
 
   const exports = [...new Set(['default', ...Object.keys(something)])];
 
-  const module = new SyntheticModule(
+  const syntheticModule = new SyntheticModule(
     exports,
     () => {
       for (const name of exports) {
-        module.setExport(
+        syntheticModule.setExport(
           name,
           name === 'default' ? something : something[name],
         );
@@ -26,9 +26,9 @@ export const asModule = async (
     { context },
   );
 
-  if (unlinked) return module;
+  if (unlinked) return syntheticModule;
 
-  await module.link((() => {}) as unknown as ModuleLinker);
-  await module.evaluate();
-  return module;
+  await syntheticModule.link((() => {}) as unknown as ModuleLinker);
+  await syntheticModule.evaluate();
+  return syntheticModule;
 };
