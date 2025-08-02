@@ -145,8 +145,6 @@ export class CompilationManager {
           this.socketServer.sockWrite({ type: 'static-changed' }, token);
           return;
         }
-
-        this.socketServer.sockWrite({ type: 'invalid' }, token);
       },
       onDone: (token: string, stats: Stats) => {
         this.socketServer.updateStats(stats, token);
