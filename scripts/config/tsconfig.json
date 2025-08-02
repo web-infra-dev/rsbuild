@@ -9,16 +9,17 @@
 
     /* modules */
     "module": "ES2020",
+    "moduleDetection": "force",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,
-    "moduleResolution": "bundler",
     "resolveJsonModule": true,
+    "noUncheckedSideEffectImports": true,
 
     /* type checking */
     "strict": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noUncheckedSideEffectImports": true
+    "noUnusedParameters": true
   },
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Base"

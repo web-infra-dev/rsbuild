@@ -8,10 +8,12 @@
 
     /* modules */
     "module": "ESNext",
+    "moduleDetection": "force",
+    "moduleResolution": "bundler",
     "verbatimModuleSyntax": true,
     "resolveJsonModule": true,
-    "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
+    "noUncheckedSideEffectImports": true,
 
     /* type checking */
     "strict": true,
