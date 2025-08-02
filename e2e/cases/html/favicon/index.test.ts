@@ -142,33 +142,7 @@ test('should generate favicon via function correctly', async () => {
   );
 });
 
-test('should allow to custom the dist path of favicon with a relative path', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    rsbuildConfig: {
-      html: {
-        favicon: '../../../assets/icon.png',
-      },
-      output: {
-        distPath: {
-          favicon: './custom',
-        },
-      },
-    },
-  });
-  const files = await rsbuild.getDistFiles();
-
-  expect(
-    Object.keys(files).some((file) => file.endsWith('/custom/icon.png')),
-  ).toBeTruthy();
-
-  const html =
-    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
-
-  expect(html).toContain('<link rel="icon" href="/custom/icon.png">');
-});
-
-test('should allow to custom the dist path of favicon', async () => {
+test('should allow to custom favicon dist path with a relative path', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
@@ -194,4 +168,30 @@ test('should allow to custom the dist path of favicon', async () => {
     files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
 
   expect(html).toContain('<link rel="icon" href="/static/favicon/icon.png">');
+});
+
+test('should allow to custom favicon dist path with a relative path starting with ./', async () => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    rsbuildConfig: {
+      html: {
+        favicon: '../../../assets/icon.png',
+      },
+      output: {
+        distPath: {
+          favicon: './custom',
+        },
+      },
+    },
+  });
+  const files = await rsbuild.getDistFiles();
+
+  expect(
+    Object.keys(files).some((file) => file.endsWith('/custom/icon.png')),
+  ).toBeTruthy();
+
+  const html =
+    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+
+  expect(html).toContain('<link rel="icon" href="/custom/icon.png">');
 });
