@@ -34,14 +34,6 @@ export type SocketMessageOk = {
   type: 'ok';
 };
 
-export type SocketMessageInvalid = {
-  type: 'invalid';
-};
-
-export type SocketMessageHot = {
-  type: 'hot';
-};
-
 export type SocketMessageWarnings = {
   type: 'warnings';
   data: { text: string[] };
@@ -54,8 +46,6 @@ export type SocketMessageErrors = {
 
 export type SocketMessage =
   | SocketMessageOk
-  | SocketMessageHot
-  | SocketMessageInvalid
   | SocketMessageStaticChanged
   | SocketMessageHash
   | SocketMessageWarnings
@@ -209,10 +199,6 @@ export class SocketServer {
     }
   }
 
-  private singleWrite(socket: Ws, message: SocketMessage) {
-    this.send(socket, JSON.stringify(message));
-  }
-
   public async close(): Promise<void> {
     this.clearHeartbeatTimer();
 
@@ -259,12 +245,6 @@ export class SocketServer {
     connection.on('close', () => {
       this.sockets.delete(token);
     });
-
-    if (this.options.hmr || this.options.liveReload) {
-      this.singleWrite(connection, {
-        type: 'hot',
-      });
-    }
 
     // send first stats to active client sock if stats exist
     if (this.stats) {
