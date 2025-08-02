@@ -10,10 +10,12 @@
 
     /* modules */
     "module": "ESNext",
+    "moduleDetection": "force",
+    "moduleResolution": "bundler",
     "verbatimModuleSyntax": true,
     "resolveJsonModule": true,
-    "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
+    "noUncheckedSideEffectImports": true,
     "paths": {
       "react": ["./node_modules/preact/compat/"],
       "react-dom": ["./node_modules/preact/compat/"]
