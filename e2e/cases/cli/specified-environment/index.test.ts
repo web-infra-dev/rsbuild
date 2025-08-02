@@ -1,11 +1,13 @@
 import { execSync } from 'node:child_process';
-import path, { join } from 'node:path';
+import { join } from 'node:path';
 import { readDirContents, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { remove } from 'fs-extra';
 
+const distPath = join(__dirname, 'dist');
+
 test.beforeEach(async () => {
-  await remove(join(__dirname, 'dist'));
+  await remove(distPath);
 });
 
 rspackOnlyTest(
@@ -15,7 +17,7 @@ rspackOnlyTest(
       cwd: __dirname,
     });
 
-    const files = await readDirContents(path.join(__dirname, 'dist'));
+    const files = await readDirContents(distPath);
     const outputFiles = Object.keys(files);
 
     expect(
@@ -34,7 +36,7 @@ rspackOnlyTest(
       cwd: __dirname,
     });
 
-    const files = await readDirContents(path.join(__dirname, 'dist'));
+    const files = await readDirContents(distPath);
     const outputFiles = Object.keys(files);
 
     expect(
