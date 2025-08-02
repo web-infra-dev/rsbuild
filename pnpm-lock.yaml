@@ -242,8 +242,6 @@ importers:
         specifier: 0.7.6
         version: 0.7.6
 
-  e2e/cases/plugin-babel/decorator: {}
-
   e2e/cases/plugin-react/react-compiler-babel:
     dependencies:
       react:
@@ -282,8 +280,6 @@ importers:
   e2e/cases/resolve/pkg-imports: {}
 
   e2e/cases/server/custom-server: {}
-
-  e2e/cases/server/multi-server: {}
 
   e2e/cases/server/ssr: {}
 

@@ -1,8 +1,0 @@
-{
-  "extends": "@rsbuild/config/tsconfig",
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "outDir": "./dist"
-  },
-  "include": ["src", "*.test.ts"]
-}
