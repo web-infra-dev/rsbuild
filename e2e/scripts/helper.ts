@@ -37,7 +37,6 @@ export const getProviderTest = (
   };
 };
 
-export const webpackOnlyTest = getProviderTest(['webpack']);
 export const rspackOnlyTest = getProviderTest(['rspack']);
 
 // fast-glob only accepts posix path
