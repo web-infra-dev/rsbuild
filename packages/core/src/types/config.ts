@@ -897,6 +897,11 @@ export type DistPathConfig = {
    * @default 'static/assets'
    */
   assets?: string;
+  /**
+   * The output directory of favicon.
+   * @default '/'
+   */
+  favicon?: string;
 };
 
 export type FilenameConfig = {

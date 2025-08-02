@@ -141,3 +141,29 @@ test('should generate favicon via function correctly', async () => {
     '<link rel="icon" href="https://example.com/bar.ico">',
   );
 });
+
+test('should allow to custom the dist path of favicon', async () => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    rsbuildConfig: {
+      html: {
+        favicon: '../../../assets/icon.png',
+      },
+      output: {
+        distPath: {
+          favicon: './custom',
+        },
+      },
+    },
+  });
+  const files = await rsbuild.getDistFiles();
+
+  expect(
+    Object.keys(files).some((file) => file.endsWith('/custom/icon.png')),
+  ).toBeTruthy();
+
+  const html =
+    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+
+  expect(html).toContain('<link rel="icon" href="/custom/icon.png">');
+});

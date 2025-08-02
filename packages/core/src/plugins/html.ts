@@ -280,6 +280,7 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
               entryName,
               context,
               environment,
+              faviconDistPath: config.output.distPath.favicon,
             };
 
             extraDataMap.set(entryName, extraData);

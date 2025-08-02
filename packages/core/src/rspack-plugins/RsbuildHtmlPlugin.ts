@@ -81,6 +81,7 @@ export type HtmlExtraData = {
   context: InternalContext;
   environment: EnvironmentContext;
   favicon?: string;
+  faviconDistPath: string;
   tagConfig?: TagConfig;
   templateContent?: string;
 };
@@ -255,10 +256,15 @@ export class RsbuildHtmlPlugin {
   }
 
   apply(compiler: Compiler): void {
-    const emitFavicon = async (
-      compilation: Rspack.Compilation,
-      favicon: string,
-    ) => {
+    const emitFavicon = async ({
+      compilation,
+      favicon,
+      faviconDistPath,
+    }: {
+      compilation: Rspack.Compilation;
+      favicon: string;
+      faviconDistPath: string;
+    }) => {
       const name = path.basename(favicon);
 
       if (compilation.assets[name]) {
@@ -275,7 +281,7 @@ export class RsbuildHtmlPlugin {
         return null;
       }
 
-      const filename = path.isAbsolute(favicon)
+      const inputFilename = path.isAbsolute(favicon)
         ? favicon
         : path.join(compilation.compiler.context, favicon);
 
@@ -283,7 +289,7 @@ export class RsbuildHtmlPlugin {
 
       try {
         buffer = await promisify(compilation.inputFileSystem.readFile)(
-          filename,
+          inputFilename,
         );
         if (!buffer) {
           throw new Error('Buffer is undefined');
@@ -294,28 +300,40 @@ export class RsbuildHtmlPlugin {
         addCompilationError(
           compilation,
           `${color.dim('[rsbuild:html]')} Failed to read the favicon file at ${color.yellow(
-            filename,
+            inputFilename,
           )}.`,
         );
         return null;
       }
 
       const source = new compiler.webpack.sources.RawSource(buffer, false);
-      compilation.emitAsset(name, source);
+      const outputFilename = path.join(faviconDistPath, name);
+      compilation.emitAsset(outputFilename, source);
 
-      return name;
+      return outputFilename;
     };
 
-    const addFavicon = async (
-      headTags: HtmlTagObject[],
-      favicon: string,
-      compilation: Rspack.Compilation,
-      publicPath: string,
-    ) => {
+    const addFavicon = async ({
+      headTags,
+      favicon,
+      faviconDistPath,
+      compilation,
+      publicPath,
+    }: {
+      headTags: HtmlTagObject[];
+      favicon: string;
+      faviconDistPath: string;
+      compilation: Rspack.Compilation;
+      publicPath: string;
+    }) => {
       let href = favicon;
 
       if (!isURL(favicon)) {
-        const name = await emitFavicon(compilation, favicon);
+        const name = await emitFavicon({
+          compilation,
+          favicon,
+          faviconDistPath,
+        });
 
         if (name === null) {
           return;
@@ -368,6 +386,7 @@ export class RsbuildHtmlPlugin {
         const { headTags, bodyTags } = data;
         const {
           favicon,
+          faviconDistPath,
           context,
           tagConfig,
           entryName,
@@ -380,7 +399,13 @@ export class RsbuildHtmlPlugin {
         }
 
         if (favicon) {
-          await addFavicon(headTags, favicon, compilation, data.publicPath);
+          await addFavicon({
+            headTags,
+            favicon,
+            faviconDistPath,
+            compilation,
+            publicPath: data.publicPath,
+          });
         }
 
         const tags = {
