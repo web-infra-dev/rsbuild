@@ -47,7 +47,7 @@
     "nx": "^21.3.7",
     "prettier": "^3.6.2",
     "simple-git-hooks": "^2.13.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   },
   "packageManager": "pnpm@10.13.1",
   "engines": {
