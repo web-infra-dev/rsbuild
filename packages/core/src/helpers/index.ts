@@ -335,7 +335,7 @@ export function pick<T, U extends keyof T>(
 }
 
 export const camelCase = (input: string): string =>
-  input.replace(/[-_](\w)/g, (_, c) => c.toUpperCase());
+  input.replace(/[-_](\w)/g, (_, c: string) => c.toUpperCase());
 
 export const prettyTime = (seconds: number): string => {
   const format = (time: string) => color.bold(time);

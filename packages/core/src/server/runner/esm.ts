@@ -95,7 +95,7 @@ export class EsmRunner extends CommonJsRunner {
             true,
           );
         });
-        if ((esm as any).instantiate) (esm as any).instantiate();
+
         await esm.evaluate();
         if (context.esmMode === EsmMode.Evaluated) {
           return esm;
