@@ -1,3 +1,4 @@
+import type { SocketMessage } from '../server/socketServer';
 import type { NormalizedClientConfig } from '../types';
 
 const config: NormalizedClientConfig = RSBUILD_CLIENT_CONFIG;
@@ -28,7 +29,7 @@ function formatURL(config: NormalizedClientConfig) {
 
 // Remember some state related to hot module replacement.
 let isFirstCompilation = true;
-let lastCompilationHash: string | null = null;
+let lastCompilationHash: string | undefined;
 let hasCompileErrors = false;
 
 function clearOutdatedErrors() {
@@ -175,7 +176,7 @@ function onOpen() {
 }
 
 function onMessage(e: MessageEvent<string>) {
-  const message = JSON.parse(e.data);
+  const message: SocketMessage = JSON.parse(e.data);
 
   switch (message.type) {
     case 'hash':
