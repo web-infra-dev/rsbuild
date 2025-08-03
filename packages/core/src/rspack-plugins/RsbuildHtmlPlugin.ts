@@ -307,7 +307,7 @@ export class RsbuildHtmlPlugin {
       }
 
       const source = new compiler.webpack.sources.RawSource(buffer, false);
-      const outputFilename = path.join(faviconDistPath, name);
+      const outputFilename = path.posix.join(faviconDistPath, name);
       compilation.emitAsset(outputFilename, source);
 
       return outputFilename;
