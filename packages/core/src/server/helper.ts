@@ -478,7 +478,7 @@ export function getServerTerminator(
     listened = true;
   });
 
-  return () =>
+  return async () =>
     new Promise<void>((resolve, reject) => {
       for (const socket of pendingSockets) {
         socket.destroy();

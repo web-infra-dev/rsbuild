@@ -10,7 +10,7 @@ const cleanupCallbacks = new Set<() => Promise<void>>();
  */
 const handleTermination = async (exitCode: number): Promise<void> => {
   try {
-    await Promise.all([...cleanupCallbacks].map((cb) => cb()));
+    await Promise.all([...cleanupCallbacks].map(async (cb) => cb()));
   } finally {
     // Set exit code and terminate process
     process.exitCode ??= exitCode;

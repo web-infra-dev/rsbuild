@@ -252,7 +252,7 @@ export async function createRsbuild(
     };
   };
 
-  const startDevServer: StartDevServer = (...args) => {
+  const startDevServer: StartDevServer = async (...args) => {
     context.action = 'dev';
 
     if (!getNodeEnv()) {
@@ -262,7 +262,7 @@ export async function createRsbuild(
     return providerInstance.startDevServer(...args);
   };
 
-  const createDevServer: CreateDevServer = (...args) => {
+  const createDevServer: CreateDevServer = async (...args) => {
     context.action = 'dev';
 
     if (!getNodeEnv()) {
@@ -272,7 +272,7 @@ export async function createRsbuild(
     return providerInstance.createDevServer(...args);
   };
 
-  const createCompiler: CreateCompiler = (...args) => {
+  const createCompiler: CreateCompiler = async (...args) => {
     if (!context.action) {
       context.action = getNodeEnv() === 'development' ? 'dev' : 'build';
     }

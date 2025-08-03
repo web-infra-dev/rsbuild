@@ -21,7 +21,6 @@
     },
     "plugins": ["@typescript-eslint"],
     "rules": {
-      "@typescript-eslint/promise-function-async": "off",
       "@typescript-eslint/no-unsafe-argument": "off",
       "@typescript-eslint/no-unsafe-type-assertion": "off",
       "@typescript-eslint/require-await": "off",
