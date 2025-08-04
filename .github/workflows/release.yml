@@ -35,7 +35,7 @@ jobs:
     name: Release
     if: github.repository == 'web-infra-dev/rsbuild' && github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    environment: production
+    environment: npm
     steps:
       - name: Run Ecosystem CI
         if: inputs.run_eco_ci == true
@@ -54,7 +54,7 @@ jobs:
           fetch-depth: 1
           ref: ${{ github.event.inputs.branch }}
 
-      - name: Install Pnpm
+      - name: Setup Pnpm
         run: |
           npm install -g corepack@latest --force
           corepack enable
@@ -65,12 +65,15 @@ jobs:
           node-version: 22
           cache: 'pnpm'
 
+      # Update npm to the latest version to enable OIDC
+      - name: Update npm
+        run: |
+          npm install -g npm@latest
+          npm --version
+
       - name: Install Dependencies
         run: pnpm install
 
       - name: Publish to npm
-        env:
-          NPM_TOKEN: ${{ secrets.RSBUILD_NPM_TOKEN }}
         run: |
-          npm config set "//registry.npmjs.org/:_authToken" "${NPM_TOKEN}"
           pnpm -r publish --tag ${{ github.event.inputs.npm_tag }} --publish-branch ${{ github.event.inputs.branch }}
