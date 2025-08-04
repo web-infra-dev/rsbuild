@@ -30,11 +30,11 @@
     "@prefresh/core": "^1.5.5",
     "@prefresh/utils": "^1.2.1",
     "@rspack/plugin-preact-refresh": "^1.1.2",
-    "@swc/plugin-prefresh": "^9.0.0"
+    "@swc/plugin-prefresh": "^9.0.1"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.11.0",
+    "@rslib/core": "0.11.1",
     "@types/node": "^22.17.0",
     "preact": "^10.27.0",
     "typescript": "^5.9.2"
