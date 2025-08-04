@@ -8,7 +8,7 @@ import type {
   NormalizedEnvironmentConfig,
   RsbuildConfig,
 } from './config';
-import type { InternalContext } from './context';
+import type { InternalContext, RsbuildContext } from './context';
 import type { PluginManager, RsbuildPlugin, RsbuildPluginAPI } from './plugin';
 import type { Rspack } from './rspack';
 import type { WebpackConfig } from './thirdParty';
@@ -72,6 +72,16 @@ export type Build = (options?: BuildOptions) => Promise<{
    */
   stats?: Rspack.Stats | Rspack.MultiStats;
 }>;
+
+export type InitConfigsOptions = {
+  /**
+   * The current action type.
+   * - dev: will be set when running `rsbuild dev` or `rsbuild.startDevServer()`
+   * - build: will be set when running `rsbuild build` or `rsbuild.build()`
+   * - preview: will be set when running `rsbuild preview` or `rsbuild.preview()`
+   */
+  action?: RsbuildContext['action'];
+};
 
 export type InspectConfigOptions = {
   /**
@@ -180,9 +190,9 @@ export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = Pick<
 > & {
   readonly bundler: Bundler;
 
-  initConfigs: () => Promise<
-    B extends 'rspack' ? Rspack.Configuration[] : WebpackConfig[]
-  >;
+  initConfigs: (
+    options?: InitConfigsOptions,
+  ) => Promise<B extends 'rspack' ? Rspack.Configuration[] : WebpackConfig[]>;
 
   inspectConfig: (
     options?: InspectConfigOptions,
@@ -266,7 +276,9 @@ export type RsbuildInstance = {
    * since it's automatically invoked by methods like `rsbuild.build` and
    * `rsbuild.startDevServer`.
    */
-  initConfigs: () => Promise<Rspack.Configuration[]>;
+  initConfigs: (
+    options?: InitConfigsOptions,
+  ) => Promise<Rspack.Configuration[]>;
   /**
    * Inspect and debug Rsbuild's internal configurations. It provides access to:
    * - The resolved Rsbuild configuration

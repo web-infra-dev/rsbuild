@@ -50,7 +50,9 @@ export const rspackProvider: RsbuildProvider = async ({
       return build({ context, pluginManager, rsbuildOptions }, options);
     },
 
-    async initConfigs() {
+    async initConfigs(options) {
+      context.action = options?.action;
+
       const { rspackConfigs } = await initConfigs({
         context,
         pluginManager,
