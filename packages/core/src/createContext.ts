@@ -153,7 +153,7 @@ export function updateContextByNormalizedConfig(
 export function createPublicContext(
   context: RsbuildContext,
 ): Readonly<RsbuildContext> {
-  const exposedKeys: Array<keyof RsbuildContext> = [
+  const exposedKeys: (keyof RsbuildContext)[] = [
     'action',
     'version',
     'rootPath',

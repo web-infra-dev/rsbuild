@@ -144,7 +144,7 @@ export function initPluginAPI({
     );
   }) as GetRsbuildConfig;
 
-  const exposed: Array<{ id: string | symbol; api: any }> = [];
+  const exposed: { id: string | symbol; api: any }[] = [];
 
   const expose = (id: string | symbol, api: any) => {
     exposed.push({ id, api });
@@ -158,16 +158,16 @@ export function initPluginAPI({
 
   let transformId = 0;
   const transformer: Record<string, TransformHandler> = {};
-  const processAssetsFns: Array<{
+  const processAssetsFns: {
     environment?: string;
     descriptor: ProcessAssetsDescriptor;
     handler: ProcessAssetsHandler;
-  }> = [];
+  }[] = [];
 
-  const resolveFns: Array<{
+  const resolveFns: {
     environment?: string;
     handler: ResolveHandler;
-  }> = [];
+  }[] = [];
 
   hooks.modifyBundlerChain.tap((chain, { target, environment }) => {
     const pluginName = 'RsbuildCorePlugin';

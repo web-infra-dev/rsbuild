@@ -34,10 +34,10 @@ export function extractChunks(
   includeType?: ResourceHintsIncludeType,
 ):
   | Chunk[]
-  | Array<{
+  | {
       files: string[];
       auxiliaryFiles?: string[];
-    }> {
+    }[] {
   const chunks = [...compilation.chunks];
 
   // 'asyncChunks' are chunks intended for lazy/async loading usually generated as

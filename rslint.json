@@ -21,7 +21,6 @@
     },
     "plugins": ["@typescript-eslint"],
     "rules": {
-      "@typescript-eslint/array-type": "off",
       "@typescript-eslint/no-var-requires": "off",
       "@typescript-eslint/no-unused-vars": "off",
       "@typescript-eslint/promise-function-async": "off",

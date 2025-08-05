@@ -171,7 +171,7 @@ function getTemplateParameters(
 
 function getChunks(
   entryName: string,
-  entryValue: Array<string | string[] | EntryDescription>,
+  entryValue: (string | string[] | EntryDescription)[],
 ): string[] {
   const chunks = [entryName];
 

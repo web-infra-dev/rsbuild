@@ -302,9 +302,7 @@ export interface SourceConfig {
   /**
    * Used to import the code and style of the component library on demand.
    */
-  transformImport?:
-    | TransformImportFn
-    | Array<TransformImport | TransformImportFn>;
+  transformImport?: TransformImportFn | (TransformImport | TransformImportFn)[];
   /**
    * Configure a custom tsconfig.json file path to use, can be a relative or absolute path.
    * @default 'tsconfig.json'
@@ -381,10 +379,10 @@ export type HistoryApiFallbackOptions = {
   index?: string;
   htmlAcceptHeaders?: string[];
   disableDotRule?: true;
-  rewrites?: Array<{
+  rewrites?: {
     from: RegExp;
     to: HistoryApiFallbackTo;
-  }>;
+  }[];
 };
 
 export type PrintUrls =
@@ -595,7 +593,7 @@ export type BuildCacheOptions = {
    * when any value in the array changes.
    * @default undefined
    */
-  cacheDigest?: Array<string | undefined>;
+  cacheDigest?: (string | undefined)[];
   /**
    * An array of files containing build dependencies.
    * Rspack will use the hash of each of these files to invalidate the persistent cache.
@@ -658,7 +656,7 @@ export interface PreconnectOption {
   crossorigin?: boolean;
 }
 
-export type Preconnect = Array<string | PreconnectOption>;
+export type Preconnect = (string | PreconnectOption)[];
 
 export type DnsPrefetch = string[];
 

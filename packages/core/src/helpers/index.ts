@@ -321,7 +321,7 @@ export const isMultiCompiler = (
 
 export function pick<T, U extends keyof T>(
   obj: T,
-  keys: ReadonlyArray<U>,
+  keys: readonly U[],
 ): Pick<T, U> {
   return keys.reduce(
     (ret, key) => {
