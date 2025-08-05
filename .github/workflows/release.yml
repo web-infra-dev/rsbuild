@@ -27,8 +27,6 @@ on:
 permissions:
   # Provenance generation in GitHub Actions requires "write" access to the "id-token"
   id-token: write
-  # Allow commenting on issues
-  issues: write
 
 jobs:
   release:
