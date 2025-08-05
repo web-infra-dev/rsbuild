@@ -700,6 +700,12 @@ function InitConfigs(options?: InitConfigsOptions): Promise<{
 const rspackConfigs = await rsbuild.initConfigs();
 
 console.log(rspackConfigs);
+
+const buildConfigs = await rsbuild.initConfigs({
+  action: 'build',
+});
+
+console.log(buildConfigs);
 ```
 
 ## rsbuild.inspectConfig
