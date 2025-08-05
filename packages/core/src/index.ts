@@ -76,6 +76,7 @@ export type {
   HtmlTagContext,
   HtmlTagDescriptor,
   HtmlTagHandler,
+  InitConfigsOptions,
   InlineChunkConfig,
   InlineChunkTest,
   InlineChunkTestFunction,
