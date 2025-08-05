@@ -34,4 +34,30 @@ describe('pluginApply', () => {
 
     expect(setup).toHaveBeenCalledTimes(1);
   });
+
+  it('should not return the same config when called multiple times', async () => {
+    const setup = rstest.fn();
+    const rsbuild = await createStubRsbuild({
+      plugins: [
+        {
+          name: 'plugin-test',
+          apply: 'build',
+          setup,
+        },
+      ],
+    });
+
+    const [config1] = await rsbuild.initConfigs({
+      action: 'dev',
+    });
+
+    expect(setup).not.toBeCalled();
+
+    const [config2] = await rsbuild.initConfigs({
+      action: 'build',
+    });
+
+    expect(setup).toHaveBeenCalledTimes(1);
+    expect(config1).not.toBe(config2);
+  });
 });

@@ -51,7 +51,13 @@ export const rspackProvider: RsbuildProvider = async ({
     },
 
     async initConfigs(options) {
-      context.action = options?.action;
+      if (options?.action) {
+        if (context.action !== options.action) {
+          // Calling initConfigs multiple times with different actions
+          delete context.normalizedConfig;
+        }
+        context.action = options.action;
+      }
 
       const { rspackConfigs } = await initConfigs({
         context,
