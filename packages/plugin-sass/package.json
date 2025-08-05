@@ -33,16 +33,16 @@
     "deepmerge": "^4.3.1",
     "loader-utils": "^2.0.4",
     "postcss": "^8.5.6",
-    "reduce-configs": "^1.1.0",
+    "reduce-configs": "^1.1.1",
     "sass-embedded": "^1.89.2"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.11.1",
+    "@rslib/core": "0.11.2",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^22.17.0",
     "@types/sass-loader": "^8.0.9",
-    "prebundle": "1.4.0",
+    "prebundle": "1.4.1",
     "resolve-url-loader": "^5.0.0",
     "sass-loader": "^16.0.5",
     "typescript": "^5.9.2"

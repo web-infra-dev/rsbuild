@@ -35,16 +35,16 @@
     "@babel/preset-typescript": "^7.27.1",
     "@types/babel__core": "^7.20.5",
     "deepmerge": "^4.3.1",
-    "reduce-configs": "^1.1.0",
+    "reduce-configs": "^1.1.1",
     "upath": "2.0.1"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.11.1",
+    "@rslib/core": "0.11.2",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^22.17.0",
     "babel-loader": "10.0.0",
-    "prebundle": "1.4.0",
+    "prebundle": "1.4.1",
     "typescript": "^5.9.2"
   },
   "peerDependencies": {
