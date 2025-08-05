@@ -30,15 +30,15 @@
   "dependencies": {
     "copy-webpack-plugin": "11.0.0",
     "html-webpack-plugin": "^5.6.3",
-    "mini-css-extract-plugin": "2.9.2",
+    "mini-css-extract-plugin": "2.9.3",
     "picocolors": "^1.1.1",
-    "reduce-configs": "^1.1.0",
+    "reduce-configs": "^1.1.1",
     "tsconfig-paths-webpack-plugin": "4.2.0",
     "webpack": "^5.101.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.11.1",
+    "@rslib/core": "0.11.2",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^22.17.0",
     "ansi-escapes": "4.3.2",

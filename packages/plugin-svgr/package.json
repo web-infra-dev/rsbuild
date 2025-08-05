@@ -38,11 +38,11 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.11.1",
+    "@rslib/core": "0.11.2",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^22.17.0",
     "file-loader": "6.2.0",
-    "prebundle": "1.4.0",
+    "prebundle": "1.4.1",
     "svgo": "^3.3.2",
     "typescript": "^5.9.2",
     "url-loader": "4.1.1"
