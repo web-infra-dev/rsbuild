@@ -51,11 +51,21 @@ export const rspackProvider: RsbuildProvider = async ({
     },
 
     async initConfigs(options) {
+      if (
+        context.action &&
+        options?.action &&
+        context.action !== options.action
+      ) {
+        // Calling initConfigs multiple times with different actions
+        throw new Error(
+          `\
+[rsbuild] initConfigs() can only be called with the same action type.
+  - Expected: ${context.action}
+  - Actual: ${options?.action}`,
+        );
+      }
+
       if (options?.action) {
-        if (context.action !== options.action) {
-          // Calling initConfigs multiple times with different actions
-          delete context.normalizedConfig;
-        }
         context.action = options.action;
       }
 
