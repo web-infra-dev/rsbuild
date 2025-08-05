@@ -73,15 +73,7 @@ export type Build = (options?: BuildOptions) => Promise<{
   stats?: Rspack.Stats | Rspack.MultiStats;
 }>;
 
-export type InitConfigsOptions = {
-  /**
-   * The current action type.
-   * - dev: will be set when running `rsbuild dev` or `rsbuild.startDevServer()`
-   * - build: will be set when running `rsbuild build` or `rsbuild.build()`
-   * - preview: will be set when running `rsbuild preview` or `rsbuild.preview()`
-   */
-  action?: RsbuildContext['action'];
-};
+export type InitConfigsOptions = Pick<RsbuildContext, 'action'>;
 
 export type InspectConfigOptions = {
   /**
