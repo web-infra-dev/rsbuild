@@ -32,6 +32,14 @@ When using Tailwind CSS v3, if the `content` field in `tailwind.config.js` is no
 
 Refer to [Tailwind CSS v3 - Optimize build performance](/guide/styling/tailwindcss-v3#optimize-build-performance) for more details.
 
+### Tool Selection
+
+While Rsbuild delivers excellent build performance out of the box, certain JavaScript-based tools can negatively impact overall build performance, particularly in large-scale projects.
+
+- [@rsbuild/plugin-babel](/plugins/list/plugin-babel): This plugin is based on Babel. We recommend using the more performant [SWC](/guide/configuration/swc) for code transformation instead.
+- [@rsbuild/plugin-less](/plugins/list/plugin-less): The Less compiler has relatively poor performance. Consider using [@rsbuild/plugin-sass](/plugins/list/plugin-sass) or other high-performance CSS solutions as alternatives.
+- [terser-webpack-plugin](https://www.npmjs.com/package/terser-webpack-plugin): You can replace Terser with faster minimizers, such as Rsbuild's built-in [SWC](/guide/configuration/swc) minifier.
+
 ## Development optimization
 
 The following are methods for improving performance in development mode.
