@@ -215,7 +215,7 @@ export type AddPluginsOptions = {
 };
 
 export type AddPlugins = (
-  plugins: Array<RsbuildPlugin | Falsy>,
+  plugins: (RsbuildPlugin | Falsy)[],
   options?: AddPluginsOptions,
 ) => void;
 

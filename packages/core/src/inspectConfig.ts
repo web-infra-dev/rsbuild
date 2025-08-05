@@ -42,10 +42,10 @@ export const getRsbuildInspectConfig = ({
 }): {
   rawRsbuildConfig: string;
   rsbuildConfig: InspectConfigResult['origin']['rsbuildConfig'];
-  rawEnvironmentConfigs: Array<{
+  rawEnvironmentConfigs: {
     name: string;
     content: string;
-  }>;
+  }[];
   environmentConfigs: InspectConfigResult['origin']['environmentConfigs'];
 } => {
   const { environments, ...rsbuildConfig } = normalizedConfig;
@@ -58,10 +58,10 @@ export const getRsbuildInspectConfig = ({
   const rawRsbuildConfig = stringifyConfig(debugConfig, inspectOptions.verbose);
   const environmentConfigs: Record<string, NormalizedEnvironmentConfig> = {};
 
-  const rawEnvironmentConfigs: Array<{
+  const rawEnvironmentConfigs: {
     name: string;
     content: string;
-  }> = [];
+  }[] = [];
 
   for (const [name, config] of Object.entries(environments)) {
     const debugConfig = {

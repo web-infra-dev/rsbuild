@@ -65,7 +65,7 @@ const applySetupMiddlewares = (
   return { before, after };
 };
 
-export type Middlewares = Array<RequestHandler | [string, RequestHandler]>;
+export type Middlewares = (RequestHandler | [string, RequestHandler])[];
 
 const applyDefaultMiddlewares = async ({
   devServerAPI,

@@ -47,7 +47,7 @@ export const gzipMiddleware =
     const end = res.end.bind(res);
     const write = res.write.bind(res);
     const writeHead = res.writeHead.bind(res);
-    const listeners: Array<[string | symbol, (...args: any[]) => void]> = [];
+    const listeners: [string | symbol, (...args: any[]) => void][] = [];
 
     const start = () => {
       if (started) {

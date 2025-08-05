@@ -138,7 +138,7 @@ export const formatRoutes = (
 };
 
 function getURLMessages(
-  urls: Array<{ url: string; label: string }>,
+  urls: { url: string; label: string }[],
   routes: Routes,
 ) {
   if (routes.length <= 1) {
@@ -178,7 +178,7 @@ export function printServerURLs({
   printUrls,
   trailingLineBreak = true,
 }: {
-  urls: Array<{ url: string; label: string }>;
+  urls: { url: string; label: string }[];
   port: number;
   routes: Routes;
   protocol: string;

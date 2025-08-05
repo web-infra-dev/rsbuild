@@ -324,7 +324,7 @@ export async function createRsbuild(
       );
     } while (plugins.some((v) => isPromise(v)));
 
-    return plugins as Array<RsbuildPlugin | Falsy>;
+    return plugins as (RsbuildPlugin | Falsy)[];
   };
 
   if (config.plugins) {
