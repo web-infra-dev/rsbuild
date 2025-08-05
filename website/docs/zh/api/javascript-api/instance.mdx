@@ -679,7 +679,17 @@ rsbuild.isPluginExists(pluginFoo.name, {
 - **类型：**
 
 ```ts
-function InitConfigs(): Promise<{
+type InitConfigsOptions = {
+  /**
+   * 当前的动作类型。
+   * - dev: 当运行 `rsbuild dev` 或 `rsbuild.startDevServer()` 时设置。
+   * - build: 当运行 `rsbuild build` 或 `rsbuild.build()` 时设置。
+   * - preview: 当运行 `rsbuild preview` 或 `rsbuild.preview()` 时设置。
+   */
+  action?: 'dev' | 'build' | 'preview';
+};
+
+function InitConfigs(options?: InitConfigsOptions): Promise<{
   rspackConfigs: Rspack.Configuration[];
 }>;
 ```
