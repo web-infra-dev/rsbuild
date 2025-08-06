@@ -2,7 +2,7 @@ import { posix } from 'node:path';
 import { URL } from 'node:url';
 import deepmerge from 'deepmerge';
 import color from '../../compiled/picocolors/index.js';
-import type RspackChain from '../../compiled/rspack-chain';
+import RspackChain from '../../compiled/rspack-chain';
 import { DEFAULT_ASSET_PREFIX } from '../constants';
 import type {
   FilenameConfig,
@@ -16,12 +16,12 @@ export * from './fs';
 export * from './path';
 export * from './stats';
 
-export { color };
+export { color, RspackChain };
 
 // `SubresourceIntegrityPlugin` added in Rspack v1.2.4
 export const rspackMinVersion = '1.2.4';
 
-export const getNodeEnv = () => process.env.NODE_ENV as string;
+export const getNodeEnv = (): string => process.env.NODE_ENV || '';
 export const setNodeEnv = (env: string): void => {
   process.env.NODE_ENV = env;
 };
@@ -155,7 +155,7 @@ export const urlJoin = (base: string, path: string) => {
   return `${urlProtocol}://${posix.join(baseUrl, path)}`;
 };
 
-// Can be replaced with URL.canParse when we drop support for Node.js 16
+// TODO: Can be replaced with URL.canParse when we drop support for Node.js 16
 export const canParse = (url: string): boolean => {
   try {
     new URL(url);
@@ -217,6 +217,11 @@ export function getFilename(
 ): Rspack.CssFilename;
 export function getFilename(
   config: NormalizedConfig | NormalizedEnvironmentConfig,
+  type: 'wasm',
+  isProd: boolean,
+): Rspack.WebassemblyModuleFilename;
+export function getFilename(
+  config: NormalizedConfig | NormalizedEnvironmentConfig,
   type: Exclude<keyof FilenameConfig, 'js' | 'css'>,
   isProd: boolean,
   isServer?: boolean,
@@ -253,6 +258,8 @@ export function getFilename(
       return filename.media ?? `[name]${hash}[ext]`;
     case 'assets':
       return filename.assets ?? `[name]${hash}[ext]`;
+    case 'wasm':
+      return filename.wasm ?? '[hash].module.wasm';
     default:
       throw new Error(
         `${color.dim('[rsbuild:config]')} unknown key ${color.yellow(
@@ -314,7 +321,7 @@ export const isMultiCompiler = (
 
 export function pick<T, U extends keyof T>(
   obj: T,
-  keys: ReadonlyArray<U>,
+  keys: readonly U[],
 ): Pick<T, U> {
   return keys.reduce(
     (ret, key) => {
@@ -328,7 +335,7 @@ export function pick<T, U extends keyof T>(
 }
 
 export const camelCase = (input: string): string =>
-  input.replace(/[-_](\w)/g, (_, c) => c.toUpperCase());
+  input.replace(/[-_](\w)/g, (_, c: string) => c.toUpperCase());
 
 export const prettyTime = (seconds: number): string => {
   const format = (time: string) => color.bold(time);

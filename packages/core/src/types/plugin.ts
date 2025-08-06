@@ -4,7 +4,6 @@ import type {
   Configuration as WebpackConfig,
   WebpackPluginInstance,
 } from 'webpack';
-import type RspackChain from '../../compiled/rspack-chain';
 import type { ChainIdentifier } from '../configChain';
 import type { Logger } from '../logger';
 import type {
@@ -39,8 +38,12 @@ import type {
   OnDevCompileDoneFn,
   OnExitFn,
 } from './hooks';
-import type { RsbuildInstance, RsbuildTarget } from './rsbuild';
-import type { Rspack } from './rspack';
+import type {
+  AddPluginsOptions,
+  RsbuildInstance,
+  RsbuildTarget,
+} from './rsbuild';
+import type { Rspack, RspackChain } from './rspack';
 import type { HtmlRspackPlugin } from './thirdParty';
 import type { Falsy, MaybePromise } from './utils';
 
@@ -178,7 +181,7 @@ export type ModifyWebpackConfigFn = (
 ) => Promise<WebpackConfig | void> | WebpackConfig | void;
 
 export type PluginMeta = {
-  environment: string;
+  environment?: AddPluginsOptions['environment'];
   instance: RsbuildPlugin;
 };
 
@@ -190,6 +193,17 @@ export type PluginManager = Pick<
   getAllPluginsWithMeta: () => PluginMeta[];
 };
 
+export type RsbuildPluginApplyFn = (
+  this: void,
+  /**
+   * The original Rsbuild configuration object (before plugin processing)
+   */
+  config: RsbuildConfig,
+  context: Pick<RsbuildContext, 'action'>,
+) => boolean;
+
+export type RsbuildPluginApply = 'serve' | 'build' | RsbuildPluginApplyFn;
+
 /**
  * The type of the Rsbuild plugin object.
  */
@@ -199,17 +213,37 @@ export type RsbuildPlugin = {
    */
   name: string;
   /**
+   * Conditional apply the plugin during serve or build.
+   * - `'serve'`: Apply the plugin when starting the dev server or preview server.
+   * - `'build'`: Apply the plugin during build.
+   * - Can be a function that returns `true` to apply the plugin or `false` to skip it.
+   * - If not specified, the plugin will be applied during both serve and build.
+   */
+  apply?: RsbuildPluginApply;
+  /**
    * The setup function of the plugin, which can be an async function.
    * This function is called once when the plugin is initialized.
    * @param api provides the context info, utility functions and lifecycle hooks.
    */
   setup: (api: RsbuildPluginAPI) => MaybePromise<void>;
   /**
+   * Specifies the execution order of the plugin.
+   * - `'pre'`: Execute the plugin before other plugins.
+   * - `'post'`: Execute the plugin after other plugins.
+   * - If not specified, the plugin will execute in the order they were registered.
+   *
+   * This affects the order in which hooks are registered, but if a hook specifies
+   * an `order` property, the `order` takes higher precedence.
+   */
+  enforce?: 'pre' | 'post';
+  /**
    * Declare the names of pre-plugins, which will be executed before the current plugin.
+   * This has higher precedence than the `enforce` property.
    */
   pre?: string[];
   /**
    * Declare the names of post-plugins, which will be executed after the current plugin.
+   * This has higher precedence than the `enforce` property.
    */
   post?: string[];
   /**
@@ -380,6 +414,11 @@ export type TransformDescriptor = {
    */
   mimetype?: Rspack.RuleSetCondition;
   /**
+   * The original property for specifying execution order, now deprecated in favor of `order`.
+   * @deprecated Use `order` instead.
+   */
+  enforce?: 'pre' | 'post';
+  /**
    * Specifies the execution order of the transform function.
    * - When specified as 'pre', the transform function will execute before other
    * transform functions (or Rspack loaders).
@@ -387,7 +426,7 @@ export type TransformDescriptor = {
    * transform functions (or Rspack loaders).
    * @see https://rspack.rs/config/module#ruleenforce
    */
-  enforce?: 'pre' | 'post';
+  order?: HookOrder;
 };
 
 export type TransformHook = (

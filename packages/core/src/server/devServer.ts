@@ -1,10 +1,10 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
-import type Connect from '../../compiled/connect/index.js';
 import { color, getPublicPathFromCompiler, isMultiCompiler } from '../helpers';
 import { logger } from '../logger';
 import { onBeforeRestartServer, restartDevServer } from '../restart';
 import type {
+  Connect,
   CreateCompiler,
   CreateDevServerOptions,
   EnvironmentAPI,
@@ -40,15 +40,17 @@ import {
 import { createHttpServer } from './httpServer';
 import { notFoundMiddleware, optionsFallbackMiddleware } from './middlewares';
 import { open } from './open';
+import type { SocketMessage } from './socketServer';
 import { setupWatchFiles, type WatchFilesResult } from './watchFiles';
 
 type HTTPServer = Server | Http2SecureServer;
 
-export type SockWriteType = 'static-changed' | (string & {});
+type ExtractSocketMessageData<T extends SocketMessage['type']> =
+  Extract<SocketMessage, { type: T }> extends { data: infer D } ? D : undefined;
 
-export type SockWrite = (
-  type: SockWriteType,
-  data?: string | boolean | Record<string, any>,
+export type SockWrite = <T extends SocketMessage['type']>(
+  type: T,
+  data?: ExtractSocketMessageData<T>,
 ) => void;
 
 export type RsbuildDevServer = {
@@ -157,19 +159,35 @@ export async function createDevServer<
 
   let lastStats: Rspack.Stats[];
 
-  // should register onDevCompileDone hook before startCompile
-  const waitFirstCompileDone = runCompile
-    ? new Promise<void>((resolve) => {
-        context.hooks.onDevCompileDone.tap(({ stats, isFirstCompile }) => {
-          lastStats = 'stats' in stats ? stats.stats : [stats];
+  let waitLastCompileDoneResolve: (() => void) | null = null;
+  let waitLastCompileDone = new Promise<void>((resolve) => {
+    waitLastCompileDoneResolve = resolve;
+  });
 
-          if (!isFirstCompile) {
-            return;
-          }
-          resolve();
-        });
-      })
-    : Promise.resolve();
+  const resetWaitLastCompileDone = () => {
+    // No need to reset if lastStats is not set
+    if (!lastStats) {
+      return;
+    }
+
+    // Resolve the previous promise if it exists
+    if (waitLastCompileDoneResolve) {
+      waitLastCompileDoneResolve();
+      waitLastCompileDoneResolve = null;
+    }
+    waitLastCompileDone = new Promise<void>((resolve) => {
+      waitLastCompileDoneResolve = resolve;
+    });
+  };
+
+  // should register onDevCompileDone hook before startCompile
+  context.hooks.onDevCompileDone.tap(({ stats }) => {
+    lastStats = 'stats' in stats ? stats.stats : [stats];
+    if (waitLastCompileDoneResolve) {
+      waitLastCompileDoneResolve();
+      waitLastCompileDoneResolve = null;
+    }
+  });
 
   const startCompile: () => Promise<CompilationManager> = async () => {
     const compiler = customCompiler || (await createCompiler());
@@ -179,6 +197,10 @@ export async function createDevServer<
         `${color.dim('[rsbuild:server]')} Failed to get compiler instance.`,
       );
     }
+
+    compiler?.hooks.watchRun.tap('rsbuild:watchRun', () => {
+      resetWaitLastCompileDone();
+    });
 
     const publicPaths = isMultiCompiler(compiler)
       ? compiler.compilers.map(getPublicPathFromCompiler)
@@ -289,7 +311,7 @@ export async function createDevServer<
                   `${color.yellow('runCompile')} is false`,
               );
             }
-            await waitFirstCompileDone;
+            await waitLastCompileDone;
             return lastStats[environment.index];
           },
           context: environment,
@@ -301,7 +323,7 @@ export async function createDevServer<
                   `${color.yellow('runCompile')} is false`,
               );
             }
-            await waitFirstCompileDone;
+            await waitLastCompileDone;
             return cacheableLoadBundle(
               lastStats[environment.index],
               entryName,
@@ -319,7 +341,7 @@ export async function createDevServer<
                   `${color.yellow('runCompile')} is false`,
               );
             }
-            await waitFirstCompileDone;
+            await waitLastCompileDone;
             return cacheableTransformedHtml(
               lastStats[environment.index],
               entryName,
@@ -348,7 +370,7 @@ export async function createDevServer<
     compilationManager?.socketServer.sockWrite({
       type,
       data,
-    });
+    } as SocketMessage);
 
   const devServerAPI: RsbuildDevServer = {
     port,

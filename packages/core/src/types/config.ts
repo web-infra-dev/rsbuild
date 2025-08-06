@@ -1,6 +1,7 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { SecureServerSessionOptions } from 'node:http2';
 import type { ServerOptions as HttpsServerOptions } from 'node:https';
+import type { URL } from 'node:url';
 import type {
   Configuration,
   CopyRspackPluginOptions,
@@ -35,6 +36,7 @@ import type {
 import type { RsbuildEntry, RsbuildMode, RsbuildTarget } from './rsbuild';
 import type { BundlerPluginInstance, Rspack, RspackRule } from './rspack';
 import type {
+  Connect,
   CSSExtractOptions,
   CSSLoaderModulesOptions,
   CSSLoaderOptions,
@@ -300,9 +302,7 @@ export interface SourceConfig {
   /**
    * Used to import the code and style of the component library on demand.
    */
-  transformImport?:
-    | TransformImportFn
-    | Array<TransformImport | TransformImportFn>;
+  transformImport?: TransformImportFn | (TransformImport | TransformImportFn)[];
   /**
    * Configure a custom tsconfig.json file path to use, can be a relative or absolute path.
    * @default 'tsconfig.json'
@@ -367,20 +367,22 @@ export type ProxyConfig =
 
 export type HistoryApiFallbackContext = {
   match: RegExpMatchArray;
-  parsedUrl: import('node:url').Url;
-  request: Request;
+  parsedUrl: URL;
+  request: IncomingMessage;
 };
+
+export type HistoryApiFallbackTo =
+  | string
+  | ((context: HistoryApiFallbackContext) => string);
 
 export type HistoryApiFallbackOptions = {
   index?: string;
-  verbose?: boolean;
-  logger?: typeof console.log;
   htmlAcceptHeaders?: string[];
   disableDotRule?: true;
-  rewrites?: Array<{
+  rewrites?: {
     from: RegExp;
-    to: string | RegExp | ((context: HistoryApiFallbackContext) => string);
-  }>;
+    to: HistoryApiFallbackTo;
+  }[];
 };
 
 export type PrintUrls =
@@ -480,8 +482,9 @@ export interface ServerConfig {
    */
   htmlFallback?: HtmlFallback;
   /**
-   * Provide alternative pages for some 404 responses or other requests.
-   * see https://github.com/bripkens/connect-history-api-fallback
+   * Used to support routing based on the history API.
+   * When a user visits a path that does not exist, it will automatically
+   * return a specified HTML file to avoid a 404 error.
    */
   historyApiFallback?: boolean | HistoryApiFallbackOptions;
   /**
@@ -590,7 +593,7 @@ export type BuildCacheOptions = {
    * when any value in the array changes.
    * @default undefined
    */
-  cacheDigest?: Array<string | undefined>;
+  cacheDigest?: (string | undefined)[];
   /**
    * An array of files containing build dependencies.
    * Rspack will use the hash of each of these files to invalidate the persistent cache.
@@ -653,7 +656,7 @@ export interface PreconnectOption {
   crossorigin?: boolean;
 }
 
-export type Preconnect = Array<string | PreconnectOption>;
+export type Preconnect = (string | PreconnectOption)[];
 
 export type DnsPrefetch = string[];
 
@@ -869,7 +872,7 @@ export type DistPathConfig = {
   font?: string;
   /**
    * The output directory of HTML files.
-   * @default '/'
+   * @default './'
    */
   html?: string;
   /**
@@ -892,6 +895,11 @@ export type DistPathConfig = {
    * @default 'static/assets'
    */
   assets?: string;
+  /**
+   * The output directory of favicon.
+   * @default './'
+   */
+  favicon?: string;
 };
 
 export type FilenameConfig = {
@@ -935,7 +943,12 @@ export type FilenameConfig = {
    */
   media?: Rspack.AssetModuleFilename;
   /**
-   * the name of other assets, except for above (image, svg, font, html, wasm...)
+   * The name of Wasm files.
+   * @default '[hash].module.wasm'
+   */
+  wasm?: Rspack.WebassemblyModuleFilename;
+  /**
+   * The name of other assets, except for above (image, svg, font, html, wasm...)
    * @default '[name].[contenthash:8][ext]'
    */
   assets?: Rspack.AssetModuleFilename;
@@ -1369,6 +1382,12 @@ export type HtmlBasicTag = {
    * HTML escaping, so ensure it's safe to prevent XSS vulnerabilities.
    */
   children?: string;
+  /**
+   * The metadata object for tags, used to store additional information about tags.
+   * `metadata` does not affect the generated HTML content.
+   * @default undefined
+   */
+  metadata?: Record<string, any>;
 };
 
 export type HtmlTag = HtmlBasicTag & {
@@ -1558,13 +1577,7 @@ export type ProgressBarConfig = {
   id?: string;
 };
 
-export type NextFunction = () => void;
-
-export type RequestHandler = (
-  req: IncomingMessage,
-  res: ServerResponse,
-  next: NextFunction,
-) => void;
+export type RequestHandler = Connect.NextHandleFunction;
 
 export type EnvironmentAPI = {
   [name: string]: {
@@ -1789,16 +1802,24 @@ export type RsbuildConfigMeta = {
 };
 
 /**
+ * Only some dev options can be defined in the environment config
+ */
+export type AllowedEnvironmentDevKeys =
+  | 'hmr'
+  | 'liveReload'
+  | 'assetPrefix'
+  | 'progressBar'
+  | 'lazyCompilation'
+  | 'writeToDisk';
+
+/**
  * The Rsbuild config to run in the specified environment.
  * */
 export interface EnvironmentConfig {
   /**
    * Options for local development.
    */
-  dev?: Pick<
-    DevConfig,
-    'hmr' | 'assetPrefix' | 'progressBar' | 'lazyCompilation' | 'writeToDisk'
-  >;
+  dev?: Pick<DevConfig, AllowedEnvironmentDevKeys>;
   /**
    * Options for HTML generation.
    */
@@ -1889,10 +1910,7 @@ export interface RsbuildConfig extends EnvironmentConfig {
 export type MergedEnvironmentConfig = {
   mode: RsbuildMode;
   root: string;
-  dev: Pick<
-    NormalizedDevConfig,
-    'hmr' | 'assetPrefix' | 'progressBar' | 'lazyCompilation' | 'writeToDisk'
-  >;
+  dev: Pick<NormalizedDevConfig, AllowedEnvironmentDevKeys>;
   html: NormalizedHtmlConfig;
   tools: NormalizedToolsConfig;
   resolve: NormalizedResolveConfig;

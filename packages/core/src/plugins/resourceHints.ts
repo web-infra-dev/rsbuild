@@ -1,6 +1,6 @@
 import { isRegExp } from 'node:util/types';
 import { castArray } from '../helpers';
-import { HtmlResourceHintsPlugin } from '../rspack/resource-hints/HtmlResourceHintsPlugin';
+import { HtmlResourceHintsPlugin } from '../rspack-plugins/resource-hints/HtmlResourceHintsPlugin';
 import type {
   HtmlBasicTag,
   NormalizedEnvironmentConfig,

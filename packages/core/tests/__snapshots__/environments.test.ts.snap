@@ -53,6 +53,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "distPath": {
       "assets": "static/assets",
       "css": "static/css",
+      "favicon": "./",
       "font": "static/font",
       "html": "./",
       "image": "static/image",
@@ -197,6 +198,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "distPath": {
       "assets": "static/assets",
       "css": "static/css",
+      "favicon": "./",
       "font": "static/font",
       "html": "./",
       "image": "static/image",
@@ -341,6 +343,7 @@ exports[`environment config > should print environment config when inspect confi
       "distPath": {
         "assets": "static/assets",
         "css": "static/css",
+        "favicon": "./",
         "font": "static/font",
         "html": "./",
         "image": "static/image",
@@ -481,6 +484,7 @@ exports[`environment config > should print environment config when inspect confi
       "distPath": {
         "assets": "static/assets",
         "css": "static/css",
+        "favicon": "./",
         "font": "static/font",
         "html": "./",
         "image": "static/image",
@@ -641,6 +645,7 @@ exports[`environment config > should support modify environment config by api.mo
       "distPath": {
         "assets": "static/assets",
         "css": "static/css",
+        "favicon": "./",
         "font": "static/font",
         "html": "./",
         "image": "static/image",
@@ -781,6 +786,7 @@ exports[`environment config > should support modify environment config by api.mo
       "distPath": {
         "assets": "static/assets",
         "css": "static/css",
+        "favicon": "./",
         "font": "static/font",
         "html": "./",
         "image": "static/image",
@@ -922,6 +928,7 @@ exports[`environment config > should support modify environment config by api.mo
       "distPath": {
         "assets": "static/assets",
         "css": "static/css",
+        "favicon": "./",
         "font": "static/font",
         "html": "./",
         "image": "static/image",
@@ -1066,6 +1073,7 @@ exports[`environment config > should support modify single environment config by
       "distPath": {
         "assets": "static/assets",
         "css": "static/css",
+        "favicon": "./",
         "font": "static/font",
         "html": "./",
         "image": "static/image",
@@ -1206,6 +1214,7 @@ exports[`environment config > should support modify single environment config by
       "distPath": {
         "assets": "static/assets",
         "css": "static/css",
+        "favicon": "./",
         "font": "static/font",
         "html": "./",
         "image": "static/image",
@@ -1311,6 +1320,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "force": false,
         },
       },
+      "typeReexportsPresence": true,
     },
     "infrastructureLogging": {
       "level": "error",
@@ -1320,6 +1330,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "parser": {
         "javascript": {
           "exportsPresence": "error",
+          "typeReexportsPresence": "tolerant",
         },
       },
       "rules": [
@@ -1463,6 +1474,12 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                     "legacyDecorator": false,
                   },
                 },
+                "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
+                  },
+                },
               },
             },
           ],
@@ -1513,6 +1530,12 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
+                  },
+                },
+                "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
                   },
                 },
               },
@@ -1743,6 +1766,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "force": false,
         },
       },
+      "typeReexportsPresence": true,
     },
     "infrastructureLogging": {
       "level": "error",
@@ -1752,6 +1776,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "parser": {
         "javascript": {
           "exportsPresence": "error",
+          "typeReexportsPresence": "tolerant",
         },
       },
       "rules": [
@@ -1867,6 +1892,12 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                     "legacyDecorator": false,
                   },
                 },
+                "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
+                  },
+                },
               },
             },
           ],
@@ -1913,6 +1944,12 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
+                  },
+                },
+                "rspackExperiments": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
                   },
                 },
               },

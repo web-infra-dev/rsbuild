@@ -1,13 +1,12 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
-import type Connect from '../../compiled/connect/index.js';
 import { getPathnameFromUrl } from '../helpers/path';
 import { logger } from '../logger';
 import type {
+  Connect,
   InternalContext,
   NormalizedConfig,
   PreviewOptions,
-  RequestHandler,
   ServerConfig,
 } from '../types';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
@@ -25,6 +24,7 @@ import {
   printServerURLs,
   type StartServerResult,
 } from './helper';
+import { historyApiFallbackMiddleware } from './historyApiFallback';
 import { createHttpServer } from './httpServer';
 import {
   faviconFallbackMiddleware,
@@ -122,14 +122,11 @@ export class RsbuildProdServer {
     await this.applyStaticAssetMiddleware();
 
     if (historyApiFallback) {
-      const { default: connectHistoryApiFallback } = await import(
-        '../../compiled/connect-history-api-fallback/index.js'
+      this.middlewares.use(
+        historyApiFallbackMiddleware(
+          historyApiFallback === true ? {} : historyApiFallback,
+        ),
       );
-      const historyApiFallbackMiddleware = connectHistoryApiFallback(
-        historyApiFallback === true ? {} : historyApiFallback,
-      ) as RequestHandler;
-
-      this.middlewares.use(historyApiFallbackMiddleware);
 
       // ensure fallback request can be handled by sirv
       await this.applyStaticAssetMiddleware();

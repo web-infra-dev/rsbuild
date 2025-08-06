@@ -216,7 +216,7 @@ Although the above method can provide the type of CSS Modules, it cannot accurat
 
 Rsbuild supports generating accurate type declarations for CSS Modules, you only need to register the [@rsbuild/plugin-typed-css-modules](https://github.com/rspack-contrib/rsbuild-plugin-typed-css-modules), and then execute the build, Rsbuild will generate type declaration files for all CSS Modules.
 
-```ts file=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 import { pluginTypedCSSModules } from '@rsbuild/plugin-typed-css-modules';
 
 export default {

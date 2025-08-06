@@ -1,5 +1,4 @@
-import RspackChain from '../compiled/rspack-chain';
-import { castArray } from './helpers';
+import { castArray, RspackChain } from './helpers';
 import { logger } from './logger';
 import type { InternalContext, ModifyBundlerChainUtils } from './types';
 

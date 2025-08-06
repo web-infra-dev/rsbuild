@@ -1,13 +1,15 @@
 # server.historyApiFallback
 
-- **Type:** `boolean | ConnectHistoryApiFallbackOptions`
+- **Type:** `boolean | HistoryApiFallbackOptions`
 - **Default:** `false`
+
+`historyApiFallback` is used to support routing based on the [history API](https://developer.mozilla.org/en-US/docs/Web/API/History_API). When a user visits a path that does not exist, it will automatically return a specified HTML file to avoid a 404 error.
 
 When Rsbuild's default [page routing](/guide/basic/server#page-routing) behavior cannot meet your needs, for example, if you want to be able to access `main.html` when accessing `/`, you can achieve this through the `server.historyApiFallback` configuration.
 
 ## Example
 
-`server.historyApiFallback` is implemented based on [connect-history-api-fallback](https://github.com/bripkens/connect-history-api-fallback), and setting `server.historyApiFallback` to `true` is equivalent to using the default options of `connect-history-api-fallback`.
+When `server.historyApiFallback` is set to `true`, all HTML GET requests that do not match an actual resource will return `index.html`. This ensures that routing in single-page applications works correctly.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -17,13 +19,16 @@ export default {
 };
 ```
 
-By default, `connect-history-api-fallback` will redirect all HTML GET requests to `index.html`.
+Rsbuild will change the requested location to the [index](#index) you specify whenever there is a request which fulfills the following criteria:
+
+- The request is a `GET` or `HEAD` request
+- The request accepts `text/html`
+- The requested path does not contain a `.` (dot), meaning it is not a direct file request
+- The requested path does not match any pattern defined in [rewrites](#rewrites)
 
 ## Options
 
-`server.historyApiFallback` also supports passing an object to configure the behavior of `connect-history-api-fallback`.
-
-Here are some commonly used options, and more options and detailed information can be found in the [connect-history-api-fallback](https://github.com/bripkens/connect-history-api-fallback) documentation.
+`server.historyApiFallback` also supports passing an object to customize its behavior.
 
 ### index
 
@@ -55,7 +60,7 @@ export default {
 ```ts
 type Rewrites = Array<{
   from: RegExp;
-  to: string | RegExp | ((context: HistoryApiFallbackContext) => string);
+  to: string | ((context: HistoryApiFallbackContext) => string);
 }>;
 ```
 
@@ -72,6 +77,42 @@ export default {
         { from: /^\/subpage/, to: '/views/subpage.html' },
         { from: /./, to: '/views/404.html' },
       ],
+    },
+  },
+};
+```
+
+### htmlAcceptHeaders
+
+- **Type:** `string[]`
+- **Default:** `['text/html', '*/*']`
+
+Override the default `Accepts:` headers that are queried when matching HTML content requests.
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    historyApiFallback: {
+      htmlAcceptHeaders: ['text/html', 'application/xhtml+xml'],
+    },
+  },
+};
+```
+
+### disableDotRule
+
+- **Type:** `boolean`
+- **Default:** `false`
+
+By default, requests containing a dot (`.`) in the path are treated as direct file requests and are not redirected.
+
+Setting `disableDotRule` to `true` will disable this behavior and allow such requests to be redirected as well.
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    historyApiFallback: {
+      disableDotRule: true,
     },
   },
 };

@@ -1,4 +1,4 @@
-import { getResourceType } from '../src/rspack/resource-hints/getResourceType';
+import { getResourceType } from '../src/rspack-plugins/resource-hints/getResourceType';
 
 describe('getResourceType test', () => {
   it('should return as attribute', () => {

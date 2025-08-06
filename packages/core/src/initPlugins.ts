@@ -6,7 +6,7 @@ import { color, removeLeadingSlash } from './helpers';
 import { exitHook } from './helpers/exitHook';
 import type { TransformLoaderOptions } from './loader/transformLoader';
 import { logger } from './logger';
-import { isPluginMatchEnvironment } from './pluginManager';
+import { isEnvironmentMatch } from './pluginManager';
 import type {
   GetRsbuildConfig,
   InternalContext,
@@ -144,7 +144,7 @@ export function initPluginAPI({
     );
   }) as GetRsbuildConfig;
 
-  const exposed: Array<{ id: string | symbol; api: any }> = [];
+  const exposed: { id: string | symbol; api: any }[] = [];
 
   const expose = (id: string | symbol, api: any) => {
     exposed.push({ id, api });
@@ -158,16 +158,16 @@ export function initPluginAPI({
 
   let transformId = 0;
   const transformer: Record<string, TransformHandler> = {};
-  const processAssetsFns: Array<{
+  const processAssetsFns: {
     environment?: string;
     descriptor: ProcessAssetsDescriptor;
     handler: ProcessAssetsHandler;
-  }> = [];
+  }[] = [];
 
-  const resolveFns: Array<{
+  const resolveFns: {
     environment?: string;
     handler: ResolveHandler;
-  }> = [];
+  }[] = [];
 
   hooks.modifyBundlerChain.tap((chain, { target, environment }) => {
     const pluginName = 'RsbuildCorePlugin';
@@ -184,7 +184,7 @@ export function initPluginAPI({
         for (const { handler, environment: pluginEnvironment } of resolveFns) {
           if (
             pluginEnvironment &&
-            !isPluginMatchEnvironment(pluginEnvironment, environment.name)
+            !isEnvironmentMatch(pluginEnvironment, environment.name)
           ) {
             continue;
           }
@@ -229,7 +229,7 @@ export function initPluginAPI({
                 !descriptor.environments.includes(environment.name)) ||
               // the plugin is registered in a specific environment config
               (pluginEnvironment &&
-                !isPluginMatchEnvironment(pluginEnvironment, environment.name))
+                !isEnvironmentMatch(pluginEnvironment, environment.name))
             ) {
               continue;
             }
@@ -301,7 +301,10 @@ export function initPluginAPI({
           if (descriptor.mimetype) {
             rule.mimetype(descriptor.mimetype);
           }
-          if (descriptor.enforce) {
+
+          if (descriptor.order && descriptor.order !== 'default') {
+            rule.enforce(descriptor.order);
+          } else if (descriptor.enforce) {
             rule.enforce(descriptor.enforce);
           }
 
@@ -370,50 +373,59 @@ export function initPluginAPI({
     onAfterStartProdServer: hooks.onAfterStartProdServer.tap,
     onBeforeStartProdServer: hooks.onBeforeStartProdServer.tap,
     modifyRsbuildConfig: hooks.modifyRsbuildConfig.tap,
-    modifyHTML: (handler) =>
+    modifyHTML: (handler) => {
       hooks.modifyHTML.tapEnvironment({
         environment,
         handler,
-      }),
-    modifyHTMLTags: (handler) =>
+      });
+    },
+    modifyHTMLTags: (handler) => {
       hooks.modifyHTMLTags.tapEnvironment({
         environment,
         handler,
-      }),
-    modifyBundlerChain: (handler) =>
+      });
+    },
+    modifyBundlerChain: (handler) => {
       hooks.modifyBundlerChain.tapEnvironment({
         environment,
         handler,
-      }),
-    modifyRspackConfig: (handler) =>
+      });
+    },
+    modifyRspackConfig: (handler) => {
       hooks.modifyRspackConfig.tapEnvironment({
         environment,
         handler,
-      }),
-    modifyWebpackChain: (handler) =>
+      });
+    },
+    modifyWebpackChain: (handler) => {
       hooks.modifyWebpackChain.tapEnvironment({
         environment,
         handler,
-      }),
-    modifyWebpackConfig: (handler) =>
+      });
+    },
+    modifyWebpackConfig: (handler) => {
       hooks.modifyWebpackConfig.tapEnvironment({
         environment,
         handler,
-      }),
-    modifyEnvironmentConfig: (handler) =>
+      });
+    },
+    modifyEnvironmentConfig: (handler) => {
       hooks.modifyEnvironmentConfig.tapEnvironment({
         environment,
         handler,
-      }),
-    onAfterEnvironmentCompile: (handler) =>
+      });
+    },
+    onAfterEnvironmentCompile: (handler) => {
       hooks.onAfterEnvironmentCompile.tapEnvironment({
         environment,
         handler,
-      }),
-    onBeforeEnvironmentCompile: (handler) =>
+      });
+    },
+    onBeforeEnvironmentCompile: (handler) => {
       hooks.onBeforeEnvironmentCompile.tapEnvironment({
         environment,
         handler,
-      }),
+      });
+    },
   });
 }

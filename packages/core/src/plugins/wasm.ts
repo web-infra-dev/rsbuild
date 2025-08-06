@@ -1,21 +1,25 @@
 import { posix } from 'node:path';
+import { getFilename } from '../helpers';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginWasm = (): RsbuildPlugin => ({
   name: 'rsbuild:wasm',
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment, isProd }) => {
       const { config } = environment;
       const distPath = config.output.distPath.wasm;
+      const filename = posix.join(
+        distPath,
+        getFilename(config, 'wasm', isProd),
+      );
 
       chain.experiments({
         ...chain.get('experiments'),
         asyncWebAssembly: true,
       });
 
-      const wasmFilename = posix.join(distPath, '[hash].module.wasm');
-      chain.output.webassemblyModuleFilename(wasmFilename);
+      chain.output.webassemblyModuleFilename(filename);
 
       // support new URL('./abc.wasm', import.meta.url)
       chain.module
@@ -25,7 +29,7 @@ export const pluginWasm = (): RsbuildPlugin => ({
         .dependency('url')
         .type('asset/resource')
         .set('generator', {
-          filename: wasmFilename,
+          filename,
         });
     });
   },

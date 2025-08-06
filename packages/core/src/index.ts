@@ -4,7 +4,7 @@
  */
 
 import type * as Rspack from '@rspack/core';
-import { rspack } from '@rspack/core';
+import { rspack } from './rspack';
 
 export { runCLI } from './cli';
 export { createRsbuild } from './createRsbuild';
@@ -51,6 +51,7 @@ export type {
   CompressOptions,
   ConfigChain,
   ConfigChainWithContext,
+  Connect,
   ConsoleType,
   CreateCompiler,
   CreateRsbuildOptions,
@@ -71,9 +72,11 @@ export type {
   HtmlConfig,
   HtmlFallback,
   HtmlRspackPlugin,
+  HtmlTag,
   HtmlTagContext,
   HtmlTagDescriptor,
   HtmlTagHandler,
+  InitConfigsOptions,
   InlineChunkConfig,
   InlineChunkTest,
   InlineChunkTestFunction,

@@ -34,6 +34,23 @@ export const getAllStatsErrors = (
   return statsData.errors;
 };
 
+export const getAssetsFromStats = (
+  stats: Rspack.Stats,
+): Rspack.StatsAsset[] => {
+  const statsJson = stats.toJson({
+    all: false,
+    assets: true,
+    cachedAssets: true,
+    groupAssetsByInfo: false,
+    groupAssetsByPath: false,
+    groupAssetsByChunk: false,
+    groupAssetsByExtension: false,
+    groupAssetsByEmitStatus: false,
+  });
+
+  return statsJson.assets || [];
+};
+
 export const getAllStatsWarnings = (
   statsData: StatsCompilation,
 ): Rspack.StatsError[] | undefined => {

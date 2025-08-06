@@ -23,7 +23,7 @@ const getSassLoaderOptions = (
 } => {
   const excludes: (RegExp | string)[] = [];
 
-  const addExcludes = (items: string | RegExp | Array<string | RegExp>) => {
+  const addExcludes = (items: string | RegExp | (string | RegExp)[]) => {
     excludes.push(...(Array.isArray(items) ? items : [items]));
   };
 

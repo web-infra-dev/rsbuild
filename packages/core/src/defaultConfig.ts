@@ -8,6 +8,7 @@ import {
   DEFAULT_DEV_HOST,
   DEFAULT_MOUNT_ID,
   DEFAULT_PORT,
+  FAVICON_DIST_DIR,
   FONT_DIST_DIR,
   HMR_SOCKET_PATH,
   HTML_DIST_DIR,
@@ -158,6 +159,7 @@ const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
     image: IMAGE_DIST_DIR,
     media: MEDIA_DIST_DIR,
     assets: ASSETS_DIST_DIR,
+    favicon: FAVICON_DIST_DIR,
   },
   // Temporary placeholder, default: `${server.base}`
   assetPrefix: DEFAULT_ASSET_PREFIX,

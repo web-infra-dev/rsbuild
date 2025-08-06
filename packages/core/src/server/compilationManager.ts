@@ -1,13 +1,9 @@
 import fs from 'node:fs';
-import type { IncomingMessage, ServerResponse } from 'node:http';
-import { createRequire } from 'node:module';
 import type { Stats } from '@rspack/core';
-import { HTML_REGEX } from '../constants';
 import { isMultiCompiler } from '../helpers';
 import { getPathnameFromUrl } from '../helpers/path';
 import type {
   EnvironmentContext,
-  NextFunction,
   NormalizedDevConfig,
   NormalizedServerConfig,
   Rspack,
@@ -19,8 +15,6 @@ import {
 } from './compilationMiddleware';
 import { stripBase } from './helper';
 import { SocketServer } from './socketServer';
-
-const require = createRequire(import.meta.url);
 
 type Options = {
   publicPaths: string[];
@@ -59,22 +53,6 @@ const formatDevConfig = (
     },
   };
 };
-
-function getClientPaths(devConfig: NormalizedDevConfig) {
-  const clientPaths: string[] = [];
-
-  if (!devConfig.hmr && !devConfig.liveReload) {
-    return clientPaths;
-  }
-
-  clientPaths.push(require.resolve('@rsbuild/core/client/hmr'));
-
-  if (devConfig.client?.overlay) {
-    clientPaths.push(`${require.resolve('@rsbuild/core/client/overlay')}`);
-  }
-
-  return clientPaths;
-}
 
 /**
  * Setup compiler-related logic:
@@ -163,23 +141,18 @@ export class CompilationManager {
     const callbacks: ServerCallbacks = {
       onInvalid: (token: string, fileName?: string | null) => {
         // reload page when HTML template changed
-        if (typeof fileName === 'string' && HTML_REGEX.test(fileName)) {
+        if (typeof fileName === 'string' && fileName.endsWith('.html')) {
           this.socketServer.sockWrite({ type: 'static-changed' }, token);
           return;
         }
-
-        this.socketServer.sockWrite({ type: 'invalid' }, token);
       },
       onDone: (token: string, stats: Stats) => {
         this.socketServer.updateStats(stats, token);
       },
     };
 
-    const clientPaths = getClientPaths(devConfig);
-
     const middleware = await getCompilationMiddleware(this.compiler, {
       callbacks,
-      clientPaths,
       devConfig,
       serverConfig,
       environments,
@@ -192,11 +165,7 @@ export class CompilationManager {
         base && base !== '/' ? stripBase(prefix, base) : prefix,
       );
 
-    const wrapper = async (
-      req: IncomingMessage,
-      res: ServerResponse,
-      next: NextFunction,
-    ) => {
+    const wrapper: CompilationMiddleware = async (req, res, next) => {
       const { url } = req;
       const assetPrefix =
         url && assetPrefixes.find((prefix) => url.startsWith(prefix));

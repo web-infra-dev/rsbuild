@@ -34,7 +34,7 @@ const chainStaticAssetRule = ({
     filename,
   };
 
-  if (emit === false) {
+  if (!emit) {
     generatorOptions.emit = false;
   }
 

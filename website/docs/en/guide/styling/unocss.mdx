@@ -2,57 +2,42 @@
 
 [UnoCSS](https://unocss.dev/) is the instant atomic CSS engine, that is designed to be flexible and extensible. The core is un-opinionated, and all the CSS utilities are provided via presets.
 
-You can integrate UnoCSS in Rsbuild via [@unocss/webpack](https://npmjs.com/package/@unocss/webpack).
+You can integrate UnoCSS in Rsbuild via PostCSS plugins.
 
 ## Installing UnoCSS
 
-You need to install `@unocss/webpack` first.
+You need to install `unocss` and `@unocss/postcss` first.
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @unocss/webpack -D" />
+<PackageManagerTabs command="add unocss @unocss/postcss -D" />
 
-## Configuring plugin
+## Configuring PostCSS
 
-Register the `UnoCSSRspackPlugin` plugin in [tools.rspack](/config/tools/rspack):
+You can register the `unocss` PostCSS plugin through [postcss.config.mjs](https://www.npmjs.com/package/postcss-loader#config) or [tools.postcss](/config/tools/postcss).
 
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-import { UnoCSSRspackPlugin } from '@unocss/webpack/rspack';
+```js title="postcss.config.mjs"
+import UnoCSS from '@unocss/postcss';
 
-export default defineConfig({
-  tools: {
-    rspack: {
-      plugins: [
-        UnoCSSRspackPlugin({
-          // options
-        }),
-      ],
-    },
-  },
-});
+export default {
+  plugins: [UnoCSS()],
+};
 ```
 
-You can add UnoCSS Presets via the options of `UnoCSSRspackPlugin`, for example:
+Rsbuild has integrated [autoprefixer](https://github.com/postcss/autoprefixer), so you only need to register the `UnoCSS` plugin.
 
-```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-import { pluginReact } from '@rsbuild/plugin-react';
-import { UnoCSSRspackPlugin } from '@unocss/webpack/rspack';
-import { presetAttributify } from '@unocss/preset-attributify';
-import { presetUno } from '@unocss/preset-uno';
+## Configuring UnoCSS
+
+Create a `uno.config.ts` file in the root directory of your project and add the following content:
+
+```js title="uno.config.ts"
+import { defineConfig, presetUno } from 'unocss';
 
 export default defineConfig({
-  plugins: [pluginReact()],
-  tools: {
-    rspack: {
-      plugins: [
-        UnoCSSRspackPlugin({
-          presets: [presetUno(), presetAttributify()],
-        }),
-      ],
-    },
+  content: {
+    filesystem: ['./src/**/*.{html,js,ts,jsx,tsx}'],
   },
+  presets: [presetUno()],
 });
 ```
 
@@ -62,11 +47,14 @@ The above configuration is for reference only and can be modified to suit the ne
 
 ## Importing CSS
 
-In the JavaScript entry file, import `uno.css`:
+Add the `@unocss` directives in your CSS entry file:
 
-```js title="main.js"
-import 'uno.css';
+```css title="main.css"
+@unocss preflights;
+@unocss default;
 ```
+
+Depending on your needs, you can selectively import the CSS styles provided by UnoCSS. Please refer to the [unocss documentation](https://unocss.dev/integrations/postcss#usage) for detailed usage of the UnoCSS.
 
 ## Done
 

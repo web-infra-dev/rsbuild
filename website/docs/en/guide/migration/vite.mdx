@@ -100,7 +100,7 @@ Most common Vite plugins can be easily migrated to Rsbuild plugins, such as:
 
 You can refer to [Plugin List](/plugins/list/index) to learn more about available plugins.
 
-## Configuration migration
+## Config migration
 
 Here is the corresponding Rsbuild configuration for Vite configuration:
 
@@ -254,24 +254,15 @@ for (const path of context.keys()) {
 }
 ```
 
+## vite-tsconfig-paths
+
+Rsbuild supports TypeScript's `paths` option as alias out of the box, so you can remove the `vite-tsconfig-paths` dependency directly.
+
+See [Path aliases](/guide/advanced/alias) for more details.
+
 ## Migrating Vite plugins
 
-Rsbuild's plugin API covers most of the Vite and Rollup plugin hooks, for example:
-
-| Vite plugin hooks    | Rsbuild plugin API                                                                                                     |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `resolveId`          | [resolve](/plugins/dev/core#apiresolve)                                                                                |
-| `transform`          | [transform](/plugins/dev/core#apitransform)                                                                            |
-| `config`             | [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig)                                                          |
-| `configResolved`     | [getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig)                                                        |
-| `configEnvironment`  | [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig)                                                  |
-| `configureServer`    | [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver)                                                    |
-| `buildStart`         | [onBeforeBuild](/plugins/dev/hooks#onbeforebuild), [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) |
-| `buildEnd`           | [onAfterBuild](/plugins/dev/hooks#onafterbuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
-| `closeBundle`        | [onCloseBuild](/plugins/dev/hooks#onclosebuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
-| `transformIndexHtml` | [modifyHTML](/plugins/dev/hooks#modifyhtml), [modifyHTMLTags](/plugins/dev/hooks#modifyhtmltags)                       |
-
-See [Plugin system](/plugins/dev/index) for more details.
+See [Vite plugin](/guide/migration/vite-plugin) to learn how to migrate Vite plugins.
 
 ## Validating results
 

@@ -17,7 +17,7 @@ import {
   type HtmlExtraData,
   RsbuildHtmlPlugin,
   type TagConfig,
-} from '../rspack/RsbuildHtmlPlugin';
+} from '../rspack-plugins/RsbuildHtmlPlugin';
 import type {
   HtmlConfig,
   HtmlRspackPlugin,
@@ -171,7 +171,7 @@ function getTemplateParameters(
 
 function getChunks(
   entryName: string,
-  entryValue: Array<string | string[] | EntryDescription>,
+  entryValue: (string | string[] | EntryDescription)[],
 ): string[] {
   const chunks = [entryName];
 
@@ -280,6 +280,7 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
               entryName,
               context,
               environment,
+              faviconDistPath: config.output.distPath.favicon,
             };
 
             extraDataMap.set(entryName, extraData);

@@ -101,6 +101,7 @@ Here are some tools based on Rsbuild that have already set the `callerName` valu
 | Name                                                | callerName  |
 | --------------------------------------------------- | ----------- |
 | [Rslib](https://github.com/web-infra-dev/rslib)     | `'rslib'`   |
+| [Rstest](https://github.com/web-infra-dev/rstest)   | `'rstest'`  |
 | [Rspress](https://github.com/web-infra-dev/rspress) | `'rspress'` |
 | [Rspeedy](https://lynxjs.org/rspeedy)               | `'rspeedy'` |
 
@@ -612,9 +613,38 @@ import IsPluginExists from '@en/shared/isPluginExists.mdx';
 - **Example:**
 
 ```ts
-rsbuild.addPlugins([pluginFoo()]);
+const pluginFoo = {
+  name: 'plugin-foo',
+  setup(api) {
+    // ...
+  },
+};
 
-rsbuild.isPluginExists(pluginFoo().name); // true
+const rsbuild = createRsbuild({
+  rsbuildConfig: {
+    plugins: [pluginFoo],
+  },
+});
+
+rsbuild.isPluginExists(pluginFoo.name); // true
+```
+
+Or check if a plugin exists in a specified environment:
+
+```ts
+const rsbuild = createRsbuild({
+  rsbuildConfig: {
+    environments: {
+      web: {
+        plugins: [pluginFoo],
+      },
+    },
+  },
+});
+
+rsbuild.isPluginExists(pluginFoo.name, {
+  environment: 'web',
+}); // true
 ```
 
 ## rsbuild.initConfigs
@@ -626,7 +656,17 @@ Initialize and return the internal Rspack configurations used by Rsbuild. This m
 - **Type:**
 
 ```ts
-function InitConfigs(): Promise<{
+type InitConfigsOptions = {
+  /**
+   * The current action type.
+   * - dev: will be set when running `rsbuild dev` or `rsbuild.startDevServer()`
+   * - build: will be set when running `rsbuild build` or `rsbuild.build()`
+   * - preview: will be set when running `rsbuild preview` or `rsbuild.preview()`
+   */
+  action?: 'dev' | 'build' | 'preview';
+};
+
+function InitConfigs(options?: InitConfigsOptions): Promise<{
   rspackConfigs: Rspack.Configuration[];
 }>;
 ```
@@ -637,6 +677,12 @@ function InitConfigs(): Promise<{
 const rspackConfigs = await rsbuild.initConfigs();
 
 console.log(rspackConfigs);
+
+const buildConfigs = await rsbuild.initConfigs({
+  action: 'build',
+});
+
+console.log(buildConfigs);
 ```
 
 ## rsbuild.inspectConfig

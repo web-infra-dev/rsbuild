@@ -1,6 +1,7 @@
 {
   "name": "@examples/lit",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "rsbuild dev --open",
     "build": "rsbuild build",
@@ -8,7 +9,7 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "lit": "^3.3.0",
-    "typescript": "^5.8.3"
+    "lit": "^3.3.1",
+    "typescript": "^5.9.2"
   }
 }

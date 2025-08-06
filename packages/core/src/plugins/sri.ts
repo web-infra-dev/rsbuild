@@ -1,5 +1,4 @@
 import path from 'node:path';
-import { rspack } from '@rspack/core';
 import { COMPILED_PATH } from '../constants';
 import type { RsbuildPlugin } from '../types';
 
@@ -7,7 +6,7 @@ export const pluginSri = (): RsbuildPlugin => ({
   name: 'rsbuild:sri',
 
   setup(api) {
-    api.modifyBundlerChain((chain, { environment, CHAIN_ID }) => {
+    api.modifyBundlerChain((chain, { environment, CHAIN_ID, rspack }) => {
       if (api.context.bundlerType === 'webpack') {
         return;
       }

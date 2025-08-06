@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { rspack } from '@rspack/core';
 import { color } from '../helpers';
 import { logger } from '../logger';
+import { rspack } from '../rspack';
 import type { RsbuildPlugin } from '../types';
 
 enum TracePreset {
@@ -61,7 +61,6 @@ async function applyProfile(
         ? defaultRustTracePerfettoOutput
         : defaultRustTraceLoggerOutput;
 
-    // biome-ignore lint/style/noParameterAssign: setting default value makes sense
     traceOutput = defaultTraceOutput;
   }
 

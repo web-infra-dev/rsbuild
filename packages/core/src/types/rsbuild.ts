@@ -8,7 +8,7 @@ import type {
   NormalizedEnvironmentConfig,
   RsbuildConfig,
 } from './config';
-import type { InternalContext } from './context';
+import type { InternalContext, RsbuildContext } from './context';
 import type { PluginManager, RsbuildPlugin, RsbuildPluginAPI } from './plugin';
 import type { Rspack } from './rspack';
 import type { WebpackConfig } from './thirdParty';
@@ -72,6 +72,8 @@ export type Build = (options?: BuildOptions) => Promise<{
    */
   stats?: Rspack.Stats | Rspack.MultiStats;
 }>;
+
+export type InitConfigsOptions = Pick<RsbuildContext, 'action'>;
 
 export type InspectConfigOptions = {
   /**
@@ -152,7 +154,7 @@ export type CreateRsbuildOptions = {
    */
   rsbuildConfig?: RsbuildConfig | (() => Promise<RsbuildConfig>);
   /**
-   * Whether to call `loadEnv` to load env variables and define them
+   * Whether to call `loadEnv` to load environment variables and define them
    * as global variables via `source.define`.
    * @default false
    */
@@ -180,9 +182,9 @@ export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = Pick<
 > & {
   readonly bundler: Bundler;
 
-  initConfigs: () => Promise<
-    B extends 'rspack' ? Rspack.Configuration[] : WebpackConfig[]
-  >;
+  initConfigs: (
+    options?: InitConfigsOptions,
+  ) => Promise<B extends 'rspack' ? Rspack.Configuration[] : WebpackConfig[]>;
 
   inspectConfig: (
     options?: InspectConfigOptions,
@@ -199,26 +201,31 @@ export type RsbuildProvider<B extends 'rspack' | 'webpack' = 'rspack'> =
     helpers: RsbuildProviderHelpers;
   }) => Promise<ProviderInstance<B>>;
 
+export type AddPluginsOptions = {
+  /**
+   * Insert before the specified plugin.
+   */
+  before?: string;
+  /**
+   * Specify the environment that the plugin will be applied to.
+   * If not specified, the plugin will be be registered as a global plugin and
+   * applied to all environments.
+   */
+  environment?: string;
+};
+
+export type AddPlugins = (
+  plugins: (RsbuildPlugin | Falsy)[],
+  options?: AddPluginsOptions,
+) => void;
+
 export type RsbuildInstance = {
   /**
    * Register one or more Rsbuild plugins, which can be called multiple times.
    * This method needs to be called before compiling. If it is called after
    * compiling, it will not affect the compilation result.
    */
-  addPlugins: (
-    plugins: Array<RsbuildPlugin | Falsy>,
-    options?: {
-      /**
-       * Insert before the specified plugin.
-       */
-      before?: string;
-      /**
-       * Add a plugin for the specified environment.
-       * If environment is not specified, it will be registered as a global plugin (effective in all environments)
-       */
-      environment?: string;
-    },
-  ) => void;
+  addPlugins: AddPlugins;
   /**
    * Get all the Rsbuild plugins registered in the current Rsbuild instance.
    */
@@ -261,7 +268,9 @@ export type RsbuildInstance = {
    * since it's automatically invoked by methods like `rsbuild.build` and
    * `rsbuild.startDevServer`.
    */
-  initConfigs: () => Promise<Rspack.Configuration[]>;
+  initConfigs: (
+    options?: InitConfigsOptions,
+  ) => Promise<Rspack.Configuration[]>;
   /**
    * Inspect and debug Rsbuild's internal configurations. It provides access to:
    * - The resolved Rsbuild configuration

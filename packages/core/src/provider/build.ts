@@ -1,6 +1,7 @@
-import { rspack } from '@rspack/core';
+import type { WatchOptions } from '@rspack/core';
 import { registerBuildHook } from '../hooks';
 import { logger } from '../logger';
+import { rspack } from '../rspack';
 import type { Build, BuildOptions, Rspack } from '../types';
 import { createCompiler } from './createCompiler';
 import type { InitConfigsOptions } from './initConfigs';
@@ -33,11 +34,18 @@ export const build = async (
   });
 
   if (watch) {
-    compiler.watch({}, (err) => {
-      if (err) {
-        logger.error(err);
-      }
-    });
+    const watchOptions: WatchOptions[] = bundlerConfigs
+      ? bundlerConfigs.map((options) => options.watchOptions || {})
+      : [];
+
+    compiler.watch(
+      watchOptions.length > 1 ? watchOptions : watchOptions[0] || {},
+      (err) => {
+        if (err) {
+          logger.error(err);
+        }
+      },
+    );
 
     return {
       close: () =>

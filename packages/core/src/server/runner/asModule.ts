@@ -13,24 +13,22 @@ export const asModule = async (
 
   const exports = [...new Set(['default', ...Object.keys(something)])];
 
-  const m = new SyntheticModule(
+  const syntheticModule = new SyntheticModule(
     exports,
     () => {
       for (const name of exports) {
-        m.setExport(name, name === 'default' ? something : something[name]);
+        syntheticModule.setExport(
+          name,
+          name === 'default' ? something : something[name],
+        );
       }
     },
-    {
-      context,
-    },
+    { context },
   );
 
-  if (unlinked) return m;
+  if (unlinked) return syntheticModule;
 
-  await m.link((() => {}) as unknown as ModuleLinker);
-
-  // @ts-expect-error copy from webpack
-  if (m.instantiate) m.instantiate();
-  await m.evaluate();
-  return m;
+  await syntheticModule.link((() => {}) as unknown as ModuleLinker);
+  await syntheticModule.evaluate();
+  return syntheticModule;
 };

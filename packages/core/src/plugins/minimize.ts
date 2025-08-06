@@ -2,7 +2,6 @@ import type {
   LightningCssMinimizerRspackPluginOptions,
   SwcJsMinimizerRspackPluginOptions,
 } from '@rspack/core';
-import { rspack } from '@rspack/core';
 import deepmerge from 'deepmerge';
 import { isPlainObject, pick } from '../helpers';
 import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';
@@ -67,7 +66,7 @@ export const parseMinifyOptions = (
   const { minify } = config.output;
 
   if (typeof minify === 'boolean') {
-    const shouldMinify = minify === true && isProd;
+    const shouldMinify = minify && isProd;
     return {
       minifyJs: shouldMinify,
       minifyCss: shouldMinify,
@@ -88,7 +87,7 @@ export const pluginMinimize = (): RsbuildPlugin => ({
   setup(api) {
     const isRspack = api.context.bundlerType === 'rspack';
 
-    api.modifyBundlerChain(async (chain, { environment, CHAIN_ID }) => {
+    api.modifyBundlerChain(async (chain, { environment, CHAIN_ID, rspack }) => {
       const { config } = environment;
       const { minifyJs, minifyCss, jsOptions, cssOptions } =
         parseMinifyOptions(config);

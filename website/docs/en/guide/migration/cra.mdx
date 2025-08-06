@@ -43,7 +43,7 @@ Next, you need to update the npm scripts in package.json to Rsbuild's CLI comman
 ```
 
 :::tip
-Rsbuild does not integrate testing frameworks, so it does not provide a command to replace `react-scripts test`. You can directly use testing frameworks such as Jest or Vitest. You can refer to the [Rsbuild react-jest](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/react-jest) example project for configuration.
+Rsbuild does not integrate testing frameworks, so it does not provide a command to replace `react-scripts test`. You can directly use testing frameworks such as [Rstest](https://github.com/web-infra-dev/rstest), Jest or Vitest. You can refer to the [Rsbuild react-rstest](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/react-rstest) or [Rsbuild react-jest](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/react-jest) example project for configuration.
 :::
 
 ## Creating configuration file
@@ -136,7 +136,7 @@ export default {
 
 Please refer to the [SVGR plugin](/plugins/list/plugin-svgr) documentation to learn how to use SVGR in Rsbuild.
 
-## Configuration migration
+## Config migration
 
 Here is the corresponding Rsbuild configuration for [CRA configuration](https://create-react-app.dev/docs/advanced-configuration/):
 
@@ -174,7 +174,7 @@ export default {
 };
 ```
 
-## Env variables
+## Environment variables
 
 CRA injects environment variables starting with `REACT_APP_` into the client code by default, while Rsbuild injects environment variables starting with `PUBLIC_` by default (see [public variables](/guide/advanced/env-vars#public-variables)).
 

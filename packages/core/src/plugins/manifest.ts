@@ -1,7 +1,7 @@
 import type { FileDescriptor } from '../../compiled/rspack-manifest-plugin';
 import { color, isObject } from '../helpers';
 import { logger } from '../logger';
-import { recursiveChunkEntryNames } from '../rspack/resource-hints/doesChunkBelongToHtml';
+import { recursiveChunkEntryNames } from '../rspack-plugins/resource-hints/doesChunkBelongToHtml';
 import type {
   EnvironmentContext,
   ManifestByEntry,

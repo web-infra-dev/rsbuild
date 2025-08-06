@@ -266,7 +266,7 @@ test('should print server urls when HTML is disabled but printUrls is a custom f
   });
 
   const localLog = rsbuild.logs.find((log) =>
-    log.includes(`➜ Local:    http://localhost:${rsbuild.port}`),
+    log.includes(`➜  Local:    http://localhost:${rsbuild.port}`),
   );
 
   expect(localLog).toBeTruthy();

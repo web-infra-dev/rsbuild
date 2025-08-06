@@ -81,7 +81,7 @@ export type LoadEnvOptions = {
 
 export type LoadEnvResult = {
   /**
-   * All env variables in the .env file
+   * All environment variables in the .env file
    */
   parsed: Record<string, string>;
   /**
@@ -89,7 +89,7 @@ export type LoadEnvResult = {
    */
   filePaths: string[];
   /**
-   * Env variables that start with prefixes.
+   * Environment variables that start with prefixes.
    *
    * @example
    * ```ts
@@ -100,7 +100,7 @@ export type LoadEnvResult = {
    **/
   rawPublicVars: Record<string, string | undefined>;
   /**
-   * Formatted env variables that start with prefixes.
+   * Formatted environment variables that start with prefixes.
    * The keys contain the prefixes `process.env.*` and `import.meta.env.*`.
    * The values are processed by `JSON.stringify`.
    *
@@ -114,7 +114,7 @@ export type LoadEnvResult = {
    **/
   publicVars: Record<string, string>;
   /**
-   * Clear the env variables mounted on `process.env`
+   * Clear the environment variables mounted on `process.env`
    */
   cleanup: () => void;
 };

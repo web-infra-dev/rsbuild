@@ -4,9 +4,12 @@ import type {
 } from '@rspack/core';
 /** @ts-ignore `webpack` type only exists when `@rsbuild/webpack` is installed */
 import type { Configuration as WebpackConfig } from 'webpack';
+import type Connect from '../../compiled/connect/index.js';
 import type HtmlRspackPlugin from '../../compiled/html-rspack-plugin/index.js';
 import type { AcceptedPlugin, ProcessOptions } from '../../compiled/postcss';
 import type { Rspack } from './rspack';
+
+export type { Connect };
 
 export type { HtmlRspackPlugin };
 

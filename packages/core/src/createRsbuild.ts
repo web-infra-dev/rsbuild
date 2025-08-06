@@ -116,7 +116,7 @@ function applyEnvsToConfig(config: RsbuildConfig, envs: LoadEnvResult | null) {
     return;
   }
 
-  // define the public env variables
+  // define the public environment variables
   config.source ||= {};
   config.source.define = {
     ...envs.publicVars,
@@ -324,7 +324,7 @@ export async function createRsbuild(
       );
     } while (plugins.some((v) => isPromise(v)));
 
-    return plugins as Array<RsbuildPlugin | Falsy>;
+    return plugins as (RsbuildPlugin | Falsy)[];
   };
 
   if (config.plugins) {

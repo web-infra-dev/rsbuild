@@ -50,7 +50,25 @@ export const rspackProvider: RsbuildProvider = async ({
       return build({ context, pluginManager, rsbuildOptions }, options);
     },
 
-    async initConfigs() {
+    async initConfigs(options) {
+      if (
+        context.action &&
+        options?.action &&
+        context.action !== options.action
+      ) {
+        // Calling initConfigs multiple times with different actions
+        throw new Error(
+          `\
+[rsbuild] initConfigs() can only be called with the same action type.
+  - Expected: ${context.action}
+  - Actual: ${options?.action}`,
+        );
+      }
+
+      if (options?.action) {
+        context.action = options.action;
+      }
+
       const { rspackConfigs } = await initConfigs({
         context,
         pluginManager,

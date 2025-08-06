@@ -122,11 +122,11 @@ rsbuild build -c rsbuild.prod.config.mjs
 例如，Node.js 从 v22.6.0 开始已经原生支持 TypeScript，你可以如下命令来使用 Node.js 原生 loader 来加载配置文件：
 
 ```bash
-# Node.js v23.6.0+
+# Node.js >= v22.18.0
 # 不需要设置 --experimental-strip-types
 npx rsbuild build --config-loader native
 
-# Node.js v22.6.0 - v23.5.0
+# Node.js v22.6.0 - v22.17.0
 # 需要设置 --experimental-strip-types
 NODE_OPTIONS="--experimental-strip-types" npx rsbuild build --config-loader native
 ```

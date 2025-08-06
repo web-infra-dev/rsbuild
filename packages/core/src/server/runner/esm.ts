@@ -71,7 +71,7 @@ export class EsmRunner extends CommonJsRunner {
             const result = await _require(path.dirname(file!.path), specifier, {
               esmMode: EsmMode.Evaluated,
             });
-            return await asModule(result, module.context);
+            return asModule(result, module.context);
           },
         } as any);
         esmCache.set(file.path, esm);
@@ -79,7 +79,7 @@ export class EsmRunner extends CommonJsRunner {
       if (context.esmMode === EsmMode.Unlinked) return esm;
       return (async () => {
         await esm.link(async (specifier, referencingModule) => {
-          return await asModule(
+          return asModule(
             await _require(
               path.dirname(
                 referencingModule.identifier
@@ -95,7 +95,7 @@ export class EsmRunner extends CommonJsRunner {
             true,
           );
         });
-        if ((esm as any).instantiate) (esm as any).instantiate();
+
         await esm.evaluate();
         if (context.esmMode === EsmMode.Evaluated) {
           return esm;

@@ -26,7 +26,7 @@ export const gzipMiddleware =
     level = zlib.constants.Z_BEST_SPEED,
   }: CompressOptions = {}): RequestHandler =>
   (req, res, next): void => {
-    if (filter && filter(req, res) === false) {
+    if (filter && !filter(req, res)) {
       next();
       return;
     }
@@ -43,8 +43,11 @@ export const gzipMiddleware =
     let writeHeadStatus: number | undefined;
     let started = false;
 
-    const { end, write, on, writeHead } = res;
-    const listeners: Array<[string | symbol, (...args: any[]) => void]> = [];
+    const on = res.on.bind(res);
+    const end = res.end.bind(res);
+    const write = res.write.bind(res);
+    const writeHead = res.writeHead.bind(res);
+    const listeners: [string | symbol, (...args: any[]) => void][] = [];
 
     const start = () => {
       if (started) {
@@ -59,17 +62,15 @@ export const gzipMiddleware =
         gzip = zlib.createGzip({ level });
 
         gzip.on('data', (chunk) => {
-          if (
-            (write as (chunk: unknown) => boolean).call(res, chunk) === false
-          ) {
+          if (!write(chunk)) {
             gzip!.pause();
           }
         });
 
-        on.call(res, 'drain', () => gzip!.resume());
+        on('drain', () => gzip!.resume());
 
         gzip.on('end', () => {
-          (end as () => void).call(res);
+          end();
         });
 
         for (const listener of listeners) {
@@ -81,7 +82,7 @@ export const gzipMiddleware =
         }
       }
 
-      writeHead.call(res, writeHeadStatus ?? res.statusCode);
+      writeHead(writeHeadStatus ?? res.statusCode);
     };
 
     res.writeHead = (status, reason, headers?) => {
@@ -111,7 +112,7 @@ export const gzipMiddleware =
     res.on = (type, listener) => {
       if (started) {
         if (!gzip || type !== 'drain') {
-          on.call(res, type, listener);
+          on(type, listener);
         } else {
           gzip.on(type, listener);
         }

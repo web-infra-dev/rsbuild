@@ -2,6 +2,7 @@ import assert from 'node:assert';
 import net from 'node:net';
 import { join } from 'node:path';
 import { URL } from 'node:url';
+import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import type {
   CreateRsbuildOptions,
   RsbuildConfig,
@@ -287,6 +288,7 @@ export async function build({
     closeBuild = result.close;
   } catch (error) {
     buildError = error as Error;
+    buildError.message = stripAnsi(buildError.message);
 
     if (!catchBuildError) {
       throw buildError;

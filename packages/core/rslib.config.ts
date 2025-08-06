@@ -1,29 +1,40 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { nodeMinifyConfig } from '@rsbuild/config/rslib.config';
+import type { Rspack, rsbuild } from '@rslib/core';
 import { defineConfig } from '@rslib/core';
-import type { Configuration } from '@rspack/core';
 import pkgJson from './package.json';
 import prebundleConfig from './prebundle.config.mjs';
-import type { RsbuildPlugin } from './src';
 
-const define = {
+export const define = {
   RSBUILD_VERSION: JSON.stringify(pkgJson.version),
+};
+
+export const alias = {
+  // Bundle rspack-chain to the main JS bundle and use the pre-bundled types
+  '../../compiled/rspack-chain': 'rspack-chain',
 };
 
 const regexpMap: Record<string, RegExp> = {};
 
 for (const item of prebundleConfig.dependencies) {
   const depName = typeof item === 'string' ? item : item.name;
+
+  // Skip dtsOnly dependencies
+  if (typeof item !== 'string' && item.dtsOnly) {
+    continue;
+  }
+
   regexpMap[depName] = new RegExp(`compiled[\\/]${depName}(?:[\\/]|$)`);
 }
 
-const externals: Configuration['externals'] = [
+const externals: Rspack.Configuration['externals'] = [
   'webpack',
   '@rspack/core',
   '@rsbuild/core',
   '@rsbuild/core/client/hmr',
   '@rsbuild/core/client/overlay',
+  // externalize pre-bundled dependencies
   ({ request }, callback) => {
     const entries = Object.entries(regexpMap);
     if (request) {
@@ -42,7 +53,7 @@ const externals: Configuration['externals'] = [
   },
 ];
 
-const pluginFixDtsTypes: RsbuildPlugin = {
+const pluginFixDtsTypes: rsbuild.RsbuildPlugin = {
   name: 'fix-dts-types',
   setup(api) {
     api.onAfterBuild(() => {
@@ -69,6 +80,9 @@ export default defineConfig({
   },
   output: {
     externals,
+  },
+  resolve: {
+    alias,
   },
   lib: [
     {

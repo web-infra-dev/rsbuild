@@ -32,6 +32,14 @@ Rsbuild 提供了 [performance.buildCache](/config/performance/build-cache) 配�
 
 参考 [Tailwind CSS v3 - 优化构建性能](/guide/styling/tailwindcss-v3#优化构建性能) 了解更多。
 
+### 工具选择
+
+尽管 Rsbuild 本身已经提供了优秀的构建性能，但当你使用某些基于 JavaScript 的工具时，可能会对整体构建性能产生负面影响，特别是在大型项目中。
+
+- [@rsbuild/plugin-babel](/plugins/list/plugin-babel)：该插件基于 Babel 实现，建议优先使用性能更优的 [SWC](/guide/configuration/swc) 进行代码转换。
+- [@rsbuild/plugin-less](/plugins/list/plugin-less)：Less 编译器性能相对较差，推荐使用 [@rsbuild/plugin-sass](/plugins/list/plugin-sass) 或其他高性能的 CSS 方案。
+- [terser-webpack-plugin](https://www.npmjs.com/package/terser-webpack-plugin)：可以将 Terser 替换为更快的压缩工具，例如使用 Rsbuild 内置的 [SWC](/guide/configuration/swc)。
+
 ## 开发模式优化
 
 以下是针对开发构建进行提速的方法。

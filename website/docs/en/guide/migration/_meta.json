@@ -1,1 +1,9 @@
-["rsbuild-0-x", "webpack", "cra", "vue-cli", "vite", "modern-builder"]
+[
+  "rsbuild-0-x",
+  "webpack",
+  "cra",
+  "vue-cli",
+  "vite",
+  "vite-plugin",
+  "modern-builder"
+]

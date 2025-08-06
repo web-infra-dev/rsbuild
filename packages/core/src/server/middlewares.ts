@@ -1,18 +1,18 @@
 import type { IncomingMessage } from 'node:http';
 import path from 'node:path';
-import type Connect from '../../compiled/connect/index.js';
-import { addTrailingSlash, color } from '../helpers';
+import { addTrailingSlash, color, getAssetsFromStats } from '../helpers';
 import { logger } from '../logger';
 import type {
+  Connect,
   EnvironmentAPI,
   HtmlFallback,
-  RequestHandler as Middleware,
+  RequestHandler,
   Rspack,
 } from '../types';
 import type { CompilationManager } from './compilationManager';
 import { joinUrlSegments, stripBase } from './helper';
 
-export const faviconFallbackMiddleware: Middleware = (req, res, next) => {
+export const faviconFallbackMiddleware: RequestHandler = (req, res, next) => {
   if (req.url === '/favicon.ico') {
     res.statusCode = 204;
     res.end();
@@ -73,12 +73,12 @@ export const getRequestLoggerMiddleware: () => Promise<Connect.NextHandleFunctio
     };
   };
 
-export const notFoundMiddleware: Middleware = (_req, res, _next) => {
+export const notFoundMiddleware: RequestHandler = (_req, res, _next) => {
   res.statusCode = 404;
   res.end();
 };
 
-export const optionsFallbackMiddleware: Middleware = (req, res, next) => {
+export const optionsFallbackMiddleware: RequestHandler = (req, res, next) => {
   if (req.method === 'OPTIONS') {
     // Use 204 as no content to send in the response body
     res.statusCode = 204;
@@ -130,10 +130,11 @@ const getUrlPathname = (url: string): string => {
 export const getHtmlCompletionMiddleware: (params: {
   distPath: string;
   compilationManager: CompilationManager;
-}) => Middleware = ({ distPath, compilationManager }) => {
+}) => RequestHandler = ({ distPath, compilationManager }) => {
   return async (req, res, next) => {
     if (!maybeHTMLRequest(req)) {
-      return next();
+      next();
+      return;
     }
 
     const url = req.url!;
@@ -141,9 +142,10 @@ export const getHtmlCompletionMiddleware: (params: {
 
     const rewrite = (newUrl: string) => {
       req.url = newUrl;
-      return compilationManager.middleware(req, res, (...args) => {
+      compilationManager.middleware(req, res, (...args) => {
         next(...args);
       });
+      return;
     };
 
     // '/' => '/index.html'
@@ -152,7 +154,8 @@ export const getHtmlCompletionMiddleware: (params: {
       const filePath = path.join(distPath, newUrl);
 
       if (await isFileExists(filePath, compilationManager.outputFileSystem)) {
-        return rewrite(newUrl);
+        rewrite(newUrl);
+        return;
       }
     }
     // '/main' => '/main.html'
@@ -161,7 +164,8 @@ export const getHtmlCompletionMiddleware: (params: {
       const filePath = path.join(distPath, newUrl);
 
       if (await isFileExists(filePath, compilationManager.outputFileSystem)) {
-        return rewrite(newUrl);
+        rewrite(newUrl);
+        return;
       }
     }
 
@@ -172,16 +176,17 @@ export const getHtmlCompletionMiddleware: (params: {
 /**
  * handle `server.base`
  */
-export const getBaseMiddleware: (params: { base: string }) => Middleware = ({
-  base,
-}) => {
+export const getBaseMiddleware: (params: {
+  base: string;
+}) => RequestHandler = ({ base }) => {
   return async (req, res, next) => {
     const url = req.url!;
     const pathname = getUrlPathname(url);
 
     if (pathname.startsWith(base)) {
       req.url = stripBase(url, base);
-      return next();
+      next();
+      return;
     }
 
     const redirectPath =
@@ -227,14 +232,15 @@ export const getHtmlFallbackMiddleware: (params: {
   distPath: string;
   compilationManager: CompilationManager;
   htmlFallback?: HtmlFallback;
-}) => Middleware = ({ htmlFallback, distPath, compilationManager }) => {
+}) => RequestHandler = ({ htmlFallback, distPath, compilationManager }) => {
   return async (req, res, next) => {
     if (
       !maybeHTMLRequest(req) ||
       '/favicon.ico' === req.url ||
       htmlFallback !== 'index'
     ) {
-      return next();
+      next();
+      return;
     }
 
     const filePath = path.join(distPath, 'index.html');
@@ -250,9 +256,10 @@ export const getHtmlFallbackMiddleware: (params: {
       }
 
       req.url = newUrl;
-      return compilationManager.middleware(req, res, (...args) =>
-        next(...args),
-      );
+      compilationManager.middleware(req, res, (...args) => {
+        next(...args);
+      });
+      return;
     }
 
     next();
@@ -264,16 +271,20 @@ export const getHtmlFallbackMiddleware: (params: {
  */
 export const viewingServedFilesMiddleware: (params: {
   environments: EnvironmentAPI;
-}) => Middleware =
+}) => RequestHandler =
   ({ environments }) =>
   async (req, res, next) => {
     const url = req.url!;
     const pathname = getUrlPathname(url);
 
-    if (pathname === '/rsbuild-dev-server') {
-      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-      res.write(
-        `<!DOCTYPE html>
+    if (pathname !== '/rsbuild-dev-server') {
+      next();
+      return;
+    }
+
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    res.write(
+      `<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8"/>
@@ -316,31 +327,32 @@ export const viewingServedFilesMiddleware: (params: {
     <h1>Assets Report</h1>
   </body>
 </html>`,
-      );
-      try {
-        for (const key in environments) {
-          const list = [];
-          res.write(`<h2>Environment: ${key}</h2>`);
-          const environment = environments[key];
-          const stats = await environment.getStats();
-          const statsForPrint = stats.toJson();
-          const { assets = [] } = statsForPrint;
-          res.write('<ul>');
-          for (const asset of assets) {
-            list.push(
-              `<li><a target="_blank" href="${asset?.name}">${asset?.name}</a></li>`,
-            );
-          }
-          res.write(list?.join(''));
-          res.write('</ul>');
+    );
+
+    try {
+      for (const key in environments) {
+        res.write(`<h2>Environment: ${key}</h2>`);
+
+        const list = [];
+        const environment = environments[key];
+        const stats = await environment.getStats();
+        const assets = getAssetsFromStats(stats);
+
+        res.write('<ul>');
+
+        for (const asset of assets) {
+          list.push(
+            `<li><a target="_blank" href="${asset?.name}">${asset?.name}</a></li>`,
+          );
         }
-        res.end('</body></html>');
-      } catch (err) {
-        logger.error(err);
-        res.writeHead(500);
-        res.end('Failed to list the files');
+
+        res.write(list?.join(''));
+        res.write('</ul>');
       }
-    } else {
-      next();
+      res.end('</body></html>');
+    } catch (err) {
+      logger.error(err);
+      res.writeHead(500);
+      res.end('Failed to list the files');
     }
   };

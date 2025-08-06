@@ -74,8 +74,8 @@ export async function setupCliShortcuts({
   if (help) {
     logger.log(
       help === true
-        ? `  ➜ ${color.dim('press')} ${color.bold('h + enter')} ${color.dim('to show shortcuts')}\n`
-        : `  ➜ ${help}\n`,
+        ? `  ➜  ${color.dim('press')} ${color.bold('h + enter')} ${color.dim('to show shortcuts')}\n`
+        : `  ➜  ${help}\n`,
     );
   }
 

@@ -9,6 +9,7 @@ type FilenameConfig = {
   css?: string | Function;
   svg?: string | Function;
   font?: string | Function;
+  wasm?: string;
   image?: string | Function;
   media?: string | Function;
   assets?: string | Function;
@@ -25,6 +26,7 @@ const devDefaultFilename = {
   css: '[name].css',
   svg: '[name].[contenthash:8].svg',
   font: '[name].[contenthash:8][ext]',
+  wasm: '[hash].module.wasm',
   image: '[name].[contenthash:8][ext]',
   media: '[name].[contenthash:8][ext]',
   assets: '[name].[contenthash:8][ext]',
@@ -37,6 +39,7 @@ const prodDefaultFilename = {
   css: '[name].[contenthash:8].css',
   svg: '[name].[contenthash:8].svg',
   font: '[name].[contenthash:8][ext]',
+  wasm: '[hash].module.wasm',
   image: '[name].[contenthash:8][ext]',
   media: '[name].[contenthash:8][ext]',
   assets: '[name].[contenthash:8][ext]',
@@ -65,6 +68,7 @@ Rsbuild 会基于 `output.filename` 和 [output.distPath](/config/output/dist-pa
 - `css`：CSS 样式文件的名称。
 - `svg`：SVG 图片的名称。
 - `font`：字体文件的名称。
+- `wasm`: Wasm 文件的名称。
 - `image`：非 SVG 图片的名称。
 - `media`：视频等媒体资源的名称。
 - `assets`：其他静态资源的名称。例如 [扩展静态资源类型](/guide/basic/static-assets#扩展静态资源类型) 中定义的资源。

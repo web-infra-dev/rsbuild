@@ -3,6 +3,6 @@
   "name": "@e2e/webpack-source-map",
   "version": "1.0.0",
   "dependencies": {
-    "source-map": "0.7.4"
+    "source-map": "0.7.6"
   }
 }

@@ -1,10 +1,27 @@
 /// <reference types="@rspack/core/module" />
 
 /**
+ * This is a placeholder for extending the type options.
+ * You can augment this interface to enable stricter type checking.
+ * @example
+ * ```ts
+ * interface RsbuildTypeOptions {
+ *   // This will enable strict type checking for `import.meta.env`.
+ *   strictImportMetaEnv: true;
+ * }
+ * ```
+ */
+// biome-ignore lint/suspicious/noEmptyInterface: placeholder
+interface RsbuildTypeOptions {}
+
+/**
  * import.meta
  */
+type ImportMetaEnvFallbackKey =
+  'strictImportMetaEnv' extends keyof RsbuildTypeOptions ? never : string;
+
 interface ImportMetaEnv {
-  [key: string]: any;
+  [key: ImportMetaEnvFallbackKey]: any;
   /**
    * The value of the `mode` configuration.
    * @example

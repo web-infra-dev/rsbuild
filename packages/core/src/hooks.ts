@@ -1,5 +1,4 @@
 import { isFunction, isMultiCompiler } from './helpers';
-import { isPluginMatchEnvironment } from './pluginManager';
 import type {
   AsyncHook,
   EnvironmentAsyncHook,
@@ -84,9 +83,9 @@ export function createEnvironmentAsyncHook<
     for (const callback of callbacks) {
       // If this callback is not a global callback, the environment info should match
       if (
-        callback.environment &&
         environment &&
-        !isPluginMatchEnvironment(callback.environment, environment)
+        callback.environment &&
+        callback.environment !== environment
       ) {
         continue;
       }
@@ -114,9 +113,9 @@ export function createEnvironmentAsyncHook<
     for (const callback of callbacks) {
       // If this callback is not a global callback, the environment info should match
       if (
-        callback.environment &&
         environment &&
-        !isPluginMatchEnvironment(callback.environment, environment)
+        callback.environment &&
+        callback.environment !== environment
       ) {
         continue;
       }
@@ -130,8 +129,9 @@ export function createEnvironmentAsyncHook<
 
   return {
     tapEnvironment,
-    tap: (handler: Callback | HookDescriptor<Callback>) =>
-      tapEnvironment({ handler }),
+    tap: (handler: Callback | HookDescriptor<Callback>) => {
+      tapEnvironment({ handler });
+    },
     callChain,
     callBatch,
   };
@@ -389,7 +389,7 @@ export const registerBuildHook = ({
   }, []);
 
   const beforeCompile = async () =>
-    await context.hooks.onBeforeBuild.callBatch({
+    context.hooks.onBeforeBuild.callBatch({
       bundlerConfigs,
       environments: context.environments,
       isWatch,
@@ -397,11 +397,11 @@ export const registerBuildHook = ({
     });
 
   const beforeEnvironmentCompiler = async (buildIndex: number) =>
-    await context.hooks.onBeforeEnvironmentCompile.callBatch({
+    context.hooks.onBeforeEnvironmentCompile.callBatch({
       environment: environmentList[buildIndex].name,
       args: [
         {
-          bundlerConfig: bundlerConfigs?.[buildIndex] as Rspack.Configuration,
+          bundlerConfig: bundlerConfigs?.[buildIndex]!,
           environment: environmentList[buildIndex],
           isWatch,
           isFirstCompile,
@@ -470,11 +470,11 @@ export const registerDevHook = ({
   }, []);
 
   const beforeEnvironmentCompiler = async (buildIndex: number) =>
-    await context.hooks.onBeforeEnvironmentCompile.callBatch({
+    context.hooks.onBeforeEnvironmentCompile.callBatch({
       environment: environmentList[buildIndex].name,
       args: [
         {
-          bundlerConfig: bundlerConfigs?.[buildIndex] as Rspack.Configuration,
+          bundlerConfig: bundlerConfigs?.[buildIndex]!,
           environment: environmentList[buildIndex],
           isWatch: true,
           isFirstCompile,

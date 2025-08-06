@@ -1,3 +1,4 @@
+import type { SocketMessage } from '../server/socketServer';
 import type { NormalizedClientConfig } from '../types';
 
 const config: NormalizedClientConfig = RSBUILD_CLIENT_CONFIG;
@@ -28,7 +29,7 @@ function formatURL(config: NormalizedClientConfig) {
 
 // Remember some state related to hot module replacement.
 let isFirstCompilation = true;
-let lastCompilationHash: string | null = null;
+let lastCompilationHash: string | undefined;
 let hasCompileErrors = false;
 
 function clearOutdatedErrors() {
@@ -142,8 +143,12 @@ function tryApplyUpdates() {
 
     // https://rspack.rs/api/runtime-api/module-variables#importmetawebpackhot
     import.meta.webpackHot.check(true).then(
-      (updatedModules) => handleApplyUpdates(null, updatedModules),
-      (err) => handleApplyUpdates(err, null),
+      (updatedModules) => {
+        handleApplyUpdates(null, updatedModules);
+      },
+      (err: unknown) => {
+        handleApplyUpdates(err, null);
+      },
     );
     return;
   }
@@ -155,14 +160,23 @@ function tryApplyUpdates() {
 
 let connection: WebSocket | null = null;
 let reconnectCount = 0;
+let pingIntervalId: ReturnType<typeof setInterval>;
 
 function onOpen() {
   // Notify users that the HMR has successfully connected.
   console.info('[HMR] connected.');
+
+  // To prevent WebSocket timeouts caused by proxies (e.g., nginx, docker),
+  // send a periodic ping message to keep the connection alive.
+  pingIntervalId = setInterval(() => {
+    if (connection && connection.readyState === connection.OPEN) {
+      connection.send(JSON.stringify({ type: 'ping' }));
+    }
+  }, 30000);
 }
 
 function onMessage(e: MessageEvent<string>) {
-  const message = JSON.parse(e.data);
+  const message: SocketMessage = JSON.parse(e.data);
 
   switch (message.type) {
     case 'hash':
@@ -234,6 +248,7 @@ function connect(fallback = false) {
 }
 
 function removeListeners() {
+  clearInterval(pingIntervalId);
   if (connection) {
     connection.removeEventListener('open', onOpen);
     connection.removeEventListener('close', onClose);

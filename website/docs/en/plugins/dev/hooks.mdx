@@ -541,6 +541,8 @@ type HtmlBasicTag = {
   attrs?: Record<string, string | boolean | null | undefined>;
   // innerHTML of the tag
   children?: string;
+  // additional metadata
+  metadata?: Record<string, any>;
 };
 
 type HTMLTags = {

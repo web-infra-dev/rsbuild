@@ -10,6 +10,7 @@ import { isDebug, logger } from '../logger';
 import { mergeRsbuildConfig } from '../mergeConfig';
 import { initPlugins } from '../pluginManager';
 import type {
+  AllowedEnvironmentDevKeys,
   InspectConfigOptions,
   InternalContext,
   MergedEnvironmentConfig,
@@ -22,6 +23,15 @@ import type {
   Rspack,
 } from '../types';
 import { generateRspackConfig } from './rspackConfig';
+
+const allowedEnvironmentDevKeys: AllowedEnvironmentDevKeys[] = [
+  'hmr',
+  'liveReload',
+  'writeToDisk',
+  'assetPrefix',
+  'progressBar',
+  'lazyCompilation',
+];
 
 async function modifyRsbuildConfig(context: InternalContext) {
   logger.debug('modify Rsbuild config');
@@ -122,13 +132,7 @@ const initEnvironmentConfigs = (
             ...(mergeRsbuildConfig(
               {
                 ...rsbuildSharedConfig,
-                dev: pick(dev, [
-                  'writeToDisk',
-                  'hmr',
-                  'assetPrefix',
-                  'progressBar',
-                  'lazyCompilation',
-                ]),
+                dev: pick(dev, allowedEnvironmentDevKeys),
               } as MergedEnvironmentConfig,
               config as unknown as MergedEnvironmentConfig,
             ) as MergedEnvironmentConfig),
@@ -161,13 +165,7 @@ const initEnvironmentConfigs = (
   return {
     [defaultEnvironmentName]: applyEnvironmentDefaultConfig({
       ...rsbuildSharedConfig,
-      dev: pick(dev, [
-        'hmr',
-        'assetPrefix',
-        'progressBar',
-        'lazyCompilation',
-        'writeToDisk',
-      ]),
+      dev: pick(dev, allowedEnvironmentDevKeys),
     } as MergedEnvironmentConfig),
   };
 };
@@ -181,14 +179,31 @@ const validateRsbuildConfig = (config: NormalizedConfig) => {
     );
   }
 
-  if (config.environments) {
-    const names = Object.keys(config.environments);
-    const regexp = /^[\w$-]+$/;
-    for (const name of names) {
-      // ensure environment names are filesystem and property access safe
-      if (!regexp.test(name)) {
-        logger.warn(
-          `${color.dim('[rsbuild:config]')} Environment name "${color.yellow(name)}" contains invalid characters. Only letters, numbers, "-", "_", and "$" are allowed.`,
+  if (!config.environments) {
+    return;
+  }
+
+  const environmentNames = Object.keys(config.environments);
+  const environmentNameRegexp = /^[\w$-]+$/;
+  const validTargets = ['web', 'node', 'web-worker'];
+
+  for (const name of environmentNames) {
+    // ensure environment names are filesystem and property access safe
+    if (!environmentNameRegexp.test(name)) {
+      logger.warn(
+        `${color.dim('[rsbuild:config]')} Environment name "${color.yellow(name)}" contains invalid characters. Only letters, numbers, "-", "_", and "$" are allowed.`,
+      );
+    }
+
+    const outputConfig = config.environments[name].output;
+    if (outputConfig.target) {
+      if (!validTargets.includes(outputConfig.target)) {
+        throw new Error(
+          `${color.dim('[rsbuild:config]')} Invalid value of ${color.yellow(
+            'output.target',
+          )}: ${color.yellow(`"${outputConfig.target}"`)}, valid values are: ${color.yellow(
+            validTargets.join(', '),
+          )}`,
         );
       }
     }
@@ -217,7 +232,7 @@ export async function initRsbuildConfig({
   }
 
   await initPlugins({
-    getPluginAPI: context.getPluginAPI!,
+    context,
     pluginManager,
   });
 
@@ -232,18 +247,6 @@ export async function initRsbuildConfig({
     context.specifiedEnvironments,
   );
 
-  const {
-    dev: {
-      hmr: _hmr,
-      assetPrefix: _assetPrefix,
-      progressBar: _progressBar,
-      lazyCompilation: _lazyCompilation,
-      writeToDisk: _writeToDisk,
-      ...rsbuildSharedDev
-    },
-    server,
-  } = normalizedBaseConfig;
-
   const tsconfigPaths = new Set<string>();
 
   for (const [name, config] of Object.entries(mergedEnvironments)) {
@@ -256,10 +259,10 @@ export async function initRsbuildConfig({
     const normalizedEnvironmentConfig = {
       ...environmentConfig,
       dev: {
+        ...normalizedBaseConfig.dev,
         ...environmentConfig.dev,
-        ...rsbuildSharedDev,
       },
-      server,
+      server: normalizedBaseConfig.server,
     };
 
     const { tsconfigPath } = normalizedEnvironmentConfig.source;

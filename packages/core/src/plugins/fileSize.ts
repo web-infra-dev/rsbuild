@@ -6,8 +6,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { promisify } from 'node:util';
 import zlib from 'node:zlib';
-import { CSS_REGEX, HTML_REGEX, JS_REGEX } from '../constants';
-import { color } from '../helpers';
+import { JS_REGEX } from '../constants';
+import { color, getAssetsFromStats } from '../helpers';
 import { logger } from '../logger';
 import type {
   PrintFileSizeAsset,
@@ -74,10 +74,10 @@ const coloringAssetName = (assetName: string) => {
   if (JS_REGEX.test(assetName)) {
     return color.cyan(assetName);
   }
-  if (CSS_REGEX.test(assetName)) {
+  if (assetName.endsWith('.css')) {
     return color.yellow(assetName);
   }
-  if (HTML_REGEX.test(assetName)) {
+  if (assetName.endsWith('.html')) {
     return color.green(assetName);
   }
   return color.magenta(assetName);
@@ -136,18 +136,7 @@ async function printFileSizes(
       return [];
     }
 
-    const origin = stats.toJson({
-      all: false,
-      assets: true,
-      cachedAssets: true,
-      groupAssetsByInfo: false,
-      groupAssetsByPath: false,
-      groupAssetsByChunk: false,
-      groupAssetsByExtension: false,
-      groupAssetsByEmitStatus: false,
-    });
-
-    const filteredAssets = (origin.assets || []).filter((asset) => {
+    const filteredAssets = getAssetsFromStats(stats).filter((asset) => {
       const assetInfo: PrintFileSizeAsset = {
         name: asset.name,
         size: asset.size,
@@ -322,9 +311,9 @@ export const pluginFileSize = (): RsbuildPlugin => ({
 
           logs.push(...statsLogs);
         }),
-      ).catch((err) => {
+      ).catch((err: unknown) => {
         logger.warn('Failed to print file size.');
-        logger.warn(err as Error);
+        logger.warn(err);
       });
 
       logger.log(logs.join('\n'));

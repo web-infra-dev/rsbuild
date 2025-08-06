@@ -57,6 +57,26 @@ After recompiling, the following tags are automatically generated in the HTML:
 <link rel="icon" href="/favicon.ico" />
 ```
 
+## Output path
+
+By default, favicons are output to the root path of the output directory, for example:
+
+- `./src/assets/icon.png` will be output to `./dist/icon.png`.
+- `./src/assets/favicon.ico` will be output to `./dist/favicon.ico`.
+
+You can customize the output path for favicons using the [output.distPath.favicon](/config/output/dist-path) option:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    distPath: {
+      // Output favicon to "./dist/static/favicon/" directory
+      favicon: 'static/favicon',
+    },
+  },
+};
+```
+
 ## Function usage
 
 - **Type:**

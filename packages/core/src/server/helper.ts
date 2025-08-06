@@ -138,7 +138,7 @@ export const formatRoutes = (
 };
 
 function getURLMessages(
-  urls: Array<{ url: string; label: string }>,
+  urls: { url: string; label: string }[],
   routes: Routes,
 ) {
   if (routes.length <= 1) {
@@ -146,7 +146,7 @@ function getURLMessages(
     return urls
       .map(({ label, url }) => {
         const normalizedPathname = normalizeUrl(`${url}${pathname}`);
-        const prefix = `➜ ${color.dim(label.padEnd(10))}`;
+        const prefix = `➜  ${color.dim(label.padEnd(10))}`;
         return `  ${prefix}${color.cyan(normalizedPathname)}\n`;
       })
       .join('');
@@ -158,7 +158,7 @@ function getURLMessages(
     if (index > 0) {
       message += '\n';
     }
-    message += `  ${`➜ ${label}`}\n`;
+    message += `  ➜  ${label}\n`;
 
     for (const r of routes) {
       message += `  ${color.dim('-')} ${color.dim(
@@ -178,7 +178,7 @@ export function printServerURLs({
   printUrls,
   trailingLineBreak = true,
 }: {
-  urls: Array<{ url: string; label: string }>;
+  urls: { url: string; label: string }[];
   port: number;
   routes: Routes;
   protocol: string;
@@ -228,7 +228,7 @@ export function printServerURLs({
 
   let message = getURLMessages(urls, routes);
 
-  if (trailingLineBreak === false && message.endsWith('\n')) {
+  if (!trailingLineBreak && message.endsWith('\n')) {
     message = message.slice(0, -1);
   }
 
@@ -484,7 +484,9 @@ export function getServerTerminator(
         socket.destroy();
       }
       if (listened) {
-        server.close((err) => (err ? reject(err) : resolve()));
+        server.close((err) => {
+          err ? reject(err) : resolve();
+        });
       } else {
         resolve();
       }

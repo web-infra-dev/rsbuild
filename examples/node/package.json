@@ -8,7 +8,7 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@types/node": "^22.16.0",
-    "typescript": "^5.8.3"
+    "@types/node": "^22.17.0",
+    "typescript": "^5.9.2"
   }
 }

@@ -6,6 +6,7 @@ applescript
 atrules
 attributify
 biomejs
+blackmore
 brotli
 browserslistrc
 bundleless

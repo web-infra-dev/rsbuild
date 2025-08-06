@@ -6,6 +6,7 @@
 type DistPathConfig = {
   root?: string;
   html?: string;
+  favicon?: string;
   js?: string;
   jsAsync?: string;
   css?: string;
@@ -25,6 +26,7 @@ type DistPathConfig = {
 const defaultDistPath = {
   root: 'dist',
   html: './',
+  favicon: './',
   js: output.target === 'node' ? '' : 'static/js',
   jsAsync: output.target === 'node' ? '' : 'static/js/async',
   css: 'static/css',
@@ -50,6 +52,7 @@ Here are the details of each `output.distPath` option:
 
 - `root`: The root directory of all output files.
 - `html`: The output directory of HTML files.
+- `favicon`: The output directory of favicon files.
 - `js`: The output directory of JavaScript files.
 - `jsAsync`: The output directory of async JavaScript files, which by default will be output to the `async` subdirectory of `distPath.js`.
 - `css`: The output directory of CSS style files.

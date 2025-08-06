@@ -9,7 +9,6 @@ import {
 import { formatStatsMessages } from '../helpers/format';
 import { logger } from '../logger';
 import type { DevConfig, EnvironmentContext, Rspack } from '../types';
-import type { SockWriteType } from './devServer';
 import { genOverlayHTML } from './overlay';
 
 interface ExtWebSocket extends Ws {
@@ -22,10 +21,35 @@ function isEqualSet(a: Set<string>, b: Set<string>): boolean {
 
 const CHECK_SOCKETS_INTERVAL = 30000;
 
-interface SocketMessage {
-  type: SockWriteType;
-  data?: Record<string, any> | string | boolean;
-}
+export type SocketMessageStaticChanged = {
+  type: 'static-changed' | 'content-changed';
+};
+
+export type SocketMessageHash = {
+  type: 'hash';
+  data: string;
+};
+
+export type SocketMessageOk = {
+  type: 'ok';
+};
+
+export type SocketMessageWarnings = {
+  type: 'warnings';
+  data: { text: string[] };
+};
+
+export type SocketMessageErrors = {
+  type: 'errors';
+  data: { text: string[]; html: string };
+};
+
+export type SocketMessage =
+  | SocketMessageOk
+  | SocketMessageStaticChanged
+  | SocketMessageHash
+  | SocketMessageWarnings
+  | SocketMessageErrors;
 
 const parseQueryString = (req: IncomingMessage) => {
   const queryStr = req.url ? req.url.split('?')[1] : '';
@@ -175,10 +199,6 @@ export class SocketServer {
     }
   }
 
-  private singleWrite(socket: Ws, message: SocketMessage) {
-    this.send(socket, JSON.stringify(message));
-  }
-
   public async close(): Promise<void> {
     this.clearHeartbeatTimer();
 
@@ -225,12 +245,6 @@ export class SocketServer {
     connection.on('close', () => {
       this.sockets.delete(token);
     });
-
-    if (this.options.hmr || this.options.liveReload) {
-      this.singleWrite(connection, {
-        type: 'hot',
-      });
-    }
 
     // send first stats to active client sock if stats exist
     if (this.stats) {
@@ -324,7 +338,8 @@ export class SocketServer {
     this.initialChunks[token] = newInitialChunks;
 
     if (shouldReload) {
-      return this.sockWrite({ type: 'static-changed' }, token);
+      this.sockWrite({ type: 'static-changed' }, token);
+      return;
     }
 
     const shouldEmit =
@@ -335,16 +350,19 @@ export class SocketServer {
       statsJson.assets.every((asset: any) => !asset.emitted);
 
     if (shouldEmit) {
-      return this.sockWrite({ type: 'ok' }, token);
+      this.sockWrite({ type: 'ok' }, token);
+      return;
     }
 
-    this.sockWrite(
-      {
-        type: 'hash',
-        data: statsJson.hash,
-      },
-      token,
-    );
+    if (statsJson.hash) {
+      this.sockWrite(
+        {
+          type: 'hash',
+          data: statsJson.hash,
+        },
+        token,
+      );
+    }
 
     if (statsJson.errorsCount) {
       const errors = getAllStatsErrors(statsJson);
@@ -353,7 +371,7 @@ export class SocketServer {
         warnings: [],
       });
 
-      return this.sockWrite(
+      this.sockWrite(
         {
           type: 'errors',
           data: {
@@ -363,6 +381,7 @@ export class SocketServer {
         },
         token,
       );
+      return;
     }
 
     if (statsJson.warningsCount) {
@@ -371,7 +390,7 @@ export class SocketServer {
         warnings,
         errors: [],
       });
-      return this.sockWrite(
+      this.sockWrite(
         {
           type: 'warnings',
           data: {
@@ -380,9 +399,11 @@ export class SocketServer {
         },
         token,
       );
+      return;
     }
 
-    return this.sockWrite({ type: 'ok' }, token);
+    this.sockWrite({ type: 'ok' }, token);
+    return;
   }
 
   // send message to connecting socket

@@ -71,7 +71,9 @@ function clearOverlay() {
   document
     .querySelectorAll<ErrorOverlay>(overlayId)
     // close overlay immediately to avoid multiple overlays at the same time
-    .forEach((n) => n.close(true));
+    .forEach((n) => {
+      n.close(true);
+    });
 }
 
 if (typeof document !== 'undefined') {
