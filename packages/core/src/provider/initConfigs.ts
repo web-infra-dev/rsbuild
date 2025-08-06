@@ -85,6 +85,13 @@ export type InitConfigsOptions = {
   rsbuildOptions: ResolvedCreateRsbuildOptions;
 };
 
+const createEnvironmentNotFoundError = (environments: string[] = []) => {
+  const envList = color.yellow(environments.join(','));
+  return new Error(
+    `${color.dim('[rsbuild:config]')} The current build is specified to run only in the ${envList} environment, but the configuration of the specified environment was not found.`,
+  );
+};
+
 const initEnvironmentConfigs = (
   normalizedConfig: NormalizedConfig,
   rootPath: string,
@@ -104,7 +111,7 @@ const initEnvironmentConfigs = (
     dev,
     server: _server,
     provider: _provider,
-    ...rsbuildSharedConfig
+    ...baseConfig
   } = normalizedConfig;
 
   const isEnvironmentEnabled = (name: string) =>
@@ -123,48 +130,40 @@ const initEnvironmentConfigs = (
     return config;
   };
 
-  if (environments && Object.keys(environments).length) {
+  if (environments && Object.keys(environments).length > 0) {
     const resolvedEnvironments = Object.fromEntries(
       Object.entries(environments)
         .filter(([name]) => isEnvironmentEnabled(name))
         .map(([name, config]) => {
-          const environmentConfig: MergedEnvironmentConfig = {
-            ...(mergeRsbuildConfig(
+          const environmentConfig = {
+            ...mergeRsbuildConfig(
               {
-                ...rsbuildSharedConfig,
+                ...baseConfig,
                 dev: pick(dev, allowedEnvironmentDevKeys),
               } as MergedEnvironmentConfig,
-              config as unknown as MergedEnvironmentConfig,
-            ) as MergedEnvironmentConfig),
+              config,
+            ),
           };
 
           return [name, applyEnvironmentDefaultConfig(environmentConfig)];
         }),
     );
 
-    if (!Object.keys(resolvedEnvironments).length) {
-      throw new Error(
-        `${color.dim('[rsbuild:config]')} The current build is specified to run only in the ${color.yellow(
-          specifiedEnvironments?.join(','),
-        )} environment, but the configuration of the specified environment was not found.`,
-      );
+    if (Object.keys(resolvedEnvironments).length === 0) {
+      throw createEnvironmentNotFoundError(specifiedEnvironments);
     }
     return resolvedEnvironments;
   }
 
-  const defaultEnvironmentName = camelCase(rsbuildSharedConfig.output.target);
+  const defaultEnvironmentName = camelCase(baseConfig.output.target);
 
   if (!isEnvironmentEnabled(defaultEnvironmentName)) {
-    throw new Error(
-      `${color.dim('[rsbuild:config]')} The current build is specified to run only in the ${color.yellow(
-        specifiedEnvironments?.join(','),
-      )} environment, but the configuration of the specified environment was not found.`,
-    );
+    throw createEnvironmentNotFoundError(specifiedEnvironments);
   }
 
   return {
     [defaultEnvironmentName]: applyEnvironmentDefaultConfig({
-      ...rsbuildSharedConfig,
+      ...baseConfig,
       dev: pick(dev, allowedEnvironmentDevKeys),
     } as MergedEnvironmentConfig),
   };
