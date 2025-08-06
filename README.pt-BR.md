@@ -81,6 +81,7 @@ Rstack é uma cadeia de ferramentas JavaScript unificada construída em torno do
 | [Rspress](https://github.com/web-infra-dev/rspress)   | Gerador de site estático                       |
 | [Rsdoctor](https://github.com/web-infra-dev/rsdoctor) | Analisador de build                            |
 | [Rstest](https://github.com/web-infra-dev/rstest)     | Framework de testes                            |
+| [Rslint](https://github.com/web-infra-dev/rslint)     | Linter                                         |
 
 ## 🔗 Links
 
