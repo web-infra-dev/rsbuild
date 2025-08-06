@@ -24,36 +24,6 @@ type Options = {
   compiler: Rspack.Compiler | Rspack.MultiCompiler;
 };
 
-// allow to configure dev.writeToDisk in environments
-const formatDevConfig = (
-  config: NormalizedDevConfig,
-  environments: Record<string, EnvironmentContext>,
-): NormalizedDevConfig => {
-  const writeToDiskValues = Object.values(environments).map(
-    (env) => env.config.dev.writeToDisk,
-  );
-  if (new Set(writeToDiskValues).size === 1) {
-    return {
-      ...config,
-      writeToDisk: writeToDiskValues[0],
-    };
-  }
-
-  return {
-    ...config,
-    writeToDisk(filePath: string, compilationName?: string) {
-      let { writeToDisk } = config;
-      if (compilationName && environments[compilationName]) {
-        writeToDisk =
-          environments[compilationName].config.dev.writeToDisk ?? writeToDisk;
-      }
-      return typeof writeToDisk === 'function'
-        ? writeToDisk(filePath)
-        : writeToDisk!;
-    },
-  };
-};
-
 /**
  * Setup compiler-related logic:
  * 1. setup rsbuild-dev-middleware
@@ -77,7 +47,7 @@ export class CompilationManager {
   public socketServer: SocketServer;
 
   constructor({ dev, server, compiler, publicPaths, environments }: Options) {
-    this.devConfig = formatDevConfig(dev, environments);
+    this.devConfig = dev;
     this.serverConfig = server;
     this.compiler = compiler;
     this.environments = environments;
