@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { dev, getRandomPort, rspackOnlyTest } from '@e2e/helper';
+import { dev, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
@@ -17,7 +17,6 @@ rspackOnlyTest(
       recursive: true,
     });
 
-    const port = await getRandomPort();
     const rsbuild = await dev({
       cwd,
       page,
@@ -27,9 +26,6 @@ rspackOnlyTest(
             index: join(cwd, 'test-temp-src/index.ts'),
           },
         },
-        server: {
-          port,
-        },
         dev: {
           client: {
             host: '',
@@ -37,8 +33,6 @@ rspackOnlyTest(
         },
       },
     });
-
-    expect(rsbuild.port).toBe(port);
 
     const appPath = join(cwd, 'test-temp-src/App.tsx');
 
