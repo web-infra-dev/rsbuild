@@ -149,7 +149,7 @@ const initEnvironmentConfigs = (
         }),
     );
 
-    if (Object.keys(resolvedEnvironments).length < 1) {
+    if (Object.keys(resolvedEnvironments).length === 0) {
       throw createEnvironmentNotFoundError(specifiedEnvironments);
     }
     return resolvedEnvironments;
