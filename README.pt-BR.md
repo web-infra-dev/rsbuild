@@ -73,7 +73,7 @@ Para começar a usar o Rsbuild, consulte a seção [Início Rápido](https://rsb
 
 Rstack é uma cadeia de ferramentas JavaScript unificada construída em torno do Rspack, com alto desempenho e arquitetura consistente.
 
-| Name                                                  | Description              | Version                                                                                                                                                                          |
+| Nome                                                  | Descrição                | Versão                                                                                                                                                                           |
 | ----------------------------------------------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Rspack](https://github.com/web-infra-dev/rspack)     | Bundler                  | <a href="https://npmjs.com/package/@rspack/core"><img src="https://img.shields.io/npm/v/@rspack/core?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" /></a>     |
 | [Rsbuild](https://github.com/web-infra-dev/rsbuild)   | Build tool               | <a href="https://npmjs.com/package/@rsbuild/core"><img src="https://img.shields.io/npm/v/@rsbuild/core?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" /></a>   |
