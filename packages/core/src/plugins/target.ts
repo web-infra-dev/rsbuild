@@ -7,7 +7,7 @@ export const pluginTarget = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain({
       order: 'pre',
-      handler: async (chain, { target, environment }) => {
+      handler: (chain, { target, environment }) => {
         if (target === 'node') {
           chain.target('node');
           return;

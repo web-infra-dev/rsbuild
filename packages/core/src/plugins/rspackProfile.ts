@@ -81,7 +81,7 @@ async function applyProfile(
 export const pluginRspackProfile = (): RsbuildPlugin => ({
   name: 'rsbuild:rspack-profile',
 
-  async setup(api) {
+  setup(api) {
     if (api.context.bundlerType === 'webpack') {
       return;
     }

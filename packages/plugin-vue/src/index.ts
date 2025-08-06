@@ -74,7 +74,7 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
         return merged;
       });
 
-      api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
+      api.modifyBundlerChain((chain, { CHAIN_ID }) => {
         chain.resolve.extensions.add('.vue');
 
         const userLoaderOptions = options.vueLoaderOptions ?? {};

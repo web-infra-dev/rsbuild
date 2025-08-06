@@ -73,10 +73,10 @@ export const loadBundle = async <T>(
   return res;
 };
 
-export const getTransformedHtml = async (
+export const getTransformedHtml = (
   entryName: string,
   utils: ServerUtils,
-): Promise<string> => {
+): string => {
   const { htmlPaths, distPath } = utils.environment;
   const htmlPath = htmlPaths[entryName];
 
@@ -100,7 +100,7 @@ export const createCacheableFunction = <T>(
     stats: Rspack.Stats,
     entryName: string,
     utils: ServerUtils,
-  ) => Promise<T>,
+  ) => Promise<T> | T,
 ) => {
   const cache = new WeakMap<
     Rspack.Stats,

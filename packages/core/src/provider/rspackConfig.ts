@@ -41,7 +41,7 @@ async function modifyRspackConfig(
     },
   );
 
-  const utils = await getConfigUtils(proxiedConfig, chainUtils);
+  const utils = getConfigUtils(proxiedConfig, chainUtils);
 
   [currentConfig] = await context.hooks.modifyRspackConfig.callChain({
     environment: utils.environment.name,
@@ -71,10 +71,10 @@ async function modifyRspackConfig(
   return currentConfig;
 }
 
-export async function getConfigUtils(
+export function getConfigUtils(
   config: Rspack.Configuration,
   chainUtils: ModifyChainUtils,
-): Promise<ModifyRspackConfigUtils> {
+): ModifyRspackConfigUtils {
   return {
     ...chainUtils,
 

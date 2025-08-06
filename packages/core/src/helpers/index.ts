@@ -83,9 +83,7 @@ const compareSemver = (version1: string, version2: string) => {
  * we should check that the Rspack version is greater than the minimum
  * supported version.
  */
-export const isSatisfyRspackVersion = async (
-  originalVersion: string,
-): Promise<boolean> => {
+export const isSatisfyRspackVersion = (originalVersion: string): boolean => {
   let version = originalVersion;
 
   // The nightly version of Rspack is to append `-canary-abc` to the current version
@@ -124,7 +122,7 @@ export const getPublicPathFromChain = (
   chain: RspackChain,
   withSlash = true,
 ): string => {
-  const publicPath = chain.output.get('publicPath');
+  const publicPath: Rspack.PublicPath = chain.output.get('publicPath');
 
   if (typeof publicPath === 'string') {
     return formatPublicPath(publicPath, withSlash);

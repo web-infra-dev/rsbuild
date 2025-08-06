@@ -5,7 +5,7 @@ export const pluginEntry = (): RsbuildPlugin => ({
   name: 'rsbuild:entry',
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, { environment, isServer }) => {
+    api.modifyBundlerChain((chain, { environment, isServer }) => {
       const { config, entry } = environment;
       const { preEntry } = config.source;
 

@@ -41,7 +41,7 @@ export const run = async <T>({
 }): Promise<T> => {
   const runnerFactory = new BasicRunnerFactory(bundlePath);
   const runner = runnerFactory.create(runnerFactoryOptions);
-  const mod = runner.run(bundlePath);
+  const mod = await runner.run(bundlePath);
 
   return mod as T;
 };

@@ -5,7 +5,7 @@ import { build } from './build';
 import { createCompiler as baseCreateCompiler } from './createCompiler';
 import { initConfigs, initRsbuildConfig } from './initConfigs';
 
-export const rspackProvider: RsbuildProvider = async ({
+export const rspackProvider: RsbuildProvider = ({
   context,
   pluginManager,
   rsbuildOptions,

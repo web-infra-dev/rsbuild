@@ -123,10 +123,10 @@ export async function generateWebpackConfig({
 
   let webpackConfig = chain.toConfig() as WebpackConfig;
 
-  const configUtils = (await helpers.getConfigUtils(
+  const configUtils = helpers.getConfigUtils(
     webpackConfig as Rspack.Configuration,
     chainUtils as unknown as ModifyRspackConfigUtils,
-  )) as unknown as ModifyWebpackConfigUtils;
+  ) as unknown as ModifyWebpackConfigUtils;
 
   webpackConfig = await modifyWebpackConfig(
     context,

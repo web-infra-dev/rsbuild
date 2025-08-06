@@ -6,7 +6,7 @@ import { logger } from './logger';
 import { createChokidar } from './server/watchFiles.js';
 import type { RsbuildInstance } from './types';
 
-type Cleaner = () => Promise<unknown> | unknown;
+type Cleaner = () => unknown;
 
 let cleaners: Cleaner[] = [];
 
