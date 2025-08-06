@@ -1678,6 +1678,8 @@ export type CliShortcut = {
   action: () => void | Promise<void>;
 };
 
+export type WriteToDisk = boolean | ((filename: string) => boolean);
+
 export interface DevConfig {
   /**
    * Whether to enable Hot Module Replacement.
@@ -1731,7 +1733,7 @@ export interface DevConfig {
    * Controls whether the build output from development mode is written to disk.
    * @default false
    */
-  writeToDisk?: boolean | ((filename: string) => boolean);
+  writeToDisk?: WriteToDisk;
   /**
    * This option allows you to configure a list of globs/directories/files to watch for
    * file changes.

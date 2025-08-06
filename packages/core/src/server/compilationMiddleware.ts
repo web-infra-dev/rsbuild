@@ -7,7 +7,8 @@ import type {
   EnvironmentContext,
   NormalizedDevConfig,
   NormalizedEnvironmentConfig,
-  ServerConfig,
+  NormalizedServerConfig,
+  WriteToDisk,
 } from '../types';
 import { getResolvedClientConfig } from './hmrFallback';
 
@@ -138,14 +139,41 @@ export type CompilationMiddlewareOptions = {
    * Should trigger when compiler hook called
    */
   callbacks: ServerCallbacks;
-  devConfig: DevConfig;
-  serverConfig: ServerConfig;
+  devConfig: NormalizedDevConfig;
+  serverConfig: NormalizedServerConfig;
   environments: Record<string, EnvironmentContext>;
 };
 
 export type CompilationMiddleware = Connect.NextHandleFunction & {
   close: (callback: (err: Error | null | undefined) => void) => any;
   watch: () => void;
+};
+
+/**
+ * Resolve writeToDisk config across multiple environments.
+ * Returns the unified config if all environments have the same value,
+ * otherwise returns a function that resolves config based on compilation.
+ */
+const resolveWriteToDiskConfig = (
+  config: NormalizedDevConfig,
+  environments: Record<string, EnvironmentContext>,
+): WriteToDisk => {
+  const writeToDiskValues = Object.values(environments).map(
+    (env) => env.config.dev.writeToDisk,
+  );
+  if (new Set(writeToDiskValues).size === 1) {
+    return writeToDiskValues[0];
+  }
+
+  return (filePath: string, name?: string) => {
+    let { writeToDisk } = config;
+    if (name && environments[name]) {
+      writeToDisk = environments[name].config.dev.writeToDisk ?? writeToDisk;
+    }
+    return typeof writeToDisk === 'function'
+      ? writeToDisk(filePath)
+      : writeToDisk;
+  };
 };
 
 /**
@@ -162,14 +190,14 @@ export const getCompilationMiddleware = async (
     '../../compiled/rsbuild-dev-middleware/index.js'
   );
 
-  const { callbacks, devConfig, serverConfig } = options;
+  const { callbacks, environments, devConfig, serverConfig } = options;
   const resolvedClientConfig = await getResolvedClientConfig(
     devConfig.client,
     serverConfig,
   );
 
   const setupCompiler = (compiler: Compiler, index: number) => {
-    const environment = Object.values(options.environments).find(
+    const environment = Object.values(environments).find(
       (env) => env.index === index,
     );
     if (!environment) {
@@ -206,6 +234,6 @@ export const getCompilationMiddleware = async (
     publicPath: '/',
     stats: false,
     serverSideRender: true,
-    writeToDisk: devConfig.writeToDisk,
+    writeToDisk: resolveWriteToDiskConfig(devConfig, environments),
   });
 };
