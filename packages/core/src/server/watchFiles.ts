@@ -4,15 +4,15 @@ import { castArray } from '../helpers';
 import type {
   ChokidarOptions,
   DevConfig,
+  NormalizedConfig,
   ServerConfig,
   WatchFiles,
 } from '../types';
 import type { CompilationManager } from './compilationManager';
 
 type WatchFilesOptions = {
-  dev: DevConfig;
-  server: ServerConfig;
   root: string;
+  config: NormalizedConfig;
   compilationManager?: CompilationManager;
 };
 
@@ -23,20 +23,20 @@ export type WatchFilesResult = {
 export async function setupWatchFiles(
   options: WatchFilesOptions,
 ): Promise<WatchFilesResult | undefined> {
-  const { dev, server, root, compilationManager } = options;
+  const { config, root, compilationManager } = options;
 
-  const { hmr, liveReload } = dev;
+  const { hmr, liveReload } = config.dev;
   if ((!hmr && !liveReload) || !compilationManager) {
     return;
   }
 
   const closeDevFilesWatcher = await watchDevFiles(
-    dev,
+    config.dev,
     compilationManager,
     root,
   );
   const serverFilesWatcher = await watchServerFiles(
-    server,
+    config.server,
     compilationManager,
     root,
   );

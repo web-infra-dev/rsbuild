@@ -3,14 +3,13 @@ import type { Compiler, MultiCompiler, Stats } from '@rspack/core';
 import { applyToCompiler } from '../helpers';
 import type {
   Connect,
-  DevConfig,
   EnvironmentContext,
+  NormalizedConfig,
   NormalizedDevConfig,
   NormalizedEnvironmentConfig,
-  NormalizedServerConfig,
   WriteToDisk,
 } from '../types';
-import { getResolvedClientConfig } from './hmrFallback';
+import { resolveHostname } from './hmrFallback';
 
 const require = createRequire(import.meta.url);
 let hmrClientPath: string;
@@ -101,15 +100,15 @@ export const setupServerHooks = ({
 function applyHMREntry({
   config,
   compiler,
-  devConfig,
-  resolvedClientConfig,
   token,
+  resolvedHost,
+  resolvedPort,
 }: {
   config: NormalizedEnvironmentConfig;
   compiler: Compiler;
-  devConfig: DevConfig;
-  resolvedClientConfig: DevConfig['client'];
   token: string;
+  resolvedHost: string;
+  resolvedPort: number;
 }) {
   if (!isClientCompiler(compiler)) {
     return;
@@ -120,11 +119,17 @@ function applyHMREntry({
     return;
   }
 
+  const clientConfig = { ...config.dev.client };
+  if (clientConfig.port === '<port>') {
+    clientConfig.port = resolvedPort;
+  }
+
   new compiler.webpack.DefinePlugin({
     RSBUILD_WEB_SOCKET_TOKEN: JSON.stringify(token),
-    RSBUILD_CLIENT_CONFIG: JSON.stringify(devConfig.client),
-    RSBUILD_RESOLVED_CLIENT_CONFIG: JSON.stringify(resolvedClientConfig),
-    RSBUILD_DEV_LIVE_RELOAD: devConfig.liveReload,
+    RSBUILD_CLIENT_CONFIG: JSON.stringify(clientConfig),
+    RSBUILD_SERVER_HOST: JSON.stringify(resolvedHost),
+    RSBUILD_SERVER_PORT: JSON.stringify(resolvedPort),
+    RSBUILD_DEV_LIVE_RELOAD: config.dev.liveReload,
   }).apply(compiler);
 
   for (const clientPath of clientPaths) {
@@ -133,16 +138,6 @@ function applyHMREntry({
     }).apply(compiler);
   }
 }
-
-export type CompilationMiddlewareOptions = {
-  /**
-   * Should trigger when compiler hook called
-   */
-  callbacks: ServerCallbacks;
-  devConfig: NormalizedDevConfig;
-  serverConfig: NormalizedServerConfig;
-  environments: Record<string, EnvironmentContext>;
-};
 
 export type CompilationMiddleware = Connect.NextHandleFunction & {
   close: (callback: (err: Error | null | undefined) => void) => any;
@@ -182,19 +177,26 @@ const resolveWriteToDiskConfig = (
  * - Inject the HMR client path into page
  * - Notify server when compiler hooks are triggered
  */
-export const getCompilationMiddleware = async (
-  compiler: Compiler | MultiCompiler,
-  options: CompilationMiddlewareOptions,
-): Promise<CompilationMiddleware> => {
+export const getCompilationMiddleware = async ({
+  config,
+  compiler,
+  callbacks,
+  environments,
+  resolvedPort,
+}: {
+  config: NormalizedConfig;
+  compiler: Compiler | MultiCompiler;
+  /**
+   * Should trigger when compiler hook called
+   */
+  callbacks: ServerCallbacks;
+  environments: Record<string, EnvironmentContext>;
+  resolvedPort: number;
+}): Promise<CompilationMiddleware> => {
   const { default: rsbuildDevMiddleware } = await import(
     '../../compiled/rsbuild-dev-middleware/index.js'
   );
-
-  const { callbacks, environments, devConfig, serverConfig } = options;
-  const resolvedClientConfig = await getResolvedClientConfig(
-    devConfig.client,
-    serverConfig,
-  );
+  const resolvedHost = await resolveHostname(config.server.host);
 
   const setupCompiler = (compiler: Compiler, index: number) => {
     const environment = Object.values(environments).find(
@@ -210,11 +212,11 @@ export const getCompilationMiddleware = async (
     }
 
     applyHMREntry({
-      compiler,
-      devConfig,
-      resolvedClientConfig,
       token,
       config: environment.config,
+      compiler,
+      resolvedHost,
+      resolvedPort,
     });
 
     // register hooks for each compilation, update socket stats if recompiled
@@ -234,6 +236,6 @@ export const getCompilationMiddleware = async (
     publicPath: '/',
     stats: false,
     serverSideRender: true,
-    writeToDisk: resolveWriteToDiskConfig(devConfig, environments),
+    writeToDisk: resolveWriteToDiskConfig(config.dev, environments),
   });
 };

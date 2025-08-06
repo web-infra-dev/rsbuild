@@ -1808,6 +1808,7 @@ export type RsbuildConfigMeta = {
  */
 export type AllowedEnvironmentDevKeys =
   | 'hmr'
+  | 'client'
   | 'liveReload'
   | 'assetPrefix'
   | 'progressBar'

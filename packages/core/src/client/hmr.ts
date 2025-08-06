@@ -2,12 +2,13 @@ import type { SocketMessage } from '../server/socketServer';
 import type { NormalizedClientConfig } from '../types';
 
 const config: NormalizedClientConfig = RSBUILD_CLIENT_CONFIG;
-const resolvedConfig: NormalizedClientConfig = RSBUILD_RESOLVED_CLIENT_CONFIG;
+const serverHost = RSBUILD_SERVER_HOST;
+const serverPort = RSBUILD_SERVER_PORT;
 
-function formatURL(config: NormalizedClientConfig) {
+function formatURL(fallback?: boolean) {
   const { location } = self;
-  const hostname = config.host || location.hostname;
-  const port = config.port || location.port;
+  const hostname = (fallback ? serverHost : config.host) || location.hostname;
+  const port = (fallback ? serverPort : config.port) || location.port;
   const protocol =
     config.protocol || (location.protocol === 'https:' ? 'wss' : 'ws');
   const pathname = config.path;
@@ -222,7 +223,7 @@ function onClose() {
 }
 
 function onError() {
-  if (formatURL(config) !== formatURL(resolvedConfig)) {
+  if (formatURL() !== formatURL(true)) {
     console.error(
       '[HMR] WebSocket connection error, attempting direct fallback.',
     );
@@ -234,7 +235,7 @@ function onError() {
 
 // Establishing a WebSocket connection with the server.
 function connect(fallback = false) {
-  const socketUrl = formatURL(fallback ? resolvedConfig : config);
+  const socketUrl = formatURL(fallback);
   connection = new WebSocket(socketUrl);
   connection.addEventListener('open', onOpen);
   // Attempt to reconnect after disconnection

@@ -1,4 +1,3 @@
-import type { DevConfig, ServerConfig } from '../types/config';
 import { isWildcardHost } from './helper';
 
 /**
@@ -22,7 +21,9 @@ export async function getLocalhostResolvedAddress(): Promise<
   return match ? undefined : defaultLookup.address;
 }
 
-async function resolveHostname(host: string | undefined = 'localhost') {
+export async function resolveHostname(
+  host: string | undefined = 'localhost',
+): Promise<string> {
   if (host === 'localhost') {
     const resolvedAddress = await getLocalhostResolvedAddress();
     if (resolvedAddress) {
@@ -32,16 +33,4 @@ async function resolveHostname(host: string | undefined = 'localhost') {
 
   // If possible, set the host name to localhost
   return host === undefined || isWildcardHost(host) ? 'localhost' : host;
-}
-
-export async function getResolvedClientConfig(
-  clientConfig: DevConfig['client'],
-  serverConfig: ServerConfig,
-): Promise<DevConfig['client']> {
-  const resolvedHost = await resolveHostname(serverConfig.host);
-  return {
-    ...clientConfig,
-    host: resolvedHost,
-    port: serverConfig.port,
-  };
 }
