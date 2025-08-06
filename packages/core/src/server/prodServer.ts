@@ -226,7 +226,7 @@ export async function startProdServer(
 
         const protocol = https ? 'https' : 'http';
         const urls = await getAddressUrls({ protocol, port, host });
-        const cliShortcutsEnabled = isCliShortcutsEnabled(config.dev);
+        const cliShortcutsEnabled = isCliShortcutsEnabled(config);
 
         const cleanupGracefulShutdown = setupGracefulShutdown();
 

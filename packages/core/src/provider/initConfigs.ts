@@ -26,6 +26,7 @@ import { generateRspackConfig } from './rspackConfig';
 
 const allowedEnvironmentDevKeys: AllowedEnvironmentDevKeys[] = [
   'hmr',
+  'client',
   'liveReload',
   'writeToDisk',
   'assetPrefix',

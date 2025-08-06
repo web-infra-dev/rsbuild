@@ -10,7 +10,6 @@ import type {
   EnvironmentAPI,
   InternalContext,
   NormalizedConfig,
-  NormalizedDevConfig,
   Rspack,
 } from '../types';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
@@ -118,14 +117,6 @@ export type RsbuildDevServer = {
   sockWrite: SockWrite;
 };
 
-const formatDevConfig = (config: NormalizedDevConfig, port: number) => {
-  // replace port placeholder
-  if (config.client.port === '<port>') {
-    config.client.port = String(port);
-  }
-  return config;
-};
-
 export async function createDevServer<
   Options extends {
     context: InternalContext;
@@ -147,7 +138,6 @@ export async function createDevServer<
   });
   const { middlewareMode } = config.server;
   const { context } = options;
-  const devConfig = formatDevConfig(config.dev, port);
   const routes = getRoutes(context);
   const root = context.rootPath;
 
@@ -208,13 +198,10 @@ export async function createDevServer<
 
     // create dev middleware instance
     const compilationManager = new CompilationManager({
-      dev: devConfig,
-      server: {
-        ...config.server,
-        port,
-      },
-      publicPaths: publicPaths,
+      config,
       compiler,
+      publicPaths: publicPaths,
+      resolvedPort: port,
       environments: context.environments,
     });
 
@@ -226,7 +213,7 @@ export async function createDevServer<
   const protocol = https ? 'https' : 'http';
   const urls = await getAddressUrls({ protocol, port, host });
 
-  const cliShortcutsEnabled = isCliShortcutsEnabled(devConfig);
+  const cliShortcutsEnabled = isCliShortcutsEnabled(config);
 
   const printUrls = () =>
     printServerURLs({
@@ -273,9 +260,9 @@ export async function createDevServer<
 
     if (cliShortcutsEnabled) {
       const shortcutsOptions =
-        typeof devConfig.cliShortcuts === 'boolean'
+        typeof config.dev.cliShortcuts === 'boolean'
           ? {}
-          : devConfig.cliShortcuts;
+          : config.dev.cliShortcuts;
 
       const cleanup = await setupCliShortcuts({
         openPage,
@@ -465,8 +452,7 @@ export async function createDevServer<
   const compilationManager = runCompile ? await startCompile() : undefined;
 
   fileWatcher = await setupWatchFiles({
-    dev: devConfig,
-    server: config.server,
+    config,
     compilationManager,
     root,
   });
@@ -474,10 +460,9 @@ export async function createDevServer<
   devMiddlewares = await getDevMiddlewares({
     pwd: root,
     compilationManager,
-    dev: devConfig,
+    config,
     devServerAPI,
     context,
-    server: config.server,
     postCallbacks,
   });
 

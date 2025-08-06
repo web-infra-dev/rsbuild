@@ -2,12 +2,7 @@ import fs from 'node:fs';
 import type { Stats } from '@rspack/core';
 import { isMultiCompiler } from '../helpers';
 import { getPathnameFromUrl } from '../helpers/path';
-import type {
-  EnvironmentContext,
-  NormalizedDevConfig,
-  NormalizedServerConfig,
-  Rspack,
-} from '../types';
+import type { EnvironmentContext, NormalizedConfig, Rspack } from '../types';
 import {
   type CompilationMiddleware,
   getCompilationMiddleware,
@@ -17,11 +12,11 @@ import { stripBase } from './helper';
 import { SocketServer } from './socketServer';
 
 type Options = {
-  publicPaths: string[];
-  environments: Record<string, EnvironmentContext>;
-  dev: NormalizedDevConfig;
-  server: NormalizedServerConfig;
+  config: NormalizedConfig;
   compiler: Rspack.Compiler | Rspack.MultiCompiler;
+  publicPaths: string[];
+  resolvedPort: number;
+  environments: Record<string, EnvironmentContext>;
 };
 
 /**
@@ -34,9 +29,7 @@ export class CompilationManager {
 
   public outputFileSystem: Rspack.OutputFileSystem;
 
-  private devConfig: NormalizedDevConfig;
-
-  private serverConfig: NormalizedServerConfig;
+  private config: NormalizedConfig;
 
   public compiler: Rspack.Compiler | Rspack.MultiCompiler;
 
@@ -46,14 +39,22 @@ export class CompilationManager {
 
   public socketServer: SocketServer;
 
-  constructor({ dev, server, compiler, publicPaths, environments }: Options) {
-    this.devConfig = dev;
-    this.serverConfig = server;
+  private resolvedPort: number;
+
+  constructor({
+    config,
+    compiler,
+    publicPaths,
+    resolvedPort,
+    environments,
+  }: Options) {
+    this.config = config;
     this.compiler = compiler;
     this.environments = environments;
     this.publicPaths = publicPaths;
+    this.resolvedPort = resolvedPort;
     this.outputFileSystem = fs;
-    this.socketServer = new SocketServer(dev, environments);
+    this.socketServer = new SocketServer(config.dev, environments);
   }
 
   public async init(): Promise<void> {
@@ -106,7 +107,7 @@ export class CompilationManager {
   };
 
   private async setupCompilationMiddleware(): Promise<void> {
-    const { devConfig, serverConfig, publicPaths, environments } = this;
+    const { config, publicPaths, environments } = this;
 
     const callbacks: ServerCallbacks = {
       onInvalid: (token: string, fileName?: string | null) => {
@@ -121,14 +122,15 @@ export class CompilationManager {
       },
     };
 
-    const middleware = await getCompilationMiddleware(this.compiler, {
+    const middleware = await getCompilationMiddleware({
+      config,
+      compiler: this.compiler,
       callbacks,
-      devConfig,
-      serverConfig,
       environments,
+      resolvedPort: this.resolvedPort,
     });
 
-    const { base } = serverConfig;
+    const { base } = config.server;
     const assetPrefixes = publicPaths
       .map(getPathnameFromUrl)
       .map((prefix) =>
