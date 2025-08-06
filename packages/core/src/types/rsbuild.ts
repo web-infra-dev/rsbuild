@@ -199,7 +199,7 @@ export type RsbuildProvider<B extends 'rspack' | 'webpack' = 'rspack'> =
     pluginManager: PluginManager;
     rsbuildOptions: ResolvedCreateRsbuildOptions;
     helpers: RsbuildProviderHelpers;
-  }) => Promise<ProviderInstance<B>>;
+  }) => Promise<ProviderInstance<B>> | ProviderInstance<B>;
 
 export type AddPluginsOptions = {
   /**

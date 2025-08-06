@@ -9,7 +9,7 @@ export const pluginProgress = (): RsbuildPlugin => ({
       return;
     }
 
-    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment, rspack }) => {
+    api.modifyBundlerChain((chain, { CHAIN_ID, environment, rspack }) => {
       const { config } = environment;
       const options = config.dev.progressBar;
 

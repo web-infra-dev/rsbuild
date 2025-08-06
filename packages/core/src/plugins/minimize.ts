@@ -87,7 +87,7 @@ export const pluginMinimize = (): RsbuildPlugin => ({
   setup(api) {
     const isRspack = api.context.bundlerType === 'rspack';
 
-    api.modifyBundlerChain(async (chain, { environment, CHAIN_ID, rspack }) => {
+    api.modifyBundlerChain((chain, { environment, CHAIN_ID, rspack }) => {
       const { config } = environment;
       const { minifyJs, minifyCss, jsOptions, cssOptions } =
         parseMinifyOptions(config);

@@ -113,7 +113,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain({
       order: 'pre',
-      handler: async (chain, { CHAIN_ID, isDev, target, environment }) => {
+      handler: (chain, { CHAIN_ID, isDev, target, environment }) => {
         const { config, browserslist } = environment;
         const cacheRoot = path.join(api.context.cachePath, '.swc');
 
@@ -170,7 +170,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
           } else {
             swcConfig.env!.mode = polyfillMode;
 
-            const coreJsDir = await applyCoreJs(swcConfig, polyfillMode);
+            const coreJsDir = applyCoreJs(swcConfig, polyfillMode);
             for (const item of [rule, dataUriRule]) {
               item.resolve.alias.set('core-js', coreJsDir);
             }
@@ -219,10 +219,7 @@ const getCoreJsVersion = (corejsPkgPath: string) => {
   }
 };
 
-async function applyCoreJs(
-  swcConfig: SwcLoaderOptions,
-  polyfillMode: Polyfill,
-) {
+function applyCoreJs(swcConfig: SwcLoaderOptions, polyfillMode: Polyfill) {
   const coreJsPath = require.resolve('core-js/package.json');
   const version = getCoreJsVersion(coreJsPath);
   const coreJsDir = path.dirname(coreJsPath);

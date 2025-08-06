@@ -163,34 +163,32 @@ export function pluginModuleFederation(): RsbuildPlugin {
         ];
       });
 
-      api.modifyBundlerChain(
-        async (chain, { CHAIN_ID, target, environment }) => {
-          const { config } = environment;
+      api.modifyBundlerChain((chain, { CHAIN_ID, target, environment }) => {
+        const { config } = environment;
 
-          if (!config.moduleFederation?.options || target !== 'web') {
-            return;
+        if (!config.moduleFederation?.options || target !== 'web') {
+          return;
+        }
+
+        const { options } = config.moduleFederation;
+
+        chain
+          .plugin(CHAIN_ID.PLUGIN.MODULE_FEDERATION)
+          .use(rspack.container.ModuleFederationPlugin, [options]);
+
+        if (options.name) {
+          if (options.exposes) {
+            chain
+              .plugin('mf-patch-split-chunks')
+              .use(PatchSplitChunksPlugin, [options.name]);
           }
 
-          const { options } = config.moduleFederation;
-
-          chain
-            .plugin(CHAIN_ID.PLUGIN.MODULE_FEDERATION)
-            .use(rspack.container.ModuleFederationPlugin, [options]);
-
-          if (options.name) {
-            if (options.exposes) {
-              chain
-                .plugin('mf-patch-split-chunks')
-                .use(PatchSplitChunksPlugin, [options.name]);
-            }
-
-            // `uniqueName` is required for react refresh to work
-            if (!chain.output.get('uniqueName')) {
-              chain.output.set('uniqueName', options.name);
-            }
+          // `uniqueName` is required for react refresh to work
+          if (!chain.output.get('uniqueName')) {
+            chain.output.set('uniqueName', options.name);
           }
-        },
-      );
+        }
+      });
     },
   };
 }

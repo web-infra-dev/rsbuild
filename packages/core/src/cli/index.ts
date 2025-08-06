@@ -11,7 +11,7 @@ function initNodeEnv() {
   }
 }
 
-export async function runCLI(): Promise<void> {
+export function runCLI(): void {
   initNodeEnv();
 
   // make it easier to identify the process via activity monitor or other tools

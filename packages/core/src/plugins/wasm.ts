@@ -6,7 +6,7 @@ export const pluginWasm = (): RsbuildPlugin => ({
   name: 'rsbuild:wasm',
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment, isProd }) => {
+    api.modifyBundlerChain((chain, { CHAIN_ID, environment, isProd }) => {
       const { config } = environment;
       const distPath = config.output.distPath.wasm;
       const filename = posix.join(

@@ -137,7 +137,7 @@ export class CompilationManager {
         base && base !== '/' ? stripBase(prefix, base) : prefix,
       );
 
-    const wrapper: CompilationMiddleware = async (req, res, next) => {
+    const wrapper: CompilationMiddleware = (req, res, next) => {
       const { url } = req;
       const assetPrefix =
         url && assetPrefixes.find((prefix) => url.startsWith(prefix));

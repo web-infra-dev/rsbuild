@@ -179,7 +179,7 @@ export const getHtmlCompletionMiddleware: (params: {
 export const getBaseMiddleware: (params: {
   base: string;
 }) => RequestHandler = ({ base }) => {
-  return async (req, res, next) => {
+  return (req, res, next) => {
     const url = req.url!;
     const pathname = getUrlPathname(url);
 

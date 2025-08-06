@@ -29,7 +29,7 @@ function getAbsoluteDistPath(
 // using cache to avoid multiple calls to loadConfig
 const browsersListCache = new Map<string, string[]>();
 
-export async function getBrowserslist(path: string): Promise<string[] | null> {
+export function getBrowserslist(path: string): string[] | null {
   const env = process.env.NODE_ENV;
   const cacheKey = path + env;
 
@@ -47,10 +47,10 @@ export async function getBrowserslist(path: string): Promise<string[] | null> {
   return null;
 }
 
-export async function getBrowserslistByEnvironment(
+export function getBrowserslistByEnvironment(
   path: string,
   config: NormalizedEnvironmentConfig,
-): Promise<string[]> {
+): string[] {
   const { target, overrideBrowserslist } = config.output;
 
   if (Array.isArray(overrideBrowserslist)) {
@@ -59,7 +59,7 @@ export async function getBrowserslistByEnvironment(
 
   // Read project browserslist config when target is `web-like`
   if (target === 'web' || target === 'web-worker') {
-    const browserslistrc = await getBrowserslist(path);
+    const browserslistrc = getBrowserslist(path);
     if (browserslistrc) {
       return browserslistrc;
     }
@@ -99,10 +99,7 @@ export async function updateEnvironmentContext(
   context.environments ||= {};
 
   for (const [index, [name, config]] of Object.entries(configs).entries()) {
-    const browserslist = await getBrowserslistByEnvironment(
-      context.rootPath,
-      config,
-    );
+    const browserslist = getBrowserslistByEnvironment(context.rootPath, config);
 
     const { entry = {}, tsconfigPath } = config.source;
     const htmlPaths = getEnvironmentHTMLPaths(entry, config);

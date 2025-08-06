@@ -69,7 +69,7 @@ import type {
   StartDevServer,
 } from './types';
 
-async function applyDefaultPlugins(
+function applyDefaultPlugins(
   pluginManager: PluginManager,
   context: InternalContext,
 ) {
@@ -191,7 +191,7 @@ export async function createRsbuild(
   const globalPluginAPI = getPluginAPI();
 
   logger.debug('add default plugins');
-  await applyDefaultPlugins(pluginManager, context);
+  applyDefaultPlugins(pluginManager, context);
   logger.debug('add default plugins done');
 
   const provider = (config.provider as RsbuildProvider) || rspackProvider;
