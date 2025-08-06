@@ -73,15 +73,15 @@ Para começar a usar o Rsbuild, consulte a seção [Início Rápido](https://rsb
 
 Rstack é uma cadeia de ferramentas JavaScript unificada construída em torno do Rspack, com alto desempenho e arquitetura consistente.
 
-| Nome                                                  | Descrição                                      |
-| ----------------------------------------------------- | ---------------------------------------------- |
-| [Rspack](https://github.com/web-infra-dev/rspack)     | Bundler                                        |
-| [Rsbuild](https://github.com/web-infra-dev/rsbuild)   | Ferramenta de build                            |
-| [Rslib](https://github.com/web-infra-dev/rslib)       | Ferramenta para desenvolvimento de bibliotecas |
-| [Rspress](https://github.com/web-infra-dev/rspress)   | Gerador de site estático                       |
-| [Rsdoctor](https://github.com/web-infra-dev/rsdoctor) | Analisador de build                            |
-| [Rstest](https://github.com/web-infra-dev/rstest)     | Framework de testes                            |
-| [Rslint](https://github.com/web-infra-dev/rslint)     | Linter                                         |
+| Nome                                                  | Descrição                | Versão                                                                                                                                                                           |
+| ----------------------------------------------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Rspack](https://github.com/web-infra-dev/rspack)     | Bundler                  | <a href="https://npmjs.com/package/@rspack/core"><img src="https://img.shields.io/npm/v/@rspack/core?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" /></a>     |
+| [Rsbuild](https://github.com/web-infra-dev/rsbuild)   | Build tool               | <a href="https://npmjs.com/package/@rsbuild/core"><img src="https://img.shields.io/npm/v/@rsbuild/core?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" /></a>   |
+| [Rslib](https://github.com/web-infra-dev/rslib)       | Library development tool | <a href="https://npmjs.com/package/@rslib/core"><img src="https://img.shields.io/npm/v/@rslib/core?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" /></a>       |
+| [Rspress](https://github.com/web-infra-dev/rspress)   | Static site generator    | <a href="https://npmjs.com/package/@rspress/core"><img src="https://img.shields.io/npm/v/@rspress/core?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" /></a>   |
+| [Rsdoctor](https://github.com/web-infra-dev/rsdoctor) | Build analyzer           | <a href="https://npmjs.com/package/@rsdoctor/core"><img src="https://img.shields.io/npm/v/@rsdoctor/core?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" /></a> |
+| [Rstest](https://github.com/web-infra-dev/rstest)     | Testing framework        | <a href="https://npmjs.com/package/@rstest/core"><img src="https://img.shields.io/npm/v/@rstest/core?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" /></a>     |
+| [Rslint](https://github.com/web-infra-dev/rslint)     | Linter                   | <a href="https://npmjs.com/package/@rslint/core"><img src="https://img.shields.io/npm/v/@rslint/core?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" /></a>     |
 
 ## 🔗 Links
 
