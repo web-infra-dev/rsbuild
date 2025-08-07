@@ -1,6 +1,7 @@
 import { exec } from 'node:child_process';
 import { access } from 'node:fs/promises';
 import path from 'node:path';
+import { createRsbuildBinPath } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import fse from 'fs-extra';
 
@@ -30,7 +31,7 @@ export const createAndValidate = async (
   const dir = path.join(cwd, name);
   await fse.remove(dir);
 
-  let command = `npx create-rsbuild -d ${name} -t ${template}`;
+  let command = `${createRsbuildBinPath} -d ${name} -t ${template}`;
   if (tools.length) {
     const toolsCmd = tools.map((tool) => `--tools ${tool}`).join(' ');
     command += ` ${toolsCmd}`;

@@ -2,7 +2,7 @@ import { type ChildProcessWithoutNullStreams, spawn } from 'node:child_process';
 import fs from 'node:fs';
 import { join } from 'node:path';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
-import { expectPoll, rspackOnlyTest } from '@e2e/helper';
+import { expectPoll, rsbuildBinPath, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { removeSync } from 'fs-extra';
 
@@ -57,7 +57,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should generate rspack profile as expected in build',
   async () => {
-    const buildProcess = spawn('npx', ['rsbuild', 'build'], {
+    const buildProcess = spawn(`${rsbuildBinPath} build`, {
       cwd: __dirname,
       env: {
         ...process.env,

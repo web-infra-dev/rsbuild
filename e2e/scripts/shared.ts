@@ -1,5 +1,10 @@
 import assert from 'node:assert';
-import { type ExecSyncOptions, execSync } from 'node:child_process';
+import {
+  type ExecOptions,
+  type ExecSyncOptions,
+  exec,
+  execSync,
+} from 'node:child_process';
 import net from 'node:net';
 import { join } from 'node:path';
 import { URL } from 'node:url';
@@ -342,7 +347,14 @@ export async function build({
   };
 }
 
-const binPath = join(__dirname, '../node_modules/@rsbuild/core/bin/rsbuild.js');
+export const rsbuildBinPath = join(
+  __dirname,
+  '../node_modules/@rsbuild/core/bin/rsbuild.js',
+);
+export const createRsbuildBinPath = join(
+  __dirname,
+  '../node_modules/create-rsbuild/bin.js',
+);
 
 /**
  * Synchronously run the Rsbuild CLI with the given command.
@@ -351,5 +363,9 @@ const binPath = join(__dirname, '../node_modules/@rsbuild/core/bin/rsbuild.js');
  * @returns The result of `execSync`, typically a Buffer containing stdout.
  */
 export function runCliSync(command: string, options?: ExecSyncOptions) {
-  return execSync(`node ${binPath} ${command}`, options);
+  return execSync(`node ${rsbuildBinPath} ${command}`, options);
+}
+
+export function runCli(command: string, options?: ExecOptions) {
+  return exec(`node ${rsbuildBinPath} ${command}`, options);
 }

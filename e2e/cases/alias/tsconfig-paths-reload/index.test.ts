@@ -1,4 +1,3 @@
-import { exec } from 'node:child_process';
 import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import {
@@ -6,6 +5,7 @@ import {
   getRandomPort,
   gotoPage,
   rspackOnlyTest,
+  runCli,
 } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import fse from 'fs-extra';
@@ -25,7 +25,7 @@ rspackOnlyTest(
     await fse.copy(join(__dirname, 'tsconfig.json'), tempConfig);
 
     const port = await getRandomPort();
-    const childProcess = exec('npx rsbuild dev', {
+    const childProcess = runCli(' dev', {
       cwd: __dirname,
       env: {
         ...process.env,
