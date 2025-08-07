@@ -12,7 +12,7 @@ rspackOnlyTest('should support watch mode for build command', async () => {
 
   fse.outputFileSync(indexFile, `console.log('hello!');`);
 
-  const childProcess = runCli(' build --watch', {
+  const childProcess = runCli('build --watch', {
     cwd: __dirname,
   });
 

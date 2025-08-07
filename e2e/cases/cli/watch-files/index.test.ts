@@ -20,7 +20,7 @@ test.beforeEach(async () => {
 rspackOnlyTest(
   'should restart dev server when extra config file changed',
   async () => {
-    const childProcess = runCli(' dev', {
+    const childProcess = runCli('dev', {
       cwd: __dirname,
       env: {
         ...process.env,
@@ -48,7 +48,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should not restart dev server if `watchFiles.type` is `reload-page`',
   async () => {
-    const childProcess = runCli(' dev', {
+    const childProcess = runCli('dev', {
       cwd: __dirname,
       env: {
         ...process.env,
@@ -74,7 +74,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should not restart dev server if `watchFiles.type` is not set',
   async () => {
-    const childProcess = runCli(' dev', {
+    const childProcess = runCli('dev', {
       cwd: __dirname,
       env: {
         ...process.env,

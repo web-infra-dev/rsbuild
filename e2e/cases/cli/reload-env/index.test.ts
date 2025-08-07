@@ -30,7 +30,7 @@ rspackOnlyTest(
     };`,
     );
 
-    const devProcess = runCli(' dev', {
+    const devProcess = runCli('dev', {
       cwd: __dirname,
       env: {
         ...process.env,

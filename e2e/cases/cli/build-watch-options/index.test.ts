@@ -18,7 +18,7 @@ rspackOnlyTest(
     await remove(distIndexFile);
     await fse.copy(srcDir, tempDir);
 
-    const childProcess = runCli(' build --watch', {
+    const childProcess = runCli('build --watch', {
       cwd: __dirname,
     });
 
