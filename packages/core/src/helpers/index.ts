@@ -153,7 +153,7 @@ export const urlJoin = (base: string, path: string) => {
   return `${urlProtocol}://${posix.join(baseUrl, path)}`;
 };
 
-// TODO: Can be replaced with URL.canParse when we drop support for Node.js 16
+// Can be replaced with URL.canParse when we drop support for Node.js 18
 export const canParse = (url: string): boolean => {
   try {
     new URL(url);

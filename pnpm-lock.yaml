@@ -14,18 +14,12 @@ patchedDependencies:
   http-proxy@1.18.1:
     hash: 424b689da454f1f336d635615733f30568882789c1173f861c30f95ba8b05723
     path: patches/http-proxy@1.18.1.patch
-  open@10.2.0:
-    hash: 7bcf8172c4cfec5e484422abed097de4fb7a5a9b62c79bc06d6460e7fc879581
-    path: patches/open@10.2.0.patch
   postcss-loader@8.1.1:
     hash: 7f10237e1665e9913e0f735a822545af08363f5cc67eacc2c37408aee7553d47
     path: patches/postcss-loader@8.1.1.patch
   url-loader:
     hash: 4ed67f741914e665ed1dcef907caaa2acc85269026674133f7b987661de3591f
     path: patches/url-loader@4.1.1.patch
-  wsl-utils@0.1.0:
-    hash: f104c08692fc73e10ddda7868fc2c116e57c9042dd9a721da8242188d3cb8fa6
-    path: patches/wsl-utils@0.1.0.patch
 
 importers:
 
@@ -690,7 +684,7 @@ importers:
         version: 2.4.1
       open:
         specifier: ^10.2.0
-        version: 10.2.0(patch_hash=7bcf8172c4cfec5e484422abed097de4fb7a5a9b62c79bc06d6460e7fc879581)
+        version: 10.2.0
       picocolors:
         specifier: ^1.1.1
         version: 1.1.1
@@ -11362,12 +11356,12 @@ snapshots:
       regex: 6.0.1
       regex-recursion: 6.0.2
 
-  open@10.2.0(patch_hash=7bcf8172c4cfec5e484422abed097de4fb7a5a9b62c79bc06d6460e7fc879581):
+  open@10.2.0:
     dependencies:
       default-browser: 5.2.1
       define-lazy-prop: 3.0.0
       is-inside-container: 1.0.0
-      wsl-utils: 0.1.0(patch_hash=f104c08692fc73e10ddda7868fc2c116e57c9042dd9a721da8242188d3cb8fa6)
+      wsl-utils: 0.1.0
 
   open@8.4.2:
     dependencies:
@@ -12732,7 +12726,7 @@ snapshots:
 
   ws@8.18.3: {}
 
-  wsl-utils@0.1.0(patch_hash=f104c08692fc73e10ddda7868fc2c116e57c9042dd9a721da8242188d3cb8fa6):
+  wsl-utils@0.1.0:
     dependencies:
       is-wsl: 3.1.0
 
