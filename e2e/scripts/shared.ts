@@ -1,4 +1,5 @@
 import assert from 'node:assert';
+import { type ExecSyncOptions, execSync } from 'node:child_process';
 import net from 'node:net';
 import { join } from 'node:path';
 import { URL } from 'node:url';
@@ -339,4 +340,16 @@ export async function build({
     getIndexFile,
     instance: rsbuild,
   };
+}
+
+const binPath = join(__dirname, '../node_modules/@rsbuild/core/bin/rsbuild.js');
+
+/**
+ * Synchronously run the Rsbuild CLI with the given command.
+ * @param command - The CLI command string to run (e.g., "build --config ./rsbuild.config.ts").
+ * @param options - Optional options to pass to `execSync`.
+ * @returns The result of `execSync`, typically a Buffer containing stdout.
+ */
+export function runCliSync(command: string, options?: ExecSyncOptions) {
+  return execSync(`node ${binPath} ${command}`, options);
 }

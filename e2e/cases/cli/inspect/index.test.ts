@@ -1,6 +1,5 @@
-import { execSync } from 'node:child_process';
 import path from 'node:path';
-import { readDirContents, rspackOnlyTest } from '@e2e/helper';
+import { readDirContents, rspackOnlyTest, runCliSync } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { removeSync } from 'fs-extra';
 
@@ -12,7 +11,7 @@ const clean = () => {
 rspackOnlyTest('should run inspect command correctly', async () => {
   clean();
 
-  execSync('npx rsbuild inspect', {
+  runCliSync('inspect', {
     cwd: __dirname,
   });
 
@@ -39,7 +38,7 @@ rspackOnlyTest(
   async () => {
     clean();
 
-    execSync('npx rsbuild inspect --mode production', {
+    runCliSync('inspect --mode production', {
       cwd: __dirname,
     });
 
@@ -64,7 +63,7 @@ rspackOnlyTest(
   async () => {
     clean();
 
-    execSync('npx rsbuild inspect --output foo', {
+    runCliSync('inspect --output foo', {
       cwd: __dirname,
     });
 
