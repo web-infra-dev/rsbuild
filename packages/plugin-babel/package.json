@@ -26,7 +26,7 @@
     "build": "rslib build",
     "dev": "rslib build --watch",
     "prebundle": "prebundle",
-    "bump": "npx bumpp --no-tag"
+    "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
     "@babel/core": "^7.28.0",

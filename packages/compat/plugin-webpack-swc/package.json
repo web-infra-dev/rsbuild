@@ -24,7 +24,7 @@
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build --watch",
-    "bump": "npx bumpp --no-tag"
+    "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
     "@modern-js/swc-plugins": "0.6.11",
