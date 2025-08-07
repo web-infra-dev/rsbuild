@@ -50,18 +50,7 @@ const applyCommonOptions = (cli: CAC) => {
         default: 'jiti',
       },
     )
-    .option(
-      '-r, --root <root>',
-      'Set the project root directory (absolute path or relative to cwd)',
-    )
-    .option(
-      '-m, --mode <mode>',
-      'Set the build mode (development | production | none)',
-    )
-    .option(
-      '--log-level <level>',
-      'Set the log level (info | warn | error | silent)',
-    )
+    .option('--env-dir <dir>', 'Set the directory for loading `.env` files')
     .option(
       '--env-mode <mode>',
       'Set the env mode to load the `.env.[mode]` file',
@@ -70,7 +59,18 @@ const applyCommonOptions = (cli: CAC) => {
       type: [String],
       default: [],
     })
-    .option('--env-dir <dir>', 'Set the directory for loading `.env` files')
+    .option(
+      '--log-level <level>',
+      'Set the log level (info | warn | error | silent)',
+    )
+    .option(
+      '-m, --mode <mode>',
+      'Set the build mode (development | production | none)',
+    )
+    .option(
+      '-r, --root <root>',
+      'Set the project root directory (absolute path or relative to cwd)',
+    )
     .option('--no-env', 'Disable loading of `.env` files');
 };
 
