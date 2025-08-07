@@ -21,7 +21,7 @@ export const nodeMinifyConfig: Minify = {
 
 export const esmConfig: LibConfig = {
   format: 'esm',
-  syntax: 'es2021',
+  syntax: 'es2022',
   dts: {
     build: true,
   },
@@ -32,7 +32,7 @@ export const esmConfig: LibConfig = {
 
 export const cjsConfig: LibConfig = {
   format: 'cjs',
-  syntax: 'es2021',
+  syntax: 'es2022',
   output: {
     minify: nodeMinifyConfig,
   },
