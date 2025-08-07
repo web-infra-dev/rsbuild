@@ -18,7 +18,7 @@ own GitHub account and then [clone](https://help.github.com/articles/cloning-a-r
 
 ### Install Node.js
 
-We recommend using Node.js LTS version. See [Install Node.js](https://nodejs.org/en/download).
+Use the latest Node.js LTS version. For installation instructions, see [Install Node.js](https://nodejs.org/en/download).
 
 ### Install dependencies
 
