@@ -647,7 +647,7 @@ import OnBeforeCreateCompiler from '@en/shared/onBeforeCreateCompiler.mdx';
 const myPlugin = () => ({
   setup(api) {
     api.onBeforeCreateCompiler(({ bundlerConfigs }) => {
-      console.log('the bundler config is ', bundlerConfigs);
+      console.log('the bundler config are ', bundlerConfigs);
     });
   },
 });
@@ -724,7 +724,7 @@ import OnBeforeBuild from '@en/shared/onBeforeBuild.mdx';
 const myPlugin = () => ({
   setup(api) {
     api.onBeforeBuild(({ bundlerConfigs }) => {
-      console.log('the bundler config is ', bundlerConfigs);
+      console.log('the bundler config are ', bundlerConfigs);
     });
   },
 });
@@ -884,7 +884,7 @@ import OnBeforeDevCompile from '@en/shared/onBeforeDevCompile.mdx';
 const myPlugin = () => ({
   setup(api) {
     api.onBeforeDevCompile(({ bundlerConfigs }) => {
-      console.log('the bundler config is ', bundlerConfigs);
+      console.log('the bundler config are ', bundlerConfigs);
     });
   },
 });
