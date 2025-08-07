@@ -57,7 +57,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should generate rspack profile as expected in build',
   async () => {
-    const buildProcess = spawn(`${rsbuildBinPath} build`, {
+    const buildProcess = spawn('node', [rsbuildBinPath, 'build'], {
       cwd: __dirname,
       env: {
         ...process.env,
