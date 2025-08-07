@@ -28,18 +28,14 @@ export function runCLI(): void {
     }
   }
 
-  // Print a blank line to keep the greet log nice.
-  // Some package managers automatically output a blank line, some do not.
-  const { npm_execpath } = process.env;
-  if (
-    !npm_execpath ||
-    npm_execpath.includes('npx-cli.js') ||
-    npm_execpath.includes('.bun')
-  ) {
-    logger.log();
-  }
-
-  logger.greet(`  Rsbuild v${RSBUILD_VERSION}\n`);
+  // Ensure consistent spacing before the greeting message.
+  // Different package managers handle output formatting differently - some automatically
+  // add a blank line before command output, while others do not.
+  const { npm_execpath, npm_lifecycle_event } = process.env;
+  const isNpx = npm_lifecycle_event === 'npx';
+  const isBun = npm_execpath?.includes('.bun');
+  const prefix = isNpx || isBun ? '\n' : '';
+  logger.greet(`${prefix}  Rsbuild v${RSBUILD_VERSION}\n`);
 
   try {
     setupCommands();
