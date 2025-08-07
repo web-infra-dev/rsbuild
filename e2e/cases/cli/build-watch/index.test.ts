@@ -1,7 +1,6 @@
-import { exec } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { expectFile, rspackOnlyTest } from '@e2e/helper';
+import { expectFile, rspackOnlyTest, runCli } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import fse, { remove } from 'fs-extra';
 
@@ -13,7 +12,7 @@ rspackOnlyTest('should support watch mode for build command', async () => {
 
   fse.outputFileSync(indexFile, `console.log('hello!');`);
 
-  const childProcess = exec('npx rsbuild build --watch', {
+  const childProcess = runCli('build --watch', {
     cwd: __dirname,
   });
 
