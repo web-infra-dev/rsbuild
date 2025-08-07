@@ -1,4 +1,5 @@
 import assert from 'node:assert';
+import { type ExecSyncOptions, execSync } from 'node:child_process';
 import net from 'node:net';
 import { join } from 'node:path';
 import { URL } from 'node:url';
@@ -339,4 +340,10 @@ export async function build({
     getIndexFile,
     instance: rsbuild,
   };
+}
+
+const binPath = join(__dirname, '../node_modules/@rsbuild/core/bin/rsbuild.js');
+
+export function runCliSync(command: string, options?: ExecSyncOptions) {
+  return execSync(`${binPath} ${command}`, options);
 }

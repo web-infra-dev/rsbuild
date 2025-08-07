@@ -1,6 +1,5 @@
-import { execSync } from 'node:child_process';
 import path from 'node:path';
-import { readDirContents, rspackOnlyTest } from '@e2e/helper';
+import { readDirContents, rspackOnlyTest, runCliSync } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 const nodeVersion = process.version.slice(1).split('.')[0];
@@ -11,7 +10,7 @@ const conditionalTest = isNodeVersionCompatible
   : rspackOnlyTest.skip;
 
 conditionalTest('should use Node.js native loader to load config', async () => {
-  execSync('npx rsbuild build --config-loader native', {
+  runCliSync('build --config-loader native', {
     cwd: __dirname,
     env: {
       ...process.env,

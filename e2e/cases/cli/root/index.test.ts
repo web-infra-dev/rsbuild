@@ -1,12 +1,11 @@
-import { execSync } from 'node:child_process';
 import path from 'node:path';
-import { readDirContents, rspackOnlyTest } from '@e2e/helper';
+import { readDirContents, rspackOnlyTest, runCliSync } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest(
   'should run build command with --root option correctly',
   async () => {
-    execSync('npx rsbuild build --root test', {
+    runCliSync('build --root test', {
       cwd: __dirname,
     });
 
@@ -22,7 +21,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should run build command with -r option correctly',
   async () => {
-    execSync('npx rsbuild build -r test', {
+    runCliSync('build -r test', {
       cwd: __dirname,
     });
 

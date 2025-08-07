@@ -1,11 +1,10 @@
-import { execSync } from 'node:child_process';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
-import { rspackOnlyTest } from '@e2e/helper';
+import { rspackOnlyTest, runCliSync } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest('should run build command with log level: info', async () => {
   const result = stripAnsi(
-    execSync('npx rsbuild build --logLevel info', {
+    runCliSync('build --logLevel info', {
       cwd: __dirname,
     }).toString(),
   );
@@ -17,7 +16,7 @@ rspackOnlyTest('should run build command with log level: info', async () => {
 
 rspackOnlyTest('should run build command with log level: warn', async () => {
   const result = stripAnsi(
-    execSync('npx rsbuild build --logLevel warn', {
+    runCliSync('build --logLevel warn', {
       cwd: __dirname,
     }).toString(),
   );

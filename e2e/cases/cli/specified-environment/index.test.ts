@@ -1,6 +1,5 @@
-import { execSync } from 'node:child_process';
 import { join } from 'node:path';
-import { readDirContents, rspackOnlyTest } from '@e2e/helper';
+import { readDirContents, rspackOnlyTest, runCliSync } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { remove } from 'fs-extra';
 
@@ -13,7 +12,7 @@ test.beforeEach(async () => {
 rspackOnlyTest(
   'should only build specified environment when using --environment option',
   async () => {
-    execSync('npx rsbuild build --environment web2', {
+    runCliSync('build --environment web2', {
       cwd: __dirname,
     });
 
@@ -32,7 +31,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should build specified environments when using --environment shorten option',
   async () => {
-    execSync('npx rsbuild build --environment web1,web2', {
+    runCliSync('build --environment web1,web2', {
       cwd: __dirname,
     });
 

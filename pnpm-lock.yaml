@@ -281,7 +281,11 @@ importers:
 
   e2e/cases/server/custom-server: {}
 
-  e2e/cases/server/ssr: {}
+  e2e/cases/server/ssr:
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../../../../packages/core
 
   e2e/cases/server/ssr-type-module: {}
 
