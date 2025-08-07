@@ -18,22 +18,7 @@ own GitHub account and then [clone](https://help.github.com/articles/cloning-a-r
 
 ### Install Node.js
 
-We recommend using Node.js LTS version. You can check your current Node.js version using the following command:
-
-```bash
-node -v
-```
-
-If you do not have Node.js installed in your current environment, you can use [nvm](https://github.com/nvm-sh/nvm) or [fnm](https://github.com/Schniz/fnm) to install it.
-
-Here is an example of how to install the Node.js LTS version via nvm:
-
-```bash
-# Install Node.js LTS
-nvm install --lts
-# Switch to Node.js LTS
-nvm use --lts
-```
+Use the latest Node.js LTS version. For installation instructions, see [Install Node.js](https://nodejs.org/en/download).
 
 ### Install dependencies
 
