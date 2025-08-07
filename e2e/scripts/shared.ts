@@ -351,5 +351,5 @@ const binPath = join(__dirname, '../node_modules/@rsbuild/core/bin/rsbuild.js');
  * @returns The result of `execSync`, typically a Buffer containing stdout.
  */
 export function runCliSync(command: string, options?: ExecSyncOptions) {
-  return execSync(`${binPath} ${command}`, options);
+  return execSync(`node ${binPath} ${command}`, options);
 }
