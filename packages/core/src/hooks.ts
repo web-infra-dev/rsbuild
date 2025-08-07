@@ -20,6 +20,7 @@ import type {
   OnAfterStartProdServerFn,
   OnBeforeBuildFn,
   OnBeforeCreateCompilerFn,
+  OnBeforeDevCompileFn,
   OnBeforeEnvironmentCompileFn,
   OnBeforeStartDevServerFn,
   OnBeforeStartProdServerFn,
@@ -201,6 +202,7 @@ export function initHooks(): {
   onAfterBuild: AsyncHook<OnAfterBuildFn>;
   onCloseBuild: AsyncHook<OnCloseBuildFn>;
   onBeforeBuild: AsyncHook<OnBeforeBuildFn>;
+  onBeforeDevCompile: AsyncHook<OnBeforeDevCompileFn>;
   onDevCompileDone: AsyncHook<OnDevCompileDoneFn>;
   onCloseDevServer: AsyncHook<OnCloseDevServerFn>;
   onAfterStartDevServer: AsyncHook<OnAfterStartDevServerFn>;
@@ -226,6 +228,7 @@ export function initHooks(): {
     onCloseBuild: createAsyncHook<OnCloseBuildFn>(),
     onAfterBuild: createAsyncHook<OnAfterBuildFn>(),
     onBeforeBuild: createAsyncHook<OnBeforeBuildFn>(),
+    onBeforeDevCompile: createAsyncHook<OnBeforeDevCompileFn>(),
     onDevCompileDone: createAsyncHook<OnDevCompileDoneFn>(),
     onCloseDevServer: createAsyncHook<OnCloseDevServerFn>(),
     onAfterStartDevServer: createAsyncHook<OnAfterStartDevServerFn>(),
@@ -475,6 +478,14 @@ export const registerDevHook = ({
     return prev;
   }, []);
 
+  const beforeCompile = async () =>
+    context.hooks.onBeforeDevCompile.callBatch({
+      bundlerConfigs,
+      environments: context.environments,
+      isFirstCompile,
+      isWatch: true,
+    });
+
   const beforeEnvironmentCompiler = async (buildIndex: number) =>
     context.hooks.onBeforeEnvironmentCompile.callBatch({
       environment: environmentList[buildIndex].name,
@@ -515,6 +526,7 @@ export const registerDevHook = ({
   onBeforeCompile({
     compiler,
     beforeEnvironmentCompiler,
+    beforeCompile,
     isWatch: true,
   });
 

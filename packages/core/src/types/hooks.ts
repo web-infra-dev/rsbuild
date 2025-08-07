@@ -37,6 +37,15 @@ export type OnBeforeBuildFn<B = 'rspack'> = (
   },
 ) => MaybePromise<void>;
 
+export type OnBeforeDevCompileFn<B = 'rspack'> = (
+  params: CompileCommonParams & {
+    environments: Record<string, EnvironmentContext>;
+    bundlerConfigs?: B extends 'rspack'
+      ? Rspack.Configuration[]
+      : WebpackConfig[];
+  },
+) => MaybePromise<void>;
+
 export type OnAfterEnvironmentCompileFn = (
   params: CompileCommonParams & {
     stats?: Rspack.Stats;

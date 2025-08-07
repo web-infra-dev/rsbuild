@@ -24,6 +24,7 @@ Called only when running the `rsbuild dev` command or the `rsbuild.startDevServe
 
 - [onBeforeStartDevServer](#onbeforestartdevserver): Called before starting the dev server.
 - [onAfterStartDevServer](#onafterstartdevserver): Called after starting the dev server.
+- [onBeforeDevCompile](#onbeforedevcompile): Called before each build in development mode.
 - [onDevCompileDone](#ondevcompiledone): Called after each build in development mode.
 
 Called only when Rsbuild is restarted or when the [close()](/api/javascript-api/instance#close-server) method of `rsbuild.startDevServer()` is executed.
@@ -61,6 +62,7 @@ When the `rsbuild dev` command or `rsbuild.startDevServer()` method is executed,
 - [modifyRspackConfig](#modifyrspackconfig)
 - [onBeforeCreateCompiler](#onbeforecreatecompiler)
 - [onAfterCreateCompiler](#onaftercreatecompiler)
+- [onBeforeDevCompile](#onbeforedevcompile)
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [onAfterStartDevServer](#onafterstartdevserver)
 - [modifyHTMLTags](#modifyhtmltags)
@@ -72,6 +74,7 @@ When the `rsbuild dev` command or `rsbuild.startDevServer()` method is executed,
 
 When rebuilding, the following hooks will be triggered again:
 
+- [onBeforeDevCompile](#onbeforedevcompile)
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [modifyHTMLTags](#modifyhtmltags)
 - [modifyHTML](#modifyhtml)
@@ -132,6 +135,7 @@ Correspondingly, there are some plugin hooks that are related to the current env
 - [onBeforeCreateCompiler](#onbeforecreatecompiler)
 - [onAfterCreateCompiler](#onaftercreatecompiler)
 - [onAfterStartDevServer](#onafterstartdevserver)
+- [onBeforeDevCompile](#onbeforedevcompile)
 - [onDevCompileDone](#ondevcompiledone)
 - [onCloseDevServer](#onclosedevserver)
 - [onBeforeBuild](#onbeforebuild)
@@ -868,23 +872,19 @@ const myPlugin = () => ({
 });
 ```
 
-### onAfterEnvironmentCompile
+### onBeforeDevCompile
 
-import OnDevCompileEnvironmentDone from '@en/shared/onAfterEnvironmentCompile.mdx';
+import OnBeforeDevCompile from '@en/shared/onBeforeDevCompile.mdx';
 
-<OnDevCompileEnvironmentDone />
+<OnBeforeDevCompile />
 
 - **Example:**
 
 ```ts
 const myPlugin = () => ({
   setup(api) {
-    api.onAfterEnvironmentCompile(({ isFirstCompile }) => {
-      if (isFirstCompile) {
-        console.log('first compile!');
-      } else {
-        console.log('re-compile!');
-      }
+    api.onBeforeDevCompile(({ bundlerConfigs }) => {
+      console.log('the bundler config is ', bundlerConfigs);
     });
   },
 });
