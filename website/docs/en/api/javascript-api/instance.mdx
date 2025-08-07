@@ -944,6 +944,22 @@ rsbuild.onAfterStartProdServer(({ port, routes }) => {
 });
 ```
 
+## rsbuild.onBeforeDevCompile
+
+> Provides the same functionality as the [onBeforeDevCompile](/plugins/dev/hooks#onbeforedevcompile) plugin hook.
+
+import OnBeforeDevCompile from '@en/shared/onBeforeDevCompile.mdx';
+
+<OnBeforeDevCompile />
+
+- **Example:**
+
+```ts
+rsbuild.onBeforeDevCompile(({ bundlerConfigs }) => {
+  console.log('the Rspack configs are ', bundlerConfigs);
+});
+```
+
 ## rsbuild.onDevCompileDone
 
 > Provides the same functionality as the [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone) plugin hook.

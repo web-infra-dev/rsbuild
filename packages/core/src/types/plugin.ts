@@ -30,6 +30,7 @@ import type {
   OnAfterStartProdServerFn,
   OnBeforeBuildFn,
   OnBeforeCreateCompilerFn,
+  OnBeforeDevCompileFn,
   OnBeforeEnvironmentCompileFn,
   OnBeforeStartDevServerFn,
   OnBeforeStartProdServerFn,
@@ -639,6 +640,10 @@ export type RsbuildPluginAPI = Readonly<{
    * A callback function that is triggered before the production build is executed.
    */
   onBeforeBuild: PluginHook<OnBeforeBuildFn>;
+  /**
+   * A callback function that is triggered before the dev build is executed.
+   */
+  onBeforeDevCompile: PluginHook<OnBeforeDevCompileFn>;
   /**
    * A callback function that is triggered after the Compiler instance has been
    * created, but before the build process begins. This hook is called when you

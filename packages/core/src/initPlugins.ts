@@ -365,6 +365,7 @@ export function initPluginAPI({
     onCloseBuild: hooks.onCloseBuild.tap,
     onBeforeBuild: hooks.onBeforeBuild.tap,
     onCloseDevServer: hooks.onCloseDevServer.tap,
+    onBeforeDevCompile: hooks.onBeforeDevCompile.tap,
     onDevCompileDone: hooks.onDevCompileDone.tap,
     onAfterCreateCompiler: hooks.onAfterCreateCompiler.tap,
     onAfterStartDevServer: hooks.onAfterStartDevServer.tap,

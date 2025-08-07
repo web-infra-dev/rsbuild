@@ -46,6 +46,9 @@ const createPlugin = () => {
       api.onBeforeBuild(() => {
         names.push('BeforeBuild');
       });
+      api.onBeforeDevCompile(() => {
+        names.push('BeforeDevCompile');
+      });
       api.onAfterBuild(() => {
         names.push('AfterBuild');
       });
@@ -187,6 +190,7 @@ rspackOnlyTest(
       'ModifyBundlerConfig',
       'BeforeCreateCompiler',
       'AfterCreateCompiler',
+      'BeforeDevCompile',
       'BeforeEnvironmentCompile',
       'ModifyHTMLTags',
       'ModifyHTML',

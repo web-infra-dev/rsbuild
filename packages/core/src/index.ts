@@ -128,6 +128,7 @@ export type {
   OnAfterStartProdServerFn,
   OnBeforeBuildFn,
   OnBeforeCreateCompilerFn,
+  OnBeforeDevCompileFn,
   OnBeforeEnvironmentCompileFn,
   OnBeforeStartDevServerFn,
   OnBeforeStartProdServerFn,

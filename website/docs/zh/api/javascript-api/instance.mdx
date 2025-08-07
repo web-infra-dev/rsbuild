@@ -966,6 +966,22 @@ rsbuild.onAfterStartProdServer(({ port, routes }) => {
 });
 ```
 
+## rsbuild.onBeforeDevCompile
+
+> 功能与 [onBeforeDevCompile](/plugins/dev/hooks#onbeforedevcompile) 插件 hook 一致。
+
+import OnBeforeDevCompile from '@zh/shared/onBeforeDevCompile.mdx';
+
+<OnBeforeDevCompile />
+
+- **示例：**
+
+```ts
+rsbuild.onBeforeDevCompile(({ bundlerConfigs }) => {
+  console.log('the Rspack configs are ', bundlerConfigs);
+});
+```
+
 ## rsbuild.onDevCompileDone
 
 > 功能与 [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone) 插件 hook 一致。
