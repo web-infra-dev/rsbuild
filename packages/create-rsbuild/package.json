@@ -44,7 +44,7 @@
     "typescript": "^5.9.2"
   },
   "engines": {
-    "node": ">= 18.12.0"
+    "node": ">=18.12.0"
   },
   "publishConfig": {
     "access": "public",
