@@ -287,7 +287,11 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/core
 
-  e2e/cases/server/ssr-type-module: {}
+  e2e/cases/server/ssr-type-module:
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../../../../packages/core
 
   e2e/cases/swc-plugin:
     dependencies:
