@@ -74,9 +74,11 @@ export function createEnvironmentAsyncHook<
   const callChain = async ({
     environment,
     args: params,
+    afterEach,
   }: {
     environment?: string;
     args: Parameters<Callback>;
+    afterEach?: (args: Parameters<Callback>) => void;
   }) => {
     const callbacks = [...preGroup, ...defaultGroup, ...postGroup];
 
@@ -94,6 +96,10 @@ export function createEnvironmentAsyncHook<
 
       if (result !== undefined) {
         params[0] = result;
+      }
+
+      if (afterEach) {
+        afterEach(params);
       }
     }
 

@@ -94,6 +94,10 @@ export type EnvironmentAsyncHook<
      * The parameters to pass to each callback
      */
     args: Parameters<Callback>;
+    /**
+     * The callback function to be executed after each callback
+     */
+    afterEach?: (args: Parameters<Callback>) => void;
   }) => Promise<Parameters<Callback>>;
   /**
    * Executes callbacks in sequence independently and collects all their results into an array.

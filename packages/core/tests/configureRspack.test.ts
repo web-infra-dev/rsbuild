@@ -243,4 +243,61 @@ describe('configure Rspack', () => {
       'BannerPlugin',
     );
   });
+
+  test('should merge rules as expected when using appendRules', async () => {
+    const fooRule = {
+      test: /\.foo/,
+      use: 'foo-loader',
+    };
+    const barRule = {
+      test: /\.bar/,
+      use: 'bar-loader',
+    };
+    const bazRule = {
+      test: /\.baz/,
+      use: 'baz-loader',
+    };
+
+    const config1 = defineConfig({
+      tools: {
+        rspack: (config) => {
+          return {
+            ...config,
+            module: {
+              ...config.module,
+              rules: [...(config.module?.rules || []), fooRule],
+            },
+          };
+        },
+      },
+    });
+
+    const config2 = defineConfig({
+      tools: {
+        rspack: {
+          module: {
+            rules: [barRule],
+          },
+        },
+      },
+    });
+
+    const config3 = defineConfig({
+      tools: {
+        rspack: (config, { appendRules }) => {
+          appendRules(bazRule);
+          return config;
+        },
+      },
+    });
+
+    const mergedConfig = mergeRsbuildConfig(config1, config2, config3);
+
+    const rsbuildInstance = await createRsbuild({
+      rsbuildConfig: mergedConfig,
+    });
+    const config = await rsbuildInstance.initConfigs();
+    const rules = config[0].module?.rules || [];
+    expect(rules.slice(-3)).toEqual([fooRule, barRule, bazRule]);
+  });
 });
