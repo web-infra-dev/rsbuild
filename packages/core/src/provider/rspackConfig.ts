@@ -27,25 +27,14 @@ async function modifyRspackConfig(
 
   let currentConfig = rspackConfig;
 
-  // Ensure the helpers can always access the latest merged configuration object
-  const proxiedConfig = new Proxy(
-    {},
-    {
-      get(_, prop) {
-        return currentConfig[prop as keyof typeof currentConfig];
-      },
-      set(_, prop, value) {
-        currentConfig[prop as keyof typeof currentConfig] = value;
-        return true;
-      },
-    },
-  );
-
-  const utils = getConfigUtils(proxiedConfig, chainUtils);
+  const utils = getConfigUtils(() => currentConfig, chainUtils);
 
   [currentConfig] = await context.hooks.modifyRspackConfig.callChain({
     environment: utils.environment.name,
     args: [rspackConfig as NarrowedRspackConfig, utils],
+    afterEach: ([config]) => {
+      currentConfig = config;
+    },
   });
 
   if (utils.environment.config.tools?.rspack) {
@@ -72,7 +61,7 @@ async function modifyRspackConfig(
 }
 
 export function getConfigUtils(
-  config: Rspack.Configuration,
+  getCurrentConfig: () => Rspack.Configuration,
   chainUtils: ModifyChainUtils,
 ): ModifyRspackConfigUtils {
   return {
@@ -81,6 +70,7 @@ export function getConfigUtils(
     mergeConfig: merge,
 
     addRules(rules) {
+      const config = getCurrentConfig();
       const ruleArr = castArray(rules);
       if (!config.module) {
         config.module = {};
@@ -92,6 +82,7 @@ export function getConfigUtils(
     },
 
     appendRules(rules) {
+      const config = getCurrentConfig();
       const ruleArr = castArray(rules);
       if (!config.module) {
         config.module = {};
@@ -103,6 +94,7 @@ export function getConfigUtils(
     },
 
     prependPlugins(plugins) {
+      const config = getCurrentConfig();
       const pluginArr = castArray(plugins);
       if (!config.plugins) {
         config.plugins = [];
@@ -111,6 +103,7 @@ export function getConfigUtils(
     },
 
     appendPlugins(plugins) {
+      const config = getCurrentConfig();
       const pluginArr = castArray(plugins);
       if (!config.plugins) {
         config.plugins = [];
@@ -119,6 +112,7 @@ export function getConfigUtils(
     },
 
     removePlugin(pluginName) {
+      const config = getCurrentConfig();
       if (!config.plugins) {
         return;
       }
