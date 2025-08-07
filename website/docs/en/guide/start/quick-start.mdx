@@ -7,33 +7,21 @@ We provide online examples based on Rsbuild. The examples give an intuitive feel
 - [StackBlitz example](https://stackblitz.com/~/github.com/rspack-contrib/rsbuild-stackblitz-example)
 - [CodeSandbox example](https://codesandbox.io/p/github/rspack-contrib/rsbuild-codesandbox-example)
 
-## Setup environment
+## Environment preparation
 
-Rsbuild supports using [Node.js](https://nodejs.org/), [Deno](https://deno.com/), or [Bun](https://bun.sh/) as the runtime.
+Rsbuild supports using [Node.js](https://nodejs.org/), [Deno](https://deno.com/), or [Bun](https://bun.sh/) as the JavaScript runtime.
 
-### Node.js
+You can refer to the following installation guides and choose one runtime:
 
-For Node.js, you will need to install Node.js >= version 16, it is recommended to use the Node.js LTS version.
+- [Install Node.js](https://nodejs.org/en/download)
+- [Install Bun](https://bun.com/docs/installation)
+- [Install Deno](https://docs.deno.com/runtime/getting_started/installation/)
 
-Check the current Node.js version with the following command:
+:::tip Version requirements
 
-```bash
-node -v
-```
+- Rsbuild version 1.5 and above requires Node.js at least 18.12.0.
+- Rsbuild versions below 1.5 support Node.js 16.10.0 as the minimum.
 
-If you do not have Node.js installed in current environment, or the installed version is too low, you can use [nvm](https://github.com/nvm-sh/nvm) or [fnm](https://github.com/Schniz/fnm) to install.
-
-Here is an example of how to install via nvm:
-
-```bash
-# Install Node.js LTS
-nvm install --lts
-# Switch to Node.js LTS
-nvm use --lts
-```
-
-:::tip
-Node.js 16 will no longer be supported by Rsbuild ≥ 1.5.
 :::
 
 ## Create an Rsbuild application
