@@ -49,7 +49,7 @@
     "build": "rslib build",
     "dev": "rslib build --watch",
     "prebundle": "prebundle",
-    "bump": "npx bumpp --no-tag"
+    "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
     "@rspack/core": "1.4.11",

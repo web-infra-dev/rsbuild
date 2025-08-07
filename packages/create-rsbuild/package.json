@@ -26,7 +26,7 @@
     "build": "rslib build",
     "dev": "rslib build --watch",
     "start": "node ./dist/index.js",
-    "bump": "npx bumpp --no-tag"
+    "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
     "create-rstack": "1.5.6"

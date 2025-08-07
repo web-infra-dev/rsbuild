@@ -25,7 +25,7 @@
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build --watch",
-    "bump": "npx bumpp --no-tag"
+    "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
     "deepmerge": "^4.3.1",
