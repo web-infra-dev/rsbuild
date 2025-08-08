@@ -136,7 +136,7 @@ export const expectPoll = (fn: () => boolean) => {
  * @param page
  * @param timeout
  */
-export async function waitForHmr(page: Page, timeout = 500) {
+export async function waitForHmr(page: Page, timeout = 100) {
   await Promise.race([
     page.waitForResponse((response) => response.url().includes('hot-update')),
     new Promise((resolve) => {
@@ -144,5 +144,4 @@ export async function waitForHmr(page: Page, timeout = 500) {
     }),
   ]);
   await page.waitForTimeout(timeout);
-  // await Promise.race([page.waitForResponse(/.*\.js$/, new Promise((resolve) => { setTimeout(resolve, 1000); }))]);
 }
