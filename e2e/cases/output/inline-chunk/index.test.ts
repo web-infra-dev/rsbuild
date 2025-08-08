@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { build, dev } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, type Page, test } from '@playwright/test';
 import type { RspackChain } from '@rsbuild/core';
 
 // use source-map for easy to test. By default, Rsbuild use hidden-source-map
@@ -168,7 +168,7 @@ test('styles are not inline by default in development mode', async ({
   // index.css in page
   await expect(
     page.evaluate(
-      `document.querySelectorAll('link[href*="index.css"]').length`,
+      `document.querySelectorAll('link[href*="src_index_js.css"]').length`,
     ),
   ).resolves.toEqual(1);
 
@@ -352,7 +352,7 @@ test('inline does not work in development mode when enable is auto', async ({
   // all index.css in page
   await expect(
     page.evaluate(
-      `document.querySelectorAll('link[href*="index.css"]').length`,
+      `document.querySelectorAll('link[href*="src_index_js.css"]').length`,
     ),
   ).resolves.toEqual(1);
 
@@ -384,7 +384,7 @@ test('styles and scripts are not inline by default in development mode when enab
   // all index.css in page
   await expect(
     page.evaluate(
-      `document.querySelectorAll('link[href*="index.css"]').length`,
+      `document.querySelectorAll('link[href*="src_index_js.css"]').length`,
     ),
   ).resolves.toEqual(1);
 

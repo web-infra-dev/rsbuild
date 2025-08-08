@@ -22,7 +22,10 @@ rspackOnlyTest(
     const files = await rsbuild.getDistFiles();
 
     const [, content] = Object.entries(files).find(
-      ([name]) => name.endsWith('.js') && name.includes('static/js/index'),
+      ([name]) =>
+        name.endsWith('.js') &&
+        name.includes('static/js/async') &&
+        name.includes('index_js'),
     )!;
 
     // in Rspack is: \\u4f60\\u597D world!

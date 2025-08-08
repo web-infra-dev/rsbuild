@@ -107,8 +107,10 @@ test('should allow to access manifest data in environment context after dev buil
     },
   });
 
-  // main.js, main.js.map, index.html
-  expect(Object.keys(webManifest.allFiles).length).toBe(3);
+  // index.js index.js.map index.html hot-update.js.map src_index_ts.js src_index_ts.js.map
+  // when we enable lazyCompilation
+  expect(Object.keys(webManifest.allFiles).length).toBe(6);
+
   expect(webManifest.entries.index).toMatchObject({
     initial: {
       js: ['/static/js/index.js'],
@@ -168,8 +170,9 @@ test('should allow to access manifest data in environment API', async ({
   // should visit base url correctly
   await page.goto(`http://localhost:${rsbuild.port}`);
 
-  // main.js, main.js.map, index.html
-  expect(Object.keys(webManifest.allFiles).length).toBe(3);
+  // index.js index.js.map index.html hot-update.js.map src_index_ts.js src_index_ts.js.map
+  // when we enable lazyCompilation
+  expect(Object.keys(webManifest.allFiles).length).toBe(6);
   expect(webManifest.entries.index).toMatchObject({
     initial: {
       js: ['/static/js/index.js'],

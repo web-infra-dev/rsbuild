@@ -14,6 +14,7 @@ import {
   type ProxyConsoleOptions,
   proxyConsole,
   readDirContents,
+  waitForHmr,
 } from './helper';
 
 /**
@@ -219,6 +220,7 @@ export async function dev({
 
   if (page) {
     await gotoPage(page, result);
+    await waitForHmr(page);
   }
 
   return {

@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import { platform } from 'node:os';
 import { join } from 'node:path';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
-import { expect, test } from '@playwright/test';
+import { expect, type Page, test } from '@playwright/test';
 import type { ConsoleType } from '@rsbuild/core';
 import glob, {
   convertPathToPattern,
@@ -126,3 +126,23 @@ export const expectPoll = (fn: () => boolean) => {
     intervals: [20, 30, 40, 50, 60, 70, 80, 90, 100],
   });
 };
+
+/**
+ * we enable lazy compilation by default, so we need to wait for the page to load
+ *
+ * This function waits for the HMR (Hot Module Replacement) response to ensure that the page is updated correctly.
+ * It waits for a response that includes "hot-update" in the URL, with a timeout of 5000 milliseconds,
+ * and then waits for an additional 500 milliseconds to ensure the page has time to reflect the changes.
+ * @param page
+ * @param timeout
+ */
+export async function waitForHmr(page: Page, timeout = 500) {
+  await Promise.race([
+    page.waitForResponse((response) => response.url().includes('hot-update')),
+    new Promise((resolve) => {
+      setTimeout(resolve, 1000);
+    }),
+  ]);
+  await page.waitForTimeout(timeout);
+  // await Promise.race([page.waitForResponse(/.*\.js$/, new Promise((resolve) => { setTimeout(resolve, 1000); }))]);
+}
