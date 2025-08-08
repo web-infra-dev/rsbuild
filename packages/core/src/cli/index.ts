@@ -2,9 +2,11 @@ import { logger } from '../logger';
 import type { LogLevel } from '../types';
 import { setupCommands } from './commands';
 
+const { argv } = process;
+
 function initNodeEnv() {
   if (!process.env.NODE_ENV) {
-    const command = process.argv[2];
+    const command = argv[2];
     process.env.NODE_ENV = ['build', 'preview'].includes(command)
       ? 'production'
       : 'development';
@@ -14,8 +16,7 @@ function initNodeEnv() {
 function showGreeting() {
   // Skip greeting when help is requested, as cac's help output already contains
   // information that would be redundant with the greeting message
-  const { argv } = process;
-  if (argv.includes('--help') || argv.includes('-h')) {
+  if (argv.some((item) => item === '--help' || item === '-h')) {
     return;
   }
 
