@@ -11,21 +11,12 @@ function initNodeEnv() {
   }
 }
 
-export function runCLI(): void {
-  initNodeEnv();
-
-  // make it easier to identify the process via activity monitor or other tools
-  process.title = 'rsbuild-node';
-
-  // ensure log level is set before any log is printed
-  const logLevelIndex = process.argv.findIndex(
-    (item) => item === '--log-level' || item === '--logLevel',
-  );
-  if (logLevelIndex !== -1) {
-    const level = process.argv[logLevelIndex + 1];
-    if (level && ['warn', 'error', 'silent'].includes(level)) {
-      logger.level = level as LogLevel;
-    }
+function showGreeting() {
+  // Skip greeting when help is requested, as cac's help output already contains
+  // information that would be redundant with the greeting message
+  const { argv } = process;
+  if (argv.includes('--help') || argv.includes('-h')) {
+    return;
   }
 
   // Ensure consistent spacing before the greeting message.
@@ -36,6 +27,28 @@ export function runCLI(): void {
   const isBun = npm_execpath?.includes('.bun');
   const prefix = isNpx || isBun ? '\n' : '';
   logger.greet(`${prefix}  Rsbuild v${RSBUILD_VERSION}\n`);
+}
+
+// ensure log level is set before any log is printed
+function setupLogLevel() {
+  const logLevelIndex = process.argv.findIndex(
+    (item) => item === '--log-level' || item === '--logLevel',
+  );
+  if (logLevelIndex !== -1) {
+    const level = process.argv[logLevelIndex + 1];
+    if (level && ['warn', 'error', 'silent'].includes(level)) {
+      logger.level = level as LogLevel;
+    }
+  }
+}
+
+export function runCLI(): void {
+  // make it easier to identify the process via activity monitor or other tools
+  process.title = 'rsbuild-node';
+
+  initNodeEnv();
+  setupLogLevel();
+  showGreeting();
 
   try {
     setupCommands();
