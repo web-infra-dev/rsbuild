@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { build, dev } from '@e2e/helper';
-import { expect, type Page, test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import type { RspackChain } from '@rsbuild/core';
 
 // use source-map for easy to test. By default, Rsbuild use hidden-source-map

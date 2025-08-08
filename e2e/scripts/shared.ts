@@ -220,7 +220,13 @@ export async function dev({
 
   if (page) {
     await gotoPage(page, result);
-    await waitForHmr(page);
+
+    const normalizeRsbuildConfig = rsbuild.getNormalizedConfig();
+
+    // we enable lazy compilation by default, so we need to wait for the page to load
+    if (normalizeRsbuildConfig.dev.lazyCompilation) {
+      await waitForHmr(page);
+    }
   }
 
   return {

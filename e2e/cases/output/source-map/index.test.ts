@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import path, { join } from 'node:path';
+import { join } from 'node:path';
 import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import type { Rspack } from '@rsbuild/core';
