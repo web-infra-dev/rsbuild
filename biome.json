@@ -20,6 +20,12 @@
       "**/e2e/**",
       "**/scripts/**",
       "**/website/**",
+      "!**/node_modules/**",
+      "!**/.nx/**",
+      "!**/dist/**",
+      "!**/dist-*/**",
+      "!**/doc_build/**",
+      "!**/compiled/**",
       "!**/*.vue",
       "!**/*.svelte",
       "!**/template-lit-*/src/my-element.*"
