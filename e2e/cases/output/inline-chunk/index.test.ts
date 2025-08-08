@@ -168,7 +168,7 @@ test('styles are not inline by default in development mode', async ({
   // index.css in page
   await expect(
     page.evaluate(
-      `document.querySelectorAll('link[href*="index.css"]').length`,
+      `document.querySelectorAll('link[href*="src_index_js.css"]').length`,
     ),
   ).resolves.toEqual(1);
 
@@ -352,7 +352,7 @@ test('inline does not work in development mode when enable is auto', async ({
   // all index.css in page
   await expect(
     page.evaluate(
-      `document.querySelectorAll('link[href*="index.css"]').length`,
+      `document.querySelectorAll('link[href*="src_index_js.css"]').length`,
     ),
   ).resolves.toEqual(1);
 
@@ -384,7 +384,7 @@ test('styles and scripts are not inline by default in development mode when enab
   // all index.css in page
   await expect(
     page.evaluate(
-      `document.querySelectorAll('link[href*="index.css"]').length`,
+      `document.querySelectorAll('link[href*="src_index_js.css"]').length`,
     ),
   ).resolves.toEqual(1);
 

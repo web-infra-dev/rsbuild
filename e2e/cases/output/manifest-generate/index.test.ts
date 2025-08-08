@@ -64,8 +64,8 @@ test('should allow to custom generate manifest data in dev', async ({
     ];
   const manifest = JSON.parse(manifestContent);
 
-  expect(manifest.filesCount).toBe(2);
-  expect(manifest.data.allFiles.length).toBe(2);
+  expect(manifest.filesCount).toBe(3);
+  expect(manifest.data.allFiles.length).toBe(3);
   expect(manifest.data.entries.index).toMatchObject({
     initial: {
       js: ['/static/js/index.js'],

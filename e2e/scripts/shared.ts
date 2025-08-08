@@ -14,6 +14,7 @@ import {
   type ProxyConsoleOptions,
   proxyConsole,
   readDirContents,
+  waitForHmr,
 } from './helper';
 
 /**
@@ -219,6 +220,13 @@ export async function dev({
 
   if (page) {
     await gotoPage(page, result);
+
+    const normalizeRsbuildConfig = rsbuild.getNormalizedConfig();
+
+    // we enable lazy compilation by default, so we need to wait for the page to load
+    if (normalizeRsbuildConfig.dev.lazyCompilation) {
+      await waitForHmr(page);
+    }
   }
 
   return {

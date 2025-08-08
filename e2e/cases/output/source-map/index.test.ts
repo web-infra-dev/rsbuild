@@ -168,14 +168,14 @@ test('should generate source map correctly in development build', async ({
   const files = await rsbuild.getDistFiles(false);
 
   const jsMapFile = Object.keys(files).find((files) =>
-    files.endsWith('.js.map'),
+    files.endsWith('index_js.js.map'),
   );
   expect(jsMapFile).not.toBeUndefined();
 
   const jsContent = await readFileSync(jsMapFile!, 'utf-8');
   const jsMap = JSON.parse(jsContent);
   expect(jsMap.sources.length).toBeGreaterThan(1);
-  expect(jsMap.file).toEqual('static/js/index.js');
+  expect(jsMap.file).toEqual('static/js/async/src_index_js.js');
   expect(jsMap.sourcesContent).toContain(
     readFileSync(join(fixtures, 'src/App.jsx'), 'utf-8'),
   );
