@@ -37,7 +37,6 @@
       "@typescript-eslint/no-misused-promises": "off",
       "@typescript-eslint/no-redundant-type-constituents": "off",
       "@typescript-eslint/no-implied-eval": "off",
-      "@typescript-eslint/no-unnecessary-type-assertion": "off",
       "@typescript-eslint/switch-exhaustiveness-check": "off",
       "@typescript-eslint/prefer-promise-reject-errors": "off",
       "@typescript-eslint/no-empty-function": "off"

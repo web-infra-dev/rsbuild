@@ -62,13 +62,13 @@ export class EsmRunner extends CommonJsRunner {
           url: `${pathToFileURL(file.path).href}?${esmIdentifier}`,
           // run in current execution context
           initializeImportMeta: (meta: { url: string }, _: any) => {
-            meta.url = pathToFileURL(file!.path).href;
+            meta.url = pathToFileURL(file.path).href;
           },
           importModuleDynamically: async (
             specifier: any,
             module: { context: any },
           ) => {
-            const result = await _require(path.dirname(file!.path), specifier, {
+            const result = await _require(path.dirname(file.path), specifier, {
               esmMode: EsmMode.Evaluated,
             });
             return asModule(result, module.context);
