@@ -1217,8 +1217,8 @@ importers:
         specifier: ^1.0.4
         version: 1.0.4(@rsbuild/core@packages+core)
       rsbuild-plugin-open-graph:
-        specifier: ^1.0.4
-        version: 1.0.4(@rsbuild/core@packages+core)
+        specifier: ^1.1.0
+        version: 1.1.0(@rsbuild/core@packages+core)
       rspress-plugin-font-open-sans:
         specifier: ^1.0.3
         version: 1.0.3(@rspress/core@2.0.0-beta.24(@types/react@19.1.9)(acorn@8.15.0)(webpack@5.101.0))
@@ -5742,8 +5742,8 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  rsbuild-plugin-open-graph@1.0.4:
-    resolution: {integrity: sha512-zypY4cXKg9MfMnm6lZ8YY0/b3f2qhoCjko1EAJ0YydLuFcAQlt5onVW0hYdm2AeUJi57vHr5RL1ocawDl6PBJA==}
+  rsbuild-plugin-open-graph@1.1.0:
+    resolution: {integrity: sha512-ETrmQxhs/hW7xFzDGb6CIiZ1tVOrsrGPDgPTC/49bQ+sK75y6LZ3/CvcqPNxMwdnI3Ba79l62FIFvR0uC+UISw==}
     peerDependencies:
       '@rsbuild/core': 1.x
     peerDependenciesMeta:
@@ -11889,7 +11889,7 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': link:packages/core
 
-  rsbuild-plugin-open-graph@1.0.4(@rsbuild/core@packages+core):
+  rsbuild-plugin-open-graph@1.1.0(@rsbuild/core@packages+core):
     optionalDependencies:
       '@rsbuild/core': link:packages/core
 
