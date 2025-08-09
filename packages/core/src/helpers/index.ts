@@ -215,6 +215,11 @@ export function getFilename(
 ): Rspack.CssFilename;
 export function getFilename(
   config: NormalizedConfig | NormalizedEnvironmentConfig,
+  type: 'html',
+  isProd?: boolean,
+): string;
+export function getFilename(
+  config: NormalizedConfig | NormalizedEnvironmentConfig,
   type: 'wasm',
   isProd: boolean,
 ): Rspack.WebassemblyModuleFilename;
@@ -227,7 +232,7 @@ export function getFilename(
 export function getFilename(
   config: NormalizedConfig | NormalizedEnvironmentConfig,
   type: keyof FilenameConfig,
-  isProd: boolean,
+  isProd?: boolean,
   isServer?: boolean,
 ) {
   const { filename, filenameHash } = config.output;
@@ -239,25 +244,30 @@ export function getFilename(
     return filenameHash ? '.[contenthash:8]' : '';
   };
 
-  const hash = getHash();
-
   switch (type) {
     case 'js':
-      return filename.js ?? `[name]${isProd && !isServer ? hash : ''}.js`;
+      return filename.js ?? `[name]${isProd && !isServer ? getHash() : ''}.js`;
     case 'css':
-      return filename.css ?? `[name]${isProd ? hash : ''}.css`;
+      return filename.css ?? `[name]${isProd ? getHash() : ''}.css`;
     case 'svg':
-      return filename.svg ?? `[name]${hash}.svg`;
+      return filename.svg ?? `[name]${getHash()}.svg`;
     case 'font':
-      return filename.font ?? `[name]${hash}[ext]`;
+      return filename.font ?? `[name]${getHash()}[ext]`;
     case 'image':
-      return filename.image ?? `[name]${hash}[ext]`;
+      return filename.image ?? `[name]${getHash()}[ext]`;
     case 'media':
-      return filename.media ?? `[name]${hash}[ext]`;
+      return filename.media ?? `[name]${getHash()}[ext]`;
     case 'assets':
-      return filename.assets ?? `[name]${hash}[ext]`;
+      return filename.assets ?? `[name]${getHash()}[ext]`;
     case 'wasm':
       return filename.wasm ?? '[hash].module.wasm';
+    case 'html':
+      if (filename.html) {
+        return filename.html;
+      }
+      return config.html.outputStructure === 'flat'
+        ? '[name].html'
+        : '[name]/index.html';
     default:
       throw new Error(
         `${color.dim('[rsbuild:config]')} unknown key ${color.yellow(
