@@ -2,7 +2,7 @@ import { join, posix } from 'node:path';
 import type { Compiler } from '@rspack/core';
 import { LOADER_PATH } from './constants';
 import { createPublicContext } from './createContext';
-import { color, removeLeadingSlash } from './helpers';
+import { color, getFilename, removeLeadingSlash } from './helpers';
 import { exitHook } from './helpers/exitHook';
 import type { TransformLoaderOptions } from './loader/transformLoader';
 import { logger } from './logger';
@@ -28,16 +28,7 @@ export function getHTMLPathByEntry(
   entryName: string,
   config: NormalizedEnvironmentConfig,
 ): string {
-  let filename: string;
-
-  if (config.output.filename.html) {
-    filename = config.output.filename.html.replace('[name]', entryName);
-  } else if (config.html.outputStructure === 'flat') {
-    filename = `${entryName}.html`;
-  } else {
-    filename = `${entryName}/index.html`;
-  }
-
+  const filename = getFilename(config, 'html').replace('[name]', entryName);
   const prefix = config.output.distPath.html;
 
   if (prefix.startsWith('/')) {

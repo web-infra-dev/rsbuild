@@ -29,20 +29,22 @@ export const getSwcMinimizerOptions = (
     };
   }
 
-  switch (config.output.legalComments) {
-    case 'inline':
-      options.minimizerOptions.format.comments = 'some';
-      options.extractComments = false;
-      break;
-    case 'linked':
-      options.extractComments = true;
-      break;
-    case 'none':
-      options.minimizerOptions.format.comments = false;
-      options.extractComments = false;
-      break;
-    default:
-      break;
+  if (config.output.legalComments) {
+    switch (config.output.legalComments) {
+      case 'inline':
+        options.minimizerOptions.format.comments = 'some';
+        options.extractComments = false;
+        break;
+      case 'linked':
+        options.extractComments = true;
+        break;
+      case 'none':
+        options.minimizerOptions.format.comments = false;
+        options.extractComments = false;
+        break;
+      default:
+        break;
+    }
   }
 
   options.minimizerOptions.format.asciiOnly = config.output.charset === 'ascii';
