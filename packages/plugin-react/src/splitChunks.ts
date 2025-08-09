@@ -1,4 +1,4 @@
-import type { RsbuildPluginAPI, Rspack, SplitChunks } from '@rsbuild/core';
+import type { RsbuildPluginAPI, Rspack } from '@rsbuild/core';
 import type { SplitReactChunkOptions } from './index.js';
 
 const isPlainObject = (obj: unknown): obj is Record<string, any> =>
@@ -57,7 +57,7 @@ export const applySplitChunksRule = (
       cacheGroups: {
         // user defined cache groups take precedence
         ...extraGroups,
-        ...(currentConfig as Exclude<SplitChunks, false>).cacheGroups,
+        ...currentConfig.cacheGroups,
       },
     });
   });
