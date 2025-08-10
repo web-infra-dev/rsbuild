@@ -365,7 +365,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
       {
         "dependency": "url",
         "generator": {
-          "filename": "static/wasm/[hash].module.wasm",
+          "filename": "static/wasm/[contenthash:8].module.wasm",
         },
         "test": /\\\\\\.wasm\\$/,
         "type": "asset/resource",
@@ -395,7 +395,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
     "path": "<ROOT>/dist",
     "pathinfo": false,
     "publicPath": "/",
-    "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
+    "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
   },
   "performance": {
     "hints": false,

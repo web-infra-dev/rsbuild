@@ -365,7 +365,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       {
         "dependency": "url",
         "generator": {
-          "filename": "static/wasm/[hash].module.wasm",
+          "filename": "static/wasm/[contenthash:8].module.wasm",
         },
         "test": /\\\\\\.wasm\\$/,
         "type": "asset/resource",
@@ -395,7 +395,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "path": "<ROOT>/packages/core/tests/dist",
     "pathinfo": false,
     "publicPath": "/",
-    "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
+    "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
   },
   "performance": {
     "hints": false,
@@ -871,7 +871,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       {
         "dependency": "url",
         "generator": {
-          "filename": "static/wasm/[hash].module.wasm",
+          "filename": "static/wasm/[contenthash:8].module.wasm",
         },
         "test": /\\\\\\.wasm\\$/,
         "type": "asset/resource",
@@ -933,7 +933,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "path": "<ROOT>/packages/core/tests/dist",
     "pathinfo": false,
     "publicPath": "/",
-    "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
+    "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
   },
   "performance": {
     "hints": false,
@@ -1373,7 +1373,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       {
         "dependency": "url",
         "generator": {
-          "filename": "static/wasm/[hash].module.wasm",
+          "filename": "static/wasm/[contenthash:8].module.wasm",
         },
         "test": /\\\\\\.wasm\\$/,
         "type": "asset/resource",
@@ -1409,7 +1409,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "path": "<ROOT>/packages/core/tests/dist",
     "pathinfo": false,
     "publicPath": "/",
-    "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
+    "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
   },
   "performance": {
     "hints": false,
@@ -1842,7 +1842,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
       {
         "dependency": "url",
         "generator": {
-          "filename": "static/wasm/[hash].module.wasm",
+          "filename": "static/wasm/[contenthash:8].module.wasm",
         },
         "test": /\\\\\\.wasm\\$/,
         "type": "asset/resource",
@@ -1876,7 +1876,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
     "path": "<ROOT>/packages/core/tests/dist",
     "pathinfo": false,
     "publicPath": "/",
-    "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
+    "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
   },
   "performance": {
     "hints": false,

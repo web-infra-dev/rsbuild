@@ -11,7 +11,10 @@ export const pluginWasm = (): RsbuildPlugin => ({
       const distPath = config.output.distPath.wasm;
       const filename = posix.join(
         distPath,
-        getFilename(config, 'wasm', isProd),
+        // webpack does not support contenthash for Wasm files
+        api.context.bundlerType === 'webpack'
+          ? '[hash].module.wasm'
+          : getFilename(config, 'wasm', isProd),
       );
 
       chain.experiments({
