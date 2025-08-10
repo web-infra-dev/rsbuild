@@ -120,6 +120,24 @@ pluginLess({
 });
 ```
 
+### parallel
+
+- **Type:** `boolean`
+- **Default:** `false`
+- **Version:** Added in v1.4.0
+
+Whether to enable parallel loader execution, running `less-loader` in worker threads. When enabled, this typically improves build performance when processing large numbers of Less modules.
+
+Note that this option is experimental and may not work if your Less options contain functions.
+
+```ts
+pluginLess({
+  parallel: true,
+});
+```
+
+> See [Rspack - Rule.use.parallel](https://rspack.rs/config/module#ruleuseparallel) for more details.
+
 ## Modifying Less version
 
 In some scenarios, if you need to use a specific version of Less instead of the built-in Less v4 in Rsbuild, you can install the desired Less version in your project and set it up using the `implementation` option of the `less-loader`.
