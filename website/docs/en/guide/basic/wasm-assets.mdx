@@ -32,7 +32,7 @@ You can also get the path of a WebAssembly module using the `new URL` syntax:
 ```js title="index.js"
 const wasmURL = new URL('./add.wasm', import.meta.url);
 
-console.log(wasmURL).pathname; // "/static/wasm/[hash].module.wasm"
+console.log(wasmURL).pathname; // "/static/wasm/[contenthash:8].module.wasm"
 ```
 
 ## Output directory
