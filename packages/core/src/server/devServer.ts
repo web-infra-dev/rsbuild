@@ -282,7 +282,7 @@ export async function createDevServer<
 
   const cacheableLoadBundle = createCacheableFunction(loadBundle);
   const cacheableTransformedHtml = createCacheableFunction<string>(
-    async (_stats, entryName, utils) => getTransformedHtml(entryName, utils),
+    (_stats, entryName, utils) => getTransformedHtml(entryName, utils),
   );
 
   const environmentAPI = Object.fromEntries(
