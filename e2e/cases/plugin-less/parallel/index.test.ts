@@ -1,20 +1,23 @@
-import { build, dev } from '@e2e/helper';
+import { build, dev, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('should compile less with `parallel` option in production mode', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
-  });
+rspackOnlyTest(
+  'should compile less with `parallel` option in production mode',
+  async () => {
+    const rsbuild = await build({
+      cwd: __dirname,
+    });
 
-  const files = await rsbuild.getDistFiles();
-  const cssFiles = Object.keys(files).find((file) => file.endsWith('.css'))!;
+    const files = await rsbuild.getDistFiles();
+    const cssFiles = Object.keys(files).find((file) => file.endsWith('.css'))!;
 
-  expect(files[cssFiles]).toEqual(
-    'body{background-color:red;font-size:16px}div{font-size:14px}h1{font-size:18px;font-weight:700}p{font-size:15px}',
-  );
+    expect(files[cssFiles]).toEqual(
+      'body{background-color:red;font-size:16px}div{font-size:14px}h1{font-size:18px;font-weight:700}p{font-size:15px}',
+    );
 
-  await rsbuild.close();
-});
+    await rsbuild.close();
+  },
+);
 
 test('should compile less with `parallel` option in development mode', async ({
   page,
