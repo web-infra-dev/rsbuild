@@ -1,5 +1,6 @@
 import path, { posix } from 'node:path';
 import deepmerge from 'deepmerge';
+import postcssrc from 'postcss-load-config';
 import { reduceConfigs, reduceConfigsWithContext } from 'reduce-configs';
 import type { AcceptedPlugin, PluginCreator } from '../../compiled/postcss';
 import {
@@ -114,13 +115,9 @@ async function loadUserPostcssrc(
     return clonePostCSSConfig(await cached);
   }
 
-  const { default: postcssrc } = await import(
-    '../../compiled/postcss-load-config/index.js'
-  );
-
-  const promise = postcssrc({}, root).catch((err: Error) => {
+  const promise = postcssrc({}, root).catch((err: unknown) => {
     // ignore the config not found error
-    if (err.message?.includes('No PostCSS Config found')) {
+    if ((err as Error).message?.includes('No PostCSS Config found')) {
       return {};
     }
     throw err;

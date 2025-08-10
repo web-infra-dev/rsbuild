@@ -34,6 +34,8 @@ const externals: Rspack.Configuration['externals'] = [
   '@rsbuild/core',
   '@rsbuild/core/client/hmr',
   '@rsbuild/core/client/overlay',
+  // yaml is an optional dependency of `postcss-load-config`
+  'yaml',
   // externalize pre-bundled dependencies
   ({ request }, callback) => {
     const entries = Object.entries(regexpMap);
@@ -95,6 +97,12 @@ export default defineConfig({
       },
       output: {
         minify: nodeMinifyConfig,
+      },
+      shims: {
+        esm: {
+          // For `postcss-load-config`
+          __filename: true,
+        },
       },
     },
     {
