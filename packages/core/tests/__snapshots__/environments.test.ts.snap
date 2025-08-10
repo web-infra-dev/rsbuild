@@ -1669,7 +1669,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
         {
           "dependency": "url",
           "generator": {
-            "filename": "static/wasm/[hash].module.wasm",
+            "filename": "static/wasm/[contenthash:8].module.wasm",
           },
           "test": /\\\\\\.wasm\\$/,
           "type": "asset/resource",
@@ -1699,7 +1699,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "path": "<ROOT>/dist",
       "pathinfo": false,
       "publicPath": "/",
-      "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
+      "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
     },
     "performance": {
       "hints": false,
@@ -2083,7 +2083,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
         {
           "dependency": "url",
           "generator": {
-            "filename": "static/wasm/[hash].module.wasm",
+            "filename": "static/wasm/[contenthash:8].module.wasm",
           },
           "test": /\\\\\\.wasm\\$/,
           "type": "asset/resource",
@@ -2119,7 +2119,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "path": "<ROOT>/dist",
       "pathinfo": false,
       "publicPath": "/",
-      "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
+      "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
     },
     "performance": {
       "hints": false,

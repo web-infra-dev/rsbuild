@@ -10,7 +10,7 @@ exports[`plugin-wasm > should add wasm rule properly 1`] = `
       {
         "dependency": "url",
         "generator": {
-          "filename": "static/wasm/[hash].module.wasm",
+          "filename": "static/wasm/[contenthash:8].module.wasm",
         },
         "test": /\\\\\\.wasm\\$/,
         "type": "asset/resource",
@@ -18,7 +18,7 @@ exports[`plugin-wasm > should add wasm rule properly 1`] = `
     ],
   },
   "output": {
-    "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
+    "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
   },
   "plugins": [
     {
