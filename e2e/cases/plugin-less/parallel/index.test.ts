@@ -1,5 +1,5 @@
 import { build, dev, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect } from '@playwright/test';
 
 rspackOnlyTest(
   'should compile less with `parallel` option in production mode',
