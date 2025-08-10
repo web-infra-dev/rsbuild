@@ -85,18 +85,25 @@ export type PluginLessOptions = {
       addExcludes: (items: string | RegExp | (string | RegExp)[]) => void;
     }
   >;
-
   /**
    * Include some `.less` files, they will be transformed by less-loader.
    * @default /\.less$/
    */
   include?: Rspack.RuleSetCondition;
-
   /**
    * Exclude some `.less` files, they will not be transformed by less-loader.
    * @default undefined
    */
   exclude?: Rspack.RuleSetCondition;
+  /**
+   * Whether to enable parallel loader execution, running `less-loader` in worker
+   * threads. When enabled, this typically improves build performance when processing
+   * large numbers of Less modules.
+   * @experimental This is an experimental Rspack feature and will not work if your Less
+   * options contain functions.
+   * @default false
+   */
+  parallel?: boolean;
 };
 
 const getLessLoaderOptions = (
@@ -171,7 +178,7 @@ export const pluginLess = (
   name: PLUGIN_LESS_NAME,
 
   setup(api) {
-    const { include = /\.less$/ } = pluginOptions;
+    const { include = /\.less$/, parallel = false } = pluginOptions;
     const RAW_QUERY_REGEX: RegExp = /^\?raw$/;
     const INLINE_QUERY_REGEX: RegExp = /^\?inline$/;
 
@@ -255,7 +262,18 @@ export const pluginLess = (
           rule.use(id).loader(loader.get('loader')).options(clonedOptions);
         }
 
-        rule.use(CHAIN_ID.USE.LESS).loader(lessLoaderPath).options(options);
+        const lessRule = rule
+          .use(CHAIN_ID.USE.LESS)
+          .loader(lessLoaderPath)
+          .options(options);
+
+        if (parallel) {
+          lessRule.parallel(true);
+          chain.experiments({
+            ...chain.get('experiments'),
+            parallelLoader: true,
+          });
+        }
       });
     });
   },
