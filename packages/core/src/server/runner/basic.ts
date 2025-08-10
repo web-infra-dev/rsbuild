@@ -46,7 +46,7 @@ export abstract class BasicRunner implements Runner {
   protected requirers: Map<string, RunnerRequirer> = new Map();
   constructor(protected _options: IBasicRunnerOptions) {}
 
-  async run(file: string): Promise<unknown> {
+  run(file: string): Promise<unknown> {
     if (!this.globalContext) {
       this.globalContext = this.createGlobalContext();
     }
@@ -64,7 +64,7 @@ export abstract class BasicRunner implements Runner {
 
   getRequire(): RunnerRequirer {
     const entryRequire = this.requirers.get('entry')!;
-    return async (currentDirectory, modulePath, context = {}) => {
+    return (currentDirectory, modulePath, context = {}) => {
       const p = Array.isArray(modulePath)
         ? modulePath
         : modulePath.split('?')[0];
