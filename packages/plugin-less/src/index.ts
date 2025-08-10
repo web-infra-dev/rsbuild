@@ -230,11 +230,6 @@ export const pluginLess = (
         }
       };
 
-      const lessLoaderPath = path.join(
-        __dirname,
-        '../compiled/less-loader/index.js',
-      );
-
       updateRules((rule, type) => {
         for (const item of excludes) {
           rule.exclude.add(item);
@@ -262,6 +257,10 @@ export const pluginLess = (
           rule.use(id).loader(loader.get('loader')).options(clonedOptions);
         }
 
+        const lessLoaderPath = path.join(
+          __dirname,
+          '../compiled/less-loader/index.js',
+        );
         const lessRule = rule
           .use(CHAIN_ID.USE.LESS)
           .loader(lessLoaderPath)
