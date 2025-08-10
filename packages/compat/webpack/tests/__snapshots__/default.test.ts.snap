@@ -261,7 +261,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       {
         "dependency": "url",
         "generator": {
-          "filename": "static/wasm/[contenthash:8].module.wasm",
+          "filename": "static/wasm/[hash].module.wasm",
         },
         "test": /\\\\\\.wasm\\$/,
         "type": "asset/resource",
@@ -292,7 +292,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "path": "<ROOT>/packages/compat/webpack/tests/dist",
     "pathinfo": false,
     "publicPath": "/",
-    "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
+    "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
   "performance": {
     "hints": false,
@@ -718,7 +718,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
       {
         "dependency": "url",
         "generator": {
-          "filename": "static/wasm/[contenthash:8].module.wasm",
+          "filename": "static/wasm/[hash].module.wasm",
         },
         "test": /\\\\\\.wasm\\$/,
         "type": "asset/resource",
@@ -748,7 +748,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     "path": "<ROOT>/packages/compat/webpack/tests/dist",
     "pathinfo": false,
     "publicPath": "/",
-    "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
+    "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
   "performance": {
     "hints": false,
@@ -1174,7 +1174,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       {
         "dependency": "url",
         "generator": {
-          "filename": "static/wasm/[contenthash:8].module.wasm",
+          "filename": "static/wasm/[hash].module.wasm",
         },
         "test": /\\\\\\.wasm\\$/,
         "type": "asset/resource",
@@ -1209,7 +1209,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "path": "<ROOT>/packages/compat/webpack/tests/dist",
     "pathinfo": false,
     "publicPath": "/",
-    "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
+    "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
   "performance": {
     "hints": false,
@@ -1560,7 +1560,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       {
         "dependency": "url",
         "generator": {
-          "filename": "static/wasm/[contenthash:8].module.wasm",
+          "filename": "static/wasm/[hash].module.wasm",
         },
         "test": /\\\\\\.wasm\\$/,
         "type": "asset/resource",
@@ -1580,7 +1580,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "path": "<ROOT>/packages/compat/webpack/tests/dist",
     "pathinfo": false,
     "publicPath": "/",
-    "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
+    "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
   "performance": {
     "hints": false,
