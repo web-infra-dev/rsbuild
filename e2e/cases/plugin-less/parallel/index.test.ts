@@ -19,16 +19,17 @@ rspackOnlyTest(
   },
 );
 
-test('should compile less with `parallel` option in development mode', async ({
-  page,
-}) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
-  });
+rspackOnlyTest(
+  'should compile less with `parallel` option in development mode',
+  async ({ page }) => {
+    const rsbuild = await dev({
+      cwd: __dirname,
+      page,
+    });
 
-  const body = page.locator('body');
-  await expect(body).toHaveCSS('background-color', 'rgb(255, 0, 0)');
-  await expect(body).toHaveCSS('font-size', '16px');
-  await rsbuild.close();
-});
+    const body = page.locator('body');
+    await expect(body).toHaveCSS('background-color', 'rgb(255, 0, 0)');
+    await expect(body).toHaveCSS('font-size', '16px');
+    await rsbuild.close();
+  },
+);
