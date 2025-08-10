@@ -98,6 +98,12 @@ export default defineConfig({
       output: {
         minify: nodeMinifyConfig,
       },
+      shims: {
+        esm: {
+          // For `postcss-load-config`
+          __filename: true,
+        },
+      },
     },
     {
       id: 'esm_loaders',
