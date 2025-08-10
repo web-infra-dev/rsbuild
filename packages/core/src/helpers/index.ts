@@ -237,11 +237,11 @@ export function getFilename(
 ) {
   const { filename, filenameHash } = config.output;
 
-  const getHash = () => {
+  const getHash = (dot = true) => {
     if (typeof filenameHash === 'string') {
-      return filenameHash ? `.[${filenameHash}]` : '';
+      return filenameHash ? `${dot ? '.' : ''}[${filenameHash}]` : '';
     }
-    return filenameHash ? '.[contenthash:8]' : '';
+    return filenameHash ? `${dot ? '.' : ''}[contenthash:8]` : '';
   };
 
   switch (type) {
@@ -260,7 +260,7 @@ export function getFilename(
     case 'assets':
       return filename.assets ?? `[name]${getHash()}[ext]`;
     case 'wasm':
-      return filename.wasm ?? '[hash].module.wasm';
+      return filename.wasm ?? `${getHash(false)}.module.wasm`;
     case 'html':
       if (filename.html) {
         return filename.html;
