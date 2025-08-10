@@ -14,7 +14,6 @@ function replaceFileContent(filePath, replaceFn) {
 export default {
   prettier: true,
   dependencies: [
-    // prebundle sass-loader to make it works in Node 16
     {
       name: 'sass-loader',
       externals: {

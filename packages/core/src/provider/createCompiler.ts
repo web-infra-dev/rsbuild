@@ -87,7 +87,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     environments: context.environments,
   });
 
-  if (!(await isSatisfyRspackVersion(rspack.rspackVersion))) {
+  if (!isSatisfyRspackVersion(rspack.rspackVersion)) {
     throw new Error(
       `${color.dim('[rsbuild]')} The current Rspack version does not meet the requirements, the minimum supported version of Rspack is ${color.green(
         rspackMinVersion,

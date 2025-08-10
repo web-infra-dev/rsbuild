@@ -8,7 +8,7 @@ import type {
   NormalizedEnvironmentConfig,
   RsbuildConfig,
 } from './config';
-import type { InternalContext } from './context';
+import type { InternalContext, RsbuildContext } from './context';
 import type { PluginManager, RsbuildPlugin, RsbuildPluginAPI } from './plugin';
 import type { Rspack } from './rspack';
 import type { WebpackConfig } from './thirdParty';
@@ -72,6 +72,8 @@ export type Build = (options?: BuildOptions) => Promise<{
    */
   stats?: Rspack.Stats | Rspack.MultiStats;
 }>;
+
+export type InitConfigsOptions = Pick<RsbuildContext, 'action'>;
 
 export type InspectConfigOptions = {
   /**
@@ -180,9 +182,9 @@ export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = Pick<
 > & {
   readonly bundler: Bundler;
 
-  initConfigs: () => Promise<
-    B extends 'rspack' ? Rspack.Configuration[] : WebpackConfig[]
-  >;
+  initConfigs: (
+    options?: InitConfigsOptions,
+  ) => Promise<B extends 'rspack' ? Rspack.Configuration[] : WebpackConfig[]>;
 
   inspectConfig: (
     options?: InspectConfigOptions,
@@ -197,7 +199,7 @@ export type RsbuildProvider<B extends 'rspack' | 'webpack' = 'rspack'> =
     pluginManager: PluginManager;
     rsbuildOptions: ResolvedCreateRsbuildOptions;
     helpers: RsbuildProviderHelpers;
-  }) => Promise<ProviderInstance<B>>;
+  }) => Promise<ProviderInstance<B>> | ProviderInstance<B>;
 
 export type AddPluginsOptions = {
   /**
@@ -213,7 +215,7 @@ export type AddPluginsOptions = {
 };
 
 export type AddPlugins = (
-  plugins: Array<RsbuildPlugin | Falsy>,
+  plugins: (RsbuildPlugin | Falsy)[],
   options?: AddPluginsOptions,
 ) => void;
 
@@ -266,7 +268,9 @@ export type RsbuildInstance = {
    * since it's automatically invoked by methods like `rsbuild.build` and
    * `rsbuild.startDevServer`.
    */
-  initConfigs: () => Promise<Rspack.Configuration[]>;
+  initConfigs: (
+    options?: InitConfigsOptions,
+  ) => Promise<Rspack.Configuration[]>;
   /**
    * Inspect and debug Rsbuild's internal configurations. It provides access to:
    * - The resolved Rsbuild configuration
@@ -322,6 +326,7 @@ export type RsbuildInstance = {
   | 'onBeforeStartProdServer'
   | 'onCloseBuild'
   | 'onCloseDevServer'
+  | 'onBeforeDevCompile'
   | 'onDevCompileDone'
   | 'onExit'
 >;

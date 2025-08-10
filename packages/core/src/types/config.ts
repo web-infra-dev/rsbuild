@@ -302,9 +302,7 @@ export interface SourceConfig {
   /**
    * Used to import the code and style of the component library on demand.
    */
-  transformImport?:
-    | TransformImportFn
-    | Array<TransformImport | TransformImportFn>;
+  transformImport?: TransformImportFn | (TransformImport | TransformImportFn)[];
   /**
    * Configure a custom tsconfig.json file path to use, can be a relative or absolute path.
    * @default 'tsconfig.json'
@@ -381,10 +379,10 @@ export type HistoryApiFallbackOptions = {
   index?: string;
   htmlAcceptHeaders?: string[];
   disableDotRule?: true;
-  rewrites?: Array<{
+  rewrites?: {
     from: RegExp;
     to: HistoryApiFallbackTo;
-  }>;
+  }[];
 };
 
 export type PrintUrls =
@@ -484,8 +482,9 @@ export interface ServerConfig {
    */
   htmlFallback?: HtmlFallback;
   /**
-   * Provide alternative pages for some 404 responses or other requests.
-   * see https://github.com/bripkens/connect-history-api-fallback
+   * Used to support routing based on the history API.
+   * When a user visits a path that does not exist, it will automatically
+   * return a specified HTML file to avoid a 404 error.
    */
   historyApiFallback?: boolean | HistoryApiFallbackOptions;
   /**
@@ -594,7 +593,7 @@ export type BuildCacheOptions = {
    * when any value in the array changes.
    * @default undefined
    */
-  cacheDigest?: Array<string | undefined>;
+  cacheDigest?: (string | undefined)[];
   /**
    * An array of files containing build dependencies.
    * Rspack will use the hash of each of these files to invalidate the persistent cache.
@@ -657,7 +656,7 @@ export interface PreconnectOption {
   crossorigin?: boolean;
 }
 
-export type Preconnect = Array<string | PreconnectOption>;
+export type Preconnect = (string | PreconnectOption)[];
 
 export type DnsPrefetch = string[];
 
@@ -873,7 +872,7 @@ export type DistPathConfig = {
   font?: string;
   /**
    * The output directory of HTML files.
-   * @default '/'
+   * @default './'
    */
   html?: string;
   /**
@@ -896,6 +895,11 @@ export type DistPathConfig = {
    * @default 'static/assets'
    */
   assets?: string;
+  /**
+   * The output directory of favicon.
+   * @default './'
+   */
+  favicon?: string;
 };
 
 export type FilenameConfig = {
@@ -1674,6 +1678,8 @@ export type CliShortcut = {
   action: () => void | Promise<void>;
 };
 
+export type WriteToDisk = boolean | ((filename: string) => boolean);
+
 export interface DevConfig {
   /**
    * Whether to enable Hot Module Replacement.
@@ -1727,7 +1733,7 @@ export interface DevConfig {
    * Controls whether the build output from development mode is written to disk.
    * @default false
    */
-  writeToDisk?: boolean | ((filename: string) => boolean);
+  writeToDisk?: WriteToDisk;
   /**
    * This option allows you to configure a list of globs/directories/files to watch for
    * file changes.
@@ -1798,16 +1804,25 @@ export type RsbuildConfigMeta = {
 };
 
 /**
+ * Only some dev options can be defined in the environment config
+ */
+export type AllowedEnvironmentDevKeys =
+  | 'hmr'
+  | 'client'
+  | 'liveReload'
+  | 'assetPrefix'
+  | 'progressBar'
+  | 'lazyCompilation'
+  | 'writeToDisk';
+
+/**
  * The Rsbuild config to run in the specified environment.
  * */
 export interface EnvironmentConfig {
   /**
    * Options for local development.
    */
-  dev?: Pick<
-    DevConfig,
-    'hmr' | 'assetPrefix' | 'progressBar' | 'lazyCompilation' | 'writeToDisk'
-  >;
+  dev?: Pick<DevConfig, AllowedEnvironmentDevKeys>;
   /**
    * Options for HTML generation.
    */
@@ -1898,10 +1913,7 @@ export interface RsbuildConfig extends EnvironmentConfig {
 export type MergedEnvironmentConfig = {
   mode: RsbuildMode;
   root: string;
-  dev: Pick<
-    NormalizedDevConfig,
-    'hmr' | 'assetPrefix' | 'progressBar' | 'lazyCompilation' | 'writeToDisk'
-  >;
+  dev: Pick<NormalizedDevConfig, AllowedEnvironmentDevKeys>;
   html: NormalizedHtmlConfig;
   tools: NormalizedToolsConfig;
   resolve: NormalizedResolveConfig;

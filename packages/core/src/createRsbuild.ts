@@ -69,7 +69,7 @@ import type {
   StartDevServer,
 } from './types';
 
-async function applyDefaultPlugins(
+function applyDefaultPlugins(
   pluginManager: PluginManager,
   context: InternalContext,
 ) {
@@ -191,7 +191,7 @@ export async function createRsbuild(
   const globalPluginAPI = getPluginAPI();
 
   logger.debug('add default plugins');
-  await applyDefaultPlugins(pluginManager, context);
+  applyDefaultPlugins(pluginManager, context);
   logger.debug('add default plugins done');
 
   const provider = (config.provider as RsbuildProvider) || rspackProvider;
@@ -303,6 +303,7 @@ export async function createRsbuild(
       'onAfterStartDevServer',
       'onAfterStartProdServer',
       'onCloseDevServer',
+      'onBeforeDevCompile',
       'onDevCompileDone',
       'onExit',
       'getRsbuildConfig',
@@ -324,7 +325,7 @@ export async function createRsbuild(
       );
     } while (plugins.some((v) => isPromise(v)));
 
-    return plugins as Array<RsbuildPlugin | Falsy>;
+    return plugins as (RsbuildPlugin | Falsy)[];
   };
 
   if (config.plugins) {

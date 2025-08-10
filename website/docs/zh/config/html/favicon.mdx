@@ -57,6 +57,26 @@ export default {
 <link rel="icon" href="/favicon.ico" />
 ```
 
+## 输出路径
+
+默认情况下，favicon 文件会输出到构建产物目录的根路径下，比如：
+
+- `./src/assets/icon.png` 会输出到 `./dist/icon.png`。
+- `./src/assets/favicon.ico` 会输出到 `./dist/favicon.ico`。
+
+你可以通过 [output.distPath.favicon](/config/output/dist-path) 选项来自定义 favicon 的输出路径：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    distPath: {
+      // 将 favicon 输出到 "./dist/static/favicon/" 目录
+      favicon: 'static/favicon',
+    },
+  },
+};
+```
+
 ## 函数用法
 
 - **类型：**

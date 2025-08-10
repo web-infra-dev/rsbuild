@@ -1,7 +1,6 @@
-import { execSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { rspackOnlyTest } from '@e2e/helper';
+import { rspackOnlyTest, runCliSync } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import fse, { remove } from 'fs-extra';
 
@@ -16,7 +15,7 @@ test.beforeEach(async () => {
 rspackOnlyTest(
   'should load .env config and allow rsbuild.config.ts to read env vars',
   async () => {
-    execSync('npx rsbuild build', {
+    runCliSync('build', {
       cwd: __dirname,
     });
     expect(fs.existsSync(path.join(__dirname, 'dist/1'))).toBeTruthy();
@@ -26,7 +25,7 @@ rspackOnlyTest(
 rspackOnlyTest('should load .env.local with higher priority', async () => {
   fse.outputFileSync(localFile, 'FOO=2');
 
-  execSync('npx rsbuild build', {
+  runCliSync('build', {
     cwd: __dirname,
   });
   expect(fs.existsSync(path.join(__dirname, 'dist/2'))).toBeTruthy();
@@ -38,7 +37,7 @@ rspackOnlyTest(
     fse.outputFileSync(localFile, 'FOO=2');
     fse.outputFileSync(prodLocalFile, 'FOO=3');
 
-    execSync('npx rsbuild build', {
+    runCliSync('build', {
       cwd: __dirname,
     });
     expect(fs.existsSync(path.join(__dirname, 'dist/3'))).toBeTruthy();
@@ -46,7 +45,7 @@ rspackOnlyTest(
 );
 
 rspackOnlyTest('should allow to specify env mode via --env-mode', async () => {
-  execSync('npx rsbuild build --env-mode test', {
+  runCliSync('build --env-mode test', {
     cwd: __dirname,
   });
 

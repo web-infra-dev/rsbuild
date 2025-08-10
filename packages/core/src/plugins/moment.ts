@@ -4,7 +4,7 @@ export const pluginMoment = (): RsbuildPlugin => ({
   name: 'rsbuild:moment',
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, { environment, bundler }) => {
+    api.modifyBundlerChain((chain, { environment, bundler }) => {
       const { config } = environment;
 
       if (config.performance.removeMomentLocale) {

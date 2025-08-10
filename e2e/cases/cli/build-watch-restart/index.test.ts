@@ -1,7 +1,6 @@
-import { exec } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { expectFile, rspackOnlyTest } from '@e2e/helper';
+import { expectFile, rspackOnlyTest, runCli } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import fse, { remove } from 'fs-extra';
 
@@ -24,7 +23,7 @@ rspackOnlyTest('should support restart build when config changed', async () => {
 
   fse.outputFileSync(indexFile, `console.log('hello!');`);
 
-  const childProcess = exec(`npx rsbuild build --watch -c ${tempConfigFile}`, {
+  const childProcess = runCli(`build --watch -c ${tempConfigFile}`, {
     cwd: __dirname,
   });
 

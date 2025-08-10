@@ -53,6 +53,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "distPath": {
       "assets": "static/assets",
       "css": "static/css",
+      "favicon": "./",
       "font": "static/font",
       "html": "./",
       "image": "static/image",
@@ -197,6 +198,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "distPath": {
       "assets": "static/assets",
       "css": "static/css",
+      "favicon": "./",
       "font": "static/font",
       "html": "./",
       "image": "static/image",
@@ -341,6 +343,7 @@ exports[`environment config > should print environment config when inspect confi
       "distPath": {
         "assets": "static/assets",
         "css": "static/css",
+        "favicon": "./",
         "font": "static/font",
         "html": "./",
         "image": "static/image",
@@ -481,6 +484,7 @@ exports[`environment config > should print environment config when inspect confi
       "distPath": {
         "assets": "static/assets",
         "css": "static/css",
+        "favicon": "./",
         "font": "static/font",
         "html": "./",
         "image": "static/image",
@@ -641,6 +645,7 @@ exports[`environment config > should support modify environment config by api.mo
       "distPath": {
         "assets": "static/assets",
         "css": "static/css",
+        "favicon": "./",
         "font": "static/font",
         "html": "./",
         "image": "static/image",
@@ -781,6 +786,7 @@ exports[`environment config > should support modify environment config by api.mo
       "distPath": {
         "assets": "static/assets",
         "css": "static/css",
+        "favicon": "./",
         "font": "static/font",
         "html": "./",
         "image": "static/image",
@@ -922,6 +928,7 @@ exports[`environment config > should support modify environment config by api.mo
       "distPath": {
         "assets": "static/assets",
         "css": "static/css",
+        "favicon": "./",
         "font": "static/font",
         "html": "./",
         "image": "static/image",
@@ -1066,6 +1073,7 @@ exports[`environment config > should support modify single environment config by
       "distPath": {
         "assets": "static/assets",
         "css": "static/css",
+        "favicon": "./",
         "font": "static/font",
         "html": "./",
         "image": "static/image",
@@ -1206,6 +1214,7 @@ exports[`environment config > should support modify single environment config by
       "distPath": {
         "assets": "static/assets",
         "css": "static/css",
+        "favicon": "./",
         "font": "static/font",
         "html": "./",
         "image": "static/image",

@@ -29,20 +29,22 @@ export const getSwcMinimizerOptions = (
     };
   }
 
-  switch (config.output.legalComments) {
-    case 'inline':
-      options.minimizerOptions.format.comments = 'some';
-      options.extractComments = false;
-      break;
-    case 'linked':
-      options.extractComments = true;
-      break;
-    case 'none':
-      options.minimizerOptions.format.comments = false;
-      options.extractComments = false;
-      break;
-    default:
-      break;
+  if (config.output.legalComments) {
+    switch (config.output.legalComments) {
+      case 'inline':
+        options.minimizerOptions.format.comments = 'some';
+        options.extractComments = false;
+        break;
+      case 'linked':
+        options.extractComments = true;
+        break;
+      case 'none':
+        options.minimizerOptions.format.comments = false;
+        options.extractComments = false;
+        break;
+      default:
+        break;
+    }
   }
 
   options.minimizerOptions.format.asciiOnly = config.output.charset === 'ascii';
@@ -87,7 +89,7 @@ export const pluginMinimize = (): RsbuildPlugin => ({
   setup(api) {
     const isRspack = api.context.bundlerType === 'rspack';
 
-    api.modifyBundlerChain(async (chain, { environment, CHAIN_ID, rspack }) => {
+    api.modifyBundlerChain((chain, { environment, CHAIN_ID, rspack }) => {
       const { config } = environment;
       const { minifyJs, minifyCss, jsOptions, cssOptions } =
         parseMinifyOptions(config);

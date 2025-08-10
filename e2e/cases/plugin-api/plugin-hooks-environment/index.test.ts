@@ -65,6 +65,9 @@ const createPlugin = () => {
       api.onAfterStartProdServer(() => {
         names.push('AfterStartProdServer');
       });
+      api.onBeforeDevCompile(() => {
+        names.push('BeforeDevCompile');
+      });
       api.onDevCompileDone(() => {
         names.push('OnDevCompileDone');
       });
@@ -189,6 +192,7 @@ rspackOnlyTest(
       'ModifyBundlerConfig web',
       'BeforeCreateCompiler',
       'AfterCreateCompiler',
+      'BeforeDevCompile',
       'BeforeEnvironmentCompile web',
       'ModifyHTMLTags web',
       'ModifyHTML web',
@@ -209,6 +213,7 @@ rspackOnlyTest(
       'ModifyBundlerConfig node',
       'BeforeCreateCompiler',
       'AfterCreateCompiler',
+      'BeforeDevCompile',
       'BeforeEnvironmentCompile node',
       'ModifyHTMLTags node',
       'ModifyHTML node',

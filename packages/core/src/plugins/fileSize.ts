@@ -313,9 +313,9 @@ export const pluginFileSize = (): RsbuildPlugin => ({
 
           logs.push(...statsLogs);
         }),
-      ).catch((err) => {
+      ).catch((err: unknown) => {
         logger.warn('Failed to print file size.');
-        logger.warn(err as Error);
+        logger.warn(err);
       });
 
       logger.log(logs.join('\n'));

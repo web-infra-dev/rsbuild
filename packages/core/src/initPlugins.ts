@@ -2,7 +2,7 @@ import { join, posix } from 'node:path';
 import type { Compiler } from '@rspack/core';
 import { LOADER_PATH } from './constants';
 import { createPublicContext } from './createContext';
-import { color, removeLeadingSlash } from './helpers';
+import { color, getFilename, removeLeadingSlash } from './helpers';
 import { exitHook } from './helpers/exitHook';
 import type { TransformLoaderOptions } from './loader/transformLoader';
 import { logger } from './logger';
@@ -28,16 +28,7 @@ export function getHTMLPathByEntry(
   entryName: string,
   config: NormalizedEnvironmentConfig,
 ): string {
-  let filename: string;
-
-  if (config.output.filename.html) {
-    filename = config.output.filename.html.replace('[name]', entryName);
-  } else if (config.html.outputStructure === 'flat') {
-    filename = `${entryName}.html`;
-  } else {
-    filename = `${entryName}/index.html`;
-  }
-
+  const filename = getFilename(config, 'html').replace('[name]', entryName);
   const prefix = config.output.distPath.html;
 
   if (prefix.startsWith('/')) {
@@ -144,7 +135,7 @@ export function initPluginAPI({
     );
   }) as GetRsbuildConfig;
 
-  const exposed: Array<{ id: string | symbol; api: any }> = [];
+  const exposed: { id: string | symbol; api: any }[] = [];
 
   const expose = (id: string | symbol, api: any) => {
     exposed.push({ id, api });
@@ -158,16 +149,16 @@ export function initPluginAPI({
 
   let transformId = 0;
   const transformer: Record<string, TransformHandler> = {};
-  const processAssetsFns: Array<{
+  const processAssetsFns: {
     environment?: string;
     descriptor: ProcessAssetsDescriptor;
     handler: ProcessAssetsHandler;
-  }> = [];
+  }[] = [];
 
-  const resolveFns: Array<{
+  const resolveFns: {
     environment?: string;
     handler: ResolveHandler;
-  }> = [];
+  }[] = [];
 
   hooks.modifyBundlerChain.tap((chain, { target, environment }) => {
     const pluginName = 'RsbuildCorePlugin';
@@ -365,6 +356,7 @@ export function initPluginAPI({
     onCloseBuild: hooks.onCloseBuild.tap,
     onBeforeBuild: hooks.onBeforeBuild.tap,
     onCloseDevServer: hooks.onCloseDevServer.tap,
+    onBeforeDevCompile: hooks.onBeforeDevCompile.tap,
     onDevCompileDone: hooks.onDevCompileDone.tap,
     onAfterCreateCompiler: hooks.onAfterCreateCompiler.tap,
     onAfterStartDevServer: hooks.onAfterStartDevServer.tap,

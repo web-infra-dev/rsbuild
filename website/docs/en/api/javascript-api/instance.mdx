@@ -656,7 +656,17 @@ Initialize and return the internal Rspack configurations used by Rsbuild. This m
 - **Type:**
 
 ```ts
-function InitConfigs(): Promise<{
+type InitConfigsOptions = {
+  /**
+   * The current action type.
+   * - dev: will be set when running `rsbuild dev` or `rsbuild.startDevServer()`
+   * - build: will be set when running `rsbuild build` or `rsbuild.build()`
+   * - preview: will be set when running `rsbuild preview` or `rsbuild.preview()`
+   */
+  action?: 'dev' | 'build' | 'preview';
+};
+
+function InitConfigs(options?: InitConfigsOptions): Promise<{
   rspackConfigs: Rspack.Configuration[];
 }>;
 ```
@@ -667,6 +677,12 @@ function InitConfigs(): Promise<{
 const rspackConfigs = await rsbuild.initConfigs();
 
 console.log(rspackConfigs);
+
+const buildConfigs = await rsbuild.initConfigs({
+  action: 'build',
+});
+
+console.log(buildConfigs);
 ```
 
 ## rsbuild.inspectConfig
@@ -925,6 +941,22 @@ import OnAfterStartProdServer from '@en/shared/onAfterStartProdServer.mdx';
 rsbuild.onAfterStartProdServer(({ port, routes }) => {
   console.log('this port is: ', port);
   console.log('this routes is: ', routes);
+});
+```
+
+## rsbuild.onBeforeDevCompile
+
+> Provides the same functionality as the [onBeforeDevCompile](/plugins/dev/hooks#onbeforedevcompile) plugin hook.
+
+import OnBeforeDevCompile from '@en/shared/onBeforeDevCompile.mdx';
+
+<OnBeforeDevCompile />
+
+- **Example:**
+
+```ts
+rsbuild.onBeforeDevCompile(({ bundlerConfigs }) => {
+  console.log('the Rspack configs are ', bundlerConfigs);
 });
 ```
 

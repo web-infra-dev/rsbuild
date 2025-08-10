@@ -29,7 +29,7 @@ interface DoesChunkBelongToHtmlOptions {
 function recursiveChunkGroup(
   chunkGroup: ChunkGroup,
   visited = new Set<ChunkGroup>(),
-): Array<string | undefined> {
+): (string | undefined)[] {
   // check if the chunkGroup has been visited to prevent circular reference
   if (visited.has(chunkGroup)) {
     return [];

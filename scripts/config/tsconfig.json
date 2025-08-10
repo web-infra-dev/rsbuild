@@ -2,23 +2,24 @@
   "compilerOptions": {
     "lib": ["DOM", "ESNext"],
     "jsx": "preserve",
-    "target": "ES2021",
+    "target": "ES2022",
     "types": ["node"],
     "skipLibCheck": true,
     "useDefineForClassFields": true,
 
     /* modules */
-    "module": "ES2020",
+    "module": "ES2022",
+    "moduleDetection": "force",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,
-    "moduleResolution": "bundler",
     "resolveJsonModule": true,
+    "noUncheckedSideEffectImports": true,
 
     /* type checking */
     "strict": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noUncheckedSideEffectImports": true
+    "noUnusedParameters": true
   },
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Base"

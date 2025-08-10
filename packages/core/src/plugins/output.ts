@@ -77,10 +77,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(
-      async (
-        chain,
-        { CHAIN_ID, isDev, isProd, isServer, environment, rspack },
-      ) => {
+      (chain, { CHAIN_ID, isDev, isProd, isServer, environment, rspack }) => {
         const { distPath, config } = environment;
 
         const publicPath = getPublicPath({

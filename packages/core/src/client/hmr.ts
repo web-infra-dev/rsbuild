@@ -1,12 +1,14 @@
+import type { SocketMessage } from '../server/socketServer';
 import type { NormalizedClientConfig } from '../types';
 
 const config: NormalizedClientConfig = RSBUILD_CLIENT_CONFIG;
-const resolvedConfig: NormalizedClientConfig = RSBUILD_RESOLVED_CLIENT_CONFIG;
+const serverHost = RSBUILD_SERVER_HOST;
+const serverPort = RSBUILD_SERVER_PORT;
 
-function formatURL(config: NormalizedClientConfig) {
+function formatURL(fallback?: boolean) {
   const { location } = self;
-  const hostname = config.host || location.hostname;
-  const port = config.port || location.port;
+  const hostname = (fallback ? serverHost : config.host) || location.hostname;
+  const port = (fallback ? serverPort : config.port) || location.port;
   const protocol =
     config.protocol || (location.protocol === 'https:' ? 'wss' : 'ws');
   const pathname = config.path;
@@ -28,7 +30,7 @@ function formatURL(config: NormalizedClientConfig) {
 
 // Remember some state related to hot module replacement.
 let isFirstCompilation = true;
-let lastCompilationHash: string | null = null;
+let lastCompilationHash: string | undefined;
 let hasCompileErrors = false;
 
 function clearOutdatedErrors() {
@@ -145,7 +147,7 @@ function tryApplyUpdates() {
       (updatedModules) => {
         handleApplyUpdates(null, updatedModules);
       },
-      (err) => {
+      (err: unknown) => {
         handleApplyUpdates(err, null);
       },
     );
@@ -159,14 +161,23 @@ function tryApplyUpdates() {
 
 let connection: WebSocket | null = null;
 let reconnectCount = 0;
+let pingIntervalId: ReturnType<typeof setInterval>;
 
 function onOpen() {
   // Notify users that the HMR has successfully connected.
   console.info('[HMR] connected.');
+
+  // To prevent WebSocket timeouts caused by proxies (e.g., nginx, docker),
+  // send a periodic ping message to keep the connection alive.
+  pingIntervalId = setInterval(() => {
+    if (connection && connection.readyState === connection.OPEN) {
+      connection.send(JSON.stringify({ type: 'ping' }));
+    }
+  }, 30000);
 }
 
 function onMessage(e: MessageEvent<string>) {
-  const message = JSON.parse(e.data);
+  const message: SocketMessage = JSON.parse(e.data);
 
   switch (message.type) {
     case 'hash':
@@ -212,7 +223,7 @@ function onClose() {
 }
 
 function onError() {
-  if (formatURL(config) !== formatURL(resolvedConfig)) {
+  if (formatURL() !== formatURL(true)) {
     console.error(
       '[HMR] WebSocket connection error, attempting direct fallback.',
     );
@@ -224,7 +235,7 @@ function onError() {
 
 // Establishing a WebSocket connection with the server.
 function connect(fallback = false) {
-  const socketUrl = formatURL(fallback ? resolvedConfig : config);
+  const socketUrl = formatURL(fallback);
   connection = new WebSocket(socketUrl);
   connection.addEventListener('open', onOpen);
   // Attempt to reconnect after disconnection
@@ -238,6 +249,7 @@ function connect(fallback = false) {
 }
 
 function removeListeners() {
+  clearInterval(pingIntervalId);
   if (connection) {
     connection.removeEventListener('open', onOpen);
     connection.removeEventListener('close', onClose);

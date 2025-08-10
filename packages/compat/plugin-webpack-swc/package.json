@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-webpack-swc",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "SWC plugin for Rsbuild webpack provider",
   "repository": {
     "type": "git",
@@ -24,12 +24,12 @@
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build --watch",
-    "bump": "npx bumpp --no-tag"
+    "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
     "@modern-js/swc-plugins": "0.6.11",
     "@swc/helpers": "^0.5.17",
-    "core-js": "~3.44.0",
+    "core-js": "~3.45.0",
     "deepmerge": "^4.3.1",
     "lodash": "^4.17.21",
     "picocolors": "^1.1.1",
@@ -38,18 +38,17 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "@rslib/core": "0.11.0",
+    "@rslib/core": "0.11.2",
     "@types/lodash": "^4.17.20",
     "@types/semver": "^7.7.0",
-    "typescript": "^5.8.3",
-    "webpack": "^5.100.2"
+    "typescript": "^5.9.2",
+    "webpack": "^5.101.0"
   },
   "peerDependencies": {
     "@rsbuild/core": "1.x"
   },
   "publishConfig": {
     "access": "public",
-    "provenance": true,
     "registry": "https://registry.npmjs.org/"
   }
 }

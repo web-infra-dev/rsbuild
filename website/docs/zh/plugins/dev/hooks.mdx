@@ -24,6 +24,7 @@
 
 - [onBeforeStartDevServer](#onbeforestartdevserver)：在启动开发服务器前调用。
 - [onAfterStartDevServer](#onafterstartdevserver)：在启动开发服务器后调用。
+- [onBeforeDevCompile](#onbeforedevcompile)：在每次执行开发环境构建前调用。
 - [onDevCompileDone](#ondevcompiledone)：在每次开发模式构建结束后调用。
 
 仅在 Rsbuild restart 时，或是执行 `rsbuild.startDevServer()` 的 [close()](/api/javascript-api/instance#关闭-server) 方法时调用。
@@ -61,6 +62,7 @@
 - [modifyRspackConfig](#modifyrspackconfig)
 - [onBeforeCreateCompiler](#onbeforecreatecompiler)
 - [onAfterCreateCompiler](#onaftercreatecompiler)
+- [onBeforeDevCompile](#onbeforedevcompile)
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [onAfterStartDevServer](#onafterstartdevserver)
 - [modifyHTMLTags](#modifyhtmltags)
@@ -72,6 +74,7 @@
 
 当 rebuild 时，以下 hooks 会再次触发：
 
+- [onBeforeDevCompile](#onbeforedevcompile)
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [modifyHTMLTags](#modifyhtmltags)
 - [modifyHTML](#modifyhtml)
@@ -132,6 +135,7 @@
 - [onBeforeCreateCompiler](#onbeforecreatecompiler)
 - [onAfterCreateCompiler](#onaftercreatecompiler)
 - [onAfterStartDevServer](#onafterstartdevserver)
+- [onBeforeDevCompile](#onbeforedevcompile)
 - [onDevCompileDone](#ondevcompiledone)
 - [onCloseDevServer](#onclosedevserver)
 - [onBeforeBuild](#onbeforebuild)
@@ -639,7 +643,7 @@ import OnBeforeCreateCompiler from '@zh/shared/onBeforeCreateCompiler.mdx';
 const myPlugin = () => ({
   setup(api) {
     api.onBeforeCreateCompiler(({ bundlerConfigs }) => {
-      console.log('the bundler config is ', bundlerConfigs);
+      console.log('the bundler configs are ', bundlerConfigs);
     });
   },
 });
@@ -716,7 +720,7 @@ import OnBeforeBuild from '@zh/shared/onBeforeBuild.mdx';
 const myPlugin = () => ({
   setup(api) {
     api.onBeforeBuild(({ bundlerConfigs }) => {
-      console.log('the bundler config is ', bundlerConfigs);
+      console.log('the bundler configs are ', bundlerConfigs);
     });
   },
 });
@@ -864,23 +868,19 @@ const myPlugin = () => ({
 });
 ```
 
-### onAfterEnvironmentCompile
+### onBeforeDevCompile
 
-import OnDevCompileEnvironmentDone from '@zh/shared/onAfterEnvironmentCompile.mdx';
+import OnBeforeDevCompile from '@zh/shared/onBeforeDevCompile.mdx';
 
-<OnDevCompileEnvironmentDone />
+<OnBeforeDevCompile />
 
 - **示例：**
 
 ```ts
 const myPlugin = () => ({
   setup(api) {
-    api.onAfterEnvironmentCompile(({ isFirstCompile }) => {
-      if (isFirstCompile) {
-        console.log('first compile!');
-      } else {
-        console.log('re-compile!');
-      }
+    api.onBeforeDevCompile(({ bundlerConfigs }) => {
+      console.log('the bundler configs are ', bundlerConfigs);
     });
   },
 });

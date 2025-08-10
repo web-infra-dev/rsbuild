@@ -1,7 +1,6 @@
-import { exec } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { expectFile, rspackOnlyTest } from '@e2e/helper';
+import { expectFile, rspackOnlyTest, runCli } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import fse, { remove } from 'fs-extra';
 
@@ -19,7 +18,7 @@ rspackOnlyTest(
     await remove(distIndexFile);
     await fse.copy(srcDir, tempDir);
 
-    const childProcess = exec('npx rsbuild build --watch', {
+    const childProcess = runCli('build --watch', {
       cwd: __dirname,
     });
 

@@ -1,10 +1,9 @@
 import { color, isTTY } from '../helpers';
 import { logger } from '../logger';
-import type { CliShortcut, NormalizedDevConfig } from '../types/config';
+import type { CliShortcut, NormalizedConfig } from '../types/config';
 
-export const isCliShortcutsEnabled = (
-  devConfig: NormalizedDevConfig,
-): boolean => devConfig.cliShortcuts && isTTY('stdin');
+export const isCliShortcutsEnabled = (config: NormalizedConfig): boolean =>
+  config.dev.cliShortcuts && isTTY('stdin');
 
 export async function setupCliShortcuts({
   help = true,

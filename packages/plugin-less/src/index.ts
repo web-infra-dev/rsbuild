@@ -82,7 +82,7 @@ export type PluginLessOptions = {
        * @deprecated
        * use `exclude` option instead.
        */
-      addExcludes: (items: string | RegExp | Array<string | RegExp>) => void;
+      addExcludes: (items: string | RegExp | (string | RegExp)[]) => void;
     }
   >;
 
@@ -106,7 +106,7 @@ const getLessLoaderOptions = (
 ) => {
   const excludes: (RegExp | string)[] = [];
 
-  const addExcludes = (items: string | RegExp | Array<string | RegExp>) => {
+  const addExcludes = (items: string | RegExp | (string | RegExp)[]) => {
     excludes.push(...(Array.isArray(items) ? items : [items]));
   };
 
@@ -175,7 +175,7 @@ export const pluginLess = (
     const RAW_QUERY_REGEX: RegExp = /^\?raw$/;
     const INLINE_QUERY_REGEX: RegExp = /^\?inline$/;
 
-    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
+    api.modifyBundlerChain((chain, { CHAIN_ID, environment }) => {
       const { config } = environment;
 
       const lessRule = chain.module

@@ -1,14 +1,8 @@
 import fs from 'node:fs';
-import { createRequire } from 'node:module';
 import type { Stats } from '@rspack/core';
 import { isMultiCompiler } from '../helpers';
 import { getPathnameFromUrl } from '../helpers/path';
-import type {
-  EnvironmentContext,
-  NormalizedDevConfig,
-  NormalizedServerConfig,
-  Rspack,
-} from '../types';
+import type { EnvironmentContext, NormalizedConfig, Rspack } from '../types';
 import {
   type CompilationMiddleware,
   getCompilationMiddleware,
@@ -17,61 +11,13 @@ import {
 import { stripBase } from './helper';
 import { SocketServer } from './socketServer';
 
-const require = createRequire(import.meta.url);
-
 type Options = {
-  publicPaths: string[];
-  environments: Record<string, EnvironmentContext>;
-  dev: NormalizedDevConfig;
-  server: NormalizedServerConfig;
+  config: NormalizedConfig;
   compiler: Rspack.Compiler | Rspack.MultiCompiler;
+  publicPaths: string[];
+  resolvedPort: number;
+  environments: Record<string, EnvironmentContext>;
 };
-
-// allow to configure dev.writeToDisk in environments
-const formatDevConfig = (
-  config: NormalizedDevConfig,
-  environments: Record<string, EnvironmentContext>,
-): NormalizedDevConfig => {
-  const writeToDiskValues = Object.values(environments).map(
-    (env) => env.config.dev.writeToDisk,
-  );
-  if (new Set(writeToDiskValues).size === 1) {
-    return {
-      ...config,
-      writeToDisk: writeToDiskValues[0],
-    };
-  }
-
-  return {
-    ...config,
-    writeToDisk(filePath: string, compilationName?: string) {
-      let { writeToDisk } = config;
-      if (compilationName && environments[compilationName]) {
-        writeToDisk =
-          environments[compilationName].config.dev.writeToDisk ?? writeToDisk;
-      }
-      return typeof writeToDisk === 'function'
-        ? writeToDisk(filePath)
-        : writeToDisk!;
-    },
-  };
-};
-
-function getClientPaths(devConfig: NormalizedDevConfig) {
-  const clientPaths: string[] = [];
-
-  if (!devConfig.hmr && !devConfig.liveReload) {
-    return clientPaths;
-  }
-
-  clientPaths.push(require.resolve('@rsbuild/core/client/hmr'));
-
-  if (devConfig.client?.overlay) {
-    clientPaths.push(require.resolve('@rsbuild/core/client/overlay'));
-  }
-
-  return clientPaths;
-}
 
 /**
  * Setup compiler-related logic:
@@ -83,9 +29,7 @@ export class CompilationManager {
 
   public outputFileSystem: Rspack.OutputFileSystem;
 
-  private devConfig: NormalizedDevConfig;
-
-  private serverConfig: NormalizedServerConfig;
+  private config: NormalizedConfig;
 
   public compiler: Rspack.Compiler | Rspack.MultiCompiler;
 
@@ -95,14 +39,22 @@ export class CompilationManager {
 
   public socketServer: SocketServer;
 
-  constructor({ dev, server, compiler, publicPaths, environments }: Options) {
-    this.devConfig = formatDevConfig(dev, environments);
-    this.serverConfig = server;
+  private resolvedPort: number;
+
+  constructor({
+    config,
+    compiler,
+    publicPaths,
+    resolvedPort,
+    environments,
+  }: Options) {
+    this.config = config;
     this.compiler = compiler;
     this.environments = environments;
     this.publicPaths = publicPaths;
+    this.resolvedPort = resolvedPort;
     this.outputFileSystem = fs;
-    this.socketServer = new SocketServer(dev, environments);
+    this.socketServer = new SocketServer(config.dev, environments);
   }
 
   public async init(): Promise<void> {
@@ -155,7 +107,7 @@ export class CompilationManager {
   };
 
   private async setupCompilationMiddleware(): Promise<void> {
-    const { devConfig, serverConfig, publicPaths, environments } = this;
+    const { config, publicPaths, environments } = this;
 
     const callbacks: ServerCallbacks = {
       onInvalid: (token: string, fileName?: string | null) => {
@@ -164,32 +116,28 @@ export class CompilationManager {
           this.socketServer.sockWrite({ type: 'static-changed' }, token);
           return;
         }
-
-        this.socketServer.sockWrite({ type: 'invalid' }, token);
       },
       onDone: (token: string, stats: Stats) => {
         this.socketServer.updateStats(stats, token);
       },
     };
 
-    const clientPaths = getClientPaths(devConfig);
-
-    const middleware = await getCompilationMiddleware(this.compiler, {
+    const middleware = await getCompilationMiddleware({
+      config,
+      compiler: this.compiler,
       callbacks,
-      clientPaths,
-      devConfig,
-      serverConfig,
       environments,
+      resolvedPort: this.resolvedPort,
     });
 
-    const { base } = serverConfig;
+    const { base } = config.server;
     const assetPrefixes = publicPaths
       .map(getPathnameFromUrl)
       .map((prefix) =>
         base && base !== '/' ? stripBase(prefix, base) : prefix,
       );
 
-    const wrapper: CompilationMiddleware = async (req, res, next) => {
+    const wrapper: CompilationMiddleware = (req, res, next) => {
       const { url } = req;
       const assetPrefix =
         url && assetPrefixes.find((prefix) => url.startsWith(prefix));

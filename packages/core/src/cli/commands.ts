@@ -38,51 +38,47 @@ export type PreviewOptions = CommonOptions;
 
 const applyCommonOptions = (cli: CAC) => {
   cli
-    .option('--base <base>', 'specify the base path of the server')
+    .option('--base <base>', 'Set the base path of the server')
     .option(
       '-c, --config <config>',
-      'specify the configuration file, can be a relative or absolute path',
+      'Set the configuration file (relative or absolute path)',
     )
     .option(
       '--config-loader <loader>',
-      'specify the loader to load the config file, can be `jiti` or `native`',
+      'Set the config file loader (jiti | native)',
       {
         default: 'jiti',
       },
     )
+    .option('--env-dir <dir>', 'Set the directory for loading `.env` files')
     .option(
-      '-r, --root <root>',
-      'specify the project root directory, can be an absolute path or a path relative to cwd',
+      '--env-mode <mode>',
+      'Set the env mode to load the `.env.[mode]` file',
+    )
+    .option('--environment <name>', 'Set the environment name(s) to build', {
+      type: [String],
+      default: [],
+    })
+    .option(
+      '--log-level <level>',
+      'Set the log level (info | warn | error | silent)',
     )
     .option(
       '-m, --mode <mode>',
-      'specify the build mode, can be `development`, `production` or `none`',
+      'Set the build mode (development | production | none)',
     )
     .option(
-      '--log-level <level>',
-      'specify the log level, can be `info`, `warn`, `error` or `silent`',
+      '-r, --root <root>',
+      'Set the project root directory (absolute path or relative to cwd)',
     )
-    .option(
-      '--env-mode <mode>',
-      'specify the env mode to load the `.env.[mode]` file',
-    )
-    .option(
-      '--environment <name>',
-      'specify the name of environment to build',
-      {
-        type: [String],
-        default: [],
-      },
-    )
-    .option('--env-dir <dir>', 'specify the directory to load `.env` files')
-    .option('--no-env', 'Disable loading `.env` files');
+    .option('--no-env', 'Disable loading of `.env` files');
 };
 
 const applyServerOptions = (command: Command) => {
   command
-    .option('-o, --open [url]', 'open the page in browser on startup')
-    .option('--port <port>', 'specify a port number for server to listen')
-    .option('--host <host>', 'specify the host that the server listens to');
+    .option('-o, --open [url]', 'Open the page in browser on startup')
+    .option('--port <port>', 'Set the port number for the server')
+    .option('--host <host>', 'Set the host that the server listens to');
 };
 
 export function setupCommands(): void {
@@ -95,15 +91,15 @@ export function setupCommands(): void {
   applyCommonOptions(cli);
 
   // Allow to run `rsbuild` without any sub-command to trigger dev
-  const devCommand = cli.command('', 'starting the dev server').alias('dev');
-  const buildCommand = cli.command('build', 'build the app for production');
+  const devCommand = cli.command('dev', 'Start the dev server').alias('');
+  const buildCommand = cli.command('build', 'Build the app for production');
   const previewCommand = cli.command(
     'preview',
-    'preview the production build locally',
+    'Preview the production build locally',
   );
   const inspectCommand = cli.command(
     'inspect',
-    'inspect the Rspack and Rsbuild configs',
+    'Inspect the Rspack and Rsbuild configs',
   );
 
   applyServerOptions(devCommand);
@@ -121,7 +117,10 @@ export function setupCommands(): void {
   });
 
   buildCommand
-    .option('-w, --watch', 'turn on watch mode, watch for changes and rebuild')
+    .option(
+      '-w, --watch',
+      'Enable watch mode to automatically rebuild on file changes',
+    )
     .action(async (options: BuildOptions) => {
       try {
         const rsbuild = await init({
@@ -163,8 +162,8 @@ export function setupCommands(): void {
   });
 
   inspectCommand
-    .option('--output <output>', 'specify inspect content output path')
-    .option('--verbose', 'show full function definitions in output')
+    .option('--output <output>', 'Set the output path for inspection results')
+    .option('--verbose', 'Show complete function definitions in output')
     .action(async (options: InspectOptions) => {
       try {
         const rsbuild = await init({ cliOptions: options });

@@ -89,7 +89,7 @@ rspackOnlyTest(
 
     await expect(locator).toHaveText('Hello Test!');
 
-    // #test-keep should unchanged when app.tsx HMR
+    // #test-keep should remain unchanged when app.tsx HMR
     await expect(locatorKeep.innerHTML()).resolves.toBe(keepNum);
 
     await rsbuild.close();

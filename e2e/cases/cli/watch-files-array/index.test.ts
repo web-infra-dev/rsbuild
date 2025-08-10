@@ -1,7 +1,6 @@
-import { exec } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { expectFile, getRandomPort, rspackOnlyTest } from '@e2e/helper';
+import { expectFile, getRandomPort, rspackOnlyTest, runCli } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { remove } from 'fs-extra';
 
@@ -17,7 +16,7 @@ rspackOnlyTest(
     await remove(dist);
     fs.writeFileSync(extraConfigFile, 'export default { foo: 1 };');
 
-    const childProcess = exec('npx rsbuild dev', {
+    const childProcess = runCli('dev', {
       cwd: __dirname,
       env: {
         ...process.env,

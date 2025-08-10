@@ -1,12 +1,41 @@
+import { createRequire } from 'node:module';
 import type { Compiler, MultiCompiler, Stats } from '@rspack/core';
 import { applyToCompiler } from '../helpers';
 import type {
   Connect,
-  DevConfig,
   EnvironmentContext,
-  ServerConfig,
+  NormalizedConfig,
+  NormalizedDevConfig,
+  NormalizedEnvironmentConfig,
+  WriteToDisk,
 } from '../types';
-import { getResolvedClientConfig } from './hmrFallback';
+import { resolveHostname } from './hmrFallback';
+
+const require = createRequire(import.meta.url);
+let hmrClientPath: string;
+let overlayClientPath: string;
+
+function getClientPaths(devConfig: NormalizedDevConfig) {
+  const clientPaths: string[] = [];
+
+  if (!devConfig.hmr && !devConfig.liveReload) {
+    return clientPaths;
+  }
+
+  if (!hmrClientPath) {
+    hmrClientPath = require.resolve('@rsbuild/core/client/hmr');
+  }
+  clientPaths.push(hmrClientPath);
+
+  if (devConfig.client?.overlay) {
+    if (!overlayClientPath) {
+      overlayClientPath = require.resolve('@rsbuild/core/client/overlay');
+    }
+    clientPaths.push(overlayClientPath);
+  }
+
+  return clientPaths;
+}
 
 export const isClientCompiler = (compiler: {
   options: {
@@ -69,27 +98,38 @@ export const setupServerHooks = ({
 };
 
 function applyHMREntry({
+  config,
   compiler,
-  clientPaths,
-  devConfig,
-  resolvedClientConfig,
   token,
+  resolvedHost,
+  resolvedPort,
 }: {
+  config: NormalizedEnvironmentConfig;
   compiler: Compiler;
-  clientPaths: string[];
-  devConfig: DevConfig;
-  resolvedClientConfig: DevConfig['client'];
   token: string;
+  resolvedHost: string;
+  resolvedPort: number;
 }) {
   if (!isClientCompiler(compiler)) {
     return;
   }
 
+  const clientPaths = getClientPaths(config.dev);
+  if (!clientPaths.length) {
+    return;
+  }
+
+  const clientConfig = { ...config.dev.client };
+  if (clientConfig.port === '<port>') {
+    clientConfig.port = resolvedPort;
+  }
+
   new compiler.webpack.DefinePlugin({
     RSBUILD_WEB_SOCKET_TOKEN: JSON.stringify(token),
-    RSBUILD_CLIENT_CONFIG: JSON.stringify(devConfig.client),
-    RSBUILD_RESOLVED_CLIENT_CONFIG: JSON.stringify(resolvedClientConfig),
-    RSBUILD_DEV_LIVE_RELOAD: devConfig.liveReload,
+    RSBUILD_CLIENT_CONFIG: JSON.stringify(clientConfig),
+    RSBUILD_SERVER_HOST: JSON.stringify(resolvedHost),
+    RSBUILD_SERVER_PORT: JSON.stringify(resolvedPort),
+    RSBUILD_DEV_LIVE_RELOAD: config.dev.liveReload,
   }).apply(compiler);
 
   for (const clientPath of clientPaths) {
@@ -99,23 +139,36 @@ function applyHMREntry({
   }
 }
 
-export type CompilationMiddlewareOptions = {
-  /**
-   * To ensure HMR works, the devMiddleware need inject the HMR client path into page when HMR enable.
-   */
-  clientPaths?: string[];
-  /**
-   * Should trigger when compiler hook called
-   */
-  callbacks: ServerCallbacks;
-  devConfig: DevConfig;
-  serverConfig: ServerConfig;
-  environments: Record<string, EnvironmentContext>;
-};
-
 export type CompilationMiddleware = Connect.NextHandleFunction & {
   close: (callback: (err: Error | null | undefined) => void) => any;
   watch: () => void;
+};
+
+/**
+ * Resolve writeToDisk config across multiple environments.
+ * Returns the unified config if all environments have the same value,
+ * otherwise returns a function that resolves config based on compilation.
+ */
+const resolveWriteToDiskConfig = (
+  config: NormalizedDevConfig,
+  environments: Record<string, EnvironmentContext>,
+): WriteToDisk => {
+  const writeToDiskValues = Object.values(environments).map(
+    (env) => env.config.dev.writeToDisk,
+  );
+  if (new Set(writeToDiskValues).size === 1) {
+    return writeToDiskValues[0];
+  }
+
+  return (filePath: string, name?: string) => {
+    let { writeToDisk } = config;
+    if (name && environments[name]) {
+      writeToDisk = environments[name].config.dev.writeToDisk ?? writeToDisk;
+    }
+    return typeof writeToDisk === 'function'
+      ? writeToDisk(filePath)
+      : writeToDisk;
+  };
 };
 
 /**
@@ -124,38 +177,48 @@ export type CompilationMiddleware = Connect.NextHandleFunction & {
  * - Inject the HMR client path into page
  * - Notify server when compiler hooks are triggered
  */
-export const getCompilationMiddleware = async (
-  compiler: Compiler | MultiCompiler,
-  options: CompilationMiddlewareOptions,
-): Promise<CompilationMiddleware> => {
+export const getCompilationMiddleware = async ({
+  config,
+  compiler,
+  callbacks,
+  environments,
+  resolvedPort,
+}: {
+  config: NormalizedConfig;
+  compiler: Compiler | MultiCompiler;
+  /**
+   * Should trigger when compiler hook called
+   */
+  callbacks: ServerCallbacks;
+  environments: Record<string, EnvironmentContext>;
+  resolvedPort: number;
+}): Promise<CompilationMiddleware> => {
   const { default: rsbuildDevMiddleware } = await import(
     '../../compiled/rsbuild-dev-middleware/index.js'
   );
-
-  const { clientPaths, callbacks, devConfig, serverConfig } = options;
-  const resolvedClientConfig = await getResolvedClientConfig(
-    devConfig.client,
-    serverConfig,
-  );
+  const resolvedHost = await resolveHostname(config.server.host);
 
   const setupCompiler = (compiler: Compiler, index: number) => {
-    const token = Object.values(options.environments).find(
+    const environment = Object.values(environments).find(
       (env) => env.index === index,
-    )?.webSocketToken;
+    );
+    if (!environment) {
+      return;
+    }
 
+    const token = environment.webSocketToken;
     if (!token) {
       return;
     }
 
-    if (clientPaths) {
-      applyHMREntry({
-        compiler,
-        clientPaths,
-        devConfig,
-        resolvedClientConfig,
-        token,
-      });
-    }
+    applyHMREntry({
+      token,
+      config: environment.config,
+      compiler,
+      resolvedHost,
+      resolvedPort,
+    });
+
     // register hooks for each compilation, update socket stats if recompiled
     setupServerHooks({
       compiler,
@@ -173,6 +236,6 @@ export const getCompilationMiddleware = async (
     publicPath: '/',
     stats: false,
     serverSideRender: true,
-    writeToDisk: devConfig.writeToDisk,
+    writeToDisk: resolveWriteToDiskConfig(config.dev, environments),
   });
 };

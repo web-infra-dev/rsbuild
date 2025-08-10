@@ -23,7 +23,7 @@ const getSassLoaderOptions = (
 } => {
   const excludes: (RegExp | string)[] = [];
 
-  const addExcludes = (items: string | RegExp | Array<string | RegExp>) => {
+  const addExcludes = (items: string | RegExp | (string | RegExp)[]) => {
     excludes.push(...(Array.isArray(items) ? items : [items]));
   };
 
@@ -106,7 +106,7 @@ export const pluginSass = (
       patchCompilerGlobalLocation(compiler);
     });
 
-    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
+    api.modifyBundlerChain((chain, { CHAIN_ID, environment }) => {
       const { config } = environment;
       const { sourceMap } = config.output;
       const isUseSourceMap =
@@ -168,7 +168,7 @@ export const pluginSass = (
       );
 
       const resolveUrlLoaderOptions = {
-        join: await getResolveUrlJoinFn(),
+        join: getResolveUrlJoinFn(),
         // 'resolve-url-loader' relies on 'adjust-sourcemap-loader',
         // it has performance regression issues in some scenarios,
         // so we need to disable the sourceMap option.

@@ -88,6 +88,11 @@ export async function init({
     commonOpts = cliOptions;
   }
 
+  // Build multiple environments can be shortened to: --environment name1,name2
+  commonOpts.environment = commonOpts.environment?.flatMap((env) =>
+    env.split(','),
+  );
+
   try {
     const cwd = process.cwd();
     const root = commonOpts.root

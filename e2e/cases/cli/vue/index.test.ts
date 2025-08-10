@@ -1,10 +1,9 @@
-import { execSync } from 'node:child_process';
 import path from 'node:path';
-import { readDirContents, rspackOnlyTest } from '@e2e/helper';
+import { readDirContents, rspackOnlyTest, runCliSync } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest('should build Vue SFC correctly', async () => {
-  execSync('npx rsbuild build', {
+  runCliSync('build', {
     cwd: __dirname,
   });
 

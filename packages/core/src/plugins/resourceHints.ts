@@ -61,7 +61,7 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
       return { headTags, bodyTags };
     });
 
-    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
+    api.modifyBundlerChain((chain, { CHAIN_ID, environment }) => {
       const { config, htmlPaths } = environment;
 
       if (Object.keys(htmlPaths).length === 0) {

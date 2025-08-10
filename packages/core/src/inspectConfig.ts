@@ -42,10 +42,10 @@ export const getRsbuildInspectConfig = ({
 }): {
   rawRsbuildConfig: string;
   rsbuildConfig: InspectConfigResult['origin']['rsbuildConfig'];
-  rawEnvironmentConfigs: Array<{
+  rawEnvironmentConfigs: {
     name: string;
     content: string;
-  }>;
+  }[];
   environmentConfigs: InspectConfigResult['origin']['environmentConfigs'];
 } => {
   const { environments, ...rsbuildConfig } = normalizedConfig;
@@ -58,10 +58,10 @@ export const getRsbuildInspectConfig = ({
   const rawRsbuildConfig = stringifyConfig(debugConfig, inspectOptions.verbose);
   const environmentConfigs: Record<string, NormalizedEnvironmentConfig> = {};
 
-  const rawEnvironmentConfigs: Array<{
+  const rawEnvironmentConfigs: {
     name: string;
     content: string;
-  }> = [];
+  }[] = [];
 
   for (const [name, config] of Object.entries(environments)) {
     const debugConfig = {
@@ -173,13 +173,8 @@ export async function outputInspectConfigFiles({
 }
 
 export function stringifyConfig(config: unknown, verbose?: boolean): string {
-  // webpackChain.toString can be used as a common stringify method
-  const stringify = RspackChain.toString as (
-    config: unknown,
-    options: { verbose?: boolean },
-  ) => string;
-
-  return stringify(config, { verbose });
+  // rspackChain.toString can be used as a common stringify method
+  return RspackChain.toString(config, { verbose });
 }
 
 const getInspectOutputPath = (

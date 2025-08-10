@@ -67,7 +67,7 @@ export abstract class BasicRunner implements Runner {
     return async (currentDirectory, modulePath, context = {}) => {
       const p = Array.isArray(modulePath)
         ? modulePath
-        : modulePath.split('?')[0]!;
+        : modulePath.split('?')[0];
       return entryRequire(currentDirectory, p, context);
     };
   }

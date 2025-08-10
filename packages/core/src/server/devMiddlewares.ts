@@ -4,10 +4,9 @@ import { castArray, isMultiCompiler, pick } from '../helpers';
 import { logger } from '../logger';
 import { rspack } from '../rspack';
 import type {
-  DevConfig,
   InternalContext,
+  NormalizedConfig,
   RequestHandler,
-  ServerConfig,
   SetupMiddlewaresContext,
 } from '../types';
 import type { CompilationManager } from './compilationManager';
@@ -26,23 +25,22 @@ import {
 import { createProxyMiddleware } from './proxy';
 
 export type RsbuildDevMiddlewareOptions = {
-  pwd: string;
-  dev: DevConfig;
-  devServerAPI: RsbuildDevServer;
-  server: ServerConfig;
+  config: NormalizedConfig;
   context: InternalContext;
   compilationManager?: CompilationManager;
+  devServerAPI: RsbuildDevServer;
   /**
    * Callbacks returned by the `onBeforeStartDevServer` hook.
    */
   postCallbacks: (() => void)[];
+  pwd: string;
 };
 
 const applySetupMiddlewares = (
-  dev: RsbuildDevMiddlewareOptions['dev'],
+  config: NormalizedConfig,
   devServerAPI: RsbuildDevServer,
 ) => {
-  const setupMiddlewares = dev.setupMiddlewares || [];
+  const setupMiddlewares = config.dev.setupMiddlewares || [];
 
   const serverOptions: SetupMiddlewaresContext = pick(devServerAPI, [
     'sockWrite',
@@ -65,14 +63,14 @@ const applySetupMiddlewares = (
   return { before, after };
 };
 
-export type Middlewares = Array<RequestHandler | [string, RequestHandler]>;
+export type Middlewares = (RequestHandler | [string, RequestHandler])[];
 
 const applyDefaultMiddlewares = async ({
-  devServerAPI,
-  middlewares,
-  server,
+  config,
   compilationManager,
   context,
+  devServerAPI,
+  middlewares,
   pwd,
   postCallbacks,
 }: RsbuildDevMiddlewareOptions & {
@@ -81,6 +79,7 @@ const applyDefaultMiddlewares = async ({
   onUpgrade: UpgradeEvent;
 }> => {
   const upgradeEvents: UpgradeEvent[] = [];
+  const { server } = config;
 
   if (server.cors) {
     const { default: corsMiddleware } = await import(
@@ -270,7 +269,7 @@ export const getDevMiddlewares = async (
 
   // Order: setupMiddlewares.unshift => internal middleware => setupMiddlewares.push
   const { before, after } = applySetupMiddlewares(
-    options.dev,
+    options.config,
     options.devServerAPI,
   );
 

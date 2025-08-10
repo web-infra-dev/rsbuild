@@ -1,9 +1,12 @@
 {
-  "private": true,
   "name": "@e2e/custom-server-ssr",
   "version": "1.0.0",
+  "private": true,
   "scripts": {
-    "dev": "npx rsbuild dev",
-    "dev:esm": "cross-env NODE_OPTIONS=\"--experimental-vm-modules\" TEST_ESM_LIBRARY=true npx rsbuild dev"
+    "dev": "rsbuild dev",
+    "dev:esm": "cross-env NODE_OPTIONS=\"--experimental-vm-modules\" TEST_ESM_LIBRARY=true rsbuild dev"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "workspace:*"
   }
 }

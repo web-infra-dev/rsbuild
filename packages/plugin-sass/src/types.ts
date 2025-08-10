@@ -41,7 +41,7 @@ export type PluginSassOptions = {
        * @deprecated
        * use `exclude` option instead.
        */
-      addExcludes: (items: string | RegExp | Array<string | RegExp>) => void;
+      addExcludes: (items: string | RegExp | (string | RegExp)[]) => void;
     }
   >;
 

@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-react",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "description": "React plugin for Rsbuild",
   "repository": {
     "type": "git",
@@ -24,7 +24,7 @@
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build --watch",
-    "bump": "npx bumpp --no-tag"
+    "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
     "@rspack/plugin-react-refresh": "~1.4.3",
@@ -32,17 +32,16 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.11.0",
+    "@rslib/core": "0.11.2",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.16.5",
-    "typescript": "^5.8.3"
+    "@types/node": "^22.17.0",
+    "typescript": "^5.9.2"
   },
   "peerDependencies": {
     "@rsbuild/core": "1.x"
   },
   "publishConfig": {
     "access": "public",
-    "provenance": true,
     "registry": "https://registry.npmjs.org/"
   }
 }

@@ -37,6 +37,15 @@ export type OnBeforeBuildFn<B = 'rspack'> = (
   },
 ) => MaybePromise<void>;
 
+export type OnBeforeDevCompileFn<B = 'rspack'> = (
+  params: CompileCommonParams & {
+    environments: Record<string, EnvironmentContext>;
+    bundlerConfigs?: B extends 'rspack'
+      ? Rspack.Configuration[]
+      : WebpackConfig[];
+  },
+) => MaybePromise<void>;
+
 export type OnAfterEnvironmentCompileFn = (
   params: CompileCommonParams & {
     stats?: Rspack.Stats;
@@ -72,10 +81,10 @@ export type OnBeforeStartDevServerFn = (params: {
 
 export type OnBeforeStartProdServerFn = () => MaybePromise<void>;
 
-export type Routes = Array<{
+export type Routes = {
   entryName: string;
   pathname: string;
-}>;
+}[];
 
 export type OnAfterStartDevServerFn = (params: {
   port: number;
@@ -154,7 +163,7 @@ export type ModifyRsbuildConfigUtils = {
   mergeRsbuildConfig: (...configs: RsbuildConfig[]) => RsbuildConfig;
 };
 
-type ArrayAtLeastOne<A, B> = [A, ...Array<A | B>] | [...Array<A | B>, A];
+type ArrayAtLeastOne<A, B> = [A, ...(A | B)[]] | [...(A | B)[], A];
 
 export type ModifyEnvironmentConfigUtils = {
   /** environment name. */

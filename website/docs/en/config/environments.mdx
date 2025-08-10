@@ -11,7 +11,13 @@ interface EnvironmentConfig {
   plugins?: RsbuildPlugins;
   dev?: Pick<
     DevConfig,
-    'hmr' | 'assetPrefix' | 'progressBar' | 'lazyCompilation' | 'writeToDisk'
+    | 'hmr'
+    | 'client'
+    | 'liveReload'
+    | 'assetPrefix'
+    | 'progressBar'
+    | 'lazyCompilation'
+    | 'writeToDisk'
   >;
   html?: HtmlConfig;
   tools?: ToolsConfig;

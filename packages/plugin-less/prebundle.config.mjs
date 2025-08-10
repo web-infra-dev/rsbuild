@@ -33,7 +33,6 @@ export default {
         );
       },
     },
-    // prebundle less-loader to make it works in Node 16
     {
       name: 'less-loader',
       ignoreDts: true,

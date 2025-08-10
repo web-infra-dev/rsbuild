@@ -50,9 +50,7 @@ export function patchCompilerGlobalLocation(compiler: {
  *
  * reference: https://github.com/bholloway/resolve-url-loader/blob/e2695cde68f325f617825e168173df92236efb93/packages/resolve-url-loader/docs/advanced-features.md
  */
-export const getResolveUrlJoinFn = async (): Promise<
-  (...args: unknown[]) => void
-> => {
+export const getResolveUrlJoinFn = (): ((...args: unknown[]) => void) => {
   const {
     createJoinFunction,
     asGenerator,

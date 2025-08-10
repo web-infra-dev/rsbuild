@@ -6,6 +6,11 @@ import {
 } from '../src/server/compilationMiddleware';
 import { formatRoutes, printServerURLs } from '../src/server/helper';
 
+beforeEach(() => {
+  const consoleLogSpy = rstest.spyOn(console, 'log');
+  consoleLogSpy.mockImplementation(() => {});
+});
+
 test('formatRoutes', () => {
   expect(
     formatRoutes(

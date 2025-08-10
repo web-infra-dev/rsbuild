@@ -10,7 +10,7 @@ export const pluginServer = (): RsbuildPlugin => ({
   name: 'rsbuild:server',
 
   setup(api) {
-    const onStartServer: OnAfterStartDevServerFn = async ({ port, routes }) => {
+    const onStartServer: OnAfterStartDevServerFn = ({ port, routes }) => {
       const config = api.getNormalizedConfig();
       if (config.server.open) {
         open({

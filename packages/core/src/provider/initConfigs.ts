@@ -10,6 +10,7 @@ import { isDebug, logger } from '../logger';
 import { mergeRsbuildConfig } from '../mergeConfig';
 import { initPlugins } from '../pluginManager';
 import type {
+  AllowedEnvironmentDevKeys,
   InspectConfigOptions,
   InternalContext,
   MergedEnvironmentConfig,
@@ -22,6 +23,16 @@ import type {
   Rspack,
 } from '../types';
 import { generateRspackConfig } from './rspackConfig';
+
+const allowedEnvironmentDevKeys: AllowedEnvironmentDevKeys[] = [
+  'hmr',
+  'client',
+  'liveReload',
+  'writeToDisk',
+  'assetPrefix',
+  'progressBar',
+  'lazyCompilation',
+];
 
 async function modifyRsbuildConfig(context: InternalContext) {
   logger.debug('modify Rsbuild config');
@@ -75,6 +86,13 @@ export type InitConfigsOptions = {
   rsbuildOptions: ResolvedCreateRsbuildOptions;
 };
 
+const createEnvironmentNotFoundError = (environments: string[] = []) => {
+  const envList = color.yellow(environments.join(','));
+  return new Error(
+    `${color.dim('[rsbuild:config]')} The current build is specified to run only in the ${envList} environment, but the configuration of the specified environment was not found.`,
+  );
+};
+
 const initEnvironmentConfigs = (
   normalizedConfig: NormalizedConfig,
   rootPath: string,
@@ -94,7 +112,7 @@ const initEnvironmentConfigs = (
     dev,
     server: _server,
     provider: _provider,
-    ...rsbuildSharedConfig
+    ...baseConfig
   } = normalizedConfig;
 
   const isEnvironmentEnabled = (name: string) =>
@@ -113,61 +131,41 @@ const initEnvironmentConfigs = (
     return config;
   };
 
-  if (environments && Object.keys(environments).length) {
+  if (environments && Object.keys(environments).length > 0) {
     const resolvedEnvironments = Object.fromEntries(
       Object.entries(environments)
         .filter(([name]) => isEnvironmentEnabled(name))
         .map(([name, config]) => {
-          const environmentConfig: MergedEnvironmentConfig = {
-            ...(mergeRsbuildConfig(
+          const environmentConfig = {
+            ...mergeRsbuildConfig(
               {
-                ...rsbuildSharedConfig,
-                dev: pick(dev, [
-                  'writeToDisk',
-                  'hmr',
-                  'assetPrefix',
-                  'progressBar',
-                  'lazyCompilation',
-                ]),
+                ...baseConfig,
+                dev: pick(dev, allowedEnvironmentDevKeys),
               } as MergedEnvironmentConfig,
-              config as unknown as MergedEnvironmentConfig,
-            ) as MergedEnvironmentConfig),
+              config,
+            ),
           };
 
           return [name, applyEnvironmentDefaultConfig(environmentConfig)];
         }),
     );
 
-    if (!Object.keys(resolvedEnvironments).length) {
-      throw new Error(
-        `${color.dim('[rsbuild:config]')} The current build is specified to run only in the ${color.yellow(
-          specifiedEnvironments?.join(','),
-        )} environment, but the configuration of the specified environment was not found.`,
-      );
+    if (Object.keys(resolvedEnvironments).length === 0) {
+      throw createEnvironmentNotFoundError(specifiedEnvironments);
     }
     return resolvedEnvironments;
   }
 
-  const defaultEnvironmentName = camelCase(rsbuildSharedConfig.output.target);
+  const defaultEnvironmentName = camelCase(baseConfig.output.target);
 
   if (!isEnvironmentEnabled(defaultEnvironmentName)) {
-    throw new Error(
-      `${color.dim('[rsbuild:config]')} The current build is specified to run only in the ${color.yellow(
-        specifiedEnvironments?.join(','),
-      )} environment, but the configuration of the specified environment was not found.`,
-    );
+    throw createEnvironmentNotFoundError(specifiedEnvironments);
   }
 
   return {
     [defaultEnvironmentName]: applyEnvironmentDefaultConfig({
-      ...rsbuildSharedConfig,
-      dev: pick(dev, [
-        'hmr',
-        'assetPrefix',
-        'progressBar',
-        'lazyCompilation',
-        'writeToDisk',
-      ]),
+      ...baseConfig,
+      dev: pick(dev, allowedEnvironmentDevKeys),
     } as MergedEnvironmentConfig),
   };
 };
@@ -249,18 +247,6 @@ export async function initRsbuildConfig({
     context.specifiedEnvironments,
   );
 
-  const {
-    dev: {
-      hmr: _hmr,
-      assetPrefix: _assetPrefix,
-      progressBar: _progressBar,
-      lazyCompilation: _lazyCompilation,
-      writeToDisk: _writeToDisk,
-      ...rsbuildSharedDev
-    },
-    server,
-  } = normalizedBaseConfig;
-
   const tsconfigPaths = new Set<string>();
 
   for (const [name, config] of Object.entries(mergedEnvironments)) {
@@ -273,10 +259,10 @@ export async function initRsbuildConfig({
     const normalizedEnvironmentConfig = {
       ...environmentConfig,
       dev: {
+        ...normalizedBaseConfig.dev,
         ...environmentConfig.dev,
-        ...rsbuildSharedDev,
       },
-      server,
+      server: normalizedBaseConfig.server,
     };
 
     const { tsconfigPath } = normalizedEnvironmentConfig.source;
