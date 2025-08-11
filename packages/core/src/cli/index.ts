@@ -23,10 +23,12 @@ function showGreeting() {
   // Ensure consistent spacing before the greeting message.
   // Different package managers handle output formatting differently - some automatically
   // add a blank line before command output, while others do not.
-  const { npm_execpath, npm_lifecycle_event } = process.env;
+  const { npm_execpath, npm_lifecycle_event, NODE_RUN_SCRIPT_NAME } =
+    process.env;
   const isNpx = npm_lifecycle_event === 'npx';
   const isBun = npm_execpath?.includes('.bun');
-  const prefix = isNpx || isBun ? '\n' : '';
+  const isNodeRun = Boolean(NODE_RUN_SCRIPT_NAME);
+  const prefix = isNpx || isBun || isNodeRun ? '\n' : '';
   logger.greet(`${prefix}  Rsbuild v${RSBUILD_VERSION}\n`);
 }
 
