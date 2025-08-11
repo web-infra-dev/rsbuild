@@ -48,6 +48,7 @@ export const dualPackage = defineConfig({
   },
   plugins: [
     pluginAreTheTypesWrong({
+      enable: Boolean(process.env.CI),
       areTheTypesWrongOptions: {
         ignoreRules: [
           // The dual package always provide the ESM types.
