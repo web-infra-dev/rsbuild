@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expectFile, rspackOnlyTest, runCli } from '@e2e/helper';
+import { expectFileWithContent, rspackOnlyTest, runCli } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import fse, { remove } from 'fs-extra';
 
@@ -22,14 +22,12 @@ rspackOnlyTest(
       cwd: __dirname,
     });
 
-    await expectFile(distIndexFile);
-    expect(fs.readFileSync(distIndexFile, 'utf-8')).toContain('foo1bar1');
+    await expectFileWithContent(distIndexFile, 'foo1bar1');
     await remove(distIndexFile);
 
     // should watch foo.js
     fse.outputFileSync(fooFile, `export const foo = 'foo2';`);
-    await expectFile(distIndexFile);
-    expect(fs.readFileSync(distIndexFile, 'utf-8')).toContain('foo2bar1');
+    await expectFileWithContent(distIndexFile, 'foo2bar1');
 
     // should not watch bar.js
     fse.outputFileSync(barFile, `export const bar = 'bar2';`);

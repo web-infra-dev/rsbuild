@@ -1,7 +1,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expectFile, getRandomPort, rspackOnlyTest, runCli } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import {
+  expectFile,
+  expectFileWithContent,
+  getRandomPort,
+  rspackOnlyTest,
+  runCli,
+} from '@e2e/helper';
+import { test } from '@playwright/test';
 import { remove } from 'fs-extra';
 
 const dist = path.join(__dirname, 'dist');
@@ -32,6 +38,7 @@ rspackOnlyTest(
 
     // the first build
     await expectFile(distIndexFile);
+    await expectFileWithContent(tempOutputFile, '1');
 
     await remove(tempOutputFile);
     // temp config changed and trigger rebuild
@@ -39,7 +46,7 @@ rspackOnlyTest(
 
     // rebuild and generate dist files
     await expectFile(tempOutputFile);
-    expect(fs.readFileSync(tempOutputFile, 'utf-8')).toEqual('2');
+    await expectFileWithContent(tempOutputFile, '2');
 
     childProcess.kill();
   },
@@ -59,13 +66,14 @@ rspackOnlyTest(
     });
 
     await expectFile(distIndexFile);
+    await expectFileWithContent(tempOutputFile, '1');
 
     await remove(distIndexFile);
     // temp config changed
     fs.writeFileSync(extraConfigFile, 'export default 2;');
 
     await expectFile(tempOutputFile);
-    expect(fs.readFileSync(tempOutputFile, 'utf-8')).toEqual('1');
+    await expectFileWithContent(tempOutputFile, '1');
 
     childProcess.kill();
   },
@@ -92,7 +100,7 @@ rspackOnlyTest(
     fs.writeFileSync(extraConfigFile, 'export default 2;');
 
     await expectFile(tempOutputFile);
-    expect(fs.readFileSync(tempOutputFile, 'utf-8')).toEqual('1');
+    await expectFileWithContent(tempOutputFile, '1');
 
     childProcess.kill();
   },
