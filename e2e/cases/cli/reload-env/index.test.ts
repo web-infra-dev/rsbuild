@@ -1,7 +1,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expectFile, getRandomPort, rspackOnlyTest, runCli } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import {
+  expectFileWithContent,
+  getRandomPort,
+  rspackOnlyTest,
+  runCli,
+} from '@e2e/helper';
 import { remove } from 'fs-extra';
 
 rspackOnlyTest(
@@ -38,14 +42,10 @@ rspackOnlyTest(
       },
     });
 
-    await expectFile(distIndex);
-    expect(fs.readFileSync(distIndex, 'utf-8')).toContain('jack');
-
+    await expectFileWithContent(distIndex, 'jack');
     await remove(distIndex);
-
     fs.writeFileSync(envLocalFile, 'PUBLIC_NAME=rose');
-    await expectFile(distIndex);
-    expect(fs.readFileSync(distIndex, 'utf-8')).toContain('rose');
+    await expectFileWithContent(distIndex, 'rose');
 
     devProcess.kill();
   },

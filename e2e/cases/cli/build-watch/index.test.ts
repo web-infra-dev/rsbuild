@@ -1,7 +1,5 @@
-import fs from 'node:fs';
 import path from 'node:path';
-import { expectFile, rspackOnlyTest, runCli } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expectFileWithContent, rspackOnlyTest, runCli } from '@e2e/helper';
 import fse, { remove } from 'fs-extra';
 
 rspackOnlyTest('should support watch mode for build command', async () => {
@@ -16,13 +14,11 @@ rspackOnlyTest('should support watch mode for build command', async () => {
     cwd: __dirname,
   });
 
-  await expectFile(distIndexFile);
-  expect(fs.readFileSync(distIndexFile, 'utf-8')).toContain('hello!');
+  await expectFileWithContent(distIndexFile, 'hello!');
   await remove(distIndexFile);
 
   fse.outputFileSync(indexFile, `console.log('hello2!');`);
-  await expectFile(distIndexFile);
-  expect(fs.readFileSync(distIndexFile, 'utf-8')).toContain('hello2!');
+  await expectFileWithContent(distIndexFile, 'hello2!');
 
   childProcess.kill();
 });
