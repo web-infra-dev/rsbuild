@@ -11,6 +11,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "lazyCompilation": {
+      "entries": false,
+      "imports": true,
+    },
     "rspackFuture": {
       "bundlerInfo": {
         "force": false,
@@ -517,6 +521,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "lazyCompilation": {
+      "entries": false,
+      "imports": true,
+    },
     "rspackFuture": {
       "bundlerInfo": {
         "force": false,
@@ -1480,6 +1488,10 @@ exports[`tools.rspack > should match snapshot 1`] = `
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "lazyCompilation": {
+      "entries": false,
+      "imports": true,
+    },
     "rspackFuture": {
       "bundlerInfo": {
         "force": false,

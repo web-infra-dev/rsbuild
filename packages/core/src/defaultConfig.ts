@@ -49,9 +49,6 @@ const getDefaultDevConfig = (): NormalizedDevConfig => ({
   assetPrefix: DEFAULT_ASSET_PREFIX,
   writeToDisk: false,
   cliShortcuts: false,
-  lazyCompilation: {
-    imports: true,
-  },
   client: {
     path: HMR_SOCKET_PATH,
     port: '',
@@ -272,6 +269,14 @@ export const withDefaultConfig = async (
       merged.output ||= {};
       merged.output.assetPrefix = merged.server.base;
     }
+  }
+
+  if (merged.dev?.lazyCompilation === undefined) {
+    merged.dev ||= {};
+    merged.dev.lazyCompilation = {
+      imports: true,
+      entries: false,
+    };
   }
 
   if (!merged.source.tsconfigPath) {

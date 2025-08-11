@@ -304,6 +304,10 @@ exports[`environment config > should print environment config when inspect confi
         "reconnect": 100,
       },
       "hmr": true,
+      "lazyCompilation": {
+        "entries": false,
+        "imports": true,
+      },
       "liveReload": true,
       "watchFiles": [],
       "writeToDisk": false,
@@ -445,6 +449,10 @@ exports[`environment config > should print environment config when inspect confi
         "reconnect": 100,
       },
       "hmr": true,
+      "lazyCompilation": {
+        "entries": false,
+        "imports": true,
+      },
       "liveReload": true,
       "watchFiles": [],
       "writeToDisk": false,
@@ -606,6 +614,10 @@ exports[`environment config > should support modify environment config by api.mo
         "reconnect": 100,
       },
       "hmr": true,
+      "lazyCompilation": {
+        "entries": false,
+        "imports": true,
+      },
       "liveReload": true,
       "watchFiles": [],
       "writeToDisk": false,
@@ -747,6 +759,10 @@ exports[`environment config > should support modify environment config by api.mo
         "reconnect": 100,
       },
       "hmr": true,
+      "lazyCompilation": {
+        "entries": false,
+        "imports": true,
+      },
       "liveReload": true,
       "watchFiles": [],
       "writeToDisk": false,
@@ -889,6 +905,10 @@ exports[`environment config > should support modify environment config by api.mo
         "reconnect": 100,
       },
       "hmr": true,
+      "lazyCompilation": {
+        "entries": false,
+        "imports": true,
+      },
       "liveReload": true,
       "watchFiles": [],
       "writeToDisk": false,
@@ -1034,6 +1054,10 @@ exports[`environment config > should support modify single environment config by
         "reconnect": 100,
       },
       "hmr": true,
+      "lazyCompilation": {
+        "entries": false,
+        "imports": true,
+      },
       "liveReload": true,
       "watchFiles": [],
       "writeToDisk": false,
@@ -1175,6 +1199,10 @@ exports[`environment config > should support modify single environment config by
         "reconnect": 100,
       },
       "hmr": true,
+      "lazyCompilation": {
+        "entries": false,
+        "imports": true,
+      },
       "liveReload": true,
       "watchFiles": [],
       "writeToDisk": false,
@@ -1315,6 +1343,10 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     "devtool": "eval-source-map",
     "experiments": {
       "asyncWebAssembly": true,
+      "lazyCompilation": {
+        "entries": false,
+        "imports": true,
+      },
       "rspackFuture": {
         "bundlerInfo": {
           "force": false,

@@ -11,6 +11,10 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "lazyCompilation": {
+      "entries": false,
+      "imports": true,
+    },
     "rspackFuture": {
       "bundlerInfo": {
         "force": false,
