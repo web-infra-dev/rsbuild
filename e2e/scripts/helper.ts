@@ -73,6 +73,25 @@ export const readDirContents = async (path: string, options?: GlobOptions) => {
 export const expectFile = (dir: string) =>
   expectPoll(() => fs.existsSync(dir)).toBeTruthy();
 
+/**
+ * Expect a file to exist and include specified content
+ */
+export const expectFileWithContent = (
+  filePath: string,
+  expectedContent: string,
+) =>
+  expectPoll(() => {
+    try {
+      if (!fs.existsSync(filePath)) {
+        return false;
+      }
+      const content = fs.readFileSync(filePath, 'utf-8');
+      return content.includes(expectedContent);
+    } catch {
+      return false;
+    }
+  }).toBeTruthy();
+
 export type ProxyConsoleOptions = {
   types?: ConsoleType | ConsoleType[];
   keepAnsi?: boolean;
