@@ -97,7 +97,7 @@ export type PluginLessOptions = {
   exclude?: Rspack.RuleSetCondition;
   /**
    * Whether to enable parallel loader execution, running `less-loader` in worker
-   * threads. When enabled, this typically improves build performance when processing
+   * threads. When enabled, this typically improves build performance when compiling
    * large numbers of Less modules.
    * @experimental This is an experimental Rspack feature and will not work if your Less
    * options contain functions.
