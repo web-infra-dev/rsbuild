@@ -68,8 +68,8 @@ pluginVue({
 
 在 [chunkSplit.strategy](/config/performance/chunk-split) 设置为 `split-by-experience` 时，Rsbuild 默认会自动将 `vue` 和 `router` 相关的包拆分为单独的 chunk:
 
-- `lib-vue.js`：包含 vue，vue-loader，以及 vue 的子依赖（@vue/shared，@vue/reactivity，@vue/runtime-dom，@vue/runtime-core）。
-- `lib-router.js`：包含 vue-router。
+- `lib-vue.js`：包含 `vue`、`vue-loader`，以及它们的子依赖（`@vue/shared`，`@vue/reactivity`，`@vue/runtime-dom`，`@vue/runtime-core`）。
+- `lib-router.js`：包含 `vue-router`。
 
 该选项用于控制这一行为，决定是否需要将 `vue` 和 `router` 相关的包拆分为单独的 chunk。
 

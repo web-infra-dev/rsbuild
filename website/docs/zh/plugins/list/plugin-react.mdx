@@ -130,8 +130,8 @@ pluginReact({
 
 在 [chunkSplit.strategy](/config/performance/chunk-split) 设置为 `split-by-experience` 时，Rsbuild 默认会自动将 `react` 和 `router` 相关的包拆分为单独的 chunk:
 
-- `lib-react.js`：包含 react，react-dom，以及 react 的子依赖（scheduler）。
-- `lib-router.js`：包含 react-router，react-router-dom，以及 react-router 的子依赖（history，@remix-run/router）。
+- `lib-react.js`：包含 `react`、`react-dom`，以及它们的子依赖（`scheduler`）。
+- `lib-router.js`：包含 `react-router`、`react-router-dom`，以及它们的子依赖（`history`，`@remix-run/router`）。
 
 该选项用于控制这一行为，决定是否需要将 `react` 和 `router` 相关的包拆分为单独的 chunk。
 

@@ -23,10 +23,12 @@ Rsbuild 支持设置以下几种拆包策略：
 
 ### 分包策略
 
-Rsbuild 默认采用 `split-by-experience` 策略，这是我们根据经验制定的策略。具体来说，当你的项目中引用了以下 npm 包时，它们会自动被拆分为单独的 chunk：
+Rsbuild 默认采用 `split-by-experience` 策略，这是基于实践经验制定的优化策略。当项目中引用以下 npm 包时，它们会自动拆分为独立的 chunk：
 
-- `lib-polyfill.js`：包含 `core-js`，`@swc/helpers`，`tslib`。
-- `lib-axios.js`：包含 `axios` 以及相关的包。
+- `lib-polyfill.js`：包含 `core-js`、`@swc/helpers`、`tslib`
+- `lib-axios.js`：包含 `axios`
+- `lib-react.js`：由 [@rsbuild/plugin-react](/plugins/list/plugin-react#splitchunks) 提供
+- `lib-vue.js`：由 [@rsbuild/plugin-vue](/plugins/list/plugin-vue#splitchunks) 提供
 
 这种方式将常用的包进行分组，然后拆分为单独的 chunk，有助于浏览器缓存。
 
