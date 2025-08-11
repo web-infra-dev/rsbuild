@@ -1,5 +1,6 @@
 import type { Minify } from '@rsbuild/core';
 import { defineConfig, type LibConfig } from '@rslib/core';
+import { pluginAreTheTypesWrong } from 'rsbuild-plugin-arethetypeswrong';
 
 export const commonExternals: Array<string | RegExp> = [
   'webpack',
@@ -45,4 +46,14 @@ export const dualPackage = defineConfig({
       externals: commonExternals,
     },
   },
+  plugins: [
+    pluginAreTheTypesWrong({
+      areTheTypesWrongOptions: {
+        ignoreRules: [
+          // The dual package always provide the ESM types.
+          'false-esm',
+        ],
+      },
+    }),
+  ],
 });

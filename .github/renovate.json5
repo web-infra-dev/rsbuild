@@ -102,7 +102,7 @@
     'style-loader',
     'http-proxy-middleware',
     // Temporary ignore
-    "less",
+    'less',
     '@biomejs/biome',
   ],
 }

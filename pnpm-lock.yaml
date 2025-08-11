@@ -1137,6 +1137,9 @@ importers:
       '@types/node':
         specifier: ^22.17.1
         version: 22.17.1
+      rsbuild-plugin-arethetypeswrong:
+        specifier: 0.1.0
+        version: 0.1.0(@rsbuild/core@packages+core)(typescript@5.9.2)
       typescript:
         specifier: ^5.9.2
         version: 5.9.2
@@ -5727,6 +5730,16 @@ packages:
       webpack: ^5.0.0
     peerDependenciesMeta:
       webpack:
+        optional: true
+
+  rsbuild-plugin-arethetypeswrong@0.1.0:
+    resolution: {integrity: sha512-rbVnrvFjSuZHu0h+bTcChQXCiIUrX8DmY30DnUHzvwrFuMadS4B5mnOqwpynJ6cFNKs6e8bQGdDB77SZuNkXcQ==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@rsbuild/core': '*'
+      typescript: '*'
+    peerDependenciesMeta:
+      '@rsbuild/core':
         optional: true
 
   rsbuild-plugin-dts@0.11.2:
@@ -11889,6 +11902,12 @@ snapshots:
       rslog: 1.2.11
     optionalDependencies:
       webpack: 5.101.0
+
+  rsbuild-plugin-arethetypeswrong@0.1.0(@rsbuild/core@packages+core)(typescript@5.9.2):
+    dependencies:
+      typescript: 5.9.2
+    optionalDependencies:
+      '@rsbuild/core': link:packages/core
 
   rsbuild-plugin-dts@0.11.2(@rsbuild/core@1.4.14)(typescript@5.9.2):
     dependencies:
