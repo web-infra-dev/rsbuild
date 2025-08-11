@@ -272,6 +272,14 @@ export const withDefaultConfig = async (
     }
   }
 
+  if (merged.dev?.lazyCompilation === undefined) {
+    merged.dev ||= {};
+    merged.dev.lazyCompilation = {
+      imports: true,
+      entries: false,
+    };
+  }
+
   if (!merged.source.tsconfigPath) {
     const tsconfigPath = join(rootPath, TS_CONFIG_FILE);
 

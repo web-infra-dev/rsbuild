@@ -1,11 +1,25 @@
 import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
+declare global {
+  interface Window {
+    dynamicChunkNonce?: string;
+  }
+}
+
 test('should apply nonce to dynamic chunks in dev build', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
     page,
   });
+
+  await page.waitForFunction(
+    () => window.dynamicChunkNonce !== undefined,
+    undefined,
+    {
+      timeout: 2000,
+    },
+  );
 
   expect(await page.evaluate('window.dynamicChunkNonce')).toEqual(
     'CSP_NONCE_PLACEHOLDER',
