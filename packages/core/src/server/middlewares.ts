@@ -61,7 +61,7 @@ export const getRequestLoggerMiddleware: () => Promise<Connect.NextHandleFunctio
 
         // :status :method :url :total-time ms
         logger.debug(
-          `${statusColor(status)} ${method} ${color.gray(url)} ${color.gray(
+          `${statusColor(status)} ${method} ${url} ${color.dim(
             `${totalTime.toFixed(3)} ms`,
           )}`,
         );
@@ -249,9 +249,7 @@ export const getHtmlFallbackMiddleware: (params: {
 
       if (logger.level === 'verbose') {
         logger.debug(
-          `${req.method} ${color.gray(
-            `${req.url} ${color.yellow('fallback')} to ${newUrl}`,
-          )}`,
+          `    ${req.method} ${req.url} ${color.yellow('fallback to')} ${newUrl}`,
         );
       }
 
