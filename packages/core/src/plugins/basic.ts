@@ -101,6 +101,8 @@ export const pluginBasic = (): RsbuildPlugin => ({
                 force: false,
               },
             },
+            // enable native-watcher by default
+            nativeWatcher: true,
           });
         }
 
