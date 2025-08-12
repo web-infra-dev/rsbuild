@@ -34,8 +34,9 @@ const externals: Rspack.Configuration['externals'] = [
   '@rsbuild/core',
   '@rsbuild/core/client/hmr',
   '@rsbuild/core/client/overlay',
-  // yaml is an optional dependency of `postcss-load-config`
+  // yaml and tsx are optional dependencies of `postcss-load-config`
   'yaml',
+  'tsx/cjs/api',
   // externalize pre-bundled dependencies
   ({ request }, callback) => {
     const entries = Object.entries(regexpMap);
