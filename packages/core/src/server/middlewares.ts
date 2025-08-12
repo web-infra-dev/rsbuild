@@ -249,7 +249,7 @@ export const getHtmlFallbackMiddleware: (params: {
 
       if (logger.level === 'verbose') {
         logger.debug(
-          `${req.method} ${color.gray(
+          `    ${req.method} ${color.gray(
             `${req.url} ${color.yellow('fallback')} to ${newUrl}`,
           )}`,
         );
