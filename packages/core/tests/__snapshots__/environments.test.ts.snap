@@ -72,6 +72,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "legalComments": "linked",
     "manifest": false,
     "minify": true,
+    "module": false,
     "polyfill": "off",
     "sourceMap": {
       "css": false,
@@ -217,6 +218,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "legalComments": "linked",
     "manifest": false,
     "minify": true,
+    "module": false,
     "polyfill": "off",
     "sourceMap": {
       "css": false,
@@ -362,6 +364,7 @@ exports[`environment config > should print environment config when inspect confi
       "legalComments": "linked",
       "manifest": false,
       "minify": true,
+      "module": false,
       "polyfill": "off",
       "sourceMap": {
         "css": false,
@@ -503,6 +506,7 @@ exports[`environment config > should print environment config when inspect confi
       "legalComments": "linked",
       "manifest": false,
       "minify": true,
+      "module": false,
       "polyfill": "off",
       "sourceMap": {
         "css": false,
@@ -664,6 +668,7 @@ exports[`environment config > should support modify environment config by api.mo
       "legalComments": "linked",
       "manifest": false,
       "minify": true,
+      "module": false,
       "polyfill": "off",
       "sourceMap": {
         "css": false,
@@ -805,6 +810,7 @@ exports[`environment config > should support modify environment config by api.mo
       "legalComments": "linked",
       "manifest": false,
       "minify": true,
+      "module": false,
       "polyfill": "off",
       "sourceMap": {
         "css": false,
@@ -947,6 +953,7 @@ exports[`environment config > should support modify environment config by api.mo
       "legalComments": "linked",
       "manifest": false,
       "minify": true,
+      "module": false,
       "polyfill": "off",
       "sourceMap": {
         "css": false,
@@ -1092,6 +1099,7 @@ exports[`environment config > should support modify single environment config by
       "legalComments": "linked",
       "manifest": false,
       "minify": true,
+      "module": false,
       "polyfill": "off",
       "sourceMap": {
         "css": false,
@@ -1233,6 +1241,7 @@ exports[`environment config > should support modify single environment config by
       "legalComments": "linked",
       "manifest": false,
       "minify": true,
+      "module": false,
       "polyfill": "off",
       "sourceMap": {
         "css": false,

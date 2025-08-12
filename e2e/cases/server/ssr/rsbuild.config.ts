@@ -55,6 +55,7 @@ export default defineConfig({
     },
     node: {
       output: {
+        module: true,
         target: 'node',
       },
       source: {
@@ -67,19 +68,10 @@ export default defineConfig({
           if (process.env.TEST_ESM_LIBRARY) {
             return {
               ...config,
-              experiments: {
-                ...config.experiments,
-                outputModule: true,
-              },
               output: {
                 ...config.output,
                 filename: '[name].mjs',
                 chunkFilename: '[name].mjs',
-                chunkFormat: 'module',
-                chunkLoading: 'import',
-                library: {
-                  type: 'module',
-                },
               },
             };
           }
