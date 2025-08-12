@@ -13,7 +13,7 @@ export const pluginEsm = (): RsbuildPlugin => ({
 
       if (!isServer) {
         throw new Error(
-          '[rsbuild:config] `output.module` config only support node target yet.',
+          '[rsbuild:config] `output.module` is only supported for Node.js targets.',
         );
       }
 
