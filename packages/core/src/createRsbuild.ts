@@ -23,6 +23,7 @@ import { pluginCleanOutput } from './plugins/cleanOutput';
 import { pluginCss } from './plugins/css';
 import { pluginDefine } from './plugins/define';
 import { pluginEntry } from './plugins/entry';
+import { pluginEsm } from './plugins/esm';
 import { pluginExternals } from './plugins/externals';
 import { pluginFileSize } from './plugins/fileSize';
 import { pluginHtml } from './plugins/html';
@@ -94,6 +95,7 @@ function applyDefaultPlugins(
     pluginMinimize(),
     pluginProgress(),
     pluginSwc(),
+    pluginEsm(),
     pluginExternals(),
     pluginSplitChunks(),
     pluginInlineChunk(),

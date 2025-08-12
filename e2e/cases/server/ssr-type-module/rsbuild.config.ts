@@ -55,30 +55,12 @@ export default defineConfig({
     },
     node: {
       output: {
+        module: true,
         target: 'node',
       },
       source: {
         entry: {
           index: './src/index.server',
-        },
-      },
-      tools: {
-        rspack: (config) => {
-          return {
-            ...config,
-            experiments: {
-              ...config.experiments,
-              outputModule: true,
-            },
-            output: {
-              ...config.output,
-              chunkFormat: 'module',
-              chunkLoading: 'import',
-              library: {
-                type: 'module',
-              },
-            },
-          };
         },
       },
     },

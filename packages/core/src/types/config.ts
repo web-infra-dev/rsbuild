@@ -1231,6 +1231,13 @@ export interface OutputConfig {
    */
   manifest?: ManifestConfig;
   /**
+   * Whether to output JavaScript files in ES modules format. This feature is currently
+   * experimental and only available when `output.target` is `'node'`.
+   * @experimental
+   * @default false
+   */
+  module?: boolean;
+  /**
    * Whether to generate source map files, and which format of source map to generate.
    *
    * @default
@@ -1308,6 +1315,7 @@ export interface NormalizedOutputConfig extends OutputConfig {
   assetPrefix: string;
   dataUriLimit: number | NormalizedDataUriLimit;
   manifest: ManifestConfig;
+  module: boolean;
   minify: Minify;
   inlineScripts: InlineChunkConfig;
   inlineStyles: InlineChunkConfig;
