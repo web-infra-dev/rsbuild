@@ -19,6 +19,10 @@ Rsbuild 支持设置以下几种拆包策略：
 - `single-vendor`: 将所有 NPM 包的代码打包到一个单独的 chunk 中。
 - `custom`: 自定义拆包配置。
 
+:::tip
+在使用除了 `all-in-one` 之外的其他策略时，Rspack 默认的拆包规则也会生效，详情请参考 [Rspack - SplitChunksPlugin](https://rspack.rs/zh/plugins/webpack/split-chunks-plugin#默认行为)。
+:::
+
 ## split-by-experience
 
 ### 分包策略
@@ -30,7 +34,7 @@ Rsbuild 默认采用 `split-by-experience` 策略，这是基于实践经验制�
 - `lib-react.js`：由 [@rsbuild/plugin-react](/plugins/list/plugin-react#splitchunks) 提供
 - `lib-vue.js`：由 [@rsbuild/plugin-vue](/plugins/list/plugin-vue#splitchunks) 提供
 
-这种方式将常用的包进行分组，然后拆分为单独的 chunk，有助于浏览器缓存。
+这种方式将常用的包进行分组，然后拆分为单独的 chunk，有助于提升浏览器缓存效率。
 
 ### 配置
 
