@@ -16,6 +16,8 @@ permissions:
   contents: write
   # Allow commenting on issues
   issues: write
+  # Allow commenting on PR
+  pull-requests: write
 
 jobs:
   changes:
