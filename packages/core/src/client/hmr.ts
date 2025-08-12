@@ -29,7 +29,6 @@ function formatURL(fallback?: boolean) {
 }
 
 // Remember some state related to hot module replacement.
-let isFirstCompilation = true;
 let lastCompilationHash: string | undefined;
 let hasCompileErrors = false;
 
@@ -55,22 +54,15 @@ export const registerOverlay = (
 function handleSuccess() {
   clearOutdatedErrors();
 
-  const isHotUpdate = !isFirstCompilation;
-  isFirstCompilation = false;
   hasCompileErrors = false;
 
-  // Attempt to apply hot updates or reload.
-  if (isHotUpdate) {
-    tryApplyUpdates();
-  }
+  tryApplyUpdates();
 }
 
 // Compilation with warnings (e.g. ESLint).
 function handleWarnings({ text }: { text: string[] }) {
   clearOutdatedErrors();
 
-  const isHotUpdate = !isFirstCompilation;
-  isFirstCompilation = false;
   hasCompileErrors = false;
 
   for (let i = 0; i < text.length; i++) {
@@ -83,17 +75,13 @@ function handleWarnings({ text }: { text: string[] }) {
     console.warn(text[i]);
   }
 
-  // Attempt to apply hot updates or reload.
-  if (isHotUpdate) {
-    tryApplyUpdates();
-  }
+  tryApplyUpdates();
 }
 
 // Compilation with errors (e.g. syntax error or missing modules).
 function handleErrors({ text, html }: { text: string[]; html: string }) {
   clearOutdatedErrors();
 
-  isFirstCompilation = false;
   hasCompileErrors = true;
 
   // Also log them to the console.
