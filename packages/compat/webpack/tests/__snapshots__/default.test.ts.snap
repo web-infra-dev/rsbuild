@@ -28,10 +28,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   "infrastructureLogging": {
     "level": "error",
   },
-  "lazyCompilation": {
-    "entries": false,
-    "imports": true,
-  },
   "mode": "development",
   "module": {
     "parser": {
@@ -489,10 +485,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
   },
   "infrastructureLogging": {
     "level": "error",
-  },
-  "lazyCompilation": {
-    "entries": false,
-    "imports": true,
   },
   "mode": "production",
   "module": {
