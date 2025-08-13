@@ -53,9 +53,7 @@ export const registerOverlay = (
 // Successful compilation.
 function handleSuccess() {
   clearOutdatedErrors();
-
   hasCompileErrors = false;
-
   tryApplyUpdates();
 }
 
@@ -111,10 +109,8 @@ const handleApplyUpdates = (
     return;
   }
 
-  if (isUpdateAvailable()) {
-    // While we were updating, there was a new update! Do it again.
-    tryApplyUpdates();
-  }
+  // While we were updating, there was a new update! Do it again.
+  tryApplyUpdates();
 };
 
 // Attempt to update code on the fly, fall back to a hard reload.
