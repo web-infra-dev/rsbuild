@@ -8,7 +8,7 @@ export const pluginLazyCompilation = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain((chain, { environment, target }) => {
-      if (target !== 'web') {
+      if (target !== 'web' || api.context.bundlerType === 'webpack') {
         return;
       }
 
