@@ -29,8 +29,14 @@ type LazyCompilationOptions =
     };
 ```
 
-- **默认值：** `false`
-- **版本：** `>= 1.3.0`
+- **默认值：**
+
+```js
+const defaultOptions = {
+  imports: true,
+  entries: false,
+};
+```
 
 用于开启 lazy compilation（即按需编译），基于 Rspack 的 [lazy compilation](https://rspack.rs/zh/guide/features/lazy-compilation) 特性实现。
 
@@ -124,3 +130,10 @@ export default {
 :::tip
 Rsbuild 会自动将 `<port>` 占位符替换为 server 实际监听的端口号。
 :::
+
+## 版本历史
+
+| 版本   | 变更内容                    |
+| ------ | --------------------------- |
+| v1.3.0 | 新增配置项                  |
+| v1.5.0 | 默认值由 `false` 改为当前值 |

@@ -30,7 +30,13 @@ type LazyCompilationOptions =
 ```
 
 - **Default:** `false`
-- **Version:** `>= 1.3.0`
+
+```js
+const defaultOptions = {
+  imports: true,
+  entries: false,
+};
+```
 
 Enable lazy compilation (compilation on demand), implemented based on Rspack's [lazy compilation](https://rspack.rs/guide/features/lazy-compilation) feature.
 
@@ -124,3 +130,10 @@ export default {
 :::tip
 Rsbuild will replace the `<port>` placeholder with the actual port number the server is listening on.
 :::
+
+## Version history
+
+| Version | Changes                                             |
+| ------- | --------------------------------------------------- |
+| v1.3.0  | Added configuration option                          |
+| v1.5.0  | Changed default value from `false` to current value |
