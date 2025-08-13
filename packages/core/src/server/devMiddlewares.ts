@@ -135,13 +135,19 @@ const applyDefaultMiddlewares = async ({
     // Rsbuild users can enable lazy compilation in two ways:
     // 1. Use Rsbuild's `dev.lazyCompilation` option
     // 2. Use Rspack's `experiments.lazyCompilation` option
+    // 3. Use Rspack's configuration top-level `lazyCompilation` option
     const isLazyCompilationEnabled = () => {
       if (isMultiCompiler(compiler)) {
         return compiler.compilers.some(
-          (childCompiler) => childCompiler.options.experiments?.lazyCompilation,
+          (childCompiler) =>
+            childCompiler.options.experiments?.lazyCompilation ||
+            childCompiler.options.lazyCompilation,
         );
       }
-      return compiler.options.experiments?.lazyCompilation;
+      return (
+        compiler.options.experiments?.lazyCompilation ||
+        compiler.options.lazyCompilation
+      );
     };
 
     if (isLazyCompilationEnabled()) {
