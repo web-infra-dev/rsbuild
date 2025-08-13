@@ -24,13 +24,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "lazyCompilation": {
-      "entries": false,
-      "imports": true,
-    },
   },
   "infrastructureLogging": {
     "level": "error",
+  },
+  "lazyCompilation": {
+    "entries": false,
+    "imports": true,
   },
   "mode": "development",
   "module": {
@@ -486,13 +486,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "lazyCompilation": {
-      "entries": false,
-      "imports": true,
-    },
   },
   "infrastructureLogging": {
     "level": "error",
+  },
+  "lazyCompilation": {
+    "entries": false,
+    "imports": true,
   },
   "mode": "production",
   "module": {

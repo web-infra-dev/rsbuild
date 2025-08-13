@@ -25,12 +25,9 @@ export const pluginLazyCompilation = (): RsbuildPlugin => ({
         // If there is only one entry, do not enable lazy compilation for entries
         // this can reduce the rebuild time
         if (Object.keys(entries).length <= 1) {
-          chain.experiments({
-            ...chain.get('experiments'),
-            lazyCompilation: {
-              entries: false,
-              imports: true,
-            },
+          chain.lazyCompilation({
+            entries: false,
+            imports: true,
           });
           return;
         }
@@ -42,23 +39,17 @@ export const pluginLazyCompilation = (): RsbuildPlugin => ({
         typeof options.serverUrl === 'string' &&
         api.context.devServer
       ) {
-        chain.experiments({
-          ...chain.get('experiments'),
-          lazyCompilation: {
-            ...options,
-            serverUrl: replacePortPlaceholder(
-              options.serverUrl,
-              api.context.devServer.port,
-            ),
-          },
+        chain.lazyCompilation({
+          ...options,
+          serverUrl: replacePortPlaceholder(
+            options.serverUrl,
+            api.context.devServer.port,
+          ),
         });
         return;
       }
 
-      chain.experiments({
-        ...chain.get('experiments'),
-        lazyCompilation: options,
-      });
+      chain.lazyCompilation(options);
     });
   },
 });
