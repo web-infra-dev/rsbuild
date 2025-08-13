@@ -48,9 +48,7 @@ rspackOnlyTest(
       rsbuildConfig: {
         tools: {
           rspack: {
-            experiments: {
-              lazyCompilation: true,
-            },
+            lazyCompilation: true,
           },
         },
       },
