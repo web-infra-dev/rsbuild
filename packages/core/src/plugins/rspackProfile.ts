@@ -10,7 +10,7 @@ enum TracePreset {
   ALL = 'ALL', // contains all trace events
 }
 
-function resolveLayer(value: string): string {
+function resolveLayer(value: TracePreset): string {
   const overviewTraceFilter = 'info';
   const allTraceFilter = 'trace';
 
@@ -36,7 +36,7 @@ async function ensureFileDir(outputFilePath: string) {
  */
 async function applyProfile(
   root: string,
-  filterValue: string,
+  filterValue: TracePreset,
   traceLayer = 'perfetto',
   traceOutput?: string,
 ) {
@@ -96,7 +96,7 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
     const onStart = async () => {
       traceOutput = await applyProfile(
         api.context.rootPath,
-        RSPACK_PROFILE,
+        RSPACK_PROFILE as TracePreset,
         process.env.RSPACK_TRACE_LAYER,
         process.env.RSPACK_TRACE_OUTPUT,
       );
