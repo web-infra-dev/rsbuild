@@ -53,8 +53,8 @@ rspackOnlyTest(
     await expect(locator2).toHaveText('Hello Test!');
 
     // #test-keep should remain unchanged when app.tsx HMR
-    await expect(locatorKeep1.innerHTML()).resolves.toBe(keepNum1);
-    await expect(locatorKeep2.innerHTML()).resolves.toBe(keepNum2);
+    expect(await locatorKeep1.innerHTML()).toBe(keepNum1);
+    expect(await locatorKeep2.innerHTML()).toBe(keepNum2);
 
     await rsbuild.close();
   },

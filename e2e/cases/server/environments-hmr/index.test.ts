@@ -76,8 +76,7 @@ rspackOnlyTest(
     );
 
     await expect(locator1).toHaveText('Hello Rsbuild (web1)!');
-
-    await expect(locatorKeep.innerHTML()).resolves.toBe(keepNum);
+    expect(await locatorKeep.innerHTML()).toBe(keepNum);
 
     // index HMR correctly
     const appPath = join(cwd, 'test-temp-src/App.tsx');
@@ -90,7 +89,7 @@ rspackOnlyTest(
     await expect(locator).toHaveText('Hello Test!');
 
     // #test-keep should remain unchanged when app.tsx HMR
-    await expect(locatorKeep.innerHTML()).resolves.toBe(keepNum);
+    expect(await locatorKeep.innerHTML()).toBe(keepNum);
 
     await rsbuild.close();
   },
