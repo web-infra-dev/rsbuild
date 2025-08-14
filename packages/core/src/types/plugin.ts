@@ -261,7 +261,8 @@ export type RsbuildPlugin = {
 // Rsbuild core without throwing type mismatches. In most cases, Rsbuild core
 // only adds new methods or properties to the API object, which means that lower
 // version plugins will usually work fine.
-type LooseRsbuildPlugin = Omit<RsbuildPlugin, 'setup'> & {
+type LooseRsbuildPlugin = Omit<RsbuildPlugin, 'setup' | 'apply'> & {
+  apply?: any;
   setup: (api: any) => MaybePromise<void>;
 };
 
