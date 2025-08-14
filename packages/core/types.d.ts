@@ -279,6 +279,20 @@ declare module '*?raw' {
 }
 
 /**
+ * @requires [@rsbuild/plugin-svgr](https://npmjs.com/package/@rsbuild/plugin-svgr)
+ * Imports svg as a React component.
+ * @note Only works with SVGR and React. Rsbuild will call SVGR to transform the SVG into a React component
+ * @example
+ * import Logo from './logo.svg?react'
+ * 
+ * export const App = () => <Logo />;
+ */
+declare module '*.svg?react' {
+  const content: string;
+  export default content;
+}
+
+/**
  * CSS Modules
  */
 type CSSModuleClasses = {
