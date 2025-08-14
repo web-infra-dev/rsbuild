@@ -11,6 +11,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "inlineEnum": true,
     "lazyBarrel": true,
     "rspackFuture": {
       "bundlerInfo": {
@@ -177,7 +178,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
-                  "exportedEnum": false,
+                  "exportedEnum": true,
                   "typeExports": true,
                 },
               },
@@ -235,7 +236,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
-                  "exportedEnum": false,
+                  "exportedEnum": true,
                   "typeExports": true,
                 },
               },
@@ -522,6 +523,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "inlineEnum": true,
     "lazyBarrel": true,
     "rspackFuture": {
       "bundlerInfo": {
@@ -688,7 +690,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
-                  "exportedEnum": false,
+                  "exportedEnum": true,
                   "typeExports": true,
                 },
               },
@@ -746,7 +748,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
-                  "exportedEnum": false,
+                  "exportedEnum": true,
                   "typeExports": true,
                 },
               },
@@ -1061,6 +1063,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "inlineEnum": true,
     "lazyBarrel": true,
     "rspackFuture": {
       "bundlerInfo": {
@@ -1195,7 +1198,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
-                  "exportedEnum": false,
+                  "exportedEnum": true,
                   "typeExports": true,
                 },
               },
@@ -1249,7 +1252,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
-                  "exportedEnum": false,
+                  "exportedEnum": true,
                   "typeExports": true,
                 },
               },
@@ -1491,6 +1494,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "inlineEnum": true,
     "lazyBarrel": true,
     "rspackFuture": {
       "bundlerInfo": {
@@ -1665,7 +1669,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
-                  "exportedEnum": false,
+                  "exportedEnum": true,
                   "typeExports": true,
                 },
               },
@@ -1723,7 +1727,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
-                  "exportedEnum": false,
+                  "exportedEnum": true,
                   "typeExports": true,
                 },
               },

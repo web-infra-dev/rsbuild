@@ -64,7 +64,7 @@ exports[`plugins/react > should configuring \`tools.swc\` to override react runt
           },
           "rspackExperiments": {
             "collectTypeScriptInfo": {
-              "exportedEnum": false,
+              "exportedEnum": true,
               "typeExports": true,
             },
           },
@@ -159,7 +159,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
           },
           "rspackExperiments": {
             "collectTypeScriptInfo": {
-              "exportedEnum": false,
+              "exportedEnum": true,
               "typeExports": true,
             },
           },
