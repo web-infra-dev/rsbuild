@@ -5,6 +5,7 @@ exports[`plugin-basic > should apply basic config correctly in development 1`] =
   "context": "<ROOT>/packages/core/tests",
   "devtool": "cheap-module-source-map",
   "experiments": {
+    "lazyBarrel": true,
     "rspackFuture": {
       "bundlerInfo": {
         "force": false,
@@ -51,6 +52,7 @@ exports[`plugin-basic > should apply basic config correctly in production 1`] = 
   "context": "<ROOT>/packages/core/tests",
   "devtool": false,
   "experiments": {
+    "lazyBarrel": true,
     "rspackFuture": {
       "bundlerInfo": {
         "force": false,
