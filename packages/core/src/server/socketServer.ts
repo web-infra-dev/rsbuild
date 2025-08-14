@@ -249,9 +249,12 @@ export class SocketServer {
       connection.isAlive = true;
     });
 
-    const sockets = this.socketsMap.get(token) ?? new Set();
+    let sockets = this.socketsMap.get(token);
+    if (!sockets) {
+      sockets = new Set();
+      this.socketsMap.set(token, sockets);
+    }
     sockets.add(connection);
-    this.socketsMap.set(token, sockets);
 
     connection.on('close', () => {
       const sockets = this.socketsMap.get(token);
