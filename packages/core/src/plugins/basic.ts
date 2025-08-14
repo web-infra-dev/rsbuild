@@ -95,6 +95,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
         if (api.context.bundlerType === 'rspack') {
           chain.experiments({
             ...chain.get('experiments'),
+            lazyBarrel: true,
             typeReexportsPresence: true,
             rspackFuture: {
               bundlerInfo: {
