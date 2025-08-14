@@ -92,7 +92,7 @@ rspackOnlyTest(
     await expect(title).toHaveCSS('font-size', '40px');
 
     // #test-keep should unchanged when CSS HMR
-    await expect(locatorKeep.innerHTML()).resolves.toBe(keepNum);
+    expect(await locatorKeep.innerHTML()).toBe(keepNum);
 
     await rsbuild.close();
   },

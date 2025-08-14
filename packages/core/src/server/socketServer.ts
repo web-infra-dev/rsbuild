@@ -59,7 +59,7 @@ const parseQueryString = (req: IncomingMessage) => {
 export class SocketServer {
   private wsServer!: Ws.Server;
 
-  private readonly sockets: Map<string, Ws> = new Map();
+  private readonly socketsMap: Map<string, Set<Ws>> = new Map();
 
   private readonly options: DevConfig;
 
@@ -170,7 +170,7 @@ export class SocketServer {
   public updateStats(stats: Rspack.Stats, token: string): void {
     this.stats[token] = stats;
 
-    if (!this.sockets.size) {
+    if (!this.socketsMap.size) {
       return;
     }
 
@@ -187,14 +187,21 @@ export class SocketServer {
    */
   public sockWrite(message: SocketMessage, token?: string): void {
     const messageStr = JSON.stringify(message);
-    if (token) {
-      const socket = this.sockets.get(token);
-      if (socket) {
+
+    const sendToSockets = (sockets: Set<Ws>) => {
+      for (const socket of sockets) {
         this.send(socket, messageStr);
       }
+    };
+
+    if (token) {
+      const sockets = this.socketsMap.get(token);
+      if (sockets) {
+        sendToSockets(sockets);
+      }
     } else {
-      for (const socket of this.sockets.values()) {
-        this.send(socket, messageStr);
+      for (const sockets of this.socketsMap.values()) {
+        sendToSockets(sockets);
       }
     }
   }
@@ -210,14 +217,16 @@ export class SocketServer {
       socket.terminate();
     }
     // Close all tracked sockets
-    for (const socket of this.sockets.values()) {
-      socket.close();
+    for (const sockets of this.socketsMap.values()) {
+      sockets.forEach((socket) => {
+        socket.close();
+      });
     }
 
     // Reset all properties
     this.stats = {};
     this.initialChunks = {};
-    this.sockets.clear();
+    this.socketsMap.clear();
 
     return new Promise<void>((resolve, reject) => {
       this.wsServer.close((err) => {
@@ -240,10 +249,23 @@ export class SocketServer {
       connection.isAlive = true;
     });
 
-    this.sockets.set(token, connection);
+    let sockets = this.socketsMap.get(token);
+    if (!sockets) {
+      sockets = new Set();
+      this.socketsMap.set(token, sockets);
+    }
+    sockets.add(connection);
 
     connection.on('close', () => {
-      this.sockets.delete(token);
+      const sockets = this.socketsMap.get(token);
+      if (!sockets) {
+        return;
+      }
+
+      sockets.delete(connection);
+      if (sockets.size === 0) {
+        this.socketsMap.delete(token);
+      }
     });
 
     // send first stats to active client sock if stats exist
