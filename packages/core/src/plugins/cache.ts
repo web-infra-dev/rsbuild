@@ -40,8 +40,12 @@ async function validateWebpackCache(
     await fs.promises.rm(cacheDirectory, { force: true, recursive: true });
   }
 
-  await fs.promises.mkdir(cacheDirectory, { recursive: true });
-  await fs.promises.writeFile(configFile, JSON.stringify(buildDependencies));
+  try {
+    await fs.promises.mkdir(cacheDirectory, { recursive: true });
+    await fs.promises.writeFile(configFile, JSON.stringify(buildDependencies));
+  } catch (e) {
+    logger.debug('failed to write the buildDependencies.json', e);
+  }
 }
 
 function getCacheDirectory(

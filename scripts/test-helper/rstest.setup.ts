@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { beforeAll, expect } from '@rstest/core';
 import { createSnapshotSerializer } from 'path-serializer';
 
 beforeAll((suite) => {
