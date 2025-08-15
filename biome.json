@@ -20,12 +20,12 @@
       "**/e2e/**",
       "**/scripts/**",
       "**/website/**",
-      "!**/node_modules/**",
-      "!**/.nx/**",
-      "!**/dist/**",
-      "!**/dist-*/**",
-      "!**/doc_build/**",
-      "!**/compiled/**",
+      "!**/node_modules",
+      "!**/.nx",
+      "!**/dist",
+      "!**/dist-*",
+      "!**/doc_build",
+      "!**/compiled",
       "!**/*.vue",
       "!**/*.svelte",
       "!**/template-lit-*/src/my-element.*"
@@ -44,6 +44,9 @@
     "enabled": true,
     "rules": {
       "recommended": true,
+      "correctness": {
+        "useUniqueElementIds": "off"
+      },
       "style": {
         "noNonNullAssertion": "off",
         "useFilenamingConvention": {
@@ -54,6 +57,7 @@
         }
       },
       "suspicious": {
+        "noTsIgnore": "off",
         "noExplicitAny": "off",
         "noConfusingVoidType": "off"
       }

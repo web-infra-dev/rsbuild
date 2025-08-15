@@ -235,7 +235,6 @@ export async function createDevServer<
     });
   };
 
-  // biome-ignore lint/style/useConst: should be declared before use
   let fileWatcher: WatchFilesResult | undefined;
   let devMiddlewares: GetDevMiddlewaresResult | undefined;
 
