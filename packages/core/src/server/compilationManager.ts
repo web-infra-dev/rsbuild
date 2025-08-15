@@ -29,12 +29,15 @@ export class CompilationManager {
 
   public outputFileSystem: Rspack.OutputFileSystem;
 
+  // biome-ignore lint/correctness/noUnusedPrivateClassMembers: Biome bug
   private config: NormalizedConfig;
 
   public compiler: Rspack.Compiler | Rspack.MultiCompiler;
 
+  // biome-ignore lint/correctness/noUnusedPrivateClassMembers: Biome bug
   private environments: Record<string, EnvironmentContext>;
 
+  // biome-ignore lint/correctness/noUnusedPrivateClassMembers: Biome bug
   private publicPaths: string[];
 
   public socketServer: SocketServer;
