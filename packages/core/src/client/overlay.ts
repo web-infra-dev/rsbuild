@@ -11,7 +11,7 @@ class ErrorOverlay extends HTMLElement {
 
     if (!this.attachShadow) {
       console.warn(
-        '[Rsbuild] Current browser version does not support displaying error overlay',
+        '[rsbuild] Error overlay disabled: Shadow DOM not supported in this browser.',
       );
       return;
     }
@@ -80,6 +80,6 @@ if (typeof document !== 'undefined') {
   registerOverlay(createOverlay, clearOverlay);
 } else {
   console.info(
-    '[Rsbuild] Failed to display error overlay as document is not available, you can disable the `dev.client.overlay` option.',
+    '[rsbuild] Error overlay unavailable: Running in non-browser environment. To suppress this message, set `dev.client.overlay: false` in your configuration.',
   );
 }

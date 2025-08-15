@@ -66,7 +66,7 @@ function handleWarnings({ text }: { text: string[] }) {
   for (let i = 0; i < text.length; i++) {
     if (i === 5) {
       console.warn(
-        'There were more warnings in other files, you can find a complete log in the terminal.',
+        '[rsbuild] Additional warnings detected. View complete log in terminal for details.',
       );
       break;
     }
@@ -103,7 +103,10 @@ const handleApplyUpdates = (
   const forcedReload = err || !updatedModules;
   if (forcedReload) {
     if (err) {
-      console.error('[HMR] Forced reload caused by: ', err);
+      console.error(
+        '[rsbuild] HMR update failed, performing full reload: ',
+        err,
+      );
     }
     reloadPage();
     return;
@@ -148,8 +151,8 @@ let reconnectCount = 0;
 let pingIntervalId: ReturnType<typeof setInterval>;
 
 function onOpen() {
-  // Notify users that the HMR has successfully connected.
-  console.info('[HMR] connected.');
+  // Notify users that the WebSocket has successfully connected.
+  console.info('[rsbuild] WebSocket connected.');
 
   // To prevent WebSocket timeouts caused by proxies (e.g., nginx, docker),
   // send a periodic ping message to keep the connection alive.
@@ -192,14 +195,14 @@ function onMessage(e: MessageEvent<string>) {
 function onClose() {
   if (reconnectCount >= config.reconnect) {
     if (config.reconnect > 0) {
-      console.info(
-        '[HMR] connection failure after maximum reconnect limit exceeded.',
+      console.warn(
+        '[rsbuild] WebSocket connection failed after maximum retry attempts.',
       );
     }
     return;
   }
 
-  console.info('[HMR] disconnected. Attempting to reconnect.');
+  console.info('[rsbuild] WebSocket connection lost. Reconnecting...');
   removeListeners();
   connection = null;
   reconnectCount++;
@@ -209,7 +212,7 @@ function onClose() {
 function onError() {
   if (formatURL() !== formatURL(true)) {
     console.error(
-      '[HMR] WebSocket connection error, attempting direct fallback.',
+      '[rsbuild] WebSocket connection failed. Trying direct connection fallback.',
     );
     removeListeners();
     connection = null;
@@ -219,6 +222,7 @@ function onError() {
 
 // Establishing a WebSocket connection with the server.
 function connect(fallback = false) {
+  console.info('[rsbuild] WebSocket connecting...');
   const socketUrl = formatURL(fallback);
   connection = new WebSocket(socketUrl);
   connection.addEventListener('open', onOpen);
