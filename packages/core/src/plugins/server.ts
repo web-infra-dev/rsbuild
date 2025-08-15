@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
+import { isDeno } from '../constants';
 import { normalizePublicDirs } from '../defaultConfig';
 import { dedupeNestedPaths } from '../helpers';
 import { open } from '../server/open';
@@ -60,17 +61,25 @@ export const pluginServer = (): RsbuildPlugin => ({
           // async errors will missing error stack on copy, move
           // https://github.com/jprichardson/node-fs-extra/issues/769
           await Promise.all(
-            distPaths.map((distPath) =>
-              fs.promises.cp(normalizedPath, distPath, {
+            distPaths.map(async (distPath) => {
+              // https://github.com/web-infra-dev/rsbuild/issues/5804
+              if (isDeno && fs.existsSync(distPath)) {
+                await fs.promises.rm(distPath, {
+                  recursive: true,
+                  force: true,
+                });
+              }
+
+              return fs.promises.cp(normalizedPath, distPath, {
                 recursive: true,
                 // dereference symlinks
                 dereference: true,
-              }),
-            ),
+              });
+            }),
           );
         } catch (err) {
           if (err instanceof Error) {
-            err.message = `Copy public dir (${normalizedPath}) to dist failed:\n${err.message}`;
+            err.message = `Failed to copy public directory '${normalizedPath}' to output directory:\n${err.message}`;
           }
 
           throw err;
