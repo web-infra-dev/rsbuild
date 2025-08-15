@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 
 export const __filename: string = fileURLToPath(import.meta.url);
 export const __dirname: string = dirname(__filename);
+export const isDeno: boolean = typeof Deno !== 'undefined';
 
 // Paths
 // loaders will be emitted to the same folder of the main bundle
