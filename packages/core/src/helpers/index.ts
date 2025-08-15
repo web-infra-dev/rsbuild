@@ -240,7 +240,7 @@ export function getFilename(
 
   const getHash = () => {
     if (typeof filenameHash === 'string') {
-      return filenameHash ? `.${filenameHash}]` : '';
+      return filenameHash || `.${filenameHash}]`;
     }
     return filenameHash ? `.${defaultHash}` : '';
   };
