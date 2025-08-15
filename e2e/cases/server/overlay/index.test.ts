@@ -33,7 +33,7 @@ test('should show overlay correctly', async ({ page }) => {
   });
 
   await expectPoll(() =>
-    logs.some((log) => log.includes('[HMR] connected.')),
+    logs.some((log) => log.includes('[rsbuild] WebSocket connected.')),
   ).toBeTruthy();
 
   const errorOverlay = page.locator('rsbuild-error-overlay');
