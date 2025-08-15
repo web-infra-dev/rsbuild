@@ -163,7 +163,7 @@ export class SocketServer {
       // /rsbuild-hmr?token=...
       const query = parseQueryString(req);
 
-      this.onConnect(socket, query.token);
+      this.onConnect(socket as ExtWebSocket, query.token);
     });
   }
 
@@ -239,14 +239,12 @@ export class SocketServer {
     });
   }
 
-  private onConnect(socket: Ws, token: string) {
-    const connection = socket as ExtWebSocket;
-
-    connection.isAlive = true;
+  private onConnect(socket: ExtWebSocket, token: string) {
+    socket.isAlive = true;
 
     // heartbeat
-    connection.on('pong', () => {
-      connection.isAlive = true;
+    socket.on('pong', () => {
+      socket.isAlive = true;
     });
 
     let sockets = this.socketsMap.get(token);
@@ -254,15 +252,15 @@ export class SocketServer {
       sockets = new Set();
       this.socketsMap.set(token, sockets);
     }
-    sockets.add(connection);
+    sockets.add(socket);
 
-    connection.on('close', () => {
+    socket.on('close', () => {
       const sockets = this.socketsMap.get(token);
       if (!sockets) {
         return;
       }
 
-      sockets.delete(connection);
+      sockets.delete(socket);
       if (sockets.size === 0) {
         this.socketsMap.delete(token);
       }
@@ -429,11 +427,11 @@ export class SocketServer {
   }
 
   // send message to connecting socket
-  private send(connection: Ws, message: string) {
-    if (connection.readyState !== 1) {
+  private send(socket: Ws, message: string) {
+    if (socket.readyState !== socket.OPEN) {
       return;
     }
 
-    connection.send(message);
+    socket.send(message);
   }
 }
