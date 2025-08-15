@@ -428,7 +428,7 @@ export class SocketServer {
 
   // send message to connecting socket
   private send(socket: Ws, message: string) {
-    if (socket.readyState !== 1) {
+    if (socket.readyState !== socket.OPEN) {
       return;
     }
 
