@@ -146,7 +146,7 @@ function tryApplyUpdates() {
   reloadPage();
 }
 
-let connection: WebSocket | null = null;
+let socket: WebSocket | null = null;
 let reconnectCount = 0;
 let pingIntervalId: ReturnType<typeof setInterval>;
 
@@ -157,8 +157,8 @@ function onOpen() {
   // To prevent WebSocket timeouts caused by proxies (e.g., nginx, docker),
   // send a periodic ping message to keep the connection alive.
   pingIntervalId = setInterval(() => {
-    if (connection && connection.readyState === connection.OPEN) {
-      connection.send(JSON.stringify({ type: 'ping' }));
+    if (socket && socket.readyState === socket.OPEN) {
+      socket.send(JSON.stringify({ type: 'ping' }));
     }
   }, 30000);
 }
@@ -204,7 +204,7 @@ function onClose() {
 
   console.info('[rsbuild] WebSocket connection lost. Reconnecting...');
   removeListeners();
-  connection = null;
+  socket = null;
   reconnectCount++;
   setTimeout(connect, 1000 * 1.5 ** reconnectCount);
 }
@@ -215,7 +215,7 @@ function onError() {
       '[rsbuild] WebSocket connection failed. Trying direct connection fallback.',
     );
     removeListeners();
-    connection = null;
+    socket = null;
     connect(true);
   }
 }
@@ -224,25 +224,25 @@ function onError() {
 function connect(fallback = false) {
   console.info('[rsbuild] WebSocket connecting...');
   const socketUrl = formatURL(fallback);
-  connection = new WebSocket(socketUrl);
-  connection.addEventListener('open', onOpen);
+  socket = new WebSocket(socketUrl);
+  socket.addEventListener('open', onOpen);
   // Attempt to reconnect after disconnection
-  connection.addEventListener('close', onClose);
+  socket.addEventListener('close', onClose);
   // Handle messages from the server.
-  connection.addEventListener('message', onMessage);
+  socket.addEventListener('message', onMessage);
   // Handle errors
   if (!fallback) {
-    connection.addEventListener('error', onError);
+    socket.addEventListener('error', onError);
   }
 }
 
 function removeListeners() {
   clearInterval(pingIntervalId);
-  if (connection) {
-    connection.removeEventListener('open', onOpen);
-    connection.removeEventListener('close', onClose);
-    connection.removeEventListener('message', onMessage);
-    connection.removeEventListener('error', onError);
+  if (socket) {
+    socket.removeEventListener('open', onOpen);
+    socket.removeEventListener('close', onClose);
+    socket.removeEventListener('message', onMessage);
+    socket.removeEventListener('error', onError);
   }
 }
 
