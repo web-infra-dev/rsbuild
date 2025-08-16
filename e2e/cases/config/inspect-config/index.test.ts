@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path, { join } from 'node:path';
 import { createRsbuild, proxyConsole, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import { remove, removeSync } from 'fs-extra';
 
 test.afterAll(() => {
@@ -203,6 +204,57 @@ rspackOnlyTest('should generate extra config files', async () => {
   expect(logs.some((log) => log.includes('Rstest Config:'))).toBeTruthy();
 
   await remove(rstestConfig);
+
+  restore();
+});
+
+rspackOnlyTest('should apply plugin correctly', async () => {
+  const { restore } = proxyConsole();
+
+  let servePluginApplied = false;
+  let buildPluginApplied = false;
+
+  const servePlugin: RsbuildPlugin = {
+    name: 'serve-plugin',
+    apply: 'serve',
+    setup: () => {
+      servePluginApplied = true;
+    },
+  };
+
+  const buildPlugin: RsbuildPlugin = {
+    name: 'build-plugin',
+    apply: 'build',
+    setup: () => {
+      buildPluginApplied = true;
+    },
+  };
+
+  const rsbuild1 = await createRsbuild({
+    cwd: __dirname,
+    rsbuildConfig: {
+      mode: 'development',
+      plugins: [servePlugin, buildPlugin],
+    },
+  });
+  await rsbuild1.inspectConfig();
+
+  expect(servePluginApplied).toBe(true);
+  expect(buildPluginApplied).toBe(false);
+
+  servePluginApplied = false;
+
+  const rsbuild2 = await createRsbuild({
+    cwd: __dirname,
+    rsbuildConfig: {
+      mode: 'production',
+      plugins: [servePlugin, buildPlugin],
+    },
+  });
+  await rsbuild2.inspectConfig();
+
+  expect(servePluginApplied).toBe(false);
+  expect(buildPluginApplied).toBe(true);
 
   restore();
 });

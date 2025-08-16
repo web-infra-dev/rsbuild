@@ -58,6 +58,7 @@ import type {
   CreateDevServer,
   CreateRsbuildOptions,
   Falsy,
+  InspectConfig,
   InternalContext,
   PluginManager,
   PreviewOptions,
@@ -274,11 +275,20 @@ export async function createRsbuild(
     return providerInstance.createDevServer(...args);
   };
 
-  const createCompiler: CreateCompiler = (...args) => {
+  const initAction = () => {
     if (!context.action) {
-      context.action = getNodeEnv() === 'development' ? 'dev' : 'build';
+      context.action = config.mode === 'development' ? 'dev' : 'build';
     }
+  };
+
+  const createCompiler: CreateCompiler = (...args) => {
+    initAction();
     return providerInstance.createCompiler(...args);
+  };
+
+  const inspectConfig: InspectConfig = async (...args) => {
+    initAction();
+    return providerInstance.inspectConfig(...args);
   };
 
   const rsbuild = {
@@ -287,6 +297,7 @@ export async function createRsbuild(
     startDevServer,
     createCompiler,
     createDevServer,
+    inspectConfig,
     ...pick(pluginManager, [
       'addPlugins',
       'getPlugins',
@@ -311,7 +322,7 @@ export async function createRsbuild(
       'getRsbuildConfig',
       'getNormalizedConfig',
     ]),
-    ...pick(providerInstance, ['initConfigs', 'inspectConfig']),
+    ...pick(providerInstance, ['initConfigs']),
   };
 
   if (envs) {

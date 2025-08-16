@@ -176,6 +176,10 @@ export type StartDevServer = (
   options?: StartDevServerOptions,
 ) => Promise<StartServerResult>;
 
+export type InspectConfig<B extends 'rspack' | 'webpack' = 'rspack'> = (
+  options?: InspectConfigOptions,
+) => Promise<InspectConfigResult<B>>;
+
 export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = Pick<
   RsbuildInstance,
   'build' | 'createCompiler' | 'createDevServer' | 'startDevServer'
@@ -186,9 +190,7 @@ export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = Pick<
     options?: InitConfigsOptions,
   ) => Promise<B extends 'rspack' ? Rspack.Configuration[] : WebpackConfig[]>;
 
-  inspectConfig: (
-    options?: InspectConfigOptions,
-  ) => Promise<InspectConfigResult<B>>;
+  inspectConfig: InspectConfig<B>;
 };
 
 export type RsbuildProviderHelpers = typeof providerHelpers;
