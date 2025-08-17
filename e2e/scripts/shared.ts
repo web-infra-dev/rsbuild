@@ -1,5 +1,6 @@
 import assert from 'node:assert';
 import {
+  type ChildProcess,
   type ExecOptions,
   type ExecSyncOptions,
   exec,
@@ -15,13 +16,14 @@ import type {
   RsbuildPlugins,
 } from '@rsbuild/core';
 import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
+import { async } from 'fast-glob';
 import type { Page } from 'playwright';
 import {
+  expectPoll,
   type ProxyConsoleOptions,
   proxyConsole,
   readDirContents,
 } from './helper';
-
 /**
  * Build an URL based on the entry name and port
  */
@@ -367,5 +369,36 @@ export function runCliSync(command: string, options?: ExecSyncOptions) {
 }
 
 export function runCli(command: string, options?: ExecOptions) {
-  return exec(`node ${rsbuildBinPath} ${command}`, options);
+  const childProcess = exec(`node ${rsbuildBinPath} ${command}`, options);
+
+  const logs: string[] = [];
+  const onData = (data: Buffer) => {
+    logs.push(data.toString());
+  };
+
+  childProcess.stdout?.on('data', onData);
+  childProcess.stderr?.on('data', onData);
+
+  const close = () => {
+    childProcess.stdout?.off('data', onData);
+    childProcess.stderr?.off('data', onData);
+    childProcess.kill();
+  };
+
+  const expectLog = async (log: string) =>
+    expectPoll(() => logs.some((l) => l.includes(log))).toBeTruthy();
+
+  const expectBuildEnd = async () => expectLog('built in');
+
+  const clearLogs = () => {
+    logs.length = 0;
+  };
+
+  return {
+    close,
+    clearLogs,
+    expectLog,
+    childProcess,
+    expectBuildEnd,
+  };
 }

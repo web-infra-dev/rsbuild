@@ -18,7 +18,7 @@ rspackOnlyTest(
     await remove(distIndexFile);
     await fse.copy(srcDir, tempDir);
 
-    const childProcess = runCli('build --watch', {
+    const { childProcess, close } = runCli('build --watch', {
       cwd: __dirname,
     });
 
@@ -34,6 +34,6 @@ rspackOnlyTest(
     await new Promise((resolve) => setTimeout(resolve, 300));
     expect(fs.readFileSync(distIndexFile, 'utf-8')).toContain('foo2bar1');
 
-    childProcess.kill();
+    close();
   },
 );
