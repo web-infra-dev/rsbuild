@@ -371,7 +371,7 @@ export function runCliSync(command: string, options?: ExecSyncOptions) {
 export function runCli(command: string, options?: ExecOptions) {
   const childProcess = exec(`node ${rsbuildBinPath} ${command}`, options);
 
-  const logs: string[] = [];
+  let logs: string[] = [];
   const onData = (data: Buffer) => {
     logs.push(data.toString());
   };
@@ -391,7 +391,7 @@ export function runCli(command: string, options?: ExecOptions) {
   const expectBuildEnd = async () => expectLog('built in');
 
   const clearLogs = () => {
-    logs.length = 0;
+    logs = [];
   };
 
   return {
