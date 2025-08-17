@@ -371,7 +371,7 @@ export function runCli(command: string, options?: ExecOptions) {
 
   let logs: string[] = [];
   const onData = (data: Buffer) => {
-    logs.push(data.toString());
+    logs.push(stripAnsi(data.toString()));
   };
 
   childProcess.stdout?.on('data', onData);
@@ -383,8 +383,12 @@ export function runCli(command: string, options?: ExecOptions) {
     childProcess.kill();
   };
 
-  const expectLog = async (log: string) =>
-    expectPoll(() => logs.some((l) => l.includes(log))).toBeTruthy();
+  const expectLog = async (pattern: string | RegExp) =>
+    expectPoll(() =>
+      logs.some((l) =>
+        typeof pattern === 'string' ? l.includes(pattern) : pattern.test(l),
+      ),
+    ).toBeTruthy();
 
   const expectBuildEnd = async () => expectLog('built in');
 
