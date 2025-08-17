@@ -22,7 +22,7 @@ rspackOnlyTest('should support watch mode for build command', async () => {
   clearLogs();
 
   fse.outputFileSync(indexFile, `console.log('hello2!');`);
-  await expectLog('building src/index.js');
+  await expectLog(/building src[\\/]index.js/);
   await expectBuildEnd();
   await expectFileWithContent(distIndexFile, 'hello2!');
 
