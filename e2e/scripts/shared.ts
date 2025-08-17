@@ -17,7 +17,6 @@ import type {
 import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
 import type { Page } from 'playwright';
 import {
-  expectPoll,
   type ProxyConsoleOptions,
   proxyConsole,
   readDirContents,
@@ -373,8 +372,8 @@ export function runCliSync(command: string, options?: ExecSyncOptions) {
   return execSync(`node ${rsbuildBinPath} ${command}`, options);
 }
 
-export function runCli(command: string, options?: ExecOptions) {
-  const childProcess = exec(`node ${rsbuildBinPath} ${command}`, options);
+export function runCommand(command: string, options?: ExecOptions) {
+  const childProcess = exec(command, options);
 
   let logs: string[] = [];
   const logPatterns = new Set<{
@@ -441,4 +440,8 @@ export function runCli(command: string, options?: ExecOptions) {
     childProcess,
     expectBuildEnd,
   };
+}
+
+export function runCli(command: string, options?: ExecOptions) {
+  return runCommand(`node ${rsbuildBinPath} ${command}`, options);
 }

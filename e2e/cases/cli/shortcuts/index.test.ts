@@ -1,126 +1,84 @@
-import { exec } from 'node:child_process';
-import { stripVTControlCharacters as stripAnsi } from 'node:util';
-import { expectPoll, rspackOnlyTest } from '@e2e/helper';
+import { rspackOnlyTest, runCommand } from '@e2e/helper';
 
 rspackOnlyTest('should display shortcuts as expected in dev', async () => {
-  const devProcess = exec('node ./dev.mjs', {
-    cwd: __dirname,
-  });
-
-  let logs: string[] = [];
-
-  devProcess.stdout?.on('data', (data) => {
-    const output = data.toString().trim();
-    logs.push(stripAnsi(output));
-  });
+  const { childProcess, expectLog, clearLogs, close } = runCommand(
+    'node ./dev.mjs',
+    {
+      cwd: __dirname,
+    },
+  );
 
   // help
-  await expectPoll(() =>
-    logs.some((log) => log.includes('press h + enter to show shortcuts')),
-  ).toBeTruthy();
-  devProcess.stdin?.write('h\n');
-  await expectPoll(() =>
-    logs.some((log) => log.includes('u + enter  show urls')),
-  ).toBeTruthy();
+  await expectLog('press h + enter to show shortcuts');
+  childProcess.stdin?.write('h\n');
+  await expectLog('u + enter  show urls');
 
   // print urls
-  logs = [];
-  devProcess.stdin?.write('u\n');
-  await expectPoll(() =>
-    logs.some((log) => log.includes('➜  Local:    http://localhost:')),
-  ).toBeTruthy();
+  clearLogs();
+  childProcess.stdin?.write('u\n');
+  await expectLog('➜  Local:    http://localhost:');
 
   // restart server
-  logs = [];
-  devProcess.stdin?.write('r\n');
-  await expectPoll(() =>
-    logs.some((log) => log.includes('restarting server')),
-  ).toBeTruthy();
-  await expectPoll(() =>
-    logs.some((log) => log.includes('➜  Local:    http://localhost:')),
-  ).toBeTruthy();
+  clearLogs();
+  childProcess.stdin?.write('r\n');
+  await expectLog('restarting server');
+  await expectLog('➜  Local:    http://localhost:');
 
-  devProcess.kill();
+  close();
 });
 
 rspackOnlyTest('should display shortcuts as expected in preview', async () => {
-  const devProcess = exec('node ./preview.mjs', {
-    cwd: __dirname,
-  });
-
-  let logs: string[] = [];
-
-  devProcess.stdout?.on('data', (data) => {
-    const output = data.toString().trim();
-    logs.push(stripAnsi(output));
-  });
+  const { childProcess, expectLog, clearLogs, close } = runCommand(
+    'node ./preview.mjs',
+    {
+      cwd: __dirname,
+    },
+  );
 
   // help
-  await expectPoll(() =>
-    logs.some((log) => log.includes('press h + enter to show shortcuts')),
-  ).toBeTruthy();
-  devProcess.stdin?.write('h\n');
-  await expectPoll(() =>
-    logs.some((log) => log.includes('u + enter  show urls')),
-  ).toBeTruthy();
+  await expectLog('press h + enter to show shortcuts');
+  childProcess.stdin?.write('h\n');
+  await expectLog('u + enter  show urls');
 
   // print urls
-  logs = [];
-  devProcess.stdin?.write('u\n');
-  await expectPoll(() =>
-    logs.some((log) => log.includes('➜  Local:    http://localhost:')),
-  ).toBeTruthy();
+  clearLogs();
+  childProcess.stdin?.write('u\n');
+  await expectLog('➜  Local:    http://localhost:');
 
-  devProcess.kill();
+  close();
 });
 
 rspackOnlyTest('should allow to custom shortcuts in dev', async () => {
-  const devProcess = exec('node ./devCustom.mjs', {
-    cwd: __dirname,
-  });
+  const { childProcess, expectLog, clearLogs, close } = runCommand(
+    'node ./devCustom.mjs',
+    {
+      cwd: __dirname,
+    },
+  );
 
-  let logs: string[] = [];
+  await expectLog('press h + enter to show shortcuts');
 
-  devProcess.stdout?.on('data', (data) => {
-    const output = data.toString().trim();
-    logs.push(stripAnsi(output));
-  });
+  clearLogs();
+  childProcess.stdin?.write('s\n');
+  await expectLog('hello world!');
 
-  await expectPoll(() =>
-    logs.some((log) => log.includes('press h + enter to show shortcuts')),
-  ).toBeTruthy();
-
-  logs = [];
-  devProcess.stdin?.write('s\n');
-  await expectPoll(() =>
-    logs.some((log) => log.includes('hello world!')),
-  ).toBeTruthy();
-
-  devProcess.kill();
+  close();
 });
 
 rspackOnlyTest('should allow to custom shortcuts in preview', async () => {
-  const devProcess = exec('node ./previewCustom.mjs', {
-    cwd: __dirname,
-  });
-
-  let logs: string[] = [];
-
-  devProcess.stdout?.on('data', (data) => {
-    const output = data.toString().trim();
-    logs.push(stripAnsi(output));
-  });
+  const { childProcess, expectLog, clearLogs, close } = runCommand(
+    'node ./previewCustom.mjs',
+    {
+      cwd: __dirname,
+    },
+  );
 
   // help
-  await expectPoll(() =>
-    logs.some((log) => log.includes('press h + enter to show shortcuts')),
-  ).toBeTruthy();
+  await expectLog('press h + enter to show shortcuts');
 
-  logs = [];
-  devProcess.stdin?.write('s\n');
-  await expectPoll(() =>
-    logs.some((log) => log.includes('hello world!')),
-  ).toBeTruthy();
+  clearLogs();
+  childProcess.stdin?.write('s\n');
+  await expectLog('hello world!');
 
-  devProcess.kill();
+  close();
 });

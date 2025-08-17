@@ -25,7 +25,7 @@ rspackOnlyTest(
     await fse.copy(join(__dirname, 'tsconfig.json'), tempConfig);
 
     const port = await getRandomPort();
-    const { childProcess, close } = runCli('dev', {
+    const { close } = runCli('dev', {
       cwd: __dirname,
       env: {
         ...process.env,

@@ -16,7 +16,7 @@ rspackOnlyTest(
     await remove(dist);
     fs.writeFileSync(extraConfigFile, 'export default { foo: 1 };');
 
-    const { childProcess, close } = runCli('dev', {
+    const { close } = runCli('dev', {
       cwd: __dirname,
       env: {
         ...process.env,
