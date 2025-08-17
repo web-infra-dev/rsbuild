@@ -17,11 +17,11 @@ import type {
 import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
 import type { Page } from 'playwright';
 import {
+  expectPoll,
   type ProxyConsoleOptions,
   proxyConsole,
   readDirContents,
 } from './helper';
-
 /**
  * Build an URL based on the entry name and port
  */
@@ -367,5 +367,36 @@ export function runCliSync(command: string, options?: ExecSyncOptions) {
 }
 
 export function runCli(command: string, options?: ExecOptions) {
-  return exec(`node ${rsbuildBinPath} ${command}`, options);
+  const childProcess = exec(`node ${rsbuildBinPath} ${command}`, options);
+
+  let logs: string[] = [];
+  const onData = (data: Buffer) => {
+    logs.push(data.toString());
+  };
+
+  childProcess.stdout?.on('data', onData);
+  childProcess.stderr?.on('data', onData);
+
+  const close = () => {
+    childProcess.stdout?.off('data', onData);
+    childProcess.stderr?.off('data', onData);
+    childProcess.kill();
+  };
+
+  const expectLog = async (log: string) =>
+    expectPoll(() => logs.some((l) => l.includes(log))).toBeTruthy();
+
+  const expectBuildEnd = async () => expectLog('built in');
+
+  const clearLogs = () => {
+    logs = [];
+  };
+
+  return {
+    close,
+    clearLogs,
+    expectLog,
+    childProcess,
+    expectBuildEnd,
+  };
 }

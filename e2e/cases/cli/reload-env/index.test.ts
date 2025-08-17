@@ -34,7 +34,7 @@ rspackOnlyTest(
     };`,
     );
 
-    const devProcess = runCli('dev', {
+    const { close } = runCli('dev', {
       cwd: __dirname,
       env: {
         ...process.env,
@@ -47,6 +47,6 @@ rspackOnlyTest(
     fs.writeFileSync(envLocalFile, 'PUBLIC_NAME=rose');
     await expectFileWithContent(distIndex, 'rose');
 
-    devProcess.kill();
+    close();
   },
 );

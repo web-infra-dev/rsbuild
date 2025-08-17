@@ -21,7 +21,7 @@ rspackOnlyTest('should support restart build when config changed', async () => {
 
   fse.outputFileSync(indexFile, `console.log('hello!');`);
 
-  const childProcess = runCli(`build --watch -c ${tempConfigFile}`, {
+  const { childProcess, close } = runCli(`build --watch -c ${tempConfigFile}`, {
     cwd: __dirname,
   });
 
@@ -45,5 +45,5 @@ rspackOnlyTest('should support restart build when config changed', async () => {
   fse.outputFileSync(indexFile, `console.log('hello2!');`);
   await expectFileWithContent(distIndexFile, 'hello2!');
 
-  childProcess.kill();
+  close();
 });

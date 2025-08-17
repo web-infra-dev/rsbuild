@@ -29,7 +29,7 @@ rspackOnlyTest(
     };`,
     );
 
-    const childProcess = runCli('dev', {
+    const { childProcess, close } = runCli('dev', {
       cwd: __dirname,
     });
 
@@ -52,6 +52,6 @@ rspackOnlyTest(
 
     await expectFile(dist2);
 
-    childProcess.kill();
+    close();
   },
 );
