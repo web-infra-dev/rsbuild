@@ -433,9 +433,12 @@ export function runCommand(command: string, options?: ExecOptions) {
     logs = [];
   };
 
+  const getLogs = () => logs;
+
   return {
     close,
     clearLogs,
+    getLogs,
     expectLog,
     childProcess,
     expectBuildEnd,
