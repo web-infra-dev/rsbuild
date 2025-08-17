@@ -347,6 +347,13 @@ export async function build({
   };
 }
 
+const matchPattern = (log: string, pattern: string | RegExp) => {
+  if (typeof pattern === 'string') {
+    return log.includes(pattern);
+  }
+  return pattern.test(log);
+};
+
 export const rsbuildBinPath = join(
   __dirname,
   '../node_modules/@rsbuild/core/bin/rsbuild.js',
@@ -370,8 +377,19 @@ export function runCli(command: string, options?: ExecOptions) {
   const childProcess = exec(`node ${rsbuildBinPath} ${command}`, options);
 
   let logs: string[] = [];
+  const logPatterns = new Set<{
+    pattern: string | RegExp;
+    resolve: (value: boolean) => void;
+  }>();
+
   const onData = (data: Buffer) => {
-    logs.push(stripAnsi(data.toString()));
+    const log = stripAnsi(data.toString());
+    logs.push(log);
+    for (const { pattern, resolve } of logPatterns) {
+      if (matchPattern(log, pattern)) {
+        resolve(true);
+      }
+    }
   };
 
   childProcess.stdout?.on('data', onData);
@@ -383,12 +401,32 @@ export function runCli(command: string, options?: ExecOptions) {
     childProcess.kill();
   };
 
-  const expectLog = async (pattern: string | RegExp) =>
-    expectPoll(() =>
-      logs.some((l) =>
-        typeof pattern === 'string' ? l.includes(pattern) : pattern.test(l),
-      ),
-    ).toBeTruthy();
+  const expectLog = async (pattern: string | RegExp) => {
+    if (logs.some((log) => matchPattern(log, pattern))) {
+      return true;
+    }
+
+    return new Promise<boolean>((resolve, reject) => {
+      const timeoutId = setTimeout(() => {
+        reject(
+          new Error(
+            `Timeout: Expected log pattern not found within 10 seconds: ${pattern}`,
+          ),
+        );
+      }, 10000);
+
+      const patternEntry = {
+        pattern,
+        resolve: (value: boolean) => {
+          clearTimeout(timeoutId);
+          logPatterns.delete(patternEntry);
+          resolve(value);
+        },
+      };
+
+      logPatterns.add(patternEntry);
+    });
+  };
 
   const expectBuildEnd = async () => expectLog('built in');
 
