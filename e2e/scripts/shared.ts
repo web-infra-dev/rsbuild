@@ -371,7 +371,7 @@ export function runCli(command: string, options?: ExecOptions) {
 
   let logs: string[] = [];
   const onData = (data: Buffer) => {
-    logs.push(data.toString());
+    logs.push(stripAnsi(data.toString()));
   };
 
   childProcess.stdout?.on('data', onData);
