@@ -1,6 +1,5 @@
 import assert from 'node:assert';
 import {
-  type ChildProcess,
   type ExecOptions,
   type ExecSyncOptions,
   exec,
@@ -16,7 +15,6 @@ import type {
   RsbuildPlugins,
 } from '@rsbuild/core';
 import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
-import { async } from 'fast-glob';
 import type { Page } from 'playwright';
 import {
   expectPoll,
