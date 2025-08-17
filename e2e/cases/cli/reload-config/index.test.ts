@@ -29,7 +29,7 @@ rspackOnlyTest(
     };`,
     );
 
-    const { childProcess, close } = runCli('dev', {
+    const { close } = runCli('dev', {
       cwd: __dirname,
     });
 
