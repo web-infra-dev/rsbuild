@@ -15,7 +15,7 @@ test('should not print file size if has errors', async () => {
   });
 
   expect(rsbuild.buildError).toBeTruthy();
-  expect(rsbuild.logs.some((log) => log.includes('Total:'))).toBeFalsy();
+  rsbuild.expectNoLog('Total:');
 
   await rsbuild.close();
 });

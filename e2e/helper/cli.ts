@@ -5,7 +5,7 @@ import {
   execSync,
 } from 'node:child_process';
 import { RSBUILD_BIN_PATH } from './constants';
-import { createLogMatcher } from './logs';
+import { createLogHelper } from './logs';
 
 /**
  * Synchronously run the Rsbuild CLI with the given command.
@@ -20,11 +20,10 @@ export function runCliSync(command: string, options?: ExecSyncOptions) {
 export function runCommand(command: string, options?: ExecOptions) {
   const childProcess = exec(command, options);
 
-  const { addLog, clearLogs, expectLog, expectBuildEnd, logs } =
-    createLogMatcher();
+  const logHelper = createLogHelper();
 
   const onData = (data: Buffer) => {
-    addLog(data.toString());
+    logHelper.addLog(data.toString());
   };
 
   childProcess.stdout?.on('data', onData);
@@ -37,12 +36,9 @@ export function runCommand(command: string, options?: ExecOptions) {
   };
 
   return {
-    logs,
+    ...logHelper,
     close,
-    clearLogs,
-    expectLog,
     childProcess,
-    expectBuildEnd,
   };
 }
 

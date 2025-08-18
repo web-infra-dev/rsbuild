@@ -1,6 +1,5 @@
 import path from 'node:path';
 import { expectFileWithContent, rspackOnlyTest, runCli } from '@e2e/helper';
-import { expect } from '@playwright/test';
 import fse from 'fs-extra';
 
 rspackOnlyTest(
@@ -14,7 +13,7 @@ rspackOnlyTest(
 
     await fse.copy(srcDir, tempDir);
 
-    const { logs, close, expectLog, expectBuildEnd, clearLogs } = runCli(
+    const { close, expectLog, expectNoLog, expectBuildEnd, clearLogs } = runCli(
       'build --watch',
       {
         cwd: __dirname,
@@ -34,9 +33,7 @@ rspackOnlyTest(
     // should not watch bar.js
     fse.outputFileSync(barFile, `export const bar = 'bar2';`);
     await new Promise((resolve) => setTimeout(resolve, 100));
-    expect(
-      logs.some((log) => /building test-temp-src[\\/]bar.js/.test(log)),
-    ).toBeFalsy();
+    expectNoLog(/building test-temp-src[\\/]bar.js/);
 
     close();
   },

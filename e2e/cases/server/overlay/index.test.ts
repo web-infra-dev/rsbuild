@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { createLogMatcher, dev } from '@e2e/helper';
+import { createLogHelper, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
@@ -15,7 +15,7 @@ test('should show overlay correctly', async ({ page }) => {
     recursive: true,
   });
 
-  const { expectLog, addLog } = createLogMatcher();
+  const { expectLog, addLog } = createLogHelper();
 
   page.on('console', (consoleMessage) => {
     addLog(consoleMessage.text());

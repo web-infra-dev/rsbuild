@@ -32,10 +32,12 @@ const bundlerNodeConfig = path.resolve(
   `./dist/.rsbuild/${process.env.PROVIDE_TYPE || 'rspack'}.config.node.mjs`,
 );
 
+const INSPECT_LOG = 'config inspection completed';
+
 rspackOnlyTest(
   'should generate config files when writeToDisk is true',
   async () => {
-    const { logs, restore } = proxyConsole();
+    const { expectLog, restore } = proxyConsole();
 
     const rsbuild = await createRsbuild({
       cwd: __dirname,
@@ -46,10 +48,7 @@ rspackOnlyTest(
 
     expect(fs.existsSync(bundlerConfig)).toBeTruthy();
     expect(fs.existsSync(rsbuildConfig)).toBeTruthy();
-
-    expect(
-      logs.some((log) => log.includes('config inspection completed')),
-    ).toBeTruthy();
+    await expectLog(INSPECT_LOG);
 
     await remove(rsbuildConfig);
     await remove(bundlerConfig);
@@ -61,7 +60,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should generate config files correctly when output is specified',
   async () => {
-    const { logs, restore } = proxyConsole();
+    const { expectLog, restore } = proxyConsole();
 
     const rsbuild = await createRsbuild({
       cwd: __dirname,
@@ -83,10 +82,7 @@ rspackOnlyTest(
 
     expect(fs.existsSync(bundlerConfig)).toBeTruthy();
     expect(fs.existsSync(rsbuildConfig)).toBeTruthy();
-
-    expect(
-      logs.some((log) => log.includes('config inspection completed')),
-    ).toBeTruthy();
+    await expectLog(INSPECT_LOG);
 
     await remove(rsbuildConfig);
     await remove(bundlerConfig);
@@ -98,7 +94,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should generate bundler config for node when target contains node',
   async () => {
-    const { logs, restore } = proxyConsole();
+    const { expectLog, restore } = proxyConsole();
 
     const rsbuild = await createRsbuild({
       cwd: __dirname,
@@ -124,10 +120,7 @@ rspackOnlyTest(
     expect(fs.existsSync(rsbuildNodeConfig)).toBeTruthy();
     expect(fs.existsSync(bundlerConfig)).toBeTruthy();
     expect(fs.existsSync(bundlerNodeConfig)).toBeTruthy();
-
-    expect(
-      logs.some((log) => log.includes('config inspection completed')),
-    ).toBeTruthy();
+    await expectLog(INSPECT_LOG);
 
     await remove(rsbuildConfig);
     await remove(rsbuildNodeConfig);
@@ -154,7 +147,7 @@ rspackOnlyTest(
 );
 
 rspackOnlyTest('should allow to specify absolute output path', async () => {
-  const { logs, restore } = proxyConsole();
+  const { expectLog, restore } = proxyConsole();
 
   const rsbuild = await createRsbuild({
     cwd: __dirname,
@@ -166,9 +159,7 @@ rspackOnlyTest('should allow to specify absolute output path', async () => {
     outputPath,
   });
 
-  expect(
-    logs.some((log) => log.includes('config inspection completed')),
-  ).toBeTruthy();
+  await expectLog(INSPECT_LOG);
 
   expect(
     fs.existsSync(path.join(outputPath, 'rspack.config.web.mjs')),
@@ -180,7 +171,7 @@ rspackOnlyTest('should allow to specify absolute output path', async () => {
 });
 
 rspackOnlyTest('should generate extra config files', async () => {
-  const { logs, restore } = proxyConsole();
+  const { expectLog, restore } = proxyConsole();
 
   const rsbuild = await createRsbuild({
     cwd: __dirname,
@@ -200,9 +191,7 @@ rspackOnlyTest('should generate extra config files', async () => {
   );
 
   expect(fs.existsSync(rstestConfig)).toBeTruthy();
-
-  expect(logs.some((log) => log.includes('Rstest Config:'))).toBeTruthy();
-
+  await expectLog('Rstest Config:');
   await remove(rstestConfig);
 
   restore();

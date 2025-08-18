@@ -4,10 +4,12 @@ import { createRsbuild, type Rspack } from '@rsbuild/core';
 import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
 import { matchPlugin } from '@scripts/test-helper';
 
+const RSDOCTOR_LOG = '@rsdoctor/rspack-plugin enabled';
+
 rspackOnlyTest(
   'should register Rsdoctor plugin when process.env.RSDOCTOR is true',
   async () => {
-    const { logs, restore } = proxyConsole();
+    const { expectLog, restore } = proxyConsole();
     process.env.RSDOCTOR = 'true';
 
     const rsbuild = await createRsbuild({
@@ -16,9 +18,7 @@ rspackOnlyTest(
 
     const compiler = await rsbuild.createCompiler();
 
-    expect(
-      logs.some((log) => log.includes('@rsdoctor') && log.includes('enabled')),
-    ).toBe(true);
+    await expectLog(RSDOCTOR_LOG);
 
     expect(
       matchPlugin(
@@ -35,7 +35,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should not register Rsdoctor plugin when process.env.RSDOCTOR is false',
   async () => {
-    const { logs, restore } = proxyConsole();
+    const { expectNoLog, restore } = proxyConsole();
     process.env.RSDOCTOR = 'false';
 
     const rsbuild = await createRsbuild({
@@ -44,9 +44,7 @@ rspackOnlyTest(
 
     const compiler = await rsbuild.createCompiler();
 
-    expect(
-      logs.some((log) => log.includes('@rsdoctor') && log.includes('enabled')),
-    ).toBe(false);
+    expectNoLog(RSDOCTOR_LOG);
 
     expect(
       matchPlugin(
@@ -63,7 +61,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should not register Rsdoctor plugin when process.env.RSDOCTOR is true and the plugin has been registered',
   async () => {
-    const { logs, restore } = proxyConsole();
+    const { expectNoLog, restore } = proxyConsole();
 
     process.env.RSDOCTOR = 'true';
 
@@ -91,9 +89,7 @@ rspackOnlyTest(
       ),
     ).toBeTruthy();
 
-    expect(
-      logs.some((log) => log.includes('@rsdoctor') && log.includes('enabled')),
-    ).toBe(false);
+    expectNoLog(RSDOCTOR_LOG);
 
     process.env.RSDOCTOR = '';
     restore();

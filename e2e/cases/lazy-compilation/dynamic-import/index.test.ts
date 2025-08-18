@@ -1,5 +1,5 @@
 import { dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { test } from '@playwright/test';
 
 rspackOnlyTest(
   'should lazy compile dynamic imported modules',
@@ -13,9 +13,7 @@ rspackOnlyTest(
     });
 
     await rsbuild.expectBuildEnd();
-    expect(
-      rsbuild.logs.some((log) => log.includes('building src/foo.js')),
-    ).toBeFalsy();
+    rsbuild.expectNoLog('building src/foo.js');
 
     await gotoPage(page, rsbuild, 'index');
     await rsbuild.expectLog('building src/foo.js');

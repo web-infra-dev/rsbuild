@@ -15,7 +15,7 @@ const matchPattern = (log: string, pattern: LogPattern) => {
   return pattern(log);
 };
 
-export const createLogMatcher = () => {
+export const createLogHelper = () => {
   const logs: string[] = [];
 
   const logPatterns = new Set<{
@@ -68,6 +68,10 @@ export const createLogMatcher = () => {
     });
   };
 
+  const expectNoLog = (pattern: LogPattern) => {
+    return !logs.some((log) => matchPattern(log, pattern));
+  };
+
   const expectBuildEnd = async () => expectLog(BUILD_END_LOG);
 
   return {
@@ -75,18 +79,15 @@ export const createLogMatcher = () => {
     addLog,
     clearLogs,
     expectLog,
+    expectNoLog,
     expectBuildEnd,
   };
 };
 
-export type CreateLogMatcher = ReturnType<typeof createLogMatcher>;
+export type LogHelper = ReturnType<typeof createLogHelper>;
 
 export type ProxyConsoleOptions = {
   types?: ConsoleType | ConsoleType[];
-};
-
-export type ProxyConsoleResult = CreateLogMatcher & {
-  restore: () => void;
 };
 
 /**
@@ -94,9 +95,11 @@ export type ProxyConsoleResult = CreateLogMatcher & {
  */
 export const proxyConsole = ({
   types = ['log', 'warn', 'info', 'error'],
-}: ProxyConsoleOptions = {}): ProxyConsoleResult => {
+}: ProxyConsoleOptions = {}): LogHelper & {
+  restore: () => void;
+} => {
   const restores: Array<() => void> = [];
-  const logMatcher = createLogMatcher();
+  const logMatcher = createLogHelper();
 
   for (const type of Array.isArray(types) ? types : [types]) {
     const method = console[type];
