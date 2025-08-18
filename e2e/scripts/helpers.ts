@@ -1,6 +1,8 @@
 import fs from 'node:fs';
+import net from 'node:net';
 import { platform } from 'node:os';
 import { join } from 'node:path';
+import { URL } from 'node:url';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import { expect, test } from '@playwright/test';
 import type { ConsoleType } from '@rsbuild/core';
@@ -8,6 +10,68 @@ import glob, {
   convertPathToPattern,
   type Options as GlobOptions,
 } from 'fast-glob';
+import type { Page } from 'playwright';
+
+/**
+ * Build an URL based on the entry name and port
+ */
+export const buildEntryUrl = (entryName: string, port: number) => {
+  const htmlRoot = new URL(`http://localhost:${port}`);
+  const homeUrl = new URL(`${entryName}.html`, htmlRoot);
+  return homeUrl.href;
+};
+
+/**
+ * Build the entry URL and navigate to it
+ */
+export const gotoPage = async (
+  page: Page,
+  rsbuild: { port: number },
+  path = 'index',
+) => {
+  const url = buildEntryUrl(path, rsbuild.port);
+  return page.goto(url);
+};
+
+export const noop = async () => {};
+
+function isPortAvailable(port: number) {
+  try {
+    const server = net.createServer().listen(port);
+    return new Promise((resolve) => {
+      server.on('listening', () => {
+        server.close();
+        resolve(true);
+      });
+      server.on('error', () => {
+        resolve(false);
+      });
+    });
+  } catch {
+    return false;
+  }
+}
+
+const portMap = new Map();
+
+/**
+ * Get a random port
+ * Available port ranges: 1024 ～ 65535
+ * `10080` is not available on macOS CI, `> 50000` get 'permission denied' on Windows.
+ * so we use `15000` ~ `45000`.
+ */
+export async function getRandomPort(
+  defaultPort = Math.ceil(Math.random() * 30000) + 15000,
+) {
+  let port = defaultPort;
+  while (true) {
+    if (!portMap.get(port) && (await isPortAvailable(port))) {
+      portMap.set(port, 1);
+      return port;
+    }
+    port++;
+  }
+}
 
 export const providerType = process.env.PROVIDE_TYPE || 'rspack';
 
@@ -118,7 +182,6 @@ export const proxyConsole = ({
     restores.push(() => {
       console[type] = method;
     });
-
     console[type] = (log) => {
       logs.push(keepAnsi || typeof log !== 'string' ? log : stripAnsi(log));
     };
@@ -144,4 +207,22 @@ export const expectPoll = (fn: () => boolean) => {
   return expect.poll(fn, {
     intervals: [20, 30, 40, 50, 60, 70, 80, 90, 100],
   });
+};
+
+/**
+ * Read the contents of a dist directory and return a map of
+ * file paths to their contents.
+ */
+export const getDistFiles = async (distPath: string, ignoreMap = true) => {
+  return readDirContents(distPath, {
+    absolute: true,
+    ignore: ignoreMap ? [join(distPath, '/**/*.map')] : [],
+  });
+};
+
+export const matchPattern = (log: string, pattern: string | RegExp) => {
+  if (typeof pattern === 'string') {
+    return log.includes(pattern);
+  }
+  return pattern.test(log);
 };

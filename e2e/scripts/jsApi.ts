@@ -1,13 +1,5 @@
 import assert from 'node:assert';
-import {
-  type ExecOptions,
-  type ExecSyncOptions,
-  exec,
-  execSync,
-} from 'node:child_process';
-import net from 'node:net';
 import { join } from 'node:path';
-import { URL } from 'node:url';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import type {
   CreateRsbuildOptions,
@@ -17,33 +9,13 @@ import type {
 import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
 import type { Page } from 'playwright';
 import {
+  getDistFiles,
+  getRandomPort,
+  gotoPage,
+  noop,
   type ProxyConsoleOptions,
   proxyConsole,
-  readDirContents,
-} from './helper';
-/**
- * Build an URL based on the entry name and port
- */
-export const buildEntryUrl = (entryName: string, port: number) => {
-  const htmlRoot = new URL(`http://localhost:${port}`);
-  const homeUrl = new URL(`${entryName}.html`, htmlRoot);
-
-  return homeUrl.href;
-};
-
-/**
- * Build the entry URL and navigate to it
- */
-export const gotoPage = async (
-  page: Page,
-  rsbuild: { port: number },
-  path = 'index',
-) => {
-  const url = buildEntryUrl(path, rsbuild.port);
-  return page.goto(url);
-};
-
-const noop = async () => {};
+} from './helpers';
 
 export const createRsbuild = async (
   rsbuildOptions: CreateRsbuildOptions & { rsbuildConfig?: RsbuildConfig },
@@ -76,45 +48,6 @@ export const createRsbuild = async (
 
   return rsbuild;
 };
-
-function isPortAvailable(port: number) {
-  try {
-    const server = net.createServer().listen(port);
-    return new Promise((resolve) => {
-      server.on('listening', () => {
-        server.close();
-        resolve(true);
-      });
-
-      server.on('error', () => {
-        resolve(false);
-      });
-    });
-  } catch {
-    return false;
-  }
-}
-
-const portMap = new Map();
-
-/**
- * Get a random port
- * Available port ranges: 1024 ～ 65535
- * `10080` is not available on macOS CI, `> 50000` get 'permission denied' on Windows.
- * so we use `15000` ~ `45000`.
- */
-export async function getRandomPort(
-  defaultPort = Math.ceil(Math.random() * 30000) + 15000,
-) {
-  let port = defaultPort;
-  while (true) {
-    if (!portMap.get(port) && (await isPortAvailable(port))) {
-      portMap.set(port, 1);
-      return port;
-    }
-    port++;
-  }
-}
 
 const updateConfigForTest = async (
   originalConfig: RsbuildConfig,
@@ -152,17 +85,6 @@ const updateConfigForTest = async (
   );
 
   return mergedConfig;
-};
-
-/**
- * Read the contents of a dist directory and return a map of
- * file paths to their contents.
- */
-const getDistFiles = async (distPath: string, ignoreMap = true) => {
-  return readDirContents(distPath, {
-    absolute: true,
-    ignore: ignoreMap ? [join(distPath, '/**/*.map')] : [],
-  });
 };
 
 /**
@@ -344,107 +266,4 @@ export async function build({
     getIndexFile,
     instance: rsbuild,
   };
-}
-
-const matchPattern = (log: string, pattern: string | RegExp) => {
-  if (typeof pattern === 'string') {
-    return log.includes(pattern);
-  }
-  return pattern.test(log);
-};
-
-export const rsbuildBinPath = join(
-  __dirname,
-  '../node_modules/@rsbuild/core/bin/rsbuild.js',
-);
-export const createRsbuildBinPath = join(
-  __dirname,
-  '../node_modules/create-rsbuild/bin.js',
-);
-
-/**
- * Synchronously run the Rsbuild CLI with the given command.
- * @param command - The CLI command string to run (e.g., "build --config ./rsbuild.config.ts").
- * @param options - Optional options to pass to `execSync`.
- * @returns The result of `execSync`, typically a Buffer containing stdout.
- */
-export function runCliSync(command: string, options?: ExecSyncOptions) {
-  return execSync(`node ${rsbuildBinPath} ${command}`, options);
-}
-
-export function runCommand(command: string, options?: ExecOptions) {
-  const childProcess = exec(command, options);
-
-  let logs: string[] = [];
-  const logPatterns = new Set<{
-    pattern: string | RegExp;
-    resolve: (value: boolean) => void;
-  }>();
-
-  const onData = (data: Buffer) => {
-    const log = stripAnsi(data.toString());
-    logs.push(log);
-    for (const { pattern, resolve } of logPatterns) {
-      if (matchPattern(log, pattern)) {
-        resolve(true);
-      }
-    }
-  };
-
-  childProcess.stdout?.on('data', onData);
-  childProcess.stderr?.on('data', onData);
-
-  const close = () => {
-    childProcess.stdout?.off('data', onData);
-    childProcess.stderr?.off('data', onData);
-    childProcess.kill();
-  };
-
-  const expectLog = async (pattern: string | RegExp) => {
-    if (logs.some((log) => matchPattern(log, pattern))) {
-      return true;
-    }
-
-    return new Promise<boolean>((resolve, reject) => {
-      const timeoutId = setTimeout(() => {
-        reject(
-          new Error(
-            `Timeout: Expected log pattern not found within 10 seconds: ${pattern}`,
-          ),
-        );
-      }, 10000);
-
-      const patternEntry = {
-        pattern,
-        resolve: (value: boolean) => {
-          clearTimeout(timeoutId);
-          logPatterns.delete(patternEntry);
-          resolve(value);
-        },
-      };
-
-      logPatterns.add(patternEntry);
-    });
-  };
-
-  const expectBuildEnd = async () => expectLog('built in');
-
-  const clearLogs = () => {
-    logs = [];
-  };
-
-  const getLogs = () => logs;
-
-  return {
-    close,
-    clearLogs,
-    getLogs,
-    expectLog,
-    childProcess,
-    expectBuildEnd,
-  };
-}
-
-export function runCli(command: string, options?: ExecOptions) {
-  return runCommand(`node ${rsbuildBinPath} ${command}`, options);
 }
