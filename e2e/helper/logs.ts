@@ -3,23 +3,23 @@ import type { ConsoleType } from '@rsbuild/core';
 import color from 'picocolors';
 import { BUILD_END_LOG } from './constants';
 
-export type LogPattern = {
-  pattern: string | RegExp;
-  resolve: (value: boolean) => void;
-};
+type LogPattern = string | RegExp | ((log: string) => boolean);
 
-const matchPattern = (log: string, pattern: string | RegExp) => {
+const matchPattern = (log: string, pattern: LogPattern) => {
   if (typeof pattern === 'string') {
     return log.includes(pattern);
   }
-  return pattern.test(log);
+  if (pattern instanceof RegExp) {
+    return pattern.test(log);
+  }
+  return pattern(log);
 };
 
 export const createLogMatcher = () => {
   const logs: string[] = [];
 
   const logPatterns = new Set<{
-    pattern: string | RegExp;
+    pattern: LogPattern;
     resolve: (value: boolean) => void;
   }>();
 
@@ -37,7 +37,7 @@ export const createLogMatcher = () => {
     }
   };
 
-  const expectLog = async (pattern: string | RegExp) => {
+  const expectLog = async (pattern: LogPattern) => {
     if (logs.some((log) => matchPattern(log, pattern))) {
       return true;
     }

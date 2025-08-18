@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { dev, expectPoll } from '@e2e/helper';
+import { createLogMatcher, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
@@ -15,9 +15,10 @@ test('should show overlay correctly', async ({ page }) => {
     recursive: true,
   });
 
-  const logs: string[] = [];
+  const { expectLog, addLog } = createLogMatcher();
+
   page.on('console', (consoleMessage) => {
-    logs.push(consoleMessage.text());
+    addLog(consoleMessage.text());
   });
 
   const rsbuild = await dev({
@@ -32,25 +33,18 @@ test('should show overlay correctly', async ({ page }) => {
     },
   });
 
-  await expectPoll(() =>
-    logs.some((log) => log.includes('[rsbuild] WebSocket connected.')),
-  ).toBeTruthy();
+  await expectLog('[rsbuild] WebSocket connected.');
 
   const errorOverlay = page.locator('rsbuild-error-overlay');
-
   expect(await errorOverlay.locator('.title').count()).toBe(0);
 
   const appPath = join(cwd, 'test-temp-src/App.tsx');
-
   await fs.promises.writeFile(
     appPath,
     fs.readFileSync(appPath, 'utf-8').replace('</div>', '</aaaaa>'),
   );
 
-  await expectPoll(() =>
-    logs.some((log) => log.includes('Module build failed')),
-  ).toBeTruthy();
-
+  await expectLog('Module build failed');
   await expect(errorOverlay.locator('.title')).toHaveText('Build failed');
 
   await rsbuild.close();
