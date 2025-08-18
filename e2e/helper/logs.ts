@@ -26,8 +26,8 @@ export const createLogMatcher = () => {
     logs.length = 0;
   };
 
-  const addLog = (originalLog: string) => {
-    const log = stripAnsi(originalLog);
+  const addLog = (input: string) => {
+    const log = stripAnsi(typeof input !== 'string' ? input : stripAnsi(input));
     logs.push(log);
     for (const { pattern, resolve } of logPatterns) {
       if (matchPattern(log, pattern)) {
@@ -74,13 +74,13 @@ export const createLogMatcher = () => {
   };
 };
 
+export type CreateLogMatcher = ReturnType<typeof createLogMatcher>;
+
 export type ProxyConsoleOptions = {
   types?: ConsoleType | ConsoleType[];
-  keepAnsi?: boolean;
 };
 
-export type ProxyConsoleResult = {
-  logs: string[];
+export type ProxyConsoleResult = CreateLogMatcher & {
   restore: () => void;
 };
 
@@ -89,28 +89,28 @@ export type ProxyConsoleResult = {
  */
 export const proxyConsole = ({
   types = ['log', 'warn', 'info', 'error'],
-  keepAnsi = false,
 }: ProxyConsoleOptions = {}): ProxyConsoleResult => {
-  const logs: string[] = [];
   const restores: Array<() => void> = [];
+  const logMatcher = createLogMatcher();
 
   for (const type of Array.isArray(types) ? types : [types]) {
     const method = console[type];
-
     restores.push(() => {
       console[type] = method;
     });
     console[type] = (log) => {
-      logs.push(keepAnsi || typeof log !== 'string' ? log : stripAnsi(log));
+      logMatcher.addLog(log);
     };
   }
 
+  const restore = () => {
+    for (const restore of restores) {
+      restore();
+    }
+  };
+
   return {
-    logs,
-    restore: () => {
-      for (const restore of restores) {
-        restore();
-      }
-    },
+    restore,
+    ...logMatcher,
   };
 };
