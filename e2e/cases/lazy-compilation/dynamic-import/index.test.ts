@@ -12,11 +12,15 @@ rspackOnlyTest(
       cwd: __dirname,
     });
 
+    // the first build
     await rsbuild.expectBuildEnd();
     rsbuild.expectNoLog('building src/foo.js');
+    rsbuild.clearLogs();
 
+    // build foo.js
     await gotoPage(page, rsbuild, 'index');
     await rsbuild.expectLog('building src/foo.js');
+    await rsbuild.expectBuildEnd();
     await rsbuild.close();
   },
 );
