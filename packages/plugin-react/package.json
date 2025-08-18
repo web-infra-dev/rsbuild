@@ -32,9 +32,9 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.12.0",
+    "@rslib/core": "0.12.1",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.17.1",
+    "@types/node": "^22.17.2",
     "typescript": "^5.9.2"
   },
   "peerDependencies": {

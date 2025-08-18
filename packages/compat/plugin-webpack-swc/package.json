@@ -38,11 +38,11 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "@rslib/core": "0.12.0",
+    "@rslib/core": "0.12.1",
     "@types/lodash": "^4.17.20",
     "@types/semver": "^7.7.0",
     "typescript": "^5.9.2",
-    "webpack": "^5.101.1"
+    "webpack": "^5.101.2"
   },
   "peerDependencies": {
     "@rsbuild/core": "1.x"
