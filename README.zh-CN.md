@@ -85,7 +85,7 @@ Rstack 是一个围绕 Rspack 打造的 JavaScript 统一工具链，具有优�
 
 ## 🔗 链接
 
-- [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack)：与 Rstack 相关的精彩内容列表。
+- [awesome-rstack](https://github.com/web-infra-dev/awesome-rstack)：与 Rstack 相关的精彩内容列表。
 - [rstack-examples](https://github.com/rspack-contrib/rstack-examples)：Rstack 的示例项目。
 - [storybook-rsbuild](https://github.com/rspack-contrib/storybook-rsbuild): 基于 Rsbuild 构建的 Storybook。
 - [rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template)：使用此模板创建你的 Rsbuild 插件。
