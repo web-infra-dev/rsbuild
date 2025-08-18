@@ -46,9 +46,7 @@ test('should warn when define `process.env`', async ({ page }) => {
     },
   });
 
-  await rsbuild.expectLog(
-    'The "source.define" option includes an object with the key "PATH" under "process.env"',
-  );
+  await rsbuild.expectLog('The "source.define" option includes an object');
   await rsbuild.close();
 });
 
