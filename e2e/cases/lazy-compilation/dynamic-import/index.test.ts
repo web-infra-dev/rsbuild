@@ -1,4 +1,4 @@
-import { dev, expectPoll, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 rspackOnlyTest(
@@ -12,18 +12,13 @@ rspackOnlyTest(
       cwd: __dirname,
     });
 
-    await expectPoll(() =>
-      rsbuild.logs.some((log) => log.includes('built in ')),
-    ).toBeTruthy();
+    await rsbuild.expectBuildEnd();
     expect(
       rsbuild.logs.some((log) => log.includes('building src/foo.js')),
     ).toBeFalsy();
 
     await gotoPage(page, rsbuild, 'index');
-    await expectPoll(() =>
-      rsbuild.logs.some((log) => log.includes('building src/foo.js')),
-    ).toBeTruthy();
-
+    await rsbuild.expectLog('building src/foo.js');
     await rsbuild.close();
   },
 );

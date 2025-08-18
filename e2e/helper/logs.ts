@@ -1,5 +1,6 @@
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import type { ConsoleType } from '@rsbuild/core';
+import color from 'picocolors';
 import { BUILD_END_LOG } from './constants';
 
 export type LogPattern = {
@@ -27,7 +28,7 @@ export const createLogMatcher = () => {
   };
 
   const addLog = (input: string) => {
-    const log = stripAnsi(typeof input !== 'string' ? input : stripAnsi(input));
+    const log = stripAnsi(input);
     logs.push(log);
     for (const { pattern, resolve } of logPatterns) {
       if (matchPattern(log, pattern)) {
@@ -43,12 +44,16 @@ export const createLogMatcher = () => {
 
     return new Promise<boolean>((resolve, reject) => {
       const timeoutId = setTimeout(() => {
+        const title = color.bold(
+          color.red('Timeout: Expected log not found within 5 seconds.'),
+        );
+        const expect = color.yellow(pattern.toString());
         reject(
           new Error(
-            `Timeout: Expected log pattern not found within 10 seconds: ${pattern}`,
+            `${title}\nExpect: ${expect}\nGet:\n${color.cyan(logs.join('\n'))}`,
           ),
         );
-      }, 10000);
+      }, 5000);
 
       const patternEntry = {
         pattern,
@@ -98,8 +103,16 @@ export const proxyConsole = ({
     restores.push(() => {
       console[type] = method;
     });
-    console[type] = (log) => {
-      logMatcher.addLog(log);
+    console[type] = (...args: any[]) => {
+      const logMessage = args
+        .map((arg) => {
+          if (typeof arg === 'string') {
+            return arg;
+          }
+          return typeof arg === 'object' ? JSON.stringify(arg) : String(arg);
+        })
+        .join(' ');
+      logMatcher.addLog(logMessage);
     };
   }
 

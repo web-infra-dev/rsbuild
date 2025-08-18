@@ -67,13 +67,8 @@ test('should generate config files in debug mode when dev', async ({
   expect(fs.existsSync(getRsbuildConfig(distRoot))).toBeTruthy();
   expect(fs.existsSync(getBundlerConfig(distRoot))).toBeTruthy();
 
-  expect(
-    rsbuild.logs.some((log) => log.includes('config inspection completed')),
-  ).toBeTruthy();
-
-  expect(
-    rsbuild.logs.some((log) => log.includes('create compiler')),
-  ).toBeTruthy();
+  await rsbuild.expectLog('config inspection completed');
+  await rsbuild.expectLog('create compiler');
 
   delete process.env.DEBUG;
   logger.level = level;

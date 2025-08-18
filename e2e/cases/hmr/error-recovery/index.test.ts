@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { dev, expectPoll, rspackOnlyTest } from '@e2e/helper';
+import { dev, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
@@ -43,9 +43,7 @@ rspackOnlyTest(
         ),
     );
 
-    await expectPoll(() =>
-      rsbuild.logs.some((log) => log.includes('Module build failed')),
-    ).toBeTruthy();
+    await rsbuild.expectLog('Module build failed');
 
     await fs.promises.writeFile(
       appPath,

@@ -5,7 +5,7 @@ import { pluginReact } from '@rsbuild/plugin-react';
 
 rspackOnlyTest('should validate Rspack config by default', async () => {
   try {
-    await build({
+    const rsbuild = await build({
       cwd: __dirname,
       rsbuildConfig: {
         tools: {
@@ -16,6 +16,7 @@ rspackOnlyTest('should validate Rspack config by default', async () => {
         },
       },
     });
+    await rsbuild.close();
   } catch (e) {
     expect(e).toBeTruthy();
     expect((e as Error).message).toContain('received object at "entry"');
@@ -38,11 +39,7 @@ rspackOnlyTest('should warn when passing unrecognized keys', async () => {
     },
   });
 
-  expect(
-    rsbuild.logs.some((log) =>
-      log.includes(`Unrecognized key(s) in object: 'unrecognized'`),
-    ),
-  );
+  await rsbuild.expectLog(`Unrecognized key(s) "unrecognized" in object`);
   await rsbuild.close();
 
   process.env.RSPACK_CONFIG_VALIDATE = value;
@@ -64,14 +61,12 @@ rspackOnlyTest('should allow to override Rspack config validate', async () => {
     },
   });
 
-  expect(
-    rsbuild.logs.some((log) =>
-      log.includes('Expected object, received number'),
-    ),
+  await rsbuild.expectLog(
+    'Expected array at "entry" or Expected function, received object at "entry"',
   );
+  await rsbuild.close();
 
   process.env.RSPACK_CONFIG_VALIDATE = RSPACK_CONFIG_VALIDATE;
-  await rsbuild.close();
 });
 
 rspackOnlyTest(
