@@ -5,11 +5,7 @@ import {
   execSync,
 } from 'node:child_process';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
-import {
-  BUILD_END_LOG,
-  CREATE_RSBUILD_BIN_PATH,
-  RSBUILD_BIN_PATH,
-} from './constants';
+import { BUILD_END_LOG, RSBUILD_BIN_PATH } from './constants';
 import { matchPattern } from './helpers';
 
 /**
@@ -96,5 +92,5 @@ export function runCommand(command: string, options?: ExecOptions) {
 }
 
 export function runCli(command: string, options?: ExecOptions) {
-  return runCommand(`node ${CREATE_RSBUILD_BIN_PATH} ${command}`, options);
+  return runCommand(`node ${RSBUILD_BIN_PATH} ${command}`, options);
 }
