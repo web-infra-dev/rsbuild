@@ -4,6 +4,7 @@ import { platform } from 'node:os';
 import { join } from 'node:path';
 import { URL } from 'node:url';
 import { expect, test } from '@playwright/test';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import glob, {
   convertPathToPattern,
   type Options as GlobOptions,
@@ -175,4 +176,81 @@ export const getDistFiles = async (distPath: string, ignoreMap = true) => {
     absolute: true,
     ignore: ignoreMap ? [join(distPath, '/**/*.map')] : [],
   });
+};
+
+export const recordPluginHooks = () => {
+  const hooks: string[] = [];
+
+  const plugin: RsbuildPlugin = {
+    name: 'record-hooks-plugin',
+    setup(api) {
+      api.modifyRspackConfig(() => {
+        hooks.push('ModifyBundlerConfig');
+      });
+      api.modifyWebpackChain(() => {
+        hooks.push('ModifyBundlerConfig');
+      });
+      api.modifyRsbuildConfig(() => {
+        hooks.push('ModifyRsbuildConfig');
+      });
+      api.modifyEnvironmentConfig(() => {
+        hooks.push('ModifyEnvironmentConfig');
+      });
+      api.modifyBundlerChain(() => {
+        hooks.push('ModifyBundlerChain');
+      });
+      api.modifyHTML((html) => {
+        hooks.push('ModifyHTML');
+        return html;
+      });
+      api.modifyHTMLTags((tags) => {
+        hooks.push('ModifyHTMLTags');
+        return tags;
+      });
+      api.onBeforeStartDevServer(() => {
+        hooks.push('BeforeStartDevServer');
+      });
+      api.onAfterStartDevServer(() => {
+        hooks.push('AfterStartDevServer');
+      });
+      api.onBeforeCreateCompiler(() => {
+        hooks.push('BeforeCreateCompiler');
+      });
+      api.onAfterCreateCompiler(() => {
+        hooks.push('AfterCreateCompiler');
+      });
+      api.onBeforeBuild(() => {
+        hooks.push('BeforeBuild');
+      });
+      api.onBeforeDevCompile(() => {
+        hooks.push('BeforeDevCompile');
+      });
+      api.onAfterBuild(() => {
+        hooks.push('AfterBuild');
+      });
+      api.onBeforeEnvironmentCompile(() => {
+        hooks.push('BeforeEnvironmentCompile');
+      });
+      api.onAfterEnvironmentCompile(() => {
+        hooks.push('AfterEnvironmentCompile');
+      });
+      api.onBeforeStartProdServer(() => {
+        hooks.push('BeforeStartProdServer');
+      });
+      api.onCloseDevServer(() => {
+        hooks.push('OnCloseDevServer');
+      });
+      api.onAfterStartProdServer(() => {
+        hooks.push('AfterStartProdServer');
+      });
+      api.onDevCompileDone(() => {
+        hooks.push('OnDevCompileDone');
+      });
+      api.onCloseBuild(() => {
+        hooks.push('OnCloseBuild');
+      });
+    },
+  };
+
+  return { plugin, hooks };
 };
