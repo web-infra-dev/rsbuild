@@ -96,8 +96,8 @@ function useFooterData() {
           link: 'https://bsky.app/profile/rspack.rs',
         },
         {
-          title: 'Awesome Rspack',
-          link: 'https://github.com/web-infra-dev/awesome-rspack',
+          title: 'Awesome Rstack',
+          link: 'https://github.com/web-infra-dev/awesome-rstack',
         },
       ],
     },
