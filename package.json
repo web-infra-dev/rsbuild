@@ -36,10 +36,10 @@
   "devDependencies": {
     "@biomejs/biome": "^2.2.0",
     "@rsbuild/config": "workspace:*",
-    "@rslint/core": "^0.1.9",
+    "@rslint/core": "^0.1.11",
     "@rstest/core": "^0.2.1",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.17.1",
+    "@types/node": "^22.17.2",
     "cross-env": "^10.0.0",
     "cspell-ban-words": "^0.0.4",
     "heading-case": "^1.0.0",

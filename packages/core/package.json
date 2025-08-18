@@ -59,10 +59,10 @@
     "jiti": "^2.5.1"
   },
   "devDependencies": {
-    "@rslib/core": "0.12.0",
+    "@rslib/core": "0.12.1",
     "@types/connect": "3.4.38",
     "@types/cors": "^2.8.19",
-    "@types/node": "^22.17.1",
+    "@types/node": "^22.17.2",
     "@types/on-finished": "2.3.5",
     "@types/webpack-bundle-analyzer": "4.7.0",
     "@types/ws": "^8.18.1",
@@ -94,7 +94,7 @@
     "style-loader": "3.3.4",
     "tinyglobby": "^0.2.14",
     "typescript": "^5.9.2",
-    "webpack": "^5.101.1",
+    "webpack": "^5.101.2",
     "webpack-bundle-analyzer": "^4.10.2",
     "webpack-merge": "6.0.1",
     "ws": "^8.18.3"
