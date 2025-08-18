@@ -6,12 +6,9 @@ test('should log warning by default', async () => {
     cwd: __dirname,
   });
 
-  expect(
-    rsbuild.logs.some((log) =>
-      log.includes('Using / for division outside of calc() is deprecated'),
-    ),
-  ).toBeTruthy();
-
+  await rsbuild.expectLog(
+    'Using / for division outside of calc() is deprecated',
+  );
   await rsbuild.close();
 });
 

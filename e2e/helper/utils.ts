@@ -3,9 +3,7 @@ import net from 'node:net';
 import { platform } from 'node:os';
 import { join } from 'node:path';
 import { URL } from 'node:url';
-import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import { expect, test } from '@playwright/test';
-import type { ConsoleType } from '@rsbuild/core';
 import glob, {
   convertPathToPattern,
   type Options as GlobOptions,
@@ -156,47 +154,6 @@ export const expectFileWithContent = (
     }
   }).toBeTruthy();
 
-export type ProxyConsoleOptions = {
-  types?: ConsoleType | ConsoleType[];
-  keepAnsi?: boolean;
-};
-
-export type ProxyConsoleResult = {
-  logs: string[];
-  restore: () => void;
-};
-
-/**
- * Proxy the console methods to capture the logs
- */
-export const proxyConsole = ({
-  types = ['log', 'warn', 'info', 'error'],
-  keepAnsi = false,
-}: ProxyConsoleOptions = {}): ProxyConsoleResult => {
-  const logs: string[] = [];
-  const restores: Array<() => void> = [];
-
-  for (const type of Array.isArray(types) ? types : [types]) {
-    const method = console[type];
-
-    restores.push(() => {
-      console[type] = method;
-    });
-    console[type] = (log) => {
-      logs.push(keepAnsi || typeof log !== 'string' ? log : stripAnsi(log));
-    };
-  }
-
-  return {
-    logs,
-    restore: () => {
-      for (const restore of restores) {
-        restore();
-      }
-    },
-  };
-};
-
 // Windows and macOS use different new lines
 export const normalizeNewlines = (str: string) => str.replace(/\r\n/g, '\n');
 
@@ -218,11 +175,4 @@ export const getDistFiles = async (distPath: string, ignoreMap = true) => {
     absolute: true,
     ignore: ignoreMap ? [join(distPath, '/**/*.map')] : [],
   });
-};
-
-export const matchPattern = (log: string, pattern: string | RegExp) => {
-  if (typeof pattern === 'string') {
-    return log.includes(pattern);
-  }
-  return pattern.test(log);
 };

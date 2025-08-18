@@ -68,11 +68,6 @@ test('should handle proxy error correctly', async ({ page }) => {
 
   expect(res?.status()).toBe(504);
 
-  expect(
-    rsbuild.logs.some((log) =>
-      log.includes('Error occurred while proxying request'),
-    ),
-  ).toBeTruthy();
-
+  await rsbuild.expectLog('Error occurred while proxying request');
   await rsbuild.close();
 });

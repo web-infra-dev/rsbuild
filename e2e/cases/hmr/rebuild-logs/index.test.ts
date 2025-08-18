@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { dev, expectPoll, rspackOnlyTest } from '@e2e/helper';
+import { dev, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
@@ -38,10 +38,7 @@ rspackOnlyTest('should print changed files in logs', async ({ page }) => {
       .replace('Hello Rsbuild!', 'Hello Rsbuild2!'),
   );
 
-  await expectPoll(() =>
-    rsbuild.logs.some((log) => log.includes('building test-temp-src/App.tsx')),
-  ).toBeTruthy();
-
+  await rsbuild.expectLog('building test-temp-src/App.tsx');
   await rsbuild.close();
 });
 
@@ -73,11 +70,6 @@ rspackOnlyTest('should print removed files in logs', async ({ page }) => {
 
   await fs.promises.unlink(appPath);
 
-  await expectPoll(() =>
-    rsbuild.logs.some((log) =>
-      log.includes('building removed test-temp-src/App.tsx'),
-    ),
-  ).toBeTruthy();
-
+  await rsbuild.expectLog('building removed test-temp-src/App.tsx');
   await rsbuild.close();
 });

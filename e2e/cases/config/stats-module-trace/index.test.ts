@@ -8,8 +8,6 @@ test('should log error module trace', async () => {
   });
 
   expect(rsbuild.buildError).toBeTruthy();
-  expect(
-    rsbuild.logs.some((log) => log.includes('@ ./src/index.tsx')),
-  ).toBeTruthy();
+  await rsbuild.expectLog('@ ./src/index.tsx');
   await rsbuild.close();
 });

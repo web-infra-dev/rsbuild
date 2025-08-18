@@ -8,11 +8,8 @@ rspackOnlyTest('should print Sass plugin hints as expected', async () => {
   });
 
   expect(rsbuild.buildError).toBeTruthy();
-  expect(
-    rsbuild.logs.some((log) =>
-      log.includes('To enable support for Sass, use "@rsbuild/plugin-sass"'),
-    ),
-  ).toBeTruthy();
-
+  await rsbuild.expectLog(
+    'To enable support for Sass, use "@rsbuild/plugin-sass"',
+  );
   await rsbuild.close();
 });

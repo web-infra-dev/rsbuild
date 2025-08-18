@@ -8,13 +8,8 @@ test('should print tips if resolve Node.js builtin module failed', async () => {
   });
 
   expect(rsbuild.buildError).toBeTruthy();
-  expect(
-    rsbuild.logs.some((log) =>
-      log.includes(
-        '"querystring" is a built-in Node.js module and cannot be imported in client-side code.',
-      ),
-    ),
+  await rsbuild.expectLog(
+    '"querystring" is a built-in Node.js module and cannot be imported in client-side code.',
   );
-
   await rsbuild.close();
 });

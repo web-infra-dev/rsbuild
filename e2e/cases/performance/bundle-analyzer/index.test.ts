@@ -19,11 +19,7 @@ test('should emit bundle analyze report correctly when dev', async ({
   );
   expect(filePaths.length).toBe(1);
 
-  expect(
-    rsbuild.logs.some((log) =>
-      log.includes('Webpack Bundle Analyzer saved report to'),
-    ),
-  ).toBeTruthy();
+  await rsbuild.expectLog('Webpack Bundle Analyzer saved report to');
   await rsbuild.close();
 });
 
@@ -37,12 +33,7 @@ test('should emit bundle analyze report correctly when build', async () => {
     file.endsWith('report-web.html'),
   );
 
-  expect(
-    rsbuild.logs.some((log) =>
-      log.includes('Webpack Bundle Analyzer saved report to'),
-    ),
-  ).toBeTruthy();
-
+  await rsbuild.expectLog('Webpack Bundle Analyzer saved report to');
   expect(filePaths.length).toBe(1);
   await rsbuild.close();
 });

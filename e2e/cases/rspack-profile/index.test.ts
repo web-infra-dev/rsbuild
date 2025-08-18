@@ -24,7 +24,7 @@ const getProfilePath = (logs: string[]) =>
 rspackOnlyTest(
   'should generate rspack profile as expected in dev',
   async () => {
-    const { getLogs, close, expectLog } = runCommand('node ./dev.mjs', {
+    const { logs, close, expectLog } = runCommand('node ./dev.mjs', {
       cwd: __dirname,
       env: {
         ...process.env,
@@ -33,7 +33,7 @@ rspackOnlyTest(
     });
 
     await expectLog(PROFILE_LOG);
-    const profileFile = getProfilePath(getLogs());
+    const profileFile = getProfilePath(logs);
     expect(fs.existsSync(profileFile!)).toBeTruthy();
     close();
   },
@@ -42,7 +42,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should generate rspack profile as expected in build',
   async () => {
-    const { getLogs, close, expectLog } = runCli('build', {
+    const { logs, close, expectLog } = runCli('build', {
       cwd: __dirname,
       env: {
         ...process.env,
@@ -51,7 +51,7 @@ rspackOnlyTest(
     });
 
     await expectLog(PROFILE_LOG);
-    const profileFile = getProfilePath(getLogs());
+    const profileFile = getProfilePath(logs);
     expect(fs.existsSync(profileFile!)).toBeTruthy();
     close();
   },

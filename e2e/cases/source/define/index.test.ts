@@ -46,12 +46,7 @@ test('should warn when define `process.env`', async ({ page }) => {
     },
   });
 
-  expect(
-    rsbuild.logs.some((log) =>
-      log.includes('The "source.define" option includes an object'),
-    ),
-  ).toBe(true);
-
+  await rsbuild.expectLog('The "source.define" option includes an object');
   await rsbuild.close();
 });
 
@@ -68,11 +63,6 @@ test('should warn when define stringified `process.env`', async ({ page }) => {
     },
   });
 
-  expect(
-    rsbuild.logs.some((log) =>
-      log.includes('The "source.define" option includes an object'),
-    ),
-  ).toBe(true);
-
+  await rsbuild.expectLog('The "source.define" option includes an object');
   await rsbuild.close();
 });

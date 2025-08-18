@@ -1,0 +1,14 @@
+{
+  "name": "@e2e/helper",
+  "private": true,
+  "version": "1.0.0",
+  "exports": {
+    ".": {
+      "types": "./index.ts",
+      "default": "./index.ts"
+    }
+  },
+  "dependencies": {
+    "picocolors": "^1.1.1"
+  }
+}

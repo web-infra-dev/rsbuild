@@ -8,13 +8,8 @@ rspackOnlyTest('should print Stylus plugin hints as expected', async () => {
   });
 
   expect(rsbuild.buildError).toBeTruthy();
-  expect(
-    rsbuild.logs.some((log) =>
-      log.includes(
-        'To enable support for Stylus, use "@rsbuild/plugin-stylus"',
-      ),
-    ),
-  ).toBeTruthy();
-
+  await rsbuild.expectLog(
+    'To enable support for Stylus, use "@rsbuild/plugin-stylus"',
+  );
   await rsbuild.close();
 });

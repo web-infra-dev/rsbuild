@@ -18,14 +18,9 @@ rspackOnlyTest(
       ),
     ).toMatch(/sha384-[A-Za-z0-9+/=]+/);
 
-    expect(
-      rsbuild.logs.some((log) =>
-        log.includes(
-          'SubResourceIntegrityPlugin may interfere with hot reloading',
-        ),
-      ),
-    ).toBe(true);
-
+    await rsbuild.expectLog(
+      'SubResourceIntegrityPlugin may interfere with hot reloading',
+    );
     await rsbuild.close();
   },
 );

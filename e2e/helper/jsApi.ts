@@ -8,14 +8,8 @@ import type {
 } from '@rsbuild/core';
 import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
 import type { Page } from 'playwright';
-import {
-  getDistFiles,
-  getRandomPort,
-  gotoPage,
-  noop,
-  type ProxyConsoleOptions,
-  proxyConsole,
-} from './helpers';
+import { proxyConsole } from './logs';
+import { getDistFiles, getRandomPort, gotoPage, noop } from './utils';
 
 export const createRsbuild = async (
   rsbuildOptions: CreateRsbuildOptions & { rsbuildConfig?: RsbuildConfig },
@@ -93,7 +87,6 @@ const updateConfigForTest = async (
 export async function dev({
   plugins,
   page,
-  captureLogs = true,
   waitFirstCompileDone = true,
   ...options
 }: CreateRsbuildOptions & {
@@ -105,10 +98,6 @@ export async function dev({
    */
   page?: Page;
   /**
-   * Call `proxyConsole` to capture the console logs.
-   */
-  captureLogs?: ProxyConsoleOptions | boolean;
-  /**
    * The done of `dev` does not mean the compile is done.
    * If your test relies on the completion of compilation you should `waitFirstCompileDone`
    * @default true
@@ -117,10 +106,7 @@ export async function dev({
 }) {
   process.env.NODE_ENV = 'development';
 
-  const proxyConsoleResult =
-    captureLogs === false
-      ? null
-      : proxyConsole(captureLogs === true ? {} : captureLogs);
+  const logHelpers = proxyConsole();
 
   options.rsbuildConfig = await updateConfigForTest(
     options.rsbuildConfig || {},
@@ -150,13 +136,13 @@ export async function dev({
 
   return {
     ...result,
-    logs: proxyConsoleResult?.logs || [],
+    ...logHelpers,
     instance: rsbuild,
     getDistFiles: (ignoreMap?: boolean) =>
       getDistFiles(rsbuild.context.distPath, ignoreMap),
     close: async () => {
       await result.server.close();
-      proxyConsoleResult?.restore();
+      logHelpers.restore();
     },
   };
 }
@@ -166,7 +152,6 @@ export async function dev({
  */
 export async function build({
   plugins,
-  captureLogs = true,
   catchBuildError = false,
   runServer = false,
   page,
@@ -188,17 +173,10 @@ export async function build({
    * This method will automatically run the server and goto the page.
    */
   page?: Page;
-  /**
-   * Call `proxyConsole` to capture the console logs.
-   */
-  captureLogs?: ProxyConsoleOptions | boolean;
 }) {
   process.env.NODE_ENV = 'production';
 
-  const proxyConsoleResult =
-    captureLogs === false
-      ? null
-      : proxyConsole(captureLogs === true ? {} : captureLogs);
+  const logHelpers = proxyConsole();
 
   options.rsbuildConfig = await updateConfigForTest(
     options.rsbuildConfig || {},
@@ -253,13 +231,13 @@ export async function build({
   }
 
   return {
-    logs: proxyConsoleResult?.logs || [],
+    ...logHelpers,
     distPath,
     port,
     close: async () => {
       await closeBuild?.();
       await server.close();
-      proxyConsoleResult?.restore();
+      logHelpers.restore();
     },
     buildError,
     getDistFiles: (ignoreMap?: boolean) => getDistFiles(distPath, ignoreMap),

@@ -21,12 +21,5 @@ rspackOnlyTest('should compile nested npm import correctly', async () => {
     '#b{color:#ff0}#c{color:green}#a{font-size:10px}html{font-size:18px}',
   );
 
-  // there will be a deprecation log for `~`.
-  expect(
-    rsbuild.logs.some((log) =>
-      log.includes(`a request starts with '~' is deprecated`),
-    ),
-  );
-
   await rsbuild.close();
 });
