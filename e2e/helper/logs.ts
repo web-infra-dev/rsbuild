@@ -24,7 +24,7 @@ export const createLogMatcher = () => {
   }>();
 
   const clearLogs = () => {
-    logs.length = 0;
+    logs.splice(0);
   };
 
   const addLog = (input: string) => {

@@ -1,88 +1,16 @@
-import { getRandomPort, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import {
+  getRandomPort,
+  gotoPage,
+  recordPluginHooks,
+  rspackOnlyTest,
+} from '@e2e/helper';
 import { expect } from '@playwright/test';
-import { createRsbuild, type RsbuildPlugin } from '@rsbuild/core';
-
-const createPlugin = () => {
-  const names: string[] = [];
-
-  const plugin: RsbuildPlugin = {
-    name: 'test-plugin',
-    setup(api) {
-      api.modifyRspackConfig(() => {
-        names.push('ModifyBundlerConfig');
-      });
-      api.modifyWebpackChain(() => {
-        names.push('ModifyBundlerConfig');
-      });
-      api.modifyRsbuildConfig(() => {
-        names.push('ModifyRsbuildConfig');
-      });
-      api.modifyEnvironmentConfig(() => {
-        names.push('ModifyEnvironmentConfig');
-      });
-      api.modifyBundlerChain(() => {
-        names.push('ModifyBundlerChain');
-      });
-      api.modifyHTML((html) => {
-        names.push('ModifyHTML');
-        return html;
-      });
-      api.modifyHTMLTags((tags) => {
-        names.push('ModifyHTMLTags');
-        return tags;
-      });
-      api.onBeforeStartDevServer(() => {
-        names.push('BeforeStartDevServer');
-      });
-      api.onAfterStartDevServer(() => {
-        names.push('AfterStartDevServer');
-      });
-      api.onBeforeCreateCompiler(() => {
-        names.push('BeforeCreateCompiler');
-      });
-      api.onAfterCreateCompiler(() => {
-        names.push('AfterCreateCompiler');
-      });
-      api.onBeforeBuild(() => {
-        names.push('BeforeBuild');
-      });
-      api.onBeforeDevCompile(() => {
-        names.push('BeforeDevCompile');
-      });
-      api.onAfterBuild(() => {
-        names.push('AfterBuild');
-      });
-      api.onBeforeEnvironmentCompile(() => {
-        names.push('BeforeEnvironmentCompile');
-      });
-      api.onAfterEnvironmentCompile(() => {
-        names.push('AfterEnvironmentCompile');
-      });
-      api.onBeforeStartProdServer(() => {
-        names.push('BeforeStartProdServer');
-      });
-      api.onCloseDevServer(() => {
-        names.push('OnCloseDevServer');
-      });
-      api.onAfterStartProdServer(() => {
-        names.push('AfterStartProdServer');
-      });
-      api.onDevCompileDone(() => {
-        names.push('OnDevCompileDone');
-      });
-      api.onCloseBuild(() => {
-        names.push('OnCloseBuild');
-      });
-    },
-  };
-
-  return { plugin, names };
-};
+import { createRsbuild } from '@rsbuild/core';
 
 rspackOnlyTest(
   'should run plugin hooks correctly when running build',
   async () => {
-    const { plugin, names } = createPlugin();
+    const { plugin, hooks } = recordPluginHooks();
     const rsbuild = await createRsbuild({
       cwd: __dirname,
       rsbuildConfig: {
@@ -97,7 +25,7 @@ rspackOnlyTest(
 
     await buildInstance.close();
 
-    expect(names).toEqual([
+    expect(hooks).toEqual([
       'ModifyRsbuildConfig',
       'ModifyEnvironmentConfig',
       'ModifyBundlerChain',
@@ -118,7 +46,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should run plugin hooks correctly when running build and mode is development',
   async () => {
-    const { plugin, names } = createPlugin();
+    const { plugin, hooks } = recordPluginHooks();
     const rsbuild = await createRsbuild({
       cwd: __dirname,
       rsbuildConfig: {
@@ -134,7 +62,7 @@ rspackOnlyTest(
 
     await buildInstance.close();
 
-    expect(names).toEqual([
+    expect(hooks).toEqual([
       'ModifyRsbuildConfig',
       'ModifyEnvironmentConfig',
       'ModifyBundlerChain',
@@ -158,7 +86,7 @@ rspackOnlyTest(
     process.env.NODE_ENV = 'development';
     const port = await getRandomPort();
 
-    const { plugin, names } = createPlugin();
+    const { plugin, hooks } = recordPluginHooks();
     const rsbuild = await createRsbuild({
       cwd: __dirname,
       rsbuildConfig: {
@@ -175,14 +103,14 @@ rspackOnlyTest(
 
     await result.server.close();
 
-    expect(names.filter((name) => name.includes('DevServer'))).toEqual([
+    expect(hooks.filter((name) => name.includes('DevServer'))).toEqual([
       'BeforeStartDevServer',
       'AfterStartDevServer',
       'OnCloseDevServer',
     ]);
 
     // compile is async, so the execution order of AfterStartDevServer and the compile hooks is uncertain
-    expect(names.filter((name) => name !== 'AfterStartDevServer')).toEqual([
+    expect(hooks.filter((name) => name !== 'AfterStartDevServer')).toEqual([
       'ModifyRsbuildConfig',
       'ModifyEnvironmentConfig',
       'BeforeStartDevServer',
@@ -206,7 +134,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should run plugin hooks correctly when running preview',
   async () => {
-    const { plugin, names } = createPlugin();
+    const { plugin, hooks } = recordPluginHooks();
     const rsbuild = await createRsbuild({
       cwd: __dirname,
       rsbuildConfig: {
@@ -218,7 +146,7 @@ rspackOnlyTest(
       checkDistDir: false,
     });
 
-    expect(names).toEqual([
+    expect(hooks).toEqual([
       'ModifyRsbuildConfig',
       'ModifyEnvironmentConfig',
       'BeforeStartProdServer',

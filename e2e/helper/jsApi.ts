@@ -154,6 +154,7 @@ export async function build({
   plugins,
   catchBuildError = false,
   runServer = false,
+  watch = false,
   page,
   ...options
 }: CreateRsbuildOptions & {
@@ -173,6 +174,10 @@ export async function build({
    * This method will automatically run the server and goto the page.
    */
   page?: Page;
+  /**
+   * Whether to watch files.
+   */
+  watch?: boolean;
 }) {
   process.env.NODE_ENV = 'production';
 
@@ -189,7 +194,7 @@ export async function build({
   let closeBuild: () => Promise<void> | undefined;
 
   try {
-    const result = await rsbuild.build();
+    const result = await rsbuild.build({ watch });
     closeBuild = result.close;
   } catch (error) {
     buildError = error as Error;
