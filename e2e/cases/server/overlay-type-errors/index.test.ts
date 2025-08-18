@@ -1,12 +1,12 @@
-import { dev, expectPoll } from '@e2e/helper';
+import { createLogMatcher, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
 
 test('should display type errors on overlay correctly', async ({ page }) => {
-  const logs: string[] = [];
+  const { addLog, expectLog } = createLogMatcher();
   page.on('console', (consoleMessage) => {
-    logs.push(consoleMessage.text());
+    addLog(consoleMessage.text());
   });
 
   const rsbuild = await dev({
@@ -14,12 +14,9 @@ test('should display type errors on overlay correctly', async ({ page }) => {
     page,
   });
 
-  await expectPoll(() =>
-    logs.some((log) => log.includes('TS2322:')),
-  ).toBeTruthy();
+  await expectLog('TS2322:');
 
   const errorOverlay = page.locator('rsbuild-error-overlay');
-
   await expect(errorOverlay.locator('.title')).toHaveText('Build failed');
 
   // Get "<span style="color:#888">TS2322: </span>"
