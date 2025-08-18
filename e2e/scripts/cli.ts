@@ -4,24 +4,13 @@ import {
   exec,
   execSync,
 } from 'node:child_process';
-import { join } from 'node:path';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
-
-const matchPattern = (log: string, pattern: string | RegExp) => {
-  if (typeof pattern === 'string') {
-    return log.includes(pattern);
-  }
-  return pattern.test(log);
-};
-
-export const rsbuildBinPath = join(
-  __dirname,
-  '../node_modules/@rsbuild/core/bin/rsbuild.js',
-);
-export const createRsbuildBinPath = join(
-  __dirname,
-  '../node_modules/create-rsbuild/bin.js',
-);
+import {
+  BUILD_END_LOG,
+  CREATE_RSBUILD_BIN_PATH,
+  RSBUILD_BIN_PATH,
+} from './constants';
+import { matchPattern } from './helpers';
 
 /**
  * Synchronously run the Rsbuild CLI with the given command.
@@ -30,7 +19,7 @@ export const createRsbuildBinPath = join(
  * @returns The result of `execSync`, typically a Buffer containing stdout.
  */
 export function runCliSync(command: string, options?: ExecSyncOptions) {
-  return execSync(`node ${rsbuildBinPath} ${command}`, options);
+  return execSync(`node ${RSBUILD_BIN_PATH} ${command}`, options);
 }
 
 export function runCommand(command: string, options?: ExecOptions) {
@@ -88,7 +77,7 @@ export function runCommand(command: string, options?: ExecOptions) {
     });
   };
 
-  const expectBuildEnd = async () => expectLog('built in');
+  const expectBuildEnd = async () => expectLog(BUILD_END_LOG);
 
   const clearLogs = () => {
     logs = [];
@@ -107,5 +96,5 @@ export function runCommand(command: string, options?: ExecOptions) {
 }
 
 export function runCli(command: string, options?: ExecOptions) {
-  return runCommand(`node ${rsbuildBinPath} ${command}`, options);
+  return runCommand(`node ${CREATE_RSBUILD_BIN_PATH} ${command}`, options);
 }

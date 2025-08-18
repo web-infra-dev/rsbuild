@@ -18,7 +18,6 @@ import type { Page } from 'playwright';
 export const buildEntryUrl = (entryName: string, port: number) => {
   const htmlRoot = new URL(`http://localhost:${port}`);
   const homeUrl = new URL(`${entryName}.html`, htmlRoot);
-
   return homeUrl.href;
 };
 
@@ -44,7 +43,6 @@ function isPortAvailable(port: number) {
         server.close();
         resolve(true);
       });
-
       server.on('error', () => {
         resolve(false);
       });
@@ -184,7 +182,6 @@ export const proxyConsole = ({
     restores.push(() => {
       console[type] = method;
     });
-
     console[type] = (log) => {
       logs.push(keepAnsi || typeof log !== 'string' ? log : stripAnsi(log));
     };
@@ -221,4 +218,11 @@ export const getDistFiles = async (distPath: string, ignoreMap = true) => {
     absolute: true,
     ignore: ignoreMap ? [join(distPath, '/**/*.map')] : [],
   });
+};
+
+export const matchPattern = (log: string, pattern: string | RegExp) => {
+  if (typeof pattern === 'string') {
+    return log.includes(pattern);
+  }
+  return pattern.test(log);
 };
