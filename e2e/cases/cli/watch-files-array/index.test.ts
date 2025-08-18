@@ -1,39 +1,39 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expectFile, getRandomPort, rspackOnlyTest, runCli } from '@e2e/helper';
+import { getRandomPort, gotoPage, rspackOnlyTest, runCli } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { remove } from 'fs-extra';
 
-const tempConfigPath = './test-temp-config.ts';
+const distIndex = path.join(__dirname, 'dist/static/js/index.js');
+const tempConfig = path.join(__dirname, 'test-temp-config.ts');
 
 rspackOnlyTest(
   'should restart dev server when extra config file changed',
-  async () => {
-    const dist = path.join(__dirname, 'dist');
-    const extraConfigFile = path.join(__dirname, tempConfigPath);
+  async ({ page }) => {
+    await remove(distIndex);
+    fs.writeFileSync(tempConfig, 'export default 1;');
 
-    await remove(extraConfigFile);
-    await remove(dist);
-    fs.writeFileSync(extraConfigFile, 'export default { foo: 1 };');
-
-    const { close } = runCli('dev', {
+    const port = await getRandomPort();
+    const { close, expectBuildEnd, expectLog, clearLogs } = runCli('dev', {
       cwd: __dirname,
       env: {
         ...process.env,
-        PORT: String(await getRandomPort()),
+        PORT: String(port),
       },
     });
 
-    await expectFile(dist);
+    // the first build
+    await expectBuildEnd();
+    await gotoPage(page, { port });
+    await expect(page.locator('#test')).toHaveText('1');
 
-    await remove(dist);
-    // temp config changed
-    fs.writeFileSync(extraConfigFile, 'export default { foo: 2 };');
-
-    // rebuild and generate dist files
-    await expectFile(dist);
-    expect(fs.existsSync(path.join(dist, 'temp.txt')));
-
+    // restart dev server
+    clearLogs();
+    fs.writeFileSync(tempConfig, 'export default 2;');
+    await expectLog('restarting server');
+    await expectBuildEnd();
+    await gotoPage(page, { port });
+    await expect(page.locator('#test')).toHaveText('2');
     close();
   },
 );
