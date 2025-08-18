@@ -106,7 +106,7 @@ export async function dev({
 }) {
   process.env.NODE_ENV = 'development';
 
-  const logHelpers = proxyConsole();
+  const logHelper = proxyConsole();
 
   options.rsbuildConfig = await updateConfigForTest(
     options.rsbuildConfig || {},
@@ -136,13 +136,13 @@ export async function dev({
 
   return {
     ...result,
-    ...logHelpers,
+    ...logHelper,
     instance: rsbuild,
     getDistFiles: (ignoreMap?: boolean) =>
       getDistFiles(rsbuild.context.distPath, ignoreMap),
     close: async () => {
       await result.server.close();
-      logHelpers.restore();
+      logHelper.restore();
     },
   };
 }
@@ -181,7 +181,7 @@ export async function build({
 }) {
   process.env.NODE_ENV = 'production';
 
-  const logHelpers = proxyConsole();
+  const logHelper = proxyConsole();
 
   options.rsbuildConfig = await updateConfigForTest(
     options.rsbuildConfig || {},
@@ -236,13 +236,13 @@ export async function build({
   }
 
   return {
-    ...logHelpers,
+    ...logHelper,
     distPath,
     port,
     close: async () => {
       await closeBuild?.();
       await server.close();
-      logHelpers.restore();
+      logHelper.restore();
     },
     buildError,
     getDistFiles: (ignoreMap?: boolean) => getDistFiles(distPath, ignoreMap),

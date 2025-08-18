@@ -20,9 +20,7 @@ rspackOnlyTest(
     await gotoPage(page, rsbuild, 'page1');
     await expect(page.locator('#test')).toHaveText('Page 1');
     await rsbuild.expectLog('building src/page1/index.js');
-    expect(
-      rsbuild.logs.some((log) => log.includes('building src/page2/index.js')),
-    ).toBeFalsy();
+    rsbuild.expectNoLog('building src/page2/index.js');
 
     await gotoPage(page, rsbuild, 'page2');
     await expect(page.locator('#test')).toHaveText('Page 2');
@@ -53,9 +51,7 @@ rspackOnlyTest(
     await gotoPage(page, rsbuild, 'page1');
     await expect(page.locator('#test')).toHaveText('Page 1');
     await rsbuild.expectLog('building src/page1/index.js');
-    expect(
-      rsbuild.logs.some((log) => log.includes('building src/page2/index.js')),
-    ).toBeFalsy();
+    rsbuild.expectNoLog('building src/page2/index.js');
 
     await gotoPage(page, rsbuild, 'page2');
     await expect(page.locator('#test')).toHaveText('Page 2');

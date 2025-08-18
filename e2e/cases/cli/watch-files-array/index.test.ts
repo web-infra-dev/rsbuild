@@ -2,15 +2,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { getRandomPort, gotoPage, rspackOnlyTest, runCli } from '@e2e/helper';
 import { expect } from '@playwright/test';
-import { remove } from 'fs-extra';
 
-const distIndex = path.join(__dirname, 'dist/static/js/index.js');
 const tempConfig = path.join(__dirname, 'test-temp-config.ts');
 
 rspackOnlyTest(
   'should restart dev server when extra config file changed',
   async ({ page }) => {
-    await remove(distIndex);
     fs.writeFileSync(tempConfig, 'export default 1;');
 
     const port = await getRandomPort();

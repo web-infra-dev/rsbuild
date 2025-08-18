@@ -1,6 +1,8 @@
 import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
+const COMPILE_WARNING = 'Compile Warning';
+
 rspackOnlyTest('should allow to enable Rspack experiments.css', async () => {
   const rsbuild = await build({
     cwd: __dirname,
@@ -11,9 +13,7 @@ rspackOnlyTest('should allow to enable Rspack experiments.css', async () => {
 
   expect(content).toEqual('body{color:red}');
   // should have no warnings
-  expect(
-    rsbuild.logs.some((log) => log.includes('Compile Warning')),
-  ).toBeFalsy();
+  rsbuild.expectNoLog(COMPILE_WARNING);
 
   await rsbuild.close();
 });
@@ -36,9 +36,7 @@ rspackOnlyTest(
     expect(content).toContain('color:red');
 
     // should have no warnings
-    expect(
-      rsbuild.logs.some((log) => log.includes('Compile Warning')),
-    ).toBeFalsy();
+    rsbuild.expectNoLog(COMPILE_WARNING);
 
     await rsbuild.close();
   },
