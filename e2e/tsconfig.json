@@ -9,7 +9,7 @@
   },
   "include": [
     "src",
-    "scripts",
+    "helper",
     "cases",
     "playwright.config.ts",
     "cases/**/*.test.ts",

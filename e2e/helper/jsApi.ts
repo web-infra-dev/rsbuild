@@ -8,14 +8,8 @@ import type {
 } from '@rsbuild/core';
 import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
 import type { Page } from 'playwright';
-import {
-  getDistFiles,
-  getRandomPort,
-  gotoPage,
-  noop,
-  type ProxyConsoleOptions,
-  proxyConsole,
-} from './helpers';
+import { type ProxyConsoleOptions, proxyConsole } from './logs';
+import { getDistFiles, getRandomPort, gotoPage, noop } from './utils';
 
 export const createRsbuild = async (
   rsbuildOptions: CreateRsbuildOptions & { rsbuildConfig?: RsbuildConfig },
