@@ -15,7 +15,7 @@ rspackOnlyTest(
       files[Object.keys(files).find((file) => file.endsWith('.css'))!];
 
     expect(content).toEqual(
-      '@media (-webkit-min-device-pixel-ratio:2),(min-resolution:2dppx){.item{-webkit-user-select:none;-ms-user-select:none;user-select:none;background:-webkit-linear-gradient(#fff,#000);background:linear-gradient(#fff,#000);-webkit-transition:all .5s;transition:all .5s}}',
+      '@media (-webkit-min-device-pixel-ratio:2),(min-resolution:2dppx){.item{-webkit-user-select:none;-ms-user-select:none;user-select:none;background:-webkit-linear-gradient(#000,#fff);background:linear-gradient(#fff,#000);-webkit-transition:all .5s;transition:all .5s}}',
     );
   },
 );
@@ -43,7 +43,7 @@ rspackOnlyTest(
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    background: -webkit-linear-gradient(#fff, #000);
+    background: -webkit-linear-gradient(top, #fff, #000);
     background: linear-gradient(#fff, #000);
     -webkit-transition: all .5s;
     transition: all .5s;
