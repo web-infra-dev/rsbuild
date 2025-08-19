@@ -38,7 +38,7 @@ rspackOnlyTest(
       'ModifyHTML',
       'AfterEnvironmentCompile',
       'AfterBuild',
-      'OnCloseBuild',
+      'CloseBuild',
     ]);
   },
 );
@@ -75,7 +75,7 @@ rspackOnlyTest(
       'ModifyHTML',
       'AfterEnvironmentCompile',
       'AfterBuild',
-      'OnCloseBuild',
+      'CloseBuild',
     ]);
   },
 );
@@ -106,7 +106,7 @@ rspackOnlyTest(
     expect(hooks.filter((name) => name.includes('DevServer'))).toEqual([
       'BeforeStartDevServer',
       'AfterStartDevServer',
-      'OnCloseDevServer',
+      'CloseDevServer',
     ]);
 
     // compile is async, so the execution order of AfterStartDevServer and the compile hooks is uncertain
@@ -123,8 +123,9 @@ rspackOnlyTest(
       'ModifyHTMLTags',
       'ModifyHTML',
       'AfterEnvironmentCompile',
-      'OnDevCompileDone',
-      'OnCloseDevServer',
+      'AfterDevCompile',
+      'DevCompileDone',
+      'CloseDevServer',
     ]);
 
     process.env.NODE_ENV = 'test';

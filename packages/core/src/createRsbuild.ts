@@ -317,6 +317,7 @@ export async function createRsbuild(
       'onAfterStartProdServer',
       'onCloseDevServer',
       'onBeforeDevCompile',
+      'onAfterDevCompile',
       'onDevCompileDone',
       'onExit',
       'getRsbuildConfig',

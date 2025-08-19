@@ -117,7 +117,7 @@ export async function dev({
 
   const wait = waitFirstCompileDone
     ? new Promise<void>((resolve) => {
-        rsbuild.onDevCompileDone(({ isFirstCompile }) => {
+        rsbuild.onAfterDevCompile(({ isFirstCompile }) => {
           if (!isFirstCompile) {
             return;
           }

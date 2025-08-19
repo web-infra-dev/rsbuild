@@ -22,7 +22,7 @@ async function main() {
     },
   });
 
-  rsbuild.onDevCompileDone(() => {
+  rsbuild.onAfterDevCompile(() => {
     process.exit(0);
   });
 

@@ -15,6 +15,7 @@ import type {
   ModifyWebpackConfigFn,
   OnAfterBuildFn,
   OnAfterCreateCompilerFn,
+  OnAfterDevCompileFn,
   OnAfterEnvironmentCompileFn,
   OnAfterStartDevServerFn,
   OnAfterStartProdServerFn,
@@ -26,7 +27,6 @@ import type {
   OnBeforeStartProdServerFn,
   OnCloseBuildFn,
   OnCloseDevServerFn,
-  OnDevCompileDoneFn,
   OnExitFn,
   Rspack,
 } from './types';
@@ -203,7 +203,7 @@ export function initHooks(): {
   onCloseBuild: AsyncHook<OnCloseBuildFn>;
   onBeforeBuild: AsyncHook<OnBeforeBuildFn>;
   onBeforeDevCompile: AsyncHook<OnBeforeDevCompileFn>;
-  onDevCompileDone: AsyncHook<OnDevCompileDoneFn>;
+  onAfterDevCompile: AsyncHook<OnAfterDevCompileFn>;
   onCloseDevServer: AsyncHook<OnCloseDevServerFn>;
   onAfterStartDevServer: AsyncHook<OnAfterStartDevServerFn>;
   onBeforeStartDevServer: AsyncHook<OnBeforeStartDevServerFn>;
@@ -229,7 +229,7 @@ export function initHooks(): {
     onAfterBuild: createAsyncHook<OnAfterBuildFn>(),
     onBeforeBuild: createAsyncHook<OnBeforeBuildFn>(),
     onBeforeDevCompile: createAsyncHook<OnBeforeDevCompileFn>(),
-    onDevCompileDone: createAsyncHook<OnDevCompileDoneFn>(),
+    onAfterDevCompile: createAsyncHook<OnAfterDevCompileFn>(),
     onCloseDevServer: createAsyncHook<OnCloseDevServerFn>(),
     onAfterStartDevServer: createAsyncHook<OnAfterStartDevServerFn>(),
     onBeforeStartDevServer: createAsyncHook<OnBeforeStartDevServerFn>(),
@@ -500,7 +500,7 @@ export const registerDevHook = ({
     });
 
   const onDone = async (stats: Rspack.Stats | Rspack.MultiStats) => {
-    const p = context.hooks.onDevCompileDone.callBatch({
+    const p = context.hooks.onAfterDevCompile.callBatch({
       isFirstCompile,
       stats,
       environments: context.environments,

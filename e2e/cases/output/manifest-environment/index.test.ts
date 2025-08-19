@@ -93,7 +93,7 @@ test('should allow to access manifest data in environment context after dev buil
         {
           name: 'test',
           setup(api: RsbuildPluginAPI) {
-            api.onDevCompileDone(({ environments }) => {
+            api.onAfterDevCompile(({ environments }) => {
               if (environments.web.manifest) {
                 webManifest = environments.web.manifest;
               }

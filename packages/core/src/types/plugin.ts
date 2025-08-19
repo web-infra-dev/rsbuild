@@ -25,6 +25,7 @@ import type {
   ModifyRsbuildConfigFn,
   OnAfterBuildFn,
   OnAfterCreateCompilerFn,
+  OnAfterDevCompileFn,
   OnAfterEnvironmentCompileFn,
   OnAfterStartDevServerFn,
   OnAfterStartProdServerFn,
@@ -36,7 +37,6 @@ import type {
   OnBeforeStartProdServerFn,
   OnCloseBuildFn,
   OnCloseDevServerFn,
-  OnDevCompileDoneFn,
   OnExitFn,
 } from './hooks';
 import type {
@@ -621,6 +621,11 @@ export type RsbuildPluginAPI = Readonly<{
    */
   onAfterCreateCompiler: PluginHook<OnAfterCreateCompilerFn>;
   /**
+   * Called after each development mode build, you can use `isFirstCompile`
+   * to determine whether it is the first build.
+   */
+  onAfterDevCompile: PluginHook<OnAfterDevCompileFn>;
+  /**
    * A callback function that is triggered after the compilation of a single environment.
    * You can access the build result information via the
    * [stats](https://rspack.rs/api/javascript-api/stats) parameter.
@@ -674,10 +679,11 @@ export type RsbuildPluginAPI = Readonly<{
    */
   onCloseDevServer: PluginHook<OnCloseDevServerFn>;
   /**
-   * Called after each development mode build, you can use `isFirstCompile`
-   * to determine whether it is the first build.
+   * Alias for the `onAfterDevCompile` hook.
+   * @deprecated Use `onAfterDevCompile` instead (added in v1.5.0).
+   * Both hooks have identical functionality.
    */
-  onDevCompileDone: PluginHook<OnDevCompileDoneFn>;
+  onDevCompileDone: PluginHook<OnAfterDevCompileFn>;
   /**
    * Called when the process is going to exit, this hook can only execute
    * synchronous code.

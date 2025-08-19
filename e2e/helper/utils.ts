@@ -238,16 +238,19 @@ export const recordPluginHooks = () => {
         hooks.push('BeforeStartProdServer');
       });
       api.onCloseDevServer(() => {
-        hooks.push('OnCloseDevServer');
+        hooks.push('CloseDevServer');
       });
       api.onAfterStartProdServer(() => {
         hooks.push('AfterStartProdServer');
       });
+      api.onAfterDevCompile(() => {
+        hooks.push('AfterDevCompile');
+      });
       api.onDevCompileDone(() => {
-        hooks.push('OnDevCompileDone');
+        hooks.push('DevCompileDone');
       });
       api.onCloseBuild(() => {
-        hooks.push('OnCloseBuild');
+        hooks.push('CloseBuild');
       });
     },
   };

@@ -170,8 +170,8 @@ export async function createDevServer<
     });
   };
 
-  // should register onDevCompileDone hook before startCompile
-  context.hooks.onDevCompileDone.tap(({ stats }) => {
+  // should register onAfterDevCompile hook before startCompile
+  context.hooks.onAfterDevCompile.tap(({ stats }) => {
     lastStats = 'stats' in stats ? stats.stats : [stats];
     if (waitLastCompileDoneResolve) {
       waitLastCompileDoneResolve();
