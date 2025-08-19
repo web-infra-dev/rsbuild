@@ -3,7 +3,7 @@
 - **类型：**
 
 ```ts
-function OnDevCompileDone(
+function OnAfterDevCompile(
   callback: (params: {
     isFirstCompile: boolean;
     stats: Stats | MultiStats;
@@ -11,3 +11,7 @@ function OnDevCompileDone(
   }) => Promise<void> | void,
 ): void;
 ```
+
+:::tip
+`onAfterDevCompile` 钩子在 Rsbuild v1.5.0 中新增。对于之前的版本，你可以使用功能完全相同的 `onDevCompileDone` 钩子。
+:::

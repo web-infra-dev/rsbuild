@@ -177,7 +177,7 @@ api.onAfterBuild(({ environments }) => {
   console.log(environments.web.manifest);
 });
 
-api.onDevCompileDone(({ environments }) => {
+api.onAfterDevCompile(({ environments }) => {
   console.log(environments.web.manifest);
 });
 
@@ -192,7 +192,7 @@ manifest 数据仅在构建完成后才能被访问，你可以在以下 hooks �
 - [onAfterEnvironmentCompile](/plugins/dev/hooks#onafterenvironmentcompile)
 - [onCloseBuild](/plugins/dev/hooks#onclosebuild)
 - [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)
-- [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone)
+- [onAfterDevCompile](/plugins/dev/hooks#onafterdevcompile)
 - [onExit](/plugins/dev/hooks#onexit)
 
 ### webSocketToken

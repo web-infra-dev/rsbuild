@@ -226,12 +226,12 @@ const myPlugin = () => ({
 });
 ```
 
-For some global plugin hooks (such as [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone), [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver), etc.), Rsbuild supports obtaining the context of all environments through the `environments` parameter.
+For some global plugin hooks (such as [onAfterDevCompile](/plugins/dev/hooks#onafterdevcompile), [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver), etc.), Rsbuild supports obtaining the context of all environments through the `environments` parameter.
 
 ```ts
 const myPlugin = () => ({
   setup(api) {
-    api.onDevCompileDone(({ environments }) => {
+    api.onAfterDevCompile(({ environments }) => {
       environments.forEach((environment) => {
         console.log('environment', environment);
       });
