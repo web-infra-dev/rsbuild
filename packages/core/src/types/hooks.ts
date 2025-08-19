@@ -62,7 +62,7 @@ export type OnAfterBuildFn = (
 
 export type OnCloseDevServerFn = () => MaybePromise<void>;
 
-export type OnDevCompileDoneFn = (params: {
+export type OnAfterDevCompileFn = (params: {
   isFirstCompile: boolean;
   stats: Rspack.Stats | Rspack.MultiStats;
   environments: Record<string, EnvironmentContext>;
@@ -223,7 +223,7 @@ export type EnvironmentContext = {
    * Manifest data. Only available when:
    * - The `output.manifest` config is enabled
    * - The build has completed, accessible in hooks like `onAfterBuild`,
-   * `onDevCompileDone` and `onAfterEnvironmentCompile` or via the environment API
+   * `onAfterDevCompile` and `onAfterEnvironmentCompile` or via the environment API
    */
   manifest?: Record<string, unknown> | ManifestData;
   /**

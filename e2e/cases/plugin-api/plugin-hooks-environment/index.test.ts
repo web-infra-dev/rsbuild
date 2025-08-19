@@ -60,7 +60,7 @@ const createPlugin = () => {
         names.push('BeforeStartProdServer');
       });
       api.onCloseDevServer(() => {
-        names.push('OnCloseDevServer');
+        names.push('CloseDevServer');
       });
       api.onAfterStartProdServer(() => {
         names.push('AfterStartProdServer');
@@ -68,8 +68,11 @@ const createPlugin = () => {
       api.onBeforeDevCompile(() => {
         names.push('BeforeDevCompile');
       });
+      api.onAfterDevCompile(() => {
+        names.push('AfterDevCompile');
+      });
       api.onDevCompileDone(() => {
-        names.push('OnDevCompileDone');
+        names.push('DevCompileDone');
       });
     },
   };
@@ -176,7 +179,7 @@ rspackOnlyTest(
     expect(names.filter((name) => name.includes('DevServer'))).toEqual([
       'BeforeStartDevServer',
       'AfterStartDevServer',
-      'OnCloseDevServer',
+      'CloseDevServer',
     ]);
 
     // compile is async, so the execution order of AfterStartDevServer and the compile hooks is uncertain
@@ -197,8 +200,9 @@ rspackOnlyTest(
       'ModifyHTMLTags web',
       'ModifyHTML web',
       'AfterEnvironmentCompile web',
-      'OnDevCompileDone',
-      'OnCloseDevServer',
+      'AfterDevCompile',
+      'DevCompileDone',
+      'CloseDevServer',
     ]);
 
     expect(
@@ -218,8 +222,9 @@ rspackOnlyTest(
       'ModifyHTMLTags node',
       'ModifyHTML node',
       'AfterEnvironmentCompile node',
-      'OnDevCompileDone',
-      'OnCloseDevServer',
+      'AfterDevCompile',
+      'DevCompileDone',
+      'CloseDevServer',
     ]);
 
     process.env.NODE_ENV = 'test';
