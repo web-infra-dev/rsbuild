@@ -21,7 +21,7 @@ const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
 /**
  * The `@babel/preset-typescript` default options.
  */
-export const DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS = {
+const DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS = {
   allowNamespaces: true,
   allExtensions: true,
   allowDeclareFields: true,

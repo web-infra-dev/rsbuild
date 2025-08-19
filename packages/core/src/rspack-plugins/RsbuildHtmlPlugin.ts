@@ -71,7 +71,7 @@ const HEAD_TAGS = [
   'template',
 ];
 
-export const FILE_ATTRS = {
+const FILE_ATTRS = {
   link: 'href',
   script: 'src',
 };
