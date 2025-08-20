@@ -308,6 +308,7 @@ export async function createRsbuild(
       'context',
       'getRsbuildConfig',
       'getNormalizedConfig',
+      'modifyEnvironmentConfig',
       'modifyRsbuildConfig',
       'onCloseBuild',
       'onBeforeBuild',
