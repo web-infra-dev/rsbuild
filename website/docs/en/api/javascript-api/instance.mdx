@@ -168,7 +168,7 @@ The bundler type of current build.
 type bundlerType = 'rspack' | 'webpack';
 ```
 
-> Rsbuild internally supports switching to webpack for comparative testing, so this field is provided for differentiation. Usually, you do not need to use this field.
+> Rsbuild internally supports switching to Webpack for comparative testing, so this field is provided for differentiation. Usually, you do not need to use this field.
 
 ## rsbuild.build
 
@@ -651,7 +651,7 @@ rsbuild.isPluginExists(pluginFoo.name, {
 
 Initialize and return the internal Rspack configurations used by Rsbuild. This method processes all plugins and configurations to generate the final Rspack configs.
 
-> Note: You typically don't need to call this method directly since it's automatically invoked by methods like [rsbuild.build](#rsbuildbuild) and [rsbuild.startDevServer](#rsbuildstartdevserver).
+> Note: You typically do not need to call this method directly since it is automatically invoked by methods like [rsbuild.build](#rsbuildbuild) and [rsbuild.startDevServer](#rsbuildstartdevserver).
 
 - **Type:**
 
