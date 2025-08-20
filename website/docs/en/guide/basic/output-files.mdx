@@ -1,12 +1,12 @@
 # Output files
 
-This chapter will introduces the directory structure of output files and how to control the output directory of different types of files.
+This chapter introduces the directory structure of output files and how to control the output directory of different types of files.
 
 If you want to know how to deploy the build outputs of Rsbuild as a static site, please refer to [Deploy Static Site](/guide/basic/static-deploy).
 
 ## Default directory structure
 
-The following is a basic directory for output files. By default, the compiled files will be output in the `dist` directory of current project.
+The following shows the basic directory structure for output files. By default, the compiled files will be output in the `dist` directory of the current project.
 
 ```bash
 dist
@@ -26,19 +26,19 @@ dist
 The most common output files are HTML files, JS files, and CSS files:
 
 - HTML files: default output to the root of dist directory.
-- JS files: default output to `static/js` directory,
+- JS files: default output to `static/js` directory.
 - CSS files: default output to the `static/css` directory.
 
 In addition, JS files and CSS files sometimes generate some related files:
 
-- License files: contains open source license, which is output to the same level directory of the JS file, and adds `.LICENSE.txt` suffix.
-- Source Map files: contains the source code mappings, which is output to the same level directory of JS files and CSS files, and adds a `.map` suffix.
+- License files: contain open source licenses, which are output to the same level directory as the JS file, and add `.LICENSE.txt` suffix.
+- Source Map files: contain the source code mappings, which are output to the same level directory as JS files and CSS files, and add a `.map` suffix.
 
 In the filename, `[name]` represents the entry name corresponding to this file, such as `index`, `main`. `[hash]` is the hash value generated based on the content of the file.
 
 ## Development mode output
 
-In development mode, Rsbuild stores the build outputs in memory on the dev server by default, rather than writing then to disk. This can reduce the overhead of fs operations. You can refer to [View Static Assets](/guide/basic/server#view-static-assets) to view all static assets generated in the current build.
+In development mode, Rsbuild stores the build outputs in memory on the dev server by default, rather than writing them to disk. This can reduce the overhead of fs operations. You can refer to [View Static Assets](/guide/basic/server#view-static-assets) to view all static assets generated in the current build.
 
 You can choose to write the output files to disk, which is typically used for inspecting the contents of the build artifacts or configuring proxy rules for static assets.
 
@@ -57,7 +57,7 @@ export default {
 Rsbuild provides some configs to modify the directory or filename, you can:
 
 - Modify the filename through [output.filename](/config/output/filename).
-- Modify the output path of through [output.distPath](/config/output/dist-path).
+- Modify the output path through [output.distPath](/config/output/dist-path).
 - Modify the license file through [output.legalComments](/config/output/legal-comments).
 - Modify Source Map file through [output.sourceMap](/config/output/source-map).
 - Modify the output structure of the HTML files through [html.outputStructure](/config/html/output-structure).
@@ -82,7 +82,7 @@ dist
         └── qux.[hash].mp4
 ```
 
-You can use the [output.distPath](/config/output/dist-path) config to uniformly input these static assets into a directory, for example, output to the `assets` directory:
+You can use the [output.distPath](/config/output/dist-path) config to uniformly output these static assets into a directory, for example, output to the `assets` directory:
 
 ```ts
 export default {
