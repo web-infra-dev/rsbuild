@@ -176,7 +176,7 @@ api.onAfterBuild(({ environments }) => {
   console.log(environments.web.manifest);
 });
 
-api.onDevCompileDone(({ environments }) => {
+api.onAfterDevCompile(({ environments }) => {
   console.log(environments.web.manifest);
 });
 
@@ -191,7 +191,7 @@ The manifest data is only available after the build has completed, you can acces
 - [onAfterEnvironmentCompile](/plugins/dev/hooks#onafterenvironmentcompile)
 - [onCloseBuild](/plugins/dev/hooks#onclosebuild)
 - [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)
-- [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone)
+- [onAfterDevCompile](/plugins/dev/hooks#onafterdevcompile)
 - [onExit](/plugins/dev/hooks#onexit)
 
 ### webSocketToken

@@ -3,7 +3,7 @@ Called after each development mode build, you can use `isFirstCompile` to determ
 - **Type:**
 
 ```ts
-function OnDevCompileDone(
+function OnAfterDevCompile(
   callback: (params: {
     isFirstCompile: boolean;
     stats: Stats | MultiStats;
@@ -11,3 +11,7 @@ function OnDevCompileDone(
   }) => Promise<void> | void,
 ): void;
 ```
+
+:::tip
+The `onAfterDevCompile` hook was added in Rsbuild v1.5.0. For earlier versions, you can use the functionally identical `onDevCompileDone` hook.
+:::

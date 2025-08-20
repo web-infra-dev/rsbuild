@@ -960,18 +960,18 @@ rsbuild.onBeforeDevCompile(({ bundlerConfigs }) => {
 });
 ```
 
-## rsbuild.onDevCompileDone
+## rsbuild.onAfterDevCompile
 
-> Provides the same functionality as the [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone) plugin hook.
+> Provides the same functionality as the [onAfterDevCompile](/plugins/dev/hooks#onafterdevcompile) plugin hook.
 
-import OnDevCompileDone from '@en/shared/onDevCompileDone.mdx';
+import OnAfterDevCompile from '@en/shared/onAfterDevCompile.mdx';
 
-<OnDevCompileDone />
+<OnAfterDevCompile />
 
 - **Example:**
 
 ```ts
-rsbuild.onDevCompileDone(({ isFirstCompile }) => {
+rsbuild.onAfterDevCompile(({ isFirstCompile }) => {
   if (isFirstCompile) {
     console.log('first compile!');
   } else {
