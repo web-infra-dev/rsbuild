@@ -1029,3 +1029,17 @@ rsbuild.onBeforeBuild(() => {
   console.log(config.html.title);
 });
 ```
+
+## rsbuild.modifyRsbuildConfig
+
+> Provides the same functionality as the [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) plugin API.
+
+- **Version：** Added in v1.5.0
+- **Example：**
+
+```ts
+rsbuild.modifyRsbuildConfig((config) => {
+  config.html ||= {};
+  config.html.title = 'My Default Title';
+});
+```
