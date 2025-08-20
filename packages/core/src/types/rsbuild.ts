@@ -318,6 +318,7 @@ export type RsbuildInstance = {
   | 'getNormalizedConfig'
   | 'getRsbuildConfig'
   | 'isPluginExists'
+  | 'modifyRsbuildConfig'
   | 'onAfterBuild'
   | 'onAfterCreateCompiler'
   | 'onAfterStartDevServer'

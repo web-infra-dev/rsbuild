@@ -1051,3 +1051,17 @@ rsbuild.onBeforeBuild(() => {
   console.log(config.html.title);
 });
 ```
+
+## rsbuild.modifyRsbuildConfig
+
+> 功能与 [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) 插件 API 一致。
+
+- **版本：** 添加于 v1.5.0
+- **示例：**
+
+```ts
+rsbuild.modifyRsbuildConfig((config) => {
+  config.html ||= {};
+  config.html.title = 'My Default Title';
+});
+```

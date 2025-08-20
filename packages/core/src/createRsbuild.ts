@@ -291,7 +291,7 @@ export async function createRsbuild(
     return providerInstance.inspectConfig(...args);
   };
 
-  const rsbuild = {
+  const rsbuild: RsbuildInstance = {
     build,
     preview,
     startDevServer,
@@ -306,6 +306,9 @@ export async function createRsbuild(
     ]),
     ...pick(globalPluginAPI, [
       'context',
+      'getRsbuildConfig',
+      'getNormalizedConfig',
+      'modifyRsbuildConfig',
       'onCloseBuild',
       'onBeforeBuild',
       'onBeforeCreateCompiler',
@@ -320,8 +323,6 @@ export async function createRsbuild(
       'onAfterDevCompile',
       'onDevCompileDone',
       'onExit',
-      'getRsbuildConfig',
-      'getNormalizedConfig',
     ]),
     ...pick(providerInstance, ['initConfigs']),
   };
