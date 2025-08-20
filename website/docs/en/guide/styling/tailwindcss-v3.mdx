@@ -133,7 +133,7 @@ When using Tailwind CSS, if the `content` field in `tailwind.config.js` is not c
 
 Therefore, we recommend that you specify the paths to be scanned accurately to avoid unnecessary performance overhead. For example, only include HTML or JS files in the project source code that actually contain Tailwind class names, and avoid including irrelevant files or directories, especially the `node_modules` directory.
 
-Here is an bad example of scanning the `node_modules`:
+Here is a bad example of scanning the `node_modules`:
 
 ```js title="tailwind.config.js"
 /** @type {import('tailwindcss').Config} */

@@ -100,7 +100,7 @@ When `target` is set to `'web-worker'`, Rsbuild will:
 - Set Rspack's [target](https://rspack.rs/config/target) to `'webworker'`.
 - No HTML files will be generated, and HTML-related logic will not be executed, since HTML is not required by the Web Worker environment.
 - CSS code will not be bundled or extracted, but the id information of CSS Modules will be included in the bundle (the default value of [output.emitCss](/config/output/emit-css) is `false`).
-- The default code split strategy will be disabled, and **dynamic import can not work**, because the Web Worker only runs a single JavaScript file.
+- The default code split strategy will be disabled, and **dynamic import cannot work**, because the Web Worker only runs a single JavaScript file.
 - Set the default value of [output.emitCss](/config/output/emit-css) to `false`. This means that CSS code will not be extracted to separate files, but the id information of CSS Modules will be included in the bundle.
 - Disable the HMR.
 
