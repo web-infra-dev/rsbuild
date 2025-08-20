@@ -492,13 +492,6 @@ importers:
         version: link:../../packages/plugin-vue
 
   examples/webpack:
-    dependencies:
-      react:
-        specifier: ^19.1.1
-        version: 19.1.1
-      react-dom:
-        specifier: ^19.1.1
-        version: 19.1.1(react@19.1.1)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*

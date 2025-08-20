@@ -7,9 +7,7 @@ import { isWildcardHost } from './helper';
  * Returns the resolved address if there's a difference, undefined otherwise.
  * This helps detect cases where IPv4/IPv6 resolution might vary.
  */
-export async function getLocalhostResolvedAddress(): Promise<
-  string | undefined
-> {
+async function getLocalhostResolvedAddress(): Promise<string | undefined> {
   const { promises: dns } = await import('node:dns');
   const [defaultLookup, explicitLookup] = await Promise.all([
     dns.lookup('localhost'),

@@ -20,7 +20,7 @@ import type {
 
 const require = createRequire(import.meta.url);
 
-export function applySwcDecoratorConfig(
+function applySwcDecoratorConfig(
   swcConfig: Rspack.SwcLoaderOptions,
   config: NormalizedEnvironmentConfig,
 ): void {

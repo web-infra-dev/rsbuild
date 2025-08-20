@@ -5,7 +5,7 @@ import { color } from '../../helpers';
 import { EsmRunner } from './esm';
 import type { Runner, RunnerFactory, RunnerFactoryOptions } from './type';
 
-export class BasicRunnerFactory implements RunnerFactory {
+class BasicRunnerFactory implements RunnerFactory {
   constructor(protected name: string) {}
 
   create(options: RunnerFactoryOptions): Runner {
