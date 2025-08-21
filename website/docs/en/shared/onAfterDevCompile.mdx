@@ -3,7 +3,7 @@ Called after each development mode build, you can use `isFirstCompile` to determ
 - **Type:**
 
 ```ts
-function OnDevCompileDone(
+function OnAfterDevCompile(
   callback: (params: {
     isFirstCompile: boolean;
     stats: Stats | MultiStats;

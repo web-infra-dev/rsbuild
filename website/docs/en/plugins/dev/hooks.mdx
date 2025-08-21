@@ -25,7 +25,7 @@ Called only when running the `rsbuild dev` command or the `rsbuild.startDevServe
 - [onBeforeStartDevServer](#onbeforestartdevserver): Called before starting the dev server.
 - [onAfterStartDevServer](#onafterstartdevserver): Called after starting the dev server.
 - [onBeforeDevCompile](#onbeforedevcompile): Called before each build in development mode.
-- [onDevCompileDone](#ondevcompiledone): Called after each build in development mode.
+- [onAfterDevCompile](#onafterdevcompile): Called after each build in development mode.
 
 Called only when Rsbuild is restarted or when the [close()](/api/javascript-api/instance#close-server) method of `rsbuild.startDevServer()` is executed.
 
@@ -68,7 +68,7 @@ When the `rsbuild dev` command or `rsbuild.startDevServer()` method is executed,
 - [modifyHTMLTags](#modifyhtmltags)
 - [modifyHTML](#modifyhtml)
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile)
-- [onDevCompileDone](#ondevcompiledone)
+- [onAfterDevCompile](#onafterdevcompile)
 - [onCloseDevServer](#onclosedevserver)
 - [onExit](#onexit)
 
@@ -79,7 +79,7 @@ When rebuilding, the following hooks will be triggered again:
 - [modifyHTMLTags](#modifyhtmltags)
 - [modifyHTML](#modifyhtml)
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile)
-- [onDevCompileDone](#ondevcompiledone)
+- [onAfterDevCompile](#onafterdevcompile)
 
 ### Build hooks
 
@@ -136,7 +136,7 @@ Correspondingly, there are some plugin hooks that are related to the current env
 - [onAfterCreateCompiler](#onaftercreatecompiler)
 - [onAfterStartDevServer](#onafterstartdevserver)
 - [onBeforeDevCompile](#onbeforedevcompile)
-- [onDevCompileDone](#ondevcompiledone)
+- [onAfterDevCompile](#onafterdevcompile)
 - [onCloseDevServer](#onclosedevserver)
 - [onBeforeBuild](#onbeforebuild)
 - [onAfterBuild](#onafterbuild)
@@ -891,18 +891,19 @@ const myPlugin = () => ({
 });
 ```
 
-### onDevCompileDone
+### onAfterDevCompile
 
-import OnDevCompileDone from '@en/shared/onDevCompileDone.mdx';
+import OnAfterDevCompile from '@en/shared/onAfterDevCompile.mdx';
 
-<OnDevCompileDone />
+<OnAfterDevCompile />
 
+- **Version:** Added in v1.5.0
 - **Example:**
 
 ```ts
 const myPlugin = () => ({
   setup(api) {
-    api.onDevCompileDone(({ isFirstCompile }) => {
+    api.onAfterDevCompile(({ isFirstCompile }) => {
       if (isFirstCompile) {
         console.log('first compile!');
       } else {
@@ -912,6 +913,10 @@ const myPlugin = () => ({
   },
 });
 ```
+
+### onDevCompileDone
+
+Deprecated. This hook has the same functionality as [onAfterDevCompile](#onafterdevcompile). Please consider using `onAfterDevCompile` instead (added in v1.5.0).
 
 ### onCloseDevServer
 

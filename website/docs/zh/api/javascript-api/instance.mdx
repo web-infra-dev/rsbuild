@@ -982,18 +982,19 @@ rsbuild.onBeforeDevCompile(({ bundlerConfigs }) => {
 });
 ```
 
-## rsbuild.onDevCompileDone
+## rsbuild.onAfterDevCompile
 
-> 功能与 [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone) 插件 hook 一致。
+> 功能与 [onAfterDevCompile](/plugins/dev/hooks#onafterdevcompile) 插件 hook 一致。
 
-import OnDevCompileDone from '@zh/shared/onDevCompileDone.mdx';
+import OnAfterDevCompile from '@zh/shared/onAfterDevCompile.mdx';
 
-<OnDevCompileDone />
+<OnAfterDevCompile />
 
+- **版本：** 新增于 v1.5.0
 - **示例：**
 
 ```ts
-rsbuild.onDevCompileDone(({ isFirstCompile }) => {
+rsbuild.onAfterDevCompile(({ isFirstCompile }) => {
   if (isFirstCompile) {
     console.log('first compile!');
   } else {
@@ -1001,6 +1002,10 @@ rsbuild.onDevCompileDone(({ isFirstCompile }) => {
   }
 });
 ```
+
+## rsbuild.onDevCompileDone
+
+已废弃。与 [onAfterDevCompile](#onafterdevcompile) 功能完全一致，请优先考虑使用 `onAfterDevCompile` 代替（在 v1.5.0 中添加）。
 
 ## rsbuild.onExit
 
