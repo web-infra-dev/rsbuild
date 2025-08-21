@@ -315,6 +315,7 @@ export type RsbuildInstance = {
 } & Pick<
   RsbuildPluginAPI,
   | 'context'
+  | 'expose'
   | 'getNormalizedConfig'
   | 'getRsbuildConfig'
   | 'isPluginExists'
@@ -322,16 +323,16 @@ export type RsbuildInstance = {
   | 'modifyRsbuildConfig'
   | 'onAfterBuild'
   | 'onAfterCreateCompiler'
+  | 'onAfterDevCompile'
   | 'onAfterStartDevServer'
   | 'onAfterStartProdServer'
   | 'onBeforeBuild'
   | 'onBeforeCreateCompiler'
+  | 'onBeforeDevCompile'
   | 'onBeforeStartDevServer'
   | 'onBeforeStartProdServer'
   | 'onCloseBuild'
   | 'onCloseDevServer'
-  | 'onBeforeDevCompile'
-  | 'onAfterDevCompile'
   | 'onDevCompileDone'
   | 'onExit'
 >;

@@ -1030,6 +1030,20 @@ rsbuild.onBeforeBuild(() => {
 });
 ```
 
+## rsbuild.expose
+
+> Provides the same functionality as the [expose](/plugins/dev/core#apiexpose) plugin API.
+
+- **Version:** Added in v1.5.0
+- **Example:**
+
+```ts
+rsbuild.expose('my-id', {
+  value: 1,
+  double: (val: number) => val * 2,
+});
+```
+
 ## rsbuild.modifyRsbuildConfig
 
 > Provides the same functionality as the [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) plugin API.
