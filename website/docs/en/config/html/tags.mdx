@@ -207,6 +207,20 @@ Controls whether to insert the tag after existing tags.
 - `true`: Insert after existing tags
 - `false`: Insert before existing tags
 
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    tags: [
+      {
+        tag: 'script',
+        attrs: { src: 'https://example.com/script.js' },
+        append: false,
+      },
+    ],
+  },
+};
+```
+
 See [Injection position](#injection-position) for more details.
 
 ### head
@@ -218,6 +232,20 @@ Specifies whether to inject the tag into the HTML `<head>` element.
 
 - `true`: Inject into `<head>`
 - `false`: Inject into `<body>`
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    tags: [
+      {
+        tag: 'script',
+        attrs: { src: 'https://example.com/script.js' },
+        head: false,
+      },
+    ],
+  },
+};
+```
 
 For elements allowed in the `<head>`, the default is `true`; for other elements, the default is `false`.
 

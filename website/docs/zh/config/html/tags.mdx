@@ -207,6 +207,20 @@ export default {
 - `true`：在现有标签之后插入
 - `false`：在现有标签之前插入
 
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    tags: [
+      {
+        tag: 'script',
+        attrs: { src: 'https://example.com/script.js' },
+        append: false,
+      },
+    ],
+  },
+};
+```
+
 查看 [插入位置](#插入位置) 了解更多。
 
 ### head
@@ -218,6 +232,20 @@ export default {
 
 - `true`：注入到 `<head>` 中
 - `false`：注入到 `<body>` 中
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    tags: [
+      {
+        tag: 'script',
+        attrs: { src: 'https://example.com/script.js' },
+        head: false,
+      },
+    ],
+  },
+};
+```
 
 对于允许包含在 `<head>` 中的元素，默认值为 `true`；其他元素默认值为 `false`。
 
