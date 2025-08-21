@@ -1052,6 +1052,20 @@ rsbuild.onBeforeBuild(() => {
 });
 ```
 
+## rsbuild.expose
+
+> 功能与 [expose](/plugins/dev/core#apiexpose) 插件 API 一致。
+
+- **版本：** 添加于 v1.5.0
+- **示例：**
+
+```ts
+rsbuild.expose('my-id', {
+  value: 1,
+  double: (val: number) => val * 2,
+});
+```
+
 ## rsbuild.modifyRsbuildConfig
 
 > 功能与 [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) 插件 API 一致。
