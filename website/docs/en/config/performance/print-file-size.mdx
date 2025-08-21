@@ -73,6 +73,10 @@ export default {
 };
 ```
 
+:::tip
+If the current build only generates one static asset, the total size will not be printed.
+:::
+
 When set to a function, you can customize the total size output format:
 
 ```ts
@@ -92,10 +96,6 @@ Function parameters:
 - `assets`: Array of static assets, each containing `name` and `size` properties
 - `totalSize`: Total size of all static assets in bytes
 - `totalGzipSize`: Total gzip-compressed size of all static assets in bytes
-
-:::tip
-If the current build only generates one static asset, the total size will not be printed.
-:::
 
 ### detail
 
