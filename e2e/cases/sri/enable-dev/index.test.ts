@@ -10,6 +10,7 @@ rspackOnlyTest(
     });
 
     const testEl = page.locator('#root');
+    await page.waitForFunction('window.a', undefined, { timeout: 1000 });
     await expect(testEl).toHaveText('Hello Rsbuild!');
 
     expect(

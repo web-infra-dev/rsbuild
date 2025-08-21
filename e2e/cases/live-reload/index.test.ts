@@ -51,6 +51,9 @@ rspackOnlyTest(
       rsbuildConfig: {
         dev: {
           liveReload: false,
+          // in this test, we disable hmr and liveReload,
+          // but lazyCompilation dependent hmr or liveReload to load lazy js bundle
+          lazyCompilation: false,
         },
       },
     });

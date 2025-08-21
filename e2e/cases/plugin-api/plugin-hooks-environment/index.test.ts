@@ -170,6 +170,8 @@ rspackOnlyTest(
 
     await gotoPage(page, result);
 
+    await page.waitForFunction('window.a', undefined, { timeout: 1000 });
+
     await result.server.close();
 
     expect(names.filter((name) => name.includes(' web')).length).toBe(
@@ -202,6 +204,13 @@ rspackOnlyTest(
       'AfterEnvironmentCompile web',
       'AfterDevCompile',
       'DevCompileDone',
+      'BeforeDevCompile',
+      'BeforeEnvironmentCompile web',
+      'ModifyHTMLTags web',
+      'ModifyHTML web',
+      'AfterEnvironmentCompile web',
+      'AfterDevCompile',
+      'DevCompileDone',
       'CloseDevServer',
     ]);
 
@@ -217,6 +226,13 @@ rspackOnlyTest(
       'ModifyBundlerConfig node',
       'BeforeCreateCompiler',
       'AfterCreateCompiler',
+      'BeforeDevCompile',
+      'BeforeEnvironmentCompile node',
+      'ModifyHTMLTags node',
+      'ModifyHTML node',
+      'AfterEnvironmentCompile node',
+      'AfterDevCompile',
+      'DevCompileDone',
       'BeforeDevCompile',
       'BeforeEnvironmentCompile node',
       'ModifyHTMLTags node',

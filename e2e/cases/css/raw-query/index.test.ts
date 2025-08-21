@@ -10,6 +10,13 @@ test('should allow to import raw CSS files in development mode', async ({
     cwd: __dirname,
     page,
   });
+
+  await page.waitForFunction(
+    'window.bStyles && window.aRaw && window.bRaw',
+    undefined,
+    { timeout: 1000 },
+  );
+
   const bStyles: Record<string, string> = await page.evaluate('window.bStyles');
 
   expect(await page.evaluate('window.aRaw')).toBe(

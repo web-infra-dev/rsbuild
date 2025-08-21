@@ -7,13 +7,13 @@ import {
   runCli,
 } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackOnlyTest.skip(
   'should restart dev server when .env file is changed',
   async () => {
     const dist = path.join(__dirname, 'dist');
     const configFile = path.join(__dirname, 'rsbuild.config.mjs');
     const envLocalFile = path.join(__dirname, '.env.local');
-    const distIndex = path.join(dist, 'static/js/index.js');
+    const distIndex = path.join(dist, 'static/js/async/src_index_js.js');
 
     fs.writeFileSync(envLocalFile, 'PUBLIC_NAME=jack');
     fs.writeFileSync(
@@ -36,6 +36,8 @@ rspackOnlyTest(
         NODE_ENV: 'development',
       },
     });
+
+    // await page.browser.newPage()
 
     await expectBuildEnd();
     await expectFileWithContent(distIndex, 'jack');

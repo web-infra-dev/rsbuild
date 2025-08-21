@@ -33,8 +33,13 @@ rspackOnlyTest(
       },
     });
 
+    await page.waitForRequest(/\.css/, { timeout: 1000 });
+
     const content = await readFile(
-      join(rsbuild.instance.context.distPath, 'static/css/index.css'),
+      join(
+        rsbuild.instance.context.distPath,
+        'static/css/async/src_index_js.css',
+      ),
       'utf-8',
     );
     expect(content).toContain(
