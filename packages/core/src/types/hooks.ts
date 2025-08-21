@@ -68,6 +68,11 @@ export type OnAfterDevCompileFn = (params: {
   environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;
 
+/**
+ * @deprecated Use `OnAfterDevCompileFn` instead.
+ */
+export type OnDevCompileDoneFn = OnAfterDevCompileFn;
+
 export type OnBeforeStartDevServerFn = (params: {
   /**
    * The dev server instance, the same as the return value of `createDevServer`.
