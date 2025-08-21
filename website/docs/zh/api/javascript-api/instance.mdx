@@ -1065,3 +1065,19 @@ rsbuild.modifyRsbuildConfig((config) => {
   config.html.title = 'My Default Title';
 });
 ```
+
+## rsbuild.modifyEnvironmentConfig
+
+> 功能与 [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig) 插件 API 一致。
+
+- **版本：** 添加于 v1.5.0
+- **示例：**
+
+```ts
+rsbuild.modifyEnvironmentConfig((config, { name }) => {
+  if (name !== 'web') {
+    return config;
+  }
+  config.html.title = 'My Default Title';
+});
+```
