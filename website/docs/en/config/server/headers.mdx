@@ -15,7 +15,9 @@ If both `server.headers` and `server.cors` are used, `server.headers` will overr
 
 :::
 
-## Usage
+## Examples
+
+### Basic custom headers
 
 The `server.headers` option accepts an object where:
 
@@ -32,9 +34,46 @@ export default {
 };
 ```
 
-## Multiple values
+### Security headers
 
-Use an array of strings to send multiple headers with the same name.
+Add common security headers to protect your application:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    headers: {
+      'X-Content-Type-Options': 'nosniff',
+      'X-Frame-Options': 'DENY',
+      'X-XSS-Protection': '1; mode=block',
+      'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+      'Referrer-Policy': 'strict-origin-when-cross-origin',
+    },
+  },
+};
+```
+
+### Content Security Policy
+
+Configure CSP headers for enhanced security:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    headers: {
+      'Content-Security-Policy': [
+        "default-src 'self'",
+        "script-src 'self' 'unsafe-inline'",
+        "style-src 'self' 'unsafe-inline'",
+        "img-src 'self' data: https:",
+      ].join('; '),
+    },
+  },
+};
+```
+
+### Multiple values for the same header
+
+Use an array of strings to send multiple headers with the same name:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -46,3 +85,163 @@ export default {
   },
 };
 ```
+
+### API development headers
+
+Useful headers for API development and debugging:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    headers: {
+      'X-API-Version': '1.0',
+      'X-Request-ID': 'dev-request',
+      'X-Response-Time': '100ms',
+      'X-Environment': 'development',
+    },
+  },
+};
+```
+
+### Cache control headers
+
+Configure caching behavior for development:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    headers: {
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      Pragma: 'no-cache',
+      Expires: '0',
+    },
+  },
+};
+```
+
+### Environment-specific headers
+
+Different headers for different environments:
+
+```ts title="rsbuild.config.ts"
+const isDev = process.env.NODE_ENV === 'development';
+
+export default {
+  server: {
+    headers: {
+      'X-Environment': isDev ? 'development' : 'production',
+      ...(isDev && {
+        'X-Debug': 'true',
+        'Access-Control-Allow-Headers': '*',
+      }),
+    },
+  },
+};
+```
+
+### Custom MIME types
+
+Override or add MIME types for specific file extensions:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    headers: {
+      // This will be applied to all responses
+      // For file-specific MIME types, use server.historyApiFallback or middleware
+    },
+  },
+};
+```
+
+### Headers with dynamic values
+
+Generate headers with dynamic content:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    headers: {
+      'X-Build-Time': new Date().toISOString(),
+      'X-Version': process.env.npm_package_version || '1.0.0',
+      'X-Node-Version': process.version,
+    },
+  },
+};
+```
+
+### CORS alternative
+
+While `server.cors` is recommended for CORS, you can also set CORS headers manually:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      'Access-Control-Max-Age': '86400',
+    },
+  },
+};
+```
+
+## Common use cases
+
+### Feature flags via headers
+
+Pass feature flags to the frontend via custom headers:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    headers: {
+      'X-Feature-New-UI': process.env.ENABLE_NEW_UI || 'false',
+      'X-Feature-Beta': process.env.ENABLE_BETA_FEATURES || 'false',
+    },
+  },
+};
+```
+
+### Development debugging
+
+Headers to help with development and debugging:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    headers: {
+      'X-Powered-By': 'Rsbuild',
+      'X-Dev-Mode': 'true',
+      'X-HMR-Enabled': 'true',
+      Server: 'Rsbuild Development Server',
+    },
+  },
+};
+```
+
+### Microservice identification
+
+When running multiple services, identify each service:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    headers: {
+      'X-Service-Name': 'frontend-app',
+      'X-Service-Version': '2.1.0',
+      'X-Service-Instance': process.env.INSTANCE_ID || 'local',
+    },
+  },
+};
+```
+
+## Notes
+
+- Headers are applied to all responses from the development server
+- Header names are case-insensitive according to HTTP specification
+- If both `server.headers` and `server.cors` are configured, `server.headers` takes precedence
+- Headers only affect the development and preview servers, not production builds
+- Use [html.meta](/config/html/meta) for meta tags in HTML documents
+- For conditional headers based on request path, consider using [server.setupMiddlewares](/config/server/setup-middlewares)

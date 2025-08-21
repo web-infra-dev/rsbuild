@@ -31,13 +31,13 @@ HTTPS:
 Rsbuild enables HTTP/2 server by default. However, when you use [server.proxy](/config/server/proxy), the server will downgrade to HTTP/1, because the underlying [http-proxy](https://www.npmjs.com/package/http-proxy) does not support HTTP/2.
 :::
 
-## Set certificate
+## Examples
+
+### Basic HTTPS with custom certificates
 
 You can manually pass in the certificate and the private key required in the `server.https` option. This parameter will be directly passed to the `createServer` method of the https module in Node.js.
 
-For details, please refer to [https.createServer](https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener).
-
-```ts
+```ts title="rsbuild.config.ts"
 import fs from 'node:fs';
 
 export default {
@@ -50,18 +50,226 @@ export default {
 };
 ```
 
-:::tip
-The certificates used for local development are typically generated using [mkcert](https://github.com/FiloSottile/mkcert). Please read ["How to use HTTPS for local development"](https://web.dev/articles/how-to-use-local-https?hl=en) to learn how to use it.
-:::
+For details, please refer to [https.createServer](https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener).
 
-## Self-signed Certificate
+### Self-signed certificate with plugin
 
 For basic configuration requirements, you can add the [@rsbuild/plugin-basic-ssl](https://github.com/rspack-contrib/rsbuild-plugin-basic-ssl) plugin, which will automatically create a self-signed certificate and set `server.https` option by default.
 
-```ts
+```ts title="rsbuild.config.ts"
 import { pluginBasicSsl } from '@rsbuild/plugin-basic-ssl';
 
 export default {
   plugins: [pluginBasicSsl()],
 };
 ```
+
+### Complete HTTPS configuration
+
+Configure HTTPS with additional options:
+
+```ts title="rsbuild.config.ts"
+import fs from 'node:fs';
+
+export default {
+  server: {
+    https: {
+      key: fs.readFileSync('path/to/private-key.pem'),
+      cert: fs.readFileSync('path/to/certificate.pem'),
+      ca: fs.readFileSync('path/to/ca-certificate.pem'), // Optional: Certificate Authority
+      passphrase: 'your-passphrase', // If private key is encrypted
+      requestCert: true, // Request client certificate
+      rejectUnauthorized: false, // Allow self-signed certificates
+    },
+  },
+};
+```
+
+### Development vs production certificates
+
+Different certificate configurations for different environments:
+
+```ts title="rsbuild.config.ts"
+import fs from 'node:fs';
+
+const isDev = process.env.NODE_ENV === 'development';
+
+export default {
+  server: {
+    https: isDev
+      ? {
+          // Development: self-signed certificates
+          key: fs.readFileSync('dev-certificates/localhost-key.pem'),
+          cert: fs.readFileSync('dev-certificates/localhost.pem'),
+        }
+      : {
+          // Production: proper CA-signed certificates
+          key: fs.readFileSync('prod-certificates/private.key'),
+          cert: fs.readFileSync('prod-certificates/certificate.crt'),
+          ca: fs.readFileSync('prod-certificates/ca-bundle.crt'),
+        },
+  },
+};
+```
+
+### HTTP/2 with push streams
+
+Configure HTTP/2 specific options:
+
+```ts title="rsbuild.config.ts"
+import fs from 'node:fs';
+
+export default {
+  server: {
+    https: {
+      key: fs.readFileSync('certificates/private.pem'),
+      cert: fs.readFileSync('certificates/public.pem'),
+      // HTTP/2 specific options
+      allowHTTP1: true, // Allow HTTP/1.1 fallback
+      settings: {
+        enablePush: true, // Enable HTTP/2 server push
+        maxConcurrentStreams: 100,
+      },
+    },
+  },
+};
+```
+
+### Let's Encrypt certificates
+
+Use Let's Encrypt certificates for production:
+
+```ts title="rsbuild.config.ts"
+import fs from 'node:fs';
+
+export default {
+  server: {
+    https: {
+      key: fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/privkey.pem'),
+      cert: fs.readFileSync(
+        '/etc/letsencrypt/live/yourdomain.com/fullchain.pem',
+      ),
+    },
+  },
+};
+```
+
+### Conditional HTTPS
+
+Enable HTTPS only when certificates are available:
+
+```ts title="rsbuild.config.ts"
+import fs from 'node:fs';
+import path from 'node:path';
+
+const keyPath = path.join(__dirname, 'certificates/private.pem');
+const certPath = path.join(__dirname, 'certificates/public.pem');
+
+const httpsConfig =
+  fs.existsSync(keyPath) && fs.existsSync(certPath)
+    ? {
+        key: fs.readFileSync(keyPath),
+        cert: fs.readFileSync(certPath),
+      }
+    : undefined;
+
+export default {
+  server: {
+    https: httpsConfig,
+  },
+};
+```
+
+### With custom cipher suites
+
+Configure security-focused HTTPS with custom cipher suites:
+
+```ts title="rsbuild.config.ts"
+import fs from 'node:fs';
+
+export default {
+  server: {
+    https: {
+      key: fs.readFileSync('certificates/private.pem'),
+      cert: fs.readFileSync('certificates/public.pem'),
+      ciphers: [
+        'ECDHE-RSA-AES128-GCM-SHA256',
+        'ECDHE-RSA-AES256-GCM-SHA384',
+        'ECDHE-RSA-AES128-SHA256',
+        'ECDHE-RSA-AES256-SHA384',
+      ].join(':'),
+      secureProtocol: 'TLSv1_2_method', // Force TLS 1.2
+      honorCipherOrder: true,
+    },
+  },
+};
+```
+
+## Certificate generation
+
+:::tip
+The certificates used for local development are typically generated using [mkcert](https://github.com/FiloSottile/mkcert). Please read ["How to use HTTPS for local development"](https://web.dev/articles/how-to-use-local-https?hl=en) to learn how to use it.
+:::
+
+### Using mkcert for development
+
+1. Install mkcert:
+
+```bash
+# macOS
+brew install mkcert
+brew install nss # if you use Firefox
+
+# Ubuntu/Debian
+sudo apt install libnss3-tools
+wget -O mkcert https://github.com/FiloSottile/mkcert/releases/download/v1.4.4/mkcert-v1.4.4-linux-amd64
+chmod +x mkcert
+sudo mv mkcert /usr/local/bin/
+```
+
+2. Create and install local CA:
+
+```bash
+mkcert -install
+```
+
+3. Generate certificates:
+
+```bash
+mkcert localhost 127.0.0.1 ::1
+```
+
+4. Use in Rsbuild:
+
+```ts title="rsbuild.config.ts"
+import fs from 'node:fs';
+
+export default {
+  server: {
+    https: {
+      key: fs.readFileSync('./localhost+2-key.pem'),
+      cert: fs.readFileSync('./localhost+2.pem'),
+    },
+  },
+};
+```
+
+### OpenSSL for development
+
+Generate self-signed certificates using OpenSSL:
+
+```bash
+# Generate private key
+openssl genrsa -out private-key.pem 2048
+
+# Generate certificate
+openssl req -new -x509 -key private-key.pem -out certificate.pem -days 365 -subj "/CN=localhost"
+```
+
+## Notes
+
+- HTTPS is required for many modern web APIs (Service Workers, Geolocation, etc.)
+- Self-signed certificates will show browser warnings in production
+- For production, use certificates from trusted Certificate Authorities
+- HTTP/2 requires HTTPS in browsers (though the spec allows HTTP/2 over plain HTTP)
+- When using proxy, HTTP/2 features may be limited due to http-proxy constraints

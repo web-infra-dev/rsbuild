@@ -5,17 +5,34 @@
 
 `charset` 配置项允许你指定输出文件的[字符编码](https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding)，以确保它们在不同的环境中能够正确显示。
 
-## UTF8
+## 示例
+
+### UTF8（默认）
 
 默认情况下，Rsbuild 的输出是 [UTF-8](https://developer.mozilla.org/en-US/docs/Glossary/UTF-8) 编码，这是 Web 应用中最常用的字符编码。
 
-当你的 web 服务器返回资源时，请确保发送正确的 [Content-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) 响应头，使浏览器能够正确解析。
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    charset: 'utf8', // 这是默认值
+  },
+};
+```
 
-## ASCII
+**使用 UTF-8 的 JavaScript 输出：**
+
+```js
+// 字符按原样保留
+const message = '你好世界! 🌍';
+const emoji = '👋🏻';
+const symbols = 'α β γ δ ε';
+```
+
+### ASCII 编码
 
 如果你希望输出文件使用 [ASCII](https://developer.mozilla.org/en-US/docs/Glossary/ASCII) 编码，可以在配置文件中这样设置：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     charset: 'ascii',
@@ -23,10 +40,87 @@ export default {
 };
 ```
 
-使用 ASCII 编码时，任何非 ASCII 字符都使用反斜杠进行转义，这通常会生成稍大一点的文件，也使其更难阅读。
+**使用 ASCII 的 JavaScript 输出：**
+
+```js
+// 非 ASCII 字符被转义
+const message = '\\u4f60\\u597d\\u4e16\\u754c! \\ud83c\\udf0d';
+const emoji = '\\ud83d\\udc4b\\ud83c\\udffb';
+const symbols = '\\u03b1 \\u03b2 \\u03b3 \\u03b4 \\u03b5';
+```
+
+### 基于环境的字符集配置
+
+根据部署环境配置字符集：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    charset: process.env.LEGACY_SUPPORT ? 'ascii' : 'utf8',
+  },
+};
+```
+
+### 传统系统兼容性
+
+当需要支持较老的系统或 Unicode 支持有限的环境时，使用 ASCII 编码：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    charset: 'ascii',
+  },
+  // 通常与其他传统友好的设置结合使用
+  target: 'web-legacy',
+};
+```
+
+## 文件大小影响
+
+### UTF-8 编码
+
+- **优点：** 保留原始字符，ASCII 内容的文件更小，可读性更好
+- **缺点：** 在非常老的系统中可能无法工作
+
+**文件大小示例：**
+
+```js
+// 源码：const msg = "你好世界! 🌍";
+// UTF-8 输出：const msg = "你好世界! 🌍";  （约26字节）
+```
+
+### ASCII 编码
+
+- **优点：** 与传统系统最大兼容性
+- **缺点：** 由于 Unicode 转义导致文件更大，可读性较差
+
+**文件大小示例：**
+
+```js
+// 源码：const msg = "你好世界! 🌍";
+// ASCII 输出：const msg = "\\u4f60\\u597d\\u4e16\\u754c! \\ud83c\\udf0d";  （约46字节）
+```
+
+## 服务器配置
+
+当你的 web 服务器返回资源时，请确保发送正确的 [Content-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) 响应头，使浏览器能够正确解析。
+
+### 对于 UTF-8 文件：
+
+```
+Content-Type: text/javascript; charset=utf-8
+```
+
+### 对于 ASCII 文件：
+
+```
+Content-Type: text/javascript; charset=us-ascii
+```
 
 ## 注意事项
 
-目前 `charset` 选项仅会影响经过 [SWC](/guide/configuration/swc) 编译的文件，默认为 JavaScript 和 TypeScript 文件，而 HTML、CSS 文件则不受 `charset` 选项的影响。
-
-对于 HTML 文件，Rsbuild 默认会添加 `<meta charset="utf-8">` 标签，你可以通过 [html.meta](/config/html/meta) 选项来修改它。
+- 目前 `charset` 选项仅会影响经过 [SWC](/guide/configuration/swc) 编译的文件，默认为 JavaScript 和 TypeScript 文件。
+- HTML 和 CSS 文件不受 `charset` 选项的影响。
+- 对于 HTML 文件，Rsbuild 默认会添加 `<meta charset="utf-8">` 标签，你可以通过 [html.meta](/config/html/meta) 选项来修改它。
+- 当代码中包含大量非 ASCII 字符时，ASCII 编码可能会显著增加包体积。
+- 对于现代 Web 应用，建议使用 UTF-8，除非有特定的传统系统需求。

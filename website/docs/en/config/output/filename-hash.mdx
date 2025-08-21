@@ -5,18 +5,31 @@
 
 Whether to add a hash value to the filename after the production build.
 
-### Disable hash
+## Examples
+
+### Basic usage (default behavior)
 
 By default, the filename of the output files will include a hash value:
 
 ```bash
+# Default output with hashes
 dist/static/css/index.7879e19d.css
 dist/static/js/index.18a568e5.js
 ```
 
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    filenameHash: true, // This is the default
+  },
+};
+```
+
+### Disable hash completely
+
 You can set `output.filenameHash` to false to disable this behavior:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     filenameHash: false,
@@ -27,17 +40,16 @@ export default {
 After rebuilding, the output filenames becomes:
 
 ```bash
+# Output without hashes
 dist/static/css/index.css
 dist/static/js/index.js
 ```
 
-### Hash format
+### Custom hash format
 
-The default hash format is `contenthash:8`, which generates an 8-bit hash based on the content of the file.
+The default hash format is `contenthash:8`, which generates an 8-bit hash based on the content of the file. You can set `output.filenameHash` to other formats supported by Rspack and customize the length:
 
-You can set `output.filenameHash` to other formats supported by Rspack and customize the length.
-
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     filenameHash: 'fullhash:16',
@@ -45,14 +57,156 @@ export default {
 };
 ```
 
+**Output:**
+
+```bash
+dist/static/css/index.a1b2c3d4e5f6g7h8.css
+dist/static/js/index.a1b2c3d4e5f6g7h8.js
+```
+
+### Different hash lengths
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    filenameHash: 'contenthash:12', // 12-character hash
+  },
+};
+```
+
+**Output:**
+
+```bash
+dist/static/css/index.7879e19d2b3c.css
+dist/static/js/index.18a568e59f4d.js
+```
+
+### Environment-specific configuration
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    // Enable hash only in production
+    filenameHash: process.env.NODE_ENV === 'production',
+  },
+};
+```
+
+### Different hash types for different scenarios
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    // Use fullhash for libraries that need consistent hash across all files
+    filenameHash:
+      process.env.BUILD_TYPE === 'library' ? 'fullhash:8' : 'contenthash:8',
+  },
+};
+```
+
+## Hash types explained
+
 The optional hash formats are:
 
-- `fullhash`: The hash value of the entire compilation. If any file changes, the hash values of all output files in the entire project will change.
-- `chunkhash`: The hash value of the chunk. The hash value will only change when the content of the chunk (and its included modules) changes.
-- `contenthash`: The hash value of the file content. The hash value will only change when the content of the file itself changes.
+### contenthash (recommended)
 
-### Notes
+- **Best for:** Most web applications
+- **Behavior:** Hash value changes only when the file's own content changes
+- **Benefits:** Optimal caching - unchanged files keep the same hash
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    filenameHash: 'contenthash:8',
+  },
+};
+```
+
+**Example scenario:**
+
+```bash
+# Only changed files get new hashes
+dist/static/js/index.18a568e5.js      # Unchanged - same hash
+dist/static/js/about.new7hash.js      # Changed - new hash
+dist/static/css/main.7879e19d.css     # Unchanged - same hash
+```
+
+### chunkhash
+
+- **Best for:** Code splitting scenarios
+- **Behavior:** Hash changes when any module in the chunk changes
+- **Benefits:** Good for chunks that include multiple related modules
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    filenameHash: 'chunkhash:8',
+  },
+};
+```
+
+### fullhash
+
+- **Best for:** Libraries or when you need consistent versioning
+- **Behavior:** All files get the same hash, changes when any file in the compilation changes
+- **Use case:** When you want all files to have the same version identifier
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    filenameHash: 'fullhash:8',
+  },
+};
+```
+
+**Example scenario:**
+
+```bash
+# All files have the same hash
+dist/static/js/index.a1b2c3d4.js
+dist/static/js/about.a1b2c3d4.js
+dist/static/css/main.a1b2c3d4.css
+```
+
+## Advanced configurations
+
+### Combining with custom filenames
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    filenameHash: 'contenthash:10',
+    filename: {
+      js: 'js/[name].[contenthash:10].bundle.js',
+      css: 'css/[name].[contenthash:10].bundle.css',
+    },
+  },
+};
+```
+
+### Target-specific behavior
+
+```ts title="rsbuild.config.ts"
+export default {
+  environments: {
+    web: {
+      output: {
+        filenameHash: 'contenthash:8', // Hash for web builds
+      },
+    },
+    node: {
+      output: {
+        filenameHash: false, // No hash for Node.js builds
+      },
+    },
+  },
+};
+```
+
+## Notes
 
 - [output.filename](/config/output/filename) has a higher priority than `output.filenameHash`.
 - By default, when the target is not `web`, the hash will not be included in the filename of the output files, such as Node.js bundles.
 - By default, the filename in development mode does not include a hash.
+- Hash-based filenames enable long-term caching strategies by ensuring that unchanged files maintain the same filename.
+- Choose `contenthash` for most applications to maximize cache efficiency.

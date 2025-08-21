@@ -14,9 +14,11 @@ Each key passed into options is an identifier or multiple identifiers joined wit
 
 > For more usage, please refer to [Using define](/guide/advanced/env-vars#using-define) and [Rspack - DefinePlugin](https://rspack.rs/plugins/webpack/define-plugin).
 
-## Example
+## Examples
 
-```js
+### Basic usage
+
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     define: {
@@ -32,11 +34,341 @@ export default {
 };
 ```
 
-Expressions will be replaced with the corresponding code fragments:
+**In your code:**
 
 ```js
 const foo = TWO;
-
 // ⬇️ Turns into
 const foo = 1 + 1;
 ```
+
+### Environment-specific configuration
+
+Define different values for development and production:
+
+```ts title="rsbuild.config.ts"
+const isDev = process.env.NODE_ENV === 'development';
+
+export default {
+  source: {
+    define: {
+      __DEV__: JSON.stringify(isDev),
+      __PROD__: JSON.stringify(!isDev),
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      VERSION: JSON.stringify(process.env.npm_package_version),
+    },
+  },
+};
+```
+
+**Usage in code:**
+
+```js
+if (__DEV__) {
+  console.log('Development mode');
+}
+
+if (__PROD__) {
+  // Production-only code
+  analytics.track('page_view');
+}
+```
+
+### Feature flags
+
+Use define for feature flag management:
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    define: {
+      FEATURE_NEW_UI: JSON.stringify(process.env.ENABLE_NEW_UI === 'true'),
+      FEATURE_ANALYTICS: JSON.stringify(
+        process.env.ENABLE_ANALYTICS === 'true',
+      ),
+      FEATURE_BETA: JSON.stringify(process.env.BETA_FEATURES === 'true'),
+      API_VERSION: JSON.stringify('v2'),
+    },
+  },
+};
+```
+
+**Usage in code:**
+
+```js
+// Conditional feature rendering
+if (FEATURE_NEW_UI) {
+  import('./NewUIComponent');
+}
+
+// API configuration
+const apiUrl = `https://api.example.com/${API_VERSION}`;
+```
+
+### API endpoint configuration
+
+Define API endpoints for different environments:
+
+```ts title="rsbuild.config.ts"
+const apiEndpoints = {
+  development: 'https://dev-api.example.com',
+  staging: 'https://staging-api.example.com',
+  production: 'https://api.example.com',
+};
+
+export default {
+  source: {
+    define: {
+      API_BASE_URL: JSON.stringify(
+        apiEndpoints[process.env.NODE_ENV] || apiEndpoints.development,
+      ),
+      API_TIMEOUT: 5000,
+      MAX_RETRIES: 3,
+    },
+  },
+};
+```
+
+**Usage in code:**
+
+```js
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  timeout: API_TIMEOUT,
+});
+
+const fetchWithRetry = async (url, retries = MAX_RETRIES) => {
+  // Implementation using MAX_RETRIES
+};
+```
+
+### Build metadata
+
+Include build information and metadata:
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    define: {
+      BUILD_TIME: JSON.stringify(new Date().toISOString()),
+      BUILD_VERSION: JSON.stringify(process.env.npm_package_version),
+      GIT_COMMIT: JSON.stringify(process.env.GITHUB_SHA || 'unknown'),
+      BUILD_ENV: JSON.stringify(process.env.NODE_ENV),
+    },
+  },
+};
+```
+
+**Usage in code:**
+
+```js
+// Display build information
+console.log(`Version: ${BUILD_VERSION}`);
+console.log(`Built at: ${BUILD_TIME}`);
+console.log(`Commit: ${GIT_COMMIT}`);
+
+// Add to user agent or analytics
+const buildInfo = {
+  version: BUILD_VERSION,
+  buildTime: BUILD_TIME,
+  commit: GIT_COMMIT,
+};
+```
+
+### Complex object definitions
+
+Define complex objects and configurations:
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    define: {
+      CONFIG: JSON.stringify({
+        apiUrl: 'https://api.example.com',
+        features: {
+          newUI: true,
+          analytics: false,
+        },
+        theme: {
+          primaryColor: '#1976d2',
+          secondaryColor: '#dc004e',
+        },
+      }),
+    },
+  },
+};
+```
+
+**Usage in code:**
+
+```js
+// Access nested configuration
+const primaryColor = CONFIG.theme.primaryColor;
+const isNewUIEnabled = CONFIG.features.newUI;
+```
+
+### Function definitions
+
+Define functions for compile-time execution:
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    define: {
+      IS_MOBILE: `(function() { return /Mobi|Android/i.test(navigator.userAgent); })()`,
+      LOG_LEVEL: JSON.stringify(process.env.LOG_LEVEL || 'info'),
+      DEBUG_MODE: process.env.DEBUG === 'true',
+    },
+  },
+};
+```
+
+### Conditional imports and code elimination
+
+Use define for dead code elimination:
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    define: {
+      INCLUDE_POLYFILLS: JSON.stringify(
+        process.env.TARGET_BROWSER === 'legacy',
+      ),
+      ENABLE_DEVTOOLS: JSON.stringify(process.env.NODE_ENV !== 'production'),
+    },
+  },
+};
+```
+
+**Usage in code:**
+
+```js
+// Code will be completely removed in production builds
+if (ENABLE_DEVTOOLS) {
+  import('./devtools').then(({ initDevtools }) => {
+    initDevtools();
+  });
+}
+
+// Conditional polyfill loading
+if (INCLUDE_POLYFILLS) {
+  import('core-js/stable');
+}
+```
+
+### Type checking definitions
+
+Use `typeof` prefix for type checking:
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    define: {
+      'typeof window': JSON.stringify('object'),
+      'typeof process': JSON.stringify('undefined'), // For browser builds
+      'typeof global': JSON.stringify('undefined'),
+    },
+  },
+};
+```
+
+**Usage in code:**
+
+```js
+// This check will be replaced at build time
+if (typeof window !== 'undefined') {
+  // Browser-specific code
+  window.addEventListener('resize', handleResize);
+}
+```
+
+### Multi-environment configuration
+
+Create environment-specific define configurations:
+
+```ts title="rsbuild.config.ts"
+const getDefineConfig = (env: string) => {
+  const baseDefine = {
+    'process.env.NODE_ENV': JSON.stringify(env),
+    BUILD_ENV: JSON.stringify(env),
+  };
+
+  switch (env) {
+    case 'development':
+      return {
+        ...baseDefine,
+        DEBUG: true,
+        API_URL: JSON.stringify('http://localhost:3001'),
+        ENABLE_MOCKS: true,
+      };
+    case 'staging':
+      return {
+        ...baseDefine,
+        DEBUG: false,
+        API_URL: JSON.stringify('https://staging-api.example.com'),
+        ENABLE_MOCKS: false,
+      };
+    case 'production':
+      return {
+        ...baseDefine,
+        DEBUG: false,
+        API_URL: JSON.stringify('https://api.example.com'),
+        ENABLE_MOCKS: false,
+      };
+    default:
+      return baseDefine;
+  }
+};
+
+export default {
+  source: {
+    define: getDefineConfig(process.env.NODE_ENV || 'development'),
+  },
+};
+```
+
+## Common patterns
+
+### Safe JSON stringification
+
+Always use `JSON.stringify()` for string values to avoid quote issues:
+
+```ts
+// ✅ Correct
+define: {
+  API_KEY: JSON.stringify('abc123'),
+}
+
+// ❌ Incorrect - can cause syntax errors
+define: {
+  API_KEY: 'abc123', // This becomes: const API_KEY = abc123; (invalid)
+}
+```
+
+### Environment variable mapping
+
+Map environment variables systematically:
+
+```ts title="rsbuild.config.ts"
+const envVars = ['NODE_ENV', 'API_URL', 'SENTRY_DSN', 'ANALYTICS_ID'];
+
+const defineConfig = envVars.reduce((acc, key) => {
+  acc[`process.env.${key}`] = JSON.stringify(process.env[key]);
+  return acc;
+}, {});
+
+export default {
+  source: {
+    define: defineConfig,
+  },
+};
+```
+
+## Notes
+
+- Define replacements happen at build time, not runtime
+- Values are replaced as-is, so string values should be JSON.stringify'd
+- Undefined values will cause runtime errors, use null instead
+- Define only affects modules processed by Rsbuild (not node_modules by default)
+- Be cautious with object definitions as they're inlined everywhere they're used
+- Consider bundle size impact when defining large objects or strings

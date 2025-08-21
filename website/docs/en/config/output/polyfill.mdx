@@ -7,13 +7,13 @@ Control the injection mode of the polyfills.
 
 > Please refer to the [Polyfill Mode](/guide/advanced/browser-compatibility#polyfill-mode) for more details.
 
-## Optional value
+## Examples
 
-### usage
+### Usage-based polyfills (recommended)
 
-When `output.polyfill` is configured as `'usage'`, Rsbuild will inject the polyfills based on the APIs used in each file.
+When `output.polyfill` is configured as `'usage'`, Rsbuild will inject the polyfills based on the APIs used in each file. This provides optimal bundle size as only needed polyfills are included.
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     polyfill: 'usage',
@@ -21,11 +21,21 @@ export default {
 };
 ```
 
-### entry
+**Example scenario:**
 
-When `output.polyfill` is configured as `'entry'`, Rsbuild will inject the polyfills in each entry file.
+```js
+// Your code
+const promise = Promise.all([fetch('/api/data'), import('./module')]);
+const set = new Set([1, 2, 3]);
+```
 
-```ts
+**Result:** Only polyfills for `Promise`, `fetch`, and `Set` are injected if needed by target browsers.
+
+### Entry-based polyfills
+
+When `output.polyfill` is configured as `'entry'`, Rsbuild will inject the polyfills in each entry file. This ensures all polyfills are available but may increase bundle size.
+
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     polyfill: 'entry',
@@ -33,14 +43,233 @@ export default {
 };
 ```
 
-### off
+**Result:** All core polyfills are injected at the beginning of each entry file, regardless of actual usage.
+
+### No polyfills
 
 When `output.polyfill` is configured as `'off'`, Rsbuild will not inject the polyfills, and developers need to ensure code compatibility themselves.
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     polyfill: 'off',
   },
 };
 ```
+
+**Use cases:**
+
+- Targeting modern browsers only
+- Managing polyfills manually
+- Using a custom polyfill solution
+
+## Comparison of polyfill modes
+
+### Usage mode
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    polyfill: 'usage',
+    // Commonly combined with browserslist config
+  },
+  source: {
+    // Define your target browsers
+    targets: ['chrome >= 87', 'firefox >= 78', 'safari >= 14'],
+  },
+};
+```
+
+**Pros:**
+
+- Optimal bundle size (only used APIs are polyfilled)
+- Automatic analysis of code requirements
+- Per-file optimization
+
+**Cons:**
+
+- Requires careful browserslist configuration
+- May miss dynamically used APIs
+
+### Entry mode
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    polyfill: 'entry',
+  },
+  source: {
+    targets: ['ie >= 11'], // More aggressive browser support
+  },
+};
+```
+
+**Pros:**
+
+- Comprehensive polyfill coverage
+- Predictable behavior
+- Good for legacy browser support
+
+**Cons:**
+
+- Larger bundle size
+- May include unnecessary polyfills
+
+### Off mode
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    polyfill: 'off',
+  },
+  source: {
+    targets: ['chrome >= 90'], // Modern browsers only
+  },
+};
+```
+
+**Pros:**
+
+- Smallest bundle size
+- Full control over polyfills
+- Best for modern environments
+
+**Cons:**
+
+- Manual polyfill management required
+- Risk of runtime errors in older browsers
+
+## Advanced configurations
+
+### Environment-specific polyfills
+
+```ts title="rsbuild.config.ts"
+export default {
+  environments: {
+    modern: {
+      output: {
+        polyfill: 'off', // Modern browsers
+      },
+      source: {
+        targets: ['chrome >= 90', 'firefox >= 90'],
+      },
+    },
+    legacy: {
+      output: {
+        polyfill: 'entry', // Legacy browsers need all polyfills
+      },
+      source: {
+        targets: ['ie >= 11'],
+      },
+    },
+  },
+};
+```
+
+### Conditional polyfill configuration
+
+```ts title="rsbuild.config.ts"
+const isLegacyBuild = process.env.LEGACY_BUILD === 'true';
+
+export default {
+  output: {
+    polyfill: isLegacyBuild ? 'entry' : 'usage',
+  },
+  source: {
+    targets: isLegacyBuild
+      ? ['ie >= 11', 'chrome >= 49']
+      : ['chrome >= 87', 'firefox >= 78'],
+  },
+};
+```
+
+### Custom polyfill with manual injection
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    polyfill: 'off', // Disable automatic polyfills
+  },
+  source: {
+    entry: {
+      index: ['./polyfills.js', './src/index.js'], // Custom polyfill file first
+    },
+  },
+};
+```
+
+**polyfills.js example:**
+
+```js
+// Custom polyfill file
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+
+// Or specific polyfills only
+import 'core-js/es/promise';
+import 'core-js/es/fetch';
+```
+
+## Bundle size impact
+
+### Small modern application
+
+```ts
+// With 'off': ~50KB (base app)
+// With 'usage': ~52KB (+2KB for specific polyfills)
+// With 'entry': ~75KB (+25KB for all polyfills)
+```
+
+### Large application with many ES6+ features
+
+```ts
+// With 'off': ~200KB (base app)
+// With 'usage': ~220KB (+20KB for used polyfills)
+// With 'entry': ~275KB (+75KB for all polyfills)
+```
+
+## Best practices
+
+### For modern applications
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    polyfill: 'usage', // Best balance
+  },
+  source: {
+    targets: ['chrome >= 87', 'firefox >= 78', 'safari >= 14', 'edge >= 88'],
+  },
+};
+```
+
+### For legacy support
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    polyfill: 'entry', // Comprehensive coverage
+  },
+  source: {
+    targets: ['ie >= 11', '> 0.25%', 'not dead'],
+  },
+};
+```
+
+### For libraries
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    polyfill: 'off', // Let consumers decide
+  },
+  // Provide separate polyfilled version if needed
+};
+```
+
+## Notes
+
+- Polyfills are only injected in production builds by default
+- The actual polyfills injected depend on your `browserslist` configuration or `source.targets`
+- Using `'usage'` mode requires SWC or Babel to analyze your code
+- Consider using [differential serving](/guide/advanced/browser-compatibility#differential-serving) for optimal modern/legacy browser support

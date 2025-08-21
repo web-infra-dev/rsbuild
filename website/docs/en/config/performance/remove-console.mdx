@@ -5,11 +5,13 @@
 
 Whether to remove `console.[methodName]` in production build.
 
-## Remove all
+## Examples
+
+### Remove all console statements
 
 When `removeConsole` is set to `true`, all types of `console.[methodName]` are removed:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     removeConsole: true,
@@ -17,11 +19,22 @@ export default {
 };
 ```
 
-## Specific type
+**Before:**
+
+```js
+console.log('Debug info');
+console.warn('Warning message');
+console.error('Error occurred');
+console.info('Info message');
+```
+
+**After build:** All console statements are removed from the production bundle.
+
+### Remove specific console types
 
 You can also specify to remove only certain types of `console.[methodName]`, such as `console.log` and `console.warn`:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     removeConsole: ['log', 'warn'],
@@ -29,8 +42,53 @@ export default {
 };
 ```
 
+**Before:**
+
+```js
+console.log('This will be removed');
+console.warn('This will be removed');
+console.error('This will be kept');
+console.info('This will be kept');
+```
+
+**After build:** Only `console.log` and `console.warn` are removed, while `console.error` and `console.info` remain.
+
+### Environment-specific configuration
+
+You can conditionally remove console statements based on the environment:
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    removeConsole: process.env.NODE_ENV === 'production' ? true : false,
+  },
+};
+```
+
+### Debugging-focused removal
+
+Remove debug-related console statements but keep error handling:
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    removeConsole: ['log', 'info', 'table', 'group'],
+  },
+};
+```
+
+This configuration keeps `console.warn` and `console.error` for important runtime messages while removing debugging output.
+
+## Supported console types
+
 The following types of console are currently supported:
 
 ```ts
 type ConsoleType = 'log' | 'info' | 'warn' | 'error' | 'table' | 'group';
 ```
+
+## Notes
+
+- This option only affects production builds. Console statements are preserved in development mode for debugging purposes.
+- The transformation is performed at build time, so console statements are completely removed from the bundle, reducing bundle size.
+- Consider keeping `error` and `warn` console statements for production error monitoring.

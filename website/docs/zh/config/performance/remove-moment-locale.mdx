@@ -7,15 +7,37 @@
 
 `moment.js` 默认包含了大量的语言包文件，会导致打包后的包体积增大。
 
+## 示例
+
+### 基本用法
+
 当项目中使用了 `moment.js` 时，推荐开启此选项，自动排除所有的语言包文件：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     removeMomentLocale: true,
   },
 };
 ```
+
+### 包体积影响
+
+**未启用 `removeMomentLocale`：**
+
+```bash
+# moment.js 包含所有语言包（约160种语言包）
+dist/static/js/index.js    245 kB
+```
+
+**启用 `removeMomentLocale: true`：**
+
+```bash
+# 默认只包含英语语言包
+dist/static/js/index.js    67 kB  (-178 kB)
+```
+
+### 加载特定语言包
 
 开启后，可以通过以下方式来加载语言包文件：
 
@@ -24,4 +46,112 @@ import moment from 'moment';
 import 'moment/locale/zh-cn';
 
 moment.locale('zh-cn');
+console.log(moment().format('LLLL')); // 使用中文格式
 ```
+
+### 加载多个语言包
+
+按需加载多个语言包：
+
+```js
+import moment from 'moment';
+
+// 加载多个语言包
+import 'moment/locale/zh-cn';
+import 'moment/locale/fr';
+import 'moment/locale/es';
+
+// 动态切换语言包
+moment.locale('zh-cn');
+console.log(moment().format('LLLL'));
+
+moment.locale('fr');
+console.log(moment().format('LLLL'));
+```
+
+### 动态语言包加载
+
+对于需要动态加载语言包的应用：
+
+```js
+import moment from 'moment';
+
+async function loadLocale(locale) {
+  switch (locale) {
+    case 'zh-cn':
+      await import('moment/locale/zh-cn');
+      break;
+    case 'fr':
+      await import('moment/locale/fr');
+      break;
+    case 'ja':
+      await import('moment/locale/ja');
+      break;
+    // 根据需要添加更多语言包
+  }
+  moment.locale(locale);
+}
+
+// 使用方式
+await loadLocale('zh-cn');
+console.log(moment().format('LLLL'));
+```
+
+### 条件配置
+
+仅在生产构建中启用语言包移除：
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    removeMomentLocale: process.env.NODE_ENV === 'production',
+  },
+};
+```
+
+## 替代方案
+
+如果你只需要几个语言包且希望进一步减小包体积，可考虑：
+
+### 1. 使用 Day.js 替代
+
+[Day.js](https://day.js.org/) 是 moment.js 的轻量级替代品：
+
+```bash
+npm install dayjs
+```
+
+```js
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+
+dayjs.extend(localizedFormat);
+dayjs.locale('zh-cn');
+console.log(dayjs().format('LLLL'));
+```
+
+### 2. 使用 webpack.ContextReplacementPlugin 进行精确控制
+
+对于更精细的控制，可以使用 webpack 的 ContextReplacementPlugin：
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: {
+      plugins: [
+        new rspack.ContextReplacementPlugin(
+          /moment[/\\]locale$/,
+          /zh-cn|fr|es/, // 只包含这些语言包
+        ),
+      ],
+    },
+  },
+};
+```
+
+## 注意事项
+
+- 此选项只影响 moment.js 的语言包文件，不影响 moment.js 核心功能。
+- 该选项通过使用 webpack 的 `IgnorePlugin` 来跳过 moment.js 语言包文件的打包。
+- 启用此选项后，务必测试应用程序以确保所需的语言包被正确加载。

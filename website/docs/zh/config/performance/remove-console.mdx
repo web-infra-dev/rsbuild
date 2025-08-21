@@ -5,11 +5,13 @@
 
 在生产模式构建时，是否自动移除代码中的 `console.[methodName]`。
 
-## 全部移除
+## 示例
+
+### 移除所有 console 语句
 
 当 `removeConsole` 被设置为 `true` 时，会移除所有类型的 `console.[methodName]`：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     removeConsole: true,
@@ -17,11 +19,22 @@ export default {
 };
 ```
 
-## 指定类型
+**构建前：**
+
+```js
+console.log('调试信息');
+console.warn('警告信息');
+console.error('错误信息');
+console.info('提示信息');
+```
+
+**构建后：** 所有 console 语句都会从生产包中移除。
+
+### 移除指定类型的 console
 
 你也可以指定仅移除特定类型的 `console.[methodName]`，比如移除 `console.log` 和 `console.warn`：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     removeConsole: ['log', 'warn'],
@@ -29,8 +42,53 @@ export default {
 };
 ```
 
+**构建前：**
+
+```js
+console.log('这将被移除');
+console.warn('这将被移除');
+console.error('这将被保留');
+console.info('这将被保留');
+```
+
+**构建后：** 只有 `console.log` 和 `console.warn` 被移除，`console.error` 和 `console.info` 保持不变。
+
+### 基于环境的条件配置
+
+你可以根据环境条件性地移除 console 语句：
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    removeConsole: process.env.NODE_ENV === 'production' ? true : false,
+  },
+};
+```
+
+### 专注于调试的移除策略
+
+移除调试相关的 console 语句，但保留错误处理：
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    removeConsole: ['log', 'info', 'table', 'group'],
+  },
+};
+```
+
+此配置保留 `console.warn` 和 `console.error` 用于重要的运行时消息，同时移除调试输出。
+
+## 支持的 console 类型
+
 目前支持配置以下类型的 console：
 
 ```ts
 type ConsoleType = 'log' | 'info' | 'warn' | 'error' | 'table' | 'group';
 ```
+
+## 注意事项
+
+- 此选项仅影响生产构建。在开发模式下会保留 console 语句以便调试。
+- 转换在构建时执行，console 语句被完全从包中移除，从而减小包体积。
+- 考虑保留 `error` 和 `warn` console 语句用于生产环境的错误监控。

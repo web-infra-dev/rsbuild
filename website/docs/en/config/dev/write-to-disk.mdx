@@ -9,13 +9,15 @@ Controls whether the build output from development mode is written to disk.
 In development mode, Rsbuild stores the build outputs in memory on the dev server by default, rather than writing them to disk. This can reduce the overhead of fs operations. You can refer to [View Static Assets](/guide/basic/server#view-static-assets) to view all static assets generated in the current build.
 :::
 
-## Writing to disk
+## Examples
+
+### Enable disk writing
 
 You can choose to write the build output to disk, which is usually used for inspecting the content of the build output or configuring proxy rules for static assets.
 
 Simply set the `dev.writeToDisk` option to `true`:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     writeToDisk: true,
@@ -23,20 +25,235 @@ export default {
 };
 ```
 
+**Result:** All development build files are written to the configured output directory.
+
 :::tip
 Setting `writeToDisk: true` is used for viewing the build output from development mode. It does not change the behavior of the dev server. When accessing files through a browser, the dev server will still read the file content from memory.
 :::
 
-## Matching specific files
+### Selective file writing
 
 You can also set `dev.writeToDisk` to a function to match only certain files. When the function returns `false`, the file will not be written; when it returns `true`, the file will be written to disk.
 
-For example, to write files to disk while excluding hot-update temporary files:
+#### Exclude hot-update files
 
-```ts
+Write files to disk while excluding hot-update temporary files:
+
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     writeToDisk: (file) => !file.includes('.hot-update.'),
   },
 };
 ```
+
+#### Write only specific file types
+
+Write only JavaScript and CSS files to disk:
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    writeToDisk: (file) => {
+      return file.endsWith('.js') || file.endsWith('.css');
+    },
+  },
+};
+```
+
+#### Write only main bundle files
+
+Exclude vendor and chunk files, write only main bundle files:
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    writeToDisk: (file) => {
+      // Skip vendor files and chunks, only write main files
+      return !file.includes('vendor') && !file.includes('chunk');
+    },
+  },
+};
+```
+
+#### Write based on file path
+
+Write only files in specific directories:
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    writeToDisk: (file) => {
+      // Only write static assets, not HTML files
+      return file.includes('/static/');
+    },
+  },
+};
+```
+
+### Environment-specific configuration
+
+Different disk writing behavior for different environments:
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    writeToDisk: process.env.WRITE_DEV_FILES === 'true',
+  },
+};
+```
+
+### Advanced filtering examples
+
+#### Write files based on size
+
+Only write files larger than a certain size:
+
+```ts title="rsbuild.config.ts"
+import { statSync } from 'node:fs';
+import { join } from 'node:path';
+
+export default {
+  dev: {
+    writeToDisk: (file) => {
+      try {
+        // Check file size (this is a conceptual example)
+        // In practice, you might need different logic
+        return file.endsWith('.js') || file.endsWith('.css');
+      } catch {
+        return true;
+      }
+    },
+  },
+};
+```
+
+#### Debug-specific files
+
+Write files only when debugging specific features:
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    writeToDisk: (file) => {
+      if (process.env.DEBUG_ASSETS) {
+        return true; // Write all files when debugging
+      }
+
+      // Normal mode: exclude temporary files
+      return !file.includes('.hot-update.') && !file.includes('.map');
+    },
+  },
+};
+```
+
+### Combining with output configuration
+
+Write development files to a specific directory:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    distPath: {
+      root: process.env.NODE_ENV === 'development' ? 'dev-dist' : 'dist',
+    },
+  },
+  dev: {
+    writeToDisk: true,
+  },
+};
+```
+
+## Common use cases
+
+### Debugging build output
+
+Inspect the actual files generated during development:
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    writeToDisk: true, // Write all files for debugging
+  },
+};
+```
+
+### Proxy configuration
+
+When configuring proxies that need to serve static files:
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    writeToDisk: (file) => {
+      // Write static assets that might be referenced by proxy
+      return file.includes('/static/') && !file.includes('.hot-update.');
+    },
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+      },
+    },
+  },
+};
+```
+
+### Development tools integration
+
+For tools that need to analyze build output:
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    writeToDisk: process.env.ANALYZE_BUILD === 'true',
+  },
+};
+```
+
+### Testing setup
+
+Write specific files needed for automated testing:
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    writeToDisk: (file) => {
+      // Write files that tests might need to access directly
+      return file.includes('test-') || file.endsWith('.spec.js');
+    },
+  },
+};
+```
+
+## Performance considerations
+
+- **Memory usage:** Writing files to disk uses additional memory to buffer file contents
+- **I/O overhead:** Disk writes add I/O operations that can slow down rebuilds
+- **Disk space:** Development files can accumulate over time if not cleaned up
+
+### Optimized configuration
+
+Balance between debugging needs and performance:
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    writeToDisk: (file) => {
+      // Skip temporary and source map files to reduce I/O
+      const skipFiles = ['.hot-update.', '.map', 'webpack-dev-server'];
+      return !skipFiles.some((skip) => file.includes(skip));
+    },
+  },
+};
+```
+
+## Notes
+
+- Files are written to the configured output directory (typically `dist/`)
+- This option only affects development builds, not production builds
+- The dev server still serves files from memory even when written to disk
+- Hot-update files are temporary and usually don't need to be written to disk
+- Consider disk space usage when enabling this option for large projects

@@ -5,17 +5,34 @@
 
 The `charset` config allows you to specify the [character encoding](https://developer.mozilla.org/en-US/docs/Glossary/Character_encoding) for output files to ensure they are displayed correctly in different environments.
 
-## UTF8
+## Examples
+
+### UTF8 (default)
 
 By default, the output of Rsbuild is encoded in [UTF-8](https://developer.mozilla.org/en-US/docs/Glossary/UTF-8), which is the most commonly used character encoding in web applications.
 
-When your web server returns the resource, please ensure that it sends the correct [Content-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) response header so that the browser can parse it correctly.
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    charset: 'utf8', // This is the default
+  },
+};
+```
 
-## ASCII
-
-If you want the output files to use [ASCII](https://developer.mozilla.org/en-US/docs/Glossary/ASCII) encoding, you can set this in the config file like this:
+**JavaScript output with UTF-8:**
 
 ```js
+// Characters are preserved as-is
+const message = 'Hello 世界! 🌍';
+const emoji = '👋🏻';
+const symbols = 'α β γ δ ε';
+```
+
+### ASCII encoding
+
+If you want the output files to use [ASCII](https://developer.mozilla.org/en-US/docs/Glossary/ASCII) encoding, you can set this in the config file:
+
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     charset: 'ascii',
@@ -23,10 +40,87 @@ export default {
 };
 ```
 
-When using ASCII encoding, all non-ASCII characters are escaped with backslashes, which may make the files slightly larger and harder to read.
+**JavaScript output with ASCII:**
+
+```js
+// Non-ASCII characters are escaped
+const message = 'Hello \\u4e16\\u754c! \\ud83c\\udf0d';
+const emoji = '\\ud83d\\udc4b\\ud83c\\udffb';
+const symbols = '\\u03b1 \\u03b2 \\u03b3 \\u03b4 \\u03b5';
+```
+
+### Environment-specific charset
+
+Configure charset based on deployment environment:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    charset: process.env.LEGACY_SUPPORT ? 'ascii' : 'utf8',
+  },
+};
+```
+
+### Legacy system compatibility
+
+Use ASCII encoding when targeting older systems or environments with limited Unicode support:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    charset: 'ascii',
+  },
+  // Often combined with other legacy-friendly settings
+  target: 'web-legacy',
+};
+```
+
+## Impact on file sizes
+
+### UTF-8 encoding
+
+- **Pros:** Preserves original characters, smaller file size for ASCII content, better readability
+- **Cons:** May not work in very old systems
+
+**Example file size:**
+
+```js
+// Source: const msg = "Hello 世界! 🌍";
+// UTF-8 output: const msg = "Hello 世界! 🌍";  (~26 bytes)
+```
+
+### ASCII encoding
+
+- **Pros:** Maximum compatibility with legacy systems
+- **Cons:** Larger file size due to Unicode escaping, less readable
+
+**Example file size:**
+
+```js
+// Source: const msg = "Hello 世界! 🌍";
+// ASCII output: const msg = "Hello \\u4e16\\u754c! \\ud83c\\udf0d";  (~46 bytes)
+```
+
+## Server configuration
+
+When your web server returns the resource, please ensure that it sends the correct [Content-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) response header so that the browser can parse it correctly.
+
+### For UTF-8 files:
+
+```
+Content-Type: text/javascript; charset=utf-8
+```
+
+### For ASCII files:
+
+```
+Content-Type: text/javascript; charset=us-ascii
+```
 
 ## Notes
 
-Currently, the `charset` option only affects files compiled with [SWC](/guide/configuration/swc), which by default includes JavaScript and TypeScript files. However, HTML and CSS files are not affected by the `charset` option.
-
-For HTML files, Rsbuild adds a `<meta charset="utf-8">` tag by default. You can change this using the [html.meta](/config/html/meta) option.
+- Currently, the `charset` option only affects files compiled with [SWC](/guide/configuration/swc), which by default includes JavaScript and TypeScript files.
+- HTML and CSS files are not affected by the `charset` option.
+- For HTML files, Rsbuild adds a `<meta charset="utf-8">` tag by default. You can change this using the [html.meta](/config/html/meta) option.
+- ASCII encoding may increase bundle size significantly when your code contains many non-ASCII characters.
+- UTF-8 is recommended for modern web applications unless you have specific legacy system requirements.

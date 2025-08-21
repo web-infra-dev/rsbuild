@@ -7,15 +7,37 @@ Whether to remove the locales of [moment.js](https://momentjs.com/).
 
 `moment.js` contains a lot of locales by default, which will increase the bundle size.
 
+## Examples
+
+### Basic usage
+
 When `moment.js` is used in the project, it is recommended to enable this option to automatically exclude all locales:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     removeMomentLocale: true,
   },
 };
 ```
+
+### Bundle size impact
+
+**Without `removeMomentLocale`:**
+
+```bash
+# moment.js includes all locales (~160 locales)
+dist/static/js/index.js    245 kB
+```
+
+**With `removeMomentLocale: true`:**
+
+```bash
+# Only English locale included by default
+dist/static/js/index.js    67 kB  (-178 kB)
+```
+
+### Loading specific locales
 
 Once enabled, you can load a specific locale via:
 
@@ -24,4 +46,112 @@ import moment from 'moment';
 import 'moment/locale/zh-cn';
 
 moment.locale('zh-cn');
+console.log(moment().format('LLLL')); // 使用中文格式
 ```
+
+### Multiple locales
+
+Load multiple locales as needed:
+
+```js
+import moment from 'moment';
+
+// Load multiple locales
+import 'moment/locale/zh-cn';
+import 'moment/locale/fr';
+import 'moment/locale/es';
+
+// Switch between locales dynamically
+moment.locale('zh-cn');
+console.log(moment().format('LLLL'));
+
+moment.locale('fr');
+console.log(moment().format('LLLL'));
+```
+
+### Dynamic locale loading
+
+For applications that need to load locales dynamically:
+
+```js
+import moment from 'moment';
+
+async function loadLocale(locale) {
+  switch (locale) {
+    case 'zh-cn':
+      await import('moment/locale/zh-cn');
+      break;
+    case 'fr':
+      await import('moment/locale/fr');
+      break;
+    case 'ja':
+      await import('moment/locale/ja');
+      break;
+    // Add more locales as needed
+  }
+  moment.locale(locale);
+}
+
+// Usage
+await loadLocale('zh-cn');
+console.log(moment().format('LLLL'));
+```
+
+### Conditional configuration
+
+Enable locale removal only in production builds:
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    removeMomentLocale: process.env.NODE_ENV === 'production',
+  },
+};
+```
+
+## Alternative solutions
+
+If you only need a few locales and want to minimize bundle size further, consider:
+
+### 1. Using Day.js instead
+
+[Day.js](https://day.js.org/) is a lighter alternative to moment.js:
+
+```bash
+npm install dayjs
+```
+
+```js
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+
+dayjs.extend(localizedFormat);
+dayjs.locale('zh-cn');
+console.log(dayjs().format('LLLL'));
+```
+
+### 2. Tree-shaking with webpack.ContextReplacementPlugin
+
+For more granular control, you can use webpack's ContextReplacementPlugin:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: {
+      plugins: [
+        new rspack.ContextReplacementPlugin(
+          /moment[/\\]locale$/,
+          /zh-cn|fr|es/, // Only include these locales
+        ),
+      ],
+    },
+  },
+};
+```
+
+## Notes
+
+- This option only affects moment.js locale files. It doesn't affect the core moment.js functionality.
+- The option works by using webpack's `IgnorePlugin` to skip moment.js locale files during bundling.
+- Always test your application after enabling this option to ensure the required locales are properly loaded.
