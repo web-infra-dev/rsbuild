@@ -6,7 +6,13 @@
 type PrintFileSizeOptions =
   | boolean
   | {
-      total?: boolean;
+      total?:
+        | boolean
+        | ((params: {
+            assets: PrintFileSizeAsset[];
+            totalSize: number;
+            totalGzipSize: number;
+          }) => string);
       detail?: boolean;
       compressed?: boolean;
       include?: (asset: PrintFileSizeAsset) => boolean;
@@ -50,10 +56,12 @@ You can customize the output format through the options.
 
 ### total
 
-- **Type:** `boolean`
+- **Type:** `boolean | ((assets: PrintFileSizeAsset[], totalSize: number, totalGzipSize: number) => string)`
 - **Default:** `true`
 
-Whether to output the total size of all static assets.
+Whether to output the total size of all static assets, or provide a function to customize the output format of the total size.
+
+When set to `false`, the total size will not be output:
 
 ```ts
 export default {
@@ -64,6 +72,26 @@ export default {
   },
 };
 ```
+
+When set to a function, you can customize the total size output format:
+
+```ts
+export default {
+  performance: {
+    printFileSize: {
+      total: ({ assets, totalSize }) => {
+        return `Generated ${assets.length} files, the total size is ${(totalSize / 1000).toFixed(1)} kB.`;
+      },
+    },
+  },
+};
+```
+
+Function parameters:
+
+- `assets`: Array of static assets, each containing `name` and `size` properties
+- `totalSize`: Total size of all static assets in bytes
+- `totalGzipSize`: Total gzip-compressed size of all static assets in bytes
 
 :::tip
 If the current build only generates one static asset, the total size will not be printed.
