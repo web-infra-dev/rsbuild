@@ -56,7 +56,7 @@ You can customize the output format through the options.
 
 ### total
 
-- **Type:** `boolean | ((assets: PrintFileSizeAsset[], totalSize: number, totalGzipSize: number) => string)`
+- **Type:** `boolean | ((params: { assets: PrintFileSizeAsset[]; totalSize: number; totalGzipSize: number }) => string)`
 - **Default:** `true`
 
 Whether to output the total size of all static assets, or provide a function to customize the output format of the total size.
