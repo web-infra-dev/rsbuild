@@ -255,7 +255,7 @@ export async function initPlugins({
   context: InternalContext;
   pluginManager: PluginManager;
 }): Promise<void> {
-  logger.debug('init plugins');
+  logger.debug('initializing plugins');
 
   let plugins = pluginManager.getAllPluginsWithMeta();
   plugins = sortPluginsByEnforce(plugins);
@@ -316,5 +316,5 @@ export async function initPlugins({
     await setup(context.getPluginAPI!(environment));
   }
 
-  logger.debug('init plugins done');
+  logger.debug('plugins initialized');
 }
