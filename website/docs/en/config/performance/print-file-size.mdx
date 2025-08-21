@@ -10,6 +10,7 @@ type PrintFileSizeOptions =
       detail?: boolean;
       compressed?: boolean;
       include?: (asset: PrintFileSizeAsset) => boolean;
+      exclude?: (asset: PrintFileSizeAsset) => boolean;
     };
 ```
 
