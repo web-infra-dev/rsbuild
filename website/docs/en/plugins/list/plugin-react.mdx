@@ -172,7 +172,7 @@ When set to `true`, enables the React Profiler for performance analysis in produ
 ```ts title="rsbuild.config.ts"
 pluginReact({
   // Only enable the profiler when REACT_PROFILER is true,
-  // as the option will increase the build time and adds some small additional overhead.
+  // as the option will increase the build time and add some small additional overhead.
   enableProfiler: process.env.REACT_PROFILER === 'true',
 });
 ```
