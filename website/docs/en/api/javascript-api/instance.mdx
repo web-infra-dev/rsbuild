@@ -1025,7 +1025,7 @@ import GetNormalizedConfig from '@en/shared/getNormalizedConfig.mdx';
 
 ```ts
 rsbuild.onBeforeBuild(() => {
-  const config = api.getNormalizedConfig();
+  const config = rsbuild.getNormalizedConfig();
   console.log(config.html.title);
 });
 ```
@@ -1034,8 +1034,8 @@ rsbuild.onBeforeBuild(() => {
 
 > Provides the same functionality as the [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) plugin API.
 
-- **Version：** Added in v1.5.0
-- **Example：**
+- **Version:** Added in v1.5.0
+- **Example:**
 
 ```ts
 rsbuild.modifyRsbuildConfig((config) => {
@@ -1048,8 +1048,8 @@ rsbuild.modifyRsbuildConfig((config) => {
 
 > Provides the same functionality as the [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig) plugin API.
 
-- **Version：** Added in v1.5.0
-- **Example：**
+- **Version:** Added in v1.5.0
+- **Example:**
 
 ```ts
 rsbuild.modifyEnvironmentConfig((config, { name }) => {
