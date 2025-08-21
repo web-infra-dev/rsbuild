@@ -56,7 +56,7 @@ async function modifyRspackConfig(
     });
   }
 
-  logger.debug('applied `modifyRspackConfig` hook');
+  logger.debug('applied modifyRspackConfig hook');
   return currentConfig;
 }
 
