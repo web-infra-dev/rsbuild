@@ -146,7 +146,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
         const { name } = rspackConfigs[index];
 
         // When using multi compiler, print name to distinguish different compilers
-        const suffix = name && isMultiCompiler ? color.gray(` (${name})`) : '';
+        const suffix = name && isMultiCompiler ? color.dim(` (${name})`) : '';
         logger.ready(`built in ${time}${suffix}`);
       }
     };
