@@ -6,7 +6,7 @@ export async function modifyBundlerChain(
   context: InternalContext,
   utils: ModifyBundlerChainUtils,
 ): Promise<RspackChain> {
-  logger.debug('modify bundler chain');
+  logger.debug('applying modifyBundlerChain hook');
 
   const bundlerChain = new RspackChain();
 
@@ -22,7 +22,7 @@ export async function modifyBundlerChain(
     }
   }
 
-  logger.debug('modify bundler chain done');
+  logger.debug('applied modifyBundlerChain hook');
 
   return modifiedBundlerChain;
 }

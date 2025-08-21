@@ -193,9 +193,9 @@ export async function createRsbuild(
   context.getPluginAPI = getPluginAPI;
   const globalPluginAPI = getPluginAPI();
 
-  logger.debug('add default plugins');
+  logger.debug('registering default plugins');
   applyDefaultPlugins(pluginManager, context);
-  logger.debug('add default plugins done');
+  logger.debug('default plugins registered');
 
   const provider = (config.provider as RsbuildProvider) || rspackProvider;
 

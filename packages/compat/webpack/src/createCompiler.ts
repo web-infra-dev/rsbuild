@@ -3,7 +3,7 @@ import WebpackMultiStats from 'webpack/lib/MultiStats.js';
 import { type InitConfigsOptions, initConfigs } from './initConfigs.js';
 
 export async function createCompiler(options: InitConfigsOptions) {
-  logger.debug('create compiler');
+  logger.debug('creating compiler');
   const { helpers, context } = options;
   const { webpackConfigs } = await initConfigs(options);
 
@@ -58,7 +58,7 @@ export async function createCompiler(options: InitConfigsOptions) {
     compiler,
     environments: context.environments,
   });
-  logger.debug('create compiler done');
+  logger.debug('compiler created');
 
   return {
     compiler,

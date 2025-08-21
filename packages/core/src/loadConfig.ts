@@ -209,7 +209,7 @@ export async function loadConfig({
     );
   }
 
-  logger.debug('loaded config file:', configFilePath);
+  logger.debug('configuration loaded from:', configFilePath);
 
   return {
     content: applyMetaInfo(configExport),
