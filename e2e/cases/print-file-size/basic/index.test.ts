@@ -312,7 +312,7 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
       },
     });
 
-    expect(rsbuild.logs.toString()).toContain(`Generated 5 files`);
+    await rsbuild.expectLog('Generated 5 files.');
 
     await rsbuild.close();
   });

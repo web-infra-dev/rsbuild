@@ -6,13 +6,7 @@
 type PrintFileSizeOptions =
   | boolean
   | {
-      total?:
-        | boolean
-        | ((params: {
-            assets: PrintFileSizeAsset[];
-            totalSize: number;
-            totalGzipSize: number;
-          }) => string);
+      total?: boolean | Function;
       detail?: boolean;
       compressed?: boolean;
       include?: (asset: PrintFileSizeAsset) => boolean;
@@ -56,7 +50,18 @@ export default {
 
 ### total
 
-- **类型：** `boolean | ((params: { assets: PrintFileSizeAsset[]; totalSize: number; totalGzipSize: number }) => string)`
+- **类型：**
+
+```ts
+type Total =
+  | boolean
+  | ((params: {
+      assets: PrintFileSizeAsset[];
+      totalSize: number;
+      totalGzipSize: number;
+    }) => string);
+```
+
 - **默认值：** `true`
 
 是否输出所有静态资源的总体积，或者提供一个函数来自定义总体积的输出格式。
