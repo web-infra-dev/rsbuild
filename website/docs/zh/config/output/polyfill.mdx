@@ -11,9 +11,9 @@
 
 ### usage
 
-当 `output.polyfill` 配置为 `'usage'` 时，Rsbuild 会在每个文件中根据代码中使用的 API 注入 polyfills。
+当 `output.polyfill` 配置为 `'usage'` 时，Rsbuild 会在每个文件中根据代码中使用的 API 注入 polyfills。这提供了最优的包体积，因为只包含所需的 polyfills。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     polyfill: 'usage',
@@ -23,9 +23,9 @@ export default {
 
 ### entry
 
-当 `output.polyfill` 配置为 `'entry'` 时，Rsbuild 会在每个入口文件中注入 polyfills。
+当 `output.polyfill` 配置为 `'entry'` 时，Rsbuild 会在每个入口文件中注入 polyfills。这确保了所有 polyfills 都可用，但可能会增加包体积。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     polyfill: 'entry',
@@ -37,7 +37,7 @@ export default {
 
 当 `output.polyfill` 配置为 `'off'` 时，Rsbuild 不会注入 polyfills，开发者需要自行保证代码的兼容性。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     polyfill: 'off',

@@ -1,0 +1,51 @@
+# output.module
+
+- **类型：** `boolean`
+- **默认值：** `false`
+- **版本：** 添加于 v1.5.0
+
+是否以 ES 模块格式输出 JavaScript 文件。
+
+:::tip
+
+- 此功能目前为实验性功能，仅在 [output.target](/config/output/target) 为 `'node'` 时可用。
+- 如果你需要构建 ESM 格式的 JavaScript 库，推荐使用 [Rslib](https://rslib.rs)，它是一个开箱即用的库开发工具，基于 Rsbuild 实现。
+
+:::
+
+## 示例
+
+在构建 Node.js bundles 时，Rsbuild 默认输出 CommonJS 格式的产物，你可以将 `output.module` 设置为 `true` 来输出 ES modules 格式：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'node',
+    module: true,
+  },
+};
+```
+
+## 运行 ESM 产物
+
+为了在 Node.js 中正确运行 ESM 产物，你可以选择以下任一方式：
+
+1. 将 package.json 的 `type` 字段设置为 `'module'`：
+
+```json title="package.json"
+{
+  "type": "module"
+}
+```
+
+2. 将输出的 JavaScript 文件扩展名改为 `.mjs`：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    filename: {
+      js: '[name].mjs',
+    },
+  },
+};
+```

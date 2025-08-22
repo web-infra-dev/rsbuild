@@ -1,10 +1,10 @@
 {
   "name": "@examples/node",
   "private": true,
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "build": "rsbuild build",
-    "start": "rsbuild build && node ./dist/server/index.js"
+    "start": "rsbuild build && node ./dist/index.js"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
