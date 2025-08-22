@@ -102,9 +102,9 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
       );
     };
 
-    api.onBeforeBuild(({ isFirstCompile }) => {
+    api.onBeforeBuild(async ({ isFirstCompile }) => {
       if (isFirstCompile) {
-        onStart();
+        await onStart();
       }
     });
     api.onBeforeStartDevServer(onStart);
