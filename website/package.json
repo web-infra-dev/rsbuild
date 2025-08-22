@@ -17,7 +17,7 @@
     "@rspress/plugin-llms": "2.0.0-beta.28",
     "@rspress/plugin-rss": "2.0.0-beta.28",
     "@rspress/plugin-sitemap": "2.0.0-beta.28",
-    "@rstack-dev/doc-ui": "1.10.10",
+    "@rstack-dev/doc-ui": "^1.11.0",
     "@shikijs/transformers": "^3.9.2",
     "@types/node": "^22.17.2",
     "@types/react": "^19.1.10",
