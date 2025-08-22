@@ -37,11 +37,13 @@ You can set the options of [builtin:swc-loader](https://rspack.rs/guide/features
 
 > Refer to [Configure SWC](/guide/configuration/swc) for more details.
 
-## Object type
+## Examples
+
+### Basic object configuration
 
 `tools.swc` can be configured as an object, this object will be deeply merged with the built-in `builtin:swc-loader` option.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     swc: {
@@ -53,11 +55,11 @@ export default {
 };
 ```
 
-## Function type
+### Function configuration
 
-`tools.swc` can also be configured as a function, this function takes one argument, which is the built-in `builtin:swc-loader` option. You can modify this object then return a new config. For example:
+`tools.swc` can also be configured as a function, this function takes one argument, which is the built-in `builtin:swc-loader` option. You can modify this object then return a new config:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     swc: (config) => {
@@ -72,3 +74,482 @@ export default {
 :::tip
 The object returned by the `tools.swc` function will be used directly as the final `builtin:swc-loader` option, and will not be merged with the built-in `builtin:swc-loader` option anymore.
 :::
+
+### React configuration
+
+Configure SWC for React development with JSX and Fast Refresh:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    swc: {
+      jsc: {
+        parser: {
+          syntax: 'typescript',
+          tsx: true, // Enable JSX parsing
+        },
+        transform: {
+          react: {
+            runtime: 'automatic', // Use React 17+ automatic JSX runtime
+            development: process.env.NODE_ENV === 'development',
+            refresh: process.env.NODE_ENV === 'development', // Enable Fast Refresh
+          },
+        },
+      },
+    },
+  },
+};
+```
+
+### Legacy browser support
+
+Configure SWC for legacy browser compatibility:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    swc: {
+      env: {
+        targets: {
+          ie: '11',
+          chrome: '49',
+          firefox: '36',
+        },
+        mode: 'usage',
+        coreJs: '3.26',
+      },
+      jsc: {
+        parser: {
+          syntax: 'typescript',
+          dynamicImport: true,
+        },
+        transform: {
+          useDefineForClassFields: false, // For IE compatibility
+        },
+      },
+    },
+  },
+};
+```
+
+### Decorators support
+
+Enable experimental decorators support:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    swc: {
+      jsc: {
+        parser: {
+          syntax: 'typescript',
+          decorators: true,
+        },
+        transform: {
+          decoratorMetadata: true,
+          useDefineForClassFields: false,
+        },
+      },
+    },
+  },
+};
+```
+
+### Performance optimization
+
+Optimize SWC for better build performance:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    swc: {
+      jsc: {
+        externalHelpers: true, // Reduce bundle size
+        minify: {
+          compress: {
+            dead_code: true,
+            drop_console: process.env.NODE_ENV === 'production',
+            drop_debugger: process.env.NODE_ENV === 'production',
+            passes: 3,
+          },
+          mangle: {
+            keep_classnames: false,
+            keep_fnames: false,
+          },
+        },
+      },
+      experimental: {
+        cacheRoot: './node_modules/.cache/.swc',
+        plugins: [], // Add SWC plugins if needed
+      },
+    },
+  },
+};
+```
+
+### Environment-specific configuration
+
+Different SWC configurations for different environments:
+
+```ts title="rsbuild.config.ts"
+const isDev = process.env.NODE_ENV === 'development';
+
+export default {
+  tools: {
+    swc: {
+      env: {
+        targets: isDev
+          ? { node: 'current' } // Use current Node.js version for dev
+          : {
+              browsers: ['last 2 versions', '> 1%', 'not dead'],
+            },
+        mode: 'usage',
+        coreJs: '3.26',
+      },
+      jsc: {
+        minify: isDev
+          ? undefined
+          : {
+              compress: true,
+              mangle: true,
+            },
+        parser: {
+          syntax: 'typescript',
+          jsx: true,
+          dynamicImport: true,
+          topLevelAwait: true,
+        },
+      },
+    },
+  },
+};
+```
+
+### Custom transformations
+
+Add custom SWC transformations:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    swc: (config) => {
+      // Add emotion support
+      config.jsc.transform = {
+        ...config.jsc.transform,
+        emotion: {
+          enabled: true,
+          autoLabel: 'dev-only',
+          labelFormat: '[local]',
+        },
+      };
+
+      // Configure styled-components
+      config.jsc.experimental = {
+        ...config.jsc.experimental,
+        plugins: [
+          [
+            '@swc/plugin-styled-components',
+            {
+              displayName: true,
+              ssr: false,
+              fileName: true,
+            },
+          ],
+        ],
+      };
+
+      return config;
+    },
+  },
+};
+```
+
+### TypeScript configuration
+
+Advanced TypeScript support with SWC:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    swc: {
+      jsc: {
+        parser: {
+          syntax: 'typescript',
+          tsx: true,
+          decorators: true,
+          dynamicImport: true,
+          importAssertions: true,
+        },
+        transform: {
+          useDefineForClassFields: true,
+          legacyDecorator: false, // Use TC39 decorators
+        },
+        target: 'es2022', // Target modern JavaScript
+        baseUrl: './src',
+        paths: {
+          '@/*': ['./src/*'],
+          '~/*': ['./src/components/*'],
+        },
+      },
+    },
+  },
+};
+```
+
+### Optimization for library builds
+
+Configure SWC for library/package builds:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    swc: {
+      jsc: {
+        externalHelpers: true, // Important for libraries
+        parser: {
+          syntax: 'typescript',
+          tsx: false, // Usually false for libraries
+          decorators: true,
+        },
+        target: 'es5', // Broad compatibility
+        loose: false, // Strict compliance
+      },
+      module: {
+        type: 'commonjs', // or 'es6' for ESM
+        strict: true,
+        strictMode: true,
+      },
+      sourceMaps: true,
+      env: {
+        targets: {
+          node: '14', // Support Node.js 14+
+        },
+      },
+    },
+  },
+};
+```
+
+### Development vs production configuration
+
+Different configurations for development and production:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    swc: (config) => {
+      if (process.env.NODE_ENV === 'production') {
+        // Production optimizations
+        config.jsc.minify = {
+          compress: {
+            arguments: true,
+            arrows: true,
+            booleans: true,
+            drop_console: true,
+            drop_debugger: true,
+            evaluate: true,
+            hoist_funs: true,
+            hoist_vars: true,
+            if_return: true,
+            join_vars: true,
+            loops: true,
+            passes: 3,
+            properties: true,
+            sequences: true,
+            side_effects: true,
+            switches: true,
+            typeofs: true,
+            unused: true,
+          },
+          mangle: {
+            keep_classnames: false,
+            keep_fnames: false,
+            safari10: true,
+          },
+        };
+
+        // Disable source maps for production
+        config.sourceMaps = false;
+      } else {
+        // Development optimizations
+        config.jsc.transform.react = {
+          ...config.jsc.transform?.react,
+          development: true,
+          refresh: true, // Fast refresh
+        };
+
+        // Enable source maps for development
+        config.sourceMaps = 'inline';
+      }
+
+      return config;
+    },
+  },
+};
+```
+
+### Plugin integration
+
+Integrate SWC with various plugins:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    swc: {
+      jsc: {
+        experimental: {
+          plugins: [
+            // Styled Components plugin
+            [
+              '@swc/plugin-styled-components',
+              {
+                displayName: true,
+                ssr: false,
+                fileName: true,
+                meaninglessFileNames: ['index', 'styles'],
+              },
+            ],
+            // Emotion plugin
+            [
+              '@swc/plugin-emotion',
+              {
+                sourceMap: true,
+                autoLabel: 'dev-only',
+              },
+            ],
+          ],
+        },
+      },
+    },
+  },
+};
+```
+
+### Custom file matching
+
+Configure SWC for specific file patterns:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: {
+      module: {
+        rules: [
+          {
+            test: /\.tsx?$/,
+            exclude: /node_modules/,
+            use: [
+              {
+                loader: 'builtin:swc-loader',
+                options: {
+                  jsc: {
+                    parser: {
+                      syntax: 'typescript',
+                      tsx: true,
+                    },
+                  },
+                },
+              },
+            ],
+          },
+          // Custom SWC config for specific files
+          {
+            test: /\.worker\.ts$/,
+            use: [
+              {
+                loader: 'builtin:swc-loader',
+                options: {
+                  jsc: {
+                    target: 'es2018', // Different target for workers
+                    parser: {
+                      syntax: 'typescript',
+                    },
+                  },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  },
+};
+```
+
+## Common use cases
+
+### Migrating from Babel
+
+When migrating from Babel to SWC, you can gradually transition:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    swc: (config) => {
+      // Equivalent to @babel/preset-env
+      config.env = {
+        targets: 'defaults',
+        mode: 'usage',
+        coreJs: '3.26',
+      };
+
+      // Equivalent to @babel/preset-react
+      config.jsc.transform.react = {
+        runtime: 'automatic',
+        development: process.env.NODE_ENV === 'development',
+      };
+
+      return config;
+    },
+  },
+};
+```
+
+### Framework-specific configurations
+
+#### Vue.js setup
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    swc: {
+      jsc: {
+        parser: {
+          syntax: 'typescript',
+          tsx: false, // Vue uses .vue files
+        },
+      },
+    },
+  },
+};
+```
+
+#### Svelte setup
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    swc: {
+      jsc: {
+        parser: {
+          syntax: 'typescript',
+          tsx: false,
+        },
+        transform: {
+          // Disable React transforms for Svelte
+          react: undefined,
+        },
+      },
+    },
+  },
+};
+```
+
+## Notes
+
+- SWC is significantly faster than Babel for most transformations
+- Some Babel plugins don't have SWC equivalents yet
+- SWC's experimental plugins are written in Rust and WASM
+- Configure `experimental.cacheRoot` for better performance across builds
+- Use `externalHelpers: true` to reduce bundle size, especially for libraries
+- SWC handles TypeScript type stripping but not type checking (use `tsc --noEmit` for that)
