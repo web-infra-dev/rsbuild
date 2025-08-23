@@ -148,7 +148,7 @@ Now, you can run the `npm run dev` command to start the dev server with SSR func
 
 By default, scripts and links associated with the current page are automatically inserted into the HTML template. At this time, the compiled HTML template content can be obtained through [getTransformedHtml](/api/javascript-api/environment-api#gettransformedhtml).
 
-When you need to dynamically generate HTML on the server side, you'll need to inject the URLs of JavaScript and CSS assets into the HTML. By configuring [output.manifest](/config/output/manifest), you can easily obtain the manifest information of these assets. Here's an example:
+When you need to dynamically generate HTML on the server side, you will need to inject the URLs of JavaScript and CSS assets into the HTML. By configuring [output.manifest](/config/output/manifest), you can easily obtain the manifest information of these assets. Here is an example:
 
 ```ts title="rsbuild.config.ts"
 export default {
