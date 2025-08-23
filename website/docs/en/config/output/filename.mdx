@@ -71,7 +71,7 @@ Here are the details of each `output.filename` option:
 - `wasm`: The name of the Wasm files.
 - `image`: The name of non-SVG images.
 - `media`: The name of media assets, such as video.
-- `assets`: The name of other static assets. Such as the assets defined in [Extend Asset Types](/guide/basic/static-assets#extend-asset-types).
+- `assets`: The name of other static assets, such as the assets defined in [Extend Asset Types](/guide/basic/static-assets#extend-asset-types).
 
 ## Example
 
@@ -138,7 +138,7 @@ When you import a module via dynamic import, the module will be bundled into a s
 const { add } = await import('./add.ts');
 ```
 
-To specify a fixed name for the async module, use the [magic comments](https://rspack.rs/api/runtime-api/module-methods#magic-comments) provided by Rspack, using `webpackChunkName ` to specify the module name:
+To specify a fixed name for the async module, use the [magic comments](https://rspack.rs/api/runtime-api/module-methods#magic-comments) provided by Rspack, using `webpackChunkName` to specify the module name:
 
 ```js title="src/index.ts"
 const { add } = await import(
