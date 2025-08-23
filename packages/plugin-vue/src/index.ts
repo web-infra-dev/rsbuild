@@ -63,9 +63,7 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
             // 1. `/path/to/Foo.vue`
             // 2. `/path/to/Foo.vue.css?query=...`
             if (VUE_REGEXP.test(path) || path.includes('.vue.css')) {
-              return (
-                query.includes('type=style') && query.includes('module=true')
-              );
+              return query.includes('type=style') && query.includes('module=');
             }
             return CSS_MODULES_REGEX.test(path);
           };
