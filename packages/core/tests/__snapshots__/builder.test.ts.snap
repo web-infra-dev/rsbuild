@@ -52,7 +52,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         "resourceQuery": {
           "not": [
             /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            /\\^\\\\\\?inline\\$/,
+            /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
           ],
         },
         "sideEffects": true,
@@ -94,7 +94,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         "resolve": {
           "preferRelative": true,
         },
-        "resourceQuery": /\\^\\\\\\?inline\\$/,
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -254,7 +254,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /\\^\\\\\\?inline\\$/,
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
           },
           {
@@ -285,7 +285,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /\\^\\\\\\?inline\\$/,
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
           },
           {
@@ -316,7 +316,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /\\^\\\\\\?inline\\$/,
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
           },
           {
@@ -347,7 +347,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /\\^\\\\\\?inline\\$/,
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
           },
           {

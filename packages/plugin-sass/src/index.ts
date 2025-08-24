@@ -99,8 +99,8 @@ export const pluginSass = (
 
   setup(api) {
     const { rewriteUrls = true, include = /\.s(?:a|c)ss$/ } = pluginOptions;
-    const RAW_QUERY_REGEX: RegExp = /[?&]raw(?:&|=|$)/;
-    const INLINE_QUERY_REGEX: RegExp = /^\?inline$/;
+    const RAW_QUERY_REGEX = /[?&]raw(?:&|=|$)/;
+    const INLINE_QUERY_REGEX = /[?&]inline(?:&|=|$)/;
 
     api.onAfterCreateCompiler(({ compiler }) => {
       patchCompilerGlobalLocation(compiler);
