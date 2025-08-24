@@ -23,7 +23,7 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
       /node_modules\\[\\\\\\\\/\\]svelte\\[\\\\\\\\/\\]/,
     ],
     "resourceQuery": {
-      "not": /\\^\\\\\\?raw\\$/,
+      "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
     },
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
     "type": "javascript/auto",
@@ -71,7 +71,7 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
     ],
   },
   {
-    "resourceQuery": /\\^\\\\\\?raw\\$/,
+    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
     "type": "asset/source",
   },
@@ -155,7 +155,7 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
       /node_modules\\[\\\\\\\\/\\]svelte\\[\\\\\\\\/\\]/,
     ],
     "resourceQuery": {
-      "not": /\\^\\\\\\?raw\\$/,
+      "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
     },
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
     "type": "javascript/auto",
@@ -203,7 +203,7 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
     ],
   },
   {
-    "resourceQuery": /\\^\\\\\\?raw\\$/,
+    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
     "type": "asset/source",
   },

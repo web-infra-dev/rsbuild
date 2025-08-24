@@ -18,7 +18,7 @@ exports[`plugin-asset > should add image rules correctly 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -49,7 +49,7 @@ exports[`plugin-asset > should add image rules correctly 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -80,7 +80,7 @@ exports[`plugin-asset > should add image rules correctly 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -111,7 +111,7 @@ exports[`plugin-asset > should add image rules correctly 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -159,7 +159,7 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -190,7 +190,7 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -221,7 +221,7 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -252,7 +252,7 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -300,7 +300,7 @@ exports[`plugin-asset > should allow to use distPath.image to modify dist path 1
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -331,7 +331,7 @@ exports[`plugin-asset > should allow to use distPath.image to modify dist path 1
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -362,7 +362,7 @@ exports[`plugin-asset > should allow to use distPath.image to modify dist path 1
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -393,7 +393,7 @@ exports[`plugin-asset > should allow to use distPath.image to modify dist path 1
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -441,7 +441,7 @@ exports[`plugin-asset > should allow to use filename.image to modify filename 1`
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -472,7 +472,7 @@ exports[`plugin-asset > should allow to use filename.image to modify filename 1`
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -503,7 +503,7 @@ exports[`plugin-asset > should allow to use filename.image to modify filename 1`
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -534,7 +534,7 @@ exports[`plugin-asset > should allow to use filename.image to modify filename 1`
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
