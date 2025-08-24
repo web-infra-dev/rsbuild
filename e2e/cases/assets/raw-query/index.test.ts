@@ -81,9 +81,14 @@ test('should allow to get raw TS content with `?raw`', async ({ page }) => {
     page,
   });
 
-  expect(await page.evaluate('window.rawTs')).toEqual(
-    await promises.readFile(join(__dirname, 'src/bar.ts'), 'utf-8'),
+  const tsContent = await promises.readFile(
+    join(__dirname, 'src/bar.ts'),
+    'utf-8',
   );
+  expect(await page.evaluate('window.rawTs1')).toEqual(tsContent);
+  expect(await page.evaluate('window.rawTs2')).toEqual(tsContent);
+  expect(await page.evaluate('window.rawTs3')).toEqual(tsContent);
+  expect(await page.evaluate('window.rawTs4')).toEqual(tsContent);
 
   await rsbuild.close();
 });

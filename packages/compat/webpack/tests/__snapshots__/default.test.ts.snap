@@ -52,7 +52,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         },
         "resourceQuery": {
           "not": [
-            /\\^\\\\\\?raw\\$/,
+            /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             /\\^\\\\\\?inline\\$/,
           ],
         },
@@ -100,7 +100,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         ],
       },
       {
-        "resourceQuery": /\\^\\\\\\?raw\\$/,
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.css\\$/,
         "type": "asset/source",
       },
@@ -116,13 +116,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
         ],
         "resourceQuery": {
-          "not": /\\^\\\\\\?raw\\$/,
+          "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
       },
       {
-        "resourceQuery": /\\^\\\\\\?raw\\$/,
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "asset/source",
       },
@@ -148,7 +148,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -179,7 +179,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -210,7 +210,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -241,7 +241,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -510,7 +510,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         },
         "resourceQuery": {
           "not": [
-            /\\^\\\\\\?raw\\$/,
+            /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             /\\^\\\\\\?inline\\$/,
           ],
         },
@@ -558,7 +558,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         ],
       },
       {
-        "resourceQuery": /\\^\\\\\\?raw\\$/,
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.css\\$/,
         "type": "asset/source",
       },
@@ -573,13 +573,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
         "resourceQuery": {
-          "not": /\\^\\\\\\?raw\\$/,
+          "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
       },
       {
-        "resourceQuery": /\\^\\\\\\?raw\\$/,
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "asset/source",
       },
@@ -605,7 +605,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -636,7 +636,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -667,7 +667,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -698,7 +698,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -965,7 +965,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         },
         "resourceQuery": {
           "not": [
-            /\\^\\\\\\?raw\\$/,
+            /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             /\\^\\\\\\?inline\\$/,
           ],
         },
@@ -1014,7 +1014,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         ],
       },
       {
-        "resourceQuery": /\\^\\\\\\?raw\\$/,
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.css\\$/,
         "type": "asset/source",
       },
@@ -1029,13 +1029,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
         "resourceQuery": {
-          "not": /\\^\\\\\\?raw\\$/,
+          "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
       },
       {
-        "resourceQuery": /\\^\\\\\\?raw\\$/,
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "asset/source",
       },
@@ -1061,7 +1061,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -1092,7 +1092,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -1123,7 +1123,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -1154,7 +1154,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -1351,7 +1351,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         },
         "resourceQuery": {
           "not": [
-            /\\^\\\\\\?raw\\$/,
+            /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             /\\^\\\\\\?inline\\$/,
           ],
         },
@@ -1400,7 +1400,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         ],
       },
       {
-        "resourceQuery": /\\^\\\\\\?raw\\$/,
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.css\\$/,
         "type": "asset/source",
       },
@@ -1415,13 +1415,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
         "resourceQuery": {
-          "not": /\\^\\\\\\?raw\\$/,
+          "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
       },
       {
-        "resourceQuery": /\\^\\\\\\?raw\\$/,
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "asset/source",
       },
@@ -1447,7 +1447,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -1478,7 +1478,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -1509,7 +1509,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -1540,7 +1540,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {

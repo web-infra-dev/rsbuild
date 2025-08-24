@@ -72,7 +72,7 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
   name: PLUGIN_STYLUS_NAME,
 
   setup(api) {
-    const RAW_QUERY_REGEX: RegExp = /^\?raw$/;
+    const RAW_QUERY_REGEX: RegExp = /[?&]raw(?:&|=|$)/;
     const INLINE_QUERY_REGEX: RegExp = /^\?inline$/;
 
     api.modifyBundlerChain((chain, { CHAIN_ID, environment }) => {
