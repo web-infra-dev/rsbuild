@@ -47,7 +47,11 @@ export const DEFAULT_BROWSERSLIST: Record<string, string[]> = {
 export const JS_REGEX: RegExp = /\.(?:js|mjs|cjs|jsx)$/;
 export const SCRIPT_REGEX: RegExp = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
 export const CSS_REGEX: RegExp = /\.css$/;
-export const RAW_QUERY_REGEX: RegExp = /^\?raw$/;
+/**
+ * Regular expression to match the 'raw' query parameter.
+ * Matches patterns like: `?raw`, `?raw&other=value`, `?other=value&raw`, `?raw=value`
+ */
+export const RAW_QUERY_REGEX: RegExp = /[?&]raw(?:&|=|$)/;
 export const INLINE_QUERY_REGEX: RegExp = /^\?inline$/;
 export const NODE_MODULES_REGEX: RegExp = /[\\/]node_modules[\\/]/;
 

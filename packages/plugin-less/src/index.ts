@@ -179,7 +179,7 @@ export const pluginLess = (
 
   setup(api) {
     const { include = /\.less$/, parallel = false } = pluginOptions;
-    const RAW_QUERY_REGEX: RegExp = /^\?raw$/;
+    const RAW_QUERY_REGEX: RegExp = /[?&]raw(?:&|=|$)/;
     const INLINE_QUERY_REGEX: RegExp = /^\?inline$/;
 
     api.modifyBundlerChain((chain, { CHAIN_ID, environment }) => {
