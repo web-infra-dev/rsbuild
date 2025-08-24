@@ -672,8 +672,8 @@ importers:
         specifier: ^2.0.9
         version: 2.0.9
       launch-editor-middleware:
-        specifier: ^2.11.0
-        version: 2.11.0
+        specifier: ^2.11.1
+        version: 2.11.1
       mrmime:
         specifier: ^2.0.1
         version: 2.0.1
@@ -4712,11 +4712,11 @@ packages:
     resolution: {integrity: sha512-oDxVkRwPOHhGlxKIDiDB2h+/l05QPtefD7nSqRgDfZt8P+QVYFWjfeK8jANf5O2YXjk8egd7KntvXKYx82wOag==}
     engines: {node: '>= 18'}
 
-  launch-editor-middleware@2.11.0:
-    resolution: {integrity: sha512-AEKcN/lnbugcXYoYOpEuTR87vhFvEWH6azZl6gqqUrnntFBNowIkgof2g8wHQ+UrM9aNRKykTWFz/TW+uiqlow==}
+  launch-editor-middleware@2.11.1:
+    resolution: {integrity: sha512-6xpn4pJz5mDg2kUH7L6gK5BuZcZPdVwoSs/DhfebefwLyszNXqFFjksGup/w4CTRzzrr8FSEufDzb/gKFLle6w==}
 
-  launch-editor@2.11.0:
-    resolution: {integrity: sha512-R/PIF14L6e2eHkhvQPu7jDRCr0msfCYCxbYiLgkkAGi0dVPWuM+RrsPu0a5dpuNe0KWGL3jpAkOlv53xGfPheQ==}
+  launch-editor@2.11.1:
+    resolution: {integrity: sha512-SEET7oNfgSaB6Ym0jufAdCeo3meJVeCaaDyzRygy0xsp2BFKCprcfHljTq4QkzTLUxEKkFK6OK4811YM2oSrRg==}
 
   leac@0.6.0:
     resolution: {integrity: sha512-y+SqErxb8h7nE/fiEX07jsbuhrpO9lL8eca7/Y1nuWV2moNlXhyd59iDGcRf6moVyDMbmTNzL40SUyrFU/yDpg==}
@@ -10522,11 +10522,11 @@ snapshots:
       type-is: 2.0.1
       vary: 1.1.2
 
-  launch-editor-middleware@2.11.0:
+  launch-editor-middleware@2.11.1:
     dependencies:
-      launch-editor: 2.11.0
+      launch-editor: 2.11.1
 
-  launch-editor@2.11.0:
+  launch-editor@2.11.1:
     dependencies:
       picocolors: 1.1.1
       shell-quote: 1.8.3
