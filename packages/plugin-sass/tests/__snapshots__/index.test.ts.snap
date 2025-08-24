@@ -12,7 +12,7 @@ exports[`plugin-sass > should add sass-loader 1`] = `
     "resourceQuery": {
       "not": [
         /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-        /\\^\\\\\\?inline\\$/,
+        /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
       ],
     },
     "sideEffects": true,
@@ -71,7 +71,7 @@ exports[`plugin-sass > should add sass-loader 1`] = `
     ],
   },
   {
-    "resourceQuery": /\\^\\\\\\?inline\\$/,
+    "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
     "use": [
       {
@@ -138,7 +138,7 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
     "resourceQuery": {
       "not": [
         /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-        /\\^\\\\\\?inline\\$/,
+        /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
       ],
     },
     "sideEffects": true,
@@ -197,7 +197,7 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
     ],
   },
   {
-    "resourceQuery": /\\^\\\\\\?inline\\$/,
+    "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
     "use": [
       {
@@ -267,7 +267,7 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
     "resourceQuery": {
       "not": [
         /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-        /\\^\\\\\\?inline\\$/,
+        /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
       ],
     },
     "sideEffects": true,
@@ -329,7 +329,7 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
     "exclude": [
       /node_modules/,
     ],
-    "resourceQuery": /\\^\\\\\\?inline\\$/,
+    "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
     "use": [
       {
@@ -396,7 +396,7 @@ exports[`plugin-sass > should allow to use legacy API and mute deprecation warni
     "resourceQuery": {
       "not": [
         /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-        /\\^\\\\\\?inline\\$/,
+        /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
       ],
     },
     "sideEffects": true,
@@ -456,7 +456,7 @@ exports[`plugin-sass > should allow to use legacy API and mute deprecation warni
     ],
   },
   {
-    "resourceQuery": /\\^\\\\\\?inline\\$/,
+    "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
     "use": [
       {

@@ -52,7 +52,11 @@ export const CSS_REGEX: RegExp = /\.css$/;
  * Matches patterns like: `?raw`, `?raw&other=value`, `?other=value&raw`, `?raw=value`
  */
 export const RAW_QUERY_REGEX: RegExp = /[?&]raw(?:&|=|$)/;
-export const INLINE_QUERY_REGEX: RegExp = /^\?inline$/;
+/**
+ * Regular expression to match the 'inline' query parameter.
+ * Matches patterns like: `?inline`, `?inline&other=value`, `?other=value&inline`, `?inline=value`
+ */
+export const INLINE_QUERY_REGEX: RegExp = /[?&]inline(?:&|=|$)/;
 export const NODE_MODULES_REGEX: RegExp = /[\\/]node_modules[\\/]/;
 
 // Plugins
