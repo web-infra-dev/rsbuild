@@ -64,6 +64,7 @@ exports[`plugin-less > should add less-loader 1`] = `
   },
   {
     "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+    "sideEffects": true,
     "test": /\\\\\\.less\\$/,
     "use": [
       {
@@ -174,6 +175,7 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
   },
   {
     "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+    "sideEffects": true,
     "test": /\\\\\\.less\\$/,
     "use": [
       {
@@ -290,6 +292,7 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
       /node_modules/,
     ],
     "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+    "sideEffects": true,
     "test": /\\\\\\.less\\$/,
     "use": [
       {
@@ -400,6 +403,7 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
   },
   {
     "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+    "sideEffects": true,
     "test": /\\\\\\.less\\$/,
     "use": [
       {
@@ -517,6 +521,7 @@ exports[`plugin-less > should allow to use Less plugins 1`] = `
   },
   {
     "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+    "sideEffects": true,
     "test": /\\\\\\.less\\$/,
     "use": [
       {

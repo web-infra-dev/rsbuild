@@ -92,6 +92,8 @@ describe('plugin-sass', () => {
               // Mock the behavior of Rsbuild < 1.3.0
               api.modifyBundlerChain((chain, { CHAIN_ID }) => {
                 chain.module.rules.delete(CHAIN_ID.RULE.CSS_INLINE);
+                // @ts-expect-error
+                delete CHAIN_ID.RULE.CSS_INLINE;
               });
             },
           },

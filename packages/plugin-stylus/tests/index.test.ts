@@ -40,6 +40,8 @@ describe('plugin-stylus', () => {
             setup(api: RsbuildPluginAPI) {
               api.modifyBundlerChain((chain, { CHAIN_ID }) => {
                 chain.module.rules.delete(CHAIN_ID.RULE.CSS_INLINE);
+                // @ts-expect-error
+                delete CHAIN_ID.RULE.CSS_INLINE;
               });
             },
           },
