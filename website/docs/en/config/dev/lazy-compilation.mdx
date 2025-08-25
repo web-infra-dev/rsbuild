@@ -44,7 +44,7 @@ Enable lazy compilation (compilation on demand), implemented based on Rspack's [
 
 Although Rspack itself has good performance, the overall build time can still be less than ideal when building applications with a large number of modules. This is because the modules in the application need to be compiled by various loaders, such as `postcss-loader`, `sass-loader`, `vue-loader`, etc., which introduce additional compilation overhead.
 
-Lazy compilation is an effective strategy to improve the startup performance of the development phase. Instead of compiling all modules at initialization, it compiles modules on demand as they're needed. This means that developers can quickly see the application running when starting the dev server, and build the required modules in batches. By compiling on demand, unnecessary compilation time can be reduced. As the project scales up, compilation time does not significantly increase, which greatly enhances the development experience.
+Lazy compilation is an effective strategy to improve the startup performance of the development phase. Instead of compiling all modules at initialization, it compiles modules on demand as they are needed. This means that developers can quickly see the application running when starting the dev server, and build the required modules in batches. By compiling on demand, unnecessary compilation time can be reduced. As the project scales up, compilation time does not significantly increase, which greatly enhances the development experience.
 
 :::tip
 Lazy compilation is only effective for dev builds and does not affect production builds.
