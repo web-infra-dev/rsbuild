@@ -191,7 +191,7 @@ async function printFileSizes(
     if (typeof options.total === 'function') {
       return options.total({
         environmentName,
-        distFolder: path.relative(
+        distPath: path.relative(
           rootPath,
           stats.compilation.outputOptions.path || '',
         ),

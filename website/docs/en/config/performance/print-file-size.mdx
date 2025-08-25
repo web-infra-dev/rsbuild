@@ -57,7 +57,7 @@ type Total =
   | boolean
   | ((params: {
       environmentName: string;
-      distFolder: string;
+      distPath: string;
       assets: PrintFileSizeAsset[];
       totalSize: number;
       totalGzipSize: number;
@@ -90,8 +90,8 @@ When set to a function, you can customize the total size output format:
 export default {
   performance: {
     printFileSize: {
-      total: ({ distFolder, assets, totalSize }) => {
-        return `Generated ${assets.length} files in ${distFolder}, the total size is ${(totalSize / 1000).toFixed(1)} kB.`;
+      total: ({ distPath, assets, totalSize }) => {
+        return `Generated ${assets.length} files in ${distPath}, the total size is ${(totalSize / 1000).toFixed(1)} kB.`;
       },
     },
   },
@@ -101,7 +101,7 @@ export default {
 Function parameters:
 
 - `environmentName`: The unique name of the current environment, used to distinguish and locate the environment
-- `distFolder`: The output directory relative to the project root
+- `distPath`: The output directory relative to the project root
 - `assets`: Array of static assets, each containing `name` and `size` properties
 - `totalSize`: Total size of all static assets in bytes
 - `totalGzipSize`: Total gzip-compressed size of all static assets in bytes

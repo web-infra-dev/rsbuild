@@ -57,7 +57,7 @@ type Total =
   | boolean
   | ((params: {
       environmentName: string;
-      distFolder: string;
+      distPath: string;
       assets: PrintFileSizeAsset[];
       totalSize: number;
       totalGzipSize: number;
@@ -90,8 +90,8 @@ export default {
 export default {
   performance: {
     printFileSize: {
-      total: ({ distFolder, assets, totalSize }) => {
-        return `Generated ${assets.length} files in ${distFolder}, the total size is ${(totalSize / 1000).toFixed(1)} kB.`;
+      total: ({ distPath, assets, totalSize }) => {
+        return `Generated ${assets.length} files in ${distPath}, the total size is ${(totalSize / 1000).toFixed(1)} kB.`;
       },
     },
   },
@@ -101,7 +101,7 @@ export default {
 函数参数说明：
 
 - `environmentName`: 当前环境的唯一名称，用于区分和定位该环境
-- `distFolder`: 输出目录相对于项目根目录的路径
+- `distPath`: 输出目录相对于项目根目录的路径
 - `assets`: 静态资源列表，每个资源包含 `name` 和 `size` 属性
 - `totalSize`: 所有静态资源的体积
 - `totalGzipSize`: 所有静态资源 gzip 压缩后的体积
