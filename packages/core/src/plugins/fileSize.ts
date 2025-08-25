@@ -93,23 +93,21 @@ async function printFileSizes(
   options: PrintFileSizeOptions,
   stats: Rspack.Stats,
   rootPath: string,
+  distPath: string,
   environmentName: string,
 ) {
   const logs: string[] = [];
-
-  let showTotal = options.total !== false;
   const showDetail = options.detail !== false;
-  const exclude = options.exclude ?? excludeAsset;
+  let showTotal = options.total !== false;
 
   if (!showTotal && !showDetail) {
     return logs;
   }
 
-  const formatAsset = async (
-    asset: Rspack.StatsAsset,
-    distPath: string,
-    distFolder: string,
-  ) => {
+  const exclude = options.exclude ?? excludeAsset;
+  const relativeDistPath = path.relative(rootPath, distPath);
+
+  const formatAsset = async (asset: Rspack.StatsAsset) => {
     const fileName = asset.name.split('?')[0];
     const contents = await fs.promises.readFile(path.join(distPath, fileName));
     const size = Buffer.byteLength(contents);
@@ -121,7 +119,7 @@ async function printFileSizes(
 
     return {
       size,
-      folder: path.join(distFolder, path.dirname(fileName)),
+      folder: path.join(relativeDistPath, path.dirname(fileName)),
       name: path.basename(fileName),
       gzippedSize,
       sizeLabel: calcFileSize(size),
@@ -129,18 +127,14 @@ async function printFileSizes(
     };
   };
 
+  const pickAssetInfo = (asset: PrintFileSizeAsset): PrintFileSizeAsset => ({
+    name: asset.name,
+    size: asset.size,
+  });
+
   const getAssets = async () => {
-    const distPath = stats.compilation.outputOptions.path;
-
-    if (!distPath) {
-      return [];
-    }
-
     const filteredAssets = getAssetsFromStats(stats).filter((asset) => {
-      const assetInfo: PrintFileSizeAsset = {
-        name: asset.name,
-        size: asset.size,
-      };
+      const assetInfo = pickAssetInfo(asset);
       if (exclude(assetInfo)) {
         return false;
       }
@@ -150,12 +144,9 @@ async function printFileSizes(
       return true;
     });
 
-    const distFolder = path.relative(rootPath, distPath);
-
-    return Promise.all(
-      filteredAssets.map((asset) => formatAsset(asset, distPath, distFolder)),
-    );
+    return Promise.all(filteredAssets.map((asset) => formatAsset(asset)));
   };
+
   const assets = await getAssets();
 
   if (assets.length === 0) {
@@ -191,14 +182,8 @@ async function printFileSizes(
     if (typeof options.total === 'function') {
       return options.total({
         environmentName,
-        distPath: path.relative(
-          rootPath,
-          stats.compilation.outputOptions.path || '',
-        ),
-        assets: assets.map((asset) => ({
-          name: asset.name,
-          size: asset.size,
-        })),
+        distPath: relativeDistPath,
+        assets: assets.map((asset) => pickAssetInfo(asset)),
         totalSize,
         totalGzipSize,
       });
@@ -340,6 +325,7 @@ export const pluginFileSize = (): RsbuildPlugin => ({
             mergedConfig,
             multiStats[index],
             api.context.rootPath,
+            environment.distPath,
             environment.name,
           );
 
