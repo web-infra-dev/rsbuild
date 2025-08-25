@@ -12,16 +12,24 @@ test('should allow to import raw CSS files in development mode', async ({
   });
 
   await page.waitForFunction(
-    'window.bStyles && window.aRaw && window.bRaw',
+    [
+      'window.aRaw1',
+      'window.aRaw2',
+      'window.aRaw3',
+      'window.aRaw4',
+      'window.bRaw',
+    ].join(' && '),
     undefined,
     { timeout: 1000 },
   );
 
+  const aContent = readFileSync(path.join(__dirname, 'src/a.css'), 'utf-8');
   const bStyles: Record<string, string> = await page.evaluate('window.bStyles');
 
-  expect(await page.evaluate('window.aRaw')).toBe(
-    readFileSync(path.join(__dirname, 'src/a.css'), 'utf-8'),
-  );
+  expect(await page.evaluate('window.aRaw1')).toBe(aContent);
+  expect(await page.evaluate('window.aRaw2')).toBe(aContent);
+  expect(await page.evaluate('window.aRaw3')).toBe(aContent);
+  expect(await page.evaluate('window.aRaw4')).toBe(aContent);
   expect(await page.evaluate('window.bRaw')).toBe(
     readFileSync(path.join(__dirname, 'src/b.module.css'), 'utf-8'),
   );
@@ -38,11 +46,13 @@ test('should allow to import raw CSS files in production mode', async ({
     page,
   });
 
+  const aContent = readFileSync(path.join(__dirname, 'src/a.css'), 'utf-8');
   const bStyles: Record<string, string> = await page.evaluate('window.bStyles');
 
-  expect(await page.evaluate('window.aRaw')).toBe(
-    readFileSync(path.join(__dirname, 'src/a.css'), 'utf-8'),
-  );
+  expect(await page.evaluate('window.aRaw1')).toBe(aContent);
+  expect(await page.evaluate('window.aRaw2')).toBe(aContent);
+  expect(await page.evaluate('window.aRaw3')).toBe(aContent);
+  expect(await page.evaluate('window.aRaw4')).toBe(aContent);
   expect(await page.evaluate('window.bRaw')).toBe(
     readFileSync(path.join(__dirname, 'src/b.module.css'), 'utf-8'),
   );

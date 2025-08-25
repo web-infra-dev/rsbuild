@@ -8,7 +8,7 @@ Force Rsbuild to resolve the specified packages from project root, which is usef
 
 ## Example
 
-For example, assume your project is based on React 19, and you are using the `foo` package that depends on React 17, then your project will have two different versions of the React:
+For example, assume your project is based on React 19, and you are using the `foo` package that depends on React 17, then your project will have two different versions of React:
 
 ```
 app/
@@ -32,7 +32,7 @@ export default defineConfig({
 });
 ```
 
-Note that using `resolve.dedupe` to unify different major versions of a package, it may cause some packages to fail because they may depend on specific versions of APIs or features.
+Note that using `resolve.dedupe` to unify different major versions of a package may cause some packages to fail because they may depend on specific versions of APIs or features.
 
 For example, if `foo` depends on a React 17-specific API or feature, then unifying React 17 and React 19 with React 19 using `resolve.dedupe` may cause `foo` to fail.
 

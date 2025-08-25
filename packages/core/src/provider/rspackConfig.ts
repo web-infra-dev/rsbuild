@@ -23,7 +23,7 @@ async function modifyRspackConfig(
   rspackConfig: Rspack.Configuration,
   chainUtils: ModifyChainUtils,
 ) {
-  logger.debug('modify Rspack config');
+  logger.debug('applying modifyRspackConfig hook');
 
   let currentConfig = rspackConfig;
 
@@ -56,7 +56,7 @@ async function modifyRspackConfig(
     });
   }
 
-  logger.debug('modify Rspack config done');
+  logger.debug('applied modifyRspackConfig hook');
   return currentConfig;
 }
 

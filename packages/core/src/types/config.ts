@@ -615,10 +615,16 @@ export type PrintFileSizeAsset = {
 
 export type PrintFileSizeOptions = {
   /**
-   * Whether to print the total size of all static assets.
+   * Whether to print the total size of all static assets, or a function to generate custom total output.
    * @default true
    */
-  total?: boolean;
+  total?:
+    | boolean
+    | ((params: {
+        assets: PrintFileSizeAsset[];
+        totalSize: number;
+        totalGzipSize: number;
+      }) => string);
   /**
    * Whether to print the size of each static asset.
    * @default true

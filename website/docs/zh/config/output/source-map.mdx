@@ -94,6 +94,10 @@ export default {
 };
 ```
 
+:::warning
+在生产构建中使用 `source-map` 或 `hidden-source-map` 等选项时，请勿将 source maps (`.map` 文件) 部署到公开访问的 Web 服务器或 CDN 上。公开 source maps 会暴露你的源代码，并且可能带来安全风险。
+:::
+
 ## CSS source map
 
 CSS 文件的 source map 通过 `sourceMap.css` 来控制，设置为 `true` 为开启，设置为 `false` 为关闭。

@@ -78,7 +78,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
   compiler: Rspack.Compiler | Rspack.MultiCompiler;
   rspackConfigs: Rspack.Configuration[];
 }> {
-  logger.debug('create compiler');
+  logger.debug('creating compiler');
   const { context } = options;
   const { rspackConfigs } = await initConfigs(options);
 
@@ -105,7 +105,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
 
   const logRspackVersion = () => {
     if (!isVersionLogged) {
-      logger.debug(`use Rspack v${rspack.rspackVersion}`);
+      logger.debug(`using Rspack v${rspack.rspackVersion}`);
       isVersionLogged = true;
     }
   };
@@ -146,7 +146,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
         const { name } = rspackConfigs[index];
 
         // When using multi compiler, print name to distinguish different compilers
-        const suffix = name && isMultiCompiler ? color.gray(` (${name})`) : '';
+        const suffix = name && isMultiCompiler ? color.dim(` (${name})`) : '';
         logger.ready(`built in ${time}${suffix}`);
       }
     };
@@ -196,7 +196,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     compiler,
     environments: context.environments,
   });
-  logger.debug('create compiler done');
+  logger.debug('compiler created');
 
   return {
     compiler,

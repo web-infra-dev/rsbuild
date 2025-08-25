@@ -7,7 +7,7 @@
 
 ## 用法
 
-`source.exclude` 的用法与 Rspack 中的 [Rule.exclude](https://rspack.rs/zh/config/module#ruleexclude) 一致，支持传入字符串或正则表达式来匹配模块的路径。
+`source.exclude` 的用法与 [source.include](/config/source/include) 类似，支持传入字符串或正则表达式来匹配模块的路径。
 
 比如:
 
@@ -21,7 +21,24 @@ export default {
 };
 ```
 
-> 参考 [source.include](/config/source/include) 来了解更多。
+> 查看 [source.include](/config/source/include) 来了解更多用法。
+
+## 优先级
+
+当同时设置 `source.include` 和 `source.exclude` 时，`source.exclude` 具有更高的优先级。
+
+例如，在下面的示例中，虽然 `source.include` 匹配了整个 `src` 目录，但 `src/foo` 目录下的 JavaScript 文件不会被 SWC 编译：
+
+```ts title="rsbuild.config.ts"
+import path from 'node:path';
+
+export default {
+  source: {
+    include: [path.resolve(__dirname, 'src')],
+    exclude: [path.resolve(__dirname, 'src/foo')],
+  },
+};
+```
 
 ## 排除打包
 

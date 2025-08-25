@@ -48,7 +48,7 @@ const prodDefaultFilename = {
 
 Sets the filename of output files.
 
-After the production build, Rsbuild will add a hash in the middle of the filename by default. If you don't need to add it, you can set [output.filenameHash](/config/output/filename-hash) to `false` to disable this behavior.
+After the production build, Rsbuild will add a hash in the middle of the filename by default. If you do not need to add it, you can set [output.filenameHash](/config/output/filename-hash) to `false` to disable this behavior.
 
 :::tip
 Rsbuild will generate the final file path based on `output.filename` and [output.distPath](/config/output/dist-path).
@@ -71,7 +71,7 @@ Here are the details of each `output.filename` option:
 - `wasm`: The name of the Wasm files.
 - `image`: The name of non-SVG images.
 - `media`: The name of media assets, such as video.
-- `assets`: The name of other static assets. Such as the assets defined in [Extend Asset Types](/guide/basic/static-assets#extend-asset-types).
+- `assets`: The name of other static assets, such as the assets defined in [Extend Asset Types](/guide/basic/static-assets#extend-asset-types).
 
 ## Example
 
@@ -104,7 +104,7 @@ export default {
 :::tip Filename hash
 Usually, Rsbuild only sets the filename hash in the production mode (i.e., when `process.env.NODE_ENV === 'production'`).
 
-If you set the filename hash in the development mode, it may cause HMR to fail (especially for CSS files). This is because every time the file content changes, the hash value changes, preventing bundler from reading the latest file content.
+If you set the filename hash in the development mode, it may cause HMR to fail (especially for CSS files). This is because every time the file content changes, the hash value changes, preventing the bundler from reading the latest file content.
 :::
 
 ## Template strings
@@ -138,7 +138,7 @@ When you import a module via dynamic import, the module will be bundled into a s
 const { add } = await import('./add.ts');
 ```
 
-To specify a fixed name for the async module, use the [magic comments](https://rspack.rs/api/runtime-api/module-methods#magic-comments) provided by Rspack, using `webpackChunkName ` to specify the module name:
+To specify a fixed name for the async module, use the [magic comments](https://rspack.rs/api/runtime-api/module-methods#magic-comments) provided by Rspack, using `webpackChunkName` to specify the module name:
 
 ```js title="src/index.ts"
 const { add } = await import(

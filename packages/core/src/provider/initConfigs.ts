@@ -35,7 +35,7 @@ const allowedEnvironmentDevKeys: AllowedEnvironmentDevKeys[] = [
 ];
 
 async function modifyRsbuildConfig(context: InternalContext) {
-  logger.debug('modify Rsbuild config');
+  logger.debug('applying modifyRsbuildConfig hook');
 
   const pluginsCount = context.config.plugins?.length ?? 0;
   const [modified] = await context.hooks.modifyRsbuildConfig.callChain(
@@ -53,7 +53,7 @@ async function modifyRsbuildConfig(context: InternalContext) {
     );
   }
 
-  logger.debug('modify Rsbuild config done');
+  logger.debug('applied modifyRsbuildConfig hook');
 }
 
 async function modifyEnvironmentConfig(
@@ -61,7 +61,7 @@ async function modifyEnvironmentConfig(
   config: MergedEnvironmentConfig,
   name: string,
 ) {
-  logger.debug(`modify Rsbuild environment(${name}) config`);
+  logger.debug(`applying modifyEnvironmentConfig hook (${name})`);
 
   const [modified] = await context.hooks.modifyEnvironmentConfig.callChain({
     environment: name,
@@ -75,7 +75,7 @@ async function modifyEnvironmentConfig(
     ],
   });
 
-  logger.debug(`modify Rsbuild environment(${name}) config done`);
+  logger.debug(`applied modifyEnvironmentConfig hook (${name})`);
 
   return modified;
 }

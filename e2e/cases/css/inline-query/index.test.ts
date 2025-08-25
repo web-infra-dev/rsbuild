@@ -10,19 +10,22 @@ rspackOnlyTest(
     });
 
     await page.waitForFunction(
-      'window.aInline && window.bInline && window.bStyles',
+      ['aInline1', 'aInline2', 'aInline3', 'aInline4'].join(' && '),
       undefined,
       { timeout: 1000 },
     );
 
-    const aInline: string = await page.evaluate('window.aInline');
+    for (const key of ['aInline1', 'aInline2', 'aInline3', 'aInline4']) {
+      const inline: string = await page.evaluate(`window.${key}`);
+      expect(
+        inline.includes('.header-class') && inline.includes('color: red'),
+      ).toBe(true);
+    }
+
     const bInline: string = await page.evaluate('window.bInline');
     const bStyles: Record<string, string> =
       await page.evaluate('window.bStyles');
 
-    expect(
-      aInline.includes('.header-class') && aInline.includes('color: red'),
-    ).toBe(true);
     expect(
       bInline.includes('.title-class') && bInline.includes('font-size: 14px'),
     ).toBe(true);
@@ -40,12 +43,14 @@ rspackOnlyTest(
       page,
     });
 
+    for (const key of ['aInline1', 'aInline2', 'aInline3', 'aInline4']) {
+      const inline: string = await page.evaluate(`window.${key}`);
+      expect(inline.includes('.header-class{color:red}')).toBe(true);
+    }
+
     const bStyles: Record<string, string> =
       await page.evaluate('window.bStyles');
 
-    expect(await page.evaluate('window.aInline')).toBe(
-      '.header-class{color:red}',
-    );
     expect(await page.evaluate('window.bInline')).toBe(
       '.title-class{font-size:14px}',
     );

@@ -187,6 +187,20 @@ async function printFileSizes(
     : '';
   const totalSizeStr = showTotal ? calcFileSize(totalSize) : '';
 
+  const getCustomTotal = () => {
+    if (typeof options.total === 'function') {
+      return options.total({
+        assets: assets.map((asset) => ({
+          name: asset.name,
+          size: asset.size,
+        })),
+        totalSize,
+        totalGzipSize,
+      });
+    }
+    return null;
+  };
+
   if (showDetail) {
     const maxFileLength = Math.max(
       ...assets.map((a) => (a.folder + path.sep + a.name).length),
@@ -237,27 +251,42 @@ async function printFileSizes(
 
     if (showTotal) {
       logs.push('');
-      let log = '';
-      log += ' '.repeat(maxFileLength - totalSizeLabel.length);
-      log += color.magenta(totalSizeLabel);
-      log += `   ${totalSizeStr}`;
+
+      const customTotal = getCustomTotal();
+      if (customTotal) {
+        // Custom total display
+        logs.push(customTotal);
+      } else {
+        // Default total display
+        let log = '';
+        log += ' '.repeat(maxFileLength - totalSizeLabel.length);
+        log += color.magenta(totalSizeLabel);
+        log += `   ${totalSizeStr}`;
+
+        if (options.compressed) {
+          const colorFn = getAssetColor(totalGzipSize / assets.length);
+          log += ' '.repeat(maxSizeLength - totalSizeStr.length);
+          log += `   ${colorFn(calcFileSize(totalGzipSize))}`;
+        }
+
+        logs.push(log);
+      }
+    }
+  } else if (showTotal) {
+    const customTotal = getCustomTotal();
+    if (customTotal) {
+      // Custom total display
+      logs.push(customTotal);
+    } else {
+      // Default total display
+      let log = `${color.magenta(totalSizeLabel)} ${totalSizeStr}`;
 
       if (options.compressed) {
-        const colorFn = getAssetColor(totalGzipSize / assets.length);
-        log += ' '.repeat(maxSizeLength - totalSizeStr.length);
-        log += `   ${colorFn(calcFileSize(totalGzipSize))}`;
+        log += color.green(` (${calcFileSize(totalGzipSize)} gzipped)`);
       }
 
       logs.push(log);
     }
-  } else if (showTotal) {
-    let log = `${color.magenta(totalSizeLabel)} ${totalSizeStr}`;
-
-    if (options.compressed) {
-      log += color.green(` (${calcFileSize(totalGzipSize)} gzipped)`);
-    }
-
-    logs.push(log);
   }
 
   logs.push('');

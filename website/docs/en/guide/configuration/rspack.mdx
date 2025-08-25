@@ -1,6 +1,6 @@
 # Configure Rspack
 
-Rsbuild supports directly modifying the Rspack configuration object, and also supports modifying the built-in Rspack configuration of Rsbuild through `rspack-chain`.
+Rsbuild supports directly modifying the Rspack configuration object, and supports modifying the built-in Rspack configuration of Rsbuild through `rspack-chain`.
 
 :::tip
 The built-in Rspack config in Rsbuild may change with iterations, and these changes won't be reflected in semver. Therefore, your custom config may become invalid when you upgrade Rsbuild.
@@ -85,7 +85,7 @@ Rsbuild provides the [tools.bundlerChain](/config/tools/bundler-chain) config to
 - The first argument is an `rspack-chain` instance, which you can use to modify the Rspack config.
 - The second argument is an utils object, including `env`, `isProd`, `CHAIN_ID`, etc.
 
-Here's a basic example:
+Here is a basic example:
 
 ```ts title="rsbuild.config.ts"
 export default {

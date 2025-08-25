@@ -241,6 +241,10 @@ console.log(logoUrl); // -> string
 console.log(Logo); // -> React component
 ```
 
+:::tip
+When `mixedImport` is enabled, `svgrOptions.exportType` defaults to `'named'` if not explicitly configured.
+:::
+
 #### Limitations
 
 It is recommended to use `?react` to transform SVG to React component instead of using mixed import. Because mixed import has the following limitations:
@@ -401,4 +405,4 @@ declare module '*.svg?react' {
 }
 ```
 
-After adding the type declarations, if the type error still exists, you can try to restart the IDE, or adjust the directory where `env.d.ts` is located, making sure the TypeScript can correctly identify the type definition.
+After adding the type declarations, if the type error still exists, you can try to restart the IDE, or adjust the directory where `env.d.ts` is located, making sure that TypeScript can correctly identify the type definition.

@@ -241,6 +241,10 @@ console.log(logoUrl); // -> string
 console.log(Logo); // -> React component
 ```
 
+:::tip
+启用 `mixedImport` 后，如果没有显式设置 `svgrOptions.exportType`，则默认值为 `'named'`。
+:::
+
 #### 局限性
 
 建议优先使用 `?react` 来将 SVG 转换为 React 组件，而不是使用混合导入。因为混合导入有如下局限性：

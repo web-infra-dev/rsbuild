@@ -94,6 +94,10 @@ export default {
 };
 ```
 
+:::warning
+Do not deploy source maps (`.map` files) to the public web server or CDN when using values such as `source-map` or `hidden-source-map` in production builds. Public source maps will expose your source code and may bring security risks.
+:::
+
 ## CSS source map
 
 The source map for CSS files is controlled by `sourceMap.css`. Setting it to `true` will enable the source map, while setting it to `false` will disable it.
