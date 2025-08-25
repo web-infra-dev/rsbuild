@@ -20,7 +20,7 @@
     "@rstack-dev/doc-ui": "^1.11.0",
     "@shikijs/transformers": "^3.11.0",
     "@types/node": "^22.17.2",
-    "@types/react": "^19.1.10",
+    "@types/react": "^19.1.11",
     "@types/react-dom": "^19.1.7",
     "fast-glob": "^3.3.3",
     "react": "^19.1.1",
