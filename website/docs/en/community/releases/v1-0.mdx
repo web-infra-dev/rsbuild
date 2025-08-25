@@ -14,7 +14,7 @@ We are pleased to announce the release of Rsbuild 1.0!
 
 For a long time, developers using webpack have been bothered by two major issues: **slow build times and configuration complexity**.
 
-We have used Rust to rewrite webpack into [Rspack](https://github.com/web-infra-dev/rspack), which addresses the slow build issue. However, to maintain compatibility with the webpack ecosystem, Rspack retains webpack's configuration and API, which means it still has some complexity and a learning curve.
+We have used Rust to rewrite webpack into [Rspack](https://github.com/web-infra-dev/rspack), which addresses the slow build issue. However, to maintain compatibility with the webpack ecosystem, Rspack retains webpack's configuration and API, still resulting in some complexity and a learning curve.
 
 ### Evolution of the ecosystem
 
@@ -36,7 +36,7 @@ Rsbuild is built on top of Rspack. We designed Rsbuild with an easy-to-use, Type
 
 When developing Rsbuild, we learned best practices from the best tools in the community and focused on two usage scenarios:
 
-- As a lightweight build tool: Helps developers quickly setup web applications with out-of-the-box support for CSR applications.
+- As a lightweight build tool: Helps developers quickly set up web applications with out-of-the-box support for CSR applications.
 - As a shared infrastructure: Provides [JavaScript API](/api/start/) and [Plugin API](/plugins/dev/) for higher-level tools and frameworks, allowing developers to easily build their tools or frameworks on top of Rsbuild.
 
 ## Performance
