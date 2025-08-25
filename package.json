@@ -34,17 +34,17 @@
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.2.0",
+    "@biomejs/biome": "^2.2.2",
     "@rsbuild/config": "workspace:*",
-    "@rslint/core": "^0.1.11",
-    "@rstest/core": "^0.2.1",
+    "@rslint/core": "^0.1.12",
+    "@rstest/core": "^0.2.2",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^22.17.2",
     "cross-env": "^10.0.0",
     "cspell-ban-words": "^0.0.4",
-    "heading-case": "^1.0.0",
+    "heading-case": "^1.0.1",
     "nano-staged": "^0.8.0",
-    "nx": "^21.4.0",
+    "nx": "^21.4.1",
     "prettier": "^3.6.2",
     "simple-git-hooks": "^2.13.1",
     "typescript": "^5.9.2"

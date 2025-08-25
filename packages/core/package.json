@@ -52,14 +52,14 @@
     "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
-    "@rspack/core": "1.5.0-beta.1",
+    "@rspack/core": "1.5.0-rc.0",
     "@rspack/lite-tapable": "~1.0.1",
     "@swc/helpers": "^0.5.17",
-    "core-js": "~3.45.0",
+    "core-js": "~3.45.1",
     "jiti": "^2.5.1"
   },
   "devDependencies": {
-    "@rslib/core": "0.12.1",
+    "@rslib/core": "0.12.2",
     "@types/connect": "3.4.38",
     "@types/cors": "^2.8.19",
     "@types/node": "^22.17.2",
@@ -94,7 +94,7 @@
     "style-loader": "3.3.4",
     "tinyglobby": "^0.2.14",
     "typescript": "^5.9.2",
-    "webpack": "^5.101.2",
+    "webpack": "^5.101.3",
     "webpack-bundle-analyzer": "^4.10.2",
     "webpack-merge": "6.0.1",
     "ws": "^8.18.3"

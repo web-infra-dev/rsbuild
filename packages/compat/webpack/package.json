@@ -34,11 +34,11 @@
     "picocolors": "^1.1.1",
     "reduce-configs": "^1.1.1",
     "tsconfig-paths-webpack-plugin": "4.2.0",
-    "webpack": "^5.101.2"
+    "webpack": "^5.101.3"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.12.1",
+    "@rslib/core": "0.12.2",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^22.17.2",
     "ansi-escapes": "4.3.2",
