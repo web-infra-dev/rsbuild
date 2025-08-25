@@ -9,6 +9,10 @@ rspackOnlyTest(
       page,
     });
 
+    await page.waitForFunction('window.disposeCounter', undefined, {
+      timeout: 1000,
+    });
+
     expect(await page.evaluate('window.disposeCounter')).toEqual(4);
     await rsbuild.close();
   },

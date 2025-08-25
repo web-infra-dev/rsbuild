@@ -10,6 +10,19 @@ test('should allow to import raw CSS files in development mode', async ({
     cwd: __dirname,
     page,
   });
+
+  await page.waitForFunction(
+    [
+      'window.aRaw1',
+      'window.aRaw2',
+      'window.aRaw3',
+      'window.aRaw4',
+      'window.bRaw',
+    ].join(' && '),
+    undefined,
+    { timeout: 1000 },
+  );
+
   const aContent = readFileSync(path.join(__dirname, 'src/a.css'), 'utf-8');
   const bStyles: Record<string, string> = await page.evaluate('window.bStyles');
 

@@ -6,7 +6,7 @@ export const App = () => (
       <Route
         path="/"
         element={
-          <div>
+          <div id="home">
             home
             <div>
               <Link to="/a">A</Link>

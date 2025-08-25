@@ -6,4 +6,8 @@ export default defineConfig({
       enable: true,
     },
   },
+  dev: {
+    // TODO: skip lazyCompilation in sri
+    lazyCompilation: true,
+  },
 });

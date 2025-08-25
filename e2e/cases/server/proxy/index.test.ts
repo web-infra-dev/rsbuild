@@ -35,6 +35,9 @@ test('should apply basic proxy rules correctly', async ({ page }) => {
   });
 
   await page.goto(`http://localhost:${rsbuild2.port}/main`);
+
+  await page.waitForFunction('window.a', undefined, { timeout: 1000 });
+
   expect(await page.innerHTML('body')).toContain('<div id="root">1</div>');
 
   await rsbuild1.close();

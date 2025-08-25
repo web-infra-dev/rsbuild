@@ -24,6 +24,9 @@ rspackOnlyTest('support SSR with external', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
     rsbuildConfig: {
+      dev: {
+        lazyCompilation: false,
+      },
       output: {
         externals: {
           react: 'react',

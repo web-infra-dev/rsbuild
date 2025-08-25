@@ -101,6 +101,8 @@ rspackOnlyTest(
 
     await gotoPage(page, result);
 
+    await page.waitForFunction('window.a', undefined, { timeout: 1000 });
+
     await result.server.close();
 
     expect(hooks.filter((name) => name.includes('DevServer'))).toEqual([
@@ -118,6 +120,13 @@ rspackOnlyTest(
       'ModifyBundlerConfig',
       'BeforeCreateCompiler',
       'AfterCreateCompiler',
+      'BeforeDevCompile',
+      'BeforeEnvironmentCompile',
+      'ModifyHTMLTags',
+      'ModifyHTML',
+      'AfterEnvironmentCompile',
+      'AfterDevCompile',
+      'DevCompileDone',
       'BeforeDevCompile',
       'BeforeEnvironmentCompile',
       'ModifyHTMLTags',

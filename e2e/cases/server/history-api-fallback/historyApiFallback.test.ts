@@ -31,7 +31,10 @@ rspackOnlyTest(
     });
 
     await page.goto(`http://localhost:${rsbuild.port}`);
-    expect(await page.innerHTML('body')).toContain('<div>home<div>');
+
+    await page.waitForSelector('#home', { timeout: 1000 });
+
+    expect(await page.innerHTML('body')).toContain('<div id="home">home<div>');
 
     await page.goto(`http://localhost:${rsbuild.port}/a`);
     expect(await page.innerHTML('body')).toContain('<div>A</div>');
@@ -70,7 +73,7 @@ test('should provide history api fallback for preview server correctly', async (
   });
 
   await page.goto(`http://localhost:${rsbuild.port}`);
-  expect(await page.innerHTML('body')).toContain('<div>home<div>');
+  expect(await page.innerHTML('body')).toContain('<div id="home">home<div>');
 
   await page.goto(`http://localhost:${rsbuild.port}/a`);
   expect(await page.innerHTML('body')).toContain('<div>A</div>');

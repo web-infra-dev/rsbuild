@@ -17,12 +17,14 @@ rspackOnlyTest(
       },
     });
 
+    await page.waitForFunction('window.a', undefined, { timeout: 1000 });
+
     expect(await page.evaluate('window.a')).toBe('你好 world!');
 
     const files = await rsbuild.getDistFiles();
 
     const [, content] = Object.entries(files).find(
-      ([name]) => name.endsWith('.js') && name.includes('static/js/index'),
+      ([name]) => name.endsWith('.js') && name.includes('static/js/async/'),
     )!;
 
     // in Rspack is: \\u4f60\\u597D world!

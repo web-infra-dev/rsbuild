@@ -9,6 +9,8 @@ rspackOnlyTest(
       page,
     });
 
+    await page.waitForFunction('window.a', undefined, { timeout: 1000 });
+
     expect(await page.evaluate('window.a')).toBe(`.the-a-class {
   color: red;
 }

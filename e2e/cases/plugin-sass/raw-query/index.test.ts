@@ -11,6 +11,12 @@ test('should allow to import raw Sass files in development mode', async ({
     page,
   });
 
+  await page.waitForFunction(
+    'window.aRaw && window.bRaw && window.bStyles',
+    undefined,
+    { timeout: 1000 },
+  );
+
   const aRaw: string = await page.evaluate('window.aRaw');
   const bRaw: string = await page.evaluate('window.bRaw');
   const bStyles: Record<string, string> = await page.evaluate('window.bStyles');

@@ -275,8 +275,8 @@ export const withDefaultConfig = async (
   if (merged.dev?.lazyCompilation === undefined) {
     merged.dev ||= {};
     merged.dev.lazyCompilation = {
+      entries: true,
       imports: true,
-      entries: false,
     };
   }
 

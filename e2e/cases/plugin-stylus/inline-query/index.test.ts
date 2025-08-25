@@ -9,6 +9,14 @@ rspackOnlyTest(
       page,
     });
 
+    await page.waitForFunction(
+      'window.aInline && window.bInline && window.bStyles',
+      undefined,
+      {
+        timeout: 1000,
+      },
+    );
+
     const aInline: string = await page.evaluate('window.aInline');
     const bInline: string = await page.evaluate('window.bInline');
     const bStyles: Record<string, string> =

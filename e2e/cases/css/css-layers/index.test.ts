@@ -27,6 +27,9 @@ rspackOnlyTest(
         },
       },
     });
+
+    await page.waitForRequest(/\.css/, { timeout: 1000 });
+
     const files = await rsbuild.getDistFiles();
 
     const content =
