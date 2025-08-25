@@ -604,8 +604,8 @@ importers:
   packages/core:
     dependencies:
       '@rspack/core':
-        specifier: 1.5.0-beta.1
-        version: 1.5.0-beta.1(@swc/helpers@0.5.17)
+        specifier: 1.5.0-rc.0
+        version: 1.5.0-rc.0(@swc/helpers@0.5.17)
       '@rspack/lite-tapable':
         specifier: ~1.0.1
         version: 1.0.1
@@ -657,7 +657,7 @@ importers:
         version: 2.8.5
       css-loader:
         specifier: 7.1.2
-        version: 7.1.2(patch_hash=f108465818eeda8955fecc4aa57dbfd6219c34a7a876fc224f229836292996a6)(@rspack/core@1.5.0-beta.1(@swc/helpers@0.5.17))(webpack@5.101.3)
+        version: 7.1.2(patch_hash=f108465818eeda8955fecc4aa57dbfd6219c34a7a876fc224f229836292996a6)(@rspack/core@1.5.0-rc.0(@swc/helpers@0.5.17))(webpack@5.101.3)
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -666,7 +666,7 @@ importers:
         version: 12.0.2
       html-rspack-plugin:
         specifier: 6.1.2
-        version: 6.1.2(@rspack/core@1.5.0-beta.1(@swc/helpers@0.5.17))
+        version: 6.1.2(@rspack/core@1.5.0-rc.0(@swc/helpers@0.5.17))
       http-proxy-middleware:
         specifier: ^2.0.9
         version: 2.0.9
@@ -693,7 +693,7 @@ importers:
         version: 6.0.1(jiti@2.5.1)(postcss@8.5.6)(yaml@2.8.0)
       postcss-loader:
         specifier: 8.1.1
-        version: 8.1.1(patch_hash=7f10237e1665e9913e0f735a822545af08363f5cc67eacc2c37408aee7553d47)(@rspack/core@1.5.0-beta.1(@swc/helpers@0.5.17))(postcss@8.5.6)(typescript@5.9.2)(webpack@5.101.3)
+        version: 8.1.1(patch_hash=7f10237e1665e9913e0f735a822545af08363f5cc67eacc2c37408aee7553d47)(@rspack/core@1.5.0-rc.0(@swc/helpers@0.5.17))(postcss@8.5.6)(typescript@5.9.2)(webpack@5.101.3)
       prebundle:
         specifier: 1.4.1
         version: 1.4.1(typescript@5.9.2)
@@ -711,7 +711,7 @@ importers:
         version: 1.4.0
       rspack-manifest-plugin:
         specifier: 5.0.3
-        version: 5.0.3(@rspack/core@1.5.0-beta.1(@swc/helpers@0.5.17))
+        version: 5.0.3(@rspack/core@1.5.0-rc.0(@swc/helpers@0.5.17))
       sirv:
         specifier: ^3.0.1
         version: 3.0.1
@@ -9721,7 +9721,7 @@ snapshots:
 
   cspell-ban-words@0.0.4: {}
 
-  css-loader@7.1.2(patch_hash=f108465818eeda8955fecc4aa57dbfd6219c34a7a876fc224f229836292996a6)(@rspack/core@1.5.0-beta.1(@swc/helpers@0.5.17))(webpack@5.101.3):
+  css-loader@7.1.2(patch_hash=f108465818eeda8955fecc4aa57dbfd6219c34a7a876fc224f229836292996a6)(@rspack/core@1.5.0-rc.0(@swc/helpers@0.5.17))(webpack@5.101.3):
     dependencies:
       icss-utils: 5.1.0(postcss@8.5.6)
       postcss: 8.5.6
@@ -9732,7 +9732,7 @@ snapshots:
       postcss-value-parser: 4.2.0
       semver: 7.7.2
     optionalDependencies:
-      '@rspack/core': 1.5.0-beta.1(@swc/helpers@0.5.17)
+      '@rspack/core': 1.5.0-rc.0(@swc/helpers@0.5.17)
       webpack: 5.101.3
 
   css-select@4.3.0:
@@ -10525,11 +10525,11 @@ snapshots:
       relateurl: 0.2.7
       terser: 5.43.1
 
-  html-rspack-plugin@6.1.2(@rspack/core@1.5.0-beta.1(@swc/helpers@0.5.17)):
+  html-rspack-plugin@6.1.2(@rspack/core@1.5.0-rc.0(@swc/helpers@0.5.17)):
     dependencies:
       '@rspack/lite-tapable': 1.0.1
     optionalDependencies:
-      '@rspack/core': 1.5.0-beta.1(@swc/helpers@0.5.17)
+      '@rspack/core': 1.5.0-rc.0(@swc/helpers@0.5.17)
 
   html-to-text@9.0.5:
     dependencies:
@@ -11785,14 +11785,14 @@ snapshots:
       postcss: 8.5.6
       yaml: 2.8.0
 
-  postcss-loader@8.1.1(patch_hash=7f10237e1665e9913e0f735a822545af08363f5cc67eacc2c37408aee7553d47)(@rspack/core@1.5.0-beta.1(@swc/helpers@0.5.17))(postcss@8.5.6)(typescript@5.9.2)(webpack@5.101.3):
+  postcss-loader@8.1.1(patch_hash=7f10237e1665e9913e0f735a822545af08363f5cc67eacc2c37408aee7553d47)(@rspack/core@1.5.0-rc.0(@swc/helpers@0.5.17))(postcss@8.5.6)(typescript@5.9.2)(webpack@5.101.3):
     dependencies:
       cosmiconfig: 9.0.0(typescript@5.9.2)
       jiti: 1.21.7
       postcss: 8.5.6
       semver: 7.7.2
     optionalDependencies:
-      '@rspack/core': 1.5.0-beta.1(@swc/helpers@0.5.17)
+      '@rspack/core': 1.5.0-rc.0(@swc/helpers@0.5.17)
       webpack: 5.101.3
     transitivePeerDependencies:
       - typescript
@@ -12173,11 +12173,11 @@ snapshots:
       deepmerge: 4.3.1
       javascript-stringify: 2.1.0
 
-  rspack-manifest-plugin@5.0.3(@rspack/core@1.5.0-beta.1(@swc/helpers@0.5.17)):
+  rspack-manifest-plugin@5.0.3(@rspack/core@1.5.0-rc.0(@swc/helpers@0.5.17)):
     dependencies:
       '@rspack/lite-tapable': 1.0.1
     optionalDependencies:
-      '@rspack/core': 1.5.0-beta.1(@swc/helpers@0.5.17)
+      '@rspack/core': 1.5.0-rc.0(@swc/helpers@0.5.17)
 
   rspress-plugin-font-open-sans@1.0.3(@rspress/core@2.0.0-beta.28(@types/react@19.1.11)(acorn@8.15.0)):
     dependencies:
