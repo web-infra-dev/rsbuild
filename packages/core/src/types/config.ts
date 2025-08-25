@@ -621,6 +621,8 @@ export type PrintFileSizeOptions = {
   total?:
     | boolean
     | ((params: {
+        environmentName: string;
+        distFolder: string;
         assets: PrintFileSizeAsset[];
         totalSize: number;
         totalGzipSize: number;

@@ -190,6 +190,11 @@ async function printFileSizes(
   const getCustomTotal = () => {
     if (typeof options.total === 'function') {
       return options.total({
+        environmentName,
+        distFolder: path.relative(
+          rootPath,
+          stats.compilation.outputOptions.path || '',
+        ),
         assets: assets.map((asset) => ({
           name: asset.name,
           size: asset.size,
