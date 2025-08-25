@@ -236,7 +236,7 @@ Rsbuild has a built-in WebSocket handler to support HMR:
 3. After the browser successfully establishes a connection with the Rsbuild WebSocket handler, real-time communication is possible.
 4. The Rsbuild WebSocket handler notifies the browser after each recompilation is complete. The browser then sends a `hot-update.(js|json)` request to the dev server to load the new compiled module.
 
-When you use custom server, you may encounter HMR connection error problems. This is because the custom server does not forward WebSocket connection requests to Rsbuild's WebSocket handler.
+When you use a custom server, you may encounter HMR connection error problems. This is because the custom server does not forward WebSocket connection requests to Rsbuild's WebSocket handler.
 
 At this time, you need to use the `connectWebSocket` method to enable Rsbuild to sense and process the WebSocket connection request from the browser.
 
