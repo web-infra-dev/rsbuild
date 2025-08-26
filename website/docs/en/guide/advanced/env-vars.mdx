@@ -84,7 +84,7 @@ if (import.meta.env.PROD) {
 - **Type:** `string`
 - **Scope:** Available in source code, replaced at build time via [define](/guide/advanced/env-vars#using-define)
 
-You can use `import.meta.env.BASE_URL` in the client code to access the server's [base path](/guide/basic/server#base-path), which is determined by the [server.base](/config/server/base) configuration, which is helpful for referencing [public folder](/guide/basic/static-assets#public-folder) assets in the code.
+You can use `import.meta.env.BASE_URL` in the client code to access the server's [base path](/guide/basic/server#base-path), which is determined by the [server.base](/config/server/base) configuration and is helpful for referencing [public folder](/guide/basic/static-assets#public-folder) assets in the code.
 
 For example, we set the base path of the server to `/foo` through [server.base](/config/server/base) configuration:
 
