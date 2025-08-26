@@ -33,7 +33,8 @@ export default defineConfig({
           try {
             await serverRenderMiddleware(req, res, next);
           } catch (err) {
-            logger.error('SSR render error, downgrade to CSR...\n', err);
+            logger.error('SSR render error, downgrade to CSR...');
+            logger.error(err);
             next();
           }
         } else {

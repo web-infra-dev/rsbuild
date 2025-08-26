@@ -111,7 +111,8 @@ async function startDevServer() {
       res.writeHead(200, { 'Content-Type': 'text/html' });
       res.end(html);
     } catch (err) {
-      logger.error('SSR failed: ', err);
+      logger.error('SSR failed.');
+      logger.error(err);
       next();
     }
   });
