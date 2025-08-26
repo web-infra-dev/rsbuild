@@ -26,9 +26,6 @@ export const setNodeEnv = (env: string): void => {
   process.env.NODE_ENV = env;
 };
 
-export const isNil = (o: unknown): o is undefined | null =>
-  o === undefined || o === null;
-
 export const isFunction = (func: unknown): func is (...args: any[]) => any =>
   typeof func === 'function';
 

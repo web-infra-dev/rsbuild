@@ -51,8 +51,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         },
         "resourceQuery": {
           "not": [
-            /\\^\\\\\\?raw\\$/,
-            /\\^\\\\\\?inline\\$/,
+            /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
           ],
         },
         "sideEffects": true,
@@ -94,7 +94,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "resolve": {
           "preferRelative": true,
         },
-        "resourceQuery": /\\^\\\\\\?inline\\$/,
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -123,7 +123,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         ],
       },
       {
-        "resourceQuery": /\\^\\\\\\?raw\\$/,
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.css\\$/,
         "type": "asset/source",
       },
@@ -139,7 +139,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
         ],
         "resourceQuery": {
-          "not": /\\^\\\\\\?raw\\$/,
+          "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
@@ -187,7 +187,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         ],
       },
       {
-        "resourceQuery": /\\^\\\\\\?raw\\$/,
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "asset/source",
       },
@@ -254,11 +254,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /\\^\\\\\\?inline\\$/,
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -285,11 +285,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /\\^\\\\\\?inline\\$/,
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -316,11 +316,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /\\^\\\\\\?inline\\$/,
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -347,11 +347,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /\\^\\\\\\?inline\\$/,
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -563,8 +563,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         },
         "resourceQuery": {
           "not": [
-            /\\^\\\\\\?raw\\$/,
-            /\\^\\\\\\?inline\\$/,
+            /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
           ],
         },
         "sideEffects": true,
@@ -606,7 +606,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "resolve": {
           "preferRelative": true,
         },
-        "resourceQuery": /\\^\\\\\\?inline\\$/,
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -636,7 +636,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         ],
       },
       {
-        "resourceQuery": /\\^\\\\\\?raw\\$/,
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.css\\$/,
         "type": "asset/source",
       },
@@ -651,7 +651,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
         "resourceQuery": {
-          "not": /\\^\\\\\\?raw\\$/,
+          "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
@@ -699,7 +699,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         ],
       },
       {
-        "resourceQuery": /\\^\\\\\\?raw\\$/,
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "asset/source",
       },
@@ -766,11 +766,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /\\^\\\\\\?inline\\$/,
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -797,11 +797,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /\\^\\\\\\?inline\\$/,
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -828,11 +828,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /\\^\\\\\\?inline\\$/,
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -859,11 +859,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /\\^\\\\\\?inline\\$/,
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -1099,8 +1099,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         },
         "resourceQuery": {
           "not": [
-            /\\^\\\\\\?raw\\$/,
-            /\\^\\\\\\?inline\\$/,
+            /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
           ],
         },
         "sideEffects": true,
@@ -1131,7 +1131,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "resolve": {
           "preferRelative": true,
         },
-        "resourceQuery": /\\^\\\\\\?inline\\$/,
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -1148,7 +1148,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         ],
       },
       {
-        "resourceQuery": /\\^\\\\\\?raw\\$/,
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.css\\$/,
         "type": "asset/source",
       },
@@ -1163,7 +1163,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
         "resourceQuery": {
-          "not": /\\^\\\\\\?raw\\$/,
+          "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
@@ -1207,7 +1207,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         ],
       },
       {
-        "resourceQuery": /\\^\\\\\\?raw\\$/,
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "asset/source",
       },
@@ -1270,11 +1270,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /\\^\\\\\\?inline\\$/,
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -1301,11 +1301,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /\\^\\\\\\?inline\\$/,
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -1332,11 +1332,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /\\^\\\\\\?inline\\$/,
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -1363,11 +1363,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /\\^\\\\\\?inline\\$/,
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -1542,8 +1542,8 @@ exports[`tools.rspack > should match snapshot 1`] = `
         },
         "resourceQuery": {
           "not": [
-            /\\^\\\\\\?raw\\$/,
-            /\\^\\\\\\?inline\\$/,
+            /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
           ],
         },
         "sideEffects": true,
@@ -1585,7 +1585,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "resolve": {
           "preferRelative": true,
         },
-        "resourceQuery": /\\^\\\\\\?inline\\$/,
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -1614,7 +1614,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         ],
       },
       {
-        "resourceQuery": /\\^\\\\\\?raw\\$/,
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.css\\$/,
         "type": "asset/source",
       },
@@ -1630,7 +1630,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
           /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
         ],
         "resourceQuery": {
-          "not": /\\^\\\\\\?raw\\$/,
+          "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
@@ -1678,7 +1678,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         ],
       },
       {
-        "resourceQuery": /\\^\\\\\\?raw\\$/,
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "asset/source",
       },
@@ -1745,11 +1745,11 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /\\^\\\\\\?inline\\$/,
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -1776,11 +1776,11 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /\\^\\\\\\?inline\\$/,
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -1807,11 +1807,11 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /\\^\\\\\\?inline\\$/,
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -1838,11 +1838,11 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /\\^\\\\\\?inline\\$/,
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {

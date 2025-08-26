@@ -31,7 +31,6 @@ export const DEFAULT_DATA_URL_SIZE = 4096;
 export const DEFAULT_MOUNT_ID = 'root';
 export const DEFAULT_DEV_HOST = '0.0.0.0';
 export const DEFAULT_ASSET_PREFIX = '/';
-export const DEFAULT_BASE_URL = '/';
 export const DEFAULT_WEB_BROWSERSLIST: string[] = [
   'chrome >= 87',
   'edge >= 88',
@@ -48,8 +47,16 @@ export const DEFAULT_BROWSERSLIST: Record<string, string[]> = {
 export const JS_REGEX: RegExp = /\.(?:js|mjs|cjs|jsx)$/;
 export const SCRIPT_REGEX: RegExp = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
 export const CSS_REGEX: RegExp = /\.css$/;
-export const RAW_QUERY_REGEX: RegExp = /^\?raw$/;
-export const INLINE_QUERY_REGEX: RegExp = /^\?inline$/;
+/**
+ * Regular expression to match the 'raw' query parameter.
+ * Matches patterns like: `?raw`, `?raw&other=value`, `?other=value&raw`, `?raw=value`
+ */
+export const RAW_QUERY_REGEX: RegExp = /[?&]raw(?:&|=|$)/;
+/**
+ * Regular expression to match the 'inline' query parameter.
+ * Matches patterns like: `?inline`, `?inline&other=value`, `?other=value&inline`, `?inline=value`
+ */
+export const INLINE_QUERY_REGEX: RegExp = /[?&]inline(?:&|=|$)/;
 export const NODE_MODULES_REGEX: RegExp = /[\\/]node_modules[\\/]/;
 
 // Plugins

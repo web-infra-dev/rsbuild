@@ -211,8 +211,6 @@ export default defineConfig({
       pluginSass(),
       pluginGoogleAnalytics({ id: 'G-L6BZ6TKW4R' }),
       pluginOpenGraph({
-        title: 'Rsbuild',
-        type: 'website',
         url: siteUrl,
         description,
         twitter: {

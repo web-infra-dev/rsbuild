@@ -320,7 +320,7 @@ const onBeforeCompile = ({
   }
 };
 
-export const onCompileDone = ({
+const onCompileDone = ({
   compiler,
   onDone,
   onEnvironmentDone,

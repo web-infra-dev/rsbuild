@@ -266,7 +266,7 @@ function applyTransformImport(
   }
 }
 
-export function applySwcDecoratorConfig(
+function applySwcDecoratorConfig(
   swcConfig: SwcLoaderOptions,
   config: NormalizedEnvironmentConfig,
 ): void {

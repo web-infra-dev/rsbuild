@@ -124,7 +124,7 @@ export default {
 - **Type:** `string`
 - **Default:** `undefined`
 
-The innerHTML content of the tag. The content is inserted as-is without HTML escaping, so ensure it's safe to prevent XSS vulnerabilities.
+The innerHTML content of the tag. The content is inserted as-is without HTML escaping, so ensure it is safe to prevent XSS vulnerabilities.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -207,6 +207,20 @@ Controls whether to insert the tag after existing tags.
 - `true`: Insert after existing tags
 - `false`: Insert before existing tags
 
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    tags: [
+      {
+        tag: 'script',
+        attrs: { src: 'https://example.com/script.js' },
+        append: false,
+      },
+    ],
+  },
+};
+```
+
 See [Injection position](#injection-position) for more details.
 
 ### head
@@ -218,6 +232,20 @@ Specifies whether to inject the tag into the HTML `<head>` element.
 
 - `true`: Inject into `<head>`
 - `false`: Inject into `<body>`
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    tags: [
+      {
+        tag: 'script',
+        attrs: { src: 'https://example.com/script.js' },
+        head: false,
+      },
+    ],
+  },
+};
+```
 
 For elements allowed in the `<head>`, the default is `true`; for other elements, the default is `false`.
 
@@ -444,7 +472,7 @@ export default {
 };
 ```
 
-The result will seems like:
+The result will look like:
 
 ```html
 <body>

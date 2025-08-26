@@ -51,8 +51,8 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         },
         "resourceQuery": {
           "not": [
-            /\\^\\\\\\?raw\\$/,
-            /\\^\\\\\\?inline\\$/,
+            /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
           ],
         },
         "sideEffects": true,
@@ -94,7 +94,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         "resolve": {
           "preferRelative": true,
         },
-        "resourceQuery": /\\^\\\\\\?inline\\$/,
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -123,7 +123,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         ],
       },
       {
-        "resourceQuery": /\\^\\\\\\?raw\\$/,
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.css\\$/,
         "type": "asset/source",
       },
@@ -139,7 +139,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
           /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
         ],
         "resourceQuery": {
-          "not": /\\^\\\\\\?raw\\$/,
+          "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
@@ -187,7 +187,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         ],
       },
       {
-        "resourceQuery": /\\^\\\\\\?raw\\$/,
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "asset/source",
       },
@@ -254,11 +254,11 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /\\^\\\\\\?inline\\$/,
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -285,11 +285,11 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /\\^\\\\\\?inline\\$/,
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -316,11 +316,11 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /\\^\\\\\\?inline\\$/,
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {
@@ -347,11 +347,11 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
             "type": "asset/resource",
           },
           {
-            "resourceQuery": /\\^\\\\\\?inline\\$/,
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/inline",
           },
           {
-            "resourceQuery": /\\^\\\\\\?raw\\$/,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
           {

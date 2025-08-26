@@ -20,13 +20,13 @@ In debug mode, you will see some logs in the terminal starting with `rsbuild`, i
 $ DEBUG=rsbuild pnpm dev
 
   ...
-  rsbuild init plugins
-  rsbuild init plugins done
-  rsbuild use Rspack v1.0.0
+  rsbuild 10:00:00 configuration loaded from: /path/to/...
+  rsbuild 10:00:00 registering default plugins
+  rsbuild 10:00:00 default plugins registered
   ...
 ```
 
-In addition, the following logs will be output in the terminal, indicating that the Rsbuild has written the internally generated build configs to disk, and you can open these config files to view the corresponding content.
+In addition, the following logs will be output in the terminal, indicating that Rsbuild has written the internally generated build configurations to disk, and you can open these config files to view the corresponding content.
 
 ```bash
 config inspection completed, generated files:

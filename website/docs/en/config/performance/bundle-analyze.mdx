@@ -115,7 +115,7 @@ In the output directory, you will see `stats.json` and `report-web.html` files.
     └── report-web.html
 ```
 
-If you don't need the `report-web.html`, you can set `analyzerMode` to `disabled`.
+If you do not need the `report-web.html`, you can set `analyzerMode` to `disabled`.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -133,4 +133,4 @@ export default {
 1. Enabling the server mode will cause the `build` process to not exit normally.
 2. Enabling `bundleAnalyzer` will reduce build speed. Therefore, this configuration should not be enabled during daily development, and it is recommended to enable it on demand through the `BUNDLE_ANALYZE` environment variable.
 3. Since no code minification and other optimizations are performed in the `dev` phase, the real output size cannot be reflected, so it is recommended to analyze the output size in the `build` phase.
-4. If the bundleAnalyzer is enabled during the `dev` phase, in order to ensure that webpack-bundle-analyzer can access the contents of static assets, Rsbuild will automatically enable the [dev.writeToDisk](/config/dev/write-to-disk) option.
+4. If the bundleAnalyzer is enabled during the `dev` phase, to ensure that webpack-bundle-analyzer can access the contents of static assets, Rsbuild will automatically enable the [dev.writeToDisk](/config/dev/write-to-disk) option.

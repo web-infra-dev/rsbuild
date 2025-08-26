@@ -135,6 +135,7 @@ export type {
   OnBeforeStartProdServerFn,
   OnCloseBuildFn,
   OnCloseDevServerFn,
+  OnDevCompileDoneFn,
   OnExitFn,
   OutputConfig,
   OutputStructure,

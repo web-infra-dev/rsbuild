@@ -11,8 +11,8 @@ exports[`plugin-less > should add less-loader 1`] = `
     },
     "resourceQuery": {
       "not": [
-        /\\^\\\\\\?raw\\$/,
-        /\\^\\\\\\?inline\\$/,
+        /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
       ],
     },
     "sideEffects": true,
@@ -63,7 +63,8 @@ exports[`plugin-less > should add less-loader 1`] = `
     ],
   },
   {
-    "resourceQuery": /\\^\\\\\\?inline\\$/,
+    "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+    "sideEffects": true,
     "test": /\\\\\\.less\\$/,
     "use": [
       {
@@ -103,7 +104,7 @@ exports[`plugin-less > should add less-loader 1`] = `
     ],
   },
   {
-    "resourceQuery": /\\^\\\\\\?raw\\$/,
+    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
     "test": /\\\\\\.less\\$/,
     "type": "asset/source",
   },
@@ -121,8 +122,8 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
     },
     "resourceQuery": {
       "not": [
-        /\\^\\\\\\?raw\\$/,
-        /\\^\\\\\\?inline\\$/,
+        /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
       ],
     },
     "sideEffects": true,
@@ -173,7 +174,8 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
     ],
   },
   {
-    "resourceQuery": /\\^\\\\\\?inline\\$/,
+    "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+    "sideEffects": true,
     "test": /\\\\\\.less\\$/,
     "use": [
       {
@@ -213,7 +215,7 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
     ],
   },
   {
-    "resourceQuery": /\\^\\\\\\?raw\\$/,
+    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
     "test": /\\\\\\.less\\$/,
     "type": "asset/source",
   },
@@ -234,8 +236,8 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
     },
     "resourceQuery": {
       "not": [
-        /\\^\\\\\\?raw\\$/,
-        /\\^\\\\\\?inline\\$/,
+        /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
       ],
     },
     "sideEffects": true,
@@ -289,7 +291,8 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
     "exclude": [
       /node_modules/,
     ],
-    "resourceQuery": /\\^\\\\\\?inline\\$/,
+    "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+    "sideEffects": true,
     "test": /\\\\\\.less\\$/,
     "use": [
       {
@@ -329,7 +332,7 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
     ],
   },
   {
-    "resourceQuery": /\\^\\\\\\?raw\\$/,
+    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
     "test": /\\\\\\.less\\$/,
     "type": "asset/source",
   },
@@ -347,8 +350,8 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
     },
     "resourceQuery": {
       "not": [
-        /\\^\\\\\\?raw\\$/,
-        /\\^\\\\\\?inline\\$/,
+        /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
       ],
     },
     "sideEffects": true,
@@ -399,7 +402,8 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
     ],
   },
   {
-    "resourceQuery": /\\^\\\\\\?inline\\$/,
+    "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+    "sideEffects": true,
     "test": /\\\\\\.less\\$/,
     "use": [
       {
@@ -439,7 +443,7 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
     ],
   },
   {
-    "resourceQuery": /\\^\\\\\\?raw\\$/,
+    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
     "test": /\\\\\\.less\\$/,
     "type": "asset/source",
   },
@@ -457,8 +461,8 @@ exports[`plugin-less > should allow to use Less plugins 1`] = `
     },
     "resourceQuery": {
       "not": [
-        /\\^\\\\\\?raw\\$/,
-        /\\^\\\\\\?inline\\$/,
+        /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
       ],
     },
     "sideEffects": true,
@@ -516,7 +520,8 @@ exports[`plugin-less > should allow to use Less plugins 1`] = `
     ],
   },
   {
-    "resourceQuery": /\\^\\\\\\?inline\\$/,
+    "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+    "sideEffects": true,
     "test": /\\\\\\.less\\$/,
     "use": [
       {
@@ -563,7 +568,7 @@ exports[`plugin-less > should allow to use Less plugins 1`] = `
     ],
   },
   {
-    "resourceQuery": /\\^\\\\\\?raw\\$/,
+    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
     "test": /\\\\\\.less\\$/,
     "type": "asset/source",
   },

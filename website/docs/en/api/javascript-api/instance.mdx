@@ -651,7 +651,7 @@ rsbuild.isPluginExists(pluginFoo.name, {
 
 Initialize and return the internal Rspack configurations used by Rsbuild. This method processes all plugins and configurations to generate the final Rspack configs.
 
-> Note: You typically don't need to call this method directly since it's automatically invoked by methods like [rsbuild.build](#rsbuildbuild) and [rsbuild.startDevServer](#rsbuildstartdevserver).
+> Note: You typically do not need to call this method directly since it is automatically invoked by methods like [rsbuild.build](#rsbuildbuild) and [rsbuild.startDevServer](#rsbuildstartdevserver).
 
 - **Type:**
 
@@ -1025,7 +1025,51 @@ import GetNormalizedConfig from '@en/shared/getNormalizedConfig.mdx';
 
 ```ts
 rsbuild.onBeforeBuild(() => {
-  const config = api.getNormalizedConfig();
+  const config = rsbuild.getNormalizedConfig();
   console.log(config.html.title);
+});
+```
+
+## rsbuild.expose
+
+> Provides the same functionality as the [expose](/plugins/dev/core#apiexpose) plugin API.
+
+- **Version:** Added in v1.5.0
+- **Example:**
+
+```ts
+rsbuild.expose('my-id', {
+  value: 1,
+  double: (val: number) => val * 2,
+});
+```
+
+## rsbuild.modifyRsbuildConfig
+
+> Provides the same functionality as the [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) plugin API.
+
+- **Version:** Added in v1.5.0
+- **Example:**
+
+```ts
+rsbuild.modifyRsbuildConfig((config) => {
+  config.html ||= {};
+  config.html.title = 'My Default Title';
+});
+```
+
+## rsbuild.modifyEnvironmentConfig
+
+> Provides the same functionality as the [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig) plugin API.
+
+- **Version:** Added in v1.5.0
+- **Example:**
+
+```ts
+rsbuild.modifyEnvironmentConfig((config, { name }) => {
+  if (name !== 'web') {
+    return config;
+  }
+  config.html.title = 'My Default Title';
 });
 ```

@@ -68,7 +68,7 @@ type ManifestList = {
       };
       /** HTML files related to the current entry */
       html?: FilePath[];
-      /** other assets (e.g. png、svg、source map) related to the current entry */
+      /** other assets (e.g., png, svg, source map) related to the current entry */
       assets?: FilePath[];
     };
   };
@@ -255,7 +255,7 @@ export default {
 
 ## Multiple environments
 
-When using [environments](/config/environments) and configuring multiple environments, please specify an unique `manifest.filename` value for each environment to prevent manifest files from different environments from overwriting each other.
+When using [environments](/config/environments) and configuring multiple environments, please specify a unique `manifest.filename` value for each environment to prevent manifest files from different environments from overwriting each other.
 
 For example, use the default `manifest.json` for the `web` environment and use `manifest-node.json` for the `node` environment:
 

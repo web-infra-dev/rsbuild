@@ -31,11 +31,11 @@
     "deepmerge": "^4.3.1",
     "reduce-configs": "^1.1.1",
     "stylus": "0.64.0",
-    "stylus-loader": "8.1.1"
+    "stylus-loader": "8.1.2"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.12.1",
+    "@rslib/core": "0.12.2",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^22.17.2",
     "typescript": "^5.9.2"

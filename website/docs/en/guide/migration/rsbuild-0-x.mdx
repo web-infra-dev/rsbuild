@@ -309,7 +309,7 @@ export default {
 
 Rsbuild v1 removed the `output.minify.html` and `output.minify.htmlOptions` options, and no longer minify the HTML files.
 
-Previously Rsbuild uses `html-minifier-terser` to minify the HTML files. But the performance of `html-minifier-terser` can not meet the needs of Rsbuild applications, and In most cases, there is little benefit in compressing HTML.
+Previously Rsbuild uses `html-minifier-terser` to minify the HTML files. But the performance of `html-minifier-terser` cannot meet the needs of Rsbuild applications, and in most cases, there is little benefit in compressing HTML.
 
 At this stage, Rsbuild will not built-in `html-minifier-terser`, so we provide a standalone [rsbuild-plugin-html-minifier-terser](https://github.com/rspack-contrib/rsbuild-plugin-html-minifier-terser) to support HTML minification.
 

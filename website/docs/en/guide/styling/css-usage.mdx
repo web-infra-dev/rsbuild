@@ -7,14 +7,14 @@ Rsbuild also provides several configurations that allow customization of the pro
 ## Lightning CSS
 
 :::tip
-[Lightning CSS](https://lightningcss.dev) is a high performance CSS parser, transformer and minifier written in Rust. It supports parsing and transforming many modern CSS features into syntax supported by target browsers, and also provides a better compression ratio.
+[Lightning CSS](https://lightningcss.dev) is a high performance CSS parser, transformer and minifier written in Rust. It supports parsing and transforming many modern CSS features into syntax supported by target browsers, and provides a better compression ratio.
 :::
 
 Rsbuild uses Rspack's built-in [lightningcss-loader](https://rspack.rs/guide/features/builtin-lightningcss-loader) to transform CSS code. It automatically reads the project's [browserslist](/guide/advanced/browserslist) config and converts the CSS code to syntax supported by target browsers.
 
 ### Features
 
-- Lightning CSS automatically adds vendor prefixes like `-webkit-`, `-moz-`, `-ms-`, etc., so you don't need to manually add prefixes or use the [autoprefixer](https://github.com/postcss/autoprefixer) plugin.
+- Lightning CSS automatically adds vendor prefixes like `-webkit-`, `-moz-`, `-ms-`, etc., so you do not need to manually add prefixes or use the [autoprefixer](https://github.com/postcss/autoprefixer) plugin.
 - Lightning CSS automatically downgrades CSS syntax, allowing you to use modern CSS features such as CSS nesting and custom media queries in your code without worrying about browser compatibility issues.
 - You can use [tools.lightningcssLoader](/config/tools/lightningcss-loader) to customize the options for `lightningcss-loader`.
 

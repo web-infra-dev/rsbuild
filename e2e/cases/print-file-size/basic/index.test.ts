@@ -296,4 +296,24 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
 
     await rsbuild.close();
   });
+
+  test('printFileSize with custom total function should work', async () => {
+    const rsbuild = await build({
+      cwd,
+      rsbuildConfig: {
+        performance: {
+          printFileSize: {
+            total: ({ assets }) => {
+              return `Generated ${assets.length} files.`;
+            },
+            detail: false,
+          },
+        },
+      },
+    });
+
+    await rsbuild.expectLog('Generated 5 files.');
+
+    await rsbuild.close();
+  });
 });

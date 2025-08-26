@@ -7,7 +7,7 @@ Exclude JavaScript or TypeScript files that do not need to be compiled by [SWC](
 
 ## Usage
 
-The usage of `source.exclude` is consistent with [Rule.exclude](https://rspack.rs/config/module#ruleexclude) in Rspack, which supports passing in strings or regular expressions to match the module path.
+The usage of `source.exclude` is similar to [source.include](/config/source/include), supporting passing in strings or regular expressions to match the module path.
 
 For example:
 
@@ -21,7 +21,24 @@ export default {
 };
 ```
 
-> Refer to [source.include](/config/source/include) to learn more.
+> See [source.include](/config/source/include) to learn more usages.
+
+## Priority
+
+When both `source.include` and `source.exclude` are set, `source.exclude` has higher priority.
+
+For example, in the following example, although `source.include` matches the entire `src` directory, JavaScript files in the `src/foo` directory will not be compiled by SWC:
+
+```ts title="rsbuild.config.ts"
+import path from 'node:path';
+
+export default {
+  source: {
+    include: [path.resolve(__dirname, 'src')],
+    exclude: [path.resolve(__dirname, 'src/foo')],
+  },
+};
+```
 
 ## Exclude from bundling
 

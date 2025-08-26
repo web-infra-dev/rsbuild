@@ -11,8 +11,8 @@ exports[`plugin-stylus > should add stylus loader config correctly 1`] = `
     },
     "resourceQuery": {
       "not": [
-        /\\^\\\\\\?raw\\$/,
-        /\\^\\\\\\?inline\\$/,
+        /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
       ],
     },
     "sideEffects": true,
@@ -56,7 +56,8 @@ exports[`plugin-stylus > should add stylus loader config correctly 1`] = `
     ],
   },
   {
-    "resourceQuery": /\\^\\\\\\?inline\\$/,
+    "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+    "sideEffects": true,
     "test": /\\\\\\.styl\\(us\\)\\?\\$/,
     "use": [
       {
@@ -89,7 +90,7 @@ exports[`plugin-stylus > should add stylus loader config correctly 1`] = `
     ],
   },
   {
-    "resourceQuery": /\\^\\\\\\?raw\\$/,
+    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
     "test": /\\\\\\.styl\\(us\\)\\?\\$/,
     "type": "asset/source",
   },
@@ -107,8 +108,8 @@ exports[`plugin-stylus > should allow to configure stylus options 1`] = `
     },
     "resourceQuery": {
       "not": [
-        /\\^\\\\\\?raw\\$/,
-        /\\^\\\\\\?inline\\$/,
+        /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
       ],
     },
     "sideEffects": true,
@@ -155,7 +156,8 @@ exports[`plugin-stylus > should allow to configure stylus options 1`] = `
     ],
   },
   {
-    "resourceQuery": /\\^\\\\\\?inline\\$/,
+    "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+    "sideEffects": true,
     "test": /\\\\\\.styl\\(us\\)\\?\\$/,
     "use": [
       {
@@ -191,7 +193,7 @@ exports[`plugin-stylus > should allow to configure stylus options 1`] = `
     ],
   },
   {
-    "resourceQuery": /\\^\\\\\\?raw\\$/,
+    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
     "test": /\\\\\\.styl\\(us\\)\\?\\$/,
     "type": "asset/source",
   },

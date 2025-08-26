@@ -39,7 +39,7 @@ export default {
 
 ### Path rewrite
 
-If you don't want `/api` to be passed along, we need to rewrite the path:
+If you do not want `/api` to be passed along, we need to rewrite the path:
 
 ```js
 export default {
@@ -104,7 +104,7 @@ In addition to the `http-proxy-middleware` option, Rsbuild also support the `byp
 
 ### bypass
 
-Sometimes you don't want to proxy everything. It is possible to bypass the proxy based on the return value of a `bypass` function.
+Sometimes you do not want to proxy everything. It is possible to bypass the proxy based on the return value of a `bypass` function.
 
 In the function, you get access to the request, response, and proxy options.
 
@@ -114,7 +114,7 @@ In the function, you get access to the request, response, and proxy options.
 - Return a path to serve from, instead of continuing to proxy the request.
 - Return a Promise to handle the request asynchronously.
 
-E.g. for a browser request, you want to serve an HTML page, but for an API request, you want to proxy it. You could configure like this:
+For example, for a browser request, you want to serve an HTML page, but for an API request, you want to proxy it. You could configure like this:
 
 ```ts title="rsbuild.config.ts"
 export default {

@@ -99,8 +99,6 @@ export const pluginSass = (
 
   setup(api) {
     const { rewriteUrls = true, include = /\.s(?:a|c)ss$/ } = pluginOptions;
-    const RAW_QUERY_REGEX: RegExp = /^\?raw$/;
-    const INLINE_QUERY_REGEX: RegExp = /^\?inline$/;
 
     api.onAfterCreateCompiler(({ compiler }) => {
       patchCompilerGlobalLocation(compiler);
@@ -122,36 +120,32 @@ export const pluginSass = (
       const rule = chain.module
         .rule(findRuleId(chain, CHAIN_ID.RULE.SASS))
         .test(include)
-        // exclude `import './foo.scss?raw'` and `import './foo.scss?inline'`
-        .resourceQuery({ not: [RAW_QUERY_REGEX, INLINE_QUERY_REGEX] })
-        .sideEffects(true)
         .resolve.preferRelative(true)
         .end();
 
-      // Rsbuild < 1.3.0 does not have CSS inline rule
-      const supportInline =
-        CHAIN_ID.RULE.CSS_INLINE &&
-        chain.module.rules.has(CHAIN_ID.RULE.CSS_INLINE);
-
-      const inlineRule = supportInline
+      // Rsbuild < 1.3.0 does not have the raw and inline rules
+      const inlineRule = CHAIN_ID.RULE.CSS_INLINE
         ? chain.module
             .rule(findRuleId(chain, CHAIN_ID.RULE.SASS_INLINE))
             .test(include)
-            .resourceQuery(INLINE_QUERY_REGEX)
         : null;
 
       // Support for importing raw Sass files
-      chain.module
-        .rule(CHAIN_ID.RULE.SASS_RAW)
-        .test(include)
-        .type('asset/source')
-        .resourceQuery(RAW_QUERY_REGEX);
+      if (CHAIN_ID.RULE.CSS_RAW) {
+        const cssRawRule = chain.module.rules.get(CHAIN_ID.RULE.CSS_RAW);
+        chain.module
+          .rule(CHAIN_ID.RULE.SASS_RAW)
+          .test(include)
+          .type('asset/source')
+          .resourceQuery(cssRawRule.get('resourceQuery'));
+      }
 
       // Update the normal rule and the inline rule
       const updateRules = (
         callback: (rule: RspackChain.Rule, type: 'normal' | 'inline') => void,
       ) => {
         callback(rule, 'normal');
+
         if (inlineRule) {
           callback(inlineRule, 'inline');
         }
@@ -188,6 +182,8 @@ export const pluginSass = (
           type === 'normal' ? CHAIN_ID.RULE.CSS : CHAIN_ID.RULE.CSS_INLINE,
         );
         rule.dependency(cssRule.get('dependency'));
+        rule.sideEffects(cssRule.get('sideEffects'));
+        rule.resourceQuery(cssRule.get('resourceQuery'));
 
         for (const id of Object.keys(cssRule.uses.entries())) {
           const loader = cssRule.uses.get(id);

@@ -193,9 +193,9 @@ export async function createRsbuild(
   context.getPluginAPI = getPluginAPI;
   const globalPluginAPI = getPluginAPI();
 
-  logger.debug('add default plugins');
+  logger.debug('registering default plugins');
   applyDefaultPlugins(pluginManager, context);
-  logger.debug('add default plugins done');
+  logger.debug('default plugins registered');
 
   const provider = (config.provider as RsbuildProvider) || rspackProvider;
 
@@ -291,7 +291,7 @@ export async function createRsbuild(
     return providerInstance.inspectConfig(...args);
   };
 
-  const rsbuild = {
+  const rsbuild: RsbuildInstance = {
     build,
     preview,
     startDevServer,
@@ -306,22 +306,25 @@ export async function createRsbuild(
     ]),
     ...pick(globalPluginAPI, [
       'context',
-      'onCloseBuild',
-      'onBeforeBuild',
-      'onBeforeCreateCompiler',
-      'onBeforeStartDevServer',
-      'onBeforeStartProdServer',
-      'onAfterBuild',
-      'onAfterCreateCompiler',
-      'onAfterStartDevServer',
-      'onAfterStartProdServer',
-      'onCloseDevServer',
-      'onBeforeDevCompile',
-      'onAfterDevCompile',
-      'onDevCompileDone',
-      'onExit',
+      'expose',
       'getRsbuildConfig',
       'getNormalizedConfig',
+      'modifyEnvironmentConfig',
+      'modifyRsbuildConfig',
+      'onAfterBuild',
+      'onAfterCreateCompiler',
+      'onAfterDevCompile',
+      'onAfterStartDevServer',
+      'onAfterStartProdServer',
+      'onBeforeBuild',
+      'onBeforeCreateCompiler',
+      'onBeforeDevCompile',
+      'onBeforeStartDevServer',
+      'onBeforeStartProdServer',
+      'onCloseBuild',
+      'onCloseDevServer',
+      'onDevCompileDone',
+      'onExit',
     ]),
     ...pick(providerInstance, ['initConfigs']),
   };
