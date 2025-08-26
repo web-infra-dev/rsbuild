@@ -18,8 +18,8 @@ export * from './stats';
 
 export { color, RspackChain };
 
-// `SubresourceIntegrityPlugin` added in Rspack v1.2.4
-export const rspackMinVersion = '1.2.4';
+// Lazy compilation was stabilized in Rspack v1.5.0
+export const rspackMinVersion = '1.5.0';
 
 export const getNodeEnv = (): string => process.env.NODE_ENV || '';
 export const setNodeEnv = (env: string): void => {
