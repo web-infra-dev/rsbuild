@@ -98,7 +98,8 @@ function getDefaultSwcConfig({
     rspackExperiments: {
       collectTypeScriptInfo: {
         typeExports: true,
-        exportedEnum: true,
+        // TODO: enable
+        exportedEnum: false,
       },
     },
   };
