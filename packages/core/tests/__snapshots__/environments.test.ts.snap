@@ -1483,7 +1483,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           },
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-          "type": "javascript/auto",
           "use": [
             {
               "loader": "builtin:swc-loader",
@@ -1907,7 +1906,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           },
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-          "type": "javascript/auto",
           "use": [
             {
               "loader": "builtin:swc-loader",

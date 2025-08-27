@@ -142,7 +142,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "builtin:swc-loader",
@@ -654,7 +653,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "builtin:swc-loader",
@@ -1166,7 +1164,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "builtin:swc-loader",
@@ -1633,7 +1630,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
           "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "builtin:swc-loader",

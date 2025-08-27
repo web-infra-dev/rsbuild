@@ -26,7 +26,6 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
       "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
     },
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-    "type": "javascript/auto",
     "use": [
       {
         "loader": "builtin:swc-loader",
@@ -158,7 +157,6 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
       "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
     },
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-    "type": "javascript/auto",
     "use": [
       {
         "loader": "builtin:swc-loader",

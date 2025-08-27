@@ -142,7 +142,6 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
           "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "builtin:swc-loader",

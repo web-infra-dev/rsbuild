@@ -19,7 +19,6 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
     "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
   },
   "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-  "type": "javascript/auto",
   "use": [
     {
       "loader": "builtin:swc-loader",
@@ -111,7 +110,6 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
     "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
   },
   "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-  "type": "javascript/auto",
   "use": [
     {
       "loader": "builtin:swc-loader",
@@ -203,7 +201,6 @@ exports[`plugins/babel > should apply environment config correctly 2`] = `
     "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
   },
   "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-  "type": "javascript/auto",
   "use": [
     {
       "loader": "builtin:swc-loader",
@@ -290,7 +287,6 @@ exports[`plugins/babel > should set babel-loader 1`] = `
     "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
   },
   "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-  "type": "javascript/auto",
   "use": [
     {
       "loader": "builtin:swc-loader",
@@ -379,7 +375,6 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
     "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
   },
   "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-  "type": "javascript/auto",
   "use": [
     {
       "loader": "builtin:swc-loader",

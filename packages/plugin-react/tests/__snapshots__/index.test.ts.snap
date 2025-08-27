@@ -23,7 +23,6 @@ exports[`plugins/react > should configuring \`tools.swc\` to override react runt
       "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
     },
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-    "type": "javascript/auto",
     "use": [
       {
         "loader": "builtin:swc-loader",
@@ -118,7 +117,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
       "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
     },
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-    "type": "javascript/auto",
     "use": [
       {
         "loader": "builtin:swc-loader",
