@@ -210,7 +210,21 @@ export type RsbuildPluginApplyFn = (
 export type RsbuildPluginApply = 'serve' | 'build' | RsbuildPluginApplyFn;
 
 /**
- * The type of the Rsbuild plugin object.
+ * Defines the structure and behavior of an Rsbuild plugin.
+ * Rsbuild plugins provide a standardized way to extend build functionality through
+ * lifecycle hooks and configuration modifications.
+ *
+ * @example
+ * ```ts
+ * const myPlugin = (): RsbuildPlugin => ({
+ *   name: 'my-plugin',
+ *   setup(api) {
+ *     api.onBeforeBuild(() => {
+ *       console.log('Build starting...');
+ *     });
+ *   }
+ * });
+ * ```
  */
 export type RsbuildPlugin = {
   /**
@@ -525,7 +539,9 @@ declare function getNormalizedConfig(options: {
 }): NormalizedEnvironmentConfig;
 
 /**
- * Define a generic Rsbuild plugin API that provider can extend as needed.
+ * The API interface provided to Rsbuild plugins through the `setup` function.
+ * It allows plugins to interact with the build process, modify configurations,
+ * register hooks, and access context information.
  */
 export type RsbuildPluginAPI = Readonly<{
   /**
