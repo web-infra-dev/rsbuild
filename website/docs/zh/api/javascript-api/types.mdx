@@ -90,7 +90,9 @@ const context: RsbuildContext = rsbuild.context;
 
 ## RsbuildPlugin
 
-Rsbuild 插件的类型。
+定义 Rsbuild 插件的结构和行为。
+
+Rsbuild 插件提供了一种标准化的方式，通过生命周期钩子和修改配置来扩展构建能力。
 
 ```ts
 import type { RsbuildPlugin } from '@rsbuild/core';
@@ -103,7 +105,9 @@ const myPlugin: RsbuildPlugin = {
 
 ## RsbuildPluginAPI
 
-Rsbuild 插件中，setup 函数传入的 api 对象的类型。
+通过 `setup` 函数提供给 Rsbuild 插件的 API 接口。
+
+它允许插件与构建过程进行交互，修改配置、注册钩子、以及访问上下文信息。
 
 ```ts
 import type { RsbuildPluginAPI } from '@rsbuild/core';
