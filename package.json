@@ -53,5 +53,10 @@
   "engines": {
     "node": ">=18.12.0",
     "pnpm": ">=10.15.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "@rspack/core": "1.5.0"
+    }
   }
 }

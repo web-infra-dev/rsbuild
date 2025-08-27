@@ -206,6 +206,9 @@ export default defineConfig({
     },
   ],
   builderConfig: {
+    performance: {
+      buildCache: Boolean(process.env.CACHE),
+    },
     plugins: [
       rsbuildPluginOverview,
       pluginSass(),
