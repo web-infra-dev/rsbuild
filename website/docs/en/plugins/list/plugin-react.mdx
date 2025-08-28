@@ -208,8 +208,10 @@ As Windows does not support the above usage, you can also use [cross-env](https:
 
 ```ts
 type ReactRefreshOptions = {
-  include?: string | RegExp | (string | RegExp)[] | null;
-  exclude?: string | RegExp | (string | RegExp)[] | null;
+  // @link https://rspack.rs/config/module#condition
+  test?: Rspack.RuleSetCondition;
+  include?: Rspack.RuleSetCondition;
+  exclude?: Rspack.RuleSetCondition;
   library?: string;
   forceEnable?: boolean;
 };
@@ -219,8 +221,13 @@ type ReactRefreshOptions = {
 
 ```js
 const defaultOptions = {
-  include: [/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/],
-  exclude: [/[\\/]node_modules[\\/]/],
+  test: [/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/],
+  include: [
+    // Same as Rsbuild's `source.include` configuration
+  ],
+  exclude: [
+    // Same as Rsbuild's `source.exclude` configuration
+  ],
   resourceQuery: { not: /^\?raw$/ },
 };
 ```
