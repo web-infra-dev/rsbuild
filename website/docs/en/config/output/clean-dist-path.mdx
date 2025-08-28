@@ -8,14 +8,14 @@ type CleanDistPath = boolean | 'auto' | CleanDistPathObject;
 
 - **Default:** `'auto'`
 
-Whether to clean up all files in the output directory before the build starts. The output directory is the [output.distPath.root](/config/output/dist-path) directory.
+Configure whether to clean up all files in the output directory before the build starts. The output directory is the [output.distPath.root](/config/output/dist-path) directory.
 
 ## Default behavior
 
 The default value of `output.cleanDistPath` is `'auto'`:
 
 - In development mode, if [dev.writeToDisk](/config/dev/write-to-disk) is `false`, Rsbuild will not perform cleanup.
-- In any mode, if [output.distPath.root](/config/output/dist-path) is an external directory or equals to the project root directory, Rsbuild will not perform cleanup to avoid accidentally deleting files from other directories.
+- In any mode, if [output.distPath.root](/config/output/dist-path) is an external directory or equals the project root directory, Rsbuild will not perform cleanup to avoid accidentally deleting files from other directories.
 
 ```js
 export default {

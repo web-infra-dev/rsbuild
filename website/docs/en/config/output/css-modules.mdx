@@ -2,13 +2,13 @@
 
 - **Type:** `CSSModules`
 
-For custom CSS Modules configuration.
+Configure custom CSS Modules settings.
 
-The CSS Modules feature of Rsbuild is based on the `modules` option of css-loader. You can refer to [css-loader - modules](https://github.com/webpack-contrib/css-loader?tab=readme-ov-file#modules) to learn more.
+The CSS Modules feature in Rsbuild is based on the `modules` option of css-loader. You can refer to [css-loader - modules](https://github.com/webpack-contrib/css-loader?tab=readme-ov-file#modules) to learn more.
 
 ## cssModules.auto
 
-The `auto` configuration option allows CSS Modules to be automatically enabled based on their filenames.
+The `auto` configuration option allows CSS Modules to be automatically enabled based on filenames.
 
 - **Type:**
 
@@ -27,7 +27,7 @@ type Auto =
 
 Type description:
 
-- `true`: enable CSS Modules for all files matching `/\.module\.\w+$/i.test(filename)` regexp.
+- `true`: enable CSS Modules for all files matching the `/\.module\.\w+$/i.test(filename)` regexp.
 - `false`: disable CSS Modules.
 - `RegExp`: enable CSS Modules for all files matching `/RegExp/i.test(filename)` regexp.
 - `function`: enable CSS Modules for files based on the filename satisfying your filter function check.

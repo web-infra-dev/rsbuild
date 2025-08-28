@@ -3,18 +3,18 @@
 - **Type:** `boolean | string`
 - **Default:** `true`
 
-Whether to add a hash value to the filename after the production build.
+Configure whether to add a hash value to the filename after the production build.
 
 ### Disable hash
 
-By default, the filename of the output files will include a hash value:
+By default, output file names include a hash value:
 
 ```bash
 dist/static/css/index.7879e19d.css
 dist/static/js/index.18a568e5.js
 ```
 
-You can set `output.filenameHash` to false to disable this behavior:
+You can set `output.filenameHash` to `false` to disable this behavior:
 
 ```js
 export default {
@@ -24,7 +24,7 @@ export default {
 };
 ```
 
-After rebuilding, the output filenames becomes:
+After rebuilding, the output filenames become:
 
 ```bash
 dist/static/css/index.css
