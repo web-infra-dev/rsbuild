@@ -64,11 +64,13 @@ rspackOnlyTest(
       },
     });
 
+    await page.waitForRequest(/\.js/, { timeout: 1000 });
+
     const files = await rsbuild.getDistFiles(false);
 
     // should have filename hash in production mode
     const indexFile = Object.keys(files).find((key) =>
-      key.match(/static\/js\/index\.\w+\.js/),
+      key.match(/static\/js\/async\/\w+\.\w+\.js/),
     )!;
 
     // should replace `process.env.NODE_ENV` with `'production'`

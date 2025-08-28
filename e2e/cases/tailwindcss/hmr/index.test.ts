@@ -23,6 +23,12 @@ rspackOnlyTest('should support tailwindcss HMR', async ({ page }) => {
     page,
   });
 
+  await page.waitForFunction(
+    "document.querySelector('#root').className",
+    undefined,
+    { timeout: 1000 },
+  );
+
   await expect(page.locator('#root')).toHaveCSS('color', 'rgb(0, 0, 0)');
 
   writeFileSync(tempFile, getContent('text-white'));

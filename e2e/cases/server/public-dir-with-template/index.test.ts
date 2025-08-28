@@ -14,6 +14,7 @@ test('should serve publicDir with template for dev server correctly', async ({
   expect((await res?.body())?.toString().trim()).toBe('aaaa');
 
   await page.goto(`http://localhost:${rsbuild.port}`);
+  await page.waitForSelector('#test', { timeout: 1000 });
   const title = await page.$('title');
   expect(await title?.innerText()).toBe('Hello');
 

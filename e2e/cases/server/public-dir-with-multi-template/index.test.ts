@@ -14,11 +14,11 @@ test('should serve publicDir with templates for dev server correctly', async ({
   expect((await res?.body())?.toString().trim()).toBe('aaaa');
 
   await page.goto(`http://localhost:${rsbuild.port}/foo`);
-  const title = await page.$('#test');
+  const title = await page.waitForSelector('#test', { timeout: 1000 });
   expect(await title?.innerText()).toBe('Hello Foo!');
 
   await page.goto(`http://localhost:${rsbuild.port}/bar`);
-  const title2 = await page.$('#test');
+  const title2 = await page.waitForSelector('#test', { timeout: 1000 });
   expect(await title2?.innerText()).toBe('Hello Bar!');
 
   await rsbuild.close();

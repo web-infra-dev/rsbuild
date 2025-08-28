@@ -18,10 +18,17 @@ rspackOnlyTest(
         },
       },
     });
+
+    await page.waitForFunction('window.a', undefined, { timeout: 1000 });
+
     const files = await rsbuild.getDistFiles();
     const content =
-      files[Object.keys(files).find((file) => file.endsWith('.js'))!];
+      files[
+        Object.keys(files).find(
+          (file) => file.endsWith('.js') && file.includes('src_index_js'),
+        )!
+      ];
 
-    expect(content).toContain('function(){console.log("main")}');
+    expect(content).toContain('function(){window.a=1}');
   },
 );

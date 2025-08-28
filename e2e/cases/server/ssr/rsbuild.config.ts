@@ -42,6 +42,7 @@ export default defineConfig({
         }
       });
     },
+    lazyCompilation: false,
   },
   environments: {
     web: {

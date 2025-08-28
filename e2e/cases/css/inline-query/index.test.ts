@@ -9,6 +9,17 @@ rspackOnlyTest(
       page,
     });
 
+    await page.waitForFunction(
+      [
+        'window.aInline1',
+        'window.aInline2',
+        'window.aInline3',
+        'window.aInline4',
+      ].join(' && '),
+      undefined,
+      { timeout: 1000 },
+    );
+
     for (const key of ['aInline1', 'aInline2', 'aInline3', 'aInline4']) {
       const inline: string = await page.evaluate(`window.${key}`);
       expect(

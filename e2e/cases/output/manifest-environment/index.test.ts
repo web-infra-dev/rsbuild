@@ -169,7 +169,7 @@ test('should allow to access manifest data in environment API', async ({
   await page.goto(`http://localhost:${rsbuild.port}`);
 
   // main.js, main.js.map, index.html
-  expect(Object.keys(webManifest.allFiles).length).toBe(3);
+  expect(Object.keys(webManifest.allFiles).length).toBe(6);
   expect(webManifest.entries.index).toMatchObject({
     initial: {
       js: ['/static/js/index.js'],

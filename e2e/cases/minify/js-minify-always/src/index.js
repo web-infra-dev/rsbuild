@@ -1,5 +1,5 @@
 function main() {
-  console.log('main');
+  window.a = 1;
 }
 
 main();

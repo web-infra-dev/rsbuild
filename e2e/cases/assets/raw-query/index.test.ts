@@ -13,6 +13,8 @@ test('should allow to get raw asset content with `?raw` in development mode', as
     page,
   });
 
+  await page.waitForFunction('window.rawSvg', undefined, { timeout: 1000 });
+
   expect(await page.evaluate('window.rawSvg')).toEqual(
     await promises.readFile(
       join(__dirname, '../../../assets/circle.svg'),
@@ -52,6 +54,8 @@ test('should allow to get raw SVG content with `?raw` when using pluginSvgr', as
     },
   });
 
+  await page.waitForFunction('window.rawSvg', undefined, { timeout: 1000 });
+
   expect(await page.evaluate('window.rawSvg')).toEqual(
     await promises.readFile(
       join(__dirname, '../../../assets/circle.svg'),
@@ -68,6 +72,8 @@ test('should allow to get raw JS content with `?raw`', async ({ page }) => {
     page,
   });
 
+  await page.waitForFunction('window.rawJs', undefined, { timeout: 1000 });
+
   expect(await page.evaluate('window.rawJs')).toEqual(
     await promises.readFile(join(__dirname, 'src/foo.js'), 'utf-8'),
   );
@@ -80,6 +86,11 @@ test('should allow to get raw TS content with `?raw`', async ({ page }) => {
     cwd: __dirname,
     page,
   });
+
+  await page.waitForFunction('window.rawTs1', undefined, { timeout: 1000 });
+  await page.waitForFunction('window.rawTs2', undefined, { timeout: 1000 });
+  await page.waitForFunction('window.rawTs3', undefined, { timeout: 1000 });
+  await page.waitForFunction('window.rawTs4', undefined, { timeout: 1000 });
 
   const tsContent = await promises.readFile(
     join(__dirname, 'src/bar.ts'),
@@ -104,6 +115,8 @@ test('should allow to get raw TSX content with `?raw` and using pluginReact', as
     },
   });
 
+  await page.waitForFunction('window.rawTsx', undefined, { timeout: 1000 });
+
   expect(await page.evaluate('window.rawTsx')).toEqual(
     await promises.readFile(join(__dirname, 'src/baz.tsx'), 'utf-8'),
   );
@@ -118,6 +131,8 @@ test('should not get raw SVG content with query other than `?raw`', async ({
     cwd: __dirname,
     page,
   });
+
+  await page.waitForFunction('window.normalSvg', undefined, { timeout: 1000 });
 
   expect(
     (await page.evaluate<string>('window.normalSvg')).startsWith(
@@ -135,6 +150,9 @@ test('should not get raw JS content with query other than `?raw`', async ({
     cwd: __dirname,
     page,
   });
+
+  await page.waitForFunction('window.normalJs', undefined, { timeout: 1000 });
+
   expect(await page.evaluate('window.normalJs')).toEqual('foo');
   await rsbuild.close();
 });
