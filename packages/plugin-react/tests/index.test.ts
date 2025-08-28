@@ -50,7 +50,27 @@ describe('plugins/react', () => {
 
     rsbuild.addPlugins([pluginReact()]);
 
-    expect(await rsbuild.matchBundlerPlugin('ReactRefreshPlugin')).toBeFalsy();
+    expect(
+      await rsbuild.matchBundlerPlugin('ReactRefreshRspackPlugin'),
+    ).toBeFalsy();
+  });
+
+  it('should set transpilation scope for react refresh plugin correctly', async () => {
+    const rsbuild = await createStubRsbuild({
+      rsbuildConfig: {
+        mode: 'development',
+        source: {
+          include: [/foo/, /bar/],
+          exclude: [/baz/],
+        },
+      },
+    });
+
+    rsbuild.addPlugins([pluginReact()]);
+
+    expect(
+      await rsbuild.matchBundlerPlugin('ReactRefreshRspackPlugin'),
+    ).toMatchSnapshot();
   });
 
   it('should not apply react refresh when target is node', async () => {
@@ -64,7 +84,9 @@ describe('plugins/react', () => {
 
     rsbuild.addPlugins([pluginReact()]);
 
-    expect(await rsbuild.matchBundlerPlugin('ReactRefreshPlugin')).toBeFalsy();
+    expect(
+      await rsbuild.matchBundlerPlugin('ReactRefreshRspackPlugin'),
+    ).toBeFalsy();
   });
 
   it('should not apply react refresh when target is web-worker', async () => {
@@ -78,7 +100,9 @@ describe('plugins/react', () => {
 
     rsbuild.addPlugins([pluginReact()]);
 
-    expect(await rsbuild.matchBundlerPlugin('ReactRefreshPlugin')).toBeFalsy();
+    expect(
+      await rsbuild.matchBundlerPlugin('ReactRefreshRspackPlugin'),
+    ).toBeFalsy();
   });
 
   it('should not apply splitChunks rule when strategy is not split-by-experience', async () => {
