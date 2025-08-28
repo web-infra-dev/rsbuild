@@ -10,7 +10,7 @@ Configure how to generate the manifest file.
 - `string`: Generate a manifest file with the specified filename or path.
 - `object`: Generate a manifest file with the specified options.
 
-The manifest file contains the information of all assets, and the mapping relationship between [entry module](/config/source/entry) and assets.
+The manifest file contains information about all assets and the mapping between [entry modules](/config/source/entry) and assets.
 
 ## Basic example
 
@@ -49,7 +49,7 @@ After building, Rsbuild will generate a `dist/manifest.json` file:
 
 ## Manifest structure
 
-By default, the manifest file will be output in the following structure:
+The manifest file will be output with the following structure by default:
 
 ```ts
 type FilePath = string;
@@ -255,7 +255,7 @@ export default {
 
 ## Multiple environments
 
-When using [environments](/config/environments) and configuring multiple environments, please specify a unique `manifest.filename` value for each environment to prevent manifest files from different environments from overwriting each other.
+When using [environments](/config/environments) with multiple environments, please specify a unique `manifest.filename` value for each environment to prevent manifest files from different environments from overwriting each other.
 
 For example, use the default `manifest.json` for the `web` environment and use `manifest-node.json` for the `node` environment:
 
@@ -279,7 +279,7 @@ export default {
 };
 ```
 
-You can also choose to generate the manifest file for a specific environment:
+You can also choose to generate the manifest file only for specific environments:
 
 ```ts title="rsbuild.config.ts"
 export default {
