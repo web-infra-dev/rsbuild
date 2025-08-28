@@ -1,12 +1,12 @@
 # Static assets
 
-Rsbuild supports import static assets, including images, fonts, audio and video.
+Rsbuild supports importing static assets, including images, fonts, audio, and video.
 
-:::tip What is Static Assets
-Static assets are files that are part of a web application and do not change, even when the application is being used. Examples of static assets include images, fonts, medias, stylesheets, and JavaScript files. These assets are typically stored on a web server or CDN, and delivered to the user's web browser when the web application is accessed. Because they do not change, static assets can be cached by the browser, which helps to improve the performance of the web application.
+:::tip What are Static Assets
+Static assets are files that are part of a web application and do not change, even when the application is being used. Examples of static assets include images, fonts, media files, stylesheets, and JavaScript files. These assets are typically stored on a web server or CDN, and delivered to the user's web browser when the web application is accessed. Because they do not change, static assets can be cached by the browser, which helps to improve the performance of the web application.
 :::
 
-## Assets format
+## Asset formats
 
 The following are the formats supported by Rsbuild by default:
 
@@ -18,12 +18,12 @@ The following are the formats supported by Rsbuild by default:
 To import assets in other formats, refer to [Extend Asset Types](#extend-asset-types).
 
 :::tip SVG images
-SVG image is a special case. Rsbuild support convert SVG to React components, so SVG is processed separately. For details, see [SVGR Plugin](/plugins/list/plugin-svgr).
+SVG images are a special case. Rsbuild supports converting SVG to React components, so SVG is processed separately. For details, see [SVGR Plugin](/plugins/list/plugin-svgr).
 :::
 
-## Import assets in JS file
+## Importing assets in JavaScript files
 
-In JS files, you can import static assets with relative paths:
+In JavaScript files, you can import static assets using relative paths:
 
 ```tsx
 // Import the logo.png image in the static directory
@@ -34,7 +34,7 @@ console.log(logo); // "/static/logo.[hash].png"
 export default = () => <img src={logo} />;
 ```
 
-Import with [alias](/guide/advanced/alias) is also available:
+Importing with [alias](/guide/advanced/alias) is also supported:
 
 ```tsx
 import logo from '@/static/logo.png';
@@ -74,9 +74,9 @@ const fooCss = new URL('./foo.css', import.meta.url).href;
 console.log(fooCss); // "/static/foo.[hash].css"
 ```
 
-## Import assets in CSS file
+## Importing assets in CSS files
 
-In CSS files, you can reference static assets in relative paths:
+In CSS files, you can reference static assets using relative paths:
 
 ```css
 .logo {
@@ -84,7 +84,7 @@ In CSS files, you can reference static assets in relative paths:
 }
 ```
 
-Import with [alias](/guide/advanced/alias) are also supported:
+Importing with [alias](/guide/advanced/alias) is also supported:
 
 ```css
 .logo {
@@ -153,7 +153,7 @@ console.log(image); // "data:image/png;base64,iVBORw0KGgo..."
 
 For a more detailed introduction to asset inlining, please refer to the [Static Asset Inlining](/guide/optimization/inline-assets) chapter.
 
-## Import as string
+## Importing as string
 
 Rsbuild supports using the `?raw` query parameter to import the raw content of static assets as a string in JavaScript.
 
@@ -194,10 +194,10 @@ Please read [Output Files](/guide/basic/output-files) for details.
 
 ## URL prefix
 
-The URL returned after importing a asset will automatically include the path prefix:
+The URL returned after importing an asset will automatically include the path prefix:
 
-- In development, using [dev.assetPrefix](/config/dev/asset-prefix) to set the path prefix.
-- In production, using [output.assetPrefix](/config/output/asset-prefix) to set the path prefix.
+- In development, use [dev.assetPrefix](/config/dev/asset-prefix) to set the path prefix.
+- In production, use [output.assetPrefix](/config/output/asset-prefix) to set the path prefix.
 
 For example, you can set `output.assetPrefix` to `https://example.com`:
 
