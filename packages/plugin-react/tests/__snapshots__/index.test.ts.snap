@@ -95,6 +95,33 @@ exports[`plugins/react > should not apply splitChunks rule when strategy is not 
 }
 `;
 
+exports[`plugins/react > should set transpilation scope for react refresh plugin correctly 1`] = `
+ReactRefreshRspackPlugin {
+  "options": {
+    "exclude": [
+      /baz/,
+    ],
+    "forceEnable": false,
+    "include": [
+      {
+        "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+      },
+      /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+      /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
+      /foo/,
+      /bar/,
+    ],
+    "injectEntry": true,
+    "injectLoader": true,
+    "overlay": false,
+    "resourceQuery": {
+      "not": /\\^\\\\\\?raw\\$/,
+    },
+    "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+  },
+}
+`;
+
 exports[`plugins/react > should work with swc-loader 1`] = `
 [
   {

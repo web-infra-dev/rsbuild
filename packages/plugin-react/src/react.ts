@@ -65,15 +65,16 @@ export const applyBasicReactSupport = (
       const { ReactRefreshRspackPlugin } = await import(
         '@rspack/plugin-react-refresh'
       );
-      const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
-      const NODE_MODULES_REGEX = /[\\/]node_modules[\\/]/;
+
+      const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
 
       chain
         .plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)
         .use(ReactRefreshRspackPlugin, [
           {
-            include: [SCRIPT_REGEX],
-            exclude: [NODE_MODULES_REGEX],
+            test: jsRule.get('test'),
+            include: jsRule.include.values(),
+            exclude: jsRule.exclude.values(),
             resourceQuery: { not: /^\?raw$/ },
             ...options.reactRefreshOptions,
           },
