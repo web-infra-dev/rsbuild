@@ -21,7 +21,7 @@ The default value of `mode` depends on the `process.env.NODE_ENV` environment va
 - If `NODE_ENV` is `development`, the default value is `development`.
 - If `NODE_ENV` has any other value, the default value is `none`.
 
-If you set the value of `mode`, the value of `NODE_ENV` will be ignored.
+If you set `mode`, the `NODE_ENV` value will be ignored.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -45,7 +45,7 @@ When using Rsbuild's JavaScript API:
 
 ## Development mode
 
-If the value of `mode` is `development`:
+If `mode` is `development`:
 
 - Enable HMR and register the [HotModuleReplacementPlugin](https://rspack.rs/plugins/webpack/hot-module-replacement-plugin).
 - Generate JavaScript source maps, but do not generate CSS source maps. See [output.sourceMap](/config/output/source-map) for details.
@@ -53,11 +53,11 @@ If the value of `mode` is `development`:
 - The `import.meta.env.MODE` in the source code will be replaced with `'development'`.
 - The `import.meta.env.DEV` in the source code will be replaced with `true`.
 - The `import.meta.env.PROD` in the source code will be replaced with `false`.
-- Use the value of [dev.assetPrefix](/config/dev/asset-prefix) as the URL prefix for static assets.
+- Use [dev.assetPrefix](/config/dev/asset-prefix) as the URL prefix for static assets.
 
 ## Production mode
 
-If the value of `mode` is `production`:
+If `mode` is `production`:
 
 - Enable JavaScript code minification and register the [SwcJsMinimizerRspackPlugin](https://rspack.rs/plugins/rspack/swc-js-minimizer-rspack-plugin).
 - Enable CSS code minification and register the [LightningCssMinimizerRspackPlugin](https://rspack.rs/plugins/rspack/lightning-css-minimizer-rspack-plugin).
@@ -68,15 +68,15 @@ If the value of `mode` is `production`:
 - The `import.meta.env.MODE` in the source code will be replaced with `'production'`.
 - The `import.meta.env.DEV` in the source code will be replaced with `false`.
 - The `import.meta.env.PROD` in the source code will be replaced with `true`.
-- Use the value of [output.assetPrefix](/config/output/asset-prefix) as the URL prefix for static assets.
+- Use [output.assetPrefix](/config/output/asset-prefix) as the URL prefix for static assets.
 
 ## None mode
 
-If the value of `mode` is `none`:
+If `mode` is `none`:
 
 - Do not enable any optimizations.
 - The `process.env.NODE_ENV` in the source code will not be replaced.
 - The `import.meta.env.MODE` in the source code will be replaced with `'none'`.
 - The `import.meta.env.DEV` in the source code will be replaced with `false`.
 - The `import.meta.env.PROD` in the source code will be replaced with `false`.
-- Use the value of [output.assetPrefix](/config/output/asset-prefix) as the URL prefix for static assets.
+- Use [output.assetPrefix](/config/output/asset-prefix) as the URL prefix for static assets.
