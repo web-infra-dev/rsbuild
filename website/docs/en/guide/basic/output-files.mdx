@@ -58,8 +58,8 @@ Rsbuild provides some configuration options to modify the directory or filename:
 
 - Modify the filename through [output.filename](/config/output/filename).
 - Modify the output path through [output.distPath](/config/output/dist-path).
-- Modify the license file through [output.legalComments](/config/output/legal-comments).
-- Modify source map through [output.sourceMap](/config/output/source-map).
+- Modify the license file output through [output.legalComments](/config/output/legal-comments).
+- Modify source map output through [output.sourceMap](/config/output/source-map).
 - Modify the output structure of the HTML files through [html.outputStructure](/config/html/output-structure).
 
 ## Static assets
@@ -82,7 +82,7 @@ dist
         └── qux.[hash].mp4
 ```
 
-You can use the [output.distPath](/config/output/dist-path) config to uniformly output these static assets into a directory, for example, output to the `assets` directory:
+You can use the [output.distPath](/config/output/dist-path) config to output these static assets to a single directory, for example, output to the `assets` directory:
 
 ```ts
 export default {
