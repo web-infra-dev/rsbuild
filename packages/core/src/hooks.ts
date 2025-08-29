@@ -271,22 +271,19 @@ const onBeforeCompile = ({
   if (isMultiCompiler(compiler)) {
     const { compilers } = compiler;
 
-    let doneCompilers = 0;
-
     let waitBeforeCompileDone: Promise<void> | undefined;
+
+    // Executed when a watching compilation has been invalidated (re-compilation)
+    compiler.hooks.invalid.tap(name, () => {
+      waitBeforeCompileDone = undefined;
+    });
 
     for (let index = 0; index < compilers.length; index++) {
       const compiler = compilers[index];
-      let compilerDone = false;
 
       (isWatch ? compiler.hooks.watchRun : compiler.hooks.run).tapPromise(
         name,
         async () => {
-          if (!compilerDone) {
-            compilerDone = true;
-            doneCompilers++;
-          }
-
           if (!waitBeforeCompileDone) {
             waitBeforeCompileDone = beforeCompile?.();
           }
@@ -297,17 +294,6 @@ const onBeforeCompile = ({
           await beforeEnvironmentCompiler(index);
         },
       );
-
-      compiler.hooks.invalid.tap(name, () => {
-        if (compilerDone) {
-          compilerDone = false;
-          doneCompilers--;
-        }
-
-        if (doneCompilers <= 0) {
-          waitBeforeCompileDone = undefined;
-        }
-      });
     }
   } else {
     (isWatch ? compiler.hooks.watchRun : compiler.hooks.run).tapPromise(
