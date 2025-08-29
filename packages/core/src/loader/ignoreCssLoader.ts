@@ -1,6 +1,6 @@
-import type { LoaderContext } from '@rspack/core';
+import type { LoaderDefinition } from '@rspack/core';
 
-export default function (this: LoaderContext<unknown>, source: string): string {
+const ignoreCssLoader: LoaderDefinition = function (source) {
   this?.cacheable(true);
 
   // if the source code include '___CSS_LOADER_EXPORT___'
@@ -12,4 +12,6 @@ export default function (this: LoaderContext<unknown>, source: string): string {
 
   // Preserve CSS Modules export for SSR.
   return source;
-}
+};
+
+export default ignoreCssLoader;

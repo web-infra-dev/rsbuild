@@ -18,10 +18,7 @@ const transformSvg = callbackify(
     transform(contents, config, state),
 );
 
-function svgrLoader(
-  this: Rspack.LoaderContext<Config>,
-  contents: string,
-): void {
+const svgrLoader: Rspack.LoaderDefinition<Config> = function (contents): void {
   this?.cacheable();
 
   const callback = this.async();
@@ -60,6 +57,6 @@ function svgrLoader(
       });
     });
   }
-}
+};
 
 export default svgrLoader;
