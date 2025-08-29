@@ -1,6 +1,6 @@
 # Output files
 
-This chapter introduces the output file directory structure and how to control the output directory for different file types.
+This section introduces the output file directory structure and how to control the output directory for different file types.
 
 If you want to know how to deploy the build outputs of Rsbuild as a static site, please refer to [Deploy Static Site](/guide/basic/static-deploy).
 
@@ -38,7 +38,7 @@ In the filename, `[name]` represents the entry name for this file, such as `inde
 
 ## Development mode output
 
-In development mode, Rsbuild stores build outputs in memory on the dev server by default, rather than writing them to disk. This reduces filesystem operation overhead. You can refer to [View Static Assets](/guide/basic/server#view-static-assets) to view all static assets generated in the current build.
+In development mode, Rsbuild stores build outputs in memory via the dev server by default, rather than writing them to disk. This reduces filesystem operation overhead. You can refer to [View Static Assets](/guide/basic/server#view-static-assets) to view all static assets generated in the current build.
 
 You can choose to write output files to disk, which is typically used for inspecting build artifacts or configuring proxy rules for static assets.
 
@@ -52,9 +52,9 @@ export default {
 };
 ```
 
-## Modify the directory
+## Modify the output directory
 
-Rsbuild provides some configuration options to modify the directory or filename:
+Rsbuild provides several configuration options to modify the directory or filename:
 
 - Modify the filename through [output.filename](/config/output/filename).
 - Modify the output path through [output.distPath](/config/output/dist-path).

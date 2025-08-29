@@ -1,6 +1,6 @@
 # Dev server
 
-Rsbuild comes with a built-in dev server designed to improve the development experience. When you run the `rsbuild dev` or `rsbuild preview` commands, the server starts and provides features such as page preview, routing, and hot module reloading.
+Rsbuild comes with a built-in dev server designed to improve the development experience. When you run `rsbuild dev` or `rsbuild preview` commands, the server starts and provides features like page preview, routing, and hot module reloading.
 
 ## Base path
 
@@ -30,15 +30,15 @@ For example, open `http://localhost:3000/rsbuild-dev-server` in the browser, you
 
 ## Page routing
 
-Rsbuild server provides a set of default routing conventions and allows users to customize them through configurations.
+Rsbuild server provides default routing conventions and allows customization through configurations.
 
 ### Default behavior
 
 Rsbuild server generates the corresponding page route based on the [server.base](/config/server/base) and [source.entry](/config/source/entry) configurations.
 
-When entry is index, the page can be accessed through `/`; when entry is foo, the page can be accessed through `/foo`.
+When entry is `index`, the page can be accessed via `/`; when entry is `foo`, the page can be accessed via `/foo`.
 
-When server.base is `/base`, the index page can be accessed through `/base` and the foo page can be accessed through `/base/foo`.
+When `server.base` is `/base`, the index page can be accessed via `/base` and the foo page can be accessed via `/base/foo`.
 
 ```ts title="rsbuild.config.ts"
 export default {
