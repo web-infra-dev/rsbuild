@@ -38,7 +38,7 @@ export default {
 ```
 
 :::tip
-This usage is usually used for debugging and troubleshooting. It is not recommended to disable code minification in production builds, as it will significantly degrade the page performance.
+This approach is usually used for debugging and troubleshooting. It is not recommended to disable code minification in production builds, as it will significantly degrade page performance.
 :::
 
 ## Options
@@ -83,7 +83,7 @@ export default {
 - **Type:** `Rspack.SwcJsMinimizerRspackPluginOptions`
 - **Default:** `{}`
 
-`output.minify.jsOptions` is used to configure SWC's minification options. For detailed configurations, please refer to [SwcJsMinimizerRspackPlugin](https://rspack.rs/plugins/rspack/swc-js-minimizer-rspack-plugin). The following configuration will override the default settings, disable the mangle feature.
+`output.minify.jsOptions` is used to configure SWC's minification options. For detailed configurations, please refer to [SwcJsMinimizerRspackPlugin](https://rspack.rs/plugins/rspack/swc-js-minimizer-rspack-plugin). The following configuration overrides the default settings, disabling the mangle feature.
 
 For example, disable the mangle feature:
 
