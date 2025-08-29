@@ -10,11 +10,13 @@ exports[`plugin-define > should register define plugin correctly 1`] = `
       "_args": [
         {
           "NAME": "\\"Jack\\"",
-          "import.meta.env.ASSET_PREFIX": "\\"\\"",
-          "import.meta.env.BASE_URL": "\\"/\\"",
-          "import.meta.env.DEV": false,
-          "import.meta.env.MODE": "\\"none\\"",
-          "import.meta.env.PROD": false,
+          "import.meta.env": {
+            "ASSET_PREFIX": "\\"\\"",
+            "BASE_URL": "\\"/\\"",
+            "DEV": false,
+            "MODE": "\\"none\\"",
+            "PROD": false,
+          },
           "process.env.ASSET_PREFIX": "\\"\\"",
           "process.env.BASE_URL": "\\"/\\"",
         },

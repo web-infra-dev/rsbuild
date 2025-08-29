@@ -1,64 +1,164 @@
 import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('should define vars in production mode correctly', async () => {
+declare global {
+  interface Window {
+    [key: string]: unknown;
+  }
+}
+
+test('should define vars in production mode correctly', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
+    page,
+    rsbuildConfig: {
+      mode: 'production',
+    },
   });
 
-  const file = await rsbuild.getIndexFile();
-  expect(file.content).toContain(
-    'console.log("import.meta.env.MODE","production")',
+  const { content } = await rsbuild.getIndexFile();
+
+  // Replaced identifiers
+  expect(content).toContain('"[value] import.meta.env.MODE","production"');
+  expect(content).toContain('"[value] process.env.NODE_ENV","production"');
+
+  // runtime values
+  expect(
+    await page.evaluate(() => window['import.meta.env.MODE === "development"']),
+  ).toBe(undefined);
+  expect(
+    await page.evaluate(
+      () => window['import.meta.env?.MODE === "development"'],
+    ),
+  ).toBe(undefined);
+  expect(
+    await page.evaluate(() => window['import.meta.env.MODE === "production"']),
+  ).toBe(true);
+  expect(
+    await page.evaluate(() => window['import.meta.env?.MODE === "production"']),
+  ).toBe(true);
+  expect(await page.evaluate(() => window['import.meta.env.DEV'])).toBe(
+    undefined,
   );
-  expect(file.content).toContain(
-    'console.log("process.env.NODE_ENV","production")',
+  expect(await page.evaluate(() => window['import.meta.env?.DEV'])).toBe(
+    undefined,
   );
-  expect(file.content).not.toContain('console.log("import.meta.env.DEV")');
-  expect(file.content).toContain('console.log("import.meta.env.PROD")');
+  expect(await page.evaluate(() => window['import.meta.env.PROD'])).toBe(true);
+  expect(await page.evaluate(() => window['import.meta.env?.PROD'])).toBe(true);
+  expect(await page.evaluate(() => window.destructedValues)).toBe(
+    'MODE:production,DEV:false,PROD:true',
+  );
+
+  // dead code elimination
+  expect(content).not.toContain(
+    '[condition] import.meta.env.MODE === "development"',
+  );
+  expect(content).not.toContain('[condition] import.meta.env.DEV');
+
+  await rsbuild.close();
 });
 
-test('should define vars in development mode correctly', async () => {
+test('should define vars in development mode correctly', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
+    page,
     rsbuildConfig: {
       mode: 'development',
     },
   });
 
-  const file = await rsbuild.getIndexFile();
-  expect(file.content).toContain(
-    'console.log(\'import.meta.env.MODE\', "development");',
+  const { content } = await rsbuild.getIndexFile();
+
+  // Replaced identifiers
+  expect(content).toContain(`'[value] import.meta.env.MODE', "development"`);
+  expect(content).toContain(`'[value] process.env.NODE_ENV', "development"`);
+
+  // runtime values
+  expect(
+    await page.evaluate(() => window['import.meta.env.MODE === "development"']),
+  ).toBe(true);
+  expect(
+    await page.evaluate(
+      () => window['import.meta.env?.MODE === "development"'],
+    ),
+  ).toBe(true);
+  expect(
+    await page.evaluate(() => window['import.meta.env.MODE === "production"']),
+  ).toBe(undefined);
+  expect(
+    await page.evaluate(() => window['import.meta.env?.MODE === "production"']),
+  ).toBe(undefined);
+  expect(await page.evaluate(() => window['import.meta.env.DEV'])).toBe(true);
+  expect(await page.evaluate(() => window['import.meta.env?.DEV'])).toBe(true);
+  expect(await page.evaluate(() => window['import.meta.env.PROD'])).toBe(
+    undefined,
   );
-  expect(file.content).toContain(
-    'console.log(\'process.env.NODE_ENV\', "development")',
+  expect(await page.evaluate(() => window['import.meta.env?.PROD'])).toBe(
+    undefined,
   );
-  expect(file.content).toContain("console.log('import.meta.env.DEV');");
-  expect(file.content).not.toContain("console.log('import.meta.env.PROD');");
+  expect(await page.evaluate(() => window.destructedValues)).toBe(
+    'MODE:development,DEV:true,PROD:false',
+  );
+
+  await rsbuild.close();
 });
 
-test('should define vars in none mode correctly', async () => {
+test('should define vars in none mode correctly', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
+    page,
     rsbuildConfig: {
       mode: 'none',
     },
   });
 
-  const file = await rsbuild.getIndexFile();
-  expect(file.content).toContain(
-    'console.log(\'import.meta.env.MODE\', "none");',
+  const { content } = await rsbuild.getIndexFile();
+
+  // Replaced identifiers
+  expect(content).toContain(`'[value] import.meta.env.MODE', "none"`);
+  expect(content).toContain(
+    `'[value] process.env.NODE_ENV', process.env.NODE_ENV`,
   );
-  expect(file.content).toContain(
-    "console.log('process.env.NODE_ENV', process.env.NODE_ENV)",
+
+  // runtime values
+  expect(
+    await page.evaluate(() => window['import.meta.env.MODE === "development"']),
+  ).toBe(undefined);
+  expect(
+    await page.evaluate(
+      () => window['import.meta.env?.MODE === "development"'],
+    ),
+  ).toBe(undefined);
+  expect(
+    await page.evaluate(() => window['import.meta.env.MODE === "production"']),
+  ).toBe(undefined);
+  expect(
+    await page.evaluate(() => window['import.meta.env?.MODE === "production"']),
+  ).toBe(undefined);
+  expect(await page.evaluate(() => window['import.meta.env.DEV'])).toBe(
+    undefined,
   );
-  expect(file.content).not.toContain("console.log('import.meta.env.DEV');");
-  expect(file.content).not.toContain("console.log('import.meta.env.PROD');");
+  expect(await page.evaluate(() => window['import.meta.env?.DEV'])).toBe(
+    undefined,
+  );
+  expect(await page.evaluate(() => window['import.meta.env.PROD'])).toBe(
+    undefined,
+  );
+  expect(await page.evaluate(() => window['import.meta.env?.PROD'])).toBe(
+    undefined,
+  );
+  expect(await page.evaluate(() => window.destructedValues)).toBe(
+    'MODE:none,DEV:false,PROD:false',
+  );
+
+  await rsbuild.close();
 });
 
 rspackOnlyTest('should allow to disable NODE_ENV injection', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
+      mode: 'production',
       tools: {
         rspack: {
           optimization: { nodeEnv: false },
@@ -67,8 +167,8 @@ rspackOnlyTest('should allow to disable NODE_ENV injection', async () => {
     },
   });
 
-  const file = await rsbuild.getIndexFile();
-  expect(file.content).toContain(
-    'console.log("process.env.NODE_ENV",process.env.NODE_ENV)',
+  const { content } = await rsbuild.getIndexFile();
+  expect(content).toContain(
+    '[value] process.env.NODE_ENV",process.env.NODE_ENV',
   );
 });
