@@ -6,7 +6,7 @@ export type TransformLoaderOptions = {
   getEnvironment: () => EnvironmentContext;
 };
 
-const transform: LoaderDefinition<TransformLoaderOptions> =
+const transformLoader: LoaderDefinition<TransformLoaderOptions> =
   async function transform(source, map): Promise<void> {
     const callback = this.async();
     const bypass = () => {
@@ -63,4 +63,4 @@ const transform: LoaderDefinition<TransformLoaderOptions> =
     }
   };
 
-export default transform;
+export default transformLoader;
