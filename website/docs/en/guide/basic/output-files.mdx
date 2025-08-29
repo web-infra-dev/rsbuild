@@ -1,12 +1,12 @@
 # Output files
 
-This chapter introduces the directory structure of output files and how to control the output directory of different types of files.
+This chapter introduces the output file directory structure and how to control the output directory for different file types.
 
 If you want to know how to deploy the build outputs of Rsbuild as a static site, please refer to [Deploy Static Site](/guide/basic/static-deploy).
 
 ## Default directory structure
 
-The following section shows the basic directory structure for output files. By default, the compiled files will be output in the `dist` directory of the current project.
+The following section shows the basic output file directory structure. By default, compiled files are output to the `dist` directory of the current project.
 
 ```bash
 dist
@@ -25,22 +25,22 @@ dist
 
 The most common output files are HTML files, JS files, and CSS files:
 
-- HTML files: default output to the root of the dist directory.
-- JS files: default output to `static/js` directory.
-- CSS files: default output to the `static/css` directory.
+- HTML files: output to the root of the dist directory by default.
+- JS files: output to `static/js` directory by default.
+- CSS files: output to the `static/css` directory by default.
 
-In addition, JS files and CSS files sometimes generate some related files:
+Additionally, JS files and CSS files sometimes generate related files:
 
-- License files: contain open source licenses, which are output to the same directory as the JS file, and have `.LICENSE.txt` suffix.
-- Source map files: contain the source code mappings, which are output to the same directory as JS files and CSS files, and have a `.map` suffix.
+- License files: contain open source licenses, output to the same directory as the JS file with a `.LICENSE.txt` suffix.
+- Source map files: contain source code mappings, output to the same directory as JS files and CSS files with a `.map` suffix.
 
-In the filename, `[name]` represents the entry name corresponding to this file, such as `index`, `main`. `[hash]` is the hash value generated based on the content of the file.
+In the filename, `[name]` represents the entry name for this file, such as `index` or `main`. `[hash]` is the hash value generated based on the file content.
 
 ## Development mode output
 
-In development mode, Rsbuild stores the build outputs in memory on the dev server by default, rather than writing them to disk. This can reduce the overhead of fs operations. You can refer to [View Static Assets](/guide/basic/server#view-static-assets) to view all static assets generated in the current build.
+In development mode, Rsbuild stores build outputs in memory on the dev server by default, rather than writing them to disk. This reduces filesystem operation overhead. You can refer to [View Static Assets](/guide/basic/server#view-static-assets) to view all static assets generated in the current build.
 
-You can choose to write the output files to disk, which is typically used for inspecting the contents of the build artifacts or configuring proxy rules for static assets.
+You can choose to write output files to disk, which is typically used for inspecting build artifacts or configuring proxy rules for static assets.
 
 Just set the [dev.writeToDisk](/config/dev/write-to-disk) configuration to `true`:
 
@@ -146,9 +146,9 @@ export default {
 
 ## Flatten the directory
 
-Sometimes you don't want the dist directory to have too many levels, you can set the directory to an empty string to flatten the generated directory.
+If you prefer a flatter directory structure in the dist directory, you can set the directory to an empty string to flatten the generated directory.
 
-See the example below:
+Here's an example:
 
 ```ts
 export default {
@@ -161,7 +161,7 @@ export default {
 };
 ```
 
-The above config will generate the following directory structure:
+This configuration will generate the following directory structure:
 
 ```bash
 dist

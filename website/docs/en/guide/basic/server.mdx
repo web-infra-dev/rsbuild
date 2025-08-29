@@ -1,12 +1,12 @@
 # Dev server
 
-Rsbuild comes with a built-in dev server designed to improve the development experience. When you run the `rsbuild dev` or `rsbuild preview` commands, the server will start, providing features such as page preview, routing, and hot module reloading.
+Rsbuild comes with a built-in dev server designed to improve the development experience. When you run the `rsbuild dev` or `rsbuild preview` commands, the server starts and provides features such as page preview, routing, and hot module reloading.
 
 ## Base path
 
-By default, the Rsbuild server's base path is `/`. You can access output files like `index.html` and assets in the [public folder](/guide/basic/static-assets#public-folder) through `http://localhost:3000/`.
+By default, the Rsbuild server's base path is `/`. You can access output files like `index.html` and assets in the [public folder](/guide/basic/static-assets#public-folder) at `http://localhost:3000/`.
 
-Rsbuild supports modifying the base path of the server through [server.base](/config/server/base). If you want to access these files through `http://localhost:3000/foo/`, you can configure the following:
+Rsbuild supports modifying the server's base path through [server.base](/config/server/base). If you want to access these files at `http://localhost:3000/foo/`, you can configure the following:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -30,11 +30,11 @@ For example, open `http://localhost:3000/rsbuild-dev-server` in the browser, you
 
 ## Page routing
 
-Rsbuild server offers a set of default routing conventions, and allows users to customize it through configurations.
+Rsbuild server provides a set of default routing conventions and allows users to customize them through configurations.
 
 ### Default behavior
 
-Rsbuild server will generate the corresponding page route based on the [server.base](/config/server/base) and [source.entry](/config/source/entry) configurations.
+Rsbuild server generates the corresponding page route based on the [server.base](/config/server/base) and [source.entry](/config/source/entry) configurations.
 
 When entry is index, the page can be accessed through `/`; when entry is foo, the page can be accessed through `/foo`.
 
@@ -53,10 +53,10 @@ export default {
 
 ### Fallback behavior
 
-By default, when the request meets the following conditions and the corresponding resource is not found, it will fallback to `index.html`:
+By default, when a request meets the following conditions and the corresponding resource is not found, it will fallback to `index.html`:
 
 - The request is a `GET` or `HEAD` request
-- Which accepts `text/html` (the request header accept type is `text/html` or `*/*`)
+- The request accepts `text/html` (the request header accept type is `text/html` or `*/*`)
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -68,7 +68,7 @@ export default {
 
 ### Custom fallback behavior
 
-When Rsbuild's default [server.htmlFallback](/config/server/html-fallback) configuration cannot meet your needs, for example, if you want to be able to access `main.html` when accessing `/`, you can set it up using [server.historyApiFallback](/config/server/history-api-fallback).
+When Rsbuild's default [server.htmlFallback](/config/server/html-fallback) configuration doesn't meet your needs, for example, if you want to access `main.html` when accessing `/`, you can configure it using [server.historyApiFallback](/config/server/history-api-fallback).
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -88,11 +88,11 @@ export default {
 
 ### HTML output path
 
-Normally, `/` points to the dist root directory, and the HTML file is output to the dist root directory. At this time, the corresponding HTML page can be accessed through `/some-path`.
+Normally, `/` points to the dist root directory, and HTML files are output to the dist root directory. In this case, you can access the corresponding HTML page at `/some-path`.
 
-If you output HTML files to other subdirectories by modifying [output.distPath.html](/config/output/dist-path), you need to access the corresponding HTML page through `/[htmlPath]/some-path`.
+If you output HTML files to other subdirectories by modifying [output.distPath.html](/config/output/dist-path), you need to access the corresponding HTML page at `/[htmlPath]/some-path`.
 
-For example, if you set the HTML file to be output to the `HTML` directory, index.html will be accessed through `/html/`, and foo.html will be accessed through `/html/foo`.
+For example, if you set HTML files to be output to the `HTML` directory, index.html will be accessed at `/html/`, and foo.html will be accessed at `/html/foo`.
 
 ```ts
 export default {
@@ -112,21 +112,21 @@ export default {
 
 ## Rspack dev server
 
-Rsbuild has a built-in lightweight dev server, which is different from the dev servers built into Rspack CLI or webpack CLI. There are some differences between them, including different configuration options.
+Rsbuild has a built-in lightweight dev server that differs from the dev servers built into Rspack CLI or webpack CLI. There are some differences between them, including different configuration options.
 
 ### Comparison
 
-Compared with the dev server built into Rspack CLI, Rsbuild's dev server has the following differences:
+Compared to the dev server built into Rspack CLI, Rsbuild's dev server has the following differences:
 
 - **Configuration**: Rsbuild provides richer server configuration options.
 - **Log Format**: The log format of Rspack CLI is basically consistent with webpack CLI, while Rsbuild's logs are clearer and more readable.
-- **Dependencies**: Rsbuild is implemented based on lightweight libraries like `connect`, which has fewer dependencies and faster startup speed compared to `express` used by `@rspack/dev-server`.
+- **Dependencies**: Rsbuild is built on lightweight libraries like `connect`, which has fewer dependencies and faster startup speed compared to `express` used by `@rspack/dev-server`.
 
 ### Configuration
 
 Rsbuild does not support using Rspack's [devServer](https://rspack.rs/config/dev-server) config. Instead, you can use Rsbuild's `dev` and `server` configs.
 
-In Rsbuild, `dev` contains some configurations that only work in development mode, while the `server` config works for both dev and preview servers.
+In Rsbuild, `dev` contains configurations that only work in development mode, while the `server` config works for both dev and preview servers.
 
 Below are the Rsbuild configuration options that correspond to the Rspack CLI's `devServer` config:
 

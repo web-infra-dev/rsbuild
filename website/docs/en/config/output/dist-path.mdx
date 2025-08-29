@@ -40,13 +40,13 @@ const defaultDistPath = {
 };
 ```
 
-Set the directory of the output files. Rsbuild will emit files to the specified subdirectory according to the file type.
+Configure the directory for output files. Rsbuild will emit files to the specified subdirectory according to the file type.
 
 > See [Output files](/guide/basic/output-files) for more information.
 
 ## File types
 
-`output.distPath` can be set differently for different file types.
+`output.distPath` can be configured differently for different file types.
 
 Here are the details of each `output.distPath` option:
 
@@ -54,9 +54,9 @@ Here are the details of each `output.distPath` option:
 - `html`: The output directory of HTML files.
 - `favicon`: The output directory of favicon files.
 - `js`: The output directory of JavaScript files.
-- `jsAsync`: The output directory of async JavaScript files, which by default will be output to the `async` subdirectory of `distPath.js`.
+- `jsAsync`: The output directory of async JavaScript files, which by default are output to the `async` subdirectory of `distPath.js`.
 - `css`: The output directory of CSS style files.
-- `cssAsync`: The output directory of async CSS files, which by default will be output to the `async` subdirectory of `distPath.css`.
+- `cssAsync`: The output directory of async CSS files, which by default are output to the `async` subdirectory of `distPath.css`.
 - `svg`: The output directory of SVG images.
 - `font`: The output directory of font files.
 - `wasm`: The output directory of WebAssembly files.
@@ -66,7 +66,7 @@ Here are the details of each `output.distPath` option:
 
 ## Root directory
 
-The `root` is the root directory of the build artifacts and can be specified as a relative or absolute path. If `root` is a relative path, it will be appended to the project's root directory to form an absolute path.
+The `root` is the root directory of the build artifacts and can be specified as a relative or absolute path. If `root` is a relative path, it is appended to the project's root directory to form an absolute path.
 
 Other directories can only be specified as relative paths and will be output relative to the `root` directory.
 

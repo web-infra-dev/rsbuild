@@ -1,6 +1,6 @@
 # JavaScript API
 
-Rsbuild provides a complete set of JavaScript APIs for developers to build higher level tools or frameworks on top of Rsbuild.
+Rsbuild provides a comprehensive JavaScript API for developers to build higher-level tools or frameworks on top of Rsbuild.
 
 Rsbuild's JavaScript API can be used in Node.js, Deno, or Bun.
 
@@ -30,22 +30,22 @@ The `createRsbuild` method provides some options, which you can learn more about
 
 ### 3. Call Rsbuild instance method
 
-The Rsbuild instance provides some methods, which you can use according to the usage scenarios.
+The Rsbuild instance provides several methods that you can use according to your scenario.
 
-To start local development, it is recommended to use the [rsbuild.startDevServer](/api/javascript-api/instance#rsbuildstartdevserver) method, which will start a local dev server.
+For local development, we recommend using the [rsbuild.startDevServer](/api/javascript-api/instance#rsbuildstartdevserver) method, which starts a local dev server.
 
 ```ts
 await rsbuild.startDevServer();
 ```
 
-After successfully starting dev server, you can see the following logs:
+After successfully starting the dev server, you will see the following logs:
 
 ```
   ➜ Local:    http://localhost:3000
   ➜ Network:  http://192.168.0.1:3000
 ```
 
-To deploy the App to production environment, it is recommended to use the [rsbuild.build](/api/javascript-api/instance#rsbuildbuild) method, which will build the production outputs.
+For production deployment, we recommend using the [rsbuild.build](/api/javascript-api/instance#rsbuildbuild) method, which builds the production outputs.
 
 ```ts
 await rsbuild.build();
@@ -53,7 +53,7 @@ await rsbuild.build();
 
 > For more introduction of Rsbuild instance methods, please read the [Rsbuild Instance](/api/javascript-api/instance) chapter.
 
-After completing the above three steps, you have learned the basic usage of Rsbuild. Next, you can customize the build process through Rsbuild plugins and configurations.
+After completing these three steps, you have learned the basic usage of Rsbuild. Next, you can customize the build process through Rsbuild plugins and configurations.
 
 ## Exports format
 
@@ -67,4 +67,4 @@ import { createRsbuild } from '@rsbuild/core';
 const { createRsbuild } = require('@rsbuild/core');
 ```
 
-> It is recommended to use ES modules format, which is more in line with the community standards.
+> We recommend using the ES modules format, which better aligns with community standards.
