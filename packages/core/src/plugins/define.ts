@@ -53,11 +53,13 @@ export const pluginDefine = (): RsbuildPlugin => ({
       const assetPrefix = JSON.stringify(getPublicPathFromChain(chain, false));
 
       const builtinVars: Define = {
-        'import.meta.env.MODE': JSON.stringify(config.mode),
-        'import.meta.env.DEV': config.mode === 'development',
-        'import.meta.env.PROD': config.mode === 'production',
-        'import.meta.env.BASE_URL': baseUrl,
-        'import.meta.env.ASSET_PREFIX': assetPrefix,
+        'import.meta.env': {
+          MODE: JSON.stringify(config.mode),
+          DEV: config.mode === 'development',
+          PROD: config.mode === 'production',
+          BASE_URL: baseUrl,
+          ASSET_PREFIX: assetPrefix,
+        },
         'process.env.BASE_URL': baseUrl,
         'process.env.ASSET_PREFIX': assetPrefix,
       };

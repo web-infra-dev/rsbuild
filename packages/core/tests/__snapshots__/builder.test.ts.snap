@@ -461,11 +461,13 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
     DefinePlugin {
       "_args": [
         {
-          "import.meta.env.ASSET_PREFIX": "\\"\\"",
-          "import.meta.env.BASE_URL": "\\"/\\"",
-          "import.meta.env.DEV": true,
-          "import.meta.env.MODE": "\\"development\\"",
-          "import.meta.env.PROD": false,
+          "import.meta.env": {
+            "ASSET_PREFIX": "\\"\\"",
+            "BASE_URL": "\\"/\\"",
+            "DEV": true,
+            "MODE": "\\"development\\"",
+            "PROD": false,
+          },
           "process.env.ASSET_PREFIX": "\\"\\"",
           "process.env.BASE_URL": "\\"/\\"",
         },

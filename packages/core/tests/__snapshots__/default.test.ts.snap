@@ -461,11 +461,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     DefinePlugin {
       "_args": [
         {
-          "import.meta.env.ASSET_PREFIX": "\\"\\"",
-          "import.meta.env.BASE_URL": "\\"/\\"",
-          "import.meta.env.DEV": true,
-          "import.meta.env.MODE": "\\"development\\"",
-          "import.meta.env.PROD": false,
+          "import.meta.env": {
+            "ASSET_PREFIX": "\\"\\"",
+            "BASE_URL": "\\"/\\"",
+            "DEV": true,
+            "MODE": "\\"development\\"",
+            "PROD": false,
+          },
           "process.env.ASSET_PREFIX": "\\"\\"",
           "process.env.BASE_URL": "\\"/\\"",
         },
@@ -1001,11 +1003,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     DefinePlugin {
       "_args": [
         {
-          "import.meta.env.ASSET_PREFIX": "\\"\\"",
-          "import.meta.env.BASE_URL": "\\"/\\"",
-          "import.meta.env.DEV": false,
-          "import.meta.env.MODE": "\\"production\\"",
-          "import.meta.env.PROD": true,
+          "import.meta.env": {
+            "ASSET_PREFIX": "\\"\\"",
+            "BASE_URL": "\\"/\\"",
+            "DEV": false,
+            "MODE": "\\"production\\"",
+            "PROD": true,
+          },
           "process.env.ASSET_PREFIX": "\\"\\"",
           "process.env.BASE_URL": "\\"/\\"",
         },
@@ -1435,11 +1439,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     DefinePlugin {
       "_args": [
         {
-          "import.meta.env.ASSET_PREFIX": "\\"\\"",
-          "import.meta.env.BASE_URL": "\\"/\\"",
-          "import.meta.env.DEV": true,
-          "import.meta.env.MODE": "\\"development\\"",
-          "import.meta.env.PROD": false,
+          "import.meta.env": {
+            "ASSET_PREFIX": "\\"\\"",
+            "BASE_URL": "\\"/\\"",
+            "DEV": true,
+            "MODE": "\\"development\\"",
+            "PROD": false,
+          },
           "process.env.ASSET_PREFIX": "\\"\\"",
           "process.env.BASE_URL": "\\"/\\"",
         },
@@ -1959,11 +1965,13 @@ exports[`tools.rspack > should match snapshot 1`] = `
     DefinePlugin {
       "_args": [
         {
-          "import.meta.env.ASSET_PREFIX": "\\"\\"",
-          "import.meta.env.BASE_URL": "\\"/\\"",
-          "import.meta.env.DEV": true,
-          "import.meta.env.MODE": "\\"development\\"",
-          "import.meta.env.PROD": false,
+          "import.meta.env": {
+            "ASSET_PREFIX": "\\"\\"",
+            "BASE_URL": "\\"/\\"",
+            "DEV": true,
+            "MODE": "\\"development\\"",
+            "PROD": false,
+          },
           "process.env.ASSET_PREFIX": "\\"\\"",
           "process.env.BASE_URL": "\\"/\\"",
         },
