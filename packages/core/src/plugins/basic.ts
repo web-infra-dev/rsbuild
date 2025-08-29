@@ -96,8 +96,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
           chain.experiments({
             ...chain.get('experiments'),
             lazyBarrel: true,
-            // TODO: enable
-            inlineEnum: false,
+            inlineEnum: true,
             typeReexportsPresence: true,
             rspackFuture: {
               bundlerInfo: {
