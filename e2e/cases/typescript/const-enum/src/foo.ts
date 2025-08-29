@@ -1,6 +1,6 @@
 export enum Animals {
-  Fish = 0,
-  Cat = 1,
+  Fish = 'fish',
+  Cat = 'cat',
 }
 
 // biome-ignore lint/suspicious/noConstEnum: for testing
