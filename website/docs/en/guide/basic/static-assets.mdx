@@ -31,7 +31,7 @@ import logo from './static/logo.png';
 
 console.log(logo); // "/static/logo.[hash].png"
 
-export default = () => <img src={logo} />;
+export default () => <img src={logo} />;
 ```
 
 Importing with [alias](/guide/advanced/alias) is also supported:
@@ -41,7 +41,7 @@ import logo from '@/static/logo.png';
 
 console.log(logo); // "/static/logo.[hash].png"
 
-export default = () => <img src={logo} />;
+export default () => <img src={logo} />;
 ```
 
 ### URL assets
@@ -53,7 +53,7 @@ const logo = new URL('./static/logo.png', import.meta.url).href;
 
 console.log(logo); // "/static/logo.[hash].png"
 
-export default = () => <img src={logo} />;
+export default () => <img src={logo} />;
 ```
 
 If you use `new URL()` to reference `.js` or `.ts` files, they will be treated as URL assets and will not be processed by Rsbuild's built-in `swc-loader`.
