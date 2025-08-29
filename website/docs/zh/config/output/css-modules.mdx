@@ -8,7 +8,7 @@ Rsbuild 的 CSS Modules 功能是基于 css-loader 的 `modules` 选项实现的
 
 ## cssModules.auto
 
-auto 配置项允许基于文件名自动启用 CSS Modules。
+`auto` 配置项允许基于文件名自动启用 CSS Modules。
 
 - **类型：**
 
@@ -32,13 +32,27 @@ type Auto =
 - `RegExp`: 为所有匹配 `/RegExp/i.test(filename)` 正则表达式的文件启用 CSS Modules。
 - `function`: 为所有通过基于文件名的过滤函数校验的文件启用 CSS Modules。
 
-```ts
+例如，为 `shared/` 目录下的文件额外启用 CSS Modules：
+
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     cssModules: {
       auto: (resource) => {
         return resource.includes('.module.') || resource.includes('shared/');
       },
+    },
+  },
+};
+```
+
+再比如，将所有包含 .module. 和 .modules. 的文件都视为 CSS Modules：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    cssModules: {
+      auto: /\.modules?\./,
     },
   },
 };
@@ -69,7 +83,7 @@ type CSSModulesLocalsConvention =
 - `dashes`：只有类名中的破折号会被驼峰化，然后被导出。原始类名也会被导出。
 - `dashesOnly`：类名中的破折号会被驼峰化，然后被导出。原始类名不会被导出。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     cssModules: {
@@ -90,7 +104,7 @@ export default {
 
 将 `exportGlobals` 设置为 `true`：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     cssModules: {
@@ -166,7 +180,7 @@ console.log(styles.header);
 
 将 `localIdentName` 设置为其他值：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     cssModules: {
@@ -206,7 +220,7 @@ type Mode =
 
 例如：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     cssModules: {
@@ -244,7 +258,7 @@ export default {
 
 是否具名导出 class names。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     cssModules: {

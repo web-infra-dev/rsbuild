@@ -32,13 +32,27 @@ Type description:
 - `RegExp`: enable CSS Modules for all files matching `/RegExp/i.test(filename)` regexp.
 - `function`: enable CSS Modules for files based on the filename satisfying your filter function check.
 
-```ts
+For example, to additionally enable CSS Modules for files in the `shared/` directory:
+
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     cssModules: {
       auto: (resource) => {
         return resource.includes('.module.') || resource.includes('shared/');
       },
+    },
+  },
+};
+```
+
+Another example, to treat all files containing `.module.` and `.modules.` as CSS Modules:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    cssModules: {
+      auto: /\.modules?\./,
     },
   },
 };
@@ -69,7 +83,7 @@ Type description:
 - `dashes`: Only dashes in class names will be camelized, the original class name will be exported.
 - `dashesOnly`: Dashes in class names will be camelized, the original class name will not be exported.
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     cssModules: {
@@ -90,7 +104,7 @@ Allows exporting names from global class names, so you can use them via import.
 
 Set the `exportGlobals` to `true`:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     cssModules: {
@@ -166,7 +180,7 @@ You can use the following template strings in `localIdentName`:
 
 Set `localIdentName` to other value:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     cssModules: {
@@ -206,7 +220,7 @@ The `'local'` mode is the most common use case for CSS Modules, enabling modular
 
 For example:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     cssModules: {
@@ -240,7 +254,7 @@ modules: {
 
 Whether to enable ES modules named export for class names.
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     cssModules: {
