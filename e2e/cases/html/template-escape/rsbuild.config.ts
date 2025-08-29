@@ -12,8 +12,5 @@ export default defineConfig({
     template({ entryName }) {
       return `./static/${entryName}.html`;
     },
-    templateParameters: {
-      text: '<div>escape me</div>',
-    },
   },
 });
