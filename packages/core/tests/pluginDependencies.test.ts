@@ -140,4 +140,44 @@ describe('sort plugins by dependencies', () => {
       );
     }).toThrow(/Plugins dependencies has loop: 2,3,5/);
   });
+
+  it('should handle multiple plugins with same name in different environments', () => {
+    const cases = [
+      {
+        instance: { name: 'plugin-a' },
+        environment: 'web',
+      },
+      {
+        instance: { name: 'plugin-a' },
+        environment: 'node',
+      },
+      {
+        instance: { name: 'plugin-b', pre: ['plugin-a'] },
+        environment: 'web',
+      },
+      {
+        instance: { name: 'plugin-c', pre: ['plugin-a'] },
+        environment: 'node',
+      },
+    ];
+
+    const result = sortPluginsByDependencies(cases);
+
+    // All 4 plugins should be included
+    expect(result).toHaveLength(4);
+
+    // Both plugin-a instances should come before plugin-b and plugin-c
+    const pluginAIndices = result
+      .map((p, i) => (p.instance.name === 'plugin-a' ? i : -1))
+      .filter((i) => i !== -1);
+    const pluginBIndex = result.findIndex(
+      (p) => p.instance.name === 'plugin-b',
+    );
+    const pluginCIndex = result.findIndex(
+      (p) => p.instance.name === 'plugin-c',
+    );
+
+    expect(pluginAIndices.every((i) => i < pluginBIndex)).toBe(true);
+    expect(pluginAIndices.every((i) => i < pluginCIndex)).toBe(true);
+  });
 });
