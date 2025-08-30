@@ -10,7 +10,7 @@ Web Workers are a type of JavaScript program that runs in the background, indepe
 
 ### Import with constructors
 
-Web Workers are first-class citizens of Rspack, which means you don't need any loader to use web workers directly in Rspack or Rsbuild projects.
+Web Workers are first-class citizens of Rspack, which means you do not need any loader to use web workers directly in Rspack or Rsbuild projects.
 
 For example, create a file called `worker.js`:
 
@@ -73,7 +73,7 @@ const worker = new Worker();
 worker.postMessage({ a: 1 });
 ```
 
-> `worker-loader` is no longer maintained, if you don't need to inline Web Workers, it is recommended to use the `new Worker()` syntax.
+> `worker-loader` is no longer maintained, if you do not need to inline Web Workers, it is recommended to use the `new Worker()` syntax.
 
 ### Loading scripts from remote URLs (cross-origin)
 
