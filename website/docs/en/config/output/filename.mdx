@@ -48,10 +48,10 @@ const prodDefaultFilename = {
 
 Sets the filename of output files.
 
-After the production build, Rsbuild will add a hash in the middle of the filename by default. If you do not need to add it, you can set [output.filenameHash](/config/output/filename-hash) to `false` to disable this behavior.
+After the production build, Rsbuild adds a hash to the filename by default. To disable this behavior, set [output.filenameHash](/config/output/filename-hash) to `false`.
 
 :::tip
-Rsbuild will generate the final file path based on `output.filename` and [output.distPath](/config/output/dist-path).
+Rsbuild generates the final file path based on `output.filename` and [output.distPath](/config/output/dist-path).
 
 See [Output files](/guide/basic/output-files) for more information.
 
@@ -102,9 +102,9 @@ export default {
 ```
 
 :::tip Filename hash
-Usually, Rsbuild only sets the filename hash in the production mode (i.e., when `process.env.NODE_ENV === 'production'`).
+Typically, Rsbuild only sets the filename hash in production mode (`process.env.NODE_ENV === 'production'`).
 
-If you set the filename hash in the development mode, it may cause HMR to fail (especially for CSS files). This is because every time the file content changes, the hash value changes, preventing the bundler from reading the latest file content.
+Setting the filename hash in development mode may cause HMR to fail (especially for CSS files). This happens because each time the file content changes, the hash value changes, preventing the bundler from reading the latest file content.
 :::
 
 ## Template strings
