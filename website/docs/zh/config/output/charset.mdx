@@ -9,6 +9,14 @@
 
 默认情况下，Rsbuild 的输出是 [UTF-8](https://developer.mozilla.org/en-US/docs/Glossary/UTF-8) 编码，这是 Web 应用中最常用的字符编码。
 
+```js
+export default {
+  output: {
+    charset: 'utf8', // 这是默认值
+  },
+};
+```
+
 当你的 web 服务器返回资源时，请确保发送正确的 [Content-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) 响应头，使浏览器能够正确解析。
 
 ## ASCII
@@ -24,6 +32,21 @@ export default {
 ```
 
 使用 ASCII 编码时，任何非 ASCII 字符都使用反斜杠进行转义，这通常会生成稍大一点的文件，也使其更难阅读。
+
+### 在旧系统中使用 ASCII
+
+在部署到旧系统或有严格字符编码要求的环境时，ASCII 编码非常有用：
+
+```js
+// 示例：在旧环境的生产构建中使用 ASCII
+const isLegacyEnvironment = process.env.LEGACY_DEPLOYMENT === 'true';
+
+export default {
+  output: {
+    charset: isLegacyEnvironment ? 'ascii' : 'utf8',
+  },
+};
+```
 
 ## 注意事项
 
