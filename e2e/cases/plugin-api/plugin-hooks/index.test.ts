@@ -1,9 +1,4 @@
-import {
-  getRandomPort,
-  gotoPage,
-  recordPluginHooks,
-  rspackOnlyTest,
-} from '@e2e/helper';
+import { build, dev, recordPluginHooks, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { createRsbuild } from '@rsbuild/core';
 
@@ -11,19 +6,14 @@ rspackOnlyTest(
   'should run plugin hooks correctly when running build',
   async () => {
     const { plugin, hooks } = recordPluginHooks();
-    const rsbuild = await createRsbuild({
+    const rsbuild = await build({
       cwd: __dirname,
       rsbuildConfig: {
         plugins: [plugin],
-        performance: {
-          printFileSize: false,
-        },
       },
     });
 
-    const buildInstance = await rsbuild.build();
-
-    await buildInstance.close();
+    await rsbuild.close();
 
     expect(hooks).toEqual([
       'ModifyRsbuildConfig',
@@ -47,20 +37,15 @@ rspackOnlyTest(
   'should run plugin hooks correctly when running build and mode is development',
   async () => {
     const { plugin, hooks } = recordPluginHooks();
-    const rsbuild = await createRsbuild({
+    const rsbuild = await build({
       cwd: __dirname,
       rsbuildConfig: {
         mode: 'development',
         plugins: [plugin],
-        performance: {
-          printFileSize: false,
-        },
       },
     });
 
-    const buildInstance = await rsbuild.build();
-
-    await buildInstance.close();
+    await rsbuild.close();
 
     expect(hooks).toEqual([
       'ModifyRsbuildConfig',
@@ -84,24 +69,17 @@ rspackOnlyTest(
   'should run plugin hooks correctly when running startDevServer',
   async ({ page }) => {
     process.env.NODE_ENV = 'development';
-    const port = await getRandomPort();
 
     const { plugin, hooks } = recordPluginHooks();
-    const rsbuild = await createRsbuild({
+    const rsbuild = await dev({
       cwd: __dirname,
+      page,
       rsbuildConfig: {
         plugins: [plugin],
-        server: {
-          port,
-        },
       },
     });
 
-    const result = await rsbuild.startDevServer();
-
-    await gotoPage(page, result);
-
-    await result.server.close();
+    await rsbuild.close();
 
     expect(hooks.filter((name) => name.includes('DevServer'))).toEqual([
       'BeforeStartDevServer',
