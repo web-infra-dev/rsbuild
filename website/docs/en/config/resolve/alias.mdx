@@ -18,7 +18,7 @@ const defaultAlias = {
 
 Set the alias for the module path, which is used to simplify the import path or redirect the module reference.
 
-For TypeScript projects, you only need to configure [compilerOptions.paths](https://typescriptlang.org/tsconfig#paths) in the `tsconfig.json` file. The Rsbuild will automatically recognize it, so there is no need to configure the `resolve.alias` option separately. For more details, please refer to [Path Aliases](/guide/advanced/alias).
+For TypeScript projects, you only need to configure [compilerOptions.paths](https://typescriptlang.org/tsconfig#paths) in the `tsconfig.json` file. Rsbuild will automatically recognize it, so there is no need to configure the `resolve.alias` option separately. For more details, please refer to [Path Aliases](/guide/advanced/alias).
 
 :::tip
 In versions prior to Rsbuild 1.1.7, you can use the `source.alias` to set alias, but it will be removed in the next major version.
