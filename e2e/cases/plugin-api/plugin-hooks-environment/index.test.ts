@@ -1,6 +1,6 @@
-import { getRandomPort, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { build, dev, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
-import { createRsbuild, type RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 
 const createPlugin = () => {
   const names: string[] = [];
@@ -85,7 +85,7 @@ rspackOnlyTest(
   async () => {
     process.env.NODE_ENV = 'production';
     const { plugin, names } = createPlugin();
-    const rsbuild = await createRsbuild({
+    const rsbuild = await build({
       cwd: __dirname,
       rsbuildConfig: {
         plugins: [plugin],
@@ -93,13 +93,8 @@ rspackOnlyTest(
           web: {},
           node: {},
         },
-        performance: {
-          printFileSize: false,
-        },
       },
     });
-
-    await rsbuild.build();
 
     // Test environment hook is always called twice
     expect(names.filter((name) => name.includes(' web')).length).toBe(
@@ -138,6 +133,7 @@ rspackOnlyTest(
       'AfterBuild',
     ]);
 
+    await rsbuild.close();
     process.env.NODE_ENV = 'test';
   },
 );
@@ -146,31 +142,21 @@ rspackOnlyTest(
   'should run plugin hooks correctly when running startDevServer with multiple environments',
   async ({ page }) => {
     process.env.NODE_ENV = 'development';
-    const port = await getRandomPort();
 
     const { plugin, names } = createPlugin();
-    const rsbuild = await createRsbuild({
+    const rsbuild = await dev({
       cwd: __dirname,
+      page,
       rsbuildConfig: {
         plugins: [plugin],
-        server: {
-          port,
-        },
         environments: {
           web: {},
           node: {},
         },
-        performance: {
-          printFileSize: false,
-        },
       },
     });
 
-    const result = await rsbuild.startDevServer();
-
-    await gotoPage(page, result);
-
-    await result.server.close();
+    await rsbuild.close();
 
     expect(names.filter((name) => name.includes(' web')).length).toBe(
       names.filter((name) => name.includes(' node')).length,

@@ -1,12 +1,7 @@
 import { join } from 'node:path';
-import {
-  getRandomPort,
-  gotoPage,
-  proxyConsole,
-  rspackOnlyTest,
-} from '@e2e/helper';
+import { dev, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
-import { createRsbuild, type RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import fse from 'fs-extra';
 
 const createPlugin = () => {
@@ -31,23 +26,16 @@ rspackOnlyTest(
   'should run onBeforeDevCompile hook correctly when rebuild in dev with multiple environments',
   async ({ page }) => {
     process.env.NODE_ENV = 'development';
-    const cwd = __dirname;
-    const filePath = join(cwd, 'test-temp-src', 'index.js');
-    await fse.outputFile(filePath, "console.log('1');");
-
-    const port = await getRandomPort();
+    const indexJs = join(__dirname, 'test-temp-src', 'index.js');
+    await fse.outputFile(indexJs, "console.log('1');");
 
     const { plugin, names } = createPlugin();
 
-    const { expectLog, restore, expectBuildEnd } = proxyConsole();
-
-    const rsbuild = await createRsbuild({
+    const rsbuild = await dev({
       cwd: __dirname,
+      page,
       rsbuildConfig: {
         plugins: [plugin],
-        server: {
-          port,
-        },
         environments: {
           web: {},
           node: {
@@ -58,15 +46,8 @@ rspackOnlyTest(
             },
           },
         },
-        performance: {
-          printFileSize: false,
-        },
       },
     });
-
-    const result = await rsbuild.startDevServer();
-
-    await gotoPage(page, result);
 
     expect(names.includes('BeforeDevCompile')).toBeTruthy();
     expect(names.includes('BeforeEnvironmentCompile node')).toBeTruthy();
@@ -75,9 +56,9 @@ rspackOnlyTest(
     names.length = 0;
 
     // rebuild
-    await fse.outputFile(filePath, "console.log('2');");
-    await expectLog('building test-temp-src');
-    await expectBuildEnd();
+    await fse.outputFile(indexJs, "console.log('2');");
+    await rsbuild.expectLog('building test-temp-src');
+    await rsbuild.expectBuildEnd();
 
     expect(names).toEqual([
       'BeforeDevCompile',
@@ -85,10 +66,7 @@ rspackOnlyTest(
       'BeforeEnvironmentCompile node',
     ]);
 
-    await result.server.close();
-
-    restore();
-
+    await rsbuild.close();
     process.env.NODE_ENV = 'test';
   },
 );
