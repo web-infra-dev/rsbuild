@@ -17,7 +17,7 @@ type Minify =
 
 Configure whether to enable code minification in production mode and configure minimizer options.
 
-By default, JS and CSS code are automatically minified in production mode to improve page performance. If you don't want to minify the code, you can set `minify` to `false` to disable minification for all code. Alternatively, you can control code minification behavior through detailed configuration of the `minify` option. Below are detailed explanations for each configuration option:
+By default, JS and CSS code are automatically minified in production mode to improve page performance. If you don't want to minify the code, you can set `minify` to `false` to disable minification for all code. Alternatively, you can control code minification behavior through detailed configuration of the `minify` option. Each configuration option is explained below:
 
 :::tip
 Rsbuild uses [SWC](/guide/configuration/swc) to minify JS code and [Lightning CSS](/guide/styling/css-usage#lightning-css) to minify CSS code by default.
@@ -83,7 +83,7 @@ export default {
 - **Type:** `Rspack.SwcJsMinimizerRspackPluginOptions`
 - **Default:** `{}`
 
-`output.minify.jsOptions` is used to configure SWC's minification options. For detailed configurations, please refer to [SwcJsMinimizerRspackPlugin](https://rspack.rs/plugins/rspack/swc-js-minimizer-rspack-plugin). The following configuration overrides the default settings, disabling the mangle feature.
+`output.minify.jsOptions` is used to configure SWC's minification options. For detailed configurations, please refer to [SwcJsMinimizerRspackPlugin](https://rspack.rs/plugins/rspack/swc-js-minimizer-rspack-plugin).
 
 For example, disable the mangle feature:
 
