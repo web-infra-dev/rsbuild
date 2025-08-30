@@ -180,11 +180,11 @@ export const pluginFoo = (): RsbuildPlugin => {
 
 ## Lifetime hooks
 
-Rsbuild uses lifetime planning work internally, and plugins can also register hooks to take part in any stage of the workflow and implement their own features.
+Rsbuild internally uses lifecycle hooks to schedule tasks, and plugins can also register hooks to take part in any stage of the workflow and implement their own features.
 
 The full list of Rsbuild's lifetime hooks can be found in the [API References](/plugins/dev/hooks).
 
-The Rsbuild does not take over the hooks of the underlying Rspack, whose documents can be found here: [Rspack Plugin API](https://rspack.rs/api/plugin-api).
+Rsbuild does not take over the hooks of the underlying Rspack, whose documents can be found here: [Rspack Plugin API](https://rspack.rs/api/plugin-api).
 
 ## Migrate Vite plugin
 
