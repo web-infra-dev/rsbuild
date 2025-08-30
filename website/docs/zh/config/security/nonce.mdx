@@ -23,6 +23,8 @@ nonce 机制在 Content Security Policy（CSP，内容安全策略）中起到�
 
 ## 示例
 
+### 基本用法
+
 默认情况下，Rsbuild 不会开启 `nonce`，你可以按照需求定义该值：
 
 ```js
@@ -34,6 +36,61 @@ export default {
 ```
 
 通常，我们可以在项目中可以定义一个固定值，并在 Nginx、Web Server、网关等响应下游的服务器上，统一替换成随机值。
+
+### 配合 CSP 头部使用
+
+配置 nonce 与内容安全策略头部一起使用，增强安全性：
+
+```js
+export default {
+  security: {
+    nonce: 'RANDOM_NONCE_VALUE',
+  },
+  server: {
+    headers: {
+      'Content-Security-Policy':
+        "script-src 'self' 'nonce-RANDOM_NONCE_VALUE'; style-src 'self' 'nonce-RANDOM_NONCE_VALUE';",
+    },
+  },
+};
+```
+
+### 动态生成 nonce
+
+对于生产环境，为每个请求生成唯一的 nonce 值：
+
+```js
+const generateNonce = () => {
+  return Buffer.from(Math.random().toString())
+    .toString('base64')
+    .substring(0, 16);
+};
+
+export default {
+  security: {
+    nonce:
+      process.env.NODE_ENV === 'production' ? generateNonce() : 'dev-nonce-123',
+  },
+};
+```
+
+### 框架相关配置
+
+当使用 React 或其他框架时，确保 nonce 在服务端渲染和客户端渲染之间保持一致：
+
+```js
+// 用于 SSR 应用
+export default {
+  security: {
+    nonce: process.env.CSP_NONCE || 'default-nonce',
+  },
+  html: {
+    templateParameters: {
+      nonce: process.env.CSP_NONCE || 'default-nonce',
+    },
+  },
+};
+```
 
 ## 生效范围
 

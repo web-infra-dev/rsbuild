@@ -21,7 +21,9 @@ For more information about nonce, you can refer to:
 - [nonce - MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce)
 - [webpack - Content Security Policies](https://webpack.js.org/guides/csp/)
 
-## Example
+## Examples
+
+### Basic usage
 
 By default, `nonce` is not enabled by Rsbuild, you can define this value based on your needs:
 
@@ -34,6 +36,61 @@ export default {
 ```
 
 Typically, we can define a fixed value in the project, and replace it with a random value on downstream servers such as Nginx, Web Server, gateway, etc.
+
+### Using with CSP headers
+
+Configure nonce alongside Content Security Policy headers for enhanced security:
+
+```js
+export default {
+  security: {
+    nonce: 'RANDOM_NONCE_VALUE',
+  },
+  server: {
+    headers: {
+      'Content-Security-Policy':
+        "script-src 'self' 'nonce-RANDOM_NONCE_VALUE'; style-src 'self' 'nonce-RANDOM_NONCE_VALUE';",
+    },
+  },
+};
+```
+
+### Dynamic nonce generation
+
+For production environments, generate unique nonce values for each request:
+
+```js
+const generateNonce = () => {
+  return Buffer.from(Math.random().toString())
+    .toString('base64')
+    .substring(0, 16);
+};
+
+export default {
+  security: {
+    nonce:
+      process.env.NODE_ENV === 'production' ? generateNonce() : 'dev-nonce-123',
+  },
+};
+```
+
+### Framework-specific configurations
+
+When using React or other frameworks, ensure the nonce is consistent across SSR and client-side rendering:
+
+```js
+// For SSR applications
+export default {
+  security: {
+    nonce: process.env.CSP_NONCE || 'default-nonce',
+  },
+  html: {
+    templateParameters: {
+      nonce: process.env.CSP_NONCE || 'default-nonce',
+    },
+  },
+};
+```
 
 ## Scope of effect
 
