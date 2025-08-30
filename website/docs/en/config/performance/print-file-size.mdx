@@ -221,7 +221,7 @@ export default {
   performance: {
     printFileSize: {
       exclude: (asset) =>
-        /\.(?:map|LICENSE\.txt)$/.test(asset.name) ||
+        /\.(?:map|LICENSE\.txt|d\.ts)$/.test(asset.name) ||
         /\.html$/.test(asset.name),
     },
   },
