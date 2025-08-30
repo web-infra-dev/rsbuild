@@ -21,7 +21,7 @@ const defaultValue = {
 };
 ```
 
-By default, Rsbuild will use the `public` directory as the directory for serving public assets, files in this directory will be served at [server.base](/config/server/base) path (default `/`).
+By default, Rsbuild uses the `public` directory for serving public assets. Files in this directory are served at [server.base](/config/server/base) path (default `/`).
 
 > Related document: [Public Folder](/guide/basic/static-assets#public-folder).
 
@@ -114,8 +114,8 @@ export default {
 
 When performing [multi-environment builds](/guide/advanced/environments), Rsbuild copies files from the public directory to the output directory of each environment. If there are nested output directories, files will only be copied to the root of the output directory. For example:
 
-- The distDir of the `web` environment is `dist`, and the distDir of the `web1` environment is `dist/web1`. Due to the nested relationship between `dist` and `dist/web1`, at this time, the public directory files are only copied to the `dist` directory.
-- The distDir of the `esm` environment is `dist/esm`, and the distDir of the `cjs` environment is `dist/cjs`. Since there is no nesting relationship between `dist/esm` and `dist/cjs`, at this time, the public directory files will be copied to the `dist/esm` and `dist/cjs` directories respectively.
+- The distDir of the `web` environment is `dist`, and the distDir of the `web1` environment is `dist/web1`. Due to the nested relationship between `dist` and `dist/web1`, the public directory files are only copied to the `dist` directory.
+- The distDir of the `esm` environment is `dist/esm`, and the distDir of the `cjs` environment is `dist/cjs`. Since there is no nesting relationship between `dist/esm` and `dist/cjs`, the public directory files will be copied to both the `dist/esm` and `dist/cjs` directories.
 
 ### watch
 
