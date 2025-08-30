@@ -135,7 +135,7 @@ function myPlugin() {
     setup(api) {
       api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
         return mergeRsbuildConfig(config, {
-          plugins: [fooPlugin(), barPlugin()], // <- it won't work
+          plugins: [fooPlugin(), barPlugin()], // <- this will not work
         });
       });
     },
