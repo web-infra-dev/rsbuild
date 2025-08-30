@@ -1,4 +1,4 @@
-import { posix } from 'node:path';
+import path from 'node:path';
 import { getFilename } from '../helpers';
 import type { RsbuildPlugin } from '../types';
 
@@ -9,7 +9,7 @@ export const pluginWasm = (): RsbuildPlugin => ({
     api.modifyBundlerChain((chain, { CHAIN_ID, environment, isProd }) => {
       const { config } = environment;
       const distPath = config.output.distPath.wasm;
-      const filename = posix.join(
+      const filename = path.posix.join(
         distPath,
         // webpack does not support contenthash for Wasm files
         api.context.bundlerType === 'webpack'
