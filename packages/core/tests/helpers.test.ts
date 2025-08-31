@@ -1,6 +1,7 @@
 import { sep } from 'node:path';
 import {
   ensureAssetPrefix,
+  isPlainObject,
   isWebTarget,
   pick,
   prettyTime,
@@ -261,4 +262,57 @@ test('should isWebTarget work correctly', () => {
 
   expect(isWebTarget('web-worker-special')).toBe(false);
   expect(isWebTarget('something-web-worker-else')).toBe(false);
+});
+
+describe('isPlainObject', () => {
+  it('should return true for plain objects', () => {
+    expect(isPlainObject({})).toBe(true);
+    expect(isPlainObject({ foo: 'bar' })).toBe(true);
+    expect(isPlainObject(Object.create(null))).toBe(false);
+  });
+
+  it('should return false for non-plain objects', () => {
+    expect(isPlainObject(null)).toBe(false);
+    expect(isPlainObject(undefined)).toBe(false);
+    expect(isPlainObject('string')).toBe(false);
+    expect(isPlainObject(123)).toBe(false);
+    expect(isPlainObject([])).toBe(false);
+    expect(isPlainObject(new Date())).toBe(false);
+    expect(isPlainObject(/regex/)).toBe(false);
+
+    class TestClass {}
+    expect(isPlainObject(new TestClass())).toBe(false);
+  });
+
+  it('should perform efficiently in performance test', () => {
+    const iterations = 100000;
+    const testObjects = [
+      {},
+      { foo: 'bar' },
+      { nested: { prop: 'value' } },
+      null,
+      undefined,
+      'string',
+      123,
+      [],
+      new Date(),
+    ];
+
+    const startTime = performance.now();
+
+    for (let i = 0; i < iterations; i++) {
+      const obj = testObjects[i % testObjects.length];
+      isPlainObject(obj);
+    }
+
+    const endTime = performance.now();
+    const duration = endTime - startTime;
+
+    // Should complete 100k operations in less than 50ms on most systems
+    // This validates that our Object.prototype caching optimization works
+    expect(duration).toBeLessThan(50);
+    console.log(
+      `isPlainObject performance test: ${iterations} operations in ${duration.toFixed(2)}ms`,
+    );
+  });
 });
