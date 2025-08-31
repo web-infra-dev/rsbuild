@@ -56,7 +56,7 @@ console.log(logo); // "/static/logo.[hash].png"
 export default () => <img src={logo} />;
 ```
 
-If you use `new URL()` to reference `.js` or `.ts` files, they will be treated as URL assets and will not be processed by Rsbuild's built-in `swc-loader`.
+When using `new URL()` to reference `.js` or `.ts` files, they are treated as URL assets and are not processed by Rsbuild's built-in `swc-loader`.
 
 ```tsx
 // foo.ts will remain the original content and be output to the dist directory
@@ -65,7 +65,7 @@ const fooTs = new URL('./foo.ts', import.meta.url).href;
 console.log(fooTs); // "/static/foo.[hash].ts"
 ```
 
-Similarly, when using `new URL()` to reference `.css` or `.scss` files, they will be treated as URL assets and will not be processed by Rsbuild's built-in CSS loaders.
+Similarly, when using `new URL()` to reference `.css` or `.scss` files, they are treated as URL assets and are not processed by Rsbuild's built-in CSS loaders.
 
 ```tsx
 // foo.css will remain the original content and be output to the dist directory
