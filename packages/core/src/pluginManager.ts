@@ -216,9 +216,10 @@ export const sortPluginsByDependencies = (
 
   while (zeroEndPoints.length) {
     const zep = zeroEndPoints.shift()!;
-    sortedPoint.push(...getPlugin(zep.instance.name));
+    const pluginInstances = getPlugin(zep.instance.name);
+    sortedPoint.push(...pluginInstances);
     allLines = allLines.filter(
-      (l) => l[0] !== getPlugin(zep.instance.name)[0].instance.name,
+      (l) => l[0] !== pluginInstances[0].instance.name,
     );
 
     const restPoints = plugins.filter(
