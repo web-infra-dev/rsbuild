@@ -332,15 +332,13 @@ export function pick<T, U extends keyof T>(
   obj: T,
   keys: readonly U[],
 ): Pick<T, U> {
-  return keys.reduce(
-    (ret, key) => {
-      if (obj[key] !== undefined) {
-        ret[key] = obj[key];
-      }
-      return ret;
-    },
-    {} as Pick<T, U>,
-  );
+  const result = {} as Pick<T, U>;
+  for (const key of keys) {
+    if (obj[key] !== undefined) {
+      result[key] = obj[key];
+    }
+  }
+  return result;
 }
 
 export const camelCase = (input: string): string =>

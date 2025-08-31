@@ -110,6 +110,37 @@ describe('pick', () => {
   it('should not pick undefined properties', () => {
     expect(pick({ foo: undefined, bar: undefined }, ['foo'])).toEqual({});
   });
+
+  it('should pick multiple properties', () => {
+    expect(pick({ foo: 1, bar: 2, baz: 3 }, ['foo', 'bar'])).toEqual({
+      foo: 1,
+      bar: 2,
+    });
+  });
+
+  it('should handle empty keys array', () => {
+    expect(pick({ foo: 1, bar: 2 }, [])).toEqual({});
+  });
+
+  it('should handle non-existent keys', () => {
+    expect(pick({ foo: 1 }, ['bar' as any])).toEqual({});
+  });
+
+  it('should pick falsy values correctly', () => {
+    expect(
+      pick({ foo: 0, bar: false, baz: null, qux: '' }, [
+        'foo',
+        'bar',
+        'baz',
+        'qux',
+      ]),
+    ).toEqual({
+      foo: 0,
+      bar: false,
+      baz: null,
+      qux: '',
+    });
+  });
 });
 
 it('normalizeUrl', () => {
