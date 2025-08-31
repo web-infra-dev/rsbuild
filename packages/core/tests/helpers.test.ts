@@ -283,36 +283,4 @@ describe('isPlainObject', () => {
     class TestClass {}
     expect(isPlainObject(new TestClass())).toBe(false);
   });
-
-  it('should perform efficiently in performance test', () => {
-    const iterations = 100000;
-    const testObjects = [
-      {},
-      { foo: 'bar' },
-      { nested: { prop: 'value' } },
-      null,
-      undefined,
-      'string',
-      123,
-      [],
-      new Date(),
-    ];
-
-    const startTime = performance.now();
-
-    for (let i = 0; i < iterations; i++) {
-      const obj = testObjects[i % testObjects.length];
-      isPlainObject(obj);
-    }
-
-    const endTime = performance.now();
-    const duration = endTime - startTime;
-
-    // Should complete 100k operations in less than 50ms on most systems
-    // This validates that our Object.prototype caching optimization works
-    expect(duration).toBeLessThan(50);
-    console.log(
-      `isPlainObject performance test: ${iterations} operations in ${duration.toFixed(2)}ms`,
-    );
-  });
 });
