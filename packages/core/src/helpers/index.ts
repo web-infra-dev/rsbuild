@@ -319,7 +319,7 @@ export const createVirtualModule = (content: string) =>
 
 export function isWebTarget(target: RsbuildTarget | RsbuildTarget[]): boolean {
   const targets = castArray(target);
-  return targets.includes('web') || target.includes('web-worker');
+  return targets.includes('web') || targets.includes('web-worker');
 }
 
 export const isMultiCompiler = (
