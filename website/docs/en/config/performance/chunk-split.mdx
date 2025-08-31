@@ -14,10 +14,10 @@ Please refer to the [Code Splitting](/guide/optimization/code-splitting) guide f
 Rsbuild supports the following chunk splitting strategies:
 
 - [split-by-experience](/guide/optimization/code-splitting#split-by-experience): an empirical splitting strategy, automatically splits some commonly used npm packages into chunks of moderate size.
-- [split-by-module](/guide/optimization/code-splitting#split-by-module): split by NPM package granularity, each NPM package corresponds to a chunk.
+- [split-by-module](/guide/optimization/code-splitting#split-by-module): split by npm package granularity, each npm package corresponds to a chunk.
 - [split-by-size](/guide/optimization/code-splitting#split-by-size): automatically split according to module size.
 - [all-in-one](/guide/optimization/code-splitting#all-in-one): bundle all codes into one chunk.
-- [single-vendor](/guide/optimization/code-splitting#single-vendor): bundle all NPM packages into a single chunk.
+- [single-vendor](/guide/optimization/code-splitting#single-vendor): bundle all npm packages into a single chunk.
 - [custom](/guide/optimization/code-splitting#custom-splitting-strategy): custom chunk splitting strategy.
 
 ## Type definition
@@ -106,7 +106,7 @@ export default {
 - **Type:** `RegExp[] | Record<string, RegExp>`
 - **Default:** `[]`
 
-Via `chunkSplit.forceSplitting`, you can specify the NPM packages that need to be forced to split.
+Via `chunkSplit.forceSplitting`, you can specify the npm packages that need to be forced to split.
 
 For example, split the `axios` library under node_modules into `axios.js`:
 
