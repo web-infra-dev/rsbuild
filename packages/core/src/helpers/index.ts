@@ -59,9 +59,22 @@ export const cloneDeep = <T>(value: T): T => {
   });
 };
 
+// Cache for parsed version parts to avoid repeated string splitting
+const versionPartsCache = new Map<string, number[]>();
+
+const parseVersionParts = (version: string): number[] => {
+  if (versionPartsCache.has(version)) {
+    return versionPartsCache.get(version)!;
+  }
+
+  const parts = version.split('.').map(Number);
+  versionPartsCache.set(version, parts);
+  return parts;
+};
+
 const compareSemver = (version1: string, version2: string) => {
-  const parts1 = version1.split('.').map(Number);
-  const parts2 = version2.split('.').map(Number);
+  const parts1 = parseVersionParts(version1);
+  const parts2 = parseVersionParts(version2);
   const len = Math.max(parts1.length, parts2.length);
 
   for (let i = 0; i < len; i++) {
