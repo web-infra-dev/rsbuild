@@ -27,7 +27,7 @@ const transformLoader: LoaderDefinition<TransformLoaderOptions> =
 
     try {
       const result = await transform({
-        code: source,
+        code: String(source),
         context: this.context,
         resource: this.resource,
         resourcePath: this.resourcePath,
