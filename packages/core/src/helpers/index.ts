@@ -32,11 +32,14 @@ export const isFunction = (func: unknown): func is (...args: any[]) => any =>
 export const isObject = (obj: unknown): obj is Record<string, any> =>
   Object.prototype.toString.call(obj) === '[object Object]';
 
+// Cache Object.prototype reference for better performance in hot paths
+const objectPrototype = Object.prototype;
+
 export const isPlainObject = (obj: unknown): obj is Record<string, any> => {
   return (
     obj !== null &&
     typeof obj === 'object' &&
-    Object.getPrototypeOf(obj) === Object.prototype
+    Object.getPrototypeOf(obj) === objectPrototype
   );
 };
 
