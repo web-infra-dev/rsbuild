@@ -56,16 +56,33 @@ export const getPathnameFromUrl = (publicPath: string): string => {
 
 /** dedupe and remove nested paths */
 export const dedupeNestedPaths = (paths: string[]): string[] => {
-  return paths
-    .sort((p1, p2) => (p2.length > p1.length ? -1 : 1))
-    .reduce<string[]>((prev, curr) => {
-      const isSub = prev.find((p) => curr.startsWith(p) || curr === p);
-      if (isSub) {
-        return prev;
-      }
+  if (paths.length <= 1) {
+    return [...paths];
+  }
 
-      return prev.concat(curr);
-    }, []);
+  // Sort paths by length (shortest first) and deduplicate
+  // This ensures parent directories are processed before child directories
+  const sorted = [...new Set(paths)].sort((a, b) => a.length - b.length);
+  const result: string[] = [];
+
+  for (const path of sorted) {
+    let hasParent = false;
+
+    // Only check existing results (which are all shorter or equal length)
+    // Since paths are sorted by length, potential parents are already processed
+    for (const existing of result) {
+      if (path.startsWith(`${existing}/`)) {
+        hasParent = true;
+        break; // Early termination when parent is found
+      }
+    }
+
+    if (!hasParent) {
+      result.push(path);
+    }
+  }
+
+  return result;
 };
 
 /**
