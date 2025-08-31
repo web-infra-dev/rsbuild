@@ -27,10 +27,7 @@ const transformLoader: LoaderDefinition<TransformLoaderOptions> =
 
     try {
       const result = await transform({
-        code:
-          typeof source === 'string'
-            ? source
-            : (source as Buffer).toString('utf8'),
+        code: source,
         context: this.context,
         resource: this.resource,
         resourcePath: this.resourcePath,
