@@ -32,7 +32,7 @@ You can also get the path of a WebAssembly module using the `new URL` syntax:
 ```js title="index.js"
 const wasmURL = new URL('./add.wasm', import.meta.url);
 
-console.log(wasmURL).pathname; // "/static/wasm/[contenthash:8].module.wasm"
+console.log(wasmURL.pathname); // "/static/wasm/[contenthash:8].module.wasm"
 ```
 
 ## Output directory
@@ -58,5 +58,5 @@ When you import a Wasm file in TypeScript code, you usually need to add the corr
 For example, the `add.wasm` file exports an `add()` method, then you can create an `add.wasm.d.ts` file in the same directory and add the corresponding type declaration:
 
 ```ts title="add.wasm.d.ts"
-export const add = (num1: number, num2: number) => number;
+export const add: (num1: number, num2: number) => number;
 ```
