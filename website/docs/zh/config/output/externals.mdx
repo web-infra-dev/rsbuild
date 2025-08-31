@@ -19,6 +19,8 @@ type Externals =
 
 ## 示例
 
+### 基础用法
+
 将 `react-dom` 依赖从构建产物中剔除。为了在运行时获取这个模块, `react-dom` 的值将全局检索 `ReactDOM` 变量。
 
 ```js
@@ -27,6 +29,144 @@ export default {
     externals: {
       'react-dom': 'ReactDOM',
     },
+  },
+};
+```
+
+### 多个外部依赖
+
+通过提供包含多个条目的对象来排除多个依赖：
+
+```js
+export default {
+  output: {
+    externals: {
+      react: 'React',
+      'react-dom': 'ReactDOM',
+      lodash: '_',
+      moment: 'moment',
+    },
+  },
+};
+```
+
+### 数组格式
+
+使用数组来定义多个外部配置：
+
+```js
+export default {
+  output: {
+    externals: [
+      {
+        react: 'React',
+        'react-dom': 'ReactDOM',
+      },
+      'lodash',
+    ],
+  },
+};
+```
+
+### 配合 CDN 使用
+
+一个常见的用例是从 CDN 加载流行的库并将它们从构建包中排除，以减少构建包大小：
+
+```js
+export default {
+  output: {
+    externals: {
+      react: 'React',
+      'react-dom': 'ReactDOM',
+      antd: 'antd',
+    },
+  },
+  html: {
+    tags: [
+      {
+        tag: 'script',
+        attrs: {
+          src: 'https://unpkg.com/react@18/umd/react.production.min.js',
+        },
+      },
+      {
+        tag: 'script',
+        attrs: {
+          src: 'https://unpkg.com/react-dom@18/umd/react-dom.production.min.js',
+        },
+      },
+      {
+        tag: 'script',
+        attrs: {
+          src: 'https://unpkg.com/antd@5/dist/antd.min.js',
+        },
+      },
+    ],
+  },
+};
+```
+
+### 基于函数的外部依赖
+
+使用函数来动态确定模块是否应该是外部的：
+
+```js
+export default {
+  output: {
+    externals: (context, request, callback) => {
+      // 将所有以 'jquery' 开头的请求外部化
+      if (/^jquery/.test(request)) {
+        return callback(null, 'jQuery');
+      }
+      // 继续正常打包
+      callback();
+    },
+  },
+};
+```
+
+### 正则表达式模式
+
+使用正则表达式来匹配具有特定模式的多个模块：
+
+```js
+export default {
+  output: {
+    externals: [
+      // 外部化所有 @babel 包
+      /^@babel\/.+$/,
+      // 外部化所有 lodash 子模块
+      /^lodash\/.+$/,
+    ],
+  },
+};
+```
+
+### 复杂配置
+
+结合不同的外部类型来处理更复杂的场景：
+
+```js
+export default {
+  output: {
+    externals: [
+      // 字符串格式 - 假设全局变量名与模块名相同
+      'jquery',
+      // 对象格式 - 显式的全局变量映射
+      {
+        react: 'React',
+        'react-dom': 'ReactDOM',
+      },
+      // 函数格式 - 动态外部化
+      (context, request, callback) => {
+        if (request.startsWith('@my-company/')) {
+          return callback(null, `MyCompany['${request.slice(12)}']`);
+        }
+        callback();
+      },
+      // 正则表达式格式 - 模式匹配
+      /^chartjs-.+$/,
+    ],
   },
 };
 ```
