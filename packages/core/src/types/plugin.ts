@@ -307,8 +307,9 @@ type TransformResult =
 export type TransformContext = {
   /**
    * The code of the module.
+   * When raw is true, this will be a Buffer instead of a string.
    */
-  code: string;
+  code: string | Buffer;
   /**
    * The directory path of the currently processed module,
    * which changes with the location of each processed module.
