@@ -87,8 +87,11 @@ export async function emptyDir(
 
         if (entry.isDirectory()) {
           await emptyDir(fullPath, keep, false);
-          if (!keep.length) {
+          // Try to remove the directory if it's empty after recursive cleanup
+          try {
             await fs.promises.rmdir(fullPath);
+          } catch {
+            // Directory is not empty or cannot be removed, that's fine
           }
         } else {
           await fs.promises.unlink(fullPath);
