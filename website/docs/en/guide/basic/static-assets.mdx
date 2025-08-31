@@ -135,7 +135,7 @@ console.log(largeImage); // "/static/largeImage.[hash].png"
 console.log(smallImage); // "data:image/png;base64,iVBORw0KGgo..."
 ```
 
-Adding the `?url` query ensures that the asset is always loaded as a separate file and returns a URL:
+Adding the `?url` query parameter ensures that the asset is always loaded as a separate file and returns a URL:
 
 ```js
 import image from './static/image.png?url';
@@ -143,7 +143,7 @@ import image from './static/image.png?url';
 console.log(image); // "/static/image.[hash].png"
 ```
 
-Adding the `?inline` query ensures that the asset is always inlined in the code, regardless of the file size:
+Adding the `?inline` query parameter ensures that the asset is always inlined in the code, regardless of the file size:
 
 ```js
 import image from './static/image.png?inline';
@@ -187,8 +187,8 @@ Rsbuild >= 1.3.0 supports the `?raw` query parameter, and >= 1.4.0 supports impo
 
 When static assets are imported, they will be output to the dist directory. You can:
 
-- Modify the output filename through [output.filename](/config/output/filename).
-- Modify the output path through [output.distPath](/config/output/dist-path).
+- Use [output.filename](/config/output/filename) to modify the output filename.
+- Use [output.distPath](/config/output/dist-path) to modify the output path.
 
 Please read [Output Files](/guide/basic/output-files) for details.
 
