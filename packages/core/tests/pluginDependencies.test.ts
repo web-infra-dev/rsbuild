@@ -144,19 +144,19 @@ describe('sort plugins by dependencies', () => {
   it('should handle multiple plugins with same name in different environments', () => {
     const cases = [
       {
-        instance: { name: 'plugin-a' },
-        environment: 'web',
-      },
-      {
-        instance: { name: 'plugin-a' },
-        environment: 'node',
-      },
-      {
         instance: { name: 'plugin-b', pre: ['plugin-a'] },
         environment: 'web',
       },
       {
         instance: { name: 'plugin-c', pre: ['plugin-a'] },
+        environment: 'node',
+      },
+      {
+        instance: { name: 'plugin-a' },
+        environment: 'web',
+      },
+      {
+        instance: { name: 'plugin-a' },
         environment: 'node',
       },
     ];
