@@ -259,8 +259,6 @@ test('should isWebTarget work correctly', () => {
   expect(isWebTarget(['web-worker'])).toBe(true);
   expect(isWebTarget(['web-worker', 'node'])).toBe(true);
 
-  // These tests demonstrate the bug - they should fail with current implementation
-  // but pass with the fix (substring vs array element matching)
-  expect(isWebTarget('web-worker-special')).toBe(false); // This fails due to bug
-  expect(isWebTarget('something-web-worker-else')).toBe(false); // This fails due to bug
+  expect(isWebTarget('web-worker-special')).toBe(false);
+  expect(isWebTarget('something-web-worker-else')).toBe(false);
 });
