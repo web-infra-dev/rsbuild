@@ -9,7 +9,7 @@ The `charset` config allows you to specify the [character encoding](https://deve
 
 By default, the output of Rsbuild is encoded in [UTF-8](https://developer.mozilla.org/en-US/docs/Glossary/UTF-8), which is the most commonly used character encoding in web applications.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     charset: 'utf8', // This is the default
@@ -23,7 +23,7 @@ When your web server returns the resource, please ensure that it sends the corre
 
 If you want the output files to use [ASCII](https://developer.mozilla.org/en-US/docs/Glossary/ASCII) encoding, you can set this in the config file like this:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     charset: 'ascii',
@@ -32,21 +32,6 @@ export default {
 ```
 
 When using ASCII encoding, all non-ASCII characters are escaped with backslashes, which may make the files slightly larger and harder to read.
-
-### Use ASCII for legacy systems
-
-ASCII encoding is useful when deploying to legacy systems or environments with strict character encoding requirements:
-
-```js
-// Example: Use ASCII for production builds in legacy environments
-const isLegacyEnvironment = process.env.LEGACY_DEPLOYMENT === 'true';
-
-export default {
-  output: {
-    charset: isLegacyEnvironment ? 'ascii' : 'utf8',
-  },
-};
-```
 
 ## Notes
 
