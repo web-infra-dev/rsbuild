@@ -1,5 +1,10 @@
 import { sep } from 'node:path';
-import { ensureAssetPrefix, pick, prettyTime } from '../src/helpers';
+import {
+  ensureAssetPrefix,
+  isWebTarget,
+  pick,
+  prettyTime,
+} from '../src/helpers';
 import { dedupeNestedPaths, getCommonParentPath } from '../src/helpers/path';
 import { getRoutes, normalizeUrl } from '../src/server/helper';
 import type { InternalContext } from '../src/types';
@@ -236,4 +241,26 @@ test('should dedupeNestedPaths correctly', async () => {
     'package/to/root/dist/web2',
     'package/to/root/dist/web3',
   ]);
+});
+
+test('should isWebTarget work correctly', () => {
+  // Test with single targets
+  expect(isWebTarget('web')).toBe(true);
+  expect(isWebTarget('node')).toBe(false);
+
+  // Test with arrays
+  expect(isWebTarget(['web'])).toBe(true);
+  expect(isWebTarget(['node'])).toBe(false);
+  expect(isWebTarget(['web', 'node'])).toBe(true);
+  expect(isWebTarget(['node'])).toBe(false);
+
+  // Test web-worker target
+  expect(isWebTarget('web-worker')).toBe(true);
+  expect(isWebTarget(['web-worker'])).toBe(true);
+  expect(isWebTarget(['web-worker', 'node'])).toBe(true);
+
+  // These tests demonstrate the bug - they should fail with current implementation
+  // but pass with the fix (substring vs array element matching)
+  expect(isWebTarget('web-worker-special')).toBe(false); // This fails due to bug
+  expect(isWebTarget('something-web-worker-else')).toBe(false); // This fails due to bug
 });
