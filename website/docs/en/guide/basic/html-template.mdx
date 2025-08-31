@@ -1,12 +1,12 @@
 # HTML
 
-During the build process, Rsbuild will compile based on the HTML template and template parameters to generate several HTML files.
+During the build process, Rsbuild compiles HTML templates and template parameters to generate HTML files.
 
-Rsbuild provides several configuration options to set the HTML template. This section explains the basic usage of these options.
+Rsbuild provides several configuration options to set HTML templates. This section explains the basic usage of these options.
 
 ## HTML generation
 
-Rsbuild will generate an HTML file for each entry defined in [source.entry](/config/source/entry).
+Rsbuild generates an HTML file for each entry defined in [source.entry](/config/source/entry).
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -23,7 +23,7 @@ See [source.entry - HTML generation](/config/source/entry#html-generation) for m
 
 ## Set template
 
-In Rsbuild, you can use the [html.template](/config/html/template) config to define the path to the custom HTML template.
+Use the [html.template](/config/html/template) config to define the path to a custom HTML template.
 
 ```ts
 export default {
@@ -33,7 +33,7 @@ export default {
 };
 ```
 
-If `html.template` is not set, Rsbuild will use the built-in HTML template, the content is as follows:
+When `html.template` is not set, Rsbuild uses the built-in HTML template:
 
 ```html title="defaultTemplate.html"
 <!doctype html>
@@ -45,7 +45,7 @@ If `html.template` is not set, Rsbuild will use the built-in HTML template, the 
 </html>
 ```
 
-In the default template, `id="<%= mountId %>"` will be replaced with `id="root"`, you can modify this value through the [html.mountId](/config/html/mount-id) option.
+In the default template, `id="<%= mountId %>"` is replaced with `id="root"`. Modify this value using the [html.mountId](/config/html/mount-id) option.
 
 ## Set page title
 
