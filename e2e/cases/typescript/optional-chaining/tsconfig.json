@@ -1,15 +1,7 @@
 {
+  "extends": "@rsbuild/config/tsconfig",
   "compilerOptions": {
-    "target": "ES2015",
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true
+    "outDir": "./dist"
   },
-  "include": ["src/**/*"]
+  "include": ["src", "*.test.ts"]
 }
