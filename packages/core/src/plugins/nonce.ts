@@ -6,7 +6,8 @@ export const pluginNonce = (): RsbuildPlugin => ({
 
   setup(api) {
     api.onAfterCreateCompiler(({ compiler, environments }) => {
-      const nonces = Object.values(environments).map((environment) => {
+      const environmentList = Object.values(environments);
+      const nonces = environmentList.map((environment) => {
         const { nonce } = environment.config.security;
 
         return nonce;
@@ -15,8 +16,6 @@ export const pluginNonce = (): RsbuildPlugin => ({
       if (!nonces.some((nonce) => !!nonce)) {
         return;
       }
-
-      const environmentList = Object.values(environments);
 
       applyToCompiler(compiler, (compiler, index) => {
         const nonce = nonces[index];
