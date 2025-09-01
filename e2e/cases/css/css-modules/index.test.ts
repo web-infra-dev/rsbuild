@@ -1,22 +1,25 @@
 import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
-rspackOnlyTest('should compile CSS Modules correctly', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
-  });
-  const files = await rsbuild.getDistFiles();
+rspackOnlyTest(
+  'should compile CSS Modules with default configuration',
+  async () => {
+    const rsbuild = await build({
+      cwd: __dirname,
+    });
+    const files = await rsbuild.getDistFiles();
 
-  const content =
-    files[Object.keys(files).find((file) => file.endsWith('.css'))!];
+    const content =
+      files[Object.keys(files).find((file) => file.endsWith('.css'))!];
 
-  expect(content).toMatch(
-    /\.the-a-class{color:red}\.the-b-class-\w{6}{color:#00f}\.the-c-class-\w{6}{color:#ff0}\.the-d-class{color:green}/,
-  );
-});
+    expect(content).toMatch(
+      /\.the-a-class{color:red}\.the-b-class-\w{6}{color:#00f}\.the-c-class-\w{6}{color:#ff0}\.the-d-class{color:green}/,
+    );
+  },
+);
 
 rspackOnlyTest(
-  'should compile CSS Modules follow by output.cssModules',
+  'should compile CSS Modules with custom auto configuration',
   async () => {
     const rsbuild = await build({
       cwd: __dirname,
@@ -42,7 +45,7 @@ rspackOnlyTest(
 );
 
 rspackOnlyTest(
-  'should compile CSS Modules follow by output.cssModules custom localIdentName',
+  'should compile CSS Modules with custom localIdentName pattern',
   async () => {
     const rsbuild = await build({
       cwd: __dirname,
@@ -66,7 +69,7 @@ rspackOnlyTest(
 );
 
 rspackOnlyTest(
-  'should compile CSS Modules follow by output.cssModules custom localIdentName - hashDigest',
+  'should compile CSS Modules with custom hash digest format',
   async () => {
     const rsbuild = await build({
       cwd: __dirname,
