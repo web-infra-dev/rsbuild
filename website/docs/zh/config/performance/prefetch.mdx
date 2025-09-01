@@ -38,36 +38,6 @@ export default {
 };
 ```
 
-### 条件性 prefetch
-
-你可以根据环境条件启用 prefetch。例如，仅在生产环境构建时启用 prefetch：
-
-```ts title="rsbuild.config.ts"
-export default {
-  performance: {
-    prefetch: process.env.NODE_ENV === 'production',
-  },
-};
-```
-
-### 性能优化场景
-
-为了更好的性能优化，你可以配置 prefetch 的特定选项：
-
-```ts title="rsbuild.config.ts"
-export default {
-  performance: {
-    prefetch: {
-      type: 'async-chunks',
-      // 仅预取 JavaScript 和 CSS 文件
-      include: [/\.(js|css)$/],
-      // 排除大文件以避免不必要的带宽使用
-      exclude: [/\.map$/, /\.chunk\.js$/],
-    },
-  },
-};
-```
-
 比如，在入口文件中动态引入了其他模块：
 
 ```js title="index.js"
@@ -139,30 +109,6 @@ export default {
     prefetch: {
       type: 'all-chunks',
       include: [/\.png$/],
-    },
-  },
-};
-```
-
-以下是不同 prefetch 类型的示例：
-
-```ts title="rsbuild.config.ts"
-// 仅预取异步 chunks（默认行为）
-export default {
-  performance: {
-    prefetch: {
-      type: 'async-chunks',
-    },
-  },
-};
-```
-
-```ts title="rsbuild.config.ts"
-// 预取初始（非异步）资源
-export default {
-  performance: {
-    prefetch: {
-      type: 'initial',
     },
   },
 };
