@@ -23,28 +23,11 @@ At build time, prevent some `import` dependencies from being packed into bundles
 
 Exclude the `react-dom` dependency from the output bundle. To get this module at runtime, the value of `react-dom` will globally retrieve the `ReactDOM` variable.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     externals: {
       'react-dom': 'ReactDOM',
-    },
-  },
-};
-```
-
-### Multiple externals
-
-You can exclude multiple dependencies by providing an object with multiple entries:
-
-```js
-export default {
-  output: {
-    externals: {
-      react: 'React',
-      'react-dom': 'ReactDOM',
-      lodash: '_',
-      moment: 'moment',
     },
   },
 };
@@ -54,7 +37,7 @@ export default {
 
 Use an array to define multiple external configurations:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     externals: [
@@ -70,15 +53,14 @@ export default {
 
 ### Using with CDN
 
-A common use case is to load popular libraries from CDN and exclude them from your bundle to reduce bundle size:
+A common use case is to load libraries from CDN and exclude them from your bundle:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     externals: {
       react: 'React',
       'react-dom': 'ReactDOM',
-      antd: 'antd',
     },
   },
   html: {
@@ -95,32 +77,7 @@ export default {
           src: 'https://unpkg.com/react-dom@18/umd/react-dom.production.min.js',
         },
       },
-      {
-        tag: 'script',
-        attrs: {
-          src: 'https://unpkg.com/antd@5/dist/antd.min.js',
-        },
-      },
     ],
-  },
-};
-```
-
-### Function-based externals
-
-Use a function to dynamically determine whether a module should be external:
-
-```js
-export default {
-  output: {
-    externals: (context, request, callback) => {
-      // Externalize all requests starting with 'jquery'
-      if (/^jquery/.test(request)) {
-        return callback(null, 'jQuery');
-      }
-      // Continue with normal bundling
-      callback();
-    },
   },
 };
 ```
@@ -129,7 +86,7 @@ export default {
 
 Use regular expressions to match multiple modules with a pattern:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     externals: [
@@ -137,35 +94,6 @@ export default {
       /^@babel\/.+$/,
       // Externalize all lodash sub-modules
       /^lodash\/.+$/,
-    ],
-  },
-};
-```
-
-### Complex configuration
-
-Combine different external types for more complex scenarios:
-
-```js
-export default {
-  output: {
-    externals: [
-      // String format - assumes global variable name same as module name
-      'jquery',
-      // Object format - explicit global variable mapping
-      {
-        react: 'React',
-        'react-dom': 'ReactDOM',
-      },
-      // Function format - dynamic externalization
-      (context, request, callback) => {
-        if (request.startsWith('@my-company/')) {
-          return callback(null, `MyCompany['${request.slice(12)}']`);
-        }
-        callback();
-      },
-      // RegExp format - pattern matching
-      /^chartjs-.+$/,
     ],
   },
 };
