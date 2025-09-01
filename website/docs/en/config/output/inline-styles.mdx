@@ -20,11 +20,11 @@ type InlineChunkConfig =
 
 Whether to inline output style files (.css files) into HTML with `<style>` tags.
 
-Note that, with this option on, the style files will no longer be written to the dist directory, they will only exist inside the HTML file instead.
+When this option is enabled, style files are no longer written to the dist directory and only exist inside the HTML file.
 
 ## Example
 
-By default, we have the following output files:
+By default, the following output files are generated:
 
 ```bash
 dist/html/main/index.html
@@ -32,7 +32,7 @@ dist/static/css/style.css
 dist/static/js/main.js
 ```
 
-After turning on the `output.inlineStyles` option:
+After enabling the `output.inlineStyles` option:
 
 ```js
 export default {
@@ -86,12 +86,12 @@ The production filename includes a hash value by default, such as `static/css/ma
 
 ### Using function
 
-You can also set `output.inlineStyles` to a function that accepts the following parameters:
+Set `output.inlineStyles` to a function that accepts the following parameters:
 
 - `name`: The filename, such as `static/css/main.18a568e5.css`.
 - `size`: The file size in bytes.
 
-For example, if we want to inline assets that are smaller than 10kB, we can add the following configuration:
+To inline assets smaller than 10kB, add the following configuration:
 
 ```js
 export default {

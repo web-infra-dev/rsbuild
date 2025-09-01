@@ -8,7 +8,7 @@ type CleanDistPath = boolean | 'auto' | CleanDistPathObject;
 
 - **Default:** `'auto'`
 
-Configure whether to clean up all files in the output directory before the build starts. The output directory is the [output.distPath.root](/config/output/dist-path) directory.
+Configure whether to clean all files in the output directory before the build starts. The output directory is the [output.distPath.root](/config/output/dist-path) directory.
 
 ## Default behavior
 
@@ -29,7 +29,7 @@ export default {
 
 ## Forced switch
 
-You can set `cleanDistPath` to `true` to force it to be enabled, or set it to `false` to force it to be disabled.
+Set `cleanDistPath` to `true` to force enable it, or set it to `false` to force disable it.
 
 ```js
 export default {
@@ -41,7 +41,7 @@ export default {
 
 ## Conditional
 
-If you only need to clean files in production mode, but not in development mode, you can configure it as:
+To clean files only in production mode and not in development mode, configure it as:
 
 ```js
 export default {

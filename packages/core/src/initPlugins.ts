@@ -255,7 +255,7 @@ export function initPluginAPI({
 
       hooks.modifyBundlerChain.tapEnvironment({
         environment,
-        handler: (chain, { target, environment }) => {
+        handler: (chain, { target, environment: environmentContext }) => {
           // filter by targets
           if (descriptor.targets && !descriptor.targets.includes(target)) {
             return;
@@ -264,7 +264,7 @@ export function initPluginAPI({
           // filter by environments
           if (
             descriptor.environments &&
-            !descriptor.environments.includes(environment.name)
+            !descriptor.environments.includes(environmentContext.name)
           ) {
             return;
           }
@@ -309,7 +309,7 @@ export function initPluginAPI({
             .loader(loaderPath)
             .options({
               id,
-              getEnvironment: () => environment,
+              getEnvironment: () => environmentContext,
             } satisfies TransformLoaderOptions);
         },
       });

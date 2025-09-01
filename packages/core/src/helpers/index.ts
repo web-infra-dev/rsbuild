@@ -32,11 +32,14 @@ export const isFunction = (func: unknown): func is (...args: any[]) => any =>
 export const isObject = (obj: unknown): obj is Record<string, any> =>
   Object.prototype.toString.call(obj) === '[object Object]';
 
+// Cache Object.prototype reference for better performance in hot paths
+const objectPrototype = Object.prototype;
+
 export const isPlainObject = (obj: unknown): obj is Record<string, any> => {
   return (
     obj !== null &&
     typeof obj === 'object' &&
-    Object.getPrototypeOf(obj) === Object.prototype
+    Object.getPrototypeOf(obj) === objectPrototype
   );
 };
 
@@ -319,7 +322,7 @@ export const createVirtualModule = (content: string) =>
 
 export function isWebTarget(target: RsbuildTarget | RsbuildTarget[]): boolean {
   const targets = castArray(target);
-  return targets.includes('web') || target.includes('web-worker');
+  return targets.includes('web') || targets.includes('web-worker');
 }
 
 export const isMultiCompiler = (
@@ -332,15 +335,13 @@ export function pick<T, U extends keyof T>(
   obj: T,
   keys: readonly U[],
 ): Pick<T, U> {
-  return keys.reduce(
-    (ret, key) => {
-      if (obj[key] !== undefined) {
-        ret[key] = obj[key];
-      }
-      return ret;
-    },
-    {} as Pick<T, U>,
-  );
+  const result = {} as Pick<T, U>;
+  for (const key of keys) {
+    if (obj[key] !== undefined) {
+      result[key] = obj[key];
+    }
+  }
+  return result;
 }
 
 export const camelCase = (input: string): string =>
