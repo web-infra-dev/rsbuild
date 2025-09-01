@@ -140,4 +140,46 @@ describe('sort plugins by dependencies', () => {
       );
     }).toThrow(/Plugins dependencies has loop: 2,3,5/);
   });
+
+  it('should handle multiple plugins with same name in different environments', () => {
+    const cases = [
+      {
+        instance: { name: 'plugin-b', pre: ['plugin-a'] },
+        environment: 'web',
+      },
+      {
+        instance: { name: 'plugin-c', pre: ['plugin-a'] },
+        environment: 'node',
+      },
+      {
+        instance: { name: 'plugin-a' },
+        environment: 'web',
+      },
+      {
+        instance: { name: 'plugin-a' },
+        environment: 'node',
+      },
+    ];
+
+    const result = sortPluginsByDependencies(cases);
+
+    expect(result).toEqual([
+      {
+        instance: { name: 'plugin-a' },
+        environment: 'web',
+      },
+      {
+        instance: { name: 'plugin-a' },
+        environment: 'node',
+      },
+      {
+        instance: { name: 'plugin-b', pre: ['plugin-a'] },
+        environment: 'web',
+      },
+      {
+        instance: { name: 'plugin-c', pre: ['plugin-a'] },
+        environment: 'node',
+      },
+    ]);
+  });
 });

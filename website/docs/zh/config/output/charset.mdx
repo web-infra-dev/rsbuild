@@ -9,13 +9,21 @@
 
 默认情况下，Rsbuild 的输出是 [UTF-8](https://developer.mozilla.org/en-US/docs/Glossary/UTF-8) 编码，这是 Web 应用中最常用的字符编码。
 
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    charset: 'utf8', // 这是默认值
+  },
+};
+```
+
 当你的 web 服务器返回资源时，请确保发送正确的 [Content-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) 响应头，使浏览器能够正确解析。
 
 ## ASCII
 
 如果你希望输出文件使用 [ASCII](https://developer.mozilla.org/en-US/docs/Glossary/ASCII) 编码，可以在配置文件中这样设置：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     charset: 'ascii',

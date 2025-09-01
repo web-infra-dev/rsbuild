@@ -36,7 +36,7 @@ function formatFileList(paths: string[], rootPath: string) {
   let files = paths.filter(isLikelyFile);
 
   // if no files, use the first path as the file
-  if (files.length === 0) {
+  if (files.length === 0 && paths.length > 0) {
     files = [paths[0]];
   }
 

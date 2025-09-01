@@ -28,6 +28,16 @@ const defaultOptions = {
 };
 ```
 
+To enable prefetch in your Rsbuild configuration:
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    prefetch: true,
+  },
+};
+```
+
 For example, if you dynamically import other modules in the entry file:
 
 ```js title="index.js"

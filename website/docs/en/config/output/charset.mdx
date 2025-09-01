@@ -9,13 +9,21 @@ The `charset` config allows you to specify the [character encoding](https://deve
 
 By default, the output of Rsbuild is encoded in [UTF-8](https://developer.mozilla.org/en-US/docs/Glossary/UTF-8), which is the most commonly used character encoding in web applications.
 
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    charset: 'utf8', // This is the default
+  },
+};
+```
+
 When your web server returns the resource, please ensure that it sends the correct [Content-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) response header so that the browser can parse it correctly.
 
 ## ASCII
 
 If you want the output files to use [ASCII](https://developer.mozilla.org/en-US/docs/Glossary/ASCII) encoding, you can set this in the config file like this:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     charset: 'ascii',

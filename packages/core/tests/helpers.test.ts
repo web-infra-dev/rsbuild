@@ -1,5 +1,11 @@
 import { sep } from 'node:path';
-import { ensureAssetPrefix, pick, prettyTime } from '../src/helpers';
+import {
+  ensureAssetPrefix,
+  isPlainObject,
+  isWebTarget,
+  pick,
+  prettyTime,
+} from '../src/helpers';
 import { dedupeNestedPaths, getCommonParentPath } from '../src/helpers/path';
 import { getRoutes, normalizeUrl } from '../src/server/helper';
 import type { InternalContext } from '../src/types';
@@ -104,6 +110,37 @@ describe('pick', () => {
 
   it('should not pick undefined properties', () => {
     expect(pick({ foo: undefined, bar: undefined }, ['foo'])).toEqual({});
+  });
+
+  it('should pick multiple properties', () => {
+    expect(pick({ foo: 1, bar: 2, baz: 3 }, ['foo', 'bar'])).toEqual({
+      foo: 1,
+      bar: 2,
+    });
+  });
+
+  it('should handle empty keys array', () => {
+    expect(pick({ foo: 1, bar: 2 }, [])).toEqual({});
+  });
+
+  it('should handle non-existent keys', () => {
+    expect(pick({ foo: 1 }, ['bar' as any])).toEqual({});
+  });
+
+  it('should pick falsy values correctly', () => {
+    expect(
+      pick({ foo: 0, bar: false, baz: null, qux: '' }, [
+        'foo',
+        'bar',
+        'baz',
+        'qux',
+      ]),
+    ).toEqual({
+      foo: 0,
+      bar: false,
+      baz: null,
+      qux: '',
+    });
   });
 });
 
@@ -236,4 +273,45 @@ test('should dedupeNestedPaths correctly', async () => {
     'package/to/root/dist/web2',
     'package/to/root/dist/web3',
   ]);
+});
+
+test('should isWebTarget work correctly', () => {
+  // Test with single targets
+  expect(isWebTarget('web')).toBe(true);
+  expect(isWebTarget('node')).toBe(false);
+
+  // Test with arrays
+  expect(isWebTarget(['web'])).toBe(true);
+  expect(isWebTarget(['node'])).toBe(false);
+  expect(isWebTarget(['web', 'node'])).toBe(true);
+  expect(isWebTarget(['node'])).toBe(false);
+
+  // Test web-worker target
+  expect(isWebTarget('web-worker')).toBe(true);
+  expect(isWebTarget(['web-worker'])).toBe(true);
+  expect(isWebTarget(['web-worker', 'node'])).toBe(true);
+
+  expect(isWebTarget('web-worker-special')).toBe(false);
+  expect(isWebTarget('something-web-worker-else')).toBe(false);
+});
+
+describe('isPlainObject', () => {
+  it('should return true for plain objects', () => {
+    expect(isPlainObject({})).toBe(true);
+    expect(isPlainObject({ foo: 'bar' })).toBe(true);
+    expect(isPlainObject(Object.create(null))).toBe(false);
+  });
+
+  it('should return false for non-plain objects', () => {
+    expect(isPlainObject(null)).toBe(false);
+    expect(isPlainObject(undefined)).toBe(false);
+    expect(isPlainObject('string')).toBe(false);
+    expect(isPlainObject(123)).toBe(false);
+    expect(isPlainObject([])).toBe(false);
+    expect(isPlainObject(new Date())).toBe(false);
+    expect(isPlainObject(/regex/)).toBe(false);
+
+    class TestClass {}
+    expect(isPlainObject(new TestClass())).toBe(false);
+  });
 });
