@@ -28,6 +28,16 @@ const defaultOptions = {
 };
 ```
 
+在 Rsbuild 配置中启用 prefetch：
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    prefetch: true,
+  },
+};
+```
+
 比如，在入口文件中动态引入了其他模块：
 
 ```js title="index.js"
