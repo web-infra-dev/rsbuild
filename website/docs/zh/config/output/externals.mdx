@@ -19,14 +19,82 @@ type Externals =
 
 ## 示例
 
+### 基础用法
+
 将 `react-dom` 依赖从构建产物中剔除。为了在运行时获取这个模块, `react-dom` 的值将全局检索 `ReactDOM` 变量。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     externals: {
       'react-dom': 'ReactDOM',
     },
+  },
+};
+```
+
+### 数组格式
+
+使用数组来定义多个 `externals` 配置：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    externals: [
+      {
+        react: 'React',
+        'react-dom': 'ReactDOM',
+      },
+      'lodash',
+    ],
+  },
+};
+```
+
+### 配合 CDN 使用
+
+一个常见的用法是从 CDN 加载一些库，并将它们从构建产物中排除：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    externals: {
+      react: 'React',
+      'react-dom': 'ReactDOM',
+    },
+  },
+  html: {
+    tags: [
+      {
+        tag: 'script',
+        attrs: {
+          src: 'https://unpkg.com/react@18/umd/react.production.min.js',
+        },
+      },
+      {
+        tag: 'script',
+        attrs: {
+          src: 'https://unpkg.com/react-dom@18/umd/react-dom.production.min.js',
+        },
+      },
+    ],
+  },
+};
+```
+
+### 正则表达式模式
+
+使用正则表达式来匹配具有特定模式的多个模块：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    externals: [
+      // 外部化所有 @babel 包
+      /^@babel\/.+$/,
+      // 外部化所有 lodash 子模块
+      /^lodash\/.+$/,
+    ],
   },
 };
 ```
