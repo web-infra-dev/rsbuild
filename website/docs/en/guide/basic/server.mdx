@@ -1,6 +1,6 @@
 # Dev server
 
-Rsbuild comes with a built-in dev server designed to improve the development experience. When you run `rsbuild dev` or `rsbuild preview` commands, the server starts and provides features like page preview, routing, and hot module reloading.
+Rsbuild comes with a built-in dev server designed to improve the development experience. When you run `rsbuild dev` or `rsbuild preview` commands, the server starts and provides features like page preview, routing, and hot module replacement.
 
 ## Base path
 
@@ -53,7 +53,7 @@ export default {
 
 ### Fallback behavior
 
-By default, when a request meets the following conditions and the corresponding resource is not found, it will fallback to `index.html`:
+By default, when a request meets the following conditions and the corresponding resource is not found, it will fall back to `index.html`:
 
 - The request is a `GET` or `HEAD` request
 - The request accepts `text/html` (the request header accept type is `text/html` or `*/*`)
