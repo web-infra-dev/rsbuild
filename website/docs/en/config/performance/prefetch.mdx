@@ -38,36 +38,6 @@ export default {
 };
 ```
 
-### Conditional prefetch
-
-You can enable prefetch conditionally based on the environment. For example, to enable prefetch only in production builds:
-
-```ts title="rsbuild.config.ts"
-export default {
-  performance: {
-    prefetch: process.env.NODE_ENV === 'production',
-  },
-};
-```
-
-### Performance optimization scenarios
-
-For better performance optimization, you can configure prefetch with specific options:
-
-```ts title="rsbuild.config.ts"
-export default {
-  performance: {
-    prefetch: {
-      type: 'async-chunks',
-      // Only prefetch JavaScript and CSS files
-      include: [/\.(js|css)$/],
-      // Exclude large files to avoid unnecessary bandwidth usage
-      exclude: [/\.map$/, /\.chunk\.js$/],
-    },
-  },
-};
-```
-
 For example, if you dynamically import other modules in the entry file:
 
 ```js title="index.js"
@@ -139,30 +109,6 @@ export default {
     prefetch: {
       type: 'all-chunks',
       include: [/\.png$/],
-    },
-  },
-};
-```
-
-Here are examples of different prefetch types:
-
-```ts title="rsbuild.config.ts"
-// Prefetch only async chunks (default behavior)
-export default {
-  performance: {
-    prefetch: {
-      type: 'async-chunks',
-    },
-  },
-};
-```
-
-```ts title="rsbuild.config.ts"
-// Prefetch initial (non-async) resources
-export default {
-  performance: {
-    prefetch: {
-      type: 'initial',
     },
   },
 };
