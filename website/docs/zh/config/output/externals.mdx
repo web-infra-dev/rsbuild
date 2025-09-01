@@ -53,33 +53,35 @@ export default {
 
 ### 配合 CDN 使用
 
-一个常见的用法是从 CDN 加载一些库，并将它们从构建产物中排除：
+一个常见的用法是从 CDN 加载一些库，将它们从构建产物中排除，通过 [html.tags](/config/html/tags) 配置将它们引入到 HTML 中。
 
 ```ts title="rsbuild.config.ts"
 export default {
   output: {
     externals: {
-      react: 'React',
-      'react-dom': 'ReactDOM',
+      axios: 'axios',
     },
   },
   html: {
     tags: [
       {
         tag: 'script',
+        append: false,
         attrs: {
-          src: 'https://unpkg.com/react@18/umd/react.production.min.js',
-        },
-      },
-      {
-        tag: 'script',
-        attrs: {
-          src: 'https://unpkg.com/react-dom@18/umd/react-dom.production.min.js',
+          defer: true,
+          crossorigin: true,
+          src: 'https://unpkg.com/axios@1/dist/axios.min.js',
         },
       },
     ],
   },
 };
+```
+
+然后，你可以在源代码中使用外部库：
+
+```js title="src/api.js"
+const response = await window.axios.get('/api/users');
 ```
 
 ### 正则表达式模式

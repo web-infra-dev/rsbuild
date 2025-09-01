@@ -53,33 +53,35 @@ export default {
 
 ### Using with CDN
 
-A common use case is to load libraries from CDN and exclude them from your bundle:
+A common use case is to load libraries from CDN and exclude them from your bundle, then use [html.tags](/config/html/tags) to include them in your HTML.
 
 ```ts title="rsbuild.config.ts"
 export default {
   output: {
     externals: {
-      react: 'React',
-      'react-dom': 'ReactDOM',
+      axios: 'axios',
     },
   },
   html: {
     tags: [
       {
         tag: 'script',
+        append: false,
         attrs: {
-          src: 'https://unpkg.com/react@18/umd/react.production.min.js',
-        },
-      },
-      {
-        tag: 'script',
-        attrs: {
-          src: 'https://unpkg.com/react-dom@18/umd/react-dom.production.min.js',
+          defer: true,
+          crossorigin: true,
+          src: 'https://unpkg.com/axios@1/dist/axios.min.js',
         },
       },
     ],
   },
 };
+```
+
+Then you can use the external libraries in your source code:
+
+```js title="src/api.js"
+const response = await window.axios.get('/api/users');
 ```
 
 ### RegExp patterns
