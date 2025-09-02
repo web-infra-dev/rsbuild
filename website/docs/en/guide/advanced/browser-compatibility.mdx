@@ -6,13 +6,13 @@ This chapter introduces how to use the capabilities provided by Rsbuild to deal 
 
 ## Set browserslist
 
-Before dealing with compatibility issues, you first need to clarify which browsers your project needs to support, and add the corresponding browserslist config.
+Before dealing with compatibility issues, you first need to determine which browsers your project needs to support, and add the corresponding browserslist config.
 
 - If you haven't set browserslist yet, please read the [Browserslist](/guide/advanced/browserslist) chapter first.
 
 - If you have set a browserslist, Rsbuild will automatically compile according to that scope, downgrade JavaScript syntax and CSS syntax, and inject the required polyfill. In most cases, you can safely use modern ECMAScript features without worrying about compatibility issues.
 
-After setting the browserslist, if you still encountered some compatibility issues, please continue reading below contents to find some solutions.
+After setting the browserslist, if you still encounter compatibility issues, please continue reading the content below to find solutions.
 
 :::tip What is polyfill
 A polyfill is a piece of code that provides the functionality of a newer feature to older browsers that do not support that feature natively. It is used to fill in the gaps in older browsers' implementations of web standards, allowing developers to use newer features safely without having to worry about whether or not they will work in older browsers. For example, if a browser does not support the Array.map() method, a polyfill can be used to provide that functionality, allowing code that uses `Array.prototype.flat()` to work in that browser. Polyfills are commonly used to ensure that web applications can work on a wide range of browsers, including older ones.
@@ -26,9 +26,9 @@ Before dealing with compatibility issues, it is recommended that you understand 
 
 When you use higher-version syntax and API in your project, to make the compiled code run stably in lower-version browsers, we need to downgrade two parts: syntax downgrade and API downgrade.
 
-**Rsbuild downgrades syntax through syntax transpilation, and downgrades API through inject polyfill.**
+**Rsbuild downgrades syntax through syntax transpilation, and downgrades APIs through polyfill injection.**
 
-> Grammar and API are not strongly bound. When browser manufacturers implement the engine, they will support some syntax or implement some APIs in advance according to the specification or their own needs. Therefore, browsers from different manufacturers in the same period are not necessarily compatible with syntax and API. So in general practice, syntax and API are handled in two parts.
+> Syntax and APIs are not tightly coupled. When browser manufacturers implement the engine, they will support some syntax or implement some APIs in advance according to the specification or their own needs. Therefore, browsers from different manufacturers in the same period are not necessarily compatible with syntax and API. So in general practice, syntax and API are handled in two parts.
 
 ### Syntax transpilation
 

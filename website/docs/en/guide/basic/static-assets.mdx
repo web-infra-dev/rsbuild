@@ -92,7 +92,7 @@ Importing with [alias](/guide/advanced/alias) is also supported:
 }
 ```
 
-If you want to reference static assets in absolute paths in CSS files:
+If you want to reference static assets with absolute paths in CSS files:
 
 ```css
 @font-face {
@@ -101,7 +101,7 @@ If you want to reference static assets in absolute paths in CSS files:
 }
 ```
 
-By default, the built-in `css-loader` in Rsbuild will resolve absolute paths in `url()` and look for the specified modules. If you want to skip resolving absolute paths, you can configure [`tools.cssLoader`](/config/tools/css-loader#toolscssloader) to filter out the specified paths. The filtered paths are left as they are in the code.
+By default, the built-in `css-loader` in Rsbuild will resolve absolute paths in `url()` and look for the specified modules. If you want to skip resolving absolute paths, you can configure [`tools.cssLoader`](/config/tools/css-loader#toolscssloader) to filter out the specified paths. The filtered paths will be left as-is in the code.
 
 ```ts
 export default {

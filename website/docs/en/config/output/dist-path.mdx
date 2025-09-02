@@ -40,7 +40,7 @@ const defaultDistPath = {
 };
 ```
 
-Configure the directory for output files. Rsbuild emits files to the specified subdirectory according to file type.
+Configure the directory for output files. Rsbuild outputs files to the specified subdirectory according to file type.
 
 > See [Output files](/guide/basic/output-files) for more information.
 
@@ -74,7 +74,7 @@ Other directories can only be specified as relative paths and will be output rel
 
 The JavaScript files will be output to the `distPath.root` + `distPath.js` directory, which is `dist/static/js`.
 
-To output JavaScript files to the `build/resource/js` directory, add the following config:
+To output JavaScript files to the `build/resource/js` directory, add the following configuration:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -87,7 +87,7 @@ export default {
 };
 ```
 
-The above config will generate the following directory structure:
+The above configuration will generate the following directory structure:
 
 ```bash
 build
