@@ -3,10 +3,10 @@
 - **Type:** `ChunkSplit`
 - **Default:** `{ strategy: 'split-by-experience' }`
 
-`performance.chunkSplit` is used to configure the chunk splitting strategy. The type of `ChunkSplit` is as follows:
+`performance.chunkSplit` configures the chunk splitting strategy. The type definition for `ChunkSplit`:
 
 ::: tip
-Please refer to the [Code Splitting](/guide/optimization/code-splitting) guide for detailed usage.
+See the [Code Splitting](/guide/optimization/code-splitting) guide for detailed usage.
 :::
 
 ## chunkSplit.strategy
@@ -22,7 +22,7 @@ Rsbuild supports the following chunk splitting strategies:
 
 ## Type definition
 
-The type of `performance.chunkSplit` is as follows:
+The complete type definition for `performance.chunkSplit`:
 
 ```ts
 type ForceSplitting = RegExp[] | Record<string, RegExp>;
