@@ -1,10 +1,10 @@
-import { build } from '@e2e/helper';
+import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('should compile optional chaining and nullish coalescing correctly', async ({
+test('should compile optional chaining and nullish coalescing in development mode', async ({
   page,
 }) => {
-  await build({
+  const rsbuild = await dev({
     cwd: __dirname,
     page,
   });
@@ -15,4 +15,24 @@ test('should compile optional chaining and nullish coalescing correctly', async 
   expect(await page.evaluate(() => window.nullishCoalescingTest)).toBe(
     'No email, fallback',
   );
+
+  await rsbuild.close();
+});
+
+test('should compile optional chaining and nullish coalescing in production mode', async ({
+  page,
+}) => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    page,
+  });
+
+  expect(await page.evaluate(() => window.optionalChainingTest)).toBe(
+    'john@example.com',
+  );
+  expect(await page.evaluate(() => window.nullishCoalescingTest)).toBe(
+    'No email, fallback',
+  );
+
+  await rsbuild.close();
 });

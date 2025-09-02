@@ -11,7 +11,9 @@ const nullUser: typeof user | null = null;
 
 // Basic tests
 const email = user.profile?.email ?? 'No email';
+// @ts-expect-error
 const nullEmail = nullUser?.profile?.email ?? 'No email';
+// @ts-expect-error
 const nullValue = null ?? 'fallback';
 
 // Set results on window for testing
