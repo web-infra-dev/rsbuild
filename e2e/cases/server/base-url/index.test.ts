@@ -7,7 +7,6 @@ test('server.base when dev', async ({ page }) => {
     page,
     rsbuildConfig: {
       server: {
-        printUrls: true,
         base: '/base',
       },
     },
@@ -77,7 +76,6 @@ test('server.base when build & preview', async ({ page }) => {
     page,
     rsbuildConfig: {
       server: {
-        printUrls: true,
         base: '/base',
       },
     },

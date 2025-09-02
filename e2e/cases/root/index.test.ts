@@ -11,8 +11,8 @@ test('should allow to set relative root path', async () => {
     },
   });
 
-  const index = await rsbuild.getIndexFile();
-  expect(index.content).toBeTruthy();
+  const index = await rsbuild.getIndexBundle();
+  expect(index).toBeTruthy();
   expect(rsbuild.distPath).toContain('test');
 });
 
@@ -24,8 +24,8 @@ test('should allow to set absolute root path', async () => {
     },
   });
 
-  const index = await rsbuild.getIndexFile();
-  expect(index.content).toBeTruthy();
+  const index = await rsbuild.getIndexBundle();
+  expect(index).toBeTruthy();
   expect(rsbuild.distPath).toContain('test');
 });
 

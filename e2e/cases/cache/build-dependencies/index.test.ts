@@ -40,14 +40,10 @@ test('`buildCache.buildDependencies` should work as expected', async () => {
   // first build without cache
   let rsbuild = await build(getBuildConfig(''));
 
-  expect(
-    (await rsbuild.getIndexFile()).content.includes('222222'),
-  ).toBeTruthy();
+  expect((await rsbuild.getIndexBundle()).includes('222222')).toBeTruthy();
 
   rsbuild = await build(getBuildConfig('foo'));
 
   // extension '.test.js' should work
-  expect(
-    (await rsbuild.getIndexFile()).content.includes('111111'),
-  ).toBeTruthy();
+  expect((await rsbuild.getIndexBundle()).includes('111111')).toBeTruthy();
 });

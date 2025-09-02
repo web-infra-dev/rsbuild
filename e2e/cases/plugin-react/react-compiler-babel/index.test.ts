@@ -31,8 +31,8 @@ rspackOnlyTest(
     await button.click();
     await expect(button).toHaveText('count: 1');
 
-    const index = await rsbuild.getIndexFile();
-    expect(index.content).toContain('memo_cache_sentinel');
+    const index = await rsbuild.getIndexBundle();
+    expect(index).toContain('memo_cache_sentinel');
 
     await rsbuild.close();
   },

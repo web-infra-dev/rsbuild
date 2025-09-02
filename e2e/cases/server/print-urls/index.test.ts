@@ -3,16 +3,9 @@ import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
 
-test('should print server urls correctly when printUrls is true', async ({
-  page,
-}) => {
+test('should print server urls correctly by default', async ({ page }) => {
   const rsbuild = await dev({
     cwd,
-    rsbuildConfig: {
-      server: {
-        printUrls: true,
-      },
-    },
   });
 
   await page.goto(`http://localhost:${rsbuild.port}`);
@@ -39,9 +32,6 @@ test('should print different environment server urls correctly', async ({
   const rsbuild = await dev({
     cwd,
     rsbuildConfig: {
-      server: {
-        printUrls: true,
-      },
       environments: {
         web: {
           output: {
@@ -178,7 +168,6 @@ test('allow only listen to localhost for dev', async ({ page }) => {
     rsbuildConfig: {
       server: {
         host: 'localhost',
-        printUrls: true,
       },
     },
   });
@@ -205,7 +194,6 @@ test('allow only listen to localhost for prod preview', async ({ page }) => {
     rsbuildConfig: {
       server: {
         host: 'localhost',
-        printUrls: true,
       },
     },
   });

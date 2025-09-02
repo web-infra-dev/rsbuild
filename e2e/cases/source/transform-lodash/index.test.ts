@@ -21,7 +21,8 @@ test('should support using transformImport to reduce lodash bundle size', async 
     },
   });
 
-  const { size, content } = await rsbuild.getIndexFile();
+  const content = await rsbuild.getIndexBundle();
+  const size = content.length / 1024;
 
   expect(content.includes('debounce')).toBeFalsy();
   expect(size < 10).toBeTruthy();

@@ -11,7 +11,7 @@ function extractFileSizeLogs(logs: string[]) {
   for (const log of logs) {
     const trimmed = log.trim();
     const isTableHeader = trimmed.startsWith('File (');
-    const isTotalSize = trimmed.startsWith('Total size');
+    const isTotalSize = trimmed.startsWith('Total');
 
     if (isTableHeader || isTotalSize) {
       isFileSizeLog = true;
@@ -37,14 +37,9 @@ function extractFileSizeLogs(logs: string[]) {
 }
 
 test.describe('should print file size correctly', async () => {
-  test('printFileSize: true should work', async () => {
+  test('should print file size after building by default', async () => {
     const rsbuild = await build({
       cwd,
-      rsbuildConfig: {
-        performance: {
-          printFileSize: true,
-        },
-      },
     });
 
     expect(extractFileSizeLogs(rsbuild.logs)).toEqual(`
@@ -65,9 +60,6 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
       rsbuildConfig: {
         output: {
           filenameHash: false,
-        },
-        performance: {
-          printFileSize: true,
         },
         environments: {
           web: {
@@ -163,9 +155,6 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB`);
     const rsbuild = await build({
       cwd,
       rsbuildConfig: {
-        performance: {
-          printFileSize: true,
-        },
         output: {
           distPath: {
             root: '../test-temp-folder/dist',
@@ -278,11 +267,6 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
   test('should not calculate gzip size if the asset is not compressible', async () => {
     const rsbuild = await build({
       cwd,
-      rsbuildConfig: {
-        performance: {
-          printFileSize: true,
-        },
-      },
     });
 
     expect(extractFileSizeLogs(rsbuild.logs)).toEqual(`
