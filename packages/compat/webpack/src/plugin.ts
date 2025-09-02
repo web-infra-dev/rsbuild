@@ -80,14 +80,14 @@ export const pluginAdaptor = (
       }
 
       // enable progress bar for webpack by default
-      const progress = config.dev.progressBar ?? true;
-      if (progress) {
+      const { progressBar } = config.dev;
+      if (progressBar) {
         const { ProgressPlugin } = await import('./progress/ProgressPlugin.js');
         chain.plugin(CHAIN_ID.PLUGIN.PROGRESS).use(ProgressPlugin, [
           {
             id: environment.name,
             prettyTime: helpers.prettyTime,
-            ...(progress === true ? {} : progress),
+            ...(progressBar === true ? {} : progressBar),
           },
         ]);
       }
