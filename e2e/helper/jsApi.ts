@@ -250,3 +250,5 @@ export async function build({
     instance: rsbuild,
   };
 }
+
+export type BuildResult = Awaited<ReturnType<typeof build>>;
