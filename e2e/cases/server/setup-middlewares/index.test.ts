@@ -31,11 +31,6 @@ test('should apply custom middleware via `setupMiddlewares`', async ({
 test('should apply to trigger page reload via the `static-changed` type of sockWrite', async ({
   page,
 }) => {
-  // HMR cases will fail on Windows
-  if (process.platform === 'win32') {
-    test.skip();
-  }
-
   let count = 0;
   let reloadPage: undefined | (() => void);
 

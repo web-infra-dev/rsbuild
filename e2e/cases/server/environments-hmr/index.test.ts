@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
 import { dev, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const cwd = __dirname;
@@ -9,11 +9,6 @@ const cwd = __dirname;
 rspackOnlyTest(
   'Multiple environments HMR should work correctly',
   async ({ page, context }) => {
-    // HMR cases will fail on Windows
-    if (process.platform === 'win32') {
-      test.skip();
-    }
-
     await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
       recursive: true,
     });

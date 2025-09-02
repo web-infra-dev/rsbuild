@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
 import { build, dev, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect } from '@playwright/test';
 
 const fixtures = __dirname;
 
@@ -47,11 +47,6 @@ rspackOnlyTest(
 rspackOnlyTest(
   'HMR should work well when `injectStyles` is enabled',
   async ({ page }) => {
-    // HMR cases will fail on Windows
-    if (process.platform === 'win32') {
-      test.skip();
-    }
-
     await fs.promises.cp(
       join(fixtures, 'src'),
       join(fixtures, 'test-temp-src'),

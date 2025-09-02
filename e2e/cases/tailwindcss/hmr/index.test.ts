@@ -1,7 +1,7 @@
 import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { dev, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect } from '@playwright/test';
 
 const getContent = (
   classNames: string,
@@ -9,11 +9,6 @@ const getContent = (
 `;
 
 rspackOnlyTest('should support tailwindcss HMR', async ({ page }) => {
-  // HMR cases will fail on Windows
-  if (process.platform === 'win32') {
-    test.skip();
-  }
-
   const tempFile = join(__dirname, 'src/test-temp-file.js');
 
   writeFileSync(tempFile, getContent('text-black'));
