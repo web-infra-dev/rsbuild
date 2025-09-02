@@ -93,6 +93,44 @@ export default {
 };
 ```
 
+### Example
+
+Suppose you have the following CSS file:
+
+```css title="src/style.module.css"
+.dash-class {
+  color: blue;
+}
+.camelClass {
+  color: red;
+}
+.underscore_class {
+  color: green;
+}
+```
+
+Different `exportLocalsConvention` configurations will produce different export results:
+
+```js title="src/index.js"
+import styles from './style.module.css';
+
+console.log(styles);
+// camelCase (default)
+// { 'dash-class': '...', 'dashClass': '...', 'camelClass': '...', 'underscore_class': '...', 'underscoreClass': '...' }
+
+// camelCaseOnly
+// { 'dashClass': '...', 'camelClass': '...', 'underscoreClass': '...' }
+
+// dashes
+// { 'dash-class': '...', 'dashClass': '...', 'camelClass': '...', 'underscore_class': '...' }
+
+// dashesOnly
+// { 'dashClass': '...', 'camelClass': '...', 'underscore_class': '...' }
+
+// asIs
+// { 'dash-class': '...', 'camelClass': '...', 'underscore_class': '...' }
+```
+
 ## cssModules.exportGlobals
 
 - **Type:** `boolean`
