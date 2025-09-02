@@ -1,7 +1,7 @@
 import { promises as fs } from 'node:fs';
 import { join } from 'node:path';
 import { dev, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect } from '@playwright/test';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import fse from 'fs-extra';
 
@@ -9,10 +9,6 @@ import fse from 'fs-extra';
 rspackOnlyTest(
   'should not re-compile templates when the template is not changed',
   async ({ page }) => {
-    if (process.platform === 'win32') {
-      test.skip();
-    }
-
     let count = 0;
 
     const targetDir = join(__dirname, 'test-temp-src');
