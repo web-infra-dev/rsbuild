@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
 import { isDeno } from '../constants';
 import { normalizePublicDirs } from '../defaultConfig';
-import { dedupeNestedPaths } from '../helpers';
+import { color, dedupeNestedPaths } from '../helpers';
 import { open } from '../server/open';
 import type { OnAfterStartDevServerFn, RsbuildPlugin } from '../types';
 
@@ -79,7 +79,7 @@ export const pluginServer = (): RsbuildPlugin => ({
           );
         } catch (err) {
           if (err instanceof Error) {
-            err.message = `Failed to copy public directory '${normalizedPath}' to output directory:\n${err.message}`;
+            err.message = `Failed to copy public directory '${color.yellow(normalizedPath)}' to output directory. To disable public directory copying, set \`${color.cyan('server.publicDir: false')}\` in your config. \n${err.message}`;
           }
 
           throw err;
