@@ -28,7 +28,7 @@ Source map is an information file that stores the source code mapping relationsh
 
 ## Default behavior
 
-By default, the source map generation rules for Rsbuild are as follows:
+By default, Rsbuild generates source maps using these rules:
 
 - In development mode, source maps for JS files are generated for development debugging, while source maps for CSS files are not generated.
 - In production mode, no source maps for JS and CSS files are generated to improve build performance.
@@ -65,7 +65,7 @@ export default {
 
 The source map for JS files is controlled by `sourceMap.js` and can be configured by passing in all the source map formats supported by Rspack's [devtool](https://rspack.rs/config/devtool) option. Setting it to `false` will disable the source map.
 
-For example, if you need to generate high-quality source maps in all environments, you can set it as follows:
+For example, to generate high-quality source maps in all environments:
 
 ```js
 export default {
@@ -102,7 +102,7 @@ Do not deploy source maps (`.map` files) to the public web server or CDN when us
 
 The source map for CSS files is controlled by `sourceMap.css`. Setting it to `true` will enable the source map, while setting it to `false` will disable it.
 
-For example, if you need to generate a source map for CSS files, you can set it as follows:
+To generate a source map for CSS files:
 
 ```js
 export default {
