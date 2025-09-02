@@ -31,6 +31,6 @@ test('should dedupe specified packages as expected', async () => {
     cwd: __dirname,
   });
 
-  const { content } = await rsbuild.getIndexFile();
+  const content = await rsbuild.getIndexBundle();
   expect(content).not.toContain(flag);
 });

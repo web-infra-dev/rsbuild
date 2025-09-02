@@ -6,6 +6,6 @@ rspackOnlyTest('should support import attributes syntax', async () => {
     cwd: __dirname,
   });
 
-  const indexJs = await rsbuild.getIndexFile();
-  expect(indexJs.content).toContain('with import attributes');
+  const indexJs = await rsbuild.getIndexBundle();
+  expect(indexJs).toContain('with import attributes');
 });

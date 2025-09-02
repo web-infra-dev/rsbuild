@@ -53,9 +53,6 @@ const updateConfigForTest = async (
   });
 
   const baseConfig: RsbuildConfig = {
-    dev: {
-      progressBar: false,
-    },
     resolve: {
       alias: {
         '@assets': join(__dirname, '../assets'),
@@ -64,11 +61,9 @@ const updateConfigForTest = async (
     server: {
       // make port random to avoid conflict
       port: await getRandomPort(),
-      printUrls: false,
     },
     performance: {
       buildCache: false,
-      printFileSize: false,
     },
   };
 
@@ -167,6 +162,7 @@ export async function build({
   catchBuildError?: boolean;
   /**
    * Whether to run the server.
+   * @default false
    */
   runServer?: boolean;
   /**
@@ -216,7 +212,7 @@ export async function build({
     server = ret.server;
   }
 
-  const getIndexFile = async () => {
+  const getIndexBundle = async () => {
     const files = await getDistFiles(distPath);
     const [name, content] =
       Object.entries(files).find(
@@ -225,10 +221,7 @@ export async function build({
 
     assert(name && content);
 
-    return {
-      content: content,
-      size: content.length / 1024,
-    };
+    return content;
   };
 
   if (page) {
@@ -246,7 +239,7 @@ export async function build({
     },
     buildError,
     getDistFiles: (ignoreMap?: boolean) => getDistFiles(distPath, ignoreMap),
-    getIndexFile,
+    getIndexBundle,
     instance: rsbuild,
   };
 }

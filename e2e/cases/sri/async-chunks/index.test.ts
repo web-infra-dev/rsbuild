@@ -9,7 +9,7 @@ rspackOnlyTest(
       page,
     });
 
-    const { content } = await rsbuild.getIndexFile();
+    const content = await rsbuild.getIndexBundle();
 
     expect(
       content.includes('sriHashes={') && content.includes('"sha384-'),

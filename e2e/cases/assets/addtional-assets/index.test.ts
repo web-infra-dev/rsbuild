@@ -19,8 +19,8 @@ test('should allow to configure additional assets and match by RegExp', async ()
   const files = await rsbuild.getDistFiles();
   const filenames = Object.keys(files);
 
-  const indexJs = await rsbuild.getIndexFile();
-  expect(indexJs.content).toContain('data:application/json5;base64,');
+  const indexJs = await rsbuild.getIndexBundle();
+  expect(indexJs).toContain('data:application/json5;base64,');
 
   expect(
     isIncludeFile(filenames, 'dist/static/assets/test-temp-large.json5'),
@@ -43,8 +43,8 @@ test('should allow to configure additional assets and match by path', async () =
   const files = await rsbuild.getDistFiles();
   const filenames = Object.keys(files);
 
-  const indexJs = await rsbuild.getIndexFile();
-  expect(indexJs.content).toContain('data:application/json5;base64,');
+  const indexJs = await rsbuild.getIndexBundle();
+  expect(indexJs).toContain('data:application/json5;base64,');
 
   expect(
     isIncludeFile(filenames, 'dist/static/assets/test-temp-large.json5'),

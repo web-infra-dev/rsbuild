@@ -16,7 +16,7 @@ test('should define vars in production mode correctly', async ({ page }) => {
     },
   });
 
-  const { content } = await rsbuild.getIndexFile();
+  const content = await rsbuild.getIndexBundle();
 
   // Replaced identifiers
   expect(content).toContain('"[value] import.meta.env.MODE","production"');
@@ -67,7 +67,7 @@ test('should define vars in development mode correctly', async ({ page }) => {
     },
   });
 
-  const { content } = await rsbuild.getIndexFile();
+  const content = await rsbuild.getIndexBundle();
 
   // Replaced identifiers
   expect(content).toContain(`'[value] import.meta.env.MODE', "development"`);
@@ -112,7 +112,7 @@ test('should define vars in none mode correctly', async ({ page }) => {
     },
   });
 
-  const { content } = await rsbuild.getIndexFile();
+  const content = await rsbuild.getIndexBundle();
 
   // Replaced identifiers
   expect(content).toContain(`'[value] import.meta.env.MODE', "none"`);
@@ -167,7 +167,7 @@ rspackOnlyTest('should allow to disable NODE_ENV injection', async () => {
     },
   });
 
-  const { content } = await rsbuild.getIndexFile();
+  const content = await rsbuild.getIndexBundle();
   expect(content).toContain(
     '[value] process.env.NODE_ENV",process.env.NODE_ENV',
   );

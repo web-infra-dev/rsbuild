@@ -8,7 +8,7 @@ rspackOnlyTest(
       cwd: __dirname,
     });
 
-    const indexJs = await rsbuild.getIndexFile();
-    expect(indexJs.content).toContain('with enforce: pre');
+    const indexJs = await rsbuild.getIndexBundle();
+    expect(indexJs).toContain('with enforce: pre');
   },
 );

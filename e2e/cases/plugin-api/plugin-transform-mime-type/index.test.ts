@@ -8,7 +8,7 @@ rspackOnlyTest(
       cwd: __dirname,
     });
 
-    const indexJs = await rsbuild.getIndexFile();
-    expect(indexJs.content).toContain('data-uri-bar');
+    const indexJs = await rsbuild.getIndexBundle();
+    expect(indexJs).toContain('data-uri-bar');
   },
 );
