@@ -11,7 +11,7 @@ function extractFileSizeLogs(logs: string[]) {
   for (const log of logs) {
     const trimmed = log.trim();
     const isTableHeader = trimmed.startsWith('File (');
-    const isTotalSize = trimmed.startsWith('Total:');
+    const isTotalSize = trimmed.startsWith('Total');
 
     if (isTableHeader || isTotalSize) {
       isFileSizeLog = true;
