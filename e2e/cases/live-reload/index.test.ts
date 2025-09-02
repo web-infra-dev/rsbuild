@@ -18,11 +18,6 @@ test.afterEach(() => {
 rspackOnlyTest(
   'should fallback to live-reload when dev.hmr is false',
   async ({ page }) => {
-    // HMR cases will fail on Windows
-    if (process.platform === 'win32') {
-      test.skip();
-    }
-
     const rsbuild = await dev({
       cwd: __dirname,
       page,

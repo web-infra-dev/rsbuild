@@ -4,7 +4,7 @@ import { dev, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 rspackOnlyTest('HMR should work properly', async ({ page }) => {
-  // HMR cases will fail on Windows
+  // Prefresh does not work as expected on Windows
   if (process.platform === 'win32') {
     test.skip();
   }

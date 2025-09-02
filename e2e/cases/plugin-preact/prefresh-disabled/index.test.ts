@@ -1,14 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { dev, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect } from '@playwright/test';
 
 rspackOnlyTest('HMR should work properly', async ({ page }) => {
-  // HMR cases will fail on Windows
-  if (process.platform === 'win32') {
-    test.skip();
-  }
-
   const root = __dirname;
   const compFilePath = path.join(root, 'src/test-temp-B.jsx');
   const compSourceCode = `const B = (props) => {

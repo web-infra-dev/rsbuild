@@ -6,11 +6,6 @@ import { expect, test } from '@playwright/test';
 const cwd = __dirname;
 
 test('should show overlay correctly', async ({ page }) => {
-  // HMR cases will fail on Windows
-  if (process.platform === 'win32') {
-    test.skip();
-  }
-
   await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
     recursive: true,
   });

@@ -8,7 +8,6 @@ const cwd = __dirname;
 rspackOnlyTest(
   'should reload page when HTML template changed',
   async ({ page }) => {
-    // HMR cases will fail on Windows
     if (process.platform === 'win32') {
       test.skip();
     }

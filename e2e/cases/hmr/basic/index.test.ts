@@ -1,16 +1,11 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
 import { dev, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect } from '@playwright/test';
 
 const cwd = __dirname;
 
 rspackOnlyTest('HMR should work by default', async ({ page }) => {
-  // HMR cases will fail on Windows
-  if (process.platform === 'win32') {
-    test.skip();
-  }
-
   await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
     recursive: true,
   });

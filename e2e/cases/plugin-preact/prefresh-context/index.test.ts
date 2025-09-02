@@ -6,7 +6,7 @@ import { expect, test } from '@playwright/test';
 rspackOnlyTest(
   'HMR should work properly with `createContext`',
   async ({ page }) => {
-    // HMR cases will fail on Windows
+    // Prefresh does not work as expected on Windows
     if (process.platform === 'win32') {
       test.skip();
     }
