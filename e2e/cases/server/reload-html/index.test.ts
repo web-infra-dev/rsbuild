@@ -8,6 +8,7 @@ const cwd = __dirname;
 rspackOnlyTest(
   'should reload page when HTML template changed',
   async ({ page }) => {
+    // Failed to run this case on Windows
     if (process.platform === 'win32') {
       test.skip();
     }

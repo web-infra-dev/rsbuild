@@ -9,6 +9,7 @@ import fse from 'fs-extra';
 rspackOnlyTest(
   'should not re-compile templates when the template is not changed',
   async ({ page }) => {
+    // Failed to run this case on Windows
     if (process.platform === 'win32') {
       test.skip();
     }

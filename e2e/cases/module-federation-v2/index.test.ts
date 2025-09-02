@@ -7,7 +7,7 @@ import {
   gotoPage,
   rspackOnlyTest,
 } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect } from '@playwright/test';
 import type { RsbuildConfig } from '@rsbuild/core';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 
@@ -29,11 +29,6 @@ export default Button;`,
 rspackOnlyTest(
   'should run module federation in development mode',
   async ({ page }) => {
-    // this case often timeout on Windows
-    if (process.platform === 'win32') {
-      test.skip();
-    }
-
     writeButtonCode();
 
     const remotePort = await getRandomPort();
