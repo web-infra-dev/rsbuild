@@ -79,7 +79,7 @@ export const pluginServer = (): RsbuildPlugin => ({
           );
         } catch (err) {
           if (err instanceof Error) {
-            err.message = `Failed to copy public directory '${color.yellow(normalizedPath)}' to output directory. To disable public directory copying, set \`${color.cyan('server.publicDir: false')}\` in your config. \n${err.message}`;
+            err.message = `Failed to copy public directory '${color.yellow(normalizedPath)}' to output directory. To disable public directory copying, set \`${color.cyan('server.publicDir: false')}\` in your config.\n${err.message}`;
           }
 
           throw err;
