@@ -34,7 +34,7 @@ rspackOnlyTest('should print changed files in logs', async ({ page }) => {
       .replace('Hello Rsbuild!', 'Hello Rsbuild2!'),
   );
 
-  await rsbuild.expectLog('building test-temp-src/App.tsx');
+  await rsbuild.expectLog(/building test-temp-src[\\/]App\.tsx/);
   await rsbuild.close();
 });
 
@@ -62,6 +62,6 @@ rspackOnlyTest('should print removed files in logs', async ({ page }) => {
 
   await fs.promises.unlink(appPath);
 
-  await rsbuild.expectLog('building removed test-temp-src/App.tsx');
+  await rsbuild.expectLog(/building removed test-temp-src[\\/]App\.tsx/);
   await rsbuild.close();
 });

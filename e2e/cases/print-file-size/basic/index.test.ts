@@ -19,7 +19,7 @@ function extractFileSizeLogs(logs: string[]) {
     if (isFileSizeLog) {
       // replace numbers and contenthash with placeholder
       // remove trailing spaces
-      // replace Windows path seq with slash
+      // replace Windows path sep with slash
       result.push(
         log
           .replace(/\.[a-z0-9]{8}\./g, '.[[hash]].')
