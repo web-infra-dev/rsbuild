@@ -93,6 +93,44 @@ export default {
 };
 ```
 
+### 示例
+
+假设你有以下 CSS 文件：
+
+```css title="src/style.css"
+.dash-class {
+  color: blue;
+}
+.camelClass {
+  color: red;
+}
+.underscore_class {
+  color: green;
+}
+```
+
+不同的 `exportLocalsConvention` 配置会产生不同的导出结果：
+
+```js title="src/index.js"
+import styles from './style.module.css';
+
+console.log(styles);
+// camelCase（默认）
+// { 'dash-class': '...', 'dashClass': '...', 'camelClass': '...', 'underscore_class': '...', 'underscoreClass': '...' }
+
+// camelCaseOnly
+// { 'dashClass': '...', 'camelClass': '...', 'underscoreClass': '...' }
+
+// dashes
+// { 'dash-class': '...', 'dashClass': '...', 'camelClass': '...', 'underscore_class': '...' }
+
+// dashesOnly
+// { 'dashClass': '...', 'camelClass': '...', 'underscore_class': '...' }
+
+// asIs
+// { 'dash-class': '...', 'camelClass': '...', 'underscore_class': '...' }
+```
+
 ## cssModules.exportGlobals
 
 - **类型：** `boolean`
