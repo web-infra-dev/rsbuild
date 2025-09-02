@@ -1,13 +1,17 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
 import { dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
 
 rspackOnlyTest(
   'should reload page when HTML template changed',
   async ({ page }) => {
+    if (process.platform === 'win32') {
+      test.skip();
+    }
+
     await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
       recursive: true,
     });
