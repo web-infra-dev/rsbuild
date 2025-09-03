@@ -172,10 +172,10 @@ export const expectPoll = (fn: () => boolean) => {
  * Read the contents of a dist directory and return a map of
  * file paths to their contents.
  */
-export const getDistFiles = async (distPath: string, ignoreMap = true) => {
+export const getDistFiles = async (distPath: string, sourceMaps = false) => {
   return readDirContents(distPath, {
     absolute: true,
-    ignore: ignoreMap ? [join(distPath, '/**/*.map')] : [],
+    ignore: !sourceMaps ? [join(distPath, '/**/*.map')] : [],
   });
 };
 

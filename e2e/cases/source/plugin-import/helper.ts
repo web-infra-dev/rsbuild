@@ -89,7 +89,7 @@ export function shareTest(
       ...otherConfigs,
       rsbuildConfig: { ...config },
     });
-    const files = await rsbuild.getDistFiles(false);
+    const files = await rsbuild.getDistFiles({ sourceMaps: true });
     expect(files[findEntry(files)]).toContain('transformImport test succeed');
   });
 }

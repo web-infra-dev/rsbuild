@@ -133,8 +133,8 @@ export async function dev({
     ...result,
     ...logHelper,
     instance: rsbuild,
-    getDistFiles: (ignoreMap?: boolean) =>
-      getDistFiles(rsbuild.context.distPath, ignoreMap),
+    getDistFiles: ({ sourceMaps }: { sourceMaps?: boolean } = {}) =>
+      getDistFiles(rsbuild.context.distPath, sourceMaps),
     close: async () => {
       await result.server.close();
       logHelper.restore();
@@ -238,7 +238,8 @@ export async function build({
       logHelper.restore();
     },
     buildError,
-    getDistFiles: (ignoreMap?: boolean) => getDistFiles(distPath, ignoreMap),
+    getDistFiles: ({ sourceMaps }: { sourceMaps?: boolean } = {}) =>
+      getDistFiles(rsbuild.context.distPath, sourceMaps),
     getIndexBundle,
     instance: rsbuild,
   };
