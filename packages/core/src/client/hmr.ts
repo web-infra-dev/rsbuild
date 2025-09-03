@@ -205,7 +205,9 @@ function onClose() {
     return;
   }
 
-  console.info('[rsbuild] WebSocket connection lost. Reconnecting...');
+  if (reconnectCount === 0) {
+    console.info('[rsbuild] WebSocket connection lost. Reconnecting...');
+  }
   removeListeners();
   socket = null;
   reconnectCount++;
@@ -225,7 +227,10 @@ function onError() {
 
 // Establishing a WebSocket connection with the server.
 function connect(fallback = false) {
-  console.info('[rsbuild] WebSocket connecting...');
+  if (reconnectCount === 0) {
+    console.info('[rsbuild] WebSocket connecting...');
+  }
+
   const socketUrl = formatURL(fallback);
   socket = new WebSocket(socketUrl);
   socket.addEventListener('open', onOpen);
