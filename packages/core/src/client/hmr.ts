@@ -154,6 +154,9 @@ function onOpen() {
   // Notify users that the WebSocket has successfully connected.
   console.info('[rsbuild] WebSocket connected.');
 
+  // Reset reconnect count
+  reconnectCount = 0;
+
   // To prevent WebSocket timeouts caused by proxies (e.g., nginx, docker),
   // send a periodic ping message to keep the connection alive.
   pingIntervalId = setInterval(() => {
