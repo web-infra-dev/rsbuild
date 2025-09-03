@@ -7,17 +7,17 @@ export type TransformLoaderOptions = {
 };
 
 const mergeSourceMap = async (
-  inputSourceMap?: sources.RawSourceMap | string,
-  additionalSourceMap?: sources.RawSourceMap | string | null,
+  originalSourceMap?: sources.RawSourceMap | string,
+  generatedSourceMap?: sources.RawSourceMap | string | null,
 ): Promise<sources.RawSourceMap | string | undefined> => {
-  if (!inputSourceMap || !additionalSourceMap) {
-    return additionalSourceMap ?? inputSourceMap;
+  if (!originalSourceMap || !generatedSourceMap) {
+    return generatedSourceMap ?? originalSourceMap;
   }
 
   const { default: remapping } = await import(
     '../../compiled/@jridgewell/remapping/index.js'
   );
-  return remapping([additionalSourceMap, inputSourceMap], () => null);
+  return remapping([generatedSourceMap, originalSourceMap], () => null);
 };
 
 const transformLoader: LoaderDefinition<TransformLoaderOptions> =

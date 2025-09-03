@@ -11,41 +11,41 @@ rspackOnlyTest(
     });
 
     const files = await rsbuild.getDistFiles(false);
-    const srcIndexTs = readFileSync(
+    const sourceCode = readFileSync(
       path.join(__dirname, 'src/index.ts'),
       'utf-8',
     );
-    const distIndexJs =
+    const outputCode =
       files[Object.keys(files).find((file) => file.endsWith('index.js'))!];
-    const distIndexJsMap =
+    const sourceMap =
       files[Object.keys(files).find((file) => file.endsWith('index.js.map'))!];
 
-    const index1 = distIndexJs.indexOf('"args"');
-    const index2 = distIndexJs.indexOf('"hello"');
+    const argsPosition = outputCode.indexOf('"args"');
+    const helloPosition = outputCode.indexOf('"hello"');
 
-    const originalPositions = await validateSourceMap(distIndexJsMap, [
+    const originalPositions = await validateSourceMap(sourceMap, [
       {
         line: 1,
-        column: index1,
+        column: argsPosition,
       },
       {
         line: 1,
-        column: index2,
+        column: helloPosition,
       },
     ]);
 
-    const srcLines = srcIndexTs.split('\n');
+    const sourceLines = sourceCode.split('\n');
     expect(originalPositions).toEqual([
       {
         source: 'webpack:///src/index.ts',
         line: 2,
-        column: srcLines[1].indexOf(`'args'`),
+        column: sourceLines[1].indexOf(`'args'`),
         name: null,
       },
       {
         source: 'webpack:///src/index.ts',
         line: 5,
-        column: srcLines[4].indexOf(`'hello'`),
+        column: sourceLines[4].indexOf(`'hello'`),
         name: null,
       },
     ]);
