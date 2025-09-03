@@ -59,6 +59,7 @@
     "jiti": "^2.5.1"
   },
   "devDependencies": {
+    "@jridgewell/remapping": "^2.3.5",
     "@rslib/core": "0.12.4",
     "@types/connect": "3.4.38",
     "@types/cors": "^2.8.19",
