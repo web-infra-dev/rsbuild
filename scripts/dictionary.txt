@@ -48,6 +48,7 @@ iife
 imagex
 jfif
 jiti
+jridgewell
 jscpuprofile
 jsesc
 kaios

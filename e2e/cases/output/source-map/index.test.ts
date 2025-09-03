@@ -1,31 +1,10 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { build, dev } from '@e2e/helper';
+import { build, dev, validateSourceMap } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import type { Rspack } from '@rsbuild/core';
-import sourceMap from 'source-map';
 
 const fixtures = __dirname;
-
-async function validateSourceMap(
-  rawSourceMap: string,
-  generatedPositions: {
-    line: number;
-    column: number;
-  }[],
-) {
-  const consumer = await new sourceMap.SourceMapConsumer(rawSourceMap);
-
-  const originalPositions = generatedPositions.map((generatedPosition) =>
-    consumer.originalPositionFor({
-      line: generatedPosition.line,
-      column: generatedPosition.column,
-    }),
-  );
-
-  consumer.destroy();
-  return originalPositions;
-}
 
 async function testSourceMapType(devtool: Rspack.Configuration['devtool']) {
   const rsbuild = await build({

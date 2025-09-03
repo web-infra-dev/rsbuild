@@ -10,6 +10,7 @@ import glob, {
   type Options as GlobOptions,
 } from 'fast-glob';
 import type { Page } from 'playwright';
+import sourceMap from 'source-map';
 
 /**
  * Build an URL based on the entry name and port
@@ -257,3 +258,23 @@ export const recordPluginHooks = () => {
 
   return { plugin, hooks };
 };
+
+export async function validateSourceMap(
+  rawSourceMap: string,
+  generatedPositions: {
+    line: number;
+    column: number;
+  }[],
+) {
+  const consumer = await new sourceMap.SourceMapConsumer(rawSourceMap);
+
+  const originalPositions = generatedPositions.map((generatedPosition) =>
+    consumer.originalPositionFor({
+      line: generatedPosition.line,
+      column: generatedPosition.column,
+    }),
+  );
+
+  consumer.destroy();
+  return originalPositions;
+}

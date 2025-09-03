@@ -54,6 +54,7 @@
     "fs-extra": "^11.3.1",
     "playwright": "1.55.0",
     "polka": "^0.5.2",
+    "source-map": "^0.7.6",
     "tailwindcss": "^4.1.12",
     "typescript": "^5.9.2"
   }

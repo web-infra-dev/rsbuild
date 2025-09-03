@@ -203,6 +203,9 @@ importers:
       polka:
         specifier: ^0.5.2
         version: 0.5.2
+      source-map:
+        specifier: ^0.7.6
+        version: 0.7.6
       tailwindcss:
         specifier: ^4.1.12
         version: 4.1.12
@@ -230,11 +233,7 @@ importers:
         specifier: ^5.1.0
         version: 5.1.0(webpack@5.101.3)
 
-  e2e/cases/output/source-map:
-    dependencies:
-      source-map:
-        specifier: 0.7.6
-        version: 0.7.6
+  e2e/cases/output/source-map: {}
 
   e2e/cases/plugin-react/react-compiler-babel:
     dependencies:
@@ -619,6 +618,9 @@ importers:
         specifier: ^2.5.1
         version: 2.5.1
     devDependencies:
+      '@jridgewell/remapping':
+        specifier: ^2.3.5
+        version: 2.3.5
       '@rslib/core':
         specifier: 0.12.4
         version: 0.12.4(typescript@5.9.2)
@@ -695,8 +697,8 @@ importers:
         specifier: 8.1.1
         version: 8.1.1(patch_hash=7f10237e1665e9913e0f735a822545af08363f5cc67eacc2c37408aee7553d47)(@rspack/core@1.5.2(@swc/helpers@0.5.17))(postcss@8.5.6)(typescript@5.9.2)(webpack@5.101.3)
       prebundle:
-        specifier: 1.4.1
-        version: 1.4.1(typescript@5.9.2)
+        specifier: 1.4.2
+        version: 1.4.2(typescript@5.9.2)
       reduce-configs:
         specifier: ^1.1.1
         version: 1.1.1
@@ -5648,6 +5650,10 @@ packages:
     resolution: {integrity: sha512-3QFA5GL9MUeIRaScjLe7xUYEmkztrZhXIkBBOOvOPEEmnOQkcqKyApiamiCXgaLXTtHwiK8V98T7//aylyJIqw==}
     hasBin: true
 
+  prebundle@1.4.2:
+    resolution: {integrity: sha512-XurCQRE/Irns5mqH7V7VC5C7auIfz431DtBdOhfReb+ypsBdrLO6V5pVjwgrzVJwOx3jbjTvPXUHiw9LqalZPw==}
+    hasBin: true
+
   prettier@3.6.2:
     resolution: {integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==}
     engines: {node: '>=14'}
@@ -7374,7 +7380,7 @@ snapshots:
 
   '@jridgewell/gen-mapping@0.3.12':
     dependencies:
-      '@jridgewell/sourcemap-codec': 1.5.0
+      '@jridgewell/sourcemap-codec': 1.5.5
       '@jridgewell/trace-mapping': 0.3.29
 
   '@jridgewell/remapping@2.3.5':
@@ -7396,7 +7402,7 @@ snapshots:
   '@jridgewell/trace-mapping@0.3.29':
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
-      '@jridgewell/sourcemap-codec': 1.5.0
+      '@jridgewell/sourcemap-codec': 1.5.5
 
   '@jsonjoy.com/base64@1.1.2(tslib@2.8.1)':
     dependencies:
@@ -11843,6 +11849,16 @@ snapshots:
   preact@10.27.1: {}
 
   prebundle@1.4.1(typescript@5.9.2):
+    dependencies:
+      '@vercel/ncc': 0.38.3
+      prettier: 3.6.2
+      rollup: 4.46.2
+      rollup-plugin-dts: 6.2.1(rollup@4.46.2)(typescript@5.9.2)
+      terser: 5.43.1
+    transitivePeerDependencies:
+      - typescript
+
+  prebundle@1.4.2(typescript@5.9.2):
     dependencies:
       '@vercel/ncc': 0.38.3
       prettier: 3.6.2

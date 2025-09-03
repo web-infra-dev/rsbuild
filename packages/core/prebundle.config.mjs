@@ -171,5 +171,9 @@ export type SourceMapGenerator = unknown;
       },
       ignoreDts: true,
     },
+    {
+      name: '@jridgewell/remapping',
+      ignoreDts: true,
+    },
   ],
 };
