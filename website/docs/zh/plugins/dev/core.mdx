@@ -511,9 +511,9 @@ api.transform(
 
 注意，对于一些复杂的代码转换场景，`api.transform` 可能无法满足，此时你可以使用 Rspack loader 进行实现。
 
-### Source map
+### Source maps
 
-你可以在 `transform` 函数中返回一个 source map，Rsbuild 会自动将返回的 source map 与其他 Rspack loader 或 `transform` hook 生成的 source map 合并，使最终的 source map 能够正确映射到原始源代码。
+你可以在 `transform` 函数中返回一个 source map，Rsbuild 会自动将返回的 source map 与其他 Rspack loader 或 `transform` hook 生成的 source maps 合并，使最终的 source map 能够正确映射到原始源代码。
 
 ```js
 api.transform({ test: /\.js$/ }, ({ code }) => {
