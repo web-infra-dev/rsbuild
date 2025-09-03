@@ -259,7 +259,7 @@ export const recordPluginHooks = () => {
   return { plugin, hooks };
 };
 
-export async function validateSourceMap(
+export async function mapSourceMapPositions(
   rawSourceMap: string,
   generatedPositions: {
     line: number;

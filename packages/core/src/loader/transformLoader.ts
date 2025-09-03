@@ -65,7 +65,10 @@ const transformLoader: LoaderDefinition<TransformLoaderOptions> =
         return;
       }
 
-      const mergedMap = await mergeSourceMap(map, result.map);
+      const mergedMap = await mergeSourceMap(
+        map as sources.RawSourceMap,
+        result.map,
+      );
       callback(null, result.code, mergedMap);
     } catch (error) {
       if (error instanceof Error) {

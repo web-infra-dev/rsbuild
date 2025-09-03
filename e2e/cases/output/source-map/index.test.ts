@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
-import { build, dev, validateSourceMap } from '@e2e/helper';
+import path, { join } from 'node:path';
+import { build, dev, mapSourceMapPositions } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import type { Rspack } from '@rsbuild/core';
 
@@ -15,24 +15,31 @@ async function testSourceMapType(devtool: Rspack.Configuration['devtool']) {
           js: devtool,
         },
         legalComments: 'none',
+        filenameHash: false,
       },
     },
   });
 
   const files = await rsbuild.getDistFiles(false);
-  const [, jsMapContent] = Object.entries(files).find(
-    ([name]) => name.includes('static/js/') && name.endsWith('.js.map'),
-  )!;
 
-  const [, jsContent] = Object.entries(files).find(
-    ([name]) => name.includes('static/js/') && name.endsWith('.js'),
-  )!;
+  const indexSourceCode = readFileSync(
+    path.join(__dirname, 'src/index.js'),
+    'utf-8',
+  );
+  const appSourceCode = readFileSync(
+    path.join(__dirname, 'src/App.jsx'),
+    'utf-8',
+  );
+  const outputCode =
+    files[Object.keys(files).find((file) => file.endsWith('index.js'))!];
+  const sourceMap =
+    files[Object.keys(files).find((file) => file.endsWith('index.js.map'))!];
 
-  const AppContentIndex = jsContent.indexOf('Hello Rsbuild!');
-  const indexContentIndex = jsContent.indexOf('window.aa');
+  const AppContentIndex = outputCode.indexOf('Hello Rsbuild!');
+  const indexContentIndex = outputCode.indexOf('window.test');
 
-  const originalPositions = (
-    await validateSourceMap(jsMapContent, [
+  const positions = (
+    await mapSourceMapPositions(sourceMap, [
       {
         line: 1,
         column: AppContentIndex,
@@ -44,22 +51,23 @@ async function testSourceMapType(devtool: Rspack.Configuration['devtool']) {
     ])
   ).map((o) => ({
     ...o,
-    source: o.source!.split('source-map/')[1] || o.source,
+    source: o.source?.split('source-map/')[1] || o.source,
   }));
 
-  expect(originalPositions[0]).toEqual({
-    source: 'src/App.jsx',
-    line: 2,
-    column: 24,
-    name: null,
-  });
-
-  expect(originalPositions[1]).toEqual({
-    source: 'src/index.js',
-    line: 7,
-    column: 0,
-    name: 'window',
-  });
+  expect(positions).toEqual([
+    {
+      source: 'src/App.jsx',
+      line: 2,
+      column: appSourceCode.split('\n')[1].indexOf('Hello Rsbuild!'),
+      name: null,
+    },
+    {
+      source: 'src/index.js',
+      line: 7,
+      column: indexSourceCode.split('\n')[6].indexOf('window'),
+      name: 'window',
+    },
+  ]);
 }
 
 const productionDevtools: Rspack.Configuration['devtool'][] = [

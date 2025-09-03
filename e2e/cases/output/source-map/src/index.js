@@ -4,7 +4,7 @@ import App from './App';
 
 import './index.css';
 
-window.aa = 2;
+window.test = 2;
 
 const container = document.getElementById('root');
 if (container) {
