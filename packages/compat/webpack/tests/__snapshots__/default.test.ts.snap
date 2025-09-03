@@ -33,6 +33,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "parser": {
       "javascript": {
         "exportsPresence": "error",
+        "inlineConst": true,
         "typeReexportsPresence": "tolerant",
       },
     },
@@ -477,6 +478,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     "parser": {
       "javascript": {
         "exportsPresence": "error",
+        "inlineConst": true,
         "typeReexportsPresence": "tolerant",
       },
     },
@@ -918,6 +920,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "parser": {
       "javascript": {
         "exportsPresence": "error",
+        "inlineConst": true,
         "typeReexportsPresence": "tolerant",
       },
     },
@@ -1290,6 +1293,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       "javascript": {
         "dynamicImportMode": "eager",
         "exportsPresence": "error",
+        "inlineConst": true,
         "typeReexportsPresence": "tolerant",
       },
     },

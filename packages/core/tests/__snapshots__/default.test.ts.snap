@@ -11,6 +11,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "inlineConst": true,
     "inlineEnum": true,
     "lazyBarrel": true,
     "rspackFuture": {
@@ -32,6 +33,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "parser": {
       "javascript": {
         "exportsPresence": "error",
+        "inlineConst": true,
         "typeReexportsPresence": "tolerant",
       },
     },
@@ -525,6 +527,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "inlineConst": true,
     "inlineEnum": true,
     "lazyBarrel": true,
     "rspackFuture": {
@@ -546,6 +549,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "parser": {
       "javascript": {
         "exportsPresence": "error",
+        "inlineConst": true,
         "typeReexportsPresence": "tolerant",
       },
     },
@@ -1067,6 +1071,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "inlineConst": true,
     "inlineEnum": true,
     "lazyBarrel": true,
     "rspackFuture": {
@@ -1084,6 +1089,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "parser": {
       "javascript": {
         "exportsPresence": "error",
+        "inlineConst": true,
         "typeReexportsPresence": "tolerant",
       },
     },
@@ -1500,6 +1506,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "inlineConst": true,
     "inlineEnum": true,
     "lazyBarrel": true,
     "rspackFuture": {
@@ -1521,6 +1528,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
     "parser": {
       "javascript": {
         "exportsPresence": "error",
+        "inlineConst": true,
         "typeReexportsPresence": "tolerant",
       },
     },
