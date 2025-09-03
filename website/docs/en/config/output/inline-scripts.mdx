@@ -67,7 +67,7 @@ Setting `inlineScripts: true` is equivalent to setting [inlineScripts.enable](#e
 
 ### Script tag position
 
-When `output.inlineScripts` is used, it is recommended to set [html.inject](/config/html/inject) to `'body'`.
+When using `output.inlineScripts`, we recommend setting [html.inject](/config/html/inject) to `'body'`.
 
 As the default injection position of the script tag is the `<head>` tag, changing the injection position to the `<body>` tag can ensure that the inlined script can access the DOM elements in `<body>`.
 

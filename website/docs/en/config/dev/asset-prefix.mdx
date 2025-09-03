@@ -7,7 +7,7 @@ Set the URL prefix of static assets in [development mode](/config/mode).
 
 `assetPrefix` will affect the URLs of most of the static assets, including JavaScript files, CSS files, images, videos, etc. If an incorrect value is specified, you'll receive 404 errors while loading these resources.
 
-This config is only used in `development` mode. In `production` mode or `none` mode, use the [output.assetPrefix](/config/output/asset-prefix) to set the URL prefix.
+This config is only used in `development` mode. In `production` mode or `none` mode, use [output.assetPrefix](/config/output/asset-prefix) to configure the URL prefix.
 
 ## Default value
 
@@ -15,7 +15,7 @@ The default value of `dev.assetPrefix` is the same as [server.base](/config/serv
 
 When `server.base` is `/foo`, `index.html` and other static assets can be accessed through `http://localhost:3000/foo/`.
 
-It should be noted that when customizing the `dev.assetPrefix` option, if you want static assets to be normally accessible through the Rsbuild dev server, `dev.assetPrefix` should contain the same URL prefix as `server.base`, such as:
+It should be noted that when customizing the `dev.assetPrefix` option, if you want static assets to be normally accessible through the Rsbuild dev server, `dev.assetPrefix` should contain the same URL prefix as `server.base`. For example:
 
 ```ts
 export default {

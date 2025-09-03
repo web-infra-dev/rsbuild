@@ -6,7 +6,7 @@ If you want to know how to deploy the build outputs of Rsbuild as a static site,
 
 ## Default directory structure
 
-The default output directory structure is shown below. Output files are written to the `dist` directory in the current project.
+The default output directory structure is shown below. Output files are placed in the `dist` directory of the current project.
 
 ```bash
 dist
@@ -25,14 +25,14 @@ dist
 
 The most common output files are HTML, JS, and CSS files:
 
-- HTML files: written to the root of the dist directory by default.
-- JS files: written to the `static/js` directory by default.
-- CSS files: written to the `static/css` directory by default.
+- HTML files: placed in the root of the dist directory by default.
+- JS files: placed in the `static/js` directory by default.
+- CSS files: placed in the `static/css` directory by default.
 
 Additional files may be generated alongside JS and CSS files:
 
-- License files: contain open source license information, written to the same directory as the JS file with a `.LICENSE.txt` suffix.
-- Source map files: contain source code mapping information, written to the same directory as JS and CSS files with a `.map` suffix.
+- License files: contain open source license information, placed in the same directory as the JS file with a `.LICENSE.txt` suffix.
+- Source map files: contain source code mapping information, placed in the same directory as JS and CSS files with a `.map` suffix.
 
 In the filename, `[name]` represents the entry name for this file, such as `index` or `main`. `[hash]` is a hash value generated based on the file content.
 
