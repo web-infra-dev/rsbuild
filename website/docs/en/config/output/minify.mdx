@@ -17,7 +17,7 @@ type Minify =
 
 Controls code minification in production mode and configures minimizer options.
 
-By default, JS and CSS code are automatically minified in production mode to improve page performance. To disable minification for all code, set `minify` to `false`. Alternatively, control code minification behavior through detailed configuration of the `minify` option:
+By default, JS and CSS code are automatically minified in production mode to improve page performance. To disable minification entirely, set `minify` to `false`. You can also control specific minification behavior through the detailed `minify` options:
 
 :::tip
 Rsbuild uses [SWC](/guide/configuration/swc) to minify JS code and [Lightning CSS](/guide/styling/css-usage#lightning-css) to minify CSS code by default.
@@ -38,7 +38,7 @@ export default {
 ```
 
 :::tip
-This approach is used for debugging and troubleshooting. We do not recommend to disable code minification in production builds, as it will significantly degrade page performance.
+This is useful for debugging and troubleshooting. We do not recommend disabling code minification in production builds, as it will significantly degrade page performance.
 :::
 
 ## Options
@@ -162,14 +162,14 @@ export default {
 ```
 
 :::tip
-When you configure some options in [tools.lightningcssLoader](/config/tools/lightningcss-loader), `output.minify.cssOptions` will automatically inherit these options, which ensures that the CSS code transformation behavior in the development build is consistent with that in the production build.
+When you configure options in [tools.lightningcssLoader](/config/tools/lightningcss-loader), `output.minify.cssOptions` will automatically inherit these options, ensuring that CSS code transformation behavior in the development build is consistent with the production build.
 :::
 
 ## Switching minifier
 
 ### JS minifier
 
-If the default SWC minifier does not meet your needs, you can switch to other minifiers through the [tools.bundlerChain](/config/tools/bundler-chain) option.
+If the default SWC minifier doesn't meet your needs, you can switch to other minifiers using the [tools.bundlerChain](/config/tools/bundler-chain) option.
 
 For example, use [terser-webpack-plugin](https://github.com/terser/terser-webpack-plugin) to switch to Terser or esbuild.
 
