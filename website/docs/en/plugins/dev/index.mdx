@@ -8,7 +8,7 @@ Rsbuild plugins are functions that can register hooks at different stages, liste
 
 Before developing a Rsbuild plugin, you may have been familiar with the plugin systems of tools such as webpack, Vite, esbuild, etc.
 
-Generally, Rsbuild's plugin API is similar to esbuild, and compared with webpack or Rspack plugins, Rsbuild's plugin API is simpler and easier to get started with.
+Rsbuild's plugin API is similar to esbuild's, and compared with webpack or Rspack plugins, Rsbuild's plugin API is simpler and easier to get started with.
 
 ```ts
 // esbuild plugin
@@ -37,7 +37,7 @@ class RspackExamplePlugin {
 }
 ```
 
-From a functional perspective, Rsbuild's plugin API mainly revolves around Rsbuild's operation process and build configuration and provides some hooks for extension. On the other hand, Rspack's plugin API is more complex and rich, capable of modifying every aspect of the bundling process.
+From a functional perspective, Rsbuild's plugin API mainly revolves around Rsbuild's operation process and build configuration, providing various hooks for extension. On the other hand, Rspack's plugin API is more complex and comprehensive, capable of modifying every aspect of the bundling process.
 
 Rspack plugins can be integrated into Rsbuild plugins. If the hooks provided by Rsbuild do not meet your requirements, you can also implement the functionality using Rspack plugin and register Rspack plugins in the Rsbuild plugin:
 

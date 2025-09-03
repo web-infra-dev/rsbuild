@@ -3,13 +3,13 @@
 - **Type:** `boolean`
 - **Default:** `true`
 
-Control whether to emit static assets such as images, fonts, audio, video, etc.
+Controls whether to emit static assets such as images, fonts, audio, video, etc.
 
-In scenarios such as SSR, you may not need to emit duplicate static assets. Therefore, you can return `false` in `emitAssets` to avoid emitting assets.
+In scenarios such as SSR, you may not need to emit duplicate static assets. Therefore, you can set `emitAssets` to `false` to avoid emitting assets.
 
 ## Example
 
-For example, the following example will emit static assets when building web bundles, and avoid emitting when building node bundles.
+The following example will emit static assets when building web bundles, and avoid emitting when building node bundles.
 
 ```js
 export default {

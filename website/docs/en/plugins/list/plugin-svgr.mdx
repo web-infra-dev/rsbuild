@@ -4,7 +4,7 @@ import { SourceCode } from '@rspress/core/theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-svgr" />
 
-By default, Rsbuild will treat SVG files as static assets. For processing rules, please refer to: [Static assets](/guide/basic/static-assets).
+By default, Rsbuild treats SVG files as static assets. For processing rules, refer to: [Static assets](/guide/basic/static-assets).
 
 With the SVGR plugin, Rsbuild supports transforming SVG to React components via [SVGR](https://react-svgr.com/).
 
@@ -35,7 +35,7 @@ export default {
 
 ### Default usage
 
-After registering the plugin, when you import an SVG in a JavaScript file, if the imported path contains the `?react` suffix, Rsbuild will call SVGR to transform the SVG into a React component.
+After registering the plugin, when you import an SVG in a JavaScript file, if the imported path includes the `?react` suffix, Rsbuild will call SVGR to transform the SVG into a React component.
 
 ```jsx title="App.jsx"
 import Logo from './logo.svg?react';
@@ -43,7 +43,7 @@ import Logo from './logo.svg?react';
 export const App = () => <Logo />;
 ```
 
-If the imported path does not contain the `?react` suffix, then the SVG will be treated as a normal static asset and you will get a URL string or base64 URL, see [Static assets](/guide/basic/static-assets).
+If the imported path doesn't include the `?react` suffix, then the SVG will be treated as a normal static asset and you will get a URL string or base64 URL, see [Static assets](/guide/basic/static-assets).
 
 ```js
 import logoURL from './static/logo.svg';
@@ -96,7 +96,7 @@ type PluginSvgrOptions = {
 
 ### svgrOptions
 
-Modify the options of SVGR, the passed object will be deep merged with the default value. See [SVGR - Options](https://react-svgr.com/docs/options/) for details.
+Modifies the options of SVGR, the passed object will be deep merged with the default value. See [SVGR - Options](https://react-svgr.com/docs/options/) for details.
 
 - **Type:** `import('@svgr/core').Config`
 - **Default:**

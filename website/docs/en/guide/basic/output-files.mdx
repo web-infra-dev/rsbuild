@@ -1,12 +1,12 @@
 # Output files
 
-This section introduces the output file directory structure and how to control the output directory for different file types.
+This section introduces the output file directory structure and explains how to control the output directory for different file types.
 
 If you want to know how to deploy the build outputs of Rsbuild as a static site, please refer to [Deploy Static Site](/guide/basic/static-deploy).
 
 ## Default directory structure
 
-The default output directory structure is shown below. Output files are written to the `dist` directory of the current project.
+The default output directory structure is shown below. Output files are written to the `dist` directory in the current project.
 
 ```bash
 dist
@@ -38,7 +38,7 @@ In the filename, `[name]` represents the entry name for this file, such as `inde
 
 ## Development mode output
 
-In development mode, Rsbuild stores build outputs in memory on the dev server by default, rather than writing them to disk. This reduces filesystem operation overhead. Refer to [View Static Assets](/guide/basic/server#view-static-assets) to view all static assets generated in the current build.
+In development mode, Rsbuild stores build outputs in memory on the dev server by default, rather than writing them to disk. This reduces filesystem operation overhead. Refer to [View Static Assets](/guide/basic/server#view-static-assets) to see all static assets generated in the current build.
 
 To write output files to disk (typically used for inspecting build artifacts or configuring proxy rules for static assets), set the [dev.writeToDisk](/config/dev/write-to-disk) configuration to `true`:
 
@@ -80,7 +80,7 @@ dist
         └── qux.[hash].mp4
 ```
 
-Use the [output.distPath](/config/output/dist-path) config to write these static assets to a single directory, for example, to the `assets` directory:
+Use the [output.distPath](/config/output/dist-path) config to write these static assets to a single directory. For example, to organize them in an `assets` directory:
 
 ```ts
 export default {
@@ -116,7 +116,7 @@ dist
 └── [name].js
 ```
 
-Node.js outputs typically contain only JS files, without HTML or CSS. The JS file names do not include hash values.
+Node.js outputs typically contain only JS files, without HTML or CSS. The JS filenames do not include hash values.
 
 Modify the output path of Node.js files using the [environments](/config/environments) config.
 
@@ -144,7 +144,7 @@ export default {
 
 ## Flatten the directory
 
-For a flatter directory structure in the dist directory, set the directory to an empty string to flatten the generated directory.
+For a flatter directory structure, set any directory to an empty string to flatten the generated output structure.
 
 Here's an example:
 

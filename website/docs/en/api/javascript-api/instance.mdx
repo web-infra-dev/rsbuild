@@ -41,7 +41,7 @@ type Version = string;
 
 ### context.rootPath
 
-The root path of current build, corresponding to the `cwd` option of [createRsbuild](/api/javascript-api/core#creatersbuild) method.
+The root path of the current build, corresponding to the `cwd` option of the [createRsbuild](/api/javascript-api/core#creatersbuild) method.
 
 - **Type:**
 
@@ -172,7 +172,7 @@ type bundlerType = 'rspack' | 'webpack';
 
 ## rsbuild.build
 
-Perform a production mode build. This method will generate optimized production bundles and emit them to the output directory.
+Performs a production mode build. This method generates optimized production bundles and emits them to the output directory.
 
 - **Type:**
 
@@ -299,7 +299,7 @@ await rsbuild.build({
 
 ## rsbuild.startDevServer
 
-Start the local dev server. This method will:
+Starts the local dev server. This method will:
 
 1. Start a development server that serves your application.
 2. Watch for file changes and trigger recompilation.
@@ -429,7 +429,7 @@ await server.listen();
 
 ## rsbuild.preview
 
-Start a server to preview the production build locally. This method should be executed after [rsbuild.build](#rsbuildbuild).
+Starts a server to preview the production build locally. This method should be executed after [rsbuild.build](#rsbuildbuild).
 
 - **Type:**
 
@@ -510,7 +510,7 @@ await server.close();
 
 ## rsbuild.createCompiler
 
-Create an Rspack [Compiler](https://rspack.rs/api/javascript-api/compiler) instance. If there are multiple [environments](/config/environments) for this build, the return value is [MultiCompiler](https://rspack.rs/api/javascript-api/compiler#multicompiler).
+Creates an Rspack [Compiler](https://rspack.rs/api/javascript-api/compiler) instance. If there are multiple [environments](/config/environments) for this build, the return value is [MultiCompiler](https://rspack.rs/api/javascript-api/compiler#multicompiler).
 
 - **Type:**
 
@@ -528,7 +528,7 @@ const compiler = await rsbuild.createCompiler();
 
 ## rsbuild.addPlugins
 
-Register one or more Rsbuild plugins, which can be called multiple times.
+Registers one or more Rsbuild plugins, which can be called multiple times.
 
 This method needs to be called before compiling. If it is called after compiling, it will not affect the compilation result.
 
@@ -557,7 +557,7 @@ rsbuild.addPlugins([pluginFoo()], { environment: 'node' });
 
 ## rsbuild.getPlugins
 
-Get all the Rsbuild plugins registered in the current Rsbuild instance.
+Gets all the Rsbuild plugins registered in the current Rsbuild instance.
 
 - **Type:**
 
@@ -687,7 +687,7 @@ console.log(buildConfigs);
 
 ## rsbuild.inspectConfig
 
-Inspect and debug Rsbuild's internal configurations. It provides access to:
+Inspects and debugs Rsbuild's internal configurations. It provides access to:
 
 - The resolved Rsbuild configuration
 - The environment-specific Rsbuild configurations

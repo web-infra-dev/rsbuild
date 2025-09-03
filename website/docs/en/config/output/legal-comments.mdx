@@ -3,7 +3,7 @@
 - **Type:** `'linked' | 'inline' | 'none'`
 - **Default:** `'linked'`
 
-Configure how to handle legal comments.
+Controls how legal comments are handled in the build output.
 
 ## What are legal comments?
 
@@ -25,11 +25,11 @@ For example, the `LICENSE` comment in React:
 
 ## Optional values
 
-You can configure how to handle legal comments using these options:
+You can control how legal comments are handled using these options:
 
 ### `linked`
 
-Extract all legal comments to `*.LICENSE.txt` files and link to them with a comment.
+Extracts all legal comments to `*.LICENSE.txt` files and links to them with a comment.
 
 ```js title="rsbuild.config.js"
 export default {
@@ -43,7 +43,7 @@ export default {
 
 ### `inline`
 
-Preserve all legal comments in the original position. This may increase the size of the output bundles.
+Preserves all legal comments in their original position. This may increase the size of the output bundles.
 
 ```js title="rsbuild.config.js"
 export default {
@@ -55,7 +55,7 @@ export default {
 
 ### `none`
 
-Remove all legal comments.
+Removes all legal comments.
 
 ```js title="rsbuild.config.js"
 export default {
