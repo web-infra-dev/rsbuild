@@ -63,6 +63,13 @@ export default {
       name: 'rspack-chain',
       copyDts: true,
       dtsOnly: true,
+      // rspack-chain provides ESM types
+      afterBundle(task) {
+        const pkgJsonPath = join(task.distPath, 'package.json');
+        const pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf-8'));
+        pkgJson.type = 'module';
+        fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson));
+      },
     },
     {
       name: 'http-proxy-middleware',
