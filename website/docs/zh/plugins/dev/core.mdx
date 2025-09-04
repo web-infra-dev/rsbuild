@@ -516,7 +516,7 @@ api.transform(
 你可以在 `transform` 函数中返回一个 source map，Rsbuild 会自动将返回的 source map 与其他 Rspack loader 或 `transform` hook 生成的 source maps 合并，使最终的 source map 能够正确映射到原始源代码。
 
 ```js
-api.transform({ test: /\.js$/ }, ({ code }) => {
+api.transform({ test: /\.js$/ }, async ({ code }) => {
   const { transformedCode, sourceMap } = await someTransformFunction(code);
   return {
     code: transformedCode,
