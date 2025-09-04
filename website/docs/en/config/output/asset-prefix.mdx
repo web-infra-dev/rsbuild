@@ -3,11 +3,11 @@
 - **Type:** `string | 'auto'`
 - **Default:** [server.base](/config/server/base)
 
-In [production mode](/config/mode), use this option to set the URL prefix for static assets, such as setting it to a CDN URL.
+In [production mode](/config/mode), use this option to configure the URL prefix for static assets, such as a CDN URL.
 
 `assetPrefix` affects the URLs of most static assets, including JavaScript files, CSS files, images, videos, etc. If an incorrect value is specified, you'll receive 404 errors while loading these resources.
 
-This configuration is only used in `production` mode or `none` mode. In `development` mode, use the [dev.assetPrefix](/config/dev/asset-prefix) to set the URL prefix.
+This configuration is only used in `production` mode or `none` mode. In `development` mode, use [dev.assetPrefix](/config/dev/asset-prefix) to configure the URL prefix.
 
 ## Example
 
@@ -54,7 +54,7 @@ The default value of `output.assetPrefix` is the same as [server.base](/config/s
 
 When `server.base` is `/foo`, `index.html` and static assets can be accessed through `http://localhost:3000/foo/`.
 
-It should be noted that when customizing the `output.assetPrefix` option, if you want static assets to be accessible normally during [Rsbuild preview](/guide/basic/cli#rsbuild-preview), `output.assetPrefix` should contain the same URL prefix as `server.base`, such as:
+It should be noted that when customizing the `output.assetPrefix` option, if you want static assets to be accessible normally during [Rsbuild preview](/guide/basic/cli#rsbuild-preview), `output.assetPrefix` should contain the same URL prefix as `server.base`. For example:
 
 ```ts
 export default {
@@ -71,12 +71,12 @@ export default {
 
 assetPrefix can be set to the following types of paths:
 
-- **absolute path**: This is the most common practice, can be specific server paths, like `/assets/`, or setting to CDN paths, like `https://cdn.example.com/assets/`.
-- **relative path**: such as `./assets/`.
+- **absolute path**: This is the most common practice, which can be specific server paths like `/assets/`, or CDN paths like `https://cdn.example.com/assets/`.
+- **relative path**: For example, `./assets/`.
 - **'auto'**: Rspack will automatically calculate the path and generate relative paths based on file location.
 
 :::tip
-It's not recommended to set assetPrefix as a relative path, such as `'./assets/'`. This is because when assets are at different path depths, using relative paths may cause assets to load incorrectly.
+It's not recommended to set assetPrefix as a relative path like `'./assets/'`. This is because when assets are at different path depths, using relative paths may cause assets to load incorrectly.
 :::
 
 ## Compare with `publicPath`
