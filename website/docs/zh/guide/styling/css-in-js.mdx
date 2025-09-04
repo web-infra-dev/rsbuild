@@ -67,7 +67,7 @@ export default defineConfig({
 
 Rsbuild 支持使用 [@vanilla-extract/webpack-plugin](https://npmjs.com/package/@vanilla-extract/webpack-plugin) 插件，你可以添加以下配置来使用 [vanilla-extract](https://github.com/vanilla-extract-css/vanilla-extract)：
 
-现在 Rspack 在开发模式下如果同时使用了 splitChunks 和 `@vanilla-extract/webpack-plugin` 会有 HMR 问题，我们可以通过特殊的 splitChunks 配置来规避这个问题。
+目前，Rspack 在同时使用 `splitChunks` 和 `@vanilla-extract/webpack-plugin` 时存在一个 [HMR 问题](https://github.com/web-infra-dev/rsbuild/issues/6049)。在开发模式下，你可以使用特殊的 `splitChunks` 配置来规避这个问题。
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
