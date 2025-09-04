@@ -14,18 +14,37 @@ export function toRelativePath(base: string, filepath: string): string {
 }
 
 export function getCommonParentPath(paths: string[]): string {
-  const uniquePaths = [...new Set(paths)];
+  // Efficient deduplication without creating intermediate arrays
+  const uniquePaths: string[] = [];
+  const seen = new Set<string>();
+  for (const path of paths) {
+    if (!seen.has(path)) {
+      seen.add(path);
+      uniquePaths.push(path);
+    }
+  }
 
   if (uniquePaths.length === 1) {
     return uniquePaths[0];
   }
 
-  const [first, ...rest] = uniquePaths.map((p) => p.split(sep));
+  // Pre-split all paths once to avoid repeated splits
+  const splitPaths = uniquePaths.map((p) => p.split(sep));
+  const [first, ...rest] = splitPaths;
   const common: string[] = [];
 
   for (let i = 0; i < first.length; i++) {
     const segment = first[i];
-    if (rest.every((p) => p[i] === segment)) {
+    // Use simple loop instead of every() for better performance with early termination
+    let allMatch = true;
+    for (let j = 0; j < rest.length; j++) {
+      if (i >= rest[j].length || rest[j][i] !== segment) {
+        allMatch = false;
+        break;
+      }
+    }
+
+    if (allMatch) {
       common.push(segment);
     } else {
       break;
