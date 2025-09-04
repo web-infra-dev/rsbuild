@@ -84,7 +84,7 @@
     "picocolors": "^1.1.1",
     "postcss": "^8.5.6",
     "postcss-load-config": "6.0.1",
-    "postcss-loader": "8.1.1",
+    "postcss-loader": "8.2.0",
     "prebundle": "1.4.1",
     "reduce-configs": "^1.1.1",
     "rsbuild-dev-middleware": "0.3.0",

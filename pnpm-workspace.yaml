@@ -15,7 +15,7 @@ patchedDependencies:
   css-loader@7.1.2: patches/css-loader@7.1.2.patch
   file-loader: patches/file-loader@6.2.0.patch
   http-proxy@1.18.1: patches/http-proxy@1.18.1.patch
-  postcss-loader@8.1.1: patches/postcss-loader@8.1.1.patch
+  postcss-loader@8.2.0: patches/postcss-loader@8.2.0.patch
   url-loader: patches/url-loader@4.1.1.patch
 
 strictPeerDependencies: false
