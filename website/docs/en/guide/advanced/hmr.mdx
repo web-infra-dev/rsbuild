@@ -10,7 +10,7 @@ Hot Module Replacement (HMR) exchanges, adds, or removes modules while an applic
 
 Rsbuild has built-in support for HMR, which is enabled by default in development mode.
 
-If you do not need to use HMR, set [dev.hmr](/config/dev/hmr) to `false`. This will disable HMR and react-refresh will, and Rsbuild will automatically fallback to [dev.liveReload](/config/dev/live-reload).
+If you don't need HMR, set [dev.hmr](/config/dev/hmr) to `false`. This will disable HMR and react-refresh, and Rsbuild will automatically fall back to [dev.liveReload](/config/dev/live-reload).
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -33,7 +33,7 @@ export default {
 
 ## Specify HMR URL
 
-By default, Rsbuild uses the host and port number of the current page to splice the WebSocket URL for HMR.
+By default, Rsbuild uses the host and port number of the current page to construct the WebSocket URL for HMR.
 
 When the HMR connection fails, you can specify the WebSocket URL by customizing [dev.client](/config/dev/client) config.
 
