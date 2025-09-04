@@ -90,21 +90,23 @@ export default defineConfig({
 Rsbuild 不与任何前端 UI 框架耦合。因此，如果你是一个 React 项目，需要手动添加 [React 插件](/plugins/list/plugin-react)：
 
 ```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-export default {
+export default defineConfig({
   plugins: [pluginReact()],
-};
+});
 ```
 
 如果你当前项目中有使用 SVGR，还需要注册 Rsbuild 的 [SVGR 插件](/plugins/list/plugin-svgr)：
 
 ```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 
-export default {
+export default defineConfig({
   plugins: [pluginSvgr()],
-};
+});
 ```
 
 如果你是其他框架的使用者，可参考 [插件列表](/plugins/list/index) 选择对应的框架插件。

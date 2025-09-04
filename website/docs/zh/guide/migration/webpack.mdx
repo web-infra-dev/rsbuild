@@ -56,13 +56,15 @@ export default defineConfig({
 - 使用 [tools.rspack](/config/tools/rspack) 选项（Rspack 和 webpack 的配置基本上等价）。
 
 ```ts title="rsbuild.config.ts"
-export default {
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
   tools: {
     rspack: {
       plugins: [new SomeWebpackPlugin()],
     },
   },
-};
+});
 ```
 
 - 使用 Rsbuild 封装的配置项，比如 css-loader 的选项可以通过 [tools.cssLoader](/config/tools/css-loader) 设置。
@@ -74,14 +76,16 @@ export default {
 webpack 使用 `entry` 字段来设置构建入口，在 Rsbuild 中你可以使用 [source.entry](/config/source/entry) 来设置。
 
 ```ts title="rsbuild.config.ts"
-export default {
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
   source: {
     entry: {
       foo: './src/pages/foo/index.ts',
       bar: './src/pages/bar/index.ts',
     },
   },
-};
+});
 ```
 
 ### 清理配置
@@ -196,13 +200,15 @@ module.exports = {
 - Rsbuild 配置：
 
 ```ts title="rsbuild.config.ts"
-export default {
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
   source: {
     transformImport: [
       { libraryName: 'some-library', libraryDirectory: 'es', style: true },
     ],
   },
-};
+});
 ```
 
 ## 验证结果

@@ -90,21 +90,23 @@ export default defineConfig({
 Rsbuild is not coupled with any front-end UI framework. Therefore, if you are a React project, you need to manually add [React Plugin](/plugins/list/plugin-react):
 
 ```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-export default {
+export default defineConfig({
   plugins: [pluginReact()],
-};
+});
 ```
 
 If you are using SVGR in your current project, you also need to register [SVGR Plugin](/plugins/list/plugin-svgr):
 
 ```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 
-export default {
+export default defineConfig({
   plugins: [pluginSvgr()],
-};
+});
 ```
 
 If you are a user of other frameworks, you can refer to [Rsbuild Plugin List](/plugins/list/index) to select the corresponding framework plugin.
