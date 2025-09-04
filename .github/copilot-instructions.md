@@ -1,6 +1,6 @@
 # Rsbuild
 
-This is a monorepo contains the Rsbuild build tool, plugins, and related packages. Rsbuild is a high-performance JavaScript build tool powered by Rspack.
+This monorepo contains the Rsbuild build tool, plugins, and related packages. Rsbuild is a high-performance JavaScript build tool powered by Rspack.
 
 ## Setup & Build
 
