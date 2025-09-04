@@ -67,6 +67,8 @@ export default defineConfig({
 
 Rsbuild 支持使用 [@vanilla-extract/webpack-plugin](https://npmjs.com/package/@vanilla-extract/webpack-plugin) 插件，你可以添加以下配置来使用 [vanilla-extract](https://github.com/vanilla-extract-css/vanilla-extract)：
 
+现在 Rspack 在开发模式下如果同时使用了 splitChunks 和 `@vanilla-extract/webpack-plugin` 会有 HMR 问题，我们可以通过特殊的 splitChunks 配置来规避这个问题。
+
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
@@ -80,6 +82,20 @@ export default defineConfig({
       },
     }),
   ],
+  performance: {
+    chunkSplit: {
+      override: {
+        cacheGroups: {
+          vanilla: {
+            test: /@vanilla-extract\/webpack-plugin/,
+            // 确保在开发模式下 @vanilla-extract/webpack-plugin 产生虚拟模块所在的 Chunk id 稳定以避免 HMR 问题
+            name: process.env.NODE_ENV === 'development' && 'vanilla',
+            chunks: 'all',
+          },
+        },
+      },
+    },
+  },
   tools: {
     rspack: {
       plugins: [new VanillaExtractPlugin()],
