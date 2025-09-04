@@ -89,13 +89,15 @@ CRA 默认会将构建产物输出到 `build` 目录，而 Rsbuild 的默认构�
 你可以配置 Rsbuild 的 [output.distPath.root](/config/output/dist-path) 选项，将目录修改为 `build`，与 CRA 保持一致：
 
 ```ts title="rsbuild.config.ts"
-export default {
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
   output: {
     distPath: {
       root: 'build',
     },
   },
-};
+});
 ```
 
 > 更多细节请参考[构建产物](/guide/basic/output-files)章节。
@@ -127,11 +129,12 @@ const App = () => (
 只需要安装和注册 `@rsbuild/plugin-svgr` 即可：
 
 ```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 
-export default {
+export default defineConfig({
   plugins: [pluginSvgr({ mixedImport: true })],
-};
+});
 ```
 
 请参考 [SVGR 插件](/plugins/list/plugin-svgr) 文档了解如何在 Rsbuild 中使用 SVGR。
@@ -166,12 +169,14 @@ CRA 默认会使用 Babel 编译 node_modules 中的依赖，但 Rsbuild 则不�
 如果你需要处理 node_modules 中依赖引起的语法兼容性问题，可以使用 [source.include](/config/source/include#编译-node_modules) 配置项来编译 node_modules。
 
 ```ts title="rsbuild.config.ts"
-export default {
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
   source: {
     // 编译所有 JS 文件并排除 core-js
     include: [{ not: /[\\/]core-js[\\/]/ }],
   },
-};
+});
 ```
 
 ## 环境变量
@@ -240,7 +245,9 @@ You may need an appropriate loader to handle this file type.
 比如，你可以添加以下 asset modules 配置，来保持与 CRA 相同的输出结果：
 
 ```ts title="rsbuild.config.ts"
-export default {
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
   tools: {
     rspack: {
       module: {
@@ -258,7 +265,7 @@ export default {
       },
     },
   },
-};
+});
 ```
 
 ## 移除 react-app-polyfill
@@ -277,11 +284,13 @@ import 'react-app-polyfill/stable'; // [!code --]
 2. 配置 [output.polyfill](/config/output/polyfill)：
 
 ```ts title="rsbuild.config.ts"
-export default {
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
   output: {
     polyfill: 'usage',
   },
-};
+});
 ```
 
 > 参考 [浏览器兼容性](/guide/advanced/browser-compatibility) 来了解 Rsbuild 是如何处理 polyfill 的。
@@ -316,11 +325,12 @@ CRA 默认使用 ESLint 来检查代码质量。Rsbuild 默认不包含代码检
 `@rsbuild/plugin-eslint` 插件允许你在构建过程中执行 ESLint 检查。
 
 ```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
 import { pluginEslint } from '@rsbuild/plugin-eslint';
 
-export default {
+export default defineConfig({
   plugins: [pluginEslint()],
-};
+});
 ```
 
 注册插件后，在开发 (`npm run dev`) 和生产构建 (`npm run build`) 过程中，ESLint 会自动运行。插件会在控制台输出 ESLint 警告和错误。
@@ -377,7 +387,9 @@ module.exports = {
 - 迁移后：
 
 ```ts title="rsbuild.config.ts"
-export default {
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
   tools: {
     rspack: {
       resolve: {
@@ -387,7 +399,7 @@ export default {
         process.env.NODE_ENV === 'development' ? [new MyWebpackPlugin()] : [],
     },
   },
-};
+});
 ```
 
 ## 内容补充
