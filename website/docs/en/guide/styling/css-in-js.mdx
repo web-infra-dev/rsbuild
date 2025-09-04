@@ -67,6 +67,8 @@ Please note, you must select the SWC plugin that matches the current version of 
 
 Rsbuild supports [@vanilla-extract/webpack-plugin](https://npmjs.com/package/@vanilla-extract/webpack-plugin). You can add the following config to use [vanilla-extract](https://github.com/vanilla-extract-css/vanilla-extract):
 
+Currently, Rspack has an [HMR issue](https://github.com/web-infra-dev/rsbuild/issues/6049) when using `splitChunks` together with `@vanilla-extract/webpack-plugin`. In development mode, you can use a special `splitChunks` configuration to work around this issue.
+
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
@@ -80,6 +82,20 @@ export default defineConfig({
       },
     }),
   ],
+  performance: {
+    chunkSplit: {
+      override: {
+        cacheGroups: {
+          vanilla: {
+            test: /@vanilla-extract\/webpack-plugin/,
+            // make sure the chunk contains modules created by @vanilla-extract/webpack-plugin has stable id in development mode to avoid HMR issues
+            name: process.env.NODE_ENV === 'development' && 'vanilla',
+            chunks: 'all',
+          },
+        },
+      },
+    },
+  },
   tools: {
     rspack: {
       plugins: [new VanillaExtractPlugin()],
