@@ -226,14 +226,14 @@ test('printServerURLs', () => {
 
   expect(message!).toMatchInlineSnapshot(`
     "  ➜  local
-      - index    http://localhost:3000/
-      - foo      http://localhost:3000/html/foo
-      - bar      http://localhost:3000/bar
+      -  index    http://localhost:3000/
+      -  foo      http://localhost:3000/html/foo
+      -  bar      http://localhost:3000/bar
 
       ➜  network
-      - index    http://192.168.0.1:3000/
-      - foo      http://192.168.0.1:3000/html/foo
-      - bar      http://192.168.0.1:3000/bar
+      -  index    http://192.168.0.1:3000/
+      -  foo      http://192.168.0.1:3000/html/foo
+      -  bar      http://192.168.0.1:3000/bar
     "
   `);
 
