@@ -33,7 +33,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "parser": {
       "javascript": {
         "exportsPresence": "error",
-        "inlineConst": true,
+        "inlineConst": false,
         "typeReexportsPresence": "tolerant",
       },
     },
