@@ -67,10 +67,12 @@ function getDefaultSwcConfig({
   browserslist,
   cacheRoot,
   config,
+  isProd,
 }: {
   browserslist: string[];
   cacheRoot: string;
   config: NormalizedEnvironmentConfig;
+  isProd: boolean;
 }): SwcLoaderOptions {
   return {
     jsc: {
@@ -98,7 +100,7 @@ function getDefaultSwcConfig({
     rspackExperiments: {
       collectTypeScriptInfo: {
         typeExports: true,
-        exportedEnum: true,
+        exportedEnum: isProd,
       },
     },
   };
@@ -113,7 +115,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain({
       order: 'pre',
-      handler: (chain, { CHAIN_ID, isDev, target, environment }) => {
+      handler: (chain, { CHAIN_ID, isDev, isProd, target, environment }) => {
         const { config, browserslist } = environment;
         const cacheRoot = path.join(api.context.cachePath, '.swc');
 
@@ -156,6 +158,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
           browserslist,
           cacheRoot,
           config,
+          isProd,
         });
 
         applyTransformImport(swcConfig, config.source.transformImport);

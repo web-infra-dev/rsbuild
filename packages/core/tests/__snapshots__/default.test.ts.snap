@@ -12,7 +12,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   "experiments": {
     "asyncWebAssembly": true,
     "inlineConst": false,
-    "inlineEnum": true,
+    "inlineEnum": false,
     "lazyBarrel": true,
     "rspackFuture": {
       "bundlerInfo": {
@@ -180,7 +180,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
-                  "exportedEnum": true,
+                  "exportedEnum": false,
                   "typeExports": true,
                 },
               },
@@ -238,7 +238,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
-                  "exportedEnum": true,
+                  "exportedEnum": false,
                   "typeExports": true,
                 },
               },
@@ -1072,7 +1072,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "experiments": {
     "asyncWebAssembly": true,
     "inlineConst": false,
-    "inlineEnum": true,
+    "inlineEnum": false,
     "lazyBarrel": true,
     "rspackFuture": {
       "bundlerInfo": {
@@ -1208,7 +1208,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
-                  "exportedEnum": true,
+                  "exportedEnum": false,
                   "typeExports": true,
                 },
               },
@@ -1262,7 +1262,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
-                  "exportedEnum": true,
+                  "exportedEnum": false,
                   "typeExports": true,
                 },
               },
@@ -1507,7 +1507,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
   "experiments": {
     "asyncWebAssembly": true,
     "inlineConst": false,
-    "inlineEnum": true,
+    "inlineEnum": false,
     "lazyBarrel": true,
     "rspackFuture": {
       "bundlerInfo": {
@@ -1683,7 +1683,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
-                  "exportedEnum": true,
+                  "exportedEnum": false,
                   "typeExports": true,
                 },
               },
@@ -1741,7 +1741,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
-                  "exportedEnum": true,
+                  "exportedEnum": false,
                   "typeExports": true,
                 },
               },
