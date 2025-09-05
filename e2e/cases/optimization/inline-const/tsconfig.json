@@ -1,7 +1,0 @@
-{
-  "extends": "@rsbuild/config/tsconfig",
-  "compilerOptions": {
-    "outDir": "./dist"
-  },
-  "include": ["src", "*.test.ts"]
-}
