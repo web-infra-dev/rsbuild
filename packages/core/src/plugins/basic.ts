@@ -29,7 +29,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(
-      (chain, { isDev, target, bundler, environment, CHAIN_ID }) => {
+      (chain, { isDev, isProd, target, bundler, environment, CHAIN_ID }) => {
         const { config } = environment;
 
         chain.name(environment.name);
@@ -70,7 +70,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
         // Align with the futureDefaults of webpack 6
         chain.module.parser.merge({
           javascript: {
-            inlineConst: true,
+            inlineConst: isProd,
             exportsPresence: 'error',
             typeReexportsPresence: 'tolerant',
           },
@@ -98,7 +98,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
             ...chain.get('experiments'),
             lazyBarrel: true,
             inlineEnum: true,
-            inlineConst: true,
+            inlineConst: isProd,
             typeReexportsPresence: true,
             rspackFuture: {
               bundlerInfo: {

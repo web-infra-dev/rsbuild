@@ -11,7 +11,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "inlineConst": true,
+    "inlineConst": false,
     "inlineEnum": true,
     "lazyBarrel": true,
     "rspackFuture": {
@@ -33,7 +33,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
     "parser": {
       "javascript": {
         "exportsPresence": "error",
-        "inlineConst": true,
+        "inlineConst": false,
         "typeReexportsPresence": "tolerant",
       },
     },

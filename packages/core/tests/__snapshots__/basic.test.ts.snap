@@ -5,7 +5,7 @@ exports[`plugin-basic > should apply basic config correctly in development 1`] =
   "context": "<ROOT>/packages/core/tests",
   "devtool": "cheap-module-source-map",
   "experiments": {
-    "inlineConst": true,
+    "inlineConst": false,
     "inlineEnum": true,
     "lazyBarrel": true,
     "rspackFuture": {
@@ -23,7 +23,7 @@ exports[`plugin-basic > should apply basic config correctly in development 1`] =
     "parser": {
       "javascript": {
         "exportsPresence": "error",
-        "inlineConst": true,
+        "inlineConst": false,
         "typeReexportsPresence": "tolerant",
       },
     },
