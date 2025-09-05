@@ -8,8 +8,8 @@ declare global {
   }
 }
 
-window.test1 = `${FISH},${CAT}`;
-window.test2 = `${FISH.toUpperCase()},${CAT.toUpperCase()}`;
+window.test1 = `${FISH},${FISH.toUpperCase()}`;
+window.test2 = `${CAT},${CAT.toUpperCase()}`;
 
 import('./constants2').then(({ DOG }) => {
   window.test3 = `${DOG},${DOG.toUpperCase()}`;
