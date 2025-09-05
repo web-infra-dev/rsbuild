@@ -189,7 +189,7 @@ export default {
 
 ### dataUriLimit defaults
 
-The default value for [output.dataUriLimit](/config/output/data-uri-limit) has been changed from `10000 (10kB)` to `4096 (4KiB)`.
+The default value for [output.dataUriLimit](/config/output/data-uri-limit) has been changed from `10000 (10 kB)` to `4096 (4 KiB)`.
 
 This is because more applications are currently using HTTP 2.0, so splitting assets into separate files would perform better. Meanwhile, inlining assets over 4KiB can make the JS bundle to be too large and not cache friendly.
 
