@@ -161,7 +161,7 @@ function getURLMessages(
     message += `  ➜  ${label}\n`;
 
     for (const r of routes) {
-      message += `  ${color.dim('-')} ${color.dim(
+      message += `  ${color.dim('-')}  ${color.dim(
         r.entryName.padEnd(maxNameLength + 4),
       )}${color.cyan(normalizeUrl(`${url}${r.pathname}`))}\n`;
     }

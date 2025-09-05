@@ -3,24 +3,17 @@ import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
 
+const NETWORK_LOG_REGEX =
+  /➜\s{2}Network:\s{2}http:\/\/\d{1,3}(?:\.\d{1,3}){3}:\d+/;
+
 test('should print server urls correctly by default', async ({ page }) => {
   const rsbuild = await dev({
     cwd,
   });
 
   await page.goto(`http://localhost:${rsbuild.port}`);
-
-  const localLog = rsbuild.logs.find(
-    (log) =>
-      log.includes('Local:') &&
-      log.includes(`http://localhost:${rsbuild.port}`),
-  );
-  const networkLog = rsbuild.logs.find(
-    (log) => log.includes('Network:') && log.includes('http://'),
-  );
-
-  expect(localLog).toBeTruthy();
-  expect(networkLog).toBeTruthy();
+  await rsbuild.expectLog(`➜  Local:    http://localhost:${rsbuild.port}/`);
+  await rsbuild.expectLog(NETWORK_LOG_REGEX);
 
   expect(rsbuild.logs.find((log) => log.includes('/./'))).toBeFalsy();
   await rsbuild.close();
@@ -61,17 +54,12 @@ test('should print different environment server urls correctly', async ({
 
   await page.goto(`http://localhost:${rsbuild.port}`);
 
-  const localIndexLog = rsbuild.logs.find(
-    (log) => log.includes('Local:') && log.includes('/html0'),
+  await rsbuild.expectLog(
+    `-  index    http://localhost:${rsbuild.port}/html0/`,
   );
-
-  expect(localIndexLog).toBeTruthy();
-
-  const localMainLog = rsbuild.logs.find(
-    (log) => log.includes('Local:') && log.includes('/html1/main'),
+  await rsbuild.expectLog(
+    `-  main     http://localhost:${rsbuild.port}/html1/main`,
   );
-
-  expect(localMainLog).toBeTruthy();
 
   await rsbuild.close();
 });
@@ -90,15 +78,8 @@ test('should not print server urls when printUrls is false', async ({
 
   await page.goto(`http://localhost:${rsbuild.port}`);
 
-  const localLog = rsbuild.logs.find(
-    (log) => log.includes('Local:') && log.includes('http://localhost'),
-  );
-  const networkLog = rsbuild.logs.find(
-    (log) => log.includes('Network:') && log.includes('http://'),
-  );
-
-  expect(localLog).toBeFalsy();
-  expect(networkLog).toBeFalsy();
+  rsbuild.expectNoLog(`➜  Local:    http://localhost:${rsbuild.port}`);
+  rsbuild.expectNoLog(NETWORK_LOG_REGEX);
 
   await rsbuild.close();
 });
@@ -119,15 +100,8 @@ test('should allow to custom urls', async ({ page }) => {
 
   await page.goto(`http://localhost:${rsbuild.port}`);
 
-  const localLog = rsbuild.logs.find(
-    (log) => log.includes('Local:') && log.includes('http://localhost'),
-  );
-  const networkLog = rsbuild.logs.find(
-    (log) => log.includes('Network:') && log.includes('http://'),
-  );
-
-  expect(localLog).toBeFalsy();
-  expect(networkLog).toBeFalsy();
+  rsbuild.expectNoLog(`➜  Local:    http://localhost:${rsbuild.port}`);
+  rsbuild.expectNoLog(NETWORK_LOG_REGEX);
 
   await rsbuild.close();
 });
@@ -144,20 +118,12 @@ test('should allow to modify and return new urls', async ({ page }) => {
 
   await page.goto(`http://localhost:${rsbuild.port}`);
 
-  const localLog = rsbuild.logs.find(
-    (log) =>
-      log.includes('Local:') &&
-      log.includes(`http://localhost:${rsbuild.port}/test/`),
+  await rsbuild.expectLog(
+    `➜  Local:    http://localhost:${rsbuild.port}/test/`,
   );
-  const networkLog = rsbuild.logs.find(
-    (log) =>
-      log.includes('Network:') &&
-      log.includes('http://') &&
-      log.includes('/test/'),
+  rsbuild.expectNoLog(
+    /➜\s{2}Network:\s{2}http:\/\/\d{1,3}(?:\.\d{1,3}){3}:\d+\/test\//,
   );
-
-  expect(localLog).toBeTruthy();
-  expect(networkLog).toBeTruthy();
 
   await rsbuild.close();
 });
@@ -174,15 +140,8 @@ test('allow only listen to localhost for dev', async ({ page }) => {
 
   await page.goto(`http://localhost:${rsbuild.port}`);
 
-  const localLog = rsbuild.logs.find(
-    (log) => log.includes('Local:') && log.includes('http://localhost'),
-  );
-  const networkLog = rsbuild.logs.find(
-    (log) => log.includes('Network:') && log.includes('http://'),
-  );
-
-  expect(localLog).toBeTruthy();
-  expect(networkLog).toBeFalsy();
+  await rsbuild.expectLog(`➜  Local:    http://localhost:${rsbuild.port}`);
+  rsbuild.expectNoLog(NETWORK_LOG_REGEX);
 
   await rsbuild.close();
 });
@@ -200,15 +159,8 @@ test('allow only listen to localhost for prod preview', async ({ page }) => {
 
   await page.goto(`http://localhost:${rsbuild.port}`);
 
-  const localLog = rsbuild.logs.find(
-    (log) => log.includes('Local:') && log.includes('http://localhost'),
-  );
-  const networkLog = rsbuild.logs.find(
-    (log) => log.includes('Network:') && log.includes('http://'),
-  );
-
-  expect(localLog).toBeTruthy();
-  expect(networkLog).toBeFalsy();
+  await rsbuild.expectLog(`➜  Local:    http://localhost:${rsbuild.port}`);
+  rsbuild.expectNoLog(NETWORK_LOG_REGEX);
 
   await rsbuild.close();
 });
@@ -224,15 +176,8 @@ test('should not print server urls when HTML is disabled', async ({ page }) => {
     },
   });
 
-  const localLog = rsbuild.logs.find(
-    (log) => log.includes('Local:') && log.includes('http://localhost'),
-  );
-  const networkLog = rsbuild.logs.find(
-    (log) => log.includes('Network:') && log.includes('http://'),
-  );
-
-  expect(localLog).toBeFalsy();
-  expect(networkLog).toBeFalsy();
+  rsbuild.expectNoLog(`➜  Local:    http://localhost:${rsbuild.port}`);
+  rsbuild.expectNoLog(NETWORK_LOG_REGEX);
 
   await rsbuild.close();
 });
@@ -253,15 +198,13 @@ test('should print server urls when HTML is disabled but printUrls is a custom f
     },
   });
 
-  const localLog = rsbuild.logs.find((log) =>
-    log.includes(`➜  Local:    http://localhost:${rsbuild.port}`),
-  );
-
-  expect(localLog).toBeTruthy();
+  await rsbuild.expectLog(`➜  Local:    http://localhost:${rsbuild.port}`);
   await rsbuild.close();
 });
 
-test('should get posix route correctly', async ({ page }) => {
+test('should print server urls for multiple entries as expected', async ({
+  page,
+}) => {
   const rsbuild = await dev({
     cwd,
     rsbuildConfig: {
@@ -292,15 +235,13 @@ test('should get posix route correctly', async ({ page }) => {
 
   await page.goto(`http://localhost:${rsbuild.port}`);
 
-  const webLog = rsbuild.logs.find((log) =>
-    log.includes(`http://localhost:${rsbuild.port}/dist/`),
+  await rsbuild.expectLog(`➜  Local:`);
+  await rsbuild.expectLog(
+    `-  index     http://localhost:${rsbuild.port}/dist/`,
   );
-  const web1Log = rsbuild.logs.find((log) =>
-    log.includes(`http://localhost:${rsbuild.port}/.dist/web1/index1`),
+  await rsbuild.expectLog(
+    `-  index1    http://localhost:${rsbuild.port}/.dist/web1/index1`,
   );
-
-  expect(webLog).toBeTruthy();
-  expect(web1Log).toBeTruthy();
 
   await rsbuild.close();
 });
