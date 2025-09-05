@@ -1353,7 +1353,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     "experiments": {
       "asyncWebAssembly": true,
       "inlineConst": false,
-      "inlineEnum": true,
+      "inlineEnum": false,
       "lazyBarrel": true,
       "rspackFuture": {
         "bundlerInfo": {
@@ -1521,7 +1521,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                 },
                 "rspackExperiments": {
                   "collectTypeScriptInfo": {
-                    "exportedEnum": true,
+                    "exportedEnum": false,
                     "typeExports": true,
                   },
                 },
@@ -1579,7 +1579,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                 },
                 "rspackExperiments": {
                   "collectTypeScriptInfo": {
-                    "exportedEnum": true,
+                    "exportedEnum": false,
                     "typeExports": true,
                   },
                 },
@@ -1809,7 +1809,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     "experiments": {
       "asyncWebAssembly": true,
       "inlineConst": false,
-      "inlineEnum": true,
+      "inlineEnum": false,
       "lazyBarrel": true,
       "rspackFuture": {
         "bundlerInfo": {
@@ -1945,7 +1945,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                 },
                 "rspackExperiments": {
                   "collectTypeScriptInfo": {
-                    "exportedEnum": true,
+                    "exportedEnum": false,
                     "typeExports": true,
                   },
                 },
@@ -1999,7 +1999,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                 },
                 "rspackExperiments": {
                   "collectTypeScriptInfo": {
-                    "exportedEnum": true,
+                    "exportedEnum": false,
                     "typeExports": true,
                   },
                 },

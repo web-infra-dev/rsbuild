@@ -12,7 +12,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
   "experiments": {
     "asyncWebAssembly": true,
     "inlineConst": false,
-    "inlineEnum": true,
+    "inlineEnum": false,
     "lazyBarrel": true,
     "rspackFuture": {
       "bundlerInfo": {
@@ -180,7 +180,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
-                  "exportedEnum": true,
+                  "exportedEnum": false,
                   "typeExports": true,
                 },
               },
@@ -238,7 +238,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
-                  "exportedEnum": true,
+                  "exportedEnum": false,
                   "typeExports": true,
                 },
               },

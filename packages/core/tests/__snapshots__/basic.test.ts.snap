@@ -6,7 +6,7 @@ exports[`plugin-basic > should apply basic config correctly in development 1`] =
   "devtool": "cheap-module-source-map",
   "experiments": {
     "inlineConst": false,
-    "inlineEnum": true,
+    "inlineEnum": false,
     "lazyBarrel": true,
     "rspackFuture": {
       "bundlerInfo": {

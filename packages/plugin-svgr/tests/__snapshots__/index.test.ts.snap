@@ -61,7 +61,7 @@ exports[`svgr > configure SVGR options 1`] = `
             },
             "rspackExperiments": {
               "collectTypeScriptInfo": {
-                "exportedEnum": true,
+                "exportedEnum": false,
                 "typeExports": true,
               },
             },
@@ -167,7 +167,7 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
             },
             "rspackExperiments": {
               "collectTypeScriptInfo": {
-                "exportedEnum": true,
+                "exportedEnum": false,
                 "typeExports": true,
               },
             },
@@ -241,7 +241,7 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
             },
             "rspackExperiments": {
               "collectTypeScriptInfo": {
-                "exportedEnum": true,
+                "exportedEnum": false,
                 "typeExports": true,
               },
             },
@@ -346,7 +346,7 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
             },
             "rspackExperiments": {
               "collectTypeScriptInfo": {
-                "exportedEnum": true,
+                "exportedEnum": false,
                 "typeExports": true,
               },
             },
@@ -420,7 +420,7 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
             },
             "rspackExperiments": {
               "collectTypeScriptInfo": {
-                "exportedEnum": true,
+                "exportedEnum": false,
                 "typeExports": true,
               },
             },
@@ -525,7 +525,7 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
             },
             "rspackExperiments": {
               "collectTypeScriptInfo": {
-                "exportedEnum": true,
+                "exportedEnum": false,
                 "typeExports": true,
               },
             },
@@ -599,7 +599,7 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
             },
             "rspackExperiments": {
               "collectTypeScriptInfo": {
-                "exportedEnum": true,
+                "exportedEnum": false,
                 "typeExports": true,
               },
             },
@@ -704,7 +704,7 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
             },
             "rspackExperiments": {
               "collectTypeScriptInfo": {
-                "exportedEnum": true,
+                "exportedEnum": false,
                 "typeExports": true,
               },
             },
@@ -778,7 +778,7 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
             },
             "rspackExperiments": {
               "collectTypeScriptInfo": {
-                "exportedEnum": true,
+                "exportedEnum": false,
                 "typeExports": true,
               },
             },
