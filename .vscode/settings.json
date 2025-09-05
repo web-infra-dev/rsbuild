@@ -15,5 +15,15 @@
   },
   "mdx.validate.validateFileLinks": "ignore",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "json.schemas": [
+    {
+      "fileMatch": ["**/_meta.json"],
+      "url": "./website/node_modules/@rspress/core/meta-json-schema.json"
+    },
+    {
+      "fileMatch": ["**/_nav.json"],
+      "url": "./website/node_modules/@rspress/core/nav-json-schema.json"
+    }
+  ]
 }
