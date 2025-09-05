@@ -5,12 +5,12 @@
 
 Replaces variables in your code with other values or expressions at compile time. This is useful for enabling different behavior between development and production builds.
 
-Each key passed to the configuration represents an identifier or multiple identifiers joined with `.`.
+Each configuration key represents an identifier or multiple identifiers joined with `.`.
 
-- If the value is a string, it will be used as a code fragment.
-- If the value is not a string, it will be stringified (including functions).
-- If the value is an object, all keys are defined the same way.
-- If you prefix the key with `typeof`, it is only defined for typeof calls.
+- String values are used as code fragments.
+- Other types (including functions) are stringified.
+- Object values define all keys the same way.
+- Keys prefixed with `typeof` are only defined for typeof calls.
 
 > For more usage, see [Using define](/guide/advanced/env-vars#using-define) and [Rspack - DefinePlugin](https://rspack.rs/plugins/webpack/define-plugin).
 
@@ -32,7 +32,7 @@ export default {
 };
 ```
 
-Expressions will be replaced with the corresponding code fragments:
+Expressions are replaced with the corresponding code fragments:
 
 ```js
 const foo = TWO;
