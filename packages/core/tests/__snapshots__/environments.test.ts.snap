@@ -1352,7 +1352,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     "devtool": "eval-source-map",
     "experiments": {
       "asyncWebAssembly": true,
-      "inlineConst": true,
       "inlineEnum": true,
       "lazyBarrel": true,
       "rspackFuture": {
@@ -1374,7 +1373,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "parser": {
         "javascript": {
           "exportsPresence": "error",
-          "inlineConst": true,
           "typeReexportsPresence": "tolerant",
         },
       },
@@ -1808,7 +1806,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     "devtool": "eval",
     "experiments": {
       "asyncWebAssembly": true,
-      "inlineConst": true,
       "inlineEnum": true,
       "lazyBarrel": true,
       "rspackFuture": {
@@ -1826,7 +1823,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "parser": {
         "javascript": {
           "exportsPresence": "error",
-          "inlineConst": true,
           "typeReexportsPresence": "tolerant",
         },
       },
