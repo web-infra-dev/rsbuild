@@ -1,15 +1,18 @@
-import { Animals, Animals2 } from './foo';
+import { Animals, Numbers } from './constants';
 
 declare global {
   interface Window {
-    test1: string;
-    test2: string;
-    test3: string;
-    test4: string;
+    testFish: string;
+    testCat: string;
+    testDog: string;
+    testNumbers: string;
   }
 }
 
-window.test1 = `Fish ${Animals.Fish}, Cat ${Animals.Cat}`;
-window.test2 = `Fish ${Animals2.Fish}, Cat ${Animals2.Cat}`;
-window.test3 = `Fish ${Animals.Fish.toUpperCase()}, Cat ${Animals.Cat.toUpperCase()}`;
-window.test4 = `Fish ${Animals2.Fish.toString()}, Cat ${Animals2.Cat.toString()}`;
+window.testFish = `${Animals.Fish},${Animals.Fish.toUpperCase()}`;
+window.testCat = `${Animals.Cat},${Animals.Cat.toUpperCase()}`;
+window.testNumbers = `${Numbers.Zero},${Numbers.One},${Numbers.One.toFixed(1)}`;
+
+import('./constants2').then(({ Animals2 }) => {
+  window.testDog = `${Animals2.Dog},${Animals2.Dog.toUpperCase()}`;
+});

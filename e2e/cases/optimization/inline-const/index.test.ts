@@ -8,14 +8,14 @@ rspackOnlyTest(
       cwd: __dirname,
       page,
     });
-    await page.waitForFunction(() => window.test3);
-    expect(await page.evaluate(() => window.test1)).toBe('fish,FISH');
-    expect(await page.evaluate(() => window.test2)).toBe('cat,CAT');
-    expect(await page.evaluate(() => window.test3)).toBe('dog,DOG');
+    await page.waitForFunction(() => window.testDog);
+    expect(await page.evaluate(() => window.testFish)).toBe('fish,FISH');
+    expect(await page.evaluate(() => window.testCat)).toBe('cat,CAT');
+    expect(await page.evaluate(() => window.testDog)).toBe('dog,DOG');
 
     const indexJs = await rsbuild.getIndexBundle();
-    expect(indexJs).toContain('window.test1="fish,FISH"');
-    expect(indexJs).toContain('window.test2="cat,CAT"');
+    expect(indexJs).toContain('window.testFish="fish,FISH"');
+    expect(indexJs).toContain('window.testCat="cat,CAT"');
 
     await rsbuild.close();
   },
@@ -28,9 +28,9 @@ test('should import the constants as expected in development mode', async ({
     cwd: __dirname,
     page,
   });
-  await page.waitForFunction(() => window.test3);
-  expect(await page.evaluate(() => window.test1)).toBe('fish,FISH');
-  expect(await page.evaluate(() => window.test2)).toBe('cat,CAT');
-  expect(await page.evaluate(() => window.test3)).toBe('dog,DOG');
+  await page.waitForFunction(() => window.testDog);
+  expect(await page.evaluate(() => window.testFish)).toBe('fish,FISH');
+  expect(await page.evaluate(() => window.testCat)).toBe('cat,CAT');
+  expect(await page.evaluate(() => window.testDog)).toBe('dog,DOG');
   await rsbuild.close();
 });
