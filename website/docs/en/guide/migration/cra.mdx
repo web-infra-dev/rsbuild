@@ -89,15 +89,13 @@ By default, CRA outputs to the `build` directory, while Rsbuild's default output
 You can configure Rsbuild's [output.distPath.root](/config/output/dist-path) option to change the directory to `build`, in line with CRA:
 
 ```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-
-export default defineConfig({
+export default {
   output: {
     distPath: {
       root: 'build',
     },
   },
-});
+};
 ```
 
 > For more details, please refer to the [Output Files](/guide/basic/output-files) section.
@@ -129,12 +127,11 @@ const App = () => (
 You only need to install and register `@rsbuild/plugin-svgr`:
 
 ```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 
-export default defineConfig({
+export default {
   plugins: [pluginSvgr({ mixedImport: true })],
-});
+};
 ```
 
 Please refer to the [SVGR plugin](/plugins/list/plugin-svgr) documentation to learn how to use SVGR in Rsbuild.
@@ -169,14 +166,12 @@ By default, CRA uses Babel to compile dependencies in node_modules, but Rsbuild 
 To handle syntax compatibility issues caused by dependencies in node_modules, you can use the [source.include](/config/source/include#compile-node_modules) config to compile node_modules.
 
 ```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-
-export default defineConfig({
+export default {
   source: {
     // Compile all JS files and exclude core-js
     include: [{ not: /[\\/]core-js[\\/]/ }],
   },
-});
+};
 ```
 
 ## Environment variables
@@ -245,9 +240,7 @@ To resolve this error, you can use the following methods:
 For example, you can add the following asset modules config to get the same output result as CRA:
 
 ```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-
-export default defineConfig({
+export default {
   tools: {
     rspack: {
       module: {
@@ -265,7 +258,7 @@ export default defineConfig({
       },
     },
   },
-});
+};
 ```
 
 ## Remove react-app-polyfill
@@ -284,13 +277,11 @@ import 'react-app-polyfill/stable'; // [!code --]
 2. Configure [output.polyfill](/config/output/polyfill):
 
 ```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-
-export default defineConfig({
+export default {
   output: {
     polyfill: 'usage',
   },
-});
+};
 ```
 
 > Read [Browser compatibility](/guide/advanced/browser-compatibility) to understand how Rsbuild handles polyfills.
@@ -325,12 +316,11 @@ In addition to adding the `lint` command in `package.json`, you can also add the
 `@rsbuild/plugin-eslint` allows you to run ESLint during the build process.
 
 ```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
 import { pluginEslint } from '@rsbuild/plugin-eslint';
 
-export default defineConfig({
+export default {
   plugins: [pluginEslint()],
-});
+};
 ```
 
 After registering the plugin, ESLint will run automatically during development (`npm run dev`) and production builds (`npm run build`). The plugin will display ESLint warnings and errors in the console output.
@@ -387,9 +377,7 @@ module.exports = {
 - After migration:
 
 ```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-
-export default defineConfig({
+export default {
   tools: {
     rspack: {
       resolve: {
@@ -399,7 +387,7 @@ export default defineConfig({
         process.env.NODE_ENV === 'development' ? [new MyWebpackPlugin()] : [],
     },
   },
-});
+};
 ```
 
 ## Contents supplement

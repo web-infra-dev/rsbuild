@@ -56,15 +56,13 @@ For the few webpack configurations that need to be migrated, you can choose the 
 - Use the [tools.rspack](/config/tools/rspack) option (Rspack and webpack configurations are basically equivalent).
 
 ```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-
-export default defineConfig({
+export default {
   tools: {
     rspack: {
       plugins: [new SomeWebpackPlugin()],
     },
   },
-});
+};
 ```
 
 - Use encapsulated configs in Rsbuild, for example, options for css-loader can be set through [tools.cssLoader](/config/tools/css-loader).
@@ -76,16 +74,14 @@ export default defineConfig({
 webpack uses the `entry` field to set the build entry. In Rsbuild, you can use [source.entry](/config/source/entry) to set it.
 
 ```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-
-export default defineConfig({
+export default {
   source: {
     entry: {
       foo: './src/pages/foo/index.ts',
       bar: './src/pages/bar/index.ts',
     },
   },
-});
+};
 ```
 
 ### Cleaning up config
@@ -200,15 +196,13 @@ module.exports = {
 - Rsbuild configuration:
 
 ```ts title="rsbuild.config.ts"
-import { defineConfig } from '@rsbuild/core';
-
-export default defineConfig({
+export default {
   source: {
     transformImport: [
       { libraryName: 'some-library', libraryDirectory: 'es', style: true },
     ],
   },
-});
+};
 ```
 
 ## Validating results
