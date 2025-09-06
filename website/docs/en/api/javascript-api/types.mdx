@@ -1,6 +1,6 @@
 # Rsbuild types
 
-This section describes some of the type definitions provided by the Rsbuild.
+This section describes some of the type definitions that Rsbuild includes.
 
 ## RsbuildInstance
 
@@ -92,7 +92,7 @@ const context: RsbuildContext = rsbuild.context;
 
 Defines the structure and behavior of an Rsbuild plugin.
 
-Rsbuild plugins provide a standardized way to extend build functionality through lifecycle hooks and configuration modifications.
+Rsbuild plugins offer a standardized way to extend build functionality through lifecycle hooks and configuration modifications.
 
 ```ts
 import type { RsbuildPlugin } from '@rsbuild/core';
@@ -105,7 +105,7 @@ const myPlugin: RsbuildPlugin = {
 
 ## RsbuildPluginAPI
 
-The API interface provided to Rsbuild plugins through the `setup` function.
+The API interface that Rsbuild exposes to plugins through the `setup` function.
 
 It allows plugins to interact with the build process, modify configurations, register hooks, and access context information.
 

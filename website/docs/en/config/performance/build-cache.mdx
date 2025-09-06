@@ -77,7 +77,7 @@ export default {
 
 Add additional cache digests, the previous build cache will be invalidated when any value in the array changes.
 
-`cacheDigest` can be used to add some variables that will affect the build result, for example `process.env.SOME_ENV`.
+`cacheDigest` allows you to add variables that affect the build result, for example `process.env.SOME_ENV`.
 
 ```ts title="rsbuild.config.ts"
 export default defineConfig({
