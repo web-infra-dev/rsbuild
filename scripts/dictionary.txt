@@ -138,6 +138,8 @@ transpiling
 treeshaking
 tsbuildinfo
 tsdoc
+twoslash
+uncompiled
 unocss
 unpatch
 unplugin
