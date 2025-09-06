@@ -9,10 +9,59 @@
 
 ## 示例
 
-```ts
+### 基础用法
+
+启用严格端口模式，确保在指定端口被占用时开发服务器会失败：
+
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     strictPort: true,
   },
 };
 ```
+
+### 配合指定端口使用
+
+当你需要确保应用运行在特定端口上时（例如用于 API 集成或 Docker 容器）：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    port: 3000,
+    strictPort: true,
+  },
+};
+```
+
+使用此配置，如果端口 3000 已被占用，Rsbuild 将抛出错误，而不是自动使用端口 3001。
+
+### 环境特定配置
+
+仅在特定环境中启用严格端口模式，例如在端口一致性至关重要的 CI/CD 流水线中：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    port: process.env.PORT ? Number(process.env.PORT) : 3000,
+    strictPort:
+      process.env.NODE_ENV === 'production' || process.env.CI === 'true',
+  },
+};
+```
+
+### Docker 开发环境配置
+
+当使用配置了端口映射的 Docker 进行开发时，严格端口模式确保一致性：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    host: '0.0.0.0',
+    port: 8080,
+    strictPort: true,
+  },
+};
+```
+
+这可以防止当 Docker 配置将容器端口 8080 映射到主机时，开发服务器尝试使用不同端口而导致的问题。

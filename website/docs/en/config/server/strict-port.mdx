@@ -9,10 +9,59 @@ Set `strictPort` to `true` and Rsbuild will throw an exception when the port is 
 
 ## Example
 
-```ts
+### Basic usage
+
+Enable strict port mode to ensure the dev server fails if the specified port is occupied:
+
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     strictPort: true,
   },
 };
 ```
+
+### Use with specific port
+
+When you need to ensure your application runs on a specific port (e.g., for API integration or Docker containers):
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    port: 3000,
+    strictPort: true,
+  },
+};
+```
+
+With this configuration, if port 3000 is already in use, Rsbuild will throw an error instead of automatically using port 3001.
+
+### Environment-specific configuration
+
+Enable strict port only in specific environments, such as CI/CD pipelines where port consistency is critical:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    port: process.env.PORT ? Number(process.env.PORT) : 3000,
+    strictPort:
+      process.env.NODE_ENV === 'production' || process.env.CI === 'true',
+  },
+};
+```
+
+### Docker development setup
+
+When developing with Docker where port mapping is configured, strict port mode ensures consistency:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    host: '0.0.0.0',
+    port: 8080,
+    strictPort: true,
+  },
+};
+```
+
+This prevents issues when your Docker configuration maps container port 8080 to host, but the dev server tries to use a different port.
