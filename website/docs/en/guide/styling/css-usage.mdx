@@ -1,13 +1,13 @@
 # CSS
 
-Rsbuild provides out-of-the-box support for CSS, including PostCSS, CSS Modules, CSS preprocessors, CSS inlining, and CSS compression.
+Rsbuild includes out-of-the-box support for CSS, including PostCSS, CSS Modules, CSS preprocessors, CSS inlining, and CSS compression.
 
-Rsbuild also provides several configurations to customize CSS file processing rules.
+Rsbuild also includes several configurations to customize CSS file processing rules.
 
 ## Lightning CSS
 
 :::tip
-[Lightning CSS](https://lightningcss.dev) is a high-performance CSS parser, transformer and minifier written in Rust. It supports parsing and transforming many modern CSS features into syntax supported by target browsers, and provides better compression ratios.
+[Lightning CSS](https://lightningcss.dev) is a high-performance CSS parser, transformer and minifier written in Rust. It supports parsing and transforming many modern CSS features into syntax supported by target browsers, and delivers better compression ratios.
 :::
 
 Rsbuild uses Rspack's built-in [lightningcss-loader](https://rspack.rs/guide/features/builtin-lightningcss-loader) to transform CSS code. It automatically reads the project's [browserslist](/guide/advanced/browserslist) config and converts CSS code to syntax supported by target browsers.

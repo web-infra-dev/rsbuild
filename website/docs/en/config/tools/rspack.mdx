@@ -11,7 +11,7 @@ The built-in Rspack config in Rsbuild may change with iterations, and these chan
 
 ## Object type
 
-`tools.rspack` can be configured as an object to be deep merged with the built-in Rspack configuration through [webpack-merge](https://github.com/survivejs/webpack-merge).
+`tools.rspack` accepts an object that gets deep merged with the built-in Rspack configuration through [webpack-merge](https://github.com/survivejs/webpack-merge).
 
 For example, add `resolve.alias` configuration:
 
@@ -88,7 +88,7 @@ The second parameter of this function is an object, which contains some utility 
 
 - **Type:** `'development' | 'production' | 'test'`
 
-The `env` parameter can be used to determine whether the current environment is development, production or test. For example:
+The `env` parameter determines whether the current environment is development, production or test. For example:
 
 ```js
 export default {
