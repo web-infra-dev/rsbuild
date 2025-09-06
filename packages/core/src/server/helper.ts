@@ -2,7 +2,7 @@ import type { IncomingMessage, Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
 import type { Socket } from 'node:net';
 import os from 'node:os';
-import { posix, relative } from 'node:path';
+import { posix, relative, sep } from 'node:path';
 import { DEFAULT_DEV_HOST } from '../constants';
 import {
   addTrailingSlash,
@@ -10,7 +10,6 @@ import {
   getCommonParentPath,
   isFunction,
   removeLeadingSlash,
-  toPosixPath,
 } from '../helpers';
 import { logger } from '../logger';
 import type {
@@ -106,10 +105,7 @@ export const getRoutes = (context: InternalContext): Routes => {
 
   return environmentWithHtml.reduce<Routes>((prev, environmentContext) => {
     const { distPath, config } = environmentContext;
-    const distPrefix = relative(
-      toPosixPath(commonDistPath),
-      toPosixPath(distPath),
-    );
+    const distPrefix = relative(commonDistPath, distPath).split(sep).join('/');
 
     const routes = formatRoutes(
       environmentContext.htmlPaths,
