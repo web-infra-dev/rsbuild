@@ -7,6 +7,7 @@ import { DEFAULT_DEV_HOST } from '../constants';
 import {
   addTrailingSlash,
   color,
+  getCommonParentPath,
   isFunction,
   removeLeadingSlash,
 } from '../helpers';
@@ -91,23 +92,29 @@ export const stripBase = (path: string, base: string): string => {
 };
 
 export const getRoutes = (context: InternalContext): Routes => {
-  return Object.values(context.environments).reduce<Routes>(
-    (prev, environmentContext) => {
-      const { distPath, config } = environmentContext;
-      const distPrefix = relative(context.distPath, distPath)
-        .split(sep)
-        .join('/');
-
-      const routes = formatRoutes(
-        environmentContext.htmlPaths,
-        context.normalizedConfig!.server.base,
-        posix.join(distPrefix, config.output.distPath.html),
-        config.html.outputStructure,
-      );
-      return prev.concat(...routes);
-    },
-    [],
+  const environmentWithHtml = Object.values(context.environments).filter(
+    (item) => Object.keys(item.htmlPaths).length > 0,
   );
+  if (environmentWithHtml.length === 0) {
+    return [];
+  }
+
+  const commonDistPath = getCommonParentPath(
+    environmentWithHtml.map((item) => item.distPath),
+  );
+
+  return environmentWithHtml.reduce<Routes>((prev, environmentContext) => {
+    const { distPath, config } = environmentContext;
+    const distPrefix = relative(commonDistPath, distPath).split(sep).join('/');
+
+    const routes = formatRoutes(
+      environmentContext.htmlPaths,
+      context.normalizedConfig!.server.base,
+      posix.join(distPrefix, config.output.distPath.html),
+      config.html.outputStructure,
+    );
+    return prev.concat(...routes);
+  }, []);
 };
 
 /*

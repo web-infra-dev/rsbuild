@@ -19,51 +19,6 @@ test('should print server urls correctly by default', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('should print different environment server urls correctly', async ({
-  page,
-}) => {
-  const rsbuild = await dev({
-    cwd,
-    rsbuildConfig: {
-      environments: {
-        web: {
-          output: {
-            distPath: {
-              html: 'html0',
-            },
-          },
-        },
-        web1: {
-          source: {
-            entry: {
-              main: './src/index.js',
-            },
-          },
-          html: {
-            outputStructure: 'nested',
-          },
-          output: {
-            distPath: {
-              html: 'html1',
-            },
-          },
-        },
-      },
-    },
-  });
-
-  await page.goto(`http://localhost:${rsbuild.port}`);
-
-  await rsbuild.expectLog(
-    `-  index    http://localhost:${rsbuild.port}/html0/`,
-  );
-  await rsbuild.expectLog(
-    `-  main     http://localhost:${rsbuild.port}/html1/main`,
-  );
-
-  await rsbuild.close();
-});
-
 test('should not print server urls when printUrls is false', async ({
   page,
 }) => {
@@ -202,7 +157,7 @@ test('should print server urls when HTML is disabled but printUrls is a custom f
   await rsbuild.close();
 });
 
-test('should print server urls for multiple entries as expected', async ({
+test('should print server urls for multiple web environments with custom distPath.root', async ({
   page,
 }) => {
   const rsbuild = await dev({
@@ -243,5 +198,86 @@ test('should print server urls for multiple entries as expected', async ({
     `-  index1    http://localhost:${rsbuild.port}/.dist/web1/index1`,
   );
 
+  await rsbuild.close();
+});
+
+test('should print server urls for multiple web environments with custom distPath.html', async ({
+  page,
+}) => {
+  const rsbuild = await dev({
+    cwd,
+    rsbuildConfig: {
+      environments: {
+        web: {
+          output: {
+            distPath: {
+              html: 'html0',
+            },
+          },
+        },
+        web1: {
+          source: {
+            entry: {
+              main: './src/index.js',
+            },
+          },
+          html: {
+            outputStructure: 'nested',
+          },
+          output: {
+            distPath: {
+              html: 'html1',
+            },
+          },
+        },
+      },
+    },
+  });
+
+  await page.goto(`http://localhost:${rsbuild.port}`);
+
+  await rsbuild.expectLog(
+    `-  index    http://localhost:${rsbuild.port}/html0/`,
+  );
+  await rsbuild.expectLog(
+    `-  main     http://localhost:${rsbuild.port}/html1/main`,
+  );
+
+  await rsbuild.close();
+});
+
+test('should print server urls for web and node environments with custom distPath.root', async ({
+  page,
+}) => {
+  const rsbuild = await dev({
+    cwd,
+    rsbuildConfig: {
+      server: {
+        htmlFallback: false,
+      },
+      environments: {
+        web: {
+          output: {
+            distPath: {
+              root: 'dist/client',
+            },
+          },
+        },
+        node: {
+          output: {
+            target: 'node',
+            distPath: { root: './dist/server' },
+          },
+        },
+      },
+    },
+  });
+
+  await page.goto(`http://localhost:${rsbuild.port}`);
+  expect(await page.evaluate(() => window.test)).toBe(1);
+
+  await rsbuild.expectLog(`➜  Local:    http://localhost:${rsbuild.port}/`, {
+    strict: true,
+  });
   await rsbuild.close();
 });
