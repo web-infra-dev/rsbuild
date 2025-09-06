@@ -95,6 +95,10 @@ export const getRoutes = (context: InternalContext): Routes => {
   const environmentWithHtml = Object.values(context.environments).filter(
     (item) => Object.keys(item.htmlPaths).length > 0,
   );
+  if (environmentWithHtml.length === 0) {
+    return [];
+  }
+
   const commonDistPath = getCommonParentPath(
     environmentWithHtml.map((item) => item.distPath),
   );
