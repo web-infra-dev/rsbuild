@@ -64,6 +64,22 @@ export default {
 
 > 请参考 [dev.lazyCompilation](/config/dev/lazy-compilation) 了解更多。
 
+### 开启 native watcher
+
+启用 Rspack 的 [native watcher](https://rspack.rs/zh/config/experiments#experimentsnativewatcher) 可以提升开发模式下的 HMR 性能。
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: {
+      experiments: {
+        nativeWatcher: true,
+      },
+    },
+  },
+};
+```
+
 ### Source map 格式
 
 为了提供良好的调试体验，Rsbuild 在开发模式下默认使用 `cheap-module-source-map` 格式 source map，这是一种高质量的 source map 格式，会带来一定的性能开销。

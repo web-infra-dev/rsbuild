@@ -62,7 +62,23 @@ export default {
 };
 ```
 
-> Please refer to [dev.lazyCompilation](/config/dev/lazy-compilation) for more information.
+> Refer to [dev.lazyCompilation](/config/dev/lazy-compilation) for more information.
+
+### Enable native watcher
+
+Enabling Rspack's [native watcher](https://rspack.rs/config/experiments#experimentsnativewatcher) can improve HMR performance in development mode.
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: {
+      experiments: {
+        nativeWatcher: true,
+      },
+    },
+  },
+};
+```
 
 ### Source map format
 
