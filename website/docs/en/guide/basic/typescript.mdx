@@ -44,7 +44,7 @@ export type { SomeType } from './types';
 
 ## Preset types
 
-`@rsbuild/core` provides some preset type definitions, including CSS files, CSS Modules, static assets, `import.meta` and other types.
+`@rsbuild/core` includes some preset type definitions, including CSS files, CSS Modules, static assets, `import.meta` and other types.
 
 You can create a `src/env.d.ts` file to reference it:
 
@@ -52,13 +52,13 @@ You can create a `src/env.d.ts` file to reference it:
 /// <reference types="@rsbuild/core/types" />
 ```
 
-> See [types.d.ts](https://github.com/web-infra-dev/rsbuild/blob/main/packages/core/types.d.ts) for the complete preset type definitions provided by Rsbuild.
+> See [types.d.ts](https://github.com/web-infra-dev/rsbuild/blob/main/packages/core/types.d.ts) for the complete preset type definitions that Rsbuild includes.
 
 ## Type checking
 
 When transpiling TypeScript code using tools like SWC and Babel, type checking is not performed.
 
-Rsbuild provides the Type Check plugin, which runs TypeScript type checking in a separate process. The plugin internally integrates [ts-checker-rspack-plugin](https://github.com/rspack-contrib/ts-checker-rspack-plugin).
+Rsbuild includes the Type Check plugin, which runs TypeScript type checking in a separate process. The plugin internally integrates [ts-checker-rspack-plugin](https://github.com/rspack-contrib/ts-checker-rspack-plugin).
 
 Please refer to the [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check) for usage instructions.
 
