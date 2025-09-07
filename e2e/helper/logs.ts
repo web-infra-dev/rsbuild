@@ -5,9 +5,17 @@ import { BUILD_END_LOG } from './constants';
 
 type LogPattern = string | RegExp | ((log: string) => boolean);
 
-const matchPattern = (log: string, pattern: LogPattern) => {
+type MatchPatternOptions = { strict?: boolean };
+
+const matchPattern = (
+  log: string,
+  pattern: LogPattern,
+  options: MatchPatternOptions = {},
+) => {
   if (typeof pattern === 'string') {
-    return log.includes(pattern);
+    return options.strict
+      ? log.split('\n').some((line) => line.trim() === pattern.trim())
+      : log.includes(pattern);
   }
   if (pattern instanceof RegExp) {
     return pattern.test(log);
@@ -21,6 +29,7 @@ export const createLogHelper = () => {
   const logPatterns = new Set<{
     pattern: LogPattern;
     resolve: (value: boolean) => void;
+    options: MatchPatternOptions;
   }>();
 
   const clearLogs = () => {
@@ -30,15 +39,18 @@ export const createLogHelper = () => {
   const addLog = (input: string) => {
     const log = stripAnsi(input);
     logs.push(log);
-    for (const { pattern, resolve } of logPatterns) {
-      if (matchPattern(log, pattern)) {
+    for (const { pattern, resolve, options } of logPatterns) {
+      if (matchPattern(log, pattern, options)) {
         resolve(true);
       }
     }
   };
 
-  const expectLog = async (pattern: LogPattern) => {
-    if (logs.some((log) => matchPattern(log, pattern))) {
+  const expectLog = async (
+    pattern: LogPattern,
+    options: MatchPatternOptions = {},
+  ) => {
+    if (logs.some((log) => matchPattern(log, pattern, options))) {
       return true;
     }
 
@@ -57,6 +69,7 @@ export const createLogHelper = () => {
 
       const patternEntry = {
         pattern,
+        options,
         resolve: (value: boolean) => {
           clearTimeout(timeoutId);
           logPatterns.delete(patternEntry);
