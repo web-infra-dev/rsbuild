@@ -166,48 +166,59 @@ export type ToolsWebpackChainConfig = OneOrMany<
 
 export interface ToolsConfig {
   /**
-   * Configure bundler config base on [rspack-chain](https://github.com/rspack-contrib/rspack-chain)
+   * Configure bundler config base on rspack-chain.
+   * @default undefined
    */
   bundlerChain?: ToolsBundlerChainConfig;
   /**
-   * Modify the options of [css-loader](https://github.com/webpack-contrib/css-loader).
+   * Modify the options of css-loader.
+   * @default undefined
    */
   cssLoader?: ToolsCSSLoaderConfig;
   /**
-   * Modify the options of [postcss-loader](https://github.com/webpack-contrib/postcss-loader).
+   * Modify the options of postcss-loader.
+   * @default undefined
    */
   postcss?: ToolsPostCSSLoaderConfig;
   /**
-   * Modify the options of [style-loader](https://github.com/webpack-contrib/style-loader).
+   * Modify the options of style-loader.
+   * @default undefined
    */
   styleLoader?: ToolsStyleLoaderConfig;
   /**
    * Configure the html-rspack-plugin.
+   * @default undefined
    */
   htmlPlugin?: boolean | ToolsHtmlPluginConfig;
   /**
-   * Configure the `builtin:swc-loader` of Rspack.
+   * Configure the builtin:swc-loader of Rspack.
+   * @default undefined
    */
   swc?: ToolsSwcConfig;
   /**
-   * Configure the `builtin:lightningcss-loader` of Rspack.
+   * Configure the builtin:lightningcss-loader of Rspack.
+   * @default undefined
    */
   lightningcssLoader?: boolean | ConfigChain<Rspack.LightningcssLoaderOptions>;
   /**
-   * Modify the options of [CssExtractRspackPlugin](https://rspack.rs/plugins/rspack/css-extract-rspack-plugin).
+   * Modify the options of CssExtractRspackPlugin.
+   * @default undefined
    */
   cssExtract?: CSSExtractOptions;
   /**
    * Configure Rspack.
+   * @default undefined
    */
   rspack?: ToolsRspackConfig;
   /**
-   * Configure [webpack](https://webpack.js.org/).
+   * Configure webpack.
+   * @default undefined
    * @requires webpack
    */
   webpack?: ToolsWebpackConfig;
   /**
-   * Configure webpack by [rspack-chain](https://github.com/rspack-contrib/rspack-chain).
+   * Configure webpack by rspack-chain.
+   * @default undefined
    * @requires webpack
    */
   webpackChain?: ToolsWebpackChainConfig;
@@ -571,14 +582,13 @@ export type SriOptions = {
 
 export interface SecurityConfig {
   /**
-   * Adding an nonce attribute to sub-resources introduced by HTML allows the browser to
-   * verify the nonce of the introduced resource, thus preventing xss.
+   * Adding a nonce attribute to the scripts resources introduced for HTML. This allows the browser to determine whether the script can be executed when it parses inline scripts with matching nonce values.
+   * @default undefined
    */
   nonce?: string;
   /**
-   * Adding an integrity attribute (`integrity`) to sub-resources introduced by HTML
-   * allows the browser to verify the integrity of the introduced resource, thus preventing
-   * tampering with the downloaded resource.
+   * Adding an integrity attribute to script and link tags introduced by HTML allows the browser to verify the integrity of the introduced resource, thus preventing tampering with the downloaded resource.
+   * @default undefined
    */
   sri?: SriOptions;
 }
@@ -1709,16 +1719,17 @@ export type WriteToDisk = boolean | ((filename: string) => boolean);
 export interface DevConfig {
   /**
    * Whether to enable Hot Module Replacement.
+   * @default true
    */
   hmr?: boolean;
   /**
-   * Whether to reload the page when file changes are detected.
+   * Whether to reload the page when source files are changed.
+   * @default true
    */
   liveReload?: boolean;
   /**
-   * Set the URL prefix of static assets in development mode,
-   * similar to the [output.publicPath](https://rspack.rs/config/output#outputpublicpath)
-   * config of Rspack.
+   * Set the URL prefix of static assets in development mode, similar to the output.publicPath config of Rspack.
+   * @default server.base
    */
   assetPrefix?: string | boolean;
   /**
@@ -1728,6 +1739,7 @@ export interface DevConfig {
   progressBar?: boolean | ProgressBarConfig;
   /**
    * Config for Rsbuild client code.
+   * @default undefined
    */
   client?: ClientConfig;
   /**
@@ -1753,6 +1765,7 @@ export interface DevConfig {
       };
   /**
    * Used to add custom middleware to the dev server.
+   * @default undefined
    */
   setupMiddlewares?: SetupMiddlewaresFn | SetupMiddlewaresFn[];
   /**
@@ -1761,8 +1774,8 @@ export interface DevConfig {
    */
   writeToDisk?: WriteToDisk;
   /**
-   * This option allows you to configure a list of globs/directories/files to watch for
-   * file changes.
+   * Watch specified files and directories for changes. When a file change is detected, it can trigger a page reload or restart the dev server.
+   * @default undefined
    */
   watchFiles?: WatchFiles | WatchFiles[];
   /**
@@ -1785,14 +1798,14 @@ export type NormalizedDevConfig = Omit<DevConfig, 'watchFiles'> &
 
 export interface ResolveConfig {
   /**
-   * Force Rsbuild to resolve the specified packages from project root,
-   * which is useful for deduplicating packages and reducing the bundle size.
+   * Force Rsbuild to resolve the specified packages from project root, which is useful for deduplicating packages and reducing the bundle size.
+   * @default undefined
    */
   dedupe?: string[];
   /**
-   * Set the alias for the module path, which is used to simplify the import path or
-   * redirect the module reference.
-   * Similar to the [resolve.alias](https://rspack.rs/config/resolve) config of Rspack.
+   * Set the alias for the module path, which is used to simplify the import path or redirect the module reference.
+   * Similar to the resolve.alias config of Rspack.
+   * @default { '@swc/helpers': path.dirname(require.resolve('@swc/helpers/package.json')) }
    */
   alias?: ConfigChain<Alias>;
   /**
