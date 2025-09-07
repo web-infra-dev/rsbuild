@@ -9,10 +9,18 @@ const NETWORK_LOG_REGEX =
 test('should print server urls correctly by default', async ({ page }) => {
   const rsbuild = await dev({
     cwd,
+    rsbuildConfig: {
+      server: {
+        htmlFallback: false,
+      },
+    },
   });
 
-  await page.goto(`http://localhost:${rsbuild.port}`);
-  await rsbuild.expectLog(`➜  Local:    http://localhost:${rsbuild.port}/`);
+  const url = `http://localhost:${rsbuild.port}/`;
+  await page.goto(url);
+  expect(await page.evaluate(() => window.test)).toBe(1);
+
+  await rsbuild.expectLog(`➜  Local:    ${url}`);
   await rsbuild.expectLog(NETWORK_LOG_REGEX);
 
   expect(rsbuild.logs.find((log) => log.includes('/./'))).toBeFalsy();
@@ -89,13 +97,16 @@ test('allow only listen to localhost for dev', async ({ page }) => {
     rsbuildConfig: {
       server: {
         host: 'localhost',
+        htmlFallback: false,
       },
     },
   });
 
-  await page.goto(`http://localhost:${rsbuild.port}`);
+  const url = `http://localhost:${rsbuild.port}/`;
+  await page.goto(url);
+  expect(await page.evaluate(() => window.test)).toBe(1);
 
-  await rsbuild.expectLog(`➜  Local:    http://localhost:${rsbuild.port}`);
+  await rsbuild.expectLog(`➜  Local:    ${url}`);
   rsbuild.expectNoLog(NETWORK_LOG_REGEX);
 
   await rsbuild.close();
@@ -108,13 +119,16 @@ test('allow only listen to localhost for prod preview', async ({ page }) => {
     rsbuildConfig: {
       server: {
         host: 'localhost',
+        htmlFallback: false,
       },
     },
   });
 
-  await page.goto(`http://localhost:${rsbuild.port}`);
+  const url = `http://localhost:${rsbuild.port}/`;
+  await page.goto(url);
+  expect(await page.evaluate(() => window.test)).toBe(1);
 
-  await rsbuild.expectLog(`➜  Local:    http://localhost:${rsbuild.port}`);
+  await rsbuild.expectLog(`➜  Local:    ${url}`);
   rsbuild.expectNoLog(NETWORK_LOG_REGEX);
 
   await rsbuild.close();
@@ -207,6 +221,9 @@ test('should print server urls for multiple web environments with custom distPat
   const rsbuild = await dev({
     cwd,
     rsbuildConfig: {
+      server: {
+        htmlFallback: false,
+      },
       environments: {
         web: {
           output: {
@@ -234,14 +251,17 @@ test('should print server urls for multiple web environments with custom distPat
     },
   });
 
-  await page.goto(`http://localhost:${rsbuild.port}`);
+  const url1 = `http://localhost:${rsbuild.port}/html0/`;
+  const url2 = `http://localhost:${rsbuild.port}/html1/main`;
 
-  await rsbuild.expectLog(
-    `-  index    http://localhost:${rsbuild.port}/html0/`,
-  );
-  await rsbuild.expectLog(
-    `-  main     http://localhost:${rsbuild.port}/html1/main`,
-  );
+  await page.goto(url1);
+  expect(await page.evaluate(() => window.test)).toBe(1);
+
+  await page.goto(url2);
+  expect(await page.evaluate(() => window.test)).toBe(1);
+
+  await rsbuild.expectLog(`-  index    ${url1}`);
+  await rsbuild.expectLog(`-  main     ${url2}`);
 
   await rsbuild.close();
 });
