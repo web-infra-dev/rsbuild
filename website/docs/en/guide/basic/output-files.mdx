@@ -25,14 +25,14 @@ dist
 
 The most common output files are HTML, JS, and CSS files:
 
-- HTML files: generated in the root of the dist directory by default.
-- JS files: generated in the `static/js` directory by default.
-- CSS files: generated in the `static/css` directory by default.
+- HTML files: written to the root of the dist directory by default.
+- JS files: written to the `static/js` directory by default.
+- CSS files: written to the `static/css` directory by default.
 
 Additional files may be generated alongside JS and CSS files:
 
-- License files: contain open source license information, generated in the same directory as the JS file with a `.LICENSE.txt` suffix.
-- Source map files: contain source code mapping information, generated in the same directory as JS and CSS files with a `.map` suffix.
+- License files: contain open source license information, written to the same directory as the JS file with a `.LICENSE.txt` suffix.
+- Source map files: contain source code mapping information, written to the same directory as JS and CSS files with a `.map` suffix.
 
 In the filename, `[name]` represents the entry name for this file, such as `index` or `main`. `[hash]` is a hash value generated based on the file content.
 
@@ -62,7 +62,7 @@ Rsbuild provides several configuration options to modify the directory or filena
 
 ## Static assets
 
-When importing static assets such as images, SVG, fonts, media, etc., in your code, they are generated in the `dist/static` directory and automatically organized into subdirectories by file type:
+When importing static assets such as images, SVG, fonts, media, etc., in your code, they are written to the `dist/static` directory and automatically organized into subdirectories by file type:
 
 ```bash
 dist
@@ -80,7 +80,7 @@ dist
         └── qux.[hash].mp4
 ```
 
-Use the [output.distPath](/config/output/dist-path) config to store these static assets in a single directory. For example, to organize them in an `assets` directory:
+Use the [output.distPath](/config/output/dist-path) config to write these static assets to a single directory. For example, to organize them in an `assets` directory:
 
 ```ts
 export default {
@@ -120,7 +120,7 @@ Node.js outputs typically contain only JS files, without HTML or CSS. The JS fil
 
 Modify the output path of Node.js files using the [environments](/config/environments) config.
 
-For example, to store Node.js files in the `server` directory:
+For example, to write Node.js files to the `server` directory:
 
 ```ts
 export default {
