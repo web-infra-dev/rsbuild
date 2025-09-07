@@ -283,24 +283,28 @@ export interface SourceConfig {
   entry?: RsbuildEntry;
   /**
    * Exclude JavaScript or TypeScript files that do not need to be compiled by SWC.
+   * @default []
    */
   exclude?: RuleSetCondition[];
   /**
-   * Add a script before the entry file of each page.
-   * This script will be executed before the page code.
-   * It can be used to execute global logics, such as polyfill injection.
+   * Add a script before the entry file of each page. This script will be executed before the page code.
+   * Use this to execute global logic, such as injecting polyfills, setting global styles, etc.
+   * @default undefined
    */
   preEntry?: string | string[];
   /**
-   * Used to replaces variables in your code with other values or expressions at compile time.
+   * Replaces variables in your code with other values or expressions at compile time. This is useful for enabling different behavior between development and production builds.
+   * @default {}
    */
   define?: Define;
   /**
-   * Configuring decorators syntax.
+   * Used to configure the decorators syntax.
+   * @default { version: '2022-03' }
    */
   decorators?: Decorators;
   /**
-   * Used to import the code and style of the component library on demand.
+   * Transform the import path to modularly import subpaths of third-party packages. The functionality is similar to babel-plugin-import.
+   * @default undefined
    */
   transformImport?: TransformImportFn | (TransformImport | TransformImportFn)[];
   /**
@@ -453,7 +457,8 @@ export interface ServerConfig {
    */
   compress?: boolean | CompressOptions;
   /**
-   * Serving static files from the directory (by default 'public' directory)
+   * By default, Rsbuild uses the `public` directory for serving public assets. Files in this directory are served at server.base path.
+   * @default { name: 'public', copyOnBuild: 'auto', watch: false }
    */
   publicDir?: PublicDir;
   /**
@@ -473,7 +478,8 @@ export interface ServerConfig {
    */
   host?: string;
   /**
-   * Adds headers to all responses.
+   * Adds headers to all responses sent from Rsbuild server. This configuration directly leverages Node.js response.setHeader() method under the hood.
+   * @default undefined
    */
   headers?: Record<string, string | string[]>;
   /**
@@ -482,9 +488,8 @@ export interface ServerConfig {
    */
   htmlFallback?: HtmlFallback;
   /**
-   * Used to support routing based on the history API.
-   * When a user visits a path that does not exist, it will automatically
-   * return a specified HTML file to avoid a 404 error.
+   * Used to support routing based on the history API. When a user visits a path that does not exist, it will automatically return a specified HTML file to avoid a 404 error.
+   * @default false
    */
   historyApiFallback?: boolean | HistoryApiFallbackOptions;
   /**
@@ -509,8 +514,8 @@ export interface ServerConfig {
    */
   cors?: boolean | cors.CorsOptions;
   /**
-   * Configure proxy rules for the dev server or preview server to proxy requests to
-   * the specified service.
+   * Configure proxy rules for the dev server or preview server to proxy requests to the specified service.
+   * @default undefined
    */
   proxy?: ProxyConfig;
   /**
@@ -715,11 +720,13 @@ export type PrefetchOptions = Omit<ResourceHintsOptions, 'dedupe'>;
 export interface PerformanceConfig {
   /**
    * Whether to remove `console.[methodName]` in production build.
+   * @default false
    */
   removeConsole?: boolean | ConsoleType[];
 
   /**
-   * Whether to remove the locales of [moment.js](https://momentjs.com/).
+   * Whether to remove the locales of moment.js.
+   * @default false
    */
   removeMomentLocale?: boolean;
 
@@ -731,16 +738,19 @@ export interface PerformanceConfig {
 
   /**
    * Whether to print the file sizes after production build.
+   * @default true
    */
   printFileSize?: PrintFileSizeOptions | boolean;
 
   /**
    * Configure the chunk splitting strategy.
+   * @default { strategy: 'split-by-experience' }
    */
   chunkSplit?: ChunkSplit;
 
   /**
-   * Analyze the size of output files.
+   * Used to enable the webpack-bundle-analyzer plugin to analyze the size of the output.
+   * @default undefined
    */
   bundleAnalyze?: BundleAnalyzerPlugin.Options;
 
@@ -794,8 +804,8 @@ export interface PerformanceConfig {
   prefetch?: true | PrefetchOptions;
 
   /**
-   * Whether capture timing information for each module,
-   * same as the [profile](https://rspack.rs/config/other-options#profile) config of Rspack.
+   * Whether to capture timing information for each module, the same as the profile config of Rspack.
+   * @default false
    */
   profile?: boolean;
 }
@@ -1161,7 +1171,7 @@ export type CleanDistPath = boolean | 'auto' | CleanDistPathObject;
 
 export interface OutputConfig {
   /**
-   * Specify build target to run in specified environment.
+   * Setting the build target for Rsbuild.
    * @default 'web'
    */
   target?: RsbuildTarget;
@@ -1201,8 +1211,8 @@ export interface OutputConfig {
   assetPrefix?: string;
   /**
    * Set the size threshold to inline static assets such as images and fonts.
-   * By default, static assets will be Base64 encoded and inline into the page if
-   * the size is less than 4KiB.
+   * By default, static assets will be Base64 encoded and inline into the page if the size is less than 4KiB.
+   * @default { svg: 4096, font: 4096, image: 4096, media: 4096, assets: 4096 }
    */
   dataUriLimit?: number | DataUriLimit;
   /**
@@ -1872,7 +1882,8 @@ export interface EnvironmentConfig {
    */
   moduleFederation?: ModuleFederationConfig;
   /**
-   * Configure Rsbuild plugins.
+   * Used to register Rsbuild plugins.
+   * @default undefined
    */
   plugins?: RsbuildPlugins;
 }
@@ -1884,7 +1895,8 @@ export type LogLevel = 'info' | 'warn' | 'error' | 'silent';
  * */
 export interface RsbuildConfig extends EnvironmentConfig {
   /**
-   * Specify the Rsbuild build mode.
+   * Specify the build mode for Rsbuild, as each mode has different default behavior and optimizations. For example, the `production` mode will minify code by default.
+   * @default Depends on `process.env.NODE_ENV`: `'production'` if NODE_ENV is 'production', `'development'` if NODE_ENV is 'development', otherwise `'none'`
    */
   mode?: RsbuildMode;
   /**
@@ -1893,11 +1905,11 @@ export interface RsbuildConfig extends EnvironmentConfig {
    */
   root?: string;
   /**
-   * Specify the log level.
-   * - 'info': show 'info', 'start', 'success', 'ready', 'warn' and 'error' logs.
-   * - 'warn': show 'warn' and 'error' logs.
-   * - 'error': only show 'error' logs.
-   * - 'silent': disable all logs.
+   * Specify the log level of Rsbuild.
+   * - 'info': Output all logs.
+   * - 'warn': Output `warn` and `error` level logs.
+   * - 'error': Output `error` level logs.
+   * - 'silent': Do not output any logs.
    * @default 'info'
    */
   logLevel?: LogLevel;
@@ -1911,7 +1923,8 @@ export interface RsbuildConfig extends EnvironmentConfig {
    */
   server?: ServerConfig;
   /**
-   * Configure rsbuild config by environment.
+   * Rsbuild supports building outputs for multiple environments. You can use `environments` to define different Rsbuild configurations for each environment.
+   * @default undefined
    */
   environments?: {
     [name: string]: EnvironmentConfig;
