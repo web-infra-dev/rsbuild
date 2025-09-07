@@ -58,7 +58,7 @@ export type { SomeType } from './types';
 
 在进行 TypeScript 转译时，SWC 和 Babel 等工具不会执行类型检查。
 
-Rsbuild 提供了 Type Check 插件，用于在单独的进程中运行 TypeScript 类型检查，插件内部集成了 [ts-checker-rspack-plugin](https://github.com/rspack-contrib/ts-checker-rspack-plugin)。
+要启用类型检查，请使用 [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check) 插件。该插件会在单独的进程中运行 TypeScript 类型检查，并在内部集成了 [ts-checker-rspack-plugin](https://github.com/rspack-contrib/ts-checker-rspack-plugin)。
 
 请参考 [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check) 了解用法。
 
