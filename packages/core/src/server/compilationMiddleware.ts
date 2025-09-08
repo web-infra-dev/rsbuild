@@ -227,7 +227,7 @@ export const getCompilationMiddleware = async ({
 
   applyToCompiler(compiler, setupCompiler);
 
-  return await devMiddleware(compiler, {
+  return devMiddleware(compiler, {
     publicPath: '/',
     writeToDisk: resolveWriteToDiskConfig(config.dev, environments),
   });
