@@ -1,3 +1,11 @@
+/**
+ * The dev middleware is modified based on
+ * https://github.com/webpack/webpack-dev-middleware
+ *
+ * MIT Licensed
+ * Copyright JS Foundation and other contributors
+ * https://github.com/webpack/webpack-dev-middleware/blob/master/LICENSE
+ */
 import type { Stats as FSStats, ReadStream } from 'node:fs';
 import type {
   IncomingMessage,
