@@ -139,13 +139,13 @@ export type WithoutUndefined<T, K extends keyof T> = T & {
   [P in K]-?: NonNullable<T[P]>;
 };
 
-export function devMiddleware<
+export async function devMiddleware<
   RequestInternal extends IncomingMessage = IncomingMessage,
   ResponseInternal extends ServerResponse = ServerResponse,
 >(
   compiler: Compiler | MultiCompiler,
   options: Options = {},
-): API<RequestInternal, ResponseInternal> {
+): Promise<API<RequestInternal, ResponseInternal>> {
   const context: WithOptional<Context, 'watching' | 'outputFileSystem'> = {
     state: false,
     // eslint-disable-next-line no-undefined
@@ -161,7 +161,7 @@ export function devMiddleware<
     setupWriteToDisk(context);
   }
 
-  setupOutputFileSystem(context);
+  await setupOutputFileSystem(context);
 
   const filledContext = context as unknown as FilledContext;
 

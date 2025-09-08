@@ -1,5 +1,6 @@
 import { createRequire } from 'node:module';
 import type { Compiler, MultiCompiler, Stats } from '@rspack/core';
+import { devMiddleware } from '../dev-middleware';
 import { applyToCompiler } from '../helpers';
 import type {
   Connect,
@@ -193,7 +194,6 @@ export const getCompilationMiddleware = async ({
   environments: Record<string, EnvironmentContext>;
   resolvedPort: number;
 }): Promise<CompilationMiddleware> => {
-  const { devMiddleware } = await import('../dev-middleware');
   const resolvedHost = await resolveHostname(config.server.host);
 
   const setupCompiler = (compiler: Compiler, index: number) => {
@@ -227,7 +227,7 @@ export const getCompilationMiddleware = async ({
 
   applyToCompiler(compiler, setupCompiler);
 
-  return devMiddleware(compiler, {
+  return await devMiddleware(compiler, {
     publicPath: '/',
     writeToDisk: resolveWriteToDiskConfig(config.dev, environments),
   });

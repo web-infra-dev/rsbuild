@@ -1,14 +1,16 @@
 import type { MultiCompiler } from '@rspack/core';
-import { createFsFromVolume, Volume } from 'memfs';
 import type { Context, OutputFileSystem, WithOptional } from '../index';
 
-export function setupOutputFileSystem(
+export async function setupOutputFileSystem(
   context: WithOptional<Context, 'watching' | 'outputFileSystem'>,
-): void {
+): Promise<void> {
   // TODO: refine concrete fs type returned by memfs to match OutputFileSystem
   let outputFileSystem: OutputFileSystem | any;
 
   if (context.options.writeToDisk !== true) {
+    const { createFsFromVolume, Volume } = await import(
+      '../../../compiled/memfs/index.js'
+    );
     outputFileSystem = createFsFromVolume(new Volume());
   } else {
     const isMultiCompiler = (context.compiler as MultiCompiler).compilers;
