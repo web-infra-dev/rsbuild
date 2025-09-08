@@ -1,5 +1,5 @@
 const cacheStore: WeakMap<
-  Function,
+  (...args: any[]) => void,
   Map<string, { data: unknown }>
 > = new WeakMap();
 

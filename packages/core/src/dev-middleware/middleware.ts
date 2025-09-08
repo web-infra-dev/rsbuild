@@ -162,7 +162,7 @@ export function wrapper<
         res.removeHeader(headers[i]);
       }
 
-      if (options && options.headers) {
+      if (options?.headers) {
         const keys = Object.keys(options.headers);
         for (let i = 0; i < keys.length; i++) {
           const key = keys[i];

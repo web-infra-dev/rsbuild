@@ -12,7 +12,7 @@ export function ready<Request extends IncomingMessage>(
     return;
   }
 
-  const name = (req && (req as any).url) || (callback as Function).name;
+  const name = (req && (req as any).url) || callback.name;
 
   logger.debug(
     `[rsbuild-dev-middleware] wait until bundle finished${name ? `: ${name}` : ''}`,
