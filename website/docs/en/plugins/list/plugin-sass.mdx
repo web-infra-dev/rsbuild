@@ -168,12 +168,12 @@ pluginSass({
 ```
 
 :::tip
-Sass's `legacy` API has been deprecated and will be removed in Sass 2.0. It is recommended to migrate to the `modern-compiler` API. For more details, see [Sass - Legacy JS API](https://sass-lang.com/documentation/breaking-changes/legacy-js-api/).
+Sass's `legacy` API has been deprecated and will be removed in Sass 2.0. We recommend migrating to the `modern-compiler` API. For more details, see [Sass - Legacy JS API](https://sass-lang.com/documentation/breaking-changes/legacy-js-api/).
 :::
 
 ### Ignore Sass deprecation warnings
 
-Sass uses warning logs to notify you of deprecated usages that will be removed in future major releases of Sass. It is recommended to make changes as suggested by the logs. If you do not want to see these logs, you can ignore these warnings by using the [silenceDeprecations](https://sass-lang.com/documentation/js-api/interfaces/stringoptions/#silenceDeprecations) option in Sass.
+Sass uses warning logs to highlight deprecated patterns that will be removed in future major releases. We recommend updating your code according to these warnings. If you do not want to see them, you can ignore the warnings by using the [silenceDeprecations](https://sass-lang.com/documentation/js-api/interfaces/stringoptions/#silenceDeprecations) option in Sass.
 
 For example, `@import` has been deprecated in Sass. If you use this syntax, Sass will output the following prompt:
 

@@ -247,7 +247,7 @@ When `mixedImport` is enabled, `svgrOptions.exportType` defaults to `'named'` if
 
 #### Limitations
 
-It is recommended to use `?react` to transform SVG to React component instead of using mixed import. Because mixed import has the following limitations:
+We recommend using `?react` to convert an SVG into a React component rather than relying on mixed imports, which have the following limitations:
 
 1. Increased bundle size: Mixed import causes a single SVG module to be compiled into two types of code (even if some exports are not used), which will increase the bundle size.
 2. Slow down compiling: Mixed import will cause extra compilation overhead. Even if the ReactComponent export is not used in the code, the SVG file will still be compiled by SVGR. And SVGR is based on Babel, which has a high performance overhead.
