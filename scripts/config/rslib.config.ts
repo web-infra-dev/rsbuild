@@ -25,7 +25,7 @@ export const esmConfig: LibConfig = {
   syntax: 'es2022',
   dts: {
     build: true,
-    tsgo: Boolean(!process.env.CI),
+    tsgo: !process.env.CI,
   },
   output: {
     minify: nodeMinifyConfig,
