@@ -32,7 +32,7 @@ export function setupHooks(
 
   const compiler = (context as unknown as Context).compiler as any;
 
-  compiler.hooks.watchRun.tap('webpack-dev-middleware', invalid);
-  compiler.hooks.invalid.tap('webpack-dev-middleware', invalid);
-  compiler.hooks.done.tap('webpack-dev-middleware', done);
+  compiler.hooks.watchRun.tap('rsbuild-dev-middleware', invalid);
+  compiler.hooks.invalid.tap('rsbuild-dev-middleware', invalid);
+  compiler.hooks.done.tap('rsbuild-dev-middleware', done);
 }
