@@ -7,7 +7,7 @@ import { createRequire } from 'node:module';
  * We can remove this module once `@rspack/core` provides an ESM bundle in the future.
  */
 const require = createRequire(import.meta.url);
-const rspack =
+const rspack: (typeof import('@rspack/core'))['rspack'] =
   require('@rspack/core') as (typeof import('@rspack/core'))['rspack'];
 
 export { rspack };

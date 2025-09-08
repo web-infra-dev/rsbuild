@@ -95,6 +95,7 @@ export default defineConfig({
       plugins: [pluginFixDtsTypes],
       dts: {
         build: true,
+        tsgo: true,
       },
       output: {
         minify: nodeMinifyConfig,
