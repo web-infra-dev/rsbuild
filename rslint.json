@@ -37,7 +37,8 @@
       "@typescript-eslint/no-redundant-type-constituents": "off",
       "@typescript-eslint/no-implied-eval": "off",
       "@typescript-eslint/prefer-promise-reject-errors": "off",
-      "@typescript-eslint/no-empty-function": "off"
+      "@typescript-eslint/no-empty-function": "off",
+      "@typescript-eslint/no-explicit-any": "off"
     }
   }
 ]
