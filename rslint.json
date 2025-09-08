@@ -1,7 +1,11 @@
 [
   {
     "language": "javascript",
-    "ignores": ["**/dist-types/**", "**/compiled/**"],
+    "ignores": [
+      "**/dist-types/**",
+      "**/compiled/**",
+      "**/src/dev-middleware/**"
+    ],
     "languageOptions": {
       "parserOptions": {
         "project": [
