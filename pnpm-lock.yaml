@@ -642,9 +642,6 @@ importers:
       '@types/ws':
         specifier: ^8.18.1
         version: 8.18.1
-      '@typescript/native-preview':
-        specifier: 7.0.0-dev.20250907.1
-        version: 7.0.0-dev.20250907.1
       browserslist-load-config:
         specifier: 1.0.1
         version: 1.0.1
@@ -1139,6 +1136,9 @@ importers:
       '@types/node':
         specifier: ^22.18.1
         version: 22.18.1
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20250907.1
+        version: 7.0.0-dev.20250907.1
       rsbuild-plugin-arethetypeswrong:
         specifier: 0.1.1
         version: 0.1.1(@rsbuild/core@packages+core)(typescript@5.9.2)

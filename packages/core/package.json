@@ -60,7 +60,6 @@
   },
   "devDependencies": {
     "@jridgewell/remapping": "^2.3.5",
-    "@typescript/native-preview": "7.0.0-dev.20250907.1",
     "@rslib/core": "0.13.0",
     "@types/connect": "3.4.38",
     "@types/cors": "^2.8.19",
