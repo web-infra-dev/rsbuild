@@ -50,8 +50,8 @@ importers:
         specifier: ^0.0.4
         version: 0.0.4
       heading-case:
-        specifier: ^1.0.1
-        version: 1.0.1
+        specifier: ^1.0.2
+        version: 1.0.2
       nano-staged:
         specifier: ^0.8.0
         version: 0.8.0
@@ -4470,8 +4470,8 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
 
-  heading-case@1.0.1:
-    resolution: {integrity: sha512-CTs1K2eJy+BrwG35AmPH80Jd15BD6waTEOhex0WWirylAWfdoPYD/gv5H+TXXGFsR9DyOWNWUMLU8JRsZctkcQ==}
+  heading-case@1.0.2:
+    resolution: {integrity: sha512-/auUg52lwuEOlb3IhtTj5UQvqdr3J/e07ibuK+YU/JI8QI+FVWsMbxGbYbwSpD5qLXXUAs2MzdiBt1/K/Q0fTw==}
     hasBin: true
 
   homedir-polyfill@1.0.3:
@@ -10359,7 +10359,7 @@ snapshots:
 
   he@1.2.0: {}
 
-  heading-case@1.0.1: {}
+  heading-case@1.0.2: {}
 
   homedir-polyfill@1.0.3:
     dependencies:

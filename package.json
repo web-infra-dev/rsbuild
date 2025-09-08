@@ -42,7 +42,7 @@
     "@types/node": "^22.18.1",
     "cross-env": "^10.0.0",
     "cspell-ban-words": "^0.0.4",
-    "heading-case": "^1.0.1",
+    "heading-case": "^1.0.2",
     "nano-staged": "^0.8.0",
     "nx": "^21.4.1",
     "prettier": "^3.6.2",
