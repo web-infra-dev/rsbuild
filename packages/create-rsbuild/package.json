@@ -40,7 +40,7 @@
     "@rsbuild/plugin-svelte": "workspace:*",
     "@rsbuild/plugin-vue": "workspace:*",
     "@rslib/core": "0.12.4",
-    "@types/node": "^22.18.0",
+    "@types/node": "^22.18.1",
     "typescript": "^5.9.2"
   },
   "engines": {

@@ -34,12 +34,12 @@
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.2.2",
+    "@biomejs/biome": "^2.2.3",
     "@rsbuild/config": "workspace:*",
-    "@rslint/core": "^0.1.12",
-    "@rstest/core": "^0.3.1",
+    "@rslint/core": "^0.1.13",
+    "@rstest/core": "^0.3.2",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.18.0",
+    "@types/node": "^22.18.1",
     "cross-env": "^10.0.0",
     "cspell-ban-words": "^0.0.4",
     "heading-case": "^1.0.1",

@@ -15,13 +15,13 @@
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.8.2",
     "solid-js": "^1.9.9",
-    "vue": "^3.5.20",
+    "vue": "^3.5.21",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
     "@e2e/helper": "workspace:*",
-    "@module-federation/enhanced": "0.18.3",
-    "@module-federation/rsbuild-plugin": "0.18.3",
+    "@module-federation/enhanced": "0.18.4",
+    "@module-federation/rsbuild-plugin": "0.18.4",
     "@playwright/test": "1.55.0",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
@@ -42,10 +42,10 @@
     "@rsbuild/webpack": "workspace:*",
     "@rsdoctor/rspack-plugin": "1.2.3",
     "@scripts/test-helper": "workspace:*",
-    "@tailwindcss/postcss": "^4.1.12",
+    "@tailwindcss/postcss": "^4.1.13",
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.20",
-    "@types/node": "^22.18.0",
+    "@types/node": "^22.18.1",
     "@types/polka": "^0.5.7",
     "@types/react": "^19.1.12",
     "@types/react-dom": "^19.1.9",
@@ -55,7 +55,7 @@
     "playwright": "1.55.0",
     "polka": "^0.5.2",
     "source-map": "^0.7.6",
-    "tailwindcss": "^4.1.12",
+    "tailwindcss": "^4.1.13",
     "typescript": "^5.9.2"
   }
 }

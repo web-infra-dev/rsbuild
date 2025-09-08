@@ -35,9 +35,9 @@
     "@rsbuild/core": "workspace:*",
     "@rslib/core": "0.12.4",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.18.0",
+    "@types/node": "^22.18.1",
     "typescript": "^5.9.2",
-    "vue": "^3.5.20"
+    "vue": "^3.5.21"
   },
   "peerDependencies": {
     "@rsbuild/core": "1.x"
