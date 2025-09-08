@@ -50,8 +50,8 @@ importers:
         specifier: ^0.0.4
         version: 0.0.4
       heading-case:
-        specifier: ^1.0.1
-        version: 1.0.1
+        specifier: ^1.0.2
+        version: 1.0.2
       nano-staged:
         specifier: ^0.8.0
         version: 0.8.0
@@ -742,8 +742,8 @@ importers:
   packages/create-rsbuild:
     dependencies:
       create-rstack:
-        specifier: 1.5.6
-        version: 1.5.6
+        specifier: 1.6.0
+        version: 1.6.0
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -3777,8 +3777,8 @@ packages:
       typescript:
         optional: true
 
-  create-rstack@1.5.6:
-    resolution: {integrity: sha512-ZJpD6klOdBv4Vvh58I7xdgU4wJMx6GZeCvPAywPL1zlMSvaQDtCYLBFBZXAizasO8H/hGlo10rYHJz6eDS9cQg==}
+  create-rstack@1.6.0:
+    resolution: {integrity: sha512-pE6RHlRQ/AufdFAVIIFLDXtjtBkaDv8pdWiicy3ZRFNoBZ4JXTq3xu4Cq2ngk7ty+tNY8ruyU3/3X0zImcFVPg==}
 
   cron-parser@4.9.0:
     resolution: {integrity: sha512-p0SaNjrHOnQeR8/VnfGbmg9te2kfyYSQ7Sc/j/6DtPL3JQvKxmjO9TSjNFpujqV3vEYYBvNNvXSxzyksBWAx1Q==}
@@ -4470,8 +4470,8 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
 
-  heading-case@1.0.1:
-    resolution: {integrity: sha512-CTs1K2eJy+BrwG35AmPH80Jd15BD6waTEOhex0WWirylAWfdoPYD/gv5H+TXXGFsR9DyOWNWUMLU8JRsZctkcQ==}
+  heading-case@1.0.2:
+    resolution: {integrity: sha512-/auUg52lwuEOlb3IhtTj5UQvqdr3J/e07ibuK+YU/JI8QI+FVWsMbxGbYbwSpD5qLXXUAs2MzdiBt1/K/Q0fTw==}
     hasBin: true
 
   homedir-polyfill@1.0.3:
@@ -9581,7 +9581,7 @@ snapshots:
     optionalDependencies:
       typescript: 5.9.2
 
-  create-rstack@1.5.6: {}
+  create-rstack@1.6.0: {}
 
   cron-parser@4.9.0:
     dependencies:
@@ -10359,7 +10359,7 @@ snapshots:
 
   he@1.2.0: {}
 
-  heading-case@1.0.1: {}
+  heading-case@1.0.2: {}
 
   homedir-polyfill@1.0.3:
     dependencies:
