@@ -25,6 +25,7 @@ export default {
     'rspack-manifest-plugin',
     'html-rspack-plugin',
     'mrmime',
+    'memfs',
     'tinyglobby',
     'chokidar',
     'cors',

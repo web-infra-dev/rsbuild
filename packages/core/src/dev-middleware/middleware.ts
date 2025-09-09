@@ -2,7 +2,6 @@ import type { Stats as FSStats, ReadStream } from 'node:fs';
 import type { IncomingMessage } from 'node:http';
 import type { Range, Result as RangeResult, Ranges } from 'range-parser';
 import rangeParser from 'range-parser';
-import mrmime from '../../compiled/mrmime/index.js';
 import onFinishedStream from '../../compiled/on-finished/index.js';
 import { logger } from '../logger';
 import type {
@@ -43,8 +42,9 @@ function createReadStreamOrReadFileSync(
   return { bufferOrStream, byteLength };
 }
 
-function getContentType(str: string): false | string {
-  let mime = mrmime.lookup(str) as string | false | undefined;
+async function getContentType(str: string): Promise<false | string> {
+  const { lookup } = await import('../../compiled/mrmime/index.js');
+  let mime = lookup(str) as string | false | undefined;
   if (!mime) {
     return false;
   }
@@ -362,7 +362,7 @@ export function wrapper<
       let offset = 0;
 
       if (!res.getHeader('Content-Type')) {
-        const contentType = getContentType(filename);
+        const contentType = await getContentType(filename);
         if (contentType) {
           res.setHeader('Content-Type', contentType);
         }
