@@ -50,7 +50,7 @@ export function setupWriteToDisk(
             (mkdirError: NodeJS.ErrnoException | null) => {
               if (mkdirError) {
                 logger.error(
-                  `[rsbuild-dev-middleware] ${name}Unable to write "${dir}" directory to disk:\n${String(mkdirError)}`,
+                  `[rsbuild-dev-middleware] ${name}Unable to write "${dir}" directory to disk:\n${mkdirError.message}`,
                 );
 
                 callback(mkdirError);
@@ -63,7 +63,7 @@ export function setupWriteToDisk(
                 (writeFileError: NodeJS.ErrnoException | null) => {
                   if (writeFileError) {
                     logger.error(
-                      `[rsbuild-dev-middleware] ${name}Unable to write "${targetPath}" asset to disk:\n${String(writeFileError)}`,
+                      `[rsbuild-dev-middleware] ${name}Unable to write "${targetPath}" asset to disk:\n${writeFileError.message}`,
                     );
 
                     callback(writeFileError);
