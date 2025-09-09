@@ -15,7 +15,7 @@ export function memorize<T>(
     const cacheItem = cache.get(key);
 
     if (cacheItem) {
-      return cacheItem.data as T;
+      return cacheItem.data;
     }
 
     // @ts-ignore preserve runtime behavior

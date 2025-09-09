@@ -5,9 +5,7 @@ export function setupHooks(
   context: WithOptional<Context, 'watching' | 'outputFileSystem'>,
 ): void {
   function invalid() {
-    // eslint-disable-next-line no-param-reassign
     context.state = false;
-    // eslint-disable-next-line no-param-reassign, no-undefined
     context.stats = undefined;
   }
 

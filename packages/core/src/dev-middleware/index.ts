@@ -60,7 +60,7 @@ export type ResponseData = {
 
 export type NormalizedHeaders =
   | Record<string, string | number>
-  | Array<{ key: string; value: number | string }>;
+  | { key: string; value: number | string }[];
 
 export type Headers<
   RequestInternal extends IncomingMessage = IncomingMessage,
@@ -148,7 +148,6 @@ export async function devMiddleware<
 ): Promise<API<RequestInternal, ResponseInternal>> {
   const context: WithOptional<Context, 'watching' | 'outputFileSystem'> = {
     state: false,
-    // eslint-disable-next-line no-undefined
     stats: undefined,
     callbacks: [],
     options,
@@ -181,7 +180,6 @@ export async function devMiddleware<
       const errorHandler = (error: Error | null | undefined) => {
         if (error) {
           if ((error as any).message?.includes('× Error:')) {
-            // eslint-disable-next-line no-param-reassign
             (error as any).message = (error as any).message
               .replace('× Error:', '')
               .trim();
@@ -197,7 +195,7 @@ export async function devMiddleware<
         );
 
         context.watching = multiCompiler.watch(
-          watchOptions as WatchOptions[],
+          watchOptions,
           errorHandler,
         ) as unknown as MultiWatching;
       } else {
@@ -205,7 +203,7 @@ export async function devMiddleware<
         const watchOptions = singleCompiler.options.watchOptions || {};
 
         context.watching = singleCompiler.watch(
-          watchOptions as WatchOptions,
+          watchOptions,
           errorHandler,
         ) as unknown as Watching;
       }
