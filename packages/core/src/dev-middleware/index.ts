@@ -167,10 +167,7 @@ export async function devMiddleware<
           (childCompiler) => childCompiler.options.watchOptions || {},
         );
 
-        context.watching = multiCompiler.watch(
-          watchOptions,
-          errorHandler,
-        ) as MultiWatching;
+        context.watching = multiCompiler.watch(watchOptions, errorHandler);
       } else {
         const singleCompiler = context.compiler as Compiler;
         const watchOptions = singleCompiler.options.watchOptions || {};

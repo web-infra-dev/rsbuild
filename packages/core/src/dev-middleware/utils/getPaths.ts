@@ -6,7 +6,7 @@ type PublicPathInfo = { outputPath: string; publicPath: string | undefined };
 export function getPaths(context: FilledContext): PublicPathInfo[] {
   const { stats, options } = context;
   const childStats: WStats[] = (stats as WMultiStats).stats
-    ? ((stats as WMultiStats).stats as WStats[])
+    ? (stats as WMultiStats).stats
     : [stats as WStats];
   const publicPaths: PublicPathInfo[] = [];
 

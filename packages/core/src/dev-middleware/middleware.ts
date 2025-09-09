@@ -442,14 +442,10 @@ export function wrapper<
           res.statusCode = 206;
           res.setHeader(
             'Content-Range',
-            getValueContentRangeHeader(
-              'bytes',
-              size,
-              (parsedRanges as Ranges)[0],
-            ),
+            getValueContentRangeHeader('bytes', size, parsedRanges[0]),
           );
 
-          [offset, len] = getOffsetAndLenFromRange((parsedRanges as Ranges)[0]);
+          [offset, len] = getOffsetAndLenFromRange(parsedRanges[0]);
         }
       }
 

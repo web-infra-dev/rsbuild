@@ -62,11 +62,8 @@ export function getFilenameFromUrl(
     const { pathname } = urlObject;
     const { pathname: publicPathPathname } = publicPathObject;
 
-    if (
-      pathname &&
-      (pathname as string).startsWith(publicPathPathname as string)
-    ) {
-      if ((pathname as string).includes('\u0000')) {
+    if (pathname && pathname.startsWith(publicPathPathname)) {
+      if (pathname.includes('\u0000')) {
         extra.errorCode = 400;
         return undefined;
       }
@@ -78,7 +75,7 @@ export function getFilenameFromUrl(
 
       filename = path.join(
         outputPath,
-        (pathname as string).slice((publicPathPathname as string).length),
+        pathname.slice(publicPathPathname.length),
       );
 
       try {
