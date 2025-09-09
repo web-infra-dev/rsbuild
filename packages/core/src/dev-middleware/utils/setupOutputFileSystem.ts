@@ -38,6 +38,5 @@ export async function setupOutputFileSystem(
   }
 
   // @ts-ignore
-  // eslint-disable-next-line no-param-reassign
   (context as any).outputFileSystem = outputFileSystem as OutputFileSystem;
 }

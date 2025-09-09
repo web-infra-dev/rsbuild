@@ -1,11 +1,10 @@
 const matchHtmlRegExp = /["'&<>]/;
 
 export function escapeHtml(input: string): string {
-  const str = `${input}`;
-  const match = matchHtmlRegExp.exec(str);
+  const match = matchHtmlRegExp.exec(input);
 
   if (!match) {
-    return str;
+    return input;
   }
 
   let htmlEntity: string | undefined;
@@ -13,8 +12,8 @@ export function escapeHtml(input: string): string {
   let index = 0;
   let lastIndex = 0;
 
-  for ({ index } = match as RegExpExecArray; index < str.length; index++) {
-    switch (str.charCodeAt(index)) {
+  for ({ index } = match; index < input.length; index++) {
+    switch (input.charCodeAt(index)) {
       case 34:
         htmlEntity = '&quot' + ';';
         break;
@@ -31,17 +30,16 @@ export function escapeHtml(input: string): string {
         htmlEntity = '&gt' + ';';
         break;
       default:
-        // eslint-disable-next-line no-continue
         continue;
     }
 
     if (lastIndex !== index) {
-      html += str.substring(lastIndex, index);
+      html += input.substring(lastIndex, index);
     }
 
     lastIndex = index + 1;
-    html += htmlEntity as string;
+    html += htmlEntity;
   }
 
-  return lastIndex !== index ? html + str.substring(lastIndex, index) : html;
+  return lastIndex !== index ? html + input.substring(lastIndex, index) : html;
 }

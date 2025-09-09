@@ -35,7 +35,8 @@ export function setupWriteToDisk(
               : true;
 
           if (!allowWrite) {
-            return callback();
+            callback();
+            return;
           }
 
           const dir = path.dirname(targetPath);
@@ -43,35 +44,37 @@ export function setupWriteToDisk(
             ? `Child "${compiler.options.name}": `
             : '';
 
-          return fs.mkdir(
+          fs.mkdir(
             dir,
             { recursive: true },
             (mkdirError: NodeJS.ErrnoException | null) => {
               if (mkdirError) {
                 logger.error(
-                  `[rsbuild-dev-middleware] ${name}Unable to write "${dir}" directory to disk:\n${mkdirError}`,
+                  `[rsbuild-dev-middleware] ${name}Unable to write "${dir}" directory to disk:\n${mkdirError.message}`,
                 );
 
-                return callback(mkdirError);
+                callback(mkdirError);
+                return;
               }
 
-              return fs.writeFile(
+              fs.writeFile(
                 targetPath,
                 content,
                 (writeFileError: NodeJS.ErrnoException | null) => {
                   if (writeFileError) {
                     logger.error(
-                      `[rsbuild-dev-middleware] ${name}Unable to write "${targetPath}" asset to disk:\n${writeFileError}`,
+                      `[rsbuild-dev-middleware] ${name}Unable to write "${targetPath}" asset to disk:\n${writeFileError.message}`,
                     );
 
-                    return callback(writeFileError);
+                    callback(writeFileError);
+                    return;
                   }
 
                   logger.debug(
                     `[rsbuild-dev-middleware] ${name}Asset written to disk: "${targetPath}"`,
                   );
 
-                  return callback();
+                  callback();
                 },
               );
             },

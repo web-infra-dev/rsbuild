@@ -15,10 +15,9 @@ import { memorize } from './utils/memorize';
 import { parseTokenList } from './utils/parseTokenList';
 import { ready } from './utils/ready';
 
-async function getEtag(stat: FSStats): Promise<string> {
+function getEtag(stat: FSStats): string {
   const mtime = stat.mtime.getTime().toString(16);
   const size = stat.size.toString(16);
-
   return `W/"${size}-${mtime}"`;
 }
 
@@ -124,7 +123,6 @@ export function wrapper<
   return async function middleware(req, res, next) {
     const acceptedMethods = ['GET', 'HEAD'];
 
-    // eslint-disable-next-line no-param-reassign
     (res as any).locals = (res as any).locals || {};
 
     async function goNext() {
@@ -132,10 +130,10 @@ export function wrapper<
         ready(
           context,
           () => {
-            // eslint-disable-next-line no-param-reassign
             // TODO: augment Response type to include `locals`
-            ((res as any).locals as any).webpack = { devMiddleware: context };
-            resolve(next());
+            (res as any).locals.webpack = { devMiddleware: context };
+            next();
+            resolve();
           },
           req,
         );
@@ -173,7 +171,6 @@ export function wrapper<
         }
       }
 
-      // eslint-disable-next-line no-param-reassign
       res.statusCode = status;
       res.setHeader('Content-Type', 'text/html; charset=utf-8');
       res.setHeader('Content-Security-Policy', "default-src 'none'");
@@ -202,7 +199,7 @@ export function wrapper<
         return (
           !etag ||
           (ifMatch !== '*' &&
-            parseTokenList(ifMatch as string).every(
+            parseTokenList(ifMatch).every(
               (match: string) =>
                 match !== etag &&
                 match !== `W/${etag}` &&
@@ -213,7 +210,7 @@ export function wrapper<
 
       const ifUnmodifiedSince = req.headers['if-unmodified-since'];
       if (ifUnmodifiedSince) {
-        const unmodifiedSince = parseHttpDate(ifUnmodifiedSince as string);
+        const unmodifiedSince = parseHttpDate(ifUnmodifiedSince);
         if (!Number.isNaN(unmodifiedSince)) {
           const lastModified = parseHttpDate(
             String(res.getHeader('Last-Modified')),
@@ -235,10 +232,7 @@ export function wrapper<
     function isFresh(resHeaders: import('http').OutgoingHttpHeaders): boolean {
       const cacheControl = req.headers['cache-control'];
 
-      if (
-        cacheControl &&
-        CACHE_CONTROL_NO_CACHE_REGEXP.test(cacheControl as string)
-      ) {
+      if (cacheControl && CACHE_CONTROL_NO_CACHE_REGEXP.test(cacheControl)) {
         return false;
       }
 
@@ -254,7 +248,7 @@ export function wrapper<
           return false;
         }
 
-        const matches = parseTokenList(noneMatch as string);
+        const matches = parseTokenList(noneMatch);
         let etagStale = true;
 
         for (let i = 0; i < matches.length; i++) {
@@ -283,8 +277,7 @@ export function wrapper<
         const modifiedStale =
           !lastModified ||
           !(
-            parseHttpDate(String(lastModified)) <=
-            parseHttpDate(modifiedSince as string)
+            parseHttpDate(String(lastModified)) <= parseHttpDate(modifiedSince)
           );
 
         if (modifiedStale) {
@@ -319,7 +312,7 @@ export function wrapper<
     }
 
     function getRangeHeader(): string | undefined {
-      const rage = req.headers.range as string | undefined;
+      const rage = req.headers.range;
       if (rage && BYTES_RANGE_REGEXP.test(rage)) {
         return rage;
       }
@@ -340,7 +333,7 @@ export function wrapper<
 
     async function processRequest() {
       const extra: import('./utils/getFilenameFromUrl').Extra = {};
-      const filename = getFilenameFromUrl(context, req.url as string, extra);
+      const filename = getFilenameFromUrl(context, req.url!, extra);
 
       if (extra.errorCode) {
         if (extra.errorCode === 403) {
@@ -357,7 +350,7 @@ export function wrapper<
         return;
       }
 
-      const { size } = extra.stats as FSStats;
+      const { size } = extra.stats!;
       let len = size;
       let offset = 0;
 
@@ -373,16 +366,16 @@ export function wrapper<
       }
 
       if (context.options.lastModified && !res.getHeader('Last-Modified')) {
-        const modified = (extra.stats as FSStats).mtime.toUTCString();
+        const modified = extra.stats!.mtime.toUTCString();
         res.setHeader('Last-Modified', modified);
       }
 
       const rangeHeader = getRangeHeader();
 
       if (!res.getHeader('ETag')) {
-        const value = extra.stats as FSStats;
+        const value = extra.stats;
         if (value) {
-          const hash = await getEtag(value);
+          const hash = getEtag(value);
           res.setHeader('ETag', hash);
         }
       }
@@ -394,7 +387,6 @@ export function wrapper<
         }
 
         if (res.statusCode === 404) {
-          // eslint-disable-next-line no-param-reassign
           res.statusCode = 200;
         }
 
@@ -407,7 +399,6 @@ export function wrapper<
               | undefined,
           })
         ) {
-          // eslint-disable-next-line no-param-reassign
           res.statusCode = 304;
 
           res.removeHeader('Content-Encoding');
@@ -457,20 +448,17 @@ export function wrapper<
         }
 
         if (parsedRanges !== -2 && (parsedRanges as any[]).length === 1) {
-          // eslint-disable-next-line no-param-reassign
           res.statusCode = 206;
           res.setHeader(
             'Content-Range',
             getValueContentRangeHeader(
               'bytes',
               size,
-              (parsedRanges as Ranges)[0] as Range,
+              (parsedRanges as Ranges)[0],
             ),
           );
 
-          [offset, len] = getOffsetAndLenFromRange(
-            (parsedRanges as Ranges)[0] as Range,
-          );
+          [offset, len] = getOffsetAndLenFromRange((parsedRanges as Ranges)[0]);
         }
       }
 
@@ -496,7 +484,6 @@ export function wrapper<
 
       if (req.method === 'HEAD') {
         if (res.statusCode === 404) {
-          // eslint-disable-next-line no-param-reassign
           res.statusCode = 200;
         }
         res.end();
@@ -519,6 +506,7 @@ export function wrapper<
         'error',
         (error: NodeJS.ErrnoException) => {
           cleanup();
+          // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
           switch (error.code) {
             case 'ENAMETOOLONG':
             case 'ENOENT':

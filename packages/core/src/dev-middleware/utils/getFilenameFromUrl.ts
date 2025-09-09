@@ -15,7 +15,6 @@ export type Extra = {
 // TODO: type the cache options instead of using any for the second parameter
 const memoizedParse = memorize(parse as any, undefined as any, (value: any) => {
   if (value.pathname) {
-    // eslint-disable-next-line no-param-reassign
     value.pathname = decode(value.pathname);
   }
 
@@ -34,10 +33,10 @@ export function getFilenameFromUrl(
   extra: Extra = {},
 ): string | undefined {
   const { options } = context;
-  const paths = getPaths(context) as Array<{
+  const paths = getPaths(context) as {
     publicPath: string | undefined;
     outputPath: string;
-  }>;
+  }[];
 
   let foundFilename: string | undefined;
   let urlObject: URL;
