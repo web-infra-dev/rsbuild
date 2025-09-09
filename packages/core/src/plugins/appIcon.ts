@@ -7,6 +7,7 @@ import {
   fileExistsByCompilation,
   getPublicPathFromCompiler,
   isURL,
+  pick,
 } from '../helpers';
 import type { AppIconItem, HtmlBasicTag, RsbuildPlugin } from '../types';
 
@@ -176,17 +177,7 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
             .filter(
               (icon) => icon.target === 'web-app-manifest' || !icon.target,
             )
-            .map((icon) => {
-              const result = {
-                src: icon.src,
-                sizes: icon.sizes,
-                purpose: icon.purpose,
-              };
-              if (icon.mimeType) {
-                return { ...result, type: icon.mimeType };
-              }
-              return result;
-            });
+            .map((icon) => pick(icon, ['src', 'sizes', 'purpose', 'mimeType']));
 
           const manifest = {
             name: appIcon.name,
