@@ -28,7 +28,7 @@ export function setupHooks(
     });
   }
 
-  const compiler = (context as unknown as Context).compiler as any;
+  const compiler = (context as Context).compiler;
 
   compiler.hooks.watchRun.tap('rsbuild-dev-middleware', invalid);
   compiler.hooks.invalid.tap('rsbuild-dev-middleware', invalid);

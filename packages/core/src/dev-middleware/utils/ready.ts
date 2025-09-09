@@ -12,11 +12,11 @@ export function ready<Request extends IncomingMessage>(
     return;
   }
 
-  const name = (req && (req as any).url) || callback.name;
+  const name = req?.url || callback.name;
 
   logger.debug(
     `[rsbuild-dev-middleware] wait until bundle finished${name ? `: ${name}` : ''}`,
   );
 
-  context.callbacks.push(callback as unknown as Callback);
+  context.callbacks.push(callback as Callback);
 }

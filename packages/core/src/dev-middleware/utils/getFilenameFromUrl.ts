@@ -12,7 +12,7 @@ export type Extra = {
 };
 
 // TODO: type the cache options instead of using any for the second parameter
-const memoizedParse = memorize(parse as any, undefined as any, (value: any) => {
+const memoizedParse = memorize(parse, undefined, (value: any) => {
   if (value.pathname) {
     value.pathname = decode(value.pathname);
   }
@@ -40,7 +40,7 @@ export function getFilenameFromUrl(
   let urlObject: URL;
 
   try {
-    urlObject = memoizedParse(url, false, true) as unknown as URL;
+    urlObject = memoizedParse(url, false, true) as URL;
   } catch (_ignoreError) {
     return undefined;
   }
@@ -54,13 +54,13 @@ export function getFilenameFromUrl(
         publicPath !== 'auto' && publicPath ? publicPath : '/',
         false,
         true,
-      ) as unknown as URL;
+      ) as URL;
     } catch (_ignoreError) {
       continue;
     }
 
-    const { pathname } = urlObject as any;
-    const { pathname: publicPathPathname } = publicPathObject as any;
+    const { pathname } = urlObject;
+    const { pathname: publicPathPathname } = publicPathObject;
 
     if (
       pathname &&

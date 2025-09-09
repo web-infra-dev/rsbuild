@@ -6,18 +6,18 @@ type PublicPathInfo = { outputPath: string; publicPath: string | undefined };
 export function getPaths(context: FilledContext): PublicPathInfo[] {
   const { stats, options } = context;
   const childStats: WStats[] = (stats as WMultiStats).stats
-    ? ((stats as WMultiStats).stats as unknown as WStats[])
+    ? ((stats as WMultiStats).stats as WStats[])
     : [stats as WStats];
   const publicPaths: PublicPathInfo[] = [];
 
-  for (const { compilation } of childStats as any) {
+  for (const { compilation } of childStats) {
     const outputPath = compilation.getPath(
       compilation.outputOptions.path || '',
     );
     const publicPath = options.publicPath
-      ? compilation.getPath(options.publicPath)
+      ? compilation.getPath(options.publicPath as string)
       : compilation.outputOptions.publicPath
-        ? compilation.getPath(compilation.outputOptions.publicPath)
+        ? compilation.getPath(compilation.outputOptions.publicPath as string)
         : '';
 
     publicPaths.push({ outputPath, publicPath });

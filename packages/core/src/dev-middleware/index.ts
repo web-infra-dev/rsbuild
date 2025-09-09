@@ -127,7 +127,7 @@ export async function devMiddleware<
     callbacks: [],
     options,
     compiler,
-  } as unknown as WithOptional<Context, 'watching' | 'outputFileSystem'>;
+  } as WithOptional<Context, 'watching' | 'outputFileSystem'>;
 
   setupHooks(context);
 
@@ -137,10 +137,10 @@ export async function devMiddleware<
 
   await setupOutputFileSystem(context);
 
-  const filledContext = context as unknown as FilledContext;
+  const filledContext = context as FilledContext;
 
   const instance = (
-    createMiddleware as unknown as (
+    createMiddleware as (
       ctx: FilledContext,
     ) => API<RequestInternal, ResponseInternal>
   )(filledContext);
@@ -148,16 +148,14 @@ export async function devMiddleware<
   // API
   instance.watch = () => {
     if ((context.compiler as Compiler).watching) {
-      context.watching = (context.compiler as Compiler).watching as unknown as
+      context.watching = (context.compiler as Compiler).watching as
         | Watching
         | MultiWatching;
     } else {
       const errorHandler = (error: Error | null | undefined) => {
         if (error) {
-          if ((error as any).message?.includes('× Error:')) {
-            (error as any).message = (error as any).message
-              .replace('× Error:', '')
-              .trim();
+          if (error.message?.includes('× Error:')) {
+            error.message = error.message.replace('× Error:', '').trim();
           }
           logger.error(error);
         }
@@ -172,7 +170,7 @@ export async function devMiddleware<
         context.watching = multiCompiler.watch(
           watchOptions,
           errorHandler,
-        ) as unknown as MultiWatching;
+        ) as MultiWatching;
       } else {
         const singleCompiler = context.compiler as Compiler;
         const watchOptions = singleCompiler.options.watchOptions || {};
@@ -180,14 +178,14 @@ export async function devMiddleware<
         context.watching = singleCompiler.watch(
           watchOptions,
           errorHandler,
-        ) as unknown as Watching;
+        ) as Watching;
       }
     }
   };
 
   instance.getFilenameFromUrl = (url, extra) =>
     (
-      getFilenameFromUrl as unknown as (
+      getFilenameFromUrl as (
         ctx: FilledContext,
         url: string,
         extra?: Extra,
@@ -207,8 +205,7 @@ export async function devMiddleware<
     filledContext.watching?.close(callback);
   };
 
-  // TODO: extend the middleware function type to include `context` without casting
-  (instance as any).context = filledContext;
+  instance.context = filledContext;
 
   return instance;
 }

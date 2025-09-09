@@ -18,7 +18,6 @@ export function memorize<T>(
       return cacheItem.data;
     }
 
-    // @ts-ignore preserve runtime behavior
     let result: T = fn.apply(undefined, arguments_);
 
     if (callback) {
@@ -32,7 +31,7 @@ export function memorize<T>(
     return result;
   };
 
-  cacheStore.set(memoized, cache as unknown as Map<string, { data: unknown }>);
+  cacheStore.set(memoized, cache as Map<string, { data: unknown }>);
 
   return memoized;
 }

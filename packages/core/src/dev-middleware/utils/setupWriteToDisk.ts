@@ -1,8 +1,14 @@
-import * as fs from 'node:fs';
-import * as path from 'node:path';
+import fs from 'node:fs';
+import path from 'node:path';
 import type { Compilation, Compiler, MultiCompiler } from '@rspack/core';
 import { logger } from '../../logger';
 import type { Context, WithOptional } from '../index';
+
+declare module '@rspack/core' {
+  interface Compiler {
+    __hasRsbuildAssetEmittedCallback?: boolean;
+  }
+}
 
 export function setupWriteToDisk(
   context: WithOptional<Context, 'watching' | 'outputFileSystem'>,
@@ -12,7 +18,7 @@ export function setupWriteToDisk(
 
   for (const compiler of compilers) {
     compiler.hooks.emit.tap('DevMiddleware', () => {
-      if ((compiler as any).hasWebpackDevMiddlewareAssetEmittedCallback) {
+      if (compiler.__hasRsbuildAssetEmittedCallback) {
         return;
       }
 
@@ -31,7 +37,7 @@ export function setupWriteToDisk(
           const { writeToDisk: filter } = context.options;
           const allowWrite =
             filter && typeof filter === 'function'
-              ? filter(targetPath, (compilation as any).name)
+              ? filter(targetPath, compilation.name)
               : true;
 
           if (!allowWrite) {
@@ -82,8 +88,7 @@ export function setupWriteToDisk(
         },
       );
 
-      // @ts-ignore
-      (compiler as any).hasWebpackDevMiddlewareAssetEmittedCallback = true;
+      compiler.__hasRsbuildAssetEmittedCallback = true;
     });
   }
 }
