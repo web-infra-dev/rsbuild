@@ -2,7 +2,6 @@
   "recommendations": [
     "biomejs.biome",
     "esbenp.prettier-vscode",
-    "unifiedjs.vscode-mdx",
-    "TypeScriptTeam.native-preview"
+    "unifiedjs.vscode-mdx"
   ]
 }
