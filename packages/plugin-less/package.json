@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.12.4",
+    "@rslib/core": "0.13.0",
     "@scripts/test-helper": "workspace:*",
     "@types/less": "^3.0.8",
     "less": "4.3.0",

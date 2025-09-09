@@ -140,6 +140,7 @@ transpiling
 treeshaking
 tsbuildinfo
 tsdoc
+tsgo
 twoslash
 uncompiled
 unocss
