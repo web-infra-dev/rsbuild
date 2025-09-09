@@ -34,8 +34,6 @@ export type ExtendedServerResponse = {
 
 export type ServerResponse = NodeServerResponse & ExtendedServerResponse;
 
-export type WatchOptions = NonNullable<Configuration['watchOptions']>;
-
 export type Watching = Compiler['watching'];
 
 export type MultiWatching = ReturnType<MultiCompiler['watch']>;
@@ -53,34 +51,11 @@ export type OutputFileSystem = {
 
 export type Callback = (stats?: Stats | MultiStats) => void;
 
-export type ResponseData = {
-  data: Buffer | ReadStream;
-  byteLength: number;
-};
-
-export type NormalizedHeaders =
-  | Record<string, string | number>
-  | { key: string; value: number | string }[];
-
-export type Headers<
-  RequestInternal extends IncomingMessage = IncomingMessage,
-  ResponseInternal extends ServerResponse = ServerResponse,
-> =
-  | NormalizedHeaders
-  | ((
-      req: RequestInternal,
-      res: ResponseInternal,
-      context: Context,
-    ) => void | undefined | NormalizedHeaders)
-  | undefined;
-
 export type Options = {
   writeToDisk?:
     | boolean
     | ((targetPath: string, compilationName?: string) => boolean);
   publicPath?: NonNullable<Configuration['output']>['publicPath'];
-  index?: boolean | string;
-  lastModified?: boolean;
 };
 
 export type NextFunction = (err?: unknown) => void;
