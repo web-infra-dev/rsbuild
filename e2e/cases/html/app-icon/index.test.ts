@@ -195,6 +195,56 @@ test('should allow to specify target for each icon', async () => {
   });
 });
 
+test('should allow to specify purpose for each icon', async () => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    rsbuildConfig: {
+      html: {
+        appIcon: {
+          name: 'My Website',
+          icons: [
+            {
+              src: '../../../assets/circle.svg',
+              size: 192,
+              target: 'web-app-manifest',
+              purpose: 'monochrome',
+            },
+            {
+              src: '../../../assets/image.png',
+              size: 512,
+              target: 'web-app-manifest',
+              purpose: 'maskable',
+            },
+          ],
+        },
+      },
+    },
+  });
+  const files = await rsbuild.getDistFiles();
+  const manifestPath = Object.keys(files).find((file) =>
+    file.endsWith('manifest.webmanifest'),
+  );
+  expect(manifestPath).toBeTruthy();
+
+  expect(JSON.parse(files[manifestPath!])).toEqual({
+    name: 'My Website',
+    icons: [
+      {
+        src: '/static/image/circle.svg',
+        sizes: '192x192',
+        type: 'image/svg+xml',
+        purpose: 'monochrome',
+      },
+      {
+        src: '/static/image/image.png',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'maskable',
+      },
+    ],
+  });
+});
+
 test('should allow to customize manifest filename', async () => {
   const rsbuild = await build({
     cwd: __dirname,

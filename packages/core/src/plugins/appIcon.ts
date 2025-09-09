@@ -180,6 +180,7 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
               const result = {
                 src: icon.src,
                 sizes: icon.sizes,
+                purpose: icon.purpose,
               };
               if (icon.mimeType) {
                 return { ...result, type: icon.mimeType };
