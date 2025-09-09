@@ -117,7 +117,7 @@ The original import path that needs to be transformed.
 - **Type:** `string`
 - **Default:** `'lib'`
 
-Used to splice the transformed path, the splicing rule is `${libraryName}/${libraryDirectory}/${member}`, where member is the imported member.
+Constructs the transformed path by concatenating `${libraryName}/${libraryDirectory}/${member}`, where member is the imported member.
 
 Example:
 
@@ -156,7 +156,7 @@ import 'foo/lib/button/style';
 - **Type:** `string`
 - **Default:** `undefined`
 
-This configuration is used to splice the import path when importing styles. If this configuration is specified, the `style` configuration option will be ignored. The spliced import path is `${libraryName}/${styleLibraryDirectory}/${member}`.
+Constructs the import path when importing styles. If this configuration is specified, the `style` configuration option will be ignored. The constructed import path is `${libraryName}/${styleLibraryDirectory}/${member}`.
 
 When it is set to `styles`:
 

@@ -28,7 +28,7 @@ HTTPS:
 ```
 
 :::tip
-Rsbuild enables HTTP/2 server by default. However, when you use [server.proxy](/config/server/proxy), the server will downgrade to HTTP/1, because the underlying [http-proxy](https://www.npmjs.com/package/http-proxy) does not support HTTP/2.
+When HTTPS is enabled, Rsbuild uses an HTTP/2 server by default. However, if you enable [server.proxy](/config/server/proxy), the dev server falls back to HTTP/1 because its underlying dependency, [http-proxy](https://www.npmjs.com/package/http-proxy), does not support HTTP/2.
 :::
 
 ## Set certificate

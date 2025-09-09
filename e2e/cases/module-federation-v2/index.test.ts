@@ -110,7 +110,7 @@ rspackOnlyTest('should downgrade syntax as expected', async () => {
     plugins: [
       pluginCheckSyntax({
         // MF runtime contains dynamic import, which can not pass syntax checking
-        exclude: [/@module-federation[\\/]runtime/],
+        exclude: [/@module-federation[\\/+]runtime/],
       }),
     ],
   };

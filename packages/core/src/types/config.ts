@@ -292,7 +292,8 @@ export interface SourceConfig {
    */
   preEntry?: string | string[];
   /**
-   * Used to replaces variables in your code with other values or expressions at compile time.
+   * Replaces variables in your code with other values or expressions at compile time.
+   * This is useful for enabling different behavior between development and production builds.
    */
   define?: Define;
   /**
@@ -453,7 +454,8 @@ export interface ServerConfig {
    */
   compress?: boolean | CompressOptions;
   /**
-   * Serving static files from the directory (by default 'public' directory)
+   * Serving static files from the directory
+   * @default { name: 'public', copyOnBuild: 'auto', watch: false }
    */
   publicDir?: PublicDir;
   /**
@@ -485,6 +487,7 @@ export interface ServerConfig {
    * Used to support routing based on the history API.
    * When a user visits a path that does not exist, it will automatically
    * return a specified HTML file to avoid a 404 error.
+   * @default false
    */
   historyApiFallback?: boolean | HistoryApiFallbackOptions;
   /**
@@ -566,8 +569,9 @@ export type SriOptions = {
 
 export interface SecurityConfig {
   /**
-   * Adding an nonce attribute to sub-resources introduced by HTML allows the browser to
-   * verify the nonce of the introduced resource, thus preventing xss.
+   * Adding a `nonce` attribute to the scripts resources introduced for HTML. This allows
+   * the browser to determine whether the script can be executed when it parses inline
+   * scripts with matching nonce values.
    */
   nonce?: string;
   /**
@@ -715,11 +719,13 @@ export type PrefetchOptions = Omit<ResourceHintsOptions, 'dedupe'>;
 export interface PerformanceConfig {
   /**
    * Whether to remove `console.[methodName]` in production build.
+   * @default false
    */
   removeConsole?: boolean | ConsoleType[];
 
   /**
    * Whether to remove the locales of [moment.js](https://momentjs.com/).
+   * @default false
    */
   removeMomentLocale?: boolean;
 
@@ -731,11 +737,13 @@ export interface PerformanceConfig {
 
   /**
    * Whether to print the file sizes after production build.
+   * @default true
    */
   printFileSize?: PrintFileSizeOptions | boolean;
 
   /**
    * Configure the chunk splitting strategy.
+   * @default { strategy: 'split-by-experience' }
    */
   chunkSplit?: ChunkSplit;
 
@@ -1161,7 +1169,7 @@ export type CleanDistPath = boolean | 'auto' | CleanDistPathObject;
 
 export interface OutputConfig {
   /**
-   * Specify build target to run in specified environment.
+   * Setting the build target for Rsbuild.
    * @default 'web'
    */
   target?: RsbuildTarget;
@@ -1476,6 +1484,21 @@ export type AppIconItem = {
    * - `web-app-manifest` for web application manifest.
    */
   target?: 'apple-touch-icon' | 'web-app-manifest';
+  /**
+   * A case-sensitive keyword string that specifies one or more contexts in
+   * which the icon can be used by the browser or operating system.
+   * This field is only effective when the `target` is `'web-app-manifest'`.
+   *
+   * The possible properties include:
+   * - `'monochrome'`: Indicates that the icon is intended to be used as a
+   * monochrome icon with a solid fill.
+   * - `'maskable'`: Indicates that the icon is designed with icon masks and
+   * safe zone in mind.
+   * - `'any'`: Indicates that the icon can be used in any context. This is
+   * the default value.
+   * @see https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Manifest/Reference/icons#purpose
+   */
+  purpose?: string;
 };
 
 export type AppIcon = {
@@ -1699,10 +1722,12 @@ export type WriteToDisk = boolean | ((filename: string) => boolean);
 export interface DevConfig {
   /**
    * Whether to enable Hot Module Replacement.
+   * @default true
    */
   hmr?: boolean;
   /**
    * Whether to reload the page when file changes are detected.
+   * @default true
    */
   liveReload?: boolean;
   /**
@@ -1751,8 +1776,8 @@ export interface DevConfig {
    */
   writeToDisk?: WriteToDisk;
   /**
-   * This option allows you to configure a list of globs/directories/files to watch for
-   * file changes.
+   * Watch specified files and directories for changes. When a file change is detected,
+   * it can trigger a page reload or restart the dev server.
    */
   watchFiles?: WatchFiles | WatchFiles[];
   /**
@@ -1783,6 +1808,7 @@ export interface ResolveConfig {
    * Set the alias for the module path, which is used to simplify the import path or
    * redirect the module reference.
    * Similar to the [resolve.alias](https://rspack.rs/config/resolve) config of Rspack.
+   * @default { '@swc/helpers': path.dirname(require.resolve('@swc/helpers/package.json')) }
    */
   alias?: ConfigChain<Alias>;
   /**
@@ -1884,7 +1910,11 @@ export type LogLevel = 'info' | 'warn' | 'error' | 'silent';
  * */
 export interface RsbuildConfig extends EnvironmentConfig {
   /**
-   * Specify the Rsbuild build mode.
+   * Specify the build mode for Rsbuild, as each mode has different default behavior and optimizations.
+   * @default Depends on `process.env.NODE_ENV`:
+   * - `'production'` if NODE_ENV is 'production'
+   * - `'development'` if NODE_ENV is 'development'
+   * - otherwise `'none'`
    */
   mode?: RsbuildMode;
   /**
@@ -1893,11 +1923,11 @@ export interface RsbuildConfig extends EnvironmentConfig {
    */
   root?: string;
   /**
-   * Specify the log level.
-   * - 'info': show 'info', 'start', 'success', 'ready', 'warn' and 'error' logs.
-   * - 'warn': show 'warn' and 'error' logs.
-   * - 'error': only show 'error' logs.
-   * - 'silent': disable all logs.
+   * Specify the log level of Rsbuild.
+   * - 'info': Output all logs.
+   * - 'warn': Output `warn` and `error` level logs.
+   * - 'error': Output `error` level logs.
+   * - 'silent': Do not output any logs.
    * @default 'info'
    */
   logLevel?: LogLevel;

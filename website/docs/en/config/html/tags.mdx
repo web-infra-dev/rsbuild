@@ -45,7 +45,7 @@ The generated HTML file will look like:
 
 ## Tag object
 
-`html.tags` can accept an array, and each element in the array is a `HtmlTag` object, which is used to describe the tag to be injected.
+`html.tags` can accept an array, where each element is a `HtmlTag` object that describes the tag to be injected.
 
 ```ts
 type HtmlTag = {
@@ -396,7 +396,7 @@ The HTML file will look like:
 
 ## Limitation
 
-This configuration is used to modify the content of HTML files after Rsbuild completes building, and does not resolve or parse new modules. It cannot be used to import un-compiled source code files. Also cannot replace configurations such as [source.preEntry](/config/source/pre-entry).
+This configuration modifies the content of HTML files after Rsbuild completes building, and does not resolve or parse new modules. It cannot be used to import uncompiled source code files, nor can it replace configurations such as [source.preEntry](/config/source/pre-entry).
 
 For example, for the following project:
 

@@ -9,10 +9,29 @@ Set `strictPort` to `true` and Rsbuild will throw an exception when the port is 
 
 ## Example
 
-```ts
+### Basic usage
+
+Enable strict port mode to ensure the dev server fails if the specified port is occupied:
+
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     strictPort: true,
   },
 };
 ```
+
+### Use with specific port
+
+When you need to ensure your application runs on a specific port:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    port: 3333,
+    strictPort: true,
+  },
+};
+```
+
+With this configuration, if port 3333 is already in use, Rsbuild will throw an error instead of automatically using port 3334.

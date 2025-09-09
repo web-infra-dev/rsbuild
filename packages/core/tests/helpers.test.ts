@@ -1,4 +1,4 @@
-import { sep } from 'node:path';
+import { join, sep } from 'node:path';
 import {
   ensureAssetPrefix,
   isPlainObject,
@@ -11,9 +11,10 @@ import { getRoutes, normalizeUrl } from '../src/server/helper';
 import type { InternalContext } from '../src/types';
 
 test('should getRoutes correctly', () => {
+  const cwd = __dirname;
   expect(
     getRoutes({
-      distPath: '/project/dist',
+      distPath: join(cwd, 'dist'),
       normalizedConfig: {
         server: {
           base: '/',
@@ -21,7 +22,7 @@ test('should getRoutes correctly', () => {
       },
       environments: {
         web: {
-          distPath: '/project/dist',
+          distPath: join(cwd, 'dist'),
           htmlPaths: {
             index: 'index.html',
           },
@@ -37,7 +38,7 @@ test('should getRoutes correctly', () => {
           },
         },
         web1: {
-          distPath: '/project/dist/web1',
+          distPath: join(cwd, 'dist/web1'),
           htmlPaths: {
             index: 'index.html',
           },
@@ -53,7 +54,7 @@ test('should getRoutes correctly', () => {
           },
         },
         web2: {
-          distPath: '/project/dist/web2',
+          distPath: join(cwd, 'dist/web2'),
           htmlPaths: {
             index: 'index.html',
             main: 'main.html',
@@ -291,7 +292,9 @@ test('should isWebTarget work correctly', () => {
   expect(isWebTarget(['web-worker'])).toBe(true);
   expect(isWebTarget(['web-worker', 'node'])).toBe(true);
 
+  // @ts-expect-error
   expect(isWebTarget('web-worker-special')).toBe(false);
+  // @ts-expect-error
   expect(isWebTarget('something-web-worker-else')).toBe(false);
 });
 

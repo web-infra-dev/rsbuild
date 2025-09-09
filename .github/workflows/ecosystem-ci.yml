@@ -78,7 +78,7 @@ jobs:
 
       - name: Setup Node.js
         if: steps.eco_ci.outcome == 'failure'
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         with:
           node-version: 22
           cache: 'pnpm'
@@ -91,7 +91,7 @@ jobs:
           workflow-output: ${{ toJson(steps.eco_ci.outputs) }}
 
       - id: create-commit-comment
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         if: steps.eco_ci.outcome == 'failure'
         name: Create Commit Comment
         with:
@@ -109,7 +109,7 @@ jobs:
     if: github.repository == 'web-infra-dev/rsbuild' && github.event_name == 'workflow_dispatch'
     steps:
       - id: get-pr-number
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         name: Get PR Number
         with:
           script: |
@@ -134,7 +134,7 @@ jobs:
 
       - id: create-comment
         name: Create Comment
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         if: steps.get-pr-number.outputs.result
         with:
           result-encoding: string
@@ -175,7 +175,7 @@ jobs:
           workflow-output: ${{ toJson(steps.eco_ci.outputs) }}
 
       - id: update-comment
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         if: steps.get-pr-number.outputs.result
         name: Update Comment
         with:

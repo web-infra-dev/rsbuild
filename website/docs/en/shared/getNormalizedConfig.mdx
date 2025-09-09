@@ -1,8 +1,8 @@
-Get the all normalized Rsbuild config or the Rsbuild config of a specified environment, this method must be called after the [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) hook is executed.
+Get the normalized Rsbuild config for all environments or a specific one. Call this method only after the [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) hook has executed.
 
 Compared with the `api.getRsbuildConfig` method, the config returned by this method has been normalized, and the type definition of the config will be narrowed. For example, the `undefined` type of `config.html` will be removed.
 
-It is recommended to use this method to get the Rsbuild config.
+We recommend using this method to get the Rsbuild config.
 
 - **Type:**
 

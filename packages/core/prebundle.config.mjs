@@ -25,6 +25,7 @@ export default {
     'rspack-manifest-plugin',
     'html-rspack-plugin',
     'mrmime',
+    'memfs',
     'tinyglobby',
     'chokidar',
     'cors',
@@ -117,14 +118,6 @@ export default {
           content.replace("from 'webpack'", 'from "@rspack/core"'),
         );
       },
-    },
-    {
-      name: 'rsbuild-dev-middleware',
-      externals: {
-        rslog: '../rslog',
-        mrmime: '../mrmime',
-      },
-      ignoreDts: true,
     },
     {
       name: 'style-loader',

@@ -10,6 +10,7 @@ blackmore
 brotli
 browserslistrc
 bundleless
+cachable
 caniuse
 chunkhash
 Chunktmp
@@ -71,6 +72,7 @@ napi
 nolyfill
 noopener
 noreferrer
+nosniff
 nosources
 ntqry
 nuxt
@@ -138,6 +140,9 @@ transpiling
 treeshaking
 tsbuildinfo
 tsdoc
+tsgo
+twoslash
+uncompiled
 unocss
 unpatch
 unplugin

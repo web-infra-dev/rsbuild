@@ -25,7 +25,7 @@ Commands:
 
 ## Common flags
 
-Rsbuild CLI provides several common flags that can be used with all commands:
+Rsbuild CLI includes several common flags that work with all commands:
 
 | Flag                       | Description                                                                                                                       |
 | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
@@ -43,7 +43,7 @@ Rsbuild CLI provides several common flags that can be used with all commands:
 
 ## rsbuild dev
 
-The `rsbuild dev` command is used to start a local dev server and compile the source code for development.
+The `rsbuild dev` command starts a local dev server and compiles the source code for development.
 
 ```bash
 Usage: rsbuild dev [options]
@@ -62,7 +62,7 @@ npx rsbuild
 
 ### Opening page
 
-The `--open` option allows you to automatically open a page when starting the dev server, which is equivalent to setting [server.open](/config/server/open) to `true`.
+The `--open` option automatically opens a page when starting the dev server, which is equivalent to setting [server.open](/config/server/open) to `true`.
 
 ```bash
 rsbuild dev --open
@@ -97,7 +97,7 @@ Options:
 
 ## rsbuild preview
 
-The `rsbuild preview` command is used to preview the production build outputs locally. Note that you need to execute the `rsbuild build` command beforehand to generate the build outputs.
+The `rsbuild preview` command previews the production build outputs locally. Note that you need to execute the `rsbuild build` command beforehand to generate the build outputs.
 
 ```bash
 Usage: rsbuild preview [options]
@@ -114,7 +114,7 @@ The preview command is only used for local preview. Do not use it for production
 
 ## rsbuild inspect
 
-The `rsbuild inspect` command is used to view the Rsbuild config and Rspack config of the project.
+The `rsbuild inspect` command displays the Rsbuild config and Rspack config of the project.
 
 ```bash
 Usage: rsbuild inspect [options]
