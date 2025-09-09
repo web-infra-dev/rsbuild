@@ -1,43 +1,31 @@
-import type { MultiCompiler } from '@rspack/core';
-import type { Context, OutputFileSystem, WithOptional } from '../index';
+import fs from 'node:fs';
+import type { MultiCompiler, OutputFileSystem } from '@rspack/core';
+import { isMultiCompiler } from '../../helpers';
+import type { Context, WithOptional } from '../index';
 
 export async function setupOutputFileSystem(
   context: WithOptional<Context, 'watching' | 'outputFileSystem'>,
 ): Promise<void> {
-  // TODO: refine concrete fs type returned by memfs to match OutputFileSystem
-  let outputFileSystem: OutputFileSystem | any;
+  let outputFileSystem: OutputFileSystem;
 
-  if (context.options.writeToDisk !== true) {
+  if (context.options.writeToDisk) {
+    const firstCompiler = isMultiCompiler(context.compiler)
+      ? context.compiler.compilers[0]
+      : context.compiler;
+    outputFileSystem = firstCompiler.outputFileSystem || fs;
+  } else {
     const { createFsFromVolume, Volume } = await import(
       '../../../compiled/memfs/index.js'
     );
-    outputFileSystem = createFsFromVolume(new Volume());
-  } else {
-    const isMultiCompiler = (context.compiler as MultiCompiler).compilers;
-
-    if (isMultiCompiler) {
-      const compiler = (context.compiler as MultiCompiler).compilers.filter(
-        (item) => Object.hasOwn(item.options, 'devServer'),
-      );
-
-      ({ outputFileSystem } =
-        compiler[0] ||
-        ((context.compiler as MultiCompiler).compilers[0] as any));
-    } else {
-      ({ outputFileSystem } = context.compiler as any);
-    }
+    outputFileSystem = createFsFromVolume(new Volume()) as OutputFileSystem;
   }
 
   const compilers = (context.compiler as MultiCompiler).compilers || [
     context.compiler,
   ];
 
-  for (const compiler of compilers as any[]) {
-    // @ts-ignore
+  for (const compiler of compilers) {
     compiler.outputFileSystem = outputFileSystem;
   }
-
-  // @ts-ignore
-  // eslint-disable-next-line no-param-reassign
-  (context as any).outputFileSystem = outputFileSystem as OutputFileSystem;
+  context.outputFileSystem = outputFileSystem;
 }

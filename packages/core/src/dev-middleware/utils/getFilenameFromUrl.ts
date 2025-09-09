@@ -86,8 +86,10 @@ export function getFilenameFromUrl(
 
       try {
         extra.stats = (
-          context.outputFileSystem.statSync as (p: string) => Stats
-        )(filename);
+          context.outputFileSystem as unknown as {
+            statSync: (p: string) => Stats;
+          }
+        ).statSync(filename);
       } catch (_ignoreError) {
         continue;
       }
@@ -110,8 +112,10 @@ export function getFilenameFromUrl(
 
         try {
           extra.stats = (
-            context.outputFileSystem.statSync as (p: string) => Stats
-          )(filename);
+            context.outputFileSystem as unknown as {
+              statSync: (p: string) => Stats;
+            }
+          ).statSync(filename);
         } catch (__ignoreError) {
           continue;
         }
