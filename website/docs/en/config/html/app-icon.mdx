@@ -7,6 +7,7 @@ type AppIconItem = {
   src: string;
   size: number;
   target?: 'apple-touch-icon' | 'web-app-manifest';
+  purpose?: string;
 };
 
 type AppIcon = {
@@ -106,6 +107,7 @@ The list of icons:
 - `src` is the path of the icon, which can be a URL, an absolute file path, or a relative path to the project [root](/config/root).
 - `size` is the size of the icon in pixels.
 - `target` refers to the intended target for the icon, which can be either `apple-touch-icon` or `web-app-manifest`. If `target` is not set, by default, the manifest file will include all icons, while the `apple-touch-icon` tags will only include icons smaller than `200x200`.
+- `purpose` is a case-sensitive keyword string that specifies one or more contexts in which the icon can be used by the browser or operating system. This field is only effective when the `target` is `'web-app-manifest'`. See [MDN - purpose](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Manifest/Reference/icons#purpose) for more details.
 
 ### Example
 
@@ -172,3 +174,9 @@ export default {
   },
 };
 ```
+
+## Version history
+
+| Version | Changes                            |
+| ------- | ---------------------------------- |
+| v1.5.5  | Added support for `purpose` option |

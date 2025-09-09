@@ -7,6 +7,7 @@ type AppIconItem = {
   src: string;
   size: number;
   target?: 'apple-touch-icon' | 'web-app-manifest';
+  purpose?: string;
 };
 
 type AppIcon = {
@@ -106,6 +107,7 @@ export default {
 - `src` 是图标的路径，可以是 URL 地址、文件的绝对路径，或是相对于项目 [root](/config/root) 的相对路径。
 - `size` 是图标的大小，以像素为单位。
 - `target` 是图标的目标，可以是 `apple-touch-icon` 或 `web-app-manifest`。如果未设置 `target`，默认情况下，manifest 文件会包含所有的图标，而 `apple-touch-icon` 标签只会包含小于 `200x200` 的图标。
+- `purpose` 是一个区分大小写的字符串，用于指定浏览器或操作系统在何种场景下可以使用该图标。该字段仅在 `target` 为 `'web-app-manifest'` 时生效。更多信息请参考 [MDN - purpose](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Manifest/Reference/icons#purpose)。
 
 ### 示例
 
@@ -172,3 +174,9 @@ export default {
   },
 };
 ```
+
+## 版本历史
+
+| 版本   | 变更内容                    |
+| ------ | --------------------------- |
+| v1.5.5 | 新增对 `purpose` 选项的支持 |

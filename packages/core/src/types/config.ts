@@ -1484,6 +1484,21 @@ export type AppIconItem = {
    * - `web-app-manifest` for web application manifest.
    */
   target?: 'apple-touch-icon' | 'web-app-manifest';
+  /**
+   * A case-sensitive keyword string that specifies one or more contexts in
+   * which the icon can be used by the browser or operating system.
+   * This field is only effective when the `target` is `'web-app-manifest'`.
+   *
+   * The possible properties include:
+   * - `'monochrome'`: Indicates that the icon is intended to be used as a
+   * monochrome icon with a solid fill.
+   * - `'maskable'`: Indicates that the icon is designed with icon masks and
+   * safe zone in mind.
+   * - `'any'`: Indicates that the icon can be used in any context. This is
+   * the default value.
+   * @see https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Manifest/Reference/icons#purpose
+   */
+  purpose?: string;
 };
 
 export type AppIcon = {
