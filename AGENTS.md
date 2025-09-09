@@ -2,6 +2,11 @@
 
 This monorepo contains the Rsbuild build tool, plugins, and related packages. Rsbuild is a high-performance JavaScript build tool powered by Rspack.
 
+## Setup
+
+- Enable Corepack and install deps: `npm install corepack -g && corepack enable && pnpm install`
+- Node.js 22+
+
 ## Commands
 
 - **Build**: `pnpm build` (all packages) | `npx nx build @rsbuild/core` (specific)
@@ -17,5 +22,11 @@ This monorepo contains the Rsbuild build tool, plugins, and related packages. Rs
 
 ## Architecture
 
-- **Structure**: Monorepo with `packages/core/` (main), `packages/plugin-*/` (plugins)
+- **Structure**: Monorepo (Pnpm + Nx)
+  - `packages/core/`: Main Rsbuild package with CLI
+  - `packages/plugin-*/`: Official plugins (React, Vue, Sass, etc.)
+  - `packages/create-rsbuild/`: Project scaffolding
+  - `e2e/`: End-to-end tests
+  - `examples/`: Basic examples
+  - `website/`: Documentation
 - **Testing**: `.test.ts` files, use `rstest` runner
