@@ -6,7 +6,7 @@
  * Copyright JS Foundation and other contributors
  * https://github.com/webpack/webpack-dev-middleware/blob/master/LICENSE
  */
-import type { Stats as FSStats, ReadStream } from 'node:fs';
+import type { ReadStream } from 'node:fs';
 import type {
   IncomingMessage,
   ServerResponse as NodeServerResponse,
@@ -19,6 +19,7 @@ import type {
   Stats,
 } from '@rspack/core';
 import { logger } from '../logger';
+import type { Rspack } from '../types';
 import { wrapper as createMiddleware } from './middleware';
 import { type Extra, getFilenameFromUrl } from './utils/getFilenameFromUrl';
 import { ready } from './utils/ready';
@@ -39,17 +40,6 @@ export type WatchOptions = NonNullable<Configuration['watchOptions']>;
 export type Watching = Compiler['watching'];
 
 export type MultiWatching = ReturnType<MultiCompiler['watch']>;
-
-// TODO: refine types to match underlying fs-like implementations
-export type OutputFileSystem = {
-  createReadStream?: (
-    p: string,
-    opts: { start: number; end: number },
-  ) => ReadStream;
-  statSync?: (p: string) => FSStats;
-  lstat?: (p: string) => unknown; // TODO: type
-  readFileSync?: (p: string) => Buffer;
-};
 
 export type Callback = (stats?: Stats | MultiStats) => void;
 
@@ -92,7 +82,7 @@ export type Context = {
   options: Options;
   compiler: Compiler | MultiCompiler;
   watching: Watching | MultiWatching | undefined;
-  outputFileSystem: OutputFileSystem;
+  outputFileSystem: Rspack.OutputFileSystem;
 };
 
 export type FilledContext = Omit<Context, 'watching'> & {

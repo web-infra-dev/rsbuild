@@ -22,29 +22,14 @@ async function getEtag(stat: FSStats): Promise<string> {
   return `W/"${size}-${mtime}"`;
 }
 
-function createReadStreamOrReadFileSync(
-  filename: string,
-  outputFileSystem: any, // TODO: narrow type to OutputFileSystem
-  start: number,
-  end: number,
-): { bufferOrStream: Buffer | ReadStream; byteLength: number } {
-  const bufferOrStream = (
-    outputFileSystem.createReadStream as (
-      p: string,
-      opts: { start: number; end: number },
-    ) => ReadStream
-  )(filename, {
-    start,
-    end,
-  });
-  const byteLength = end === 0 ? 0 : end - start + 1;
-
-  return { bufferOrStream, byteLength };
-}
+type CreateReadStream = (
+  p: string,
+  opts: { start: number; end: number },
+) => ReadStream;
 
 async function getContentType(str: string): Promise<false | string> {
   const { lookup } = await import('../../compiled/mrmime/index.js');
-  let mime = lookup(str) as string | false | undefined;
+  let mime = lookup(str);
   if (!mime) {
     return false;
   }
@@ -79,22 +64,22 @@ function parseHttpDate(date: string): number {
 const CACHE_CONTROL_NO_CACHE_REGEXP = /(?:^|,)\s*?no-cache\s*?(?:,|$)/;
 
 function destroyStream(stream: ReadStream, suppress: boolean): void {
-  if (typeof (stream as any).destroy === 'function') {
-    (stream as any).destroy();
+  if (typeof stream.destroy === 'function') {
+    stream.destroy();
   }
 
-  if (typeof (stream as any).close === 'function') {
+  if (typeof stream.close === 'function') {
     stream.on('open', function onOpenClose(this: ReadStream) {
       // @ts-ignore
-      if (typeof (this as any).fd === 'number') {
+      if (typeof this.fd === 'number') {
         this.close();
       }
     });
   }
 
-  if (typeof (stream as any).addListener === 'function' && suppress) {
-    (stream as any).removeAllListeners('error');
-    (stream as any).addListener('error', () => {});
+  if (typeof stream.addListener === 'function' && suppress) {
+    stream.removeAllListeners('error');
+    stream.addListener('error', () => {});
   }
 }
 
@@ -124,8 +109,7 @@ export function wrapper<
   return async function middleware(req, res, next) {
     const acceptedMethods = ['GET', 'HEAD'];
 
-    // eslint-disable-next-line no-param-reassign
-    (res as any).locals = (res as any).locals || {};
+    res.locals = res.locals || {};
 
     async function goNext() {
       return new Promise<void>((resolve) => {
@@ -134,7 +118,7 @@ export function wrapper<
           () => {
             // eslint-disable-next-line no-param-reassign
             // TODO: augment Response type to include `locals`
-            ((res as any).locals as any).webpack = { devMiddleware: context };
+            (res.locals as any).webpack = { devMiddleware: context };
             resolve(next());
           },
           req,
@@ -168,7 +152,7 @@ export function wrapper<
           const key = keys[i];
           const value = options.headers[key];
           if (typeof value !== 'undefined') {
-            res.setHeader(key, value as any);
+            res.setHeader(key, value);
           }
         }
       }
@@ -202,7 +186,7 @@ export function wrapper<
         return (
           !etag ||
           (ifMatch !== '*' &&
-            parseTokenList(ifMatch as string).every(
+            parseTokenList(ifMatch).every(
               (match: string) =>
                 match !== etag &&
                 match !== `W/${etag}` &&
@@ -213,7 +197,7 @@ export function wrapper<
 
       const ifUnmodifiedSince = req.headers['if-unmodified-since'];
       if (ifUnmodifiedSince) {
-        const unmodifiedSince = parseHttpDate(ifUnmodifiedSince as string);
+        const unmodifiedSince = parseHttpDate(ifUnmodifiedSince);
         if (!Number.isNaN(unmodifiedSince)) {
           const lastModified = parseHttpDate(
             String(res.getHeader('Last-Modified')),
@@ -235,10 +219,7 @@ export function wrapper<
     function isFresh(resHeaders: import('http').OutgoingHttpHeaders): boolean {
       const cacheControl = req.headers['cache-control'];
 
-      if (
-        cacheControl &&
-        CACHE_CONTROL_NO_CACHE_REGEXP.test(cacheControl as string)
-      ) {
+      if (cacheControl && CACHE_CONTROL_NO_CACHE_REGEXP.test(cacheControl)) {
         return false;
       }
 
@@ -254,7 +235,7 @@ export function wrapper<
           return false;
         }
 
-        const matches = parseTokenList(noneMatch as string);
+        const matches = parseTokenList(noneMatch);
         let etagStale = true;
 
         for (let i = 0; i < matches.length; i++) {
@@ -283,8 +264,7 @@ export function wrapper<
         const modifiedStale =
           !lastModified ||
           !(
-            parseHttpDate(String(lastModified)) <=
-            parseHttpDate(modifiedSince as string)
+            parseHttpDate(String(lastModified)) <= parseHttpDate(modifiedSince)
           );
 
         if (modifiedStale) {
@@ -480,12 +460,15 @@ export function wrapper<
       const [start, end] = calcStartAndEnd(offset, len);
 
       try {
-        ({ bufferOrStream, byteLength } = createReadStreamOrReadFileSync(
-          filename,
-          context.outputFileSystem,
+        bufferOrStream = (
+          context.outputFileSystem as unknown as {
+            createReadStream: CreateReadStream;
+          }
+        ).createReadStream(filename, {
           start,
           end,
-        ));
+        });
+        byteLength = end === 0 ? 0 : end - start + 1;
       } catch (_ignoreError) {
         await goNext();
         return;
@@ -503,36 +486,32 @@ export function wrapper<
         return;
       }
 
-      const isPipeSupports =
-        typeof (bufferOrStream as ReadStream).pipe === 'function';
+      const isPipeSupports = typeof bufferOrStream.pipe === 'function';
 
       if (!isPipeSupports) {
-        res.end(bufferOrStream as Buffer);
+        res.end(bufferOrStream);
         return;
       }
 
       const cleanup = () => {
-        destroyStream(bufferOrStream as ReadStream, true);
+        destroyStream(bufferOrStream, true);
       };
 
-      (bufferOrStream as ReadStream).on(
-        'error',
-        (error: NodeJS.ErrnoException) => {
-          cleanup();
-          switch (error.code) {
-            case 'ENAMETOOLONG':
-            case 'ENOENT':
-            case 'ENOTDIR':
-              sendError(404);
-              break;
-            default:
-              sendError(500);
-              break;
-          }
-        },
-      );
+      bufferOrStream.on('error', (error: NodeJS.ErrnoException) => {
+        cleanup();
+        switch (error.code) {
+          case 'ENAMETOOLONG':
+          case 'ENOENT':
+          case 'ENOTDIR':
+            sendError(404);
+            break;
+          default:
+            sendError(500);
+            break;
+        }
+      });
 
-      (bufferOrStream as ReadStream).pipe(res as any);
+      bufferOrStream.pipe(res);
 
       onFinishedStream(res, cleanup);
     }
