@@ -373,7 +373,7 @@ export function wrapper<
       const rangeHeader = getRangeHeader();
 
       if (!res.getHeader('ETag')) {
-        const value = extra.stats!;
+        const value = extra.stats;
         if (value) {
           const hash = getEtag(value);
           res.setHeader('ETag', hash);
