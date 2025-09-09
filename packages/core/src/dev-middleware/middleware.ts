@@ -365,11 +365,6 @@ export function wrapper<
         res.setHeader('Accept-Ranges', 'bytes');
       }
 
-      if (context.options.lastModified && !res.getHeader('Last-Modified')) {
-        const modified = extra.stats!.mtime.toUTCString();
-        res.setHeader('Last-Modified', modified);
-      }
-
       const rangeHeader = getRangeHeader();
 
       if (!res.getHeader('ETag')) {

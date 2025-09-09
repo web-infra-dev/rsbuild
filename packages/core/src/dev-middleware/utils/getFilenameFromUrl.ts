@@ -12,7 +12,6 @@ export type Extra = {
 };
 
 // TODO: type the cache options instead of using any for the second parameter
-// TODO: type the cache options instead of using any for the second parameter
 const memoizedParse = memorize(parse as any, undefined as any, (value: any) => {
   if (value.pathname) {
     value.pathname = decode(value.pathname);
@@ -32,7 +31,6 @@ export function getFilenameFromUrl(
   url: string,
   extra: Extra = {},
 ): string | undefined {
-  const { options } = context;
   const paths = getPaths(context) as {
     publicPath: string | undefined;
     outputPath: string;
@@ -95,15 +93,8 @@ export function getFilenameFromUrl(
         foundFilename = filename;
         break;
       }
-      if (
-        extra.stats.isDirectory() &&
-        (typeof options.index === 'undefined' || options.index)
-      ) {
-        const indexValue =
-          typeof options.index === 'undefined' ||
-          typeof options.index === 'boolean'
-            ? 'index.html'
-            : options.index;
+      if (extra.stats.isDirectory()) {
+        const indexValue = 'index.html';
 
         filename = path.join(filename, indexValue);
 
