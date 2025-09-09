@@ -177,7 +177,18 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
             .filter(
               (icon) => icon.target === 'web-app-manifest' || !icon.target,
             )
-            .map((icon) => pick(icon, ['src', 'sizes', 'purpose', 'mimeType']));
+            .map((icon) => {
+              const result = pick(icon, [
+                'src',
+                'sizes',
+                'purpose',
+                'mimeType',
+              ]);
+              if (icon.mimeType) {
+                return { ...result, type: icon.mimeType };
+              }
+              return result;
+            });
 
           const manifest = {
             name: appIcon.name,
