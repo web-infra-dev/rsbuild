@@ -1,4 +1,4 @@
-import type { LoaderDefinition, sources } from '@rspack/core';
+import type { LoaderDefinition, RawSourceMap } from '@rspack/core';
 import type { EnvironmentContext } from '../types';
 
 export type TransformLoaderOptions = {
@@ -7,9 +7,9 @@ export type TransformLoaderOptions = {
 };
 
 const mergeSourceMap = async (
-  originalSourceMap?: sources.RawSourceMap | string,
-  generatedSourceMap?: sources.RawSourceMap | string | null,
-): Promise<sources.RawSourceMap | string | undefined> => {
+  originalSourceMap?: RawSourceMap | string,
+  generatedSourceMap?: RawSourceMap | string | null,
+): Promise<RawSourceMap | string | undefined> => {
   if (!originalSourceMap || !generatedSourceMap) {
     return generatedSourceMap ?? originalSourceMap;
   }
@@ -65,10 +65,7 @@ const transformLoader: LoaderDefinition<TransformLoaderOptions> =
         return;
       }
 
-      const mergedMap = await mergeSourceMap(
-        map as sources.RawSourceMap,
-        result.map,
-      );
+      const mergedMap = await mergeSourceMap(map, result.map);
       callback(null, result.code, mergedMap);
     } catch (error) {
       if (error instanceof Error) {

@@ -301,7 +301,7 @@ type TransformResult =
   | string
   | {
       code: string;
-      map?: string | Rspack.sources.RawSourceMap | null;
+      map?: string | Rspack.RawSourceMap | null;
     };
 
 export type TransformContext = {
