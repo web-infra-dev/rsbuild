@@ -1,4 +1,4 @@
-window.a = '你好 world!';
+window.a = `你好 world! I'm 🦀`;
 
 window.b = {
   Д: 'A',
