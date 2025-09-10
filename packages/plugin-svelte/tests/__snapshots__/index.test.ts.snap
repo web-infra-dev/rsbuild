@@ -475,7 +475,7 @@ exports[`plugin-svelte > should set dev and hotReload to false in production mod
           },
           "rspackExperiments": {
             "collectTypeScriptInfo": {
-              "exportedEnum": true,
+              "exportedEnum": false,
               "typeExports": true,
             },
           },
