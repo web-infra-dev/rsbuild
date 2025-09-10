@@ -7,11 +7,29 @@
 
 > 请查看 [Polyfill 方案](/guide/advanced/browser-compatibility#polyfill-mode) 了解详细内容。
 
-## 可选值
+## 示例
 
-### usage
+### 禁用 polyfills
 
-当 `output.polyfill` 配置为 `'usage'` 时，Rsbuild 会在每个文件中根据代码中使用的 API 注入 polyfills。这提供了最优的包体积，因为只包含所需的 polyfills。
+当 `output.polyfill` 配置为 `'off'` 时，Rsbuild 不会注入任何 polyfills。当你不需要 polyfill 支持或手动管理 polyfills 时使用此选项。
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    polyfill: 'off',
+  },
+};
+```
+
+适用于以下场景：
+
+- 你的应用只针对现代浏览器
+- 你使用了外部 polyfill 服务，如 [Polyfill.io](https://polyfill.io/)
+- 你的包体积非常重要，需要完全控制
+
+### 智能 polyfill 注入
+
+当 `output.polyfill` 设置为 `'usage'` 时，Rsbuild 会分析你的代码，只为实际使用的 API 注入 polyfills。这提供了最小的包体积。
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -21,9 +39,17 @@ export default {
 };
 ```
 
-### entry
+例如，如果你的代码只使用了 `Promise.all()` 和 `Array.includes()`，则只会包含这些特定功能的 polyfills。
 
-当 `output.polyfill` 配置为 `'entry'` 时，Rsbuild 会在每个入口文件中注入 polyfills。这确保了所有 polyfills 都可用，但可能会增加包体积。
+推荐在以下场景使用：
+
+- 你想要最优的包体积
+- 你正在构建库或组件
+- 你的代码库有选择性地使用现代 JavaScript 特性
+
+### 全局 polyfill 注入
+
+当 `output.polyfill` 设置为 `'entry'` 时，Rsbuild 会在每个入口点注入一套完整的 polyfills。所有支持的 polyfills 都可全局使用。
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -33,14 +59,42 @@ export default {
 };
 ```
 
-### off
+这确保了最大的兼容性，但可能显著增加包体积。
 
-当 `output.polyfill` 配置为 `'off'` 时，Rsbuild 不会注入 polyfills，开发者需要自行保证代码的兼容性。
+在以下场景使用此模式：
+
+- 你需要支持旧版浏览器（IE 11+）
+- 你的应用使用了许多现代 JavaScript 特性
+- 兼容性比包体积更重要
+- 你正在从使用 `@babel/preset-env` 的 webpack 迁移
+
+### 条件 polyfill 配置
+
+你也可以基于环境设置不同的 polyfill 模式：
 
 ```ts title="rsbuild.config.ts"
 export default {
   output: {
-    polyfill: 'off',
+    polyfill: process.env.NODE_ENV === 'production' ? 'usage' : 'entry',
+  },
+};
+```
+
+或者为不同的环境配置不同的模式：
+
+```ts title="rsbuild.config.ts"
+export default {
+  environments: {
+    web: {
+      output: {
+        polyfill: 'usage',
+      },
+    },
+    legacy: {
+      output: {
+        polyfill: 'entry',
+      },
+    },
   },
 };
 ```

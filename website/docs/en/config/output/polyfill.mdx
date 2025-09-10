@@ -7,11 +7,29 @@ Control the polyfill injection mode.
 
 > Please refer to the [Polyfill Mode](/guide/advanced/browser-compatibility#polyfill-mode) for more details.
 
-## Optional value
+## Examples
 
-### usage
+### Disable polyfills
 
-When `output.polyfill` is set to `'usage'`, Rsbuild injects polyfills based on the APIs used in each file. This provides optimal bundle size as only needed polyfills are included.
+When `output.polyfill` is configured as `'off'`, Rsbuild will not inject any polyfills. Use this when you don't need polyfill support or manage polyfills manually.
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    polyfill: 'off',
+  },
+};
+```
+
+This is ideal when:
+
+- Your application only targets modern browsers
+- You're using external polyfill services like [Polyfill.io](https://polyfill.io/)
+- Your bundle size is critical and you want complete control
+
+### Smart polyfill injection
+
+When `output.polyfill` is set to `'usage'`, Rsbuild analyzes your code and only injects polyfills for APIs that are actually used. This provides the smallest bundle size.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -21,9 +39,17 @@ export default {
 };
 ```
 
-### entry
+For example, if your code only uses `Promise.all()` and `Array.includes()`, only polyfills for these specific features will be included.
 
-When `output.polyfill` is set to `'entry'`, Rsbuild injects polyfills in each entry file. This ensures all polyfills are available but may increase bundle size.
+This mode is recommended when:
+
+- You want optimal bundle size
+- You're building a library or component
+- Your codebase uses modern JavaScript features selectively
+
+### Global polyfill injection
+
+When `output.polyfill` is set to `'entry'`, Rsbuild injects a comprehensive set of polyfills at each entry point. All supported polyfills are available globally.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -33,14 +59,42 @@ export default {
 };
 ```
 
-### off
+This ensures maximum compatibility but may increase bundle size significantly.
 
-When `output.polyfill` is configured as `'off'`, Rsbuild will not inject the polyfills, and developers need to ensure code compatibility themselves.
+Use this mode when:
+
+- You need to support legacy browsers (IE 11+)
+- Your application uses many modern JavaScript features
+- Bundle size is less critical than compatibility
+- You're migrating from webpack with `@babel/preset-env`
+
+### Conditional polyfill configuration
+
+You can also set different polyfill modes based on the environment:
 
 ```ts title="rsbuild.config.ts"
 export default {
   output: {
-    polyfill: 'off',
+    polyfill: process.env.NODE_ENV === 'production' ? 'usage' : 'entry',
+  },
+};
+```
+
+Or configure different modes for different environments:
+
+```ts title="rsbuild.config.ts"
+export default {
+  environments: {
+    web: {
+      output: {
+        polyfill: 'usage',
+      },
+    },
+    legacy: {
+      output: {
+        polyfill: 'entry',
+      },
+    },
   },
 };
 ```
