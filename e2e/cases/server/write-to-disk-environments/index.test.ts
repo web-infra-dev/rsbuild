@@ -2,8 +2,19 @@ import fs from 'node:fs';
 import { join } from 'node:path';
 import { dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
+import { removeSync } from 'fs-extra';
 
 const cwd = __dirname;
+
+test.beforeEach(() => {
+  const dirs = ['dist', 'dist-1', 'dist-2', 'dist-same', 'dist-same-1'];
+  for (const dir of dirs) {
+    const target = join(cwd, dir);
+    if (fs.existsSync(target)) {
+      removeSync(target);
+    }
+  }
+});
 
 test('multiple environments writeToDisk should work correctly', async ({
   page,
