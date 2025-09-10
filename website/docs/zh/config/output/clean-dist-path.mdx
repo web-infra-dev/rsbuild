@@ -17,7 +17,7 @@ type CleanDistPath = boolean | 'auto' | CleanDistPathObject;
 - 在开发模式下，如果 [dev.writeToDisk](/config/dev/write-to-disk) 的值为 `false`，则 Rsbuild 不会执行清理。
 - 在任意模式下，如果 [output.distPath.root](/config/output/dist-path) 为外部目录，或等于项目根目录时，Rsbuild 不会执行清理，这是为了避免误删其他目录的文件。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     distPath: {
@@ -31,7 +31,7 @@ export default {
 
 你可以把 `cleanDistPath` 设置为 `true` 来强制开启，也可以设置为 `false` 来强制关闭该行为。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     cleanDistPath: true,
@@ -43,7 +43,7 @@ export default {
 
 如果你只需要在生产模式构建前清理文件，而在开发模式构建前不需要，那么可以配置为：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     cleanDistPath: process.env.NODE_ENV === 'production',
@@ -62,7 +62,7 @@ export default {
 
 是否在构建开始前清理产物目录下的所有文件。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     // 等价于 `cleanDistPath: true`
@@ -82,7 +82,7 @@ export default {
 
 例如，保留 `dist/foo.json` 文件：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     cleanDistPath: {
