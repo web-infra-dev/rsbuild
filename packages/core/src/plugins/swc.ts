@@ -113,7 +113,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain({
       order: 'pre',
-      handler: (chain, { CHAIN_ID, isDev, isProd, target, environment }) => {
+      handler: (chain, { CHAIN_ID, isDev, target, environment }) => {
         const { config, browserslist } = environment;
         const cacheRoot = path.join(api.context.cachePath, '.swc');
 

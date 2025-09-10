@@ -13,12 +13,15 @@ rspackOnlyTest(
     expect(await page.evaluate(() => window.testFish)).toBe('fish,FISH');
     expect(await page.evaluate(() => window.testCat)).toBe('cat,CAT');
     expect(await page.evaluate(() => window.testDog)).toBe('dog,DOG');
-    expect(await page.evaluate(() => window.testNumbers)).toBe('0,1,1.0');
+    expect(await page.evaluate(() => window.testNumbers)).toBe(
+      '0,1,1.1,1.0,-1,-1.1',
+    );
 
-    const indexJs = await rsbuild.getIndexBundle();
-    expect(indexJs).toContain('window.testFish="fish,FISH"');
-    expect(indexJs).toContain('window.testCat="cat,CAT"');
-    expect(indexJs).toContain('window.testNumbers="0,1,1.0"');
+    // TODO: enable inline enum optimization
+    // const indexJs = await rsbuild.getIndexBundle();
+    // expect(indexJs).toContain('window.testFish="fish,FISH"');
+    // expect(indexJs).toContain('window.testCat="cat,CAT"');
+    // expect(indexJs).toContain('window.testNumbers="0,1,1.1,1.0,-1,-1.1"');
 
     await rsbuild.close();
   },
