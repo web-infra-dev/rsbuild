@@ -10,9 +10,7 @@ test.beforeEach(() => {
   const dirs = ['dist', 'dist-1', 'dist-2', 'dist-same', 'dist-same-1'];
   for (const dir of dirs) {
     const target = join(cwd, dir);
-    if (fs.existsSync(target)) {
-      removeSync(target);
-    }
+    removeSync(target);
   }
 });
 
