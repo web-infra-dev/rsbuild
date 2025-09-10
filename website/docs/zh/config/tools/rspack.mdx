@@ -15,7 +15,7 @@ Rsbuild 内置的 Rspack 配置会随着迭代而发生变化，这些变化不�
 
 比如添加 `resolve.alias` 配置：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: {
@@ -31,7 +31,7 @@ export default {
 
 在合并配置时，`webpack-merge` 会自动合并数组，比如 `plugins`、`module.rules`、`resolve.extensions` 等配置。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: {
@@ -50,7 +50,7 @@ export default {
 
 `tools.rspack` 也可以配置为一个函数，这个函数接收一个参数，即内置的 Rspack 配置对象，你可以对这个对象进行修改，然后返回一份新的配置。比如：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config) => {
@@ -68,7 +68,7 @@ export default {
 
 `tools.rspack` 还可以是一个异步函数：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: async (config) => {
@@ -90,7 +90,7 @@ export default {
 
 通过 env 参数可以判断当前环境为 development、production 还是 test。比如：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { env }) => {
@@ -109,7 +109,7 @@ export default {
 
 一个布尔值，表示当前是否为开发模式构建，当 [mode](/config/mode) 为 `development` 时，值为 `true`。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { isDev }) => {
@@ -128,7 +128,7 @@ export default {
 
 一个布尔值，表示当前是否为生产模式构建，当 [mode](/config/mode) 为 `production` 时，值为 `true`。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (chain, { isProd }) => {
@@ -148,7 +148,7 @@ export default {
 
 你可以为不同的构建目标设置不同的 Rspack 配置，比如：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { target }) => {
@@ -169,7 +169,7 @@ export default {
 
 一个布尔值，表示当前 [构建目标](/config/output/target) 是否为 `node`，等价于 `target === 'node'`。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { isServer }) => {
@@ -188,7 +188,7 @@ export default {
 
 一个布尔值，表示当前 [构建目标](/config/output/target) 是否为 `web-worker`，等价于 `target === 'web-worker'`。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { isWebWorker }) => {
@@ -207,12 +207,28 @@ export default {
 
 Rspack 实例，等价于 `import { rspack } from '@rsbuild/core'`。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { rspack }) => {
       config.plugins.push(new rspack.BannerPlugin());
       return config;
+    },
+  },
+};
+```
+
+### environment
+
+- **类型：** [EnvironmentContext](/api/javascript-api/environment-api#environment-context)
+
+和当前环境有关的上下文信息。
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: (config, { environment }) => {
+      console.log(environment);
     },
   },
 };
@@ -224,7 +240,7 @@ export default {
 
 对应 [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin) 插件的默认导出。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { HtmlPlugin }) => {
@@ -244,7 +260,7 @@ export default {
 
 示例：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { addRules }) => {
@@ -278,7 +294,7 @@ export default {
 
 示例：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { appendRules }) => {
@@ -310,7 +326,7 @@ export default {
 
 在内部 Rspack 插件数组头部添加额外的插件，数组头部的插件会优先执行。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { prependPlugins }) => {
@@ -330,7 +346,7 @@ export default {
 
 在内部 Rspack 插件数组尾部添加额外的插件，数组尾部的插件会在最后执行。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { appendPlugins }) => {
@@ -352,7 +368,7 @@ export default {
 
 例如，删除内部的 [webpack-bundle-analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer)：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { removePlugin }) => {
@@ -368,7 +384,7 @@ export default {
 
 用于合并多份 Rspack 配置，等价于 [webpack-merge](https://github.com/survivejs/webpack-merge)。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { mergeConfig }) => {

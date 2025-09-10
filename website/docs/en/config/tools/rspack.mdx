@@ -15,7 +15,7 @@ The built-in Rspack config in Rsbuild may change with iterations, and these chan
 
 For example, add `resolve.alias` configuration:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: {
@@ -31,7 +31,7 @@ export default {
 
 When merging configurations, `webpack-merge` will automatically concatenate arrays such as `plugins`, `module.rules`, `resolve.extensions`, etc.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: {
@@ -50,7 +50,7 @@ If you need to override a configuration rather than merge it with the default va
 
 `tools.rspack` can be configured as a function. The first parameter of this function is the built-in Rspack configuration object, you can modify this object, and then return it. For example:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config) => {
@@ -68,7 +68,7 @@ The object returned by the `tools.rspack` function is used directly as the final
 
 `tools.rspack` can also be an async function:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: async (config) => {
@@ -90,7 +90,7 @@ The second parameter of this function is an object, which contains some utility 
 
 The `env` parameter determines whether the current environment is development, production or test. For example:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { env }) => {
@@ -109,7 +109,7 @@ export default {
 
 A boolean value indicating whether this is a development build. Set to `true` when the [mode](/config/mode) is `development`.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { isDev }) => {
@@ -128,7 +128,7 @@ export default {
 
 A boolean value indicating whether this is a production build. Set to `true` when the [mode](/config/mode) is `production`.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (chain, { isProd }) => {
@@ -148,7 +148,7 @@ The current [build target](/config/output/target).
 
 You can set different Rspack configurations for different build targets, for example:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { target }) => {
@@ -169,7 +169,7 @@ export default {
 
 A boolean value indicating whether the [build target](/config/output/target) is `node`, equivalent to `target === 'node'`.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { isServer }) => {
@@ -188,7 +188,7 @@ export default {
 
 A boolean value indicating whether the [build target](/config/output/target) is `web-worker`, equivalent to `target === 'web-worker'`.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { isWebWorker }) => {
@@ -207,12 +207,28 @@ export default {
 
 The Rspack instance, the same as `import { rspack } from '@rsbuild/core'`.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { rspack }) => {
       config.plugins.push(new rspack.BannerPlugin());
       return config;
+    },
+  },
+};
+```
+
+### environment
+
+- **Type:** [EnvironmentContext](/api/javascript-api/environment-api#environment-context)
+
+Context information about the current environment.
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: (config, { environment }) => {
+      console.log(environment);
     },
   },
 };
@@ -224,7 +240,7 @@ export default {
 
 The default export of [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin).
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { HtmlPlugin }) => {
@@ -244,7 +260,7 @@ It should be noted that Rspack loaders will be executed in right-to-left order. 
 
 For example:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { addRules }) => {
@@ -278,7 +294,7 @@ Add additional [Rspack rules](https://rspack.rs/config/module#modulerules) to th
 
 For example:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { appendRules }) => {
@@ -310,7 +326,7 @@ export default {
 
 Add additional plugins to the head of the internal Rspack plugins array, and the plugin will be executed first.
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { prependPlugins }) => {
@@ -330,7 +346,7 @@ export default {
 
 Add additional plugins at the end of the internal Rspack plugins array, the plugin will be executed last.
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { appendPlugins }) => {
@@ -352,7 +368,7 @@ Remove the internal Rspack plugin, the parameter is the `constructor.name` of th
 
 For example, remove the internal [webpack-bundle-analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer):
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { removePlugin }) => {
@@ -368,7 +384,7 @@ export default {
 
 Used to merge multiple Rspack configs, the same as [webpack-merge](https://github.com/survivejs/webpack-merge).
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { mergeConfig }) => {
