@@ -67,12 +67,10 @@ function getDefaultSwcConfig({
   browserslist,
   cacheRoot,
   config,
-  isProd,
 }: {
   browserslist: string[];
   cacheRoot: string;
   config: NormalizedEnvironmentConfig;
-  isProd: boolean;
 }): SwcLoaderOptions {
   return {
     jsc: {
@@ -100,7 +98,7 @@ function getDefaultSwcConfig({
     rspackExperiments: {
       collectTypeScriptInfo: {
         typeExports: true,
-        exportedEnum: isProd,
+        exportedEnum: false,
       },
     },
   };
@@ -158,7 +156,6 @@ export const pluginSwc = (): RsbuildPlugin => ({
           browserslist,
           cacheRoot,
           config,
-          isProd,
         });
 
         applyTransformImport(swcConfig, config.source.transformImport);
