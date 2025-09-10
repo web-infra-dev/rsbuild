@@ -78,22 +78,21 @@ function parseHttpDate(date: string): number {
 const CACHE_CONTROL_NO_CACHE_REGEXP = /(?:^|,)\s*?no-cache\s*?(?:,|$)/;
 
 function destroyStream(stream: ReadStream, suppress: boolean): void {
-  if (typeof (stream as any).destroy === 'function') {
-    (stream as any).destroy();
+  if (typeof stream.destroy === 'function') {
+    stream.destroy();
   }
 
-  if (typeof (stream as any).close === 'function') {
-    stream.on('open', function onOpenClose(this: ReadStream) {
-      // @ts-ignore
-      if (typeof (this as any).fd === 'number') {
+  if (typeof stream.close === 'function') {
+    stream.on('open', function onOpenClose(this: ReadStream, fd) {
+      if (typeof fd === 'number') {
         this.close();
       }
     });
   }
 
-  if (typeof (stream as any).addListener === 'function' && suppress) {
-    (stream as any).removeAllListeners('error');
-    (stream as any).addListener('error', () => {});
+  if (typeof stream.addListener === 'function' && suppress) {
+    stream.removeAllListeners('error');
+    stream.addListener('error', () => {});
   }
 }
 
@@ -123,15 +122,13 @@ export function wrapper<
   return async function middleware(req, res, next) {
     const acceptedMethods = ['GET', 'HEAD'];
 
-    (res as any).locals = (res as any).locals || {};
-
     async function goNext() {
       return new Promise<void>((resolve) => {
         ready(
           context,
           () => {
-            // TODO: augment Response type to include `locals`
-            (res as any).locals.webpack = { devMiddleware: context };
+            res.locals = res.locals || {};
+            res.locals.webpack = { devMiddleware: context };
             next();
             resolve();
           },
@@ -166,7 +163,7 @@ export function wrapper<
           const key = keys[i];
           const value = options.headers[key];
           if (typeof value !== 'undefined') {
-            res.setHeader(key, value as any);
+            res.setHeader(key, value);
           }
         }
       }
@@ -368,9 +365,8 @@ export function wrapper<
       const rangeHeader = getRangeHeader();
 
       if (!res.getHeader('ETag')) {
-        const value = extra.stats;
-        if (value) {
-          const hash = getEtag(value);
+        if (extra.stats) {
+          const hash = getEtag(extra.stats);
           res.setHeader('ETag', hash);
         }
       }
@@ -427,7 +423,7 @@ export function wrapper<
 
           sendError(416, {
             headers: {
-              'Content-Range': res.getHeader('Content-Range') as any,
+              'Content-Range': res.getHeader('Content-Range'),
             },
           });
           return;
@@ -436,24 +432,20 @@ export function wrapper<
           logger.error(
             "[rsbuild-dev-middleware] A malformed 'Range' header was provided. A regular response will be sent for this request.",
           );
-        } else if ((parsedRanges as any[]).length > 1) {
+        } else if (parsedRanges.length > 1) {
           logger.error(
             "[rsbuild-dev-middleware] A 'Range' header with multiple ranges was provided. Multiple ranges are not supported, so a regular response will be sent for this request.",
           );
         }
 
-        if (parsedRanges !== -2 && (parsedRanges as any[]).length === 1) {
+        if (parsedRanges !== -2 && parsedRanges.length === 1) {
           res.statusCode = 206;
           res.setHeader(
             'Content-Range',
-            getValueContentRangeHeader(
-              'bytes',
-              size,
-              (parsedRanges as Ranges)[0],
-            ),
+            getValueContentRangeHeader('bytes', size, parsedRanges[0]),
           );
 
-          [offset, len] = getOffsetAndLenFromRange((parsedRanges as Ranges)[0]);
+          [offset, len] = getOffsetAndLenFromRange(parsedRanges[0]);
         }
       }
 
@@ -474,7 +466,6 @@ export function wrapper<
         return;
       }
 
-      // @ts-ignore
       res.setHeader('Content-Length', byteLength);
 
       if (req.method === 'HEAD') {
@@ -515,7 +506,7 @@ export function wrapper<
         },
       );
 
-      (bufferOrStream as ReadStream).pipe(res as any);
+      (bufferOrStream as ReadStream).pipe(res);
 
       onFinishedStream(res, cleanup);
     }

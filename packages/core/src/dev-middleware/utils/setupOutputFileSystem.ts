@@ -21,10 +21,9 @@ export async function setupOutputFileSystem(
       );
 
       ({ outputFileSystem } =
-        compiler[0] ||
-        ((context.compiler as MultiCompiler).compilers[0] as any));
+        compiler[0] || (context.compiler as MultiCompiler).compilers[0]);
     } else {
-      ({ outputFileSystem } = context.compiler as any);
+      ({ outputFileSystem } = context.compiler);
     }
   }
 
@@ -32,11 +31,9 @@ export async function setupOutputFileSystem(
     context.compiler,
   ];
 
-  for (const compiler of compilers as any[]) {
-    // @ts-ignore
+  for (const compiler of compilers) {
     compiler.outputFileSystem = outputFileSystem;
   }
 
-  // @ts-ignore
-  (context as any).outputFileSystem = outputFileSystem as OutputFileSystem;
+  context.outputFileSystem = outputFileSystem as OutputFileSystem;
 }
