@@ -39,7 +39,9 @@ test('should import the enum values as expected in development mode', async ({
   expect(await page.evaluate(() => window.testFish)).toBe('fish,FISH');
   expect(await page.evaluate(() => window.testCat)).toBe('cat,CAT');
   expect(await page.evaluate(() => window.testDog)).toBe('dog,DOG');
-  expect(await page.evaluate(() => window.testNumbers)).toBe('0,1,1.0');
+  expect(await page.evaluate(() => window.testNumbers)).toBe(
+    '0,1,1.1,1.0,-1,-1.1',
+  );
 
   await rsbuild.close();
 });
