@@ -3,7 +3,9 @@ import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
 
-test('writeToDisk default', async ({ page }) => {
+test('should work with the default writeToDisk configuration', async ({
+  page,
+}) => {
   const rsbuild = await dev({
     cwd,
     page,
@@ -22,7 +24,7 @@ test('writeToDisk default', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('writeToDisk false', async ({ page }) => {
+test('should work when writeToDisk is set to false', async ({ page }) => {
   const rsbuild = await dev({
     cwd,
     page,
@@ -44,7 +46,7 @@ test('writeToDisk false', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('writeToDisk true', async ({ page }) => {
+test('should work when writeToDisk is set to true', async ({ page }) => {
   const rsbuild = await dev({
     cwd,
     page,

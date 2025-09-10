@@ -21,7 +21,7 @@ rspackOnlyTest(
 );
 
 rspackOnlyTest(
-  'should add vendor prefixes by current browserslist in dev mode',
+  'should add vendor prefixes by current browserslist in dev',
   async ({ page }) => {
     const rsbuild = await dev({
       cwd: __dirname,

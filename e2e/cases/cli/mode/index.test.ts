@@ -12,7 +12,7 @@ rspackOnlyTest(
     const outputs = await readDirContents(path.join(__dirname, 'dist'));
     const outputFiles = Object.keys(outputs);
 
-    // no filename hash in development mode
+    // no filename hash in dev
     expect(
       outputFiles.find((item) => item.endsWith('static/js/index.js')),
     ).toBeTruthy();
@@ -32,7 +32,7 @@ rspackOnlyTest(
     const outputs = await readDirContents(path.join(__dirname, 'dist'));
     const outputFiles = Object.keys(outputs);
 
-    // no filename hash in development mode
+    // no filename hash in dev
     expect(
       outputFiles.find((item) => item.endsWith('static/js/index.js')),
     ).toBeTruthy();

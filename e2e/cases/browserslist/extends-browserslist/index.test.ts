@@ -1,7 +1,7 @@
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('extends browserslist and downgrade the syntax', async () => {
+test('should extend browserslist and downgrade syntax', async () => {
   const originalCwd = process.cwd();
   process.chdir(__dirname);
 

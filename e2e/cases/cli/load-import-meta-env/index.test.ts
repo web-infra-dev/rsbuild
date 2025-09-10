@@ -44,10 +44,13 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest('should allow to specify env mode via --env-mode', async () => {
-  runCliSync('build --env-mode test', {
-    cwd: __dirname,
-  });
+rspackOnlyTest(
+  'should support specifying env mode via --env-mode',
+  async () => {
+    runCliSync('build --env-mode test', {
+      cwd: __dirname,
+    });
 
-  expect(fs.existsSync(path.join(__dirname, 'dist/5'))).toBeTruthy();
-});
+    expect(fs.existsSync(path.join(__dirname, 'dist/5'))).toBeTruthy();
+  },
+);

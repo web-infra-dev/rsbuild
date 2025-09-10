@@ -1,7 +1,7 @@
 import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('should compile optional chaining and nullish coalescing in development mode', async ({
+test('should compile optional chaining and nullish coalescing in dev', async ({
   page,
 }) => {
   const rsbuild = await dev({
@@ -19,7 +19,7 @@ test('should compile optional chaining and nullish coalescing in development mod
   await rsbuild.close();
 });
 
-test('should compile optional chaining and nullish coalescing in production mode', async ({
+test('should compile optional chaining and nullish coalescing in build', async ({
   page,
 }) => {
   const rsbuild = await build({

@@ -1,7 +1,7 @@
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('should allow to custom dist path of different files', async () => {
+test('should support custom dist paths for different file types', async () => {
   const rsbuild = await build({
     cwd: __dirname,
   });

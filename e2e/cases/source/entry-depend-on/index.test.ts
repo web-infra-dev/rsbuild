@@ -1,7 +1,7 @@
 import { build, gotoPage } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('should allow to set entry description object with dependOn', async ({
+test('should support an entry description object with dependOn', async ({
   page,
 }) => {
   const rsbuild = await build({

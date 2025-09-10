@@ -17,7 +17,7 @@ test('should resolve package.json#imports correctly in dev build', async ({
   await rsbuild.close();
 });
 
-test('should resolve package.json#imports correctly in prod build', async ({
+test('should resolve package.json#imports correctly in build', async ({
   page,
 }) => {
   const rsbuild = await build({

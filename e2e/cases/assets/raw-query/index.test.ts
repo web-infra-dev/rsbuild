@@ -5,9 +5,7 @@ import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 
-test('should allow to get raw asset content with `?raw` in development mode', async ({
-  page,
-}) => {
+test('should return raw asset content with `?raw` in dev', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
     page,
@@ -23,7 +21,7 @@ test('should allow to get raw asset content with `?raw` in development mode', as
   await rsbuild.close();
 });
 
-test('should allow to get raw asset content with `?raw` in production mode', async ({
+test('should return raw asset content with `?raw` in build', async ({
   page,
 }) => {
   const rsbuild = await build({
@@ -41,7 +39,7 @@ test('should allow to get raw asset content with `?raw` in production mode', asy
   await rsbuild.close();
 });
 
-test('should allow to get raw SVG content with `?raw` when using pluginSvgr', async ({
+test('should return raw SVG content with `?raw` when using pluginSvgr', async ({
   page,
 }) => {
   const rsbuild = await dev({
@@ -62,7 +60,7 @@ test('should allow to get raw SVG content with `?raw` when using pluginSvgr', as
   await rsbuild.close();
 });
 
-test('should allow to get raw JS content with `?raw`', async ({ page }) => {
+test('should return raw JS content with `?raw`', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
     page,
@@ -75,7 +73,7 @@ test('should allow to get raw JS content with `?raw`', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('should allow to get raw TS content with `?raw`', async ({ page }) => {
+test('should return raw TS content with `?raw`', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
     page,
@@ -93,7 +91,7 @@ test('should allow to get raw TS content with `?raw`', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('should allow to get raw TSX content with `?raw` and using pluginReact', async ({
+test('should return raw TSX content with `?raw` when using pluginReact', async ({
   page,
 }) => {
   const rsbuild = await dev({

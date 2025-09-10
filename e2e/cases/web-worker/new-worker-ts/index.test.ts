@@ -1,7 +1,9 @@
 import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('should allow to build web-worker with new Worker', async ({ page }) => {
+test('should build a web worker in build using the new Worker syntax', async ({
+  page,
+}) => {
   const rsbuild = await build({
     cwd: __dirname,
     page,
@@ -14,7 +16,7 @@ test('should allow to build web-worker with new Worker', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('should allow to build web-worker with new Worker in dev mode', async ({
+test('should build a web worker in dev using the new Worker syntax', async ({
   page,
 }) => {
   const rsbuild = await dev({

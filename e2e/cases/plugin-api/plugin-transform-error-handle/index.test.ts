@@ -1,6 +1,6 @@
 import { dev, rspackOnlyTest } from '@e2e/helper';
 
-rspackOnlyTest('should handle transform error in dev mode', async () => {
+rspackOnlyTest('should handle transform error in dev', async () => {
   const rsbuild = await dev({
     cwd: __dirname,
   });

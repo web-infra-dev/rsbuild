@@ -1,7 +1,7 @@
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('exclude specified sass file with exclude option', async () => {
+test('should exclude specified Sass files using the exclude option', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {

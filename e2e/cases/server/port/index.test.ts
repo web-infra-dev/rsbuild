@@ -1,7 +1,7 @@
 import { dev, getRandomPort } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('should allow to set port via server.port', async ({ page }) => {
+test('should set the port via server.port', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', (err) => errors.push(err.message));
 

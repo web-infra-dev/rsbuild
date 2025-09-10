@@ -18,7 +18,7 @@ test('should clean dist path by default', async () => {
   expect(fs.existsSync(testDistFile)).toBeFalsy();
 });
 
-test('should not clean dist path in dev mode when writeToDisk is false', async () => {
+test('should not clean dist path in dev when writeToDisk is false', async () => {
   await fse.outputFile(testDistFile, `{ "test": 1 }`);
 
   await dev({
@@ -34,7 +34,7 @@ test('should not clean dist path in dev mode when writeToDisk is false', async (
   await remove(testDistFile);
 });
 
-test('should clean dist path in dev mode when writeToDisk is true', async () => {
+test('should clean dist path in dev when writeToDisk is true', async () => {
   await fse.outputFile(testDistFile, `{ "test": 1 }`);
 
   await dev({

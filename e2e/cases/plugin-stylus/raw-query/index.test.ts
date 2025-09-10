@@ -3,9 +3,7 @@ import path from 'node:path';
 import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('should allow to import raw Stylus files in development mode', async ({
-  page,
-}) => {
+test('should allow to import raw Stylus files in dev', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
     page,
@@ -24,9 +22,7 @@ test('should allow to import raw Stylus files in development mode', async ({
   await rsbuild.close();
 });
 
-test('should allow to import raw Stylus files in production mode', async ({
-  page,
-}) => {
+test('should allow to import raw Stylus files in build', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
     page,

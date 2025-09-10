@@ -45,7 +45,7 @@ const expectSourceMap = async (files: Record<string, string>) => {
 };
 
 rspackOnlyTest(
-  'should merge source map when plugin transforms code in production mode',
+  'should merge source map when plugin transforms code in build',
   async () => {
     const rsbuild = await build({
       cwd: __dirname,
@@ -58,7 +58,7 @@ rspackOnlyTest(
 );
 
 rspackOnlyTest(
-  'should merge source map when plugin transforms code in development mode',
+  'should merge source map when plugin transforms code in dev',
   async ({ page }) => {
     const rsbuild = await dev({
       cwd: __dirname,

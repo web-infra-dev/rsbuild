@@ -14,7 +14,7 @@ test('should detect and report missing named export errors during build', async 
   await rsbuild.close();
 });
 
-test('should detect and report missing named export errors in development mode', async ({
+test('should detect and report missing named export errors in dev', async ({
   page,
 }) => {
   const rsbuild = await dev({

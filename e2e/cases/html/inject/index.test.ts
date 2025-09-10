@@ -3,7 +3,7 @@ import { build, normalizeNewlines, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginRem } from '@rsbuild/plugin-rem';
 
-test('injection script order should be as expected', async () => {
+test('should preserve the expected script injection order', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     plugins: [

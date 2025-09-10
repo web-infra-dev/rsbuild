@@ -3,7 +3,9 @@ import { join } from 'node:path';
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('html.outputStructure', async ({ page }) => {
+test('should output nested HTML structure when html.outputStructure is `nested`', async ({
+  page,
+}) => {
   const rsbuild = await build({
     cwd: __dirname,
     page,

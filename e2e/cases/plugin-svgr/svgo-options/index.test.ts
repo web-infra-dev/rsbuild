@@ -1,7 +1,7 @@
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('use SVGR and override svgo plugin options', async ({ page }) => {
+test('should use SVGR and override SVGO plugin options', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
     page,

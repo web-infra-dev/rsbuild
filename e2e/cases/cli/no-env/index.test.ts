@@ -3,7 +3,7 @@ import path from 'node:path';
 import { rspackOnlyTest, runCliSync } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
-rspackOnlyTest('should allow to disable loading env files', async () => {
+rspackOnlyTest('should disable loading env files', async () => {
   runCliSync('build --no-env', {
     cwd: __dirname,
   });

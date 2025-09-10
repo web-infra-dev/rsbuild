@@ -3,7 +3,7 @@ import path from 'node:path';
 import { rspackOnlyTest, runCliSync } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
-rspackOnlyTest('should allow to custom env directory', async () => {
+rspackOnlyTest('should support a custom env directory', async () => {
   runCliSync('build --env-dir env', {
     cwd: __dirname,
   });

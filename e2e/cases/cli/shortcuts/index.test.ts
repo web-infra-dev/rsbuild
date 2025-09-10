@@ -48,7 +48,7 @@ rspackOnlyTest('should display shortcuts as expected in preview', async () => {
   close();
 });
 
-rspackOnlyTest('should allow to custom shortcuts in dev', async () => {
+rspackOnlyTest('should support custom shortcuts in dev', async () => {
   const { childProcess, expectLog, clearLogs, close } = runCommand(
     'node ./devCustom.mjs',
     {
@@ -65,7 +65,7 @@ rspackOnlyTest('should allow to custom shortcuts in dev', async () => {
   close();
 });
 
-rspackOnlyTest('should allow to custom shortcuts in preview', async () => {
+rspackOnlyTest('should support custom shortcuts in preview', async () => {
   const { childProcess, expectLog, clearLogs, close } = runCommand(
     'node ./previewCustom.mjs',
     {

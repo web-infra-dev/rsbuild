@@ -19,7 +19,7 @@ rspackOnlyTest(
 );
 
 rspackOnlyTest(
-  'should build Vue SFC with CSS Modules correctly in prod build for node target',
+  'should build Vue SFC with CSS Modules correctly in build for node target',
   async ({ page }) => {
     const rsbuild = await build({
       cwd: __dirname,

@@ -1,7 +1,7 @@
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('SVGR basic usage', async ({ page }) => {
+test('should handle SVG assets in JS and CSS', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
     page,

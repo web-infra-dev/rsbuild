@@ -1,7 +1,7 @@
 import { dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('OPTIONS request should fallback success when no other middleware responses', async ({
+test('should return 204 for OPTIONS requests when no middleware handles them', async ({
   page,
 }) => {
   const rsbuild = await dev({
@@ -21,7 +21,7 @@ test('OPTIONS request should fallback success when no other middleware responses
   await rsbuild.close();
 });
 
-test('OPTIONS request should response correctly with middleware responses', async ({
+test('should return 200 with custom headers for OPTIONS requests handled by middleware', async ({
   page,
 }) => {
   const rsbuild = await dev({

@@ -7,7 +7,7 @@ declare global {
   }
 }
 
-test('should define vars in production mode correctly', async ({ page }) => {
+test('should define vars in build correctly', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
     page,
@@ -58,7 +58,7 @@ test('should define vars in production mode correctly', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('should define vars in development mode correctly', async ({ page }) => {
+test('should define vars in dev', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
     page,

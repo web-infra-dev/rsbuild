@@ -17,9 +17,7 @@ const toolsConfig = {
   },
 };
 
-test('inline all scripts should work and emit all source maps', async ({
-  page,
-}) => {
+test('should inline all scripts and emit all source maps', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
     page,
@@ -58,7 +56,7 @@ test('inline all scripts should work and emit all source maps', async ({
   await rsbuild.close();
 });
 
-test('using RegExp to inline scripts', async () => {
+test('should inline scripts when matching a RegExp', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
@@ -84,7 +82,7 @@ test('using RegExp to inline scripts', async () => {
   ).toBeGreaterThanOrEqual(2);
 });
 
-test('inline scripts by filename and file size', async () => {
+test('should inline scripts based on filename and size', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
@@ -112,7 +110,7 @@ test('inline scripts by filename and file size', async () => {
   ).toBeGreaterThanOrEqual(2);
 });
 
-test('using RegExp to inline styles', async () => {
+test('should inline styles when matching a RegExp', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
@@ -132,7 +130,7 @@ test('using RegExp to inline styles', async () => {
   ).toEqual(0);
 });
 
-test('inline styles by filename and file size', async () => {
+test('should inline styles based on filename and size', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
@@ -154,9 +152,7 @@ test('inline styles by filename and file size', async () => {
   ).toEqual(0);
 });
 
-test('styles are not inline by default in development mode', async ({
-  page,
-}) => {
+test('should not inline styles by default in dev', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
     page,
@@ -175,7 +171,7 @@ test('styles are not inline by default in development mode', async ({
   await rsbuild.close();
 });
 
-test('using RegExp to inline styles in development mode', async ({ page }) => {
+test('should inline styles in dev when matching a RegExp', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
     page,
@@ -200,7 +196,7 @@ test('using RegExp to inline styles in development mode', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('inline styles by filename and file size in development mode', async ({
+test('should inline styles in dev based on filename and size', async ({
   page,
 }) => {
   const rsbuild = await dev({
@@ -229,7 +225,7 @@ test('inline styles by filename and file size in development mode', async ({
   await rsbuild.close();
 });
 
-test('inline scripts does not work when enable is false', async () => {
+test('should not inline scripts when disabled', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
@@ -258,7 +254,7 @@ test('inline scripts does not work when enable is false', async () => {
   ).toBeGreaterThanOrEqual(2);
 });
 
-test('inline styles does not work when enable is false', async () => {
+test('should not inline styles when disabled', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
@@ -281,7 +277,7 @@ test('inline styles does not work when enable is false', async () => {
   ).toEqual(1);
 });
 
-test('inline chunk works in production mode when enable is auto', async () => {
+test('should inline assets in build when enable is auto', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
@@ -321,7 +317,7 @@ test('inline chunk works in production mode when enable is auto', async () => {
   ).toEqual(0);
 });
 
-test('inline does not work in development mode when enable is auto', async ({
+test('should not inline assets in dev when enable is auto', async ({
   page,
 }) => {
   const rsbuild = await dev({
@@ -359,7 +355,7 @@ test('inline does not work in development mode when enable is auto', async ({
   await rsbuild.close();
 });
 
-test('styles and scripts are not inline by default in development mode when enable not set', async ({
+test('should not inline scripts or styles in dev by default when enable is unset', async ({
   page,
 }) => {
   const rsbuild = await dev({

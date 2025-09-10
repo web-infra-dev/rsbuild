@@ -2,7 +2,7 @@ import { URL } from 'node:url';
 import { dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('should allow to listen ipv6 host', async ({ page }) => {
+test('should listen on an IPv6 host', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
   });

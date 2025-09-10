@@ -2,7 +2,7 @@ import { build, dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest(
-  'should run SWC Wasm plugin correctly in dev mode',
+  'should run SWC Wasm plugin correctly in dev',
   async ({ page }) => {
     const rsbuild = await dev({
       cwd: __dirname,

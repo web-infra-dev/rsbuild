@@ -19,7 +19,7 @@ test('should generate unique classname for different CSS Modules files in dev bu
   await rsbuild.close();
 });
 
-test('should generate unique classname for different CSS Modules files in prod build', async ({
+test('should generate unique classname for different CSS Modules files in build', async ({
   page,
 }) => {
   const rsbuild = await dev({

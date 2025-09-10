@@ -139,7 +139,7 @@ test('should allow to configure CORS', async ({ page, request }) => {
   await rsbuild.close();
 });
 
-test('`server.headers` should override `server.cors` for dev server', async ({
+test('should override `server.cors` for dev server when `server.headers` is set', async ({
   page,
   request,
 }) => {
@@ -164,7 +164,7 @@ test('`server.headers` should override `server.cors` for dev server', async ({
   await rsbuild.close();
 });
 
-test('`server.headers` should override `server.cors` for preview server', async ({
+test('should override `server.cors` for preview server when `server.headers` is set', async ({
   page,
   request,
 }) => {

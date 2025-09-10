@@ -95,7 +95,7 @@ dist/static/js/lib-react.js   X.X kB   X.X kB
     await rsbuild.close();
   });
 
-  test('printFileSize: false should not print logs', async () => {
+  test('should not print logs when printFileSize is false', async () => {
     const rsbuild = await build({
       cwd,
       rsbuildConfig: {
@@ -110,7 +110,7 @@ dist/static/js/lib-react.js   X.X kB   X.X kB
     await rsbuild.close();
   });
 
-  test('printFileSize.detail: false should work', async () => {
+  test('should not print details when printFileSize.detail is false', async () => {
     const rsbuild = await build({
       cwd,
       rsbuildConfig: {
@@ -281,7 +281,7 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
     await rsbuild.close();
   });
 
-  test('printFileSize with custom total function should work', async () => {
+  test('should respect a custom total function for printFileSize', async () => {
     const rsbuild = await build({
       cwd,
       rsbuildConfig: {
