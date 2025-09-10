@@ -2,7 +2,7 @@ import { build, dev, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest(
-  'should compile less with `parallel` option in production mode',
+  'should compile less with `parallel` option in build',
   async () => {
     const rsbuild = await build({
       cwd: __dirname,
@@ -20,7 +20,7 @@ rspackOnlyTest(
 );
 
 rspackOnlyTest(
-  'should compile less with `parallel` option in development mode',
+  'should compile less with `parallel` option in dev',
   async ({ page }) => {
     const rsbuild = await dev({
       cwd: __dirname,

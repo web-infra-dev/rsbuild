@@ -4,7 +4,7 @@ import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { remove } from 'fs-extra';
 
-test('`buildCache.cacheDirectory` should work as expected in development mode', async ({
+test('`buildCache.cacheDirectory` should work as expected in dev', async ({
   page,
 }) => {
   const defaultDirectory = path.resolve(__dirname, './node_modules/.cache');
@@ -29,7 +29,7 @@ test('`buildCache.cacheDirectory` should work as expected in development mode', 
   await rsbuild.close();
 });
 
-test('`buildCache.cacheDirectory` should work as expected in production mode', async () => {
+test('`buildCache.cacheDirectory` should work as expected in build', async () => {
   const defaultDirectory = path.resolve(__dirname, './node_modules/.cache');
   const cacheDirectory = path.resolve(__dirname, './node_modules/.cache2');
   await remove(defaultDirectory);

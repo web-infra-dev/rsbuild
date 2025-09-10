@@ -5,7 +5,7 @@ const utf8Str = `你好 world! I'm 🦀`;
 const asciiStr = `\\u{4F60}\\u{597D} world! I'm \\u{1F980}`;
 
 rspackOnlyTest(
-  'should allow to set output.charset to ascii in development mode',
+  'should allow to set output.charset to ascii in dev',
   async ({ page }) => {
     const rsbuild = await dev({
       cwd: __dirname,
@@ -33,7 +33,7 @@ rspackOnlyTest(
   },
 );
 
-test('should allow to set output.charset to ascii in production mode', async ({
+test('should allow to set output.charset to ascii in build', async ({
   page,
 }) => {
   const rsbuild = await build({
@@ -54,9 +54,7 @@ test('should allow to set output.charset to ascii in production mode', async ({
   await rsbuild.close();
 });
 
-test('should allow to set output.charset to utf8 in development mode', async ({
-  page,
-}) => {
+test('should allow to set output.charset to utf8 in dev', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
     rsbuildConfig: {
@@ -82,7 +80,7 @@ test('should allow to set output.charset to utf8 in development mode', async ({
   await rsbuild.close();
 });
 
-test('should allow to set output.charset to utf8 in production mode', async ({
+test('should allow to set output.charset to utf8 in build', async ({
   page,
 }) => {
   const rsbuild = await build({

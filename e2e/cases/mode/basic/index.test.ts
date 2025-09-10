@@ -11,7 +11,7 @@ test('should allow to set development mode when building', async () => {
 
   const files = await rsbuild.getDistFiles({ sourceMaps: true });
 
-  // should not have filename hash in development mode
+  // should not have filename hash in dev
   const indexFile = Object.keys(files).find((key) =>
     key.endsWith('static/js/index.js'),
   )!;
@@ -66,7 +66,7 @@ rspackOnlyTest(
 
     const files = await rsbuild.getDistFiles({ sourceMaps: true });
 
-    // should have filename hash in production mode
+    // should have filename hash in build
     const indexFile = Object.keys(files).find((key) =>
       key.match(/static\/js\/index\.\w+\.js/),
     )!;

@@ -5,7 +5,7 @@ import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 
-test('should allow to get raw asset content with `?raw` in development mode', async ({
+test('should allow to get raw asset content with `?raw` in dev', async ({
   page,
 }) => {
   const rsbuild = await dev({
@@ -23,7 +23,7 @@ test('should allow to get raw asset content with `?raw` in development mode', as
   await rsbuild.close();
 });
 
-test('should allow to get raw asset content with `?raw` in production mode', async ({
+test('should allow to get raw asset content with `?raw` in build', async ({
   page,
 }) => {
   const rsbuild = await build({

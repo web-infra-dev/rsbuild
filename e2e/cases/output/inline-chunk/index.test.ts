@@ -154,9 +154,7 @@ test('inline styles by filename and file size', async () => {
   ).toEqual(0);
 });
 
-test('styles are not inline by default in development mode', async ({
-  page,
-}) => {
+test('styles are not inline by default in dev', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
     page,
@@ -175,7 +173,7 @@ test('styles are not inline by default in development mode', async ({
   await rsbuild.close();
 });
 
-test('using RegExp to inline styles in development mode', async ({ page }) => {
+test('using RegExp to inline styles in dev', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
     page,
@@ -200,9 +198,7 @@ test('using RegExp to inline styles in development mode', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('inline styles by filename and file size in development mode', async ({
-  page,
-}) => {
+test('inline styles by filename and file size in dev', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
     page,
@@ -281,7 +277,7 @@ test('inline styles does not work when enable is false', async () => {
   ).toEqual(1);
 });
 
-test('inline chunk works in production mode when enable is auto', async () => {
+test('inline chunk works in build when enable is auto', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
@@ -321,9 +317,7 @@ test('inline chunk works in production mode when enable is auto', async () => {
   ).toEqual(0);
 });
 
-test('inline does not work in development mode when enable is auto', async ({
-  page,
-}) => {
+test('inline does not work in dev when enable is auto', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
     page,
@@ -359,7 +353,7 @@ test('inline does not work in development mode when enable is auto', async ({
   await rsbuild.close();
 });
 
-test('styles and scripts are not inline by default in development mode when enable not set', async ({
+test('styles and scripts are not inline by default in dev when enable not set', async ({
   page,
 }) => {
   const rsbuild = await dev({

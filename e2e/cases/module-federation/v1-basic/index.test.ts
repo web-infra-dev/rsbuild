@@ -26,34 +26,31 @@ export default Button;`,
   );
 };
 
-rspackOnlyTest(
-  'should run module federation in development mode',
-  async ({ page }) => {
-    writeButtonCode();
+rspackOnlyTest('should run module federation in dev', async ({ page }) => {
+  writeButtonCode();
 
-    const remotePort = await getRandomPort();
+  const remotePort = await getRandomPort();
 
-    process.env.REMOTE_PORT = remotePort.toString();
+  process.env.REMOTE_PORT = remotePort.toString();
 
-    const remoteApp = await dev({
-      cwd: remote,
-    });
-    const hostApp = await dev({
-      cwd: host,
-    });
+  const remoteApp = await dev({
+    cwd: remote,
+  });
+  const hostApp = await dev({
+    cwd: host,
+  });
 
-    await gotoPage(page, remoteApp);
-    await expect(page.locator('#title')).toHaveText('Remote');
-    await expect(page.locator('#button')).toHaveText('Button from remote');
+  await gotoPage(page, remoteApp);
+  await expect(page.locator('#title')).toHaveText('Remote');
+  await expect(page.locator('#button')).toHaveText('Button from remote');
 
-    await gotoPage(page, hostApp);
-    await expect(page.locator('#title')).toHaveText('Host');
-    await expect(page.locator('#button')).toHaveText('Button from remote');
+  await gotoPage(page, hostApp);
+  await expect(page.locator('#title')).toHaveText('Host');
+  await expect(page.locator('#button')).toHaveText('Button from remote');
 
-    await hostApp.close();
-    await remoteApp.close();
-  },
-);
+  await hostApp.close();
+  await remoteApp.close();
+});
 
 rspackOnlyTest(
   'should allow to set `server.cors` config',
@@ -89,7 +86,7 @@ rspackOnlyTest(
 );
 
 rspackOnlyTest(
-  'should run module federation in development mode with server.base',
+  'should run module federation in dev with server.base',
   async ({ page }) => {
     writeButtonCode();
 

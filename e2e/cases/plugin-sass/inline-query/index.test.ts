@@ -2,7 +2,7 @@ import { build, dev, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest(
-  'should allow to import inline Sass files in development mode',
+  'should allow to import inline Sass files in dev',
   async ({ page }) => {
     const rsbuild = await dev({
       cwd: __dirname,
@@ -27,7 +27,7 @@ rspackOnlyTest(
 );
 
 rspackOnlyTest(
-  'should allow to import inline Sass files in production mode',
+  'should allow to import inline Sass files in build',
   async ({ page }) => {
     const rsbuild = await build({
       cwd: __dirname,
