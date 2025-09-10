@@ -38,7 +38,7 @@ Please refer to: [RspackChain examples](/guide/configuration/rspack#use-bundler-
 
 The `env` parameter can be used to determine whether the current environment is development, production or test. For example:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     bundlerChain: (chain, { env }) => {
@@ -56,7 +56,7 @@ export default {
 
 A boolean value indicating whether this is a development build. Set to `true` when the [mode](/config/mode) is `development`.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     bundlerChain: (config, { isDev }) => {
@@ -75,7 +75,7 @@ export default {
 
 A boolean value indicating whether this is a production build. Set to `true` when the [mode](/config/mode) is `production`.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     bundlerChain: (chain, { isProd }) => {
@@ -95,7 +95,7 @@ The current [build target](/config/output/target).
 
 You can set different Rspack configurations for different build targets, for example:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     bundlerChain: (chain, { target }) => {
@@ -114,7 +114,7 @@ export default {
 
 A boolean value indicating whether the [build target](/config/output/target) is `node`, equivalent to `target === 'node'`.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     bundlerChain: (chain, { isServer }) => {
@@ -132,7 +132,7 @@ export default {
 
 A boolean value indicating whether the [build target](/config/output/target) is `web-worker`, equivalent to `target === 'web-worker'`.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     bundlerChain: (chain, { isWebWorker }) => {
@@ -150,7 +150,7 @@ export default {
 
 The Rspack instance, the same as `import { rspack } from '@rsbuild/core'`.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     bundlerChain: (chain, { rspack }) => {
@@ -166,13 +166,29 @@ export default {
 };
 ```
 
+### environment
+
+- **Type:** [EnvironmentContext](/api/javascript-api/environment-api#environment-context)
+
+Context information about the current environment.
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    bundlerChain: (chain, { environment }) => {
+      console.log(environment);
+    },
+  },
+};
+```
+
 ### HtmlPlugin
 
 - **Type:** `typeof import('html-rspack-plugin')`
 
 The default export of [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin).
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     bundlerChain: (chain, { HtmlPlugin }) => {
