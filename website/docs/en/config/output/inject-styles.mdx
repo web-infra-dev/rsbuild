@@ -7,12 +7,51 @@ Whether to inject styles into DOM.
 
 By default, Rsbuild will extract CSS into a separate `.css` file and output it to the dist directory. When this option is set to `true`, CSS files will be inlined into JS files and inserted on the page at runtime via `<style>` tags. This feature is implemented based on [style-loader](https://npmjs.com/package/style-loader).
 
-### Example
+## Examples
 
-```ts
+### Basic Usage
+
+Enable CSS injection for all builds:
+
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     injectStyles: true,
+  },
+};
+```
+
+### Environment-specific Configuration
+
+Enable CSS injection only in development mode for faster HMR, while keeping CSS extraction in production for optimal performance:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    injectStyles: process.env.NODE_ENV === 'development',
+  },
+};
+```
+
+### Multi-environment Builds
+
+Configure different CSS injection strategies for different environments:
+
+```ts title="rsbuild.config.ts"
+export default {
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+        injectStyles: false, // Extract CSS for web builds
+      },
+    },
+    webComponent: {
+      output: {
+        target: 'web',
+        injectStyles: true, // Inject CSS for web components to avoid external dependencies
+      },
+    },
   },
 };
 ```
@@ -23,13 +62,19 @@ When `output.injectStyles` is enabled, you can modify the options of `style-load
 
 ### Usage scenario
 
-We recommend enabling the `injectStyles` option only in development.
+We recommend enabling the `injectStyles` option only in development mode for improved development experience, or in specific scenarios where CSS needs to be bundled with JS.
 
-For production builds, we recommend using Rsbuild's default behavior, which extracts CSS into separate bundles so browsers can load CSS and JS assets in parallel.
+**Development mode:** Injecting styles can provide faster Hot Module Replacement (HMR) updates since styles are loaded inline with JavaScript.
+
+**Web Components:** When building reusable web components, injecting styles ensures the component is self-contained without external CSS dependencies.
+
+**Widget/Embeddable Scripts:** For JavaScript widgets that need to be embedded in third-party websites, injecting styles eliminates the need for users to include separate CSS files.
+
+For production builds of regular web applications, we recommend using Rsbuild's default behavior, which extracts CSS into separate bundles so browsers can load CSS and JS assets in parallel.
 
 For example:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     injectStyles: process.env.NODE_ENV === 'development',

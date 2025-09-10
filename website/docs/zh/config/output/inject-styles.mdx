@@ -9,10 +9,49 @@
 
 ## 示例
 
-```ts
+### 基础用法
+
+为所有构建启用 CSS 注入：
+
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     injectStyles: true,
+  },
+};
+```
+
+### 特定环境配置
+
+仅在开发模式启用 CSS 注入以获得更快的 HMR，同时在生产模式保持 CSS 提取以获得最佳性能：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    injectStyles: process.env.NODE_ENV === 'development',
+  },
+};
+```
+
+### 多环境构建
+
+为不同环境配置不同的 CSS 注入策略：
+
+```ts title="rsbuild.config.ts"
+export default {
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+        injectStyles: false, // Web 构建提取 CSS
+      },
+    },
+    webComponent: {
+      output: {
+        target: 'web',
+        injectStyles: true, // Web 组件注入 CSS 以避免外部依赖
+      },
+    },
   },
 };
 ```
@@ -23,13 +62,19 @@ export default {
 
 ## 使用场景
 
-建议仅在开发模式开启 `injectStyles` 选项。
+建议仅在开发模式或需要将 CSS 与 JS 打包在一起的特定场景下启用 `injectStyles` 选项。
 
-对于生产模式构建，建议使用 Rsbuild 的默认行为，将 CSS 抽取为单独的 bundle，以便浏览器能够并行加载 CSS 和 JS 资源。
+**开发模式：** 注入样式可以提供更快的热模块替换 (HMR) 更新，因为样式与 JavaScript 内联加载。
+
+**Web 组件：** 构建可复用的 Web 组件时，注入样式确保组件是自包含的，无需外部 CSS 依赖。
+
+**小部件/嵌入式脚本：** 对于需要嵌入到第三方网站的 JavaScript 小部件，注入样式消除了用户包含单独 CSS 文件的需要。
+
+对于常规 Web 应用的生产构建，建议使用 Rsbuild 的默认行为，将 CSS 抽取为单独的 bundle，以便浏览器能够并行加载 CSS 和 JS 资源。
 
 比如：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     injectStyles: process.env.NODE_ENV === 'development',
