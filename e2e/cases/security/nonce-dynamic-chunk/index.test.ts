@@ -28,7 +28,7 @@ test('should apply nonce to dynamic chunks in dev build', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('should apply nonce to dynamic chunks in prod build', async ({ page }) => {
+test('should apply nonce to dynamic chunks in build', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
     page,

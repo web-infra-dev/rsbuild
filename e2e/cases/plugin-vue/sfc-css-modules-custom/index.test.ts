@@ -22,7 +22,7 @@ rspackOnlyTest(
 );
 
 rspackOnlyTest(
-  'should allow to custom CSS Modules inject name in prod build',
+  'should allow to custom CSS Modules inject name in build',
   async ({ page }) => {
     const rsbuild = await build({
       cwd: __dirname,

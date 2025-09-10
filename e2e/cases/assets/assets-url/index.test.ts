@@ -1,7 +1,7 @@
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('should allow to get assets URL with `?url`', async ({ page }) => {
+test('should return the asset URL with `?url`', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
     page,

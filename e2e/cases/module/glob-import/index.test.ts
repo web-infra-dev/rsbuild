@@ -17,7 +17,7 @@ rspackOnlyTest(
 );
 
 rspackOnlyTest(
-  'should glob import components in prod build correctly',
+  'should glob import components in build correctly',
   async ({ page }) => {
     const rsbuild = await build({
       cwd: __dirname,

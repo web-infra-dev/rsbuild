@@ -2,7 +2,7 @@ import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-test('should allow to inline assets with `?inline`', async ({ page }) => {
+test('should inline assets with `?inline`', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
     page,

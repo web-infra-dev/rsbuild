@@ -29,7 +29,7 @@ test('should build successfully with multiple environments', async ({
   await rsbuild.close();
 });
 
-test('should serve successfully in dev mode with multiple environments', async ({
+test('should serve successfully in dev with multiple environments', async ({
   page,
 }) => {
   const rsbuild = await dev({

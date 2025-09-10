@@ -3,7 +3,7 @@ import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import fse from 'fs-extra';
 
-test('should allow to set relative root path', async () => {
+test('should support setting a relative root path', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
@@ -16,7 +16,7 @@ test('should allow to set relative root path', async () => {
   expect(rsbuild.distPath).toContain('test');
 });
 
-test('should allow to set absolute root path', async () => {
+test('should support setting an absolute root path', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {

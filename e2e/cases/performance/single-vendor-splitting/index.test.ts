@@ -2,7 +2,7 @@ import { basename } from 'node:path';
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('should allow to use `forceSplitting` when chunkSplit is "single-vendor"', async () => {
+test('should support `forceSplitting` when chunkSplit is "single-vendor"', async () => {
   const rsbuild = await build({
     cwd: __dirname,
   });

@@ -4,7 +4,7 @@ import type { RsbuildPluginAPI } from '@rsbuild/core';
 
 const fixtures = __dirname;
 
-test('should allow to access manifest data in environment context after prod build', async () => {
+test('should allow to access manifest data in environment context after build', async () => {
   let webManifest: Record<string, any> = {};
   let nodeManifest: Record<string, any> = {};
 

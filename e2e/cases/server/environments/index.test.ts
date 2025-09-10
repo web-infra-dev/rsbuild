@@ -44,7 +44,7 @@ test('should serve multiple environments correctly', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('should allow to access environment API in setupMiddlewares', async ({
+test('should expose the environment API in setupMiddlewares', async ({
   page,
 }) => {
   let assertionsCount = 0;

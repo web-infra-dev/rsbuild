@@ -2,7 +2,7 @@ import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest(
-  'generate integrity for async script tags in prod build',
+  'generate integrity for async script tags in build',
   async ({ page }) => {
     const rsbuild = await build({
       cwd: __dirname,

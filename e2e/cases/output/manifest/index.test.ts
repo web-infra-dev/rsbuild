@@ -101,9 +101,7 @@ test('should generate manifest file when target is node', async () => {
   });
 });
 
-test('should always write manifest to disk when in dev mode', async ({
-  page,
-}) => {
+test('should always write manifest to disk when in dev', async ({ page }) => {
   const rsbuild = await dev({
     cwd: fixtures,
     page,

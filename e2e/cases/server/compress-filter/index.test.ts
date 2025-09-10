@@ -1,7 +1,7 @@
 import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('should allow to configure compress filter in dev mode', async ({
+test('should support configuring the compression filter in dev', async ({
   page,
   request,
 }) => {
@@ -23,7 +23,7 @@ test('should allow to configure compress filter in dev mode', async ({
   await rsbuild.close();
 });
 
-test('should allow to configure compress filter in preview mode', async ({
+test('should support configuring the compression filter in preview mode', async ({
   page,
   request,
 }) => {

@@ -25,7 +25,7 @@ const rsbuildConfig: RsbuildConfig = {
   },
 };
 
-test('should allow to custom generate manifest data in production build', async () => {
+test('should generate custom manifest data in production build', async () => {
   const rsbuild = await build({
     cwd: fixtures,
     rsbuildConfig,
@@ -48,9 +48,7 @@ test('should allow to custom generate manifest data in production build', async 
   });
 });
 
-test('should allow to custom generate manifest data in dev', async ({
-  page,
-}) => {
+test('should generate custom manifest data in dev', async ({ page }) => {
   const rsbuild = await dev({
     cwd: fixtures,
     page,

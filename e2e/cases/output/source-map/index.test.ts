@@ -174,7 +174,7 @@ test('should generate source map correctly in development build', async ({
   await rsbuild.close();
 });
 
-test('should allow to only generate source map for CSS files', async () => {
+test('should generate source maps only for CSS files', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
