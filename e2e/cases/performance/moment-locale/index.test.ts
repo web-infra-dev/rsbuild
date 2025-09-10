@@ -1,7 +1,7 @@
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('removeMomentLocale false (default)', async () => {
+test('should retain Moment locales when removeMomentLocale is false (default)', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
@@ -39,7 +39,7 @@ test('removeMomentLocale false (default)', async () => {
   expect(momentMapFile.includes('moment/locale')).toBeTruthy();
 });
 
-test('removeMomentLocale true', async () => {
+test('should remove Moment locales when removeMomentLocale is true', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {

@@ -1,7 +1,9 @@
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('use SVGR and exclude some files', async ({ page }) => {
+test('should exclude matched SVG files from SVGR processing', async ({
+  page,
+}) => {
   const rsbuild = await build({
     cwd: __dirname,
     page,

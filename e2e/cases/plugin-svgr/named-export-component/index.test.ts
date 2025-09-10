@@ -1,7 +1,9 @@
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('use SVGR and default export React component', async ({ page }) => {
+test('should render an SVG React component via SVGR (named export)', async ({
+  page,
+}) => {
   const rsbuild = await build({
     cwd: __dirname,
     page,

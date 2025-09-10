@@ -5,7 +5,7 @@ import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = resolve(__dirname, '../');
 
-test('externals', async ({ page }) => {
+test('should treat specified modules as externals', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
     page,
@@ -35,7 +35,7 @@ test('externals', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('should not external dependencies when target is web worker', async () => {
+test('should not externalize dependencies when target is web worker', async () => {
   const rsbuild = await build({
     cwd: fixtures,
     plugins: [pluginReact()],

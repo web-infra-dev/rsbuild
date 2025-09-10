@@ -5,7 +5,9 @@ import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = resolve(__dirname);
 
-test('injectStyles', async ({ page }) => {
+test('should inject styles and not emit CSS files when output.injectStyles is true', async ({
+  page,
+}) => {
   const rsbuild = await build({
     cwd: fixtures,
     page,

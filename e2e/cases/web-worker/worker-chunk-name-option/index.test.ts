@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('should allow to build web-worker and specify chunk name', async ({
+test('should build a web worker and specify the chunk name', async ({
   page,
 }) => {
   const rsbuild = await build({

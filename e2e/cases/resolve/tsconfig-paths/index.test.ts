@@ -1,7 +1,7 @@
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('tsconfig paths should work and override the alias config', async ({
+test('should respect tsconfig paths and override resolve.alias', async ({
   page,
 }) => {
   const rsbuild = await build({
@@ -22,7 +22,7 @@ test('tsconfig paths should work and override the alias config', async ({
   await rsbuild.close();
 });
 
-test('tsconfig paths should not work when aliasStrategy is "prefer-alias"', async ({
+test('should ignore tsconfig paths when aliasStrategy is "prefer-alias"', async ({
   page,
 }) => {
   const rsbuild = await build({

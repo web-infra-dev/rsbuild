@@ -91,7 +91,7 @@ test('should allow to modify and return new urls', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('allow only listen to localhost for dev', async ({ page }) => {
+test('should listen only on localhost in dev', async ({ page }) => {
   const rsbuild = await dev({
     cwd,
     rsbuildConfig: {
@@ -112,7 +112,7 @@ test('allow only listen to localhost for dev', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('allow only listen to localhost for prod preview', async ({ page }) => {
+test('should listen only on localhost in preview', async ({ page }) => {
   const rsbuild = await build({
     cwd,
     page,

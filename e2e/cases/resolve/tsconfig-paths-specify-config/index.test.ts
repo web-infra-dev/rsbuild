@@ -1,7 +1,7 @@
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('tsconfig paths should work and override the alias config', async ({
+test('should respect tsconfig paths and override the alias config', async ({
   page,
 }) => {
   const rsbuild = await build({

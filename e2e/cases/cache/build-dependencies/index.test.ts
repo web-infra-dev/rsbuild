@@ -5,7 +5,7 @@ import { expect, test } from '@playwright/test';
 import type { RsbuildConfig } from '@rsbuild/core';
 import { remove } from 'fs-extra';
 
-test('`buildCache.buildDependencies` should work as expected', async () => {
+test('should respect `buildCache.buildDependencies`', async () => {
   const cacheDirectory = path.resolve(
     __dirname,
     './node_modules/.cache/test-cache-build-dependencies',

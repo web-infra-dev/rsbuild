@@ -41,7 +41,7 @@ test.describe('should combine multiple html config correctly', () => {
     );
   });
 
-  test('appicon', async () => {
+  test('should inject Apple touch icons', async () => {
     const [, iconRelativePath] =
       /<link rel="apple-touch-icon" sizes="180x180" href="(.*?)">/.exec(
         mainContent,
@@ -58,7 +58,7 @@ test.describe('should combine multiple html config correctly', () => {
     ).toBeTruthy();
   });
 
-  test('favicon', async () => {
+  test('should inject favicon links', async () => {
     const [, iconRelativePath] =
       /<link.*rel="icon".*href="(.*?)">/.exec(mainContent) || [];
 
@@ -71,7 +71,7 @@ test.describe('should combine multiple html config correctly', () => {
     expect(/<link.*rel="icon".*href="(.*?)">/.test(fooContent)).toBeTruthy();
   });
 
-  test('custom inject', async () => {
+  test('should inject scripts into the body when configured', async () => {
     expect(
       /<head>[\s\S]*<script[\s\S]*>[\s\S]*<\/head>/.test(mainContent),
     ).toBeFalsy();
@@ -80,7 +80,7 @@ test.describe('should combine multiple html config correctly', () => {
     ).toBeTruthy();
   });
 
-  test('custom meta', async () => {
+  test('should inject custom meta tags', async () => {
     expect(
       /<meta name="description" content="a description of the page">/.test(
         mainContent,

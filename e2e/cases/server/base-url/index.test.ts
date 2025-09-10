@@ -1,7 +1,7 @@
 import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('server.base when dev', async ({ page }) => {
+test('should apply server.base in dev', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
     page,
@@ -45,7 +45,9 @@ test('server.base when dev', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('server.base with dev.assetPrefix: true', async ({ page }) => {
+test('should respect server.base when dev.assetPrefix is true', async ({
+  page,
+}) => {
   const rsbuild = await dev({
     cwd: __dirname,
     page,
@@ -70,7 +72,7 @@ test('server.base with dev.assetPrefix: true', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('server.base when build & preview', async ({ page }) => {
+test('should apply server.base in preview', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
     page,

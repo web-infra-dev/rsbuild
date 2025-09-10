@@ -22,7 +22,9 @@ test.describe('should render mountId correctly', () => {
     await rsbuild.close();
   });
 
-  test('mountId', async ({ page }) => {
+  test('should render content into the configured mountId', async ({
+    page,
+  }) => {
     const errors: string[] = [];
     page.on('pageerror', (err) => errors.push(err.message));
 
@@ -34,7 +36,7 @@ test.describe('should render mountId correctly', () => {
     expect(errors).toEqual([]);
   });
 
-  test('inject default (head)', async () => {
+  test('should inject scripts into <head> by default', async () => {
     const pagePath = join(rsbuild.distPath, 'index.html');
     const content = await fs.promises.readFile(pagePath, 'utf-8');
 

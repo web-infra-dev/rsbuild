@@ -46,7 +46,9 @@ rspackOnlyTest('legalComments linked (default)', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('legalComments none', async ({ page }) => {
+test('should omit legal comments when legalComments is set to "none"', async ({
+  page,
+}) => {
   const rsbuild = await build({
     cwd: fixtures,
     page,
@@ -85,7 +87,9 @@ test('legalComments none', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('legalComments inline', async ({ page }) => {
+test('should inline legal comments when legalComments is set to "inline"', async ({
+  page,
+}) => {
   const rsbuild = await build({
     cwd: fixtures,
     page,

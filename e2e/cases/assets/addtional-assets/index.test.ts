@@ -6,7 +6,7 @@ function isIncludeFile(filenames: string[], includeFilename: string) {
   return filenames.some((filename) => filename.includes(includeFilename));
 }
 
-test('should allow to configure additional assets and match by RegExp', async () => {
+test('should support configuring additional assets matched by RegExp', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
@@ -30,7 +30,7 @@ test('should allow to configure additional assets and match by RegExp', async ()
   ).toBeFalsy();
 });
 
-test('should allow to configure additional assets and match by path', async () => {
+test('should support configuring additional assets matched by path', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
@@ -54,7 +54,7 @@ test('should allow to configure additional assets and match by path', async () =
   ).toBeFalsy();
 });
 
-test('should allow to disable emit for additional assets', async () => {
+test('should support disabling emission for additional assets', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {

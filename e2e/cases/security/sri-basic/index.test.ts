@@ -2,7 +2,7 @@ import { build, dev, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 rspackOnlyTest(
-  'generate integrity for script and style tags in prod build',
+  'should generate integrity attributes for script and style tags in build',
   async ({ page }) => {
     const rsbuild = await build({
       cwd: __dirname,
@@ -27,7 +27,7 @@ rspackOnlyTest(
   },
 );
 
-test('do not generate integrity for script and style tags in dev build', async ({
+test('should not generate integrity attributes for script and style tags in dev', async ({
   page,
 }) => {
   const rsbuild = await dev({

@@ -14,7 +14,7 @@ test.beforeEach(() => {
   }
 });
 
-test('multiple environments writeToDisk should work correctly', async ({
+test('should handle writeToDisk correctly across multiple environments', async ({
   page,
 }) => {
   const rsbuild = await dev({
