@@ -1,7 +1,9 @@
 import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('multi compiler build', async ({ page }) => {
+test('should build successfully with multiple environments', async ({
+  page,
+}) => {
   const rsbuild = await build({
     cwd: __dirname,
     page,
@@ -27,16 +29,13 @@ test('multi compiler build', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('multi compiler dev', async ({ page }) => {
+test('should serve successfully in dev mode with multiple environments', async ({
+  page,
+}) => {
   const rsbuild = await dev({
     cwd: __dirname,
     page,
     rsbuildConfig: {
-      output: {
-        distPath: {
-          root: 'dist-dev',
-        },
-      },
       environments: {
         web: {
           output: {
