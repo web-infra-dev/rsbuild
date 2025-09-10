@@ -16,7 +16,7 @@ test('should build a web worker in build using the new Worker syntax', async ({
   await rsbuild.close();
 });
 
-test('should build a web worker in dev using the new Worker ', async ({
+test('should build a web worker in dev using the new Worker', async ({
   page,
 }) => {
   const rsbuild = await dev({
