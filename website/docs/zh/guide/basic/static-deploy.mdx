@@ -80,19 +80,26 @@ export default defineConfig({
 <script src="https://cdn.com/path/static/js/index.some-hash.js"></script>
 ```
 
-## Zephyr Cloud
+## 部署平台
 
-[Zephyr Cloud](https://zephyr-cloud.io) 是一个零配置的部署平台，它可以直接集成到构建流程中，并为模块联邦应用提供全球边缘分发。
+下面介绍一些常见平台的部署方式。
 
-### 如何部署
+> 平台名称按照字母顺序排列。
 
-请按照 [zephyr-rsbuild-plugin](https://www.npmjs.com/package/zephyr-rsbuild-plugin) 中的步骤进行操作。
+### Cloudflare Pages
 
-在构建过程中，你的应用会被自动部署，并生成一个可访问的部署 URL。Zephyr Cloud 会负责资源优化、全球 CDN 分发、模块联邦配置，并提供自动回滚功能。
+[Cloudflare Pages](https://developers.cloudflare.com/pages/) 是一个由 Cloudflare 提供的静态网站托管平台。
 
-参考 [zephyr-cloud.io](https://zephyr-cloud.io) 开始使用。
+你可以按照 [Cloudflare Pages - Git integration guide](https://developers.cloudflare.com/pages/get-started/git-integration/) 操作，通过 Git 集成，将你的站点部署到 Cloudflare Pages。
 
-## GitHub Pages
+在进行配置时，你需要填写 "Build settings" 中的以下字段：
+
+- **Build command**：构建命令，填写项目的 build 命令即可，通常是 `npm run build`。
+- **Build output directory**：产物目录，填写项目中的产物目录，默认是 `dist`。
+
+然后点击 **Save and Deploy** 按钮，就可以开始部署了。
+
+### GitHub Pages
 
 [GitHub Pages](https://pages.github.com/) 是一个静态站点托管服务，可以直接从 GitHub 上的存储库获取 HTML、CSS 和 JavaScript 文件。
 
@@ -174,11 +181,11 @@ jobs:
 
 5. 提交，等待 GitHub Actions 执行，执行完成后，你可以访问 `https://<USERNAME>.github.io/<REPO_NAME>/` 来查看部署后的页面。
 
-## Netlify
+### Netlify
 
 [Netlify Core](https://netlify.com/) 是一个针对开发者的前端云解决方案，使用现代、可组合的工具构建和部署具有未来兼容性的数字解决方案。
 
-### 新增站点
+#### 新增站点
 
 Netlify 提供了详细的指南，你可以按照 [Netlify - Add new site](https://docs.netlify.com/welcome/add-new-site/) 操作，配置一些基础信息，就可以开始部署了。
 
@@ -189,17 +196,17 @@ Netlify 提供了详细的指南，你可以按照 [Netlify - Add new site](http
 
 然后点击 **Deploy site** 按钮，就可以开始部署了。
 
-### 配置域名
+#### 配置域名
 
 如果你想要使你的站点可以通过你自己的域名访问，那么你可以在 Netlify 的 "Domain management" 栏目中进行配置。
 
 > 详细指南：[Netlify - Custom domains](https://docs.netlify.com/domains-https/custom-domains/)。
 
-## Vercel
+### Vercel
 
 [Vercel](https://vercel.com/) 是一个为开发者提供的平台，它提供了构建和快速部署网络应用所需的工具、工作流程和基础设施，无需额外的配置。
 
-### 新增站点
+#### 新增站点
 
 Vercel 提供了详细的指南，你可以按照 [Vercel - Projects](https://vercel.com/docs/projects/overview) 操作，在 dashboard 中创建一个项目，配置一些基础信息，就可以开始部署了。
 
@@ -209,21 +216,20 @@ Vercel 提供了详细的指南，你可以按照 [Vercel - Projects](https://ve
 
 然后点击 **Deploy** 按钮，就可以开始部署了。
 
-### 配置域名
+#### 配置域名
 
 如果你想要使你的站点可以通过你自己的域名访问，那么你可以在 Vercel 的 "Domains" 栏目中进行配置。
 
 > 详细指南：[Vercel - Domains](https://vercel.com/docs/projects/domains)。
 
-## Cloudflare Pages
+### Zephyr Cloud
 
-[Cloudflare Pages](https://developers.cloudflare.com/pages/) 是一个由 Cloudflare 提供的静态网站托管平台。
+[Zephyr Cloud](https://zephyr-cloud.io) 是一个零配置的部署平台，它可以直接集成到构建流程中，并为模块联邦应用提供全球边缘分发。
 
-你可以按照 [Cloudflare Pages - Git integration guide](https://developers.cloudflare.com/pages/get-started/git-integration/) 操作，通过 Git 集成，将你的站点部署到 Cloudflare Pages。
+#### 如何部署
 
-在进行配置时，你需要填写 "Build settings" 中的以下字段：
+请按照 [zephyr-rsbuild-plugin](https://www.npmjs.com/package/zephyr-rsbuild-plugin) 中的步骤进行操作。
 
-- **Build command**：构建命令，填写项目的 build 命令即可，通常是 `npm run build`。
-- **Build output directory**：产物目录，填写项目中的产物目录，默认是 `dist`。
+在构建过程中，你的应用会被自动部署，并生成一个可访问的部署 URL。Zephyr Cloud 会负责资源优化、全球 CDN 分发、模块联邦配置，并提供自动回滚功能。
 
-然后点击 **Save and Deploy** 按钮，就可以开始部署了。
+参考 [zephyr-cloud.io](https://zephyr-cloud.io) 开始使用。
