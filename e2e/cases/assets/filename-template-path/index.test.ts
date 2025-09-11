@@ -11,4 +11,6 @@ test('should allow filename.image: "[path]"', async () => {
   expect(
     filenames.some((filename) => filename.includes('dist/src/assets/icon.png')),
   ).toBeTruthy();
+
+  await rsbuild.close();
 });
