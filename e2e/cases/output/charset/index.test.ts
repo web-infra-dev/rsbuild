@@ -3,6 +3,16 @@ import { expect, test } from '@playwright/test';
 
 const utf8Str = `你好 world! I'm 🦀`;
 const asciiStr = `\\u{4F60}\\u{597D} world! I'm \\u{1F980}`;
+const expectedObject = {
+  Å: 'A',
+  Ð: 'D',
+  Þ: 'o',
+  å: 'a',
+  ð: 'd',
+  þ: 'o',
+  Д: 'A',
+  '𝒩': 'a',
+};
 
 rspackOnlyTest(
   'should set output.charset to ascii in dev',
@@ -20,7 +30,8 @@ rspackOnlyTest(
       },
     });
 
-    expect(await page.evaluate('window.a')).toBe(utf8Str);
+    expect(await page.evaluate('window.testA')).toBe(utf8Str);
+    expect(await page.evaluate('window.testB')).toStrictEqual(expectedObject);
 
     const files = await rsbuild.getDistFiles();
     const [, content] = Object.entries(files).find(
@@ -44,7 +55,8 @@ test('should set output.charset to ascii in build', async ({ page }) => {
     },
   });
 
-  expect(await page.evaluate('window.a')).toBe(utf8Str);
+  expect(await page.evaluate('window.testA')).toBe(utf8Str);
+  expect(await page.evaluate('window.testB')).toStrictEqual(expectedObject);
 
   const content = await rsbuild.getIndexBundle();
   expect(content.includes(asciiStr)).toBeTruthy();
@@ -52,21 +64,19 @@ test('should set output.charset to ascii in build', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('should set output.charset to utf8 in dev', async ({ page }) => {
+test('should use utf8 charset in dev by default', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
     rsbuildConfig: {
       dev: {
         writeToDisk: true,
       },
-      output: {
-        charset: 'utf8',
-      },
     },
     page,
   });
 
-  expect(await page.evaluate('window.a')).toBe(utf8Str);
+  expect(await page.evaluate('window.testA')).toBe(utf8Str);
+  expect(await page.evaluate('window.testB')).toStrictEqual(expectedObject);
 
   const files = await rsbuild.getDistFiles();
   const [, content] = Object.entries(files).find(
@@ -78,18 +88,14 @@ test('should set output.charset to utf8 in dev', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('should set output.charset to utf8 in build', async ({ page }) => {
+test('should use utf8 charset in build by default', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    rsbuildConfig: {
-      output: {
-        charset: 'utf8',
-      },
-    },
     page,
   });
 
-  expect(await page.evaluate('window.a')).toBe(utf8Str);
+  expect(await page.evaluate('window.testA')).toBe(utf8Str);
+  expect(await page.evaluate('window.testB')).toStrictEqual(expectedObject);
 
   const content = await rsbuild.getIndexBundle();
   expect(content.includes(utf8Str)).toBeTruthy();

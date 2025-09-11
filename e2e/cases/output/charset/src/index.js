@@ -1,6 +1,6 @@
-window.a = `你好 world! I'm 🦀`;
+window.testA = `你好 world! I'm 🦀`;
 
-window.b = {
+window.testB = {
   Д: 'A',
   Å: 'A',
   Ð: 'D',
