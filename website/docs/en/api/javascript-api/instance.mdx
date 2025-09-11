@@ -980,6 +980,35 @@ rsbuild.onAfterDevCompile(({ isFirstCompile }) => {
 });
 ```
 
+## rsbuild.onBeforeEnvironmentCompile
+
+> Provides the same functionality as the [onBeforeEnvironmentCompile](/plugins/dev/hooks#onbeforeenvironmentcompile) plugin hook.
+
+- **Version:** Added in v1.5.7
+- **Example:**
+
+```ts
+rsbuild.onBeforeEnvironmentCompile(({ bundlerConfig, environment }) => {
+  console.log(
+    `the bundler config for the ${environment.name} is `,
+    bundlerConfig,
+  );
+});
+```
+
+## rsbuild.onAfterEnvironmentCompile
+
+> Provides the same functionality as the [onAfterEnvironmentCompile](/plugins/dev/hooks#onafterenvironmentcompile) plugin hook.
+
+- **Version:** Added in v1.5.7
+- **Example:**
+
+```ts
+rsbuild.onAfterEnvironmentCompile(({ isFirstCompile, stats }) => {
+  console.log(stats?.toJson(), isFirstCompile);
+});
+```
+
 ## rsbuild.onExit
 
 > Provides the same functionality as the [onExit](/plugins/dev/hooks#onexit) plugin hook.

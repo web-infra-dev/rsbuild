@@ -1002,6 +1002,35 @@ rsbuild.onAfterDevCompile(({ isFirstCompile }) => {
 });
 ```
 
+## rsbuild.onBeforeEnvironmentCompile
+
+> 功能与 [onBeforeEnvironmentCompile](/plugins/dev/hooks#onbeforeenvironmentcompile) 插件 hook 一致。
+
+- **版本：** 添加于 v1.5.7
+- **示例：**
+
+```ts
+rsbuild.onBeforeEnvironmentCompile(({ bundlerConfig, environment }) => {
+  console.log(
+    `the bundler config for the ${environment.name} is `,
+    bundlerConfig,
+  );
+});
+```
+
+## rsbuild.onAfterEnvironmentCompile
+
+> 功能与 [onAfterEnvironmentCompile](/plugins/dev/hooks#onafterenvironmentcompile) 插件 hook 一致。
+
+- **版本：** 添加于 v1.5.7
+- **示例：**
+
+```ts
+rsbuild.onAfterEnvironmentCompile(({ isFirstCompile, stats }) => {
+  console.log(stats?.toJson(), isFirstCompile);
+});
+```
+
 ## rsbuild.onExit
 
 > 功能与 [onExit](/plugins/dev/hooks#onexit) 插件 hook 一致。
