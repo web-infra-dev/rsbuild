@@ -42,6 +42,7 @@ export type {
   AppIconItem,
   Build,
   BuildOptions,
+  BuildResult,
   BundlerPluginInstance,
   Charset,
   CleanDistPath,

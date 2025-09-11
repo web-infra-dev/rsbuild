@@ -61,7 +61,9 @@ export type BuildOptions = {
   compiler?: Compiler | MultiCompiler;
 };
 
-export type Build = (options?: BuildOptions) => Promise<{
+export type Build = (options?: BuildOptions) => Promise<BuildResult>;
+
+export type BuildResult = {
   /**
    * Close the build and call the `onCloseBuild` hook.
    * In watch mode, this method will stop watching.
@@ -71,7 +73,7 @@ export type Build = (options?: BuildOptions) => Promise<{
    * Rspack's [stats](https://rspack.rs/api/javascript-api/stats) object.
    */
   stats?: Rspack.Stats | Rspack.MultiStats;
-}>;
+};
 
 export type InitConfigsOptions = Pick<RsbuildContext, 'action'>;
 
