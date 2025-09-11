@@ -62,5 +62,17 @@
         "noConfusingVoidType": "off"
       }
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["e2e/**/🦀.js"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useFilenamingConvention": "off"
+          }
+        }
+      }
+    }
+  ]
 }
