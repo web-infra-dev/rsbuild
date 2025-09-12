@@ -1,15 +1,12 @@
 import { join } from 'node:path';
-import { dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 const cwd = __dirname;
 
 rspackOnlyTest(
   'should allow to set different dev.client for multiple environments',
-  async ({ page }) => {
+  async ({ dev }) => {
     const rsbuild = await dev({
-      cwd,
-      page,
       rsbuildConfig: {
         environments: {
           foo: {
@@ -46,6 +43,5 @@ rspackOnlyTest(
     const barJs = filenames.find((name) => name.endsWith('bar.js'));
     expect(files[fooJs!].includes('"host":"http://foo.com"')).toBeTruthy();
     expect(files[barJs!].includes('"host":"http://bar.com"')).toBeTruthy();
-    await rsbuild.close();
   },
 );

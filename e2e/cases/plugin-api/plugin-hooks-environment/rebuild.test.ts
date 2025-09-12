@@ -1,6 +1,5 @@
 import { join } from 'node:path';
-import { dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import fse from 'fs-extra';
 
@@ -24,7 +23,7 @@ const createPlugin = () => {
 
 rspackOnlyTest(
   'should run onBeforeDevCompile hook correctly when rebuild in dev with multiple environments',
-  async ({ page }) => {
+  async ({ dev }) => {
     process.env.NODE_ENV = 'development';
     const indexJs = join(__dirname, 'test-temp-src', 'index.js');
     await fse.outputFile(indexJs, "console.log('1');");
@@ -32,8 +31,6 @@ rspackOnlyTest(
     const { plugin, names } = createPlugin();
 
     const rsbuild = await dev({
-      cwd: __dirname,
-      page,
       rsbuildConfig: {
         plugins: [plugin],
         environments: {
@@ -66,7 +63,6 @@ rspackOnlyTest(
       'BeforeEnvironmentCompile node',
     ]);
 
-    await rsbuild.close();
     process.env.NODE_ENV = 'test';
   },
 );

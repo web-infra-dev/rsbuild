@@ -1,18 +1,15 @@
-import { createLogHelper, dev } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { createLogHelper, expect, test } from '@e2e/helper';
 
-const cwd = __dirname;
-
-test('should display type errors on overlay correctly', async ({ page }) => {
+test('should display type errors on overlay correctly', async ({
+  page,
+  dev,
+}) => {
   const { addLog, expectLog } = createLogHelper();
   page.on('console', (consoleMessage) => {
     addLog(consoleMessage.text());
   });
 
-  const rsbuild = await dev({
-    cwd,
-    page,
-  });
+  await dev();
 
   await expectLog('TS2322:');
 
@@ -31,6 +28,4 @@ test('should display type errors on overlay correctly', async ({ page }) => {
   expect(
     linkText?.endsWith('/src/index.ts:3:1') && linkText.startsWith('.'),
   ).toBeTruthy();
-
-  await rsbuild.close();
 });

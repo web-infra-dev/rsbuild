@@ -1,9 +1,9 @@
-import { buildEntryUrl, dev } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { buildEntryUrl, expect, test } from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
 
 test('should run onBeforeStartDevServer hooks and add custom middleware', async ({
   page,
+  dev,
 }) => {
   const plugin: RsbuildPlugin = {
     name: 'test-plugin',
@@ -31,8 +31,6 @@ test('should run onBeforeStartDevServer hooks and add custom middleware', async 
   };
 
   const rsbuild = await dev({
-    cwd: __dirname,
-    page,
     rsbuildConfig: {
       plugins: [plugin],
     },
@@ -46,6 +44,4 @@ test('should run onBeforeStartDevServer hooks and add custom middleware', async 
 
   await page.goto(test2Url);
   await expect(page.content()).resolves.toContain('Hello, world2!');
-
-  await rsbuild.close();
 });

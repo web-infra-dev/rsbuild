@@ -1,14 +1,9 @@
-import { dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should show assets on /rsbuild-dev-server path',
-  async ({ page }) => {
-    const rsbuild = await dev({
-      cwd: __dirname,
-      page,
-      rsbuildConfig: {},
-    });
+  async ({ page, dev }) => {
+    const rsbuild = await dev();
 
     await page.goto(`http://localhost:${rsbuild.port}/rsbuild-dev-server`);
 
@@ -32,17 +27,13 @@ rspackOnlyTest(
 
       expect(status).toBeGreaterThanOrEqual(200);
     }
-
-    await rsbuild.close();
   },
 );
 
 rspackOnlyTest(
   'should show assets on /rsbuild-dev-server path with server.base and assetPrefix',
-  async ({ page }) => {
+  async ({ page, dev }) => {
     const rsbuild = await dev({
-      cwd: __dirname,
-      page,
       rsbuildConfig: {
         dev: {
           assetPrefix: '/testing/assets/',
@@ -75,20 +66,16 @@ rspackOnlyTest(
 
       expect(status).toBeGreaterThanOrEqual(200);
     }
-
-    await rsbuild.close();
   },
 );
 
 rspackOnlyTest(
   'should show assets on /rsbuild-dev-server path with environments',
-  async ({ page }) => {
+  async ({ page, dev }) => {
     const entry1 = './src/index.tsx';
     const entry2 = './src2/index.tsx';
 
     const rsbuild = await dev({
-      cwd: __dirname,
-      page,
       rsbuildConfig: {
         environments: {
           test1: {
@@ -134,7 +121,5 @@ rspackOnlyTest(
 
       expect(status).toBeGreaterThanOrEqual(200);
     }
-
-    await rsbuild.close();
   },
 );

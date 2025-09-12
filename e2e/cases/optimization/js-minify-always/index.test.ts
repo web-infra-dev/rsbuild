@@ -1,10 +1,7 @@
-import { dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
-rspackOnlyTest('should allow to minify JS in dev', async ({ page }) => {
+rspackOnlyTest('should allow to minify JS in dev', async ({ page, dev }) => {
   const rsbuild = await dev({
-    cwd: __dirname,
-    page,
     rsbuildConfig: {
       output: {
         minify: {

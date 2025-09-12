@@ -1,5 +1,4 @@
-import { build, dev } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { build, expect, test } from '@e2e/helper';
 
 declare global {
   interface Window {
@@ -7,11 +6,11 @@ declare global {
   }
 }
 
-test('should apply nonce to dynamic chunks in dev build', async ({ page }) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
-  });
+test('should apply nonce to dynamic chunks in dev build', async ({
+  page,
+  dev,
+}) => {
+  await dev();
 
   await page.waitForFunction(
     () => window.dynamicChunkNonce !== undefined,
@@ -24,8 +23,6 @@ test('should apply nonce to dynamic chunks in dev build', async ({ page }) => {
   expect(await page.evaluate('window.dynamicChunkNonce')).toEqual(
     'CSP_NONCE_PLACEHOLDER',
   );
-
-  await rsbuild.close();
 });
 
 test('should apply nonce to dynamic chunks in build', async ({ page }) => {

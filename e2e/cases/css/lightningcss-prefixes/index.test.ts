@@ -1,5 +1,4 @@
-import { build, dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { build, expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should add vendor prefixes by current browserslist',
@@ -20,11 +19,8 @@ rspackOnlyTest(
 
 rspackOnlyTest(
   'should add vendor prefixes by current browserslist in dev',
-  async ({ page }) => {
-    const rsbuild = await dev({
-      cwd: __dirname,
-      page,
-    });
+  async ({ dev }) => {
+    const rsbuild = await dev();
 
     const distFiles = rsbuild.getDistFiles();
     const content =
@@ -44,7 +40,5 @@ rspackOnlyTest(
   }
 }`,
     );
-
-    await rsbuild.close();
   },
 );

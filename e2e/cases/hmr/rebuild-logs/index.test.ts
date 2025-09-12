@@ -1,18 +1,15 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 const cwd = __dirname;
 
-rspackOnlyTest('should print changed files in logs', async ({ page }) => {
+rspackOnlyTest('should print changed files in logs', async ({ page, dev }) => {
   await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
     recursive: true,
   });
 
   const rsbuild = await dev({
-    cwd,
-    page,
     rsbuildConfig: {
       source: {
         entry: {
@@ -35,17 +32,14 @@ rspackOnlyTest('should print changed files in logs', async ({ page }) => {
   );
 
   await rsbuild.expectLog(/building test-temp-src[\\/]App\.tsx/);
-  await rsbuild.close();
 });
 
-rspackOnlyTest('should print removed files in logs', async ({ page }) => {
+rspackOnlyTest('should print removed files in logs', async ({ page, dev }) => {
   await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
     recursive: true,
   });
 
   const rsbuild = await dev({
-    cwd,
-    page,
     rsbuildConfig: {
       source: {
         entry: {
@@ -63,5 +57,4 @@ rspackOnlyTest('should print removed files in logs', async ({ page }) => {
   await fs.promises.unlink(appPath);
 
   await rsbuild.expectLog(/building removed test-temp-src[\\/]App\.tsx/);
-  await rsbuild.close();
 });

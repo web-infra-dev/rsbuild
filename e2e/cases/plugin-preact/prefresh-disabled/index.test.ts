@@ -1,9 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
-rspackOnlyTest('HMR should work properly', async ({ page }) => {
+rspackOnlyTest('HMR should work properly', async ({ page, dev }) => {
   const root = __dirname;
   const compFilePath = path.join(root, 'src/test-temp-B.jsx');
   const compSourceCode = `const B = (props) => {
@@ -15,10 +14,7 @@ export default B;
 
   fs.writeFileSync(compFilePath, compSourceCode, 'utf-8');
 
-  const rsbuild = await dev({
-    cwd: root,
-    page,
-  });
+  await dev();
 
   const a = page.locator('#A');
   const b = page.locator('#B');
@@ -48,6 +44,4 @@ export default B;
       bText === 'Beep: 0'
     );
   });
-
-  await rsbuild.close();
 });

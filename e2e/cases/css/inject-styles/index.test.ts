@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { build, dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { build, expect, rspackOnlyTest } from '@e2e/helper';
 
 const fixtures = __dirname;
 
@@ -39,14 +38,12 @@ rspackOnlyTest(
     // less worked
     const title = page.locator('#title');
     await expect(title).toHaveCSS('font-size', '20px');
-
-    await rsbuild.close();
   },
 );
 
 rspackOnlyTest(
   'HMR should work well when `injectStyles` is enabled',
-  async ({ page }) => {
+  async ({ page, dev }) => {
     await fs.promises.cp(
       join(fixtures, 'src'),
       join(fixtures, 'test-temp-src'),
@@ -54,8 +51,6 @@ rspackOnlyTest(
     );
 
     const rsbuild = await dev({
-      cwd: fixtures,
-      page,
       rsbuildConfig: {
         source: {
           entry: {
@@ -88,8 +83,6 @@ rspackOnlyTest(
 
     // #test-keep should unchanged when CSS HMR
     expect(await locatorKeep.innerHTML()).toBe(keepNum);
-
-    await rsbuild.close();
   },
 );
 

@@ -1,19 +1,13 @@
-import { build, dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { build, expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should apply plugin as expected when running dev server',
-  async ({ page }) => {
-    const rsbuild = await dev({
-      cwd: __dirname,
-      page,
-    });
+  async ({ page, dev }) => {
+    await dev();
 
     const body = page.locator('body');
     await expect(body).toHaveText('serve-plugin');
     await expect(body).not.toHaveText('build-plugin');
-
-    await rsbuild.close();
   },
 );
 

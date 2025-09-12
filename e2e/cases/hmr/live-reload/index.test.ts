@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { dev, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, rspackOnlyTest, test } from '@e2e/helper';
 
 const appFile = path.join(__dirname, 'src/App.jsx');
 let appCode: string;
@@ -17,11 +16,8 @@ test.afterEach(() => {
 
 rspackOnlyTest(
   'should fallback to live-reload when dev.hmr is false',
-  async ({ page }) => {
-    const rsbuild = await dev({
-      cwd: __dirname,
-      page,
-    });
+  async ({ page, dev }) => {
+    await dev();
 
     const testEl = page.locator('#test');
     await expect(testEl).toHaveText('Hello Rsbuild!');
@@ -32,17 +28,13 @@ rspackOnlyTest(
       'utf-8',
     );
     await expect(testEl).toHaveText('Hello Live Reload!');
-
-    await rsbuild.close();
   },
 );
 
 rspackOnlyTest(
   'should not reload page when live-reload is disabled',
-  async ({ page }) => {
-    const rsbuild = await dev({
-      cwd: __dirname,
-      page,
+  async ({ page, dev }) => {
+    await dev({
       rsbuildConfig: {
         dev: {
           liveReload: false,
@@ -59,7 +51,5 @@ rspackOnlyTest(
       'utf-8',
     );
     await expect(test).toHaveText('Hello Rsbuild!');
-
-    await rsbuild.close();
   },
 );

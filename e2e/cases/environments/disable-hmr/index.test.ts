@@ -1,12 +1,9 @@
-import { dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest, test } from '@e2e/helper';
 
 rspackOnlyTest(
   'should allow to disable HMR and live reload for a specified environment',
-  async ({ page }) => {
+  async ({ page, dev }) => {
     const rsbuild = await dev({
-      page,
-      cwd: __dirname,
       rsbuildConfig: {
         performance: {
           chunkSplit: {
@@ -50,7 +47,5 @@ rspackOnlyTest(
 
     expect(fooContent.includes('dist/client/hmr.js')).toBeTruthy();
     expect(barContent.includes('dist/client/hmr.js')).toBeFalsy();
-
-    await rsbuild.close();
   },
 );

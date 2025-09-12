@@ -1,10 +1,7 @@
-import { build, dev } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { build, expect, test } from '@e2e/helper';
 
-test('should apply server.base in dev', async ({ page }) => {
+test('should apply server.base in dev', async ({ page, dev }) => {
   const rsbuild = await dev({
-    cwd: __dirname,
-    page,
     rsbuildConfig: {
       server: {
         base: '/base',
@@ -41,16 +38,13 @@ test('should apply server.base in dev', async ({ page }) => {
   await page.goto(`http://localhost:${rsbuild.port}/base/aaa.txt`);
 
   expect(await page.content()).toContain('aaaa');
-
-  await rsbuild.close();
 });
 
 test('should respect server.base when dev.assetPrefix is true', async ({
   page,
+  dev,
 }) => {
   const rsbuild = await dev({
-    cwd: __dirname,
-    page,
     rsbuildConfig: {
       server: {
         base: '/base',
@@ -68,8 +62,6 @@ test('should respect server.base when dev.assetPrefix is true', async ({
   // should visit public dir correctly with base prefix
   await page.goto(`http://localhost:${rsbuild.port}/base/aaa.txt`);
   expect(await page.content()).toContain('aaaa');
-
-  await rsbuild.close();
 });
 
 test('should apply server.base in preview', async ({ page }) => {
@@ -118,10 +110,9 @@ test('should apply server.base in preview', async ({ page }) => {
 
 test('should serve resource correctly when assetPrefix is a subPath of server.base', async ({
   page,
+  dev,
 }) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
+  await dev({
     rsbuildConfig: {
       dev: {
         assetPrefix: '/base/aaa',
@@ -134,6 +125,4 @@ test('should serve resource correctly when assetPrefix is a subPath of server.ba
 
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
-
-  await rsbuild.close();
 });

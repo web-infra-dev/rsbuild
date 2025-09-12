@@ -1,5 +1,4 @@
-import { build, dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { build, expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest('should bundle CSS layers as expected in build', async () => {
   const rsbuild = await build({
@@ -17,11 +16,8 @@ rspackOnlyTest('should bundle CSS layers as expected in build', async () => {
 
 rspackOnlyTest(
   'should bundle CSS layers as expected in dev',
-  async ({ page }) => {
-    const rsbuild = await dev({
-      cwd: __dirname,
-      page,
-    });
+  async ({ dev }) => {
+    const rsbuild = await dev();
     const files = rsbuild.getDistFiles();
 
     const content =
@@ -55,7 +51,5 @@ rspackOnlyTest(
 }
 
 }`);
-
-    await rsbuild.close();
   },
 );

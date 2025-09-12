@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { dev } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 import { removeSync } from 'fs-extra';
 
 const cwd = __dirname;
@@ -16,10 +15,9 @@ test.beforeEach(() => {
 
 test('should handle writeToDisk correctly across multiple environments', async ({
   page,
+  dev,
 }) => {
-  const rsbuild = await dev({
-    cwd,
-    page,
+  await dev({
     rsbuildConfig: {
       dev: {
         writeToDisk: true,
@@ -62,16 +60,13 @@ test('should handle writeToDisk correctly across multiple environments', async (
   expect(fs.existsSync(join(cwd, 'dist/index.html'))).toBeFalsy();
   expect(fs.existsSync(join(cwd, 'dist-1/index.html'))).toBeTruthy();
   expect(fs.existsSync(join(cwd, 'dist-2/index.html'))).toBeTruthy();
-
-  await rsbuild.close();
 });
 
 test('should writeToDisk correctly when environment writeToDisk configuration same', async ({
   page,
+  dev,
 }) => {
-  const rsbuild = await dev({
-    cwd,
-    page,
+  await dev({
     rsbuildConfig: {
       dev: {
         writeToDisk: false,
@@ -106,6 +101,4 @@ test('should writeToDisk correctly when environment writeToDisk configuration sa
 
   expect(fs.existsSync(join(cwd, 'dist-same/index.html'))).toBeTruthy();
   expect(fs.existsSync(join(cwd, 'dist-same-1/index.html'))).toBeTruthy();
-
-  await rsbuild.close();
 });

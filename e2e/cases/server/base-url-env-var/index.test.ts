@@ -1,12 +1,9 @@
-import { build, dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { build, expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should define BASE_URL env var correctly in dev',
-  async ({ page }) => {
-    const rsbuild = await dev({
-      cwd: __dirname,
-      page,
+  async ({ page, dev }) => {
+    await dev({
       rsbuildConfig: {
         html: {
           template: './src/index.html',
@@ -22,8 +19,6 @@ rspackOnlyTest(
 
     // should define `import.meta.env.BASE_URL` correctly
     await expect(page.locator('#public-base-path-meta')).toHaveText('/base');
-
-    await rsbuild.close();
   },
 );
 

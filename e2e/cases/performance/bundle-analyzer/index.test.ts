@@ -1,12 +1,10 @@
-import { build, dev, getDistFiles } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { build, expect, getDistFiles, test } from '@e2e/helper';
 
 test('should emit bundle analyze report correctly when dev', async ({
   page,
+  devOnly,
 }) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-  });
+  const rsbuild = await devOnly();
 
   await page.goto(`http://localhost:${rsbuild.port}`);
   const testEl = page.locator('#test');
@@ -19,7 +17,6 @@ test('should emit bundle analyze report correctly when dev', async ({
   expect(filePaths.length).toBe(1);
 
   await rsbuild.expectLog('Webpack Bundle Analyzer saved report to');
-  await rsbuild.close();
 });
 
 test('should emit bundle analyze report correctly when build', async () => {

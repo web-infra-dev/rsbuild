@@ -1,5 +1,4 @@
-import { build, dev, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { build, expect, rspackOnlyTest, test } from '@e2e/helper';
 
 rspackOnlyTest(
   'should generate integrity attributes for script and style tags in build',
@@ -29,11 +28,9 @@ rspackOnlyTest(
 
 test('should not generate integrity attributes for script and style tags in dev', async ({
   page,
+  dev,
 }) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
-  });
+  await dev();
 
   const testEl = page.locator('#root');
   await expect(testEl).toHaveText('Hello Rsbuild!');
@@ -43,6 +40,4 @@ test('should not generate integrity attributes for script and style tags in dev'
       'document.querySelector("script")?.getAttribute("integrity")',
     ),
   ).toEqual(null);
-
-  await rsbuild.close();
 });

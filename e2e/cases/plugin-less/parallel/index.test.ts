@@ -1,5 +1,4 @@
-import { build, dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { build, expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should compile less with `parallel` option in build',
@@ -21,15 +20,11 @@ rspackOnlyTest(
 
 rspackOnlyTest(
   'should compile less with `parallel` option in dev',
-  async ({ page }) => {
-    const rsbuild = await dev({
-      cwd: __dirname,
-      page,
-    });
+  async ({ page, dev }) => {
+    await dev();
 
     const body = page.locator('body');
     await expect(body).toHaveCSS('background-color', 'rgb(255, 0, 0)');
     await expect(body).toHaveCSS('font-size', '16px');
-    await rsbuild.close();
   },
 );

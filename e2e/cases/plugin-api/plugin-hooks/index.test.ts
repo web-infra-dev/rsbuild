@@ -1,5 +1,4 @@
-import { build, dev, recordPluginHooks, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { build, expect, recordPluginHooks, rspackOnlyTest } from '@e2e/helper';
 import { createRsbuild } from '@rsbuild/core';
 
 rspackOnlyTest(
@@ -67,13 +66,11 @@ rspackOnlyTest(
 
 rspackOnlyTest(
   'should run plugin hooks correctly when running startDevServer',
-  async ({ page }) => {
+  async ({ dev }) => {
     process.env.NODE_ENV = 'development';
 
     const { plugin, hooks } = recordPluginHooks();
     const rsbuild = await dev({
-      cwd: __dirname,
-      page,
       rsbuildConfig: {
         plugins: [plugin],
       },

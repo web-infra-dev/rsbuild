@@ -1,16 +1,13 @@
-import fs from 'node:fs';
 import { join } from 'node:path';
-import { dev } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
 const cwd = __dirname;
 
 test('should access / success and htmlFallback success by default', async ({
   page,
+  devOnly,
 }) => {
-  const rsbuild = await dev({
-    cwd,
-  });
+  const rsbuild = await devOnly();
 
   const url = new URL(`http://localhost:${rsbuild.port}/`);
 
@@ -30,13 +27,10 @@ test('should access / success and htmlFallback success by default', async ({
   await page.goto(`http://localhost:${rsbuild.port}//aaaaa`);
 
   await expect(page.locator('#test')).toHaveText('Hello Rsbuild!');
-
-  await rsbuild.close();
 });
 
-test('should return 404 when htmlFallback false', async ({ page }) => {
-  const rsbuild = await dev({
-    cwd,
+test('should return 404 when htmlFallback false', async ({ page, devOnly }) => {
+  const rsbuild = await devOnly({
     rsbuildConfig: {
       server: {
         htmlFallback: false,
@@ -49,13 +43,13 @@ test('should return 404 when htmlFallback false', async ({ page }) => {
   const res = await page.goto(url.href);
 
   expect(res?.status()).toBe(404);
-
-  await rsbuild.close();
 });
 
-test('should access /main with query or hash success', async ({ page }) => {
-  const rsbuild = await dev({
-    cwd,
+test('should access /main with query or hash success', async ({
+  page,
+  devOnly,
+}) => {
+  const rsbuild = await devOnly({
     rsbuildConfig: {
       source: {
         entry: {
@@ -79,15 +73,13 @@ test('should access /main with query or hash success', async ({ page }) => {
   const res1 = await page.goto(url1.href);
 
   expect(res1?.status()).toBe(200);
-
-  await rsbuild.close();
 });
 
 test('should access /main.html success when entry is main', async ({
   page,
+  devOnly,
 }) => {
-  const rsbuild = await dev({
-    cwd,
+  const rsbuild = await devOnly({
     rsbuildConfig: {
       source: {
         entry: {
@@ -103,13 +95,13 @@ test('should access /main.html success when entry is main', async ({
 
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
-
-  await rsbuild.close();
 });
 
-test('should access /main success when entry is main', async ({ page }) => {
-  const rsbuild = await dev({
-    cwd,
+test('should access /main success when entry is main', async ({
+  page,
+  devOnly,
+}) => {
+  const rsbuild = await devOnly({
     rsbuildConfig: {
       source: {
         entry: {
@@ -127,15 +119,13 @@ test('should access /main success when entry is main', async ({ page }) => {
 
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
-
-  await rsbuild.close();
 });
 
 test('should access /main success when entry is main and use memoryFs', async ({
   page,
+  devOnly,
 }) => {
-  const rsbuild = await dev({
-    cwd,
+  const rsbuild = await devOnly({
     rsbuildConfig: {
       source: {
         entry: {
@@ -151,15 +141,13 @@ test('should access /main success when entry is main and use memoryFs', async ({
 
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
-
-  await rsbuild.close();
 });
 
 test('should access /main success when entry is main and set assetPrefix', async ({
   page,
+  devOnly,
 }) => {
-  const rsbuild = await dev({
-    cwd,
+  const rsbuild = await devOnly({
     rsbuildConfig: {
       source: {
         entry: {
@@ -178,15 +166,13 @@ test('should access /main success when entry is main and set assetPrefix', async
 
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
-
-  await rsbuild.close();
 });
 
 test('should access /main success when entry is main and outputPath is /main/index.html', async ({
   page,
+  devOnly,
 }) => {
-  const rsbuild = await dev({
-    cwd,
+  const rsbuild = await devOnly({
     rsbuildConfig: {
       source: {
         entry: {
@@ -205,13 +191,10 @@ test('should access /main success when entry is main and outputPath is /main/ind
 
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
-
-  await rsbuild.close();
 });
 
-test('should return 404 when page is not found', async ({ page }) => {
-  const rsbuild = await dev({
-    cwd,
+test('should return 404 when page is not found', async ({ page, devOnly }) => {
+  const rsbuild = await devOnly({
     rsbuildConfig: {
       source: {
         entry: {
@@ -226,15 +209,13 @@ test('should return 404 when page is not found', async ({ page }) => {
   const res = await page.goto(url.href);
 
   expect(res?.status()).toBe(404);
-
-  await rsbuild.close();
 });
 
 test('should access /html/main success when entry is main and outputPath is /html/main.html', async ({
   page,
+  devOnly,
 }) => {
-  const rsbuild = await dev({
-    cwd,
+  const rsbuild = await devOnly({
     rsbuildConfig: {
       source: {
         entry: {
@@ -263,15 +244,13 @@ test('should access /html/main success when entry is main and outputPath is /htm
   const res = await page.goto(url1.href);
 
   expect(res?.status()).toBe(404);
-
-  await rsbuild.close();
 });
 
 test('should access /main success when modify publicPath in compiler', async ({
   page,
+  devOnly,
 }) => {
-  const rsbuild = await dev({
-    cwd,
+  const rsbuild = await devOnly({
     rsbuildConfig: {
       source: {
         entry: {
@@ -303,15 +282,13 @@ test('should access /main success when modify publicPath in compiler', async ({
     files[Object.keys(files).find((file) => file.endsWith('main.html'))!];
 
   expect(htmlContent.includes('/aaaa/static/js/main.js')).toBeTruthy();
-
-  await rsbuild.close();
 });
 
 test('should access /main success when distPath is absolute', async ({
   page,
+  devOnly,
 }) => {
-  const rsbuild = await dev({
-    cwd,
+  const rsbuild = await devOnly({
     rsbuildConfig: {
       source: {
         entry: {
@@ -328,6 +305,4 @@ test('should access /main success when distPath is absolute', async ({
 
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
-
-  await rsbuild.close();
 });

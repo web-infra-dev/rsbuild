@@ -1,5 +1,4 @@
-import { build, dev, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { build, expect, rspackOnlyTest, test } from '@e2e/helper';
 
 rspackOnlyTest('should inline the enum values in build', async ({ page }) => {
   const rsbuild = await build({
@@ -24,11 +23,11 @@ rspackOnlyTest('should inline the enum values in build', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('should import the enum values as expected in dev', async ({ page }) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
-  });
+test('should import the enum values as expected in dev', async ({
+  page,
+  dev,
+}) => {
+  await dev();
 
   await page.waitForFunction(() => window.testDog);
   expect(await page.evaluate(() => window.testFish)).toBe('fish,FISH');
@@ -37,6 +36,4 @@ test('should import the enum values as expected in dev', async ({ page }) => {
   expect(await page.evaluate(() => window.testNumbers)).toBe(
     '0,1,10,1.1,1.0,-1,-1.1',
   );
-
-  await rsbuild.close();
 });
