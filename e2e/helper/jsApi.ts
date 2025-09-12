@@ -9,6 +9,7 @@ import type {
   RsbuildPlugins,
 } from '@rsbuild/core';
 import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
+import { normalizeToPosixPath } from '@scripts/test-helper';
 import type { Page } from 'playwright';
 import { proxyConsole } from './logs';
 import { getRandomPort, gotoPage, noop } from './utils';
@@ -111,9 +112,9 @@ const collectOutputFiles = (rsbuild: RsbuildInstance) => {
             continue;
           }
           const outputPath = compilation.options.output.path;
-          const assetPath = outputPath
-            ? join(outputPath, asset.name)
-            : asset.name;
+          const assetPath = normalizeToPosixPath(
+            outputPath ? join(outputPath, asset.name) : asset.name,
+          );
           outputFiles[assetPath] = asset.source.source().toString();
         }
       });
