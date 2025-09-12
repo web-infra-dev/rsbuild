@@ -242,12 +242,19 @@ export async function createDevServer<
     ? null
     : setupGracefulShutdown();
 
+  let closingPromise: Promise<void> | null = null;
+
   const closeServer = async () => {
-    // ensure closeServer is only called once
-    removeCleanup(closeServer);
-    cleanupGracefulShutdown?.();
-    await context.hooks.onCloseDevServer.callBatch();
-    await Promise.all([devMiddlewares?.close(), fileWatcher?.close()]);
+    if (!closingPromise) {
+      closingPromise = (async () => {
+        // ensure closeServer is only called once
+        removeCleanup(closeServer);
+        cleanupGracefulShutdown?.();
+        await context.hooks.onCloseDevServer.callBatch();
+        await Promise.all([devMiddlewares?.close(), fileWatcher?.close()]);
+      })();
+    }
+    return closingPromise;
   };
 
   if (!middlewareMode) {
