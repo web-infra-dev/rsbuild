@@ -1,10 +1,9 @@
 import path from 'node:path';
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
 
-test('should set template via function correctly', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+import { expect, test } from '@e2e/helper';
+
+test('should set template via function correctly', async ({ buildOnly }) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       source: {
         entry: {
@@ -36,10 +35,8 @@ test('should set template via function correctly', async () => {
   expect(indexHtml).toContain('<div id="test-template">text</div>');
 });
 
-test('should allow to access templateParameters', async ({ page }) => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    page,
+test('should allow to access templateParameters', async ({ page, build }) => {
+  await build({
     rsbuildConfig: {
       html: {
         template: './static/index.html',
@@ -57,13 +54,12 @@ test('should allow to access templateParameters', async ({ page }) => {
   await expect(testEl).toHaveText('Hello Rsbuild!');
 
   await expect(page.evaluate('window.foo')).resolves.toBe('bar');
-
-  await rsbuild.close();
 });
 
-test('should set template via tools.htmlPlugin correctly', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should set template via tools.htmlPlugin correctly', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       source: {
         entry: {

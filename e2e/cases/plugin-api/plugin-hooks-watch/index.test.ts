@@ -1,18 +1,16 @@
 import { join } from 'node:path';
-import { build, recordPluginHooks, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, recordPluginHooks, rspackOnlyTest } from '@e2e/helper';
 import fse from 'fs-extra';
 
 rspackOnlyTest(
   'should run plugin hooks correctly when running build with watch',
-  async () => {
+  async ({ buildOnly }) => {
     const cwd = __dirname;
     const filePath = join(cwd, 'test-temp-src', 'index.js');
     await fse.outputFile(filePath, "console.log('1');");
 
     const { plugin, hooks } = recordPluginHooks();
-    const rsbuild = await build({
-      cwd: __dirname,
+    const rsbuild = await buildOnly({
       watch: true,
       rsbuildConfig: {
         plugins: [plugin],
@@ -48,6 +46,5 @@ rspackOnlyTest(
       'ModifyHTML',
       'AfterEnvironmentCompile',
     ]);
-    await rsbuild.close();
   },
 );

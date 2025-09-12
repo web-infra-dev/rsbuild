@@ -1,10 +1,9 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
-test('should support configuring an entry description object', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
-  });
+test('should support configuring an entry description object', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly();
 
   const files = rsbuild.getDistFiles();
   const filenames = Object.keys(files);
@@ -15,6 +14,4 @@ test('should support configuring an entry description object', async () => {
   expect(
     filenames.find((item) => item.includes('static/js/bar.')),
   ).toBeTruthy();
-
-  await rsbuild.close();
 });

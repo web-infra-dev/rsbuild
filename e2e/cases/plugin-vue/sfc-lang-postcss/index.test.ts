@@ -1,17 +1,11 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should build Vue SFC with lang="postcss" correctly',
-  async ({ page }) => {
-    const rsbuild = await build({
-      cwd: __dirname,
-      page,
-    });
+  async ({ page, build }) => {
+    const rsbuild = await build();
 
     const button = page.locator('#button');
     await expect(button).toHaveCSS('color', 'rgb(255, 0, 0)');
-
-    await rsbuild.close();
   },
 );

@@ -1,5 +1,4 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const cases = [
@@ -40,10 +39,8 @@ const cases = [
 ];
 
 for (const item of cases) {
-  test(item.name, async ({ page }) => {
+  test(item.name, async ({ page, build }) => {
     const rsbuild = await build({
-      cwd: item.cwd,
-      page,
       plugins: [pluginReact()],
       rsbuildConfig: item.config || {},
     });
@@ -61,7 +58,5 @@ for (const item of cases) {
         ),
       ).resolves.toBeTruthy();
     }
-
-    await rsbuild.close();
   });
 }

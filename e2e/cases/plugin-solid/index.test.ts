@@ -1,11 +1,14 @@
 import path from 'node:path';
-import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import type { BuildOptions, BuildResult } from '@e2e/helper';
+import { expect, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginSolid } from '@rsbuild/plugin-solid';
 import { pluginStylus } from '@rsbuild/plugin-stylus';
 
-const buildFixture = (rootDir: string): ReturnType<typeof build> => {
+const buildFixture = (
+  buildOnly: (options?: BuildOptions) => Promise<BuildResult>,
+  rootDir: string,
+): Promise<BuildResult> => {
   const root = path.join(__dirname, rootDir);
   const plugins = [
     pluginBabel({
@@ -16,7 +19,7 @@ const buildFixture = (rootDir: string): ReturnType<typeof build> => {
 
   if (rootDir === 'stylus') plugins.push(pluginStylus());
 
-  return build({
+  return buildOnly({
     cwd: root,
     runServer: true,
     plugins,
@@ -25,8 +28,8 @@ const buildFixture = (rootDir: string): ReturnType<typeof build> => {
 
 rspackOnlyTest(
   'should build basic solid component properly',
-  async ({ page }) => {
-    const rsbuild = await buildFixture('basic');
+  async ({ page, buildOnly }) => {
+    const rsbuild = await buildFixture(buildOnly, 'basic');
 
     await gotoPage(page, rsbuild);
 
@@ -35,14 +38,13 @@ rspackOnlyTest(
 
     await button.click();
     await expect(button).toHaveText('count: 1');
-    await rsbuild.close();
   },
 );
 
 rspackOnlyTest(
   'should build solid component with typescript',
-  async ({ page }) => {
-    const rsbuild = await buildFixture('ts');
+  async ({ page, buildOnly }) => {
+    const rsbuild = await buildFixture(buildOnly, 'ts');
 
     await gotoPage(page, rsbuild);
 
@@ -51,7 +53,6 @@ rspackOnlyTest(
 
     await button.click();
     await expect(button).toHaveText('count: 1');
-    await rsbuild.close();
   },
 );
 
@@ -59,8 +60,8 @@ rspackOnlyTest(
 for (const name of ['less', 'scss', 'stylus']) {
   rspackOnlyTest(
     `should build solid component with ${name}`,
-    async ({ page }) => {
-      const rsbuild = await buildFixture(name);
+    async ({ page, buildOnly }) => {
+      const rsbuild = await buildFixture(buildOnly, name);
 
       await gotoPage(page, rsbuild);
 
@@ -69,8 +70,6 @@ for (const name of ['less', 'scss', 'stylus']) {
       await expect(title).toHaveText('Hello World!');
       // use the text color to assert the compilation result
       await expect(title).toHaveCSS('color', 'rgb(255, 62, 0)');
-
-      await rsbuild.close();
     },
   );
 }

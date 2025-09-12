@@ -1,24 +1,16 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, rspackOnlyTest, test } from '@e2e/helper';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 
-test('should use legacy decorators by default', async ({ page }) => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    page,
-  });
+test('should use legacy decorators by default', async ({ page, build }) => {
+  const rsbuild = await build();
 
   expect(await page.evaluate('window.aaa')).toBe('hello');
   expect(await page.evaluate('window.bbb')).toBe('world');
   expect(await page.evaluate('window.ccc')).toBe('hello world');
-
-  await rsbuild.close();
 });
 
-test('should allow to use stage 3 decorators', async ({ page }) => {
+test('should allow to use stage 3 decorators', async ({ page, build }) => {
   const rsbuild = await build({
-    cwd: __dirname,
-    page,
     rsbuildConfig: {
       source: {
         decorators: {
@@ -31,33 +23,25 @@ test('should allow to use stage 3 decorators', async ({ page }) => {
   expect(await page.evaluate('window.aaa')).toBe('hello');
   expect(await page.evaluate('window.bbb')).toBe('world');
   expect(await page.evaluate('window.ccc')).toBe('hello world');
-
-  await rsbuild.close();
 });
 
 rspackOnlyTest(
   'should use legacy decorators with babel-plugin',
-  async ({ page }) => {
+  async ({ page, build }) => {
     const rsbuild = await build({
-      cwd: __dirname,
-      page,
       plugins: [pluginBabel()],
     });
 
     expect(await page.evaluate('window.aaa')).toBe('hello');
     expect(await page.evaluate('window.bbb')).toBe('world');
     expect(await page.evaluate('window.ccc')).toBe('hello world');
-
-    await rsbuild.close();
   },
 );
 
 rspackOnlyTest(
   'should allow to use stage 3 decorators with babel-plugin',
-  async ({ page }) => {
+  async ({ page, build }) => {
     const rsbuild = await build({
-      cwd: __dirname,
-      page,
       plugins: [pluginBabel()],
       rsbuildConfig: {
         source: {
@@ -71,7 +55,5 @@ rspackOnlyTest(
     expect(await page.evaluate('window.aaa')).toBe('hello');
     expect(await page.evaluate('window.bbb')).toBe('world');
     expect(await page.evaluate('window.ccc')).toBe('hello world');
-
-    await rsbuild.close();
   },
 );

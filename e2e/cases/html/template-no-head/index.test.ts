@@ -1,13 +1,10 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 // https://github.com/web-infra-dev/rsbuild/issues/4924
 rspackOnlyTest(
   'should inject tags to HTML template without <head> tag',
-  async () => {
-    const rsbuild = await build({
-      cwd: __dirname,
-    });
+  async ({ buildOnly }) => {
+    const rsbuild = await buildOnly();
     const files = rsbuild.getDistFiles();
 
     const indexHtml =

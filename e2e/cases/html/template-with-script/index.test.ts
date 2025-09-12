@@ -1,11 +1,10 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
 // see: https://github.com/rspack-contrib/html-rspack-plugin/issues/14
-test('should compile template with es template correctly', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
-  });
+test('should compile template with es template correctly', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly();
   const files = rsbuild.getDistFiles();
 
   const indexHtml =

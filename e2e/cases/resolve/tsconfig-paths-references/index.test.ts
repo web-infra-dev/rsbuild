@@ -1,12 +1,9 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'tsconfig paths should work with references',
-  async ({ page }) => {
-    const rsbuild = await build({
-      cwd: __dirname,
-      page,
+  async ({ page, build }) => {
+    await build({
       rsbuildConfig: {
         resolve: {
           alias: {
@@ -18,7 +15,5 @@ rspackOnlyTest(
 
     const foo = page.locator('#foo');
     await expect(foo).toHaveText('tsconfig paths worked');
-
-    await rsbuild.close();
   },
 );

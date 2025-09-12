@@ -1,13 +1,8 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, rspackOnlyTest, test } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-const fixtures = __dirname;
-
-rspackOnlyTest('legalComments linked (default)', async ({ page }) => {
+rspackOnlyTest('legalComments linked (default)', async ({ page, build }) => {
   const rsbuild = await build({
-    cwd: fixtures,
-    page,
     plugins: [pluginReact()],
     rsbuildConfig: {
       performance: {
@@ -42,16 +37,13 @@ rspackOnlyTest('legalComments linked (default)', async ({ page }) => {
     ];
 
   expect(JsContent.includes('Foo Bar')).toBeFalsy();
-
-  await rsbuild.close();
 });
 
 test('should omit legal comments when legalComments is set to "none"', async ({
   page,
+  build,
 }) => {
   const rsbuild = await build({
-    cwd: fixtures,
-    page,
     plugins: [pluginReact()],
     rsbuildConfig: {
       performance: {
@@ -83,16 +75,13 @@ test('should omit legal comments when legalComments is set to "none"', async ({
     ];
 
   expect(JsContent.includes('@license BBB')).toBeFalsy();
-
-  await rsbuild.close();
 });
 
 test('should inline legal comments when legalComments is set to "inline"', async ({
   page,
+  build,
 }) => {
   const rsbuild = await build({
-    cwd: fixtures,
-    page,
     plugins: [pluginReact()],
     rsbuildConfig: {
       performance: {
@@ -125,6 +114,4 @@ test('should inline legal comments when legalComments is set to "inline"', async
 
   expect(JsContent.includes('@license BBB')).toBeTruthy();
   expect(JsContent.includes('Foo Bar')).toBeFalsy();
-
-  await rsbuild.close();
 });

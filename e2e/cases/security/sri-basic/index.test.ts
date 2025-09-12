@@ -1,12 +1,9 @@
-import { build, expect, rspackOnlyTest, test } from '@e2e/helper';
+import { expect, rspackOnlyTest, test } from '@e2e/helper';
 
 rspackOnlyTest(
   'should generate integrity attributes for script and style tags in build',
-  async ({ page }) => {
-    const rsbuild = await build({
-      cwd: __dirname,
-      page,
-    });
+  async ({ page, build }) => {
+    const rsbuild = await build();
 
     const files = rsbuild.getDistFiles();
     const html =
@@ -22,7 +19,6 @@ rspackOnlyTest(
 
     const testEl = page.locator('#root');
     await expect(testEl).toHaveText('Hello Rsbuild!');
-    await rsbuild.close();
   },
 );
 

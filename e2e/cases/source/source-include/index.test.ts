@@ -1,9 +1,9 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
-test('should compile modules outside of project by default', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should compile modules outside of project by default', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     catchBuildError: true,
   });
 
@@ -11,6 +11,4 @@ test('should compile modules outside of project by default', async () => {
   expect(
     rsbuild.logs.find((log) => log.includes('Syntax check passed')),
   ).toBeTruthy();
-
-  await rsbuild.close();
 });

@@ -1,9 +1,9 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
-test('should print tips if resolve Node.js builtin module failed', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should print tips if resolve Node.js builtin module failed', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     catchBuildError: true,
   });
 
@@ -11,5 +11,4 @@ test('should print tips if resolve Node.js builtin module failed', async () => {
   await rsbuild.expectLog(
     '"querystring" is a built-in Node.js module and cannot be imported in client-side code.',
   );
-  await rsbuild.close();
 });

@@ -1,5 +1,4 @@
-import { gotoPage, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { startDevServerPure } from './scripts/pureServer.mjs';
 import { startDevServer } from './scripts/server.mjs';
 

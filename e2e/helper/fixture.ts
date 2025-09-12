@@ -1,6 +1,12 @@
 import path from 'node:path';
 import base, { expect } from '@playwright/test';
-import { build as baseBuild, dev as baseDev, type DevResult } from './jsApi';
+import {
+  type Build,
+  build as baseBuild,
+  dev as baseDev,
+  type Dev,
+  type DevResult,
+} from './jsApi';
 
 type RsbuildFixture = {
   /**
@@ -13,14 +19,14 @@ type RsbuildFixture = {
    * Uses the test file's cwd.
    * The fixture auto-closes after the test.
    */
-  build: typeof baseBuild;
+  build: Build;
 
   /**
    * Build only. No preview server or page navigation by default.
    * Uses the test file's cwd.
    * The fixture auto-closes after the test.
    */
-  buildOnly: typeof baseBuild;
+  buildOnly: Build;
 
   /**
    * Start the dev server and auto-navigate the Playwright page.
@@ -28,14 +34,14 @@ type RsbuildFixture = {
    * Waits for the first compile by default.
    * The fixture auto-closes after the test.
    */
-  dev: typeof baseDev;
+  dev: Dev;
 
   /**
    * Start the dev server without page navigation.
    * Uses the test file's cwd.
    * The fixture auto-closes after the test.
    */
-  devOnly: typeof baseDev;
+  devOnly: Dev;
 };
 
 type Close = DevResult['close'];

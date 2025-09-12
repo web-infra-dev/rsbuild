@@ -1,4 +1,4 @@
-import { build, expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should allow to import inline Stylus files in dev',
@@ -22,11 +22,8 @@ rspackOnlyTest(
 
 rspackOnlyTest(
   'should allow to import inline Stylus files in build',
-  async ({ page }) => {
-    const rsbuild = await build({
-      cwd: __dirname,
-      page,
-    });
+  async ({ page, build }) => {
+    const rsbuild = await build();
 
     const aInline: string = await page.evaluate('window.aInline');
     const bInline: string = await page.evaluate('window.bInline');
@@ -36,7 +33,5 @@ rspackOnlyTest(
     expect(aInline).toBe('.header-class{color:red}');
     expect(bInline).toBe('.title-class{font-size:14px}');
     expect(bStyles['title-class']).toBeTruthy();
-
-    await rsbuild.close();
   },
 );

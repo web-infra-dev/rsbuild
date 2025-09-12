@@ -1,12 +1,8 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 import { pluginVue } from '@rsbuild/plugin-vue';
 
-const fixtures = __dirname;
-
-test('should split vue chunks correctly', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
+test('should split vue chunks correctly', async ({ buildOnly }) => {
+  const rsbuild = await buildOnly({
     plugins: [pluginVue()],
   });
 
@@ -16,9 +12,10 @@ test('should split vue chunks correctly', async () => {
   expect(filesNames.find((file) => file.includes('lib-router'))).toBeTruthy();
 });
 
-test('should not split vue chunks when strategy is `all-in-one`', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
+test('should not split vue chunks when strategy is `all-in-one`', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     plugins: [pluginVue()],
     rsbuildConfig: {
       performance: {
@@ -35,9 +32,8 @@ test('should not split vue chunks when strategy is `all-in-one`', async () => {
   expect(filesNames.find((file) => file.includes('lib-router'))).toBeFalsy();
 });
 
-test('should not override user defined cache groups', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
+test('should not override user defined cache groups', async ({ buildOnly }) => {
+  const rsbuild = await buildOnly({
     plugins: [pluginVue()],
     rsbuildConfig: {
       performance: {

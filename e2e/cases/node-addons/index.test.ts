@@ -1,13 +1,11 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+
+import { expect, test } from '@e2e/helper';
 import fse, { remove } from 'fs-extra';
 
-test('should compile Node addons correctly', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
-  });
+test('should compile Node addons correctly', async ({ buildOnly }) => {
+  const rsbuild = await buildOnly();
   const files = rsbuild.getDistFiles();
   const addonFile = Object.keys(files).find((file) =>
     file.endsWith('test.darwin.node'),
@@ -26,7 +24,9 @@ test('should compile Node addons correctly', async () => {
   }
 });
 
-test('should compile Node addons in the node_modules correctly', async () => {
+test('should compile Node addons in the node_modules correctly', async ({
+  buildOnly,
+}) => {
   const pkgDir = join(__dirname, 'node_modules', 'node-addon-pkg');
 
   await remove(pkgDir);
@@ -45,8 +45,7 @@ test('should compile Node addons in the node_modules correctly', async () => {
     join(pkgDir, 'src', 'other.node'),
   );
 
-  const rsbuild = await build({
-    cwd: __dirname,
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       source: {
         entry: {

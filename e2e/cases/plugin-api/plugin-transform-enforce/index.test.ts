@@ -1,13 +1,9 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should allow plugin to specify the execution order via `enforce`',
-  async () => {
-    const rsbuild = await build({
-      cwd: __dirname,
-    });
-
+  async ({ buildOnly }) => {
+    const rsbuild = await buildOnly();
     const indexJs = await rsbuild.getIndexBundle();
     expect(indexJs).toContain('with enforce: pre');
   },

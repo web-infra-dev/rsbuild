@@ -1,13 +1,13 @@
 import { join } from 'node:path';
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, rspackOnlyTest, test } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
 
-test('should generate prefetch link when prefetch is defined', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
+test('should generate prefetch link when prefetch is defined', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
@@ -46,9 +46,10 @@ test('should generate prefetch link when prefetch is defined', async () => {
   ).toBeTruthy();
 });
 
-test('should generate prefetch link correctly when assetPrefix do not have a protocol', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
+test('should generate prefetch link correctly when assetPrefix do not have a protocol', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
@@ -84,9 +85,8 @@ test('should generate prefetch link correctly when assetPrefix do not have a pro
   ).toBeTruthy();
 });
 
-test('should generate prefetch link with include', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
+test('should generate prefetch link with include', async ({ buildOnly }) => {
+  const rsbuild = await buildOnly({
     plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
@@ -123,9 +123,10 @@ test('should generate prefetch link with include', async () => {
   ).toBeTruthy();
 });
 
-test('should generate prefetch link with include array', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
+test('should generate prefetch link with include array', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
@@ -162,9 +163,10 @@ test('should generate prefetch link with include array', async () => {
   ).toBeTruthy();
 });
 
-test('should generate prefetch link with exclude array', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
+test('should generate prefetch link with exclude array', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
@@ -201,9 +203,10 @@ test('should generate prefetch link with exclude array', async () => {
   ).toBeTruthy();
 });
 
-test('should generate prefetch link by config (distinguish html)', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
+test('should generate prefetch link by config (distinguish html)', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
@@ -251,9 +254,8 @@ test('should generate prefetch link by config (distinguish html)', async () => {
 
 rspackOnlyTest(
   'should not generate prefetch link for inlined assets',
-  async () => {
-    const rsbuild = await build({
-      cwd: fixtures,
+  async ({ buildOnly }) => {
+    const rsbuild = await buildOnly({
       plugins: [pluginReact()],
       rsbuildConfig: {
         source: {
@@ -283,9 +285,8 @@ rspackOnlyTest(
 
 rspackOnlyTest(
   'should not generate prefetch link for inlined assets with test option',
-  async () => {
-    const rsbuild = await build({
-      cwd: fixtures,
+  async ({ buildOnly }) => {
+    const rsbuild = await buildOnly({
       plugins: [pluginReact()],
       rsbuildConfig: {
         source: {

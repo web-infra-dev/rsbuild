@@ -1,9 +1,7 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
-test('should escape template parameters correctly', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should escape template parameters correctly', async ({ buildOnly }) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       html: {
         templateParameters: {
@@ -23,9 +21,10 @@ test('should escape template parameters correctly', async () => {
   expect(barHtml).toContain('<div>escape me</div>');
 });
 
-test('should allow to passing undefined to template parameters', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should allow to passing undefined to template parameters', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       html: {
         templateParameters: {
@@ -46,5 +45,4 @@ test('should allow to passing undefined to template parameters', async () => {
   expect(barHtml).toContain('<div id="test"></div>');
 
   expect(rsbuild.buildError).toBeFalsy();
-  await rsbuild.close();
 });

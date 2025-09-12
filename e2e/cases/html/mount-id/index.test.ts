@@ -1,14 +1,13 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { build, gotoPage } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, gotoPage, test } from '@e2e/helper';
 
 test.describe('should render mountId correctly', () => {
-  let rsbuild: Awaited<ReturnType<typeof build>>;
-
-  test.beforeAll(async () => {
-    rsbuild = await build({
-      cwd: __dirname,
+  test('should render content into the configured mountId', async ({
+    page,
+    buildOnly,
+  }) => {
+    const rsbuild = await buildOnly({
       runServer: true,
       rsbuildConfig: {
         html: {
@@ -16,27 +15,29 @@ test.describe('should render mountId correctly', () => {
         },
       },
     });
-  });
 
-  test.afterAll(async () => {
-    await rsbuild.close();
-  });
-
-  test('should render content into the configured mountId', async ({
-    page,
-  }) => {
-    const errors: string[] = [];
+    const errors = [] as string[];
     page.on('pageerror', (err) => errors.push(err.message));
 
     await gotoPage(page, rsbuild);
 
-    const test = page.locator('#test');
-    await expect(test).toHaveText('Hello Rsbuild!');
+    const testEl = page.locator('#test');
+    await expect(testEl).toHaveText('Hello Rsbuild!');
 
     expect(errors).toEqual([]);
   });
 
-  test('should inject scripts into <head> by default', async () => {
+  test('should inject scripts into <head> by default', async ({
+    buildOnly,
+  }) => {
+    const rsbuild = await buildOnly({
+      rsbuildConfig: {
+        html: {
+          mountId: 'app',
+        },
+      },
+    });
+
     const pagePath = join(rsbuild.distPath, 'index.html');
     const content = await fs.promises.readFile(pagePath, 'utf-8');
 

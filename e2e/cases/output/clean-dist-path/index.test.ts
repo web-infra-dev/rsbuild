@@ -1,17 +1,16 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { build, dev } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { dev, expect, test } from '@e2e/helper';
 import fse, { remove } from 'fs-extra';
 
 const cwd = __dirname;
 const testDistFile = join(cwd, 'dist/test.json');
 const testDeepDistFile = join(cwd, 'dist/foo/bar/test.json');
 
-test('should clean dist path by default', async () => {
+test('should clean dist path by default', async ({ buildOnly }) => {
   await fse.outputFile(testDistFile, `{ "test": 1 }`);
 
-  await build({
+  await buildOnly({
     cwd,
   });
 
@@ -49,11 +48,13 @@ test('should clean dist path in dev when writeToDisk is true', async () => {
   expect(fs.existsSync(testDistFile)).toBeFalsy();
 });
 
-test('should not clean dist path if it is outside root', async () => {
+test('should not clean dist path if it is outside root', async ({
+  buildOnly,
+}) => {
   const testOutsideFile = join(cwd, '../node_modules/test.json');
   await fse.outputFile(testOutsideFile, `{ "test": 1 }`);
 
-  const rsbuild = await build({
+  const rsbuild = await buildOnly({
     cwd,
     rsbuildConfig: {
       output: {
@@ -73,13 +74,12 @@ test('should not clean dist path if it is outside root', async () => {
   expect(fs.existsSync(testOutsideFile)).toBeTruthy();
 
   await remove(testOutsideFile);
-  await rsbuild.close();
 });
 
-test('should allow to disable cleanDistPath', async () => {
+test('should allow to disable cleanDistPath', async ({ buildOnly }) => {
   await fse.outputFile(testDistFile, `{ "test": 1 }`);
 
-  await build({
+  await buildOnly({
     cwd,
     rsbuildConfig: {
       output: {
@@ -93,11 +93,13 @@ test('should allow to disable cleanDistPath', async () => {
   await remove(testDistFile);
 });
 
-test('should allow to use `cleanDistPath.keep` to keep some files', async () => {
+test('should allow to use `cleanDistPath.keep` to keep some files', async ({
+  buildOnly,
+}) => {
   await fse.outputFile(testDistFile, `{ "test": 1 }`);
   await fse.outputFile(testDeepDistFile, `{ "test": 1 }`);
 
-  await build({
+  await buildOnly({
     cwd,
     rsbuildConfig: {
       output: {
@@ -111,7 +113,7 @@ test('should allow to use `cleanDistPath.keep` to keep some files', async () => 
   expect(fs.existsSync(testDistFile)).toBeTruthy();
   expect(fs.existsSync(testDeepDistFile)).toBeTruthy();
 
-  await build({ cwd });
+  await buildOnly({ cwd });
   expect(fs.existsSync(testDistFile)).toBeFalsy();
   expect(fs.existsSync(testDeepDistFile)).toBeFalsy();
 });

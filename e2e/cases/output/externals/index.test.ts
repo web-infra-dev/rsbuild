@@ -1,14 +1,8 @@
-import { resolve } from 'node:path';
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-const fixtures = resolve(__dirname, '../');
-
-test('should treat specified modules as externals', async ({ page }) => {
-  const rsbuild = await build({
-    cwd: fixtures,
-    page,
+test('should treat specified modules as externals', async ({ page, build }) => {
+  await build({
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
@@ -31,13 +25,12 @@ test('should treat specified modules as externals', async ({ page }) => {
   const externalVar = await page.evaluate('window.aa');
 
   expect(externalVar).toBeDefined();
-
-  await rsbuild.close();
 });
 
-test('should not externalize dependencies when target is web worker', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
+test('should not externalize dependencies when target is web worker', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {

@@ -1,5 +1,4 @@
-import { dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { dev, expect, gotoPage, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should render pages correctly when using lazy compilation',
@@ -27,7 +26,6 @@ rspackOnlyTest(
     await gotoPage(page, rsbuild, 'page2');
     await rsbuild.expectBuildEnd();
     await expect(page.locator('#test')).toHaveText('Page 2');
-    await rsbuild.close();
   },
 );
 
@@ -59,6 +57,5 @@ rspackOnlyTest(
     await gotoPage(page, rsbuild, 'page2');
     await rsbuild.expectBuildEnd();
     await expect(page.locator('#test')).toHaveText('Page 2');
-    await rsbuild.close();
   },
 );

@@ -1,6 +1,5 @@
 import path from 'node:path';
-import { build, dev } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 import type { RspackChain } from '@rsbuild/core';
 
 // use source-map for easy to test. By default, Rsbuild use hidden-source-map
@@ -17,10 +16,11 @@ const toolsConfig = {
   },
 };
 
-test('should inline all scripts and emit all source maps', async ({ page }) => {
+test('should inline all scripts and emit all source maps', async ({
+  page,
+  build,
+}) => {
   const rsbuild = await build({
-    cwd: __dirname,
-    page,
     rsbuildConfig: {
       source: {
         entry: {
@@ -52,13 +52,10 @@ test('should inline all scripts and emit all source maps', async ({ page }) => {
     Object.keys(files).filter((fileName) => fileName.endsWith('.js.map'))
       .length,
   ).toEqual(3);
-
-  await rsbuild.close();
 });
 
-test('should inline scripts when matching a RegExp', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should inline scripts when matching a RegExp', async ({ buildOnly }) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
         inlineScripts: /\/index\.\w+\.js$/,
@@ -82,9 +79,10 @@ test('should inline scripts when matching a RegExp', async () => {
   ).toBeGreaterThanOrEqual(2);
 });
 
-test('should inline scripts based on filename and size', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should inline scripts based on filename and size', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
         inlineScripts({ size, name }) {
@@ -110,9 +108,8 @@ test('should inline scripts based on filename and size', async () => {
   ).toBeGreaterThanOrEqual(2);
 });
 
-test('should inline styles when matching a RegExp', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should inline styles when matching a RegExp', async ({ buildOnly }) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
         inlineStyles: /\/index\.\w+\.css$/,
@@ -130,9 +127,10 @@ test('should inline styles when matching a RegExp', async () => {
   ).toEqual(0);
 });
 
-test('should inline styles based on filename and size', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should inline styles based on filename and size', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
         inlineStyles({ size, name }) {
@@ -152,10 +150,8 @@ test('should inline styles based on filename and size', async () => {
   ).toEqual(0);
 });
 
-test('should not inline styles by default in dev', async ({ page }) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
+test('should not inline styles by default in dev', async ({ page, dev }) => {
+  await dev({
     rsbuildConfig: {
       tools: toolsConfig,
     },
@@ -167,14 +163,13 @@ test('should not inline styles by default in dev', async ({ page }) => {
       `document.querySelectorAll('link[href*="index.css"]').length`,
     ),
   ).resolves.toEqual(1);
-
-  await rsbuild.close();
 });
 
-test('should inline styles in dev when matching a RegExp', async ({ page }) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
+test('should inline styles in dev when matching a RegExp', async ({
+  page,
+  dev,
+}) => {
+  await dev({
     rsbuildConfig: {
       output: {
         inlineStyles: {
@@ -192,16 +187,13 @@ test('should inline styles in dev when matching a RegExp', async ({ page }) => {
       `document.querySelectorAll('link[href*="index.css"]').length`,
     ),
   ).resolves.toEqual(0);
-
-  await rsbuild.close();
 });
 
 test('should inline styles in dev based on filename and size', async ({
   page,
+  dev,
 }) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
+  await dev({
     rsbuildConfig: {
       output: {
         inlineStyles: {
@@ -221,13 +213,10 @@ test('should inline styles in dev based on filename and size', async ({
       `document.querySelectorAll('link[href*="index.css"]').length`,
     ),
   ).resolves.toEqual(0);
-
-  await rsbuild.close();
 });
 
-test('should not inline scripts when disabled', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should not inline scripts when disabled', async ({ buildOnly }) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
         inlineScripts: {
@@ -254,9 +243,8 @@ test('should not inline scripts when disabled', async () => {
   ).toBeGreaterThanOrEqual(2);
 });
 
-test('should not inline styles when disabled', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should not inline styles when disabled', async ({ buildOnly }) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
         inlineStyles: {
@@ -277,9 +265,10 @@ test('should not inline styles when disabled', async () => {
   ).toEqual(1);
 });
 
-test('should inline assets in build when enable is auto', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should inline assets in build when enable is auto', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
         inlineScripts: {
@@ -319,10 +308,9 @@ test('should inline assets in build when enable is auto', async () => {
 
 test('should not inline assets in dev when enable is auto', async ({
   page,
+  dev,
 }) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
+  await dev({
     rsbuildConfig: {
       output: {
         inlineScripts: {
@@ -351,16 +339,13 @@ test('should not inline assets in dev when enable is auto', async ({
       `document.querySelectorAll('link[href*="index.css"]').length`,
     ),
   ).resolves.toEqual(1);
-
-  await rsbuild.close();
 });
 
 test('should not inline scripts or styles in dev by default when enable is unset', async ({
   page,
+  dev,
 }) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
+  await dev({
     rsbuildConfig: {
       tools: toolsConfig,
       output: {
@@ -383,6 +368,4 @@ test('should not inline scripts or styles in dev by default when enable is unset
       `document.querySelectorAll('link[href*="index.css"]').length`,
     ),
   ).resolves.toEqual(1);
-
-  await rsbuild.close();
 });

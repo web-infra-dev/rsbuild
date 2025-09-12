@@ -1,5 +1,4 @@
-import { dev, getRandomPort } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { dev, expect, getRandomPort, test } from '@e2e/helper';
 import polka from 'polka';
 
 test('should proxy SSE request correctly', async ({ page }) => {
@@ -61,6 +60,5 @@ test('should proxy SSE request correctly', async ({ page }) => {
   expect(result.text).toContain('Hello SSE1');
   expect(result.text).toContain('Hello SSE2');
 
-  await rsbuild.close();
   app.server?.close();
 });

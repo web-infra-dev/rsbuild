@@ -1,5 +1,4 @@
-import { createRsbuild, getRandomPort } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { createRsbuild, expect, getRandomPort, test } from '@e2e/helper';
 import polka from 'polka';
 
 // TODO: flaky test

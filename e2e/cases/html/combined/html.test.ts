@@ -1,47 +1,45 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
-test.describe('should combine multiple html config correctly', () => {
-  let rsbuild: Awaited<ReturnType<typeof build>>;
-  let mainContent: string;
-  let fooContent: string;
-
-  test.beforeAll(async () => {
-    rsbuild = await build({
-      cwd: __dirname,
-      rsbuildConfig: {
-        source: {
-          entry: {
-            main: join(__dirname, 'src/index.js'),
-            foo: join(__dirname, 'src/foo.js'),
-          },
-        },
-        html: {
-          meta: {
-            description: 'a description of the page',
-          },
-          inject: 'body',
-          appIcon: {
-            icons: [{ src: '../../../assets/icon.png', size: 180 }],
-          },
-          favicon: '../../../assets/icon.png',
+const buildAndRead = async (buildOnly: any) => {
+  const rsbuild = await buildOnly({
+    rsbuildConfig: {
+      source: {
+        entry: {
+          main: join(__dirname, 'src/index.js'),
+          foo: join(__dirname, 'src/foo.js'),
         },
       },
-    });
-
-    mainContent = await fs.promises.readFile(
-      join(rsbuild.distPath, 'main.html'),
-      'utf-8',
-    );
-    fooContent = await fs.promises.readFile(
-      join(rsbuild.distPath, 'foo.html'),
-      'utf-8',
-    );
+      html: {
+        meta: {
+          description: 'a description of the page',
+        },
+        inject: 'body',
+        appIcon: {
+          icons: [{ src: '../../../assets/icon.png', size: 180 }],
+        },
+        favicon: '../../../assets/icon.png',
+      },
+    },
   });
 
-  test('should inject Apple touch icons', async () => {
+  const mainContent = await fs.promises.readFile(
+    join(rsbuild.distPath, 'main.html'),
+    'utf-8',
+  );
+  const fooContent = await fs.promises.readFile(
+    join(rsbuild.distPath, 'foo.html'),
+    'utf-8',
+  );
+
+  return { rsbuild, mainContent, fooContent };
+};
+
+test.describe('should combine multiple html config correctly', () => {
+  test('should inject Apple touch icons', async ({ buildOnly }) => {
+    const { rsbuild, mainContent, fooContent } = await buildAndRead(buildOnly);
+
     const [, iconRelativePath] =
       /<link rel="apple-touch-icon" sizes="180x180" href="(.*?)">/.exec(
         mainContent,
@@ -52,13 +50,14 @@ test.describe('should combine multiple html config correctly', () => {
     const iconPath = join(rsbuild.distPath, iconRelativePath);
     expect(fs.existsSync(iconPath)).toBeTruthy();
 
-    // should work on all page
     expect(
       /<link.*rel="apple-touch-icon".*href="(.*?)">/.test(fooContent),
     ).toBeTruthy();
   });
 
-  test('should inject favicon links', async () => {
+  test('should inject favicon links', async ({ buildOnly }) => {
+    const { rsbuild, mainContent, fooContent } = await buildAndRead(buildOnly);
+
     const [, iconRelativePath] =
       /<link.*rel="icon".*href="(.*?)">/.exec(mainContent) || [];
 
@@ -67,11 +66,13 @@ test.describe('should combine multiple html config correctly', () => {
     const iconPath = join(rsbuild.distPath, iconRelativePath);
     expect(fs.existsSync(iconPath)).toBeTruthy();
 
-    // should work on all page
     expect(/<link.*rel="icon".*href="(.*?)">/.test(fooContent)).toBeTruthy();
   });
 
-  test('should inject scripts into the body when configured', async () => {
+  test('should inject scripts into the body when configured', async ({
+    buildOnly,
+  }) => {
+    const { mainContent } = await buildAndRead(buildOnly);
     expect(
       /<head>[\s\S]*<script[\s\S]*>[\s\S]*<\/head>/.test(mainContent),
     ).toBeFalsy();
@@ -80,7 +81,8 @@ test.describe('should combine multiple html config correctly', () => {
     ).toBeTruthy();
   });
 
-  test('should inject custom meta tags', async () => {
+  test('should inject custom meta tags', async ({ buildOnly }) => {
+    const { mainContent } = await buildAndRead(buildOnly);
     expect(
       /<meta name="description" content="a description of the page">/.test(
         mainContent,

@@ -1,15 +1,15 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
-rspackOnlyTest('should print Stylus plugin hints as expected', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    catchBuildError: true,
-  });
+rspackOnlyTest(
+  'should print Stylus plugin hints as expected',
+  async ({ buildOnly }) => {
+    const rsbuild = await buildOnly({
+      catchBuildError: true,
+    });
 
-  expect(rsbuild.buildError).toBeTruthy();
-  await rsbuild.expectLog(
-    'To enable support for Stylus, use "@rsbuild/plugin-stylus"',
-  );
-  await rsbuild.close();
-});
+    expect(rsbuild.buildError).toBeTruthy();
+    await rsbuild.expectLog(
+      'To enable support for Stylus, use "@rsbuild/plugin-stylus"',
+    );
+  },
+);

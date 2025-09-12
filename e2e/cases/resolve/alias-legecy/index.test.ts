@@ -1,10 +1,9 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
-test('should allow to use the legacy `source.alias` config', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
-  });
+test('should allow to use the legacy `source.alias` config', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly();
 
   const files = rsbuild.getDistFiles();
   const fileNames = Object.keys(files);
@@ -19,5 +18,4 @@ test('should allow to use the legacy `source.alias` config', async () => {
   expect(files[nodeIndex!]).toContain('for node target');
 
   await rsbuild.expectLog('"source.alias" config is deprecated');
-  await rsbuild.close();
 });

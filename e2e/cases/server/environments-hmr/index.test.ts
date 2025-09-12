@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { dev, expect, rspackOnlyTest } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const cwd = __dirname;
@@ -85,7 +84,5 @@ rspackOnlyTest(
 
     // #test-keep should remain unchanged when app.tsx HMR
     expect(await locatorKeep.innerHTML()).toBe(keepNum);
-
-    await rsbuild.close();
   },
 );

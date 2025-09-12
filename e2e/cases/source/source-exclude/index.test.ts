@@ -1,11 +1,11 @@
 import path from 'node:path';
-import { build, toPosixPath } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test, toPosixPath } from '@e2e/helper';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 
-test('should not compile specified file when source.exclude', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should not compile specified file when source.exclude', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     plugins: [pluginCheckSyntax()],
     catchBuildError: true,
     rsbuildConfig: {

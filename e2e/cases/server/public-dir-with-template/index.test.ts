@@ -1,4 +1,4 @@
-import { build, expect, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
 const cwd = __dirname;
 
@@ -18,10 +18,10 @@ test('should serve publicDir with template for dev server correctly', async ({
 
 test('should serve publicDir with template for preview server correctly', async ({
   page,
+  build,
 }) => {
   const rsbuild = await build({
     cwd,
-    page,
   });
 
   const res = await page.goto(`http://localhost:${rsbuild.port}/aa.txt`);
@@ -30,6 +30,4 @@ test('should serve publicDir with template for preview server correctly', async 
   await page.goto(`http://localhost:${rsbuild.port}`);
   const title = await page.$('title');
   expect(await title?.innerText()).toBe('Hello');
-
-  await rsbuild.close();
 });

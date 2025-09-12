@@ -1,13 +1,9 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'generate integrity for async script tags in build',
-  async ({ page }) => {
-    const rsbuild = await build({
-      cwd: __dirname,
-      page,
-    });
+  async ({ page, build }) => {
+    const rsbuild = await build();
 
     const content = await rsbuild.getIndexBundle();
 
@@ -17,6 +13,5 @@ rspackOnlyTest(
 
     const testEl = page.locator('#root');
     await expect(testEl).toHaveText('foo');
-    await rsbuild.close();
   },
 );

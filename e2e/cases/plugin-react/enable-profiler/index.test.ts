@@ -1,18 +1,10 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
-
-const fixtures = __dirname;
+import { expect, test } from '@e2e/helper';
 
 test('should render element with enabled profiler correctly', async ({
   page,
+  build,
 }) => {
-  const rsbuild = await build({
-    cwd: fixtures,
-    page,
-  });
-
+  await build();
   const testEl = page.locator('#test');
   await expect(testEl).toHaveText('Hello Rsbuild!');
-
-  await rsbuild.close();
 });

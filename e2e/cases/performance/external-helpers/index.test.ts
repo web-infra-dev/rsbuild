@@ -1,10 +1,8 @@
 import path from 'node:path';
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
-rspackOnlyTest('should externalHelpers by default', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+rspackOnlyTest('should externalHelpers by default', async ({ buildOnly }) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       source: {
         entry: { index: path.resolve(__dirname, './src/main.ts') },

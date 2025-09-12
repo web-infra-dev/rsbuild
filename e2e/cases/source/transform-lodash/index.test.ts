@@ -1,9 +1,9 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
-test('should support using transformImport to reduce lodash bundle size', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should support using transformImport to reduce lodash bundle size', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       source: {
         transformImport: [

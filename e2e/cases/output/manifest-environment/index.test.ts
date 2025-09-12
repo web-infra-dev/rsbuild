@@ -1,15 +1,15 @@
-import { build, dev } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { dev, expect, test } from '@e2e/helper';
 import type { RsbuildPluginAPI } from '@rsbuild/core';
 
 const fixtures = __dirname;
 
-test('should allow to access manifest data in environment context after build', async () => {
+test('should allow to access manifest data in environment context after build', async ({
+  buildOnly,
+}) => {
   let webManifest: Record<string, any> = {};
   let nodeManifest: Record<string, any> = {};
 
-  await build({
-    cwd: fixtures,
+  await buildOnly({
     rsbuildConfig: {
       output: {
         filenameHash: false,
@@ -64,14 +64,12 @@ test('should allow to access manifest data in environment context after build', 
 });
 
 test('should allow to access manifest data in environment context after dev build', async ({
-  page,
+  dev,
 }) => {
   let webManifest: Record<string, any> = {};
   let nodeManifest: Record<string, any> = {};
 
-  const rsbuild = await dev({
-    cwd: fixtures,
-    page,
+  await dev({
     rsbuildConfig: {
       output: {
         filenameHash: false,
@@ -123,8 +121,6 @@ test('should allow to access manifest data in environment context after dev buil
       js: ['/index.js'],
     },
   });
-
-  await rsbuild.close();
 });
 
 test('should allow to access manifest data in environment API', async ({
@@ -184,6 +180,4 @@ test('should allow to access manifest data in environment API', async ({
       js: ['/index.js'],
     },
   });
-
-  await rsbuild.close();
 });

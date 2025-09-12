@@ -1,9 +1,9 @@
-import { build, dev, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { dev, expect, rspackOnlyTest, test } from '@e2e/helper';
 
-test('should allow to set development mode when building', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should allow to set development mode when building', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       mode: 'development',
     },
@@ -29,9 +29,8 @@ test('should allow to set development mode when building', async () => {
   expect(indexSourceMap).toBeTruthy();
 });
 
-test('should allow to set none mode when building', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should allow to set none mode when building', async ({ buildOnly }) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       mode: 'none',
     },
@@ -79,7 +78,5 @@ rspackOnlyTest(
       key.endsWith('.js.map'),
     );
     expect(indexSourceMap).toBeFalsy();
-
-    await rsbuild.close();
   },
 );

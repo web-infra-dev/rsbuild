@@ -1,9 +1,9 @@
-import { build, dev } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { dev, expect, test } from '@e2e/helper';
 
-test('should detect and report missing named export errors during build', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should detect and report missing named export errors during build', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     catchBuildError: true,
   });
 
@@ -11,7 +11,6 @@ test('should detect and report missing named export errors during build', async 
   await rsbuild.expectLog(
     `export 'aa' (imported as 'aa') was not found in './test'`,
   );
-  await rsbuild.close();
 });
 
 test('should detect and report missing named export errors in dev', async ({
@@ -25,5 +24,4 @@ test('should detect and report missing named export errors in dev', async ({
   await rsbuild.expectLog(
     `export 'aa' (imported as 'aa') was not found in './test'`,
   );
-  await rsbuild.close();
 });

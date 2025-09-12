@@ -1,11 +1,12 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
 import { pluginReact } from '@rsbuild/plugin-react';
 
-test('should add single environment plugin correctly', async ({ page }) => {
+test('should add single environment plugin correctly', async ({
+  page,
+  build,
+}) => {
   const rsbuild = await build({
-    cwd: __dirname,
     rsbuildConfig: {
       environments: {
         web: {
@@ -30,7 +31,6 @@ test('should add single environment plugin correctly', async ({ page }) => {
         },
       },
     },
-    page,
   });
 
   const button = page.locator('#test');

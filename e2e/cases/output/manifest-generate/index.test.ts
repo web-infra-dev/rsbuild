@@ -1,5 +1,4 @@
-import { build, dev } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { dev, expect, test } from '@e2e/helper';
 import type { RsbuildConfig } from '@rsbuild/core';
 
 const fixtures = __dirname;
@@ -25,9 +24,10 @@ const rsbuildConfig: RsbuildConfig = {
   },
 };
 
-test('should generate custom manifest data in production build', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
+test('should generate custom manifest data in production build', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig,
   });
 
@@ -70,6 +70,4 @@ test('should generate custom manifest data in dev', async ({ page }) => {
     },
     html: ['/index.html'],
   });
-
-  await rsbuild.close();
 });

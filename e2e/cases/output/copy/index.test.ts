@@ -1,12 +1,11 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+
+import { expect, test } from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
 
-test('should copy asset to dist folder correctly', async () => {
-  await build({
-    cwd: __dirname,
+test('should copy asset to dist folder correctly', async ({ buildOnly }) => {
+  await buildOnly({
     rsbuildConfig: {
       output: {
         distPath: {
@@ -20,9 +19,10 @@ test('should copy asset to dist folder correctly', async () => {
   expect(fs.existsSync(join(__dirname, 'dist-1/icon.png'))).toBeTruthy();
 });
 
-test('should copy asset from src to dist folder correctly', async () => {
-  await build({
-    cwd: __dirname,
+test('should copy asset from src to dist folder correctly', async ({
+  buildOnly,
+}) => {
+  await buildOnly({
     rsbuildConfig: {
       output: {
         copy: [
@@ -35,9 +35,10 @@ test('should copy asset from src to dist folder correctly', async () => {
   expect(fs.existsSync(join(__dirname, 'dist/assets/foo.txt'))).toBeTruthy();
 });
 
-test('should copy asset to dist sub-folder correctly', async () => {
-  await build({
-    cwd: __dirname,
+test('should copy asset to dist sub-folder correctly', async ({
+  buildOnly,
+}) => {
+  await buildOnly({
     rsbuildConfig: {
       output: {
         distPath: {
@@ -51,7 +52,7 @@ test('should copy asset to dist sub-folder correctly', async () => {
   expect(fs.existsSync(join(__dirname, 'dist-1/foo/icon.png'))).toBeTruthy();
 });
 
-test('should merge copy config correctly', async () => {
+test('should merge copy config correctly', async ({ buildOnly }) => {
   const rsbuildPlugin = (): RsbuildPlugin => ({
     name: 'example',
     setup(api) {
@@ -88,8 +89,7 @@ test('should merge copy config correctly', async () => {
     },
   });
 
-  await build({
-    cwd: __dirname,
+  await buildOnly({
     rsbuildConfig: {
       output: {
         distPath: {

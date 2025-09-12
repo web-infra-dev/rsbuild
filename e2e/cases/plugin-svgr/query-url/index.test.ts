@@ -1,13 +1,10 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
 test('should import svg with SVGR plugin and query URL correctly', async ({
   page,
+  build,
 }) => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    page,
-  });
+  const rsbuild = await build();
 
   // test SVG asset
   await expect(
@@ -22,6 +19,4 @@ test('should import svg with SVGR plugin and query URL correctly', async ({
       `getComputedStyle(document.getElementById('test-css')).backgroundImage.includes('static/svg/mobile')`,
     ),
   ).resolves.toBeTruthy();
-
-  await rsbuild.close();
 });

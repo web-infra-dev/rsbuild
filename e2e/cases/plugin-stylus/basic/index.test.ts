@@ -1,10 +1,7 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
-rspackOnlyTest('should compile stylus correctly', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
-  });
+rspackOnlyTest('should compile stylus correctly', async ({ buildOnly }) => {
+  const rsbuild = await buildOnly();
   const files = rsbuild.getDistFiles();
 
   const content =

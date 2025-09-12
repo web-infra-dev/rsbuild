@@ -1,10 +1,9 @@
 import path from 'node:path';
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
 
-test('should emit local favicon to dist path', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+import { expect, test } from '@e2e/helper';
+
+test('should emit local favicon to dist path', async ({ buildOnly }) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       html: {
         favicon: '../../../assets/icon.png',
@@ -23,9 +22,10 @@ test('should emit local favicon to dist path', async () => {
   expect(html).toContain('<link rel="icon" href="/icon.png">');
 });
 
-test('should allow `html.favicon` to be an absolute path', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should allow `html.favicon` to be an absolute path', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       html: {
         favicon: path.resolve(__dirname, '../../../assets/icon.png'),
@@ -44,9 +44,8 @@ test('should allow `html.favicon` to be an absolute path', async () => {
   expect(html).toContain('<link rel="icon" href="/icon.png">');
 });
 
-test('should add type attribute for SVG favicon', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should add type attribute for SVG favicon', async ({ buildOnly }) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       html: {
         favicon: '../../../assets/mobile.svg',
@@ -67,9 +66,8 @@ test('should add type attribute for SVG favicon', async () => {
   );
 });
 
-test('should apply asset prefix to favicon URL', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should apply asset prefix to favicon URL', async ({ buildOnly }) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       html: {
         favicon: '../../../assets/icon.png',
@@ -89,9 +87,8 @@ test('should apply asset prefix to favicon URL', async () => {
   );
 });
 
-test('should allow favicon to be a CDN URL', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should allow favicon to be a CDN URL', async ({ buildOnly }) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       html: {
         favicon: 'https://foo.com/icon.png',
@@ -106,9 +103,10 @@ test('should allow favicon to be a CDN URL', async () => {
   expect(html).toContain('<link rel="icon" href="https://foo.com/icon.png">');
 });
 
-test('should generate favicon via function correctly', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should generate favicon via function correctly', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       source: {
         entry: {
@@ -142,9 +140,10 @@ test('should generate favicon via function correctly', async () => {
   );
 });
 
-test('should allow to custom favicon dist path with a relative path', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should allow to custom favicon dist path with a relative path', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       html: {
         favicon: '../../../assets/icon.png',
@@ -170,9 +169,10 @@ test('should allow to custom favicon dist path with a relative path', async () =
   expect(html).toContain('<link rel="icon" href="/static/favicon/icon.png">');
 });
 
-test('should allow to custom favicon dist path with a relative path starting with ./', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should allow to custom favicon dist path with a relative path starting with ./', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       html: {
         favicon: '../../../assets/icon.png',

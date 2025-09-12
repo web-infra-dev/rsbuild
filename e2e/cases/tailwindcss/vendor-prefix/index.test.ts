@@ -1,13 +1,9 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should generate tailwindcss utilities with vendor prefixes correctly',
-  async () => {
-    const rsbuild = await build({
-      cwd: __dirname,
-    });
-
+  async ({ buildOnly }) => {
+    const rsbuild = await buildOnly();
     const files = rsbuild.getDistFiles();
     const indexCssFile = Object.keys(files).find(
       (file) => file.includes('index.') && file.endsWith('.css'),

@@ -1,15 +1,11 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should allow to re-export type without the type modifier',
-  async ({ page }) => {
+  async ({ page, build }) => {
     const rsbuild = await build({
-      cwd: __dirname,
-      page,
       catchBuildError: true,
     });
     expect(rsbuild.buildError).toBeFalsy();
-    await rsbuild.close();
   },
 );

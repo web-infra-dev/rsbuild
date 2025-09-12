@@ -1,6 +1,5 @@
 import { join } from 'node:path';
-import { dev } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { dev, expect, test } from '@e2e/helper';
 
 const prj1 = join(__dirname, 'project1');
 const prj2 = join(__dirname, 'project2');
@@ -69,5 +68,4 @@ test('should handle proxy error correctly', async ({ page }) => {
   expect(res?.status()).toBe(504);
 
   await rsbuild.expectLog('Error occurred while proxying request');
-  await rsbuild.close();
 });

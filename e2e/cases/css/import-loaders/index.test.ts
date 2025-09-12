@@ -1,12 +1,9 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should compile CSS Modules which depends on importLoaders correctly',
-  async () => {
-    const rsbuild = await build({
-      cwd: __dirname,
-    });
+  async ({ buildOnly }) => {
+    const rsbuild = await buildOnly();
     const files = rsbuild.getDistFiles();
 
     const content =

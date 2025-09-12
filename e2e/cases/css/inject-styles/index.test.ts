@@ -1,16 +1,13 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { build, expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 const fixtures = __dirname;
 
 rspackOnlyTest(
   'should inline style when `injectStyles` is enabled',
-  async ({ page }) => {
-    const rsbuild = await build({
-      cwd: fixtures,
-      page,
-    });
+  async ({ page, build }) => {
+    const rsbuild = await build();
 
     // injectStyles worked
     const files = rsbuild.getDistFiles();
@@ -88,10 +85,8 @@ rspackOnlyTest(
 
 rspackOnlyTest(
   'should allow to disable CSS minification when `injectStyles` is enabled',
-  async ({ page }) => {
+  async ({ page, build }) => {
     const rsbuild = await build({
-      cwd: fixtures,
-      page,
       rsbuildConfig: {
         output: {
           minify: false,
@@ -115,7 +110,5 @@ rspackOnlyTest(
   padding: 0;
 }`),
     ).toBeTruthy();
-
-    await rsbuild.close();
   },
 );

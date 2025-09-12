@@ -1,4 +1,4 @@
-import { build, expect, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
 const cwd = __dirname;
 
@@ -104,10 +104,10 @@ test('should listen only on localhost in dev', async ({ page, devOnly }) => {
   rsbuild.expectNoLog(NETWORK_LOG_REGEX);
 });
 
-test('should listen only on localhost in preview', async ({ page }) => {
+test('should listen only on localhost in preview', async ({ page, build }) => {
   const rsbuild = await build({
     cwd,
-    page,
+
     rsbuildConfig: {
       server: {
         host: 'localhost',
@@ -122,14 +122,15 @@ test('should listen only on localhost in preview', async ({ page }) => {
 
   await rsbuild.expectLog(`➜  Local:    ${url}`);
   rsbuild.expectNoLog(NETWORK_LOG_REGEX);
-
-  await rsbuild.close();
 });
 
-test('should not print server urls when HTML is disabled', async ({ page }) => {
+test('should not print server urls when HTML is disabled', async ({
+  page,
+  build,
+}) => {
   const rsbuild = await build({
     cwd,
-    page,
+
     rsbuildConfig: {
       tools: {
         htmlPlugin: false,
@@ -139,16 +140,15 @@ test('should not print server urls when HTML is disabled', async ({ page }) => {
 
   rsbuild.expectNoLog(`➜  Local:    http://localhost:${rsbuild.port}`);
   rsbuild.expectNoLog(NETWORK_LOG_REGEX);
-
-  await rsbuild.close();
 });
 
 test('should print server urls when HTML is disabled but printUrls is a custom function', async ({
   page,
+  build,
 }) => {
   const rsbuild = await build({
     cwd,
-    page,
+
     rsbuildConfig: {
       tools: {
         htmlPlugin: false,
@@ -160,7 +160,6 @@ test('should print server urls when HTML is disabled but printUrls is a custom f
   });
 
   await rsbuild.expectLog(`➜  Local:    http://localhost:${rsbuild.port}`);
-  await rsbuild.close();
 });
 
 test('should print server urls for multiple web environments with custom distPath.root', async ({

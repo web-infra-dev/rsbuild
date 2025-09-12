@@ -1,10 +1,9 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
-test('should allow to use `postcssOptions` function to apply different postcss config for different files', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
-  });
+test('should allow to use `postcssOptions` function to apply different postcss config for different files', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly();
 
   const fooCssExpected =
     '.font-bold{--tw-font-weight:var(--font-weight-bold);font-weight:var(--font-weight-bold)}.underline{text-decoration-line:underline}}';

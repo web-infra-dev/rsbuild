@@ -1,10 +1,10 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import type { BuildResult } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
 const cwd = __dirname;
 
 const expectConsoleType = async (
-  rsbuild: Awaited<ReturnType<typeof build>>,
+  rsbuild: Awaited<BuildResult>,
   consoleType: Record<string, boolean>,
 ) => {
   const files = rsbuild.getDistFiles();
@@ -18,8 +18,8 @@ const expectConsoleType = async (
   }
 };
 
-test('should remove specified console correctly', async () => {
-  const rsbuild = await build({
+test('should remove specified console correctly', async ({ buildOnly }) => {
+  const rsbuild = await buildOnly({
     cwd,
     rsbuildConfig: {
       performance: {
@@ -36,8 +36,8 @@ test('should remove specified console correctly', async () => {
   });
 });
 
-test('should remove all console correctly', async () => {
-  const rsbuild = await build({
+test('should remove all console correctly', async ({ buildOnly }) => {
+  const rsbuild = await buildOnly({
     cwd,
     rsbuildConfig: {
       performance: {

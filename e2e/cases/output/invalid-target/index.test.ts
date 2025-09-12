@@ -1,9 +1,9 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
-test('should throw error when `output.target` is invalid', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should throw error when `output.target` is invalid', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     catchBuildError: true,
     rsbuildConfig: {
       output: {
@@ -16,6 +16,4 @@ test('should throw error when `output.target` is invalid', async () => {
   expect(rsbuild.buildError?.message).toContain(
     `Invalid value of output.target: "foo", valid values are:`,
   );
-
-  await rsbuild.close();
 });

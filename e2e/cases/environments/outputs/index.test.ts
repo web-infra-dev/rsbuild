@@ -1,9 +1,7 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
-test('should apply multiple dist path correctly', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should apply multiple dist path correctly', async ({ buildOnly }) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       environments: {
         web: {

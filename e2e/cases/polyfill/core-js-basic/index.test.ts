@@ -1,5 +1,4 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, rspackOnlyTest, test } from '@e2e/helper';
 import { getPolyfillContent } from '../helper';
 
 const EXPECT_VALUE = {
@@ -12,9 +11,9 @@ const EXPECT_VALUE = {
 
 test('should add polyfill when set polyfill entry (default)', async ({
   page,
+  build,
 }) => {
   const rsbuild = await build({
-    cwd: __dirname,
     rsbuildConfig: {
       output: {
         polyfill: 'entry',
@@ -23,12 +22,9 @@ test('should add polyfill when set polyfill entry (default)', async ({
         },
       },
     },
-    page,
   });
 
   expect(await page.evaluate('window.a')).toEqual(EXPECT_VALUE);
-
-  await rsbuild.close();
 
   const files = rsbuild.getDistFiles({ sourceMaps: true });
 
@@ -42,9 +38,8 @@ test('should add polyfill when set polyfill entry (default)', async ({
 // @rsbuild/plugin-webpack-swc do not support groupBy yet
 rspackOnlyTest(
   'should add polyfill when set polyfill usage',
-  async ({ page }) => {
+  async ({ page, build }) => {
     const rsbuild = await build({
-      cwd: __dirname,
       rsbuildConfig: {
         output: {
           polyfill: 'usage',
@@ -53,7 +48,6 @@ rspackOnlyTest(
           },
         },
       },
-      page,
     });
 
     page.on('pageerror', (err) => {
@@ -61,8 +55,6 @@ rspackOnlyTest(
     });
 
     expect(await page.evaluate('window.a')).toEqual(EXPECT_VALUE);
-
-    await rsbuild.close();
 
     const files = rsbuild.getDistFiles({ sourceMaps: true });
 

@@ -1,13 +1,13 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import {
+  expect,
   expectFile,
   getRandomPort,
   gotoPage,
   rspackOnlyTest,
   runCli,
 } from '@e2e/helper';
-import { expect } from '@playwright/test';
 import fse from 'fs-extra';
 import { tempConfig } from './rsbuild.config';
 

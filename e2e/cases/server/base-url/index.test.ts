@@ -1,4 +1,4 @@
-import { build, expect, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
 test('should apply server.base in dev', async ({ page, dev }) => {
   const rsbuild = await dev({
@@ -64,10 +64,8 @@ test('should respect server.base when dev.assetPrefix is true', async ({
   expect(await page.content()).toContain('aaaa');
 });
 
-test('should apply server.base in preview', async ({ page }) => {
+test('should apply server.base in preview', async ({ page, build }) => {
   const rsbuild = await build({
-    cwd: __dirname,
-    page,
     rsbuildConfig: {
       server: {
         base: '/base',
@@ -104,8 +102,6 @@ test('should apply server.base in preview', async ({ page }) => {
   await page.goto(`http://localhost:${rsbuild.port}/base/aaa.txt`);
 
   expect(await page.content()).toContain('aaaa');
-
-  await rsbuild.close();
 });
 
 test('should serve resource correctly when assetPrefix is a subPath of server.base', async ({
