@@ -130,13 +130,18 @@ export async function dev({
   rsbuild.onBeforeStartDevServer(() => {
     distFiles = {};
   });
-  rsbuild.onAfterEnvironmentCompile(({ stats, environment }) => {
-    const assets = stats ? stats.compilation.getAssets() : [];
-    for (const asset of assets) {
-      if (asset.source) {
-        const assetPath = join(environment.distPath, asset.name);
-        distFiles[assetPath] = asset.source.source().toString();
-      }
+  rsbuild.onAfterCreateCompiler(({ compiler }) => {
+    const compilers = 'compilers' in compiler ? compiler.compilers : [compiler];
+    for (const compiler of compilers) {
+      compiler.hooks.emit.tap('CollectAssetsPlugin', (compilation) => {
+        for (const asset of compilation.getAssets()) {
+          const assetPath = join(
+            compilation.options.output.path || '',
+            asset.name,
+          );
+          distFiles[assetPath] = asset.source.source().toString();
+        }
+      });
     }
   });
 
@@ -225,13 +230,18 @@ export async function build({
   rsbuild.onBeforeBuild(() => {
     distFiles = {};
   });
-  rsbuild.onAfterEnvironmentCompile(({ stats, environment }) => {
-    const assets = stats ? stats.compilation.getAssets() : [];
-    for (const asset of assets) {
-      if (asset.source) {
-        const assetPath = join(environment.distPath, asset.name);
-        distFiles[assetPath] = asset.source.source().toString();
-      }
+  rsbuild.onAfterCreateCompiler(({ compiler }) => {
+    const compilers = 'compilers' in compiler ? compiler.compilers : [compiler];
+    for (const compiler of compilers) {
+      compiler.hooks.emit.tap('CollectAssetsPlugin', (compilation) => {
+        for (const asset of compilation.getAssets()) {
+          const assetPath = join(
+            compilation.options.output.path || '',
+            asset.name,
+          );
+          distFiles[assetPath] = asset.source.source().toString();
+        }
+      });
     }
   });
 
