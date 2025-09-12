@@ -10,13 +10,6 @@ test('should access / success and htmlFallback success by default', async ({
 }) => {
   const rsbuild = await dev({
     cwd,
-    rsbuildConfig: {
-      output: {
-        distPath: {
-          root: 'dist-html-fallback-0',
-        },
-      },
-    },
   });
 
   const url = new URL(`http://localhost:${rsbuild.port}/`);
@@ -47,11 +40,6 @@ test('should return 404 when htmlFallback false', async ({ page }) => {
     rsbuildConfig: {
       server: {
         htmlFallback: false,
-      },
-      output: {
-        distPath: {
-          root: 'dist-html-fallback-0-1',
-        },
       },
     },
   });
@@ -106,11 +94,6 @@ test('should access /main.html success when entry is main', async ({
           main: join(cwd, 'src/index.js'),
         },
       },
-      output: {
-        distPath: {
-          root: 'dist-html-fallback-1',
-        },
-      },
     },
   });
 
@@ -131,11 +114,6 @@ test('should access /main success when entry is main', async ({ page }) => {
       source: {
         entry: {
           main: join(cwd, 'src/index.js'),
-        },
-      },
-      output: {
-        distPath: {
-          root: 'dist-html-fallback-2',
         },
       },
     },
@@ -164,11 +142,6 @@ test('should access /main success when entry is main and use memoryFs', async ({
           main: join(cwd, 'src/index.js'),
         },
       },
-      output: {
-        distPath: {
-          root: 'dist-html-fallback-3',
-        },
-      },
     },
   });
 
@@ -191,11 +164,6 @@ test('should access /main success when entry is main and set assetPrefix', async
       source: {
         entry: {
           main: join(cwd, 'src/index.js'),
-        },
-      },
-      output: {
-        distPath: {
-          root: 'dist-html-fallback-4',
         },
       },
       dev: {
@@ -225,11 +193,6 @@ test('should access /main success when entry is main and outputPath is /main/ind
           main: join(cwd, 'src/index.js'),
         },
       },
-      output: {
-        distPath: {
-          root: 'dist-html-fallback-5',
-        },
-      },
       html: {
         outputStructure: 'nested',
       },
@@ -253,11 +216,6 @@ test('should return 404 when page is not found', async ({ page }) => {
       source: {
         entry: {
           main: join(cwd, 'src/index.js'),
-        },
-      },
-      output: {
-        distPath: {
-          root: 'dist-html-fallback-6',
         },
       },
     },
@@ -285,7 +243,6 @@ test('should access /html/main success when entry is main and outputPath is /htm
       },
       output: {
         distPath: {
-          root: 'dist-html-fallback-5',
           html: 'html',
         },
       },
@@ -319,11 +276,6 @@ test('should access /main success when modify publicPath in compiler', async ({
       source: {
         entry: {
           main: join(cwd, 'src/index.js'),
-        },
-      },
-      output: {
-        distPath: {
-          root: 'dist-html-fallback-6',
         },
       },
     },
@@ -365,11 +317,6 @@ test('should access /main success when distPath is absolute', async ({
       source: {
         entry: {
           main: join(cwd, 'src/index.js'),
-        },
-      },
-      output: {
-        distPath: {
-          root: join(cwd, 'dist-html-fallback-7'),
         },
       },
     },
