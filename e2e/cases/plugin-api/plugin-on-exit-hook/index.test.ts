@@ -1,8 +1,7 @@
 import { exec } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 import { remove } from 'fs-extra';
 
 const distFile = path.join(__dirname, 'node_modules/hooksTempFile');

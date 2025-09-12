@@ -1,11 +1,12 @@
 import { readFileSync } from 'node:fs';
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
 
-test('should add id prefix after svgo minification', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
-  });
+import { expect, test } from '@e2e/helper';
+
+test('should add id prefix after svgo minification', async ({
+  build,
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly();
 
   const files = rsbuild.getDistFiles();
   const indexJs = Object.keys(files).find(

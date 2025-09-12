@@ -1,10 +1,7 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
-test('should allow to custom HTML filename', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
-  });
+test('should allow to custom HTML filename', async ({ build, buildOnly }) => {
+  const rsbuild = await buildOnly();
 
   const files = rsbuild.getDistFiles();
   const fooFile = Object.keys(files).find((item) =>
@@ -15,5 +12,4 @@ test('should allow to custom HTML filename', async () => {
   );
   expect(fooFile).toBeTruthy();
   expect(barFile).toBeTruthy();
-  await rsbuild.close();
 });

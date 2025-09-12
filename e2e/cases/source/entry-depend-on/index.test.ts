@@ -1,11 +1,11 @@
-import { build, gotoPage } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, gotoPage, test } from '@e2e/helper';
 
 test('should support an entry description object with dependOn', async ({
   page,
+  build,
+  buildOnly,
 }) => {
-  const rsbuild = await build({
-    cwd: __dirname,
+  const rsbuild = await buildOnly({
     runServer: true,
   });
 
@@ -17,6 +17,4 @@ test('should support an entry description object with dependOn', async ({
 
   await gotoPage(page, rsbuild, 'baz');
   expect(await page.evaluate('window.test')).toBe('foo-bar-baz');
-
-  await rsbuild.close();
 });

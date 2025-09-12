@@ -1,13 +1,14 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { build, dev, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { dev, expect, rspackOnlyTest, test } from '@e2e/helper';
 
 const fixtures = __dirname;
 
-test('should generate manifest file in output', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
+test('should generate manifest file in output', async ({
+  build,
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
         manifest: true,
@@ -41,9 +42,11 @@ test('should generate manifest file in output', async () => {
   });
 });
 
-test('should generate manifest file at specified path', async () => {
-  await build({
-    cwd: fixtures,
+test('should generate manifest file at specified path', async ({
+  build,
+  buildOnly,
+}) => {
+  await buildOnly({
     rsbuildConfig: {
       output: {
         manifest: './custom/my-manifest.json',
@@ -67,9 +70,11 @@ test('should generate manifest file at specified path', async () => {
   expect(Object.keys(parsed.allFiles).length).toBe(2);
 });
 
-test('should generate manifest file when target is node', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
+test('should generate manifest file when target is node', async ({
+  build,
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
         distPath: {
@@ -127,13 +132,13 @@ test('should always write manifest to disk when in dev', async ({ page }) => {
     files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];
 
   expect(manifestContent).toBeDefined();
-
-  await rsbuild.close();
 });
 
-test('should allow to filter files in manifest', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
+test('should allow to filter files in manifest', async ({
+  build,
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
         manifest: {
@@ -167,9 +172,8 @@ test('should allow to filter files in manifest', async () => {
 
 rspackOnlyTest(
   'should allow to include license files in manifest',
-  async () => {
-    const rsbuild = await build({
-      cwd: fixtures,
+  async ({ build, buildOnly }) => {
+    const rsbuild = await buildOnly({
       rsbuildConfig: {
         output: {
           manifest: {

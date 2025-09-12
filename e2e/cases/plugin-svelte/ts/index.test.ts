@@ -1,13 +1,9 @@
-import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, gotoPage, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should build svelte component with typescript',
-  async ({ page }) => {
-    const rsbuild = await build({
-      cwd: __dirname,
-      page,
-    });
+  async ({ page, build }) => {
+    const rsbuild = await build();
 
     await gotoPage(page, rsbuild);
 
@@ -16,7 +12,5 @@ rspackOnlyTest(
 
     const count = page.locator('#count');
     await expect(count).toHaveText('Count: 2');
-
-    await rsbuild.close();
   },
 );

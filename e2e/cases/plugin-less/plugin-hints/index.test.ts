@@ -1,16 +1,16 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
-rspackOnlyTest('should print Less plugin hints as expected', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    catchBuildError: true,
-  });
+rspackOnlyTest(
+  'should print Less plugin hints as expected',
+  async ({ buildOnly }) => {
+    const rsbuild = await buildOnly({
+      catchBuildError: true,
+    });
 
-  expect(rsbuild.buildError).toBeTruthy();
+    expect(rsbuild.buildError).toBeTruthy();
 
-  await rsbuild.expectLog(
-    'To enable support for Less, use "@rsbuild/plugin-less"',
-  );
-  await rsbuild.close();
-});
+    await rsbuild.expectLog(
+      'To enable support for Less, use "@rsbuild/plugin-less"',
+    );
+  },
+);

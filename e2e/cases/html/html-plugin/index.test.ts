@@ -1,11 +1,13 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
 
-test('should allow to use tools.htmlPlugin to modify HTML plugin options', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+import { expect, test } from '@e2e/helper';
+
+test('should allow to use tools.htmlPlugin to modify HTML plugin options', async ({
+  build,
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       tools: {
         htmlPlugin(config, { entryName }) {
@@ -27,9 +29,11 @@ test('should allow to use tools.htmlPlugin to modify HTML plugin options', async
   ).toBeTruthy();
 });
 
-test('should allow to use tools.htmlPlugin to return a new config object', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should allow to use tools.htmlPlugin to return a new config object', async ({
+  build,
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       html: {
         crossorigin: true,

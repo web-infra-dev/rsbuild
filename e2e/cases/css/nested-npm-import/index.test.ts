@@ -1,25 +1,23 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
-rspackOnlyTest('should compile nested npm import correctly', async () => {
-  fs.cpSync(
-    path.resolve(__dirname, '_node_modules'),
-    path.resolve(__dirname, 'node_modules'),
-    { recursive: true },
-  );
+rspackOnlyTest(
+  'should compile nested npm import correctly',
+  async ({ buildOnly }) => {
+    fs.cpSync(
+      path.resolve(__dirname, '_node_modules'),
+      path.resolve(__dirname, 'node_modules'),
+      { recursive: true },
+    );
 
-  const rsbuild = await build({
-    cwd: __dirname,
-  });
+    const rsbuild = await buildOnly();
 
-  const files = rsbuild.getDistFiles();
-  const cssFiles = Object.keys(files).find((file) => file.endsWith('.css'))!;
+    const files = rsbuild.getDistFiles();
+    const cssFiles = Object.keys(files).find((file) => file.endsWith('.css'))!;
 
-  expect(files[cssFiles]).toEqual(
-    '#b{color:#ff0}#c{color:green}#a{font-size:10px}html{font-size:18px}',
-  );
-
-  await rsbuild.close();
-});
+    expect(files[cssFiles]).toEqual(
+      '#b{color:#ff0}#c{color:green}#a{font-size:10px}html{font-size:18px}',
+    );
+  },
+);

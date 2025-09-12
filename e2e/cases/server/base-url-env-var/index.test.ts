@@ -1,4 +1,4 @@
-import { build, expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should define BASE_URL env var correctly in dev',
@@ -24,10 +24,8 @@ rspackOnlyTest(
 
 rspackOnlyTest(
   'should define BASE_URL env var correctly in build',
-  async ({ page }) => {
+  async ({ page, build }) => {
     const rsbuild = await build({
-      cwd: __dirname,
-      page,
       rsbuildConfig: {
         html: {
           template: './src/index.html',
@@ -43,7 +41,5 @@ rspackOnlyTest(
 
     // should define `import.meta.env.BASE_URL` correctly
     await expect(page.locator('#public-base-path-meta')).toHaveText('/base');
-
-    await rsbuild.close();
   },
 );

@@ -1,10 +1,12 @@
 import path from 'node:path';
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
 
-test('should build web-worker target correctly', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+import { expect, test } from '@e2e/helper';
+
+test('should build web-worker target correctly', async ({
+  build,
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
         target: 'web-worker',
@@ -19,9 +21,11 @@ test('should build web-worker target correctly', async () => {
   expect(jsFiles[0].includes('index')).toBeTruthy();
 });
 
-test('should build web-worker target with dynamicImport correctly', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should build web-worker target with dynamicImport correctly', async ({
+  build,
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       source: {
         entry: { index: path.resolve(__dirname, './src/index2.js') },

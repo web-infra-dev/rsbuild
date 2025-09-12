@@ -1,12 +1,9 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should allow plugin to match data uri modules with `mimetype`',
-  async () => {
-    const rsbuild = await build({
-      cwd: __dirname,
-    });
+  async ({ build, buildOnly }) => {
+    const rsbuild = await buildOnly();
 
     const indexJs = await rsbuild.getIndexBundle();
     expect(indexJs).toContain('data-uri-bar');

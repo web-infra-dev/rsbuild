@@ -1,14 +1,21 @@
 import { readFileSync } from 'node:fs';
 import path, { join } from 'node:path';
-import { build, dev, mapSourceMapPositions } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import {
+  type Build,
+  dev,
+  expect,
+  mapSourceMapPositions,
+  test,
+} from '@e2e/helper';
 import type { Rspack } from '@rsbuild/core';
 
 const fixtures = __dirname;
 
-async function testSourceMapType(devtool: Rspack.Configuration['devtool']) {
-  const rsbuild = await build({
-    cwd: fixtures,
+async function testSourceMapType(
+  devtool: Rspack.Configuration['devtool'],
+  buildOnly: Build,
+) {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
         sourceMap: {
@@ -78,15 +85,17 @@ const productionDevtools: Rspack.Configuration['devtool'][] = [
 ];
 
 for (const devtool of productionDevtools) {
-  test(`should generate correct "${devtool}" source map in production build`, async () => {
-    await testSourceMapType(devtool);
+  test(`should generate correct "${devtool}" source map in build`, async ({
+    buildOnly,
+  }) => {
+    await testSourceMapType(devtool, buildOnly);
   });
 }
 
-test('should not generate source map by default in production build', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
-  });
+test('should not generate source map by default in production build', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly();
 
   const files = rsbuild.getDistFiles({ sourceMaps: true });
 
@@ -100,9 +109,10 @@ test('should not generate source map by default in production build', async () =
   expect(cssMapFiles.length).toEqual(0);
 });
 
-test('should generate source map if `output.sourceMap` is true', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
+test('should generate source map if `output.sourceMap` is true', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
         sourceMap: true,
@@ -122,9 +132,10 @@ test('should generate source map if `output.sourceMap` is true', async () => {
   expect(cssMapFiles.length).toBeGreaterThan(0);
 });
 
-test('should not generate source map if `output.sourceMap` is false', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
+test('should not generate source map if `output.sourceMap` is false', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
         sourceMap: false,
@@ -167,13 +178,12 @@ test('should generate source map correctly in dev', async ({ page }) => {
     readFileSync(join(fixtures, 'src/index.js'), 'utf-8'),
   );
   expect(jsMap.mappings).not.toBeUndefined();
-
-  await rsbuild.close();
 });
 
-test('should generate source maps only for CSS files', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should generate source maps only for CSS files', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
         sourceMap: {

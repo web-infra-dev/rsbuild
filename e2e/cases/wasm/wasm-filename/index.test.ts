@@ -1,13 +1,9 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should allow to custom the filename of Wasm files',
-  async ({ page }) => {
-    const rsbuild = await build({
-      cwd: __dirname,
-      page,
-    });
+  async ({ page, build }) => {
+    const rsbuild = await build();
     const files = rsbuild.getDistFiles();
 
     const wasmFile = Object.keys(files).find((file) =>
@@ -15,6 +11,5 @@ rspackOnlyTest(
     );
 
     expect(wasmFile).toBeTruthy();
-    await rsbuild.close();
   },
 );

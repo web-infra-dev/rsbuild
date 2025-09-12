@@ -1,5 +1,4 @@
-import { dev } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { dev, expect, test } from '@e2e/helper';
 
 test('should return 204 for OPTIONS requests when no middleware handles them', async ({
   page,
@@ -17,8 +16,6 @@ test('should return 204 for OPTIONS requests when no middleware handles them', a
     method: 'OPTIONS',
   });
   expect(response.status).toBe(204);
-
-  await rsbuild.close();
 });
 
 test('should return 200 with custom headers for OPTIONS requests handled by middleware', async ({
@@ -60,6 +57,4 @@ test('should return 200 with custom headers for OPTIONS requests handled by midd
   expect(response.headers.get('access-control-allow-origin')).toBe(
     'https://example.com',
   );
-
-  await rsbuild.close();
 });

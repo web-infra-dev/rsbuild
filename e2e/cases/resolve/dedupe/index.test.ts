@@ -1,6 +1,6 @@
 import { join } from 'node:path';
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+
+import { expect, test } from '@e2e/helper';
 import { outputFileSync } from 'fs-extra';
 
 function writeDuplicatedPackage(flag: string) {
@@ -23,13 +23,14 @@ function writeDuplicatedPackage(flag: string) {
   );
 }
 
-test('should dedupe specified packages as expected', async () => {
+test('should dedupe specified packages as expected', async ({
+  build,
+  buildOnly,
+}) => {
   const flag = 'This is fake React';
   writeDuplicatedPackage(flag);
 
-  const rsbuild = await build({
-    cwd: __dirname,
-  });
+  const rsbuild = await buildOnly();
 
   const content = await rsbuild.getIndexBundle();
   expect(content).not.toContain(flag);

@@ -1,13 +1,14 @@
 import { join } from 'node:path';
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, rspackOnlyTest, test } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
 
-test('should generate preload link when preload is defined', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
+test('should generate preload link when preload is defined', async ({
+  build,
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
@@ -43,9 +44,11 @@ test('should generate preload link when preload is defined', async () => {
   ).toBeTruthy();
 });
 
-test('should generate preload link with duplicate', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
+test('should generate preload link with duplicate', async ({
+  build,
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
@@ -83,9 +86,11 @@ test('should generate preload link with duplicate', async () => {
   ).toBeTruthy();
 });
 
-test('should generate preload link with crossOrigin', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
+test('should generate preload link with crossOrigin', async ({
+  build,
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
@@ -127,9 +132,11 @@ test('should generate preload link with crossOrigin', async () => {
   ).toBeTruthy();
 });
 
-test('should generate preload link without crossOrigin when same origin', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
+test('should generate preload link without crossOrigin when same origin', async ({
+  build,
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
@@ -168,9 +175,11 @@ test('should generate preload link without crossOrigin when same origin', async 
   ).toBeTruthy();
 });
 
-test('should generate preload link with include', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
+test('should generate preload link with include', async ({
+  build,
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
@@ -207,9 +216,11 @@ test('should generate preload link with include', async () => {
   ).toBeTruthy();
 });
 
-test('should generate preload link with include array', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
+test('should generate preload link with include array', async ({
+  build,
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
@@ -248,9 +259,8 @@ test('should generate preload link with include array', async () => {
 
 rspackOnlyTest(
   'should not generate preload link for inlined assets',
-  async () => {
-    const rsbuild = await build({
-      cwd: fixtures,
+  async ({ build, buildOnly }) => {
+    const rsbuild = await buildOnly({
       plugins: [pluginReact()],
       rsbuildConfig: {
         source: {
@@ -280,9 +290,8 @@ rspackOnlyTest(
 
 rspackOnlyTest(
   'should not generate preload link for inlined assets with test option',
-  async () => {
-    const rsbuild = await build({
-      cwd: fixtures,
+  async ({ build, buildOnly }) => {
+    const rsbuild = await buildOnly({
       plugins: [pluginReact()],
       rsbuildConfig: {
         source: {

@@ -1,5 +1,4 @@
-import { dev } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { dev, expect, test } from '@e2e/helper';
 
 const cwd = __dirname;
 
@@ -40,8 +39,6 @@ test('should serve multiple environments correctly', async ({ page }) => {
 
   const locator1 = page.locator('#test');
   await expect(locator1).toHaveText('Hello Rsbuild (web1)!');
-
-  await rsbuild.close();
 });
 
 test('should expose the environment API in setupMiddlewares', async ({
@@ -93,8 +90,6 @@ test('should expose the environment API in setupMiddlewares', async ({
   await page.goto(`http://localhost:${rsbuild.port}`);
 
   expect(assertionsCount).toBe(2);
-
-  await rsbuild.close();
 });
 
 // TODO: not support serve multiple environments when distPath different
@@ -135,6 +130,4 @@ test.skip('serve multiple environments correctly when distPath different', async
 
   const locator1 = page.locator('#test');
   await expect(locator1).toHaveText('Hello Rsbuild (web1)!');
-
-  await rsbuild.close();
 });

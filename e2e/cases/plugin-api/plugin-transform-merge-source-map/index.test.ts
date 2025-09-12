@@ -1,7 +1,6 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import {
-  build,
   expect,
   getDistFiles,
   mapSourceMapPositions,
@@ -52,14 +51,11 @@ const expectSourceMap = async (files: Record<string, string>) => {
 
 rspackOnlyTest(
   'should merge source map when plugin transforms code in build',
-  async () => {
-    const rsbuild = await build({
-      cwd: __dirname,
-    });
+  async ({ build, buildOnly }) => {
+    const rsbuild = await buildOnly();
     const files = rsbuild.getDistFiles({ sourceMaps: true });
 
     await expectSourceMap(files);
-    await rsbuild.close();
   },
 );
 

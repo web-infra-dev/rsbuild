@@ -1,10 +1,10 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
-test('should generate preconnect link when preconnect is defined', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
-  });
+test('should generate preconnect link when preconnect is defined', async ({
+  build,
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly();
 
   const files = rsbuild.getDistFiles();
 

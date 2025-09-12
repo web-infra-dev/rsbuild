@@ -24,7 +24,6 @@ rspackOnlyTest('should work with string and path to file', async ({ page }) => {
 
   // reset file
   fs.truncateSync(file);
-  await rsbuild.close();
 });
 
 rspackOnlyTest(
@@ -51,7 +50,6 @@ rspackOnlyTest(
 
     // reset file
     fs.truncateSync(file);
-    await rsbuild.close();
   },
 );
 
@@ -88,8 +86,6 @@ rspackOnlyTest('should work with string array directory', async ({ page }) => {
   });
   // reset file
   fs.truncateSync(other);
-
-  await rsbuild.close();
 });
 
 rspackOnlyTest('should work with string and glob', async ({ page }) => {
@@ -115,7 +111,6 @@ rspackOnlyTest('should work with string and glob', async ({ page }) => {
 
   // reset file
   fs.truncateSync(file);
-  await rsbuild.close();
 });
 
 rspackOnlyTest('should work with options', async ({ page }) => {
@@ -143,5 +138,4 @@ rspackOnlyTest('should work with options', async ({ page }) => {
 
   // reset file
   fs.truncateSync(file);
-  await rsbuild.close();
 });

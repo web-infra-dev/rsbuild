@@ -1,15 +1,13 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+
+import { expect, test } from '@e2e/helper';
 
 test('should build a web worker and specify the chunk name', async ({
   page,
+  build,
 }) => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    page,
-  });
+  const rsbuild = await build();
 
   await expect(page.locator('#root')).toHaveText(
     'The Answer to the Ultimate Question of Life, The Universe, and Everything: 42',
@@ -17,6 +15,4 @@ test('should build a web worker and specify the chunk name', async ({
 
   const workerFilePath = join(__dirname, 'dist/static/js/async/foo-worker.js');
   expect(existsSync(workerFilePath)).toBeTruthy();
-
-  await rsbuild.close();
 });

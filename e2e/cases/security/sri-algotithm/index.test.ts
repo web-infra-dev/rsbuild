@@ -1,13 +1,9 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'generate integrity using sha512 algorithm',
-  async ({ page }) => {
-    const rsbuild = await build({
-      cwd: __dirname,
-      page,
-    });
+  async ({ page, build }) => {
+    const rsbuild = await build();
 
     const files = rsbuild.getDistFiles();
     const html =
@@ -23,6 +19,5 @@ rspackOnlyTest(
 
     const testEl = page.locator('#root');
     await expect(testEl).toHaveText('Hello Rsbuild!');
-    await rsbuild.close();
   },
 );

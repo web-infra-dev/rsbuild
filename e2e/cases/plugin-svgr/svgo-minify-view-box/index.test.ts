@@ -1,13 +1,16 @@
 import { readFileSync } from 'node:fs';
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
 
-test('should preserve viewBox after svgo minification', async () => {
+import { expect, test } from '@e2e/helper';
+
+test('should preserve viewBox after svgo minification', async ({
+  build,
+  buildOnly,
+}) => {
   const buildOpts = {
     cwd: __dirname,
   };
 
-  const rsbuild = await build(buildOpts);
+  const rsbuild = await buildOnly(buildOpts);
 
   const files = rsbuild.getDistFiles();
   const indexJs = Object.keys(files).find(

@@ -1,6 +1,5 @@
 import path from 'node:path';
-import { readDirContents, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, readDirContents, rspackOnlyTest } from '@e2e/helper';
 import { createRsbuild } from '@rsbuild/core';
 import { pluginVue } from '@rsbuild/plugin-vue';
 

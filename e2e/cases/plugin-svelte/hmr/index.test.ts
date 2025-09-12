@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { dev, expect, rspackOnlyTest } from '@e2e/helper';
 import { pluginSvelte } from '@rsbuild/plugin-svelte';
 
 rspackOnlyTest('HMR should work properly', async ({ page }) => {
@@ -38,5 +37,4 @@ rspackOnlyTest('HMR should work properly', async ({ page }) => {
   await expect(a).toHaveText('A: 0');
 
   fs.writeFileSync(bPath, sourceCodeB, 'utf-8'); // recover the source code
-  await rsbuild.close();
 });

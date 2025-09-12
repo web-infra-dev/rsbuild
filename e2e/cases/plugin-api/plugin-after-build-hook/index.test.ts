@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 import { createRsbuild, type RsbuildPlugin } from '@rsbuild/core';
 import fse, { remove } from 'fs-extra';
 

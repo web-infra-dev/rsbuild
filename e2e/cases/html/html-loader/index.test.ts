@@ -1,4 +1,4 @@
-import { build, expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should allow to use html-loader in development',
@@ -19,20 +19,21 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest('should allow to use html-loader in production', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
-  });
+rspackOnlyTest(
+  'should allow to use html-loader in production',
+  async ({ build, buildOnly }) => {
+    const rsbuild = await buildOnly();
 
-  const files = rsbuild.getDistFiles();
-  const filenames = Object.keys(files);
+    const files = rsbuild.getDistFiles();
+    const filenames = Object.keys(files);
 
-  expect(
-    filenames.some((filename) =>
-      filename.includes('dist/static/image/image.png'),
-    ),
-  ).toBeTruthy();
+    expect(
+      filenames.some((filename) =>
+        filename.includes('dist/static/image/image.png'),
+      ),
+    ).toBeTruthy();
 
-  const htmlFile = filenames.find((filename) => filename.endsWith('.html'));
-  expect(files[htmlFile!]).toContain('<img src="/static/image/image.png"');
-});
+    const htmlFile = filenames.find((filename) => filename.endsWith('.html'));
+    expect(files[htmlFile!]).toContain('<img src="/static/image/image.png"');
+  },
+);

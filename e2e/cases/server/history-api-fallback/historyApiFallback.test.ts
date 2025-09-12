@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { build, expect, rspackOnlyTest, test } from '@e2e/helper';
+import { expect, rspackOnlyTest, test } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const cwd = __dirname;
@@ -36,11 +36,12 @@ rspackOnlyTest(
 
 test('should provide history api fallback for preview server correctly', async ({
   page,
+  build,
 }) => {
   const rsbuild = await build({
     cwd,
     plugins: [pluginReact()],
-    page,
+
     rsbuildConfig: {
       source: {
         entry: {
@@ -63,6 +64,4 @@ test('should provide history api fallback for preview server correctly', async (
 
   await page.goto(`http://localhost:${rsbuild.port}/b`);
   expect(await page.innerHTML('body')).toContain('<div>B</div>');
-
-  await rsbuild.close();
 });

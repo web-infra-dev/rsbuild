@@ -1,13 +1,10 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
 test('should exclude matched SVG files from SVGR processing (importer)', async ({
   page,
+  build,
 }) => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    page,
-  });
+  const rsbuild = await build();
 
   await expect(
     page.evaluate(`document.getElementById('foo').tagName === 'svg'`),
@@ -18,6 +15,4 @@ test('should exclude matched SVG files from SVGR processing (importer)', async (
       `document.getElementById('bar').src.startsWith('data:image/svg')`,
     ),
   ).resolves.toBeTruthy();
-
-  await rsbuild.close();
 });

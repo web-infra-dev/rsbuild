@@ -1,11 +1,10 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
-test('should import default from SVG with SVGR correctly', async ({ page }) => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    page,
-  });
+test('should import default from SVG with SVGR correctly', async ({
+  page,
+  build,
+}) => {
+  const rsbuild = await build();
 
   // test svgr（namedExport）
   await expect(
@@ -35,6 +34,4 @@ test('should import default from SVG with SVGR correctly', async ({ page }) => {
       `getComputedStyle(document.getElementById('test-css-large')).backgroundImage.includes('http:')`,
     ),
   ).resolves.toBeTruthy();
-
-  await rsbuild.close();
 });

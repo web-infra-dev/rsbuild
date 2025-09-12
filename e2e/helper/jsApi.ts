@@ -297,5 +297,7 @@ export async function build({
   };
 }
 
-export type BuildResult = Awaited<ReturnType<typeof build>>;
-export type DevResult = Awaited<ReturnType<typeof dev>>;
+export type Build = typeof build;
+export type BuildResult = Awaited<ReturnType<Build>>;
+export type Dev = typeof dev;
+export type DevResult = Awaited<ReturnType<Dev>>;

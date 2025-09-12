@@ -1,5 +1,4 @@
-import { build, dev, gotoPage } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { dev, expect, gotoPage, test } from '@e2e/helper';
 
 test('should allow to define global variables in development', async ({
   page,
@@ -13,30 +12,22 @@ test('should allow to define global variables in development', async ({
 
   const testEl = page.locator('#test-el');
   await expect(testEl).toHaveText('aaaaa');
-
-  await rsbuild.close();
 });
 
 test('should allow to define global variables in production build', async ({
   page,
+  build,
 }) => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    page,
-  });
+  const rsbuild = await build();
 
   await gotoPage(page, rsbuild);
 
   const testEl = page.locator('#test-el');
   await expect(testEl).toHaveText('aaaaa');
-
-  await rsbuild.close();
 });
 
-test('should warn when define `process.env`', async ({ page }) => {
+test('should warn when define `process.env`', async ({ page, build }) => {
   const rsbuild = await build({
-    cwd: __dirname,
-    page,
     rsbuildConfig: {
       source: {
         define: {
@@ -47,13 +38,13 @@ test('should warn when define `process.env`', async ({ page }) => {
   });
 
   await rsbuild.expectLog('The "source.define" option includes an object');
-  await rsbuild.close();
 });
 
-test('should warn when define stringified `process.env`', async ({ page }) => {
+test('should warn when define stringified `process.env`', async ({
+  page,
+  build,
+}) => {
   const rsbuild = await build({
-    cwd: __dirname,
-    page,
     rsbuildConfig: {
       source: {
         define: {
@@ -64,5 +55,4 @@ test('should warn when define stringified `process.env`', async ({ page }) => {
   });
 
   await rsbuild.expectLog('The "source.define" option includes an object');
-  await rsbuild.close();
 });

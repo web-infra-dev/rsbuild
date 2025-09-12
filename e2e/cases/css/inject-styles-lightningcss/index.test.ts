@@ -1,14 +1,9 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
-
-const fixtures = __dirname;
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should use lightningcss-loader to transform and minify CSS when injectStyles is true',
-  async () => {
-    const rsbuild = await build({
-      cwd: fixtures,
-    });
+  async ({ buildOnly }) => {
+    const rsbuild = await buildOnly();
 
     // injectStyles worked
     const files = rsbuild.getDistFiles();

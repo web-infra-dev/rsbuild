@@ -1,4 +1,4 @@
-import { build, expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should apply plugin as expected when running dev server',
@@ -13,16 +13,11 @@ rspackOnlyTest(
 
 rspackOnlyTest(
   'should apply plugin as expected when running build',
-  async ({ page }) => {
-    const rsbuild = await build({
-      cwd: __dirname,
-      page,
-    });
+  async ({ page, build }) => {
+    const rsbuild = await build();
 
     const body = page.locator('body');
     await expect(body).toHaveText('build-plugin');
     await expect(body).not.toHaveText('serve-plugin');
-
-    await rsbuild.close();
   },
 );

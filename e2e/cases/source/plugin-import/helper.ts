@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+
+import { expect, test } from '@e2e/helper';
 import type { RsbuildConfig, TransformImport } from '@rsbuild/core';
 import fse from 'fs-extra';
 
@@ -83,8 +83,8 @@ export function shareTest(
     },
   };
 
-  test(msg, async () => {
-    const rsbuild = await build({
+  test(msg, async ({ buildOnly }) => {
+    const rsbuild = await buildOnly({
       ...setupConfig,
       ...otherConfigs,
       rsbuildConfig: { ...config },

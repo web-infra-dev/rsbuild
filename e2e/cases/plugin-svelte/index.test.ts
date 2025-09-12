@@ -1,15 +1,16 @@
 import path from 'node:path';
-import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import type { BuildOptions, BuildResult } from '@e2e/helper';
+import { expect, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { pluginSvelte } from '@rsbuild/plugin-svelte';
 
 const buildFixture = (
+  buildOnly: (options?: BuildOptions) => Promise<BuildResult>,
   rootDir: string,
   entry: string,
-): ReturnType<typeof build> => {
+): Promise<BuildResult> => {
   const root = path.join(__dirname, rootDir);
 
-  return build({
+  return buildOnly({
     cwd: root,
     runServer: true,
     plugins: [pluginSvelte()],
@@ -25,16 +26,14 @@ const buildFixture = (
 
 rspackOnlyTest(
   'should build basic svelte component properly',
-  async ({ page }) => {
-    const rsbuild = await buildFixture('basic', 'src/index.js');
+  async ({ page, buildOnly }) => {
+    const rsbuild = await buildFixture(buildOnly, 'basic', 'src/index.js');
 
     await gotoPage(page, rsbuild);
 
     const title = page.locator('#title');
 
     await expect(title).toHaveText('Hello world!');
-
-    await rsbuild.close();
   },
 );
 
@@ -42,8 +41,8 @@ rspackOnlyTest(
 for (const name of ['less', 'scss', 'stylus']) {
   rspackOnlyTest(
     `should build svelte component with ${name}`,
-    async ({ page }) => {
-      const rsbuild = await buildFixture(name, 'src/index.js');
+    async ({ page, buildOnly }) => {
+      const rsbuild = await buildFixture(buildOnly, name, 'src/index.js');
 
       await gotoPage(page, rsbuild);
 
@@ -52,8 +51,6 @@ for (const name of ['less', 'scss', 'stylus']) {
       await expect(title).toHaveText('Hello world!');
       // use the text color to assert the compilation result
       await expect(title).toHaveCSS('color', 'rgb(255, 62, 0)');
-
-      await rsbuild.close();
     },
   );
 }

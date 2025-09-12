@@ -1,11 +1,12 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
 const fixtures = __dirname;
 
-test('should generate manifest for async chunks correctly', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
+test('should generate manifest for async chunks correctly', async ({
+  build,
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
         manifest: true,

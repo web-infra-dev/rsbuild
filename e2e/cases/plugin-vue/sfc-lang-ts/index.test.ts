@@ -1,17 +1,11 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should build Vue SFC with lang="ts" correctly',
-  async ({ page }) => {
-    const rsbuild = await build({
-      cwd: __dirname,
-      page,
-    });
+  async ({ page, build }) => {
+    const rsbuild = await build();
 
     const button = page.locator('#button');
     await expect(button).toHaveText('count: 0 foo: bar');
-
-    await rsbuild.close();
   },
 );

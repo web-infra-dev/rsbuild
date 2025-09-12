@@ -1,14 +1,13 @@
 import { promises as fs } from 'node:fs';
 import { join } from 'node:path';
-import { dev, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, rspackOnlyTest, test } from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import fse from 'fs-extra';
 
 // https://github.com/web-infra-dev/rsbuild/issues/5176
 rspackOnlyTest(
   'should not re-compile templates when the template is not changed',
-  async ({ page }) => {
+  async ({ dev, page }) => {
     // Failed to run this case on Windows
     if (process.platform === 'win32') {
       test.skip();
@@ -22,9 +21,7 @@ rspackOnlyTest(
       recursive: true,
     });
 
-    const rsbuild = await dev({
-      cwd: __dirname,
-      page,
+    await dev({
       rsbuildConfig: {
         root: targetDir,
         source: {
@@ -68,7 +65,5 @@ rspackOnlyTest(
     await expect(page.locator('#content')).toHaveText('foo3');
     // The count should not change if the templates are not changed
     expect(count).toEqual(4);
-
-    await rsbuild.close();
   },
 );

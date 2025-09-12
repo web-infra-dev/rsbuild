@@ -1,9 +1,10 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
-test('should allow to generate HTML with filename hash using filename.html', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should allow to generate HTML with filename hash using filename.html', async ({
+  build,
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
         filename: {
@@ -19,12 +20,13 @@ test('should allow to generate HTML with filename hash using filename.html', asy
   );
 
   expect(/index.\w+.html/.test(htmlFilename!)).toBeTruthy();
-  await rsbuild.close();
 });
 
-test('should allow to generate HTML with filename hash using tools.htmlPlugin', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should allow to generate HTML with filename hash using tools.htmlPlugin', async ({
+  build,
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       tools: {
         htmlPlugin(config, { entryName }) {
@@ -41,5 +43,4 @@ test('should allow to generate HTML with filename hash using tools.htmlPlugin', 
   );
 
   expect(/index.\w+.html/.test(htmlFilename!)).toBeTruthy();
-  await rsbuild.close();
 });

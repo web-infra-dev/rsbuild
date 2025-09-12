@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
-import { build, expect, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
 test('should allow to import raw CSS files in dev', async ({ page, dev }) => {
   await dev();
@@ -17,11 +17,11 @@ test('should allow to import raw CSS files in dev', async ({ page, dev }) => {
   expect(bStyles['title-class']).toBeTruthy();
 });
 
-test('should allow to import raw CSS files in build', async ({ page }) => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    page,
-  });
+test('should allow to import raw CSS files in build', async ({
+  page,
+  build,
+}) => {
+  const rsbuild = await build();
 
   const aContent = readFileSync(path.join(__dirname, 'src/a.css'), 'utf-8');
   const bStyles: Record<string, string> = await page.evaluate('window.bStyles');
@@ -34,6 +34,4 @@ test('should allow to import raw CSS files in build', async ({ page }) => {
     readFileSync(path.join(__dirname, 'src/b.module.css'), 'utf-8'),
   );
   expect(bStyles['title-class']).toBeTruthy();
-
-  await rsbuild.close();
 });

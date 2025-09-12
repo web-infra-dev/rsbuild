@@ -1,14 +1,9 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
-
-const fixtures = __dirname;
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should minify template success when inlineScripts & inlineStyles',
-  async ({ page }) => {
+  async ({ build }) => {
     const rsbuild = await build({
-      cwd: fixtures,
-      page,
       rsbuildConfig: {
         html: {
           template: './static/index.html',
@@ -31,7 +26,5 @@ rspackOnlyTest(
     expect(
       /let \w+=document\.createElement\("div"\)/.test(content),
     ).toBeTruthy();
-
-    await rsbuild.close();
   },
 );

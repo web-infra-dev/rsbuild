@@ -1,12 +1,12 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
 const fixtures = __dirname;
 
-test('should generate manifest with single vendor as expected', async () => {
-  const rsbuild = await build({
-    cwd: fixtures,
-  });
+test('should generate manifest with single vendor as expected', async ({
+  build,
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly();
 
   const files = rsbuild.getDistFiles();
 

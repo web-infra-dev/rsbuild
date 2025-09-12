@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { rspackOnlyTest, runCli, runCommand } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, rspackOnlyTest, runCli, runCommand, test } from '@e2e/helper';
 import { removeSync } from 'fs-extra';
 
 test.afterAll(() => {

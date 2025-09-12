@@ -1,13 +1,11 @@
 import { join } from 'node:path';
-import { build, getRandomPort } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, getRandomPort, test } from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
 
-test('should preview dist files correctly', async ({ page }) => {
+test('should preview dist files correctly', async ({ page, build }) => {
   const cwd = join(__dirname, 'basic');
   const server = await build({
     cwd,
-    page,
   });
 
   const rootEl = page.locator('#root');
@@ -18,6 +16,7 @@ test('should preview dist files correctly', async ({ page }) => {
 
 test('should allow plugin to modify preview server config', async ({
   page,
+  build,
 }) => {
   const cwd = join(__dirname, 'basic');
   const PORT = await getRandomPort();
@@ -36,7 +35,6 @@ test('should allow plugin to modify preview server config', async ({
   const server = await build({
     cwd,
     plugins: [plugin],
-    page,
   });
 
   expect(server.port).toEqual(PORT);

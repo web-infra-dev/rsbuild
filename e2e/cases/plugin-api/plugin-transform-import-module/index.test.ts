@@ -1,12 +1,9 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should allow plugin to transform code and call `importModule`',
-  async () => {
-    const rsbuild = await build({
-      cwd: __dirname,
-    });
+  async ({ build, buildOnly }) => {
+    const rsbuild = await buildOnly();
 
     const files = rsbuild.getDistFiles();
     const indexCss = Object.keys(files).find(
