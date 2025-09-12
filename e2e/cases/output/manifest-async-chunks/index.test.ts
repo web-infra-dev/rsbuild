@@ -19,7 +19,7 @@ test('should generate manifest for async chunks correctly', async () => {
     },
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const manifestContent =
     files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];

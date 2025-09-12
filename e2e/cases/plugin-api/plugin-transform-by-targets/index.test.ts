@@ -6,7 +6,7 @@ test('should allow plugin to transform code by targets', async () => {
     cwd: __dirname,
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const webJs = Object.keys(files).find(
     (file) =>
       file.includes('index') &&

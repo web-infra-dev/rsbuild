@@ -39,7 +39,7 @@ rspackOnlyTest(
       },
     });
 
-    const files = await rsbuild.getDistFiles();
+    const files = rsbuild.getDistFiles();
     const filenames = Object.keys(files);
 
     const fooJs = filenames.find((filename) =>

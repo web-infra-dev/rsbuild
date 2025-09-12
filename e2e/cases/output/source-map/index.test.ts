@@ -20,7 +20,7 @@ async function testSourceMapType(devtool: Rspack.Configuration['devtool']) {
     },
   });
 
-  const files = await rsbuild.getDistFiles({ sourceMaps: true });
+  const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   const indexSourceCode = readFileSync(
     path.join(__dirname, 'src/index.js'),
@@ -88,7 +88,7 @@ test('should not generate source map by default in production build', async () =
     cwd: fixtures,
   });
 
-  const files = await rsbuild.getDistFiles({ sourceMaps: true });
+  const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   const jsMapFiles = Object.keys(files).filter((files) =>
     files.endsWith('.js.map'),
@@ -110,7 +110,7 @@ test('should generate source map if `output.sourceMap` is true', async () => {
     },
   });
 
-  const files = await rsbuild.getDistFiles({ sourceMaps: true });
+  const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   const jsMapFiles = Object.keys(files).filter((files) =>
     files.endsWith('.js.map'),
@@ -132,7 +132,7 @@ test('should not generate source map if `output.sourceMap` is false', async () =
     },
   });
 
-  const files = await rsbuild.getDistFiles({ sourceMaps: true });
+  const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   const jsMapFiles = Object.keys(files).filter((files) =>
     files.endsWith('.js.map'),
@@ -152,7 +152,7 @@ test('should generate source map correctly in development build', async ({
     page,
   });
 
-  const files = await rsbuild.getDistFiles({ sourceMaps: true });
+  const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   const jsMapFile = Object.keys(files).find((files) =>
     files.endsWith('.js.map'),
@@ -187,7 +187,7 @@ test('should generate source maps only for CSS files', async () => {
     },
   });
 
-  const files = await rsbuild.getDistFiles({ sourceMaps: true });
+  const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   const jsMapFiles = Object.keys(files).filter((files) =>
     files.endsWith('.js.map'),

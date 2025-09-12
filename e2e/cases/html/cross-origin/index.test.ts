@@ -10,7 +10,7 @@ test('should not apply crossOrigin by default', async () => {
       },
     },
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const html =
     files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
 
@@ -30,7 +30,7 @@ test('should apply crossOrigin when crossorigin is "anonymous" and not same orig
       },
     },
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const html =
     files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
 

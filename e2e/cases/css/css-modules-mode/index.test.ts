@@ -12,7 +12,7 @@ test('should compile CSS Modules global mode correctly', async () => {
       },
     },
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const content =
     files[Object.keys(files).find((file) => file.endsWith('.css'))!];

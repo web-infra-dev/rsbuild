@@ -56,7 +56,7 @@ rspackOnlyTest(
     const rsbuild = await build({
       cwd: __dirname,
     });
-    const files = await rsbuild.getDistFiles({ sourceMaps: true });
+    const files = rsbuild.getDistFiles({ sourceMaps: true });
 
     await expectSourceMap(files);
     await rsbuild.close();

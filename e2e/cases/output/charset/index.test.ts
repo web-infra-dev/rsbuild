@@ -33,7 +33,7 @@ rspackOnlyTest(
     expect(await page.evaluate('window.testA')).toBe(utf8Str);
     expect(await page.evaluate('window.testB')).toStrictEqual(expectedObject);
 
-    const files = await rsbuild.getDistFiles();
+    const files = rsbuild.getDistFiles();
     const [, content] = Object.entries(files).find(
       ([name]) => name.endsWith('.js') && name.includes('static/js/index'),
     )!;
@@ -78,7 +78,7 @@ test('should use utf8 charset in dev by default', async ({ page }) => {
   expect(await page.evaluate('window.testA')).toBe(utf8Str);
   expect(await page.evaluate('window.testB')).toStrictEqual(expectedObject);
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const [, content] = Object.entries(files).find(
     ([name]) => name.endsWith('.js') && name.includes('static/js/index'),
   )!;

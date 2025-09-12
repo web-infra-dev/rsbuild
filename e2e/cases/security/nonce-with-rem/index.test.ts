@@ -5,7 +5,7 @@ test('should inject rem runtime code with nonce', async () => {
   const rsbuild = await build({
     cwd: __dirname,
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const html =
     files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
   expect(html).toContain(

@@ -8,7 +8,7 @@ rspackOnlyTest(
       cwd: __dirname,
     });
 
-    const files = await rsbuild.getDistFiles();
+    const files = rsbuild.getDistFiles();
     const indexHTML = Object.keys(files).find(
       (file) => file.includes('index') && file.endsWith('.html'),
     );

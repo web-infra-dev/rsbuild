@@ -35,7 +35,7 @@ rspackOnlyTest(
 
     await rsbuild.close();
 
-    const files = await rsbuild.getDistFiles();
+    const files = rsbuild.getDistFiles();
     const content =
       files[Object.keys(files).find((file) => file.endsWith('.css'))!];
     expect(content).toMatch(/\.foo-\w{6}{color:red}\.bar{color:#00f}/);

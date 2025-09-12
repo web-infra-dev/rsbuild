@@ -19,7 +19,7 @@ test('should generate module chunks when chunkSplit is "split-by-module"', async
     },
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const [reactFile] = Object.entries(files).find(
     ([name, content]) =>

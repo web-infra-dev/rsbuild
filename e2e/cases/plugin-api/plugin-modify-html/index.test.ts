@@ -25,7 +25,7 @@ rspackOnlyTest('should allow plugin to modify HTML content', async () => {
     },
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const indexHTML = Object.keys(files).find(
     (file) => file.includes('index') && file.endsWith('.html'),
   );
@@ -62,7 +62,7 @@ rspackOnlyTest(
       },
     });
 
-    const files = await rsbuild.getDistFiles();
+    const files = rsbuild.getDistFiles();
     const indexHTML = Object.keys(files).find(
       (file) => file.includes('index') && file.endsWith('.html'),
     );

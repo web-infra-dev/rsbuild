@@ -9,7 +9,7 @@ test('should extend browserslist and downgrade syntax', async () => {
     cwd: __dirname,
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const indexFile =
     files[Object.keys(files).find((file) => file.endsWith('.js'))!];

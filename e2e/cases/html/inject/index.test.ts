@@ -18,7 +18,7 @@ test('should preserve the expected script injection order', async () => {
       },
     },
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const html =
     files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
@@ -52,7 +52,7 @@ rspackOnlyTest('should set inject via function correctly', async () => {
       },
     },
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const fooHtml =
     files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];

@@ -7,7 +7,7 @@ test('should add id prefix after svgo minification', async () => {
     cwd: __dirname,
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const indexJs = Object.keys(files).find(
     (file) => file.includes('/index.') && file.endsWith('.js'),
   );

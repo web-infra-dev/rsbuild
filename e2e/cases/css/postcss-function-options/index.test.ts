@@ -11,7 +11,7 @@ test('should allow to use `postcssOptions` function to apply different postcss c
   const barCssExpected =
     '.text-3xl{font-size:var(--text-3xl);line-height:var(--tw-leading,var(--text-3xl--line-height))}}';
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const fooCssFile = Object.keys(files).find(
     (file) => file.includes('foo.') && file.endsWith('.css'),
   )!;

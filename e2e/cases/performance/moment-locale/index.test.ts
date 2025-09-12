@@ -28,7 +28,7 @@ test('should retain Moment locales when removeMomentLocale is false (default)', 
     runServer: false,
   });
 
-  const files = await rsbuild.getDistFiles({ sourceMaps: true });
+  const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   const fileName = Object.keys(files).find(
     (file) => file.includes('moment-js') && file.endsWith('.js.map'),
@@ -67,7 +67,7 @@ test('should remove Moment locales when removeMomentLocale is true', async () =>
     runServer: false,
   });
 
-  const files = await rsbuild.getDistFiles({ sourceMaps: true });
+  const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   const fileName = Object.keys(files).find(
     (file) => file.includes('moment-js') && file.endsWith('.js.map'),

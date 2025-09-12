@@ -6,7 +6,7 @@ rspackOnlyTest('should set the hash format to fullhash', async () => {
     cwd: __dirname,
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const filenames = Object.keys(files);
 
   let firstHash = '';

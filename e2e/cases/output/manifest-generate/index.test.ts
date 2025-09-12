@@ -31,7 +31,7 @@ test('should generate custom manifest data in production build', async () => {
     rsbuildConfig,
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const manifestContent =
     files[
       Object.keys(files).find((file) => file.endsWith('my-manifest.json'))!
@@ -55,7 +55,7 @@ test('should generate custom manifest data in dev', async ({ page }) => {
     rsbuildConfig,
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const manifestContent =
     files[
       Object.keys(files).find((file) => file.endsWith('my-manifest.json'))!
