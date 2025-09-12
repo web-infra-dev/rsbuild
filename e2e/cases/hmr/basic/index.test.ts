@@ -1,18 +1,15 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 const cwd = __dirname;
 
-rspackOnlyTest('HMR should work by default', async ({ page }) => {
+rspackOnlyTest('HMR should work by default', async ({ page, dev }) => {
   await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
     recursive: true,
   });
 
-  const rsbuild = await dev({
-    cwd,
-    page,
+  await dev({
     rsbuildConfig: {
       source: {
         entry: {
@@ -51,5 +48,4 @@ rspackOnlyTest('HMR should work by default', async ({ page }) => {
   );
 
   await expect(locator).toHaveCSS('color', 'rgb(0, 0, 255)');
-  await rsbuild.close();
 });

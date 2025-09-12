@@ -3,7 +3,6 @@ import net from 'node:net';
 import { platform } from 'node:os';
 import { join, sep } from 'node:path';
 import { URL } from 'node:url';
-import { expect, test } from '@playwright/test';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import glob, {
   convertPathToPattern,
@@ -11,6 +10,7 @@ import glob, {
 } from 'fast-glob';
 import type { Page } from 'playwright';
 import sourceMap from 'source-map';
+import { expect } from './fixture';
 
 /**
  * Build an URL based on the entry name and port
@@ -72,36 +72,6 @@ export async function getRandomPort(
     port++;
   }
 }
-
-export const providerType = process.env.PROVIDE_TYPE || 'rspack';
-
-process.env.PROVIDE_TYPE = providerType;
-
-export const getProviderTest = (
-  supportType: string[] = ['rspack'],
-): typeof test => {
-  if (supportType.includes(providerType)) {
-    return test;
-  }
-
-  const testSkip = test.skip;
-
-  // @ts-expect-error
-  testSkip.describe = test.describe.skip;
-
-  // @ts-expect-error
-  testSkip.fail = test.describe.skip;
-  // @ts-expect-error
-  testSkip.only = test.only;
-
-  // @ts-expect-error
-  return testSkip as typeof test.skip & {
-    describe: typeof test.describe.skip;
-    only: typeof test.only;
-  };
-};
-
-export const rspackOnlyTest = getProviderTest(['rspack']);
 
 // fast-glob only accepts posix path
 // https://github.com/mrmlnc/fast-glob#convertpathtopatternpath

@@ -2,6 +2,7 @@ import { defineConfig } from '@playwright/test';
 
 // Enable Rspack's config schema validation
 process.env.RSPACK_CONFIG_VALIDATE = 'strict';
+process.env.PROVIDE_TYPE ||= 'rspack';
 
 export default defineConfig({
   // Retry on CI

@@ -1,13 +1,9 @@
-import { build, dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { build, expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should allow to import inline CSS files in dev',
-  async ({ page }) => {
-    const rsbuild = await dev({
-      cwd: __dirname,
-      page,
-    });
+  async ({ page, dev }) => {
+    await dev();
 
     for (const key of ['aInline1', 'aInline2', 'aInline3', 'aInline4']) {
       const inline: string = await page.evaluate(`window.${key}`);
@@ -24,8 +20,6 @@ rspackOnlyTest(
       bInline.includes('.title-class') && bInline.includes('font-size: 14px'),
     ).toBe(true);
     expect(bStyles['title-class']).toBeTruthy();
-
-    await rsbuild.close();
   },
 );
 

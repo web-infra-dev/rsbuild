@@ -1,20 +1,14 @@
-import { build, dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { build, expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should render basic React component in development correctly',
-  async ({ page }) => {
-    const rsbuild = await dev({
-      cwd: __dirname,
-      page,
-    });
+  async ({ page, dev }) => {
+    await dev();
 
     const button = page.locator('#button');
     await expect(button).toHaveText('count: 0');
     await button.click();
     await expect(button).toHaveText('count: 1');
-
-    await rsbuild.close();
   },
 );
 

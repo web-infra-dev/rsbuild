@@ -1,11 +1,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { dev, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, rspackOnlyTest, test } from '@e2e/helper';
 
 rspackOnlyTest(
   'HMR should work properly with `createContext`',
-  async ({ page }) => {
+  async ({ page, dev }) => {
     // Prefresh does not work as expected on Windows
     if (process.platform === 'win32') {
       test.skip();
@@ -22,10 +21,7 @@ export default B;
 
     fs.writeFileSync(compFilePath, compSourceCode, 'utf-8');
 
-    const rsbuild = await dev({
-      cwd: root,
-      page,
-    });
+    await dev();
 
     const a = page.locator('#A');
     const b = page.locator('#B');
@@ -55,7 +51,5 @@ export default B;
         bText === 'Beep: 5'
       );
     });
-
-    await rsbuild.close();
   },
 );

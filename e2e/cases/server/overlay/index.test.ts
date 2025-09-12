@@ -1,11 +1,10 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { createLogHelper, dev } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { createLogHelper, expect, test } from '@e2e/helper';
 
 const cwd = __dirname;
 
-test('should show overlay correctly', async ({ page }) => {
+test('should show overlay correctly', async ({ page, dev }) => {
   await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
     recursive: true,
   });
@@ -16,9 +15,7 @@ test('should show overlay correctly', async ({ page }) => {
     addLog(consoleMessage.text());
   });
 
-  const rsbuild = await dev({
-    cwd,
-    page,
+  await dev({
     rsbuildConfig: {
       source: {
         entry: {
@@ -41,6 +38,4 @@ test('should show overlay correctly', async ({ page }) => {
 
   await expectLog('Module build failed');
   await expect(errorOverlay.locator('.title')).toHaveText('Build failed');
-
-  await rsbuild.close();
 });

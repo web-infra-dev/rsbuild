@@ -1,12 +1,9 @@
-import { dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, gotoPage, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should replace port placeholder with actual port',
-  async ({ page }) => {
-    const rsbuild = await dev({
-      cwd: __dirname,
-    });
+  async ({ page, devOnly }) => {
+    const rsbuild = await devOnly();
 
     // the first build
     await rsbuild.expectBuildEnd();
@@ -22,6 +19,5 @@ rspackOnlyTest(
     await gotoPage(page, rsbuild, 'page2');
     await rsbuild.expectBuildEnd();
     await expect(page.locator('#test')).toHaveText('Page 2');
-    await rsbuild.close();
   },
 );

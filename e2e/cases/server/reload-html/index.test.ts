@@ -1,13 +1,12 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { dev, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, rspackOnlyTest, test } from '@e2e/helper';
 
 const cwd = __dirname;
 
 rspackOnlyTest(
   'should reload page when HTML template changed',
-  async ({ page }) => {
+  async ({ page, dev }) => {
     // Failed to run this case on Windows
     if (process.platform === 'win32') {
       test.skip();
@@ -17,10 +16,7 @@ rspackOnlyTest(
       recursive: true,
     });
 
-    const rsbuild = await dev({
-      cwd,
-      page,
-    });
+    await dev();
 
     await expect(page).toHaveTitle('Foo');
 
@@ -31,6 +27,5 @@ rspackOnlyTest(
     );
     // expect page title to be 'Bar' after HTML template changed
     await expect(page).toHaveTitle('Bar');
-    await rsbuild.close();
   },
 );

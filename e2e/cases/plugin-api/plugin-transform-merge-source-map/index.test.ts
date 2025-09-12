@@ -2,12 +2,12 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import {
   build,
-  dev,
+  expect,
   getDistFiles,
   mapSourceMapPositions,
   rspackOnlyTest,
+  test,
 } from '@e2e/helper';
-import { expect } from '@playwright/test';
 
 const expectSourceMap = async (files: Record<string, string>) => {
   const sourceCode = readFileSync(
@@ -65,14 +65,10 @@ rspackOnlyTest(
 
 rspackOnlyTest(
   'should merge source map when plugin transforms code in dev',
-  async ({ page }) => {
-    const rsbuild = await dev({
-      cwd: __dirname,
-      page,
-    });
+  async ({ dev }) => {
+    const rsbuild = await dev();
     const files = await getDistFiles(rsbuild.distPath, true);
 
     await expectSourceMap(files);
-    await rsbuild.close();
   },
 );

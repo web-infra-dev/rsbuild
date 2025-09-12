@@ -1,12 +1,10 @@
 import path from 'node:path';
-import { build, providerType } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
-import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
+import { build, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 
-test('should externalHelpers by default', async () => {
+rspackOnlyTest('should externalHelpers by default', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    plugins: providerType === 'rspack' ? [] : [pluginSwc()],
     rsbuildConfig: {
       source: {
         entry: { index: path.resolve(__dirname, './src/main.ts') },

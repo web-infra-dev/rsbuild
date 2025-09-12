@@ -1,16 +1,11 @@
-import { build, dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { build, expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should allow to use the `using` declaration for explicit resource management in development',
-  async ({ page }) => {
-    const rsbuild = await dev({
-      cwd: __dirname,
-      page,
-    });
+  async ({ page, dev }) => {
+    await dev();
 
     expect(await page.evaluate('window.disposeCounter')).toEqual(4);
-    await rsbuild.close();
   },
 );
 

@@ -1,19 +1,17 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, gotoPage, rspackOnlyTest } from '@e2e/helper';
 
 const cwd = __dirname;
 
 rspackOnlyTest(
   'should allow to create multiple HMR connections',
-  async ({ page: page1, context }) => {
+  async ({ page: page1, context, devOnly }) => {
     await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
       recursive: true,
     });
 
-    const rsbuild = await dev({
-      cwd,
+    const rsbuild = await devOnly({
       rsbuildConfig: {
         source: {
           entry: {
@@ -50,7 +48,5 @@ rspackOnlyTest(
     // #test-keep should remain unchanged when app.tsx HMR
     expect(await locatorKeep1.innerHTML()).toBe(keepNum1);
     expect(await locatorKeep2.innerHTML()).toBe(keepNum2);
-
-    await rsbuild.close();
   },
 );

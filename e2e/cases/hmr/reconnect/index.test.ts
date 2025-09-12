@@ -1,13 +1,12 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 const cwd = __dirname;
 
 rspackOnlyTest(
   'should reconnect Web Socket server as expected',
-  async ({ page }) => {
+  async ({ page, dev, devOnly }) => {
     await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
       recursive: true,
     });
@@ -17,8 +16,6 @@ rspackOnlyTest(
     };
 
     const rsbuild = await dev({
-      cwd,
-      page,
       rsbuildConfig: {
         source: { entry },
       },
@@ -28,10 +25,8 @@ rspackOnlyTest(
     await expect(locator).toHaveText('Hello Rsbuild!');
 
     const { port } = rsbuild;
-    await rsbuild.close();
 
-    const rsbuild2 = await dev({
-      cwd,
+    await devOnly({
       rsbuildConfig: {
         server: { port },
         source: { entry },
@@ -44,7 +39,5 @@ rspackOnlyTest(
       fs.readFileSync(appPath, 'utf-8').replace('Hello Rsbuild', 'Hello Test'),
     );
     await expect(locator).toHaveText('Hello Test!');
-
-    await rsbuild2.close();
   },
 );

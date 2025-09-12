@@ -1,20 +1,17 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 const cwd = __dirname;
 
 rspackOnlyTest(
   'HMR should work when Fast Refresh is disabled',
-  async ({ page }) => {
+  async ({ page, dev }) => {
     await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
       recursive: true,
     });
 
-    const rsbuild = await dev({
-      cwd,
-      page,
+    await dev({
       rsbuildConfig: {
         source: {
           entry: {
@@ -34,6 +31,5 @@ rspackOnlyTest(
       fs.readFileSync(appPath, 'utf-8').replace('Hello Rsbuild', 'Hello Test'),
     );
     await expect(locator).toHaveText('Hello Test!');
-    await rsbuild.close();
   },
 );

@@ -1,15 +1,16 @@
 import path, { join } from 'node:path';
-import { build, dev, getDistFiles } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { build, expect, getDistFiles, test } from '@e2e/helper';
 import fse from 'fs-extra';
 
 const cwd = __dirname;
 
-test('should serve publicDir for dev server correctly', async ({ page }) => {
+test('should serve publicDir for dev server correctly', async ({
+  page,
+  devOnly,
+}) => {
   await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');
 
-  const rsbuild = await dev({
-    cwd,
+  const rsbuild = await devOnly({
     rsbuildConfig: {
       output: {
         distPath: {
@@ -24,17 +25,15 @@ test('should serve publicDir for dev server correctly', async ({ page }) => {
   );
 
   expect((await res?.body())?.toString().trim()).toBe('a');
-
-  await rsbuild.close();
 });
 
 test('should serve publicDir with assetPrefix for dev server correctly', async ({
   page,
+  devOnly,
 }) => {
   await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');
 
-  const rsbuild = await dev({
-    cwd,
+  const rsbuild = await devOnly({
     rsbuildConfig: {
       dev: {
         assetPrefix: '/dev/',
@@ -53,18 +52,16 @@ test('should serve publicDir with assetPrefix for dev server correctly', async (
   );
 
   expect((await res?.body())?.toString().trim()).toBe('a');
-
-  await rsbuild.close();
 });
 
 test('should serve multiple publicDir for dev server correctly', async ({
   page,
+  devOnly,
 }) => {
   await fse.outputFile(join(__dirname, 'test-temp-dir1', 'a.txt'), 'a');
   await fse.outputFile(join(__dirname, 'test-temp-dir2', 'b.txt'), 'b');
 
-  const rsbuild = await dev({
-    cwd,
+  const rsbuild = await devOnly({
     rsbuildConfig: {
       server: {
         publicDir: [{ name: 'test-temp-dir1' }, { name: 'test-temp-dir2' }],
@@ -82,20 +79,18 @@ test('should serve multiple publicDir for dev server correctly', async ({
 
   const resB = await page.goto(`http://localhost:${rsbuild.port}/b.txt`);
   expect((await resB?.body())?.toString().trim()).toBe('b');
-
-  await rsbuild.close();
 });
 
 test('should serve custom publicDir for dev server correctly', async ({
   page,
+  devOnly,
 }) => {
   await fse.outputFile(
     join(__dirname, 'public1', 'test-temp-file.txt'),
     'a111',
   );
 
-  const rsbuild = await dev({
-    cwd,
+  const rsbuild = await devOnly({
     rsbuildConfig: {
       server: {
         publicDir: {
@@ -115,13 +110,13 @@ test('should serve custom publicDir for dev server correctly', async ({
   );
 
   expect((await res?.body())?.toString().trim()).toBe('a111');
-
-  await rsbuild.close();
 });
 
-test('should not serve publicDir when publicDir is false', async ({ page }) => {
-  const rsbuild = await dev({
-    cwd,
+test('should not serve publicDir when publicDir is false', async ({
+  page,
+  devOnly,
+}) => {
+  const rsbuild = await devOnly({
     rsbuildConfig: {
       server: {
         publicDir: false,
@@ -140,8 +135,6 @@ test('should not serve publicDir when publicDir is false', async ({ page }) => {
   );
 
   expect(res?.status()).toBe(404);
-
-  await rsbuild.close();
 });
 
 test('should serve publicDir for preview server correctly', async ({
@@ -355,10 +348,11 @@ test('should serve multiple publicDir for preview server correctly', async ({
   await rsbuild.close();
 });
 
-test('should reload page when publicDir file changes', async ({ page }) => {
-  const rsbuild = await dev({
-    cwd,
-    page,
+test('should reload page when publicDir file changes', async ({
+  page,
+  dev,
+}) => {
+  await dev({
     rsbuildConfig: {
       server: {
         publicDir: {
@@ -378,15 +372,13 @@ test('should reload page when publicDir file changes', async ({ page }) => {
 
   // reset file
   await fse.outputFile(file, 'a');
-  await rsbuild.close();
 });
 
 test('should reload page when custom publicDir file changes', async ({
   page,
+  dev,
 }) => {
-  const rsbuild = await dev({
-    cwd,
-    page,
+  await dev({
     rsbuildConfig: {
       server: {
         publicDir: {
@@ -407,5 +399,4 @@ test('should reload page when custom publicDir file changes', async ({
 
   // reset file
   await fse.outputFile(file, 'a111');
-  await rsbuild.close();
 });

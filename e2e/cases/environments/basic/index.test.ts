@@ -1,5 +1,4 @@
-import { build, dev } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { build, expect, test } from '@e2e/helper';
 
 test('should build successfully with multiple environments', async ({
   page,
@@ -31,10 +30,9 @@ test('should build successfully with multiple environments', async ({
 
 test('should serve successfully in dev with multiple environments', async ({
   page,
+  dev,
 }) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
+  await dev({
     rsbuildConfig: {
       environments: {
         web: {
@@ -53,6 +51,4 @@ test('should serve successfully in dev with multiple environments', async ({
 
   const test = page.locator('#test');
   await expect(test).toHaveText('Hello Rsbuild!');
-
-  await rsbuild.close();
 });

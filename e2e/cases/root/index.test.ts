@@ -1,6 +1,5 @@
 import { join } from 'node:path';
-import { build, dev } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { build, expect, test } from '@e2e/helper';
 import fse from 'fs-extra';
 
 test('should support setting a relative root path', async () => {
@@ -29,14 +28,16 @@ test('should support setting an absolute root path', async () => {
   expect(rsbuild.distPath).toContain('test');
 });
 
-test('should serve publicDir correctly when setting root', async ({ page }) => {
+test('should serve publicDir correctly when setting root', async ({
+  page,
+  devOnly,
+}) => {
   await fse.outputFile(
     join(__dirname, 'test/public', 'test-temp-file.txt'),
     'a',
   );
 
-  const rsbuild = await dev({
-    cwd: __dirname,
+  const rsbuild = await devOnly({
     rsbuildConfig: {
       root: './test',
     },
@@ -47,6 +48,4 @@ test('should serve publicDir correctly when setting root', async ({ page }) => {
   );
 
   expect((await res?.body())?.toString().trim()).toBe('a');
-
-  await rsbuild.close();
 });

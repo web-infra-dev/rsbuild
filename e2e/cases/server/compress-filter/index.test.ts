@@ -1,14 +1,10 @@
-import { build, dev } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { build, expect, test } from '@e2e/helper';
 
 test('should support configuring the compression filter in dev', async ({
-  page,
   request,
+  dev,
 }) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
-  });
+  const rsbuild = await dev();
 
   const indexJsResponse = await request.get(
     `http://127.0.0.1:${rsbuild.port}/static/js/index.js`,
@@ -19,8 +15,6 @@ test('should support configuring the compression filter in dev', async ({
     `http://127.0.0.1:${rsbuild.port}/static/js/async/vue.js`,
   );
   expect(asyncJsResponse.headers()['content-encoding']).toEqual('gzip');
-
-  await rsbuild.close();
 });
 
 test('should support configuring the compression filter in preview mode', async ({

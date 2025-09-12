@@ -1,14 +1,11 @@
-import { dev, getRandomPort } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, getRandomPort, test } from '@e2e/helper';
 
-test('should set the port via server.port', async ({ page }) => {
+test('should set the port via server.port', async ({ page, dev }) => {
   const errors: string[] = [];
   page.on('pageerror', (err) => errors.push(err.message));
 
   const port = await getRandomPort();
   const rsbuild = await dev({
-    cwd: __dirname,
-    page,
     rsbuildConfig: {
       server: {
         port,
@@ -20,8 +17,6 @@ test('should set the port via server.port', async ({ page }) => {
 
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
-
-  await rsbuild.close();
 
   expect(errors).toEqual([]);
 });

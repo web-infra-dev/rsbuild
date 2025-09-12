@@ -1,20 +1,15 @@
-import { build, dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { build, expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should let lightningcss minimizer inherit from tools.lightningcssLoader',
-  async ({ page }) => {
-    const rsbuild = await dev({
-      cwd: __dirname,
-      page,
-    });
+  async ({ dev }) => {
+    const rsbuild = await dev();
     const devFiles = rsbuild.getDistFiles();
     const devContent =
       devFiles[
         Object.keys(devFiles).find((file) => file.endsWith('css/index.css'))!
       ];
     expect(devContent).toContain('margin-inline-end: 100px;');
-    await rsbuild.close();
 
     const rsbuild2 = await build({
       cwd: __dirname,

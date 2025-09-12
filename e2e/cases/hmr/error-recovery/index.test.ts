@@ -1,20 +1,17 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 const cwd = __dirname;
 
 rspackOnlyTest(
   'HMR should work after fixing compilation error',
-  async ({ page }) => {
+  async ({ page, dev }) => {
     await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
       recursive: true,
     });
 
     const rsbuild = await dev({
-      cwd,
-      page,
       rsbuildConfig: {
         source: {
           entry: {
@@ -52,6 +49,5 @@ rspackOnlyTest(
     );
 
     await expect(locator).toHaveText('Hello Rsbuild2!');
-    await rsbuild.close();
   },
 );
