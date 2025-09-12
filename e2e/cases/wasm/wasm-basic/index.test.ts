@@ -6,7 +6,7 @@ test('should allow to import a Wasm file', async ({ page }) => {
     cwd: __dirname,
     page,
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const wasmFile = Object.keys(files).find((file) =>
     file.endsWith('.module.wasm'),

@@ -6,7 +6,7 @@ test('should support custom dist paths for different file types', async () => {
     cwd: __dirname,
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const filenames = Object.keys(files);
 
   // JS

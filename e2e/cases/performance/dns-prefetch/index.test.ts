@@ -6,7 +6,7 @@ test('should generate dnsPrefetch link when dnsPrefetch is defined', async () =>
     cwd: __dirname,
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const [, content] = Object.entries(files).find(([name]) =>
     name.endsWith('.html'),

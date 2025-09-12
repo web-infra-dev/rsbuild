@@ -3,13 +3,15 @@ import { join } from 'node:path';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import type {
   CreateRsbuildOptions,
+  BuildResult as RsbuildBuildResult,
   RsbuildConfig,
+  RsbuildInstance,
   RsbuildPlugins,
 } from '@rsbuild/core';
 import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
 import type { Page } from 'playwright';
 import { proxyConsole } from './logs';
-import { getDistFiles, getRandomPort, gotoPage, noop } from './utils';
+import { getRandomPort, gotoPage, noop, toPosixPath } from './utils';
 
 export const createRsbuild = async (
   rsbuildOptions: CreateRsbuildOptions & { rsbuildConfig?: RsbuildConfig },
@@ -76,6 +78,51 @@ const updateConfigForTest = async (
   return mergedConfig;
 };
 
+const filterSourceMaps = (distFiles: Record<string, string>) => {
+  return Object.entries(distFiles).reduce(
+    (acc, [key, value]) => {
+      if (key.endsWith('.map')) {
+        return acc;
+      }
+      acc[key] = value;
+      return acc;
+    },
+    {} as Record<string, string>,
+  );
+};
+
+const collectOutputFiles = (rsbuild: RsbuildInstance) => {
+  let outputFiles: Record<string, string> = {};
+
+  const reset = () => {
+    outputFiles = {};
+  };
+
+  rsbuild.onBeforeBuild(reset);
+  rsbuild.onBeforeStartDevServer(reset);
+
+  rsbuild.onAfterCreateCompiler(({ compiler }) => {
+    const compilers = 'compilers' in compiler ? compiler.compilers : [compiler];
+    for (const compiler of compilers) {
+      compiler.hooks.emit.tap('CollectAssetsPlugin', (compilation) => {
+        for (const asset of compilation.getAssets()) {
+          // skip inlined assets
+          if (!asset.source) {
+            continue;
+          }
+          const outputPath = compilation.options.output.path;
+          const assetPath = toPosixPath(
+            outputPath ? join(outputPath, asset.name) : asset.name,
+          );
+          outputFiles[assetPath] = asset.source.source().toString();
+        }
+      });
+    }
+  });
+
+  return () => outputFiles;
+};
+
 /**
  * Start the dev server and return the server instance.
  */
@@ -109,6 +156,7 @@ export async function dev({
   );
 
   const rsbuild = await createRsbuild(options, plugins);
+  const getOutputFiles = collectOutputFiles(rsbuild);
 
   const wait = waitFirstCompileDone
     ? new Promise<void>((resolve) => {
@@ -129,12 +177,15 @@ export async function dev({
     await gotoPage(page, result);
   }
 
+  const { distPath } = rsbuild.context;
+
   return {
     ...result,
     ...logHelper,
+    distPath,
     instance: rsbuild,
     getDistFiles: ({ sourceMaps }: { sourceMaps?: boolean } = {}) =>
-      getDistFiles(rsbuild.context.distPath, sourceMaps),
+      sourceMaps ? getOutputFiles() : filterSourceMaps(getOutputFiles()),
     close: async () => {
       await result.server.close();
       logHelper.restore();
@@ -185,13 +236,13 @@ export async function build({
   );
 
   const rsbuild = await createRsbuild(options, plugins);
+  const getOutputFiles = collectOutputFiles(rsbuild);
 
   let buildError: Error | undefined;
-  let closeBuild: () => Promise<void> | undefined;
+  let buildResult: RsbuildBuildResult | undefined;
 
   try {
-    const result = await rsbuild.build({ watch });
-    closeBuild = result.close;
+    buildResult = await rsbuild.build({ watch });
   } catch (error) {
     buildError = error as Error;
     buildError.message = stripAnsi(buildError.message);
@@ -213,14 +264,11 @@ export async function build({
   }
 
   const getIndexBundle = async () => {
-    const files = await getDistFiles(distPath);
     const [name, content] =
-      Object.entries(files).find(
+      Object.entries(getOutputFiles()).find(
         ([file]) => file.includes('index') && file.endsWith('.js'),
       ) || [];
-
     assert(name && content);
-
     return content;
   };
 
@@ -233,13 +281,13 @@ export async function build({
     distPath,
     port,
     close: async () => {
-      await closeBuild?.();
+      await buildResult?.close();
       await server.close();
       logHelper.restore();
     },
     buildError,
     getDistFiles: ({ sourceMaps }: { sourceMaps?: boolean } = {}) =>
-      getDistFiles(rsbuild.context.distPath, sourceMaps),
+      sourceMaps ? getOutputFiles() : filterSourceMaps(getOutputFiles()),
     getIndexBundle,
     instance: rsbuild,
   };

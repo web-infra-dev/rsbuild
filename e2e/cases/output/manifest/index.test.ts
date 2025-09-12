@@ -21,7 +21,7 @@ test('should generate manifest file in output', async () => {
     },
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const manifestContent =
     files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];
@@ -82,7 +82,7 @@ test('should generate manifest file when target is node', async () => {
     },
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const manifestContent =
     files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];
@@ -121,7 +121,7 @@ test('should always write manifest to disk when in dev', async ({ page }) => {
     },
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const manifestContent =
     files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];
@@ -149,7 +149,7 @@ test('should allow to filter files in manifest', async () => {
     },
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const manifestContent =
     files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];
@@ -185,7 +185,7 @@ rspackOnlyTest(
       },
     });
 
-    const files = await rsbuild.getDistFiles();
+    const files = rsbuild.getDistFiles();
 
     const manifestContent =
       files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];

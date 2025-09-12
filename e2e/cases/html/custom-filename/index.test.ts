@@ -1,19 +1,19 @@
-import { join } from 'node:path';
-import { build, readDirContents } from '@e2e/helper';
+import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should allow to custom HTML filename', async () => {
-  await build({
+  const rsbuild = await build({
     cwd: __dirname,
   });
 
-  const outputs = await readDirContents(join(__dirname, 'dist'));
-  const fooFile = Object.keys(outputs).find((item) =>
+  const files = rsbuild.getDistFiles();
+  const fooFile = Object.keys(files).find((item) =>
     item.includes('custom-foo.html'),
   );
-  const barFile = Object.keys(outputs).find((item) =>
+  const barFile = Object.keys(files).find((item) =>
     item.includes('custom-bar.html'),
   );
   expect(fooFile).toBeTruthy();
   expect(barFile).toBeTruthy();
+  await rsbuild.close();
 });

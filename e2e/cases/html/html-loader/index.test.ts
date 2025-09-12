@@ -9,7 +9,7 @@ rspackOnlyTest(
       page,
     });
 
-    const files = await rsbuild.getDistFiles();
+    const files = rsbuild.getDistFiles();
     const filenames = Object.keys(files);
 
     expect(
@@ -30,7 +30,7 @@ rspackOnlyTest('should allow to use html-loader in production', async () => {
     cwd: __dirname,
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const filenames = Object.keys(files);
 
   expect(

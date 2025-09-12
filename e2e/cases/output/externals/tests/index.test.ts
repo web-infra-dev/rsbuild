@@ -48,7 +48,7 @@ test('should not externalize dependencies when target is web worker', async () =
       },
     },
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const content =
     files[Object.keys(files).find((file) => file.endsWith('.js'))!];

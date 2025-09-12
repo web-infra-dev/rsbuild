@@ -10,7 +10,7 @@ test('should generate the same hash digest for the same SVG', async ({
     page,
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   expect(
     Object.keys(files).filter((key) => key.endsWith('.svg')).length,

@@ -13,7 +13,7 @@ rspackOnlyTest('should compile common CSS import correctly', async () => {
     },
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const cssFiles = Object.keys(files).find((file) => file.endsWith('.css'))!;
 
   expect(files[cssFiles]).toEqual(

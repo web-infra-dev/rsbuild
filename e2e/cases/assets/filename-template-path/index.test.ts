@@ -5,10 +5,12 @@ test('should allow filename.image: "[path]"', async () => {
   const rsbuild = await build({
     cwd: __dirname,
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const filenames = Object.keys(files);
   // Image
   expect(
     filenames.some((filename) => filename.includes('dist/src/assets/icon.png')),
   ).toBeTruthy();
+
+  await rsbuild.close();
 });

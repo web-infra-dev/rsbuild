@@ -11,12 +11,9 @@ rspackOnlyTest('should allow to minify JS in dev', async ({ page }) => {
           js: 'always',
         },
       },
-      dev: {
-        writeToDisk: true,
-      },
     },
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const content =
     files[Object.keys(files).find((file) => file.endsWith('.js'))!];
 

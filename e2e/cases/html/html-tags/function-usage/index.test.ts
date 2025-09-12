@@ -6,7 +6,7 @@ rspackOnlyTest('should inject tags with function usage correctly', async () => {
     cwd: __dirname,
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const indexHtml =
     files[Object.keys(files).find((file) => file.endsWith('index.html'))!];

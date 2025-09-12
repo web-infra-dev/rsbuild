@@ -7,7 +7,7 @@ const expectConsoleType = async (
   rsbuild: Awaited<ReturnType<typeof build>>,
   consoleType: Record<string, boolean>,
 ) => {
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const indexFile = Object.keys(files).find(
     (name) => name.includes('index.') && name.endsWith('.js'),
   )!;

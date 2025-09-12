@@ -7,7 +7,7 @@ rspackOnlyTest('should allow to enable Rspack experiments.css', async () => {
   const rsbuild = await build({
     cwd: __dirname,
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const content =
     files[Object.keys(files).find((file) => file.endsWith('index.css'))!];
 
@@ -30,7 +30,7 @@ rspackOnlyTest(
       },
     });
 
-    const files = await rsbuild.getDistFiles();
+    const files = rsbuild.getDistFiles();
     const content =
       files[Object.keys(files).find((file) => file.endsWith('index.js'))!];
     expect(content).toContain('color:red');

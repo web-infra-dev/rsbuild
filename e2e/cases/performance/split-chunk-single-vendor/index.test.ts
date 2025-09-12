@@ -19,7 +19,7 @@ test('should generate vendor chunk when chunkSplit is "single-vendor"', async ()
     },
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const [vendorFile] = Object.entries(files).find(
     ([name, content]) => name.includes('vendor') && content.includes('React'),

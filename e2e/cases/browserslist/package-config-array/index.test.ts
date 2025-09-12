@@ -6,7 +6,7 @@ test('should read browserslist array from package.json', async () => {
     cwd: __dirname,
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const indexFile =
     files[Object.keys(files).find((file) => file.endsWith('.js'))!];

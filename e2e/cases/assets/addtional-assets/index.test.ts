@@ -16,7 +16,7 @@ test('should support configuring additional assets matched by RegExp', async () 
     },
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const filenames = Object.keys(files);
 
   const indexJs = await rsbuild.getIndexBundle();
@@ -40,7 +40,7 @@ test('should support configuring additional assets matched by path', async () =>
     },
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const filenames = Object.keys(files);
 
   const indexJs = await rsbuild.getIndexBundle();
@@ -67,7 +67,7 @@ test('should support disabling emission for additional assets', async () => {
     },
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const filenames = Object.keys(files);
 
   expect(

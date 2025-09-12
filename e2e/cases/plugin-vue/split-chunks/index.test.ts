@@ -10,7 +10,7 @@ test('should split vue chunks correctly', async () => {
     plugins: [pluginVue()],
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const filesNames = Object.keys(files);
   expect(filesNames.find((file) => file.includes('lib-vue'))).toBeTruthy();
   expect(filesNames.find((file) => file.includes('lib-router'))).toBeTruthy();
@@ -29,7 +29,7 @@ test('should not split vue chunks when strategy is `all-in-one`', async () => {
     },
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const filesNames = Object.keys(files);
   expect(filesNames.find((file) => file.includes('lib-vue'))).toBeFalsy();
   expect(filesNames.find((file) => file.includes('lib-router'))).toBeFalsy();
@@ -55,7 +55,7 @@ test('should not override user defined cache groups', async () => {
     },
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const filesNames = Object.keys(files);
   expect(filesNames.find((file) => file.includes('my-vue'))).toBeTruthy();
 });

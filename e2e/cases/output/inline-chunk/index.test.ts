@@ -38,7 +38,7 @@ test('should inline all scripts and emit all source maps', async ({ page }) => {
   // test runtime
   expect(await page.evaluate('window.test')).toBe('aaaa');
 
-  const files = await rsbuild.getDistFiles({ sourceMaps: true });
+  const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   // no entry chunks or runtime chunks in output
   expect(
@@ -66,7 +66,7 @@ test('should inline scripts when matching a RegExp', async () => {
       tools: toolsConfig,
     },
   });
-  const files = await rsbuild.getDistFiles({ sourceMaps: true });
+  const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   // no index.js in output
   expect(
@@ -94,7 +94,7 @@ test('should inline scripts based on filename and size', async () => {
       tools: toolsConfig,
     },
   });
-  const files = await rsbuild.getDistFiles({ sourceMaps: true });
+  const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   // no index.js in output
   expect(
@@ -120,7 +120,7 @@ test('should inline styles when matching a RegExp', async () => {
       tools: toolsConfig,
     },
   });
-  const files = await rsbuild.getDistFiles({ sourceMaps: true });
+  const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   // no index.css in output
   expect(
@@ -142,7 +142,7 @@ test('should inline styles based on filename and size', async () => {
       tools: toolsConfig,
     },
   });
-  const files = await rsbuild.getDistFiles({ sourceMaps: true });
+  const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   // no index.css in output
   expect(
@@ -238,7 +238,7 @@ test('should not inline scripts when disabled', async () => {
       tools: toolsConfig,
     },
   });
-  const files = await rsbuild.getDistFiles({ sourceMaps: true });
+  const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   // all index.js in output
   expect(
@@ -267,7 +267,7 @@ test('should not inline styles when disabled', async () => {
       tools: toolsConfig,
     },
   });
-  const files = await rsbuild.getDistFiles({ sourceMaps: true });
+  const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   // all index.css in output
   expect(
@@ -294,7 +294,7 @@ test('should inline assets in build when enable is auto', async () => {
       tools: toolsConfig,
     },
   });
-  const files = await rsbuild.getDistFiles({ sourceMaps: true });
+  const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   // no index.js in output
   expect(

@@ -7,7 +7,7 @@ test('should support `forceSplitting` when chunkSplit is "single-vendor"', async
     cwd: __dirname,
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const jsFiles = Object.keys(files)
     .filter((name) => name.endsWith('.js'))

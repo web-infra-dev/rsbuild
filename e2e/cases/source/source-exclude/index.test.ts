@@ -1,8 +1,7 @@
 import path from 'node:path';
-import { build } from '@e2e/helper';
+import { build, toPosixPath } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
-import { normalizeToPosixPath } from '@scripts/test-helper';
 
 test('should not compile specified file when source.exclude', async () => {
   const rsbuild = await build({
@@ -25,7 +24,7 @@ test('should not compile specified file when source.exclude', async () => {
     rsbuild.logs.find(
       (log) =>
         log.includes('source:') &&
-        normalizeToPosixPath(log).includes('/dist/static/js/index'),
+        toPosixPath(log).includes('/dist/static/js/index'),
     ),
   ).toBeTruthy();
 });

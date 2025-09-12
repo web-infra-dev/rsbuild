@@ -8,7 +8,7 @@ rspackOnlyTest(
       cwd: __dirname,
       page,
     });
-    const files = await rsbuild.getDistFiles();
+    const files = rsbuild.getDistFiles();
 
     const wasmFile = Object.keys(files).find((file) =>
       file.endsWith('factorial.wasm'),

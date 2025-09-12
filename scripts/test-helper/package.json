@@ -27,8 +27,7 @@
     "@rsbuild/core": "workspace:*",
     "@types/node": "^22.18.1",
     "path-serializer": "0.5.1",
-    "typescript": "^5.9.2",
-    "upath": "2.0.1"
+    "typescript": "^5.9.2"
   },
   "devDependencies": {
     "@rslib/core": "0.13.0"

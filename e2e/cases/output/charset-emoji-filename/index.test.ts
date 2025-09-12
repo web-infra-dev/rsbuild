@@ -6,11 +6,6 @@ const utf8Str = `你好 world! I'm 🦀`;
 test('should resolve emoji filename in dev', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
-    rsbuildConfig: {
-      dev: {
-        writeToDisk: true,
-      },
-    },
     page,
   });
 

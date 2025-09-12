@@ -18,9 +18,6 @@ export default defineConfig({
       image: '[name][ext]',
     },
   },
-  dev: {
-    writeToDisk: true,
-  },
   html: {
     template: 'src/template.html',
   },

@@ -1,16 +1,17 @@
-import path from 'node:path';
-import { build, readDirContents } from '@e2e/helper';
+import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should set default entry when entry is set to an empty object', async () => {
-  await build({
+  const rsbuild = await build({
     cwd: __dirname,
   });
 
-  const outputs = await readDirContents(path.join(__dirname, 'dist'));
-  const outputFiles = Object.keys(outputs);
+  const files = rsbuild.getDistFiles();
+  const filenames = Object.keys(files);
 
   expect(
-    outputFiles.find((item) => item.includes('static/js/index.')),
+    filenames.find((item) => item.includes('static/js/index.')),
   ).toBeTruthy();
+
+  await rsbuild.close();
 });

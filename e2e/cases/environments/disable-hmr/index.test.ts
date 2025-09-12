@@ -8,9 +8,6 @@ rspackOnlyTest(
       page,
       cwd: __dirname,
       rsbuildConfig: {
-        dev: {
-          writeToDisk: true,
-        },
         performance: {
           chunkSplit: {
             strategy: 'all-in-one',
@@ -39,7 +36,7 @@ rspackOnlyTest(
       },
     });
 
-    const files = await rsbuild.getDistFiles();
+    const files = rsbuild.getDistFiles();
     const filenames = Object.keys(files);
 
     const fooJs = filenames.find((filename) =>

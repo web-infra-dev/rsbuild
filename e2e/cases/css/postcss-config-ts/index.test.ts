@@ -6,7 +6,7 @@ rspackOnlyTest('should load postcss.config.ts correctly', async () => {
     cwd: __dirname,
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const indexCssFile = Object.keys(files).find(
     (file) => file.includes('index.') && file.endsWith('.css'),
   )!;

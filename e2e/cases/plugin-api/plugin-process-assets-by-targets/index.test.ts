@@ -11,7 +11,7 @@ rspackOnlyTest('should process assets when target is web', async () => {
     },
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const indexJs = Object.keys(files).find(
     (file) => file.includes('index') && file.endsWith('.js'),
   );
@@ -28,7 +28,7 @@ rspackOnlyTest('should not process assets when target is not web', async () => {
     },
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const indexJs = Object.keys(files).find(
     (file) => file.includes('index') && file.endsWith('.js'),
   );

@@ -10,16 +10,6 @@ test('should access / success and htmlFallback success by default', async ({
 }) => {
   const rsbuild = await dev({
     cwd,
-    rsbuildConfig: {
-      dev: {
-        writeToDisk: true,
-      },
-      output: {
-        distPath: {
-          root: 'dist-html-fallback-0',
-        },
-      },
-    },
   });
 
   const url = new URL(`http://localhost:${rsbuild.port}/`);
@@ -48,16 +38,8 @@ test('should return 404 when htmlFallback false', async ({ page }) => {
   const rsbuild = await dev({
     cwd,
     rsbuildConfig: {
-      dev: {
-        writeToDisk: true,
-      },
       server: {
         htmlFallback: false,
-      },
-      output: {
-        distPath: {
-          root: 'dist-html-fallback-0-1',
-        },
       },
     },
   });
@@ -112,14 +94,6 @@ test('should access /main.html success when entry is main', async ({
           main: join(cwd, 'src/index.js'),
         },
       },
-      output: {
-        distPath: {
-          root: 'dist-html-fallback-1',
-        },
-      },
-      dev: {
-        writeToDisk: true,
-      },
     },
   });
 
@@ -141,14 +115,6 @@ test('should access /main success when entry is main', async ({ page }) => {
         entry: {
           main: join(cwd, 'src/index.js'),
         },
-      },
-      output: {
-        distPath: {
-          root: 'dist-html-fallback-2',
-        },
-      },
-      dev: {
-        writeToDisk: true,
       },
     },
   });
@@ -176,14 +142,6 @@ test('should access /main success when entry is main and use memoryFs', async ({
           main: join(cwd, 'src/index.js'),
         },
       },
-      output: {
-        distPath: {
-          root: 'dist-html-fallback-3',
-        },
-      },
-      dev: {
-        writeToDisk: true,
-      },
     },
   });
 
@@ -208,13 +166,7 @@ test('should access /main success when entry is main and set assetPrefix', async
           main: join(cwd, 'src/index.js'),
         },
       },
-      output: {
-        distPath: {
-          root: 'dist-html-fallback-4',
-        },
-      },
       dev: {
-        writeToDisk: true,
         assetPrefix: '/aaaa/',
       },
     },
@@ -241,16 +193,8 @@ test('should access /main success when entry is main and outputPath is /main/ind
           main: join(cwd, 'src/index.js'),
         },
       },
-      output: {
-        distPath: {
-          root: 'dist-html-fallback-5',
-        },
-      },
       html: {
         outputStructure: 'nested',
-      },
-      dev: {
-        writeToDisk: true,
       },
     },
   });
@@ -273,14 +217,6 @@ test('should return 404 when page is not found', async ({ page }) => {
         entry: {
           main: join(cwd, 'src/index.js'),
         },
-      },
-      output: {
-        distPath: {
-          root: 'dist-html-fallback-6',
-        },
-      },
-      dev: {
-        writeToDisk: true,
       },
     },
   });
@@ -307,12 +243,8 @@ test('should access /html/main success when entry is main and outputPath is /htm
       },
       output: {
         distPath: {
-          root: 'dist-html-fallback-5',
           html: 'html',
         },
-      },
-      dev: {
-        writeToDisk: true,
       },
     },
   });
@@ -346,14 +278,6 @@ test('should access /main success when modify publicPath in compiler', async ({
           main: join(cwd, 'src/index.js'),
         },
       },
-      output: {
-        distPath: {
-          root: 'dist-html-fallback-6',
-        },
-      },
-      dev: {
-        writeToDisk: true,
-      },
     },
     plugins: [
       {
@@ -374,12 +298,11 @@ test('should access /main success when modify publicPath in compiler', async ({
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
 
-  const content = fs.readFileSync(
-    join(cwd, 'dist-html-fallback-6', 'main.html'),
-    'utf-8',
-  );
+  const files = rsbuild.getDistFiles();
+  const htmlContent =
+    files[Object.keys(files).find((file) => file.endsWith('main.html'))!];
 
-  expect(content.includes('/aaaa/static/js/main.js')).toBeTruthy();
+  expect(htmlContent.includes('/aaaa/static/js/main.js')).toBeTruthy();
 
   await rsbuild.close();
 });
@@ -393,11 +316,6 @@ test('should access /main success when distPath is absolute', async ({
       source: {
         entry: {
           main: join(cwd, 'src/index.js'),
-        },
-      },
-      output: {
-        distPath: {
-          root: join(cwd, 'dist-html-fallback-7'),
         },
       },
     },

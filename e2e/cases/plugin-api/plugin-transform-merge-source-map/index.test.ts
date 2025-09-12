@@ -1,6 +1,12 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
-import { build, dev, mapSourceMapPositions, rspackOnlyTest } from '@e2e/helper';
+import {
+  build,
+  dev,
+  getDistFiles,
+  mapSourceMapPositions,
+  rspackOnlyTest,
+} from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 const expectSourceMap = async (files: Record<string, string>) => {
@@ -50,7 +56,7 @@ rspackOnlyTest(
     const rsbuild = await build({
       cwd: __dirname,
     });
-    const files = await rsbuild.getDistFiles({ sourceMaps: true });
+    const files = rsbuild.getDistFiles({ sourceMaps: true });
 
     await expectSourceMap(files);
     await rsbuild.close();
@@ -64,7 +70,7 @@ rspackOnlyTest(
       cwd: __dirname,
       page,
     });
-    const files = await rsbuild.getDistFiles({ sourceMaps: true });
+    const files = await getDistFiles(rsbuild.distPath, true);
 
     await expectSourceMap(files);
     await rsbuild.close();

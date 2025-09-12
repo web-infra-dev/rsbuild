@@ -8,7 +8,7 @@ test('should compile Node addons correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const addonFile = Object.keys(files).find((file) =>
     file.endsWith('test.darwin.node'),
   );
@@ -56,7 +56,7 @@ test('should compile Node addons in the node_modules correctly', async () => {
     },
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const addonFile = Object.keys(files).find((file) =>
     file.endsWith('other.node'),
   );

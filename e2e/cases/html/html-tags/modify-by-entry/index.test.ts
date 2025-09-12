@@ -6,7 +6,7 @@ test('should allow to inject tags by entry name', async () => {
     cwd: __dirname,
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const fooHTML =
     files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];

@@ -21,7 +21,7 @@ test('should externalHelpers by default', async () => {
       },
     },
   });
-  const files = await rsbuild.getDistFiles({ sourceMaps: true });
+  const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   const content =
     files[

@@ -9,7 +9,7 @@ test('should allow to set development mode when building', async () => {
     },
   });
 
-  const files = await rsbuild.getDistFiles({ sourceMaps: true });
+  const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   // should not have filename hash in dev
   const indexFile = Object.keys(files).find((key) =>
@@ -37,7 +37,7 @@ test('should allow to set none mode when building', async () => {
     },
   });
 
-  const files = await rsbuild.getDistFiles({ sourceMaps: true });
+  const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   // should not have filename hash in none mode
   const indexFile = Object.keys(files).find((key) =>
@@ -58,13 +58,10 @@ rspackOnlyTest(
       page,
       rsbuildConfig: {
         mode: 'production',
-        dev: {
-          writeToDisk: true,
-        },
       },
     });
 
-    const files = await rsbuild.getDistFiles({ sourceMaps: true });
+    const files = rsbuild.getDistFiles({ sourceMaps: true });
 
     // should have filename hash in build
     const indexFile = Object.keys(files).find((key) =>

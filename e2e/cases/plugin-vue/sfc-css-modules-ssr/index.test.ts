@@ -9,7 +9,7 @@ rspackOnlyTest(
       page,
     });
 
-    const files = await rsbuild.getDistFiles();
+    const files = rsbuild.getDistFiles();
     const indexJs =
       files[Object.keys(files).find((file) => file.endsWith('index.js'))!];
     expect(indexJs).toMatch(/`src-App__red-\w{6}`/);
@@ -26,7 +26,7 @@ rspackOnlyTest(
       page,
     });
 
-    const files = await rsbuild.getDistFiles();
+    const files = rsbuild.getDistFiles();
     const indexJs =
       files[Object.keys(files).find((file) => file.endsWith('index.js'))!];
     expect(indexJs).toMatch(/"red-\w{6}"/);

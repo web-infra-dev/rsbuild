@@ -16,7 +16,7 @@ test('should exclude specified Less files using the exclude option', async () =>
     },
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));
   const lessFiles = Object.keys(files).filter((file) => file.endsWith('.less'));
 

@@ -17,11 +17,6 @@ rspackOnlyTest(
             main: join(cwd, 'src/index.jsx'),
           },
         },
-        output: {
-          distPath: {
-            root: 'dist-historyApiFallback',
-          },
-        },
         server: {
           historyApiFallback: {
             index: '/main.html',
@@ -54,11 +49,6 @@ test('should provide history api fallback for preview server correctly', async (
       source: {
         entry: {
           main: join(cwd, 'src/index.jsx'),
-        },
-      },
-      output: {
-        distPath: {
-          root: 'dist-historyApiFallback',
         },
       },
       server: {

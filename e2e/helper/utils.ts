@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import net from 'node:net';
 import { platform } from 'node:os';
-import { join } from 'node:path';
+import { join, sep } from 'node:path';
 import { URL } from 'node:url';
 import { expect, test } from '@playwright/test';
 import type { RsbuildPlugin } from '@rsbuild/core';
@@ -278,3 +278,15 @@ export async function mapSourceMapPositions(
   consumer.destroy();
   return originalPositions;
 }
+
+/**
+ * Convert Windows backslash paths to posix forward slashes
+ * @example
+ * toPosixPath('foo\\bar') // returns 'foo/bar'
+ */
+export const toPosixPath = (filepath: string): string => {
+  if (sep === '/') {
+    return filepath;
+  }
+  return filepath.replace(/\\/g, '/');
+};

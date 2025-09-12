@@ -1,4 +1,3 @@
-import path from 'node:path';
 import { isPromise } from 'node:util/types';
 import type {
   BundlerPluginInstance,
@@ -9,12 +8,6 @@ import type {
   Rspack,
   RspackRule,
 } from '@rsbuild/core';
-import upath from 'upath';
-
-export const normalizeToPosixPath = (p: string | undefined) =>
-  upath
-    .normalizeSafe(path.normalize(p || ''))
-    .replace(/^([a-zA-Z]+):/, (_, m: string) => `/${m.toLowerCase()}`);
 
 /** Match plugin by constructor name. */
 export const matchPlugin = (

@@ -6,7 +6,7 @@ test('should output a single JavaScript bundle', async () => {
     cwd: __dirname,
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   // expect only one bundle (end with .js)
   const filePaths = Object.keys(files).filter((file) => file.endsWith('.js'));
 

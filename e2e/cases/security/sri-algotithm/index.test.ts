@@ -9,7 +9,7 @@ rspackOnlyTest(
       page,
     });
 
-    const files = await rsbuild.getDistFiles();
+    const files = rsbuild.getDistFiles();
     const html =
       files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
 

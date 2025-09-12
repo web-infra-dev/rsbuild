@@ -1,5 +1,4 @@
-import { join } from 'node:path';
-import { build, dev, readDirContents } from '@e2e/helper';
+import { build, dev, getDistFiles } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should emit bundle analyze report correctly when dev', async ({
@@ -13,7 +12,7 @@ test('should emit bundle analyze report correctly when dev', async ({
   const testEl = page.locator('#test');
   await expect(testEl).toHaveText('Hello Rsbuild!');
 
-  const files = await readDirContents(join(__dirname, 'dist'));
+  const files = await getDistFiles(rsbuild.distPath);
   const filePaths = Object.keys(files).filter((file) =>
     file.endsWith('report-web.html'),
   );
@@ -28,7 +27,7 @@ test('should emit bundle analyze report correctly when build', async () => {
     cwd: __dirname,
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = await getDistFiles(rsbuild.distPath);
   const filePaths = Object.keys(files).filter((file) =>
     file.endsWith('report-web.html'),
   );

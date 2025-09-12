@@ -11,7 +11,7 @@ test('should generate default title correctly', async () => {
       },
     },
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const html =
     files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
@@ -30,7 +30,7 @@ test('should allow setting empty title to unset the default title', async () => 
       },
     },
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const html =
     files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
@@ -49,7 +49,7 @@ test('should generate title correctly', async () => {
       },
     },
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const html =
     files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
@@ -69,7 +69,7 @@ test('should generate title correctly when using custom HTML template', async ()
       },
     },
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const html =
     files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
@@ -89,7 +89,7 @@ test('should generate title correctly when using htmlPlugin.options.title', asyn
       },
     },
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const html =
     files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
@@ -113,7 +113,7 @@ test('should generate title via function correctly', async () => {
       },
     },
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const fooHtml =
     files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
@@ -137,7 +137,7 @@ test('should not inject title if template already contains a title', async () =>
       },
     },
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const html =
     files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];

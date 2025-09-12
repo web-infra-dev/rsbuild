@@ -12,7 +12,7 @@ test('should emit apple-touch-icon to dist path', async () => {
       },
     },
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   expect(
     Object.keys(files).some((file) => file.endsWith('static/image/icon.png')),
@@ -41,7 +41,7 @@ test('should emit manifest.webmanifest to dist path', async () => {
       },
     },
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   expect(
     Object.keys(files).some((file) => file.endsWith('static/image/icon.png')),
@@ -91,7 +91,7 @@ test('should allow to specify URL as icon', async () => {
       },
     },
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const manifestPath = Object.keys(files).find((file) =>
     file.endsWith('manifest.webmanifest'),
@@ -150,7 +150,7 @@ test('should allow to specify target for each icon', async () => {
       },
     },
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   expect(
     Object.keys(files).some((file) => file.endsWith('static/image/icon.png')),
@@ -220,7 +220,7 @@ test('should allow to specify purpose for each icon', async () => {
       },
     },
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const manifestPath = Object.keys(files).find((file) =>
     file.endsWith('manifest.webmanifest'),
   );
@@ -262,7 +262,7 @@ test('should allow to customize manifest filename', async () => {
     },
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const manifestPath = Object.keys(files).find((file) =>
     file.endsWith('manifest.json'),
   );
@@ -289,7 +289,6 @@ test('should append dev.assetPrefix to icon URL', async ({ page }) => {
     rsbuildConfig: {
       dev: {
         assetPrefix: 'http://localhost:3000',
-        writeToDisk: true,
       },
       html: {
         appIcon: {
@@ -303,7 +302,7 @@ test('should append dev.assetPrefix to icon URL', async ({ page }) => {
     },
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   expect(
     Object.keys(files).some((file) => file.endsWith('static/image/icon.png')),
@@ -364,7 +363,7 @@ test('should append output.assetPrefix to icon URL', async () => {
       },
     },
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   expect(
     Object.keys(files).some((file) => file.endsWith('static/image/icon.png')),
@@ -419,7 +418,7 @@ test('should apply asset prefix to apple-touch-icon URL', async () => {
       },
     },
   });
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
   const {
     origin: { bundlerConfigs },

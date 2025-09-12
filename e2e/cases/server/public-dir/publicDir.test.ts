@@ -1,5 +1,5 @@
 import path, { join } from 'node:path';
-import { build, dev } from '@e2e/helper';
+import { build, dev, getDistFiles } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import fse from 'fs-extra';
 
@@ -202,7 +202,7 @@ test('should copy publicDir to the environment distDir when multiple environment
       },
     },
   });
-  const files = await rsbuild.getDistFiles();
+  const files = await getDistFiles(rsbuild.distPath);
   const filenames = Object.keys(files);
 
   expect(
@@ -245,7 +245,7 @@ test('should copy publicDir to the node distDir when copyOnBuild is specified as
       },
     },
   });
-  const files = await rsbuild.getDistFiles();
+  const files = await getDistFiles(rsbuild.distPath);
   const filenames = Object.keys(files);
 
   expect(
@@ -280,7 +280,7 @@ test('should copy publicDir to root dist when environment dist path has a parent
       },
     },
   });
-  const files = await rsbuild.getDistFiles();
+  const files = await getDistFiles(rsbuild.distPath);
   const filenames = Object.keys(files);
 
   expect(

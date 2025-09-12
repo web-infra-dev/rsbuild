@@ -16,7 +16,7 @@ rspackOnlyTest('should emit multiple CSS files correctly', async () => {
     },
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const entry1CSS = Object.keys(files).find(
     (file) => file.includes('entry1') && file.endsWith('.css'),
   )!;

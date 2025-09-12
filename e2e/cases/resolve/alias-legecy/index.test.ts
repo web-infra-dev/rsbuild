@@ -6,7 +6,7 @@ test('should allow to use the legacy `source.alias` config', async () => {
     cwd: __dirname,
   });
 
-  const files = await rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
   const fileNames = Object.keys(files);
   const webIndex = fileNames.find(
     (file) => file.includes('static/js') && file.endsWith('index.js'),
