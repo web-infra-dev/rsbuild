@@ -11,9 +11,6 @@ rspackOnlyTest(
       cwd,
       page,
       rsbuildConfig: {
-        dev: {
-          writeToDisk: true,
-        },
         environments: {
           foo: {
             source: {

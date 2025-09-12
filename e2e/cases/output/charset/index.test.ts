@@ -21,9 +21,6 @@ rspackOnlyTest(
       cwd: __dirname,
       page,
       rsbuildConfig: {
-        dev: {
-          writeToDisk: true,
-        },
         output: {
           charset: 'ascii',
         },
@@ -67,11 +64,6 @@ test('should set output.charset to ascii in build', async ({ page }) => {
 test('should use utf8 charset in dev by default', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
-    rsbuildConfig: {
-      dev: {
-        writeToDisk: true,
-      },
-    },
     page,
   });
 

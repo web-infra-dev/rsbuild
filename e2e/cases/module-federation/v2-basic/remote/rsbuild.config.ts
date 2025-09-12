@@ -19,7 +19,4 @@ export default defineConfig({
     },
     port: Number(process.env.REMOTE_PORT) || 3002,
   },
-  dev: {
-    writeToDisk: true,
-  },
 });

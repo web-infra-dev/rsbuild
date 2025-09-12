@@ -8,9 +8,6 @@ rspackOnlyTest(
       page,
       cwd: __dirname,
       rsbuildConfig: {
-        dev: {
-          writeToDisk: true,
-        },
         performance: {
           chunkSplit: {
             strategy: 'all-in-one',

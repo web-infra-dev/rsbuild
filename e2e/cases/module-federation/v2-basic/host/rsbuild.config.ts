@@ -18,7 +18,4 @@ export default defineConfig({
       origin: defaultAllowedOrigins,
     },
   },
-  dev: {
-    writeToDisk: true,
-  },
 });

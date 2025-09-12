@@ -11,9 +11,6 @@ rspackOnlyTest('should allow to minify CSS in dev', async ({ page }) => {
           css: 'always',
         },
       },
-      dev: {
-        writeToDisk: true,
-      },
     },
   });
 

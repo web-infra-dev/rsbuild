@@ -21,11 +21,6 @@ rspackOnlyTest(
     const rsbuild = await dev({
       cwd: __dirname,
       page,
-      rsbuildConfig: {
-        dev: {
-          writeToDisk: true,
-        },
-      },
     });
     const files = rsbuild.getDistFiles();
 

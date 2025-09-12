@@ -1,24 +1,30 @@
-import { readFile } from 'node:fs/promises';
-import { join } from 'node:path';
 import { build, dev, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest(
   'should let lightningcss minimizer inherit from tools.lightningcssLoader',
   async ({ page }) => {
-    const cssIndex = join(__dirname, 'dist/static/css/index.css');
-
-    await dev({
+    const rsbuild = await dev({
       cwd: __dirname,
       page,
     });
-    const devContent = await readFile(cssIndex, 'utf-8');
+    const devFiles = rsbuild.getDistFiles();
+    const devContent =
+      devFiles[
+        Object.keys(devFiles).find((file) => file.endsWith('css/index.css'))!
+      ];
     expect(devContent).toContain('margin-inline-end: 100px;');
+    await rsbuild.close();
 
-    await build({
+    const rsbuild2 = await build({
       cwd: __dirname,
     });
-    const buildContent = await readFile(cssIndex, 'utf-8');
+    const buildFiles = rsbuild2.getDistFiles();
+    const buildContent =
+      buildFiles[
+        Object.keys(buildFiles).find((file) => file.endsWith('css/index.css'))!
+      ];
     expect(buildContent).toContain('margin-inline-end:100px');
+    await rsbuild2.close();
   },
 );

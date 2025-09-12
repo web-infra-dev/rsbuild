@@ -11,9 +11,6 @@ rspackOnlyTest('should allow to minify JS in dev', async ({ page }) => {
           js: 'always',
         },
       },
-      dev: {
-        writeToDisk: true,
-      },
     },
   });
   const files = rsbuild.getDistFiles();

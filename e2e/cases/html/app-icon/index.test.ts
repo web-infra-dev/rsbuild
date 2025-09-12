@@ -289,7 +289,6 @@ test('should append dev.assetPrefix to icon URL', async ({ page }) => {
     rsbuildConfig: {
       dev: {
         assetPrefix: 'http://localhost:3000',
-        writeToDisk: true,
       },
       html: {
         appIcon: {

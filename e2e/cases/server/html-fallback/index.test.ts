@@ -11,9 +11,6 @@ test('should access / success and htmlFallback success by default', async ({
   const rsbuild = await dev({
     cwd,
     rsbuildConfig: {
-      dev: {
-        writeToDisk: true,
-      },
       output: {
         distPath: {
           root: 'dist-html-fallback-0',
@@ -48,9 +45,6 @@ test('should return 404 when htmlFallback false', async ({ page }) => {
   const rsbuild = await dev({
     cwd,
     rsbuildConfig: {
-      dev: {
-        writeToDisk: true,
-      },
       server: {
         htmlFallback: false,
       },
@@ -117,9 +111,6 @@ test('should access /main.html success when entry is main', async ({
           root: 'dist-html-fallback-1',
         },
       },
-      dev: {
-        writeToDisk: true,
-      },
     },
   });
 
@@ -146,9 +137,6 @@ test('should access /main success when entry is main', async ({ page }) => {
         distPath: {
           root: 'dist-html-fallback-2',
         },
-      },
-      dev: {
-        writeToDisk: true,
       },
     },
   });
@@ -181,9 +169,6 @@ test('should access /main success when entry is main and use memoryFs', async ({
           root: 'dist-html-fallback-3',
         },
       },
-      dev: {
-        writeToDisk: true,
-      },
     },
   });
 
@@ -214,7 +199,6 @@ test('should access /main success when entry is main and set assetPrefix', async
         },
       },
       dev: {
-        writeToDisk: true,
         assetPrefix: '/aaaa/',
       },
     },
@@ -249,9 +233,6 @@ test('should access /main success when entry is main and outputPath is /main/ind
       html: {
         outputStructure: 'nested',
       },
-      dev: {
-        writeToDisk: true,
-      },
     },
   });
 
@@ -278,9 +259,6 @@ test('should return 404 when page is not found', async ({ page }) => {
         distPath: {
           root: 'dist-html-fallback-6',
         },
-      },
-      dev: {
-        writeToDisk: true,
       },
     },
   });
@@ -310,9 +288,6 @@ test('should access /html/main success when entry is main and outputPath is /htm
           root: 'dist-html-fallback-5',
           html: 'html',
         },
-      },
-      dev: {
-        writeToDisk: true,
       },
     },
   });
@@ -350,9 +325,6 @@ test('should access /main success when modify publicPath in compiler', async ({
         distPath: {
           root: 'dist-html-fallback-6',
         },
-      },
-      dev: {
-        writeToDisk: true,
       },
     },
     plugins: [

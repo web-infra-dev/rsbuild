@@ -58,9 +58,6 @@ rspackOnlyTest(
       page,
       rsbuildConfig: {
         mode: 'production',
-        dev: {
-          writeToDisk: true,
-        },
       },
     });
 
