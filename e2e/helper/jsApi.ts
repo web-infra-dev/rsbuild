@@ -110,10 +110,10 @@ const collectOutputFiles = (rsbuild: RsbuildInstance) => {
           if (!asset.source) {
             continue;
           }
-          const assetPath = join(
-            compilation.options.output.path || '',
-            asset.name,
-          );
+          const outputPath = compilation.options.output.path;
+          const assetPath = outputPath
+            ? join(outputPath, asset.name)
+            : asset.name;
           outputFiles[assetPath] = asset.source.source().toString();
         }
       });

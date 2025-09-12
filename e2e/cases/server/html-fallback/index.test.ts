@@ -298,12 +298,11 @@ test('should access /main success when modify publicPath in compiler', async ({
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
 
-  const content = fs.readFileSync(
-    join(cwd, 'dist-html-fallback-6', 'main.html'),
-    'utf-8',
-  );
+  const files = rsbuild.getDistFiles();
+  const htmlContent =
+    files[Object.keys(files).find((file) => file.endsWith('main.html'))!];
 
-  expect(content.includes('/aaaa/static/js/main.js')).toBeTruthy();
+  expect(htmlContent.includes('/aaaa/static/js/main.js')).toBeTruthy();
 
   await rsbuild.close();
 });
