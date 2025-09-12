@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 import fse, { remove } from 'fs-extra';
 
-test('should compile Node addons correctly', async ({ build, buildOnly }) => {
+test('should compile Node addons correctly', async ({ buildOnly }) => {
   const rsbuild = await buildOnly();
   const files = rsbuild.getDistFiles();
   const addonFile = Object.keys(files).find((file) =>
@@ -25,7 +25,6 @@ test('should compile Node addons correctly', async ({ build, buildOnly }) => {
 });
 
 test('should compile Node addons in the node_modules correctly', async ({
-  build,
   buildOnly,
 }) => {
   const pkgDir = join(__dirname, 'node_modules', 'node-addon-pkg');

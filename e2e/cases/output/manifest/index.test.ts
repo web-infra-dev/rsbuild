@@ -1,13 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { dev, expect, rspackOnlyTest, test } from '@e2e/helper';
+import { expect, rspackOnlyTest, test } from '@e2e/helper';
 
-const fixtures = __dirname;
-
-test('should generate manifest file in output', async ({
-  build,
-  buildOnly,
-}) => {
+test('should generate manifest file in output', async ({ buildOnly }) => {
   const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
@@ -43,7 +38,6 @@ test('should generate manifest file in output', async ({
 });
 
 test('should generate manifest file at specified path', async ({
-  build,
   buildOnly,
 }) => {
   await buildOnly({
@@ -71,7 +65,6 @@ test('should generate manifest file at specified path', async ({
 });
 
 test('should generate manifest file when target is node', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly({
@@ -106,10 +99,8 @@ test('should generate manifest file when target is node', async ({
   });
 });
 
-test('should always write manifest to disk when in dev', async ({ page }) => {
+test('should always write manifest to disk when in dev', async ({ dev }) => {
   const rsbuild = await dev({
-    cwd: fixtures,
-    page,
     rsbuildConfig: {
       output: {
         distPath: {
@@ -134,10 +125,7 @@ test('should always write manifest to disk when in dev', async ({ page }) => {
   expect(manifestContent).toBeDefined();
 });
 
-test('should allow to filter files in manifest', async ({
-  build,
-  buildOnly,
-}) => {
+test('should allow to filter files in manifest', async ({ buildOnly }) => {
   const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
@@ -172,7 +160,7 @@ test('should allow to filter files in manifest', async ({
 
 rspackOnlyTest(
   'should allow to include license files in manifest',
-  async ({ build, buildOnly }) => {
+  async ({ buildOnly }) => {
     const rsbuild = await buildOnly({
       rsbuildConfig: {
         output: {

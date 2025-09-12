@@ -2,7 +2,7 @@ import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should allow plugin to transform code',
-  async ({ build, buildOnly }) => {
+  async ({ buildOnly }) => {
     const rsbuild = await buildOnly();
 
     const files = rsbuild.getDistFiles();

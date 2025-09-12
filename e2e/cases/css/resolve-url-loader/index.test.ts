@@ -1,7 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
 test('should resolve relative asset correctly in SCSS file', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly();

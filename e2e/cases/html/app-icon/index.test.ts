@@ -24,10 +24,7 @@ test('should emit apple-touch-icon to dist path', async ({ buildOnly }) => {
   );
 });
 
-test('should emit manifest.webmanifest to dist path', async ({
-  build,
-  buildOnly,
-}) => {
+test('should emit manifest.webmanifest to dist path', async ({ buildOnly }) => {
   const rsbuild = await buildOnly({
     rsbuildConfig: {
       html: {
@@ -76,7 +73,7 @@ test('should emit manifest.webmanifest to dist path', async ({
   });
 });
 
-test('should allow to specify URL as icon', async ({ build, buildOnly }) => {
+test('should allow to specify URL as icon', async ({ buildOnly }) => {
   const rsbuild = await buildOnly({
     rsbuildConfig: {
       html: {
@@ -121,10 +118,7 @@ test('should allow to specify URL as icon', async ({ build, buildOnly }) => {
   });
 });
 
-test('should allow to specify target for each icon', async ({
-  build,
-  buildOnly,
-}) => {
+test('should allow to specify target for each icon', async ({ buildOnly }) => {
   const rsbuild = await buildOnly({
     rsbuildConfig: {
       html: {
@@ -196,10 +190,7 @@ test('should allow to specify target for each icon', async ({
   });
 });
 
-test('should allow to specify purpose for each icon', async ({
-  build,
-  buildOnly,
-}) => {
+test('should allow to specify purpose for each icon', async ({ buildOnly }) => {
   const rsbuild = await buildOnly({
     rsbuildConfig: {
       html: {
@@ -248,10 +239,7 @@ test('should allow to specify purpose for each icon', async ({
   });
 });
 
-test('should allow to customize manifest filename', async ({
-  build,
-  buildOnly,
-}) => {
+test('should allow to customize manifest filename', async ({ buildOnly }) => {
   const rsbuild = await buildOnly({
     rsbuildConfig: {
       html: {
@@ -348,10 +336,7 @@ test('should append dev.assetPrefix to icon URL', async ({ page }) => {
   });
 });
 
-test('should append output.assetPrefix to icon URL', async ({
-  build,
-  buildOnly,
-}) => {
+test('should append output.assetPrefix to icon URL', async ({ buildOnly }) => {
   const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
@@ -410,7 +395,6 @@ test('should append output.assetPrefix to icon URL', async ({
 });
 
 test('should apply asset prefix to apple-touch-icon URL', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly({

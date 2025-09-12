@@ -2,10 +2,7 @@ import path from 'node:path';
 
 import { expect, test } from '@e2e/helper';
 
-test('should build web-worker target correctly', async ({
-  build,
-  buildOnly,
-}) => {
+test('should build web-worker target correctly', async ({ buildOnly }) => {
   const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
@@ -22,7 +19,6 @@ test('should build web-worker target correctly', async ({
 });
 
 test('should build web-worker target with dynamicImport correctly', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly({

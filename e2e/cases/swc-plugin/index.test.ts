@@ -15,7 +15,7 @@ rspackOnlyTest(
 
 rspackOnlyTest(
   'should run SWC Wasm plugin correctly in production build',
-  async ({ page, build, buildOnly }) => {
+  async ({ page, buildOnly }) => {
     const rsbuild = await buildOnly({
       runServer: true,
     });

@@ -7,7 +7,7 @@ const cwd = __dirname;
 const testDistFile = join(cwd, 'dist/test.json');
 const testDeepDistFile = join(cwd, 'dist/foo/bar/test.json');
 
-test('should clean dist path by default', async ({ build, buildOnly }) => {
+test('should clean dist path by default', async ({ buildOnly }) => {
   await fse.outputFile(testDistFile, `{ "test": 1 }`);
 
   await buildOnly({
@@ -49,7 +49,6 @@ test('should clean dist path in dev when writeToDisk is true', async () => {
 });
 
 test('should not clean dist path if it is outside root', async ({
-  build,
   buildOnly,
 }) => {
   const testOutsideFile = join(cwd, '../node_modules/test.json');
@@ -77,7 +76,7 @@ test('should not clean dist path if it is outside root', async ({
   await remove(testOutsideFile);
 });
 
-test('should allow to disable cleanDistPath', async ({ build, buildOnly }) => {
+test('should allow to disable cleanDistPath', async ({ buildOnly }) => {
   await fse.outputFile(testDistFile, `{ "test": 1 }`);
 
   await buildOnly({
@@ -95,7 +94,6 @@ test('should allow to disable cleanDistPath', async ({ build, buildOnly }) => {
 });
 
 test('should allow to use `cleanDistPath.keep` to keep some files', async ({
-  build,
   buildOnly,
 }) => {
   await fse.outputFile(testDistFile, `{ "test": 1 }`);

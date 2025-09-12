@@ -1,9 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-const fixtures = __dirname;
-
 test('should generate manifest with single vendor as expected', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly();

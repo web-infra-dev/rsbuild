@@ -20,7 +20,6 @@ test('should emit bundle analyze report correctly when dev', async ({
 });
 
 test('should emit bundle analyze report correctly when build', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly();

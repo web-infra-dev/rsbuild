@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { dev, expect, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 import type { RspackChain } from '@rsbuild/core';
 
 // use source-map for easy to test. By default, Rsbuild use hidden-source-map
@@ -54,10 +54,7 @@ test('should inline all scripts and emit all source maps', async ({
   ).toEqual(3);
 });
 
-test('should inline scripts when matching a RegExp', async ({
-  build,
-  buildOnly,
-}) => {
+test('should inline scripts when matching a RegExp', async ({ buildOnly }) => {
   const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
@@ -83,7 +80,6 @@ test('should inline scripts when matching a RegExp', async ({
 });
 
 test('should inline scripts based on filename and size', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly({
@@ -112,10 +108,7 @@ test('should inline scripts based on filename and size', async ({
   ).toBeGreaterThanOrEqual(2);
 });
 
-test('should inline styles when matching a RegExp', async ({
-  build,
-  buildOnly,
-}) => {
+test('should inline styles when matching a RegExp', async ({ buildOnly }) => {
   const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
@@ -135,7 +128,6 @@ test('should inline styles when matching a RegExp', async ({
 });
 
 test('should inline styles based on filename and size', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly({
@@ -158,10 +150,8 @@ test('should inline styles based on filename and size', async ({
   ).toEqual(0);
 });
 
-test('should not inline styles by default in dev', async ({ page }) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
+test('should not inline styles by default in dev', async ({ page, dev }) => {
+  await dev({
     rsbuildConfig: {
       tools: toolsConfig,
     },
@@ -175,10 +165,11 @@ test('should not inline styles by default in dev', async ({ page }) => {
   ).resolves.toEqual(1);
 });
 
-test('should inline styles in dev when matching a RegExp', async ({ page }) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
+test('should inline styles in dev when matching a RegExp', async ({
+  page,
+  dev,
+}) => {
+  await dev({
     rsbuildConfig: {
       output: {
         inlineStyles: {
@@ -200,10 +191,9 @@ test('should inline styles in dev when matching a RegExp', async ({ page }) => {
 
 test('should inline styles in dev based on filename and size', async ({
   page,
+  dev,
 }) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
+  await dev({
     rsbuildConfig: {
       output: {
         inlineStyles: {
@@ -225,10 +215,7 @@ test('should inline styles in dev based on filename and size', async ({
   ).resolves.toEqual(0);
 });
 
-test('should not inline scripts when disabled', async ({
-  build,
-  buildOnly,
-}) => {
+test('should not inline scripts when disabled', async ({ buildOnly }) => {
   const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
@@ -256,7 +243,7 @@ test('should not inline scripts when disabled', async ({
   ).toBeGreaterThanOrEqual(2);
 });
 
-test('should not inline styles when disabled', async ({ build, buildOnly }) => {
+test('should not inline styles when disabled', async ({ buildOnly }) => {
   const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
@@ -279,7 +266,6 @@ test('should not inline styles when disabled', async ({ build, buildOnly }) => {
 });
 
 test('should inline assets in build when enable is auto', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly({
@@ -322,10 +308,9 @@ test('should inline assets in build when enable is auto', async ({
 
 test('should not inline assets in dev when enable is auto', async ({
   page,
+  dev,
 }) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
+  await dev({
     rsbuildConfig: {
       output: {
         inlineScripts: {
@@ -358,10 +343,9 @@ test('should not inline assets in dev when enable is auto', async ({
 
 test('should not inline scripts or styles in dev by default when enable is unset', async ({
   page,
+  dev,
 }) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
+  await dev({
     rsbuildConfig: {
       tools: toolsConfig,
       output: {

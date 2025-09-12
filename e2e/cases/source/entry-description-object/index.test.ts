@@ -1,7 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
 test('should support configuring an entry description object', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly();

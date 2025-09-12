@@ -4,7 +4,6 @@ import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 
 test('should allow to use tools.htmlPlugin to modify HTML plugin options', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly({
@@ -30,7 +29,6 @@ test('should allow to use tools.htmlPlugin to modify HTML plugin options', async
 });
 
 test('should allow to use tools.htmlPlugin to return a new config object', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly({

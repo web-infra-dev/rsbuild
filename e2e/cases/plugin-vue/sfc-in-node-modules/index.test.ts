@@ -4,7 +4,7 @@ import fse from 'fs-extra';
 
 rspackOnlyTest(
   'should transpile Vue SFC in node_modules correctly',
-  async ({ build, buildOnly }) => {
+  async ({ buildOnly }) => {
     fse.outputFileSync(
       path.resolve(__dirname, 'node_modules/foo/package.json'),
       JSON.stringify({

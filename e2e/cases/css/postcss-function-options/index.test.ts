@@ -1,7 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
 test('should allow to use `postcssOptions` function to apply different postcss config for different files', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly();

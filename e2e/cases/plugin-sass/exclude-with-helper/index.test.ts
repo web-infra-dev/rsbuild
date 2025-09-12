@@ -1,7 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
 test('should exclude specified Sass files using addExcludes', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly({

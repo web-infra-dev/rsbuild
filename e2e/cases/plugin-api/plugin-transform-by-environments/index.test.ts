@@ -1,7 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
 test('should allow plugin to transform code by environments', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly();

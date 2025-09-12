@@ -23,10 +23,7 @@ function writeDuplicatedPackage(flag: string) {
   );
 }
 
-test('should dedupe specified packages as expected', async ({
-  build,
-  buildOnly,
-}) => {
+test('should dedupe specified packages as expected', async ({ buildOnly }) => {
   const flag = 'This is fake React';
   writeDuplicatedPackage(flag);
 

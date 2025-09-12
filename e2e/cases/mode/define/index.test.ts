@@ -143,7 +143,7 @@ test('should define vars in none mode correctly', async ({ page, build }) => {
 
 rspackOnlyTest(
   'should allow to disable NODE_ENV injection',
-  async ({ build, buildOnly }) => {
+  async ({ buildOnly }) => {
     const rsbuild = await buildOnly({
       rsbuildConfig: {
         mode: 'production',

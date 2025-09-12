@@ -1,7 +1,7 @@
 import { expect, test } from '@e2e/helper';
 import { cases, copyPkgToNodeModules, findEntry, shareTest } from './helper';
 
-test('should import with template config', async ({ build, buildOnly }) => {
+test('should import with template config', async ({ buildOnly }) => {
   copyPkgToNodeModules();
 
   const rsbuild = await buildOnly({
@@ -26,7 +26,7 @@ test('should import with template config', async ({ build, buildOnly }) => {
   expect(files[entry]).toContain('transformImport test succeed');
 });
 
-test('should not transformImport by default', async ({ build, buildOnly }) => {
+test('should not transformImport by default', async ({ buildOnly }) => {
   copyPkgToNodeModules();
 
   const rsbuild = await buildOnly({

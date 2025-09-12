@@ -1,7 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
 test('should allow to generate HTML with filename hash using filename.html', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly({
@@ -23,7 +22,6 @@ test('should allow to generate HTML with filename hash using filename.html', asy
 });
 
 test('should allow to generate HTML with filename hash using tools.htmlPlugin', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly({

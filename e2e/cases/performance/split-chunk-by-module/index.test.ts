@@ -4,7 +4,6 @@ import { expect, test } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 test('should generate module chunks when chunkSplit is "split-by-module"', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly({

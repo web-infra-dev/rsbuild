@@ -1,7 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
 test('should merge `postcssOptions` function with `postcss.config.ts` as expected', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly();

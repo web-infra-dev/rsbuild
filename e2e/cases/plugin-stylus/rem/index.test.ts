@@ -2,10 +2,9 @@ import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should compile stylus and rem correctly',
-  async ({ build, buildOnly }) => {
+  async ({ buildOnly }) => {
     const rsbuild = await buildOnly();
     const files = rsbuild.getDistFiles();
-
     const content =
       files[Object.keys(files).find((file) => file.endsWith('.css'))!];
 

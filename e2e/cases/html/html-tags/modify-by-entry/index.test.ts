@@ -1,11 +1,7 @@
 import { expect, test } from '@e2e/helper';
 
-test('should allow to inject tags by entry name', async ({
-  build,
-  buildOnly,
-}) => {
+test('should allow to inject tags by entry name', async ({ buildOnly }) => {
   const rsbuild = await buildOnly();
-
   const files = rsbuild.getDistFiles();
 
   const fooHTML =

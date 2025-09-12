@@ -1,9 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('should render conditional statement correctly', async ({
-  build,
-  buildOnly,
-}) => {
+test('should render conditional statement correctly', async ({ buildOnly }) => {
   const rsbuild = await buildOnly();
   const files = rsbuild.getDistFiles();
 

@@ -21,7 +21,7 @@ rspackOnlyTest(
 
 rspackOnlyTest(
   'should allow to use html-loader in production',
-  async ({ build, buildOnly }) => {
+  async ({ buildOnly }) => {
     const rsbuild = await buildOnly();
 
     const files = rsbuild.getDistFiles();

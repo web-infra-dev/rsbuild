@@ -2,7 +2,7 @@ import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should add vendor prefixes by current browserslist',
-  async ({ build, buildOnly }) => {
+  async ({ buildOnly }) => {
     const rsbuild = await buildOnly();
     const files = rsbuild.getDistFiles();
 

@@ -1,5 +1,4 @@
 import type { BuildResult } from '@e2e/helper';
-
 import { expect, test } from '@e2e/helper';
 
 const cwd = __dirname;
@@ -19,10 +18,7 @@ const expectConsoleType = async (
   }
 };
 
-test('should remove specified console correctly', async ({
-  build,
-  buildOnly,
-}) => {
+test('should remove specified console correctly', async ({ buildOnly }) => {
   const rsbuild = await buildOnly({
     cwd,
     rsbuildConfig: {
@@ -40,7 +36,7 @@ test('should remove specified console correctly', async ({
   });
 });
 
-test('should remove all console correctly', async ({ build, buildOnly }) => {
+test('should remove all console correctly', async ({ buildOnly }) => {
   const rsbuild = await buildOnly({
     cwd,
     rsbuildConfig: {

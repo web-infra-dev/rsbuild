@@ -1,9 +1,7 @@
 import { expect, test } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-const fixtures = __dirname;
-
-test('should split react chunks correctly', async ({ build, buildOnly }) => {
+test('should split react chunks correctly', async ({ buildOnly }) => {
   const rsbuild = await buildOnly({
     plugins: [pluginReact()],
   });
@@ -15,7 +13,6 @@ test('should split react chunks correctly', async ({ build, buildOnly }) => {
 });
 
 test('should not split react chunks when strategy is `all-in-one`', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly({
@@ -35,10 +32,7 @@ test('should not split react chunks when strategy is `all-in-one`', async ({
   expect(filesNames.find((file) => file.includes('lib-router'))).toBeFalsy();
 });
 
-test('should not override user defined cache groups', async ({
-  build,
-  buildOnly,
-}) => {
+test('should not override user defined cache groups', async ({ buildOnly }) => {
   const rsbuild = await buildOnly({
     plugins: [pluginReact()],
     rsbuildConfig: {

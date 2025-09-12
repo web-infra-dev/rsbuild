@@ -1,6 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('should allow to custom HTML filename', async ({ build, buildOnly }) => {
+test('should allow to custom HTML filename', async ({ buildOnly }) => {
   const rsbuild = await buildOnly();
 
   const files = rsbuild.getDistFiles();

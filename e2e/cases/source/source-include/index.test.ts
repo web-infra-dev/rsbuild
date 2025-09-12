@@ -1,7 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
 test('should compile modules outside of project by default', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly({

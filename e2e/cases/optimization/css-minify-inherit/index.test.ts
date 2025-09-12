@@ -2,7 +2,7 @@ import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should let lightningcss minimizer inherit from tools.lightningcssLoader',
-  async ({ dev, build, buildOnly }) => {
+  async ({ dev, buildOnly }) => {
     const rsbuild = await dev();
     const devFiles = rsbuild.getDistFiles();
     const devContent =

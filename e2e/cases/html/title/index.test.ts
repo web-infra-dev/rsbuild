@@ -2,10 +2,7 @@ import path from 'node:path';
 
 import { expect, test } from '@e2e/helper';
 
-test('should generate default title correctly', async ({
-  build,
-  buildOnly,
-}) => {
+test('should generate default title correctly', async ({ buildOnly }) => {
   const rsbuild = await buildOnly({
     rsbuildConfig: {
       source: {
@@ -21,7 +18,6 @@ test('should generate default title correctly', async ({
 });
 
 test('should allow setting empty title to unset the default title', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly({
@@ -41,7 +37,7 @@ test('should allow setting empty title to unset the default title', async ({
   expect(html).not.toContain('<title>');
 });
 
-test('should generate title correctly', async ({ build, buildOnly }) => {
+test('should generate title correctly', async ({ buildOnly }) => {
   const rsbuild = await buildOnly({
     rsbuildConfig: {
       source: {
@@ -60,7 +56,6 @@ test('should generate title correctly', async ({ build, buildOnly }) => {
 });
 
 test('should generate title correctly when using custom HTML template', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly({
@@ -82,7 +77,6 @@ test('should generate title correctly when using custom HTML template', async ({
 });
 
 test('should generate title correctly when using htmlPlugin.options.title', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly({
@@ -103,10 +97,7 @@ test('should generate title correctly when using htmlPlugin.options.title', asyn
   expect(html).toContain('<title>foo</title>');
 });
 
-test('should generate title via function correctly', async ({
-  build,
-  buildOnly,
-}) => {
+test('should generate title via function correctly', async ({ buildOnly }) => {
   const rsbuild = await buildOnly({
     rsbuildConfig: {
       source: {
@@ -134,7 +125,6 @@ test('should generate title via function correctly', async ({
 });
 
 test('should not inject title if template already contains a title', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly({

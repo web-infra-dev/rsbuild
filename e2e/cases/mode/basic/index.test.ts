@@ -1,7 +1,6 @@
 import { dev, expect, rspackOnlyTest, test } from '@e2e/helper';
 
 test('should allow to set development mode when building', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly({
@@ -30,10 +29,7 @@ test('should allow to set development mode when building', async ({
   expect(indexSourceMap).toBeTruthy();
 });
 
-test('should allow to set none mode when building', async ({
-  build,
-  buildOnly,
-}) => {
+test('should allow to set none mode when building', async ({ buildOnly }) => {
   const rsbuild = await buildOnly({
     rsbuildConfig: {
       mode: 'none',

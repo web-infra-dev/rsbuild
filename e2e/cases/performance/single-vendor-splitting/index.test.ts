@@ -3,7 +3,6 @@ import { basename } from 'node:path';
 import { expect, test } from '@e2e/helper';
 
 test('should support `forceSplitting` when chunkSplit is "single-vendor"', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly();

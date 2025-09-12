@@ -5,7 +5,6 @@ import {
   getDistFiles,
   mapSourceMapPositions,
   rspackOnlyTest,
-  test,
 } from '@e2e/helper';
 
 const expectSourceMap = async (files: Record<string, string>) => {
@@ -51,7 +50,7 @@ const expectSourceMap = async (files: Record<string, string>) => {
 
 rspackOnlyTest(
   'should merge source map when plugin transforms code in build',
-  async ({ build, buildOnly }) => {
+  async ({ buildOnly }) => {
     const rsbuild = await buildOnly();
     const files = rsbuild.getDistFiles({ sourceMaps: true });
 

@@ -1,7 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
 test('should allow to use the legacy `source.alias` config', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly();

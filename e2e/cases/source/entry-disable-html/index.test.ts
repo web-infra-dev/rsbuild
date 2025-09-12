@@ -1,7 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
 test('should disable HTML generation for specific entries', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly();

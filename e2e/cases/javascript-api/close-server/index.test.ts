@@ -9,7 +9,6 @@ test('should support calling `close()` multiple times in dev', async ({
 });
 
 test('should support calling `close()` multiple times in preview', async ({
-  build,
   buildOnly,
 }) => {
   const result = await buildOnly();

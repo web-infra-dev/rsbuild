@@ -1,9 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('should allow to set alias by build target', async ({
-  build,
-  buildOnly,
-}) => {
+test('should allow to set alias by build target', async ({ buildOnly }) => {
   const rsbuild = await buildOnly();
 
   const files = rsbuild.getDistFiles();

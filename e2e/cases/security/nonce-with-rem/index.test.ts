@@ -1,9 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('should inject rem runtime code with nonce', async ({
-  build,
-  buildOnly,
-}) => {
+test('should inject rem runtime code with nonce', async ({ buildOnly }) => {
   const rsbuild = await buildOnly();
   const files = rsbuild.getDistFiles();
   const html =

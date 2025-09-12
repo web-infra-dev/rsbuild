@@ -4,10 +4,7 @@ import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
 
-test('should copy asset to dist folder correctly', async ({
-  build,
-  buildOnly,
-}) => {
+test('should copy asset to dist folder correctly', async ({ buildOnly }) => {
   await buildOnly({
     rsbuildConfig: {
       output: {
@@ -23,7 +20,6 @@ test('should copy asset to dist folder correctly', async ({
 });
 
 test('should copy asset from src to dist folder correctly', async ({
-  build,
   buildOnly,
 }) => {
   await buildOnly({
@@ -40,7 +36,6 @@ test('should copy asset from src to dist folder correctly', async ({
 });
 
 test('should copy asset to dist sub-folder correctly', async ({
-  build,
   buildOnly,
 }) => {
   await buildOnly({
@@ -57,7 +52,7 @@ test('should copy asset to dist sub-folder correctly', async ({
   expect(fs.existsSync(join(__dirname, 'dist-1/foo/icon.png'))).toBeTruthy();
 });
 
-test('should merge copy config correctly', async ({ build, buildOnly }) => {
+test('should merge copy config correctly', async ({ buildOnly }) => {
   const rsbuildPlugin = (): RsbuildPlugin => ({
     name: 'example',
     setup(api) {

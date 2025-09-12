@@ -1,7 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
 test('should throw error when `output.target` is invalid', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly({

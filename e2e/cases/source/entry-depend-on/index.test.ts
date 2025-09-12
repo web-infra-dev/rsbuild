@@ -2,7 +2,6 @@ import { expect, gotoPage, test } from '@e2e/helper';
 
 test('should support an entry description object with dependOn', async ({
   page,
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly({

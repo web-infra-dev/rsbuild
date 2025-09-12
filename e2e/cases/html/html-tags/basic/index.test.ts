@@ -1,6 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('should inject tags correctly', async ({ build, buildOnly }) => {
+test('should inject tags correctly', async ({ buildOnly }) => {
   const rsbuild = await buildOnly();
 
   const files = rsbuild.getDistFiles();

@@ -34,7 +34,7 @@ test('should preserve the expected script injection order', async ({
 
 rspackOnlyTest(
   'should set inject via function correctly',
-  async ({ build, buildOnly }) => {
+  async ({ buildOnly }) => {
     const rsbuild = await buildOnly({
       rsbuildConfig: {
         source: {

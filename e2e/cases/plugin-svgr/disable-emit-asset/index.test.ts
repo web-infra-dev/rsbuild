@@ -1,7 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
 test('should import svg with SVGR plugin and query URL correctly', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly();

@@ -1,7 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
 test('should generate tailwindcss utilities correctly', async ({
-  build,
   buildOnly,
 }) => {
   const rsbuild = await buildOnly();

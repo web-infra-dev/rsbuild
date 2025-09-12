@@ -163,7 +163,6 @@ test('should serve publicDir for preview server correctly', async ({
 });
 
 test('should copy publicDir to the environment distDir when multiple environments', async ({
-  build,
   buildOnly,
 }) => {
   await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');
@@ -218,7 +217,6 @@ test('should copy publicDir to the environment distDir when multiple environment
 });
 
 test('should copy publicDir to the node distDir when copyOnBuild is specified as true', async ({
-  build,
   buildOnly,
 }) => {
   await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');
@@ -254,7 +252,6 @@ test('should copy publicDir to the node distDir when copyOnBuild is specified as
 });
 
 test('should copy publicDir to root dist when environment dist path has a parent-child relationship', async ({
-  build,
   buildOnly,
 }) => {
   await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');

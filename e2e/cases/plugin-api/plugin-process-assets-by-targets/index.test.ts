@@ -21,7 +21,7 @@ rspackOnlyTest(
 
 rspackOnlyTest(
   'should not process assets when target is not web',
-  async ({ build, buildOnly }) => {
+  async ({ buildOnly }) => {
     const rsbuild = await buildOnly({
       rsbuildConfig: {
         output: {

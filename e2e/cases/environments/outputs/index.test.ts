@@ -1,9 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('should apply multiple dist path correctly', async ({
-  build,
-  buildOnly,
-}) => {
+test('should apply multiple dist path correctly', async ({ buildOnly }) => {
   const rsbuild = await buildOnly({
     rsbuildConfig: {
       environments: {
