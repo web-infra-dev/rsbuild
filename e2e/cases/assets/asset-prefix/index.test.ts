@@ -1,10 +1,7 @@
-import { build, dev } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
-test('should allow dev.assetPrefix to be `auto`', async ({ page }) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
+test('should allow dev.assetPrefix to be `auto`', async ({ page, dev }) => {
+  await dev({
     rsbuildConfig: {
       dev: {
         assetPrefix: 'auto',
@@ -17,14 +14,10 @@ test('should allow dev.assetPrefix to be `auto`', async ({ page }) => {
 
   const testEl2 = page.locator('#test2');
   await expect(testEl2).toHaveText('auto');
-
-  await rsbuild.close();
 });
 
-test('should allow dev.assetPrefix to be true', async ({ page }) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
+test('should allow dev.assetPrefix to be true', async ({ page, dev }) => {
+  const result = await dev({
     rsbuildConfig: {
       dev: {
         assetPrefix: true,
@@ -33,16 +26,14 @@ test('should allow dev.assetPrefix to be true', async ({ page }) => {
   });
 
   const testEl = page.locator('#test');
-  await expect(testEl).toHaveText(`http://localhost:${rsbuild.port}`);
-  await rsbuild.close();
+  await expect(testEl).toHaveText(`http://localhost:${result.port}`);
 });
 
 test('should allow dev.assetPrefix to have <port> placeholder', async ({
   page,
+  dev,
 }) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
+  const result = await dev({
     rsbuildConfig: {
       dev: {
         assetPrefix: 'http://localhost:<port>/',
@@ -51,18 +42,17 @@ test('should allow dev.assetPrefix to have <port> placeholder', async ({
   });
 
   const testEl = page.locator('#test');
-  await expect(testEl).toHaveText(`http://localhost:${rsbuild.port}`);
+  await expect(testEl).toHaveText(`http://localhost:${result.port}`);
 
   const testEl2 = page.locator('#test2');
-  await expect(testEl2).toHaveText(`http://localhost:${rsbuild.port}`);
-
-  await rsbuild.close();
+  await expect(testEl2).toHaveText(`http://localhost:${result.port}`);
 });
 
-test('should allow output.assetPrefix to be `auto`', async ({ page }) => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    page,
+test('should allow output.assetPrefix to be `auto`', async ({
+  page,
+  build,
+}) => {
+  await build({
     rsbuildConfig: {
       output: {
         assetPrefix: 'auto',
@@ -72,15 +62,13 @@ test('should allow output.assetPrefix to be `auto`', async ({ page }) => {
 
   const testEl = page.locator('#test');
   await expect(testEl).toHaveText('auto');
-  await rsbuild.close();
 });
 
 test('should inject assetPrefix to env var and template correctly', async ({
   page,
+  build,
 }) => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    page,
+  await build({
     rsbuildConfig: {
       html: {
         template: './src/template.html',
@@ -94,12 +82,10 @@ test('should inject assetPrefix to env var and template correctly', async ({
 
   await expect(page.locator('#prefix1')).toHaveText('http://example.com');
   await expect(page.locator('#prefix2')).toHaveText('http://example.com');
-  await rsbuild.close();
 });
 
-test('should use output.assetPrefix in none mode', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should use output.assetPrefix in none mode', async ({ buildOnly }) => {
+  const result = await buildOnly({
     rsbuildConfig: {
       mode: 'none',
       dev: {
@@ -111,7 +97,7 @@ test('should use output.assetPrefix in none mode', async () => {
     },
   });
 
-  const files = rsbuild.getDistFiles();
+  const files = result.getDistFiles();
   const indexHtml =
     files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
   expect(indexHtml).toContain('http://prod.com');

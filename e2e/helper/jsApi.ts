@@ -123,15 +123,7 @@ const collectOutputFiles = (rsbuild: RsbuildInstance) => {
   return () => outputFiles;
 };
 
-/**
- * Start the dev server and return the server instance.
- */
-export async function dev({
-  plugins,
-  page,
-  waitFirstCompileDone = true,
-  ...options
-}: CreateRsbuildOptions & {
+export type DevOptions = CreateRsbuildOptions & {
   plugins?: RsbuildPlugins;
   rsbuildConfig?: RsbuildConfig;
   /**
@@ -145,7 +137,17 @@ export async function dev({
    * @default true
    */
   waitFirstCompileDone?: boolean;
-}) {
+};
+
+/**
+ * Start the dev server and return the server instance.
+ */
+export async function dev({
+  plugins,
+  page,
+  waitFirstCompileDone = true,
+  ...options
+}: DevOptions = {}) {
   process.env.NODE_ENV = 'development';
 
   const logHelper = proxyConsole();
@@ -193,17 +195,7 @@ export async function dev({
   };
 }
 
-/**
- * Build the project and return the build result.
- */
-export async function build({
-  plugins,
-  catchBuildError = false,
-  runServer = false,
-  watch = false,
-  page,
-  ...options
-}: CreateRsbuildOptions & {
+export type BuildOptions = CreateRsbuildOptions & {
   plugins?: RsbuildPlugins;
   rsbuildConfig?: RsbuildConfig;
   /**
@@ -225,7 +217,19 @@ export async function build({
    * Whether to watch files.
    */
   watch?: boolean;
-}) {
+};
+
+/**
+ * Build the project and return the build result.
+ */
+export async function build({
+  plugins,
+  catchBuildError = false,
+  runServer = false,
+  watch = false,
+  page,
+  ...options
+}: BuildOptions = {}) {
   process.env.NODE_ENV = 'production';
 
   const logHelper = proxyConsole();
@@ -258,9 +262,9 @@ export async function build({
   let server = { close: noop };
 
   if (runServer || page) {
-    const ret = await rsbuild.preview();
-    port = ret.port;
-    server = ret.server;
+    const result = await rsbuild.preview();
+    port = result.port;
+    server = result.server;
   }
 
   const getIndexBundle = async () => {
@@ -294,3 +298,4 @@ export async function build({
 }
 
 export type BuildResult = Awaited<ReturnType<typeof build>>;
+export type DevResult = Awaited<ReturnType<typeof dev>>;
