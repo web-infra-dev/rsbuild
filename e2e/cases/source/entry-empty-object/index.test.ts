@@ -6,11 +6,11 @@ test('should set default entry when entry is set to an empty object', async () =
     cwd: __dirname,
   });
 
-  const outputs = rsbuild.getDistFiles();
-  const outputFiles = Object.keys(outputs);
+  const files = rsbuild.getDistFiles();
+  const filenames = Object.keys(files);
 
   expect(
-    outputFiles.find((item) => item.includes('static/js/index.')),
+    filenames.find((item) => item.includes('static/js/index.')),
   ).toBeTruthy();
 
   await rsbuild.close();

@@ -6,11 +6,11 @@ test('should allow to custom HTML filename', async () => {
     cwd: __dirname,
   });
 
-  const outputs = rsbuild.getDistFiles();
-  const fooFile = Object.keys(outputs).find((item) =>
+  const files = rsbuild.getDistFiles();
+  const fooFile = Object.keys(files).find((item) =>
     item.includes('custom-foo.html'),
   );
-  const barFile = Object.keys(outputs).find((item) =>
+  const barFile = Object.keys(files).find((item) =>
     item.includes('custom-bar.html'),
   );
   expect(fooFile).toBeTruthy();

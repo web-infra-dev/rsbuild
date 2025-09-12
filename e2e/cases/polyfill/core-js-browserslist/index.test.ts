@@ -10,8 +10,8 @@ test('should read browserslist for development env correctly', async ({
     page,
   });
 
-  const outputs = rsbuild.getDistFiles({ sourceMaps: true });
-  const content = getPolyfillContent(outputs);
+  const files = rsbuild.getDistFiles({ sourceMaps: true });
+  const content = getPolyfillContent(files);
 
   expect(content.includes('es.string.replace-all')).toBeFalsy();
   await rsbuild.close();
@@ -22,8 +22,8 @@ test('should read browserslist for production env correctly', async () => {
     cwd: __dirname,
   });
 
-  const outputs = rsbuild.getDistFiles({ sourceMaps: true });
-  const content = getPolyfillContent(outputs);
+  const files = rsbuild.getDistFiles({ sourceMaps: true });
+  const content = getPolyfillContent(files);
 
   expect(content.includes('es.string.replace-all')).toBeTruthy();
   await rsbuild.close();

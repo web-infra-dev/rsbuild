@@ -13,8 +13,8 @@ test('should allow to generate HTML with filename hash using filename.html', asy
     },
   });
 
-  const outputs = rsbuild.getDistFiles();
-  const htmlFilename = Object.keys(outputs).find((item) =>
+  const files = rsbuild.getDistFiles();
+  const htmlFilename = Object.keys(files).find((item) =>
     item.endsWith('.html'),
   );
 
@@ -35,8 +35,8 @@ test('should allow to generate HTML with filename hash using tools.htmlPlugin', 
     },
   });
 
-  const outputs = rsbuild.getDistFiles();
-  const htmlFilename = Object.keys(outputs).find((item) =>
+  const files = rsbuild.getDistFiles();
+  const htmlFilename = Object.keys(files).find((item) =>
     item.endsWith('.html'),
   );
 

@@ -6,14 +6,14 @@ test('should support configuring an entry description object', async () => {
     cwd: __dirname,
   });
 
-  const outputs = rsbuild.getDistFiles();
-  const outputFiles = Object.keys(outputs);
+  const files = rsbuild.getDistFiles();
+  const filenames = Object.keys(files);
 
   expect(
-    outputFiles.find((item) => item.includes('static/js/foo.')),
+    filenames.find((item) => item.includes('static/js/foo.')),
   ).toBeTruthy();
   expect(
-    outputFiles.find((item) => item.includes('static/js/bar.')),
+    filenames.find((item) => item.includes('static/js/bar.')),
   ).toBeTruthy();
 
   await rsbuild.close();

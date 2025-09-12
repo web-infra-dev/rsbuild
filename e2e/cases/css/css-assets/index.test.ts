@@ -6,11 +6,11 @@ test('should build CSS assets correctly', async () => {
     cwd: __dirname,
   });
 
-  const outputs = rsbuild.getDistFiles();
-  const outputFiles = Object.keys(outputs);
+  const files = rsbuild.getDistFiles();
+  const filenames = Object.keys(files);
 
   expect(
-    outputFiles.find(
+    filenames.find(
       (item) => item.includes('static/image/image') && item.endsWith('.jpeg'),
     ),
   ).toBeTruthy();
