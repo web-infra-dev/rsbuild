@@ -1,7 +1,12 @@
 import fs from 'node:fs';
 import path, { join } from 'node:path';
-import { createRsbuild, proxyConsole, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import {
+  createRsbuild,
+  expect,
+  proxyConsole,
+  rspackOnlyTest,
+  test,
+} from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import { remove, removeSync } from 'fs-extra';
 

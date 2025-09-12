@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { rspackOnlyTest, runCliSync } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest, runCliSync } from '@e2e/helper';
 
 rspackOnlyTest(
   'should allow to custom env prefix via loadEnv method',

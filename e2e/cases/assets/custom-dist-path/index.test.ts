@@ -1,10 +1,9 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
-test('should support custom dist paths for different file types', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
-  });
+test('should support custom dist paths for different file types', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly();
 
   const files = rsbuild.getDistFiles();
   const filenames = Object.keys(files);

@@ -1,5 +1,4 @@
-import { type BuildResult, build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { type BuildResult, expect, rspackOnlyTest } from '@e2e/helper';
 
 declare global {
   interface Window {
@@ -18,10 +17,8 @@ const expectCSSContext = async (rsbuild: BuildResult) => {
 
 rspackOnlyTest(
   'should compile CSS Modules with exportLocalsConvention camelCaseOnly',
-  async ({ page }) => {
+  async ({ page, build }) => {
     const rsbuild = await build({
-      cwd: __dirname,
-      page,
       rsbuildConfig: {
         output: {
           cssModules: {
@@ -39,17 +36,13 @@ rspackOnlyTest(
       'theCamelClass',
       'theUnderscoreClass',
     ]);
-
-    await rsbuild.close();
   },
 );
 
 rspackOnlyTest(
   'should compile CSS Modules with exportLocalsConvention camelCase',
-  async ({ page }) => {
+  async ({ page, build }) => {
     const rsbuild = await build({
-      cwd: __dirname,
-      page,
       rsbuildConfig: {
         output: {
           cssModules: {
@@ -69,17 +62,13 @@ rspackOnlyTest(
       'the_underscore_class',
       'theUnderscoreClass',
     ]);
-
-    await rsbuild.close();
   },
 );
 
 rspackOnlyTest(
   'should compile CSS Modules with exportLocalsConvention dashes',
-  async ({ page }) => {
+  async ({ page, build }) => {
     const rsbuild = await build({
-      cwd: __dirname,
-      page,
       rsbuildConfig: {
         output: {
           cssModules: {
@@ -98,17 +87,13 @@ rspackOnlyTest(
       'theCamelClass',
       'the_underscore_class',
     ]);
-
-    await rsbuild.close();
   },
 );
 
 rspackOnlyTest(
   'should compile CSS Modules with exportLocalsConvention dashesOnly',
-  async ({ page }) => {
+  async ({ page, build }) => {
     const rsbuild = await build({
-      cwd: __dirname,
-      page,
       rsbuildConfig: {
         output: {
           cssModules: {
@@ -126,17 +111,13 @@ rspackOnlyTest(
       'theCamelClass',
       'the_underscore_class',
     ]);
-
-    await rsbuild.close();
   },
 );
 
 rspackOnlyTest(
   'should compile CSS Modules with exportLocalsConvention asIs',
-  async ({ page }) => {
+  async ({ page, build }) => {
     const rsbuild = await build({
-      cwd: __dirname,
-      page,
       rsbuildConfig: {
         output: {
           cssModules: {
@@ -154,7 +135,5 @@ rspackOnlyTest(
       'theCamelClass',
       'the_underscore_class',
     ]);
-
-    await rsbuild.close();
   },
 );

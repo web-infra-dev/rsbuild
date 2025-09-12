@@ -1,12 +1,9 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should compile CSS Modules with default configuration',
-  async () => {
-    const rsbuild = await build({
-      cwd: __dirname,
-    });
+  async ({ buildOnly }) => {
+    const rsbuild = await buildOnly();
     const files = rsbuild.getDistFiles();
 
     const content =
@@ -20,9 +17,8 @@ rspackOnlyTest(
 
 rspackOnlyTest(
   'should compile CSS Modules with custom auto configuration',
-  async () => {
-    const rsbuild = await build({
-      cwd: __dirname,
+  async ({ buildOnly }) => {
+    const rsbuild = await buildOnly({
       rsbuildConfig: {
         output: {
           cssModules: {
@@ -46,9 +42,8 @@ rspackOnlyTest(
 
 rspackOnlyTest(
   'should compile CSS Modules with custom localIdentName pattern',
-  async () => {
-    const rsbuild = await build({
-      cwd: __dirname,
+  async ({ buildOnly }) => {
+    const rsbuild = await buildOnly({
       rsbuildConfig: {
         output: {
           cssModules: {
@@ -70,9 +65,8 @@ rspackOnlyTest(
 
 rspackOnlyTest(
   'should compile CSS Modules with custom hash digest format',
-  async () => {
-    const rsbuild = await build({
-      cwd: __dirname,
+  async ({ buildOnly }) => {
+    const rsbuild = await buildOnly({
       rsbuildConfig: {
         output: {
           cssModules: {

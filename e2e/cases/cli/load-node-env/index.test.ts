@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { rspackOnlyTest, runCliSync } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest, runCliSync } from '@e2e/helper';
 
 // see: https://github.com/web-infra-dev/rsbuild/issues/2904
 rspackOnlyTest(

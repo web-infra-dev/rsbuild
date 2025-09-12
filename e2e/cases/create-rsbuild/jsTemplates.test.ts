@@ -1,5 +1,4 @@
-import { rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 import { createAndValidate } from './helper';
 
 rspackOnlyTest('should create react project as expected', async () => {

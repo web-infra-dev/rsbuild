@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { rspackOnlyTest, runCliSync } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, rspackOnlyTest, runCliSync, test } from '@e2e/helper';
 import fse, { remove } from 'fs-extra';
 
 const localFile = path.join(__dirname, '.env.local');

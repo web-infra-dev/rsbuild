@@ -1,8 +1,7 @@
 import { exec } from 'node:child_process';
 import { access } from 'node:fs/promises';
 import path from 'node:path';
-import { CREATE_RSBUILD_BIN_PATH } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { CREATE_RSBUILD_BIN_PATH, expect } from '@e2e/helper';
 import fse from 'fs-extra';
 
 export const expectPackageJson = (

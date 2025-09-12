@@ -1,11 +1,8 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-test('should inline small assets automatically', async ({ page }) => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    page,
+test('should inline small assets automatically', async ({ page, build }) => {
+  await build({
     plugins: [pluginReact()],
   });
 
@@ -14,6 +11,4 @@ test('should inline small assets automatically', async ({ page }) => {
       `document.getElementById('test-img').src.startsWith('data:image/png')`,
     ),
   ).resolves.toBeTruthy();
-
-  await rsbuild.close();
 });

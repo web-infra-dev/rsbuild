@@ -1,14 +1,14 @@
 import path from 'node:path';
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
 function isIncludeFile(filenames: string[], includeFilename: string) {
   return filenames.some((filename) => filename.includes(includeFilename));
 }
 
-test('should support configuring additional assets matched by RegExp', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should support configuring additional assets matched by RegExp', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       source: {
         assetsInclude: [/\.json5$/],
@@ -30,9 +30,10 @@ test('should support configuring additional assets matched by RegExp', async () 
   ).toBeFalsy();
 });
 
-test('should support configuring additional assets matched by path', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should support configuring additional assets matched by path', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       source: {
         assetsInclude: path.resolve(__dirname, 'src/assets'),
@@ -54,9 +55,10 @@ test('should support configuring additional assets matched by path', async () =>
   ).toBeFalsy();
 });
 
-test('should support disabling emission for additional assets', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should support disabling emission for additional assets', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       source: {
         assetsInclude: [/\.json5$/],
