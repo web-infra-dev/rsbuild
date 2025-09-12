@@ -106,6 +106,10 @@ const collectOutputFiles = (rsbuild: RsbuildInstance) => {
     for (const compiler of compilers) {
       compiler.hooks.emit.tap('CollectAssetsPlugin', (compilation) => {
         for (const asset of compilation.getAssets()) {
+          // skip inlined assets
+          if (!asset.source) {
+            continue;
+          }
           const assetPath = join(
             compilation.options.output.path || '',
             asset.name,
