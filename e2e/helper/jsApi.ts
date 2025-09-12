@@ -9,10 +9,9 @@ import type {
   RsbuildPlugins,
 } from '@rsbuild/core';
 import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
-import { normalizeToPosixPath } from '@scripts/test-helper';
 import type { Page } from 'playwright';
 import { proxyConsole } from './logs';
-import { getRandomPort, gotoPage, noop } from './utils';
+import { getRandomPort, gotoPage, noop, toPosixPath } from './utils';
 
 export const createRsbuild = async (
   rsbuildOptions: CreateRsbuildOptions & { rsbuildConfig?: RsbuildConfig },
@@ -112,7 +111,7 @@ const collectOutputFiles = (rsbuild: RsbuildInstance) => {
             continue;
           }
           const outputPath = compilation.options.output.path;
-          const assetPath = normalizeToPosixPath(
+          const assetPath = toPosixPath(
             outputPath ? join(outputPath, asset.name) : asset.name,
           );
           outputFiles[assetPath] = asset.source.source().toString();

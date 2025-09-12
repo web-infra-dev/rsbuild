@@ -1166,9 +1166,6 @@ importers:
       typescript:
         specifier: ^5.9.2
         version: 5.9.2
-      upath:
-        specifier: 2.0.1
-        version: 2.0.1
     devDependencies:
       '@rslib/core':
         specifier: 0.13.0

@@ -1,4 +1,4 @@
-import { build } from '@e2e/helper';
+import { build, toPosixPath } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
@@ -21,11 +21,12 @@ function extractFileSizeLogs(logs: string[]) {
       // remove trailing spaces
       // replace Windows path sep with slash
       result.push(
-        log
-          .replace(/\.[a-z0-9]{8}\./g, '.[[hash]].')
-          .replace(/\d+\.\d+ kB/g, 'X.X kB')
-          .replace(/\s+$/gm, '')
-          .replace(/\\/g, '/'),
+        toPosixPath(
+          log
+            .replace(/\.[a-z0-9]{8}\./g, '.[[hash]].')
+            .replace(/\d+\.\d+ kB/g, 'X.X kB')
+            .replace(/\s+$/gm, ''),
+        ),
       );
     }
     if (isTotalSize) {
