@@ -1,10 +1,9 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
-test('should allow to configure options of CSSExtractPlugin', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
-  });
+test('should allow to configure options of CSSExtractPlugin', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly();
   const files = rsbuild.getDistFiles();
   const content =
     files[Object.keys(files).find((file) => file.endsWith('my-css.css'))!];

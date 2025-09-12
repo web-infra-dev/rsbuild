@@ -1,16 +1,13 @@
 import { resolve } from 'node:path';
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
-import { pluginReact } from '@rsbuild/plugin-react';
 
-const fixtures = resolve(__dirname);
+import { expect, test } from '@e2e/helper';
+import { pluginReact } from '@rsbuild/plugin-react';
 
 test('should inject styles and not emit CSS files when output.injectStyles is true', async ({
   page,
+  build,
 }) => {
   const rsbuild = await build({
-    cwd: fixtures,
-    page,
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
@@ -32,6 +29,4 @@ test('should inject styles and not emit CSS files when output.injectStyles is tr
   // less worked
   const title = page.locator('#title');
   await expect(title).toHaveCSS('font-size', '20px');
-
-  await rsbuild.close();
 });

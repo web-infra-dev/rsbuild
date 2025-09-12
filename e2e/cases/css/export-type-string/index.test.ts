@@ -1,4 +1,4 @@
-import { build, expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should allow to configure `cssLoader.exportType` as `string` in development',
@@ -24,11 +24,8 @@ rspackOnlyTest(
 
 rspackOnlyTest(
   'should allow to configure `cssLoader.exportType` as `string` in production',
-  async ({ page }) => {
-    const rsbuild = await build({
-      cwd: __dirname,
-      page,
-    });
+  async ({ page, build }) => {
+    await build();
 
     expect(await page.evaluate('window.a')).toBe(`.the-a-class {
   color: red;
@@ -42,7 +39,5 @@ rspackOnlyTest(
     expect(
       (await page.evaluate<string>('window.b')).includes('.the-b-class-'),
     ).toBeTruthy();
-
-    await rsbuild.close();
   },
 );

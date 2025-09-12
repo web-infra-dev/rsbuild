@@ -1,13 +1,11 @@
 import { join } from 'node:path';
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, rspackOnlyTest, test } from '@e2e/helper';
 
 test('should allow to use tools.bundlerChain to set alias config', async ({
   page,
+  build,
 }) => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    page,
+  await build({
     rsbuildConfig: {
       tools: {
         bundlerChain: (chain) => {
@@ -18,16 +16,13 @@ test('should allow to use tools.bundlerChain to set alias config', async ({
   });
 
   await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild! 1');
-
-  await rsbuild.close();
 });
 
 test('should allow to use async tools.bundlerChain to set alias config', async ({
   page,
+  build,
 }) => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    page,
+  await build({
     rsbuildConfig: {
       tools: {
         bundlerChain: async (chain) => {
@@ -43,16 +38,12 @@ test('should allow to use async tools.bundlerChain to set alias config', async (
   });
 
   await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild! 1');
-
-  await rsbuild.close();
 });
 
 rspackOnlyTest(
   'should allow to use rspack in tools.bundlerChain',
-  async ({ page }) => {
-    const rsbuild = await build({
-      cwd: __dirname,
-      page,
+  async ({ page, build }) => {
+    await build({
       rsbuildConfig: {
         tools: {
           bundlerChain: (chain, { rspack }) => {
@@ -70,7 +61,5 @@ rspackOnlyTest(
 
     const testEl = page.locator('#test-define');
     await expect(testEl).toHaveText('aaaaa');
-
-    await rsbuild.close();
   },
 );

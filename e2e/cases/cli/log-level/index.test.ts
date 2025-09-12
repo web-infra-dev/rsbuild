@@ -1,6 +1,5 @@
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
-import { rspackOnlyTest, runCliSync } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest, runCliSync } from '@e2e/helper';
 
 rspackOnlyTest('should run build command with log level: info', async () => {
   const result = stripAnsi(

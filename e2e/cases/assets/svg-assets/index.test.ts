@@ -1,11 +1,7 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
-test('should handle SVG assets in JS and CSS', async ({ page }) => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    page,
-  });
+test('should handle SVG assets in JS and CSS', async ({ page, build }) => {
+  await build();
 
   // test SVG asset
   await expect(
@@ -20,6 +16,4 @@ test('should handle SVG assets in JS and CSS', async ({ page }) => {
       `getComputedStyle(document.getElementById('test-css')).backgroundImage.includes('static/svg/mobile')`,
     ),
   ).resolves.toBeTruthy();
-
-  await rsbuild.close();
 });

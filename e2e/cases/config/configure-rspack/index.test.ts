@@ -1,12 +1,9 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should allow to use tools.rspack to configure Rspack',
-  async ({ page }) => {
-    const rsbuild = await build({
-      cwd: __dirname,
-      page,
+  async ({ page, build }) => {
+    await build({
       rsbuildConfig: {
         tools: {
           rspack: (config, { rspack }) => {
@@ -22,17 +19,13 @@ rspackOnlyTest(
 
     const testEl = page.locator('#test-el');
     await expect(testEl).toHaveText('aaaaa');
-
-    await rsbuild.close();
   },
 );
 
 rspackOnlyTest(
   'should allow to use async tools.rspack to configure Rspack',
-  async ({ page }) => {
-    const rsbuild = await build({
-      cwd: __dirname,
-      page,
+  async ({ page, build }) => {
+    await build({
       rsbuildConfig: {
         tools: {
           rspack: async (config, { rspack }) => {
@@ -53,7 +46,5 @@ rspackOnlyTest(
 
     const testEl = page.locator('#test-el');
     await expect(testEl).toHaveText('aaaaa');
-
-    await rsbuild.close();
   },
 );

@@ -1,12 +1,9 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should compile CSS Modules with named exports correctly',
-  async ({ page }) => {
+  async ({ page, build }) => {
     const rsbuild = await build({
-      cwd: __dirname,
-      page,
       rsbuildConfig: {
         output: {
           cssModules: {
@@ -28,6 +25,5 @@ rspackOnlyTest(
     const text = await root.innerHTML();
 
     expect(text).toMatch(/classA-\w{6} classB-\w{6} classC-\w{6}/);
-    await rsbuild.close();
   },
 );

@@ -1,7 +1,6 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 import { createAndValidate } from './helper';
 
 rspackOnlyTest('should create project with eslint as expected', async () => {

@@ -1,13 +1,11 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 test('should disable asset inlining with `?__inline=false`', async ({
   page,
+  build,
 }) => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    page,
+  await build({
     plugins: [pluginReact()],
   });
 
@@ -16,6 +14,4 @@ test('should disable asset inlining with `?__inline=false`', async ({
       `document.getElementById('test-img').src.includes('static/image/icon')`,
     ),
   ).resolves.toBeTruthy();
-
-  await rsbuild.close();
 });

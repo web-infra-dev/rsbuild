@@ -1,6 +1,10 @@
 import path from 'node:path';
-import { readDirContents, rspackOnlyTest, runCliSync } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import {
+  expect,
+  readDirContents,
+  rspackOnlyTest,
+  runCliSync,
+} from '@e2e/helper';
 import { remove } from 'fs-extra';
 
 rspackOnlyTest(

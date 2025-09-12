@@ -1,9 +1,9 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
-test('should not emit CSS files when build node target', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should not emit CSS files when build node target', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
         target: 'node',
@@ -21,9 +21,10 @@ test('should not emit CSS files when build node target', async () => {
   expect(cssFiles).toHaveLength(0);
 });
 
-test('should allow to emit CSS with output.emitCss when build node target', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should allow to emit CSS with output.emitCss when build node target', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
         target: 'node',
@@ -42,9 +43,10 @@ test('should allow to emit CSS with output.emitCss when build node target', asyn
   expect(cssFiles).toHaveLength(1);
 });
 
-test('should not emit CSS files when build web-worker target', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should not emit CSS files when build web-worker target', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
         target: 'web-worker',
@@ -62,9 +64,10 @@ test('should not emit CSS files when build web-worker target', async () => {
   expect(cssFiles).toHaveLength(0);
 });
 
-test('should allow to emit CSS with output.emitCss when build web-worker target', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should allow to emit CSS with output.emitCss when build web-worker target', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
         target: 'web-worker',
@@ -83,9 +86,10 @@ test('should allow to emit CSS with output.emitCss when build web-worker target'
   expect(cssFiles).toHaveLength(1);
 });
 
-test('should allow to disable CSS emit with output.emitCss when build web target', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
+test('should allow to disable CSS emit with output.emitCss when build web target', async ({
+  buildOnly,
+}) => {
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
         target: 'web',

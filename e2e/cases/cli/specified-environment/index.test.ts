@@ -1,6 +1,11 @@
 import { join } from 'node:path';
-import { readDirContents, rspackOnlyTest, runCliSync } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import {
+  expect,
+  readDirContents,
+  rspackOnlyTest,
+  runCliSync,
+  test,
+} from '@e2e/helper';
 import { remove } from 'fs-extra';
 
 const distPath = join(__dirname, 'dist');

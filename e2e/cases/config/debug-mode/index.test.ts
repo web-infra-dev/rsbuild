@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { build, dev } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { dev, expect, test } from '@e2e/helper';
 import { logger } from '@rsbuild/core';
 
 const getRsbuildConfig = (dist: string) =>
@@ -13,14 +12,15 @@ const getBundlerConfig = (dist: string) =>
     `./${dist}/.rsbuild/${process.env.PROVIDE_TYPE || 'rspack'}.config.web.mjs`,
   );
 
-test('should generate config files in debug mode when build', async () => {
+test('should generate config files in debug mode when build', async ({
+  buildOnly,
+}) => {
   const { level } = logger;
   logger.level = 'verbose';
   process.env.DEBUG = 'rsbuild';
 
   const distRoot = 'dist-1';
-  const rsbuild = await build({
-    cwd: __dirname,
+  const rsbuild = await buildOnly({
     rsbuildConfig: {
       output: {
         distPath: {
@@ -38,7 +38,6 @@ test('should generate config files in debug mode when build', async () => {
 
   delete process.env.DEBUG;
   logger.level = level;
-  await rsbuild.close();
 });
 
 test('should generate config files in debug mode when dev', async ({
@@ -69,5 +68,4 @@ test('should generate config files in debug mode when dev', async ({
 
   delete process.env.DEBUG;
   logger.level = level;
-  await rsbuild.close();
 });

@@ -1,7 +1,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { getRandomPort, gotoPage, rspackOnlyTest, runCli } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import {
+  expect,
+  getRandomPort,
+  gotoPage,
+  rspackOnlyTest,
+  runCli,
+  test,
+} from '@e2e/helper';
 
 const tempConfig = path.join(__dirname, 'test-temp-config.ts');
 

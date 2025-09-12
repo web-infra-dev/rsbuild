@@ -1,28 +1,25 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 const COMPILE_WARNING = 'Compile Warning';
 
-rspackOnlyTest('should allow to enable Rspack experiments.css', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
-  });
-  const files = rsbuild.getDistFiles();
-  const content =
-    files[Object.keys(files).find((file) => file.endsWith('index.css'))!];
+rspackOnlyTest(
+  'should allow to enable Rspack experiments.css',
+  async ({ buildOnly }) => {
+    const rsbuild = await buildOnly();
+    const files = rsbuild.getDistFiles();
+    const content =
+      files[Object.keys(files).find((file) => file.endsWith('index.css'))!];
 
-  expect(content).toEqual('body{color:red}');
-  // should have no warnings
-  rsbuild.expectNoLog(COMPILE_WARNING);
-
-  await rsbuild.close();
-});
+    expect(content).toEqual('body{color:red}');
+    // should have no warnings
+    rsbuild.expectNoLog(COMPILE_WARNING);
+  },
+);
 
 rspackOnlyTest(
   'should allow to enable Rspack experiments.css with style-loader',
-  async () => {
-    const rsbuild = await build({
-      cwd: __dirname,
+  async ({ buildOnly }) => {
+    const rsbuild = await buildOnly({
       rsbuildConfig: {
         output: {
           injectStyles: true,
@@ -37,7 +34,5 @@ rspackOnlyTest(
 
     // should have no warnings
     rsbuild.expectNoLog(COMPILE_WARNING);
-
-    await rsbuild.close();
   },
 );
