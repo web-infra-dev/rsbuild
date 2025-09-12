@@ -70,7 +70,7 @@ rspackOnlyTest(
       cwd: __dirname,
       page,
     });
-    const files = await getDistFiles(rsbuild.instance.context.distPath, true);
+    const files = await getDistFiles(rsbuild.distPath, true);
 
     await expectSourceMap(files);
     await rsbuild.close();

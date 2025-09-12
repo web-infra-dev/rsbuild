@@ -202,7 +202,7 @@ test('should copy publicDir to the environment distDir when multiple environment
       },
     },
   });
-  const files = await getDistFiles(rsbuild.instance.context.distPath);
+  const files = await getDistFiles(rsbuild.distPath);
   const filenames = Object.keys(files);
 
   expect(
@@ -245,7 +245,7 @@ test('should copy publicDir to the node distDir when copyOnBuild is specified as
       },
     },
   });
-  const files = await getDistFiles(rsbuild.instance.context.distPath);
+  const files = await getDistFiles(rsbuild.distPath);
   const filenames = Object.keys(files);
 
   expect(
@@ -280,7 +280,7 @@ test('should copy publicDir to root dist when environment dist path has a parent
       },
     },
   });
-  const files = await getDistFiles(rsbuild.instance.context.distPath);
+  const files = await getDistFiles(rsbuild.distPath);
   const filenames = Object.keys(files);
 
   expect(

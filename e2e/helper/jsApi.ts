@@ -177,9 +177,12 @@ export async function dev({
     await gotoPage(page, result);
   }
 
+  const { distPath } = rsbuild.context;
+
   return {
     ...result,
     ...logHelper,
+    distPath,
     instance: rsbuild,
     getDistFiles: ({ sourceMaps }: { sourceMaps?: boolean } = {}) =>
       sourceMaps ? getOutputFiles() : filterSourceMaps(getOutputFiles()),
