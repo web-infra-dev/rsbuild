@@ -35,7 +35,7 @@ You can force an asset to be inlined by adding the `inline` query when importing
 
 ```tsx
 import React from 'react';
-import img from '. /foo.png?inline';
+import img from './foo.png?inline';
 
 export default function Foo() {
   return <img src={img} />;
@@ -50,7 +50,7 @@ When you reference a static asset in your CSS file, you can also force inline th
 
 ```css
 .foo {
-  background-image: url('. /icon.png?inline');
+  background-image: url('./icon.png?inline');
 }
 ```
 
@@ -64,7 +64,7 @@ To prevent assets from being inlined and ensure they're always loaded as separat
 
 ```tsx
 import React from 'react';
-import img from '. /foo.png?url';
+import img from './foo.png?url';
 
 export default function Foo() {
   return <img src={img} />;
@@ -79,7 +79,7 @@ When you reference a static asset in your CSS file, you can also force the asset
 
 ```css
 .foo {
-  background-image: url('. /icon.png?url');
+  background-image: url('./icon.png?url');
 }
 ```
 
