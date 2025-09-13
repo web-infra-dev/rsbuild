@@ -1,10 +1,10 @@
 # CLI
 
-Rsbuild comes with a lightweight CLI that includes commands such as [rsbuild dev](#rsbuild-dev) and [rsbuild build](#rsbuild-build).
+Rsbuild includes a lightweight CLI with commands like [rsbuild dev](#rsbuild-dev) and [rsbuild build](#rsbuild-build).
 
 ## All commands
 
-To view all available CLI commands, run the following command in the project directory:
+To view all available CLI commands, run this command in your project directory:
 
 ```bash
 npx rsbuild -h
@@ -25,7 +25,7 @@ Commands:
 
 ## Common flags
 
-Rsbuild CLI includes several common flags that work with all commands:
+The Rsbuild CLI includes several common flags that work with all commands:
 
 | Flag                       | Description                                                                                                                       |
 | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
@@ -43,7 +43,7 @@ Rsbuild CLI includes several common flags that work with all commands:
 
 ## rsbuild dev
 
-The `rsbuild dev` command starts a local dev server and compiles the source code for development.
+The `rsbuild dev` command starts a local development server and compiles source code for development.
 
 ```bash
 Usage: rsbuild dev [options]
@@ -54,7 +54,7 @@ Options:
   --host <host>         Set the host that the server listens to
 ```
 
-You can also start the dev server by running `rsbuild` directly, which is equivalent to running `rsbuild dev`.
+You can also start the development server by running `rsbuild` directly, which is equivalent to running `rsbuild dev`.
 
 ```bash
 npx rsbuild
@@ -62,13 +62,13 @@ npx rsbuild
 
 ### Opening page
 
-The `--open` option automatically opens a page when starting the dev server, which is equivalent to setting [server.open](/config/server/open) to `true`.
+The `--open` option automatically opens a page when starting the development server, equivalent to setting [server.open](/config/server/open) to `true`.
 
 ```bash
 rsbuild dev --open
 ```
 
-The `--open` option also supports specifying the URL to be opened, for example:
+The `--open` option also supports specifying a URL to open, for example:
 
 ```bash
 rsbuild dev --open http://localhost:3000/foo

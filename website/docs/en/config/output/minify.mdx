@@ -17,17 +17,17 @@ type Minify =
 
 Controls code minification in production mode and configures minimizer options.
 
-By default, JS and CSS code are automatically minified in production mode to improve page performance. To disable minification entirely, set `minify` to `false`. You can also control specific minification behavior using the detailed `minify` options:
+By default, JavaScript and CSS code are automatically minified in production mode to improve page performance. To disable minification entirely, set `minify` to `false`. You can also control specific minification behavior using the detailed `minify` options:
 
 :::tip
-Rsbuild uses [SWC](/guide/configuration/swc) to minify JS code and [Lightning CSS](/guide/styling/css-usage#lightning-css) to minify CSS code by default.
+Rsbuild uses [SWC](/guide/configuration/swc) to minify JavaScript code and [Lightning CSS](/guide/styling/css-usage#lightning-css) to minify CSS code by default.
 :::
 
 ## Example
 
 ### Disable minification
 
-Set `minify` to `false` to disable JS and CSS code minification:
+Set `minify` to `false` to disable JavaScript and CSS code minification:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -38,7 +38,7 @@ export default {
 ```
 
 :::tip
-This is useful for debugging and troubleshooting. We do not recommend disabling code minification in production builds, as it will significantly degrade page performance.
+This is useful for debugging and troubleshooting. We do not recommend disabling code minification in production builds, as it will significantly impact page performance.
 :::
 
 ## Options
@@ -54,7 +54,7 @@ Whether to enable minification for JavaScript bundles:
 - `false`: Disabled in all modes.
 - `'always'`: Enabled in all modes.
 
-For example, disable JavaScript minification:
+For example, to disable JavaScript minification:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -66,7 +66,7 @@ export default {
 };
 ```
 
-Enable JavaScript minification in both development and production mode:
+To enable JavaScript minification in both development and production mode:
 
 ```ts title="rsbuild.config.ts"
 export default {
