@@ -1,6 +1,6 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should show assets on /rsbuild-dev-server path',
   async ({ page, dev }) => {
     const rsbuild = await dev();
@@ -30,7 +30,7 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should show assets on /rsbuild-dev-server path with server.base and assetPrefix',
   async ({ page, dev }) => {
     const rsbuild = await dev({
@@ -69,7 +69,7 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should show assets on /rsbuild-dev-server path with environments',
   async ({ page, dev }) => {
     const entry1 = './src/index.tsx';

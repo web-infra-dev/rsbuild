@@ -1,4 +1,4 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
 
 const createPlugin = () => {
@@ -79,12 +79,12 @@ const createPlugin = () => {
   return { plugin, names };
 };
 
-rspackOnlyTest(
+rspackTest(
   'should run plugin hooks correctly when running build with multiple environments',
-  async ({ buildOnly }) => {
+  async ({ build }) => {
     process.env.NODE_ENV = 'production';
     const { plugin, names } = createPlugin();
-    const rsbuild = await buildOnly({
+    await build({
       rsbuildConfig: {
         plugins: [plugin],
         environments: {
@@ -131,12 +131,11 @@ rspackOnlyTest(
       'AfterBuild',
     ]);
 
-    await rsbuild.close();
     process.env.NODE_ENV = 'test';
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should run plugin hooks correctly when running startDevServer with multiple environments',
   async ({ dev }) => {
     process.env.NODE_ENV = 'development';

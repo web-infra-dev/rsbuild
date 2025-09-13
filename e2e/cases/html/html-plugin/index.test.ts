@@ -4,9 +4,9 @@ import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 
 test('should allow to use tools.htmlPlugin to modify HTML plugin options', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     rsbuildConfig: {
       tools: {
         htmlPlugin(config, { entryName }) {
@@ -29,9 +29,9 @@ test('should allow to use tools.htmlPlugin to modify HTML plugin options', async
 });
 
 test('should allow to use tools.htmlPlugin to return a new config object', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     rsbuildConfig: {
       html: {
         crossorigin: true,

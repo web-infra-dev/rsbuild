@@ -1,10 +1,10 @@
 import { join } from 'node:path';
-import { expect, rspackOnlyTest, test } from '@e2e/helper';
+import { expect, rspackTest, test } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const cwd = __dirname;
 
-rspackOnlyTest(
+rspackTest(
   'should provide history api fallback for dev server correctly',
   async ({ page, devOnly }) => {
     const rsbuild = await devOnly({
@@ -36,9 +36,9 @@ rspackOnlyTest(
 
 test('should provide history api fallback for preview server correctly', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  const rsbuild = await build({
+  const rsbuild = await buildPreview({
     cwd,
     plugins: [pluginReact()],
 

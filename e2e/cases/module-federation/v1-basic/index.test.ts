@@ -1,6 +1,6 @@
 import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { getRandomPort, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { getRandomPort, gotoPage, rspackTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import type { RsbuildConfig } from '@rsbuild/core';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
@@ -20,36 +20,30 @@ export default Button;`,
   );
 };
 
-rspackOnlyTest(
-  'should run module federation in dev',
-  async ({ page, devOnly }) => {
-    writeButtonCode();
+rspackTest('should run module federation in dev', async ({ page, devOnly }) => {
+  writeButtonCode();
 
-    const remotePort = await getRandomPort();
+  const remotePort = await getRandomPort();
 
-    process.env.REMOTE_PORT = remotePort.toString();
+  process.env.REMOTE_PORT = remotePort.toString();
 
-    const remoteApp = await devOnly({
-      cwd: remote,
-    });
-    const hostApp = await devOnly({
-      cwd: host,
-    });
+  const remoteApp = await devOnly({
+    cwd: remote,
+  });
+  const hostApp = await devOnly({
+    cwd: host,
+  });
 
-    await gotoPage(page, remoteApp);
-    await expect(page.locator('#title')).toHaveText('Remote');
-    await expect(page.locator('#button')).toHaveText('Button from remote');
+  await gotoPage(page, remoteApp);
+  await expect(page.locator('#title')).toHaveText('Remote');
+  await expect(page.locator('#button')).toHaveText('Button from remote');
 
-    await gotoPage(page, hostApp);
-    await expect(page.locator('#title')).toHaveText('Host');
-    await expect(page.locator('#button')).toHaveText('Button from remote');
+  await gotoPage(page, hostApp);
+  await expect(page.locator('#title')).toHaveText('Host');
+  await expect(page.locator('#button')).toHaveText('Button from remote');
+});
 
-    await hostApp.close();
-    await remoteApp.close();
-  },
-);
-
-rspackOnlyTest(
+rspackTest(
   'should allow to set `server.cors` config',
   async ({ request, devOnly }) => {
     writeButtonCode();
@@ -76,13 +70,10 @@ rspackOnlyTest(
     expect(hostResponse.headers()['access-control-allow-origin']).toEqual(
       'https://localhost',
     );
-
-    await hostApp.close();
-    await remoteApp.close();
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should run module federation in dev with server.base',
   async ({ page, devOnly }) => {
     writeButtonCode();
@@ -115,13 +106,10 @@ rspackOnlyTest(
     await gotoPage(page, hostApp);
     await expect(page.locator('#title')).toHaveText('Host');
     await expect(page.locator('#button')).toHaveText('Button from remote');
-
-    await hostApp.close();
-    await remoteApp.close();
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should allow remote module to perform HMR',
   async ({ page, devOnly }) => {
     writeButtonCode();
@@ -149,15 +137,12 @@ rspackOnlyTest(
     await expect(page.locator('#button')).toHaveText(
       'Button from remote (HMR)',
     );
-
-    await hostApp.close();
-    await remoteApp.close();
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should transform module federation runtime with SWC',
-  async ({ buildOnly }) => {
+  async ({ build }) => {
     writeButtonCode();
 
     const remotePort = await getRandomPort();
@@ -183,14 +168,14 @@ rspackOnlyTest(
     };
 
     await expect(
-      buildOnly({
+      build({
         cwd: remote,
         rsbuildConfig,
       }),
     ).resolves.toBeTruthy();
 
     await expect(
-      buildOnly({
+      build({
         cwd: host,
         rsbuildConfig,
       }),

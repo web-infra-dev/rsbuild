@@ -4,10 +4,8 @@ function isIncludeFile(filenames: string[], includeFilename: string) {
   return filenames.some((filename) => filename.includes(includeFilename));
 }
 
-test('should disable asset emission for the node target', async ({
-  buildOnly,
-}) => {
-  const rsbuild = await buildOnly();
+test('should disable asset emission for the node target', async ({ build }) => {
+  const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();
   const filenames = Object.keys(files);
@@ -19,8 +17,8 @@ test('should disable asset emission for the node target', async ({
   ).toBeFalsy();
 });
 
-test('should disable asset emission for JSON assets', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly();
+test('should disable asset emission for JSON assets', async ({ build }) => {
+  const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();
   const filenames = Object.keys(files);

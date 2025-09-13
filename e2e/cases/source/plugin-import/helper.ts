@@ -77,8 +77,8 @@ export function shareTest(
     },
   };
 
-  test(msg, async ({ buildOnly }) => {
-    const rsbuild = await buildOnly({
+  test(msg, async ({ build }) => {
+    const rsbuild = await build({
       rsbuildConfig: config,
     });
     const files = rsbuild.getDistFiles({ sourceMaps: true });

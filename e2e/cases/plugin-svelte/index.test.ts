@@ -1,16 +1,16 @@
 import path from 'node:path';
 import type { BuildOptions, BuildResult } from '@e2e/helper';
-import { expect, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { expect, gotoPage, rspackTest } from '@e2e/helper';
 import { pluginSvelte } from '@rsbuild/plugin-svelte';
 
 const buildFixture = (
-  buildOnly: (options?: BuildOptions) => Promise<BuildResult>,
+  build: (options?: BuildOptions) => Promise<BuildResult>,
   rootDir: string,
   entry: string,
 ): Promise<BuildResult> => {
   const root = path.join(__dirname, rootDir);
 
-  return buildOnly({
+  return build({
     cwd: root,
     runServer: true,
     plugins: [pluginSvelte()],
@@ -24,10 +24,10 @@ const buildFixture = (
   });
 };
 
-rspackOnlyTest(
+rspackTest(
   'should build basic svelte component properly',
-  async ({ page, buildOnly }) => {
-    const rsbuild = await buildFixture(buildOnly, 'basic', 'src/index.js');
+  async ({ page, build }) => {
+    const rsbuild = await buildFixture(build, 'basic', 'src/index.js');
 
     await gotoPage(page, rsbuild);
 
@@ -39,10 +39,10 @@ rspackOnlyTest(
 
 // test cases for CSS preprocessors
 for (const name of ['less', 'scss', 'stylus']) {
-  rspackOnlyTest(
+  rspackTest(
     `should build svelte component with ${name}`,
-    async ({ page, buildOnly }) => {
-      const rsbuild = await buildFixture(buildOnly, name, 'src/index.js');
+    async ({ page, build }) => {
+      const rsbuild = await buildFixture(build, name, 'src/index.js');
 
       await gotoPage(page, rsbuild);
 

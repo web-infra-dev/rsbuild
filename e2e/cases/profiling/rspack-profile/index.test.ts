@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { expect, rspackOnlyTest, runCli, runCommand, test } from '@e2e/helper';
+import { expect, rspackTest, runCli, runCommand, test } from '@e2e/helper';
 import { removeSync } from 'fs-extra';
 
 test.afterAll(() => {
@@ -20,38 +20,32 @@ const getProfilePath = (logs: string[]) =>
     ?.split(PROFILE_LOG)[1]
     ?.trim();
 
-rspackOnlyTest(
-  'should generate rspack profile as expected in dev',
-  async () => {
-    const { logs, close, expectLog } = runCommand('node ./dev.mjs', {
-      cwd: __dirname,
-      env: {
-        ...process.env,
-        RSPACK_PROFILE: 'OVERVIEW',
-      },
-    });
+rspackTest('should generate rspack profile as expected in dev', async () => {
+  const { logs, close, expectLog } = runCommand('node ./dev.mjs', {
+    cwd: __dirname,
+    env: {
+      ...process.env,
+      RSPACK_PROFILE: 'OVERVIEW',
+    },
+  });
 
-    await expectLog(PROFILE_LOG);
-    const profileFile = getProfilePath(logs);
-    expect(fs.existsSync(profileFile!)).toBeTruthy();
-    close();
-  },
-);
+  await expectLog(PROFILE_LOG);
+  const profileFile = getProfilePath(logs);
+  expect(fs.existsSync(profileFile!)).toBeTruthy();
+  close();
+});
 
-rspackOnlyTest(
-  'should generate rspack profile as expected in build',
-  async () => {
-    const { logs, close, expectLog } = runCli('build', {
-      cwd: __dirname,
-      env: {
-        ...process.env,
-        RSPACK_PROFILE: 'OVERVIEW',
-      },
-    });
+rspackTest('should generate rspack profile as expected in build', async () => {
+  const { logs, close, expectLog } = runCli('build', {
+    cwd: __dirname,
+    env: {
+      ...process.env,
+      RSPACK_PROFILE: 'OVERVIEW',
+    },
+  });
 
-    await expectLog(PROFILE_LOG);
-    const profileFile = getProfilePath(logs);
-    expect(fs.existsSync(profileFile!)).toBeTruthy();
-    close();
-  },
-);
+  await expectLog(PROFILE_LOG);
+  const profileFile = getProfilePath(logs);
+  expect(fs.existsSync(profileFile!)).toBeTruthy();
+  close();
+});

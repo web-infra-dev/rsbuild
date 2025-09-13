@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 import { createRsbuild, type RsbuildPlugin } from '@rsbuild/core';
 import fse, { remove } from 'fs-extra';
 
@@ -30,7 +30,7 @@ const plugin: RsbuildPlugin = {
   },
 };
 
-rspackOnlyTest(
+rspackTest(
   'should run onAfterBuild hooks correctly when have multiple targets',
   async () => {
     await remove(distFile);

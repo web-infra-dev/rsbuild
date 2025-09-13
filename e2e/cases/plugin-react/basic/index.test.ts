@@ -1,6 +1,6 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should render basic React component in development correctly',
   async ({ page, dev }) => {
     await dev();
@@ -12,10 +12,10 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should render basic React component in production correctly',
-  async ({ page, build }) => {
-    await build();
+  async ({ page, buildPreview }) => {
+    await buildPreview();
 
     const button = page.locator('#button');
     await expect(button).toHaveText('count: 0');

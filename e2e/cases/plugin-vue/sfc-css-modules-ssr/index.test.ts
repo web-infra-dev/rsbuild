@@ -1,6 +1,6 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should build Vue SFC with CSS Modules correctly in dev build for node target',
   async ({ dev }) => {
     const rsbuild = await dev();
@@ -13,10 +13,10 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should build Vue SFC with CSS Modules correctly in build for node target',
-  async ({ build }) => {
-    const rsbuild = await build();
+  async ({ buildPreview }) => {
+    const rsbuild = await buildPreview();
 
     const files = rsbuild.getDistFiles();
     const indexJs =

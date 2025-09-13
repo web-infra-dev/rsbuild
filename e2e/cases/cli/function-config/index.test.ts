@@ -1,13 +1,8 @@
 import path from 'node:path';
-import {
-  expect,
-  readDirContents,
-  rspackOnlyTest,
-  runCliSync,
-} from '@e2e/helper';
+import { expect, readDirContents, rspackTest, runCliSync } from '@e2e/helper';
 import { remove } from 'fs-extra';
 
-rspackOnlyTest(
+rspackTest(
   'should support exporting a function from the config file',
   async () => {
     const targetDir = path.join(__dirname, 'dist-production-build');

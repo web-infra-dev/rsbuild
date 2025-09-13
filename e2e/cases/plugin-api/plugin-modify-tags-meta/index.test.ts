@@ -1,9 +1,9 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should allow plugin to modify HTML tags with metadata',
-  async ({ buildOnly }) => {
-    const rsbuild = await buildOnly();
+  async ({ build }) => {
+    const rsbuild = await build();
 
     const files = rsbuild.getDistFiles();
     const indexHTML = Object.keys(files).find(

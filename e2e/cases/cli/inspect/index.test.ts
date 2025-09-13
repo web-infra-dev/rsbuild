@@ -1,10 +1,5 @@
 import path from 'node:path';
-import {
-  expect,
-  readDirContents,
-  rspackOnlyTest,
-  runCliSync,
-} from '@e2e/helper';
+import { expect, readDirContents, rspackTest, runCliSync } from '@e2e/helper';
 import { removeSync } from 'fs-extra';
 
 const clean = () => {
@@ -12,7 +7,7 @@ const clean = () => {
   delete process.env.NODE_ENV;
 };
 
-rspackOnlyTest('should run inspect command correctly', async () => {
+rspackTest('should run inspect command correctly', async () => {
   clean();
 
   runCliSync('inspect', {
@@ -37,7 +32,7 @@ rspackOnlyTest('should run inspect command correctly', async () => {
   expect(files[rspackConfig!]).toContain("mode: 'development'");
 });
 
-rspackOnlyTest(
+rspackTest(
   'should run inspect command with mode option correctly',
   async () => {
     clean();
@@ -62,7 +57,7 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should run inspect command with output option correctly',
   async () => {
     clean();

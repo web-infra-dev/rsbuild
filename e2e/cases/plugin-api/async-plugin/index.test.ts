@@ -1,4 +1,4 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
 
 const asyncPlugin = async (): Promise<RsbuildPlugin> => {
@@ -22,10 +22,10 @@ const asyncPlugin = async (): Promise<RsbuildPlugin> => {
   };
 };
 
-rspackOnlyTest(
+rspackTest(
   'should allow to register async plugin in plugins field',
-  async ({ page, build }) => {
-    await build({
+  async ({ page, buildPreview }) => {
+    await buildPreview({
       plugins: [asyncPlugin()],
     });
 

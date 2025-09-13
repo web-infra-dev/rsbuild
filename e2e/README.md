@@ -38,12 +38,12 @@ test('test 1 + 1', () => {
 });
 ```
 
-You can run tests for Rspack only by using the `rspackOnlyTest` method.
+You can run tests for Rspack only by using the `rspackTest` method.
 
 ```ts
-import { rspackOnlyTest } from '@e2e/helper';
+import { rspackTest } from '@e2e/helper';
 
-rspackOnlyTest('test 1 + 1', () => {
+rspackTest('test 1 + 1', () => {
   expect(1 + 1).toBe(2);
 });
 ```

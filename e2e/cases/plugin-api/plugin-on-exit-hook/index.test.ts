@@ -1,12 +1,12 @@
 import { exec } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 import { remove } from 'fs-extra';
 
 const distFile = path.join(__dirname, 'node_modules/hooksTempFile');
 
-rspackOnlyTest('should run onExit hook before process exit', async () => {
+rspackTest('should run onExit hook before process exit', async () => {
   await remove(distFile);
 
   await new Promise<void>((resolve, reject) => {

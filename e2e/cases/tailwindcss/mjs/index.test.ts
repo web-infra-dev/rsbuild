@@ -1,9 +1,9 @@
 import { expect, test } from '@e2e/helper';
 
 test('should generate tailwindcss utilities with mjs config correctly', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly();
+  const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();
   const indexCssFile = Object.keys(files).find(

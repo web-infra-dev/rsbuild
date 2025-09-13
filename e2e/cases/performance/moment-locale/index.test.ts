@@ -1,9 +1,9 @@
 import { expect, test } from '@e2e/helper';
 
 test('should retain Moment locales when removeMomentLocale is false (default)', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     rsbuildConfig: {
       output: {
         sourceMap: {
@@ -40,9 +40,9 @@ test('should retain Moment locales when removeMomentLocale is false (default)', 
 });
 
 test('should remove Moment locales when removeMomentLocale is true', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     rsbuildConfig: {
       output: {
         sourceMap: {

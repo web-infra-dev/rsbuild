@@ -1,9 +1,9 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should allow to custom the filename of Wasm files',
-  async ({ build }) => {
-    const rsbuild = await build();
+  async ({ buildPreview }) => {
+    const rsbuild = await buildPreview();
     const files = rsbuild.getDistFiles();
 
     const wasmFile = Object.keys(files).find((file) =>

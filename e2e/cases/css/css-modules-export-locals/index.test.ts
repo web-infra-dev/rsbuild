@@ -1,4 +1,4 @@
-import { type BuildResult, expect, rspackOnlyTest } from '@e2e/helper';
+import { type BuildResult, expect, rspackTest } from '@e2e/helper';
 
 declare global {
   interface Window {
@@ -15,10 +15,10 @@ const expectCSSContext = async (rsbuild: BuildResult) => {
   );
 };
 
-rspackOnlyTest(
+rspackTest(
   'should compile CSS Modules with exportLocalsConvention camelCaseOnly',
-  async ({ page, build }) => {
-    const rsbuild = await build({
+  async ({ page, buildPreview }) => {
+    const rsbuild = await buildPreview({
       rsbuildConfig: {
         output: {
           cssModules: {
@@ -39,10 +39,10 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should compile CSS Modules with exportLocalsConvention camelCase',
-  async ({ page, build }) => {
-    const rsbuild = await build({
+  async ({ page, buildPreview }) => {
+    const rsbuild = await buildPreview({
       rsbuildConfig: {
         output: {
           cssModules: {
@@ -65,10 +65,10 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should compile CSS Modules with exportLocalsConvention dashes',
-  async ({ page, build }) => {
-    const rsbuild = await build({
+  async ({ page, buildPreview }) => {
+    const rsbuild = await buildPreview({
       rsbuildConfig: {
         output: {
           cssModules: {
@@ -90,10 +90,10 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should compile CSS Modules with exportLocalsConvention dashesOnly',
-  async ({ page, build }) => {
-    const rsbuild = await build({
+  async ({ page, buildPreview }) => {
+    const rsbuild = await buildPreview({
       rsbuildConfig: {
         output: {
           cssModules: {
@@ -114,10 +114,10 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should compile CSS Modules with exportLocalsConvention asIs',
-  async ({ page, build }) => {
-    const rsbuild = await build({
+  async ({ page, buildPreview }) => {
+    const rsbuild = await buildPreview({
       rsbuildConfig: {
         output: {
           cssModules: {

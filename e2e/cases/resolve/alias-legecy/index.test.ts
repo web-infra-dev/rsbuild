@@ -1,9 +1,9 @@
 import { expect, test } from '@e2e/helper';
 
 test('should allow to use the legacy `source.alias` config', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly();
+  const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();
   const fileNames = Object.keys(files);

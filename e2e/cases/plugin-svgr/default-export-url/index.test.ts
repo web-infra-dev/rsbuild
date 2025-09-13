@@ -2,9 +2,9 @@ import { expect, test } from '@e2e/helper';
 
 test('should import default from SVG with SVGR correctly', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  await build();
+  await buildPreview();
 
   // test svgr（namedExport）
   await expect(

@@ -1,13 +1,13 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
 const fixtures = __dirname;
 
-rspackOnlyTest(
+rspackTest(
   'should inline style when `injectStyles` is enabled',
-  async ({ page, build }) => {
-    const rsbuild = await build();
+  async ({ page, buildPreview }) => {
+    const rsbuild = await buildPreview();
 
     // injectStyles worked
     const files = rsbuild.getDistFiles();
@@ -38,7 +38,7 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'HMR should work well when `injectStyles` is enabled',
   async ({ page, dev }) => {
     await fs.promises.cp(
@@ -83,7 +83,7 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should allow to disable CSS minification when `injectStyles` is enabled',
   async ({ build }) => {
     const rsbuild = await build({

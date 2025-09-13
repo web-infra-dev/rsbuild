@@ -1,7 +1,7 @@
 import { expect, test } from '@e2e/helper';
 
-test('should allow to import a Wasm file', async ({ page, build }) => {
-  const rsbuild = await build();
+test('should allow to import a Wasm file', async ({ page, buildPreview }) => {
+  const rsbuild = await buildPreview();
   const files = rsbuild.getDistFiles();
 
   const wasmFile = Object.keys(files).find((file) =>

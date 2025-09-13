@@ -1,12 +1,7 @@
 import path from 'node:path';
-import {
-  expect,
-  readDirContents,
-  rspackOnlyTest,
-  runCliSync,
-} from '@e2e/helper';
+import { expect, readDirContents, rspackTest, runCliSync } from '@e2e/helper';
 
-rspackOnlyTest('should run build command correctly', async () => {
+rspackTest('should run build command correctly', async () => {
   runCliSync('build', {
     cwd: __dirname,
   });

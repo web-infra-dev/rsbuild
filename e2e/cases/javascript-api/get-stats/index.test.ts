@@ -1,7 +1,7 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 import { createRsbuild } from '@rsbuild/core';
 
-rspackOnlyTest(
+rspackTest(
   'should allow to call `getStats` to get stats after creating dev server',
   async () => {
     const rsbuild = await createRsbuild({

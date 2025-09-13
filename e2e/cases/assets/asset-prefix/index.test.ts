@@ -50,9 +50,9 @@ test('should allow dev.assetPrefix to have <port> placeholder', async ({
 
 test('should allow output.assetPrefix to be `auto`', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  await build({
+  await buildPreview({
     rsbuildConfig: {
       output: {
         assetPrefix: 'auto',
@@ -66,9 +66,9 @@ test('should allow output.assetPrefix to be `auto`', async ({
 
 test('should inject assetPrefix to env var and template correctly', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  await build({
+  await buildPreview({
     rsbuildConfig: {
       html: {
         template: './src/template.html',
@@ -84,8 +84,8 @@ test('should inject assetPrefix to env var and template correctly', async ({
   await expect(page.locator('#prefix2')).toHaveText('http://example.com');
 });
 
-test('should use output.assetPrefix in none mode', async ({ buildOnly }) => {
-  const result = await buildOnly({
+test('should use output.assetPrefix in none mode', async ({ build }) => {
+  const result = await build({
     rsbuildConfig: {
       mode: 'none',
       dev: {

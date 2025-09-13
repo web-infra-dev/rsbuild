@@ -2,8 +2,8 @@ import fs from 'node:fs';
 import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 
-const buildAndRead = async (buildOnly: any) => {
-  const rsbuild = await buildOnly({
+const buildAndRead = async (build: any) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       source: {
         entry: {
@@ -37,8 +37,8 @@ const buildAndRead = async (buildOnly: any) => {
 };
 
 test.describe('should combine multiple html config correctly', () => {
-  test('should inject Apple touch icons', async ({ buildOnly }) => {
-    const { rsbuild, mainContent, fooContent } = await buildAndRead(buildOnly);
+  test('should inject Apple touch icons', async ({ build }) => {
+    const { rsbuild, mainContent, fooContent } = await buildAndRead(build);
 
     const [, iconRelativePath] =
       /<link rel="apple-touch-icon" sizes="180x180" href="(.*?)">/.exec(
@@ -55,8 +55,8 @@ test.describe('should combine multiple html config correctly', () => {
     ).toBeTruthy();
   });
 
-  test('should inject favicon links', async ({ buildOnly }) => {
-    const { rsbuild, mainContent, fooContent } = await buildAndRead(buildOnly);
+  test('should inject favicon links', async ({ build }) => {
+    const { rsbuild, mainContent, fooContent } = await buildAndRead(build);
 
     const [, iconRelativePath] =
       /<link.*rel="icon".*href="(.*?)">/.exec(mainContent) || [];
@@ -70,9 +70,9 @@ test.describe('should combine multiple html config correctly', () => {
   });
 
   test('should inject scripts into the body when configured', async ({
-    buildOnly,
+    build,
   }) => {
-    const { mainContent } = await buildAndRead(buildOnly);
+    const { mainContent } = await buildAndRead(build);
     expect(
       /<head>[\s\S]*<script[\s\S]*>[\s\S]*<\/head>/.test(mainContent),
     ).toBeFalsy();
@@ -81,8 +81,8 @@ test.describe('should combine multiple html config correctly', () => {
     ).toBeTruthy();
   });
 
-  test('should inject custom meta tags', async ({ buildOnly }) => {
-    const { mainContent } = await buildAndRead(buildOnly);
+  test('should inject custom meta tags', async ({ build }) => {
+    const { mainContent } = await buildAndRead(build);
     expect(
       /<meta name="description" content="a description of the page">/.test(
         mainContent,

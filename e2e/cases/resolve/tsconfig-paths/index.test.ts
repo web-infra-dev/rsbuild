@@ -2,9 +2,9 @@ import { expect, test } from '@e2e/helper';
 
 test('should respect tsconfig paths and override resolve.alias', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  await build({
+  await buildPreview({
     rsbuildConfig: {
       resolve: {
         alias: {
@@ -20,9 +20,9 @@ test('should respect tsconfig paths and override resolve.alias', async ({
 
 test('should ignore tsconfig paths when aliasStrategy is "prefer-alias"', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  await build({
+  await buildPreview({
     rsbuildConfig: {
       resolve: {
         alias: {

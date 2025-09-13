@@ -2,9 +2,9 @@ import { expect, test } from '@e2e/helper';
 
 // https://github.com/web-infra-dev/rsbuild/issues/4610
 test('should generate the same hash digest for the same SVG', async ({
-  build,
+  buildPreview,
 }) => {
-  const rsbuild = await build();
+  const rsbuild = await buildPreview();
 
   const files = rsbuild.getDistFiles();
 

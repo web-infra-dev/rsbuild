@@ -1,12 +1,12 @@
 import path from 'node:path';
 import type { BuildOptions, BuildResult } from '@e2e/helper';
-import { expect, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { expect, gotoPage, rspackTest } from '@e2e/helper';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginSolid } from '@rsbuild/plugin-solid';
 import { pluginStylus } from '@rsbuild/plugin-stylus';
 
 const buildFixture = (
-  buildOnly: (options?: BuildOptions) => Promise<BuildResult>,
+  build: (options?: BuildOptions) => Promise<BuildResult>,
   rootDir: string,
 ): Promise<BuildResult> => {
   const root = path.join(__dirname, rootDir);
@@ -19,17 +19,17 @@ const buildFixture = (
 
   if (rootDir === 'stylus') plugins.push(pluginStylus());
 
-  return buildOnly({
+  return build({
     cwd: root,
     runServer: true,
     plugins,
   });
 };
 
-rspackOnlyTest(
+rspackTest(
   'should build basic solid component properly',
-  async ({ page, buildOnly }) => {
-    const rsbuild = await buildFixture(buildOnly, 'basic');
+  async ({ page, build }) => {
+    const rsbuild = await buildFixture(build, 'basic');
 
     await gotoPage(page, rsbuild);
 
@@ -41,10 +41,10 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should build solid component with typescript',
-  async ({ page, buildOnly }) => {
-    const rsbuild = await buildFixture(buildOnly, 'ts');
+  async ({ page, build }) => {
+    const rsbuild = await buildFixture(build, 'ts');
 
     await gotoPage(page, rsbuild);
 
@@ -58,10 +58,10 @@ rspackOnlyTest(
 
 // test cases for CSS preprocessors
 for (const name of ['less', 'scss', 'stylus']) {
-  rspackOnlyTest(
+  rspackTest(
     `should build solid component with ${name}`,
-    async ({ page, buildOnly }) => {
-      const rsbuild = await buildFixture(buildOnly, name);
+    async ({ page, build }) => {
+      const rsbuild = await buildFixture(build, name);
 
       await gotoPage(page, rsbuild);
 

@@ -11,9 +11,9 @@ test('should allow to configure pre-entry in development', async ({
 
 test('should allow to configure pre-entry in production build', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  await build();
+  await buildPreview();
   await expect(page.innerHTML('#test-el')).resolves.toBe('aaaaa');
   await expect(page.evaluate('window.aa')).resolves.toBe(2);
 });

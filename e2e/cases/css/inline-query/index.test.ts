@@ -1,6 +1,6 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should allow to import inline CSS files in dev',
   async ({ page, dev }) => {
     await dev();
@@ -23,10 +23,10 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should allow to import inline CSS files in build',
-  async ({ page, build }) => {
-    await build();
+  async ({ page, buildPreview }) => {
+    await buildPreview();
 
     for (const key of ['aInline1', 'aInline2', 'aInline3', 'aInline4']) {
       const inline: string = await page.evaluate(`window.${key}`);

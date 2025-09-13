@@ -22,9 +22,9 @@ test('should serve publicDir with templates for dev server correctly', async ({
 
 test('should serve publicDir with templates for preview server correctly', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  const rsbuild = await build({
+  const rsbuild = await buildPreview({
     cwd,
   });
 

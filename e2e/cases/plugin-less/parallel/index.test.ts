@@ -1,9 +1,9 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should compile less with `parallel` option in build',
-  async ({ buildOnly }) => {
-    const rsbuild = await buildOnly();
+  async ({ build }) => {
+    const rsbuild = await build();
     const files = rsbuild.getDistFiles();
     const cssFiles = Object.keys(files).find((file) => file.endsWith('.css'))!;
     expect(files[cssFiles]).toEqual(
@@ -12,7 +12,7 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should compile less with `parallel` option in dev',
   async ({ page, dev }) => {
     await dev();

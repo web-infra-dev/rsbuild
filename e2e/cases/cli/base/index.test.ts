@@ -1,12 +1,7 @@
 import path from 'node:path';
-import {
-  expect,
-  readDirContents,
-  rspackOnlyTest,
-  runCliSync,
-} from '@e2e/helper';
+import { expect, readDirContents, rspackTest, runCliSync } from '@e2e/helper';
 
-rspackOnlyTest('should run allow to specify base path', async () => {
+rspackTest('should run allow to specify base path', async () => {
   runCliSync('build --base /test', {
     cwd: __dirname,
   });

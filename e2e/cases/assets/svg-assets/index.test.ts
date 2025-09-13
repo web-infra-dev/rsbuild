@@ -1,7 +1,10 @@
 import { expect, test } from '@e2e/helper';
 
-test('should handle SVG assets in JS and CSS', async ({ page, build }) => {
-  await build();
+test('should handle SVG assets in JS and CSS', async ({
+  page,
+  buildPreview,
+}) => {
+  await buildPreview();
 
   // test SVG asset
   await expect(

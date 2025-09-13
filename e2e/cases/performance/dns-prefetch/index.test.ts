@@ -1,9 +1,9 @@
 import { expect, test } from '@e2e/helper';
 
 test('should generate dnsPrefetch link when dnsPrefetch is defined', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly();
+  const rsbuild = await build();
   const files = rsbuild.getDistFiles();
 
   const [, content] = Object.entries(files).find(([name]) =>

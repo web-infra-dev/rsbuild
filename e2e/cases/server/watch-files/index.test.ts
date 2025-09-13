@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { rspackOnlyTest } from '@e2e/helper';
+import { rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should work with string and path to file',
   async ({ dev, page }) => {
     const file = path.join(__dirname, '/assets/example.txt');
@@ -27,7 +27,7 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should work with string and path to directory',
   async ({ dev, page }) => {
     const file = path.join(__dirname, '/assets/example.txt');
@@ -52,43 +52,40 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
-  'should work with string array directory',
-  async ({ dev, page }) => {
-    const file = path.join(__dirname, '/assets/example.txt');
-    const other = path.join(__dirname, '/other/other.txt');
-    await dev({
-      rsbuildConfig: {
-        dev: {
-          watchFiles: {
-            paths: [
-              path.join(__dirname, '/assets'),
-              path.join(__dirname, '/other'),
-            ],
-          },
+rspackTest('should work with string array directory', async ({ dev, page }) => {
+  const file = path.join(__dirname, '/assets/example.txt');
+  const other = path.join(__dirname, '/other/other.txt');
+  await dev({
+    rsbuildConfig: {
+      dev: {
+        watchFiles: {
+          paths: [
+            path.join(__dirname, '/assets'),
+            path.join(__dirname, '/other'),
+          ],
         },
       },
-    });
+    },
+  });
 
-    await fs.promises.writeFile(file, 'test');
-    // check the page is reloaded
-    await new Promise((resolve) => {
-      page.waitForURL(page.url()).then(resolve);
-    });
-    // reset file
-    fs.truncateSync(file);
+  await fs.promises.writeFile(file, 'test');
+  // check the page is reloaded
+  await new Promise((resolve) => {
+    page.waitForURL(page.url()).then(resolve);
+  });
+  // reset file
+  fs.truncateSync(file);
 
-    await fs.promises.writeFile(other, 'test');
-    // check the page is reloaded
-    await new Promise((resolve) => {
-      page.waitForURL(page.url()).then(resolve);
-    });
-    // reset file
-    fs.truncateSync(other);
-  },
-);
+  await fs.promises.writeFile(other, 'test');
+  // check the page is reloaded
+  await new Promise((resolve) => {
+    page.waitForURL(page.url()).then(resolve);
+  });
+  // reset file
+  fs.truncateSync(other);
+});
 
-rspackOnlyTest('should work with string and glob', async ({ dev, page }) => {
+rspackTest('should work with string and glob', async ({ dev, page }) => {
   const file = path.join(__dirname, '/assets/example.txt');
   const watchDir = path.join(__dirname, '/assets');
   await dev({
@@ -111,7 +108,7 @@ rspackOnlyTest('should work with string and glob', async ({ dev, page }) => {
   fs.truncateSync(file);
 });
 
-rspackOnlyTest('should work with options', async ({ dev, page }) => {
+rspackTest('should work with options', async ({ dev, page }) => {
   const file = path.join(__dirname, '/assets/example.txt');
   await dev({
     rsbuildConfig: {

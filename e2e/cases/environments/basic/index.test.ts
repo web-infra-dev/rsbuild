@@ -2,9 +2,9 @@ import { expect, test } from '@e2e/helper';
 
 test('should build successfully with multiple environments', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  await build({
+  await buildPreview({
     rsbuildConfig: {
       environments: {
         web: {

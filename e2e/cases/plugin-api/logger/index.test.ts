@@ -1,7 +1,7 @@
 import { expect, test } from '@e2e/helper';
 import { type Logger, logger, type RsbuildPlugin } from '@rsbuild/core';
 
-test('should allow plugin to custom resolver', async ({ buildOnly }) => {
+test('should allow plugin to custom resolver', async ({ build }) => {
   let pluginLogger: Logger | undefined;
 
   const loggerPlugin: RsbuildPlugin = {
@@ -11,7 +11,7 @@ test('should allow plugin to custom resolver', async ({ buildOnly }) => {
     },
   };
 
-  await buildOnly({
+  await build({
     rsbuildConfig: {
       plugins: [loggerPlugin],
     },

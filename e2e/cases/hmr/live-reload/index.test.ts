@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expect, rspackOnlyTest, test } from '@e2e/helper';
+import { expect, rspackTest, test } from '@e2e/helper';
 
 const appFile = path.join(__dirname, 'src/App.jsx');
 let appCode: string;
@@ -14,7 +14,7 @@ test.afterEach(() => {
   fs.writeFileSync(appFile, appCode, 'utf-8');
 });
 
-rspackOnlyTest(
+rspackTest(
   'should fallback to live-reload when dev.hmr is false',
   async ({ page, dev }) => {
     await dev();
@@ -31,7 +31,7 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should not reload page when live-reload is disabled',
   async ({ page, dev }) => {
     await dev({

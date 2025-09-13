@@ -1,6 +1,6 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest('should allow to minify JS in dev', async ({ dev }) => {
+rspackTest('should allow to minify JS in dev', async ({ dev }) => {
   const rsbuild = await dev({
     rsbuildConfig: {
       output: {

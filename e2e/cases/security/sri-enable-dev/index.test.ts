@@ -1,6 +1,6 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'generate integrity for script and style tags in dev build',
   async ({ page, dev }) => {
     const rsbuild = await dev();

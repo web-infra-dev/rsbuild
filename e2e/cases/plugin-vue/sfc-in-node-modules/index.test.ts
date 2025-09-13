@@ -1,10 +1,10 @@
 import path from 'node:path';
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 import fse from 'fs-extra';
 
-rspackOnlyTest(
+rspackTest(
   'should transpile Vue SFC in node_modules correctly',
-  async ({ buildOnly }) => {
+  async ({ build }) => {
     fse.outputFileSync(
       path.resolve(__dirname, 'node_modules/foo/package.json'),
       JSON.stringify({
@@ -18,7 +18,7 @@ rspackOnlyTest(
       '<template><div :test="window?.foo" /></template>',
     );
 
-    const rsbuild = await buildOnly();
+    const rsbuild = await build();
 
     const content = await rsbuild.getIndexBundle();
     expect(content).not.toContain('window?.foo');

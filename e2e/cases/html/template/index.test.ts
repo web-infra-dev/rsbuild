@@ -2,8 +2,8 @@ import path from 'node:path';
 
 import { expect, test } from '@e2e/helper';
 
-test('should set template via function correctly', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should set template via function correctly', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       source: {
         entry: {
@@ -35,8 +35,11 @@ test('should set template via function correctly', async ({ buildOnly }) => {
   expect(indexHtml).toContain('<div id="test-template">text</div>');
 });
 
-test('should allow to access templateParameters', async ({ page, build }) => {
-  await build({
+test('should allow to access templateParameters', async ({
+  page,
+  buildPreview,
+}) => {
+  await buildPreview({
     rsbuildConfig: {
       html: {
         template: './static/index.html',
@@ -57,9 +60,9 @@ test('should allow to access templateParameters', async ({ page, build }) => {
 });
 
 test('should set template via tools.htmlPlugin correctly', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     rsbuildConfig: {
       source: {
         entry: {

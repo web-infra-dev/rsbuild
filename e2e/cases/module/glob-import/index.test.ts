@@ -1,6 +1,6 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should glob import components in dev build correctly',
   async ({ page, dev }) => {
     await dev();
@@ -10,11 +10,10 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should glob import components in build correctly',
-  async ({ page, build }) => {
-    await build();
-
+  async ({ page, buildPreview }) => {
+    await buildPreview();
     await expect(page.locator('#header')).toHaveText('Header');
     await expect(page.locator('#footer')).toHaveText('Footer');
   },

@@ -13,9 +13,9 @@ test('should resolve package.json#imports correctly in dev build', async ({
 
 test('should resolve package.json#imports correctly in build', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  await build();
+  await buildPreview();
   const foo = page.locator('#foo');
   await expect(foo).toHaveText('foo');
   const test = page.locator('#test');

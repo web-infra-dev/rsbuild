@@ -5,9 +5,9 @@ const fixtures = __dirname;
 
 test('should access / and htmlFallback success by default', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  const rsbuild = await build({
+  const rsbuild = await buildPreview({
     rsbuildConfig: {
       output: {
         distPath: {
@@ -31,8 +31,11 @@ test('should access / and htmlFallback success by default', async ({
   await expect(page.locator('#test')).toHaveText('Hello Rsbuild!');
 });
 
-test('should return 404 when htmlFallback false', async ({ page, build }) => {
-  const rsbuild = await build({
+test('should return 404 when htmlFallback false', async ({
+  page,
+  buildPreview,
+}) => {
+  const rsbuild = await buildPreview({
     rsbuildConfig: {
       server: {
         htmlFallback: false,
@@ -54,9 +57,9 @@ test('should return 404 when htmlFallback false', async ({ page, build }) => {
 
 test('should access /main.html success when entry is main', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  const rsbuild = await build({
+  const rsbuild = await buildPreview({
     rsbuildConfig: {
       source: {
         entry: {
@@ -81,9 +84,9 @@ test('should access /main.html success when entry is main', async ({
 
 test('should access /main success when entry is main', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  const rsbuild = await build({
+  const rsbuild = await buildPreview({
     rsbuildConfig: {
       source: {
         entry: {
@@ -110,9 +113,9 @@ test('should access /main success when entry is main', async ({
 
 test('should access /main success when entry is main and set assetPrefix', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  const rsbuild = await build({
+  const rsbuild = await buildPreview({
     rsbuildConfig: {
       source: {
         entry: {
@@ -138,9 +141,9 @@ test('should access /main success when entry is main and set assetPrefix', async
 
 test('should access /main success when entry is main and outputPath is /main/index.html', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  const rsbuild = await build({
+  const rsbuild = await buildPreview({
     rsbuildConfig: {
       source: {
         entry: {
@@ -166,8 +169,11 @@ test('should access /main success when entry is main and outputPath is /main/ind
   await expect(locator).toHaveText('Hello Rsbuild!');
 });
 
-test('should return 404 when page is not found', async ({ page, build }) => {
-  const rsbuild = await build({
+test('should return 404 when page is not found', async ({
+  page,
+  buildPreview,
+}) => {
+  const rsbuild = await buildPreview({
     rsbuildConfig: {
       source: {
         entry: {
@@ -191,9 +197,9 @@ test('should return 404 when page is not found', async ({ page, build }) => {
 
 test('should access /html/main success when entry is main and outputPath is /html/main.html', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  const rsbuild = await build({
+  const rsbuild = await buildPreview({
     rsbuildConfig: {
       source: {
         entry: {
@@ -227,11 +233,11 @@ test('should access /html/main success when entry is main and outputPath is /htm
 
 test('should match resource correctly with specify assetPrefix', async ({
   page,
-  build,
+  buildPreview,
 }) => {
   const port = await getRandomPort();
 
-  const rsbuild = await build({
+  const rsbuild = await buildPreview({
     rsbuildConfig: {
       server: {
         port,
@@ -255,11 +261,11 @@ test('should match resource correctly with specify assetPrefix', async ({
 
 test('should match resource correctly with full url assetPrefix', async ({
   page,
-  build,
+  buildPreview,
 }) => {
   const port = await getRandomPort();
 
-  const rsbuild = await build({
+  const rsbuild = await buildPreview({
     rsbuildConfig: {
       server: {
         port,

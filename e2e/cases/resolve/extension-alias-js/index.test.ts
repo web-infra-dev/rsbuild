@@ -6,15 +6,15 @@ import { remove } from 'fs-extra';
 
 test('should allow to import TS files with .js extension', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  await build();
+  await buildPreview();
   expect(await page.evaluate(() => window.test)).toBe('ts');
 });
 
 test('should resolve the .js file first if both .js and .ts exist', async ({
   page,
-  build,
+  buildPreview,
 }) => {
   await fs.promises.cp(
     join(__dirname, 'src'),
@@ -29,7 +29,7 @@ test('should resolve the .js file first if both .js and .ts exist', async ({
     'export const foo = "js";',
   );
 
-  await build({
+  await buildPreview({
     rsbuildConfig: {
       source: {
         entry: {

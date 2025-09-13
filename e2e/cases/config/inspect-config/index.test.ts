@@ -4,7 +4,7 @@ import {
   createRsbuild,
   expect,
   proxyConsole,
-  rspackOnlyTest,
+  rspackTest,
   test,
 } from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
@@ -39,7 +39,7 @@ const bundlerNodeConfig = path.resolve(
 
 const INSPECT_LOG = 'config inspection completed';
 
-rspackOnlyTest(
+rspackTest(
   'should generate config files when writeToDisk is true',
   async () => {
     const { expectLog, restore } = proxyConsole();
@@ -62,7 +62,7 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should generate config files correctly when output is specified',
   async () => {
     const { expectLog, restore } = proxyConsole();
@@ -96,7 +96,7 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should generate bundler config for node when target contains node',
   async () => {
     const { expectLog, restore } = proxyConsole();
@@ -136,7 +136,7 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should not generate config files when writeToDisk is false',
   async () => {
     const rsbuild = await createRsbuild({
@@ -151,7 +151,7 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest('should allow to specify absolute output path', async () => {
+rspackTest('should allow to specify absolute output path', async () => {
   const { expectLog, restore } = proxyConsole();
 
   const rsbuild = await createRsbuild({
@@ -175,7 +175,7 @@ rspackOnlyTest('should allow to specify absolute output path', async () => {
   restore();
 });
 
-rspackOnlyTest('should generate extra config files', async () => {
+rspackTest('should generate extra config files', async () => {
   const { expectLog, restore } = proxyConsole();
 
   const rsbuild = await createRsbuild({
@@ -202,7 +202,7 @@ rspackOnlyTest('should generate extra config files', async () => {
   restore();
 });
 
-rspackOnlyTest('should apply plugin correctly', async () => {
+rspackTest('should apply plugin correctly', async () => {
   const { restore } = proxyConsole();
 
   let servePluginApplied = false;

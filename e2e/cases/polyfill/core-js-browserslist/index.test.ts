@@ -13,9 +13,9 @@ test('should read browserslist for development env correctly', async ({
 });
 
 test('should read browserslist for production env correctly', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly();
+  const rsbuild = await build();
   const files = rsbuild.getDistFiles({ sourceMaps: true });
   const content = getPolyfillContent(files);
 

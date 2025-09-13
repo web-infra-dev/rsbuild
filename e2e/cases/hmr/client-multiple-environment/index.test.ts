@@ -1,9 +1,9 @@
 import { join } from 'node:path';
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
 const cwd = __dirname;
 
-rspackOnlyTest(
+rspackTest(
   'should allow to set different dev.client for multiple environments',
   async ({ dev }) => {
     const rsbuild = await dev({

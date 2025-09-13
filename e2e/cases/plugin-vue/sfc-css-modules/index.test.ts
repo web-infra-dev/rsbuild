@@ -1,6 +1,6 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should build Vue SFC with CSS Modules correctly in dev build',
   async ({ page, dev }) => {
     await dev();
@@ -15,10 +15,10 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should build Vue SFC with CSS Modules correctly in build',
-  async ({ page, build }) => {
-    await build();
+  async ({ page, buildPreview }) => {
+    await buildPreview();
 
     const test1 = page.locator('#test1');
     const test2 = page.locator('#test2');

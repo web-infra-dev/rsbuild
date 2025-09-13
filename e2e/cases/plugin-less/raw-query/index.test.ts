@@ -21,9 +21,9 @@ test('should support importing raw Less files in dev', async ({
 
 test('should support importing raw Less files in build', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  await build();
+  await buildPreview();
 
   const aRaw: string = await page.evaluate('window.aRaw');
   const bRaw: string = await page.evaluate('window.bRaw');

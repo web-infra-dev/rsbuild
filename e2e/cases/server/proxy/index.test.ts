@@ -35,9 +35,6 @@ test('should apply basic proxy rules correctly', async ({ dev, page }) => {
 
   await page.goto(`http://localhost:${rsbuild2.port}/main`);
   expect(await page.innerHTML('body')).toContain('<div id="root">1</div>');
-
-  await rsbuild1.close();
-  await rsbuild2.close();
 });
 
 test('should handle proxy error correctly', async ({ dev, page }) => {

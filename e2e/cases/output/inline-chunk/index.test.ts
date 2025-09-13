@@ -18,9 +18,9 @@ const toolsConfig = {
 
 test('should inline all scripts and emit all source maps', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  const rsbuild = await build({
+  const rsbuild = await buildPreview({
     rsbuildConfig: {
       source: {
         entry: {
@@ -54,8 +54,8 @@ test('should inline all scripts and emit all source maps', async ({
   ).toEqual(3);
 });
 
-test('should inline scripts when matching a RegExp', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should inline scripts when matching a RegExp', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       output: {
         inlineScripts: /\/index\.\w+\.js$/,
@@ -79,10 +79,8 @@ test('should inline scripts when matching a RegExp', async ({ buildOnly }) => {
   ).toBeGreaterThanOrEqual(2);
 });
 
-test('should inline scripts based on filename and size', async ({
-  buildOnly,
-}) => {
-  const rsbuild = await buildOnly({
+test('should inline scripts based on filename and size', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       output: {
         inlineScripts({ size, name }) {
@@ -108,8 +106,8 @@ test('should inline scripts based on filename and size', async ({
   ).toBeGreaterThanOrEqual(2);
 });
 
-test('should inline styles when matching a RegExp', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should inline styles when matching a RegExp', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       output: {
         inlineStyles: /\/index\.\w+\.css$/,
@@ -127,10 +125,8 @@ test('should inline styles when matching a RegExp', async ({ buildOnly }) => {
   ).toEqual(0);
 });
 
-test('should inline styles based on filename and size', async ({
-  buildOnly,
-}) => {
-  const rsbuild = await buildOnly({
+test('should inline styles based on filename and size', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       output: {
         inlineStyles({ size, name }) {
@@ -215,8 +211,8 @@ test('should inline styles in dev based on filename and size', async ({
   ).resolves.toEqual(0);
 });
 
-test('should not inline scripts when disabled', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should not inline scripts when disabled', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       output: {
         inlineScripts: {
@@ -243,8 +239,8 @@ test('should not inline scripts when disabled', async ({ buildOnly }) => {
   ).toBeGreaterThanOrEqual(2);
 });
 
-test('should not inline styles when disabled', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should not inline styles when disabled', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       output: {
         inlineStyles: {
@@ -265,10 +261,8 @@ test('should not inline styles when disabled', async ({ buildOnly }) => {
   ).toEqual(1);
 });
 
-test('should inline assets in build when enable is auto', async ({
-  buildOnly,
-}) => {
-  const rsbuild = await buildOnly({
+test('should inline assets in build when enable is auto', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       output: {
         inlineScripts: {

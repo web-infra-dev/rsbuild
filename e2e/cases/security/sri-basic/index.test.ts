@@ -1,9 +1,9 @@
-import { expect, rspackOnlyTest, test } from '@e2e/helper';
+import { expect, rspackTest, test } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should generate integrity attributes for script and style tags in build',
-  async ({ page, build }) => {
-    const rsbuild = await build();
+  async ({ page, buildPreview }) => {
+    const rsbuild = await buildPreview();
 
     const files = rsbuild.getDistFiles();
     const html =

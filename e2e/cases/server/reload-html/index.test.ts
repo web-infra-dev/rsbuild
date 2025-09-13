@@ -1,10 +1,10 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { expect, rspackOnlyTest, test } from '@e2e/helper';
+import { expect, rspackTest, test } from '@e2e/helper';
 
 const cwd = __dirname;
 
-rspackOnlyTest(
+rspackTest(
   'should reload page when HTML template changed',
   async ({ page, dev }) => {
     // Failed to run this case on Windows

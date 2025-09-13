@@ -1,7 +1,7 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest('should import JSON correctly', async ({ page, build }) => {
-  await build();
+rspackTest('should import JSON correctly', async ({ page, buildPreview }) => {
+  await buildPreview();
 
   expect(await page.evaluate('window.age')).toBe(1);
   expect(await page.evaluate('window.b')).toBe('{"list":[1,2]}');

@@ -1,11 +1,11 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
 const COMPILE_WARNING = 'Compile Warning';
 
-rspackOnlyTest(
+rspackTest(
   'should allow to enable Rspack experiments.css',
-  async ({ buildOnly }) => {
-    const rsbuild = await buildOnly();
+  async ({ build }) => {
+    const rsbuild = await build();
     const files = rsbuild.getDistFiles();
     const content =
       files[Object.keys(files).find((file) => file.endsWith('index.css'))!];
@@ -16,10 +16,10 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should allow to enable Rspack experiments.css with style-loader',
-  async ({ buildOnly }) => {
-    const rsbuild = await buildOnly({
+  async ({ build }) => {
+    const rsbuild = await build({
       rsbuildConfig: {
         output: {
           injectStyles: true,

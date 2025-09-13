@@ -5,13 +5,13 @@ import {
   expectFile,
   getRandomPort,
   gotoPage,
-  rspackOnlyTest,
+  rspackTest,
   runCli,
 } from '@e2e/helper';
 import fse from 'fs-extra';
 import { tempConfig } from './rsbuild.config';
 
-rspackOnlyTest(
+rspackTest(
   'should watch tsconfig.json and reload the server when it changes',
   async ({ page }) => {
     if (process.platform === 'win32') {

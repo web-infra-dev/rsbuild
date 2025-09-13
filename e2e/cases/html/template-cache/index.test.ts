@@ -1,11 +1,11 @@
 import { promises as fs } from 'node:fs';
 import { join } from 'node:path';
-import { expect, rspackOnlyTest, test } from '@e2e/helper';
+import { expect, rspackTest, test } from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import fse from 'fs-extra';
 
 // https://github.com/web-infra-dev/rsbuild/issues/5176
-rspackOnlyTest(
+rspackTest(
   'should not re-compile templates when the template is not changed',
   async ({ dev, page }) => {
     // Failed to run this case on Windows

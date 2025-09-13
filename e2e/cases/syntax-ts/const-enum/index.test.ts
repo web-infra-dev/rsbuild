@@ -1,9 +1,9 @@
-import { expect, rspackOnlyTest, test } from '@e2e/helper';
+import { expect, rspackTest, test } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should inline the enum values in build',
-  async ({ page, build }) => {
-    await build();
+  async ({ page, buildPreview }) => {
+    await buildPreview();
 
     await page.waitForFunction(() => window.testDog);
     expect(await page.evaluate(() => window.testFish)).toBe('fish,FISH');

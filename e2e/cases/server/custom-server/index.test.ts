@@ -1,10 +1,10 @@
-import { expect, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { expect, gotoPage, rspackTest } from '@e2e/helper';
 // @ts-expect-error
 import { startDevServerPure } from './scripts/pureServer.mjs';
 // @ts-expect-error
 import { startDevServer } from './scripts/server.mjs';
 
-rspackOnlyTest('should support a custom dev server', async ({ page }) => {
+rspackTest('should support a custom dev server', async ({ page }) => {
   const { config, close } = await startDevServer(__dirname);
 
   await gotoPage(page, config);
@@ -21,7 +21,7 @@ rspackOnlyTest('should support a custom dev server', async ({ page }) => {
   await close();
 });
 
-rspackOnlyTest(
+rspackTest(
   'should support a custom dev server without compilation',
   async ({ page }) => {
     const { config, close } = await startDevServerPure(__dirname);

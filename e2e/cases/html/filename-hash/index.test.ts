@@ -1,9 +1,9 @@
 import { expect, test } from '@e2e/helper';
 
 test('should allow to generate HTML with filename hash using filename.html', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     rsbuildConfig: {
       output: {
         filename: {
@@ -22,9 +22,9 @@ test('should allow to generate HTML with filename hash using filename.html', asy
 });
 
 test('should allow to generate HTML with filename hash using tools.htmlPlugin', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     rsbuildConfig: {
       tools: {
         htmlPlugin(config, { entryName }) {

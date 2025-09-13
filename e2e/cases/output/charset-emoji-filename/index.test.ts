@@ -7,8 +7,11 @@ test('should resolve emoji filename in dev', async ({ page, dev }) => {
   expect(await page.evaluate('window.test')).toBe(utf8Str);
 });
 
-test('should resolve emoji filename in build', async ({ page, build }) => {
-  const rsbuild = await build();
+test('should resolve emoji filename in build', async ({
+  page,
+  buildPreview,
+}) => {
+  const rsbuild = await buildPreview();
   const content = await rsbuild.getIndexBundle();
   expect(await page.evaluate('window.test')).toBe(utf8Str);
   expect(content.includes(utf8Str)).toBeTruthy();

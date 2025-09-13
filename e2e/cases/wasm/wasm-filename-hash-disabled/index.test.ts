@@ -1,9 +1,9 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should not allow to disable filename hash of Wasm files',
-  async ({ build }) => {
-    const rsbuild = await build();
+  async ({ buildPreview }) => {
+    const rsbuild = await buildPreview();
     const files = rsbuild.getDistFiles();
 
     const wasmFile = Object.keys(files).find((file) =>

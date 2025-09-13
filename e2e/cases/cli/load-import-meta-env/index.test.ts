@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expect, rspackOnlyTest, runCliSync, test } from '@e2e/helper';
+import { expect, rspackTest, runCliSync, test } from '@e2e/helper';
 import fse, { remove } from 'fs-extra';
 
 const localFile = path.join(__dirname, '.env.local');
@@ -11,7 +11,7 @@ test.beforeEach(async () => {
   await remove(prodLocalFile);
 });
 
-rspackOnlyTest(
+rspackTest(
   'should load .env config and allow rsbuild.config.ts to read env vars',
   async () => {
     runCliSync('build', {
@@ -21,7 +21,7 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest('should load .env.local with higher priority', async () => {
+rspackTest('should load .env.local with higher priority', async () => {
   fse.outputFileSync(localFile, 'FOO=2');
 
   runCliSync('build', {
@@ -30,7 +30,7 @@ rspackOnlyTest('should load .env.local with higher priority', async () => {
   expect(fs.existsSync(path.join(__dirname, 'dist/2'))).toBeTruthy();
 });
 
-rspackOnlyTest(
+rspackTest(
   'should load .env.production.local with higher priority',
   async () => {
     fse.outputFileSync(localFile, 'FOO=2');
@@ -43,13 +43,10 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
-  'should support specifying env mode via --env-mode',
-  async () => {
-    runCliSync('build --env-mode test', {
-      cwd: __dirname,
-    });
+rspackTest('should support specifying env mode via --env-mode', async () => {
+  runCliSync('build --env-mode test', {
+    cwd: __dirname,
+  });
 
-    expect(fs.existsSync(path.join(__dirname, 'dist/5'))).toBeTruthy();
-  },
-);
+  expect(fs.existsSync(path.join(__dirname, 'dist/5'))).toBeTruthy();
+});

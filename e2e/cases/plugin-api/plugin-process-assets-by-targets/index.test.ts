@@ -1,28 +1,25 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
-  'should process assets when target is web',
-  async ({ buildOnly }) => {
-    const rsbuild = await buildOnly({
-      rsbuildConfig: {
-        output: {
-          target: 'web',
-        },
+rspackTest('should process assets when target is web', async ({ build }) => {
+  const rsbuild = await build({
+    rsbuildConfig: {
+      output: {
+        target: 'web',
       },
-    });
+    },
+  });
 
-    const files = rsbuild.getDistFiles();
-    const indexJs = Object.keys(files).find(
-      (file) => file.includes('index') && file.endsWith('.js'),
-    );
-    expect(indexJs).toBeFalsy();
-  },
-);
+  const files = rsbuild.getDistFiles();
+  const indexJs = Object.keys(files).find(
+    (file) => file.includes('index') && file.endsWith('.js'),
+  );
+  expect(indexJs).toBeFalsy();
+});
 
-rspackOnlyTest(
+rspackTest(
   'should not process assets when target is not web',
-  async ({ buildOnly }) => {
-    const rsbuild = await buildOnly({
+  async ({ build }) => {
+    const rsbuild = await build({
       rsbuildConfig: {
         output: {
           target: 'web-worker',

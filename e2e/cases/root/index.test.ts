@@ -2,8 +2,8 @@ import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 import fse from 'fs-extra';
 
-test('should support setting a relative root path', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should support setting a relative root path', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       root: './test',
     },
@@ -14,8 +14,8 @@ test('should support setting a relative root path', async ({ buildOnly }) => {
   expect(rsbuild.distPath).toContain('test');
 });
 
-test('should support setting an absolute root path', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should support setting an absolute root path', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       root: join(__dirname, './test'),
     },

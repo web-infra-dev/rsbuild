@@ -23,11 +23,11 @@ function writeDuplicatedPackage(flag: string) {
   );
 }
 
-test('should dedupe specified packages as expected', async ({ buildOnly }) => {
+test('should dedupe specified packages as expected', async ({ build }) => {
   const flag = 'This is fake React';
   writeDuplicatedPackage(flag);
 
-  const rsbuild = await buildOnly();
+  const rsbuild = await build();
 
   const content = await rsbuild.getIndexBundle();
   expect(content).not.toContain(flag);

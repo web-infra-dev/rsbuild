@@ -1,9 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { expect, rspackOnlyTest, test } from '@e2e/helper';
+import { expect, rspackTest, test } from '@e2e/helper';
 
-test('should generate manifest file in output', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should generate manifest file in output', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       output: {
         manifest: true,
@@ -37,10 +37,8 @@ test('should generate manifest file in output', async ({ buildOnly }) => {
   });
 });
 
-test('should generate manifest file at specified path', async ({
-  buildOnly,
-}) => {
-  await buildOnly({
+test('should generate manifest file at specified path', async ({ build }) => {
+  await build({
     rsbuildConfig: {
       output: {
         manifest: './custom/my-manifest.json',
@@ -64,10 +62,8 @@ test('should generate manifest file at specified path', async ({
   expect(Object.keys(parsed.allFiles).length).toBe(2);
 });
 
-test('should generate manifest file when target is node', async ({
-  buildOnly,
-}) => {
-  const rsbuild = await buildOnly({
+test('should generate manifest file when target is node', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       output: {
         distPath: {
@@ -125,8 +121,8 @@ test('should always write manifest to disk when in dev', async ({ dev }) => {
   expect(manifestContent).toBeDefined();
 });
 
-test('should allow to filter files in manifest', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should allow to filter files in manifest', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       output: {
         manifest: {
@@ -158,10 +154,10 @@ test('should allow to filter files in manifest', async ({ buildOnly }) => {
   });
 });
 
-rspackOnlyTest(
+rspackTest(
   'should allow to include license files in manifest',
-  async ({ buildOnly }) => {
-    const rsbuild = await buildOnly({
+  async ({ build }) => {
+    const rsbuild = await build({
       rsbuildConfig: {
         output: {
           manifest: {

@@ -1,7 +1,7 @@
 import { expect, test } from '@e2e/helper';
 
-test('should escape template parameters correctly', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should escape template parameters correctly', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       html: {
         templateParameters: {
@@ -22,9 +22,9 @@ test('should escape template parameters correctly', async ({ buildOnly }) => {
 });
 
 test('should allow to passing undefined to template parameters', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     rsbuildConfig: {
       html: {
         templateParameters: {

@@ -1,6 +1,6 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'support SSR load esm with type module',
   async ({ page, devOnly }) => {
     const rsbuild = await devOnly();

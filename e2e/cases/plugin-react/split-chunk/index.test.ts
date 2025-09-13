@@ -1,8 +1,8 @@
 import { expect, test } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-test('should split react chunks correctly', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should split react chunks correctly', async ({ build }) => {
+  const rsbuild = await build({
     plugins: [pluginReact()],
   });
 
@@ -13,9 +13,9 @@ test('should split react chunks correctly', async ({ buildOnly }) => {
 });
 
 test('should not split react chunks when strategy is `all-in-one`', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     plugins: [pluginReact()],
     rsbuildConfig: {
       performance: {
@@ -32,8 +32,8 @@ test('should not split react chunks when strategy is `all-in-one`', async ({
   expect(filesNames.find((file) => file.includes('lib-router'))).toBeFalsy();
 });
 
-test('should not override user defined cache groups', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should not override user defined cache groups', async ({ build }) => {
+  const rsbuild = await build({
     plugins: [pluginReact()],
     rsbuildConfig: {
       performance: {

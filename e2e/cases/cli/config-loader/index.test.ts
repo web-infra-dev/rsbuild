@@ -1,17 +1,10 @@
 import path from 'node:path';
-import {
-  expect,
-  readDirContents,
-  rspackOnlyTest,
-  runCliSync,
-} from '@e2e/helper';
+import { expect, readDirContents, rspackTest, runCliSync } from '@e2e/helper';
 
 const nodeVersion = process.version.slice(1).split('.')[0];
 const isNodeVersionCompatible = Number(nodeVersion) >= 22;
 
-const conditionalTest = isNodeVersionCompatible
-  ? rspackOnlyTest
-  : rspackOnlyTest.skip;
+const conditionalTest = isNodeVersionCompatible ? rspackTest : rspackTest.skip;
 
 conditionalTest('should use Node.js native loader to load config', async () => {
   runCliSync('build --config-loader native', {

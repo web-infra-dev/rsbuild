@@ -38,9 +38,9 @@ function extractFileSizeLogs(logs: string[]) {
 
 test.describe('should print file size correctly', async () => {
   test('should print file size after building by default', async ({
-    buildOnly,
+    build,
   }) => {
-    const rsbuild = await buildOnly({
+    const rsbuild = await build({
       cwd,
     });
 
@@ -55,9 +55,9 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
   });
 
   test('should print size of multiple environments correctly', async ({
-    buildOnly,
+    build,
   }) => {
-    const rsbuild = await buildOnly({
+    const rsbuild = await build({
       cwd,
       rsbuildConfig: {
         output: {
@@ -96,9 +96,9 @@ dist/static/js/lib-react.js   X.X kB   X.X kB
   });
 
   test('should not print logs when printFileSize is false', async ({
-    buildOnly,
+    build,
   }) => {
-    const rsbuild = await buildOnly({
+    const rsbuild = await build({
       cwd,
       rsbuildConfig: {
         performance: {
@@ -111,9 +111,9 @@ dist/static/js/lib-react.js   X.X kB   X.X kB
   });
 
   test('should not print details when printFileSize.detail is false', async ({
-    buildOnly,
+    build,
   }) => {
-    const rsbuild = await buildOnly({
+    const rsbuild = await build({
       cwd,
       rsbuildConfig: {
         performance: {
@@ -128,8 +128,8 @@ dist/static/js/lib-react.js   X.X kB   X.X kB
 Total size (web): X.X kB (X.X kB gzipped)`);
   });
 
-  test('printFileSize.total: false should work', async ({ buildOnly }) => {
-    const rsbuild = await buildOnly({
+  test('printFileSize.total: false should work', async ({ build }) => {
+    const rsbuild = await build({
       cwd,
       rsbuildConfig: {
         performance: {
@@ -150,9 +150,9 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB`);
   });
 
   test('should print dist folder correctly if it is not a subdir of root', async ({
-    buildOnly,
+    build,
   }) => {
-    const rsbuild = await buildOnly({
+    const rsbuild = await build({
       cwd,
       rsbuildConfig: {
         output: {
@@ -173,10 +173,8 @@ File (web)                                                 Size       Gzip
                                                   Total:   X.X kB   X.X kB`);
   });
 
-  test('should allow to disable gzip-compressed size', async ({
-    buildOnly,
-  }) => {
-    const rsbuild = await buildOnly({
+  test('should allow to disable gzip-compressed size', async ({ build }) => {
+    const rsbuild = await build({
       cwd,
       rsbuildConfig: {
         performance: {
@@ -197,8 +195,8 @@ dist/static/js/lib-react.[[hash]].js   X.X kB
                               Total:   X.X kB`);
   });
 
-  test('should allow to filter assets by name', async ({ buildOnly }) => {
-    const rsbuild = await buildOnly({
+  test('should allow to filter assets by name', async ({ build }) => {
+    const rsbuild = await build({
       cwd,
       rsbuildConfig: {
         performance: {
@@ -216,8 +214,8 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
                               Total:   X.X kB   X.X kB`);
   });
 
-  test('should allow to filter assets by size', async ({ buildOnly }) => {
-    const rsbuild = await buildOnly({
+  test('should allow to filter assets by size', async ({ build }) => {
+    const rsbuild = await build({
       cwd,
       rsbuildConfig: {
         performance: {
@@ -233,8 +231,8 @@ File (web)                             Size       Gzip
 dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB`);
   });
 
-  test('should allow to custom exclude function', async ({ buildOnly }) => {
-    const rsbuild = await buildOnly({
+  test('should allow to custom exclude function', async ({ build }) => {
+    const rsbuild = await build({
       cwd,
       rsbuildConfig: {
         performance: {
@@ -257,9 +255,9 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
   });
 
   test('should not calculate gzip size if the asset is not compressible', async ({
-    buildOnly,
+    build,
   }) => {
-    const rsbuild = await buildOnly({
+    const rsbuild = await build({
       cwd,
     });
 
@@ -274,9 +272,9 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
   });
 
   test('should respect a custom total function for printFileSize', async ({
-    buildOnly,
+    build,
   }) => {
-    const rsbuild = await buildOnly({
+    const rsbuild = await build({
       cwd,
       rsbuildConfig: {
         performance: {

@@ -1,6 +1,6 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should exports global in CSS Modules correctly in dev build',
   async ({ page, dev }) => {
     await dev();
@@ -13,10 +13,10 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should exports global in CSS Modules correctly in build',
-  async ({ page, build }) => {
-    const rsbuild = await build();
+  async ({ page, buildPreview }) => {
+    const rsbuild = await buildPreview();
 
     const test1Locator = page.locator('#test1');
     await expect(test1Locator).toHaveCSS('color', 'rgb(255, 0, 0)');

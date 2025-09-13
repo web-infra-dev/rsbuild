@@ -1,11 +1,11 @@
 import { join } from 'node:path';
-import { expect, rspackOnlyTest, test } from '@e2e/helper';
+import { expect, rspackTest, test } from '@e2e/helper';
 
 test('should allow to use tools.bundlerChain to set alias config', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  await build({
+  await buildPreview({
     rsbuildConfig: {
       tools: {
         bundlerChain: (chain) => {
@@ -20,9 +20,9 @@ test('should allow to use tools.bundlerChain to set alias config', async ({
 
 test('should allow to use async tools.bundlerChain to set alias config', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  await build({
+  await buildPreview({
     rsbuildConfig: {
       tools: {
         bundlerChain: async (chain) => {
@@ -40,10 +40,10 @@ test('should allow to use async tools.bundlerChain to set alias config', async (
   await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild! 1');
 });
 
-rspackOnlyTest(
+rspackTest(
   'should allow to use rspack in tools.bundlerChain',
-  async ({ page, build }) => {
-    await build({
+  async ({ page, buildPreview }) => {
+    await buildPreview({
       rsbuildConfig: {
         tools: {
           bundlerChain: (chain, { rspack }) => {

@@ -26,14 +26,14 @@ test('should use `buildCache.cacheDirectory` as expected in dev', async ({
 });
 
 test('should use `buildCache.cacheDirectory` as expected in build', async ({
-  buildOnly,
+  build,
 }) => {
   const defaultDirectory = path.resolve(__dirname, './node_modules/.cache');
   const cacheDirectory = path.resolve(__dirname, './node_modules/.cache2');
   await remove(defaultDirectory);
   await remove(cacheDirectory);
 
-  await buildOnly({
+  await build({
     rsbuildConfig: {
       performance: {
         buildCache: {

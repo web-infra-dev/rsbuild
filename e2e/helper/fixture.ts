@@ -15,18 +15,18 @@ type RsbuildFixture = {
   cwd: string;
 
   /**
-   * Build the project, start a preview server, and auto-navigate the Playwright page.
+   * Build the project. No preview server or page navigation by default.
    * Uses the test file's cwd.
    * The fixture auto-closes after the test.
    */
   build: Build;
 
   /**
-   * Build only. No preview server or page navigation by default.
+   * Build the project, start a preview server, and auto-navigate the Playwright page.
    * Uses the test file's cwd.
    * The fixture auto-closes after the test.
    */
-  buildOnly: Build;
+  buildPreview: Build;
 
   /**
    * Start the dev server and auto-navigate the Playwright page.
@@ -53,10 +53,10 @@ export const test = base.extend<RsbuildFixture>({
     await use(cwd);
   },
 
-  build: async ({ cwd, page }, use) => {
+  build: async ({ cwd }, use) => {
     const closes: Close[] = [];
     const build: typeof baseBuild = async (options) => {
-      const result = await baseBuild({ cwd, page, ...options });
+      const result = await baseBuild({ cwd, ...options });
       closes.push(result.close);
       return result;
     };
@@ -70,10 +70,10 @@ export const test = base.extend<RsbuildFixture>({
     }
   },
 
-  buildOnly: async ({ cwd }, use) => {
+  buildPreview: async ({ cwd, page }, use) => {
     const closes: Close[] = [];
     const build: typeof baseBuild = async (options) => {
-      const result = await baseBuild({ cwd, ...options });
+      const result = await baseBuild({ cwd, page, ...options });
       closes.push(result.close);
       return result;
     };
@@ -124,7 +124,7 @@ export const test = base.extend<RsbuildFixture>({
 
 export { expect };
 
-export const rspackOnlyTest = ((): typeof test => {
+export const rspackTest = ((): typeof test => {
   if (process.env.PROVIDE_TYPE !== 'webpack') {
     return test;
   }

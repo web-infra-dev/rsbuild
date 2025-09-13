@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expect, rspackOnlyTest, runCliSync } from '@e2e/helper';
+import { expect, rspackTest, runCliSync } from '@e2e/helper';
 
-rspackOnlyTest('should support a custom env directory', async () => {
+rspackTest('should support a custom env directory', async () => {
   runCliSync('build --env-dir env', {
     cwd: __dirname,
   });

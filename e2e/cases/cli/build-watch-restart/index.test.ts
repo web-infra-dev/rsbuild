@@ -1,8 +1,8 @@
 import path from 'node:path';
-import { expectFileWithContent, rspackOnlyTest, runCli } from '@e2e/helper';
+import { expectFileWithContent, rspackTest, runCli } from '@e2e/helper';
 import fse from 'fs-extra';
 
-rspackOnlyTest('should support restart build when config changed', async () => {
+rspackTest('should support restart build when config changed', async () => {
   const indexFile = path.join(__dirname, 'src/index.js');
   const distIndexFile = path.join(__dirname, 'dist/static/js/index.js');
   const tempConfig = path.join(__dirname, 'test-temp-rsbuild.config.mjs');

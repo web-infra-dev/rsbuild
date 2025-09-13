@@ -1,6 +1,6 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should allow to import inline Less files in dev',
   async ({ page, dev }) => {
     await dev();
@@ -20,10 +20,10 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should allow to import inline Less files in build',
-  async ({ page, build }) => {
-    await build();
+  async ({ page, buildPreview }) => {
+    await buildPreview();
 
     const aInline: string = await page.evaluate('window.aInline');
     const bInline: string = await page.evaluate('window.bInline');

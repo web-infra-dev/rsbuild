@@ -1,9 +1,9 @@
-import { expect, normalizeNewlines, rspackOnlyTest } from '@e2e/helper';
+import { expect, normalizeNewlines, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should inject tags with function usage correctly',
-  async ({ buildOnly }) => {
-    const rsbuild = await buildOnly();
+  async ({ build }) => {
+    const rsbuild = await build();
     const files = rsbuild.getDistFiles();
 
     const indexHtml =

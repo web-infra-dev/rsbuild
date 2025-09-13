@@ -139,11 +139,11 @@ test('should not serve publicDir when publicDir is false', async ({
 
 test('should serve publicDir for preview server correctly', async ({
   page,
-  build,
+  buildPreview,
 }) => {
   await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');
 
-  const rsbuild = await build({
+  const rsbuild = await buildPreview({
     cwd,
 
     rsbuildConfig: {
@@ -163,11 +163,11 @@ test('should serve publicDir for preview server correctly', async ({
 });
 
 test('should copy publicDir to the environment distDir when multiple environments', async ({
-  buildOnly,
+  build,
 }) => {
   await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');
 
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     cwd,
     rsbuildConfig: {
       environments: {
@@ -217,11 +217,11 @@ test('should copy publicDir to the environment distDir when multiple environment
 });
 
 test('should copy publicDir to the node distDir when copyOnBuild is specified as true', async ({
-  buildOnly,
+  build,
 }) => {
   await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');
 
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     cwd,
     rsbuildConfig: {
       server: {
@@ -252,12 +252,12 @@ test('should copy publicDir to the node distDir when copyOnBuild is specified as
 });
 
 test('should copy publicDir to root dist when environment dist path has a parent-child relationship', async ({
-  buildOnly,
+  build,
 }) => {
   await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');
   fse.removeSync(join(__dirname, 'dist-build-web'));
 
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     cwd,
     rsbuildConfig: {
       environments: {
@@ -295,11 +295,11 @@ test('should copy publicDir to root dist when environment dist path has a parent
 
 test('should serve publicDir for preview server with assetPrefix correctly', async ({
   page,
-  build,
+  buildPreview,
 }) => {
   await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');
 
-  const rsbuild = await build({
+  const rsbuild = await buildPreview({
     cwd,
 
     rsbuildConfig: {
@@ -324,12 +324,12 @@ test('should serve publicDir for preview server with assetPrefix correctly', asy
 
 test('should serve multiple publicDir for preview server correctly', async ({
   page,
-  build,
+  buildPreview,
 }) => {
   await fse.outputFile(join(__dirname, 'test-temp-dir1', 'a.txt'), 'a');
   await fse.outputFile(join(__dirname, 'test-temp-dir2', 'b.txt'), 'b');
 
-  const rsbuild = await build({
+  const rsbuild = await buildPreview({
     cwd,
 
     rsbuildConfig: {

@@ -1,10 +1,10 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
 const cwd = __dirname;
 
-rspackOnlyTest('HMR should work by default', async ({ page, dev }) => {
+rspackTest('HMR should work by default', async ({ page, dev }) => {
   await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
     recursive: true,
   });

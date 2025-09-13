@@ -1,9 +1,9 @@
 import { expect, test } from '@e2e/helper';
 
 test('should detect and report missing named export errors during build', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     catchBuildError: true,
   });
 

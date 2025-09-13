@@ -1,12 +1,7 @@
 import path from 'node:path';
-import {
-  expect,
-  readDirContents,
-  rspackOnlyTest,
-  runCliSync,
-} from '@e2e/helper';
+import { expect, readDirContents, rspackTest, runCliSync } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should set NODE_ENV correctly when running build command',
   async () => {
     delete process.env.NODE_ENV;

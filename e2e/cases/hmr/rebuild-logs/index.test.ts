@@ -1,10 +1,10 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
 const cwd = __dirname;
 
-rspackOnlyTest('should print changed files in logs', async ({ page, dev }) => {
+rspackTest('should print changed files in logs', async ({ page, dev }) => {
   await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
     recursive: true,
   });
@@ -34,7 +34,7 @@ rspackOnlyTest('should print changed files in logs', async ({ page, dev }) => {
   await rsbuild.expectLog(/building test-temp-src[\\/]App\.tsx/);
 });
 
-rspackOnlyTest('should print removed files in logs', async ({ page, dev }) => {
+rspackTest('should print removed files in logs', async ({ page, dev }) => {
   await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
     recursive: true,
   });

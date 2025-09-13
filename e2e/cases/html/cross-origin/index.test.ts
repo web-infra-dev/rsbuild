@@ -1,7 +1,7 @@
 import { expect, test } from '@e2e/helper';
 
-test('should not apply crossOrigin by default', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should not apply crossOrigin by default', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       html: {
         scriptLoading: 'blocking',
@@ -16,9 +16,9 @@ test('should not apply crossOrigin by default', async ({ buildOnly }) => {
 });
 
 test('should apply crossOrigin when crossorigin is "anonymous" and not same origin', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     rsbuildConfig: {
       html: {
         scriptLoading: 'blocking',
