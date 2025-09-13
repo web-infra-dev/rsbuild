@@ -1,3 +1,4 @@
+import { promises } from 'node:fs';
 import path from 'node:path';
 import base, { expect } from '@playwright/test';
 import {
@@ -7,6 +8,11 @@ import {
   type Dev,
   type DevResult,
 } from './jsApi';
+
+type EditFile = (
+  filename: string,
+  replacer: (code: string) => string,
+) => Promise<void>;
 
 type RsbuildFixture = {
   /**
@@ -42,6 +48,13 @@ type RsbuildFixture = {
    * The fixture auto-closes after the test.
    */
   devOnly: Dev;
+
+  /**
+   * Edit a file in the test file's cwd.
+   * @param filename The filename relative to the test file's cwd.
+   * @param replacer The replacer function.
+   */
+  editFile: EditFile;
 };
 
 type Close = DevResult['close'];
@@ -119,6 +132,15 @@ export const test = base.extend<RsbuildFixture>({
         await close();
       }
     }
+  },
+
+  editFile: async ({ cwd }, use) => {
+    const editFile: EditFile = async (filename, replacer) => {
+      const resolvedFilename = path.resolve(cwd, filename);
+      const code = await promises.readFile(resolvedFilename, 'utf-8');
+      return promises.writeFile(resolvedFilename, replacer(code));
+    };
+    await use(editFile);
   },
 });
 

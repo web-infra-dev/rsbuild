@@ -1,4 +1,3 @@
-import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import {
   expect,
@@ -13,7 +12,7 @@ import { tempConfig } from './rsbuild.config';
 
 rspackTest(
   'should watch tsconfig.json and reload the server when it changes',
-  async ({ page }) => {
+  async ({ page, editFile }) => {
     if (process.platform === 'win32') {
       return;
     }
@@ -37,8 +36,7 @@ rspackTest(
     await gotoPage(page, { port });
     await expect(page.locator('#content')).toHaveText('foo');
 
-    const tsconfigContent = await readFile(tempConfig, 'utf-8');
-    await writeFile(tempConfig, tsconfigContent.replace('foo', 'bar'));
+    await editFile(tempConfig, (code) => code.replace('foo', 'bar'));
     await expect(page.locator('#content')).toHaveText('bar');
 
     close();

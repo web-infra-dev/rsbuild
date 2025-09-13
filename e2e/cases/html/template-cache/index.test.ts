@@ -7,7 +7,7 @@ import fse from 'fs-extra';
 // https://github.com/web-infra-dev/rsbuild/issues/5176
 rspackTest(
   'should not re-compile templates when the template is not changed',
-  async ({ dev, page }) => {
+  async ({ dev, page, editFile }) => {
     // Failed to run this case on Windows
     if (process.platform === 'win32') {
       test.skip();
@@ -51,17 +51,17 @@ rspackTest(
     expect(count).toEqual(2);
 
     // Re-compile the template when the template is changed
-    const indexHtmlPath = join(targetDir, 'index.html');
-    const indexHtml = await fs.readFile(indexHtmlPath, 'utf-8');
-    await fs.writeFile(indexHtmlPath, indexHtml.replace('foo', 'foo2'));
+    await editFile('test-temp-src/index.html', (code) =>
+      code.replace('foo', 'foo2'),
+    );
     await expect(page.locator('#root')).toHaveText('foo2');
     // The count will be 4 as the childCompiler in html-rspack-plugin
     // will compile all the templates
     expect(count).toEqual(4);
 
-    const indexJsPath = join(targetDir, 'index.js');
-    const indexJs = await fs.readFile(indexJsPath, 'utf-8');
-    await fs.writeFile(indexJsPath, indexJs.replace('foo', 'foo3'));
+    await editFile('test-temp-src/index.js', (code) =>
+      code.replace('foo', 'foo3'),
+    );
     await expect(page.locator('#content')).toHaveText('foo3');
     // The count should not change if the templates are not changed
     expect(count).toEqual(4);

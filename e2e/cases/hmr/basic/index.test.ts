@@ -4,7 +4,7 @@ import { expect, rspackTest } from '@e2e/helper';
 
 const cwd = __dirname;
 
-rspackTest('HMR should work by default', async ({ page, dev }) => {
+rspackTest('HMR should work by default', async ({ page, dev, editFile }) => {
   await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
     recursive: true,
   });
@@ -26,11 +26,8 @@ rspackTest('HMR should work by default', async ({ page, dev }) => {
   const locatorKeep = page.locator('#test-keep');
   const keepNum = await locatorKeep.innerHTML();
 
-  const appPath = join(cwd, 'test-temp-src/App.tsx');
-
-  await fs.promises.writeFile(
-    appPath,
-    fs.readFileSync(appPath, 'utf-8').replace('Hello Rsbuild', 'Hello Test'),
+  await editFile('test-temp-src/App.tsx', (code) =>
+    code.replace('Hello Rsbuild', 'Hello Test'),
   );
 
   await expect(locator).toHaveText('Hello Test!');
@@ -38,11 +35,9 @@ rspackTest('HMR should work by default', async ({ page, dev }) => {
   // #test-keep should remain unchanged when app.tsx HMR
   expect(await locatorKeep.innerHTML()).toBe(keepNum);
 
-  const cssPath = join(cwd, 'test-temp-src/App.css');
-
-  await fs.promises.writeFile(
-    cssPath,
-    `#test {
+  await editFile(
+    'test-temp-src/App.css',
+    () => `#test {
   color: rgb(0, 0, 255);
 }`,
   );
