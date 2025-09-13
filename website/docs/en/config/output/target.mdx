@@ -9,13 +9,13 @@ type RsbuildTarget = 'web' | 'node' | 'web-worker';
 - **Default:** `'web'`
 - **Version:** `>= 1.0.0`
 
-Setting the build target for Rsbuild.
+Sets the build target for Rsbuild.
 
 Rsbuild supports multiple build targets for running in different environments. After setting the target type, Rsbuild's default configuration will change accordingly.
 
 ## Default target
 
-By default, the target is set to 'web' and builds outputs for running in the browser.
+The target is `'web'` by default, building outputs for browsers.
 
 Rsbuild reads the [Browserslist config](https://github.com/browserslist/browserslist) in the project to determine the range of supported browsers.
 
@@ -40,7 +40,7 @@ export default {
 
 You can use [environments](/config/environments) to build multiple targets in parallel.
 
-For example, to build `web` outputs and `node` outputs at the same time:
+To build `web` and `node` outputs simultaneously, use [environments](/config/environments):
 
 ```ts
 export default {

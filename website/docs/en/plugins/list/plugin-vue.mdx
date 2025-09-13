@@ -14,7 +14,7 @@ For Vue 3 JSX / TSX syntax, please use the [Vue JSX plugin](https://github.com/r
 
 ### Install plugin
 
-You can install the plugin using the following command:
+Install the plugin with this command:
 
 import { PackageManagerTabs } from '@theme';
 
@@ -22,7 +22,7 @@ import { PackageManagerTabs } from '@theme';
 
 ### Register plugin
 
-You can register the plugin in the `rsbuild.config.ts` file:
+Register the plugin in your `rsbuild.config.ts` file:
 
 ```ts title="rsbuild.config.ts"
 import { pluginVue } from '@rsbuild/plugin-vue';
@@ -36,11 +36,11 @@ After registering the plugin, you can import `*.vue` SFC files in your code.
 
 ## Options
 
-To customize the compilation behavior of Vue, use the following options.
+Customize Vue compilation behavior with these options:
 
 ### vueLoaderOptions
 
-Options passed to `vue-loader`, please refer to the [vue-loader documentation](https://vue-loader.vuejs.org/) for detailed usage.
+Options passed to `vue-loader`. See the [vue-loader documentation](https://vue-loader.vuejs.org/) for detailed usage.
 
 - **Type:** `VueLoaderOptions`
 - **Default:**

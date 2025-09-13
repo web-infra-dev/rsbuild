@@ -1,17 +1,17 @@
 # Migrating from Rsbuild 0.x
 
-The document lists all breaking changes from Rsbuild 0.7 to 1.0. You can refer to this document for migration.
+This document lists all breaking changes from Rsbuild 0.7 to 1.0. Use it as a migration reference.
 
 > See [Breaking changes in Rsbuild v1.0.0](https://github.com/web-infra-dev/rsbuild/discussions/2508) for details.
 
 ## [Important] Lightning CSS loader
 
-Rsbuild now enables [lightningcss-loader](https://rspack.rs/guide/features/builtin-lightningcss-loader) by default to transform CSS files, it replaces `autoprefixer` to add vendor prefixes and provides better performance.
+Rsbuild now enables [lightningcss-loader](https://rspack.rs/guide/features/builtin-lightningcss-loader) by default to transform CSS files. It replaces `autoprefixer` for adding vendor prefixes and delivers better performance.
 
-- `@rsbuild/plugin-lightningcss` has been deprecated and no longer needed.
+- `@rsbuild/plugin-lightningcss` is deprecated and no longer needed.
 - `tools.autoprefixer` config has been removed.
 
-Considering that Lightning CSS has some uncovered edge cases, you can still enable autoprefixer via the postcss config file:
+Since Lightning CSS has some uncovered edge cases, you can still enable autoprefixer through a postcss config file:
 
 ```js title="postcss.config.cjs"
 module.exports = {
@@ -23,9 +23,9 @@ module.exports = {
 
 ## [Important] output.polyfill
 
-Rsbuild v1 set [output.polyfill](/config/output/polyfill) to `'off'` by default, this can reduce the polyfill code and generate smaller bundles by default.
+Rsbuild v1 sets [output.polyfill](/config/output/polyfill) to `'off'` by default. This reduces polyfill code and generates smaller bundles.
 
-If your application need polyfill, please set `output.polyfill` to `'usage'` or `'entry'`:
+If your application needs polyfills, set `output.polyfill` to `'usage'` or `'entry'`:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -37,9 +37,9 @@ export default {
 
 ## [Important] source.decorators
 
-Rsbuild now uses `2022-11` decorators version by default. This allows Rsbuild to align the default behavior with TypeScript >= 5.0 and esbuild >= 0.21.0.
+Rsbuild now uses `2022-11` decorators version by default. This aligns Rsbuild's default behavior with TypeScript >= 5.0 and esbuild >= 0.21.0.
 
-If you are using the legacy decorators, you can add the following config:
+For legacy decorators, add this config:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -56,12 +56,12 @@ export default defineConfig({
 ## [Important] output.targets
 
 :::tip
-Rsbuild v1 removes the `output.targets` option and the target parameters of `source.alias` /`source.entry` and other configs, and instead configures it through `environments` to provide more flexible multi-environment config capabilities.
+Rsbuild v1 removes the `output.targets` option and target parameters from `source.alias`, `source.entry`, and other configs. Instead, use `environments` for more flexible multi-environment configuration.
 
-Compared with the original options, `environments` has a wider coverage and can perform differentiated config of more configs in multiple environments. For details, please refer to [Multiple-Environment Builds](/guide/advanced/environments).
+The `environments` option provides broader coverage and enables differentiated config across multiple environments. For details, see [Multiple-Environment Builds](/guide/advanced/environments).
 :::
 
-Removed `output.targets` config, use [output.target](/config/output/target) and [environments](/config/environments) config instead.
+The `output.targets` config has been removed. Use [output.target](/config/output/target) and [environments](/config/environments) instead.
 
 - before:
 

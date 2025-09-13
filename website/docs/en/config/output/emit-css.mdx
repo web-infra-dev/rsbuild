@@ -3,7 +3,7 @@
 - **Type:** `boolean`
 - **Default:** `true` when [output.target](/config/output/target) is `web`, otherwise `false`
 
-Whether to emit CSS to the output bundles.
+Controls whether CSS is emitted to output bundles.
 
 If `false`, the CSS will not be extracted to separate files or injected into the JavaScript bundles via [output.injectStyles](/config/output/inject-styles).
 
@@ -15,7 +15,7 @@ When `output.emitCss` is `false`, the class name information of CSS Modules will
 
 ## Example
 
-When building Node.js bundles, if you need to output CSS files, you can set `output.emitCss` to `true`:
+When building Node.js bundles, set `output.emitCss` to `true` to output CSS files:
 
 ```js
 export default {

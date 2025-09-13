@@ -74,7 +74,7 @@ const defaultOptions = {
 
 By default, Rsbuild uses the [new JSX runtime](https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) introduced in React 17, which is `runtime: 'automatic'`.
 
-If your current React version is lower than 16.14.0, you can set `runtime` to `'classic'`:
+For React versions below 16.14.0, set `runtime` to `'classic'`:
 
 ```ts
 pluginReact({
@@ -101,7 +101,7 @@ function App() {
 - **Type:** `string`
 - **Default:** `'react'`
 
-When `runtime` is `'automatic'`, you can specify the import path of the JSX runtime through `importSource`.
+With `runtime` set to `'automatic'`, you can specify the JSX runtime import path through `importSource`.
 
 For example, when using [Emotion](https://emotion.sh/), you can set `importSource` to `'@emotion/react'`:
 
