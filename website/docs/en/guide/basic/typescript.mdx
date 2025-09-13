@@ -1,6 +1,6 @@
 # TypeScript
 
-Rsbuild supports TypeScript by default, allowing you to directly use `.ts` and `.tsx` files in your projects.
+Rsbuild supports TypeScript by default, allowing you to directly use `.ts` and `.tsx` files in your project.
 
 ## TypeScript transpilation
 
@@ -8,9 +8,9 @@ Rsbuild uses [SWC](/guide/configuration/swc) by default for transpiling TypeScri
 
 ### Isolated modules
 
-Unlike the native TypeScript compiler, tools like SWC and Babel compile each file separately and cannot determine whether an imported name is a type or a value. Therefore, when using TypeScript in Rsbuild, you need to enable the [verbatimModuleSyntax](https://www.typescriptlang.org/tsconfig/#verbatimModuleSyntax) or [isolatedModules](https://typescriptlang.org/tsconfig/#isolatedModules) option in your `tsconfig.json` file:
+Unlike the native TypeScript compiler, tools like SWC and Babel compile each file separately and cannot determine whether an imported name is a type or a value. Therefore, when using TypeScript in Rsbuild, you need to enable the [verbatimModuleSyntax](https://www.typescriptlang.org/tsconfig/#verbatimModuleSyntax) or [isolatedModules](https://typescriptlang.org/tsconfig/#isolatedModules) option in your `tsconfig.json`:
 
-- If `typescript` >= 5.0.0, use the `verbatimModuleSyntax` option, it will enable `isolatedModules` option by default:
+- For TypeScript >= 5.0.0, use the `verbatimModuleSyntax` option, which enables the `isolatedModules` option by default:
 
 ```json title="tsconfig.json"
 {
@@ -20,7 +20,7 @@ Unlike the native TypeScript compiler, tools like SWC and Babel compile each fil
 }
 ```
 
-- If `typescript` < 5.0.0, use the `isolatedModules` option:
+- For TypeScript < 5.0.0, use the `isolatedModules` option:
 
 ```json title="tsconfig.json"
 {
@@ -30,7 +30,7 @@ Unlike the native TypeScript compiler, tools like SWC and Babel compile each fil
 }
 ```
 
-Enabling `isolatedModules` option can help you avoid using certain syntax that cannot be correctly compiled by SWC and Babel, such as cross-file type references. It will guide you to correct the corresponding usage:
+Enabling the `isolatedModules` option helps you avoid using syntax that cannot be correctly compiled by SWC and Babel, such as cross-file type references. It will guide you to correct the usage:
 
 ```ts
 // Wrong
@@ -44,7 +44,7 @@ export type { SomeType } from './types';
 
 ## Preset types
 
-`@rsbuild/core` provides some preset type definitions, including CSS files, CSS Modules, static assets, `import.meta` and other types.
+`@rsbuild/core` provides preset type definitions, including CSS files, CSS Modules, static assets, `import.meta`, and other types.
 
 You can create a `src/env.d.ts` file to reference it:
 

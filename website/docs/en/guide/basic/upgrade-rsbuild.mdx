@@ -1,6 +1,6 @@
 # Upgrade Rsbuild
 
-This section explains how to upgrade the project's Rsbuild dependencies to the latest version.
+This section explains how to upgrade your project's Rsbuild dependencies to the latest version.
 
 :::tip
 
@@ -33,7 +33,7 @@ rsbuild - 3 patch
 ℹ changes written to package.json, run npm i to install updates.
 ```
 
-You can also adjust the `include` pattern to match specific packages, for example, to upgrade only packages under the `@rsbuild` scope:
+You can also adjust the `include` pattern to match specific packages. For example, to upgrade only packages under the `@rsbuild` scope:
 
 ```bash
 npx taze --include /@rsbuild/ -w
@@ -41,7 +41,7 @@ npx taze --include /@rsbuild/ -w
 
 ### Options
 
-Here are some examples of using taze options.
+Here are some examples of using Taze options:
 
 - In a monorepo, you can add the `-r` option to upgrade recursively:
 

@@ -2,23 +2,23 @@
 
 Rsbuild supports importing static assets, including images, fonts, audio, and video.
 
-:::tip What are Static Assets
-Static assets are files that are part of a web application and do not change, even when the application is being used. Examples of static assets include images, fonts, media files, stylesheets, and JavaScript files. These assets are typically stored on a web server or CDN, and delivered to the user's web browser when the web application is accessed. Because they do not change, static assets can be cached by the browser, which helps to improve the performance of the web application.
+:::tip What are static assets
+Static assets are files that are part of a web application and do not change during application use. Examples include images, fonts, media files, stylesheets, and JavaScript files. These assets are typically stored on a web server or CDN and delivered to the user's browser when the application is accessed. Since they don't change, static assets can be cached by the browser, improving application performance.
 :::
 
 ## Asset formats
 
 Rsbuild supports these formats by default:
 
-- **images**: png, jpg, jpeg, gif, svg, bmp, webp, ico, apng, avif, tif, tiff, jfif, pjpeg, pjp, cur.
-- **fonts**: woff, woff2, eot, ttf, otf, ttc.
-- **audio**: mp3, wav, flac, aac, m4a, opus.
-- **video**: mp4, webm, ogg, mov.
+- **Images**: png, jpg, jpeg, gif, svg, bmp, webp, ico, apng, avif, tif, tiff, jfif, pjpeg, pjp, cur.
+- **Fonts**: woff, woff2, eot, ttf, otf, ttc.
+- **Audio**: mp3, wav, flac, aac, m4a, opus.
+- **Video**: mp4, webm, ogg, mov.
 
 To import assets in other formats, refer to [Extend Asset Types](#extend-asset-types).
 
 :::tip SVG images
-SVG images are a special case. Rsbuild supports converting SVG to React components, so SVG is processed separately. For details, see [SVGR Plugin](/plugins/list/plugin-svgr).
+SVG images are a special case. Rsbuild supports converting SVG to React components, so SVG files are processed separately. For details, see [SVGR Plugin](/plugins/list/plugin-svgr).
 :::
 
 ## Importing assets in JavaScript files
@@ -56,7 +56,7 @@ console.log(logo); // "/static/logo.[hash].png"
 export default () => <img src={logo} />;
 ```
 
-When using `new URL()` to reference `.js` or `.ts` files, they are treated as URL assets and are not processed by Rsbuild's built-in `swc-loader`.
+When using `new URL()` to reference `.js` or `.ts` files, they are treated as URL assets and are not processed by Rsbuild's built-in SWC loader.
 
 ```tsx
 // foo.ts will remain the original content and be output to the dist directory

@@ -4,7 +4,7 @@ import { SourceCode } from '@rspress/core/theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-svgr" />
 
-By default, Rsbuild treats SVG files as static assets. For processing rules, refer to: [Static assets](/guide/basic/static-assets).
+By default, Rsbuild treats SVG files as static assets. For processing rules, see [Static assets](/guide/basic/static-assets).
 
 With the SVGR plugin, Rsbuild supports transforming SVG to React components via [SVGR](https://react-svgr.com/).
 
@@ -43,7 +43,7 @@ import Logo from './logo.svg?react';
 export const App = () => <Logo />;
 ```
 
-If the imported path doesn't include the `?react` suffix, then the SVG will be treated as a normal static asset and you will get a URL string or base64 URL, see [Static assets](/guide/basic/static-assets).
+If the imported path doesn't include the `?react` suffix, the SVG will be treated as a normal static asset and you will get a URL string or base64 URL. See [Static assets](/guide/basic/static-assets).
 
 ```js
 import logoURL from './static/logo.svg';
