@@ -1,7 +1,5 @@
-import { dev, expect, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 import type { RsbuildPluginAPI } from '@rsbuild/core';
-
-const fixtures = __dirname;
 
 test('should allow to access manifest data in environment context after build', async ({
   buildOnly,
@@ -124,14 +122,13 @@ test('should allow to access manifest data in environment context after dev buil
 });
 
 test('should allow to access manifest data in environment API', async ({
+  dev,
   page,
 }) => {
   let webManifest: Record<string, any> | undefined = {};
   let nodeManifest: Record<string, any> | undefined = {};
 
   const rsbuild = await dev({
-    cwd: fixtures,
-    page,
     rsbuildConfig: {
       output: {
         filenameHash: false,

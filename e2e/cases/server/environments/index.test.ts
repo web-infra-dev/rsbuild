@@ -1,10 +1,7 @@
-import { dev, expect, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
-const cwd = __dirname;
-
-test('should serve multiple environments correctly', async ({ page }) => {
+test('should serve multiple environments correctly', async ({ dev, page }) => {
   const rsbuild = await dev({
-    cwd,
     rsbuildConfig: {
       environments: {
         web: {},
@@ -42,12 +39,12 @@ test('should serve multiple environments correctly', async ({ page }) => {
 });
 
 test('should expose the environment API in setupMiddlewares', async ({
+  dev,
   page,
 }) => {
   let assertionsCount = 0;
 
   const rsbuild = await dev({
-    cwd,
     rsbuildConfig: {
       dev: {
         setupMiddlewares: (middlewares, { environments }) => {
@@ -94,10 +91,10 @@ test('should expose the environment API in setupMiddlewares', async ({
 
 // TODO: not support serve multiple environments when distPath different
 test.skip('serve multiple environments correctly when distPath different', async ({
+  dev,
   page,
 }) => {
   const rsbuild = await dev({
-    cwd,
     rsbuildConfig: {
       environments: {
         web: {},

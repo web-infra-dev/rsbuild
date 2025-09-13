@@ -1,13 +1,10 @@
-import { dev, expect, gotoPage, test } from '@e2e/helper';
+import { expect, gotoPage, test } from '@e2e/helper';
 
 test('should allow to define global variables in development', async ({
+  dev,
   page,
 }) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
-  });
-
+  const rsbuild = await dev();
   await gotoPage(page, rsbuild);
 
   const testEl = page.locator('#test-el');

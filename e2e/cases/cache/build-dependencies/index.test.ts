@@ -18,7 +18,6 @@ test('should respect `buildCache.buildDependencies`', async ({ buildOnly }) => {
   const getBuildConfig = (input: string) => {
     fs.writeFileSync(testDepsPath, input);
     return {
-      cwd: __dirname,
       rsbuildConfig: {
         tools: {
           bundlerChain: (chain) => {

@@ -1,4 +1,4 @@
-import { dev, expect, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
 test('should emit apple-touch-icon to dist path', async ({ buildOnly }) => {
   const rsbuild = await buildOnly({
@@ -275,10 +275,8 @@ test('should allow to customize manifest filename', async ({ buildOnly }) => {
   });
 });
 
-test('should append dev.assetPrefix to icon URL', async ({ page }) => {
+test('should append dev.assetPrefix to icon URL', async ({ dev }) => {
   const rsbuild = await dev({
-    cwd: __dirname,
-    page,
     rsbuildConfig: {
       dev: {
         assetPrefix: 'http://localhost:3000',

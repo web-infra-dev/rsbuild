@@ -1,4 +1,4 @@
-import { dev, expect, rspackOnlyTest, test } from '@e2e/helper';
+import { expect, rspackOnlyTest, test } from '@e2e/helper';
 
 test('should allow to set development mode when building', async ({
   buildOnly,
@@ -51,10 +51,8 @@ test('should allow to set none mode when building', async ({ buildOnly }) => {
 
 rspackOnlyTest(
   'should allow to set production mode when starting dev server',
-  async ({ page }) => {
+  async ({ dev }) => {
     const rsbuild = await dev({
-      cwd: __dirname,
-      page,
       rsbuildConfig: {
         mode: 'production',
       },

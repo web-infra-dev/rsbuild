@@ -1,10 +1,10 @@
 import { join } from 'node:path';
-import { dev, expect, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
 const prj1 = join(__dirname, 'project1');
 const prj2 = join(__dirname, 'project2');
 
-test('should apply basic proxy rules correctly', async ({ page }) => {
+test('should apply basic proxy rules correctly', async ({ dev, page }) => {
   const rsbuild1 = await dev({
     cwd: prj1,
     rsbuildConfig: {
@@ -40,7 +40,7 @@ test('should apply basic proxy rules correctly', async ({ page }) => {
   await rsbuild2.close();
 });
 
-test('should handle proxy error correctly', async ({ page }) => {
+test('should handle proxy error correctly', async ({ dev, page }) => {
   const rsbuild = await dev({
     cwd: prj1,
     rsbuildConfig: {

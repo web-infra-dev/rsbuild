@@ -1,7 +1,5 @@
-import { dev, expect, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 import type { RsbuildConfig } from '@rsbuild/core';
-
-const fixtures = __dirname;
 
 const rsbuildConfig: RsbuildConfig = {
   output: {
@@ -48,10 +46,8 @@ test('should generate custom manifest data in production build', async ({
   });
 });
 
-test('should generate custom manifest data in dev', async ({ page }) => {
+test('should generate custom manifest data in dev', async ({ dev }) => {
   const rsbuild = await dev({
-    cwd: fixtures,
-    page,
     rsbuildConfig,
   });
 

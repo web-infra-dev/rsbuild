@@ -62,13 +62,7 @@ export function shareTest(
   msg: string,
   entry: string,
   transformImport: TransformImport,
-  otherConfigs: {
-    plugins?: any[];
-  } = {},
 ) {
-  const setupConfig = {
-    cwd: __dirname,
-  };
   const config: RsbuildConfig = {
     source: {
       entry: {
@@ -85,9 +79,7 @@ export function shareTest(
 
   test(msg, async ({ buildOnly }) => {
     const rsbuild = await buildOnly({
-      ...setupConfig,
-      ...otherConfigs,
-      rsbuildConfig: { ...config },
+      rsbuildConfig: config,
     });
     const files = rsbuild.getDistFiles({ sourceMaps: true });
     expect(files[findEntry(files)]).toContain('transformImport test succeed');
