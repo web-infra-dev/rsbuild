@@ -113,6 +113,9 @@ rspackOnlyTest(
       cwd: __dirname,
       rsbuildConfig: {
         plugins: [plugin],
+        server: {
+          printUrls: false,
+        },
       },
     });
 
@@ -120,13 +123,13 @@ rspackOnlyTest(
       checkDistDir: false,
     });
 
+    await result.server.close();
+
     expect(hooks).toEqual([
       'ModifyRsbuildConfig',
       'ModifyEnvironmentConfig',
       'BeforeStartProdServer',
       'AfterStartProdServer',
     ]);
-
-    await result.server.close();
   },
 );

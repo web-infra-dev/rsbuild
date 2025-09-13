@@ -18,6 +18,5 @@ rspackOnlyTest(
         Object.keys(buildFiles).find((file) => file.endsWith('css/index.css'))!
       ];
     expect(buildContent).toContain('margin-inline-end:100px');
-    await rsbuild2.close();
   },
 );

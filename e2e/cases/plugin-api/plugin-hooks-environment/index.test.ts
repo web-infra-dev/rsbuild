@@ -84,7 +84,7 @@ rspackOnlyTest(
   async ({ buildOnly }) => {
     process.env.NODE_ENV = 'production';
     const { plugin, names } = createPlugin();
-    const rsbuild = await buildOnly({
+    await buildOnly({
       rsbuildConfig: {
         plugins: [plugin],
         environments: {
@@ -131,7 +131,6 @@ rspackOnlyTest(
       'AfterBuild',
     ]);
 
-    await rsbuild.close();
     process.env.NODE_ENV = 'test';
   },
 );

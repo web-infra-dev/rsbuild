@@ -43,9 +43,6 @@ rspackOnlyTest(
     await gotoPage(page, hostApp);
     await expect(page.locator('#title')).toHaveText('Host');
     await expect(page.locator('#button')).toHaveText('Button from remote');
-
-    await hostApp.close();
-    await remoteApp.close();
   },
 );
 
@@ -76,9 +73,6 @@ rspackOnlyTest(
     expect(hostResponse.headers()['access-control-allow-origin']).toEqual(
       'https://localhost',
     );
-
-    await hostApp.close();
-    await remoteApp.close();
   },
 );
 
@@ -115,9 +109,6 @@ rspackOnlyTest(
     await gotoPage(page, hostApp);
     await expect(page.locator('#title')).toHaveText('Host');
     await expect(page.locator('#button')).toHaveText('Button from remote');
-
-    await hostApp.close();
-    await remoteApp.close();
   },
 );
 
@@ -149,9 +140,6 @@ rspackOnlyTest(
     await expect(page.locator('#button')).toHaveText(
       'Button from remote (HMR)',
     );
-
-    await hostApp.close();
-    await remoteApp.close();
   },
 );
 
