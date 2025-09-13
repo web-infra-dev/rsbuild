@@ -1,10 +1,9 @@
-import { dev, expect, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { expect, gotoPage, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should render pages correctly when using lazy compilation',
-  async ({ page }) => {
+  async ({ page, dev }) => {
     const rsbuild = await dev({
-      cwd: __dirname,
       rsbuildConfig: {
         dev: {
           lazyCompilation: true,
@@ -31,9 +30,8 @@ rspackOnlyTest(
 
 rspackOnlyTest(
   'should allow to configure `tools.rspack.experiments.lazyCompilation`',
-  async ({ page }) => {
+  async ({ page, dev }) => {
     const rsbuild = await dev({
-      cwd: __dirname,
       rsbuildConfig: {
         tools: {
           rspack: {

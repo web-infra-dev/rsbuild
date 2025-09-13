@@ -1,19 +1,17 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { dev, expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 import { pluginSvelte } from '@rsbuild/plugin-svelte';
 
-rspackOnlyTest('HMR should work properly', async ({ page }) => {
-  const root = __dirname;
-  const bPath = path.join(root, 'src/test-temp-B.svelte');
+rspackOnlyTest('HMR should work properly', async ({ page, dev }) => {
+  const cwd = __dirname;
+  const bPath = path.join(cwd, 'src/test-temp-B.svelte');
   fs.writeFileSync(
     bPath,
-    fs.readFileSync(path.join(root, 'src/B.svelte'), 'utf-8'),
+    fs.readFileSync(path.join(cwd, 'src/B.svelte'), 'utf-8'),
   );
 
   await dev({
-    cwd: root,
-    page,
     plugins: [pluginSvelte()],
   });
 

@@ -1,4 +1,4 @@
-import { dev, expect, rspackOnlyTest, test } from '@e2e/helper';
+import { expect, rspackOnlyTest, test } from '@e2e/helper';
 
 const utf8Str = `你好 world! I'm 🦀`;
 const asciiStr = `\\u{4F60}\\u{597D} world! I'm \\u{1F980}`;
@@ -15,10 +15,8 @@ const expectedObject = {
 
 rspackOnlyTest(
   'should set output.charset to ascii in dev',
-  async ({ page }) => {
+  async ({ page, dev }) => {
     const rsbuild = await dev({
-      cwd: __dirname,
-      page,
       rsbuildConfig: {
         output: {
           charset: 'ascii',
@@ -54,11 +52,8 @@ test('should set output.charset to ascii in build', async ({ page, build }) => {
   expect(content.includes(asciiStr)).toBeTruthy();
 });
 
-test('should use utf8 charset in dev by default', async ({ page }) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
-  });
+test('should use utf8 charset in dev by default', async ({ page, dev }) => {
+  const rsbuild = await dev();
 
   expect(await page.evaluate('window.testA')).toBe(utf8Str);
   expect(await page.evaluate('window.testB')).toStrictEqual(expectedObject);

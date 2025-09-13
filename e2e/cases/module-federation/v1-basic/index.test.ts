@@ -1,12 +1,6 @@
 import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import {
-  build,
-  dev,
-  getRandomPort,
-  gotoPage,
-  rspackOnlyTest,
-} from '@e2e/helper';
+import { getRandomPort, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import type { RsbuildConfig } from '@rsbuild/core';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
@@ -26,44 +20,47 @@ export default Button;`,
   );
 };
 
-rspackOnlyTest('should run module federation in dev', async ({ page }) => {
-  writeButtonCode();
+rspackOnlyTest(
+  'should run module federation in dev',
+  async ({ page, devOnly }) => {
+    writeButtonCode();
 
-  const remotePort = await getRandomPort();
+    const remotePort = await getRandomPort();
 
-  process.env.REMOTE_PORT = remotePort.toString();
+    process.env.REMOTE_PORT = remotePort.toString();
 
-  const remoteApp = await dev({
-    cwd: remote,
-  });
-  const hostApp = await dev({
-    cwd: host,
-  });
+    const remoteApp = await devOnly({
+      cwd: remote,
+    });
+    const hostApp = await devOnly({
+      cwd: host,
+    });
 
-  await gotoPage(page, remoteApp);
-  await expect(page.locator('#title')).toHaveText('Remote');
-  await expect(page.locator('#button')).toHaveText('Button from remote');
+    await gotoPage(page, remoteApp);
+    await expect(page.locator('#title')).toHaveText('Remote');
+    await expect(page.locator('#button')).toHaveText('Button from remote');
 
-  await gotoPage(page, hostApp);
-  await expect(page.locator('#title')).toHaveText('Host');
-  await expect(page.locator('#button')).toHaveText('Button from remote');
+    await gotoPage(page, hostApp);
+    await expect(page.locator('#title')).toHaveText('Host');
+    await expect(page.locator('#button')).toHaveText('Button from remote');
 
-  await hostApp.close();
-  await remoteApp.close();
-});
+    await hostApp.close();
+    await remoteApp.close();
+  },
+);
 
 rspackOnlyTest(
   'should allow to set `server.cors` config',
-  async ({ request }) => {
+  async ({ request, devOnly }) => {
     writeButtonCode();
 
     const remotePort = await getRandomPort();
     process.env.REMOTE_PORT = remotePort.toString();
 
-    const remoteApp = await dev({
+    const remoteApp = await devOnly({
       cwd: remote,
     });
-    const hostApp = await dev({
+    const hostApp = await devOnly({
       cwd: host,
     });
 
@@ -87,14 +84,14 @@ rspackOnlyTest(
 
 rspackOnlyTest(
   'should run module federation in dev with server.base',
-  async ({ page }) => {
+  async ({ page, devOnly }) => {
     writeButtonCode();
 
     const remotePort = await getRandomPort();
 
     process.env.REMOTE_PORT = remotePort.toString();
 
-    const remoteApp = await dev({
+    const remoteApp = await devOnly({
       cwd: remote,
       rsbuildConfig: {
         server: {
@@ -102,7 +99,7 @@ rspackOnlyTest(
         },
       },
     });
-    const hostApp = await dev({
+    const hostApp = await devOnly({
       cwd: host,
       rsbuildConfig: {
         server: {
@@ -126,17 +123,17 @@ rspackOnlyTest(
 
 rspackOnlyTest(
   'should allow remote module to perform HMR',
-  async ({ page }) => {
+  async ({ page, devOnly }) => {
     writeButtonCode();
 
     const remotePort = await getRandomPort();
 
     process.env.REMOTE_PORT = remotePort.toString();
 
-    const remoteApp = await dev({
+    const remoteApp = await devOnly({
       cwd: remote,
     });
-    const hostApp = await dev({
+    const hostApp = await devOnly({
       cwd: host,
     });
 
@@ -160,7 +157,7 @@ rspackOnlyTest(
 
 rspackOnlyTest(
   'should transform module federation runtime with SWC',
-  async () => {
+  async ({ buildOnly }) => {
     writeButtonCode();
 
     const remotePort = await getRandomPort();
@@ -186,14 +183,14 @@ rspackOnlyTest(
     };
 
     await expect(
-      build({
+      buildOnly({
         cwd: remote,
         rsbuildConfig,
       }),
     ).resolves.toBeTruthy();
 
     await expect(
-      build({
+      buildOnly({
         cwd: host,
         rsbuildConfig,
       }),

@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { dev, expect, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 import fse, { remove } from 'fs-extra';
 
 const cwd = __dirname;
@@ -17,11 +17,12 @@ test('should clean dist path by default', async ({ buildOnly }) => {
   expect(fs.existsSync(testDistFile)).toBeFalsy();
 });
 
-test('should not clean dist path in dev when writeToDisk is false', async () => {
+test('should not clean dist path in dev when writeToDisk is false', async ({
+  dev,
+}) => {
   await fse.outputFile(testDistFile, `{ "test": 1 }`);
 
   await dev({
-    cwd,
     rsbuildConfig: {
       dev: {
         writeToDisk: false,
@@ -33,11 +34,12 @@ test('should not clean dist path in dev when writeToDisk is false', async () => 
   await remove(testDistFile);
 });
 
-test('should clean dist path in dev when writeToDisk is true', async () => {
+test('should clean dist path in dev when writeToDisk is true', async ({
+  dev,
+}) => {
   await fse.outputFile(testDistFile, `{ "test": 1 }`);
 
   await dev({
-    cwd,
     rsbuildConfig: {
       dev: {
         writeToDisk: true,

@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { dev, expect, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 import { logger } from '@rsbuild/core';
 
 const getRsbuildConfig = (dist: string) =>
@@ -42,6 +42,7 @@ test('should generate config files in debug mode when build', async ({
 
 test('should generate config files in debug mode when dev', async ({
   page,
+  dev,
 }) => {
   const { level } = logger;
   process.env.DEBUG = 'rsbuild';
@@ -49,7 +50,6 @@ test('should generate config files in debug mode when dev', async ({
 
   const distRoot = 'dist-2';
   const rsbuild = await dev({
-    cwd: __dirname,
     rsbuildConfig: {
       output: {
         distPath: {

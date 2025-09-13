@@ -1,20 +1,18 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { dev, expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const cwd = __dirname;
 
 rspackOnlyTest(
   'Multiple environments HMR should work correctly',
-  async ({ page, context }) => {
+  async ({ dev, page, context }) => {
     await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
       recursive: true,
     });
 
     const rsbuild = await dev({
-      cwd,
-      page,
       rsbuildConfig: {
         plugins: [pluginReact()],
         environments: {

@@ -1,14 +1,9 @@
-import { dev, expect, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
 test('should return 204 for OPTIONS requests when no middleware handles them', async ({
-  page,
+  dev,
 }) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
-    rsbuildConfig: {},
-  });
-
+  const rsbuild = await dev();
   const response = await fetch(`http://127.0.0.1:${rsbuild.port}`, {
     headers: {
       'content-type': 'application/json',
@@ -19,11 +14,9 @@ test('should return 204 for OPTIONS requests when no middleware handles them', a
 });
 
 test('should return 200 with custom headers for OPTIONS requests handled by middleware', async ({
-  page,
+  dev,
 }) => {
   const rsbuild = await dev({
-    cwd: __dirname,
-    page,
     rsbuildConfig: {
       server: {
         cors: false,

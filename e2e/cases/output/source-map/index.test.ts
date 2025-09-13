@@ -1,15 +1,9 @@
 import { readFileSync } from 'node:fs';
 import path, { join } from 'node:path';
-import {
-  type Build,
-  dev,
-  expect,
-  mapSourceMapPositions,
-  test,
-} from '@e2e/helper';
+import { type Build, expect, mapSourceMapPositions, test } from '@e2e/helper';
 import type { Rspack } from '@rsbuild/core';
 
-const fixtures = __dirname;
+const cwd = __dirname;
 
 async function testSourceMapType(
   devtool: Rspack.Configuration['devtool'],
@@ -155,12 +149,8 @@ test('should not generate source map if `output.sourceMap` is false', async ({
   expect(cssMapFiles.length).toEqual(0);
 });
 
-test('should generate source map correctly in dev', async ({ page }) => {
-  const rsbuild = await dev({
-    cwd: fixtures,
-    page,
-  });
-
+test('should generate source map correctly in dev', async ({ dev }) => {
+  const rsbuild = await dev();
   const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   const jsMapPath = Object.keys(files).find((files) =>
@@ -172,10 +162,10 @@ test('should generate source map correctly in dev', async ({ page }) => {
   expect(jsMap.sources.length).toBeGreaterThan(1);
   expect(jsMap.file).toEqual('static/js/index.js');
   expect(jsMap.sourcesContent).toContain(
-    readFileSync(join(fixtures, 'src/App.jsx'), 'utf-8'),
+    readFileSync(join(cwd, 'src/App.jsx'), 'utf-8'),
   );
   expect(jsMap.sourcesContent).toContain(
-    readFileSync(join(fixtures, 'src/index.js'), 'utf-8'),
+    readFileSync(join(cwd, 'src/index.js'), 'utf-8'),
   );
   expect(jsMap.mappings).not.toBeUndefined();
 });
