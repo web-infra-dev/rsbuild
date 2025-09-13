@@ -3,9 +3,10 @@
   "name": "@rsbuild/e2e",
   "version": "1.0.0",
   "scripts": {
-    "e2e": "pnpm e2e:rspack && pnpm e2e:webpack",
+    "e2e": "pnpm e2e:rspack && pnpm e2e:webpack && pnpm type-check",
     "e2e:rspack": "cross-env NODE_OPTIONS=\"--experimental-vm-modules --no-warnings\" playwright test",
-    "e2e:webpack": "cross-env PROVIDE_TYPE=webpack playwright test"
+    "e2e:webpack": "cross-env PROVIDE_TYPE=webpack playwright test",
+    "type-check": "tsc"
   },
   "dependencies": {
     "lodash": "^4.17.21",

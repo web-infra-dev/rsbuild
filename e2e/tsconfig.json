@@ -1,19 +1,13 @@
 {
   "extends": "@rsbuild/config/tsconfig",
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "outDir": "./dist",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "noEmit": true
   },
   "include": [
-    "src",
     "helper",
-    "cases",
     "playwright.config.ts",
     "cases/**/*.test.ts",
-    "cache/cache-basic"
+    "cases/**/*.config.ts"
   ],
   "references": [
     {
