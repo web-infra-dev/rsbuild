@@ -125,7 +125,6 @@ test('should listen only on localhost in preview', async ({ page, build }) => {
 });
 
 test('should not print server urls when HTML is disabled', async ({
-  page,
   build,
 }) => {
   const rsbuild = await build({
@@ -143,7 +142,6 @@ test('should not print server urls when HTML is disabled', async ({
 });
 
 test('should print server urls when HTML is disabled but printUrls is a custom function', async ({
-  page,
   build,
 }) => {
   const rsbuild = await build({

@@ -21,7 +21,7 @@ test('should allow to import raw CSS files in build', async ({
   page,
   build,
 }) => {
-  const rsbuild = await build();
+  await build();
 
   const aContent = readFileSync(path.join(__dirname, 'src/a.css'), 'utf-8');
   const bStyles: Record<string, string> = await page.evaluate('window.bStyles');

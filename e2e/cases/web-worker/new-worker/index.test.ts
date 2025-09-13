@@ -4,7 +4,7 @@ test('should build a web worker in build using the new Worker syntax', async ({
   page,
   build,
 }) => {
-  const rsbuild = await build();
+  await build();
 
   await expect(page.locator('#root')).toHaveText(
     'The Answer to the Ultimate Question of Life, The Universe, and Everything: 42',

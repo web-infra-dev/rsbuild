@@ -20,7 +20,7 @@ test('should allow to import raw Sass files in build', async ({
   page,
   build,
 }) => {
-  const rsbuild = await build();
+  await build();
 
   const aRaw: string = await page.evaluate('window.aRaw');
   const bRaw: string = await page.evaluate('window.bRaw');

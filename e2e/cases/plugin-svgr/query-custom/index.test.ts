@@ -4,7 +4,7 @@ test('should import default from SVG with custom query correctly', async ({
   page,
   build,
 }) => {
-  const rsbuild = await build();
+  await build();
 
   await expect(
     page.evaluate(`document.getElementById('component').tagName === 'svg'`),

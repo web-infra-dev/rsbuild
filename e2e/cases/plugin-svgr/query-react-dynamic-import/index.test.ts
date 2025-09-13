@@ -5,7 +5,7 @@ test('should import default from SVG with react query and dynamic import correct
   page,
   build,
 }) => {
-  const rsbuild = await build();
+  await build();
 
   await expect(
     page.evaluate(`document.getElementById('component').tagName === 'svg'`),

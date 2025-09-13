@@ -4,7 +4,7 @@ test('should import default from SVG with SVGR correctly', async ({
   page,
   build,
 }) => {
-  const rsbuild = await build();
+  await build();
 
   // test svgr（namedExport）
   await expect(

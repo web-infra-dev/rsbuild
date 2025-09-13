@@ -3,7 +3,7 @@ import { expect, rspackOnlyTest } from '@e2e/helper';
 rspackOnlyTest(
   'should build basic Vue SFC correctly',
   async ({ page, build }) => {
-    const rsbuild = await build();
+    await build();
 
     const button1 = page.locator('#button1');
     const button2 = page.locator('#button2');

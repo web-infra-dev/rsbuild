@@ -15,7 +15,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should render basic Preact component in production correctly',
   async ({ page, build }) => {
-    const rsbuild = await build();
+    await build();
 
     const button = page.locator('#button');
     await expect(button).toHaveText('count: 0');

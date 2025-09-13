@@ -4,7 +4,7 @@ import { dev, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest('should work with string and path to file', async ({ page }) => {
   const file = path.join(__dirname, '/assets/example.txt');
-  const rsbuild = await dev({
+  await dev({
     cwd: __dirname,
     page,
     rsbuildConfig: {
@@ -30,7 +30,7 @@ rspackOnlyTest(
   'should work with string and path to directory',
   async ({ page }) => {
     const file = path.join(__dirname, '/assets/example.txt');
-    const rsbuild = await dev({
+    await dev({
       cwd: __dirname,
       page,
       rsbuildConfig: {
@@ -56,7 +56,7 @@ rspackOnlyTest(
 rspackOnlyTest('should work with string array directory', async ({ page }) => {
   const file = path.join(__dirname, '/assets/example.txt');
   const other = path.join(__dirname, '/other/other.txt');
-  const rsbuild = await dev({
+  await dev({
     cwd: __dirname,
     page,
     rsbuildConfig: {
@@ -91,7 +91,7 @@ rspackOnlyTest('should work with string array directory', async ({ page }) => {
 rspackOnlyTest('should work with string and glob', async ({ page }) => {
   const file = path.join(__dirname, '/assets/example.txt');
   const watchDir = path.join(__dirname, '/assets');
-  const rsbuild = await dev({
+  await dev({
     cwd: __dirname,
     page,
     rsbuildConfig: {
@@ -115,7 +115,7 @@ rspackOnlyTest('should work with string and glob', async ({ page }) => {
 
 rspackOnlyTest('should work with options', async ({ page }) => {
   const file = path.join(__dirname, '/assets/example.txt');
-  const rsbuild = await dev({
+  await dev({
     cwd: __dirname,
     page,
     rsbuildConfig: {

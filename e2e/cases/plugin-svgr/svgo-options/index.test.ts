@@ -4,7 +4,7 @@ test('should use SVGR and override SVGO plugin options', async ({
   page,
   build,
 }) => {
-  const rsbuild = await build();
+  await build();
 
   await expect(
     page.evaluate(`document.getElementById('test-svg').tagName === 'svg'`),

@@ -7,7 +7,7 @@ test('should build a web worker and specify the chunk name', async ({
   page,
   build,
 }) => {
-  const rsbuild = await build();
+  await build();
 
   await expect(page.locator('#root')).toHaveText(
     'The Answer to the Ultimate Question of Life, The Universe, and Everything: 42',

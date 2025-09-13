@@ -11,7 +11,7 @@ rspackOnlyTest('HMR should work properly', async ({ page }) => {
     fs.readFileSync(path.join(root, 'src/B.svelte'), 'utf-8'),
   );
 
-  const rsbuild = await dev({
+  await dev({
     cwd: root,
     page,
     plugins: [pluginSvelte()],

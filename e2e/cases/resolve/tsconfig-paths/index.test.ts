@@ -4,7 +4,7 @@ test('should respect tsconfig paths and override resolve.alias', async ({
   page,
   build,
 }) => {
-  const rsbuild = await build({
+  await build({
     rsbuildConfig: {
       resolve: {
         alias: {
@@ -22,7 +22,7 @@ test('should ignore tsconfig paths when aliasStrategy is "prefer-alias"', async 
   page,
   build,
 }) => {
-  const rsbuild = await build({
+  await build({
     rsbuildConfig: {
       resolve: {
         alias: {

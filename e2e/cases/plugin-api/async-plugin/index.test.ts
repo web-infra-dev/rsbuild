@@ -25,7 +25,7 @@ const asyncPlugin = async (): Promise<RsbuildPlugin> => {
 rspackOnlyTest(
   'should allow to register async plugin in plugins field',
   async ({ page, build }) => {
-    const rsbuild = await build({
+    await build({
       plugins: [asyncPlugin()],
     });
 

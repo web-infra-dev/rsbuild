@@ -3,7 +3,7 @@ import { expect, rspackOnlyTest } from '@e2e/helper';
 rspackOnlyTest(
   'tsconfig paths should work and override the alias config',
   async ({ page, build }) => {
-    const rsbuild = await build({
+    await build({
       rsbuildConfig: {
         resolve: {
           alias: {
@@ -24,7 +24,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'tsconfig paths should not work when aliasStrategy is "prefer-alias"',
   async ({ page, build }) => {
-    const rsbuild = await build({
+    await build({
       rsbuildConfig: {
         resolve: {
           alias: {

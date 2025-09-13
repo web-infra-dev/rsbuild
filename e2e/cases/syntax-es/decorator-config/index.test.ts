@@ -2,7 +2,7 @@ import { expect, rspackOnlyTest, test } from '@e2e/helper';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 
 test('should use legacy decorators by default', async ({ page, build }) => {
-  const rsbuild = await build();
+  await build();
 
   expect(await page.evaluate('window.aaa')).toBe('hello');
   expect(await page.evaluate('window.bbb')).toBe('world');
@@ -10,7 +10,7 @@ test('should use legacy decorators by default', async ({ page, build }) => {
 });
 
 test('should allow to use stage 3 decorators', async ({ page, build }) => {
-  const rsbuild = await build({
+  await build({
     rsbuildConfig: {
       source: {
         decorators: {
@@ -28,7 +28,7 @@ test('should allow to use stage 3 decorators', async ({ page, build }) => {
 rspackOnlyTest(
   'should use legacy decorators with babel-plugin',
   async ({ page, build }) => {
-    const rsbuild = await build({
+    await build({
       plugins: [pluginBabel()],
     });
 
@@ -41,7 +41,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should allow to use stage 3 decorators with babel-plugin',
   async ({ page, build }) => {
-    const rsbuild = await build({
+    await build({
       plugins: [pluginBabel()],
       rsbuildConfig: {
         source: {

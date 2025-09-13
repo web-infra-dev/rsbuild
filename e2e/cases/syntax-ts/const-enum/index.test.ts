@@ -3,7 +3,7 @@ import { expect, rspackOnlyTest, test } from '@e2e/helper';
 rspackOnlyTest(
   'should inline the enum values in build',
   async ({ page, build }) => {
-    const rsbuild = await build();
+    await build();
 
     await page.waitForFunction(() => window.testDog);
     expect(await page.evaluate(() => window.testFish)).toBe('fish,FISH');

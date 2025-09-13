@@ -2,7 +2,7 @@ import { expect, rspackOnlyTest, test } from '@e2e/helper';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 
 test('should run stage 3 decorators correctly', async ({ page, build }) => {
-  const rsbuild = await build();
+  await build();
 
   expect(await page.evaluate('window.message')).toBe('hello');
   expect(await page.evaluate('window.method')).toBe('targetMethod');
@@ -12,7 +12,7 @@ test('should run stage 3 decorators correctly', async ({ page, build }) => {
 rspackOnlyTest(
   'should run stage 3 decorators correctly with babel-plugin',
   async ({ page, build }) => {
-    const rsbuild = await build({
+    await build({
       plugins: [pluginBabel()],
     });
 
@@ -24,7 +24,7 @@ rspackOnlyTest(
 
 test.fail(
   'stage 3 decorators do not support decoratorBeforeExport',
-  async ({ page }) => {
+  async ({ page, build }) => {
     // SyntaxError: Decorators must be placed *after* the 'export' keyword
     const rsbuild = await build({
       rsbuildConfig: {
