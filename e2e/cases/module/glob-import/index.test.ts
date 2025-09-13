@@ -12,8 +12,8 @@ rspackTest(
 
 rspackTest(
   'should glob import components in build correctly',
-  async ({ page, build }) => {
-    await build();
+  async ({ page, buildPreview }) => {
+    await buildPreview();
     await expect(page.locator('#header')).toHaveText('Header');
     await expect(page.locator('#footer')).toHaveText('Footer');
   },

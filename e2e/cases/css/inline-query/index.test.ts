@@ -25,8 +25,8 @@ rspackTest(
 
 rspackTest(
   'should allow to import inline CSS files in build',
-  async ({ page, build }) => {
-    await build();
+  async ({ page, buildPreview }) => {
+    await buildPreview();
 
     for (const key of ['aInline1', 'aInline2', 'aInline3', 'aInline4']) {
       const inline: string = await page.evaluate(`window.${key}`);

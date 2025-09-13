@@ -6,8 +6,8 @@ const fixtures = __dirname;
 
 rspackTest(
   'should inline style when `injectStyles` is enabled',
-  async ({ page, build }) => {
-    const rsbuild = await build();
+  async ({ page, buildPreview }) => {
+    const rsbuild = await buildPreview();
 
     // injectStyles worked
     const files = rsbuild.getDistFiles();

@@ -20,9 +20,9 @@ test('should return raw asset content with `?raw` in dev', async ({
 
 test('should return raw asset content with `?raw` in build', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  await build();
+  await buildPreview();
 
   expect(await page.evaluate('window.rawSvg')).toEqual(
     await promises.readFile(

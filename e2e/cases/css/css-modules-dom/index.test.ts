@@ -3,9 +3,9 @@ import { pluginReact } from '@rsbuild/plugin-react';
 
 test('should inject styles and not emit CSS files when output.injectStyles is true', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  const rsbuild = await build({
+  const rsbuild = await buildPreview({
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
