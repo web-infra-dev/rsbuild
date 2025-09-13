@@ -53,7 +53,7 @@ export default {
 
 ### Fallback behavior
 
-By default, when a request meets the following conditions and the corresponding resource is not found, it will fall back to `index.html`:
+By default, requests that meet the following conditions fall back to `index.html` when the corresponding resource is not found:
 
 - The request is a `GET` or `HEAD` request
 - The request accepts `text/html` (the request header accept type is `text/html` or `*/*`)
@@ -68,7 +68,7 @@ export default {
 
 ### Custom fallback behavior
 
-When Rsbuild's default [server.htmlFallback](/config/server/html-fallback) configuration does not meet your needs, for example, if you want to access `main.html` when accessing `/`, you can configure it using [server.historyApiFallback](/config/server/history-api-fallback).
+If Rsbuild's default [server.htmlFallback](/config/server/html-fallback) configuration doesn't meet your needs—for example, you want to access `main.html` when visiting `/`—configure it using [server.historyApiFallback](/config/server/history-api-fallback):
 
 ```ts title="rsbuild.config.ts"
 export default {

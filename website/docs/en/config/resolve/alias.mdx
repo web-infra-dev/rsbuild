@@ -18,7 +18,7 @@ const defaultAlias = {
 
 Create aliases for module paths to simplify import paths or redirect module references.
 
-For TypeScript projects, you only need to configure [compilerOptions.paths](https://typescriptlang.org/tsconfig#paths) in the `tsconfig.json` file. Rsbuild will automatically recognize it, so there is no need to configure the `resolve.alias` option separately. For more details, please refer to [Path Aliases](/guide/advanced/alias).
+For TypeScript projects, configure [compilerOptions.paths](https://typescriptlang.org/tsconfig#paths) in your `tsconfig.json` file. Rsbuild automatically recognizes these settings, so you don't need to configure `resolve.alias` separately. For more details, refer to [Path Aliases](/guide/advanced/alias).
 
 :::tip
 In versions prior to Rsbuild 1.1.7, you can use `source.alias` to set alias, but it will be removed in the next major version.
@@ -26,7 +26,7 @@ In versions prior to Rsbuild 1.1.7, you can use `source.alias` to set alias, but
 
 ## Basic usage
 
-`resolve.alias` can be an object, the `key` is the module path in the source code to be replaced, and the `value` is the target path to which the module will be mapped.
+`resolve.alias` accepts an object where the `key` is the module path in your source code to replace, and the `value` is the target path for the module mapping.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -38,11 +38,11 @@ export default {
 };
 ```
 
-With the above configuration, if `@common/Foo.tsx` is imported in the code, it will be mapped to the `<project-root>/src/common/Foo.tsx`.
+With this configuration, importing `@common/Foo.tsx` in your code maps to `<project-root>/src/common/Foo.tsx`.
 
 ## Function usage
 
-The `resolve.alias` can be a function, it will accept the previous alias object, and you can modify it.
+`resolve.alias` can also be a function that receives the previous alias object, which you can modify:
 
 ```ts title="rsbuild.config.ts"
 export default {
