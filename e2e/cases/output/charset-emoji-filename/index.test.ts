@@ -3,7 +3,7 @@ import { dev, expect, test } from '@e2e/helper';
 const utf8Str = `你好 world! I'm 🦀`;
 
 test('should resolve emoji filename in dev', async ({ page }) => {
-  const rsbuild = await dev({
+  await dev({
     cwd: __dirname,
     page,
   });

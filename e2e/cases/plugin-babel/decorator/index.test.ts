@@ -4,7 +4,7 @@ import { pluginBabel } from '@rsbuild/plugin-babel';
 rspackOnlyTest(
   'should support legacy decorators and source.decorators.version in TypeScript',
   async ({ page, build }) => {
-    const rsbuild = await build({
+    await build({
       plugins: [pluginBabel()],
     });
 
@@ -17,7 +17,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should support legacy decorators and source.decorators.version in JavaScript',
   async ({ page, build }) => {
-    const rsbuild = await build({
+    await build({
       plugins: [pluginBabel()],
       rsbuildConfig: {
         source: {

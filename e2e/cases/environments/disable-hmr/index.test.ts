@@ -1,8 +1,8 @@
-import { expect, rspackOnlyTest, test } from '@e2e/helper';
+import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should allow to disable HMR and live reload for a specified environment',
-  async ({ page, dev }) => {
+  async ({ dev }) => {
     const rsbuild = await dev({
       rsbuildConfig: {
         performance: {

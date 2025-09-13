@@ -1,10 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { dev, expect, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 import { remove } from 'fs-extra';
 
 test('should use `buildCache.cacheDirectory` as expected in dev', async ({
-  page,
   dev,
 }) => {
   const defaultDirectory = path.resolve(__dirname, './node_modules/.cache');

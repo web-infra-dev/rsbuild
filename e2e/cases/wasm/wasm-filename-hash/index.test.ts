@@ -2,7 +2,7 @@ import { expect, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should allow to custom the filename hash of Wasm files',
-  async ({ page, build }) => {
+  async ({ build }) => {
     const rsbuild = await build();
     const files = rsbuild.getDistFiles();
 

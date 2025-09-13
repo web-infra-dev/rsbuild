@@ -18,7 +18,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should build Vue SFC with CSS Modules correctly in build',
   async ({ page, build }) => {
-    const rsbuild = await build();
+    await build();
 
     const test1 = page.locator('#test1');
     const test2 = page.locator('#test2');

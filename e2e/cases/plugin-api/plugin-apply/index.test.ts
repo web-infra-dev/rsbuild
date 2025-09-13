@@ -14,7 +14,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should apply plugin as expected when running build',
   async ({ page, build }) => {
-    const rsbuild = await build();
+    await build();
 
     const body = page.locator('body');
     await expect(body).toHaveText('build-plugin');

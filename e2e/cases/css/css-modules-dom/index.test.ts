@@ -1,5 +1,3 @@
-import { resolve } from 'node:path';
-
 import { expect, test } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 

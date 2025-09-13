@@ -18,7 +18,6 @@ test('should support configuring the compression filter in dev', async ({
 });
 
 test('should support configuring the compression filter in preview mode', async ({
-  page,
   request,
   build,
 }) => {

@@ -4,7 +4,7 @@ test('should import svg with SVGR plugin and query URL correctly', async ({
   page,
   build,
 }) => {
-  const rsbuild = await build();
+  await build();
 
   // test SVG asset
   await expect(

@@ -4,7 +4,7 @@ test('should build successfully with multiple environments', async ({
   page,
   build,
 }) => {
-  const rsbuild = await build({
+  await build({
     rsbuildConfig: {
       environments: {
         web: {

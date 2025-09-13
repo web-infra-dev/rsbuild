@@ -15,7 +15,7 @@ rspackOnlyTest(
 
 rspackOnlyTest(
   'should build Vue SFC with CSS Modules correctly in build for node target',
-  async ({ page, build }) => {
+  async ({ build }) => {
     const rsbuild = await build();
 
     const files = rsbuild.getDistFiles();

@@ -40,7 +40,7 @@ const cases = [
 
 for (const item of cases) {
   test(item.name, async ({ page, build }) => {
-    const rsbuild = await build({
+    await build({
       plugins: [pluginReact()],
       rsbuildConfig: item.config || {},
     });

@@ -23,7 +23,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should allow to import inline Sass files in build',
   async ({ page, build }) => {
-    const rsbuild = await build();
+    await build();
 
     const aInline: string = await page.evaluate('window.aInline');
     const bInline: string = await page.evaluate('window.bInline');

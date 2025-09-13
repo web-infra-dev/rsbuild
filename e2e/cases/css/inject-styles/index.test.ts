@@ -47,7 +47,7 @@ rspackOnlyTest(
       { recursive: true },
     );
 
-    const rsbuild = await dev({
+    await dev({
       rsbuildConfig: {
         source: {
           entry: {
@@ -85,7 +85,7 @@ rspackOnlyTest(
 
 rspackOnlyTest(
   'should allow to disable CSS minification when `injectStyles` is enabled',
-  async ({ page, build }) => {
+  async ({ build }) => {
     const rsbuild = await build({
       rsbuildConfig: {
         output: {

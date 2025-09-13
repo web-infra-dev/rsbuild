@@ -25,7 +25,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should define BASE_URL env var correctly in build',
   async ({ page, build }) => {
-    const rsbuild = await build({
+    await build({
       rsbuildConfig: {
         html: {
           template: './src/index.html',

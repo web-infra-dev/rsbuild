@@ -22,7 +22,6 @@ test('should include CORS headers for dev server if `cors` is `true`', async ({
 });
 
 test('should include CORS headers for preview server if `cors` is `true`', async ({
-  page,
   request,
   build,
 }) => {
@@ -73,11 +72,7 @@ test('should not include CORS headers for dev server if `cors` is `false`', asyn
   expect(response.headers()).not.toHaveProperty('access-control-allow-origin');
 });
 
-test('should set `cors` to `false` by default', async ({
-  page,
-  request,
-  build,
-}) => {
+test('should set `cors` to `false` by default', async ({ request, build }) => {
   const rsbuild = await build();
 
   const response = await request.get(`http://127.0.0.1:${rsbuild.port}`);
@@ -85,7 +80,6 @@ test('should set `cors` to `false` by default', async ({
 });
 
 test('should not include CORS headers for preview server if `cors` is `false`', async ({
-  page,
   request,
   build,
 }) => {
@@ -101,7 +95,7 @@ test('should not include CORS headers for preview server if `cors` is `false`', 
   expect(response.headers()).not.toHaveProperty('access-control-allow-origin');
 });
 
-test('should allow to configure CORS', async ({ page, request, build }) => {
+test('should allow to configure CORS', async ({ request, build }) => {
   const rsbuild = await build({
     rsbuildConfig: {
       server: {
@@ -140,7 +134,6 @@ test('should override `server.cors` for dev server when `server.headers` is set'
 });
 
 test('should override `server.cors` for preview server when `server.headers` is set', async ({
-  page,
   request,
   build,
 }) => {

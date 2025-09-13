@@ -4,7 +4,7 @@ import { pluginBabel } from '@rsbuild/plugin-babel';
 rspackOnlyTest(
   'should run babel with babel plugin correctly',
   async ({ page, build }) => {
-    const rsbuild = await build({
+    await build({
       plugins: [
         pluginBabel({
           babelLoaderOptions: (_, { addPlugins }) => {
@@ -21,7 +21,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should allow to exclude file from babel transformation',
   async ({ page, build }) => {
-    const rsbuild = await build({
+    await build({
       rsbuildConfig: {
         source: {
           exclude: [/aa/],
