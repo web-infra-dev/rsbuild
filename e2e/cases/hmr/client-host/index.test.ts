@@ -6,7 +6,7 @@ const cwd = __dirname;
 
 rspackTest(
   'HMR should work when setting dev.port and dev.client.host',
-  async ({ page, dev }) => {
+  async ({ page, dev, editFile }) => {
     await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
       recursive: true,
     });
@@ -26,14 +26,11 @@ rspackTest(
       },
     });
 
-    const appPath = join(cwd, 'test-temp-src/App.tsx');
-
     const locator = page.locator('#test');
     await expect(locator).toHaveText('Hello Rsbuild!');
 
-    await fs.promises.writeFile(
-      appPath,
-      fs.readFileSync(appPath, 'utf-8').replace('Hello Rsbuild', 'Hello Test'),
+    await editFile('test-temp-src/App.tsx', (code) =>
+      code.replace('Hello Rsbuild', 'Hello Test'),
     );
 
     await expect(locator).toHaveText('Hello Test!');

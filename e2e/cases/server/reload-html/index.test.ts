@@ -6,7 +6,7 @@ const cwd = __dirname;
 
 rspackTest(
   'should reload page when HTML template changed',
-  async ({ page, dev }) => {
+  async ({ page, dev, editFile }) => {
     // Failed to run this case on Windows
     if (process.platform === 'win32') {
       test.skip();
@@ -20,10 +20,8 @@ rspackTest(
 
     await expect(page).toHaveTitle('Foo');
 
-    const templatePath = join(cwd, 'test-temp-src/index.html');
-    await fs.promises.writeFile(
-      templatePath,
-      fs.readFileSync(templatePath, 'utf-8').replace('Foo', 'Bar'),
+    await editFile('test-temp-src/index.html', (code) =>
+      code.replace('Foo', 'Bar'),
     );
     // expect page title to be 'Bar' after HTML template changed
     await expect(page).toHaveTitle('Bar');

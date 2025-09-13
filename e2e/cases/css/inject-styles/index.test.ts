@@ -40,7 +40,7 @@ rspackTest(
 
 rspackTest(
   'HMR should work well when `injectStyles` is enabled',
-  async ({ page, dev }) => {
+  async ({ page, dev, editFile }) => {
     await fs.promises.cp(
       join(fixtures, 'src'),
       join(fixtures, 'test-temp-src'),
@@ -68,11 +68,8 @@ rspackTest(
     const locatorKeep = page.locator('#test-keep');
     const keepNum = await locatorKeep.innerHTML();
 
-    const filePath = join(fixtures, 'test-temp-src/App.module.less');
-
-    await fs.promises.writeFile(
-      filePath,
-      fs.readFileSync(filePath, 'utf-8').replace('20px', '40px'),
+    await editFile('test-temp-src/App.module.less', (code) =>
+      code.replace('20px', '40px'),
     );
 
     // CSS HMR works well

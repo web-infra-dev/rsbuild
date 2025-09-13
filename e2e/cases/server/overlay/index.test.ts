@@ -4,7 +4,7 @@ import { createLogHelper, expect, test } from '@e2e/helper';
 
 const cwd = __dirname;
 
-test('should show overlay correctly', async ({ page, dev }) => {
+test('should show overlay correctly', async ({ page, dev, editFile }) => {
   await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
     recursive: true,
   });
@@ -30,10 +30,8 @@ test('should show overlay correctly', async ({ page, dev }) => {
   const errorOverlay = page.locator('rsbuild-error-overlay');
   expect(await errorOverlay.locator('.title').count()).toBe(0);
 
-  const appPath = join(cwd, 'test-temp-src/App.tsx');
-  await fs.promises.writeFile(
-    appPath,
-    fs.readFileSync(appPath, 'utf-8').replace('</div>', '</aaaaa>'),
+  await editFile('test-temp-src/App.tsx', (code) =>
+    code.replace('</div>', '</aaaaa>'),
   );
 
   await expectLog('Module build failed');

@@ -16,24 +16,18 @@ test.afterEach(() => {
 
 rspackTest(
   'should fallback to live-reload when dev.hmr is false',
-  async ({ page, dev }) => {
+  async ({ page, dev, editFile }) => {
     await dev();
-
     const testEl = page.locator('#test');
     await expect(testEl).toHaveText('Hello Rsbuild!');
-
-    fs.writeFileSync(
-      appFile,
-      appCode.replace('Rsbuild', 'Live Reload'),
-      'utf-8',
-    );
+    await editFile(appFile, (code) => code.replace('Rsbuild', 'Live Reload'));
     await expect(testEl).toHaveText('Hello Live Reload!');
   },
 );
 
 rspackTest(
   'should not reload page when live-reload is disabled',
-  async ({ page, dev }) => {
+  async ({ page, dev, editFile }) => {
     await dev({
       rsbuildConfig: {
         dev: {
@@ -44,12 +38,7 @@ rspackTest(
 
     const test = page.locator('#test');
     await expect(test).toHaveText('Hello Rsbuild!');
-
-    fs.writeFileSync(
-      appFile,
-      appCode.replace('Rsbuild', 'Live Reload'),
-      'utf-8',
-    );
+    await editFile(appFile, (code) => code.replace('Rsbuild', 'Live Reload'));
     await expect(test).toHaveText('Hello Rsbuild!');
   },
 );

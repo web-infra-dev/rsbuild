@@ -4,7 +4,7 @@ import { expect, rspackTest, test } from '@e2e/helper';
 
 rspackTest(
   'HMR should work properly with `createContext`',
-  async ({ page, dev }) => {
+  async ({ page, dev, editFile }) => {
     // Prefresh does not work as expected on Windows
     if (process.platform === 'win32') {
       test.skip();
@@ -34,11 +34,7 @@ export default B;
     await expect(b).toHaveText('B: 5');
 
     // simulate a change to component B's source code
-    fs.writeFileSync(
-      compFilePath,
-      compSourceCode.replace('B:', 'Beep:'),
-      'utf-8',
-    );
+    await editFile(compFilePath, (code) => code.replace('B:', 'Beep:'));
 
     await page.waitForFunction(() => {
       const aText = document.querySelector('#A')?.textContent;
