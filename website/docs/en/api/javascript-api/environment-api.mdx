@@ -1,12 +1,12 @@
 # Environment API
 
-Here you can find all the environment related APIs.
+Here you can find all environment-related APIs.
 
 > See [Multi-environment builds](/guide/advanced/environments) for more details.
 
 ## Environment context
 
-Environment context is a read-only object that provides some context information about the current environment.
+Environment context is a read-only object that provides context information about the current environment.
 
 - **Type:**
 
@@ -23,14 +23,14 @@ type EnvironmentContext = {
 };
 ```
 
-You can get the environment context through the following ways:
+You can get the environment context in the following ways:
 
 1. In Rsbuild's [Plugin hooks](/plugins/dev/hooks#plugin-hooks), you can get the environment context object through the `environment` or `environments` parameter.
 2. In the [Environment API](#environment-api-1), it is available via `environments.context`.
 
 ### name
 
-The unique name of the current environment is used to distinguish and locate the environment, corresponds to the key in the [environments](/config/environments) configuration.
+The unique name of the current environment, used to distinguish and locate the environment. Corresponds to the key in the [environments](/config/environments) configuration.
 
 - **Type:** `string`
 - **Example:**

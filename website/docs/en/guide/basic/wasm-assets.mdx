@@ -3,7 +3,7 @@
 Rsbuild provides native support for WebAssembly (WASM) modules, allowing you to import and use `.wasm` files directly in your project.
 
 :::tip What is WebAssembly
-WebAssembly (Wasm) is a portable, high-performance binary format designed to execute CPU-intensive computing tasks in modern web browsers, bringing performance and reliability similar to native compiled code to the web platform.
+WebAssembly (Wasm) is a portable, high-performance binary format designed to execute CPU-intensive computing tasks in modern web browsers, bringing near-native performance and reliability to the web platform.
 :::
 
 ## Import
@@ -39,7 +39,7 @@ console.log(wasmURL.pathname); // "/static/wasm/[contenthash:8].module.wasm"
 
 When a `.wasm` asset is imported, it will be output by Rsbuild to the `dist/static/wasm` directory by default.
 
-You can change the output directory of `.wasm` files via [output.distPath](/config/output/dist-path) config.
+You can change the output directory for `.wasm` files using the [output.distPath](/config/output/dist-path) configuration:
 
 ```ts
 export default {
@@ -53,9 +53,9 @@ export default {
 
 ## Type declaration
 
-When you import a Wasm file in TypeScript code, you usually need to add the corresponding type declaration.
+When you import a WebAssembly file in TypeScript code, you usually need to add the corresponding type declaration.
 
-For example, the `add.wasm` file exports an `add()` method, then you can create an `add.wasm.d.ts` file in the same directory and add the corresponding type declaration:
+For example, if the `add.wasm` file exports an `add()` method, you can create an `add.wasm.d.ts` file in the same directory and add the corresponding type declaration:
 
 ```ts title="add.wasm.d.ts"
 export const add: (num1: number, num2: number) => number;
