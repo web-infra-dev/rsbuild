@@ -1,7 +1,7 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest('should compile stylus correctly', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly();
+rspackTest('should compile stylus correctly', async ({ build }) => {
+  const rsbuild = await build();
   const files = rsbuild.getDistFiles();
 
   const content =

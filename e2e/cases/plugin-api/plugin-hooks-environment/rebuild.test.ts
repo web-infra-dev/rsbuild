@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import fse from 'fs-extra';
 
@@ -21,7 +21,7 @@ const createPlugin = () => {
   return { plugin, names };
 };
 
-rspackOnlyTest(
+rspackTest(
   'should run onBeforeDevCompile hook correctly when rebuild in dev with multiple environments',
   async ({ dev }) => {
     process.env.NODE_ENV = 'development';

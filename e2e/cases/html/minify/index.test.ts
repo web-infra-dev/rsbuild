@@ -1,9 +1,9 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should minify template success when inlineScripts & inlineStyles',
-  async ({ build }) => {
-    const rsbuild = await build({
+  async ({ buildPreview }) => {
+    const rsbuild = await buildPreview({
       rsbuildConfig: {
         html: {
           template: './static/index.html',

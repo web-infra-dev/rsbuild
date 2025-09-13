@@ -1,4 +1,4 @@
-import { expect, rspackOnlyTest, test } from '@e2e/helper';
+import { expect, rspackTest, test } from '@e2e/helper';
 
 declare global {
   interface Window {
@@ -6,8 +6,11 @@ declare global {
   }
 }
 
-test('should define vars in build correctly', async ({ page, build }) => {
-  const rsbuild = await build({
+test('should define vars in build correctly', async ({
+  page,
+  buildPreview,
+}) => {
+  const rsbuild = await buildPreview({
     rsbuildConfig: {
       mode: 'production',
     },
@@ -53,8 +56,8 @@ test('should define vars in build correctly', async ({ page, build }) => {
   expect(content).not.toContain('[condition] import.meta.env.DEV');
 });
 
-test('should define vars in dev', async ({ page, build }) => {
-  const rsbuild = await build({
+test('should define vars in dev', async ({ page, buildPreview }) => {
+  const rsbuild = await buildPreview({
     rsbuildConfig: {
       mode: 'development',
     },
@@ -94,8 +97,11 @@ test('should define vars in dev', async ({ page, build }) => {
   );
 });
 
-test('should define vars in none mode correctly', async ({ page, build }) => {
-  const rsbuild = await build({
+test('should define vars in none mode correctly', async ({
+  page,
+  buildPreview,
+}) => {
+  const rsbuild = await buildPreview({
     rsbuildConfig: {
       mode: 'none',
     },
@@ -141,23 +147,20 @@ test('should define vars in none mode correctly', async ({ page, build }) => {
   );
 });
 
-rspackOnlyTest(
-  'should allow to disable NODE_ENV injection',
-  async ({ buildOnly }) => {
-    const rsbuild = await buildOnly({
-      rsbuildConfig: {
-        mode: 'production',
-        tools: {
-          rspack: {
-            optimization: { nodeEnv: false },
-          },
+rspackTest('should allow to disable NODE_ENV injection', async ({ build }) => {
+  const rsbuild = await build({
+    rsbuildConfig: {
+      mode: 'production',
+      tools: {
+        rspack: {
+          optimization: { nodeEnv: false },
         },
       },
-    });
+    },
+  });
 
-    const content = await rsbuild.getIndexBundle();
-    expect(content).toContain(
-      '[value] process.env.NODE_ENV",process.env.NODE_ENV',
-    );
-  },
-);
+  const content = await rsbuild.getIndexBundle();
+  expect(content).toContain(
+    '[value] process.env.NODE_ENV",process.env.NODE_ENV',
+  );
+});

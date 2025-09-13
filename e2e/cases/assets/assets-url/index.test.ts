@@ -1,7 +1,10 @@
 import { expect, test } from '@e2e/helper';
 
-test('should return the asset URL with `?url`', async ({ page, build }) => {
-  await build();
+test('should return the asset URL with `?url`', async ({
+  page,
+  buildPreview,
+}) => {
+  await buildPreview();
 
   await expect(
     page.evaluate(

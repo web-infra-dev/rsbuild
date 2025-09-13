@@ -3,9 +3,9 @@ import { pluginReact } from '@rsbuild/plugin-react';
 
 test('should disable asset inlining with `?__inline=false`', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  await build({
+  await buildPreview({
     plugins: [pluginReact()],
   });
 

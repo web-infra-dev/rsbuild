@@ -4,9 +4,9 @@ import { expect, test } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 test('should generate vendor chunk when chunkSplit is "single-vendor"', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {

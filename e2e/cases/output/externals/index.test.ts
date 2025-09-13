@@ -1,8 +1,11 @@
 import { expect, test } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-test('should treat specified modules as externals', async ({ page, build }) => {
-  await build({
+test('should treat specified modules as externals', async ({
+  page,
+  buildPreview,
+}) => {
+  await buildPreview({
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
@@ -28,9 +31,9 @@ test('should treat specified modules as externals', async ({ page, build }) => {
 });
 
 test('should not externalize dependencies when target is web worker', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {

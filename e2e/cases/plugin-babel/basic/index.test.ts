@@ -1,10 +1,10 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 
-rspackOnlyTest(
+rspackTest(
   'should run babel with babel plugin correctly',
-  async ({ page, build }) => {
-    await build({
+  async ({ page, buildPreview }) => {
+    await buildPreview({
       plugins: [
         pluginBabel({
           babelLoaderOptions: (_, { addPlugins }) => {
@@ -18,10 +18,10 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should allow to exclude file from babel transformation',
-  async ({ page, build }) => {
-    await build({
+  async ({ page, buildPreview }) => {
+    await buildPreview({
       rsbuildConfig: {
         source: {
           exclude: [/aa/],

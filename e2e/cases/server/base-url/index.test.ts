@@ -64,8 +64,8 @@ test('should respect server.base when dev.assetPrefix is true', async ({
   expect(await page.content()).toContain('aaaa');
 });
 
-test('should apply server.base in preview', async ({ page, build }) => {
-  const rsbuild = await build({
+test('should apply server.base in preview', async ({ page, buildPreview }) => {
+  const rsbuild = await buildPreview({
     rsbuildConfig: {
       server: {
         base: '/base',

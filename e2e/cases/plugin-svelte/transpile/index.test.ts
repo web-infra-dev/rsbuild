@@ -1,8 +1,8 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should transpile .svelte files to ES2015 as expected',
-  async ({ buildOnly }) => {
-    expect(buildOnly()).resolves.toBeTruthy();
+  async ({ build }) => {
+    expect(build()).resolves.toBeTruthy();
   },
 );

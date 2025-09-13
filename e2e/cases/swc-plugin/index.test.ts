@@ -1,6 +1,6 @@
-import { expect, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { expect, gotoPage, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should run SWC Wasm plugin correctly in dev',
   async ({ page, devOnly }) => {
     const rsbuild = await devOnly();
@@ -13,10 +13,10 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should run SWC Wasm plugin correctly in production build',
-  async ({ page, buildOnly }) => {
-    const rsbuild = await buildOnly({
+  async ({ page, build }) => {
+    const rsbuild = await build({
       runServer: true,
     });
 

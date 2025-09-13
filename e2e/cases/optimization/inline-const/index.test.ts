@@ -1,9 +1,9 @@
-import { expect, rspackOnlyTest, test } from '@e2e/helper';
+import { expect, rspackTest, test } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should inline the constants in build',
-  async ({ page, build }) => {
-    const rsbuild = await build();
+  async ({ page, buildPreview }) => {
+    const rsbuild = await buildPreview();
     await page.waitForFunction(() => window.testDog);
     expect(await page.evaluate(() => window.testFish)).toBe('fish,FISH');
     expect(await page.evaluate(() => window.testCat)).toBe('cat,CAT');

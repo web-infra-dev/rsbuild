@@ -18,8 +18,8 @@ const expectConsoleType = async (
   }
 };
 
-test('should remove specified console correctly', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should remove specified console correctly', async ({ build }) => {
+  const rsbuild = await build({
     cwd,
     rsbuildConfig: {
       performance: {
@@ -36,8 +36,8 @@ test('should remove specified console correctly', async ({ buildOnly }) => {
   });
 });
 
-test('should remove all console correctly', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should remove all console correctly', async ({ build }) => {
+  const rsbuild = await build({
     cwd,
     rsbuildConfig: {
       performance: {

@@ -1,7 +1,7 @@
 import { expect, test } from '@e2e/helper';
 
-test('should log error module trace', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should log error module trace', async ({ build }) => {
+  const rsbuild = await build({
     catchBuildError: true,
   });
 

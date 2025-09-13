@@ -1,11 +1,11 @@
-import { expect, proxyConsole, rspackOnlyTest } from '@e2e/helper';
+import { expect, proxyConsole, rspackTest } from '@e2e/helper';
 import { createRsbuild, type Rspack } from '@rsbuild/core';
 import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
 import { matchPlugin } from '@scripts/test-helper';
 
 const RSDOCTOR_LOG = '@rsdoctor/rspack-plugin enabled';
 
-rspackOnlyTest(
+rspackTest(
   'should register Rsdoctor plugin when process.env.RSDOCTOR is true',
   async () => {
     const { expectLog, restore } = proxyConsole();
@@ -31,7 +31,7 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should not register Rsdoctor plugin when process.env.RSDOCTOR is false',
   async () => {
     const { expectNoLog, restore } = proxyConsole();
@@ -57,7 +57,7 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should not register Rsdoctor plugin when process.env.RSDOCTOR is true and the plugin has been registered',
   async () => {
     const { expectNoLog, restore } = proxyConsole();

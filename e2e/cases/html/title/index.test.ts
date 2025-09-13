@@ -2,8 +2,8 @@ import path from 'node:path';
 
 import { expect, test } from '@e2e/helper';
 
-test('should generate default title correctly', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should generate default title correctly', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       source: {
         entry: { foo: path.resolve(__dirname, './src/foo.js') },
@@ -18,9 +18,9 @@ test('should generate default title correctly', async ({ buildOnly }) => {
 });
 
 test('should allow setting empty title to unset the default title', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     rsbuildConfig: {
       source: {
         entry: { foo: path.resolve(__dirname, './src/foo.js') },
@@ -37,8 +37,8 @@ test('should allow setting empty title to unset the default title', async ({
   expect(html).not.toContain('<title>');
 });
 
-test('should generate title correctly', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should generate title correctly', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       source: {
         entry: { foo: path.resolve(__dirname, './src/foo.js') },
@@ -56,9 +56,9 @@ test('should generate title correctly', async ({ buildOnly }) => {
 });
 
 test('should generate title correctly when using custom HTML template', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     rsbuildConfig: {
       source: {
         entry: { foo: path.resolve(__dirname, './src/foo.js') },
@@ -77,9 +77,9 @@ test('should generate title correctly when using custom HTML template', async ({
 });
 
 test('should generate title correctly when using htmlPlugin.options.title', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     rsbuildConfig: {
       source: {
         entry: { foo: path.resolve(__dirname, './src/foo.js') },
@@ -97,8 +97,8 @@ test('should generate title correctly when using htmlPlugin.options.title', asyn
   expect(html).toContain('<title>foo</title>');
 });
 
-test('should generate title via function correctly', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should generate title via function correctly', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       source: {
         entry: {
@@ -125,9 +125,9 @@ test('should generate title via function correctly', async ({ buildOnly }) => {
 });
 
 test('should not inject title if template already contains a title', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     rsbuildConfig: {
       source: {
         entry: { foo: path.resolve(__dirname, './src/foo.js') },

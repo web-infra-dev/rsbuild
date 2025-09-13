@@ -1,9 +1,9 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'generate integrity using sha512 algorithm',
-  async ({ page, build }) => {
-    const rsbuild = await build();
+  async ({ page, buildPreview }) => {
+    const rsbuild = await buildPreview();
 
     const files = rsbuild.getDistFiles();
     const html =

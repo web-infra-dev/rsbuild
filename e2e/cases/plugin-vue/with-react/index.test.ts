@@ -1,9 +1,9 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should allow to build Vue SFC when pluginReact is also used',
-  async ({ page, build }) => {
-    await build();
+  async ({ page, buildPreview }) => {
+    await buildPreview();
 
     const button1 = page.locator('#button1');
     const button2 = page.locator('#button2');

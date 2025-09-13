@@ -1,9 +1,7 @@
 import { expect, test } from '@e2e/helper';
 
-test('should compile CSS Modules global mode correctly', async ({
-  buildOnly,
-}) => {
-  const rsbuild = await buildOnly({
+test('should compile CSS Modules global mode correctly', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       output: {
         cssModules: {

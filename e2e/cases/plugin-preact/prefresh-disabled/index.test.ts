@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest('HMR should work properly', async ({ page, dev }) => {
+rspackTest('HMR should work properly', async ({ page, dev }) => {
   const root = __dirname;
   const compFilePath = path.join(root, 'src/test-temp-B.jsx');
   const compSourceCode = `const B = (props) => {

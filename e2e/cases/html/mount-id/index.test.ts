@@ -5,9 +5,9 @@ import { expect, gotoPage, test } from '@e2e/helper';
 test.describe('should render mountId correctly', () => {
   test('should render content into the configured mountId', async ({
     page,
-    buildOnly,
+    build,
   }) => {
-    const rsbuild = await buildOnly({
+    const rsbuild = await build({
       runServer: true,
       rsbuildConfig: {
         html: {
@@ -27,10 +27,8 @@ test.describe('should render mountId correctly', () => {
     expect(errors).toEqual([]);
   });
 
-  test('should inject scripts into <head> by default', async ({
-    buildOnly,
-  }) => {
-    const rsbuild = await buildOnly({
+  test('should inject scripts into <head> by default', async ({ build }) => {
+    const rsbuild = await build({
       rsbuildConfig: {
         html: {
           mountId: 'app',

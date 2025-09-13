@@ -1,9 +1,9 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should compile CSS Modules with default configuration',
-  async ({ buildOnly }) => {
-    const rsbuild = await buildOnly();
+  async ({ build }) => {
+    const rsbuild = await build();
     const files = rsbuild.getDistFiles();
 
     const content =
@@ -15,10 +15,10 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should compile CSS Modules with custom auto configuration',
-  async ({ buildOnly }) => {
-    const rsbuild = await buildOnly({
+  async ({ build }) => {
+    const rsbuild = await build({
       rsbuildConfig: {
         output: {
           cssModules: {
@@ -40,10 +40,10 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should compile CSS Modules with custom localIdentName pattern',
-  async ({ buildOnly }) => {
-    const rsbuild = await buildOnly({
+  async ({ build }) => {
+    const rsbuild = await build({
       rsbuildConfig: {
         output: {
           cssModules: {
@@ -63,10 +63,10 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should compile CSS Modules with custom hash digest format',
-  async ({ buildOnly }) => {
-    const rsbuild = await buildOnly({
+  async ({ build }) => {
+    const rsbuild = await build({
       rsbuildConfig: {
         output: {
           cssModules: {

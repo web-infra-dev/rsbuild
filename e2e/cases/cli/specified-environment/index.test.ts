@@ -2,7 +2,7 @@ import { join } from 'node:path';
 import {
   expect,
   readDirContents,
-  rspackOnlyTest,
+  rspackTest,
   runCliSync,
   test,
 } from '@e2e/helper';
@@ -14,7 +14,7 @@ test.beforeEach(async () => {
   await remove(distPath);
 });
 
-rspackOnlyTest(
+rspackTest(
   'should only build specified environment when using --environment option',
   async () => {
     runCliSync('build --environment web2', {
@@ -33,7 +33,7 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should build specified environments when using --environment shorten option',
   async () => {
     runCliSync('build --environment web1,web2', {

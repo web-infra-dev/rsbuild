@@ -1,9 +1,9 @@
-import { expect, normalizeNewlines, rspackOnlyTest } from '@e2e/helper';
+import { expect, normalizeNewlines, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should not inject charset meta if template already contains it',
-  async ({ buildOnly }) => {
-    const rsbuild = await buildOnly({
+  async ({ build }) => {
+    const rsbuild = await build({
       rsbuildConfig: {
         html: {
           template: './src/index.html',

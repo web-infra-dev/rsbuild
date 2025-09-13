@@ -1,9 +1,9 @@
 import { expect, test } from '@e2e/helper';
 
 test('should set default entry when entry is set to an empty object', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly();
+  const rsbuild = await build();
   const files = rsbuild.getDistFiles();
   const filenames = Object.keys(files);
 

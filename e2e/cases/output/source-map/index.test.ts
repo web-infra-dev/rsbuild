@@ -7,9 +7,9 @@ const cwd = __dirname;
 
 async function testSourceMapType(
   devtool: Rspack.Configuration['devtool'],
-  buildOnly: Build,
+  build: Build,
 ) {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     rsbuildConfig: {
       output: {
         sourceMap: {
@@ -80,16 +80,16 @@ const productionDevtools: Rspack.Configuration['devtool'][] = [
 
 for (const devtool of productionDevtools) {
   test(`should generate correct "${devtool}" source map in build`, async ({
-    buildOnly,
+    build,
   }) => {
-    await testSourceMapType(devtool, buildOnly);
+    await testSourceMapType(devtool, build);
   });
 }
 
 test('should not generate source map by default in production build', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly();
+  const rsbuild = await build();
 
   const files = rsbuild.getDistFiles({ sourceMaps: true });
 
@@ -104,9 +104,9 @@ test('should not generate source map by default in production build', async ({
 });
 
 test('should generate source map if `output.sourceMap` is true', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     rsbuildConfig: {
       output: {
         sourceMap: true,
@@ -127,9 +127,9 @@ test('should generate source map if `output.sourceMap` is true', async ({
 });
 
 test('should not generate source map if `output.sourceMap` is false', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     rsbuildConfig: {
       output: {
         sourceMap: false,
@@ -170,10 +170,8 @@ test('should generate source map correctly in dev', async ({ dev }) => {
   expect(jsMap.mappings).not.toBeUndefined();
 });
 
-test('should generate source maps only for CSS files', async ({
-  buildOnly,
-}) => {
-  const rsbuild = await buildOnly({
+test('should generate source maps only for CSS files', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       output: {
         sourceMap: {

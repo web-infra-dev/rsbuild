@@ -1,10 +1,10 @@
 import path from 'node:path';
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should compile CSS Modules composes correctly',
-  async ({ buildOnly }) => {
-    const rsbuild = await buildOnly();
+  async ({ build }) => {
+    const rsbuild = await build();
     const files = rsbuild.getDistFiles();
 
     const content =
@@ -16,10 +16,10 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should compile CSS Modules composes with external correctly',
-  async ({ buildOnly }) => {
-    const rsbuild = await buildOnly({
+  async ({ build }) => {
+    const rsbuild = await build({
       rsbuildConfig: {
         source: {
           entry: { external: path.resolve(__dirname, './src/external.js') },

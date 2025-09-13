@@ -1,7 +1,7 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest('should allow to customize logger', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly();
+rspackTest('should allow to customize logger', async ({ build }) => {
+  const rsbuild = await build();
   expect(
     rsbuild.logs.find((item) => item.includes('[READY] built in')),
   ).toBeTruthy();

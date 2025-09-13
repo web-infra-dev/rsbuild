@@ -1,7 +1,7 @@
 import { expect, test } from '@e2e/helper';
 
-test('should allow to custom filename by function', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly();
+test('should allow to custom filename by function', async ({ build }) => {
+  const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();
   const filenames = Object.keys(files);

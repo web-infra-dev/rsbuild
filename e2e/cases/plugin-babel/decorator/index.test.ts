@@ -1,10 +1,10 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 
-rspackOnlyTest(
+rspackTest(
   'should support legacy decorators and source.decorators.version in TypeScript',
-  async ({ page, build }) => {
-    await build({
+  async ({ page, buildPreview }) => {
+    await buildPreview({
       plugins: [pluginBabel()],
     });
 
@@ -14,10 +14,10 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should support legacy decorators and source.decorators.version in JavaScript',
-  async ({ page, build }) => {
-    await build({
+  async ({ page, buildPreview }) => {
+    await buildPreview({
       plugins: [pluginBabel()],
       rsbuildConfig: {
         source: {

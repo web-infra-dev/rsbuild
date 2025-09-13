@@ -2,9 +2,9 @@ import { expect, test } from '@e2e/helper';
 
 test('should import svg with SVGR plugin and query URL correctly', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  await build();
+  await buildPreview();
 
   // test SVG asset
   await expect(

@@ -6,9 +6,9 @@ function isIncludeFile(filenames: string[], includeFilename: string) {
 }
 
 test('should support configuring additional assets matched by RegExp', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     rsbuildConfig: {
       source: {
         assetsInclude: [/\.json5$/],
@@ -31,9 +31,9 @@ test('should support configuring additional assets matched by RegExp', async ({
 });
 
 test('should support configuring additional assets matched by path', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     rsbuildConfig: {
       source: {
         assetsInclude: path.resolve(__dirname, 'src/assets'),
@@ -56,9 +56,9 @@ test('should support configuring additional assets matched by path', async ({
 });
 
 test('should support disabling emission for additional assets', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     rsbuildConfig: {
       source: {
         assetsInclude: [/\.json5$/],

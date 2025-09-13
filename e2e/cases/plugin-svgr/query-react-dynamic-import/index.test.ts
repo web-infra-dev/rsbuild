@@ -3,9 +3,9 @@ import { expect, test } from '@e2e/helper';
 // https://github.com/web-infra-dev/rsbuild/issues/1766
 test('should import default from SVG with react query and dynamic import correctly', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  await build();
+  await buildPreview();
 
   await expect(
     page.evaluate(`document.getElementById('component').tagName === 'svg'`),

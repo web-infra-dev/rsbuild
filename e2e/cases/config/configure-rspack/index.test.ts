@@ -1,9 +1,9 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should allow to use tools.rspack to configure Rspack',
-  async ({ page, build }) => {
-    await build({
+  async ({ page, buildPreview }) => {
+    await buildPreview({
       rsbuildConfig: {
         tools: {
           rspack: (config, { rspack }) => {
@@ -22,10 +22,10 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should allow to use async tools.rspack to configure Rspack',
-  async ({ page, build }) => {
-    await build({
+  async ({ page, buildPreview }) => {
+    await buildPreview({
       rsbuildConfig: {
         tools: {
           rspack: async (config, { rspack }) => {

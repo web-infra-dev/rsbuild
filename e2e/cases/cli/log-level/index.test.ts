@@ -1,7 +1,7 @@
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
-import { expect, rspackOnlyTest, runCliSync } from '@e2e/helper';
+import { expect, rspackTest, runCliSync } from '@e2e/helper';
 
-rspackOnlyTest('should run build command with log level: info', async () => {
+rspackTest('should run build command with log level: info', async () => {
   const result = stripAnsi(
     runCliSync('build --logLevel info', {
       cwd: __dirname,
@@ -13,7 +13,7 @@ rspackOnlyTest('should run build command with log level: info', async () => {
   expect(result).toContain('built in');
 });
 
-rspackOnlyTest('should run build command with log level: warn', async () => {
+rspackTest('should run build command with log level: warn', async () => {
   const result = stripAnsi(
     runCliSync('build --logLevel warn', {
       cwd: __dirname,

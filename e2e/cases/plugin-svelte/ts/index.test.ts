@@ -1,9 +1,9 @@
-import { expect, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { expect, gotoPage, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should build svelte component with typescript',
-  async ({ page, build }) => {
-    const rsbuild = await build();
+  async ({ page, buildPreview }) => {
+    const rsbuild = await buildPreview();
 
     await gotoPage(page, rsbuild);
 

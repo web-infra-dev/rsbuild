@@ -7,10 +7,10 @@ const cwd = __dirname;
 const testDistFile = join(cwd, 'dist/test.json');
 const testDeepDistFile = join(cwd, 'dist/foo/bar/test.json');
 
-test('should clean dist path by default', async ({ buildOnly }) => {
+test('should clean dist path by default', async ({ build }) => {
   await fse.outputFile(testDistFile, `{ "test": 1 }`);
 
-  await buildOnly({
+  await build({
     cwd,
   });
 
@@ -50,13 +50,11 @@ test('should clean dist path in dev when writeToDisk is true', async ({
   expect(fs.existsSync(testDistFile)).toBeFalsy();
 });
 
-test('should not clean dist path if it is outside root', async ({
-  buildOnly,
-}) => {
+test('should not clean dist path if it is outside root', async ({ build }) => {
   const testOutsideFile = join(cwd, '../node_modules/test.json');
   await fse.outputFile(testOutsideFile, `{ "test": 1 }`);
 
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     cwd,
     rsbuildConfig: {
       output: {
@@ -78,10 +76,10 @@ test('should not clean dist path if it is outside root', async ({
   await remove(testOutsideFile);
 });
 
-test('should allow to disable cleanDistPath', async ({ buildOnly }) => {
+test('should allow to disable cleanDistPath', async ({ build }) => {
   await fse.outputFile(testDistFile, `{ "test": 1 }`);
 
-  await buildOnly({
+  await build({
     cwd,
     rsbuildConfig: {
       output: {
@@ -96,12 +94,12 @@ test('should allow to disable cleanDistPath', async ({ buildOnly }) => {
 });
 
 test('should allow to use `cleanDistPath.keep` to keep some files', async ({
-  buildOnly,
+  build,
 }) => {
   await fse.outputFile(testDistFile, `{ "test": 1 }`);
   await fse.outputFile(testDeepDistFile, `{ "test": 1 }`);
 
-  await buildOnly({
+  await build({
     cwd,
     rsbuildConfig: {
       output: {
@@ -115,7 +113,7 @@ test('should allow to use `cleanDistPath.keep` to keep some files', async ({
   expect(fs.existsSync(testDistFile)).toBeTruthy();
   expect(fs.existsSync(testDeepDistFile)).toBeTruthy();
 
-  await buildOnly({ cwd });
+  await build({ cwd });
   expect(fs.existsSync(testDistFile)).toBeFalsy();
   expect(fs.existsSync(testDeepDistFile)).toBeFalsy();
 });

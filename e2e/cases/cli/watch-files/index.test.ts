@@ -4,7 +4,7 @@ import {
   expect,
   getRandomPort,
   gotoPage,
-  rspackOnlyTest,
+  rspackTest,
   runCli,
   test,
 } from '@e2e/helper';
@@ -15,7 +15,7 @@ test.beforeEach(async () => {
   fs.writeFileSync(tempConfig, 'export default 1;');
 });
 
-rspackOnlyTest(
+rspackTest(
   'should restart dev server when extra config file changed',
   async ({ page }) => {
     const port = await getRandomPort();

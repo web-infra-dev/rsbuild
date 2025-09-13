@@ -2,12 +2,12 @@ import { expect, test } from '@e2e/helper';
 import type { RsbuildPluginAPI } from '@rsbuild/core';
 
 test('should allow to access manifest data in environment context after build', async ({
-  buildOnly,
+  build,
 }) => {
   let webManifest: Record<string, any> = {};
   let nodeManifest: Record<string, any> = {};
 
-  await buildOnly({
+  await build({
     rsbuildConfig: {
       output: {
         filenameHash: false,

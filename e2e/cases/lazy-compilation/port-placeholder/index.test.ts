@@ -1,6 +1,6 @@
-import { expect, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { expect, gotoPage, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should replace port placeholder with actual port',
   async ({ page, devOnly }) => {
     const rsbuild = await devOnly();

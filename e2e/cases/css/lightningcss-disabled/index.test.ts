@@ -1,9 +1,9 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should allow to disable the built-in lightningcss loader',
-  async ({ buildOnly }) => {
-    const rsbuild = await buildOnly({
+  async ({ build }) => {
+    const rsbuild = await build({
       rsbuildConfig: {
         tools: {
           lightningcssLoader: false,

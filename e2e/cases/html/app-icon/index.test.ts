@@ -1,7 +1,7 @@
 import { expect, test } from '@e2e/helper';
 
-test('should emit apple-touch-icon to dist path', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should emit apple-touch-icon to dist path', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       html: {
         appIcon: {
@@ -24,8 +24,8 @@ test('should emit apple-touch-icon to dist path', async ({ buildOnly }) => {
   );
 });
 
-test('should emit manifest.webmanifest to dist path', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should emit manifest.webmanifest to dist path', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       html: {
         appIcon: {
@@ -73,8 +73,8 @@ test('should emit manifest.webmanifest to dist path', async ({ buildOnly }) => {
   });
 });
 
-test('should allow to specify URL as icon', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should allow to specify URL as icon', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       html: {
         appIcon: {
@@ -118,8 +118,8 @@ test('should allow to specify URL as icon', async ({ buildOnly }) => {
   });
 });
 
-test('should allow to specify target for each icon', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should allow to specify target for each icon', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       html: {
         appIcon: {
@@ -190,8 +190,8 @@ test('should allow to specify target for each icon', async ({ buildOnly }) => {
   });
 });
 
-test('should allow to specify purpose for each icon', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should allow to specify purpose for each icon', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       html: {
         appIcon: {
@@ -239,8 +239,8 @@ test('should allow to specify purpose for each icon', async ({ buildOnly }) => {
   });
 });
 
-test('should allow to customize manifest filename', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should allow to customize manifest filename', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       html: {
         appIcon: {
@@ -334,8 +334,8 @@ test('should append dev.assetPrefix to icon URL', async ({ dev }) => {
   });
 });
 
-test('should append output.assetPrefix to icon URL', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should append output.assetPrefix to icon URL', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       output: {
         assetPrefix: 'https://example.com',
@@ -392,10 +392,8 @@ test('should append output.assetPrefix to icon URL', async ({ buildOnly }) => {
   });
 });
 
-test('should apply asset prefix to apple-touch-icon URL', async ({
-  buildOnly,
-}) => {
-  const rsbuild = await buildOnly({
+test('should apply asset prefix to apple-touch-icon URL', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       html: {
         appIcon: {

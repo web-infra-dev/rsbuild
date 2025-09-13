@@ -1,9 +1,9 @@
 import { expect, test } from '@e2e/helper';
 
 test('should print tips if resolve Node.js builtin module failed', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     catchBuildError: true,
   });
 

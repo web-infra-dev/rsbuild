@@ -19,9 +19,9 @@ test('should support configuring the compression filter in dev', async ({
 
 test('should support configuring the compression filter in preview mode', async ({
   request,
-  build,
+  buildPreview,
 }) => {
-  const rsbuild = await build();
+  const rsbuild = await buildPreview();
 
   const indexJsResponse = await request.get(
     `http://127.0.0.1:${rsbuild.port}/static/js/index.js`,

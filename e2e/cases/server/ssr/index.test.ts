@@ -1,6 +1,6 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest('support SSR', async ({ page, devOnly }) => {
+rspackTest('support SSR', async ({ page, devOnly }) => {
   const rsbuild = await devOnly();
 
   const url = new URL(`http://localhost:${rsbuild.port}`);
@@ -15,7 +15,7 @@ rspackOnlyTest('support SSR', async ({ page, devOnly }) => {
   expect(rsbuild.logs.filter((log) => log.includes('load SSR')).length).toBe(1);
 });
 
-rspackOnlyTest('support SSR with external', async ({ page, devOnly }) => {
+rspackTest('support SSR with external', async ({ page, devOnly }) => {
   const rsbuild = await devOnly({
     rsbuildConfig: {
       output: {
@@ -39,7 +39,7 @@ rspackOnlyTest('support SSR with external', async ({ page, devOnly }) => {
   expect(rsbuild.logs.filter((log) => log.includes('load SSR')).length).toBe(1);
 });
 
-rspackOnlyTest('support SSR with esm target', async ({ page, devOnly }) => {
+rspackTest('support SSR with esm target', async ({ page, devOnly }) => {
   process.env.TEST_ESM_LIBRARY = '1';
 
   const rsbuild = await devOnly();
@@ -53,7 +53,7 @@ rspackOnlyTest('support SSR with esm target', async ({ page, devOnly }) => {
   delete process.env.TEST_ESM_LIBRARY;
 });
 
-rspackOnlyTest(
+rspackTest(
   'support SSR with esm target & external',
   async ({ page, devOnly }) => {
     process.env.TEST_ESM_LIBRARY = '1';
@@ -79,7 +79,7 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest('support SSR with split chunk', async ({ page, devOnly }) => {
+rspackTest('support SSR with split chunk', async ({ page, devOnly }) => {
   process.env.TEST_SPLIT_CHUNK = '1';
 
   const rsbuild = await devOnly();

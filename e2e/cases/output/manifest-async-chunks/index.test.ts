@@ -1,9 +1,9 @@
 import { expect, test } from '@e2e/helper';
 
 test('should generate manifest for async chunks correctly', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     rsbuildConfig: {
       output: {
         manifest: true,

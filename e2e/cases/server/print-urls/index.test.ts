@@ -104,8 +104,11 @@ test('should listen only on localhost in dev', async ({ page, devOnly }) => {
   rsbuild.expectNoLog(NETWORK_LOG_REGEX);
 });
 
-test('should listen only on localhost in preview', async ({ page, build }) => {
-  const rsbuild = await build({
+test('should listen only on localhost in preview', async ({
+  page,
+  buildPreview,
+}) => {
+  const rsbuild = await buildPreview({
     cwd,
 
     rsbuildConfig: {
@@ -125,9 +128,9 @@ test('should listen only on localhost in preview', async ({ page, build }) => {
 });
 
 test('should not print server urls when HTML is disabled', async ({
-  build,
+  buildPreview,
 }) => {
-  const rsbuild = await build({
+  const rsbuild = await buildPreview({
     cwd,
 
     rsbuildConfig: {
@@ -142,9 +145,9 @@ test('should not print server urls when HTML is disabled', async ({
 });
 
 test('should print server urls when HTML is disabled but printUrls is a custom function', async ({
-  build,
+  buildPreview,
 }) => {
-  const rsbuild = await build({
+  const rsbuild = await buildPreview({
     cwd,
 
     rsbuildConfig: {

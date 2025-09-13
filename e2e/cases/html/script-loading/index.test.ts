@@ -1,7 +1,7 @@
-import { expect, rspackOnlyTest, test } from '@e2e/helper';
+import { expect, rspackTest, test } from '@e2e/helper';
 
-rspackOnlyTest('should apply defer by default', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly();
+rspackTest('should apply defer by default', async ({ build }) => {
+  const rsbuild = await build();
   const files = rsbuild.getDistFiles();
   const html =
     files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
@@ -10,9 +10,9 @@ rspackOnlyTest('should apply defer by default', async ({ buildOnly }) => {
 });
 
 test('should remove defer when scriptLoading is "blocking"', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     rsbuildConfig: {
       html: {
         scriptLoading: 'blocking',
@@ -26,8 +26,8 @@ test('should remove defer when scriptLoading is "blocking"', async ({
   expect(html).toContain('<script src="');
 });
 
-test('should allow to set scriptLoading to "module"', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should allow to set scriptLoading to "module"', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       html: {
         scriptLoading: 'module',

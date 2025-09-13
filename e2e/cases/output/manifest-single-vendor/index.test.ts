@@ -1,9 +1,9 @@
 import { expect, test } from '@e2e/helper';
 
 test('should generate manifest with single vendor as expected', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly();
+  const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();
 

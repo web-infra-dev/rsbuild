@@ -1,11 +1,11 @@
-import { expect, recordPluginHooks, rspackOnlyTest } from '@e2e/helper';
+import { expect, recordPluginHooks, rspackTest } from '@e2e/helper';
 import { createRsbuild } from '@rsbuild/core';
 
-rspackOnlyTest(
+rspackTest(
   'should run plugin hooks correctly when running build',
-  async ({ buildOnly }) => {
+  async ({ build }) => {
     const { plugin, hooks } = recordPluginHooks();
-    const rsbuild = await buildOnly({
+    const rsbuild = await build({
       rsbuildConfig: {
         plugins: [plugin],
       },
@@ -31,11 +31,11 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should run plugin hooks correctly when running build and mode is development',
-  async ({ buildOnly }) => {
+  async ({ build }) => {
     const { plugin, hooks } = recordPluginHooks();
-    const rsbuild = await buildOnly({
+    const rsbuild = await build({
       rsbuildConfig: {
         mode: 'development',
         plugins: [plugin],
@@ -62,7 +62,7 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should run plugin hooks correctly when running startDevServer',
   async ({ dev }) => {
     process.env.NODE_ENV = 'development';
@@ -105,7 +105,7 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should run plugin hooks correctly when running preview',
   async () => {
     const { plugin, hooks } = recordPluginHooks();

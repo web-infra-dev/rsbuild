@@ -1,9 +1,9 @@
 import { expect, test } from '@e2e/helper';
 
 test('should support custom dist paths for different file types', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly();
+  const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();
   const filenames = Object.keys(files);

@@ -20,9 +20,9 @@ test('should emit bundle analyze report correctly when dev', async ({
 });
 
 test('should emit bundle analyze report correctly when build', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly();
+  const rsbuild = await build();
 
   const files = await getDistFiles(rsbuild.distPath);
   const filePaths = Object.keys(files).filter((file) =>

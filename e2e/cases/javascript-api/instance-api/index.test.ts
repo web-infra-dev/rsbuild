@@ -1,7 +1,7 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 import { createRsbuild, type RsbuildPlugin } from '@rsbuild/core';
 
-rspackOnlyTest(
+rspackTest(
   'should allow to call `modifyRsbuildConfig` via Rsbuild instance',
   async () => {
     const rsbuild = await createRsbuild({
@@ -16,7 +16,7 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should allow to call `modifyEnvironmentConfig` via Rsbuild instance',
   async () => {
     const rsbuild = await createRsbuild({
@@ -35,32 +35,29 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
-  'should allow to call `expose` via Rsbuild instance',
-  async () => {
-    const rsbuild = await createRsbuild({
-      cwd: __dirname,
-    });
+rspackTest('should allow to call `expose` via Rsbuild instance', async () => {
+  const rsbuild = await createRsbuild({
+    cwd: __dirname,
+  });
 
-    rsbuild.expose('test', {
-      sayHello() {
-        return 'hello';
-      },
-    });
+  rsbuild.expose('test', {
+    sayHello() {
+      return 'hello';
+    },
+  });
 
-    let result = '';
+  let result = '';
 
-    const plugin: RsbuildPlugin = {
-      name: 'test-plugin',
-      setup(api) {
-        const exposed = api.useExposed('test');
-        result = exposed.sayHello();
-      },
-    };
+  const plugin: RsbuildPlugin = {
+    name: 'test-plugin',
+    setup(api) {
+      const exposed = api.useExposed('test');
+      result = exposed.sayHello();
+    },
+  };
 
-    rsbuild.addPlugins([plugin]);
-    await rsbuild.initConfigs();
+  rsbuild.addPlugins([plugin]);
+  await rsbuild.initConfigs();
 
-    expect(result).toEqual('hello');
-  },
-);
+  expect(result).toEqual('hello');
+});

@@ -1,9 +1,9 @@
 import path from 'node:path';
-import { expect, readDirContents, rspackOnlyTest } from '@e2e/helper';
+import { expect, readDirContents, rspackTest } from '@e2e/helper';
 import { createRsbuild } from '@rsbuild/core';
 import { pluginVue } from '@rsbuild/plugin-vue';
 
-rspackOnlyTest(
+rspackTest(
   'should register plugins correctly when using JavaScript API',
   async () => {
     const rsbuild = await createRsbuild({

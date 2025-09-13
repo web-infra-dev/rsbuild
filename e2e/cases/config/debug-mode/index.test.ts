@@ -13,14 +13,14 @@ const getBundlerConfig = (dist: string) =>
   );
 
 test('should generate config files in debug mode when build', async ({
-  buildOnly,
+  build,
 }) => {
   const { level } = logger;
   logger.level = 'verbose';
   process.env.DEBUG = 'rsbuild';
 
   const distRoot = 'dist-1';
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     rsbuildConfig: {
       output: {
         distPath: {

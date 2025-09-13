@@ -1,10 +1,10 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
 const cwd = __dirname;
 
-rspackOnlyTest(
+rspackTest(
   'HMR should work when dev.client.port is `<port>`',
   async ({ page, dev }) => {
     await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {

@@ -1,6 +1,6 @@
-import { rspackOnlyTest, runCommand } from '@e2e/helper';
+import { rspackTest, runCommand } from '@e2e/helper';
 
-rspackOnlyTest('should display shortcuts as expected in dev', async () => {
+rspackTest('should display shortcuts as expected in dev', async () => {
   const { childProcess, expectLog, clearLogs, close } = runCommand(
     'node ./dev.mjs',
     {
@@ -27,7 +27,7 @@ rspackOnlyTest('should display shortcuts as expected in dev', async () => {
   close();
 });
 
-rspackOnlyTest('should display shortcuts as expected in preview', async () => {
+rspackTest('should display shortcuts as expected in preview', async () => {
   const { childProcess, expectLog, clearLogs, close } = runCommand(
     'node ./preview.mjs',
     {
@@ -48,7 +48,7 @@ rspackOnlyTest('should display shortcuts as expected in preview', async () => {
   close();
 });
 
-rspackOnlyTest('should support custom shortcuts in dev', async () => {
+rspackTest('should support custom shortcuts in dev', async () => {
   const { childProcess, expectLog, clearLogs, close } = runCommand(
     'node ./devCustom.mjs',
     {
@@ -65,7 +65,7 @@ rspackOnlyTest('should support custom shortcuts in dev', async () => {
   close();
 });
 
-rspackOnlyTest('should support custom shortcuts in preview', async () => {
+rspackTest('should support custom shortcuts in preview', async () => {
   const { childProcess, expectLog, clearLogs, close } = runCommand(
     'node ./previewCustom.mjs',
     {

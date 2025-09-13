@@ -1,6 +1,6 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should allow to import inline CSS files in dev',
   async ({ page, dev }) => {
     await dev();
@@ -23,7 +23,7 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should allow to import inline CSS files in build',
   async ({ page, build }) => {
     await build();

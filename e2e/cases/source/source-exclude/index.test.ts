@@ -3,9 +3,9 @@ import { expect, test, toPosixPath } from '@e2e/helper';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 
 test('should not compile specified file when source.exclude', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     plugins: [pluginCheckSyntax()],
     catchBuildError: true,
     rsbuildConfig: {

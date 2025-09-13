@@ -27,16 +27,16 @@ test('should apply nonce to dynamic chunks in dev build', async ({
 
 test('should apply nonce to dynamic chunks in build', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  await build();
+  await buildPreview();
   expect(await page.evaluate('window.dynamicChunkNonce')).toEqual(
     'CSP_NONCE_PLACEHOLDER',
   );
 });
 
-test('should apply nonce to preload script tags', async ({ buildOnly }) => {
-  const rsbuild = await buildOnly({
+test('should apply nonce to preload script tags', async ({ build }) => {
+  const rsbuild = await build({
     rsbuildConfig: {
       performance: {
         preload: true,

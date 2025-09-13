@@ -1,15 +1,15 @@
 import { expect, getRandomPort, test } from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
 
-test('should preview dist files correctly', async ({ page, build }) => {
-  await build();
+test('should preview dist files correctly', async ({ page, buildPreview }) => {
+  await buildPreview();
   const rootEl = page.locator('#root');
   await expect(rootEl).toHaveText('Hello Rsbuild!');
 });
 
 test('should allow plugin to modify preview server config', async ({
   page,
-  build,
+  buildPreview,
 }) => {
   const PORT = await getRandomPort();
   const plugin: RsbuildPlugin = {
@@ -23,7 +23,7 @@ test('should allow plugin to modify preview server config', async ({
     },
   };
 
-  const result = await build({
+  const result = await buildPreview({
     plugins: [plugin],
   });
 

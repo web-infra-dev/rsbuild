@@ -1,16 +1,22 @@
-import { expect, rspackOnlyTest, test } from '@e2e/helper';
+import { expect, rspackTest, test } from '@e2e/helper';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 
-test('should use legacy decorators by default', async ({ page, build }) => {
-  await build();
+test('should use legacy decorators by default', async ({
+  page,
+  buildPreview,
+}) => {
+  await buildPreview();
 
   expect(await page.evaluate('window.aaa')).toBe('hello');
   expect(await page.evaluate('window.bbb')).toBe('world');
   expect(await page.evaluate('window.ccc')).toBe('hello world');
 });
 
-test('should allow to use stage 3 decorators', async ({ page, build }) => {
-  await build({
+test('should allow to use stage 3 decorators', async ({
+  page,
+  buildPreview,
+}) => {
+  await buildPreview({
     rsbuildConfig: {
       source: {
         decorators: {
@@ -25,10 +31,10 @@ test('should allow to use stage 3 decorators', async ({ page, build }) => {
   expect(await page.evaluate('window.ccc')).toBe('hello world');
 });
 
-rspackOnlyTest(
+rspackTest(
   'should use legacy decorators with babel-plugin',
-  async ({ page, build }) => {
-    await build({
+  async ({ page, buildPreview }) => {
+    await buildPreview({
       plugins: [pluginBabel()],
     });
 
@@ -38,10 +44,10 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should allow to use stage 3 decorators with babel-plugin',
-  async ({ page, build }) => {
-    await build({
+  async ({ page, buildPreview }) => {
+    await buildPreview({
       plugins: [pluginBabel()],
       rsbuildConfig: {
         source: {

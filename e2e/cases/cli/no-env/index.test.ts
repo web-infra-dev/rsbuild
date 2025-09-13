@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expect, rspackOnlyTest, runCliSync } from '@e2e/helper';
+import { expect, rspackTest, runCliSync } from '@e2e/helper';
 
-rspackOnlyTest('should disable loading env files', async () => {
+rspackTest('should disable loading env files', async () => {
   runCliSync('build --no-env', {
     cwd: __dirname,
   });

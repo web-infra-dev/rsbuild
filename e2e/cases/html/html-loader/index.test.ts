@@ -1,6 +1,6 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackOnlyTest(
+rspackTest(
   'should allow to use html-loader in development',
   async ({ dev }) => {
     const rsbuild = await dev();
@@ -19,10 +19,10 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest(
+rspackTest(
   'should allow to use html-loader in production',
-  async ({ buildOnly }) => {
-    const rsbuild = await buildOnly();
+  async ({ build }) => {
+    const rsbuild = await build();
 
     const files = rsbuild.getDistFiles();
     const filenames = Object.keys(files);

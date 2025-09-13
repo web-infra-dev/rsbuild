@@ -1,9 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expectFile, getRandomPort, rspackOnlyTest, runCli } from '@e2e/helper';
+import { expectFile, getRandomPort, rspackTest, runCli } from '@e2e/helper';
 import { remove } from 'fs-extra';
 
-rspackOnlyTest(
+rspackTest(
   'should restart dev server and reload config when config file changed',
   async () => {
     const dist1 = path.join(__dirname, 'dist');

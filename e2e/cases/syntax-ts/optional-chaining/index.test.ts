@@ -16,9 +16,9 @@ test('should compile optional chaining and nullish coalescing in dev', async ({
 
 test('should compile optional chaining and nullish coalescing in build', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  await build();
+  await buildPreview();
 
   expect(await page.evaluate(() => window.optionalChainingTest)).toBe(
     'john@example.com',

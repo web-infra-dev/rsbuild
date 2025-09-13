@@ -2,9 +2,9 @@ import { expect, test } from '@e2e/helper';
 
 test('should allow to use new URL to get path of a Wasm file', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  const rsbuild = await build();
+  const rsbuild = await buildPreview();
   const files = rsbuild.getDistFiles();
 
   const wasmFile = Object.keys(files).find((file) =>

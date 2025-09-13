@@ -13,9 +13,9 @@ test('should allow to define global variables in development', async ({
 
 test('should allow to define global variables in production build', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  const rsbuild = await build();
+  const rsbuild = await buildPreview();
 
   await gotoPage(page, rsbuild);
 
@@ -23,8 +23,8 @@ test('should allow to define global variables in production build', async ({
   await expect(testEl).toHaveText('aaaaa');
 });
 
-test('should warn when define `process.env`', async ({ build }) => {
-  const rsbuild = await build({
+test('should warn when define `process.env`', async ({ buildPreview }) => {
+  const rsbuild = await buildPreview({
     rsbuildConfig: {
       source: {
         define: {
@@ -37,8 +37,10 @@ test('should warn when define `process.env`', async ({ build }) => {
   await rsbuild.expectLog('The "source.define" option includes an object');
 });
 
-test('should warn when define stringified `process.env`', async ({ build }) => {
-  const rsbuild = await build({
+test('should warn when define stringified `process.env`', async ({
+  buildPreview,
+}) => {
+  const rsbuild = await buildPreview({
     rsbuildConfig: {
       source: {
         define: {

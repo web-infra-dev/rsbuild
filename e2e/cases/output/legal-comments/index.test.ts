@@ -1,8 +1,8 @@
-import { expect, rspackOnlyTest, test } from '@e2e/helper';
+import { expect, rspackTest, test } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-rspackOnlyTest('legalComments linked (default)', async ({ page, build }) => {
-  const rsbuild = await build({
+rspackTest('legalComments linked (default)', async ({ page, buildPreview }) => {
+  const rsbuild = await buildPreview({
     plugins: [pluginReact()],
     rsbuildConfig: {
       performance: {
@@ -41,9 +41,9 @@ rspackOnlyTest('legalComments linked (default)', async ({ page, build }) => {
 
 test('should omit legal comments when legalComments is set to "none"', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  const rsbuild = await build({
+  const rsbuild = await buildPreview({
     plugins: [pluginReact()],
     rsbuildConfig: {
       performance: {
@@ -79,9 +79,9 @@ test('should omit legal comments when legalComments is set to "none"', async ({
 
 test('should inline legal comments when legalComments is set to "inline"', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  const rsbuild = await build({
+  const rsbuild = await buildPreview({
     plugins: [pluginReact()],
     rsbuildConfig: {
       performance: {

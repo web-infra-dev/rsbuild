@@ -5,7 +5,7 @@ import { expect, test } from '@e2e/helper';
 import type { RsbuildConfig } from '@rsbuild/core';
 import { remove } from 'fs-extra';
 
-test('should respect `buildCache.buildDependencies`', async ({ buildOnly }) => {
+test('should respect `buildCache.buildDependencies`', async ({ build }) => {
   const cacheDirectory = path.resolve(
     __dirname,
     './node_modules/.cache/test-cache-build-dependencies',
@@ -37,11 +37,11 @@ test('should respect `buildCache.buildDependencies`', async ({ buildOnly }) => {
   };
 
   // first build without cache
-  let rsbuild = await buildOnly(getBuildConfig(''));
+  let rsbuild = await build(getBuildConfig(''));
 
   expect((await rsbuild.getIndexBundle()).includes('222222')).toBeTruthy();
 
-  rsbuild = await buildOnly(getBuildConfig('foo'));
+  rsbuild = await build(getBuildConfig('foo'));
 
   // extension '.test.js' should work
   expect((await rsbuild.getIndexBundle()).includes('111111')).toBeTruthy();

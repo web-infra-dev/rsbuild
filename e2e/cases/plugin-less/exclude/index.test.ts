@@ -1,9 +1,9 @@
 import { expect, test } from '@e2e/helper';
 
 test('should exclude specified Less files using the exclude option', async ({
-  buildOnly,
+  build,
 }) => {
-  const rsbuild = await buildOnly({
+  const rsbuild = await build({
     rsbuildConfig: {
       tools: {
         bundlerChain(chain) {

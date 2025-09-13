@@ -1,4 +1,4 @@
-import { expect, rspackOnlyTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 import { createRsbuild, type RsbuildPlugin } from '@rsbuild/core';
 
 type ParentAPI = {
@@ -6,7 +6,7 @@ type ParentAPI = {
   double: (val: number) => number;
 };
 
-rspackOnlyTest('should allow plugin to expose and consume API', async () => {
+rspackTest('should allow plugin to expose and consume API', async () => {
   const parentSymbol = Symbol('parent-api');
 
   const pluginParent: RsbuildPlugin = {

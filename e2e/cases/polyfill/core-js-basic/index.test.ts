@@ -1,4 +1,4 @@
-import { expect, rspackOnlyTest, test } from '@e2e/helper';
+import { expect, rspackTest, test } from '@e2e/helper';
 import { getPolyfillContent } from '../helper';
 
 const EXPECT_VALUE = {
@@ -11,9 +11,9 @@ const EXPECT_VALUE = {
 
 test('should add polyfill when set polyfill entry (default)', async ({
   page,
-  build,
+  buildPreview,
 }) => {
-  const rsbuild = await build({
+  const rsbuild = await buildPreview({
     rsbuildConfig: {
       output: {
         polyfill: 'entry',
@@ -36,10 +36,10 @@ test('should add polyfill when set polyfill entry (default)', async ({
 });
 
 // @rsbuild/plugin-webpack-swc do not support groupBy yet
-rspackOnlyTest(
+rspackTest(
   'should add polyfill when set polyfill usage',
-  async ({ page, build }) => {
-    const rsbuild = await build({
+  async ({ page, buildPreview }) => {
+    const rsbuild = await buildPreview({
       rsbuildConfig: {
         output: {
           polyfill: 'usage',

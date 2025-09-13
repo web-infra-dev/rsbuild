@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expect, rspackOnlyTest, runCliSync } from '@e2e/helper';
+import { expect, rspackTest, runCliSync } from '@e2e/helper';
 
-rspackOnlyTest('should inject public env vars to client', async () => {
+rspackTest('should inject public env vars to client', async () => {
   runCliSync('build', {
     cwd: __dirname,
     env: {
