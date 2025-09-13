@@ -5,12 +5,7 @@ import { expect, test } from '@e2e/helper';
 test('should preserve viewBox after svgo minification', async ({
   buildOnly,
 }) => {
-  const buildOpts = {
-    cwd: __dirname,
-  };
-
-  const rsbuild = await buildOnly(buildOpts);
-
+  const rsbuild = await buildOnly();
   const files = rsbuild.getDistFiles();
   const indexJs = Object.keys(files).find(
     (file) => file.includes('/index.') && file.endsWith('.js'),
