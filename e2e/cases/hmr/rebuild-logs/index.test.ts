@@ -4,35 +4,33 @@ import { expect, rspackTest } from '@e2e/helper';
 
 const cwd = __dirname;
 
-rspackTest('should print changed files in logs', async ({ page, dev }) => {
-  await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
-    recursive: true,
-  });
+rspackTest(
+  'should print changed files in logs',
+  async ({ page, dev, editFile }) => {
+    await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
+      recursive: true,
+    });
 
-  const rsbuild = await dev({
-    rsbuildConfig: {
-      source: {
-        entry: {
-          index: join(cwd, 'test-temp-src/index.ts'),
+    const rsbuild = await dev({
+      rsbuildConfig: {
+        source: {
+          entry: {
+            index: join(cwd, 'test-temp-src/index.ts'),
+          },
         },
       },
-    },
-  });
+    });
 
-  const locator = page.locator('#test');
-  await expect(locator).toHaveText('Hello Rsbuild!');
+    const locator = page.locator('#test');
+    await expect(locator).toHaveText('Hello Rsbuild!');
 
-  const appPath = join(cwd, 'test-temp-src/App.tsx');
+    await editFile('test-temp-src/App.tsx', (code) =>
+      code.replace('Hello Rsbuild!', 'Hello Rsbuild2!'),
+    );
 
-  await fs.promises.writeFile(
-    appPath,
-    fs
-      .readFileSync(appPath, 'utf-8')
-      .replace('Hello Rsbuild!', 'Hello Rsbuild2!'),
-  );
-
-  await rsbuild.expectLog(/building test-temp-src[\\/]App\.tsx/);
-});
+    await rsbuild.expectLog(/building test-temp-src[\\/]App\.tsx/);
+  },
+);
 
 rspackTest('should print removed files in logs', async ({ page, dev }) => {
   await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {

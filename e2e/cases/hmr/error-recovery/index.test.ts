@@ -6,7 +6,7 @@ const cwd = __dirname;
 
 rspackTest(
   'HMR should work after fixing compilation error',
-  async ({ page, dev }) => {
+  async ({ page, dev, editFile }) => {
     await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
       recursive: true,
     });
@@ -24,28 +24,20 @@ rspackTest(
     const locator = page.locator('#test');
     await expect(locator).toHaveText('Hello Rsbuild!');
 
-    const appPath = join(cwd, 'test-temp-src/App.tsx');
-
-    await fs.promises.writeFile(
-      appPath,
-      fs
-        .readFileSync(appPath, 'utf-8')
-        .replace(
-          '<div id="test">Hello Rsbuild!</div>',
-          '<div id="test">Hello Rsbuild!</div',
-        ),
+    await editFile('test-temp-src/App.tsx', (code) =>
+      code.replace(
+        '<div id="test">Hello Rsbuild!</div>',
+        '<div id="test">Hello Rsbuild!</div',
+      ),
     );
 
     await rsbuild.expectLog('Module build failed');
 
-    await fs.promises.writeFile(
-      appPath,
-      fs
-        .readFileSync(appPath, 'utf-8')
-        .replace(
-          '<div id="test">Hello Rsbuild!</div',
-          '<div id="test">Hello Rsbuild2!</div>',
-        ),
+    await editFile('test-temp-src/App.tsx', (code) =>
+      code.replace(
+        '<div id="test">Hello Rsbuild!</div',
+        '<div id="test">Hello Rsbuild2!</div>',
+      ),
     );
 
     await expect(locator).toHaveText('Hello Rsbuild2!');
