@@ -51,7 +51,8 @@ type RsbuildFixture = {
 
   /**
    * Edit a file in the test file's cwd.
-   * @param filename The filename relative to the test file's cwd.
+   * @param filename The filename. If it is not absolute, it will be resolved
+   * relative to the test file's cwd.
    * @param replacer The replacer function.
    */
   editFile: EditFile;
@@ -136,7 +137,9 @@ export const test = base.extend<RsbuildFixture>({
 
   editFile: async ({ cwd }, use) => {
     const editFile: EditFile = async (filename, replacer) => {
-      const resolvedFilename = path.resolve(cwd, filename);
+      const resolvedFilename = path.isAbsolute(filename)
+        ? filename
+        : path.resolve(cwd, filename);
       const code = await promises.readFile(resolvedFilename, 'utf-8');
       return promises.writeFile(resolvedFilename, replacer(code));
     };
