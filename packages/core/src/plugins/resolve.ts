@@ -124,8 +124,13 @@ export const pluginResolve = (): RsbuildPlugin => ({
       order: 'pre',
       handler: (chain, { environment, CHAIN_ID }) => {
         const { config, tsconfigPath } = environment;
+        const { extensions, conditionNames } = config.resolve;
 
-        chain.resolve.extensions.merge([...config.resolve.extensions]);
+        chain.resolve.extensions.merge([...extensions]);
+
+        if (conditionNames?.length) {
+          chain.resolve.conditionNames.merge([...conditionNames]);
+        }
 
         const isTsProject =
           tsconfigPath && !tsconfigPath.endsWith('jsconfig.json');

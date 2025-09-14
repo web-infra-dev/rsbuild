@@ -10,6 +10,7 @@ const OVERRIDE_PATHS = [
   'server.open',
   'server.printUrls',
   'resolve.extensions',
+  'resolve.conditionNames',
   'provider',
 ];
 
