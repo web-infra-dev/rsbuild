@@ -1830,7 +1830,7 @@ export interface ResolveConfig {
   /**
    * Specifies the condition names used to match entry points in the exports field
    * of a package.
-   * @default Inherit from Rspack. See https://rspack.rs/config/resolve#resolveconditionnames
+   * @default Inherits from Rspack. See https://rspack.rs/config/resolve#resolveconditionnames
    */
   conditionNames?: string[];
 }
