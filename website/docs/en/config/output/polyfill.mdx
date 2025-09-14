@@ -3,15 +3,15 @@
 - **Type:** `'entry' | 'usage' | 'off'`
 - **Default:** `'off'`
 
-Control the polyfill injection mode.
+Controls the polyfill injection mode.
 
-> Please refer to the [Polyfill Mode](/guide/advanced/browser-compatibility#polyfill-mode) for more details.
+> See [Polyfill Mode](/guide/advanced/browser-compatibility#polyfill-mode) for more details.
 
 ## Optional value
 
 ### usage
 
-When `output.polyfill` is set to `'usage'`, Rsbuild injects polyfills based on the APIs used in each file. This provides optimal bundle size as only needed polyfills are included.
+With `output.polyfill` set to `'usage'`, Rsbuild injects polyfills based on the APIs used in each file. This provides optimal bundle size by including only needed polyfills.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -23,7 +23,7 @@ export default {
 
 ### entry
 
-When `output.polyfill` is set to `'entry'`, Rsbuild injects polyfills in each entry file. This ensures all polyfills are available but may increase bundle size.
+With `output.polyfill` set to `'entry'`, Rsbuild injects polyfills in each entry file. This ensures all polyfills are available but may increase bundle size.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -35,7 +35,7 @@ export default {
 
 ### off
 
-When `output.polyfill` is configured as `'off'`, Rsbuild will not inject the polyfills, and developers need to ensure code compatibility themselves.
+With `output.polyfill` set to `'off'`, Rsbuild will not inject polyfills. Developers need to ensure code compatibility themselves.
 
 ```ts title="rsbuild.config.ts"
 export default {
