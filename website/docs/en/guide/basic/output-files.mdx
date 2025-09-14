@@ -40,7 +40,7 @@ In the filename, `[name]` represents the entry name for this file, such as `inde
 
 In development mode, Rsbuild stores build outputs in memory on the dev server by default instead of writing them to disk. This reduces file system overhead. Refer to [View Static Assets](/guide/basic/server#view-static-assets) to see all static assets generated in the current build.
 
-To write output files to disk—useful for inspecting build artifacts or configuring proxy rules for static assets—set [dev.writeToDisk](/config/dev/write-to-disk) to `true`:
+To write output files to disk, which is useful for inspecting build artifacts or configuring proxy rules for static assets, set [dev.writeToDisk](/config/dev/write-to-disk) to `true`:
 
 ```ts
 export default {
