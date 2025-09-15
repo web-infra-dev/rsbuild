@@ -114,6 +114,7 @@ ReactRefreshRspackPlugin {
     "injectEntry": true,
     "injectLoader": true,
     "overlay": false,
+    "reloadOnRuntimeErrors": false,
     "resourceQuery": {
       "not": /\\^\\\\\\?raw\\$/,
     },

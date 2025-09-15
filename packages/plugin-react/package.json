@@ -27,14 +27,14 @@
     "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
-    "@rspack/plugin-react-refresh": "^1.5.0",
+    "@rspack/plugin-react-refresh": "^1.5.1",
     "react-refresh": "^0.17.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.13.0",
+    "@rslib/core": "0.13.2",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.18.1",
+    "@types/node": "^22.18.3",
     "typescript": "^5.9.2"
   },
   "peerDependencies": {
