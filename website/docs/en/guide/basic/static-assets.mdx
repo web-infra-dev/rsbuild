@@ -198,8 +198,17 @@ The URL returned after importing an asset will automatically include the path pr
 
 - In development, use [dev.assetPrefix](/config/dev/asset-prefix) to set the path prefix.
 - In production, use [output.assetPrefix](/config/output/asset-prefix) to set the path prefix.
+- When either `dev.assetPrefix` or `output.assetPrefix` is not configured, the value of [server.base](/config/server/base) will be automatically used as the default prefix.
 
 For example, you can set `output.assetPrefix` to `https://example.com`:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    assetPrefix: 'https://example.com',
+  },
+};
+```
 
 ```js
 import logo from './static/logo.png';
