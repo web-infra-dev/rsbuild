@@ -1827,6 +1827,12 @@ export interface ResolveConfig {
    * @default ['.ts', '.tsx', '.mjs', '.js', '.jsx', '.json']
    */
   extensions?: string[];
+  /**
+   * Specifies the condition names used to match entry points in the exports field
+   * of a package.
+   * @default Inherits from Rspack. See https://rspack.rs/config/resolve#resolveconditionnames
+   */
+  conditionNames?: string[];
 }
 
 export type NormalizedResolveConfig = ResolveConfig &
