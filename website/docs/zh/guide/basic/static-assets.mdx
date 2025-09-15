@@ -198,8 +198,17 @@ Rsbuild >= 1.3.0 支持 `?raw` 查询参数，>= 1.4.0 支持引用 JS 和 TS �
 
 - 在开发模式下，通过 [dev.assetPrefix](/config/dev/asset-prefix) 设置路径前缀。
 - 在生产模式下，通过 [output.assetPrefix](/config/output/asset-prefix) 设置路径前缀。
+- 当 `dev.assetPrefix` 或 `output.assetPrefix` 未配置时，将自动使用 [server.base](/config/server/base) 的值作为默认前缀。
 
 比如将 `output.assetPrefix` 设置为 `https://example.com`：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    assetPrefix: 'https://example.com',
+  },
+};
+```
 
 ```js
 import logo from './static/logo.png';
