@@ -1,12 +1,11 @@
 import path from 'node:path';
 import { expect, readDirContents, rspackTest, runCliSync } from '@e2e/helper';
 
-const nodeVersion = process.version.slice(1).split('.')[0];
-const isNodeVersionCompatible = Number(nodeVersion) >= 22;
+rspackTest('should use Node.js native loader to load config', async () => {
+  if (!process.features.typescript) {
+    return;
+  }
 
-const conditionalTest = isNodeVersionCompatible ? rspackTest : rspackTest.skip;
-
-conditionalTest('should use Node.js native loader to load config', async () => {
   runCliSync('build --config-loader native', {
     cwd: __dirname,
     env: {
