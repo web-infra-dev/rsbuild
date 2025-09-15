@@ -103,5 +103,6 @@
     'http-proxy-middleware',
     // Temporary ignore
     'less',
+    'tinyglobby',
   ],
 }
