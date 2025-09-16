@@ -1,12 +1,12 @@
 # Environment variables
 
-Rsbuild supports injecting environment variables or expressions into the code during build, which is helpful for distinguishing the running environment or replacing constants.
+Rsbuild supports injecting environment variables or expressions into your code during build, which helps distinguish the running environment or replace constants.
 
-This chapter introduces how to use environment variables in Rsbuild.
+This chapter explains how to use environment variables in Rsbuild.
 
 ## Default variables
 
-By default, Rsbuild injects some environment variables into the code using [source.define](#using-define). These are replaced with specified values during the build:
+Rsbuild injects some environment variables into your code by default using [source.define](#using-define). These are replaced with specified values during build:
 
 `import.meta.env` contains these environment variables:
 
@@ -27,7 +27,7 @@ By default, Rsbuild injects some environment variables into the code using [sour
 - **Type:** `'production' | 'development' | 'none'`
 - **Scope:** Available in source code, replaced at build time via [define](/guide/advanced/env-vars#using-define)
 
-You can use `import.meta.env.MODE` in the client code to read the value of the [mode](/config/mode) configuration.
+Use `import.meta.env.MODE` in client code to read the [mode](/config/mode) configuration value.
 
 ```ts
 if (import.meta.env.MODE === 'development') {

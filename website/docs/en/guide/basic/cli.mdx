@@ -54,7 +54,7 @@ Options:
   --host <host>         Set the host that the server listens to
 ```
 
-You can also start the dev server by running `rsbuild` directly, which is equivalent to running `rsbuild dev`.
+Start the dev server by running `rsbuild` directly, which is equivalent to `rsbuild dev`:
 
 ```bash
 npx rsbuild
@@ -86,7 +86,7 @@ When using [server.open](/config/server/open) and `--open` at the same time, `--
 
 ## rsbuild build
 
-The `rsbuild build` command will build the outputs for production in the `dist/` directory by default.
+The `rsbuild build` command builds production outputs in the `dist/` directory by default.
 
 ```bash
 Usage: rsbuild build [options]
@@ -97,7 +97,7 @@ Options:
 
 ## rsbuild preview
 
-The `rsbuild preview` command previews the production build outputs locally. Note that you need to execute the `rsbuild build` command beforehand to generate the build outputs.
+The `rsbuild preview` command previews production build outputs locally. Run `rsbuild build` first to generate the build outputs.
 
 ```bash
 Usage: rsbuild preview [options]
@@ -114,7 +114,7 @@ The preview command is only used for local preview. Do not use it for production
 
 ## rsbuild inspect
 
-The `rsbuild inspect` command displays the Rsbuild config and Rspack config of the project.
+The `rsbuild inspect` command displays the project's Rsbuild and Rspack configurations.
 
 ```bash
 Usage: rsbuild inspect [options]
@@ -124,7 +124,7 @@ Options:
   --verbose             Show complete function definitions in output
 ```
 
-When you run the command `npx rsbuild inspect` in the project root directory, the following files will be generated in the `dist/.rsbuild` directory of the project:
+Running `npx rsbuild inspect` in the project root generates these files in the `dist/.rsbuild` directory:
 
 - `rsbuild.config.mjs`: Represents the Rsbuild configuration used during the build.
 - `rspack.config.web.mjs`: Represents the Rspack configuration used during the build.
