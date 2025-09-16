@@ -1,8 +1,3 @@
-const cacheStore: WeakMap<
-  (...args: any[]) => void,
-  Map<string, { data: unknown }>
-> = new WeakMap();
-
 export function memorize<T>(
   fn: (...args: any[]) => T,
   {
@@ -30,8 +25,6 @@ export function memorize<T>(
 
     return result;
   };
-
-  cacheStore.set(memoized, cache as Map<string, { data: unknown }>);
 
   return memoized;
 }
