@@ -6,9 +6,9 @@ Rsbuild supports using [Browserslist](https://browsersl.ist/) to specify which b
 
 Since different browsers support ECMAScript and CSS differently, developers need to set the correct browser range for web applications.
 
-[Browserslist](https://browsersl.ist/) can specify which browsers your web application can run in, it provides a configuration for specifying browsers range. Browserslist has become a standard in the industry, it is used by libraries such as SWC, Lightning CSS, Babel, ESLint, PostCSS and webpack.
+[Browserslist](https://browsersl.ist/) can specify which browsers your web application can run in; it provides a configuration for specifying browser ranges. Browserslist has become an industry standard, used by libraries such as SWC, Lightning CSS, Babel, ESLint, PostCSS and webpack.
 
-When you specify a browser range through Browserslist, Rsbuild will compile JavaScript and CSS code to the specified syntax.
+When you specify a browser range through Browserslist, Rsbuild compiles JavaScript and CSS code to the specified syntax.
 
 ## Polyfill injection
 
@@ -28,7 +28,7 @@ For example, when you need to be compatible with IE11 browser, Rsbuild will comp
 
 ## Default values
 
-Rsbuild will set different default values of Browserslist according to [output.target](/config/output/target), you can also explicitly set Browserslist in your project, which will make the compatible scope of the project more clear.
+Rsbuild sets different default Browserslist values according to [output.target](/config/output/target). You can also explicitly set Browserslist in your project, which makes the compatible scope clearer.
 
 ### Web target
 
