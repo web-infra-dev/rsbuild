@@ -8,20 +8,16 @@ export async function setupOutputFileSystem(
   options: Options,
   compilers: Compiler[],
 ): Promise<OutputFileSystem> {
-  let outputFileSystem: unknown;
-
   if (options.writeToDisk !== true) {
     const { createFsFromVolume, Volume } = await import(
       '../../../compiled/memfs/index.js'
     );
-    outputFileSystem = createFsFromVolume(new Volume());
-  } else {
-    ({ outputFileSystem } = compilers[0]);
+    const outputFileSystem = createFsFromVolume(new Volume());
+
+    for (const compiler of compilers) {
+      compiler.outputFileSystem = outputFileSystem as RspackOutputFileSystem;
+    }
   }
 
-  for (const compiler of compilers) {
-    compiler.outputFileSystem = outputFileSystem as RspackOutputFileSystem;
-  }
-
-  return outputFileSystem as OutputFileSystem;
+  return compilers[0].outputFileSystem as OutputFileSystem;
 }
