@@ -56,7 +56,7 @@ exports[`plugin-basic > should apply basic config correctly in production 1`] = 
   "devtool": false,
   "experiments": {
     "inlineConst": true,
-    "inlineEnum": false,
+    "inlineEnum": true,
     "lazyBarrel": true,
     "rspackFuture": {
       "bundlerInfo": {
