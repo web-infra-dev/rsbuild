@@ -110,10 +110,6 @@ export type API<
 
 export type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<T>;
 
-export type WithoutUndefined<T, K extends keyof T> = T & {
-  [P in K]-?: NonNullable<T[P]>;
-};
-
 export async function devMiddleware<
   RequestInternal extends IncomingMessage = IncomingMessage,
   ResponseInternal extends ServerResponse = ServerResponse,
@@ -127,7 +123,7 @@ export async function devMiddleware<
     callbacks: [],
     options,
     compiler,
-  } as WithOptional<Context, 'watching' | 'outputFileSystem'>;
+  };
 
   setupHooks(context);
 
