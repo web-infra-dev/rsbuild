@@ -17,7 +17,7 @@ type Minify =
 
 Controls code minification in production mode and configures minimizer options.
 
-By default, JavaScript and CSS code are automatically minified in production mode to improve page performance. To disable minification entirely, set `minify` to `false`. You can also control specific minification behavior using the detailed `minify` options:
+JavaScript and CSS code are automatically minified in production mode to improve page performance. To disable minification entirely, set `minify` to `false`. Control specific minification behavior using the detailed `minify` options:
 
 :::tip
 Rsbuild uses [SWC](/guide/configuration/swc) to minify JavaScript code and [Lightning CSS](/guide/styling/css-usage#lightning-css) to minify CSS code by default.
@@ -38,7 +38,7 @@ export default {
 ```
 
 :::tip
-This is useful for debugging and troubleshooting. We do not recommend disabling code minification in production builds, as it will significantly impact page performance.
+This helps with debugging and troubleshooting. We don't recommend disabling code minification in production builds, as it significantly impacts page performance.
 :::
 
 ## Options

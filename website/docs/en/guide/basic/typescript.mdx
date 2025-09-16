@@ -30,7 +30,7 @@ Unlike the native TypeScript compiler, tools like SWC and Babel compile each fil
 }
 ```
 
-The `isolatedModules` option prevents syntax that SWC and Babel cannot correctly compile, such as cross-file type references. It guides you toward correct usage:
+The `isolatedModules` option prevents syntax that SWC and Babel cannot compile correctly, such as cross-file type references. It guides you toward correct usage:
 
 ```ts
 // Wrong
@@ -64,7 +64,7 @@ Please refer to the [@rsbuild/plugin-type-check](https://github.com/rspack-contr
 
 ## tsconfig.json Path
 
-Rsbuild by default reads the `tsconfig.json` file from the root directory. You can use the [source.tsconfigPath](/config/source/tsconfig-path) to configure a custom tsconfig.json file path.
+Rsbuild reads the `tsconfig.json` file from the root directory by default. Use [source.tsconfigPath](/config/source/tsconfig-path) to configure a custom tsconfig.json file path.
 
 ```ts
 export default {

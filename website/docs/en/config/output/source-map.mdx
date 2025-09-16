@@ -23,19 +23,19 @@ const defaultSourceMap = {
 Configures whether to generate source map files and which source map format to generate.
 
 :::tip What is a source map
-A source map is an information file that stores the source code mapping relationship. It records each location of the compiled code and the corresponding pre-compilation location. With source maps, you can directly view the source code when debugging compiled code.
+A source map is an information file that stores source code mapping relationships. It records each location in the compiled code and its corresponding pre-compilation location. With source maps, you can directly view source code when debugging compiled code.
 :::
 
 ## Default behavior
 
-By default, Rsbuild generates source maps using these rules:
+Rsbuild generates source maps using these rules by default:
 
 - In development mode, source maps for JS files are generated for development debugging, while source maps for CSS files are not generated.
 - In production mode, source maps for JS and CSS files are not generated to improve build performance.
 
 ## Boolean value
 
-If `output.sourceMap` is `true`, source maps will be generated according to the [mode](/config/mode), equivalent to:
+If `output.sourceMap` is `true`, source maps are generated according to the [mode](/config/mode), equivalent to:
 
 ```js
 export default {

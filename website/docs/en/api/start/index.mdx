@@ -4,13 +4,13 @@ Rsbuild provides a comprehensive JavaScript API for developers to build higher-l
 
 Rsbuild's JavaScript API can be used in Node.js, Deno, or Bun.
 
-## Access example
+## Getting started
 
-Here is a basic example of how to access the Rsbuild JavaScript API.
+This basic example demonstrates how to use the Rsbuild JavaScript API.
 
 ### 1. Install Rsbuild
 
-You need to install the `@rsbuild/core` package:
+Install the `@rsbuild/core` package:
 
 import { PackageManagerTabs } from '@theme';
 
@@ -18,7 +18,7 @@ import { PackageManagerTabs } from '@theme';
 
 ### 2. Create an Rsbuild instance
 
-You can call the [createRsbuild](/api/javascript-api/core#creatersbuild) method to create an Rsbuild instance:
+Call the [createRsbuild](/api/javascript-api/core#creatersbuild) method to create an Rsbuild instance:
 
 ```ts
 import { createRsbuild } from '@rsbuild/core';
@@ -26,38 +26,38 @@ import { createRsbuild } from '@rsbuild/core';
 const rsbuild = await createRsbuild();
 ```
 
-The `createRsbuild` method provides some options, which you can learn more about in the [API - createRsbuild](/api/javascript-api/core#creatersbuild).
+The `createRsbuild` method accepts various options. Learn more in the [API - createRsbuild](/api/javascript-api/core#creatersbuild) documentation.
 
-### 3. Call Rsbuild instance method
+### 3. Call Rsbuild instance methods
 
-The Rsbuild instance provides several methods that you can use according to your scenario.
+The Rsbuild instance provides several methods for different scenarios.
 
-For local development, we recommend using the [rsbuild.startDevServer](/api/javascript-api/instance#rsbuildstartdevserver) method, which starts a local dev server.
+For local development, use the [rsbuild.startDevServer](/api/javascript-api/instance#rsbuildstartdevserver) method to start a local dev server:
 
 ```ts
 await rsbuild.startDevServer();
 ```
 
-After successfully starting the dev server, you will see these logs:
+Once the dev server starts successfully, these logs will appear:
 
 ```
   ➜ Local:    http://localhost:3000
   ➜ Network:  http://192.168.0.1:3000
 ```
 
-For production deployment, we recommend using the [rsbuild.build](/api/javascript-api/instance#rsbuildbuild) method, which builds the production outputs.
+For production deployment, use the [rsbuild.build](/api/javascript-api/instance#rsbuildbuild) method to build production outputs:
 
 ```ts
 await rsbuild.build();
 ```
 
-> For more introduction of Rsbuild instance methods, please read the [Rsbuild Instance](/api/javascript-api/instance) chapter.
+> For more information about Rsbuild instance methods, see the [Rsbuild Instance](/api/javascript-api/instance) documentation.
 
-After completing these three steps, you have learned the basic usage of Rsbuild. Next, you can customize the build process through Rsbuild plugins and configurations.
+These three steps cover the basic usage of Rsbuild. Next, customize the build process with Rsbuild plugins and configurations.
 
-## Exports format
+## Export formats
 
-Rsbuild provides exports in both ES Modules and CommonJS formats:
+Rsbuild supports both ES Modules and CommonJS formats:
 
 ```js title="index.mjs"
 import { createRsbuild } from '@rsbuild/core';
@@ -67,4 +67,4 @@ import { createRsbuild } from '@rsbuild/core';
 const { createRsbuild } = require('@rsbuild/core');
 ```
 
-> We recommend using the ES modules format, which better aligns with community standards.
+> We recommend using ES modules, which align better with community standards.

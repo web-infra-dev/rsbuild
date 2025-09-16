@@ -53,9 +53,9 @@ type RootPath = string;
 
 The absolute path of the output directory, corresponding to the [output.distPath.root](/config/output/dist-path) config in `RsbuildConfig`.
 
-When there are multiple environments, Rsbuild will try to get the parent distPath of all environments as `context.distPath`.
+When multiple environments exist, Rsbuild attempts to find the parent distPath of all environments as `context.distPath`.
 
-If you want to get the absolute path to the output directory of a specified environment, it is recommended to use [environment.distPath](/api/javascript-api/environment-api#distpath).
+To get the absolute path to a specific environment's output directory, use [environment.distPath](/api/javascript-api/environment-api#distpath).
 
 - **Type:**
 
@@ -160,7 +160,7 @@ if (rsbuild.context.action === 'dev') {
 
 ### context.bundlerType
 
-The bundler type of current build.
+The bundler type for the current build.
 
 - **Type:**
 
@@ -172,7 +172,7 @@ type bundlerType = 'rspack' | 'webpack';
 
 ## rsbuild.build
 
-Performs a production mode build. This method generates optimized production bundles and emits them to the output directory.
+Runs a production build, generating optimized production bundles and writing them to the output directory.
 
 - **Type:**
 
@@ -255,7 +255,7 @@ const buildResult = await rsbuild.build({
 await buildResult.close();
 ```
 
-In non-watch mode, you should also call the `close()` method to end the build, which will trigger the [onCloseBuild](/plugins/dev/hooks#onclosebuild) hook to perform cleanup operations.
+In non-watch mode, also call the `close()` method to end the build, which triggers the [onCloseBuild](/plugins/dev/hooks#onclosebuild) hook for cleanup operations.
 
 ```ts
 const buildResult = await rsbuild.build();
@@ -266,7 +266,7 @@ await buildResult.close();
 
 In non-watch mode, the `rsbuild.build()` returns an Rspack [stats](https://rspack.rs/api/javascript-api/stats) object.
 
-For example, use the `stats.toJson()` method to get all assets information:
+Use the `stats.toJson()` method to get asset information:
 
 ```ts
 const result = await rsbuild.build();
@@ -301,8 +301,8 @@ await rsbuild.build({
 
 Starts the local dev server. This method will:
 
-1. Start a development server that serves your application.
-2. Watch for file changes and trigger recompilation.
+1. Start a development server to serve your application
+2. Watch for file changes and trigger recompilation
 
 - **Type:**
 
@@ -362,14 +362,14 @@ try {
 }
 ```
 
-After successfully starting dev server, you can see the following logs:
+Once the dev server starts successfully, these logs appear:
 
 ```
   ➜ Local:    http://localhost:3000
   ➜ Network:  http://192.168.0.1:3000
 ```
 
-`startDevServer` returns the following parameters:
+`startDevServer` returns these parameters:
 
 - `urls`: URLs to access dev server.
 - `port`: The actual listening port number.
@@ -383,7 +383,7 @@ console.log(port); // 3000
 
 ### Close server
 
-Calling the `close()` method to close the dev server, trigger the [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) hook and perform necessary cleanup operations.
+Call the `close()` method to close the dev server, trigger the [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) hook, and perform cleanup operations.
 
 ```ts
 const { server } = await rsbuild.startDevServer();
@@ -392,7 +392,7 @@ await server.close();
 
 ### Get port silently
 
-In some cases, the default startup port number is already occupied. In this situation, Rsbuild will automatically increment the port number until it finds an available one. This process will output a prompt log. If you do not want this log, you can set `getPortSilently` to `true`.
+When the default startup port is occupied, Rsbuild automatically increments the port number until it finds an available one. This process outputs a prompt log. To suppress this log, set `getPortSilently` to `true`.
 
 ```ts
 await rsbuild.startDevServer({

@@ -4,9 +4,9 @@ Rsbuild includes a built-in dev server designed to improve the development exper
 
 ## Base path
 
-By default, the Rsbuild server's base path is `/`. You can access output files like `index.html` and assets in the [public folder](/guide/basic/static-assets#public-folder) at `http://localhost:3000/`.
+By default, the Rsbuild server's base path is `/`. Access output files like `index.html` and [public folder](/guide/basic/static-assets#public-folder) assets at `http://localhost:3000/`.
 
-You can modify the server's base path using [server.base](/config/server/base). To access files at `http://localhost:3000/foo/`, configure:
+Modify the server's base path using [server.base](/config/server/base). To access files at `http://localhost:3000/foo/`, configure:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -18,7 +18,7 @@ export default {
 
 ## View static assets
 
-After starting the dev server, you can access `/rsbuild-dev-server` to view all static assets generated during the current build.
+After starting the dev server, access `/rsbuild-dev-server` to view all static assets generated during the current build.
 
 For example, open `http://localhost:3000/rsbuild-dev-server` in your browser:
 
