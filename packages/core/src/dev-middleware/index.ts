@@ -18,6 +18,7 @@ import type {
   MultiStats,
   Stats,
 } from '@rspack/core';
+import { isMultiCompiler } from '../helpers';
 import { logger } from '../logger';
 import { wrapper as createMiddleware } from './middleware';
 import { type Extra, getFilenameFromUrl } from './utils/getFilenameFromUrl';
@@ -65,7 +66,7 @@ export type Context = {
   stats: Stats | MultiStats | undefined;
   callbacks: Callback[];
   options: Options;
-  compiler: Compiler | MultiCompiler;
+  compilers: Compiler[];
   watching: Watching | MultiWatching | undefined;
   outputFileSystem: OutputFileSystem;
 };
@@ -117,21 +118,22 @@ export async function devMiddleware<
   compiler: Compiler | MultiCompiler,
   options: Options = {},
 ): Promise<API<RequestInternal, ResponseInternal>> {
+  const compilers = isMultiCompiler(compiler) ? compiler.compilers : [compiler];
   const context: WithOptional<Context, 'watching' | 'outputFileSystem'> = {
     state: false,
     stats: undefined,
     callbacks: [],
     options,
-    compiler,
+    compilers,
   };
 
-  setupHooks(context);
+  setupHooks(context, compiler);
 
   if (options.writeToDisk) {
     setupWriteToDisk(context);
   }
 
-  await setupOutputFileSystem(context);
+  context.outputFileSystem = await setupOutputFileSystem(options, compilers);
 
   const filledContext = context as FilledContext;
 
@@ -143,10 +145,8 @@ export async function devMiddleware<
 
   // API
   instance.watch = () => {
-    if ((context.compiler as Compiler).watching) {
-      context.watching = (context.compiler as Compiler).watching as
-        | Watching
-        | MultiWatching;
+    if (compiler.watching) {
+      context.watching = compiler.watching;
     } else {
       const errorHandler = (error: Error | null | undefined) => {
         if (error) {
@@ -157,33 +157,20 @@ export async function devMiddleware<
         }
       };
 
-      if (Array.isArray((context.compiler as MultiCompiler).compilers)) {
-        const multiCompiler = context.compiler as MultiCompiler;
-        const watchOptions = multiCompiler.compilers.map(
+      if (compilers.length > 1) {
+        const watchOptions = compilers.map(
           (childCompiler) => childCompiler.options.watchOptions || {},
         );
-
-        context.watching = multiCompiler.watch(watchOptions, errorHandler);
+        context.watching = compiler.watch(watchOptions, errorHandler);
       } else {
-        const singleCompiler = context.compiler as Compiler;
-        const watchOptions = singleCompiler.options.watchOptions || {};
-
-        context.watching = singleCompiler.watch(
-          watchOptions,
-          errorHandler,
-        ) as Watching;
+        const watchOptions = compilers[0].options.watchOptions || {};
+        context.watching = compiler.watch(watchOptions, errorHandler);
       }
     }
   };
 
   instance.getFilenameFromUrl = (url, extra) =>
-    (
-      getFilenameFromUrl as (
-        ctx: FilledContext,
-        url: string,
-        extra?: Extra,
-      ) => string | undefined
-    )(filledContext, url, extra);
+    getFilenameFromUrl(filledContext, url, extra);
 
   instance.waitUntilValid = (callback: Callback = noop) => {
     ready(filledContext, callback);

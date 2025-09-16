@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import type { Compilation, Compiler, MultiCompiler } from '@rspack/core';
+import type { Compilation } from '@rspack/core';
 import { logger } from '../../logger';
 import type { Context, WithOptional } from '../index';
 
@@ -13,8 +13,7 @@ declare module '@rspack/core' {
 export function setupWriteToDisk(
   context: WithOptional<Context, 'watching' | 'outputFileSystem'>,
 ): void {
-  const compilers: Compiler[] = (context.compiler as MultiCompiler)
-    .compilers || [context.compiler as Compiler];
+  const { compilers } = context;
 
   for (const compiler of compilers) {
     compiler.hooks.emit.tap('DevMiddleware', () => {

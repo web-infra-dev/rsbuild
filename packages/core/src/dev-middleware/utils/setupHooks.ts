@@ -1,15 +1,16 @@
-import type { MultiStats as WMultiStats, Stats as WStats } from '@rspack/core';
+import type { Compiler, MultiCompiler, MultiStats, Stats } from '@rspack/core';
 import type { Context, WithOptional } from '../index';
 
 export function setupHooks(
   context: WithOptional<Context, 'watching' | 'outputFileSystem'>,
+  compiler: Compiler | MultiCompiler,
 ): void {
   function invalid() {
     context.state = false;
     context.stats = undefined;
   }
 
-  function done(stats: WStats | WMultiStats) {
+  function done(stats: Stats | MultiStats) {
     context.state = true;
     context.stats = stats;
 
@@ -23,12 +24,10 @@ export function setupHooks(
       (context as Context).callbacks = [];
 
       callbacks.forEach((callback) => {
-        (callback as (...args: any[]) => WStats | WMultiStats)(stats);
+        (callback as (...args: any[]) => Stats | MultiStats)(stats);
       });
     });
   }
-
-  const compiler = (context as Context).compiler;
 
   compiler.hooks.watchRun.tap('rsbuild-dev-middleware', invalid);
   compiler.hooks.invalid.tap('rsbuild-dev-middleware', invalid);
