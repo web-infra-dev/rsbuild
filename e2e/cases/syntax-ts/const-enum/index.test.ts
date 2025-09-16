@@ -3,7 +3,7 @@ import { expect, rspackTest, test } from '@e2e/helper';
 rspackTest(
   'should inline the enum values in build',
   async ({ page, buildPreview }) => {
-    await buildPreview();
+    const result = await buildPreview();
 
     await page.waitForFunction(() => window.testDog);
     expect(await page.evaluate(() => window.testFish)).toBe('fish,FISH');
@@ -13,11 +13,11 @@ rspackTest(
       '0,1,10,1.1,1.0,-1,-1.1',
     );
 
-    // TODO: enable inline enum optimization
-    // const indexJs = await rsbuild.getIndexBundle();
-    // expect(indexJs).toContain('window.testFish="fish,FISH"');
-    // expect(indexJs).toContain('window.testCat="cat,CAT"');
-    // expect(indexJs).toContain('window.testNumbers="0,1,10,1.1,1.0,-1,-1.1"');
+    const indexJs = await result.getIndexBundle();
+    expect(indexJs).toContain('window.testFish="fish,FISH"');
+    expect(indexJs).toContain('window.testCat="cat,CAT"');
+    // minus values cannot be inlined
+    expect(indexJs).toContain('window.testNumbers=`0,1,10,1.1,1.0');
   },
 );
 

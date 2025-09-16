@@ -528,7 +528,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   "experiments": {
     "asyncWebAssembly": true,
     "inlineConst": true,
-    "inlineEnum": false,
+    "inlineEnum": true,
     "lazyBarrel": true,
     "rspackFuture": {
       "bundlerInfo": {
@@ -696,7 +696,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
-                  "exportedEnum": false,
+                  "exportedEnum": true,
                   "typeExports": true,
                 },
               },
@@ -754,7 +754,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
               },
               "rspackExperiments": {
                 "collectTypeScriptInfo": {
-                  "exportedEnum": false,
+                  "exportedEnum": true,
                   "typeExports": true,
                 },
               },
