@@ -1,6 +1,14 @@
 # server.proxy
 
-- **类型：** `Record<string, string> | Record<string, ProxyOptions> | ProxyOptions[] | ProxyOptions`
+- **类型：**
+
+```ts
+type ProxyConfig =
+  | Record<string, string | ProxyOptions>
+  | ProxyOptions[]
+  | ProxyOptions;
+```
+
 - **默认值：** `undefined`
 
 为开发服务器或预览服务器配置代理规则，将请求代理到指定的服务上。
@@ -21,7 +29,7 @@ export default {
 };
 ```
 
-此时，`/api/users` 请求将会代理到 http://localhost:3000/api/users。
+此时，`/api/users` 请求将会代理到 `http://localhost:3000/api/users`。
 
 你也可以代理到线上域名，比如:
 

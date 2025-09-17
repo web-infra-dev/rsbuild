@@ -361,8 +361,7 @@ export type ProxyOptions = HttpProxyOptions & {
 };
 
 export type ProxyConfig =
-  | Record<string, string>
-  | Record<string, ProxyOptions>
+  | Record<string, string | ProxyOptions>
   | ProxyOptions[]
   | ProxyOptions;
 

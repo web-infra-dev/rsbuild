@@ -1,6 +1,14 @@
 # server.proxy
 
-- **Type:** `Record<string, string> | Record<string, ProxyOptions> | ProxyOptions[] | ProxyOptions`
+- **Type:**
+
+```ts
+type ProxyConfig =
+  | Record<string, string | ProxyOptions>
+  | ProxyOptions[]
+  | ProxyOptions;
+```
+
 - **Default:** `undefined`
 
 Configure proxy rules for the dev server or preview server to proxy requests to the specified service.
@@ -21,7 +29,7 @@ export default {
 };
 ```
 
-A request to `/api/users` will now proxy the request to http://localhost:3000/api/users.
+A request to `/api/users` will now proxy the request to `http://localhost:3000/api/users`.
 
 You can also proxy to an online domain name, such as:
 
