@@ -20,8 +20,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "rslib build",
-    "dev": "rslib build --watch"
+    "build": "rslib build --config-loader native",
+    "dev": "rslib build -w --config-loader native"
   },
   "dependencies": {
     "@rsbuild/core": "workspace:*",
@@ -30,7 +30,7 @@
     "typescript": "^5.9.2"
   },
   "devDependencies": {
-    "@rslib/core": "0.13.2"
+    "@rslib/core": "0.13.3"
   },
   "publishConfig": {
     "access": "public",

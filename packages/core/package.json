@@ -46,8 +46,8 @@
     "types.d.ts"
   ],
   "scripts": {
-    "build": "rslib build",
-    "dev": "rslib build --watch",
+    "build": "rslib build --config-loader native",
+    "dev": "rslib build -w --config-loader native",
     "prebundle": "prebundle",
     "bump": "pnpx bumpp --no-tag"
   },
@@ -60,7 +60,7 @@
   },
   "devDependencies": {
     "@jridgewell/remapping": "^2.3.5",
-    "@rslib/core": "0.13.2",
+    "@rslib/core": "0.13.3",
     "@types/connect": "3.4.38",
     "@types/cors": "^2.8.19",
     "@types/node": "^22.18.3",

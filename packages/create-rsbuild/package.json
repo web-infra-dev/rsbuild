@@ -23,8 +23,8 @@
     "bin.js"
   ],
   "scripts": {
-    "build": "rslib build",
-    "dev": "rslib build --watch",
+    "build": "rslib build --config-loader native",
+    "dev": "rslib build -w --config-loader native",
     "start": "node ./dist/index.js",
     "bump": "pnpx bumpp --no-tag"
   },
@@ -39,7 +39,7 @@
     "@rsbuild/plugin-solid": "workspace:*",
     "@rsbuild/plugin-svelte": "workspace:*",
     "@rsbuild/plugin-vue": "workspace:*",
-    "@rslib/core": "0.13.2",
+    "@rslib/core": "0.13.3",
     "@types/node": "^22.18.3",
     "typescript": "^5.9.2"
   },
