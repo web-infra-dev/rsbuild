@@ -1,42 +1,27 @@
 import { expect, rspackTest } from '@e2e/helper';
-import { createRsbuild } from '@rsbuild/core';
 
-rspackTest('should not load env by default', async () => {
-  const rsbuild = await createRsbuild({
-    cwd: __dirname,
+rspackTest('should not load env by default', async ({ build }) => {
+  await build({
     loadEnv: false,
-    rsbuildConfig: {
-      performance: {
-        printFileSize: false,
-      },
-    },
   });
-
-  expect(process.env.PUBLIC_FOO).toBe(undefined);
-  expect(process.env.PUBLIC_BAR).toBe(undefined);
-  const { close } = await rsbuild.build();
-  await close();
-});
-
-rspackTest('should allow to call `build` with `loadEnv` options', async () => {
-  const rsbuild = await createRsbuild({
-    cwd: __dirname,
-    loadEnv: {
-      mode: 'prod',
-    },
-    rsbuildConfig: {
-      performance: {
-        printFileSize: false,
-      },
-    },
-  });
-
-  expect(process.env.PUBLIC_FOO).toBe('foo');
-  expect(process.env.PUBLIC_BAR).toBe('bar');
-
-  const { close } = await rsbuild.build();
-  await close();
-
   expect(process.env.PUBLIC_FOO).toBe(undefined);
   expect(process.env.PUBLIC_BAR).toBe(undefined);
 });
+
+rspackTest(
+  'should allow to call `build` with `loadEnv` options',
+  async ({ build }) => {
+    const result = await build({
+      loadEnv: {
+        mode: 'prod',
+      },
+    });
+
+    expect(process.env.PUBLIC_FOO).toBe('foo');
+    expect(process.env.PUBLIC_BAR).toBe('bar');
+
+    await result.close();
+    expect(process.env.PUBLIC_FOO).toBe(undefined);
+    expect(process.env.PUBLIC_BAR).toBe(undefined);
+  },
+);

@@ -1,17 +1,14 @@
 import { expect, rspackTest } from '@e2e/helper';
-import { createRsbuild } from '@rsbuild/core';
 
-rspackTest('should allow to call `build` and get stats object', async () => {
-  const rsbuild = await createRsbuild({
-    cwd: __dirname,
-  });
+rspackTest(
+  'should allow to call `build` and get stats object',
+  async ({ build }) => {
+    const result = await build();
 
-  const { stats, close } = await rsbuild.build();
+    await result.close();
 
-  await close();
-
-  const result = stats?.toJson({ all: true })!;
-
-  expect(result.name).toBe('web');
-  expect(result.assets?.length).toBeGreaterThan(0);
-});
+    const statsJson = result.stats?.toJson({ all: true })!;
+    expect(statsJson.name).toBe('web');
+    expect(statsJson.assets?.length).toBeGreaterThan(0);
+  },
+);
