@@ -8,7 +8,7 @@ test('should handle proxy error', async ({ dev, page }) => {
         proxy: [
           {
             context: ['/api'],
-            target: 'http://somepagewhichdoesnotexits.com:9000',
+            target: 'http://somepagewhichdoesnotexist.com:9000',
             changeOrigin: true,
             secure: false,
           },
