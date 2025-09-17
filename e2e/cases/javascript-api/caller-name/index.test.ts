@@ -1,12 +1,10 @@
 import { expect, rspackTest } from '@e2e/helper';
-import { createRsbuild } from '@rsbuild/core';
 
 rspackTest(
   'should allow to set caller name and use it in plugins',
-  async () => {
+  async ({ build }) => {
     let callerName = '';
-    const rsbuild = await createRsbuild({
-      cwd: __dirname,
+    await build({
       callerName: 'foo',
       rsbuildConfig: {
         plugins: [
@@ -20,7 +18,6 @@ rspackTest(
       },
     });
 
-    await rsbuild.build();
     expect(callerName).toBe('foo');
   },
 );

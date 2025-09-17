@@ -284,6 +284,7 @@ export async function build({
     ...logHelper,
     distPath,
     port,
+    stats: buildResult?.stats,
     close: async () => {
       await buildResult?.close();
       await server.close();
