@@ -43,7 +43,7 @@ function createReadStreamOrReadFileSync(
 
 async function getContentType(str: string): Promise<false | string> {
   const { lookup } = await import('../../compiled/mrmime/index.js');
-  let mime = lookup(str) as string | false | undefined;
+  let mime = lookup(str);
   if (!mime) {
     return false;
   }
