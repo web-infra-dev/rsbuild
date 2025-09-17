@@ -6,13 +6,7 @@ import { expect, test } from '@e2e/helper';
 test('should output nested HTML structure when html.outputStructure is `nested`', async ({
   build,
 }) => {
-  const rsbuild = await build({
-    rsbuildConfig: {
-      html: {
-        outputStructure: 'nested',
-      },
-    },
-  });
+  const rsbuild = await build();
 
   const pagePath = join(rsbuild.distPath, 'index/index.html');
 

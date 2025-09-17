@@ -1,15 +1,7 @@
 import { expect, rspackTest } from '@e2e/helper';
 
 rspackTest('should compile common CSS import correctly', async ({ build }) => {
-  const rsbuild = await build({
-    rsbuildConfig: {
-      resolve: {
-        alias: {
-          '@': './src',
-        },
-      },
-    },
-  });
+  const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();
   const cssFiles = Object.keys(files).find((file) => file.endsWith('.css'))!;

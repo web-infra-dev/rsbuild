@@ -1,25 +1,7 @@
 import { expect, test } from '@e2e/helper';
 
 test('should apply multiple dist path correctly', async ({ build }) => {
-  const rsbuild = await build({
-    rsbuildConfig: {
-      environments: {
-        web: {
-          output: {
-            filenameHash: false,
-          },
-        },
-        web1: {
-          output: {
-            filenameHash: false,
-            distPath: {
-              root: 'dist/web1',
-            },
-          },
-        },
-      },
-    },
-  });
+  const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();
   const filenames = Object.keys(files);

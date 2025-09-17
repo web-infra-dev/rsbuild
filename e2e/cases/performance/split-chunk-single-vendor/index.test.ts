@@ -1,24 +1,10 @@
 import { basename } from 'node:path';
-
 import { expect, test } from '@e2e/helper';
-import { pluginReact } from '@rsbuild/plugin-react';
 
 test('should generate vendor chunk when chunkSplit is "single-vendor"', async ({
   build,
 }) => {
-  const rsbuild = await build({
-    plugins: [pluginReact()],
-    rsbuildConfig: {
-      output: {
-        filenameHash: false,
-      },
-      performance: {
-        chunkSplit: {
-          strategy: 'single-vendor',
-        },
-      },
-    },
-  });
+  const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();
 

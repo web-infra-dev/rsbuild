@@ -7,11 +7,6 @@ test('should inject styles and not emit CSS files when output.injectStyles is tr
 }) => {
   const rsbuild = await buildPreview({
     plugins: [pluginReact()],
-    rsbuildConfig: {
-      output: {
-        injectStyles: true,
-      },
-    },
   });
 
   // injectStyles worked

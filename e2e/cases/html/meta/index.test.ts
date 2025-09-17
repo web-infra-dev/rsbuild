@@ -3,16 +3,7 @@ import { expect, normalizeNewlines, rspackTest } from '@e2e/helper';
 rspackTest(
   'should not inject charset meta if template already contains it',
   async ({ build }) => {
-    const rsbuild = await build({
-      rsbuildConfig: {
-        html: {
-          template: './src/index.html',
-        },
-        output: {
-          filenameHash: false,
-        },
-      },
-    });
+    const rsbuild = await build();
     const files = rsbuild.getDistFiles();
 
     const html =

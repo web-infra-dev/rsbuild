@@ -3,15 +3,7 @@ import { expect, rspackTest } from '@e2e/helper';
 rspackTest(
   'should compile CSS Modules with named exports correctly',
   async ({ page, buildPreview }) => {
-    const rsbuild = await buildPreview({
-      rsbuildConfig: {
-        output: {
-          cssModules: {
-            namedExport: true,
-          },
-        },
-      },
-    });
+    const rsbuild = await buildPreview();
     const files = rsbuild.getDistFiles();
 
     const content =

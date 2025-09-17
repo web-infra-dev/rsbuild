@@ -3,19 +3,7 @@ import { expect, rspackTest } from '@e2e/helper';
 rspackTest(
   'should minify template success when inlineScripts & inlineStyles',
   async ({ buildPreview }) => {
-    const rsbuild = await buildPreview({
-      rsbuildConfig: {
-        html: {
-          template: './static/index.html',
-          // avoid Minified React error #200;
-          inject: 'body',
-        },
-        output: {
-          inlineScripts: true,
-          inlineStyles: true,
-        },
-      },
-    });
+    const rsbuild = await buildPreview();
 
     const files = rsbuild.getDistFiles();
 
