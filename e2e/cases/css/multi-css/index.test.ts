@@ -1,18 +1,7 @@
-import path from 'node:path';
 import { expect, rspackTest } from '@e2e/helper';
 
 rspackTest('should emit multiple CSS files correctly', async ({ build }) => {
-  const rsbuild = await build({
-    rsbuildConfig: {
-      source: {
-        entry: {
-          entry1: path.resolve(__dirname, './src/entry1/index.js'),
-          entry2: path.resolve(__dirname, './src/entry2/index.js'),
-          entry3: path.resolve(__dirname, './src/entry3/index.js'),
-        },
-      },
-    },
-  });
+  const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();
   const entry1CSS = Object.keys(files).find(
