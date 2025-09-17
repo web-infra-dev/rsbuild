@@ -1,10 +1,11 @@
 {
   "name": "@rsbuild/config",
   "version": "1.0.1",
+  "type": "module",
   "private": true,
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.13.2",
+    "@rslib/core": "0.13.3",
     "@types/node": "^22.18.3",
     "@typescript/native-preview": "7.0.0-dev.20250914.1",
     "rsbuild-plugin-arethetypeswrong": "0.1.1",

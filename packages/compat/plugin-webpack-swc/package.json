@@ -22,8 +22,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "rslib build",
-    "dev": "rslib build --watch",
+    "build": "rslib build --config-loader native",
+    "dev": "rslib build -w --config-loader native",
     "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
@@ -38,7 +38,7 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "@rslib/core": "0.13.2",
+    "@rslib/core": "0.13.3",
     "@types/lodash": "^4.17.20",
     "@types/semver": "^7.7.1",
     "typescript": "^5.9.2",
