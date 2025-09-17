@@ -25,6 +25,16 @@ pnpm e2e:webpack css
 pnpm e2e:rspack css
 ```
 
+## Debugging
+
+If a test directory includes an `rsbuild.config.*` file, you can simply run `npx rsbuild dev` or `npx rsbuild build` to start it. This approach provides a simpler and more convenient way to debug.
+
+```bash
+cd cases/assets/emit-assets
+npx rsbuild dev
+npx rsbuild build
+```
+
 ## Add test cases
 
 Test cases added using the `test` method will run in both Rspack and webpack.
