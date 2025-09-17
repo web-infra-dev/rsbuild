@@ -35,8 +35,8 @@ importers:
         specifier: ^0.1.13
         version: 0.1.13
       '@rstest/core':
-        specifier: ^0.3.4
-        version: 0.3.4
+        specifier: ^0.4.0
+        version: 0.4.0
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:scripts/test-helper
@@ -2817,8 +2817,8 @@ packages:
   '@rstack-dev/doc-ui@1.11.0':
     resolution: {integrity: sha512-5GZ8EwvmKj8LXomEElC4GhDlDW2SazCeHbA+ieacJrlcGduuiJXGTBzVA2rNnPLjAb41H0esuy0aH0skRIQAqA==}
 
-  '@rstest/core@0.3.4':
-    resolution: {integrity: sha512-sFyOoq9r4c6lR8dfcdRuoONqAbEZ0RkilzaZ3IYYHQG9nrUCcJw22VSYRiOSrDv2fnaY0ilqbvnrRVHeCdxX3A==}
+  '@rstest/core@0.4.0':
+    resolution: {integrity: sha512-6wbSE5/y5OKBOdnJNNgRDOVIWlEDeY5ln1walsfKYxcorOrGCo34dZ/0TG+BF+EmaptXhBoBYaS70cv1ipVZzA==}
     engines: {node: '>=18.12.0'}
     hasBin: true
     peerDependencies:
@@ -8298,7 +8298,7 @@ snapshots:
 
   '@rspack/binding-wasm32-wasi@1.5.0':
     dependencies:
-      '@napi-rs/wasm-runtime': 1.0.1
+      '@napi-rs/wasm-runtime': 1.0.5
     optional: true
 
   '@rspack/binding-wasm32-wasi@1.5.2':
@@ -8536,7 +8536,7 @@ snapshots:
 
   '@rspress/shared@2.0.0-beta.32':
     dependencies:
-      '@rsbuild/core': 1.5.4
+      '@rsbuild/core': 1.5.8
       '@shikijs/rehype': 3.12.2
       gray-matter: 4.0.3
       lodash-es: 4.17.21
@@ -8569,7 +8569,7 @@ snapshots:
       - react
       - react-dom
 
-  '@rstest/core@0.3.4':
+  '@rstest/core@0.4.0':
     dependencies:
       '@rsbuild/core': 1.5.0
       '@types/chai': 5.2.2
