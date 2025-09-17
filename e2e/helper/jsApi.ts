@@ -13,7 +13,7 @@ import type { Page } from 'playwright';
 import type { LogHelper } from './logs';
 import { getRandomPort, gotoPage, noop, toPosixPath } from './utils';
 
-export const createRsbuild = async (
+const createRsbuild = async (
   rsbuildOptions: CreateRsbuildOptions & { rsbuildConfig?: RsbuildConfig },
   plugins: RsbuildPlugins = [],
 ) => {

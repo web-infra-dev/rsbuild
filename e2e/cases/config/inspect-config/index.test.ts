@@ -1,7 +1,8 @@
 import fs from 'node:fs';
 import path, { join } from 'node:path';
-import { createRsbuild, expect, rspackTest, test } from '@e2e/helper';
+import { expect, rspackTest, test } from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
+import { createRsbuild } from '@rsbuild/core';
 import { remove, removeSync } from 'fs-extra';
 
 test.afterAll(() => {
