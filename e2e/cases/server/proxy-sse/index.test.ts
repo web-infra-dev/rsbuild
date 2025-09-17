@@ -1,7 +1,7 @@
 import { expect, getRandomPort, test } from '@e2e/helper';
 import polka from 'polka';
 
-test('should proxy SSE request correctly', async ({ dev, page }) => {
+test('should proxy SSE request', async ({ dev, page }) => {
   const ssePort = await getRandomPort();
   const rsbuild = await dev({
     rsbuildConfig: {
