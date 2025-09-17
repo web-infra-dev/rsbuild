@@ -7,35 +7,28 @@
  * https://github.com/webpack/webpack-dev-middleware/blob/master/LICENSE
  */
 import type { Stats as FSStats, ReadStream } from 'node:fs';
-import type {
-  IncomingMessage,
-  ServerResponse as NodeServerResponse,
-} from 'node:http';
+import type { ServerResponse as NodeServerResponse } from 'node:http';
 import type {
   Compiler,
   Configuration,
   MultiCompiler,
   MultiStats,
   Stats,
+  Watching,
 } from '@rspack/core';
 import { isMultiCompiler } from '../helpers';
 import { logger } from '../logger';
+import type { RequestHandler } from '../types';
 import { wrapper as createMiddleware } from './middleware';
-import { type Extra, getFilenameFromUrl } from './utils/getFilenameFromUrl';
-import { ready } from './utils/ready';
 import { setupHooks } from './utils/setupHooks';
 import { setupOutputFileSystem } from './utils/setupOutputFileSystem';
 import { setupWriteToDisk } from './utils/setupWriteToDisk';
 
 const noop = () => {};
 
-export type ExtendedServerResponse = {
+export type ServerResponse = NodeServerResponse & {
   locals?: { webpack?: { devMiddleware?: Context } };
 };
-
-export type ServerResponse = NodeServerResponse & ExtendedServerResponse;
-
-export type Watching = Compiler['watching'];
 
 export type MultiWatching = ReturnType<MultiCompiler['watch']>;
 
@@ -59,8 +52,6 @@ export type Options = {
   publicPath?: NonNullable<Configuration['output']>['publicPath'];
 };
 
-export type NextFunction = (err?: unknown) => void;
-
 export type Context = {
   state: boolean;
   stats: Stats | MultiStats | undefined;
@@ -75,49 +66,19 @@ export type FilledContext = Omit<Context, 'watching'> & {
   watching: Watching | MultiWatching;
 };
 
-export type Middleware<
-  RequestInternal extends IncomingMessage = IncomingMessage,
-  ResponseInternal extends ServerResponse = ServerResponse,
-> = (
-  req: RequestInternal,
-  res: ResponseInternal,
-  next: NextFunction,
-) => Promise<void>;
-
-export type GetFilenameFromUrl = (
-  url: string,
-  extra?: Extra,
-) => string | undefined;
-
-export type WaitUntilValid = (callback: Callback) => void;
-
-export type Invalidate = (callback: Callback) => void;
-
 export type Close = (callback: (err: Error | null | undefined) => void) => void;
 
-export type AdditionalMethods = {
-  getFilenameFromUrl: GetFilenameFromUrl;
+export type API = RequestHandler & {
   watch: () => void;
-  waitUntilValid: WaitUntilValid;
-  invalidate: Invalidate;
   close: Close;
-  context: Context;
 };
-
-export type API<
-  RequestInternal extends IncomingMessage = IncomingMessage,
-  ResponseInternal extends ServerResponse = ServerResponse,
-> = Middleware<RequestInternal, ResponseInternal> & AdditionalMethods;
 
 export type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<T>;
 
-export async function devMiddleware<
-  RequestInternal extends IncomingMessage = IncomingMessage,
-  ResponseInternal extends ServerResponse = ServerResponse,
->(
+export async function devMiddleware(
   compiler: Compiler | MultiCompiler,
   options: Options = {},
-): Promise<API<RequestInternal, ResponseInternal>> {
+): Promise<API> {
   const compilers = isMultiCompiler(compiler) ? compiler.compilers : [compiler];
   const context: WithOptional<Context, 'watching' | 'outputFileSystem'> = {
     state: false,
@@ -137,11 +98,9 @@ export async function devMiddleware<
 
   const filledContext = context as FilledContext;
 
-  const instance = (
-    createMiddleware as (
-      ctx: FilledContext,
-    ) => API<RequestInternal, ResponseInternal>
-  )(filledContext);
+  const instance = (createMiddleware as (ctx: FilledContext) => API)(
+    filledContext,
+  );
 
   // API
   instance.watch = () => {
@@ -169,23 +128,9 @@ export async function devMiddleware<
     }
   };
 
-  instance.getFilenameFromUrl = (url, extra) =>
-    getFilenameFromUrl(filledContext, url, extra);
-
-  instance.waitUntilValid = (callback: Callback = noop) => {
-    ready(filledContext, callback);
-  };
-
-  instance.invalidate = (callback: Callback = noop) => {
-    ready(filledContext, callback);
-    filledContext.watching?.invalidate();
-  };
-
   instance.close = (callback: (err?: Error | null) => void = noop) => {
     filledContext.watching?.close(callback);
   };
-
-  instance.context = filledContext;
 
   return instance;
 }

@@ -1,14 +1,10 @@
 import type { Stats as FSStats, ReadStream } from 'node:fs';
-import type { IncomingMessage } from 'node:http';
 import type { Range, Result as RangeResult, Ranges } from 'range-parser';
 import rangeParser from 'range-parser';
 import onFinishedStream from '../../compiled/on-finished/index.js';
 import { logger } from '../logger';
-import type {
-  FilledContext,
-  ServerResponse,
-  Middleware as TMiddleware,
-} from './index';
+import type { RequestHandler } from '../types';
+import type { FilledContext, ServerResponse } from './index';
 import { escapeHtml } from './utils/escapeHtml';
 import { getFilenameFromUrl } from './utils/getFilenameFromUrl';
 import { memorize } from './utils/memorize';
@@ -115,10 +111,7 @@ type SendErrorOptions = {
   headers?: Record<string, number | string | string[] | undefined>;
 };
 
-export function wrapper<
-  Request extends IncomingMessage,
-  Response extends ServerResponse,
->(context: FilledContext): TMiddleware<Request, Response> {
+export function wrapper(context: FilledContext): RequestHandler {
   return async function middleware(req, res, next) {
     const acceptedMethods = ['GET', 'HEAD'];
 
@@ -127,8 +120,9 @@ export function wrapper<
         ready(
           context,
           () => {
-            res.locals = res.locals || {};
-            res.locals.webpack = { devMiddleware: context };
+            const extendedRes = res as ServerResponse;
+            extendedRes.locals = extendedRes.locals || {};
+            extendedRes.locals.webpack = { devMiddleware: context };
             next();
             resolve();
           },

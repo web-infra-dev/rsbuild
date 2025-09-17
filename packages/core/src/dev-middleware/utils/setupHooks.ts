@@ -15,13 +15,13 @@ export function setupHooks(
     context.stats = stats;
 
     process.nextTick(() => {
-      const { state, callbacks } = context as Context;
+      const { state, callbacks } = context;
 
       if (!state) {
         return;
       }
 
-      (context as Context).callbacks = [];
+      context.callbacks = [];
 
       callbacks.forEach((callback) => {
         (callback as (...args: any[]) => Stats | MultiStats)(stats);
