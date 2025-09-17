@@ -1,37 +1,10 @@
 import { expect, test } from '@e2e/helper';
 
-import { pluginReact } from '@rsbuild/plugin-react';
-
 test('should add single environment plugin correctly', async ({
   page,
   buildPreview,
 }) => {
-  const rsbuild = await buildPreview({
-    rsbuildConfig: {
-      environments: {
-        web: {
-          output: {
-            filenameHash: false,
-          },
-          plugins: [pluginReact()],
-        },
-        web1: {
-          source: {
-            entry: {
-              main: './src/index1.ts',
-            },
-          },
-          output: {
-            assetPrefix: 'auto',
-            filenameHash: false,
-            distPath: {
-              root: 'dist/web1',
-            },
-          },
-        },
-      },
-    },
-  });
+  const rsbuild = await buildPreview();
 
   const button = page.locator('#test');
   await expect(button).toHaveText('Hello Rsbuild!');

@@ -1,16 +1,7 @@
 import { expect, rspackTest } from '@e2e/helper';
 
 rspackTest('should allow to minify CSS in dev', async ({ dev }) => {
-  const rsbuild = await dev({
-    rsbuildConfig: {
-      output: {
-        minify: {
-          css: 'always',
-        },
-      },
-    },
-  });
-
+  const rsbuild = await dev();
   const files = rsbuild.getDistFiles();
 
   const content =

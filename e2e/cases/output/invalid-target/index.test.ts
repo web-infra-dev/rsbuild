@@ -5,12 +5,6 @@ test('should throw error when `output.target` is invalid', async ({
 }) => {
   const rsbuild = await build({
     catchBuildError: true,
-    rsbuildConfig: {
-      output: {
-        // @ts-expect-error test invalid target
-        target: 'foo',
-      },
-    },
   });
 
   expect(rsbuild.buildError?.message).toContain(

@@ -3,19 +3,7 @@ import { expect, test } from '@e2e/helper';
 test('should generate manifest for async chunks correctly', async ({
   build,
 }) => {
-  const rsbuild = await build({
-    rsbuildConfig: {
-      output: {
-        manifest: true,
-        filenameHash: false,
-      },
-      performance: {
-        chunkSplit: {
-          strategy: 'all-in-one',
-        },
-      },
-    },
-  });
+  const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();
 

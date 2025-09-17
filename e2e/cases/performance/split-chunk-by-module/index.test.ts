@@ -8,16 +8,6 @@ test('should generate module chunks when chunkSplit is "split-by-module"', async
 }) => {
   const rsbuild = await build({
     plugins: [pluginReact()],
-    rsbuildConfig: {
-      output: {
-        filenameHash: false,
-      },
-      performance: {
-        chunkSplit: {
-          strategy: 'split-by-module',
-        },
-      },
-    },
   });
 
   const files = rsbuild.getDistFiles();
