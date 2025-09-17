@@ -21,6 +21,17 @@ type RsbuildFixture = {
    */
   cwd: string;
 
+  /**
+   * Helper to capture and assert console logs.
+   * Proxies console methods and collects log lines for assertions.
+   * @example
+   * // Wait for a specific log line
+   * await logHelper.expectLog('some message');
+   * // Assert there is no error output
+   * logHelper.expectNoLog(/error/);
+   * // Clear collected logs
+   * logHelper.clearLogs();
+   */
   logHelper: LogHelper;
 
   /**
@@ -57,6 +68,10 @@ type RsbuildFixture = {
    * @param filename The filename. If it is not absolute, it will be resolved
    * relative to the test file's cwd.
    * @param replacer The replacer function.
+   * @example
+   * await editFile('src/index.ts', (code) =>
+   *   code.replace('Hello', 'Hi'),
+   * );
    */
   editFile: EditFile;
 };
