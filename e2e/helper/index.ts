@@ -8,5 +8,4 @@ export {
   createRsbuild,
   type Dev,
 } from './jsApi';
-export * from './logs';
 export * from './utils';

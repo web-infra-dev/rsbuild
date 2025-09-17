@@ -126,7 +126,7 @@ rspackTest(
 
 rspackTest(
   'should not generate config files when writeToDisk is false',
-  async ({ logHelper }) => {
+  async () => {
     const rsbuild = await createRsbuild({
       cwd: __dirname,
     });

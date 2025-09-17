@@ -1,15 +1,20 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { createLogHelper, expect, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
 const cwd = __dirname;
 
-test('should show overlay correctly', async ({ page, dev, editFile }) => {
+test('should show overlay correctly', async ({
+  page,
+  dev,
+  editFile,
+  logHelper,
+}) => {
   await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
     recursive: true,
   });
 
-  const { expectLog, addLog } = createLogHelper();
+  const { expectLog, addLog } = logHelper;
 
   page.on('console', (consoleMessage) => {
     addLog(consoleMessage.text());
