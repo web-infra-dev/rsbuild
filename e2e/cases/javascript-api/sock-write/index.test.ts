@@ -1,11 +1,9 @@
-import { expectPoll, gotoPage, proxyConsole, rspackTest } from '@e2e/helper';
+import { expectPoll, gotoPage, rspackTest } from '@e2e/helper';
 import { createRsbuild } from '@rsbuild/core';
 
 rspackTest(
   'should allow to call `sockWrite` after creating dev server',
   async ({ page }) => {
-    const { restore } = proxyConsole();
-
     let count = 0;
     const rsbuild = await createRsbuild({
       cwd: __dirname,
@@ -27,6 +25,5 @@ rspackTest(
     expectPoll(() => count > previousCount).toBeTruthy();
 
     await server.close();
-    restore();
   },
 );

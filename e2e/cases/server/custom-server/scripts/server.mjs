@@ -9,9 +9,6 @@ export async function startDevServer(fixtures) {
         htmlFallback: false,
         middlewareMode: true,
       },
-      dev: {
-        printUrls: false,
-      },
     },
   });
 

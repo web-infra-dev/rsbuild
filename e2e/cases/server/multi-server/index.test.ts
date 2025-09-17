@@ -22,7 +22,6 @@ test.skip('multiple rsbuild dev servers should work correctly', async ({
         assetPrefix: '/app1',
       },
       server: {
-        printUrls: false,
         middlewareMode: true,
       },
     },
@@ -42,7 +41,6 @@ test.skip('multiple rsbuild dev servers should work correctly', async ({
         },
       },
       server: {
-        printUrls: false,
         middlewareMode: true,
       },
       dev: {

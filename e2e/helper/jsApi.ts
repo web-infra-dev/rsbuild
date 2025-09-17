@@ -10,7 +10,7 @@ import type {
 } from '@rsbuild/core';
 import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
 import type { Page } from 'playwright';
-import { proxyConsole } from './logs';
+import type { LogHelper } from './logs';
 import { getRandomPort, gotoPage, noop, toPosixPath } from './utils';
 
 export const createRsbuild = async (
@@ -124,6 +124,7 @@ const collectOutputFiles = (rsbuild: RsbuildInstance) => {
 };
 
 export type DevOptions = CreateRsbuildOptions & {
+  logHelper?: LogHelper;
   plugins?: RsbuildPlugins;
   rsbuildConfig?: RsbuildConfig;
   /**
@@ -146,11 +147,10 @@ export async function dev({
   plugins,
   page,
   waitFirstCompileDone = true,
+  logHelper,
   ...options
 }: DevOptions = {}) {
   process.env.NODE_ENV = 'development';
-
-  const logHelper = proxyConsole();
 
   options.rsbuildConfig = await updateConfigForTest(
     options.rsbuildConfig || {},
@@ -183,19 +183,19 @@ export async function dev({
 
   return {
     ...result,
-    ...logHelper,
+    ...logHelper!,
     distPath,
     instance: rsbuild,
     getDistFiles: ({ sourceMaps }: { sourceMaps?: boolean } = {}) =>
       sourceMaps ? getOutputFiles() : filterSourceMaps(getOutputFiles()),
     close: async () => {
       await result.server.close();
-      logHelper.restore();
     },
   };
 }
 
 export type BuildOptions = CreateRsbuildOptions & {
+  logHelper?: LogHelper;
   plugins?: RsbuildPlugins;
   rsbuildConfig?: RsbuildConfig;
   /**
@@ -228,11 +228,10 @@ export async function build({
   runServer = false,
   watch = false,
   page,
+  logHelper,
   ...options
 }: BuildOptions = {}) {
   process.env.NODE_ENV = 'production';
-
-  const logHelper = proxyConsole();
 
   options.rsbuildConfig = await updateConfigForTest(
     options.rsbuildConfig || {},
@@ -281,14 +280,13 @@ export async function build({
   }
 
   return {
-    ...logHelper,
+    ...logHelper!,
     distPath,
     port,
     stats: buildResult?.stats,
     close: async () => {
       await buildResult?.close();
       await server.close();
-      logHelper.restore();
     },
     buildError,
     getDistFiles: ({ sourceMaps }: { sourceMaps?: boolean } = {}) =>
