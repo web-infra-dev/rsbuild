@@ -1,7 +1,7 @@
 export async function getApp() {
   const name = 'circle';
-  const { default: Component } = await import(`@assets/${name}.svg?react`);
-  const { default: url } = await import(`@assets/${name}.svg?url`);
+  const { default: Component } = await import(`@e2e/assets/${name}.svg?react`);
+  const { default: url } = await import(`@e2e/assets/${name}.svg?url`);
 
   return () => (
     <div>

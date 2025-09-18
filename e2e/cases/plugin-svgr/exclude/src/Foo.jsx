@@ -1,4 +1,4 @@
-import Logo from '@assets/mobile.svg';
+import Logo from '@e2e/assets/mobile.svg';
 
 function Foo() {
   return <Logo id="foo" />;

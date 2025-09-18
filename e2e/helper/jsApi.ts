@@ -55,11 +55,6 @@ const updateConfigForTest = async (
   });
 
   const baseConfig: RsbuildConfig = {
-    resolve: {
-      alias: {
-        '@assets': join(__dirname, '../assets'),
-      },
-    },
     server: {
       // make port random to avoid conflict
       port: await getRandomPort(),

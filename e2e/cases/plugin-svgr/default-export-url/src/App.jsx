@@ -1,5 +1,5 @@
-import smallImg from '@assets/circle.svg';
-import largeImg, { ReactComponent as Logo } from '@assets/mobile.svg';
+import smallImg from '@e2e/assets/circle.svg';
+import largeImg, { ReactComponent as Logo } from '@e2e/assets/mobile.svg';
 import './App.css';
 
 function App() {

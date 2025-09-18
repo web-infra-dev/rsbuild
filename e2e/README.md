@@ -1,10 +1,12 @@
 # @rsbuild/e2e
 
-This folder contains the e2e test cases of Rsbuild.
+This folder contains the E2E test cases of Rsbuild. The E2E suite is powered by [Playwright](https://github.com/microsoft/playwright).
 
-## Tech stack
+## Directory structure
 
-- [playwright](https://github.com/microsoft/playwright): The e2e test framework.
+- `cases`: Test cases covering different Rsbuild features.
+- `assets`: Common static assets, can be accessed using the `@e2e/assets` package.
+- `scripts`: Shared helpers, can be accessed using the `@e2e/helper` package.
 
 ## Commands
 

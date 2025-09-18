@@ -98,6 +98,9 @@ importers:
         specifier: ^4.5.1
         version: 4.5.1(vue@3.5.21(typescript@5.9.2))
     devDependencies:
+      '@e2e/assets':
+        specifier: workspace:*
+        version: link:assets
       '@e2e/helper':
         specifier: workspace:*
         version: link:helper
@@ -212,6 +215,8 @@ importers:
       typescript:
         specifier: ^5.9.2
         version: 5.9.2
+
+  e2e/assets: {}
 
   e2e/cases/browserslist/browserslist-config-mock: {}
 

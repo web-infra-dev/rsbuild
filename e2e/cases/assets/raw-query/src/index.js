@@ -1,5 +1,5 @@
-import normalSvg from '@assets/circle.svg?not-raw';
-import rawSvg from '@assets/circle.svg?raw';
+import normalSvg from '@e2e/assets/circle.svg?not-raw';
+import rawSvg from '@e2e/assets/circle.svg?raw';
 import rawTs4 from './bar.ts?other=value&raw';
 import rawTs1 from './bar.ts?raw';
 import rawTs2 from './bar.ts?raw=1';

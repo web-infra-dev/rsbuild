@@ -20,6 +20,7 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
+    "@e2e/assets": "workspace:*",
     "@e2e/helper": "workspace:*",
     "@module-federation/enhanced": "0.19.1",
     "@module-federation/rsbuild-plugin": "0.19.1",
