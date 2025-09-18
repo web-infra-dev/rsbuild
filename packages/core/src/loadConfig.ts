@@ -140,7 +140,12 @@ export async function loadConfig({
   let configExport: RsbuildConfigExport;
 
   // Determine the loading strategy based on the config loader type
-  const useNative = loader === 'native' || loader === 'auto';
+  const useNative =
+    loader === 'native' ||
+    (loader === 'auto' &&
+      (process.features.typescript ||
+        process.versions.bun ||
+        process.versions.deno));
 
   if (useNative || /\.(?:js|mjs|cjs)$/.test(configFilePath)) {
     try {
