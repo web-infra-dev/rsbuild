@@ -255,7 +255,7 @@ const buildResult = await rsbuild.build({
 await buildResult.close();
 ```
 
-In non-watch mode, also call the `close()` method to end the build, which triggers the [onCloseBuild](/plugins/dev/hooks#onclosebuild) hook for cleanup operations.
+In non-watch mode, you should also call the `close()` method to end the build, which triggers the [onCloseBuild](/plugins/dev/hooks#onclosebuild) hook for cleanup operations.
 
 ```ts
 const buildResult = await rsbuild.build();
@@ -264,7 +264,7 @@ await buildResult.close();
 
 ### Stats object
 
-In non-watch mode, the `rsbuild.build()` returns an Rspack [stats](https://rspack.rs/api/javascript-api/stats) object.
+In non-watch mode, `rsbuild.build()` returns an Rspack [stats](https://rspack.rs/api/javascript-api/stats) object.
 
 For example, use the `stats.toJson()` method to get asset information:
 
