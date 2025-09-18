@@ -100,7 +100,7 @@ importers:
     devDependencies:
       '@e2e/assets':
         specifier: workspace:*
-        version: link:assets
+        version: link:cases/output/copy/dist-1/foo
       '@e2e/helper':
         specifier: workspace:*
         version: link:helper
@@ -237,6 +237,8 @@ importers:
       html-loader:
         specifier: ^5.1.0
         version: 5.1.0(webpack@5.101.3)
+
+  e2e/cases/output/copy/dist-1/foo: {}
 
   e2e/cases/output/source-map: {}
 
@@ -727,8 +729,8 @@ importers:
         specifier: ^1.4.1
         version: 1.4.1
       rspack-manifest-plugin:
-        specifier: 5.0.3
-        version: 5.0.3(@rspack/core@1.5.5(@swc/helpers@0.5.17))
+        specifier: 5.1.0
+        version: 5.1.0(@rspack/core@1.5.5(@swc/helpers@0.5.17))
       sirv:
         specifier: ^3.0.2
         version: 3.0.2
@@ -5928,8 +5930,8 @@ packages:
   rspack-chain@1.4.1:
     resolution: {integrity: sha512-cKkRjUXl2fhQzYwQD7aux+Og1WtjuWFG5XjtOZldjYiRanRoz9OrmbRf4s2kCOgxNplPWP946mqG5hAIzY/V0w==}
 
-  rspack-manifest-plugin@5.0.3:
-    resolution: {integrity: sha512-DCLSu5KE/ReIOhK2JTCQSI0JIgJ40E2i+2noqINtfhu12+UsK29dgMITEHIpYNR0JggcmmgZIDxPxm9dOV/2vQ==}
+  rspack-manifest-plugin@5.1.0:
+    resolution: {integrity: sha512-XAt1VOfRt6gcNlekB7rpiYK0MuC8VuWRrM2F33Eu83B/fmEVJUNVMDxZJhqJ0NMDJNxq80404j+NAfzlYQCjrw==}
     engines: {node: '>=14'}
     peerDependencies:
       '@rspack/core': 0.x || 1.x
@@ -12185,7 +12187,7 @@ snapshots:
       deepmerge: 4.3.1
       javascript-stringify: 2.1.0
 
-  rspack-manifest-plugin@5.0.3(@rspack/core@1.5.5(@swc/helpers@0.5.17)):
+  rspack-manifest-plugin@5.1.0(@rspack/core@1.5.5(@swc/helpers@0.5.17)):
     dependencies:
       '@rspack/lite-tapable': 1.0.1
     optionalDependencies:

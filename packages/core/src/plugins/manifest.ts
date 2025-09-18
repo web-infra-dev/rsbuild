@@ -1,5 +1,13 @@
-import type { FileDescriptor } from '../../compiled/rspack-manifest-plugin';
-import { color, isObject } from '../helpers';
+import type {
+  FileDescriptor,
+  InternalOptions,
+} from '../../compiled/rspack-manifest-plugin';
+import {
+  color,
+  ensureAssetPrefix,
+  getPublicPathFromCompiler,
+  isObject,
+} from '../helpers';
 import { logger } from '../logger';
 import { recursiveChunkEntryNames } from '../rspack-plugins/resource-hints/doesChunkBelongToHtml';
 import type {
@@ -11,23 +19,33 @@ import type {
   RsbuildPlugin,
 } from '../types';
 
+const isCSSPath = (filePath: string) => filePath.endsWith('.css');
+
 const generateManifest =
   (
     htmlPaths: Record<string, string>,
     manifestOptions: ManifestObjectConfig,
     environment: EnvironmentContext,
-  ) =>
-  (_seed: Record<string, any>, files: FileDescriptor[]) => {
+  ): InternalOptions['generate'] =>
+  (
+    _seed: Record<string, any>,
+    files: FileDescriptor[],
+    entries: Record<string, string[]>,
+    { compilation },
+  ) => {
     const chunkEntries = new Map<string, FileDescriptor[]>();
-
     const licenseMap = new Map<string, string>();
+    const publicPath = getPublicPathFromCompiler(compilation);
 
     const allFiles = files.map((file) => {
       if (file.chunk) {
-        const names = recursiveChunkEntryNames(file.chunk);
+        const entryNames = recursiveChunkEntryNames(file.chunk);
 
-        for (const name of names) {
-          chunkEntries.set(name, [file, ...(chunkEntries.get(name) || [])]);
+        for (const entryName of entryNames) {
+          chunkEntries.set(entryName, [
+            file,
+            ...(chunkEntries.get(entryName) || []),
+          ]);
         }
       }
 
@@ -38,24 +56,33 @@ const generateManifest =
       return file.path;
     });
 
-    const entries: ManifestData['entries'] = {};
+    const manifestEntries: ManifestData['entries'] = {};
 
-    for (const [name, chunkFiles] of chunkEntries) {
+    for (const [entryName, chunkFiles] of chunkEntries) {
       const assets = new Set<string>();
       const initialJS: string[] = [];
-      const asyncJS: string[] = [];
       const initialCSS: string[] = [];
+      const asyncJS: string[] = [];
       const asyncCSS: string[] = [];
 
-      for (const file of chunkFiles) {
-        if (file.isInitial) {
-          if (file.path.endsWith('.css')) {
-            initialCSS.push(file.path);
+      // Get the initial chunks from `entries`, since they come from
+      // `compilation.entrypoints.get(entryName).getFiles()`, which ensures
+      // the correct chunk order (especially important for CSS chunks where
+      // order must be preserved).
+      if (entries[entryName]) {
+        for (const filePath of entries[entryName]) {
+          const fileURL = ensureAssetPrefix(filePath, publicPath);
+          if (isCSSPath(filePath)) {
+            initialCSS.push(fileURL);
           } else {
-            initialJS.push(file.path);
+            initialJS.push(fileURL);
           }
-        } else {
-          if (file.path.endsWith('.css')) {
+        }
+      }
+
+      for (const file of chunkFiles) {
+        if (!file.isInitial) {
+          if (isCSSPath(file.path)) {
             asyncCSS.push(file.path);
           } else {
             asyncJS.push(file.path);
@@ -81,7 +108,7 @@ const generateManifest =
         entryManifest.assets = Array.from(assets);
       }
 
-      const htmlPath = files.find((f) => f.name === htmlPaths[name])?.path;
+      const htmlPath = files.find((f) => f.name === htmlPaths[entryName])?.path;
 
       if (htmlPath) {
         entryManifest.html = [htmlPath];
@@ -113,12 +140,12 @@ const generateManifest =
         };
       }
 
-      entries[name] = entryManifest;
+      manifestEntries[entryName] = entryManifest;
     }
 
     const manifestData: ManifestData = {
       allFiles,
-      entries,
+      entries: manifestEntries,
     };
 
     if (manifestOptions.generate) {

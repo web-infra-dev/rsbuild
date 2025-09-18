@@ -92,7 +92,7 @@
     "reduce-configs": "^1.1.1",
     "rslog": "^1.2.11",
     "rspack-chain": "^1.4.1",
-    "rspack-manifest-plugin": "5.0.3",
+    "rspack-manifest-plugin": "5.1.0",
     "sirv": "^3.0.2",
     "style-loader": "3.3.4",
     "tinyglobby": "0.2.14",
