@@ -20,8 +20,7 @@ interface RsbuildTypeOptions {}
 type ImportMetaEnvFallbackKey =
   'strictImportMetaEnv' extends keyof RsbuildTypeOptions ? never : string;
 
-interface ImportMetaEnv {
-  [key: ImportMetaEnvFallbackKey]: any;
+interface ImportMetaEnv extends Record<ImportMetaEnvFallbackKey, any> {
   /**
    * The value of the `mode` configuration.
    * @example
