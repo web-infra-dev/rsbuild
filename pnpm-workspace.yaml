@@ -19,3 +19,4 @@ patchedDependencies:
   url-loader: patches/url-loader@4.1.1.patch
 
 strictPeerDependencies: false
+engineStrict: true
