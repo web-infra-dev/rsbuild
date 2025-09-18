@@ -59,7 +59,7 @@ export function recursiveChunkEntryNames(chunk: Chunk): string[] {
   return [...new Set(names)];
 }
 
-// modify from html-rspack-plugin/index.js `filterChunks`
+// modified from html-rspack-plugin/index.js `filterChunks`
 function isChunksFiltered(
   chunkName: string,
   includeChunks?: string[] | 'all',
