@@ -27,19 +27,19 @@ Commands:
 
 Rsbuild CLI 提供了一些公共选项，可以用于所有命令：
 
-| 选项                       | 描述                                                                                                       |
-| -------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `--base <base>`            | 指定服务端的基础路径，详见 [server.base](/config/server/base)                                              |
-| `-c, --config <config>`    | 指定配置文件路径（相对路径或绝对路径），详见 [指定配置文件](/guide/configuration/rsbuild#指定配置文件)     |
-| `--config-loader <loader>` | 指定配置文件加载方式（`jiti` \| `native`），详见 [指定加载方式](/guide/configuration/rsbuild#指定加载方式) |
-| `--env-mode <mode>`        | 指定 env 模式来加载 `.env.[mode]` 文件，详见 [Env 模式](/guide/advanced/env-vars#env-模式)                 |
-| `--env-dir <dir>`          | 指定目录来加载 `.env` 文件，详见 [Env 目录](/guide/advanced/env-vars#env-目录)                             |
-| `--environment <name>`     | 指定需要构建的 environment 名称，详见 [构建指定环境](/guide/advanced/environments#构建指定环境)            |
-| `-h, --help`               | 显示命令帮助                                                                                               |
-| `--log-level <level>`      | 指定日志级别（`info` \| `warn` \| `error` \| `silent`），详见 [logLevel](/config/log-level)                |
-| `-m, --mode <mode>`        | 指定构建模式（`development` \| `production` \| `none`），详见 [mode](/config/mode)                         |
-| `--no-env`                 | 禁用 `.env` 文件的加载                                                                                     |
-| `-r, --root <root>`        | 指定项目根目录（绝对路径或者相对于 [cwd](https://nodejs.org/api/process.html#processcwd) 的路径）          |
+| 选项                       | 描述                                                                                                                 |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `--base <base>`            | 指定服务端的基础路径，详见 [server.base](/config/server/base)                                                        |
+| `-c, --config <config>`    | 指定配置文件路径（相对路径或绝对路径），详见 [指定配置文件](/guide/configuration/rsbuild#指定配置文件)               |
+| `--config-loader <loader>` | 指定配置文件加载方式（`auto` \| `jiti` \| `native`），详见 [指定加载方式](/guide/configuration/rsbuild#指定加载方式) |
+| `--env-mode <mode>`        | 指定 env 模式来加载 `.env.[mode]` 文件，详见 [Env 模式](/guide/advanced/env-vars#env-模式)                           |
+| `--env-dir <dir>`          | 指定目录来加载 `.env` 文件，详见 [Env 目录](/guide/advanced/env-vars#env-目录)                                       |
+| `--environment <name>`     | 指定需要构建的 environment 名称，详见 [构建指定环境](/guide/advanced/environments#构建指定环境)                      |
+| `-h, --help`               | 显示命令帮助                                                                                                         |
+| `--log-level <level>`      | 指定日志级别（`info` \| `warn` \| `error` \| `silent`），详见 [logLevel](/config/log-level)                          |
+| `-m, --mode <mode>`        | 指定构建模式（`development` \| `production` \| `none`），详见 [mode](/config/mode)                                   |
+| `--no-env`                 | 禁用 `.env` 文件的加载                                                                                               |
+| `-r, --root <root>`        | 指定项目根目录（绝对路径或者相对于 [cwd](https://nodejs.org/api/process.html#processcwd) 的路径）                    |
 
 ## rsbuild dev
 
