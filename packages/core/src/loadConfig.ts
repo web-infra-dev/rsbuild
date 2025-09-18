@@ -152,10 +152,10 @@ export async function loadConfig({
       if (loader === 'native') {
         logger.error(errorMessage);
         throw err;
-      } else {
-        logger.debug(`${errorMessage}, fallback to jiti.`);
-        logger.debug(err);
       }
+
+      logger.debug(`${errorMessage}, fallback to jiti.`);
+      logger.debug(err);
     }
   }
 
