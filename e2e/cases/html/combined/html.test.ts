@@ -3,26 +3,7 @@ import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 
 const buildAndRead = async (build: any) => {
-  const rsbuild = await build({
-    rsbuildConfig: {
-      source: {
-        entry: {
-          main: join(__dirname, 'src/index.js'),
-          foo: join(__dirname, 'src/foo.js'),
-        },
-      },
-      html: {
-        meta: {
-          description: 'a description of the page',
-        },
-        inject: 'body',
-        appIcon: {
-          icons: [{ src: '../../../assets/icon.png', size: 180 }],
-        },
-        favicon: '../../../assets/icon.png',
-      },
-    },
-  });
+  const rsbuild = await build();
 
   const mainContent = await fs.promises.readFile(
     join(rsbuild.distPath, 'main.html'),
