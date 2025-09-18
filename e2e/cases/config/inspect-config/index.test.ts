@@ -1,13 +1,8 @@
 import fs from 'node:fs';
 import path, { join } from 'node:path';
-import {
-  createRsbuild,
-  expect,
-  proxyConsole,
-  rspackTest,
-  test,
-} from '@e2e/helper';
+import { expect, rspackTest, test } from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
+import { createRsbuild } from '@rsbuild/core';
 import { remove, removeSync } from 'fs-extra';
 
 test.afterAll(() => {
@@ -41,8 +36,8 @@ const INSPECT_LOG = 'config inspection completed';
 
 rspackTest(
   'should generate config files when writeToDisk is true',
-  async () => {
-    const { expectLog, restore } = proxyConsole();
+  async ({ logHelper }) => {
+    const { expectLog } = logHelper;
 
     const rsbuild = await createRsbuild({
       cwd: __dirname,
@@ -57,15 +52,13 @@ rspackTest(
 
     await remove(rsbuildConfig);
     await remove(bundlerConfig);
-
-    restore();
   },
 );
 
 rspackTest(
   'should generate config files correctly when output is specified',
-  async () => {
-    const { expectLog, restore } = proxyConsole();
+  async ({ logHelper }) => {
+    const { expectLog } = logHelper;
 
     const rsbuild = await createRsbuild({
       cwd: __dirname,
@@ -91,15 +84,13 @@ rspackTest(
 
     await remove(rsbuildConfig);
     await remove(bundlerConfig);
-
-    restore();
   },
 );
 
 rspackTest(
   'should generate bundler config for node when target contains node',
-  async () => {
-    const { expectLog, restore } = proxyConsole();
+  async ({ logHelper }) => {
+    const { expectLog } = logHelper;
 
     const rsbuild = await createRsbuild({
       cwd: __dirname,
@@ -131,8 +122,6 @@ rspackTest(
     await remove(rsbuildNodeConfig);
     await remove(bundlerConfig);
     await remove(bundlerNodeConfig);
-
-    restore();
   },
 );
 
@@ -151,32 +140,33 @@ rspackTest(
   },
 );
 
-rspackTest('should allow to specify absolute output path', async () => {
-  const { expectLog, restore } = proxyConsole();
+rspackTest(
+  'should allow to specify absolute output path',
+  async ({ logHelper }) => {
+    const { expectLog } = logHelper;
 
-  const rsbuild = await createRsbuild({
-    cwd: __dirname,
-  });
-  const outputPath = path.join(__dirname, 'test-temp-output');
+    const rsbuild = await createRsbuild({
+      cwd: __dirname,
+    });
+    const outputPath = path.join(__dirname, 'test-temp-output');
 
-  await rsbuild.inspectConfig({
-    writeToDisk: true,
-    outputPath,
-  });
+    await rsbuild.inspectConfig({
+      writeToDisk: true,
+      outputPath,
+    });
 
-  await expectLog(INSPECT_LOG);
+    await expectLog(INSPECT_LOG);
 
-  expect(
-    fs.existsSync(path.join(outputPath, 'rspack.config.web.mjs')),
-  ).toBeTruthy();
+    expect(
+      fs.existsSync(path.join(outputPath, 'rspack.config.web.mjs')),
+    ).toBeTruthy();
 
-  await remove(rsbuildConfig);
+    await remove(rsbuildConfig);
+  },
+);
 
-  restore();
-});
-
-rspackTest('should generate extra config files', async () => {
-  const { expectLog, restore } = proxyConsole();
+rspackTest('should generate extra config files', async ({ logHelper }) => {
+  const { expectLog } = logHelper;
 
   const rsbuild = await createRsbuild({
     cwd: __dirname,
@@ -198,13 +188,9 @@ rspackTest('should generate extra config files', async () => {
   expect(fs.existsSync(rstestConfig)).toBeTruthy();
   await expectLog('Rstest Config:');
   await remove(rstestConfig);
-
-  restore();
 });
 
 rspackTest('should apply plugin correctly', async () => {
-  const { restore } = proxyConsole();
-
   let servePluginApplied = false;
   let buildPluginApplied = false;
 
@@ -249,6 +235,4 @@ rspackTest('should apply plugin correctly', async () => {
 
   expect(servePluginApplied).toBe(false);
   expect(buildPluginApplied).toBe(true);
-
-  restore();
 });

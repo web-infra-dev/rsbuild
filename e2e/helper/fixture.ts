@@ -8,6 +8,7 @@ import {
   type Dev,
   type DevResult,
 } from './jsApi';
+import { type LogHelper, proxyConsole } from './logs';
 
 type EditFile = (
   filename: string,
@@ -19,6 +20,19 @@ type RsbuildFixture = {
    * Absolute working directory of the current test file.
    */
   cwd: string;
+
+  /**
+   * Helper to capture and assert console logs.
+   * Proxies console methods and collects log lines for assertions.
+   * @example
+   * // Wait for a specific log line
+   * await logHelper.expectLog('some message');
+   * // Assert there is no error output
+   * logHelper.expectNoLog(/error/);
+   * // Clear collected logs
+   * logHelper.clearLogs();
+   */
+  logHelper: LogHelper;
 
   /**
    * Build the project. No preview server or page navigation by default.
@@ -54,6 +68,10 @@ type RsbuildFixture = {
    * @param filename The filename. If it is not absolute, it will be resolved
    * relative to the test file's cwd.
    * @param replacer The replacer function.
+   * @example
+   * await editFile('src/index.ts', (code) =>
+   *   code.replace('Hello', 'Hi'),
+   * );
    */
   editFile: EditFile;
 };
@@ -67,10 +85,20 @@ export const test = base.extend<RsbuildFixture>({
     await use(cwd);
   },
 
-  build: async ({ cwd }, use) => {
+  logHelper: [
+    // biome-ignore lint/correctness/noEmptyPattern: required by playwright
+    async ({}, use) => {
+      const logHelper = proxyConsole();
+      await use(logHelper);
+      logHelper.restore();
+    },
+    { auto: true },
+  ],
+
+  build: async ({ cwd, logHelper }, use) => {
     const closes: Close[] = [];
     const build: typeof baseBuild = async (options) => {
-      const result = await baseBuild({ cwd, ...options });
+      const result = await baseBuild({ cwd, logHelper, ...options });
       closes.push(result.close);
       return result;
     };
@@ -84,10 +112,10 @@ export const test = base.extend<RsbuildFixture>({
     }
   },
 
-  buildPreview: async ({ cwd, page }, use) => {
+  buildPreview: async ({ cwd, page, logHelper }, use) => {
     const closes: Close[] = [];
     const build: typeof baseBuild = async (options) => {
-      const result = await baseBuild({ cwd, page, ...options });
+      const result = await baseBuild({ cwd, page, logHelper, ...options });
       closes.push(result.close);
       return result;
     };
@@ -101,10 +129,10 @@ export const test = base.extend<RsbuildFixture>({
     }
   },
 
-  dev: async ({ cwd, page }, use) => {
+  dev: async ({ cwd, page, logHelper }, use) => {
     const closes: Close[] = [];
     const dev: typeof baseDev = async (options) => {
-      const result = await baseDev({ cwd, page, ...options });
+      const result = await baseDev({ cwd, page, logHelper, ...options });
       closes.push(result.close);
       return result;
     };
@@ -118,10 +146,10 @@ export const test = base.extend<RsbuildFixture>({
     }
   },
 
-  devOnly: async ({ cwd }, use) => {
+  devOnly: async ({ cwd, logHelper }, use) => {
     const closes: Close[] = [];
     const dev: typeof baseDev = async (options) => {
-      const result = await baseDev({ cwd, ...options });
+      const result = await baseDev({ cwd, logHelper, ...options });
       closes.push(result.close);
       return result;
     };

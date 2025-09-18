@@ -1,10 +1,9 @@
-import { expect, proxyConsole, rspackTest } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 import { createRsbuild } from '@rsbuild/core';
 
 rspackTest(
   'should allow to call `getStats` to get stats after creating dev server',
   async () => {
-    const { restore } = proxyConsole();
     const rsbuild = await createRsbuild({
       cwd: __dirname,
       rsbuildConfig: {
@@ -26,7 +25,5 @@ rspackTest(
       }),
     ).toBe('object');
     await server.close();
-
-    restore();
   },
 );

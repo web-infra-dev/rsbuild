@@ -113,9 +113,6 @@ rspackTest(
       cwd: __dirname,
       rsbuildConfig: {
         plugins: [plugin],
-        server: {
-          printUrls: false,
-        },
       },
     });
 

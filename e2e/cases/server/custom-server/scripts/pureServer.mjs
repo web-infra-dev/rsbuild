@@ -11,7 +11,6 @@ export async function startDevServerPure(fixtures) {
         middlewareMode: true,
       },
       dev: {
-        printUrls: false,
         setupMiddlewares: (middlewares) => {
           middlewares.unshift((req, res, next) => {
             if (req.url === '/test') {

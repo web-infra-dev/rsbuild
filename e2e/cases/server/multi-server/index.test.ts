@@ -1,4 +1,5 @@
-import { createRsbuild, expect, getRandomPort, test } from '@e2e/helper';
+import { expect, getRandomPort, test } from '@e2e/helper';
+import { createRsbuild } from '@rsbuild/core';
 import polka from 'polka';
 
 // TODO: flaky test
@@ -22,7 +23,6 @@ test.skip('multiple rsbuild dev servers should work correctly', async ({
         assetPrefix: '/app1',
       },
       server: {
-        printUrls: false,
         middlewareMode: true,
       },
     },
@@ -42,7 +42,6 @@ test.skip('multiple rsbuild dev servers should work correctly', async ({
         },
       },
       server: {
-        printUrls: false,
         middlewareMode: true,
       },
       dev: {

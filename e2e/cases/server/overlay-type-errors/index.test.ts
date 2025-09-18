@@ -1,10 +1,11 @@
-import { createLogHelper, expect, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
 test('should display type errors on overlay correctly', async ({
   page,
   dev,
+  logHelper,
 }) => {
-  const { addLog, expectLog } = createLogHelper();
+  const { addLog, expectLog } = logHelper;
   page.on('console', (consoleMessage) => {
     addLog(consoleMessage.text());
   });

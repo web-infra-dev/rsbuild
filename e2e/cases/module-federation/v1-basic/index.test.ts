@@ -1,7 +1,6 @@
 import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { getRandomPort, gotoPage, rspackTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, getRandomPort, gotoPage, rspackTest } from '@e2e/helper';
 import type { RsbuildConfig } from '@rsbuild/core';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 
