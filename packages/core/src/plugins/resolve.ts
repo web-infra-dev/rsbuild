@@ -124,12 +124,15 @@ export const pluginResolve = (): RsbuildPlugin => ({
       order: 'pre',
       handler: (chain, { environment, CHAIN_ID }) => {
         const { config, tsconfigPath } = environment;
-        const { extensions, conditionNames } = config.resolve;
+        const { extensions, conditionNames, mainFields } = config.resolve;
 
         chain.resolve.extensions.merge([...extensions]);
 
         if (conditionNames?.length) {
           chain.resolve.conditionNames.merge([...conditionNames]);
+        }
+        if (mainFields?.length) {
+          chain.resolve.mainFields.merge([...mainFields]);
         }
 
         const isTsProject =

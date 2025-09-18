@@ -1832,6 +1832,15 @@ export interface ResolveConfig {
    * @default Inherits from Rspack. See https://rspack.rs/config/resolve#resolveconditionnames
    */
   conditionNames?: string[];
+  /**
+   * Controls the priority of fields in a package.json used to locate a package's
+   * entry file. It is the ordered list of package.json fields Rspack will try
+   * when resolving an npm package's entry point.
+   * @default
+   * - If `output.target` is `'web'`, `'web-worker'`, or not specified, the default value is `["browser", "module", "main"]`.
+   * - If `output.target` is `'node'`, the default value is `["module", "main"]`.
+   */
+  mainFields?: string[];
 }
 
 export type NormalizedResolveConfig = ResolveConfig &

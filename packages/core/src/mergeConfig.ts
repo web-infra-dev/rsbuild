@@ -11,6 +11,7 @@ const OVERRIDE_PATHS = [
   'server.printUrls',
   'resolve.extensions',
   'resolve.conditionNames',
+  'resolve.mainFields',
   'provider',
 ];
 
