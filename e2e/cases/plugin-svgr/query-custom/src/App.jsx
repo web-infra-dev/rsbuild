@@ -1,5 +1,5 @@
-import Component from '@assets/circle.svg?custom';
-import url from '@assets/circle.svg?url';
+import Component from '@e2e/assets/circle.svg?custom';
+import url from '@e2e/assets/circle.svg?url';
 
 function App() {
   return (

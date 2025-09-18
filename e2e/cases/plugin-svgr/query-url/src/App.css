@@ -1,5 +1,5 @@
 #test-css {
   width: 50px;
   height: 50px;
-  background-image: url('@assets/mobile.svg?url');
+  background-image: url('@e2e/assets/mobile.svg?url');
 }

@@ -1,5 +1,6 @@
 {
   "name": "@e2e/helper",
+  "description": "Common helper functions used in E2E test cases.",
   "private": true,
   "version": "1.0.0",
   "exports": {

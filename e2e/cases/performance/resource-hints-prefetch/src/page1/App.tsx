@@ -1,4 +1,4 @@
-import png from '@assets/icon.png?url';
+import png from '@e2e/assets/icon.png?url';
 
 const App = () => (
   <>

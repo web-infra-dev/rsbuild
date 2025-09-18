@@ -1,4 +1,4 @@
-import img from '@assets/icon.png?inline';
+import img from '@e2e/assets/icon.png?inline';
 
 function App() {
   return (
