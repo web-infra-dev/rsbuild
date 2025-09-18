@@ -27,19 +27,19 @@ Commands:
 
 The Rsbuild CLI includes several common flags that work with all commands:
 
-| Flag                       | Description                                                                                                                         |
-| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `--base <base>`            | Set the base path of the server, see [server.base](/config/server/base)                                                             |
-| `-c, --config <config>`    | Set the configuration file (relative or absolute path), see [Specify config file](/guide/configuration/rsbuild#specify-config-file) |
-| `--config-loader <loader>` | Set the config file loader (`jiti` \| `native`), see [Specify config loader](/guide/configuration/rsbuild#specify-config-loader)    |
-| `--env-mode <mode>`        | Set the env mode to load the `.env.[mode]` file, see [Env mode](/guide/advanced/env-vars#env-mode)                                  |
-| `--env-dir <dir>`          | Set the directory for loading `.env` files, see [Env directory](/guide/advanced/env-vars#env-directory)                             |
-| `--environment <name>`     | Set the environment name(s) to build, see [Build specified environment](/guide/advanced/environments#build-specified-environment)   |
-| `-h, --help`               | Display help for command                                                                                                            |
-| `--log-level <level>`      | Set the log level (`info` \| `warn` \| `error` \| `silent`), see [logLevel](/config/log-level)                                      |
-| `-m, --mode <mode>`        | Set the build mode (`development` \| `production` \| `none`), see [mode](/config/mode)                                              |
-| `--no-env`                 | Disable loading of `.env` files                                                                                                     |
-| `-r, --root <root>`        | Set the project root directory (absolute path or relative to [cwd](https://nodejs.org/api/process.html#processcwd))                 |
+| Flag                       | Description                                                                                                                                |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `--base <base>`            | Set the base path of the server, see [server.base](/config/server/base)                                                                    |
+| `-c, --config <config>`    | Set the configuration file (relative or absolute path), see [Specify config file](/guide/configuration/rsbuild#specify-config-file)        |
+| `--config-loader <loader>` | Set the config file loader (`auto` \| `jiti` \| `native`), see [Specify config loader](/guide/configuration/rsbuild#specify-config-loader) |
+| `--env-mode <mode>`        | Set the env mode to load the `.env.[mode]` file, see [Env mode](/guide/advanced/env-vars#env-mode)                                         |
+| `--env-dir <dir>`          | Set the directory for loading `.env` files, see [Env directory](/guide/advanced/env-vars#env-directory)                                    |
+| `--environment <name>`     | Set the environment name(s) to build, see [Build specified environment](/guide/advanced/environments#build-specified-environment)          |
+| `-h, --help`               | Display help for command                                                                                                                   |
+| `--log-level <level>`      | Set the log level (`info` \| `warn` \| `error` \| `silent`), see [logLevel](/config/log-level)                                             |
+| `-m, --mode <mode>`        | Set the build mode (`development` \| `production` \| `none`), see [mode](/config/mode)                                                     |
+| `--no-env`                 | Disable loading of `.env` files                                                                                                            |
+| `-r, --root <root>`        | Set the project root directory (absolute path or relative to [cwd](https://nodejs.org/api/process.html#processcwd))                        |
 
 ## rsbuild dev
 
