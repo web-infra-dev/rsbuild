@@ -363,3 +363,29 @@ test('should not inline scripts or styles in dev by default when enable is unset
     ),
   ).resolves.toEqual(1);
 });
+
+test('should update source mapping URL in build', async ({ build }) => {
+  const assetPrefix = 'https://example.com/base/';
+  const rsbuild = await build({
+    rsbuildConfig: {
+      output: {
+        filenameHash: false,
+        inlineScripts: true,
+        assetPrefix,
+      },
+      tools: toolsConfig,
+    },
+  });
+
+  const files = rsbuild.getDistFiles({ sourceMaps: true });
+  const indexHtml =
+    files[
+      Object.keys(files).find((fileName) => fileName.endsWith('/index.html'))!
+    ];
+
+  expect(
+    indexHtml.includes(
+      `//# sourceMappingURL=${assetPrefix}static/js/index.js.map`,
+    ),
+  ).toBeTruthy();
+});
