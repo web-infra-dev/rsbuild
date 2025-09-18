@@ -527,7 +527,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "inlineConst": true,
+    "inlineConst": false,
     "inlineEnum": true,
     "lazyBarrel": true,
     "rspackFuture": {
@@ -549,7 +549,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "parser": {
       "javascript": {
         "exportsPresence": "error",
-        "inlineConst": true,
+        "inlineConst": false,
         "typeReexportsPresence": "tolerant",
       },
     },
