@@ -138,14 +138,9 @@ export async function loadConfig({
   };
 
   let configExport: RsbuildConfigExport;
-  let useNative = false;
 
   // Determine the loading strategy based on the config loader type
-  if (loader === 'native' || loader === 'auto') {
-    useNative = true;
-  } else {
-    useNative = false;
-  }
+  const useNative = loader === 'native' || loader === 'auto';
 
   if (useNative || /\.(?:js|mjs|cjs)$/.test(configFilePath)) {
     try {
@@ -153,20 +148,13 @@ export async function loadConfig({
       const exportModule = await import(`${configFileURL}?t=${Date.now()}`);
       configExport = exportModule.default ? exportModule.default : exportModule;
     } catch (err) {
+      const errorMessage = `Failed to load file with native loader: ${color.dim(configFilePath)}`;
       if (loader === 'native') {
-        logger.error(
-          `Failed to load file with native loader: ${color.dim(configFilePath)}`,
-        );
+        logger.error(errorMessage);
         throw err;
-      } else if (loader === 'auto') {
-        logger.debug(
-          `failed to load file with native loader, fallback to jiti: ${color.dim(configFilePath)}`,
-        );
-        logger.debug(err);
       } else {
-        logger.debug(
-          `failed to load file with dynamic import: ${color.dim(configFilePath)}`,
-        );
+        logger.debug(`${errorMessage}, fallback to jiti.`);
+        logger.debug(err);
       }
     }
   }
