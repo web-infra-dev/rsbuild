@@ -255,7 +255,7 @@ const buildResult = await rsbuild.build({
 await buildResult.close();
 ```
 
-In non-watch mode, you should also call the `close()` method to end the build, which triggers the [onCloseBuild](/plugins/dev/hooks#onclosebuild) hook for cleanup operations.
+In non-watch mode, also call the `close()` method to end the build, which triggers the [onCloseBuild](/plugins/dev/hooks#onclosebuild) hook for cleanup operations.
 
 ```ts
 const buildResult = await rsbuild.build();
