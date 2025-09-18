@@ -10,17 +10,17 @@ declare global {
 
 copy(
   join(__dirname, 'package-foo'),
-  join(__dirname, 'node_modules/@e2e/resolve-condition-names-package-foo'),
+  join(__dirname, 'node_modules/@e2e/resolve-main-fields-package-foo'),
 );
 
-test('should apply resolve.conditionNames as expected in dev', async ({
+test('should apply resolve.mainFields as expected in dev', async ({
   page,
   dev,
 }) => {
   await dev({
     rsbuildConfig: {
       resolve: {
-        conditionNames: ['custom', 'import', 'require'],
+        mainFields: ['custom', 'module', 'main'],
       },
     },
   });
@@ -29,11 +29,11 @@ test('should apply resolve.conditionNames as expected in dev', async ({
   await dev({
     rsbuildConfig: {
       resolve: {
-        conditionNames: ['require', 'import'],
+        mainFields: ['main', 'module'],
       },
     },
   });
-  expect(await page.evaluate(() => window.test)).toBe('import');
+  expect(await page.evaluate(() => window.test)).toBe('main');
 });
 
 test('should apply resolve.conditionNames as expected in build', async ({
@@ -43,7 +43,7 @@ test('should apply resolve.conditionNames as expected in build', async ({
   await buildPreview({
     rsbuildConfig: {
       resolve: {
-        conditionNames: ['custom', 'import', 'require'],
+        mainFields: ['custom', 'module', 'main'],
       },
     },
   });
@@ -52,11 +52,10 @@ test('should apply resolve.conditionNames as expected in build', async ({
   await buildPreview({
     rsbuildConfig: {
       resolve: {
-        conditionNames: ['require', 'import'],
+        mainFields: ['main', 'module'],
       },
     },
   });
 
-  // The key order in the `exports` object determines priority
-  expect(await page.evaluate(() => window.test)).toBe('import');
+  expect(await page.evaluate(() => window.test)).toBe('main');
 });
