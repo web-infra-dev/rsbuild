@@ -22,7 +22,7 @@ const defaultInclude = [
 
 ## Usage
 
-Through the `source.include` config, you can specify directories or modules that need to be compiled by Rsbuild. The usage of `source.include` is consistent with [Rule.include](https://rspack.rs/config/module#ruleinclude) in Rspack, which supports passing in strings or regular expressions to match the module path.
+Through the `source.include` configuration, you can specify directories or modules that need to be compiled by Rsbuild. The usage of `source.include` is consistent with [Rule.include](https://rspack.rs/config/module#ruleinclude) in Rspack, which supports passing in strings or regular expressions to match the module path.
 
 For example:
 
@@ -38,13 +38,13 @@ export default {
 
 ## Compile npm packages
 
-A typical usage scenario is to compile npm packages under node_modules, because some third-party dependencies have ESNext syntax, which may cause them to fail to run on low-version browsers. You can solve the problem by using this config to specify the dependencies that need to be compiled.
+A typical usage scenario is to compile npm packages under node_modules, because some third-party dependencies have ESNext syntax, which may cause them to fail to run on older browsers. You can solve this problem by using this configuration to specify the dependencies that need to be compiled.
 
 :::tip
 If you are unsure which third-party dependencies in node_modules contain ESNext syntax, you can use the [@rsbuild/plugin-check-syntax](https://github.com/rspack-contrib/rsbuild-plugin-check-syntax) for checking. The plugin can help you find the modules that contain ESNext syntax.
 :::
 
-Take `query-string` as an example, you can add the following config:
+Take `query-string` as an example, you can add the following configuration:
 
 ```ts title="rsbuild.config.ts"
 import path from 'node:path';

@@ -1,6 +1,6 @@
 # Debug mode
 
-Rsbuild provides a debug mode to troubleshoot problems, you can add the `DEBUG=rsbuild` environment variable when building to enable Rsbuild's debug mode.
+Rsbuild provides a debug mode to troubleshoot problems. You can add the `DEBUG=rsbuild` environment variable when building to enable Rsbuild's debug mode.
 
 ```bash
 # Debug in development mode
@@ -10,7 +10,7 @@ DEBUG=rsbuild pnpm dev
 DEBUG=rsbuild pnpm build
 ```
 
-In debug mode, Rsbuild will output some additional log information, and write the Rsbuild config and Rspack config to the dist directory, which is convenient for developers to view and debug.
+In debug mode, Rsbuild will output additional log information and write the Rsbuild config and Rspack config to the dist directory, making it convenient for developers to view and debug.
 
 ## Log information
 
@@ -26,7 +26,7 @@ $ DEBUG=rsbuild pnpm dev
   ...
 ```
 
-In addition, the following logs will be output in the terminal, indicating that Rsbuild has written the internally generated build configurations to disk, and you can open these config files to view the corresponding content.
+Additionally, the following logs will be output in the terminal, indicating that Rsbuild has written the internally generated build configurations to disk. You can open these config files to view the corresponding content.
 
 ```bash
 config inspection completed, generated files:
@@ -37,7 +37,7 @@ config inspection completed, generated files:
 
 ## Rsbuild config file
 
-In debug mode, Rsbuild will automatically generate `dist/.rsbuild/rsbuild.config.mjs` file, which contains the final generated Rsbuild config. In this file, you can know the final result of the Rsbuild config you passed in after being processed by the framework and Rsbuild.
+In debug mode, Rsbuild will automatically generate a `dist/.rsbuild/rsbuild.config.mjs` file, which contains the final generated Rsbuild config. In this file, you can see the final result of the Rsbuild config you passed in after being processed by the framework and Rsbuild.
 
 The structure of the file is as follows:
 

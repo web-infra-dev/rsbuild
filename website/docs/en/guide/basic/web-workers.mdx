@@ -63,7 +63,7 @@ export default {
 };
 ```
 
-When using `worker-rspack-loader`, you need to use the `import` to import the Web Worker file, instead of the `new Worker('/path/to/worker.js')`.
+When using `worker-rspack-loader`, you need to use `import` to load the Web Worker file, instead of `new Worker('/path/to/worker.js')`.
 
 ```js
 import Worker from './file.worker.js';
@@ -73,13 +73,13 @@ const worker = new Worker();
 worker.postMessage({ a: 1 });
 ```
 
-> `worker-loader` is no longer maintained, if you do not need to inline Web Workers, it is recommended to use the `new Worker()` syntax.
+> `worker-loader` is no longer maintained. If you don't need to inline Web Workers, we recommend using the `new Worker()` syntax.
 
 ### Loading scripts from remote URLs (cross-origin)
 
 By default, the worker script will be emitted as a separate chunk. This script supports uploading to CDN, but must obey the [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
 
-If you want your worker scripts to be accessible across domains, a common solution is to load via [importScripts](https://developer.mozilla.org/en-US/docs/Web/API/WorkerGlobalScope/importScripts) (not subject to CORS), you can refer to the following code:
+If you want your worker scripts to be accessible across domains, a common solution is to load them via [importScripts](https://developer.mozilla.org/en-US/docs/Web/API/WorkerGlobalScope/importScripts) (not subject to CORS). You can refer to the following code:
 
 ```js title=index.js {2}
 // https://github.com/jantimon/remote-web-worker
