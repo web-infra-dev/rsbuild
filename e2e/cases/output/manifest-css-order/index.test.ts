@@ -8,17 +8,16 @@ test('should generate manifest with initial chunks in correct order', async ({
   const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();
+  const filenames = Object.keys(files);
   const manifestContent =
-    files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];
+    files[filenames.find((file) => file.endsWith('manifest.json'))!];
   const manifest: ManifestData = JSON.parse(manifestContent);
 
-  for (const entryData of Object.values(manifest.entries)) {
-    const htmlFileName = entryData.html![0];
-    const htmlContent =
-      files[Object.keys(files).find((file) => file.endsWith(htmlFileName))!];
-    expect(htmlContent).toBeDefined();
+  for (const entry of Object.values(manifest.entries)) {
+    const htmlFileName = entry.html![0];
+    const html = files[filenames.find((file) => file.endsWith(htmlFileName))!];
 
-    const scriptMatches = htmlContent.match(/<script[^>]*src="([^"]+)"/g) || [];
+    const scriptMatches = html.match(/<script[^>]*src="([^"]+)"/g) || [];
     const htmlScriptOrder = scriptMatches
       .map((match) => {
         const srcMatch = match.match(/src="([^"]+)"/);
@@ -27,7 +26,7 @@ test('should generate manifest with initial chunks in correct order', async ({
       .filter(Boolean);
 
     const linkMatches =
-      htmlContent.match(/<link[^>]*href="([^"]+)"[^>]*rel="stylesheet"/g) || [];
+      html.match(/<link[^>]*href="([^"]+)"[^>]*rel="stylesheet"/g) || [];
     const htmlCssOrder = linkMatches
       .map((match) => {
         const hrefMatch = match.match(/href="([^"]+)"/);
@@ -35,7 +34,7 @@ test('should generate manifest with initial chunks in correct order', async ({
       })
       .filter(Boolean);
 
-    expect(entryData.initial?.js).toEqual(htmlScriptOrder);
-    expect(entryData.initial?.css).toEqual(htmlCssOrder);
+    expect(entry.initial?.js).toEqual(htmlScriptOrder);
+    expect(entry.initial?.css).toEqual(htmlCssOrder);
   }
 });
