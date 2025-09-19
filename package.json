@@ -49,9 +49,9 @@
     "simple-git-hooks": "^2.13.1",
     "typescript": "^5.9.2"
   },
-  "packageManager": "pnpm@10.16.0",
+  "packageManager": "pnpm@10.17.0",
   "engines": {
     "node": ">=22.18.0",
-    "pnpm": ">=10.16.0"
+    "pnpm": ">=10.17.0"
   }
 }
