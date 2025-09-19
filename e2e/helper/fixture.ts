@@ -9,7 +9,7 @@ import {
   type Dev,
   type DevResult,
 } from './jsApi';
-import { type LogHelper, proxyConsole } from './logs';
+import { type ExtendedLogHelper, proxyConsole } from './logs';
 
 type EditFile = (
   filename: string,
@@ -33,7 +33,7 @@ type RsbuildFixture = {
    * // Clear collected logs
    * logHelper.clearLogs();
    */
-  logHelper: LogHelper;
+  logHelper: ExtendedLogHelper;
 
   /**
    * Build the project. No preview server or page navigation by default.
