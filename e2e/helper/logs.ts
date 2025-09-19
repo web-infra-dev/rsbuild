@@ -25,6 +25,7 @@ const matchPattern = (
 
 export const createLogHelper = () => {
   const logs: string[] = [];
+  const originalLogs: string[] = [];
 
   const logPatterns = new Set<{
     pattern: LogPattern;
@@ -39,6 +40,8 @@ export const createLogHelper = () => {
   const addLog = (input: string) => {
     const log = stripAnsi(input);
     logs.push(log);
+    originalLogs.push(input);
+
     for (const { pattern, resolve, options } of logPatterns) {
       if (matchPattern(log, pattern, options)) {
         resolve(true);
@@ -87,10 +90,17 @@ export const createLogHelper = () => {
 
   const expectBuildEnd = async () => expectLog(BUILD_END_LOG);
 
+  const printCapturedLogs = () => {
+    for (const log of originalLogs) {
+      console.log(log);
+    }
+  };
+
   return {
     logs,
     addLog,
     clearLogs,
+    printCapturedLogs,
     expectLog,
     expectNoLog,
     expectBuildEnd,
