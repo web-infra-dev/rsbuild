@@ -212,21 +212,25 @@ console.log(styles.header);
 - `[path]` - 源文件的相对路径。
 - `[file]` - 文件名和路径。
 - `[ext]` - 文件后缀名，包含点号。
-- `[hash:<hashDigest>:<hashDigestLength>]` - 带有哈希设置的哈希。
+- `[hash:<hashDigest>:<hashDigestLength>]` - 带有哈希设置的哈希。其中 `hashDigest` 是[哈希编码](https://rspack.rs/zh/config/output#outputhashdigest)，`hashDigestLength` 是哈希值的长度。
 
 ### 示例
 
-将 `localIdentName` 设置为其他值：
+将 `localIdentName` 设置为其他值，例如更简短的五位哈希值：
 
 ```ts title="rsbuild.config.ts"
 export default {
   output: {
     cssModules: {
-      localIdentName: '[hash:base64:4]',
+      localIdentName: '[hash:base64:5]',
     },
   },
 };
 ```
+
+:::tip
+如果 hash 长度设置得较短，可能会增加类名冲突的风险。
+:::
 
 ## cssModules.mode
 
