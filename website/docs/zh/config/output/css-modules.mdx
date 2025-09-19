@@ -216,13 +216,13 @@ console.log(styles.header);
 
 ### 示例
 
-将 `localIdentName` 设置为其他值：
+将 `localIdentName` 设置为其他值，例如最简短的五位哈希值：
 
 ```ts title="rsbuild.config.ts"
 export default {
   output: {
     cssModules: {
-      localIdentName: '[hash:base64:4]',
+      localIdentName: '[hash:base64:5]',
     },
   },
 };

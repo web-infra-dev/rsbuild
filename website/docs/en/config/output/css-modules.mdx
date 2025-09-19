@@ -216,13 +216,13 @@ You can use the following template strings in `localIdentName`:
 
 ### Example
 
-Set `localIdentName` to other value:
+Set `localIdentName` to other value, for example, the shortest 5-character hash value:
 
 ```ts title="rsbuild.config.ts"
 export default {
   output: {
     cssModules: {
-      localIdentName: '[hash:base64:4]',
+      localIdentName: '[hash:base64:5]',
     },
   },
 };
