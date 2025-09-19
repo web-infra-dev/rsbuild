@@ -25,6 +25,7 @@ const matchPattern = (
 
 export const createLogHelper = () => {
   const logs: string[] = [];
+  const originalLogs: string[] = [];
 
   const logPatterns = new Set<{
     pattern: LogPattern;
@@ -39,6 +40,8 @@ export const createLogHelper = () => {
   const addLog = (input: string) => {
     const log = stripAnsi(input);
     logs.push(log);
+    originalLogs.push(input);
+
     for (const { pattern, resolve, options } of logPatterns) {
       if (matchPattern(log, pattern, options)) {
         resolve(true);
@@ -89,6 +92,7 @@ export const createLogHelper = () => {
 
   return {
     logs,
+    originalLogs,
     addLog,
     clearLogs,
     expectLog,
@@ -103,16 +107,25 @@ export type ProxyConsoleOptions = {
   types?: ConsoleType | ConsoleType[];
 };
 
+export type ProxyConsoleResult = LogHelper & {
+  /**
+   * Restore the original console methods
+   */
+  restore: () => void;
+  /**
+   * Restore the original console methods and print the captured logs
+   */
+  printCapturedLogs: () => void;
+};
+
 /**
  * Proxy the console methods to capture the logs
  */
 export const proxyConsole = ({
   types = ['log', 'warn', 'info', 'error'],
-}: ProxyConsoleOptions = {}): LogHelper & {
-  restore: () => void;
-} => {
+}: ProxyConsoleOptions = {}): ProxyConsoleResult => {
   const restores: Array<() => void> = [];
-  const logMatcher = createLogHelper();
+  const logHelper = createLogHelper();
 
   for (const type of Array.isArray(types) ? types : [types]) {
     const method = console[type];
@@ -128,7 +141,7 @@ export const proxyConsole = ({
           return typeof arg === 'object' ? JSON.stringify(arg) : String(arg);
         })
         .join(' ');
-      logMatcher.addLog(logMessage);
+      logHelper.addLog(logMessage);
     };
   }
 
@@ -138,8 +151,16 @@ export const proxyConsole = ({
     }
   };
 
+  const printCapturedLogs = () => {
+    restore();
+    for (const log of logHelper.originalLogs) {
+      console.log(log);
+    }
+  };
+
   return {
     restore,
-    ...logMatcher,
+    printCapturedLogs,
+    ...logHelper,
   };
 };

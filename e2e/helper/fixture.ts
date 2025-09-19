@@ -1,6 +1,7 @@
 import { promises } from 'node:fs';
 import path from 'node:path';
 import base, { expect } from '@playwright/test';
+import color from 'picocolors';
 import {
   type Build,
   build as baseBuild,
@@ -87,10 +88,23 @@ export const test = base.extend<RsbuildFixture>({
 
   logHelper: [
     // biome-ignore lint/correctness/noEmptyPattern: required by playwright
-    async ({}, use) => {
+    async ({}, use, testInfo) => {
       const logHelper = proxyConsole();
       await use(logHelper);
       logHelper.restore();
+
+      // If the test failed, log the console output for debugging
+      if (testInfo.status !== testInfo.expectedStatus) {
+        // header log
+        const header = `╭──────────────  Logs from: "${testInfo.title}" ──────────────╮`;
+        console.log(color.bold(`\n${header}\n`));
+
+        // body logs
+        logHelper.printCapturedLogs();
+
+        // footer log
+        console.log(color.bold(`╰${'─'.repeat(header.length - 2)}╯\n`));
+      }
     },
     { auto: true },
   ],
