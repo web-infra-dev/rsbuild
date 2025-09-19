@@ -107,7 +107,7 @@ export type ProxyConsoleOptions = {
   types?: ConsoleType | ConsoleType[];
 };
 
-export type ProxyConsoleResult = LogHelper & {
+export type ExtendedLogHelper = LogHelper & {
   /**
    * Restore the original console methods
    */
@@ -123,7 +123,7 @@ export type ProxyConsoleResult = LogHelper & {
  */
 export const proxyConsole = ({
   types = ['log', 'warn', 'info', 'error'],
-}: ProxyConsoleOptions = {}): ProxyConsoleResult => {
+}: ProxyConsoleOptions = {}): ExtendedLogHelper => {
   const restores: Array<() => void> = [];
   const logHelper = createLogHelper();
 
