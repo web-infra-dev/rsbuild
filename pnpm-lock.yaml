@@ -100,7 +100,7 @@ importers:
     devDependencies:
       '@e2e/assets':
         specifier: workspace:*
-        version: link:cases/output/copy/dist-1/foo
+        version: link:assets
       '@e2e/helper':
         specifier: workspace:*
         version: link:helper
@@ -237,8 +237,6 @@ importers:
       html-loader:
         specifier: ^5.1.0
         version: 5.1.0(webpack@5.101.3)
-
-  e2e/cases/output/copy/dist-1/foo: {}
 
   e2e/cases/output/source-map: {}
 
