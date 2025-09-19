@@ -18,7 +18,7 @@
     "@rspress/plugin-rss": "2.0.0-beta.32",
     "@rspress/plugin-sitemap": "2.0.0-beta.32",
     "@rstack-dev/doc-ui": "^1.11.0",
-    "@shikijs/transformers": "^3.12.2",
+    "@shikijs/transformers": "^3.13.0",
     "@types/node": "^22.18.3",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
