@@ -90,17 +90,11 @@ export const createLogHelper = () => {
 
   const expectBuildEnd = async () => expectLog(BUILD_END_LOG);
 
-  const printCapturedLogs = () => {
-    for (const log of originalLogs) {
-      console.log(log);
-    }
-  };
-
   return {
     logs,
+    originalLogs,
     addLog,
     clearLogs,
-    printCapturedLogs,
     expectLog,
     expectNoLog,
     expectBuildEnd,
@@ -113,16 +107,25 @@ export type ProxyConsoleOptions = {
   types?: ConsoleType | ConsoleType[];
 };
 
+export type ProxyConsoleResult = LogHelper & {
+  /**
+   * Restore the original console methods
+   */
+  restore: () => void;
+  /**
+   * Restore the original console methods and print the captured logs
+   */
+  printCapturedLogs: () => void;
+};
+
 /**
  * Proxy the console methods to capture the logs
  */
 export const proxyConsole = ({
   types = ['log', 'warn', 'info', 'error'],
-}: ProxyConsoleOptions = {}): LogHelper & {
-  restore: () => void;
-} => {
+}: ProxyConsoleOptions = {}): ProxyConsoleResult => {
   const restores: Array<() => void> = [];
-  const logMatcher = createLogHelper();
+  const logHelper = createLogHelper();
 
   for (const type of Array.isArray(types) ? types : [types]) {
     const method = console[type];
@@ -138,7 +141,7 @@ export const proxyConsole = ({
           return typeof arg === 'object' ? JSON.stringify(arg) : String(arg);
         })
         .join(' ');
-      logMatcher.addLog(logMessage);
+      logHelper.addLog(logMessage);
     };
   }
 
@@ -148,8 +151,16 @@ export const proxyConsole = ({
     }
   };
 
+  const printCapturedLogs = () => {
+    restore();
+    for (const log of logHelper.originalLogs) {
+      console.log(log);
+    }
+  };
+
   return {
     restore,
-    ...logMatcher,
+    printCapturedLogs,
+    ...logHelper,
   };
 };
