@@ -1,3 +1,8 @@
+import {
+  type ChildProcess,
+  type ExecOptions,
+  exec as nodeExec,
+} from 'node:child_process';
 import { promises } from 'node:fs';
 import path from 'node:path';
 import base, { expect } from '@playwright/test';
@@ -15,6 +20,13 @@ type EditFile = (
   filename: string,
   replacer: (code: string) => string,
 ) => Promise<void>;
+
+type Exec = (
+  command: string,
+  options?: ExecOptions,
+) => {
+  childProcess: ChildProcess;
+};
 
 type RsbuildFixture = {
   /**
@@ -34,21 +46,18 @@ type RsbuildFixture = {
    * logHelper.clearLogs();
    */
   logHelper: ExtendedLogHelper;
-
   /**
    * Build the project. No preview server or page navigation by default.
    * Uses the test file's cwd.
    * The fixture auto-closes after the test.
    */
   build: Build;
-
   /**
    * Build the project, start a preview server, and auto-navigate the Playwright page.
    * Uses the test file's cwd.
    * The fixture auto-closes after the test.
    */
   buildPreview: Build;
-
   /**
    * Start the dev server and auto-navigate the Playwright page.
    * Uses the test file's cwd.
@@ -56,14 +65,12 @@ type RsbuildFixture = {
    * The fixture auto-closes after the test.
    */
   dev: Dev;
-
   /**
    * Start the dev server without page navigation.
    * Uses the test file's cwd.
    * The fixture auto-closes after the test.
    */
   devOnly: Dev;
-
   /**
    * Edit a file in the test file's cwd.
    * @param filename The filename. If it is not absolute, it will be resolved
@@ -75,6 +82,16 @@ type RsbuildFixture = {
    * );
    */
   editFile: EditFile;
+  /**
+   * Execute a command in the test file's cwd.
+   * The child process is auto-killed after the test.
+   * @param command The command to execute.
+   * @param options Optional execution options.
+   * @returns An object containing the child process.
+   * @example
+   * const { childProcess } = exec('npm run build');
+   */
+  exec: Exec;
 };
 
 type Close = DevResult['close'];
@@ -94,7 +111,10 @@ export const test = base.extend<RsbuildFixture>({
       logHelper.restore();
 
       // If the test failed, log the console output for debugging
-      if (testInfo.status !== testInfo.expectedStatus) {
+      if (
+        testInfo.status !== testInfo.expectedStatus &&
+        logHelper.logs.length
+      ) {
         // header log
         const header = `╭──────────────  Logs from: "${testInfo.title}" ──────────────╮`;
         console.log(color.bold(`\n${header}\n`));
@@ -186,6 +206,35 @@ export const test = base.extend<RsbuildFixture>({
       return promises.writeFile(resolvedFilename, replacer(code));
     };
     await use(editFile);
+  },
+
+  exec: async ({ cwd, logHelper }, use) => {
+    let close: (() => void) | undefined;
+
+    const exec: Exec = (command, options) => {
+      const childProcess = nodeExec(command, {
+        cwd,
+        ...options,
+      });
+
+      const onData = (data: Buffer) => {
+        logHelper.addLog(data.toString());
+      };
+
+      childProcess.stdout?.on('data', onData);
+      childProcess.stderr?.on('data', onData);
+
+      close = () => {
+        childProcess.stdout?.off('data', onData);
+        childProcess.stderr?.off('data', onData);
+        childProcess.kill();
+      };
+
+      return { childProcess };
+    };
+
+    await use(exec);
+    close?.();
   },
 });
 

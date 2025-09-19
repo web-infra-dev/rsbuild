@@ -17,7 +17,7 @@ export function runCliSync(command: string, options?: ExecSyncOptions) {
   return execSync(`node ${RSBUILD_BIN_PATH} ${command}`, options);
 }
 
-export function runCommand(command: string, options?: ExecOptions) {
+function runCommand(command: string, options?: ExecOptions) {
   const childProcess = exec(command, options);
 
   const logHelper = createLogHelper();
