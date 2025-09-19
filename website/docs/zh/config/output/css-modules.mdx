@@ -216,7 +216,7 @@ console.log(styles.header);
 
 ### 示例
 
-将 `localIdentName` 设置为其他值，例如最简短的五位哈希值：
+将 `localIdentName` 设置为其他值，例如更简短的五位哈希值：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -227,6 +227,10 @@ export default {
   },
 };
 ```
+
+:::tip
+如果 hash 长度设置得较短，可能会增加类名冲突的风险。
+:::
 
 ## cssModules.mode
 

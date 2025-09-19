@@ -216,7 +216,7 @@ You can use the following template strings in `localIdentName`:
 
 ### Example
 
-Set `localIdentName` to other value, for example, the shortest 5-character hash value:
+Set `localIdentName` to other value, for example, the shorter 5-character hash value:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -227,6 +227,10 @@ export default {
   },
 };
 ```
+
+:::tip
+If the hash length is set too short, it may increase the risk of class name conflicts.
+:::
 
 ## cssModules.mode
 
