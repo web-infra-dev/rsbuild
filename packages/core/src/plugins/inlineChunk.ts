@@ -1,8 +1,8 @@
-import path from 'node:path';
 import { isRegExp } from 'node:util/types';
 import { CSS_REGEX, JS_REGEX } from '../constants';
 import {
   addTrailingSlash,
+  ensureAssetPrefix,
   getPublicPathFromCompiler,
   isFunction,
 } from '../helpers';
@@ -15,7 +15,7 @@ import type {
 } from '../types';
 
 /**
- * If we inlined the chunk to HTML,we should update the value of sourceMappingURL,
+ * If we inlined the chunk to HTML, we should update the value of sourceMappingURL,
  * because the relative path of source code has been changed.
  */
 function updateSourceMappingURL({
@@ -40,9 +40,8 @@ function updateSourceMappingURL({
     source.includes('# sourceMappingURL')
   ) {
     const prefix = addTrailingSlash(
-      path.join(publicPath, config.output.distPath[type] || ''),
+      ensureAssetPrefix(config.output.distPath[type] || '', publicPath),
     );
-
     return source.replace(
       /# sourceMappingURL=/,
       `# sourceMappingURL=${prefix}`,
