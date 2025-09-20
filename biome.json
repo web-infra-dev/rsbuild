@@ -65,7 +65,7 @@
   },
   "overrides": [
     {
-      "includes": ["e2e/**/🦀.js"],
+      "includes": ["e2e/**/🦀.js", "e2e/**/charset-zh-filename/**"],
       "linter": {
         "rules": {
           "style": {
