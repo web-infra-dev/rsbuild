@@ -1,11 +1,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expectFile, getRandomPort, rspackTest, runCli } from '@e2e/helper';
+import { expectFile, getRandomPort, rspackTest } from '@e2e/helper';
 import { remove } from 'fs-extra';
 
 rspackTest(
   'should restart dev server and reload config when config file changed',
-  async () => {
+  async ({ execCli }) => {
     const dist1 = path.join(__dirname, 'dist');
     const dist2 = path.join(__dirname, 'dist-2');
     const configFile = path.join(__dirname, 'rsbuild.config.mjs');
@@ -29,9 +29,7 @@ rspackTest(
     };`,
     );
 
-    const { close } = runCli('dev', {
-      cwd: __dirname,
-    });
+    execCli('dev');
 
     await expectFile(dist1);
 
@@ -51,7 +49,5 @@ rspackTest(
     );
 
     await expectFile(dist2);
-
-    close();
   },
 );

@@ -1,13 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import {
-  expect,
-  getRandomPort,
-  gotoPage,
-  rspackTest,
-  runCli,
-  test,
-} from '@e2e/helper';
+import { expect, getRandomPort, gotoPage, rspackTest, test } from '@e2e/helper';
 
 const tempConfig = path.join(__dirname, 'test-temp-config.ts');
 
@@ -17,16 +10,14 @@ test.beforeEach(async () => {
 
 rspackTest(
   'should restart dev server when extra config file changed',
-  async ({ page }) => {
+  async ({ page, execCli, logHelper }) => {
     const port = await getRandomPort();
-    const { close, clearLogs, expectLog, expectBuildEnd } = runCli('dev', {
-      cwd: __dirname,
+    execCli('dev', {
       env: {
-        ...process.env,
         PORT: String(port),
-        NODE_ENV: 'development',
       },
     });
+    const { clearLogs, expectLog, expectBuildEnd } = logHelper;
 
     // the first build
     await expectBuildEnd();
@@ -40,6 +31,5 @@ rspackTest(
     await expectBuildEnd();
     await gotoPage(page, { port });
     await expect(page.locator('#test')).toHaveText('2');
-    close();
   },
 );
