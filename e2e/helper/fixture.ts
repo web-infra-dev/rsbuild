@@ -7,6 +7,7 @@ import { promises } from 'node:fs';
 import path from 'node:path';
 import base, { expect } from '@playwright/test';
 import color from 'picocolors';
+import { RSBUILD_BIN_PATH } from './constants';
 import {
   type Build,
   build as baseBuild,
@@ -92,6 +93,16 @@ type RsbuildFixture = {
    * const { childProcess } = exec('npm run build');
    */
   exec: Exec;
+  /**
+   * Execute an Rsbuild CLI command in the test file's cwd.
+   * The child process is auto-killed after the test.
+   * @param command The CLI command to execute (without 'rsbuild' prefix).
+   * @param options Optional execution options.
+   * @returns An object containing the child process.
+   * @example
+   * const { childProcess } = execCli('build --watch');
+   */
+  execCli: Exec;
 };
 
 type Close = DevResult['close'];
@@ -235,6 +246,18 @@ export const test = base.extend<RsbuildFixture>({
 
     await use(exec);
     close?.();
+  },
+
+  execCli: async ({ exec }, use) => {
+    const execCli: Exec = (command, options = {}) => {
+      // inherit process.env from current process
+      const { NODE_ENV: _, ...restEnv } = process.env;
+      options.env ||= {};
+      options.env = { ...restEnv, ...options.env };
+
+      return exec(`node ${RSBUILD_BIN_PATH} ${command}`, options);
+    };
+    await use(execCli);
   },
 });
 

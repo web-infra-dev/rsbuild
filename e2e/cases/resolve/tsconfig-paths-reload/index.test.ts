@@ -5,14 +5,13 @@ import {
   getRandomPort,
   gotoPage,
   rspackTest,
-  runCli,
 } from '@e2e/helper';
 import fse from 'fs-extra';
 import { tempConfig } from './rsbuild.config';
 
 rspackTest(
   'should watch tsconfig.json and reload the server when it changes',
-  async ({ page, editFile }) => {
+  async ({ page, editFile, execCli }) => {
     if (process.platform === 'win32') {
       return;
     }
@@ -24,10 +23,8 @@ rspackTest(
     await fse.copy(join(__dirname, 'tsconfig.json'), tempConfig);
 
     const port = await getRandomPort();
-    const { close } = runCli('dev', {
-      cwd: __dirname,
+    execCli('dev', {
       env: {
-        ...process.env,
         PORT: String(port),
       },
     });
@@ -38,7 +35,5 @@ rspackTest(
 
     await editFile(tempConfig, (code) => code.replace('foo', 'bar'));
     await expect(page.locator('#content')).toHaveText('bar');
-
-    close();
   },
 );

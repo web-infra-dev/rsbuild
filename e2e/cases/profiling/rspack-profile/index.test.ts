@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { expect, rspackTest, runCli, test } from '@e2e/helper';
+import { expect, rspackTest, test } from '@e2e/helper';
 import { removeSync } from 'fs-extra';
 
 test.afterAll(() => {
@@ -37,17 +37,18 @@ rspackTest(
   },
 );
 
-rspackTest('should generate rspack profile as expected in build', async () => {
-  const { logs, close, expectLog } = runCli('build', {
-    cwd: __dirname,
-    env: {
-      ...process.env,
-      RSPACK_PROFILE: 'OVERVIEW',
-    },
-  });
+rspackTest(
+  'should generate rspack profile as expected in build',
+  async ({ execCli, logHelper }) => {
+    execCli('build', {
+      env: {
+        RSPACK_PROFILE: 'OVERVIEW',
+      },
+    });
+    const { logs, expectLog } = logHelper;
 
-  await expectLog(PROFILE_LOG);
-  const profileFile = getProfilePath(logs);
-  expect(fs.existsSync(profileFile!)).toBeTruthy();
-  close();
-});
+    await expectLog(PROFILE_LOG);
+    const profileFile = getProfilePath(logs);
+    expect(fs.existsSync(profileFile!)).toBeTruthy();
+  },
+);
