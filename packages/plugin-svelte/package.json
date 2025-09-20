@@ -35,7 +35,7 @@
     "@rslib/core": "0.13.3",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^22.18.3",
-    "svelte": "^5.38.10",
+    "svelte": "^5.39.3",
     "typescript": "^5.9.2"
   },
   "peerDependencies": {
