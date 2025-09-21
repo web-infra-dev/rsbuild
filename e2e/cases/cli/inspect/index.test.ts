@@ -1,18 +1,15 @@
 import path from 'node:path';
-import { expect, readDirContents, rspackTest, runCliSync } from '@e2e/helper';
+import { expect, readDirContents, rspackTest } from '@e2e/helper';
 import { removeSync } from 'fs-extra';
 
 const clean = () => {
   removeSync(path.join(__dirname, 'dist'));
-  delete process.env.NODE_ENV;
 };
 
-rspackTest('should run inspect command correctly', async () => {
+rspackTest('should run inspect command correctly', async ({ execCliSync }) => {
   clean();
 
-  runCliSync('inspect', {
-    cwd: __dirname,
-  });
+  execCliSync('inspect');
 
   const files = await readDirContents(path.join(__dirname, 'dist/.rsbuild'));
   const fileNames = Object.keys(files);
@@ -34,12 +31,10 @@ rspackTest('should run inspect command correctly', async () => {
 
 rspackTest(
   'should run inspect command with mode option correctly',
-  async () => {
+  async ({ execCliSync }) => {
     clean();
 
-    runCliSync('inspect --mode production', {
-      cwd: __dirname,
-    });
+    execCliSync('inspect --mode production');
 
     const files = await readDirContents(path.join(__dirname, 'dist/.rsbuild'));
     const fileNames = Object.keys(files);
@@ -59,12 +54,10 @@ rspackTest(
 
 rspackTest(
   'should run inspect command with output option correctly',
-  async () => {
+  async ({ execCliSync }) => {
     clean();
 
-    runCliSync('inspect --output foo', {
-      cwd: __dirname,
-    });
+    execCliSync('inspect --output foo');
 
     const outputs = await readDirContents(path.join(__dirname, 'dist/foo'));
     const outputFiles = Object.keys(outputs);

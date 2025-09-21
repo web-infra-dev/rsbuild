@@ -25,7 +25,6 @@ rspackTest(
   async ({ exec, logHelper }) => {
     exec('node ./dev.mjs', {
       env: {
-        ...process.env,
         RSPACK_PROFILE: 'OVERVIEW',
       },
     });
