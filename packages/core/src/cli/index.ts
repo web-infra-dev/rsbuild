@@ -14,12 +14,6 @@ function initNodeEnv() {
 }
 
 function showGreeting() {
-  // Skip greeting when help is requested, as cac's help output already contains
-  // information that would be redundant with the greeting message
-  if (argv.some((item) => item === '--help' || item === '-h')) {
-    return;
-  }
-
   // Ensure consistent spacing before the greeting message.
   // Different package managers handle output formatting differently - some automatically
   // add a blank line before command output, while others do not.

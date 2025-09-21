@@ -84,7 +84,10 @@ const applyServerOptions = (command: Command) => {
 export function setupCommands(): void {
   const cli = cac('rsbuild');
 
-  cli.help();
+  cli.help((sections) => {
+    // remove the default version log as we already log it in greeting
+    sections.shift();
+  });
   cli.version(RSBUILD_VERSION);
 
   // Apply common options to all commands
