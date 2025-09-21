@@ -1,6 +1,8 @@
 import {
   type ChildProcess,
   type ExecOptions,
+  type ExecSyncOptions,
+  execSync,
   exec as nodeExec,
 } from 'node:child_process';
 import { promises } from 'node:fs';
@@ -28,6 +30,8 @@ type Exec = (
 ) => {
   childProcess: ChildProcess;
 };
+
+type ExecSync = (command: string, options?: ExecSyncOptions) => string;
 
 type RsbuildFixture = {
   /**
@@ -103,9 +107,31 @@ type RsbuildFixture = {
    * const { childProcess } = execCli('build --watch');
    */
   execCli: Exec;
+  /**
+   * Execute an Rsbuild CLI command synchronously in the test file's cwd.
+   * @param command The CLI command to execute (without 'rsbuild' prefix).
+   * @param options Optional execution options.
+   * @example
+   * execCliSync('build', {
+   *   // ...options
+   * });
+   */
+  execCliSync: ExecSync;
 };
 
 type Close = DevResult['close'];
+
+const setupExecOptions = <T extends ExecOptions | ExecSyncOptions>(
+  options: T,
+  cwd: string,
+): T => {
+  // inherit process.env from current process
+  const { NODE_ENV: _, ...restEnv } = process.env;
+  options.env ||= {};
+  options.env = { ...restEnv, ...options.env };
+  options.cwd ||= cwd;
+  return options;
+};
 
 export const test = base.extend<RsbuildFixture>({
   // biome-ignore lint/correctness/noEmptyPattern: required by playwright
@@ -222,11 +248,8 @@ export const test = base.extend<RsbuildFixture>({
   exec: async ({ cwd, logHelper }, use) => {
     let close: (() => void) | undefined;
 
-    const exec: Exec = (command, options) => {
-      const childProcess = nodeExec(command, {
-        cwd,
-        ...options,
-      });
+    const exec: Exec = (command, options = {}) => {
+      const childProcess = nodeExec(command, setupExecOptions(options, cwd));
 
       const onData = (data: Buffer) => {
         logHelper.addLog(data.toString());
@@ -250,14 +273,19 @@ export const test = base.extend<RsbuildFixture>({
 
   execCli: async ({ exec }, use) => {
     const execCli: Exec = (command, options = {}) => {
-      // inherit process.env from current process
-      const { NODE_ENV: _, ...restEnv } = process.env;
-      options.env ||= {};
-      options.env = { ...restEnv, ...options.env };
-
       return exec(`node ${RSBUILD_BIN_PATH} ${command}`, options);
     };
     await use(execCli);
+  },
+
+  execCliSync: async ({ cwd }, use) => {
+    const execCliSync: ExecSync = (command, options = {}) => {
+      return execSync(
+        `node ${RSBUILD_BIN_PATH} ${command}`,
+        setupExecOptions(options, cwd),
+      ).toString();
+    };
+    await use(execCliSync);
   },
 });
 

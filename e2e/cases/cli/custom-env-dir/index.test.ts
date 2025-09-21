@@ -1,11 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expect, rspackTest, runCliSync } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackTest('should support a custom env directory', async () => {
-  runCliSync('build --env-dir env', {
-    cwd: __dirname,
-  });
+rspackTest('should support a custom env directory', async ({ execCliSync }) => {
+  execCliSync('build --env-dir env');
   const content = fs.readFileSync(
     path.join(__dirname, 'dist/static/js/index.js'),
     'utf-8',

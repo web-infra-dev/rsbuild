@@ -1,11 +1,5 @@
 import { join } from 'node:path';
-import {
-  expect,
-  readDirContents,
-  rspackTest,
-  runCliSync,
-  test,
-} from '@e2e/helper';
+import { expect, readDirContents, rspackTest, test } from '@e2e/helper';
 import { remove } from 'fs-extra';
 
 const distPath = join(__dirname, 'dist');
@@ -16,10 +10,8 @@ test.beforeEach(async () => {
 
 rspackTest(
   'should only build specified environment when using --environment option',
-  async () => {
-    runCliSync('build --environment web2', {
-      cwd: __dirname,
-    });
+  async ({ execCliSync }) => {
+    execCliSync('build --environment web2');
 
     const files = await readDirContents(distPath);
     const outputFiles = Object.keys(files);
@@ -35,10 +27,8 @@ rspackTest(
 
 rspackTest(
   'should build specified environments when using --environment shorten option',
-  async () => {
-    runCliSync('build --environment web1,web2', {
-      cwd: __dirname,
-    });
+  async ({ execCliSync }) => {
+    execCliSync('build --environment web1,web2');
 
     const files = await readDirContents(distPath);
     const outputFiles = Object.keys(files);

@@ -1,11 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expect, rspackTest, runCliSync } from '@e2e/helper';
+import { expect, rspackTest } from '@e2e/helper';
 
-rspackTest('should disable loading env files', async () => {
-  runCliSync('build --no-env', {
-    cwd: __dirname,
-  });
+rspackTest('should disable loading env files', async ({ execCliSync }) => {
+  execCliSync('build --no-env');
   const content = fs.readFileSync(
     path.join(__dirname, 'dist/static/js/index.js'),
     'utf-8',
