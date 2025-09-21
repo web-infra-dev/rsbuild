@@ -91,7 +91,7 @@ export function setupCommands(): void {
   applyCommonOptions(cli);
 
   // Allow to run `rsbuild` without any sub-command to trigger dev
-  const devCommand = cli.command('dev', 'Start the dev server').alias('');
+  const devCommand = cli.command('', 'Start the dev server').alias('dev');
   const buildCommand = cli.command('build', 'Build the app for production');
   const previewCommand = cli.command(
     'preview',
