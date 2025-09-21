@@ -23,7 +23,7 @@ function showGreeting() {
   const isBun = npm_execpath?.includes('.bun');
   const isNodeRun = Boolean(NODE_RUN_SCRIPT_NAME);
   const prefix = isNpx || isBun || isNodeRun ? '\n' : '';
-  logger.greet(`${prefix}  Rsbuild v${RSBUILD_VERSION}\n`);
+  logger.greet(`${prefix}Rsbuild v${RSBUILD_VERSION}\n`);
 }
 
 // ensure log level is set before any log is printed
