@@ -12,7 +12,7 @@ import {
 } from './helpers';
 import { initPluginAPI } from './initPlugins';
 import { type LoadEnvResult, loadEnv } from './loadEnv';
-import { logger } from './logger';
+import { isDebug, logger } from './logger';
 import { createPluginManager } from './pluginManager';
 import { pluginAppIcon } from './plugins/appIcon';
 import { pluginAsset } from './plugins/asset';
@@ -172,7 +172,8 @@ export async function createRsbuild(
     ? await options.rsbuildConfig()
     : options.rsbuildConfig || {};
 
-  if (config.logLevel) {
+  // debug mode should always verbose logs
+  if (config.logLevel && !isDebug()) {
     logger.level = config.logLevel;
   }
 

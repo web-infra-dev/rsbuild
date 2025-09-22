@@ -1,4 +1,5 @@
 import cac, { type CAC, type Command } from 'cac';
+import { color } from '../helpers';
 import type { ConfigLoader } from '../loadConfig';
 import { logger } from '../logger';
 import { RSPACK_BUILD_ERROR } from '../provider/build';
@@ -84,14 +85,13 @@ const applyServerOptions = (command: Command) => {
 export function setupCommands(): void {
   const cli = cac('rsbuild');
 
-  cli.help();
   cli.version(RSBUILD_VERSION);
 
   // Apply common options to all commands
   applyCommonOptions(cli);
 
-  // Allow to run `rsbuild` without any sub-command to trigger dev
-  const devCommand = cli.command('dev', 'Start the dev server').alias('');
+  const devDescription = `Start the dev server ${color.dim('(default if no command is given)')}`;
+  const devCommand = cli.command('', devDescription).alias('dev');
   const buildCommand = cli.command('build', 'Build the app for production');
   const previewCommand = cli.command(
     'preview',
@@ -178,6 +178,29 @@ export function setupCommands(): void {
         process.exit(1);
       }
     });
+
+  cli.help((sections) => {
+    // remove the default version log as we already log it in greeting
+    sections.shift();
+
+    for (const section of sections) {
+      // Fix the dev command name
+      if (section.title === 'Commands') {
+        section.body = section.body.replace(
+          `         ${devDescription}`,
+          `dev      ${devDescription}`,
+        );
+      }
+
+      // Simplify the help output for sub-commands
+      if (section.title?.startsWith('For more info')) {
+        section.title = color.dim('  For details on a sub-command, run');
+        section.body = color.dim('  $ rsbuild <command> -h');
+      } else {
+        section.title = color.cyan(section.title);
+      }
+    }
+  });
 
   cli.parse();
 }

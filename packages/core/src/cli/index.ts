@@ -1,4 +1,4 @@
-import { logger } from '../logger';
+import { isDebug, logger } from '../logger';
 import type { LogLevel } from '../types';
 import { setupCommands } from './commands';
 
@@ -14,12 +14,6 @@ function initNodeEnv() {
 }
 
 function showGreeting() {
-  // Skip greeting when help is requested, as cac's help output already contains
-  // information that would be redundant with the greeting message
-  if (argv.some((item) => item === '--help' || item === '-h')) {
-    return;
-  }
-
   // Ensure consistent spacing before the greeting message.
   // Different package managers handle output formatting differently - some automatically
   // add a blank line before command output, while others do not.
@@ -29,7 +23,7 @@ function showGreeting() {
   const isBun = npm_execpath?.includes('.bun');
   const isNodeRun = Boolean(NODE_RUN_SCRIPT_NAME);
   const prefix = isNpx || isBun || isNodeRun ? '\n' : '';
-  logger.greet(`${prefix}  Rsbuild v${RSBUILD_VERSION}\n`);
+  logger.greet(`${prefix}Rsbuild v${RSBUILD_VERSION}\n`);
 }
 
 // ensure log level is set before any log is printed
@@ -39,7 +33,7 @@ function setupLogLevel() {
   );
   if (logLevelIndex !== -1) {
     const level = process.argv[logLevelIndex + 1];
-    if (level && ['warn', 'error', 'silent'].includes(level)) {
+    if (level && ['warn', 'error', 'silent'].includes(level) && !isDebug()) {
       logger.level = level as LogLevel;
     }
   }

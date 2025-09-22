@@ -20,7 +20,7 @@ export default function Overview() {
   const Nodes = OVERVIEW_GROUPS.map((group) => (
     <div key={group.name} className={styles.overviewGroups}>
       <div className={styles.group}>
-        <h2>{group.name}</h2>
+        <div className={styles.title}>{group.name}</div>
         <ul>
           {group.items.map((item) => (
             <li key={item.text}>

@@ -31,6 +31,10 @@ export default {
 - `error`：输出 `error` 级别的日志
 - `silent`：不输出任何日志
 
+::: note
+当 [开启调试模式](/guide/debug/debug-mode) 时，始终会输出所有日志。
+:::
+
 ## 局限性
 
 目前你无法为每一个 Rsbuild 实例设置不同的日志级别，因为 Rsbuild 内部有一个全局共享的 [logger](/api/javascript-api/core#logger) 实例，所有 Rsbuild 实例都会共享这个 logger 实例。

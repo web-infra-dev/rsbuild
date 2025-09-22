@@ -165,6 +165,41 @@ export default {
 
 如果你是插件开发者，可查看 [开发 Environment 插件](/plugins/dev/index#environment-插件) 了解详情。
 
+## 配置输出目录
+
+在多环境构建时，建议为不同的环境配置不同的输出目录，以避免不同环境的同名构建产物互相覆盖。
+
+你可以通过 [output.distPath.root](/config/output/dist-path) 来为每个环境设置独立的输出根目录。
+
+比如，将 web 产物输出到默认的 `dist`，将 node 产物输出到 `dist/server`：
+
+```ts title="rsbuild.config.ts"
+export default {
+  environments: {
+    web: {
+      source: {
+        entry: {
+          index: './src/index.client.js',
+        },
+      },
+    },
+    node: {
+      source: {
+        entry: {
+          index: './src/index.server.js',
+        },
+      },
+      output: {
+        target: 'node',
+        distPath: {
+          root: 'dist/server',
+        },
+      },
+    },
+  },
+};
+```
+
 ## 插件 API
 
 ### 更新配置

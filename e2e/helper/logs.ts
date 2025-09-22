@@ -153,9 +153,7 @@ export const proxyConsole = ({
 
   const printCapturedLogs = () => {
     restore();
-    for (const log of logHelper.originalLogs) {
-      console.log(log);
-    }
+    console.log(logHelper.originalLogs.join('\n'));
   };
 
   return {

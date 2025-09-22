@@ -6,7 +6,6 @@ export const __dirname: string = dirname(__filename);
 export const isDeno: boolean = typeof Deno !== 'undefined';
 
 // Paths
-// loaders will be emitted to the same folder of the main bundle
 export const ROOT_DIST_DIR = 'dist';
 export const HTML_DIST_DIR = './';
 export const FAVICON_DIST_DIR = './';
@@ -18,6 +17,7 @@ export const WASM_DIST_DIR = 'static/wasm';
 export const IMAGE_DIST_DIR = 'static/image';
 export const MEDIA_DIST_DIR = 'static/media';
 export const ASSETS_DIST_DIR = 'static/assets';
+// loaders will be emitted to the same folder of the main bundle
 export const LOADER_PATH: string = join(__dirname);
 export const STATIC_PATH: string = join(__dirname, '../static');
 export const COMPILED_PATH: string = join(__dirname, '../compiled');

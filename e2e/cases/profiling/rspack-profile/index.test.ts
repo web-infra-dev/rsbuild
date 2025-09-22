@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { expect, rspackTest, runCli, runCommand, test } from '@e2e/helper';
+import { expect, rspackTest, test } from '@e2e/helper';
 import { removeSync } from 'fs-extra';
 
 test.afterAll(() => {
@@ -20,32 +20,34 @@ const getProfilePath = (logs: string[]) =>
     ?.split(PROFILE_LOG)[1]
     ?.trim();
 
-rspackTest('should generate rspack profile as expected in dev', async () => {
-  const { logs, close, expectLog } = runCommand('node ./dev.mjs', {
-    cwd: __dirname,
-    env: {
-      ...process.env,
-      RSPACK_PROFILE: 'OVERVIEW',
-    },
-  });
+rspackTest(
+  'should generate rspack profile as expected in dev',
+  async ({ exec, logHelper }) => {
+    exec('node ./dev.mjs', {
+      env: {
+        RSPACK_PROFILE: 'OVERVIEW',
+      },
+    });
+    const { logs, expectLog } = logHelper;
 
-  await expectLog(PROFILE_LOG);
-  const profileFile = getProfilePath(logs);
-  expect(fs.existsSync(profileFile!)).toBeTruthy();
-  close();
-});
+    await expectLog(PROFILE_LOG);
+    const profileFile = getProfilePath(logs);
+    expect(fs.existsSync(profileFile!)).toBeTruthy();
+  },
+);
 
-rspackTest('should generate rspack profile as expected in build', async () => {
-  const { logs, close, expectLog } = runCli('build', {
-    cwd: __dirname,
-    env: {
-      ...process.env,
-      RSPACK_PROFILE: 'OVERVIEW',
-    },
-  });
+rspackTest(
+  'should generate rspack profile as expected in build',
+  async ({ execCli, logHelper }) => {
+    execCli('build', {
+      env: {
+        RSPACK_PROFILE: 'OVERVIEW',
+      },
+    });
+    const { logs, expectLog } = logHelper;
 
-  await expectLog(PROFILE_LOG);
-  const profileFile = getProfilePath(logs);
-  expect(fs.existsSync(profileFile!)).toBeTruthy();
-  close();
-});
+    await expectLog(PROFILE_LOG);
+    const profileFile = getProfilePath(logs);
+    expect(fs.existsSync(profileFile!)).toBeTruthy();
+  },
+);
