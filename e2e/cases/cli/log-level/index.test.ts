@@ -20,3 +20,18 @@ rspackTest(
     expect(stdout).not.toContain('built in');
   },
 );
+
+rspackTest(
+  'should always verbose logs when debug mode is enabled',
+  async ({ execCliSync }) => {
+    const stdout = stripAnsi(
+      execCliSync('build --logLevel error', {
+        env: {
+          ...process.env,
+          DEBUG: 'rsbuild',
+        },
+      }),
+    );
+    expect(stdout).toContain('config inspection completed');
+  },
+);

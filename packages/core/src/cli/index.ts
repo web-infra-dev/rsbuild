@@ -1,4 +1,4 @@
-import { logger } from '../logger';
+import { isDebug, logger } from '../logger';
 import type { LogLevel } from '../types';
 import { setupCommands } from './commands';
 
@@ -33,7 +33,7 @@ function setupLogLevel() {
   );
   if (logLevelIndex !== -1) {
     const level = process.argv[logLevelIndex + 1];
-    if (level && ['warn', 'error', 'silent'].includes(level)) {
+    if (level && ['warn', 'error', 'silent'].includes(level) && !isDebug()) {
       logger.level = level as LogLevel;
     }
   }

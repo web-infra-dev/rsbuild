@@ -173,7 +173,8 @@ export async function createRsbuild(
     : options.rsbuildConfig || {};
 
   if (config.logLevel) {
-    logger.level = config.logLevel;
+    // debug mode should always verbose logs
+    logger.level = logger.level === 'verbose' ? 'verbose' : config.logLevel;
   }
 
   applyEnvsToConfig(config, envs);

@@ -31,6 +31,10 @@ export default {
 - `error`: Output `error` level logs
 - `silent`: Do not output any logs
 
+::: note
+When in [Debug mode](/guide/debug/debug-mode), all logs are always output.
+:::
+
 ## Limitations
 
 Currently, you cannot set different log levels for each Rsbuild instance, because Rsbuild has a global shared [logger](/api/javascript-api/core#logger) instance, and all Rsbuild instances will share this logger instance.
