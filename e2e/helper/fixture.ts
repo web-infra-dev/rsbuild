@@ -23,8 +23,8 @@ import { type ExtendedLogHelper, proxyConsole } from './logs';
 
 function makeBox(title: string) {
   const rawHeader = `╭──────────────  Logs from: "${title}" ──────────────╮`;
-  const visible = stripAnsi(rawHeader);
-  const width = stringWidth(visible);
+  const strippedHeader = stripAnsi(rawHeader);
+  const width = stringWidth(strippedHeader);
   const footer = `╰${'─'.repeat(Math.max(0, width - 2))}╯`;
   return {
     header: color.bold(`\n${rawHeader}\n`),
