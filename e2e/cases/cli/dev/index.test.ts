@@ -7,7 +7,7 @@ rspackTest(
     execCli(`dev --port ${port}`);
     await logHelper.expectBuildEnd();
     await gotoPage(page, { port });
-    await expect(page.locator('#test')).toHaveText('hel22o');
+    await expect(page.locator('#test')).toHaveText('hello');
   },
 );
 
@@ -18,6 +18,6 @@ rspackTest(
     execCli(`--port ${port}`);
     await logHelper.expectBuildEnd();
     await gotoPage(page, { port });
-    await expect(page.locator('#test')).toHaveText('hel22lo');
+    await expect(page.locator('#test')).toHaveText('hello');
   },
 );
