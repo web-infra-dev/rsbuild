@@ -10,7 +10,6 @@
     }
   },
   "dependencies": {
-    "picocolors": "^1.1.1",
-    "string-width": "^8.1.0"
+    "picocolors": "^1.1.1"
   }
 }

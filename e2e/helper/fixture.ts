@@ -7,10 +7,7 @@ import {
 } from 'node:child_process';
 import { promises } from 'node:fs';
 import path from 'node:path';
-import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import base, { expect } from '@playwright/test';
-import color from 'picocolors';
-import stringWidth from 'string-width';
 import { RSBUILD_BIN_PATH } from './constants';
 import {
   type Build,
@@ -22,13 +19,11 @@ import {
 import { type ExtendedLogHelper, proxyConsole } from './logs';
 
 function makeBox(title: string) {
-  const rawHeader = `╭──────────────  Logs from: "${title}" ──────────────╮`;
-  const strippedHeader = stripAnsi(rawHeader);
-  const width = stringWidth(strippedHeader);
-  const footer = `╰${'─'.repeat(Math.max(0, width - 2))}╯`;
+  const header = `╭──────────────  Logs from: "${title}" ──────────────╮`;
+  const footer = `╰──────────────  Logs from: "${title}" ──────────────╯`;
   return {
-    header: color.bold(`\n${rawHeader}\n`),
-    footer: color.bold(`${footer}\n`),
+    header: `\n${header}\n`,
+    footer: `${footer}\n`,
   };
 }
 
