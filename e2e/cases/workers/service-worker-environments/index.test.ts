@@ -1,4 +1,4 @@
-import { expect, gotoPage, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 import type { Page } from 'playwright';
 
 declare global {
@@ -7,11 +7,10 @@ declare global {
   }
 }
 
-const waitForServiceWorker = async (page: Page, port: number) => {
+const waitForServiceWorker = async (page: Page) => {
   // Setup service worker in playwright
   const context = page.context();
   const serviceWorkerPromise = context.waitForEvent('serviceworker');
-  await gotoPage(page, { port });
   await page.reload();
   await serviceWorkerPromise;
   await page.evaluate(async () => {
@@ -27,18 +26,20 @@ const waitForServiceWorker = async (page: Page, port: number) => {
   expect(await page.evaluate(() => window.swStatus)).toBe('ready');
 };
 
-test('should compile service worker in build', async ({ page, build }) => {
-  const rsbuild = await build();
-  const { port } = await rsbuild.instance.preview();
+test('should compile service worker in build', async ({
+  page,
+  buildPreview,
+}) => {
+  const rsbuild = await buildPreview();
   const files = rsbuild.getDistFiles();
   const filenames = Object.keys(files);
   expect(
     filenames.some((filename) => filename.endsWith('/sw.js')),
   ).toBeTruthy();
-  await waitForServiceWorker(page, port);
+  await waitForServiceWorker(page);
 });
 
-test('should compile service worker in dev', async ({ devOnly, page }) => {
-  const { port } = await devOnly();
-  await waitForServiceWorker(page, port);
+test('should compile service worker in dev', async ({ dev, page }) => {
+  await dev();
+  await waitForServiceWorker(page);
 });
