@@ -22,7 +22,7 @@ rspackTest(
 );
 
 rspackTest(
-  'should always verbose logs when debug mode is enabled',
+  'should always print verbose logs when debug mode is enabled',
   async ({ execCliSync }) => {
     const stdout = stripAnsi(
       execCliSync('build --logLevel error', {
