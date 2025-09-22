@@ -79,7 +79,7 @@
     "html-rspack-plugin": "6.1.3",
     "http-proxy-middleware": "^2.0.9",
     "launch-editor-middleware": "^2.11.1",
-    "memfs": "^4.42.0",
+    "memfs": "^4.43.0",
     "mrmime": "^2.0.1",
     "on-finished": "2.4.1",
     "open": "^10.2.0",
