@@ -34,7 +34,7 @@ test('should compile service worker in build', async ({
   const files = rsbuild.getDistFiles();
   const filenames = Object.keys(files);
   expect(
-    filenames.some((filename) => filename.endsWith('/sw.js')),
+    filenames.some((filename) => filename.endsWith('dist/sw.js')),
   ).toBeTruthy();
   await waitForServiceWorker(page);
 });
