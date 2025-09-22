@@ -7,8 +7,10 @@ import {
 } from 'node:child_process';
 import { promises } from 'node:fs';
 import path from 'node:path';
+import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import base, { expect } from '@playwright/test';
 import color from 'picocolors';
+import stringWidth from 'string-width';
 import { RSBUILD_BIN_PATH } from './constants';
 import {
   type Build,
@@ -18,6 +20,17 @@ import {
   type DevResult,
 } from './jsApi';
 import { type ExtendedLogHelper, proxyConsole } from './logs';
+
+function makeBox(title: string) {
+  const rawHeader = `╭──────────────  Logs from: "${title}" ──────────────╮`;
+  const visible = stripAnsi(rawHeader);
+  const width = stringWidth(visible);
+  const footer = `╰${'─'.repeat(Math.max(0, width - 2))}╯`;
+  return {
+    header: color.bold(`\n${rawHeader}\n`),
+    footer: color.bold(`${footer}\n`),
+  };
+}
 
 type EditFile = (
   filename: string,
@@ -152,15 +165,10 @@ export const test = base.extend<RsbuildFixture>({
         testInfo.status !== testInfo.expectedStatus &&
         logHelper.logs.length
       ) {
-        // header log
-        const header = `╭──────────────  Logs from: "${testInfo.title}" ──────────────╮`;
-        console.log(color.bold(`\n${header}\n`));
-
-        // body logs
+        const { header, footer } = makeBox(testInfo.title);
+        console.log(header);
         logHelper.printCapturedLogs();
-
-        // footer log
-        console.log(color.bold(`╰${'─'.repeat(header.length - 2)}╯\n`));
+        console.log(footer);
       }
     },
     { auto: true },
