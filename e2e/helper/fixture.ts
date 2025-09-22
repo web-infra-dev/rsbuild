@@ -23,8 +23,11 @@ import { type ExtendedLogHelper, proxyConsole } from './logs';
 
 function makeBox(title: string) {
   const rawHeader = `╭──────────────  Logs from: "${title}" ──────────────╮`;
-  const strippedHeader = stripAnsi(rawHeader);
-  const width = stringWidth(strippedHeader);
+  const width = stringWidth(stripAnsi(rawHeader), {
+    // Treat ambiguous-width characters (like box drawing chars) as wide (2 columns),
+    // so that string width matches how GitHub Actions renders them.
+    ambiguousIsNarrow: false,
+  });
   const footer = `╰${'─'.repeat(Math.max(0, width - 2))}╯`;
   return {
     header: color.bold(`\n${rawHeader}\n`),
