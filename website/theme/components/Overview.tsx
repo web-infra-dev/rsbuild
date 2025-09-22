@@ -32,5 +32,5 @@ export default function Overview() {
     </div>
   ));
 
-  return <div className={`${styles.root}`}>{Nodes}</div>;
+  return <div className={styles.root}>{Nodes}</div>;
 }
