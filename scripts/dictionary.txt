@@ -115,6 +115,7 @@ rstest
 ruleset
 selfsign
 selfsigned
+serviceworker
 shiki
 shikijs
 sirv
