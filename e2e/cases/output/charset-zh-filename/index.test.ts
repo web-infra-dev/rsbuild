@@ -9,8 +9,8 @@ rspackTest('should resolve Chinese filename in dev', async ({ page, dev }) => {
 
 rspackTest(
   'should resolve Chinese filename in build',
-  async ({ page, build }) => {
-    await build();
+  async ({ page, buildPreview }) => {
+    await buildPreview();
     expect(await page.evaluate('window.test')).toBe(expected);
   },
 );
