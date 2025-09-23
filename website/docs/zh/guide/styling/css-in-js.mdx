@@ -100,16 +100,39 @@ export default defineConfig({
     rspack: {
       plugins: [new VanillaExtractPlugin()],
     },
-    // 你可以手动关闭 css url 解析，避免重新解析 vanilla-extract/webpack-plugin 生成的 图片资源 url
-    // 详见：https://github.com/web-infra-dev/rsbuild/issues/6215
-    // cssLoader: {
-    //   url: false,
-    // },
   },
 });
 ```
 
 > 参考示例：[vanilla-extract](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/vanilla-extract)。
+
+#### 静态资源
+
+当导入静态资源时，使用 import 语法：
+
+```ts title="src/App.css.ts"
+import { style } from '@vanilla-extract/css';
+import logoUrl from './logo.png';
+
+export const containerStyle = style({
+  backgroundImage: `url(${logoUrl})`,
+});
+```
+
+由于 `logoUrl` 已经是一个指向 dist 目录的解析路径，`css-loader` 不需要再次处理它。通过 [tools.cssLoader.url](/config/tools/css-loader) 禁用 CSS URL 处理，以避免遇到模块解析错误：
+
+```ts title="rsbuild.config.ts"
+export default defineConfig({
+  // ... 其他配置
+  tools: {
+    cssLoader: {
+      url: false,
+    },
+  },
+});
+```
+
+> 参考：[#6215](https://github.com/web-infra-dev/rsbuild/issues/6215)。
 
 ## StyleX
 
