@@ -6,5 +6,6 @@
   "browser-compatibility",
   "module-federation",
   "environments",
-  "ssr"
+  "ssr",
+  "testing"
 ]
