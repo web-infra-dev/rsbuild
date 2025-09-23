@@ -5,7 +5,7 @@ rspackTest(
   async ({ page, devOnly }) => {
     const rsbuild = await devOnly();
 
-    // the first build
+    // initial build
     await rsbuild.expectBuildEnd();
     rsbuild.clearLogs();
 

@@ -17,7 +17,7 @@ rspackTest(
     });
     const { expectBuildEnd, expectLog, clearLogs } = logHelper;
 
-    // the first build
+    // initial build
     await expectBuildEnd();
     await gotoPage(page, { port });
     await expect(page.locator('#test')).toHaveText('1');
