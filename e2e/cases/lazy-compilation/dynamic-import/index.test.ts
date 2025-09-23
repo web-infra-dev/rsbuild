@@ -1,6 +1,6 @@
 import { expect, gotoPage, rspackTest } from '@e2e/helper';
 
-const BUILD_FOO = 'building src/foo.js';
+const BUILD_FOO = /building src[\\/]foo.js/;
 
 rspackTest(
   'should lazy compile dynamic imported modules',

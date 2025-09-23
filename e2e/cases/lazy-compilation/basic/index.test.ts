@@ -1,7 +1,7 @@
 import { expect, gotoPage, rspackTest } from '@e2e/helper';
 
-const BUILD_PAGE1 = 'building src/page1/index.js';
-const BUILD_PAGE2 = 'building src/page2/index.js';
+const BUILD_PAGE1 = /building src[\\/]page1[\\/]index.js/;
+const BUILD_PAGE2 = /building src[\\/]page2[\\/]index.js/;
 
 rspackTest(
   'should render pages correctly when using lazy compilation',
