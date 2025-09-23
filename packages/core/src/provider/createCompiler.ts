@@ -52,10 +52,18 @@ function formatFileList(paths: string[], rootPath: string) {
   return fileInfo;
 }
 
-function printBuildLog(compiler: Rspack.Compiler, context: InternalContext) {
-  const changedFiles = compiler.modifiedFiles
-    ? Array.from(compiler.modifiedFiles)
-    : null;
+function printBuildLog(
+  compiler: Rspack.Compiler,
+  context: InternalContext,
+  lazyModules: Set<string>,
+) {
+  const { modifiedFiles } = compiler;
+  const changedFiles = modifiedFiles?.size
+    ? Array.from(modifiedFiles)
+    : lazyModules.size
+      ? Array.from(lazyModules)
+      : null;
+
   if (changedFiles?.length) {
     const fileInfo = formatFileList(changedFiles, context.rootPath);
     logger.start(`building ${color.dim(fileInfo)}`);
@@ -65,6 +73,7 @@ function printBuildLog(compiler: Rspack.Compiler, context: InternalContext) {
   const removedFiles = compiler.removedFiles
     ? Array.from(compiler.removedFiles)
     : null;
+
   if (removedFiles?.length) {
     const fileInfo = formatFileList(removedFiles, context.rootPath);
     logger.start(`building ${color.dim(`removed ${fileInfo}`)}`);
@@ -110,11 +119,46 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     }
   };
 
+  const lazyModules: Set<string> = new Set();
+
+  // Collect lazy compiled modules from the infrastructure logs
+  compiler.hooks.infrastructureLog.tap(
+    'rsbuild:compiling',
+    // @ts-ignore TODO: https://github.com/web-infra-dev/rspack/pull/11742
+    (name, _, args) => {
+      const log = args[0];
+      if (
+        name === 'LazyCompilation' &&
+        typeof log === 'string' &&
+        log.startsWith('lazy-compilation-proxy')
+      ) {
+        const resource = log.split(' ')[0];
+        if (!resource) {
+          return;
+        }
+
+        const { rootPath } = context;
+        const absolutePath = resource.split('!').pop();
+
+        if (absolutePath?.startsWith(rootPath)) {
+          const relativePath = absolutePath.replace(rootPath, '');
+          lazyModules.add(relativePath);
+        }
+      }
+    },
+  );
+
   compiler.hooks.watchRun.tap('rsbuild:compiling', (compiler) => {
     logRspackVersion();
+
     if (!isCompiling) {
-      printBuildLog(compiler, context);
+      printBuildLog(compiler, context, lazyModules);
     }
+
+    if (lazyModules.size) {
+      lazyModules.clear();
+    }
+
     isCompiling = true;
   });
 

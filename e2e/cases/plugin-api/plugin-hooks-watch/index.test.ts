@@ -17,7 +17,7 @@ rspackTest(
       },
     });
 
-    // the first build
+    // initial build
     await rsbuild.expectBuildEnd();
     rsbuild.clearLogs();
 
