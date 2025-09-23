@@ -10,11 +10,11 @@ Web Workers are a type of JavaScript program that runs in the background, indepe
 
 ### Import with constructors
 
-Web Workers are first-class citizens of Rspack, which means you do not need any loader to use web workers directly in Rspack or Rsbuild projects.
+Rspack provides built-in support for Web Workers, which means you can use Web Workers directly in Rsbuild projects without needing any Loaders.
 
 For example, create a file called `worker.js`:
 
-```js title=worker.js
+```js title="worker.js"
 self.onmessage = (event) => {
   const result = event.data * 2;
   self.postMessage(result);
@@ -23,7 +23,7 @@ self.onmessage = (event) => {
 
 Then use this worker in the main thread:
 
-```js title=index.js
+```js title="index.js"
 const worker = new Worker(new URL('./worker.js', import.meta.url));
 
 worker.onmessage = (event) => {
@@ -33,7 +33,7 @@ worker.onmessage = (event) => {
 worker.postMessage(10);
 ```
 
-For more details, please refer to [Rspack - Web Workers](https://rspack.rs/guide/features/web-workers).
+Rspack supports multiple Worker syntaxes by default. See [Rspack - Web Workers](https://rspack.rs/guide/features/web-workers) for more information.
 
 ### Using worker-loader
 
@@ -75,13 +75,13 @@ worker.postMessage({ a: 1 });
 
 > `worker-loader` is no longer maintained. If you don't need to inline Web Workers, we recommend using the `new Worker()` syntax.
 
-### Loading scripts from remote URLs (cross-origin)
+### Loading scripts from remote URLs
 
 By default, the worker script will be emitted as a separate chunk. This script supports uploading to CDN, but must obey the [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
 
 If you want your worker scripts to be accessible across domains, a common solution is to load them via [importScripts](https://developer.mozilla.org/en-US/docs/Web/API/WorkerGlobalScope/importScripts) (not subject to CORS). You can refer to the following code:
 
-```js title=index.js {2}
+```js title="index.js"
 // https://github.com/jantimon/remote-web-worker
 import 'remote-web-worker';
 
@@ -98,16 +98,34 @@ worker.postMessage(10);
 
 For detailed discussions on cross-domain issues, please refer to [Discussions - webpack 5 web worker support for CORS?](https://github.com/webpack/webpack/discussions/14648)
 
-## Build Web Workers outputs
+## Standalone build
 
-Rsbuild supports building Web Workers outputs independently, which is helpful when you need to provide Web Workers outputs for use by other applications.
+Rsbuild supports standalone building of Web Workers bundles. When you need to configure independent build options for Web Workers or provide Web Workers for use by other applications, you can use the following methods.
 
-You can set Rsbuild's [output.target](/config/output/target) configuration to `'web-worker'`, and Rsbuild will generate build outputs suitable for the Web Workers environment.
+Set Rsbuild's [output.target](/config/output/target) configuration option to `'web-worker'` to generate build artifacts that run in Worker threads.
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     target: 'web-worker',
+  },
+};
+```
+
+Use [environments](/config/environments) to build both Web Workers and the main application simultaneously:
+
+```ts title="rsbuild.config.ts"
+export default {
+  environments: {
+    web: {
+      // Build configuration for the main application
+    },
+    webWorker: {
+      // Build configuration for Web Workers
+      output: {
+        target: 'web-worker',
+      },
+    },
   },
 };
 ```
