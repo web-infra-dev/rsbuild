@@ -1,7 +1,7 @@
 import type { Stats as FSStats, ReadStream } from 'node:fs';
+import onFinished from 'on-finished';
 import type { Range, Result as RangeResult, Ranges } from 'range-parser';
 import rangeParser from 'range-parser';
-import onFinishedStream from '../../compiled/on-finished/index.js';
 import { logger } from '../logger';
 import type { RequestHandler } from '../types';
 import type { FilledContext, ServerResponse } from './index';
@@ -498,7 +498,7 @@ export function wrapper(context: FilledContext): RequestHandler {
 
       (bufferOrStream as ReadStream).pipe(res);
 
-      onFinishedStream(res, cleanup);
+      onFinished(res, cleanup);
     }
 
     ready(context, processRequest);
