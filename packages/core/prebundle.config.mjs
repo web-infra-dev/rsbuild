@@ -20,7 +20,6 @@ export default {
   },
   dependencies: [
     'ws',
-    'on-finished',
     'connect',
     'rspack-manifest-plugin',
     'html-rspack-plugin',

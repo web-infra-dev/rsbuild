@@ -1,5 +1,6 @@
 import type { IncomingMessage } from 'node:http';
 import path from 'node:path';
+import onFinished from 'on-finished';
 import { addTrailingSlash, color, getAssetsFromStats } from '../helpers';
 import { logger } from '../logger';
 import type {
@@ -37,12 +38,8 @@ const getStatusCodeColor = (status: number) => {
   return (res: number) => res;
 };
 
-export const getRequestLoggerMiddleware: () => Promise<Connect.NextHandleFunction> =
-  async () => {
-    const { default: onFinished } = await import(
-      '../../compiled/on-finished/index.js'
-    );
-
+export const getRequestLoggerMiddleware: () => Connect.NextHandleFunction =
+  () => {
     return (req, res, next) => {
       const _startAt = process.hrtime();
 

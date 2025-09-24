@@ -67,7 +67,7 @@ export class RsbuildProdServer {
       this.options.serverConfig;
 
     if (logger.level === 'verbose') {
-      this.middlewares.use(await getRequestLoggerMiddleware());
+      this.middlewares.use(getRequestLoggerMiddleware());
     }
 
     if (cors) {
