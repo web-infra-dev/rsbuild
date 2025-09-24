@@ -95,6 +95,15 @@ exports[`plugins/react > should not apply splitChunks rule when strategy is not 
 }
 `;
 
+exports[`plugins/react > should set \`parser.javascript.jsx\` to \`true\` when using \`preserve\` react runtime 1`] = `
+{
+  "exportsPresence": "error",
+  "inlineConst": false,
+  "jsx": true,
+  "typeReexportsPresence": "tolerant",
+}
+`;
+
 exports[`plugins/react > should set transpilation scope for react refresh plugin correctly 1`] = `
 ReactRefreshRspackPlugin {
   "options": {

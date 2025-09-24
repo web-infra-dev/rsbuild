@@ -39,6 +39,22 @@ describe('plugins/react', () => {
     expect(matchRules(config, 'a.js')).toMatchSnapshot();
   });
 
+  it('should set `parser.javascript.jsx` to `true` when using `preserve` react runtime', async () => {
+    const rsbuild = await createStubRsbuild({
+      rsbuildConfig: {},
+    });
+
+    rsbuild.addPlugins([
+      pluginReact({
+        swcReactOptions: {
+          runtime: 'preserve',
+        },
+      }),
+    ]);
+    const config = await rsbuild.unwrapConfig();
+    expect(config.module.parser.javascript).toMatchSnapshot();
+  });
+
   it('should not apply react refresh when dev.hmr is false', async () => {
     const rsbuild = await createStubRsbuild({
       rsbuildConfig: {

@@ -49,6 +49,16 @@ export const applyBasicReactSupport = (
     return mergeEnvironmentConfig(extraConfig, config);
   });
 
+  if (options.swcReactOptions?.runtime === 'preserve') {
+    api.modifyBundlerChain((chain) => {
+      chain.module.parser.merge({
+        javascript: {
+          jsx: true,
+        },
+      });
+    });
+  }
+
   api.modifyBundlerChain(
     async (chain, { CHAIN_ID, environment, isDev, target }) => {
       const { config } = environment;
