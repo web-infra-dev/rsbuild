@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/core",
-  "version": "1.5.11",
+  "version": "1.5.12",
   "description": "The Rspack-based build tool.",
   "homepage": "https://rsbuild.rs",
   "bugs": {
