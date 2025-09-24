@@ -151,10 +151,15 @@ export type CreateRsbuildOptions = {
    */
   environment?: string[];
   /**
+   * Alias for `config`.
+   * This option will be deprecated in the future.
+   */
+  rsbuildConfig?: RsbuildConfig | (() => Promise<RsbuildConfig>);
+  /**
    * Rsbuild configurations.
    * Passing a function to load the config asynchronously with custom logic.
    */
-  rsbuildConfig?: RsbuildConfig | (() => Promise<RsbuildConfig>);
+  config?: RsbuildConfig | (() => Promise<RsbuildConfig>);
   /**
    * Whether to call `loadEnv` to load environment variables and define them
    * as global variables via `source.define`.

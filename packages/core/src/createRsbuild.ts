@@ -168,9 +168,10 @@ export async function createRsbuild(
       })
     : null;
 
-  const config = isFunction(options.rsbuildConfig)
-    ? await options.rsbuildConfig()
-    : options.rsbuildConfig || {};
+  const configOrFactory = options.config ?? options.rsbuildConfig;
+  const config = isFunction(configOrFactory)
+    ? await configOrFactory()
+    : configOrFactory || {};
 
   // debug mode should always verbose logs
   if (config.logLevel && !isDebug()) {
