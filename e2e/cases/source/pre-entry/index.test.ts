@@ -9,7 +9,7 @@ test('should allow to configure pre-entry in development', async ({
   await expect(page.evaluate('window.aa')).resolves.toBe(2);
 });
 
-test('should allow to configure pre-entry in production build', async ({
+test('should allow to configure pre-entry in build', async ({
   page,
   buildPreview,
 }) => {

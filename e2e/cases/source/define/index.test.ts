@@ -11,7 +11,7 @@ test('should allow to define global variables in development', async ({
   await expect(testEl).toHaveText('aaaaa');
 });
 
-test('should allow to define global variables in production build', async ({
+test('should allow to define global variables in build', async ({
   page,
   buildPreview,
 }) => {

@@ -1,7 +1,7 @@
 import { expect, rspackTest } from '@e2e/helper';
 
 rspackTest(
-  'should render basic React component in development correctly',
+  'should render basic React component in dev',
   async ({ page, dev }) => {
     await dev();
 
@@ -13,7 +13,7 @@ rspackTest(
 );
 
 rspackTest(
-  'should render basic React component in production correctly',
+  'should render basic React component in build',
   async ({ page, buildPreview }) => {
     await buildPreview();
 
