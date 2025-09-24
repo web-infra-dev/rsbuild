@@ -51,7 +51,7 @@ interface ReactConfig {
         refreshSig?: string;
         emitFullSignatures?: boolean;
       };
-  runtime?: 'automatic' | 'classic';
+  runtime?: 'automatic' | 'classic' | 'preserve';
   importSource?: string;
 }
 ```
@@ -69,12 +69,24 @@ const defaultOptions = {
 
 ### swcReactOptions.runtime
 
-- **Type:** `'automatic' | 'classic'`
+Decides which runtime to use when transforming JSX.
+
+- **Type:** `'automatic' | 'classic' | 'preserve'`
 - **Default:** `'automatic'`
 
-By default, Rsbuild uses the [new JSX runtime](https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) introduced in React 17, which is `runtime: 'automatic'`.
+#### automatic
 
-For React versions below 16.14.0, set `runtime` to `'classic'`:
+By default, Rsbuild uses `runtime: 'automatic'` to leverage the [new JSX runtime](https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) introduced in React 17.
+
+This approach eliminates the need to manually import React in every file that uses JSX.
+
+:::tip
+React 16.14.0 and later versions support the new JSX runtime.
+:::
+
+#### classic
+
+For React versions prior to 16.14.0, set `runtime` to `'classic'`:
 
 ```ts
 pluginReact({
@@ -84,16 +96,26 @@ pluginReact({
 });
 ```
 
-> React 16.14.0 can use the new JSX runtime.
+When using the classic JSX runtime, you must manually import React in your code:
 
-When using the classic JSX runtime, you need to manually import React in your code:
-
-```jsx
+```jsx title="App.jsx"
 import React from 'react';
 
 function App() {
   return <h1>Hello World</h1>;
 }
+```
+
+#### preserve
+
+Use `runtime: 'preserve'` to leave JSX syntax unchanged without transforming it, this is useful when you are building a library that expects JSX to be left as is.
+
+```ts
+pluginReact({
+  swcReactOptions: {
+    runtime: 'preserve',
+  },
+});
 ```
 
 ### swcReactOptions.importSource

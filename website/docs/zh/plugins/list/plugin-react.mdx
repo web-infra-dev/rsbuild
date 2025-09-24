@@ -51,7 +51,7 @@ interface ReactConfig {
         refreshSig?: string;
         emitFullSignatures?: boolean;
       };
-  runtime?: 'automatic' | 'classic';
+  runtime?: 'automatic' | 'classic' | 'preserve';
   importSource?: string;
 }
 ```
@@ -69,14 +69,24 @@ const defaultOptions = {
 
 ### swcReactOptions.runtime
 
-设置 JSX runtime 的类型。
+设置在转换 JSX 时使用哪种运行时。
 
-- **类型：** `'automatic' | 'classic'`
+- **类型：** `'automatic' | 'classic' | 'preserve'`
 - **默认值：** `'automatic'`
 
-默认情况下，Rsbuild 使用 React 17 引入的[新版本 JSX runtime](https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html)，即 `runtime: 'automatic'`。
+#### automatic
 
-如果你当前的 React 版本低于 16.14.0，可以将 `runtime` 设置为 `'classic'`：
+默认情况下，Rsbuild 使用 `runtime: 'automatic'` 来利用 React 17 中引入的 [新版 JSX 转换](https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html)。
+
+采用这种方式时，无需在每个 JSX 文件中手动导入 React。
+
+:::tip
+React 16.14.0 及更高版本支持新版 JSX 运行时。
+:::
+
+#### classic
+
+对于 React 16.14.0 之前的版本，将 `runtime` 设置为 `'classic'`：
 
 ```ts
 pluginReact({
@@ -86,16 +96,26 @@ pluginReact({
 });
 ```
 
-> React 16.14.0 可以使用新版本 JSX runtime。
+当使用经典 JSX 运行时的时候，你必须在代码中手动导入 React：
 
-在使用 classic JSX runtime 时，你需要手动在代码中引入 React：
-
-```jsx
+```jsx title="App.jsx"
 import React from 'react';
 
 function App() {
   return <h1>Hello World</h1>;
 }
+```
+
+#### preserve
+
+使用 `runtime: 'preserve'` 可以保持 JSX 语法原样，不做任何转换，这在开发需要保留 JSX 代码的库时非常有用。
+
+```ts
+pluginReact({
+  swcReactOptions: {
+    runtime: 'preserve',
+  },
+});
 ```
 
 ### swcReactOptions.importSource
