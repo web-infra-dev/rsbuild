@@ -35,7 +35,7 @@ describe('plugin-basic', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBasic()],
-      rsbuildConfig: {
+      config: {
         output: {
           minify: false,
         },

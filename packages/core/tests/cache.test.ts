@@ -14,7 +14,7 @@ describe('plugin-cache', () => {
     },
     {
       name: 'should custom cache directory by user',
-      rsbuildConfig: {
+      config: {
         performance: {
           buildCache: {
             cacheDirectory: './node_modules/.cache/tmp',
@@ -24,7 +24,7 @@ describe('plugin-cache', () => {
     },
     {
       name: 'should apply cacheDigest',
-      rsbuildConfig: {
+      config: {
         performance: {
           buildCache: {
             cacheDigest: ['a', 'b', 'c'],
@@ -34,7 +34,7 @@ describe('plugin-cache', () => {
     },
     {
       name: 'should not apply cacheDigest',
-      rsbuildConfig: {
+      config: {
         performance: {
           buildCache: {
             cacheDigest: [],
@@ -44,7 +44,7 @@ describe('plugin-cache', () => {
     },
     {
       name: 'should disable cache',
-      rsbuildConfig: {
+      config: {
         performance: {
           buildCache: false,
         },
@@ -55,7 +55,7 @@ describe('plugin-cache', () => {
   it.each(cases)('$name', async (item) => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCache()],
-      rsbuildConfig: item.rsbuildConfig || {
+      config: item.config || {
         performance: {
           buildCache: true,
         },

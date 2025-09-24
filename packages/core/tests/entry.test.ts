@@ -42,7 +42,7 @@ describe('plugin-entry', () => {
   it.each(cases)('$name', async (item) => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry()],
-      rsbuildConfig: {
+      config: {
         source: {
           entry: item.entry as unknown as Record<string, string | string[]>,
           preEntry: item.preEntry,
@@ -58,7 +58,7 @@ describe('plugin-entry', () => {
   it('should apply environments entry config correctly', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry()],
-      rsbuildConfig: {
+      config: {
         environments: {
           web: {
             source: {
@@ -85,7 +85,7 @@ describe('plugin-entry', () => {
   it('should apply different environments entry config correctly', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry()],
-      rsbuildConfig: {
+      config: {
         environments: {
           web: {
             source: {

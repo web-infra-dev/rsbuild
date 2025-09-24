@@ -4,7 +4,7 @@ import { pluginReact } from '../src';
 describe('splitChunks', () => {
   it('should apply antd/semi/... splitChunks rule when pkg is installed', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
+      config: {
         performance: {},
       },
     });
@@ -18,7 +18,7 @@ describe('splitChunks', () => {
 
   it('should not apply splitChunks rule when strategy is not split-by-experience', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
+      config: {
         performance: {
           chunkSplit: {
             strategy: 'single-vendor',
@@ -36,7 +36,7 @@ describe('splitChunks', () => {
 
   it('should apply splitChunks.react/router plugin option when strategy is split-by-experience', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
+      config: {
         performance: {
           chunkSplit: {
             strategy: 'split-by-experience',

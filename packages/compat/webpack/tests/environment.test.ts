@@ -4,7 +4,7 @@ describe('environment config', () => {
   it('tools.webpack / bundlerChain can be used in environment config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [],
-      rsbuildConfig: {
+      config: {
         tools: {
           webpack(config) {
             return {

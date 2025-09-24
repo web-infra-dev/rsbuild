@@ -33,7 +33,7 @@ describe('stringifyConfig', () => {
   });
 
   it('should stringify Rsbuild config correctly', async () => {
-    const rsbuildConfig = {
+    const config = {
       tools: {
         bundlerChain(chain: any) {
           chain.devtool('eval');
@@ -41,6 +41,6 @@ describe('stringifyConfig', () => {
       },
     };
 
-    expect(stringifyConfig(rsbuildConfig)).toMatchSnapshot();
+    expect(stringifyConfig(config)).toMatchSnapshot();
   });
 });

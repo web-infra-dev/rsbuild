@@ -9,7 +9,7 @@ describe('plugin-split-chunks', () => {
   it('should set split-by-experience config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSplitChunks()],
-      rsbuildConfig: {
+      config: {
         performance: {
           chunkSplit: {
             strategy: 'split-by-experience',
@@ -28,7 +28,7 @@ describe('plugin-split-chunks', () => {
   it('should set split-by-experience config correctly when polyfill is off', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSplitChunks()],
-      rsbuildConfig: {
+      config: {
         performance: {
           chunkSplit: {
             strategy: 'split-by-experience',
@@ -47,7 +47,7 @@ describe('plugin-split-chunks', () => {
   it('should set split-by-module config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSplitChunks()],
-      rsbuildConfig: {
+      config: {
         performance: {
           chunkSplit: {
             strategy: 'split-by-module',
@@ -66,7 +66,7 @@ describe('plugin-split-chunks', () => {
   it('should set single-vendor config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSplitChunks()],
-      rsbuildConfig: {
+      config: {
         performance: {
           chunkSplit: {
             strategy: 'single-vendor',
@@ -85,7 +85,7 @@ describe('plugin-split-chunks', () => {
   it('should set single-size config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSplitChunks()],
-      rsbuildConfig: {
+      config: {
         performance: {
           chunkSplit: {
             strategy: 'split-by-size',
@@ -106,7 +106,7 @@ describe('plugin-split-chunks', () => {
   it('should set all-in-one config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSplitChunks()],
-      rsbuildConfig: {
+      config: {
         performance: {
           chunkSplit: {
             strategy: 'all-in-one',
@@ -125,7 +125,7 @@ describe('plugin-split-chunks', () => {
   it('should set custom config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSplitChunks()],
-      rsbuildConfig: {
+      config: {
         performance: {
           chunkSplit: {
             strategy: 'custom',
@@ -148,7 +148,7 @@ describe('plugin-split-chunks', () => {
   it('should allow forceSplitting to be an object', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSplitChunks()],
-      rsbuildConfig: {
+      config: {
         performance: {
           chunkSplit: {
             strategy: 'custom',
@@ -173,7 +173,7 @@ describe('plugin-split-chunks', () => {
   it('should not split chunks when target is node', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSplitChunks()],
-      rsbuildConfig: {
+      config: {
         output: {
           target: 'node',
         },

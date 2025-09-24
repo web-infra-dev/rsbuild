@@ -90,43 +90,9 @@ exports[`plugin-html > should allow to configure html.tags 1`] = `
 
 exports[`plugin-html > should allow to modify plugin options by tools.htmlPlugin 1`] = `
 {
-  "entry": {
-    "index": [
-      "./src/index.js",
-    ],
-  },
   "plugins": [
     {
       "name": "RsbuildCorePlugin",
-    },
-    HtmlRspackPlugin {
-      "options": {
-        "base": false,
-        "cache": true,
-        "chunks": "all",
-        "chunksSortMode": "auto",
-        "compile": true,
-        "excludeChunks": [],
-        "favicon": false,
-        "filename": "index.html",
-        "hash": false,
-        "inject": true,
-        "meta": {},
-        "publicPath": "auto",
-        "scriptLoading": "defer",
-        "showErrors": true,
-        "template": "auto",
-        "templateContent": false,
-        "templateParameters": [Function],
-        "title": "Rspack App",
-        "xhtml": false,
-        Symbol(entryName): "index",
-      },
-      "version": 6,
-    },
-    RsbuildHtmlPlugin {
-      "getExtraData": [Function],
-      "name": "RsbuildHtmlPlugin",
     },
   ],
 }
@@ -134,51 +100,9 @@ exports[`plugin-html > should allow to modify plugin options by tools.htmlPlugin
 
 exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = `
 {
-  "entry": {
-    "index": [
-      "./src/index.js",
-    ],
-  },
   "plugins": [
     {
       "name": "RsbuildCorePlugin",
-    },
-    HtmlRspackPlugin {
-      "options": {
-        "base": false,
-        "cache": true,
-        "chunks": [
-          "index",
-        ],
-        "chunksSortMode": "auto",
-        "compile": true,
-        "entryName": "index",
-        "excludeChunks": [],
-        "favicon": false,
-        "filename": "index.html",
-        "hash": false,
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "publicPath": "auto",
-        "scriptLoading": "defer",
-        "showErrors": true,
-        "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-        "xhtml": false,
-        Symbol(entryName): "index",
-      },
-      "version": 6,
-    },
-    RsbuildHtmlPlugin {
-      "getExtraData": [Function],
-      "name": "RsbuildHtmlPlugin",
     },
   ],
 }
@@ -186,51 +110,9 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
 
 exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
 {
-  "entry": {
-    "index": [
-      "./src/index.js",
-    ],
-  },
   "plugins": [
     {
       "name": "RsbuildCorePlugin",
-    },
-    HtmlRspackPlugin {
-      "options": {
-        "base": false,
-        "cache": true,
-        "chunks": [
-          "index",
-        ],
-        "chunksSortMode": "auto",
-        "compile": true,
-        "entryName": "index",
-        "excludeChunks": [],
-        "favicon": false,
-        "filename": "index.html",
-        "hash": false,
-        "inject": "body",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "publicPath": "auto",
-        "scriptLoading": "defer",
-        "showErrors": true,
-        "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-        "xhtml": false,
-        Symbol(entryName): "index",
-      },
-      "version": 6,
-    },
-    RsbuildHtmlPlugin {
-      "getExtraData": [Function],
-      "name": "RsbuildHtmlPlugin",
     },
   ],
 }
@@ -342,51 +224,9 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
 
 exports[`plugin-html > should stop injecting <script> if inject is () => false 1`] = `
 {
-  "entry": {
-    "index": [
-      "./src/index.js",
-    ],
-  },
   "plugins": [
     {
       "name": "RsbuildCorePlugin",
-    },
-    HtmlRspackPlugin {
-      "options": {
-        "base": false,
-        "cache": true,
-        "chunks": [
-          "index",
-        ],
-        "chunksSortMode": "auto",
-        "compile": true,
-        "entryName": "index",
-        "excludeChunks": [],
-        "favicon": false,
-        "filename": "index.html",
-        "hash": false,
-        "inject": false,
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "publicPath": "auto",
-        "scriptLoading": "defer",
-        "showErrors": true,
-        "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-        "xhtml": false,
-        Symbol(entryName): "index",
-      },
-      "version": 6,
-    },
-    RsbuildHtmlPlugin {
-      "getExtraData": [Function],
-      "name": "RsbuildHtmlPlugin",
     },
   ],
 }
@@ -394,51 +234,9 @@ exports[`plugin-html > should stop injecting <script> if inject is () => false 1
 
 exports[`plugin-html > should stop injecting <script> if inject is false 1`] = `
 {
-  "entry": {
-    "index": [
-      "./src/index.js",
-    ],
-  },
   "plugins": [
     {
       "name": "RsbuildCorePlugin",
-    },
-    HtmlRspackPlugin {
-      "options": {
-        "base": false,
-        "cache": true,
-        "chunks": [
-          "index",
-        ],
-        "chunksSortMode": "auto",
-        "compile": true,
-        "entryName": "index",
-        "excludeChunks": [],
-        "favicon": false,
-        "filename": "index.html",
-        "hash": false,
-        "inject": false,
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "publicPath": "auto",
-        "scriptLoading": "defer",
-        "showErrors": true,
-        "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-        "xhtml": false,
-        Symbol(entryName): "index",
-      },
-      "version": 6,
-    },
-    RsbuildHtmlPlugin {
-      "getExtraData": [Function],
-      "name": "RsbuildHtmlPlugin",
     },
   ],
 }

@@ -32,7 +32,7 @@ describe('modifyRsbuildConfig', () => {
 
   it('should modify config by utils', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
+      config: {
         source: {
           entry: {
             main: 'src/index.ts',

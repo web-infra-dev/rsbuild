@@ -6,7 +6,7 @@ describe('applyDefaultPlugins', () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'development';
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
+      config: {
         _privateMeta: {
           configFilePath: '/path/to/rsbuild.config.ts',
         },
@@ -36,7 +36,7 @@ describe('applyDefaultPlugins', () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
+      config: {
         output: {
           target: 'web-worker',
         },
@@ -54,7 +54,7 @@ describe('applyDefaultPlugins', () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
+      config: {
         output: {
           target: 'node',
         },

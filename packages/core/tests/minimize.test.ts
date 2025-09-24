@@ -71,7 +71,7 @@ describe('plugin-minimize', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
-      rsbuildConfig: {
+      config: {
         output: {
           minify: {
             js: false,
@@ -95,7 +95,7 @@ describe('plugin-minimize', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
-      rsbuildConfig: {
+      config: {
         output: {
           minify: {
             css: false,
@@ -117,7 +117,7 @@ describe('plugin-minimize', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
-      rsbuildConfig: {
+      config: {
         output: {
           minify: {
             css: false,
@@ -141,7 +141,7 @@ describe('plugin-minimize', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
-      rsbuildConfig: {
+      config: {
         output: {
           minify: {
             jsOptions: {
@@ -172,7 +172,7 @@ describe('plugin-minimize', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
-      rsbuildConfig: {
+      config: {
         performance: {
           removeConsole: true,
         },
@@ -230,7 +230,7 @@ describe('plugin-minimize', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
-      rsbuildConfig: {
+      config: {
         performance: {
           removeConsole: ['log', 'warn'],
         },
@@ -291,7 +291,7 @@ describe('plugin-minimize', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
-      rsbuildConfig: {
+      config: {
         output: {
           charset: 'utf8',
         },

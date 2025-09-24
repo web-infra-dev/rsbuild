@@ -12,7 +12,7 @@ describe('plugin-solid', () => {
 
   it('should apply solid preset correctly', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig,
+      config: rsbuildConfig,
       plugins: [pluginSolid(), pluginBabel()],
     });
     const config = await rsbuild.unwrapConfig();
@@ -22,7 +22,7 @@ describe('plugin-solid', () => {
 
   it('should allow to configure solid preset options', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig,
+      config: rsbuildConfig,
       plugins: [
         pluginSolid({
           solidPresetOptions: {

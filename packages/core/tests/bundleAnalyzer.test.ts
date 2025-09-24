@@ -6,7 +6,7 @@ describe('plugin-bundle-analyze', () => {
   it('should add bundle analyze plugin', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBundleAnalyzer()],
-      rsbuildConfig: {
+      config: {
         performance: {
           bundleAnalyze: {
             reportFilename: 'index$$.html',
@@ -23,7 +23,7 @@ describe('plugin-bundle-analyze', () => {
   it('should add bundle analyze plugin when bundle analyze is enabled in environments', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBundleAnalyzer()],
-      rsbuildConfig: {
+      config: {
         environments: {
           web: {
             performance: {
@@ -44,7 +44,7 @@ describe('plugin-bundle-analyze', () => {
   it('should enable bundle analyze plugin when performance.profile is enable', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginPerformance(), pluginBundleAnalyzer()],
-      rsbuildConfig: {
+      config: {
         environments: {
           web: {
             performance: {

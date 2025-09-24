@@ -5,7 +5,7 @@ import { pluginVue } from '../src';
 describe('plugin-vue', () => {
   it('should add vue-loader and VueLoaderPlugin correctly', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         plugins: [pluginVue()],
       },
     });
@@ -18,7 +18,7 @@ describe('plugin-vue', () => {
 
   it('should allow to configure vueLoader options', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         plugins: [
           pluginVue({
             vueLoaderOptions: {
@@ -34,7 +34,7 @@ describe('plugin-vue', () => {
 
   it('should define feature flags correctly', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         plugins: [pluginVue()],
       },
     });
