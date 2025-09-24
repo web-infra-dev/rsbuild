@@ -23,8 +23,8 @@
     "compiled"
   ],
   "scripts": {
-    "build": "rslib build --config-loader native",
-    "dev": "rslib build -w --config-loader native",
+    "build": "rslib build",
+    "dev": "rslib build -w",
     "prebundle": "prebundle",
     "bump": "pnpx bumpp --no-tag"
   },
