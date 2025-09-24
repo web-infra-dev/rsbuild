@@ -122,31 +122,27 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
   const lazyModules: Set<string> = new Set();
 
   // Collect lazy compiled modules from the infrastructure logs
-  compiler.hooks.infrastructureLog.tap(
-    'rsbuild:compiling',
-    // @ts-ignore TODO: https://github.com/web-infra-dev/rspack/pull/11742
-    (name, _, args) => {
-      const log = args[0];
-      if (
-        name === 'LazyCompilation' &&
-        typeof log === 'string' &&
-        log.startsWith('lazy-compilation-proxy')
-      ) {
-        const resource = log.split(' ')[0];
-        if (!resource) {
-          return;
-        }
-
-        const { rootPath } = context;
-        const absolutePath = resource.split('!').pop();
-
-        if (absolutePath?.startsWith(rootPath)) {
-          const relativePath = absolutePath.replace(rootPath, '');
-          lazyModules.add(relativePath);
-        }
+  compiler.hooks.infrastructureLog.tap('rsbuild:compiling', (name, _, args) => {
+    const log = args[0];
+    if (
+      name === 'LazyCompilation' &&
+      typeof log === 'string' &&
+      log.startsWith('lazy-compilation-proxy')
+    ) {
+      const resource = log.split(' ')[0];
+      if (!resource) {
+        return;
       }
-    },
-  );
+
+      const { rootPath } = context;
+      const absolutePath = resource.split('!').pop();
+
+      if (absolutePath?.startsWith(rootPath)) {
+        const relativePath = absolutePath.replace(rootPath, '');
+        lazyModules.add(relativePath);
+      }
+    }
+  });
 
   compiler.hooks.watchRun.tap('rsbuild:compiling', (compiler) => {
     logRspackVersion();
