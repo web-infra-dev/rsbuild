@@ -14,7 +14,7 @@ rspackTest(
 );
 
 rspackTest(
-  'should run SWC Wasm plugin correctly in production build',
+  'should run SWC Wasm plugin correctly in build',
   async ({ page, build }) => {
     const rsbuild = await build({
       runServer: true,

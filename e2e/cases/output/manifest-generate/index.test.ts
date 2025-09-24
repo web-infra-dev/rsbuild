@@ -22,9 +22,7 @@ const rsbuildConfig: RsbuildConfig = {
   },
 };
 
-test('should generate custom manifest data in production build', async ({
-  build,
-}) => {
+test('should generate custom manifest data in build', async ({ build }) => {
   const rsbuild = await build({
     rsbuildConfig,
   });

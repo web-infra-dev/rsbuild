@@ -86,7 +86,7 @@ for (const devtool of productionDevtools) {
   });
 }
 
-test('should not generate source map by default in production build', async ({
+test('should not generate source map by default in build', async ({
   build,
 }) => {
   const rsbuild = await build();
