@@ -38,8 +38,8 @@ const getStatusCodeColor = (status: number) => {
   return (res: number) => res;
 };
 
-export const getRequestLoggerMiddleware: () => Promise<Connect.NextHandleFunction> =
-  async () => {
+export const getRequestLoggerMiddleware: () => Connect.NextHandleFunction =
+  () => {
     return (req, res, next) => {
       const _startAt = process.hrtime();
 

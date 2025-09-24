@@ -270,7 +270,7 @@ export const getDevMiddlewares = async (
   const { compilationManager } = options;
 
   if (logger.level === 'verbose') {
-    middlewares.push(await getRequestLoggerMiddleware());
+    middlewares.push(getRequestLoggerMiddleware());
   }
 
   // Order: setupMiddlewares.unshift => internal middleware => setupMiddlewares.push
