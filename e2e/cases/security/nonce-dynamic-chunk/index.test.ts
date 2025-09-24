@@ -37,7 +37,7 @@ test('should apply nonce to dynamic chunks in build', async ({
 
 test('should apply nonce to preload script tags', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       performance: {
         preload: true,
       },

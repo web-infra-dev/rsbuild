@@ -4,7 +4,7 @@ test('should retain Moment locales when removeMomentLocale is false (default)', 
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         sourceMap: {
           js: 'source-map',
@@ -43,7 +43,7 @@ test('should remove Moment locales when removeMomentLocale is true', async ({
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         sourceMap: {
           js: 'source-map',

@@ -30,7 +30,7 @@ test.fail(
   async ({ page, buildPreview }) => {
     // SyntaxError: Decorators must be placed *after* the 'export' keyword
     const rsbuild = await buildPreview({
-      rsbuildConfig: {
+      config: {
         source: {
           entry: {
             index: './src/decoratorBeforeExport.js',

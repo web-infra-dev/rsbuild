@@ -5,7 +5,7 @@ test('should respect tsconfig paths and override resolve.alias', async ({
   buildPreview,
 }) => {
   await buildPreview({
-    rsbuildConfig: {
+    config: {
       resolve: {
         alias: {
           '@common': './src/common2',
@@ -23,7 +23,7 @@ test('should ignore tsconfig paths when aliasStrategy is "prefer-alias"', async 
   buildPreview,
 }) => {
   await buildPreview({
-    rsbuildConfig: {
+    config: {
       resolve: {
         alias: {
           '@/common': './src/common2',

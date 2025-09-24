@@ -13,7 +13,7 @@ test('should remove defer when scriptLoading is "blocking"', async ({
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       html: {
         scriptLoading: 'blocking',
       },
@@ -28,7 +28,7 @@ test('should remove defer when scriptLoading is "blocking"', async ({
 
 test('should allow to set scriptLoading to "module"', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       html: {
         scriptLoading: 'module',
       },

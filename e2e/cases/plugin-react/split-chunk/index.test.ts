@@ -17,7 +17,7 @@ test('should not split react chunks when strategy is `all-in-one`', async ({
 }) => {
   const rsbuild = await build({
     plugins: [pluginReact()],
-    rsbuildConfig: {
+    config: {
       performance: {
         chunkSplit: {
           strategy: 'all-in-one',
@@ -35,7 +35,7 @@ test('should not split react chunks when strategy is `all-in-one`', async ({
 test('should not override user defined cache groups', async ({ build }) => {
   const rsbuild = await build({
     plugins: [pluginReact()],
-    rsbuildConfig: {
+    config: {
       performance: {
         chunkSplit: {
           override: {

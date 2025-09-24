@@ -2,7 +2,7 @@ import { expect, test } from '@e2e/helper';
 
 test('should escape template parameters correctly', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       html: {
         templateParameters: {
           text: '<div>escape me</div>',
@@ -25,7 +25,7 @@ test('should allow to passing undefined to template parameters', async ({
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       html: {
         templateParameters: {
           text: undefined,

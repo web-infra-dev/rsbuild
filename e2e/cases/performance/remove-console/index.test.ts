@@ -21,7 +21,7 @@ const expectConsoleType = async (
 test('should remove specified console correctly', async ({ build }) => {
   const rsbuild = await build({
     cwd,
-    rsbuildConfig: {
+    config: {
       performance: {
         removeConsole: ['log', 'warn'],
       },
@@ -39,7 +39,7 @@ test('should remove specified console correctly', async ({ build }) => {
 test('should remove all console correctly', async ({ build }) => {
   const rsbuild = await build({
     cwd,
-    rsbuildConfig: {
+    config: {
       performance: {
         removeConsole: true,
       },

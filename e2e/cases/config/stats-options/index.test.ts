@@ -12,7 +12,7 @@ test('should not log warning when set stats.warnings false', async ({
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       tools: {
         bundlerChain: (chain) => {
           chain.stats({

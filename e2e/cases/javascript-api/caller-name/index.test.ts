@@ -6,7 +6,7 @@ rspackTest(
     let callerName = '';
     await build({
       callerName: 'foo',
-      rsbuildConfig: {
+      config: {
         plugins: [
           {
             name: 'foo',

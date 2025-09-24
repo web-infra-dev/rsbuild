@@ -14,13 +14,11 @@ rspackTest('should run inspect command correctly', async ({ execCliSync }) => {
   const files = await readDirContents(path.join(__dirname, 'dist/.rsbuild'));
   const fileNames = Object.keys(files);
 
-  const rsbuildConfig = fileNames.find((item) =>
-    item.includes('rsbuild.config.mjs'),
-  );
-  expect(rsbuildConfig).toBeTruthy();
-  expect(files[rsbuildConfig!]).toContain("'rsbuild:basic'");
-  expect(files[rsbuildConfig!]).toContain('hmr: true');
-  expect(files[rsbuildConfig!]).toContain('plugins:');
+  const config = fileNames.find((item) => item.includes('rsbuild.config.mjs'));
+  expect(config).toBeTruthy();
+  expect(files[config!]).toContain("'rsbuild:basic'");
+  expect(files[config!]).toContain('hmr: true');
+  expect(files[config!]).toContain('plugins:');
 
   const rspackConfig = fileNames.find((item) =>
     item.includes('rspack.config.web.mjs'),
@@ -39,10 +37,10 @@ rspackTest(
     const files = await readDirContents(path.join(__dirname, 'dist/.rsbuild'));
     const fileNames = Object.keys(files);
 
-    const rsbuildConfig = fileNames.find((item) =>
+    const config = fileNames.find((item) =>
       item.includes('rsbuild.config.mjs'),
     );
-    expect(rsbuildConfig).toBeTruthy();
+    expect(config).toBeTruthy();
 
     const rspackConfig = fileNames.find((item) =>
       item.includes('rspack.config.web.mjs'),

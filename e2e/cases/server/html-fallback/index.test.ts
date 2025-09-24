@@ -31,7 +31,7 @@ test('should access / success and htmlFallback success by default', async ({
 
 test('should return 404 when htmlFallback false', async ({ page, devOnly }) => {
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       server: {
         htmlFallback: false,
       },
@@ -50,7 +50,7 @@ test('should access /main with query or hash success', async ({
   devOnly,
 }) => {
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(cwd, 'src/index.js'),
@@ -80,7 +80,7 @@ test('should access /main.html success when entry is main', async ({
   devOnly,
 }) => {
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(cwd, 'src/index.js'),
@@ -102,7 +102,7 @@ test('should access /main success when entry is main', async ({
   devOnly,
 }) => {
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(cwd, 'src/index.js'),
@@ -126,7 +126,7 @@ test('should access /main success when entry is main and use memoryFs', async ({
   devOnly,
 }) => {
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(cwd, 'src/index.js'),
@@ -148,7 +148,7 @@ test('should access /main success when entry is main and set assetPrefix', async
   devOnly,
 }) => {
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(cwd, 'src/index.js'),
@@ -173,7 +173,7 @@ test('should access /main success when entry is main and outputPath is /main/ind
   devOnly,
 }) => {
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(cwd, 'src/index.js'),
@@ -195,7 +195,7 @@ test('should access /main success when entry is main and outputPath is /main/ind
 
 test('should return 404 when page is not found', async ({ page, devOnly }) => {
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(cwd, 'src/index.js'),
@@ -216,7 +216,7 @@ test('should access /html/main success when entry is main and outputPath is /htm
   devOnly,
 }) => {
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(cwd, 'src/index.js'),
@@ -251,7 +251,7 @@ test('should access /main success when modify publicPath in compiler', async ({
   devOnly,
 }) => {
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(cwd, 'src/index.js'),
@@ -289,7 +289,7 @@ test('should access /main success when distPath is absolute', async ({
   devOnly,
 }) => {
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(cwd, 'src/index.js'),

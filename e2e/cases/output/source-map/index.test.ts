@@ -10,7 +10,7 @@ async function testSourceMapType(
   build: Build,
 ) {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         sourceMap: {
           js: devtool,
@@ -107,7 +107,7 @@ test('should generate source map if `output.sourceMap` is true', async ({
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         sourceMap: true,
       },
@@ -130,7 +130,7 @@ test('should not generate source map if `output.sourceMap` is false', async ({
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         sourceMap: false,
       },
@@ -172,7 +172,7 @@ test('should generate source map correctly in dev', async ({ dev }) => {
 
 test('should generate source maps only for CSS files', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         sourceMap: {
           js: false,

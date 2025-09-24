@@ -2,7 +2,7 @@ import { expect, rspackTest } from '@e2e/helper';
 
 rspackTest('should process assets when target is web', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         target: 'web',
       },
@@ -20,7 +20,7 @@ rspackTest(
   'should not process assets when target is not web',
   async ({ build }) => {
     const rsbuild = await build({
-      rsbuildConfig: {
+      config: {
         output: {
           target: 'web-worker',
         },

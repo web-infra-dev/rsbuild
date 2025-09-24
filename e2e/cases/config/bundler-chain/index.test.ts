@@ -6,7 +6,7 @@ test('should allow to use tools.bundlerChain to set alias config', async ({
   buildPreview,
 }) => {
   await buildPreview({
-    rsbuildConfig: {
+    config: {
       tools: {
         bundlerChain: (chain) => {
           chain.resolve.alias.set('@common', join(__dirname, 'src/common'));
@@ -23,7 +23,7 @@ test('should allow to use async tools.bundlerChain to set alias config', async (
   buildPreview,
 }) => {
   await buildPreview({
-    rsbuildConfig: {
+    config: {
       tools: {
         bundlerChain: async (chain) => {
           return new Promise((resolve) => {
@@ -44,7 +44,7 @@ rspackTest(
   'should allow to use rspack in tools.bundlerChain',
   async ({ page, buildPreview }) => {
     await buildPreview({
-      rsbuildConfig: {
+      config: {
         tools: {
           bundlerChain: (chain, { rspack }) => {
             chain.resolve.alias.set('@common', join(__dirname, 'src/common'));

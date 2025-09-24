@@ -4,7 +4,7 @@ test('should exclude specified Sass files using the exclude option', async ({
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       tools: {
         bundlerChain(chain) {
           chain.module

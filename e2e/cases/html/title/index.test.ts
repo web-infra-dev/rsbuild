@@ -4,7 +4,7 @@ import { expect, test } from '@e2e/helper';
 
 test('should generate default title correctly', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: { foo: path.resolve(__dirname, './src/foo.js') },
       },
@@ -21,7 +21,7 @@ test('should allow setting empty title to unset the default title', async ({
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: { foo: path.resolve(__dirname, './src/foo.js') },
       },
@@ -39,7 +39,7 @@ test('should allow setting empty title to unset the default title', async ({
 
 test('should generate title correctly', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: { foo: path.resolve(__dirname, './src/foo.js') },
       },
@@ -59,7 +59,7 @@ test('should generate title correctly when using custom HTML template', async ({
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: { foo: path.resolve(__dirname, './src/foo.js') },
       },
@@ -80,7 +80,7 @@ test('should generate title correctly when using htmlPlugin.options.title', asyn
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: { foo: path.resolve(__dirname, './src/foo.js') },
       },
@@ -99,7 +99,7 @@ test('should generate title correctly when using htmlPlugin.options.title', asyn
 
 test('should generate title via function correctly', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           foo: path.resolve(__dirname, './src/foo.js'),
@@ -128,7 +128,7 @@ test('should not inject title if template already contains a title', async ({
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: { foo: path.resolve(__dirname, './src/foo.js') },
       },

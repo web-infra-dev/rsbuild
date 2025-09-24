@@ -8,7 +8,7 @@ test('should apply custom middleware via `setupMiddlewares`', async ({
 
   // Only tested to see if it works, not all configurations.
   await dev({
-    rsbuildConfig: {
+    config: {
       dev: {
         setupMiddlewares: (middlewares) => {
           middlewares.unshift((_req, _res, next) => {
@@ -33,7 +33,7 @@ test('should apply to trigger page reload via the `static-changed` type of sockW
 
   // Only tested to see if it works, not all configurations.
   await dev({
-    rsbuildConfig: {
+    config: {
       dev: {
         setupMiddlewares: (middlewares, { sockWrite }) => {
           middlewares.unshift((_req, _res, next) => {

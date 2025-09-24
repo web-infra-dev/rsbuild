@@ -6,7 +6,7 @@ test('should set the port via server.port', async ({ page, dev }) => {
 
   const port = await getRandomPort();
   const rsbuild = await dev({
-    rsbuildConfig: {
+    config: {
       server: {
         port,
       },

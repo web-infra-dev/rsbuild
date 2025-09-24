@@ -5,7 +5,7 @@ test('should build successfully with multiple environments', async ({
   buildPreview,
 }) => {
   await buildPreview({
-    rsbuildConfig: {
+    config: {
       environments: {
         web: {
           output: {
@@ -30,7 +30,7 @@ test('should serve successfully in dev with multiple environments', async ({
   dev,
 }) => {
   await dev({
-    rsbuildConfig: {
+    config: {
       environments: {
         web: {
           output: {

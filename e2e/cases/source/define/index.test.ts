@@ -25,7 +25,7 @@ test('should allow to define global variables in build', async ({
 
 test('should warn when define `process.env`', async ({ buildPreview }) => {
   const rsbuild = await buildPreview({
-    rsbuildConfig: {
+    config: {
       source: {
         define: {
           'process.env': process.env,
@@ -41,7 +41,7 @@ test('should warn when define stringified `process.env`', async ({
   buildPreview,
 }) => {
   const rsbuild = await buildPreview({
-    rsbuildConfig: {
+    config: {
       source: {
         define: {
           'process.env': JSON.stringify(process.env),

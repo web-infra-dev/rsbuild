@@ -14,14 +14,14 @@ import type { LogHelper } from './logs';
 import { getRandomPort, gotoPage, noop, toPosixPath } from './utils';
 
 const createRsbuild = async (
-  rsbuildOptions: CreateRsbuildOptions & { rsbuildConfig?: RsbuildConfig },
+  rsbuildOptions: CreateRsbuildOptions & { config?: RsbuildConfig },
   plugins: RsbuildPlugins = [],
 ) => {
   const { createRsbuild } = await import('@rsbuild/core');
 
-  rsbuildOptions.rsbuildConfig ||= {};
-  rsbuildOptions.rsbuildConfig.plugins = [
-    ...(rsbuildOptions.rsbuildConfig.plugins || []),
+  rsbuildOptions.config ||= {};
+  rsbuildOptions.config.plugins = [
+    ...(rsbuildOptions.config.plugins || []),
     ...(plugins || []),
   ];
 
@@ -33,7 +33,7 @@ const createRsbuild = async (
 
   const { webpackProvider } = await import('@rsbuild/webpack');
 
-  rsbuildOptions.rsbuildConfig.provider = webpackProvider;
+  rsbuildOptions.config.provider = webpackProvider;
 
   const rsbuild = await createRsbuild(rsbuildOptions);
 
@@ -121,7 +121,7 @@ const collectOutputFiles = (rsbuild: RsbuildInstance) => {
 export type DevOptions = CreateRsbuildOptions & {
   logHelper?: LogHelper;
   plugins?: RsbuildPlugins;
-  rsbuildConfig?: RsbuildConfig;
+  config?: RsbuildConfig;
   /**
    * Playwright Page instance.
    * This method will automatically goto the page.
@@ -147,10 +147,7 @@ export async function dev({
 }: DevOptions = {}) {
   process.env.NODE_ENV = 'development';
 
-  options.rsbuildConfig = await updateConfigForTest(
-    options.rsbuildConfig || {},
-    options.cwd,
-  );
+  options.config = await updateConfigForTest(options.config || {}, options.cwd);
 
   const rsbuild = await createRsbuild(options, plugins);
   const getOutputFiles = collectOutputFiles(rsbuild);
@@ -192,7 +189,7 @@ export async function dev({
 export type BuildOptions = CreateRsbuildOptions & {
   logHelper?: LogHelper;
   plugins?: RsbuildPlugins;
-  rsbuildConfig?: RsbuildConfig;
+  config?: RsbuildConfig;
   /**
    * Whether to catch the build error.
    * @default false
@@ -228,10 +225,7 @@ export async function build({
 }: BuildOptions = {}) {
   process.env.NODE_ENV = 'production';
 
-  options.rsbuildConfig = await updateConfigForTest(
-    options.rsbuildConfig || {},
-    options.cwd,
-  );
+  options.config = await updateConfigForTest(options.config || {}, options.cwd);
 
   const rsbuild = await createRsbuild(options, plugins);
   const getOutputFiles = collectOutputFiles(rsbuild);

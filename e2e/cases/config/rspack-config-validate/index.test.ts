@@ -5,7 +5,7 @@ import { pluginReact } from '@rsbuild/plugin-react';
 rspackTest('should validate Rspack config by default', async ({ build }) => {
   try {
     await build({
-      rsbuildConfig: {
+      config: {
         tools: {
           // @ts-expect-error mock invalid config
           rspack: {
@@ -25,7 +25,7 @@ rspackTest('should warn when passing unrecognized keys', async ({ build }) => {
   process.env.RSPACK_CONFIG_VALIDATE = 'loose-unrecognized-keys';
 
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       tools: {
         rspack: {
           // @ts-expect-error mock invalid config
@@ -47,7 +47,7 @@ rspackTest(
     process.env.RSPACK_CONFIG_VALIDATE = 'loose';
 
     const rsbuild = await build({
-      rsbuildConfig: {
+      config: {
         tools: {
           // @ts-expect-error mock invalid config
           rspack: {
@@ -70,7 +70,7 @@ rspackTest(
   async ({ build }) => {
     try {
       await build({
-        rsbuildConfig: {
+        config: {
           tools: {
             // @ts-expect-error mock invalid config
             rspack: {

@@ -7,7 +7,7 @@ rspackTest(
   async ({ dev, page }) => {
     const file = path.join(__dirname, '/assets/example.txt');
     await dev({
-      rsbuildConfig: {
+      config: {
         dev: {
           watchFiles: {
             paths: file,
@@ -32,7 +32,7 @@ rspackTest(
   async ({ dev, page }) => {
     const file = path.join(__dirname, '/assets/example.txt');
     await dev({
-      rsbuildConfig: {
+      config: {
         dev: {
           watchFiles: {
             paths: path.join(__dirname, '/assets'),
@@ -56,7 +56,7 @@ rspackTest('should work with string array directory', async ({ dev, page }) => {
   const file = path.join(__dirname, '/assets/example.txt');
   const other = path.join(__dirname, '/other/other.txt');
   await dev({
-    rsbuildConfig: {
+    config: {
       dev: {
         watchFiles: {
           paths: [
@@ -89,7 +89,7 @@ rspackTest('should work with string and glob', async ({ dev, page }) => {
   const file = path.join(__dirname, '/assets/example.txt');
   const watchDir = path.join(__dirname, '/assets');
   await dev({
-    rsbuildConfig: {
+    config: {
       dev: {
         watchFiles: {
           paths: `${watchDir}/**/*`,
@@ -111,7 +111,7 @@ rspackTest('should work with string and glob', async ({ dev, page }) => {
 rspackTest('should work with options', async ({ dev, page }) => {
   const file = path.join(__dirname, '/assets/example.txt');
   await dev({
-    rsbuildConfig: {
+    config: {
       dev: {
         watchFiles: {
           paths: file,

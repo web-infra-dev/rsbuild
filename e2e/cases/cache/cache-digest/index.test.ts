@@ -13,7 +13,7 @@ test('should respect `buildCache.cacheDigest`', async ({ build }) => {
   await remove(cacheDirectory);
 
   const getBuildConfig = (input: string) => ({
-    rsbuildConfig: {
+    config: {
       tools: {
         bundlerChain: (chain) => {
           if (input === 'foo') {

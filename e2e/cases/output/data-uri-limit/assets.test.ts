@@ -42,7 +42,7 @@ for (const item of cases) {
   test(item.name, async ({ page, buildPreview }) => {
     await buildPreview({
       plugins: [pluginReact()],
-      rsbuildConfig: item.config || {},
+      config: item.config || {},
     });
 
     if (item.expected === 'url') {

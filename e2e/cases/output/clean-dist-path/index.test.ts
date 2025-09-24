@@ -23,7 +23,7 @@ test('should not clean dist path in dev when writeToDisk is false', async ({
   await fse.outputFile(testDistFile, `{ "test": 1 }`);
 
   await dev({
-    rsbuildConfig: {
+    config: {
       dev: {
         writeToDisk: false,
       },
@@ -40,7 +40,7 @@ test('should clean dist path in dev when writeToDisk is true', async ({
   await fse.outputFile(testDistFile, `{ "test": 1 }`);
 
   await dev({
-    rsbuildConfig: {
+    config: {
       dev: {
         writeToDisk: true,
       },
@@ -56,7 +56,7 @@ test('should not clean dist path if it is outside root', async ({ build }) => {
 
   const rsbuild = await build({
     cwd,
-    rsbuildConfig: {
+    config: {
       output: {
         distPath: {
           root: '../node_modules',
@@ -81,7 +81,7 @@ test('should allow to disable cleanDistPath', async ({ build }) => {
 
   await build({
     cwd,
-    rsbuildConfig: {
+    config: {
       output: {
         cleanDistPath: false,
       },
@@ -101,7 +101,7 @@ test('should allow to use `cleanDistPath.keep` to keep some files', async ({
 
   await build({
     cwd,
-    rsbuildConfig: {
+    config: {
       output: {
         cleanDistPath: {
           keep: [/dist\/test.json/, /dist\/foo\/bar\/test.json/],

@@ -59,7 +59,7 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
   }) => {
     const rsbuild = await build({
       cwd,
-      rsbuildConfig: {
+      config: {
         output: {
           filenameHash: false,
         },
@@ -100,7 +100,7 @@ dist/static/js/lib-react.js   X.X kB   X.X kB
   }) => {
     const rsbuild = await build({
       cwd,
-      rsbuildConfig: {
+      config: {
         performance: {
           printFileSize: false,
         },
@@ -115,7 +115,7 @@ dist/static/js/lib-react.js   X.X kB   X.X kB
   }) => {
     const rsbuild = await build({
       cwd,
-      rsbuildConfig: {
+      config: {
         performance: {
           printFileSize: {
             detail: false,
@@ -131,7 +131,7 @@ Total size (web): X.X kB (X.X kB gzipped)`);
   test('printFileSize.total: false should work', async ({ build }) => {
     const rsbuild = await build({
       cwd,
-      rsbuildConfig: {
+      config: {
         performance: {
           printFileSize: {
             total: false,
@@ -154,7 +154,7 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB`);
   }) => {
     const rsbuild = await build({
       cwd,
-      rsbuildConfig: {
+      config: {
         output: {
           distPath: {
             root: '../test-temp-folder/dist',
@@ -176,7 +176,7 @@ File (web)                                                 Size       Gzip
   test('should allow to disable gzip-compressed size', async ({ build }) => {
     const rsbuild = await build({
       cwd,
-      rsbuildConfig: {
+      config: {
         performance: {
           printFileSize: {
             compressed: false,
@@ -198,7 +198,7 @@ dist/static/js/lib-react.[[hash]].js   X.X kB
   test('should allow to filter assets by name', async ({ build }) => {
     const rsbuild = await build({
       cwd,
-      rsbuildConfig: {
+      config: {
         performance: {
           printFileSize: {
             include: (asset) => asset.name.endsWith('.js'),
@@ -217,7 +217,7 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
   test('should allow to filter assets by size', async ({ build }) => {
     const rsbuild = await build({
       cwd,
-      rsbuildConfig: {
+      config: {
         performance: {
           printFileSize: {
             include: (asset) => asset.size > 10 * 1000,
@@ -234,7 +234,7 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB`);
   test('should allow to custom exclude function', async ({ build }) => {
     const rsbuild = await build({
       cwd,
-      rsbuildConfig: {
+      config: {
         performance: {
           printFileSize: {
             exclude: (asset) =>
@@ -276,7 +276,7 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
   }) => {
     const rsbuild = await build({
       cwd,
-      rsbuildConfig: {
+      config: {
         performance: {
           printFileSize: {
             total: ({ assets }) => {

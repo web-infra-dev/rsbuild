@@ -4,7 +4,7 @@ rspackTest(
   'tsconfig paths should work with references',
   async ({ page, buildPreview }) => {
     await buildPreview({
-      rsbuildConfig: {
+      config: {
         resolve: {
           alias: {
             '@common': './src/common2',

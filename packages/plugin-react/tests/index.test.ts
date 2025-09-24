@@ -40,9 +40,7 @@ describe('plugins/react', () => {
   });
 
   it('should set `parser.javascript.jsx` to `true` when using `preserve` react runtime', async () => {
-    const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {},
-    });
+    const rsbuild = await createStubRsbuild();
 
     rsbuild.addPlugins([
       pluginReact({

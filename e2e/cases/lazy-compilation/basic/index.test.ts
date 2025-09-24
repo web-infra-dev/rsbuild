@@ -7,7 +7,7 @@ rspackTest(
   'should render pages correctly when using lazy compilation',
   async ({ page, dev }) => {
     const rsbuild = await dev({
-      rsbuildConfig: {
+      config: {
         dev: {
           lazyCompilation: true,
         },
@@ -38,7 +38,7 @@ rspackTest(
   'should allow to configure `tools.rspack.experiments.lazyCompilation`',
   async ({ page, dev }) => {
     const rsbuild = await dev({
-      rsbuildConfig: {
+      config: {
         tools: {
           rspack: {
             lazyCompilation: true,

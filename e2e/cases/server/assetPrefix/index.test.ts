@@ -5,7 +5,7 @@ test('should match resource correctly with specify assetPrefix', async ({
   dev,
 }) => {
   await dev({
-    rsbuildConfig: {
+    config: {
       dev: {
         assetPrefix: '/subpath/',
       },
@@ -21,7 +21,7 @@ test('should match resource correctly with full url assetPrefix', async ({
   dev,
 }) => {
   await dev({
-    rsbuildConfig: {
+    config: {
       dev: {
         assetPrefix: `http://localhost:<port>/subpath/`,
       },

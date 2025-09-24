@@ -3,7 +3,7 @@ import { expect, test } from '@e2e/helper';
 
 test('should build web-worker target correctly', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         target: 'web-worker',
       },
@@ -21,7 +21,7 @@ test('should build web-worker target with dynamicImport correctly', async ({
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: { index: path.resolve(__dirname, './src/index2.js') },
       },

@@ -48,7 +48,7 @@ rspackTest(
     );
 
     await dev({
-      rsbuildConfig: {
+      config: {
         source: {
           entry: {
             index: join(fixtures, 'test-temp-src/index.ts'),
@@ -84,7 +84,7 @@ rspackTest(
   'should allow to disable CSS minification when `injectStyles` is enabled',
   async ({ build }) => {
     const rsbuild = await build({
-      rsbuildConfig: {
+      config: {
         output: {
           minify: false,
         },

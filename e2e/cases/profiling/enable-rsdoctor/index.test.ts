@@ -64,7 +64,7 @@ rspackTest(
 
     const rsbuild = await createRsbuild({
       cwd: __dirname,
-      rsbuildConfig: {
+      config: {
         tools: {
           rspack: {
             plugins: [

@@ -1,7 +1,7 @@
 import { expect, test } from '@e2e/helper';
 import type { RsbuildConfig } from '@rsbuild/core';
 
-const rsbuildConfig: RsbuildConfig = {
+const config: RsbuildConfig = {
   output: {
     manifest: {
       filename: 'my-manifest.json',
@@ -24,7 +24,7 @@ const rsbuildConfig: RsbuildConfig = {
 
 test('should generate custom manifest data in build', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig,
+    config,
   });
 
   const files = rsbuild.getDistFiles();
@@ -46,7 +46,7 @@ test('should generate custom manifest data in build', async ({ build }) => {
 
 test('should generate custom manifest data in dev', async ({ dev }) => {
   const rsbuild = await dev({
-    rsbuildConfig,
+    config,
   });
 
   const files = rsbuild.getDistFiles();

@@ -31,7 +31,7 @@ rspackTest(
     const { plugin, names } = createPlugin();
 
     const rsbuild = await dev({
-      rsbuildConfig: {
+      config: {
         plugins: [plugin],
         environments: {
           web: {},

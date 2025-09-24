@@ -30,7 +30,7 @@ test('should resolve the .js file first if both .js and .ts exist', async ({
   );
 
   await buildPreview({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           index: join(__dirname, 'test-temp-src/index.ts'),

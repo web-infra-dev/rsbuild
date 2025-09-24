@@ -9,7 +9,7 @@ test('should generate prefetch link when prefetch is defined', async ({
 }) => {
   const rsbuild = await build({
     plugins: [pluginReact()],
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(fixtures, 'src/page1/index.ts'),
@@ -51,7 +51,7 @@ test('should generate prefetch link correctly when assetPrefix do not have a pro
 }) => {
   const rsbuild = await build({
     plugins: [pluginReact()],
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(fixtures, 'src/page1/index.ts'),
@@ -88,7 +88,7 @@ test('should generate prefetch link correctly when assetPrefix do not have a pro
 test('should generate prefetch link with include', async ({ build }) => {
   const rsbuild = await build({
     plugins: [pluginReact()],
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(fixtures, 'src/page1/index.ts'),
@@ -126,7 +126,7 @@ test('should generate prefetch link with include', async ({ build }) => {
 test('should generate prefetch link with include array', async ({ build }) => {
   const rsbuild = await build({
     plugins: [pluginReact()],
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(fixtures, 'src/page1/index.ts'),
@@ -164,7 +164,7 @@ test('should generate prefetch link with include array', async ({ build }) => {
 test('should generate prefetch link with exclude array', async ({ build }) => {
   const rsbuild = await build({
     plugins: [pluginReact()],
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(fixtures, 'src/page1/index.ts'),
@@ -204,7 +204,7 @@ test('should generate prefetch link by config (distinguish html)', async ({
 }) => {
   const rsbuild = await build({
     plugins: [pluginReact()],
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           page1: join(fixtures, 'src/page1/index.ts'),
@@ -253,7 +253,7 @@ rspackTest(
   async ({ build }) => {
     const rsbuild = await build({
       plugins: [pluginReact()],
-      rsbuildConfig: {
+      config: {
         source: {
           entry: {
             main: join(fixtures, 'src/page1/index.ts'),
@@ -284,7 +284,7 @@ rspackTest(
   async ({ build }) => {
     const rsbuild = await build({
       plugins: [pluginReact()],
-      rsbuildConfig: {
+      config: {
         source: {
           entry: {
             main: join(fixtures, 'src/page1/index.ts'),

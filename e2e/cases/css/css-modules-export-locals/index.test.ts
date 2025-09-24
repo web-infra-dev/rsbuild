@@ -19,7 +19,7 @@ rspackTest(
   'should compile CSS Modules with exportLocalsConvention camelCaseOnly',
   async ({ page, buildPreview }) => {
     const rsbuild = await buildPreview({
-      rsbuildConfig: {
+      config: {
         output: {
           cssModules: {
             exportLocalsConvention: 'camelCaseOnly',
@@ -43,7 +43,7 @@ rspackTest(
   'should compile CSS Modules with exportLocalsConvention camelCase',
   async ({ page, buildPreview }) => {
     const rsbuild = await buildPreview({
-      rsbuildConfig: {
+      config: {
         output: {
           cssModules: {
             exportLocalsConvention: 'camelCase',
@@ -69,7 +69,7 @@ rspackTest(
   'should compile CSS Modules with exportLocalsConvention dashes',
   async ({ page, buildPreview }) => {
     const rsbuild = await buildPreview({
-      rsbuildConfig: {
+      config: {
         output: {
           cssModules: {
             exportLocalsConvention: 'dashes',
@@ -94,7 +94,7 @@ rspackTest(
   'should compile CSS Modules with exportLocalsConvention dashesOnly',
   async ({ page, buildPreview }) => {
     const rsbuild = await buildPreview({
-      rsbuildConfig: {
+      config: {
         output: {
           cssModules: {
             exportLocalsConvention: 'dashesOnly',
@@ -118,7 +118,7 @@ rspackTest(
   'should compile CSS Modules with exportLocalsConvention asIs',
   async ({ page, buildPreview }) => {
     const rsbuild = await buildPreview({
-      rsbuildConfig: {
+      config: {
         output: {
           cssModules: {
             exportLocalsConvention: 'asIs',

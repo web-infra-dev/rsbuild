@@ -9,7 +9,7 @@ test('should support configuring additional assets matched by RegExp', async ({
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       source: {
         assetsInclude: [/\.json5$/],
       },
@@ -34,7 +34,7 @@ test('should support configuring additional assets matched by path', async ({
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       source: {
         assetsInclude: path.resolve(__dirname, 'src/assets'),
       },
@@ -59,7 +59,7 @@ test('should support disabling emission for additional assets', async ({
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       source: {
         assetsInclude: [/\.json5$/],
       },

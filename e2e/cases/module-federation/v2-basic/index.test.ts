@@ -81,7 +81,7 @@ rspackTest('should downgrade syntax as expected', async ({ build }) => {
 
   process.env.REMOTE_PORT = remotePort.toString();
 
-  const rsbuildConfig: RsbuildConfig = {
+  const config: RsbuildConfig = {
     output: {
       sourceMap: true,
       overrideBrowserslist: ['Chrome >= 51'],
@@ -102,14 +102,14 @@ rspackTest('should downgrade syntax as expected', async ({ build }) => {
   await expect(
     build({
       cwd: remote,
-      rsbuildConfig,
+      config,
     }),
   ).resolves.toBeTruthy();
 
   await expect(
     build({
       cwd: host,
-      rsbuildConfig,
+      config,
     }),
   ).resolves.toBeTruthy();
 });

@@ -37,7 +37,7 @@ test('should return raw SVG content with `?raw` when using pluginSvgr', async ({
   dev,
 }) => {
   await dev({
-    rsbuildConfig: {
+    config: {
       plugins: [pluginSvgr()],
     },
   });
@@ -76,7 +76,7 @@ test('should return raw TSX content with `?raw` when using pluginReact', async (
   dev,
 }) => {
   await dev({
-    rsbuildConfig: {
+    config: {
       plugins: [pluginReact()],
     },
   });

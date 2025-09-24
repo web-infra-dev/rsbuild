@@ -4,7 +4,7 @@ test('should allow to set development mode when building', async ({
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       mode: 'development',
     },
   });
@@ -31,7 +31,7 @@ test('should allow to set development mode when building', async ({
 
 test('should allow to set none mode when building', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       mode: 'none',
     },
   });
@@ -53,7 +53,7 @@ rspackTest(
   'should allow to set production mode when starting dev server',
   async ({ dev }) => {
     const rsbuild = await dev({
-      rsbuildConfig: {
+      config: {
         mode: 'production',
       },
     });

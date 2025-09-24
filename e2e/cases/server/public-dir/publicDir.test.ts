@@ -11,7 +11,7 @@ test('should serve publicDir for dev server correctly', async ({
   await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');
 
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       output: {
         distPath: {
           root: 'dist-dev-1',
@@ -34,7 +34,7 @@ test('should serve publicDir with assetPrefix for dev server correctly', async (
   await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');
 
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       dev: {
         assetPrefix: '/dev/',
       },
@@ -62,7 +62,7 @@ test('should serve multiple publicDir for dev server correctly', async ({
   await fse.outputFile(join(__dirname, 'test-temp-dir2', 'b.txt'), 'b');
 
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       server: {
         publicDir: [{ name: 'test-temp-dir1' }, { name: 'test-temp-dir2' }],
       },
@@ -91,7 +91,7 @@ test('should serve custom publicDir for dev server correctly', async ({
   );
 
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       server: {
         publicDir: {
           name: 'public1',
@@ -117,7 +117,7 @@ test('should not serve publicDir when publicDir is false', async ({
   devOnly,
 }) => {
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       server: {
         publicDir: false,
         htmlFallback: false,
@@ -146,7 +146,7 @@ test('should serve publicDir for preview server correctly', async ({
   const rsbuild = await buildPreview({
     cwd,
 
-    rsbuildConfig: {
+    config: {
       output: {
         distPath: {
           root: 'dist-build-1',
@@ -169,7 +169,7 @@ test('should copy publicDir to the environment distDir when multiple environment
 
   const rsbuild = await build({
     cwd,
-    rsbuildConfig: {
+    config: {
       environments: {
         web1: {
           output: {
@@ -223,7 +223,7 @@ test('should copy publicDir to the node distDir when copyOnBuild is specified as
 
   const rsbuild = await build({
     cwd,
-    rsbuildConfig: {
+    config: {
       server: {
         publicDir: {
           copyOnBuild: true,
@@ -259,7 +259,7 @@ test('should copy publicDir to root dist when environment dist path has a parent
 
   const rsbuild = await build({
     cwd,
-    rsbuildConfig: {
+    config: {
       environments: {
         web1: {
           output: {
@@ -302,7 +302,7 @@ test('should serve publicDir for preview server with assetPrefix correctly', asy
   const rsbuild = await buildPreview({
     cwd,
 
-    rsbuildConfig: {
+    config: {
       dev: {
         assetPrefix: '/dev/',
       },
@@ -332,7 +332,7 @@ test('should serve multiple publicDir for preview server correctly', async ({
   const rsbuild = await buildPreview({
     cwd,
 
-    rsbuildConfig: {
+    config: {
       server: {
         publicDir: [{ name: 'test-temp-dir1' }, { name: 'test-temp-dir2' }],
       },
@@ -356,7 +356,7 @@ test('should reload page when publicDir file changes', async ({
   dev,
 }) => {
   await dev({
-    rsbuildConfig: {
+    config: {
       server: {
         publicDir: {
           watch: true,
@@ -382,7 +382,7 @@ test('should reload page when custom publicDir file changes', async ({
   dev,
 }) => {
   await dev({
-    rsbuildConfig: {
+    config: {
       server: {
         publicDir: {
           name: 'public1',

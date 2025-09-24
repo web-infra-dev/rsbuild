@@ -8,7 +8,7 @@ test('should allow to access manifest data in environment context after build', 
   let nodeManifest: Record<string, any> = {};
 
   await build({
-    rsbuildConfig: {
+    config: {
       output: {
         filenameHash: false,
       },
@@ -68,7 +68,7 @@ test('should allow to access manifest data in environment context after dev buil
   let nodeManifest: Record<string, any> = {};
 
   await dev({
-    rsbuildConfig: {
+    config: {
       output: {
         filenameHash: false,
       },
@@ -129,7 +129,7 @@ test('should allow to access manifest data in environment API', async ({
   let nodeManifest: Record<string, any> | undefined = {};
 
   const rsbuild = await dev({
-    rsbuildConfig: {
+    config: {
       output: {
         filenameHash: false,
       },

@@ -4,7 +4,7 @@ rspackTest(
   'should define BASE_URL env var correctly in dev',
   async ({ page, dev }) => {
     await dev({
-      rsbuildConfig: {
+      config: {
         html: {
           template: './src/index.html',
         },
@@ -26,7 +26,7 @@ rspackTest(
   'should define BASE_URL env var correctly in build',
   async ({ page, buildPreview }) => {
     await buildPreview({
-      rsbuildConfig: {
+      config: {
         html: {
           template: './src/index.html',
         },

@@ -29,7 +29,7 @@ const plugin = {
 async function main() {
   const rsbuild = await createRsbuild({
     cwd: __dirname,
-    rsbuildConfig: {
+    config: {
       plugins: [plugin],
     },
   });

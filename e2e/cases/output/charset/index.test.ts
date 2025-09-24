@@ -17,7 +17,7 @@ rspackTest(
   'should set output.charset to ascii in dev',
   async ({ page, dev }) => {
     const rsbuild = await dev({
-      rsbuildConfig: {
+      config: {
         output: {
           charset: 'ascii',
         },
@@ -41,7 +41,7 @@ test('should set output.charset to ascii in build', async ({
   buildPreview,
 }) => {
   const rsbuild = await buildPreview({
-    rsbuildConfig: {
+    config: {
       output: {
         charset: 'ascii',
       },

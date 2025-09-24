@@ -10,7 +10,7 @@ test('should include CORS headers for dev server if `cors` is `true`', async ({
   dev,
 }) => {
   const rsbuild = await dev({
-    rsbuildConfig: {
+    config: {
       server: {
         cors: true,
       },
@@ -26,7 +26,7 @@ test('should include CORS headers for preview server if `cors` is `true`', async
   buildPreview,
 }) => {
   const rsbuild = await buildPreview({
-    rsbuildConfig: {
+    config: {
       server: {
         cors: true,
       },
@@ -39,7 +39,7 @@ test('should include CORS headers for preview server if `cors` is `true`', async
 
 rspackTest('should include CORS headers for MF', async ({ request, dev }) => {
   const rsbuild = await dev({
-    rsbuildConfig: {
+    config: {
       moduleFederation: {
         options: {
           name: 'foo',
@@ -58,7 +58,7 @@ test('should not include CORS headers for dev server if `cors` is `false`', asyn
   dev,
 }) => {
   const rsbuild = await dev({
-    rsbuildConfig: {
+    config: {
       server: {
         cors: false,
       },
@@ -83,7 +83,7 @@ test('should not include CORS headers for preview server if `cors` is `false`', 
   buildPreview,
 }) => {
   const rsbuild = await buildPreview({
-    rsbuildConfig: {
+    config: {
       server: {
         cors: false,
       },
@@ -96,7 +96,7 @@ test('should not include CORS headers for preview server if `cors` is `false`', 
 
 test('should allow to configure CORS', async ({ request, buildPreview }) => {
   const rsbuild = await buildPreview({
-    rsbuildConfig: {
+    config: {
       server: {
         cors: {
           origin: 'https://example.com',
@@ -116,7 +116,7 @@ test('should override `server.cors` for dev server when `server.headers` is set'
   dev,
 }) => {
   const rsbuild = await dev({
-    rsbuildConfig: {
+    config: {
       server: {
         cors: true,
         headers: {
@@ -137,7 +137,7 @@ test('should override `server.cors` for preview server when `server.headers` is 
   buildPreview,
 }) => {
   const rsbuild = await buildPreview({
-    rsbuildConfig: {
+    config: {
       server: {
         cors: true,
         headers: {
