@@ -22,6 +22,9 @@ node --cpu-prof ./node_modules/@rsbuild/core/bin/rsbuild.js dev
 
 # build
 node --cpu-prof ./node_modules/@rsbuild/core/bin/rsbuild.js build
+
+# Set higher precision sampling interval
+node --cpu-prof --cpu-prof-interval=100 ./node_modules/@rsbuild/core/bin/rsbuild.js build
 ```
 
 The above commands will generate a `*.cpuprofile` file. We can use [speedscope](https://github.com/jlfwong/speedscope) to visualize this file:
