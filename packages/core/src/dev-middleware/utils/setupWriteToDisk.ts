@@ -75,10 +75,6 @@ export function setupWriteToDisk(
                     return;
                   }
 
-                  logger.debug(
-                    `[rsbuild-dev-middleware] ${name}Asset written to disk: "${targetPath}"`,
-                  );
-
                   callback();
                 },
               );

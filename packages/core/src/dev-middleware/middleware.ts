@@ -117,17 +117,13 @@ export function wrapper(context: FilledContext): RequestHandler {
 
     async function goNext() {
       return new Promise<void>((resolve) => {
-        ready(
-          context,
-          () => {
-            const extendedRes = res as ServerResponse;
-            extendedRes.locals = extendedRes.locals || {};
-            extendedRes.locals.webpack = { devMiddleware: context };
-            next();
-            resolve();
-          },
-          req,
-        );
+        ready(context, () => {
+          const extendedRes = res as ServerResponse;
+          extendedRes.locals = extendedRes.locals || {};
+          extendedRes.locals.webpack = { devMiddleware: context };
+          next();
+          resolve();
+        });
       });
     }
 
@@ -505,6 +501,6 @@ export function wrapper(context: FilledContext): RequestHandler {
       onFinishedStream(res, cleanup);
     }
 
-    ready(context, processRequest, req);
+    ready(context, processRequest);
   };
 }
