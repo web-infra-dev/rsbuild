@@ -23,8 +23,8 @@
     "bin.js"
   ],
   "scripts": {
-    "build": "rslib build --config-loader native",
-    "dev": "rslib build -w --config-loader native",
+    "build": "rslib build",
+    "dev": "rslib build -w",
     "start": "node ./dist/index.js",
     "bump": "pnpx bumpp --no-tag"
   },
