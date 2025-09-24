@@ -101,7 +101,7 @@ export async function init({
 
     const rsbuild = await createRsbuild({
       cwd: root,
-      rsbuildConfig: () => loadConfig(root),
+      config: () => loadConfig(root),
       environment: commonOpts.environment,
       loadEnv:
         commonOpts.env === false
