@@ -22,6 +22,9 @@ node --cpu-prof ./node_modules/@rsbuild/core/bin/rsbuild.js dev
 
 # build
 node --cpu-prof ./node_modules/@rsbuild/core/bin/rsbuild.js build
+
+# 设置更高精度的采样间隔
+node --cpu-prof --cpu-prof-interval=100 ./node_modules/@rsbuild/core/bin/rsbuild.js build
 ```
 
 以上命令执行后会生成一个 `*.cpuprofile` 文件，我们可以使用 [speedscope](https://github.com/jlfwong/speedscope) 来可视化查看该文件：
