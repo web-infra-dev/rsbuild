@@ -6,7 +6,7 @@ import { logger } from '../logger';
 import type { RequestHandler } from '../types';
 import type { FilledContext, ServerResponse } from './index';
 import { escapeHtml } from './utils/escapeHtml';
-import { getFilenameFromUrl } from './utils/getFilenameFromUrl';
+import { type Extra, getFilenameFromUrl } from './utils/getFilenameFromUrl';
 import { memorize } from './utils/memorize';
 import { parseTokenList } from './utils/parseTokenList';
 import { ready } from './utils/ready';
@@ -319,7 +319,7 @@ export function wrapper(context: FilledContext): RequestHandler {
     }
 
     async function processRequest() {
-      const extra: import('./utils/getFilenameFromUrl').Extra = {};
+      const extra: Extra = {};
       const filename = getFilenameFromUrl(context, req.url!, extra);
 
       if (extra.errorCode) {

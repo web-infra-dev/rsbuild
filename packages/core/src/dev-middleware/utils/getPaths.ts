@@ -1,13 +1,15 @@
-import type { MultiStats, Stats } from '@rspack/core';
+import type { Stats } from '@rspack/core';
 import type { FilledContext } from '../index';
 
 type PublicPathInfo = { outputPath: string; publicPath: string | undefined };
 
 export function getPaths(context: FilledContext): PublicPathInfo[] {
   const { stats, options } = context;
-  const childStats: Stats[] = (stats as MultiStats).stats
-    ? (stats as MultiStats).stats
-    : [stats as Stats];
+  if (!stats) {
+    return [];
+  }
+
+  const childStats: Stats[] = 'stats' in stats ? stats.stats : [stats];
   const publicPaths: PublicPathInfo[] = [];
 
   for (const { compilation } of childStats) {

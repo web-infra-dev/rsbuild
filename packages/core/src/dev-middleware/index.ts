@@ -68,7 +68,7 @@ export type FilledContext = Omit<Context, 'watching'> & {
 
 export type Close = (callback: (err: Error | null | undefined) => void) => void;
 
-export type API = RequestHandler & {
+export type DevMiddleware = RequestHandler & {
   watch: () => void;
   close: Close;
 };
@@ -78,7 +78,7 @@ export type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<T>;
 export async function devMiddleware(
   compiler: Compiler | MultiCompiler,
   options: Options = {},
-): Promise<API> {
+): Promise<DevMiddleware> {
   const compilers = isMultiCompiler(compiler) ? compiler.compilers : [compiler];
   const context: WithOptional<Context, 'watching' | 'outputFileSystem'> = {
     state: false,
@@ -98,7 +98,7 @@ export async function devMiddleware(
 
   const filledContext = context as FilledContext;
 
-  const instance = (createMiddleware as (ctx: FilledContext) => API)(
+  const instance = (createMiddleware as (ctx: FilledContext) => DevMiddleware)(
     filledContext,
   );
 
