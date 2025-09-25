@@ -1,4 +1,4 @@
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, getFileContent, rspackTest } from '@e2e/helper';
 
 const COMPILE_WARNING = 'Compile Warning';
 
@@ -7,8 +7,7 @@ rspackTest(
   async ({ build }) => {
     const rsbuild = await build();
     const files = rsbuild.getDistFiles();
-    const content =
-      files[Object.keys(files).find((file) => file.endsWith('index.css'))!];
+    const content = getFileContent(files, 'index.css');
 
     expect(content).toEqual('body{color:red}');
     // should have no warnings
@@ -28,8 +27,7 @@ rspackTest(
     });
 
     const files = rsbuild.getDistFiles();
-    const content =
-      files[Object.keys(files).find((file) => file.endsWith('index.js'))!];
+    const content = getFileContent(files, 'index.js');
     expect(content).toContain('color:red');
 
     // should have no warnings

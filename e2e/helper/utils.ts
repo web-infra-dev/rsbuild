@@ -260,3 +260,49 @@ export const toPosixPath = (filepath: string): string => {
   }
   return filepath.replace(/\\/g, '/');
 };
+
+export type FileMatcher = string | RegExp | ((file: string) => boolean);
+export type FilesMap = Record<string, string>;
+export type FindFileOptions = {
+  /** Remove hash like `file.123abc.js` before matching */
+  ignoreHash?: boolean;
+};
+
+const HASH_PATTERN = /\.[0-9a-z]{6,}(?=\.)/gi;
+
+const toMatcherFn = (matcher: FileMatcher): ((file: string) => boolean) => {
+  if (typeof matcher === 'function') {
+    return matcher;
+  }
+  if (typeof matcher === 'string') {
+    return (file: string) => file.endsWith(matcher);
+  }
+  return (file: string) => matcher.test(file);
+};
+
+/** Return the first file name that matches the provided matcher */
+export const findFile = (
+  files: FilesMap,
+  matcher: FileMatcher,
+  options: FindFileOptions = {},
+): string => {
+  const { ignoreHash = true } = options;
+  const getComparable = (file: string) =>
+    ignoreHash ? file.replace(HASH_PATTERN, '') : file;
+  const matcherFn = toMatcherFn(matcher);
+
+  for (const file of Object.keys(files)) {
+    if (matcherFn(getComparable(file))) {
+      return file;
+    }
+  }
+
+  throw new Error(`Unable to find file matching ${matcher.toString()}`);
+};
+
+/** Return the content of the first matching file from a files map */
+export const getFileContent = (
+  files: FilesMap,
+  matcher: FileMatcher,
+  options?: FindFileOptions,
+): string => files[findFile(files, matcher, options)];

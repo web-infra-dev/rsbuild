@@ -1,4 +1,4 @@
-import { expect, test } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 
 test('should allow dev.assetPrefix to be `auto`', async ({ page, dev }) => {
   await dev({
@@ -98,8 +98,7 @@ test('should use output.assetPrefix in none mode', async ({ build }) => {
   });
 
   const files = result.getDistFiles();
-  const indexHtml =
-    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+  const indexHtml = getFileContent(files, 'index.html');
   expect(indexHtml).toContain('http://prod.com');
   expect(indexHtml).not.toContain('http://dev.com');
 });

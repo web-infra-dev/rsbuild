@@ -1,14 +1,11 @@
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, getFileContent, rspackTest } from '@e2e/helper';
 
 rspackTest(
   'should compile CSS Modules with default configuration',
   async ({ build }) => {
     const rsbuild = await build();
     const files = rsbuild.getDistFiles();
-
-    const content =
-      files[Object.keys(files).find((file) => file.endsWith('.css'))!];
-
+    const content = getFileContent(files, 'index.css');
     expect(content).toMatch(
       /\.the-a-class{color:red}\.the-b-class-\w{6}{color:#00f}\.the-c-class-\w{6}{color:#ff0}\.the-d-class{color:green}/,
     );
@@ -30,10 +27,7 @@ rspackTest(
       },
     });
     const files = rsbuild.getDistFiles();
-
-    const content =
-      files[Object.keys(files).find((file) => file.endsWith('.css'))!];
-
+    const content = getFileContent(files, 'index.css');
     expect(content).toMatch(
       /.the-a-class{color:red}.the-b-class-\w{6}{color:#00f}.the-c-class{color:#ff0}.the-d-class{color:green}/,
     );
@@ -53,10 +47,7 @@ rspackTest(
       },
     });
     const files = rsbuild.getDistFiles();
-
-    const content =
-      files[Object.keys(files).find((file) => file.endsWith('.css'))!];
-
+    const content = getFileContent(files, 'index.css');
     expect(content).toMatch(
       /\.the-a-class{color:red}\.\w{8}{color:#00f}\.\w{8}{color:#ff0}\.the-d-class{color:green}/,
     );
@@ -76,10 +67,7 @@ rspackTest(
       },
     });
     const files = rsbuild.getDistFiles();
-
-    const content =
-      files[Object.keys(files).find((file) => file.endsWith('.css'))!];
-
+    const content = getFileContent(files, 'index.css');
     expect(content).toMatch(
       /\.the-a-class{color:red}\.\w{4}{color:#00f}\.\w{4}{color:#ff0}\.the-d-class{color:green}/,
     );
