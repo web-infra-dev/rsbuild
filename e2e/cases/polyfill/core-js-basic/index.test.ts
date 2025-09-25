@@ -27,7 +27,6 @@ test('should add polyfill when set polyfill entry (default)', async ({
   expect(await page.evaluate('window.a')).toEqual(EXPECT_VALUE);
 
   const files = rsbuild.getDistFiles({ sourceMaps: true });
-
   const content = getPolyfillContent(files);
 
   // should polyfill all api

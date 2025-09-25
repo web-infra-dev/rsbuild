@@ -268,7 +268,7 @@ export type FindFileOptions = {
   ignoreHash?: boolean;
 };
 
-const HASH_PATTERN = /(\.|-)[0-9a-z]{6,}(?=\.)/gi;
+const HASH_PATTERN = /\.[0-9a-z]{6,}(?=\.)/gi;
 
 const toMatcherFn = (matcher: FileMatcher): ((file: string) => boolean) => {
   if (typeof matcher === 'function') {

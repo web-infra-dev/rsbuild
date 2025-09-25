@@ -24,7 +24,7 @@ rspackTest(
       },
     });
     const files = rsbuild.getDistFiles();
-    const content = getFileContent(files, 'index.css');
+    const content = getFileContent(files, 'external.css');
     expect(content).toMatch(
       /.*\{color:#000;background:#0ff\}.*\{background:green\}/,
     );
