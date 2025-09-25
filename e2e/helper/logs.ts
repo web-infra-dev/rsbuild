@@ -65,7 +65,7 @@ export const createLogHelper = () => {
         const expect = color.yellow(pattern.toString());
         reject(
           new Error(
-            `${title}\nExpect: ${expect}\nGet:\n${color.cyan(logs.join('\n'))}`,
+            `${title}\nExpect: ${expect}\nGet:\n${originalLogs.join('\n')}`,
           ),
         );
       }, 5000);
