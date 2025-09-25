@@ -2,6 +2,7 @@ import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
 import type Ws from '../../compiled/ws/index.js';
 import {
+  color,
   getAllStatsErrors,
   getAllStatsWarnings,
   getStatsOptions,
@@ -44,12 +45,23 @@ export type SocketMessageErrors = {
   data: { text: string[]; html: string };
 };
 
+export type ClientMessageRuntimeError = {
+  type: 'runtime-error';
+  message: string;
+};
+
+export type ClientMessagePing = {
+  type: 'ping';
+};
+
 export type SocketMessage =
   | SocketMessageOk
   | SocketMessageStaticChanged
   | SocketMessageHash
   | SocketMessageWarnings
   | SocketMessageErrors;
+
+export type ClientMessage = ClientMessagePing | ClientMessageRuntimeError;
 
 const parseQueryString = (req: IncomingMessage) => {
   const queryStr = req.url ? req.url.split('?')[1] : '';
@@ -245,6 +257,22 @@ export class SocketServer {
     // heartbeat
     socket.on('pong', () => {
       socket.isAlive = true;
+    });
+
+    socket.on('message', (data) => {
+      try {
+        const message: ClientMessage = JSON.parse(
+          // eslint-disable-next-line @typescript-eslint/no-base-to-string
+          typeof data === 'string' ? data : data.toString(),
+        );
+
+        // Handle runtime errors from browser
+        if (message.type === 'runtime-error') {
+          logger.error(
+            `${color.cyan('[browser]')} ${color.red(message.message)}`,
+          );
+        }
+      } catch {}
     });
 
     let sockets = this.socketsMap.get(token);
