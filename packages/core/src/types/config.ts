@@ -1720,6 +1720,13 @@ export type WriteToDisk = boolean | ((filename: string) => boolean);
 
 export interface DevConfig {
   /**
+   * Enables forwarding of browser runtime errors to the terminal. When `true`, the dev
+   * client listens for window `error` events in the browser and send them to the dev server,
+   * where they are printed in the terminal (prefixed with `[browser]`).
+   * @default true
+   */
+  browserLogs?: boolean;
+  /**
    * Whether to enable Hot Module Replacement.
    * @default true
    */
@@ -1790,7 +1797,12 @@ export type NormalizedDevConfig = Omit<DevConfig, 'watchFiles'> &
   Required<
     Pick<
       DevConfig,
-      'hmr' | 'liveReload' | 'assetPrefix' | 'writeToDisk' | 'cliShortcuts'
+      | 'hmr'
+      | 'liveReload'
+      | 'assetPrefix'
+      | 'writeToDisk'
+      | 'cliShortcuts'
+      | 'browserLogs'
     >
   > & {
     watchFiles: WatchFiles[];
@@ -1866,6 +1878,7 @@ export type AllowedEnvironmentDevKeys =
   | 'hmr'
   | 'client'
   | 'liveReload'
+  | 'browserLogs'
   | 'assetPrefix'
   | 'progressBar'
   | 'lazyCompilation'

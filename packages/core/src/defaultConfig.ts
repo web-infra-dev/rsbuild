@@ -44,6 +44,7 @@ const require = createRequire(import.meta.url);
 const getDefaultDevConfig = (): NormalizedDevConfig => ({
   hmr: true,
   liveReload: true,
+  browserLogs: true,
   watchFiles: [],
   // Temporary placeholder, default: `${server.base}`
   assetPrefix: DEFAULT_ASSET_PREFIX,

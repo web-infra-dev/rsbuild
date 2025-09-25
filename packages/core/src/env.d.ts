@@ -7,6 +7,7 @@ declare global {
   const RSBUILD_SERVER_HOST: string;
   const RSBUILD_SERVER_PORT: number;
   const RSBUILD_DEV_LIVE_RELOAD: boolean;
+  const RSBUILD_DEV_BROWSER_LOGS: boolean;
   const RSBUILD_WEB_SOCKET_TOKEN: string;
   const Deno: unknown;
 }
