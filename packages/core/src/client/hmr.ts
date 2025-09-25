@@ -243,16 +243,30 @@ function onSocketError() {
 
 const errorMessages: ClientMessageRuntimeError[] = [];
 
-function onRuntimeError(event: ErrorEvent) {
-  const message: ClientMessageRuntimeError = {
+function sendRuntimeError(message: string) {
+  const messageInfo: ClientMessageRuntimeError = {
     type: 'runtime-error',
-    message: event.message,
+    message,
   };
   if (isSocketReady()) {
-    socketSend(message);
+    socketSend(messageInfo);
   } else {
-    errorMessages.push(message);
+    errorMessages.push(messageInfo);
   }
+}
+
+function onUnhandledRejection({ reason }: PromiseRejectionEvent) {
+  let message: string;
+
+  if (reason instanceof Error) {
+    message = reason.message;
+  } else if (typeof reason === 'string') {
+    message = reason;
+  } else {
+    return;
+  }
+
+  sendRuntimeError(`Unhandled Rejection: ${message}`);
 }
 
 // Establishing a WebSocket connection with the server.
@@ -291,7 +305,10 @@ function reloadPage() {
 }
 
 if (RSBUILD_DEV_BROWSER_LOGS && typeof window !== 'undefined') {
-  window.addEventListener('error', onRuntimeError);
+  window.addEventListener('error', (event) => {
+    sendRuntimeError(event.message);
+  });
+  window.addEventListener('unhandledrejection', onUnhandledRejection);
 }
 
 connect();
