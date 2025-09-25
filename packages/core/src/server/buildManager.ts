@@ -4,10 +4,10 @@ import { isMultiCompiler } from '../helpers';
 import { getPathnameFromUrl } from '../helpers/path';
 import type { EnvironmentContext, NormalizedConfig, Rspack } from '../types';
 import {
-  type CompilationMiddleware,
-  getCompilationMiddleware,
+  type AssetsMiddleware,
+  getAssetsMiddleware,
   type ServerCallbacks,
-} from './compilationMiddleware';
+} from './assets-middleware';
 import { stripBase } from './helper';
 import { SocketServer } from './socketServer';
 
@@ -20,12 +20,12 @@ type Options = {
 };
 
 /**
- * Setup compiler-related logic:
- * 1. setup rsbuild-dev-middleware
+ * Setup compiler related logic:
+ * 1. setup assets middleware
  * 2. establish webSocket connect
  */
-export class CompilationManager {
-  public middleware!: CompilationMiddleware;
+export class BuildManager {
+  public middleware!: AssetsMiddleware;
 
   public outputFileSystem: Rspack.OutputFileSystem;
 
@@ -64,7 +64,7 @@ export class CompilationManager {
     await this.setupCompilationMiddleware();
     await this.socketServer.prepare();
 
-    // Get the latest outputFileSystem from rsbuild-dev-middleware
+    // Get the latest outputFileSystem from assets middleware
     const { compiler } = this;
     this.outputFileSystem =
       (isMultiCompiler(compiler)
@@ -125,7 +125,7 @@ export class CompilationManager {
       },
     };
 
-    const middleware = await getCompilationMiddleware({
+    const middleware = await getAssetsMiddleware({
       config,
       compiler: this.compiler,
       callbacks,
@@ -140,7 +140,7 @@ export class CompilationManager {
         base && base !== '/' ? stripBase(prefix, base) : prefix,
       );
 
-    const wrapper: CompilationMiddleware = (req, res, next) => {
+    const wrapper: AssetsMiddleware = (req, res, next) => {
       const { url } = req;
       const assetPrefix =
         url && assetPrefixes.find((prefix) => url.startsWith(prefix));
@@ -161,8 +161,7 @@ export class CompilationManager {
     wrapper.close = middleware.close;
     wrapper.watch = middleware.watch;
 
-    // wrap rsbuild-dev-middleware to handle HTML file（without publicPath）
-    // maybe we should serve HTML file by sirv
+    // wrap assets middleware to handle HTML file（without publicPath）
     this.middleware = wrapper;
   }
 }

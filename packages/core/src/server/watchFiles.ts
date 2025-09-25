@@ -8,12 +8,12 @@ import type {
   ServerConfig,
   WatchFiles,
 } from '../types';
-import type { CompilationManager } from './compilationManager';
+import type { BuildManager } from './buildManager.js';
 
 type WatchFilesOptions = {
   root: string;
   config: NormalizedConfig;
-  compilationManager?: CompilationManager;
+  buildManager?: BuildManager;
 };
 
 export type WatchFilesResult = {
@@ -23,21 +23,21 @@ export type WatchFilesResult = {
 export async function setupWatchFiles(
   options: WatchFilesOptions,
 ): Promise<WatchFilesResult | undefined> {
-  const { config, root, compilationManager } = options;
+  const { config, root, buildManager } = options;
 
   const { hmr, liveReload } = config.dev;
-  if ((!hmr && !liveReload) || !compilationManager) {
+  if ((!hmr && !liveReload) || !buildManager) {
     return;
   }
 
   const closeDevFilesWatcher = await watchDevFiles(
     config.dev,
-    compilationManager,
+    buildManager,
     root,
   );
   const serverFilesWatcher = await watchServerFiles(
     config.server,
-    compilationManager,
+    buildManager,
     root,
   );
 
@@ -53,7 +53,7 @@ export async function setupWatchFiles(
 
 async function watchDevFiles(
   devConfig: DevConfig,
-  compilationManager: CompilationManager,
+  buildManager: BuildManager,
   root: string,
 ) {
   const { watchFiles } = devConfig;
@@ -65,11 +65,7 @@ async function watchDevFiles(
 
   for (const { paths, options, type } of castArray(watchFiles)) {
     const watchOptions = prepareWatchOptions(paths, options, type);
-    const watcher = await startWatchFiles(
-      watchOptions,
-      compilationManager,
-      root,
-    );
+    const watcher = await startWatchFiles(watchOptions, buildManager, root);
     if (watcher) {
       watchers.push(watcher);
     }
@@ -84,7 +80,7 @@ async function watchDevFiles(
 
 function watchServerFiles(
   serverConfig: ServerConfig,
-  compilationManager: CompilationManager,
+  buildManager: BuildManager,
   root: string,
 ) {
   const publicDirs = normalizePublicDirs(serverConfig.publicDir);
@@ -101,7 +97,7 @@ function watchServerFiles(
   }
 
   const watchOptions = prepareWatchOptions(watchPaths);
-  return startWatchFiles(watchOptions, compilationManager, root);
+  return startWatchFiles(watchOptions, buildManager, root);
 }
 
 function prepareWatchOptions(
@@ -162,7 +158,7 @@ async function startWatchFiles(
     options,
     type = 'reload-page',
   }: ReturnType<typeof prepareWatchOptions>,
-  compilationManager: CompilationManager,
+  buildManager: BuildManager,
   root: string,
 ) {
   if (type !== 'reload-page') {
@@ -172,7 +168,7 @@ async function startWatchFiles(
   const watcher = await createChokidar(paths, root, options);
 
   watcher.on('change', () => {
-    compilationManager.socketServer.sockWrite({
+    buildManager.socketServer.sockWrite({
       type: 'static-changed',
     });
   });

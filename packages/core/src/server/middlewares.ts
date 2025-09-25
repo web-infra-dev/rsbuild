@@ -10,7 +10,7 @@ import type {
   RequestHandler,
   Rspack,
 } from '../types';
-import type { CompilationManager } from './compilationManager';
+import type { BuildManager } from './buildManager';
 import { joinUrlSegments, stripBase } from './helper';
 
 export const faviconFallbackMiddleware: RequestHandler = (req, res, next) => {
@@ -126,8 +126,8 @@ const getUrlPathname = (url: string): string => {
  */
 export const getHtmlCompletionMiddleware: (params: {
   distPath: string;
-  compilationManager: CompilationManager;
-}) => RequestHandler = ({ distPath, compilationManager }) => {
+  buildManager: BuildManager;
+}) => RequestHandler = ({ distPath, buildManager }) => {
   return async (req, res, next) => {
     if (!maybeHTMLRequest(req)) {
       next();
@@ -139,7 +139,7 @@ export const getHtmlCompletionMiddleware: (params: {
 
     const rewrite = (newUrl: string) => {
       req.url = newUrl;
-      compilationManager.middleware(req, res, (...args) => {
+      buildManager.middleware(req, res, (...args) => {
         next(...args);
       });
       return;
@@ -150,7 +150,7 @@ export const getHtmlCompletionMiddleware: (params: {
       const newUrl = `${pathname}index.html`;
       const filePath = path.join(distPath, newUrl);
 
-      if (await isFileExists(filePath, compilationManager.outputFileSystem)) {
+      if (await isFileExists(filePath, buildManager.outputFileSystem)) {
         rewrite(newUrl);
         return;
       }
@@ -160,7 +160,7 @@ export const getHtmlCompletionMiddleware: (params: {
       const newUrl = `${pathname}.html`;
       const filePath = path.join(distPath, newUrl);
 
-      if (await isFileExists(filePath, compilationManager.outputFileSystem)) {
+      if (await isFileExists(filePath, buildManager.outputFileSystem)) {
         rewrite(newUrl);
         return;
       }
@@ -227,9 +227,9 @@ export const getBaseMiddleware: (params: {
  */
 export const getHtmlFallbackMiddleware: (params: {
   distPath: string;
-  compilationManager: CompilationManager;
+  buildManager: BuildManager;
   htmlFallback?: HtmlFallback;
-}) => RequestHandler = ({ htmlFallback, distPath, compilationManager }) => {
+}) => RequestHandler = ({ htmlFallback, distPath, buildManager }) => {
   return async (req, res, next) => {
     if (
       !maybeHTMLRequest(req) ||
@@ -241,7 +241,7 @@ export const getHtmlFallbackMiddleware: (params: {
     }
 
     const filePath = path.join(distPath, 'index.html');
-    if (await isFileExists(filePath, compilationManager.outputFileSystem)) {
+    if (await isFileExists(filePath, buildManager.outputFileSystem)) {
       const newUrl = '/index.html';
 
       if (logger.level === 'verbose') {
@@ -251,7 +251,7 @@ export const getHtmlFallbackMiddleware: (params: {
       }
 
       req.url = newUrl;
-      compilationManager.middleware(req, res, (...args) => {
+      buildManager.middleware(req, res, (...args) => {
         next(...args);
       });
       return;
