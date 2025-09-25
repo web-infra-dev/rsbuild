@@ -263,9 +263,8 @@ export const toPosixPath = (filepath: string): string => {
 };
 
 export type FileMatcher = string | RegExp | ((file: string) => boolean);
-export type FilesMap = Record<string, string>;
 export type FindFileOptions = {
-  /** Remove hash like `file.123abc.js` before matching */
+  /** Whether to ignore hash from filename (default: true) */
   ignoreHash?: boolean;
 };
 
@@ -281,9 +280,13 @@ const toMatcherFn = (matcher: FileMatcher): ((file: string) => boolean) => {
   return (file: string) => matcher.test(file);
 };
 
-/** Return the first file name that matches the provided matcher */
+/**
+ * Find the first filename that matches the matcher
+ * @returns The matching file path
+ * @throws {Error} When no matching file is found
+ */
 export const findFile = (
-  files: FilesMap,
+  files: Record<string, string>,
   matcher: FileMatcher,
   options: FindFileOptions = {},
 ): string => {
@@ -303,9 +306,13 @@ export const findFile = (
   );
 };
 
-/** Return the content of the first matching file from a files map */
+/**
+ * Get the content of the first matching file from a files map
+ * @returns The content of the matching file
+ * @throws {Error} When no matching file is found
+ */
 export const getFileContent = (
-  files: FilesMap,
+  files: Record<string, string>,
   matcher: FileMatcher,
   options?: FindFileOptions,
 ): string => files[findFile(files, matcher, options)];

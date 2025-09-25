@@ -29,11 +29,7 @@ test('should generate preload link when preload is defined', async ({
 
   const files = rsbuild.getDistFiles();
 
-  const asyncFileName = findFile(
-    files,
-    (file) =>
-      file.includes('/static/js/async/') && !file.endsWith('.LICENSE.txt'),
-  );
+  const asyncFileName = findFile(files, /\/static\/js\/async\/.+\.js$/);
   const content = getFileContent(files, '.html');
 
   // test.js, test.css, image.png
@@ -70,10 +66,7 @@ test('should generate preload link with duplicate', async ({ build }) => {
 
   const initialFileName = findFile(
     files,
-    (file) =>
-      file.includes('/static/js/') &&
-      !file.includes('/static/js/async/') &&
-      !file.endsWith('.LICENSE.txt'),
+    /\/static\/js\/(?!async\/)[^/]+\.js$/,
   );
   const content = getFileContent(files, '.html');
 
@@ -109,11 +102,7 @@ test('should generate preload link with crossOrigin', async ({ build }) => {
 
   const files = rsbuild.getDistFiles();
 
-  const asyncFileName = findFile(
-    files,
-    (file) =>
-      file.includes('/static/js/async/') && !file.endsWith('.LICENSE.txt'),
-  );
+  const asyncFileName = findFile(files, /\/static\/js\/async\/.+\.js$/);
   const content = getFileContent(files, '.html');
 
   // test.js, test.css, image.png
@@ -150,11 +139,7 @@ test('should generate preload link without crossOrigin when same origin', async 
 
   const files = rsbuild.getDistFiles();
 
-  const asyncFileName = findFile(
-    files,
-    (file) =>
-      file.includes('/static/js/async/') && !file.endsWith('.LICENSE.txt'),
-  );
+  const asyncFileName = findFile(files, /\/static\/js\/async\/.+\.js$/);
   const content = getFileContent(files, '.html');
 
   // test.js, test.css, image.png
@@ -188,9 +173,7 @@ test('should generate preload link with include', async ({ build }) => {
 
   const files = rsbuild.getDistFiles();
 
-  const asyncFileName = findFile(files, (file) =>
-    file.includes('/static/image/image'),
-  );
+  const asyncFileName = findFile(files, 'image.png');
   const content = getFileContent(files, '.html');
 
   // image.png
@@ -224,9 +207,7 @@ test('should generate preload link with include array', async ({ build }) => {
 
   const files = rsbuild.getDistFiles();
 
-  const asyncFileName = findFile(files, (file) =>
-    file.includes('/static/image/image'),
-  );
+  const asyncFileName = findFile(files, 'image.png');
   const content = getFileContent(files, '.html');
 
   // image.png, test.js

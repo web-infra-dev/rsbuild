@@ -32,11 +32,7 @@ test('should generate prefetch link when prefetch is defined', async ({
 
   const files = rsbuild.getDistFiles();
 
-  const asyncFileName = findFile(
-    files,
-    (file) =>
-      file.includes('/static/js/async/') && !file.endsWith('.LICENSE.txt'),
-  );
+  const asyncFileName = findFile(files, /\/static\/js\/async\/.+\.js$/);
   const content = getFileContent(files, '.html');
 
   // test.js, test.css, image.png
@@ -73,11 +69,7 @@ test('should generate prefetch link correctly when assetPrefix do not have a pro
 
   const files = rsbuild.getDistFiles();
 
-  const asyncFileName = findFile(
-    files,
-    (file) =>
-      file.includes('/static/js/async/') && !file.endsWith('.LICENSE.txt'),
-  );
+  const asyncFileName = findFile(files, /\/static\/js\/async\/.+\.js$/);
   const content = getFileContent(files, '.html');
 
   expect(
@@ -108,9 +100,7 @@ test('should generate prefetch link with include', async ({ build }) => {
 
   const files = rsbuild.getDistFiles();
 
-  const asyncFileName = findFile(files, (file) =>
-    file.includes('/static/image/image'),
-  );
+  const asyncFileName = findFile(files, 'image.png');
   const content = getFileContent(files, '.html');
 
   // image.png
@@ -144,9 +134,7 @@ test('should generate prefetch link with include array', async ({ build }) => {
 
   const files = rsbuild.getDistFiles();
 
-  const asyncFileName = findFile(files, (file) =>
-    file.includes('/static/image/image'),
-  );
+  const asyncFileName = findFile(files, 'image.png');
   const content = getFileContent(files, '.html');
 
   // image.png, test.js
@@ -180,9 +168,7 @@ test('should generate prefetch link with exclude array', async ({ build }) => {
 
   const files = rsbuild.getDistFiles();
 
-  const asyncFileName = findFile(files, (file) =>
-    file.includes('/static/image/image'),
-  );
+  const asyncFileName = findFile(files, 'image.png');
   const content = getFileContent(files, '.html');
 
   // image.png
@@ -224,9 +210,7 @@ test('should generate prefetch link by config (distinguish html)', async ({
   // icon.png、test.js, test.css, image.png
   expect(content.match(/rel="prefetch"/g)?.length).toBe(4);
 
-  const assetFileName = findFile(files, (file) =>
-    file.includes('/static/image/'),
-  );
+  const assetFileName = findFile(files, 'image.png');
 
   expect(
     content.includes(

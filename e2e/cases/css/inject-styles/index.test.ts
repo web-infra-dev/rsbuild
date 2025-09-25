@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { expect, getFileContent, rspackTest } from '@e2e/helper';
+import { expect, findFile, getFileContent, rspackTest } from '@e2e/helper';
 
 const fixtures = __dirname;
 
@@ -11,8 +11,7 @@ rspackTest(
 
     // injectStyles worked
     const files = rsbuild.getDistFiles();
-    const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));
-    expect(cssFiles.length).toBe(0);
+    expect(() => findFile(files, '.css')).toThrowError();
 
     // should inline minified CSS
     const indexJs = getFileContent(files, 'index.js');
@@ -89,8 +88,7 @@ rspackTest(
 
     // injectStyles worked
     const files = rsbuild.getDistFiles();
-    const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));
-    expect(cssFiles.length).toBe(0);
+    expect(() => findFile(files, '.css')).toThrowError();
 
     // should inline CSS
     const indexJs = getFileContent(files, 'index.js');

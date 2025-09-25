@@ -25,7 +25,7 @@ rspackTest('legalComments linked (default)', async ({ page, buildPreview }) => {
 
   const LicenseContent = getFileContent(
     files,
-    (file) => file.includes('js/index') && file.endsWith('.LICENSE.txt'),
+    'static/js/index.js.LICENSE.txt',
   );
 
   expect(LicenseContent.includes('@preserve AAAA')).toBeTruthy();
@@ -60,17 +60,9 @@ test('should omit legal comments when legalComments is set to "none"', async ({
 
   const files = rsbuild.getDistFiles();
 
-  expect(() =>
-    findFile(
-      files,
-      (file) => file.includes('js/index') && file.endsWith('.LICENSE.txt'),
-    ),
-  ).toThrow();
+  expect(() => findFile(files, 'static/js/index.js.LICENSE.txt')).toThrow();
 
-  const JsContent = getFileContent(
-    files,
-    (file) => file.includes('js/index') && file.endsWith('.js'),
-  );
+  const JsContent = getFileContent(files, 'static/js/index.js');
 
   expect(JsContent.includes('@license BBB')).toBeFalsy();
 });
@@ -97,17 +89,9 @@ test('should inline legal comments when legalComments is set to "inline"', async
 
   const files = rsbuild.getDistFiles();
 
-  expect(() =>
-    findFile(
-      files,
-      (file) => file.includes('js/index') && file.endsWith('.LICENSE.txt'),
-    ),
-  ).toThrow();
+  expect(() => findFile(files, 'static/js/index.js.LICENSE.txt')).toThrow();
 
-  const JsContent = getFileContent(
-    files,
-    (file) => file.includes('js/index') && file.endsWith('.js'),
-  );
+  const JsContent = getFileContent(files, 'static/js/index.js');
 
   expect(JsContent.includes('@license BBB')).toBeTruthy();
   expect(JsContent.includes('Foo Bar')).toBeFalsy();
