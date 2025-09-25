@@ -3,7 +3,7 @@ import { defaultAllowedOrigins } from '../src/defaultConfig';
 import {
   isClientCompiler,
   setupServerHooks,
-} from '../src/server/compilationMiddleware';
+} from '../src/server/assets-middleware';
 import { formatRoutes, printServerURLs } from '../src/server/helper';
 
 beforeEach(() => {
