@@ -1,4 +1,7 @@
-import type { SocketMessage } from '../server/socketServer';
+import type {
+  SocketMessage,
+  SocketMessageRuntimeError,
+} from '../server/socketServer';
 import type { NormalizedClientConfig } from '../types';
 
 const config: NormalizedClientConfig = RSBUILD_CLIENT_CONFIG;
@@ -150,6 +153,13 @@ let socket: WebSocket | null = null;
 let reconnectCount = 0;
 let pingIntervalId: ReturnType<typeof setInterval>;
 
+const isSocketReady = () => socket && socket.readyState === socket.OPEN;
+const socketSend = (data: unknown) => {
+  if (isSocketReady()) {
+    socket!.send(JSON.stringify(data));
+  }
+};
+
 function onOpen() {
   // Notify users that the WebSocket has successfully connected.
   console.info('[rsbuild] WebSocket connected.');
@@ -160,10 +170,15 @@ function onOpen() {
   // To prevent WebSocket timeouts caused by proxies (e.g., nginx, docker),
   // send a periodic ping message to keep the connection alive.
   pingIntervalId = setInterval(() => {
-    if (socket && socket.readyState === socket.OPEN) {
-      socket.send(JSON.stringify({ type: 'ping' }));
-    }
+    socketSend({ type: 'ping' });
   }, 30000);
+
+  if (errorMessages.length) {
+    errorMessages.forEach((message) => {
+      socketSend(message);
+    });
+    errorMessages.length = 0;
+  }
 }
 
 function onMessage(e: MessageEvent<string>) {
@@ -214,7 +229,7 @@ function onClose() {
   setTimeout(connect, 1000 * 1.5 ** reconnectCount);
 }
 
-function onError() {
+function onSocketError() {
   if (formatURL() !== formatURL(true)) {
     console.error(
       '[rsbuild] WebSocket connection failed. Trying direct connection fallback.',
@@ -222,6 +237,20 @@ function onError() {
     removeListeners();
     socket = null;
     connect(true);
+  }
+}
+
+const errorMessages: SocketMessageRuntimeError[] = [];
+
+function onRuntimeError(event: ErrorEvent) {
+  const message: SocketMessageRuntimeError = {
+    type: 'runtime-error',
+    message: event.message,
+  };
+  if (isSocketReady()) {
+    socketSend(message);
+  } else {
+    errorMessages.push(message);
   }
 }
 
@@ -240,7 +269,7 @@ function connect(fallback = false) {
   socket.addEventListener('message', onMessage);
   // Handle errors
   if (!fallback) {
-    socket.addEventListener('error', onError);
+    socket.addEventListener('error', onSocketError);
   }
 }
 
@@ -250,7 +279,7 @@ function removeListeners() {
     socket.removeEventListener('open', onOpen);
     socket.removeEventListener('close', onClose);
     socket.removeEventListener('message', onMessage);
-    socket.removeEventListener('error', onError);
+    socket.removeEventListener('error', onSocketError);
   }
 }
 
@@ -258,6 +287,10 @@ function reloadPage() {
   if (RSBUILD_DEV_LIVE_RELOAD) {
     window.location.reload();
   }
+}
+
+if (typeof window !== 'undefined') {
+  window.addEventListener('error', onRuntimeError);
 }
 
 connect();
