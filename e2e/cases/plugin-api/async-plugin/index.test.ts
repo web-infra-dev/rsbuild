@@ -26,7 +26,9 @@ rspackTest(
   'should allow to register async plugin in plugins field',
   async ({ page, buildPreview }) => {
     await buildPreview({
-      plugins: [asyncPlugin()],
+      config: {
+        plugins: [asyncPlugin()],
+      },
     });
 
     const testEl = page.locator('#test-el');

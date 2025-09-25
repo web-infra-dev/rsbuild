@@ -1,9 +1,10 @@
 import { defineConfig } from '@rsbuild/core';
 import { pluginLess } from '@rsbuild/plugin-less';
+import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSass } from '@rsbuild/plugin-sass';
 
 export default defineConfig({
-  plugins: [pluginLess(), pluginSass()],
+  plugins: [pluginLess(), pluginSass(), pluginReact()],
   output: {
     injectStyles: true,
   },

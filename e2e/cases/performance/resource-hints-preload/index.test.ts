@@ -8,8 +8,8 @@ test('should generate preload link when preload is defined', async ({
   build,
 }) => {
   const rsbuild = await build({
-    plugins: [pluginReact()],
     config: {
+      plugins: [pluginReact()],
       source: {
         entry: {
           main: join(fixtures, 'src/page1/index.ts'),
@@ -45,8 +45,8 @@ test('should generate preload link when preload is defined', async ({
 
 test('should generate preload link with duplicate', async ({ build }) => {
   const rsbuild = await build({
-    plugins: [pluginReact()],
     config: {
+      plugins: [pluginReact()],
       source: {
         entry: {
           main: join(fixtures, 'src/page1/index.ts'),
@@ -84,8 +84,8 @@ test('should generate preload link with duplicate', async ({ build }) => {
 
 test('should generate preload link with crossOrigin', async ({ build }) => {
   const rsbuild = await build({
-    plugins: [pluginReact()],
     config: {
+      plugins: [pluginReact()],
       source: {
         entry: {
           main: join(fixtures, 'src/page1/index.ts'),
@@ -129,8 +129,8 @@ test('should generate preload link without crossOrigin when same origin', async 
   build,
 }) => {
   const rsbuild = await build({
-    plugins: [pluginReact()],
     config: {
+      plugins: [pluginReact()],
       source: {
         entry: {
           main: join(fixtures, 'src/page1/index.ts'),
@@ -169,8 +169,8 @@ test('should generate preload link without crossOrigin when same origin', async 
 
 test('should generate preload link with include', async ({ build }) => {
   const rsbuild = await build({
-    plugins: [pluginReact()],
     config: {
+      plugins: [pluginReact()],
       source: {
         entry: {
           main: join(fixtures, 'src/page1/index.ts'),
@@ -207,8 +207,8 @@ test('should generate preload link with include', async ({ build }) => {
 
 test('should generate preload link with include array', async ({ build }) => {
   const rsbuild = await build({
-    plugins: [pluginReact()],
     config: {
+      plugins: [pluginReact()],
       source: {
         entry: {
           main: join(fixtures, 'src/page1/index.ts'),
@@ -247,8 +247,8 @@ rspackTest(
   'should not generate preload link for inlined assets',
   async ({ build }) => {
     const rsbuild = await build({
-      plugins: [pluginReact()],
       config: {
+        plugins: [pluginReact()],
         source: {
           entry: {
             main: join(fixtures, 'src/page1/index.ts'),
@@ -278,8 +278,8 @@ rspackTest(
   'should not generate preload link for inlined assets with test option',
   async ({ build }) => {
     const rsbuild = await build({
-      plugins: [pluginReact()],
       config: {
+        plugins: [pluginReact()],
         source: {
           entry: {
             main: join(fixtures, 'src/page1/index.ts'),

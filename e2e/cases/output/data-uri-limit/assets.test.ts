@@ -41,8 +41,10 @@ const cases = [
 for (const item of cases) {
   test(item.name, async ({ page, buildPreview }) => {
     await buildPreview({
-      plugins: [pluginReact()],
-      config: item.config || {},
+      config: {
+        ...(item.config || {}),
+        plugins: [pluginReact()],
+      },
     });
 
     if (item.expected === 'url') {

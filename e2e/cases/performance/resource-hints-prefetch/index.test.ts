@@ -8,8 +8,8 @@ test('should generate prefetch link when prefetch is defined', async ({
   build,
 }) => {
   const rsbuild = await build({
-    plugins: [pluginReact()],
     config: {
+      plugins: [pluginReact()],
       source: {
         entry: {
           main: join(fixtures, 'src/page1/index.ts'),
@@ -50,8 +50,8 @@ test('should generate prefetch link correctly when assetPrefix do not have a pro
   build,
 }) => {
   const rsbuild = await build({
-    plugins: [pluginReact()],
     config: {
+      plugins: [pluginReact()],
       source: {
         entry: {
           main: join(fixtures, 'src/page1/index.ts'),
@@ -87,8 +87,8 @@ test('should generate prefetch link correctly when assetPrefix do not have a pro
 
 test('should generate prefetch link with include', async ({ build }) => {
   const rsbuild = await build({
-    plugins: [pluginReact()],
     config: {
+      plugins: [pluginReact()],
       source: {
         entry: {
           main: join(fixtures, 'src/page1/index.ts'),
@@ -125,8 +125,8 @@ test('should generate prefetch link with include', async ({ build }) => {
 
 test('should generate prefetch link with include array', async ({ build }) => {
   const rsbuild = await build({
-    plugins: [pluginReact()],
     config: {
+      plugins: [pluginReact()],
       source: {
         entry: {
           main: join(fixtures, 'src/page1/index.ts'),
@@ -163,8 +163,8 @@ test('should generate prefetch link with include array', async ({ build }) => {
 
 test('should generate prefetch link with exclude array', async ({ build }) => {
   const rsbuild = await build({
-    plugins: [pluginReact()],
     config: {
+      plugins: [pluginReact()],
       source: {
         entry: {
           main: join(fixtures, 'src/page1/index.ts'),
@@ -203,8 +203,8 @@ test('should generate prefetch link by config (distinguish html)', async ({
   build,
 }) => {
   const rsbuild = await build({
-    plugins: [pluginReact()],
     config: {
+      plugins: [pluginReact()],
       source: {
         entry: {
           page1: join(fixtures, 'src/page1/index.ts'),
@@ -252,8 +252,8 @@ rspackTest(
   'should not generate prefetch link for inlined assets',
   async ({ build }) => {
     const rsbuild = await build({
-      plugins: [pluginReact()],
       config: {
+        plugins: [pluginReact()],
         source: {
           entry: {
             main: join(fixtures, 'src/page1/index.ts'),
@@ -283,8 +283,8 @@ rspackTest(
   'should not generate prefetch link for inlined assets with test option',
   async ({ build }) => {
     const rsbuild = await build({
-      plugins: [pluginReact()],
       config: {
+        plugins: [pluginReact()],
         source: {
           entry: {
             main: join(fixtures, 'src/page1/index.ts'),

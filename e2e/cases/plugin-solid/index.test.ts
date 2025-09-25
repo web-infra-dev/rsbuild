@@ -22,7 +22,9 @@ const buildFixture = (
   return build({
     cwd: root,
     runServer: true,
-    plugins,
+    config: {
+      plugins,
+    },
   });
 };
 

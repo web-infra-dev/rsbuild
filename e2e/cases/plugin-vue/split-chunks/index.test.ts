@@ -3,7 +3,9 @@ import { pluginVue } from '@rsbuild/plugin-vue';
 
 test('should split vue chunks correctly', async ({ build }) => {
   const rsbuild = await build({
-    plugins: [pluginVue()],
+    config: {
+      plugins: [pluginVue()],
+    },
   });
 
   const files = rsbuild.getDistFiles();
@@ -16,8 +18,8 @@ test('should not split vue chunks when strategy is `all-in-one`', async ({
   build,
 }) => {
   const rsbuild = await build({
-    plugins: [pluginVue()],
     config: {
+      plugins: [pluginVue()],
       performance: {
         chunkSplit: {
           strategy: 'all-in-one',
@@ -34,8 +36,8 @@ test('should not split vue chunks when strategy is `all-in-one`', async ({
 
 test('should not override user defined cache groups', async ({ build }) => {
   const rsbuild = await build({
-    plugins: [pluginVue()],
     config: {
+      plugins: [pluginVue()],
       performance: {
         chunkSplit: {
           override: {

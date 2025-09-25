@@ -24,7 +24,9 @@ test('should allow plugin to modify preview server config', async ({
   };
 
   const result = await buildPreview({
-    plugins: [plugin],
+    config: {
+      plugins: [plugin],
+    },
   });
 
   expect(result.port).toEqual(PORT);

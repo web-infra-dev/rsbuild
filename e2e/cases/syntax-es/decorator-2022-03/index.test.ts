@@ -16,7 +16,9 @@ rspackTest(
   'should run stage 3 decorators correctly with babel-plugin',
   async ({ page, buildPreview }) => {
     await buildPreview({
-      plugins: [pluginBabel()],
+      config: {
+        plugins: [pluginBabel()],
+      },
     });
 
     expect(await page.evaluate('window.message')).toBe('hello');
@@ -36,8 +38,8 @@ test.fail(
             index: './src/decoratorBeforeExport.js',
           },
         },
+        plugins: [pluginBabel()],
       },
-      plugins: [pluginBabel()],
     });
 
     expect(await page.evaluate('window.message')).toBe('hello');

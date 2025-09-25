@@ -257,17 +257,17 @@ test('should access /main success when modify publicPath in compiler', async ({
           main: join(cwd, 'src/index.js'),
         },
       },
-    },
-    plugins: [
-      {
-        name: 'foo',
-        setup(api: any) {
-          api.modifyBundlerChain((chain: any) => {
-            chain.output.publicPath('/aaaa/');
-          });
+      plugins: [
+        {
+          name: 'foo',
+          setup(api: any) {
+            api.modifyBundlerChain((chain: any) => {
+              chain.output.publicPath('/aaaa/');
+            });
+          },
         },
-      },
-    ],
+      ],
+    },
   });
 
   const url = new URL(`http://localhost:${rsbuild.port}/main`);

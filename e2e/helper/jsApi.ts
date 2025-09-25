@@ -6,7 +6,6 @@ import type {
   BuildResult as RsbuildBuildResult,
   RsbuildConfig,
   RsbuildInstance,
-  RsbuildPlugins,
 } from '@rsbuild/core';
 import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
 import type { Page } from 'playwright';
@@ -15,15 +14,8 @@ import { getRandomPort, gotoPage, noop, toPosixPath } from './utils';
 
 const createRsbuild = async (
   rsbuildOptions: CreateRsbuildOptions & { config?: RsbuildConfig },
-  plugins: RsbuildPlugins = [],
 ) => {
   const { createRsbuild } = await import('@rsbuild/core');
-
-  rsbuildOptions.config ||= {};
-  rsbuildOptions.config.plugins = [
-    ...(rsbuildOptions.config.plugins || []),
-    ...(plugins || []),
-  ];
 
   if (process.env.PROVIDE_TYPE === 'rspack') {
     const rsbuild = await createRsbuild(rsbuildOptions);
@@ -33,6 +25,7 @@ const createRsbuild = async (
 
   const { webpackProvider } = await import('@rsbuild/webpack');
 
+  rsbuildOptions.config ||= {};
   rsbuildOptions.config.provider = webpackProvider;
 
   const rsbuild = await createRsbuild(rsbuildOptions);
@@ -120,7 +113,6 @@ const collectOutputFiles = (rsbuild: RsbuildInstance) => {
 
 export type DevOptions = CreateRsbuildOptions & {
   logHelper?: LogHelper;
-  plugins?: RsbuildPlugins;
   config?: RsbuildConfig;
   /**
    * Playwright Page instance.
@@ -139,7 +131,6 @@ export type DevOptions = CreateRsbuildOptions & {
  * Start the dev server and return the server instance.
  */
 export async function dev({
-  plugins,
   page,
   waitFirstCompileDone = true,
   logHelper,
@@ -149,7 +140,7 @@ export async function dev({
 
   options.config = await updateConfigForTest(options.config || {}, options.cwd);
 
-  const rsbuild = await createRsbuild(options, plugins);
+  const rsbuild = await createRsbuild(options);
   const getOutputFiles = collectOutputFiles(rsbuild);
 
   const wait = waitFirstCompileDone
@@ -188,7 +179,6 @@ export async function dev({
 
 export type BuildOptions = CreateRsbuildOptions & {
   logHelper?: LogHelper;
-  plugins?: RsbuildPlugins;
   config?: RsbuildConfig;
   /**
    * Whether to catch the build error.
@@ -215,7 +205,6 @@ export type BuildOptions = CreateRsbuildOptions & {
  * Build the project and return the build result.
  */
 export async function build({
-  plugins,
   catchBuildError = false,
   runServer = false,
   watch = false,
@@ -227,7 +216,7 @@ export async function build({
 
   options.config = await updateConfigForTest(options.config || {}, options.cwd);
 
-  const rsbuild = await createRsbuild(options, plugins);
+  const rsbuild = await createRsbuild(options);
   const getOutputFiles = collectOutputFiles(rsbuild);
 
   let buildError: Error | undefined;
