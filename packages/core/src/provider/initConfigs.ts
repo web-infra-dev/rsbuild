@@ -28,6 +28,7 @@ const allowedEnvironmentDevKeys: AllowedEnvironmentDevKeys[] = [
   'hmr',
   'client',
   'liveReload',
+  'browserLogs',
   'writeToDisk',
   'assetPrefix',
   'progressBar',

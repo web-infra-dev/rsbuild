@@ -131,6 +131,7 @@ function applyHMREntry({
     RSBUILD_SERVER_HOST: JSON.stringify(resolvedHost),
     RSBUILD_SERVER_PORT: JSON.stringify(resolvedPort),
     RSBUILD_DEV_LIVE_RELOAD: config.dev.liveReload,
+    RSBUILD_DEV_BROWSER_LOGS: config.dev.browserLogs,
   }).apply(compiler);
 
   for (const clientPath of clientPaths) {

@@ -290,7 +290,7 @@ function reloadPage() {
   }
 }
 
-if (typeof window !== 'undefined') {
+if (RSBUILD_DEV_BROWSER_LOGS && typeof window !== 'undefined') {
   window.addEventListener('error', onRuntimeError);
 }
 
