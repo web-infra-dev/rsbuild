@@ -259,14 +259,20 @@ function onUnhandledRejection({ reason }: PromiseRejectionEvent) {
   let message: string;
 
   if (reason instanceof Error) {
-    message = reason.message;
+    message = reason.name
+      ? `${reason.name}: ${reason.message}`
+      : reason.message;
   } else if (typeof reason === 'string') {
     message = reason;
   } else {
-    return;
+    try {
+      message = JSON.stringify(reason);
+    } catch (_) {
+      return;
+    }
   }
 
-  sendRuntimeError(`Unhandled Rejection: ${message}`);
+  sendRuntimeError(`Uncaught (in promise) ${message}`);
 }
 
 // Establishing a WebSocket connection with the server.
