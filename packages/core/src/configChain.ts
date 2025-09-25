@@ -74,8 +74,6 @@ export const CHAIN_ID = {
     STYLUS_INLINE: 'stylus-inline',
     /** Rule for svg */
     SVG: 'svg',
-    /** Rule for pug */
-    PUG: 'pug',
     /** Rule for Vue */
     VUE: 'vue',
     /** Rule for wasm */
@@ -106,8 +104,6 @@ export const CHAIN_ID = {
     STYLUS: 'stylus',
     /** url-loader */
     URL: 'url',
-    /** pug-loader */
-    PUG: 'pug',
     /** vue-loader */
     VUE: 'vue',
     /** swc-loader */
