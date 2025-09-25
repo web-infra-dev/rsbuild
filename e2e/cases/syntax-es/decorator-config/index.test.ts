@@ -35,7 +35,9 @@ rspackTest(
   'should use legacy decorators with babel-plugin',
   async ({ page, buildPreview }) => {
     await buildPreview({
-      plugins: [pluginBabel()],
+      config: {
+        plugins: [pluginBabel()],
+      },
     });
 
     expect(await page.evaluate('window.aaa')).toBe('hello');
@@ -48,8 +50,8 @@ rspackTest(
   'should allow to use stage 3 decorators with babel-plugin',
   async ({ page, buildPreview }) => {
     await buildPreview({
-      plugins: [pluginBabel()],
       config: {
+        plugins: [pluginBabel()],
         source: {
           decorators: {
             version: '2022-03',

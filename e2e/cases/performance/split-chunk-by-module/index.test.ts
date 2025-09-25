@@ -1,13 +1,11 @@
 import { basename } from 'node:path';
-
 import { expect, test } from '@e2e/helper';
-import { pluginReact } from '@rsbuild/plugin-react';
 
 test('should generate module chunks when chunkSplit is "split-by-module"', async ({
   build,
 }) => {
   const rsbuild = await build({
-    plugins: [pluginReact()],
+    config: {},
   });
 
   const files = rsbuild.getDistFiles();

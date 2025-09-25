@@ -5,7 +5,9 @@ rspackTest(
   'should support legacy decorators and source.decorators.version in TypeScript',
   async ({ page, buildPreview }) => {
     await buildPreview({
-      plugins: [pluginBabel()],
+      config: {
+        plugins: [pluginBabel()],
+      },
     });
 
     expect(await page.evaluate('window.aaa')).toBe('hello');
@@ -18,8 +20,8 @@ rspackTest(
   'should support legacy decorators and source.decorators.version in JavaScript',
   async ({ page, buildPreview }) => {
     await buildPreview({
-      plugins: [pluginBabel()],
       config: {
+        plugins: [pluginBabel()],
         source: {
           entry: {
             index: './src/jsIndex.js',

@@ -1,13 +1,10 @@
 import { expect, test } from '@e2e/helper';
-import { pluginReact } from '@rsbuild/plugin-react';
 
 test('should inject styles and not emit CSS files when output.injectStyles is true', async ({
   page,
   buildPreview,
 }) => {
-  const rsbuild = await buildPreview({
-    plugins: [pluginReact()],
-  });
+  const rsbuild = await buildPreview();
 
   // injectStyles worked
   const files = rsbuild.getDistFiles();

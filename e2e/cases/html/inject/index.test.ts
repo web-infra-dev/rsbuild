@@ -6,12 +6,12 @@ test('should preserve the expected script injection order', async ({
   build,
 }) => {
   const rsbuild = await build({
-    plugins: [
-      pluginRem({
-        inlineRuntime: false,
-      }),
-    ],
     config: {
+      plugins: [
+        pluginRem({
+          inlineRuntime: false,
+        }),
+      ],
       html: {
         inject: false,
         template: './static/index.html',

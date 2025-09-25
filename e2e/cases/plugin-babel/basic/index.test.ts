@@ -5,13 +5,15 @@ rspackTest(
   'should run babel with babel plugin correctly',
   async ({ page, buildPreview }) => {
     await buildPreview({
-      plugins: [
-        pluginBabel({
-          babelLoaderOptions: (_, { addPlugins }) => {
-            addPlugins([require('./plugins/myBabelPlugin')]);
-          },
-        }),
-      ],
+      config: {
+        plugins: [
+          pluginBabel({
+            babelLoaderOptions: (_, { addPlugins }) => {
+              addPlugins([require('./plugins/myBabelPlugin')]);
+            },
+          }),
+        ],
+      },
     });
 
     expect(await page.evaluate('window.b')).toBe(10);
@@ -26,14 +28,14 @@ rspackTest(
         source: {
           exclude: [/aa/],
         },
+        plugins: [
+          pluginBabel({
+            babelLoaderOptions: (_, { addPlugins }) => {
+              addPlugins([require('./plugins/myBabelPlugin')]);
+            },
+          }),
+        ],
       },
-      plugins: [
-        pluginBabel({
-          babelLoaderOptions: (_, { addPlugins }) => {
-            addPlugins([require('./plugins/myBabelPlugin')]);
-          },
-        }),
-      ],
     });
 
     expect(await page.evaluate('window.b')).toBe(10);

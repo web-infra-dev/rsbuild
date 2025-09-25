@@ -14,23 +14,25 @@ rspackTest(
 
 rspackTest('should filter environments correctly', async ({ build }) => {
   const rsbuild = await build({
-    plugins: [
-      {
-        name: 'my-plugin-node',
-        setup(api: RsbuildPluginAPI) {
-          api.processAssets(
-            { stage: 'summarize', environments: ['node'] },
-            ({ assets, compilation }) => {
-              for (const key of Object.keys(assets)) {
-                if (key.endsWith('.js')) {
-                  compilation.deleteAsset(key);
+    config: {
+      plugins: [
+        {
+          name: 'my-plugin-node',
+          setup(api: RsbuildPluginAPI) {
+            api.processAssets(
+              { stage: 'summarize', environments: ['node'] },
+              ({ assets, compilation }) => {
+                for (const key of Object.keys(assets)) {
+                  if (key.endsWith('.js')) {
+                    compilation.deleteAsset(key);
+                  }
                 }
-              }
-            },
-          );
+              },
+            );
+          },
         },
-      },
-    ],
+      ],
+    },
   });
 
   expect(existsSync(join(rsbuild.distPath, 'static/index.js'))).toBeFalsy();

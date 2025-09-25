@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { expect, rspackTest } from '@e2e/helper';
-import { pluginSvelte } from '@rsbuild/plugin-svelte';
 
 rspackTest('HMR should work properly', async ({ page, dev, editFile }) => {
   const cwd = __dirname;
@@ -11,9 +10,7 @@ rspackTest('HMR should work properly', async ({ page, dev, editFile }) => {
     fs.readFileSync(path.join(cwd, 'src/B.svelte'), 'utf-8'),
   );
 
-  await dev({
-    plugins: [pluginSvelte()],
-  });
+  await dev();
 
   const a = page.locator('#A');
   const b = page.locator('#B');

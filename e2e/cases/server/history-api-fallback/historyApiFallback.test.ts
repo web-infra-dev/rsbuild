@@ -8,8 +8,8 @@ rspackTest(
   'should provide history api fallback for dev server correctly',
   async ({ page, devOnly }) => {
     const rsbuild = await devOnly({
-      plugins: [pluginReact()],
       config: {
+        plugins: [pluginReact()],
         source: {
           entry: {
             main: join(cwd, 'src/index.jsx'),
@@ -40,9 +40,9 @@ test('should provide history api fallback for preview server correctly', async (
 }) => {
   const rsbuild = await buildPreview({
     cwd,
-    plugins: [pluginReact()],
 
     config: {
+      plugins: [pluginReact()],
       source: {
         entry: {
           main: join(cwd, 'src/index.jsx'),
