@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { expect, test } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 
 const cwd = __dirname;
 
@@ -278,8 +278,7 @@ test('should access /main success when modify publicPath in compiler', async ({
   await expect(locator).toHaveText('Hello Rsbuild!');
 
   const files = rsbuild.getDistFiles();
-  const htmlContent =
-    files[Object.keys(files).find((file) => file.endsWith('main.html'))!];
+  const htmlContent = getFileContent(files, 'main.html');
 
   expect(htmlContent.includes('/aaaa/static/js/main.js')).toBeTruthy();
 });

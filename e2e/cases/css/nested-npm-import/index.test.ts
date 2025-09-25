@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, getFileContent, rspackTest } from '@e2e/helper';
 
 rspackTest('should compile nested npm import correctly', async ({ build }) => {
   fs.cpSync(
@@ -12,9 +12,9 @@ rspackTest('should compile nested npm import correctly', async ({ build }) => {
   const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();
-  const cssFiles = Object.keys(files).find((file) => file.endsWith('.css'))!;
+  const cssContent = getFileContent(files, '.css');
 
-  expect(files[cssFiles]).toEqual(
+  expect(cssContent).toEqual(
     '#b{color:#ff0}#c{color:green}#a{font-size:10px}html{font-size:18px}',
   );
 });

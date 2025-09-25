@@ -1,4 +1,4 @@
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, getFileContent, rspackTest } from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
 
 rspackTest('should allow plugin to modify HTML content', async ({ build }) => {
@@ -24,11 +24,7 @@ rspackTest('should allow plugin to modify HTML content', async ({ build }) => {
   });
 
   const files = rsbuild.getDistFiles();
-  const indexHTML = Object.keys(files).find(
-    (file) => file.includes('index') && file.endsWith('.html'),
-  );
-
-  const html = files[indexHTML!];
+  const html = getFileContent(files, 'index.html');
 
   expect(html.includes('<div>index.html</div>')).toBeTruthy();
   expect(html.includes('<div>assets: 2</div>')).toBeTruthy();
@@ -60,11 +56,7 @@ rspackTest(
     });
 
     const files = rsbuild.getDistFiles();
-    const indexHTML = Object.keys(files).find(
-      (file) => file.includes('index') && file.endsWith('.html'),
-    );
-
-    const html = files[indexHTML!];
+    const html = getFileContent(files, 'index.html');
 
     expect(html.includes('foo')).toBeFalsy();
     expect(html.includes('bar')).toBeTruthy();

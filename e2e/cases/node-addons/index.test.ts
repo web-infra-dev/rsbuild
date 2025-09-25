@@ -1,21 +1,14 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
 
-import { expect, test } from '@e2e/helper';
+import { expect, findFile, test } from '@e2e/helper';
 import fse, { remove } from 'fs-extra';
 
 test('should compile Node addons correctly', async ({ build }) => {
   const rsbuild = await build();
   const files = rsbuild.getDistFiles();
-  const addonFile = Object.keys(files).find((file) =>
-    file.endsWith('test.darwin.node'),
-  );
-
-  expect(addonFile?.includes('/test.darwin.node')).toBeTruthy();
-
-  expect(
-    fs.existsSync(join(__dirname, 'dist', 'test.darwin.node')),
-  ).toBeTruthy();
+  const addonFile = findFile(files, 'test.darwin.node');
+  expect(fs.existsSync(addonFile)).toBeTruthy();
 
   // the `test.darwin.node` is only compatible with darwin
   if (process.platform === 'darwin') {
@@ -56,13 +49,8 @@ test('should compile Node addons in the node_modules correctly', async ({
   });
 
   const files = rsbuild.getDistFiles();
-  const addonFile = Object.keys(files).find((file) =>
-    file.endsWith('other.node'),
-  );
-
-  expect(addonFile?.includes('/other.node')).toBeTruthy();
-
-  expect(fs.existsSync(join(__dirname, 'dist', 'other.node'))).toBeTruthy();
+  const addonFile = findFile(files, 'other.node');
+  expect(fs.existsSync(addonFile)).toBeTruthy();
 
   if (process.platform === 'darwin') {
     const { default: content } = await import('./dist/index.js' as string);

@@ -1,6 +1,6 @@
 import path from 'node:path';
 
-import { expect, test } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 
 test('should set template via function correctly', async ({ build }) => {
   const rsbuild = await build({
@@ -26,12 +26,10 @@ test('should set template via function correctly', async ({ build }) => {
   });
   const files = rsbuild.getDistFiles();
 
-  const fooHtml =
-    files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
+  const fooHtml = getFileContent(files, 'foo.html');
   expect(fooHtml).toContain('<div id="test-template">foo</div>');
 
-  const indexHtml =
-    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+  const indexHtml = getFileContent(files, 'index.html');
   expect(indexHtml).toContain('<div id="test-template">text</div>');
 });
 
@@ -86,11 +84,9 @@ test('should set template via tools.htmlPlugin correctly', async ({
   });
   const files = rsbuild.getDistFiles();
 
-  const fooHtml =
-    files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
+  const fooHtml = getFileContent(files, 'foo.html');
   expect(fooHtml).toContain('<div id="test-template">foo</div>');
 
-  const indexHtml =
-    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+  const indexHtml = getFileContent(files, 'index.html');
   expect(indexHtml).toContain('<div id="test-template">text</div>');
 });

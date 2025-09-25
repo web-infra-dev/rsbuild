@@ -1,4 +1,4 @@
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, getFileContent, rspackTest } from '@e2e/helper';
 
 rspackTest(
   'generate integrity using sha512 algorithm',
@@ -6,8 +6,7 @@ rspackTest(
     const rsbuild = await buildPreview();
 
     const files = rsbuild.getDistFiles();
-    const html =
-      files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+    const html = getFileContent(files, 'index.html');
 
     expect(html).toMatch(
       /<script defer src="\/static\/js\/index\.\w{8}\.js" integrity="sha512-[A-Za-z0-9+/=]+"/,

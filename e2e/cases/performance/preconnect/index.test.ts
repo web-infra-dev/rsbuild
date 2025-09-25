@@ -1,4 +1,4 @@
-import { expect, test } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 
 test('should generate preconnect link when preconnect is defined', async ({
   build,
@@ -7,9 +7,7 @@ test('should generate preconnect link when preconnect is defined', async ({
 
   const files = rsbuild.getDistFiles();
 
-  const [, content] = Object.entries(files).find(([name]) =>
-    name.endsWith('.html'),
-  )!;
+  const content = getFileContent(files, '.html');
 
   expect(
     content.includes('<link rel="preconnect" href="http://aaaa.com">'),

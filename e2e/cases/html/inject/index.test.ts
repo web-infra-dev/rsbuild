@@ -1,5 +1,11 @@
 import path from 'node:path';
-import { expect, normalizeNewlines, rspackTest, test } from '@e2e/helper';
+import {
+  expect,
+  getFileContent,
+  normalizeNewlines,
+  rspackTest,
+  test,
+} from '@e2e/helper';
 import { pluginRem } from '@rsbuild/plugin-rem';
 
 test('should preserve the expected script injection order', async ({
@@ -20,8 +26,7 @@ test('should preserve the expected script injection order', async ({
   });
   const files = rsbuild.getDistFiles();
 
-  const html =
-    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+  const html = getFileContent(files, 'index.html');
 
   // rem => normal resource => template custom resource
   expect(
@@ -53,14 +58,12 @@ rspackTest('should set inject via function correctly', async ({ build }) => {
   });
   const files = rsbuild.getDistFiles();
 
-  const fooHtml =
-    files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
+  const fooHtml = getFileContent(files, 'foo.html');
   expect(normalizeNewlines(fooHtml)).toEqual(
     `<!doctype html><html><head><title>Rsbuild App</title><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body><div id="root"></div><script defer src="/static/js/foo.js"></script></body></html>`,
   );
 
-  const indexHtml =
-    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+  const indexHtml = getFileContent(files, 'index.html');
   expect(normalizeNewlines(indexHtml)).toEqual(
     `<!doctype html><html><head><title>Rsbuild App</title><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><script defer src="/static/js/index.js"></script><link href="/static/css/index.css" rel="stylesheet"></head><body><div id="root"></div></body></html>`,
   );

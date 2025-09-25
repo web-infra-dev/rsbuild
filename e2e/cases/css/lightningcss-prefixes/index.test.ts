@@ -1,4 +1,4 @@
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, getFileContent, rspackTest } from '@e2e/helper';
 
 rspackTest(
   'should add vendor prefixes by current browserslist',
@@ -6,8 +6,7 @@ rspackTest(
     const rsbuild = await build();
     const files = rsbuild.getDistFiles();
 
-    const content =
-      files[Object.keys(files).find((file) => file.endsWith('.css'))!];
+    const content = getFileContent(files, '.css');
 
     expect(content).toEqual(
       '@media (-webkit-min-device-pixel-ratio:2),(min-resolution:2dppx){.item{-webkit-user-select:none;-ms-user-select:none;user-select:none;background:-webkit-linear-gradient(#000,#fff);background:linear-gradient(#fff,#000);-webkit-transition:all .5s;transition:all .5s}}',
@@ -21,10 +20,7 @@ rspackTest(
     const rsbuild = await dev();
 
     const distFiles = rsbuild.getDistFiles();
-    const content =
-      distFiles[
-        Object.keys(distFiles).find((file) => file.endsWith('css/index.css'))!
-      ];
+    const content = getFileContent(distFiles, 'css/index.css');
     expect(content).toContain(
       `@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
   .item {

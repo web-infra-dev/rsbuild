@@ -1,4 +1,4 @@
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, getFileContent, rspackTest } from '@e2e/helper';
 
 rspackTest(
   'should compile CSS relative imports correctly',
@@ -6,8 +6,7 @@ rspackTest(
     const rsbuild = await build();
     const files = rsbuild.getDistFiles();
 
-    const content =
-      files[Object.keys(files).find((file) => file.endsWith('.css'))!];
+    const content = getFileContent(files, '.css');
 
     expect(content).toContain(
       '.foo{color:red}.bar{color:#00f}.baz{color:green}',

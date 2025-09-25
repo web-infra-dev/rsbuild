@@ -3,6 +3,7 @@ import path from 'node:path';
 import {
   expect,
   getDistFiles,
+  getFileContent,
   mapSourceMapPositions,
   rspackTest,
 } from '@e2e/helper';
@@ -12,10 +13,8 @@ const expectSourceMap = async (files: Record<string, string>) => {
     path.join(__dirname, 'src/index.ts'),
     'utf-8',
   );
-  const outputCode =
-    files[Object.keys(files).find((file) => file.endsWith('index.js'))!];
-  const sourceMap =
-    files[Object.keys(files).find((file) => file.endsWith('index.js.map'))!];
+  const outputCode = getFileContent(files, 'index.js');
+  const sourceMap = getFileContent(files, 'index.js.map');
 
   const argsPosition = outputCode.indexOf('"args"');
   const helloPosition = outputCode.indexOf('"hello"');

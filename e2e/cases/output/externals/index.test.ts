@@ -1,4 +1,4 @@
-import { expect, test } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 test('should treat specified modules as externals', async ({
@@ -46,7 +46,6 @@ test('should not externalize dependencies when target is web worker', async ({
   });
   const files = rsbuild.getDistFiles();
 
-  const content =
-    files[Object.keys(files).find((file) => file.endsWith('.js'))!];
+  const content = getFileContent(files, '.js');
   expect(content.includes('MyReact')).toBeFalsy();
 });

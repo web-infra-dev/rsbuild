@@ -1,5 +1,5 @@
 import { basename } from 'node:path';
-import { expect, test } from '@e2e/helper';
+import { expect, findFile, test } from '@e2e/helper';
 
 test('should generate vendor chunk when chunkSplit is "single-vendor"', async ({
   build,
@@ -8,9 +8,10 @@ test('should generate vendor chunk when chunkSplit is "single-vendor"', async ({
 
   const files = rsbuild.getDistFiles();
 
-  const [vendorFile] = Object.entries(files).find(
-    ([name, content]) => name.includes('vendor') && content.includes('React'),
-  )!;
+  const vendorFile = findFile(
+    files,
+    (name) => name.includes('vendor') && files[name].includes('React'),
+  );
   expect(vendorFile).toBeTruthy();
 
   const jsFiles = Object.keys(files)

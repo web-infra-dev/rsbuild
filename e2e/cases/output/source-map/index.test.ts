@@ -1,6 +1,12 @@
 import { readFileSync } from 'node:fs';
 import path, { join } from 'node:path';
-import { type Build, expect, mapSourceMapPositions, test } from '@e2e/helper';
+import {
+  type Build,
+  expect,
+  getFileContent,
+  mapSourceMapPositions,
+  test,
+} from '@e2e/helper';
 import type { Rspack } from '@rsbuild/core';
 
 const cwd = __dirname;
@@ -31,10 +37,8 @@ async function testSourceMapType(
     path.join(__dirname, 'src/App.jsx'),
     'utf-8',
   );
-  const outputCode =
-    files[Object.keys(files).find((file) => file.endsWith('index.js'))!];
-  const sourceMap =
-    files[Object.keys(files).find((file) => file.endsWith('index.js.map'))!];
+  const outputCode = getFileContent(files, 'index.js');
+  const sourceMap = getFileContent(files, 'index.js.map');
 
   const AppContentIndex = outputCode.indexOf('Hello Rsbuild!');
   const indexContentIndex = outputCode.indexOf('window.test');
@@ -153,12 +157,7 @@ test('should generate source map correctly in dev', async ({ dev }) => {
   const rsbuild = await dev();
   const files = rsbuild.getDistFiles({ sourceMaps: true });
 
-  const jsMapPath = Object.keys(files).find((files) =>
-    files.endsWith('.js.map'),
-  );
-  expect(jsMapPath).not.toBeUndefined();
-  const jsMapContent = files[jsMapPath!];
-  const jsMap = JSON.parse(jsMapContent);
+  const jsMap = JSON.parse(getFileContent(files, '.js.map'));
   expect(jsMap.sources.length).toBeGreaterThan(1);
   expect(jsMap.file).toEqual('static/js/index.js');
   expect(jsMap.sourcesContent).toContain(

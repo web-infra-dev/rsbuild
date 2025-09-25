@@ -1,4 +1,4 @@
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, getFileContent, rspackTest } from '@e2e/helper';
 
 rspackTest(
   'should resolve ts paths correctly in SCSS file',
@@ -7,8 +7,7 @@ rspackTest(
 
     const files = rsbuild.getDistFiles();
 
-    const content =
-      files[Object.keys(files).find((file) => file.endsWith('.css'))!];
+    const content = getFileContent(files, '.css');
 
     expect(content).toContain('background-image:url(/static/image/icon');
   },

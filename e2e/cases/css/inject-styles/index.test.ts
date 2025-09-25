@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, findFile, getFileContent, rspackTest } from '@e2e/helper';
 
 const fixtures = __dirname;
 
@@ -11,19 +11,14 @@ rspackTest(
 
     // injectStyles worked
     const files = rsbuild.getDistFiles();
-    const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));
-    expect(cssFiles.length).toBe(0);
+    expect(() => findFile(files, '.css')).toThrowError();
 
     // should inline minified CSS
-    const indexJsFile = Object.keys(files).find(
-      (file) => file.includes('index.') && file.endsWith('.js'),
-    )!;
+    const indexJs = getFileContent(files, 'index.js');
 
+    expect(indexJs.includes('html,body{margin:0;padding:0}')).toBeTruthy();
     expect(
-      files[indexJsFile].includes('html,body{margin:0;padding:0}'),
-    ).toBeTruthy();
-    expect(
-      files[indexJsFile].includes(
+      indexJs.includes(
         '.description{text-align:center;font-size:16px;line-height:1.5}',
       ),
     ).toBeTruthy();
@@ -93,16 +88,13 @@ rspackTest(
 
     // injectStyles worked
     const files = rsbuild.getDistFiles();
-    const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));
-    expect(cssFiles.length).toBe(0);
+    expect(() => findFile(files, '.css')).toThrowError();
 
     // should inline CSS
-    const indexJsFile = Object.keys(files).find(
-      (file) => file.includes('index.') && file.endsWith('.js'),
-    )!;
+    const indexJs = getFileContent(files, 'index.js');
 
     expect(
-      files[indexJsFile].includes(`html, body {
+      indexJs.includes(`html, body {
   margin: 0;
   padding: 0;
 }`),

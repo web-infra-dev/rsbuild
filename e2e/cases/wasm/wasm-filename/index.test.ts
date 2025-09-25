@@ -1,4 +1,4 @@
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, findFile, rspackTest } from '@e2e/helper';
 
 rspackTest(
   'should allow to custom the filename of Wasm files',
@@ -6,9 +6,7 @@ rspackTest(
     const rsbuild = await buildPreview();
     const files = rsbuild.getDistFiles();
 
-    const wasmFile = Object.keys(files).find((file) =>
-      file.endsWith('factorial.wasm'),
-    );
+    const wasmFile = findFile(files, 'factorial.wasm');
 
     expect(wasmFile).toBeTruthy();
   },

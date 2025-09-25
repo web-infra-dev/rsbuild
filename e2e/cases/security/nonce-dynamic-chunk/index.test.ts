@@ -1,4 +1,4 @@
-import { expect, test } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 
 declare global {
   interface Window {
@@ -44,8 +44,7 @@ test('should apply nonce to preload script tags', async ({ build }) => {
     },
   });
   const files = rsbuild.getDistFiles();
-  const html =
-    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+  const html = getFileContent(files, 'index.html');
 
   expect(html).toContain(
     `rel="preload" as="script" nonce="CSP_NONCE_PLACEHOLDER">`,

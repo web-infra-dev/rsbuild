@@ -1,4 +1,4 @@
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, findFile, rspackTest } from '@e2e/helper';
 
 rspackTest('should process assets when target is web', async ({ build }) => {
   const rsbuild = await build({
@@ -10,10 +10,7 @@ rspackTest('should process assets when target is web', async ({ build }) => {
   });
 
   const files = rsbuild.getDistFiles();
-  const indexJs = Object.keys(files).find(
-    (file) => file.includes('index') && file.endsWith('.js'),
-  );
-  expect(indexJs).toBeFalsy();
+  expect(() => findFile(files, 'index.js')).toThrow();
 });
 
 rspackTest(
@@ -28,9 +25,7 @@ rspackTest(
     });
 
     const files = rsbuild.getDistFiles();
-    const indexJs = Object.keys(files).find(
-      (file) => file.includes('index') && file.endsWith('.js'),
-    );
+    const indexJs = findFile(files, 'index.js');
     expect(indexJs).toBeTruthy();
   },
 );

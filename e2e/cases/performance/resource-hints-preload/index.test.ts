@@ -1,5 +1,11 @@
 import { join } from 'node:path';
-import { expect, rspackTest, test } from '@e2e/helper';
+import {
+  expect,
+  findFile,
+  getFileContent,
+  rspackTest,
+  test,
+} from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
@@ -23,13 +29,8 @@ test('should generate preload link when preload is defined', async ({
 
   const files = rsbuild.getDistFiles();
 
-  const asyncFileName = Object.keys(files).find(
-    (file) =>
-      file.includes('/static/js/async/') && !file.endsWith('.LICENSE.txt'),
-  )!;
-  const [, content] = Object.entries(files).find(([name]) =>
-    name.endsWith('.html'),
-  )!;
+  const asyncFileName = findFile(files, /\/static\/js\/async\/.+\.js$/);
+  const content = getFileContent(files, '.html');
 
   // test.js, test.css, image.png
   expect(content.match(/rel="preload"/g)?.length).toBe(3);
@@ -63,15 +64,11 @@ test('should generate preload link with duplicate', async ({ build }) => {
 
   const files = rsbuild.getDistFiles();
 
-  const initialFileName = Object.keys(files).find(
-    (file) =>
-      file.includes('/static/js/') &&
-      !file.includes('/static/js/async/') &&
-      !file.endsWith('.LICENSE.txt'),
-  )!;
-  const [, content] = Object.entries(files).find(([name]) =>
-    name.endsWith('.html'),
-  )!;
+  const initialFileName = findFile(
+    files,
+    /\/static\/js\/(?!async\/)[^/]+\.js$/,
+  );
+  const content = getFileContent(files, '.html');
 
   expect(
     content.includes(
@@ -105,13 +102,8 @@ test('should generate preload link with crossOrigin', async ({ build }) => {
 
   const files = rsbuild.getDistFiles();
 
-  const asyncFileName = Object.keys(files).find(
-    (file) =>
-      file.includes('/static/js/async/') && !file.endsWith('.LICENSE.txt'),
-  )!;
-  const [, content] = Object.entries(files).find(([name]) =>
-    name.endsWith('.html'),
-  )!;
+  const asyncFileName = findFile(files, /\/static\/js\/async\/.+\.js$/);
+  const content = getFileContent(files, '.html');
 
   // test.js, test.css, image.png
   expect(content.match(/rel="preload"/g)?.length).toBe(3);
@@ -147,13 +139,8 @@ test('should generate preload link without crossOrigin when same origin', async 
 
   const files = rsbuild.getDistFiles();
 
-  const asyncFileName = Object.keys(files).find(
-    (file) =>
-      file.includes('/static/js/async/') && !file.endsWith('.LICENSE.txt'),
-  )!;
-  const [, content] = Object.entries(files).find(([name]) =>
-    name.endsWith('.html'),
-  )!;
+  const asyncFileName = findFile(files, /\/static\/js\/async\/.+\.js$/);
+  const content = getFileContent(files, '.html');
 
   // test.js, test.css, image.png
   expect(content.match(/rel="preload"/g)?.length).toBe(3);
@@ -186,12 +173,8 @@ test('should generate preload link with include', async ({ build }) => {
 
   const files = rsbuild.getDistFiles();
 
-  const asyncFileName = Object.keys(files).find((file) =>
-    file.includes('/static/image/image'),
-  )!;
-  const [, content] = Object.entries(files).find(([name]) =>
-    name.endsWith('.html'),
-  )!;
+  const asyncFileName = findFile(files, 'image.png');
+  const content = getFileContent(files, '.html');
 
   // image.png
   expect(content.match(/rel="preload"/g)?.length).toBe(1);
@@ -224,12 +207,8 @@ test('should generate preload link with include array', async ({ build }) => {
 
   const files = rsbuild.getDistFiles();
 
-  const asyncFileName = Object.keys(files).find((file) =>
-    file.includes('/static/image/image'),
-  )!;
-  const [, content] = Object.entries(files).find(([name]) =>
-    name.endsWith('.html'),
-  )!;
+  const asyncFileName = findFile(files, 'image.png');
+  const content = getFileContent(files, '.html');
 
   // image.png, test.js
   expect(content.match(/rel="preload"/g)?.length).toBe(2);
@@ -265,9 +244,7 @@ rspackTest(
     });
 
     const files = rsbuild.getDistFiles();
-    const [, content] = Object.entries(files).find(([name]) =>
-      name.endsWith('.html'),
-    )!;
+    const content = getFileContent(files, '.html');
 
     // image.png
     expect(content.match(/rel="preload" as="/g)?.length).toBe(1);
@@ -302,9 +279,7 @@ rspackTest(
     });
 
     const files = rsbuild.getDistFiles();
-    const [, content] = Object.entries(files).find(([name]) =>
-      name.endsWith('.html'),
-    )!;
+    const content = getFileContent(files, '.html');
 
     // image.png
     expect(content.match(/rel="preload" as="/g)?.length).toBe(1);

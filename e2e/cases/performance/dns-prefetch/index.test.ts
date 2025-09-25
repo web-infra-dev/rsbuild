@@ -1,4 +1,4 @@
-import { expect, test } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 
 test('should generate dnsPrefetch link when dnsPrefetch is defined', async ({
   build,
@@ -6,9 +6,7 @@ test('should generate dnsPrefetch link when dnsPrefetch is defined', async ({
   const rsbuild = await build();
   const files = rsbuild.getDistFiles();
 
-  const [, content] = Object.entries(files).find(([name]) =>
-    name.endsWith('.html'),
-  )!;
+  const content = getFileContent(files, '.html');
 
   expect(
     content.includes('<link rel="dns-prefetch" href="http://aaaa.com">'),

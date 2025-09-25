@@ -1,4 +1,4 @@
-import { expect, test } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 
 test('should generate manifest with single vendor as expected', async ({
   build,
@@ -7,8 +7,7 @@ test('should generate manifest with single vendor as expected', async ({
 
   const files = rsbuild.getDistFiles();
 
-  const manifestContent =
-    files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];
+  const manifestContent = getFileContent(files, 'manifest.json');
 
   expect(manifestContent).toBeDefined();
 
