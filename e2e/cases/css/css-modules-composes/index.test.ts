@@ -1,15 +1,12 @@
 import path from 'node:path';
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, getFileContent, rspackTest } from '@e2e/helper';
 
 rspackTest(
   'should compile CSS Modules composes correctly',
   async ({ build }) => {
     const rsbuild = await build();
     const files = rsbuild.getDistFiles();
-
-    const content =
-      files[Object.keys(files).find((file) => file.endsWith('.css'))!];
-
+    const content = getFileContent(files, 'index.css');
     expect(content).toMatch(
       /.*\{color:#ff0;background:red\}.*\{background:#00f\}/,
     );
@@ -27,10 +24,7 @@ rspackTest(
       },
     });
     const files = rsbuild.getDistFiles();
-
-    const content =
-      files[Object.keys(files).find((file) => file.endsWith('.css'))!];
-
+    const content = getFileContent(files, 'index.css');
     expect(content).toMatch(
       /.*\{color:#000;background:#0ff\}.*\{background:green\}/,
     );

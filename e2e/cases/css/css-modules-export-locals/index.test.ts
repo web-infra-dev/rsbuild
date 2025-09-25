@@ -1,4 +1,9 @@
-import { type BuildResult, expect, rspackTest } from '@e2e/helper';
+import {
+  type BuildResult,
+  expect,
+  getFileContent,
+  rspackTest,
+} from '@e2e/helper';
 
 declare global {
   interface Window {
@@ -8,8 +13,7 @@ declare global {
 
 const expectCSSContext = async (rsbuild: BuildResult) => {
   const files = rsbuild.getDistFiles();
-  const content =
-    files[Object.keys(files).find((file) => file.endsWith('.css'))!];
+  const content = getFileContent(files, 'index.css');
   expect(content).toMatch(
     /\.the-dash-class-\w{6}{color:#00f}\.theCamelClass-\w{6}{color:red}\.the_underscore_class-\w{6}{color:green}/,
   );

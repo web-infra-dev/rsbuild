@@ -1,4 +1,4 @@
-import { expect, test } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 
 test('should not emit CSS files when build node target', async ({ build }) => {
   const rsbuild = await build({
@@ -11,8 +11,7 @@ test('should not emit CSS files when build node target', async ({ build }) => {
   const files = rsbuild.getDistFiles();
 
   // preserve CSS Modules mapping
-  const jsContent =
-    files[Object.keys(files).find((file) => file.endsWith('.js'))!];
+  const jsContent = getFileContent(files, 'index.js');
   expect(jsContent.includes('"title-class":')).toBeTruthy();
 
   const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));
@@ -33,8 +32,7 @@ test('should allow to emit CSS with output.emitCss when build node target', asyn
   const files = rsbuild.getDistFiles();
 
   // preserve CSS Modules mapping
-  const jsContent =
-    files[Object.keys(files).find((file) => file.endsWith('.js'))!];
+  const jsContent = getFileContent(files, 'index.js');
   expect(jsContent.includes('"title-class":')).toBeTruthy();
 
   const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));
@@ -54,8 +52,7 @@ test('should not emit CSS files when build web-worker target', async ({
   const files = rsbuild.getDistFiles();
 
   // preserve CSS Modules mapping
-  const jsContent =
-    files[Object.keys(files).find((file) => file.endsWith('.js'))!];
+  const jsContent = getFileContent(files, 'index.js');
   expect(jsContent.includes('"title-class":')).toBeTruthy();
 
   const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));
@@ -76,8 +73,7 @@ test('should allow to emit CSS with output.emitCss when build web-worker target'
   const files = rsbuild.getDistFiles();
 
   // preserve CSS Modules mapping
-  const jsContent =
-    files[Object.keys(files).find((file) => file.endsWith('.js'))!];
+  const jsContent = getFileContent(files, 'index.js');
   expect(jsContent.includes('"title-class":')).toBeTruthy();
 
   const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));
@@ -98,8 +94,7 @@ test('should allow to disable CSS emit with output.emitCss when build web target
   const files = rsbuild.getDistFiles();
 
   // preserve CSS Modules mapping
-  const jsContent =
-    files[Object.keys(files).find((file) => file.endsWith('.js'))!];
+  const jsContent = getFileContent(files, 'index.js');
   expect(jsContent.includes('"title-class":')).toBeTruthy();
 
   const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));

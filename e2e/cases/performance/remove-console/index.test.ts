@@ -1,5 +1,5 @@
 import type { BuildResult } from '@e2e/helper';
-import { expect, test } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 
 const cwd = __dirname;
 
@@ -8,10 +8,7 @@ const expectConsoleType = async (
   consoleType: Record<string, boolean>,
 ) => {
   const files = rsbuild.getDistFiles();
-  const indexFile = Object.keys(files).find(
-    (name) => name.includes('index.') && name.endsWith('.js'),
-  )!;
-  const content = files[indexFile];
+  const content = getFileContent(files, 'index.js');
 
   for (const [key, value] of Object.entries(consoleType)) {
     expect(content.includes(`test-console-${key}`)).toEqual(value);
