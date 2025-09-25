@@ -45,9 +45,13 @@ export type SocketMessageErrors = {
   data: { text: string[]; html: string };
 };
 
-export type SocketMessageRuntimeError = {
+export type ClientMessageRuntimeError = {
   type: 'runtime-error';
   message: string;
+};
+
+export type ClientMessagePing = {
+  type: 'ping';
 };
 
 export type SocketMessage =
@@ -55,8 +59,9 @@ export type SocketMessage =
   | SocketMessageStaticChanged
   | SocketMessageHash
   | SocketMessageWarnings
-  | SocketMessageErrors
-  | SocketMessageRuntimeError;
+  | SocketMessageErrors;
+
+export type ClientMessage = ClientMessagePing | ClientMessageRuntimeError;
 
 const parseQueryString = (req: IncomingMessage) => {
   const queryStr = req.url ? req.url.split('?')[1] : '';
@@ -254,9 +259,12 @@ export class SocketServer {
       socket.isAlive = true;
     });
 
-    socket.on('message', (data: Ws.RawData) => {
+    socket.on('message', (data) => {
       try {
-        const message: SocketMessage = JSON.parse(data.toString());
+        const message: ClientMessage = JSON.parse(
+          // eslint-disable-next-line @typescript-eslint/no-base-to-string
+          typeof data === 'string' ? data : data.toString(),
+        );
 
         // Handle runtime errors from browser
         if (message.type === 'runtime-error') {

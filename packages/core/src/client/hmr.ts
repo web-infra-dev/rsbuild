@@ -1,6 +1,7 @@
 import type {
+  ClientMessage,
+  ClientMessageRuntimeError,
   SocketMessage,
-  SocketMessageRuntimeError,
 } from '../server/socketServer';
 import type { NormalizedClientConfig } from '../types';
 
@@ -154,7 +155,7 @@ let reconnectCount = 0;
 let pingIntervalId: ReturnType<typeof setInterval>;
 
 const isSocketReady = () => socket && socket.readyState === socket.OPEN;
-const socketSend = (data: unknown) => {
+const socketSend = (data: ClientMessage) => {
   if (isSocketReady()) {
     socket!.send(JSON.stringify(data));
   }
@@ -240,10 +241,10 @@ function onSocketError() {
   }
 }
 
-const errorMessages: SocketMessageRuntimeError[] = [];
+const errorMessages: ClientMessageRuntimeError[] = [];
 
 function onRuntimeError(event: ErrorEvent) {
-  const message: SocketMessageRuntimeError = {
+  const message: ClientMessageRuntimeError = {
     type: 'runtime-error',
     message: event.message,
   };
