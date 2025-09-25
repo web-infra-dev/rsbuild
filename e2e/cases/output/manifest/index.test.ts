@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { expect, rspackTest, test } from '@e2e/helper';
+import { expect, getFileContent, rspackTest, test } from '@e2e/helper';
 
 test('should generate manifest file in output', async ({ build }) => {
   const rsbuild = await build({
@@ -19,8 +19,7 @@ test('should generate manifest file in output', async ({ build }) => {
 
   const files = rsbuild.getDistFiles();
 
-  const manifestContent =
-    files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];
+  const manifestContent = getFileContent(files, 'manifest.json');
 
   expect(manifestContent).toBeDefined();
 
@@ -78,8 +77,7 @@ test('should generate manifest file when target is node', async ({ build }) => {
 
   const files = rsbuild.getDistFiles();
 
-  const manifestContent =
-    files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];
+  const manifestContent = getFileContent(files, 'manifest.json');
 
   expect(manifestContent).toBeDefined();
 
@@ -115,8 +113,7 @@ test('should always write manifest to disk when in dev', async ({ dev }) => {
 
   const files = rsbuild.getDistFiles();
 
-  const manifestContent =
-    files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];
+  const manifestContent = getFileContent(files, 'manifest.json');
 
   expect(manifestContent).toBeDefined();
 });
@@ -140,8 +137,7 @@ test('should allow to filter files in manifest', async ({ build }) => {
 
   const files = rsbuild.getDistFiles();
 
-  const manifestContent =
-    files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];
+  const manifestContent = getFileContent(files, 'manifest.json');
   const manifest = JSON.parse(manifestContent);
 
   // main.js
@@ -175,8 +171,7 @@ rspackTest(
 
     const files = rsbuild.getDistFiles();
 
-    const manifestContent =
-      files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];
+    const manifestContent = getFileContent(files, 'manifest.json');
     const manifest = JSON.parse(manifestContent);
 
     expect(Object.keys(manifest.allFiles).length).toBe(3);

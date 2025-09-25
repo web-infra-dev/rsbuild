@@ -1,20 +1,22 @@
-import { expect, test } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 
 test('should allow plugin to transform code by targets', async ({ build }) => {
   const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();
-  const webJs = Object.keys(files).find(
+  const webJs = getFileContent(
+    files,
     (file) =>
       file.includes('index') &&
       !file.includes('server') &&
       file.endsWith('.js'),
   );
-  const nodeJs = Object.keys(files).find(
+  const nodeJs = getFileContent(
+    files,
     (file) =>
       file.includes('index') && file.includes('server') && file.endsWith('.js'),
   );
 
-  expect(files[webJs!].includes('target is web')).toBeTruthy();
-  expect(files[nodeJs!].includes('target is node')).toBeTruthy();
+  expect(webJs.includes('target is web')).toBeTruthy();
+  expect(nodeJs.includes('target is node')).toBeTruthy();
 });

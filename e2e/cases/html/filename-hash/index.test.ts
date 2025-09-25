@@ -1,4 +1,4 @@
-import { expect, test } from '@e2e/helper';
+import { expect, findFile, test } from '@e2e/helper';
 
 test('should allow to generate HTML with filename hash using filename.html', async ({
   build,
@@ -14,11 +14,9 @@ test('should allow to generate HTML with filename hash using filename.html', asy
   });
 
   const files = rsbuild.getDistFiles();
-  const htmlFilename = Object.keys(files).find((item) =>
-    item.endsWith('.html'),
-  );
+  const htmlFilename = findFile(files, '.html');
 
-  expect(/index.\w+.html/.test(htmlFilename!)).toBeTruthy();
+  expect(/index.\w+.html/.test(htmlFilename)).toBeTruthy();
 });
 
 test('should allow to generate HTML with filename hash using tools.htmlPlugin', async ({
@@ -36,9 +34,7 @@ test('should allow to generate HTML with filename hash using tools.htmlPlugin', 
   });
 
   const files = rsbuild.getDistFiles();
-  const htmlFilename = Object.keys(files).find((item) =>
-    item.endsWith('.html'),
-  );
+  const htmlFilename = findFile(files, '.html');
 
-  expect(/index.\w+.html/.test(htmlFilename!)).toBeTruthy();
+  expect(/index.\w+.html/.test(htmlFilename)).toBeTruthy();
 });

@@ -1,4 +1,4 @@
-import { expect, rspackTest, test } from '@e2e/helper';
+import { expect, getFileContent, rspackTest, test } from '@e2e/helper';
 
 const utf8Str = `你好 world! I'm 🦀`;
 const asciiStr = `\\u{4F60}\\u{597D} world! I'm \\u{1F980}`;
@@ -28,9 +28,10 @@ rspackTest(
     expect(await page.evaluate('window.testB')).toStrictEqual(expectedObject);
 
     const files = rsbuild.getDistFiles();
-    const [, content] = Object.entries(files).find(
-      ([name]) => name.endsWith('.js') && name.includes('static/js/index'),
-    )!;
+    const content = getFileContent(
+      files,
+      (name) => name.endsWith('.js') && name.includes('static/js/index'),
+    );
 
     expect(content.includes(asciiStr)).toBeTruthy();
   },
@@ -62,9 +63,10 @@ test('should use utf8 charset in dev by default', async ({ page, dev }) => {
   expect(await page.evaluate('window.testB')).toStrictEqual(expectedObject);
 
   const files = rsbuild.getDistFiles();
-  const [, content] = Object.entries(files).find(
-    ([name]) => name.endsWith('.js') && name.includes('static/js/index'),
-  )!;
+  const content = getFileContent(
+    files,
+    (name) => name.endsWith('.js') && name.includes('static/js/index'),
+  );
 
   expect(content.includes(utf8Str)).toBeTruthy();
 });

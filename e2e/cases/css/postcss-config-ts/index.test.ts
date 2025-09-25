@@ -1,14 +1,10 @@
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, getFileContent, rspackTest } from '@e2e/helper';
 
 rspackTest('should load postcss.config.ts correctly', async ({ build }) => {
   const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();
-  const indexCssFile = Object.keys(files).find(
-    (file) => file.includes('index.') && file.endsWith('.css'),
-  )!;
-
-  const indexCssContent = files[indexCssFile];
+  const indexCssContent = getFileContent(files, 'index.css');
   expect(indexCssContent).toContain(
     '.text-3xl{font-size:var(--text-3xl);line-height:var(--tw-leading,var(--text-3xl--line-height))}',
   );

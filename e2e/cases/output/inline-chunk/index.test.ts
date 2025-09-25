@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { expect, test } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 import type { RspackChain } from '@rsbuild/core';
 
 // use source-map for easy to test. By default, Rsbuild use hidden-source-map
@@ -378,10 +378,7 @@ test('should update source mapping URL in build', async ({ build }) => {
   });
 
   const files = rsbuild.getDistFiles({ sourceMaps: true });
-  const indexHtml =
-    files[
-      Object.keys(files).find((fileName) => fileName.endsWith('/index.html'))!
-    ];
+  const indexHtml = getFileContent(files, '/index.html');
 
   expect(
     indexHtml.includes(

@@ -1,6 +1,6 @@
 import path from 'node:path';
 
-import { expect, test } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 
 test('should generate default title correctly', async ({ build }) => {
   const rsbuild = await build({
@@ -12,8 +12,7 @@ test('should generate default title correctly', async ({ build }) => {
   });
   const files = rsbuild.getDistFiles();
 
-  const html =
-    files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
+  const html = getFileContent(files, 'foo.html');
   expect(html).toContain('<title>Rsbuild App</title>');
 });
 
@@ -32,8 +31,7 @@ test('should allow setting empty title to unset the default title', async ({
   });
   const files = rsbuild.getDistFiles();
 
-  const html =
-    files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
+  const html = getFileContent(files, 'foo.html');
   expect(html).not.toContain('<title>');
 });
 
@@ -50,8 +48,7 @@ test('should generate title correctly', async ({ build }) => {
   });
   const files = rsbuild.getDistFiles();
 
-  const html =
-    files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
+  const html = getFileContent(files, 'foo.html');
   expect(html).toContain('<title>foo</title>');
 });
 
@@ -71,8 +68,7 @@ test('should generate title correctly when using custom HTML template', async ({
   });
   const files = rsbuild.getDistFiles();
 
-  const html =
-    files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
+  const html = getFileContent(files, 'foo.html');
   expect(html).toContain('<title>foo</title>');
 });
 
@@ -92,8 +88,7 @@ test('should generate title correctly when using htmlPlugin.options.title', asyn
   });
   const files = rsbuild.getDistFiles();
 
-  const html =
-    files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
+  const html = getFileContent(files, 'foo.html');
   expect(html).toContain('<title>foo</title>');
 });
 
@@ -115,12 +110,10 @@ test('should generate title via function correctly', async ({ build }) => {
   });
   const files = rsbuild.getDistFiles();
 
-  const fooHtml =
-    files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
+  const fooHtml = getFileContent(files, 'foo.html');
   expect(fooHtml).toContain('<title>foo</title>');
 
-  const barHtml =
-    files[Object.keys(files).find((file) => file.endsWith('bar.html'))!];
+  const barHtml = getFileContent(files, 'bar.html');
   expect(barHtml).toContain('<title>bar</title>');
 });
 
@@ -140,7 +133,6 @@ test('should not inject title if template already contains a title', async ({
   });
   const files = rsbuild.getDistFiles();
 
-  const html =
-    files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
+  const html = getFileContent(files, 'foo.html');
   expect(html).toContain('<title>Page Title</title>');
 });

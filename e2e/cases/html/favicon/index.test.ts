@@ -1,6 +1,6 @@
 import path from 'node:path';
 
-import { expect, test } from '@e2e/helper';
+import { expect, findFile, getFileContent, test } from '@e2e/helper';
 
 test('should emit local favicon to dist path', async ({ build }) => {
   const rsbuild = await build({
@@ -11,13 +11,11 @@ test('should emit local favicon to dist path', async ({ build }) => {
     },
   });
   const files = rsbuild.getDistFiles();
+  const icon = findFile(files, 'icon.png');
 
-  expect(
-    Object.keys(files).some((file) => file.endsWith('/icon.png')),
-  ).toBeTruthy();
+  expect(icon.endsWith('/icon.png')).toBeTruthy();
 
-  const html =
-    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+  const html = getFileContent(files, 'index.html');
 
   expect(html).toContain('<link rel="icon" href="/icon.png">');
 });
@@ -33,13 +31,11 @@ test('should allow `html.favicon` to be an absolute path', async ({
     },
   });
   const files = rsbuild.getDistFiles();
+  const icon = findFile(files, 'icon.png');
 
-  expect(
-    Object.keys(files).some((file) => file.endsWith('/icon.png')),
-  ).toBeTruthy();
+  expect(icon.endsWith('/icon.png')).toBeTruthy();
 
-  const html =
-    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+  const html = getFileContent(files, 'index.html');
 
   expect(html).toContain('<link rel="icon" href="/icon.png">');
 });
@@ -53,13 +49,11 @@ test('should add type attribute for SVG favicon', async ({ build }) => {
     },
   });
   const files = rsbuild.getDistFiles();
+  const icon = findFile(files, 'mobile.svg');
 
-  expect(
-    Object.keys(files).some((file) => file.endsWith('/mobile.svg')),
-  ).toBeTruthy();
+  expect(icon.endsWith('/mobile.svg')).toBeTruthy();
 
-  const html =
-    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+  const html = getFileContent(files, 'index.html');
 
   expect(html).toContain(
     '<link rel="icon" href="/mobile.svg" type="image/svg+xml">',
@@ -79,8 +73,7 @@ test('should apply asset prefix to favicon URL', async ({ build }) => {
   });
   const files = rsbuild.getDistFiles();
 
-  const html =
-    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+  const html = getFileContent(files, 'index.html');
 
   expect(html).toContain(
     '<link rel="icon" href="https://www.example.com/icon.png">',
@@ -97,8 +90,7 @@ test('should allow favicon to be a CDN URL', async ({ build }) => {
   });
   const files = rsbuild.getDistFiles();
 
-  const html =
-    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+  const html = getFileContent(files, 'index.html');
 
   expect(html).toContain('<link rel="icon" href="https://foo.com/icon.png">');
 });
@@ -125,14 +117,12 @@ test('should generate favicon via function correctly', async ({ build }) => {
   });
   const files = rsbuild.getDistFiles();
 
-  const fooHtml =
-    files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
+  const fooHtml = getFileContent(files, 'foo.html');
   expect(fooHtml).toContain(
     '<link rel="icon" href="https://example.com/foo.ico">',
   );
 
-  const barHtml =
-    files[Object.keys(files).find((file) => file.endsWith('bar.html'))!];
+  const barHtml = getFileContent(files, 'bar.html');
   expect(barHtml).toContain(
     '<link rel="icon" href="https://example.com/bar.ico">',
   );
@@ -154,15 +144,11 @@ test('should allow to custom favicon dist path with a relative path', async ({
     },
   });
   const files = rsbuild.getDistFiles();
+  const faviconFile = findFile(files, 'static/favicon/icon.png');
 
-  expect(
-    Object.keys(files).some((file) =>
-      file.endsWith('/static/favicon/icon.png'),
-    ),
-  ).toBeTruthy();
+  expect(faviconFile.endsWith('/static/favicon/icon.png')).toBeTruthy();
 
-  const html =
-    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+  const html = getFileContent(files, 'index.html');
 
   expect(html).toContain('<link rel="icon" href="/static/favicon/icon.png">');
 });
@@ -183,13 +169,11 @@ test('should allow to custom favicon dist path with a relative path starting wit
     },
   });
   const files = rsbuild.getDistFiles();
+  const faviconFile = findFile(files, 'custom/icon.png');
 
-  expect(
-    Object.keys(files).some((file) => file.endsWith('/custom/icon.png')),
-  ).toBeTruthy();
+  expect(faviconFile.endsWith('/custom/icon.png')).toBeTruthy();
 
-  const html =
-    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+  const html = getFileContent(files, 'index.html');
 
   expect(html).toContain('<link rel="icon" href="/custom/icon.png">');
 });

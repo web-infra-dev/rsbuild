@@ -1,5 +1,5 @@
 import { basename } from 'node:path';
-import { expect, test } from '@e2e/helper';
+import { expect, findFile, test } from '@e2e/helper';
 
 test('should generate module chunks when chunkSplit is "split-by-module"', async ({
   build,
@@ -10,10 +10,10 @@ test('should generate module chunks when chunkSplit is "split-by-module"', async
 
   const files = rsbuild.getDistFiles();
 
-  const [reactFile] = Object.entries(files).find(
-    ([name, content]) =>
-      name.includes('npm.react') && content.includes('React'),
-  )!;
+  const reactFile = findFile(
+    files,
+    (name) => name.includes('npm.react') && files[name].includes('React'),
+  );
   expect(reactFile).toBeTruthy();
 
   const jsFiles = Object.keys(files)

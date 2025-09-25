@@ -1,4 +1,9 @@
-import { expect, normalizeNewlines, rspackTest } from '@e2e/helper';
+import {
+  expect,
+  getFileContent,
+  normalizeNewlines,
+  rspackTest,
+} from '@e2e/helper';
 
 rspackTest(
   'should not inject charset meta if template already contains it',
@@ -6,8 +11,7 @@ rspackTest(
     const rsbuild = await build();
     const files = rsbuild.getDistFiles();
 
-    const html =
-      files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+    const html = getFileContent(files, 'index.html');
     expect(normalizeNewlines(html)).toEqual(`<!doctype html>
 <html>
   <head>

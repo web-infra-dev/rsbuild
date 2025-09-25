@@ -1,4 +1,4 @@
-import { expect, test } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 
 test('should allow to use `postcssOptions` function to apply different postcss config for different files', async ({
   build,
@@ -11,15 +11,11 @@ test('should allow to use `postcssOptions` function to apply different postcss c
     '.text-3xl{font-size:var(--text-3xl);line-height:var(--tw-leading,var(--text-3xl--line-height))}}';
 
   const files = rsbuild.getDistFiles();
-  const fooCssFile = Object.keys(files).find(
-    (file) => file.includes('foo.') && file.endsWith('.css'),
-  )!;
-  expect(files[fooCssFile]).toContain(fooCssExpected);
-  expect(files[fooCssFile]).not.toContain(barCssExpected);
+  const fooCss = getFileContent(files, 'foo.css');
+  expect(fooCss).toContain(fooCssExpected);
+  expect(fooCss).not.toContain(barCssExpected);
 
-  const barCssFile = Object.keys(files).find(
-    (file) => file.includes('bar.') && file.endsWith('.css'),
-  )!;
-  expect(files[barCssFile]).toContain(barCssExpected);
-  expect(files[barCssFile]).not.toContain(fooCssExpected);
+  const barCss = getFileContent(files, 'bar.css');
+  expect(barCss).toContain(barCssExpected);
+  expect(barCss).not.toContain(fooCssExpected);
 });

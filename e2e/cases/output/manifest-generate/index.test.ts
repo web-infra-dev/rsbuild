@@ -1,4 +1,4 @@
-import { expect, test } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 import type { RsbuildConfig } from '@rsbuild/core';
 
 const config: RsbuildConfig = {
@@ -28,10 +28,7 @@ test('should generate custom manifest data in build', async ({ build }) => {
   });
 
   const files = rsbuild.getDistFiles();
-  const manifestContent =
-    files[
-      Object.keys(files).find((file) => file.endsWith('my-manifest.json'))!
-    ];
+  const manifestContent = getFileContent(files, 'my-manifest.json');
   const manifest = JSON.parse(manifestContent);
 
   expect(manifest.filesCount).toBe(2);
@@ -50,10 +47,7 @@ test('should generate custom manifest data in dev', async ({ dev }) => {
   });
 
   const files = rsbuild.getDistFiles();
-  const manifestContent =
-    files[
-      Object.keys(files).find((file) => file.endsWith('my-manifest.json'))!
-    ];
+  const manifestContent = getFileContent(files, 'my-manifest.json');
   const manifest = JSON.parse(manifestContent);
 
   expect(manifest.filesCount).toBe(2);

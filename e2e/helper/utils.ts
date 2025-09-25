@@ -8,6 +8,7 @@ import glob, {
   convertPathToPattern,
   type Options as GlobOptions,
 } from 'fast-glob';
+import color from 'picocolors';
 import type { Page } from 'playwright';
 import sourceMap from 'source-map';
 import { expect } from './fixture';
@@ -268,7 +269,7 @@ export type FindFileOptions = {
   ignoreHash?: boolean;
 };
 
-const HASH_PATTERN = /\.[0-9a-z]{6,}(?=\.)/gi;
+const HASH_PATTERN = /\.[0-9a-z]{8,}(?=\.)/gi;
 
 const toMatcherFn = (matcher: FileMatcher): ((file: string) => boolean) => {
   if (typeof matcher === 'function') {
@@ -297,7 +298,9 @@ export const findFile = (
     }
   }
 
-  throw new Error(`Unable to find file matching ${matcher.toString()}`);
+  throw new Error(
+    `Unable to find file matching "${color.cyan(matcher.toString())}"`,
+  );
 };
 
 /** Return the content of the first matching file from a files map */

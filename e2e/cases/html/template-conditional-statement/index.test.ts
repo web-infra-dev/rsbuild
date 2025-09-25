@@ -1,11 +1,10 @@
-import { expect, test } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 
 test('should render conditional statement correctly', async ({ build }) => {
   const rsbuild = await build();
   const files = rsbuild.getDistFiles();
 
-  const indexHtml =
-    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+  const indexHtml = getFileContent(files, 'index.html');
 
   // Basic if statement (showBasic: true)
   expect(indexHtml).toContain('Basic if true');

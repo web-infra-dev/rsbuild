@@ -1,4 +1,4 @@
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, getFileContent, rspackTest } from '@e2e/helper';
 
 rspackTest(
   'should minify template success when inlineScripts & inlineStyles',
@@ -7,8 +7,7 @@ rspackTest(
 
     const files = rsbuild.getDistFiles();
 
-    const content =
-      files[Object.keys(files).find((file) => file.endsWith('.html'))!];
+    const content = getFileContent(files, '.html');
 
     expect(content.includes('html,body{margin:0;padding:0}')).toBeTruthy();
     expect(

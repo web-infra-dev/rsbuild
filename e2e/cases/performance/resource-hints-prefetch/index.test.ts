@@ -1,5 +1,11 @@
 import { join } from 'node:path';
-import { expect, rspackTest, test } from '@e2e/helper';
+import {
+  expect,
+  findFile,
+  getFileContent,
+  rspackTest,
+  test,
+} from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = __dirname;
@@ -26,13 +32,12 @@ test('should generate prefetch link when prefetch is defined', async ({
 
   const files = rsbuild.getDistFiles();
 
-  const asyncFileName = Object.keys(files).find(
+  const asyncFileName = findFile(
+    files,
     (file) =>
       file.includes('/static/js/async/') && !file.endsWith('.LICENSE.txt'),
-  )!;
-  const [, content] = Object.entries(files).find(([name]) =>
-    name.endsWith('.html'),
-  )!;
+  );
+  const content = getFileContent(files, '.html');
 
   // test.js, test.css, image.png
   expect(content.match(/rel="prefetch"/g)?.length).toBe(3);
@@ -68,13 +73,12 @@ test('should generate prefetch link correctly when assetPrefix do not have a pro
 
   const files = rsbuild.getDistFiles();
 
-  const asyncFileName = Object.keys(files).find(
+  const asyncFileName = findFile(
+    files,
     (file) =>
       file.includes('/static/js/async/') && !file.endsWith('.LICENSE.txt'),
-  )!;
-  const [, content] = Object.entries(files).find(([name]) =>
-    name.endsWith('.html'),
-  )!;
+  );
+  const content = getFileContent(files, '.html');
 
   expect(
     content.includes(
@@ -104,12 +108,10 @@ test('should generate prefetch link with include', async ({ build }) => {
 
   const files = rsbuild.getDistFiles();
 
-  const asyncFileName = Object.keys(files).find((file) =>
+  const asyncFileName = findFile(files, (file) =>
     file.includes('/static/image/image'),
-  )!;
-  const [, content] = Object.entries(files).find(([name]) =>
-    name.endsWith('.html'),
-  )!;
+  );
+  const content = getFileContent(files, '.html');
 
   // image.png
   expect(content.match(/rel="prefetch"/g)?.length).toBe(1);
@@ -142,12 +144,10 @@ test('should generate prefetch link with include array', async ({ build }) => {
 
   const files = rsbuild.getDistFiles();
 
-  const asyncFileName = Object.keys(files).find((file) =>
+  const asyncFileName = findFile(files, (file) =>
     file.includes('/static/image/image'),
-  )!;
-  const [, content] = Object.entries(files).find(([name]) =>
-    name.endsWith('.html'),
-  )!;
+  );
+  const content = getFileContent(files, '.html');
 
   // image.png, test.js
   expect(content.match(/rel="prefetch"/g)?.length).toBe(2);
@@ -180,12 +180,10 @@ test('should generate prefetch link with exclude array', async ({ build }) => {
 
   const files = rsbuild.getDistFiles();
 
-  const asyncFileName = Object.keys(files).find((file) =>
+  const asyncFileName = findFile(files, (file) =>
     file.includes('/static/image/image'),
-  )!;
-  const [, content] = Object.entries(files).find(([name]) =>
-    name.endsWith('.html'),
-  )!;
+  );
+  const content = getFileContent(files, '.html');
 
   // image.png
   expect(content.match(/rel="prefetch"/g)?.length).toBe(1);
@@ -221,16 +219,14 @@ test('should generate prefetch link by config (distinguish html)', async ({
 
   const files = rsbuild.getDistFiles();
 
-  const [, content] = Object.entries(files).find(([name]) =>
-    name.endsWith('page1.html'),
-  )!;
+  const content = getFileContent(files, 'page1.html');
 
   // icon.png、test.js, test.css, image.png
   expect(content.match(/rel="prefetch"/g)?.length).toBe(4);
 
-  const assetFileName = Object.keys(files).find((file) =>
+  const assetFileName = findFile(files, (file) =>
     file.includes('/static/image/'),
-  )!;
+  );
 
   expect(
     content.includes(
@@ -240,9 +236,7 @@ test('should generate prefetch link by config (distinguish html)', async ({
     ),
   ).toBeTruthy();
 
-  const [, content2] = Object.entries(files).find(([name]) =>
-    name.endsWith('page2.html'),
-  )!;
+  const content2 = getFileContent(files, 'page2.html');
 
   // test.js, test.css, image.png
   expect(content2.match(/rel="prefetch"/g)?.length).toBe(3);
@@ -270,9 +264,7 @@ rspackTest(
     });
 
     const files = rsbuild.getDistFiles();
-    const [, content] = Object.entries(files).find(([name]) =>
-      name.endsWith('.html'),
-    )!;
+    const content = getFileContent(files, '.html');
 
     // image.png
     expect(content.match(/rel="prefetch"/g)?.length).toBe(1);
@@ -307,9 +299,7 @@ rspackTest(
     });
 
     const files = rsbuild.getDistFiles();
-    const [, content] = Object.entries(files).find(([name]) =>
-      name.endsWith('.html'),
-    )!;
+    const content = getFileContent(files, '.html');
 
     // image.png
     expect(content.match(/rel="prefetch"/g)?.length).toBe(1);
