@@ -9,7 +9,7 @@ test('should forward browser error logs to terminal by default', async ({
   await rsbuild.expectLog(EXPECTED_LOG);
 });
 
-test('should disable forwarding browser error logs', async ({ dev, page }) => {
+test('should disable forwarding browser error logs', async ({ dev }) => {
   const rsbuild = await dev({
     config: {
       dev: {
