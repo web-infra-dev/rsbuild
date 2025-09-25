@@ -17,7 +17,7 @@ rspackTest('support SSR', async ({ page, devOnly }) => {
 
 rspackTest('support SSR with external', async ({ page, devOnly }) => {
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       output: {
         externals: {
           react: 'react',
@@ -59,7 +59,7 @@ rspackTest(
     process.env.TEST_ESM_LIBRARY = '1';
 
     const rsbuild = await devOnly({
-      rsbuildConfig: {
+      config: {
         output: {
           externals: {
             react: 'react',

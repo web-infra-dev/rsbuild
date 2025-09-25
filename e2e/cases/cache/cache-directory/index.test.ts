@@ -12,7 +12,7 @@ test('should use `buildCache.cacheDirectory` as expected in dev', async ({
   await remove(cacheDirectory);
 
   await dev({
-    rsbuildConfig: {
+    config: {
       performance: {
         buildCache: {
           cacheDirectory,
@@ -34,7 +34,7 @@ test('should use `buildCache.cacheDirectory` as expected in build', async ({
   await remove(cacheDirectory);
 
   await build({
-    rsbuildConfig: {
+    config: {
       performance: {
         buildCache: {
           cacheDirectory,

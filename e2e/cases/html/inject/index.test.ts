@@ -11,7 +11,7 @@ test('should preserve the expected script injection order', async ({
         inlineRuntime: false,
       }),
     ],
-    rsbuildConfig: {
+    config: {
       html: {
         inject: false,
         template: './static/index.html',
@@ -34,7 +34,7 @@ test('should preserve the expected script injection order', async ({
 
 rspackTest('should set inject via function correctly', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           index: path.resolve(__dirname, './src/index.js'),

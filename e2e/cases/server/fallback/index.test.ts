@@ -17,7 +17,7 @@ test('should return 200 with custom headers for OPTIONS requests handled by midd
   dev,
 }) => {
   const rsbuild = await dev({
-    rsbuildConfig: {
+    config: {
       server: {
         cors: false,
       },

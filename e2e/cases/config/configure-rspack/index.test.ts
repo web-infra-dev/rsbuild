@@ -4,7 +4,7 @@ rspackTest(
   'should allow to use tools.rspack to configure Rspack',
   async ({ page, buildPreview }) => {
     await buildPreview({
-      rsbuildConfig: {
+      config: {
         tools: {
           rspack: (config, { rspack }) => {
             config.plugins.push(
@@ -26,7 +26,7 @@ rspackTest(
   'should allow to use async tools.rspack to configure Rspack',
   async ({ page, buildPreview }) => {
     await buildPreview({
-      rsbuildConfig: {
+      config: {
         tools: {
           rspack: async (config, { rspack }) => {
             return new Promise<void>((resolve) => {

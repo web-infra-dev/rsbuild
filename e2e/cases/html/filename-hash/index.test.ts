@@ -4,7 +4,7 @@ test('should allow to generate HTML with filename hash using filename.html', asy
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         filename: {
           html: '[name].[contenthash:8].html',
@@ -25,7 +25,7 @@ test('should allow to generate HTML with filename hash using tools.htmlPlugin', 
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       tools: {
         htmlPlugin(config, { entryName }) {
           config.filename = `${entryName}.[contenthash:8].html`;

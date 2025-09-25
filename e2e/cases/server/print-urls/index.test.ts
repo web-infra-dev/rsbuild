@@ -10,7 +10,7 @@ test('should print server urls correctly by default', async ({
   devOnly,
 }) => {
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       server: {
         htmlFallback: false,
       },
@@ -32,7 +32,7 @@ test('should not print server urls when printUrls is false', async ({
   devOnly,
 }) => {
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       server: {
         printUrls: false,
       },
@@ -47,7 +47,7 @@ test('should not print server urls when printUrls is false', async ({
 
 test('should allow to custom urls', async ({ page, devOnly }) => {
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       server: {
         printUrls: ({ urls, protocol, port }) => {
           expect(typeof port).toEqual('number');
@@ -69,7 +69,7 @@ test('should allow to modify and return new urls', async ({
   devOnly,
 }) => {
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       server: {
         printUrls: ({ urls }) => urls.map((url) => `${url}/test`),
       },
@@ -88,7 +88,7 @@ test('should allow to modify and return new urls', async ({
 
 test('should listen only on localhost in dev', async ({ page, devOnly }) => {
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       server: {
         host: 'localhost',
         htmlFallback: false,
@@ -111,7 +111,7 @@ test('should listen only on localhost in preview', async ({
   const rsbuild = await buildPreview({
     cwd,
 
-    rsbuildConfig: {
+    config: {
       server: {
         host: 'localhost',
         htmlFallback: false,
@@ -133,7 +133,7 @@ test('should not print server urls when HTML is disabled', async ({
   const rsbuild = await buildPreview({
     cwd,
 
-    rsbuildConfig: {
+    config: {
       tools: {
         htmlPlugin: false,
       },
@@ -150,7 +150,7 @@ test('should print server urls when HTML is disabled but printUrls is a custom f
   const rsbuild = await buildPreview({
     cwd,
 
-    rsbuildConfig: {
+    config: {
       tools: {
         htmlPlugin: false,
       },
@@ -168,7 +168,7 @@ test('should print server urls for multiple web environments with custom distPat
   devOnly,
 }) => {
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       server: {
         printUrls: ({ urls, routes }) => {
           expect(routes[0].pathname).toBe('/dist/');
@@ -210,7 +210,7 @@ test('should print server urls for multiple web environments with custom distPat
   devOnly,
 }) => {
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       server: {
         htmlFallback: false,
       },
@@ -259,7 +259,7 @@ test('should print server urls for web and node environments with custom distPat
   devOnly,
 }) => {
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       server: {
         htmlFallback: false,
       },

@@ -9,7 +9,7 @@ test('should generate preload link when preload is defined', async ({
 }) => {
   const rsbuild = await build({
     plugins: [pluginReact()],
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(fixtures, 'src/page1/index.ts'),
@@ -46,7 +46,7 @@ test('should generate preload link when preload is defined', async ({
 test('should generate preload link with duplicate', async ({ build }) => {
   const rsbuild = await build({
     plugins: [pluginReact()],
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(fixtures, 'src/page1/index.ts'),
@@ -85,7 +85,7 @@ test('should generate preload link with duplicate', async ({ build }) => {
 test('should generate preload link with crossOrigin', async ({ build }) => {
   const rsbuild = await build({
     plugins: [pluginReact()],
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(fixtures, 'src/page1/index.ts'),
@@ -130,7 +130,7 @@ test('should generate preload link without crossOrigin when same origin', async 
 }) => {
   const rsbuild = await build({
     plugins: [pluginReact()],
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(fixtures, 'src/page1/index.ts'),
@@ -170,7 +170,7 @@ test('should generate preload link without crossOrigin when same origin', async 
 test('should generate preload link with include', async ({ build }) => {
   const rsbuild = await build({
     plugins: [pluginReact()],
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(fixtures, 'src/page1/index.ts'),
@@ -208,7 +208,7 @@ test('should generate preload link with include', async ({ build }) => {
 test('should generate preload link with include array', async ({ build }) => {
   const rsbuild = await build({
     plugins: [pluginReact()],
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(fixtures, 'src/page1/index.ts'),
@@ -248,7 +248,7 @@ rspackTest(
   async ({ build }) => {
     const rsbuild = await build({
       plugins: [pluginReact()],
-      rsbuildConfig: {
+      config: {
         source: {
           entry: {
             main: join(fixtures, 'src/page1/index.ts'),
@@ -279,7 +279,7 @@ rspackTest(
   async ({ build }) => {
     const rsbuild = await build({
       plugins: [pluginReact()],
-      rsbuildConfig: {
+      config: {
         source: {
           entry: {
             main: join(fixtures, 'src/page1/index.ts'),

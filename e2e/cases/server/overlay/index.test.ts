@@ -21,7 +21,7 @@ test('should show overlay correctly', async ({
   });
 
   await dev({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           index: join(cwd, 'test-temp-src/index.tsx'),

@@ -25,7 +25,7 @@ describe('plugin-asset', () => {
   test('should allow to use distPath.image to modify dist path', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginAsset()],
-      rsbuildConfig: {
+      config: {
         output: {
           distPath: {
             image: 'foo',
@@ -41,7 +41,7 @@ describe('plugin-asset', () => {
   test('should add image rules correctly', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginAsset()],
-      rsbuildConfig: {
+      config: {
         output: {
           distPath: {
             image: '',
@@ -57,7 +57,7 @@ describe('plugin-asset', () => {
   test('should allow to use filename.image to modify filename', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginAsset()],
-      rsbuildConfig: {
+      config: {
         output: {
           filename: {
             image: 'foo[ext]',

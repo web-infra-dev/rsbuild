@@ -21,7 +21,7 @@ test('should inline all scripts and emit all source maps', async ({
   buildPreview,
 }) => {
   const rsbuild = await buildPreview({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           index: path.resolve(__dirname, './src/index.js'),
@@ -56,7 +56,7 @@ test('should inline all scripts and emit all source maps', async ({
 
 test('should inline scripts when matching a RegExp', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         inlineScripts: /\/index\.\w+\.js$/,
       },
@@ -81,7 +81,7 @@ test('should inline scripts when matching a RegExp', async ({ build }) => {
 
 test('should inline scripts based on filename and size', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         inlineScripts({ size, name }) {
           return name.includes('index') && size < 10000;
@@ -108,7 +108,7 @@ test('should inline scripts based on filename and size', async ({ build }) => {
 
 test('should inline styles when matching a RegExp', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         inlineStyles: /\/index\.\w+\.css$/,
       },
@@ -127,7 +127,7 @@ test('should inline styles when matching a RegExp', async ({ build }) => {
 
 test('should inline styles based on filename and size', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         inlineStyles({ size, name }) {
           return name.includes('index') && size < 1000;
@@ -148,7 +148,7 @@ test('should inline styles based on filename and size', async ({ build }) => {
 
 test('should not inline styles by default in dev', async ({ page, dev }) => {
   await dev({
-    rsbuildConfig: {
+    config: {
       tools: toolsConfig,
     },
   });
@@ -166,7 +166,7 @@ test('should inline styles in dev when matching a RegExp', async ({
   dev,
 }) => {
   await dev({
-    rsbuildConfig: {
+    config: {
       output: {
         inlineStyles: {
           enable: true,
@@ -190,7 +190,7 @@ test('should inline styles in dev based on filename and size', async ({
   dev,
 }) => {
   await dev({
-    rsbuildConfig: {
+    config: {
       output: {
         inlineStyles: {
           enable: true,
@@ -213,7 +213,7 @@ test('should inline styles in dev based on filename and size', async ({
 
 test('should not inline scripts when disabled', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         inlineScripts: {
           enable: false,
@@ -241,7 +241,7 @@ test('should not inline scripts when disabled', async ({ build }) => {
 
 test('should not inline styles when disabled', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         inlineStyles: {
           enable: false,
@@ -263,7 +263,7 @@ test('should not inline styles when disabled', async ({ build }) => {
 
 test('should inline assets in build when enable is auto', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         inlineScripts: {
           enable: 'auto',
@@ -305,7 +305,7 @@ test('should not inline assets in dev when enable is auto', async ({
   dev,
 }) => {
   await dev({
-    rsbuildConfig: {
+    config: {
       output: {
         inlineScripts: {
           enable: 'auto',
@@ -340,7 +340,7 @@ test('should not inline scripts or styles in dev by default when enable is unset
   dev,
 }) => {
   await dev({
-    rsbuildConfig: {
+    config: {
       tools: toolsConfig,
       output: {
         inlineStyles: true,
@@ -367,7 +367,7 @@ test('should not inline scripts or styles in dev by default when enable is unset
 test('should update source mapping URL in build', async ({ build }) => {
   const assetPrefix = 'https://example.com/base/';
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         filenameHash: false,
         inlineScripts: true,

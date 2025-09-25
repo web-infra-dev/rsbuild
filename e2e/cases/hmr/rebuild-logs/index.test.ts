@@ -12,7 +12,7 @@ rspackTest(
     });
 
     const rsbuild = await dev({
-      rsbuildConfig: {
+      config: {
         source: {
           entry: {
             index: join(cwd, 'test-temp-src/index.ts'),
@@ -38,7 +38,7 @@ rspackTest('should print removed files in logs', async ({ page, dev }) => {
   });
 
   const rsbuild = await dev({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           index: join(cwd, 'test-temp-src/index.ts'),

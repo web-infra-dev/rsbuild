@@ -5,7 +5,7 @@ describe('plugin-define', () => {
   test('should register define plugin correctly', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginDefine()],
-      rsbuildConfig: {
+      config: {
         source: {
           define: {
             NAME: JSON.stringify('Jack'),

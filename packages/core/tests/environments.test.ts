@@ -8,7 +8,7 @@ describe('environment config', () => {
     const cwd = process.cwd();
     const rsbuild = await createRsbuild({
       cwd,
-      rsbuildConfig: {
+      config: {
         environments: {
           ssr: {
             output: {
@@ -37,7 +37,7 @@ describe('environment config', () => {
   it('should support modify environment config by api.modifyRsbuildConfig', async () => {
     process.env.NODE_ENV = 'development';
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         resolve: {
           alias: {
             '@common': './src/common',
@@ -100,7 +100,7 @@ describe('environment config', () => {
   it('should support modify single environment config by api.modifyEnvironmentConfig', async () => {
     process.env.NODE_ENV = 'development';
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         resolve: {
           alias: {
             '@common': './src/common',
@@ -174,7 +174,7 @@ describe('environment config', () => {
       },
     });
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         environments: {
           web: {
             plugins: [plugin('web')],
@@ -215,7 +215,7 @@ describe('environment config', () => {
     });
 
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         environments: {
           web: {
             plugins: [plugin('web')],
@@ -241,7 +241,7 @@ describe('environment config', () => {
   it('should normalize environment config correctly', async () => {
     process.env.NODE_ENV = 'development';
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         resolve: {
           alias: {
             '@common': './src/common',
@@ -296,7 +296,7 @@ describe('environment config', () => {
   it('should print environment config when inspect config', async () => {
     process.env.NODE_ENV = 'development';
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         resolve: {
           alias: {
             '@common': './src/common',
@@ -330,7 +330,7 @@ describe('environment config', () => {
 
   it('tools.rspack / bundlerChain can be configured in environment config', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         tools: {
           rspack(config) {
             return {
@@ -370,7 +370,7 @@ describe('environment config', () => {
 
   it('dev.hmr can be configured in environment config', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         environments: {
           web: {
             dev: {

@@ -6,7 +6,7 @@ rspackTest(
   async ({ build }) => {
     const { plugin, hooks } = recordPluginHooks();
     const rsbuild = await build({
-      rsbuildConfig: {
+      config: {
         plugins: [plugin],
       },
     });
@@ -36,7 +36,7 @@ rspackTest(
   async ({ build }) => {
     const { plugin, hooks } = recordPluginHooks();
     const rsbuild = await build({
-      rsbuildConfig: {
+      config: {
         mode: 'development',
         plugins: [plugin],
       },
@@ -69,7 +69,7 @@ rspackTest(
 
     const { plugin, hooks } = recordPluginHooks();
     const rsbuild = await dev({
-      rsbuildConfig: {
+      config: {
         plugins: [plugin],
       },
     });
@@ -111,7 +111,7 @@ rspackTest(
     const { plugin, hooks } = recordPluginHooks();
     const rsbuild = await createRsbuild({
       cwd: __dirname,
-      rsbuildConfig: {
+      config: {
         plugins: [plugin],
       },
     });

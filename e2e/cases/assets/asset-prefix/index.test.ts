@@ -2,7 +2,7 @@ import { expect, test } from '@e2e/helper';
 
 test('should allow dev.assetPrefix to be `auto`', async ({ page, dev }) => {
   await dev({
-    rsbuildConfig: {
+    config: {
       dev: {
         assetPrefix: 'auto',
       },
@@ -18,7 +18,7 @@ test('should allow dev.assetPrefix to be `auto`', async ({ page, dev }) => {
 
 test('should allow dev.assetPrefix to be true', async ({ page, dev }) => {
   const result = await dev({
-    rsbuildConfig: {
+    config: {
       dev: {
         assetPrefix: true,
       },
@@ -34,7 +34,7 @@ test('should allow dev.assetPrefix to have <port> placeholder', async ({
   dev,
 }) => {
   const result = await dev({
-    rsbuildConfig: {
+    config: {
       dev: {
         assetPrefix: 'http://localhost:<port>/',
       },
@@ -53,7 +53,7 @@ test('should allow output.assetPrefix to be `auto`', async ({
   buildPreview,
 }) => {
   await buildPreview({
-    rsbuildConfig: {
+    config: {
       output: {
         assetPrefix: 'auto',
       },
@@ -69,7 +69,7 @@ test('should inject assetPrefix to env var and template correctly', async ({
   buildPreview,
 }) => {
   await buildPreview({
-    rsbuildConfig: {
+    config: {
       html: {
         template: './src/template.html',
       },
@@ -86,7 +86,7 @@ test('should inject assetPrefix to env var and template correctly', async ({
 
 test('should use output.assetPrefix in none mode', async ({ build }) => {
   const result = await build({
-    rsbuildConfig: {
+    config: {
       mode: 'none',
       dev: {
         assetPrefix: 'http://dev.com',

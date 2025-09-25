@@ -22,7 +22,7 @@ rspackTest(
   'should allow to exclude file from babel transformation',
   async ({ page, buildPreview }) => {
     await buildPreview({
-      rsbuildConfig: {
+      config: {
         source: {
           exclude: [/aa/],
         },

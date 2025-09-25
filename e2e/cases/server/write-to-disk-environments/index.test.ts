@@ -18,7 +18,7 @@ test('should handle writeToDisk correctly across multiple environments', async (
   dev,
 }) => {
   await dev({
-    rsbuildConfig: {
+    config: {
       dev: {
         writeToDisk: true,
       },
@@ -67,7 +67,7 @@ test('should writeToDisk correctly when environment writeToDisk configuration sa
   dev,
 }) => {
   await dev({
-    rsbuildConfig: {
+    config: {
       dev: {
         writeToDisk: false,
       },

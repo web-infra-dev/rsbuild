@@ -26,7 +26,7 @@ describe('plugin-resolve', () => {
   it('should allow to customize extensions', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
-      rsbuildConfig: {
+      config: {
         resolve: {
           extensions: ['.ts', '.js'],
         },
@@ -40,7 +40,7 @@ describe('plugin-resolve', () => {
   it('should not apply tsConfigPath when aliasStrategy is "prefer-alias"', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
-      rsbuildConfig: {
+      config: {
         resolve: {
           aliasStrategy: 'prefer-alias',
         },
@@ -55,7 +55,7 @@ describe('plugin-resolve', () => {
   it('should allow to use resolve.alias to configure alias', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
-      rsbuildConfig: {
+      config: {
         resolve: {
           alias: {
             foo: 'bar',
@@ -73,7 +73,7 @@ describe('plugin-resolve', () => {
   it('should allow resolve.alias to be a function', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
-      rsbuildConfig: {
+      config: {
         resolve: {
           alias() {
             return {

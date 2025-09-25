@@ -7,7 +7,7 @@ const cwd2 = join(__dirname, 'project2');
 test('should apply mixed proxy rules', async ({ dev, page }) => {
   const rsbuild1 = await dev({
     cwd: cwd1,
-    rsbuildConfig: {
+    config: {
       dev: {
         assetPrefix: true,
       },
@@ -16,7 +16,7 @@ test('should apply mixed proxy rules', async ({ dev, page }) => {
 
   const rsbuild2 = await dev({
     cwd: cwd2,
-    rsbuildConfig: {
+    config: {
       server: {
         proxy: {
           '/foo': `http://127.0.0.1:${rsbuild1.port}/`,

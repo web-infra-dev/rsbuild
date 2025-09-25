@@ -29,7 +29,7 @@ rspackTest(
   'should not reload page when live-reload is disabled',
   async ({ page, dev, editFile }) => {
     await dev({
-      rsbuildConfig: {
+      config: {
         dev: {
           liveReload: false,
         },

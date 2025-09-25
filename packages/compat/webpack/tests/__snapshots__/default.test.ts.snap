@@ -17,11 +17,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "context": "<ROOT>/packages/compat/webpack/tests",
   "devtool": "cheap-module-source-map",
-  "entry": {
-    "index": [
-      "./src/index.js",
-    ],
-  },
   "experiments": {
     "asyncWebAssembly": true,
   },
@@ -318,64 +313,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "name": "RsbuildCorePlugin",
     },
     HotModuleReplacementPlugin {},
-    HtmlWebpackPlugin {
-      "options": {
-        "base": false,
-        "cache": true,
-        "chunks": [
-          "index",
-        ],
-        "chunksSortMode": "auto",
-        "compile": true,
-        "entryName": "index",
-        "excludeChunks": [],
-        "favicon": false,
-        "filename": "index.html",
-        "hash": false,
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "minify": "auto",
-        "publicPath": "auto",
-        "scriptLoading": "defer",
-        "showErrors": true,
-        "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-        "xhtml": false,
-        Symbol(entryName): "index",
-      },
-      "userOptions": {
-        "chunks": [
-          "index",
-        ],
-        "entryName": "index",
-        "filename": "index.html",
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "scriptLoading": "defer",
-        "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-        Symbol(entryName): "index",
-      },
-      "version": 5,
-    },
-    RsbuildHtmlPlugin {
-      "getExtraData": [Function],
-      "name": "RsbuildHtmlPlugin",
-    },
     DefinePlugin {
       "definitions": {
         "import.meta.env": {
@@ -462,11 +399,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
   },
   "context": "<ROOT>/packages/compat/webpack/tests",
   "devtool": false,
-  "entry": {
-    "index": [
-      "./src/index.js",
-    ],
-  },
   "experiments": {
     "asyncWebAssembly": true,
   },
@@ -760,64 +692,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     {
       "name": "RsbuildCorePlugin",
     },
-    HtmlWebpackPlugin {
-      "options": {
-        "base": false,
-        "cache": true,
-        "chunks": [
-          "index",
-        ],
-        "chunksSortMode": "auto",
-        "compile": true,
-        "entryName": "index",
-        "excludeChunks": [],
-        "favicon": false,
-        "filename": "index.html",
-        "hash": false,
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "minify": "auto",
-        "publicPath": "auto",
-        "scriptLoading": "defer",
-        "showErrors": true,
-        "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-        "xhtml": false,
-        Symbol(entryName): "index",
-      },
-      "userOptions": {
-        "chunks": [
-          "index",
-        ],
-        "entryName": "index",
-        "filename": "index.html",
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "scriptLoading": "defer",
-        "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-        Symbol(entryName): "index",
-      },
-      "version": 5,
-    },
-    RsbuildHtmlPlugin {
-      "getExtraData": [Function],
-      "name": "RsbuildHtmlPlugin",
-    },
     DefinePlugin {
       "definitions": {
         "import.meta.env": {
@@ -904,11 +778,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   },
   "context": "<ROOT>/packages/compat/webpack/tests",
   "devtool": false,
-  "entry": {
-    "index": [
-      "./src/index.js",
-    ],
-  },
   "experiments": {
     "asyncWebAssembly": true,
   },
@@ -1276,11 +1145,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   },
   "context": "<ROOT>/packages/compat/webpack/tests",
   "devtool": false,
-  "entry": {
-    "index": [
-      "./src/index.js",
-    ],
-  },
   "experiments": {
     "asyncWebAssembly": true,
   },

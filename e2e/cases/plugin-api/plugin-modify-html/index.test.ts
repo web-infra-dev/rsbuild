@@ -18,7 +18,7 @@ rspackTest('should allow plugin to modify HTML content', async ({ build }) => {
   };
 
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       plugins: [myPlugin],
     },
   });
@@ -54,7 +54,7 @@ rspackTest(
     };
 
     const rsbuild = await build({
-      rsbuildConfig: {
+      config: {
         plugins: [myPlugin],
       },
     });

@@ -2,7 +2,7 @@ import { expect, test } from '@e2e/helper';
 
 test('should apply server.base in dev', async ({ page, dev }) => {
   const rsbuild = await dev({
-    rsbuildConfig: {
+    config: {
       server: {
         base: '/base',
       },
@@ -45,7 +45,7 @@ test('should respect server.base when dev.assetPrefix is true', async ({
   dev,
 }) => {
   const rsbuild = await dev({
-    rsbuildConfig: {
+    config: {
       server: {
         base: '/base',
       },
@@ -66,7 +66,7 @@ test('should respect server.base when dev.assetPrefix is true', async ({
 
 test('should apply server.base in preview', async ({ page, buildPreview }) => {
   const rsbuild = await buildPreview({
-    rsbuildConfig: {
+    config: {
       server: {
         base: '/base',
       },
@@ -109,7 +109,7 @@ test('should serve resource correctly when assetPrefix is a subPath of server.ba
   dev,
 }) => {
   await dev({
-    rsbuildConfig: {
+    config: {
       dev: {
         assetPrefix: '/base/aaa',
       },

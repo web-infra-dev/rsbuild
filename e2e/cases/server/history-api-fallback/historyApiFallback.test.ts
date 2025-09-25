@@ -9,7 +9,7 @@ rspackTest(
   async ({ page, devOnly }) => {
     const rsbuild = await devOnly({
       plugins: [pluginReact()],
-      rsbuildConfig: {
+      config: {
         source: {
           entry: {
             main: join(cwd, 'src/index.jsx'),
@@ -42,7 +42,7 @@ test('should provide history api fallback for preview server correctly', async (
     cwd,
     plugins: [pluginReact()],
 
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(cwd, 'src/index.jsx'),

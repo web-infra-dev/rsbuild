@@ -6,7 +6,7 @@ rspackTest(
   'should register plugins correctly when using JavaScript API',
   async ({ build }) => {
     await build({
-      rsbuildConfig: {
+      config: {
         plugins: [pluginVue()],
       },
     });

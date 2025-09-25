@@ -26,7 +26,7 @@ describe('plugin-target', () => {
   test.each(cases)('%j', async (item) => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginTarget()],
-      rsbuildConfig: {
+      config: {
         output: {
           target: item.target,
           overrideBrowserslist: item.browserslist || undefined,

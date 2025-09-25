@@ -4,7 +4,7 @@ import { pluginReact } from '@rsbuild/plugin-react';
 rspackTest('legalComments linked (default)', async ({ page, buildPreview }) => {
   const rsbuild = await buildPreview({
     plugins: [pluginReact()],
-    rsbuildConfig: {
+    config: {
       performance: {
         chunkSplit: {
           strategy: 'all-in-one',
@@ -45,7 +45,7 @@ test('should omit legal comments when legalComments is set to "none"', async ({
 }) => {
   const rsbuild = await buildPreview({
     plugins: [pluginReact()],
-    rsbuildConfig: {
+    config: {
       performance: {
         chunkSplit: {
           strategy: 'all-in-one',
@@ -83,7 +83,7 @@ test('should inline legal comments when legalComments is set to "inline"', async
 }) => {
   const rsbuild = await buildPreview({
     plugins: [pluginReact()],
-    rsbuildConfig: {
+    config: {
       performance: {
         chunkSplit: {
           strategy: 'all-in-one',

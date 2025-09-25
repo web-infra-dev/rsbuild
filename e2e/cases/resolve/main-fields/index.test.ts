@@ -18,7 +18,7 @@ test('should apply resolve.mainFields as expected in dev', async ({
   dev,
 }) => {
   await dev({
-    rsbuildConfig: {
+    config: {
       resolve: {
         mainFields: ['custom', 'module', 'main'],
       },
@@ -27,7 +27,7 @@ test('should apply resolve.mainFields as expected in dev', async ({
   expect(await page.evaluate(() => window.test)).toBe('custom');
 
   await dev({
-    rsbuildConfig: {
+    config: {
       resolve: {
         mainFields: ['main', 'module'],
       },
@@ -41,7 +41,7 @@ test('should apply resolve.conditionNames as expected in build', async ({
   buildPreview,
 }) => {
   await buildPreview({
-    rsbuildConfig: {
+    config: {
       resolve: {
         mainFields: ['custom', 'module', 'main'],
       },
@@ -50,7 +50,7 @@ test('should apply resolve.conditionNames as expected in build', async ({
   expect(await page.evaluate(() => window.test)).toBe('custom');
 
   await buildPreview({
-    rsbuildConfig: {
+    config: {
       resolve: {
         mainFields: ['main', 'module'],
       },

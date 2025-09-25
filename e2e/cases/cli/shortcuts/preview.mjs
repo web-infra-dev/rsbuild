@@ -10,7 +10,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 async function main() {
   const rsbuild = await createRsbuild({
     cwd: __dirname,
-    rsbuildConfig: {
+    config: {
       dev: {
         cliShortcuts: true,
       },

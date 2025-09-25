@@ -4,7 +4,7 @@ import { pluginReact } from '../src';
 describe('plugins/react', () => {
   it('should work with swc-loader', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
+      config: {
         mode: 'development',
       },
     });
@@ -17,7 +17,7 @@ describe('plugins/react', () => {
 
   it('should configuring `tools.swc` to override react runtime', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
+      config: {
         mode: 'development',
         tools: {
           swc: {
@@ -40,9 +40,7 @@ describe('plugins/react', () => {
   });
 
   it('should set `parser.javascript.jsx` to `true` when using `preserve` react runtime', async () => {
-    const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {},
-    });
+    const rsbuild = await createStubRsbuild({});
 
     rsbuild.addPlugins([
       pluginReact({
@@ -57,7 +55,7 @@ describe('plugins/react', () => {
 
   it('should not apply react refresh when dev.hmr is false', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
+      config: {
         dev: {
           hmr: false,
         },
@@ -73,7 +71,7 @@ describe('plugins/react', () => {
 
   it('should set transpilation scope for react refresh plugin correctly', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
+      config: {
         mode: 'development',
         source: {
           include: [/foo/, /bar/],
@@ -91,7 +89,7 @@ describe('plugins/react', () => {
 
   it('should not apply react refresh when target is node', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
+      config: {
         output: {
           target: 'node',
         },
@@ -107,7 +105,7 @@ describe('plugins/react', () => {
 
   it('should not apply react refresh when target is web-worker', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
+      config: {
         output: {
           target: 'web-worker',
         },
@@ -123,7 +121,7 @@ describe('plugins/react', () => {
 
   it('should not apply splitChunks rule when strategy is not split-by-experience', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
+      config: {
         performance: {
           chunkSplit: {
             strategy: 'single-vendor',
@@ -141,7 +139,7 @@ describe('plugins/react', () => {
 
   it('should allow to custom jsxImportSource', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {},
+      config: {},
     });
 
     rsbuild.addPlugins([
@@ -160,7 +158,7 @@ describe('plugins/react', () => {
     process.env.NODE_ENV = 'production';
 
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
+      config: {
         environments: {
           web: {},
           web1: {},

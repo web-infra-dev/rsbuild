@@ -6,7 +6,7 @@ describe('plugins/babel', () => {
   it('babel-loader should works with builtin:swc-loader', async () => {
     const rsbuild = await createRsbuild({
       cwd: import.meta.dirname,
-      rsbuildConfig: {
+      config: {
         plugins: [pluginBabel()],
         source: {
           include: [/node_modules[\\/]query-string[\\/]/],
@@ -25,7 +25,7 @@ describe('plugins/babel', () => {
   it('should apply environment config correctly', async () => {
     const rsbuild = await createRsbuild({
       cwd: import.meta.dirname,
-      rsbuildConfig: {
+      config: {
         plugins: [pluginBabel()],
         environments: {
           web: {
@@ -66,7 +66,7 @@ describe('plugins/babel', () => {
   it('should set babel-loader', async () => {
     const rsbuild = await createRsbuild({
       cwd: import.meta.dirname,
-      rsbuildConfig: {
+      config: {
         plugins: [pluginBabel()],
         performance: {
           buildCache: false,
@@ -81,7 +81,7 @@ describe('plugins/babel', () => {
   it('should set babel-loader when config is add', async () => {
     const rsbuild = await createRsbuild({
       cwd: import.meta.dirname,
-      rsbuildConfig: {
+      config: {
         plugins: [
           pluginBabel({
             babelLoaderOptions: (config) => {

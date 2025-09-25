@@ -2,7 +2,7 @@ import { expect, test } from '@e2e/helper';
 
 test('should not emit CSS files when build node target', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         target: 'node',
       },
@@ -23,7 +23,7 @@ test('should allow to emit CSS with output.emitCss when build node target', asyn
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         target: 'node',
         emitCss: true,
@@ -45,7 +45,7 @@ test('should not emit CSS files when build web-worker target', async ({
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         target: 'web-worker',
       },
@@ -66,7 +66,7 @@ test('should allow to emit CSS with output.emitCss when build web-worker target'
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         target: 'web-worker',
         emitCss: true,
@@ -88,7 +88,7 @@ test('should allow to disable CSS emit with output.emitCss when build web target
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         target: 'web',
         emitCss: false,

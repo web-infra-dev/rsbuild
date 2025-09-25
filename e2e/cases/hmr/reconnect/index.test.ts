@@ -16,7 +16,7 @@ rspackTest(
     };
 
     const rsbuild = await dev({
-      rsbuildConfig: {
+      config: {
         source: { entry },
       },
     });
@@ -27,7 +27,7 @@ rspackTest(
     const { port } = rsbuild;
 
     await devOnly({
-      rsbuildConfig: {
+      config: {
         server: { port },
         source: { entry },
       },

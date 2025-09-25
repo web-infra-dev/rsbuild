@@ -4,7 +4,7 @@ rspackTest(
   'tsconfig paths should work and override the alias config',
   async ({ page, buildPreview }) => {
     await buildPreview({
-      rsbuildConfig: {
+      config: {
         resolve: {
           alias: {
             '@common': './src/common2',
@@ -25,7 +25,7 @@ rspackTest(
   'tsconfig paths should not work when aliasStrategy is "prefer-alias"',
   async ({ page, buildPreview }) => {
     await buildPreview({
-      rsbuildConfig: {
+      config: {
         resolve: {
           alias: {
             '@/common': './src/common2',

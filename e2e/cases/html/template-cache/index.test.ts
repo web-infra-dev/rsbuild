@@ -22,7 +22,7 @@ rspackTest(
     });
 
     await dev({
-      rsbuildConfig: {
+      config: {
         root: targetDir,
         source: {
           entry: {

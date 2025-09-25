@@ -4,7 +4,7 @@ import { expect, test } from '@e2e/helper';
 
 test('should emit local favicon to dist path', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       html: {
         favicon: '../../../assets/icon.png',
       },
@@ -26,7 +26,7 @@ test('should allow `html.favicon` to be an absolute path', async ({
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       html: {
         favicon: path.resolve(__dirname, '../../../assets/icon.png'),
       },
@@ -46,7 +46,7 @@ test('should allow `html.favicon` to be an absolute path', async ({
 
 test('should add type attribute for SVG favicon', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       html: {
         favicon: '../../../assets/mobile.svg',
       },
@@ -68,7 +68,7 @@ test('should add type attribute for SVG favicon', async ({ build }) => {
 
 test('should apply asset prefix to favicon URL', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       html: {
         favicon: '../../../assets/icon.png',
       },
@@ -89,7 +89,7 @@ test('should apply asset prefix to favicon URL', async ({ build }) => {
 
 test('should allow favicon to be a CDN URL', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       html: {
         favicon: 'https://foo.com/icon.png',
       },
@@ -105,7 +105,7 @@ test('should allow favicon to be a CDN URL', async ({ build }) => {
 
 test('should generate favicon via function correctly', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           foo: path.resolve(__dirname, './src/foo.js'),
@@ -142,7 +142,7 @@ test('should allow to custom favicon dist path with a relative path', async ({
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       html: {
         favicon: '../../../assets/icon.png',
       },
@@ -171,7 +171,7 @@ test('should allow to custom favicon dist path with a relative path starting wit
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       html: {
         favicon: '../../../assets/icon.png',
       },

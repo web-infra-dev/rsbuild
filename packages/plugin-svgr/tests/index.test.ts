@@ -56,7 +56,7 @@ describe('svgr', () => {
   it.each(cases)('$name', async (item) => {
     const rsbuild = await createRsbuild({
       cwd: import.meta.dirname,
-      rsbuildConfig: {
+      config: {
         plugins: [pluginSvgr(item.pluginConfig), pluginReact()],
       },
     });

@@ -6,7 +6,7 @@ describe('plugin-svelte', () => {
   it('should add svelte loader and resolve config properly', async () => {
     const rsbuild = await createRsbuild({
       cwd: __dirname,
-      rsbuildConfig: {
+      config: {
         plugins: [pluginSvelte()],
       },
     });
@@ -19,7 +19,7 @@ describe('plugin-svelte', () => {
   it('should add rule for `.svelte.js` and `.svelte.ts` as expected', async () => {
     const rsbuild = await createRsbuild({
       cwd: __dirname,
-      rsbuildConfig: {
+      config: {
         plugins: [pluginSvelte()],
       },
     });
@@ -34,7 +34,7 @@ describe('plugin-svelte', () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createRsbuild({
       cwd: __dirname,
-      rsbuildConfig: {
+      config: {
         plugins: [pluginSvelte()],
       },
     });
@@ -46,7 +46,7 @@ describe('plugin-svelte', () => {
   it('should turn off HMR by hand correctly', async () => {
     const rsbuild = await createRsbuild({
       cwd: __dirname,
-      rsbuildConfig: {
+      config: {
         dev: {
           hmr: false,
         },
@@ -60,7 +60,7 @@ describe('plugin-svelte', () => {
   it('should override default svelte-loader options throw options.svelteLoaderOptions', async () => {
     const rsbuild = await createRsbuild({
       cwd: __dirname,
-      rsbuildConfig: {
+      config: {
         plugins: [
           pluginSvelte({
             svelteLoaderOptions: {
@@ -77,7 +77,7 @@ describe('plugin-svelte', () => {
   it('should support pass custom preprocess options', async () => {
     const rsbuild = await createRsbuild({
       cwd: __dirname,
-      rsbuildConfig: {
+      config: {
         plugins: [
           pluginSvelte({
             preprocessOptions: {

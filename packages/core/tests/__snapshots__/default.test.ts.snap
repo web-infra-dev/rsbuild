@@ -1064,11 +1064,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
 {
   "context": "<ROOT>/packages/core/tests",
   "devtool": "cheap-module-source-map",
-  "entry": {
-    "index": [
-      "./src/index.js",
-    ],
-  },
   "experiments": {
     "asyncWebAssembly": true,
     "inlineConst": false,
@@ -1499,11 +1494,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
 {
   "context": "<ROOT>/packages/core/tests",
   "devtool": "cheap-module-source-map",
-  "entry": {
-    "index": [
-      "./src/index.js",
-    ],
-  },
   "experiments": {
     "asyncWebAssembly": true,
     "inlineConst": false,
@@ -1932,43 +1922,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
     HotModuleReplacementPlugin {
       "affectedHooks": undefined,
       "name": "HotModuleReplacementPlugin",
-    },
-    HtmlRspackPlugin {
-      "options": {
-        "base": false,
-        "cache": true,
-        "chunks": [
-          "index",
-        ],
-        "chunksSortMode": "auto",
-        "compile": true,
-        "entryName": "index",
-        "excludeChunks": [],
-        "favicon": false,
-        "filename": "index.html",
-        "hash": false,
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "publicPath": "auto",
-        "scriptLoading": "defer",
-        "showErrors": true,
-        "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-        "xhtml": false,
-        Symbol(entryName): "index",
-      },
-      "version": 6,
-    },
-    RsbuildHtmlPlugin {
-      "getExtraData": [Function],
-      "name": "RsbuildHtmlPlugin",
     },
     DefinePlugin {
       "_args": [

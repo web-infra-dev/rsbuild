@@ -19,7 +19,7 @@ describe('plugin-html', () => {
   it('should not register html plugin when target is node', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(stubContext)],
-      rsbuildConfig: {
+      config: {
         output: {
           target: 'node',
         },
@@ -31,7 +31,7 @@ describe('plugin-html', () => {
   it('should not register html plugin when target is web-worker', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(stubContext)],
-      rsbuildConfig: {
+      config: {
         output: {
           target: 'web-worker',
         },
@@ -43,7 +43,7 @@ describe('plugin-html', () => {
   it('should allow to set favicon by html.favicon option', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(stubContext)],
-      rsbuildConfig: {
+      config: {
         html: {
           favicon: './src/favicon.ico',
         },
@@ -57,7 +57,7 @@ describe('plugin-html', () => {
   it('should allow to set inject by html.inject option', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(stubContext)],
-      rsbuildConfig: {
+      config: {
         html: {
           inject: 'body',
         },
@@ -85,7 +85,7 @@ describe('plugin-html', () => {
   it('should allow to modify plugin options by tools.htmlPlugin', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(stubContext)],
-      rsbuildConfig: {
+      config: {
         tools: {
           htmlPlugin(_config, utils) {
             expect(utils.entryName).toEqual('index');
@@ -104,7 +104,7 @@ describe('plugin-html', () => {
   it('should allow to disable html plugin', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(stubContext)],
-      rsbuildConfig: {
+      config: {
         tools: {
           htmlPlugin: false,
         },
@@ -117,7 +117,7 @@ describe('plugin-html', () => {
   it('should support multi entry', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(stubContext)],
-      rsbuildConfig: {
+      config: {
         source: {
           entry: {
             main: './src/main.ts',
@@ -139,7 +139,7 @@ describe('plugin-html', () => {
   it('should allow to configure html.tags', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(stubContext)],
-      rsbuildConfig: {
+      config: {
         source: {
           entry: {
             main: './src/main.ts',
@@ -158,7 +158,7 @@ describe('plugin-html', () => {
   it('should support environment html config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(stubContext)],
-      rsbuildConfig: {
+      config: {
         environments: {
           web: {
             source: {
@@ -203,7 +203,7 @@ describe('plugin-html', () => {
     async ({ value }) => {
       const rsbuild = await createStubRsbuild({
         plugins: [pluginEntry(), pluginHtml(stubContext)],
-        rsbuildConfig: { html: { inject: value } },
+        config: { html: { inject: value } },
       });
       const config = await rsbuild.unwrapConfig();
       expect(config).toMatchSnapshot();

@@ -9,7 +9,7 @@ test.describe('should render mountId correctly', () => {
   }) => {
     const rsbuild = await build({
       runServer: true,
-      rsbuildConfig: {
+      config: {
         html: {
           mountId: 'app',
         },
@@ -29,7 +29,7 @@ test.describe('should render mountId correctly', () => {
 
   test('should inject scripts into <head> by default', async ({ build }) => {
     const rsbuild = await build({
-      rsbuildConfig: {
+      config: {
         html: {
           mountId: 'app',
         },

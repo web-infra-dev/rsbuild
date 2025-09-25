@@ -7,7 +7,7 @@ test('should treat specified modules as externals', async ({
 }) => {
   await buildPreview({
     plugins: [pluginReact()],
-    rsbuildConfig: {
+    config: {
       output: {
         externals: {
           './aaa': 'aa',
@@ -35,7 +35,7 @@ test('should not externalize dependencies when target is web worker', async ({
 }) => {
   const rsbuild = await build({
     plugins: [pluginReact()],
-    rsbuildConfig: {
+    config: {
       output: {
         target: 'web-worker',
         externals: {

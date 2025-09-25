@@ -4,7 +4,7 @@ import polka from 'polka';
 test('should proxy SSE request', async ({ dev, page }) => {
   const ssePort = await getRandomPort();
   const rsbuild = await dev({
-    rsbuildConfig: {
+    config: {
       server: {
         proxy: {
           '/api': {

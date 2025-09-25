@@ -5,7 +5,7 @@ import { pluginSass } from '../src';
 describe('plugin-sass', () => {
   it('should add sass-loader', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         plugins: [pluginSass()],
       },
     });
@@ -16,7 +16,7 @@ describe('plugin-sass', () => {
 
   it('should add sass-loader and css-loader when injectStyles', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         plugins: [pluginSass()],
         output: {
           injectStyles: true,
@@ -30,7 +30,7 @@ describe('plugin-sass', () => {
 
   it('should add sass-loader with excludes', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         plugins: [
           pluginSass({
             sassLoaderOptions(_config, { addExcludes }) {
@@ -47,7 +47,7 @@ describe('plugin-sass', () => {
 
   it('should allow to use legacy API and mute deprecation warnings', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         plugins: [
           pluginSass({
             sassLoaderOptions: {
@@ -64,7 +64,7 @@ describe('plugin-sass', () => {
 
   it('should allow to add multiple sass rules', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         plugins: [
           pluginSass({
             include: [/a\.scss/, /b\.scss/],
@@ -83,7 +83,7 @@ describe('plugin-sass', () => {
 
   it('should be compatible with Rsbuild < 1.3.0', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         plugins: [
           {
             name: 'rsbuild-plugin-test',

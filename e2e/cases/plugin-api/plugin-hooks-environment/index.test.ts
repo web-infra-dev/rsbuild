@@ -85,7 +85,7 @@ rspackTest(
     process.env.NODE_ENV = 'production';
     const { plugin, names } = createPlugin();
     await build({
-      rsbuildConfig: {
+      config: {
         plugins: [plugin],
         environments: {
           web: {},
@@ -142,7 +142,7 @@ rspackTest(
 
     const { plugin, names } = createPlugin();
     const rsbuild = await dev({
-      rsbuildConfig: {
+      config: {
         plugins: [plugin],
         environments: {
           web: {},

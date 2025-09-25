@@ -20,7 +20,7 @@ describe('plugin-webpack-swc', () => {
   it('should set swc-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSwc()],
-      rsbuildConfig: {
+      config: {
         provider: webpackProvider,
       },
     });
@@ -32,7 +32,7 @@ describe('plugin-webpack-swc', () => {
   it('should apply multiple environment configs correctly', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSwc()],
-      rsbuildConfig: {
+      config: {
         provider: webpackProvider,
         environments: {
           web: {
@@ -67,7 +67,7 @@ describe('plugin-webpack-swc', () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSwc()],
-      rsbuildConfig: {
+      config: {
         provider: webpackProvider,
       },
     });
@@ -82,7 +82,7 @@ describe('plugin-webpack-swc', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSwc()],
-      rsbuildConfig: {
+      config: {
         output: {
           legalComments: 'none',
         },
@@ -102,7 +102,7 @@ describe('plugin-webpack-swc', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSwc()],
-      rsbuildConfig: {
+      config: {
         output: {
           charset: 'utf8',
         },
@@ -121,7 +121,7 @@ describe('plugin-webpack-swc', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSwc()],
-      rsbuildConfig: {
+      config: {
         output: {
           legalComments: 'inline',
         },
@@ -147,7 +147,7 @@ describe('plugin-webpack-swc', () => {
           },
         }),
       ],
-      rsbuildConfig: {
+      config: {
         provider: webpackProvider,
       },
     });
@@ -170,7 +170,7 @@ describe('plugin-webpack-swc', () => {
           },
         }),
       ],
-      rsbuildConfig: {
+      config: {
         provider: webpackProvider,
       },
     });
@@ -189,7 +189,7 @@ describe('plugin-webpack-swc', () => {
           cssMinify: false,
         }),
       ],
-      rsbuildConfig: {
+      config: {
         provider: webpackProvider,
       },
     });
@@ -211,7 +211,7 @@ describe('plugin-webpack-swc', () => {
           minify: true,
         }),
       ],
-      rsbuildConfig: {
+      config: {
         provider: webpackProvider,
       },
     });
@@ -225,7 +225,7 @@ describe('plugin-webpack-swc', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSwc()],
-      rsbuildConfig: {
+      config: {
         provider: webpackProvider,
         source: {
           include: [/foo/],
@@ -242,7 +242,7 @@ describe('plugin-webpack-swc', () => {
     process.env.NODE_ENV = 'development';
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSwc()],
-      rsbuildConfig: {
+      config: {
         provider: webpackProvider,
         dev: {
           hmr: false,
@@ -260,7 +260,7 @@ describe('plugin-webpack-swc', () => {
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSwc()],
-      rsbuildConfig: {
+      config: {
         provider: webpackProvider,
         environments: {
           node: {
@@ -416,7 +416,7 @@ describe('plugin-webpack-swc', () => {
           },
         }),
       ],
-      rsbuildConfig: {
+      config: {
         provider: webpackProvider,
       },
     });
@@ -444,7 +444,7 @@ describe('plugin-webpack-swc', () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSwc()],
-      rsbuildConfig: {
+      config: {
         provider: webpackProvider,
         environments: {
           web: {
@@ -474,7 +474,7 @@ describe('plugin-webpack-swc', () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSwc()],
-      rsbuildConfig: {
+      config: {
         provider: webpackProvider,
         environments: {
           web: {

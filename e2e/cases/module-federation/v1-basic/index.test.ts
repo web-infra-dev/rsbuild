@@ -83,7 +83,7 @@ rspackTest(
 
     const remoteApp = await devOnly({
       cwd: remote,
-      rsbuildConfig: {
+      config: {
         server: {
           base: '/remote',
         },
@@ -91,7 +91,7 @@ rspackTest(
     });
     const hostApp = await devOnly({
       cwd: host,
-      rsbuildConfig: {
+      config: {
         server: {
           base: '/host',
         },
@@ -148,7 +148,7 @@ rspackTest(
 
     process.env.REMOTE_PORT = remotePort.toString();
 
-    const rsbuildConfig: RsbuildConfig = {
+    const config: RsbuildConfig = {
       output: {
         sourceMap: true,
         overrideBrowserslist: ['Chrome >= 51'],
@@ -169,14 +169,14 @@ rspackTest(
     await expect(
       build({
         cwd: remote,
-        rsbuildConfig,
+        config,
       }),
     ).resolves.toBeTruthy();
 
     await expect(
       build({
         cwd: host,
-        rsbuildConfig,
+        config,
       }),
     ).resolves.toBeTruthy();
   },

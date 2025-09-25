@@ -5,7 +5,7 @@ test('should work with the default writeToDisk configuration', async ({
   dev,
 }) => {
   await dev({
-    rsbuildConfig: {
+    config: {
       output: {
         distPath: {
           root: 'dist-write-to-disk-default',
@@ -20,7 +20,7 @@ test('should work with the default writeToDisk configuration', async ({
 
 test('should work when writeToDisk is set to false', async ({ page, dev }) => {
   await dev({
-    rsbuildConfig: {
+    config: {
       output: {
         distPath: {
           root: 'dist-write-to-disk-false',
@@ -38,7 +38,7 @@ test('should work when writeToDisk is set to false', async ({ page, dev }) => {
 
 test('should work when writeToDisk is set to true', async ({ page, dev }) => {
   await dev({
-    rsbuildConfig: {
+    config: {
       output: {
         distPath: {
           root: 'dist-write-to-disk',

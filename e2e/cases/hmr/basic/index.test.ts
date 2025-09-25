@@ -10,7 +10,7 @@ rspackTest('HMR should work by default', async ({ page, dev, editFile }) => {
   });
 
   await dev({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           index: join(cwd, 'test-temp-src/index.ts'),

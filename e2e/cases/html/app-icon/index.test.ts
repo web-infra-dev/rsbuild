@@ -2,7 +2,7 @@ import { expect, test } from '@e2e/helper';
 
 test('should emit apple-touch-icon to dist path', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       html: {
         appIcon: {
           icons: [{ src: '../../../assets/icon.png', size: 180 }],
@@ -26,7 +26,7 @@ test('should emit apple-touch-icon to dist path', async ({ build }) => {
 
 test('should emit manifest.webmanifest to dist path', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       html: {
         appIcon: {
           name: 'My Website',
@@ -75,7 +75,7 @@ test('should emit manifest.webmanifest to dist path', async ({ build }) => {
 
 test('should allow to specify URL as icon', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       html: {
         appIcon: {
           name: 'My Website',
@@ -120,7 +120,7 @@ test('should allow to specify URL as icon', async ({ build }) => {
 
 test('should allow to specify target for each icon', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       html: {
         appIcon: {
           name: 'My Website',
@@ -192,7 +192,7 @@ test('should allow to specify target for each icon', async ({ build }) => {
 
 test('should allow to specify purpose for each icon', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       html: {
         appIcon: {
           name: 'My Website',
@@ -241,7 +241,7 @@ test('should allow to specify purpose for each icon', async ({ build }) => {
 
 test('should allow to customize manifest filename', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       html: {
         appIcon: {
           filename: 'manifest.json',
@@ -277,7 +277,7 @@ test('should allow to customize manifest filename', async ({ build }) => {
 
 test('should append dev.assetPrefix to icon URL', async ({ dev }) => {
   const rsbuild = await dev({
-    rsbuildConfig: {
+    config: {
       dev: {
         assetPrefix: 'http://localhost:3000',
       },
@@ -336,7 +336,7 @@ test('should append dev.assetPrefix to icon URL', async ({ dev }) => {
 
 test('should append output.assetPrefix to icon URL', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         assetPrefix: 'https://example.com',
       },
@@ -394,7 +394,7 @@ test('should append output.assetPrefix to icon URL', async ({ build }) => {
 
 test('should apply asset prefix to apple-touch-icon URL', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       html: {
         appIcon: {
           icons: [{ src: '../../../assets/icon.png', size: 180 }],

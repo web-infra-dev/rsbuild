@@ -8,7 +8,7 @@ test('should access / and htmlFallback success by default', async ({
   buildPreview,
 }) => {
   const rsbuild = await buildPreview({
-    rsbuildConfig: {
+    config: {
       output: {
         distPath: {
           root: 'dist-0',
@@ -36,7 +36,7 @@ test('should return 404 when htmlFallback false', async ({
   buildPreview,
 }) => {
   const rsbuild = await buildPreview({
-    rsbuildConfig: {
+    config: {
       server: {
         htmlFallback: false,
       },
@@ -60,7 +60,7 @@ test('should access /main.html success when entry is main', async ({
   buildPreview,
 }) => {
   const rsbuild = await buildPreview({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(fixtures, 'src/index.ts'),
@@ -87,7 +87,7 @@ test('should access /main success when entry is main', async ({
   buildPreview,
 }) => {
   const rsbuild = await buildPreview({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(fixtures, 'src/index.ts'),
@@ -116,7 +116,7 @@ test('should access /main success when entry is main and set assetPrefix', async
   buildPreview,
 }) => {
   const rsbuild = await buildPreview({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(fixtures, 'src/index.ts'),
@@ -144,7 +144,7 @@ test('should access /main success when entry is main and outputPath is /main/ind
   buildPreview,
 }) => {
   const rsbuild = await buildPreview({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(fixtures, 'src/index.ts'),
@@ -174,7 +174,7 @@ test('should return 404 when page is not found', async ({
   buildPreview,
 }) => {
   const rsbuild = await buildPreview({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(fixtures, 'src/index.ts'),
@@ -200,7 +200,7 @@ test('should access /html/main success when entry is main and outputPath is /htm
   buildPreview,
 }) => {
   const rsbuild = await buildPreview({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           main: join(fixtures, 'src/index.ts'),
@@ -238,7 +238,7 @@ test('should match resource correctly with specify assetPrefix', async ({
   const port = await getRandomPort();
 
   const rsbuild = await buildPreview({
-    rsbuildConfig: {
+    config: {
       server: {
         port,
       },
@@ -266,7 +266,7 @@ test('should match resource correctly with full url assetPrefix', async ({
   const port = await getRandomPort();
 
   const rsbuild = await buildPreview({
-    rsbuildConfig: {
+    config: {
       server: {
         port,
       },

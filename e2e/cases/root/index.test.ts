@@ -4,7 +4,7 @@ import fse from 'fs-extra';
 
 test('should support setting a relative root path', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       root: './test',
     },
   });
@@ -16,7 +16,7 @@ test('should support setting a relative root path', async ({ build }) => {
 
 test('should support setting an absolute root path', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       root: join(__dirname, './test'),
     },
   });
@@ -36,7 +36,7 @@ test('should serve publicDir correctly when setting root', async ({
   );
 
   const rsbuild = await devOnly({
-    rsbuildConfig: {
+    config: {
       root: './test',
     },
   });

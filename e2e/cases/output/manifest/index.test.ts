@@ -4,7 +4,7 @@ import { expect, rspackTest, test } from '@e2e/helper';
 
 test('should generate manifest file in output', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         manifest: true,
         filenameHash: false,
@@ -39,7 +39,7 @@ test('should generate manifest file in output', async ({ build }) => {
 
 test('should generate manifest file at specified path', async ({ build }) => {
   await build({
-    rsbuildConfig: {
+    config: {
       output: {
         manifest: './custom/my-manifest.json',
         filenameHash: false,
@@ -64,7 +64,7 @@ test('should generate manifest file at specified path', async ({ build }) => {
 
 test('should generate manifest file when target is node', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         distPath: {
           root: 'dist-1',
@@ -97,7 +97,7 @@ test('should generate manifest file when target is node', async ({ build }) => {
 
 test('should always write manifest to disk when in dev', async ({ dev }) => {
   const rsbuild = await dev({
-    rsbuildConfig: {
+    config: {
       output: {
         distPath: {
           root: 'dist-dev',
@@ -123,7 +123,7 @@ test('should always write manifest to disk when in dev', async ({ dev }) => {
 
 test('should allow to filter files in manifest', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       output: {
         manifest: {
           filter: (file) => file.name.endsWith('.js'),
@@ -158,7 +158,7 @@ rspackTest(
   'should allow to include license files in manifest',
   async ({ build }) => {
     const rsbuild = await build({
-      rsbuildConfig: {
+      config: {
         output: {
           manifest: {
             filter: () => true,

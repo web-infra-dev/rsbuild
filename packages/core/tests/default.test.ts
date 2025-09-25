@@ -29,7 +29,7 @@ describe('applyDefaultPlugins', () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'test';
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
+      config: {
         mode: 'development',
         output: {
           target: 'node',
@@ -56,7 +56,7 @@ describe('tools.rspack', () => {
     }
 
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
+      config: {
         tools: {
           rspack: (_config, { addRules, prependPlugins, appendRules }) => {
             addRules({
@@ -211,7 +211,7 @@ describe('bundlerApi', () => {
 describe('default value', () => {
   it('should apply server.base as assetPrefix default value', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
+      config: {
         server: {
           base: '/base',
         },
@@ -227,7 +227,7 @@ describe('default value', () => {
 
   it('should apply dev / output assetPrefix value correctly', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
+      config: {
         server: {
           base: '/base',
         },

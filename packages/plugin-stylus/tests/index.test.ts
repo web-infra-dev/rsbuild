@@ -5,7 +5,7 @@ import { pluginStylus } from '../src';
 describe('plugin-stylus', () => {
   it('should add stylus loader config correctly', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         plugins: [pluginStylus()],
       },
     });
@@ -16,7 +16,7 @@ describe('plugin-stylus', () => {
 
   it('should allow to configure stylus options', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         plugins: [
           pluginStylus({
             stylusOptions: {
@@ -32,7 +32,7 @@ describe('plugin-stylus', () => {
 
   it('should be compatible with Rsbuild < 1.3.0', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         plugins: [
           {
             name: 'rsbuild-plugin-test',

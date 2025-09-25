@@ -13,7 +13,7 @@ rspackTest(
     });
 
     const rsbuild = await dev({
-      rsbuildConfig: {
+      config: {
         plugins: [pluginReact()],
         environments: {
           web: {

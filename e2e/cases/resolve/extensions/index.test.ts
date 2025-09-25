@@ -5,7 +5,7 @@ test('should apply resolve.extensions as expected', async ({
   buildPreview,
 }) => {
   await buildPreview({
-    rsbuildConfig: {
+    config: {
       resolve: {
         extensions: ['.ts', '.js'],
       },
@@ -15,7 +15,7 @@ test('should apply resolve.extensions as expected', async ({
   expect(await page.evaluate(() => window.test)).toBe('ts');
 
   await buildPreview({
-    rsbuildConfig: {
+    config: {
       resolve: {
         extensions: ['.js', '.ts'],
       },

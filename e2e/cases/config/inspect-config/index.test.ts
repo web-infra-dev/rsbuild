@@ -94,7 +94,7 @@ rspackTest(
 
     const rsbuild = await createRsbuild({
       cwd: __dirname,
-      rsbuildConfig: {
+      config: {
         environments: {
           web: {
             output: {
@@ -212,7 +212,7 @@ rspackTest('should apply plugin correctly', async () => {
 
   const rsbuild1 = await createRsbuild({
     cwd: __dirname,
-    rsbuildConfig: {
+    config: {
       mode: 'development',
       plugins: [servePlugin, buildPlugin],
     },
@@ -226,7 +226,7 @@ rspackTest('should apply plugin correctly', async () => {
 
   const rsbuild2 = await createRsbuild({
     cwd: __dirname,
-    rsbuildConfig: {
+    config: {
       mode: 'production',
       plugins: [servePlugin, buildPlugin],
     },

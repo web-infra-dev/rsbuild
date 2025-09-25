@@ -34,7 +34,7 @@ rspackTest(
   'should show assets on /rsbuild-dev-server path with server.base and assetPrefix',
   async ({ page, dev }) => {
     const rsbuild = await dev({
-      rsbuildConfig: {
+      config: {
         dev: {
           assetPrefix: '/testing/assets/',
         },
@@ -76,7 +76,7 @@ rspackTest(
     const entry2 = './src2/index.tsx';
 
     const rsbuild = await dev({
-      rsbuildConfig: {
+      config: {
         environments: {
           test1: {
             source: {

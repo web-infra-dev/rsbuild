@@ -20,7 +20,7 @@ rspackTest(
   'should compile CSS Modules composes with external correctly',
   async ({ build }) => {
     const rsbuild = await build({
-      rsbuildConfig: {
+      config: {
         source: {
           entry: { external: path.resolve(__dirname, './src/external.js') },
         },

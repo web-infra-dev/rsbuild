@@ -15,7 +15,7 @@ describe('plugin-output', () => {
   it('should allow to custom server directory with distPath.root', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
-      rsbuildConfig: {
+      config: {
         output: {
           target: 'node',
           distPath: {
@@ -32,7 +32,7 @@ describe('plugin-output', () => {
   it('should allow to set distPath.js and distPath.css to empty string', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
-      rsbuildConfig: {
+      config: {
         output: {
           distPath: {
             js: '',
@@ -49,7 +49,7 @@ describe('plugin-output', () => {
   it('should allow to custom async js path via distPath.jsAsync', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
-      rsbuildConfig: {
+      config: {
         output: {
           distPath: {
             jsAsync: 'custom/js',
@@ -67,7 +67,7 @@ describe('plugin-output', () => {
   it('should allow to use filename.js to modify filename', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
-      rsbuildConfig: {
+      config: {
         output: {
           filename: {
             js: 'foo.js',
@@ -84,7 +84,7 @@ describe('plugin-output', () => {
   it('output config should works when target is node', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
-      rsbuildConfig: {
+      config: {
         output: {
           target: 'node',
           distPath: {
@@ -105,7 +105,7 @@ describe('plugin-output', () => {
   it('should allow to use copy plugin', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
-      rsbuildConfig: {
+      config: {
         output: {
           copy: {
             patterns: [
@@ -125,7 +125,7 @@ describe('plugin-output', () => {
   it('should allow to use copy plugin with multiple config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
-      rsbuildConfig: {
+      config: {
         output: {
           copy: [
             {
@@ -154,7 +154,7 @@ describe('plugin-output', () => {
     rstest.stubEnv('NODE_ENV', 'development');
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
-      rsbuildConfig: {
+      config: {
         dev: {
           assetPrefix: 'http://example-<port>.com:<port>/',
         },
@@ -168,7 +168,7 @@ describe('plugin-output', () => {
   it('should replace `<port>` placeholder with server.port', async () => {
     rstest.stubEnv('NODE_ENV', 'development');
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         server: { port: 4000 },
         dev: {
           assetPrefix: 'http://example-<port>.com:<port>/',
@@ -183,7 +183,7 @@ describe('plugin-output', () => {
   it('should replace `<port>` placeholder of `output.assetPrefix` with default port', async () => {
     rstest.stubEnv('NODE_ENV', 'production');
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         output: {
           assetPrefix: 'http://example.com:<port>/',
         },

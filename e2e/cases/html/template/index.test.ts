@@ -4,7 +4,7 @@ import { expect, test } from '@e2e/helper';
 
 test('should set template via function correctly', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           index: path.resolve(__dirname, './src/index.js'),
@@ -40,7 +40,7 @@ test('should allow to access templateParameters', async ({
   buildPreview,
 }) => {
   await buildPreview({
-    rsbuildConfig: {
+    config: {
       html: {
         template: './static/index.html',
         templateParameters: {
@@ -63,7 +63,7 @@ test('should set template via tools.htmlPlugin correctly', async ({
   build,
 }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           index: path.resolve(__dirname, './src/index.js'),

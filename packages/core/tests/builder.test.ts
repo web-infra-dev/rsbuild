@@ -5,7 +5,7 @@ describe('should use Rspack as the default bundler', () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'development';
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         source: {
           entry: {
             index: './src/index.js',
@@ -40,7 +40,7 @@ describe('plugins', () => {
     }
 
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         source: {
           entry: {
             index: './src/index.js',

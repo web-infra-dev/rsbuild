@@ -4,7 +4,7 @@ import polka from 'polka';
 export async function startDevServer(fixtures) {
   const rsbuild = await createRsbuild({
     cwd: fixtures,
-    rsbuildConfig: {
+    config: {
       server: {
         htmlFallback: false,
         middlewareMode: true,

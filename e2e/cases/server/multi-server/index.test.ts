@@ -8,7 +8,7 @@ test.skip('multiple rsbuild dev servers should work correctly', async ({
 }) => {
   const rsbuild1 = await createRsbuild({
     cwd: __dirname,
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           index: './src/index1',
@@ -30,7 +30,7 @@ test.skip('multiple rsbuild dev servers should work correctly', async ({
 
   const rsbuild2 = await createRsbuild({
     cwd: __dirname,
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           index: './src/index2',

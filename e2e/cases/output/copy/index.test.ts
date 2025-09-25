@@ -6,7 +6,7 @@ import type { RsbuildPlugin } from '@rsbuild/core';
 
 test('should copy asset to dist folder correctly', async ({ build }) => {
   await build({
-    rsbuildConfig: {
+    config: {
       output: {
         distPath: {
           root: 'dist-1',
@@ -23,7 +23,7 @@ test('should copy asset from src to dist folder correctly', async ({
   build,
 }) => {
   await build({
-    rsbuildConfig: {
+    config: {
       output: {
         copy: [
           { from: '**/*.txt', to: 'assets', context: join(__dirname, 'src') },
@@ -37,7 +37,7 @@ test('should copy asset from src to dist folder correctly', async ({
 
 test('should copy asset to dist sub-folder correctly', async ({ build }) => {
   await build({
-    rsbuildConfig: {
+    config: {
       output: {
         distPath: {
           root: 'dist-1',
@@ -88,7 +88,7 @@ test('should merge copy config correctly', async ({ build }) => {
   });
 
   await build({
-    rsbuildConfig: {
+    config: {
       output: {
         distPath: {
           root: 'dist-4',

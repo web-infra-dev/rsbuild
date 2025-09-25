@@ -2,7 +2,7 @@ import { expect, test } from '@e2e/helper';
 
 test('should serve multiple environments correctly', async ({ dev, page }) => {
   const rsbuild = await dev({
-    rsbuildConfig: {
+    config: {
       environments: {
         web: {},
         web1: {
@@ -45,7 +45,7 @@ test('should expose the environment API in setupMiddlewares', async ({
   let assertionsCount = 0;
 
   const rsbuild = await dev({
-    rsbuildConfig: {
+    config: {
       dev: {
         setupMiddlewares: (middlewares, { environments }) => {
           middlewares.unshift(async (req, _res, next) => {
@@ -95,7 +95,7 @@ test.skip('serve multiple environments correctly when distPath different', async
   page,
 }) => {
   const rsbuild = await dev({
-    rsbuildConfig: {
+    config: {
       environments: {
         web: {},
         web1: {

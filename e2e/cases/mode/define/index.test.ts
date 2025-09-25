@@ -11,7 +11,7 @@ test('should define vars in build correctly', async ({
   buildPreview,
 }) => {
   const rsbuild = await buildPreview({
-    rsbuildConfig: {
+    config: {
       mode: 'production',
     },
   });
@@ -58,7 +58,7 @@ test('should define vars in build correctly', async ({
 
 test('should define vars in dev', async ({ page, buildPreview }) => {
   const rsbuild = await buildPreview({
-    rsbuildConfig: {
+    config: {
       mode: 'development',
     },
   });
@@ -102,7 +102,7 @@ test('should define vars in none mode correctly', async ({
   buildPreview,
 }) => {
   const rsbuild = await buildPreview({
-    rsbuildConfig: {
+    config: {
       mode: 'none',
     },
   });
@@ -149,7 +149,7 @@ test('should define vars in none mode correctly', async ({
 
 rspackTest('should allow to disable NODE_ENV injection', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       mode: 'production',
       tools: {
         rspack: {

@@ -12,7 +12,7 @@ rspackTest(
     const { plugin, hooks } = recordPluginHooks();
     const rsbuild = await build({
       watch: true,
-      rsbuildConfig: {
+      config: {
         plugins: [plugin],
       },
     });

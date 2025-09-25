@@ -6,7 +6,7 @@ rspackTest(
   async () => {
     const rsbuild = await createRsbuild({
       cwd: __dirname,
-      rsbuildConfig: {
+      config: {
         environments: {
           node: {
             output: {

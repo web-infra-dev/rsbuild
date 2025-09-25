@@ -20,7 +20,7 @@ rspackTest(
   'should allow to enable Rspack experiments.css with style-loader',
   async ({ build }) => {
     const rsbuild = await build({
-      rsbuildConfig: {
+      config: {
         output: {
           injectStyles: true,
         },

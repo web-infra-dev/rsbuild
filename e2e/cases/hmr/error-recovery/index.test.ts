@@ -12,7 +12,7 @@ rspackTest(
     });
 
     const rsbuild = await dev({
-      rsbuildConfig: {
+      config: {
         source: {
           entry: {
             index: join(cwd, 'test-temp-src/index.ts'),

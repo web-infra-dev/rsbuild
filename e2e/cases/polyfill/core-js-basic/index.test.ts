@@ -14,7 +14,7 @@ test('should add polyfill when set polyfill entry (default)', async ({
   buildPreview,
 }) => {
   const rsbuild = await buildPreview({
-    rsbuildConfig: {
+    config: {
       output: {
         polyfill: 'entry',
         sourceMap: {
@@ -40,7 +40,7 @@ rspackTest(
   'should add polyfill when set polyfill usage',
   async ({ page, buildPreview }) => {
     const rsbuild = await buildPreview({
-      rsbuildConfig: {
+      config: {
         output: {
           polyfill: 'usage',
           sourceMap: {

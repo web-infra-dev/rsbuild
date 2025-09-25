@@ -11,7 +11,7 @@ rspackTest('should apply nonce to script and style tags', async ({ build }) => {
 
 rspackTest('should apply environment nonce', async ({ build }) => {
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       environments: {
         web: {
           security: {

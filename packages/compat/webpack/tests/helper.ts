@@ -3,15 +3,15 @@ import { createStubRsbuild as createBaseRsbuild } from '@scripts/test-helper';
 import { webpackProvider } from '../src/provider';
 
 export async function createStubRsbuild({
-  rsbuildConfig = {},
+  config = {},
   plugins,
   ...options
 }: CreateRsbuildOptions & {
   plugins?: RsbuildPlugins;
 }) {
-  rsbuildConfig.provider = webpackProvider;
+  config.provider = webpackProvider;
   return createBaseRsbuild({
-    rsbuildConfig,
+    config,
     plugins,
     ...options,
   });

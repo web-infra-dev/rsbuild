@@ -12,7 +12,7 @@ test('should allow plugin to custom resolver', async ({ build }) => {
   };
 
   await build({
-    rsbuildConfig: {
+    config: {
       plugins: [loggerPlugin],
     },
   });

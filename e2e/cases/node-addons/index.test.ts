@@ -46,7 +46,7 @@ test('should compile Node addons in the node_modules correctly', async ({
   );
 
   const rsbuild = await build({
-    rsbuildConfig: {
+    config: {
       source: {
         entry: {
           index: './src/other.js',

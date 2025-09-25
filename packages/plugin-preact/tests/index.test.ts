@@ -12,7 +12,7 @@ describe('plugins/preact', () => {
   it('should apply react aliases by default', async () => {
     const rsbuild = await createRsbuild({
       cwd: __dirname,
-      rsbuildConfig: {
+      config: {
         plugins: [pluginPreact()],
       },
     });
@@ -24,7 +24,7 @@ describe('plugins/preact', () => {
   it('should not apply react aliases if reactAliasesEnabled is false', async () => {
     const rsbuild = await createRsbuild({
       cwd: __dirname,
-      rsbuildConfig: {
+      config: {
         plugins: [
           pluginPreact({
             reactAliasesEnabled: false,

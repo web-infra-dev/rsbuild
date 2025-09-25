@@ -19,7 +19,7 @@ rspackTest(
   'should compile CSS Modules with custom auto configuration',
   async ({ build }) => {
     const rsbuild = await build({
-      rsbuildConfig: {
+      config: {
         output: {
           cssModules: {
             auto: (resource) => {
@@ -44,7 +44,7 @@ rspackTest(
   'should compile CSS Modules with custom localIdentName pattern',
   async ({ build }) => {
     const rsbuild = await build({
-      rsbuildConfig: {
+      config: {
         output: {
           cssModules: {
             localIdentName: '[hash:base64:8]',
@@ -67,7 +67,7 @@ rspackTest(
   'should compile CSS Modules with custom hash digest format',
   async ({ build }) => {
     const rsbuild = await build({
-      rsbuildConfig: {
+      config: {
         output: {
           cssModules: {
             localIdentName: '[hash:hex:4]',

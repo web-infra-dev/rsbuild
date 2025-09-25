@@ -39,7 +39,7 @@ describe('plugin-css', () => {
   it('should enable source map when output.sourceMap.css is true', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      rsbuildConfig: {
+      config: {
         output: {
           sourceMap: {
             css: true,
@@ -56,7 +56,7 @@ describe('plugin-css', () => {
   it('should disable source map when output.sourceMap.css is false', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      rsbuildConfig: {
+      config: {
         output: {
           sourceMap: {
             css: false,
@@ -88,7 +88,7 @@ describe('plugin-css', () => {
   it('should allow to custom cssModules.localIdentName', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      rsbuildConfig: {
+      config: {
         output: {
           cssModules: {
             localIdentName: '[hash]',
@@ -107,7 +107,7 @@ describe('plugin-css', () => {
   it('should use custom cssModules rule when using output.cssModules config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      rsbuildConfig: {
+      config: {
         output: {
           cssModules: {
             auto: (resourcePath) => resourcePath.includes('.module.'),
@@ -124,7 +124,7 @@ describe('plugin-css injectStyles', () => {
   it('should use css-loader + style-loader when injectStyles is true', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      rsbuildConfig: {
+      config: {
         output: {
           injectStyles: true,
         },
@@ -139,7 +139,7 @@ describe('plugin-css injectStyles', () => {
   it('should apply ignoreCssLoader when injectStyles is true and target is node', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
-      rsbuildConfig: {
+      config: {
         output: {
           target: 'node',
           injectStyles: true,
@@ -156,7 +156,7 @@ describe('plugin-css injectStyles', () => {
 it('should ensure isolation of PostCSS config objects between different builds', async () => {
   const rsbuild = await createStubRsbuild({
     plugins: [pluginCss()],
-    rsbuildConfig: {
+    config: {
       environments: {
         web: {
           tools: {

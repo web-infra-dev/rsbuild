@@ -6,7 +6,7 @@ describe('plugin-module-federation', () => {
   it('should set module federation config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSplitChunks(), pluginModuleFederation()],
-      rsbuildConfig: {
+      config: {
         performance: {
           chunkSplit: {
             strategy: 'split-by-experience',
@@ -41,7 +41,7 @@ describe('plugin-module-federation', () => {
   it('should set environment module federation config correctly', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSplitChunks(), pluginModuleFederation()],
-      rsbuildConfig: {
+      config: {
         performance: {
           chunkSplit: {
             strategy: 'split-by-experience',
@@ -81,7 +81,7 @@ describe('plugin-module-federation', () => {
   it('should set module federation and environment chunkSplit config correctly', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSplitChunks(), pluginModuleFederation()],
-      rsbuildConfig: {
+      config: {
         moduleFederation: {
           options: {
             name: 'remote',

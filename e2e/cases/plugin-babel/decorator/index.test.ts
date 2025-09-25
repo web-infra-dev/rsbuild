@@ -19,7 +19,7 @@ rspackTest(
   async ({ page, buildPreview }) => {
     await buildPreview({
       plugins: [pluginBabel()],
-      rsbuildConfig: {
+      config: {
         source: {
           entry: {
             index: './src/jsIndex.js',

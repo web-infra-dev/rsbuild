@@ -17,7 +17,7 @@ test('should allow to use stage 3 decorators', async ({
   buildPreview,
 }) => {
   await buildPreview({
-    rsbuildConfig: {
+    config: {
       source: {
         decorators: {
           version: '2022-03',
@@ -49,7 +49,7 @@ rspackTest(
   async ({ page, buildPreview }) => {
     await buildPreview({
       plugins: [pluginBabel()],
-      rsbuildConfig: {
+      config: {
         source: {
           decorators: {
             version: '2022-03',

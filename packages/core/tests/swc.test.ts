@@ -107,7 +107,7 @@ describe('plugin-swc', () => {
 
   it('should allow to use `tools.swc` to configure swc-loader options', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
+      config: {
         tools: {
           swc: {
             jsc: {
@@ -128,7 +128,7 @@ describe('plugin-swc', () => {
 
   it('should allow to use `tools.swc` to be function type', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
+      config: {
         tools: {
           swc() {
             return {
@@ -151,7 +151,7 @@ describe('plugin-swc', () => {
 
   it('should apply environment config correctly', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
+      config: {
         environments: {
           web: {
             source: {
@@ -194,15 +194,15 @@ describe('plugin-swc', () => {
   });
 });
 
-async function matchConfigSnapshot(rsbuildConfig: RsbuildConfig) {
-  rsbuildConfig.source ||= {};
-  rsbuildConfig.source.entry = {
+async function matchConfigSnapshot(config: RsbuildConfig) {
+  config.source ||= {};
+  config.source.entry = {
     main: './src/index.js',
   };
 
   const rsbuild = await createStubRsbuild({
     plugins: [pluginSwc(), pluginEntry()],
-    rsbuildConfig,
+    config,
   });
 
   const {

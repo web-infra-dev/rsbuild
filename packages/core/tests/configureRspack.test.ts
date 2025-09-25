@@ -10,7 +10,7 @@ import {
 describe('configure Rspack', () => {
   it('should allow tools.rspack to return config', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         tools: {
           rspack(config) {
             return {
@@ -28,7 +28,7 @@ describe('configure Rspack', () => {
 
   it('should allow tools.rspack to modify config object', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         tools: {
           rspack(config) {
             config.devtool = 'eval-cheap-source-map';
@@ -43,7 +43,7 @@ describe('configure Rspack', () => {
 
   it('should allow tools.rspack to be an object', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         tools: {
           rspack: {
             devtool: 'eval',
@@ -58,7 +58,7 @@ describe('configure Rspack', () => {
 
   it('should allow tools.rspack to be an array', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         tools: {
           rspack: [
             {
@@ -78,7 +78,7 @@ describe('configure Rspack', () => {
 
   it('should provide mergeConfig util in tools.rspack function', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         tools: {
           rspack: (config, { mergeConfig }) => {
             return mergeConfig(config, {
@@ -95,7 +95,7 @@ describe('configure Rspack', () => {
 
   it('should allow to use tools.bundlerChain to modify config', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         tools: {
           bundlerChain(chain) {
             chain.devtool('eval');
@@ -110,7 +110,7 @@ describe('configure Rspack', () => {
 
   it('should allow tools.bundlerChain to be an array', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         tools: {
           bundlerChain: [
             (chain) => {
@@ -130,7 +130,7 @@ describe('configure Rspack', () => {
 
   it('should expose HtmlWebpackPlugin instance via params', async () => {
     await createRsbuild({
-      rsbuildConfig: {
+      config: {
         tools: {
           rspack(_config, utils) {
             expect(utils.HtmlPlugin.version).toEqual(5);
@@ -142,7 +142,7 @@ describe('configure Rspack', () => {
 
   it('should allow to append and prepend plugins', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         tools: {
           rspack(_config, utils) {
             utils.appendPlugins([new utils.rspack.DefinePlugin({ foo: '1' })]);
@@ -165,7 +165,7 @@ describe('configure Rspack', () => {
 
   it('should allow to remove plugins', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         tools: {
           rspack(_config, utils) {
             utils.appendPlugins([new utils.rspack.DefinePlugin({ foo: '1' })]);
@@ -187,7 +187,7 @@ describe('configure Rspack', () => {
     };
 
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         tools: {
           rspack(_config, utils) {
             utils.addRules(newRule);
@@ -228,7 +228,7 @@ describe('configure Rspack', () => {
     const mergedConfig = mergeRsbuildConfig(config1, config2, config3);
 
     const rsbuildInstance = await createRsbuild({
-      rsbuildConfig: mergedConfig,
+      config: mergedConfig,
     });
     const config = await rsbuildInstance.initConfigs();
     const plugins = config[0].plugins || [];
@@ -294,7 +294,7 @@ describe('configure Rspack', () => {
     const mergedConfig = mergeRsbuildConfig(config1, config2, config3);
 
     const rsbuildInstance = await createRsbuild({
-      rsbuildConfig: mergedConfig,
+      config: mergedConfig,
     });
     const config = await rsbuildInstance.initConfigs();
     const rules = config[0].module?.rules || [];

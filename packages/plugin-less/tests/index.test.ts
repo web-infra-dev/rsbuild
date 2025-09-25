@@ -5,7 +5,7 @@ import { pluginLess } from '../src';
 describe('plugin-less', () => {
   it('should add less-loader', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         plugins: [pluginLess()],
       },
     });
@@ -16,7 +16,7 @@ describe('plugin-less', () => {
 
   it('should add less-loader and css-loader when injectStyles', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         plugins: [pluginLess()],
         output: {
           injectStyles: true,
@@ -30,7 +30,7 @@ describe('plugin-less', () => {
 
   it('should add less-loader with tools.less', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         plugins: [
           pluginLess({
             lessLoaderOptions: {
@@ -49,7 +49,7 @@ describe('plugin-less', () => {
 
   it('should add less-loader with excludes', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         plugins: [
           pluginLess({
             lessLoaderOptions(_config, { addExcludes }) {
@@ -75,7 +75,7 @@ describe('plugin-less', () => {
 
     const mockPlugin = new MockPlugin({ foo: 'bar' });
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         plugins: [
           pluginLess({
             lessLoaderOptions: {
@@ -95,7 +95,7 @@ describe('plugin-less', () => {
 
   it('should allow to add multiple less rules', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         plugins: [
           pluginLess({
             include: [/a\.less/, /b\.less/],
@@ -114,7 +114,7 @@ describe('plugin-less', () => {
 
   it('should be compatible with Rsbuild < 1.3.0', async () => {
     const rsbuild = await createRsbuild({
-      rsbuildConfig: {
+      config: {
         plugins: [
           {
             name: 'rsbuild-plugin-test',
