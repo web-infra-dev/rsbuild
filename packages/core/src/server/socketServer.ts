@@ -1,26 +1,15 @@
 import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
-import path from 'node:path';
-import { promisify } from 'node:util';
-import { parse as parseStack } from 'stacktrace-parser';
 import type Ws from '../../compiled/ws/index.js';
-import { JS_REGEX } from '../constants.js';
 import {
-  color,
   getAllStatsErrors,
   getAllStatsWarnings,
   getStatsOptions,
 } from '../helpers';
 import { formatStatsMessages } from '../helpers/format';
 import { logger } from '../logger';
-import type {
-  DevConfig,
-  EnvironmentContext,
-  InternalContext,
-  Rspack,
-} from '../types';
-import { getFileFromUrl } from './assets-middleware/getFileFromUrl.js';
-import type { OutputFileSystem } from './assets-middleware/index.js';
+import type { DevConfig, InternalContext, Rspack } from '../types';
+import { reportRuntimeError } from './browserLogs.js';
 import { genOverlayHTML } from './overlay';
 
 interface ExtWebSocket extends Ws {
@@ -78,108 +67,6 @@ export type ClientMessage = ClientMessagePing | ClientMessageRuntimeError;
 const parseQueryString = (req: IncomingMessage) => {
   const queryStr = req.url ? req.url.split('?')[1] : '';
   return queryStr ? Object.fromEntries(new URLSearchParams(queryStr)) : {};
-};
-
-async function mapSourceMapPosition(
-  rawSourceMap: string,
-  line: number,
-  column: number,
-) {
-  const { SourceMapConsumer } = await import(
-    '../../compiled/source-map/index.js'
-  );
-  const consumer = await new SourceMapConsumer(rawSourceMap);
-  const originalPosition = consumer.originalPositionFor({ line, column });
-  consumer.destroy();
-  return originalPosition;
-}
-
-/**
- * Resolve source filename and original position from runtime stack trace
- */
-const resolveSourceLocation = async (
-  stack: string,
-  fs: Rspack.OutputFileSystem,
-  environments: Record<string, EnvironmentContext>,
-) => {
-  const parsed = parseStack(stack);
-  if (!parsed.length) {
-    return;
-  }
-
-  // only parse JS files
-  const { file, column, lineNumber } = parsed[0];
-  if (
-    file === null ||
-    column === null ||
-    lineNumber === null ||
-    !JS_REGEX.test(file)
-  ) {
-    return;
-  }
-
-  const sourceMapInfo = getFileFromUrl(
-    `${file}.map`,
-    fs as OutputFileSystem,
-    environments,
-  );
-
-  if (!sourceMapInfo || 'errorCode' in sourceMapInfo) {
-    return;
-  }
-
-  const readFile = promisify(fs.readFile);
-  try {
-    const sourceMap = await readFile(sourceMapInfo.filename);
-    if (sourceMap) {
-      return await mapSourceMapPosition(
-        sourceMap.toString(),
-        lineNumber,
-        column,
-      );
-    }
-  } catch {}
-};
-
-const formatErrorLocation = async (
-  stack: string,
-  context: InternalContext,
-  fs: Rspack.OutputFileSystem,
-) => {
-  const parsed = await resolveSourceLocation(stack, fs, context.environments);
-
-  if (!parsed) {
-    return;
-  }
-
-  const { source, line, column } = parsed;
-  if (!source) {
-    return;
-  }
-
-  let rawLocation = path.relative(context.rootPath, source);
-  if (line !== null) {
-    rawLocation += column === null ? `:${line}` : `:${line}:${column}`;
-  }
-  return rawLocation;
-};
-
-/**
- * Handle runtime errors from browser
- */
-const onRuntimeError = async (
-  message: ClientMessageRuntimeError,
-  context: InternalContext,
-  fs: Rspack.OutputFileSystem,
-) => {
-  let log = `${color.cyan('[browser]')} ${color.red(message.message)}`;
-
-  if (message.stack) {
-    const rawLocation = await formatErrorLocation(message.stack, context, fs);
-    log += color.dim(` (${rawLocation})`);
-  }
-
-  logger.error(log);
 };
 
 export class SocketServer {
@@ -385,7 +272,7 @@ export class SocketServer {
         );
 
         if (message.type === 'runtime-error') {
-          onRuntimeError(message, this.context, this.getOutputFileSystem());
+          reportRuntimeError(message, this.context, this.getOutputFileSystem());
         }
       } catch {}
     });
