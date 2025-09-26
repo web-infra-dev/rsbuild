@@ -54,62 +54,50 @@ export function getFilenameFromUrl(
 
   for (const outputPath of getOutputPaths(context)) {
     let filename: string | undefined;
-    let publicPathObject: URL;
+
+    const { pathname } = urlObject;
+
+    // Return early to prevent null byte injection attacks
+    if (pathname.includes('\0')) {
+      extra.errorCode = 400;
+      return;
+    }
+
+    if (UP_PATH_REGEXP.test(path.normalize(`./${pathname}`))) {
+      extra.errorCode = 403;
+      return undefined;
+    }
+
+    filename = path.join(outputPath, pathname);
 
     try {
-      publicPathObject = memoizedParse('/', false, true) as URL;
+      extra.stats = (
+        context.outputFileSystem.statSync as (p: string) => FSStats
+      )(filename);
     } catch (_ignoreError) {
       continue;
     }
 
-    const { pathname } = urlObject;
-    const { pathname: publicPathPathname } = publicPathObject;
+    if (extra.stats.isFile()) {
+      foundFilename = filename;
+      break;
+    }
+    if (extra.stats.isDirectory()) {
+      const indexValue = 'index.html';
 
-    if (pathname?.startsWith(publicPathPathname)) {
-      if (pathname.includes('\u0000')) {
-        extra.errorCode = 400;
-        return undefined;
-      }
-
-      if (UP_PATH_REGEXP.test(path.normalize(`./${pathname}`))) {
-        extra.errorCode = 403;
-        return undefined;
-      }
-
-      filename = path.join(
-        outputPath,
-        pathname.slice(publicPathPathname.length),
-      );
+      filename = path.join(filename, indexValue);
 
       try {
         extra.stats = (
           context.outputFileSystem.statSync as (p: string) => FSStats
         )(filename);
-      } catch (_ignoreError) {
+      } catch (__ignoreError) {
         continue;
       }
 
       if (extra.stats.isFile()) {
         foundFilename = filename;
         break;
-      }
-      if (extra.stats.isDirectory()) {
-        const indexValue = 'index.html';
-
-        filename = path.join(filename, indexValue);
-
-        try {
-          extra.stats = (
-            context.outputFileSystem.statSync as (p: string) => FSStats
-          )(filename);
-        } catch (__ignoreError) {
-          continue;
-        }
-
-        if (extra.stats.isFile()) {
-          foundFilename = filename;
-          break;
-        }
       }
     }
   }
