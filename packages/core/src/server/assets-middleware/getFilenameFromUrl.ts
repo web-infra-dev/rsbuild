@@ -48,14 +48,17 @@ export function getFilenameFromUrl(
 
   try {
     urlObject = memoizedParse(url, false, true) as URL;
-  } catch (_ignoreError) {
-    return undefined;
+  } catch {
+    return;
   }
 
   for (const outputPath of getOutputPaths(context)) {
     let filename: string | undefined;
 
     const { pathname } = urlObject;
+    if (!pathname) {
+      continue;
+    }
 
     // Return early to prevent null byte injection attacks
     if (pathname.includes('\0')) {
@@ -65,7 +68,7 @@ export function getFilenameFromUrl(
 
     if (UP_PATH_REGEXP.test(path.normalize(`./${pathname}`))) {
       extra.errorCode = 403;
-      return undefined;
+      return;
     }
 
     filename = path.join(outputPath, pathname);
