@@ -6,7 +6,6 @@ Promise.reject('string');
 Promise.reject({ name: 'Custom', message: 'custom message' });
 Promise.reject(new Error('reason'));
 Promise.reject(new DOMException('Aborted', 'AbortError'));
-Promise.any([Promise.reject(new Error('A')), Promise.reject('B')]);
 
 (async () => {
   throw new Error('Thrown in async');

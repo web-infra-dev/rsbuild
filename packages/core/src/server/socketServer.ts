@@ -2,14 +2,14 @@ import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
 import type Ws from '../../compiled/ws/index.js';
 import {
-  color,
   getAllStatsErrors,
   getAllStatsWarnings,
   getStatsOptions,
 } from '../helpers';
 import { formatStatsMessages } from '../helpers/format';
 import { logger } from '../logger';
-import type { DevConfig, EnvironmentContext, Rspack } from '../types';
+import type { DevConfig, InternalContext, Rspack } from '../types';
+import { reportRuntimeError } from './browserLogs';
 import { genOverlayHTML } from './overlay';
 
 interface ExtWebSocket extends Ws {
@@ -48,6 +48,7 @@ export type SocketMessageErrors = {
 export type ClientMessageRuntimeError = {
   type: 'runtime-error';
   message: string;
+  stack?: string;
 };
 
 export type ClientMessagePing = {
@@ -75,22 +76,26 @@ export class SocketServer {
 
   private readonly options: DevConfig;
 
+  private readonly context: InternalContext;
+
   private stats: Record<string, Rspack.Stats>;
 
   private initialChunks: Record<string, Set<string>>;
 
   private heartbeatTimer: NodeJS.Timeout | null = null;
 
-  private environments: Record<string, EnvironmentContext>;
+  private getOutputFileSystem: () => Rspack.OutputFileSystem;
 
   constructor(
+    context: InternalContext,
     options: DevConfig,
-    environments: Record<string, EnvironmentContext>,
+    getOutputFileSystem: () => Rspack.OutputFileSystem,
   ) {
     this.options = options;
     this.stats = {};
     this.initialChunks = {};
-    this.environments = environments;
+    this.context = context;
+    this.getOutputFileSystem = getOutputFileSystem;
   }
 
   // subscribe upgrade event to handle socket
@@ -104,7 +109,7 @@ export class SocketServer {
     }
 
     const query = parseQueryString(req);
-    const tokens = Object.values(this.environments).map(
+    const tokens = Object.values(this.context.environments).map(
       (env) => env.webSocketToken,
     );
 
@@ -266,11 +271,8 @@ export class SocketServer {
           typeof data === 'string' ? data : data.toString(),
         );
 
-        // Handle runtime errors from browser
         if (message.type === 'runtime-error') {
-          logger.error(
-            `${color.cyan('[browser]')} ${color.red(message.message)}`,
-          );
+          reportRuntimeError(message, this.context, this.getOutputFileSystem());
         }
       } catch {}
     });

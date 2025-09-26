@@ -243,10 +243,11 @@ function onSocketError() {
 
 const errorMessages: ClientMessageRuntimeError[] = [];
 
-function sendRuntimeError(message: string) {
+function sendRuntimeError(message: string, stack?: string) {
   const messageInfo: ClientMessageRuntimeError = {
     type: 'runtime-error',
     message,
+    stack,
   };
   if (isSocketReady()) {
     socketSend(messageInfo);
@@ -257,11 +258,13 @@ function sendRuntimeError(message: string) {
 
 function onUnhandledRejection({ reason }: PromiseRejectionEvent) {
   let message: string;
+  let stack: string | undefined;
 
   if (reason instanceof Error) {
     message = reason.name
       ? `${reason.name}: ${reason.message}`
       : reason.message;
+    stack = reason.stack;
   } else if (typeof reason === 'string') {
     message = reason;
   } else {
@@ -272,7 +275,7 @@ function onUnhandledRejection({ reason }: PromiseRejectionEvent) {
     }
   }
 
-  sendRuntimeError(`Uncaught (in promise) ${message}`);
+  sendRuntimeError(`Uncaught (in promise) ${message}`, stack);
 }
 
 // Establishing a WebSocket connection with the server.
@@ -312,7 +315,10 @@ function reloadPage() {
 
 if (RSBUILD_DEV_BROWSER_LOGS && typeof window !== 'undefined') {
   window.addEventListener('error', (event) => {
-    sendRuntimeError(event.message);
+    sendRuntimeError(
+      event.message,
+      event.error instanceof Error ? event.error.stack : undefined,
+    );
   });
   window.addEventListener('unhandledrejection', onUnhandledRejection);
 }

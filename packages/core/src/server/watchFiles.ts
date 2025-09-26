@@ -1,5 +1,5 @@
 import type { FSWatcher } from '../../compiled/chokidar/index.js';
-import { normalizePublicDirs } from '../defaultConfig.js';
+import { normalizePublicDirs } from '../defaultConfig';
 import { castArray } from '../helpers';
 import type {
   ChokidarOptions,
@@ -8,7 +8,7 @@ import type {
   ServerConfig,
   WatchFiles,
 } from '../types';
-import type { BuildManager } from './buildManager.js';
+import type { BuildManager } from './buildManager';
 
 type WatchFilesOptions = {
   root: string;

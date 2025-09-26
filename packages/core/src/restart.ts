@@ -3,7 +3,7 @@ import type { ChokidarOptions } from '../compiled/chokidar/index.js';
 import { init } from './cli/init';
 import { color, isTTY } from './helpers';
 import { logger } from './logger';
-import { createChokidar } from './server/watchFiles.js';
+import { createChokidar } from './server/watchFiles';
 import type { RsbuildInstance } from './types';
 
 type Cleaner = () => unknown;

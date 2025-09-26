@@ -23,6 +23,7 @@ export default {
     'connect',
     'rspack-manifest-plugin',
     'html-rspack-plugin',
+    'source-map',
     'mrmime',
     'memfs',
     'tinyglobby',
