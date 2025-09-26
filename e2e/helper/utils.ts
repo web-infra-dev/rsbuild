@@ -16,9 +16,9 @@ import { expect } from './fixture';
 /**
  * Build an URL based on the entry name and port
  */
-export const buildEntryUrl = (pathname: string, port: number) => {
+export const buildEntryUrl = (entryName: string, port: number) => {
   const htmlRoot = new URL(`http://localhost:${port}`);
-  const homeUrl = new URL(pathname, htmlRoot);
+  const homeUrl = new URL(`${entryName}.html`, htmlRoot);
   return homeUrl.href;
 };
 
@@ -29,8 +29,9 @@ export const gotoPage = async (
   page: Page,
   rsbuild: { port: number },
   path = 'index',
+  { hash = '' } = {},
 ) => {
-  const url = buildEntryUrl(path, rsbuild.port);
+  const url = `${buildEntryUrl(path, rsbuild.port)}${hash ? `#${hash}` : ''}`;
   return page.goto(url);
 };
 
