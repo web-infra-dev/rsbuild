@@ -12,8 +12,8 @@ import type {
   NormalizedConfig,
   Rspack,
 } from '../types';
+import { BuildManager } from './buildManager';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
-import { CompilationManager } from './compilationManager';
 import {
   type GetDevMiddlewaresResult,
   getDevMiddlewares,
@@ -179,7 +179,7 @@ export async function createDevServer<
     }
   });
 
-  const startCompile: () => Promise<CompilationManager> = async () => {
+  const startCompile: () => Promise<BuildManager> = async () => {
     const compiler = customCompiler || (await createCompiler());
 
     if (!compiler) {
@@ -196,8 +196,7 @@ export async function createDevServer<
       ? compiler.compilers.map(getPublicPathFromCompiler)
       : [getPublicPathFromCompiler(compiler)];
 
-    // create dev middleware instance
-    const compilationManager = new CompilationManager({
+    const buildManager = new BuildManager({
       config,
       compiler,
       publicPaths: publicPaths,
@@ -205,9 +204,9 @@ export async function createDevServer<
       environments: context.environments,
     });
 
-    await compilationManager.init();
+    await buildManager.init();
 
-    return compilationManager;
+    return buildManager;
   };
 
   const protocol = https ? 'https' : 'http';
@@ -297,7 +296,7 @@ export async function createDevServer<
         name,
         {
           getStats: async () => {
-            if (!compilationManager) {
+            if (!buildManager) {
               throw new Error(
                 `${color.dim('[rsbuild:server]')} Can not call ` +
                   `${color.yellow('getStats')} when ` +
@@ -309,7 +308,7 @@ export async function createDevServer<
           },
           context: environment,
           loadBundle: async <T>(entryName: string) => {
-            if (!compilationManager) {
+            if (!buildManager) {
               throw new Error(
                 `${color.dim('[rsbuild:server]')} Can not call ` +
                   `${color.yellow('loadBundle')} when ` +
@@ -321,13 +320,13 @@ export async function createDevServer<
               lastStats[environment.index],
               entryName,
               {
-                readFileSync: compilationManager.readFileSync,
+                readFileSync: buildManager.readFileSync,
                 environment,
               },
             ) as T;
           },
           getTransformedHtml: async (entryName: string) => {
-            if (!compilationManager) {
+            if (!buildManager) {
               throw new Error(
                 `${color.dim('[rsbuild:server]')} Can not call ` +
                   `${color.yellow('getTransformedHtml')} when ` +
@@ -339,7 +338,7 @@ export async function createDevServer<
               lastStats[environment.index],
               entryName,
               {
-                readFileSync: compilationManager.readFileSync,
+                readFileSync: buildManager.readFileSync,
                 environment,
               },
             );
@@ -360,7 +359,7 @@ export async function createDevServer<
       });
 
   const sockWrite: SockWrite = (type, data) =>
-    compilationManager?.socketServer.sockWrite({
+    buildManager?.socketServer.sockWrite({
       type,
       data,
     } as SocketMessage);
@@ -455,17 +454,17 @@ export async function createDevServer<
     await beforeCreateCompiler();
   }
 
-  const compilationManager = runCompile ? await startCompile() : undefined;
+  const buildManager = runCompile ? await startCompile() : undefined;
 
   fileWatcher = await setupWatchFiles({
     config,
-    compilationManager,
+    buildManager,
     root,
   });
 
   devMiddlewares = await getDevMiddlewares({
     pwd: root,
-    compilationManager,
+    buildManager,
     config,
     devServerAPI,
     context,
@@ -481,7 +480,7 @@ export async function createDevServer<
   }
 
   // start watching
-  compilationManager?.watch();
+  buildManager?.watch();
 
   logger.debug('create dev server done');
 

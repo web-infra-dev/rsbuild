@@ -9,7 +9,7 @@ import type {
   RequestHandler,
   SetupMiddlewaresContext,
 } from '../types';
-import type { CompilationManager } from './compilationManager';
+import type { BuildManager } from './buildManager';
 import type { RsbuildDevServer } from './devServer';
 import { gzipMiddleware } from './gzipMiddleware';
 import type { UpgradeEvent } from './helper';
@@ -27,7 +27,7 @@ import { createProxyMiddleware } from './proxy';
 export type RsbuildDevMiddlewareOptions = {
   config: NormalizedConfig;
   context: InternalContext;
-  compilationManager?: CompilationManager;
+  buildManager?: BuildManager;
   devServerAPI: RsbuildDevServer;
   /**
    * Callbacks returned by the `onBeforeStartDevServer` hook.
@@ -67,7 +67,7 @@ export type Middlewares = (RequestHandler | [string, RequestHandler])[];
 
 const applyDefaultMiddlewares = async ({
   config,
-  compilationManager,
+  buildManager,
   context,
   devServerAPI,
   middlewares,
@@ -127,9 +127,9 @@ const applyDefaultMiddlewares = async ({
   if (
     context.action === 'dev' &&
     context.bundlerType === 'rspack' &&
-    compilationManager
+    buildManager
   ) {
-    const { compiler } = compilationManager;
+    const { compiler } = buildManager;
 
     // We check the compiler options to determine whether lazy compilation is enabled.
     // Rsbuild users can enable lazy compilation in two ways:
@@ -174,11 +174,11 @@ const applyDefaultMiddlewares = async ({
     }),
   );
 
-  if (compilationManager) {
-    middlewares.push(compilationManager.middleware);
+  if (buildManager) {
+    middlewares.push(buildManager.middleware);
 
     // subscribe upgrade event to handle websocket
-    upgradeEvents.push(compilationManager.socketServer.upgrade);
+    upgradeEvents.push(buildManager.socketServer.upgrade);
 
     middlewares.push((req, res, next) => {
       // [prevFullHash].hot-update.json will 404 (expected) when rsbuild restart and some file changed
@@ -191,10 +191,10 @@ const applyDefaultMiddlewares = async ({
     });
   }
 
-  if (compilationManager) {
+  if (buildManager) {
     middlewares.push(
       getHtmlCompletionMiddleware({
-        compilationManager,
+        buildManager,
         distPath: context.distPath,
       }),
     );
@@ -223,10 +223,10 @@ const applyDefaultMiddlewares = async ({
     callback();
   }
 
-  if (compilationManager) {
+  if (buildManager) {
     middlewares.push(
       getHtmlFallbackMiddleware({
-        compilationManager,
+        buildManager,
         distPath: context.distPath,
         htmlFallback: server.htmlFallback,
       }),
@@ -241,8 +241,8 @@ const applyDefaultMiddlewares = async ({
     );
 
     // ensure fallback request can be handled by compilation middleware
-    if (compilationManager?.middleware) {
-      middlewares.push(compilationManager.middleware);
+    if (buildManager?.middleware) {
+      middlewares.push(buildManager.middleware);
     }
   }
 
@@ -267,7 +267,7 @@ export const getDevMiddlewares = async (
   options: RsbuildDevMiddlewareOptions,
 ): Promise<GetDevMiddlewaresResult> => {
   const middlewares: Middlewares = [];
-  const { compilationManager } = options;
+  const { buildManager } = options;
 
   if (logger.level === 'verbose') {
     middlewares.push(getRequestLoggerMiddleware());
@@ -290,7 +290,7 @@ export const getDevMiddlewares = async (
 
   return {
     close: async () => {
-      await compilationManager?.close();
+      await buildManager?.close();
     },
     onUpgrade,
     middlewares,

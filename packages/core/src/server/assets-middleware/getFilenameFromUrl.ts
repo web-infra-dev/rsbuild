@@ -2,8 +2,8 @@ import type { Stats } from 'node:fs';
 import * as path from 'node:path';
 import { unescape as qsUnescape } from 'node:querystring';
 import { parse } from 'node:url';
-import type { FilledContext } from '../index';
 import { getPaths } from './getPaths';
+import type { FilledContext } from './index';
 import { memorize } from './memorize';
 
 export type Extra = {

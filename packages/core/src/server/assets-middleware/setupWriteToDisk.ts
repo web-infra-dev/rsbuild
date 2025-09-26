@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import type { Compilation } from '@rspack/core';
+import type { Compilation, Compiler } from '@rspack/core';
 import { logger } from '../../logger';
-import type { Context, WithOptional } from '../index';
+import type { Options } from './index';
 
 declare module '@rspack/core' {
   interface Compiler {
@@ -11,10 +11,9 @@ declare module '@rspack/core' {
 }
 
 export function setupWriteToDisk(
-  context: WithOptional<Context, 'watching' | 'outputFileSystem'>,
+  compilers: Compiler[],
+  options: Options,
 ): void {
-  const { compilers } = context;
-
   for (const compiler of compilers) {
     compiler.hooks.emit.tap('DevMiddleware', () => {
       if (compiler.__hasRsbuildAssetEmittedCallback) {
@@ -33,7 +32,7 @@ export function setupWriteToDisk(
           callback: (err?: Error) => void,
         ) => {
           const { targetPath, content, compilation } = info;
-          const { writeToDisk: filter } = context.options;
+          const { writeToDisk: filter } = options;
           const allowWrite =
             filter && typeof filter === 'function'
               ? filter(targetPath, compilation.name)
@@ -55,7 +54,7 @@ export function setupWriteToDisk(
             (mkdirError: NodeJS.ErrnoException | null) => {
               if (mkdirError) {
                 logger.error(
-                  `[rsbuild-dev-middleware] ${name}Unable to write "${dir}" directory to disk:\n${mkdirError.message}`,
+                  `[rsbuild:middleware] ${name}Unable to write "${dir}" directory to disk:\n${mkdirError.message}`,
                 );
 
                 callback(mkdirError);
@@ -68,7 +67,7 @@ export function setupWriteToDisk(
                 (writeFileError: NodeJS.ErrnoException | null) => {
                   if (writeFileError) {
                     logger.error(
-                      `[rsbuild-dev-middleware] ${name}Unable to write "${targetPath}" asset to disk:\n${writeFileError.message}`,
+                      `[rsbuild:middleware] ${name}Unable to write "${targetPath}" asset to disk:\n${writeFileError.message}`,
                     );
 
                     callback(writeFileError);

@@ -2,7 +2,7 @@ import type {
   Compiler,
   OutputFileSystem as RspackOutputFileSystem,
 } from '@rspack/core';
-import type { Options, OutputFileSystem } from '../index';
+import type { Options, OutputFileSystem } from './index';
 
 export async function setupOutputFileSystem(
   options: Options,

@@ -2,14 +2,21 @@ import type { Stats as FSStats, ReadStream } from 'node:fs';
 import onFinished from 'on-finished';
 import type { Range, Result as RangeResult, Ranges } from 'range-parser';
 import rangeParser from 'range-parser';
-import { logger } from '../logger';
-import type { RequestHandler } from '../types';
+import { logger } from '../../logger';
+import type { RequestHandler } from '../../types';
+import { escapeHtml } from './escapeHtml';
+import { type Extra, getFilenameFromUrl } from './getFilenameFromUrl';
 import type { FilledContext, ServerResponse } from './index';
-import { escapeHtml } from './utils/escapeHtml';
-import { getFilenameFromUrl } from './utils/getFilenameFromUrl';
-import { memorize } from './utils/memorize';
-import { parseTokenList } from './utils/parseTokenList';
-import { ready } from './utils/ready';
+import { memorize } from './memorize';
+import { parseTokenList } from './parseTokenList';
+
+export function ready(context: FilledContext, callback: () => void): void {
+  if (context.stats) {
+    callback();
+    return;
+  }
+  context.callbacks.push(callback);
+}
 
 function getEtag(stat: FSStats): string {
   const mtime = stat.mtime.getTime().toString(16);
@@ -38,7 +45,7 @@ function createReadStreamOrReadFileSync(
 }
 
 async function getContentType(str: string): Promise<false | string> {
-  const { lookup } = await import('../../compiled/mrmime/index.js');
+  const { lookup } = await import('../../../compiled/mrmime/index.js');
   let mime = lookup(str);
   if (!mime) {
     return false;
@@ -319,14 +326,12 @@ export function wrapper(context: FilledContext): RequestHandler {
     }
 
     async function processRequest() {
-      const extra: import('./utils/getFilenameFromUrl').Extra = {};
+      const extra: Extra = {};
       const filename = getFilenameFromUrl(context, req.url!, extra);
 
       if (extra.errorCode) {
         if (extra.errorCode === 403) {
-          logger.error(
-            `[rsbuild-dev-middleware] Malicious path "${filename}".`,
-          );
+          logger.error(`[rsbuild:middleware] Malicious path "${filename}".`);
         }
         sendError(extra.errorCode);
         return;
@@ -403,7 +408,7 @@ export function wrapper(context: FilledContext): RequestHandler {
 
         if (parsedRanges === -1) {
           logger.error(
-            "[rsbuild-dev-middleware] Unsatisfiable range for 'Range' header.",
+            "[rsbuild:middleware] Unsatisfiable range for 'Range' header.",
           );
 
           res.setHeader(
@@ -420,11 +425,11 @@ export function wrapper(context: FilledContext): RequestHandler {
         }
         if (parsedRanges === -2) {
           logger.error(
-            "[rsbuild-dev-middleware] A malformed 'Range' header was provided. A regular response will be sent for this request.",
+            "[rsbuild:middleware] A malformed 'Range' header was provided. A regular response will be sent for this request.",
           );
         } else if (parsedRanges.length > 1) {
           logger.error(
-            "[rsbuild-dev-middleware] A 'Range' header with multiple ranges was provided. Multiple ranges are not supported, so a regular response will be sent for this request.",
+            "[rsbuild:middleware] A 'Range' header with multiple ranges was provided. Multiple ranges are not supported, so a regular response will be sent for this request.",
           );
         }
 
