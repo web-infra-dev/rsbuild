@@ -16,9 +16,9 @@ import { expect } from './fixture';
 /**
  * Build an URL based on the entry name and port
  */
-export const buildEntryUrl = (entryName: string, port: number) => {
+export const buildEntryUrl = (pathname: string, port: number) => {
   const htmlRoot = new URL(`http://localhost:${port}`);
-  const homeUrl = new URL(`${entryName}.html`, htmlRoot);
+  const homeUrl = new URL(pathname, htmlRoot);
   return homeUrl.href;
 };
 

@@ -109,6 +109,8 @@ const formatErrorLocation = async (
   return rawLocation;
 };
 
+let lastRuntimeErrorLog: string;
+
 /**
  * Processes runtime errors received from the browser and logs them with
  * source location information.
@@ -127,5 +129,11 @@ export const reportRuntimeError = async (
     }
   }
 
+  // Avoid outputting the same log consecutively
+  if (log === lastRuntimeErrorLog) {
+    return;
+  }
+
   logger.error(log);
+  lastRuntimeErrorLog = log;
 };
