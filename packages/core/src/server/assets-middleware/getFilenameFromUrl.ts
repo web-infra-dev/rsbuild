@@ -1,15 +1,27 @@
-import type { Stats } from 'node:fs';
+import type { Stats as FSStats } from 'node:fs';
 import * as path from 'node:path';
 import { unescape as qsUnescape } from 'node:querystring';
 import { parse } from 'node:url';
-import { getPaths } from './getPaths';
+import type { Stats } from '@rspack/core';
 import type { FilledContext } from './index';
 import { memorize } from './memorize';
 
 export type Extra = {
-  stats?: Stats;
+  stats?: FSStats;
   errorCode?: number;
 };
+
+export function getOutputPaths(context: FilledContext): string[] {
+  const { stats } = context;
+  if (!stats) {
+    return [];
+  }
+
+  const childStats: Stats[] = 'stats' in stats ? stats.stats : [stats];
+  return childStats.map(
+    ({ compilation }) => compilation.outputOptions.path || '',
+  );
+}
 
 // TODO: type the cache options instead of using any for the second parameter
 const memoizedParse = memorize(parse, undefined, (value: any) => {
@@ -31,11 +43,6 @@ export function getFilenameFromUrl(
   url: string,
   extra: Extra = {},
 ): string | undefined {
-  const paths = getPaths(context) as {
-    publicPath: string | undefined;
-    outputPath: string;
-  }[];
-
   let foundFilename: string | undefined;
   let urlObject: URL;
 
@@ -45,16 +52,12 @@ export function getFilenameFromUrl(
     return undefined;
   }
 
-  for (const { publicPath, outputPath } of paths) {
+  for (const outputPath of getOutputPaths(context)) {
     let filename: string | undefined;
     let publicPathObject: URL;
 
     try {
-      publicPathObject = memoizedParse(
-        publicPath !== 'auto' && publicPath ? publicPath : '/',
-        false,
-        true,
-      ) as URL;
+      publicPathObject = memoizedParse('/', false, true) as URL;
     } catch (_ignoreError) {
       continue;
     }
@@ -80,7 +83,7 @@ export function getFilenameFromUrl(
 
       try {
         extra.stats = (
-          context.outputFileSystem.statSync as (p: string) => Stats
+          context.outputFileSystem.statSync as (p: string) => FSStats
         )(filename);
       } catch (_ignoreError) {
         continue;
@@ -97,7 +100,7 @@ export function getFilenameFromUrl(
 
         try {
           extra.stats = (
-            context.outputFileSystem.statSync as (p: string) => Stats
+            context.outputFileSystem.statSync as (p: string) => FSStats
           )(filename);
         } catch (__ignoreError) {
           continue;

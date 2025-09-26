@@ -1,12 +1,10 @@
 import fs from 'node:fs';
-import type { Stats } from '@rspack/core';
 import { isMultiCompiler } from '../helpers';
 import { getPathnameFromUrl } from '../helpers/path';
 import type { EnvironmentContext, NormalizedConfig, Rspack } from '../types';
 import {
   type AssetsMiddleware,
   getAssetsMiddleware,
-  type ServerCallbacks,
 } from './assets-middleware';
 import { stripBase } from './helper';
 import { SocketServer } from './socketServer';
@@ -112,23 +110,10 @@ export class BuildManager {
   private async setupCompilationMiddleware(): Promise<void> {
     const { config, publicPaths, environments } = this;
 
-    const callbacks: ServerCallbacks = {
-      onInvalid: (token: string, fileName?: string | null) => {
-        // reload page when HTML template changed
-        if (typeof fileName === 'string' && fileName.endsWith('.html')) {
-          this.socketServer.sockWrite({ type: 'static-changed' }, token);
-          return;
-        }
-      },
-      onDone: (token: string, stats: Stats) => {
-        this.socketServer.updateStats(stats, token);
-      },
-    };
-
     const middleware = await getAssetsMiddleware({
       config,
       compiler: this.compiler,
-      callbacks,
+      socketServer: this.socketServer,
       environments,
       resolvedPort: this.resolvedPort,
     });

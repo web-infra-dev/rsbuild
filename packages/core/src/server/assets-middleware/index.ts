@@ -11,7 +11,6 @@ import type { ServerResponse as NodeServerResponse } from 'node:http';
 import { createRequire } from 'node:module';
 import type {
   Compiler,
-  Configuration,
   MultiCompiler,
   MultiStats,
   Stats,
@@ -28,6 +27,7 @@ import type {
   WriteToDisk,
 } from '../../types';
 import { resolveHostname } from './../hmrFallback';
+import type { SocketServer } from '../socketServer';
 import { wrapper as createMiddleware } from './middleware';
 import { setupHooks } from './setupHooks';
 import { setupOutputFileSystem } from './setupOutputFileSystem';
@@ -56,13 +56,11 @@ export type Options = {
   writeToDisk?:
     | boolean
     | ((targetPath: string, compilationName?: string) => boolean);
-  publicPath?: NonNullable<Configuration['output']>['publicPath'];
 };
 
 export type Context = {
   stats: Stats | MultiStats | undefined;
   callbacks: (() => void)[];
-  options: Options;
   watching: Watching | MultiWatching | undefined;
   outputFileSystem: OutputFileSystem;
 };
@@ -82,13 +80,12 @@ export type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<T>;
 
 export async function assetsMiddleware(
   compiler: Compiler | MultiCompiler,
-  options: Options = {},
+  options: Options,
 ): Promise<AssetsMiddleware> {
   const compilers = isMultiCompiler(compiler) ? compiler.compilers : [compiler];
   const context: WithOptional<Context, 'watching' | 'outputFileSystem'> = {
     stats: undefined,
     callbacks: [],
-    options,
   };
 
   setupHooks(context, compiler);
@@ -192,35 +189,31 @@ const isNodeCompiler = (compiler: {
   return false;
 };
 
-export type ServerCallbacks = {
-  onInvalid: (token: string, fileName?: string | null) => void;
-  onDone: (token: string, stats: Stats) => void;
-};
-
 export const setupServerHooks = ({
   compiler,
   token,
-  callbacks: { onDone, onInvalid },
+  socketServer,
 }: {
   compiler: Compiler;
   token: string;
-  callbacks: ServerCallbacks;
+  socketServer: SocketServer;
 }): void => {
   // TODO: node SSR HMR is not supported yet
   if (isNodeCompiler(compiler)) {
     return;
   }
 
-  const { compile, invalid, done } = compiler.hooks;
+  const { invalid, done } = compiler.hooks;
 
-  compile.tap('rsbuild-dev-server', () => {
-    onInvalid(token);
-  });
   invalid.tap('rsbuild-dev-server', (fileName) => {
-    onInvalid(token, fileName);
+    // reload page when HTML template changed
+    if (typeof fileName === 'string' && fileName.endsWith('.html')) {
+      socketServer.sockWrite({ type: 'static-changed' }, token);
+      return;
+    }
   });
   done.tap('rsbuild-dev-server', (stats) => {
-    onDone(token, stats);
+    socketServer.updateStats(stats, token);
   });
 };
 
@@ -303,16 +296,13 @@ const resolveWriteToDiskConfig = (
 export const getAssetsMiddleware = async ({
   config,
   compiler,
-  callbacks,
+  socketServer,
   environments,
   resolvedPort,
 }: {
   config: NormalizedConfig;
   compiler: Compiler | MultiCompiler;
-  /**
-   * Should trigger when compiler hook called
-   */
-  callbacks: ServerCallbacks;
+  socketServer: SocketServer;
   environments: Record<string, EnvironmentContext>;
   resolvedPort: number;
 }): Promise<AssetsMiddleware> => {
@@ -342,7 +332,7 @@ export const getAssetsMiddleware = async ({
     // register hooks for each compilation, update socket stats if recompiled
     setupServerHooks({
       compiler,
-      callbacks,
+      socketServer,
       token,
     });
   };
@@ -350,7 +340,6 @@ export const getAssetsMiddleware = async ({
   applyToCompiler(compiler, setupCompiler);
 
   return assetsMiddleware(compiler, {
-    publicPath: '/',
     writeToDisk: resolveWriteToDiskConfig(config.dev, environments),
   });
 };
