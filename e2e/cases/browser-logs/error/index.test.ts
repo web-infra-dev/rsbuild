@@ -1,7 +1,7 @@
 import { test } from '@e2e/helper';
 
 const EXPECTED_LOG =
-  'error   [browser] Uncaught Error: test (src/index.js:1:0)';
+  /error\s+\[browser\] Uncaught Error: test (src[\\/]index.js:1:0)/;
 
 test('should forward browser error logs to terminal by default', async ({
   dev,
