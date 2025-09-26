@@ -29,8 +29,9 @@ export const gotoPage = async (
   page: Page,
   rsbuild: { port: number },
   path = 'index',
+  { hash = '' } = {},
 ) => {
-  const url = buildEntryUrl(path, rsbuild.port);
+  const url = `${buildEntryUrl(path, rsbuild.port)}${hash ? `#${hash}` : ''}`;
   return page.goto(url);
 };
 
