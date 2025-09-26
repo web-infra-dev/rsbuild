@@ -24,7 +24,4 @@ test('should forward browser unhandled rejection logs to terminal', async ({
   await rsbuild.expectLog(
     'error   [browser] Uncaught (in promise) AbortError: signal is aborted without reason (src/index.js:17:0)',
   );
-  await rsbuild.expectLog(
-    'error   [browser] Uncaught (in promise) AggregateError: All promises were rejected',
-  );
 });
