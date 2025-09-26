@@ -2,25 +2,38 @@ import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import type { ConsoleType } from '@rsbuild/core';
 import color from 'picocolors';
 import { BUILD_END_LOG } from './constants';
+import { toPosixPath } from './utils';
 
 type LogPattern = string | RegExp | ((log: string) => boolean);
 
-type MatchPatternOptions = { strict?: boolean };
+type MatchPatternOptions = {
+  /**
+   * Whether to use exact line matching instead of substring matching
+   * @default false
+   */
+  strict?: boolean;
+  /**
+   * Whether to convert file paths to POSIX format before matching
+   * @default false
+   */
+  posix?: boolean;
+};
 
 const matchPattern = (
   log: string,
   pattern: LogPattern,
   options: MatchPatternOptions = {},
 ) => {
+  const logToCheck = options.posix ? toPosixPath(log) : log;
   if (typeof pattern === 'string') {
     return options.strict
-      ? log.split('\n').some((line) => line.trim() === pattern.trim())
-      : log.includes(pattern);
+      ? logToCheck.split('\n').some((line) => line.trim() === pattern.trim())
+      : logToCheck.includes(pattern);
   }
   if (pattern instanceof RegExp) {
-    return pattern.test(log);
+    return pattern.test(logToCheck);
   }
-  return pattern(log);
+  return pattern(logToCheck);
 };
 
 export const createLogHelper = () => {
@@ -84,8 +97,11 @@ export const createLogHelper = () => {
     });
   };
 
-  const expectNoLog = (pattern: LogPattern) => {
-    return !logs.some((log) => matchPattern(log, pattern));
+  const expectNoLog = (
+    pattern: LogPattern,
+    options: MatchPatternOptions = {},
+  ) => {
+    return !logs.some((log) => matchPattern(log, pattern, options));
   };
 
   const expectBuildEnd = async () => expectLog(BUILD_END_LOG);
