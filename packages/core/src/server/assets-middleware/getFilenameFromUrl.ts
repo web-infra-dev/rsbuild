@@ -77,7 +77,7 @@ export function getFilenameFromUrl(
       extra.stats = (
         context.outputFileSystem.statSync as (p: string) => FSStats
       )(filename);
-    } catch (_ignoreError) {
+    } catch {
       continue;
     }
 
@@ -92,7 +92,7 @@ export function getFilenameFromUrl(
         extra.stats = (
           context.outputFileSystem.statSync as (p: string) => FSStats
         )(filename);
-      } catch (__ignoreError) {
+      } catch {
         continue;
       }
 

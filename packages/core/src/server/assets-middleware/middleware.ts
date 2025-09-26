@@ -455,7 +455,7 @@ export function wrapper(context: FilledContext): RequestHandler {
           start,
           end,
         ));
-      } catch (_ignoreError) {
+      } catch {
         await goNext();
         return;
       }
