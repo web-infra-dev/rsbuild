@@ -732,6 +732,9 @@ importers:
       sirv:
         specifier: ^3.0.2
         version: 3.0.2
+      source-map:
+        specifier: ^0.7.6
+        version: 0.7.6
       stacktrace-parser:
         specifier: ^0.1.11
         version: 0.1.11
