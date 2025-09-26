@@ -1,17 +1,17 @@
 import fs from 'node:fs';
 import { isMultiCompiler } from '../helpers';
 import { getPathnameFromUrl } from '../helpers/path';
-import type { EnvironmentContext, NormalizedConfig, Rspack } from '../types';
+import type { InternalContext, NormalizedConfig, Rspack } from '../types';
 import { type AssetsMiddleware, assetsMiddleware } from './assets-middleware';
 import { stripBase } from './helper';
 import { SocketServer } from './socketServer';
 
 type Options = {
+  context: InternalContext;
   config: NormalizedConfig;
   compiler: Rspack.Compiler | Rspack.MultiCompiler;
   publicPaths: string[];
   resolvedPort: number;
-  environments: Record<string, EnvironmentContext>;
 };
 
 /**
@@ -24,35 +24,39 @@ export class BuildManager {
 
   public outputFileSystem: Rspack.OutputFileSystem;
 
-  // biome-ignore lint/correctness/noUnusedPrivateClassMembers: Biome bug
-  private config: NormalizedConfig;
+  public socketServer: SocketServer;
 
   public compiler: Rspack.Compiler | Rspack.MultiCompiler;
 
   // biome-ignore lint/correctness/noUnusedPrivateClassMembers: Biome bug
-  private environments: Record<string, EnvironmentContext>;
+  private config: NormalizedConfig;
 
   // biome-ignore lint/correctness/noUnusedPrivateClassMembers: Biome bug
   private publicPaths: string[];
 
-  public socketServer: SocketServer;
-
   private resolvedPort: number;
+
+  // biome-ignore lint/correctness/noUnusedPrivateClassMembers: Biome bug
+  private context: InternalContext;
 
   constructor({
     config,
+    context,
     compiler,
     publicPaths,
     resolvedPort,
-    environments,
   }: Options) {
     this.config = config;
+    this.context = context;
     this.compiler = compiler;
-    this.environments = environments;
     this.publicPaths = publicPaths;
     this.resolvedPort = resolvedPort;
     this.outputFileSystem = fs;
-    this.socketServer = new SocketServer(config.dev, environments);
+    this.socketServer = new SocketServer(
+      context,
+      config.dev,
+      () => this.outputFileSystem,
+    );
   }
 
   public async init(): Promise<void> {
@@ -105,13 +109,13 @@ export class BuildManager {
   };
 
   private async setupCompilationMiddleware(): Promise<void> {
-    const { config, publicPaths, environments } = this;
+    const { config, context, publicPaths } = this;
 
     const middleware = await assetsMiddleware({
       config,
       compiler: this.compiler,
       socketServer: this.socketServer,
-      environments,
+      environments: context.environments,
       resolvedPort: this.resolvedPort,
     });
 

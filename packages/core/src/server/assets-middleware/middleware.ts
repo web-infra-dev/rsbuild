@@ -5,7 +5,7 @@ import rangeParser from 'range-parser';
 import { logger } from '../../logger';
 import type { EnvironmentContext, RequestHandler } from '../../types';
 import { escapeHtml } from './escapeHtml';
-import { getFilenameFromUrl } from './getFilenameFromUrl';
+import { getFileFromUrl } from './getFileFromUrl';
 import type { Context, OutputFileSystem, ServerResponse } from './index';
 import { memorize } from './memorize';
 import { parseTokenList } from './parseTokenList';
@@ -334,11 +334,7 @@ export function wrapper(
         return;
       }
 
-      const resolved = getFilenameFromUrl(
-        req.url,
-        outputFileSystem,
-        environments,
-      );
+      const resolved = getFileFromUrl(req.url, outputFileSystem, environments);
 
       if (!resolved) {
         await goNext();

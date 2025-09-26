@@ -21,7 +21,7 @@ function decode(input: string): string {
   return qsUnescape(input);
 }
 
-export function getFilenameFromUrl(
+export function getFileFromUrl(
   url: string,
   outputFileSystem: OutputFileSystem,
   environments: Record<string, EnvironmentContext>,

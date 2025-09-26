@@ -1,6 +1,10 @@
 import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
+import path from 'node:path';
+import { promisify } from 'node:util';
+import { parse as parseStack } from 'stacktrace-parser';
 import type Ws from '../../compiled/ws/index.js';
+import { JS_REGEX } from '../constants.js';
 import {
   color,
   getAllStatsErrors,
@@ -9,7 +13,14 @@ import {
 } from '../helpers';
 import { formatStatsMessages } from '../helpers/format';
 import { logger } from '../logger';
-import type { DevConfig, EnvironmentContext, Rspack } from '../types';
+import type {
+  DevConfig,
+  EnvironmentContext,
+  InternalContext,
+  Rspack,
+} from '../types';
+import { getFileFromUrl } from './assets-middleware/getFileFromUrl.js';
+import type { OutputFileSystem } from './assets-middleware/index.js';
 import { genOverlayHTML } from './overlay';
 
 interface ExtWebSocket extends Ws {
@@ -48,6 +59,7 @@ export type SocketMessageErrors = {
 export type ClientMessageRuntimeError = {
   type: 'runtime-error';
   message: string;
+  stack?: string;
 };
 
 export type ClientMessagePing = {
@@ -68,6 +80,100 @@ const parseQueryString = (req: IncomingMessage) => {
   return queryStr ? Object.fromEntries(new URLSearchParams(queryStr)) : {};
 };
 
+async function mapSourceMapPosition(
+  rawSourceMap: string,
+  line: number,
+  column: number,
+) {
+  const { SourceMapConsumer } = await import(
+    '../../compiled/source-map/index.js'
+  );
+  const consumer = await new SourceMapConsumer(rawSourceMap);
+  const originalPosition = consumer.originalPositionFor({ line, column });
+  consumer.destroy();
+  return originalPosition;
+}
+
+/**
+ * Parse source filename and original position from runtime stack trace
+ */
+const parseOriginalPosition = async (
+  stack: string,
+  fs: Rspack.OutputFileSystem,
+  environments: Record<string, EnvironmentContext>,
+) => {
+  const parsed = parseStack(stack);
+  if (!parsed.length) {
+    return;
+  }
+
+  // only parse JS files
+  const { file, column, lineNumber } = parsed[0];
+  if (
+    file === null ||
+    column === null ||
+    lineNumber === null ||
+    !JS_REGEX.test(file)
+  ) {
+    return;
+  }
+
+  const sourceMapInfo = getFileFromUrl(
+    `${file}.map`,
+    fs as OutputFileSystem,
+    environments,
+  );
+
+  if (!sourceMapInfo || 'errorCode' in sourceMapInfo) {
+    return;
+  }
+
+  const readFile = promisify(fs.readFile);
+  try {
+    const sourceMap = await readFile(sourceMapInfo.filename);
+    if (sourceMap) {
+      return mapSourceMapPosition(sourceMap.toString(), lineNumber, column);
+    }
+  } catch {}
+};
+
+/**
+ * Handle runtime errors from browser
+ */
+const onRuntimeError = async (
+  message: ClientMessageRuntimeError,
+  context: InternalContext,
+  fs: Rspack.OutputFileSystem,
+) => {
+  let log = `${color.cyan('[browser]')} ${color.red(message.message)}`;
+
+  if (message.stack) {
+    const parsed = await parseOriginalPosition(
+      message.stack,
+      fs,
+      context.environments,
+    );
+
+    if (!parsed) {
+      return;
+    }
+
+    const { source, line, column } = parsed;
+    if (!source) {
+      return;
+    }
+
+    let sourceInfo = path.relative(context.rootPath, source);
+    if (line !== null) {
+      sourceInfo += column === null ? `:${line}` : `:${line}:${column}`;
+    }
+
+    log += color.dim(` (${sourceInfo})`);
+  }
+
+  logger.error(log);
+};
+
 export class SocketServer {
   private wsServer!: Ws.Server;
 
@@ -75,22 +181,26 @@ export class SocketServer {
 
   private readonly options: DevConfig;
 
+  private readonly context: InternalContext;
+
   private stats: Record<string, Rspack.Stats>;
 
   private initialChunks: Record<string, Set<string>>;
 
   private heartbeatTimer: NodeJS.Timeout | null = null;
 
-  private environments: Record<string, EnvironmentContext>;
+  private getOutputFileSystem: () => Rspack.OutputFileSystem;
 
   constructor(
+    context: InternalContext,
     options: DevConfig,
-    environments: Record<string, EnvironmentContext>,
+    getOutputFileSystem: () => Rspack.OutputFileSystem,
   ) {
     this.options = options;
     this.stats = {};
     this.initialChunks = {};
-    this.environments = environments;
+    this.context = context;
+    this.getOutputFileSystem = getOutputFileSystem;
   }
 
   // subscribe upgrade event to handle socket
@@ -104,7 +214,7 @@ export class SocketServer {
     }
 
     const query = parseQueryString(req);
-    const tokens = Object.values(this.environments).map(
+    const tokens = Object.values(this.context.environments).map(
       (env) => env.webSocketToken,
     );
 
@@ -266,11 +376,8 @@ export class SocketServer {
           typeof data === 'string' ? data : data.toString(),
         );
 
-        // Handle runtime errors from browser
         if (message.type === 'runtime-error') {
-          logger.error(
-            `${color.cyan('[browser]')} ${color.red(message.message)}`,
-          );
+          onRuntimeError(message, this.context, this.getOutputFileSystem());
         }
       } catch {}
     });

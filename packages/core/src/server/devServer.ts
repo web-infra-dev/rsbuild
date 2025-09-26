@@ -197,11 +197,11 @@ export async function createDevServer<
       : [getPublicPathFromCompiler(compiler)];
 
     const buildManager = new BuildManager({
+      context,
       config,
       compiler,
       publicPaths: publicPaths,
       resolvedPort: port,
-      environments: context.environments,
     });
 
     await buildManager.init();
