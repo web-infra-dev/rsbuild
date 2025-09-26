@@ -83,9 +83,7 @@ export function getFilenameFromUrl(
       break;
     }
     if (extra.stats.isDirectory()) {
-      const indexValue = 'index.html';
-
-      filename = path.join(filename, indexValue);
+      filename = path.join(filename, 'index.html');
 
       try {
         extra.stats = (
