@@ -1,15 +1,27 @@
-import type { Stats } from 'node:fs';
+import type { Stats as FSStats } from 'node:fs';
 import * as path from 'node:path';
 import { unescape as qsUnescape } from 'node:querystring';
 import { parse } from 'node:url';
-import { getPaths } from './getPaths';
+import type { Stats } from '@rspack/core';
 import type { FilledContext } from './index';
 import { memorize } from './memorize';
 
 export type Extra = {
-  stats?: Stats;
+  stats?: FSStats;
   errorCode?: number;
 };
+
+export function getOutputPaths(context: FilledContext): string[] {
+  const { stats } = context;
+  if (!stats) {
+    return [];
+  }
+
+  const childStats: Stats[] = 'stats' in stats ? stats.stats : [stats];
+  return childStats.map(
+    ({ compilation }) => compilation.outputOptions.path || '',
+  );
+}
 
 // TODO: type the cache options instead of using any for the second parameter
 const memoizedParse = memorize(parse, undefined, (value: any) => {
@@ -31,82 +43,60 @@ export function getFilenameFromUrl(
   url: string,
   extra: Extra = {},
 ): string | undefined {
-  const paths = getPaths(context) as {
-    publicPath: string | undefined;
-    outputPath: string;
-  }[];
-
-  let foundFilename: string | undefined;
   let urlObject: URL;
-
   try {
     urlObject = memoizedParse(url, false, true) as URL;
-  } catch (_ignoreError) {
-    return undefined;
+  } catch {
+    return;
   }
 
-  for (const { publicPath, outputPath } of paths) {
-    let filename: string | undefined;
-    let publicPathObject: URL;
+  const { pathname } = urlObject;
+  if (!pathname) {
+    return;
+  }
+
+  // Return early to prevent null byte injection attacks
+  if (pathname.includes('\0')) {
+    extra.errorCode = 400;
+    return;
+  }
+
+  if (UP_PATH_REGEXP.test(path.normalize(`./${pathname}`))) {
+    extra.errorCode = 403;
+    return;
+  }
+
+  let foundFilename: string | undefined;
+
+  for (const outputPath of getOutputPaths(context)) {
+    let filename = path.join(outputPath, pathname);
 
     try {
-      publicPathObject = memoizedParse(
-        publicPath !== 'auto' && publicPath ? publicPath : '/',
-        false,
-        true,
-      ) as URL;
-    } catch (_ignoreError) {
+      extra.stats = (
+        context.outputFileSystem.statSync as (p: string) => FSStats
+      )(filename);
+    } catch {
       continue;
     }
 
-    const { pathname } = urlObject;
-    const { pathname: publicPathPathname } = publicPathObject;
-
-    if (pathname?.startsWith(publicPathPathname)) {
-      if (pathname.includes('\u0000')) {
-        extra.errorCode = 400;
-        return undefined;
-      }
-
-      if (UP_PATH_REGEXP.test(path.normalize(`./${pathname}`))) {
-        extra.errorCode = 403;
-        return undefined;
-      }
-
-      filename = path.join(
-        outputPath,
-        pathname.slice(publicPathPathname.length),
-      );
+    if (extra.stats.isFile()) {
+      foundFilename = filename;
+      break;
+    }
+    if (extra.stats.isDirectory()) {
+      filename = path.join(filename, 'index.html');
 
       try {
         extra.stats = (
-          context.outputFileSystem.statSync as (p: string) => Stats
+          context.outputFileSystem.statSync as (p: string) => FSStats
         )(filename);
-      } catch (_ignoreError) {
+      } catch {
         continue;
       }
 
       if (extra.stats.isFile()) {
         foundFilename = filename;
         break;
-      }
-      if (extra.stats.isDirectory()) {
-        const indexValue = 'index.html';
-
-        filename = path.join(filename, indexValue);
-
-        try {
-          extra.stats = (
-            context.outputFileSystem.statSync as (p: string) => Stats
-          )(filename);
-        } catch (__ignoreError) {
-          continue;
-        }
-
-        if (extra.stats.isFile()) {
-          foundFilename = filename;
-          break;
-        }
       }
     }
   }

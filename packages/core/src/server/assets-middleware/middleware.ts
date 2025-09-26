@@ -310,7 +310,6 @@ export function wrapper(context: FilledContext): RequestHandler {
       if (rage && BYTES_RANGE_REGEXP.test(rage)) {
         return rage;
       }
-      return undefined;
     }
 
     function getOffsetAndLenFromRange(range: Range): [number, number] {
@@ -456,7 +455,7 @@ export function wrapper(context: FilledContext): RequestHandler {
           start,
           end,
         ));
-      } catch (_ignoreError) {
+      } catch {
         await goNext();
         return;
       }
