@@ -43,35 +43,33 @@ export function getFilenameFromUrl(
   url: string,
   extra: Extra = {},
 ): string | undefined {
-  let foundFilename: string | undefined;
   let urlObject: URL;
-
   try {
     urlObject = memoizedParse(url, false, true) as URL;
   } catch {
     return;
   }
 
+  const { pathname } = urlObject;
+  if (!pathname) {
+    return;
+  }
+
+  // Return early to prevent null byte injection attacks
+  if (pathname.includes('\0')) {
+    extra.errorCode = 400;
+    return;
+  }
+
+  if (UP_PATH_REGEXP.test(path.normalize(`./${pathname}`))) {
+    extra.errorCode = 403;
+    return;
+  }
+
+  let foundFilename: string | undefined;
+
   for (const outputPath of getOutputPaths(context)) {
-    let filename: string | undefined;
-
-    const { pathname } = urlObject;
-    if (!pathname) {
-      continue;
-    }
-
-    // Return early to prevent null byte injection attacks
-    if (pathname.includes('\0')) {
-      extra.errorCode = 400;
-      return;
-    }
-
-    if (UP_PATH_REGEXP.test(path.normalize(`./${pathname}`))) {
-      extra.errorCode = 403;
-      return;
-    }
-
-    filename = path.join(outputPath, pathname);
+    let filename = path.join(outputPath, pathname);
 
     try {
       extra.stats = (
