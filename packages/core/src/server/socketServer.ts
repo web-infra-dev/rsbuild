@@ -9,7 +9,7 @@ import {
 import { formatStatsMessages } from '../helpers/format';
 import { logger } from '../logger';
 import type { DevConfig, InternalContext, Rspack } from '../types';
-import { reportRuntimeError } from './browserLogs.js';
+import { reportRuntimeError } from './browserLogs';
 import { genOverlayHTML } from './overlay';
 
 interface ExtWebSocket extends Ws {

@@ -1,13 +1,13 @@
 import path from 'node:path';
 import { promisify } from 'node:util';
 import { parse as parseStack } from 'stacktrace-parser';
-import { JS_REGEX } from '../constants.js';
+import { JS_REGEX } from '../constants';
 import { color } from '../helpers';
 import { logger } from '../logger';
 import type { EnvironmentContext, InternalContext, Rspack } from '../types';
-import { getFileFromUrl } from './assets-middleware/getFileFromUrl.js';
-import type { OutputFileSystem } from './assets-middleware/index.js';
-import type { ClientMessageRuntimeError } from './socketServer.js';
+import { getFileFromUrl } from './assets-middleware/getFileFromUrl';
+import type { OutputFileSystem } from './assets-middleware/index';
+import type { ClientMessageRuntimeError } from './socketServer';
 
 /**
  * Maps a position in compiled code to its original source position using
