@@ -1,29 +1,27 @@
-import type { Compiler, MultiCompiler, MultiStats, Stats } from '@rspack/core';
-import type { Context, WithOptional } from './index';
+import type { Compiler, MultiCompiler } from '@rspack/core';
+import type { Context } from './index';
 
 export function setupHooks(
-  context: WithOptional<Context, 'watching' | 'outputFileSystem'>,
+  context: Context,
   compiler: Compiler | MultiCompiler,
 ): void {
   function invalid() {
-    context.stats = undefined;
+    context.ready = false;
   }
 
-  function done(stats: Stats | MultiStats) {
-    context.stats = stats;
+  function done() {
+    context.ready = true;
 
     process.nextTick(() => {
-      const { stats, callbacks } = context;
-
-      if (!stats) {
+      if (!context.ready) {
         return;
       }
 
-      context.callbacks = [];
-
+      const { callbacks } = context;
       callbacks.forEach((callback) => {
         callback();
       });
+      context.callbacks = [];
     });
   }
 

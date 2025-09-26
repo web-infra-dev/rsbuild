@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import type { Compilation, Compiler } from '@rspack/core';
 import { logger } from '../../logger';
-import type { Options } from './index';
+import type { EnvironmentContext, NormalizedDevConfig } from '../../types';
 
 declare module '@rspack/core' {
   interface Compiler {
@@ -10,9 +10,40 @@ declare module '@rspack/core' {
   }
 }
 
+export type ResolvedWriteToDisk =
+  | boolean
+  | ((filePath: string, name?: string) => boolean);
+
+/**
+ * Resolve writeToDisk config across multiple environments.
+ * Returns the unified config if all environments have the same value,
+ * otherwise returns a function that resolves config based on compilation.
+ */
+export const resolveWriteToDiskConfig = (
+  config: NormalizedDevConfig,
+  environments: Record<string, EnvironmentContext>,
+): ResolvedWriteToDisk => {
+  const writeToDiskValues = Object.values(environments).map(
+    (env) => env.config.dev.writeToDisk,
+  );
+  if (new Set(writeToDiskValues).size === 1) {
+    return writeToDiskValues[0];
+  }
+
+  return (filePath: string, name?: string) => {
+    let { writeToDisk } = config;
+    if (name && environments[name]) {
+      writeToDisk = environments[name].config.dev.writeToDisk ?? writeToDisk;
+    }
+    return typeof writeToDisk === 'function'
+      ? writeToDisk(filePath)
+      : writeToDisk;
+  };
+};
+
 export function setupWriteToDisk(
   compilers: Compiler[],
-  options: Options,
+  writeToDisk: ResolvedWriteToDisk,
 ): void {
   for (const compiler of compilers) {
     compiler.hooks.emit.tap('DevMiddleware', () => {
@@ -32,10 +63,9 @@ export function setupWriteToDisk(
           callback: (err?: Error) => void,
         ) => {
           const { targetPath, content, compilation } = info;
-          const { writeToDisk: filter } = options;
           const allowWrite =
-            filter && typeof filter === 'function'
-              ? filter(targetPath, compilation.name)
+            writeToDisk && typeof writeToDisk === 'function'
+              ? writeToDisk(targetPath, compilation.name)
               : true;
 
           if (!allowWrite) {

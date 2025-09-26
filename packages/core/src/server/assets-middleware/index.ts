@@ -9,13 +9,7 @@
 import type { Stats as FSStats, ReadStream } from 'node:fs';
 import type { ServerResponse as NodeServerResponse } from 'node:http';
 import { createRequire } from 'node:module';
-import type {
-  Compiler,
-  MultiCompiler,
-  MultiStats,
-  Stats,
-  Watching,
-} from '@rspack/core';
+import type { Compiler, MultiCompiler, Watching } from '@rspack/core';
 import { applyToCompiler, isMultiCompiler } from '../../helpers';
 import { logger } from '../../logger';
 import type {
@@ -24,14 +18,13 @@ import type {
   NormalizedDevConfig,
   NormalizedEnvironmentConfig,
   RequestHandler,
-  WriteToDisk,
 } from '../../types';
 import { resolveHostname } from './../hmrFallback';
 import type { SocketServer } from '../socketServer';
 import { wrapper as createMiddleware } from './middleware';
 import { setupHooks } from './setupHooks';
 import { setupOutputFileSystem } from './setupOutputFileSystem';
-import { setupWriteToDisk } from './setupWriteToDisk';
+import { resolveWriteToDiskConfig, setupWriteToDisk } from './setupWriteToDisk';
 
 const noop = () => {};
 
@@ -48,7 +41,6 @@ export type OutputFileSystem = {
     opts: { start: number; end: number },
   ) => ReadStream;
   statSync?: (p: string) => FSStats;
-  lstat?: (p: string) => unknown; // TODO: type
   readFileSync?: (p: string) => Buffer;
 };
 
@@ -59,81 +51,18 @@ export type Options = {
 };
 
 export type Context = {
-  stats: Stats | MultiStats | undefined;
+  ready: boolean;
   callbacks: (() => void)[];
-  watching: Watching | MultiWatching | undefined;
-  outputFileSystem: OutputFileSystem;
 };
 
-export type FilledContext = Omit<Context, 'watching'> & {
-  watching: Watching | MultiWatching;
-};
-
-export type Close = (callback: (err: Error | null | undefined) => void) => void;
+export type AssetsMiddlewareClose = (
+  callback: (err?: Error | null) => void,
+) => void;
 
 export type AssetsMiddleware = RequestHandler & {
   watch: () => void;
-  close: Close;
+  close: AssetsMiddlewareClose;
 };
-
-export type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<T>;
-
-export async function assetsMiddleware(
-  compiler: Compiler | MultiCompiler,
-  options: Options,
-): Promise<AssetsMiddleware> {
-  const compilers = isMultiCompiler(compiler) ? compiler.compilers : [compiler];
-  const context: WithOptional<Context, 'watching' | 'outputFileSystem'> = {
-    stats: undefined,
-    callbacks: [],
-  };
-
-  setupHooks(context, compiler);
-
-  if (options.writeToDisk) {
-    setupWriteToDisk(compilers, options);
-  }
-
-  context.outputFileSystem = await setupOutputFileSystem(options, compilers);
-
-  const filledContext = context as FilledContext;
-
-  const instance = (
-    createMiddleware as (ctx: FilledContext) => AssetsMiddleware
-  )(filledContext);
-
-  // API
-  instance.watch = () => {
-    if (compiler.watching) {
-      context.watching = compiler.watching;
-    } else {
-      const errorHandler = (error: Error | null | undefined) => {
-        if (error) {
-          if (error.message?.includes('× Error:')) {
-            error.message = error.message.replace('× Error:', '').trim();
-          }
-          logger.error(error);
-        }
-      };
-
-      if (compilers.length > 1) {
-        const watchOptions = compilers.map(
-          (childCompiler) => childCompiler.options.watchOptions || {},
-        );
-        context.watching = compiler.watch(watchOptions, errorHandler);
-      } else {
-        const watchOptions = compilers[0].options.watchOptions || {};
-        context.watching = compiler.watch(watchOptions, errorHandler);
-      }
-    }
-  };
-
-  instance.close = (callback: (err?: Error | null) => void = noop) => {
-    filledContext.watching?.close(callback);
-  };
-
-  return instance;
-}
 
 const require = createRequire(import.meta.url);
 let hmrClientPath: string;
@@ -261,39 +190,12 @@ function applyHMREntry({
 }
 
 /**
- * Resolve writeToDisk config across multiple environments.
- * Returns the unified config if all environments have the same value,
- * otherwise returns a function that resolves config based on compilation.
- */
-const resolveWriteToDiskConfig = (
-  config: NormalizedDevConfig,
-  environments: Record<string, EnvironmentContext>,
-): WriteToDisk => {
-  const writeToDiskValues = Object.values(environments).map(
-    (env) => env.config.dev.writeToDisk,
-  );
-  if (new Set(writeToDiskValues).size === 1) {
-    return writeToDiskValues[0];
-  }
-
-  return (filePath: string, name?: string) => {
-    let { writeToDisk } = config;
-    if (name && environments[name]) {
-      writeToDisk = environments[name].config.dev.writeToDisk ?? writeToDisk;
-    }
-    return typeof writeToDisk === 'function'
-      ? writeToDisk(filePath)
-      : writeToDisk;
-  };
-};
-
-/**
  * The assets middleware handles compiler setup for development:
  * - Call `compiler.watch`
  * - Inject the HMR client path into page
  * - Notify server when compiler hooks are triggered
  */
-export const getAssetsMiddleware = async ({
+export const assetsMiddleware = async ({
   config,
   compiler,
   socketServer,
@@ -339,7 +241,54 @@ export const getAssetsMiddleware = async ({
 
   applyToCompiler(compiler, setupCompiler);
 
-  return assetsMiddleware(compiler, {
-    writeToDisk: resolveWriteToDiskConfig(config.dev, environments),
-  });
+  const compilers = isMultiCompiler(compiler) ? compiler.compilers : [compiler];
+  const context: Context = {
+    ready: false,
+    callbacks: [],
+  };
+
+  setupHooks(context, compiler);
+
+  const writeToDisk = resolveWriteToDiskConfig(config.dev, environments);
+  if (writeToDisk) {
+    setupWriteToDisk(compilers, writeToDisk);
+  }
+
+  const outputFileSystem = await setupOutputFileSystem(writeToDisk, compilers);
+
+  const instance = createMiddleware(
+    context,
+    outputFileSystem,
+    environments,
+  ) as AssetsMiddleware;
+
+  let watching: Watching | MultiWatching | undefined;
+
+  // API
+  instance.watch = () => {
+    if (compiler.watching) {
+      watching = compiler.watching;
+    } else {
+      const errorHandler = (error: Error | null | undefined) => {
+        if (error) {
+          if (error.message?.includes('× Error:')) {
+            error.message = error.message.replace('× Error:', '').trim();
+          }
+          logger.error(error);
+        }
+      };
+
+      const watchOptions =
+        compilers.length > 1
+          ? compilers.map(({ options }) => options.watchOptions || {})
+          : compilers[0].options.watchOptions || {};
+      watching = compiler.watch(watchOptions, errorHandler);
+    }
+  };
+
+  instance.close = ((callback = noop) => {
+    watching?.close(callback);
+  }) satisfies AssetsMiddlewareClose;
+
+  return instance;
 };
