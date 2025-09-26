@@ -1,4 +1,4 @@
-import { buildEntryUrl, expect, test } from '@e2e/helper';
+import { expect, gotoPage, test } from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
 
 test('should run onBeforeStartDevServer hooks and add custom middleware', async ({
@@ -36,12 +36,9 @@ test('should run onBeforeStartDevServer hooks and add custom middleware', async 
     },
   });
 
-  const testUrl = buildEntryUrl('test', rsbuild.port);
-  const test2Url = buildEntryUrl('test2', rsbuild.port);
-
-  await page.goto(testUrl);
+  await gotoPage(page, rsbuild, 'test');
   await expect(page.content()).resolves.toContain('Hello, world!');
 
-  await page.goto(test2Url);
+  await gotoPage(page, rsbuild, 'test2');
   await expect(page.content()).resolves.toContain('Hello, world2!');
 });
