@@ -2,10 +2,7 @@ import fs from 'node:fs';
 import { isMultiCompiler } from '../helpers';
 import { getPathnameFromUrl } from '../helpers/path';
 import type { EnvironmentContext, NormalizedConfig, Rspack } from '../types';
-import {
-  type AssetsMiddleware,
-  getAssetsMiddleware,
-} from './assets-middleware';
+import { type AssetsMiddleware, assetsMiddleware } from './assets-middleware';
 import { stripBase } from './helper';
 import { SocketServer } from './socketServer';
 
@@ -110,7 +107,7 @@ export class BuildManager {
   private async setupCompilationMiddleware(): Promise<void> {
     const { config, publicPaths, environments } = this;
 
-    const middleware = await getAssetsMiddleware({
+    const middleware = await assetsMiddleware({
       config,
       compiler: this.compiler,
       socketServer: this.socketServer,

@@ -2,13 +2,14 @@ import type {
   Compiler,
   OutputFileSystem as RspackOutputFileSystem,
 } from '@rspack/core';
-import type { Options, OutputFileSystem } from './index';
+import type { OutputFileSystem } from './index';
+import type { ResolvedWriteToDisk } from './setupWriteToDisk';
 
 export async function setupOutputFileSystem(
-  options: Options,
+  writeToDisk: ResolvedWriteToDisk,
   compilers: Compiler[],
 ): Promise<OutputFileSystem> {
-  if (options.writeToDisk !== true) {
+  if (writeToDisk !== true) {
     const { createFsFromVolume, Volume } = await import(
       '../../../compiled/memfs/index.js'
     );

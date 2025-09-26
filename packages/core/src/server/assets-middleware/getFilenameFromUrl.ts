@@ -1,27 +1,10 @@
 import type { Stats as FSStats } from 'node:fs';
-import * as path from 'node:path';
+import path from 'node:path';
 import { unescape as qsUnescape } from 'node:querystring';
 import { parse } from 'node:url';
-import type { Stats } from '@rspack/core';
-import type { FilledContext } from './index';
+import type { EnvironmentContext } from '../../types';
+import type { OutputFileSystem } from './index';
 import { memorize } from './memorize';
-
-export type Extra = {
-  stats?: FSStats;
-  errorCode?: number;
-};
-
-export function getOutputPaths(context: FilledContext): string[] {
-  const { stats } = context;
-  if (!stats) {
-    return [];
-  }
-
-  const childStats: Stats[] = 'stats' in stats ? stats.stats : [stats];
-  return childStats.map(
-    ({ compilation }) => compilation.outputOptions.path || '',
-  );
-}
 
 // TODO: type the cache options instead of using any for the second parameter
 const memoizedParse = memorize(parse, undefined, (value: any) => {
@@ -39,10 +22,10 @@ function decode(input: string): string {
 }
 
 export function getFilenameFromUrl(
-  context: FilledContext,
   url: string,
-  extra: Extra = {},
-): string | undefined {
+  outputFileSystem: OutputFileSystem,
+  environments: Record<string, EnvironmentContext>,
+): { filename: string; fsStats: FSStats } | { errorCode: number } | undefined {
   let urlObject: URL;
   try {
     urlObject = memoizedParse(url, false, true) as URL;
@@ -57,49 +40,52 @@ export function getFilenameFromUrl(
 
   // Return early to prevent null byte injection attacks
   if (pathname.includes('\0')) {
-    extra.errorCode = 400;
-    return;
+    return { errorCode: 400 };
   }
 
+  // Prevent path traversal attacks by checking for ".." patterns
   if (UP_PATH_REGEXP.test(path.normalize(`./${pathname}`))) {
-    extra.errorCode = 403;
-    return;
+    return { errorCode: 403 };
   }
 
-  let foundFilename: string | undefined;
+  const distPaths = new Set(
+    Object.values(environments).map((env) => env.distPath),
+  );
 
-  for (const outputPath of getOutputPaths(context)) {
-    let filename = path.join(outputPath, pathname);
+  for (const distPath of distPaths) {
+    let filename = path.join(distPath, pathname);
+    let fsStats: FSStats | undefined;
 
     try {
-      extra.stats = (
-        context.outputFileSystem.statSync as (p: string) => FSStats
-      )(filename);
+      fsStats = outputFileSystem.statSync?.(filename);
     } catch {
       continue;
     }
 
-    if (extra.stats.isFile()) {
-      foundFilename = filename;
-      break;
+    if (!fsStats) {
+      continue;
     }
-    if (extra.stats.isDirectory()) {
+
+    if (fsStats.isFile()) {
+      return { filename, fsStats };
+    }
+
+    if (fsStats.isDirectory()) {
       filename = path.join(filename, 'index.html');
 
       try {
-        extra.stats = (
-          context.outputFileSystem.statSync as (p: string) => FSStats
-        )(filename);
+        fsStats = outputFileSystem.statSync?.(filename);
       } catch {
         continue;
       }
 
-      if (extra.stats.isFile()) {
-        foundFilename = filename;
-        break;
+      if (!fsStats) {
+        continue;
+      }
+
+      if (fsStats.isFile()) {
+        return { filename, fsStats };
       }
     }
   }
-
-  return foundFilename;
 }

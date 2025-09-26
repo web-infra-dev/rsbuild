@@ -3,19 +3,19 @@ import onFinished from 'on-finished';
 import type { Range, Result as RangeResult, Ranges } from 'range-parser';
 import rangeParser from 'range-parser';
 import { logger } from '../../logger';
-import type { RequestHandler } from '../../types';
+import type { EnvironmentContext, RequestHandler } from '../../types';
 import { escapeHtml } from './escapeHtml';
-import { type Extra, getFilenameFromUrl } from './getFilenameFromUrl';
-import type { FilledContext, ServerResponse } from './index';
+import { getFilenameFromUrl } from './getFilenameFromUrl';
+import type { Context, OutputFileSystem, ServerResponse } from './index';
 import { memorize } from './memorize';
 import { parseTokenList } from './parseTokenList';
 
-export function ready(context: FilledContext, callback: () => void): void {
-  if (context.stats) {
+export function ready(context: Context, callback: () => void): void {
+  if (context.ready) {
     callback();
-    return;
+  } else {
+    context.callbacks.push(callback);
   }
-  context.callbacks.push(callback);
 }
 
 function getEtag(stat: FSStats): string {
@@ -26,7 +26,7 @@ function getEtag(stat: FSStats): string {
 
 function createReadStreamOrReadFileSync(
   filename: string,
-  outputFileSystem: any, // TODO: narrow type to OutputFileSystem
+  outputFileSystem: OutputFileSystem,
   start: number,
   end: number,
 ): { bufferOrStream: Buffer | ReadStream; byteLength: number } {
@@ -118,10 +118,14 @@ type SendErrorOptions = {
   headers?: Record<string, number | string | string[] | undefined>;
 };
 
-export function wrapper(context: FilledContext): RequestHandler {
-  return async function middleware(req, res, next) {
-    const acceptedMethods = ['GET', 'HEAD'];
+const acceptedMethods = ['GET', 'HEAD'];
 
+export function wrapper(
+  context: Context,
+  outputFileSystem: OutputFileSystem,
+  environments: Record<string, EnvironmentContext>,
+): RequestHandler {
+  return async function middleware(req, res, next) {
     async function goNext() {
       return new Promise<void>((resolve) => {
         ready(context, () => {
@@ -325,23 +329,32 @@ export function wrapper(context: FilledContext): RequestHandler {
     }
 
     async function processRequest() {
-      const extra: Extra = {};
-      const filename = getFilenameFromUrl(context, req.url!, extra);
-
-      if (extra.errorCode) {
-        if (extra.errorCode === 403) {
-          logger.error(`[rsbuild:middleware] Malicious path "${filename}".`);
-        }
-        sendError(extra.errorCode);
-        return;
-      }
-
-      if (!filename) {
+      if (!req.url) {
         await goNext();
         return;
       }
 
-      const { size } = extra.stats!;
+      const resolved = getFilenameFromUrl(
+        req.url,
+        outputFileSystem,
+        environments,
+      );
+
+      if (!resolved) {
+        await goNext();
+        return;
+      }
+
+      if ('errorCode' in resolved) {
+        if (resolved.errorCode === 403) {
+          logger.error(`[rsbuild:middleware] Malicious path "${req.url}".`);
+        }
+        sendError(resolved.errorCode);
+        return;
+      }
+
+      const { fsStats, filename } = resolved;
+      const { size } = fsStats;
       let len = size;
       let offset = 0;
 
@@ -359,8 +372,8 @@ export function wrapper(context: FilledContext): RequestHandler {
       const rangeHeader = getRangeHeader();
 
       if (!res.getHeader('ETag')) {
-        if (extra.stats) {
-          const hash = getEtag(extra.stats);
+        if (fsStats) {
+          const hash = getEtag(fsStats);
           res.setHeader('ETag', hash);
         }
       }
@@ -451,7 +464,7 @@ export function wrapper(context: FilledContext): RequestHandler {
       try {
         ({ bufferOrStream, byteLength } = createReadStreamOrReadFileSync(
           filename,
-          context.outputFileSystem,
+          outputFileSystem,
           start,
           end,
         ));
