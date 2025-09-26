@@ -95,9 +95,9 @@ async function mapSourceMapPosition(
 }
 
 /**
- * Parse source filename and original position from runtime stack trace
+ * Resolve source filename and original position from runtime stack trace
  */
-const parseOriginalPosition = async (
+const resolveSourceLocation = async (
   stack: string,
   fs: Rspack.OutputFileSystem,
   environments: Record<string, EnvironmentContext>,
@@ -132,9 +132,36 @@ const parseOriginalPosition = async (
   try {
     const sourceMap = await readFile(sourceMapInfo.filename);
     if (sourceMap) {
-      return mapSourceMapPosition(sourceMap.toString(), lineNumber, column);
+      return await mapSourceMapPosition(
+        sourceMap.toString(),
+        lineNumber,
+        column,
+      );
     }
   } catch {}
+};
+
+const formatErrorLocation = async (
+  stack: string,
+  context: InternalContext,
+  fs: Rspack.OutputFileSystem,
+) => {
+  const parsed = await resolveSourceLocation(stack, fs, context.environments);
+
+  if (!parsed) {
+    return;
+  }
+
+  const { source, line, column } = parsed;
+  if (!source) {
+    return;
+  }
+
+  let rawLocation = path.relative(context.rootPath, source);
+  if (line !== null) {
+    rawLocation += column === null ? `:${line}` : `:${line}:${column}`;
+  }
+  return rawLocation;
 };
 
 /**
@@ -148,27 +175,8 @@ const onRuntimeError = async (
   let log = `${color.cyan('[browser]')} ${color.red(message.message)}`;
 
   if (message.stack) {
-    const parsed = await parseOriginalPosition(
-      message.stack,
-      fs,
-      context.environments,
-    );
-
-    if (!parsed) {
-      return;
-    }
-
-    const { source, line, column } = parsed;
-    if (!source) {
-      return;
-    }
-
-    let sourceInfo = path.relative(context.rootPath, source);
-    if (line !== null) {
-      sourceInfo += column === null ? `:${line}` : `:${line}:${column}`;
-    }
-
-    log += color.dim(` (${sourceInfo})`);
+    const rawLocation = await formatErrorLocation(message.stack, context, fs);
+    log += color.dim(` (${rawLocation})`);
   }
 
   logger.error(log);
