@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { promisify } from 'node:util';
-import { parse as parseStack } from 'stacktrace-parser';
-import { JS_REGEX } from '../constants';
+import { parse as parseStack, type StackFrame } from 'stacktrace-parser';
+import { SCRIPT_REGEX } from '../constants';
 import { color } from '../helpers';
 import { logger } from '../logger';
 import type { EnvironmentContext, InternalContext, Rspack } from '../types';
@@ -28,6 +28,19 @@ async function mapSourceMapPosition(
 }
 
 /**
+ * Returns the first stack frame that looks like user code
+ */
+const findSourceFrame = (parsed: StackFrame[]) => {
+  return parsed.find(
+    (frame) =>
+      frame.file !== null &&
+      frame.column !== null &&
+      frame.lineNumber !== null &&
+      SCRIPT_REGEX.test(frame.file),
+  ) as { file: string; column: number; lineNumber: number } | undefined;
+};
+
+/**
  * Resolve source filename and original position from runtime stack trace
  */
 const resolveSourceLocation = async (
@@ -41,16 +54,12 @@ const resolveSourceLocation = async (
   }
 
   // only parse JS files
-  const { file, column, lineNumber } = parsed[0];
-  if (
-    file === null ||
-    column === null ||
-    lineNumber === null ||
-    !JS_REGEX.test(file)
-  ) {
+  const frame = findSourceFrame(parsed);
+  if (!frame) {
     return;
   }
 
+  const { file, column, lineNumber } = frame;
   const sourceMapInfo = getFileFromUrl(
     `${file}.map`,
     fs as OutputFileSystem,
@@ -113,7 +122,9 @@ export const reportRuntimeError = async (
 
   if (message.stack) {
     const rawLocation = await formatErrorLocation(message.stack, context, fs);
-    log += color.dim(` (${rawLocation})`);
+    if (rawLocation) {
+      log += color.dim(` (${rawLocation})`);
+    }
   }
 
   logger.error(log);
