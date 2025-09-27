@@ -61,6 +61,15 @@ export type RsbuildContext = {
   callerName: string;
 };
 
+export type BuildStatus = 'idle' | 'building' | 'done';
+
+export type BuildState = {
+  /** Current build status */
+  status: BuildStatus;
+  /** Whether there are build errors */
+  hasErrors: boolean;
+};
+
 /** The inner context. */
 export type InternalContext = RsbuildContext & {
   /** All hooks. */
@@ -81,4 +90,6 @@ export type InternalContext = RsbuildContext & {
   environments: Record<string, EnvironmentContext>;
   /** Only build specified environment. */
   specifiedEnvironments?: string[];
+  /** Build state information */
+  buildState: BuildState;
 };
