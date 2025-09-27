@@ -274,7 +274,9 @@ export class SocketServer {
         if (
           message.type === 'client-error' &&
           // Do not report browser error when using webpack
-          this.context.bundlerType === 'rspack'
+          this.context.bundlerType === 'rspack' &&
+          // Do not report browser error when build failed
+          !this.context.buildState.hasErrors
         ) {
           reportRuntimeError(message, this.context, this.getOutputFileSystem());
         }
