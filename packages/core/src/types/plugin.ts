@@ -154,7 +154,7 @@ export type ModifyWebpackChainUtils = ModifyChainUtils & {
   CHAIN_ID: ChainIdentifier;
   /**
    * @deprecated Use target instead.
-   * */
+   */
   name: string;
   /**
    * @deprecated Use HtmlPlugin instead.

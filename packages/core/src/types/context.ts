@@ -28,7 +28,8 @@ export type RsbuildContext = {
    *     // ...
    *   });
    *   await rsbuild.startDevServer();
-   *   console.log(rsbuild.context.devServer); // { hostname: 'localhost', port: 3000, https: false }
+   *   console.log(rsbuild.context.devServer);
+   *   // { hostname: 'localhost', port: 3000, https: false }
    * }
    * ```
    */
@@ -82,9 +83,9 @@ export type InternalContext = RsbuildContext & {
   normalizedConfig?: NormalizedConfig;
   /**
    * Get the plugin API.
-   *
-   * When environment is undefined, the global plugin API is returned, which can be used in all environments.
-   * */
+   * When environment is undefined, the global plugin API is returned, which
+   * can be used in all environments.
+   */
   getPluginAPI?: (environment?: string) => RsbuildPluginAPI;
   /** The environment context. */
   environments: Record<string, EnvironmentContext>;

@@ -1357,14 +1357,14 @@ export type OutputStructure = 'flat' | 'nested';
 /**
  * custom properties
  * e.g. { name: 'viewport' content: 'width=500, initial-scale=1' }
- * */
+ */
 export type MetaAttrs = { [attrName: string]: string | boolean };
 
 export type MetaOptions = {
   /**
    * name content pair
    * e.g. { viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no' }`
-   * */
+   */
   [name: string]: string | false | MetaAttrs;
 };
 
@@ -1886,7 +1886,7 @@ export type AllowedEnvironmentDevKeys =
 
 /**
  * The Rsbuild config to run in the specified environment.
- * */
+ */
 export interface EnvironmentConfig {
   /**
    * Options for local development.
@@ -1934,7 +1934,7 @@ export type LogLevel = 'info' | 'warn' | 'error' | 'silent';
 
 /**
  * The Rsbuild config.
- * */
+ */
 export interface RsbuildConfig extends EnvironmentConfig {
   /**
    * Specify the build mode for Rsbuild, as each mode has different default behavior and optimizations.
