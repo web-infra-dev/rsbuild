@@ -8,7 +8,7 @@ import type { NormalizedClientConfig } from '../types';
 const config: NormalizedClientConfig = RSBUILD_CLIENT_CONFIG;
 const serverHost = RSBUILD_SERVER_HOST;
 const serverPort = RSBUILD_SERVER_PORT;
-const messages: ClientMessage[] = [];
+const queuedMessages: ClientMessage[] = [];
 
 // Hash of the last successful build
 let lastHash: string | undefined;
@@ -172,9 +172,9 @@ function onOpen() {
     socketSend({ type: 'ping' });
   }, 30000);
 
-  if (messages.length) {
-    messages.forEach(socketSend);
-    messages.length = 0;
+  if (queuedMessages.length) {
+    queuedMessages.forEach(socketSend);
+    queuedMessages.length = 0;
   }
 }
 
@@ -246,7 +246,7 @@ function sendError(message: string, stack?: string) {
   if (isSocketReady()) {
     socketSend(messageInfo);
   } else {
-    messages.push(messageInfo);
+    queuedMessages.push(messageInfo);
   }
 }
 
