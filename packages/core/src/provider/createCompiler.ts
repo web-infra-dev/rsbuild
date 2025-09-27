@@ -88,6 +88,8 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
   rspackConfigs: Rspack.Configuration[];
 }> {
   logger.debug('creating compiler');
+
+  const HOOK_NAME = 'rsbuild:compiler';
   const { context } = options;
   const { rspackConfigs } = await initConfigs(options);
 
@@ -122,7 +124,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
   const lazyModules: Set<string> = new Set();
 
   // Collect lazy compiled modules from the infrastructure logs
-  compiler.hooks.infrastructureLog.tap('rsbuild:compiling', (name, _, args) => {
+  compiler.hooks.infrastructureLog.tap(HOOK_NAME, (name, _, args) => {
     const log = args[0];
     if (
       name === 'LazyCompilation' &&
@@ -144,7 +146,12 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     }
   });
 
-  compiler.hooks.watchRun.tap('rsbuild:compiling', (compiler) => {
+  compiler.hooks.run.tap(HOOK_NAME, () => {
+    context.buildState.status = 'building';
+  });
+
+  compiler.hooks.watchRun.tap(HOOK_NAME, (compiler) => {
+    context.buildState.status = 'building';
     logRspackVersion();
 
     if (!isCompiling) {
@@ -158,68 +165,72 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     isCompiling = true;
   });
 
+  compiler.hooks.invalid.tap(HOOK_NAME, () => {
+    context.buildState.status = 'idle';
+    context.buildState.hasErrors = false;
+  });
+
   if (context.action === 'build') {
     // When there are multiple compilers, we only need to print the start log once
     const firstCompiler = isMultiCompiler
       ? (compiler as Rspack.MultiCompiler).compilers[0]
       : compiler;
-    firstCompiler.hooks.run.tap('rsbuild:run', () => {
+
+    firstCompiler.hooks.run.tap(HOOK_NAME, () => {
       logger.info('build started...');
       logRspackVersion();
     });
   }
 
-  const done = (stats: Rspack.Stats | Rspack.MultiStats) => {
-    const statsOptions = getStatsOptions(compiler);
-    const statsJson = stats.toJson({
-      children: true,
-      moduleTrace: true,
-      // get the compilation time
-      timings: true,
-      preset: 'errors-warnings',
-      ...statsOptions,
-    });
-
-    const printTime = (c: StatsCompilation, index: number) => {
-      if (c.time) {
-        const time = prettyTime(c.time / 1000);
-        const { name } = rspackConfigs[index];
-
-        // When using multi compiler, print name to distinguish different compilers
-        const suffix = name && isMultiCompiler ? color.dim(` (${name})`) : '';
-        logger.ready(`built in ${time}${suffix}`);
-      }
-    };
-
-    const hasErrors = stats.hasErrors();
-
-    if (!hasErrors) {
-      // only print children compiler time when multi compiler
-      if (isMultiCompiler && statsJson.children?.length) {
-        statsJson.children.forEach((c, index) => {
-          printTime(c, index);
-        });
-      } else {
-        printTime(statsJson, 0);
-      }
-    }
-
-    const { message, level } = formatStats(statsJson, hasErrors);
-
-    if (level === 'error') {
-      logger.error(message);
-    }
-    if (level === 'warning') {
-      logger.warn(message);
-    }
-
-    isCompiling = false;
-  };
-
   compiler.hooks.done.tap(
-    'rsbuild:done',
+    HOOK_NAME,
     (stats: Rspack.Stats | Rspack.MultiStats) => {
-      done(stats);
+      const hasErrors = stats.hasErrors();
+      context.buildState.hasErrors = hasErrors;
+      context.buildState.status = 'done';
+
+      const statsOptions = getStatsOptions(compiler);
+      const statsJson = stats.toJson({
+        children: true,
+        moduleTrace: true,
+        // get the compilation time
+        timings: true,
+        preset: 'errors-warnings',
+        ...statsOptions,
+      });
+
+      const printTime = (c: StatsCompilation, index: number) => {
+        if (c.time) {
+          const time = prettyTime(c.time / 1000);
+          const { name } = rspackConfigs[index];
+
+          // When using multi compiler, print name to distinguish different compilers
+          const suffix = name && isMultiCompiler ? color.dim(` (${name})`) : '';
+          logger.ready(`built in ${time}${suffix}`);
+        }
+      };
+
+      if (!hasErrors) {
+        // only print children compiler time when multi compiler
+        if (isMultiCompiler && statsJson.children?.length) {
+          statsJson.children.forEach((c, index) => {
+            printTime(c, index);
+          });
+        } else {
+          printTime(statsJson, 0);
+        }
+      }
+
+      const { message, level } = formatStats(statsJson, hasErrors);
+
+      if (level === 'error') {
+        logger.error(message);
+      }
+      if (level === 'warning') {
+        logger.warn(message);
+      }
+
+      isCompiling = false;
     },
   );
 

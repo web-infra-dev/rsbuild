@@ -212,5 +212,9 @@ export async function createContext(
     config: { ...rsbuildConfig },
     originalConfig: userConfig,
     specifiedEnvironments,
+    buildState: {
+      status: 'idle',
+      hasErrors: false,
+    },
   };
 }
