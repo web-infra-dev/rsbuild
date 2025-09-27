@@ -3,20 +3,12 @@ import onFinished from 'on-finished';
 import type { Range, Result as RangeResult, Ranges } from 'range-parser';
 import rangeParser from 'range-parser';
 import { logger } from '../../logger';
-import type { EnvironmentContext, RequestHandler } from '../../types';
+import type { InternalContext, RequestHandler } from '../../types';
 import { escapeHtml } from './escapeHtml';
 import { getFileFromUrl } from './getFileFromUrl';
-import type { Context, OutputFileSystem, ServerResponse } from './index';
+import type { OutputFileSystem } from './index';
 import { memorize } from './memorize';
 import { parseTokenList } from './parseTokenList';
-
-export function ready(context: Context, callback: () => void): void {
-  if (context.ready) {
-    callback();
-  } else {
-    context.callbacks.push(callback);
-  }
-}
 
 function getEtag(stat: FSStats): string {
   const mtime = stat.mtime.getTime().toString(16);
@@ -120,18 +112,17 @@ type SendErrorOptions = {
 
 const acceptedMethods = ['GET', 'HEAD'];
 
-export function wrapper(
-  context: Context,
+export function createMiddleware(
+  context: InternalContext,
+  ready: (callback: () => void) => void,
   outputFileSystem: OutputFileSystem,
-  environments: Record<string, EnvironmentContext>,
 ): RequestHandler {
   return async function middleware(req, res, next) {
+    const { environments } = context;
+
     async function goNext() {
       return new Promise<void>((resolve) => {
-        ready(context, () => {
-          const extendedRes = res as ServerResponse;
-          extendedRes.locals = extendedRes.locals || {};
-          extendedRes.locals.webpack = { devMiddleware: context };
+        ready(() => {
           next();
           resolve();
         });
@@ -514,6 +505,6 @@ export function wrapper(
       onFinished(res, cleanup);
     }
 
-    ready(context, processRequest);
+    ready(processRequest);
   };
 }

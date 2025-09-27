@@ -113,9 +113,9 @@ export class BuildManager {
 
     const middleware = await assetsMiddleware({
       config,
+      context,
       compiler: this.compiler,
       socketServer: this.socketServer,
-      environments: context.environments,
       resolvedPort: this.resolvedPort,
     });
 
