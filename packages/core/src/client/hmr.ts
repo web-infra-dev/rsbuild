@@ -8,6 +8,11 @@ import type { NormalizedClientConfig } from '../types';
 const config: NormalizedClientConfig = RSBUILD_CLIENT_CONFIG;
 const serverHost = RSBUILD_SERVER_HOST;
 const serverPort = RSBUILD_SERVER_PORT;
+const queuedMessages: ClientMessage[] = [];
+
+// Hash of the last successful build
+let lastHash: string | undefined;
+let hasBuildErrors = false;
 
 function formatURL(fallback?: boolean) {
   const { location } = self;
@@ -32,15 +37,12 @@ function formatURL(fallback?: boolean) {
   return `${protocol}${colon}//${hostname}:${port}${pathname}?token=${RSBUILD_WEB_SOCKET_TOKEN}`;
 }
 
-// Remember some state related to hot module replacement.
-let lastCompilationHash: string | undefined;
-let hasCompileErrors = false;
-
-function clearOutdatedErrors() {
-  // Clean up outdated compile errors, if any.
-  if (console.clear && hasCompileErrors) {
+function clearBuildErrors() {
+  // Clean up outdated compile errors
+  if (console.clear && hasBuildErrors) {
     console.clear();
   }
+  hasBuildErrors = false;
 }
 
 let createOverlay: undefined | ((html: string) => void);
@@ -56,16 +58,13 @@ export const registerOverlay = (
 
 // Successful compilation.
 function handleSuccess() {
-  clearOutdatedErrors();
-  hasCompileErrors = false;
+  clearBuildErrors();
   tryApplyUpdates();
 }
 
 // Compilation with warnings (e.g. ESLint).
 function handleWarnings({ text }: { text: string[] }) {
-  clearOutdatedErrors();
-
-  hasCompileErrors = false;
+  clearBuildErrors();
 
   for (let i = 0; i < text.length; i++) {
     if (i === 5) {
@@ -82,9 +81,8 @@ function handleWarnings({ text }: { text: string[] }) {
 
 // Compilation with errors (e.g. syntax error or missing modules).
 function handleErrors({ text, html }: { text: string[]; html: string }) {
-  clearOutdatedErrors();
-
-  hasCompileErrors = true;
+  clearBuildErrors();
+  hasBuildErrors = true;
 
   // Also log them to the console.
   for (const error of text) {
@@ -98,7 +96,7 @@ function handleErrors({ text, html }: { text: string[]; html: string }) {
 
 // __webpack_hash__ is the hash of the current compilation.
 // It's a global variable injected by Rspack.
-const isUpdateAvailable = () => lastCompilationHash !== WEBPACK_HASH;
+const shouldUpdate = () => lastHash !== WEBPACK_HASH;
 
 const handleApplyUpdates = (
   err: unknown,
@@ -123,7 +121,7 @@ const handleApplyUpdates = (
 // Attempt to update code on the fly, fall back to a hard reload.
 function tryApplyUpdates() {
   // detect is there a newer version of this code available
-  if (!isUpdateAvailable()) {
+  if (!shouldUpdate()) {
     return;
   }
 
@@ -174,11 +172,9 @@ function onOpen() {
     socketSend({ type: 'ping' });
   }, 30000);
 
-  if (errorMessages.length) {
-    errorMessages.forEach((message) => {
-      socketSend(message);
-    });
-    errorMessages.length = 0;
+  if (queuedMessages.length) {
+    queuedMessages.forEach(socketSend);
+    queuedMessages.length = 0;
   }
 }
 
@@ -188,9 +184,9 @@ function onMessage(e: MessageEvent<string>) {
   switch (message.type) {
     case 'hash':
       // Update the last compilation hash
-      lastCompilationHash = message.data;
+      lastHash = message.data;
 
-      if (clearOverlay && isUpdateAvailable()) {
+      if (clearOverlay && shouldUpdate()) {
         clearOverlay();
       }
       break;
@@ -241,9 +237,7 @@ function onSocketError() {
   }
 }
 
-const errorMessages: ClientMessageError[] = [];
-
-function sendRuntimeError(message: string, stack?: string) {
+function sendError(message: string, stack?: string) {
   const messageInfo: ClientMessageError = {
     type: 'client-error',
     message,
@@ -252,7 +246,7 @@ function sendRuntimeError(message: string, stack?: string) {
   if (isSocketReady()) {
     socketSend(messageInfo);
   } else {
-    errorMessages.push(messageInfo);
+    queuedMessages.push(messageInfo);
   }
 }
 
@@ -275,7 +269,7 @@ function onUnhandledRejection({ reason }: PromiseRejectionEvent) {
     }
   }
 
-  sendRuntimeError(`Uncaught (in promise) ${message}`, stack);
+  sendError(`Uncaught (in promise) ${message}`, stack);
 }
 
 // Establishing a WebSocket connection with the server.
@@ -314,11 +308,8 @@ function reloadPage() {
 }
 
 if (RSBUILD_DEV_BROWSER_LOGS && typeof window !== 'undefined') {
-  window.addEventListener('error', (event) => {
-    sendRuntimeError(
-      event.message,
-      event.error instanceof Error ? event.error.stack : undefined,
-    );
+  window.addEventListener('error', ({ message, error }) => {
+    sendError(message, error instanceof Error ? error.stack : undefined);
   });
   window.addEventListener('unhandledrejection', onUnhandledRejection);
 }
