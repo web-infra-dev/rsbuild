@@ -88,6 +88,8 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
   rspackConfigs: Rspack.Configuration[];
 }> {
   logger.debug('creating compiler');
+
+  const HOOK_NAME = 'rsbuild:compiler';
   const { context } = options;
   const { rspackConfigs } = await initConfigs(options);
 
@@ -122,7 +124,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
   const lazyModules: Set<string> = new Set();
 
   // Collect lazy compiled modules from the infrastructure logs
-  compiler.hooks.infrastructureLog.tap('rsbuild:compiling', (name, _, args) => {
+  compiler.hooks.infrastructureLog.tap(HOOK_NAME, (name, _, args) => {
     const log = args[0];
     if (
       name === 'LazyCompilation' &&
@@ -144,7 +146,11 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     }
   });
 
-  compiler.hooks.watchRun.tap('rsbuild:compiling', (compiler) => {
+  compiler.hooks.run.tap(HOOK_NAME, () => {
+    context.buildState.status = 'building';
+  });
+
+  compiler.hooks.watchRun.tap(HOOK_NAME, (compiler) => {
     context.buildState.status = 'building';
     logRspackVersion();
 
@@ -159,26 +165,25 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     isCompiling = true;
   });
 
+  compiler.hooks.invalid.tap(HOOK_NAME, () => {
+    context.buildState.status = 'idle';
+    context.buildState.hasErrors = false;
+  });
+
   if (context.action === 'build') {
-    context.buildState.status = 'building';
     // When there are multiple compilers, we only need to print the start log once
     const firstCompiler = isMultiCompiler
       ? (compiler as Rspack.MultiCompiler).compilers[0]
       : compiler;
 
-    firstCompiler.hooks.run.tap('rsbuild:run', () => {
+    firstCompiler.hooks.run.tap(HOOK_NAME, () => {
       logger.info('build started...');
       logRspackVersion();
     });
   }
 
-  compiler.hooks.invalid.tap('rsbuild:invalid', () => {
-    context.buildState.status = 'idle';
-    context.buildState.hasErrors = false;
-  });
-
   compiler.hooks.done.tap(
-    'rsbuild:done',
+    HOOK_NAME,
     (stats: Rspack.Stats | Rspack.MultiStats) => {
       const hasErrors = stats.hasErrors();
       context.buildState.hasErrors = hasErrors;

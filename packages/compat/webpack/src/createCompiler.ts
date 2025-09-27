@@ -4,6 +4,8 @@ import { type InitConfigsOptions, initConfigs } from './initConfigs.js';
 
 export async function createCompiler(options: InitConfigsOptions) {
   logger.debug('creating compiler');
+
+  const HOOK_NAME = 'rsbuild:compiler';
   const { helpers, context } = options;
   const { webpackConfigs } = await initConfigs(options);
 
@@ -20,7 +22,24 @@ export async function createCompiler(options: InitConfigsOptions) {
     | Rspack.Compiler
     | Rspack.MultiCompiler;
 
-  const done = (stats: Rspack.Stats) => {
+  compiler.hooks.run.tap(HOOK_NAME, () => {
+    context.buildState.status = 'building';
+  });
+
+  compiler.hooks.watchRun.tap(HOOK_NAME, () => {
+    context.buildState.status = 'building';
+  });
+
+  compiler.hooks.invalid.tap(HOOK_NAME, () => {
+    context.buildState.status = 'idle';
+    context.buildState.hasErrors = false;
+  });
+
+  compiler.hooks.done.tap(HOOK_NAME, (stats) => {
+    const hasErrors = stats.hasErrors();
+    context.buildState.hasErrors = hasErrors;
+    context.buildState.status = 'done';
+
     const statsOptions = helpers.getStatsOptions(compiler);
     const statsJson = stats.toJson({
       moduleTrace: true,
@@ -29,20 +48,13 @@ export async function createCompiler(options: InitConfigsOptions) {
       ...statsOptions,
     });
 
-    const { message, level } = helpers.formatStats(
-      statsJson,
-      stats.hasErrors(),
-    );
+    const { message, level } = helpers.formatStats(statsJson, hasErrors);
 
     if (level === 'error') {
       logger.error(message);
     } else if (level === 'warning') {
       logger.warn(message);
     }
-  };
-
-  compiler.hooks.done.tap('rsbuild:done', (stats: unknown) => {
-    done(stats as Rspack.Stats);
   });
 
   if (context.action === 'dev') {
