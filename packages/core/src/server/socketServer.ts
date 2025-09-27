@@ -22,31 +22,38 @@ function isEqualSet(a: Set<string>, b: Set<string>): boolean {
 
 const CHECK_SOCKETS_INTERVAL = 30000;
 
-export type SocketMessageStaticChanged = {
+export type ServerMessageStaticChanged = {
   type: 'static-changed' | 'content-changed';
 };
 
-export type SocketMessageHash = {
+export type ServerMessageHash = {
   type: 'hash';
   data: string;
 };
 
-export type SocketMessageOk = {
+export type ServerMessageOk = {
   type: 'ok';
 };
 
-export type SocketMessageWarnings = {
+export type ServerMessageWarnings = {
   type: 'warnings';
   data: { text: string[] };
 };
 
-export type SocketMessageErrors = {
+export type ServerMessageErrors = {
   type: 'errors';
   data: { text: string[]; html: string };
 };
 
-export type ClientMessageRuntimeError = {
-  type: 'runtime-error';
+export type ServerMessage =
+  | ServerMessageOk
+  | ServerMessageStaticChanged
+  | ServerMessageHash
+  | ServerMessageWarnings
+  | ServerMessageErrors;
+
+export type ClientMessageError = {
+  type: 'client-error';
   message: string;
   stack?: string;
 };
@@ -55,14 +62,7 @@ export type ClientMessagePing = {
   type: 'ping';
 };
 
-export type SocketMessage =
-  | SocketMessageOk
-  | SocketMessageStaticChanged
-  | SocketMessageHash
-  | SocketMessageWarnings
-  | SocketMessageErrors;
-
-export type ClientMessage = ClientMessagePing | ClientMessageRuntimeError;
+export type ClientMessage = ClientMessagePing | ClientMessageError;
 
 const parseQueryString = (req: IncomingMessage) => {
   const queryStr = req.url ? req.url.split('?')[1] : '';
@@ -202,7 +202,7 @@ export class SocketServer {
    * @param token - The token of the socket to send the message to,
    * if not provided, the message will be sent to all sockets
    */
-  public sockWrite(message: SocketMessage, token?: string): void {
+  public sockWrite(message: ServerMessage, token?: string): void {
     const messageStr = JSON.stringify(message);
 
     const sendToSockets = (sockets: Set<Ws>) => {
@@ -272,7 +272,7 @@ export class SocketServer {
         );
 
         if (
-          message.type === 'runtime-error' &&
+          message.type === 'client-error' &&
           // Do not report browser error when using webpack
           this.context.bundlerType === 'rspack'
         ) {

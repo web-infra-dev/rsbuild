@@ -1,7 +1,7 @@
 import type {
   ClientMessage,
-  ClientMessageRuntimeError,
-  SocketMessage,
+  ClientMessageError,
+  ServerMessage,
 } from '../server/socketServer';
 import type { NormalizedClientConfig } from '../types';
 
@@ -183,7 +183,7 @@ function onOpen() {
 }
 
 function onMessage(e: MessageEvent<string>) {
-  const message: SocketMessage = JSON.parse(e.data);
+  const message: ServerMessage = JSON.parse(e.data);
 
   switch (message.type) {
     case 'hash':
@@ -241,11 +241,11 @@ function onSocketError() {
   }
 }
 
-const errorMessages: ClientMessageRuntimeError[] = [];
+const errorMessages: ClientMessageError[] = [];
 
 function sendRuntimeError(message: string, stack?: string) {
-  const messageInfo: ClientMessageRuntimeError = {
-    type: 'runtime-error',
+  const messageInfo: ClientMessageError = {
+    type: 'client-error',
     message,
     stack,
   };
