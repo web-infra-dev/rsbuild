@@ -271,7 +271,11 @@ export class SocketServer {
           typeof data === 'string' ? data : data.toString(),
         );
 
-        if (message.type === 'runtime-error') {
+        if (
+          message.type === 'runtime-error' &&
+          // Do not report browser error when using webpack
+          this.context.bundlerType === 'rspack'
+        ) {
           reportRuntimeError(message, this.context, this.getOutputFileSystem());
         }
       } catch {}
