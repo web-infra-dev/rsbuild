@@ -39,15 +39,15 @@ import {
 import { createHttpServer } from './httpServer';
 import { notFoundMiddleware, optionsFallbackMiddleware } from './middlewares';
 import { open } from './open';
-import type { SocketMessage } from './socketServer';
+import type { ServerMessage } from './socketServer';
 import { setupWatchFiles, type WatchFilesResult } from './watchFiles';
 
 type HTTPServer = Server | Http2SecureServer;
 
-type ExtractSocketMessageData<T extends SocketMessage['type']> =
-  Extract<SocketMessage, { type: T }> extends { data: infer D } ? D : undefined;
+type ExtractSocketMessageData<T extends ServerMessage['type']> =
+  Extract<ServerMessage, { type: T }> extends { data: infer D } ? D : undefined;
 
-export type SockWrite = <T extends SocketMessage['type']>(
+export type SockWrite = <T extends ServerMessage['type']>(
   type: T,
   data?: ExtractSocketMessageData<T>,
 ) => void;
@@ -362,7 +362,7 @@ export async function createDevServer<
     buildManager?.socketServer.sockWrite({
       type,
       data,
-    } as SocketMessage);
+    } as ServerMessage);
 
   const devServerAPI: RsbuildDevServer = {
     port,
