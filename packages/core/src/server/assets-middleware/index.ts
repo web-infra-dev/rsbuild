@@ -7,13 +7,12 @@
  * https://github.com/webpack/webpack-dev-middleware/blob/master/LICENSE
  */
 import type { Stats as FSStats, ReadStream } from 'node:fs';
-import type { ServerResponse as NodeServerResponse } from 'node:http';
 import { createRequire } from 'node:module';
 import type { Compiler, MultiCompiler, Watching } from '@rspack/core';
 import { applyToCompiler, isMultiCompiler } from '../../helpers';
 import { logger } from '../../logger';
 import type {
-  EnvironmentContext,
+  InternalContext,
   NormalizedConfig,
   NormalizedDevConfig,
   NormalizedEnvironmentConfig,
@@ -21,16 +20,11 @@ import type {
 } from '../../types';
 import { resolveHostname } from './../hmrFallback';
 import type { SocketServer } from '../socketServer';
-import { wrapper as createMiddleware } from './middleware';
-import { setupHooks } from './setupHooks';
+import { createMiddleware } from './middleware';
 import { setupOutputFileSystem } from './setupOutputFileSystem';
 import { resolveWriteToDiskConfig, setupWriteToDisk } from './setupWriteToDisk';
 
 const noop = () => {};
-
-export type ServerResponse = NodeServerResponse & {
-  locals?: { webpack?: { devMiddleware?: Context } };
-};
 
 export type MultiWatching = ReturnType<MultiCompiler['watch']>;
 
@@ -48,11 +42,6 @@ export type Options = {
   writeToDisk?:
     | boolean
     | ((targetPath: string, compilationName?: string) => boolean);
-};
-
-export type Context = {
-  ready: boolean;
-  callbacks: (() => void)[];
 };
 
 export type AssetsMiddlewareClose = (
@@ -90,31 +79,19 @@ function getClientPaths(devConfig: NormalizedDevConfig) {
   return clientPaths;
 }
 
-export const isClientCompiler = (compiler: {
-  options: {
-    target?: Compiler['options']['target'];
-  };
-}): boolean => {
+export const isClientCompiler = (compiler: Compiler): boolean => {
   const { target } = compiler.options;
-
   if (target) {
     return Array.isArray(target) ? target.includes('web') : target === 'web';
   }
-
   return false;
 };
 
-const isNodeCompiler = (compiler: {
-  options: {
-    target?: Compiler['options']['target'];
-  };
-}) => {
+const isNodeCompiler = (compiler: Compiler) => {
   const { target } = compiler.options;
-
   if (target) {
     return Array.isArray(target) ? target.includes('node') : target === 'node';
   }
-
   return false;
 };
 
@@ -127,21 +104,20 @@ export const setupServerHooks = ({
   token: string;
   socketServer: SocketServer;
 }): void => {
-  // TODO: node SSR HMR is not supported yet
+  // Node HMR is not supported yet
   if (isNodeCompiler(compiler)) {
     return;
   }
 
-  const { invalid, done } = compiler.hooks;
-
-  invalid.tap('rsbuild-dev-server', (fileName) => {
+  compiler.hooks.invalid.tap('rsbuild-dev-server', (fileName) => {
     // reload page when HTML template changed
     if (typeof fileName === 'string' && fileName.endsWith('.html')) {
       socketServer.sockWrite({ type: 'static-changed' }, token);
       return;
     }
   });
-  done.tap('rsbuild-dev-server', (stats) => {
+
+  compiler.hooks.done.tap('rsbuild-dev-server', (stats) => {
     socketServer.updateStats(stats, token);
   });
 };
@@ -198,17 +174,18 @@ function applyHMREntry({
 export const assetsMiddleware = async ({
   config,
   compiler,
+  context,
   socketServer,
-  environments,
   resolvedPort,
 }: {
   config: NormalizedConfig;
   compiler: Compiler | MultiCompiler;
+  context: InternalContext;
   socketServer: SocketServer;
-  environments: Record<string, EnvironmentContext>;
   resolvedPort: number;
 }): Promise<AssetsMiddleware> => {
   const resolvedHost = await resolveHostname(config.server.host);
+  const { environments } = context;
 
   const setupCompiler = (compiler: Compiler, index: number) => {
     const environment = Object.values(environments).find(
@@ -242,12 +219,20 @@ export const assetsMiddleware = async ({
   applyToCompiler(compiler, setupCompiler);
 
   const compilers = isMultiCompiler(compiler) ? compiler.compilers : [compiler];
-  const context: Context = {
-    ready: false,
-    callbacks: [],
-  };
+  const callbacks: (() => void)[] = [];
 
-  setupHooks(context, compiler);
+  compiler.hooks.done.tap('rsbuild-dev-middleware', () => {
+    process.nextTick(() => {
+      if (!(context.buildState.status === 'done')) {
+        return;
+      }
+
+      callbacks.forEach((callback) => {
+        callback();
+      });
+      callbacks.length = 0;
+    });
+  });
 
   const writeToDisk = resolveWriteToDiskConfig(config.dev, environments);
   if (writeToDisk) {
@@ -256,10 +241,18 @@ export const assetsMiddleware = async ({
 
   const outputFileSystem = await setupOutputFileSystem(writeToDisk, compilers);
 
+  const ready = (callback: () => void) => {
+    if (context.buildState.status === 'done') {
+      callback();
+    } else {
+      callbacks.push(callback);
+    }
+  };
+
   const instance = createMiddleware(
     context,
+    ready,
     outputFileSystem,
-    environments,
   ) as AssetsMiddleware;
 
   let watching: Watching | MultiWatching | undefined;
@@ -269,20 +262,19 @@ export const assetsMiddleware = async ({
     if (compiler.watching) {
       watching = compiler.watching;
     } else {
-      const errorHandler = (error: Error | null | undefined) => {
+      const watchOptions =
+        compilers.length > 1
+          ? compilers.map(({ options }) => options.watchOptions || {})
+          : compilers[0].options.watchOptions || {};
+
+      watching = compiler.watch(watchOptions, (error) => {
         if (error) {
           if (error.message?.includes('× Error:')) {
             error.message = error.message.replace('× Error:', '').trim();
           }
           logger.error(error);
         }
-      };
-
-      const watchOptions =
-        compilers.length > 1
-          ? compilers.map(({ options }) => options.watchOptions || {})
-          : compilers[0].options.watchOptions || {};
-      watching = compiler.watch(watchOptions, errorHandler);
+      });
     }
   };
 
