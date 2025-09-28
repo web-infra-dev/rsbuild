@@ -53,7 +53,7 @@ export default {
       name: 'launch-editor-middleware',
       ignoreDts: true,
       externals: {
-        picocolors: '../picocolors',
+        picocolors: '../picocolors/index.js',
       },
     },
     {
@@ -134,7 +134,7 @@ export default {
       name: 'postcss',
       copyDts: true,
       externals: {
-        picocolors: '../picocolors',
+        picocolors: '../picocolors/index.js',
       },
       afterBundle(task) {
         // source-map-js type does not exist, use a stub instead
@@ -160,14 +160,14 @@ export type SourceMapGenerator = unknown;
       name: 'css-loader',
       ignoreDts: true,
       externals: {
-        postcss: '../postcss',
+        postcss: '../postcss/index.js',
       },
     },
     {
       name: 'postcss-loader',
       externals: {
         jiti: 'jiti',
-        postcss: '../postcss',
+        postcss: '../postcss/index.js',
       },
       ignoreDts: true,
     },
@@ -175,7 +175,7 @@ export type SourceMapGenerator = unknown;
       name: '@jridgewell/remapping',
       ignoreDts: true,
       externals: {
-        '@jridgewell/trace-mapping': '../trace-mapping',
+        '@jridgewell/trace-mapping': '../trace-mapping/index.js',
       },
     },
   ],
