@@ -23,7 +23,7 @@ export default {
     'connect',
     'rspack-manifest-plugin',
     'html-rspack-plugin',
-    'source-map',
+    '@jridgewell/trace-mapping',
     'mrmime',
     'memfs',
     'tinyglobby',
@@ -174,6 +174,9 @@ export type SourceMapGenerator = unknown;
     {
       name: '@jridgewell/remapping',
       ignoreDts: true,
+      externals: {
+        '@jridgewell/trace-mapping': '../@jridgewell/trace-mapping',
+      },
     },
   ],
 };
