@@ -4,5 +4,6 @@ compiled
 doc_build
 pnpm-lock.yaml
 
-# Avoid CSS syntax error
-**/less/inline-js/**/*.less
+# Avoid syntax error
+e2e/cases/plugin-less/inline-js/src/*.less
+e2e/cases/browser-logs/skip-build-error/src/**
