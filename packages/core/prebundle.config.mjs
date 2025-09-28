@@ -175,7 +175,7 @@ export type SourceMapGenerator = unknown;
       name: '@jridgewell/remapping',
       ignoreDts: true,
       externals: {
-        '@jridgewell/trace-mapping': '../@jridgewell/trace-mapping',
+        '@jridgewell/trace-mapping': '../trace-mapping',
       },
     },
   ],

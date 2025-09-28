@@ -206,9 +206,6 @@ importers:
       polka:
         specifier: ^0.5.2
         version: 0.5.2
-      source-map:
-        specifier: ^0.7.6
-        version: 0.7.6
       tailwindcss:
         specifier: ^4.1.13
         version: 4.1.13
@@ -237,8 +234,6 @@ importers:
       html-loader:
         specifier: ^5.1.0
         version: 5.1.0(webpack@5.101.3)
-
-  e2e/cases/output/source-map: {}
 
   e2e/cases/plugin-react/react-compiler-babel:
     dependencies:
@@ -306,6 +301,10 @@ importers:
       picocolors:
         specifier: ^1.1.1
         version: 1.1.1
+    devDependencies:
+      '@jridgewell/trace-mapping':
+        specifier: ^0.3.31
+        version: 0.3.31
 
   examples/lit:
     devDependencies:
@@ -735,9 +734,6 @@ importers:
       sirv:
         specifier: ^3.0.2
         version: 3.0.2
-      source-map:
-        specifier: ^0.7.6
-        version: 0.7.6
       stacktrace-parser:
         specifier: ^0.1.11
         version: 0.1.11

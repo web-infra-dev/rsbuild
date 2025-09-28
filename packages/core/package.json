@@ -95,7 +95,6 @@
     "rspack-chain": "^1.4.1",
     "rspack-manifest-plugin": "5.1.0",
     "sirv": "^3.0.2",
-    "source-map": "^0.7.6",
     "stacktrace-parser": "^0.1.11",
     "style-loader": "3.3.4",
     "tinyglobby": "0.2.14",
