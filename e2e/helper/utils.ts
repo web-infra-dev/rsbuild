@@ -3,6 +3,7 @@ import net from 'node:net';
 import { platform } from 'node:os';
 import { join, sep } from 'node:path';
 import { URL } from 'node:url';
+import { originalPositionFor, TraceMap } from '@jridgewell/trace-mapping';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import glob, {
   convertPathToPattern,
@@ -10,7 +11,6 @@ import glob, {
 } from 'fast-glob';
 import color from 'picocolors';
 import type { Page } from 'playwright';
-import sourceMap from 'source-map';
 import { expect } from './fixture';
 
 /**
@@ -238,16 +238,14 @@ export async function mapSourceMapPositions(
     column: number;
   }[],
 ) {
-  const consumer = await new sourceMap.SourceMapConsumer(rawSourceMap);
-
+  const tracer = new TraceMap(rawSourceMap);
   const originalPositions = generatedPositions.map((generatedPosition) =>
-    consumer.originalPositionFor({
+    originalPositionFor(tracer, {
       line: generatedPosition.line,
       column: generatedPosition.column,
     }),
   );
 
-  consumer.destroy();
   return originalPositions;
 }
 

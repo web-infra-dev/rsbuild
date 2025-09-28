@@ -56,7 +56,7 @@ async function testSourceMapType(
     ])
   ).map((o) => ({
     ...o,
-    source: o.source?.split('source-map/')[1] || o.source,
+    source: o.source?.split('webpack:///')[1] || o.source,
   }));
 
   expect(positions).toEqual([

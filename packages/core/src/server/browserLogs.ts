@@ -18,12 +18,11 @@ async function mapSourceMapPosition(
   line: number,
   column: number,
 ) {
-  const { SourceMapConsumer } = await import(
-    '../../compiled/source-map/index.js'
-  );
-  const consumer = await new SourceMapConsumer(rawSourceMap);
-  const originalPosition = consumer.originalPositionFor({ line, column });
-  consumer.destroy();
+  const {
+    default: { TraceMap, originalPositionFor },
+  } = await import('../../compiled/@jridgewell/trace-mapping/index.js');
+  const tracer = new TraceMap(rawSourceMap);
+  const originalPosition = originalPositionFor(tracer, { line, column });
   return originalPosition;
 }
 
@@ -80,7 +79,11 @@ const resolveSourceLocation = async (
         column,
       );
     }
-  } catch {}
+  } catch (error) {
+    if (error instanceof Error) {
+      logger.debug(`failed to map source map position: ${error.message}`);
+    }
+  }
 };
 
 /**
