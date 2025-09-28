@@ -298,13 +298,12 @@ importers:
 
   e2e/helper:
     dependencies:
-      picocolors:
-        specifier: ^1.1.1
-        version: 1.1.1
-    devDependencies:
       '@jridgewell/trace-mapping':
         specifier: ^0.3.31
         version: 0.3.31
+      picocolors:
+        specifier: ^1.1.1
+        version: 1.1.1
 
   examples/lit:
     devDependencies:
