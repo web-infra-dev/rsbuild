@@ -19,6 +19,7 @@ export type Bundler = 'rspack' | 'webpack';
 export type StartDevServerOptions = {
   /**
    * Using a custom Rspack Compiler object.
+   * @deprecated This is no longer supported and will be removed in a future version.
    */
   compiler?: Compiler | MultiCompiler;
   /**
@@ -57,6 +58,7 @@ export type BuildOptions = {
   watch?: boolean;
   /**
    * Using a custom Rspack Compiler object.
+   * @deprecated This is no longer supported and will be removed in a future version.
    */
   compiler?: Compiler | MultiCompiler;
 };

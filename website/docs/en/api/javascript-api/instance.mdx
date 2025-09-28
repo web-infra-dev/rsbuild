@@ -183,10 +183,6 @@ type BuildOptions = {
    * @default false
    */
   watch?: boolean;
-  /**
-   * Using a custom Rspack Compiler object.
-   */
-  compiler?: Compiler | MultiCompiler;
 };
 
 function Build(options?: BuildOptions): Promise<{
@@ -282,21 +278,6 @@ if (stats) {
 }
 ```
 
-### Custom compiler
-
-In some cases, you may want to use a custom compiler:
-
-```ts
-import { rspack } from '@rsbuild/core';
-
-const compiler = rspack({
-  // ...
-});
-await rsbuild.build({
-  compiler,
-});
-```
-
 ## rsbuild.startDevServer
 
 Starts the local dev server. This method will:
@@ -308,10 +289,6 @@ Starts the local dev server. This method will:
 
 ```ts
 type StartDevServerOptions = {
-  /**
-   * Using a custom Rspack Compiler object.
-   */
-  compiler?: Compiler | MultiCompiler;
   /**
    * Whether to get port silently and not print any logs.
    * @default false
@@ -397,21 +374,6 @@ When the default startup port is occupied, Rsbuild automatically increments the 
 ```ts
 await rsbuild.startDevServer({
   getPortSilently: true,
-});
-```
-
-### Custom compiler
-
-In some cases, you may want to use a custom compiler:
-
-```ts
-import { rspack } from '@rsbuild/core';
-
-const compiler = rspack({
-  // ...
-});
-await rsbuild.startDevServer({
-  compiler,
 });
 ```
 

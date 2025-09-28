@@ -206,10 +206,6 @@ type BuildOptions = {
    * @default false
    */
   watch?: boolean;
-  /**
-   * 使用自定义的 Rspack Compiler 对象
-   */
-  compiler?: Compiler | MultiCompiler;
 };
 
 function Build(options?: BuildOptions): Promise<{
@@ -305,21 +301,6 @@ if (stats) {
 }
 ```
 
-### 自定义 Compiler
-
-个别情况下，你可能希望使用自定义的 compiler：
-
-```ts
-import { rspack } from '@rsbuild/core';
-
-const compiler = rspack({
-  // ...
-});
-await rsbuild.build({
-  compiler,
-});
-```
-
 ## rsbuild.startDevServer
 
 启动本地 dev server。该方法会：
@@ -331,10 +312,6 @@ await rsbuild.build({
 
 ```ts
 type StartDevServerOptions = {
-  /**
-   * 使用自定义的 Rspack Compiler 对象
-   */
-  compiler?: Compiler | MultiCompiler;
   /**
    * 是否在启动时静默获取端口号，不输出任何日志
    * @default false
@@ -420,21 +397,6 @@ await server.close();
 ```ts
 await rsbuild.startDevServer({
   getPortSilently: true,
-});
-```
-
-### 自定义 Compiler
-
-个别情况下，你可能希望使用自定义的 compiler：
-
-```ts
-import { rspack } from '@rsbuild/core';
-
-const compiler = rspack({
-  // ...
-});
-await rsbuild.startDevServer({
-  compiler,
 });
 ```
 
