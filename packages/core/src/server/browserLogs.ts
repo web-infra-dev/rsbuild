@@ -79,8 +79,10 @@ const resolveSourceLocation = async (
         column,
       );
     }
-  } catch (e) {
-    logger.error(e);
+  } catch (error) {
+    if (error instanceof Error) {
+      logger.debug(`failed to map source map position: ${error.message}`);
+    }
   }
 };
 
