@@ -116,7 +116,7 @@ const formatErrorLocation = async (
  * Formats error messages received from the browser into a log string with
  * source location information.
  */
-export const formatClientErrorLog = async (
+export const formatBrowserErrorLog = async (
   message: ClientMessageError,
   context: InternalContext,
   fs: Rspack.OutputFileSystem,

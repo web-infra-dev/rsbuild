@@ -9,7 +9,7 @@ import {
 import { formatStatsMessages } from '../helpers/format';
 import { logger } from '../logger';
 import type { DevConfig, InternalContext, Rspack } from '../types';
-import { formatClientErrorLog } from './browserLogs';
+import { formatBrowserErrorLog } from './browserLogs';
 import { genOverlayHTML } from './overlay';
 
 interface ExtWebSocket extends Ws {
@@ -282,7 +282,7 @@ export class SocketServer {
           // Do not report browser error when build failed
           !this.context.buildState.hasErrors
         ) {
-          const log = await formatClientErrorLog(
+          const log = await formatBrowserErrorLog(
             message,
             this.context,
             this.getOutputFileSystem(),
