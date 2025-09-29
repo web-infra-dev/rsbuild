@@ -9,10 +9,16 @@ const formatFileName = (fileName: string) => {
 };
 
 function resolveFileName(stats: StatsError) {
-  // `moduleName` is the readable relative path of the source file
-  // e.g. "./src/App.jsx"
-  if (stats.moduleName) {
-    return formatFileName(stats.moduleName);
+  const file =
+    // `file` is a custom file path related to the stats error
+    // It should be output first
+    stats.file ||
+    // `moduleName` is the readable relative path of the source file
+    // e.g. "./src/App.jsx"
+    stats.moduleName;
+
+  if (file) {
+    return formatFileName(file);
   }
 
   // `moduleIdentifier` is the absolute path with inline loaders
@@ -28,9 +34,7 @@ function resolveFileName(stats: StatsError) {
     }
   }
 
-  // fallback to `file` if `moduleName` and `moduleIdentifier` do not exist
-  const file = stats.file;
-  return file ? formatFileName(file) : '';
+  return '';
 }
 
 function resolveModuleTrace(stats: StatsError) {
