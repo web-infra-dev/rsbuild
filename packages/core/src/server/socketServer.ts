@@ -9,7 +9,7 @@ import {
 import { formatStatsMessages } from '../helpers/format';
 import { logger } from '../logger';
 import type { DevConfig, InternalContext, Rspack } from '../types';
-import { reportRuntimeError } from './browserLogs';
+import { formatBrowserErrorLog } from './browserLogs';
 import { genOverlayHTML } from './overlay';
 
 interface ExtWebSocket extends Ws {
@@ -85,6 +85,8 @@ export class SocketServer {
   private heartbeatTimer: NodeJS.Timeout | null = null;
 
   private getOutputFileSystem: () => Rspack.OutputFileSystem;
+
+  private reportedBrowserLogs: Set<string> = new Set();
 
   constructor(
     context: InternalContext,
@@ -184,8 +186,9 @@ export class SocketServer {
     });
   }
 
-  public updateStats(stats: Rspack.Stats, token: string): void {
+  public onBuildDone(stats: Rspack.Stats, token: string): void {
     this.stats[token] = stats;
+    this.reportedBrowserLogs.clear();
 
     if (!this.socketsMap.size) {
       return;
@@ -244,6 +247,7 @@ export class SocketServer {
     this.stats = {};
     this.initialChunks = {};
     this.socketsMap.clear();
+    this.reportedBrowserLogs.clear();
 
     return new Promise<void>((resolve, reject) => {
       this.wsServer.close((err) => {
@@ -264,7 +268,7 @@ export class SocketServer {
       socket.isAlive = true;
     });
 
-    socket.on('message', (data) => {
+    socket.on('message', async (data) => {
       try {
         const message: ClientMessage = JSON.parse(
           // eslint-disable-next-line @typescript-eslint/no-base-to-string
@@ -278,7 +282,16 @@ export class SocketServer {
           // Do not report browser error when build failed
           !this.context.buildState.hasErrors
         ) {
-          reportRuntimeError(message, this.context, this.getOutputFileSystem());
+          const log = await formatBrowserErrorLog(
+            message,
+            this.context,
+            this.getOutputFileSystem(),
+          );
+
+          if (!this.reportedBrowserLogs.has(log)) {
+            this.reportedBrowserLogs.add(log);
+            logger.error(log);
+          }
         }
       } catch {}
     });
