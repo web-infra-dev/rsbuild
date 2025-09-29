@@ -33,6 +33,10 @@ export default {
 };
 ```
 
+:::tip
+需要注意的是，当你将页面与 Web Workers 一起打包时，由于 Web Workers 线程与主线程（页面）环境隔离，`entry` 方案对 Web Workers 并不适用，此时可以使用 `usage` 方案。
+:::
+
 ### off
 
 当 `output.polyfill` 配置为 `'off'` 时，Rsbuild 不会注入 polyfills，你需要自行处理代码的兼容性。

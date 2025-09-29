@@ -98,6 +98,18 @@ worker.postMessage(10);
 
 关于跨域问题的详细讨论可参考 [Discussions - webpack 5 web worker support for CORS?](https://github.com/webpack/webpack/discussions/14648)
 
+### 浏览器兼容性
+
+当你将页面与 Web Workers 一起打包时，需要注意的是，由于 Web Workers 线程与主线程（页面）环境隔离，Rsbuild 所提供的 polyfill [entry 方案](/guide/advanced/browser-compatibility#entry-方案) 对 Web Workers 并不适用，此时可以使用 [usage 方案](/guide/advanced/browser-compatibility#usage-方案)。
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    polyfill: 'usage',
+  },
+};
+```
+
 ## 独立构建
 
 Rsbuild 支持独立构建 Web Workers 产物。当你需要为 Web Workers 配置独立的构建选项，或将 Web Workers 提供给其他应用使用时，可以使用以下方法。
