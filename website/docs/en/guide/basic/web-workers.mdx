@@ -98,6 +98,18 @@ worker.postMessage(10);
 
 For detailed discussions on cross-domain issues, please refer to [Discussions - webpack 5 web worker support for CORS?](https://github.com/webpack/webpack/discussions/14648)
 
+### Browser compatibility
+
+When your application includes both main-thread code and Web Workers created with `new Worker`, note that Web Workers run in isolated threads and do not share the main-thread environment. As a result, Rsbuild’s polyfill [entry mode](/guide/advanced/browser-compatibility#entry-mode) does not apply to Web Workers. In this case, it’s recommended to use the [usage mode](/guide/advanced/browser-compatibility#usage-mode) to inject the required polyfills directly into each Web Worker.
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    polyfill: 'usage',
+  },
+};
+```
+
 ## Standalone build
 
 Rsbuild supports standalone building of Web Workers bundles. When you need to configure independent build options for Web Workers or provide Web Workers for use by other applications, you can use the following methods.
