@@ -58,9 +58,44 @@ Create a `src/env.d.ts` file to reference these types:
 
 When transpiling TypeScript code using tools like SWC and Babel, type checking is not performed.
 
-To enable type checking, use the plugin [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check). It runs TypeScript type checking in a separate process and uses [ts-checker-rspack-plugin](https://github.com/rspack-contrib/ts-checker-rspack-plugin) under the hood.
+### Type check plugin
 
-Please refer to the [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check) for usage instructions.
+To enable type checking, you can use the [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check) plugin. This plugin runs TypeScript type checking in a separate process and internally integrates [ts-checker-rspack-plugin](https://github.com/rspack-contrib/ts-checker-rspack-plugin).
+
+The plugin supports type checking in both dev and build modes, helping you catch type errors early during development.
+
+Refer to [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check) for usage instructions.
+
+### Using tsc
+
+You can also use [tsc](https://www.typescriptlang.org/docs/handbook/compiler-options.html) directly for type checking by adding a `type-check` step to your `build` script. This approach only performs type checking after the build and does not run during dev mode.
+
+```json title="package.json"
+{
+  "scripts": {
+    "build": "rsbuild build && npm run type-check",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
+```
+
+For Vue applications, use [vue-tsc](https://github.com/vuejs/language-tools/tree/master/packages/tsc) instead of `tsc`. It supports Vue SFCs in addition to TypeScript files.
+
+```json title="package.json"
+{
+  "scripts": {
+    "build": "rsbuild build && npm run type-check",
+    "type-check": "vue-tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "vue-tsc": "^3.0.0"
+  }
+}
+```
 
 ## tsconfig.json Path
 
