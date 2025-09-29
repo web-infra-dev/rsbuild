@@ -1,4 +1,4 @@
-import type { StatsCompilation, StatsError } from '@rspack/core';
+import type { StatsError } from '@rspack/core';
 import color from '../../compiled/picocolors/index.js';
 
 const formatFileName = (fileName: string) => {
@@ -191,24 +191,20 @@ const hintNodePolyfill = (message: string): string => {
   return message;
 };
 
-// Cleans up Rspack error messages.
-function formatMessage(stats: StatsError | string, verbose?: boolean) {
+// Formats Rspack stats error to readable message
+export function formatStatsError(stats: StatsError, verbose?: boolean): string {
   let lines: string[] = [];
   let message: string;
 
   // Stats error object
-  if (typeof stats === 'object') {
-    const fileName = resolveFileName(stats);
-    const mainMessage = stats.message;
-    const details =
-      verbose && stats.details ? `\nDetails: ${stats.details}\n` : '';
-    const stack = verbose && stats.stack ? `\n${stats.stack}` : '';
-    const moduleTrace = resolveModuleTrace(stats);
+  const fileName = resolveFileName(stats);
+  const mainMessage = stats.message;
+  const details =
+    verbose && stats.details ? `\nDetails: ${stats.details}\n` : '';
+  const stack = verbose && stats.stack ? `\n${stats.stack}` : '';
+  const moduleTrace = resolveModuleTrace(stats);
 
-    message = `${fileName}${mainMessage}${details}${stack}${moduleTrace}`;
-  } else {
-    message = stats;
-  }
+  message = `${fileName}${mainMessage}${details}${stack}${moduleTrace}`;
 
   // Remove inner error message
   const innerError = '-- inner error --';
@@ -233,22 +229,4 @@ function formatMessage(stats: StatsError | string, verbose?: boolean) {
   message = lines.join('\n');
 
   return message.trim();
-}
-
-export function formatStatsMessages(
-  stats: Pick<StatsCompilation, 'errors' | 'warnings'>,
-  verbose?: boolean,
-): {
-  errors: string[];
-  warnings: string[];
-} {
-  const formattedErrors =
-    stats.errors?.map((error) => formatMessage(error, verbose)) || [];
-  const formattedWarnings =
-    stats.warnings?.map((warning) => formatMessage(warning, verbose)) || [];
-
-  return {
-    errors: formattedErrors,
-    warnings: formattedWarnings,
-  };
 }
