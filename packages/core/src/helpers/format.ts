@@ -9,8 +9,14 @@ const formatFileName = (fileName: string) => {
 };
 
 function resolveFileName(stats: StatsError) {
-  // Get the real source file path with stats.moduleIdentifier.
-  // e.g. moduleIdentifier is "builtin:react-refresh-loader!/Users/x/src/App.jsx"
+  // `moduleName` is the readable relative path of the source file
+  // e.g. "./src/App.jsx"
+  if (stats.moduleName) {
+    return formatFileName(stats.moduleName);
+  }
+
+  // `moduleIdentifier` is the absolute path with inline loaders
+  // e.g. "builtin:react-refresh-loader!/Users/x/src/App.jsx"
   if (stats.moduleIdentifier) {
     const regex = /(?:!|^)([^!]+)$/;
     const matched = stats.moduleIdentifier.match(regex);
@@ -22,8 +28,8 @@ function resolveFileName(stats: StatsError) {
     }
   }
 
-  // fallback to file or moduleName if moduleIdentifier parse failed
-  const file = stats.file || stats.moduleName;
+  // fallback to `file` if `moduleName` and `moduleIdentifier` do not exist
+  const file = stats.file;
   return file ? formatFileName(file) : '';
 }
 
