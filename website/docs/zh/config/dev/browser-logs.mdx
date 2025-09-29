@@ -1,0 +1,38 @@
+# dev.browserLogs
+
+- **类型：** `boolean`
+- **默认值：** `true`
+- **版本：** 新增于 v1.5.13
+
+控制是否将浏览器运行时错误转发到终端。
+
+当设置为 `true` 时，Rsbuild 的客户端会监听浏览器中的 window `error` 事件，并将它们发送到开发服务器，然后在终端中打印（带有 `[browser]` 为前缀）。
+
+## 示例
+
+例如，如果你的应用中有以下代码：
+
+```jsx title="src/App.jsx"
+const App = () => {
+  const item = undefined;
+  return <div>{item.name}</div>;
+};
+```
+
+浏览器会抛出错误，Rsbuild 会将此错误转发到终端：
+
+```bash
+error   [browser] Uncaught TypeError: Cannot read properties of undefined (reading 'name') (src/App.jsx:3:0)
+```
+
+## 禁用
+
+将 `dev.browserLogs` 设置为 `false` 可以禁用此行为。
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    browserLogs: false,
+  },
+};
+```
