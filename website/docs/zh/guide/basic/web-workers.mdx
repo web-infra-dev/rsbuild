@@ -100,7 +100,7 @@ worker.postMessage(10);
 
 ### 浏览器兼容性
 
-当你的应用中既包含主线程页面代码，也包含通过 `new Worker` 创建的 Web Worker 时，需要注意：由于 Web Worker 运行在独立的线程中，与主线程环境隔离，Rsbuild 提供的 polyfill [entry 方案](/guide/advanced/browser-compatibility#entry-方案) 无法在 Web Worker 中生效。此时，建议改用 [usage 方案](/guide/advanced/browser-compatibility#usage-方案)，为 Web Worker 单独注入所需的 polyfill 代码。
+当你的应用中既包含主线程代码，也包含通过 `new Worker` 创建的 Web Worker 时，需要注意：由于 Web Worker 运行在独立的线程中，与主线程环境隔离，Rsbuild 提供的 polyfill [entry 方案](/guide/advanced/browser-compatibility#entry-方案) 无法在 Web Worker 中生效。此时，建议改用 [usage 方案](/guide/advanced/browser-compatibility#usage-方案)，为 Web Worker 单独注入所需的 polyfill 代码。
 
 ```ts title="rsbuild.config.ts"
 export default {
