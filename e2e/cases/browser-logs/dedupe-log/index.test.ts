@@ -2,8 +2,6 @@ import path, { join } from 'node:path';
 import { gotoPage, rspackTest } from '@e2e/helper';
 import fse from 'fs-extra';
 
-const LOG_PREFIX = 'Error: value is';
-
 rspackTest(
   'should not output the same error log consecutively',
   async ({ devOnly, page, editFile }) => {
