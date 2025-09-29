@@ -118,7 +118,7 @@ export const setupServerHooks = ({
   });
 
   compiler.hooks.done.tap('rsbuild-dev-server', (stats) => {
-    socketServer.updateStats(stats, token);
+    socketServer.onBuildDone(stats, token);
   });
 };
 

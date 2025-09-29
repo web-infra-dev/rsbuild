@@ -112,17 +112,15 @@ const formatErrorLocation = async (
   return rawLocation;
 };
 
-let lastRuntimeErrorLog: string;
-
 /**
- * Processes runtime errors received from the browser and logs them with
+ * Formats error messages received from the browser into a log string with
  * source location information.
  */
-export const reportRuntimeError = async (
+export const formatRuntimeError = async (
   message: ClientMessageError,
   context: InternalContext,
   fs: Rspack.OutputFileSystem,
-): Promise<void> => {
+): Promise<string> => {
   let log = `${color.cyan('[browser]')} ${color.red(message.message)}`;
 
   if (message.stack) {
@@ -132,11 +130,5 @@ export const reportRuntimeError = async (
     }
   }
 
-  // Avoid outputting the same log consecutively
-  if (log === lastRuntimeErrorLog) {
-    return;
-  }
-
-  logger.error(log);
-  lastRuntimeErrorLog = log;
+  return log;
 };

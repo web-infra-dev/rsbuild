@@ -1,1 +1,1 @@
-throw new Error(location.hash);
+throw new Error(`value is ${location.hash}`);
