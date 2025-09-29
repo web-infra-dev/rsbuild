@@ -58,9 +58,44 @@ export type { SomeType } from './types';
 
 在进行 TypeScript 转译时，SWC 和 Babel 等工具不会执行类型检查。
 
-要启用类型检查，请使用 [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check) 插件。该插件会在单独的进程中运行 TypeScript 类型检查，并在内部集成了 [ts-checker-rspack-plugin](https://github.com/rspack-contrib/ts-checker-rspack-plugin)。
+### 类型检查插件
+
+要启用类型检查，可以使用 [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check) 插件。该插件会在单独的进程中运行 TypeScript 类型检查，并在内部集成了 [ts-checker-rspack-plugin](https://github.com/rspack-contrib/ts-checker-rspack-plugin)。
+
+该插件支持在开发模式和构建模式下进行类型检查，帮助你在开发过程中及时发现类型错误。
 
 请参考 [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check) 了解用法。
+
+### 使用 tsc
+
+你也可以直接使用 `tsc` 来进行类型检查，在 `build` 脚本中添加 `type-check` 步骤即可。这种方式仅在构建完成后执行类型检查，在开发模式下不会执行。
+
+```json title="package.json"
+{
+  "scripts": {
+    "build": "rsbuild build && npm run type-check",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
+```
+
+对于 Vue 应用，使用 [vue-tsc](https://github.com/vuejs/language-tools/tree/master/packages/tsc) 代替 `tsc`，它除了支持 TypeScript 文件外，还支持 Vue 单文件组件（SFC）。
+
+```json title="package.json"
+{
+  "scripts": {
+    "build": "rsbuild build && npm run type-check",
+    "type-check": "vue-tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "vue-tsc": "^3.0.0"
+  }
+}
+```
 
 ## tsconfig.json 路径
 
