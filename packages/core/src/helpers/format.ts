@@ -9,6 +9,10 @@ const formatFileName = (fileName: string) => {
 };
 
 function resolveFileName(stats: StatsError) {
+  if (stats.moduleName) {
+    return formatFileName(stats.moduleName);
+  }
+
   // Get the real source file path with stats.moduleIdentifier.
   // e.g. moduleIdentifier is "builtin:react-refresh-loader!/Users/x/src/App.jsx"
   if (stats.moduleIdentifier) {
@@ -22,8 +26,8 @@ function resolveFileName(stats: StatsError) {
     }
   }
 
-  // fallback to file or moduleName if moduleIdentifier parse failed
-  const file = stats.file || stats.moduleName;
+  // fallback to file if moduleIdentifier parse failed
+  const file = stats.file;
   return file ? formatFileName(file) : '';
 }
 
