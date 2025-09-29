@@ -10,8 +10,9 @@ const formatFileName = (fileName: string) => {
 
 function resolveFileName(stats: StatsError) {
   const file =
-    // `file` is a custom file path related to the stats error
-    // It should be output first
+    // `file` is a custom file path related to the stats error. For example,
+    // ts-checker-rspack-plugin sets the module path of type errors to this field.
+    // It should be output first as it provides the most specific error location.
     stats.file ||
     // `moduleName` is the readable relative path of the source file
     // e.g. "./src/App.jsx"
