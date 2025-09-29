@@ -1720,7 +1720,7 @@ export type WriteToDisk = boolean | ((filename: string) => boolean);
 
 export interface DevConfig {
   /**
-   * Enables forwarding of browser runtime errors to the terminal. When `true`, the dev
+   * Controls whether to forward browser runtime errors to the terminal. When `true`, the dev
    * client listens for window `error` events in the browser and send them to the dev server,
    * where they are printed in the terminal (prefixed with `[browser]`).
    * @default true

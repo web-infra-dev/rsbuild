@@ -1,0 +1,38 @@
+# dev.browserLogs
+
+- **Type:** `boolean`
+- **Default:** `true`
+- **Version:** Added in v1.5.13
+
+Controls whether to forward browser runtime errors to the terminal.
+
+When `true`, the Rsbuild client listens for window `error` events in the browser and send them to the dev server, where they are printed in the terminal (prefixed with `[browser]`).
+
+## Example
+
+For example, if you have the following code in your application:
+
+```jsx title="src/App.jsx"
+const App = () => {
+  const item = undefined;
+  return <div>{item.name}</div>;
+};
+```
+
+The browser will throw an error, and Rsbuild will forward this error to the terminal:
+
+```bash
+error   [browser] Uncaught TypeError: Cannot read properties of undefined (reading 'name') (src/App.jsx:3:0)
+```
+
+## Disabling
+
+Set `dev.browserLogs` to `false` to disable this behavior.
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    browserLogs: false,
+  },
+};
+```
