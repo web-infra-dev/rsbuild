@@ -29,7 +29,7 @@
   "dependencies": {
     "@prefresh/core": "^1.5.7",
     "@prefresh/utils": "^1.2.1",
-    "@rspack/plugin-preact-refresh": "^1.1.2",
+    "@rspack/plugin-preact-refresh": "^1.1.3",
     "@swc/plugin-prefresh": "^9.1.0"
   },
   "devDependencies": {
