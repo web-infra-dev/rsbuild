@@ -58,7 +58,7 @@ Create a `src/env.d.ts` file to reference these types:
 
 When transpiling TypeScript code using tools like SWC and Babel, type checking is not performed.
 
-### Type Check Plugin
+### Type check plugin
 
 To enable type checking, you can use the [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check) plugin. This plugin runs TypeScript type checking in a separate process and internally integrates [ts-checker-rspack-plugin](https://github.com/rspack-contrib/ts-checker-rspack-plugin).
 
@@ -68,7 +68,7 @@ Refer to [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-
 
 ### Using tsc
 
-You can also use `tsc` directly for type checking by adding a `type-check` step to your `build` script. This approach only performs type checking after the build and does not run during dev mode.
+You can also use [tsc](https://www.typescriptlang.org/docs/handbook/compiler-options.html) directly for type checking by adding a `type-check` step to your `build` script. This approach only performs type checking after the build and does not run during dev mode.
 
 ```json title="package.json"
 {
@@ -96,7 +96,6 @@ For Vue applications, use [vue-tsc](https://github.com/vuejs/language-tools/tree
   }
 }
 ```
-
 
 ## tsconfig.json Path
 
