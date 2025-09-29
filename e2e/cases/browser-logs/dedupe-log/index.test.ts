@@ -3,7 +3,7 @@ import { gotoPage, rspackTest } from '@e2e/helper';
 import fse from 'fs-extra';
 
 rspackTest(
-  'should not output the same error log consecutively',
+  'should not output the same browser log',
   async ({ devOnly, page, editFile }) => {
     const tempDir = path.join(__dirname, 'test-temp-src');
     const srcDir = path.join(__dirname, 'src');
