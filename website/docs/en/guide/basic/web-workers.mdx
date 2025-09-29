@@ -100,7 +100,7 @@ For detailed discussions on cross-domain issues, please refer to [Discussions - 
 
 ### Browser compatibility
 
-It should be noted that when you bundle page with Web Workers, the [entry mode](/guide/advanced/browser-compatibility#entry-mode) is not applicable to Web Workers because the Web Workers thread is isolated from the main thread (page), and the [usage mode](/guide/advanced/browser-compatibility#usage-mode) can be used at this time.
+When your application contains both page code and Web Workers code, it's important to note that Web Workers run in a separate thread, isolated from the main thread environment. The polyfill [entry mode](/guide/advanced/browser-compatibility#entry-mode) provided by Rsbuild cannot take effect in Web Workers. In this case, it is recommended to use the [usage mode](/guide/advanced/browser-compatibility#usage-mode) to inject the required polyfill code specifically for the Web Workers.
 
 ```ts title="rsbuild.config.ts"
 export default {
