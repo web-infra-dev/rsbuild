@@ -3,7 +3,7 @@ import color from '../../compiled/picocolors/index.js';
 import { logger } from '../logger';
 import type { Rspack } from '../types';
 import { isMultiCompiler } from './';
-import { formatStatsMessages } from './format.js';
+import { formatStatsError } from './format';
 
 function formatErrorMessage(errors: string[]) {
   const title = color.bold(
@@ -98,27 +98,16 @@ export function formatStats(
   const verbose = logger.level === 'verbose';
 
   if (hasErrors) {
-    const { errors } = formatStatsMessages(
-      {
-        errors: getAllStatsErrors(statsData),
-        warnings: [],
-      },
-      verbose,
-    );
-
+    const statsErrors = getAllStatsErrors(statsData) ?? [];
+    const errors = statsErrors.map((item) => formatStatsError(item, verbose));
     return {
       message: formatErrorMessage(errors),
       level: 'error',
     };
   }
 
-  const { warnings } = formatStatsMessages(
-    {
-      errors: [],
-      warnings: getAllStatsWarnings(statsData),
-    },
-    verbose,
-  );
+  const statsWarnings = getAllStatsWarnings(statsData) ?? [];
+  const warnings = statsWarnings.map((item) => formatStatsError(item, verbose));
 
   if (warnings.length) {
     const title = color.bold(

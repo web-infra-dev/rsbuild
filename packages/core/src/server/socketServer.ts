@@ -6,7 +6,7 @@ import {
   getAllStatsWarnings,
   getStatsOptions,
 } from '../helpers';
-import { formatStatsMessages } from '../helpers/format';
+import { formatStatsError } from '../helpers/format';
 import { logger } from '../logger';
 import type { DevConfig, InternalContext, Rspack } from '../types';
 import { formatBrowserErrorLog } from './browserLogs';
@@ -434,11 +434,8 @@ export class SocketServer {
     }
 
     if (statsJson.errorsCount) {
-      const errors = getAllStatsErrors(statsJson);
-      const { errors: formattedErrors } = formatStatsMessages({
-        errors,
-        warnings: [],
-      });
+      const statsErrors = getAllStatsErrors(statsJson) ?? [];
+      const formattedErrors = statsErrors.map((item) => formatStatsError(item));
 
       this.sockWrite(
         {
@@ -454,11 +451,11 @@ export class SocketServer {
     }
 
     if (statsJson.warningsCount) {
-      const warnings = getAllStatsWarnings(statsJson);
-      const { warnings: formattedWarnings } = formatStatsMessages({
-        warnings,
-        errors: [],
-      });
+      const statsWarnings = getAllStatsWarnings(statsJson) ?? [];
+      const formattedWarnings = statsWarnings.map((item) =>
+        formatStatsError(item),
+      );
+
       this.sockWrite(
         {
           type: 'warnings',
