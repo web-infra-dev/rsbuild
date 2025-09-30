@@ -19,7 +19,7 @@ function resolveFileName(stats: StatsError) {
     stats.moduleName;
 
   if (file) {
-    return formatFileName(file);
+    return file;
   }
 
   // `moduleIdentifier` is the absolute path with inline loaders
@@ -30,7 +30,7 @@ function resolveFileName(stats: StatsError) {
     if (matched) {
       const fileName = matched.pop();
       if (fileName) {
-        return formatFileName(fileName);
+        return fileName;
       }
     }
   }
@@ -38,18 +38,36 @@ function resolveFileName(stats: StatsError) {
   return '';
 }
 
-function resolveModuleTrace(stats: StatsError) {
-  let traceStr = '';
-  if (stats.moduleTrace) {
-    for (const trace of stats.moduleTrace) {
-      if (trace.originName) {
-        // TODO: missing moduleTrace.dependencies[].loc in rspack
-        traceStr += `\n @ ${trace.originName}`;
-      }
-    }
+/**
+ * Format the module trace, the output be like:
+ * Import traces (entry → error):
+ *   ./src/index.tsx
+ *   ./src/App.tsx
+ *   ./src/Foo.tsx ×
+ */
+function formatModuleTrace(stats: StatsError, errorFile: string) {
+  if (!stats.moduleTrace) {
+    return;
   }
 
-  return traceStr;
+  const moduleNames = stats.moduleTrace
+    .map((trace) => trace.originName)
+    .filter(Boolean) as string[];
+
+  if (!moduleNames.length) {
+    return;
+  }
+
+  if (errorFile) {
+    moduleNames.unshift(`${errorFile} ${color.bold(color.red('×'))}`);
+  }
+
+  const rawTrace = moduleNames
+    .reverse()
+    .map((item) => `\n  ${item}`)
+    .join('');
+
+  return color.dim(`Import traces (entry → error):${rawTrace}`);
 }
 
 function hintUnknownFiles(message: string): string {
@@ -202,9 +220,9 @@ export function formatStatsError(stats: StatsError, verbose?: boolean): string {
   const details =
     verbose && stats.details ? `\nDetails: ${stats.details}\n` : '';
   const stack = verbose && stats.stack ? `\n${stats.stack}` : '';
-  const moduleTrace = resolveModuleTrace(stats);
+  const moduleTrace = formatModuleTrace(stats, fileName) ?? '';
 
-  message = `${fileName}${mainMessage}${details}${stack}${moduleTrace}`;
+  message = `${formatFileName(fileName)}${mainMessage}${details}${stack}${moduleTrace}`;
 
   // Remove inner error message
   const innerError = '-- inner error --';
