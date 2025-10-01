@@ -56,8 +56,8 @@ importers:
         specifier: ^0.8.0
         version: 0.8.0
       nx:
-        specifier: ^21.5.3
-        version: 21.5.3
+        specifier: ^21.6.2
+        version: 21.6.2
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
@@ -5399,8 +5399,8 @@ packages:
   nth-check@2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
 
-  nx@21.5.3:
-    resolution: {integrity: sha512-+XwzK3OWZw/7zLdhNHBms9VdAA8F6w6QsX8qFQ3+3CnbqEy0IDmVxTXb8c711LDMbEtNn94EiWvSV6C00FKw9Q==}
+  nx@21.6.2:
+    resolution: {integrity: sha512-bFZgAsB838vn9kk1vI6a1A9sStKyOA7Q9Ifsx7fYPth3D0GafHKu7X2/YbsC4h1TpmuejkJCPWUw2WtCOQy6IQ==}
     hasBin: true
     peerDependencies:
       '@swc-node/register': ^1.8.0
@@ -11515,7 +11515,7 @@ snapshots:
     dependencies:
       boolbase: 1.0.0
 
-  nx@21.5.3:
+  nx@21.6.2:
     dependencies:
       '@napi-rs/wasm-runtime': 0.2.4
       '@yarnpkg/lockfile': 1.1.0
