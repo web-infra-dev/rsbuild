@@ -40,7 +40,7 @@
     "@rstest/core": "^0.5.0",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^22.18.6",
-    "cross-env": "^10.0.0",
+    "cross-env": "^10.1.0",
     "cspell-ban-words": "^0.0.4",
     "heading-case": "^1.0.2",
     "nano-staged": "^0.8.0",
