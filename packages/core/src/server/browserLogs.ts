@@ -59,7 +59,7 @@ const resolveSourceLocation = async (
   }
 
   const { file, column, lineNumber } = frame;
-  const sourceMapInfo = getFileFromUrl(
+  const sourceMapInfo = await getFileFromUrl(
     `${file}.map`,
     fs as OutputFileSystem,
     environments,
