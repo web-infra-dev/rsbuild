@@ -6,11 +6,13 @@ import type { OutputFileSystem } from './index';
 
 const UP_PATH_REGEXP = /(?:^|[\\/])\.\.(?:[\\/]|$)/;
 
-export function getFileFromUrl(
+export async function getFileFromUrl(
   url: string,
   outputFileSystem: OutputFileSystem,
   environments: Record<string, EnvironmentContext>,
-): { filename: string; fsStats: FSStats } | { errorCode: number } | undefined {
+): Promise<
+  { filename: string; fsStats: FSStats } | { errorCode: number } | undefined
+> {
   let pathname: string | undefined;
 
   try {
@@ -40,12 +42,24 @@ export function getFileFromUrl(
     Object.values(environments).map((env) => env.distPath),
   );
 
+  const stat = async (filename: string) => {
+    return new Promise<FSStats | undefined>((resolve, reject) => {
+      outputFileSystem.stat(filename, (err, stats) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(stats);
+        }
+      });
+    });
+  };
+
   for (const distPath of distPaths) {
     let filename = path.join(distPath, pathname);
     let fsStats: FSStats | undefined;
 
     try {
-      fsStats = outputFileSystem.statSync?.(filename);
+      fsStats = await stat(filename);
     } catch {
       continue;
     }
@@ -62,7 +76,7 @@ export function getFileFromUrl(
       filename = path.join(filename, 'index.html');
 
       try {
-        fsStats = outputFileSystem.statSync?.(filename);
+        fsStats = await stat(filename);
       } catch {
         continue;
       }

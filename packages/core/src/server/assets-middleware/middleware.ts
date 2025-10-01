@@ -325,7 +325,11 @@ export function createMiddleware(
         return;
       }
 
-      const resolved = getFileFromUrl(req.url, outputFileSystem, environments);
+      const resolved = await getFileFromUrl(
+        req.url,
+        outputFileSystem,
+        environments,
+      );
 
       if (!resolved) {
         await goNext();

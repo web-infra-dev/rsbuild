@@ -6,7 +6,7 @@
  * Copyright JS Foundation and other contributors
  * https://github.com/webpack/webpack-dev-middleware/blob/master/LICENSE
  */
-import type { Stats as FSStats, ReadStream } from 'node:fs';
+import type { ReadStream } from 'node:fs';
 import { createRequire } from 'node:module';
 import type { Compiler, MultiCompiler, Watching } from '@rspack/core';
 import { applyToCompiler, isMultiCompiler } from '../../helpers';
@@ -17,6 +17,7 @@ import type {
   NormalizedDevConfig,
   NormalizedEnvironmentConfig,
   RequestHandler,
+  Rspack,
 } from '../../types';
 import { resolveHostname } from './../hmrFallback';
 import type { SocketServer } from '../socketServer';
@@ -28,14 +29,12 @@ const noop = () => {};
 
 export type MultiWatching = ReturnType<MultiCompiler['watch']>;
 
-// TODO: refine types to match underlying fs-like implementations
-export type OutputFileSystem = {
+export type OutputFileSystem = Rspack.OutputFileSystem & {
+  // TODO: can be removed after Rspack adding this type
   createReadStream?: (
     p: string,
     opts: { start: number; end: number },
   ) => ReadStream;
-  statSync?: (p: string) => FSStats;
-  readFileSync?: (p: string) => Buffer;
 };
 
 export type Options = {
