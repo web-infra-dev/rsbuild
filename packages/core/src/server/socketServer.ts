@@ -337,7 +337,6 @@ export class SocketServer {
     const defaultStats: Rspack.StatsOptions = {
       all: false,
       hash: true,
-      assets: true,
       warnings: true,
       warningsCount: true,
       errors: true,
