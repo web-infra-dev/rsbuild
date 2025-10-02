@@ -88,6 +88,8 @@ export class SocketServer {
 
   private reportedBrowserLogs: Set<string> = new Set();
 
+  private currentHash: Map<string, string> = new Map();
+
   constructor(
     context: InternalContext,
     options: DevConfig,
@@ -332,10 +334,9 @@ export class SocketServer {
       return null;
     }
 
-    const defaultStats: Record<string, boolean> = {
+    const defaultStats: Rspack.StatsOptions = {
       all: false,
       hash: true,
-      assets: true,
       warnings: true,
       warningsCount: true,
       errors: true,
@@ -383,7 +384,7 @@ export class SocketServer {
     const newInitialChunks: Set<string> = new Set();
     if (statsJson.entrypoints) {
       for (const entrypoint of Object.values(statsJson.entrypoints)) {
-        const chunks = entrypoint.chunks;
+        const { chunks } = entrypoint;
 
         if (!Array.isArray(chunks)) {
           continue;
@@ -411,19 +412,22 @@ export class SocketServer {
       return;
     }
 
-    const shouldEmit =
-      !force &&
-      statsJson &&
-      !statsJson.errorsCount &&
-      statsJson.assets &&
-      statsJson.assets.every((asset: any) => !asset.emitted);
-
-    if (shouldEmit) {
-      this.sockWrite({ type: 'ok' }, token);
-      return;
-    }
-
     if (statsJson.hash) {
+      const prevHash = this.currentHash.get(token);
+      this.currentHash.set(token, statsJson.hash);
+
+      // If build hash is not changed and there is no error or warning, skip emit
+      const shouldEmit =
+        !force &&
+        !statsJson.errorsCount &&
+        !statsJson.warningsCount &&
+        prevHash === statsJson.hash;
+
+      if (shouldEmit) {
+        this.sockWrite({ type: 'ok' }, token);
+        return;
+      }
+
       this.sockWrite(
         {
           type: 'hash',
@@ -469,7 +473,6 @@ export class SocketServer {
     }
 
     this.sockWrite({ type: 'ok' }, token);
-    return;
   }
 
   // send message to connecting socket
