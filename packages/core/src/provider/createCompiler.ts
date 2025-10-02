@@ -171,6 +171,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
   });
 
   compiler.hooks.invalid.tap(HOOK_NAME, () => {
+    context.buildState.stats = null;
     context.buildState.status = 'idle';
     context.buildState.hasErrors = false;
   });
@@ -190,18 +191,11 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
   compiler.hooks.done.tap(
     HOOK_NAME,
     (statsInstance: Rspack.Stats | Rspack.MultiStats) => {
-      const statsOptions = getStatsOptions(compiler);
-      const stats = statsInstance.toJson({
-        children: true,
-        moduleTrace: true,
-        // get the compilation time
-        timings: true,
-        errors: true,
-        warnings: true,
-        ...statsOptions,
-      }) as RsbuildStats;
+      const statsOptions = getStatsOptions(compiler, context.action);
+      const stats = statsInstance.toJson(statsOptions) as RsbuildStats;
 
       const hasErrors = getStatsErrors(stats).length > 0;
+      context.buildState.stats = stats;
       context.buildState.status = 'done';
       context.buildState.hasErrors = hasErrors;
 

@@ -213,6 +213,7 @@ export async function createContext(
     originalConfig: userConfig,
     specifiedEnvironments,
     buildState: {
+      stats: null,
       status: 'idle',
       hasErrors: false,
     },
