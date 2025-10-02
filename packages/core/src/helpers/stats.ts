@@ -1,6 +1,6 @@
 import color from '../../compiled/picocolors/index.js';
 import { logger } from '../logger';
-import type { RsbuildStats, Rspack } from '../types';
+import type { ActionType, RsbuildStats, Rspack } from '../types';
 import { isMultiCompiler } from './';
 import { formatStatsError } from './format';
 
@@ -79,9 +79,30 @@ export const getAssetsFromStats = (
 
 export function getStatsOptions(
   compiler: Rspack.Compiler | Rspack.MultiCompiler,
+  action?: ActionType,
 ): Rspack.StatsOptions {
+  const defaultOptions: Rspack.StatsOptions = {
+    all: false,
+    // for displaying the build time
+    timings: true,
+    // for displaying the build errors
+    errors: true,
+    // for displaying the build warnings
+    warnings: true,
+    // for displaying the module trace when build failed
+    moduleTrace: true,
+  };
+
+  if (action === 'dev') {
+    // for HMR to compare the hash
+    defaultOptions.hash = true;
+    // for HMR to compare the entrypoints
+    defaultOptions.entrypoints = true;
+  }
+
   if (isMultiCompiler(compiler)) {
     return {
+      ...defaultOptions,
       children: compiler.compilers.map((compiler) =>
         compiler.options ? compiler.options.stats : undefined,
       ),
@@ -91,13 +112,14 @@ export function getStatsOptions(
   const { stats } = compiler.options;
 
   if (typeof stats === 'string') {
-    return { preset: stats };
-  }
-  if (typeof stats === 'object') {
-    return stats;
+    return { ...defaultOptions, preset: stats };
   }
 
-  return {};
+  if (typeof stats === 'object') {
+    return { ...defaultOptions, ...stats };
+  }
+
+  return defaultOptions;
 }
 
 export function formatStats(
@@ -111,26 +133,28 @@ export function formatStats(
   const verbose = logger.level === 'verbose';
 
   if (hasErrors) {
-    const statsErrors = getStatsErrors(stats);
-    const errors = statsErrors.map((item) => formatStatsError(item, verbose));
+    const errors = getStatsErrors(stats);
+    const errorMessages = errors.map((item) => formatStatsError(item, verbose));
     return {
-      message: formatErrorMessage(errors),
+      message: formatErrorMessage(errorMessages),
       level: 'error',
     };
   }
 
-  const statsWarnings = getStatsWarnings(stats);
-  const warnings = statsWarnings.map((item) => formatStatsError(item, verbose));
+  const warnings = getStatsWarnings(stats);
+  const warningMessages = warnings.map((item) =>
+    formatStatsError(item, verbose),
+  );
 
-  if (warnings.length) {
+  if (warningMessages.length) {
     const title = color.bold(
       color.yellow(
-        warnings.length > 1 ? 'Build warnings: \n' : 'Build warning: \n',
+        warningMessages.length > 1 ? 'Build warnings: \n' : 'Build warning: \n',
       ),
     );
 
     return {
-      message: `${title}${warnings.join('\n\n')}\n`,
+      message: `${title}${warningMessages.join('\n\n')}\n`,
       level: 'warning',
     };
   }

@@ -2,8 +2,11 @@ import type { Hooks } from '../hooks';
 import type { NormalizedConfig, RsbuildConfig } from './config';
 import type { EnvironmentContext } from './hooks';
 import type { RsbuildPluginAPI } from './plugin';
+import type { RsbuildStats } from './rsbuild';
 
 export type BundlerType = 'rspack' | 'webpack';
+
+export type ActionType = 'dev' | 'build' | 'preview';
 
 /** The public context */
 export type RsbuildContext = {
@@ -47,7 +50,7 @@ export type RsbuildContext = {
    * - build: will be set when running `rsbuild build` or `rsbuild.build()`
    * - preview: will be set when running `rsbuild preview` or `rsbuild.preview()`
    */
-  action?: 'dev' | 'build' | 'preview';
+  action?: ActionType;
   /**
    * The bundler type, can be `rspack` or `webpack`.
    */
@@ -65,6 +68,11 @@ export type RsbuildContext = {
 export type BuildStatus = 'idle' | 'building' | 'done';
 
 export type BuildState = {
+  /**
+   * The stats object of the last build.
+   * Available after the build has been done.
+   */
+  stats: RsbuildStats | null;
   /** Current build status */
   status: BuildStatus;
   /** Whether there are build errors */

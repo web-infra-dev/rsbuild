@@ -1,13 +1,13 @@
 import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
 import type Ws from '../../compiled/ws/index.js';
-import { getStatsErrors, getStatsOptions, getStatsWarnings } from '../helpers';
 import { formatStatsError } from '../helpers/format';
+import { getStatsErrors, getStatsWarnings } from '../helpers/stats';
 import { logger } from '../logger';
 import type {
   DevConfig,
   InternalContext,
-  RsbuildStats,
+  RsbuildStatsItem,
   Rspack,
 } from '../types';
 import { formatBrowserErrorLog } from './browserLogs';
@@ -79,9 +79,7 @@ export class SocketServer {
 
   private readonly context: InternalContext;
 
-  private stats: Record<string, Rspack.Stats>;
-
-  private initialChunks: Record<string, Set<string>>;
+  private initialChunksMap: Map<string, Set<string>> = new Map();
 
   private heartbeatTimer: NodeJS.Timeout | null = null;
 
@@ -96,10 +94,8 @@ export class SocketServer {
     options: DevConfig,
     getOutputFileSystem: () => Rspack.OutputFileSystem,
   ) {
-    this.options = options;
-    this.stats = {};
-    this.initialChunks = {};
     this.context = context;
+    this.options = options;
     this.getOutputFileSystem = getOutputFileSystem;
   }
 
@@ -189,17 +185,14 @@ export class SocketServer {
     });
   }
 
-  public onBuildDone(stats: Rspack.Stats, token: string): void {
-    this.stats[token] = stats;
+  public onBuildDone(token: string): void {
     this.reportedBrowserLogs.clear();
 
     if (!this.socketsMap.size) {
       return;
     }
 
-    this.sendStats({
-      token,
-    });
+    this.sendStats({ token });
   }
 
   /**
@@ -247,9 +240,8 @@ export class SocketServer {
     }
 
     // Reset all properties
-    this.stats = {};
-    this.initialChunks = {};
     this.socketsMap.clear();
+    this.initialChunksMap.clear();
     this.reportedBrowserLogs.clear();
 
     return new Promise<void>((resolve, reject) => {
@@ -319,44 +311,38 @@ export class SocketServer {
     });
 
     // send first stats to active client sock if stats exist
-    if (this.stats) {
-      this.sendStats({
-        force: true,
-        token,
-      });
-    }
+    this.sendStats({
+      force: true,
+      token,
+    });
   }
 
-  // get standard stats
-  private getStats(name: string) {
-    const curStats = this.stats[name];
+  // Only use stats when environment is matched
+  private getStats(token: string) {
+    const { stats } = this.context.buildState;
+    const environment = Object.values(this.context.environments).find(
+      ({ webSocketToken }) => webSocketToken === token,
+    );
 
-    if (!curStats) {
-      return null;
+    if (!stats || !environment) {
+      return;
     }
 
-    const defaultStats: Rspack.StatsOptions = {
-      all: false,
-      hash: true,
-      warnings: true,
-      errors: true,
-      errorDetails: false,
-      entrypoints: true,
-      children: true,
-      moduleTrace: true,
-    };
+    let currentStats: RsbuildStatsItem = stats;
 
-    const statsOptions = getStatsOptions(curStats.compilation.compiler);
-    const statsJson = curStats.toJson({ ...defaultStats, ...statsOptions });
-
-    // statsJson is null when the previous compilation is removed on the Rust side
-    if (!statsJson) {
-      return null;
+    if (stats.children) {
+      const childStats = stats.children[environment.index];
+      if (childStats) {
+        currentStats = childStats;
+      }
     }
 
+    // Collect errors and warnings from all stats
+    // while using the matched stats for other data
     return {
-      statsJson,
-      root: curStats.compilation.compiler.options.context,
+      stats: currentStats,
+      errors: getStatsErrors(stats),
+      warnings: getStatsWarnings(stats),
     };
   }
 
@@ -369,20 +355,18 @@ export class SocketServer {
     force?: boolean;
   }) {
     const result = this.getStats(token);
-
-    // this should never happened
     if (!result) {
       return null;
     }
 
-    const { statsJson, root } = result;
+    const { stats, errors, warnings } = result;
 
     // web-infra-dev/rspack#6633
     // when initial-chunks change, reload the page
     // e.g: ['index.js'] -> ['index.js', 'lib-polyfill.js']
     const newInitialChunks: Set<string> = new Set();
-    if (statsJson.entrypoints) {
-      for (const entrypoint of Object.values(statsJson.entrypoints)) {
+    if (stats.entrypoints) {
+      for (const entrypoint of Object.values(stats.entrypoints)) {
         const { chunks } = entrypoint;
 
         if (!Array.isArray(chunks)) {
@@ -398,34 +382,31 @@ export class SocketServer {
       }
     }
 
-    const initialChunks = this.initialChunks[token];
+    const initialChunks = this.initialChunksMap.get(token);
     const shouldReload =
-      Boolean(statsJson.entrypoints) &&
-      Boolean(initialChunks) &&
+      stats.entrypoints &&
+      initialChunks &&
       !isEqualSet(initialChunks, newInitialChunks);
 
-    this.initialChunks[token] = newInitialChunks;
+    this.initialChunksMap.set(token, newInitialChunks);
 
     if (shouldReload) {
       this.sockWrite({ type: 'static-changed' }, token);
       return;
     }
 
-    const statsErrors = getStatsErrors(statsJson as RsbuildStats) ?? [];
-    const statsWarnings = getStatsWarnings(statsJson as RsbuildStats) ?? [];
-
-    if (statsJson.hash) {
+    if (stats.hash) {
       const prevHash = this.currentHash.get(token);
-      this.currentHash.set(token, statsJson.hash);
+      this.currentHash.set(token, stats.hash);
 
-      // If build hash is not changed and there is no error or warning, skip emit
-      const shouldEmit =
+      // If build hash is not changed and there is no error or warning,
+      // skip the other messages
+      if (
         !force &&
-        statsErrors.length === 0 &&
-        statsWarnings.length === 0 &&
-        prevHash === statsJson.hash;
-
-      if (shouldEmit) {
+        errors.length === 0 &&
+        warnings.length === 0 &&
+        prevHash === stats.hash
+      ) {
         this.sockWrite({ type: 'ok' }, token);
         return;
       }
@@ -433,21 +414,21 @@ export class SocketServer {
       this.sockWrite(
         {
           type: 'hash',
-          data: statsJson.hash,
+          data: stats.hash,
         },
         token,
       );
     }
 
-    if (statsErrors.length > 0) {
-      const formattedErrors = statsErrors.map((item) => formatStatsError(item));
+    if (errors.length > 0) {
+      const errorMessages = errors.map((item) => formatStatsError(item));
 
       this.sockWrite(
         {
           type: 'errors',
           data: {
-            text: formattedErrors,
-            html: genOverlayHTML(formattedErrors, root),
+            text: errorMessages,
+            html: genOverlayHTML(errorMessages, this.context.rootPath),
           },
         },
         token,
@@ -455,17 +436,13 @@ export class SocketServer {
       return;
     }
 
-    if (statsWarnings.length > 0) {
-      const formattedWarnings = statsWarnings.map((item) =>
-        formatStatsError(item),
-      );
+    if (warnings.length > 0) {
+      const warningMessages = warnings.map((item) => formatStatsError(item));
 
       this.sockWrite(
         {
           type: 'warnings',
-          data: {
-            text: formattedWarnings,
-          },
+          data: { text: warningMessages },
         },
         token,
       );

@@ -31,23 +31,19 @@ export async function createCompiler(options: InitConfigsOptions) {
   });
 
   compiler.hooks.invalid.tap(HOOK_NAME, () => {
+    context.buildState.stats = null;
     context.buildState.status = 'idle';
     context.buildState.hasErrors = false;
   });
 
   compiler.hooks.done.tap(HOOK_NAME, (statsInstance) => {
     const statsOptions = helpers.getStatsOptions(compiler);
-    const stats = statsInstance.toJson({
-      moduleTrace: true,
-      children: true,
-      errors: true,
-      warnings: true,
-      ...statsOptions,
-    }) as RsbuildStats;
+    const stats = statsInstance.toJson(statsOptions) as RsbuildStats;
 
     const hasErrors = helpers.getStatsErrors(stats).length > 0;
-    context.buildState.hasErrors = hasErrors;
+    context.buildState.stats = stats;
     context.buildState.status = 'done';
+    context.buildState.hasErrors = hasErrors;
 
     const { message, level } = helpers.formatStats(stats, hasErrors);
 
