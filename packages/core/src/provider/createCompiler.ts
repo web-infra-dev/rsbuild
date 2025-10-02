@@ -2,8 +2,8 @@ import { sep } from 'node:path';
 import {
   color,
   formatStats,
+  getStatsErrors,
   getStatsOptions,
-  hasStatsErrors,
   isSatisfyRspackVersion,
   prettyTime,
   rspackMinVersion,
@@ -201,7 +201,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
         ...statsOptions,
       }) as RsbuildStats;
 
-      const hasErrors = hasStatsErrors(stats);
+      const hasErrors = getStatsErrors(stats).length > 0;
 
       context.buildState.status = 'done';
       context.buildState.hasErrors = hasErrors;

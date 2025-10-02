@@ -18,12 +18,6 @@ function formatErrorMessage(errors: string[]) {
   return `${title}\n${text}`;
 }
 
-export const hasStatsErrors = (stats: RsbuildStats): boolean =>
-  getStatsErrors(stats).length > 0;
-
-export const hasStatsWarnings = (stats: RsbuildStats): boolean =>
-  getStatsWarnings(stats).length > 0;
-
 /**
  * If stats has errors, return stats errors directly
  * If stats has no errors, return child errors, as some errors exist in both
