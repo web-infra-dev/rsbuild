@@ -365,3 +365,15 @@ export type RsbuildEntry = Record<
 >;
 
 export type RsbuildMode = 'development' | 'production' | 'none';
+
+export type RsbuildStatsItem = Pick<
+  Rspack.StatsCompilation,
+  'errors' | 'warnings' | 'time'
+>;
+
+/**
+ * A subset of Rspack's StatsCompilation with only the fields we need
+ */
+export type RsbuildStats = RsbuildStatsItem & {
+  children: RsbuildStatsItem[];
+};

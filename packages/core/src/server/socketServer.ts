@@ -1,14 +1,15 @@
 import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
 import type Ws from '../../compiled/ws/index.js';
-import {
-  getAllStatsErrors,
-  getAllStatsWarnings,
-  getStatsOptions,
-} from '../helpers';
+import { getStatsErrors, getStatsOptions, getStatsWarnings } from '../helpers';
 import { formatStatsError } from '../helpers/format';
 import { logger } from '../logger';
-import type { DevConfig, InternalContext, Rspack } from '../types';
+import type {
+  DevConfig,
+  InternalContext,
+  RsbuildStats,
+  Rspack,
+} from '../types';
 import { formatBrowserErrorLog } from './browserLogs';
 import { genOverlayHTML } from './overlay';
 
@@ -338,9 +339,7 @@ export class SocketServer {
       all: false,
       hash: true,
       warnings: true,
-      warningsCount: true,
       errors: true,
-      errorsCount: true,
       errorDetails: false,
       entrypoints: true,
       children: true,
@@ -412,6 +411,9 @@ export class SocketServer {
       return;
     }
 
+    const statsErrors = getStatsErrors(statsJson as RsbuildStats) ?? [];
+    const statsWarnings = getStatsWarnings(statsJson as RsbuildStats) ?? [];
+
     if (statsJson.hash) {
       const prevHash = this.currentHash.get(token);
       this.currentHash.set(token, statsJson.hash);
@@ -419,8 +421,8 @@ export class SocketServer {
       // If build hash is not changed and there is no error or warning, skip emit
       const shouldEmit =
         !force &&
-        !statsJson.errorsCount &&
-        !statsJson.warningsCount &&
+        statsErrors.length === 0 &&
+        statsWarnings.length === 0 &&
         prevHash === statsJson.hash;
 
       if (shouldEmit) {
@@ -437,8 +439,7 @@ export class SocketServer {
       );
     }
 
-    if (statsJson.errorsCount) {
-      const statsErrors = getAllStatsErrors(statsJson) ?? [];
+    if (statsErrors.length > 0) {
       const formattedErrors = statsErrors.map((item) => formatStatsError(item));
 
       this.sockWrite(
@@ -454,8 +455,7 @@ export class SocketServer {
       return;
     }
 
-    if (statsJson.warningsCount) {
-      const statsWarnings = getAllStatsWarnings(statsJson) ?? [];
+    if (statsWarnings.length > 0) {
       const formattedWarnings = statsWarnings.map((item) =>
         formatStatsError(item),
       );
