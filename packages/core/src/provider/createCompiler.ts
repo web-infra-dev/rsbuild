@@ -202,7 +202,6 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
       }) as RsbuildStats;
 
       const hasErrors = getStatsErrors(stats).length > 0;
-
       context.buildState.status = 'done';
       context.buildState.hasErrors = hasErrors;
 

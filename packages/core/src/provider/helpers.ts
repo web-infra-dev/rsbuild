@@ -3,7 +3,12 @@
  */
 
 export { modifyBundlerChain } from '../configChain';
-export { formatStats, getStatsOptions, prettyTime } from '../helpers';
+export {
+  formatStats,
+  getStatsErrors,
+  getStatsOptions,
+  prettyTime,
+} from '../helpers';
 export { registerBuildHook, registerDevHook } from '../hooks';
 export { inspectConfig } from '../inspectConfig';
 export {
