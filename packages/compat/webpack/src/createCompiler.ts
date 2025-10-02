@@ -35,9 +35,9 @@ export async function createCompiler(options: InitConfigsOptions) {
     context.buildState.hasErrors = false;
   });
 
-  compiler.hooks.done.tap(HOOK_NAME, (stats) => {
+  compiler.hooks.done.tap(HOOK_NAME, (statsInstance) => {
     const statsOptions = helpers.getStatsOptions(compiler);
-    const statsJson = stats.toJson({
+    const stats = statsInstance.toJson({
       moduleTrace: true,
       children: true,
       errors: true,
@@ -45,11 +45,11 @@ export async function createCompiler(options: InitConfigsOptions) {
       ...statsOptions,
     }) as RsbuildStats;
 
-    const hasErrors = helpers.getStatsErrors(statsJson).length > 0;
+    const hasErrors = helpers.getStatsErrors(stats).length > 0;
     context.buildState.hasErrors = hasErrors;
     context.buildState.status = 'done';
 
-    const { message, level } = helpers.formatStats(statsJson, hasErrors);
+    const { message, level } = helpers.formatStats(stats, hasErrors);
 
     if (level === 'error') {
       logger.error(message);
