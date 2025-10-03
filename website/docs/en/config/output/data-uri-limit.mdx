@@ -28,9 +28,9 @@ const defaultDatUriLimit = {
 
 Set the size threshold to inline static assets such as images and fonts.
 
-By default, static assets will be Base64 encoded and inline into the page if the size is less than 4KiB.
+By default, static assets will be Base64 encoded and inlined into the page if they are smaller than 4KiB.
 
-You can adjust the threshold by setting the `dataUriLimit` config.
+You can adjust this threshold by setting the `dataUriLimit` config.
 
 Details:
 
@@ -74,7 +74,7 @@ export default {
 };
 ```
 
-- Set the threshold for image assets to 5KiB, do not inline video assets:
+- Set the threshold for image assets to 5KiB and do not inline video assets:
 
 ```js
 export default {

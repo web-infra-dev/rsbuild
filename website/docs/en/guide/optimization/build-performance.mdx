@@ -1,14 +1,14 @@
 # Improve build performance
 
-Rsbuild optimizes build performance by default, but as projects become larger, you may encounter build performance issues.
+Rsbuild optimizes build performance by default, but you may encounter performance issues as your project grows larger.
 
 This document provides optional optimization methods to improve build performance.
 
 ## Performance profiling
 
-Performing performance analysis can help identify performance bottlenecks in your project, enabling targeted optimization.
+Performance profiling helps identify bottlenecks in your project, enabling targeted optimization.
 
-Please refer to the [Build Performance Analysis](/guide/debug/build-profiling) section for more information.
+Please refer to the [Build Performance Analysis](/guide/debug/build-profiling) section.
 
 ## General optimization
 
@@ -20,39 +20,39 @@ Upgrading to the latest version of Rsbuild provides the latest performance optim
 
 ### Enable persistent cache
 
-Rsbuild provides [performance.buildCache](/config/performance/build-cache) configuration, which significantly improves rebuild speed.
+Rsbuild provides [performance.buildCache](/config/performance/build-cache) configuration to significantly improve rebuild speed.
 
-### Reducing modules
+### Reduce module count
 
-Optimizing the number of modules referenced by the application reduces bundle size and improves build performance. Read the [Bundle Size Optimization](/guide/optimization/optimize-bundle) section to learn optimization methods.
+Optimizing the number of modules reduces bundle size and improves build performance. Read the [Bundle Size Optimization](/guide/optimization/optimize-bundle) section to learn optimization methods.
 
 ### Optimize Tailwind CSS
 
-When using Tailwind CSS v3, if the `content` field in `tailwind.config.js` is not correctly configured, this can lead to poor build performance and HMR performance.
+When using Tailwind CSS v3, incorrectly configuring the `content` field in `tailwind.config.js` can lead to poor build and HMR performance.
 
 Refer to [Tailwind CSS v3 - Optimize build performance](/guide/styling/tailwindcss-v3#optimize-build-performance) for more details.
 
 ### Parallel Less compilation
 
-If your project uses the [@rsbuild/plugin-less](/plugins/list/plugin-less) plugin and contains a large number of Less files, you can try enabling parallel compilation to improve build performance.
+If your project uses the [@rsbuild/plugin-less](/plugins/list/plugin-less) plugin with a large number of Less files, you can enable parallel compilation to improve build performance.
 
 Refer to [Less Plugin - parallel](/plugins/list/plugin-less#parallel) for more details.
 
 ### Tool selection
 
-While Rsbuild delivers excellent build performance out of the box, certain JavaScript-based tools can negatively impact overall build performance, particularly in large-scale projects.
+While Rsbuild delivers excellent build performance out of the box, certain JavaScript-based tools can negatively impact performance, particularly in large projects.
 
 - [@rsbuild/plugin-babel](/plugins/list/plugin-babel): This plugin is based on Babel. We recommend using the more performant [SWC](/guide/configuration/swc) for code transformation instead.
-- [@rsbuild/plugin-less](/plugins/list/plugin-less): The Less compiler has relatively poor performance. Consider using [@rsbuild/plugin-sass](/plugins/list/plugin-sass) or other high-performance CSS solutions as alternatives.
+- [@rsbuild/plugin-less](/plugins/list/plugin-less): The Less compiler has relatively poor performance. Consider using [@rsbuild/plugin-sass](/plugins/list/plugin-sass) or other performant CSS solutions as alternatives.
 - [terser-webpack-plugin](https://www.npmjs.com/package/terser-webpack-plugin): You can replace Terser with faster minimizers, such as Rsbuild's built-in [SWC](/guide/configuration/swc) minifier.
 
 ## Development optimization
 
-These methods improve performance specifically in development mode.
+These methods improve performance in development mode.
 
 ### Enable lazy compilation
 
-Enabling lazy compilation can significantly reduce the number of modules compiled at dev startup and improve startup time.
+Enabling lazy compilation can significantly reduce the number of modules compiled at startup and improve startup time.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -82,11 +82,11 @@ export default {
 
 ### Source map format
 
-In order to provide a good debugging experience, Rsbuild uses the `cheap-module-source-map` format source map by default in development mode, which is a high-quality source map format and will bring certain performance overhead.
+To provide a good debugging experience, Rsbuild uses the `cheap-module-source-map` format in development mode by default. This is a high-quality source map format with some performance overhead.
 
-You can improve build speed by adjusting the source map format in development mode through [output.sourceMap](/config/output/source-map).
+You can improve build speed by adjusting the source map format through [output.sourceMap](/config/output/source-map).
 
-For example to disable source map:
+For example, to disable source maps:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -98,7 +98,7 @@ export default {
 };
 ```
 
-Or set the source map format of the development mode to the cheapest `eval` format:
+Or set the source map format to the fastest `eval` format in development mode:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -114,9 +114,9 @@ export default {
 
 ### Browserslist for development
 
-This strategy is similar to ["Adjust Browserslist"](/guide/optimization/optimize-bundle#adjust-browserslist), the difference is that we can set different browserslist for development and production mode, thereby reducing the compilation overhead in development mode.
+This strategy is similar to ["Adjust Browserslist"](/guide/optimization/optimize-bundle#adjust-browserslist). The difference is that we can set different browserslist configurations for development and production, thereby reducing compilation overhead in development.
 
-For example, you can add the following config to `.browserslistrc`, which means that only the latest browsers are compatible in development mode, and the actual browsers are compatible in the production mode:
+For example, you can add the following config to `.browserslistrc` to target only the latest browsers in development while supporting a broader range in production:
 
 ```yaml title=".browserslistrc"
 [production]
@@ -131,4 +131,4 @@ last 1 firefox version
 last 1 safari version
 ```
 
-Note that this can lead to some differences in the build result between development and production modes.
+Note that this can lead to differences in build output between development and production modes.

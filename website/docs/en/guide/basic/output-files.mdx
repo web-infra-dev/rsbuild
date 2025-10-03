@@ -6,7 +6,7 @@ To learn about deploying Rsbuild build outputs as a static site, see [Deploy Sta
 
 ## Default directory structure
 
-The default output directory structure is shown below. Output files are written to the `dist` directory in your project root.
+The default output directory structure is shown below. Output files are written to the `dist` directory at your project root.
 
 ```bash
 dist
@@ -38,9 +38,9 @@ In the filename, `[name]` represents the entry name for this file, such as `inde
 
 ## Development mode output
 
-In development mode, Rsbuild stores build outputs in memory on the dev server by default instead of writing them to disk. This reduces file system overhead. Refer to [View Static Assets](/guide/basic/server#view-static-assets) to see all static assets generated in the current build.
+In development mode, Rsbuild stores build outputs in memory by default instead of writing them to disk. This reduces file system overhead. See [View Static Assets](/guide/basic/server#view-static-assets) to view all static assets generated in the current build.
 
-To write output files to disk, which is useful for inspecting build artifacts or configuring proxy rules for static assets, set [dev.writeToDisk](/config/dev/write-to-disk) to `true`:
+To write output files to disk (useful for inspecting build artifacts or configuring proxy rules), set [dev.writeToDisk](/config/dev/write-to-disk) to `true`:
 
 ```ts
 export default {
@@ -80,7 +80,7 @@ dist
         └── qux.[hash].mp4
 ```
 
-Configure [output.distPath](/config/output/dist-path) to write static assets to a single directory. For example, to organize them in an `assets` directory:
+You can configure [output.distPath](/config/output/dist-path) to write all static assets to a single directory. For example, to organize them in an `assets` directory:
 
 ```ts
 export default {
@@ -116,7 +116,7 @@ dist
 └── [name].js
 ```
 
-Node.js outputs typically contain only JS files without HTML or CSS. JS filenames do not include hash values.
+Node.js outputs typically contain only JS files, without HTML or CSS. JS filenames do not include hash values.
 
 You can modify the output path for Node.js files using the [environments](/config/environments) configuration.
 
@@ -144,7 +144,7 @@ export default {
 
 ## Flatten directories
 
-To create a flatter directory structure, set any directory path to an empty string to flatten the output structure.
+To create a flatter directory structure, set any directory path to an empty string.
 
 For example:
 

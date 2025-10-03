@@ -54,7 +54,7 @@ Options:
   --host <host>         Set the host that the server listens to
 ```
 
-Start the dev server by running `rsbuild` directly, which is equivalent to `rsbuild dev`:
+Start the dev server by running `rsbuild` directly (equivalent to `rsbuild dev`):
 
 ```bash
 npx rsbuild
@@ -62,7 +62,7 @@ npx rsbuild
 
 ### Opening page
 
-The `--open` option automatically opens a page when starting the dev server, equivalent to setting [server.open](/config/server/open) to `true`.
+The `--open` option automatically opens a page when starting the dev server (equivalent to setting [server.open](/config/server/open) to `true`).
 
 ```bash
 rsbuild dev --open
@@ -81,7 +81,7 @@ rsbuild dev -o
 ```
 
 :::tip
-When using [server.open](/config/server/open) and `--open` at the same time, `--open` takes precedence.
+When using both [server.open](/config/server/open) and `--open`, the `--open` option takes precedence.
 :::
 
 ## rsbuild build
@@ -97,7 +97,7 @@ Options:
 
 ## rsbuild preview
 
-The `rsbuild preview` command previews production build outputs locally. Run `rsbuild build` first to generate the build outputs.
+The `rsbuild preview` command previews production build outputs locally. You must run `rsbuild build` first to generate the build outputs.
 
 ```bash
 Usage: rsbuild preview [options]
@@ -140,7 +140,7 @@ config inspection completed, generated files:
 
 ### Setting mode
 
-By default, the inspect command outputs the configuration for the development mode. You can add the `--mode production` option to output the configuration for the production mode:
+By default, the inspect command outputs configuration for development mode. Add the `--mode production` option to output production mode configuration:
 
 ```bash
 rsbuild inspect --mode production
@@ -148,7 +148,7 @@ rsbuild inspect --mode production
 
 ### Verbose content
 
-By default, the inspect command omits the content of functions in the configuration object. You can add the `--verbose` option to output the complete content of functions:
+By default, the inspect command omits function content in the configuration object. Add the `--verbose` option to output complete function content:
 
 ```bash
 rsbuild inspect --verbose
@@ -156,7 +156,7 @@ rsbuild inspect --verbose
 
 ### Multiple targets
 
-If the current project has multiple build targets, such as building browser bundles and Node.js bundles simultaneously, multiple Rspack configuration files will be generated in the `dist/.rsbuild` directory.
+If the current project has multiple build targets (such as building both browser and Node.js bundles), multiple Rspack configuration files will be generated in the `dist/.rsbuild` directory.
 
 ```bash
 ➜ npx rsbuild inspect
