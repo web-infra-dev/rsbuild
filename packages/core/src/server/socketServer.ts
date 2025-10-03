@@ -196,6 +196,23 @@ export class SocketServer {
   }
 
   /**
+   * Send error messages to the client and render error overlay
+   */
+  public sendError(errors: Rspack.StatsError[], token: string): void {
+    const formattedErrors = errors.map((item) => formatStatsError(item));
+    this.sockWrite(
+      {
+        type: 'errors',
+        data: {
+          text: formattedErrors,
+          html: genOverlayHTML(formattedErrors, this.context.rootPath),
+        },
+      },
+      token,
+    );
+  }
+
+  /**
    * Write message to each socket
    * @param message - The message to send
    * @param token - The token of the socket to send the message to,
@@ -421,18 +438,7 @@ export class SocketServer {
     }
 
     if (errors.length > 0) {
-      const errorMessages = errors.map((item) => formatStatsError(item));
-
-      this.sockWrite(
-        {
-          type: 'errors',
-          data: {
-            text: errorMessages,
-            html: genOverlayHTML(errorMessages, this.context.rootPath),
-          },
-        },
-        token,
-      );
+      this.sendError(errors, token);
       return;
     }
 
