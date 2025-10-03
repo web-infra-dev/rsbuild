@@ -5,16 +5,14 @@ import { isMultiCompiler } from './';
 import { formatStatsError } from './format';
 
 function formatErrorMessage(errors: string[]) {
+  if (!errors.length) {
+    return `Build failed. No errors reported since Rspack's "stats.errors" is disabled.`;
+  }
+
   const title = color.bold(
     color.red(errors.length > 1 ? 'Build errors: ' : 'Build error: '),
   );
-
-  if (!errors.length) {
-    return `${title}\n${color.yellow(`For more details, please set 'stats.errors: true' `)}`;
-  }
-
   const text = `${errors.join('\n\n')}\n`;
-
   return `${title}\n${text}`;
 }
 

@@ -3,7 +3,6 @@ import {
   color,
   formatStats,
   getRsbuildStats,
-  getStatsErrors,
   isSatisfyRspackVersion,
   prettyTime,
   rspackMinVersion,
@@ -187,7 +186,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     HOOK_NAME,
     (statsInstance: Rspack.Stats | Rspack.MultiStats) => {
       const stats = getRsbuildStats(statsInstance, compiler, context.action);
-      const hasErrors = getStatsErrors(stats).length > 0;
+      const hasErrors = statsInstance.hasErrors();
 
       context.buildState.stats = stats;
       context.buildState.status = 'done';

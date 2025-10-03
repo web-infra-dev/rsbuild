@@ -19,8 +19,8 @@ import {
 import { type ExtendedLogHelper, proxyConsole } from './logs';
 
 function makeBox(title: string) {
-  const header = `╭──────────────  Logs from: "${title}" ──────────────╮`;
-  const footer = `╰──────────────  Logs from: "${title}" ──────────────╯`;
+  const header = `╭────────────  Logs from: "${title}" ────────────╮`;
+  const footer = `╰────────────  Logs from: "${title}" ────────────╯`;
   return {
     header: `\n${header}\n`,
     footer: `${footer}\n`,
