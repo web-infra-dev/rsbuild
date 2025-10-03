@@ -5,8 +5,8 @@
 export { modifyBundlerChain } from '../configChain';
 export {
   formatStats,
+  getRsbuildStats,
   getStatsErrors,
-  getStatsOptions,
   prettyTime,
 } from '../helpers';
 export { registerBuildHook, registerDevHook } from '../hooks';

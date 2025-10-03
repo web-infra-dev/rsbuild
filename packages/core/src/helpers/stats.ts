@@ -77,7 +77,7 @@ export const getAssetsFromStats = (
   return statsJson.assets || [];
 };
 
-export function getStatsOptions(
+function getStatsOptions(
   compiler: Rspack.Compiler | Rspack.MultiCompiler,
   action?: ActionType,
 ): Rspack.StatsOptions {
@@ -120,6 +120,15 @@ export function getStatsOptions(
   }
 
   return defaultOptions;
+}
+
+export function getRsbuildStats(
+  statsInstance: Rspack.Stats | Rspack.MultiStats,
+  compiler: Rspack.Compiler | Rspack.MultiCompiler,
+  action?: ActionType,
+): RsbuildStats {
+  const statsOptions = getStatsOptions(compiler, action);
+  return statsInstance.toJson(statsOptions) as RsbuildStats;
 }
 
 export function formatStats(
