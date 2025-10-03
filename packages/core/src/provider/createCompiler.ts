@@ -2,8 +2,8 @@ import { sep } from 'node:path';
 import {
   color,
   formatStats,
+  getRsbuildStats,
   getStatsErrors,
-  getStatsOptions,
   isSatisfyRspackVersion,
   prettyTime,
   rspackMinVersion,
@@ -11,12 +11,7 @@ import {
 import { registerDevHook } from '../hooks';
 import { logger } from '../logger';
 import { rspack } from '../rspack';
-import type {
-  InternalContext,
-  RsbuildStats,
-  RsbuildStatsItem,
-  Rspack,
-} from '../types';
+import type { InternalContext, RsbuildStatsItem, Rspack } from '../types';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 
 // keep the last 3 parts of the path to make logs clean
@@ -171,6 +166,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
   });
 
   compiler.hooks.invalid.tap(HOOK_NAME, () => {
+    context.buildState.stats = null;
     context.buildState.status = 'idle';
     context.buildState.hasErrors = false;
   });
@@ -190,18 +186,10 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
   compiler.hooks.done.tap(
     HOOK_NAME,
     (statsInstance: Rspack.Stats | Rspack.MultiStats) => {
-      const statsOptions = getStatsOptions(compiler);
-      const stats = statsInstance.toJson({
-        children: true,
-        moduleTrace: true,
-        // get the compilation time
-        timings: true,
-        errors: true,
-        warnings: true,
-        ...statsOptions,
-      }) as RsbuildStats;
-
+      const stats = getRsbuildStats(statsInstance, compiler, context.action);
       const hasErrors = getStatsErrors(stats).length > 0;
+
+      context.buildState.stats = stats;
       context.buildState.status = 'done';
       context.buildState.hasErrors = hasErrors;
 
