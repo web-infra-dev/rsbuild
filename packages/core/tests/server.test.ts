@@ -1,9 +1,6 @@
 import { rspack } from '@rspack/core';
 import { defaultAllowedOrigins } from '../src/defaultConfig';
-import {
-  isClientCompiler,
-  setupServerHooks,
-} from '../src/server/assets-middleware';
+import { isClientCompiler } from '../src/server/assets-middleware';
 import { formatRoutes, printServerURLs } from '../src/server/helper';
 
 beforeEach(() => {
@@ -248,44 +245,6 @@ test('printServerURLs', () => {
 });
 
 describe('test dev server', () => {
-  test('should setupServerHooks correctly', () => {
-    const compiler = rspack({
-      target: 'web',
-    });
-    const onDoneFn = rstest.fn();
-    const onInvalidFn = rstest.fn();
-
-    setupServerHooks({
-      compiler,
-      token: 'test',
-      callbacks: {
-        onDone: onDoneFn,
-        onInvalid: onInvalidFn,
-      },
-    });
-
-    expect(compiler.hooks.done.taps.length).toBe(1);
-  });
-
-  test('should not setupServerHooks when compiler is server', () => {
-    const compiler = rspack({
-      target: 'node',
-    });
-    const onDoneFn = rstest.fn();
-    const onInvalidFn = rstest.fn();
-
-    setupServerHooks({
-      compiler,
-      token: 'test',
-      callbacks: {
-        onDone: onDoneFn,
-        onInvalid: onInvalidFn,
-      },
-    });
-
-    expect(compiler.hooks.done.taps.length).toBe(0);
-  });
-
   test('check isClientCompiler', () => {
     expect(isClientCompiler(rspack({}))).toBeTruthy();
 
