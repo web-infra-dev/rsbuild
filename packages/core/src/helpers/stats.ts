@@ -1,7 +1,6 @@
-import type { StatsCompilation } from '@rspack/core';
 import color from '../../compiled/picocolors/index.js';
 import { logger } from '../logger';
-import type { Rspack } from '../types';
+import type { RsbuildStats, Rspack } from '../types';
 import { isMultiCompiler } from './';
 import { formatStatsError } from './format';
 
@@ -19,19 +18,46 @@ function formatErrorMessage(errors: string[]) {
   return `${title}\n${text}`;
 }
 
-export const getAllStatsErrors = (
-  statsData: StatsCompilation,
-): Rspack.StatsError[] | undefined => {
-  // stats error + childCompiler error
-  // only append child errors when stats error does not exist, because some errors will exist in both stats and childCompiler
-  if (statsData.errorsCount && statsData.errors?.length === 0) {
-    return statsData.children?.reduce<Rspack.StatsError[]>(
-      (errors, curr) => errors.concat(curr.errors || []),
+/**
+ * If stats has errors, return stats errors directly
+ * If stats has no errors, return child errors, as some errors exist in both
+ * stats and childCompiler
+ */
+export const getStatsErrors = ({
+  errors,
+  children,
+}: RsbuildStats): Rspack.StatsError[] => {
+  if (errors !== undefined && errors.length > 0) {
+    return errors;
+  }
+
+  if (children) {
+    return children.reduce<Rspack.StatsError[]>(
+      (errors, ret) => (ret.errors ? errors.concat(ret.errors) : errors),
       [],
     );
   }
 
-  return statsData.errors;
+  return [];
+};
+
+export const getStatsWarnings = ({
+  warnings,
+  children,
+}: RsbuildStats): Rspack.StatsError[] => {
+  if (warnings !== undefined && warnings.length > 0) {
+    return warnings;
+  }
+
+  if (children) {
+    return children.reduce<Rspack.StatsError[]>(
+      (warnings, ret) =>
+        ret.warnings ? warnings.concat(ret.warnings) : warnings,
+      [],
+    );
+  }
+
+  return [];
 };
 
 export const getAssetsFromStats = (
@@ -49,19 +75,6 @@ export const getAssetsFromStats = (
   });
 
   return statsJson.assets || [];
-};
-
-export const getAllStatsWarnings = (
-  statsData: StatsCompilation,
-): Rspack.StatsError[] | undefined => {
-  if (statsData.warningsCount && statsData.warnings?.length === 0) {
-    return statsData.children?.reduce<Rspack.StatsError[]>(
-      (warnings, curr) => warnings.concat(curr.warnings || []),
-      [],
-    );
-  }
-
-  return statsData.warnings;
 };
 
 export function getStatsOptions(
@@ -88,7 +101,7 @@ export function getStatsOptions(
 }
 
 export function formatStats(
-  statsData: Rspack.StatsCompilation,
+  stats: RsbuildStats,
   hasErrors: boolean,
 ): {
   message?: string;
@@ -98,7 +111,7 @@ export function formatStats(
   const verbose = logger.level === 'verbose';
 
   if (hasErrors) {
-    const statsErrors = getAllStatsErrors(statsData) ?? [];
+    const statsErrors = getStatsErrors(stats);
     const errors = statsErrors.map((item) => formatStatsError(item, verbose));
     return {
       message: formatErrorMessage(errors),
@@ -106,7 +119,7 @@ export function formatStats(
     };
   }
 
-  const statsWarnings = getAllStatsWarnings(statsData) ?? [];
+  const statsWarnings = getStatsWarnings(stats);
   const warnings = statsWarnings.map((item) => formatStatsError(item, verbose));
 
   if (warnings.length) {

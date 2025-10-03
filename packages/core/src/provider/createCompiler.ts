@@ -1,8 +1,8 @@
 import { sep } from 'node:path';
-import type { StatsCompilation } from '@rspack/core';
 import {
   color,
   formatStats,
+  getStatsErrors,
   getStatsOptions,
   isSatisfyRspackVersion,
   prettyTime,
@@ -11,7 +11,12 @@ import {
 import { registerDevHook } from '../hooks';
 import { logger } from '../logger';
 import { rspack } from '../rspack';
-import type { InternalContext, Rspack } from '../types';
+import type {
+  InternalContext,
+  RsbuildStats,
+  RsbuildStatsItem,
+  Rspack,
+} from '../types';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 
 // keep the last 3 parts of the path to make logs clean
@@ -184,24 +189,25 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
 
   compiler.hooks.done.tap(
     HOOK_NAME,
-    (stats: Rspack.Stats | Rspack.MultiStats) => {
-      const hasErrors = stats.hasErrors();
-      context.buildState.hasErrors = hasErrors;
-      context.buildState.status = 'done';
-
+    (statsInstance: Rspack.Stats | Rspack.MultiStats) => {
       const statsOptions = getStatsOptions(compiler);
-      const statsJson = stats.toJson({
+      const stats = statsInstance.toJson({
         children: true,
         moduleTrace: true,
         // get the compilation time
         timings: true,
-        preset: 'errors-warnings',
+        errors: true,
+        warnings: true,
         ...statsOptions,
-      });
+      }) as RsbuildStats;
 
-      const printTime = (c: StatsCompilation, index: number) => {
-        if (c.time) {
-          const time = prettyTime(c.time / 1000);
+      const hasErrors = getStatsErrors(stats).length > 0;
+      context.buildState.status = 'done';
+      context.buildState.hasErrors = hasErrors;
+
+      const printTime = (statsItem: RsbuildStatsItem, index: number) => {
+        if (statsItem.time) {
+          const time = prettyTime(statsItem.time / 1000);
           const { name } = rspackConfigs[index];
 
           // When using multi compiler, print name to distinguish different compilers
@@ -212,16 +218,16 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
 
       if (!hasErrors) {
         // only print children compiler time when multi compiler
-        if (isMultiCompiler && statsJson.children?.length) {
-          statsJson.children.forEach((c, index) => {
+        if (isMultiCompiler && stats.children?.length) {
+          stats.children.forEach((c, index) => {
             printTime(c, index);
           });
         } else {
-          printTime(statsJson, 0);
+          printTime(stats, 0);
         }
       }
 
-      const { message, level } = formatStats(statsJson, hasErrors);
+      const { message, level } = formatStats(stats, hasErrors);
 
       if (level === 'error') {
         logger.error(message);

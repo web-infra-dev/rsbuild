@@ -1,4 +1,4 @@
-import { logger, type Rspack } from '@rsbuild/core';
+import { logger, type RsbuildStats, type Rspack } from '@rsbuild/core';
 import WebpackMultiStats from 'webpack/lib/MultiStats.js';
 import { type InitConfigsOptions, initConfigs } from './initConfigs.js';
 
@@ -35,20 +35,21 @@ export async function createCompiler(options: InitConfigsOptions) {
     context.buildState.hasErrors = false;
   });
 
-  compiler.hooks.done.tap(HOOK_NAME, (stats) => {
-    const hasErrors = stats.hasErrors();
+  compiler.hooks.done.tap(HOOK_NAME, (statsInstance) => {
+    const statsOptions = helpers.getStatsOptions(compiler);
+    const stats = statsInstance.toJson({
+      moduleTrace: true,
+      children: true,
+      errors: true,
+      warnings: true,
+      ...statsOptions,
+    }) as RsbuildStats;
+
+    const hasErrors = helpers.getStatsErrors(stats).length > 0;
     context.buildState.hasErrors = hasErrors;
     context.buildState.status = 'done';
 
-    const statsOptions = helpers.getStatsOptions(compiler);
-    const statsJson = stats.toJson({
-      moduleTrace: true,
-      children: true,
-      preset: 'errors-warnings',
-      ...statsOptions,
-    });
-
-    const { message, level } = helpers.formatStats(statsJson, hasErrors);
+    const { message, level } = helpers.formatStats(stats, hasErrors);
 
     if (level === 'error') {
       logger.error(message);
