@@ -37,7 +37,7 @@ export async function createCompiler(options: InitConfigsOptions) {
   });
 
   compiler.hooks.done.tap(HOOK_NAME, (statsInstance) => {
-    const statsOptions = helpers.getStatsOptions(compiler);
+    const statsOptions = helpers.getStatsOptions(compiler, context.action);
     const stats = statsInstance.toJson(statsOptions) as RsbuildStats;
 
     const hasErrors = helpers.getStatsErrors(stats).length > 0;
