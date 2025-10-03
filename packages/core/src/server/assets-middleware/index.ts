@@ -9,7 +9,7 @@
 import type { ReadStream } from 'node:fs';
 import { createRequire } from 'node:module';
 import type { Compiler, MultiCompiler, Watching } from '@rspack/core';
-import { applyToCompiler, isMultiCompiler } from '../../helpers';
+import { applyToCompiler, isMultiCompiler, pick } from '../../helpers';
 import { logger } from '../../logger';
 import type {
   InternalContext,
@@ -94,11 +94,16 @@ const isNodeCompiler = (compiler: Compiler) => {
   return false;
 };
 
+const isTsError = (error: Rspack.RspackError) =>
+  'message' in error && error.stack?.includes('ts-checker-rspack-plugin');
+
 export const setupServerHooks = ({
+  context,
   compiler,
   token,
   socketServer,
 }: {
+  context: InternalContext;
   compiler: Compiler;
   token: string;
   socketServer: SocketServer;
@@ -108,15 +113,53 @@ export const setupServerHooks = ({
     return;
   }
 
+  // Track errors count to detect if the `done` hook is called multiple times
+  let errorsCount: number | null = null;
+
   compiler.hooks.invalid.tap('rsbuild-dev-server', (fileName) => {
+    errorsCount = null;
+
     // reload page when HTML template changed
     if (typeof fileName === 'string' && fileName.endsWith('.html')) {
       socketServer.sockWrite({ type: 'static-changed' }, token);
-      return;
     }
   });
 
-  compiler.hooks.done.tap('rsbuild-dev-server', () => {
+  compiler.hooks.done.tap('rsbuild-dev-server', (stats) => {
+    const { errors } = stats.compilation;
+    if (errors.length === errorsCount) {
+      return;
+    }
+
+    const isRecalled = errorsCount !== null;
+    errorsCount = errors.length;
+
+    /**
+     * The ts-checker-rspack-plugin asynchronously pushes Type errors to `compilation.errors`
+     * and calls the `done` hook again, so we need to detect changes in errors and render them
+     * in the overlay.
+     */
+    if (isRecalled) {
+      const tsErrors = errors.filter(isTsError);
+      if (!tsErrors.length) {
+        return;
+      }
+
+      const { stats: statsJson } = context.buildState;
+      const statsErrors = tsErrors.map((item) =>
+        pick(item, ['message', 'file']),
+      );
+
+      if (statsJson) {
+        statsJson.errors = statsJson.errors
+          ? [...statsJson.errors, ...statsErrors]
+          : statsErrors;
+      }
+
+      socketServer.sendError(statsErrors, token);
+      return;
+    }
+
     socketServer.onBuildDone(token);
   });
 };
@@ -209,6 +252,7 @@ export const assetsMiddleware = async ({
 
     // register hooks for each compilation, update socket stats if recompiled
     setupServerHooks({
+      context,
       compiler,
       socketServer,
       token,

@@ -1,20 +1,8 @@
 import { expect, test } from '@e2e/helper';
+import type { Page } from 'playwright';
 
-// TODO: fixme
-test.skip('should display type errors on overlay correctly', async ({
-  page,
-  dev,
-  logHelper,
-}) => {
-  const { addLog, expectLog } = logHelper;
-  page.on('console', (consoleMessage) => {
-    addLog(consoleMessage.text());
-  });
-
-  await dev();
-
-  await expectLog('TS2322:');
-
+const expectErrorOverlay = async (page: Page) => {
+  await page.waitForSelector('rsbuild-error-overlay', { state: 'attached' });
   const errorOverlay = page.locator('rsbuild-error-overlay');
   await expect(errorOverlay.locator('.title')).toHaveText('Build failed');
 
@@ -30,4 +18,23 @@ test.skip('should display type errors on overlay correctly', async ({
   expect(
     linkText?.endsWith('/src/index.ts:3:1') && linkText.startsWith('.'),
   ).toBeTruthy();
+};
+
+test('should display type errors on overlay correctly', async ({
+  page,
+  dev,
+  logHelper,
+}) => {
+  const { addLog, expectLog } = logHelper;
+  page.on('console', (consoleMessage) => {
+    addLog(consoleMessage.text());
+  });
+
+  await dev();
+  await expectLog('TS2322:');
+  await expectErrorOverlay(page);
+
+  // The error overlay should be rendered after reloading the page
+  page.reload();
+  await expectErrorOverlay(page);
 });
