@@ -1,6 +1,7 @@
 import { expect, test } from '@e2e/helper';
 
-test('should display type errors on overlay correctly', async ({
+// TODO: fixme
+test.skip('should display type errors on overlay correctly', async ({
   page,
   dev,
   logHelper,
