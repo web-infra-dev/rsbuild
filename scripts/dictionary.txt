@@ -47,6 +47,7 @@ icss
 idents
 iife
 imagex
+inlines
 jfif
 jiti
 jridgewell
