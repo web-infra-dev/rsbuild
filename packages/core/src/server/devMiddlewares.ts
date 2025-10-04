@@ -268,9 +268,9 @@ export type GetDevMiddlewaresResult = {
   middlewares: Middlewares;
 };
 
-export const getDevMiddlewares = async (
+export const getDevMiddlewares = (
   options: RsbuildDevMiddlewareOptions,
-): Promise<GetDevMiddlewaresResult> => {
+): GetDevMiddlewaresResult => {
   const middlewares: Middlewares = [];
   const { buildManager } = options;
 

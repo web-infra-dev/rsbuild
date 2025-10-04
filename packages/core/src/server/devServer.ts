@@ -467,7 +467,7 @@ export async function createDevServer<
     root,
   });
 
-  devMiddlewares = await getDevMiddlewares({
+  devMiddlewares = getDevMiddlewares({
     pwd: root,
     buildManager,
     config,
