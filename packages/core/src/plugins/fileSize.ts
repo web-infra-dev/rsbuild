@@ -10,6 +10,7 @@ import { JS_REGEX } from '../constants';
 import { color, getAssetsFromStats } from '../helpers';
 import { logger } from '../logger';
 import type {
+  InternalContext,
   PrintFileSizeAsset,
   PrintFileSizeOptions,
   RsbuildPlugin,
@@ -284,13 +285,13 @@ async function printFileSizes(
   return logs;
 }
 
-export const pluginFileSize = (): RsbuildPlugin => ({
+export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
   name: 'rsbuild:file-size',
 
   setup(api) {
     api.onAfterBuild(async ({ stats, environments, isFirstCompile }) => {
       // No need to print file sizes if there is any compilation error
-      if (!stats || stats.hasErrors() || !isFirstCompile) {
+      if (!stats || context.buildState.hasErrors || !isFirstCompile) {
         return;
       }
 

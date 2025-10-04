@@ -52,7 +52,7 @@ export const build = async (
     compiler.run((err, stats) => {
       if (err) {
         reject(err);
-      } else if (stats?.hasErrors()) {
+      } else if (context.buildState.hasErrors) {
         reject(new Error('webpack build failed.'));
       }
       // If there is a compilation error, the close method should not be called.

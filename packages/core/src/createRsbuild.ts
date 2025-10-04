@@ -82,7 +82,7 @@ function applyDefaultPlugins(
     pluginTarget(),
     pluginOutput(),
     pluginResolve(),
-    pluginFileSize(),
+    pluginFileSize(context),
     // cleanOutput plugin should before the html plugin
     pluginCleanOutput(),
     pluginAsset(),

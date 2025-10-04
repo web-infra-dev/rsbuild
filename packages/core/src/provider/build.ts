@@ -70,7 +70,7 @@ export const build = async (
 
         if (err) {
           reject(err);
-        } else if (stats?.hasErrors()) {
+        } else if (context.buildState.hasErrors) {
           reject(new Error(RSPACK_BUILD_ERROR));
         } else {
           resolve({ stats });
