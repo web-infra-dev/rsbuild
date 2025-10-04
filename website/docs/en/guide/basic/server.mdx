@@ -6,7 +6,7 @@ Rsbuild includes a built-in dev server designed to improve the development exper
 
 By default, the Rsbuild server's base path is `/`. Access output files like `index.html` and [public folder](/guide/basic/static-assets#public-folder) assets at `http://localhost:3000/`.
 
-Modify the server's base path using [server.base](/config/server/base). To access files at `http://localhost:3000/foo/`, configure:
+Modify the server's base path using [server.base](/config/server/base). To access files at `http://localhost:3000/foo/`, configure as follows:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -36,9 +36,9 @@ The Rsbuild server provides default routing conventions and allows customization
 
 The Rsbuild server generates page routes based on the [server.base](/config/server/base) and [source.entry](/config/source/entry) configurations.
 
-When entry is `index`, the page can be accessed via `/`; when entry is `foo`, the page can be accessed via `/foo`.
+When the entry is `index`, the page can be accessed via `/`; when the entry is `foo`, the page can be accessed via `/foo`.
 
-When `server.base` is `/base`, the index page can be accessed via `/base` and the foo page can be accessed via `/base/foo`.
+When `server.base` is `/base`, the index page can be accessed via `/base` and the foo page via `/base/foo`.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -68,7 +68,7 @@ export default {
 
 ### Custom fallback behavior
 
-If Rsbuild's default [server.htmlFallback](/config/server/html-fallback) configuration does not meet your needs, for example, if you want to access `main.html` when accessing `/`, you can configure it using [server.historyApiFallback](/config/server/history-api-fallback).
+If Rsbuild's default [server.htmlFallback](/config/server/html-fallback) configuration doesn't meet your needs (for example, if you want to access `main.html` when accessing `/`), you can configure it using [server.historyApiFallback](/config/server/history-api-fallback).
 
 ```ts title="rsbuild.config.ts"
 export default {
