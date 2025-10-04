@@ -42,7 +42,7 @@ export async function createCompiler(options: InitConfigsOptions) {
       compiler,
       context.action,
     );
-    const hasErrors = helpers.getStatsErrors(stats).length > 0;
+    const hasErrors = statsInstance.hasErrors();
 
     context.buildState.stats = stats;
     context.buildState.status = 'done';
