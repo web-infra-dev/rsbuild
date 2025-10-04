@@ -2,7 +2,7 @@
 
 Inline static assets refers to embedding the content of a static asset directly in an HTML or JS file, instead of linking to an external file. This can improve website performance by reducing the number of HTTP requests the browser needs to make to load the page.
 
-However, inlining static assets has some disadvantages, such as increasing file size, which may lead to slower loading. Therefore, you should decide whether to inline assets based on your specific situation.
+However, inlining static assets has some disadvantages, such as increasing the size of a single file, which may lead to slower loading. Therefore, you should decide whether to inline assets based on your specific situation.
 
 Rsbuild automatically inlines static assets smaller than 4KiB. Sometimes you may need to manually control whether assets are inlined. This document explains how to precisely control the inlining behavior of static assets.
 
