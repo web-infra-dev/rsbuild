@@ -70,7 +70,7 @@ const applySetupMiddlewares = (
 
 export type Middlewares = (RequestHandler | [string, RequestHandler])[];
 
-const applyDefaultMiddlewares = async ({
+const applyDefaultMiddlewares = ({
   config,
   buildManager,
   context,
@@ -80,9 +80,9 @@ const applyDefaultMiddlewares = async ({
   postCallbacks,
 }: RsbuildDevMiddlewareOptions & {
   middlewares: Middlewares;
-}): Promise<{
+}): {
   onUpgrade: UpgradeEvent;
-}> => {
+} => {
   const upgradeEvents: UpgradeEvent[] = [];
   const { server } = config;
 
@@ -286,7 +286,7 @@ export const getDevMiddlewares = async (
 
   middlewares.push(...before);
 
-  const { onUpgrade } = await applyDefaultMiddlewares({
+  const { onUpgrade } = applyDefaultMiddlewares({
     ...options,
     middlewares,
   });
