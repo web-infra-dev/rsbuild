@@ -13,7 +13,7 @@ import type { ClientMessageError } from './socketServer';
  * Maps a position in compiled code to its original source position using
  * source maps.
  */
-async function mapSourceMapPosition(
+function mapSourceMapPosition(
   rawSourceMap: string,
   line: number,
   column: number,
@@ -73,11 +73,7 @@ const resolveSourceLocation = async (
   try {
     const sourceMap = await readFile(sourceMapInfo.filename);
     if (sourceMap) {
-      return await mapSourceMapPosition(
-        sourceMap.toString(),
-        lineNumber,
-        column,
-      );
+      return mapSourceMapPosition(sourceMap.toString(), lineNumber, column);
     }
   } catch (error) {
     if (error instanceof Error) {

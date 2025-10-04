@@ -158,7 +158,7 @@ export class SocketServer {
   }
 
   // create socket, install socket handler, bind socket event
-  public async prepare(): Promise<void> {
+  public prepare(): void {
     this.clearHeartbeatTimer();
 
     const ws = requireCompiledPackage('ws');

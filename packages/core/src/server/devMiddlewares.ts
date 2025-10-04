@@ -108,8 +108,9 @@ const applyDefaultMiddlewares = async ({
   // Apply proxy middleware
   // each proxy configuration creates its own middleware instance
   if (server.proxy) {
-    const { middlewares: proxyMiddlewares, upgrade } =
-      await createProxyMiddleware(server.proxy);
+    const { middlewares: proxyMiddlewares, upgrade } = createProxyMiddleware(
+      server.proxy,
+    );
     upgradeEvents.push(upgrade);
 
     for (const middleware of proxyMiddlewares) {

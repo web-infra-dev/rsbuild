@@ -198,7 +198,7 @@ export const pluginManifest = (): RsbuildPlugin => ({
   setup(api) {
     const manifestFilenames = new Map<string, string>();
 
-    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment, isDev }) => {
+    api.modifyBundlerChain((chain, { CHAIN_ID, environment, isDev }) => {
       const {
         output: { manifest },
         dev: { writeToDisk },

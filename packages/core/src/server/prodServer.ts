@@ -92,7 +92,7 @@ export class RsbuildProdServer {
     // Apply proxy middleware
     // each proxy configuration creates its own middleware instance
     if (proxy) {
-      const { middlewares, upgrade } = await createProxyMiddleware(proxy);
+      const { middlewares, upgrade } = createProxyMiddleware(proxy);
 
       for (const middleware of middlewares) {
         this.middlewares.use(middleware);
