@@ -1,6 +1,6 @@
 import type { FSWatcher } from '../../compiled/chokidar/index.js';
 import { normalizePublicDirs } from '../defaultConfig';
-import { castArray } from '../helpers';
+import { castArray, requireCompiledPackage } from '../helpers';
 import type {
   ChokidarOptions,
   DevConfig,
@@ -124,7 +124,7 @@ export async function createChokidar(
   root: string,
   options: ChokidarOptions,
 ): Promise<FSWatcher> {
-  const chokidar = await import('../../compiled/chokidar/index.js');
+  const chokidar = requireCompiledPackage('chokidar');
 
   const watchFiles: Set<string> = new Set();
 
@@ -137,9 +137,8 @@ export async function createChokidar(
   });
 
   if (globPatterns.length) {
-    const tinyglobby = await import('../../compiled/tinyglobby/index.js');
+    const { glob } = requireCompiledPackage('tinyglobby');
     // interop default to make both CJS and ESM work
-    const { glob } = tinyglobby.default || tinyglobby;
     const files = await glob(globPatterns, {
       cwd: root,
       absolute: true,

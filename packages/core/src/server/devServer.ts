@@ -1,6 +1,11 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
-import { color, getPublicPathFromCompiler, isMultiCompiler } from '../helpers';
+import {
+  color,
+  getPublicPathFromCompiler,
+  isMultiCompiler,
+  requireCompiledPackage,
+} from '../helpers';
 import { logger } from '../logger';
 import { onBeforeRestartServer, restartDevServer } from '../restart';
 import type {
@@ -348,7 +353,7 @@ export async function createDevServer<
     }),
   );
 
-  const { default: connect } = await import('../../compiled/connect/index.js');
+  const connect = requireCompiledPackage('connect');
   const middlewares = connect();
 
   const httpServer = middlewareMode
@@ -462,7 +467,7 @@ export async function createDevServer<
     root,
   });
 
-  devMiddlewares = await getDevMiddlewares({
+  devMiddlewares = getDevMiddlewares({
     pwd: root,
     buildManager,
     config,

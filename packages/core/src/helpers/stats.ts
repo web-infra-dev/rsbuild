@@ -1,8 +1,8 @@
-import color from '../../compiled/picocolors/index.js';
 import { logger } from '../logger';
 import type { ActionType, RsbuildStats, Rspack } from '../types';
 import { isMultiCompiler } from './';
 import { formatStatsError } from './format';
+import { color } from './vendors';
 
 function formatErrorMessage(errors: string[]) {
   if (!errors.length) {

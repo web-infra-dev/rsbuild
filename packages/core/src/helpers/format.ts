@@ -1,5 +1,5 @@
 import type { StatsError } from '@rspack/core';
-import color from '../../compiled/picocolors/index.js';
+import { color } from './vendors';
 
 const formatFileName = (fileName: string) => {
   // add default column add lines for linking

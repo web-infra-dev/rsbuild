@@ -7,6 +7,7 @@ import {
   ensureAssetPrefix,
   getPublicPathFromCompiler,
   isObject,
+  requireCompiledPackage,
 } from '../helpers';
 import { logger } from '../logger';
 import { recursiveChunkEntryNames } from '../rspack-plugins/resource-hints/doesChunkBelongToHtml';
@@ -197,7 +198,7 @@ export const pluginManifest = (): RsbuildPlugin => ({
   setup(api) {
     const manifestFilenames = new Map<string, string>();
 
-    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment, isDev }) => {
+    api.modifyBundlerChain((chain, { CHAIN_ID, environment, isDev }) => {
       const {
         output: { manifest },
         dev: { writeToDisk },
@@ -209,8 +210,8 @@ export const pluginManifest = (): RsbuildPlugin => ({
 
       const manifestOptions = normalizeManifestObjectConfig(manifest);
 
-      const { RspackManifestPlugin } = await import(
-        '../../compiled/rspack-manifest-plugin/index.js'
+      const { RspackManifestPlugin } = requireCompiledPackage(
+        'rspack-manifest-plugin',
       );
       const { htmlPaths } = environment;
 

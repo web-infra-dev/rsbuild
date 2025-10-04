@@ -1,4 +1,5 @@
 import type { LoaderDefinition, RawSourceMap } from '@rspack/core';
+import { requireCompiledPackage } from '../helpers';
 import type { EnvironmentContext } from '../types';
 
 export type TransformLoaderOptions = {
@@ -6,17 +7,15 @@ export type TransformLoaderOptions = {
   getEnvironment: () => EnvironmentContext;
 };
 
-const mergeSourceMap = async (
+const mergeSourceMap = (
   originalSourceMap?: RawSourceMap | string,
   generatedSourceMap?: RawSourceMap | string | null,
-): Promise<RawSourceMap | string | undefined> => {
+): RawSourceMap | string | undefined => {
   if (!originalSourceMap || !generatedSourceMap) {
     return generatedSourceMap ?? originalSourceMap;
   }
 
-  const { default: remapping } = await import(
-    '../../compiled/@jridgewell/remapping/index.js'
-  );
+  const remapping = requireCompiledPackage('@jridgewell/remapping');
   return remapping([generatedSourceMap, originalSourceMap], () => null);
 };
 
@@ -65,7 +64,7 @@ const transformLoader: LoaderDefinition<TransformLoaderOptions> =
         return;
       }
 
-      const mergedMap = await mergeSourceMap(map, result.map);
+      const mergedMap = mergeSourceMap(map, result.map);
       callback(null, result.code, mergedMap);
     } catch (error) {
       if (error instanceof Error) {

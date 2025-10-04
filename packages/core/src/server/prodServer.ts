@@ -1,5 +1,6 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
+import { requireCompiledPackage } from '../helpers';
 import { getPathnameFromUrl } from '../helpers/path';
 import { logger } from '../logger';
 import type {
@@ -71,9 +72,7 @@ export class RsbuildProdServer {
     }
 
     if (cors) {
-      const { default: corsMiddleware } = await import(
-        '../../compiled/cors/index.js'
-      );
+      const corsMiddleware = requireCompiledPackage('cors');
       this.middlewares.use(
         corsMiddleware(typeof cors === 'boolean' ? {} : cors),
       );
@@ -93,7 +92,7 @@ export class RsbuildProdServer {
     // Apply proxy middleware
     // each proxy configuration creates its own middleware instance
     if (proxy) {
-      const { middlewares, upgrade } = await createProxyMiddleware(proxy);
+      const { middlewares, upgrade } = createProxyMiddleware(proxy);
 
       for (const middleware of middlewares) {
         this.middlewares.use(middleware);
@@ -119,7 +118,7 @@ export class RsbuildProdServer {
       this.middlewares.use(getBaseMiddleware({ base }));
     }
 
-    await this.applyStaticAssetMiddleware();
+    this.applyStaticAssetMiddleware();
 
     if (historyApiFallback) {
       this.middlewares.use(
@@ -129,7 +128,7 @@ export class RsbuildProdServer {
       );
 
       // ensure fallback request can be handled by sirv
-      await this.applyStaticAssetMiddleware();
+      this.applyStaticAssetMiddleware();
     }
 
     this.middlewares.use(faviconFallbackMiddleware);
@@ -137,13 +136,13 @@ export class RsbuildProdServer {
     this.middlewares.use(notFoundMiddleware);
   }
 
-  private async applyStaticAssetMiddleware() {
+  private applyStaticAssetMiddleware() {
     const {
       output: { path, assetPrefixes },
       serverConfig: { htmlFallback },
     } = this.options;
 
-    const { default: sirv } = await import('../../compiled/sirv/index.js');
+    const sirv = requireCompiledPackage('sirv');
 
     const assetMiddleware = sirv(path, {
       etag: true,
@@ -182,7 +181,7 @@ export async function startProdServer(
     config,
   });
 
-  const { default: connect } = await import('../../compiled/connect/index.js');
+  const connect = requireCompiledPackage('connect');
   const middlewares = connect();
 
   const serverConfig = config.server;

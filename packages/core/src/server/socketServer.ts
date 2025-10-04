@@ -2,6 +2,7 @@ import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
 import type Ws from '../../compiled/ws/index.js';
 import { formatStatsError } from '../helpers/format';
+import { requireCompiledPackage } from '../helpers/index.js';
 import { getStatsErrors, getStatsWarnings } from '../helpers/stats';
 import { logger } from '../logger';
 import type {
@@ -157,10 +158,10 @@ export class SocketServer {
   }
 
   // create socket, install socket handler, bind socket event
-  public async prepare(): Promise<void> {
+  public prepare(): void {
     this.clearHeartbeatTimer();
 
-    const { default: ws } = await import('../../compiled/ws/index.js');
+    const ws = requireCompiledPackage('ws');
 
     this.wsServer = new ws.Server({
       noServer: true,

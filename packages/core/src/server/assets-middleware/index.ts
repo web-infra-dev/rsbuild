@@ -282,7 +282,7 @@ export const assetsMiddleware = async ({
     setupWriteToDisk(compilers, writeToDisk);
   }
 
-  const outputFileSystem = await setupOutputFileSystem(writeToDisk, compilers);
+  const outputFileSystem = setupOutputFileSystem(writeToDisk, compilers);
 
   const ready = (callback: () => void) => {
     if (context.buildState.status === 'done') {
