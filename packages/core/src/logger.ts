@@ -12,8 +12,10 @@
  * This convention helps distinguish between normal operations
  * and important alerts that require attention.
  */
-import { type Logger, logger } from '../compiled/rslog/index.js';
-import { color } from './helpers';
+import type { Logger } from '../compiled/rslog/index.js';
+import { color, requireCompiledPackage } from './helpers';
+
+const logger: Logger = requireCompiledPackage('rslog').logger;
 
 export const isDebug = (): boolean => {
   if (!process.env.DEBUG) {
