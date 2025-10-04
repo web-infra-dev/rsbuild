@@ -1,6 +1,11 @@
 import { isAbsolute, join } from 'node:path';
 import { normalizePublicDirs } from '../defaultConfig';
-import { castArray, isMultiCompiler, pick } from '../helpers';
+import {
+  castArray,
+  isMultiCompiler,
+  pick,
+  requireCompiledPackage,
+} from '../helpers';
 import { logger } from '../logger';
 import { rspack } from '../rspack';
 import type {
@@ -82,9 +87,7 @@ const applyDefaultMiddlewares = async ({
   const { server } = config;
 
   if (server.cors) {
-    const { default: corsMiddleware } = await import(
-      '../../compiled/cors/index.js'
-    );
+    const corsMiddleware = requireCompiledPackage('cors');
     middlewares.push(
       corsMiddleware(typeof server.cors === 'boolean' ? {} : server.cors),
     );
@@ -163,8 +166,8 @@ const applyDefaultMiddlewares = async ({
     middlewares.push(getBaseMiddleware({ base: server.base }));
   }
 
-  const { default: launchEditorMiddleware } = await import(
-    '../../compiled/launch-editor-middleware/index.js'
+  const launchEditorMiddleware = requireCompiledPackage(
+    'launch-editor-middleware',
   );
   middlewares.push(['/__open-in-editor', launchEditorMiddleware()]);
 
@@ -202,7 +205,8 @@ const applyDefaultMiddlewares = async ({
 
   const publicDirs = normalizePublicDirs(server?.publicDir);
   for (const publicDir of publicDirs) {
-    const { default: sirv } = await import('../../compiled/sirv/index.js');
+    const sirv = requireCompiledPackage('sirv');
+
     const { name } = publicDir;
     const normalizedPath = isAbsolute(name) ? name : join(pwd, name);
 

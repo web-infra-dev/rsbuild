@@ -8,6 +8,7 @@ import {
   getPublicPathFromCompiler,
   isURL,
   pick,
+  requireCompiledPackage,
 } from '../helpers';
 import type { AppIconItem, HtmlBasicTag, RsbuildPlugin } from '../types';
 
@@ -91,7 +92,7 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
           return;
         }
 
-        const { lookup } = await import('../../compiled/mrmime/index.js');
+        const { lookup } = requireCompiledPackage('mrmime');
 
         const distDir = config.output.distPath.image;
         const manifestFile = appIcon.filename ?? 'manifest.webmanifest';

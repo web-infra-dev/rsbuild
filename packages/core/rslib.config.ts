@@ -44,7 +44,7 @@ const externals: Rspack.Configuration['externals'] = [
       for (const [name, test] of entries) {
         if (request === name) {
           throw new Error(
-            `"${name}" is not allowed to be imported, use "../compiled/${name}/index.js" instead.`,
+            `"${name}" is not allowed to be imported, use "requireCompiledPackage" instead.`,
           );
         }
         if (test.test(request)) {

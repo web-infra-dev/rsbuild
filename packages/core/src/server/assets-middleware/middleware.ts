@@ -2,6 +2,7 @@ import type { Stats as FSStats, ReadStream } from 'node:fs';
 import onFinished from 'on-finished';
 import type { Range, Result as RangeResult, Ranges } from 'range-parser';
 import rangeParser from 'range-parser';
+import { requireCompiledPackage } from '../../helpers';
 import { logger } from '../../logger';
 import type { InternalContext, RequestHandler } from '../../types';
 import { escapeHtml } from './escapeHtml';
@@ -36,8 +37,8 @@ function createReadStreamOrReadFileSync(
   return { bufferOrStream, byteLength };
 }
 
-async function getContentType(str: string): Promise<false | string> {
-  const { lookup } = await import('../../../compiled/mrmime/index.js');
+function getContentType(str: string): false | string {
+  const { lookup } = requireCompiledPackage('mrmime');
   let mime = lookup(str);
   if (!mime) {
     return false;
@@ -350,7 +351,7 @@ export function createMiddleware(
       let offset = 0;
 
       if (!res.getHeader('Content-Type')) {
-        const contentType = await getContentType(filename);
+        const contentType = getContentType(filename);
         if (contentType) {
           res.setHeader('Content-Type', contentType);
         }

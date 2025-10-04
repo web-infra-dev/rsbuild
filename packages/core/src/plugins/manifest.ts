@@ -7,6 +7,7 @@ import {
   ensureAssetPrefix,
   getPublicPathFromCompiler,
   isObject,
+  requireCompiledPackage,
 } from '../helpers';
 import { logger } from '../logger';
 import { recursiveChunkEntryNames } from '../rspack-plugins/resource-hints/doesChunkBelongToHtml';
@@ -209,8 +210,8 @@ export const pluginManifest = (): RsbuildPlugin => ({
 
       const manifestOptions = normalizeManifestObjectConfig(manifest);
 
-      const { RspackManifestPlugin } = await import(
-        '../../compiled/rspack-manifest-plugin/index.js'
+      const { RspackManifestPlugin } = requireCompiledPackage(
+        'rspack-manifest-plugin',
       );
       const { htmlPaths } = environment;
 

@@ -2,7 +2,7 @@ import path from 'node:path';
 import { promisify } from 'node:util';
 import { parse as parseStack, type StackFrame } from 'stacktrace-parser';
 import { SCRIPT_REGEX } from '../constants';
-import { color } from '../helpers';
+import { color, requireCompiledPackage } from '../helpers';
 import { logger } from '../logger';
 import type { EnvironmentContext, InternalContext, Rspack } from '../types';
 import { getFileFromUrl } from './assets-middleware/getFileFromUrl';
@@ -18,9 +18,9 @@ async function mapSourceMapPosition(
   line: number,
   column: number,
 ) {
-  const {
-    default: { TraceMap, originalPositionFor },
-  } = await import('../../compiled/@jridgewell/trace-mapping/index.js');
+  const { TraceMap, originalPositionFor } = requireCompiledPackage(
+    '@jridgewell/trace-mapping',
+  );
   const tracer = new TraceMap(rawSourceMap);
   const originalPosition = originalPositionFor(tracer, { line, column });
   return originalPosition;
