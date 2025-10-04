@@ -245,7 +245,7 @@ The `override` config will be merged with Rspack's `splitChunks` config. For spe
 In addition to the `chunkSplit` configuration, using [dynamic import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) is also an important optimization technique that can effectively reduce initial bundle size.
 
 :::tip About dynamic import
-Dynamic import is a feature introduced in ECMAScript 2020 that allows you to dynamically load JavaScript modules. Rspack, which powers Rsbuild, supports dynamic import by default, so you can use it directly in your code.
+Dynamic import is a feature introduced in ECMAScript 2020 that allows you to dynamically load JavaScript modules. Rspack supports dynamic import by default, so you can use it directly in your code.
 :::
 
 When the bundler encounters `import()` syntax, it automatically splits the relevant code into a new chunk and loads it on-demand at runtime.
