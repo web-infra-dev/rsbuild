@@ -13,7 +13,7 @@
  * and important alerts that require attention.
  */
 import type { Logger } from '../compiled/rslog/index.js';
-import { color, requireCompiledPackage } from './helpers';
+import { color, requireCompiledPackage } from './helpers/vendors';
 
 const logger: Logger = requireCompiledPackage('rslog').logger;
 
