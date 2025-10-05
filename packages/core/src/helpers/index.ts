@@ -210,15 +210,6 @@ export const isTTY = (type: 'stdin' | 'stdout' = 'stdout'): boolean => {
   );
 };
 
-export const addCompilationError = (
-  compilation: Rspack.Compilation,
-  message: string,
-): void => {
-  compilation.errors.push(
-    new compilation.compiler.webpack.WebpackError(message),
-  );
-};
-
 export async function hash(data: string): Promise<string> {
   const crypto = await import('node:crypto');
   // Available in Node.js v20.12.0

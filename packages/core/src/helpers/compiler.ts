@@ -34,3 +34,12 @@ export const applyToCompiler = (
     apply(compiler, 0);
   }
 };
+
+export const addCompilationError = (
+  compilation: Rspack.Compilation,
+  message: string,
+): void => {
+  compilation.errors.push(
+    new compilation.compiler.webpack.WebpackError(message),
+  );
+};

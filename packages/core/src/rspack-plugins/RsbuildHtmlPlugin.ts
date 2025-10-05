@@ -1,7 +1,8 @@
 import path from 'node:path';
 import { promisify } from 'node:util';
 import type { Compilation, Compiler } from '@rspack/core';
-import { addCompilationError, color, isFunction, partition } from '../helpers';
+import { color, isFunction, partition } from '../helpers';
+import { addCompilationError } from '../helpers/compiler';
 import { ensureAssetPrefix, isURL } from '../helpers/url';
 import { logger } from '../logger';
 import { getHTMLPlugin } from '../pluginHelper';
