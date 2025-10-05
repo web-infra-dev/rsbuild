@@ -1,11 +1,7 @@
 import { sep } from 'node:path';
-import {
-  color,
-  isSatisfyRspackVersion,
-  prettyTime,
-  rspackMinVersion,
-} from '../helpers';
+import { color, prettyTime } from '../helpers';
 import { formatStats, getRsbuildStats } from '../helpers/stats';
+import { isSatisfyRspackVersion, rspackMinVersion } from '../helpers/version';
 import { registerDevHook } from '../hooks';
 import { logger } from '../logger';
 import { rspack } from '../rspack';
