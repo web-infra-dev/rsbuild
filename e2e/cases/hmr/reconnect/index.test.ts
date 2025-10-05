@@ -5,7 +5,7 @@ import { expect, rspackTest } from '@e2e/helper';
 const cwd = __dirname;
 
 rspackTest(
-  'should reconnect Web Socket server as expected',
+  'should reconnect WebSocket server as expected',
   async ({ page, dev, devOnly, editFile }) => {
     await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
       recursive: true,

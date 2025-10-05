@@ -38,12 +38,6 @@ export type OutputFileSystem = Rspack.OutputFileSystem & {
   ) => ReadStream;
 };
 
-export type Options = {
-  writeToDisk?:
-    | boolean
-    | ((targetPath: string, compilationName?: string) => boolean);
-};
-
 export type AssetsMiddlewareClose = (
   callback: (err?: Error | null) => void,
 ) => void;
