@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import { isMultiCompiler } from '../helpers';
+import { isMultiCompiler } from '../helpers/compiler';
 import { getPathnameFromUrl } from '../helpers/path';
 import type { InternalContext, NormalizedConfig, Rspack } from '../types';
 import { type AssetsMiddleware, assetsMiddleware } from './assets-middleware';

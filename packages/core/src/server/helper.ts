@@ -4,13 +4,9 @@ import type { Socket } from 'node:net';
 import os from 'node:os';
 import { posix, relative, sep } from 'node:path';
 import { DEFAULT_DEV_HOST } from '../constants';
-import {
-  addTrailingSlash,
-  color,
-  isFunction,
-  removeLeadingSlash,
-} from '../helpers';
+import { color, isFunction } from '../helpers';
 import { getCommonParentPath } from '../helpers/path';
+import { addTrailingSlash, removeLeadingSlash } from '../helpers/url';
 import { logger } from '../logger';
 import type {
   InternalContext,

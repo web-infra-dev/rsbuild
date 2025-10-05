@@ -1,6 +1,6 @@
 import { logger } from '../logger';
 import type { ActionType, RsbuildStats, Rspack } from '../types';
-import { isMultiCompiler } from './';
+import { isMultiCompiler } from './compiler';
 import { formatStatsError } from './format';
 import { color } from './vendors';
 

@@ -1,6 +1,10 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
-import { color, getPublicPathFromCompiler, isMultiCompiler } from '../helpers';
+import { color } from '../helpers';
+import {
+  getPublicPathFromCompiler,
+  isMultiCompiler,
+} from '../helpers/compiler';
 import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
 import { onBeforeRestartServer, restartDevServer } from '../restart';

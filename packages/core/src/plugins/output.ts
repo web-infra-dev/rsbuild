@@ -4,7 +4,8 @@ import {
   DEFAULT_DEV_HOST,
   DEFAULT_PORT,
 } from '../constants';
-import { formatPublicPath, getFilename, urlJoin } from '../helpers';
+import { getFilename } from '../helpers';
+import { formatPublicPath, urlJoin } from '../helpers/url';
 import { replacePortPlaceholder } from '../server/open';
 import type {
   NormalizedEnvironmentConfig,

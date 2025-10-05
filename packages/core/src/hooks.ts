@@ -1,4 +1,5 @@
-import { isFunction, isMultiCompiler } from './helpers';
+import { isFunction } from './helpers';
+import { isMultiCompiler } from './helpers/compiler';
 import type {
   AsyncHook,
   EnvironmentAsyncHook,

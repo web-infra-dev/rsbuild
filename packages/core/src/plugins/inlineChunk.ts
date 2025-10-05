@@ -1,11 +1,8 @@
 import { isRegExp } from 'node:util/types';
 import { CSS_REGEX, JS_REGEX } from '../constants';
-import {
-  addTrailingSlash,
-  ensureAssetPrefix,
-  getPublicPathFromCompiler,
-  isFunction,
-} from '../helpers';
+import { isFunction } from '../helpers';
+import { getPublicPathFromCompiler } from '../helpers/compiler';
+import { addTrailingSlash, ensureAssetPrefix } from '../helpers/url';
 import type {
   HtmlBasicTag,
   InlineChunkTest,

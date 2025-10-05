@@ -1,8 +1,5 @@
-import { posix } from 'node:path';
-import { URL } from 'node:url';
 import deepmerge from 'deepmerge';
 import RspackChain from '../../compiled/rspack-chain';
-import { DEFAULT_ASSET_PREFIX } from '../constants';
 import type {
   FilenameConfig,
   NormalizedConfig,
@@ -50,109 +47,6 @@ export const cloneDeep = <T>(value: T): T => {
   return deepmerge<T>({}, value, {
     isMergeableObject: isPlainObject,
   });
-};
-
-export const removeLeadingSlash = (s: string): string => s.replace(/^\/+/, '');
-export const removeTailingSlash = (s: string): string => s.replace(/\/+$/, '');
-export const addTrailingSlash = (s: string): string =>
-  s.endsWith('/') ? s : `${s}/`;
-
-export const formatPublicPath = (
-  publicPath: string,
-  withSlash = true,
-): string => {
-  // 'auto' is a magic value in Rspack and we should not add trailing slash
-  if (publicPath === 'auto') {
-    return publicPath;
-  }
-
-  return withSlash
-    ? addTrailingSlash(publicPath)
-    : removeTailingSlash(publicPath);
-};
-
-export const getPublicPathFromChain = (
-  chain: RspackChain,
-  withSlash = true,
-): string => {
-  const publicPath: Rspack.PublicPath = chain.output.get('publicPath');
-
-  if (typeof publicPath === 'string') {
-    return formatPublicPath(publicPath, withSlash);
-  }
-
-  return formatPublicPath(DEFAULT_ASSET_PREFIX, withSlash);
-};
-
-export const getPublicPathFromCompiler = (
-  compiler: Rspack.Compiler | Rspack.Compilation,
-): string => {
-  const { publicPath } = compiler.options.output;
-
-  if (typeof publicPath === 'string') {
-    // 'auto' is a magic value in Rspack and behave like `publicPath: ""`
-    if (publicPath === 'auto') {
-      return '';
-    }
-    return publicPath.endsWith('/') ? publicPath : `${publicPath}/`;
-  }
-
-  // publicPath function is not supported yet, fallback to default value
-  return DEFAULT_ASSET_PREFIX;
-};
-
-export const urlJoin = (base: string, path: string) => {
-  const [urlProtocol, baseUrl] = base.split('://');
-  return `${urlProtocol}://${posix.join(baseUrl, path)}`;
-};
-
-// Can be replaced with URL.canParse when we drop support for Node.js 18
-export const canParse = (url: string): boolean => {
-  try {
-    new URL(url);
-    return true;
-  } catch {
-    return false;
-  }
-};
-
-export const ensureAssetPrefix = (
-  url: string,
-  assetPrefix: Rspack.PublicPath = DEFAULT_ASSET_PREFIX,
-): string => {
-  // The use of an absolute URL without a protocol is technically legal,
-  // however it cannot be parsed as a URL instance, just return it.
-  // e.g. str is //example.com/foo.js
-  if (url.startsWith('//')) {
-    return url;
-  }
-
-  // If str is an complete URL, just return it.
-  // Only absolute url with hostname & protocol can be parsed into URL instance.
-  // e.g. str is https://example.com/foo.js
-  if (canParse(url)) {
-    return url;
-  }
-
-  // 'auto' is a magic value in Rspack and behave like `publicPath: ""`
-  if (assetPrefix === 'auto') {
-    return url;
-  }
-
-  // function is not supported by this helper
-  if (typeof assetPrefix === 'function') {
-    return url;
-  }
-
-  if (assetPrefix.startsWith('http')) {
-    return urlJoin(assetPrefix, url);
-  }
-
-  if (assetPrefix.startsWith('//')) {
-    return urlJoin(`https:${assetPrefix}`, url).replace('https:', '');
-  }
-
-  return posix.join(assetPrefix, url);
 };
 
 export function getFilename(
@@ -252,23 +146,8 @@ export function partition<T>(
   return [truthy, falsy];
 }
 
-export const applyToCompiler = (
-  compiler: Rspack.Compiler | Rspack.MultiCompiler,
-  apply: (c: Rspack.Compiler, index: number) => void,
-): void => {
-  if (isMultiCompiler(compiler)) {
-    compiler.compilers.forEach(apply);
-  } else {
-    apply(compiler, 0);
-  }
-};
-
 export const upperFirst = (str: string): string =>
   str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
-
-// Determine if the string is a URL
-export const isURL = (str: string): boolean =>
-  str.startsWith('http') || str.startsWith('//:');
 
 export const createVirtualModule = (content: string) =>
   `data:text/javascript,${content}`;
@@ -277,12 +156,6 @@ export function isWebTarget(target: RsbuildTarget | RsbuildTarget[]): boolean {
   const targets = castArray(target);
   return targets.includes('web') || targets.includes('web-worker');
 }
-
-export const isMultiCompiler = (
-  compiler: Rspack.Compiler | Rspack.MultiCompiler,
-): compiler is Rspack.MultiCompiler => {
-  return 'compilers' in compiler && Array.isArray(compiler.compilers);
-};
 
 export function pick<T, U extends keyof T>(
   obj: T,

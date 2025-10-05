@@ -1,4 +1,5 @@
-import { color, getPublicPathFromChain } from '../helpers';
+import { color } from '../helpers';
+import { getPublicPathFromChain } from '../helpers/url';
 import { logger } from '../logger';
 import type { Define, RsbuildPlugin } from '../types';
 

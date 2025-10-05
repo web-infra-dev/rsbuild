@@ -22,12 +22,8 @@ import type {
   Compiler,
   RspackPluginInstance,
 } from '@rspack/core';
-import {
-  castArray,
-  ensureAssetPrefix,
-  isFunction,
-  upperFirst,
-} from '../../helpers';
+import { castArray, isFunction, upperFirst } from '../../helpers';
+import { ensureAssetPrefix } from '../../helpers/url';
 import { getHTMLPlugin } from '../../pluginHelper';
 import type {
   HtmlRspackPlugin,

@@ -9,7 +9,8 @@
 import type { ReadStream } from 'node:fs';
 import { createRequire } from 'node:module';
 import type { Compiler, MultiCompiler, Watching } from '@rspack/core';
-import { applyToCompiler, isMultiCompiler, pick } from '../../helpers';
+import { pick } from '../../helpers';
+import { applyToCompiler, isMultiCompiler } from '../../helpers/compiler';
 import { logger } from '../../logger';
 import type {
   InternalContext,
