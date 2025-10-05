@@ -1,4 +1,4 @@
-import { requireCompiledPackage } from '../helpers';
+import { requireCompiledPackage } from '../helpers/vendors';
 import type {
   NormalizedEnvironmentConfig,
   RsbuildConfig,

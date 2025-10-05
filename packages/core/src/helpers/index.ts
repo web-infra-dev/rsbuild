@@ -12,11 +12,7 @@ import type {
 } from '../types';
 import { color } from './vendors';
 
-export * from './fs';
-export * from './path';
-export * from './stats';
-export * from './vendors';
-export { RspackChain };
+export { color, RspackChain };
 
 // Lazy compilation was stabilized in Rspack v1.5.0
 export const rspackMinVersion = '1.5.0';

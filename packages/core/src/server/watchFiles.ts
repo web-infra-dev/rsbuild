@@ -1,6 +1,7 @@
 import type { FSWatcher } from '../../compiled/chokidar/index.js';
 import { normalizePublicDirs } from '../defaultConfig';
-import { castArray, requireCompiledPackage } from '../helpers';
+import { castArray } from '../helpers';
+import { requireCompiledPackage } from '../helpers/vendors';
 import type {
   ChokidarOptions,
   DevConfig,

@@ -7,10 +7,10 @@ import { DEFAULT_DEV_HOST } from '../constants';
 import {
   addTrailingSlash,
   color,
-  getCommonParentPath,
   isFunction,
   removeLeadingSlash,
 } from '../helpers';
+import { getCommonParentPath } from '../helpers/path';
 import { logger } from '../logger';
 import type {
   InternalContext,

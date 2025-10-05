@@ -1,5 +1,5 @@
 import type { LoaderDefinition, RawSourceMap } from '@rspack/core';
-import { requireCompiledPackage } from '../helpers';
+import { requireCompiledPackage } from '../helpers/vendors';
 import type { EnvironmentContext } from '../types';
 
 export type TransformLoaderOptions = {

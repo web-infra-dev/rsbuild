@@ -9,9 +9,9 @@ import {
   castArray,
   color,
   getPublicPathFromChain,
-  isFileExists,
   isPlainObject,
 } from '../helpers';
+import { isFileExists } from '../helpers/fs';
 import {
   entryNameSymbol,
   type HtmlExtraData,

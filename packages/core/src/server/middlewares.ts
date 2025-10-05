@@ -1,7 +1,8 @@
 import type { IncomingMessage } from 'node:http';
 import path from 'node:path';
 import onFinished from 'on-finished';
-import { addTrailingSlash, color, getAssetsFromStats } from '../helpers';
+import { addTrailingSlash, color } from '../helpers';
+import { getAssetsFromStats } from '../helpers/stats';
 import { logger } from '../logger';
 import type {
   Connect,

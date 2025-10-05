@@ -7,8 +7,8 @@ import {
   ensureAssetPrefix,
   getPublicPathFromCompiler,
   isObject,
-  requireCompiledPackage,
 } from '../helpers';
+import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
 import { recursiveChunkEntryNames } from '../rspack-plugins/resource-hints/doesChunkBelongToHtml';
 import type {

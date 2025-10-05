@@ -1,11 +1,7 @@
 import { isAbsolute, join } from 'node:path';
 import { normalizePublicDirs } from '../defaultConfig';
-import {
-  castArray,
-  isMultiCompiler,
-  pick,
-  requireCompiledPackage,
-} from '../helpers';
+import { castArray, isMultiCompiler, pick } from '../helpers';
+import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
 import { rspack } from '../rspack';
 import type {

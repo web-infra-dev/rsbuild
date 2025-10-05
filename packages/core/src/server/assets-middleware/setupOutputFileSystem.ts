@@ -2,7 +2,7 @@ import type {
   Compiler,
   OutputFileSystem as RspackOutputFileSystem,
 } from '@rspack/core';
-import { requireCompiledPackage } from '../../helpers';
+import { requireCompiledPackage } from '../../helpers/vendors';
 import type { OutputFileSystem } from './index';
 import type { ResolvedWriteToDisk } from './setupWriteToDisk';
 

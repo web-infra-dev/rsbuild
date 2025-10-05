@@ -5,11 +5,11 @@ import {
   castArray,
   color,
   getNodeEnv,
-  isEmptyDir,
   isFunction,
   pick,
   setNodeEnv,
 } from './helpers';
+import { isEmptyDir } from './helpers/fs';
 import { initPluginAPI } from './initPlugins';
 import { type LoadEnvResult, loadEnv } from './loadEnv';
 import { isDebug, logger } from './logger';

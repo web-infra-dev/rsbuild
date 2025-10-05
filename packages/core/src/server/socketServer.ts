@@ -2,8 +2,8 @@ import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
 import type Ws from '../../compiled/ws/index.js';
 import { formatStatsError } from '../helpers/format';
-import { requireCompiledPackage } from '../helpers/index.js';
 import { getStatsErrors, getStatsWarnings } from '../helpers/stats';
+import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
 import type {
   DevConfig,

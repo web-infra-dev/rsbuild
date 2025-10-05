@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { toRelativePath } from '../helpers';
+import { toRelativePath } from '../helpers/path';
 import { ansiHTML } from './ansiHTML';
 import { escapeHtml } from './helper';
 

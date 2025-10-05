@@ -4,12 +4,12 @@ import {
   addCompilationError,
   color,
   ensureAssetPrefix,
-  fileExistsByCompilation,
   getPublicPathFromCompiler,
   isURL,
   pick,
-  requireCompiledPackage,
 } from '../helpers';
+import { fileExistsByCompilation } from '../helpers/fs';
+import { requireCompiledPackage } from '../helpers/vendors';
 import type { AppIconItem, HtmlBasicTag, RsbuildPlugin } from '../types';
 
 type IconExtra = {
