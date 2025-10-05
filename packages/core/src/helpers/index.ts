@@ -1,7 +1,6 @@
 import { posix } from 'node:path';
 import { URL } from 'node:url';
 import deepmerge from 'deepmerge';
-import color from '../../compiled/picocolors/index.js';
 import RspackChain from '../../compiled/rspack-chain';
 import { DEFAULT_ASSET_PREFIX } from '../constants';
 import type {
@@ -11,12 +10,13 @@ import type {
   RsbuildTarget,
   Rspack,
 } from '../types';
+import { color } from './vendors';
 
 export * from './fs';
 export * from './path';
 export * from './stats';
-
-export { color, RspackChain };
+export * from './vendors';
+export { RspackChain };
 
 // Lazy compilation was stabilized in Rspack v1.5.0
 export const rspackMinVersion = '1.5.0';

@@ -1,11 +1,10 @@
 /**
  * This file is used to get/set the global instance for html-plugin and css-extract plugin.
  */
-import { createRequire } from 'node:module';
+
+import { requireCompiledPackage } from './helpers';
 import { rspack } from './rspack';
 import type { HtmlRspackPlugin } from './types';
-
-const require = createRequire(import.meta.url);
 
 let htmlPlugin: typeof HtmlRspackPlugin;
 
@@ -20,7 +19,7 @@ export const setHTMLPlugin = (plugin: typeof HtmlRspackPlugin): void => {
 
 export const getHTMLPlugin = (): typeof HtmlRspackPlugin => {
   if (!htmlPlugin) {
-    htmlPlugin = require('../compiled/html-rspack-plugin/index.js');
+    htmlPlugin = requireCompiledPackage('html-rspack-plugin');
   }
   return htmlPlugin;
 };

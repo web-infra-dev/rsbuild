@@ -2,7 +2,7 @@ import path from 'node:path';
 import { promisify } from 'node:util';
 import { parse as parseStack, type StackFrame } from 'stacktrace-parser';
 import { SCRIPT_REGEX } from '../constants';
-import { color } from '../helpers';
+import { color, requireCompiledPackage } from '../helpers';
 import { logger } from '../logger';
 import type { EnvironmentContext, InternalContext, Rspack } from '../types';
 import { getFileFromUrl } from './assets-middleware/getFileFromUrl';
@@ -13,14 +13,14 @@ import type { ClientMessageError } from './socketServer';
  * Maps a position in compiled code to its original source position using
  * source maps.
  */
-async function mapSourceMapPosition(
+function mapSourceMapPosition(
   rawSourceMap: string,
   line: number,
   column: number,
 ) {
-  const {
-    default: { TraceMap, originalPositionFor },
-  } = await import('../../compiled/@jridgewell/trace-mapping/index.js');
+  const { TraceMap, originalPositionFor } = requireCompiledPackage(
+    '@jridgewell/trace-mapping',
+  );
   const tracer = new TraceMap(rawSourceMap);
   const originalPosition = originalPositionFor(tracer, { line, column });
   return originalPosition;
@@ -73,11 +73,7 @@ const resolveSourceLocation = async (
   try {
     const sourceMap = await readFile(sourceMapInfo.filename);
     if (sourceMap) {
-      return await mapSourceMapPosition(
-        sourceMap.toString(),
-        lineNumber,
-        column,
-      );
+      return mapSourceMapPosition(sourceMap.toString(), lineNumber, column);
     }
   } catch (error) {
     if (error instanceof Error) {

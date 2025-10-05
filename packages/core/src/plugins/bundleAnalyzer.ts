@@ -1,3 +1,4 @@
+import { requireCompiledPackage } from '../helpers';
 import type {
   NormalizedEnvironmentConfig,
   RsbuildConfig,
@@ -36,15 +37,15 @@ export function pluginBundleAnalyzer(): RsbuildPlugin {
         },
       });
 
-      api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
+      api.modifyBundlerChain((chain, { CHAIN_ID, environment }) => {
         const { config } = environment;
 
         if (!isUseAnalyzer(config)) {
           return;
         }
 
-        const { default: BundleAnalyzer } = await import(
-          '../../compiled/webpack-bundle-analyzer/index.js'
+        const BundleAnalyzer = requireCompiledPackage(
+          'webpack-bundle-analyzer',
         );
 
         chain
