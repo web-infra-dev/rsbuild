@@ -4,7 +4,8 @@ import {
   updateEnvironmentContext,
 } from '../createContext';
 import { getDefaultEntry, normalizeConfig } from '../defaultConfig';
-import { camelCase, color, ensureAbsolutePath, pick } from '../helpers';
+import { camelCase, color, pick } from '../helpers';
+import { ensureAbsolutePath } from '../helpers/path';
 import { inspectConfig } from '../inspectConfig';
 import { isDebug, logger } from '../logger';
 import { mergeRsbuildConfig } from '../mergeConfig';

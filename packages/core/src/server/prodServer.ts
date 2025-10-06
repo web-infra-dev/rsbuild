@@ -1,7 +1,7 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
-import { requireCompiledPackage } from '../helpers';
 import { getPathnameFromUrl } from '../helpers/path';
+import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
 import type {
   Connect,

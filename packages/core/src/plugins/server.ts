@@ -2,7 +2,8 @@ import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
 import { isDeno } from '../constants';
 import { normalizePublicDirs } from '../defaultConfig';
-import { color, dedupeNestedPaths } from '../helpers';
+import { color } from '../helpers';
+import { dedupeNestedPaths } from '../helpers/path';
 import { open } from '../server/open';
 import type { OnAfterStartDevServerFn, RsbuildPlugin } from '../types';
 

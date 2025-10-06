@@ -2,13 +2,10 @@ import type {
   FileDescriptor,
   InternalOptions,
 } from '../../compiled/rspack-manifest-plugin';
-import {
-  color,
-  ensureAssetPrefix,
-  getPublicPathFromCompiler,
-  isObject,
-  requireCompiledPackage,
-} from '../helpers';
+import { color, isObject } from '../helpers';
+import { getPublicPathFromCompiler } from '../helpers/compiler';
+import { ensureAssetPrefix } from '../helpers/url';
+import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
 import { recursiveChunkEntryNames } from '../rspack-plugins/resource-hints/doesChunkBelongToHtml';
 import type {

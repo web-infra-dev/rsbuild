@@ -1,7 +1,8 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
 import { expand } from 'dotenv-expand';
-import { color, getNodeEnv, isFileSync } from './helpers';
+import { color, getNodeEnv } from './helpers';
+import { isFileSync } from './helpers/fs';
 import { logger } from './logger';
 
 const DOTENV_LINE =

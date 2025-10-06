@@ -9,7 +9,8 @@
 import type { ReadStream } from 'node:fs';
 import { createRequire } from 'node:module';
 import type { Compiler, MultiCompiler, Watching } from '@rspack/core';
-import { applyToCompiler, isMultiCompiler, pick } from '../../helpers';
+import { pick } from '../../helpers';
+import { applyToCompiler, isMultiCompiler } from '../../helpers/compiler';
 import { logger } from '../../logger';
 import type {
   InternalContext,
@@ -35,12 +36,6 @@ export type OutputFileSystem = Rspack.OutputFileSystem & {
     p: string,
     opts: { start: number; end: number },
   ) => ReadStream;
-};
-
-export type Options = {
-  writeToDisk?:
-    | boolean
-    | ((targetPath: string, compilationName?: string) => boolean);
 };
 
 export type AssetsMiddlewareClose = (

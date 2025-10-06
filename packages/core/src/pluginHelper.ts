@@ -2,7 +2,7 @@
  * This file is used to get/set the global instance for html-plugin and css-extract plugin.
  */
 
-import { requireCompiledPackage } from './helpers';
+import { requireCompiledPackage } from './helpers/vendors';
 import { rspack } from './rspack';
 import type { HtmlRspackPlugin } from './types';
 

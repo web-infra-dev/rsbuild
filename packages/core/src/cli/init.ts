@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { createRsbuild } from '../createRsbuild';
-import { castArray, ensureAbsolutePath } from '../helpers';
+import { castArray } from '../helpers';
+import { ensureAbsolutePath } from '../helpers/path';
 import { loadConfig as baseLoadConfig } from '../loadConfig';
 import { logger } from '../logger';
 import { watchFilesForRestart } from '../restart';

@@ -2,7 +2,7 @@ import type { Stats as FSStats, ReadStream } from 'node:fs';
 import onFinished from 'on-finished';
 import type { Range, Result as RangeResult, Ranges } from 'range-parser';
 import rangeParser from 'range-parser';
-import { requireCompiledPackage } from '../../helpers';
+import { requireCompiledPackage } from '../../helpers/vendors';
 import { logger } from '../../logger';
 import type { InternalContext, RequestHandler } from '../../types';
 import { escapeHtml } from './escapeHtml';

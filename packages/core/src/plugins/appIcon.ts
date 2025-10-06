@@ -1,15 +1,13 @@
 import path from 'node:path';
 import { promisify } from 'node:util';
+import { color, pick } from '../helpers';
 import {
   addCompilationError,
-  color,
-  ensureAssetPrefix,
-  fileExistsByCompilation,
   getPublicPathFromCompiler,
-  isURL,
-  pick,
-  requireCompiledPackage,
-} from '../helpers';
+} from '../helpers/compiler';
+import { fileExistsByCompilation } from '../helpers/fs';
+import { ensureAssetPrefix, isURL } from '../helpers/url';
+import { requireCompiledPackage } from '../helpers/vendors';
 import type { AppIconItem, HtmlBasicTag, RsbuildPlugin } from '../types';
 
 type IconExtra = {

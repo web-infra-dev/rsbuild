@@ -1,4 +1,7 @@
-import { isSatisfyRspackVersion, rspackMinVersion } from '../src/helpers';
+import {
+  isSatisfyRspackVersion,
+  rspackMinVersion,
+} from '../src/helpers/version';
 
 describe('rspack version', () => {
   it('isSatisfyRspackVersion', () => {

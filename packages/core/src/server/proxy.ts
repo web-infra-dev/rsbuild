@@ -1,5 +1,5 @@
 import type { RequestHandler } from '../../compiled/http-proxy-middleware/index.js';
-import { requireCompiledPackage } from '../helpers/index.js';
+import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
 import type {
   RequestHandler as Middleware,

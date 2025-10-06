@@ -19,7 +19,8 @@ import {
   TS_CONFIG_FILE,
   WASM_DIST_DIR,
 } from './constants';
-import { findExists, getNodeEnv, isFileExists } from './helpers';
+import { getNodeEnv } from './helpers';
+import { findExists, isFileExists } from './helpers/fs';
 import { mergeRsbuildConfig } from './mergeConfig';
 import type {
   NormalizedConfig,

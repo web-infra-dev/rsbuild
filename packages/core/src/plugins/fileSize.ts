@@ -7,7 +7,8 @@ import path from 'node:path';
 import { promisify } from 'node:util';
 import zlib from 'node:zlib';
 import { JS_REGEX } from '../constants';
-import { color, getAssetsFromStats } from '../helpers';
+import { color } from '../helpers';
+import { getAssetsFromStats } from '../helpers/stats';
 import { logger } from '../logger';
 import type {
   InternalContext,

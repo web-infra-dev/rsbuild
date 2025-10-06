@@ -1,6 +1,7 @@
 import { join, sep } from 'node:path';
 import { RSBUILD_OUTPUTS_PATH } from '../constants';
-import { color, emptyDir } from '../helpers';
+import { color } from '../helpers';
+import { emptyDir } from '../helpers/fs';
 import { logger } from '../logger';
 import type {
   CleanDistPath,

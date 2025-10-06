@@ -29,7 +29,7 @@ export type { ChainIdentifier } from './configChain';
 // Constants
 export { PLUGIN_CSS_NAME, PLUGIN_SWC_NAME } from './constants';
 export { defaultAllowedOrigins } from './defaultConfig';
-export { ensureAssetPrefix } from './helpers';
+export { ensureAssetPrefix } from './helpers/url';
 // Helpers
 export { type Logger, logger } from './logger';
 export { mergeRsbuildConfig } from './mergeConfig';

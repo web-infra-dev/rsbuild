@@ -1,12 +1,7 @@
 import { join, sep } from 'node:path';
-import {
-  ensureAssetPrefix,
-  isPlainObject,
-  isWebTarget,
-  pick,
-  prettyTime,
-} from '../src/helpers';
+import { isPlainObject, isWebTarget, pick, prettyTime } from '../src/helpers';
 import { dedupeNestedPaths, getCommonParentPath } from '../src/helpers/path';
+import { ensureAssetPrefix } from '../src/helpers/url';
 import { getRoutes, normalizeUrl } from '../src/server/helper';
 import type { InternalContext } from '../src/types';
 

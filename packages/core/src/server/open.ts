@@ -1,6 +1,7 @@
 import { apps, default as baseOpen } from 'open';
 import { STATIC_PATH } from '../constants';
-import { canParse, castArray, color } from '../helpers';
+import { castArray, color } from '../helpers';
+import { canParse } from '../helpers/url';
 import { logger } from '../logger';
 import type { NormalizedConfig, Routes } from '../types';
 import { getHostInUrl } from './helper';

@@ -5,13 +5,9 @@ import {
   reduceConfigsMergeContext,
   reduceConfigsWithContext,
 } from 'reduce-configs';
-import {
-  castArray,
-  color,
-  getPublicPathFromChain,
-  isFileExists,
-  isPlainObject,
-} from '../helpers';
+import { castArray, color, isPlainObject } from '../helpers';
+import { isFileExists } from '../helpers/fs';
+import { getPublicPathFromChain } from '../helpers/url';
 import {
   entryNameSymbol,
   type HtmlExtraData,

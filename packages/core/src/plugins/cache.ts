@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
-import { findExists, hash, isFileExists } from '../helpers';
+import { hash } from '../helpers';
+import { findExists, isFileExists } from '../helpers/fs';
 import { logger } from '../logger';
 import type {
   BuildCacheOptions,
