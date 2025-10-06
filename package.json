@@ -34,20 +34,20 @@
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.2.4",
+    "@biomejs/biome": "^2.2.5",
     "@rsbuild/config": "workspace:*",
     "@rslint/core": "^0.1.13",
-    "@rstest/core": "^0.5.0",
+    "@rstest/core": "^0.5.1",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.18.6",
+    "@types/node": "^22.18.8",
     "cross-env": "^10.1.0",
     "cspell-ban-words": "^0.0.4",
     "heading-case": "^1.0.2",
     "nano-staged": "^0.8.0",
-    "nx": "^21.6.2",
+    "nx": "^21.6.3",
     "prettier": "^3.6.2",
     "simple-git-hooks": "^2.13.1",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   },
   "packageManager": "pnpm@10.17.0",
   "engines": {

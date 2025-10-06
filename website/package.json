@@ -19,7 +19,7 @@
     "@rspress/plugin-sitemap": "2.0.0-beta.34",
     "@rstack-dev/doc-ui": "^1.11.0",
     "@shikijs/transformers": "^3.13.0",
-    "@types/node": "^22.18.6",
+    "@types/node": "^22.18.8",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "fast-glob": "^3.3.3",
@@ -29,6 +29,6 @@
     "rsbuild-plugin-open-graph": "^1.1.0",
     "rspress-plugin-font-open-sans": "^1.0.3",
     "rspress-plugin-sitemap": "^1.2.1",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   }
 }
