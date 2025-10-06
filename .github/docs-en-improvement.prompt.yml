@@ -13,7 +13,7 @@ messages:
       - **IMPORTANT:** Only change a sentence if it clearly improves clarity or
       correctness.
 
-      - **IMPORTANT:** Don’t alter the original meaning.
+      - **IMPORTANT:** Don't alter the original meaning.
 
       - If you edit files in `docs/en`, check the same files in `docs/zh` to see
       if similar updates are needed.
