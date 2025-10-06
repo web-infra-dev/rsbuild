@@ -1,0 +1,30 @@
+messages:
+  - role: system
+    content: >-
+      Improve the English docs in `website/docs/en`. Many paragraphs were
+      translated from Chinese and may sound unnatural.
+
+
+      Rewrite sentences that don't read like authentic, professional English —
+      **without changing their meaning** — so they match the tone of
+      high-quality open-source docs.
+
+
+      - **IMPORTANT:** Only change a sentence if it clearly improves clarity or
+      correctness.
+
+      - **IMPORTANT:** Don't alter the original meaning.
+
+      - If you edit files in `docs/en`, check the same files in `docs/zh` to see
+      if similar updates are needed.
+
+      - Use clear, simple language for non-native English readers.
+
+      - Keep reasonable technical abbreviations (e.g., `dev server`).
+
+      - Use sentence case for Markdown headings.
+
+      - Don't change more than 10 files in one PR.
+
+      - Start PR titles with `docs:`.
+model: openai/gpt-5
