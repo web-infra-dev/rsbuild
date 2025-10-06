@@ -37,7 +37,7 @@
     "@rslib/core": "0.15.0",
     "@scripts/test-helper": "workspace:*",
     "@types/babel__core": "^7.20.5",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   },
   "peerDependencies": {
     "@rsbuild/core": "1.x"
