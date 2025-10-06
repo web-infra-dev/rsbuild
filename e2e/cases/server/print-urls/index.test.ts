@@ -1,7 +1,5 @@
 import { expect, test } from '@e2e/helper';
 
-const cwd = __dirname;
-
 const NETWORK_LOG_REGEX =
   /➜\s{2}Network:\s{2}http:\/\/\d{1,3}(?:\.\d{1,3}){3}:\d+/;
 
@@ -109,8 +107,6 @@ test('should listen only on localhost in preview', async ({
   buildPreview,
 }) => {
   const rsbuild = await buildPreview({
-    cwd,
-
     config: {
       server: {
         host: 'localhost',
@@ -131,8 +127,6 @@ test('should not print server urls when HTML is disabled', async ({
   buildPreview,
 }) => {
   const rsbuild = await buildPreview({
-    cwd,
-
     config: {
       tools: {
         htmlPlugin: false,
@@ -148,8 +142,6 @@ test('should print server urls when HTML is disabled but printUrls is a custom f
   buildPreview,
 }) => {
   const rsbuild = await buildPreview({
-    cwd,
-
     config: {
       tools: {
         htmlPlugin: false,

@@ -53,7 +53,7 @@ test('should access /main with query or hash success', async ({
     config: {
       source: {
         entry: {
-          main: join(cwd, 'src/index.js'),
+          main: './src/index.js',
         },
       },
     },
@@ -83,7 +83,7 @@ test('should access /main.html success when entry is main', async ({
     config: {
       source: {
         entry: {
-          main: join(cwd, 'src/index.js'),
+          main: './src/index.js',
         },
       },
     },
@@ -105,7 +105,7 @@ test('should access /main success when entry is main', async ({
     config: {
       source: {
         entry: {
-          main: join(cwd, 'src/index.js'),
+          main: './src/index.js',
         },
       },
     },
@@ -129,7 +129,7 @@ test('should access /main success when entry is main and use memoryFs', async ({
     config: {
       source: {
         entry: {
-          main: join(cwd, 'src/index.js'),
+          main: './src/index.js',
         },
       },
     },
@@ -151,7 +151,7 @@ test('should access /main success when entry is main and set assetPrefix', async
     config: {
       source: {
         entry: {
-          main: join(cwd, 'src/index.js'),
+          main: './src/index.js',
         },
       },
       dev: {
@@ -176,7 +176,7 @@ test('should access /main success when entry is main and outputPath is /main/ind
     config: {
       source: {
         entry: {
-          main: join(cwd, 'src/index.js'),
+          main: './src/index.js',
         },
       },
       html: {
@@ -198,7 +198,7 @@ test('should return 404 when page is not found', async ({ page, devOnly }) => {
     config: {
       source: {
         entry: {
-          main: join(cwd, 'src/index.js'),
+          main: './src/index.js',
         },
       },
     },
@@ -219,7 +219,7 @@ test('should access /html/main success when entry is main and outputPath is /htm
     config: {
       source: {
         entry: {
-          main: join(cwd, 'src/index.js'),
+          main: './src/index.js',
         },
       },
       output: {
@@ -254,7 +254,7 @@ test('should access /main success when modify publicPath in compiler', async ({
     config: {
       source: {
         entry: {
-          main: join(cwd, 'src/index.js'),
+          main: './src/index.js',
         },
       },
       plugins: [
@@ -291,7 +291,7 @@ test('should access /main success when distPath is absolute', async ({
     config: {
       source: {
         entry: {
-          main: join(cwd, 'src/index.js'),
+          main: './src/index.js',
         },
       },
     },

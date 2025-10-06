@@ -2,11 +2,9 @@ import fs from 'node:fs';
 import { join } from 'node:path';
 import { expect, rspackTest } from '@e2e/helper';
 
-const cwd = __dirname;
-
 rspackTest(
   'HMR should work after fixing compilation error',
-  async ({ page, dev, editFile }) => {
+  async ({ cwd, page, dev, editFile }) => {
     await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
       recursive: true,
     });

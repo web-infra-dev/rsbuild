@@ -2,11 +2,9 @@ import fs from 'node:fs';
 import { join } from 'node:path';
 import { expect, gotoPage, rspackTest } from '@e2e/helper';
 
-const cwd = __dirname;
-
 rspackTest(
   'should allow to create multiple HMR connections',
-  async ({ page: page1, context, devOnly, editFile }) => {
+  async ({ cwd, page: page1, context, devOnly, editFile }) => {
     await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
       recursive: true,
     });

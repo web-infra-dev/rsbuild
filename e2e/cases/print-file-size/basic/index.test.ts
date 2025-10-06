@@ -1,7 +1,5 @@
 import { expect, test, toPosixPath } from '@e2e/helper';
 
-const cwd = __dirname;
-
 function extractFileSizeLogs(logs: string[]) {
   const result: string[] = [];
 
@@ -40,9 +38,7 @@ test.describe('should print file size correctly', async () => {
   test('should print file size after building by default', async ({
     build,
   }) => {
-    const rsbuild = await build({
-      cwd,
-    });
+    const rsbuild = await build();
 
     expect(extractFileSizeLogs(rsbuild.logs)).toEqual(`
 File (web)                             Size       Gzip
@@ -58,7 +54,6 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
     build,
   }) => {
     const rsbuild = await build({
-      cwd,
       config: {
         output: {
           filenameHash: false,
@@ -99,7 +94,6 @@ dist/static/js/lib-react.js   X.X kB   X.X kB
     build,
   }) => {
     const rsbuild = await build({
-      cwd,
       config: {
         performance: {
           printFileSize: false,
@@ -114,7 +108,6 @@ dist/static/js/lib-react.js   X.X kB   X.X kB
     build,
   }) => {
     const rsbuild = await build({
-      cwd,
       config: {
         performance: {
           printFileSize: {
@@ -130,7 +123,6 @@ Total size (web): X.X kB (X.X kB gzipped)`);
 
   test('printFileSize.total: false should work', async ({ build }) => {
     const rsbuild = await build({
-      cwd,
       config: {
         performance: {
           printFileSize: {
@@ -153,7 +145,6 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB`);
     build,
   }) => {
     const rsbuild = await build({
-      cwd,
       config: {
         output: {
           distPath: {
@@ -175,7 +166,6 @@ File (web)                                                 Size       Gzip
 
   test('should allow to disable gzip-compressed size', async ({ build }) => {
     const rsbuild = await build({
-      cwd,
       config: {
         performance: {
           printFileSize: {
@@ -197,7 +187,6 @@ dist/static/js/lib-react.[[hash]].js   X.X kB
 
   test('should allow to filter assets by name', async ({ build }) => {
     const rsbuild = await build({
-      cwd,
       config: {
         performance: {
           printFileSize: {
@@ -216,7 +205,6 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
 
   test('should allow to filter assets by size', async ({ build }) => {
     const rsbuild = await build({
-      cwd,
       config: {
         performance: {
           printFileSize: {
@@ -233,7 +221,6 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB`);
 
   test('should allow to custom exclude function', async ({ build }) => {
     const rsbuild = await build({
-      cwd,
       config: {
         performance: {
           printFileSize: {
@@ -257,9 +244,7 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
   test('should not calculate gzip size if the asset is not compressible', async ({
     build,
   }) => {
-    const rsbuild = await build({
-      cwd,
-    });
+    const rsbuild = await build();
 
     expect(extractFileSizeLogs(rsbuild.logs)).toEqual(`
 File (web)                             Size       Gzip
@@ -275,7 +260,6 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
     build,
   }) => {
     const rsbuild = await build({
-      cwd,
       config: {
         performance: {
           printFileSize: {
