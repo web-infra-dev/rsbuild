@@ -1,9 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('should serve static files and return 403 for path traversal', async ({
-  request,
-  dev,
-}) => {
+test('should serve static files', async ({ request, dev }) => {
   const rsbuild = await dev();
   const baseUrl = `http://127.0.0.1:${rsbuild.port}`;
   const reqText = await request.get(`${baseUrl}/foo.txt`);
