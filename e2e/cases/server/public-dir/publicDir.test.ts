@@ -2,8 +2,6 @@ import path, { join } from 'node:path';
 import { expect, getDistFiles, test } from '@e2e/helper';
 import fse from 'fs-extra';
 
-const cwd = __dirname;
-
 test('should serve publicDir for dev server correctly', async ({
   page,
   devOnly,
@@ -144,8 +142,6 @@ test('should serve publicDir for preview server correctly', async ({
   await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');
 
   const rsbuild = await buildPreview({
-    cwd,
-
     config: {
       output: {
         distPath: {
@@ -168,7 +164,6 @@ test('should copy publicDir to the environment distDir when multiple environment
   await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');
 
   const rsbuild = await build({
-    cwd,
     config: {
       environments: {
         web1: {
@@ -222,7 +217,6 @@ test('should copy publicDir to the node distDir when copyOnBuild is specified as
   await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');
 
   const rsbuild = await build({
-    cwd,
     config: {
       server: {
         publicDir: {
@@ -258,7 +252,6 @@ test('should copy publicDir to root dist when environment dist path has a parent
   fse.removeSync(join(__dirname, 'dist-build-web'));
 
   const rsbuild = await build({
-    cwd,
     config: {
       environments: {
         web1: {
@@ -300,8 +293,6 @@ test('should serve publicDir for preview server with assetPrefix correctly', asy
   await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');
 
   const rsbuild = await buildPreview({
-    cwd,
-
     config: {
       dev: {
         assetPrefix: '/dev/',
@@ -330,8 +321,6 @@ test('should serve multiple publicDir for preview server correctly', async ({
   await fse.outputFile(join(__dirname, 'test-temp-dir2', 'b.txt'), 'b');
 
   const rsbuild = await buildPreview({
-    cwd,
-
     config: {
       server: {
         publicDir: [{ name: 'test-temp-dir1' }, { name: 'test-temp-dir2' }],

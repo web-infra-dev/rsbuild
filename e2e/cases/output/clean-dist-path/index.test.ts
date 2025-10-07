@@ -9,11 +9,7 @@ const testDeepDistFile = join(cwd, 'dist/foo/bar/test.json');
 
 test('should clean dist path by default', async ({ build }) => {
   await fse.outputFile(testDistFile, `{ "test": 1 }`);
-
-  await build({
-    cwd,
-  });
-
+  await build();
   expect(fs.existsSync(testDistFile)).toBeFalsy();
 });
 
@@ -55,7 +51,6 @@ test('should not clean dist path if it is outside root', async ({ build }) => {
   await fse.outputFile(testOutsideFile, `{ "test": 1 }`);
 
   const rsbuild = await build({
-    cwd,
     config: {
       output: {
         distPath: {
@@ -80,7 +75,6 @@ test('should allow to disable cleanDistPath', async ({ build }) => {
   await fse.outputFile(testDistFile, `{ "test": 1 }`);
 
   await build({
-    cwd,
     config: {
       output: {
         cleanDistPath: false,
@@ -100,7 +94,6 @@ test('should allow to use `cleanDistPath.keep` to keep some files', async ({
   await fse.outputFile(testDeepDistFile, `{ "test": 1 }`);
 
   await build({
-    cwd,
     config: {
       output: {
         cleanDistPath: {

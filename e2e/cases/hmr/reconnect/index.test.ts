@@ -2,11 +2,9 @@ import fs from 'node:fs';
 import { join } from 'node:path';
 import { expect, rspackTest } from '@e2e/helper';
 
-const cwd = __dirname;
-
 rspackTest(
   'should reconnect WebSocket server as expected',
-  async ({ page, dev, devOnly, editFile }) => {
+  async ({ cwd, page, dev, devOnly, editFile }) => {
     await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
       recursive: true,
     });

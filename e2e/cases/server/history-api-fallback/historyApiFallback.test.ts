@@ -1,8 +1,5 @@
-import { join } from 'node:path';
 import { expect, rspackTest, test } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
-
-const cwd = __dirname;
 
 rspackTest(
   'should provide history api fallback for dev server correctly',
@@ -12,7 +9,7 @@ rspackTest(
         plugins: [pluginReact()],
         source: {
           entry: {
-            main: join(cwd, 'src/index.jsx'),
+            main: './src/index.jsx',
           },
         },
         server: {
@@ -39,13 +36,11 @@ test('should provide history api fallback for preview server correctly', async (
   buildPreview,
 }) => {
   const rsbuild = await buildPreview({
-    cwd,
-
     config: {
       plugins: [pluginReact()],
       source: {
         entry: {
-          main: join(cwd, 'src/index.jsx'),
+          main: './src/index.jsx',
         },
       },
       server: {

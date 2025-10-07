@@ -2,11 +2,9 @@ import fs from 'node:fs';
 import { join } from 'node:path';
 import { expect, rspackTest } from '@e2e/helper';
 
-const cwd = __dirname;
-
 rspackTest(
   'should print changed files in logs',
-  async ({ page, dev, editFile }) => {
+  async ({ cwd, page, dev, editFile }) => {
     await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
       recursive: true,
     });
@@ -32,7 +30,7 @@ rspackTest(
   },
 );
 
-rspackTest('should print removed files in logs', async ({ page, dev }) => {
+rspackTest('should print removed files in logs', async ({ cwd, page, dev }) => {
   await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
     recursive: true,
   });
