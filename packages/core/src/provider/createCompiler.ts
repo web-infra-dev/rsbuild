@@ -186,6 +186,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
       context.buildState.stats = stats;
       context.buildState.status = 'done';
       context.buildState.hasErrors = hasErrors;
+      context.socketServer?.onBuildDone();
 
       const printTime = (statsItem: RsbuildStatsItem, index: number) => {
         if (statsItem.time) {

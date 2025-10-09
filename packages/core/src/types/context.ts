@@ -1,4 +1,5 @@
 import type { Hooks } from '../hooks';
+import type { SocketServer } from '../server/socketServer';
 import type { NormalizedConfig, RsbuildConfig } from './config';
 import type { EnvironmentContext } from './hooks';
 import type { RsbuildPluginAPI } from './plugin';
@@ -101,4 +102,6 @@ export type InternalContext = RsbuildContext & {
   specifiedEnvironments?: string[];
   /** Build state information */
   buildState: BuildState;
+  /** The socket server instance. */
+  socketServer?: SocketServer;
 };

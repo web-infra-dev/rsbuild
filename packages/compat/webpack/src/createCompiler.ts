@@ -48,6 +48,7 @@ export async function createCompiler(options: InitConfigsOptions) {
     context.buildState.stats = stats;
     context.buildState.status = 'done';
     context.buildState.hasErrors = hasErrors;
+    context.socketServer?.onBuildDone();
 
     const { message, level } = helpers.formatStats(stats, hasErrors);
 
