@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { expect, gotoPage, rspackTest } from '@e2e/helper';
 
 rspackTest(
-  'should not affect other environments during HMR',
+  'should not affect other unchanged environments during HMR',
   async ({ cwd, page: page1, devOnly, editFile, context }) => {
     const tempSrc = join(cwd, 'test-temp-src');
     await fs.promises.cp(join(cwd, 'src'), tempSrc, {
