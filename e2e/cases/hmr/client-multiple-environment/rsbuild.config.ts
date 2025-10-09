@@ -1,14 +1,11 @@
-import { join } from 'node:path';
 import { defineConfig } from '@rsbuild/core';
-import { pluginReact } from '@rsbuild/plugin-react';
 
 export default defineConfig({
-  plugins: [pluginReact()],
   environments: {
     foo: {
       source: {
         entry: {
-          foo: join(__dirname, 'foo.js'),
+          foo: './src/foo.js',
         },
       },
       dev: {
@@ -20,7 +17,7 @@ export default defineConfig({
     bar: {
       source: {
         entry: {
-          bar: join(__dirname, 'bar.js'),
+          bar: './src/bar.js',
         },
       },
       dev: {

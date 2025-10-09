@@ -186,14 +186,16 @@ export class SocketServer {
     });
   }
 
-  public onBuildDone(token: string): void {
+  public onBuildDone(): void {
     this.reportedBrowserLogs.clear();
 
     if (!this.socketsMap.size) {
       return;
     }
 
-    this.sendStats({ token });
+    for (const token of this.socketsMap.keys()) {
+      this.sendStats({ token });
+    }
   }
 
   /**

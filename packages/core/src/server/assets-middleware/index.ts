@@ -154,8 +154,6 @@ export const setupServerHooks = ({
       socketServer.sendError(statsErrors, token);
       return;
     }
-
-    socketServer.onBuildDone(token);
   });
 };
 

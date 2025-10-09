@@ -57,6 +57,7 @@ export class BuildManager {
       config.dev,
       () => this.outputFileSystem,
     );
+    this.context.socketServer = this.socketServer;
   }
 
   public async init(): Promise<void> {
