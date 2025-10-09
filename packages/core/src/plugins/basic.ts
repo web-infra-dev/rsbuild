@@ -70,9 +70,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
         // Align with the futureDefaults of webpack 6
         chain.module.parser.merge({
           javascript: {
-            inlineConst: false,
             exportsPresence: 'error',
-            typeReexportsPresence: 'tolerant',
           },
         });
 
@@ -94,6 +92,13 @@ export const pluginBasic = (): RsbuildPlugin => ({
         }
 
         if (api.context.bundlerType === 'rspack') {
+          chain.module.parser.merge({
+            javascript: {
+              inlineConst: false,
+              typeReexportsPresence: 'tolerant',
+            },
+          });
+
           chain.experiments({
             ...chain.get('experiments'),
             lazyBarrel: true,
