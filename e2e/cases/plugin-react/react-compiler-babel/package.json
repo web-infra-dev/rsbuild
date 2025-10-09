@@ -7,6 +7,6 @@
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
-    "babel-plugin-react-compiler": "^19.1.0-rc.3"
+    "babel-plugin-react-compiler": "^1.0.0"
   }
 }
