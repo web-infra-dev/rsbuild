@@ -35,7 +35,7 @@ rspackTest(
     await gotoPage(page1, rsbuild, 'foo');
     await gotoPage(page2, rsbuild, 'bar');
 
-    // Initial state
+    // initial state
     await expect(page1.locator('body')).toHaveText('hello world');
     const button = page2.locator('#button');
     await expect(button).toHaveText('count: 0');
