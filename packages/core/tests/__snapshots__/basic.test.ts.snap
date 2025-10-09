@@ -55,7 +55,7 @@ exports[`plugin-basic > should apply basic config correctly in production 1`] = 
   "context": "<ROOT>/packages/core/tests",
   "devtool": false,
   "experiments": {
-    "inlineConst": false,
+    "inlineConst": true,
     "inlineEnum": true,
     "lazyBarrel": true,
     "rspackFuture": {
@@ -73,7 +73,7 @@ exports[`plugin-basic > should apply basic config correctly in production 1`] = 
     "parser": {
       "javascript": {
         "exportsPresence": "error",
-        "inlineConst": false,
+        "inlineConst": true,
         "typeReexportsPresence": "tolerant",
       },
     },

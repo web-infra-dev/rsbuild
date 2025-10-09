@@ -94,7 +94,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
         if (api.context.bundlerType === 'rspack') {
           chain.module.parser.merge({
             javascript: {
-              inlineConst: false,
+              inlineConst: isProd,
               typeReexportsPresence: 'tolerant',
             },
           });
@@ -103,7 +103,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
             ...chain.get('experiments'),
             lazyBarrel: true,
             inlineEnum: isProd,
-            inlineConst: false,
+            inlineConst: isProd,
             typeReexportsPresence: true,
             rspackFuture: {
               bundlerInfo: {
