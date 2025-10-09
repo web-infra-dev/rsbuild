@@ -2,6 +2,12 @@ import type { StatsError } from '@rspack/core';
 import { color } from './vendors';
 
 const formatFileName = (fileName: string) => {
+  // File name may be empty when the error is not related to a file.
+  // For example, when an invalid entry is provided.
+  if (!fileName) {
+    return '';
+  }
+
   // add default column add lines for linking
   return /:\d+:\d+/.test(fileName)
     ? `File: ${color.cyan(fileName)}\n`
