@@ -15,7 +15,7 @@ type Open =
 
 - **Default:** `undefined`
 
-`server.open` is used to configure a set of page URLs that Rsbuild will automatically open in the browser after starting the server.
+`server.open` configures which page URLs Rsbuild should automatically open in the browser after starting the server.
 
 > You can also use the [--open](/guide/basic/cli#opening-page) option of Rsbuild CLI to open the pages. When using `server.open` and `--open` at the same time, `--open` takes precedence.
 
@@ -92,7 +92,7 @@ export default {
 
 ## Specify browser
 
-Rsbuild opens pages in the system default browser by default, and supports specifying which browser to use when starting the dev server through the `BROWSER` environment variable.
+By default, Rsbuild opens pages in the system's default browser. You can specify which browser to use via the `BROWSER` environment variable.
 
 ### Browser name
 
@@ -116,7 +116,7 @@ npm i cross-env -D
 cross-env BROWSER=chrome npx rsbuild dev
 ```
 
-You can also refer to the [app option](https://github.com/sindresorhus/open?tab=readme-ov-file#app) of `open` to configure more special `BROWSER` values, such as some OS-specific browser names:
+You can also refer to the [app option](https://github.com/sindresorhus/open?tab=readme-ov-file#app) of `open` for additional `BROWSER` values, such as OS-specific browser names:
 
 ```bash
 # macOS
@@ -157,7 +157,7 @@ BROWSER="Google Chrome Canary" npx rsbuild dev
 
 ### Configure environment variable
 
-You can set the `BROWSER` environment variable in the local [.env.local](/guide/advanced/env-vars#env-file) file, so you do not need to manually set the environment variable every time you start the dev server, and it also avoids affecting other developers in the project.
+You can set the `BROWSER` environment variable in your local [.env.local](/guide/advanced/env-vars#env-file) file. This eliminates the need to manually set it each time you start the dev server and prevents affecting other developers on the project.
 
 ```bash
 # .env.local

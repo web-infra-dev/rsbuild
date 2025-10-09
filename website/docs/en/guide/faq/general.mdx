@@ -2,30 +2,30 @@
 
 ### What is the relationship between Rsbuild and Rspack?
 
-Rspack is the base bundler for Rsbuild. The goal of Rsbuild is to provide out-of-the-box building capabilities for Rspack users, allowing developers to start a web project with zero configuration.
+Rspack is the base bundler for Rsbuild. The goal of Rsbuild is to provide out-of-the-box build capabilities for Rspack users, allowing developers to start a web project with zero configuration.
 
 The main differences between Rspack and Rsbuild are:
 
 - Rspack projects need to be configured from scratch, while Rsbuild provides default best practice configurations and supports extending Rspack configurations.
 - Rspack projects require integration with loaders and plugins from the community to support different scenarios, while Rsbuild provides official plugins and default support for common frontend frameworks and build capabilities.
-- The capabilities of Rspack CLI are comparable to webpack CLI, with relatively streamlined functionality, while Rsbuild provides a more powerful CLI and a more complete dev server.
+- The capabilities of Rspack CLI are comparable to webpack CLI, with relatively streamlined functionality, while Rsbuild provides a more powerful CLI and more complete dev server.
 
 ---
 
 ### Can Rsbuild be used to build libraries or UI components?
 
-Rsbuild is out-of-the-box for building web applications.
+Rsbuild is designed for building web applications out of the box.
 
-For libraries and UI components, it is recommended to use [Rslib](https://github.com/web-infra-dev/rslib), which is a library development tool based on Rsbuild, and can reuse the configuration and plugins of Rsbuild.
+For libraries and UI components, we recommend using [Rslib](https://github.com/web-infra-dev/rslib), which is a library development tool based on Rsbuild and can reuse Rsbuild's configuration and plugins.
 
 ---
 
 ### What is the relationship between Rsbuild and Modern.js?
 
-Modern.js is a progressive web development framework built on top of Rsbuild. The building capabilities of Modern.js are based on Rsbuild.
+Modern.js is a progressive web development framework built on top of Rsbuild. Modern.js's build capabilities are powered by Rsbuild.
 
 The main differences between Modern.js and Rsbuild are:
 
 - Modern.js is based on React, while Rsbuild is not coupled with any frontend UI framework.
-- Modern.js is a full-stack solution, providing runtime and server-side capabilities, while Rsbuild is a build tool with other capabilities extendable through plugins.
+- Modern.js is a full-stack solution, providing runtime and server-side capabilities, while Rsbuild is a build tool with other capabilities extendable via plugins.
 - Modern.js has more built-in features, while Rsbuild pursues lightweight and flexibility.

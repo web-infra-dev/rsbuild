@@ -4,9 +4,9 @@ Rsbuild includes a built-in dev server designed to improve the development exper
 
 ## Base path
 
-By default, the Rsbuild server's base path is `/`. Access output files like `index.html` and [public folder](/guide/basic/static-assets#public-folder) assets at `http://localhost:3000/`.
+By default, the Rsbuild server's base path is `/`. You can access output files like `index.html` and [public folder](/guide/basic/static-assets#public-folder) assets at `http://localhost:3000/`.
 
-Modify the server's base path using [server.base](/config/server/base). To access files at `http://localhost:3000/foo/`, configure as follows:
+You can modify the server's base path using [server.base](/config/server/base). For example, to access files at `http://localhost:3000/foo/`, configure it as follows:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -18,7 +18,7 @@ export default {
 
 ## View static assets
 
-After starting the dev server, access `/rsbuild-dev-server` to view all static assets generated during the current build.
+After starting the dev server, you can access `/rsbuild-dev-server` to view all static assets generated during the current build.
 
 For example, open `http://localhost:3000/rsbuild-dev-server` in your browser:
 
@@ -36,9 +36,9 @@ The Rsbuild server provides default routing conventions and allows customization
 
 The Rsbuild server generates page routes based on the [server.base](/config/server/base) and [source.entry](/config/source/entry) configurations.
 
-When the entry is `index`, the page can be accessed via `/`; when the entry is `foo`, the page can be accessed via `/foo`.
+When the entry is `index`, the page can be accessed at `/`. When the entry is `foo`, the page can be accessed at `/foo`.
 
-When `server.base` is `/base`, the index page can be accessed via `/base` and the foo page via `/base/foo`.
+When `server.base` is `/base`, the index page can be accessed at `/base` and the foo page at `/base/foo`.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -112,23 +112,23 @@ export default {
 
 ## Rspack dev server
 
-Rsbuild has a built-in lightweight dev server that differs from the dev servers built into Rspack CLI or webpack CLI. There are some differences between them, including different configuration options.
+Rsbuild has a built-in lightweight dev server that differs from the dev servers in Rspack CLI or webpack CLI. There are several differences between them, including different configuration options.
 
 ### Comparison
 
-Compared to the dev server built into Rspack CLI, Rsbuild's dev server has the following differences:
+Compared to the dev server in Rspack CLI, Rsbuild's dev server has the following differences:
 
 - **Configuration**: Rsbuild provides richer server configuration options.
-- **Log Format**: The log format of Rspack CLI is basically consistent with webpack CLI, while Rsbuild's logs are clearer and more readable.
+- **Log Format**: The log format of Rspack CLI is largely consistent with webpack CLI, while Rsbuild's logs are clearer and more readable.
 - **Dependencies**: Rsbuild is built on lightweight libraries like `connect`, which has fewer dependencies and faster startup speed compared to `express` used by `@rspack/dev-server`.
 
 ### Configuration
 
-Rsbuild does not support using Rspack's [devServer](https://rspack.rs/config/dev-server) config. Instead, you can use Rsbuild's `dev` and `server` configs.
+Rsbuild does not support using Rspack's [devServer](https://rspack.rs/config/dev-server) config. Instead, use Rsbuild's `dev` and `server` configs.
 
-In Rsbuild, `dev` contains configurations that only work in development mode, while the `server` config works for both dev and preview servers.
+In Rsbuild, the `dev` config contains settings that only apply in development mode, while the `server` config applies to both dev and preview servers.
 
-Below are the Rsbuild configuration options that correspond to the Rspack CLI's `devServer` config:
+Below are the Rsbuild configuration options that correspond to Rspack CLI's `devServer` config:
 
 | Rspack CLI                                                                                        | Rsbuild                                                          |
 | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
@@ -147,7 +147,7 @@ Below are the Rsbuild configuration options that correspond to the Rspack CLI's 
 | [devServer.static](https://rspack.rs/config/dev-server#devserverstatic)                           | [server.publicDir](/config/server/public-dir)                    |
 | [devServer.watchFiles](https://rspack.rs/config/dev-server#devserverwatchfiles)                   | [dev.watchFiles](/config/dev/watch-files)                        |
 
-> For more configurations, please refer to [Config Overview](/config/index).
+> For more configurations, refer to [Config Overview](/config/index).
 
 ## Middleware
 
@@ -197,9 +197,9 @@ server.middlewares.use((req, res, next) => {
 
 ### Integrate third-party server frameworks
 
-When migrating from other server frameworks (such as Express), the original middleware may not be used directly in Rsbuild. For example, the `req.params`, `req.path`, `req.search`, `req.query` and other properties provided by Express cannot be accessed in the Rsbuild middleware.
+When migrating from other server frameworks (such as Express), the original middleware may not work directly in Rsbuild. For example, properties like `req.params`, `req.path`, `req.search`, and `req.query` provided by Express are not accessible in Rsbuild middleware.
 
-If you need to reuse existing middleware in Rsbuild, you can use the following method to introduce the server application as a whole as middleware:
+If you need to reuse existing middleware in Rsbuild, you can use the following approach to integrate the entire server application as middleware:
 
 ```ts title="rsbuild.config.ts"
 import express from 'express';
@@ -221,6 +221,6 @@ export default {
 
 ## Custom server
 
-If you want to integrate Rsbuild dev server into a custom server, you can get the instance methods of Rsbuild dev server through the `createDevServer` method of Rsbuild and call them on demand.
+If you want to integrate Rsbuild's dev server into a custom server, you can use the `createDevServer` method to get the Rsbuild dev server instance and call its methods as needed.
 
-For details, please refer to [Rsbuild - createDevServer](/api/javascript-api/instance#rsbuildcreatedevserver).
+For details, refer to [Rsbuild - createDevServer](/api/javascript-api/instance#rsbuildcreatedevserver).

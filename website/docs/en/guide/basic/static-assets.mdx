@@ -3,7 +3,7 @@
 Rsbuild supports importing static assets, including images, fonts, audio, and video.
 
 :::tip What are static assets
-Static assets are files that are part of a web application and don't change during use. Examples include images, fonts, media files, stylesheets, and JavaScript files. These assets are typically stored on a web server or CDN and delivered to the user's browser when accessing the application. Since they don't change, static assets can be cached by the browser, improving application performance.
+Static assets are files that are part of a web application and don't change during use. Examples include images, fonts, media files, stylesheets, and JavaScript files. These assets are typically stored on a web server or CDN and delivered to the user's browser when they access the application. Since they don't change, static assets can be cached by the browser, improving application performance.
 :::
 
 ## Asset formats
@@ -101,7 +101,7 @@ If you want to reference static assets with absolute paths in CSS files:
 }
 ```
 
-By default, the built-in `css-loader` in Rsbuild will resolve absolute paths in `url()` and look for the specified modules. If you want to skip resolving absolute paths, you can configure [`tools.cssLoader`](/config/tools/css-loader#toolscssloader) to filter out the specified paths. The filtered paths will be left as-is in the code.
+By default, Rsbuild's built-in `css-loader` will resolve absolute paths in `url()` and look for the specified modules. If you want to skip resolving absolute paths, you can configure [`tools.cssLoader`](/config/tools/css-loader#toolscssloader) to filter out specific paths. Filtered paths will remain unchanged in the code.
 
 ```ts
 export default {
@@ -135,7 +135,7 @@ console.log(largeImage); // "/static/largeImage.[hash].png"
 console.log(smallImage); // "data:image/png;base64,iVBORw0KGgo..."
 ```
 
-Adding the `?url` query parameter ensures that the asset is always loaded as a separate file and returns a URL:
+Adding the `?url` query parameter ensures the asset is always loaded as a separate file and returns a URL:
 
 ```js
 import image from './static/image.png?url';
@@ -143,7 +143,7 @@ import image from './static/image.png?url';
 console.log(image); // "/static/image.[hash].png"
 ```
 
-Adding the `?inline` query parameter ensures that the asset is always inlined in the code, regardless of the file size:
+Adding the `?inline` query parameter ensures the asset is always inlined in the code, regardless of file size:
 
 ```js
 import image from './static/image.png?inline';
@@ -151,7 +151,7 @@ import image from './static/image.png?inline';
 console.log(image); // "data:image/png;base64,iVBORw0KGgo..."
 ```
 
-For a more detailed introduction to asset inlining, please refer to the [Static Asset Inlining](/guide/optimization/inline-assets) section.
+For a more detailed introduction to asset inlining, refer to the [Static Asset Inlining](/guide/optimization/inline-assets) section.
 
 ## Importing as string
 
@@ -190,7 +190,7 @@ When static assets are imported, they will be output to the dist directory. You 
 - Use [output.filename](/config/output/filename) to modify the output filename.
 - Use [output.distPath](/config/output/dist-path) to modify the output path.
 
-Please read [Output Files](/guide/basic/output-files) for details.
+Read [Output Files](/guide/basic/output-files) for details.
 
 ## URL prefix
 
