@@ -15,7 +15,7 @@ type PrintUrls =
       port: number;
       routes: Routes;
       protocol: string;
-    }) => string[] | void);
+    }) => (string | { url: string; label?: string })[] | void);
 ```
 
 - **默认值：** `true`
