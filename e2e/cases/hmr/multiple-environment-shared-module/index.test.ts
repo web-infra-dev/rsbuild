@@ -1,14 +1,10 @@
-import fs from 'node:fs';
 import { join } from 'node:path';
 import { expect, gotoPage, rspackTest } from '@e2e/helper';
 
 rspackTest(
   'should perform HMR for multiple environments with shared module',
-  async ({ cwd, page, devOnly, editFile }) => {
-    const tempSrc = join(cwd, 'test-temp-src');
-    await fs.promises.cp(join(cwd, 'src'), tempSrc, {
-      recursive: true,
-    });
+  async ({ page, devOnly, editFile, copySrcDir }) => {
+    const tempSrc = await copySrcDir();
 
     const rsbuild = await devOnly({
       config: {
@@ -42,7 +38,7 @@ rspackTest(
     await expectValue('bar:hello');
 
     // edit shared module
-    await editFile('test-temp-src/shared.js', (code) =>
+    await editFile(join(tempSrc, 'shared.js'), (code) =>
       code.replace('hello', 'world'),
     );
     await gotoPage(page, rsbuild, 'foo');
@@ -51,14 +47,14 @@ rspackTest(
     await expectValue('bar:world');
 
     // edit foo entry module
-    await editFile('test-temp-src/foo.js', (code) =>
+    await editFile(join(tempSrc, 'foo.js'), (code) =>
       code.replace('foo', 'foo2'),
     );
     await gotoPage(page, rsbuild, 'foo');
     await expectValue('foo2:world');
 
     // edit bar entry module
-    await editFile('test-temp-src/bar.js', (code) =>
+    await editFile(join(tempSrc, 'bar.js'), (code) =>
       code.replace('bar', 'bar2'),
     );
     await gotoPage(page, rsbuild, 'bar');

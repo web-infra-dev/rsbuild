@@ -1,19 +1,16 @@
-import fs from 'node:fs';
 import { join } from 'node:path';
 import { expect, rspackTest } from '@e2e/helper';
 
 rspackTest(
   'HMR should work after fixing compilation error',
-  async ({ cwd, page, dev, editFile }) => {
-    await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
-      recursive: true,
-    });
+  async ({ page, dev, editFile, copySrcDir }) => {
+    const tempSrc = await copySrcDir();
 
     const rsbuild = await dev({
       config: {
         source: {
           entry: {
-            index: join(cwd, 'test-temp-src/index.ts'),
+            index: join(tempSrc, 'index.ts'),
           },
         },
       },
@@ -22,7 +19,7 @@ rspackTest(
     const locator = page.locator('#test');
     await expect(locator).toHaveText('Hello Rsbuild!');
 
-    await editFile('test-temp-src/App.tsx', (code) =>
+    await editFile(join(tempSrc, 'App.tsx'), (code) =>
       code.replace(
         '<div id="test">Hello Rsbuild!</div>',
         '<div id="test">Hello Rsbuild!</div',
@@ -31,7 +28,7 @@ rspackTest(
 
     await rsbuild.expectLog('Module build failed');
 
-    await editFile('test-temp-src/App.tsx', (code) =>
+    await editFile(join(tempSrc, 'App.tsx'), (code) =>
       code.replace(
         '<div id="test">Hello Rsbuild!</div',
         '<div id="test">Hello Rsbuild2!</div>',

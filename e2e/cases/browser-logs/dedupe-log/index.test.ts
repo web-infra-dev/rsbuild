@@ -1,19 +1,16 @@
-import path, { join } from 'node:path';
+import { join } from 'node:path';
 import { gotoPage, rspackTest } from '@e2e/helper';
-import fse from 'fs-extra';
 
 rspackTest(
   'should not output the same browser log',
-  async ({ devOnly, page, editFile }) => {
-    const tempDir = path.join(__dirname, 'test-temp-src');
-    const srcDir = path.join(__dirname, 'src');
-    await fse.copy(srcDir, tempDir);
+  async ({ devOnly, page, editFile, copySrcDir }) => {
+    const tempSrc = await copySrcDir();
 
     const rsbuild = await devOnly({
       config: {
         source: {
           entry: {
-            index: join(tempDir, 'index.js'),
+            index: join(tempSrc, 'index.js'),
           },
         },
       },
@@ -32,7 +29,7 @@ rspackTest(
     rsbuild.clearLogs();
 
     // after rebuild, logs can be printed again
-    await editFile(join(tempDir, 'index.js'), (content) =>
+    await editFile(join(tempSrc, 'index.js'), (content) =>
       content.replace('value', 'value2'),
     );
     await rsbuild.expectLog('Error: value2 is #test2');

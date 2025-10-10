@@ -1,18 +1,14 @@
-import fs from 'node:fs';
 import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
-
-const cwd = __dirname;
 
 test('should show overlay correctly', async ({
   page,
   dev,
   editFile,
   logHelper,
+  copySrcDir,
 }) => {
-  await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
-    recursive: true,
-  });
+  const tempSrc = await copySrcDir();
 
   const { expectLog, addLog } = logHelper;
 
@@ -24,7 +20,7 @@ test('should show overlay correctly', async ({
     config: {
       source: {
         entry: {
-          index: join(cwd, 'test-temp-src/index.tsx'),
+          index: join(tempSrc, 'index.tsx'),
         },
       },
     },
@@ -35,7 +31,7 @@ test('should show overlay correctly', async ({
   const errorOverlay = page.locator('rsbuild-error-overlay');
   expect(await errorOverlay.locator('.title').count()).toBe(0);
 
-  await editFile('test-temp-src/App.tsx', (code) =>
+  await editFile(join(tempSrc, 'App.tsx'), (code) =>
     code.replace('</div>', '</aaaaa>'),
   );
 

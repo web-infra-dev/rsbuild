@@ -4,14 +4,11 @@ import fse from 'fs-extra';
 
 rspackTest(
   'should allow to custom watch options for build watch',
-  async ({ execCli, logHelper }) => {
-    const srcDir = path.join(__dirname, 'src');
-    const tempDir = path.join(__dirname, 'test-temp-src');
+  async ({ execCli, logHelper, copySrcDir }) => {
+    const tempSrc = await copySrcDir();
     const distIndexFile = path.join(__dirname, 'dist/static/js/index.js');
-    const fooFile = path.join(tempDir, 'foo.js');
-    const barFile = path.join(tempDir, 'bar.js');
-
-    await fse.copy(srcDir, tempDir);
+    const fooFile = path.join(tempSrc, 'foo.js');
+    const barFile = path.join(tempSrc, 'bar.js');
 
     execCli('build --watch');
     const { expectLog, expectNoLog, expectBuildEnd, clearLogs } = logHelper;

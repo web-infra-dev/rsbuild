@@ -1,19 +1,16 @@
-import fs from 'node:fs';
 import { join } from 'node:path';
 import { expect, gotoPage, rspackTest } from '@e2e/helper';
 
 rspackTest(
   'should allow to create multiple HMR connections',
-  async ({ cwd, page: page1, context, devOnly, editFile }) => {
-    await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
-      recursive: true,
-    });
+  async ({ page: page1, context, devOnly, editFile, copySrcDir }) => {
+    const tempSrc = await copySrcDir();
 
     const rsbuild = await devOnly({
       config: {
         source: {
           entry: {
-            index: join(cwd, 'test-temp-src/index.ts'),
+            index: join(tempSrc, 'index.ts'),
           },
         },
       },
@@ -34,7 +31,7 @@ rspackTest(
     const keepNum1 = await locatorKeep1.innerHTML();
     const keepNum2 = await locatorKeep2.innerHTML();
 
-    await editFile('test-temp-src/App.tsx', (code) =>
+    await editFile(join(tempSrc, 'App.tsx'), (code) =>
       code.replace('Hello Rsbuild', 'Hello Test'),
     );
 
