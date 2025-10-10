@@ -392,7 +392,7 @@ export type PrintUrls =
       port: number;
       routes: Routes;
       protocol: string;
-    }) => string[] | void);
+    }) => (string | { url: string; label?: string })[] | void);
 
 export type PublicDirOptions = {
   /**

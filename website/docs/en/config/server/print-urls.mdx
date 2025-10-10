@@ -54,6 +54,26 @@ Output:
   ➜ Network:  http://192.168.0.1:3000/base/
 ```
 
+You may also return an array containing both strings and objects. Each object may include an optional `label` that overrides the default `Local:` or `Network:` label; if omitted, the default label is used:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    printUrls({ urls }) {
+      return urls.concat({ url: 'https://example.com/', label: 'Custom:' });
+    },
+  },
+};
+```
+
+Output:
+
+```
+  ➜ Local:    http://localhost:3000/
+  ➜ Network:  http://192.168.0.1:3000/
+  ➜ Custom:   https://example.com/
+```
+
 ### Fully customizable
 
 If the `printUrls` function does not return a value, Rsbuild will not print the server's URL addresses. You can customize the log content based on the parameters and output it to the terminal yourself.

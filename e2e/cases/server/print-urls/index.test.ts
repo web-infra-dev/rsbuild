@@ -84,6 +84,35 @@ test('should allow to modify and return new urls', async ({
   );
 });
 
+test('should allow to modify and return new urls and labels', async ({
+  page,
+  devOnly,
+}) => {
+  const rsbuild = await devOnly({
+    config: {
+      server: {
+        printUrls: ({ urls, port }) => {
+          expect(urls.includes(`http://localhost:${port}`)).toBeTruthy();
+          return urls
+            .map<{ url: string; label?: string }>((url) => ({
+              url,
+              label: 'Custom:',
+            }))
+            .concat({ url: 'http://example.com/mcp', label: 'MCP:' })
+            .concat({ url: 'http://localhost:8000/another-mcp' });
+        },
+      },
+    },
+  });
+
+  await page.goto(`http://localhost:${rsbuild.port}`);
+
+  await rsbuild.expectLog(`➜  Custom:   http://localhost:${rsbuild.port}/`);
+  await rsbuild.expectLog(`➜  MCP:      http://example.com/mcp/`);
+  await rsbuild.expectLog(`➜  Local:    http://localhost:8000/another-mcp/`);
+  rsbuild.expectNoLog(`➜  Local:    http://localhost:${rsbuild.port}`);
+});
+
 test('should listen only on localhost in dev', async ({ page, devOnly }) => {
   const rsbuild = await devOnly({
     config: {
