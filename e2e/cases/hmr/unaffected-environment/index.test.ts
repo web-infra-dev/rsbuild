@@ -1,14 +1,10 @@
-import fs from 'node:fs';
 import { join } from 'node:path';
 import { expect, gotoPage, rspackTest } from '@e2e/helper';
 
 rspackTest(
   'should not affect other unchanged environments during HMR',
-  async ({ cwd, page: page1, devOnly, editFile, context }) => {
-    const tempSrc = join(cwd, 'test-temp-src');
-    await fs.promises.cp(join(cwd, 'src'), tempSrc, {
-      recursive: true,
-    });
+  async ({ page: page1, devOnly, editFile, copySrcDir, context }) => {
+    const tempSrc = await copySrcDir();
 
     const rsbuild = await devOnly({
       config: {
@@ -43,7 +39,7 @@ rspackTest(
     await expect(button).toHaveText('count: 1');
 
     // edit foo.js
-    await editFile('test-temp-src/foo.js', (code) =>
+    await editFile(join(tempSrc, 'foo.js'), (code) =>
       code.replace('hello world', 'changed'),
     );
     await expect(page1.locator('body')).toHaveText('changed');

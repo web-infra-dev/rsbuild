@@ -1,8 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-
 import { expect, test } from '@e2e/helper';
-import { remove } from 'fs-extra';
 
 test('should allow to import TS files with .js extension', async ({
   page,
@@ -15,31 +13,21 @@ test('should allow to import TS files with .js extension', async ({
 test('should resolve the .js file first if both .js and .ts exist', async ({
   page,
   buildPreview,
+  copySrcDir,
 }) => {
-  await fs.promises.cp(
-    join(__dirname, 'src'),
-    join(__dirname, 'test-temp-src'),
-    {
-      recursive: true,
-    },
-  );
+  const tempSrc = await copySrcDir();
 
-  fs.writeFileSync(
-    join(__dirname, 'test-temp-src/foo.js'),
-    'export const foo = "js";',
-  );
+  fs.writeFileSync(join(tempSrc, 'foo.js'), 'export const foo = "js";');
 
   await buildPreview({
     config: {
       source: {
         entry: {
-          index: join(__dirname, 'test-temp-src/index.ts'),
+          index: join(tempSrc, 'index.ts'),
         },
       },
     },
   });
 
   expect(await page.evaluate(() => window.test)).toBe('js');
-
-  await remove(join(__dirname, 'test-temp-src'));
 });

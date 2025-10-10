@@ -1,13 +1,11 @@
-import { promises as fs } from 'node:fs';
 import { join } from 'node:path';
 import { expect, rspackTest, test } from '@e2e/helper';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import fse from 'fs-extra';
 
 // https://github.com/web-infra-dev/rsbuild/issues/5176
 rspackTest(
   'should not re-compile templates when the template is not changed',
-  async ({ dev, page, editFile }) => {
+  async ({ dev, page, editFile, copySrcDir }) => {
     // Failed to run this case on Windows
     if (process.platform === 'win32') {
       test.skip();
@@ -15,15 +13,11 @@ rspackTest(
 
     let count = 0;
 
-    const targetDir = join(__dirname, 'test-temp-src');
-    await fse.remove(targetDir);
-    await fs.cp(join(__dirname, 'src'), targetDir, {
-      recursive: true,
-    });
+    const tempSrc = await copySrcDir();
 
     await dev({
       config: {
-        root: targetDir,
+        root: tempSrc,
         source: {
           entry: {
             index: './index.js',
@@ -51,7 +45,7 @@ rspackTest(
     expect(count).toEqual(2);
 
     // Re-compile the template when the template is changed
-    await editFile('test-temp-src/index.html', (code) =>
+    await editFile(join(tempSrc, 'index.html'), (code) =>
       code.replace('foo', 'foo2'),
     );
     await expect(page.locator('#root')).toHaveText('foo2');
@@ -59,7 +53,7 @@ rspackTest(
     // will compile all the templates
     expect(count).toEqual(4);
 
-    await editFile('test-temp-src/index.js', (code) =>
+    await editFile(join(tempSrc, 'index.js'), (code) =>
       code.replace('foo', 'foo3'),
     );
     await expect(page.locator('#content')).toHaveText('foo3');

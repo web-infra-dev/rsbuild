@@ -1,16 +1,11 @@
-import fs from 'node:fs';
 import { join } from 'node:path';
 import { expect, rspackTest } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-const cwd = __dirname;
-
 rspackTest(
   'Multiple environments HMR should work correctly',
-  async ({ dev, page, context, editFile }) => {
-    await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
-      recursive: true,
-    });
+  async ({ dev, page, context, editFile, copySrcDir }) => {
+    const tempSrc = await copySrcDir();
 
     const rsbuild = await dev({
       config: {
@@ -19,7 +14,7 @@ rspackTest(
           web: {
             source: {
               entry: {
-                index: join(cwd, 'test-temp-src/index.ts'),
+                index: join(tempSrc, 'index.ts'),
               },
             },
           },
@@ -31,7 +26,7 @@ rspackTest(
             },
             source: {
               entry: {
-                main: join(cwd, 'test-temp-src/web1.js'),
+                main: join(tempSrc, 'web1.js'),
               },
             },
             output: {
@@ -60,7 +55,7 @@ rspackTest(
     const keepNum = await locatorKeep.innerHTML();
 
     // web1 live reload correctly and should not trigger index update
-    await editFile('test-temp-src/web1.js', (code) =>
+    await editFile(join(tempSrc, 'web1.js'), (code) =>
       code.replace('(web1)', '(web1-new)'),
     );
 
@@ -68,7 +63,7 @@ rspackTest(
     expect(await locatorKeep.innerHTML()).toBe(keepNum);
 
     // index HMR correctly
-    await editFile('test-temp-src/App.tsx', (code) =>
+    await editFile(join(tempSrc, 'App.tsx'), (code) =>
       code.replace('Hello Rsbuild', 'Hello Test'),
     );
 

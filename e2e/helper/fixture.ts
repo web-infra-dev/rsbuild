@@ -8,6 +8,7 @@ import {
 import { promises } from 'node:fs';
 import path from 'node:path';
 import base, { expect } from '@playwright/test';
+import fse from 'fs-extra';
 import { RSBUILD_BIN_PATH } from './constants';
 import {
   type Build,
@@ -71,6 +72,10 @@ type RsbuildFixture = {
    * The fixture auto-closes after the test.
    */
   buildPreview: Build;
+  /**
+   * Copies the source directory to a temporary directory for testing purposes.
+   */
+  copySrcDir: () => Promise<string>;
   /**
    * Start the dev server and auto-navigate the Playwright page.
    * Uses the test file's cwd.
@@ -289,6 +294,18 @@ export const test = base.extend<RsbuildFixture>({
       ).toString();
     };
     await use(execCliSync);
+  },
+
+  copySrcDir: async ({ cwd }, use) => {
+    const copySrcDir = async () => {
+      const targetDir = path.join(cwd, 'test-temp-src');
+      await fse.remove(targetDir);
+      await promises.cp(path.join(cwd, 'src'), targetDir, {
+        recursive: true,
+      });
+      return targetDir;
+    };
+    await use(copySrcDir);
   },
 });
 

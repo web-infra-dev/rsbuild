@@ -1,7 +1,4 @@
-import { join } from 'node:path';
 import { expect, getFileContent, test } from '@e2e/helper';
-
-const cwd = __dirname;
 
 test('should access / success and htmlFallback success by default', async ({
   page,

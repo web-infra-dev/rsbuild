@@ -1,8 +1,5 @@
-import fs from 'node:fs';
 import { join } from 'node:path';
 import { expect, findFile, getFileContent, rspackTest } from '@e2e/helper';
-
-const fixtures = __dirname;
 
 rspackTest(
   'should inline style when `injectStyles` is enabled',
@@ -35,18 +32,14 @@ rspackTest(
 
 rspackTest(
   'HMR should work well when `injectStyles` is enabled',
-  async ({ page, dev, editFile }) => {
-    await fs.promises.cp(
-      join(fixtures, 'src'),
-      join(fixtures, 'test-temp-src'),
-      { recursive: true },
-    );
+  async ({ page, dev, editFile, copySrcDir }) => {
+    const tempSrc = await copySrcDir();
 
     await dev({
       config: {
         source: {
           entry: {
-            index: join(fixtures, 'test-temp-src/index.ts'),
+            index: join(tempSrc, 'index.ts'),
           },
         },
       },
@@ -63,7 +56,7 @@ rspackTest(
     const locatorKeep = page.locator('#test-keep');
     const keepNum = await locatorKeep.innerHTML();
 
-    await editFile('test-temp-src/App.module.less', (code) =>
+    await editFile(join(tempSrc, 'App.module.less'), (code) =>
       code.replace('20px', '40px'),
     );
 
