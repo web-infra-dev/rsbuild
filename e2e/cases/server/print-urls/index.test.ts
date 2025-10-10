@@ -84,7 +84,7 @@ test('should allow to modify and return new urls', async ({
   );
 });
 
-test('should allow to modify and return new urls and lables', async ({
+test('should allow to modify and return new urls and labels', async ({
   page,
   devOnly,
 }) => {
