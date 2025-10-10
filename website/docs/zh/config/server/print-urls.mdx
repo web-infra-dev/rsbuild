@@ -54,6 +54,27 @@ export default {
   ➜ Network:  http://192.168.0.1:3000/base/
 ```
 
+你还可以返回一个同时包含字符串和对象的数组。
+每个对象都可以包含一个可选的 `label` 属性，用于覆盖默认的 `Local:` 或 `Network:` 标签；如果未提供，则会使用默认标签。
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    printUrls({ urls }) {
+      return urls.concat({ url: 'https://example.com/', label: 'Custom:' });
+    },
+  },
+};
+```
+
+输出为：
+
+```
+  ➜ Local:    http://localhost:3000/
+  ➜ Network:  http://192.168.0.1:3000/
+  ➜ Custom:   https://example.com/
+```
+
 ### 完全自定义
 
 如果 `printUrls` 函数没有返回值，Rsbuild 将不会输出 server 的 URL 地址，你可以基于入参来自定义日志内容，并自行输出到 terminal。

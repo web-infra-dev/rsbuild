@@ -213,10 +213,10 @@ export function printServerURLs({
       );
     }
 
-    urls = newUrls.map((url) => ({
-      url,
-      label: getUrlLabel(url),
-    }));
+    urls = newUrls.map((u) => {
+      const { url, label } = typeof u === 'string' ? { url: u } : u;
+      return { url, label: label ?? getUrlLabel(url) };
+    });
   }
 
   // If no urls, skip printing
