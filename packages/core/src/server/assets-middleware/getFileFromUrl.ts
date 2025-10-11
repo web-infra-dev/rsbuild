@@ -56,8 +56,7 @@ export async function getFileFromUrl(
 
   const { publicPathPathnames } = context;
 
-  for (const index in distPaths) {
-    const distPath = distPaths[index];
+  for (const [index, distPath] of distPaths.entries()) {
     const publicPathPathname = publicPathPathnames[index];
 
     let filename: string;
