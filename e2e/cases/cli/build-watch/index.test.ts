@@ -18,7 +18,7 @@ rspackTest(
     clearLogs();
 
     fse.outputFileSync(indexFile, `console.log('hello2!');`);
-    await expectLog(/building src[\\/]index.js/);
+    await expectLog('building src/index.js', { posix: true });
     await expectBuildEnd();
     await expectFileWithContent(distIndexFile, 'hello2!');
   },

@@ -3,7 +3,7 @@ import { expect, rspackTest } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 rspackTest(
-  'Multiple environments HMR should work correctly',
+  'should perform multiple environments HMR',
   async ({ dev, page, context, editFile, copySrcDir }) => {
     const tempSrc = await copySrcDir();
 
