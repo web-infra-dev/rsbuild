@@ -144,7 +144,7 @@ export class RsbuildProdServer {
 
     const sirv = requireCompiledPackage('sirv');
 
-    const assetMiddleware = sirv(path, {
+    const assetsMiddleware = sirv(path, {
       etag: true,
       dev: true,
       ignores: ['favicon.ico'],
@@ -156,15 +156,15 @@ export class RsbuildProdServer {
       const assetPrefix =
         url && assetPrefixes.find((prefix) => url.startsWith(prefix));
 
-      // handler assetPrefix
+      // handling assetPrefix
       if (assetPrefix && url?.startsWith(assetPrefix)) {
         req.url = url.slice(assetPrefix.length);
-        assetMiddleware(req, res, (...args: unknown[]) => {
+        assetsMiddleware(req, res, (...args: unknown[]) => {
           req.url = url;
           next(...args);
         });
       } else {
-        assetMiddleware(req, res, next);
+        assetsMiddleware(req, res, next);
       }
     });
   }

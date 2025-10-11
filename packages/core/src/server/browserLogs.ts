@@ -5,7 +5,7 @@ import { SCRIPT_REGEX } from '../constants';
 import { color } from '../helpers';
 import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
-import type { EnvironmentContext, InternalContext, Rspack } from '../types';
+import type { InternalContext, Rspack } from '../types';
 import { getFileFromUrl } from './assets-middleware/getFileFromUrl';
 import type { OutputFileSystem } from './assets-middleware/index';
 import type { ClientMessageError } from './socketServer';
@@ -46,7 +46,7 @@ const findSourceFrame = (parsed: StackFrame[]) => {
 const resolveSourceLocation = async (
   stack: string,
   fs: Rspack.OutputFileSystem,
-  environments: Record<string, EnvironmentContext>,
+  context: InternalContext,
 ) => {
   const parsed = parseStack(stack);
   if (!parsed.length) {
@@ -63,7 +63,7 @@ const resolveSourceLocation = async (
   const sourceMapInfo = await getFileFromUrl(
     `${file}.map`,
     fs as OutputFileSystem,
-    environments,
+    context,
   );
 
   if (!sourceMapInfo || 'errorCode' in sourceMapInfo) {
@@ -91,7 +91,7 @@ const formatErrorLocation = async (
   context: InternalContext,
   fs: Rspack.OutputFileSystem,
 ) => {
-  const parsed = await resolveSourceLocation(stack, fs, context.environments);
+  const parsed = await resolveSourceLocation(stack, fs, context);
 
   if (!parsed) {
     return;

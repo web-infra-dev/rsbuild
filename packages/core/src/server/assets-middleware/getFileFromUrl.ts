@@ -1,7 +1,7 @@
 import type { Stats as FSStats } from 'node:fs';
 import path from 'node:path';
 import { unescape as qsUnescape } from 'node:querystring';
-import type { EnvironmentContext } from '../../types';
+import type { InternalContext } from '../../types';
 import type { OutputFileSystem } from './index';
 
 const UP_PATH_REGEXP = /(?:^|[\\/])\.\.(?:[\\/]|$)/;
@@ -9,7 +9,7 @@ const UP_PATH_REGEXP = /(?:^|[\\/])\.\.(?:[\\/]|$)/;
 export async function getFileFromUrl(
   url: string,
   outputFileSystem: OutputFileSystem,
-  environments: Record<string, EnvironmentContext>,
+  context: InternalContext,
 ): Promise<
   { filename: string; fsStats: FSStats } | { errorCode: number } | undefined
 > {
@@ -38,8 +38,8 @@ export async function getFileFromUrl(
     return { errorCode: 403 };
   }
 
-  const distPaths = new Set(
-    Object.values(environments).map((env) => env.distPath),
+  const distPaths = Object.values(context.environments).map(
+    (env) => env.distPath,
   );
 
   const stat = async (filename: string) => {
@@ -54,8 +54,25 @@ export async function getFileFromUrl(
     });
   };
 
-  for (const distPath of distPaths) {
-    let filename = path.join(distPath, pathname);
+  const { publicPathPathnames } = context;
+
+  for (const [index, distPath] of distPaths.entries()) {
+    const publicPathPathname = publicPathPathnames[index];
+
+    let filename: string;
+
+    if (
+      publicPathPathname !== undefined &&
+      pathname.startsWith(publicPathPathname)
+    ) {
+      // Strip the `pathname` property from the `publicPath` option from the start
+      // of requested url. (`/prefix/foo.js` => `foo.js`)
+      // And add outputPath (`foo.js` => `/home/user/my-project/dist/foo.js`)
+      filename = path.join(distPath, pathname.slice(publicPathPathname.length));
+    } else {
+      filename = path.join(distPath, pathname);
+    }
+
     let fsStats: FSStats | undefined;
 
     try {

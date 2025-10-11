@@ -141,7 +141,7 @@ export const getHtmlCompletionMiddleware: (params: {
 
     const rewrite = (newUrl: string) => {
       req.url = newUrl;
-      buildManager.middleware(req, res, (...args) => {
+      buildManager.assetsMiddleware(req, res, (...args) => {
         next(...args);
       });
       return;
@@ -253,7 +253,7 @@ export const getHtmlFallbackMiddleware: (params: {
       }
 
       req.url = newUrl;
-      buildManager.middleware(req, res, (...args) => {
+      buildManager.assetsMiddleware(req, res, (...args) => {
         next(...args);
       });
       return;

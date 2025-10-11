@@ -104,4 +104,9 @@ export type InternalContext = RsbuildContext & {
   buildState: BuildState;
   /** The socket server instance. */
   socketServer?: SocketServer;
+  /**
+   * Pathnames derived from public paths, stripped of `server.base`.
+   * Used for static asset serving.
+   */
+  publicPathPathnames: string[];
 };

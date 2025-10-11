@@ -5,6 +5,7 @@ import {
   getPublicPathFromCompiler,
   isMultiCompiler,
 } from '../helpers/compiler';
+import { getPathnameFromUrl } from '../helpers/path';
 import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
 import { onBeforeRestartServer, restartDevServer } from '../restart';
@@ -40,6 +41,7 @@ import {
   getServerTerminator,
   printServerURLs,
   type StartServerResult,
+  stripBase,
 } from './helper';
 import { createHttpServer } from './httpServer';
 import { notFoundMiddleware, optionsFallbackMiddleware } from './middlewares';
@@ -193,19 +195,25 @@ export async function createDevServer<
       );
     }
 
-    compiler?.hooks.watchRun.tap('rsbuild:watchRun', () => {
-      resetWaitLastCompileDone();
-    });
-
     const publicPaths = isMultiCompiler(compiler)
       ? compiler.compilers.map(getPublicPathFromCompiler)
       : [getPublicPathFromCompiler(compiler)];
+
+    const { base } = config.server;
+    context.publicPathPathnames = publicPaths
+      .map(getPathnameFromUrl)
+      .map((prefix) =>
+        base && base !== '/' ? stripBase(prefix, base) : prefix,
+      );
+
+    compiler?.hooks.watchRun.tap('rsbuild:watchRun', () => {
+      resetWaitLastCompileDone();
+    });
 
     const buildManager = new BuildManager({
       context,
       config,
       compiler,
-      publicPaths: publicPaths,
       resolvedPort: port,
     });
 
