@@ -108,5 +108,5 @@ export type InternalContext = RsbuildContext & {
    * Pathnames derived from public paths, stripped of `server.base`.
    * Used for static asset serving.
    */
-  publicPathPathnames: string[];
+  publicPathnames: string[];
 };

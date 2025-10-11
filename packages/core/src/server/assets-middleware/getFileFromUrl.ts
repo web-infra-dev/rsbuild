@@ -1,11 +1,16 @@
 import type { Stats as FSStats } from 'node:fs';
 import path from 'node:path';
 import { unescape as qsUnescape } from 'node:querystring';
+import { getPathnameFromUrl } from '../../helpers/path';
 import type { InternalContext } from '../../types';
 import type { OutputFileSystem } from './index';
 
 const UP_PATH_REGEXP = /(?:^|[\\/])\.\.(?:[\\/]|$)/;
 
+/**
+ * Resolves URL to file path with security checks and retrieves file from
+ * the build output directories.
+ */
 export async function getFileFromUrl(
   url: string,
   outputFileSystem: OutputFileSystem,
@@ -13,16 +18,7 @@ export async function getFileFromUrl(
 ): Promise<
   { filename: string; fsStats: FSStats } | { errorCode: number } | undefined
 > {
-  let pathname: string | undefined;
-
-  try {
-    const urlObject = new URL(url, 'http://localhost');
-    if (urlObject.pathname) {
-      pathname = qsUnescape(urlObject.pathname);
-    }
-  } catch {
-    return;
-  }
+  const pathname = qsUnescape(getPathnameFromUrl(url));
 
   if (!pathname) {
     return;
@@ -38,10 +34,6 @@ export async function getFileFromUrl(
     return { errorCode: 403 };
   }
 
-  const distPaths = Object.values(context.environments).map(
-    (env) => env.distPath,
-  );
-
   const stat = async (filename: string) => {
     return new Promise<FSStats | undefined>((resolve, reject) => {
       outputFileSystem.stat(filename, (err, stats) => {
@@ -54,25 +46,27 @@ export async function getFileFromUrl(
     });
   };
 
-  const { publicPathPathnames } = context;
+  const { environments, publicPathnames } = context;
+  const distPaths = Object.values(environments).map((env) => env.distPath);
+  const possibleFilenames = new Set<string>();
 
+  // First, add paths that match the public prefix for more accurate resolution
   for (const [index, distPath] of distPaths.entries()) {
-    const publicPathPathname = publicPathPathnames[index];
-
-    let filename: string;
-
-    if (
-      publicPathPathname !== undefined &&
-      pathname.startsWith(publicPathPathname)
-    ) {
+    const prefix = publicPathnames[index];
+    if (prefix && prefix !== '/' && pathname.startsWith(prefix)) {
       // Strip the `pathname` property from the `publicPath` option from the start
       // of requested url. (`/prefix/foo.js` => `foo.js`)
       // And add outputPath (`foo.js` => `/home/user/my-project/dist/foo.js`)
-      filename = path.join(distPath, pathname.slice(publicPathPathname.length));
-    } else {
-      filename = path.join(distPath, pathname);
+      possibleFilenames.add(path.join(distPath, pathname.slice(prefix.length)));
     }
+  }
 
+  // Then, add fallback paths without prefix matching
+  for (const distPath of distPaths) {
+    possibleFilenames.add(path.join(distPath, pathname));
+  }
+
+  for (let filename of possibleFilenames) {
     let fsStats: FSStats | undefined;
 
     try {

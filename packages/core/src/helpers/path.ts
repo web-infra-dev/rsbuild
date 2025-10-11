@@ -46,11 +46,11 @@ export const getCompiledPath = (packageName: string): string =>
 export const ensureAbsolutePath = (base: string, filePath: string): string =>
   isAbsolute(filePath) ? filePath : join(base, filePath);
 
-export const getPathnameFromUrl = (publicPath: string): string => {
+export const getPathnameFromUrl = (url: string): string => {
   try {
-    return publicPath ? new URL(publicPath).pathname : publicPath;
+    return url ? new URL(url, 'http://localhost').pathname : url;
   } catch {
-    return publicPath;
+    return url;
   }
 };
 
