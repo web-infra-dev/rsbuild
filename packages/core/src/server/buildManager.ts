@@ -1,16 +1,13 @@
 import fs from 'node:fs';
 import { isMultiCompiler } from '../helpers/compiler';
-import { getPathnameFromUrl } from '../helpers/path';
 import type { InternalContext, NormalizedConfig, Rspack } from '../types';
 import { type AssetsMiddleware, assetsMiddleware } from './assets-middleware';
-import { stripBase } from './helper';
 import { SocketServer } from './socketServer';
 
 type Options = {
   context: InternalContext;
   config: NormalizedConfig;
   compiler: Rspack.Compiler | Rspack.MultiCompiler;
-  publicPaths: string[];
   resolvedPort: number;
 };
 
@@ -20,7 +17,7 @@ type Options = {
  * 2. establish webSocket connect
  */
 export class BuildManager {
-  public middleware!: AssetsMiddleware;
+  public assetsMiddleware!: AssetsMiddleware;
 
   public outputFileSystem: Rspack.OutputFileSystem;
 
@@ -31,25 +28,14 @@ export class BuildManager {
   // biome-ignore lint/correctness/noUnusedPrivateClassMembers: Biome bug
   private config: NormalizedConfig;
 
-  // biome-ignore lint/correctness/noUnusedPrivateClassMembers: Biome bug
-  private publicPaths: string[];
-
   private resolvedPort: number;
 
-  // biome-ignore lint/correctness/noUnusedPrivateClassMembers: Biome bug
   private context: InternalContext;
 
-  constructor({
-    config,
-    context,
-    compiler,
-    publicPaths,
-    resolvedPort,
-  }: Options) {
+  constructor({ config, context, compiler, resolvedPort }: Options) {
     this.config = config;
     this.context = context;
     this.compiler = compiler;
-    this.publicPaths = publicPaths;
     this.resolvedPort = resolvedPort;
     this.outputFileSystem = fs;
     this.socketServer = new SocketServer(
@@ -76,16 +62,16 @@ export class BuildManager {
    * Call `compiler.watch()` to start compiling.
    */
   public watch(): void {
-    this.middleware.watch();
+    this.assetsMiddleware.watch();
   }
 
   public async close(): Promise<void> {
     // socketServer close should before app close
     await this.socketServer.close();
 
-    if (this.middleware) {
+    if (this.assetsMiddleware) {
       await new Promise<void>((resolve) => {
-        this.middleware.close(() => {
+        this.assetsMiddleware.close(() => {
           resolve();
         });
       });
@@ -110,7 +96,7 @@ export class BuildManager {
   };
 
   private async setupCompilationMiddleware(): Promise<void> {
-    const { config, context, publicPaths } = this;
+    const { config, context } = this;
 
     const middleware = await assetsMiddleware({
       config,
@@ -120,35 +106,6 @@ export class BuildManager {
       resolvedPort: this.resolvedPort,
     });
 
-    const { base } = config.server;
-    const assetPrefixes = publicPaths
-      .map(getPathnameFromUrl)
-      .map((prefix) =>
-        base && base !== '/' ? stripBase(prefix, base) : prefix,
-      );
-
-    const wrapper: AssetsMiddleware = (req, res, next) => {
-      const { url } = req;
-      const assetPrefix =
-        url && assetPrefixes.find((prefix) => url.startsWith(prefix));
-
-      // slice publicPath, static asset have publicPath but html does not.
-      if (assetPrefix && assetPrefix !== '/') {
-        req.url = url.slice(assetPrefix.length - 1);
-
-        middleware(req, res, (...args) => {
-          req.url = url;
-          next(...args);
-        });
-      } else {
-        middleware(req, res, next);
-      }
-    };
-
-    wrapper.close = middleware.close;
-    wrapper.watch = middleware.watch;
-
-    // wrap assets middleware to handle HTML file（without publicPath）
-    this.middleware = wrapper;
+    this.assetsMiddleware = middleware;
   }
 }

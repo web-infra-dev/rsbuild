@@ -176,7 +176,7 @@ const applyDefaultMiddlewares = ({
   );
 
   if (buildManager) {
-    middlewares.push(buildManager.middleware);
+    middlewares.push(buildManager.assetsMiddleware);
 
     // subscribe upgrade event to handle websocket
     upgradeEvents.push(buildManager.socketServer.upgrade);
@@ -208,12 +208,12 @@ const applyDefaultMiddlewares = ({
     const { name } = publicDir;
     const normalizedPath = isAbsolute(name) ? name : join(pwd, name);
 
-    const assetMiddleware = sirv(normalizedPath, {
+    const servePublicDirMiddleware = sirv(normalizedPath, {
       etag: true,
       dev: true,
     });
 
-    middlewares.push(assetMiddleware);
+    middlewares.push(servePublicDirMiddleware);
   }
 
   // Execute callbacks returned by the `onBeforeStartDevServer` hook.
@@ -243,8 +243,8 @@ const applyDefaultMiddlewares = ({
     );
 
     // ensure fallback request can be handled by compilation middleware
-    if (buildManager?.middleware) {
-      middlewares.push(buildManager.middleware);
+    if (buildManager?.assetsMiddleware) {
+      middlewares.push(buildManager.assetsMiddleware);
     }
   }
 

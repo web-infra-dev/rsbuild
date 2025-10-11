@@ -119,8 +119,6 @@ export function createMiddleware(
   outputFileSystem: OutputFileSystem,
 ): RequestHandler {
   return async function middleware(req, res, next) {
-    const { environments } = context;
-
     async function goNext() {
       return new Promise<void>((resolve) => {
         ready(() => {
@@ -326,11 +324,7 @@ export function createMiddleware(
         return;
       }
 
-      const resolved = await getFileFromUrl(
-        req.url,
-        outputFileSystem,
-        environments,
-      );
+      const resolved = await getFileFromUrl(req.url, outputFileSystem, context);
 
       if (!resolved) {
         await goNext();
