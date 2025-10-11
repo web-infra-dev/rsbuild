@@ -1,3 +1,4 @@
+import { HomeBackground } from '@rspress/core/theme';
 import { BackgroundImage } from '@rstack-dev/doc-ui/background-image';
 import { Benchmark } from '../components/Benchmark';
 import { CopyRight } from '../components/Copyright';
@@ -9,6 +10,7 @@ import { ToolStack } from '../components/ToolStack';
 export function HomeLayout() {
   return (
     <div style={{ position: 'relative' }}>
+      <HomeBackground style={{ background: 'none' }} />
       <BackgroundImage />
       <Hero />
       <Features />
