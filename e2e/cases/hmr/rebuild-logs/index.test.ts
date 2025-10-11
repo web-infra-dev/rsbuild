@@ -24,7 +24,7 @@ rspackTest(
       code.replace('Hello Rsbuild!', 'Hello Rsbuild2!'),
     );
 
-    await rsbuild.expectLog(/building test-temp-src[\\/]App\.tsx/);
+    await rsbuild.expectLog('building test-temp-src/App.tsx', { posix: true });
   },
 );
 
@@ -50,6 +50,8 @@ rspackTest(
 
     await fs.promises.unlink(appPath);
 
-    await rsbuild.expectLog(/building removed test-temp-src[\\/]App\.tsx/);
+    await rsbuild.expectLog('building removed test-temp-src/App.tsx', {
+      posix: true,
+    });
   },
 );

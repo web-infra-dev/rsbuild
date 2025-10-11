@@ -19,13 +19,13 @@ rspackTest(
 
     // should watch foo.js
     fse.outputFileSync(fooFile, `export const foo = 'foo2';`);
-    await expectLog(/building test-temp-src[\\/]foo.js/);
+    await expectLog('building test-temp-src/foo.js', { posix: true });
     await expectBuildEnd();
     await expectFileWithContent(distIndexFile, 'foo2bar1');
 
     // should not watch bar.js
     fse.outputFileSync(barFile, `export const bar = 'bar2';`);
     await new Promise((resolve) => setTimeout(resolve, 100));
-    expectNoLog(/building test-temp-src[\\/]bar.js/);
+    expectNoLog('building test-temp-src/bar.js', { posix: true });
   },
 );
