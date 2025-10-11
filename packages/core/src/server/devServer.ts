@@ -200,7 +200,7 @@ export async function createDevServer<
       : [getPublicPathFromCompiler(compiler)];
 
     const { base } = config.server;
-    context.publicPathPathnames = publicPaths
+    context.publicPathnames = publicPaths
       .map(getPathnameFromUrl)
       .map((prefix) =>
         base && base !== '/' ? stripBase(prefix, base) : prefix,

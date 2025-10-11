@@ -208,7 +208,7 @@ export async function createContext(
     callerName: options.callerName,
     bundlerType,
     environments: {},
-    publicPathPathnames: [],
+    publicPathnames: [],
     hooks: initHooks(),
     config: { ...rsbuildConfig },
     originalConfig: userConfig,
