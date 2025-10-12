@@ -8,7 +8,7 @@ This document provides optional optimization methods to improve build performanc
 
 Performance profiling helps identify bottlenecks in your project, enabling targeted optimization.
 
-Please refer to the [Build Performance Analysis](/guide/debug/build-profiling) section.
+See the [Build Performance Analysis](/guide/debug/build-profiling) section.
 
 ## General optimization
 
@@ -30,13 +30,13 @@ Optimizing the number of modules referenced by the application reduces bundle si
 
 When using Tailwind CSS v3, incorrectly configuring the `content` field in `tailwind.config.js` can lead to poor build and HMR performance.
 
-Refer to [Tailwind CSS v3 - Optimize build performance](/guide/styling/tailwindcss-v3#optimize-build-performance) for more details.
+See [Tailwind CSS v3 - Optimize build performance](/guide/styling/tailwindcss-v3#optimize-build-performance) for more details.
 
 ### Parallel Less compilation
 
 If your project uses the [@rsbuild/plugin-less](/plugins/list/plugin-less) plugin with a large number of Less files, you can try enabling parallel compilation to improve build performance.
 
-Refer to [Less Plugin - parallel](/plugins/list/plugin-less#parallel) for more details.
+See [Less Plugin - parallel](/plugins/list/plugin-less#parallel) for more details.
 
 ### Tool selection
 
@@ -62,7 +62,7 @@ export default {
 };
 ```
 
-> Refer to [dev.lazyCompilation](/config/dev/lazy-compilation) for more information.
+> See [dev.lazyCompilation](/config/dev/lazy-compilation) for more information.
 
 ### Enable native watcher
 
