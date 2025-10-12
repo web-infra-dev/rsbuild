@@ -61,7 +61,7 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
       return { headTags, bodyTags };
     });
 
-    api.modifyBundlerChain((chain, { CHAIN_ID, environment }) => {
+    api.modifyBundlerChain((chain, { CHAIN_ID, environment, isDev }) => {
       const { config, htmlPaths } = environment;
 
       if (Object.keys(htmlPaths).length === 0) {
@@ -85,7 +85,12 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
 
         chain
           .plugin(CHAIN_ID.PLUGIN.HTML_PREFETCH)
-          .use(HtmlResourceHintsPlugin, [options, 'prefetch', HTMLCount]);
+          .use(HtmlResourceHintsPlugin, [
+            options,
+            'prefetch',
+            HTMLCount,
+            isDev,
+          ]);
       }
 
       if (preload) {
@@ -99,7 +104,7 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
 
         chain
           .plugin(CHAIN_ID.PLUGIN.HTML_PRELOAD)
-          .use(HtmlResourceHintsPlugin, [options, 'preload', HTMLCount]);
+          .use(HtmlResourceHintsPlugin, [options, 'preload', HTMLCount, isDev]);
       }
     });
   },
