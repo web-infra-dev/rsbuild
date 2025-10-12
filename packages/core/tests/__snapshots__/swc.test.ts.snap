@@ -486,7 +486,7 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
         "loader": "builtin:swc-loader",
         "options": {
           "env": {
-            "coreJs": "3.45",
+            "coreJs": "3.46",
             "mode": "usage",
             "shippedProposals": true,
             "targets": [
@@ -554,7 +554,7 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
         "loader": "builtin:swc-loader",
         "options": {
           "env": {
-            "coreJs": "3.45",
+            "coreJs": "3.46",
             "mode": "usage",
             "shippedProposals": true,
             "targets": [
@@ -1320,7 +1320,7 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
               "loader": "builtin:swc-loader",
               "options": {
                 "env": {
-                  "coreJs": "3.45",
+                  "coreJs": "3.46",
                   "mode": "entry",
                   "targets": [
                     "chrome >= 87",
@@ -1382,7 +1382,7 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
               "loader": "builtin:swc-loader",
               "options": {
                 "env": {
-                  "coreJs": "3.45",
+                  "coreJs": "3.46",
                   "mode": "entry",
                   "targets": [
                     "chrome >= 87",
@@ -1467,7 +1467,7 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
               "loader": "builtin:swc-loader",
               "options": {
                 "env": {
-                  "coreJs": "3.45",
+                  "coreJs": "3.46",
                   "mode": "usage",
                   "shippedProposals": true,
                   "targets": [
@@ -1530,7 +1530,7 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
               "loader": "builtin:swc-loader",
               "options": {
                 "env": {
-                  "coreJs": "3.45",
+                  "coreJs": "3.46",
                   "mode": "usage",
                   "shippedProposals": true,
                   "targets": [
@@ -1617,7 +1617,7 @@ exports[`plugin-swc > should has correct core-js 1`] = `
               "loader": "builtin:swc-loader",
               "options": {
                 "env": {
-                  "coreJs": "3.45",
+                  "coreJs": "3.46",
                   "mode": "entry",
                   "targets": [
                     "chrome >= 87",
@@ -1679,7 +1679,7 @@ exports[`plugin-swc > should has correct core-js 1`] = `
               "loader": "builtin:swc-loader",
               "options": {
                 "env": {
-                  "coreJs": "3.45",
+                  "coreJs": "3.46",
                   "mode": "entry",
                   "targets": [
                     "chrome >= 87",
