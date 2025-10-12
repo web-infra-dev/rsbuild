@@ -222,7 +222,7 @@ export default {
 
 ## `.env` file
 
-When a `.env` file exists in the project root directory, Rsbuild CLI automatically uses [dotenv](https://npmjs.com/package/dotenv) to load these environment variables and add them to the current Node.js process. The [Public Variables](#public-variables) will be exposed in client code.
+When a `.env` file exists in the project root directory, Rsbuild CLI automatically uses [dotenv](https://npmjs.com/package/dotenv) to load these environment variables and add them to the current Node.js process. [Public Variables](#public-variables) will be exposed in client code.
 
 You can access these environment variables through `import.meta.env.[name]` or `process.env.[name]`.
 
@@ -233,13 +233,13 @@ Rsbuild supports reading the following types of env files:
 | File Name                | Description                                                                |
 | ------------------------ | -------------------------------------------------------------------------- |
 | `.env`                   | Loaded by default in all scenarios.                                        |
-| `.env.local`             | Local usage of the `.env` file, should be added to .gitignore.             |
+| `.env.local`             | Local overrides for `.env`, should be added to `.gitignore`.               |
 | `.env.development`       | Read when `process.env.NODE_ENV` is `'development'`.                       |
 | `.env.production`        | Read when `process.env.NODE_ENV` is `'production'`.                        |
-| `.env.development.local` | Local usage of the `.env.development` file, should be added to .gitignore. |
-| `.env.production.local`  | Local usage of the `.env.production` file, should be added to .gitignore.  |
+| `.env.development.local` | Local overrides for `.env.development`, should be added to `.gitignore`.   |
+| `.env.production.local`  | Local overrides for `.env.production`, should be added to `.gitignore`.    |
 
-If multiple of the above files exist, they will all be loaded, with files listed lower in the table having higher priority.
+If multiple of the above files exist, they will all be loaded. Files listed lower in the table have higher priority.
 
 ### Env mode
 
@@ -251,7 +251,7 @@ For example, set the env mode as `test`:
 npx rsbuild dev --env-mode test
 ```
 
-Rsbuild will read these files in the following order and merge their contents. If the same environment variable is defined in multiple files, values from files loaded later will override those from files loaded earlier:
+Rsbuild will read these files in the following order and merge their contents. If the same environment variable is defined in multiple files, files loaded later will override those loaded earlier:
 
 - .env
 - .env.local
@@ -275,7 +275,7 @@ For example, to specify the env directory as `config`:
 npx rsbuild dev --env-dir config
 ```
 
-In this case, Rsbuild will read the `./config/.env` and other env files.
+Rsbuild will then read `./config/.env` and other env files from that directory.
 
 ### Example
 
@@ -361,7 +361,7 @@ console.log(process.env.PASSWORD); // -> undefined
 :::tip
 
 - The content of public variables will be exposed to your client code, so please avoid including sensitive information in public variables.
-- Public variables are replaced through [source.define](/config/source/define). Please read ["Using define"](#using-define) to understand the principles and notes of define.
+- Public variables are replaced through [source.define](/config/source/define). Read ["Using define"](#using-define) to understand the principles and caveats of define.
 
 :::
 
@@ -471,10 +471,10 @@ export default {
 
 If you use the above approach, it will cause the following problems:
 
-1. Some unused environment variables are additionally injected, causing the dev server's environment variables to leak into the frontend code.
-2. Each `process.env` reference will be replaced by a complete environment variable object, increasing bundle size and decreasing performance.
+1. Unused environment variables are injected unnecessarily, causing the dev server's environment variables to leak into the frontend code.
+2. Every `process.env` reference will be replaced with the complete environment variable object, increasing bundle size and reducing performance.
 
-Therefore, inject environment variables on `process.env` according to actual needs and avoid replacing it entirely.
+Therefore, only inject the specific environment variables you need on `process.env`, and avoid replacing it entirely.
 
 ## Type declarations
 

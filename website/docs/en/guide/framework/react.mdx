@@ -48,7 +48,7 @@ To use SVGR, you also need to register the [SVGR plugin](/plugins/list/plugin-sv
 
 Rsbuild uses React's official [Fast Refresh](https://npmjs.com/package/react-refresh) capability to perform component hot updates.
 
-Note that React Refresh requires components to be written according to standards, otherwise HMR may not work. You can use [eslint-plugin-react-refresh](https://github.com/ArnaudBarre/eslint-plugin-react-refresh) for validation.
+Note that React Refresh requires components to follow certain standards, otherwise HMR may not work. You can use [eslint-plugin-react-refresh](https://github.com/ArnaudBarre/eslint-plugin-react-refresh) for validation.
 
 For example, if React component hot updates don't work, or the component state is lost after hot updates, it's usually because your React component uses an anonymous function. React Fast Refresh requires that components cannot be anonymous functions, otherwise component state cannot be preserved after hot updates.
 

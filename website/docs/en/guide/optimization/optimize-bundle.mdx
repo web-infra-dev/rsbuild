@@ -52,7 +52,7 @@ See the [performance.bundleAnalyze](/config/performance/bundle-analyze) configur
 
 ## Adjust browserslist
 
-The Rsbuild will compile the code according to the project's Browserslist config, and inject some Polyfills. If the project does not need to be compatible with legacy browsers, you can adjust the Browserslist and drop some legacy browsers, thereby reducing the compilation overhead on syntax and polyfill.
+Rsbuild will compile the code based on the project's browserslist config and inject some polyfills. If your project doesn't need to support legacy browsers, you can adjust the browserslist to drop support for older browsers, reducing the compilation overhead for syntax transformation and polyfills.
 
 Rsbuild's default Browserslist config is:
 
