@@ -156,17 +156,21 @@ function getURLMessages(
   }
 
   let message = '';
+  let prevLabel = '';
   const maxNameLength = Math.max(...routes.map((r) => r.entryName.length));
   urls.forEach(({ label, url }, index) => {
-    if (index > 0) {
-      message += '\n';
+    if (prevLabel !== label) {
+      if (index > 0) {
+        message += '\n';
+      }
+      message += `  ➜  ${label}\n`;
+      prevLabel = label;
     }
-    message += `  ➜  ${label}\n`;
 
-    for (const r of routes) {
+    for (const { entryName, pathname } of routes) {
       message += `  ${color.dim('-')}  ${color.dim(
-        r.entryName.padEnd(maxNameLength + 4),
-      )}${color.cyan(normalizeUrl(`${url}${r.pathname}`))}\n`;
+        entryName.padEnd(maxNameLength + 4),
+      )}${color.cyan(normalizeUrl(`${url}${pathname}`))}\n`;
     }
   });
 
