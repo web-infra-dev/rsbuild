@@ -135,6 +135,7 @@ function generateLinks(
   compilation: Compilation,
   data: HtmlRspackPlugin.BeforeAssetTagGenerationData,
   HTMLCount: number,
+  isDev: boolean,
 ): HtmlRspackPlugin.HtmlTagObject[] {
   // get all chunks
   const extractedChunks = extractChunks(compilation, options.type);
@@ -164,8 +165,13 @@ function generateLinks(
         ]),
       [],
     )
-    // source map files should always be excluded
-    .filter((file) => !file.endsWith('.map'));
+    // source map and hot-update files should always be excluded
+    .filter((file) => {
+      if (isDev && file.endsWith('.hot-update.js')) {
+        return false;
+      }
+      return !file.endsWith('.map');
+    });
 
   const uniqueFiles = new Set<string>(allFiles);
   const filteredFiles = applyFilter(
@@ -234,14 +240,18 @@ export class HtmlResourceHintsPlugin implements RspackPluginInstance {
 
   HTMLCount: number;
 
+  isDev: boolean;
+
   constructor(
     options: ResourceHintsOptions,
     type: LinkType,
     HTMLCount: number,
+    isDev: boolean,
   ) {
     this.options = { ...defaultOptions, ...options };
     this.type = type;
     this.HTMLCount = HTMLCount;
+    this.isDev = isDev;
   }
 
   apply(compiler: Compiler): void {
@@ -256,6 +266,7 @@ export class HtmlResourceHintsPlugin implements RspackPluginInstance {
           compilation,
           data,
           this.HTMLCount,
+          this.isDev,
         );
 
         return data;
