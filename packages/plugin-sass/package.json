@@ -40,7 +40,7 @@
     "@rsbuild/core": "workspace:*",
     "@rslib/core": "0.15.0",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.18.8",
+    "@types/node": "^22.18.10",
     "@types/sass-loader": "^8.0.9",
     "prebundle": "1.4.2",
     "resolve-url-loader": "^5.0.0",
