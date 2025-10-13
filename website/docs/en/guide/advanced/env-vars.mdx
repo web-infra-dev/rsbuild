@@ -6,7 +6,7 @@ This chapter explains how to use environment variables in Rsbuild.
 
 ## Default variables
 
-Rsbuild injects some environment variables into your code by default using [source.define](#using-define). These are replaced with their specified values during the build:
+By default, Rsbuild uses [source.define](#using-define) to inject environment variables into your code, replacing them with their specified values during the build:
 
 `import.meta.env` contains these environment variables:
 
@@ -84,9 +84,9 @@ if (import.meta.env.PROD) {
 - **Type:** `string`
 - **Scope:** Available in source code, replaced at build time via [define](/guide/advanced/env-vars#using-define)
 
-You can use `import.meta.env.BASE_URL` in client code to access the server's [base path](/guide/basic/server#base-path). The base path is determined by the [server.base](/config/server/base) configuration and is useful for referencing [public folder](/guide/basic/static-assets#public-folder) assets in your code.
+You can use `import.meta.env.BASE_URL` in client code to access the [base path](/guide/basic/server#base-path) of the server. This base path is determined by the [server.base](/config/server/base) configuration and is helpful for referencing assets from the [public folder](/guide/basic/static-assets#public-folder) in your code.
 
-For example, we set the server's base path to `/foo` using the [server.base](/config/server/base) configuration:
+For example, set the server's base path to `/foo` using the [server.base](/config/server/base) configuration:
 
 ```ts
 export default {
@@ -96,7 +96,7 @@ export default {
 };
 ```
 
-Then, the URL for the `favicon.ico` file in the public directory is `http://localhost:3000/foo/favicon.ico`. You can use `import.meta.env.BASE_URL` to construct the URL in JavaScript files:
+Then, the URL for the `favicon.ico` file in the public directory becomes `http://localhost:3000/foo/favicon.ico`. You can use `import.meta.env.BASE_URL` to construct the URL in JavaScript files:
 
 ```js title="index.js"
 const image = new Image();
@@ -115,7 +115,7 @@ You can use `import.meta.env.ASSET_PREFIX` in client code to access the URL pref
 - In production, it is equivalent to the value set by [output.assetPrefix](/config/output/asset-prefix).
 - Rsbuild will automatically remove the trailing slash from `assetPrefix` to make string concatenation easier.
 
-For example, we copy the `static/icon.png` image to the `dist` directory using the [output.copy](/config/output/copy) configuration:
+For example, copy the `static/icon.png` image to the `dist` directory using the [output.copy](/config/output/copy) configuration:
 
 ```ts
 export default {
@@ -129,7 +129,7 @@ export default {
 };
 ```
 
-Then we can access the image URL in client code:
+Then you can access the image URL in client code:
 
 ```jsx
 const Image = <img src={`${import.meta.env.ASSET_PREFIX}/static/icon.png`} />;
@@ -152,7 +152,7 @@ const Image = <img src={`https://example.com/static/icon.png`} />;
 - **Type:** `string`
 - **Scope:** Available in source code, replaced at build time via [define](/guide/advanced/env-vars#using-define)
 
-Rsbuild also allows using `process.env.BASE_URL`, which is an alias of [import.meta.env.BASE_URL](#importmetaenvbase_url).
+Rsbuild also supports using `process.env.BASE_URL`, which is an alias for [import.meta.env.BASE_URL](#importmetaenvbase_url).
 
 For example, in the HTML template, you can use `process.env.BASE_URL` to concatenate the URL:
 
@@ -166,7 +166,7 @@ For example, in the HTML template, you can use `process.env.BASE_URL` to concate
 - **Type:** `string`
 - **Scope:** Available in source code, replaced at build time via [define](/guide/advanced/env-vars#using-define)
 
-Rsbuild also allows using `process.env.ASSET_PREFIX`, which is an alias of [import.meta.env.ASSET_PREFIX](#importmetaenvasset_prefix).
+Rsbuild also supports using `process.env.ASSET_PREFIX`, which is an alias for [import.meta.env.ASSET_PREFIX](#importmetaenvasset_prefix).
 
 For example, in the HTML template, you can use `process.env.ASSET_PREFIX` to concatenate the URL:
 
@@ -222,7 +222,7 @@ export default {
 
 ## `.env` file
 
-When a `.env` file exists in the project root directory, Rsbuild CLI automatically uses [dotenv](https://npmjs.com/package/dotenv) to load these environment variables and add them to the current Node.js process. [Public Variables](#public-variables) will be exposed in client code.
+When a `.env` file exists in the project root directory, Rsbuild CLI automatically uses [dotenv](https://npmjs.com/package/dotenv) to load these environment variables and add them to the current Node.js process. [Public variables](#public-variables) are then exposed in client code.
 
 You can access these environment variables through `import.meta.env.[name]` or `process.env.[name]`.
 
@@ -286,7 +286,7 @@ FOO=hello
 BAR=1
 ```
 
-Then in the `rsbuild.config.ts` file, you can access the environment variables using `import.meta.env.[name]` or `process.env.[name]`:
+Then, in the `rsbuild.config.ts` file, you can access the environment variables using `import.meta.env.[name]` or `process.env.[name]`:
 
 ```ts title="rsbuild.config.ts"
 console.log(import.meta.env.FOO); // 'hello'
@@ -311,7 +311,7 @@ console.log(process.env.BAR); // '2'
 
 ### Manually load env
 
-If you are not using the Rsbuild CLI and are using the [JavaScript API](/api/start/index) instead, you will need to manually call the [loadEnv](/api/javascript-api/core#loadenv) method to read environment variables and inject them via the [source.define](/config/source/define) config.
+If you are not using the Rsbuild CLI and instead use the [JavaScript API](/api/start/index), you will need to manually call the [loadEnv](/api/javascript-api/core#loadenv) method to read environment variables and inject them via the [source.define](/config/source/define) config.
 
 ```ts
 import { loadEnv, mergeRsbuildConfig } from '@rsbuild/core';
@@ -337,7 +337,7 @@ You can disable loading `.env` files by using the `--no-env` flag in the CLI.
 npx rsbuild dev --no-env
 ```
 
-When using the `--no-env` flag, Rsbuild CLI will not read any `.env` files. You can then manage environment variables using other tools like [dotenvx](https://dotenvx.com/).
+When using the `--no-env` flag, Rsbuild CLI will not read any `.env` files. You can then manage environment variables using other tools, such as [dotenvx](https://dotenvx.com/).
 
 ## Public variables
 
@@ -432,7 +432,7 @@ The `NODE_ENV` environment variable shown in the example above is already inject
 
 ### Identifier matching
 
-Note that `source.define` can only match complete global identifiers. You can think of it as a text replacement process.
+Note that `source.define` can only match complete global identifiers. You can think of it as performing text replacement.
 
 If the identifier in the code doesn't exactly match the key defined in `define`, Rsbuild will not replace it.
 
@@ -480,7 +480,7 @@ Therefore, only inject the specific environment variables you need on `process.e
 
 ### Public variables
 
-When you access a public environment variable in a TypeScript file, TypeScript may report that the variable lacks a type definition. You'll need to add the corresponding type declaration.
+When you access a public environment variable in a TypeScript file, TypeScript may report that the variable is missing a type definition. You'll need to add the corresponding type declaration.
 
 For example, if you reference a `PUBLIC_FOO` variable, TypeScript will display the following error:
 
@@ -550,9 +550,9 @@ declare namespace NodeJS {
 
 ## Tree shaking
 
-`define` can also mark dead code to assist Rspack with tree shaking optimization.
+`define` can also be used to mark dead code and assist Rspack with tree shaking optimization.
 
-Build different artifacts for different languages by replacing `import.meta.env.LANGUAGE` with a specific value. For example:
+Build different artifacts for different languages by replacing `import.meta.env.LANGUAGE` with specific values. For example:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -564,7 +564,7 @@ export default {
 };
 ```
 
-For an internationalized code:
+For internationalized code:
 
 ```js
 const App = () => {
@@ -576,7 +576,7 @@ const App = () => {
 };
 ```
 
-Specifying the environment variable `LANGUAGE=zh` and then running build will eliminate the dead code:
+Specifying the environment variable `LANGUAGE=zh` and running the build will eliminate dead code:
 
 ```js
 const App = () => {

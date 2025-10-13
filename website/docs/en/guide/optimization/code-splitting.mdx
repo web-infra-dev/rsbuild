@@ -1,6 +1,6 @@
 # Code splitting
 
-A good chunk splitting strategy is important for improving application loading performance. It can leverage browser caching to reduce requests and improve loading speed.
+A good chunk splitting strategy is important for improving application loading performance. It leverages browser caching to reduce the number of requests and improve loading speed.
 
 Several [chunk splitting strategies](/guide/optimization/code-splitting) are built into Rsbuild to meet the needs of most applications. You can also customize the chunk splitting configuration for specific use cases.
 
@@ -12,11 +12,11 @@ Several [chunk splitting strategies](/guide/optimization/code-splitting) are bui
 
 Rsbuild supports the following chunk splitting strategies:
 
-- `split-by-experience`: an empirical splitting strategy, automatically splits some commonly used npm packages into chunks of moderate size.
-- `split-by-module`: split by NPM package granularity, each NPM package corresponds to a chunk.
+- `split-by-experience`: an empirical splitting strategy that automatically splits some commonly used npm packages into chunks of moderate size.
+- `split-by-module`: split by npm package granularity, where each npm package corresponds to a chunk.
 - `split-by-size`: automatically split based on module size.
-- `all-in-one`: bundle all codes into one chunk.
-- `single-vendor`: bundle all NPM packages into a single chunk.
+- `all-in-one`: bundle all code into one chunk.
+- `single-vendor`: bundle all npm packages into a single chunk.
 - `custom`: custom chunk splitting strategy.
 
 ::: tip
@@ -59,7 +59,7 @@ If the npm packages mentioned above are not installed or used, the corresponding
 Split each npm package into a separate chunk.
 
 ::: warning
-This strategy splits node_modules with the finest granularity. Under HTTP/2, multiplexing can speed up resource loading. However, in non-HTTP/2 environments, use this strategy with caution due to HTTP head-of-line blocking.
+This strategy splits node_modules with the finest granularity. Under HTTP/2, multiplexing can speed up resource loading. However, in non-HTTP/2 environments, use this strategy cautiously due to HTTP head-of-line blocking.
 :::
 
 ### Config
@@ -76,9 +76,9 @@ export default {
 
 ### Notes
 
-- This configuration splits node_modules into many smaller chunks, resulting in a large number of file requests.
+- This configuration splits node_modules into many smaller chunks, resulting in numerous file requests.
 - With HTTP/2, resource loading is accelerated and cache hit rates improve due to multiplexing.
-- Without HTTP/2, page loading performance may decrease due to HTTP head-of-line blocking. Use with caution.
+- Without HTTP/2, page loading performance may degrade due to HTTP head-of-line blocking. Use cautiously.
 
 ## all-in-one
 
