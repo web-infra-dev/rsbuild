@@ -24,20 +24,13 @@ test('should handle writeToDisk correctly across multiple environments', async (
       },
       environments: {
         web: {
-          output: {
-            distPath: {
-              root: 'dist',
-            },
-          },
           dev: {
             writeToDisk: false,
           },
         },
         web1: {
           output: {
-            distPath: {
-              root: 'dist-1',
-            },
+            distPath: 'dist-1',
           },
           dev: {
             writeToDisk: true,
@@ -45,9 +38,7 @@ test('should handle writeToDisk correctly across multiple environments', async (
         },
         web2: {
           output: {
-            distPath: {
-              root: 'dist-2',
-            },
+            distPath: 'dist-2',
           },
         },
       },
@@ -74,9 +65,7 @@ test('should writeToDisk correctly when environment writeToDisk configuration sa
       environments: {
         web: {
           output: {
-            distPath: {
-              root: 'dist-same',
-            },
+            distPath: 'dist-same',
           },
           dev: {
             writeToDisk: true,
@@ -84,9 +73,7 @@ test('should writeToDisk correctly when environment writeToDisk configuration sa
         },
         web1: {
           output: {
-            distPath: {
-              root: 'dist-same-1',
-            },
+            distPath: 'dist-same-1',
           },
           dev: {
             writeToDisk: true,

@@ -10,9 +10,7 @@ test('should access / and htmlFallback success by default', async ({
   const rsbuild = await buildPreview({
     config: {
       output: {
-        distPath: {
-          root: 'dist-0',
-        },
+        distPath: 'dist-0',
       },
     },
   });
@@ -41,9 +39,7 @@ test('should return 404 when htmlFallback false', async ({
         htmlFallback: false,
       },
       output: {
-        distPath: {
-          root: 'dist-0',
-        },
+        distPath: 'dist-0',
       },
     },
   });
@@ -67,9 +63,7 @@ test('should access /main.html success when entry is main', async ({
         },
       },
       output: {
-        distPath: {
-          root: 'dist-1',
-        },
+        distPath: 'dist-1',
       },
     },
   });
@@ -94,9 +88,7 @@ test('should access /main success when entry is main', async ({
         },
       },
       output: {
-        distPath: {
-          root: 'dist-2',
-        },
+        distPath: 'dist-2',
       },
     },
   });
@@ -123,9 +115,7 @@ test('should access /main success when entry is main and set assetPrefix', async
         },
       },
       output: {
-        distPath: {
-          root: 'dist-4',
-        },
+        distPath: 'dist-4',
         assetPrefix: '/aaaa/',
       },
     },
@@ -151,9 +141,7 @@ test('should access /main success when entry is main and outputPath is /main/ind
         },
       },
       output: {
-        distPath: {
-          root: 'dist-5',
-        },
+        distPath: 'dist-5',
       },
       html: {
         outputStructure: 'nested',
@@ -181,9 +169,7 @@ test('should return 404 when page is not found', async ({
         },
       },
       output: {
-        distPath: {
-          root: 'dist-6',
-        },
+        distPath: 'dist-6',
       },
     },
   });
@@ -244,9 +230,7 @@ test('should match resource correctly with specify assetPrefix', async ({
       },
       output: {
         assetPrefix: '/subpath/',
-        distPath: {
-          root: 'dist-8',
-        },
+        distPath: 'dist-8',
       },
     },
   });
@@ -272,9 +256,7 @@ test('should match resource correctly with full url assetPrefix', async ({
       },
       output: {
         assetPrefix: `http://localhost:${port}/subpath/`,
-        distPath: {
-          root: 'dist-8',
-        },
+        distPath: 'dist-8',
       },
     },
   });

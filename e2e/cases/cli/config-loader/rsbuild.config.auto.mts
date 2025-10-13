@@ -3,8 +3,6 @@ import distPathJson from './path.json';
 
 export default {
   output: {
-    distPath: {
-      root: distPathJson.distPath,
-    },
+    distPath: distPathJson.distPath,
   },
 } satisfies RsbuildConfig;

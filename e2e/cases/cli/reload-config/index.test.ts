@@ -20,11 +20,6 @@ rspackTest(
       dev: {
         writeToDisk: true,
       },
-      output: {
-        distPath: {
-          root: 'dist',
-        },
-      },
       server: { port: ${await getRandomPort()} }
     };`,
     );
@@ -40,9 +35,7 @@ rspackTest(
         writeToDisk: true,
       },
       output: {
-        distPath: {
-          root: 'dist-2',
-        },
+        distPath: 'dist-2',
       },
       server: { port: ${await getRandomPort()} }
     };`,

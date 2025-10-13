@@ -45,9 +45,6 @@ export default defineConfig({
   },
   environments: {
     web: {
-      output: {
-        target: 'web',
-      },
       source: {
         entry: {
           index: './src/index',

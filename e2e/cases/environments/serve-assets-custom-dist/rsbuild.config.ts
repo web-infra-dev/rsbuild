@@ -15,9 +15,7 @@ export default defineConfig({
         },
       },
       output: {
-        distPath: {
-          root: 'dist/web1',
-        },
+        distPath: 'dist/web1',
       },
     },
     web2: {
@@ -30,9 +28,7 @@ export default defineConfig({
         },
       },
       output: {
-        distPath: {
-          root: 'dist/web2',
-        },
+        distPath: 'dist/web2',
       },
     },
   },

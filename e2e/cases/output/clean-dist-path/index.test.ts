@@ -53,9 +53,7 @@ test('should not clean dist path if it is outside root', async ({ build }) => {
   const rsbuild = await build({
     config: {
       output: {
-        distPath: {
-          root: '../node_modules',
-        },
+        distPath: '../node_modules',
       },
     },
   });

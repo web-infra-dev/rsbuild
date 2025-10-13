@@ -294,8 +294,39 @@ export const withDefaultConfig = async (
 };
 
 /**
- * Merges user config with default values to ensure required properties
- * are initialized.
+ * Converts a raw config into a consistent object-based structure.
+ */
+export const normalizeConfigStructure = (
+  config: RsbuildConfig,
+): RsbuildConfig => {
+  const { dev, output } = config;
+
+  if (typeof output?.distPath === 'string') {
+    config = {
+      ...config,
+      output: {
+        ...output,
+        distPath: { root: output.distPath },
+      },
+    };
+  }
+
+  if (dev?.watchFiles && !Array.isArray(dev.watchFiles)) {
+    config = {
+      ...config,
+      dev: {
+        ...dev,
+        watchFiles: [dev.watchFiles],
+      },
+    };
+  }
+
+  return config;
+};
+
+/**
+ * Normalizes the user configuration by merging it with defaults and ensuring
+ * consistent structure.
  */
 export const normalizeConfig = (config: RsbuildConfig): NormalizedConfig => {
   const getMode = (): RsbuildMode => {
@@ -313,13 +344,8 @@ export const normalizeConfig = (config: RsbuildConfig): NormalizedConfig => {
       ...createDefaultConfig(),
       mode: getMode(),
     },
-    config,
+    normalizeConfigStructure(config),
   ) as Required<RsbuildConfig>;
-
-  const { watchFiles } = mergedConfig.dev as NormalizedDevConfig;
-  if (!Array.isArray(watchFiles)) {
-    mergedConfig.dev.watchFiles = [watchFiles];
-  }
 
   return mergedConfig as unknown as NormalizedConfig;
 };

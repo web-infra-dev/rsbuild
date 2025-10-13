@@ -7,11 +7,7 @@ test('should build successfully with multiple environments', async ({
   await buildPreview({
     config: {
       environments: {
-        web: {
-          output: {
-            target: 'web',
-          },
-        },
+        web: {},
         node: {
           output: {
             target: 'node',
@@ -32,11 +28,7 @@ test('should serve successfully in dev with multiple environments', async ({
   await dev({
     config: {
       environments: {
-        web: {
-          output: {
-            target: 'web',
-          },
-        },
+        web: {},
         node: {
           output: {
             target: 'node',

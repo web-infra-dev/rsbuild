@@ -7,9 +7,7 @@ test('should work with the default writeToDisk configuration', async ({
   await dev({
     config: {
       output: {
-        distPath: {
-          root: 'dist-write-to-disk-default',
-        },
+        distPath: 'dist-write-to-disk-default',
       },
     },
   });
@@ -22,9 +20,7 @@ test('should work when writeToDisk is set to false', async ({ page, dev }) => {
   await dev({
     config: {
       output: {
-        distPath: {
-          root: 'dist-write-to-disk-false',
-        },
+        distPath: 'dist-write-to-disk-false',
       },
       dev: {
         writeToDisk: false,
@@ -40,9 +36,7 @@ test('should work when writeToDisk is set to true', async ({ page, dev }) => {
   await dev({
     config: {
       output: {
-        distPath: {
-          root: 'dist-write-to-disk',
-        },
+        distPath: 'dist-write-to-disk',
       },
       dev: {
         writeToDisk: true,

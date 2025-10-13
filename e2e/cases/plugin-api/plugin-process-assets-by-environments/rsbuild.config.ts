@@ -6,16 +6,13 @@ export default defineConfig({
   environments: {
     web: {
       output: {
-        target: 'web',
         filenameHash: false,
       },
     },
     node: {
       output: {
         target: 'node',
-        distPath: {
-          root: 'dist/server',
-        },
+        distPath: 'dist/server',
       },
     },
   },

@@ -8,9 +8,7 @@ test('should copy asset to dist folder correctly', async ({ build }) => {
   await build({
     config: {
       output: {
-        distPath: {
-          root: 'dist-1',
-        },
+        distPath: 'dist-1',
         copy: [{ from: '../../../assets' }],
       },
     },
@@ -39,9 +37,7 @@ test('should copy asset to dist sub-folder correctly', async ({ build }) => {
   await build({
     config: {
       output: {
-        distPath: {
-          root: 'dist-1',
-        },
+        distPath: 'dist-1',
         copy: [{ from: '../../../assets', to: 'foo' }],
       },
     },
@@ -90,9 +86,7 @@ test('should merge copy config correctly', async ({ build }) => {
   await build({
     config: {
       output: {
-        distPath: {
-          root: 'dist-4',
-        },
+        distPath: 'dist-4',
       },
       plugins: [rsbuildPlugin(), rsbuildPlugin2()],
     },

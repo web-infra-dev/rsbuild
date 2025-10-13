@@ -10,9 +10,7 @@ export default defineConfig({
     web1: {
       output: {
         filenameHash: false,
-        distPath: {
-          root: 'dist/web1',
-        },
+        distPath: 'dist/web1',
       },
     },
   },

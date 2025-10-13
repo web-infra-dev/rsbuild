@@ -96,11 +96,7 @@ rspackTest(
       cwd: __dirname,
       config: {
         environments: {
-          web: {
-            output: {
-              target: 'web',
-            },
-          },
+          web: {},
           node: {
             output: {
               target: 'node',

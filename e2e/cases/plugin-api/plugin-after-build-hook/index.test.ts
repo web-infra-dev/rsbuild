@@ -40,11 +40,7 @@ rspackTest(
       config: {
         plugins: [plugin],
         environments: {
-          web: {
-            output: {
-              target: 'web',
-            },
-          },
+          web: {},
           node: {
             output: {
               target: 'node',

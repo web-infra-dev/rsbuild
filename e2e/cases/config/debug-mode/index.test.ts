@@ -23,9 +23,7 @@ test('should generate config files in debug mode when build', async ({
   const rsbuild = await build({
     config: {
       output: {
-        distPath: {
-          root: distRoot,
-        },
+        distPath: distRoot,
       },
     },
   });
@@ -52,9 +50,7 @@ test('should generate config files in debug mode when dev', async ({
   const rsbuild = await dev({
     config: {
       output: {
-        distPath: {
-          root: distRoot,
-        },
+        distPath: distRoot,
       },
     },
     page,

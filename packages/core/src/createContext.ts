@@ -10,7 +10,6 @@ import { logger } from './logger';
 import type {
   EnvironmentContext,
   InternalContext,
-  NormalizedConfig,
   NormalizedEnvironmentConfig,
   ResolvedCreateRsbuildOptions,
   RsbuildConfig,
@@ -18,10 +17,7 @@ import type {
   RsbuildEntry,
 } from './types';
 
-function getAbsoluteDistPath(
-  cwd: string,
-  config: RsbuildConfig | NormalizedConfig | NormalizedEnvironmentConfig,
-) {
+function getAbsoluteDistPath(cwd: string, config: NormalizedEnvironmentConfig) {
   const dirRoot = config.output?.distPath?.root ?? ROOT_DIST_DIR;
   return ensureAbsolutePath(cwd, dirRoot);
 }

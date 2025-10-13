@@ -16,20 +16,13 @@ rspackTest('should apply environment nonce', async ({ build }) => {
           security: {
             nonce: 'CSP_NONCE_PLACEHOLDER',
           },
-          output: {
-            distPath: {
-              root: 'dist',
-            },
-          },
         },
         web1: {
           security: {
             nonce: 'CSP_NONCE_PLACEHOLDER1',
           },
           output: {
-            distPath: {
-              root: 'dist/dist1',
-            },
+            distPath: 'dist/dist1',
           },
         },
       },

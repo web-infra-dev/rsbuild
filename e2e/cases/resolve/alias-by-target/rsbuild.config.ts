@@ -11,9 +11,6 @@ export default defineConfig({
           '@common': './src/common',
         },
       },
-      output: {
-        target: 'web',
-      },
     },
     node: {
       resolve: {
@@ -23,9 +20,7 @@ export default defineConfig({
       },
       output: {
         target: 'node',
-        distPath: {
-          root: 'dist/server',
-        },
+        distPath: 'dist/server',
       },
     },
   },

@@ -11,9 +11,6 @@ export default defineConfig({
           index: './src/index.client.js',
         },
       },
-      output: {
-        target: 'web',
-      },
     },
     node: {
       source: {
@@ -23,9 +20,7 @@ export default defineConfig({
       },
       output: {
         target: 'node',
-        distPath: {
-          root: 'dist/server',
-        },
+        distPath: 'dist/server',
       },
     },
   },
