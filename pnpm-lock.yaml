@@ -41,8 +41,8 @@ importers:
         specifier: workspace:*
         version: link:scripts/test-helper
       '@types/node':
-        specifier: ^22.18.8
-        version: 22.18.8
+        specifier: ^22.18.10
+        version: 22.18.10
       cross-env:
         specifier: ^10.1.0
         version: 10.1.0
@@ -165,8 +165,8 @@ importers:
         specifier: workspace:*
         version: link:../packages/compat/webpack
       '@rsdoctor/rspack-plugin':
-        specifier: 1.3.1
-        version: 1.3.1(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
+        specifier: 1.3.2
+        version: 1.3.2(@rsbuild/core@packages+core)(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../scripts/test-helper
@@ -180,8 +180,8 @@ importers:
         specifier: ^4.17.20
         version: 4.17.20
       '@types/node':
-        specifier: ^22.18.8
-        version: 22.18.8
+        specifier: ^22.18.10
+        version: 22.18.10
       '@types/polka':
         specifier: ^0.5.7
         version: 0.5.7
@@ -399,8 +399,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       '@types/node':
-        specifier: ^22.18.8
-        version: 22.18.8
+        specifier: ^22.18.10
+        version: 22.18.10
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -544,7 +544,7 @@ importers:
         version: link:../webpack
       '@rslib/core':
         specifier: 0.15.0
-        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251009.1)(typescript@5.9.3)
+        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251012.1)(typescript@5.9.3)
       '@types/lodash':
         specifier: ^4.17.20
         version: 4.17.20
@@ -587,13 +587,13 @@ importers:
         version: link:../../core
       '@rslib/core':
         specifier: 0.15.0
-        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251009.1)(typescript@5.9.3)
+        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251012.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../../scripts/test-helper
       '@types/node':
-        specifier: ^22.18.8
-        version: 22.18.8
+        specifier: ^22.18.10
+        version: 22.18.10
       ansi-escapes:
         specifier: 4.3.2
         version: 4.3.2
@@ -633,7 +633,7 @@ importers:
         version: 0.3.31
       '@rslib/core':
         specifier: 0.15.0
-        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251009.1)(typescript@5.9.3)
+        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251012.1)(typescript@5.9.3)
       '@types/connect':
         specifier: 3.4.38
         version: 3.4.38
@@ -641,8 +641,8 @@ importers:
         specifier: ^2.8.19
         version: 2.8.19
       '@types/node':
-        specifier: ^22.18.8
-        version: 22.18.8
+        specifier: ^22.18.10
+        version: 22.18.10
       '@types/on-finished':
         specifier: 2.3.5
         version: 2.3.5
@@ -787,10 +787,10 @@ importers:
         version: link:../plugin-vue
       '@rslib/core':
         specifier: 0.15.0
-        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251009.1)(typescript@5.9.3)
+        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251012.1)(typescript@5.9.3)
       '@types/node':
-        specifier: ^22.18.8
-        version: 22.18.8
+        specifier: ^22.18.10
+        version: 22.18.10
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -827,13 +827,13 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.15.0
-        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251009.1)(typescript@5.9.3)
+        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251012.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^22.18.8
-        version: 22.18.8
+        specifier: ^22.18.10
+        version: 22.18.10
       babel-loader:
         specifier: 10.0.0
         version: 10.0.0(@babel/core@7.28.4)(webpack@5.102.1)
@@ -858,7 +858,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.15.0
-        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251009.1)(typescript@5.9.3)
+        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251012.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -898,10 +898,10 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.15.0
-        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251009.1)(typescript@5.9.3)
+        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251012.1)(typescript@5.9.3)
       '@types/node':
-        specifier: ^22.18.8
-        version: 22.18.8
+        specifier: ^22.18.10
+        version: 22.18.10
       preact:
         specifier: ^10.27.2
         version: 10.27.2
@@ -923,13 +923,13 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.15.0
-        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251009.1)(typescript@5.9.3)
+        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251012.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^22.18.8
-        version: 22.18.8
+        specifier: ^22.18.10
+        version: 22.18.10
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -957,13 +957,13 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.15.0
-        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251009.1)(typescript@5.9.3)
+        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251012.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^22.18.8
-        version: 22.18.8
+        specifier: ^22.18.10
+        version: 22.18.10
       '@types/sass-loader':
         specifier: ^8.0.9
         version: 8.0.9
@@ -997,7 +997,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.15.0
-        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251009.1)(typescript@5.9.3)
+        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251012.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1028,13 +1028,13 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.15.0
-        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251009.1)(typescript@5.9.3)
+        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251012.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^22.18.8
-        version: 22.18.8
+        specifier: ^22.18.10
+        version: 22.18.10
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -1053,13 +1053,13 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.15.0
-        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251009.1)(typescript@5.9.3)
+        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251012.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^22.18.8
-        version: 22.18.8
+        specifier: ^22.18.10
+        version: 22.18.10
       svelte:
         specifier: ^5.39.11
         version: 5.39.11
@@ -1093,13 +1093,13 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.15.0
-        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251009.1)(typescript@5.9.3)
+        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251012.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^22.18.8
-        version: 22.18.8
+        specifier: ^22.18.10
+        version: 22.18.10
       file-loader:
         specifier: 6.2.0
         version: 6.2.0(patch_hash=c76c890d2d68ffdf70bfbc9cb235e0389df929be2e1917766b8946b1de0a8c30)(webpack@5.102.1)
@@ -1130,13 +1130,13 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.15.0
-        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251009.1)(typescript@5.9.3)
+        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251012.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^22.18.8
-        version: 22.18.8
+        specifier: ^22.18.10
+        version: 22.18.10
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -1151,13 +1151,13 @@ importers:
         version: link:../../packages/core
       '@rslib/core':
         specifier: 0.15.0
-        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251009.1)(typescript@5.9.3)
+        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251012.1)(typescript@5.9.3)
       '@types/node':
-        specifier: ^22.18.8
-        version: 22.18.8
+        specifier: ^22.18.10
+        version: 22.18.10
       '@typescript/native-preview':
-        specifier: 7.0.0-dev.20251009.1
-        version: 7.0.0-dev.20251009.1
+        specifier: 7.0.0-dev.20251012.1
+        version: 7.0.0-dev.20251012.1
       rsbuild-plugin-arethetypeswrong:
         specifier: 0.1.1
         version: 0.1.1(@rsbuild/core@packages+core)(typescript@5.9.3)
@@ -1171,8 +1171,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       '@types/node':
-        specifier: ^22.18.8
-        version: 22.18.8
+        specifier: ^22.18.10
+        version: 22.18.10
       path-serializer:
         specifier: 0.5.1
         version: 0.5.1
@@ -1182,7 +1182,7 @@ importers:
     devDependencies:
       '@rslib/core':
         specifier: 0.15.0
-        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251009.1)(typescript@5.9.3)
+        version: 0.15.0(@typescript/native-preview@7.0.0-dev.20251012.1)(typescript@5.9.3)
 
   website:
     devDependencies:
@@ -1217,8 +1217,8 @@ importers:
         specifier: ^3.13.0
         version: 3.13.0
       '@types/node':
-        specifier: ^22.18.8
-        version: 22.18.8
+        specifier: ^22.18.10
+        version: 22.18.10
       '@types/react':
         specifier: ^19.2.2
         version: 19.2.2
@@ -2447,28 +2447,28 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  '@rsdoctor/client@1.3.1':
-    resolution: {integrity: sha512-BuAowgeQGQ9yRrFmmbnlZ5OM1IS+Qqkmgg2J3YFoQGWmHpoVxzFmKHuxbse0KPIMfoLO6qoexxgEwPQCvV3qiA==}
+  '@rsdoctor/client@1.3.2':
+    resolution: {integrity: sha512-7qacsk7kkA4CmZbvyV/18yTJ9gsbiTungoqxXWAB7WUFPWY7iWJbxPrdCRgNYOwLB/Vg5L2SCXyp3sS1WU4KHQ==}
 
-  '@rsdoctor/core@1.3.1':
-    resolution: {integrity: sha512-v7Lc21JMHCNlmXPE2Db7JXDebD8juojW53O/X0xo86/xreDJIj6X2EToswE18g9LDRQ0jHt/JZJB/F7fBxMgaQ==}
+  '@rsdoctor/core@1.3.2':
+    resolution: {integrity: sha512-3Mb1kiMAEWtaM+Y3k6/2s1sQ5JvqeMd0+sXaVl1c+zyDkATUE+o4IiCp+REg1X7q1uKSkKrdA9RoSumqACawfQ==}
 
-  '@rsdoctor/graph@1.3.1':
-    resolution: {integrity: sha512-bV2fhplmC+xkC+BltHHpnCehHyiEvjCvDSffEAszXlIl/gKEuPTbhKwDPTpGp8QIxUbfGbMEpWBRikbQeOEuJg==}
+  '@rsdoctor/graph@1.3.2':
+    resolution: {integrity: sha512-BYiJyzfnmLpLdDXWFH1X9HZU3BRA/QSg+tcY8YiUyPQQTaCRcEm4RtPQsBhV+PMnOa48N9zD5V+HvY1fg0Xp7g==}
 
-  '@rsdoctor/rspack-plugin@1.3.1':
-    resolution: {integrity: sha512-lePN6mE2YphJhQMsyYQpy7Rcm8SNf14FVuzEWtKOPHerXfSA3OIcBPnN0w8Ycd4eHmjBkd/gbX4OT7+QY+Z8vQ==}
+  '@rsdoctor/rspack-plugin@1.3.2':
+    resolution: {integrity: sha512-iD/461o82zsOY+hW2V+cManh8YSe0CEuQd0eq+Mn8B/MAO8ZrpwmEivnz9w1FOs83qBr/xfclobnPjQa44okGg==}
     peerDependencies:
       '@rspack/core': '*'
     peerDependenciesMeta:
       '@rspack/core':
         optional: true
 
-  '@rsdoctor/sdk@1.3.1':
-    resolution: {integrity: sha512-L3VjbJjmtb7WnV22bDFU60nS/c9ilGCiMRe6hgItauLwdrRm9sXljBrn4QhKG31LGo/JSCW5JJPRjUF3lyqcsg==}
+  '@rsdoctor/sdk@1.3.2':
+    resolution: {integrity: sha512-2Ei0vRCvs/VINcDFkYPMJgEnJqYqtA68aB3EvsfOtUAucZ54V8EW+E+JEgnJllCMxjghtFSmn0i7UmtON/0Xdg==}
 
-  '@rsdoctor/types@1.3.1':
-    resolution: {integrity: sha512-q2hEu2eXPl9NzgFinODrJZrfBRIrMRcC2efIDPcIMWEgIQHHGCIPxw9WfDG/uAV+tRSc1KbOsPSmamMFJDV8rw==}
+  '@rsdoctor/types@1.3.2':
+    resolution: {integrity: sha512-nuR1/pz8os8xNlldHdCKcb5N0VS8eMfrI3ti1Jx+zovmLarJqUfjfYcsGqhxI6vUJ4wrCjL/yGKAxClhbxJ8qg==}
     peerDependencies:
       '@rspack/core': '*'
       webpack: 5.x
@@ -2478,8 +2478,8 @@ packages:
       webpack:
         optional: true
 
-  '@rsdoctor/utils@1.3.1':
-    resolution: {integrity: sha512-o8QowrljKlS+qya/zRfoyiTnZJUvmZ4gUQKWR0rP9eqrZHtohl05vzFpnM4GH3JZQhTV8bMsvKIrD7kOvmbASQ==}
+  '@rsdoctor/utils@1.3.2':
+    resolution: {integrity: sha512-G4ieYhQX/kRgX3v2coy+N/ejITulovUtymxWtWOpK3zgVA8PGyNIlOEBmCsmA2AMF/N8XyjorTBLC4j/dVOzkA==}
 
   '@rslib/core@0.15.0':
     resolution: {integrity: sha512-ZxDwEU38qsM32VpW4Dy7oNf6MxgrRAgYxVsuv8v+aKm4pIOSs0nzDTJHsa2vhKjFdyRtgnHObZ6pjoJ0cmcU3A==}
@@ -3171,8 +3171,8 @@ packages:
   '@types/node-sass@4.11.8':
     resolution: {integrity: sha512-dWWMGPX8uselSQ1MLzDvQnVz5Qy1pe7SJuUl1Yqi2NCNRkrk5DmHlP44VZmTWm+buR2T217+5zEAPbAmTwKIOQ==}
 
-  '@types/node@22.18.8':
-    resolution: {integrity: sha512-pAZSHMiagDR7cARo/cch1f3rXy0AEXwsVsVH09FcyeJVAzCnGgmYis7P3JidtTUjyadhTeSo8TgRPswstghDaw==}
+  '@types/node@22.18.10':
+    resolution: {integrity: sha512-anNG/V/Efn/YZY4pRzbACnKxNKoBng2VTFydVu8RRs5hQjikP8CQfaeAV59VFSCzKNp90mXiVXW2QzV56rwMrg==}
 
   '@types/on-finished@2.3.5':
     resolution: {integrity: sha512-XUaCx9tVIC577KsOZxKbnvGlyPt2ogNXQEq/bOQpAfPwH9sH0FbzrRsK1961jpjKlK5V+Owmw55dVjukWhwH0w==}
@@ -3245,43 +3245,43 @@ packages:
   '@types/ws@8.18.1':
     resolution: {integrity: sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==}
 
-  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20251009.1':
-    resolution: {integrity: sha512-opFmcHqUP0QExv/5HsanonMattHVr0tW5rkrBDOtOaX2VTHvw59rVzWP2I+eDubeeqy+hWCdZcS+ebzU9UY0uA==}
+  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20251012.1':
+    resolution: {integrity: sha512-x6CnbPP7QnEEK14mstam7yUf6g8ZFq2XyCuh7OURrbTMfScaosQ0iRrwztyFvAgoOm0Vhrc/+pnKOlXE7h5o2A==}
     cpu: [arm64]
     os: [darwin]
 
-  '@typescript/native-preview-darwin-x64@7.0.0-dev.20251009.1':
-    resolution: {integrity: sha512-WGk6Knt6sdnfv1ogJ/1lxygsc96XpgakJCDBpy8NLP2AFinVGdbC4T6LyjTAwjH4ovBvxJHSOaPiBKduiORtkA==}
+  '@typescript/native-preview-darwin-x64@7.0.0-dev.20251012.1':
+    resolution: {integrity: sha512-RX/DWsdnrKxpVzI4D0O848GYPdUiCLDaj1YDx0oV1NBA2fcPJnVo7LQS3A2mAWnKIcWcmy8y++L5XD+qSDBN7Q==}
     cpu: [x64]
     os: [darwin]
 
-  '@typescript/native-preview-linux-arm64@7.0.0-dev.20251009.1':
-    resolution: {integrity: sha512-ARwGpR2bzcqfH/25D3JjUTiZU6p+gD9RQbABJ+FrtPBLcf6vHvNg4DQnEGuoCUjmcFVrbLyEROUp7Jre4qiC5g==}
+  '@typescript/native-preview-linux-arm64@7.0.0-dev.20251012.1':
+    resolution: {integrity: sha512-XxBHBZI2e8jGcDSSTWqcnATtP8/072ci9Yxfl0AHwEgGHele2N5PHE6sOFsat7cqWxsLPolTXwD3CiWrXpUakA==}
     cpu: [arm64]
     os: [linux]
 
-  '@typescript/native-preview-linux-arm@7.0.0-dev.20251009.1':
-    resolution: {integrity: sha512-setJwkppU/rlP+/mXJrJlVM9FTiuBvPTSG2xs294lrW+tMo+blwi4U13+ccM2bosMGeeH2e7L6ja/8JqceKacA==}
+  '@typescript/native-preview-linux-arm@7.0.0-dev.20251012.1':
+    resolution: {integrity: sha512-zRo2kf6ES8G7r0Fsvj7AOzjckRUdbidyUIoxU4L6Vs4+FN8Om+QlN3EI6/bHljgNpeYjXGbpbplvyYivoTW/sg==}
     cpu: [arm]
     os: [linux]
 
-  '@typescript/native-preview-linux-x64@7.0.0-dev.20251009.1':
-    resolution: {integrity: sha512-RTQ68ld01PjXsLwkewG8AbiimeyqAMwDDHYC136mMLJ6qgUPPA4BMN94m8tOWN5rTpgq9k4BIYJa5c0SQpnwWw==}
+  '@typescript/native-preview-linux-x64@7.0.0-dev.20251012.1':
+    resolution: {integrity: sha512-xbqC3Hv8q/tpMrk5++9ydbsldxCrfIfw2CuyD68e1T4cZZrDpMM+qr1TVbH6Yqr2l6zPS5kRnP/FXiPXpcddiA==}
     cpu: [x64]
     os: [linux]
 
-  '@typescript/native-preview-win32-arm64@7.0.0-dev.20251009.1':
-    resolution: {integrity: sha512-Exzng+qoFAUJDWJlAot0dJPvEJnmwgyL36KAQgoHbqEvS5xZfHU3FTXDh/gz/KXuRUVkb9DWSKB1kNZy7yRxYw==}
+  '@typescript/native-preview-win32-arm64@7.0.0-dev.20251012.1':
+    resolution: {integrity: sha512-LOA+nhk5dMpweJksDrjMPMNCYDlRwOyS2U5gktBFy8+3rsc6iABO5f/mcc0yy8cRxZ8H+0xf6x4oOYM944gZtg==}
     cpu: [arm64]
     os: [win32]
 
-  '@typescript/native-preview-win32-x64@7.0.0-dev.20251009.1':
-    resolution: {integrity: sha512-2h4skcYq9m2AcvzW5DBVPENhwWboehK+Fl3TfY8yp+MMkmQo1fkZ0SYmFj7/0jK8TcdBf8ZGVbnJAZXxlKIP/A==}
+  '@typescript/native-preview-win32-x64@7.0.0-dev.20251012.1':
+    resolution: {integrity: sha512-xOqeyd9+/kV3ppiXGrKDlY+2L1uhV/Sa9SAdq2ijF87kd72rXizL606lBJsStmy3erxTP7/exXS9h/Avb2t+Zw==}
     cpu: [x64]
     os: [win32]
 
-  '@typescript/native-preview@7.0.0-dev.20251009.1':
-    resolution: {integrity: sha512-ESycx6GRI5bFHgQqRH8fT8/nr1q5AAUJW4WCXfMOKYvHYNaUf0oxx2ZcBu+eCLVPGedHVx2syNQUlTciVsQIMA==}
+  '@typescript/native-preview@7.0.0-dev.20251012.1':
+    resolution: {integrity: sha512-6yB55JTN3PrOxrxJPSsLDcMwWVFVZNbOX14/d9wC1nTGbx6cJPREB8ep+rrp+rfPd5kpXZ9fME+Xic674sANAQ==}
     hasBin: true
 
   '@ungap/structured-clone@1.3.0':
@@ -8092,14 +8092,15 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  '@rsdoctor/client@1.3.1': {}
+  '@rsdoctor/client@1.3.2': {}
 
-  '@rsdoctor/core@1.3.1(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)':
+  '@rsdoctor/core@1.3.2(@rsbuild/core@packages+core)(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)':
     dependencies:
-      '@rsdoctor/graph': 1.3.1(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      '@rsdoctor/sdk': 1.3.1(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      '@rsdoctor/types': 1.3.1(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      '@rsdoctor/utils': 1.3.1(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
+      '@rsbuild/plugin-check-syntax': 1.4.0(@rsbuild/core@packages+core)
+      '@rsdoctor/graph': 1.3.2(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
+      '@rsdoctor/sdk': 1.3.2(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
+      '@rsdoctor/types': 1.3.2(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
+      '@rsdoctor/utils': 1.3.2(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
       browserslist-load-config: 1.0.1
       enhanced-resolve: 5.12.0
       filesize: 10.1.6
@@ -8108,16 +8109,17 @@ snapshots:
       semver: 7.7.3
       source-map: 0.7.6
     transitivePeerDependencies:
+      - '@rsbuild/core'
       - '@rspack/core'
       - bufferutil
       - supports-color
       - utf-8-validate
       - webpack
 
-  '@rsdoctor/graph@1.3.1(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)':
+  '@rsdoctor/graph@1.3.2(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)':
     dependencies:
-      '@rsdoctor/types': 1.3.1(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      '@rsdoctor/utils': 1.3.1(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
+      '@rsdoctor/types': 1.3.2(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
+      '@rsdoctor/utils': 1.3.2(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
       lodash.unionby: 4.8.0
       path-browserify: 1.0.1
       source-map: 0.7.6
@@ -8125,28 +8127,29 @@ snapshots:
       - '@rspack/core'
       - webpack
 
-  '@rsdoctor/rspack-plugin@1.3.1(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)':
+  '@rsdoctor/rspack-plugin@1.3.2(@rsbuild/core@packages+core)(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)':
     dependencies:
-      '@rsdoctor/core': 1.3.1(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      '@rsdoctor/graph': 1.3.1(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      '@rsdoctor/sdk': 1.3.1(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      '@rsdoctor/types': 1.3.1(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      '@rsdoctor/utils': 1.3.1(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
+      '@rsdoctor/core': 1.3.2(@rsbuild/core@packages+core)(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
+      '@rsdoctor/graph': 1.3.2(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
+      '@rsdoctor/sdk': 1.3.2(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
+      '@rsdoctor/types': 1.3.2(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
+      '@rsdoctor/utils': 1.3.2(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
       lodash-es: 4.17.21
     optionalDependencies:
       '@rspack/core': 1.5.8(@swc/helpers@0.5.17)
     transitivePeerDependencies:
+      - '@rsbuild/core'
       - bufferutil
       - supports-color
       - utf-8-validate
       - webpack
 
-  '@rsdoctor/sdk@1.3.1(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)':
+  '@rsdoctor/sdk@1.3.2(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)':
     dependencies:
-      '@rsdoctor/client': 1.3.1
-      '@rsdoctor/graph': 1.3.1(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      '@rsdoctor/types': 1.3.1(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      '@rsdoctor/utils': 1.3.1(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
+      '@rsdoctor/client': 1.3.2
+      '@rsdoctor/graph': 1.3.2(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
+      '@rsdoctor/types': 1.3.2(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
+      '@rsdoctor/utils': 1.3.2(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
       safer-buffer: 2.1.2
       socket.io: 4.8.1
       tapable: 2.2.3
@@ -8157,7 +8160,7 @@ snapshots:
       - utf-8-validate
       - webpack
 
-  '@rsdoctor/types@1.3.1(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)':
+  '@rsdoctor/types@1.3.2(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)':
     dependencies:
       '@types/connect': 3.4.38
       '@types/estree': 1.0.5
@@ -8167,10 +8170,10 @@ snapshots:
       '@rspack/core': 1.5.8(@swc/helpers@0.5.17)
       webpack: 5.102.1
 
-  '@rsdoctor/utils@1.3.1(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)':
+  '@rsdoctor/utils@1.3.2(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)':
     dependencies:
       '@babel/code-frame': 7.26.2
-      '@rsdoctor/types': 1.3.1(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
+      '@rsdoctor/types': 1.3.2(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
       '@types/estree': 1.0.5
       acorn: 8.15.0
       acorn-import-attributes: 1.9.5(acorn@8.15.0)
@@ -8188,10 +8191,10 @@ snapshots:
       - '@rspack/core'
       - webpack
 
-  '@rslib/core@0.15.0(@typescript/native-preview@7.0.0-dev.20251009.1)(typescript@5.9.3)':
+  '@rslib/core@0.15.0(@typescript/native-preview@7.0.0-dev.20251012.1)(typescript@5.9.3)':
     dependencies:
       '@rsbuild/core': 1.5.13
-      rsbuild-plugin-dts: 0.15.0(@rsbuild/core@1.5.13)(@typescript/native-preview@7.0.0-dev.20251009.1)(typescript@5.9.3)
+      rsbuild-plugin-dts: 0.15.0(@rsbuild/core@1.5.13)(@typescript/native-preview@7.0.0-dev.20251012.1)(typescript@5.9.3)
     optionalDependencies:
       typescript: 5.9.3
     transitivePeerDependencies:
@@ -8837,7 +8840,7 @@ snapshots:
   '@types/body-parser@1.19.6':
     dependencies:
       '@types/connect': 3.4.38
-      '@types/node': 22.18.8
+      '@types/node': 22.18.10
 
   '@types/chai@5.2.2':
     dependencies:
@@ -8845,11 +8848,11 @@ snapshots:
 
   '@types/connect@3.4.38':
     dependencies:
-      '@types/node': 22.18.8
+      '@types/node': 22.18.10
 
   '@types/cors@2.8.19':
     dependencies:
-      '@types/node': 22.18.8
+      '@types/node': 22.18.10
 
   '@types/debug@4.1.12':
     dependencies:
@@ -8877,7 +8880,7 @@ snapshots:
 
   '@types/express-serve-static-core@5.0.6':
     dependencies:
-      '@types/node': 22.18.8
+      '@types/node': 22.18.10
       '@types/qs': 6.14.0
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.5
@@ -8891,7 +8894,7 @@ snapshots:
   '@types/fs-extra@11.0.4':
     dependencies:
       '@types/jsonfile': 6.1.4
-      '@types/node': 22.18.8
+      '@types/node': 22.18.10
 
   '@types/hast@3.0.4':
     dependencies:
@@ -8903,13 +8906,13 @@ snapshots:
 
   '@types/http-proxy@1.17.16':
     dependencies:
-      '@types/node': 22.18.8
+      '@types/node': 22.18.10
 
   '@types/json-schema@7.0.15': {}
 
   '@types/jsonfile@6.1.4':
     dependencies:
-      '@types/node': 22.18.8
+      '@types/node': 22.18.10
 
   '@types/less@3.0.8': {}
 
@@ -8927,21 +8930,21 @@ snapshots:
 
   '@types/node-sass@4.11.8':
     dependencies:
-      '@types/node': 22.18.8
+      '@types/node': 22.18.10
 
-  '@types/node@22.18.8':
+  '@types/node@22.18.10':
     dependencies:
       undici-types: 6.21.0
 
   '@types/on-finished@2.3.5':
     dependencies:
-      '@types/node': 22.18.8
+      '@types/node': 22.18.10
 
   '@types/polka@0.5.7':
     dependencies:
       '@types/express': 5.0.3
       '@types/express-serve-static-core': 5.0.6
-      '@types/node': 22.18.8
+      '@types/node': 22.18.10
       '@types/trouter': 3.1.4
 
   '@types/qs@6.14.0': {}
@@ -8958,7 +8961,7 @@ snapshots:
 
   '@types/sass-loader@8.0.9':
     dependencies:
-      '@types/node': 22.18.8
+      '@types/node': 22.18.10
       '@types/node-sass': 4.11.8
       '@types/webpack': 4.41.40
       sass: 1.93.2
@@ -8970,12 +8973,12 @@ snapshots:
   '@types/send@0.17.5':
     dependencies:
       '@types/mime': 1.3.5
-      '@types/node': 22.18.8
+      '@types/node': 22.18.10
 
   '@types/serve-static@1.15.8':
     dependencies:
       '@types/http-errors': 2.0.5
-      '@types/node': 22.18.8
+      '@types/node': 22.18.10
       '@types/send': 0.17.5
 
   '@types/source-list-map@0.1.6': {}
@@ -8984,7 +8987,7 @@ snapshots:
 
   '@types/tapable@2.2.7':
     dependencies:
-      tapable: 2.2.3
+      tapable: 2.3.0
 
   '@types/trouter@3.1.4': {}
 
@@ -9000,7 +9003,7 @@ snapshots:
 
   '@types/webpack-bundle-analyzer@4.7.0':
     dependencies:
-      '@types/node': 22.18.8
+      '@types/node': 22.18.10
       tapable: 2.2.2
       webpack: 5.102.1
     transitivePeerDependencies:
@@ -9011,13 +9014,13 @@ snapshots:
 
   '@types/webpack-sources@3.2.3':
     dependencies:
-      '@types/node': 22.18.8
+      '@types/node': 22.18.10
       '@types/source-list-map': 0.1.6
       source-map: 0.7.6
 
   '@types/webpack@4.41.40':
     dependencies:
-      '@types/node': 22.18.8
+      '@types/node': 22.18.10
       '@types/tapable': 1.0.12
       '@types/uglify-js': 3.17.5
       '@types/webpack-sources': 3.2.3
@@ -9026,38 +9029,38 @@ snapshots:
 
   '@types/ws@8.18.1':
     dependencies:
-      '@types/node': 22.18.8
+      '@types/node': 22.18.10
 
-  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20251009.1':
+  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20251012.1':
     optional: true
 
-  '@typescript/native-preview-darwin-x64@7.0.0-dev.20251009.1':
+  '@typescript/native-preview-darwin-x64@7.0.0-dev.20251012.1':
     optional: true
 
-  '@typescript/native-preview-linux-arm64@7.0.0-dev.20251009.1':
+  '@typescript/native-preview-linux-arm64@7.0.0-dev.20251012.1':
     optional: true
 
-  '@typescript/native-preview-linux-arm@7.0.0-dev.20251009.1':
+  '@typescript/native-preview-linux-arm@7.0.0-dev.20251012.1':
     optional: true
 
-  '@typescript/native-preview-linux-x64@7.0.0-dev.20251009.1':
+  '@typescript/native-preview-linux-x64@7.0.0-dev.20251012.1':
     optional: true
 
-  '@typescript/native-preview-win32-arm64@7.0.0-dev.20251009.1':
+  '@typescript/native-preview-win32-arm64@7.0.0-dev.20251012.1':
     optional: true
 
-  '@typescript/native-preview-win32-x64@7.0.0-dev.20251009.1':
+  '@typescript/native-preview-win32-x64@7.0.0-dev.20251012.1':
     optional: true
 
-  '@typescript/native-preview@7.0.0-dev.20251009.1':
+  '@typescript/native-preview@7.0.0-dev.20251012.1':
     optionalDependencies:
-      '@typescript/native-preview-darwin-arm64': 7.0.0-dev.20251009.1
-      '@typescript/native-preview-darwin-x64': 7.0.0-dev.20251009.1
-      '@typescript/native-preview-linux-arm': 7.0.0-dev.20251009.1
-      '@typescript/native-preview-linux-arm64': 7.0.0-dev.20251009.1
-      '@typescript/native-preview-linux-x64': 7.0.0-dev.20251009.1
-      '@typescript/native-preview-win32-arm64': 7.0.0-dev.20251009.1
-      '@typescript/native-preview-win32-x64': 7.0.0-dev.20251009.1
+      '@typescript/native-preview-darwin-arm64': 7.0.0-dev.20251012.1
+      '@typescript/native-preview-darwin-x64': 7.0.0-dev.20251012.1
+      '@typescript/native-preview-linux-arm': 7.0.0-dev.20251012.1
+      '@typescript/native-preview-linux-arm64': 7.0.0-dev.20251012.1
+      '@typescript/native-preview-linux-x64': 7.0.0-dev.20251012.1
+      '@typescript/native-preview-win32-arm64': 7.0.0-dev.20251012.1
+      '@typescript/native-preview-win32-x64': 7.0.0-dev.20251012.1
 
   '@ungap/structured-clone@1.3.0': {}
 
@@ -9940,7 +9943,7 @@ snapshots:
   engine.io@6.6.4:
     dependencies:
       '@types/cors': 2.8.19
-      '@types/node': 22.18.8
+      '@types/node': 22.18.10
       accepts: 1.3.8
       base64id: 2.0.0
       cookie: 0.7.2
@@ -9956,7 +9959,7 @@ snapshots:
   enhanced-resolve@5.12.0:
     dependencies:
       graceful-fs: 4.2.11
-      tapable: 2.2.3
+      tapable: 2.3.0
 
   enhanced-resolve@5.18.3:
     dependencies:
@@ -10744,7 +10747,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 22.18.8
+      '@types/node': 22.18.10
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -12120,12 +12123,12 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': link:packages/core
 
-  rsbuild-plugin-dts@0.15.0(@rsbuild/core@1.5.13)(@typescript/native-preview@7.0.0-dev.20251009.1)(typescript@5.9.3):
+  rsbuild-plugin-dts@0.15.0(@rsbuild/core@1.5.13)(@typescript/native-preview@7.0.0-dev.20251012.1)(typescript@5.9.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
       '@rsbuild/core': 1.5.13
     optionalDependencies:
-      '@typescript/native-preview': 7.0.0-dev.20251009.1
+      '@typescript/native-preview': 7.0.0-dev.20251012.1
       typescript: 5.9.3
 
   rsbuild-plugin-google-analytics@1.0.4(@rsbuild/core@packages+core):
