@@ -230,14 +230,14 @@ You can access these environment variables through `import.meta.env.[name]` or `
 
 Rsbuild supports reading the following types of env files:
 
-| File Name                | Description                                                                |
-| ------------------------ | -------------------------------------------------------------------------- |
-| `.env`                   | Loaded by default in all scenarios.                                        |
-| `.env.local`             | Local overrides for `.env`, should be added to `.gitignore`.               |
-| `.env.development`       | Read when `process.env.NODE_ENV` is `'development'`.                       |
-| `.env.production`        | Read when `process.env.NODE_ENV` is `'production'`.                        |
-| `.env.development.local` | Local overrides for `.env.development`, should be added to `.gitignore`.   |
-| `.env.production.local`  | Local overrides for `.env.production`, should be added to `.gitignore`.    |
+| File Name                | Description                                                              |
+| ------------------------ | ------------------------------------------------------------------------ |
+| `.env`                   | Loaded by default in all scenarios.                                      |
+| `.env.local`             | Local overrides for `.env`, should be added to `.gitignore`.             |
+| `.env.development`       | Read when `process.env.NODE_ENV` is `'development'`.                     |
+| `.env.production`        | Read when `process.env.NODE_ENV` is `'production'`.                      |
+| `.env.development.local` | Local overrides for `.env.development`, should be added to `.gitignore`. |
+| `.env.production.local`  | Local overrides for `.env.production`, should be added to `.gitignore`.  |
 
 If multiple of the above files exist, they will all be loaded. Files listed lower in the table have higher priority.
 
