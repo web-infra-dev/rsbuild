@@ -1,3 +1,4 @@
+// @ts-check
 import { defineConfig } from '@rsbuild/core';
 import { pluginSvelte } from '@rsbuild/plugin-svelte';
 
