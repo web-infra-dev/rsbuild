@@ -15,9 +15,7 @@ async function main() {
         cliShortcuts: true,
       },
       output: {
-        distPath: {
-          root: 'dist-dev',
-        },
+        distPath: 'dist-dev',
       },
     },
   });

@@ -1182,8 +1182,10 @@ export interface OutputConfig {
   /**
    * Set the directory of the output files.
    * Rsbuild will emit files to the specified subdirectory according to the file type.
+   * - `string`: Set the root output directory to a specific path, equivalent to `distPath.root`.
+   * - `object`: Set the output directory for each file type.
    */
-  distPath?: DistPathConfig;
+  distPath?: string | DistPathConfig;
   /**
    * Sets the filename of output files.
    */

@@ -3,21 +3,23 @@
 - **Type:**
 
 ```ts
-type DistPathConfig = {
-  root?: string;
-  html?: string;
-  favicon?: string;
-  js?: string;
-  jsAsync?: string;
-  css?: string;
-  cssAsync?: string;
-  svg?: string;
-  font?: string;
-  wasm?: string;
-  image?: string;
-  media?: string;
-  assets?: string;
-};
+type DistPathConfig =
+  | string
+  | {
+      root?: string;
+      html?: string;
+      favicon?: string;
+      js?: string;
+      jsAsync?: string;
+      css?: string;
+      cssAsync?: string;
+      svg?: string;
+      font?: string;
+      wasm?: string;
+      image?: string;
+      media?: string;
+      assets?: string;
+    };
 ```
 
 - **Default:**
@@ -41,6 +43,9 @@ const defaultDistPath = {
 ```
 
 Configure the directory for output files. Rsbuild outputs files to the specified subdirectory according to file type.
+
+- `string`: Set the root output directory to a specific path, equivalent to `distPath.root`.
+- `object`: Set the output directory for each file type.
 
 > See [Output files](/guide/basic/output-files) for more information.
 
@@ -96,3 +101,10 @@ build
 │       └── index.js
 └── index.html
 ```
+
+## Version history
+
+| Version | Changes                                     |
+| ------- | ------------------------------------------- |
+| v1.4.13 | Added support for `distPath.favicon` option |
+| v1.6.0  | Added support for string type               |

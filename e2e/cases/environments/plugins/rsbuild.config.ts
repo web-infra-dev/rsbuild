@@ -18,9 +18,7 @@ export default defineConfig({
       output: {
         assetPrefix: 'auto',
         filenameHash: false,
-        distPath: {
-          root: 'dist/web1',
-        },
+        distPath: 'dist/web1',
       },
     },
   },

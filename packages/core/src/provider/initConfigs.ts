@@ -3,7 +3,11 @@ import {
   updateContextByNormalizedConfig,
   updateEnvironmentContext,
 } from '../createContext';
-import { getDefaultEntry, normalizeConfig } from '../defaultConfig';
+import {
+  getDefaultEntry,
+  normalizeConfig,
+  normalizeConfigStructure,
+} from '../defaultConfig';
 import { camelCase, color, pick } from '../helpers';
 import { ensureAbsolutePath } from '../helpers/path';
 import { inspectConfig } from '../inspectConfig';
@@ -12,6 +16,7 @@ import { mergeRsbuildConfig } from '../mergeConfig';
 import { initPlugins } from '../pluginManager';
 import type {
   AllowedEnvironmentDevKeys,
+  EnvironmentConfig,
   InspectConfigOptions,
   InternalContext,
   MergedEnvironmentConfig,
@@ -96,7 +101,9 @@ const createEnvironmentNotFoundError = (environments: string[] = []) => {
 };
 
 const initEnvironmentConfigs = (
-  normalizedConfig: NormalizedConfig,
+  normalizedConfig: Omit<NormalizedConfig, 'environments'> & {
+    environments: Record<string, EnvironmentConfig>;
+  },
   rootPath: string,
   specifiedEnvironments?: string[],
 ): Record<string, MergedEnvironmentConfig> => {
@@ -143,10 +150,10 @@ const initEnvironmentConfigs = (
               {
                 ...baseConfig,
                 dev: pick(dev, allowedEnvironmentDevKeys),
-              } as MergedEnvironmentConfig,
-              config,
+              },
+              normalizeConfigStructure(config),
             ),
-          };
+          } as unknown as MergedEnvironmentConfig;
 
           return [name, applyEnvironmentDefaultConfig(environmentConfig)];
         }),

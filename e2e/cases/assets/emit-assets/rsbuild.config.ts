@@ -5,11 +5,7 @@ export default defineConfig({
     filenameHash: false,
   },
   environments: {
-    web: {
-      output: {
-        target: 'web',
-      },
-    },
+    web: {},
     node: {
       output: {
         target: 'node',

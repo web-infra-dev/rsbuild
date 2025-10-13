@@ -4,16 +4,12 @@ export default defineConfig({
   environments: {
     web1: {
       output: {
-        distPath: {
-          root: 'dist/web1',
-        },
+        distPath: 'dist/web1',
       },
     },
     web2: {
       output: {
-        distPath: {
-          root: 'dist/web2',
-        },
+        distPath: 'dist/web2',
       },
     },
   },

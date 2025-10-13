@@ -11,9 +11,7 @@ test('should serve publicDir for dev server correctly', async ({
   const rsbuild = await devOnly({
     config: {
       output: {
-        distPath: {
-          root: 'dist-dev-1',
-        },
+        distPath: 'dist-dev-1',
       },
     },
   });
@@ -38,9 +36,7 @@ test('should serve publicDir with assetPrefix for dev server correctly', async (
       },
       output: {
         assetPrefix: '/prod/',
-        distPath: {
-          root: 'dist-dev-1',
-        },
+        distPath: 'dist-dev-1',
       },
     },
   });
@@ -65,9 +61,7 @@ test('should serve multiple publicDir for dev server correctly', async ({
         publicDir: [{ name: 'test-temp-dir1' }, { name: 'test-temp-dir2' }],
       },
       output: {
-        distPath: {
-          root: 'dist-dev-1',
-        },
+        distPath: 'dist-dev-1',
       },
     },
   });
@@ -96,9 +90,7 @@ test('should serve custom publicDir for dev server correctly', async ({
         },
       },
       output: {
-        distPath: {
-          root: 'dist-dev-1',
-        },
+        distPath: 'dist-dev-1',
       },
     },
   });
@@ -121,9 +113,7 @@ test('should not serve publicDir when publicDir is false', async ({
         htmlFallback: false,
       },
       output: {
-        distPath: {
-          root: 'dist-dev-1',
-        },
+        distPath: 'dist-dev-1',
       },
     },
   });
@@ -144,9 +134,7 @@ test('should serve publicDir for preview server correctly', async ({
   const rsbuild = await buildPreview({
     config: {
       output: {
-        distPath: {
-          root: 'dist-build-1',
-        },
+        distPath: 'dist-build-1',
       },
     },
   });
@@ -168,24 +156,18 @@ test('should copy publicDir to the environment distDir when multiple environment
       environments: {
         web1: {
           output: {
-            distPath: {
-              root: 'dist-build-web-1',
-            },
+            distPath: 'dist-build-web-1',
           },
         },
         web2: {
           output: {
-            distPath: {
-              root: 'dist-build-web-2',
-            },
+            distPath: 'dist-build-web-2',
           },
         },
         node: {
           output: {
             target: 'node',
-            distPath: {
-              root: 'dist-build-node',
-            },
+            distPath: 'dist-build-node',
           },
         },
       },
@@ -227,9 +209,7 @@ test('should copy publicDir to the node distDir when copyOnBuild is specified as
         node: {
           output: {
             target: 'node',
-            distPath: {
-              root: 'dist-build-node-1',
-            },
+            distPath: 'dist-build-node-1',
           },
         },
       },
@@ -256,16 +236,12 @@ test('should copy publicDir to root dist when environment dist path has a parent
       environments: {
         web1: {
           output: {
-            distPath: {
-              root: 'dist-build-web/1',
-            },
+            distPath: 'dist-build-web/1',
           },
         },
         web2: {
           output: {
-            distPath: {
-              root: 'dist-build-web',
-            },
+            distPath: 'dist-build-web',
           },
         },
       },
@@ -299,9 +275,7 @@ test('should serve publicDir for preview server with assetPrefix correctly', asy
       },
       output: {
         assetPrefix: '/prod/',
-        distPath: {
-          root: 'dist-build-1',
-        },
+        distPath: 'dist-build-1',
       },
     },
   });
@@ -326,9 +300,7 @@ test('should serve multiple publicDir for preview server correctly', async ({
         publicDir: [{ name: 'test-temp-dir1' }, { name: 'test-temp-dir2' }],
       },
       output: {
-        distPath: {
-          root: 'dist-build-1',
-        },
+        distPath: 'dist-build-1',
       },
     },
   });

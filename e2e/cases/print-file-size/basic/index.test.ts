@@ -59,17 +59,11 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
           filenameHash: false,
         },
         environments: {
-          web: {
-            output: {
-              target: 'web',
-            },
-          },
+          web: {},
           node: {
             output: {
               target: 'node',
-              distPath: {
-                root: 'dist/server',
-              },
+              distPath: 'dist/server',
             },
           },
         },
@@ -147,9 +141,7 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB`);
     const rsbuild = await build({
       config: {
         output: {
-          distPath: {
-            root: '../test-temp-folder/dist',
-          },
+          distPath: '../test-temp-folder/dist',
         },
       },
     });

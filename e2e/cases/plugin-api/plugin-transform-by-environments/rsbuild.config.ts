@@ -3,17 +3,11 @@ import { myPlugin } from './myPlugin';
 export default {
   plugins: [myPlugin],
   environments: {
-    web: {
-      output: {
-        target: 'web',
-      },
-    },
+    web: {},
     node: {
       output: {
         target: 'node',
-        distPath: {
-          root: 'dist/server',
-        },
+        distPath: 'dist/server',
       },
     },
   },

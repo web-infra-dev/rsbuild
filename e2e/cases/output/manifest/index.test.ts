@@ -65,9 +65,7 @@ test('should generate manifest file when target is node', async ({ build }) => {
   const rsbuild = await build({
     config: {
       output: {
-        distPath: {
-          root: 'dist-1',
-        },
+        distPath: 'dist-1',
         target: 'node',
         manifest: true,
         filenameHash: false,
@@ -97,9 +95,7 @@ test('should always write manifest to disk when in dev', async ({ dev }) => {
   const rsbuild = await dev({
     config: {
       output: {
-        distPath: {
-          root: 'dist-dev',
-        },
+        distPath: 'dist-dev',
         manifest: true,
         filenameHash: false,
       },

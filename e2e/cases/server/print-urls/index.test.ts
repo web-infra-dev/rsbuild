@@ -206,9 +206,7 @@ test('should print server urls for multiple web environments with custom distPat
             },
           },
           output: {
-            distPath: {
-              root: '.dist/web1',
-            },
+            distPath: '.dist/web1',
           },
         },
       },
@@ -287,15 +285,13 @@ test('should print server urls for web and node environments with custom distPat
       environments: {
         web: {
           output: {
-            distPath: {
-              root: 'dist/client',
-            },
+            distPath: 'dist/client',
           },
         },
         node: {
           output: {
             target: 'node',
-            distPath: { root: './dist/server' },
+            distPath: './dist/server',
           },
         },
       },

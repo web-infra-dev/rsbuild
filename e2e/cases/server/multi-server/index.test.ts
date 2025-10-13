@@ -15,9 +15,7 @@ test.skip('multiple rsbuild dev servers should work correctly', async ({
         },
       },
       output: {
-        distPath: {
-          root: 'dist-1',
-        },
+        distPath: 'dist-1',
       },
       dev: {
         assetPrefix: '/app1',
@@ -37,9 +35,7 @@ test.skip('multiple rsbuild dev servers should work correctly', async ({
         },
       },
       output: {
-        distPath: {
-          root: 'dist-2',
-        },
+        distPath: 'dist-2',
       },
       server: {
         middlewareMode: true,
