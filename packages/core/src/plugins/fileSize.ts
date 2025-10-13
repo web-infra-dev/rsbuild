@@ -8,13 +8,13 @@ import { promisify } from 'node:util';
 import zlib from 'node:zlib';
 import { JS_REGEX } from '../constants';
 import { color } from '../helpers';
-import { getAssetsFromStats } from '../helpers/stats';
 import { logger } from '../logger';
 import type {
   InternalContext,
   PrintFileSizeAsset,
   PrintFileSizeOptions,
   RsbuildPlugin,
+  RsbuildStatsItem,
   Rspack,
 } from '../types';
 
@@ -93,7 +93,7 @@ const isCompressible = (assetName: string) =>
 
 async function printFileSizes(
   options: PrintFileSizeOptions,
-  stats: Rspack.Stats,
+  stats: RsbuildStatsItem,
   rootPath: string,
   distPath: string,
   environmentName: string,
@@ -135,7 +135,11 @@ async function printFileSizes(
   });
 
   const getAssets = async () => {
-    const filteredAssets = getAssetsFromStats(stats).filter((asset) => {
+    if (!stats.assets) {
+      return [];
+    }
+
+    const filteredAssets = stats.assets.filter((asset) => {
       const assetInfo = pickAssetInfo(asset);
       if (exclude(assetInfo)) {
         return false;
@@ -290,9 +294,10 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
   name: 'rsbuild:file-size',
 
   setup(api) {
-    api.onAfterBuild(async ({ stats, environments, isFirstCompile }) => {
+    api.onAfterBuild(async ({ environments, isFirstCompile }) => {
+      const { stats, hasErrors } = context.buildState;
       // No need to print file sizes if there is any compilation error
-      if (!stats || context.buildState.hasErrors || !isFirstCompile) {
+      if (!stats || hasErrors || !isFirstCompile) {
         return;
       }
 
@@ -305,8 +310,6 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
           if (printFileSize === false) {
             return;
           }
-
-          const multiStats = 'stats' in stats ? stats.stats : [stats];
 
           const defaultConfig: PrintFileSizeOptions = {
             total: true,
@@ -323,9 +326,10 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
                   ...printFileSize,
                 };
 
+          const statsItem = 'children' in stats ? stats.children[index] : stats;
           const statsLogs = await printFileSizes(
             mergedConfig,
-            multiStats[index],
+            statsItem,
             api.context.rootPath,
             environment.distPath,
             environment.name,
