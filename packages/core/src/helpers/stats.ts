@@ -58,20 +58,23 @@ export const getStatsWarnings = ({
   return [];
 };
 
+export const getStatsAssetsOptions = (): Rspack.StatsOptions => ({
+  assets: true,
+  cachedAssets: true,
+  groupAssetsByInfo: false,
+  groupAssetsByPath: false,
+  groupAssetsByChunk: false,
+  groupAssetsByExtension: false,
+  groupAssetsByEmitStatus: false,
+});
+
 export const getAssetsFromStats = (
   stats: Rspack.Stats,
 ): Rspack.StatsAsset[] => {
   const statsJson = stats.toJson({
     all: false,
-    assets: true,
-    cachedAssets: true,
-    groupAssetsByInfo: false,
-    groupAssetsByPath: false,
-    groupAssetsByChunk: false,
-    groupAssetsByExtension: false,
-    groupAssetsByEmitStatus: false,
+    ...getStatsAssetsOptions(),
   });
-
   return statsJson.assets || [];
 };
 
@@ -79,7 +82,7 @@ function getStatsOptions(
   compiler: Rspack.Compiler | Rspack.MultiCompiler,
   action?: ActionType,
 ): Rspack.StatsOptions {
-  const defaultOptions: Rspack.StatsOptions = {
+  let defaultOptions: Rspack.StatsOptions = {
     all: false,
     // for displaying the build time
     timings: true,
@@ -92,10 +95,18 @@ function getStatsOptions(
   };
 
   if (action === 'dev') {
-    // for HMR to compare the hash
-    defaultOptions.hash = true;
-    // for HMR to compare the entrypoints
-    defaultOptions.entrypoints = true;
+    defaultOptions = {
+      ...defaultOptions,
+      // for HMR to compare the hash
+      hash: true,
+      // for HMR to compare the entrypoints
+      entrypoints: true,
+    };
+  } else if (action === 'build') {
+    defaultOptions = {
+      ...defaultOptions,
+      ...getStatsAssetsOptions(),
+    };
   }
 
   if (isMultiCompiler(compiler)) {
