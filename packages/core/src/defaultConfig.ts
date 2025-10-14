@@ -356,7 +356,7 @@ export const normalizeConfig = (config: RsbuildConfig): NormalizedConfig => {
   return mergedConfig as unknown as NormalizedConfig;
 };
 
-export const normalizePublicDirs = (
+const normalizePublicDirs = (
   publicDir?: PublicDir,
 ): Required<PublicDirOptions>[] => {
   if (publicDir === false) {
