@@ -133,7 +133,7 @@ function loadConfig(params?: {
   path?: string;
   meta?: Record<string, unknown>;
   envMode?: string;
-  loader?: 'jiti' | 'native';
+  loader?: 'auto' | 'jiti' | 'native';
 }): Promise<{
   content: RsbuildConfig;
   filePath: string | null;
