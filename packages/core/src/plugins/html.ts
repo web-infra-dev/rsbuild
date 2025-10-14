@@ -260,7 +260,9 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
               filename,
               entryName,
               templateParameters,
-              scriptLoading: config.html.scriptLoading,
+              scriptLoading: config.output.module
+                ? 'module'
+                : config.html.scriptLoading,
             };
 
             if (templatePath) {
