@@ -13,6 +13,16 @@
 如果启用了 [output.module](/config/output/module)，该值将始终为 `'module'`。
 :::
 
+## 注意
+
+`scriptLoading` 选项仅作用于 Rsbuild 自动生成的 `<script>` 标签，不会影响：
+
+- HTML 模板中已经存在的 `<script>` 标签
+- 通过 [html.tags](/config/html/tags) 添加的 `<script>` 标签
+- 通过 [api.modifyHtmlTags](/plugins/dev/hooks#modifyhtmltags) 添加的 `<script>` 标签
+
+## 可选值
+
 ### defer
 
 默认情况下，Rsbuild 生成的 `<script>` 标签会自动设置 [`defer` 属性](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Reference/Elements/script#defer)，以避免阻塞页面的解析和渲染。
