@@ -1598,7 +1598,10 @@ export interface HtmlConfig {
   >;
   /**
    * Set the loading mode of the `<script>` tag.
-   * @default 'defer'
+   * - `'defer'`: The `<script>` tags are rendered with `defer` attribute.
+   * - `'module'`: The `<script>` tags are rendered with `type="module"` attribute.
+   * - `'blocking'`: The `<script>` tags are rendered without `defer` or `async` attribute.
+   * @default 'defer'. If `output.module` is enabled, the value is always `'module'`.
    */
   scriptLoading?: ScriptLoading;
 }

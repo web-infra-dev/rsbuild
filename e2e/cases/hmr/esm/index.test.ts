@@ -2,7 +2,7 @@ import { join } from 'node:path';
 import { expect, rspackTest } from '@e2e/helper';
 
 rspackTest(
-  'should perform HMR and preserve state',
+  'should perform HMR and preserve state when `output.module` is enabled',
   async ({ page, dev, editFile, copySrcDir }) => {
     const tempSrc = await copySrcDir();
 
