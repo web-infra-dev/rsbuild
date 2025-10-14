@@ -79,7 +79,10 @@ const getDefaultDevConfig = (): NormalizedDevConfig => ({
 export const defaultAllowedOrigins: RegExp =
   /^https?:\/\/(?:(?:[^:]+\.)?localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/;
 
-const getDefaultServerConfig = (): NormalizedServerConfig => ({
+const getDefaultServerConfig = (): Omit<
+  NormalizedServerConfig,
+  'publicDir'
+> => ({
   port: DEFAULT_PORT,
   host: DEFAULT_DEV_HOST,
   open: false,
@@ -300,6 +303,9 @@ export const normalizeConfigStructure = (
   config: RsbuildConfig,
 ): RsbuildConfig => {
   const { dev, output } = config;
+
+  config.server ||= {};
+  config.server.publicDir = normalizePublicDirs(config.server.publicDir);
 
   if (typeof output?.distPath === 'string') {
     config = {

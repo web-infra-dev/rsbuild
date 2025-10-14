@@ -533,7 +533,9 @@ export interface ServerConfig {
   middlewareMode?: boolean;
 }
 
-export type NormalizedServerConfig = ServerConfig &
+export type NormalizedServerConfig = {
+  publicDir: Required<PublicDirOptions>[];
+} & Pick<ServerConfig, 'headers' | 'https' | 'historyApiFallback' | 'proxy'> &
   Required<
     Pick<
       ServerConfig,

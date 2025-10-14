@@ -1,12 +1,11 @@
 import type { FSWatcher } from '../../compiled/chokidar/index.js';
-import { normalizePublicDirs } from '../defaultConfig';
 import { castArray } from '../helpers';
 import { requireCompiledPackage } from '../helpers/vendors';
 import type {
   ChokidarOptions,
   DevConfig,
   NormalizedConfig,
-  ServerConfig,
+  NormalizedServerConfig,
   WatchFiles,
 } from '../types';
 import type { BuildManager } from './buildManager';
@@ -80,16 +79,15 @@ async function watchDevFiles(
 }
 
 function watchServerFiles(
-  serverConfig: ServerConfig,
+  { publicDir }: NormalizedServerConfig,
   buildManager: BuildManager,
   root: string,
 ) {
-  const publicDirs = normalizePublicDirs(serverConfig.publicDir);
-  if (!publicDirs.length) {
+  if (!publicDir.length) {
     return;
   }
 
-  const watchPaths = publicDirs
+  const watchPaths = publicDir
     .filter((item) => item.watch)
     .map((item) => item.name);
 

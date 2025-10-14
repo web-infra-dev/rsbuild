@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
 import { isDeno } from '../constants';
-import { normalizePublicDirs } from '../defaultConfig';
 import { color } from '../helpers';
 import { dedupeNestedPaths } from '../helpers/path';
 import { open } from '../server/open';
@@ -31,11 +30,8 @@ export const pluginServer = (): RsbuildPlugin => ({
         return;
       }
       const config = api.getNormalizedConfig();
-      const publicDirs = normalizePublicDirs(config.server.publicDir);
 
-      for (const publicDir of publicDirs) {
-        const { name, copyOnBuild } = publicDir;
-
+      for (const { name, copyOnBuild } of config.server.publicDir) {
         if (copyOnBuild === false || !name) {
           continue;
         }
