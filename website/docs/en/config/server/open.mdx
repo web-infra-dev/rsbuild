@@ -23,7 +23,7 @@ type Open =
 
 `server.open` can be set to the following values.
 
-- Open the project's default preview page (`http://localhost:<port>`, or `http://<host>:<port>` if [server.host](/config/server/host) is configured).
+- Open the project's default preview page (`http://localhost:<port>`, or `http://<host>:<port>` if [server.host](/config/server/host) is configured):
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -109,14 +109,14 @@ BROWSER=edge npx rsbuild dev
 BROWSER=firefox npx rsbuild dev
 ```
 
-On Windows, use [cross-env](https://npmjs.com/package/cross-env) to set environment variables:
+On Windows, use [cross-env](https://npmjs.com/package/cross-env) to set the environment variable:
 
 ```bash
 npm i cross-env -D
 cross-env BROWSER=chrome npx rsbuild dev
 ```
 
-You can also refer to the [app option](https://github.com/sindresorhus/open?tab=readme-ov-file#app) of `open` for additional `BROWSER` values, such as OS-specific browser names:
+You can also refer to the [app option](https://github.com/sindresorhus/open?tab=readme-ov-file#app) documentation from `open` for additional `BROWSER` values, such as OS-specific browser names:
 
 ```bash
 # macOS
@@ -128,7 +128,7 @@ BROWSER="google-chrome" npx rsbuild dev
 
 ### Browser arguments
 
-Pass browser arguments through `BROWSER_ARGS`, with multiple arguments separated by spaces:
+Pass browser arguments through `BROWSER_ARGS`, separating multiple arguments with spaces:
 
 ```bash
 BROWSER=chrome BROWSER_ARGS="--incognito" npx rsbuild dev
@@ -157,7 +157,7 @@ BROWSER="Google Chrome Canary" npx rsbuild dev
 
 ### Configure environment variable
 
-You can set the `BROWSER` environment variable in your local [.env.local](/guide/advanced/env-vars#env-file) file. This eliminates the need to manually set it each time you start the dev server and prevents affecting other developers on the project.
+You can set the `BROWSER` environment variable in your local [.env.local](/guide/advanced/env-vars#env-file) file. This way, you don't need to set it manually each time you start the dev server, and it won't affect other developers on the project.
 
 ```bash
 # .env.local

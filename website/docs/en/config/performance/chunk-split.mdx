@@ -70,7 +70,7 @@ export default {
 - **Type:** `number`
 - **Default:** `10000`
 
-When `chunkSplit.strategy` is `split-by-size`, you can specify the minimum size of a chunk via `chunkSplit.minSize`, the unit is bytes. The default value is `10000`. For example:
+When `chunkSplit.strategy` is `split-by-size`, you can specify the minimum size of a chunk via `chunkSplit.minSize`. The unit is bytes, and the default value is `10000`. For example:
 
 ```js
 export default {
@@ -88,7 +88,7 @@ export default {
 - **Type:** `number`
 - **Default:** `Number.POSITIVE_INFINITY`
 
-When `chunkSplit.strategy` is `split-by-size`, you can specify the maximum size of a chunk via `chunkSplit.maxSize`, the unit is bytes. The default value is `Number.POSITIVE_INFINITY`. For example:
+When `chunkSplit.strategy` is `split-by-size`, you can specify the maximum size of a chunk via `chunkSplit.maxSize`. The unit is bytes, and the default value is `Number.POSITIVE_INFINITY`. For example:
 
 ```js
 export default {
@@ -106,7 +106,7 @@ export default {
 - **Type:** `RegExp[] | Record<string, RegExp>`
 - **Default:** `[]`
 
-Via `chunkSplit.forceSplitting`, you can specify the npm packages that need to be forced to split.
+Via `chunkSplit.forceSplitting`, you can specify npm packages that should be forcibly split.
 
 For example, split the `axios` library under node_modules into `axios.js`:
 
@@ -130,7 +130,7 @@ Chunks split using the `forceSplitting` configuration will be inserted into the 
 
 ## chunkSplit.splitChunks
 
-When `chunkSplit.strategy` is `custom`, you can specify the custom Rspack chunk splitting config via `chunkSplit.splitChunks`. This config will be merged with the Rspack splitChunks config (the `cacheGroups` config will also be merged). For example:
+When `chunkSplit.strategy` is `custom`, you can specify a custom Rspack chunk splitting configuration via `chunkSplit.splitChunks`. This configuration will be merged with the Rspack splitChunks config (the `cacheGroups` config will also be merged). For example:
 
 ```js
 export default {
@@ -153,7 +153,7 @@ export default {
 
 ## chunkSplit.override
 
-When `chunkSplit.strategy` is `split-by-experience`, `split-by-module`, `split-by-size` or `single-vendor`, you can specify the custom Rspack chunk splitting config via `chunkSplit.override`. This config will be merged with the Rspack splitChunks config (the `cacheGroups` config will also be merged). For example:
+When `chunkSplit.strategy` is `split-by-experience`, `split-by-module`, `split-by-size`, or `single-vendor`, you can specify a custom Rspack chunk splitting configuration via `chunkSplit.override`. This configuration will be merged with the Rspack splitChunks config (the `cacheGroups` config will also be merged). For example:
 
 ```js
 export default {
@@ -177,7 +177,7 @@ export default {
 
 `performance.chunkSplit` only works when [output.target](/config/output/target) is `web`. This means that when `output.target` is `node` or `web-worker`, `performance.chunkSplit` will not take effect.
 
-Typically, Node bundles do not need to be split to optimize loading performance, if you need to split Node bundles, you can use the [tools.rspack](/config/tools/rspack) configuration to configure Rspack's [optimization.splitChunks](https://rspack.rs/plugins/webpack/split-chunks-plugin#optimizationsplitchunks) option:
+Typically, Node bundles do not need to be split to optimize loading performance. If you need to split Node bundles, you can use the [tools.rspack](/config/tools/rspack) configuration to set Rspack's [optimization.splitChunks](https://rspack.rs/plugins/webpack/split-chunks-plugin#optimizationsplitchunks) option:
 
 ```ts
 export default {
