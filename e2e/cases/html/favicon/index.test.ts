@@ -185,7 +185,7 @@ for (const filename of ['favicon.ico', 'favicon.png', 'favicon.svg']) {
     const rsbuild = await build({
       config: {
         server: {
-          publicDir: [{ name: publicPath }],
+          publicDir: { name: publicPath },
         },
       },
     });
