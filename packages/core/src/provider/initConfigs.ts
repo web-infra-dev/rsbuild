@@ -3,11 +3,7 @@ import {
   updateContextByNormalizedConfig,
   updateEnvironmentContext,
 } from '../createContext';
-import {
-  getDefaultEntry,
-  normalizeConfig,
-  normalizeConfigStructure,
-} from '../defaultConfig';
+import { getDefaultEntry, normalizeConfig } from '../defaultConfig';
 import { camelCase, color, pick } from '../helpers';
 import { ensureAbsolutePath } from '../helpers/path';
 import { inspectConfig } from '../inspectConfig';
@@ -151,7 +147,7 @@ const initEnvironmentConfigs = (
                 ...baseConfig,
                 dev: pick(dev, allowedEnvironmentDevKeys),
               },
-              normalizeConfigStructure(config, rootPath),
+              config,
             ),
           } as unknown as MergedEnvironmentConfig;
 

@@ -418,4 +418,75 @@ describe('mergeRsbuildConfig', () => {
       },
     });
   });
+
+  test('should merge output.copy as expected', async () => {
+    expect(
+      mergeRsbuildConfig(
+        {
+          output: {
+            copy: [
+              {
+                from: 'src/static',
+                to: 'static',
+              },
+            ],
+          },
+        },
+        {
+          output: {
+            copy: {
+              patterns: [
+                {
+                  from: 'src/static2',
+                  to: 'static2',
+                },
+              ],
+            },
+          },
+        },
+      ),
+    ).toEqual({
+      output: {
+        copy: {
+          patterns: [
+            {
+              from: 'src/static',
+              to: 'static',
+            },
+            {
+              from: 'src/static2',
+              to: 'static2',
+            },
+          ],
+        },
+      },
+    });
+  });
+
+  test('should merge output.distPath as expected', async () => {
+    expect(
+      mergeRsbuildConfig(
+        {
+          output: {
+            distPath: {
+              root: 'custom-dist1',
+              js: 'custom-js',
+            },
+          },
+        },
+        {
+          output: {
+            distPath: 'custom-dist2',
+          },
+        },
+      ),
+    ).toEqual({
+      output: {
+        distPath: {
+          root: 'custom-dist2',
+          js: 'custom-js',
+        },
+      },
+    });
+  });
 });
