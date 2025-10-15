@@ -220,16 +220,9 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
         return defaultFavicon;
       }
 
-      const { rootPath } = api.context;
       const { publicDir } = api.getNormalizedConfig().server;
       const extensions = ['ico', 'png', 'svg'];
-      const publicDirs = Array.from(
-        new Set(
-          publicDir.map(({ name }) =>
-            isAbsolute(name) ? name : path.join(rootPath, name),
-          ),
-        ),
-      );
+      const publicDirs = Array.from(new Set(publicDir.map(({ name }) => name)));
 
       const faviconPaths: string[] = [];
       for (const publicDir of publicDirs) {
