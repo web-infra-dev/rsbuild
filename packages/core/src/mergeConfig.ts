@@ -78,10 +78,10 @@ const merge = (x: unknown, y: unknown, path = ''): unknown => {
 };
 
 /**
- * Preprocess config before merging to ensure some properties can be merged
- * as expected.
+ * Preprocess config before merging to convert the raw config into a consistent
+ * object-based structure. This ensures some properties can be merged as expected.
  */
-const preprocessConfig = <T = RsbuildConfig>(config: T): T => {
+const normalizeConfigStructure = <T = RsbuildConfig>(config: T): T => {
   let { dev, output, ...rest } = config as RsbuildConfig;
 
   if (output) {
@@ -109,7 +109,7 @@ const preprocessConfig = <T = RsbuildConfig>(config: T): T => {
 export const mergeRsbuildConfig = <T = RsbuildConfig>(
   ...originalConfigs: T[]
 ): T => {
-  const configs = originalConfigs.map(preprocessConfig);
+  const configs = originalConfigs.map(normalizeConfigStructure);
 
   // In most cases there will be two configs so we perform this check first
   if (configs.length === 2) {
