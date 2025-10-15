@@ -52,6 +52,7 @@ import type {
   ConfigChainWithContext,
   MaybePromise,
   OneOrMany,
+  Optional,
   TwoLevelReadonly,
 } from './utils';
 
@@ -535,22 +536,13 @@ export interface ServerConfig {
 
 export type NormalizedServerConfig = {
   publicDir: Required<PublicDirOptions>[];
-} & Pick<ServerConfig, 'headers' | 'https' | 'historyApiFallback' | 'proxy'> &
-  Required<
-    Pick<
-      ServerConfig,
-      | 'htmlFallback'
-      | 'port'
-      | 'host'
-      | 'compress'
-      | 'strictPort'
-      | 'printUrls'
-      | 'open'
-      | 'base'
-      | 'cors'
-      | 'middlewareMode'
-    >
-  >;
+} & Omit<
+  Optional<
+    Required<ServerConfig>,
+    'headers' | 'https' | 'historyApiFallback' | 'proxy'
+  >,
+  'publicDir'
+>;
 
 export type SriAlgorithm = 'sha256' | 'sha384' | 'sha512';
 
@@ -1320,8 +1312,7 @@ export interface OutputConfig {
 export interface NormalizedOutputConfig extends OutputConfig {
   target: RsbuildTarget;
   filename: FilenameConfig;
-  distPath: Omit<Required<DistPathConfig>, 'jsAsync' | 'cssAsync' | 'js'> &
-    Pick<DistPathConfig, 'jsAsync' | 'cssAsync' | 'js'>;
+  distPath: Optional<Required<DistPathConfig>, 'jsAsync' | 'cssAsync' | 'js'>;
   polyfill: Polyfill;
   sourceMap:
     | boolean
@@ -1698,8 +1689,10 @@ export type ClientConfig = {
   overlay?: boolean;
 };
 
-export type NormalizedClientConfig = Pick<ClientConfig, 'protocol'> &
-  Omit<Required<ClientConfig>, 'protocol'>;
+export type NormalizedClientConfig = Optional<
+  Required<ClientConfig>,
+  'protocol'
+>;
 
 export type { ChokidarOptions };
 
@@ -2000,10 +1993,7 @@ export type MergedEnvironmentConfig = {
   resolve: NormalizedResolveConfig;
   source: NormalizedSourceConfig;
   output: Omit<NormalizedOutputConfig, 'distPath'> & {
-    distPath: Omit<Required<DistPathConfig>, 'jsAsync' | 'cssAsync'> & {
-      jsAsync?: string;
-      cssAsync?: string;
-    };
+    distPath: Optional<Required<DistPathConfig>, 'jsAsync' | 'cssAsync'>;
   };
   plugins?: RsbuildPlugins;
   security: NormalizedSecurityConfig;
