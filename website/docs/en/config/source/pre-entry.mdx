@@ -15,7 +15,7 @@ console.log('I am a polyfill');
 
 Then configure `src/polyfill.ts` to `source.preEntry`:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     preEntry: './src/polyfill.ts',
@@ -29,7 +29,7 @@ Re-run the compilation and visit any page. You can see that the code in `src/pol
 
 You can also configure global styles using `source.preEntry`. This CSS code will be loaded earlier than the page code, such as introducing a `normalize.css` file:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     preEntry: './src/normalize.css',
@@ -41,7 +41,7 @@ export default {
 
 You can add multiple scripts by setting `preEntry` to an array, and they will be executed in array order:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     preEntry: ['./src/polyfill-a.ts', './src/polyfill-b.ts'],

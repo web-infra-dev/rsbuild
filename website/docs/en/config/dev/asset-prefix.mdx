@@ -17,7 +17,7 @@ When `server.base` is `/foo`, `index.html` and other static assets can be access
 
 It should be noted that when customizing the `dev.assetPrefix` option, if you want static assets to be normally accessible through the Rsbuild dev server, `dev.assetPrefix` should contain the same URL prefix as `server.base`. For example:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     assetPrefix: '/foo/bar/',

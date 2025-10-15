@@ -15,7 +15,7 @@ console.log('I am a polyfill');
 
 然后将 `src/polyfill.ts` 配置到 `source.preEntry` 上：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     preEntry: './src/polyfill.ts',
@@ -29,7 +29,7 @@ export default {
 
 你也可以通过 `source.preEntry` 来配置全局样式，这段 CSS 代码会早于页面代码加载，比如引入一个 `normalize.css` 文件：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     preEntry: './src/normalize.css',
@@ -41,7 +41,7 @@ export default {
 
 你可以将 `preEntry` 设置为数组来添加多个脚本，它们会按数组顺序执行：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     preEntry: ['./src/polyfill-a.ts', './src/polyfill-b.ts'],

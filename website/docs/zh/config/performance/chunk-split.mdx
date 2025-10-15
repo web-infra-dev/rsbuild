@@ -55,7 +55,7 @@ type ChunkSplit = BaseChunkSplit | SplitBySize | SplitCustom;
 
 Rsbuild 默认采用 `split-by-experience` 策略，如果你想使用其他拆包策略，可以通过 `strategy` 选项来指定，比如：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     chunkSplit: {
@@ -72,7 +72,7 @@ export default {
 
 当 `chunkSplit.strategy` 为 `split-by-size` 时，可以通过 `chunkSplit.minSize` 配置项来指定 chunk 的最小大小，单位为字节。默认值为 10000。比如:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     chunkSplit: {
@@ -90,7 +90,7 @@ export default {
 
 当 `chunkSplit.strategy` 为 `split-by-size` 时，可以通过 `chunkSplit.maxSize` 配置项来指定 chunk 的最大大小，单位为字节。默认值为 `Number.POSITIVE_INFINITY`。比如:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     chunkSplit: {
@@ -110,7 +110,7 @@ export default {
 
 比如将 node_modules 下的 `axios` 库拆分到 `axios.js` 中：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     chunkSplit: {
@@ -132,7 +132,7 @@ export default {
 
 当 `chunkSplit.strategy` 为 `custom` 时，可以通过 `chunkSplit.splitChunks` 配置项来指定自定义的 Rspack 拆包配置。此配置会和 Rspack 的 splitChunks 配置进行合并（cacheGroups 配置也会合并）。比如:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     chunkSplit: {
@@ -155,7 +155,7 @@ export default {
 
 当 `chunkSplit.strategy` 为 `split-by-experience`、`split-by-module`、`split-by-size` 或 `single-vendor` 时，可以通过 `chunkSplit.override` 配置项来自定义 Rspack 拆包配置，此配置会和 Rspack 的 splitChunks 配置进行合并（cacheGroups 配置也会合并）。比如:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     chunkSplit: {
@@ -179,7 +179,7 @@ export default {
 
 通常 Node bundles 不需要通过 split chunks 来优化加载性能，如果你需要对 Node bundles 进行拆包，可以使用 [tools.rspack](/config/tools/rspack) 来配置 Rspack 的 [optimization.splitChunks](https://rspack.rs/zh/plugins/webpack/split-chunks-plugin#optimizationsplitchunks) 选项：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: {

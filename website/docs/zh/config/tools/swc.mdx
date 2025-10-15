@@ -41,7 +41,7 @@ const defaultOptions = {
 
 `tools.swc` 可以配置为一个对象，这个对象将会和内置的 `builtin:swc-loader` 选项进行深层合并。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     swc: {
@@ -57,7 +57,7 @@ export default {
 
 `tools.swc` 也可以配置为一个函数，这个函数接收一个参数，即内置的 `builtin:swc-loader` 选项，你可以对这个对象进行修改，然后返回一份新的配置。比如：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     swc: (config) => {

@@ -21,7 +21,7 @@ const defaultOptions = {
 
 比如，你可以通过 `tools.lightningcssLoader.exclude` 来关闭 vendor prefixes 的添加，此时你可以使用 PostCSS 的 autoprefixer 插件来添加 vendor prefixes。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     lightningcssLoader: {
@@ -37,7 +37,7 @@ export default {
 
 当 `tools.lightningcssLoader` 是一个 function 时，默认选项会作为第一个参数传入，你可以直接修改这个对象，也可以返回一个新的对象作为最终使用的选项。比如：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     lightningcssLoader: (config) => {
@@ -54,7 +54,7 @@ export default {
 
 将 `tools.lightningcssLoader` 设置为 `false`，可以禁用 Rsbuild 内置的 `lightningcss-loader`：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     lightningcssLoader: false,

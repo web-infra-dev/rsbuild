@@ -30,7 +30,7 @@ For example, if the following configurations are set at the same time:
 
 - `resolve.alias`:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   resolve: {
     alias: {
@@ -50,7 +50,7 @@ Since the tsconfig paths have a higher priority, the following will happen:
 
 If the value of `resolve.aliasStrategy` is set to `prefer-alias`, the `paths` option in `tsconfig.json` will only be used to provide TypeScript type definitions and will not affect the bundling result. In this case, the bundler will only read the `alias` option as the path alias.
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   resolve: {
     aliasStrategy: 'prefer-alias',
@@ -75,7 +75,7 @@ For example, if the following configurations are set at the same time:
 
 - `resolve.alias`:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   resolve: {
     alias: {
@@ -89,7 +89,7 @@ Since the tsconfig paths are only used to provide types, only the `@common` alia
 
 In most cases, you do not need to use `prefer-alias`, but you can consider using it if you need to dynamically generate some alias configurations. For example, generating the `alias` option based on environment variables:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   resolve: {
     alias: {

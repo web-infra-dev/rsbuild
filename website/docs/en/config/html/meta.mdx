@@ -34,7 +34,7 @@ When the `value` of a `meta` object is a string, the `key` of the object is auto
 
 To set a description, for example:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     meta: {
@@ -71,7 +71,7 @@ In this case, the `name` and `content` properties will not be set by default.
 
 To set `charset`, for example:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     meta: {
@@ -109,7 +109,7 @@ You can directly modify the configuration object and not return anything, or you
 
 For example, you can directly modify the built-in `meta` configuration object:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     meta({ value }) {
@@ -122,7 +122,7 @@ export default {
 
 In the MPA (Multi-Page Application) scenario, you can return different `meta` configurations based on the entry name, thus generating different `meta` tags for each page:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     meta({ entryName }) {
@@ -151,7 +151,7 @@ Setting the `value` of the `meta` object to `false` means the meta tag will not 
 
 To remove the `viewport`, for example:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     meta: {

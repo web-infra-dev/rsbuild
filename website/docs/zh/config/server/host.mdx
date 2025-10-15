@@ -11,7 +11,7 @@
 
 如果你希望 Rsbuild server 只监听 `localhost`，可以设置为：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     host: 'localhost',
@@ -23,7 +23,7 @@ export default {
 
 如果你希望监听所有 IPv6 的网络接口，可以设置为：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     host: '::',
@@ -33,7 +33,7 @@ export default {
 
 如果你希望监听 IPv6 指定的 host，可以设置为：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     host: '::1',

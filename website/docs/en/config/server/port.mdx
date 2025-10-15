@@ -17,7 +17,7 @@ npx rsbuild dev --port 8080
 
 Set the port to `8080`:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     port: 8080,
@@ -27,7 +27,7 @@ export default {
 
 Set different port numbers for development and preview servers:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     port: process.env.NODE_ENV === 'development' ? 3000 : 8080,

@@ -28,7 +28,7 @@ In addition to `'web'`, `target` can also be set to the following values:
 
 For example, to build for the Node.js environment:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     target: 'node',
@@ -42,7 +42,7 @@ You can use [environments](/config/environments) to build multiple targets in pa
 
 To build `web` and `node` outputs simultaneously, use [environments](/config/environments):
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   environments: {
     web: {
@@ -114,7 +114,7 @@ Rsbuild currently does not support these targets. You can configure these target
 
 For example, setting the `target` to `'electron-main'` will override the default `'web'` set by Rsbuild.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: {

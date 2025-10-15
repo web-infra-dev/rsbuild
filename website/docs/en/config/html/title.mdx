@@ -13,7 +13,7 @@ If the HTML template used in the current project already includes the `<title>` 
 
 `html.title` can be directly set as a string:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     title: 'Example',
@@ -42,7 +42,7 @@ When `html.title` is of type Function, the function receives an object as the ar
 
 In the MPA (multi-page application) scenario, you can return different `title` strings based on the entry name, thus generating different `title` tags for each page:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     title({ entryName }) {
@@ -60,7 +60,7 @@ export default {
 
 When `html.title` is set to an empty string, Rsbuild will not inject the `<title>` tag:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     title: '',

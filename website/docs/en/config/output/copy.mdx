@@ -11,7 +11,7 @@ Copies the specified file or directory to the dist directory, implemented based 
 
 Copy files from `./src/assets` to the `./dist` directory:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     copy: [
@@ -24,7 +24,7 @@ export default {
 
 Copy files from `./src/assets` to the `./dist/assets` directory:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     copy: [
@@ -37,7 +37,7 @@ export default {
 
 When copying files from the public directory to the dist directory during a production build, the `public/someDir` directory will be ignored:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     copy: [{ from: './public', globOptions: { ignore: ['**/someDir/**'] } }],

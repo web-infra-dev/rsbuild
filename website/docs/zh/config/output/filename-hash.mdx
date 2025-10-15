@@ -16,7 +16,7 @@ dist/static/js/index.18a568e5.js
 
 你可以将 `output.filenameHash` 设置为 false 来禁用这个行为：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     filenameHash: false,
@@ -37,7 +37,7 @@ hash 的默认格式为 `contenthash:8`，即基于文件内容生成 8 位 hash
 
 你可以将 `output.filenameHash` 设置为 Rspack 支持的其他格式，并自定义长度。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     filenameHash: 'fullhash:16',

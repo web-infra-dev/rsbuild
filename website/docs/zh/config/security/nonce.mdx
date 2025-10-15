@@ -25,7 +25,7 @@ nonce 机制在 Content Security Policy（CSP，内容安全策略）中起到�
 
 默认情况下，Rsbuild 不会开启 `nonce`，你可以按照需求定义该值：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   security: {
     nonce: 'CSP_NONCE_PLACEHOLDER',

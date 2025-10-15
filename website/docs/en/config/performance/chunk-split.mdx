@@ -55,7 +55,7 @@ type ChunkSplit = BaseChunkSplit | SplitBySize | SplitCustom;
 
 By default, Rsbuild uses the `split-by-experience` strategy. To use other chunk splitting strategies, specify them through the `strategy` option, for example:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     chunkSplit: {
@@ -72,7 +72,7 @@ export default {
 
 When `chunkSplit.strategy` is `split-by-size`, you can specify the minimum size of a chunk via `chunkSplit.minSize`. The unit is bytes, and the default value is `10000`. For example:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     chunkSplit: {
@@ -90,7 +90,7 @@ export default {
 
 When `chunkSplit.strategy` is `split-by-size`, you can specify the maximum size of a chunk via `chunkSplit.maxSize`. The unit is bytes, and the default value is `Number.POSITIVE_INFINITY`. For example:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     chunkSplit: {
@@ -110,7 +110,7 @@ Via `chunkSplit.forceSplitting`, you can specify npm packages that should be for
 
 For example, split the `axios` library under node_modules into `axios.js`:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     chunkSplit: {
@@ -132,7 +132,7 @@ Chunks split using the `forceSplitting` configuration will be inserted into the 
 
 When `chunkSplit.strategy` is `custom`, you can specify a custom Rspack chunk splitting configuration via `chunkSplit.splitChunks`. This configuration will be merged with the Rspack splitChunks config (the `cacheGroups` config will also be merged). For example:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     chunkSplit: {
@@ -155,7 +155,7 @@ export default {
 
 When `chunkSplit.strategy` is `split-by-experience`, `split-by-module`, `split-by-size`, or `single-vendor`, you can specify a custom Rspack chunk splitting configuration via `chunkSplit.override`. This configuration will be merged with the Rspack splitChunks config (the `cacheGroups` config will also be merged). For example:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     chunkSplit: {
@@ -179,7 +179,7 @@ export default {
 
 Typically, Node bundles do not need to be split to optimize loading performance. If you need to split Node bundles, you can use the [tools.rspack](/config/tools/rspack) configuration to set Rspack's [optimization.splitChunks](https://rspack.rs/plugins/webpack/split-chunks-plugin#optimizationsplitchunks) option:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: {

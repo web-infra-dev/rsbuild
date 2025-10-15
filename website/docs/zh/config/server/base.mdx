@@ -12,7 +12,7 @@
 
 当你希望通过 `http://localhost:3000/foo/` 访问到 `index.html` 时，可以将 `server.base` 修改为 `/foo`。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     base: '/foo',
@@ -34,7 +34,7 @@ export default {
 
 如果你不希望使用此默认行为，可以通过显式设置 `dev.assetPrefix` / `output.assetPrefix` 来覆盖：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     assetPrefix: '/',

@@ -34,7 +34,7 @@ The `<script>` tag is inside the head tag by default:
 
 Add the following config to inject `<script>` into the `<body>` tag:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     inject: 'body',
@@ -73,7 +73,7 @@ When `html.inject` is of type Function, the function receives an object as its p
 
 In the context of MPA (Multi-Page Application), you can set different `inject` behaviors based on the entry name:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     inject({ entryName }) {

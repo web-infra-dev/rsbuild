@@ -34,7 +34,7 @@ type MetaOptions = {
 
 比如设置 `description`：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     meta: {
@@ -69,7 +69,7 @@ type MetaOptions = {
 
 比如设置 `charset`：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     meta: {
@@ -107,7 +107,7 @@ type MetaFunction = ({
 
 比如，你可以直接修改内置的 `meta` 配置对象：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     meta({ value }) {
@@ -120,7 +120,7 @@ export default {
 
 在 MPA（多页面应用）场景下，你可以基于入口名称返回不同的 `meta` 配置，从而为每个页面生成不同的 `meta` 标签：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     meta({ entryName }) {
@@ -149,7 +149,7 @@ export default {
 
 比如移除 Rsbuild 预设的 `viewport`：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     meta: {

@@ -135,7 +135,7 @@ const nodeConfig = {
 
 由于 environment 名称会用于目录名和对象属性名，因此建议只包含字母、数字、`-`、`_` 和 `$`，使用其他字符时，Rsbuild 会输出 warning 进行提示。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   environments: {
     someName: {}, // ✅

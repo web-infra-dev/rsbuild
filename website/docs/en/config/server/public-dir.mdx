@@ -36,7 +36,7 @@ The name of the public directory. The value of `name` can be set to a relative p
 
 - Relative path example:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     publicDir: {
@@ -79,7 +79,7 @@ During dev builds, if you need to copy some static assets to the output director
 
 For example, disable `copyOnBuild`:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     publicDir: {
@@ -97,7 +97,7 @@ By default, when [output.target](/config/output/target) is `'node'`, Rsbuild wil
 
 You can set `copyOnBuild` to `true` to copy files for the `node` target:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     target: 'node',
@@ -126,7 +126,7 @@ Whether to watch the public directory and reload the page when the files change.
 
 Setting `watch` to `true` allows the dev server to watch changes to files in the specified public directory and reload the page when the files are changed:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     publicDir: {
@@ -142,7 +142,7 @@ Note that the `watch` option is only valid in development mode. If [dev.hmr](/co
 
 The `server.publicDir` can be configured as an array, allowing you to serve multiple directories as static assets folders:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     publicDir: [
@@ -162,7 +162,7 @@ export default {
 
 You can set `publicDir` to `false` to disable the static assets serving:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     publicDir: false,

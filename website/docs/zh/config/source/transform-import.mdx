@@ -27,7 +27,7 @@ type TransformImport =
 
 在使用 [antd](https://github.com/ant-design/ant-design) 组件库时（低于 v5 版本），你可以通过以下配置来按需引入组件：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     transformImport: [
@@ -60,7 +60,7 @@ import 'antd/es/button/style';
 
 在使用 lodash 时，你可以通过 `transformImport` 来自动引用子路径，减小包体积。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     transformImport: [
@@ -98,7 +98,7 @@ import lodash from 'lodash';
 
 如果你希望通过 `transformImport` 对 node_modules 下的代码进行处理，请将相关模块添加到 [source.include](/config/source/include) 配置中。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     include: [/node_modules[\\/]some-package[\\/]/],
@@ -226,7 +226,7 @@ import { Button } from 'foo/button';
 
 比如下面的配置，会将 `import { foo } from 'my-lib'` 转换为 `import foo from 'my-lib/foo'`。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     transformImport: [
@@ -260,7 +260,7 @@ export default {
 
 `transformImport` 的值定义为函数时，可以接受原本的 transformImport 配置，并对其进行修改。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     transformImport: (imports) => {
@@ -272,7 +272,7 @@ export default {
 
 也可以在函数中返回一个新数组作为最终结果，新数组会覆盖原本的 transformImport 配置。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     transformImport: () => {

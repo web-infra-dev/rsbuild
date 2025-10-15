@@ -27,7 +27,7 @@ Transform the import path to modularly import subpaths of third-party packages. 
 
 When using the [antd](https://github.com/ant-design/ant-design) component library (versions below v5), you can import components on demand with this config:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     transformImport: [
@@ -58,7 +58,7 @@ import 'antd/es/button/style';
 
 When using lodash, you can automatically refer to the subpath through `transformImport` to reduce bundle size.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     transformImport: [
@@ -96,7 +96,7 @@ import lodash from 'lodash';
 
 If you want to process the code in node_modules through `transformImport`, please add the relevant modules to the [source.include](/config/source/include) config.
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     include: [/node_modules[\\/]some-package[\\/]/],
@@ -224,7 +224,7 @@ Customize the transformed path.
 
 For example, the following config will transform `import { foo } from 'my-lib'` into `import foo from 'my-lib/foo'`.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     transformImport: [
@@ -258,7 +258,7 @@ Customize the transformed style path, the usage is consistent with `customName`.
 
 The `transformImport` can be a function, it will accept the previous value, and you can modify it.
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     transformImport: (imports) => {
@@ -270,7 +270,7 @@ export default {
 
 You can also return a new value as the final result in the function, which will replace the previous value.
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     transformImport: () => {

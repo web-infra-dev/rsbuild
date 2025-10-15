@@ -20,7 +20,7 @@ If `template` is not specified, the built-in HTML template of Rsbuild will be us
 
 For example, to replace the default HTML template with the `static/index.html` file, you can add the following configuration:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     template: './static/index.html',
@@ -43,7 +43,7 @@ When `html.template` is of type Function, the function receives an object as an 
 
 In the MPA (multi-page application) scenario, you can return different `template` paths based on the entry name, thus setting different templates for each page:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     template({ entryName }) {

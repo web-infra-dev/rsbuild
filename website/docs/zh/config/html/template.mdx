@@ -20,7 +20,7 @@
 
 例如，使用 `static/index.html` 文件替代默认 HTML 模板，可以添加如下设置：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     template: './static/index.html',
@@ -43,7 +43,7 @@ type TemplateFunction = ({ value: string; entryName: string }) => string | void;
 
 在 MPA（多页面应用）场景下，你可以基于入口名称返回不同的 `template` 路口，从而为每个页面设置不同的模板：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     template({ entryName }) {

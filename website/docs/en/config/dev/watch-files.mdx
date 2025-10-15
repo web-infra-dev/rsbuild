@@ -26,7 +26,7 @@ Paths of the files or directories to watch, supports glob syntax. It can be a si
 
 - Watching a single file:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     watchFiles: {
@@ -38,7 +38,7 @@ export default {
 
 - Using glob to match multiple files:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     watchFiles: {
@@ -50,7 +50,7 @@ export default {
 
 - Watching multiple file paths:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     watchFiles: {
@@ -73,7 +73,7 @@ Specifies whether to trigger a page reload or restart the dev server when a file
 
 This can be used to watch changes to static assets, such as files in the `public` directory.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     watchFiles: {
@@ -115,7 +115,7 @@ Note that the reload-server functionality is provided by Rsbuild CLI. If you are
 
 `watchFiles` is implemented based on [chokidar v4](https://github.com/paulmillr/chokidar#api), and you can pass chokidar options through `options`.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     watchFiles: {

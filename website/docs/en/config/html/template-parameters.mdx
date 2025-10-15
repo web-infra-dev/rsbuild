@@ -34,7 +34,7 @@ If the value of `templateParameters` is an object, it will be merged with the de
 
 For example, if you need to use the `foo` parameter in an HTML template, you can add the following settings:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     templateParameters: {
@@ -78,7 +78,7 @@ When `html.templateParameters` is of type Function, the function receives two pa
 
 In the context of a multi-page application (MPA), you can set different `templateParameters` based on the entry name:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     templateParameters(defaultValue, { entryName }) {

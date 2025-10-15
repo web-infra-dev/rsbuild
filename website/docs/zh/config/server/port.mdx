@@ -17,7 +17,7 @@ npx rsbuild dev --port 8080
 
 将端口设置为 `8080`：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     port: 8080,
@@ -27,7 +27,7 @@ export default {
 
 为开发服务器和预览服务器设置不同的端口号：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     port: process.env.NODE_ENV === 'development' ? 3000 : 8080,

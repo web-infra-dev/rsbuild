@@ -15,7 +15,7 @@ You can choose to write the build output to disk, which is usually used for insp
 
 Simply set the `dev.writeToDisk` option to `true`:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     writeToDisk: true,
@@ -33,7 +33,7 @@ You can also set `dev.writeToDisk` to a function to match only certain files. Wh
 
 For example, to write files to disk while excluding hot-update temporary files:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     writeToDisk: (file) => !file.includes('.hot-update.'),

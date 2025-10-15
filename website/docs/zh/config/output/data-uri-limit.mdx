@@ -46,7 +46,7 @@ const defaultDatUriLimit = {
 
 - 内联小于 10KiB 的所有静态资源：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     dataUriLimit: 10 * 1024,
@@ -56,7 +56,7 @@ export default {
 
 - 禁用静态资源内联：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     dataUriLimit: 0,
@@ -66,7 +66,7 @@ export default {
 
 - 内联所有静态资源：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     dataUriLimit: Number.MAX_SAFE_INTEGER,
@@ -76,7 +76,7 @@ export default {
 
 - 设置图片资源的阈值为 5KiB，不内联视频资源：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     dataUriLimit: {

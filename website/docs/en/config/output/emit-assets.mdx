@@ -11,7 +11,7 @@ In scenarios such as SSR, you may not need to emit duplicate static assets. You 
 
 The following example will emit static assets when building web bundles, and avoid emitting when building node bundles.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   environments: {
     web: {

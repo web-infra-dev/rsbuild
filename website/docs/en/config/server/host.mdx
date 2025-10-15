@@ -11,7 +11,7 @@ You can use `server.host` or the `--host` CLI param to set the host (The priorit
 
 If you want the Rsbuild server to listen only on `localhost`, you can set it to:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     host: 'localhost',
@@ -23,7 +23,7 @@ export default {
 
 If you want the Rsbuild server to listen all IPv6 network interfaces, you can set it to:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     host: '::',
@@ -33,7 +33,7 @@ export default {
 
 If you want the Rsbuild server to listen a specified IPv6 host, you can set it to:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     host: '::1',

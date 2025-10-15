@@ -16,7 +16,7 @@ dist/static/js/index.18a568e5.js
 
 You can set `output.filenameHash` to `false` to disable this behavior:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     filenameHash: false,
@@ -37,7 +37,7 @@ The default hash format is `contenthash:8`, which generates an 8-bit hash based 
 
 You can set `output.filenameHash` to other formats supported by Rspack and customize the length.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     filenameHash: 'fullhash:16',

@@ -34,7 +34,7 @@ dist/static/js/main.js
 
 开启 `output.inlineScripts` 选项后：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     inlineScripts: true,
@@ -71,7 +71,7 @@ dist/static/css/style.css
 
 因为 script 标签的默认插入位置是 `<head>` 标签，将插入位置修改为 `<body>` 标签后，可以保证 inlined script 能获取到 `<body>` 中的 DOM 元素。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     inject: 'body', // [!code highlight]
@@ -88,7 +88,7 @@ export default {
 
 比如，将产物中的 `main.js` 内联到 HTML 中，你可以添加如下配置：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     inlineScripts: /[\\/]main\.\w+\.js$/,
@@ -109,7 +109,7 @@ export default {
 
 比如，我们希望内联小于 10kB 的资源，可以添加如下配置：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     inlineScripts({ size }) {
@@ -125,7 +125,7 @@ export default {
 
 如果你希望将异步 Chunks 内联到 HTML 中，你可以通过 [tools.rspack](/config/tools/rspack) 配置项来实现修改 Rspack 的默认行为，将 [module.parser.javascript.dynamicImportMode](https://rspack.rs/zh/config/module#moduleparserjavascriptdynamicimportmode) 设置为 `'eager'`，此时 Rspack 不会为 dynamic import 生成单独的 JS 文件。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     inlineScripts: true,
@@ -153,7 +153,7 @@ export default {
 
 是否启用内联。`'auto'` 表示在生产模式时开启，开发模式时关闭。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     inlineScripts: {
@@ -170,7 +170,7 @@ export default {
 
 用来匹配需要内联的 JS 文件。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     inlineScripts: {

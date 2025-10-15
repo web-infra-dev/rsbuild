@@ -27,7 +27,7 @@ For more on subresource integrity, see [Subresource Integrity - MDN](https://dev
 
 When using SRI, you need to enable [html.crossorigin](/config/html/crossorigin), which ensures that resources can be properly validated with SRI during cross-origin loading.
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   security: {
     sri: {
@@ -84,7 +84,7 @@ Rsbuild will handle the following `<link>` tags:
 
 Whether to enable SRI. `'auto'` means it is enabled in production mode and disabled in development mode.
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   security: {
     sri: {
@@ -105,7 +105,7 @@ Specifies the algorithm used to compute the integrity hash.
 
 For example, set to `sha512`:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   security: {
     sri: {
