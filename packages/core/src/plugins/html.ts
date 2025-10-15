@@ -6,7 +6,7 @@ import {
   reduceConfigsWithContext,
 } from 'reduce-configs';
 import { castArray, color, isPlainObject } from '../helpers';
-import { isFileExists } from '../helpers/fs';
+import { findExists, isFileExists } from '../helpers/fs';
 import { getPublicPathFromChain } from '../helpers/url';
 import {
   entryNameSymbol,
@@ -213,6 +213,38 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
   name: 'rsbuild:html',
 
   setup(api) {
+    let defaultFavicon: string | undefined;
+
+    const resolveDefaultFavicon = () => {
+      if (defaultFavicon) {
+        return defaultFavicon;
+      }
+
+      const { rootPath } = api.context;
+      const { publicDir } = api.getNormalizedConfig().server;
+      const extensions = ['ico', 'png', 'svg'];
+      const publicDirs = Array.from(
+        new Set(
+          publicDir.map(({ name }) =>
+            isAbsolute(name) ? name : path.join(rootPath, name),
+          ),
+        ),
+      );
+
+      const faviconPaths: string[] = [];
+      for (const publicDir of publicDirs) {
+        for (const ext of extensions) {
+          faviconPaths.push(path.join(publicDir, `favicon.${ext}`));
+        }
+      }
+
+      const faviconPath = findExists(faviconPaths);
+      if (faviconPath) {
+        defaultFavicon = faviconPath;
+      }
+      return defaultFavicon;
+    };
+
     api.modifyBundlerChain(
       async (chain, { HtmlPlugin, CHAIN_ID, environment }) => {
         const { config, htmlPaths } = environment;
@@ -294,7 +326,8 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
 
             pluginOptions.title = getTitle(entryName, config);
 
-            const favicon = getFavicon(entryName, config);
+            const favicon =
+              getFavicon(entryName, config) || resolveDefaultFavicon();
             if (favicon) {
               extraData.favicon = favicon;
             }
