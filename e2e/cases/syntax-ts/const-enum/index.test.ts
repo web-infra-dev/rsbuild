@@ -17,8 +17,7 @@ rspackTest(
     const indexJs = await result.getIndexBundle();
     expect(indexJs).toContain('window.testFish="fish,FISH"');
     expect(indexJs).toContain('window.testCat="cat,CAT"');
-    // minus values cannot be inlined
-    expect(indexJs).toContain('window.testNumbers=`0,1,10,1.1,1.0');
+    expect(indexJs).toContain('window.testNumbers="0,1,10,1.1,1.0,-1,-1.1"');
     expect(indexJs).toContain('window.testNamespace="0,1,0,1"');
   },
 );
