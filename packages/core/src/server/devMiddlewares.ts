@@ -1,4 +1,3 @@
-import { isAbsolute, join } from 'node:path';
 import { castArray, pick } from '../helpers';
 import { isMultiCompiler } from '../helpers/compiler';
 import { requireCompiledPackage } from '../helpers/vendors';
@@ -34,7 +33,6 @@ export type RsbuildDevMiddlewareOptions = {
    * Callbacks returned by the `onBeforeStartDevServer` hook.
    */
   postCallbacks: (() => void)[];
-  pwd: string;
 };
 
 const applySetupMiddlewares = (
@@ -72,7 +70,6 @@ const applyDefaultMiddlewares = ({
   context,
   devServerAPI,
   middlewares,
-  pwd,
   postCallbacks,
 }: RsbuildDevMiddlewareOptions & {
   middlewares: Middlewares;
@@ -202,13 +199,10 @@ const applyDefaultMiddlewares = ({
 
   for (const { name } of server.publicDir) {
     const sirv = requireCompiledPackage('sirv');
-    const normalizedPath = isAbsolute(name) ? name : join(pwd, name);
-
-    const servePublicDirMiddleware = sirv(normalizedPath, {
+    const servePublicDirMiddleware = sirv(name, {
       etag: true,
       dev: true,
     });
-
     middlewares.push(servePublicDirMiddleware);
   }
 

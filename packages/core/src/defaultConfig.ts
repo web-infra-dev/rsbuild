@@ -1,5 +1,5 @@
 import { createRequire } from 'node:module';
-import { dirname, join } from 'node:path';
+import { dirname, isAbsolute, join } from 'node:path';
 import {
   ASSETS_DIST_DIR,
   CSS_DIST_DIR,
@@ -301,11 +301,15 @@ export const withDefaultConfig = async (
  */
 export const normalizeConfigStructure = (
   config: RsbuildConfig,
+  rootPath: string,
 ): RsbuildConfig => {
   const { dev, output } = config;
 
   config.server ||= {};
-  config.server.publicDir = normalizePublicDirs(config.server.publicDir);
+  config.server.publicDir = normalizePublicDirs(
+    rootPath,
+    config.server.publicDir,
+  );
 
   if (typeof output?.distPath === 'string') {
     config = {
@@ -334,7 +338,10 @@ export const normalizeConfigStructure = (
  * Normalizes the user configuration by merging it with defaults and ensuring
  * consistent structure.
  */
-export const normalizeConfig = (config: RsbuildConfig): NormalizedConfig => {
+export const normalizeConfig = (
+  config: RsbuildConfig,
+  rootPath: string,
+): NormalizedConfig => {
   const getMode = (): RsbuildMode => {
     if (config.mode) {
       return config.mode;
@@ -350,13 +357,14 @@ export const normalizeConfig = (config: RsbuildConfig): NormalizedConfig => {
       ...createDefaultConfig(),
       mode: getMode(),
     },
-    normalizeConfigStructure(config),
+    normalizeConfigStructure(config, rootPath),
   ) as Required<RsbuildConfig>;
 
   return mergedConfig as unknown as NormalizedConfig;
 };
 
 const normalizePublicDirs = (
+  rootPath: string,
   publicDir?: PublicDir,
 ): Required<PublicDirOptions>[] => {
   if (publicDir === false) {
@@ -364,7 +372,7 @@ const normalizePublicDirs = (
   }
 
   const defaultConfig: Required<PublicDirOptions> = {
-    name: 'public',
+    name: join(rootPath, 'public'),
     copyOnBuild: 'auto',
     watch: false,
   };
@@ -374,17 +382,20 @@ const normalizePublicDirs = (
     return [defaultConfig];
   }
 
-  if (Array.isArray(publicDir)) {
-    return publicDir.map((options) => ({
+  const mergeWithDefault = (options: PublicDirOptions) => {
+    const merged = {
       ...defaultConfig,
       ...options,
-    }));
+    };
+    if (!isAbsolute(merged.name)) {
+      merged.name = join(rootPath, merged.name);
+    }
+    return merged;
+  };
+
+  if (Array.isArray(publicDir)) {
+    return publicDir.map((options) => mergeWithDefault(options));
   }
 
-  return [
-    {
-      ...defaultConfig,
-      ...publicDir,
-    },
-  ];
+  return [mergeWithDefault(publicDir)];
 };

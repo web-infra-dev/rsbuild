@@ -1,5 +1,4 @@
 import fs from 'node:fs';
-import { isAbsolute, join } from 'node:path';
 import { isDeno } from '../constants';
 import { color } from '../helpers';
 import { dedupeNestedPaths } from '../helpers/path';
@@ -31,16 +30,12 @@ export const pluginServer = (): RsbuildPlugin => ({
       }
       const config = api.getNormalizedConfig();
 
-      for (const { name, copyOnBuild } of config.server.publicDir) {
-        if (copyOnBuild === false || !name) {
+      for (const { name: publicDir, copyOnBuild } of config.server.publicDir) {
+        if (copyOnBuild === false) {
           continue;
         }
 
-        const normalizedPath = isAbsolute(name)
-          ? name
-          : join(api.context.rootPath, name);
-
-        if (!fs.existsSync(normalizedPath)) {
+        if (!fs.existsSync(publicDir)) {
           continue;
         }
 
@@ -67,7 +62,7 @@ export const pluginServer = (): RsbuildPlugin => ({
                 });
               }
 
-              return fs.promises.cp(normalizedPath, distPath, {
+              return fs.promises.cp(publicDir, distPath, {
                 recursive: true,
                 // dereference symlinks
                 dereference: true,
@@ -76,7 +71,7 @@ export const pluginServer = (): RsbuildPlugin => ({
           );
         } catch (err) {
           if (err instanceof Error) {
-            err.message = `Failed to copy public directory '${color.yellow(normalizedPath)}' to output directory. To disable public directory copying, set \`${color.cyan('server.publicDir: false')}\` in your config.\n${err.message}`;
+            err.message = `Failed to copy public directory '${color.yellow(publicDir)}' to output directory. To disable public directory copying, set \`${color.cyan('server.publicDir: false')}\` in your config.\n${err.message}`;
           }
 
           throw err;
