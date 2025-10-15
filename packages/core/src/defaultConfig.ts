@@ -385,7 +385,7 @@ const normalizePublicDirs = (
   const mergeWithDefault = (options: PublicDirOptions) => {
     if (options.name === '') {
       throw new Error(
-        '[rsbuild:config] publicDir.name cannot be empty string.',
+        '[rsbuild:config] `publicDir.name` cannot be empty string.',
       );
     }
 
