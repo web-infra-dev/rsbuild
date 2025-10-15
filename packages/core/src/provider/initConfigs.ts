@@ -151,7 +151,7 @@ const initEnvironmentConfigs = (
                 ...baseConfig,
                 dev: pick(dev, allowedEnvironmentDevKeys),
               },
-              normalizeConfigStructure(config),
+              normalizeConfigStructure(config, rootPath),
             ),
           } as unknown as MergedEnvironmentConfig;
 
@@ -247,7 +247,10 @@ export async function initRsbuildConfig({
 
   await modifyRsbuildConfig(context);
 
-  const normalizedBaseConfig = normalizeConfig(context.config);
+  const normalizedBaseConfig = normalizeConfig(
+    context.config,
+    context.rootPath,
+  );
   const environments: Record<string, NormalizedEnvironmentConfig> = {};
 
   const mergedEnvironments = initEnvironmentConfigs(
