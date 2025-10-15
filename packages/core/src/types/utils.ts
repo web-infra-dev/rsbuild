@@ -4,6 +4,8 @@ export type OneOrMany<T> = T | T[];
 
 export type MaybePromise<T> = T | Promise<T>;
 
+export type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+
 /**
  * Creates a type with readonly properties at the first and second levels only.
  */
