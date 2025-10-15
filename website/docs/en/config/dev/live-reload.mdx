@@ -13,7 +13,7 @@ Please refer to [Hot Module Replacement](/guide/advanced/hmr) for more informati
 
 To disable live reload, set both `dev.hmr` and `dev.liveReload` to `false`. Then, no WebSocket requests will be made to the dev server on the page, and the page will not automatically refresh when files change.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     hmr: false,

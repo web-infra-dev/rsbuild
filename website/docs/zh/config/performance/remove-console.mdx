@@ -9,7 +9,7 @@
 
 当 `removeConsole` 被设置为 `true` 时，会移除所有类型的 `console.[methodName]`：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     removeConsole: true,
@@ -21,7 +21,7 @@ export default {
 
 你也可以指定仅移除特定类型的 `console.[methodName]`，比如移除 `console.log` 和 `console.warn`：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     removeConsole: ['log', 'warn'],

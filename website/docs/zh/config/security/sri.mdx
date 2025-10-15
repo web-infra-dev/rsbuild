@@ -27,7 +27,7 @@ type SriOptions = {
 
 在使用 SRI 时，你需要启用 [html.crossorigin](/config/html/crossorigin)，这可以确保资源在跨域加载时，SRI 也能正常校验。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   security: {
     sri: {
@@ -84,7 +84,7 @@ Rsbuild 会处理以下几种 `<link>` 标签：
 
 是否启用 SRI。`'auto'` 表示在生产构建时开启，开发构建时关闭。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   security: {
     sri: {
@@ -105,7 +105,7 @@ export default {
 
 比如设置为 `sha512`：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   security: {
     sri: {

@@ -30,7 +30,7 @@ If a page needs to make connections to many third-party domains, preconnecting t
 
 ## Example
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     preconnect: ['https://example.com/'],
@@ -53,7 +53,7 @@ The generated HTML tag is:
 
 Specify the URL to preconnect to.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     // Equivalent to `preconnect: ['https://example.com/'],`
@@ -73,7 +73,7 @@ export default {
 
 Specify whether to add the `crossorigin` attribute.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     preconnect: [

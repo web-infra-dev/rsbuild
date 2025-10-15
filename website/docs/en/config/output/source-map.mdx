@@ -37,7 +37,7 @@ Rsbuild generates source maps using these rules by default:
 
 If `output.sourceMap` is `true`, source maps are generated according to the [mode](/config/mode), equivalent to:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     sourceMap: {
@@ -50,7 +50,7 @@ export default {
 
 If `output.sourceMap` is `false`, no source map will be generated, equivalent to:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     sourceMap: {
@@ -67,7 +67,7 @@ The source map for JS files is controlled by `sourceMap.js` and accepts any sour
 
 For example, to generate high-quality source maps in all environments:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     sourceMap: {
@@ -79,7 +79,7 @@ export default {
 
 You can also set different source map formats based on the environment.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     sourceMap: {
@@ -104,7 +104,7 @@ The source map for CSS files is controlled by `sourceMap.css`. Setting it to `tr
 
 To generate a source map for CSS files:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     sourceMap: {
@@ -118,7 +118,7 @@ In production builds, it is not recommended to enable both [output.injectStyles]
 
 You can only enable the CSS file source map in development mode:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     injectStyles: true,

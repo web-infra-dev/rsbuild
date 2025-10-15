@@ -30,7 +30,7 @@ This is because Rsbuild provides some internal optimization processing for these
 
 When `tools.htmlPlugin` is `Object` type, the value will be merged with the default config via `Object.assign`.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     htmlPlugin: {
@@ -48,7 +48,7 @@ When `tools.htmlPlugin` is a Function:
 - The second parameter is also an object, containing the entry name and the entry value.
 - The Function can return a new object as the final config.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     htmlPlugin(config, { entryName, entryValue }) {
@@ -64,7 +64,7 @@ export default {
 
 Setting `tools.htmlPlugin` to `false` can disable the built-in `html-rspack-plugin` in Rsbuild, and no HTML files will be generated.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     htmlPlugin: false,
@@ -80,7 +80,7 @@ The `filename` option can be used to modify the file name of the HTML output.
 
 For example, in production mode, a `hash` can be added to the file name:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     htmlPlugin(config, { entryName }) {

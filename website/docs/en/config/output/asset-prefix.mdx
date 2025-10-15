@@ -56,7 +56,7 @@ When `server.base` is `/foo`, `index.html` and static assets can be accessed thr
 
 It should be noted that when customizing the `output.assetPrefix` option, if you want static assets to be accessible normally during [Rsbuild preview](/guide/basic/cli#rsbuild-preview), `output.assetPrefix` should contain the same URL prefix as `server.base`. For example:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     assetPrefix: '/foo/bar/',

@@ -12,7 +12,7 @@ By default, the Rsbuild server's base path is `/`. You can access output files l
 
 If you want to access `index.html` through `http://localhost:3000/foo/`, you can change `server.base` to `/foo`.
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     base: '/foo',
@@ -34,7 +34,7 @@ Then, `index.html` and static assets can be accessed through `http://localhost:3
 
 If you do not want to use this default behavior, you can override it by explicitly setting `dev.assetPrefix` / `output.assetPrefix` :
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     assetPrefix: '/',

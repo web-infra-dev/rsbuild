@@ -34,7 +34,7 @@ type DefaultParameters = {
 
 比如，如果你需要在 HTML 模板中使用 `foo` 参数，可以添加如下设置：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     templateParameters: {
@@ -78,7 +78,7 @@ type TemplateParametersFunction = (
 
 在 MPA（多页面应用）场景下，你可以基于入口名称设置不同的 `templateParameters` 参数：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     templateParameters(defaultValue, { entryName }) {

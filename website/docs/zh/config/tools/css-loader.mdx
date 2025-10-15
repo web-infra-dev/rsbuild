@@ -20,7 +20,7 @@ Rsbuild 默认使用 [css-loader](https://github.com/webpack-contrib/css-loader)
 
 当此值为 Object 类型时，会与默认配置进行深层合并 (deep merge)。比如：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     cssLoader: {
@@ -36,7 +36,7 @@ export default {
 
 当此值为 Function 类型时，默认配置作为第一个参数传入，你可以直接修改配置对象，也可以返回一个对象作为最终配置。比如：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     cssLoader: (config) => {

@@ -34,7 +34,7 @@
 
 添加如下配置，可以将 `<script>` 插入至 `<body>` 标签：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     inject: 'body',
@@ -73,7 +73,7 @@ type InjectFunction = ({ value: ScriptInject; entryName: string }) => string | v
 
 在 MPA（多页面应用）场景下，你可以基于入口名称设置不同的 `inject` 方式：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     inject({ entryName }) {

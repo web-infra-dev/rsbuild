@@ -37,7 +37,7 @@ source map 是保存源代码映射关系的信息文件，它记录了编译后
 
 如果 `output.sourceMap` 为 `true`，则会根据 [mode](/config/mode) 生成 JS 和 CSS 文件的 source map，等价于：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     sourceMap: {
@@ -50,7 +50,7 @@ export default {
 
 如果 `output.sourceMap` 为 `false`，则不会生成 JS 和 CSS 文件的 source map，等价于：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     sourceMap: {
@@ -67,7 +67,7 @@ JS 文件的 source map 通过 `sourceMap.js` 来控制，可以传入 Rspack [d
 
 比如，如果你需要在所有模式生成高质量的 source map，可以设置为：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     sourceMap: {
@@ -79,7 +79,7 @@ export default {
 
 你也可以根据 `NODE_ENV` 来设置不同的 source map 格式：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     sourceMap: {
@@ -104,7 +104,7 @@ CSS 文件的 source map 通过 `sourceMap.css` 来控制，设置为 `true` 为
 
 比如，如果需要生成 CSS 文件的 source map，可以设置为：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     sourceMap: {
@@ -118,7 +118,7 @@ export default {
 
 你可以仅在开发模式下开启 CSS 文件的 source map：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     injectStyles: true,

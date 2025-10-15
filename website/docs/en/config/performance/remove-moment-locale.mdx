@@ -9,7 +9,7 @@ Whether to remove the locales of [moment.js](https://momentjs.com/).
 
 When `moment.js` is used in the project, it is recommended to enable this option to automatically exclude all locales:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     removeMomentLocale: true,

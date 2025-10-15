@@ -19,7 +19,7 @@ Rsbuild 还提供了 [html.appIcon](/config/html/app-icon) 来设置 Web 应用�
 
 设置为相对路径：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     favicon: './src/assets/icon.png',
@@ -92,7 +92,7 @@ type FaviconFunction = ({ value: string; entryName: string }) => string | void;
 
 在 MPA（多页面应用）场景下，你可以基于入口名称返回不同的 `favicon`，从而为每个页面生成不同的标签：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     favicon({ entryName }) {

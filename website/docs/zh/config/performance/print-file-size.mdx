@@ -36,7 +36,7 @@ type PrintFileSizeOptions =
 
 如果不需要输出任何信息，可以将 `printFileSize` 置为 `false` 将其禁用：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     printFileSize: false,
@@ -70,7 +70,7 @@ type Total =
 
 当设置为 `false` 时，不输出总体积信息：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     printFileSize: {
@@ -86,7 +86,7 @@ export default {
 
 当设置为函数时，可以自定义总体积的输出格式：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     printFileSize: {
@@ -115,7 +115,7 @@ export default {
 
 如果你不需要查看每个静态资源文件的体积，可以把 `detail` 设置为 false，此时仅输出总体积：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     printFileSize: {
@@ -134,7 +134,7 @@ export default {
 
 如果你不需要查看 gzip 压缩后的体积，可以把 `compressed` 设置为 false，这在大型项目中可以节省一些 gzip 计算的耗时：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     printFileSize: {
@@ -178,7 +178,7 @@ type Include = (asset: PrintFileSizeAsset) => boolean;
 
 例如，只输出体积大于 10kB 的静态资源：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     printFileSize: {
@@ -190,7 +190,7 @@ export default {
 
 或者只输出体积大于 10kB 的 `.js` 文件：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     printFileSize: {
@@ -216,7 +216,7 @@ Rsbuild 默认排除 source map、许可证文件和 `.d.ts` 类型文件，因�
 
 例如，额外再排除 `.html` 文件：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     printFileSize: {

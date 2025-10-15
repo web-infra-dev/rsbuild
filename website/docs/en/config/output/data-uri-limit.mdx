@@ -46,7 +46,7 @@ Details:
 
 - Inline all static assets less than 10KiB:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     dataUriLimit: 10 * 1024,
@@ -56,7 +56,7 @@ export default {
 
 - Disable inlining of static assets:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     dataUriLimit: 0,
@@ -66,7 +66,7 @@ export default {
 
 - Inline all static assets:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     dataUriLimit: Number.MAX_SAFE_INTEGER,
@@ -76,7 +76,7 @@ export default {
 
 - Set the threshold for image assets to 5KiB and do not inline video assets:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     dataUriLimit: {

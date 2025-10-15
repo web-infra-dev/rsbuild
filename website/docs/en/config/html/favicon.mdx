@@ -19,7 +19,7 @@ Rsbuild also provides [html.appIcon](/config/html/app-icon) to set the icon of t
 
 Set as a relative path:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     favicon: './src/assets/icon.png',
@@ -92,7 +92,7 @@ When `html.favicon` is of type Function, the function receives an object as inpu
 
 In the context of MPA (Multi-Page Application), you can return different `favicon` based on the entry name, thus generating different tags for each page:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     favicon({ entryName }) {

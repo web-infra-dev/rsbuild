@@ -17,7 +17,7 @@ Configure proxy rules for the dev server or preview server to proxy requests to 
 
 ### Basic usage
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     proxy: {
@@ -33,7 +33,7 @@ A request to `/api/users` will now proxy the request to `http://localhost:3000/a
 
 You can also proxy to an online domain name, such as:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     proxy: {
@@ -49,7 +49,7 @@ export default {
 
 If you do not want `/api` to be passed along, we need to rewrite the path:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     proxy: {
@@ -68,7 +68,7 @@ export default {
 
 To proxy WebSocket requests, set `ws` to `true`:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     proxy: {
@@ -146,7 +146,7 @@ export default {
 
 Used to proxy multiple specified paths to the same target.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     proxy: [

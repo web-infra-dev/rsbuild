@@ -20,7 +20,7 @@ When `tools.postcss` is a function, the default options will be passed in as the
 
 For example, to add a PostCSS plugin, you can call the [addPlugins](#addplugins) utility function:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     postcss: (opts, { addPlugins }) => {
@@ -32,7 +32,7 @@ export default {
 
 To pass parameters to the PostCSS plugin, call the PostCSS plugin as a function:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     postcss: (opts, { addPlugins }) => {
@@ -47,7 +47,7 @@ export default {
 
 You can also modify the default `postcss-loader` options:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     postcss: (opts) => {
@@ -59,7 +59,7 @@ export default {
 
 `tools.postcss` can return a config object and completely replace the default config:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     postcss: () => {
@@ -77,7 +77,7 @@ export default {
 
 When `tools.postcss` is an object, it will be merged with the default configuration using `Object.assign`. Note that `Object.assign` is a shallow copy and will completely overwrite the built-in `presets` or `plugins` array, please use it with caution.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     postcss: {
@@ -98,7 +98,7 @@ export default {
 
 For adding additional PostCSS plugins, You can pass in a single PostCSS plugin, or an array of PostCSS plugins.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     postcss: (config, { addPlugins }) => {
@@ -119,7 +119,7 @@ export default {
 
 For example, use `postcss-plugin-a` for file paths containing `foo`, and use `postcss-plugin-b` for other file paths:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     postcss: {

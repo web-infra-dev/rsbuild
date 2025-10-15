@@ -26,7 +26,7 @@ type WatchFilesConfig = WatchFiles | WatchFiles[];
 
 - 监听单个文件：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     watchFiles: {
@@ -38,7 +38,7 @@ export default {
 
 - 使用 glob 匹配多个文件：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     watchFiles: {
@@ -50,7 +50,7 @@ export default {
 
 - 监听多个文件路径：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     watchFiles: {
@@ -73,7 +73,7 @@ reload-page 表示当文件发生变化时，浏览器打开的页面会自动�
 
 这可以用于监听一些静态资源文件的变化，例如 `public` 目录下的文件。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     watchFiles: {
@@ -115,7 +115,7 @@ export default {
 
 `watchFiles` 是基于 [chokidar v4](https://github.com/paulmillr/chokidar#api) 实现的，你可以通过 `options` 传入 chokidar 的选项。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     watchFiles: {
@@ -132,7 +132,7 @@ export default {
 
 `dev.watchFiles` 支持传入一个数组，这允许你同时配置不同 `type` 的监听器，或是为不同的目录配置不同的 `watchOptions`。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     watchFiles: [

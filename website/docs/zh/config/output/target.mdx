@@ -28,7 +28,7 @@ Rsbuild 会读取项目中的 [Browserslist 配置](https://github.com/browsersl
 
 比如构建出适用于 Node.js 环境的产物：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     target: 'node',
@@ -42,7 +42,7 @@ export default {
 
 比如同时构建 `web` 产物和 `node` 产物：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   environments: {
     web: {
@@ -113,7 +113,7 @@ Rspack 支持的 [target](https://rspack.rs/zh/config/target) 类型更为丰富
 
 例如设置 `target` 为 `'electron-main'`，这会覆盖 Rsbuild 默认设置的 `'web'`。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: {

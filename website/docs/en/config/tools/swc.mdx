@@ -41,7 +41,7 @@ You can set the options of [builtin:swc-loader](https://rspack.rs/guide/features
 
 `tools.swc` can be configured as an object, this object will be deeply merged with the built-in `builtin:swc-loader` option.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     swc: {
@@ -57,7 +57,7 @@ export default {
 
 `tools.swc` can also be configured as a function, this function takes one argument, which is the built-in `builtin:swc-loader` option. You can modify this object then return a new config. For example:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     swc: (config) => {

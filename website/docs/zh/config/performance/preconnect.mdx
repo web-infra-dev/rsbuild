@@ -28,7 +28,7 @@ type Preconnect =
 
 ## 示例
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     preconnect: ['https://example.com/'],
@@ -51,7 +51,7 @@ export default {
 
 指定要预连接的 URL。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     // 等价于 `preconnect: ['https://example.com/'],`
@@ -71,7 +71,7 @@ export default {
 
 指定是否添加 `crossorigin` 属性。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     preconnect: [

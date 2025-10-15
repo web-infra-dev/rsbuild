@@ -34,7 +34,7 @@ dist/static/js/main.js
 
 After turning on the `output.inlineScripts` option:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     inlineScripts: true,
@@ -71,7 +71,7 @@ When using `output.inlineScripts`, we recommend setting [html.inject](/config/ht
 
 As the default injection position of the script tag is the `<head>` tag, changing the injection position to the `<body>` tag can ensure that the inlined script can access the DOM elements in `<body>`.
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     inject: 'body', // [!code highlight]
@@ -88,7 +88,7 @@ To inline part of the JS files, set `inlineScripts` to a regular expression that
 
 For example, to inline `main.js` into HTML, add the following configuration:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     inlineScripts: /[\\/]main\.\w+\.js$/,
@@ -109,7 +109,7 @@ You can also set `output.inlineScripts` to a function that accepts the following
 
 For example, if we want to inline assets that are smaller than 10 kB, we can add the following configuration:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     inlineScripts({ size }) {
@@ -125,7 +125,7 @@ When you use [dynamic import](https://developer.mozilla.org/en-US/docs/Web/JavaS
 
 To inline async chunks into the HTML, change Rspack's default behavior using the [tools.rspack](/config/tools/rspack) config by setting [module.parser.javascript.dynamicImportMode](https://rspack.rs/config/module#moduleparserjavascriptdynamicimportmode) to `'eager'`. In this case, Rspack will not generate separate JS files for dynamic imports.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     inlineScripts: true,
@@ -153,7 +153,7 @@ export default {
 
 Whether to enable the inline scripts feature. If set to `'auto'`, it will be enabled when the `mode` is `'production'`.
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     inlineScripts: {
@@ -170,7 +170,7 @@ export default {
 
 The regular expression or function to match the files that need to be inlined.
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     inlineScripts: {

@@ -30,7 +30,7 @@ Rsbuild 内部基于 [html-rspack-plugin](https://github.com/rspack-contrib/html
 
 当 `tools.htmlPlugin` 的值为 `Object` 类型时，会与默认配置通过 `Object.assign` 合并。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     htmlPlugin: {
@@ -48,7 +48,7 @@ export default {
 - 第二个参数是也是一个对象，包含了 entry 的名称和 entry 的值。
 - 函数可以 return 一个新的对象作为最终的配置。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     htmlPlugin(config, { entryName, entryValue }) {
@@ -64,7 +64,7 @@ export default {
 
 将 `tools.htmlPlugin` 配置为 `false`，可以禁用 Rsbuild 内置的 `html-rspack-plugin` 插件，此时将不会生成 HTML 文件。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     htmlPlugin: false,
@@ -80,7 +80,7 @@ export default {
 
 例如，在生产模式构建时，可以在文件名上添加 `hash`：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     htmlPlugin(config, { entryName }) {

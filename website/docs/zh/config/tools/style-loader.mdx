@@ -11,7 +11,7 @@
 
 当 `tools.styleLoader` 是一个 object 时，它会与默认配置通过 `Object.assign` 合并。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     styleLoader: {
@@ -25,7 +25,7 @@ export default {
 
 当 `tools.styleLoader` 是一个 function 时，默认选项会作为第一个参数传入，你可以直接修改这个对象，也可以返回一个新的对象作为最终使用的选项。比如：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     styleLoader: (config) => {

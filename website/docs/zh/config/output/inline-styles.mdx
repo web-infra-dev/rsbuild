@@ -34,7 +34,7 @@ dist/static/js/main.js
 
 开启 `output.inlineStyles` 选项后：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     inlineStyles: true,
@@ -72,7 +72,7 @@ dist/static/js/main.js
 
 比如，将产物中的 `main.css` 内联到 HTML 中，你可以添加如下配置：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     inlineStyles: /[\\/]main\.\w+\.css$/,
@@ -93,7 +93,7 @@ export default {
 
 比如，我们希望内联小于 10kB 的资源，可以添加如下配置：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     inlineStyles({ size }) {
@@ -112,7 +112,7 @@ export default {
 
 是否启用内联。`'auto'` 表示在生产模式时开启，开发模式时关闭。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     inlineStyles: {
@@ -129,7 +129,7 @@ export default {
 
 用来匹配需要内联的 CSS 文件。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     inlineStyles: {

@@ -36,7 +36,7 @@ public 目录名称。`name` 的值可以设置为相对路径或绝对路径，
 
 - 相对路径示例：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     publicDir: {
@@ -79,7 +79,7 @@ export default {
 
 比如关闭 `copyOnBuild`：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     publicDir: {
@@ -97,7 +97,7 @@ export default {
 
 你可以将 `copyOnBuild` 设置为 `true` 来为 `node` target 复制文件：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     target: 'node',
@@ -126,7 +126,7 @@ export default {
 
 设置 `watch` 为 `true` 后，开发服务器会监听指定公共目录下的文件变化，并在文件发生变化时重新加载页面：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     publicDir: {
@@ -142,7 +142,7 @@ export default {
 
 `server.publicDir` 可以配置为一个数组，这允许你将多个目录作为静态资源服务的文件夹：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     publicDir: [
@@ -162,7 +162,7 @@ export default {
 
 你可以将 `publicDir` 设置成 `false` 来禁用静态资源服务：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     publicDir: false,

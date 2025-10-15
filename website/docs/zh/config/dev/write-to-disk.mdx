@@ -15,7 +15,7 @@
 
 只需要将 `dev.writeToDisk` 配置项设置为 `true` 即可：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     writeToDisk: true,
@@ -33,7 +33,7 @@ export default {
 
 例如将文件写入磁盘，并排除热更新临时文件：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     writeToDisk: (file) => !file.includes('.hot-update.'),
