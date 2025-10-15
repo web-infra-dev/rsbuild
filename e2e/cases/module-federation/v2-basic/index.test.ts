@@ -94,7 +94,11 @@ rspackTest('should downgrade syntax as expected', async ({ build }) => {
     plugins: [
       pluginCheckSyntax({
         // MF runtime contains dynamic import, which can not pass syntax checking
-        exclude: [/@module-federation[\\/+]runtime/],
+        exclude: [
+          /@module-federation[\\/+]runtime/,
+          // TODO: can be removed after https://github.com/module-federation/core/pull/4128 been released
+          /@module-federation[\\/+]error-codes/,
+        ],
       }),
     ],
   };
