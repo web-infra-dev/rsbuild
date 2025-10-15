@@ -216,6 +216,10 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
     let defaultFavicon: string | undefined;
 
     const resolveDefaultFavicon = () => {
+      if (defaultFavicon) {
+        return defaultFavicon;
+      }
+
       const { rootPath } = api.context;
       const { publicDir } = api.getNormalizedConfig().server;
       const extensions = ['ico', 'png', 'svg'];
