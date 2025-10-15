@@ -124,6 +124,13 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "open": false,
     "port": 3000,
     "printUrls": true,
+    "publicDir": [
+      {
+        "copyOnBuild": "auto",
+        "name": "public",
+        "watch": false,
+      },
+    ],
     "strictPort": false,
   },
   "source": {
@@ -271,6 +278,13 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "open": false,
     "port": 3000,
     "printUrls": true,
+    "publicDir": [
+      {
+        "copyOnBuild": "auto",
+        "name": "public",
+        "watch": false,
+      },
+    ],
     "strictPort": false,
   },
   "source": {
@@ -422,6 +436,13 @@ exports[`environment config > should print environment config when inspect confi
       "open": false,
       "port": 3000,
       "printUrls": true,
+      "publicDir": [
+        {
+          "copyOnBuild": "auto",
+          "name": "public",
+          "watch": false,
+        },
+      ],
       "strictPort": false,
     },
     "source": {
@@ -569,6 +590,13 @@ exports[`environment config > should print environment config when inspect confi
       "open": false,
       "port": 3000,
       "printUrls": true,
+      "publicDir": [
+        {
+          "copyOnBuild": "auto",
+          "name": "public",
+          "watch": false,
+        },
+      ],
       "strictPort": false,
     },
     "source": {
@@ -736,6 +764,13 @@ exports[`environment config > should support modify environment config by api.mo
       "open": false,
       "port": 3000,
       "printUrls": true,
+      "publicDir": [
+        {
+          "copyOnBuild": "auto",
+          "name": "public",
+          "watch": false,
+        },
+      ],
       "strictPort": false,
     },
     "source": {
@@ -884,6 +919,13 @@ exports[`environment config > should support modify environment config by api.mo
       "open": false,
       "port": 3000,
       "printUrls": true,
+      "publicDir": [
+        {
+          "copyOnBuild": "auto",
+          "name": "public",
+          "watch": false,
+        },
+      ],
       "strictPort": false,
     },
     "source": {
@@ -1032,6 +1074,13 @@ exports[`environment config > should support modify environment config by api.mo
       "open": false,
       "port": 3000,
       "printUrls": true,
+      "publicDir": [
+        {
+          "copyOnBuild": "auto",
+          "name": "public",
+          "watch": false,
+        },
+      ],
       "strictPort": false,
     },
     "source": {
@@ -1182,6 +1231,13 @@ exports[`environment config > should support modify single environment config by
       "open": false,
       "port": 3000,
       "printUrls": true,
+      "publicDir": [
+        {
+          "copyOnBuild": "auto",
+          "name": "public",
+          "watch": false,
+        },
+      ],
       "strictPort": false,
     },
     "source": {
@@ -1330,6 +1386,13 @@ exports[`environment config > should support modify single environment config by
       "open": false,
       "port": 3000,
       "printUrls": true,
+      "publicDir": [
+        {
+          "copyOnBuild": "auto",
+          "name": "public",
+          "watch": false,
+        },
+      ],
       "strictPort": false,
     },
     "source": {

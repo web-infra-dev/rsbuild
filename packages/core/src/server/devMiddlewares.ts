@@ -1,5 +1,4 @@
 import { isAbsolute, join } from 'node:path';
-import { normalizePublicDirs } from '../defaultConfig';
 import { castArray, pick } from '../helpers';
 import { isMultiCompiler } from '../helpers/compiler';
 import { requireCompiledPackage } from '../helpers/vendors';
@@ -201,11 +200,8 @@ const applyDefaultMiddlewares = ({
     );
   }
 
-  const publicDirs = normalizePublicDirs(server?.publicDir);
-  for (const publicDir of publicDirs) {
+  for (const { name } of server.publicDir) {
     const sirv = requireCompiledPackage('sirv');
-
-    const { name } = publicDir;
     const normalizedPath = isAbsolute(name) ? name : join(pwd, name);
 
     const servePublicDirMiddleware = sirv(normalizedPath, {
