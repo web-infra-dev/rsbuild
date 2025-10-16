@@ -87,10 +87,10 @@ const normalizeConfigStructure = <T = RsbuildConfig>(config: T): T => {
   if (output) {
     output = { ...output };
 
-    if (Array.isArray(output?.copy)) {
+    if (Array.isArray(output.copy)) {
       output.copy = { patterns: output.copy };
     }
-    if (typeof output?.distPath === 'string') {
+    if (typeof output.distPath === 'string') {
       output.distPath = { root: output.distPath };
     }
   }
