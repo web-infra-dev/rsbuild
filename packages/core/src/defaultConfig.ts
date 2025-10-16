@@ -297,44 +297,6 @@ export const withDefaultConfig = async (
 };
 
 /**
- * Converts a raw config into a consistent object-based structure.
- */
-export const normalizeConfigStructure = (
-  config: RsbuildConfig,
-  rootPath: string,
-): RsbuildConfig => {
-  const { dev, output } = config;
-
-  config.server ||= {};
-  config.server.publicDir = normalizePublicDirs(
-    rootPath,
-    config.server.publicDir,
-  );
-
-  if (typeof output?.distPath === 'string') {
-    config = {
-      ...config,
-      output: {
-        ...output,
-        distPath: { root: output.distPath },
-      },
-    };
-  }
-
-  if (dev?.watchFiles && !Array.isArray(dev.watchFiles)) {
-    config = {
-      ...config,
-      dev: {
-        ...dev,
-        watchFiles: [dev.watchFiles],
-      },
-    };
-  }
-
-  return config;
-};
-
-/**
  * Normalizes the user configuration by merging it with defaults and ensuring
  * consistent structure.
  */
@@ -352,15 +314,21 @@ export const normalizeConfig = (
       : 'none';
   };
 
+  config.server ||= {};
+  config.server.publicDir = normalizePublicDirs(
+    rootPath,
+    config.server.publicDir,
+  );
+
   const mergedConfig = mergeRsbuildConfig(
     {
       ...createDefaultConfig(),
       mode: getMode(),
     },
-    normalizeConfigStructure(config, rootPath),
-  ) as Required<RsbuildConfig>;
+    config,
+  ) as NormalizedConfig;
 
-  return mergedConfig as unknown as NormalizedConfig;
+  return mergedConfig;
 };
 
 const normalizePublicDirs = (

@@ -54,12 +54,6 @@ const merge = (x: unknown, y: unknown, path = ''): unknown => {
 
   // combine array
   if (pair.some(Array.isArray)) {
-    if (path === 'output.copy' && !pair.every(Array.isArray)) {
-      // x: { patterns: [A] }、y: [B, C] => { patterns: [A,B,C] }
-      return Array.isArray(x)
-        ? merge({ patterns: x }, y, path)
-        : merge(x, { patterns: y }, path);
-    }
     return [...castArray(x), ...castArray(y)];
   }
 
@@ -83,7 +77,41 @@ const merge = (x: unknown, y: unknown, path = ''): unknown => {
   return merged;
 };
 
-export const mergeRsbuildConfig = <T = RsbuildConfig>(...configs: T[]): T => {
+/**
+ * Preprocess config before merging to convert the raw config into a consistent
+ * object-based structure. This ensures some properties can be merged as expected.
+ */
+const normalizeConfigStructure = <T = RsbuildConfig>(config: T): T => {
+  let { dev, output, ...rest } = config as RsbuildConfig;
+
+  if (output) {
+    output = { ...output };
+
+    if (Array.isArray(output.copy)) {
+      output.copy = { patterns: output.copy };
+    }
+    if (typeof output.distPath === 'string') {
+      output.distPath = { root: output.distPath };
+    }
+  }
+
+  if (dev) {
+    dev = { ...dev };
+
+    if (dev.watchFiles && !Array.isArray(dev.watchFiles)) {
+      dev.watchFiles = [dev.watchFiles];
+    }
+  }
+
+  return { ...rest, dev, output } as T;
+};
+
+export const mergeRsbuildConfig = <T = RsbuildConfig>(
+  ...originalConfigs: T[]
+): T => {
+  const configs = originalConfigs.map(normalizeConfigStructure);
+
+  // In most cases there will be two configs so we perform this check first
   if (configs.length === 2) {
     return merge(configs[0], configs[1]) as T;
   }
