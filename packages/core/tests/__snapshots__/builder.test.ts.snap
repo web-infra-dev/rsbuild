@@ -13,7 +13,6 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
     "asyncWebAssembly": true,
     "inlineConst": false,
     "inlineEnum": false,
-    "lazyBarrel": true,
     "rspackFuture": {
       "bundlerInfo": {
         "force": false,

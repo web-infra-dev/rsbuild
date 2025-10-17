@@ -7,7 +7,6 @@ exports[`plugin-basic > should apply basic config correctly in development 1`] =
   "experiments": {
     "inlineConst": false,
     "inlineEnum": false,
-    "lazyBarrel": true,
     "rspackFuture": {
       "bundlerInfo": {
         "force": false,
@@ -57,7 +56,6 @@ exports[`plugin-basic > should apply basic config correctly in production 1`] = 
   "experiments": {
     "inlineConst": true,
     "inlineEnum": true,
-    "lazyBarrel": true,
     "rspackFuture": {
       "bundlerInfo": {
         "force": false,
