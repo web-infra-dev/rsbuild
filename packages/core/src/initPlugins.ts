@@ -149,7 +149,7 @@ export function initPluginAPI({
   };
 
   let transformId = 0;
-  const transformer: Record<string, TransformHandler> = {};
+  const transformer: Record<string, TransformHandler<boolean>> = {};
   const processAssetsFns: {
     environment?: string;
     descriptor: ProcessAssetsDescriptor;
