@@ -101,7 +101,6 @@ export const pluginBasic = (): RsbuildPlugin => ({
 
           chain.experiments({
             ...chain.get('experiments'),
-            lazyBarrel: true,
             inlineEnum: isProd,
             inlineConst: isProd,
             typeReexportsPresence: true,

@@ -1426,7 +1426,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "asyncWebAssembly": true,
       "inlineConst": false,
       "inlineEnum": false,
-      "lazyBarrel": true,
       "rspackFuture": {
         "bundlerInfo": {
           "force": false,
@@ -1882,7 +1881,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "asyncWebAssembly": true,
       "inlineConst": false,
       "inlineEnum": false,
-      "lazyBarrel": true,
       "rspackFuture": {
         "bundlerInfo": {
           "force": false,
