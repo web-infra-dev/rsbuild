@@ -25,7 +25,7 @@ export default {
 
 在 Rsbuild 中，你可以使用 [html.template](/config/html/template) 配置项来设置自定义的 HTML 模板文件。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     template: './static/index.html',
@@ -53,7 +53,7 @@ export default {
 
 当你的项目中只有一个页面时，直接使用 `html.title` 设置即可：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     title: 'example',
@@ -63,7 +63,7 @@ export default {
 
 当你的项目中有多个页面时，可以基于入口名称，来为不同的页面设置对应的标题。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     title({ entryName }) {
@@ -83,11 +83,11 @@ export default {
 
 ## 设置页面图标
 
-Rsbuild 支持设置 [favicon](https://developer.mozilla.org/en-US/docs/Glossary/Favicon) 图标 和 iOS 系统下的 [apple-touch-icon](https://webhint.io/docs/user-guide/hints/hint-apple-touch-icons/) 图标。
+Rsbuild 支持设置 [favicon](https://developer.mozilla.org/en-US/docs/Glossary/Favicon) 和 Web 应用图标。
 
-你可以通过 [html.favicon](/config/html/favicon) 配置项来设置 favicon 图标。
+默认情况下，Rsbuild 会自动从 [public 目录](/config/server/public-dir) 中查找 favicon 文件。如果你想自定义 favicon，可以通过 [html.favicon](/config/html/favicon) 配置项进行设置：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     favicon: './src/assets/icon.png',
@@ -95,9 +95,9 @@ export default {
 };
 ```
 
-你也可以通过 [html.appIcon](/config/html/app-icon) 配置项来设置 Web 应用的图标，用于在添加到移动设备的主屏幕时显示。
+此外，还可以使用 [html.appIcon](/config/html/app-icon) 配置项来设置 Web 应用图标，用于在将网站添加到移动设备主屏幕时显示。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     appIcon: {
@@ -124,7 +124,7 @@ Rsbuild 默认设置了 charset 和 viewport meta 标签：
 
 你也可以添加自定义的 meta 标签，比如设置 description：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     meta: {
@@ -173,8 +173,8 @@ type DefaultParameters = {
     };
     files: {
       publicPath: string;
-      js: Array<string>;
-      css: Array<string>;
+      js: string[];
+      css: string[];
       favicon?: string;
     };
   };
@@ -388,7 +388,7 @@ Rsbuild 通过插件来支持 [Pug](https://pugjs.org/) 模板引擎，详见 [@
 
 `html.tags` 的作用就是调整这些 tags 变量，从而修改 HTML 里的标签，下面是一个基本的例子：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     tags: [
