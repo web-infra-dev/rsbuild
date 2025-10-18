@@ -1,5 +1,6 @@
-import { isAbsolute, join, relative, sep } from 'node:path';
-import { COMPILED_PATH } from '../constants';
+import { isAbsolute, join, relative, sep, win32 } from 'node:path';
+import { COMPILED_PATH, isWindows } from '../constants';
+import type { Rspack } from '../types';
 
 export function toRelativePath(base: string, filepath: string): string {
   const relativePath = relative(base, filepath);
@@ -78,4 +79,24 @@ export const toPosixPath = (filepath: string): string => {
     return filepath;
   }
   return filepath.replace(/\\/g, '/');
+};
+
+/**
+ * Normalize filepaths for `source.include` and `source.exclude` configuration.
+ * On Windows, `require.resolve` returns paths with posix forward slashes,
+ * This function normalizes the path to use backslashes.
+ */
+export const normalizeRuleConditionPath = (
+  filepath: Rspack.RuleSetCondition,
+): Rspack.RuleSetCondition => {
+  if (
+    isWindows &&
+    typeof filepath === 'string' &&
+    filepath.includes('/') &&
+    win32.isAbsolute(filepath)
+  ) {
+    return filepath.replace(/\//g, '\\');
+  }
+
+  return filepath;
 };
