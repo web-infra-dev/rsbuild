@@ -1,6 +1,7 @@
 import { createRequire } from 'node:module';
 import { pathToFileURL } from 'node:url';
 import type { Configuration } from '@rspack/core';
+import { isWindows } from '../constants';
 import { color } from '../helpers';
 import { logger } from '../logger';
 import type { BundlerPluginInstance, RsbuildPlugin } from '../types';
@@ -65,10 +66,9 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
 
       let module: RsdoctorExports;
       try {
-        const moduleURL =
-          process.platform === 'win32'
-            ? pathToFileURL(packagePath).href
-            : packagePath;
+        const moduleURL = isWindows
+          ? pathToFileURL(packagePath).href
+          : packagePath;
         module = await import(moduleURL);
       } catch {
         logger.error(

@@ -17,6 +17,7 @@ import {
   isFunction,
   isWebTarget,
 } from '../helpers';
+import { normalizeRuleConditionPath } from '../helpers/path';
 import type {
   NormalizedEnvironmentConfig,
   NormalizedSourceConfig,
@@ -55,11 +56,11 @@ function applyScriptCondition({
   }
 
   for (const condition of config.source.include || []) {
-    rule.include.add(condition);
+    rule.include.add(normalizeRuleConditionPath(condition));
   }
 
   for (const condition of config.source.exclude || []) {
-    rule.exclude.add(condition);
+    rule.exclude.add(normalizeRuleConditionPath(condition));
   }
 }
 

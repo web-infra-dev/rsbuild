@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 export const __filename: string = fileURLToPath(import.meta.url);
 export const __dirname: string = dirname(__filename);
 export const isDeno: boolean = typeof Deno !== 'undefined';
+export const isWindows: boolean = process.platform === 'win32';
 
 // Paths
 export const ROOT_DIST_DIR = 'dist';
