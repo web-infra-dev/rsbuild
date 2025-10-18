@@ -1,7 +1,7 @@
 # html.favicon
 
 - **Type:** `string ｜ Function`
-- **Default:** `undefined`
+- **Default:** Automatically detects favicon files in the `public` directory
 
 Set the favicon icon path for all pages, can be set as:
 
@@ -14,6 +14,16 @@ After config this option, the favicon will be automatically copied to the dist d
 :::tip
 Rsbuild also provides [html.appIcon](/config/html/app-icon) to set the icon of the web application.
 :::
+
+## Default Value
+
+When `html.favicon` is not explicitly configured, Rsbuild will automatically look for favicon files in the [public directory](/config/server/public-dir).
+
+It searches for the following files in order, and uses the first one it finds as the default favicon:
+
+- `public/favicon.ico`
+- `public/favicon.png`
+- `public/favicon.svg`
 
 ## Example
 
@@ -105,3 +115,9 @@ export default {
   },
 };
 ```
+
+## Version history
+
+| Version | Changes                                                     |
+| ------- | ----------------------------------------------------------- |
+| v1.6.0  | Added automatic favicon detection from the public directory |
