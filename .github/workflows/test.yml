@@ -24,7 +24,7 @@ jobs:
     strategy:
       matrix:
         # run ut on macOS, as SWC cases will fail on Ubuntu CI
-        os: [macos-14, windows-latest]
+        os: [macos-latest, windows-latest]
 
     steps:
       - name: Checkout
