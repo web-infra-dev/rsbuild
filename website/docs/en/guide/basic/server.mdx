@@ -38,7 +38,7 @@ The Rsbuild server generates page routes based on the [server.base](/config/serv
 
 When the entry is `index`, the page can be accessed at `/`. When the entry is `foo`, the page can be accessed at `/foo`.
 
-When `server.base` is `/base`, the index page can be accessed at `/base` and the foo page at `/base/foo`.
+When `server.base` is `/base`, the index page can be accessed at `/base`, and the foo page can be accessed at `/base/foo`.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -112,7 +112,7 @@ export default {
 
 ## Rspack dev server
 
-Rsbuild has a built-in lightweight dev server that differs from the dev servers in Rspack CLI or webpack CLI. There are several differences between them, including different configuration options.
+Rsbuild has a built-in lightweight dev server that differs from the dev servers provided by Rspack CLI or webpack CLI. There are several differences between them, including different configuration options.
 
 ### Comparison
 

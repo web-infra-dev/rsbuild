@@ -1,12 +1,12 @@
 # Environment variables
 
-Rsbuild supports injecting environment variables or expressions into your code during the build. This helps distinguish between different running environments or replace constants.
+Rsbuild supports injecting environment variables or expressions into your code during compilation. This helps you distinguish between different environments or replace constants.
 
 This chapter explains how to use environment variables in Rsbuild.
 
 ## Default variables
 
-By default, Rsbuild uses [source.define](#using-define) to inject environment variables into your code, replacing them with their specified values during the build:
+By default, Rsbuild uses [source.define](#using-define) to inject environment variables into your code, replacing them with their values during compilation:
 
 `import.meta.env` contains these environment variables:
 
@@ -51,7 +51,7 @@ if (false) {
 }
 ```
 
-During code minification, `if (false) { ... }` will be recognized as invalid code and removed automatically.
+During code minification, `if (false) { ... }` will be recognized as dead code and automatically removed.
 
 ### import.meta.env.DEV
 
