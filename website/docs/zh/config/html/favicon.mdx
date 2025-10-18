@@ -1,7 +1,7 @@
 # html.favicon
 
 - **类型：** `string ｜ Function`
-- **默认值：** `undefined`
+- **默认值：** 自动读取 public 目录下的 favicon 文件
 
 设置页面的 favicon 图标，可以设置为：
 
@@ -14,6 +14,16 @@
 :::tip
 Rsbuild 还提供了 [html.appIcon](/config/html/app-icon) 来设置 Web 应用的图标。
 :::
+
+## 默认值
+
+在未显式配置 `html.favicon` 时， Rsbuild 会自动从 [public 目录](/config/server/public-dir) 中查找 favicon 文件。
+
+Rsbuild 会按以下优先级依次搜索文件，并在找到第一个匹配项后将其作为默认 favicon：
+
+- `public/favicon.ico`
+- `public/favicon.png`
+- `public/favicon.svg`
 
 ## 示例
 
@@ -105,3 +115,9 @@ export default {
   },
 };
 ```
+
+## 版本历史
+
+| 版本   | 变更内容                                  |
+| ------ | ----------------------------------------- |
+| v1.6.0 | 新增自动检测 public 目录下的 favicon 文件 |
