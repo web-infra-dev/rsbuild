@@ -25,7 +25,7 @@ See [source.entry - HTML generation](/config/source/entry#html-generation) for m
 
 Use [html.template](/config/html/template) to define the path to a custom HTML template.
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     template: './static/index.html',
@@ -53,7 +53,7 @@ You can set the HTML `<title>` tag through the [html.title](/config/html/title) 
 
 When there is only one page in your project, just use the `html.title` setting directly:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     title: 'example',
@@ -63,7 +63,7 @@ export default {
 
 When your project has multiple pages, you can set corresponding titles for different pages based on the entry name.
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     title({ entryName }) {
@@ -83,11 +83,11 @@ For single-page applications (SPA), Rsbuild will include an initial title in the
 
 ## Set page icon
 
-Rsbuild supports setting [favicon](https://developer.mozilla.org/en-US/docs/Glossary/Favicon) icon and [apple-touch-icon](https://webhint.io/docs/user-guide/hints/hint-apple-touch-icons/) icon.
+Rsbuild supports setting both the [favicon](https://developer.mozilla.org/en-US/docs/Glossary/Favicon) and the web application icon.
 
-You can set the favicon using the [html.favicon](/config/html/favicon) config.
+By default, Rsbuild automatically looks for favicon files in the `public` directory. If you want to customize the favicon, use the [html.favicon](/config/html/favicon) option:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     favicon: './src/assets/icon.png',
@@ -95,9 +95,9 @@ export default {
 };
 ```
 
-You can also set web application icons to display when added to the home screen of a mobile device using the [html.appIcon](/config/html/app-icon) config.
+You can also use the [html.appIcon](/config/html/app-icon) option to define web application icons, which are displayed when users add your site to their mobile device's home screen:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     appIcon: {
@@ -124,7 +124,7 @@ Rsbuild defaults to setting the charset and viewport meta tags:
 
 You can also add custom meta tags, like a description:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     meta: {
@@ -173,8 +173,8 @@ type DefaultParameters = {
     };
     files: {
       publicPath: string;
-      js: Array<string>;
-      css: Array<string>;
+      js: string[];
+      css: string[];
       favicon?: string;
     };
   };
@@ -388,7 +388,7 @@ In the HTML template, the `htmlPlugin.tags` variable gives you access to all the
 
 The purpose of the `html.tags` is to update these tag variables to modify the tags in the HTML. Here is a basic example:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     tags: [
