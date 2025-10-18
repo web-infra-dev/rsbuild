@@ -61,7 +61,7 @@ export default {
 };
 ```
 
-When your project has multiple pages, you can set corresponding titles for different pages based on the entry name.
+When your project has multiple pages, you can set different titles for each page based on the entry name.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -142,7 +142,7 @@ The generated meta tag in HTML is:
 
 ## Default template engine
 
-Rsbuild comes with a built-in default template engine to handle HTML template files, and its syntax is similar to a subset of EJS, but it has some differences. When the suffix of an HTML template file is `.html`, Rsbuild will use the built-in template engine to parse the HTML template.
+Rsbuild has a built-in default template engine for handling HTML template files. Its syntax is similar to a subset of EJS, with some differences. When an HTML template file has a `.html` extension, Rsbuild will use the built-in template engine to parse it.
 
 For example, if a `text` param is defined in the template with the value `'world'`, Rsbuild will automatically replace `<%= text %>` with the specified value during the build process.
 
