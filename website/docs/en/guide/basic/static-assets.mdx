@@ -56,7 +56,7 @@ console.log(logo); // "/static/logo.[hash].png"
 export default () => <img src={logo} />;
 ```
 
-When using `new URL()` to reference `.js` or `.ts` files, they are treated as URL assets and are not processed by Rsbuild's built-in SWC loader.
+When using `new URL()` to reference `.js` or `.ts` files, they are treated as URL assets and aren't processed by Rsbuild's built-in SWC loader.
 
 ```tsx
 // foo.ts will remain the original content and be output to the dist directory
@@ -65,7 +65,7 @@ const fooTs = new URL('./foo.ts', import.meta.url).href;
 console.log(fooTs); // "/static/foo.[hash].ts"
 ```
 
-Similarly, when using `new URL()` to reference `.css` or `.scss` files, they are treated as URL assets and are not processed by Rsbuild's built-in CSS loaders.
+Similarly, when using `new URL()` to reference `.css` or `.scss` files, they are treated as URL assets and aren't processed by Rsbuild's built-in CSS loaders.
 
 ```tsx
 // foo.css will remain the original content and be output to the dist directory
@@ -101,7 +101,7 @@ If you want to reference static assets using absolute paths in CSS files:
 }
 ```
 
-By default, Rsbuild's built-in `css-loader` will resolve absolute paths in `url()` and look for the specified modules. If you want to skip resolving absolute paths, you can configure [`tools.cssLoader`](/config/tools/css-loader#toolscssloader) to filter out specific paths. Filtered paths will be left unchanged in the code.
+By default, Rsbuild's built-in `css-loader` will resolve absolute paths in `url()` and look for the specified modules. To skip resolving absolute paths, you can configure [`tools.cssLoader`](/config/tools/css-loader#toolscssloader) to filter out specific paths. Filtered paths will remain unchanged in the code.
 
 ```ts
 export default {
@@ -125,7 +125,7 @@ export default {
 The result of importing static assets depends on the file size:
 
 - If the file size is less than 4KiB, it will be converted to a base64 string and inlined in the code.
-- If the file size is larger than 4KiB, a URL will be returned, and the file will be emitted to the output directory.
+- If the file size is larger than 4KiB, a URL will be returned and the file will be emitted to the output directory.
 
 ```js
 import largeImage from './static/largeImage.png';
@@ -218,18 +218,18 @@ console.log(logo); // "https://example.com/static/logo.[hash].png"
 
 ## Public folder
 
-The public folder at the project root can be used to place some static assets. These assets will not be built by Rsbuild and can be directly referenced via URL.
+The public folder at the project root can be used to place static assets. These assets won't be built by Rsbuild and can be directly referenced via URL.
 
-- When you start the dev server, these assets will be served under the root [server.base](/config/server/base) path, default `/`.
+- When you start the dev server, these assets will be served under the [server.base](/config/server/base) path (default `/`).
 - When you perform a production build, these assets will be copied to the [dist directory](/guide/basic/output-files).
 
 For example, you can place files such as `robots.txt`, `manifest.json`, or `favicon.ico` in the public folder.
 
 ### How to reference
 
-You can reference files in the `public` directory via a URL.
+You can reference files in the `public` directory via URL.
 
-For example, in an HTML template, the `./public/favicon.ico` file can be referenced as `/favicon.ico`, [BASE_URL](/guide/advanced/env-vars#processenvpublic_base_path) is the base path of the server.
+For example, in an HTML template, the `./public/favicon.ico` file can be referenced as `/favicon.ico`. [BASE_URL](/guide/advanced/env-vars#processenvpublic_base_path) is the base path of the server.
 
 ```html title="index.html"
 <link rel="icon" href="<%= process.env.BASE_URL %>/favicon.ico" />
