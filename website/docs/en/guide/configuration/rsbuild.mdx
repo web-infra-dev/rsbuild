@@ -54,7 +54,7 @@ You can find detailed descriptions of all configs on the [Configure Overview](/c
 
 ## Configuration file
 
-When you use the CLI of Rsbuild, Rsbuild will automatically read the configuration file in the root directory of the current project and resolve it in the following order:
+When you use the CLI of Rsbuild, it automatically reads the configuration file in the root directory of the current project and resolves it in the following order:
 
 - rsbuild.config.mjs
 - rsbuild.config.ts
@@ -95,9 +95,9 @@ export default defineConfig({
 
 ## Specify config file
 
-Rsbuild CLI uses the `--config` option to specify the config file, which can be set to a relative path or an absolute path.
+Rsbuild CLI uses the `--config` option to specify the config file. It can be set to a relative or absolute path.
 
-For example, if you need to use the `rsbuild.prod.config.mjs` file when running `build`, you can add the following scripts to `package.json`:
+For example, if you need to use the `rsbuild.prod.config.mjs` file when running `build`, add the following script to `package.json`:
 
 ```json title="package.json"
 {
@@ -117,10 +117,10 @@ rsbuild build -c rsbuild.prod.config.mjs
 
 Rsbuild provides three ways to load configuration files:
 
-- `jiti` (Default): When you use a configuration file with the `.ts`, `.mts`, and `.cts` extensions, Rsbuild will use [jiti](https://github.com/unjs/jiti) to load configuration files, providing interoperability between ESM and CommonJS. The behavior of module resolution differs slightly from the native behavior of Node.js.
-- `native`: Use Node.js native loader to load the configuration file. This can ensure that the module resolution behavior is consistent with the native behavior of Node.js and has better performance. This requires that your JavaScript runtime already natively supports TypeScript.
+- `jiti` (Default): When you use a configuration file with the `.ts`, `.mts`, or `.cts` extensions, Rsbuild uses [jiti](https://github.com/unjs/jiti) to load the configuration file, providing interoperability between ESM and CommonJS. The module resolution behavior differs slightly from Node.js native behavior.
+- `native`: Use Node.js native loader to load the configuration file. This ensures that module resolution behavior is consistent with Node.js native behavior and has better performance. This requires your JavaScript runtime to natively support TypeScript.
 
-  For example, Node.js v22.6.0+ already natively supports TypeScript, you can use the following command to use the Node.js native loader to load the configuration file:
+  For example, Node.js v22.6.0+ natively supports TypeScript. You can use the following command with the Node.js native loader to load the configuration file:
 
   ```bash
   # Node.js >= v22.18.0
@@ -132,7 +132,7 @@ Rsbuild provides three ways to load configuration files:
   NODE_OPTIONS="--experimental-strip-types" npx rsbuild build --config-loader native
   ```
 
-- `auto`: Use Node.js's native loader to load configuration files first, fallback to using jiti if it fails.
+- `auto`: Use Node.js's native loader to load configuration files first, falling back to jiti if it fails.
 
 ### About Node.js native loader
 
@@ -175,7 +175,7 @@ export default defineConfig({
 
 ## Export function
 
-Rsbuild supports the export of a function in the config file, where you can dynamically compute the config and return it to Rsbuild.
+Rsbuild supports exporting a function in the config file, which allows you to dynamically compute the config and return it to Rsbuild.
 
 ```js title="rsbuild.config.js"
 import { defineConfig } from '@rsbuild/core';
@@ -222,7 +222,7 @@ The current running CLI command, such as `dev`, `build`, `preview`.
 
 ## Export async function
 
-Rsbuild also supports the export of an async function in the config file, where you can perform some async operations:
+Rsbuild also supports exporting an async function in the config file, which allows you to perform async operations:
 
 ```js title="rsbuild.config.js"
 import { defineConfig } from '@rsbuild/core';

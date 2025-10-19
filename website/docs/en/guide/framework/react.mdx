@@ -1,6 +1,6 @@
 # React
 
-This document explains how to build a React application using Rsbuild.
+This document explains how to use Rsbuild to build a React application.
 
 ## Create a React application
 
@@ -48,9 +48,9 @@ To use SVGR, you also need to register the [SVGR plugin](/plugins/list/plugin-sv
 
 Rsbuild uses React's official [Fast Refresh](https://npmjs.com/package/react-refresh) capability to perform component hot updates.
 
-Note that React Refresh requires components to follow certain standards, otherwise HMR may not work. You can use [eslint-plugin-react-refresh](https://github.com/ArnaudBarre/eslint-plugin-react-refresh) for validation.
+Note that React Refresh requires components to follow certain standards, otherwise HMR may not work. You can use [eslint-plugin-react-refresh](https://github.com/ArnaudBarre/eslint-plugin-react-refresh) to validate your code.
 
-For example, if React component hot updates don't work, or the component state is lost after hot updates, it's usually because your React component uses an anonymous function. React Fast Refresh requires that components cannot be anonymous functions, otherwise component state cannot be preserved after hot updates.
+For example, if React component hot updates don't work, or component state is lost after hot updates, it's usually because your React component uses an anonymous function. React Fast Refresh requires that components have named functions, otherwise component state cannot be preserved after hot updates.
 
 Here are some examples of wrong usage:
 
@@ -82,14 +82,14 @@ export default MyComponent;
 
 React Compiler is a build-time tool that automatically optimizes your React app. It works with plain JavaScript, and understands the Rules of React, so you don’t need to rewrite any code to use it.
 
-Before you start using React Compiler, it is recommended to read the [React Compiler documentation](https://react.dev/learn/react-compiler) to understand the functionality, current state, and usage of the React Compiler.
+Before using React Compiler, we recommend reading the [React Compiler documentation](https://react.dev/learn/react-compiler) to understand its functionality, current state, and usage.
 
 ### How to use
 
-The steps to use React Compiler in Rsbuild:
+Steps to use React Compiler in Rsbuild:
 
-1. Upgrade versions of `react` and `react-dom` to 19. If you are unable to upgrade, you can install the extra [react-compiler-runtime](https://npmjs.com/package/react-compiler-runtime) package which will allow the compiled code to run on versions prior to 19.
-2. React Compiler currently only provides a Babel plugin, you need to install [@rsbuild/plugin-babel](/plugins/list/plugin-babel) and [babel-plugin-react-compiler](https://npmjs.com/package/babel-plugin-react-compiler).
+1. Upgrade `react` and `react-dom` to version 19. If you can't upgrade, you can install the [react-compiler-runtime](https://npmjs.com/package/react-compiler-runtime) package, which allows the compiled code to run on versions prior to 19.
+2. React Compiler currently only provides a Babel plugin. You need to install [@rsbuild/plugin-babel](/plugins/list/plugin-babel) and [babel-plugin-react-compiler](https://npmjs.com/package/babel-plugin-react-compiler).
 3. Register the Babel plugin in your Rsbuild config file:
 
 ```ts title="rsbuild.config.ts"
@@ -173,7 +173,7 @@ See [CSS-in-JS](/guide/styling/css-in-js) for how to use CSS-in-JS in Rsbuild.
 
 ## Customize JSX
 
-Rsbuild uses SWC to compile JSX, you can customize the functions used by the compiled JSX code:
+Rsbuild uses SWC to compile JSX. You can customize the functions used by the compiled JSX code:
 
 - If the JSX runtime is `automatic`, use [jsxImportSource](/plugins/list/plugin-react#swcreactoptionsimportsource) to customize the import path of the JSX runtime, for example, import from Preact or Emotion.
 - If the JSX runtime is `classic`, use `pragma` and `pragmaFrag` to specify the JSX function and Fragment component.
@@ -223,7 +223,7 @@ export default defineConfig({
 
 ### Via comments
 
-You can also customize the JSX behavior by adding specific comments at the top of a single JSX or TSX file, which will take precedence over the configurations.
+You can also customize JSX behavior by adding specific comments at the top of individual JSX or TSX files, which will take precedence over the configuration.
 
 - If the JSX runtime is `automatic`:
 
