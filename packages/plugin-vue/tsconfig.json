@@ -11,5 +11,5 @@
       "path": "../core"
     }
   ],
-  "include": ["src"]
+  "include": ["src", "compiled"]
 }

@@ -1,0 +1,12 @@
+diff --git a/dist/pluginWebpack5.js b/dist/pluginWebpack5.js
+index 7c5eadf2ad45157aed2fd23a83ae4b1a2fb4b8ac..b9cd4eb701c366fa7f7f4782a20d4e3568705a94 100644
+--- a/dist/pluginWebpack5.js
++++ b/dist/pluginWebpack5.js
+@@ -61,6 +61,7 @@ const ruleSetCompiler = new RuleSetCompiler([
+     new BasicEffectRulePlugin('resolve'),
+     new BasicEffectRulePlugin('generator'),
+     new BasicEffectRulePlugin('layer'),
++    new BasicEffectRulePlugin('with'),
+     new UseEffectRulePlugin(),
+ ]);
+ class VueLoaderPlugin {

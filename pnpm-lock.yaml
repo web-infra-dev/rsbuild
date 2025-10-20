@@ -20,6 +20,9 @@ patchedDependencies:
   url-loader:
     hash: 4ed67f741914e665ed1dcef907caaa2acc85269026674133f7b987661de3591f
     path: patches/url-loader@4.1.1.patch
+  vue-loader:
+    hash: 394a6ca6e0d17901c66d15711435ff35aa5bdfad4dad685686431eb1b24d3c6c
+    path: patches/vue-loader.patch
 
 importers:
 
@@ -1118,9 +1121,15 @@ importers:
 
   packages/plugin-vue:
     dependencies:
-      vue-loader:
-        specifier: ^17.4.2
-        version: 17.4.2(vue@3.5.22(typescript@5.9.3))(webpack@5.102.1)
+      chalk:
+        specifier: ^4.1.0
+        version: 4.1.2
+      hash-sum:
+        specifier: ^2.0.0
+        version: 2.0.0
+      watchpack:
+        specifier: ^2.4.0
+        version: 2.4.4
       webpack:
         specifier: ^5.102.1
         version: 5.102.1
@@ -1143,6 +1152,9 @@ importers:
       vue:
         specifier: ^3.5.22
         version: 3.5.22(typescript@5.9.3)
+      vue-loader:
+        specifier: ^17.4.2
+        version: 17.4.2(patch_hash=394a6ca6e0d17901c66d15711435ff35aa5bdfad4dad685686431eb1b24d3c6c)(vue@3.5.22(typescript@5.9.3))(webpack@5.102.1)
 
   scripts/config:
     devDependencies:
@@ -12966,7 +12978,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
-  vue-loader@17.4.2(vue@3.5.22(typescript@5.9.3))(webpack@5.102.1):
+  vue-loader@17.4.2(patch_hash=394a6ca6e0d17901c66d15711435ff35aa5bdfad4dad685686431eb1b24d3c6c)(vue@3.5.22(typescript@5.9.3))(webpack@5.102.1):
     dependencies:
       chalk: 4.1.2
       hash-sum: 2.0.0

@@ -13,7 +13,7 @@ export default defineConfig({
     alias,
   },
   output: {
-    externals: ['@rsbuild/core'],
+    externals: ['@rsbuild/core', /\/compiled\/vue-loader/],
   },
   name: 'node',
   globals: true,
