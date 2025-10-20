@@ -722,8 +722,8 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1
       rslog:
-        specifier: ^1.2.11
-        version: 1.2.11
+        specifier: ^1.3.0
+        version: 1.3.0
       rspack-chain:
         specifier: ^1.4.1
         version: 1.4.1
@@ -5970,8 +5970,8 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  rslog@1.2.11:
-    resolution: {integrity: sha512-YgMMzQf6lL9q4rD9WS/lpPWxVNJ1ttY9+dOXJ0+7vJrKCAOT4GH0EiRnBi9mKOitcHiOwjqJPV1n/HRqqgZmOQ==}
+  rslog@1.3.0:
+    resolution: {integrity: sha512-93DpwwaiRrLz7fJ5z6Uwb171hHBws1VVsWjU6IruLFX63BicLA44QNu0sfn3guKHnBHZMFSKO8akfx5QhjuegQ==}
 
   rspack-chain@1.4.1:
     resolution: {integrity: sha512-cKkRjUXl2fhQzYwQD7aux+Og1WtjuWFG5XjtOZldjYiRanRoz9OrmbRf4s2kCOgxNplPWP946mqG5hAIzY/V0w==}
@@ -7637,7 +7637,7 @@ snapshots:
       '@swc/helpers': 0.5.17
       caniuse-lite: 1.0.30001749
       lodash: 4.17.21
-      rslog: 1.2.11
+      rslog: 1.3.0
 
   '@module-federation/bridge-react-webpack-plugin@0.20.0':
     dependencies:
@@ -8256,7 +8256,7 @@ snapshots:
       json-stream-stringify: 3.0.1
       lines-and-columns: 2.0.4
       picocolors: 1.1.1
-      rslog: 1.2.11
+      rslog: 1.3.0
       strip-ansi: 6.0.1
     transitivePeerDependencies:
       - '@rspack/core'
@@ -12255,7 +12255,7 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': link:packages/core
 
-  rslog@1.2.11: {}
+  rslog@1.3.0: {}
 
   rspack-chain@1.4.1:
     dependencies:
