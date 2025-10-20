@@ -38,9 +38,9 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.15.0",
+    "@rslib/core": "0.15.1",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.18.10",
+    "@types/node": "^22.18.11",
     "ansi-escapes": "4.3.2",
     "cli-truncate": "2.1.0",
     "patch-console": "1.0.0",

@@ -38,9 +38,9 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.15.0",
+    "@rslib/core": "0.15.1",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.18.10",
+    "@types/node": "^22.18.11",
     "file-loader": "6.2.0",
     "prebundle": "1.4.2",
     "svgo": "^3.3.2",
