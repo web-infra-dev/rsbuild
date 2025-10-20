@@ -1,51 +1,51 @@
 [
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "start",
     "label": "Getting Started"
   },
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "framework",
     "label": "Framework"
   },
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "basic",
     "label": "Basic"
   },
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "configuration",
     "label": "Configuration"
   },
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "styling",
     "label": "Styling"
   },
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "advanced",
     "label": "Advanced"
   },
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "optimization",
     "label": "Optimization"
   },
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "migration",
     "label": "Migration"
   },
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "debug",
     "label": "Debug"
   },
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "faq",
     "label": "FAQ"
   }

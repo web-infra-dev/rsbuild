@@ -11,3 +11,8 @@
 .dark {
   --rp-c-link: var(--rp-c-brand-light);
 }
+
+// temp fix
+.rp-doc :not(:where(.rp-not-doc, .rp-not-doc *)):where(td) {
+  color: unset;
+}
