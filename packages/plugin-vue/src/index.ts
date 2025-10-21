@@ -1,6 +1,6 @@
 import { createRequire } from 'node:module';
 import type { EnvironmentConfig, RsbuildPlugin } from '@rsbuild/core';
-import { type VueLoaderOptions, VueLoaderPlugin } from 'vue-loader';
+import { type VueLoaderOptions, VueLoaderPlugin } from 'rspack-vue-loader';
 import { applySplitChunksRule } from './splitChunks.js';
 
 const require = createRequire(import.meta.url);
@@ -90,7 +90,7 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
           .rule(CHAIN_ID.RULE.VUE)
           .test(VUE_REGEXP)
           .use(CHAIN_ID.USE.VUE)
-          .loader(require.resolve('vue-loader'))
+          .loader(require.resolve('rspack-vue-loader'))
           .options(vueLoaderOptions);
 
         // Support for lang="postcss" and lang="pcss" in SFC

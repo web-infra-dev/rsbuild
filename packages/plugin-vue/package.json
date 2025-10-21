@@ -28,7 +28,7 @@
     "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
-    "vue-loader": "^17.4.2",
+    "rspack-vue-loader": "^17.4.4",
     "webpack": "^5.102.1"
   },
   "devDependencies": {
