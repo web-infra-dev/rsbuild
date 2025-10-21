@@ -33,7 +33,7 @@ export const applySplitChunksRule = (
     if (options.vue) {
       extraGroups.vue = {
         name: 'lib-vue',
-        test: /node_modules[\\/](?:vue|vue-loader|@vue[\\/]shared|@vue[\\/]reactivity|@vue[\\/]runtime-dom|@vue[\\/]runtime-core)[\\/]/,
+        test: /node_modules[\\/](?:vue|rspack-vue-loader|@vue[\\/]shared|@vue[\\/]reactivity|@vue[\\/]runtime-dom|@vue[\\/]runtime-core)[\\/]/,
         priority: 0,
       };
     }

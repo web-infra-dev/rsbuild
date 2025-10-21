@@ -5,7 +5,7 @@ exports[`plugin-vue > should add vue-loader and VueLoaderPlugin correctly 1`] = 
   "test": /\\\\\\.vue\\$/,
   "use": [
     {
-      "loader": "<ROOT>/node_modules/<PNPM_INNER>/vue-loader/dist/index.js",
+      "loader": "<ROOT>/node_modules/<PNPM_INNER>/rspack-vue-loader/dist/index.js",
       "options": {
         "compilerOptions": {
           "preserveWhitespace": false,
@@ -41,7 +41,7 @@ exports[`plugin-vue > should allow to configure vueLoader options 1`] = `
   "test": /\\\\\\.vue\\$/,
   "use": [
     {
-      "loader": "<ROOT>/node_modules/<PNPM_INNER>/vue-loader/dist/index.js",
+      "loader": "<ROOT>/node_modules/<PNPM_INNER>/rspack-vue-loader/dist/index.js",
       "options": {
         "compilerOptions": {
           "preserveWhitespace": false,

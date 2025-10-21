@@ -1118,9 +1118,9 @@ importers:
 
   packages/plugin-vue:
     dependencies:
-      vue-loader:
-        specifier: ^17.4.2
-        version: 17.4.2(vue@3.5.22(typescript@5.9.3))(webpack@5.102.1)
+      rspack-vue-loader:
+        specifier: ^17.4.4
+        version: 17.4.4(vue@3.5.22(typescript@5.9.3))(webpack@5.102.1)
       webpack:
         specifier: ^5.102.1
         version: 5.102.1
@@ -4583,9 +4583,6 @@ packages:
     resolution: {integrity: sha512-NqADB8VjPFLM2V0VvHUewwwsw0ZWBaIdgo+ieHtK3hasLz4qeCRjYcqfB6AQrBggRKppKF8L52/VqdVsO47Dlw==}
     engines: {node: '>= 0.4'}
 
-  hash-sum@2.0.0:
-    resolution: {integrity: sha512-WdZTbAByD+pHfl/g9QSsBIIwy8IT+EsPiKDs0KNX+zSHhdDLFKdZu0BQHljvO+0QI/BasbMSUa8wYNCZTvhslg==}
-
   hasown@2.0.2:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
@@ -5985,6 +5982,18 @@ packages:
       '@rspack/core':
         optional: true
 
+  rspack-vue-loader@17.4.4:
+    resolution: {integrity: sha512-T4rkTZWg9hC7DZapTaJcIphser4ogsTffH/rwnX0pwMpNKjv1XKLBPa5Icd/xNPOh1NiKVxoxcT+gb8NQliukA==}
+    peerDependencies:
+      '@vue/compiler-sfc': '*'
+      vue: '*'
+      webpack: ^4.1.0 || ^5.0.0-0
+    peerDependenciesMeta:
+      '@vue/compiler-sfc':
+        optional: true
+      vue:
+        optional: true
+
   rspress-plugin-font-open-sans@1.0.3:
     resolution: {integrity: sha512-17i7uUqvyy5k51ggZJ5xoP9duqC2W76GcBviIu400VXXAQEZx3JzZWPcGz9gGmVaFHAkH19NtZK0EYKfneX4rw==}
     peerDependencies:
@@ -6720,18 +6729,6 @@ packages:
 
   vfile@6.0.3:
     resolution: {integrity: sha512-KzIbH/9tXat2u30jf+smMwFCsno4wHVdNmzFyL+T/L3UGqqk6JKfVqOFOZEpZSHADH1k40ab6NUIXZq422ov3Q==}
-
-  vue-loader@17.4.2:
-    resolution: {integrity: sha512-yTKOA4R/VN4jqjw4y5HrynFL8AK0Z3/Jt7eOJXEitsm0GMRHDBjCfCiuTiLP7OESvsZYo2pATCWhDqxC5ZrM6w==}
-    peerDependencies:
-      '@vue/compiler-sfc': '*'
-      vue: '*'
-      webpack: ^4.1.0 || ^5.0.0-0
-    peerDependenciesMeta:
-      '@vue/compiler-sfc':
-        optional: true
-      vue:
-        optional: true
 
   vue-router@4.6.3:
     resolution: {integrity: sha512-ARBedLm9YlbvQomnmq91Os7ck6efydTSpRP3nuOKCvgJOHNrhRoJDSKtee8kcL1Vf7nz6U+PMBL+hTvR3bTVQg==}
@@ -10482,8 +10479,6 @@ snapshots:
     dependencies:
       has-symbols: 1.1.0
 
-  hash-sum@2.0.0: {}
-
   hasown@2.0.2:
     dependencies:
       function-bind: 1.1.2
@@ -12268,6 +12263,14 @@ snapshots:
     optionalDependencies:
       '@rspack/core': 1.6.0-beta.0(@swc/helpers@0.5.17)
 
+  rspack-vue-loader@17.4.4(vue@3.5.22(typescript@5.9.3))(webpack@5.102.1):
+    dependencies:
+      chalk: 4.1.2
+      watchpack: 2.4.4
+      webpack: 5.102.1
+    optionalDependencies:
+      vue: 3.5.22(typescript@5.9.3)
+
   rspress-plugin-font-open-sans@1.0.3(@rspress/core@2.0.0-beta.34(@types/react@19.2.2)):
     dependencies:
       '@rspress/core': 2.0.0-beta.34(@types/react@19.2.2)
@@ -12965,15 +12968,6 @@ snapshots:
     dependencies:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
-
-  vue-loader@17.4.2(vue@3.5.22(typescript@5.9.3))(webpack@5.102.1):
-    dependencies:
-      chalk: 4.1.2
-      hash-sum: 2.0.0
-      watchpack: 2.4.4
-      webpack: 5.102.1
-    optionalDependencies:
-      vue: 3.5.22(typescript@5.9.3)
 
   vue-router@4.6.3(vue@3.5.22(typescript@5.9.3)):
     dependencies:
