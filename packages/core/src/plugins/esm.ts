@@ -16,6 +16,13 @@ export const pluginEsm = (): RsbuildPlugin => ({
         chain.optimization.runtimeChunk(true);
       }
 
+      if (target === 'node') {
+        chain.output.library({
+          ...chain.output.get('library'),
+          type: 'module',
+        });
+      }
+
       if (target === 'web-worker') {
         throw new Error(
           '[rsbuild:config] `output.module` is not supported for web-worker target.',
@@ -26,11 +33,7 @@ export const pluginEsm = (): RsbuildPlugin => ({
         .module(true)
         .chunkFormat('module')
         .chunkLoading('import')
-        .workerChunkLoading('import')
-        .library({
-          ...chain.output.get('library'),
-          type: 'module',
-        });
+        .workerChunkLoading('import');
 
       chain.experiments({
         ...chain.get('experiments'),
