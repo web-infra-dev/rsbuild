@@ -297,3 +297,53 @@ export const pluginEslint = (options?: Options): RsbuildPlugin => ({
   },
 });
 ```
+
+## Extending plugin API
+
+When building custom tools on top of Rsbuild's [JavaScript API](/api/start/), you may want to extend the existing plugin API to provide additional capabilities — for example, exposing utility functions or sharing context objects.
+
+You can achieve this by using the [rsbuild.expose()](/api/javascript-api/instance#rsbuildexpose) method on the Rsbuild instance.
+
+This method works the same way as the plugin's [api.expose()](/plugins/dev/core#apiexpose), allowing you to expose custom methods or objects to Rsbuild plugins.
+
+For example, you can expose `getState` and `setCount` methods:
+
+```ts title="myToolkit.ts"
+import { createRsbuild } from '@rsbuild/core';
+
+export const MY_TOOLKIT_ID = 'my-toolkit';
+
+const rsbuild = await createRsbuild({
+  // ...
+});
+
+const state = {
+  count: 0,
+};
+
+rsbuild.expose(MY_TOOLKIT_ID, {
+  getState() {
+    return state;
+  },
+  setCount(count: number) {
+    state.count = count;
+  },
+});
+```
+
+Plugins can then access these extended APIs using the [api.useExposed()](/plugins/dev/core#apiuseexposed) method:
+
+```ts title="myPlugin.ts"
+import { MY_TOOLKIT_ID } from './myToolkit';
+
+const myPlugin = {
+  name: 'my-plugin',
+  setup(api) {
+    const toolkitApi = api.useExposed(MY_TOOLKIT_ID);
+    if (toolkitApi) {
+      const { count } = toolkitApi.getState();
+      toolkitApi.setCount(count + 1);
+    }
+  },
+};
+```
