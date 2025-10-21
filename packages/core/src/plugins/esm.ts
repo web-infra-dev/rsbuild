@@ -12,10 +12,6 @@ export const pluginEsm = (): RsbuildPlugin => ({
       }
 
       if (target === 'web') {
-        api.logger.warn(
-          '[rsbuild:config] `output.module` for web target is experimental and may not work as expected.',
-        );
-
         // Temporary solution to fix the issue of runtime chunk not loaded as expected.
         chain.optimization.runtimeChunk(true);
       }

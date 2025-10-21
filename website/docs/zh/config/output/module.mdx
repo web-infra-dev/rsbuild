@@ -7,14 +7,32 @@
 
 :::tip
 
-- 此功能目前为实验性功能，仅在 [output.target](/config/output/target) 为 `'node'` 时可用。
+- 此功能目前为实验性功能，仅在 [output.target](/config/output/target) 为 `'web'` 或 `'node'` 时可用。
 - 如果你需要构建 ESM 格式的 JavaScript 库，推荐使用 [Rslib](https://rslib.rs)，它是一个开箱即用的库开发工具，基于 Rsbuild 实现。
 
 :::
 
-## 示例
+## Web 应用
 
-在构建 Node.js bundles 时，Rsbuild 默认输出 CommonJS 格式的产物，你可以将 `output.module` 设置为 `true` 来输出 ES modules 格式：
+在构建 Web 应用时，Rsbuild 默认会生成 IIFE 格式的产物。
+
+如果你希望输出 ES Modules 格式，可以将 `output.module` 设置为 `true`：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    module: true,
+  },
+};
+```
+
+:::tip
+开启 `output.module` 后，Rsbuild 生成的 `<script>` 标签会自动添加 `type="module"` 属性，即 [html.scriptLoading](/config/html/script-loading) 为 `'module'`。
+:::
+
+## Node.js 应用
+
+在构建 Node.js 应用时，Rsbuild 默认输出 CommonJS 格式的产物，你可以将 `output.module` 设置为 `true` 来输出 ES modules 格式：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -25,7 +43,7 @@ export default {
 };
 ```
 
-## 运行 ESM 产物
+### 运行 ESM 产物
 
 为了在 Node.js 中正确运行 ESM 产物，你可以选择以下任一方式：
 
@@ -51,6 +69,7 @@ export default {
 
 ## 版本历史
 
-| 版本   | 变更内容   |
-| ------ | ---------- |
-| v1.5.0 | 新增该选项 |
+| 版本   | 变更内容                      |
+| ------ | ----------------------------- |
+| v1.5.0 | 新增该选项                    |
+| v1.6.0 | 支持在 `target: 'web'` 时使用 |
