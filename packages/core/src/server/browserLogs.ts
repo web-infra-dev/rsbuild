@@ -109,6 +109,20 @@ const formatErrorLocation = async (
   return rawLocation;
 };
 
+const enhanceBrowserErrorLog = (log: string) => {
+  const isProcessUndefined = log.includes(
+    'ReferenceError: process is not defined',
+  );
+  if (isProcessUndefined) {
+    return `${log}\n${color.yellow(`        - \`process\` is a Node.js global and not available in browsers.
+        - To access \`process.env.*\`, define them in a \`.env\` file with the \`PUBLIC_\` prefix.
+        - Or configure them via \`source.define\`.
+        - Alternatively, install \`@rsbuild/plugin-node-polyfill\` to polyfill Node.js globals.`)}`;
+  }
+
+  return log;
+};
+
 /**
  * Formats error messages received from the browser into a log string with
  * source location information.
@@ -127,5 +141,5 @@ export const formatBrowserErrorLog = async (
     }
   }
 
-  return log;
+  return enhanceBrowserErrorLog(log);
 };
