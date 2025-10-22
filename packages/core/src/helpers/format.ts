@@ -88,7 +88,7 @@ function hintUnknownFiles(message: string): string {
       `@rsbuild/plugin-${packageName}`,
     )}" ${color.dim(
       `(https://npmjs.com/package/@rsbuild/plugin-${packageName})`,
-    )}.`;
+    )}.\n`;
   };
 
   const recommendPlugins = [
