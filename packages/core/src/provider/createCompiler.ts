@@ -105,6 +105,11 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     ? rspack(rspackConfigs)
     : rspack(rspackConfigs[0]);
 
+  // Enable unsafe fast drop in non-watch mode to improve performance
+  if (process.env.RSPACK_UNSAFE_FAST_DROP === 'true') {
+    compiler.unsafeFastDrop = true;
+  }
+
   let isVersionLogged = false;
   let isCompiling = false;
 

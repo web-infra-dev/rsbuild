@@ -123,6 +123,10 @@ export function setupCommands(): void {
     )
     .action(async (options: BuildOptions) => {
       try {
+        if (!options.watch) {
+          process.env.RSPACK_UNSAFE_FAST_DROP = 'true';
+        }
+
         const rsbuild = await init({
           cliOptions: options,
           isBuildWatch: options.watch,
