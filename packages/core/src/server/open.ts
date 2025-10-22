@@ -1,4 +1,3 @@
-import { apps, default as baseOpen } from 'open';
 import { STATIC_PATH } from '../constants';
 import { castArray, color } from '../helpers';
 import { canParse } from '../helpers/url';
@@ -98,6 +97,11 @@ async function openBrowser(url: string): Promise<boolean> {
       logger.debug(err);
     }
   }
+
+  const { apps, default: baseOpen } = await import(
+    /** webpackChunkName: "open" */
+    'open'
+  );
 
   // Fallback to open
   // It will always open new tab
