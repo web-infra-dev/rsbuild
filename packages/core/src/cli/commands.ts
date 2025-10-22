@@ -48,7 +48,7 @@ const applyCommonOptions = (cli: CAC) => {
       '--config-loader <loader>',
       'Set the config file loader (auto | jiti | native)',
       {
-        default: 'jiti',
+        default: 'auto',
       },
     )
     .option('--env-dir <dir>', 'Set the directory for loading `.env` files')

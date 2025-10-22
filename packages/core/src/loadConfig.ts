@@ -137,15 +137,16 @@ export async function loadConfig({
     return config;
   };
 
-  let configExport: RsbuildConfigExport;
+  let configExport: RsbuildConfigExport | undefined;
 
   // Determine the loading strategy based on the config loader type
-  const useNative =
+  const useNative = Boolean(
     loader === 'native' ||
-    (loader === 'auto' &&
-      (process.features.typescript ||
-        process.versions.bun ||
-        process.versions.deno));
+      (loader === 'auto' &&
+        (process.features.typescript ||
+          process.versions.bun ||
+          process.versions.deno)),
+  );
 
   if (useNative || /\.(?:js|mjs|cjs)$/.test(configFilePath)) {
     try {
@@ -164,8 +165,8 @@ export async function loadConfig({
     }
   }
 
-  try {
-    if (configExport! === undefined) {
+  if (configExport === undefined) {
+    try {
       const { createJiti } = await import('jiti');
       const jiti = createJiti(__filename, {
         // disable require cache to support restart CLI and read the new config
@@ -179,10 +180,12 @@ export async function loadConfig({
       configExport = await jiti.import<RsbuildConfigExport>(configFilePath, {
         default: true,
       });
+    } catch (err) {
+      logger.error(
+        `Failed to load file with jiti: ${color.dim(configFilePath)}`,
+      );
+      throw err;
     }
-  } catch (err) {
-    logger.error(`Failed to load file with jiti: ${color.dim(configFilePath)}`);
-    throw err;
   }
 
   if (typeof configExport === 'function') {
