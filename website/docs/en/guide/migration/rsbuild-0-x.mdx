@@ -92,15 +92,6 @@ export default {
 };
 ```
 
-## [Important] Rspack config validation
-
-Rsbuild now enables Rspack's scheme validation by default to ensure the Rspack configuration is correct.
-
-- If there is a type error in the Rspack config object, an error will be thrown and the build will be aborted.
-- If there are extra fields in the Rspack config object, an error will be thrown, but the build will not fail.
-
-> For more details, see [Rspack - RSPACK_CONFIG_VALIDATE](https://rspack.rs/guide/migration/webpack#updating-configuration).
-
 ## source.alias
 
 Removed `target` param for `source.alias` function, use [environments](/config/environments) config instead.
