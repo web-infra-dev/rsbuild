@@ -1,11 +1,18 @@
 import type { Stats as FSStats } from 'node:fs';
 import path from 'node:path';
-import { unescape as qsUnescape } from 'node:querystring';
 import { getPathnameFromUrl } from '../../helpers/path';
 import type { InternalContext } from '../../types';
 import type { OutputFileSystem } from './index';
 
 const UP_PATH_REGEXP = /(?:^|[\\/])\.\.(?:[\\/]|$)/;
+
+function decodePath(input: string) {
+  try {
+    return decodeURIComponent(input);
+  } catch {
+    return input;
+  }
+}
 
 /**
  * Resolves URL to file path with security checks and retrieves file from
@@ -18,7 +25,7 @@ export async function getFileFromUrl(
 ): Promise<
   { filename: string; fsStats: FSStats } | { errorCode: number } | undefined
 > {
-  const pathname = qsUnescape(getPathnameFromUrl(url));
+  const pathname = decodePath(getPathnameFromUrl(url));
 
   if (!pathname) {
     return;
