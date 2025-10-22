@@ -11,3 +11,12 @@ declare global {
   const RSBUILD_WEB_SOCKET_TOKEN: string;
   const Deno: unknown;
 }
+
+declare namespace NodeJS {
+  interface ProcessEnv {
+    /**
+     * @experimental
+     */
+    RSPACK_UNSAFE_FAST_DROP?: string;
+  }
+}
