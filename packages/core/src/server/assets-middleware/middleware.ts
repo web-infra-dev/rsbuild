@@ -1,4 +1,5 @@
 import type { Stats as FSStats, ReadStream } from 'node:fs';
+import type { ServerResponse } from 'node:http';
 import onFinished from 'on-finished';
 import type { Range, Result as RangeResult, Ranges } from 'range-parser';
 import rangeParser from 'range-parser';
@@ -92,13 +93,13 @@ function destroyStream(stream: ReadStream, suppress: boolean): void {
   }
 }
 
-const statuses: Record<number, string> = {
-  400: 'Bad Request',
-  403: 'Forbidden',
-  404: 'Not Found',
-  416: 'Range Not Satisfiable',
-  500: 'Internal Server Error',
-};
+export enum HttpCode {
+  BadRequest = 400,
+  Forbidden = 403,
+  NotFound = 404,
+  RangeNotSatisfiable = 416,
+  InternalServerError = 500,
+}
 
 const parseRangeHeaders = memorize((value: string): RangeResult | Ranges => {
   const [len, rangeHeader] = value.split('|');
@@ -112,6 +113,51 @@ type SendErrorOptions = {
 };
 
 const acceptedMethods = ['GET', 'HEAD'];
+
+function sendError(
+  res: ServerResponse,
+  code: HttpCode,
+  options?: Partial<SendErrorOptions>,
+): void {
+  const errorMessages: Record<HttpCode, string> = {
+    [HttpCode.BadRequest]: 'Bad Request',
+    [HttpCode.Forbidden]: 'Forbidden',
+    [HttpCode.NotFound]: 'Not Found',
+    [HttpCode.RangeNotSatisfiable]: 'Range Not Satisfiable',
+    [HttpCode.InternalServerError]: 'Internal Server Error',
+  };
+
+  const content = errorMessages[code];
+  const document = Buffer.from(
+    `<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<title>Error</title>\n</head>\n<body>\n<pre>${escapeHtml(content)}</pre>\n</body>\n</html>`,
+    'utf-8',
+  );
+
+  const headers = res.getHeaderNames();
+  for (let i = 0; i < headers.length; i++) {
+    res.removeHeader(headers[i]);
+  }
+
+  if (options?.headers) {
+    const keys = Object.keys(options.headers);
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      const value = options.headers[key];
+      if (typeof value !== 'undefined') {
+        res.setHeader(key, value);
+      }
+    }
+  }
+
+  res.statusCode = code;
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.setHeader('Content-Security-Policy', "default-src 'none'");
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+
+  const byteLength = Buffer.byteLength(document);
+  res.setHeader('Content-Length', byteLength);
+  res.end(document);
+}
 
 export function createMiddleware(
   context: InternalContext,
@@ -131,42 +177,6 @@ export function createMiddleware(
     if (req.method && !acceptedMethods.includes(req.method)) {
       await goNext();
       return;
-    }
-
-    function sendError(
-      status: number,
-      options?: Partial<SendErrorOptions>,
-    ): void {
-      const content = statuses[status] || String(status);
-      const document = Buffer.from(
-        `<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<title>Error</title>\n</head>\n<body>\n<pre>${escapeHtml(content)}</pre>\n</body>\n</html>`,
-        'utf-8',
-      );
-
-      const headers = res.getHeaderNames();
-      for (let i = 0; i < headers.length; i++) {
-        res.removeHeader(headers[i]);
-      }
-
-      if (options?.headers) {
-        const keys = Object.keys(options.headers);
-        for (let i = 0; i < keys.length; i++) {
-          const key = keys[i];
-          const value = options.headers[key];
-          if (typeof value !== 'undefined') {
-            res.setHeader(key, value);
-          }
-        }
-      }
-
-      res.statusCode = status;
-      res.setHeader('Content-Type', 'text/html; charset=utf-8');
-      res.setHeader('Content-Security-Policy', "default-src 'none'");
-      res.setHeader('X-Content-Type-Options', 'nosniff');
-
-      const byteLength = Buffer.byteLength(document);
-      res.setHeader('Content-Length', byteLength);
-      res.end(document);
     }
 
     function isConditionalGET() {
@@ -332,10 +342,12 @@ export function createMiddleware(
       }
 
       if ('errorCode' in resolved) {
-        if (resolved.errorCode === 403) {
+        if (resolved.errorCode === HttpCode.Forbidden) {
           logger.error(`[rsbuild:middleware] Malicious path "${req.url}".`);
+        } else if (resolved.errorCode === HttpCode.BadRequest) {
+          logger.error(`[rsbuild:middleware] Invalid pathname "${req.url}".`);
         }
-        sendError(resolved.errorCode);
+        sendError(res, resolved.errorCode);
         return;
       }
 
@@ -366,7 +378,7 @@ export function createMiddleware(
 
       if (isConditionalGET()) {
         if (isPreconditionFailure()) {
-          sendError(412);
+          sendError(res, HttpCode.RangeNotSatisfiable);
           return;
         }
 
@@ -414,7 +426,7 @@ export function createMiddleware(
             getValueContentRangeHeader('bytes', size),
           );
 
-          sendError(416, {
+          sendError(res, HttpCode.RangeNotSatisfiable, {
             headers: {
               'Content-Range': res.getHeader('Content-Range'),
             },
@@ -490,10 +502,10 @@ export function createMiddleware(
             case 'ENAMETOOLONG':
             case 'ENOENT':
             case 'ENOTDIR':
-              sendError(404);
+              sendError(res, HttpCode.NotFound);
               break;
             default:
-              sendError(500);
+              sendError(res, HttpCode.InternalServerError);
               break;
           }
         },
