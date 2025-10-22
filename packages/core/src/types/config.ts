@@ -1,7 +1,3 @@
-import type { IncomingMessage, ServerResponse } from 'node:http';
-import type { SecureServerSessionOptions } from 'node:http2';
-import type { ServerOptions as HttpsServerOptions } from 'node:https';
-import type { URL } from 'node:url';
 import type {
   Configuration,
   CopyRspackPluginOptions,
@@ -12,6 +8,10 @@ import type {
   SwcJsMinimizerRspackPluginOptions,
   SwcLoaderOptions,
 } from '@rspack/core';
+import type { IncomingMessage, ServerResponse } from 'node:http';
+import type { SecureServerSessionOptions } from 'node:http2';
+import type { ServerOptions as HttpsServerOptions } from 'node:https';
+import type { URL } from 'node:url';
 import type { ChokidarOptions } from '../../compiled/chokidar/index.js';
 import type cors from '../../compiled/cors/index.js';
 import type {
@@ -1199,9 +1199,10 @@ export interface OutputConfig {
    * When using CDN in the production,
    * you can use this option to set the URL prefix of static assets,
    * similar to the `output.publicPath` config of Rspack.
+   * `auto` means use a relative path based on file location.
    * @default `server.base`
    */
-  assetPrefix?: string;
+  assetPrefix?: string | 'auto';
   /**
    * Set the size threshold to inline static assets such as images and fonts.
    * By default, static assets will be Base64 encoded and inline into the page if
