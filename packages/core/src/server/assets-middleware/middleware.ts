@@ -6,6 +6,7 @@ import rangeParser from 'range-parser';
 import { requireCompiledPackage } from '../../helpers/vendors';
 import { logger } from '../../logger';
 import type { InternalContext, RequestHandler } from '../../types';
+import { HttpCode } from '../helper';
 import { escapeHtml } from './escapeHtml';
 import { getFileFromUrl } from './getFileFromUrl';
 import type { OutputFileSystem } from './index';
@@ -91,14 +92,6 @@ function destroyStream(stream: ReadStream, suppress: boolean): void {
     stream.removeAllListeners('error');
     stream.addListener('error', () => {});
   }
-}
-
-export enum HttpCode {
-  BadRequest = 400,
-  Forbidden = 403,
-  NotFound = 404,
-  RangeNotSatisfiable = 416,
-  InternalServerError = 500,
 }
 
 const parseRangeHeaders = memorize((value: string): RangeResult | Ranges => {

@@ -517,3 +517,11 @@ export function escapeHtml(text: string | null | undefined): string {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 }
+
+export enum HttpCode {
+  BadRequest = 400,
+  Forbidden = 403,
+  NotFound = 404,
+  RangeNotSatisfiable = 416,
+  InternalServerError = 500,
+}

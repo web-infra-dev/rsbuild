@@ -2,8 +2,8 @@ import type { Stats as FSStats } from 'node:fs';
 import path from 'node:path';
 import { getPathnameFromUrl } from '../../helpers/path';
 import type { InternalContext } from '../../types';
+import { HttpCode } from '../helper';
 import type { OutputFileSystem } from './index';
-import { HttpCode } from './middleware';
 
 const UP_PATH_REGEXP = /(?:^|[\\/])\.\.(?:[\\/]|$)/;
 
