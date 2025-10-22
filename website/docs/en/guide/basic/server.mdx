@@ -1,6 +1,6 @@
 # Dev server
 
-Rsbuild includes a built-in dev server designed to improve the development experience. When you run `rsbuild dev` or `rsbuild preview`, the server starts and provides features like page preview, routing, and hot module replacement.
+Rsbuild includes a built-in dev server that enhances the development experience. When you run `rsbuild dev` or `rsbuild preview`, the server starts and provides features like page preview, routing, and hot module replacement.
 
 ## Base path
 
@@ -36,9 +36,9 @@ The Rsbuild server provides default routing conventions and allows customization
 
 The Rsbuild server generates page routes based on the [server.base](/config/server/base) and [source.entry](/config/source/entry) configurations.
 
-When the entry is `index`, the page can be accessed at `/`. When the entry is `foo`, the page can be accessed at `/foo`.
+When the entry is `index`, you can access the page at `/`. When the entry is `foo`, you can access the page at `/foo`.
 
-When `server.base` is `/base`, the index page can be accessed at `/base`, and the foo page can be accessed at `/base/foo`.
+When `server.base` is `/base`, you can access the index page at `/base`, and the foo page at `/base/foo`.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -88,11 +88,11 @@ export default {
 
 ### HTML output path
 
-Normally, `/` points to the dist root directory, and HTML files are output to the dist root directory. In this case, you can access the corresponding HTML page at `/some-path`.
+Normally, `/` points to the dist root directory, and HTML files are output to the dist root directory. In this case, you can access the HTML page at `/some-path`.
 
-If you output HTML files to other subdirectories by modifying [output.distPath.html](/config/output/dist-path), you need to access the corresponding HTML page at `/[htmlPath]/some-path`.
+If you output HTML files to other subdirectories by modifying [output.distPath.html](/config/output/dist-path), you need to access the HTML page at `/[htmlPath]/some-path`.
 
-For example, if you set HTML files to be output to the `HTML` directory, index.html will be accessed at `/html/`, and foo.html will be accessed at `/html/foo`.
+For example, if you set HTML files to output to the `HTML` directory, you can access index.html at `/html/`, and foo.html at `/html/foo`.
 
 ```ts
 export default {
@@ -112,7 +112,7 @@ export default {
 
 ## Rspack dev server
 
-Rsbuild has a built-in lightweight dev server that differs from the dev servers provided by Rspack CLI or webpack CLI. There are several differences between them, including different configuration options.
+Rsbuild has a built-in lightweight dev server that differs from the dev servers provided by Rspack CLI or webpack CLI, including different configuration options.
 
 ### Comparison
 
@@ -197,9 +197,9 @@ server.middlewares.use((req, res, next) => {
 
 ### Integrate third-party server frameworks
 
-When migrating from other server frameworks (such as Express), the original middleware may not work directly in Rsbuild. For example, properties like `req.params`, `req.path`, `req.search`, and `req.query` provided by Express are not accessible in Rsbuild middleware.
+When migrating from other server frameworks (such as Express), the original middleware may not work directly in Rsbuild. For example, Express-specific properties like `req.params`, `req.path`, `req.search`, and `req.query` are not available in Rsbuild middleware.
 
-If you need to reuse existing middleware in Rsbuild, you can use the following approach to integrate the entire server application as middleware:
+If you need to reuse existing middleware in Rsbuild, you can integrate the entire server application as middleware using the following approach:
 
 ```ts title="rsbuild.config.ts"
 import express from 'express';
