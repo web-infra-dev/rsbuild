@@ -117,7 +117,8 @@ rsbuild build -c rsbuild.prod.config.mjs
 
 Rsbuild provides three ways to load configuration files:
 
-- `jiti` (Default): When you use a configuration file with the `.ts`, `.mts`, or `.cts` extensions, Rsbuild uses [jiti](https://github.com/unjs/jiti) to load the configuration file, providing interoperability between ESM and CommonJS. The module resolution behavior differs slightly from Node.js native behavior.
+- `auto` (Default): Use Node.js's native loader to load configuration files first, falling back to jiti if it fails.
+- `jiti`: Use [jiti](https://github.com/unjs/jiti) to load the configuration file, providing interoperability between ESM and CommonJS. The module resolution behavior differs slightly from Node.js native behavior.
 - `native`: Use Node.js native loader to load the configuration file. This ensures that module resolution behavior is consistent with Node.js native behavior and has better performance. This requires your JavaScript runtime to natively support TypeScript.
 
   For example, Node.js v22.6.0+ natively supports TypeScript. You can use the following command with the Node.js native loader to load the configuration file:
@@ -131,8 +132,6 @@ Rsbuild provides three ways to load configuration files:
   # Need to set --experimental-strip-types
   NODE_OPTIONS="--experimental-strip-types" npx rsbuild build --config-loader native
   ```
-
-- `auto`: Use Node.js's native loader to load configuration files first, falling back to jiti if it fails.
 
 ### About Node.js native loader
 
