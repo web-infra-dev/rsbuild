@@ -137,7 +137,7 @@ export async function loadConfig({
     return config;
   };
 
-  let configExport: RsbuildConfigExport;
+  let configExport: RsbuildConfigExport | undefined;
 
   // Determine the loading strategy based on the config loader type
   const useNative = Boolean(
@@ -165,7 +165,7 @@ export async function loadConfig({
     }
   }
 
-  if (configExport! === undefined) {
+  if (configExport === undefined) {
     try {
       const { createJiti } = await import('jiti');
       const jiti = createJiti(__filename, {
