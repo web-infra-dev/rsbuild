@@ -31,11 +31,6 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Install Pnpm
-        run: |
-          npm install -g corepack@latest --force
-          corepack enable
-
       - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
         id: changes
         with:
@@ -71,17 +66,11 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Install Pnpm
-        run: |
-          npm install -g corepack@latest --force
-          corepack enable
-
       - name: Setup Node.js
         if: steps.eco_ci.outcome == 'failure'
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
           node-version: 22
-          cache: 'pnpm'
 
       - name: Get CI Result
         id: eco-ci-result
