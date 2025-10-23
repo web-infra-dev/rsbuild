@@ -2,17 +2,10 @@ import type { Stats as FSStats } from 'node:fs';
 import path from 'node:path';
 import { getPathnameFromUrl } from '../../helpers/path';
 import type { InternalContext } from '../../types';
+import { HttpCode } from '../helper';
 import type { OutputFileSystem } from './index';
 
 const UP_PATH_REGEXP = /(?:^|[\\/])\.\.(?:[\\/]|$)/;
-
-function decodePath(input: string) {
-  try {
-    return decodeURIComponent(input);
-  } catch {
-    return input;
-  }
-}
 
 /**
  * Resolves URL to file path with security checks and retrieves file from
@@ -23,9 +16,15 @@ export async function getFileFromUrl(
   outputFileSystem: OutputFileSystem,
   context: InternalContext,
 ): Promise<
-  { filename: string; fsStats: FSStats } | { errorCode: number } | undefined
+  { filename: string; fsStats: FSStats } | { errorCode: HttpCode } | undefined
 > {
-  const pathname = decodePath(getPathnameFromUrl(url));
+  let pathname = getPathnameFromUrl(url);
+
+  try {
+    pathname = decodeURIComponent(pathname);
+  } catch {
+    return { errorCode: HttpCode.BadRequest };
+  }
 
   if (!pathname) {
     return;
@@ -33,12 +32,12 @@ export async function getFileFromUrl(
 
   // Return early to prevent null byte injection attacks
   if (pathname.includes('\0')) {
-    return { errorCode: 400 };
+    return { errorCode: HttpCode.BadRequest };
   }
 
   // Prevent path traversal attacks by checking for ".." patterns
   if (UP_PATH_REGEXP.test(path.normalize(`./${pathname}`))) {
-    return { errorCode: 403 };
+    return { errorCode: HttpCode.Forbidden };
   }
 
   const stat = async (filename: string) => {
