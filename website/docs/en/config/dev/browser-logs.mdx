@@ -5,7 +5,9 @@
 
 Controls whether to forward browser runtime errors to the terminal.
 
-When `true`, the Rsbuild client listens for window `error` events in the browser and send them to the dev server, where they are printed in the terminal (prefixed with `[browser]`).
+When set to `true`, Rsbuild's client script listens for `window.error` events and unhandled Promise rejections in the browser, then sends these errors to the dev server. The server prints them in the terminal with a `[browser]` prefix, along with improved formatting and contextual information.
+
+This feature is particularly useful when working with AI coding agents that can only read terminal output, helping them better understand runtime errors and assist in debugging.
 
 ## Example
 
@@ -21,7 +23,8 @@ const App = () => {
 The browser will throw an error, and Rsbuild will forward this error to the terminal:
 
 ```bash
-error   [browser] Uncaught TypeError: Cannot read properties of undefined (reading 'name') (src/App.jsx:3:0)
+error   [browser] Uncaught TypeError: Cannot read properties of undefined (reading 'name')
+ (src/App.jsx:3:0)
 ```
 
 ## Disabling
