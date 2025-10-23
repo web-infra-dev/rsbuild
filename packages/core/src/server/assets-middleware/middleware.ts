@@ -120,8 +120,20 @@ function sendError(
   };
 
   const content = errorMessages[code];
+  const message = `${code} ${content}`;
   const document = Buffer.from(
-    `<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<title>Error</title>\n</head>\n<body>\n<pre>${content}</pre>\n</body>\n</html>`,
+    `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>${message}</title>
+  </head>
+  <body>
+    <center><h1>${message}</h1></center>
+    <hr>
+    <center>Rsbuild dev server</center>
+  </body>
+</html>`,
     'utf-8',
   );
 
@@ -302,21 +314,20 @@ export function createMiddleware(
     }
 
     function getRangeHeader(): string | undefined {
-      const rage = req.headers.range;
-      if (rage && BYTES_RANGE_REGEXP.test(rage)) {
-        return rage;
+      const { range } = req.headers;
+      if (range && BYTES_RANGE_REGEXP.test(range)) {
+        return range;
       }
     }
 
     function getOffsetAndLenFromRange(range: Range): [number, number] {
-      const offset = range.start;
-      const len = range.end - range.start + 1;
-      return [offset, len];
+      const { start, end } = range;
+      const len = end - start + 1;
+      return [start, len];
     }
 
-    function calcStartAndEnd(offset: number, len: number): [number, number] {
-      const start = offset;
-      const end = Math.max(offset, offset + len - 1);
+    function calcStartAndEnd(start: number, len: number): [number, number] {
+      const end = Math.max(start, start + len - 1);
       return [start, end];
     }
 
