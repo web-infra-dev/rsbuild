@@ -120,8 +120,20 @@ function sendError(
   };
 
   const content = errorMessages[code];
+  const message = `${code} ${content}`;
   const document = Buffer.from(
-    `<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<title>Error</title>\n</head>\n<body>\n<pre>${content}</pre>\n</body>\n</html>`,
+    `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>${message}</title>
+  </head>
+  <body>
+    <h1 style="text-align: center;">${message}</h1>
+    <hr>
+    <div style="text-align: center;">Rsbuild dev server</div>
+  </body>
+</html>`,
     'utf-8',
   );
 
@@ -143,7 +155,6 @@ function sendError(
 
   res.statusCode = code;
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
-  res.setHeader('Content-Security-Policy', "default-src 'none'");
   res.setHeader('X-Content-Type-Options', 'nosniff');
 
   const byteLength = Buffer.byteLength(document);
@@ -302,21 +313,20 @@ export function createMiddleware(
     }
 
     function getRangeHeader(): string | undefined {
-      const rage = req.headers.range;
-      if (rage && BYTES_RANGE_REGEXP.test(rage)) {
-        return rage;
+      const { range } = req.headers;
+      if (range && BYTES_RANGE_REGEXP.test(range)) {
+        return range;
       }
     }
 
     function getOffsetAndLenFromRange(range: Range): [number, number] {
-      const offset = range.start;
-      const len = range.end - range.start + 1;
-      return [offset, len];
+      const { start, end } = range;
+      const len = end - start + 1;
+      return [start, len];
     }
 
-    function calcStartAndEnd(offset: number, len: number): [number, number] {
-      const start = offset;
-      const end = Math.max(offset, offset + len - 1);
+    function calcStartAndEnd(start: number, len: number): [number, number] {
+      const end = Math.max(start, start + len - 1);
       return [start, end];
     }
 
