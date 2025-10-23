@@ -129,9 +129,9 @@ function sendError(
     <title>${message}</title>
   </head>
   <body>
-    <center><h1>${message}</h1></center>
+    <div style="text-align: center;"><h1>${message}</h1></div>
     <hr>
-    <center>Rsbuild dev server</center>
+    <div style="text-align: center;">Rsbuild dev server</div>
   </body>
 </html>`,
     'utf-8',
