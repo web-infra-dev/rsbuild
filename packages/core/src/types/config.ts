@@ -51,6 +51,7 @@ import type {
   ConfigChain,
   ConfigChainMergeContext,
   ConfigChainWithContext,
+  LiteralUnion,
   MaybePromise,
   OneOrMany,
   Optional,
@@ -1193,7 +1194,7 @@ export interface OutputConfig {
    * `auto` means use a relative path based on file location.
    * @default `server.base`
    */
-  assetPrefix?: string | 'auto';
+  assetPrefix?: LiteralUnion<'auto', string>;
   /**
    * Set the size threshold to inline static assets such as images and fonts.
    * By default, static assets will be Base64 encoded and inline into the page if
@@ -1734,7 +1735,7 @@ export interface DevConfig {
    * similar to the [output.publicPath](https://rspack.rs/config/output#outputpublicpath)
    * config of Rspack.
    */
-  assetPrefix?: string | boolean;
+  assetPrefix?: LiteralUnion<'auto', string> | boolean;
   /**
    * Whether to render progress bars to display the build progress.
    * @default false
