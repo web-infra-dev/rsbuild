@@ -129,7 +129,7 @@ function sendError(
     <title>${message}</title>
   </head>
   <body>
-    <div style="text-align: center;"><h1>${message}</h1></div>
+    <h1 style="text-align: center;">${message}</h1>
     <hr>
     <div style="text-align: center;">Rsbuild dev server</div>
   </body>
@@ -155,7 +155,6 @@ function sendError(
 
   res.statusCode = code;
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
-  res.setHeader('Content-Security-Policy', "default-src 'none'");
   res.setHeader('X-Content-Type-Options', 'nosniff');
 
   const byteLength = Buffer.byteLength(document);
