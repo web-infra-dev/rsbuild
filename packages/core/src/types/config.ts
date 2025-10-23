@@ -1485,7 +1485,7 @@ export type AppIconItem = {
    * the default value.
    * @see https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Manifest/Reference/icons#purpose
    */
-  purpose?: string;
+  purpose?: LiteralUnion<'any' | 'maskable' | 'monochrome', string>;
 };
 
 export type AppIcon = {
