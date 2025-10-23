@@ -436,9 +436,6 @@ importers:
       '@rsbuild/plugin-react':
         specifier: workspace:*
         version: link:../../packages/plugin-react
-      '@rsdoctor/rspack-plugin':
-        specifier: 1.3.3
-        version: 1.3.3(@rsbuild/core@packages+core)(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
       '@types/react':
         specifier: ^19.2.2
         version: 19.2.2
@@ -8070,28 +8067,6 @@ snapshots:
 
   '@rsdoctor/client@1.3.3': {}
 
-  '@rsdoctor/core@1.3.3(@rsbuild/core@packages+core)(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)':
-    dependencies:
-      '@rsbuild/plugin-check-syntax': 1.4.0(@rsbuild/core@packages+core)
-      '@rsdoctor/graph': 1.3.3(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      '@rsdoctor/sdk': 1.3.3(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      '@rsdoctor/types': 1.3.3(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      '@rsdoctor/utils': 1.3.3(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      browserslist-load-config: 1.0.1
-      enhanced-resolve: 5.12.0
-      filesize: 10.1.6
-      fs-extra: 11.3.2
-      lodash: 4.17.21
-      semver: 7.7.3
-      source-map: 0.7.6
-    transitivePeerDependencies:
-      - '@rsbuild/core'
-      - '@rspack/core'
-      - bufferutil
-      - supports-color
-      - utf-8-validate
-      - webpack
-
   '@rsdoctor/core@1.3.3(@rsbuild/core@packages+core)(@rspack/core@1.6.0-beta.1(@swc/helpers@0.5.17))(webpack@5.102.1)':
     dependencies:
       '@rsbuild/plugin-check-syntax': 1.4.0(@rsbuild/core@packages+core)
@@ -8114,17 +8089,6 @@ snapshots:
       - utf-8-validate
       - webpack
 
-  '@rsdoctor/graph@1.3.3(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)':
-    dependencies:
-      '@rsdoctor/types': 1.3.3(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      '@rsdoctor/utils': 1.3.3(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      lodash.unionby: 4.8.0
-      path-browserify: 1.0.1
-      source-map: 0.7.6
-    transitivePeerDependencies:
-      - '@rspack/core'
-      - webpack
-
   '@rsdoctor/graph@1.3.3(@rspack/core@1.6.0-beta.1(@swc/helpers@0.5.17))(webpack@5.102.1)':
     dependencies:
       '@rsdoctor/types': 1.3.3(@rspack/core@1.6.0-beta.1(@swc/helpers@0.5.17))(webpack@5.102.1)
@@ -8134,23 +8098,6 @@ snapshots:
       source-map: 0.7.6
     transitivePeerDependencies:
       - '@rspack/core'
-      - webpack
-
-  '@rsdoctor/rspack-plugin@1.3.3(@rsbuild/core@packages+core)(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)':
-    dependencies:
-      '@rsdoctor/core': 1.3.3(@rsbuild/core@packages+core)(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      '@rsdoctor/graph': 1.3.3(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      '@rsdoctor/sdk': 1.3.3(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      '@rsdoctor/types': 1.3.3(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      '@rsdoctor/utils': 1.3.3(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      lodash-es: 4.17.21
-    optionalDependencies:
-      '@rspack/core': 1.5.8(@swc/helpers@0.5.17)
-    transitivePeerDependencies:
-      - '@rsbuild/core'
-      - bufferutil
-      - supports-color
-      - utf-8-validate
       - webpack
 
   '@rsdoctor/rspack-plugin@1.3.3(@rsbuild/core@packages+core)(@rspack/core@1.6.0-beta.1(@swc/helpers@0.5.17))(webpack@5.102.1)':
@@ -8165,22 +8112,6 @@ snapshots:
       '@rspack/core': 1.6.0-beta.1(@swc/helpers@0.5.17)
     transitivePeerDependencies:
       - '@rsbuild/core'
-      - bufferutil
-      - supports-color
-      - utf-8-validate
-      - webpack
-
-  '@rsdoctor/sdk@1.3.3(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)':
-    dependencies:
-      '@rsdoctor/client': 1.3.3
-      '@rsdoctor/graph': 1.3.3(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      '@rsdoctor/types': 1.3.3(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      '@rsdoctor/utils': 1.3.3(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      safer-buffer: 2.1.2
-      socket.io: 4.8.1
-      tapable: 2.2.3
-    transitivePeerDependencies:
-      - '@rspack/core'
       - bufferutil
       - supports-color
       - utf-8-validate
@@ -8202,16 +8133,6 @@ snapshots:
       - utf-8-validate
       - webpack
 
-  '@rsdoctor/types@1.3.3(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)':
-    dependencies:
-      '@types/connect': 3.4.38
-      '@types/estree': 1.0.5
-      '@types/tapable': 2.2.7
-      source-map: 0.7.6
-    optionalDependencies:
-      '@rspack/core': 1.5.8(@swc/helpers@0.5.17)
-      webpack: 5.102.1
-
   '@rsdoctor/types@1.3.3(@rspack/core@1.6.0-beta.1(@swc/helpers@0.5.17))(webpack@5.102.1)':
     dependencies:
       '@types/connect': 3.4.38
@@ -8221,27 +8142,6 @@ snapshots:
     optionalDependencies:
       '@rspack/core': 1.6.0-beta.1(@swc/helpers@0.5.17)
       webpack: 5.102.1
-
-  '@rsdoctor/utils@1.3.3(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)':
-    dependencies:
-      '@babel/code-frame': 7.26.2
-      '@rsdoctor/types': 1.3.3(@rspack/core@1.5.8(@swc/helpers@0.5.17))(webpack@5.102.1)
-      '@types/estree': 1.0.5
-      acorn: 8.15.0
-      acorn-import-attributes: 1.9.5(acorn@8.15.0)
-      acorn-walk: 8.3.4
-      deep-eql: 4.1.4
-      envinfo: 7.18.0
-      fs-extra: 11.3.2
-      get-port: 5.1.1
-      json-stream-stringify: 3.0.1
-      lines-and-columns: 2.0.4
-      picocolors: 1.1.1
-      rslog: 1.3.0
-      strip-ansi: 6.0.1
-    transitivePeerDependencies:
-      - '@rspack/core'
-      - webpack
 
   '@rsdoctor/utils@1.3.3(@rspack/core@1.6.0-beta.1(@swc/helpers@0.5.17))(webpack@5.102.1)':
     dependencies:
