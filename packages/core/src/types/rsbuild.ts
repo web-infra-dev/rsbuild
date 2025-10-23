@@ -368,7 +368,7 @@ export type RsbuildMode = 'development' | 'production' | 'none';
 
 export type RsbuildStatsItem = Pick<
   Rspack.StatsCompilation,
-  'errors' | 'warnings' | 'time' | 'entrypoints' | 'hash' | 'assets'
+  'errors' | 'warnings' | 'time' | 'entrypoints' | 'hash'
 >;
 
 /**

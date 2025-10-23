@@ -68,14 +68,23 @@ export const getStatsAssetsOptions = (): Rspack.StatsOptions => ({
   groupAssetsByEmitStatus: false,
 });
 
-export const getAssetsFromStats = (
-  stats: Rspack.Stats,
-): Rspack.StatsAsset[] => {
-  const statsJson = stats.toJson({
-    all: false,
-    ...getStatsAssetsOptions(),
-  });
-  return statsJson.assets || [];
+export type RsbuildAsset = {
+  /**
+   * The name of the asset.
+   * @example 'index.html', 'static/js/index.[hash].js'
+   */
+  name: string;
+  /**
+   * The size of the asset in bytes.
+   */
+  size: number;
+};
+
+export const getAssetsFromStats = (stats: Rspack.Stats): RsbuildAsset[] => {
+  return Object.entries(stats.compilation.assets).map(([name, value]) => ({
+    name,
+    size: value.size(),
+  }));
 };
 
 function getStatsOptions(
@@ -101,11 +110,6 @@ function getStatsOptions(
       hash: true,
       // for HMR to compare the entrypoints
       entrypoints: true,
-    };
-  } else if (action === 'build') {
-    defaultOptions = {
-      ...defaultOptions,
-      ...getStatsAssetsOptions(),
     };
   }
 

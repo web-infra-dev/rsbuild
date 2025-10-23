@@ -339,7 +339,7 @@ export const viewingServedFilesMiddleware: (params: {
 
         for (const asset of assets) {
           list.push(
-            `<li><a target="_blank" href="${asset?.name}">${asset?.name}</a></li>`,
+            `<li><a target="_blank" href="${asset.name}">${asset.name}</a></li>`,
           );
         }
 
