@@ -372,7 +372,7 @@ export function createMiddleware(
 
       if (isConditionalGET()) {
         if (isPreconditionFailure()) {
-          sendError(res, HttpCode.RangeNotSatisfiable);
+          sendError(res, HttpCode.PreconditionFailed);
           return;
         }
 
