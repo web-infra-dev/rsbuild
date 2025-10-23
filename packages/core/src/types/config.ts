@@ -1,3 +1,7 @@
+import type { IncomingMessage, ServerResponse } from 'node:http';
+import type { SecureServerSessionOptions } from 'node:http2';
+import type { ServerOptions as HttpsServerOptions } from 'node:https';
+import type { URL } from 'node:url';
 import type {
   Configuration,
   CopyRspackPluginOptions,
@@ -8,10 +12,6 @@ import type {
   SwcJsMinimizerRspackPluginOptions,
   SwcLoaderOptions,
 } from '@rspack/core';
-import type { IncomingMessage, ServerResponse } from 'node:http';
-import type { SecureServerSessionOptions } from 'node:http2';
-import type { ServerOptions as HttpsServerOptions } from 'node:https';
-import type { URL } from 'node:url';
 import type { ChokidarOptions } from '../../compiled/chokidar/index.js';
 import type cors from '../../compiled/cors/index.js';
 import type {
