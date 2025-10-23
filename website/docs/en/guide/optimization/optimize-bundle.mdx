@@ -42,13 +42,7 @@ npx yarn-deduplicate && yarn
 
 We recommend using lightweight libraries in your project, such as replacing [moment](https://momentjs.com/) with [day.js](https://day.js.org/).
 
-To find out the large libraries in the project, add the `BUNDLE_ANALYZE=true` environment variable when building:
-
-```bash
-BUNDLE_ANALYZE=true pnpm build
-```
-
-See the [performance.bundleAnalyze](/config/performance/bundle-analyze) configuration for details.
+To find out large third-party libraries in your project, use Rsdoctor to analyze the bundle size. For more details, see [Using Rsdoctor](/guide/debug/rsdoctor).
 
 ## Adjust browserslist
 
