@@ -7,10 +7,8 @@ import { requireCompiledPackage } from '../../helpers/vendors';
 import { logger } from '../../logger';
 import type { InternalContext, RequestHandler } from '../../types';
 import { HttpCode } from '../helper';
-import { escapeHtml } from './escapeHtml';
 import { getFileFromUrl } from './getFileFromUrl';
 import type { OutputFileSystem } from './index';
-import { memorize } from './memorize';
 import { parseTokenList } from './parseTokenList';
 
 function getEtag(stat: FSStats): string {
@@ -94,12 +92,12 @@ function destroyStream(stream: ReadStream, suppress: boolean): void {
   }
 }
 
-const parseRangeHeaders = memorize((value: string): RangeResult | Ranges => {
+const parseRangeHeaders = (value: string): RangeResult | Ranges => {
   const [len, rangeHeader] = value.split('|');
   return rangeParser(Number(len), rangeHeader, {
     combine: true,
   });
-});
+};
 
 type SendErrorOptions = {
   headers?: Record<string, number | string | string[] | undefined>;
@@ -123,7 +121,7 @@ function sendError(
 
   const content = errorMessages[code];
   const document = Buffer.from(
-    `<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<title>Error</title>\n</head>\n<body>\n<pre>${escapeHtml(content)}</pre>\n</body>\n</html>`,
+    `<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<title>Error</title>\n</head>\n<body>\n<pre>${content}</pre>\n</body>\n</html>`,
     'utf-8',
   );
 
