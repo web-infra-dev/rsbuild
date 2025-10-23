@@ -116,6 +116,7 @@ function sendError(
     [HttpCode.BadRequest]: 'Bad Request',
     [HttpCode.Forbidden]: 'Forbidden',
     [HttpCode.NotFound]: 'Not Found',
+    [HttpCode.PreconditionFailed]: 'Precondition Failed',
     [HttpCode.RangeNotSatisfiable]: 'Range Not Satisfiable',
     [HttpCode.InternalServerError]: 'Internal Server Error',
   };

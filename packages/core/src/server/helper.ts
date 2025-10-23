@@ -522,6 +522,7 @@ export enum HttpCode {
   BadRequest = 400,
   Forbidden = 403,
   NotFound = 404,
+  PreconditionFailed = 412,
   RangeNotSatisfiable = 416,
   InternalServerError = 500,
 }
