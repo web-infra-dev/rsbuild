@@ -99,17 +99,9 @@ const parseRangeHeaders = (value: string): RangeResult | Ranges => {
   });
 };
 
-type SendErrorOptions = {
-  headers?: Record<string, number | string | string[] | undefined>;
-};
-
 const acceptedMethods = ['GET', 'HEAD'];
 
-function sendError(
-  res: ServerResponse,
-  code: HttpCode,
-  options?: Partial<SendErrorOptions>,
-): void {
+function sendError(res: ServerResponse, code: HttpCode): void {
   const errorMessages: Record<HttpCode, string> = {
     [HttpCode.BadRequest]: 'Bad Request',
     [HttpCode.Forbidden]: 'Forbidden',
@@ -136,22 +128,6 @@ function sendError(
 </html>`,
     'utf-8',
   );
-
-  const headers = res.getHeaderNames();
-  for (let i = 0; i < headers.length; i++) {
-    res.removeHeader(headers[i]);
-  }
-
-  if (options?.headers) {
-    const keys = Object.keys(options.headers);
-    for (let i = 0; i < keys.length; i++) {
-      const key = keys[i];
-      const value = options.headers[key];
-      if (typeof value !== 'undefined') {
-        res.setHeader(key, value);
-      }
-    }
-  }
 
   res.statusCode = code;
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
@@ -428,11 +404,7 @@ export function createMiddleware(
             getValueContentRangeHeader('bytes', size),
           );
 
-          sendError(res, HttpCode.RangeNotSatisfiable, {
-            headers: {
-              'Content-Range': res.getHeader('Content-Range'),
-            },
-          });
+          sendError(res, HttpCode.RangeNotSatisfiable);
           return;
         }
         if (parsedRanges === -2) {
