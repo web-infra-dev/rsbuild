@@ -8,13 +8,13 @@ import { promisify } from 'node:util';
 import zlib from 'node:zlib';
 import { JS_REGEX } from '../constants';
 import { color } from '../helpers';
+import { getAssetsFromStats, type RsbuildAsset } from '../helpers/stats';
 import { logger } from '../logger';
 import type {
   InternalContext,
   PrintFileSizeAsset,
   PrintFileSizeOptions,
   RsbuildPlugin,
-  RsbuildStatsItem,
   Rspack,
 } from '../types';
 
@@ -93,7 +93,7 @@ const isCompressible = (assetName: string) =>
 
 async function printFileSizes(
   options: PrintFileSizeOptions,
-  stats: RsbuildStatsItem,
+  stats: Rspack.Stats,
   rootPath: string,
   distPath: string,
   environmentName: string,
@@ -109,7 +109,7 @@ async function printFileSizes(
   const exclude = options.exclude ?? excludeAsset;
   const relativeDistPath = path.relative(rootPath, distPath);
 
-  const formatAsset = async (asset: Rspack.StatsAsset) => {
+  const formatAsset = async (asset: RsbuildAsset) => {
     const fileName = asset.name.split('?')[0];
     const contents = await fs.promises.readFile(path.join(distPath, fileName));
     const size = Buffer.byteLength(contents);
@@ -135,17 +135,13 @@ async function printFileSizes(
   });
 
   const getAssets = async () => {
-    if (!stats.assets) {
-      return [];
-    }
-
-    const filteredAssets = stats.assets.filter((asset) => {
-      const assetInfo = pickAssetInfo(asset);
-      if (exclude(assetInfo)) {
+    const assets = getAssetsFromStats(stats);
+    const filteredAssets = assets.filter((asset) => {
+      if (exclude(asset)) {
         return false;
       }
       if (options.include) {
-        return options.include(assetInfo);
+        return options.include(asset);
       }
       return true;
     });
@@ -294,8 +290,8 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
   name: 'rsbuild:file-size',
 
   setup(api) {
-    api.onAfterBuild(async ({ environments, isFirstCompile }) => {
-      const { stats, hasErrors } = context.buildState;
+    api.onAfterBuild(async ({ stats, environments, isFirstCompile }) => {
+      const { hasErrors } = context.buildState;
       // No need to print file sizes if there is any compilation error
       if (!stats || hasErrors || !isFirstCompile) {
         return;
@@ -326,7 +322,7 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
                   ...printFileSize,
                 };
 
-          const statsItem = 'children' in stats ? stats.children[index] : stats;
+          const statsItem = 'stats' in stats ? stats.stats[index] : stats;
           const statsLogs = await printFileSizes(
             mergedConfig,
             statsItem,
