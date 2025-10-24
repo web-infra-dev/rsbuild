@@ -1712,7 +1712,7 @@ export type CliShortcut = {
 
 export type WriteToDisk = boolean | ((filename: string) => boolean);
 
-export type BrowserLogsStackTrace = 'summary' | 'none';
+export type BrowserLogsStackTrace = 'summary' | 'full' | 'none';
 
 export interface DevConfig {
   /**
@@ -1728,6 +1728,7 @@ export interface DevConfig {
          * Controls how the error stack trace is displayed in the terminal when forwarding
          * browser errors.
          * - `'summary'` – Show only the first frame (e.g. `(src/App.jsx:3:0)`).
+         * - `'full'` – Print the full stack trace with all frames.
          * - `'none'` – Hide stack traces.
          * @default 'summary'
          */
