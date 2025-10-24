@@ -52,7 +52,7 @@ jobs:
         if: steps.changes.outputs.changed == 'true'
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
-          node-version: 22
+          node-version: '22.20'
           package-manager-cache: false
 
       - name: Install Dependencies
@@ -97,7 +97,7 @@ jobs:
         if: steps.changes.outputs.changed == 'true'
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
-          node-version: 22
+          node-version: '22.20'
           package-manager-cache: false
 
       - name: Install Dependencies
@@ -146,7 +146,7 @@ jobs:
         if: steps.changes.outputs.changed == 'true'
         uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
         with:
-          node-version: 22
+          node-version: '22.20'
           package-manager-cache: false
 
       - name: Install Dependencies
