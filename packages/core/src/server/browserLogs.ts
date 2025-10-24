@@ -2,10 +2,10 @@ import path from 'node:path';
 import { promisify } from 'node:util';
 import { parse as parseStack, type StackFrame } from 'stacktrace-parser';
 import { SCRIPT_REGEX } from '../constants';
-import { color, isObject } from '../helpers';
+import { color } from '../helpers';
 import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
-import type { InternalContext, Rspack } from '../types';
+import type { BrowserLogsStackTrace, InternalContext, Rspack } from '../types';
 import { getFileFromUrl } from './assets-middleware/getFileFromUrl';
 import type { OutputFileSystem } from './assets-middleware/index';
 import type { ClientMessageError } from './socketServer';
@@ -48,14 +48,6 @@ const resolveSourceLocation = async (
   fs: Rspack.OutputFileSystem,
   context: InternalContext,
 ) => {
-  const { browserLogs } = context.normalizedConfig?.dev || {};
-  const stackTrace =
-    (isObject(browserLogs) && browserLogs?.stackTrace) || 'summary';
-
-  if (stackTrace === 'none') {
-    return;
-  }
-
   const parsed = parseStack(stack);
   if (!parsed.length) {
     return;
@@ -139,10 +131,11 @@ export const formatBrowserErrorLog = async (
   message: ClientMessageError,
   context: InternalContext,
   fs: Rspack.OutputFileSystem,
+  stackTrace: BrowserLogsStackTrace,
 ): Promise<string> => {
   let log = `${color.cyan('[browser]')} ${color.red(message.message)}`;
 
-  if (message.stack) {
+  if (message.stack && stackTrace !== 'none') {
     const rawLocation = await formatErrorLocation(message.stack, context, fs);
     if (rawLocation) {
       log += color.dim(` (${rawLocation})`);
