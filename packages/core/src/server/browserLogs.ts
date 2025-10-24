@@ -2,7 +2,7 @@ import path from 'node:path';
 import { promisify } from 'node:util';
 import { parse as parseStack, type StackFrame } from 'stacktrace-parser';
 import { SCRIPT_REGEX } from '../constants';
-import { color } from '../helpers';
+import { color, isObject } from '../helpers';
 import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
 import type { InternalContext, Rspack } from '../types';
@@ -48,6 +48,14 @@ const resolveSourceLocation = async (
   fs: Rspack.OutputFileSystem,
   context: InternalContext,
 ) => {
+  const { browserLogs } = context.normalizedConfig?.dev || {};
+  const stackTrace =
+    (isObject(browserLogs) && browserLogs?.stackTrace) || 'summary';
+
+  if (stackTrace === 'none') {
+    return;
+  }
+
   const parsed = parseStack(stack);
   if (!parsed.length) {
     return;
