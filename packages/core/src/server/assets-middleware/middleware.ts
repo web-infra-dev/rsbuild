@@ -2,7 +2,6 @@ import type { Stats as FSStats, ReadStream } from 'node:fs';
 import type { ServerResponse } from 'node:http';
 import onFinished from 'on-finished';
 import type { Range, Result as RangeResult, Ranges } from 'range-parser';
-import rangeParser from 'range-parser';
 import { requireCompiledPackage } from '../../helpers/vendors';
 import { logger } from '../../logger';
 import type { InternalContext, RequestHandler } from '../../types';
@@ -92,7 +91,13 @@ function destroyStream(stream: ReadStream, suppress: boolean): void {
   }
 }
 
-const parseRangeHeaders = (value: string): RangeResult | Ranges => {
+const parseRangeHeaders = async (
+  value: string,
+): Promise<RangeResult | Ranges> => {
+  const { default: rangeParser } = await import(
+    /** webpackChunkName: "range-parser" */
+    'range-parser'
+  );
   const [len, rangeHeader] = value.split('|');
   return rangeParser(Number(len), rangeHeader, {
     combine: true,
@@ -386,7 +391,7 @@ export function createMiddleware(
       }
 
       if (rangeHeader) {
-        let parsedRanges: Ranges | RangeResult | [] = parseRangeHeaders(
+        let parsedRanges: Ranges | RangeResult | [] = await parseRangeHeaders(
           `${size}|${rangeHeader}`,
         );
 
