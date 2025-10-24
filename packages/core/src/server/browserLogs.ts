@@ -170,7 +170,7 @@ const formatFullStack = async (
     const { methodName } = frame;
     const parts: (string | undefined)[] = [];
 
-    if (methodName !== `<unknown>`) {
+    if (methodName !== '<unknown>') {
       parts.push(methodName);
     }
 
@@ -226,7 +226,10 @@ export const formatBrowserErrorLog = async (
         break;
       }
       case 'full': {
-        log += await formatFullStack(message.stack, context, fs);
+        const fullStack = await formatFullStack(message.stack, context, fs);
+        if (fullStack) {
+          log += fullStack;
+        }
         break;
       }
       case 'none':
