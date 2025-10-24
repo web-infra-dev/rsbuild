@@ -2,6 +2,7 @@ import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
 import type Ws from '../../compiled/ws/index.js';
 import { formatStatsError } from '../helpers/format';
+import { isObject } from '../helpers/index';
 import { getStatsErrors, getStatsWarnings } from '../helpers/stats';
 import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
@@ -290,17 +291,22 @@ export class SocketServer {
           typeof data === 'string' ? data : data.toString(),
         );
 
+        const { browserLogs } = this.context.normalizedConfig?.dev || {};
         if (
           message.type === 'client-error' &&
           // Do not report browser error when using webpack
           this.context.bundlerType === 'rspack' &&
           // Do not report browser error when build failed
-          !this.context.buildState.hasErrors
+          !this.context.buildState.hasErrors &&
+          browserLogs
         ) {
+          const stackTrace =
+            (isObject(browserLogs) && browserLogs.stackTrace) || 'summary';
           const log = await formatBrowserErrorLog(
             message,
             this.context,
             this.getOutputFileSystem(),
+            stackTrace,
           );
 
           if (!this.reportedBrowserLogs.has(log)) {

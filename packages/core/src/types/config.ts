@@ -1712,14 +1712,27 @@ export type CliShortcut = {
 
 export type WriteToDisk = boolean | ((filename: string) => boolean);
 
+export type BrowserLogsStackTrace = 'summary' | 'none';
+
 export interface DevConfig {
   /**
    * Controls whether to forward browser runtime errors to the terminal. When `true`, the dev
    * client listens for window `error` events in the browser and send them to the dev server,
    * where they are printed in the terminal (prefixed with `[browser]`).
-   * @default true
+   * @default { stackTrace: 'summary' }
    */
-  browserLogs?: boolean;
+  browserLogs?:
+    | boolean
+    | {
+        /**
+         * Controls how the error stack trace is displayed in the terminal when forwarding
+         * browser errors.
+         * - `'summary'` – Show only the first frame (e.g. `(src/App.jsx:3:0)`).
+         * - `'none'` – Hide stack traces.
+         * @default 'summary'
+         */
+        stackTrace?: BrowserLogsStackTrace;
+      };
   /**
    * Whether to enable Hot Module Replacement.
    * @default true
