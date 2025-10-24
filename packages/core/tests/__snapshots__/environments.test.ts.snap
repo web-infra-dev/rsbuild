@@ -4,7 +4,9 @@ exports[`environment config > should normalize environment config correctly 1`] 
 {
   "dev": {
     "assetPrefix": "/",
-    "browserLogs": true,
+    "browserLogs": {
+      "stackTrace": "summary",
+    },
     "cliShortcuts": false,
     "client": {
       "host": "",
@@ -158,7 +160,9 @@ exports[`environment config > should normalize environment config correctly 2`] 
 {
   "dev": {
     "assetPrefix": "/foo",
-    "browserLogs": true,
+    "browserLogs": {
+      "stackTrace": "summary",
+    },
     "cliShortcuts": false,
     "client": {
       "host": "",
@@ -313,7 +317,9 @@ exports[`environment config > should print environment config when inspect confi
   "ssr": {
     "dev": {
       "assetPrefix": "/",
-      "browserLogs": true,
+      "browserLogs": {
+        "stackTrace": "summary",
+      },
       "cliShortcuts": false,
       "client": {
         "host": "",
@@ -467,7 +473,9 @@ exports[`environment config > should print environment config when inspect confi
   "web": {
     "dev": {
       "assetPrefix": "/",
-      "browserLogs": true,
+      "browserLogs": {
+        "stackTrace": "summary",
+      },
       "cliShortcuts": false,
       "client": {
         "host": "",
@@ -641,7 +649,9 @@ exports[`environment config > should support modify environment config by api.mo
   "ssr": {
     "dev": {
       "assetPrefix": "/",
-      "browserLogs": true,
+      "browserLogs": {
+        "stackTrace": "summary",
+      },
       "cliShortcuts": false,
       "client": {
         "host": "",
@@ -795,7 +805,9 @@ exports[`environment config > should support modify environment config by api.mo
   "web": {
     "dev": {
       "assetPrefix": "/",
-      "browserLogs": true,
+      "browserLogs": {
+        "stackTrace": "summary",
+      },
       "cliShortcuts": false,
       "client": {
         "host": "",
@@ -950,7 +962,9 @@ exports[`environment config > should support modify environment config by api.mo
   "web1": {
     "dev": {
       "assetPrefix": "/",
-      "browserLogs": true,
+      "browserLogs": {
+        "stackTrace": "summary",
+      },
       "cliShortcuts": false,
       "client": {
         "host": "",
@@ -1108,7 +1122,9 @@ exports[`environment config > should support modify single environment config by
   "ssr": {
     "dev": {
       "assetPrefix": "/",
-      "browserLogs": true,
+      "browserLogs": {
+        "stackTrace": "summary",
+      },
       "cliShortcuts": false,
       "client": {
         "host": "",
@@ -1262,7 +1278,9 @@ exports[`environment config > should support modify single environment config by
   "web": {
     "dev": {
       "assetPrefix": "/",
-      "browserLogs": true,
+      "browserLogs": {
+        "stackTrace": "summary",
+      },
       "cliShortcuts": false,
       "client": {
         "host": "",
