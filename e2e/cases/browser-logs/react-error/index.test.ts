@@ -7,7 +7,7 @@ rspackTest(
 
     await gotoPage(page, rsbuild, '/undefinedError');
     await rsbuild.expectLog(
-      `error   [browser] Uncaught TypeError: Cannot read properties of undefined (reading 'name') (src/undefinedError.jsx:5:0)`,
+      `error   [browser] Uncaught TypeError: Cannot read properties of undefined (reading 'name') at ComponentWithUndefinedError (src/undefinedError.jsx:5:0)`,
       { posix: true },
     );
 
@@ -20,7 +20,7 @@ rspackTest(
     await gotoPage(page, rsbuild, '/eventError');
     await page.click('button');
     await rsbuild.expectLog(
-      `error   [browser] Uncaught TypeError: Cannot read properties of null (reading 'someMethod') (src/eventError.jsx:6:0)`,
+      `error   [browser] Uncaught TypeError: Cannot read properties of null (reading 'someMethod') at handleClick (src/eventError.jsx:6:0)`,
       { posix: true },
     );
   },
