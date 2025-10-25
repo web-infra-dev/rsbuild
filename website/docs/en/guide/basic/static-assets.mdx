@@ -239,7 +239,7 @@ For example, in an HTML template, the `./public/favicon.ico` file can be referen
 
 Keep these points in mind when using the `public` folder:
 
-- When referencing assets in the public folder via URL, please use absolute paths instead of relative paths to ensure that the assets can be accessed correctly after deployment.
+- When referencing assets in the public folder via URL, use absolute paths instead of relative paths to ensure assets can be accessed correctly after deployment.
 
 ```html title="src/index.html"
 <!-- Wrong -->
@@ -249,7 +249,7 @@ Keep these points in mind when using the `public` folder:
 <link rel="icon" href="/favicon.ico" />
 ```
 
-- Please avoid importing files from the public directory into the source code. The correct approach is to reference them by URL. You can place static assets imported into the source code in the `/src/assets` directory.
+- Avoid importing files from the public directory into your source code. The correct approach is to reference them by URL. You can place static assets that need to be imported into source code in the `/src/assets` directory.
 
 ```js title="src/index.js"
 // Wrong
@@ -259,7 +259,7 @@ import logo from '../public/logo.png';
 import logo from './assets/logo.png';
 ```
 
-- During the production build, the files in public folder will be copied to the output folder (default is `dist`). Please be careful to avoid name conflicts with the output files. When files in the `public` folder have the same name as outputs, the outputs have higher priority and will overwrite the files with the same name in the `public` folder. This feature can be disabled by setting [server.publicDir.copyOnBuild](/config/server/public-dir) to `false`.
+- During the production build, files in the public folder are copied to the output folder (default is `dist`). Be careful to avoid name conflicts with output files. When files in the `public` folder have the same name as outputs, the outputs have higher priority and will overwrite the conflicting public folder files. This feature can be disabled by setting [server.publicDir.copyOnBuild](/config/server/public-dir) to `false`.
 
 ### Custom behavior
 

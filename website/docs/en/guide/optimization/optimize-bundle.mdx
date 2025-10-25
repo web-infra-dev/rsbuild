@@ -1,6 +1,6 @@
 # Bundle size optimization
 
-Bundle size optimization is an important part in production build because it directly affects the user experience of online users. In this document, we will introduce some common bundle size optimization methods in Rsbuild.
+Bundle size optimization is an important part of production builds because it directly affects the user experience. This document introduces common bundle size optimization methods in Rsbuild.
 
 ## Reduce duplicate dependencies
 
@@ -8,7 +8,7 @@ It is common for web projects to bundle multiple versions of third-party depende
 
 ### Detect duplicate dependencies
 
-You can use [Rsdoctor](https://rsdoctor.rs) to detect whether there are duplicate dependencies in the project. Rsdoctor will analyze during the build process, find any duplicate bundled dependencies and display them visually:
+You can use [Rsdoctor](https://rsdoctor.rs) to detect duplicate dependencies in your project. Rsdoctor analyzes the build, finds duplicate bundled dependencies, and displays them visually:
 
 ![](https://assets.rspack.rs/rsbuild/assets/rsdoctor-duplicated-packages.png)
 
@@ -16,7 +16,7 @@ For more details, see [Rsdoctor - Duplicate Dependency Problem](https://rsdoctor
 
 ### Eliminate duplicate dependencies
 
-We can eliminate duplicate dependencies with the package manager.
+You can eliminate duplicate dependencies using your package manager.
 
 - Rsbuild provides the [resolve.dedupe](/config/resolve/dedupe) config, which allows you to force the specified packages to be resolved from the project root directory, thereby removing duplicate packages.
 
@@ -90,7 +90,7 @@ Please read the [Browser Compatibility](/guide/advanced/browser-compatibility) c
 
 ## Image compression
 
-In general front-end projects, the size of images often accounts for a large proportion of the total bundle size of the project. So if the image size can be reduced as much as possible, it will have a significant optimization effect on the project bundle size. You can enable image compression by registering a plugin in the Rsbuild:
+In typical front-end projects, images often account for a large proportion of the total bundle size. Reducing image size can significantly improve bundle size. You can enable image compression by registering a plugin in Rsbuild:
 
 ```ts title="rsbuild.config.ts"
 import { pluginImageCompress } from '@rsbuild/plugin-image-compress';
@@ -104,7 +104,7 @@ See details in [@rsbuild/plugin-image-compress](https://github.com/rspack-contri
 
 ## Split chunk
 
-A great chunk splitting strategy is very important to improve the loading performance of the application. It can make full use of the browser's caching mechanism to reduce the number of requests and improve the loading speed of the application.
+A good chunk splitting strategy is important for improving application loading performance. It makes full use of the browser's caching mechanism to reduce the number of requests and improve loading speed.
 
 Several [chunk splitting strategies](/guide/optimization/code-splitting) are built into Rsbuild. These should meet the needs of most applications. You can also customize the chunk splitting config to suit your own usage scenario.
 

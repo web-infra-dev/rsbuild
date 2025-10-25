@@ -88,9 +88,9 @@ export default {
 
 ### HTML output path
 
-Normally, `/` points to the dist root directory, and HTML files are output to the dist root directory. In this case, you can access the HTML page at `/some-path`.
+Normally, `/` points to the dist root directory, and HTML files are output to the dist root directory. In this case, you can access HTML pages at `/some-path`.
 
-If you output HTML files to other subdirectories by modifying [output.distPath.html](/config/output/dist-path), you need to access the HTML page at `/[htmlPath]/some-path`.
+If you output HTML files to other subdirectories by modifying [output.distPath.html](/config/output/dist-path), you need to access HTML pages at `/[htmlPath]/some-path`.
 
 For example, if you set HTML files to output to the `HTML` directory, you can access index.html at `/html/`, and foo.html at `/html/foo`.
 
@@ -120,7 +120,7 @@ Compared to the dev server in Rspack CLI, Rsbuild's dev server has the following
 
 - **Configuration**: Rsbuild provides richer server configuration options.
 - **Log Format**: The log format of Rspack CLI is largely consistent with webpack CLI, while Rsbuild's logs are clearer and more readable.
-- **Dependencies**: Rsbuild is built on lightweight libraries like `connect`, which has fewer dependencies and faster startup speed compared to `express` used by `@rspack/dev-server`.
+- **Dependencies**: Rsbuild is built on lightweight libraries like `connect`, which has fewer dependencies and faster startup than `express` used by `@rspack/dev-server`.
 
 ### Configuration
 
