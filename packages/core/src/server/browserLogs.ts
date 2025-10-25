@@ -41,7 +41,10 @@ const findFirstUserFrame = (parsed: StackFrame[]) => {
       frame.column !== null &&
       frame.lineNumber !== null &&
       SCRIPT_REGEX.test(frame.file),
-  ) as { file: string; column: number; lineNumber: number } | undefined;
+  ) as
+    | (StackFrame &
+        Pick<Required<StackFrame>, 'file' | 'column' | 'lineNumber'>)
+    | undefined;
 };
 
 const getOriginalPositionForFrame = async (
@@ -102,7 +105,10 @@ const resolveOriginalLocation = async (
     return;
   }
 
-  return formatOriginalLocation(originalMapping, context);
+  return {
+    frame,
+    location: formatOriginalLocation(originalMapping, context),
+  };
 };
 
 const formatOriginalLocation = (
@@ -217,12 +223,29 @@ export const formatBrowserErrorLog = async (
   if (message.stack) {
     switch (stackTrace) {
       case 'summary': {
-        const location = await resolveOriginalLocation(
+        const resolved = await resolveOriginalLocation(
           message.stack,
           fs,
           context,
         );
-        log += location ? color.dim(` (${location})`) : '';
+
+        if (!resolved) {
+          break;
+        }
+
+        const { frame, location } = resolved;
+        const { methodName } = frame;
+
+        let suffix = '';
+
+        // exclude unknown method name and file path like `./src/App.tsx`
+        if (methodName !== '<unknown>' && !/[\\/]/.test(methodName)) {
+          suffix += ` at ${methodName}`;
+        }
+        if (location) {
+          suffix += ` (${location})`;
+        }
+        log += suffix ? color.dim(suffix) : '';
         break;
       }
       case 'full': {
