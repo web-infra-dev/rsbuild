@@ -397,6 +397,7 @@ export const registerBuildHook = ({
       environment: environmentList[buildIndex].name,
       args: [
         {
+          // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: it is guaranteed to be defined
           bundlerConfig: bundlerConfigs?.[buildIndex]!,
           environment: environmentList[buildIndex],
           isWatch,
@@ -478,6 +479,7 @@ export const registerDevHook = ({
       environment: environmentList[buildIndex].name,
       args: [
         {
+          // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: it is guaranteed to be defined
           bundlerConfig: bundlerConfigs?.[buildIndex]!,
           environment: environmentList[buildIndex],
           isWatch: true,
