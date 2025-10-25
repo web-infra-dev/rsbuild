@@ -15,6 +15,15 @@ import type { OutputFileSystem } from './assets-middleware/index';
 import type { ClientMessageError } from './socketServer';
 
 /**
+ * Determines whether a given string is a valid method name
+ * extracted from a browser error stack trace.
+ * Excludes file paths such as "./src/App.tsx"
+ */
+const isValidMethodName = (methodName: string) => {
+  return methodName !== '<unknown>' && !/[\\/]/.test(methodName);
+};
+
+/**
  * Maps a position in compiled code to its original source position using
  * source maps.
  */
@@ -176,7 +185,7 @@ const formatFullStack = async (
     const { methodName } = frame;
     const parts: (string | undefined)[] = [];
 
-    if (methodName !== '<unknown>') {
+    if (isValidMethodName(methodName)) {
       parts.push(methodName);
     }
 
@@ -238,8 +247,7 @@ export const formatBrowserErrorLog = async (
 
         let suffix = '';
 
-        // exclude unknown method name and file path like `./src/App.tsx`
-        if (methodName !== '<unknown>' && !/[\\/]/.test(methodName)) {
+        if (isValidMethodName(methodName)) {
           suffix += ` at ${methodName}`;
         }
         if (location) {
