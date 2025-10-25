@@ -29,7 +29,8 @@
       "!**/*.vue",
       "!**/*.svelte",
       "!**/template-lit-*/src/my-element.*",
-      "!e2e/cases/browser-logs/skip-build-error/src"
+      "!e2e/cases/browser-logs/skip-build-error/src",
+      "!e2e/**/*.html"
     ],
     "ignoreUnknown": true
   },
