@@ -57,11 +57,11 @@ const chainStaticAssetRule = ({
     .type('asset/source')
     .resourceQuery(RAW_QUERY_REGEX);
 
-  // the asset will be inlined if fileSize < dataUrlCondition.maxSize
   rule
     .oneOf(`${assetType}-asset`)
     .type('asset')
     .parser({
+      // asset will be inlined if file size < maxSize
       dataUrlCondition: {
         maxSize,
       },
@@ -143,6 +143,15 @@ export const pluginAsset = (): RsbuildPlugin => ({
 
       // font
       createAssetRule(CHAIN_ID.RULE.FONT, FONT_EXTENSIONS, emitAssets);
+
+      // JSON
+      // Rspack has built-in rule for JSON, so we only need to handle imports with query
+      // get raw content: "foo.json?raw"
+      const rule = chain.module.rule(CHAIN_ID.RULE.JSON).test(/\.json$/i);
+      rule
+        .oneOf('json-asset-raw')
+        .type('asset/source')
+        .resourceQuery(RAW_QUERY_REGEX);
 
       // assets
       const assetsFilename = getMergedFilename('assets');

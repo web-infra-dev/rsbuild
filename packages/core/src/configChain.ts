@@ -34,6 +34,8 @@ export const CHAIN_ID = {
     MJS: 'mjs',
     /** Rule for fonts */
     FONT: 'font',
+    /** Rule for JSON */
+    JSON: 'json',
     /** Rule for images */
     IMAGE: 'image',
     /** Rule for media */
