@@ -1,8 +1,16 @@
 # dev.browserLogs
 
-- **类型：** `boolean`
-- **默认值：** `true`
-- **版本：** 新增于 v1.5.13
+- **类型：**
+
+```ts
+type BrowserLogs =
+  | boolean
+  | {
+      stackTrace?: 'summary' | 'full' | 'none';
+    };
+```
+
+- **默认值：** `{ stackTrace: 'summary' }`
 
 控制是否将浏览器运行时错误转发到终端。
 
@@ -28,6 +36,41 @@ error   [browser] Uncaught TypeError: Cannot read properties of undefined (readi
  at handleClick (src/App.jsx:3:0)
 ```
 
+## 选项
+
+### stackTrace
+
+- **类型：** `'summary' | 'full' | 'none'`
+- **默认值：** `'summary'`
+
+控制在将浏览器错误转发到终端时，错误堆栈的显示方式。
+
+- `'summary'` —— 仅显示首个堆栈帧（例如 `(src/App.jsx:3:0)`）。
+- `'full'` —— 显示完整的堆栈信息，包含所有堆栈帧。
+- `'none'` —— 不显示任何堆栈信息。
+
+例如，将 `stackTrace` 设置为 `'full'`:
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    browserLogs: {
+      stackTrace: 'full',
+    },
+  },
+};
+```
+
+完整的错误堆栈如下：
+
+```bash
+error   [browser] Uncaught TypeError: Cannot read properties of undefined (reading 'name')
+    at handleClick (src/App.jsx:6:0)
+    at someFunction (src/App.jsx:12:0)
+    at App (src/App.jsx:6:0)
+    ...
+```
+
 ## 禁用
 
 将 `dev.browserLogs` 设置为 `false` 可以禁用此行为。
@@ -42,6 +85,7 @@ export default {
 
 ## 版本历史
 
-| 版本   | 变更内容   |
-| ------ | ---------- |
-| v1.3.0 | 新增该选项 |
+| 版本    | 变更内容               |
+| ------- | ---------------------- |
+| v1.5.13 | 新增该选项             |
+| v1.6.0  | 新增 `stackTrace` 选项 |
