@@ -370,6 +370,15 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
       },
       {
+        "oneOf": [
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
+          },
+        ],
+        "test": /\\\\\\.json\\$/i,
+      },
+      {
         "dependency": "url",
         "generator": {
           "filename": "static/wasm/[contenthash:8].module.wasm",

@@ -1801,6 +1801,15 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
         },
         {
+          "oneOf": [
+            {
+              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+              "type": "asset/source",
+            },
+          ],
+          "test": /\\\\\\.json\\$/i,
+        },
+        {
           "dependency": "url",
           "generator": {
             "filename": "static/wasm/[contenthash:8].module.wasm",
@@ -2218,6 +2227,15 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             },
           ],
           "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
+        },
+        {
+          "oneOf": [
+            {
+              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+              "type": "asset/source",
+            },
+          ],
+          "test": /\\\\\\.json\\$/i,
         },
         {
           "dependency": "url",

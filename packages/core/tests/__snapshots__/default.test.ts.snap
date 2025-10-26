@@ -370,6 +370,15 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
       },
       {
+        "oneOf": [
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
+          },
+        ],
+        "test": /\\\\\\.json\\$/i,
+      },
+      {
         "dependency": "url",
         "generator": {
           "filename": "static/wasm/[contenthash:8].module.wasm",
@@ -885,6 +894,15 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
       },
       {
+        "oneOf": [
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
+          },
+        ],
+        "test": /\\\\\\.json\\$/i,
+      },
+      {
         "dependency": "url",
         "generator": {
           "filename": "static/wasm/[contenthash:8].module.wasm",
@@ -1387,6 +1405,15 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
       },
       {
+        "oneOf": [
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
+          },
+        ],
+        "test": /\\\\\\.json\\$/i,
+      },
+      {
         "dependency": "url",
         "generator": {
           "filename": "static/wasm/[contenthash:8].module.wasm",
@@ -1858,6 +1885,15 @@ exports[`tools.rspack > should match snapshot 1`] = `
           },
         ],
         "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
+      },
+      {
+        "oneOf": [
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
+          },
+        ],
+        "test": /\\\\\\.json\\$/i,
       },
       {
         "dependency": "url",
