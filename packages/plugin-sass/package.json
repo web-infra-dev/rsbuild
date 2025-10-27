@@ -41,10 +41,10 @@
     "@rslib/core": "0.16.1",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^22.18.12",
-    "@types/sass-loader": "^8.0.9",
+    "@types/sass-loader": "^8.0.10",
     "prebundle": "1.4.2",
     "resolve-url-loader": "^5.0.0",
-    "sass-loader": "^16.0.5",
+    "sass-loader": "^16.0.6",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
