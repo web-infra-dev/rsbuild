@@ -173,15 +173,15 @@ export interface ToolsConfig {
    */
   bundlerChain?: ToolsBundlerChainConfig;
   /**
-   * Modify the options of [css-loader](https://github.com/webpack-contrib/css-loader).
+   * Modify the options of [css-loader](https://github.com/webpack/css-loader).
    */
   cssLoader?: ToolsCSSLoaderConfig;
   /**
-   * Modify the options of [postcss-loader](https://github.com/webpack-contrib/postcss-loader).
+   * Modify the options of [postcss-loader](https://github.com/webpack/postcss-loader).
    */
   postcss?: ToolsPostCSSLoaderConfig;
   /**
-   * Modify the options of [style-loader](https://github.com/webpack-contrib/style-loader).
+   * Modify the options of [style-loader](https://github.com/webpack/style-loader).
    */
   styleLoader?: ToolsStyleLoaderConfig;
   /**
