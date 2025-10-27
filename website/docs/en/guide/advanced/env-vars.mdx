@@ -265,6 +265,28 @@ We recommend using `--env-mode` to set the env mode instead of modifying `proces
 
 :::
 
+#### Accessing in client code
+
+By default, Rsbuild does not inject the env mode into client code. You can manually define a global identifier using [source.define](#using-define) to make it available in the client code:
+
+```js title="rsbuild.config.js"
+export default ({ envMode }) => ({
+  source: {
+    define: {
+      ENV_MODE: JSON.stringify(envMode),
+    },
+  },
+});
+```
+
+Then you can access it in client code:
+
+```js title="src/index.js"
+if (ENV_MODE === 'my-mode') {
+  // ...
+}
+```
+
 ### Env directory
 
 By default, the `.env` file is located in the root directory of the project. You can specify the env directory by using the `--env-dir <dir>` option in the CLI.
