@@ -1,5 +1,5 @@
 import type { StatsError } from '@rspack/core';
-import { removeLoaderChainingDelimiter } from './stats';
+import { removeLoaderChainDelimiter } from './stats';
 import { color } from './vendors';
 
 const formatFileName = (fileName: string) => {
@@ -26,7 +26,7 @@ function resolveFileName(stats: StatsError) {
     stats.moduleName;
 
   if (file) {
-    return removeLoaderChainingDelimiter(file);
+    return removeLoaderChainDelimiter(file);
   }
 
   // `moduleIdentifier` is the absolute path with inline loaders
@@ -37,7 +37,7 @@ function resolveFileName(stats: StatsError) {
     if (matched) {
       const fileName = matched.pop();
       if (fileName) {
-        return removeLoaderChainingDelimiter(fileName);
+        return removeLoaderChainDelimiter(fileName);
       }
     }
   }
