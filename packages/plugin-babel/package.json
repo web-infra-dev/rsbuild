@@ -32,7 +32,7 @@
     "@babel/core": "^7.28.4",
     "@babel/plugin-proposal-decorators": "^7.28.0",
     "@babel/plugin-transform-class-properties": "^7.27.1",
-    "@babel/preset-typescript": "^7.27.1",
+    "@babel/preset-typescript": "^7.28.5",
     "@types/babel__core": "^7.20.5",
     "deepmerge": "^4.3.1",
     "reduce-configs": "^1.1.1",
