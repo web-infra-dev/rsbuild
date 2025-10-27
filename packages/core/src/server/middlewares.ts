@@ -4,7 +4,7 @@ import onFinished from 'on-finished';
 import { color } from '../helpers';
 import { getAssetsFromStats } from '../helpers/stats';
 import { addTrailingSlash } from '../helpers/url';
-import { logger } from '../logger';
+import { isVerbose, logger } from '../logger';
 import type {
   Connect,
   EnvironmentAPI,
@@ -246,7 +246,7 @@ export const getHtmlFallbackMiddleware: (params: {
     if (await isFileExists(filePath, buildManager.outputFileSystem)) {
       const newUrl = '/index.html';
 
-      if (logger.level === 'verbose') {
+      if (isVerbose()) {
         logger.debug(
           `    ${req.method} ${req.url} ${color.yellow('fallback to')} ${newUrl}`,
         );
