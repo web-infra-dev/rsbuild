@@ -120,6 +120,17 @@ const resolveOriginalLocation = async (
   };
 };
 
+/**
+ * Get relative source path that is relative to the project root.
+ * By default, the source path is relative to the dist path or is absolute.
+ */
+const getRelativeSourcePath = (source: string, context: InternalContext) => {
+  const absoluteSourcePath = path.isAbsolute(source)
+    ? source
+    : path.join(context.distPath, source);
+  return path.relative(context.rootPath, absoluteSourcePath);
+};
+
 const formatOriginalLocation = (
   originalMapping: OriginalMapping | InvalidOriginalMapping,
   context: InternalContext,
@@ -129,7 +140,7 @@ const formatOriginalLocation = (
     return;
   }
 
-  let result = path.relative(context.rootPath, source);
+  let result = getRelativeSourcePath(source, context);
   if (line !== null) {
     result += column === null ? `:${line}` : `:${line}:${column}`;
   }
