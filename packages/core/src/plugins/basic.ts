@@ -1,3 +1,4 @@
+import path from 'node:path';
 import { toPosixPath } from '../helpers/path';
 import type {
   NormalizedEnvironmentConfig,
@@ -82,14 +83,16 @@ export const pluginBasic = (): RsbuildPlugin => ({
             .use(bundler.HotModuleReplacementPlugin);
         }
 
-        if (isDev) {
-          // Set correct path for source map
-          // this helps VS Code break points working correctly in monorepo
-          chain.output.devtoolModuleFilenameTemplate(
-            (info: { absoluteResourcePath: string }) =>
-              toPosixPath(info.absoluteResourcePath),
-          );
-        }
+        // Use project-relative POSIX paths in source maps:
+        // - Prevents leaking absolute system paths
+        // - Keeps maps portable across environments
+        // - Matches source map spec and debugger expectations
+        chain.output.devtoolModuleFilenameTemplate(
+          (info: { absoluteResourcePath: string }) =>
+            toPosixPath(
+              path.relative(api.context.distPath, info.absoluteResourcePath),
+            ),
+        );
 
         if (api.context.bundlerType === 'rspack') {
           chain.module.parser.merge({
