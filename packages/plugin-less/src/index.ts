@@ -73,7 +73,7 @@ export type LessLoaderOptions = {
 export type PluginLessOptions = {
   /**
    * Options passed to less-loader.
-   * @see https://github.com/webpack-contrib/less-loader
+   * @see https://github.com/webpack/less-loader
    */
   lessLoaderOptions?: ConfigChainWithContext<
     LessLoaderOptions,

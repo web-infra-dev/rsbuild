@@ -4,7 +4,7 @@ import { SourceCode } from '@rspress/core/theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-sass" />
 
-使用 [Sass](https://sass-lang.com/) 作为 CSS 预处理器，基于 [sass-loader](https://github.com/webpack-contrib/sass-loader) 实现。
+使用 [Sass](https://sass-lang.com/) 作为 CSS 预处理器，基于 [sass-loader](https://github.com/webpack/sass-loader) 实现。
 
 ## 快速开始
 
@@ -43,7 +43,7 @@ export default {
 
 ### sassLoaderOptions
 
-修改 [sass-loader](https://github.com/webpack-contrib/sass-loader) 的配置。
+修改 [sass-loader](https://github.com/webpack/sass-loader) 的配置。
 
 - **类型：** `Object | Function`
 - **默认值：**
@@ -141,7 +141,7 @@ Sass 提供了多种实现，包括 [sass](https://npmjs.com/package/sass)、[sa
 
 Rsbuild 默认使用最新的 `sass-embedded` 实现。`sass-embedded` 是一个围绕原生 Dart Sass 可执行文件的 JavaScript wrapper，具备一致的 API 和最佳的性能。
 
-如果你需要使用其他 Sass 实现，而不是使用 Rsbuild 内置的 `sass-embedded`，可以在项目中安装需要使用的 Sass 实现，并通过 `sass-loader` 的 [implementation](https://github.com/webpack-contrib/sass-loader?tab=readme-ov-file#implementation) 选项来设置。
+如果你需要使用其他 Sass 实现，而不是使用 Rsbuild 内置的 `sass-embedded`，可以在项目中安装需要使用的 Sass 实现，并通过 `sass-loader` 的 [implementation](https://github.com/webpack/sass-loader?tab=readme-ov-file#implementation) 选项来设置。
 
 ```ts
 pluginSass({
@@ -157,7 +157,7 @@ pluginSass({
 
 ### 选择 Sass API
 
-Rsbuild 默认使用最新的 `modern-compiler` API，如果你依赖了 Sass 的 `legacy` API，可以将 sass-loader 的 [api](https://github.com/webpack-contrib/sass-loader?tab=readme-ov-file#api) 选项设置为 `legacy`，以兼容一些废弃的 Sass 写法。
+Rsbuild 默认使用最新的 `modern-compiler` API，如果你依赖了 Sass 的 `legacy` API，可以将 sass-loader 的 [api](https://github.com/webpack/sass-loader?tab=readme-ov-file#api) 选项设置为 `legacy`，以兼容一些废弃的 Sass 写法。
 
 ```ts
 pluginSass({

@@ -32,7 +32,7 @@ export type SassLoaderOptions = Omit<
 export type PluginSassOptions = {
   /**
    * Options passed to sass-loader.
-   * @see https://github.com/webpack-contrib/sass-loader
+   * @see https://github.com/webpack/sass-loader
    */
   sassLoaderOptions?: ConfigChainWithContext<
     SassLoaderOptions,

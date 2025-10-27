@@ -62,7 +62,7 @@ export const getLightningCSSLoaderOptions = (
 // If the target is not `web` and the modules option of css-loader is enabled,
 // we must enable exportOnlyLocals to only exports the modules identifier mappings.
 // Otherwise, the compiled CSS code may contain invalid code, such as `new URL`.
-// https://github.com/webpack-contrib/css-loader#exportonlylocals
+// https://github.com/webpack/css-loader#exportonlylocals
 export const normalizeCssLoaderOptions = (
   options: CSSLoaderOptions,
   exportOnlyLocals: boolean,
@@ -419,7 +419,7 @@ export const pluginCss = (): RsbuildPlugin => ({
           rule.sideEffects(true);
 
           // Enable preferRelative by default, which is consistent with the default behavior of css-loader
-          // see: https://github.com/webpack-contrib/css-loader/blob/579fc13/src/plugins/postcss-import-parser.js#L234
+          // see: https://github.com/webpack/css-loader/blob/579fc13/src/plugins/postcss-import-parser.js#L234
           rule.resolve.preferRelative(true);
         });
 
