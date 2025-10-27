@@ -192,5 +192,6 @@ export const removeLoaderChainingDelimiter = (moduleId: string): string => {
   if (isVerbose()) {
     return moduleId;
   }
-  return moduleId.split('!=!')[0];
+  const LOADER_CHAINING_DELIMITER = '!=!';
+  return moduleId.split(LOADER_CHAINING_DELIMITER)[0];
 };
