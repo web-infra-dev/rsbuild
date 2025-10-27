@@ -1,9 +1,16 @@
 <template>
   <div class="content">
-    <h1>Rsbuild with Vue</h1>
+    <h1>Rsbuild with Vue {{ value }}</h1>
     <p>Start building amazing things with Rsbuild.</p>
   </div>
 </template>
+
+<script>
+import { ref } from 'vue'; 
+
+const button = {};
+const value = ref(0);
+</script>
 
 <style scoped>
 .content {

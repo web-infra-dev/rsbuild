@@ -26,6 +26,8 @@ export const isDebug = (): boolean => {
   return ['rsbuild', 'builder', '*'].some((key) => values.includes(key));
 };
 
+export const isVerbose = (): boolean => logger.level === 'verbose';
+
 // setup the logger level
 if (isDebug()) {
   logger.level = 'verbose';

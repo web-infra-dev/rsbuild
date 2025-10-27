@@ -1,7 +1,7 @@
 import { castArray, pick } from '../helpers';
 import { isMultiCompiler } from '../helpers/compiler';
 import { requireCompiledPackage } from '../helpers/vendors';
-import { logger } from '../logger';
+import { isVerbose } from '../logger';
 import { rspack } from '../rspack';
 import type {
   InternalContext,
@@ -261,7 +261,7 @@ export const getDevMiddlewares = (
   const middlewares: Middlewares = [];
   const { buildManager } = options;
 
-  if (logger.level === 'verbose') {
+  if (isVerbose()) {
     middlewares.push(getRequestLoggerMiddleware());
   }
 

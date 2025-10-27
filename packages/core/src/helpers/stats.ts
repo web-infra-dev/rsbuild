@@ -1,4 +1,4 @@
-import { logger } from '../logger';
+import { isVerbose, logger } from '../logger';
 import type { ActionType, RsbuildStats, Rspack } from '../types';
 import { isMultiCompiler } from './compiler';
 import { formatStatsError } from './format';
@@ -183,3 +183,14 @@ export function formatStats(
 
   return {};
 }
+
+/**
+ * Remove the loader chaining delimiter from the module identifier.
+ * @example ./src/index.js!=!/node_modules/my-loader/index.js -> ./src/index.js
+ */
+export const removeLoaderChainingDelimiter = (moduleId: string): string => {
+  if (isVerbose()) {
+    return moduleId;
+  }
+  return moduleId.split('!=!')[0];
+};

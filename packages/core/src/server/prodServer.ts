@@ -2,7 +2,7 @@ import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
 import { getPathnameFromUrl } from '../helpers/path';
 import { requireCompiledPackage } from '../helpers/vendors';
-import { logger } from '../logger';
+import { isVerbose, logger } from '../logger';
 import type {
   Connect,
   InternalContext,
@@ -67,7 +67,7 @@ export class RsbuildProdServer {
     const { headers, proxy, historyApiFallback, compress, base, cors } =
       this.options.serverConfig;
 
-    if (logger.level === 'verbose') {
+    if (isVerbose()) {
       this.middlewares.use(getRequestLoggerMiddleware());
     }
 
