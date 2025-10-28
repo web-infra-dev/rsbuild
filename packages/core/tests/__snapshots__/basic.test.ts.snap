@@ -3,7 +3,6 @@
 exports[`plugin-basic > should apply basic config correctly in development 1`] = `
 {
   "context": "<ROOT>/packages/core/tests",
-  "devtool": "cheap-module-source-map",
   "experiments": {
     "inlineConst": false,
     "inlineEnum": false,
@@ -28,9 +27,6 @@ exports[`plugin-basic > should apply basic config correctly in development 1`] =
     },
   },
   "name": "web",
-  "output": {
-    "devtoolModuleFilenameTemplate": [Function],
-  },
   "performance": {
     "hints": false,
   },
@@ -52,7 +48,6 @@ exports[`plugin-basic > should apply basic config correctly in development 1`] =
 exports[`plugin-basic > should apply basic config correctly in production 1`] = `
 {
   "context": "<ROOT>/packages/core/tests",
-  "devtool": false,
   "experiments": {
     "inlineConst": true,
     "inlineEnum": true,

@@ -43,31 +43,26 @@ async function testSourceMapType(
   const AppContentIndex = outputCode.indexOf('Hello Rsbuild!');
   const indexContentIndex = outputCode.indexOf('window.test');
 
-  const positions = (
-    await mapSourceMapPositions(sourceMap, [
-      {
-        line: 1,
-        column: AppContentIndex,
-      },
-      {
-        line: 1,
-        column: indexContentIndex,
-      },
-    ])
-  ).map((o) => ({
-    ...o,
-    source: o.source?.split('webpack:///')[1] || o.source,
-  }));
+  const positions = await mapSourceMapPositions(sourceMap, [
+    {
+      line: 1,
+      column: AppContentIndex,
+    },
+    {
+      line: 1,
+      column: indexContentIndex,
+    },
+  ]);
 
   expect(positions).toEqual([
     {
-      source: 'src/App.jsx',
+      source: '../../../src/App.jsx',
       line: 2,
       column: appSourceCode.split('\n')[1].indexOf('Hello Rsbuild!'),
       name: null,
     },
     {
-      source: 'src/index.js',
+      source: '../../../src/index.js',
       line: 7,
       column: indexSourceCode.split('\n')[6].indexOf('window'),
       name: 'window',

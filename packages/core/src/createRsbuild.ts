@@ -43,6 +43,7 @@ import { pluginResourceHints } from './plugins/resourceHints';
 import { pluginRsdoctor } from './plugins/rsdoctor';
 import { pluginRspackProfile } from './plugins/rspackProfile';
 import { pluginServer } from './plugins/server';
+import { pluginSourceMap } from './plugins/sourceMap';
 import { pluginSplitChunks } from './plugins/splitChunks';
 import { pluginSri } from './plugins/sri';
 import { pluginSwc } from './plugins/swc';
@@ -78,6 +79,7 @@ function applyDefaultPlugins(
   pluginManager.addPlugins([
     pluginBasic(),
     pluginEntry(),
+    pluginSourceMap(),
     pluginCache(),
     pluginTarget(),
     pluginOutput(),
