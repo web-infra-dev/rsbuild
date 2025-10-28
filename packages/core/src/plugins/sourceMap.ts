@@ -26,10 +26,19 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
   name: 'rsbuild:source-map',
 
   setup(api) {
+    const sourceMapFilenameTemplate = ({
+      absoluteResourcePath,
+    }: {
+      absoluteResourcePath: string;
+    }) => absoluteResourcePath;
+
     api.modifyBundlerChain((chain, { bundler, environment }) => {
       const { config } = environment;
       const devtool = getDevtool(config);
-      chain.devtool(devtool);
+
+      chain
+        .devtool(devtool)
+        .output.devtoolModuleFilenameTemplate(sourceMapFilenameTemplate);
 
       // When JS source map is disabled, but CSS source map is enabled,
       // add `SourceMapDevToolPlugin` to let Rspack generate CSS source map.
@@ -42,11 +51,6 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
           },
         ]);
       }
-
-      chain.output.devtoolModuleFilenameTemplate(
-        ({ absoluteResourcePath }: { absoluteResourcePath: string }) =>
-          absoluteResourcePath,
-      );
     });
 
     // Use project-relative POSIX paths in source maps:
@@ -57,6 +61,15 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
       // Source maps has been extracted to separate files on this stage
       { stage: 'optimize-transfer' },
       ({ assets, compilation, sources }) => {
+        // If devtoolFallbackModuleFilenameTemplate is not the default template,
+        // which means users want to customize it, skip the default processing.
+        if (
+          compilation.outputOptions.devtoolFallbackModuleFilenameTemplate !==
+          sourceMapFilenameTemplate
+        ) {
+          return;
+        }
+
         const { distPath } = api.context;
 
         for (const [filename, asset] of Object.entries(assets)) {
