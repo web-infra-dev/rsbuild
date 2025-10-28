@@ -60,7 +60,7 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
     api.processAssets(
       // Source maps has been extracted to separate files on this stage
       { stage: 'optimize-transfer' },
-      ({ assets, compilation, sources }) => {
+      ({ assets, compilation, sources, environment }) => {
         // If devtoolModuleFilenameTemplate is not the default template,
         // which means users want to customize it, skip the default processing.
         if (
@@ -70,7 +70,7 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
           return;
         }
 
-        const { distPath } = api.context;
+        const { distPath } = environment;
 
         for (const [filename, asset] of Object.entries(assets)) {
           if (!filename.endsWith('.map')) {
