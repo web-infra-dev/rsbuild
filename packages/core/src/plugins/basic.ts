@@ -1,26 +1,4 @@
-import path from 'node:path';
-import { toPosixPath } from '../helpers/path';
-import type {
-  NormalizedEnvironmentConfig,
-  RsbuildPlugin,
-  Rspack,
-} from '../types';
-
-const getDevtool = (config: NormalizedEnvironmentConfig): Rspack.DevTool => {
-  const { sourceMap } = config.output;
-  const isProd = config.mode === 'production';
-
-  if (sourceMap === false) {
-    return false;
-  }
-  if (sourceMap === true) {
-    return isProd ? 'source-map' : 'cheap-module-source-map';
-  }
-  if (sourceMap.js === undefined) {
-    return isProd ? false : 'cheap-module-source-map';
-  }
-  return sourceMap.js;
-};
+import type { RsbuildPlugin } from '../types';
 
 /**
  * Set some basic Rspack configs
@@ -34,21 +12,6 @@ export const pluginBasic = (): RsbuildPlugin => ({
         const { config } = environment;
 
         chain.name(environment.name);
-
-        const devtool = getDevtool(config);
-        chain.devtool(devtool);
-
-        // When JS source map is disabled, but CSS source map is enabled,
-        // add `SourceMapDevToolPlugin` to let Rspack generate CSS source map.
-        const { sourceMap } = config.output;
-        if (!devtool && typeof sourceMap === 'object' && sourceMap.css) {
-          chain.plugin('source-map-css').use(bundler.SourceMapDevToolPlugin, [
-            {
-              test: /\.css$/,
-              filename: '[file].map[query]',
-            },
-          ]);
-        }
 
         // The base directory for resolving entry points and loaders from the configuration.
         chain.context(api.context.rootPath);
@@ -82,17 +45,6 @@ export const pluginBasic = (): RsbuildPlugin => ({
             .plugin(CHAIN_ID.PLUGIN.HMR)
             .use(bundler.HotModuleReplacementPlugin);
         }
-
-        // Use project-relative POSIX paths in source maps:
-        // - Prevents leaking absolute system paths
-        // - Keeps maps portable across environments
-        // - Matches source map spec and debugger expectations
-        chain.output.devtoolModuleFilenameTemplate(
-          (info: { absoluteResourcePath: string }) =>
-            toPosixPath(
-              path.relative(api.context.distPath, info.absoluteResourcePath),
-            ),
-        );
 
         if (api.context.bundlerType === 'rspack') {
           chain.module.parser.merge({

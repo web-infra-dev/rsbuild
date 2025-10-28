@@ -962,6 +962,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   "output": {
     "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
     "chunkFilename": "static/js/async/[name].[contenthash:8].js",
+    "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].[contenthash:8].js",
     "hashFunction": "xxhash64",
     "path": "<ROOT>/packages/core/tests/dist",

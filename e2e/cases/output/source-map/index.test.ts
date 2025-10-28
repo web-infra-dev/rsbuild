@@ -56,13 +56,13 @@ async function testSourceMapType(
 
   expect(positions).toEqual([
     {
-      source: '../src/App.jsx',
+      source: '../../../src/App.jsx',
       line: 2,
       column: appSourceCode.split('\n')[1].indexOf('Hello Rsbuild!'),
       name: null,
     },
     {
-      source: '../src/index.js',
+      source: '../../../src/index.js',
       line: 7,
       column: indexSourceCode.split('\n')[6].indexOf('window'),
       name: 'window',
