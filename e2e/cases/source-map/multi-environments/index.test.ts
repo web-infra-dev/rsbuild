@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { expect, findFile, rspackTest } from '@e2e/helper';
 
 rspackTest(
@@ -12,12 +14,16 @@ rspackTest(
         path.includes('static/js/index.js.map') && !path.includes('web2'),
     );
     const web2JsMapPath = findFile(files, 'web2/static/js/index.js.map');
+    const sourceContent = readFileSync(
+      join(__dirname, './src/index.js'),
+      'utf-8',
+    );
 
     expect(JSON.parse(files[web1JsMapPath])).toEqual({
       version: 3,
       file: 'static/js/index.js',
       sources: ['../../../src/index.js'],
-      sourcesContent: ["console.log('hello');\n"],
+      sourcesContent: [sourceContent],
       names: ['console'],
       // cspell:disable-next-line
       mappings: 'AAAAA,QAAQ,GAAG,CAAC',
@@ -26,7 +32,7 @@ rspackTest(
       version: 3,
       file: 'static/js/index.js',
       sources: ['../../../../../src/index.js'],
-      sourcesContent: ["console.log('hello');\n"],
+      sourcesContent: [sourceContent],
       names: ['console'],
       // cspell:disable-next-line
       mappings: 'AAAAA,QAAQ,GAAG,CAAC',
