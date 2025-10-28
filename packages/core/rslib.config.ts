@@ -4,7 +4,7 @@ import { nodeMinifyConfig } from '@rsbuild/config/rslib.config.ts';
 import type { Rspack, rsbuild } from '@rslib/core';
 import { defineConfig } from '@rslib/core';
 import pkgJson from './package.json' with { type: 'json' };
-import prebundleConfig from './prebundle.config.mjs';
+import prebundleConfig from './prebundle.config.ts';
 
 export const define = {
   RSBUILD_VERSION: JSON.stringify(pkgJson.version),
