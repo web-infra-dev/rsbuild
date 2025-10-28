@@ -52,6 +52,7 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
           {
             test: /\.css$/,
             filename: '[file].map[query]',
+            moduleFilenameTemplate: sourceMapFilenameTemplate,
           },
         ]);
       }

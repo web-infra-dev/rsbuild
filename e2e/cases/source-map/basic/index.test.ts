@@ -3,6 +3,7 @@ import path, { join } from 'node:path';
 import {
   type Build,
   expect,
+  findFile,
   getFileContent,
   mapSourceMapPositions,
   test,
@@ -168,6 +169,7 @@ test('should generate source maps only for CSS files', async ({ build }) => {
   const rsbuild = await build({
     config: {
       output: {
+        filenameHash: false,
         sourceMap: {
           js: false,
           css: true,
@@ -186,4 +188,20 @@ test('should generate source maps only for CSS files', async ({ build }) => {
   );
   expect(jsMapPaths.length).toEqual(0);
   expect(cssMapFiles.length).toBeGreaterThan(0);
+
+  const cssSourceMap = findFile(files, 'index.css.map');
+  const cssSourceContent = readFileSync(
+    join(__dirname, './src/index.css'),
+    'utf-8',
+  );
+
+  expect(JSON.parse(files[cssSourceMap])).toEqual({
+    file: 'static/css/index.css',
+    // cspell: disable-next-line
+    mappings: 'AADA',
+    names: [],
+    sources: ['../../../src/index.css'],
+    sourcesContent: [cssSourceContent],
+    version: 3,
+  });
 });
