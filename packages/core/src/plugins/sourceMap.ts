@@ -32,6 +32,11 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
       absoluteResourcePath: string;
     }) => absoluteResourcePath;
 
+    const enableCssSourceMap = (config: NormalizedEnvironmentConfig) => {
+      const { sourceMap } = config.output;
+      return typeof sourceMap === 'object' && sourceMap.css;
+    };
+
     api.modifyBundlerChain((chain, { bundler, environment }) => {
       const { config } = environment;
       const devtool = getDevtool(config);
@@ -42,8 +47,7 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
 
       // When JS source map is disabled, but CSS source map is enabled,
       // add `SourceMapDevToolPlugin` to let Rspack generate CSS source map.
-      const { sourceMap } = config.output;
-      if (!devtool && typeof sourceMap === 'object' && sourceMap.css) {
+      if (!devtool && enableCssSourceMap(config)) {
         chain.plugin('source-map-css').use(bundler.SourceMapDevToolPlugin, [
           {
             test: /\.css$/,
@@ -61,6 +65,14 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
       // Source maps has been extracted to separate files on this stage
       { stage: 'optimize-transfer' },
       ({ assets, compilation, sources, environment }) => {
+        // If source map is disabled, skip the processing.
+        if (
+          !compilation.options.devtool &&
+          !enableCssSourceMap(environment.config)
+        ) {
+          return;
+        }
+
         // If devtoolModuleFilenameTemplate is not the default template,
         // which means users want to customize it, skip the default processing.
         if (
