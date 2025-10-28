@@ -25,9 +25,9 @@ rspackTest(
 );
 
 rspackTest(
-  'should parse source map correctly if source path is relative',
+  'should parse source map correctly if source path is relative to source map path',
   async ({ dev }) => {
-    const distPath = join(__dirname, 'dist');
+    const sourceMapPath = join(__dirname, 'dist/static/js');
     const rsbuild = await dev({
       config: {
         tools: {
@@ -35,7 +35,7 @@ rspackTest(
             output: {
               devtoolModuleFilenameTemplate(info) {
                 return toPosixPath(
-                  relative(distPath, info.absoluteResourcePath),
+                  relative(sourceMapPath, info.absoluteResourcePath),
                 );
               },
             },
