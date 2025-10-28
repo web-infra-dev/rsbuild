@@ -61,10 +61,10 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
       // Source maps has been extracted to separate files on this stage
       { stage: 'optimize-transfer' },
       ({ assets, compilation, sources }) => {
-        // If devtoolFallbackModuleFilenameTemplate is not the default template,
+        // If devtoolModuleFilenameTemplate is not the default template,
         // which means users want to customize it, skip the default processing.
         if (
-          compilation.outputOptions.devtoolFallbackModuleFilenameTemplate !==
+          compilation.outputOptions.devtoolModuleFilenameTemplate !==
           sourceMapFilenameTemplate
         ) {
           return;
