@@ -125,10 +125,10 @@ const resolveOriginalLocation = async (
 };
 
 /**
- * Get relative source path that is relative to the project root.
+ * Resolve a source path to a project-root-relative path.
  * By default, the source path is relative to the source map path or is absolute.
  */
-const getRelativeSourcePath = (
+const resolveSourceRelativeToRoot = (
   source: string,
   sourceMapPath: string,
   context: InternalContext,
@@ -149,7 +149,7 @@ const formatOriginalLocation = (
     return;
   }
 
-  let result = getRelativeSourcePath(source, sourceMapPath, context);
+  let result = resolveSourceRelativeToRoot(source, sourceMapPath, context);
   if (line !== null) {
     result += column === null ? `:${line}` : `:${line}:${column}`;
   }
