@@ -56,7 +56,7 @@ const findFirstUserFrame = (parsed: StackFrame[]) => {
     | undefined;
 };
 
-const getOriginalPositionForFrame = async (
+const parseFrame = async (
   frame: Pick<StackFrame, 'file' | 'column' | 'lineNumber'>,
   fs: Rspack.OutputFileSystem,
   context: InternalContext,
@@ -76,11 +76,14 @@ const getOriginalPositionForFrame = async (
   try {
     const sourceMap = await readFile(sourceMapInfo.filename);
     if (sourceMap) {
-      return getOriginalPosition(
-        sourceMap.toString(),
-        lineNumber ?? 0,
-        column ?? 0,
-      );
+      return {
+        sourceMapPath: sourceMapInfo.filename,
+        originalPosition: getOriginalPosition(
+          sourceMap.toString(),
+          lineNumber ?? 0,
+          column ?? 0,
+        ),
+      };
     }
   } catch (error) {
     if (error instanceof Error) {
@@ -109,29 +112,35 @@ const resolveOriginalLocation = async (
     return;
   }
 
-  const originalMapping = await getOriginalPositionForFrame(frame, fs, context);
-  if (!originalMapping) {
+  const parsedFrame = await parseFrame(frame, fs, context);
+  if (!parsedFrame) {
     return;
   }
 
+  const { sourceMapPath, originalPosition } = parsedFrame;
   return {
     frame,
-    location: formatOriginalLocation(originalMapping, context),
+    location: formatOriginalLocation(sourceMapPath, originalPosition, context),
   };
 };
 
 /**
  * Get relative source path that is relative to the project root.
- * By default, the source path is relative to the dist path or is absolute.
+ * By default, the source path is relative to the source map path or is absolute.
  */
-const getRelativeSourcePath = (source: string, context: InternalContext) => {
+const getRelativeSourcePath = (
+  source: string,
+  sourceMapPath: string,
+  context: InternalContext,
+) => {
   const absoluteSourcePath = path.isAbsolute(source)
     ? source
-    : path.join(context.distPath, source);
+    : path.join(path.dirname(sourceMapPath), source);
   return path.relative(context.rootPath, absoluteSourcePath);
 };
 
 const formatOriginalLocation = (
+  sourceMapPath: string,
   originalMapping: OriginalMapping | InvalidOriginalMapping,
   context: InternalContext,
 ) => {
@@ -140,7 +149,7 @@ const formatOriginalLocation = (
     return;
   }
 
-  let result = getRelativeSourcePath(source, context);
+  let result = getRelativeSourcePath(source, sourceMapPath, context);
   if (line !== null) {
     result += column === null ? `:${line}` : `:${line}:${column}`;
   }
@@ -188,11 +197,7 @@ const formatFullStack = async (
   let result = '';
 
   for (const frame of parsed) {
-    const originalMapping = await getOriginalPositionForFrame(
-      frame,
-      fs,
-      context,
-    );
+    const parsedFrame = await parseFrame(frame, fs, context);
     const { methodName } = frame;
     const parts: (string | undefined)[] = [];
 
@@ -200,8 +205,13 @@ const formatFullStack = async (
       parts.push(methodName);
     }
 
-    if (originalMapping) {
-      const originalLocation = formatOriginalLocation(originalMapping, context);
+    if (parsedFrame) {
+      const { sourceMapPath, originalPosition } = parsedFrame;
+      const originalLocation = formatOriginalLocation(
+        sourceMapPath,
+        originalPosition,
+        context,
+      );
       if (originalLocation) {
         parts.push(originalLocation);
       } else {
