@@ -5,7 +5,7 @@ import {
   execSync,
   exec as nodeExec,
 } from 'node:child_process';
-import { promises } from 'node:fs';
+import { constants as fsConstants, promises } from 'node:fs';
 import path from 'node:path';
 import base, { expect } from '@playwright/test';
 import fse from 'fs-extra';
@@ -302,6 +302,7 @@ export const test = base.extend<RsbuildFixture>({
       await fse.remove(targetDir);
       await promises.cp(path.join(cwd, 'src'), targetDir, {
         recursive: true,
+        mode: fsConstants.COPYFILE_FICLONE,
       });
       return targetDir;
     };
