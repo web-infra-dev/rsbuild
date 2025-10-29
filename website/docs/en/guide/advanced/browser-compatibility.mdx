@@ -2,20 +2,20 @@
 
 Rsbuild supports [modern browsers](/guide/advanced/browserslist#default-browserslist) by default and provides syntax and API downgrade capabilities to ensure compatibility with legacy browsers that support ES5 (such as IE11).
 
-This chapter introduces how to use Rsbuild's features to address browser compatibility issues.
+This chapter explains how to use Rsbuild's features to address browser compatibility issues.
 
 ## Set browserslist
 
-Before dealing with compatibility issues, you first need to determine which browsers your project needs to support and add the corresponding browserslist config.
+Before dealing with compatibility issues, you need to determine which browsers your project needs to support and add the corresponding browserslist config.
 
 - If you haven't set browserslist yet, please read the [Browserslist](/guide/advanced/browserslist) chapter first.
 
-- If you have set a browserslist, Rsbuild will automatically compile to match that scope, downgrade JavaScript and CSS syntax, and inject the required polyfills. In most cases, you can safely use modern ECMAScript features without worrying about compatibility issues.
+- If you have set a browserslist, Rsbuild automatically compiles to match that scope, downgrades JavaScript and CSS syntax, and injects required polyfills. In most cases, you can safely use modern ECMAScript features without worrying about compatibility issues.
 
-After setting the browserslist, if you still encounter compatibility issues, please continue reading the content below to find solutions.
+After setting the browserslist, if you still encounter compatibility issues, continue reading to find solutions.
 
 :::tip What is polyfill
-A polyfill is code that provides the functionality of newer features to older browsers that do not support them natively. It fills in the gaps in older browsers' implementations of web standards, allowing developers to use newer features without worrying about whether they will work in older browsers. For example, if a browser doesn't support the `Array.prototype.flat()` method, a polyfill can provide that functionality, allowing code that uses `Array.prototype.flat()` to work in that browser. Polyfills are commonly used to ensure web applications work across a wide range of browsers, including older ones.
+A polyfill is code that provides the functionality of newer features to older browsers that don't support them natively. It fills gaps in older browsers' implementations of web standards, allowing developers to use newer features without worrying about whether they'll work in older browsers. For example, if a browser doesn't support the `Array.prototype.flat()` method, a polyfill can provide that functionality, allowing code that uses `Array.prototype.flat()` to work in that browser. Polyfills are commonly used to ensure web applications work across a wide range of browsers, including older ones.
 :::
 
 ## Background knowledge
@@ -24,9 +24,9 @@ Before dealing with compatibility issues, it is recommended that you understand 
 
 ### Syntax downgrade and API downgrade
 
-When you use higher-version syntax and APIs in your project, to make the compiled code run reliably in lower-version browsers, we need to downgrade two parts: syntax downgrade and API downgrade.
+When you use higher-version syntax and APIs in your project, to make the compiled code run reliably in lower-version browsers, we need to downgrade two parts: syntax and APIs.
 
-**Rsbuild downgrades syntax through syntax transpilation, and downgrades APIs through polyfill injection.**
+**Rsbuild downgrades syntax through transpilation and downgrades APIs through polyfill injection.**
 
 > Syntax and APIs are not tightly coupled. When browser manufacturers implement the engine, they will support some syntax or implement some APIs in advance according to the specification or their own needs. Therefore, browsers from different manufacturers in the same period are not necessarily compatible with syntax and API. So in general practice, syntax and API are handled in two parts.
 
@@ -61,7 +61,7 @@ SyntaxError: Unexpected token.
 
 It's obvious from the error message that this is a syntax error, meaning this syntax is not supported in older versions of the engine.
 
-**Syntax cannot be supported by polyfill or shim**. To run syntax that's not originally supported in a lower-version browser, you need to transpile the code into syntax that the lower-version engine can support.
+**Syntax cannot be supported by polyfill or shim**. To run syntax that's not originally supported in a lower-version browser, you need to transpile the code into syntax the lower-version engine can support.
 
 Transpile the above code into the following to run in older version engines:
 
@@ -70,7 +70,7 @@ var foo = {};
 foo === null || foo === void 0 ? void 0 : foo.bar();
 ```
 
-After transpilation, the syntax of the code has changed, and some syntax that the engine of the lower version cannot understand has been replaced with the syntax it can understand, **but the meaning of the code itself has not changed**.
+After transpilation, the syntax of the code has changed, and some syntax the lower-version engine cannot understand has been replaced with syntax it can understand, **but the meaning of the code itself hasn't changed**.
 
 If the engine encounters an unrecognized syntax when converting to AST, it will report a syntax error and abort code execution. In this case, if your project doesn't use capabilities such as SSR or SSG, the page will be blank, making it unavailable.
 

@@ -51,7 +51,7 @@ In the default template, `id="<%= mountId %>"` is replaced with `id="root"`. Mod
 
 You can set the HTML `<title>` tag through the [html.title](/config/html/title) config.
 
-When there is only one page in your project, just use the `html.title` setting directly:
+When your project has only one page, use the `html.title` setting directly:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -78,7 +78,7 @@ export default {
 ```
 
 :::tip
-For single-page applications (SPA), Rsbuild will include an initial title in the HTML page, but you usually need to dynamically update the page title on route switching, for example using some routing libraries or libraries like [React Helmet](https://github.com/nfl/react-helmet).
+For single-page applications (SPA), Rsbuild includes an initial title in the HTML page, but you typically need to dynamically update the page title on route changes, for example using routing libraries or libraries like [React Helmet](https://github.com/nfl/react-helmet).
 :::
 
 ## Set page icon
