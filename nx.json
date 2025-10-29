@@ -12,7 +12,7 @@
     ],
     "prebundle": [
       "{projectRoot}/package.json",
-      "{projectRoot}/prebundle.config.mjs"
+      "{projectRoot}/prebundle.config.ts"
     ]
   },
   "targetDefaults": {

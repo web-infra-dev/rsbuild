@@ -40,7 +40,7 @@
     "@types/less": "^3.0.8",
     "less": "4.3.0",
     "less-loader": "^12.3.0",
-    "prebundle": "1.4.2",
+    "prebundle": "1.5.0",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {

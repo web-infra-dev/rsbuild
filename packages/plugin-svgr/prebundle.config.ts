@@ -1,8 +1,7 @@
-// @ts-check
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import type { Config } from 'prebundle';
 
-/** @type {import('prebundle').Config} */
 export default {
   prettier: true,
   dependencies: [
@@ -32,4 +31,4 @@ export default {
       },
     },
   ],
-};
+} satisfies Config;

@@ -1,5 +1,5 @@
-// @ts-check
-/** @type {import('prebundle').Config} */
+import type { Config } from 'prebundle';
+
 export default {
   prettier: true,
   dependencies: [
@@ -11,4 +11,4 @@ export default {
       },
     },
   ],
-};
+} satisfies Config;
