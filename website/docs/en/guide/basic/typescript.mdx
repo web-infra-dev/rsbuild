@@ -8,7 +8,7 @@ Rsbuild uses [SWC](/guide/configuration/swc) by default for transforming TypeScr
 
 ### Isolated modules
 
-Unlike the native TypeScript compiler, tools like SWC and Babel compile each file separately and cannot determine whether an imported name is a type or value. When using TypeScript in Rsbuild, enable the [verbatimModuleSyntax](https://www.typescriptlang.org/tsconfig/#verbatimModuleSyntax) or [isolatedModules](https://typescriptlang.org/tsconfig/#isolatedModules) option in your `tsconfig.json`:
+Unlike the native TypeScript compiler, tools like SWC and Babel compile each file separately and cannot determine whether an imported name is a type or value. When using TypeScript in Rsbuild, enable the [verbatimModuleSyntax](https://www.typescriptlang.org/tsconfig/#verbatimModuleSyntax) or [isolatedModules](https://typescriptlang.org/tsconfig/#isolatedModules) option in `tsconfig.json`:
 
 - For TypeScript >= 5.0.0, use the `verbatimModuleSyntax` option, which enables the `isolatedModules` option by default:
 
@@ -56,19 +56,19 @@ Create a `src/env.d.ts` file to reference these types:
 
 ## Type checking
 
-When transpiling TypeScript code using tools like SWC and Babel, type checking is not performed.
+When transpiling TypeScript code using tools like SWC and Babel, type checking isn't performed.
 
 ### Type check plugin
 
 To enable type checking, you can use the [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check) plugin. This plugin runs TypeScript type checking in a separate process and internally integrates [ts-checker-rspack-plugin](https://github.com/rspack-contrib/ts-checker-rspack-plugin).
 
-The plugin supports type checking in both dev and build modes, helping you catch type errors early during development.
+The plugin supports type checking in both dev and build modes, helping you catch type errors early in development.
 
 Refer to [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check) for usage instructions.
 
 ### Using tsc
 
-You can also use [tsc](https://www.typescriptlang.org/docs/handbook/compiler-options.html) directly for type checking by adding a `type-check` step to your `build` script. This approach only performs type checking after the build and does not run during dev mode.
+You can also use [tsc](https://www.typescriptlang.org/docs/handbook/compiler-options.html) directly for type checking by adding a `type-check` step to your `build` script. This approach only performs type checking after the build and doesn't run during dev mode.
 
 ```json title="package.json"
 {
