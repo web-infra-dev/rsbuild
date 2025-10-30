@@ -26,6 +26,7 @@ export const serverRender =
 export default defineConfig({
   plugins: [pluginReact()],
   dev: {
+    // enable writeToDisk to make sure the sourcemap files are generated on disk for debugging
     writeToDisk: inspector.url() !== undefined,
     setupMiddlewares: ({ unshift }, context) => {
       const serverRenderMiddleware = serverRender(context);
