@@ -1,3 +1,4 @@
+import inspector from 'node:inspector';
 import {
   defineConfig,
   logger,
@@ -25,6 +26,7 @@ export const serverRender =
 export default defineConfig({
   plugins: [pluginReact()],
   dev: {
+    writeToDisk: inspector.url() !== undefined,
     setupMiddlewares: ({ unshift }, context) => {
       const serverRenderMiddleware = serverRender(context);
 
@@ -53,7 +55,7 @@ export default defineConfig({
     },
     node: {
       output: {
-        module: true,
+        module: process.env.TEST_ESM_LIBRARY === 'true',
         target: 'node',
       },
       source: {
