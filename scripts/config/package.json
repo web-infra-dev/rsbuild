@@ -6,8 +6,8 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rslib/core": "0.16.1",
-    "@types/node": "^22.18.12",
-    "@typescript/native-preview": "7.0.0-dev.20251026.1",
+    "@types/node": "^22.18.13",
+    "@typescript/native-preview": "7.0.0-dev.20251030.1",
     "rsbuild-plugin-arethetypeswrong": "0.1.1",
     "typescript": "^5.9.3"
   }

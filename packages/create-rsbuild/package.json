@@ -29,7 +29,7 @@
     "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
-    "create-rstack": "1.7.0"
+    "create-rstack": "1.7.1"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
@@ -40,7 +40,7 @@
     "@rsbuild/plugin-svelte": "workspace:*",
     "@rsbuild/plugin-vue": "workspace:*",
     "@rslib/core": "0.16.1",
-    "@types/node": "^22.18.12",
+    "@types/node": "^22.18.13",
     "typescript": "^5.9.3"
   },
   "engines": {
