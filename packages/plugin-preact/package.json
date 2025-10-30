@@ -35,7 +35,7 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rslib/core": "0.16.1",
-    "@types/node": "^22.18.12",
+    "@types/node": "^22.18.13",
     "preact": "^10.27.2",
     "typescript": "^5.9.3"
   },
