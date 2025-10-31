@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.16.1",
+    "@rslib/core": "0.17.0",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^22.18.13",
     "svelte": "^5.42.2",
