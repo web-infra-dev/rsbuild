@@ -26,11 +26,7 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
   name: 'rsbuild:source-map',
 
   setup(api) {
-    const sourceMapFilenameTemplate = ({
-      absoluteResourcePath,
-    }: {
-      absoluteResourcePath: string;
-    }) => absoluteResourcePath;
+    const DEFAULT_SOURCE_MAP_TEMPLATE = '[absolute-resource-path]';
 
     const enableCssSourceMap = (config: NormalizedEnvironmentConfig) => {
       const { sourceMap } = config.output;
@@ -43,7 +39,7 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
 
       chain
         .devtool(devtool)
-        .output.devtoolModuleFilenameTemplate(sourceMapFilenameTemplate);
+        .output.devtoolModuleFilenameTemplate(DEFAULT_SOURCE_MAP_TEMPLATE);
 
       // When JS source map is disabled, but CSS source map is enabled,
       // add `SourceMapDevToolPlugin` to let Rspack generate CSS source map.
@@ -77,7 +73,7 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
         // which means users want to customize it, skip the default processing.
         if (
           compilation.outputOptions.devtoolModuleFilenameTemplate !==
-          sourceMapFilenameTemplate
+          DEFAULT_SOURCE_MAP_TEMPLATE
         ) {
           return;
         }
