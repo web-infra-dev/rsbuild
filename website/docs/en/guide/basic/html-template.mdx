@@ -51,7 +51,7 @@ In the default template, `id="<%= mountId %>"` is replaced with `id="root"`. Mod
 
 You can set the HTML `<title>` tag through the [html.title](/config/html/title) config.
 
-When your project has only one page, use the `html.title` setting directly:
+When your project has only one page, set `html.title` directly:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -78,7 +78,7 @@ export default {
 ```
 
 :::tip
-For single-page applications (SPA), Rsbuild includes an initial title in the HTML page, but you typically need to dynamically update the page title on route changes, for example using routing libraries or libraries like [React Helmet](https://github.com/nfl/react-helmet).
+For single-page applications (SPA), Rsbuild includes an initial title in the HTML page, but you typically need to dynamically update the page title when routes change, for example using routing libraries or libraries like [React Helmet](https://github.com/nfl/react-helmet).
 :::
 
 ## Set page icon
@@ -142,9 +142,9 @@ The generated meta tag in HTML is:
 
 ## Default template engine
 
-Rsbuild has a built-in default template engine for handling HTML template files. Its syntax is similar to a subset of EJS, with some differences. When an HTML template file has a `.html` extension, Rsbuild will use the built-in template engine to parse it.
+Rsbuild has a built-in default template engine for processing HTML template files. Its syntax is similar to a subset of EJS, with some differences. When an HTML template file has a `.html` extension, Rsbuild will use the built-in template engine to parse it.
 
-For example, if a `text` param is defined in the template with the value `'world'`, Rsbuild will automatically replace `<%= text %>` with the specified value during the build process.
+For example, if a `text` parameter is defined in the template with the value `'world'`, Rsbuild will automatically replace `<%= text %>` with the specified value during the build.
 
 ```html
 <!-- Input  -->
