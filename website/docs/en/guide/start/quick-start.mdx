@@ -44,8 +44,8 @@ Follow the prompts. During setup, you can choose whether to add optional tools l
 After creating the application:
 
 - Run `git init` to initialize a Git repository.
-- Run `npm install` (or your package manager's install command) to install npm dependencies.
-- Run `npm run dev` to start the development server, which runs on `http://localhost:5173` by default.
+- Run `npm install` (or your package manager's install command) to install dependencies.
+- Run `npm run dev` to start the dev server, which runs on `http://localhost:5173` by default.
 
 ### Templates
 
@@ -63,10 +63,10 @@ When creating an application, you can choose from the following templates provid
 | svelte   | [Svelte 5](https://svelte.dev/) | TypeScript        |
 | solid    | [Solid](https://solidjs.com/)   | TypeScript        |
 
-`create-rsbuild` provides basic templates. You can find more templates through:
+`create-rsbuild` provides basic templates. You can find more templates at:
 
-- Visit [Rspack - Ecosystem](https://rspack.rs/guide/start/quick-start#ecosystem) to learn about various higher-level tools based on Rsbuild.
-- Visit [awesome-rstack - Starter](https://github.com/web-infra-dev/awesome-rstack?tab=readme-ov-file#starter) to find more community-maintained templates.
+- Visit [Rspack - Ecosystem](https://rspack.rs/guide/start/quick-start#ecosystem) to learn about higher-level tools built on Rsbuild.
+- Visit [awesome-rstack - Starter](https://github.com/web-infra-dev/awesome-rstack?tab=readme-ov-file#starter) for community-maintained templates.
 
 ### Optional tools
 
@@ -100,7 +100,7 @@ To create an application in the current directory, set the target folder to `.`:
 
 ### Quick creation
 
-[create-rsbuild](https://npmjs.com/package/create-rsbuild) provides some CLI flags. By setting these CLI flags, you can skip the interactive selection steps and create the application with one command.
+[create-rsbuild](https://npmjs.com/package/create-rsbuild) provides CLI flags that let you skip the interactive selection steps and create applications with a single command.
 
 For example, to create a React application in the `my-app` directory with one command:
 
@@ -158,14 +158,14 @@ After installation, refer to the following documents to configure your project:
 
 ## CLI
 
-Rsbuild comes with a lightweight CLI that includes commands such as `dev` and `build`.
+Rsbuild includes a lightweight CLI with commands like `dev` and `build`.
 
 ```json title="package.json"
 {
   "scripts": {
-    // starting the dev server
+    // start the dev server
     "dev": "rsbuild dev",
-    // build the app for production
+    // build for production
     "build": "rsbuild build",
     // preview the production build locally
     "preview": "rsbuild preview"

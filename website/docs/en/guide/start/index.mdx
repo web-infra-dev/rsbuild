@@ -1,12 +1,12 @@
 # Introduction
 
-Rsbuild is a high-performance build tool powered by Rspack. It provides carefully designed default build configurations that deliver an out-of-the-box development experience while fully leveraging Rspack's performance advantages.
+Rsbuild is a high-performance build tool powered by Rspack. It provides carefully designed default build configurations that deliver an out-of-the-box development experience while taking full advantage of Rspack's performance.
 
 Rsbuild provides [rich build features](/guide/start/features), including compilation of TypeScript, JSX, Sass, Less, CSS Modules, Wasm, and more. It also supports Module Federation, image compression, type checking, PostCSS, Lightning CSS, and additional features.
 
 ## 🚀 Performance
 
-Powered by Rspack's Rust-based architecture, Rsbuild delivers blazing fast performance that will reshape your development workflow.
+Powered by Rspack's Rust-based architecture, Rsbuild delivers blazing-fast performance that will reshape your development workflow.
 
 ⚡️ **Build 1000 React components:**
 
@@ -18,7 +18,7 @@ import { BenchmarkGraph } from '@components/Benchmark';
 
 ## 💡 Comparisons
 
-Rsbuild is a build tool on par with [Vite](https://vitejs.dev/), [Create React App](https://github.com/facebook/create-react-app), and [Vue CLI](https://github.com/vuejs/vue-cli). All come with built-in dev servers, command line tools, and sensible build configurations for an out-of-the-box experience.
+Rsbuild is a build tool on par with [Vite](https://vitejs.dev/), [Create React App](https://github.com/facebook/create-react-app), and [Vue CLI](https://github.com/vuejs/vue-cli). All include built-in dev servers, command line tools, and sensible build configurations for an out-of-the-box experience.
 
 ![](https://assets.rspack.rs/rsbuild/assets/rsbuild-1-0-build-tools.png)
 
@@ -26,31 +26,31 @@ Rsbuild is a build tool on par with [Vite](https://vitejs.dev/), [Create React A
 
 You can think of Rsbuild as a modernized version of Create React App or Vue CLI, with these key differences:
 
-- The underlying bundler has switched from webpack to Rspack, delivering 5 to 10 times better build performance.
-- It's decoupled from frontend UI frameworks and supports all UI frameworks via [plugins](/plugins/list/index), including React, Vue, Svelte, Solid, and more.
-- It provides better extensibility. You can extend Rsbuild flexibly through [Configurations](/config/index), [Plugin API](/plugins/dev/index), and [JavaScript API](/api/start/index).
+- The underlying bundler has been switched from webpack to Rspack, delivering 5 to 10 times better build performance.
+- It's decoupled from frontend UI frameworks and supports all frameworks via [plugins](/plugins/list/index), including React, Vue, Svelte, Solid, and more.
+- It provides better extensibility. You can flexibly extend Rsbuild through [configurations](/config/index), [Plugin API](/plugins/dev/index), and [JavaScript API](/api/start/index).
 
 ### Vite
 
-Rsbuild shares many similarities with Vite, as both aim to improve the frontend development experience. The main differences are:
+Rsbuild has many similarities to Vite, as both aim to improve the frontend development experience. The main differences are:
 
-- **Production consistency**: Rsbuild uses Rspack for bundling in both development and production builds, ensuring high consistency between development and production outputs. Vite uses ESM for module loading during development, improving startup speed but potentially causing inconsistencies between development and production outputs.
-- **Ecosystem compatibility**: Rsbuild is compatible with most webpack plugins and all Rspack plugins, while Vite is compatible with Rollup plugins. If you're currently using many plugins and loaders from the webpack ecosystem, migrating to Rsbuild is relatively straightforward.
+- **Production consistency**: Rsbuild uses Rspack for bundling in both development and production builds, ensuring high consistency between development and production outputs. Vite uses ESM during development for faster startup, but this can potentially cause inconsistencies between development and production outputs.
+- **Ecosystem compatibility**: Rsbuild is compatible with most webpack plugins and all Rspack plugins, while Vite is compatible with Rollup plugins. If you're using many plugins and loaders from the webpack ecosystem, migrating to Rsbuild is more straightforward.
 - **Module Federation**: The Rsbuild team works closely with the [Module Federation](/guide/advanced/module-federation) development team, providing first-class support for Module Federation to help you develop large web applications with micro frontend architecture.
 
 ## 🔥 Features
 
 Rsbuild has the following features:
 
-- **Easy to Configure**: One of Rsbuild's goals is to provide out-of-the-box build capabilities for Rspack users, allowing developers to start web projects with zero configuration. Additionally, Rsbuild provides semantic build configuration to reduce the learning curve for Rspack configuration.
+- **Easy to configure**: One of Rsbuild's goals is to provide out-of-the-box build capabilities for Rspack users, allowing developers to start web projects with zero configuration. Additionally, Rsbuild provides semantic build configuration to reduce the learning curve for Rspack.
 
-- **Performance Oriented**: Rsbuild integrates high-performance Rust-based tools from the community, including [Rspack](https://rspack.rs), [SWC](https://swc.rs/) and [Lightning CSS](https://lightningcss.dev/), delivering first-class build speed and development experience.
+- **Performance oriented**: Rsbuild integrates high-performance Rust-based tools from the community, including [Rspack](https://rspack.rs), [SWC](https://swc.rs/), and [Lightning CSS](https://lightningcss.dev/), delivering first-class build speed and development experience.
 
-- **Plugin Ecosystem**: Rsbuild has a lightweight plugin system and includes a range of high-quality official plugins. Furthermore, Rsbuild is compatible with most webpack plugins and all Rspack plugins, allowing users to leverage existing community or in-house plugins in Rsbuild without rewriting code.
+- **Plugin ecosystem**: Rsbuild has a lightweight plugin system and includes a range of high-quality official plugins. Furthermore, Rsbuild is compatible with most webpack plugins and all Rspack plugins, allowing you to use existing community or in-house plugins without rewriting code.
 
-- **Stable Artifacts**: Rsbuild places a strong focus on build artifact stability. It ensures high consistency between artifacts in development and production builds, and automatically handles syntax downgrading and polyfill injection. Rsbuild also provides plugins for type checking and artifact syntax validation to prevent quality and compatibility issues in production code.
+- **Stable artifacts**: Rsbuild places a strong focus on build artifact stability. It ensures high consistency between artifacts in development and production builds, and automatically handles syntax downgrading and polyfill injection. Rsbuild also provides plugins for type checking and artifact syntax validation to prevent quality and compatibility issues in production code.
 
-- **Framework Agnostic**: Rsbuild is not coupled to any frontend UI framework. It supports frameworks like React, Vue, Svelte, Solid, and Preact through plugins, with plans to support more UI frameworks from the community in the future.
+- **Framework agnostic**: Rsbuild is not coupled to any frontend UI framework. It supports frameworks like React, Vue, Svelte, Solid, and Preact through plugins, with plans to support more UI frameworks from the community in the future.
 
 ## 🦀 Rstack
 
