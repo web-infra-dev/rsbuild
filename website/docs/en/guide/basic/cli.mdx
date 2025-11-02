@@ -68,7 +68,7 @@ The `--open` option automatically opens a page when starting the dev server (equ
 rsbuild dev --open
 ```
 
-The `--open` option also supports specifying a URL to open, for example:
+The `--open` option also accepts a specific URL to open. For example:
 
 ```bash
 rsbuild dev --open http://localhost:3000/foo
@@ -97,7 +97,7 @@ Options:
 
 ## rsbuild preview
 
-The `rsbuild preview` command previews production build outputs locally. You must run `rsbuild build` first to generate the build outputs.
+The `rsbuild preview` command previews production build outputs locally. You must run `rsbuild build` first to generate the outputs.
 
 ```bash
 Usage: rsbuild preview [options]
@@ -124,7 +124,7 @@ Options:
   --verbose             Show complete function definitions in output
 ```
 
-Running `npx rsbuild inspect` in the project root generates these files in the `dist/.rsbuild` directory:
+Running `npx rsbuild inspect` in the project root generates the following files in the `dist/.rsbuild` directory:
 
 - `rsbuild.config.mjs`: Represents the Rsbuild configuration used during the build.
 - `rspack.config.web.mjs`: Represents the Rspack configuration used during the build.
@@ -140,7 +140,7 @@ config inspection completed, generated files:
 
 ### Setting mode
 
-By default, the inspect command outputs configuration for development mode. Add the `--mode production` option to output production mode configuration:
+By default, the inspect command outputs configuration for development mode. To output production mode configuration, add the `--mode production` option:
 
 ```bash
 rsbuild inspect --mode production
@@ -148,7 +148,7 @@ rsbuild inspect --mode production
 
 ### Verbose content
 
-By default, the inspect command omits function content in the configuration object. Add the `--verbose` option to output complete function content:
+By default, the inspect command omits function content in the configuration object. To output complete function content, add the `--verbose` option:
 
 ```bash
 rsbuild inspect --verbose
