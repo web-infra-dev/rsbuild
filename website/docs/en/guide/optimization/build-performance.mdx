@@ -1,22 +1,22 @@
 # Improve build performance
 
-Rsbuild optimizes build performance by default, but performance issues may arise as your project grows.
+While Rsbuild optimizes build performance by default, performance issues can arise as your project grows.
 
 This document provides optional optimization strategies to improve build performance.
 
 ## Performance profiling
 
-Performance profiling helps identify bottlenecks in your project, enabling targeted optimization.
+Performance profiling helps identify bottlenecks in your project for targeted optimization.
 
 See the [Build Performance Analysis](/guide/debug/build-profiling) section.
 
 ## General optimization
 
-These general optimization methods can speed up both development and production builds.
+These general optimization methods speed up both development and production builds.
 
 ### Upgrade Rsbuild
 
-Upgrading to the latest version of Rsbuild provides access to the latest performance optimizations. See [Upgrade Rsbuild](/guide/basic/upgrade-rsbuild) for more details.
+Upgrading to the latest version of Rsbuild gives you access to the latest performance optimizations. See [Upgrade Rsbuild](/guide/basic/upgrade-rsbuild) for more details.
 
 ### Enable persistent cache
 
@@ -24,7 +24,7 @@ Rsbuild provides a [performance.buildCache](/config/performance/build-cache) con
 
 ### Reduce module count
 
-Optimizing the number of modules your application uses reduces bundle size and improves build performance. See [Bundle Size Optimization](/guide/optimization/optimize-bundle) to learn optimization strategies.
+Optimizing the number of modules in your application reduces bundle size and improves build performance. See [Bundle Size Optimization](/guide/optimization/optimize-bundle) to learn optimization strategies.
 
 ### Optimize Tailwind CSS
 
@@ -34,7 +34,7 @@ See [Tailwind CSS v3 - Optimize build performance](/guide/styling/tailwindcss-v3
 
 ### Parallel Less compilation
 
-If your project uses the [@rsbuild/plugin-less](/plugins/list/plugin-less) plugin with many Less files, you can try enabling parallel compilation to improve build performance.
+If your project uses the [@rsbuild/plugin-less](/plugins/list/plugin-less) plugin with many Less files, try enabling parallel compilation to improve build performance.
 
 See [Less Plugin - parallel](/plugins/list/plugin-less#parallel) for more details.
 
@@ -84,7 +84,7 @@ export default {
 
 To provide a good debugging experience, Rsbuild uses the `cheap-module-source-map` format in development mode by default. This is a high-quality source map format that comes with some performance overhead.
 
-You can improve build speed by adjusting the source map format through [output.sourceMap](/config/output/source-map).
+You can improve build speed by adjusting the source map format using [output.sourceMap](/config/output/source-map).
 
 For example, to disable source maps:
 
