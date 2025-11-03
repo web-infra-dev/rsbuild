@@ -1,11 +1,11 @@
 import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import defer * as jiti from 'jiti';
 import { __filename } from './constants';
 import { color, getNodeEnv, isObject } from './helpers';
 import { logger } from './logger';
 import type { RsbuildConfig } from './types';
-import defer * as jiti from 'jiti';
 
 export type ConfigParams = {
   env: string;
@@ -177,9 +177,12 @@ export async function loadConfig({
         nativeModules: ['@rspack/core', 'typescript'],
       });
 
-      configExport = await instance.import<RsbuildConfigExport>(configFilePath, {
-        default: true,
-      });
+      configExport = await instance.import<RsbuildConfigExport>(
+        configFilePath,
+        {
+          default: true,
+        },
+      );
     } catch (err) {
       logger.error(
         `Failed to load file with jiti: ${color.dim(configFilePath)}`,
