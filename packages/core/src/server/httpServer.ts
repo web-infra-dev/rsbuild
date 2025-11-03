@@ -1,23 +1,24 @@
 import type { Server } from 'node:http';
+import defer * as http from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
+import defer * as http2 from 'node:http2';
+import defer * as https from 'node:https';
 import type { Connect, ServerConfig } from '../types';
 
-export const createHttpServer = async ({
+export const createHttpServer = ({
   serverConfig,
   middlewares,
 }: {
   serverConfig: ServerConfig;
   middlewares: Connect.Server;
-}): Promise<Http2SecureServer | Server> => {
+}): Http2SecureServer | Server => {
   if (serverConfig.https) {
     // http-proxy does not supports http2
     if (serverConfig.proxy) {
-      const { createServer } = await import('node:https');
-      return createServer(serverConfig.https, middlewares);
+      return https.createServer(serverConfig.https, middlewares);
     }
 
-    const { createSecureServer } = await import('node:http2');
-    return createSecureServer(
+    return http2.createSecureServer(
       {
         allowHTTP1: true,
         // increase the maximum memory (MiB)
@@ -29,6 +30,5 @@ export const createHttpServer = async ({
     );
   }
 
-  const { createServer } = await import('node:http');
-  return createServer(middlewares);
+  return http.createServer(middlewares);
 };

@@ -1,11 +1,12 @@
 import type { Module, ModuleLinker, SyntheticModule } from 'node:vm';
+import defer * as vm from 'node:vm';
 
 export const asModule = async (
   something: Record<string, any>,
   context: Record<string, any>,
   unlinked?: boolean,
 ): Promise<Module | SyntheticModule> => {
-  const { Module, SyntheticModule } = await import('node:vm');
+  const { Module, SyntheticModule } = vm;
 
   if (something instanceof Module) {
     return something;

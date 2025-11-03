@@ -366,7 +366,7 @@ export async function createDevServer<
 
   const httpServer = middlewareMode
     ? null
-    : await createHttpServer({
+    : createHttpServer({
         serverConfig: config.server,
         middlewares,
       });

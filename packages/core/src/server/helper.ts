@@ -1,6 +1,7 @@
 import type { IncomingMessage, Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
 import type { Socket } from 'node:net';
+import defer * as net from 'node:net';
 import os from 'node:os';
 import { posix, relative, sep } from 'node:path';
 import { DEFAULT_DEV_HOST } from '../constants';
@@ -270,7 +271,6 @@ export const getPort = async ({
     tryLimits = 1;
   }
 
-  const { createServer } = await import('node:net');
   const original = port;
 
   let found = false;
@@ -279,7 +279,7 @@ export const getPort = async ({
   while (!found && attempts <= tryLimits) {
     try {
       await new Promise((resolve, reject) => {
-        const server = createServer();
+        const server = net.createServer();
         server.unref();
         server.on('error', reject);
         server.listen({ port, host }, () => {
@@ -379,13 +379,12 @@ const isLoopbackHost = (host: string) => {
   return loopbackHosts.has(host);
 };
 
-export const getHostInUrl = async (host: string): Promise<string> => {
+export const getHostInUrl = (host: string): string => {
   if (host === DEFAULT_DEV_HOST) {
     return 'localhost';
   }
 
-  const { isIPv6 } = await import('node:net');
-  if (isIPv6(host)) {
+  if (net.isIPv6(host)) {
     return host === '::' ? '[::1]' : `[${host}]`;
   }
   return host;
@@ -427,7 +426,7 @@ export const getAddressUrls = async ({
   if (host && host !== DEFAULT_DEV_HOST) {
     const url = concatUrl({
       port,
-      host: await getHostInUrl(host),
+      host: getHostInUrl(host),
       protocol,
     });
     return [

@@ -1,3 +1,4 @@
+import defer * as crypto from 'node:crypto';
 import deepmerge from 'deepmerge';
 import RspackChain from '../../compiled/rspack-chain';
 import type {
@@ -210,8 +211,7 @@ export const isTTY = (type: 'stdin' | 'stdout' = 'stdout'): boolean => {
   );
 };
 
-export async function hash(data: string): Promise<string> {
-  const crypto = await import('node:crypto');
+export function hash(data: string): string {
   // Available in Node.js v20.12.0
   // faster than `crypto.createHash()` when hashing a smaller amount of data (<= 5MB)
   if (crypto.hash) {
