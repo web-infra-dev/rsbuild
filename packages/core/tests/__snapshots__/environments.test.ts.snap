@@ -1836,7 +1836,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     "output": {
       "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
       "chunkFilename": "static/js/async/[name].js",
-      "devtoolModuleFilenameTemplate": "[absolute-resource-path]",
+      "devtoolModuleFilenameTemplate": [Function],
       "filename": "static/js/[name].js",
       "hashFunction": "xxhash64",
       "path": "<ROOT>/dist",
