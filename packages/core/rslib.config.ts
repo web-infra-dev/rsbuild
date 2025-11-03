@@ -162,4 +162,11 @@ export default defineConfig({
       },
     },
   ],
+  tools: {
+    rspack: {
+      experiments: {
+        deferImport: true,
+      },
+    },
+  },
 });

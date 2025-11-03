@@ -5,6 +5,7 @@ import { __filename } from './constants';
 import { color, getNodeEnv, isObject } from './helpers';
 import { logger } from './logger';
 import type { RsbuildConfig } from './types';
+import defer * as jiti from 'jiti';
 
 export type ConfigParams = {
   env: string;
@@ -167,8 +168,7 @@ export async function loadConfig({
 
   if (configExport === undefined) {
     try {
-      const { createJiti } = await import('jiti');
-      const jiti = createJiti(__filename, {
+      const instance = jiti.createJiti(__filename, {
         // disable require cache to support restart CLI and read the new config
         moduleCache: false,
         interopDefault: true,
@@ -177,7 +177,7 @@ export async function loadConfig({
         nativeModules: ['@rspack/core', 'typescript'],
       });
 
-      configExport = await jiti.import<RsbuildConfigExport>(configFilePath, {
+      configExport = await instance.import<RsbuildConfigExport>(configFilePath, {
         default: true,
       });
     } catch (err) {
