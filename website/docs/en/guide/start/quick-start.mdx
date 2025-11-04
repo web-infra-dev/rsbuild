@@ -98,20 +98,20 @@ To create an application in the current directory, set the target folder to `.`:
 │  Continue and override files
 ```
 
-### Quick creation
+### Non-interactive mode
 
-[create-rsbuild](https://npmjs.com/package/create-rsbuild) provides CLI flags that let you skip the interactive prompts and create applications with a single command.
+[create-rsbuild](https://npmjs.com/package/create-rsbuild) provides several CLI options. With these options, you can skip interactive prompts and create an app directly in non-interactive mode.
 
-For example, to create a React application in the `my-app` directory with one command:
+For example, the following command creates a React app in the `my-app` directory:
 
 ```bash
-npx create-rsbuild --dir my-app --template react
+npx -y create-rsbuild --dir my-app --template react
 
 # Using abbreviations
-npx create-rsbuild -d my-app -t react
+npx -y create-rsbuild -d my-app -t react
 
 # Specify multiple tools
-npx create-rsbuild -d my-app -t react --tools eslint --tools prettier
+npx -y create-rsbuild -d my-app -t react --tools eslint --tools prettier
 ```
 
 All CLI flags supported by `create-rsbuild`:
