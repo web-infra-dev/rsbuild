@@ -121,14 +121,11 @@ const normalizeConfigStructure = <T = RsbuildConfig>(config: T): T => {
 export const mergeRsbuildConfig = <T = RsbuildConfig>(
   ...originalConfigs: T[]
 ): T => {
-  console.time('mergeRsbuildConfig');
   const configs = originalConfigs.map(normalizeConfigStructure);
 
   // In most cases there will be two configs so we perform this check first
   if (configs.length === 2) {
-    const ret = merge(configs[0], configs[1]) as T;
-    console.timeEnd('mergeRsbuildConfig');
-    return ret;
+    return merge(configs[0], configs[1]) as T;
   }
 
   if (configs.length < 2) {
