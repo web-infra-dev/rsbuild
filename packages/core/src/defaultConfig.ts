@@ -322,11 +322,11 @@ export const normalizeConfig = (
     config.server.publicDir,
   );
 
+  const defaultConfig = createDefaultConfig();
+  defaultConfig.mode = getMode();
+
   const mergedConfig = mergeRsbuildConfig(
-    {
-      ...createDefaultConfig(),
-      mode: getMode(),
-    },
+    defaultConfig,
     config,
   ) as NormalizedConfig;
 

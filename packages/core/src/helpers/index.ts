@@ -24,12 +24,11 @@ export const isObject = (obj: unknown): obj is Record<string, any> =>
 
 // Cache Object.prototype reference for better performance in hot paths
 const objectPrototype = Object.prototype;
+const getProto = Object.getPrototypeOf;
 
 export const isPlainObject = (obj: unknown): obj is Record<string, any> => {
   return (
-    obj !== null &&
-    typeof obj === 'object' &&
-    Object.getPrototypeOf(obj) === objectPrototype
+    obj !== null && typeof obj === 'object' && getProto(obj) === objectPrototype
   );
 };
 
