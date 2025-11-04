@@ -82,7 +82,8 @@ const merge = (x: unknown, y: unknown, path = ''): unknown => {
  * object-based structure. This ensures some properties can be merged as expected.
  */
 const normalizeConfigStructure = <T = RsbuildConfig>(config: T): T => {
-  let { dev, output, ...rest } = config as RsbuildConfig;
+  let { dev, output } = config as RsbuildConfig;
+  const normalizedConfig = { ...config } as RsbuildConfig;
 
   if (output) {
     output = { ...output };
@@ -93,6 +94,8 @@ const normalizeConfigStructure = <T = RsbuildConfig>(config: T): T => {
     if (typeof output.distPath === 'string') {
       output.distPath = { root: output.distPath };
     }
+
+    normalizedConfig.output = output;
   }
 
   if (dev) {
@@ -101,9 +104,11 @@ const normalizeConfigStructure = <T = RsbuildConfig>(config: T): T => {
     if (dev.watchFiles && !Array.isArray(dev.watchFiles)) {
       dev.watchFiles = [dev.watchFiles];
     }
+
+    normalizedConfig.dev = dev;
   }
 
-  return { ...rest, dev, output } as T;
+  return normalizedConfig as T;
 };
 
 export const mergeRsbuildConfig = <T = RsbuildConfig>(
