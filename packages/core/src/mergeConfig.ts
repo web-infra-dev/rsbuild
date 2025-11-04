@@ -53,11 +53,6 @@ const merge = (x: unknown, y: unknown, path = ''): unknown => {
     return y;
   }
 
-  // convert function to chained function
-  if (typeX === 'function' || typeY === 'function') {
-    return [x, y];
-  }
-
   // combine array
   const isArrayX = Array.isArray(x);
   const isArrayY = Array.isArray(y);
@@ -67,6 +62,11 @@ const merge = (x: unknown, y: unknown, path = ''): unknown => {
     return [...x, y];
   } else if (isArrayY) {
     return [x, ...y];
+  }
+
+  // convert function to chained function
+  if (typeX === 'function' || typeY === 'function') {
+    return [x, y];
   }
 
   if (!isPlainObject(x) || !isPlainObject(y)) {
