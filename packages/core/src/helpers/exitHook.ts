@@ -1,5 +1,5 @@
-import { constants } from 'node:os';
-import process from 'node:process';
+import defer * as os from 'node:os';
+import defer * as process from 'node:process';
 
 type Callback = (exitCode: number) => void;
 
@@ -37,11 +37,11 @@ export function exitHook(onExit: Callback): () => void {
     // Use `process.on` instead of `process.once` to disable
     // Node.js's default exit behavior
     process.on('SIGINT', () => {
-      exit(constants.signals.SIGINT + 128, 'SIGINT');
+      exit(os.constants.signals.SIGINT + 128, 'SIGINT');
     });
     // `kill` command
     process.once('SIGTERM', () => {
-      exit(constants.signals.SIGTERM + 128, 'SIGTERM');
+      exit(os.constants.signals.SIGTERM + 128, 'SIGTERM');
     });
     // process.exit or others
     process.once('exit', (exitCode) => {
