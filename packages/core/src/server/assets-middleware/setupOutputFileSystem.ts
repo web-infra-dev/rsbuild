@@ -1,9 +1,6 @@
-import type {
-  Compiler,
-  OutputFileSystem as RspackOutputFileSystem,
-} from '@rspack/core';
+import fs from 'node:fs';
+import type { Compiler, OutputFileSystem } from '@rspack/core';
 import { requireCompiledPackage } from '../../helpers/vendors';
-import type { OutputFileSystem } from './index';
 import type { ResolvedWriteToDisk } from './setupWriteToDisk';
 
 export function setupOutputFileSystem(
@@ -12,12 +9,17 @@ export function setupOutputFileSystem(
 ): OutputFileSystem {
   if (writeToDisk !== true) {
     const { createFsFromVolume, Volume } = requireCompiledPackage('memfs');
-    const outputFileSystem = createFsFromVolume(new Volume());
+    const outputFileSystem = createFsFromVolume(
+      new Volume(),
+    ) as OutputFileSystem;
 
     for (const compiler of compilers) {
-      compiler.outputFileSystem = outputFileSystem as RspackOutputFileSystem;
+      compiler.outputFileSystem = outputFileSystem;
     }
   }
 
-  return compilers[0].outputFileSystem as OutputFileSystem;
+  const compiler = compilers.find((compiler) =>
+    Boolean(compiler.outputFileSystem),
+  );
+  return compiler?.outputFileSystem ?? fs;
 }
