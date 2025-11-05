@@ -61,11 +61,7 @@ const parseFrame = async (
   context: InternalContext,
 ) => {
   const { file, column, lineNumber } = frame;
-  const sourceMapInfo = await getFileFromUrl(
-    `${file}.map`,
-    fs as Rspack.OutputFileSystem,
-    context,
-  );
+  const sourceMapInfo = await getFileFromUrl(`${file}.map`, fs, context);
 
   if (!sourceMapInfo || 'errorCode' in sourceMapInfo) {
     return;
