@@ -100,7 +100,7 @@ Biome 提供与 ESLint 和 Prettier 相似的代码检查和格式化功能。�
 
 ### 非交互模式
 
-[create-rsbuild](https://npmjs.com/package/create-rsbuild) 提供了一些 CLI 选项。通过这些选项，你可以跳过交互式提示，直接以非交互模式创建应用。
+[create-rsbuild](https://npmjs.com/package/create-rsbuild) 支持通过命令行选项进入非交互模式。使用该模式可以跳过所有提示，直接创建项目，适合脚本、CI 以及 coding agents 等自动化场景。
 
 例如，以下命令将在 `my-app` 目录中创建一个 React 应用：
 
@@ -117,16 +117,16 @@ npx -y create-rsbuild -d my-app -t react --tools eslint --tools prettier
 `create-rsbuild` 完整的 CLI 选项如下：
 
 ```
-Usage: create-rsbuild [options]
+Usage: create-rsbuild [dir] [options]
 
 Options:
 
-  -h, --help       display help for command
-  -d, --dir        create project in specified directory
-  -t, --template   specify the template to use
-  --tools          select additional tools (biome, eslint, prettier)
-  --override       override files in target directory
-  --package-name   specify the package name
+  -h, --help            display help for command
+  -d, --dir <dir>       create project in specified directory
+  -t, --template <tpl>  specify the template to use
+  --tools <tool>        select additional tools (biome, eslint, prettier)
+  --override            override files in target directory
+  --packageName <name>  specify the package name
 
 Templates:
 

@@ -7,6 +7,7 @@ rspackTest('should create react-ts project as expected', async () => {
   expect(pkgJson.dependencies['react-dom']).toBeTruthy();
   expect(pkgJson.devDependencies['@rsbuild/plugin-react']).toBeTruthy();
 });
+
 rspackTest('should create react18-ts project as expected', async () => {
   const { pkgJson } = await createAndValidate(__dirname, 'react18-ts');
   expect(pkgJson.dependencies.react.startsWith('^18')).toBeTruthy();
