@@ -5,7 +5,7 @@
   "private": true,
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.17.0",
+    "@rslib/core": "0.17.1",
     "@types/node": "^24.9.2",
     "@typescript/native-preview": "7.0.0-dev.20251102.1",
     "rsbuild-plugin-arethetypeswrong": "0.1.1",

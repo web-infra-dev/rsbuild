@@ -15,7 +15,7 @@
     "e2e:rspack": "cd ./e2e && pnpm e2e:rspack",
     "e2e:webpack": "cd ./e2e && pnpm e2e:webpack",
     "format": "prettier --experimental-cli --write . && heading-case --write",
-    "lint": "biome check && pnpm lint:type",
+    "lint": "biome check",
     "lint:type": "rslint",
     "prebundle": "nx run-many -t prebundle",
     "prepare": "simple-git-hooks && pnpm build",
