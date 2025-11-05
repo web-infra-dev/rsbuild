@@ -28,7 +28,7 @@
     "@playwright/test": "1.56.1",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
-    "@rsbuild/plugin-check-syntax": "^1.5.0",
+    "@rsbuild/plugin-check-syntax": "^1.6.0",
     "@rsbuild/plugin-less": "workspace:*",
     "@rsbuild/plugin-preact": "workspace:*",
     "@rsbuild/plugin-react": "workspace:*",

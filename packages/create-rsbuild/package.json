@@ -1,6 +1,6 @@
 {
   "name": "create-rsbuild",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "Create a new Rsbuild project",
   "homepage": "https://rsbuild.rs",
   "repository": {
@@ -29,7 +29,7 @@
     "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
-    "create-rstack": "1.7.1"
+    "create-rstack": "1.7.3"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",

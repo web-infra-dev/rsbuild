@@ -98,38 +98,40 @@ To create an application in the current directory, set the target folder to `.`:
 │  Continue and override files
 ```
 
-### Quick creation
+### Non-interactive mode
 
-[create-rsbuild](https://npmjs.com/package/create-rsbuild) provides CLI flags that let you skip the interactive prompts and create applications with a single command.
+[create-rsbuild](https://npmjs.com/package/create-rsbuild) supports a non-interactive mode through command-line options. This mode lets you skip all prompts and create a project directly, which is useful for scripts, CI, and coding agents.
 
-For example, to create a React application in the `my-app` directory with one command:
+For example, the following command creates a React app in the `my-app` directory:
 
 ```bash
-npx create-rsbuild --dir my-app --template react
+npx -y create-rsbuild@latest my-app --template react
 
 # Using abbreviations
-npx create-rsbuild -d my-app -t react
+npx -y create-rsbuild@latest my-app -t react
 
 # Specify multiple tools
-npx create-rsbuild -d my-app -t react --tools eslint --tools prettier
+npx -y create-rsbuild@latest my-app -t react --tools eslint --tools prettier
 ```
 
 All CLI flags supported by `create-rsbuild`:
 
 ```
-Usage: create-rsbuild [options]
+Usage: create-rsbuild [dir] [options]
 
 Options:
 
-  -h, --help       display help for command
-  -d, --dir        create project in specified directory
-  -t, --template   specify the template to use
-  --tools          select additional tools (biome, eslint, prettier)
-  --override       override files in target directory
+  -h, --help            display help for command
+  -d, --dir <dir>       create project in specified directory
+  -t, --template <tpl>  specify the template to use
+  --tools <tool>        select additional tools (biome, eslint, prettier)
+  --override            override files in target directory
+  --packageName <name>  specify the package name
 
 Templates:
 
-  react-js, react-ts, vue3-js, vue3-ts, vue2-js, vue2-ts, svelte-js, svelte-ts, solid-js, solid-ts, vanilla-js, vanilla-ts
+  react-js, react-ts, vue3-js, vue3-ts, vue2-js, vue2-ts, svelte-js, svelte-ts,
+  solid-js, solid-ts, vanilla-js, vanilla-ts
 ```
 
 ## Migrate from existing projects

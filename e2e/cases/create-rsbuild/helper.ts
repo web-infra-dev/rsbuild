@@ -30,7 +30,7 @@ export const createAndValidate = async (
   const dir = path.join(cwd, name);
   await fse.remove(dir);
 
-  let command = `node ${CREATE_RSBUILD_BIN_PATH} -d ${name} -t ${template}`;
+  let command = `node ${CREATE_RSBUILD_BIN_PATH} ${name} -t ${template}`;
   if (tools.length) {
     const toolsCmd = tools.map((tool) => `--tools ${tool}`).join(' ');
     command += ` ${toolsCmd}`;

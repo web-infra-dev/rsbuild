@@ -5,7 +5,6 @@ import { color, isFunction, partition } from '../helpers';
 import { addCompilationError } from '../helpers/compiler';
 import { ensureAssetPrefix, isURL } from '../helpers/url';
 import { logger } from '../logger';
-import { getHTMLPlugin } from '../pluginHelper';
 import type {
   EnvironmentContext,
   HtmlBasicTag,
@@ -245,9 +244,15 @@ export class RsbuildHtmlPlugin {
 
   readonly getExtraData: (entryName: string) => HtmlExtraData | undefined;
 
-  constructor(getExtraData: (entryName: string) => HtmlExtraData | undefined) {
+  readonly getHTMLPlugin: () => typeof HtmlRspackPlugin;
+
+  constructor(
+    getExtraData: (entryName: string) => HtmlExtraData | undefined,
+    getHTMLPlugin: () => typeof HtmlRspackPlugin,
+  ) {
     this.name = 'RsbuildHtmlPlugin';
     this.getExtraData = getExtraData;
+    this.getHTMLPlugin = getHTMLPlugin;
   }
 
   apply(compiler: Compiler): void {
@@ -370,7 +375,7 @@ export class RsbuildHtmlPlugin {
     };
 
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
-      const hooks = getHTMLPlugin().getCompilationHooks(compilation);
+      const hooks = this.getHTMLPlugin().getCompilationHooks(compilation);
 
       hooks.alterAssetTagGroups.tapPromise(this.name, async (data) => {
         const extraData = getExtraDataByPlugin(data.plugin);

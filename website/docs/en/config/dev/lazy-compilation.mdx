@@ -26,6 +26,11 @@ type LazyCompilationOptions =
        * Tells the client the server URL that needs to be requested.
        */
       serverUrl?: string;
+      /**
+       * Customize the prefix used for lazy compilation endpoint.
+       * @default "/lazy-compilation-using-"
+       */
+      prefix?: string;
     };
 ```
 
@@ -54,6 +59,10 @@ Lazy compilation is only effective for dev builds and does not affect production
 
 ### Enable lazy compilation
 
+By default, Rsbuild already enables `imports` option, which means lazy compilation of dynamic imported modules.
+
+To enable full lazy compilation functionality, set `lazyCompilation` option to `true`:
+
 ```ts title="rsbuild.config.ts"
 export default {
   dev: {
@@ -72,6 +81,18 @@ export default {
       // If there is only one entry, Rsbuild will not enable the entries option by default
       entries: true,
     },
+  },
+};
+```
+
+### Disable lazy compilation
+
+To disable lazy compilation, set `lazyCompilation` to `false`:
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    lazyCompilation: false,
   },
 };
 ```
@@ -133,7 +154,7 @@ Rsbuild will replace the `<port>` placeholder with the actual port number the se
 
 ## Version history
 
-| Version | Changes                                             |
-| ------- | --------------------------------------------------- |
-| v1.3.0  | Added this option                                   |
-| v1.5.0  | Changed default value from `false` to current value |
+| Version | Changes                                                                   |
+| ------- | ------------------------------------------------------------------------- |
+| v1.3.0  | Added this option                                                         |
+| v1.5.0  | Changed default value from `false` to `{ imports: true, entries: false }` |

@@ -1,7 +1,7 @@
-import { castArray, cloneDeep, isFunction, isPlainObject } from './helpers';
+import { cloneDeep, isPlainObject } from './helpers';
 import type { RsbuildConfig } from './types';
 
-const OVERRIDE_PATHS = [
+const OVERRIDE_PATHS = new Set([
   'performance.removeConsole',
   'output.inlineScripts',
   'output.inlineStyles',
@@ -13,7 +13,7 @@ const OVERRIDE_PATHS = [
   'resolve.conditionNames',
   'resolve.mainFields',
   'provider',
-];
+]);
 
 /**
  * When merging configs, some properties prefer `override` over `merge to array`
@@ -22,10 +22,10 @@ const isOverridePath = (key: string) => {
   // ignore environments name prefix, such as `environments.web`
   if (key.startsWith('environments.')) {
     const realKey = key.split('.').slice(2).join('.');
-    return OVERRIDE_PATHS.includes(realKey);
+    return OVERRIDE_PATHS.has(realKey);
   }
   return (
-    OVERRIDE_PATHS.includes(key) ||
+    OVERRIDE_PATHS.has(key) ||
     // output.filename.* supports function but we should not merge them as array
     key.startsWith('output.filename.')
   );
@@ -45,21 +45,28 @@ const merge = (x: unknown, y: unknown, path = ''): unknown => {
     return isPlainObject(x) ? cloneDeep(x) : x;
   }
 
+  const typeX = typeof x;
+  const typeY = typeof y;
+
   // no need to merge boolean with object or function, such as `tools.htmlPlugin`
-  if (typeof x === 'boolean' || typeof y === 'boolean') {
+  if (typeX === 'boolean' || typeY === 'boolean') {
     return y;
   }
 
-  const pair = [x, y];
-
   // combine array
-  if (pair.some(Array.isArray)) {
-    return [...castArray(x), ...castArray(y)];
+  const isArrayX = Array.isArray(x);
+  const isArrayY = Array.isArray(y);
+  if (isArrayX && isArrayY) {
+    return x.concat(y);
+  } else if (isArrayX) {
+    return [...x, y];
+  } else if (isArrayY) {
+    return [x, ...y];
   }
 
   // convert function to chained function
-  if (pair.some(isFunction)) {
-    return pair;
+  if (typeX === 'function' || typeY === 'function') {
+    return [x, y];
   }
 
   if (!isPlainObject(x) || !isPlainObject(y)) {
@@ -82,7 +89,8 @@ const merge = (x: unknown, y: unknown, path = ''): unknown => {
  * object-based structure. This ensures some properties can be merged as expected.
  */
 const normalizeConfigStructure = <T = RsbuildConfig>(config: T): T => {
-  let { dev, output, ...rest } = config as RsbuildConfig;
+  let { dev, output } = config as RsbuildConfig;
+  const normalizedConfig = { ...config } as RsbuildConfig;
 
   if (output) {
     output = { ...output };
@@ -93,6 +101,8 @@ const normalizeConfigStructure = <T = RsbuildConfig>(config: T): T => {
     if (typeof output.distPath === 'string') {
       output.distPath = { root: output.distPath };
     }
+
+    normalizedConfig.output = output;
   }
 
   if (dev) {
@@ -101,9 +111,11 @@ const normalizeConfigStructure = <T = RsbuildConfig>(config: T): T => {
     if (dev.watchFiles && !Array.isArray(dev.watchFiles)) {
       dev.watchFiles = [dev.watchFiles];
     }
+
+    normalizedConfig.dev = dev;
   }
 
-  return { ...rest, dev, output } as T;
+  return normalizedConfig as T;
 };
 
 export const mergeRsbuildConfig = <T = RsbuildConfig>(

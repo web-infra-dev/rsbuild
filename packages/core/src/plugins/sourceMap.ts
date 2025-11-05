@@ -33,13 +33,22 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
       return typeof sourceMap === 'object' && sourceMap.css;
     };
 
-    api.modifyBundlerChain((chain, { bundler, environment }) => {
+    api.modifyBundlerChain((chain, { bundler, environment, isDev, target }) => {
       const { config } = environment;
-      const devtool = getDevtool(config);
 
-      chain
-        .devtool(devtool)
-        .output.devtoolModuleFilenameTemplate(DEFAULT_SOURCE_MAP_TEMPLATE);
+      const devtool = getDevtool(config);
+      chain.devtool(devtool);
+
+      if (isDev && target === 'web') {
+        // Use POSIX-style absolute paths in source maps during development
+        // This ensures VS Code and browser debuggers can correctly resolve breakpoints
+        chain.output.devtoolModuleFilenameTemplate(
+          (info: { absoluteResourcePath: string }) =>
+            toPosixPath(info.absoluteResourcePath),
+        );
+      } else {
+        chain.output.devtoolModuleFilenameTemplate(DEFAULT_SOURCE_MAP_TEMPLATE);
+      }
 
       // When JS source map is disabled, but CSS source map is enabled,
       // add `SourceMapDevToolPlugin` to let Rspack generate CSS source map.
@@ -69,8 +78,8 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
           return;
         }
 
-        // If devtoolModuleFilenameTemplate is not the default template,
-        // which means users want to customize it, skip the default processing.
+        // If devtoolModuleFilenameTemplate is not the default absolute path template,
+        // we do not need to convert it to relative path.
         if (
           compilation.outputOptions.devtoolModuleFilenameTemplate !==
           DEFAULT_SOURCE_MAP_TEMPLATE

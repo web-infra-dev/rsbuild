@@ -405,7 +405,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
   "output": {
     "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
     "chunkFilename": "static/js/async/[name].js",
-    "devtoolModuleFilenameTemplate": "[absolute-resource-path]",
+    "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
     "hashFunction": "xxhash64",
     "path": "<ROOT>/dist",
@@ -466,6 +466,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
     },
     RsbuildHtmlPlugin {
       "getExtraData": [Function],
+      "getHTMLPlugin": [Function],
       "name": "RsbuildHtmlPlugin",
     },
     DefinePlugin {

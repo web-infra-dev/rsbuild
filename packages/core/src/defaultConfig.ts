@@ -122,6 +122,7 @@ const getDefaultHtmlConfig = (): NormalizedHtmlConfig => ({
   crossorigin: false,
   outputStructure: 'flat',
   scriptLoading: 'defer',
+  implementation: 'js',
 });
 
 const getDefaultSecurityConfig = (): NormalizedSecurityConfig => ({
@@ -322,11 +323,11 @@ export const normalizeConfig = (
     config.server.publicDir,
   );
 
+  const defaultConfig = createDefaultConfig();
+  defaultConfig.mode = getMode();
+
   const mergedConfig = mergeRsbuildConfig(
-    {
-      ...createDefaultConfig(),
-      mode: getMode(),
-    },
+    defaultConfig,
     config,
   ) as NormalizedConfig;
 

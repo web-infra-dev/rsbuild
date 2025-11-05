@@ -143,7 +143,7 @@ export function getChainUtils(
     isServer: target === 'node',
     isWebWorker: target === 'web-worker',
     CHAIN_ID,
-    HtmlPlugin: getHTMLPlugin(),
+    HtmlPlugin: getHTMLPlugin(environment.config),
   };
 }
 
