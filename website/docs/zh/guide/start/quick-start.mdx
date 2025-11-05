@@ -98,20 +98,20 @@ Biome 提供与 ESLint 和 Prettier 相似的代码检查和格式化功能。�
 │  Continue and override files
 ```
 
-### 快速创建
+### 非交互模式
 
-[create-rsbuild](https://npmjs.com/package/create-rsbuild) 提供了一些 CLI 选项。通过设置这些 CLI 选项，你可以跳过交互式的选择步骤，一键创建应用。
+[create-rsbuild](https://npmjs.com/package/create-rsbuild) 提供了一些 CLI 选项。通过这些选项，你可以跳过交互式提示，直接以非交互模式创建应用。
 
-比如，一键创建 React 应用到 `my-app` 目录：
+例如，以下命令将在 `my-app` 目录中创建一个 React 应用：
 
 ```bash
-npx create-rsbuild --dir my-app --template react
+npx -y create-rsbuild --dir my-app --template react
 
 # 使用缩写
-npx create-rsbuild -d my-app -t react
+npx -y create-rsbuild -d my-app -t react
 
 # 指定多个 tools
-npx create-rsbuild -d my-app -t react --tools eslint --tools prettier
+npx -y create-rsbuild -d my-app -t react --tools eslint --tools prettier
 ```
 
 `create-rsbuild` 完整的 CLI 选项如下：
@@ -126,10 +126,12 @@ Options:
   -t, --template   specify the template to use
   --tools          select additional tools (biome, eslint, prettier)
   --override       override files in target directory
+  --package-name   specify the package name
 
 Templates:
 
-  react-js, react-ts, vue3-js, vue3-ts, vue2-js, vue2-ts, svelte-js, svelte-ts, solid-js, solid-ts, vanilla-js, vanilla-ts
+  react-js, react-ts, vue3-js, vue3-ts, vue2-js, vue2-ts, svelte-js, svelte-ts,
+  solid-js, solid-ts, vanilla-js, vanilla-ts
 ```
 
 ## 从现有项目迁移
