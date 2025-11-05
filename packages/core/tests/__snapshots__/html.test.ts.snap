@@ -82,6 +82,7 @@ exports[`plugin-html > should allow to configure html.tags 1`] = `
     },
     RsbuildHtmlPlugin {
       "getExtraData": [Function],
+      "getHTMLPlugin": [Function],
       "name": "RsbuildHtmlPlugin",
     },
   ],
@@ -164,6 +165,7 @@ exports[`plugin-html > should enable minify in production 1`] = `
     },
     RsbuildHtmlPlugin {
       "getExtraData": [Function],
+      "getHTMLPlugin": [Function],
       "name": "RsbuildHtmlPlugin",
     },
   ],
@@ -216,6 +218,7 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
     },
     RsbuildHtmlPlugin {
       "getExtraData": [Function],
+      "getHTMLPlugin": [Function],
       "name": "RsbuildHtmlPlugin",
     },
   ],
@@ -289,6 +292,7 @@ exports[`plugin-html > should support environment html config 1`] = `
       },
       RsbuildHtmlPlugin {
         "getExtraData": [Function],
+        "getHTMLPlugin": [Function],
         "name": "RsbuildHtmlPlugin",
       },
     ],
@@ -338,6 +342,7 @@ exports[`plugin-html > should support environment html config 1`] = `
       },
       RsbuildHtmlPlugin {
         "getExtraData": [Function],
+        "getHTMLPlugin": [Function],
         "name": "RsbuildHtmlPlugin",
       },
     ],
@@ -427,6 +432,7 @@ exports[`plugin-html > should support multi entry 1`] = `
     },
     RsbuildHtmlPlugin {
       "getExtraData": [Function],
+      "getHTMLPlugin": [Function],
       "name": "RsbuildHtmlPlugin",
     },
   ],

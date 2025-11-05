@@ -466,6 +466,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     },
     RsbuildHtmlPlugin {
       "getExtraData": [Function],
+      "getHTMLPlugin": [Function],
       "name": "RsbuildHtmlPlugin",
     },
     DefinePlugin {
@@ -1019,6 +1020,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     },
     RsbuildHtmlPlugin {
       "getExtraData": [Function],
+      "getHTMLPlugin": [Function],
       "name": "RsbuildHtmlPlugin",
     },
     DefinePlugin {

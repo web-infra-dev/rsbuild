@@ -466,6 +466,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
     },
     RsbuildHtmlPlugin {
       "getExtraData": [Function],
+      "getHTMLPlugin": [Function],
       "name": "RsbuildHtmlPlugin",
     },
     DefinePlugin {
