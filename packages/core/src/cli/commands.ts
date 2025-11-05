@@ -188,6 +188,13 @@ export function setupCommands(): void {
     sections.shift();
 
     for (const section of sections) {
+      if (section.title === 'Usage') {
+        section.body = section.body.replace(
+          '$ rsbuild',
+          color.green(`$ rsbuild [command] [options]`),
+        );
+      }
+
       // Fix the dev command name
       if (section.title === 'Commands') {
         section.body = section.body.replace(
