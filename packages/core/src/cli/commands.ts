@@ -191,7 +191,7 @@ export function setupCommands(): void {
       if (section.title === 'Usage') {
         section.body = section.body.replace(
           '$ rsbuild',
-          color.green(`$ rsbuild [command] [options]`),
+          color.yellow(`$ rsbuild [command] [options]`),
         );
       }
 
