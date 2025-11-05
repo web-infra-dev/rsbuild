@@ -120,8 +120,8 @@ importers:
         specifier: workspace:*
         version: link:../packages/plugin-babel
       '@rsbuild/plugin-check-syntax':
-        specifier: ^1.5.0
-        version: 1.5.0(@rsbuild/core@packages+core)
+        specifier: ^1.6.0
+        version: 1.6.0(@rsbuild/core@packages+core)
       '@rsbuild/plugin-less':
         specifier: workspace:*
         version: link:../packages/plugin-less
@@ -2449,6 +2449,14 @@ packages:
 
   '@rsbuild/plugin-check-syntax@1.5.0':
     resolution: {integrity: sha512-/JutNle3wI67q/WOYcneyjUSAjZDJIycfpoJ04PWFh+qQ68Pwg4/Be1kU7GiVVklMwmEScoCd9S+gXWk+27YSg==}
+    peerDependencies:
+      '@rsbuild/core': 1.x
+    peerDependenciesMeta:
+      '@rsbuild/core':
+        optional: true
+
+  '@rsbuild/plugin-check-syntax@1.6.0':
+    resolution: {integrity: sha512-VVZ5cyKovh7nDt4lp0KppohcLMFIyneZf+1VJsMPg/UU8j45FCYxVw0o25gALUU3ofzl7C7iPrY4eLiUnHM3dA==}
     peerDependencies:
       '@rsbuild/core': 1.x
     peerDependenciesMeta:
@@ -8097,6 +8105,16 @@ snapshots:
       - supports-color
 
   '@rsbuild/plugin-check-syntax@1.5.0(@rsbuild/core@packages+core)':
+    dependencies:
+      acorn: 8.15.0
+      browserslist-to-es-version: 1.2.0
+      htmlparser2: 10.0.0
+      picocolors: 1.1.1
+      source-map: 0.7.6
+    optionalDependencies:
+      '@rsbuild/core': link:packages/core
+
+  '@rsbuild/plugin-check-syntax@1.6.0(@rsbuild/core@packages+core)':
     dependencies:
       acorn: 8.15.0
       browserslist-to-es-version: 1.2.0
