@@ -148,7 +148,7 @@ export const proxyConsole = ({
     restores.push(() => {
       console[type] = method;
     });
-    console[type] = (...args: any[]) => {
+    console[type] = (...args: unknown[]) => {
       const logMessage = args
         .map((arg) => {
           if (typeof arg === 'string') {
