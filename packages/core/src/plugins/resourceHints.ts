@@ -1,5 +1,6 @@
 import { isRegExp } from 'node:util/types';
 import { castArray } from '../helpers';
+import { getHTMLPlugin } from '../pluginHelper';
 import { HtmlResourceHintsPlugin } from '../rspack-plugins/resource-hints/HtmlResourceHintsPlugin';
 import type {
   HtmlBasicTag,
@@ -90,6 +91,7 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
             'prefetch',
             HTMLCount,
             isDev,
+            () => getHTMLPlugin(config),
           ]);
       }
 
@@ -104,7 +106,13 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
 
         chain
           .plugin(CHAIN_ID.PLUGIN.HTML_PRELOAD)
-          .use(HtmlResourceHintsPlugin, [options, 'preload', HTMLCount, isDev]);
+          .use(HtmlResourceHintsPlugin, [
+            options,
+            'preload',
+            HTMLCount,
+            isDev,
+            () => getHTMLPlugin(config),
+          ]);
       }
     });
   },

@@ -24,7 +24,6 @@ import type {
 } from '@rspack/core';
 import { castArray, isFunction, upperFirst } from '../../helpers';
 import { ensureAssetPrefix } from '../../helpers/url';
-import { getHTMLPlugin } from '../../pluginHelper';
 import type {
   HtmlRspackPlugin,
   ResourceHintsFilter,
@@ -242,21 +241,25 @@ export class HtmlResourceHintsPlugin implements RspackPluginInstance {
 
   isDev: boolean;
 
+  getHTMLPlugin: () => typeof HtmlRspackPlugin;
+
   constructor(
     options: ResourceHintsOptions,
     type: LinkType,
     HTMLCount: number,
     isDev: boolean,
+    getHTMLPlugin: () => typeof HtmlRspackPlugin,
   ) {
     this.options = { ...defaultOptions, ...options };
     this.type = type;
     this.HTMLCount = HTMLCount;
     this.isDev = isDev;
+    this.getHTMLPlugin = getHTMLPlugin;
   }
 
   apply(compiler: Compiler): void {
     compiler.hooks.compilation.tap(this.name, (compilation) => {
-      const pluginHooks = getHTMLPlugin().getCompilationHooks(compilation);
+      const pluginHooks = this.getHTMLPlugin().getCompilationHooks(compilation);
       const pluginName = `HTML${upperFirst(this.type)}Plugin`;
 
       pluginHooks.beforeAssetTagGeneration.tap(pluginName, (data) => {

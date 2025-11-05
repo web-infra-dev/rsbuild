@@ -122,6 +122,7 @@ const getDefaultHtmlConfig = (): NormalizedHtmlConfig => ({
   crossorigin: false,
   outputStructure: 'flat',
   scriptLoading: 'defer',
+  implementation: 'js',
 });
 
 const getDefaultSecurityConfig = (): NormalizedSecurityConfig => ({

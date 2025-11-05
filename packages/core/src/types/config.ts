@@ -1505,6 +1505,8 @@ export type AppIcon = {
   filename?: string;
 };
 
+type HtmlImplementation = 'js' | 'native';
+
 export interface HtmlConfig {
   /**
    * Configure the `<meta>` tag of the HTML.
@@ -1591,6 +1593,19 @@ export interface HtmlConfig {
    * @default 'defer'. If `output.module` is enabled, the value is always `'module'`.
    */
   scriptLoading?: ScriptLoading;
+  /**
+   * Specifies which implementation to use for generating HTML files.
+   *
+   * - `'js'` (default) - Use the JavaScript-based `html-rspack-plugin`.
+   * - `'native'` - Use Rspack's built-in `HtmlRspackPlugin` implemented in Rust.
+   *
+   * This option is experimental and may affect the available options in `tools.htmlPlugin`,
+   * since the two implementations are not fully compatible.
+   *
+   * @default 'js'
+   * @experimental
+   */
+  implementation?: HtmlImplementation;
 }
 
 export type NormalizedHtmlConfig = HtmlConfig & {
@@ -1601,6 +1616,7 @@ export type NormalizedHtmlConfig = HtmlConfig & {
   crossorigin: boolean | CrossOrigin;
   outputStructure: OutputStructure;
   scriptLoading: ScriptLoading;
+  implementation: HtmlImplementation;
 };
 
 export type ProgressBarConfig = {
