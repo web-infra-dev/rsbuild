@@ -158,27 +158,28 @@ pluginReact({
 - **类型：**
 
 ```ts
-type SplitReactChunkOptions = {
-  react?: boolean;
-  router?: boolean;
-};
+type SplitChunks =
+  | boolean
+  | {
+      react?: boolean;
+      router?: boolean;
+    };
 ```
 
-- **默认值：**
+- **默认值：** `true`（等价于 `{ react: true, router: true }`）
+
+例如，禁用所有 chunks 拆分：
 
 ```ts
-const defaultOptions = {
-  react: true,
-  router: true,
-};
+pluginReact({ splitChunks: false });
 ```
 
-- **示例：**
+或是仅禁用 `router` chunk 拆分：
 
 ```ts
 pluginReact({
   splitChunks: {
-    react: false,
+    react: true,
     router: false,
   },
 });

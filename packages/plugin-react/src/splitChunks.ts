@@ -1,27 +1,25 @@
 import type { RsbuildPluginAPI, Rspack } from '@rsbuild/core';
 import type { SplitReactChunkOptions } from './index.js';
 
-const isPlainObject = (obj: unknown): obj is Record<string, unknown> =>
-  obj !== null &&
-  typeof obj === 'object' &&
-  Object.prototype.toString.call(obj) === '[object Object]';
-
 export const applySplitChunksRule = (
   api: RsbuildPluginAPI,
-  options: SplitReactChunkOptions = {
-    react: true,
-    router: true,
-  },
+  options: SplitReactChunkOptions | boolean,
 ): void => {
   api.modifyBundlerChain((chain, { environment, isProd }) => {
     const { config } = environment;
-    if (config.performance.chunkSplit.strategy !== 'split-by-experience') {
+    if (
+      config.performance.chunkSplit.strategy !== 'split-by-experience' ||
+      options === false
+    ) {
       return;
     }
 
+    const normalizedOptions =
+      options === true ? { react: true, router: true } : options;
+
     const currentConfig =
       chain.optimization.splitChunks.values() as Rspack.Optimization['splitChunks'];
-    if (!isPlainObject(currentConfig)) {
+    if (typeof currentConfig !== 'object') {
       return;
     }
 
@@ -30,7 +28,7 @@ export const applySplitChunksRule = (
       Rspack.OptimizationSplitChunksCacheGroup
     > = {};
 
-    if (options.react) {
+    if (normalizedOptions.react) {
       extraGroups.react = {
         name: 'lib-react',
         test: isProd
@@ -40,7 +38,7 @@ export const applySplitChunksRule = (
       };
     }
 
-    if (options.router) {
+    if (normalizedOptions.router) {
       extraGroups.router = {
         name: 'lib-router',
         test: /node_modules[\\/](?:react-router|react-router-dom|history|@remix-run[\\/]router)[\\/]/,
