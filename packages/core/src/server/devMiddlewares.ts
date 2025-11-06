@@ -199,12 +199,12 @@ const applyDefaultMiddlewares = ({
 
   for (const { name } of server.publicDir) {
     const sirv = requireCompiledPackage('sirv');
-    const middleware = sirv(name, {
+    const sirvMiddleware = sirv(name, {
       etag: true,
       dev: true,
     });
     middlewares.push(function publicDirMiddleware(req, res, next) {
-      middleware(req, res, next);
+      sirvMiddleware(req, res, next);
     });
   }
 
