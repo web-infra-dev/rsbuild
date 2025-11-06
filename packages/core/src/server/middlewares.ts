@@ -41,7 +41,7 @@ const getStatusCodeColor = (status: number) => {
 };
 
 export const getRequestLoggerMiddleware: () => Connect.NextHandleFunction =
-  () => {
+  function requestLoggerMiddleware() {
     return (req, res, next) => {
       const _startAt = process.hrtime();
 
@@ -130,7 +130,7 @@ export const getHtmlCompletionMiddleware: (params: {
   distPath: string;
   buildManager: BuildManager;
 }) => RequestHandler = ({ distPath, buildManager }) => {
-  return async (req, res, next) => {
+  return async function htmlCompletionMiddleware(req, res, next) {
     if (!maybeHTMLRequest(req)) {
       next();
       return;
@@ -175,10 +175,10 @@ export const getHtmlCompletionMiddleware: (params: {
 /**
  * handle `server.base`
  */
-export const getBaseMiddleware: (params: {
+export const getBaseUrlMiddleware: (params: {
   base: string;
 }) => RequestHandler = ({ base }) => {
-  return (req, res, next) => {
+  return function baseUrlMiddleware(req, res, next) {
     const url = req.url!;
     const pathname = getUrlPathname(url);
 
@@ -232,7 +232,7 @@ export const getHtmlFallbackMiddleware: (params: {
   buildManager: BuildManager;
   htmlFallback?: HtmlFallback;
 }) => RequestHandler = ({ htmlFallback, distPath, buildManager }) => {
-  return async (req, res, next) => {
+  return async function htmlFallbackMiddleware(req, res, next) {
     if (
       !maybeHTMLRequest(req) ||
       '/favicon.ico' === req.url ||
@@ -268,9 +268,8 @@ export const getHtmlFallbackMiddleware: (params: {
  */
 export const viewingServedFilesMiddleware: (params: {
   environments: EnvironmentAPI;
-}) => RequestHandler =
-  ({ environments }) =>
-  async (req, res, next) => {
+}) => RequestHandler = ({ environments }) =>
+  async function viewingServedFilesMiddleware(req, res, next) {
     const url = req.url!;
     const pathname = getUrlPathname(url);
 

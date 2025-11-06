@@ -29,7 +29,7 @@ import { historyApiFallbackMiddleware } from './historyApiFallback';
 import { createHttpServer } from './httpServer';
 import {
   faviconFallbackMiddleware,
-  getBaseMiddleware,
+  getBaseUrlMiddleware,
   getRequestLoggerMiddleware,
   notFoundMiddleware,
   optionsFallbackMiddleware,
@@ -115,7 +115,7 @@ export class RsbuildProdServer {
     }
 
     if (base && base !== '/') {
-      this.middlewares.use(getBaseMiddleware({ base }));
+      this.middlewares.use(getBaseUrlMiddleware({ base }));
     }
 
     this.applyStaticAssetMiddleware();

@@ -147,7 +147,7 @@ export function createMiddleware(
   ready: (callback: () => void) => void,
   outputFileSystem: Rspack.OutputFileSystem,
 ): RequestHandler {
-  return async function middleware(req, res, next) {
+  return async function assetsMiddleware(req, res, next) {
     async function goNext() {
       return new Promise<void>((resolve) => {
         ready(() => {
