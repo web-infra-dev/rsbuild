@@ -399,7 +399,7 @@ export type HistoryApiFallbackOptions = {
    * behavior and allow such requests to be redirected as well.
    * @default false
    */
-  disableDotRule?: true;
+  disableDotRule?: boolean;
   /**
    * `rewrites` lets you customize how request paths are mapped to HTML files when
    * a History API fallback occurs. These rules only apply when no static asset matches
