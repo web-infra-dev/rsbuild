@@ -11,7 +11,6 @@ import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
 import type { BrowserLogsStackTrace, InternalContext, Rspack } from '../types';
 import { getFileFromUrl } from './assets-middleware/getFileFromUrl';
-import type { OutputFileSystem } from './assets-middleware/index';
 import type { ClientMessageError } from './socketServer';
 
 /**
@@ -62,11 +61,7 @@ const parseFrame = async (
   context: InternalContext,
 ) => {
   const { file, column, lineNumber } = frame;
-  const sourceMapInfo = await getFileFromUrl(
-    `${file}.map`,
-    fs as OutputFileSystem,
-    context,
-  );
+  const sourceMapInfo = await getFileFromUrl(`${file}.map`, fs, context);
 
   if (!sourceMapInfo || 'errorCode' in sourceMapInfo) {
     return;

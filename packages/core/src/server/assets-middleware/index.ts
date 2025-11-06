@@ -6,7 +6,6 @@
  * Copyright JS Foundation and other contributors
  * https://github.com/webpack/webpack-dev-middleware/blob/master/LICENSE
  */
-import type { ReadStream } from 'node:fs';
 import { createRequire } from 'node:module';
 import type { Compiler, MultiCompiler, Watching } from '@rspack/core';
 import { pick } from '../../helpers';
@@ -29,14 +28,6 @@ import { resolveWriteToDiskConfig, setupWriteToDisk } from './setupWriteToDisk';
 const noop = () => {};
 
 export type MultiWatching = ReturnType<MultiCompiler['watch']>;
-
-export type OutputFileSystem = Rspack.OutputFileSystem & {
-  // TODO: can be removed after Rspack adding this type
-  createReadStream?: (
-    p: string,
-    opts: { start: number; end: number },
-  ) => ReadStream;
-};
 
 export type AssetsMiddlewareClose = (
   callback: (err?: Error | null) => void,
