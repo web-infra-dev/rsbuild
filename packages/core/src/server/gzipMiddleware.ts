@@ -24,7 +24,7 @@ export const gzipMiddleware = ({
   filter,
   level = zlib.constants.Z_BEST_SPEED,
 }: CompressOptions = {}): RequestHandler =>
-  async function gzipMiddleware(req, res, next): Promise<void> {
+  function gzipMiddleware(req, res, next): void {
     if (filter && !filter(req, res)) {
       next();
       return;
