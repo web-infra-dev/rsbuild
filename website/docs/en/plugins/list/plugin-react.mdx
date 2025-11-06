@@ -158,10 +158,12 @@ This option is used to control this behavior and determine whether the `react` a
 - **Type:**
 
 ```ts
-type SplitReactChunkOptions = {
-  react?: boolean;
-  router?: boolean;
-};
+type SplitChunks =
+  | boolean
+  | {
+      react?: boolean;
+      router?: boolean;
+    };
 ```
 
 - **Default:**
@@ -173,12 +175,18 @@ const defaultOptions = {
 };
 ```
 
-- **Example:**
+For example, to disable all chunk splitting:
+
+```ts
+pluginReact({ splitChunks: false });
+```
+
+Or to disable only the `router` chunk splitting:
 
 ```ts
 pluginReact({
   splitChunks: {
-    react: false,
+    react: true,
     router: false,
   },
 });

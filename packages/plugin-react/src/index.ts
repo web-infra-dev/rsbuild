@@ -25,9 +25,11 @@ export type PluginReactOptions = {
    */
   swcReactOptions?: Rspack.SwcLoaderTransformConfig['react'];
   /**
-   * Configuration for chunk splitting of React-related dependencies.
+   * Configuration for chunk splitting of React-related dependencies when `chunkSplit.strategy`
+   * is set to `split-by-experience`.
+   * @default true
    */
-  splitChunks?: SplitReactChunkOptions;
+  splitChunks?: boolean | SplitReactChunkOptions;
   /**
    * When set to `true`, enables the React Profiler for performance analysis in production builds.
    * @default false
@@ -59,10 +61,11 @@ export const pluginReact = (
   name: PLUGIN_REACT_NAME,
 
   setup(api) {
-    const defaultOptions: PluginReactOptions = {
+    const defaultOptions = {
       fastRefresh: true,
+      splitChunks: true,
       enableProfiler: false,
-    };
+    } satisfies PluginReactOptions;
     const finalOptions = {
       ...defaultOptions,
       ...options,
@@ -76,6 +79,6 @@ export const pluginReact = (
       }
     }
 
-    applySplitChunksRule(api, finalOptions?.splitChunks);
+    applySplitChunksRule(api, finalOptions.splitChunks);
   },
 });
