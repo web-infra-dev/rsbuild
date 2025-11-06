@@ -177,7 +177,7 @@ const applyDefaultMiddlewares = ({
     // subscribe upgrade event to handle websocket
     upgradeEvents.push(buildManager.socketServer.upgrade);
 
-    middlewares.push((req, res, next) => {
+    middlewares.push(function hotUpdateJsonFallbackMiddleware(req, res, next) {
       // [prevFullHash].hot-update.json will 404 (expected) when rsbuild restart and some file changed
       if (req.url?.endsWith('.hot-update.json') && req.method !== 'OPTIONS') {
         res.statusCode = 404;

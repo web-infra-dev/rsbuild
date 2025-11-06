@@ -15,14 +15,15 @@ import type {
 import type { BuildManager } from './buildManager';
 import { joinUrlSegments, stripBase } from './helper';
 
-export const faviconFallbackMiddleware: RequestHandler = (req, res, next) => {
-  if (req.url === '/favicon.ico') {
-    res.statusCode = 204;
-    res.end();
-  } else {
-    next();
-  }
-};
+export const faviconFallbackMiddleware: RequestHandler =
+  function faviconFallbackMiddleware(req, res, next) {
+    if (req.url === '/favicon.ico') {
+      res.statusCode = 204;
+      res.end();
+    } else {
+      next();
+    }
+  };
 
 const getStatusCodeColor = (status: number) => {
   if (status >= 500) {
@@ -130,7 +131,7 @@ export const getHtmlCompletionMiddleware: (params: {
   distPath: string;
   buildManager: BuildManager;
 }) => RequestHandler = ({ distPath, buildManager }) => {
-  return async (req, res, next) => {
+  return async function htmlCompletionMiddleware(req, res, next) {
     if (!maybeHTMLRequest(req)) {
       next();
       return;
@@ -232,7 +233,7 @@ export const getHtmlFallbackMiddleware: (params: {
   buildManager: BuildManager;
   htmlFallback?: HtmlFallback;
 }) => RequestHandler = ({ htmlFallback, distPath, buildManager }) => {
-  return async (req, res, next) => {
+  return async function htmlFallbackMiddleware(req, res, next) {
     if (
       !maybeHTMLRequest(req) ||
       '/favicon.ico' === req.url ||
@@ -268,9 +269,8 @@ export const getHtmlFallbackMiddleware: (params: {
  */
 export const viewingServedFilesMiddleware: (params: {
   environments: EnvironmentAPI;
-}) => RequestHandler =
-  ({ environments }) =>
-  async (req, res, next) => {
+}) => RequestHandler = ({ environments }) =>
+  async function viewingServedFilesMiddleware(req, res, next) {
     const url = req.url!;
     const pathname = getUrlPathname(url);
 
