@@ -15,15 +15,14 @@ import type {
 import type { BuildManager } from './buildManager';
 import { joinUrlSegments, stripBase } from './helper';
 
-export const faviconFallbackMiddleware: RequestHandler =
-  function faviconFallbackMiddleware(req, res, next) {
-    if (req.url === '/favicon.ico') {
-      res.statusCode = 204;
-      res.end();
-    } else {
-      next();
-    }
-  };
+export const faviconFallbackMiddleware: RequestHandler = (req, res, next) => {
+  if (req.url === '/favicon.ico') {
+    res.statusCode = 204;
+    res.end();
+  } else {
+    next();
+  }
+};
 
 const getStatusCodeColor = (status: number) => {
   if (status >= 500) {
