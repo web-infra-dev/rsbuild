@@ -42,7 +42,7 @@ const getStatusCodeColor = (status: number) => {
 };
 
 export const getRequestLoggerMiddleware: () => Connect.NextHandleFunction =
-  () => {
+  function requestLoggerMiddleware() {
     return (req, res, next) => {
       const _startAt = process.hrtime();
 
@@ -176,10 +176,10 @@ export const getHtmlCompletionMiddleware: (params: {
 /**
  * handle `server.base`
  */
-export const getBaseMiddleware: (params: {
+export const getBaseUrlMiddleware: (params: {
   base: string;
 }) => RequestHandler = ({ base }) => {
-  return (req, res, next) => {
+  return function baseUrlMiddleware(req, res, next) {
     const url = req.url!;
     const pathname = getUrlPathname(url);
 

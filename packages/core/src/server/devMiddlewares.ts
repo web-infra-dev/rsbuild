@@ -16,7 +16,7 @@ import type { UpgradeEvent } from './helper';
 import { historyApiFallbackMiddleware } from './historyApiFallback';
 import {
   faviconFallbackMiddleware,
-  getBaseMiddleware,
+  getBaseUrlMiddleware,
   getHtmlCompletionMiddleware,
   getHtmlFallbackMiddleware,
   getRequestLoggerMiddleware,
@@ -157,7 +157,7 @@ const applyDefaultMiddlewares = ({
   }
 
   if (server.base && server.base !== '/') {
-    middlewares.push(getBaseMiddleware({ base: server.base }));
+    middlewares.push(getBaseUrlMiddleware({ base: server.base }));
   }
 
   const launchEditorMiddleware = requireCompiledPackage(
@@ -199,11 +199,13 @@ const applyDefaultMiddlewares = ({
 
   for (const { name } of server.publicDir) {
     const sirv = requireCompiledPackage('sirv');
-    const servePublicDirMiddleware = sirv(name, {
+    const middleware = sirv(name, {
       etag: true,
       dev: true,
     });
-    middlewares.push(servePublicDirMiddleware);
+    middlewares.push(function publicDirMiddleware(req, res, next) {
+      middleware(req, res, next);
+    });
   }
 
   // Execute callbacks returned by the `onBeforeStartDevServer` hook.
