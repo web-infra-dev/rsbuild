@@ -59,7 +59,7 @@ const transformLoader: LoaderDefinition<TransformLoaderOptions> =
         return;
       }
 
-      if (typeof result === 'string') {
+      if (typeof result === 'string' || Buffer.isBuffer(result)) {
         callback(null, result, map);
         return;
       }
