@@ -379,9 +379,33 @@ export type HistoryApiFallbackTo =
   | ((context: HistoryApiFallbackContext) => string);
 
 export type HistoryApiFallbackOptions = {
+  /**
+   * Specifies the default HTML file to return when the History API fallback is enabled.
+   * For example, if you set `historyApiFallback.index` to `main.html`, the server will
+   * automatically serve `main.html` as the fallback page when users access any unmatched
+   * routes.
+   * @default 'index.html'
+   */
   index?: string;
+  /**
+   * Override the default `Accepts:` headers that are queried when matching HTML content
+   * requests.
+   * @default ['text/html', '*\/*']
+   */
   htmlAcceptHeaders?: string[];
+  /**
+   * By default, requests containing a dot (`.`) in the path are treated as direct file
+   * requests and are not redirected. Setting `disableDotRule` to `true` will disable this
+   * behavior and allow such requests to be redirected as well.
+   * @default false
+   */
   disableDotRule?: true;
+  /**
+   * `rewrites` lets you customize how request paths are mapped to HTML files when
+   * a History API fallback occurs. These rules only apply when no static asset matches
+   * the request, meaning it has entered the fallback stage. Each rule is evaluated in
+   * order until a match is found and executed.
+   */
   rewrites?: {
     from: RegExp;
     to: HistoryApiFallbackTo;
