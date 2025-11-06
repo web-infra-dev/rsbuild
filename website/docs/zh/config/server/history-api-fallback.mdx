@@ -7,6 +7,10 @@
 
 当 Rsbuild 默认的 [页面路由](/guide/basic/server#page-routing) 行为无法满足你的需求时，例如，希望在访问 `/` 时可以访问 `main.html` ，你可以通过 `server.historyApiFallback` 配置项来实现这个功能。
 
+:::tip
+`server.historyApiFallback` 的优先级高于 [server.htmlFallback](/config/server/html-fallback)。
+:::
+
 ## 示例
 
 将 `server.historyApiFallback` 设置为 `true` 时，所有未匹配到实际资源的 HTML GET 请求都会返回 `index.html`，从而保证单页应用的路由能够正常工作。

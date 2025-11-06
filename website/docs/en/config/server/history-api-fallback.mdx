@@ -7,6 +7,10 @@
 
 When Rsbuild's default [page routing](/guide/basic/server#page-routing) behavior cannot meet your needs, for example, if you want to be able to access `main.html` when accessing `/`, you can achieve this through the `server.historyApiFallback` configuration.
 
+:::tip
+The `server.historyApiFallback` option has a higher priority than [server.htmlFallback](/config/server/html-fallback).
+:::
+
 ## Example
 
 When `server.historyApiFallback` is set to `true`, all HTML GET requests that do not match an actual resource will return `index.html`. This ensures that routing in single-page applications works correctly.

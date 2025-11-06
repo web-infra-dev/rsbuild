@@ -53,18 +53,10 @@ export default {
 
 ### Fallback 行为
 
-当请求满足以下条件且未找到对应资源时，会被 `server.htmlFallback` 处理，默认会回退到 index.html。
+当请求满足以下条件且未找到对应的静态资源时，[server.htmlFallback](/config/server/html-fallback) 将生效，默认会回退到 `index.html`：
 
-- 当前请求是 GET 或 HEAD 请求
-- 当前请求头接受 `text/html` (请求头 accept 类型为 `text/html` 或 `*/*`)
-
-```ts title="rsbuild.config.ts"
-export default {
-  server: {
-    htmlFallback: 'index',
-  },
-};
-```
+- 请求方法为 `GET` 或 `HEAD`
+- 请求头中的 `Accept` 包含 `text/html`（即类型为 `text/html` 或 `*/*`）
 
 ### 自定义 Fallback 行为
 
