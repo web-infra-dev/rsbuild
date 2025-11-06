@@ -53,18 +53,10 @@ export default {
 
 ### Fallback behavior
 
-By default, requests that meet the following conditions fall back to `index.html` when the corresponding resource is not found:
+If a request meets the following conditions but no corresponding static asset is found, [server.htmlFallback](/config/server/html-fallback) will be triggered and will fall back to `index.html` by default:
 
-- The request is a `GET` or `HEAD` request
-- The request accepts `text/html` (the request header accept type is `text/html` or `*/*`)
-
-```ts title="rsbuild.config.ts"
-export default {
-  server: {
-    htmlFallback: 'index',
-  },
-};
-```
+- The request method is `GET` or `HEAD`
+- The `Accept` header contains `text/html` (for example, `text/html` or `*/*`)
 
 ### Custom fallback behavior
 

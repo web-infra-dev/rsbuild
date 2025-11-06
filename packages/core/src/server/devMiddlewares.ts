@@ -217,16 +217,7 @@ const applyDefaultMiddlewares = ({
     callback();
   }
 
-  if (buildManager) {
-    middlewares.push(
-      getHtmlFallbackMiddleware({
-        buildManager,
-        distPath: context.distPath,
-        htmlFallback: server.htmlFallback,
-      }),
-    );
-  }
-
+  // historyApiFallback takes precedence over the default htmlFallback.
   if (server.historyApiFallback) {
     middlewares.push(
       historyApiFallbackMiddleware(
@@ -238,6 +229,16 @@ const applyDefaultMiddlewares = ({
     if (buildManager?.assetsMiddleware) {
       middlewares.push(buildManager.assetsMiddleware);
     }
+  }
+
+  if (buildManager) {
+    middlewares.push(
+      getHtmlFallbackMiddleware({
+        buildManager,
+        distPath: context.distPath,
+        htmlFallback: server.htmlFallback,
+      }),
+    );
   }
 
   middlewares.push(faviconFallbackMiddleware);
