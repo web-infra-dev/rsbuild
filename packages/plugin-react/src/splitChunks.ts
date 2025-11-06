@@ -15,12 +15,7 @@ export const applySplitChunksRule = (
     }
 
     const normalizedOptions =
-      options === true
-        ? {
-            react: true,
-            router: true,
-          }
-        : options;
+      options === true ? { react: true, router: true } : options;
 
     const currentConfig =
       chain.optimization.splitChunks.values() as Rspack.Optimization['splitChunks'];
