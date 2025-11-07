@@ -299,8 +299,9 @@ type PluginHook<T extends (...args: any[]) => any> = (
 
 type TransformResult =
   | string
+  | Buffer
   | {
-      code: string;
+      code: string | Buffer;
       map?: string | Rspack.RawSourceMap | null;
     };
 
