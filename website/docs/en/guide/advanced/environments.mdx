@@ -4,7 +4,7 @@ Rsbuild supports building outputs for multiple environments at the same time. Yo
 
 ## What is environment
 
-The `environment` refers to the runtime environment for build output. Common environments include browsers, Node.js, and Workers. Rsbuild allows you to define any environment names and set build options for each environment individually.
+The `environment` refers to the runtime environment for build output. Common environments include browsers, Node.js, and Workers. Rsbuild allows you to define custom environment names and set build options for each environment individually.
 
 A typical scenario is server-side rendering (SSR). You can define two environments, `web` and `node`, where the build targets ([output.target](/config/output/target)) are `web` and `node`. These are used for client-side rendering (CSR) and server-side rendering (SSR) scenarios.
 
@@ -13,7 +13,7 @@ You can also define different environments for the same build target, for exampl
 - Define `rsc` and `ssr` environments, both targeting `node`, used separately for React Server Components and SSR.
 - Define `desktop` and `mobile` environments, both targeting `web`, used separately for desktop and mobile browsers.
 
-Without the `environments` configuration, you would need to define multiple configurations for these scenarios and run multiple independent Rsbuild builds. Now, with the `environments` configuration, you can complete the build for multiple outputs in a single Rsbuild run (Rsbuild achieves this using Rspack's [MultiCompiler](https://rspack.rs/api/javascript-api/compiler#multicompiler)).
+Without the `environments` configuration, you would need to define multiple configurations for these scenarios and run multiple independent Rsbuild builds. With the `environments` configuration, you can complete the build for multiple outputs in a single Rsbuild run (Rsbuild achieves this using Rspack's [MultiCompiler](https://rspack.rs/api/javascript-api/compiler#multicompiler)).
 
 In Rsbuild, each `environment` is associated with an Rsbuild configuration, an Rspack configuration, and a set of build outputs. Rsbuild plugin developers can customize the build process for a specified environment based on the `environment` name, such as modifying Rsbuild or Rspack configurations, registering or removing plugins, adjusting Rspack rules, and viewing assets information.
 
@@ -21,7 +21,7 @@ In Rsbuild, each `environment` is associated with an Rsbuild configuration, an R
 
 Rsbuild supports defining different Rsbuild configurations for each environment through [environments](/config/environments).
 
-For example, if your project wants to support the SSR function, you need to define different configurations for client and SSR respectively. You can define web and node environments.
+For example, if your project needs SSR support, you need to define different configurations for the client and server. You can define web and node environments.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -77,7 +77,7 @@ Then, Rsbuild will use these environment configurations to internally generate t
 
 ### Debug config
 
-When you execute the command `npx rsbuild inspect` in the project root directory, you will find the following output:
+When you execute the command `npx rsbuild inspect` in the project root directory, you will see the following output:
 
 - `rsbuild.config.[name].mjs`: The Rsbuild config used for a certain environment during build.
 - `rspack.config.[name].mjs`: The Rspack config corresponding to a certain environment when building.
@@ -95,7 +95,7 @@ config inspection completed, generated files:
 
 ## Default environment
 
-When environments is not specified, Rsbuild will by default create an environment with the same name based on the currently target type (the value of [output.target](/config/output/target)).
+When environments is not specified, Rsbuild creates an environment by default with the same name as the current target type (the value of [output.target](/config/output/target)).
 
 ```ts title="rsbuild.config.ts"
 export default {
