@@ -464,8 +464,9 @@ type TransformContext = {
 
 type TransformResult =
   | string
+  | Buffer
   | {
-      code: string;
+      code: string | Buffer;
       map?: string | Rspack.sources.RawSourceMap | null;
     };
 
