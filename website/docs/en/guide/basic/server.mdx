@@ -6,7 +6,7 @@ Rsbuild includes a built-in dev server that enhances the development experience.
 
 By default, the Rsbuild server's base path is `/`. You can access output files like `index.html` and [public folder](/guide/basic/static-assets#public-folder) assets at `http://localhost:3000/`.
 
-You can modify the server's base path using [server.base](/config/server/base). For example, to access files at `http://localhost:3000/foo/`, configure it as follows:
+Modify the server's base path using [server.base](/config/server/base). For example, to access files at `http://localhost:3000/foo/`, configure it as follows:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -18,7 +18,7 @@ export default {
 
 ## View static assets
 
-After starting the dev server, you can access `/rsbuild-dev-server` to view all static assets generated during the current build.
+After starting the dev server, access `/rsbuild-dev-server` to view all static assets generated during the current build.
 
 For example, open `http://localhost:3000/rsbuild-dev-server` in your browser:
 
@@ -36,9 +36,9 @@ The Rsbuild server provides default routing conventions and allows customization
 
 The Rsbuild server generates page routes based on the [server.base](/config/server/base) and [source.entry](/config/source/entry) configurations.
 
-When the entry is `index`, you can access the page at `/`. When the entry is `foo`, you can access the page at `/foo`.
+When the entry is `index`, access the page at `/`. When the entry is `foo`, access the page at `/foo`.
 
-When `server.base` is `/base`, you can access the index page at `/base`, and the foo page at `/base/foo`.
+When `server.base` is `/base`, access the index page at `/base`, and the foo page at `/base/foo`.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -60,7 +60,7 @@ If a request meets the following conditions but no corresponding static asset is
 
 ### Custom fallback behavior
 
-If Rsbuild's default [server.htmlFallback](/config/server/html-fallback) configuration doesn't meet your needs (for example, if you want to access `main.html` when accessing `/`), you can configure it using [server.historyApiFallback](/config/server/history-api-fallback).
+If Rsbuild's default [server.htmlFallback](/config/server/html-fallback) configuration doesn't meet your needs (for example, to access `main.html` when accessing `/`), configure it using [server.historyApiFallback](/config/server/history-api-fallback).
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -80,11 +80,11 @@ export default {
 
 ### HTML output path
 
-Normally, `/` points to the dist root directory, and HTML files are output to the dist root directory. In this case, you can access HTML pages at `/some-path`.
+Normally, `/` points to the dist root directory, and HTML files are output to the dist root directory. In this case, access HTML pages at `/some-path`.
 
 If you output HTML files to other subdirectories by modifying [output.distPath.html](/config/output/dist-path), you need to access HTML pages at `/[htmlPath]/some-path`.
 
-For example, if you set HTML files to output to the `HTML` directory, you can access index.html at `/html/`, and foo.html at `/html/foo`.
+For example, if you set HTML files to output to the `HTML` directory, access index.html at `/html/`, and foo.html at `/html/foo`.
 
 ```ts
 export default {
@@ -191,7 +191,7 @@ server.middlewares.use((req, res, next) => {
 
 When migrating from other server frameworks (such as Express), the original middleware may not work directly in Rsbuild. For example, Express-specific properties like `req.params`, `req.path`, `req.search`, and `req.query` are not available in Rsbuild middleware.
 
-If you need to reuse existing middleware in Rsbuild, you can integrate the entire server application as middleware using the following approach:
+To reuse existing middleware in Rsbuild, integrate the entire server application as middleware using the following approach:
 
 ```ts title="rsbuild.config.ts"
 import express from 'express';
@@ -213,6 +213,6 @@ export default {
 
 ## Custom server
 
-If you want to integrate Rsbuild's dev server into a custom server, you can use the `createDevServer` method to get the Rsbuild dev server instance and call its methods as needed.
+To integrate Rsbuild's dev server into a custom server, use the `createDevServer` method to get the Rsbuild dev server instance and call its methods as needed.
 
 For details, refer to [Rsbuild - createDevServer](/api/javascript-api/instance#rsbuildcreatedevserver).
