@@ -1,5 +1,6 @@
 {
   "name": "@e2e/resolve-condition-names-package-foo",
+  "type": "module",
   "exports": {
     ".": {
       "custom": "./custom.js",

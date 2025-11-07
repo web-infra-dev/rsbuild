@@ -1,8 +1,8 @@
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import type { ConsoleType } from '@rsbuild/core';
 import color from 'picocolors';
-import { BUILD_END_LOG } from './constants';
-import { toPosixPath } from './utils';
+import { BUILD_END_LOG } from './constants.ts';
+import { toPosixPath } from './utils.ts';
 
 type LogPattern = string | RegExp | ((log: string) => boolean);
 

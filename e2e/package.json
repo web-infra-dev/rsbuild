@@ -1,6 +1,7 @@
 {
   "private": true,
   "name": "@rsbuild/e2e",
+  "type": "module",
   "version": "1.0.0",
   "scripts": {
     "setup": "pnpm exec playwright install chromium --with-deps",
