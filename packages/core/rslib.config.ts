@@ -91,9 +91,6 @@ export default defineConfig({
     {
       id: 'esm_index',
       format: 'esm',
-      experiments: {
-        advancedEsm: true,
-      },
       syntax: 'es2022',
       plugins: [pluginFixDtsTypes],
       dts: {
@@ -114,9 +111,6 @@ export default defineConfig({
     {
       id: 'esm_loaders',
       format: 'esm',
-      experiments: {
-        advancedEsm: true,
-      },
       syntax: 'es2022',
       source: {
         entry: {
@@ -148,9 +142,6 @@ export default defineConfig({
     {
       id: 'esm_client',
       format: 'esm',
-      experiments: {
-        advancedEsm: true,
-      },
       syntax: 'es2017',
       source: {
         entry: {
