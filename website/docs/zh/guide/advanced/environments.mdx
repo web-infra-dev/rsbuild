@@ -306,7 +306,7 @@ export async function startDevServer() {
 
   // Init Rsbuild
   const rsbuild = await createRsbuild({
-    rsbuildConfig: content,
+    config: content,
   });
 
   const app = express();

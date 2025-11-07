@@ -20,7 +20,7 @@ function createRsbuild(
 import { createRsbuild } from '@rsbuild/core';
 
 const rsbuild = await createRsbuild({
-  rsbuildConfig: {
+  config: {
     // Rsbuild configuration
   },
 });
@@ -36,7 +36,7 @@ type CreateRsbuildOptions = {
   callerName?: string;
   environment?: string[];
   loadEnv?: boolean | LoadEnvOptions;
-  rsbuildConfig?: RsbuildConfig | (() => Promise<RsbuildConfig>);
+  config?: RsbuildConfig | (() => Promise<RsbuildConfig>);
 };
 ```
 
@@ -44,17 +44,21 @@ type CreateRsbuildOptions = {
 - `callerName`: The name of the framework or tool currently invoking Rsbuild, defaults to `'rsbuild'`, see [Specify caller name](#specify-caller-name).
 - `environment`: Build only specified [environments](/guide/advanced/environments). If not specified or an empty array is passed, all environments will be built.
 - `loadEnv`：Whether to call the [loadEnv](/api/javascript-api/core#loadenv) method to load environment variables and define them as global variables via [source.define](/config/source/define).
-- `rsbuildConfig`: Rsbuild configuration object. Refer to [Configuration Overview](/config/) for all available configuration options.
+- `config`: Rsbuild configuration object. Refer to [Configuration Overview](/config/) for all available configuration options.
+
+```tip
+`config` was introduced in Rsbuild 1.6. In earlier versions, use `rsbuildConfig` as an alternative.
+```
 
 ### Load configuration async
 
-`rsbuildConfig` can also be an async function for dynamically loading Rsbuild configuration and performing custom operations.
+`config` can also be an async function for dynamically loading Rsbuild configuration and performing custom operations.
 
 ```ts
 import { createRsbuild, loadConfig } from '@rsbuild/core';
 
 const rsbuild = await createRsbuild({
-  rsbuildConfig: async () => {
+  config: async () => {
     const { content } = await loadConfig();
     someFunctionToUpdateConfig(content);
     return content;
@@ -98,7 +102,7 @@ import { myPlugin } from './myPlugin';
 
 const rsbuild = await createRsbuild({
   callerName: 'rslib',
-  rsbuildConfig: {
+  config: {
     plugins: [myPlugin],
   },
 });
@@ -151,7 +155,7 @@ const { content } = await loadConfig();
 console.log(content); // -> Rsbuild config object
 
 const rsbuild = await createRsbuild({
-  rsbuildConfig: content,
+  config: content,
 });
 ```
 
