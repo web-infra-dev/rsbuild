@@ -1847,7 +1847,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "chunkFilename": "static/js/async/[name].js",
       "devtoolModuleFilenameTemplate": [Function],
       "filename": "static/js/[name].js",
-      "hashFunction": "xxhash64",
       "path": "<ROOT>/dist",
       "pathinfo": false,
       "publicPath": "/",
@@ -2278,7 +2277,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "chunkFilename": "[name].js",
       "devtoolModuleFilenameTemplate": "[absolute-resource-path]",
       "filename": "bundle.js",
-      "hashFunction": "xxhash64",
       "library": {
         "type": "commonjs2",
       },

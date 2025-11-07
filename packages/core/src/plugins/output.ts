@@ -118,10 +118,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
           .publicPath(publicPath)
           // `pathinfo` is disabled because Rspack's `moduleId` in development mode already
           // contains the path information. Disabling it helps produce cleaner output.
-          .pathinfo(false)
-          // since webpack v5.54.0+, hashFunction supports xxhash64 as a faster algorithm
-          // which will be used as default when experiments.futureDefaults is enabled.
-          .hashFunction('xxhash64');
+          .pathinfo(false);
 
         if (isServer) {
           chain.output.library({
