@@ -3,7 +3,7 @@ import { rspackTest } from '@e2e/helper';
 rspackTest(
   'should display shortcuts as expected in dev',
   async ({ exec, logHelper }) => {
-    const { childProcess } = exec('node ./dev.mjs');
+    const { childProcess } = exec('node ./dev.js');
     const { expectLog, clearLogs } = logHelper;
 
     // help
@@ -27,7 +27,7 @@ rspackTest(
 rspackTest(
   'should display shortcuts as expected in preview',
   async ({ exec, logHelper }) => {
-    const { childProcess } = exec('node ./preview.mjs');
+    const { childProcess } = exec('node ./preview.js');
     const { expectLog, clearLogs } = logHelper;
 
     // help
@@ -45,7 +45,7 @@ rspackTest(
 rspackTest(
   'should support custom shortcuts in dev',
   async ({ exec, logHelper }) => {
-    const { childProcess } = exec('node ./devCustom.mjs');
+    const { childProcess } = exec('node ./devCustom.js');
     const { expectLog, clearLogs } = logHelper;
 
     await expectLog('press h + enter to show shortcuts');
@@ -59,7 +59,7 @@ rspackTest(
 rspackTest(
   'should support custom shortcuts in preview',
   async ({ exec, logHelper }) => {
-    const { childProcess } = exec('node ./previewCustom.mjs');
+    const { childProcess } = exec('node ./previewCustom.js');
     const { expectLog, clearLogs } = logHelper;
 
     // help

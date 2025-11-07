@@ -5,14 +5,14 @@ import {
   readDirContents,
   rspackTest,
 } from '@e2e/helper';
-import { remove } from 'fs-extra';
+import fse from 'fs-extra';
 
-const distDir = path.join(__dirname, 'dist');
+const distDir = path.join(import.meta.dirname, 'dist');
 
 rspackTest(
   'should support exporting a function from the config file',
   async ({ execCliSync }) => {
-    await remove(distDir);
+    await fse.remove(distDir);
     execCliSync('build');
     const files = await readDirContents(distDir);
     const content = getFileContent(files, 'index.js');
@@ -21,7 +21,7 @@ rspackTest(
 );
 
 rspackTest('should specify env as expected', async ({ execCliSync }) => {
-  await remove(distDir);
+  await fse.remove(distDir);
   execCliSync('build', {
     env: {
       ...process.env,
@@ -34,7 +34,7 @@ rspackTest('should specify env as expected', async ({ execCliSync }) => {
 });
 
 rspackTest('should specify env mode as expected', async ({ execCliSync }) => {
-  await remove(distDir);
+  await fse.remove(distDir);
   execCliSync('build --env-mode staging');
   const files = await readDirContents(distDir);
   const content = getFileContent(files, 'index.js');

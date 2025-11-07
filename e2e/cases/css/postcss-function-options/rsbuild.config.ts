@@ -17,7 +17,9 @@ export default defineConfig({
     postcss: {
       postcssOptions(loaderContext) {
         return {
-          plugins: [tailwindcss({ base: loaderContext.context ?? __dirname })],
+          plugins: [
+            tailwindcss({ base: loaderContext.context ?? import.meta.dirname }),
+          ],
         };
       },
     },

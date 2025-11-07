@@ -1,17 +1,17 @@
 import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
-import { outputFileSync } from 'fs-extra';
+import fse from 'fs-extra';
 
 // https://github.com/web-infra-dev/rsbuild/issues/6372
 test('should include dependency via `source.include` and `require.resolve`', async ({
   build,
 }) => {
-  const packagePath = join(__dirname, 'node_modules', 'test');
-  outputFileSync(
+  const packagePath = join(import.meta.dirname, 'node_modules', 'test');
+  fse.outputFileSync(
     join(packagePath, 'index.js'),
     'export const value = window?.value;',
   );
-  outputFileSync(
+  fse.outputFileSync(
     join(packagePath, 'package.json'),
     JSON.stringify({ name: 'test', main: 'index.js' }),
   );

@@ -1,7 +1,7 @@
-module.exports = () => ({
+export const myBabelPlugin = () => ({
   name: 'my-babel-plugin',
   visitor: {
-    Identifier(path) {
+    Identifier(path: { node: { name?: string } }) {
       const { node } = path;
       if (node?.name === 'a') {
         node.name = 'b';

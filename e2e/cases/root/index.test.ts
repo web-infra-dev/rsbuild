@@ -17,7 +17,7 @@ test('should support setting a relative root path', async ({ build }) => {
 test('should support setting an absolute root path', async ({ build }) => {
   const rsbuild = await build({
     config: {
-      root: join(__dirname, './test'),
+      root: join(import.meta.dirname, './test'),
     },
   });
 
@@ -31,7 +31,7 @@ test('should serve publicDir correctly when setting root', async ({
   devOnly,
 }) => {
   await fse.outputFile(
-    join(__dirname, 'test/public', 'test-temp-file.txt'),
+    join(import.meta.dirname, 'test/public', 'test-temp-file.txt'),
     'a',
   );
 

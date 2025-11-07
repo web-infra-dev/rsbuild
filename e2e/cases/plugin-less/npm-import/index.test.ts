@@ -5,8 +5,8 @@ import { expect, getFileContent, test } from '@e2e/helper';
 
 test('should compile less npm import correctly', async ({ build }) => {
   fs.cpSync(
-    path.resolve(__dirname, '_node_modules'),
-    path.resolve(__dirname, 'node_modules'),
+    path.resolve(import.meta.dirname, '_node_modules'),
+    path.resolve(import.meta.dirname, 'node_modules'),
     { recursive: true },
   );
 

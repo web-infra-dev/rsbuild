@@ -4,8 +4,8 @@ import { expect, getFileContent, rspackTest } from '@e2e/helper';
 
 rspackTest('should compile nested npm import correctly', async ({ build }) => {
   fs.cpSync(
-    path.resolve(__dirname, '_node_modules'),
-    path.resolve(__dirname, 'node_modules'),
+    path.resolve(import.meta.dirname, '_node_modules'),
+    path.resolve(import.meta.dirname, 'node_modules'),
     { recursive: true },
   );
 

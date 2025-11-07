@@ -10,7 +10,7 @@ rspackTest(
       test.skip();
     }
 
-    const root = __dirname;
+    const root = import.meta.dirname;
     const compFilePath = path.join(root, 'src/test-temp-B.jsx');
     const compSourceCode = `const B = (props) => {
   return <div id="B">B: {props.count}</div>;

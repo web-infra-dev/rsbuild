@@ -13,6 +13,9 @@ test('should build a web worker and specify the chunk name', async ({
     'The Answer to the Ultimate Question of Life, The Universe, and Everything: 42',
   );
 
-  const workerFilePath = join(__dirname, 'dist/static/js/async/foo-worker.js');
+  const workerFilePath = join(
+    import.meta.dirname,
+    'dist/static/js/async/foo-worker.js',
+  );
   expect(existsSync(workerFilePath)).toBeTruthy();
 });

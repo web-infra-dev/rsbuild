@@ -9,7 +9,7 @@ import {
 } from '@e2e/helper';
 import type { Rspack } from '@rsbuild/core';
 
-const cwd = __dirname;
+const cwd = import.meta.dirname;
 
 async function testSourceMapType(
   devtool: Rspack.Configuration['devtool'],
@@ -30,11 +30,11 @@ async function testSourceMapType(
   const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   const indexSourceCode = readFileSync(
-    path.join(__dirname, 'src/index.js'),
+    path.join(import.meta.dirname, 'src/index.js'),
     'utf-8',
   );
   const appSourceCode = readFileSync(
-    path.join(__dirname, 'src/App.jsx'),
+    path.join(import.meta.dirname, 'src/App.jsx'),
     'utf-8',
   );
   const outputCode = getFileContent(files, 'index.js');

@@ -5,7 +5,7 @@ import fse from 'fs-extra';
 rspackTest(
   'should run plugin hooks correctly when running build with watch',
   async ({ build }) => {
-    const cwd = __dirname;
+    const cwd = import.meta.dirname;
     const filePath = join(cwd, 'test-temp-src', 'index.js');
     await fse.outputFile(filePath, "console.log('1');");
 

@@ -11,7 +11,9 @@ rspackTest(
       },
     });
 
-    const outputs = await readDirContents(path.join(__dirname, 'dist'));
+    const outputs = await readDirContents(
+      path.join(import.meta.dirname, 'dist'),
+    );
     const outputFiles = Object.keys(outputs);
 
     expect(

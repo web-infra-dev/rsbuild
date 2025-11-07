@@ -1,2 +1,1 @@
-module.exports = (_source) =>
-  JSON.stringify({ type: 'with import attributes' });
+export default (_source) => JSON.stringify({ type: 'with import attributes' });

@@ -2,9 +2,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { expect, rspackTest } from '@e2e/helper';
 import { createRsbuild, type RsbuildPlugin } from '@rsbuild/core';
-import fse, { remove } from 'fs-extra';
+import fse from 'fs-extra';
 
-const distFile = path.join(__dirname, 'node_modules/hooksTempFile');
+const distFile = path.join(import.meta.dirname, 'node_modules/hooksTempFile');
 
 const write = (str: string) => {
   let content: string;
@@ -33,10 +33,10 @@ const plugin: RsbuildPlugin = {
 rspackTest(
   'should run onAfterBuild hooks correctly when have multiple targets',
   async () => {
-    await remove(distFile);
+    await fse.remove(distFile);
 
     const rsbuild = await createRsbuild({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       config: {
         plugins: [plugin],
         environments: {

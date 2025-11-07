@@ -27,7 +27,7 @@ rspackTest(
 rspackTest(
   'should parse source map correctly if source path is relative to source map path',
   async ({ dev }) => {
-    const sourceMapPath = join(__dirname, 'dist/static/js');
+    const sourceMapPath = join(import.meta.dirname, 'dist/static/js');
     const rsbuild = await dev({
       config: {
         tools: {

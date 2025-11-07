@@ -5,7 +5,7 @@ import { createAndValidate } from './helper';
 
 rspackTest('should create project with eslint as expected', async () => {
   const { dir, pkgJson, clean } = await createAndValidate(
-    __dirname,
+    import.meta.dirname,
     'vanilla',
     {
       name: 'test-temp-eslint',
@@ -20,7 +20,7 @@ rspackTest('should create project with eslint as expected', async () => {
 
 rspackTest('should create project with prettier as expected', async () => {
   const { dir, pkgJson, clean } = await createAndValidate(
-    __dirname,
+    import.meta.dirname,
     'vanilla',
     {
       name: 'test-temp-prettier',
@@ -37,7 +37,7 @@ rspackTest(
   'should create project with ESLint and prettier as expected',
   async () => {
     const { dir, pkgJson, clean } = await createAndValidate(
-      __dirname,
+      import.meta.dirname,
       'vanilla',
       {
         name: 'test-temp-eslint-prettier',
@@ -55,7 +55,7 @@ rspackTest(
 
 rspackTest('should create React project with ESLint as expected', async () => {
   const { dir, pkgJson, clean } = await createAndValidate(
-    __dirname,
+    import.meta.dirname,
     'react-ts',
     {
       name: 'test-temp-react-eslint',
@@ -71,7 +71,7 @@ rspackTest('should create React project with ESLint as expected', async () => {
 
 rspackTest('should create Vue project with ESLint as expected', async () => {
   const { dir, pkgJson, clean } = await createAndValidate(
-    __dirname,
+    import.meta.dirname,
     'vue3-ts',
     {
       name: 'test-temp-vue-eslint',
@@ -87,7 +87,7 @@ rspackTest('should create Vue project with ESLint as expected', async () => {
 
 rspackTest('should create project with biome as expected', async () => {
   const { dir, pkgJson, clean } = await createAndValidate(
-    __dirname,
+    import.meta.dirname,
     'vanilla',
     {
       name: 'test-temp-eslint',

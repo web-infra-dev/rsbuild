@@ -8,10 +8,10 @@ rspackTest(
     await buildPreview();
 
     expect(await page.evaluate('window.a')).toBe(
-      readFileSync(join(__dirname, './src/a.json'), 'utf-8'),
+      readFileSync(join(import.meta.dirname, './src/a.json'), 'utf-8'),
     );
     expect(await page.evaluate('window.b')).toBe(
-      readFileSync(join(__dirname, './src/b.json'), 'utf-8'),
+      readFileSync(join(import.meta.dirname, './src/b.json'), 'utf-8'),
     );
   },
 );
