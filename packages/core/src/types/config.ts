@@ -533,7 +533,15 @@ export interface ServerConfig {
    * - object: enable CORS with the specified options.
    * - true: enable CORS with default options (allow all origins, not recommended).
    * - false: disable CORS.
-   * @default false
+   * @default
+   * ```js
+   * { origin: defaultAllowedOrigins }
+   * ```
+   * where `defaultAllowedOrigins` includes:
+   * - `localhost`
+   * - `127.0.0.1`
+   * - `[::1]`
+   *
    * @link https://github.com/expressjs/cors
    */
   cors?: boolean | cors.CorsOptions;

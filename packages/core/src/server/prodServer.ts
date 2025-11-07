@@ -151,7 +151,7 @@ export class RsbuildProdServer {
       single: htmlFallback === 'index',
     });
 
-    this.middlewares.use((req, res, next) => {
+    this.middlewares.use(function staticAssetMiddleware(req, res, next) {
       const url = req.url;
       const assetPrefix =
         url && assetPrefixes.find((prefix) => url.startsWith(prefix));
