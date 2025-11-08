@@ -2,17 +2,17 @@
 
 ### Find ESNext code in the compiled files?
 
-By default, Rsbuild does not compile JavaScript files under `node_modules`. If an npm package used in the project contains ESNext syntax, it will be bundled into the output.
+By default, Rsbuild does not compile JavaScript files under `node_modules`. If an npm package contains ESNext syntax, it will be bundled into the output.
 
-When this happens, you can specify directories or modules that need to be compiled additionally through the [source.include](/config/source/include) configuration option.
+To compile these files, use the [source.include](/config/source/include) configuration to specify additional directories or modules.
 
 ---
 
 ### Build error `Error: [object Object] is not a PostCSS plugin` ?
 
-Currently, Rsbuild is using PostCSS v8. If you encounter the `Error: [object Object] is not a PostCSS plugin` error during the compilation process, it is usually caused by referencing the wrong version of PostCSS, for example, the version of `postcss` (peerDependencies) in `cssnano` does not meet expectations.
+Rsbuild uses PostCSS v8. If you encounter the `Error: [object Object] is not a PostCSS plugin` error during compilation, it's usually caused by using an incompatible version of PostCSS. For example, the `postcss` peer dependency version in `cssnano` may not match the expected version.
 
-You can find the dependencies of `UNMET PEER DEPENDENCY` through `npm ls postcss`, and then install the correct version of dependencies by specifying the PostCSS version in package.json.
+To find unmet peer dependencies, run `npm ls postcss`. Then fix the issue by specifying the correct PostCSS version in your package.json.
 
 ```
 npm ls postcss
@@ -27,7 +27,7 @@ npm ls postcss
 
 ### Build error `You may need additional loader`?
 
-If the following error message is encountered during the compilation process, it means that there are individual files that cannot be compiled correctly.
+If you see this error during compilation, it means some files cannot be compiled correctly.
 
 ```bash
 Module parse failed: Unexpected token
@@ -37,13 +37,13 @@ File was processed with these loaders:
 You may need an additional loader to handle the result of these loaders.
 ```
 
-Please check if any file formats not supported by Rsbuild are being referenced, and configure the corresponding Rspack loader to compile them.
+Check whether you're referencing unsupported file formats, and configure the appropriate Rspack loader to handle them.
 
 ---
 
 ### Compilation error `export 'foo' (imported as 'foo') was not found in './utils'`?
 
-If you encounter this error during the compilation process, it means that your code is referencing an export that does not exist.
+This error means your code is importing an export that doesn't exist.
 
 For example, in the following code, `index.ts` is importing the `foo` variable from `utils.ts`, but `utils.ts` only exports the `bar` variable.
 
@@ -63,7 +63,7 @@ File: ./src/index.ts
 export 'foo' (imported as 'foo') was not found in './utils' (possible exports: bar)
 ```
 
-If you encounter this issue, the first step is to check the import/export statements in your code and correct any invalid code.
+To fix this, check your import/export statements and correct any errors.
 
 There are some common mistakes:
 
@@ -77,7 +77,7 @@ export const bar = 'bar';
 import { foo } from './utils';
 ```
 
-- Re-exporting a type without adding the `type` modifier, causing transpilers like SWC or Babel to fail in recognizing the type export, resulting in compilation errors.
+- Re-exporting a type without the `type` modifier, which prevents transpilers like SWC or Babel from recognizing the type export.
 
 ```ts
 // utils.ts
@@ -88,7 +88,7 @@ export { Foo } from './utils'; // Incorrect
 export type { Foo } from './utils'; // Correct
 ```
 
-In some cases, the error may be caused by a third-party dependency that you cannot modify directly. In this situation, if you are sure that the issue does not affect your application, you can add the following configuration to change the log level from `error` to `warn`:
+In some cases, a third-party dependency you can't modify causes this error. If you're certain the issue doesn't affect your application, you can change the log level from `error` to `warn`:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -106,7 +106,7 @@ export default {
 };
 ```
 
-However, it is important to contact the developer of the third-party dependency immediately to fix the issue.
+However, you should still contact the dependency maintainer to report the issue.
 
 > You can refer to the Rspack documentation for more details on [module.parser.javascript.exportsPresence](https://rspack.rs/config/module#moduleparserjavascriptexportspresence).
 
@@ -114,17 +114,17 @@ However, it is important to contact the developer of the third-party dependency 
 
 ### Tree shaking does not take effect?
 
-Rsbuild will enable the tree shaking of Rspack by default during the production build. Whether tree shaking can take effect depends on whether the code can meet the conditions of Rspack's tree shaking.
+Rsbuild enables Rspack's tree shaking by default during production builds. Whether tree shaking works depends on whether your code meets Rspack's tree shaking requirements.
 
-If you find that tree shaking is not working as expected, you can check whether the `sideEffects` config of the related npm package is correct. If you do not understand the role of `sideEffects`, or if you are interested in the principles behind tree shaking, you can read [Rspack Official Documentation - Tree Shaking](https://rspack.rs/guide/optimization/tree-shaking).
+If tree shaking isn't working as expected, check the `sideEffects` configuration in the related npm package. To learn more about `sideEffects` and tree shaking principles, see [Rspack Official Documentation - Tree Shaking](https://rspack.rs/guide/optimization/tree-shaking).
 
 ---
 
 ### `JavaScript heap out of memory` when compiling?
 
-This error indicates that there is a memory overflow problem during the packaging process. In most cases, it is because the bundled content exceeds the default memory limit of Node.js.
+This error indicates a memory overflow during the build process. This typically happens when the bundled content exceeds Node.js's default memory limit.
 
-In case of OOM issues, the easiest way to fix this is by increasing the memory cap, Node.js provides the `--max-old-space-size` option to set this. You can set this parameter by adding [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions) before the CLI command.
+To fix out-of-memory issues, the easiest solution is to increase the memory limit using Node.js's `--max-old-space-size` option. Set this by adding [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions) before your CLI command.
 
 For example, add parameters before the `rsbuild build` command:
 
@@ -137,7 +137,7 @@ For example, add parameters before the `rsbuild build` command:
 }
 ```
 
-If you are executing other commands, such as `rsbuild dev`, please add parameters before the corresponding command.
+For other commands like `rsbuild dev`, add the parameters before that command instead.
 
 The value of the `max_old_space_size` parameter represents the upper limit of the memory size (MB). Generally, it can be set to `16384` (16GB).
 
@@ -146,24 +146,24 @@ The following parameters are explained in more detail in the official Node.js do
 - [NODE_OPTIONS](https://nodejs.org/api/cli.html#node_optionsoptions)
 - [--max-old-space-size](https://nodejs.org/api/cli.html#--max-old-space-sizesize-in-megabytes)
 
-In addition to increasing the memory limit, it is also a solution to improve efficiency by enabling some compilation strategies, please refer to [Improve Build Performance](/guide/optimization/build-performance).
+Besides increasing the memory limit, you can also improve efficiency by enabling optimization strategies. See [Improve Build Performance](/guide/optimization/build-performance) for details.
 
-If the above methods cannot solve your problem, it may be that some abnormal logic in the project has caused memory overflow. You can debug recent code changes and locate the root cause of problems. If it cannot be located, please contact us.
+If these methods don't solve your problem, unusual logic in your project may be causing the overflow. Debug recent code changes to find the root cause. If you can't locate it, please contact us.
 
 ---
 
 ### `Can't resolve 'core-js/modules/abc.js'` when compiling?
 
-If you get an error similar to the following when compiling, it means that [core-js](https://github.com/zloirock/core-js) cannot be resolved properly in the project.
+If you see an error like this during compilation, it means [core-js](https://github.com/zloirock/core-js) cannot be resolved in your project.
 
 ```
 Module not found: Can't resolve 'core-js/modules/es.error.cause.js'
 ```
 
-Usually, you don't need to install `core-js` in the project, because the Rsbuild already has a built-in `core-js` v3.
+Usually, you don't need to install `core-js` because Rsbuild includes `core-js` v3 by default.
 
-If there is an error that `core-js` cannot be found, there may be several reasons:
+If `core-js` cannot be found, the issue may be:
 
-1. The current project overrides the built-in `alias` configuration of Rsbuild, causing the incorrect resolution of the `core-js` path when referenced. In this case, you can check the `alias` configuration of the project.
-2. Some code in the project depends on `core-js` v2. In this case, you usually need to find out the corresponding code and upgrade `core-js` to the v3.
-3. An npm package in `node_modules` imported `core-js`, but does not declare the `core-js` dependency in `dependencies`. In this case, you need to declare the `core-js` dependency in the corresponding npm package, or install a copy of `core-js` in the project root directory.
+1. Your project overrides Rsbuild's built-in `alias` configuration, causing incorrect `core-js` path resolution. Check your `alias` configuration.
+2. Some code depends on `core-js` v2. Find the corresponding code and upgrade to `core-js` v3.
+3. An npm package in `node_modules` imports `core-js` but doesn't declare it in `dependencies`. Either add the `core-js` dependency to that package, or install `core-js` in your project root.

@@ -166,12 +166,12 @@ export default {
 
 ## Custom splitting strategy
 
-In addition to built-in strategies, you can also customize the splitting strategy for more specific needs. Custom strategies have two parts:
+Beyond the built-in strategies, you can customize the splitting strategy for specific needs. Custom strategies have two parts:
 
 - Custom group
 - Custom Rspack `splitChunks` config
 
-Note that these custom capabilities can be used together with built-in strategies; you can use built-in strategies to split common packages and custom functions to split other packages.
+You can combine these custom capabilities with built-in strategies—use built-in strategies for common packages and custom functions for other packages.
 
 ### Custom group
 
@@ -191,7 +191,7 @@ export default {
 };
 ```
 
-Through `forceSplitting` config, you can easily split packages into chunks.
+Using the `forceSplitting` config, you can easily split packages into chunks.
 
 #### Notes
 
@@ -199,7 +199,7 @@ Chunks split using `forceSplitting` are inserted into the HTML file as initial r
 
 ### Custom config
 
-In addition to custom grouping, you can also customize Rspack's `splitChunks` config through `override`. For example:
+Beyond custom grouping, you can customize Rspack's `splitChunks` config using `override`. For example:
 
 - Set `minSize` to 30,000 so modules smaller than 30,000 bytes will not be split.
 
@@ -242,10 +242,10 @@ The `override` config will be merged with Rspack's `splitChunks` config. For spe
 
 ## Using dynamic import for code splitting
 
-In addition to the `chunkSplit` configuration, using [dynamic import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) is also an important optimization technique that can effectively reduce initial bundle size.
+Beyond the `chunkSplit` configuration, [dynamic import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) is another important optimization technique that can effectively reduce initial bundle size.
 
 :::tip About dynamic import
-Dynamic import is a feature introduced in ECMAScript 2020 that allows you to dynamically load JavaScript modules. Rspack supports dynamic import by default, so you can use it directly in your code.
+Dynamic import, introduced in ECMAScript 2020, allows you to load JavaScript modules dynamically. Rspack supports dynamic import by default, so you can use it directly in your code.
 :::
 
 When the bundler encounters `import()` syntax, it automatically splits the relevant code into a new chunk and loads it on-demand at runtime.
