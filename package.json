@@ -1,6 +1,7 @@
 {
   "name": "rsbuild-monorepo",
   "private": true,
+  "type": "module",
   "workspaces": [
     "packages/*",
     "packages/compat/*",

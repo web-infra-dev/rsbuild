@@ -1,7 +1,7 @@
 {
   "name": "@scripts/test-helper",
-  "private": true,
   "version": "1.0.1",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild"
