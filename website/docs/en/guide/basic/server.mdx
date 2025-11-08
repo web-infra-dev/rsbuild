@@ -6,7 +6,7 @@ Rsbuild includes a built-in dev server that enhances the development experience.
 
 By default, the Rsbuild server's base path is `/`. You can access output files like `index.html` and [public folder](/guide/basic/static-assets#public-folder) assets at `http://localhost:3000/`.
 
-Modify the server's base path using [server.base](/config/server/base). For example, to access files at `http://localhost:3000/foo/`, configure it as follows:
+To change the server's base path, use [server.base](/config/server/base). For example, to access files at `http://localhost:3000/foo/`:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -18,7 +18,7 @@ export default {
 
 ## View static assets
 
-After starting the dev server, access `/rsbuild-dev-server` to view all static assets generated during the current build.
+After starting the dev server, visit `/rsbuild-dev-server` to view all static assets generated during the current build.
 
 For example, open `http://localhost:3000/rsbuild-dev-server` in your browser:
 
@@ -53,14 +53,14 @@ export default {
 
 ### Fallback behavior
 
-If a request meets the following conditions but no corresponding static asset is found, [server.htmlFallback](/config/server/html-fallback) will be triggered and will fall back to `index.html` by default:
+If a request meets the following conditions but no corresponding static asset exists, [server.htmlFallback](/config/server/html-fallback) triggers and falls back to `index.html` by default:
 
 - The request method is `GET` or `HEAD`
 - The `Accept` header contains `text/html` (for example, `text/html` or `*/*`)
 
 ### Custom fallback behavior
 
-If Rsbuild's default [server.htmlFallback](/config/server/html-fallback) configuration doesn't meet your needs (for example, to access `main.html` when accessing `/`), configure it using [server.historyApiFallback](/config/server/history-api-fallback).
+If Rsbuild's default [server.htmlFallback](/config/server/html-fallback) configuration doesn't meet your needs (for example, serving `main.html` when accessing `/`), use [server.historyApiFallback](/config/server/history-api-fallback) instead.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -79,9 +79,9 @@ export default {
 
 ### HTML output path
 
-Normally, `/` points to the dist root directory, and HTML files are output to the dist root directory. In this case, access HTML pages at `/some-path`.
+Normally, `/` points to the dist root directory, and HTML files are output there. In this case, access HTML pages at `/some-path`.
 
-If you output HTML files to other subdirectories by modifying [output.distPath.html](/config/output/dist-path), you need to access HTML pages at `/[htmlPath]/some-path`.
+If you output HTML files to other subdirectories using [output.distPath.html](/config/output/dist-path), access HTML pages at `/[htmlPath]/some-path` instead.
 
 For example, if you set HTML files to output to the `HTML` directory, access index.html at `/html/`, and foo.html at `/html/foo`.
 
@@ -103,7 +103,7 @@ export default {
 
 ## Rspack dev server
 
-Rsbuild has a built-in lightweight dev server that differs from the dev servers provided by Rspack CLI or webpack CLI, including different configuration options.
+Rsbuild has a built-in lightweight dev server that differs from the dev servers in Rspack CLI or webpack CLI, with different configuration options.
 
 ### Comparison
 
@@ -115,7 +115,7 @@ Compared to the dev server in Rspack CLI, Rsbuild's dev server has the following
 
 ### Configuration
 
-Rsbuild does not support using Rspack's [devServer](https://rspack.rs/config/dev-server) config. Instead, use Rsbuild's `dev` and `server` configs.
+Rsbuild doesn't support Rspack's [devServer](https://rspack.rs/config/dev-server) config. Use Rsbuild's `dev` and `server` configs instead.
 
 In Rsbuild, the `dev` config contains settings that only apply in development mode, while the `server` config applies to both dev and preview servers.
 
@@ -188,9 +188,9 @@ server.middlewares.use((req, res, next) => {
 
 ### Integrate third-party server frameworks
 
-When migrating from other server frameworks (such as Express), the original middleware may not work directly in Rsbuild. For example, Express-specific properties like `req.params`, `req.path`, `req.search`, and `req.query` are not available in Rsbuild middleware.
+When migrating from other server frameworks like Express, the original middleware may not work directly in Rsbuild. For example, Express-specific properties like `req.params`, `req.path`, `req.search`, and `req.query` aren't available in Rsbuild middleware.
 
-To reuse existing middleware in Rsbuild, integrate the entire server application as middleware using the following approach:
+To reuse existing middleware in Rsbuild, integrate your entire server application as middleware:
 
 ```ts title="rsbuild.config.ts"
 import express from 'express';

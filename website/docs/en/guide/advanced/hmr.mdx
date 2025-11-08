@@ -10,7 +10,7 @@ Hot Module Replacement (HMR) exchanges, adds, or removes modules while an applic
 
 Rsbuild has built-in support for HMR, which is enabled by default in development mode.
 
-If you don't need HMR, set [dev.hmr](/config/dev/hmr) to `false`. This disables HMR and React Refresh, and Rsbuild automatically falls back to [dev.liveReload](/config/dev/live-reload).
+If you don't need HMR, set [dev.hmr](/config/dev/hmr) to `false`. This disables HMR and React Refresh, and Rsbuild falls back to [dev.liveReload](/config/dev/live-reload).
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -20,7 +20,7 @@ export default {
 };
 ```
 
-To disable both HMR and live reload, set both [dev.hmr](/config/dev/hmr) and [dev.liveReload](/config/dev/live-reload) to `false`. This prevents WebSocket requests from the page to the dev server, and the page won't automatically refresh when files change.
+To disable both HMR and live reload, set [dev.hmr](/config/dev/hmr) and [dev.liveReload](/config/dev/live-reload) to `false`. This prevents WebSocket requests to the dev server, and the page won't refresh automatically when files change.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -35,7 +35,7 @@ export default {
 
 By default, Rsbuild uses the host and port number of the current page to construct the WebSocket URL for HMR.
 
-When the HMR connection fails, you can specify the WebSocket URL by customizing the [dev.client](/config/dev/client) config.
+If the HMR connection fails, specify the WebSocket URL using the [dev.client](/config/dev/client) config.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -50,11 +50,11 @@ export default {
 
 ## File watching
 
-By default, Rsbuild doesn't watch files in the `.git/` and `node_modules/` directories. When files in these directories change, Rsbuild won't trigger a rebuild, which reduces memory usage and improves build performance.
+By default, Rsbuild doesn't watch files in the `.git/` and `node_modules/` directories. Changes to these files won't trigger a rebuild, which reduces memory usage and improves build performance.
 
-If you want to watch these directories, manually configure Rspack's [watchOptions.ignored](https://rspack.rs/config/watch#watchoptionsignored) to override the default behavior.
+To watch these directories, configure Rspack's [watchOptions.ignored](https://rspack.rs/config/watch#watchoptionsignored) to override the default behavior.
 
-For example, to watch the `node_modules/` directory and ignore the `.git/` directory, you can configure it as follows:
+For example, to watch the `node_modules/` directory while ignoring `.git/`:
 
 ```ts title="rsbuild.config.ts"
 export default {
