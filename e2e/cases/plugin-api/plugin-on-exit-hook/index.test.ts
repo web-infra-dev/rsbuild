@@ -16,7 +16,7 @@ rspackTest('should run onExit hook before process exit', async () => {
     }, 3000);
 
     const childProcess = exec(
-      'node ./run.mjs',
+      'node ./run.js',
       { cwd: import.meta.dirname },
       (error) => {
         if (error) {
