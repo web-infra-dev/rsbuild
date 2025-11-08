@@ -5,13 +5,10 @@ import { join, sep } from 'node:path';
 import { URL } from 'node:url';
 import { originalPositionFor, TraceMap } from '@jridgewell/trace-mapping';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import glob, {
-  convertPathToPattern,
-  type Options as GlobOptions,
-} from 'fast-glob';
+import glob, { type Options as GlobOptions } from 'fast-glob';
 import color from 'picocolors';
 import type { Page } from 'playwright';
-import { expect } from './fixture';
+import { expect } from './fixture.ts';
 
 /**
  * Build an URL based on the entry name and port
@@ -79,7 +76,7 @@ export async function getRandomPort(
 // https://github.com/mrmlnc/fast-glob#convertpathtopatternpath
 const convertPath = (path: string) => {
   if (platform() === 'win32') {
-    return convertPathToPattern(path);
+    return glob.convertPathToPattern(path);
   }
   return path;
 };

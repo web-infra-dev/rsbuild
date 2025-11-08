@@ -12,9 +12,11 @@ test('should allow to import raw Stylus files in dev', async ({
   const bRaw: string = await page.evaluate('window.bRaw');
   const bStyles: Record<string, string> = await page.evaluate('window.bStyles');
 
-  expect(aRaw).toBe(readFileSync(path.join(__dirname, 'src/a.styl'), 'utf-8'));
+  expect(aRaw).toBe(
+    readFileSync(path.join(import.meta.dirname, 'src/a.styl'), 'utf-8'),
+  );
   expect(bRaw).toBe(
-    readFileSync(path.join(__dirname, 'src/b.module.styl'), 'utf-8'),
+    readFileSync(path.join(import.meta.dirname, 'src/b.module.styl'), 'utf-8'),
   );
   expect(bStyles['title-class']).toBeTruthy();
 });
@@ -29,9 +31,11 @@ test('should allow to import raw Stylus files in build', async ({
   const bRaw: string = await page.evaluate('window.bRaw');
   const bStyles: Record<string, string> = await page.evaluate('window.bStyles');
 
-  expect(aRaw).toBe(readFileSync(path.join(__dirname, 'src/a.styl'), 'utf-8'));
+  expect(aRaw).toBe(
+    readFileSync(path.join(import.meta.dirname, 'src/a.styl'), 'utf-8'),
+  );
   expect(bRaw).toBe(
-    readFileSync(path.join(__dirname, 'src/b.module.styl'), 'utf-8'),
+    readFileSync(path.join(import.meta.dirname, 'src/b.module.styl'), 'utf-8'),
   );
   expect(bStyles['title-class']).toBeTruthy();
 });

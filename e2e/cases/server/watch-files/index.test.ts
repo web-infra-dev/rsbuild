@@ -5,7 +5,7 @@ import { rspackTest } from '@e2e/helper';
 rspackTest(
   'should work with string and path to file',
   async ({ dev, page }) => {
-    const file = path.join(__dirname, '/assets/example.txt');
+    const file = path.join(import.meta.dirname, '/assets/example.txt');
     await dev({
       config: {
         dev: {
@@ -30,12 +30,12 @@ rspackTest(
 rspackTest(
   'should work with string and path to directory',
   async ({ dev, page }) => {
-    const file = path.join(__dirname, '/assets/example.txt');
+    const file = path.join(import.meta.dirname, '/assets/example.txt');
     await dev({
       config: {
         dev: {
           watchFiles: {
-            paths: path.join(__dirname, '/assets'),
+            paths: path.join(import.meta.dirname, '/assets'),
           },
         },
       },
@@ -53,15 +53,15 @@ rspackTest(
 );
 
 rspackTest('should work with string array directory', async ({ dev, page }) => {
-  const file = path.join(__dirname, '/assets/example.txt');
-  const other = path.join(__dirname, '/other/other.txt');
+  const file = path.join(import.meta.dirname, '/assets/example.txt');
+  const other = path.join(import.meta.dirname, '/other/other.txt');
   await dev({
     config: {
       dev: {
         watchFiles: {
           paths: [
-            path.join(__dirname, '/assets'),
-            path.join(__dirname, '/other'),
+            path.join(import.meta.dirname, '/assets'),
+            path.join(import.meta.dirname, '/other'),
           ],
         },
       },
@@ -86,8 +86,8 @@ rspackTest('should work with string array directory', async ({ dev, page }) => {
 });
 
 rspackTest('should work with string and glob', async ({ dev, page }) => {
-  const file = path.join(__dirname, '/assets/example.txt');
-  const watchDir = path.join(__dirname, '/assets');
+  const file = path.join(import.meta.dirname, '/assets/example.txt');
+  const watchDir = path.join(import.meta.dirname, '/assets');
   await dev({
     config: {
       dev: {
@@ -109,7 +109,7 @@ rspackTest('should work with string and glob', async ({ dev, page }) => {
 });
 
 rspackTest('should work with options', async ({ dev, page }) => {
-  const file = path.join(__dirname, '/assets/example.txt');
+  const file = path.join(import.meta.dirname, '/assets/example.txt');
   await dev({
     config: {
       dev: {

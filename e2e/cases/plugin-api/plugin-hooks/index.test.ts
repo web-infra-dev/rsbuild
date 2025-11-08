@@ -110,7 +110,7 @@ rspackTest(
   async () => {
     const { plugin, hooks } = recordPluginHooks();
     const rsbuild = await createRsbuild({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       config: {
         plugins: [plugin],
       },

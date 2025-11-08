@@ -1,7 +1,8 @@
 {
-  "private": true,
   "name": "@e2e/svelte",
   "version": "1.0.0",
+  "private": true,
+  "type": "module",
   "dependencies": {
     "svelte": "^5.43.2"
   },

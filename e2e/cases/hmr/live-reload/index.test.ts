@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { expect, rspackTest, test } from '@e2e/helper';
 
-const appFile = path.join(__dirname, 'src/App.jsx');
+const appFile = path.join(import.meta.dirname, 'src/App.jsx');
 let appCode: string;
 
 test.beforeEach(() => {

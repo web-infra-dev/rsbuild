@@ -1,9 +1,9 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
-import fse, { remove } from 'fs-extra';
+import fse from 'fs-extra';
 
-const cwd = __dirname;
+const cwd = import.meta.dirname;
 const testDistFile = join(cwd, 'dist/test.json');
 const testDeepDistFile = join(cwd, 'dist/foo/bar/test.json');
 
@@ -27,7 +27,7 @@ test('should not clean dist path in dev when writeToDisk is false', async ({
   });
 
   expect(fs.existsSync(testDistFile)).toBeTruthy();
-  await remove(testDistFile);
+  await fse.remove(testDistFile);
 });
 
 test('should clean dist path in dev when writeToDisk is true', async ({
@@ -66,7 +66,7 @@ test('should not clean dist path if it is outside root', async ({ build }) => {
 
   expect(fs.existsSync(testOutsideFile)).toBeTruthy();
 
-  await remove(testOutsideFile);
+  await fse.remove(testOutsideFile);
 });
 
 test('should allow to disable cleanDistPath', async ({ build }) => {
@@ -82,7 +82,7 @@ test('should allow to disable cleanDistPath', async ({ build }) => {
 
   expect(fs.existsSync(testDistFile)).toBeTruthy();
 
-  await remove(testDistFile);
+  await fse.remove(testDistFile);
 });
 
 test('should allow to use `cleanDistPath.keep` to keep some files', async ({

@@ -51,7 +51,7 @@ test('should generate manifest file at specified path', async ({ build }) => {
     },
   });
 
-  const manifest = join(__dirname, 'dist', 'custom/my-manifest.json');
+  const manifest = join(import.meta.dirname, 'dist', 'custom/my-manifest.json');
   const manifestContent = readFileSync(manifest, 'utf-8');
   expect(manifestContent).toBeDefined();
 

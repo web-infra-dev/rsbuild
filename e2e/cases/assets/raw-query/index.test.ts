@@ -12,7 +12,7 @@ test('should return raw asset content with `?raw` in dev', async ({
 
   expect(await page.evaluate('window.rawSvg')).toEqual(
     await promises.readFile(
-      join(__dirname, '../../../assets/circle.svg'),
+      join(import.meta.dirname, '../../../assets/circle.svg'),
       'utf-8',
     ),
   );
@@ -26,7 +26,7 @@ test('should return raw asset content with `?raw` in build', async ({
 
   expect(await page.evaluate('window.rawSvg')).toEqual(
     await promises.readFile(
-      join(__dirname, '../../../assets/circle.svg'),
+      join(import.meta.dirname, '../../../assets/circle.svg'),
       'utf-8',
     ),
   );
@@ -44,7 +44,7 @@ test('should return raw SVG content with `?raw` when using pluginSvgr', async ({
 
   expect(await page.evaluate('window.rawSvg')).toEqual(
     await promises.readFile(
-      join(__dirname, '../../../assets/circle.svg'),
+      join(import.meta.dirname, '../../../assets/circle.svg'),
       'utf-8',
     ),
   );
@@ -54,7 +54,7 @@ test('should return raw JS content with `?raw`', async ({ page, dev }) => {
   await dev();
 
   expect(await page.evaluate('window.rawJs')).toEqual(
-    await promises.readFile(join(__dirname, 'src/foo.js'), 'utf-8'),
+    await promises.readFile(join(import.meta.dirname, 'src/foo.js'), 'utf-8'),
   );
 });
 
@@ -62,7 +62,7 @@ test('should return raw TS content with `?raw`', async ({ page, dev }) => {
   await dev();
 
   const tsContent = await promises.readFile(
-    join(__dirname, 'src/bar.ts'),
+    join(import.meta.dirname, 'src/bar.ts'),
     'utf-8',
   );
   expect(await page.evaluate('window.rawTs1')).toEqual(tsContent);
@@ -82,7 +82,7 @@ test('should return raw TSX content with `?raw` when using pluginReact', async (
   });
 
   expect(await page.evaluate('window.rawTsx')).toEqual(
-    await promises.readFile(join(__dirname, 'src/baz.tsx'), 'utf-8'),
+    await promises.readFile(join(import.meta.dirname, 'src/baz.tsx'), 'utf-8'),
   );
 });
 

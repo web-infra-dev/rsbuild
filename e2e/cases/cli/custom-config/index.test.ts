@@ -6,7 +6,9 @@ rspackTest(
   async ({ execCliSync }) => {
     execCliSync('build --config ./custom.config.mjs');
 
-    const outputs = await readDirContents(path.join(__dirname, 'dist-custom'));
+    const outputs = await readDirContents(
+      path.join(import.meta.dirname, 'dist-custom'),
+    );
     const outputFiles = Object.keys(outputs);
 
     expect(outputFiles.length > 1).toBeTruthy();
@@ -16,9 +18,11 @@ rspackTest(
 rspackTest(
   'should support custom config to find absolute path',
   async ({ execCliSync }) => {
-    const absPath = path.join(__dirname, 'custom.config.mjs');
+    const absPath = path.join(import.meta.dirname, 'custom.config.mjs');
     execCliSync(`build --config ${absPath}`);
-    const outputs = await readDirContents(path.join(__dirname, 'dist-custom'));
+    const outputs = await readDirContents(
+      path.join(import.meta.dirname, 'dist-custom'),
+    );
     const outputFiles = Object.keys(outputs);
 
     expect(outputFiles.length > 1).toBeTruthy();

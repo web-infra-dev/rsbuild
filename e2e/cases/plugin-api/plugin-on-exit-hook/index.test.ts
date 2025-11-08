@@ -2,12 +2,12 @@ import { exec } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { expect, rspackTest } from '@e2e/helper';
-import { remove } from 'fs-extra';
+import fse from 'fs-extra';
 
-const distFile = path.join(__dirname, 'node_modules/hooksTempFile');
+const distFile = path.join(import.meta.dirname, 'node_modules/hooksTempFile');
 
 rspackTest('should run onExit hook before process exit', async () => {
-  await remove(distFile);
+  await fse.remove(distFile);
 
   await new Promise<void>((resolve, reject) => {
     const timeoutId = setTimeout(() => {
@@ -15,21 +15,25 @@ rspackTest('should run onExit hook before process exit', async () => {
       reject(new Error('Process timeout'));
     }, 3000);
 
-    const childProcess = exec('node ./run.mjs', { cwd: __dirname }, (error) => {
-      if (error) {
-        clearTimeout(timeoutId);
-        reject(error);
-        return;
-      }
+    const childProcess = exec(
+      'node ./run.mjs',
+      { cwd: import.meta.dirname },
+      (error) => {
+        if (error) {
+          clearTimeout(timeoutId);
+          reject(error);
+          return;
+        }
 
-      try {
-        expect(fs.readFileSync(distFile, 'utf-8')).toEqual('0');
-        clearTimeout(timeoutId);
-        resolve();
-      } catch (err) {
-        clearTimeout(timeoutId);
-        reject(err);
-      }
-    });
+        try {
+          expect(fs.readFileSync(distFile, 'utf-8')).toEqual('0');
+          clearTimeout(timeoutId);
+          resolve();
+        } catch (err) {
+          clearTimeout(timeoutId);
+          reject(err);
+        }
+      },
+    );
   });
 });

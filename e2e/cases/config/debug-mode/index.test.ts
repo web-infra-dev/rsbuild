@@ -4,11 +4,11 @@ import { expect, test } from '@e2e/helper';
 import { logger } from '@rsbuild/core';
 
 const getRsbuildConfig = (dist: string) =>
-  path.resolve(__dirname, `./${dist}/.rsbuild/rsbuild.config.mjs`);
+  path.resolve(import.meta.dirname, `./${dist}/.rsbuild/rsbuild.config.mjs`);
 
 const getBundlerConfig = (dist: string) =>
   path.resolve(
-    __dirname,
+    import.meta.dirname,
     `./${dist}/.rsbuild/${process.env.PROVIDE_TYPE || 'rspack'}.config.web.mjs`,
   );
 

@@ -9,7 +9,7 @@ const buildFixture = (
   build: (options?: BuildOptions) => Promise<BuildResult>,
   rootDir: string,
 ): Promise<BuildResult> => {
-  const root = path.join(__dirname, rootDir);
+  const root = path.join(import.meta.dirname, rootDir);
   const plugins = [
     pluginBabel({
       include: /\.(?:jsx|tsx)$/,

@@ -14,7 +14,9 @@ test('should copy asset to dist folder correctly', async ({ build }) => {
     },
   });
 
-  expect(fs.existsSync(join(__dirname, 'dist-1/icon.png'))).toBeTruthy();
+  expect(
+    fs.existsSync(join(import.meta.dirname, 'dist-1/icon.png')),
+  ).toBeTruthy();
 });
 
 test('should copy asset from src to dist folder correctly', async ({
@@ -24,13 +26,19 @@ test('should copy asset from src to dist folder correctly', async ({
     config: {
       output: {
         copy: [
-          { from: '**/*.txt', to: 'assets', context: join(__dirname, 'src') },
+          {
+            from: '**/*.txt',
+            to: 'assets',
+            context: join(import.meta.dirname, 'src'),
+          },
         ],
       },
     },
   });
 
-  expect(fs.existsSync(join(__dirname, 'dist/assets/foo.txt'))).toBeTruthy();
+  expect(
+    fs.existsSync(join(import.meta.dirname, 'dist/assets/foo.txt')),
+  ).toBeTruthy();
 });
 
 test('should copy asset to dist sub-folder correctly', async ({ build }) => {
@@ -43,7 +51,9 @@ test('should copy asset to dist sub-folder correctly', async ({ build }) => {
     },
   });
 
-  expect(fs.existsSync(join(__dirname, 'dist-1/foo/icon.png'))).toBeTruthy();
+  expect(
+    fs.existsSync(join(import.meta.dirname, 'dist-1/foo/icon.png')),
+  ).toBeTruthy();
 });
 
 test('should merge copy config correctly', async ({ build }) => {
@@ -92,6 +102,10 @@ test('should merge copy config correctly', async ({ build }) => {
     },
   });
 
-  expect(fs.existsSync(join(__dirname, 'dist-4/icon.png'))).toBeTruthy();
-  expect(fs.existsSync(join(__dirname, 'dist-4/image.png'))).toBeTruthy();
+  expect(
+    fs.existsSync(join(import.meta.dirname, 'dist-4/icon.png')),
+  ).toBeTruthy();
+  expect(
+    fs.existsSync(join(import.meta.dirname, 'dist-4/image.png')),
+  ).toBeTruthy();
 });

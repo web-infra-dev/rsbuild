@@ -42,8 +42,8 @@ rspackTest('should set inject via function correctly', async ({ build }) => {
     config: {
       source: {
         entry: {
-          index: path.resolve(__dirname, './src/index.js'),
-          foo: path.resolve(__dirname, './src/foo.js'),
+          index: path.resolve(import.meta.dirname, './src/index.js'),
+          foo: path.resolve(import.meta.dirname, './src/foo.js'),
         },
       },
       output: {

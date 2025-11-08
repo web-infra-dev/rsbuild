@@ -25,7 +25,7 @@ rspackTest(
   'should run onBeforeDevCompile hook correctly when rebuild in dev with multiple environments',
   async ({ dev }) => {
     process.env.NODE_ENV = 'development';
-    const indexJs = join(__dirname, 'test-temp-src', 'index.js');
+    const indexJs = join(import.meta.dirname, 'test-temp-src', 'index.js');
     await fse.outputFile(indexJs, "console.log('1');");
 
     const { plugin, names } = createPlugin();

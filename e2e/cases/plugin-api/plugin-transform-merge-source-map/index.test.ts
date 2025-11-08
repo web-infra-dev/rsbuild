@@ -10,7 +10,7 @@ import {
 
 const expectSourceMap = async (files: Record<string, string>) => {
   const sourceCode = readFileSync(
-    path.join(__dirname, 'src/index.ts'),
+    path.join(import.meta.dirname, 'src/index.ts'),
     'utf-8',
   );
   const outputCode = getFileContent(files, 'index.js');

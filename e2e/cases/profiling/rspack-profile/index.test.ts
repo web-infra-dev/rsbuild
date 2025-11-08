@@ -1,13 +1,13 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
 import { expect, rspackTest, test } from '@e2e/helper';
-import { removeSync } from 'fs-extra';
+import fse from 'fs-extra';
 
 test.afterAll(() => {
-  const files = fs.readdirSync(__dirname);
+  const files = fs.readdirSync(import.meta.dirname);
   for (const file of files) {
     if (file.startsWith('.rspack-profile')) {
-      removeSync(join(__dirname, file));
+      fse.removeSync(join(import.meta.dirname, file));
     }
   }
 });
@@ -23,7 +23,7 @@ const getProfilePath = (logs: string[]) =>
 rspackTest(
   'should generate rspack profile as expected in dev',
   async ({ exec, logHelper }) => {
-    exec('node ./dev.mjs', {
+    exec('node ./dev.js', {
       env: {
         RSPACK_PROFILE: 'OVERVIEW',
       },

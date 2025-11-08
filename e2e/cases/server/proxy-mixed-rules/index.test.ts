@@ -1,8 +1,8 @@
 import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 
-const cwd1 = join(__dirname, 'project1');
-const cwd2 = join(__dirname, 'project2');
+const cwd1 = join(import.meta.dirname, 'project1');
+const cwd2 = join(import.meta.dirname, 'project2');
 
 test('should apply mixed proxy rules', async ({ dev, page }) => {
   const rsbuild1 = await dev({

@@ -1,11 +1,11 @@
 import { join } from 'node:path';
 import { expect, readDirContents, rspackTest, test } from '@e2e/helper';
-import { remove } from 'fs-extra';
+import fse from 'fs-extra';
 
-const distPath = join(__dirname, 'dist');
+const distPath = join(import.meta.dirname, 'dist');
 
 test.beforeEach(async () => {
-  await remove(distPath);
+  await fse.remove(distPath);
 });
 
 rspackTest(
