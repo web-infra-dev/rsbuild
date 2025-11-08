@@ -37,7 +37,7 @@ import express from 'express';
 async function startDevServer() {
   // 初始化 Rsbuild
   const rsbuild = await createRsbuild({
-    rsbuildConfig: {
+    config: {
       server: {
         middlewareMode: true,
       },

@@ -20,7 +20,7 @@ function createRsbuild(
 import { createRsbuild } from '@rsbuild/core';
 
 const rsbuild = await createRsbuild({
-  rsbuildConfig: {
+  config: {
     // Rsbuild configuration
   },
 });
@@ -36,7 +36,7 @@ type CreateRsbuildOptions = {
   callerName?: string;
   environment?: string[];
   loadEnv?: boolean | LoadEnvOptions;
-  rsbuildConfig?: RsbuildConfig | (() => Promise<RsbuildConfig>);
+  config?: RsbuildConfig | (() => Promise<RsbuildConfig>);
 };
 ```
 
@@ -44,17 +44,21 @@ type CreateRsbuildOptions = {
 - `callerName`：当前调用者的名称，默认值为 `'rsbuild'`，详见 [指定调用者名称](#指定调用者名称)。
 - `environment`：只构建指定的 [environments](/guide/advanced/environments)，如果未指定或传入空数组，则构建所有环境。
 - `loadEnv`：是否调用 [loadEnv](/api/javascript-api/core#loadenv) 方法来加载环境变量，并通过 [source.define](/config/source/define) 定义为全局变量。
-- `rsbuildConfig`：Rsbuild 配置对象。参考 [配置总览](/config/) 查看所有可用的配置项。
+- `config`：Rsbuild 配置对象。参考 [配置总览](/config/) 查看所有可用的配置项。
+
+:::tip
+`config` 是 Rsbuild 1.6 新增的选项。在旧版本中，可使用 `rsbuildConfig` 作为替代。
+:::
 
 ### 异步加载配置
 
-`rsbuildConfig` 也可以是一个异步函数，你可以通过该函数来动态加载 Rsbuild 配置，并进行一些自定义操作。
+`config` 也可以是一个异步函数，你可以通过该函数来动态加载 Rsbuild 配置，并进行一些自定义操作。
 
 ```ts
 import { createRsbuild, loadConfig } from '@rsbuild/core';
 
 const rsbuild = await createRsbuild({
-  rsbuildConfig: async () => {
+  config: async () => {
     const { content } = await loadConfig();
     someFunctionToUpdateConfig(content);
     return content;
@@ -98,7 +102,7 @@ import { myPlugin } from './myPlugin';
 
 const rsbuild = await createRsbuild({
   callerName: 'rslib',
-  rsbuildConfig: {
+  config: {
     plugins: [myPlugin],
   },
 });
@@ -151,7 +155,7 @@ const { content } = await loadConfig();
 console.log(content); // -> Rsbuild config object
 
 const rsbuild = await createRsbuild({
-  rsbuildConfig: content,
+  config: content,
 });
 ```
 

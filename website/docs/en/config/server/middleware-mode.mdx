@@ -19,7 +19,7 @@ import express from 'express';
 async function startDevServer() {
   // Initialize Rsbuild in middleware mode
   const rsbuild = await createRsbuild({
-    rsbuildConfig: {
+    config: {
       server: {
         middlewareMode: true,
       },
