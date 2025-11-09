@@ -1,3 +1,4 @@
+import defer * as readline from 'node:readline';
 import { color, isTTY } from '../helpers';
 import { logger } from '../logger';
 import type { CliShortcut, NormalizedConfig } from '../types/config';
@@ -78,8 +79,7 @@ export async function setupCliShortcuts({
     );
   }
 
-  const { createInterface } = await import('node:readline');
-  const rl = createInterface({
+  const rl = readline.createInterface({
     input: process.stdin,
   });
 

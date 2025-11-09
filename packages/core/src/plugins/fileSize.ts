@@ -5,7 +5,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { promisify } from 'node:util';
-import zlib from 'node:zlib';
+import defer * as zlib from 'node:zlib';
 import { JS_REGEX } from '../constants';
 import { color } from '../helpers';
 import { getAssetsFromStats, type RsbuildAsset } from '../helpers/stats';

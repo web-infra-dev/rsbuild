@@ -1,3 +1,5 @@
+import defer * as childProcess from 'node:child_process';
+import defer * as nodeUtil from 'node:util';
 import { STATIC_PATH } from '../constants';
 import { castArray, color } from '../helpers';
 import { canParse } from '../helpers/url';
@@ -64,9 +66,7 @@ async function openBrowser(url: string): Promise<boolean> {
   // a Chromium browser with AppleScript. This lets us reuse an
   // existing tab when possible instead of creating a new one.
   if (shouldTryAppleScript(browser, browserArgs)) {
-    const { exec } = await import('node:child_process');
-    const { promisify } = await import('node:util');
-    const execAsync = promisify(exec);
+    const execAsync = nodeUtil.promisify(childProcess.exec);
 
     /**
      * Find the browser that is currently running
@@ -203,7 +203,7 @@ export async function open({
 
   const urls: string[] = [];
   const protocol = https ? 'https' : 'http';
-  const host = await getHostInUrl(config.server.host);
+  const host = getHostInUrl(config.server.host);
   const baseUrl = `${protocol}://${host}:${port}`;
 
   if (!targets.length) {

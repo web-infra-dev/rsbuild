@@ -1,5 +1,6 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
+import defer * as zlib from 'node:zlib';
 import { getPathnameFromUrl } from '../helpers/path';
 import { requireCompiledPackage } from '../helpers/vendors';
 import { isVerbose, logger } from '../logger';
@@ -104,11 +105,10 @@ export class RsbuildProdServer {
     // compression is placed after proxy middleware to avoid breaking SSE (Server-Sent Events),
     // but before other middlewares to ensure responses are properly compressed
     if (compress) {
-      const { constants } = await import('node:zlib');
       this.middlewares.use(
         gzipMiddleware({
           // simulates the common gzip compression rates
-          level: constants.Z_DEFAULT_COMPRESSION,
+          level: zlib.constants.Z_DEFAULT_COMPRESSION,
           ...(typeof compress === 'object' ? compress : undefined),
         }),
       );
@@ -201,7 +201,7 @@ export async function startProdServer(
 
   await context.hooks.onBeforeStartProdServer.callBatch();
 
-  const httpServer = await createHttpServer({
+  const httpServer = createHttpServer({
     serverConfig,
     middlewares: server.middlewares,
   });

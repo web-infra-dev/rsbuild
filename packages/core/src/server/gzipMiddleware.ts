@@ -1,5 +1,5 @@
 import type { ServerResponse } from 'node:http';
-import zlib from 'node:zlib';
+import defer * as zlib from 'node:zlib';
 import type { CompressOptions, RequestHandler } from '../types';
 
 const ENCODING_REGEX = /\bgzip\b/;

@@ -1,4 +1,4 @@
-import { constants } from 'node:os';
+import defer * as os from 'node:os';
 
 /**
  * A set to store all cleanup callbacks that should be executed before process termination
@@ -41,7 +41,7 @@ export const setupGracefulShutdown = (): (() => void) => {
   // or manually via 'kill -15 <pid>' or 'kill -TERM <pid>' command.
   // Add 128 to signal number as per POSIX convention for signal-terminated processes.
   const onSigterm = () => {
-    handleTermination(constants.signals.SIGTERM + 128);
+    handleTermination(os.constants.signals.SIGTERM + 128);
   };
   process.once('SIGTERM', onSigterm);
 

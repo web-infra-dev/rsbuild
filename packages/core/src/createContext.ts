@@ -100,7 +100,7 @@ export async function updateEnvironmentContext(
     const { entry = {}, tsconfigPath } = config.source;
     const htmlPaths = getEnvironmentHTMLPaths(entry, config);
     const webSocketToken =
-      context.action === 'dev' ? await hash(context.rootPath + name) : '';
+      context.action === 'dev' ? hash(context.rootPath + name) : '';
 
     const environmentContext: EnvironmentContext = {
       index,
