@@ -228,8 +228,8 @@ export function formatStatsError(stats: StatsError, verbose?: boolean): string {
     verbose && stats.details ? `\nDetails: ${stats.details}\n` : '';
   const stack = verbose && stats.stack ? `\n${stats.stack}` : '';
   const moduleTrace = formatModuleTrace(stats, fileName) ?? '';
-
-  message = `${formatFileName(fileName)}${mainMessage}${details}${stack}${moduleTrace}`;
+  const loc = stats.loc ? `:${stats.loc}` : '';
+  message = `${formatFileName(fileName + loc)}${mainMessage}${details}${stack}${moduleTrace}`;
 
   // Remove inner error message
   const innerError = '-- inner error --';
