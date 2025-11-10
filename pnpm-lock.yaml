@@ -35,8 +35,8 @@ importers:
         specifier: ^0.1.13
         version: 0.1.13
       '@rstest/core':
-        specifier: ^0.6.2
-        version: 0.6.2
+        specifier: ^0.6.3
+        version: 0.6.3
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:scripts/test-helper
@@ -2899,8 +2899,8 @@ packages:
   '@rstack-dev/doc-ui@1.11.0':
     resolution: {integrity: sha512-5GZ8EwvmKj8LXomEElC4GhDlDW2SazCeHbA+ieacJrlcGduuiJXGTBzVA2rNnPLjAb41H0esuy0aH0skRIQAqA==}
 
-  '@rstest/core@0.6.2':
-    resolution: {integrity: sha512-1Ojnq//spVXgZRlFS60TauyR7YXImB33xx8kQ+ppLKOQ7OT5OigRUmFkzDR//rAgo7/8xbU+D3FboQfeL+2miw==}
+  '@rstest/core@0.6.3':
+    resolution: {integrity: sha512-tqo07BmNPD3YoJTs0D6VBbOZAqp7EbmBqK5x86cxPC9p20dZx6k31gBK53CB5NXgqAq0+Ap7d4mhtTCxaUI/5Q==}
     engines: {node: '>=18.12.0'}
     hasBin: true
     peerDependencies:
@@ -8702,7 +8702,7 @@ snapshots:
       - react
       - react-dom
 
-  '@rstest/core@0.6.2':
+  '@rstest/core@0.6.3':
     dependencies:
       '@rsbuild/core': 1.6.0-beta.1
       '@types/chai': 5.2.3
