@@ -35,15 +35,15 @@
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.2",
+    "@biomejs/biome": "^2.3.4",
     "@rsbuild/config": "workspace:*",
     "@rslint/core": "^0.1.13",
-    "@rstest/core": "^0.6.1",
+    "@rstest/core": "^0.6.2",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^24.9.2",
     "cross-env": "^10.1.0",
     "cspell-ban-words": "^0.0.4",
-    "heading-case": "^1.0.2",
+    "heading-case": "^1.0.3",
     "nano-staged": "^0.8.0",
     "nx": "^22.0.2",
     "prettier": "^3.6.2",
