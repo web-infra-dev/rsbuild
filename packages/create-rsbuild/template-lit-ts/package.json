@@ -12,7 +12,7 @@
     "lit": "^3.3.1"
   },
   "devDependencies": {
-    "@rsbuild/core": "^1.6.0",
+    "@rsbuild/core": "^1.6.3",
     "typescript": "^5.9.3"
   }
 }

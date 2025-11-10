@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: need reproduction
         if: github.event.label.name == 'need reproduction'
-        uses: actions-cool/issues-helper@ca1b238fecb728f25584d2beb288d7f1727f9fa6 # v3.7.0
+        uses: actions-cool/issues-helper@9861779a695cf1898bd984c727f685f351cfc372 # v3.7.2
         with:
           actions: 'create-comment'
           issue-number: ${{ github.event.issue.number }}

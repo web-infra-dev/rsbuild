@@ -29,7 +29,7 @@
     "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
-    "create-rstack": "1.7.3"
+    "create-rstack": "1.7.4"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
