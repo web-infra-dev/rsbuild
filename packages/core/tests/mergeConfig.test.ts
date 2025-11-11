@@ -489,4 +489,36 @@ describe('mergeRsbuildConfig', () => {
       },
     });
   });
+
+  it('should accept `undefined` value', () => {
+    const config: RsbuildConfig = {
+      source: {
+        entry: {
+          index: 'src/index.ts',
+        },
+      },
+    };
+
+    expect(mergeRsbuildConfig(config, undefined)).toEqual(config);
+    expect(mergeRsbuildConfig(undefined, config)).toEqual(config);
+    expect(
+      mergeRsbuildConfig(undefined, config, {
+        source: {
+          entry: {
+            index2: 'src/index2.ts',
+          },
+        },
+      }),
+    ).toEqual({
+      source: {
+        entry: {
+          index: 'src/index.ts',
+          index2: 'src/index2.ts',
+        },
+      },
+    });
+    expect(mergeRsbuildConfig(undefined, undefined, undefined)).toEqual(
+      {},
+    );
+  });
 });
