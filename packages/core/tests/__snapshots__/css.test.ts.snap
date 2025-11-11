@@ -133,7 +133,7 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
-              "importLoaders": 0,
+              "importLoaders": 1,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -160,9 +160,18 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
               "exportType": "string",
-              "importLoaders": 0,
+              "importLoaders": 1,
               "modules": false,
               "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "node >= 16",
+              ],
             },
           },
         ],

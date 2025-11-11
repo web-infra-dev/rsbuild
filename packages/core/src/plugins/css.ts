@@ -333,8 +333,11 @@ export const pluginCss = (): RsbuildPlugin => ({
         // Update the normal CSS rule and the inline CSS rule
         const updateRules = (
           callback: (rule: RspackChain.Rule, type: 'normal' | 'inline') => void,
+          options: { skipNormal?: boolean } = {},
         ) => {
-          callback(rule, 'normal');
+          if (!options.skipNormal) {
+            callback(rule, 'normal');
+          }
           callback(inlineRule, 'inline');
         };
 
@@ -343,17 +346,17 @@ export const pluginCss = (): RsbuildPlugin => ({
           rule.use(CHAIN_ID.USE.CSS).loader(cssLoaderPath);
         });
 
-        if (emitCss) {
-          // `builtin:lightningcss-loader` is not supported when using webpack
-          if (
-            api.context.bundlerType === 'rspack' &&
-            config.tools.lightningcssLoader !== false
-          ) {
-            importLoaders++;
+        // `builtin:lightningcss-loader` is not supported when using webpack
+        if (
+          api.context.bundlerType === 'rspack' &&
+          config.tools.lightningcssLoader !== false
+        ) {
+          importLoaders++;
 
-            const { minifyCss } = parseMinifyOptions(config);
+          const { minifyCss } = parseMinifyOptions(config);
 
-            updateRules((rule, type) => {
+          updateRules(
+            (rule, type) => {
               // Inline styles are not processed by Rspack's minimizers,
               // so we need to minify them via `builtin:lightningcss-loader`
               const inlineStyle =
@@ -370,30 +373,36 @@ export const pluginCss = (): RsbuildPlugin => ({
                 .use(CHAIN_ID.USE.LIGHTNINGCSS)
                 .loader('builtin:lightningcss-loader')
                 .options(lightningcssOptions);
-            });
-          }
+            },
+            // If emit CSS is disabled, skip lightningcss-loader to reduce performance overhead
+            { skipNormal: !emitCss },
+          );
+        }
 
-          const postcssLoaderOptions = await getPostcssLoaderOptions({
-            config,
-            root: api.context.rootPath,
-            postcssrcCache,
-          });
+        const postcssLoaderOptions = await getPostcssLoaderOptions({
+          config,
+          root: api.context.rootPath,
+          postcssrcCache,
+        });
 
-          // enable postcss-loader if using PostCSS plugins
-          if (
-            typeof postcssLoaderOptions.postcssOptions === 'function' ||
-            postcssLoaderOptions.postcssOptions?.plugins?.length
-          ) {
-            importLoaders++;
-            const postcssLoaderPath = getCompiledPath('postcss-loader');
+        // enable postcss-loader if using PostCSS plugins
+        if (
+          typeof postcssLoaderOptions.postcssOptions === 'function' ||
+          postcssLoaderOptions.postcssOptions?.plugins?.length
+        ) {
+          importLoaders++;
+          const postcssLoaderPath = getCompiledPath('postcss-loader');
 
-            updateRules((rule) => {
+          updateRules(
+            (rule) => {
               rule
                 .use(CHAIN_ID.USE.POSTCSS)
                 .loader(postcssLoaderPath)
                 .options(postcssLoaderOptions);
-            });
-          }
+            },
+            // If emit CSS is disabled, skip postcss-loader to reduce performance overhead
+            { skipNormal: !emitCss },
+          );
         }
 
         const localIdentName = getCSSModulesLocalIdentName(config, isProd);
