@@ -227,19 +227,16 @@ const getPostcssLoaderOptions = async ({
 
 const getCSSLoaderOptions = ({
   config,
-  importLoaders,
   localIdentName,
   emitCss,
 }: {
   config: NormalizedEnvironmentConfig;
-  importLoaders: number;
   localIdentName: string;
   emitCss: boolean;
 }) => {
   const { cssModules } = config.output;
 
   const defaultOptions: CSSLoaderOptions = {
-    importLoaders,
     modules: {
       ...cssModules,
       localIdentName,
@@ -328,7 +325,10 @@ export const pluginCss = (): RsbuildPlugin => ({
         }
 
         // Number of loaders applied before css-loader for `@import` at-rules
-        let importLoaders = 0;
+        const importLoaders = {
+          normal: 0,
+          inline: 0,
+        };
 
         // Update the normal CSS rule and the inline CSS rule
         const updateRules = (
@@ -351,7 +351,10 @@ export const pluginCss = (): RsbuildPlugin => ({
           api.context.bundlerType === 'rspack' &&
           config.tools.lightningcssLoader !== false
         ) {
-          importLoaders++;
+          if (emitCss) {
+            importLoaders.normal++;
+          }
+          importLoaders.inline++;
 
           const { minifyCss } = parseMinifyOptions(config);
 
@@ -390,7 +393,11 @@ export const pluginCss = (): RsbuildPlugin => ({
           typeof postcssLoaderOptions.postcssOptions === 'function' ||
           postcssLoaderOptions.postcssOptions?.plugins?.length
         ) {
-          importLoaders++;
+          if (emitCss) {
+            importLoaders.normal++;
+          }
+          importLoaders.inline++;
+
           const postcssLoaderPath = getCompiledPath('postcss-loader');
 
           updateRules(
@@ -408,7 +415,6 @@ export const pluginCss = (): RsbuildPlugin => ({
         const localIdentName = getCSSModulesLocalIdentName(config, isProd);
         const cssLoaderOptions = getCSSLoaderOptions({
           config,
-          importLoaders,
           localIdentName,
           emitCss,
         });
@@ -421,12 +427,12 @@ export const pluginCss = (): RsbuildPlugin => ({
               ...cssLoaderOptions,
               exportType: 'string',
               modules: false,
+              importLoaders: importLoaders.inline,
             };
-          } else if (!emitCss && cssLoaderOptions.importLoaders) {
-            // If emitCss is disabled, correct importLoaders number for normal CSS rule
+          } else {
             finalOptions = {
               ...cssLoaderOptions,
-              importLoaders: cssLoaderOptions.importLoaders - 1,
+              importLoaders: importLoaders.normal,
             };
           }
           rule.use(CHAIN_ID.USE.CSS).options(finalOptions);
