@@ -133,7 +133,7 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
-              "importLoaders": 1,
+              "importLoaders": 0,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,

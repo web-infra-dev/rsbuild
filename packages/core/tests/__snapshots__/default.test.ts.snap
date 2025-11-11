@@ -1136,7 +1136,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
-              "importLoaders": 1,
+              "importLoaders": 0,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
