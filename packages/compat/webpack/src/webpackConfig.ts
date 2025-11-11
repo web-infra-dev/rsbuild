@@ -64,6 +64,7 @@ async function modifyWebpackConfig(
 async function getChainUtils(
   target: RsbuildTarget,
   environment: EnvironmentContext,
+  environments: Record<string, EnvironmentContext>,
   helpers: RsbuildProviderHelpers,
 ): Promise<ModifyWebpackChainUtils> {
   const { default: webpack } = await import('webpack');
@@ -74,7 +75,7 @@ async function getChainUtils(
   };
 
   return {
-    ...helpers.getChainUtils(target, environment),
+    ...helpers.getChainUtils(target, environment, environments),
     name: nameMap[target] || '',
     webpack,
     HtmlWebpackPlugin: helpers.getHTMLPlugin(),
@@ -95,6 +96,7 @@ export async function generateWebpackConfig({
   const chainUtils = await getChainUtils(
     target,
     context.environments[environment],
+    context.environments,
     helpers,
   );
   const { default: webpack } = await import('webpack');

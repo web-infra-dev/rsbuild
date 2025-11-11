@@ -170,13 +170,29 @@ export default {
 
 - **Type:** [EnvironmentContext](/api/javascript-api/environment-api#environment-context)
 
-Context information about the current environment.
+Context information for the current environment.
 
 ```ts title="rsbuild.config.ts"
 export default {
   tools: {
     bundlerChain: (chain, { environment }) => {
       console.log(environment);
+    },
+  },
+};
+```
+
+### environments
+
+- **Type:** `Record<string, EnvironmentContext>`
+
+Context information for all environments.
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    bundlerChain: (chain, { environments }) => {
+      console.log(environments);
     },
   },
 };

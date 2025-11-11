@@ -234,6 +234,22 @@ export default {
 };
 ```
 
+### environments
+
+- **类型：** `Record<string, EnvironmentContext>`
+
+所有环境的上下文信息。
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: (chain, { environments }) => {
+      console.log(environments);
+    },
+  },
+};
+```
+
 ### HtmlPlugin
 
 - **类型：** `typeof import('html-rspack-plugin')`

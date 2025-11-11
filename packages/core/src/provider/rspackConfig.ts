@@ -130,12 +130,14 @@ export function getConfigUtils(
 export function getChainUtils(
   target: RsbuildTarget,
   environment: EnvironmentContext,
+  environments: Record<string, EnvironmentContext>,
 ): ModifyChainUtils {
   const nodeEnv = getNodeEnv();
 
   return {
     rspack,
     environment,
+    environments,
     env: nodeEnv,
     target,
     isDev: environment.config.mode === 'development',
@@ -177,13 +179,17 @@ function validateRspackConfig(config: Rspack.Configuration) {
 export async function generateRspackConfig({
   target,
   context,
-  environment,
+  environmentName,
 }: {
-  environment: string;
   target: RsbuildTarget;
   context: InternalContext;
+  environmentName: string;
 }): Promise<Rspack.Configuration> {
-  const chainUtils = getChainUtils(target, context.environments[environment]);
+  const chainUtils = getChainUtils(
+    target,
+    context.environments[environmentName],
+    context.environments,
+  );
   const {
     BannerPlugin,
     DefinePlugin,
