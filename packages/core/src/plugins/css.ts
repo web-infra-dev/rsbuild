@@ -414,15 +414,22 @@ export const pluginCss = (): RsbuildPlugin => ({
         });
 
         updateRules((rule, type) => {
-          rule.use(CHAIN_ID.USE.CSS).options(
-            type === 'inline'
-              ? ({
-                  ...cssLoaderOptions,
-                  exportType: 'string',
-                  modules: false,
-                } satisfies CSSLoaderOptions)
-              : cssLoaderOptions,
-          );
+          let finalOptions = cssLoaderOptions;
+
+          if (type === 'inline') {
+            finalOptions = {
+              ...cssLoaderOptions,
+              exportType: 'string',
+              modules: false,
+            };
+          } else if (!emitCss && cssLoaderOptions.importLoaders) {
+            // If emitCss is disabled, correct importLoaders number for normal CSS rule
+            finalOptions = {
+              ...cssLoaderOptions,
+              importLoaders: cssLoaderOptions.importLoaders - 1,
+            };
+          }
+          rule.use(CHAIN_ID.USE.CSS).options(finalOptions);
 
           // CSS imports should always be treated as sideEffects
           rule.sideEffects(true);
