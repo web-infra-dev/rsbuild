@@ -1,4 +1,5 @@
 import type { StatsError } from '@rspack/core';
+import { isVerbose } from '../logger';
 import { removeLoaderChainDelimiter } from './stats';
 import { color } from './vendors';
 
@@ -221,18 +222,25 @@ const hintNodePolyfill = (message: string): string => {
 };
 
 // Formats Rspack stats error to readable message
-export function formatStatsError(stats: StatsError, verbose?: boolean): string {
-  let lines: string[] = [];
-  let message: string;
-
-  // Stats error object
+export function formatStatsError(stats: StatsError): string {
   const fileName = resolveFileName(stats);
-  const mainMessage = stats.message;
-  const details =
-    verbose && stats.details ? `\nDetails: ${stats.details}\n` : '';
-  const stack = verbose && stats.stack ? `\n${stats.stack}` : '';
-  const moduleTrace = formatModuleTrace(stats, fileName) ?? '';
-  message = `${formatFileName(fileName, stats)}${mainMessage}${details}${stack}${moduleTrace}`;
+  let message = `${formatFileName(fileName, stats)}${stats.message}`;
+
+  // display verbose messages in debug mode
+  const verbose = isVerbose();
+  if (verbose) {
+    if (stats.details) {
+      message += `\nDetails: ${stats.details}\n`;
+    }
+    if (stats.stack) {
+      message += `\n${stats.stack}`;
+    }
+  }
+
+  const moduleTrace = formatModuleTrace(stats, fileName);
+  if (moduleTrace) {
+    message += moduleTrace;
+  }
 
   // Remove inner error message
   const innerError = '-- inner error --';
@@ -243,7 +251,7 @@ export function formatStatsError(stats: StatsError, verbose?: boolean): string {
   message = hintUnknownFiles(message);
   message = hintNodePolyfill(message);
 
-  lines = message.split('\n');
+  let lines = message.split('\n');
 
   // Remove duplicated newlines
   lines = lines.filter(
