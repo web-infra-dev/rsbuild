@@ -4,7 +4,7 @@ import { platform } from 'node:os';
 import { join, sep } from 'node:path';
 import { URL } from 'node:url';
 import { originalPositionFor, TraceMap } from '@jridgewell/trace-mapping';
-import type { RsbuildPlugin } from '@rsbuild/core';
+import { logger, type RsbuildPlugin } from '@rsbuild/core';
 import glob, { type Options as GlobOptions } from 'fast-glob';
 import color from 'picocolors';
 import type { Page } from 'playwright';
@@ -312,3 +312,13 @@ export const getFileContent = (
   matcher: FileMatcher,
   options?: FindFileOptions,
 ): string => files[findFile(files, matcher, options)];
+
+export const enableDebugMode = () => {
+  process.env.DEBUG = 'rsbuild';
+  const { level } = logger;
+  logger.level = 'verbose';
+  return () => {
+    delete process.env.DEBUG;
+    logger.level = level;
+  };
+};

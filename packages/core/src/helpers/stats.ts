@@ -1,4 +1,4 @@
-import { isVerbose, logger } from '../logger';
+import { isVerbose } from '../logger';
 import type { ActionType, RsbuildStats, Rspack } from '../types';
 import { isMultiCompiler } from './compiler';
 import { formatStatsError } from './format';
@@ -101,6 +101,8 @@ function getStatsOptions(
     warnings: true,
     // for displaying the module trace when build failed
     moduleTrace: true,
+    // for displaying the error stack in verbose mode
+    errorStack: isVerbose(),
   };
 
   if (action === 'dev') {
@@ -151,12 +153,9 @@ export function formatStats(
   message?: string;
   level?: string;
 } {
-  // display verbose messages in debug mode
-  const verbose = logger.level === 'verbose';
-
   if (hasErrors) {
     const errors = getStatsErrors(stats);
-    const errorMessages = errors.map((item) => formatStatsError(item, verbose));
+    const errorMessages = errors.map((item) => formatStatsError(item));
     return {
       message: formatErrorMessage(errorMessages),
       level: 'error',
@@ -164,9 +163,7 @@ export function formatStats(
   }
 
   const warnings = getStatsWarnings(stats);
-  const warningMessages = warnings.map((item) =>
-    formatStatsError(item, verbose),
-  );
+  const warningMessages = warnings.map((item) => formatStatsError(item));
 
   if (warningMessages.length) {
     const title = color.bold(
