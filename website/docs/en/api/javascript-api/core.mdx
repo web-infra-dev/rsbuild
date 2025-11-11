@@ -316,7 +316,9 @@ The `mergeRsbuildConfig` function takes multiple configuration objects as parame
 - **Type:**
 
 ```ts
-function mergeRsbuildConfig(...configs: RsbuildConfig[]): RsbuildConfig;
+function mergeRsbuildConfig(
+  ...configs: (RsbuildConfig | undefined)[]
+): RsbuildConfig;
 ```
 
 ### Basic example

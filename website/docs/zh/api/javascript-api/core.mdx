@@ -316,7 +316,9 @@ loadEnv({ processEnv: { ...process.env } });
 - **类型：**
 
 ```ts
-function mergeRsbuildConfig(...configs: RsbuildConfig[]): RsbuildConfig;
+function mergeRsbuildConfig(
+  ...configs: (RsbuildConfig | undefined)[]
+): RsbuildConfig;
 ```
 
 ### 基础示例
