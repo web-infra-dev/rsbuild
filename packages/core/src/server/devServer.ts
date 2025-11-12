@@ -303,55 +303,45 @@ export async function createDevServer<
     (_stats, entryName, utils) => getTransformedHtml(entryName, utils),
   );
 
-  const environmentAPI = Object.fromEntries(
-    context.environmentList.map((environment, index) => {
-      return [
-        environment.name,
-        {
-          getStats: async () => {
-            if (!buildManager) {
-              throw new Error(
-                `${color.dim('[rsbuild:server]')} Can not call ` +
-                  `${color.yellow('getStats')} when ` +
-                  `${color.yellow('runCompile')} is false`,
-              );
-            }
-            await waitLastCompileDone;
-            return lastStats[index];
-          },
-          context: environment,
-          loadBundle: async <T>(entryName: string) => {
-            if (!buildManager) {
-              throw new Error(
-                `${color.dim('[rsbuild:server]')} Can not call ` +
-                  `${color.yellow('loadBundle')} when ` +
-                  `${color.yellow('runCompile')} is false`,
-              );
-            }
-            await waitLastCompileDone;
-            return cacheableLoadBundle(lastStats[index], entryName, {
-              readFileSync: buildManager.readFileSync,
-              environment,
-            }) as T;
-          },
-          getTransformedHtml: async (entryName: string) => {
-            if (!buildManager) {
-              throw new Error(
-                `${color.dim('[rsbuild:server]')} Can not call ` +
-                  `${color.yellow('getTransformedHtml')} when ` +
-                  `${color.yellow('runCompile')} is false`,
-              );
-            }
-            await waitLastCompileDone;
-            return cacheableTransformedHtml(lastStats[index], entryName, {
-              readFileSync: buildManager.readFileSync,
-              environment,
-            });
-          },
-        },
-      ];
-    }),
-  );
+  const environmentAPI: EnvironmentAPI = {};
+
+  const getErrorMsg = (method: string) =>
+    `${color.dim('[rsbuild:server]')} Can not call ` +
+    `${color.yellow(method)} when ` +
+    `${color.yellow('runCompile')} is false`;
+
+  context.environmentList.forEach((environment, index) => {
+    environmentAPI[environment.name] = {
+      context: environment,
+      getStats: async () => {
+        if (!buildManager) {
+          throw new Error(getErrorMsg('getStats'));
+        }
+        await waitLastCompileDone;
+        return lastStats[index];
+      },
+      loadBundle: async <T>(entryName: string) => {
+        if (!buildManager) {
+          throw new Error(getErrorMsg('loadBundle'));
+        }
+        await waitLastCompileDone;
+        return cacheableLoadBundle(lastStats[index], entryName, {
+          readFileSync: buildManager.readFileSync,
+          environment,
+        }) as T;
+      },
+      getTransformedHtml: async (entryName: string) => {
+        if (!buildManager) {
+          throw new Error(getErrorMsg('getTransformedHtml'));
+        }
+        await waitLastCompileDone;
+        return cacheableTransformedHtml(lastStats[index], entryName, {
+          readFileSync: buildManager.readFileSync,
+          environment,
+        });
+      },
+    };
+  });
 
   const connect = requireCompiledPackage('connect');
   const middlewares = connect();
