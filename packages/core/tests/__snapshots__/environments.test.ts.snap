@@ -2003,7 +2003,10 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               "options": {
                 "errorRecovery": true,
                 "targets": [
-                  "node >= 16",
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
                 ],
               },
             },
