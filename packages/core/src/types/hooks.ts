@@ -30,6 +30,9 @@ export type OnCloseBuildFn = () => MaybePromise<void>;
 
 export type OnBeforeBuildFn<B = 'rspack'> = (
   params: CompileCommonParams & {
+    /**
+     * Context information for all environments.
+     */
     environments: Record<string, EnvironmentContext>;
     bundlerConfigs?: B extends 'rspack'
       ? Rspack.Configuration[]
@@ -39,6 +42,9 @@ export type OnBeforeBuildFn<B = 'rspack'> = (
 
 export type OnBeforeDevCompileFn<B = 'rspack'> = (
   params: CompileCommonParams & {
+    /**
+     * Context information for all environments.
+     */
     environments: Record<string, EnvironmentContext>;
     bundlerConfigs?: B extends 'rspack'
       ? Rspack.Configuration[]
@@ -56,6 +62,9 @@ export type OnAfterEnvironmentCompileFn = (
 export type OnAfterBuildFn = (
   params: CompileCommonParams & {
     stats?: Rspack.Stats | Rspack.MultiStats;
+    /**
+     * Context information for all environments.
+     */
     environments: Record<string, EnvironmentContext>;
   },
 ) => MaybePromise<void>;
@@ -65,6 +74,9 @@ export type OnCloseDevServerFn = () => MaybePromise<void>;
 export type OnAfterDevCompileFn = (params: {
   isFirstCompile: boolean;
   stats: Rspack.Stats | Rspack.MultiStats;
+  /**
+   * Context information for all environments.
+   */
   environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;
 
@@ -79,7 +91,7 @@ export type OnBeforeStartDevServerFn = (params: {
    */
   server: RsbuildDevServer;
   /**
-   * A read-only object that provides some context information about different environments.
+   * Context information for all environments.
    */
   environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<(() => void) | void>;
@@ -94,17 +106,26 @@ export type Routes = {
 export type OnAfterStartDevServerFn = (params: {
   port: number;
   routes: Routes;
+  /**
+   * Context information for all environments.
+   */
   environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;
 
 export type OnAfterStartProdServerFn = (params: {
   port: number;
   routes: Routes;
+  /**
+   * Context information for all environments.
+   */
   environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;
 
 export type OnBeforeCreateCompilerFn<B = 'rspack'> = (params: {
   bundlerConfigs: B extends 'rspack' ? Rspack.Configuration[] : WebpackConfig[];
+  /**
+   * Context information for all environments.
+   */
   environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;
 
@@ -112,6 +133,9 @@ export type OnAfterCreateCompilerFn<
   Compiler = Rspack.Compiler | Rspack.MultiCompiler,
 > = (params: {
   compiler: Compiler;
+  /**
+   * Context information for all environments.
+   */
   environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;
 
@@ -276,6 +300,10 @@ export type ModifyChainUtils = {
    * The environment context for current build.
    */
   environment: EnvironmentContext;
+  /**
+   * Context information for all environments.
+   */
+  environments: Record<string, EnvironmentContext>;
   /**
    * The Rspack instance, same as `import { rspack } from '@rsbuild/core'`.
    */

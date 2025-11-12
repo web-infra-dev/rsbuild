@@ -11,7 +11,7 @@ type OnBeforeStartDevServerFn = (params: {
    */
   server: RsbuildDevServer;
   /**
-   * A read-only object that provides some context information about different environments.
+   * Context information for all environments.
    */
   environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;
