@@ -141,6 +141,18 @@ function hintUnknownFiles(message: string): string {
   return message;
 }
 
+const hintAssetsConflict = (message: string): string => {
+  const hint = 'Multiple assets emit different content to the same filename';
+
+  if (message.indexOf(hint) === -1) {
+    return message;
+  }
+
+  const extraMessage = `You may need to adjust ${color.yellow('output.filename')} configuration to prevent name conflicts. (See ${color.yellow('https://rsbuild.rs/config/output/filename')})`;
+
+  return `${message}\n${extraMessage}`;
+};
+
 /**
  * Add node polyfill tip when failed to resolve node built-in modules.
  */
@@ -250,6 +262,7 @@ export function formatStatsError(stats: StatsError): string {
 
   message = hintUnknownFiles(message);
   message = hintNodePolyfill(message);
+  message = hintAssetsConflict(message);
 
   let lines = message.split('\n');
 
