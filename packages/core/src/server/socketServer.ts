@@ -112,8 +112,8 @@ export class SocketServer {
     }
 
     const query = parseQueryString(req);
-    const tokens = Object.values(this.context.environments).map(
-      (env) => env.webSocketToken,
+    const tokens = this.context.environmentList.map(
+      ({ webSocketToken }) => webSocketToken,
     );
 
     // If the request does not contain a valid token, reject the request.
@@ -346,7 +346,7 @@ export class SocketServer {
   // Only use stats when environment is matched
   private getStats(token: string) {
     const { stats } = this.context.buildState;
-    const environment = Object.values(this.context.environments).find(
+    const environment = this.context.environmentList.find(
       ({ webSocketToken }) => webSocketToken === token,
     );
 

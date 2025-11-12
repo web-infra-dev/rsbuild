@@ -115,7 +115,7 @@ export async function updateEnvironmentContext(
     };
 
     // EnvironmentContext is readonly.
-    context.environments[name] = new Proxy(environmentContext, {
+    const readonlyEnvironmentContext = new Proxy(environmentContext, {
       get(target, prop: keyof EnvironmentContext) {
         return target[prop];
       },
@@ -130,6 +130,9 @@ export async function updateEnvironmentContext(
         return true;
       },
     });
+
+    context.environmentList[index] = readonlyEnvironmentContext;
+    context.environments[name] = readonlyEnvironmentContext;
   }
 }
 
@@ -137,9 +140,7 @@ export function updateContextByNormalizedConfig(
   context: InternalContext,
 ): void {
   // Try to get the parent dist path from all environments
-  const distPaths = Object.values(context.environments).map(
-    (item) => item.distPath,
-  );
+  const distPaths = context.environmentList.map((item) => item.distPath);
   context.distPath = getCommonParentPath(distPaths);
 }
 
@@ -204,6 +205,7 @@ export async function createContext(
     callerName: options.callerName,
     bundlerType,
     environments: {},
+    environmentList: [],
     publicPathnames: [],
     hooks: initHooks(),
     config: { ...rsbuildConfig },

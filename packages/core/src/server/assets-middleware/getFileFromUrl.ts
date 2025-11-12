@@ -51,8 +51,8 @@ export async function getFileFromUrl(
     });
   };
 
-  const { environments, publicPathnames } = context;
-  const distPaths = Object.values(environments).map((env) => env.distPath);
+  const { environmentList, publicPathnames } = context;
+  const distPaths = environmentList.map((env) => env.distPath);
   const possibleFilenames = new Set<string>();
 
   // First, add paths that match the public prefix for more accurate resolution

@@ -207,8 +207,8 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
       if (!hasErrors) {
         // only print children compiler time when multi compiler
         if (isMultiCompiler && stats.children?.length) {
-          stats.children.forEach((c, index) => {
-            printTime(c, index);
+          stats.children.forEach((item, index) => {
+            printTime(item, index);
           });
         } else {
           printTime(stats, 0);

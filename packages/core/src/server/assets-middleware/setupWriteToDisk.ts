@@ -22,8 +22,9 @@ export type ResolvedWriteToDisk =
 export const resolveWriteToDiskConfig = (
   config: NormalizedDevConfig,
   environments: Record<string, EnvironmentContext>,
+  environmentList: EnvironmentContext[],
 ): ResolvedWriteToDisk => {
-  const writeToDiskValues = Object.values(environments).map(
+  const writeToDiskValues = environmentList.map(
     (env) => env.config.dev.writeToDisk,
   );
   if (new Set(writeToDiskValues).size === 1) {

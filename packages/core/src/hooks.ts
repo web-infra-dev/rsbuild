@@ -3,7 +3,6 @@ import { isMultiCompiler } from './helpers/compiler';
 import type {
   AsyncHook,
   EnvironmentAsyncHook,
-  EnvironmentContext,
   HookDescriptor,
   InternalContext,
   ModifyBundlerChainFn,
@@ -377,12 +376,7 @@ export const registerBuildHook = ({
 }): void => {
   let isFirstCompile = true;
 
-  const environmentList = Object.values(context.environments).reduce<
-    EnvironmentContext[]
-  >((prev, curr) => {
-    prev[curr.index] = curr;
-    return prev;
-  }, []);
+  const { environmentList } = context;
 
   const beforeCompile = async () =>
     context.hooks.onBeforeBuild.callBatch({
@@ -459,12 +453,7 @@ export const registerDevHook = ({
 }): void => {
   let isFirstCompile = true;
 
-  const environmentList = Object.values(context.environments).reduce<
-    EnvironmentContext[]
-  >((prev, curr) => {
-    prev[curr.index] = curr;
-    return prev;
-  }, []);
+  const { environmentList } = context;
 
   const beforeCompile = async () =>
     context.hooks.onBeforeDevCompile.callBatch({

@@ -214,6 +214,9 @@ export type ModifyEnvironmentConfigFn = (
 ) => MaybePromise<MergedEnvironmentConfig | void>;
 
 export type EnvironmentContext = {
+  /**
+   * The index of the current environment.
+   */
   index: number;
   /**
    * The unique name of the current environment is used to distinguish and locate the

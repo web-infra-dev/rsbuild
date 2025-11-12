@@ -88,7 +88,7 @@ export const stripBase = (path: string, base: string): string => {
 };
 
 export const getRoutes = (context: InternalContext): Routes => {
-  const environmentWithHtml = Object.values(context.environments).filter(
+  const environmentWithHtml = context.environmentList.filter(
     (item) => Object.keys(item.htmlPaths).length > 0,
   );
   if (environmentWithHtml.length === 0) {

@@ -211,12 +211,10 @@ export const assetsMiddleware = async ({
   resolvedPort: number;
 }): Promise<AssetsMiddleware> => {
   const resolvedHost = await resolveHostname(config.server.host);
-  const { environments } = context;
+  const { environments, environmentList } = context;
 
   const setupCompiler = (compiler: Compiler, index: number) => {
-    const environment = Object.values(environments).find(
-      (env) => env.index === index,
-    );
+    const environment = environmentList[index];
     if (!environment) {
       return;
     }
@@ -261,7 +259,11 @@ export const assetsMiddleware = async ({
     });
   });
 
-  const writeToDisk = resolveWriteToDiskConfig(config.dev, environments);
+  const writeToDisk = resolveWriteToDiskConfig(
+    config.dev,
+    environments,
+    environmentList,
+  );
   if (writeToDisk) {
     setupWriteToDisk(compilers, writeToDisk);
   }
