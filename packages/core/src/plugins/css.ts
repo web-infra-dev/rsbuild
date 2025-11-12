@@ -267,7 +267,10 @@ export const pluginCss = (): RsbuildPlugin => ({
 
     api.modifyBundlerChain({
       order: 'pre',
-      handler: async (chain, { target, isProd, CHAIN_ID, environment }) => {
+      handler: async (
+        chain,
+        { target, isProd, CHAIN_ID, environment, environments },
+      ) => {
         const rule = chain.module.rule(CHAIN_ID.RULE.CSS);
         const inlineRule = chain.module.rule(CHAIN_ID.RULE.CSS_INLINE);
         const { config } = environment;
@@ -366,9 +369,21 @@ export const pluginCss = (): RsbuildPlugin => ({
                 type === 'inline' || config.output.injectStyles;
               const minify = inlineStyle && minifyCss;
 
+              // Use the same browserslist as web bundles to ensure consistent CSS output
+              // Prevent mismatched prefixes or features between SSR and client hydration
+              let { browserslist } = environment;
+              if (target === 'node') {
+                const webEnvironment = Object.values(environments).find(
+                  (env) => env.config.output.target === 'web',
+                );
+                if (webEnvironment?.browserslist) {
+                  browserslist = webEnvironment.browserslist;
+                }
+              }
+
               const lightningcssOptions = getLightningCSSLoaderOptions(
                 config,
-                environment.browserslist,
+                browserslist,
                 minify,
               );
 
