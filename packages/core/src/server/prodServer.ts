@@ -190,7 +190,7 @@ export async function startProdServer(
       pwd: context.rootPath,
       output: {
         path: context.distPath,
-        assetPrefixes: Object.values(context.environments).map((e) =>
+        assetPrefixes: context.environmentList.map((e) =>
           getPathnameFromUrl(e.config.output.assetPrefix),
         ),
       },

@@ -98,6 +98,8 @@ export type InternalContext = RsbuildContext & {
   getPluginAPI?: (environment?: string) => RsbuildPluginAPI;
   /** Context information for all environments. */
   environments: Record<string, EnvironmentContext>;
+  /** Array of all environments. */
+  environmentList: EnvironmentContext[];
   /** Only build specified environment. */
   specifiedEnvironments?: string[];
   /** Build state information */

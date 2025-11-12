@@ -304,9 +304,9 @@ export async function createDevServer<
   );
 
   const environmentAPI = Object.fromEntries(
-    Object.entries(context.environments).map(([name, environment]) => {
+    context.environmentList.map((environment, index) => {
       return [
-        name,
+        environment.name,
         {
           getStats: async () => {
             if (!buildManager) {
@@ -317,7 +317,7 @@ export async function createDevServer<
               );
             }
             await waitLastCompileDone;
-            return lastStats[environment.index];
+            return lastStats[index];
           },
           context: environment,
           loadBundle: async <T>(entryName: string) => {
@@ -329,14 +329,10 @@ export async function createDevServer<
               );
             }
             await waitLastCompileDone;
-            return cacheableLoadBundle(
-              lastStats[environment.index],
-              entryName,
-              {
-                readFileSync: buildManager.readFileSync,
-                environment,
-              },
-            ) as T;
+            return cacheableLoadBundle(lastStats[index], entryName, {
+              readFileSync: buildManager.readFileSync,
+              environment,
+            }) as T;
           },
           getTransformedHtml: async (entryName: string) => {
             if (!buildManager) {
@@ -347,14 +343,10 @@ export async function createDevServer<
               );
             }
             await waitLastCompileDone;
-            return cacheableTransformedHtml(
-              lastStats[environment.index],
-              entryName,
-              {
-                readFileSync: buildManager.readFileSync,
-                environment,
-              },
-            );
+            return cacheableTransformedHtml(lastStats[index], entryName, {
+              readFileSync: buildManager.readFileSync,
+              environment,
+            });
           },
         },
       ];

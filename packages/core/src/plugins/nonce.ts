@@ -8,11 +8,9 @@ export const pluginNonce = (): RsbuildPlugin => ({
   setup(api) {
     api.onAfterCreateCompiler(({ compiler, environments }) => {
       const environmentList = Object.values(environments);
-      const nonces = environmentList.map((environment) => {
-        const { nonce } = environment.config.security;
-
-        return nonce;
-      });
+      const nonces = Object.values(environments).map(
+        (environment) => environment.config.security.nonce,
+      );
 
       if (!nonces.some((nonce) => !!nonce)) {
         return;
