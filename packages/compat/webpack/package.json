@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/webpack",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "homepage": "https://rsbuild.rs",
   "repository": {
     "type": "git",
