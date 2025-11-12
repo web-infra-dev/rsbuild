@@ -131,7 +131,7 @@ export async function updateEnvironmentContext(
       },
     });
 
-    context.environmentList.push(readonlyEnvironmentContext);
+    context.environmentList[index] = readonlyEnvironmentContext;
     context.environments[name] = readonlyEnvironmentContext;
   }
 }

@@ -15,8 +15,8 @@ test('should getRoutes correctly', () => {
           base: '/',
         },
       },
-      environments: {
-        web: {
+      environmentList: [
+        {
           distPath: join(cwd, 'dist'),
           htmlPaths: {
             index: 'index.html',
@@ -32,7 +32,7 @@ test('should getRoutes correctly', () => {
             },
           },
         },
-        web1: {
+        {
           distPath: join(cwd, 'dist/web1'),
           htmlPaths: {
             index: 'index.html',
@@ -48,7 +48,7 @@ test('should getRoutes correctly', () => {
             },
           },
         },
-        web2: {
+        {
           distPath: join(cwd, 'dist/web2'),
           htmlPaths: {
             index: 'index.html',
@@ -65,7 +65,7 @@ test('should getRoutes correctly', () => {
             },
           },
         },
-      },
+      ],
     } as unknown as InternalContext),
   ).toEqual([
     {
