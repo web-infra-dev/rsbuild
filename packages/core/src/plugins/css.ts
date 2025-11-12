@@ -361,6 +361,18 @@ export const pluginCss = (): RsbuildPlugin => ({
 
           const { minifyCss } = parseMinifyOptions(config);
 
+          // Use the same browserslist as web bundles to ensure consistent CSS output
+          // Prevent mismatched prefixes or features between SSR and client hydration
+          let { browserslist } = environment;
+          if (target === 'node') {
+            const webEnvironment = Object.values(environments).find(
+              (env) => env.config.output.target === 'web',
+            );
+            if (webEnvironment?.browserslist) {
+              browserslist = webEnvironment.browserslist;
+            }
+          }
+
           updateRules(
             (rule, type) => {
               // Inline styles are not processed by Rspack's minimizers,
@@ -368,18 +380,6 @@ export const pluginCss = (): RsbuildPlugin => ({
               const inlineStyle =
                 type === 'inline' || config.output.injectStyles;
               const minify = inlineStyle && minifyCss;
-
-              // Use the same browserslist as web bundles to ensure consistent CSS output
-              // Prevent mismatched prefixes or features between SSR and client hydration
-              let { browserslist } = environment;
-              if (target === 'node') {
-                const webEnvironment = Object.values(environments).find(
-                  (env) => env.config.output.target === 'web',
-                );
-                if (webEnvironment?.browserslist) {
-                  browserslist = webEnvironment.browserslist;
-                }
-              }
 
               const lightningcssOptions = getLightningCSSLoaderOptions(
                 config,
