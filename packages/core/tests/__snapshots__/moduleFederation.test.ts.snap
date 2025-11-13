@@ -35,9 +35,6 @@ exports[`plugin-module-federation > should set environment module federation con
           },
         },
       },
-      PatchSplitChunksPlugin {
-        "name": "remote",
-      },
     ],
   },
   {
@@ -97,9 +94,6 @@ exports[`plugin-module-federation > should set module federation and environment
           },
         },
       },
-      PatchSplitChunksPlugin {
-        "name": "remote",
-      },
     ],
   },
   {
@@ -131,9 +125,6 @@ exports[`plugin-module-federation > should set module federation and environment
             },
           },
         },
-      },
-      PatchSplitChunksPlugin {
-        "name": "remote",
       },
     ],
   },
@@ -173,9 +164,6 @@ exports[`plugin-module-federation > should set module federation config 1`] = `
           },
         },
       },
-    },
-    PatchSplitChunksPlugin {
-      "name": "remote",
     },
   ],
 }
