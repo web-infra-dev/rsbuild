@@ -21,3 +21,4 @@ patchedDependencies:
 
 strictPeerDependencies: false
 engineStrict: true
+trustPolicy: no-downgrade
