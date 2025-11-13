@@ -11,11 +11,6 @@ export const pluginEsm = (): RsbuildPlugin => ({
         return;
       }
 
-      if (target === 'web') {
-        // Temporary solution to fix the issue of runtime chunk not loaded as expected.
-        chain.optimization.runtimeChunk(true);
-      }
-
       if (target === 'node') {
         chain.output.library({
           ...chain.output.get('library'),
