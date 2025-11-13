@@ -19,7 +19,6 @@
 - 将 provider 的 [dev.assetPrefix](/config/dev/asset-prefix) 配置的默认值设置为 `true`，这可以确保 remote modules 的静态资源 URL 是正确的。
 - 将 Rspack [output.uniqueName](https://rspack.rs/zh/config/output#outputuniquename) 配置的默认值设置为 `moduleFederation.options.name`，使 HMR 可以正常工作。
 - 关闭 Rsbuild [performance.chunkSplit](/config/performance/chunk-split) 中 `split-by-experience` 相关的规则，因为这可能会与 shared modules 冲突，参考 [#3161](https://github.com/module-federation/module-federation-examples/issues/3161)。
-- 关闭 remote entry 的 splitChunks 规则。
 
 ## 用法
 
