@@ -22,3 +22,6 @@ patchedDependencies:
 strictPeerDependencies: false
 engineStrict: true
 trustPolicy: no-downgrade
+trustPolicyExclude:
+  # For Rspack ecosystem CI
+  - semver@6.3.1
