@@ -258,12 +258,12 @@ export type Hooks = ReturnType<typeof initHooks>;
 const onBeforeCompile = ({
   compiler,
   beforeCompile,
-  beforeEnvironmentCompiler,
+  beforeEnvironmentCompile,
   isWatch,
 }: {
   compiler: Rspack.Compiler | Rspack.MultiCompiler;
-  beforeCompile?: () => Promise<any>;
-  beforeEnvironmentCompiler: (buildIndex: number) => Promise<any>;
+  beforeCompile: () => Promise<any>;
+  beforeEnvironmentCompile: (buildIndex: number) => Promise<any>;
   isWatch?: boolean;
 }): void => {
   const name = 'rsbuild:beforeCompile';
@@ -280,29 +280,24 @@ const onBeforeCompile = ({
 
     for (let index = 0; index < compilers.length; index++) {
       const compiler = compilers[index];
+      const runHook = isWatch ? compiler.hooks.watchRun : compiler.hooks.run;
 
-      (isWatch ? compiler.hooks.watchRun : compiler.hooks.run).tapPromise(
-        name,
-        async () => {
-          if (!waitBeforeCompileDone) {
-            waitBeforeCompileDone = beforeCompile?.();
-          }
+      runHook.tapPromise(name, async () => {
+        if (!waitBeforeCompileDone) {
+          waitBeforeCompileDone = beforeCompile();
+        }
 
-          // beforeCompile hook should done before beforeEnvironmentCompiler run
-          await waitBeforeCompileDone;
-
-          await beforeEnvironmentCompiler(index);
-        },
-      );
+        // beforeCompile hook should done before beforeEnvironmentCompile run
+        await waitBeforeCompileDone;
+        await beforeEnvironmentCompile(index);
+      });
     }
   } else {
-    (isWatch ? compiler.hooks.watchRun : compiler.hooks.run).tapPromise(
-      name,
-      async () => {
-        await beforeCompile?.();
-        await beforeEnvironmentCompiler(0);
-      },
-    );
+    const runHook = isWatch ? compiler.hooks.watchRun : compiler.hooks.run;
+    runHook.tapPromise(name, async () => {
+      await beforeCompile();
+      await beforeEnvironmentCompile(0);
+    });
   }
 };
 
@@ -368,7 +363,7 @@ export const registerBuildHook = ({
   bundlerConfigs,
   MultiStatsCtor,
 }: {
-  bundlerConfigs?: Rspack.Configuration[];
+  bundlerConfigs: Rspack.Configuration[];
   context: InternalContext;
   compiler: Rspack.Compiler | Rspack.MultiCompiler;
   isWatch: boolean;
@@ -386,29 +381,30 @@ export const registerBuildHook = ({
       isFirstCompile,
     });
 
-  const beforeEnvironmentCompiler = async (buildIndex: number) =>
-    context.hooks.onBeforeEnvironmentCompile.callBatch({
-      environment: environmentList[buildIndex].name,
+  const beforeEnvironmentCompile = async (buildIndex: number) => {
+    const environment = environmentList[buildIndex];
+    return context.hooks.onBeforeEnvironmentCompile.callBatch({
+      environment: environment.name,
       args: [
         {
-          // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: it is guaranteed to be defined
-          bundlerConfig: bundlerConfigs?.[buildIndex]!,
-          environment: environmentList[buildIndex],
+          bundlerConfig: bundlerConfigs[buildIndex],
+          environment,
           isWatch,
           isFirstCompile,
         },
       ],
     });
+  };
 
   const onDone = async (stats: Rspack.Stats | Rspack.MultiStats) => {
-    const p = context.hooks.onAfterBuild.callBatch({
+    const promise = context.hooks.onAfterBuild.callBatch({
       isFirstCompile,
       stats,
       environments: context.environments,
       isWatch,
     });
     isFirstCompile = false;
-    await p;
+    await promise;
   };
 
   const onEnvironmentDone = async (buildIndex: number, stats: Rspack.Stats) => {
@@ -428,7 +424,7 @@ export const registerBuildHook = ({
   onBeforeCompile({
     compiler,
     beforeCompile,
-    beforeEnvironmentCompiler,
+    beforeEnvironmentCompile,
     isWatch,
   });
 
@@ -446,7 +442,7 @@ export const registerDevHook = ({
   bundlerConfigs,
   MultiStatsCtor,
 }: {
-  bundlerConfigs?: Rspack.Configuration[];
+  bundlerConfigs: Rspack.Configuration[];
   context: InternalContext;
   compiler: Rspack.Compiler | Rspack.MultiCompiler;
   MultiStatsCtor: new (stats: Rspack.Stats[]) => Rspack.MultiStats;
@@ -463,28 +459,29 @@ export const registerDevHook = ({
       isWatch: true,
     });
 
-  const beforeEnvironmentCompiler = async (buildIndex: number) =>
-    context.hooks.onBeforeEnvironmentCompile.callBatch({
-      environment: environmentList[buildIndex].name,
+  const beforeEnvironmentCompile = async (buildIndex: number) => {
+    const environment = environmentList[buildIndex];
+    return context.hooks.onBeforeEnvironmentCompile.callBatch({
+      environment: environment.name,
       args: [
         {
-          // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: it is guaranteed to be defined
-          bundlerConfig: bundlerConfigs?.[buildIndex]!,
-          environment: environmentList[buildIndex],
+          bundlerConfig: bundlerConfigs[buildIndex],
+          environment,
           isWatch: true,
           isFirstCompile,
         },
       ],
     });
+  };
 
   const onDone = async (stats: Rspack.Stats | Rspack.MultiStats) => {
-    const p = context.hooks.onAfterDevCompile.callBatch({
+    const promise = context.hooks.onAfterDevCompile.callBatch({
       isFirstCompile,
       stats,
       environments: context.environments,
     });
     isFirstCompile = false;
-    await p;
+    await promise;
   };
 
   const onEnvironmentDone = async (buildIndex: number, stats: Rspack.Stats) => {
@@ -503,7 +500,7 @@ export const registerDevHook = ({
 
   onBeforeCompile({
     compiler,
-    beforeEnvironmentCompiler,
+    beforeEnvironmentCompile,
     beforeCompile,
     isWatch: true,
   });
