@@ -27,7 +27,7 @@
     "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
-    "@rspack/plugin-react-refresh": "^1.5.2",
+    "@rspack/plugin-react-refresh": "^1.5.3",
     "react-refresh": "^0.18.0"
   },
   "devDependencies": {

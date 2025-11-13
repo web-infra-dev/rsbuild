@@ -27,7 +27,7 @@
     "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
-    "@prefresh/core": "^1.5.8",
+    "@prefresh/core": "^1.5.9",
     "@prefresh/utils": "^1.2.1",
     "@rspack/plugin-preact-refresh": "^1.1.4",
     "@swc/plugin-prefresh": "^10.0.0"
