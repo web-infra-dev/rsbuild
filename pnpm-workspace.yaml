@@ -23,5 +23,9 @@ strictPeerDependencies: false
 engineStrict: true
 trustPolicy: no-downgrade
 trustPolicyExclude:
-  # For Rspack ecosystem CI
-  - semver@6.3.1
+  # For ecosystem CI and Renovate
+  - semver@5.7.2 || 6.3.1
+  - chokidar@4.0.3
+  - rxjs@7.8.2
+  - '@modern-js/node-bundle-require@2.68.2'
+  - '@modern-js/utils@2.68.2'
