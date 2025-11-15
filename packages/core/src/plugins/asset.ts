@@ -70,10 +70,14 @@ const chainStaticAssetRule = ({
 };
 
 export function getRegExpForExts(exts: string[]): RegExp {
-  const matcher = exts
-    .map((ext) => ext.trim())
-    .map((ext) => (ext.startsWith('.') ? ext.slice(1) : ext))
-    .join('|');
+  const normalizedExts: string[] = [];
+
+  for (const ext of exts) {
+    const trimmed = ext.trim();
+    normalizedExts.push(trimmed.startsWith('.') ? trimmed.slice(1) : trimmed);
+  }
+
+  const matcher = normalizedExts.join('|');
 
   return new RegExp(
     exts.length === 1 ? `\\.${matcher}$` : `\\.(?:${matcher})$`,
