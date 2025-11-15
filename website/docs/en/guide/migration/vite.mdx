@@ -1,10 +1,10 @@
 # Vite
 
-This chapter introduces how to migrate a Vite project to Rsbuild.
+This guide explains how to migrate a Vite project to Rsbuild.
 
 ## Installing dependencies
 
-First, you need to replace the npm dependencies of Vite with Rsbuild's dependencies.
+First, replace Vite's npm dependencies with Rsbuild's equivalents.
 
 import { PackageManagerTabs } from '@theme';
 
@@ -18,7 +18,7 @@ import { PackageManagerTabs } from '@theme';
 
 ## Updating npm scripts
 
-Next, you need to update the npm scripts in your package.json to use Rsbuild's CLI commands.
+Next, update the npm scripts in your package.json to run Rsbuild CLI commands.
 
 ```json title="package.json"
 {
@@ -35,7 +35,7 @@ Next, you need to update the npm scripts in your package.json to use Rsbuild's C
 
 ## Create configuration file
 
-Create a Rsbuild configuration file `rsbuild.config.ts` in the same directory as package.json, and add the following content:
+Create an Rsbuild configuration file `rsbuild.config.ts` in the same directory as package.json, and add the following content:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -58,7 +58,7 @@ Using a newly created Vite project as an example, first delete the `<script>` ta
 <script type="module" src="/src/main.ts"></script>
 ```
 
-Then add the following config.
+Then add the following configuration:
 
 ```ts title="rsbuild.config.ts"
 export default {
