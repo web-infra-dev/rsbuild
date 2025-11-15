@@ -51,8 +51,9 @@ const createPlugin = () => {
       api.onBeforeEnvironmentCompile(({ environment }) => {
         names.push(`BeforeEnvironmentCompile ${environment.name}`);
       });
-      api.onAfterEnvironmentCompile(({ stats, environment }) => {
+      api.onAfterEnvironmentCompile(({ stats, environment, time }) => {
         expect(stats?.compilation.name).toBe(environment.name);
+        expect(time).toBeGreaterThan(0);
         names.push(`AfterEnvironmentCompile ${environment.name}`);
       });
       api.onBeforeStartProdServer(() => {

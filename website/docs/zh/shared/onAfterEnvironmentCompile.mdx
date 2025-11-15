@@ -11,6 +11,10 @@ function OnAfterEnvironmentCompile(
     isWatch: boolean;
     stats?: Stats;
     environment: EnvironmentContext;
+    /**
+     * The time it takes to build the current environment in milliseconds.
+     */
+    time: number;
   }) => Promise<void> | void,
 ): void;
 ```
