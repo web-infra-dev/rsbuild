@@ -80,7 +80,7 @@ export function getRegExpForExts(exts: string[]): RegExp {
   const matcher = normalizedExts.join('|');
 
   return new RegExp(
-    exts.length === 1 ? `\\.${matcher}$` : `\\.(?:${matcher})$`,
+    normalizedExts.length === 1 ? `\\.${matcher}$` : `\\.(?:${matcher})$`,
     'i',
   );
 }
