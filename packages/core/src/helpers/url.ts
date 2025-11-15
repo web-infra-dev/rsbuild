@@ -11,7 +11,7 @@ export const addTrailingSlash = (s: string): string =>
 
 // Determine if the string is a URL
 export const isURL = (str: string): boolean =>
-  str.startsWith('http') || str.startsWith('//:');
+  str.startsWith('http') || str.startsWith('//');
 
 export const urlJoin = (base: string, path: string) => {
   const [urlProtocol, baseUrl] = base.split('://');
