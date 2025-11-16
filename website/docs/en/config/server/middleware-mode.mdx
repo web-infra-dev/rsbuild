@@ -15,11 +15,15 @@ When this option is enabled, Rsbuild will not create an HTTP server. This option
 Enable middleware mode when you need Rsbuild to provide middleware for an existing server without starting its own HTTP server:
 
 ```ts title="rsbuild.config.ts"
-export default {
-  server: {
-    middlewareMode: true,
+import { createRsbuild } from '@rsbuild/core';
+
+const rsbuild = await createRsbuild({
+  config: {
+    server: {
+      middlewareMode: true,
+    },
   },
-};
+});
 ```
 
 ### Integrate with a custom server
