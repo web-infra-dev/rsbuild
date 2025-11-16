@@ -69,7 +69,7 @@ async function getBuildDependencies(
   context: Readonly<RsbuildContext>,
   config: NormalizedEnvironmentConfig,
   environmentContext: EnvironmentContext,
-  userBuildDependencies: Record<string, string[]>,
+  userBuildDependencies?: string[],
 ) {
   const rootPackageJson = join(context.rootPath, 'package.json');
   const browserslistConfig = join(context.rootPath, '.browserslistrc');
@@ -103,10 +103,11 @@ async function getBuildDependencies(
     buildDependencies.tailwindcss = [tailwindConfig];
   }
 
-  return {
-    ...buildDependencies,
-    ...userBuildDependencies,
-  };
+  if (userBuildDependencies) {
+    buildDependencies.userBuildDependencies = userBuildDependencies;
+  }
+
+  return buildDependencies;
 }
 
 export const pluginCache = (): RsbuildPlugin => ({
@@ -137,11 +138,7 @@ export const pluginCache = (): RsbuildPlugin => ({
         context,
         config,
         environment,
-        cacheConfig.buildDependencies
-          ? {
-              userBuildDependencies: cacheConfig.buildDependencies,
-            }
-          : {},
+        cacheConfig.buildDependencies,
       );
 
       if (bundlerType === 'webpack') {
