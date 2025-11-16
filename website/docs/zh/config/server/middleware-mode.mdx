@@ -15,11 +15,15 @@
 当你只需要让 Rsbuild 提供中间件而不启动自带的 HTTP server 时，可以启用中间件模式：
 
 ```ts title="rsbuild.config.ts"
-export default {
-  server: {
-    middlewareMode: true,
+import { createRsbuild } from '@rsbuild/core';
+
+const rsbuild = await createRsbuild({
+  config: {
+    server: {
+      middlewareMode: true,
+    },
   },
-};
+});
 ```
 
 ### 与自定义 server 集成
