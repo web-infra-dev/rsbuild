@@ -21,13 +21,13 @@ const occupyPort = async () => {
 };
 
 test('should throw when strictPort is enabled and port is taken', async ({
-  dev,
+  devOnly,
 }) => {
   const blocker = await occupyPort();
 
   let message = '';
   try {
-    await dev({
+    await devOnly({
       config: {
         server: {
           port: blocker.port,
