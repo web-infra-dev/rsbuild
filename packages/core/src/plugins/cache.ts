@@ -69,7 +69,7 @@ async function getBuildDependencies(
   context: Readonly<RsbuildContext>,
   config: NormalizedEnvironmentConfig,
   environmentContext: EnvironmentContext,
-  userBuildDependencies?: string[],
+  additionalDependencies?: string[],
 ) {
   const rootPackageJson = join(context.rootPath, 'package.json');
   const browserslistConfig = join(context.rootPath, '.browserslistrc');
@@ -103,8 +103,8 @@ async function getBuildDependencies(
     buildDependencies.tailwindcss = [tailwindConfig];
   }
 
-  if (userBuildDependencies) {
-    buildDependencies.userBuildDependencies = userBuildDependencies;
+  if (additionalDependencies) {
+    buildDependencies.additional = additionalDependencies;
   }
 
   return buildDependencies;
