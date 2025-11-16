@@ -10,6 +10,23 @@
 
 ## 示例
 
+### 启用中间件模式
+
+
+```ts title="rsbuild.config.ts"
+import { createRsbuild } from '@rsbuild/core';
+
+const rsbuild = await createRsbuild({
+  config: {
+    server: {
+      middlewareMode: true,
+    },
+  },
+});
+```
+
+### 与自定义 server 集成
+
 一个典型的使用场景是，你希望将 Rsbuild 的 server 集成到自定义的 server 中。可以结合 `server.middlewareMode` 和 [rsbuild.createDevServer](/api/javascript-api/instance#rsbuildcreatedevserver) 来实现。
 
 ```ts
