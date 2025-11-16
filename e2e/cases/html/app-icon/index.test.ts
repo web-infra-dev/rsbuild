@@ -18,7 +18,7 @@ test('should emit apple-touch-icon to dist path', async ({ build }) => {
   const html = getFileContent(files, 'index.html');
 
   expect(html).toContain(
-    '<link rel="apple-touch-icon" sizes="180x180" href="/static/image/icon.png">',
+    '<link href="/static/image/icon.png" rel="apple-touch-icon" sizes="180x180">',
   );
 });
 
@@ -47,13 +47,13 @@ test('should emit manifest.webmanifest to dist path', async ({ build }) => {
   const html = getFileContent(files, 'index.html');
 
   expect(html).toContain(
-    '<link rel="apple-touch-icon" sizes="180x180" href="/static/image/icon.png">',
+    '<link href="/static/image/icon.png" rel="apple-touch-icon" sizes="180x180">',
   );
   // do not generate apple-touch-icon for large images
   expect(html).not.toContain(
-    '<link rel="apple-touch-icon" sizes="512x512" href="/static/image/image.png">',
+    '<link href="/static/image/image.png" rel="apple-touch-icon" sizes="512x512">',
   );
-  expect(html).toContain('<link rel="manifest" href="/manifest.webmanifest">');
+  expect(html).toContain('<link href="/manifest.webmanifest" rel="manifest">');
 
   expect(JSON.parse(files[manifestPath])).toEqual({
     name: 'My Website',
@@ -84,9 +84,9 @@ test('should allow to specify URL as icon', async ({ build }) => {
   const html = getFileContent(files, 'index.html');
 
   expect(html).toContain(
-    '<link rel="apple-touch-icon" sizes="192x192" href="https://example.com/icon-192.png">',
+    '<link href="https://example.com/icon-192.png" rel="apple-touch-icon" sizes="192x192">',
   );
-  expect(html).toContain('<link rel="manifest" href="/manifest.webmanifest">');
+  expect(html).toContain('<link href="/manifest.webmanifest" rel="manifest">');
 
   expect(JSON.parse(files[manifestPath])).toEqual({
     name: 'My Website',
@@ -145,16 +145,16 @@ test('should allow to specify target for each icon', async ({ build }) => {
   const html = getFileContent(files, 'index.html');
 
   expect(html).toContain(
-    '<link rel="apple-touch-icon" sizes="180x180" href="/static/image/icon.png">',
+    '<link href="/static/image/icon.png" rel="apple-touch-icon" sizes="180x180">',
   );
   // do not generate apple-touch-icon for large images
   expect(html).not.toContain(
-    '<link rel="apple-touch-icon" sizes="512x512" href="/static/image/image.png">',
+    '<link href="/static/image/image.png" rel="apple-touch-icon" sizes="512x512">',
   );
   expect(html).not.toContain(
-    '<link rel="apple-touch-icon" sizes="192x192" href="/static/image/circle.svg">',
+    '<link href="/static/image/circle.svg" rel="apple-touch-icon" sizes="192x192">',
   );
-  expect(html).toContain('<link rel="manifest" href="/manifest.webmanifest">');
+  expect(html).toContain('<link href="/manifest.webmanifest" rel="manifest">');
 
   expect(JSON.parse(files[manifestPath])).toEqual({
     name: 'My Website',
@@ -235,7 +235,7 @@ test('should allow to customize manifest filename', async ({ build }) => {
   const manifestPath = findFile(files, 'manifest.json');
   const html = getFileContent(files, 'index.html');
 
-  expect(html).toContain('<link rel="manifest" href="/manifest.json">');
+  expect(html).toContain('<link href="/manifest.json" rel="manifest">');
 
   expect(JSON.parse(files[manifestPath])).toEqual({
     name: 'My Website',
@@ -275,10 +275,10 @@ test('should append dev.assetPrefix to icon URL', async ({ dev }) => {
   const html = getFileContent(files, 'index.html');
 
   expect(html).toContain(
-    '<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:3000/static/image/icon.png">',
+    '<link href="http://localhost:3000/static/image/icon.png" rel="apple-touch-icon" sizes="180x180">',
   );
   expect(html).toContain(
-    '<link rel="manifest" href="http://localhost:3000/manifest.webmanifest">',
+    '<link href="http://localhost:3000/manifest.webmanifest" rel="manifest">',
   );
 
   expect(JSON.parse(files[manifestPath])).toEqual({
@@ -326,10 +326,10 @@ test('should append output.assetPrefix to icon URL', async ({ build }) => {
   const html = getFileContent(files, 'index.html');
 
   expect(html).toContain(
-    '<link rel="apple-touch-icon" sizes="180x180" href="https://example.com/static/image/icon.png">',
+    '<link href="https://example.com/static/image/icon.png" rel="apple-touch-icon" sizes="180x180">',
   );
   expect(html).toContain(
-    '<link rel="manifest" href="https://example.com/manifest.webmanifest">',
+    '<link href="https://example.com/manifest.webmanifest" rel="manifest">',
   );
 
   expect(JSON.parse(files[manifestPath])).toEqual({
@@ -373,6 +373,6 @@ test('should apply asset prefix to apple-touch-icon URL', async ({ build }) => {
   const html = getFileContent(files, 'index.html');
 
   expect(html).toContain(
-    '<link rel="apple-touch-icon" sizes="180x180" href="https://www.example.com/static/image/icon.png">',
+    '<link href="https://www.example.com/static/image/icon.png" rel="apple-touch-icon" sizes="180x180">',
   );
 });
