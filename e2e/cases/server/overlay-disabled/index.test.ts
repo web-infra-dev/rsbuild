@@ -33,13 +33,12 @@ test('should disable error overlay when dev.client.overlay is false', async ({
 
   await expectLog('[rsbuild] WebSocket connected.');
 
-  const errorOverlay = page.locator('rsbuild-error-overlay');
-  await expect(errorOverlay).toHaveCount(0);
+  await expect(page.locator('rsbuild-error-overlay')).toHaveCount(0);
 
   await editFile(join(tempSrc, 'App.tsx'), (code) =>
     code.replace('</div>', '</aaaa>'),
   );
 
   await expectLog('Module build failed');
-  await expect(errorOverlay).toHaveCount(0);
+  await expect(page.locator('rsbuild-error-overlay')).toHaveCount(0);
 });
