@@ -407,15 +407,19 @@ export const registerBuildHook = ({
     await promise;
   };
 
-  const onEnvironmentDone = async (buildIndex: number, stats: Rspack.Stats) => {
+  const onEnvironmentDone = async (index: number, stats: Rspack.Stats) => {
+    const time = context.buildState.stats?.children[index].time ?? 0;
+    const environment = environmentList[index];
+
     await context.hooks.onAfterEnvironmentCompile.callBatch({
-      environment: environmentList[buildIndex].name,
+      environment: environment.name,
       args: [
         {
           isFirstCompile,
           stats,
-          environment: environmentList[buildIndex],
+          environment,
           isWatch,
+          time,
         },
       ],
     });
@@ -484,15 +488,19 @@ export const registerDevHook = ({
     await promise;
   };
 
-  const onEnvironmentDone = async (buildIndex: number, stats: Rspack.Stats) => {
+  const onEnvironmentDone = async (index: number, stats: Rspack.Stats) => {
+    const time = context.buildState.stats?.children[index].time ?? 0;
+    const environment = environmentList[index];
+
     await context.hooks.onAfterEnvironmentCompile.callBatch({
-      environment: environmentList[buildIndex].name,
+      environment: environment.name,
       args: [
         {
           isFirstCompile,
           stats,
-          environment: environmentList[buildIndex],
+          environment,
           isWatch: true,
+          time,
         },
       ],
     });

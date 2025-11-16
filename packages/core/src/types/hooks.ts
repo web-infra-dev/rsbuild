@@ -55,6 +55,10 @@ export type OnBeforeDevCompileFn<B = 'rspack'> = (
 export type OnAfterEnvironmentCompileFn = (
   params: CompileCommonParams & {
     stats?: Rspack.Stats;
+    /**
+     * The time it takes to build the current environment in milliseconds.
+     */
+    time: number;
     environment: EnvironmentContext;
   },
 ) => MaybePromise<void>;
