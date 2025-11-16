@@ -749,6 +749,7 @@ export interface PerformanceConfig {
   /**
    * To enable or configure persistent build cache.
    * @experimental This feature is experimental and may be changed in the future.
+   * @default false
    */
   buildCache?: BuildCacheOptions | boolean;
 
@@ -766,6 +767,7 @@ export interface PerformanceConfig {
 
   /**
    * Analyze the size of output files.
+   * @default undefined
    */
   bundleAnalyze?: BundleAnalyzerPlugin.Options;
 
@@ -798,6 +800,7 @@ export interface PerformanceConfig {
    *   type: 'async-chunks',
    * };
    * ```
+   * @default undefined
    */
   preload?: true | PreloadOptions;
 
@@ -815,12 +818,14 @@ export interface PerformanceConfig {
    *   type: 'async-chunks',
    * };
    * ```
+   * @default undefined
    */
   prefetch?: true | PrefetchOptions;
 
   /**
    * Whether capture timing information for each module,
    * same as the [profile](https://rspack.rs/config/other-options#profile) config of Rspack.
+   * @default false
    */
   profile?: boolean;
 }
@@ -1231,6 +1236,7 @@ export interface OutputConfig {
    * Set the size threshold to inline static assets such as images and fonts.
    * By default, static assets will be Base64 encoded and inline into the page if
    * the size is less than 4KiB.
+   * @default { svg: 4096, font: 4096, image: 4096, media: 4096, assets: 4096 }
    */
   dataUriLimit?: number | DataUriLimit;
   /**
