@@ -9,7 +9,6 @@ test('should disable error overlay when dev.client.overlay is false', async ({
   copySrcDir,
 }) => {
   const tempSrc = await copySrcDir();
-
   const { expectLog, addLog } = logHelper;
 
   page.on('console', (consoleMessage) => {
@@ -18,11 +17,6 @@ test('should disable error overlay when dev.client.overlay is false', async ({
 
   await dev({
     config: {
-      dev: {
-        client: {
-          overlay: false,
-        },
-      },
       source: {
         entry: {
           index: join(tempSrc, 'index.tsx'),
