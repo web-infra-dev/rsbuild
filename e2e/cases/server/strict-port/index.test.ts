@@ -28,7 +28,6 @@ test('should throw when strictPort is enabled and port is taken', async ({
   let message = '';
   try {
     await dev({
-      waitFirstCompileDone: false,
       config: {
         server: {
           port: blocker.port,
