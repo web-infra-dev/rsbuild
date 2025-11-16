@@ -2,13 +2,15 @@ import net from 'node:net';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import { expect, getRandomPort, test } from '@e2e/helper';
 
+const HOST = '0.0.0.0';
+
 const occupyPort = async () => {
   const port = await getRandomPort();
   const blocker = net.createServer();
 
   await new Promise<void>((resolve, reject) => {
     blocker.once('error', reject);
-    blocker.listen(port, resolve);
+    blocker.listen({ port, host: HOST }, resolve);
   });
 
   return {
@@ -30,6 +32,7 @@ test('should throw when strictPort is enabled and port is taken', async ({
     await devOnly({
       config: {
         server: {
+          host: HOST,
           port: blocker.port,
           strictPort: true,
         },
