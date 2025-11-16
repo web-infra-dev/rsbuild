@@ -1,6 +1,6 @@
 # Module Federation
 
-Module Federation is an architectural pattern for decomposing JavaScript applications—similar to server-side microservices that lets you share code and resources between multiple JavaScript applications (or micro-frontends).
+Module Federation is an architectural pattern for decomposing JavaScript applications. Similar to server-side microservices, it lets multiple JavaScript applications (or micro-frontends) share code and resources.
 
 The Rspack team works closely with the Module Federation maintainers to deliver first-class support.
 
@@ -25,14 +25,14 @@ Module Federation (MF) currently offers multiple major versions; choose the one 
 
 The key characteristics of each version are:
 
-| Version | Description                                                                        | Features                                                                                                                                                                                                                                                                  | Use Cases                                                        |
-| ------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| MF v2.0 | Enhanced version of Module Federation, implemented based on Module Federation v1.5 | - Provides additional out-of-the-box features such as dynamic TS type hints, Chrome DevTools, preloading, etc.<br />- Better suited for micro-frontend architecture supporting large-scale web applications <br />- Includes all features of Module Federation 1.5 <br /> | Projects that need to use advanced capabilities of MF 2.0        |
-| MF v1.5 | Version built into Rspack                                                          | - Supports module export, module loading, dependency sharing capabilities of Module Federation v1.0<br />- Added runtime plugin functionality, enabling users to extend the behavior and functionality of module federation <br />                                        | Projects that don't need to use the extra capabilities of MF 2.0 |
+| Version | Description                                                            | Features                                                                                                                                                                                                                                                                  | Use Cases                                                 |
+| ------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| MF v2.0 | Enhanced version of Module Federation, built on Module Federation v1.5 | - Provides additional out-of-the-box features such as dynamic TS type hints, Chrome DevTools, preloading, etc.<br />- Better suited for micro-frontend architecture supporting large-scale web applications <br />- Includes all features of Module Federation 1.5 <br /> | Projects that need MF 2.0's advanced capabilities         |
+| MF v1.5 | Version built into Rspack                                              | - Supports module export, module loading, dependency sharing capabilities of Module Federation v1.0<br />- Added runtime plugin functionality, enabling users to extend the behavior and functionality of module federation <br />                                        | Projects that don't need the extra capabilities of MF 2.0 |
 
 ### Module Federation v2.0
 
-[Module Federation 2.0](https://module-federation.io/blog/announcement.html) provides additional out-of-the-box features based on Module Federation, such as dynamic TS type hints, Chrome devtools, Runtime plugins, and preloading, which makes Module Federation better suited for micro-frontend architecture supporting large-scale web applications. Module Federation v2.0 is implemented based on v1.5.
+[Module Federation 2.0](https://module-federation.io/blog/announcement.html) provides additional out-of-the-box features based on Module Federation, such as dynamic TS type hints, Chrome devtools, Runtime plugins, and preloading, making it better suited for large-scale micro-frontend architectures.
 
 You need to install the additional [@module-federation/rsbuild-plugin](https://npmjs.com/package/@module-federation/rsbuild-plugin) plugin to use Module Federation v2.0.
 
