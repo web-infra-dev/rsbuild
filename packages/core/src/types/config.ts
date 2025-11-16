@@ -589,7 +589,7 @@ export type SriOptions = {
   /**
    * Whether to enable SRI.
    * `'auto'` means it's enabled in production mode and disabled in development mode.
-   * @default undefined
+   * @default false
    */
   enable?: boolean | 'auto';
 };
