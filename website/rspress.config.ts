@@ -168,29 +168,20 @@ export default defineConfig({
         content: 'https://bsky.app/profile/rspack.rs',
       },
     ],
+    editLink: {
+      docRepoBaseUrl:
+        'https://github.com/web-infra-dev/rsbuild/tree/main/website/docs',
+    },
     locales: [
       {
         lang: 'en',
         label: 'English',
         description,
-        editLink: {
-          docRepoBaseUrl:
-            'https://github.com/web-infra-dev/rsbuild/tree/main/website/docs',
-          text: '📝 Edit this page on GitHub',
-        },
       },
       {
         lang: 'zh',
         label: '简体中文',
-        outlineTitle: '目录',
-        prevPageText: '上一页',
-        nextPageText: '下一页',
         description: '由 Rspack 驱动的构建工具',
-        editLink: {
-          docRepoBaseUrl:
-            'https://github.com/web-infra-dev/rsbuild/tree/main/website/docs',
-          text: '📝 在 GitHub 上编辑此页',
-        },
       },
     ],
   },
