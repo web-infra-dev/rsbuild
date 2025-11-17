@@ -38,7 +38,7 @@
     "@biomejs/biome": "^2.3.5",
     "@rsbuild/config": "workspace:*",
     "@rslint/core": "^0.1.13",
-    "@rstest/core": "^0.6.4",
+    "@rstest/core": "^0.6.5",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^24.10.1",
     "cross-env": "^10.1.0",
