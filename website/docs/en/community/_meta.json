@@ -1,7 +1,11 @@
 [
+  {
+    "type": "section-header",
+    "label": "Community"
+  },
   "index",
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "releases",
     "label": "Releases"
   }

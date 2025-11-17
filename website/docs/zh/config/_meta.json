@@ -1,8 +1,16 @@
 [
   {
+    "type": "section-header",
+    "label": "总览"
+  },
+  {
     "type": "file",
     "name": "index",
-    "label": "Overview"
+    "label": "配置总览"
+  },
+  {
+    "type": "section-header",
+    "label": "基础选项"
   },
   "root",
   "mode",
@@ -10,53 +18,53 @@
   "log-level",
   "environments",
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "dev",
-    "label": "dev"
+    "label": "Dev 选项"
   },
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "resolve",
-    "label": "resolve"
+    "label": "Resolve 选项"
   },
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "source",
-    "label": "source"
+    "label": "Source 选项"
   },
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "output",
-    "label": "output"
+    "label": "Output 选项"
   },
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "html",
-    "label": "html"
+    "label": "HTML 选项"
   },
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "server",
-    "label": "server"
+    "label": "Server 选项"
   },
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "security",
-    "label": "security"
+    "label": "Security 选项"
   },
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "tools",
-    "label": "tools"
+    "label": "Tools 选项"
   },
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "performance",
-    "label": "performance"
+    "label": "Performance 选项"
   },
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "module-federation",
-    "label": "moduleFederation"
+    "label": "Module Federation 选项"
   }
 ]
