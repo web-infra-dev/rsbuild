@@ -1,4 +1,4 @@
-import { registerOverlay } from './hmr';
+import { registerOverlay } from './hmr.js';
 
 const {
   HTMLElement = class {} as typeof globalThis.HTMLElement,
