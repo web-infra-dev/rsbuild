@@ -195,7 +195,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     const time = Date.now() - startTime;
     context.buildState.time[name] = time;
 
-    // For multi compiler, print name to distinguish different environments
+    // When using multiple compilers, print the name to distinguish different environments
     const suffix = isMultiCompiler ? color.dim(` (${name})`) : '';
     logger.ready(`built in ${prettyTime(time / 1000)}${suffix}`);
   };
