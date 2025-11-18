@@ -33,35 +33,38 @@ export const pluginEntry = (): RsbuildPlugin => ({
     });
 
     // Check missing entry config
-    api.onBeforeCreateCompiler(({ bundlerConfigs }) => {
-      const hasEntry = bundlerConfigs.some((config) => config.entry);
-      if (hasEntry) {
-        return;
-      }
+    api.onBeforeCreateCompiler({
+      order: 'post',
+      handler: ({ bundlerConfigs }) => {
+        const hasEntry = bundlerConfigs.some((config) => config.entry);
+        if (hasEntry) {
+          return;
+        }
 
-      const isModuleFederationPlugin = (plugin: Rspack.Plugin) =>
-        isObject(plugin) &&
-        plugin.constructor.name === 'ModuleFederationPlugin';
+        const isModuleFederationPlugin = (plugin: Rspack.Plugin) =>
+          isObject(plugin) &&
+          plugin.constructor.name === 'ModuleFederationPlugin';
 
-      const hasModuleFederation = bundlerConfigs.some(({ plugins }) =>
-        plugins?.some(isModuleFederationPlugin),
-      );
+        const hasModuleFederation = bundlerConfigs.some(({ plugins }) =>
+          plugins?.some(isModuleFederationPlugin),
+        );
 
-      // Allow entry to be left empty when module federation is enabled
-      if (hasModuleFederation) {
-        bundlerConfigs.forEach((config) => {
-          config.entry = {};
-        });
-        return;
-      }
+        // Allow entry to be left empty when module federation is enabled
+        if (hasModuleFederation) {
+          bundlerConfigs.forEach((config) => {
+            config.entry = {};
+          });
+          return;
+        }
 
-      throw new Error(
-        `${color.dim('[rsbuild:config]')} Could not find any entry module, please make sure that ${color.yellow(
-          'src/index.(ts|js|tsx|jsx|mts|cts|mjs|cjs)',
-        )} exists, or customize entry through the ${color.yellow(
-          'source.entry',
-        )} configuration.`,
-      );
+        throw new Error(
+          `${color.dim('[rsbuild:config]')} Could not find any entry module, please make sure that ${color.yellow(
+            'src/index.(ts|js|tsx|jsx|mts|cts|mjs|cjs)',
+          )} exists, or customize entry through the ${color.yellow(
+            'source.entry',
+          )} configuration.`,
+        );
+      },
     });
   },
 });
