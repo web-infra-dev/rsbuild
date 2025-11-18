@@ -1,5 +1,5 @@
-import { castArray, color, createVirtualModule } from '../helpers';
-import type { RsbuildEntryDescription, RsbuildPlugin } from '../types';
+import { castArray, color, createVirtualModule, isObject } from '../helpers';
+import type { RsbuildEntryDescription, RsbuildPlugin, Rspack } from '../types';
 
 export const pluginEntry = (): RsbuildPlugin => ({
   name: 'rsbuild:entry',
@@ -32,16 +32,36 @@ export const pluginEntry = (): RsbuildPlugin => ({
       }
     });
 
+    // Check missing entry config
     api.onBeforeCreateCompiler(({ bundlerConfigs }) => {
-      if (bundlerConfigs.every((config) => !config.entry)) {
-        throw new Error(
-          `${color.dim('[rsbuild:config]')} Could not find any entry module, please make sure that ${color.yellow(
-            'src/index.(ts|js|tsx|jsx|mts|cts|mjs|cjs)',
-          )} exists, or customize entry through the ${color.yellow(
-            'source.entry',
-          )} configuration.`,
-        );
+      const hasEntry = bundlerConfigs.some((config) => config.entry);
+      if (hasEntry) {
+        return;
       }
+
+      const isModuleFederationPlugin = (plugin: Rspack.Plugin) =>
+        isObject(plugin) &&
+        plugin.constructor.name === 'ModuleFederationPlugin';
+
+      const hasModuleFederation = bundlerConfigs.some(({ plugins }) =>
+        plugins?.some(isModuleFederationPlugin),
+      );
+
+      // Allow entry to be left empty when module federation is enabled
+      if (hasModuleFederation) {
+        bundlerConfigs.forEach((config) => {
+          config.entry = {};
+        });
+        return;
+      }
+
+      throw new Error(
+        `${color.dim('[rsbuild:config]')} Could not find any entry module, please make sure that ${color.yellow(
+          'src/index.(ts|js|tsx|jsx|mts|cts|mjs|cjs)',
+        )} exists, or customize entry through the ${color.yellow(
+          'source.entry',
+        )} configuration.`,
+      );
     });
   },
 });
