@@ -186,23 +186,24 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     });
   }
 
-  const printTime = (time: number, name?: string) => {
-    const timeStr = prettyTime(time / 1000);
+  const printTime = (index: number) => {
+    if (startTime === null) {
+      return;
+    }
+
+    const { name } = context.environmentList[index];
+    const time = Date.now() - startTime;
+    context.buildState.time[name] = time;
+
     // For multi compiler, print name to distinguish different environments
-    const suffix = name ? color.dim(` (${name})`) : '';
-    logger.ready(`built in ${timeStr}${suffix}`);
+    const suffix = isMultiCompiler ? color.dim(` (${name})`) : '';
+    logger.ready(`built in ${prettyTime(time / 1000)}${suffix}`);
   };
 
   if (isMultiCompiler) {
     (compiler as Rspack.MultiCompiler).compilers.forEach((item, index) => {
       item.hooks.done.tap(HOOK_NAME, () => {
-        if (startTime === null) {
-          return;
-        }
-        const { name } = context.environmentList[index];
-        const time = Date.now() - startTime;
-        context.buildState.time[name] = time;
-        printTime(time, name);
+        printTime(index);
       });
     });
   }
@@ -218,11 +219,8 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
       context.buildState.hasErrors = hasErrors;
       context.socketServer?.onBuildDone();
 
-      if (!isMultiCompiler && startTime !== null) {
-        const { name } = context.environmentList[0];
-        const time = Date.now() - startTime;
-        context.buildState.time[name] = time;
-        printTime(time);
+      if (!isMultiCompiler) {
+        printTime(0);
       }
 
       const { message, level } = formatStats(stats, hasErrors);
