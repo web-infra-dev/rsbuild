@@ -78,6 +78,8 @@ export type BuildState = {
   status: BuildStatus;
   /** Whether there are build errors */
   hasErrors: boolean;
+  /** The build time of each environment */
+  time: Record<string, number>;
 };
 
 /** The inner context. */
