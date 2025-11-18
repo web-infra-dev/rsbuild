@@ -543,8 +543,8 @@ importers:
         specifier: workspace:*
         version: link:../webpack
       '@rslib/core':
-        specifier: 0.17.2
-        version: 0.17.2(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
+        specifier: 0.18.0
+        version: 0.18.0(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
       '@types/lodash':
         specifier: ^4.17.20
         version: 4.17.20
@@ -586,8 +586,8 @@ importers:
         specifier: workspace:*
         version: link:../../core
       '@rslib/core':
-        specifier: 0.17.2
-        version: 0.17.2(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
+        specifier: 0.18.0
+        version: 0.18.0(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../../scripts/test-helper
@@ -632,8 +632,8 @@ importers:
         specifier: ^0.3.31
         version: 0.3.31
       '@rslib/core':
-        specifier: 0.17.2
-        version: 0.17.2(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
+        specifier: 0.18.0
+        version: 0.18.0(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
       '@types/connect':
         specifier: 3.4.38
         version: 3.4.38
@@ -786,8 +786,8 @@ importers:
         specifier: workspace:*
         version: link:../plugin-vue
       '@rslib/core':
-        specifier: 0.17.2
-        version: 0.17.2(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
+        specifier: 0.18.0
+        version: 0.18.0(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
       '@types/node':
         specifier: ^24.10.1
         version: 24.10.1
@@ -826,8 +826,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.17.2
-        version: 0.17.2(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
+        specifier: 0.18.0
+        version: 0.18.0(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -857,8 +857,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.17.2
-        version: 0.17.2(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
+        specifier: 0.18.0
+        version: 0.18.0(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -897,8 +897,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.17.2
-        version: 0.17.2(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
+        specifier: 0.18.0
+        version: 0.18.0(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
       '@types/node':
         specifier: ^24.10.1
         version: 24.10.1
@@ -922,8 +922,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.17.2
-        version: 0.17.2(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
+        specifier: 0.18.0
+        version: 0.18.0(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -956,8 +956,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.17.2
-        version: 0.17.2(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
+        specifier: 0.18.0
+        version: 0.18.0(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -996,8 +996,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.17.2
-        version: 0.17.2(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
+        specifier: 0.18.0
+        version: 0.18.0(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1027,8 +1027,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.17.2
-        version: 0.17.2(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
+        specifier: 0.18.0
+        version: 0.18.0(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1052,8 +1052,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.17.2
-        version: 0.17.2(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
+        specifier: 0.18.0
+        version: 0.18.0(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1092,8 +1092,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.17.2
-        version: 0.17.2(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
+        specifier: 0.18.0
+        version: 0.18.0(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1129,8 +1129,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.17.2
-        version: 0.17.2(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
+        specifier: 0.18.0
+        version: 0.18.0(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1150,8 +1150,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       '@rslib/core':
-        specifier: 0.17.2
-        version: 0.17.2(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
+        specifier: 0.18.0
+        version: 0.18.0(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
       '@types/node':
         specifier: ^24.10.1
         version: 24.10.1
@@ -1181,8 +1181,8 @@ importers:
         version: 5.9.3
     devDependencies:
       '@rslib/core':
-        specifier: 0.17.2
-        version: 0.17.2(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
+        specifier: 0.18.0
+        version: 0.18.0(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
 
   website:
     devDependencies:
@@ -2520,8 +2520,8 @@ packages:
   '@rsdoctor/utils@1.3.9':
     resolution: {integrity: sha512-uXvxjLBZ+1Xig71OpUf4z66ap4SuuiGP3EIHGwjWC6+e0A3x9b3q79PfcA8yAX0q4LRWhKpEDlKY/HVlNVqtQQ==}
 
-  '@rslib/core@0.17.2':
-    resolution: {integrity: sha512-AeWWC2/aOwVr7NQvXSS9FEzBzLzrOg1WMke6Gaqba5bQPGDRPplWtV1w1Y04u5bCzUs2wpofQ91fAldhFz8ShQ==}
+  '@rslib/core@0.18.0':
+    resolution: {integrity: sha512-ZLonxKnef5Hx4zZj2ZckicVnM0KwTP9x8XcNnZBuXo82maXVmSSERtvMrB7aufxlFjqEThOHG6RNuLZToM1eFQ==}
     engines: {node: '>=18.12.0'}
     hasBin: true
     peerDependencies:
@@ -5837,8 +5837,8 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  rsbuild-plugin-dts@0.17.2:
-    resolution: {integrity: sha512-j9m3Eh4hoo22G5vsZQplYDeMedRShjp/vzVbtVMextlw/oyziGeW6BowJGmLzMr7dXLCLl0y8YdAl16v0I4Oeg==}
+  rsbuild-plugin-dts@0.18.0:
+    resolution: {integrity: sha512-GzzcnYDoILabBddQH5wMQK93peZbHXnoF9wtFz0INRotAS2xIwBb1rIeFRpfn/fgXfSlFu4C8QbqD6U8PgXzJA==}
     engines: {node: '>=18.12.0'}
     peerDependencies:
       '@microsoft/api-extractor': ^7
@@ -8144,10 +8144,10 @@ snapshots:
       - '@rspack/core'
       - webpack
 
-  '@rslib/core@0.17.2(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)':
+  '@rslib/core@0.18.0(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)':
     dependencies:
       '@rsbuild/core': 1.6.6
-      rsbuild-plugin-dts: 0.17.2(@rsbuild/core@1.6.6)(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
+      rsbuild-plugin-dts: 0.18.0(@rsbuild/core@1.6.6)(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3)
     optionalDependencies:
       typescript: 5.9.3
     transitivePeerDependencies:
@@ -11933,7 +11933,7 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': link:packages/core
 
-  rsbuild-plugin-dts@0.17.2(@rsbuild/core@1.6.6)(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3):
+  rsbuild-plugin-dts@0.18.0(@rsbuild/core@1.6.6)(@typescript/native-preview@7.0.0-dev.20251116.1)(typescript@5.9.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
       '@rsbuild/core': 1.6.6
