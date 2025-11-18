@@ -164,7 +164,7 @@ export default defineConfig({
       },
       output: {
         target: 'web',
-        externals: ['./hmr'],
+        externals: ['./hmr.js'],
         distPath: {
           root: './dist/client',
         },
