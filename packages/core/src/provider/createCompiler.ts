@@ -197,10 +197,13 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
 
     // When using multiple compilers, print the name to distinguish different environments
     const suffix = isMultiCompiler ? color.dim(` (${name})`) : '';
-    const loggerMethod = hasErrors ? logger.error : logger.ready;
-    loggerMethod(
-      `${hasErrors ? 'build failed' : 'built'} in ${prettyTime(time / 1000)}${suffix}`,
-    );
+    const timeStr = `${prettyTime(time / 1000)}${suffix}`;
+
+    if (hasErrors) {
+      logger.error(`build failed in ${timeStr}`);
+    } else {
+      logger.ready(`built in ${timeStr}`);
+    }
   };
 
   if (isMultiCompiler) {
