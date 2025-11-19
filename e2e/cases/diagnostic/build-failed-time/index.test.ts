@@ -1,4 +1,4 @@
-import { rspackTest, test } from '@e2e/helper';
+import { rspackTest } from '@e2e/helper';
 
 const EXPECTED_LOG = /build failed in [\d.]+ s/;
 
