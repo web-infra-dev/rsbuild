@@ -1,6 +1,6 @@
 import { test } from '@e2e/helper';
 
-const EXPECTED_LOG = /built failed in [\d.]+ s/;
+const EXPECTED_LOG = /build failed in [\d.]+ s/;
 
 test('should print build failed time in dev', async ({ devOnly }) => {
   const rsbuild = await devOnly();
