@@ -186,7 +186,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     });
   }
 
-  const printTime = (index: number) => {
+  const printTime = (index: number, hasErrors: boolean) => {
     if (startTime === null) {
       return;
     }
@@ -197,13 +197,19 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
 
     // When using multiple compilers, print the name to distinguish different environments
     const suffix = isMultiCompiler ? color.dim(` (${name})`) : '';
-    logger.ready(`built in ${prettyTime(time / 1000)}${suffix}`);
+    const timeStr = `${prettyTime(time / 1000)}${suffix}`;
+
+    if (hasErrors) {
+      logger.error(`build failed in ${timeStr}`);
+    } else {
+      logger.ready(`built in ${timeStr}`);
+    }
   };
 
   if (isMultiCompiler) {
     (compiler as Rspack.MultiCompiler).compilers.forEach((item, index) => {
-      item.hooks.done.tap(HOOK_NAME, () => {
-        printTime(index);
+      item.hooks.done.tap(HOOK_NAME, (stats) => {
+        printTime(index, stats.hasErrors());
       });
     });
   }
@@ -219,10 +225,6 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
       context.buildState.hasErrors = hasErrors;
       context.socketServer?.onBuildDone();
 
-      if (!isMultiCompiler) {
-        printTime(0);
-      }
-
       const { message, level } = formatStats(stats, hasErrors);
 
       if (level === 'error') {
@@ -230,6 +232,9 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
       }
       if (level === 'warning') {
         logger.warn(message);
+      }
+      if (!isMultiCompiler) {
+        printTime(0, hasErrors);
       }
 
       isCompiling = false;

@@ -27,7 +27,7 @@ export function createNonTTYLogger() {
 
       prevPercentage = 100;
       if (hasErrors) {
-        logger.error(`built failed in ${compileTime} ${suffix}`);
+        logger.error(`build failed in ${compileTime} ${suffix}`);
       } else {
         logger.ready(`built in ${compileTime} ${suffix}`);
       }
