@@ -1,7 +1,11 @@
 [
+  {
+    "type": "section-header",
+    "label": "社区"
+  },
   "index",
   {
-    "type": "dir",
+    "type": "dir-section-header",
     "name": "releases",
     "label": "版本发布"
   }

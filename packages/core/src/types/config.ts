@@ -749,6 +749,7 @@ export interface PerformanceConfig {
   /**
    * To enable or configure persistent build cache.
    * @experimental This feature is experimental and may be changed in the future.
+   * @default false
    */
   buildCache?: BuildCacheOptions | boolean;
 
@@ -766,6 +767,7 @@ export interface PerformanceConfig {
 
   /**
    * Analyze the size of output files.
+   * @default undefined
    */
   bundleAnalyze?: BundleAnalyzerPlugin.Options;
 
@@ -798,6 +800,7 @@ export interface PerformanceConfig {
    *   type: 'async-chunks',
    * };
    * ```
+   * @default undefined
    */
   preload?: true | PreloadOptions;
 
@@ -815,12 +818,14 @@ export interface PerformanceConfig {
    *   type: 'async-chunks',
    * };
    * ```
+   * @default undefined
    */
   prefetch?: true | PrefetchOptions;
 
   /**
    * Whether capture timing information for each module,
    * same as the [profile](https://rspack.rs/config/other-options#profile) config of Rspack.
+   * @default false
    */
   profile?: boolean;
 }
@@ -1231,6 +1236,7 @@ export interface OutputConfig {
    * Set the size threshold to inline static assets such as images and fonts.
    * By default, static assets will be Base64 encoded and inline into the page if
    * the size is less than 4KiB.
+   * @default { svg: 4096, font: 4096, image: 4096, media: 4096, assets: 4096 }
    */
   dataUriLimit?: number | DataUriLimit;
   /**
@@ -1738,8 +1744,18 @@ export type NormalizedClientConfig = Optional<
 export type { ChokidarOptions };
 
 export type WatchFiles = {
+  /**
+   * Paths of the files or directories to watch, supports glob syntax.
+   */
   paths: string | string[];
+  /**
+   * Watch options passed to [chokidar](https://github.com/paulmillr/chokidar).
+   */
   options?: ChokidarOptions;
+  /**
+   * Specifies whether to reload the page or restart the dev server when files change.
+   * @default 'reload-page'
+   */
   type?: 'reload-page' | 'reload-server';
 };
 
@@ -1765,8 +1781,9 @@ export type BrowserLogsStackTrace = 'summary' | 'full' | 'none';
 export interface DevConfig {
   /**
    * Controls whether to forward browser runtime errors to the terminal. When `true`, the dev
-   * client listens for window `error` events in the browser and send them to the dev server,
-   * where they are printed in the terminal (prefixed with `[browser]`).
+   * client listens for `window.error` events and unhandled Promise rejections in the browser,
+   * then sends them to the dev server where they are printed in the terminal (prefixed with
+   * `[browser]`).
    * @default { stackTrace: 'summary' }
    */
   browserLogs?:
@@ -1796,6 +1813,7 @@ export interface DevConfig {
    * Set the URL prefix of static assets in development mode,
    * similar to the [output.publicPath](https://rspack.rs/config/output#outputpublicpath)
    * config of Rspack.
+   * @default `server.base`
    */
   assetPrefix?: LiteralUnion<'auto', string> | boolean;
   /**
@@ -1809,6 +1827,7 @@ export interface DevConfig {
   client?: ClientConfig;
   /**
    * Whether to enable CLI shortcuts.
+   * @default true when using Rsbuild CLI, otherwise false
    */
   cliShortcuts?:
     | boolean
@@ -1830,6 +1849,7 @@ export interface DevConfig {
       };
   /**
    * Used to add custom middleware to the dev server.
+   * @default undefined
    */
   setupMiddlewares?: SetupMiddlewaresFn | SetupMiddlewaresFn[];
   /**
@@ -1840,11 +1860,12 @@ export interface DevConfig {
   /**
    * Watch specified files and directories for changes. When a file change is detected,
    * it can trigger a page reload or restart the dev server.
+   * @default undefined
    */
   watchFiles?: WatchFiles | WatchFiles[];
   /**
-   * Enable lazy compilation.
-   * @default false
+   * Enable lazy compilation (compilation on demand).
+   * @default { imports: true, entries: false }
    */
   lazyCompilation?: boolean | Rspack.LazyCompilationOptions;
 }

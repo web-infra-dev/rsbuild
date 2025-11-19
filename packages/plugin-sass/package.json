@@ -38,9 +38,9 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.17.2",
+    "@rslib/core": "0.18.0",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^24.9.2",
+    "@types/node": "^24.10.1",
     "@types/sass-loader": "^8.0.10",
     "prebundle": "1.5.0",
     "resolve-url-loader": "^5.0.0",
