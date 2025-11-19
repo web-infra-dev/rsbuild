@@ -215,6 +215,7 @@ export async function createContext(
       stats: null,
       status: 'idle',
       hasErrors: false,
+      time: {},
     },
   };
 }

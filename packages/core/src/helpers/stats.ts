@@ -93,8 +93,6 @@ function getStatsOptions(
 ): Rspack.StatsOptions {
   let defaultOptions: Rspack.StatsOptions = {
     all: false,
-    // for displaying the build time
-    timings: true,
     // for displaying the build errors
     errors: true,
     // for displaying the build warnings
