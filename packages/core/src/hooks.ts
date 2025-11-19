@@ -408,8 +408,8 @@ export const registerBuildHook = ({
   };
 
   const onEnvironmentDone = async (index: number, stats: Rspack.Stats) => {
-    const time = context.buildState.stats?.children[index].time ?? 0;
     const environment = environmentList[index];
+    const time = context.buildState.time[environment.name] ?? 0;
 
     await context.hooks.onAfterEnvironmentCompile.callBatch({
       environment: environment.name,
@@ -489,8 +489,8 @@ export const registerDevHook = ({
   };
 
   const onEnvironmentDone = async (index: number, stats: Rspack.Stats) => {
-    const time = context.buildState.stats?.children[index].time ?? 0;
     const environment = environmentList[index];
+    const time = context.buildState.time[environment.name] ?? 0;
 
     await context.hooks.onAfterEnvironmentCompile.callBatch({
       environment: environment.name,
