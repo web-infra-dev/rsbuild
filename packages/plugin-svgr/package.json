@@ -42,7 +42,7 @@
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^24.10.1",
     "file-loader": "6.2.0",
-    "prebundle": "1.5.0",
+    "prebundle": "1.6.0",
     "svgo": "^3.3.2",
     "typescript": "^5.9.3",
     "url-loader": "4.1.1"
