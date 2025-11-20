@@ -175,7 +175,7 @@ See [CSS-in-JS](/guide/styling/css-in-js) for how to use CSS-in-JS in Rsbuild.
 
 Rsbuild uses SWC to compile JSX. You can customize the functions used by the compiled JSX code:
 
-- If the JSX runtime is `automatic`, use [jsxImportSource](/plugins/list/plugin-react#swcreactoptionsimportsource) to customize the import path of the JSX runtime, for example, import from Preact or Emotion.
+- If the JSX runtime is `automatic`, use [importSource](/plugins/list/plugin-react#swcreactoptionsimportsource) to customize the import path of the JSX runtime, for example, import from Preact or Emotion.
 - If the JSX runtime is `classic`, use `pragma` and `pragmaFrag` to specify the JSX function and Fragment component.
 
 > `@rsbuild/plugin-react` uses `automatic` as the default JSX runtime, see [swcReactOptions.runtime](/plugins/list/plugin-react#swcreactoptionsruntime).
@@ -195,7 +195,7 @@ export default defineConfig({
     pluginReact({
       swcReactOptions: {
         runtime: 'automatic',
-        jsxImportSource: '@emotion/react',
+        importSource: '@emotion/react',
       },
     }),
   ],
