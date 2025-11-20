@@ -44,7 +44,7 @@ export default {
 };
 ```
 
-最终在 HTML 中生成的 `meta` 标签为：
+在 HTML 中生成的 `meta` 标签为：
 
 ```html
 <meta name="description" content="a description of the page" />
@@ -67,7 +67,9 @@ type MetaOptions = {
 
 当 `meta` 对象的 `value` 为对象时，会将该对象的 `key: value` 映射为 `meta` 标签的属性。
 
-比如设置 `charset`：
+### charset 标签
+
+比如生成 `charset` 标签：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -81,10 +83,38 @@ export default {
 };
 ```
 
-最终在 HTML 中生成的 `meta` 标签为：
+在 HTML 中生成的 `meta` 标签为：
 
 ```html
 <meta charset="UTF-8" />
+```
+
+### Open Graph 标签
+
+生成 [Open Graph 标签](https://ogp.me/)：
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    meta: {
+      'og:title': {
+        property: 'og:title',
+        content: 'Example Title',
+      },
+      'og:image': {
+        property: 'og:image',
+        content: 'https://example.com/og.png',
+      },
+    },
+  },
+};
+```
+
+在 HTML 中生成的 `meta` 标签为：
+
+```html
+<meta property="og:title" content="Example Title" />
+<meta property="og:image" content="https://example.com/og.png" />
 ```
 
 ## 函数用法
