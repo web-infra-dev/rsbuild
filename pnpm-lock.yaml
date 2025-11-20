@@ -713,8 +713,8 @@ importers:
         specifier: 8.2.0
         version: 8.2.0(patch_hash=7434af0286aadb1ef0e2daed0d97ebc69f717990e106d650e6e515683e89988a)(@rspack/core@1.6.4(@swc/helpers@0.5.17))(postcss@8.5.6)(typescript@5.9.3)(webpack@5.102.1)
       prebundle:
-        specifier: 1.5.0
-        version: 1.5.0(typescript@5.9.3)
+        specifier: 1.6.0
+        version: 1.6.0(typescript@5.9.3)
       range-parser:
         specifier: ^1.2.1
         version: 1.2.1
@@ -838,8 +838,8 @@ importers:
         specifier: 10.0.0
         version: 10.0.0(@babel/core@7.28.5)(webpack@5.102.1)
       prebundle:
-        specifier: 1.5.0
-        version: 1.5.0(typescript@5.9.3)
+        specifier: 1.6.0
+        version: 1.6.0(typescript@5.9.3)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -872,8 +872,8 @@ importers:
         specifier: ^12.3.0
         version: 12.3.0(@rspack/core@1.6.4(@swc/helpers@0.5.17))(less@4.3.0)(webpack@5.102.1)
       prebundle:
-        specifier: 1.5.0
-        version: 1.5.0(typescript@5.9.3)
+        specifier: 1.6.0
+        version: 1.6.0(typescript@5.9.3)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -968,8 +968,8 @@ importers:
         specifier: ^8.0.10
         version: 8.0.10
       prebundle:
-        specifier: 1.5.0
-        version: 1.5.0(typescript@5.9.3)
+        specifier: 1.6.0
+        version: 1.6.0(typescript@5.9.3)
       resolve-url-loader:
         specifier: ^5.0.0
         version: 5.0.0
@@ -1104,8 +1104,8 @@ importers:
         specifier: 6.2.0
         version: 6.2.0(patch_hash=c76c890d2d68ffdf70bfbc9cb235e0389df929be2e1917766b8946b1de0a8c30)(webpack@5.102.1)
       prebundle:
-        specifier: 1.5.0
-        version: 1.5.0(typescript@5.9.3)
+        specifier: 1.6.0
+        version: 1.6.0(typescript@5.9.3)
       svgo:
         specifier: ^3.3.2
         version: 3.3.2
@@ -5669,8 +5669,8 @@ packages:
   preact@10.27.2:
     resolution: {integrity: sha512-5SYSgFKSyhCbk6SrXyMpqjb5+MQBgfvEKE/OC+PujcY34sOpqtr+0AZQtPYx5IA6VxynQ7rUPCtKzyovpj9Bpg==}
 
-  prebundle@1.5.0:
-    resolution: {integrity: sha512-LSSMKEdfKfpBFggevmoe+gjM9un1U9yFk5TE1G+fmOo9JaPpblimQk+Q3PQYJd6jWFMTyCKoJ5gREAMZBBEMjA==}
+  prebundle@1.6.0:
+    resolution: {integrity: sha512-mv0rUfY/V5RUN/1GI4c6JvNSl8ClsosOBGDFtwePwr76t3DIsc0AzIBwc4ug39awgt00iGPIbb5OReL5NJ4arQ==}
     hasBin: true
 
   prettier@3.6.2:
@@ -11759,9 +11759,10 @@ snapshots:
 
   preact@10.27.2: {}
 
-  prebundle@1.5.0(typescript@5.9.3):
+  prebundle@1.6.0(typescript@5.9.3):
     dependencies:
       '@vercel/ncc': 0.38.4
+      cac: 6.7.14
       prettier: 3.6.2
       rollup: 4.52.5
       rollup-plugin-dts: 6.2.3(rollup@4.52.5)(typescript@5.9.3)

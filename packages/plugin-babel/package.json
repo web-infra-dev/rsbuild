@@ -44,7 +44,7 @@
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^24.10.1",
     "babel-loader": "10.0.0",
-    "prebundle": "1.5.0",
+    "prebundle": "1.6.0",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
