@@ -4,11 +4,11 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "svelte": "^5.43.8"
+    "svelte": "^5.43.12"
   },
   "devDependencies": {
     "less": "4.3.0",
-    "sass": "^1.94.0",
+    "sass": "^1.94.2",
     "stylus": "0.64.0"
   }
 }
