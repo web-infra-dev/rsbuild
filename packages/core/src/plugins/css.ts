@@ -21,6 +21,7 @@ import type {
   RsbuildPlugin,
   Rspack,
   RspackChain,
+  ToolsPostCSSContext,
 } from '../types';
 import { parseMinifyOptions } from './minimize';
 
@@ -147,9 +148,15 @@ const getPostcssLoaderOptions = async ({
 }): Promise<PostCSSLoaderOptions> => {
   const extraPlugins: AcceptedPlugin[] = [];
 
-  const utils = {
-    addPlugins(plugins: AcceptedPlugin | AcceptedPlugin[]) {
-      extraPlugins.push(...castArray(plugins));
+  const context: ToolsPostCSSContext = {
+    addPlugins(plugins: AcceptedPlugin | AcceptedPlugin[], options = {}) {
+      const { order = 'post' } = options;
+      const list = castArray(plugins);
+      if (order === 'pre') {
+        extraPlugins.unshift(...list);
+      } else {
+        extraPlugins.push(...list);
+      }
     },
   };
 
@@ -167,7 +174,7 @@ const getPostcssLoaderOptions = async ({
   const finalOptions = reduceConfigsWithContext({
     initial: defaultOptions,
     config: config.tools.postcss,
-    ctx: utils,
+    ctx: context,
   });
 
   finalOptions.postcssOptions ||= {};

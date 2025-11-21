@@ -64,9 +64,24 @@ export type ToolsBundlerChainConfig = OneOrMany<
   (chain: RspackChain, utils: ModifyBundlerChainUtils) => MaybePromise<void>
 >;
 
+export type ToolsPostCSSContext = {
+  addPlugins: (
+    plugins: LoosePostCSSPlugin | LoosePostCSSPlugin[],
+    options?: {
+      /**
+       * Controls where the plugin is placed relative to the existing PostCSS plugins.
+       * - `pre`: Insert the plugin before all existing plugins.
+       * - `post`: Insert the plugin after all existing plugins.
+       * @default `post`
+       */
+      order?: 'pre' | 'post';
+    },
+  ) => void;
+};
+
 export type ToolsPostCSSLoaderConfig = ConfigChainWithContext<
   PostCSSLoaderOptions,
-  { addPlugins: (plugins: LoosePostCSSPlugin | LoosePostCSSPlugin[]) => void }
+  ToolsPostCSSContext
 >;
 
 export type ToolsCSSLoaderConfig = ConfigChain<CSSLoaderOptions>;
