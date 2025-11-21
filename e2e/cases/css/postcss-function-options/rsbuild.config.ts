@@ -4,8 +4,8 @@ import tailwindcss from '@tailwindcss/postcss';
 export default defineConfig({
   source: {
     entry: {
-      foo: './src/foo/index.ts',
-      bar: './src/bar/index.ts',
+      foo: './src/foo/index.js',
+      bar: './src/bar/index.js',
     },
   },
   html: {
