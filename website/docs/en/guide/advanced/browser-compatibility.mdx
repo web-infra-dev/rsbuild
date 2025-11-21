@@ -20,7 +20,7 @@ A polyfill is code that provides the functionality of newer features to older br
 
 ## Background knowledge
 
-Before dealing with compatibility issues, it is recommended that you understand the following background knowledge to better handle related issues.
+Before tackling compatibility issues, we recommend understanding the following background so you can handle them effectively.
 
 ### Syntax downgrade and API downgrade
 
@@ -47,7 +47,7 @@ const foo = {};
 foo?.bar();
 ```
 
-When we run this code in a low version of Node.js, the following error message will appear:
+When this code runs in an older version of Node.js, the following error message appears:
 
 ```bash
 SyntaxError: Unexpected token.
@@ -59,7 +59,7 @@ SyntaxError: Unexpected token.
    at node.js:814:3
 ```
 
-It's obvious from the error message that this is a syntax error, meaning this syntax is not supported in older versions of the engine.
+The error makes it clear that this is a syntax issue, meaning older versions of the engine do not support this syntax.
 
 **Syntax cannot be supported by polyfills or shims**. To run syntax that's not originally supported in an older browser, you need to transpile the code into syntax the older engine can support.
 
@@ -87,7 +87,7 @@ var str = 'Hello world!';
 console.log(str.notExistedMethod());
 ```
 
-The above code has correct syntax and can be converted to AST correctly in the first stage of engine runtime, but when it actually runs, the method `notExistedMethod` does not exist on `String.prototype`, so an error is reported:
+The above code uses valid syntax and can be converted to an AST during the first stage of engine runtime, but when it actually runs, the method `notExistedMethod` does not exist on `String.prototype`, so an error is reported:
 
 ```bash
 Uncaught TypeError: str.notExistedMethod is not a function
@@ -100,7 +100,7 @@ With ECMAScript iterations, new methods are added to built-in objects. For examp
 'abc'.replaceAll('abc', 'xyz');
 ```
 
-To solve the problem that `String.prototype` lacks `replaceAll` in older browsers, we can extend the `String.prototype` object in older browsers and add the `replaceAll` method to it. For example:
+To address the lack of `replaceAll` in older browsers, we can extend the `String.prototype` object and add the `replaceAll` method to it. For example:
 
 ```js
 // The implementation of this polyfill does not necessarily conform to the standard, it is only used as an example.

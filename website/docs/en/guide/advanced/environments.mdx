@@ -2,7 +2,7 @@
 
 Rsbuild supports building outputs for multiple environments at the same time. You can use [environments](/config/environments) to build multiple environments in parallel and set a different Rsbuild config for each environment.
 
-## What is environment
+## What is an environment
 
 The `environment` refers to the runtime environment for build output. Common environments include browsers, Node.js, and Workers. Rsbuild allows you to define custom environment names and set build options for each environment individually.
 
@@ -13,7 +13,7 @@ You can also define different environments for the same build target, for exampl
 - Define `rsc` and `ssr` environments, both targeting `node`, used separately for React Server Components and SSR.
 - Define `desktop` and `mobile` environments, both targeting `web`, used separately for desktop and mobile browsers.
 
-Without the `environments` configuration, you would need to define multiple configurations for these scenarios and run multiple independent Rsbuild builds. With the `environments` configuration, you can complete the build for multiple outputs in a single Rsbuild run (Rsbuild achieves this using Rspack's [MultiCompiler](https://rspack.rs/api/javascript-api/compiler#multicompiler)).
+Without the `environments` configuration, you would need to define multiple configurations for these scenarios and run multiple independent Rsbuild builds. With `environments`, you can build every output in a single Rsbuild run (Rsbuild achieves this using Rspack's [MultiCompiler](https://rspack.rs/api/javascript-api/compiler#multicompiler)).
 
 In Rsbuild, each `environment` is associated with an Rsbuild configuration, an Rspack configuration, and a set of build outputs. Rsbuild plugin developers can customize the build process for a specified environment based on the `environment` name, such as modifying Rsbuild or Rspack configurations, registering or removing plugins, adjusting Rspack rules, and viewing assets information.
 
@@ -95,7 +95,7 @@ config inspection completed, generated files:
 
 ## Default environment
 
-When environments is not specified, Rsbuild creates an environment by default with the same name as the current target type (the value of [output.target](/config/output/target)).
+When `environments` is not specified, Rsbuild creates an environment by default with the same name as the current target type (the value of [output.target](/config/output/target)).
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -119,9 +119,9 @@ export default {
 };
 ```
 
-## Build specified environment
+## Build a specific environment
 
-By default, Rsbuild will build all environments in the Rsbuild configuration when you execute `rsbuild dev` or `rsbuild build`. You can build only the specified environment via `--environment <name>`.
+By default, Rsbuild will build all environments in the Rsbuild configuration when you execute `rsbuild dev` or `rsbuild build`. You can build only the specified environments with `--environment <name>`.
 
 ```bash
 # Build for all environments by default
@@ -133,7 +133,7 @@ rsbuild dev --environment web
 # Build for the web and ssr environments
 rsbuild dev --environment web --environment node
 
-# Build multiple environments can be shortened to:
+# Building multiple environments can be shortened to:
 rsbuild dev --environment web,node
 ```
 
