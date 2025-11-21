@@ -42,9 +42,9 @@ export default defineConfig({
 
 ## Execution order
 
-By default, plugins run in the order they appear in the `plugins` array, and built-in Rsbuild plugins run before user-registered plugins.
+By default, plugins run in the order they appear in the `plugins` array. Built-in Rsbuild plugins always execute before user-defined plugins.
 
-If a plugin defines ordering fields such as `pre` or `post`, Rsbuild adjusts the execution order accordingly. See [Pre Plugins](/plugins/dev/core#pre-pluginss) for more details.
+If a plugin specifies ordering controls such as the `enforce` property, the final execution sequence will be adjusted accordingly. See the [`enforce` property](/plugins/dev/core#enforce-property) for details.
 
 ## Conditional registration
 
