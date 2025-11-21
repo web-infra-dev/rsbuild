@@ -94,7 +94,20 @@ export default {
 
 ### addPlugins
 
-- **Type:** `(plugins: PostCSSPlugin | PostCSSPlugin[]) => void`
+- **Type:**
+
+```ts
+type AddPlugins = (
+  plugins: PostCSSPlugin | PostCSSPlugin[],
+  options?: {
+    /**
+     * Controls where the plugin is placed relative to the existing PostCSS plugins.
+     * @default 'post'
+     */
+    order?: 'pre' | 'post';
+  },
+) => void;
+```
 
 For adding additional PostCSS plugins, You can pass in a single PostCSS plugin, or an array of PostCSS plugins.
 
@@ -106,6 +119,18 @@ export default {
       addPlugins(require('postcss-preset-env'));
       // Add multiple PostCSS Plugins
       addPlugins([require('postcss-preset-env'), require('postcss-import')]);
+    },
+  },
+};
+```
+
+To add plugins before the existing plugins, set `order` option to `pre`:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    postcss: (config, { addPlugins }) => {
+      addPlugins(require('postcss-preset-env'), { order: 'pre' });
     },
   },
 };

@@ -94,7 +94,18 @@ export default {
 
 ### addPlugins
 
-- **类型：** `(plugins: PostCSSPlugin | PostCSSPlugin[]) => void`
+```ts
+type AddPlugins = (
+  plugins: PostCSSPlugin | PostCSSPlugin[],
+  options?: {
+    /**
+     * 控制插件在现有 PostCSS 插件列表中的添加位置
+     * @default 'post'
+     */
+    order?: 'pre' | 'post';
+  },
+) => void;
+```
 
 用于添加额外的 PostCSS 插件，你可以传入单个 PostCSS 插件，也可以传入 PostCSS 插件数组。
 
@@ -106,6 +117,18 @@ export default {
       addPlugins(require('postcss-preset-env'));
       // 批量添加插件
       addPlugins([require('postcss-preset-env'), require('postcss-import')]);
+    },
+  },
+};
+```
+
+要在已有的插件之前添加插件，设置 `order` 选项为 `pre`：
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    postcss: (config, { addPlugins }) => {
+      addPlugins(require('postcss-preset-env'), { order: 'pre' });
     },
   },
 };
