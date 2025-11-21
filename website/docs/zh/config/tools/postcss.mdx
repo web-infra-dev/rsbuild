@@ -176,3 +176,9 @@ Rsbuild 中使用的 PostCSS 版本为 v8，当你引入社区中的 PostCSS 插
 Rsbuild 使用 [postcss-load-config](https://github.com/postcss/postcss-load-config) 加载 PostCSS 配置文件，并将其与默认配置合并。
 
 Rsbuild 内部将 `postcss-loader` 的 `postcssOptions.config` 选项始终设置为 `false`，以避免重复加载配置文件。
+
+## 版本历史
+
+| 版本   | 变更内容                           |
+| ------ | ---------------------------------- |
+| v1.6.8 | `addPlugins` 方法新增 `order` 选项 |
