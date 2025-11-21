@@ -3,6 +3,7 @@ analyse
 antd
 apng
 applescript
+atrule
 atrules
 attributify
 biomejs

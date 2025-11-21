@@ -1,4 +1,4 @@
-module.exports = () => {
+export const postcssPlugin = () => {
   return {
     postcssPlugin: 'simple-postcss-plugin',
     Once(root) {
@@ -11,4 +11,4 @@ module.exports = () => {
   };
 };
 
-module.exports.postcss = true;
+postcssPlugin.postcss = true;
