@@ -27,7 +27,7 @@ const browsersListCache = new Map<string, string[]>();
 
 export function getBrowserslist(path: string): string[] | null {
   const env = process.env.NODE_ENV;
-  const cacheKey = path + env;
+  const cacheKey = `${path}:${env ?? ''}`;
 
   if (browsersListCache.has(cacheKey)) {
     return browsersListCache.get(cacheKey)!;
