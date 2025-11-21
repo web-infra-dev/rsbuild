@@ -52,7 +52,7 @@
     "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
-    "@rspack/core": "1.6.4",
+    "@rspack/core": "npm:@rspack-canary/core@1.6.5-canary-57e2a56d-20251120152633",
     "@rspack/lite-tapable": "~1.1.0",
     "@swc/helpers": "^0.5.17",
     "core-js": "~3.47.0",
