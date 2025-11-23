@@ -18,8 +18,7 @@ export async function createCompiler(options: InitConfigsOptions) {
 
   const compiler = (webpackConfigs.length === 1
     ? webpack(webpackConfigs[0])
-    : // @ts-expect-error webpack type issue
-      webpack(webpackConfigs)) as unknown as
+    : webpack(webpackConfigs)) as unknown as
     | Rspack.Compiler
     | Rspack.MultiCompiler;
 
