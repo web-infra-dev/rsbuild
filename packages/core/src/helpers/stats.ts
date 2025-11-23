@@ -58,16 +58,6 @@ export const getStatsWarnings = ({
   return [];
 };
 
-export const getStatsAssetsOptions = (): Rspack.StatsOptions => ({
-  assets: true,
-  cachedAssets: true,
-  groupAssetsByInfo: false,
-  groupAssetsByPath: false,
-  groupAssetsByChunk: false,
-  groupAssetsByExtension: false,
-  groupAssetsByEmitStatus: false,
-});
-
 export type RsbuildAsset = {
   /**
    * The name of the asset.
