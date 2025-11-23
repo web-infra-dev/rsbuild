@@ -164,7 +164,7 @@ async function printFileSizes(
   const logs: string[] = [];
   const showDetail = options.detail !== false;
   let showTotal = options.total !== false;
-  const showDiff = options.showDiff !== false;
+  const showDiff = options.showDiff === true;
 
   if (!showTotal && !showDetail) {
     return { logs, currentSizes: {} };
@@ -370,12 +370,13 @@ async function printFileSizes(
         }
       }
 
-      if (showDiffHeader) {
-        log = log.trimEnd();
-      }
-
       if (gzipSizeLabel) {
         log += `   ${gzipSizeLabel}`;
+      }
+
+      // Trim trailing whitespace only if this is the last column
+      if (!gzipSizeLabel && showDiffHeader) {
+        log = log.trimEnd();
       }
 
       logs.push(log);
