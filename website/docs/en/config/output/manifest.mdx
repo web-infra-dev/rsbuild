@@ -55,25 +55,43 @@ The manifest file will be output with the following structure by default:
 type FilePath = string;
 
 type ManifestList = {
+  /**
+   * A flat list of all emitted asset files.
+   */
+  allFiles: FilePath[];
+  /**
+   * Maps each entry name to its associated output files.
+   */
   entries: {
-    /** The key is the entry name, from Rsbuild's source.entry config. */
     [entryName: string]: {
+      /**
+       * Files that are required during the initial load of the entry.
+       */
       initial?: {
+        /** Initial JavaScript files for this entry. */
         js?: FilePath[];
+        /** Initial CSS files for this entry. */
         css?: FilePath[];
       };
+      /**
+       * Files that may be loaded asynchronously.
+       * Usually code-split chunks or lazily loaded chunks.
+       */
       async?: {
+        /** Async JavaScript files for this entry. */
         js?: FilePath[];
+        /** Async CSS files for this entry. */
         css?: FilePath[];
       };
-      /** HTML files related to the current entry */
+      /** HTML files generated for this entry, if any. */
       html?: FilePath[];
-      /** other assets (e.g., png, svg, source map) related to the current entry */
+      /**
+       * Additional assets associated with this entry.
+       * For example images、fonts、source maps and other non JS or CSS files.
+       */
       assets?: FilePath[];
     };
   };
-  /** Flatten all assets */
-  allFiles: FilePath[];
 };
 ```
 

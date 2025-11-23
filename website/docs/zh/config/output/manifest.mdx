@@ -55,25 +55,43 @@ manifest 文件默认输出的结构为：
 type FilePath = string;
 
 type ManifestList = {
+  /**
+   * 所有构建产物文件的扁平列表
+   */
+  allFiles: FilePath[];
+  /**
+   * 将每个入口名称映射到其关联的输出文件
+   */
   entries: {
-    /** key 为 entry 名称，对应 Rsbuild 的 source.entry 配置 */
     [entryName: string]: {
+      /**
+       * 入口在初始加载阶段所需的文件
+       */
       initial?: {
+        /** 当前入口的初始 JavaScript 文件 */
         js?: FilePath[];
+        /** 当前入口的初始 CSS 文件 */
         css?: FilePath[];
       };
+      /**
+       * 异步加载的文件
+       * 通常是代码分割的 chunk 或懒加载的资源
+       */
       async?: {
+        /** 当前入口的异步 JavaScript 文件 */
         js?: FilePath[];
+        /** 当前入口的异步 CSS 文件 */
         css?: FilePath[];
       };
-      /** 当前 entry 关联的 HTML 页面 */
+      /** 当前入口生成的 HTML 文件（如果有） */
       html?: FilePath[];
-      /** 和当前 entry 相关的其他资源（如 png、svg、source map 等） */
+      /**
+       * 与当前入口关联的其他资源
+       * 例如图片、字体、source map 以及其他非 JS 或 CSS 文件
+       */
       assets?: FilePath[];
     };
   };
-  /** 铺平的所有 assets */
-  allFiles: FilePath[];
 };
 ```
 
