@@ -1159,13 +1159,13 @@ export type ManifestByEntry = {
     /** Async CSS files for this entry. */
     css?: string[];
   };
+  /** HTML files generated for this entry, if any. */
+  html?: string[];
   /**
    * Additional assets associated with this entry.
    * For example images、fonts、source maps and other non JS or CSS files.
    */
   assets?: string[];
-  /** HTML files generated for this entry, if any. */
-  html?: string[];
 };
 
 export type ManifestData = {
