@@ -1179,6 +1179,12 @@ export type ManifestData = {
   entries: {
     [entryName: string]: ManifestByEntry;
   };
+  /**
+   * Subresource Integrity (SRI) hashes for emitted assets.
+   * The key is the asset file path, and the value is its integrity hash.
+   * This field is available only when the `security.sri` option is enabled.
+   */
+  integrity: Record<string, string>;
 };
 
 export type ManifestObjectConfig = {

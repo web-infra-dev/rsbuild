@@ -34,8 +34,13 @@ const generateManifest =
     const chunkEntries = new Map<string, FileDescriptor[]>();
     const licenseMap = new Map<string, string>();
     const publicPath = getPublicPathFromCompiler(compilation);
+    const integrity: Record<string, string> = {};
 
     const allFiles = files.map((file) => {
+      if (file.integrity) {
+        integrity[file.path] = file.integrity;
+      }
+
       if (file.chunk) {
         const entryNames = recursiveChunkEntryNames(file.chunk);
 
@@ -144,6 +149,7 @@ const generateManifest =
     const manifestData: ManifestData = {
       allFiles,
       entries: manifestEntries,
+      integrity,
     };
 
     if (manifestOptions.generate) {

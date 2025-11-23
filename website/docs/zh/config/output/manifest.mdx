@@ -91,6 +91,12 @@ type ManifestList = {
        */
       assets?: FilePath[];
     };
+    /**
+     * 所有产物文件的子资源完整性（SRI）哈希值
+     * key 为文件路径，value 为对应的完整性哈希
+     * 仅在启用 `security.sri` 选项时才会生成该字段
+     */
+    integrity: Record<string, string>;
   };
 };
 ```
