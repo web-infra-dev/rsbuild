@@ -26,10 +26,12 @@ export const pluginNodeAddons = (): RsbuildPlugin => ({
 
         return `
 try {
-const path = require("node:path");
-process.dlopen(module, path.join(__dirname, "${name}"));
+  const path = require("node:path");
+  process.dlopen(module, path.join(__dirname, "${name}"));
 } catch (error) {
-throw new Error('Failed to load Node.js addon: "${name}"\\n' + error);
+  throw new Error('Failed to load Node.js addon: "${name}"\\n', {
+    cause: error,
+  });
 }
 `;
       },
