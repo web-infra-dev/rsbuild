@@ -1140,26 +1140,45 @@ export type InlineChunkConfig =
   | { enable?: boolean | 'auto'; test: InlineChunkTest };
 
 export type ManifestByEntry = {
+  /**
+   * Files that are required during the initial load of the entry.
+   */
   initial?: {
+    /** Initial JavaScript files for this entry. */
     js?: string[];
+    /** Initial CSS files for this entry. */
     css?: string[];
   };
+  /**
+   * Files that may be loaded asynchronously.
+   * Usually code-split chunks or lazily loaded chunks.
+   */
   async?: {
+    /** Async JavaScript files for this entry. */
     js?: string[];
+    /** Async CSS files for this entry. */
     css?: string[];
   };
-  /** other assets (e.g. png、svg、source map) related to the current entry */
+  /**
+   * Additional assets associated with this entry.
+   * For example images、fonts、source maps and other non JS or CSS files.
+   */
   assets?: string[];
+  /** HTML files generated for this entry, if any. */
   html?: string[];
 };
 
 export type ManifestData = {
+  /**
+   * A flat list of all emitted asset files.
+   */
+  allFiles: string[];
+  /**
+   * Maps each entry name to its associated output files.
+   */
   entries: {
-    /** relate to Rsbuild's source.entry config */
     [entryName: string]: ManifestByEntry;
   };
-  /** Flatten all assets */
-  allFiles: string[];
 };
 
 export type ManifestObjectConfig = {
