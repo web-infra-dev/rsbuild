@@ -210,6 +210,8 @@ export async function open({
     if (routes.length) {
       // auto open the first one
       urls.push(`${baseUrl}${routes[0].pathname}`);
+    } else {
+      urls.push(baseUrl);
     }
   } else {
     urls.push(
