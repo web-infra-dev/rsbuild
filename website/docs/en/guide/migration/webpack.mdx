@@ -4,7 +4,7 @@ This section introduces how to migrate a webpack project to Rsbuild.
 
 ## Installing dependencies
 
-First, you need to replace webpack's npm dependencies with Rsbuild's dependencies.
+First, replace webpack's npm dependencies with Rsbuild's dependencies.
 
 import { PackageManagerTabs } from '@theme';
 
@@ -18,7 +18,7 @@ import { PackageManagerTabs } from '@theme';
 
 ## Updating npm scripts
 
-Next, you need to update the npm scripts in your package.json to use Rsbuild's CLI commands.
+Next, update the npm scripts in your package.json to use Rsbuild's CLI commands.
 
 ```json title="package.json"
 {
@@ -33,7 +33,7 @@ Next, you need to update the npm scripts in your package.json to use Rsbuild's C
 
 ## Create configuration file
 
-Create a Rsbuild configuration file `rsbuild.config.ts` in the same directory as package.json, and add the following content:
+Create an Rsbuild configuration file `rsbuild.config.ts` in the same directory as package.json, and add the following content:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -47,9 +47,9 @@ export default defineConfig({
 
 ## Config migration
 
-In a webpack project, there might be some complex `webpack.config.js` configuration files.
+Webpack projects often include complex `webpack.config.js` configuration files.
 
-After migrating to Rsbuild, most webpack configurations are built-in and do not require manual configuration, such as output, resolve, module.rules, etc.
+After migrating to Rsbuild, most webpack configurations—such as output, resolve, and module.rules—are built in and no longer require manual setup.
 
 For the few webpack configurations that need to be migrated, you can choose the following options:
 
@@ -65,7 +65,7 @@ export default {
 };
 ```
 
-- Use encapsulated configs in Rsbuild, for example, options for css-loader can be set through [tools.cssLoader](/config/tools/css-loader).
+- Use the configuration helpers in Rsbuild; for example, you can set css-loader options through [tools.cssLoader](/config/tools/css-loader).
 
 > See [Configure Rspack](/guide/configuration/rspack) for more.
 
@@ -86,7 +86,7 @@ export default {
 
 ### Cleaning up config
 
-Since Rsbuild has built-in some common loaders and plugins, you can remove the following dependencies, which will significantly improve the dependency installation speed of the project:
+Because Rsbuild includes common loaders and plugins, you can remove the following dependencies to significantly speed up dependency installation:
 
 - css-loader
 - babel-loader
@@ -102,20 +102,20 @@ Since Rsbuild has built-in some common loaders and plugins, you can remove the f
 - ...
 
 :::tip
-The above only lists some of the common dependencies that can be removed. In actual webpack projects, there may be many other dependencies, please handle them as appropriate.
+The above list covers only some removable dependencies. Real-world webpack projects may include many others, so adjust as needed.
 :::
 
 ### Using plugins
 
 Rsbuild offers a rich set of plugins that provide out-of-the-box support for common scenarios. You can refer to the [Plugin List](/plugins/list/index) documentation to learn about these plugins.
 
-Taking a React project as an example, let us see how to integrate Rsbuild plugins. First, you can remove some React-related build dependencies that are already built into the Rsbuild React plugin, such as:
+For example, in a React project, you can integrate Rsbuild plugins as follows. First, remove React-related build dependencies that the Rsbuild React plugin already includes, such as:
 
 - `react-refresh`
 - `@babel/preset-react`
 - `@pmmmwh/react-refresh-webpack-plugin`
 
-Then see the [React Plugin](/plugins/list/plugin-react) documentation, register it and use it as follows:
+Then follow the [React Plugin](/plugins/list/plugin-react) documentation to register and use it as follows:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -126,7 +126,7 @@ export default defineConfig({
 });
 ```
 
-Most of the common webpack loaders and plugins can still be used in Rsbuild, but we recommend prioritizing the plugins provided by Rsbuild. This can further simplify your configuration. Below is their mapping relationship:
+Most common webpack loaders and plugins still work in Rsbuild, but we recommend prioritizing Rsbuild's plugins to simplify your configuration. The following shows how they map:
 
 | webpack                                                                                    | Rsbuild                                                                                                         |
 | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
@@ -152,7 +152,7 @@ Most of the common webpack loaders and plugins can still be used in Rsbuild, but
 
 ### Configure dev server
 
-Rsbuild does not support the use of Rspack's [devServer](https://rspack.rs/config/dev-server) config. Please refer to [Rspack Dev Server](/guide/basic/server#rspack-dev-server) for replacement.
+Rsbuild does not support Rspack's [devServer](https://rspack.rs/config/dev-server) config. See [Rspack Dev Server](/guide/basic/server#rspack-dev-server) for alternatives.
 
 ## Babel migration
 
