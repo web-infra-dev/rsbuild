@@ -29,7 +29,7 @@ try {
   const path = require("node:path");
   process.dlopen(module, path.join(__dirname, "${name}"));
 } catch (error) {
-  throw new Error('Failed to load Node.js addon: "${name}"\\n', {
+  throw new Error('Failed to load Node.js addon: "${name}"', {
     cause: error,
   });
 }
