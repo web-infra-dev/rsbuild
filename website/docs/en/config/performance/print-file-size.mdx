@@ -11,6 +11,7 @@ type PrintFileSizeOptions =
       compressed?: boolean;
       include?: (asset: PrintFileSizeAsset) => boolean;
       exclude?: (asset: PrintFileSizeAsset) => boolean;
+      showDiff?: boolean;
     };
 ```
 
@@ -23,14 +24,23 @@ Whether to print the file sizes after production build.
 The default output log is as follows:
 
 ```
-  File (web)                              Size        Gzip
-  dist/static/js/lib-react.b0714b60.js    140.4 kB    45.0 kB
-  dist/static/js/index.f3fde9c7.js        1.9 kB      0.97 kB
-  dist/index.html                         0.39 kB     0.25 kB
-  dist/static/css/index.2960ac62.css      0.35 kB     0.26 kB
+  File (web)                              Size        Diff        Gzip
+  dist/static/js/lib-react.b0714b60.js    140.4 kB    +2.1 kB     45.0 kB
+  dist/static/js/index.f3fde9c7.js        1.9 kB      -0.3 kB     0.97 kB
+  dist/index.html                         0.39 kB     0 kB        0.25 kB
+  dist/static/css/index.2960ac62.css      0.35 kB     NEW         0.26 kB
 
-                                 Total:   143.0 kB    46.3 kB
+                                 Total:   143.0 kB                46.3 kB
 ```
+
+The `Diff` column shows the size difference compared to the previous build:
+
+- **Green** with `-` prefix indicates the file got smaller
+- **Red** with `+` prefix indicates the file got larger
+- **Cyan** `NEW` label indicates this is a new file
+- `0 kB` indicates no change in size
+
+On the first build or when the cache doesn't exist, the `Diff` column will not be shown.
 
 ## Disable outputs
 
@@ -226,4 +236,35 @@ export default {
     },
   },
 };
+```
+
+### showDiff
+
+- **Type:** `boolean`
+- **Default:** `false`
+
+Whether to show file size difference compared to the previous build.
+
+When enabled, Rsbuild will cache the file sizes after each build and display the difference on subsequent builds. The cache is stored in `node_modules/.cache/rsbuild/file-sizes-cache.json`.
+
+To disable the diff display:
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    printFileSize: {
+      showDiff: false,
+    },
+  },
+};
+```
+
+When disabled, the output will not include the `Diff` column:
+
+```
+  File (web)                              Size        Gzip
+  dist/static/js/lib-react.b0714b60.js    140.4 kB    45.0 kB
+  dist/static/js/index.f3fde9c7.js        1.9 kB      0.97 kB
+
+                                 Total:   143.0 kB    46.3 kB
 ```
