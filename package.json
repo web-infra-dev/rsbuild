@@ -35,10 +35,10 @@
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.6",
+    "@biomejs/biome": "^2.3.7",
     "@rsbuild/config": "workspace:*",
     "@rslint/core": "^0.1.13",
-    "@rstest/core": "^0.6.5",
+    "@rstest/core": "^0.6.6",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^24.10.1",
     "cross-env": "^10.1.0",
