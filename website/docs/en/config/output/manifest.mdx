@@ -115,6 +115,35 @@ api.onAfterBuild(({ environments }) => {
 
 > See [Environment API - manifest](/api/javascript-api/environment-api#manifest) for more details.
 
+## SRI
+
+When the [`security.sri`](/config/security/sri) option is enabled, the manifest file includes an `integrity` field that stores the SRI hash for assets that support Subresource Integrity, such as JavaScript and CSS files.
+
+```ts title="rsbuild.config.ts"
+export default {
+  security: {
+    sri: {
+      enable: 'auto',
+    },
+  },
+  output: {
+    manifest: true,
+  },
+};
+```
+
+```json title="dist/manifest.json"
+{
+  "allFiles": ["/static/js/index.[hash].js", "/index.html"],
+  "entries": {
+    // ...
+  },
+  "integrity": {
+    "/static/js/index.[hash].js": "sha384-[sri-hash]"
+  }
+}
+```
+
 ## Options
 
 `output.manifest` can be an object, here are all the options:
@@ -321,3 +350,9 @@ export default {
   },
 };
 ```
+
+## Version history
+
+| Version | Changes                 |
+| ------- | ----------------------- |
+| v1.6.8  | Added `integrity` field |

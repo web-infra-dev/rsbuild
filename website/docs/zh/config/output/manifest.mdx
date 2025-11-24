@@ -115,6 +115,35 @@ api.onAfterBuild(({ environments }) => {
 
 > 参考 [Environment API - manifest](/api/javascript-api/environment-api#manifest) 了解更多。
 
+## SRI
+
+当启用 [security.sri](/config/security/sri) 选项后，manifest 文件会包含 `integrity` 字段，用于存储支持 SRI 的资源（例如 JavaScript 和 CSS 文件）的哈希值。
+
+```ts title="rsbuild.config.ts"
+export default {
+  security: {
+    sri: {
+      enable: 'auto',
+    },
+  },
+  output: {
+    manifest: true,
+  },
+};
+```
+
+```json title="dist/manifest.json"
+{
+  "allFiles": ["/static/js/index.[hash].js", "/index.html"],
+  "entries": {
+    // ...
+  },
+  "integrity": {
+    "/static/js/index.[hash].js": "sha384-[sri-hash]"
+  }
+}
+```
+
 ## 选项
 
 `output.manifest` 可以是一个对象，以下是所有可选项：
@@ -321,3 +350,9 @@ export default {
   },
 };
 ```
+
+## 版本历史
+
+| 版本   | 变更内容              |
+| ------ | --------------------- |
+| v1.6.8 | 新增 `integrity` 字段 |
