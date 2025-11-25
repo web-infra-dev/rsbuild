@@ -61,7 +61,7 @@
   "devDependencies": {
     "@jridgewell/remapping": "^2.3.5",
     "@jridgewell/trace-mapping": "^0.3.31",
-    "@rslib/core": "0.18.0",
+    "@rslib/core": "0.18.2",
     "@types/connect": "3.4.38",
     "@types/cors": "^2.8.19",
     "@types/node": "^24.10.1",
