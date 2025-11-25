@@ -43,7 +43,7 @@ test('should allow to access manifest data in environment context after build', 
     },
   });
 
-  // main.js, index.html
+  // index.js, index.html
   expect(Object.keys(webManifest.allFiles).length).toBe(2);
   expect(webManifest.entries.index).toMatchObject({
     initial: {
@@ -52,7 +52,7 @@ test('should allow to access manifest data in environment context after build', 
     html: ['/index.html'],
   });
 
-  // main.js
+  // index.js
   expect(Object.keys(nodeManifest.allFiles).length).toBe(1);
   expect(nodeManifest.entries.index).toMatchObject({
     initial: {
@@ -103,7 +103,7 @@ test('should allow to access manifest data in environment context after dev buil
     },
   });
 
-  // main.js, main.js.map, index.html
+  // index.js, index.js.map, index.html
   expect(Object.keys(webManifest.allFiles).length).toBe(3);
   expect(webManifest.entries.index).toMatchObject({
     initial: {
@@ -112,7 +112,7 @@ test('should allow to access manifest data in environment context after dev buil
     html: ['/index.html'],
   });
 
-  // main.js, main.js.map
+  // index.js, index.js.map
   expect(Object.keys(nodeManifest.allFiles).length).toBe(2);
   expect(nodeManifest.entries.index).toMatchObject({
     initial: {
@@ -161,7 +161,7 @@ test('should allow to access manifest data in environment API', async ({
   // should visit base url correctly
   await page.goto(`http://localhost:${rsbuild.port}`);
 
-  // main.js, main.js.map, index.html
+  // index.js, index.js.map, index.html
   expect(Object.keys(webManifest.allFiles).length).toBe(3);
   expect(webManifest.entries.index).toMatchObject({
     initial: {
@@ -170,7 +170,7 @@ test('should allow to access manifest data in environment API', async ({
     html: ['/index.html'],
   });
 
-  // main.js, main.js.map
+  // index.js, index.js.map
   expect(Object.keys(nodeManifest.allFiles).length).toBe(2);
   expect(nodeManifest.entries.index).toMatchObject({
     initial: {
