@@ -41,8 +41,8 @@ function clearBuildErrors() {
   // Clean up outdated compile errors
   if (console.clear && hasBuildErrors) {
     console.clear();
+    hasBuildErrors = false;
   }
-  hasBuildErrors = false;
 }
 
 let createOverlay: undefined | ((html: string) => void);
