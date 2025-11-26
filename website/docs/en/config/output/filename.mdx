@@ -107,22 +107,22 @@ Typically, Rsbuild only sets the filename hash in production mode (`process.env.
 Setting the filename hash in development mode may cause HMR to fail (especially for CSS files). This happens because each time the file content changes, the hash value changes, preventing the bundler from reading the latest file content.
 :::
 
-## Template strings
+## Filename placeholders
 
-In `output.filename`, you can use template strings to dynamically generate file names.
+In `output.filename`, you can use filename placeholders to dynamically generate file names.
 
-Common template strings include:
+Common filename placeholders include:
 
 - `[name]` - entry name, which is the key of [source.entry](/config/source/entry).
 - `[contenthash]` - hash value generated based on file content.
 - `[contenthash:<length>]` - hash value generated based on file content, with specified hash length.
 - `[ext]` - file extension, including the dot.
 
-> For more template strings, refer to [Rspack - Template String](https://rspack.rs/config/output#template-string).
+> For more filename placeholders, refer to [Rspack - Filename placeholders](https://rspack.rs/config/filename-placeholders).
 
 :::tip
 
-- `filename.html` can only use certain template strings like `[name]` and `[contenthash:<length>]`.
+- `filename.html` can only use certain filename placeholders like `[name]` and `[contenthash:<length>]`.
 - `filename.js` and `filename.css` do not support `[ext]`.
 
 :::
