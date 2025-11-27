@@ -107,22 +107,22 @@ export default {
 如果你在开发模式下设置了文件名的 hash，那么可能会导致热更新不生效（尤其是 CSS 文件）。这是因为每次文件内容变化时，都会引起 hash 变化，导致打包工具无法读取到最新的文件内容。
 :::
 
-## 模板字符串
+## 文件名占位符
 
-在 `output.filename` 的值中，你可以使用模板字符串来动态生成文件名。
+在 `output.filename` 的值中，你可以使用文件名占位符来动态生成文件名。
 
-常用的模板字符串有：
+常用的文件名占位符有：
 
 - `[name]` - entry 名称，即 [source.entry](/config/source/entry) 的 key。
 - `[contenthash]` - 基于文件内容生成的 hash 值。
 - `[contenthash:<length>]` - 基于文件内容生成的 hash 值，并指定 hash 长度。
 - `[ext]` - 文件后缀名，包含点号。
 
-> 更多模板字符串可以参考 [Rspack - Template String](https://rspack.rs/zh/config/output#template-string)。
+> 更多文件名占位符可以参考 [Rspack - 文件名占位符](https://rspack.rs/zh/config/filename-placeholders)。
 
 :::tip
 
-- `filename.html` 只能使用部分模板字符串，如 `[name]`、`[contenthash:<length>]`。
+- `filename.html` 只能使用部分文件名占位符，如 `[name]`、`[contenthash:<length>]`。
 - `filename.js` 和 `filename.css` 不支持 `[ext]`。
 
 :::
