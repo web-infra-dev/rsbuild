@@ -6,15 +6,13 @@
  * Copyright JS Foundation and other contributors
  * https://github.com/webpack/webpack-dev-middleware/blob/master/LICENSE
  */
-import { createRequire } from 'node:module';
 import type { Compiler, MultiCompiler, Watching } from '@rspack/core';
-import { pick } from '../../helpers';
+import { createVirtualModule, pick } from '../../helpers';
 import { applyToCompiler, isMultiCompiler } from '../../helpers/compiler';
 import { logger } from '../../logger';
 import type {
   InternalContext,
   NormalizedConfig,
-  NormalizedDevConfig,
   NormalizedEnvironmentConfig,
   RequestHandler,
   Rspack,
@@ -37,32 +35,6 @@ export type AssetsMiddleware = RequestHandler & {
   watch: () => void;
   close: AssetsMiddlewareClose;
 };
-
-const require = createRequire(import.meta.url);
-let hmrClientPath: string;
-let overlayClientPath: string;
-
-function getClientPaths(devConfig: NormalizedDevConfig) {
-  const clientPaths: string[] = [];
-
-  if (!devConfig.hmr && !devConfig.liveReload) {
-    return clientPaths;
-  }
-
-  if (!hmrClientPath) {
-    hmrClientPath = require.resolve('@rsbuild/core/client/hmr');
-  }
-  clientPaths.push(hmrClientPath);
-
-  if (devConfig.client?.overlay) {
-    if (!overlayClientPath) {
-      overlayClientPath = require.resolve('@rsbuild/core/client/overlay');
-    }
-    clientPaths.push(overlayClientPath);
-  }
-
-  return clientPaths;
-}
 
 export const isClientCompiler = (compiler: Compiler): boolean => {
   const { target } = compiler.options;
@@ -161,12 +133,10 @@ function applyHMREntry({
   resolvedHost: string;
   resolvedPort: number;
 }) {
-  if (!isClientCompiler(compiler)) {
-    return;
-  }
-
-  const clientPaths = getClientPaths(config.dev);
-  if (!clientPaths.length) {
+  if (
+    !isClientCompiler(compiler) ||
+    (!config.dev.hmr && !config.dev.liveReload)
+  ) {
     return;
   }
 
@@ -175,20 +145,24 @@ function applyHMREntry({
     clientConfig.port = resolvedPort;
   }
 
-  new compiler.webpack.DefinePlugin({
-    RSBUILD_WEB_SOCKET_TOKEN: JSON.stringify(token),
-    RSBUILD_CLIENT_CONFIG: JSON.stringify(clientConfig),
-    RSBUILD_SERVER_HOST: JSON.stringify(resolvedHost),
-    RSBUILD_SERVER_PORT: JSON.stringify(resolvedPort),
-    RSBUILD_DEV_LIVE_RELOAD: config.dev.liveReload,
-    RSBUILD_DEV_BROWSER_LOGS: config.dev.browserLogs,
-  }).apply(compiler);
+  const hmrEntry = `import { init } from '@rsbuild/core/client/hmr';
+${config.dev.client.overlay ? `import '@rsbuild/core/client/overlay';` : ''}
 
-  for (const clientPath of clientPaths) {
-    new compiler.webpack.EntryPlugin(compiler.context, clientPath, {
-      name: undefined,
-    }).apply(compiler);
-  }
+init({
+  token: '${token}',
+  config: ${JSON.stringify(clientConfig)},
+  serverHost: '${resolvedHost}',
+  serverPort: ${resolvedPort},
+  liveReload: ${config.dev.liveReload},
+  browserLogs: ${Boolean(config.dev.browserLogs)}
+});
+`;
+
+  new compiler.webpack.EntryPlugin(
+    compiler.context,
+    createVirtualModule(hmrEntry),
+    { name: undefined },
+  ).apply(compiler);
 }
 
 /**
