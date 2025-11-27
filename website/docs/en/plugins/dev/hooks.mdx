@@ -1,6 +1,6 @@
 # Plugin hooks
 
-This chapter introduces the plugin hooks available for Rsbuild plugins.
+This page outlines the plugin hooks available for Rsbuild plugins.
 
 ## Overview
 
@@ -115,7 +115,7 @@ When executing the `rsbuild preview` command or `rsbuild.preview()` method, Rsbu
 
 ## Global hooks vs environment hooks
 
-In Rsbuild, some of the plugin hooks are global hooks. The execution of these hooks is often related to Rsbuild's own startup process or global logic and is shared under all environments. Such as:
+In Rsbuild, some plugin hooks are global. These hooks relate to Rsbuild's startup process or other shared logic and run across all environments. For example:
 
 - `modifyRsbuildConfig` is used to modify the basic configuration of Rsbuild. The basic configuration will eventually be merged with the environment configuration;
 - `onBeforeStartDevServer` and `onAfterStartDevServer` are related to the Rsbuild dev server startup process, all environments share Rsbuild's dev server, middleware, and WebSocket.

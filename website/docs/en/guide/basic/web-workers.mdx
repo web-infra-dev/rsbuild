@@ -1,6 +1,6 @@
 # Web Workers
 
-This chapter introduces how to configure and use [Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers) in Rsbuild project.
+This page explains how to configure and use [Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers) in an Rsbuild project.
 
 :::tip Web Workers
 Web Workers are a type of JavaScript program that runs in the background, independently of other scripts, without affecting the performance of the page. This makes it possible to run long-running scripts, such as ones that handle complex calculations or access remote resources, without blocking the user interface or other scripts. Web workers provide an easy way to run tasks in the background and improve the overall performance of web applications.
@@ -10,7 +10,7 @@ Web Workers are a type of JavaScript program that runs in the background, indepe
 
 ### Import with constructors
 
-Rspack provides built-in support for Web Workers, which means you can use Web Workers directly in Rsbuild projects without needing any Loaders.
+Rspack provides built-in support for Web Workers, so you can use them directly in Rsbuild projects without adding extra loaders.
 
 For example, create a file called `worker.js`:
 
@@ -63,7 +63,7 @@ export default {
 };
 ```
 
-When using `worker-rspack-loader`, you need to use `import` to load the Web Worker file, instead of `new Worker('/path/to/worker.js')`.
+When using `worker-rspack-loader`, load the Web Worker file with `import` instead of `new Worker('/path/to/worker.js')`.
 
 ```js
 import Worker from './file.worker.js';
@@ -77,7 +77,7 @@ worker.postMessage({ a: 1 });
 
 ### Loading scripts from remote URLs
 
-By default, the worker script will be emitted as a separate chunk. This script supports uploading to CDN, but must obey the [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
+By default, the worker script is emitted as a separate chunk. You can upload this file to a CDN, but it must follow the [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
 
 If you want your worker scripts to be accessible across domains, a common solution is to load them via [importScripts](https://developer.mozilla.org/en-US/docs/Web/API/WorkerGlobalScope/importScripts) (not subject to CORS). You can refer to the following code:
 
