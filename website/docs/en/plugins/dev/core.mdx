@@ -1,13 +1,13 @@
 # Plugin API
 
-This chapter introduces the type definitions and usage of Rsbuild plugin APIs.
+This page explains the type definitions and usage of Rsbuild plugin APIs.
 
 ## RsbuildPlugin
 
-The type of the plugin object. The plugin object contains the following properties:
+`RsbuildPlugin` is the type of the plugin object. It includes the following properties:
 
 - `name`: The name of the plugin, a unique identifier.
-- `setup`: The setup function of the plugin, which can be an async function. This function is called once when the plugin is initialized. The plugin API provides the context info, utility functions and lifecycle hooks. For a complete introduction to lifecycle hooks, please read the [Plugin Hooks](/plugins/dev/hooks) chapter.
+- `setup`: The setup function of the plugin, which can be async. This function runs once when the plugin is initialized. The plugin API provides context, utility functions, and lifecycle hooks. For a complete introduction to lifecycle hooks, see [Plugin hooks](/plugins/dev/hooks).
 - `apply`: Conditional apply the plugin during serve or build, see [Conditional application](#conditional-application).
 - `enforce`: Specify the execution order of the plugin, see [enforce property](#enforce-property).
 - `pre`: Declare the names of pre-plugins, which will be executed before the current plugin, see [Pre-Plugins](#pre-plugins).
