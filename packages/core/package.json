@@ -71,7 +71,7 @@
     "@types/ws": "^8.18.1",
     "browserslist-load-config": "1.0.1",
     "cac": "^6.7.14",
-    "chokidar": "^4.0.3",
+    "chokidar": "^5.0.0",
     "connect": "3.7.0",
     "cors": "^2.8.5",
     "css-loader": "7.1.2",
