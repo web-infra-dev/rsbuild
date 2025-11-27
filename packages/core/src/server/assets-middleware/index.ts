@@ -151,7 +151,7 @@ ${config.dev.client.overlay ? `import '@rsbuild/core/client/overlay';` : ''}
 init({
   token: '${token}',
   config: ${JSON.stringify(clientConfig)},
-  serverHost: '${resolvedHost}',
+  serverHost: ${JSON.stringify(resolvedHost)},
   serverPort: ${resolvedPort},
   liveReload: ${config.dev.liveReload},
   browserLogs: ${Boolean(config.dev.browserLogs)}

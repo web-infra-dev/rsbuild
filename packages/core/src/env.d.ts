@@ -1,4 +1,4 @@
-import type { NormalizedClientConfig } from './types';
+import './types';
 
 declare global {
   const RSBUILD_VERSION: string;
