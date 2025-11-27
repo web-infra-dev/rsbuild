@@ -26,7 +26,7 @@
     "@e2e/helper": "workspace:*",
     "@module-federation/enhanced": "0.21.6",
     "@module-federation/rsbuild-plugin": "0.21.6",
-    "@playwright/test": "1.56.1",
+    "@playwright/test": "1.57.0",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
     "@rsbuild/plugin-check-syntax": "^1.6.0",
@@ -56,7 +56,7 @@
     "create-rsbuild": "workspace:*",
     "fast-glob": "^3.3.3",
     "fs-extra": "^11.3.2",
-    "playwright": "1.56.1",
+    "playwright": "1.57.0",
     "polka": "^0.5.2",
     "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3"
