@@ -95,7 +95,8 @@ export function genOverlayHTML(errors: string[], root?: string) {
   margin: 0;
   font-size: 14px;
   font-family: inherit;
-  overflow-x: scroll;
+  white-space: pre-wrap;
+  word-break: break-all;
   scrollbar-width: none;
 }
 .content::-webkit-scrollbar {
