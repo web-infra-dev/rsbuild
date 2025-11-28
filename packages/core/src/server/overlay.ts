@@ -18,7 +18,7 @@ export function convertLinksInHtml(text: string, root?: string): string {
   const urlRegex =
     /(https?:\/\/(?:[\w-]+\.)+[a-z0-9](?:[\w-.~:/?#[\]@!$&'*+,;=])*)/gi;
 
-  const nodeInternalPathRegex = /node:internal[/\\]/g;
+  const nodeInternalPathRegex = /node:internal[/\\]/;
 
   const lines = text.split('\n');
   const replacedLines = lines.map((line) => {
