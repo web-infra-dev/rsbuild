@@ -138,6 +138,11 @@ describe('convertLinksInHtml', () => {
     expect(convertLinksInHtml(ansiHTML(input), root)).toEqual(expected);
   });
 
+  it('should not convert node internal path', () => {
+    const input = 'at async readdir (node:internal/fs/promises:1:1)';
+    expect(convertLinksInHtml(ansiHTML(input))).toEqual(input);
+  });
+
   it('should convert Windows absolute path as expected', () => {
     // only run on Windows
     if (process.platform !== 'win32') {
