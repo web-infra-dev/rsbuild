@@ -94,7 +94,9 @@ export const gzipMiddleware = ({
         res.statusMessage = reason;
       } else if (reason) {
         for (const [key, value] of Object.entries(reason)) {
-          res.setHeader(key, value);
+          if (value !== undefined) {
+            res.setHeader(key, value);
+          }
         }
       }
       writeHeadStatus = status;
