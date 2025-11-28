@@ -85,8 +85,15 @@ export const gzipMiddleware = ({
     };
 
     res.writeHead = (status, reason, headers?) => {
-      if (reason) {
-        for (const [key, value] of Object.entries(headers || reason)) {
+      if (typeof reason === 'string') {
+        if (headers) {
+          for (const [key, value] of Object.entries(headers)) {
+            res.setHeader(key, value);
+          }
+        }
+        res.statusMessage = reason;
+      } else if (reason) {
+        for (const [key, value] of Object.entries(reason)) {
           res.setHeader(key, value);
         }
       }
