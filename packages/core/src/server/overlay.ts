@@ -30,7 +30,7 @@ export function convertLinksInHtml(text: string, root?: string): string {
     }
 
     let replacedLine = line.replace(pathRegex, (file) => {
-      // // Strip file URI scheme
+      // Strip file URI scheme
       if (file.includes('file://')) {
         file = file.replace('file://', '');
       }
