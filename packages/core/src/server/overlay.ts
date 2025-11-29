@@ -12,8 +12,10 @@ export function convertLinksInHtml(text: string, root?: string): string {
    * 3. `../Button.js:1:1`
    * 4. `C:\Users\username\project\src\index.js:1:1`
    * 5. `/home/user/project/src/index.js:1:1`
+   * 6. `file:///home/user/project/src/index.js:1:1`
    */
-  const pathRegex = /(?:\.\.?[/\\]|[a-zA-Z]:\\|\/)[^:]*:\d+:\d+/g;
+  const pathRegex =
+    /(?:file:\/\/(?:\/|[a-zA-Z]:\/)|\.{1,2}[/\\]|[a-zA-Z]:\\|\/)[^:]*:\d+:\d+/g;
 
   const urlRegex =
     /(https?:\/\/(?:[\w-]+\.)+[a-z0-9](?:[\w-.~:/?#[\]@!$&'*+,;=])*)/gi;
@@ -28,6 +30,11 @@ export function convertLinksInHtml(text: string, root?: string): string {
     }
 
     let replacedLine = line.replace(pathRegex, (file) => {
+      // // Strip file URI scheme
+      if (file.includes('file://')) {
+        file = file.replace('file://', '');
+      }
+
       // If the file contains `</span>`, it means the file path contains ANSI codes.
       // We need to move the `</span>` to the end of the file path.
       const hasClosingSpan =
