@@ -133,7 +133,7 @@ describe('convertLinksInHtml', () => {
     const root = '/path/to';
     const expected =
       process.platform === 'win32'
-        ? '<a class="file-link" data-file="/path/to/src/index.js:1:1">.srcindex.js:1:1</a>'
+        ? '<a class="file-link" data-file="/path/to/src/index.js:1:1">.\\src\\index.js:1:1</a>'
         : '<a class="file-link" data-file="/path/to/src/index.js:1:1">./src/index.js:1:1</a>';
     expect(convertLinksInHtml(ansiHTML(input), root)).toEqual(expected);
   });
