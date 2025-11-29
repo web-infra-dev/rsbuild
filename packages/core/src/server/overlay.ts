@@ -18,8 +18,15 @@ export function convertLinksInHtml(text: string, root?: string): string {
   const urlRegex =
     /(https?:\/\/(?:[\w-]+\.)+[a-z0-9](?:[\w-.~:/?#[\]@!$&'*+,;=])*)/gi;
 
+  const nodeInternalPathRegex = /node:internal[/\\]/;
+
   const lines = text.split('\n');
   const replacedLines = lines.map((line) => {
+    // Skip processing node internal paths
+    if (nodeInternalPathRegex.test(line)) {
+      return line;
+    }
+
     let replacedLine = line.replace(pathRegex, (file) => {
       // If the file contains `</span>`, it means the file path contains ANSI codes.
       // We need to move the `</span>` to the end of the file path.
