@@ -80,6 +80,14 @@ const EXCLUDE_ASSET_REGEX = /\.(?:map|LICENSE\.txt|d\.ts)$/;
 export const excludeAsset = (asset: PrintFileSizeAsset): boolean =>
   EXCLUDE_ASSET_REGEX.test(asset.name);
 
+/** Format a size difference for inline display */
+const formatDiff = (diff: number): string => {
+  const diffStr = calcFileSize(Math.abs(diff));
+  const sign = diff > 0 ? '+' : '-';
+  const colorFn = diff > 0 ? color.red : color.green;
+  return colorFn(`(${sign}${diffStr})`);
+};
+
 const getAssetColor = (size: number) => {
   if (size > 300 * 1000) {
     return color.red;
@@ -313,18 +321,12 @@ async function printFileSizes(
       if (isNew) {
         sizeLabel += ` ${color.cyan('(NEW)')}`;
       } else if (sizeDiff !== null && sizeDiff !== 0) {
-        const diffStr = calcFileSize(Math.abs(sizeDiff));
-        const sign = sizeDiff > 0 ? '+' : '-';
-        const colorFn = sizeDiff > 0 ? color.red : color.green;
-        sizeLabel += ` ${colorFn(`(${sign}${diffStr})`)}`;
+        sizeLabel += ` ${formatDiff(sizeDiff)}`;
       }
 
-      // Append inline diff to gzipSizeLabel
-      if (gzipSizeLabel && gzipDiff !== null && gzipDiff !== 0) {
-        const diffStr = calcFileSize(Math.abs(gzipDiff));
-        const sign = gzipDiff > 0 ? '+' : '-';
-        const colorFn = gzipDiff > 0 ? color.red : color.green;
-        gzipSizeLabel += ` ${colorFn(`(${sign}${diffStr})`)}`;
+      // Append inline diff to gzipSizeLabel (only for existing files with changes)
+      if (gzipSizeLabel && !isNew && gzipDiff !== null && gzipDiff !== 0) {
+        gzipSizeLabel += ` ${formatDiff(gzipDiff)}`;
       }
 
       const fileNameLength = (folder + path.sep + name).length;
