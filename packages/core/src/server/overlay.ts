@@ -12,15 +12,44 @@ export function convertLinksInHtml(text: string, root?: string): string {
    * 3. `../Button.js:1:1`
    * 4. `C:\Users\username\project\src\index.js:1:1`
    * 5. `/home/user/project/src/index.js:1:1`
+   * 6. `file:///home/user/project/src/index.js:1:1`
+   * 7. `file:///C:/Users/username/project/src/index.js:1:1`
    */
-  const pathRegex = /(?:\.\.?[/\\]|[a-zA-Z]:\\|\/)[^:]*:\d+:\d+/g;
+  const PATH_RE =
+    /(?:\.\.?[/\\]|(file:\/\/\/)?[a-zA-Z]:\\|(file:\/\/)?\/)[^:]*:\d+:\d+/g;
 
-  const urlRegex =
+  const URL_RE =
     /(https?:\/\/(?:[\w-]+\.)+[a-z0-9](?:[\w-.~:/?#[\]@!$&'*+,;=])*)/gi;
+
+  const NODE_INTERNAL_RE = /node:internal[/\\]/;
+  const FILE_URI_WINDOWS_RE = /^file:\/\/\/([A-Za-z]:)/;
+  const FILE_URI_UNIX_RE = /^file:\/\//;
+
+  const stripFileUri = (file: string) => {
+    if (!file.startsWith('file://')) {
+      return file;
+    }
+
+    // Windows: file:///C:/path → C:/path
+    const windows = file.replace(FILE_URI_WINDOWS_RE, '$1');
+    if (windows !== file) {
+      return windows;
+    }
+
+    // Unix: file:///usr → /usr
+    return file.replace(FILE_URI_UNIX_RE, '');
+  };
 
   const lines = text.split('\n');
   const replacedLines = lines.map((line) => {
-    let replacedLine = line.replace(pathRegex, (file) => {
+    // Skip processing node internal paths
+    if (NODE_INTERNAL_RE.test(line)) {
+      return line;
+    }
+
+    let replacedLine = line.replace(PATH_RE, (file) => {
+      file = stripFileUri(file);
+
       // If the file contains `</span>`, it means the file path contains ANSI codes.
       // We need to move the `</span>` to the end of the file path.
       const hasClosingSpan =
@@ -36,7 +65,7 @@ export function convertLinksInHtml(text: string, root?: string): string {
       return `<a class="file-link" data-file="${absolutePath}">${relativePath}</a>${suffix}`;
     });
 
-    replacedLine = replacedLine.replace(urlRegex, (url) => {
+    replacedLine = replacedLine.replace(URL_RE, (url) => {
       return `<a class="url-link" href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
     });
 
@@ -95,7 +124,8 @@ export function genOverlayHTML(errors: string[], root?: string) {
   margin: 0;
   font-size: 14px;
   font-family: inherit;
-  overflow-x: scroll;
+  white-space: pre-wrap;
+  word-break: break-all;
   scrollbar-width: none;
 }
 .content::-webkit-scrollbar {
