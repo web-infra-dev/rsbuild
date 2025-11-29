@@ -31,6 +31,7 @@ export default {
     'tinyglobby',
     'chokidar',
     'cors',
+    'webpack-merge',
     {
       name: 'picocolors',
       beforeBundle({ depPath }) {
