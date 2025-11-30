@@ -14,6 +14,7 @@ type CompiledPackages = {
   chokidar: typeof import('../../compiled/chokidar').default;
   tinyglobby: typeof import('../../compiled/tinyglobby');
   picocolors: typeof import('../../compiled/picocolors').default;
+  'webpack-merge': typeof import('../../compiled/webpack-merge');
   'html-rspack-plugin': typeof import('../../compiled/html-rspack-plugin').default;
   'http-proxy-middleware': typeof import('../../compiled/http-proxy-middleware');
   'webpack-bundle-analyzer': typeof import('../../compiled/webpack-bundle-analyzer');
