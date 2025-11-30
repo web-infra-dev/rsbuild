@@ -68,7 +68,7 @@ export function getConfigUtils(
     ...chainUtils,
 
     mergeConfig: (...args) => {
-      const merge = requireCompiledPackage('webpack-merge');
+      const { merge } = requireCompiledPackage('webpack-merge');
       return merge(...args);
     },
 
