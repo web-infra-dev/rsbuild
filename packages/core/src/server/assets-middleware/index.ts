@@ -111,33 +111,31 @@ export const setupServerHooks = ({
 
       const { stats: statsJson } = context.buildState;
 
-      if (tsErrors.length > 0) {
-        const statsErrors = tsErrors.map((item) =>
+      const handleTsIssues = (
+        issues: Rspack.RspackError[],
+        type: 'errors' | 'warnings',
+        sendFn: (issues: Rspack.StatsError[], token: string) => void,
+      ) => {
+        const statsIssues = issues.map((item) =>
           pick(item, ['message', 'file']),
         );
 
         if (statsJson) {
-          statsJson.errors = statsJson.errors
-            ? [...statsJson.errors, ...statsErrors]
-            : statsErrors;
+          statsJson[type] = statsJson[type]
+            ? [...statsJson[type], ...statsIssues]
+            : statsIssues;
         }
 
-        socketServer.sendError(statsErrors, token);
+        sendFn(statsIssues, token);
+      };
+
+      if (tsErrors.length > 0) {
+        handleTsIssues(tsErrors, 'errors', socketServer.sendError);
         return;
       }
 
       if (tsWarnings.length > 0) {
-        const statsWarnings = tsWarnings.map((item) =>
-          pick(item, ['message', 'file']),
-        );
-
-        if (statsJson) {
-          statsJson.warnings = statsJson.warnings
-            ? [...statsJson.warnings, ...statsWarnings]
-            : statsWarnings;
-        }
-
-        socketServer.sendWarning(statsWarnings, token);
+        handleTsIssues(tsWarnings, 'warnings', socketServer.sendWarning);
         return;
       }
     }
