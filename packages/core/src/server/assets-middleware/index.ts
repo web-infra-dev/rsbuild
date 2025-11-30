@@ -71,11 +71,13 @@ export const setupServerHooks = ({
     return;
   }
 
-  // Track errors count to detect if the `done` hook is called multiple times
+  // Track errors and warnings count to detect if the `done` hook is called multiple times
   let errorsCount: number | null = null;
+  let warningsCount: number | null = null;
 
   compiler.hooks.invalid.tap('rsbuild-dev-server', (fileName) => {
     errorsCount = null;
+    warningsCount = null;
 
     // reload page when HTML template changed
     if (typeof fileName === 'string' && fileName.endsWith('.html')) {
@@ -84,38 +86,60 @@ export const setupServerHooks = ({
   });
 
   compiler.hooks.done.tap('rsbuild-dev-server', (stats) => {
-    const { errors } = stats.compilation;
-    if (errors.length === errorsCount) {
+    const { errors, warnings } = stats.compilation;
+    if (errors.length === errorsCount && warnings.length === warningsCount) {
       return;
     }
 
-    const isRecalled = errorsCount !== null;
+    const isRecalled = errorsCount !== null || warningsCount !== null;
     errorsCount = errors.length;
+    warningsCount = warnings.length;
 
     /**
-     * The ts-checker-rspack-plugin asynchronously pushes Type errors to `compilation.errors`
-     * and calls the `done` hook again, so we need to detect changes in errors and render them
-     * in the overlay.
+     * The ts-checker-rspack-plugin asynchronously pushes Type errors and warnings
+     * to `compilation.errors` and `compilation.warnings` and calls the `done` hook
+     * again, so we need to detect changes in errors/warnings and render them in the
+     * overlay or browser console.
      */
     if (isRecalled) {
       const tsErrors = errors.filter(isTsError);
-      if (!tsErrors.length) {
+      const tsWarnings = warnings.filter(isTsError);
+
+      if (!tsErrors.length && !tsWarnings.length) {
         return;
       }
 
       const { stats: statsJson } = context.buildState;
-      const statsErrors = tsErrors.map((item) =>
-        pick(item, ['message', 'file']),
-      );
 
-      if (statsJson) {
-        statsJson.errors = statsJson.errors
-          ? [...statsJson.errors, ...statsErrors]
-          : statsErrors;
+      if (tsErrors.length > 0) {
+        const statsErrors = tsErrors.map((item) =>
+          pick(item, ['message', 'file']),
+        );
+
+        if (statsJson) {
+          statsJson.errors = statsJson.errors
+            ? [...statsJson.errors, ...statsErrors]
+            : statsErrors;
+        }
+
+        socketServer.sendError(statsErrors, token);
+        return;
       }
 
-      socketServer.sendError(statsErrors, token);
-      return;
+      if (tsWarnings.length > 0) {
+        const statsWarnings = tsWarnings.map((item) =>
+          pick(item, ['message', 'file']),
+        );
+
+        if (statsJson) {
+          statsJson.warnings = statsJson.warnings
+            ? [...statsJson.warnings, ...statsWarnings]
+            : statsWarnings;
+        }
+
+        socketServer.sendWarning(statsWarnings, token);
+        return;
+      }
     }
   });
 };
