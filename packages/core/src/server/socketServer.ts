@@ -466,15 +466,7 @@ export class SocketServer {
     }
 
     if (warnings.length > 0) {
-      const warningMessages = warnings.map((item) => formatStatsError(item));
-
-      this.sockWrite(
-        {
-          type: 'warnings',
-          data: { text: warningMessages },
-        },
-        token,
-      );
+      this.sendWarning(warnings, token);
       return;
     }
 
