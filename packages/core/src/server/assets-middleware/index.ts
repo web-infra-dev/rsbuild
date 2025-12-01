@@ -130,12 +130,16 @@ export const setupServerHooks = ({
       };
 
       if (tsErrors.length > 0) {
-        handleTsIssues(tsErrors, 'errors', socketServer.sendError);
+        handleTsIssues(tsErrors, 'errors', (issues, token) => {
+          socketServer.sendError(issues, token);
+        });
         return;
       }
 
       if (tsWarnings.length > 0) {
-        handleTsIssues(tsWarnings, 'warnings', socketServer.sendWarning);
+        handleTsIssues(tsWarnings, 'warnings', (issues, token) => {
+          socketServer.sendWarning(issues, token);
+        });
         return;
       }
     }
