@@ -38,7 +38,7 @@ When you use higher-version syntax and APIs in your project, you need to downgra
 - In `foo?.bar?.baz`, `?.` indicates optional chaining of access properties.
 - In `async function () {}`, `async` means to declare an asynchronous function.
 
-Because different browser parsers support different syntax—and older engines support less—some syntax will cause errors during AST parsing in older browsers.
+Because different browser parsers support different syntax, and older engines support even less, certain syntax can trigger errors when older browsers try to parse the AST.
 
 For example, the following code will cause an error in IE or an older version of Node.js:
 
