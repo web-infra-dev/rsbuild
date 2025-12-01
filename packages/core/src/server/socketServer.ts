@@ -217,6 +217,20 @@ export class SocketServer {
   }
 
   /**
+   * Send warning messages to the client
+   */
+  public sendWarning(warnings: Rspack.StatsError[], token: string): void {
+    const formattedWarnings = warnings.map((item) => formatStatsError(item));
+    this.sockWrite(
+      {
+        type: 'warnings',
+        data: { text: formattedWarnings },
+      },
+      token,
+    );
+  }
+
+  /**
    * Write message to each socket
    * @param message - The message to send
    * @param token - The token of the socket to send the message to,
@@ -452,15 +466,7 @@ export class SocketServer {
     }
 
     if (warnings.length > 0) {
-      const warningMessages = warnings.map((item) => formatStatsError(item));
-
-      this.sockWrite(
-        {
-          type: 'warnings',
-          data: { text: warningMessages },
-        },
-        token,
-      );
+      this.sendWarning(warnings, token);
       return;
     }
 
