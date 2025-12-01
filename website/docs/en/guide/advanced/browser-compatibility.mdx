@@ -2,11 +2,11 @@
 
 Rsbuild supports [modern browsers](/guide/advanced/browserslist#default-browserslist) by default and provides syntax and API downgrade capabilities to ensure compatibility with legacy browsers that support ES5 (such as IE11).
 
-This chapter explains how to use Rsbuild's features to address browser compatibility issues.
+This chapter explains how to use Rsbuild's features to handle browser compatibility issues.
 
 ## Set browserslist
 
-Before dealing with compatibility issues, you need to determine which browsers your project needs to support and add the corresponding browserslist config.
+Before addressing compatibility issues, decide which browsers your project needs to support and add the corresponding browserslist config.
 
 - If you haven't set browserslist yet, please read the [Browserslist](/guide/advanced/browserslist) chapter first.
 
@@ -15,12 +15,12 @@ Before dealing with compatibility issues, you need to determine which browsers y
 After setting the browserslist, if you still encounter compatibility issues, continue reading to find solutions.
 
 :::tip What is polyfill
-A polyfill is code that provides the functionality of newer features to older browsers that don't support them natively. It fills gaps in older browsers' implementations of web standards, allowing developers to use newer features without worrying about whether they'll work in older browsers. For example, if a browser doesn't support the `Array.prototype.flat()` method, a polyfill can provide that functionality, allowing code that uses `Array.prototype.flat()` to work in that browser. Polyfills are commonly used to ensure web applications work across a wide range of browsers, including older ones.
+A polyfill is code that provides newer features to older browsers that don't support them natively. It fills gaps in older implementations of web standards, letting developers use modern features without worrying about whether they'll work in legacy browsers. For example, if a browser doesn't support the `Array.prototype.flat()` method, a polyfill can add that functionality so code using `Array.prototype.flat()` still runs. Polyfills are commonly used to keep web applications working across a wide range of browsers, including older ones.
 :::
 
 ## Background knowledge
 
-Before tackling compatibility issues, we recommend understanding the following background so you can handle them effectively.
+Before you tackle compatibility issues, review the following background so you can address them effectively.
 
 ### Syntax downgrade and API downgrade
 
@@ -28,7 +28,7 @@ When you use higher-version syntax and APIs in your project, you need to downgra
 
 **Rsbuild downgrades syntax through transpilation and downgrades APIs through polyfill injection.**
 
-> Syntax and APIs are not tightly coupled. When browser manufacturers implement the engine, they will support some syntax or implement some APIs in advance according to the specification or their own needs. Therefore, browsers from different manufacturers in the same period are not necessarily compatible with syntax and API. So in general practice, syntax and API are handled in two parts.
+> Syntax and APIs are not tightly coupled. Browser vendors ship syntax or APIs at different times based on specifications and their own priorities, so browsers released in the same period may not support the same syntax or APIs. In practice, syntax and APIs are handled separately.
 
 ### Syntax transpilation
 
@@ -38,7 +38,7 @@ When you use higher-version syntax and APIs in your project, you need to downgra
 - In `foo?.bar?.baz`, `?.` indicates optional chaining of access properties.
 - In `async function () {}`, `async` means to declare an asynchronous function.
 
-Because different browser parsers support different syntax, especially older browser engines that support less syntax, some syntax will cause errors when run in older browser engines during the AST parsing stage.
+Because different browser parsers support different syntax, and older engines support even less, certain syntax can trigger errors when older browsers try to parse the AST.
 
 For example, the following code will cause an error in IE or an older version of Node.js:
 
@@ -78,7 +78,7 @@ If the code is successfully converted to AST, the engine will convert it into ex
 
 ### API polyfill
 
-JavaScript is an interpreted scripting language, unlike compiled languages like Rust. Rust checks function calls in the code during compilation, but JavaScript doesn't know whether a function exists until it actually runs that line of code, so some errors only appear at runtime.
+JavaScript is an interpreted scripting language, unlike compiled languages like Rust. Rust checks function calls during compilation, but JavaScript doesn't know whether a function exists until it runs that line of code, so some errors only appear at runtime.
 
 For example:
 
