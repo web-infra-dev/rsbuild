@@ -13,7 +13,7 @@
     "svelte": "^5.45.2"
   },
   "devDependencies": {
-    "@rsbuild/core": "^1.6.7",
+    "@rsbuild/core": "^1.6.10",
     "@rsbuild/plugin-svelte": "^1.0.11",
     "svelte-check": "^4.3.4",
     "typescript": "^5.9.3"
