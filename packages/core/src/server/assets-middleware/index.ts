@@ -7,6 +7,7 @@
  * https://github.com/webpack/webpack-dev-middleware/blob/master/LICENSE
  */
 import type { Compiler, MultiCompiler, Watching } from '@rspack/core';
+import { CLIENT_PATH } from '../../constants';
 import { createVirtualModule, pick } from '../../helpers';
 import { applyToCompiler, isMultiCompiler } from '../../helpers/compiler';
 import { logger } from '../../logger';
@@ -145,8 +146,8 @@ function applyHMREntry({
     clientConfig.port = resolvedPort;
   }
 
-  const hmrEntry = `import { init } from '@rsbuild/core/client/hmr';
-${config.dev.client.overlay ? `import '@rsbuild/core/client/overlay';` : ''}
+  const hmrEntry = `import { init } from '${CLIENT_PATH}/hmr';
+${config.dev.client.overlay ? `import '${CLIENT_PATH}/overlay';` : ''}
 
 init({
   token: '${token}',
