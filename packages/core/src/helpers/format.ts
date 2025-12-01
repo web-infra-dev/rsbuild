@@ -11,7 +11,7 @@ const formatFileName = (fileName: string, stats: StatsError) => {
   }
 
   const DATA_URI_PREFIX = 'data:text/javascript,';
-  if (fileName.startsWith('data:text/javascript,')) {
+  if (fileName.startsWith(DATA_URI_PREFIX)) {
     let snippet = fileName.replace(DATA_URI_PREFIX, '');
     if (snippet.length > 30) {
       snippet = `${snippet.slice(0, 30)}...`;
