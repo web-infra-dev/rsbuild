@@ -1,6 +1,7 @@
 import type {
   FileDescriptor,
   InternalOptions,
+  ManifestPluginOptions,
 } from '../../compiled/rspack-manifest-plugin';
 import { color, isObject } from '../helpers';
 import { getPublicPathFromCompiler } from '../helpers/compiler';
@@ -180,10 +181,10 @@ type NormalizedManifestConfig = ManifestObjectConfig &
 function normalizeManifestObjectConfig(
   manifest?: ManifestConfig,
 ): NormalizedManifestConfig {
-  const defaultOptions = {
+  const defaultOptions: NormalizedManifestConfig = {
     prefix: true,
     filename: 'manifest.json',
-  } satisfies ManifestObjectConfig;
+  };
 
   if (typeof manifest === 'string') {
     return {
@@ -232,15 +233,20 @@ export const pluginManifest = (): RsbuildPlugin => ({
 
       manifestFilenames.set(environment.name, manifestOptions.filename);
 
-      chain.plugin(CHAIN_ID.PLUGIN.MANIFEST).use(RspackManifestPlugin, [
-        {
-          fileName: manifestOptions.filename,
-          filter,
-          writeToFileEmit: isDev && writeToDisk !== true,
-          generate: generateManifest(htmlPaths, manifestOptions, environment),
-          publicPath: manifestOptions.prefix ? undefined : '',
-        },
-      ]);
+      const pluginOptions: ManifestPluginOptions = {
+        fileName: manifestOptions.filename,
+        filter,
+        writeToFileEmit: isDev && writeToDisk !== true,
+        generate: generateManifest(htmlPaths, manifestOptions, environment),
+      };
+
+      if (manifestOptions.prefix === false) {
+        pluginOptions.publicPath = '';
+      }
+
+      chain
+        .plugin(CHAIN_ID.PLUGIN.MANIFEST)
+        .use(RspackManifestPlugin, [pluginOptions]);
     });
 
     // validate duplicated manifest filenames and throw a warning
