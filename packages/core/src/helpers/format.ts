@@ -10,6 +10,15 @@ const formatFileName = (fileName: string, stats: StatsError) => {
     return '';
   }
 
+  const DATA_URI_PREFIX = 'data:text/javascript,';
+  if (fileName.startsWith(DATA_URI_PREFIX)) {
+    let snippet = fileName.replace(DATA_URI_PREFIX, '');
+    if (snippet.length > 30) {
+      snippet = `${snippet.slice(0, 30)}...`;
+    }
+    return `File: ${color.cyan('data-uri virtual module')} ${color.dim(`(${snippet})`)}\n`;
+  }
+
   if (/:\d+:\d+/.test(fileName)) {
     return `File: ${color.cyan(fileName)}\n`;
   }
