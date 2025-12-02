@@ -249,6 +249,70 @@ const files = [
 ];
 ```
 
+### prefix
+
+- **Type:** `boolean`
+- **Default:** `true`
+
+Controls whether the generated manifest includes the static asset prefix in file paths. The prefix is taken from [dev.assetPrefix](/config/dev/asset-prefix) and [output.assetPrefix](/config/output/asset-prefix).
+
+When `prefix` is set to `true` (the default), the manifest will include the full asset prefix.
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    assetPrefix: 'https://example.com/',
+    manifest: true,
+  },
+};
+```
+
+Example of the generated manifest:
+
+```json title="dist/manifest.json"
+{
+  "allFiles": [
+    "https://example.com/static/js/index.[hash].js",
+    "https://example.com/index.html"
+  ],
+  "entries": {
+    "index": {
+      "initial": {
+        "js": ["https://example.com/static/js/index.[hash].js"]
+      }
+    }
+  }
+}
+```
+
+If `prefix` is set to `false`, the manifest will keep the file paths relative and no asset prefix will be added.
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    assetPrefix: 'https://example.com/',
+    manifest: {
+      prefix: false,
+    },
+  },
+};
+```
+
+Example of the generated manifest:
+
+```json title="dist/manifest.json"
+{
+  "allFiles": ["static/js/index.[hash].js", "index.html"],
+  "entries": {
+    "index": {
+      "initial": {
+        "js": ["static/js/index.[hash].js"]
+      }
+    }
+  }
+}
+```
+
 ### filter
 
 - **Type:**
@@ -353,3 +417,4 @@ export default {
 | Version | Changes                 |
 | ------- | ----------------------- |
 | v1.6.8  | Added `integrity` field |
+| v1.6.12 | Added `prefix` option   |
