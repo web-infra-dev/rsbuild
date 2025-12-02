@@ -1,15 +1,17 @@
+import { sep } from 'node:path';
 import type { StatsError } from '@rspack/core';
 import { isVerbose } from '../logger';
 import { removeLoaderChainDelimiter } from './stats';
 import { color } from './vendors';
 
-const formatFileName = (fileName: string, stats: StatsError) => {
+const formatFileName = (fileName: string, stats: StatsError, root: string) => {
   // File name may be empty when the error is not related to a file.
   // For example, when an invalid entry is provided.
   if (!fileName) {
     return '';
   }
 
+  // Handle data-uri virtual modules
   const DATA_URI_PREFIX = 'data:text/javascript,';
   if (fileName.startsWith(DATA_URI_PREFIX)) {
     let snippet = fileName.replace(DATA_URI_PREFIX, '');
@@ -19,13 +21,22 @@ const formatFileName = (fileName: string, stats: StatsError) => {
     return `File: ${color.cyan('data-uri virtual module')} ${color.dim(`(${snippet})`)}\n`;
   }
 
+  // Try to shorten absolute paths by replacing the project root prefix with "./".
+  // This improves readability. For example:
+  // "/Users/path/to/project/src/App.jsx" → "./src/App.jsx"
+  const prefix = root + sep;
+  if (fileName.startsWith(prefix)) {
+    fileName = fileName.replace(prefix, `.${sep}`);
+  }
+
   if (/:\d+:\d+/.test(fileName)) {
     return `File: ${color.cyan(fileName)}\n`;
   }
   if (stats.loc) {
     return `File: ${color.cyan(`${fileName}:${stats.loc}`)}\n`;
   }
-  // add default column add lines for linking
+
+  // Add default column add lines for linking
   return `File: ${color.cyan(`${fileName}:1:1`)}\n`;
 };
 
@@ -243,9 +254,9 @@ const hintNodePolyfill = (message: string): string => {
 };
 
 // Formats Rspack stats error to readable message
-export function formatStatsError(stats: StatsError): string {
+export function formatStatsError(stats: StatsError, root: string): string {
   const fileName = resolveFileName(stats);
-  let message = `${formatFileName(fileName, stats)}${stats.message}`;
+  let message = `${formatFileName(fileName, stats, root)}${stats.message}`;
 
   // display verbose messages in debug mode
   const verbose = isVerbose();

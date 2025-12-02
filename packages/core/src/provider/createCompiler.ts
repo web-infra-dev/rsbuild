@@ -231,7 +231,11 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
       context.buildState.hasErrors = hasErrors;
       context.socketServer?.onBuildDone();
 
-      const { message, level } = formatStats(stats, hasErrors);
+      const { message, level } = formatStats(
+        stats,
+        hasErrors,
+        options.context.rootPath,
+      );
 
       if (level === 'error') {
         logger.error(message);
