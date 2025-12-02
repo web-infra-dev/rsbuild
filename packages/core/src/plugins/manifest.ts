@@ -240,7 +240,7 @@ export const pluginManifest = (): RsbuildPlugin => ({
         generate: generateManifest(htmlPaths, manifestOptions, environment),
       };
 
-      if (manifestOptions.prefix === false) {
+      if (!manifestOptions.prefix) {
         pluginOptions.publicPath = '';
       }
 
