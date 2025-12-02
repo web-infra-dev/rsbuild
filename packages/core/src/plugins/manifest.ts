@@ -1,6 +1,7 @@
 import type {
   FileDescriptor,
   InternalOptions,
+  ManifestPluginOptions,
 } from '../../compiled/rspack-manifest-plugin';
 import { color, isObject } from '../helpers';
 import { getPublicPathFromCompiler } from '../helpers/compiler';
@@ -22,7 +23,7 @@ const isCSSPath = (filePath: string) => filePath.endsWith('.css');
 const generateManifest =
   (
     htmlPaths: Record<string, string>,
-    manifestOptions: ManifestObjectConfig,
+    manifestOptions: NormalizedManifestConfig,
     environment: EnvironmentContext,
   ): InternalOptions['generate'] =>
   (
@@ -74,7 +75,9 @@ const generateManifest =
       // order must be preserved).
       if (entries[entryName]) {
         for (const filePath of entries[entryName]) {
-          const fileURL = ensureAssetPrefix(filePath, publicPath);
+          const fileURL = manifestOptions.prefix
+            ? ensureAssetPrefix(filePath, publicPath)
+            : filePath;
           if (isCSSPath(filePath)) {
             initialCSS.push(fileURL);
           } else {
@@ -172,18 +175,23 @@ const generateManifest =
     return manifestData;
   };
 
+type NormalizedManifestConfig = ManifestObjectConfig &
+  Required<Pick<ManifestObjectConfig, 'prefix' | 'filename'>>;
+
 function normalizeManifestObjectConfig(
   manifest?: ManifestConfig,
-): ManifestObjectConfig & { filename: string } {
+): NormalizedManifestConfig {
+  const defaultOptions: NormalizedManifestConfig = {
+    prefix: true,
+    filename: 'manifest.json',
+  };
+
   if (typeof manifest === 'string') {
     return {
+      ...defaultOptions,
       filename: manifest,
     };
   }
-
-  const defaultOptions = {
-    filename: 'manifest.json',
-  } satisfies ManifestObjectConfig;
 
   if (typeof manifest === 'boolean') {
     return defaultOptions;
@@ -225,14 +233,20 @@ export const pluginManifest = (): RsbuildPlugin => ({
 
       manifestFilenames.set(environment.name, manifestOptions.filename);
 
-      chain.plugin(CHAIN_ID.PLUGIN.MANIFEST).use(RspackManifestPlugin, [
-        {
-          fileName: manifestOptions.filename,
-          filter,
-          writeToFileEmit: isDev && writeToDisk !== true,
-          generate: generateManifest(htmlPaths, manifestOptions, environment),
-        },
-      ]);
+      const pluginOptions: ManifestPluginOptions = {
+        fileName: manifestOptions.filename,
+        filter,
+        writeToFileEmit: isDev && writeToDisk !== true,
+        generate: generateManifest(htmlPaths, manifestOptions, environment),
+      };
+
+      if (!manifestOptions.prefix) {
+        pluginOptions.publicPath = '';
+      }
+
+      chain
+        .plugin(CHAIN_ID.PLUGIN.MANIFEST)
+        .use(RspackManifestPlugin, [pluginOptions]);
     });
 
     // validate duplicated manifest filenames and throw a warning

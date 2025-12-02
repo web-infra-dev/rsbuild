@@ -1208,6 +1208,12 @@ export type ManifestObjectConfig = {
    * @default (file: FileDescriptor) => !file.name.endsWith('.LICENSE.txt')
    */
   filter?: (file: FileDescriptor) => boolean;
+  /**
+   * Controls whether the generated manifest includes the static asset prefix in file paths.
+   * The prefix is taken from `dev.assetPrefix` and `output.assetPrefix`.
+   * @default true
+   */
+  prefix?: boolean;
 };
 
 export type ManifestConfig = string | boolean | ManifestObjectConfig;
