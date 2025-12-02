@@ -1210,7 +1210,7 @@ export type ManifestObjectConfig = {
   filter?: (file: FileDescriptor) => boolean;
   /**
    * Controls whether the generated manifest includes the static asset prefix in file paths.
-   * This refers to the values of `dev.assetPrefix` and `output.assetPrefix`.
+   * The prefix is taken from `dev.assetPrefix` and `output.assetPrefix`.
    * @default true
    */
   prefix?: boolean;
