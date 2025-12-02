@@ -22,7 +22,7 @@ const isCSSPath = (filePath: string) => filePath.endsWith('.css');
 const generateManifest =
   (
     htmlPaths: Record<string, string>,
-    manifestOptions: ManifestObjectConfig,
+    manifestOptions: NormalizedManifestConfig,
     environment: EnvironmentContext,
   ): InternalOptions['generate'] =>
   (
@@ -74,7 +74,9 @@ const generateManifest =
       // order must be preserved).
       if (entries[entryName]) {
         for (const filePath of entries[entryName]) {
-          const fileURL = ensureAssetPrefix(filePath, publicPath);
+          const fileURL = manifestOptions.prefix
+            ? ensureAssetPrefix(filePath, publicPath)
+            : filePath;
           if (isCSSPath(filePath)) {
             initialCSS.push(fileURL);
           } else {
@@ -172,18 +174,23 @@ const generateManifest =
     return manifestData;
   };
 
+type NormalizedManifestConfig = ManifestObjectConfig &
+  Required<Pick<ManifestObjectConfig, 'prefix' | 'filename'>>;
+
 function normalizeManifestObjectConfig(
   manifest?: ManifestConfig,
-): ManifestObjectConfig & { filename: string } {
+): NormalizedManifestConfig {
+  const defaultOptions = {
+    prefix: true,
+    filename: 'manifest.json',
+  } satisfies ManifestObjectConfig;
+
   if (typeof manifest === 'string') {
     return {
+      ...defaultOptions,
       filename: manifest,
     };
   }
-
-  const defaultOptions = {
-    filename: 'manifest.json',
-  } satisfies ManifestObjectConfig;
 
   if (typeof manifest === 'boolean') {
     return defaultOptions;
@@ -231,6 +238,7 @@ export const pluginManifest = (): RsbuildPlugin => ({
           filter,
           writeToFileEmit: isDev && writeToDisk !== true,
           generate: generateManifest(htmlPaths, manifestOptions, environment),
+          publicPath: manifestOptions.prefix ? undefined : '',
         },
       ]);
     });
