@@ -249,6 +249,70 @@ const files = [
 ];
 ```
 
+### prefix
+
+- **类型：** `boolean`
+- **默认值：** `true`
+
+控制是否在 manifest 中的文件路径前添加静态资源前缀，即 [dev.assetPrefix](/config/output/asset-prefix) 和 [output.assetPrefix](/config/output/asset-prefix)。
+
+当 `prefix` 为 `true`（默认值）时，生成的 manifest 会包含完整的资源前缀。
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    assetPrefix: 'https://example.com/',
+    manifest: true,
+  },
+};
+```
+
+生成的 manifest 文件示例：
+
+```json title="dist/manifest.json"
+{
+  "allFiles": [
+    "https://example.com/static/js/index.[hash].js",
+    "https://example.com/index.html"
+  ],
+  "entries": {
+    "index": {
+      "initial": {
+        "js": ["https://example.com/static/js/index.[hash].js"]
+      }
+    }
+  }
+}
+```
+
+如果将 `prefix` 设置为 `false`，manifest 中的路径将保持相对形式，不会附加静态资源前缀。
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    assetPrefix: 'https://example.com/',
+    manifest: {
+      prefix: false,
+    },
+  },
+};
+```
+
+生成的 manifest 文件示例：
+
+```json title="dist/manifest.json"
+{
+  "allFiles": ["static/js/index.[hash].js", "index.html"],
+  "entries": {
+    "index": {
+      "initial": {
+        "js": ["static/js/index.[hash].js"]
+      }
+    }
+  }
+}
+```
+
 ### filter
 
 - **类型：**
@@ -350,6 +414,7 @@ export default {
 
 ## 版本历史
 
-| 版本   | 变更内容              |
-| ------ | --------------------- |
-| v1.6.8 | 新增 `integrity` 字段 |
+| 版本    | 变更内容              |
+| ------- | --------------------- |
+| v1.6.8  | 新增 `integrity` 字段 |
+| v1.6.12 | 新增 `prefix` 选项    |
