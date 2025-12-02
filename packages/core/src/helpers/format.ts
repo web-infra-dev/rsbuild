@@ -36,7 +36,7 @@ const formatFileName = (fileName: string, stats: StatsError, root: string) => {
     return `File: ${color.cyan(`${fileName}:${stats.loc}`)}\n`;
   }
 
-  // Add default column add lines for linking
+  // Add default column and lines for linking
   return `File: ${color.cyan(`${fileName}:1:1`)}\n`;
 };
 
