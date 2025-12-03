@@ -137,13 +137,14 @@ export function getRsbuildStats(
 export function formatStats(
   stats: RsbuildStats,
   hasErrors: boolean,
+  root: string,
 ): {
   message?: string;
   level?: string;
 } {
   if (hasErrors) {
     const errors = getStatsErrors(stats);
-    const errorMessages = errors.map((item) => formatStatsError(item));
+    const errorMessages = errors.map((item) => formatStatsError(item, root));
     return {
       message: formatErrorMessage(errorMessages),
       level: 'error',
@@ -151,7 +152,7 @@ export function formatStats(
   }
 
   const warnings = getStatsWarnings(stats);
-  const warningMessages = warnings.map((item) => formatStatsError(item));
+  const warningMessages = warnings.map((item) => formatStatsError(item, root));
 
   if (warningMessages.length) {
     const title = color.bold(
