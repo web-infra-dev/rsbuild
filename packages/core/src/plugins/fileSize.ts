@@ -157,12 +157,12 @@ async function printFileSizes(
   rootPath: string,
   distPath: string,
   environmentName: string,
-  previousSizes: FileSizeCache,
+  previousSizes: FileSizeCache | null,
 ) {
   const logs: string[] = [];
   const showDetail = options.detail !== false;
+  const showDiff = options.diff !== false && previousSizes !== null;
   let showTotal = options.total !== false;
-  const showDiff = options.diff === true;
 
   if (!showTotal && !showDetail) {
     return { logs, currentSizes: {} };
@@ -180,24 +180,12 @@ async function printFileSizes(
     const size = Buffer.byteLength(contents);
     const compressible = options.compressed && isCompressible(fileName);
     const gzippedSize = compressible ? await gzipSize(contents) : null;
-    const gzipSizeLabel = gzippedSize
+    let gzipSizeLabel = gzippedSize
       ? getAssetColor(gzippedSize)(calcFileSize(gzippedSize))
       : null;
 
     // Normalize filename for comparison (remove hash)
     const normalizedName = normalizeFileName(fileName);
-    const previousSizeData = previousSizes[environmentName]?.[normalizedName];
-    const previousSize = previousSizeData?.size;
-
-    // Calculate size differences for inline display
-    let sizeDiff: number | null = null;
-    let gzipDiff: number | null = null;
-    if (showDiff && previousSize !== undefined) {
-      sizeDiff = size - previousSize;
-      if (gzippedSize && previousSizeData?.gzippedSize !== undefined) {
-        gzipDiff = gzippedSize - previousSizeData.gzippedSize;
-      }
-    }
 
     // Store current size for next build
     currentSizes[normalizedName] = {
@@ -205,18 +193,26 @@ async function printFileSizes(
       gzippedSize: gzippedSize ?? undefined,
     };
 
-    const isNew = showDiff && previousSize === undefined;
-
     // Append inline diff to sizeLabel
     let sizeLabel = calcFileSize(size);
     let sizeLabelLength = sizeLabel.length;
-    if (isNew) {
-      sizeLabel += ` ${color.cyan('(NEW)')}`;
-      sizeLabelLength += 6;
-    } else if (sizeDiff !== null && sizeDiff !== 0) {
-      const { label, length } = formatDiff(sizeDiff);
-      sizeLabel += ` ${label}`;
-      sizeLabelLength += length + 1;
+
+    // Calculate size differences for inline display
+    if (showDiff) {
+      const sizeData = previousSizes[environmentName]?.[normalizedName];
+      const sizeDiff = size - (sizeData?.size ?? 0);
+      if (sizeDiff !== 0) {
+        const { label, length } = formatDiff(sizeDiff);
+        sizeLabel += ` ${label}`;
+        sizeLabelLength += length + 1;
+      }
+
+      if (gzippedSize) {
+        const gzipDiff = gzippedSize - (sizeData?.gzippedSize ?? 0);
+        if (gzipDiff !== 0) {
+          gzipSizeLabel += ` ${formatDiff(gzipDiff).label}`;
+        }
+      }
     }
 
     return {
@@ -227,8 +223,6 @@ async function printFileSizes(
       name: path.basename(fileName),
       gzippedSize,
       gzipSizeLabel,
-      gzipDiff,
-      isNew,
     };
   };
 
@@ -317,14 +311,8 @@ async function printFileSizes(
     );
 
     for (const asset of assets) {
-      let { sizeLabel, sizeLabelLength, gzipSizeLabel, gzipDiff, isNew } =
-        asset;
+      let { sizeLabel, sizeLabelLength, gzipSizeLabel } = asset;
       const { name, folder } = asset;
-
-      // Append inline diff to gzipSizeLabel (only for existing files with changes)
-      if (gzipSizeLabel && !isNew && gzipDiff !== null && gzipDiff !== 0) {
-        gzipSizeLabel += ` ${formatDiff(gzipDiff).label}`;
-      }
 
       const fileNameLength = (folder + path.sep + name).length;
 
@@ -424,7 +412,7 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
       // Load previous build sizes for comparison (only if diff is enabled)
       const previousSizes = showDiff
         ? await loadPreviousSizes(api.context.cachePath)
-        : {};
+        : null;
       const newCache: FileSizeCache = {};
 
       const logs = await Promise.all(
