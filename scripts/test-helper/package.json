@@ -30,7 +30,7 @@
     "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@rslib/core": "0.18.2"
+    "@rslib/core": "0.18.3"
   },
   "publishConfig": {
     "access": "public",
