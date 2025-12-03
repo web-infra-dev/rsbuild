@@ -11,7 +11,7 @@ type PrintFileSizeOptions =
       compressed?: boolean;
       include?: (asset: PrintFileSizeAsset) => boolean;
       exclude?: (asset: PrintFileSizeAsset) => boolean;
-      showDiff?: boolean;
+      diff?: boolean;
     };
 ```
 
@@ -33,7 +33,7 @@ The default output log is as follows:
                                  Total:   143.0 kB    46.3 kB
 ```
 
-When `showDiff` is enabled, size changes are shown inline in parentheses:
+When `diff` is enabled, size changes are shown inline in parentheses:
 
 ```
   File (web)                              Size             Gzip
@@ -250,7 +250,7 @@ export default {
 };
 ```
 
-### showDiff
+### diff
 
 - **Type:** `boolean`
 - **Default:** `false`
@@ -265,7 +265,7 @@ To enable the diff display:
 export default {
   performance: {
     printFileSize: {
-      showDiff: true,
+      diff: true,
     },
   },
 };
@@ -286,3 +286,9 @@ The output will show size changes inline:
 - Size decreases are shown in **green** with a `-` prefix
 - New files are marked with a **cyan** `(NEW)` label
 - Unchanged files don't show any diff
+
+## Version history
+
+| Version | Changes             |
+| ------- | ------------------- |
+| v1.6.13 | Added `diff` option |
