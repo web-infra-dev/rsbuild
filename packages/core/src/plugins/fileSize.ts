@@ -399,7 +399,7 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
   name: 'rsbuild:file-size',
 
   setup(api) {
-    api.onAfterBuild(async ({ stats, environments, isFirstCompile }) => {
+    api.onAfterBuild(async ({ stats, isFirstCompile }) => {
       const { hasErrors } = context.buildState;
       // No need to print file sizes if there is any compilation error
       if (!stats || hasErrors || !isFirstCompile) {
@@ -413,7 +413,7 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
           // uses default (false)
           return false;
         }
-        return printFileSize.diff;
+        return Boolean(printFileSize.diff);
       });
 
       // Load previous build sizes for comparison (only if showDiff is enabled)
@@ -425,7 +425,7 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
       const logs: string[] = [];
 
       await Promise.all(
-        Object.values(environments).map(async (environment, index) => {
+        context.environmentList.map(async (environment, index) => {
           const { printFileSize } = environment.config.performance;
 
           if (printFileSize === false) {
@@ -435,10 +435,9 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
           const defaultConfig: PrintFileSizeOptions = {
             total: true,
             detail: true,
+            diff: false,
             // print compressed size for the browser targets by default
             compressed: environment.config.output.target !== 'node',
-            // disable diff by default to avoid breaking existing output expectations
-            diff: false,
           };
 
           const mergedConfig =
