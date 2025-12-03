@@ -406,14 +406,19 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
         return;
       }
 
+      const environments = context.environmentList.filter(
+        ({ config }) => config.performance.printFileSize !== false,
+      );
+
+      // If no environment has printFileSize enabled, skip
+      if (!environments.length) {
+        return;
+      }
+
       // Check if any environment has diff enabled
-      const showDiff = context.environmentList.some((environment) => {
+      const showDiff = environments.some((environment) => {
         const { printFileSize } = environment.config.performance;
-        if (typeof printFileSize === 'boolean') {
-          // uses default (false)
-          return false;
-        }
-        return Boolean(printFileSize.diff);
+        return typeof printFileSize === 'object' && Boolean(printFileSize.diff);
       });
 
       // Load previous build sizes for comparison (only if diff is enabled)
@@ -422,22 +427,15 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
         : {};
       const newCache: FileSizeCache = {};
 
-      const logs: string[] = [];
-
-      await Promise.all(
-        context.environmentList.map(async (environment, index) => {
-          const { printFileSize } = environment.config.performance;
-
-          if (printFileSize === false) {
-            return;
-          }
-
+      const logs = await Promise.all(
+        environments.map(async ({ name, config, distPath }, index) => {
+          const { printFileSize } = config.performance;
           const defaultConfig: PrintFileSizeOptions = {
             total: true,
             detail: true,
             diff: false,
             // print compressed size for the browser targets by default
-            compressed: environment.config.output.target !== 'node',
+            compressed: config.output.target !== 'node',
           };
 
           const mergedConfig =
@@ -453,24 +451,26 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
             mergedConfig,
             statsItem,
             api.context.rootPath,
-            environment.distPath,
-            environment.name,
+            distPath,
+            name,
             previousSizes,
           );
 
-          logs.push(...statsLogs);
-
           // Store current sizes for this environment
-          newCache[environment.name] = currentSizes;
+          newCache[name] = currentSizes;
+
+          return statsLogs.join('\n');
         }),
       ).catch((err: unknown) => {
         logger.warn('Failed to print file size.');
         logger.warn(err);
       });
 
-      logger.log(logs.join('\n'));
+      if (logs) {
+        logger.log(logs.join('\n'));
+      }
 
-      // Save current sizes for next build comparison (only if showDiff is enabled)
+      // Save current sizes for next build comparison (only if diff is enabled)
       if (showDiff) {
         await saveSizes(api.context.cachePath, newCache);
       }
