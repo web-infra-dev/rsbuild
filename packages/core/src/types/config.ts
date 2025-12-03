@@ -687,6 +687,11 @@ export type PrintFileSizeOptions = {
    * @default (asset) => /\.(?:map|LICENSE\.txt)$/.test(asset.name)
    */
   exclude?: (asset: PrintFileSizeAsset) => boolean;
+  /**
+   * Whether to show file size difference compared to the previous build.
+   * @default false
+   */
+  showDiff?: boolean;
 };
 
 export interface PreconnectOption {
