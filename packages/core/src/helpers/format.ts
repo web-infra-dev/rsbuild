@@ -96,7 +96,7 @@ function formatModuleTrace(stats: StatsError, errorFile: string) {
   if (errorFile) {
     const formatted = removeLoaderChainDelimiter(errorFile);
     if (moduleNames[0] !== formatted) {
-      moduleNames.unshift(errorFile);
+      moduleNames.unshift(formatted);
     }
   }
 
