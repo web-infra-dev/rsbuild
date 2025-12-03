@@ -236,7 +236,7 @@ export default {
 
 Whether to show file size difference compared to the previous build.
 
-When enabled, Rsbuild will cache the file sizes after each build and display the difference inline in parentheses on subsequent builds. The cache is stored in `node_modules/.cache/rsbuild/file-sizes.json`.
+When enabled, Rsbuild will snapshot the file sizes after each build and display the difference inline in parentheses on subsequent builds. The snapshot file is stored in `<root>/node_modules/.cache/rsbuild/file-sizes.json`.
 
 To enable the diff display:
 
