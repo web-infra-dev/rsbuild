@@ -416,7 +416,7 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
         return Boolean(printFileSize.diff);
       });
 
-      // Load previous build sizes for comparison (only if showDiff is enabled)
+      // Load previous build sizes for comparison (only if diff is enabled)
       const previousSizes = showDiff
         ? await loadPreviousSizes(api.context.cachePath)
         : {};
