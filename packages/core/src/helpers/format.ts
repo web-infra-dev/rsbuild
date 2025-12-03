@@ -102,7 +102,7 @@ function formatModuleTrace(stats: StatsError, errorFile: string) {
 
   const rawTrace = moduleNames
     .reverse()
-    .map((item) => `\n  ${removeLoaderChainDelimiter(item)}`)
+    .map((item) => `\n  ${item}`)
     .join('');
 
   return color.dim(
