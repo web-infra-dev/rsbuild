@@ -18,14 +18,16 @@ import type {
   Rspack,
 } from '../types';
 
-interface FileSizeCache {
-  [environmentName: string]: {
-    [fileName: string]: {
-      size: number;
-      gzippedSize?: number;
-    };
+type SizeMap = {
+  [fileName: string]: {
+    size: number;
+    gzippedSize?: number;
   };
-}
+};
+
+type SizeSnapshots = {
+  [environmentName: string]: SizeMap;
+};
 
 const gzip = promisify(zlib.gzip);
 
@@ -35,8 +37,8 @@ async function gzipSize(input: Buffer) {
 }
 
 /** Get the cache file path for storing previous build sizes */
-function getCacheFilePath(cachePath: string): string {
-  return path.join(cachePath, 'file-sizes-cache.json');
+function getSnapshotPath(dir: string): string {
+  return path.join(dir, 'rsbuild/file-sizes.json');
 }
 
 /** Normalize file name by removing hash for comparison across builds */
@@ -45,32 +47,33 @@ export function normalizeFileName(fileName: string): string {
   return fileName.replace(/\.[a-f0-9]{8,}\./g, '.');
 }
 
-/** Load previous build file sizes from cache */
-async function loadPreviousSizes(cachePath: string): Promise<FileSizeCache> {
-  const cacheFile = getCacheFilePath(cachePath);
+/** Load previous build file sizes from snapshots */
+async function loadPreviousSizes(dir: string): Promise<SizeSnapshots | null> {
+  const snapshotPath = getSnapshotPath(dir);
   try {
-    const content = await fs.promises.readFile(cacheFile, 'utf-8');
+    const content = await fs.promises.readFile(snapshotPath, 'utf-8');
     return JSON.parse(content);
   } catch {
-    // Cache doesn't exist or is invalid, return empty cache
-    return {};
+    // Cache doesn't exist or is invalid
+    return null;
   }
 }
 
-/** Save current build file sizes to cache */
-async function saveSizes(
-  cachePath: string,
-  cache: FileSizeCache,
+/** Save current build file sizes to snapshots */
+async function saveSnapshots(
+  dir: string,
+  snapshots: SizeSnapshots,
 ): Promise<void> {
-  const cacheFile = getCacheFilePath(cachePath);
-  const cacheDir = path.dirname(cacheFile);
-
+  const snapshotPath = getSnapshotPath(dir);
   try {
-    await fs.promises.mkdir(cacheDir, { recursive: true });
-    await fs.promises.writeFile(cacheFile, JSON.stringify(cache, null, 2));
+    await fs.promises.mkdir(path.dirname(snapshotPath), { recursive: true });
+    await fs.promises.writeFile(
+      snapshotPath,
+      JSON.stringify(snapshots, null, 2),
+    );
   } catch (err) {
-    // Fail silently - cache is not critical
-    logger.debug('Failed to save file size cache:', err);
+    // Fail silently - snapshots is not critical
+    logger.debug('Failed to save file size snapshots:', err);
   }
 }
 
@@ -157,7 +160,7 @@ async function printFileSizes(
   rootPath: string,
   distPath: string,
   environmentName: string,
-  previousSizes: FileSizeCache | null,
+  previousSizes: SizeSnapshots | null,
 ) {
   const logs: string[] = [];
   const showDetail = options.detail !== false;
@@ -165,14 +168,12 @@ async function printFileSizes(
   let showTotal = options.total !== false;
 
   if (!showTotal && !showDetail) {
-    return { logs, currentSizes: {} };
+    return { logs };
   }
 
   const exclude = options.exclude ?? excludeAsset;
   const relativeDistPath = path.relative(rootPath, distPath);
-  const currentSizes: {
-    [fileName: string]: { size: number; gzippedSize?: number };
-  } = {};
+  const sizes: SizeMap = {};
 
   const formatAsset = async (asset: RsbuildAsset) => {
     const fileName = asset.name.split('?')[0];
@@ -185,7 +186,7 @@ async function printFileSizes(
     const normalizedName = normalizeFileName(fileName);
 
     // Store current size for next build
-    currentSizes[normalizedName] = {
+    sizes[normalizeFileName(fileName)] = {
       size,
       gzippedSize: gzippedSize ?? undefined,
     };
@@ -249,7 +250,7 @@ async function printFileSizes(
   const assets = await getAssets();
 
   if (assets.length === 0) {
-    return { logs, currentSizes: {} };
+    return { logs };
   }
 
   logs.push('');
@@ -380,7 +381,7 @@ async function printFileSizes(
 
   logs.push('');
 
-  return { logs, currentSizes };
+  return { logs, sizes };
 }
 
 export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
@@ -413,7 +414,7 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
       const previousSizes = showDiff
         ? await loadPreviousSizes(api.context.cachePath)
         : null;
-      const newCache: FileSizeCache = {};
+      const nextSizes: SizeSnapshots = {};
 
       const logs = await Promise.all(
         environments.map(async ({ name, index, config, distPath }) => {
@@ -435,7 +436,7 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
                 };
 
           const statsItem = 'stats' in stats ? stats.stats[index] : stats;
-          const { logs: statsLogs, currentSizes } = await printFileSizes(
+          const { logs: sizeLogs, sizes } = await printFileSizes(
             mergedConfig,
             statsItem,
             api.context.rootPath,
@@ -445,9 +446,11 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
           );
 
           // Store current sizes for this environment
-          newCache[name] = currentSizes;
+          if (sizes) {
+            nextSizes[name] = sizes;
+          }
 
-          return statsLogs.join('\n');
+          return sizeLogs.join('\n');
         }),
       ).catch((err: unknown) => {
         logger.warn('Failed to print file size.');
@@ -460,7 +463,7 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
 
       // Save current sizes for next build comparison (only if diff is enabled)
       if (showDiff) {
-        await saveSizes(api.context.cachePath, newCache);
+        await saveSnapshots(api.context.cachePath, nextSizes);
       }
     });
   },
