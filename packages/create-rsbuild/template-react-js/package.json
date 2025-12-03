@@ -9,11 +9,11 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1"
   },
   "devDependencies": {
-    "@rsbuild/core": "^1.6.10",
+    "@rsbuild/core": "^1.6.12",
     "@rsbuild/plugin-react": "^1.4.2"
   }
 }
