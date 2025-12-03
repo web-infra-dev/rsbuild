@@ -180,9 +180,6 @@ async function printFileSizes(
     const size = Buffer.byteLength(contents);
     const compressible = options.compressed && isCompressible(fileName);
     const gzippedSize = compressible ? await gzipSize(contents) : null;
-    let gzipSizeLabel = gzippedSize
-      ? getAssetColor(gzippedSize)(calcFileSize(gzippedSize))
-      : null;
 
     // Normalize filename for comparison (remove hash)
     const normalizedName = normalizeFileName(fileName);
@@ -196,6 +193,9 @@ async function printFileSizes(
     // Append inline diff to sizeLabel
     let sizeLabel = calcFileSize(size);
     let sizeLabelLength = sizeLabel.length;
+    let gzipSizeLabel = gzippedSize
+      ? getAssetColor(gzippedSize)(calcFileSize(gzippedSize))
+      : null;
 
     // Calculate size differences for inline display
     if (showDiff) {
