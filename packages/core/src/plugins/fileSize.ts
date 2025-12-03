@@ -104,18 +104,11 @@ const getAssetColor = (size: number) => {
 function getHeader(
   maxFileLength: number,
   maxSizeLength: number,
-  maxDiffLength: number,
   fileHeader: string,
-  showDiffHeader: boolean,
   showGzipHeader: boolean,
 ) {
   const lengths = [maxFileLength, maxSizeLength];
   const rowTypes = [fileHeader, 'Size'];
-
-  if (showDiffHeader) {
-    rowTypes.push('Diff');
-    lengths.push(maxDiffLength);
-  }
 
   if (showGzipHeader) {
     rowTypes.push('Gzip');
@@ -169,7 +162,7 @@ async function printFileSizes(
   const logs: string[] = [];
   const showDetail = options.detail !== false;
   let showTotal = options.total !== false;
-  const showDiff = options.showDiff === true;
+  const showDiff = options.diff === true;
 
   if (!showTotal && !showDetail) {
     return { logs, currentSizes: {} };
@@ -320,14 +313,7 @@ async function printFileSizes(
     );
 
     logs.push(
-      getHeader(
-        maxFileLength,
-        maxSizeLength,
-        0,
-        fileHeader,
-        false,
-        showGzipHeader,
-      ),
+      getHeader(maxFileLength, maxSizeLength, fileHeader, showGzipHeader),
     );
 
     for (const asset of assets) {
@@ -413,23 +399,25 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
   name: 'rsbuild:file-size',
 
   setup(api) {
-    api.onAfterBuild(async ({ stats, environments, isFirstCompile }) => {
+    api.onAfterBuild(async ({ stats, isFirstCompile }) => {
       const { hasErrors } = context.buildState;
       // No need to print file sizes if there is any compilation error
       if (!stats || hasErrors || !isFirstCompile) {
         return;
       }
 
-      // Check if any environment has showDiff enabled
-      const hasShowDiff = Object.values(environments).some((environment) => {
+      // Check if any environment has diff enabled
+      const showDiff = context.environmentList.some((environment) => {
         const { printFileSize } = environment.config.performance;
-        if (printFileSize === false) return false;
-        if (printFileSize === true) return false; // uses default (false)
-        return printFileSize.showDiff === true;
+        if (typeof printFileSize === 'boolean') {
+          // uses default (false)
+          return false;
+        }
+        return Boolean(printFileSize.diff);
       });
 
-      // Load previous build sizes for comparison (only if showDiff is enabled)
-      const previousSizes = hasShowDiff
+      // Load previous build sizes for comparison (only if diff is enabled)
+      const previousSizes = showDiff
         ? await loadPreviousSizes(api.context.cachePath)
         : {};
       const newCache: FileSizeCache = {};
@@ -437,7 +425,7 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
       const logs: string[] = [];
 
       await Promise.all(
-        Object.values(environments).map(async (environment, index) => {
+        context.environmentList.map(async (environment, index) => {
           const { printFileSize } = environment.config.performance;
 
           if (printFileSize === false) {
@@ -447,10 +435,9 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
           const defaultConfig: PrintFileSizeOptions = {
             total: true,
             detail: true,
+            diff: false,
             // print compressed size for the browser targets by default
             compressed: environment.config.output.target !== 'node',
-            // disable diff by default to avoid breaking existing output expectations
-            showDiff: false,
           };
 
           const mergedConfig =
@@ -484,7 +471,7 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
       logger.log(logs.join('\n'));
 
       // Save current sizes for next build comparison (only if showDiff is enabled)
-      if (hasShowDiff) {
+      if (showDiff) {
         await saveSizes(api.context.cachePath, newCache);
       }
     });

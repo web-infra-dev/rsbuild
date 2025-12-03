@@ -691,7 +691,7 @@ export type PrintFileSizeOptions = {
    * Whether to show file size difference compared to the previous build.
    * @default false
    */
-  showDiff?: boolean;
+  diff?: boolean;
 };
 
 export interface PreconnectOption {
