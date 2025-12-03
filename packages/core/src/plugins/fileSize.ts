@@ -81,11 +81,14 @@ export const excludeAsset = (asset: PrintFileSizeAsset): boolean =>
   EXCLUDE_ASSET_REGEX.test(asset.name);
 
 /** Format a size difference for inline display */
-const formatDiff = (diff: number): string => {
-  const diffStr = calcFileSize(Math.abs(diff));
+const formatDiff = (diff: number) => {
   const sign = diff > 0 ? '+' : '-';
+  const label = `(${sign}${calcFileSize(Math.abs(diff))})`;
   const colorFn = diff > 0 ? color.red : color.green;
-  return colorFn(`(${sign}${diffStr})`);
+  return {
+    label: colorFn(label),
+    length: label.length,
+  };
 };
 
 const getAssetColor = (size: number) => {
@@ -209,16 +212,30 @@ async function printFileSizes(
       gzippedSize: gzippedSize ?? undefined,
     };
 
+    const isNew = showDiff && previousSize === undefined;
+
+    // Append inline diff to sizeLabel
+    let sizeLabel = calcFileSize(size);
+    let sizeLabelLength = sizeLabel.length;
+    if (isNew) {
+      sizeLabel += ` ${color.cyan('(NEW)')}`;
+      sizeLabelLength += 6;
+    } else if (sizeDiff !== null && sizeDiff !== 0) {
+      const { label, length } = formatDiff(sizeDiff);
+      sizeLabel += ` ${label}`;
+      sizeLabelLength += length + 1;
+    }
+
     return {
       size,
+      sizeLabel,
+      sizeLabelLength,
       folder: path.join(relativeDistPath, path.dirname(fileName)),
       name: path.basename(fileName),
       gzippedSize,
-      sizeLabel: calcFileSize(size),
       gzipSizeLabel,
-      sizeDiff,
       gzipDiff,
-      isNew: showDiff && previousSize === undefined,
+      isNew,
     };
   };
 
@@ -294,7 +311,7 @@ async function printFileSizes(
     );
 
     const maxSizeLength = Math.max(
-      ...assets.map((a) => a.sizeLabel.length),
+      ...assets.map((a) => a.sizeLabelLength),
       totalSizeStr.length,
     );
 
@@ -314,25 +331,24 @@ async function printFileSizes(
     );
 
     for (const asset of assets) {
-      let { sizeLabel, gzipSizeLabel, sizeDiff, gzipDiff, isNew } = asset;
+      let { sizeLabel, sizeLabelLength, gzipSizeLabel, gzipDiff, isNew } =
+        asset;
       const { name, folder } = asset;
-
-      // Append inline diff to sizeLabel
-      if (isNew) {
-        sizeLabel += ` ${color.cyan('(NEW)')}`;
-      } else if (sizeDiff !== null && sizeDiff !== 0) {
-        sizeLabel += ` ${formatDiff(sizeDiff)}`;
-      }
 
       // Append inline diff to gzipSizeLabel (only for existing files with changes)
       if (gzipSizeLabel && !isNew && gzipDiff !== null && gzipDiff !== 0) {
-        gzipSizeLabel += ` ${formatDiff(gzipDiff)}`;
+        gzipSizeLabel += ` ${formatDiff(gzipDiff).label}`;
       }
 
       const fileNameLength = (folder + path.sep + name).length;
 
       let fileNameLabel =
         color.dim(asset.folder + path.sep) + coloringAssetName(asset.name);
+
+      if (sizeLabelLength < maxSizeLength) {
+        const rightPadding = ' '.repeat(maxSizeLength - sizeLabelLength);
+        sizeLabel += rightPadding;
+      }
 
       if (fileNameLength < maxFileLength) {
         const rightPadding = ' '.repeat(maxFileLength - fileNameLength);
