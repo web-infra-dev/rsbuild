@@ -36,7 +36,7 @@ async function gzipSize(input: Buffer) {
 
 /** Get the cache file path for storing previous build sizes */
 function getCacheFilePath(cachePath: string): string {
-  return path.join(cachePath, 'file-sizes-cache.json');
+  return path.join(cachePath, 'rsbuild/file-sizes.json');
 }
 
 /** Normalize file name by removing hash for comparison across builds */
@@ -46,14 +46,16 @@ export function normalizeFileName(fileName: string): string {
 }
 
 /** Load previous build file sizes from cache */
-async function loadPreviousSizes(cachePath: string): Promise<FileSizeCache> {
+async function loadPreviousSizes(
+  cachePath: string,
+): Promise<FileSizeCache | null> {
   const cacheFile = getCacheFilePath(cachePath);
   try {
     const content = await fs.promises.readFile(cacheFile, 'utf-8');
     return JSON.parse(content);
   } catch {
     // Cache doesn't exist or is invalid, return empty cache
-    return {};
+    return null;
   }
 }
 
