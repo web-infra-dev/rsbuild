@@ -43,7 +43,7 @@ jobs:
     if: github.repository == 'web-infra-dev/rsbuild' && github.event_name == 'workflow_dispatch'
     steps:
       - name: Trigger Ecosystem CI
-        uses: rspack-contrib/rstack-ecosystem-ci/.github/actions/ecosystem_ci_dispatch@d93d296aeeef028cfbc13217eb9c9f8c3c7ce1ac # v0.1.0
+        uses: rspack-contrib/rstack-ecosystem-ci/.github/actions/ecosystem_ci_dispatch@dd1608e61be90afc786a7e8d5a846ae5e5a0d940 # v0.2.0
         with:
           github-token: ${{ secrets.REPO_RSBUILD_ECO_CI_GITHUB_TOKEN_NEXT }}
           ecosystem-owner: web-infra-dev
@@ -58,7 +58,7 @@ jobs:
     if: github.repository == 'web-infra-dev/rsbuild' && github.event_name != 'workflow_dispatch' && needs.changes.outputs.changed == 'true'
     steps:
       - name: Trigger Ecosystem CI
-        uses: rspack-contrib/rstack-ecosystem-ci/.github/actions/ecosystem_ci_per_commit@d93d296aeeef028cfbc13217eb9c9f8c3c7ce1ac # v0.1.0
+        uses: rspack-contrib/rstack-ecosystem-ci/.github/actions/ecosystem_ci_per_commit@dd1608e61be90afc786a7e8d5a846ae5e5a0d940 # v0.2.0
         with:
           github-token: ${{ secrets.REPO_RSBUILD_ECO_CI_GITHUB_TOKEN_NEXT }}
           ecosystem-owner: web-infra-dev
