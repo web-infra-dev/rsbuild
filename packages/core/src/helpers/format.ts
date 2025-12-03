@@ -83,7 +83,10 @@ function formatModuleTrace(stats: StatsError, errorFile: string) {
   }
 
   const moduleNames = stats.moduleTrace
-    .map((trace) => trace.originName)
+    .map(
+      (trace) =>
+        trace.originName && removeLoaderChainDelimiter(trace.originName),
+    )
     .filter(Boolean) as string[];
 
   if (!moduleNames.length) {
@@ -91,15 +94,20 @@ function formatModuleTrace(stats: StatsError, errorFile: string) {
   }
 
   if (errorFile) {
-    moduleNames.unshift(`${errorFile} ${color.bold(color.red('×'))}`);
+    const formatted = removeLoaderChainDelimiter(errorFile);
+    if (moduleNames[0] !== formatted) {
+      moduleNames.unshift(errorFile);
+    }
   }
 
   const rawTrace = moduleNames
     .reverse()
-    .map((item) => `\n  ${item}`)
+    .map((item) => `\n  ${removeLoaderChainDelimiter(item)}`)
     .join('');
 
-  return color.dim(`Import traces (entry → error):${rawTrace}`);
+  return color.dim(
+    `Import traces (entry → error):${rawTrace} ${color.bold(color.red('×'))}`,
+  );
 }
 
 function hintUnknownFiles(message: string): string {
