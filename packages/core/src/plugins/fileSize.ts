@@ -428,7 +428,7 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
       const newCache: FileSizeCache = {};
 
       const logs = await Promise.all(
-        environments.map(async ({ name, config, distPath }, index) => {
+        environments.map(async ({ name, index, config, distPath }) => {
           const { printFileSize } = config.performance;
           const defaultConfig: PrintFileSizeOptions = {
             total: true,
