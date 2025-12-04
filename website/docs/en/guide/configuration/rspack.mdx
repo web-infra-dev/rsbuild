@@ -15,20 +15,45 @@ You can also view it through [debug mode](/guide/debug/debug-mode).
 ## Modify config object
 
 You can use the [tools.rspack](/config/tools/rspack) option of Rsbuild to modify the Rspack config object.
+Here is a smooth and natural English translation.
 
-For example, register Rspack plugins or webpack plugins:
+For example, registering a built-in Rspack plugin:
 
 ```ts title="rsbuild.config.ts"
+import { rspack } from '@rsbuild/core';
+
 export default {
   tools: {
     rspack: {
-      plugins: [SomeWebpackPlugin()],
+      plugins: [
+        new rspack.CircularDependencyRspackPlugin({
+          // options
+        }),
+      ],
     },
   },
 };
 ```
 
-Or modify the Rspack config with a function:
+Or registering a community webpack plugin:
+
+```ts title="rsbuild.config.ts"
+import { sentryWebpackPlugin } from '@sentry/webpack-plugin';
+
+export default {
+  tools: {
+    rspack: {
+      plugins: [
+        new sentryWebpackPlugin({
+          // options
+        }),
+      ],
+    },
+  },
+};
+```
+
+Or modify the built-in Rspack config with a function:
 
 ```ts title="rsbuild.config.ts"
 export default {

@@ -16,19 +16,43 @@ Rsbuild 提供了 [rsbuild inspect](/guide/basic/cli#rsbuild-inspect) 命令来�
 
 你可以使用 Rsbuild 的 [tools.rspack](/config/tools/rspack) 选项来修改 Rspack 配置对象。
 
-比如注册 Rspack 插件或 webpack 插件：
+比如注册一个 Rspack 内置的插件：
 
 ```ts title="rsbuild.config.ts"
+import { rspack } from '@rsbuild/core';
+
 export default {
   tools: {
     rspack: {
-      plugins: [SomeWebpackPlugin()],
+      plugins: [
+        new rspack.CircularDependencyRspackPlugin({
+          // options
+        }),
+      ],
     },
   },
 };
 ```
 
-比如以函数的形式修改 Rspack 配置：
+或是注册一个社区的 webpack 插件：
+
+```ts title="rsbuild.config.ts"
+import { sentryWebpackPlugin } from '@sentry/webpack-plugin';
+
+export default {
+  tools: {
+    rspack: {
+      plugins: [
+        new sentryWebpackPlugin({
+          // options
+        }),
+      ],
+    },
+  },
+};
+```
+
+或是以函数的形式修改内置的 Rspack 配置：
 
 ```ts title="rsbuild.config.ts"
 export default {
