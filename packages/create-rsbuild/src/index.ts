@@ -97,4 +97,11 @@ create({
   ],
   getTemplateName,
   mapESLintTemplate,
+  extraTools: [
+    {
+      value: 'storybook',
+      label: 'Add Storybook for component development',
+      command: 'npm create storybook@latest -- --skip-install --features docs',
+    },
+  ],
 });
