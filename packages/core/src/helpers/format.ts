@@ -1,4 +1,5 @@
 import { sep } from 'node:path';
+import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import type { StatsError } from '@rspack/core';
 import { isVerbose } from '../logger';
 import { removeLoaderChainDelimiter } from './stats';
@@ -207,7 +208,7 @@ const hintNodePolyfill = (message: string): string => {
     return message;
   }
 
-  const matchArray = message.match(/Can't resolve '(\w+)'/);
+  const matchArray = stripAnsi(message).match(/Can't resolve '(\w+)'/);
   if (!matchArray) {
     return message;
   }
