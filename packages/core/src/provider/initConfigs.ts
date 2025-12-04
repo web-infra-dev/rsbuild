@@ -321,16 +321,20 @@ export async function initConfigs({
 }> {
   const normalizedConfig = await initRsbuildConfig({ context, pluginManager });
 
-  const rspackConfigs = await Promise.all(
-    Object.entries(normalizedConfig.environments).map(
-      ([environmentName, config]) =>
-        generateRspackConfig({
-          target: config.output.target,
-          context,
-          environmentName,
-        }),
-    ),
-  );
+  const rspackConfigs: Rspack.Configuration[] = [];
+
+  // Generate Rspack configs sequentially to ensure deterministic ordering and stable results
+  for (const [environmentName, config] of Object.entries(
+    normalizedConfig.environments,
+  )) {
+    rspackConfigs.push(
+      await generateRspackConfig({
+        target: config.output.target,
+        context,
+        environmentName,
+      }),
+    );
+  }
 
   // write Rsbuild config and Rspack config to disk in debug mode
   if (isDebug()) {

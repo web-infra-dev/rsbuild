@@ -39,8 +39,9 @@ export const gzipMiddleware = ({
     }
 
     let gzip: zlib.Gzip | undefined;
-    let writeHeadStatus: number | undefined;
     let started = false;
+    let writeHeadStatus: number | undefined;
+    let writeHeadMessage: string | undefined;
 
     const on = res.on.bind(res);
     const end = res.end.bind(res);
@@ -81,16 +82,29 @@ export const gzipMiddleware = ({
         }
       }
 
-      writeHead(writeHeadStatus ?? res.statusCode);
+      const statusCode = writeHeadStatus ?? res.statusCode;
+
+      if (writeHeadMessage !== undefined) {
+        writeHead(statusCode, writeHeadMessage);
+      } else {
+        writeHead(statusCode);
+      }
     };
 
     res.writeHead = (status, reason, headers?) => {
-      if (reason) {
-        for (const [key, value] of Object.entries(headers || reason)) {
+      writeHeadStatus = status;
+
+      if (typeof reason === 'string') {
+        writeHeadMessage = reason;
+      }
+
+      const resolvedHeaders = typeof reason === 'string' ? headers : reason;
+      if (resolvedHeaders) {
+        for (const [key, value] of Object.entries(resolvedHeaders)) {
           res.setHeader(key, value);
         }
       }
-      writeHeadStatus = status;
+
       return res;
     };
 

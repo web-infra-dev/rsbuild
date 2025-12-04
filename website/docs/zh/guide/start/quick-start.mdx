@@ -46,23 +46,23 @@ import { PackageManagerTabs } from '@theme';
 
 - 执行 `git init` 来初始化 Git 仓库。
 - 执行 `npm install`（或其他包管理器的 install 命令）安装 npm 依赖。
-- 执行 `npm run dev` 启动开发服务器，服务器默认运行在 `localhost:5173`。
+- 执行 `npm run dev` 启动开发服务器，服务器默认运行在 `localhost:3000`。
 
 ### 模板
 
-在创建应用时，你可以选择 `create-rsbuild` 提供的下列模板：
+在创建应用时，你可以选择 `create-rsbuild` 提供的下列模板，查看集成指南了解更多信息。
 
-| 模板    | 描述                            | 可选功能   |
-| ------- | ------------------------------- | ---------- |
-| vanilla | 原生 JavaScript                 | TypeScript |
-| react   | [React 19](https://react.dev/)  | TypeScript |
-| react18 | [React 18](https://react.dev/)  | TypeScript |
-| vue     | [Vue 3](https://vuejs.org/)     | TypeScript |
-| vue2    | [Vue 2](https://v2.vuejs.org/)  | TypeScript |
-| lit     | [Lit](https://lit.dev/)         | TypeScript |
-| preact  | [Preact](https://preactjs.com/) | TypeScript |
-| svelte  | [Svelte 5](https://svelte.dev/) | TypeScript |
-| solid   | [Solid](https://solidjs.com/)   | TypeScript |
+| 模板    | 官方文档                        | Rsbuild 集成指南                       |
+| ------- | ------------------------------- | -------------------------------------- |
+| vanilla | 原生 JavaScript                 | -                                      |
+| react   | [React 19](https://react.dev/)  | [使用 React](/guide/framework/react)   |
+| react18 | [React 18](https://react.dev/)  | [使用 React](/guide/framework/react)   |
+| vue     | [Vue 3](https://vuejs.org/)     | [使用 Vue](/guide/framework/vue)       |
+| vue2    | [Vue 2](https://v2.vuejs.org/)  | [使用 Vue](/guide/framework/vue)       |
+| lit     | [Lit](https://lit.dev/)         | -                                      |
+| preact  | [Preact](https://preactjs.com/) | [使用 Preact](/guide/framework/preact) |
+| svelte  | [Svelte](https://svelte.dev/)   | [使用 Svelte](/guide/framework/svelte) |
+| solid   | [Solid](https://solidjs.com/)   | [使用 Solid](/guide/framework/solid)   |
 
 `create-rsbuild` 提供了开箱即用的基础模板，你还可以通过以下方式获取更丰富的模板：
 
@@ -71,13 +71,14 @@ import { PackageManagerTabs } from '@theme';
 
 ### 可选工具
 
-`create-rsbuild` 能够帮助你设置一些常用的工具，包括 [Biome](https://github.com/biomejs/biome)、[ESLint](https://github.com/eslint/eslint) 和 [prettier](https://github.com/prettier/prettier)，你可以使用上下箭头和空格进行选择。如果你不需要这些工具，可以直接按回车跳过。
+`create-rsbuild` 能够帮助你设置一些常用的工具，包括 [Biome](https://github.com/biomejs/biome)、[ESLint](https://github.com/eslint/eslint)、[prettier](https://github.com/prettier/prettier) 和 [Storybook](https://storybook.js.org/)，你可以使用上下箭头和空格进行选择。如果你不需要这些工具，可以直接按回车跳过。
 
 ```
 ◆  Select additional tools (Use <space> to select, <enter> to continue)
 │  ◻ Add Biome for code linting and formatting
 │  ◻ Add ESLint for code linting
 │  ◻ Add Prettier for code formatting
+│  ◻ Add Storybook for component development
 └
 ```
 

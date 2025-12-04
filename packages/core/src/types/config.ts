@@ -687,6 +687,11 @@ export type PrintFileSizeOptions = {
    * @default (asset) => /\.(?:map|LICENSE\.txt)$/.test(asset.name)
    */
   exclude?: (asset: PrintFileSizeAsset) => boolean;
+  /**
+   * Whether to show file size difference compared to the previous build.
+   * @default false
+   */
+  diff?: boolean;
 };
 
 export interface PreconnectOption {
@@ -1140,26 +1145,51 @@ export type InlineChunkConfig =
   | { enable?: boolean | 'auto'; test: InlineChunkTest };
 
 export type ManifestByEntry = {
+  /**
+   * Files that are required during the initial load of the entry.
+   */
   initial?: {
+    /** Initial JavaScript files for this entry. */
     js?: string[];
+    /** Initial CSS files for this entry. */
     css?: string[];
   };
+  /**
+   * Files that may be loaded asynchronously.
+   * Usually code-split chunks or lazily loaded chunks.
+   */
   async?: {
+    /** Async JavaScript files for this entry. */
     js?: string[];
+    /** Async CSS files for this entry. */
     css?: string[];
   };
-  /** other assets (e.g. png、svg、source map) related to the current entry */
-  assets?: string[];
+  /** HTML files generated for this entry, if any. */
   html?: string[];
+  /**
+   * Additional assets associated with this entry.
+   * For example images、fonts、source maps and other non JS or CSS files.
+   */
+  assets?: string[];
 };
 
 export type ManifestData = {
+  /**
+   * A flat list of all emitted asset files.
+   */
+  allFiles: string[];
+  /**
+   * Maps each entry name to its associated output files.
+   */
   entries: {
-    /** relate to Rsbuild's source.entry config */
     [entryName: string]: ManifestByEntry;
   };
-  /** Flatten all assets */
-  allFiles: string[];
+  /**
+   * Subresource Integrity (SRI) hashes for emitted assets.
+   * The key is the asset file path, and the value is its integrity hash.
+   * This field is available only when the `security.sri` option is enabled.
+   */
+  integrity: Record<string, string>;
 };
 
 export type ManifestObjectConfig = {
@@ -1183,6 +1213,12 @@ export type ManifestObjectConfig = {
    * @default (file: FileDescriptor) => !file.name.endsWith('.LICENSE.txt')
    */
   filter?: (file: FileDescriptor) => boolean;
+  /**
+   * Controls whether the generated manifest includes the static asset prefix in file paths.
+   * The prefix is taken from `dev.assetPrefix` and `output.assetPrefix`.
+   * @default true
+   */
+  prefix?: boolean;
 };
 
 export type ManifestConfig = string | boolean | ManifestObjectConfig;

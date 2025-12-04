@@ -203,7 +203,9 @@ export class SocketServer {
    * Send error messages to the client and render error overlay
    */
   public sendError(errors: Rspack.StatsError[], token: string): void {
-    const formattedErrors = errors.map((item) => formatStatsError(item));
+    const formattedErrors = errors.map((item) =>
+      formatStatsError(item, this.context.rootPath),
+    );
     this.sockWrite(
       {
         type: 'errors',
@@ -211,6 +213,22 @@ export class SocketServer {
           text: formattedErrors,
           html: genOverlayHTML(formattedErrors, this.context.rootPath),
         },
+      },
+      token,
+    );
+  }
+
+  /**
+   * Send warning messages to the client
+   */
+  public sendWarning(warnings: Rspack.StatsError[], token: string): void {
+    const formattedWarnings = warnings.map((item) =>
+      formatStatsError(item, this.context.rootPath),
+    );
+    this.sockWrite(
+      {
+        type: 'warnings',
+        data: { text: formattedWarnings },
       },
       token,
     );
@@ -452,15 +470,7 @@ export class SocketServer {
     }
 
     if (warnings.length > 0) {
-      const warningMessages = warnings.map((item) => formatStatsError(item));
-
-      this.sockWrite(
-        {
-          type: 'warnings',
-          data: { text: warningMessages },
-        },
-        token,
-      );
+      this.sendWarning(warnings, token);
       return;
     }
 

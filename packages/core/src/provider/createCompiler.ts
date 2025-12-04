@@ -69,6 +69,12 @@ function printBuildLog(
     : null;
 
   if (removedFiles?.length) {
+    // workaround for https://github.com/web-infra-dev/rspack/issues/11694
+    if (removedFiles.every((item) => item.includes('virtual'))) {
+      logger.start(`building ${color.dim('virtual modules')}`);
+      return;
+    }
+
     const fileInfo = formatFileList(removedFiles, context.rootPath);
     logger.start(`building ${color.dim(`removed ${fileInfo}`)}`);
     return;
@@ -225,7 +231,11 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
       context.buildState.hasErrors = hasErrors;
       context.socketServer?.onBuildDone();
 
-      const { message, level } = formatStats(stats, hasErrors);
+      const { message, level } = formatStats(
+        stats,
+        hasErrors,
+        options.context.rootPath,
+      );
 
       if (level === 'error') {
         logger.error(message);

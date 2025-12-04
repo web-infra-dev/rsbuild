@@ -111,7 +111,7 @@ function prepareWatchOptions(
   };
 }
 
-const GLOB_REGEX = /[*?{}[\]()!@+|]/;
+const GLOB_REGEX = /[*?{}[\]()!+|]/;
 /**
  * A simple glob pattern checker.
  * This can help us to avoid unnecessary tinyglobby import and call.

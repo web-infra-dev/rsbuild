@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/core",
-  "version": "1.6.7-canary-57e2a56d-20251120152633",
+  "version": "1.6.12-canary-63b4dae2-20251204065915",
   "description": "The Rspack-based build tool.",
   "homepage": "https://rsbuild.rs",
   "bugs": {
@@ -52,7 +52,7 @@
     "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
-    "@rspack/core": "npm:@rspack-canary/core@1.6.5-canary-57e2a56d-20251120152633",
+    "@rspack/core": "npm:@rspack-canary/core@1.6.7-canary-63b4dae2-20251204065915",
     "@rspack/lite-tapable": "~1.1.0",
     "@swc/helpers": "^0.5.17",
     "core-js": "~3.47.0",
@@ -61,7 +61,7 @@
   "devDependencies": {
     "@jridgewell/remapping": "^2.3.5",
     "@jridgewell/trace-mapping": "^0.3.31",
-    "@rslib/core": "0.18.0",
+    "@rslib/core": "0.18.3",
     "@types/connect": "3.4.38",
     "@types/cors": "^2.8.19",
     "@types/node": "^24.10.1",
@@ -80,10 +80,10 @@
     "html-rspack-plugin": "6.1.4",
     "http-proxy-middleware": "^2.0.9",
     "launch-editor-middleware": "^2.12.0",
-    "memfs": "^4.51.0",
+    "memfs": "^4.51.1",
     "mrmime": "^2.0.1",
     "on-finished": "2.4.1",
-    "open": "^10.2.0",
+    "open": "^11.0.0",
     "picocolors": "^1.1.1",
     "postcss": "^8.5.6",
     "postcss-load-config": "6.0.1",
@@ -91,15 +91,15 @@
     "prebundle": "1.6.0",
     "range-parser": "^1.2.1",
     "reduce-configs": "^1.1.1",
-    "rslog": "^1.3.0",
+    "rslog": "^1.3.2",
     "rspack-chain": "^1.4.1",
-    "rspack-manifest-plugin": "5.1.0",
+    "rspack-manifest-plugin": "5.2.0",
     "sirv": "^3.0.2",
     "stacktrace-parser": "^0.1.11",
     "style-loader": "3.3.4",
     "tinyglobby": "0.2.14",
     "typescript": "^5.9.3",
-    "webpack": "^5.102.1",
+    "webpack": "^5.103.0",
     "webpack-bundle-analyzer": "^4.10.2",
     "webpack-merge": "6.0.1",
     "ws": "^8.18.3"

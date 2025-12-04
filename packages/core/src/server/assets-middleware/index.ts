@@ -6,15 +6,17 @@
  * Copyright JS Foundation and other contributors
  * https://github.com/webpack/webpack-dev-middleware/blob/master/LICENSE
  */
-import { createRequire } from 'node:module';
+
+import { join } from 'node:path';
 import type { Compiler, MultiCompiler, Watching } from '@rspack/core';
-import { pick } from '../../helpers';
+import { CLIENT_PATH } from '../../constants';
+import { createVirtualModule, pick } from '../../helpers';
 import { applyToCompiler, isMultiCompiler } from '../../helpers/compiler';
+import { toPosixPath } from '../../helpers/path';
 import { logger } from '../../logger';
 import type {
   InternalContext,
   NormalizedConfig,
-  NormalizedDevConfig,
   NormalizedEnvironmentConfig,
   RequestHandler,
   Rspack,
@@ -37,32 +39,6 @@ export type AssetsMiddleware = RequestHandler & {
   watch: () => void;
   close: AssetsMiddlewareClose;
 };
-
-const require = createRequire(import.meta.url);
-let hmrClientPath: string;
-let overlayClientPath: string;
-
-function getClientPaths(devConfig: NormalizedDevConfig) {
-  const clientPaths: string[] = [];
-
-  if (!devConfig.hmr && !devConfig.liveReload) {
-    return clientPaths;
-  }
-
-  if (!hmrClientPath) {
-    hmrClientPath = require.resolve('@rsbuild/core/client/hmr');
-  }
-  clientPaths.push(hmrClientPath);
-
-  if (devConfig.client?.overlay) {
-    if (!overlayClientPath) {
-      overlayClientPath = require.resolve('@rsbuild/core/client/overlay');
-    }
-    clientPaths.push(overlayClientPath);
-  }
-
-  return clientPaths;
-}
 
 export const isClientCompiler = (compiler: Compiler): boolean => {
   const { target } = compiler.options;
@@ -99,11 +75,13 @@ export const setupServerHooks = ({
     return;
   }
 
-  // Track errors count to detect if the `done` hook is called multiple times
+  // Track errors and warnings count to detect if the `done` hook is called multiple times
   let errorsCount: number | null = null;
+  let warningsCount: number | null = null;
 
   compiler.hooks.invalid.tap('rsbuild-dev-server', (fileName) => {
     errorsCount = null;
+    warningsCount = null;
 
     // reload page when HTML template changed
     if (typeof fileName === 'string' && fileName.endsWith('.html')) {
@@ -112,38 +90,62 @@ export const setupServerHooks = ({
   });
 
   compiler.hooks.done.tap('rsbuild-dev-server', (stats) => {
-    const { errors } = stats.compilation;
-    if (errors.length === errorsCount) {
+    const { errors, warnings } = stats.compilation;
+    if (errors.length === errorsCount && warnings.length === warningsCount) {
       return;
     }
 
-    const isRecalled = errorsCount !== null;
+    const isRecalled = errorsCount !== null || warningsCount !== null;
     errorsCount = errors.length;
+    warningsCount = warnings.length;
 
     /**
-     * The ts-checker-rspack-plugin asynchronously pushes Type errors to `compilation.errors`
-     * and calls the `done` hook again, so we need to detect changes in errors and render them
-     * in the overlay.
+     * The ts-checker-rspack-plugin asynchronously pushes Type errors and warnings
+     * to `compilation.errors` and `compilation.warnings` and calls the `done` hook
+     * again, so we need to detect changes in errors/warnings and render them in the
+     * overlay or browser console.
      */
     if (isRecalled) {
       const tsErrors = errors.filter(isTsError);
-      if (!tsErrors.length) {
+      const tsWarnings = warnings.filter(isTsError);
+
+      if (!tsErrors.length && !tsWarnings.length) {
         return;
       }
 
       const { stats: statsJson } = context.buildState;
-      const statsErrors = tsErrors.map((item) =>
-        pick(item, ['message', 'file']),
-      );
 
-      if (statsJson) {
-        statsJson.errors = statsJson.errors
-          ? [...statsJson.errors, ...statsErrors]
-          : statsErrors;
+      const handleTsIssues = (
+        issues: Rspack.RspackError[],
+        type: 'errors' | 'warnings',
+        sendFn: (issues: Rspack.StatsError[], token: string) => void,
+      ) => {
+        const statsIssues = issues.map((item) =>
+          pick(item, ['message', 'file']),
+        );
+
+        if (statsJson) {
+          statsJson[type] = statsJson[type]
+            ? [...statsJson[type], ...statsIssues]
+            : statsIssues;
+        }
+
+        sendFn(statsIssues, token);
+      };
+
+      if (tsErrors.length > 0) {
+        handleTsIssues(tsErrors, 'errors', (issues, token) => {
+          socketServer.sendError(issues, token);
+        });
+        return;
       }
 
-      socketServer.sendError(statsErrors, token);
-      return;
+      if (tsWarnings.length > 0) {
+        handleTsIssues(tsWarnings, 'warnings', (issues, token) => {
+          socketServer.sendWarning(issues, token);
+        });
+        return;
+      }
     }
   });
 };
@@ -161,12 +163,10 @@ function applyHMREntry({
   resolvedHost: string;
   resolvedPort: number;
 }) {
-  if (!isClientCompiler(compiler)) {
-    return;
-  }
-
-  const clientPaths = getClientPaths(config.dev);
-  if (!clientPaths.length) {
+  if (
+    !isClientCompiler(compiler) ||
+    (!config.dev.hmr && !config.dev.liveReload)
+  ) {
     return;
   }
 
@@ -175,20 +175,24 @@ function applyHMREntry({
     clientConfig.port = resolvedPort;
   }
 
-  new compiler.webpack.DefinePlugin({
-    RSBUILD_WEB_SOCKET_TOKEN: JSON.stringify(token),
-    RSBUILD_CLIENT_CONFIG: JSON.stringify(clientConfig),
-    RSBUILD_SERVER_HOST: JSON.stringify(resolvedHost),
-    RSBUILD_SERVER_PORT: JSON.stringify(resolvedPort),
-    RSBUILD_DEV_LIVE_RELOAD: config.dev.liveReload,
-    RSBUILD_DEV_BROWSER_LOGS: config.dev.browserLogs,
-  }).apply(compiler);
+  const hmrEntry = `import { init } from '${toPosixPath(join(CLIENT_PATH, 'hmr'))}';
+${config.dev.client.overlay ? `import '${toPosixPath(join(CLIENT_PATH, 'overlay'))}';` : ''}
 
-  for (const clientPath of clientPaths) {
-    new compiler.webpack.EntryPlugin(compiler.context, clientPath, {
-      name: undefined,
-    }).apply(compiler);
-  }
+init({
+  token: '${token}',
+  config: ${JSON.stringify(clientConfig)},
+  serverHost: ${JSON.stringify(resolvedHost)},
+  serverPort: ${resolvedPort},
+  liveReload: ${config.dev.liveReload},
+  browserLogs: ${Boolean(config.dev.browserLogs)}
+});
+`;
+
+  new compiler.webpack.EntryPlugin(
+    compiler.context,
+    createVirtualModule(hmrEntry),
+    { name: undefined },
+  ).apply(compiler);
 }
 
 /**

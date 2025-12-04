@@ -149,7 +149,7 @@ export const upperFirst = (str: string): string =>
   str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
 
 export const createVirtualModule = (content: string) =>
-  `data:text/javascript,${content}`;
+  `data:text/javascript,${encodeURIComponent(content)}`;
 
 export function isWebTarget(target: RsbuildTarget | RsbuildTarget[]): boolean {
   const targets = castArray(target);

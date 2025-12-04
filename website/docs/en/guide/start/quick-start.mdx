@@ -46,23 +46,23 @@ After creating the application, follow these steps:
 
 - Run `git init` to initialize a Git repository.
 - Run `npm install` (or your package manager's install command) to install dependencies.
-- Run `npm run dev` to start the dev server, which runs on `http://localhost:5173` by default.
+- Run `npm run dev` to start the dev server, which runs on `http://localhost:3000` by default.
 
 ### Templates
 
 When creating an application, you can choose from the following templates provided by `create-rsbuild`:
 
-| Template | Description                     | Optional Features |
-| -------- | ------------------------------- | ----------------- |
-| vanilla  | Vanilla JavaScript              | TypeScript        |
-| react    | [React 19](https://react.dev/)  | TypeScript        |
-| react18  | [React 18](https://react.dev/)  | TypeScript        |
-| vue      | [Vue 3](https://vuejs.org/)     | TypeScript        |
-| vue2     | [Vue 2](https://v2.vuejs.org/)  | TypeScript        |
-| lit      | [Lit](https://lit.dev/)         | TypeScript        |
-| preact   | [Preact](https://preactjs.com/) | TypeScript        |
-| svelte   | [Svelte 5](https://svelte.dev/) | TypeScript        |
-| solid    | [Solid](https://solidjs.com/)   | TypeScript        |
+| Template | Official docs                   | Rsbuild integration guide               |
+| -------- | ------------------------------- | --------------------------------------- |
+| vanilla  | Native JavaScript               | -                                       |
+| react    | [React 19](https://react.dev/)  | [Using React](/guide/framework/react)   |
+| react18  | [React 18](https://react.dev/)  | [Using React](/guide/framework/react)   |
+| vue      | [Vue 3](https://vuejs.org/)     | [Using Vue](/guide/framework/vue)       |
+| vue2     | [Vue 2](https://v2.vuejs.org/)  | [Using Vue](/guide/framework/vue)       |
+| lit      | [Lit](https://lit.dev/)         | -                                       |
+| preact   | [Preact](https://preactjs.com/) | [Using Preact](/guide/framework/preact) |
+| svelte   | [Svelte](https://svelte.dev/)   | [Using Svelte](/guide/framework/svelte) |
+| solid    | [Solid](https://solidjs.com/)   | [Using Solid](/guide/framework/solid)   |
 
 `create-rsbuild` provides basic templates. You can find more templates at:
 
@@ -71,13 +71,14 @@ When creating an application, you can choose from the following templates provid
 
 ### Optional tools
 
-`create-rsbuild` can help you set up commonly used tools, including [Biome](https://github.com/biomejs/biome), [ESLint](https://github.com/eslint/eslint), and [Prettier](https://github.com/prettier/prettier). Use the arrow keys and space bar to make your selections. If you don't need these tools, simply press Enter to skip.
+`create-rsbuild` can help you set up commonly used tools, including [Biome](https://github.com/biomejs/biome), [ESLint](https://github.com/eslint/eslint), [Prettier](https://github.com/prettier/prettier), and [Storybook](https://storybook.js.org/). Use the arrow keys and space bar to make your selections. If you don't need these tools, simply press Enter to skip.
 
 ```
 ◆  Select additional tools (Use <space> to select, <enter> to continue)
 │  ◻ Add Biome for code linting and formatting
 │  ◻ Add ESLint for code linting
 │  ◻ Add Prettier for code formatting
+│  ◻ Add Storybook for component development
 └
 ```
 

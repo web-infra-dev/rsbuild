@@ -128,6 +128,16 @@ describe('convertLinksInHtml', () => {
     expect(convertLinksInHtml(ansiHTML(input2))).toEqual(expected2);
   });
 
+  it('should convert file path with file URI scheme', () => {
+    const input = 'file:///path/to/src/index.js:1:1';
+    const root = '/path/to';
+    const expected =
+      process.platform === 'win32'
+        ? '<a class="file-link" data-file="/path/to/src/index.js:1:1">.\\src\\index.js:1:1</a>'
+        : '<a class="file-link" data-file="/path/to/src/index.js:1:1">./src/index.js:1:1</a>';
+    expect(convertLinksInHtml(ansiHTML(input), root)).toEqual(expected);
+  });
+
   it('should convert relative path as expected', () => {
     const root = '/path/to';
     const input = '[\u001b[36;1;4m./src/index.js\u001b[0m:4:1]\n';
@@ -136,6 +146,11 @@ describe('convertLinksInHtml', () => {
         ? `[<span style="color:#6eecf7;font-weight:bold;text-decoration:underline;text-underline-offset:3px;"><a class="file-link" data-file="\\path\\to\\src\\index.js:4:1">./src/index.js:4:1</a></span>]\n`
         : `[<span style="color:#6eecf7;font-weight:bold;text-decoration:underline;text-underline-offset:3px;"><a class="file-link" data-file="${root}/src/index.js:4:1">./src/index.js:4:1</a></span>]\n`;
     expect(convertLinksInHtml(ansiHTML(input), root)).toEqual(expected);
+  });
+
+  it('should not convert node internal path', () => {
+    const input = 'at async readdir (node:internal/fs/promises:1:1)';
+    expect(convertLinksInHtml(ansiHTML(input))).toEqual(input);
   });
 
   it('should convert Windows absolute path as expected', () => {
@@ -149,6 +164,19 @@ describe('convertLinksInHtml', () => {
       '[\u001b[36;1;4mC:\\Users\\username\\project\\src\\index.js\u001b[0m:4:1]\n';
     const expected =
       '[<span style="color:#6eecf7;font-weight:bold;text-decoration:underline;text-underline-offset:3px;"><a class="file-link" data-file="C:\\Users\\username\\project\\src\\index.js:4:1">.\\src\\index.js:4:1</a></span>]\n';
+    expect(convertLinksInHtml(ansiHTML(input), root)).toEqual(expected);
+  });
+
+  it('should convert Windows absolute path with file URI scheme as expected', () => {
+    // only run on Windows
+    if (process.platform !== 'win32') {
+      return;
+    }
+
+    const root = 'C:\\Users\\username\\project';
+    const input = 'file:///C:\\Users\\username\\project\\src\\index.js:4:1';
+    const expected =
+      '<a class="file-link" data-file="C:\\Users\\username\\project\\src\\index.js:4:1">.\\src\\index.js:4:1</a>';
     expect(convertLinksInHtml(ansiHTML(input), root)).toEqual(expected);
   });
 

@@ -71,17 +71,17 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
     });
 
     expect(extractFileSizeLogs(rsbuild.logs)).toEqual(`
-File (node)                         Size
-dist/server/static/image/icon.png   X.X kB
-dist/server/index.js                X.X kB
-                           Total:   X.X kB
 File (web)                    Size       Gzip
 dist/static/css/index.css     X.X kB    X.X kB
 dist/index.html               X.X kB    X.X kB
 dist/static/js/index.js       X.X kB     X.X kB
 dist/static/image/icon.png    X.X kB
 dist/static/js/lib-react.js   X.X kB   X.X kB
-                     Total:   X.X kB   X.X kB`);
+                     Total:   X.X kB   X.X kB
+File (node)                         Size
+dist/server/static/image/icon.png   X.X kB
+dist/server/index.js                X.X kB
+                           Total:   X.X kB`);
   });
 
   test('should not print logs when printFileSize is false', async ({

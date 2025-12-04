@@ -11,6 +11,7 @@ type PrintFileSizeOptions =
       compressed?: boolean;
       include?: (asset: PrintFileSizeAsset) => boolean;
       exclude?: (asset: PrintFileSizeAsset) => boolean;
+      diff?: boolean;
     };
 ```
 
@@ -23,13 +24,13 @@ Whether to print the file sizes after production build.
 The default output log is as follows:
 
 ```
-  File (web)                              Size        Gzip
-  dist/static/js/lib-react.b0714b60.js    140.4 kB    45.0 kB
-  dist/static/js/index.f3fde9c7.js        1.9 kB      0.97 kB
-  dist/index.html                         0.39 kB     0.25 kB
-  dist/static/css/index.2960ac62.css      0.35 kB     0.26 kB
+File (web)                              Size        Gzip
+dist/static/js/lib-react.b0714b60.js    140.4 kB    45.0 kB
+dist/static/js/index.f3fde9c7.js        1.9 kB      0.97 kB
+dist/index.html                         0.39 kB     0.25 kB
+dist/static/css/index.2960ac62.css      0.35 kB     0.26 kB
 
-                                 Total:   143.0 kB    46.3 kB
+                               Total:   143.0 kB    46.3 kB
 ```
 
 ## Disable outputs
@@ -227,3 +228,45 @@ export default {
   },
 };
 ```
+
+### diff
+
+- **Type:** `boolean`
+- **Default:** `false`
+
+Whether to show file size difference compared to the previous build.
+
+When enabled, Rsbuild will snapshot the file sizes after each build and display the difference inline in parentheses on subsequent builds. The snapshot file is stored in `<root>/node_modules/.cache/rsbuild/file-sizes.json`.
+
+To enable the diff display:
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    printFileSize: {
+      diff: true,
+    },
+  },
+};
+```
+
+The output will show size changes inline:
+
+```
+File (web)                              Size                  Gzip
+dist/static/js/lib-react.b0714b60.js    140.4 kB (+2.1 kB)    45.0 kB (+0.5 kB)
+dist/static/js/index.f3fde9c7.js        1.9 kB (-0.3 kB)      0.97 kB (-0.1 kB)
+dist/static/css/index.2960ac62.css      0.35 kB (+0.35 kB)    0.26 kB (+0.26 kB)
+
+                               Total:   143.0 kB         46.3 kB
+```
+
+- Size increases are shown in **red** with a `+` prefix
+- Size decreases are shown in **green** with a `-` prefix
+- Unchanged files don't show any diff
+
+## Version history
+
+| Version | Changes             |
+| ------- | ------------------- |
+| v1.6.13 | Added `diff` option |

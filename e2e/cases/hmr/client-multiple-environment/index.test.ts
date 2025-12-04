@@ -9,7 +9,7 @@ rspackTest(
     const filenames = Object.keys(files);
     const fooJs = filenames.find((name) => name.endsWith('foo.js'));
     const barJs = filenames.find((name) => name.endsWith('bar.js'));
-    expect(files[fooJs!].includes('"host":"http://foo.com"')).toBeTruthy();
-    expect(files[barJs!].includes('"host":"http://bar.com"')).toBeTruthy();
+    expect(files[fooJs!].includes('"host": "http://foo.com"')).toBeTruthy();
+    expect(files[barJs!].includes('"host": "http://bar.com"')).toBeTruthy();
   },
 );
