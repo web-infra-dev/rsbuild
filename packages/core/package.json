@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/core",
-  "version": "1.6.12-canary-63b4dae2-20251204065915",
+  "version": "1.6.12-canary-20251204065915",
   "description": "The Rspack-based build tool.",
   "homepage": "https://rsbuild.rs",
   "bugs": {
