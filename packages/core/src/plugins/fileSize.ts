@@ -102,7 +102,7 @@ export const excludeAsset = (asset: PrintFileSizeAsset): boolean =>
   EXCLUDE_ASSET_REGEX.test(asset.name);
 
 /** Check if the size difference is significant */
-const isSignificantDiff = (diff: number) => Math.abs(diff) >= 0.01;
+const isSignificantDiff = (diff: number) => Math.abs(diff) >= 10;
 
 /** Format a size difference for inline display */
 const formatDiff = (diff: number) => {
