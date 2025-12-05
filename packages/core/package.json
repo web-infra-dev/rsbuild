@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/core",
-  "version": "1.6.12",
+  "version": "1.6.12-canary-20251204065915",
   "description": "The Rspack-based build tool.",
   "homepage": "https://rsbuild.rs",
   "bugs": {
@@ -52,7 +52,7 @@
     "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
-    "@rspack/core": "1.6.6",
+    "@rspack/core": "npm:@rspack-canary/core@1.6.7-canary-63b4dae2-20251204065915",
     "@rspack/lite-tapable": "~1.1.0",
     "@swc/helpers": "^0.5.17",
     "core-js": "~3.47.0",
