@@ -231,7 +231,7 @@ async function printFileSizes(
     const normalizedName = normalizeFilename(fileName);
 
     // Store current size for next build
-    snapshot.files[normalizeFilename(fileName)] = {
+    snapshot.files[normalizedName] = {
       size,
       gzippedSize: gzippedSize ?? undefined,
     };
