@@ -86,7 +86,7 @@ export function init({
     for (let i = 0; i < text.length; i++) {
       if (i === 5) {
         logger.warn(
-          'Additional warnings detected. View complete log in terminal for details.',
+          '[rsbuild] Additional warnings detected. View complete log in terminal for details.',
         );
         break;
       }
@@ -122,7 +122,10 @@ export function init({
     const forcedReload = err || !updatedModules;
     if (forcedReload) {
       if (err) {
-        logger.error('HMR update failed, performing full reload:', err);
+        logger.error(
+          '[rsbuild] HMR update failed, performing full reload:',
+          err,
+        );
       }
       reloadPage();
       return;
@@ -175,7 +178,7 @@ export function init({
 
   function onOpen() {
     // Notify users that the WebSocket has successfully connected.
-    logger.info('WebSocket connected.');
+    logger.info('[rsbuild] WebSocket connected.');
 
     // Reset reconnect count
     reconnectCount = 0;
@@ -225,14 +228,14 @@ export function init({
     if (reconnectCount >= config.reconnect) {
       if (config.reconnect > 0) {
         logger.warn(
-          'WebSocket connection failed after maximum retry attempts.',
+          '[rsbuild] WebSocket connection failed after maximum retry attempts.',
         );
       }
       return;
     }
 
     if (reconnectCount === 0) {
-      logger.info('WebSocket connection lost. Reconnecting...');
+      logger.info('[rsbuild] WebSocket connection lost. Reconnecting...');
     }
     removeListeners();
     socket = null;
@@ -243,7 +246,7 @@ export function init({
   function onSocketError() {
     if (formatURL() !== formatURL(true)) {
       logger.error(
-        'WebSocket connection failed. Trying direct connection fallback.',
+        '[rsbuild] WebSocket connection failed. Trying direct connection fallback.',
       );
       removeListeners();
       socket = null;
@@ -289,7 +292,7 @@ export function init({
   // Establishing a WebSocket connection with the server.
   function connect(fallback = false) {
     if (reconnectCount === 0) {
-      logger.info('WebSocket connecting...');
+      logger.info('[rsbuild] WebSocket connecting...');
     }
 
     const socketUrl = formatURL(fallback);

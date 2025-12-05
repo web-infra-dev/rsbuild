@@ -12,7 +12,7 @@ class ErrorOverlay extends HTMLElement {
 
     if (!this.attachShadow) {
       logger.warn(
-        'Error overlay disabled: Shadow DOM not supported in this browser.',
+        '[rsbuild] Error overlay disabled: Shadow DOM not supported in this browser.',
       );
       return;
     }
@@ -81,6 +81,6 @@ if (typeof document !== 'undefined') {
   registerOverlay(createOverlay, clearOverlay);
 } else {
   logger.info(
-    'Error overlay unavailable: Running in non-browser environment. To suppress this message, set `dev.client.overlay: false` in your configuration.',
+    '[rsbuild] Error overlay unavailable: Running in non-browser environment. To suppress this message, set `dev.client.overlay: false` in your configuration.',
   );
 }
