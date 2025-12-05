@@ -285,7 +285,7 @@ export const withDefaultConfig = async (
   if (config.dev?.client?.logLevel === undefined) {
     merged.dev ||= {};
     merged.dev.client ||= {};
-    merged.dev.client.logLevel = merged.logLevel || 'info';
+    merged.dev.client.logLevel = merged.logLevel;
   }
 
   if (merged.dev?.lazyCompilation === undefined) {
