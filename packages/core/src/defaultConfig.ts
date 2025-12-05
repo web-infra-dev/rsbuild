@@ -59,6 +59,7 @@ const getDefaultDevConfig = (): NormalizedDevConfig => ({
     host: '',
     overlay: true,
     reconnect: 100,
+    logLevel: 'info',
   },
 });
 
@@ -232,6 +233,7 @@ const createDefaultConfig = (): RsbuildConfig => ({
   security: getDefaultSecurityConfig(),
   performance: getDefaultPerformanceConfig(),
   environments: {},
+  logLevel: 'info',
 });
 
 export function getDefaultEntry(root: string): RsbuildEntry {
@@ -278,6 +280,12 @@ export const withDefaultConfig = async (
       merged.output ||= {};
       merged.output.assetPrefix = merged.server.base;
     }
+  }
+
+  if (config.dev?.client?.logLevel === undefined) {
+    merged.dev ||= {};
+    merged.dev.client ||= {};
+    merged.dev.client.logLevel = merged.logLevel || 'info';
   }
 
   if (merged.dev?.lazyCompilation === undefined) {

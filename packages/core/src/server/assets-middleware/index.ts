@@ -184,7 +184,8 @@ init({
   serverHost: ${JSON.stringify(resolvedHost)},
   serverPort: ${resolvedPort},
   liveReload: ${config.dev.liveReload},
-  browserLogs: ${Boolean(config.dev.browserLogs)}
+  browserLogs: ${Boolean(config.dev.browserLogs)},
+  logLevel: ${JSON.stringify(config.dev.client.logLevel)}
 });
 `;
 

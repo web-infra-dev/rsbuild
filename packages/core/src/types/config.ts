@@ -1785,6 +1785,11 @@ export type ClientConfig = {
    * @default true
    */
   overlay?: boolean;
+  /**
+   * Controls the log level for client-side logging in the browser console.
+   * @default 'info'
+   */
+  logLevel?: 'info' | 'warn' | 'error' | 'silent';
 };
 
 export type NormalizedClientConfig = Optional<

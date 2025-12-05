@@ -3,7 +3,10 @@ import { expect, gotoPage, rspackTest } from '@e2e/helper';
 rspackTest(
   'should run SWC Wasm plugin correctly in dev',
   async ({ page, devOnly }) => {
-    const rsbuild = await devOnly();
+    // SWC plugin cannot strip console[method] calls from Rsbuild's internal runtime logger.
+    const rsbuild = await devOnly({
+      config: { dev: { client: { logLevel: 'silent' } } },
+    });
 
     const msgPromise = page.waitForEvent('console');
     await gotoPage(page, rsbuild);

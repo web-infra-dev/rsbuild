@@ -3,7 +3,8 @@ import type {
   ClientMessageError,
   ServerMessage,
 } from '../server/socketServer';
-import type { NormalizedClientConfig } from '../types';
+import type { LogLevel, NormalizedClientConfig } from '../types';
+import { logger } from './log';
 
 let createOverlay: undefined | ((html: string) => void);
 let clearOverlay: undefined | (() => void);
@@ -23,6 +24,7 @@ export function init({
   serverPort,
   liveReload,
   browserLogs,
+  logLevel,
 }: {
   token: string;
   config: NormalizedClientConfig;
@@ -30,7 +32,10 @@ export function init({
   serverPort: number;
   liveReload: boolean;
   browserLogs: boolean;
+  logLevel: LogLevel;
 }): void {
+  logger.level = logLevel;
+
   const queuedMessages: ClientMessage[] = [];
 
   // Hash of the last successful build
@@ -80,12 +85,12 @@ export function init({
 
     for (let i = 0; i < text.length; i++) {
       if (i === 5) {
-        console.warn(
-          '[rsbuild] Additional warnings detected. View complete log in terminal for details.',
+        logger.warn(
+          'Additional warnings detected. View complete log in terminal for details.',
         );
         break;
       }
-      console.warn(text[i]);
+      logger.warn(text[i]);
     }
 
     tryApplyUpdates();
@@ -98,7 +103,7 @@ export function init({
 
     // Also log them to the console.
     for (const error of text) {
-      console.error(error);
+      logger.error(error);
     }
 
     if (createOverlay) {
@@ -117,10 +122,7 @@ export function init({
     const forcedReload = err || !updatedModules;
     if (forcedReload) {
       if (err) {
-        console.error(
-          '[rsbuild] HMR update failed, performing full reload: ',
-          err,
-        );
+        logger.error('HMR update failed, performing full reload:', err);
       }
       reloadPage();
       return;
@@ -173,7 +175,7 @@ export function init({
 
   function onOpen() {
     // Notify users that the WebSocket has successfully connected.
-    console.info('[rsbuild] WebSocket connected.');
+    logger.info('WebSocket connected.');
 
     // Reset reconnect count
     reconnectCount = 0;
@@ -222,15 +224,15 @@ export function init({
   function onClose() {
     if (reconnectCount >= config.reconnect) {
       if (config.reconnect > 0) {
-        console.warn(
-          '[rsbuild] WebSocket connection failed after maximum retry attempts.',
+        logger.warn(
+          'WebSocket connection failed after maximum retry attempts.',
         );
       }
       return;
     }
 
     if (reconnectCount === 0) {
-      console.info('[rsbuild] WebSocket connection lost. Reconnecting...');
+      logger.info('WebSocket connection lost. Reconnecting...');
     }
     removeListeners();
     socket = null;
@@ -240,8 +242,8 @@ export function init({
 
   function onSocketError() {
     if (formatURL() !== formatURL(true)) {
-      console.error(
-        '[rsbuild] WebSocket connection failed. Trying direct connection fallback.',
+      logger.error(
+        'WebSocket connection failed. Trying direct connection fallback.',
       );
       removeListeners();
       socket = null;
@@ -287,7 +289,7 @@ export function init({
   // Establishing a WebSocket connection with the server.
   function connect(fallback = false) {
     if (reconnectCount === 0) {
-      console.info('[rsbuild] WebSocket connecting...');
+      logger.info('WebSocket connecting...');
     }
 
     const socketUrl = formatURL(fallback);

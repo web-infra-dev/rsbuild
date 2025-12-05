@@ -18,6 +18,8 @@ type Client = {
   reconnect?: number;
   // Whether to display an error overlay in the browser when a compilation error occurs
   overlay?: boolean;
+  // Controls the log level for client-side logging in the browser console
+  logLevel?: 'info' | 'warn' | 'error' | 'silent';
 };
 ```
 
@@ -34,6 +36,8 @@ const defaultConfig = {
   protocol: undefined,
   reconnect: 100,
   overlay: true,
+  // Inherits from root logLevel, defaults to 'info'
+  logLevel: 'info',
 };
 ```
 
@@ -106,3 +110,24 @@ export default {
 :::tip
 The error overlay feature requires the current browser to support [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components). If the browser does not support it, the overlay will not be displayed.
 :::
+
+## Log Level
+
+The `dev.client.logLevel` option controls the log level for Rsbuild's client-side messages in the browser console.
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      logLevel: 'warn', // 'info' | 'warn' | 'error' | 'silent'
+    },
+  },
+};
+```
+
+- `'info'` - Shows all messages (default).
+- `'warn'` - Shows warnings and errors only.
+- `'error'` - Shows only errors.
+- `'silent'` - Suppresses all Rsbuild client logs.
+
+If not set, it inherits from the root [`logLevel`](/config/root#loglevel) config.

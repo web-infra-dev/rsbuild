@@ -246,4 +246,76 @@ describe('default value', () => {
     expect(rsbuildConfig.dev.assetPrefix).toBe('/base/aaa');
     expect(rsbuildConfig.output.assetPrefix).toBe('/');
   });
+
+  it('should apply root logLevel as dev.client.logLevel default value', async () => {
+    const rsbuild = await createStubRsbuild({
+      config: {
+        logLevel: 'warn',
+      },
+    });
+
+    const {
+      origin: { rsbuildConfig },
+    } = await rsbuild.inspectConfig();
+    expect(rsbuildConfig.dev.client.logLevel).toBe('warn');
+  });
+
+  it('should apply explicit dev.client.logLevel over root logLevel', async () => {
+    const rsbuild = await createStubRsbuild({
+      config: {
+        logLevel: 'warn',
+        dev: {
+          client: {
+            logLevel: 'error',
+          },
+        },
+      },
+    });
+
+    const {
+      origin: { rsbuildConfig },
+    } = await rsbuild.inspectConfig();
+    expect(rsbuildConfig.dev.client.logLevel).toBe('error');
+  });
+
+  it('should default dev.client.logLevel to info', async () => {
+    const rsbuild = await createStubRsbuild({
+      config: {},
+    });
+
+    const {
+      origin: { rsbuildConfig },
+    } = await rsbuild.inspectConfig();
+    expect(rsbuildConfig.dev.client.logLevel).toBe('info');
+  });
+
+  it('should apply dev.client.logLevel as silent', async () => {
+    const rsbuild = await createStubRsbuild({
+      config: {
+        dev: {
+          client: {
+            logLevel: 'silent',
+          },
+        },
+      },
+    });
+
+    const {
+      origin: { rsbuildConfig },
+    } = await rsbuild.inspectConfig();
+    expect(rsbuildConfig.dev.client.logLevel).toBe('silent');
+  });
+
+  it('should inherit root logLevel silent to dev.client.logLevel', async () => {
+    const rsbuild = await createStubRsbuild({
+      config: {
+        logLevel: 'silent',
+      },
+    });
+
+    const {
+      origin: { rsbuildConfig },
+    } = await rsbuild.inspectConfig();
+    expect(rsbuildConfig.dev.client.logLevel).toBe('silent');
+  });
 });
