@@ -59,7 +59,7 @@ function getSnapshotPath(dir: string): string {
   return path.join(dir, 'rsbuild/file-sizes.json');
 }
 
-/** Normalize file name by removing hash for comparison across builds */
+/** Normalize filename by removing hash for comparison across builds */
 export function normalizeFilename(fileName: string): string {
   // Remove hash patterns like .a1b2c3d4. but keep the extension
   return fileName.replace(/\.[a-f0-9]{8,}\./g, '.');
