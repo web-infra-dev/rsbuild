@@ -50,7 +50,9 @@ export const createLogger = (options: LoggerOptions = {}): Logger => {
   const logger = {} as Logger;
 
   LOG_METHODS.forEach((method) => {
-    logger[method] = (...messages: unknown[]) => log(method, ...messages);
+    logger[method] = (...messages: unknown[]) => {
+      log(method, ...messages);
+    };
   });
 
   Object.defineProperty(logger, 'level', {
