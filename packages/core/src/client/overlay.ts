@@ -1,4 +1,5 @@
 import { registerOverlay } from './hmr.js';
+import { logger } from './log.js';
 
 const {
   HTMLElement = class {} as typeof globalThis.HTMLElement,
@@ -10,7 +11,7 @@ class ErrorOverlay extends HTMLElement {
     super();
 
     if (!this.attachShadow) {
-      console.warn(
+      logger.warn(
         '[rsbuild] Error overlay disabled: Shadow DOM not supported in this browser.',
       );
       return;
@@ -79,7 +80,7 @@ function clearOverlay() {
 if (typeof document !== 'undefined') {
   registerOverlay(createOverlay, clearOverlay);
 } else {
-  console.info(
+  logger.info(
     '[rsbuild] Error overlay unavailable: Running in non-browser environment. To suppress this message, set `dev.client.overlay: false` in your configuration.',
   );
 }
