@@ -236,7 +236,7 @@ export default {
 
 Whether to show file size difference compared to the previous build.
 
-When enabled, Rsbuild will snapshot the file sizes after each build and display the difference inline in parentheses on subsequent builds. The snapshot file is stored in `<root>/node_modules/.cache/rsbuild/file-sizes-[hash].json`, where `[hash]` is the hash of the Rsbuild config file.
+When enabled, Rsbuild will snapshot the file sizes after each build and display the difference inline in parentheses on subsequent builds.
 
 To enable the diff display:
 
@@ -264,6 +264,10 @@ dist/static/css/index.2960ac62.css      0.35 kB (+0.35 kB)    0.26 kB (+0.26 kB)
 - Size increases are shown in **red** with a `+` prefix
 - Size decreases are shown in **green** with a `-` prefix
 - Unchanged files don't show any diff
+
+:::tip
+The snapshot file is stored in `<root>/node_modules/.cache/rsbuild/file-sizes-[hash].json`, where `[hash]` is the hash of the Rsbuild config file path.
+:::
 
 ## Version history
 
