@@ -7,7 +7,7 @@ import path from 'node:path';
 import { promisify } from 'node:util';
 import zlib from 'node:zlib';
 import { JS_REGEX } from '../constants';
-import { color } from '../helpers';
+import { color, hash } from '../helpers';
 import { getAssetsFromStats, type RsbuildAsset } from '../helpers/stats';
 import { logger } from '../logger';
 import type {
@@ -55,7 +55,10 @@ async function gzipSize(input: Buffer) {
 }
 
 /** Get the cache file path for storing previous build sizes */
-function getSnapshotPath(dir: string): string {
+function getSnapshotPath(dir: string, snapshotHash: string): string {
+  if (snapshotHash) {
+    return path.join(dir, `rsbuild/file-sizes-${snapshotHash}.json`);
+  }
   return path.join(dir, 'rsbuild/file-sizes.json');
 }
 
@@ -66,8 +69,9 @@ export function normalizeFilename(fileName: string): string {
 }
 
 /** Load previous build file sizes from snapshots */
-async function loadPrevSnapshots(dir: string): Promise<SizeSnapshots | null> {
-  const snapshotPath = getSnapshotPath(dir);
+async function loadPrevSnapshots(
+  snapshotPath: string,
+): Promise<SizeSnapshots | null> {
   try {
     const content = await fs.promises.readFile(snapshotPath, 'utf-8');
     return JSON.parse(content);
@@ -79,10 +83,9 @@ async function loadPrevSnapshots(dir: string): Promise<SizeSnapshots | null> {
 
 /** Save current build file sizes to snapshots */
 async function saveSnapshots(
-  dir: string,
+  snapshotPath: string,
   snapshots: SizeSnapshots,
 ): Promise<void> {
-  const snapshotPath = getSnapshotPath(dir);
   try {
     await fs.promises.mkdir(path.dirname(snapshotPath), { recursive: true });
     await fs.promises.writeFile(
@@ -509,9 +512,18 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
         return typeof printFileSize === 'object' && Boolean(printFileSize.diff);
       });
 
+      // If `configFilePath` is provided, use it to generate a unique snapshot path
+      // to avoid collision when using multiple Rsbuild config files
+      const { configFilePath } = api.getNormalizedConfig()._privateMeta || {};
+      const snapshotHash =
+        showDiff && configFilePath ? await hash(configFilePath) : '';
+      const snapshotPath = showDiff
+        ? getSnapshotPath(api.context.cachePath, snapshotHash)
+        : '';
+
       // Load previous build sizes for comparison (only if diff is enabled)
       const prevSnapshots = showDiff
-        ? await loadPrevSnapshots(api.context.cachePath)
+        ? await loadPrevSnapshots(snapshotPath)
         : null;
       const nextSnapshots: SizeSnapshots = {};
 
@@ -545,7 +557,7 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
 
       // Save current sizes for next build comparison (only if diff is enabled)
       if (showDiff) {
-        await saveSnapshots(api.context.cachePath, nextSnapshots);
+        await saveSnapshots(snapshotPath, nextSnapshots);
       }
     });
   },
