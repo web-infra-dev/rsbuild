@@ -1,6 +1,6 @@
 # Multi-environment builds
 
-Rsbuild supports building outputs for multiple environments at the same time. You can use [environments](/config/environments) to build multiple environments in parallel and set a different Rsbuild config for each environment.
+Rsbuild can build outputs for multiple environments in a single run. Use [environments](/config/environments) to build them in parallel and set a separate Rsbuild config for each one.
 
 ## What is an environment
 
@@ -15,7 +15,7 @@ You can also define different environments for the same build target, for exampl
 
 Without the `environments` configuration, you would need to define multiple configurations for these scenarios and run multiple independent Rsbuild builds. With `environments`, you can build every output in a single Rsbuild run (Rsbuild achieves this using Rspack's [MultiCompiler](https://rspack.rs/api/javascript-api/compiler#multicompiler)).
 
-In Rsbuild, each `environment` is associated with an Rsbuild configuration, an Rspack configuration, and a set of build outputs. Rsbuild plugin developers can customize the build process for a specified environment based on the `environment` name, such as modifying Rsbuild or Rspack configurations, registering or removing plugins, adjusting Rspack rules, and viewing assets information.
+In Rsbuild, each `environment` is associated with an Rsbuild configuration, an Rspack configuration, and a set of build outputs. Plugin authors can tailor the build for a specific environment—modifying configs, registering or removing plugins, adjusting Rspack rules, or inspecting asset information—based on the environment name.
 
 ## Environment configs
 
