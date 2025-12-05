@@ -12,6 +12,7 @@ import { getAssetsFromStats, type RsbuildAsset } from '../helpers/stats';
 import { logger } from '../logger';
 import type {
   InternalContext,
+  NormalizedEnvironmentConfig,
   PrintFileSizeAsset,
   PrintFileSizeOptions,
   RsbuildPlugin,
@@ -65,7 +66,7 @@ export function normalizeFilename(fileName: string): string {
 }
 
 /** Load previous build file sizes from snapshots */
-async function loadPreviousSizes(dir: string): Promise<SizeSnapshots | null> {
+async function loadPrevSnapshots(dir: string): Promise<SizeSnapshots | null> {
   const snapshotPath = getSnapshotPath(dir);
   try {
     const content = await fs.promises.readFile(snapshotPath, 'utf-8');
@@ -464,6 +465,24 @@ async function printFileSizes(
   return { logs, snapshot };
 }
 
+const normalizeConfig = (config: NormalizedEnvironmentConfig) => {
+  const { printFileSize } = config.performance;
+  const defaultConfig: PrintFileSizeOptions = {
+    total: true,
+    detail: true,
+    diff: false,
+    // print compressed size for the browser targets by default
+    compressed: config.output.target !== 'node',
+  };
+
+  return printFileSize === true
+    ? defaultConfig
+    : {
+        ...defaultConfig,
+        ...printFileSize,
+      };
+};
+
 export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
   name: 'rsbuild:file-size',
 
@@ -491,43 +510,26 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
       });
 
       // Load previous build sizes for comparison (only if diff is enabled)
-      const previousSizes = showDiff
-        ? await loadPreviousSizes(api.context.cachePath)
+      const prevSnapshots = showDiff
+        ? await loadPrevSnapshots(api.context.cachePath)
         : null;
-      const nextSizes: SizeSnapshots = {};
+      const nextSnapshots: SizeSnapshots = {};
 
       const logs = await Promise.all(
         environments.map(async ({ name, index, config, distPath }) => {
-          const { printFileSize } = config.performance;
-          const defaultConfig: PrintFileSizeOptions = {
-            total: true,
-            detail: true,
-            diff: false,
-            // print compressed size for the browser targets by default
-            compressed: config.output.target !== 'node',
-          };
-
-          const mergedConfig =
-            printFileSize === true
-              ? defaultConfig
-              : {
-                  ...defaultConfig,
-                  ...printFileSize,
-                };
-
           const statsItem = 'stats' in stats ? stats.stats[index] : stats;
           const { logs: sizeLogs, snapshot } = await printFileSizes(
-            mergedConfig,
+            normalizeConfig(config),
             statsItem,
             api.context.rootPath,
             distPath,
             name,
-            previousSizes,
+            prevSnapshots,
           );
 
           // Store current sizes for this environment
           if (snapshot) {
-            nextSizes[name] = snapshot;
+            nextSnapshots[name] = snapshot;
           }
 
           return sizeLogs.join('\n');
@@ -543,7 +545,7 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
 
       // Save current sizes for next build comparison (only if diff is enabled)
       if (showDiff) {
-        await saveSnapshots(api.context.cachePath, nextSizes);
+        await saveSnapshots(api.context.cachePath, nextSnapshots);
       }
     });
   },
