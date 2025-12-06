@@ -688,7 +688,10 @@ export type PrintFileSizeOptions = {
    */
   exclude?: (asset: PrintFileSizeAsset) => boolean;
   /**
-   * Whether to show file size difference compared to the previous build.
+   * Controls whether file size differences are displayed relative to the previous build.
+   * When this option is enabled, Rsbuild records a snapshot of all output file sizes after
+   * each build. On subsequent builds, Rsbuild compares the current sizes against the previous
+   * snapshot and shows the change inline in parentheses.
    * @default false
    */
   diff?: boolean;
