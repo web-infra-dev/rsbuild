@@ -87,7 +87,9 @@ During the HMR process, the page will make GET requests to get hot-update files,
 
 Hot-update files are considered to be static assets. If you need to configure the URL for hot-update files, please use the [dev.assetPrefix](/config/dev/asset-prefix) option.
 
-## Error overlay
+## Options
+
+### overlay
 
 The `dev.client.overlay` option allows you to choose whether or not to enable the error overlay feature.
 
@@ -111,7 +113,10 @@ export default {
 The error overlay feature requires the current browser to support [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components). If the browser does not support it, the overlay will not be displayed.
 :::
 
-## Log level
+### logLevel
+
+- **Type:** `'info' | 'warn' | 'error' | 'silent'`
+- **Default:** Inherits from root [logLevel](/config/log-level), defaults to `info`
 
 The `dev.client.logLevel` option controls the log level for Rsbuild's client-side messages in the browser console.
 
@@ -119,15 +124,21 @@ The `dev.client.logLevel` option controls the log level for Rsbuild's client-sid
 export default {
   dev: {
     client: {
-      logLevel: 'warn', // 'info' | 'warn' | 'error' | 'silent'
+      logLevel: 'warn',
     },
   },
 };
 ```
+
+Optional values:
 
 - `'info'` - Shows all messages (default).
 - `'warn'` - Shows warnings and errors only.
 - `'error'` - Shows only errors.
 - `'silent'` - Suppresses all Rsbuild client logs.
 
-If not set, it inherits from the root [`logLevel`](/config/root#loglevel) config.
+## Version history
+
+| Version | Changes                 |
+| ------- | ----------------------- |
+| v1.6.13 | Added `logLevel` option |
