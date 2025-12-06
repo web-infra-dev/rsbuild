@@ -234,11 +234,11 @@ export default {
 - **Type:** `boolean`
 - **Default:** `false`
 
-Whether to show file size difference compared to the previous build.
+Controls whether file size differences are displayed relative to the previous build.
 
-When enabled, Rsbuild will snapshot the file sizes after each build and display the difference inline in parentheses on subsequent builds.
+When this option is enabled, Rsbuild records a snapshot of all output file sizes after each build. On subsequent builds, Rsbuild compares the current sizes against the previous snapshot and shows the change inline in parentheses.
 
-To enable the diff display:
+To enable diff output:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -250,7 +250,7 @@ export default {
 };
 ```
 
-The output will show size changes inline:
+On the second build, the output begins to include inline size deltas:
 
 ```
 File (web)                              Size                  Gzip
@@ -261,12 +261,12 @@ dist/static/css/index.2960ac62.css      0.35 kB (+0.35 kB)    0.26 kB (+0.26 kB)
                                Total:   143.0 kB (+2.15 kB)   46.3 kB (+0.66 kB)
 ```
 
-- Size increases are shown in **red** with a `+` prefix
-- Size decreases are shown in **green** with a `-` prefix
-- Unchanged files don't show any diff
+- Increases are highlighted in red with a `+` prefix
+- Decreases are highlighted in green with a `-` prefix
+- Files with no change omit the diff indicator
 
 :::tip
-The snapshot file is stored in `<root>/node_modules/.cache/rsbuild/file-sizes-[hash].json`, where `[hash]` is the hash of the Rsbuild config file path.
+Snapshots are stored at `<root>/node_modules/.cache/rsbuild/file-sizes-[hash].json`, where [hash] is derived from the Rsbuild configuration file path.
 :::
 
 ## Version history
