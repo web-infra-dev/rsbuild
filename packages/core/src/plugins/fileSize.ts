@@ -104,6 +104,9 @@ const EXCLUDE_ASSET_REGEX = /\.(?:map|LICENSE\.txt|d\.ts)$/;
 export const excludeAsset = (asset: PrintFileSizeAsset): boolean =>
   EXCLUDE_ASSET_REGEX.test(asset.name);
 
+/** Check if the size difference is significant */
+const isSignificantDiff = (diff: number) => Math.abs(diff) >= 10;
+
 /** Format a size difference for inline display */
 const formatDiff = (diff: number) => {
   const sign = diff > 0 ? '+' : '-';
@@ -250,7 +253,7 @@ async function printFileSizes(
     if (showDiff) {
       const sizeData = previousSizes[environmentName]?.files[normalizedName];
       const sizeDiff = size - (sizeData?.size ?? 0);
-      if (sizeDiff !== 0) {
+      if (isSignificantDiff(sizeDiff)) {
         const { label, length } = formatDiff(sizeDiff);
         sizeLabel += ` ${label}`;
         sizeLabelLength += length + 1;
@@ -258,7 +261,7 @@ async function printFileSizes(
 
       if (gzippedSize !== null) {
         const gzipDiff = gzippedSize - (sizeData?.gzippedSize ?? 0);
-        if (gzipDiff !== 0) {
+        if (isSignificantDiff(gzipDiff)) {
           gzipSizeLabel += ` ${formatDiff(gzipDiff).label}`;
         }
       }
@@ -344,7 +347,7 @@ async function printFileSizes(
     if (showDiff) {
       const totalSizeDiff =
         totalSize - (previousSizes[environmentName]?.totalSize ?? 0);
-      if (totalSizeDiff !== 0) {
+      if (isSignificantDiff(totalSizeDiff)) {
         const { label, length } = formatDiff(totalSizeDiff);
         totalSizeLabel += ` ${label}`;
         totalSizeLabelLength += length + 1;
