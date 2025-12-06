@@ -227,3 +227,49 @@ export default {
   },
 };
 ```
+
+### diff
+
+- **类型:** `boolean`
+- **默认值:** `false`
+
+控制是否展示相较于上一次构建的文件体积差异。
+
+启用该选项后，Rsbuild 会在每次构建完成后记录所有输出文件的体积快照。随后在下一次构建时。Rsbuild 会将当前构建的文件体积与上一份快照进行对比，并在输出中以括号形式展示体积差异。
+
+启用方式如下：
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    printFileSize: {
+      diff: true,
+    },
+  },
+};
+```
+
+从第二次构建开始，输出中将显示体积变化信息：
+
+```
+File (web)                              Size                  Gzip
+dist/static/js/lib-react.b0714b60.js    140.4 kB (+2.1 kB)    45.0 kB (+0.5 kB)
+dist/static/js/index.f3fde9c7.js        1.9 kB (-0.3 kB)      0.97 kB (-0.1 kB)
+dist/static/css/index.2960ac62.css      0.35 kB (+0.35 kB)    0.26 kB (+0.26 kB)
+
+                               Total:   143.0 kB (+2.15 kB)   46.3 kB (+0.66 kB)
+```
+
+- 文件体积增加会以红色并带有 `+` 前缀
+- 文件体积减少会以绿色并带有 `-` 前缀
+- 若文件体积无变化，则不会显示差异信息
+
+:::tip
+快照文件存储在 `<root>/node_modules/.cache/rsbuild/file-sizes-[hash].json`，其中 `[hash]` 基于 Rsbuild 配置文件路径生成。
+:::
+
+## 版本历史
+
+| 版本    | 变更内容         |
+| ------- | ---------------- |
+| v1.6.13 | 新增 `diff` 选项 |
