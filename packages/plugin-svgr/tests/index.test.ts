@@ -57,6 +57,7 @@ describe('svgr', () => {
     const rsbuild = await createRsbuild({
       cwd: import.meta.dirname,
       config: {
+        mode: 'development',
         plugins: [pluginSvgr(item.pluginConfig), pluginReact()],
       },
     });
