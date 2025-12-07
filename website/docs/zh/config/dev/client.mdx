@@ -133,6 +133,28 @@ export default {
 - `'error'` - 仅显示错误
 - `'silent'` - 不显示任何 Rsbuild 客户端日志
 
+### reconnect
+
+- **类型：** `number`
+- **默认值：** `100`
+
+用于控制 WebSocket 连接断开后的最大自动重连次数。
+
+当连接中断时，Rsbuild 会按递增的时间间隔进行重连尝试。达到最大次数后将停止重连。重连成功后，HMR 和相关功能会自动恢复。
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      // 最多自动重连 3 次
+      reconnect: 3,
+    },
+  },
+};
+```
+
+将该值设为 `0` 可禁用自动重连，此时连接断开后只能通过手动刷新页面恢复。
+
 ## 版本历史
 
 | 版本    | 更新内容             |
