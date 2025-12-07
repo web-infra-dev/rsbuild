@@ -440,7 +440,7 @@ async function printFileSizes(
             const totalGzipSizeDiff =
               totalGzipSize -
               (previousSizes[environmentName]?.totalGzipSize ?? 0);
-            if (totalGzipSizeDiff !== 0) {
+            if (isSignificantDiff(totalGzipSizeDiff)) {
               log += ` ${formatDiff(totalGzipSizeDiff).label}`;
             }
           }
