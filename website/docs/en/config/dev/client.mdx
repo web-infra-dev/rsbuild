@@ -137,6 +137,28 @@ Optional values:
 - `'error'` - Shows only errors.
 - `'silent'` - Suppresses all Rsbuild client logs.
 
+### reconnect
+
+- **Type:** `number`
+- **Default:** `100`
+
+Controls the maximum number of automatic reconnection attempts after the WebSocket connection is disconnected.
+
+When the connection is lost, Rsbuild will retry the connection at increasing time intervals. Once the maximum number of attempts is reached, it will stop reconnecting. After a successful reconnection, HMR and related features will be restored automatically.
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      // Retry up to 3 times
+      reconnect: 3,
+    },
+  },
+};
+```
+
+Setting this value to `0` disables automatic reconnection. In this case, the connection can only be restored by manually refreshing the page.
+
 ## Version history
 
 | Version | Changes                 |
