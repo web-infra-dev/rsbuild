@@ -74,8 +74,8 @@ rspackTest(
     const rsbuild1 = await build({ config });
 
     const snapshotDir = join(rsbuild1.instance.context.cachePath, 'rsbuild');
-    const snapshotFile = (await fse.readdir(snapshotDir)).find(
-      (filename) => filename.startsWith('file-sizes'),
+    const snapshotFile = (await fse.readdir(snapshotDir)).find((filename) =>
+      filename.startsWith('file-sizes'),
     );
     expect(snapshotFile).toBeTruthy();
 
