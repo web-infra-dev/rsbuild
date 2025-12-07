@@ -284,12 +284,27 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
             continue;
           }
 
+          let loaderOptions = use.get('options');
+
+          // disable React refresh runtime for SVGR transformed components
+          if (jsUseId === CHAIN_ID.USE.SWC) {
+            loaderOptions = deepmerge(loaderOptions, {
+              jsc: {
+                transform: {
+                  react: {
+                    refresh: false,
+                  },
+                },
+              },
+            });
+          }
+
           rule
             .oneOf(oneOfId)
             .use(jsUseId)
             .before(CHAIN_ID.USE.SVGR)
             .loader(use.get('loader'))
-            .options(use.get('options'));
+            .options(loaderOptions);
         }
 
         return true;
