@@ -56,3 +56,45 @@ dist/index.html                      X.X kB (-X.X kB)   X.X kB (-X.X kB)
                             Total:   X.X kB (-X.X kB)   X.X kB (-X.X kB)`);
   },
 );
+
+rspackTest(
+  'should not print gzip total diff when change is below threshold',
+  async ({ cwd, build, copySrcDir }) => {
+    const cacheDir = join(cwd, 'node_modules/.cache');
+    await fse.remove(cacheDir);
+    const srcDir = await copySrcDir();
+    const config = {
+      source: {
+        entry: {
+          index: join(srcDir, 'index.js'),
+        },
+      },
+    };
+
+    const rsbuild1 = await build({ config });
+
+    const snapshotDir = join(rsbuild1.instance.context.cachePath, 'rsbuild');
+    const snapshotFile = (await fse.readdir(snapshotDir)).find((filename) =>
+      filename.startsWith('file-sizes'),
+    );
+    expect(snapshotFile).toBeTruthy();
+
+    const snapshotPath = join(snapshotDir, snapshotFile!);
+    const snapshots = await fse.readJSON(snapshotPath);
+    const environmentName = Object.keys(snapshots)[0];
+
+    expect(snapshots[environmentName].totalGzipSize).toBeGreaterThan(5);
+    snapshots[environmentName].totalGzipSize -= 5;
+    await fse.writeJSON(snapshotPath, snapshots, { spaces: 2 });
+
+    rsbuild1.clearLogs();
+
+    const rsbuild2 = await build({ config });
+
+    expect(extractFileSizeLogs(rsbuild2.logs)).toEqual(`
+File (web)                         Size      Gzip
+dist/static/js/index.[[hash]].js   X.X kB   X.X kB
+dist/index.html                    X.X kB   X.X kB
+                          Total:   X.X kB   X.X kB`);
+  },
+);
