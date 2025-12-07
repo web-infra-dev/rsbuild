@@ -62,7 +62,7 @@ export default defineConfig({
 });
 ```
 
-If you want to place these static assets on a CDN for better performance instead of serving them with the HTML from the server, set [output.assetPrefix](/config/output/asset-prefix) to the CDN address to ensure the application can properly reference these static assets.
+If you prefer to serve static assets from a CDN for better performance instead of alongside the HTML on your server, set [output.assetPrefix](/config/output/asset-prefix) to the CDN address so the application can reference the assets correctly.
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -92,7 +92,7 @@ The following sections describe how to deploy on several common platforms.
 
 You can follow the [Cloudflare Pages - Git integration guide](https://developers.cloudflare.com/pages/get-started/git-integration/) to integrate with Git and deploy your site to Cloudflare Pages.
 
-When configuring, fill in the following fields under "Build settings":
+When configuring, complete the following fields under "Build settings":
 
 - **Build command**: fill in the project's build command, typically `npm run build`.
 - **Build output directory**: fill in the project's output directory, which defaults to `dist`.
@@ -210,7 +210,7 @@ If you want to make your sites accessible at custom domain names, you can config
 
 Vercel provides a detailed guide. You can follow [Vercel - Projects](https://vercel.com/docs/projects/overview) to create a project in your dashboard, configure the basic settings, and start the deployment.
 
-You only need to configure the fields under "Build and Output Settings":
+Only the following fields under "Build and Output Settings" need to be configured:
 
 - **Output directory**: fill in the project's output directory, which defaults to `dist`.
 
