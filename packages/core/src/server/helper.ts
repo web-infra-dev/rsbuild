@@ -296,6 +296,14 @@ export const getPort = async ({
     }
   }
 
+  if (!found) {
+    throw new Error(
+      `${color.dim('[rsbuild:server]')} Failed to find an available port after ${
+        tryLimits + 1
+      } attempts, starting from ${color.yellow(original)}.`,
+    );
+  }
+
   if (port !== original) {
     if (strictPort) {
       throw new Error(
