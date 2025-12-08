@@ -274,6 +274,8 @@ importers:
 
   e2e/cases/resolve/main-fields/package-foo: {}
 
+  e2e/cases/resolve/node-imports-field: {}
+
   e2e/cases/resolve/pkg-imports: {}
 
   e2e/cases/server/custom-server: {}
