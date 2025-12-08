@@ -102,6 +102,26 @@ pluginVue({
 });
 ```
 
+Here is a natural and polished English translation:
+
+---
+
+### test
+
+Customize the matching rule for Vue Single File Components (SFC).
+
+- **Type:** [Rspack.RuleSetCondition](https://rspack.rs/config/module#condition)
+- **Default:** `/\.vue$/`
+- **Version:** `>= 1.2.1`
+
+This option allows you to extend the Vue plugin to handle additional file types. For example, you can first use a plugin or loader to transform `.md` files into Vue components, then configure the `test` option in the Vue plugin to match both `.vue` and `.md` files:
+
+```ts
+pluginVue({
+  test: /\.(vue|md)$/,
+});
+```
+
 ## FAQ
 
 ### /deep/ selector causes compilation error
