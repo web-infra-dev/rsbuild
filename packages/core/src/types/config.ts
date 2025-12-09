@@ -1184,9 +1184,7 @@ export type ManifestData = {
   /**
    * Maps each entry name to its associated output files.
    */
-  entries: {
-    [entryName: string]: ManifestByEntry;
-  };
+  entries: Record<string, ManifestByEntry>;
   /**
    * Subresource Integrity (SRI) hashes for emitted assets.
    * The key is the asset file path, and the value is its integrity hash.
@@ -1733,8 +1731,9 @@ export type ProgressBarConfig = {
 
 export type RequestHandler = Connect.NextHandleFunction;
 
-export type EnvironmentAPI = {
-  [name: string]: {
+export type EnvironmentAPI = Record<
+  string,
+  {
     /**
      * Get stats info about current environment.
      */
@@ -1757,8 +1756,8 @@ export type EnvironmentAPI = {
      * Provides some context information about the current environment
      */
     context: EnvironmentContext;
-  };
-};
+  }
+>;
 
 export type SetupMiddlewaresContext = Pick<
   RsbuildDevServer,

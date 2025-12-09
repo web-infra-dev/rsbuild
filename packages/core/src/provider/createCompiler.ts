@@ -126,7 +126,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     }
   };
 
-  const lazyModules: Set<string> = new Set();
+  const lazyModules = new Set<string>();
 
   // Collect lazy compiled modules from the infrastructure logs
   compiler.hooks.infrastructureLog.tap(HOOK_NAME, (name, _, args) => {

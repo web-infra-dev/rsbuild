@@ -349,7 +349,7 @@ export const getServerConfig = async ({
 
 const getIpv4Interfaces = () => {
   const interfaces = os.networkInterfaces();
-  const ipv4Interfaces: Map<string, os.NetworkInterfaceInfo> = new Map();
+  const ipv4Interfaces = new Map<string, os.NetworkInterfaceInfo>();
 
   for (const key of Object.keys(interfaces)) {
     for (const detail of interfaces[key]!) {

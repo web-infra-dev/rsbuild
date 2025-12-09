@@ -19,12 +19,13 @@ import type {
   Rspack,
 } from '../types';
 
-type SizeMap = {
-  [fileName: string]: {
+type SizeMap = Record<
+  string,
+  {
     size: number;
     gzippedSize?: number;
-  };
-};
+  }
+>;
 
 type SizeSnapshot = {
   files: SizeMap;
@@ -32,9 +33,7 @@ type SizeSnapshot = {
   totalGzipSize: number;
 };
 
-type SizeSnapshots = {
-  [environmentName: string]: SizeSnapshot;
-};
+type SizeSnapshots = Record<string, SizeSnapshot>;
 
 type FormattedAsset = {
   name: string;
