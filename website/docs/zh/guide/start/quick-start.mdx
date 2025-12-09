@@ -113,7 +113,7 @@ npx -y create-rsbuild --dir my-app --template react
 npx -y create-rsbuild -d my-app -t react
 
 # 指定多个 tools
-npx -y create-rsbuild -d my-app -t react --tools eslint --tools prettier
+npx -y create-rsbuild -d my-app -t react --tools eslint,prettier
 ```
 
 `create-rsbuild` 完整的 CLI 选项如下：
@@ -126,7 +126,7 @@ Options:
   -h, --help            display help for command
   -d, --dir <dir>       create project in specified directory
   -t, --template <tpl>  specify the template to use
-  --tools <tool>        select additional tools (biome, eslint, prettier)
+  --tools <tool>        select additional tools (biome, eslint, prettier, storybook)
   --override            override files in target directory
   --packageName <name>  specify the package name
 

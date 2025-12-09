@@ -113,7 +113,7 @@ npx -y create-rsbuild@latest my-app --template react
 npx -y create-rsbuild@latest my-app -t react
 
 # Specify multiple tools
-npx -y create-rsbuild@latest my-app -t react --tools eslint --tools prettier
+npx -y create-rsbuild@latest my-app -t react --tools eslint,prettier
 ```
 
 All CLI flags supported by `create-rsbuild`:
@@ -126,7 +126,7 @@ Options:
   -h, --help            display help for command
   -d, --dir <dir>       create project in specified directory
   -t, --template <tpl>  specify the template to use
-  --tools <tool>        select additional tools (biome, eslint, prettier)
+  --tools <tool>        select additional tools (biome, eslint, prettier, storybook)
   --override            override files in target directory
   --packageName <name>  specify the package name
 
