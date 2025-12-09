@@ -102,6 +102,22 @@ pluginVue({
 });
 ```
 
+### test
+
+用于自定义 Vue 单文件组件（SFC）的匹配规则。
+
+- **类型：** [Rspack.RuleSetCondition](https://rspack.rs/config/module#condition)
+- **默认值：** `/\.vue$/`
+- **版本：** `>= 1.2.1`
+
+通过该选项，你可以扩展 Vue 插件对其他文件类型的处理能力。例如，先使用某个插件或 loader 将 `.md` 文件转换为 Vue 组件，然后可以在 Vue 插件中通过 `test` 选项同时匹配 `.vue` 和 `.md` 文件：
+
+```ts
+pluginVue({
+  test: /\.(vue|md)$/,
+});
+```
+
 ## 常见问题
 
 ### /deep/ 选择器导致编译报错

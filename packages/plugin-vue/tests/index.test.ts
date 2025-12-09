@@ -41,4 +41,18 @@ describe('plugin-vue', () => {
     const config = await rsbuild.initConfigs();
     expect(matchPlugin(config[0], 'DefinePlugin')).toMatchSnapshot();
   });
+
+  it('should allow to custom test condition', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        plugins: [
+          pluginVue({
+            test: /\.(vue|md)$/,
+          }),
+        ],
+      },
+    });
+    const config = await rsbuild.initConfigs();
+    expect(matchRules(config[0], 'a.md')[0]).toMatchSnapshot();
+  });
 });

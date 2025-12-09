@@ -54,6 +54,23 @@ exports[`plugin-vue > should allow to configure vueLoader options 1`] = `
 }
 `;
 
+exports[`plugin-vue > should allow to custom test condition 1`] = `
+{
+  "test": /\\\\\\.\\(vue\\|md\\)\\$/,
+  "use": [
+    {
+      "loader": "<ROOT>/node_modules/<PNPM_INNER>/rspack-vue-loader/dist/index.js",
+      "options": {
+        "compilerOptions": {
+          "preserveWhitespace": false,
+        },
+        "experimentalInlineMatchResource": true,
+      },
+    },
+  ],
+}
+`;
+
 exports[`plugin-vue > should define feature flags correctly 1`] = `
 DefinePlugin {
   "_args": [
