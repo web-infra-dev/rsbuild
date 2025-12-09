@@ -1436,10 +1436,9 @@ export type OutputStructure = 'flat' | 'nested';
 
 /**
  * Custom meta tag attributes.
- * Key represents the attribute name. For example `name`, `content`, `charset`.
- * Value represents the attribute value, usually a string. Boolean is used for
- * boolean attributes.
-
+ * Key is the attribute name.
+ * Value is the attribute value, as a string or boolean.
+ *
  * @example
  * {
  *   name: 'viewport',
@@ -1450,8 +1449,7 @@ export type MetaAttrs = Record<string, string | boolean>;
 
 /**
  * Meta options in name-content form.
- *
- * The key represents the meta name, such as `viewport`, `description`, or `robots`.
+ * Key is the meta name, such as `viewport`, `description`, or `robots`.
  * The value can be:
  * - `string`: the content of the meta tag
  * - `false`: explicitly disables the meta
