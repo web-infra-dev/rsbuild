@@ -1452,7 +1452,7 @@ export type MetaAttrs = Record<string, string | boolean>;
  * Key is the meta name, such as `viewport`, `description`, or `robots`.
  * The value can be:
  * - `string`: the content of the meta tag
- * - `false`: explicitly disables the meta
+ * - `false`: explicitly disables the meta tag
  * - `MetaAttrs`: a set of custom meta attributes
  *
  * @example
