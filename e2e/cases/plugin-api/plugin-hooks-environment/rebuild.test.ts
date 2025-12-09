@@ -47,10 +47,12 @@ rspackTest(
 
     // initial build
     await rsbuild.expectBuildEnd();
-    rsbuild.clearLogs();
     expect(names.includes('BeforeDevCompile')).toBeTruthy();
     expect(names.includes('BeforeEnvironmentCompile node')).toBeTruthy();
     expect(names.includes('BeforeEnvironmentCompile web')).toBeTruthy();
+
+    // clear state
+    rsbuild.clearLogs();
     names.length = 0;
 
     // rebuild
