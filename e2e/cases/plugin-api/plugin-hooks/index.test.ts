@@ -65,8 +65,6 @@ rspackTest(
 rspackTest(
   'should run plugin hooks correctly when running startDevServer',
   async ({ dev }) => {
-    process.env.NODE_ENV = 'development';
-
     const { plugin, hooks } = recordPluginHooks();
     const rsbuild = await dev({
       config: {
@@ -100,8 +98,6 @@ rspackTest(
       'DevCompileDone',
       'CloseDevServer',
     ]);
-
-    process.env.NODE_ENV = 'test';
   },
 );
 

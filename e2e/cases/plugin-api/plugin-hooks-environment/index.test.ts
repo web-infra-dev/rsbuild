@@ -83,7 +83,6 @@ const createPlugin = () => {
 rspackTest(
   'should run plugin hooks correctly when running build with multiple environments',
   async ({ build }) => {
-    process.env.NODE_ENV = 'production';
     const { plugin, names } = createPlugin();
     await build({
       config: {
@@ -131,16 +130,12 @@ rspackTest(
       'AfterEnvironmentCompile node',
       'AfterBuild',
     ]);
-
-    process.env.NODE_ENV = 'test';
   },
 );
 
 rspackTest(
   'should run plugin hooks correctly when running startDevServer with multiple environments',
   async ({ dev }) => {
-    process.env.NODE_ENV = 'development';
-
     const { plugin, names } = createPlugin();
     const rsbuild = await dev({
       config: {
@@ -208,7 +203,5 @@ rspackTest(
       'DevCompileDone',
       'CloseDevServer',
     ]);
-
-    process.env.NODE_ENV = 'test';
   },
 );
