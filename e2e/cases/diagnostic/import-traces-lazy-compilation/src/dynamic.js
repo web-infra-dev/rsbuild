@@ -1,1 +1,1 @@
-import 'unexist';
+import 'un-existing-module';
