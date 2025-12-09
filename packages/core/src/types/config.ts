@@ -1435,18 +1435,36 @@ export type ScriptLoading = 'defer' | 'module' | 'blocking';
 export type OutputStructure = 'flat' | 'nested';
 
 /**
- * custom properties
- * e.g. { name: 'viewport' content: 'width=500, initial-scale=1' }
- */
-export type MetaAttrs = { [attrName: string]: string | boolean };
+ * Custom meta tag attributes.
+ * Key represents the attribute name. For example `name`, `content`, `charset`.
+ * Value represents the attribute value, usually a string. Boolean is used for
+ * boolean attributes.
 
-export type MetaOptions = {
-  /**
-   * name content pair
-   * e.g. { viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no' }`
-   */
-  [name: string]: string | false | MetaAttrs;
-};
+ * @example
+ * {
+ *   name: 'viewport',
+ *   content: 'width=500, initial-scale=1',
+ * }
+ */
+export type MetaAttrs = Record<string, string | boolean>;
+
+/**
+ * Meta options in name-content form.
+ *
+ * The key represents the meta name, such as `viewport`, `description`, or `robots`.
+ * The value can be:
+ * - `string`: the content of the meta tag
+ * - `false`: explicitly disables the meta
+ * - `MetaAttrs`: a set of custom meta attributes
+ *
+ * @example
+ * {
+ *   viewport: 'width=device-width, initial-scale=1',
+ *   description: 'My awesome website',
+ *   robots: false,
+ * }
+ */
+export type MetaOptions = Record<string, string | false | MetaAttrs>;
 
 export type HtmlBasicTag = {
   /**
@@ -2104,11 +2122,11 @@ export interface RsbuildConfig extends EnvironmentConfig {
    */
   server?: ServerConfig;
   /**
-   * Configure rsbuild config by environment.
+   * Configure Rsbuild config by environment.
+   * The key represents the environment name.
+   * The value is the Rsbuild config for the specified environment.
    */
-  environments?: {
-    [name: string]: EnvironmentConfig;
-  };
+  environments?: Record<string, EnvironmentConfig>;
   /**
    * Used to switch the bundler type.
    */
@@ -2149,7 +2167,5 @@ export type NormalizedEnvironmentConfig = TwoLevelReadonly<
 
 export type NormalizedConfig = NormalizedEnvironmentConfig & {
   provider?: unknown;
-  environments: {
-    [name: string]: NormalizedEnvironmentConfig;
-  };
+  environments: Record<string, NormalizedEnvironmentConfig>;
 };
