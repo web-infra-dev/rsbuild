@@ -1,5 +1,5 @@
 import { useI18n, useLang } from '@rspress/core/runtime';
-import { Link } from '@rspress/core/theme';
+import { Link } from '@theme';
 import { memo } from 'react';
 import styles from './HomeFooter.module.scss';
 
