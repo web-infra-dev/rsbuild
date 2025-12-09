@@ -75,21 +75,21 @@ const parseQueryString = (req: IncomingMessage) => {
 export class SocketServer {
   private wsServer!: Ws.Server;
 
-  private readonly socketsMap: Map<string, Set<Ws>> = new Map();
+  private readonly socketsMap = new Map<string, Set<Ws>>();
 
   private readonly options: DevConfig;
 
   private readonly context: InternalContext;
 
-  private initialChunksMap: Map<string, Set<string>> = new Map();
+  private initialChunksMap = new Map<string, Set<string>>();
 
   private heartbeatTimer: NodeJS.Timeout | null = null;
 
   private getOutputFileSystem: () => Rspack.OutputFileSystem;
 
-  private reportedBrowserLogs: Set<string> = new Set();
+  private reportedBrowserLogs = new Set<string>();
 
-  private currentHash: Map<string, string> = new Map();
+  private currentHash = new Map<string, string>();
 
   constructor(
     context: InternalContext,
@@ -408,7 +408,7 @@ export class SocketServer {
     // web-infra-dev/rspack#6633
     // when initial-chunks change, reload the page
     // e.g: ['index.js'] -> ['index.js', 'lib-polyfill.js']
-    const newInitialChunks: Set<string> = new Set();
+    const newInitialChunks = new Set<string>();
     if (stats.entrypoints) {
       for (const entrypoint of Object.values(stats.entrypoints)) {
         const { chunks } = entrypoint;

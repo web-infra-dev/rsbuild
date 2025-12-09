@@ -1,8 +1,8 @@
-export * from './config';
-export * from './context';
-export * from './hooks';
-export * from './plugin';
-export * from './rsbuild';
-export * from './rspack';
-export * from './thirdParty';
-export * from './utils';
+export type * from './config';
+export type * from './context';
+export type * from './hooks';
+export type * from './plugin';
+export type * from './rsbuild';
+export type * from './rspack';
+export type * from './thirdParty';
+export type * from './utils';
