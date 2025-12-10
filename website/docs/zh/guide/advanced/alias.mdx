@@ -8,12 +8,13 @@
 import request from '@request'; // 解析为 `src/common/request.ts`
 ```
 
-在 Rsbuild 中，你有两种方式可以设置路径别名:
+在 Rsbuild 中，可以通过多种方式来配置路径别名：
 
-- 使用 [tsconfig.json](https://typescriptlang.org/docs/handbook/tsconfig-json.html) 中的 `paths` 选项。
-- 使用 [resolve.alias](/config/resolve/alias) 配置。
+- 在 tsconfig.json 或 jsconfig.json 中使用 [`paths` 字段](#typescript-paths-field)。
+- 在 package.json 中使用 [`imports` 字段](#nodejs-imports-field)。
+- 使用 Rsbuild 提供的 [resolve.alias](#alias-configuration) 配置项。
 
-## tsconfig.json 的 `paths` 选项
+## TypeScript `paths` 字段
 
 你可以通过 `tsconfig.json` 中的 `paths` 来配置别名，这是我们在 TypeScript 项目中推荐使用的方式，因为它可以解决路径别名的 TS 类型问题。
 
@@ -35,7 +36,7 @@ import request from '@request'; // 解析为 `src/common/request.ts`
 你可以阅读 [TypeScript - paths](https://typescriptlang.org/tsconfig#paths) 文档来了解更多用法。
 :::
 
-## jsconfig.json
+### jsconfig.json
 
 在非 TypeScript 项目中，如果你需要通过 [jsconfig.json](https://code.visualstudio.com/docs/languages/jsconfig) 中的 `paths` 字段来设置路径别名，可以使用 [source.tsconfigPath](/config/source/tsconfig-path) 选项来设置。
 
@@ -49,7 +50,26 @@ export default {
 };
 ```
 
-## `resolve.alias` 配置
+## Node.js `imports` 字段
+
+你也可以使用 Node.js 的 [`imports` 字段](https://nodejs.org/api/packages.html#imports)，通过 `#` 前缀来定义路径别名。该方式是开箱即用的，并且不需要额外的 Rsbuild 配置。
+
+```json title="package.json"
+{
+  "type": "module",
+  "imports": {
+    "#app/*": "./src/*"
+  }
+}
+```
+
+```js title="src/index.js"
+import { message } from '#app/foo';
+```
+
+对于 TypeScript 项目，需要启用 [`resolvePackageJsonImports`](https://www.typescriptlang.org/tsconfig/#resolvePackageJsonImports)，这样 TypeScript 语言服务和编译器才能正确识别这些别名。
+
+## Alias 配置
 
 Rsbuild 提供了 [resolve.alias](/config/resolve/alias) 配置项，对应 Rspack 原生的 [resolve.alias](https://rspack.rs/zh/config/resolve#resolvealias) 配置，你可以通过对象或者函数的方式来配置这个选项。
 
