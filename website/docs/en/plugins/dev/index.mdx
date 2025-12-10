@@ -194,7 +194,7 @@ See [Migrate Vite plugin](/guide/migration/vite-plugin) to learn how to migrate 
 
 Custom plugins usually receive their options from the parameters passed to the initialization function, so you can define and use those arguments however you like.
 
-Sometimes a plugin needs to read or modify Rsbuild's shared configuration. To do that effectively, it's helpful to understand how Rsbuild generates and consumes its config:
+Sometimes a plugin needs to read or modify Rsbuild's configuration. To do that effectively, it's helpful to understand how Rsbuild generates and consumes its config:
 
 - Read, parse config and merge with default values.
 - Plugins modify the config by `api.modifyRsbuildConfig(...)`.
