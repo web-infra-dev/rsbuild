@@ -1,4 +1,4 @@
-import { excludeAsset, normalizeFilename } from '../src/plugins/fileSize';
+import { excludeAsset, normalizeFilePath } from '../src/plugins/fileSize';
 
 describe('plugin-file-size', () => {
   it('#excludeAsset - should exclude asset correctly', () => {
@@ -16,62 +16,62 @@ describe('plugin-file-size', () => {
     expect(excludeAsset({ name: 'dist/a.d.ts', size: 1000 })).toBeTruthy();
   });
 
-  describe('#normalizeFilename', () => {
+  describe('#normalizeFilePath', () => {
     it('should remove 8-character hash from filename', () => {
-      expect(normalizeFilename('index.a1b2c3d4.js')).toBe('index.js');
-      expect(normalizeFilename('styles.12345678.css')).toBe('styles.css');
+      expect(normalizeFilePath('index.a1b2c3d4.js')).toBe('index.js');
+      expect(normalizeFilePath('styles.12345678.css')).toBe('styles.css');
     });
 
     it('should remove longer hash patterns (16+ characters)', () => {
       // Valid hex digits only (a-f, 0-9)
-      expect(normalizeFilename('main.1234567890abcdef.js')).toBe('main.js');
-      expect(normalizeFilename('bundle.abc123def456.js')).toBe('bundle.js');
+      expect(normalizeFilePath('main.1234567890abcdef.js')).toBe('main.js');
+      expect(normalizeFilePath('bundle.abc123def456.js')).toBe('bundle.js');
     });
 
     it('should handle adjacent hashes (overlapping dots)', () => {
       // Note: Due to overlapping match (shared dot), only first hash is removed
       // This is fine - real build tools don't generate filenames like this
-      expect(normalizeFilename('chunk.abc12345.def67890.js')).toBe(
+      expect(normalizeFilePath('chunk.abc12345.def67890.js')).toBe(
         'chunk.def67890.js',
       );
 
       // Non-overlapping hashes work correctly
-      expect(normalizeFilename('chunk.abc12345.min.def67890.js')).toBe(
+      expect(normalizeFilePath('chunk.abc12345.min.def67890.js')).toBe(
         'chunk.min.js',
       );
     });
 
     it('should not remove non-hex sequences', () => {
       // Contains 'g' and 'h' which are not hex digits
-      expect(normalizeFilename('bundle.a1b2c3d4e5f6g7h8.js')).toBe(
+      expect(normalizeFilePath('bundle.a1b2c3d4e5f6g7h8.js')).toBe(
         'bundle.a1b2c3d4e5f6g7h8.js',
       );
-      expect(normalizeFilename('file.xyz12345.js')).toBe('file.xyz12345.js');
+      expect(normalizeFilePath('file.xyz12345.js')).toBe('file.xyz12345.js');
     });
 
     it('should preserve filename without hash', () => {
-      expect(normalizeFilename('icon.png')).toBe('icon.png');
-      expect(normalizeFilename('index.html')).toBe('index.html');
-      expect(normalizeFilename('app.js')).toBe('app.js');
+      expect(normalizeFilePath('icon.png')).toBe('icon.png');
+      expect(normalizeFilePath('index.html')).toBe('index.html');
+      expect(normalizeFilePath('app.js')).toBe('app.js');
     });
 
     it('should handle filenames with path separators', () => {
-      expect(normalizeFilename('static/js/index.a1b2c3d4.js')).toBe(
+      expect(normalizeFilePath('static/js/index.a1b2c3d4.js')).toBe(
         'static/js/index.js',
       );
-      expect(normalizeFilename('dist/css/main.12345678.css')).toBe(
+      expect(normalizeFilePath('dist/css/main.12345678.css')).toBe(
         'dist/css/main.css',
       );
     });
 
     it('should not remove short sequences that look like hashes', () => {
       // Less than 8 characters should not be removed
-      expect(normalizeFilename('file.abc123.js')).toBe('file.abc123.js');
-      expect(normalizeFilename('test.1234567.css')).toBe('test.1234567.css');
+      expect(normalizeFilePath('file.abc123.js')).toBe('file.abc123.js');
+      expect(normalizeFilePath('test.1234567.css')).toBe('test.1234567.css');
     });
 
     it('should handle uppercase hex digits', () => {
-      expect(normalizeFilename('bundle.A1B2C3D4.js')).toBe(
+      expect(normalizeFilePath('bundle.A1B2C3D4.js')).toBe(
         'bundle.A1B2C3D4.js',
       );
       // Only lowercase a-f are matched by the regex
@@ -79,11 +79,11 @@ describe('plugin-file-size', () => {
 
     it('should handle edge cases', () => {
       // Hash at the beginning (unlikely but possible)
-      expect(normalizeFilename('12345678.main.js')).toBe('12345678.main.js');
+      expect(normalizeFilePath('12345678.main.js')).toBe('12345678.main.js');
       // Multiple extensions
-      expect(normalizeFilename('app.min.a1b2c3d4.js')).toBe('app.min.js');
+      expect(normalizeFilePath('app.min.a1b2c3d4.js')).toBe('app.min.js');
       // No extension
-      expect(normalizeFilename('LICENSE')).toBe('LICENSE');
+      expect(normalizeFilePath('LICENSE')).toBe('LICENSE');
     });
   });
 });

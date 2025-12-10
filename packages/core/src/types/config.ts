@@ -21,7 +21,6 @@ import type {
 } from '../../compiled/http-proxy-middleware/index.js';
 import type { FileDescriptor } from '../../compiled/rspack-manifest-plugin';
 import type { BundleAnalyzerPlugin } from '../../compiled/webpack-bundle-analyzer/index.js';
-import type { RsbuildAsset } from '../helpers/stats.js';
 import type { RsbuildDevServer } from '../server/devServer';
 import type {
   EnvironmentContext,
@@ -647,7 +646,17 @@ export type BuildCacheOptions = {
   buildDependencies?: string[];
 };
 
-export type PrintFileSizeAsset = RsbuildAsset;
+export type PrintFileSizeAsset = {
+  /**
+   * The name of the asset.
+   * @example 'index.html', 'static/js/index.[hash].js'
+   */
+  name: string;
+  /**
+   * The size of the asset in bytes.
+   */
+  size: number;
+};
 
 export type PrintFileSizeOptions = {
   /**

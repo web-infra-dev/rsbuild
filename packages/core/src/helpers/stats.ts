@@ -58,25 +58,6 @@ export const getStatsWarnings = ({
   return [];
 };
 
-export type RsbuildAsset = {
-  /**
-   * The name of the asset.
-   * @example 'index.html', 'static/js/index.[hash].js'
-   */
-  name: string;
-  /**
-   * The size of the asset in bytes.
-   */
-  size: number;
-};
-
-export const getAssetsFromStats = (stats: Rspack.Stats): RsbuildAsset[] => {
-  return Object.entries(stats.compilation.assets).map(([name, value]) => ({
-    name,
-    size: value.size(),
-  }));
-};
-
 function getStatsOptions(
   compiler: Rspack.Compiler | Rspack.MultiCompiler,
   action?: ActionType,
