@@ -94,7 +94,7 @@ export default defineConfig({
         tsgo: !process.env.CI,
         alias: {
           // alias to pre-bundled types as it's public API
-          'rspack-chain': '../../compiled/rspack-chain',
+          'rspack-chain': './compiled/rspack-chain/types',
         },
       },
       output: {
