@@ -100,3 +100,5 @@ export const AUDIO_EXTENSIONS: string[] = [
   'm4a',
   'opus',
 ];
+
+export const LAZY_COMPILATION_IDENTIFIER = 'lazy-compilation-proxy';
