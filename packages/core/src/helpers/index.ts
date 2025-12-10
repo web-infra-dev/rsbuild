@@ -1,5 +1,5 @@
 import deepmerge from 'deepmerge';
-import RspackChain from '../../compiled/rspack-chain';
+import RspackChain from 'rspack-chain';
 import type {
   FilenameConfig,
   NormalizedConfig,
