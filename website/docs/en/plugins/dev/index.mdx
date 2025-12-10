@@ -192,10 +192,9 @@ See [Migrate Vite plugin](/guide/migration/vite-plugin) to learn how to migrate 
 
 ## Use Rsbuild config
 
-Custom plugins can usually get config from function parameters,
-just define and use it at your pleasure.
+Custom plugins usually receive their options from the parameters passed to the initialization function, so you can define and use those arguments however you like.
 
-But sometimes you may need to read and change the public config of the Rsbuild. To begin with, you should understand how the Rsbuild generates and uses its config:
+Sometimes a plugin needs to read or modify Rsbuild's shared configuration. To do that effectively, it's helpful to understand how Rsbuild generates and consumes its config:
 
 - Read, parse config and merge with default values.
 - Plugins modify the config by `api.modifyRsbuildConfig(...)`.
@@ -208,9 +207,9 @@ export const pluginUploadDist = (): RsbuildPlugin => ({
   name: 'plugin-upload-dist',
   setup(api) {
     api.modifyRsbuildConfig((config) => {
-      // try to disable minimize.
+      // Try to disable minification.
       config.output.minify = false;
-      // but also can be enable by other plugins...
+      // Other plugins might re-enable it...
     });
     api.onBeforeBuild(() => {
       // use the normalized config.
@@ -238,9 +237,7 @@ There are 3 ways to use Rsbuild config:
 - use `api.getRsbuildConfig()` to get Rsbuild config.
 - use `api.getNormalizedConfig()` to get finally normalized config.
 
-When normalized, it will again merge the config object with the default values
-and make sure the optional properties exist.
-So for PluginUploadDist, part of its type looks like:
+When normalized, the config object is merged with the default values again and most optional properties are removed, ensuring those fields are always available. For `pluginUploadDist`, part of its type looks like:
 
 ```ts
 api.modifyRsbuildConfig((config: RsbuildConfig) => {});
@@ -261,13 +258,12 @@ type NormalizedConfig = {
 };
 ```
 
-The return value type of `getNormalizedConfig()` is slightly different from that of `RsbuildConfig` and is narrowed compared to the types described elsewhere in the documentation.
-You do not need to fill in the defaults when you use it.
+The return type of `getNormalizedConfig()` differs slightly from `RsbuildConfig`; it's narrower because defaults have already been applied. You don't need to provide default values when you use it.
 
-Therefore, the best way to use configuration options is to
+Therefore, the best way to use configuration options is to:
 
-- **Modify the config** with `api.modifyRsbuildConfig(config => {})`
-- Read `api.getNormalizedConfig()` as the **actual config used by the plugin** in the further lifetime.
+- **Modify the config** with `api.modifyRsbuildConfig(config => {})`.
+- Read `api.getNormalizedConfig()` as the **actual config used by the plugin** later in its lifecycle.
 
 ## Modify Rspack configuration
 
