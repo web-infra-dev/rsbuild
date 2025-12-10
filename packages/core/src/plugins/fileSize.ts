@@ -35,7 +35,8 @@ type SizeSnapshot = {
 type SizeSnapshots = Record<string, SizeSnapshot>;
 
 type FormattedAsset = {
-  name: string;
+  filePath: string;
+  filename: string;
   filenameLabel: string;
   filenameLength: number;
   size: number;
@@ -60,10 +61,10 @@ function getSnapshotPath(dir: string, snapshotHash: string): string {
   return path.join(dir, 'rsbuild/file-sizes.json');
 }
 
-/** Normalize filename by removing hash for comparison across builds */
-export function normalizeFilename(fileName: string): string {
+/** Normalize file path by removing hash for comparison across builds */
+export function normalizeFilePath(filePath: string): string {
   // Remove hash patterns like .a1b2c3d4. but keep the extension
-  return fileName.replace(/\.[a-f0-9]{8,}\./g, '.');
+  return filePath.replace(/\.[a-f0-9]{8,}\./g, '.');
 }
 
 /** Load previous build file sizes from snapshots */
@@ -178,11 +179,6 @@ const COMPRESSIBLE_REGEX =
 const isCompressible = (assetName: string) =>
   COMPRESSIBLE_REGEX.test(assetName);
 
-const pickAssetInfo = (asset: PrintFileSizeAsset): PrintFileSizeAsset => ({
-  name: asset.name,
-  size: asset.size,
-});
-
 const calcTotalSize = (assets: FormattedAsset[], compressed?: boolean) => {
   let totalSize = 0;
   let totalGzipSize = 0;
@@ -201,9 +197,9 @@ const calcTotalSize = (assets: FormattedAsset[], compressed?: boolean) => {
 };
 
 type StatsAsset = {
-  name: string;
   size: number;
-  source: Rspack.sources.SourceValue;
+  content: Buffer | string;
+  filePath: string;
 };
 
 async function printFileSizes(
@@ -231,16 +227,15 @@ async function printFileSizes(
   };
 
   const formatAsset = async (asset: StatsAsset): Promise<FormattedAsset> => {
-    const { size } = asset;
-    const fileName = asset.name.split('?')[0];
-    const compressible = options.compressed && isCompressible(fileName);
-    const gzippedSize = compressible ? await gzipSize(asset.source) : null;
+    const { size, filePath } = asset;
+    const compressible = options.compressed && isCompressible(filePath);
+    const gzippedSize = compressible ? await gzipSize(asset.content) : null;
 
     // Normalize filename for comparison (remove hash)
-    const normalizedName = normalizeFilename(fileName);
+    const normalizedPath = normalizeFilePath(filePath);
 
     // Store current size for next build
-    snapshot.files[normalizedName] = {
+    snapshot.files[normalizedPath] = {
       size,
       gzippedSize: gzippedSize ?? undefined,
     };
@@ -254,7 +249,7 @@ async function printFileSizes(
 
     // Calculate size differences for inline display
     if (showDiff) {
-      const sizeData = previousSizes[environmentName]?.files[normalizedName];
+      const sizeData = previousSizes[environmentName]?.files[normalizedPath];
       const sizeDiff = size - (sizeData?.size ?? 0);
       if (isSignificantDiff(sizeDiff)) {
         const { label, length } = formatDiff(sizeDiff);
@@ -270,14 +265,15 @@ async function printFileSizes(
       }
     }
 
-    const folder = path.join(relativeDistPath, path.dirname(fileName));
-    const name = path.basename(fileName);
+    const folder = path.join(relativeDistPath, path.dirname(filePath));
+    const filename = path.basename(filePath);
     const filenameLabel =
-      color.dim(folder + path.sep) + coloringAssetName(name);
-    const filenameLength = (folder + path.sep + name).length;
+      color.dim(folder + path.sep) + coloringAssetName(filename);
+    const filenameLength = (folder + path.sep + filename).length;
 
     return {
-      name,
+      filePath,
+      filename,
       filenameLabel,
       filenameLength,
       size,
@@ -290,12 +286,20 @@ async function printFileSizes(
 
   const getAssets = async () => {
     const assets: StatsAsset[] = Object.entries(stats.compilation.assets).map(
-      ([name, value]) => {
-        const source = value.source();
+      ([assetName, value]) => {
+        const filePath = assetName.split('?')[0];
+        let content: string | Buffer;
+        try {
+          content = value.source();
+        } catch {
+          // webpack removes source after emitting
+          // read from file system instead
+          content = fs.readFileSync(path.join(distPath, filePath));
+        }
         return {
-          name,
-          size: Buffer.byteLength(source),
-          source,
+          filePath,
+          size: Buffer.byteLength(content),
+          content,
         };
       },
     );
@@ -304,7 +308,7 @@ async function printFileSizes(
 
     const filteredAssets = assets.filter((asset) => {
       const publicAsset: PrintFileSizeAsset = {
-        name: asset.name,
+        name: asset.filePath,
         size: asset.size,
       };
       if (exclude(publicAsset)) {
@@ -382,7 +386,10 @@ async function printFileSizes(
       return options.total({
         environmentName,
         distPath: relativeDistPath,
-        assets: assets.map((asset) => pickAssetInfo(asset)),
+        assets: assets.map((asset) => ({
+          name: asset.filePath,
+          size: asset.size,
+        })),
         totalSize,
         totalGzipSize,
       });
