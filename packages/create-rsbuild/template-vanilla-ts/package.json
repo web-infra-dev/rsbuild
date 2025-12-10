@@ -9,7 +9,7 @@
     "preview": "rsbuild preview"
   },
   "devDependencies": {
-    "@rsbuild/core": "^1.6.12",
+    "@rsbuild/core": "^1.6.14",
     "typescript": "^5.9.3"
   }
 }

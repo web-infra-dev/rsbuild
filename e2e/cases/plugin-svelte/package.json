@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "svelte": "^5.45.5"
+    "svelte": "^5.45.8"
   },
   "devDependencies": {
     "less": "4.3.0",
