@@ -8,7 +8,6 @@ import { promisify } from 'node:util';
 import zlib from 'node:zlib';
 import { JS_REGEX } from '../constants';
 import { color, hash } from '../helpers';
-import { getAssetsFromStats, type RsbuildAsset } from '../helpers/stats';
 import { logger } from '../logger';
 import type {
   InternalContext,
@@ -48,7 +47,7 @@ type FormattedAsset = {
 
 const gzip = promisify(zlib.gzip);
 
-async function gzipSize(input: Buffer) {
+async function gzipSize(input: Buffer | string) {
   const data = await gzip(input);
   return Buffer.byteLength(data);
 }
@@ -201,6 +200,12 @@ const calcTotalSize = (assets: FormattedAsset[], compressed?: boolean) => {
   };
 };
 
+type StatsAsset = {
+  name: string;
+  size: number;
+  source: Rspack.sources.SourceValue;
+};
+
 async function printFileSizes(
   options: PrintFileSizeOptions,
   stats: Rspack.Stats,
@@ -225,12 +230,11 @@ async function printFileSizes(
     totalGzipSize: 0,
   };
 
-  const formatAsset = async (asset: RsbuildAsset): Promise<FormattedAsset> => {
+  const formatAsset = async (asset: StatsAsset): Promise<FormattedAsset> => {
+    const { size } = asset;
     const fileName = asset.name.split('?')[0];
-    const contents = await fs.promises.readFile(path.join(distPath, fileName));
-    const size = Buffer.byteLength(contents);
     const compressible = options.compressed && isCompressible(fileName);
-    const gzippedSize = compressible ? await gzipSize(contents) : null;
+    const gzippedSize = compressible ? await gzipSize(asset.source) : null;
 
     // Normalize filename for comparison (remove hash)
     const normalizedName = normalizeFilename(fileName);
@@ -285,15 +289,29 @@ async function printFileSizes(
   };
 
   const getAssets = async () => {
-    const assets = getAssetsFromStats(stats);
+    const assets: StatsAsset[] = Object.entries(stats.compilation.assets).map(
+      ([name, value]) => {
+        const source = value.source();
+        return {
+          name,
+          size: Buffer.byteLength(source),
+          source,
+        };
+      },
+    );
+
     const exclude = options.exclude ?? excludeAsset;
 
     const filteredAssets = assets.filter((asset) => {
-      if (exclude(asset)) {
+      const publicAsset: PrintFileSizeAsset = {
+        name: asset.name,
+        size: asset.size,
+      };
+      if (exclude(publicAsset)) {
         return false;
       }
       if (options.include) {
-        return options.include(asset);
+        return options.include(publicAsset);
       }
       return true;
     });
