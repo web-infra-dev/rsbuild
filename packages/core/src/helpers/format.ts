@@ -1,6 +1,7 @@
 import { sep } from 'node:path';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import type { StatsError } from '@rspack/core';
+import { LAZY_COMPILATION_IDENTIFIER } from '../constants';
 import { isVerbose } from '../logger';
 import { removeLoaderChainDelimiter } from './stats';
 import { color } from './vendors';
@@ -88,7 +89,9 @@ function formatModuleTrace(stats: StatsError, errorFile: string) {
       (trace) =>
         trace.originName && removeLoaderChainDelimiter(trace.originName),
     )
-    .filter(Boolean) as string[];
+    .filter(
+      (trace) => trace && !trace.startsWith(LAZY_COMPILATION_IDENTIFIER),
+    ) as string[];
 
   if (!moduleNames.length) {
     return;
