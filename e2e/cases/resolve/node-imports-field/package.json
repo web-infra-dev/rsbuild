@@ -4,6 +4,6 @@
   "private": true,
   "type": "module",
   "imports": {
-    "#app/*": "./src/*.js"
+    "#app/*": "./src/*"
   }
 }
