@@ -599,7 +599,7 @@ export type SriOptions = {
    * Specifies the algorithm used to compute the integrity hash.
    * @default 'sha384'
    */
-  algorithm?: SriAlgorithm;
+  algorithm?: SriAlgorithm | SriAlgorithm[];
   /**
    * Whether to enable SRI.
    * `'auto'` means it's enabled in production mode and disabled in development mode.
