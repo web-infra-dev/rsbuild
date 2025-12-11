@@ -3,9 +3,11 @@
 - **类型：**
 
 ```ts
+type SriAlgorithm = 'sha256' | 'sha384' | 'sha512';
+
 type SriOptions = {
   enable?: 'auto' | boolean;
-  algorithm?: 'sha256' | 'sha384' | 'sha512';
+  algorithm?: SriAlgorithm | SriAlgorithm[];
 };
 ```
 
@@ -100,7 +102,7 @@ export default {
 
 ### algorithm
 
-- **类型：** `'sha256' | 'sha384' | 'sha512'`
+- **类型：** `SriAlgorithm | SriAlgorithm[]`
 - **默认值：** `'sha384'`
 
 指定用于计算 integrity hash 的算法。
@@ -128,4 +130,22 @@ export default {
 ></script>
 ```
 
+或者配置多种算法：
+
+```ts title="rsbuild.config.ts"
+export default {
+  security: {
+    sri: {
+      algorithm: ['sha384', 'sha256'],
+    },
+  },
+};
+```
+
 > 参考：[Cryptographic hash functions](https://www.w3.org/TR/SRI/#cryptographic-hash-functions)。
+
+## 版本历史
+
+| 版本    | 变更内容         |
+| ------- | ---------------- |
+| v1.6.15 | 支持配置多种算法 |
