@@ -186,7 +186,7 @@ const pluginBar = {
 
 For example, if you register both the Foo and Bar plugins mentioned above, the Foo plugin will not take effect because the Bar plugin declares the removal of the Foo plugin.
 
-It should be noted that if the current plugin is registered as a [specific environment plugin](/guide/advanced/environments#add-plugins-for-specified-environment), only the removal of plugins in the same environment is supported, and global plugins cannot be removed.
+If the current plugin is registered as a [specific environment plugin](/guide/advanced/environments#add-plugins-for-specified-environment), you can only remove plugins in that environment; global plugins remain in place.
 
 ## api.context
 
