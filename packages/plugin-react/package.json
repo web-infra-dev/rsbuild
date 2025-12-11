@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-react",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "React plugin for Rsbuild",
   "repository": {
     "type": "git",
@@ -27,14 +27,14 @@
     "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
-    "@rspack/plugin-react-refresh": "^1.5.2",
+    "@rspack/plugin-react-refresh": "^1.5.3",
     "react-refresh": "^0.18.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.15.1",
+    "@rslib/core": "0.18.4",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.18.12",
+    "@types/node": "^24.10.2",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {

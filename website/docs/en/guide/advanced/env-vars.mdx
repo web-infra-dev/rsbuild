@@ -1,12 +1,12 @@
 # Environment variables
 
-Rsbuild supports injecting environment variables or expressions into your code during the build. This helps you distinguish between different environments or replace constants.
+Rsbuild supports injecting environment variables or expressions into your code during the build. This helps you distinguish between environments or replace constants.
 
 This chapter explains how to use environment variables in Rsbuild.
 
 ## Default variables
 
-By default, Rsbuild uses [source.define](#using-define) to inject environment variables into your code, replacing them with their values during during the build:
+By default, Rsbuild uses [source.define](#using-define) to inject environment variables into your code, replacing them with their values during the build:
 
 `import.meta.env` contains these environment variables:
 
@@ -84,7 +84,7 @@ if (import.meta.env.PROD) {
 - **Type:** `string`
 - **Scope:** Available in source code, replaced at build time via [define](/guide/advanced/env-vars#using-define)
 
-You can use `import.meta.env.BASE_URL` in client code to access the [base path](/guide/basic/server#base-path) of the server. This base path is determined by the [server.base](/config/server/base) configuration and is helpful for referencing assets from the [public folder](/guide/basic/static-assets#public-folder) in your code.
+You can use `import.meta.env.BASE_URL` in client code to access the [base path](/guide/basic/server#base-path) of the server. This base path is determined by the [server.base](/config/server/base) configuration and is useful for referencing assets from the [public folder](/guide/basic/static-assets#public-folder) in your code.
 
 For example, set the server's base path to `/foo` using the [server.base](/config/server/base) configuration:
 
@@ -206,7 +206,7 @@ if (false) {
 }
 ```
 
-During code minification, `if (false) { ... }` will be recognized as invalid code and removed automatically.
+During code minification, `if (false) { ... }` is recognized as dead code and removed automatically.
 
 #### Custom NODE_ENV
 
@@ -264,6 +264,28 @@ The `--env-mode` option takes precedence over `process.env.NODE_ENV`.
 We recommend using `--env-mode` to set the env mode instead of modifying `process.env.NODE_ENV`.
 
 :::
+
+#### Accessing in client code
+
+By default, Rsbuild does not inject the env mode into client code. You can manually define a global identifier using [source.define](#using-define) to make it available in the client code:
+
+```js title="rsbuild.config.js"
+export default ({ envMode }) => ({
+  source: {
+    define: {
+      ENV_MODE: JSON.stringify(envMode),
+    },
+  },
+});
+```
+
+Then you can access it in client code:
+
+```js title="src/index.js"
+if (ENV_MODE === 'my-mode') {
+  // ...
+}
+```
 
 ### Env directory
 

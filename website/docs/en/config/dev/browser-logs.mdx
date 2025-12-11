@@ -1,11 +1,22 @@
 # dev.browserLogs
 
-- **Type:** `boolean`
-- **Default:** `true`
+- **Type:**
+
+```ts
+type BrowserLogs =
+  | boolean
+  | {
+      stackTrace?: 'summary' | 'full' | 'none';
+    };
+```
+
+- **Default:** `{ stackTrace: 'summary' }`
 
 Controls whether to forward browser runtime errors to the terminal.
 
-When `true`, the Rsbuild client listens for window `error` events in the browser and send them to the dev server, where they are printed in the terminal (prefixed with `[browser]`).
+When set to `true`, Rsbuild's client script listens for `window.error` events and unhandled Promise rejections in the browser, then sends these errors to the dev server. The server prints them in the terminal with a `[browser]` prefix, along with improved formatting and contextual information.
+
+This feature is particularly useful when working with AI coding agents that can only read terminal output, helping them better understand runtime errors and assist in debugging.
 
 ## Example
 
@@ -21,7 +32,43 @@ const App = () => {
 The browser will throw an error, and Rsbuild will forward this error to the terminal:
 
 ```bash
-error   [browser] Uncaught TypeError: Cannot read properties of undefined (reading 'name') (src/App.jsx:3:0)
+error   [browser] Uncaught TypeError: Cannot read properties of undefined (reading 'name')
+ at handleClick (src/App.jsx:3:0)
+```
+
+## Options
+
+### stackTrace
+
+- **Type:** `'summary' | 'full' | 'none'`
+- **Default:** `'summary'`
+
+Controls how the error stack trace is displayed in the terminal when forwarding browser errors.
+
+- `'summary'` – Show only the first frame (e.g. `(src/App.jsx:3:0)`).
+- `'full'` – Print the full stack trace with all frames.
+- `'none'` – Hide stack traces.
+
+For example, setting `stackTrace` to `'full'`:
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    browserLogs: {
+      stackTrace: 'full',
+    },
+  },
+};
+```
+
+The full stack trace will be like:
+
+```bash
+error   [browser] Uncaught TypeError: Cannot read properties of undefined (reading 'name')
+    at handleClick (src/App.jsx:6:0)
+    at someFunction (src/App.jsx:12:0)
+    at App (src/App.jsx:6:0)
+    ...
 ```
 
 ## Disabling
@@ -38,6 +85,7 @@ export default {
 
 ## Version history
 
-| Version | Changes           |
-| ------- | ----------------- |
-| v1.5.13 | Added this option |
+| Version | Changes                   |
+| ------- | ------------------------- |
+| v1.5.13 | Added this option         |
+| v1.6.0  | Added `stackTrace` option |

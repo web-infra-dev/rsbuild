@@ -1,6 +1,6 @@
 # React plugin
 
-import { SourceCode } from '@rspress/core/theme';
+import { SourceCode } from '@theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-react" />
 
@@ -158,27 +158,28 @@ This option is used to control this behavior and determine whether the `react` a
 - **Type:**
 
 ```ts
-type SplitReactChunkOptions = {
-  react?: boolean;
-  router?: boolean;
-};
+type SplitChunks =
+  | boolean
+  | {
+      react?: boolean;
+      router?: boolean;
+    };
 ```
 
-- **Default:**
+- **Default:** `true` (equivalent to `{ react: true, router: true }`)
+
+For example, to disable all chunk splitting:
 
 ```ts
-const defaultOptions = {
-  react: true,
-  router: true,
-};
+pluginReact({ splitChunks: false });
 ```
 
-- **Example:**
+Or to disable only the `router` chunk splitting:
 
 ```ts
 pluginReact({
   splitChunks: {
-    react: false,
+    react: true,
     router: false,
   },
 });

@@ -7,7 +7,9 @@ rspackTest(
     delete process.env.NODE_ENV;
     execCliSync('build');
 
-    const outputs = await readDirContents(path.join(__dirname, 'dist-prod'));
+    const outputs = await readDirContents(
+      path.join(import.meta.dirname, 'dist-prod'),
+    );
     const outputFiles = Object.keys(outputs);
 
     expect(outputFiles.length > 1).toBeTruthy();

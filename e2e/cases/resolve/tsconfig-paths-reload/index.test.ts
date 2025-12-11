@@ -16,11 +16,11 @@ rspackTest(
       return;
     }
 
-    const dist = join(__dirname, 'dist');
+    const dist = join(import.meta.dirname, 'dist');
 
     await fse.remove(dist);
     await fse.remove(tempConfig);
-    await fse.copy(join(__dirname, 'tsconfig.json'), tempConfig);
+    await fse.copy(join(import.meta.dirname, 'tsconfig.json'), tempConfig);
 
     const port = await getRandomPort();
     execCli('dev', {

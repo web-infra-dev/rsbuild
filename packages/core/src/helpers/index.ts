@@ -1,5 +1,5 @@
 import deepmerge from 'deepmerge';
-import RspackChain from '../../compiled/rspack-chain';
+import RspackChain from 'rspack-chain';
 import type {
   FilenameConfig,
   NormalizedConfig,
@@ -24,12 +24,11 @@ export const isObject = (obj: unknown): obj is Record<string, any> =>
 
 // Cache Object.prototype reference for better performance in hot paths
 const objectPrototype = Object.prototype;
+const getProto = Object.getPrototypeOf;
 
 export const isPlainObject = (obj: unknown): obj is Record<string, any> => {
   return (
-    obj !== null &&
-    typeof obj === 'object' &&
-    Object.getPrototypeOf(obj) === objectPrototype
+    obj !== null && typeof obj === 'object' && getProto(obj) === objectPrototype
   );
 };
 
@@ -150,7 +149,7 @@ export const upperFirst = (str: string): string =>
   str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
 
 export const createVirtualModule = (content: string) =>
-  `data:text/javascript,${content}`;
+  `data:text/javascript,${encodeURIComponent(content)}`;
 
 export function isWebTarget(target: RsbuildTarget | RsbuildTarget[]): boolean {
   const targets = castArray(target);

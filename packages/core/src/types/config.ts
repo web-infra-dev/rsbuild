@@ -12,16 +12,15 @@ import type {
   SwcJsMinimizerRspackPluginOptions,
   SwcLoaderOptions,
 } from '@rspack/core';
+import type RspackChain from 'rspack-chain';
 import type { ChokidarOptions } from '../../compiled/chokidar/index.js';
 import type cors from '../../compiled/cors/index.js';
 import type {
   Options as HttpProxyOptions,
   Filter as ProxyFilter,
 } from '../../compiled/http-proxy-middleware/index.js';
-import type RspackChain from '../../compiled/rspack-chain';
 import type { FileDescriptor } from '../../compiled/rspack-manifest-plugin';
 import type { BundleAnalyzerPlugin } from '../../compiled/webpack-bundle-analyzer/index.js';
-import type { RsbuildAsset } from '../helpers/stats.js';
 import type { RsbuildDevServer } from '../server/devServer';
 import type {
   EnvironmentContext,
@@ -51,6 +50,7 @@ import type {
   ConfigChain,
   ConfigChainMergeContext,
   ConfigChainWithContext,
+  LiteralUnion,
   MaybePromise,
   OneOrMany,
   Optional,
@@ -63,9 +63,24 @@ export type ToolsBundlerChainConfig = OneOrMany<
   (chain: RspackChain, utils: ModifyBundlerChainUtils) => MaybePromise<void>
 >;
 
+export type ToolsPostCSSContext = {
+  addPlugins: (
+    plugins: LoosePostCSSPlugin | LoosePostCSSPlugin[],
+    options?: {
+      /**
+       * Controls where the plugin is placed relative to the existing PostCSS plugins.
+       * - `pre`: Insert the plugin before all existing plugins.
+       * - `post`: Insert the plugin after all existing plugins.
+       * @default `post`
+       */
+      order?: 'pre' | 'post';
+    },
+  ) => void;
+};
+
 export type ToolsPostCSSLoaderConfig = ConfigChainWithContext<
   PostCSSLoaderOptions,
-  { addPlugins: (plugins: LoosePostCSSPlugin | LoosePostCSSPlugin[]) => void }
+  ToolsPostCSSContext
 >;
 
 export type ToolsCSSLoaderConfig = ConfigChain<CSSLoaderOptions>;
@@ -172,15 +187,15 @@ export interface ToolsConfig {
    */
   bundlerChain?: ToolsBundlerChainConfig;
   /**
-   * Modify the options of [css-loader](https://github.com/webpack-contrib/css-loader).
+   * Modify the options of [css-loader](https://github.com/webpack/css-loader).
    */
   cssLoader?: ToolsCSSLoaderConfig;
   /**
-   * Modify the options of [postcss-loader](https://github.com/webpack-contrib/postcss-loader).
+   * Modify the options of [postcss-loader](https://github.com/webpack/postcss-loader).
    */
   postcss?: ToolsPostCSSLoaderConfig;
   /**
-   * Modify the options of [style-loader](https://github.com/webpack-contrib/style-loader).
+   * Modify the options of [style-loader](https://github.com/webpack/style-loader).
    */
   styleLoader?: ToolsStyleLoaderConfig;
   /**
@@ -378,9 +393,33 @@ export type HistoryApiFallbackTo =
   | ((context: HistoryApiFallbackContext) => string);
 
 export type HistoryApiFallbackOptions = {
+  /**
+   * Specifies the default HTML file to return when the History API fallback is enabled.
+   * For example, if you set `historyApiFallback.index` to `main.html`, the server will
+   * automatically serve `main.html` as the fallback page when users access any unmatched
+   * routes.
+   * @default 'index.html'
+   */
   index?: string;
+  /**
+   * Override the default `Accepts:` headers that are queried when matching HTML content
+   * requests.
+   * @default ['text/html', '*\/*']
+   */
   htmlAcceptHeaders?: string[];
-  disableDotRule?: true;
+  /**
+   * By default, requests containing a dot (`.`) in the path are treated as direct file
+   * requests and are not redirected. Setting `disableDotRule` to `true` will disable this
+   * behavior and allow such requests to be redirected as well.
+   * @default false
+   */
+  disableDotRule?: boolean;
+  /**
+   * `rewrites` lets you customize how request paths are mapped to HTML files when
+   * a History API fallback occurs. These rules only apply when no static asset matches
+   * the request, meaning it has entered the fallback stage. Each rule is evaluated in
+   * order until a match is found and executed.
+   */
   rewrites?: {
     from: RegExp;
     to: HistoryApiFallbackTo;
@@ -508,7 +547,15 @@ export interface ServerConfig {
    * - object: enable CORS with the specified options.
    * - true: enable CORS with default options (allow all origins, not recommended).
    * - false: disable CORS.
-   * @default false
+   * @default
+   * ```js
+   * { origin: defaultAllowedOrigins }
+   * ```
+   * where `defaultAllowedOrigins` includes:
+   * - `localhost`
+   * - `127.0.0.1`
+   * - `[::1]`
+   *
    * @link https://github.com/expressjs/cors
    */
   cors?: boolean | cors.CorsOptions;
@@ -599,7 +646,17 @@ export type BuildCacheOptions = {
   buildDependencies?: string[];
 };
 
-export type PrintFileSizeAsset = RsbuildAsset;
+export type PrintFileSizeAsset = {
+  /**
+   * The name of the asset.
+   * @example 'index.html', 'static/js/index.[hash].js'
+   */
+  name: string;
+  /**
+   * The size of the asset in bytes.
+   */
+  size: number;
+};
 
 export type PrintFileSizeOptions = {
   /**
@@ -639,6 +696,14 @@ export type PrintFileSizeOptions = {
    * @default (asset) => /\.(?:map|LICENSE\.txt)$/.test(asset.name)
    */
   exclude?: (asset: PrintFileSizeAsset) => boolean;
+  /**
+   * Controls whether file size differences are displayed relative to the previous build.
+   * When this option is enabled, Rsbuild records a snapshot of all output file sizes after
+   * each build. On subsequent builds, Rsbuild compares the current sizes against the previous
+   * snapshot and shows the change inline in parentheses.
+   * @default false
+   */
+  diff?: boolean;
 };
 
 export interface PreconnectOption {
@@ -716,6 +781,7 @@ export interface PerformanceConfig {
   /**
    * To enable or configure persistent build cache.
    * @experimental This feature is experimental and may be changed in the future.
+   * @default false
    */
   buildCache?: BuildCacheOptions | boolean;
 
@@ -767,6 +833,7 @@ export interface PerformanceConfig {
    *   type: 'async-chunks',
    * };
    * ```
+   * @default undefined
    */
   preload?: true | PreloadOptions;
 
@@ -784,12 +851,14 @@ export interface PerformanceConfig {
    *   type: 'async-chunks',
    * };
    * ```
+   * @default undefined
    */
   prefetch?: true | PrefetchOptions;
 
   /**
    * Whether capture timing information for each module,
    * same as the [profile](https://rspack.rs/config/other-options#profile) config of Rspack.
+   * @default false
    */
   profile?: boolean;
 }
@@ -1089,26 +1158,49 @@ export type InlineChunkConfig =
   | { enable?: boolean | 'auto'; test: InlineChunkTest };
 
 export type ManifestByEntry = {
+  /**
+   * Files that are required during the initial load of the entry.
+   */
   initial?: {
+    /** Initial JavaScript files for this entry. */
     js?: string[];
+    /** Initial CSS files for this entry. */
     css?: string[];
   };
+  /**
+   * Files that may be loaded asynchronously.
+   * Usually code-split chunks or lazily loaded chunks.
+   */
   async?: {
+    /** Async JavaScript files for this entry. */
     js?: string[];
+    /** Async CSS files for this entry. */
     css?: string[];
   };
-  /** other assets (e.g. png、svg、source map) related to the current entry */
-  assets?: string[];
+  /** HTML files generated for this entry, if any. */
   html?: string[];
+  /**
+   * Additional assets associated with this entry.
+   * For example images、fonts、source maps and other non JS or CSS files.
+   */
+  assets?: string[];
 };
 
 export type ManifestData = {
-  entries: {
-    /** relate to Rsbuild's source.entry config */
-    [entryName: string]: ManifestByEntry;
-  };
-  /** Flatten all assets */
+  /**
+   * A flat list of all emitted asset files.
+   */
   allFiles: string[];
+  /**
+   * Maps each entry name to its associated output files.
+   */
+  entries: Record<string, ManifestByEntry>;
+  /**
+   * Subresource Integrity (SRI) hashes for emitted assets.
+   * The key is the asset file path, and the value is its integrity hash.
+   * This field is available only when the `security.sri` option is enabled.
+   */
+  integrity: Record<string, string>;
 };
 
 export type ManifestObjectConfig = {
@@ -1132,6 +1224,12 @@ export type ManifestObjectConfig = {
    * @default (file: FileDescriptor) => !file.name.endsWith('.LICENSE.txt')
    */
   filter?: (file: FileDescriptor) => boolean;
+  /**
+   * Controls whether the generated manifest includes the static asset prefix in file paths.
+   * The prefix is taken from `dev.assetPrefix` and `output.assetPrefix`.
+   * @default true
+   */
+  prefix?: boolean;
 };
 
 export type ManifestConfig = string | boolean | ManifestObjectConfig;
@@ -1195,11 +1293,12 @@ export interface OutputConfig {
    * `auto` means use a relative path based on file location.
    * @default `server.base`
    */
-  assetPrefix?: string | 'auto';
+  assetPrefix?: LiteralUnion<'auto', string>;
   /**
    * Set the size threshold to inline static assets such as images and fonts.
    * By default, static assets will be Base64 encoded and inline into the page if
    * the size is less than 4KiB.
+   * @default { svg: 4096, font: 4096, image: 4096, media: 4096, assets: 4096 }
    */
   dataUriLimit?: number | DataUriLimit;
   /**
@@ -1344,18 +1443,34 @@ export type ScriptLoading = 'defer' | 'module' | 'blocking';
 export type OutputStructure = 'flat' | 'nested';
 
 /**
- * custom properties
- * e.g. { name: 'viewport' content: 'width=500, initial-scale=1' }
+ * Custom meta tag attributes.
+ * Key is the attribute name.
+ * Value is the attribute value, as a string or boolean.
+ *
+ * @example
+ * {
+ *   name: 'viewport',
+ *   content: 'width=500, initial-scale=1',
+ * }
  */
-export type MetaAttrs = { [attrName: string]: string | boolean };
+export type MetaAttrs = Record<string, string | boolean>;
 
-export type MetaOptions = {
-  /**
-   * name content pair
-   * e.g. { viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no' }`
-   */
-  [name: string]: string | false | MetaAttrs;
-};
+/**
+ * Meta options in name-content form.
+ * Key is the meta name, such as `viewport`, `description`, or `robots`.
+ * The value can be:
+ * - `string`: the content of the meta tag
+ * - `false`: explicitly disables the meta tag
+ * - `MetaAttrs`: a set of custom meta attributes
+ *
+ * @example
+ * {
+ *   viewport: 'width=device-width, initial-scale=1',
+ *   description: 'My awesome website',
+ *   robots: false,
+ * }
+ */
+export type MetaOptions = Record<string, string | false | MetaAttrs>;
 
 export type HtmlBasicTag = {
   /**
@@ -1486,7 +1601,7 @@ export type AppIconItem = {
    * the default value.
    * @see https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Manifest/Reference/icons#purpose
    */
-  purpose?: string;
+  purpose?: LiteralUnion<'any' | 'maskable' | 'monochrome', string>;
 };
 
 export type AppIcon = {
@@ -1505,6 +1620,8 @@ export type AppIcon = {
    */
   filename?: string;
 };
+
+type HtmlImplementation = 'js' | 'native';
 
 export interface HtmlConfig {
   /**
@@ -1592,6 +1709,19 @@ export interface HtmlConfig {
    * @default 'defer'. If `output.module` is enabled, the value is always `'module'`.
    */
   scriptLoading?: ScriptLoading;
+  /**
+   * Specifies which implementation to use for generating HTML files.
+   *
+   * - `'js'` (default) - Use the JavaScript-based `html-rspack-plugin`.
+   * - `'native'` - Use Rspack's built-in `HtmlRspackPlugin` implemented in Rust.
+   *
+   * This option is experimental and may affect the available options in `tools.htmlPlugin`,
+   * since the two implementations are not fully compatible.
+   *
+   * @default 'js'
+   * @experimental
+   */
+  implementation?: HtmlImplementation;
 }
 
 export type NormalizedHtmlConfig = HtmlConfig & {
@@ -1602,6 +1732,7 @@ export type NormalizedHtmlConfig = HtmlConfig & {
   crossorigin: boolean | CrossOrigin;
   outputStructure: OutputStructure;
   scriptLoading: ScriptLoading;
+  implementation: HtmlImplementation;
 };
 
 export type ProgressBarConfig = {
@@ -1610,8 +1741,9 @@ export type ProgressBarConfig = {
 
 export type RequestHandler = Connect.NextHandleFunction;
 
-export type EnvironmentAPI = {
-  [name: string]: {
+export type EnvironmentAPI = Record<
+  string,
+  {
     /**
      * Get stats info about current environment.
      */
@@ -1634,8 +1766,8 @@ export type EnvironmentAPI = {
      * Provides some context information about the current environment
      */
     context: EnvironmentContext;
-  };
-};
+  }
+>;
 
 export type SetupMiddlewaresContext = Pick<
   RsbuildDevServer,
@@ -1681,6 +1813,11 @@ export type ClientConfig = {
    * @default true
    */
   overlay?: boolean;
+  /**
+   * Controls the log level for client-side logging in the browser console.
+   * @default 'info'
+   */
+  logLevel?: 'info' | 'warn' | 'error' | 'silent';
 };
 
 export type NormalizedClientConfig = Optional<
@@ -1691,8 +1828,18 @@ export type NormalizedClientConfig = Optional<
 export type { ChokidarOptions };
 
 export type WatchFiles = {
+  /**
+   * Paths of the files or directories to watch, supports glob syntax.
+   */
   paths: string | string[];
+  /**
+   * Watch options passed to [chokidar](https://github.com/paulmillr/chokidar).
+   */
   options?: ChokidarOptions;
+  /**
+   * Specifies whether to reload the page or restart the dev server when files change.
+   * @default 'reload-page'
+   */
   type?: 'reload-page' | 'reload-server';
 };
 
@@ -1713,14 +1860,29 @@ export type CliShortcut = {
 
 export type WriteToDisk = boolean | ((filename: string) => boolean);
 
+export type BrowserLogsStackTrace = 'summary' | 'full' | 'none';
+
 export interface DevConfig {
   /**
    * Controls whether to forward browser runtime errors to the terminal. When `true`, the dev
-   * client listens for window `error` events in the browser and send them to the dev server,
-   * where they are printed in the terminal (prefixed with `[browser]`).
-   * @default true
+   * client listens for `window.error` events and unhandled Promise rejections in the browser,
+   * then sends them to the dev server where they are printed in the terminal (prefixed with
+   * `[browser]`).
+   * @default { stackTrace: 'summary' }
    */
-  browserLogs?: boolean;
+  browserLogs?:
+    | boolean
+    | {
+        /**
+         * Controls how the error stack trace is displayed in the terminal when forwarding
+         * browser errors.
+         * - `'summary'` – Show only the first frame (e.g. `(src/App.jsx:3:0)`).
+         * - `'full'` – Print the full stack trace with all frames.
+         * - `'none'` – Hide stack traces.
+         * @default 'summary'
+         */
+        stackTrace?: BrowserLogsStackTrace;
+      };
   /**
    * Whether to enable Hot Module Replacement.
    * @default true
@@ -1735,8 +1897,9 @@ export interface DevConfig {
    * Set the URL prefix of static assets in development mode,
    * similar to the [output.publicPath](https://rspack.rs/config/output#outputpublicpath)
    * config of Rspack.
+   * @default `server.base`
    */
-  assetPrefix?: string | boolean;
+  assetPrefix?: LiteralUnion<'auto', string> | boolean;
   /**
    * Whether to render progress bars to display the build progress.
    * @default false
@@ -1748,6 +1911,7 @@ export interface DevConfig {
   client?: ClientConfig;
   /**
    * Whether to enable CLI shortcuts.
+   * @default true when using Rsbuild CLI, otherwise false
    */
   cliShortcuts?:
     | boolean
@@ -1769,6 +1933,7 @@ export interface DevConfig {
       };
   /**
    * Used to add custom middleware to the dev server.
+   * @default undefined
    */
   setupMiddlewares?: SetupMiddlewaresFn | SetupMiddlewaresFn[];
   /**
@@ -1779,11 +1944,12 @@ export interface DevConfig {
   /**
    * Watch specified files and directories for changes. When a file change is detected,
    * it can trigger a page reload or restart the dev server.
+   * @default undefined
    */
   watchFiles?: WatchFiles | WatchFiles[];
   /**
-   * Enable lazy compilation.
-   * @default false
+   * Enable lazy compilation (compilation on demand).
+   * @default { imports: true, entries: false }
    */
   lazyCompilation?: boolean | Rspack.LazyCompilationOptions;
 }
@@ -1963,11 +2129,11 @@ export interface RsbuildConfig extends EnvironmentConfig {
    */
   server?: ServerConfig;
   /**
-   * Configure rsbuild config by environment.
+   * Configure Rsbuild config by environment.
+   * The key represents the environment name.
+   * The value is the Rsbuild config for the specified environment.
    */
-  environments?: {
-    [name: string]: EnvironmentConfig;
-  };
+  environments?: Record<string, EnvironmentConfig>;
   /**
    * Used to switch the bundler type.
    */
@@ -2008,7 +2174,5 @@ export type NormalizedEnvironmentConfig = TwoLevelReadonly<
 
 export type NormalizedConfig = NormalizedEnvironmentConfig & {
   provider?: unknown;
-  environments: {
-    [name: string]: NormalizedEnvironmentConfig;
-  };
+  environments: Record<string, NormalizedEnvironmentConfig>;
 };

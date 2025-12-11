@@ -2,13 +2,11 @@ import type { Stats as FSStats, ReadStream } from 'node:fs';
 import type { ServerResponse } from 'node:http';
 import onFinished from 'on-finished';
 import type { Range, Result as RangeResult, Ranges } from 'range-parser';
-import rangeParser from 'range-parser';
 import { requireCompiledPackage } from '../../helpers/vendors';
 import { logger } from '../../logger';
-import type { InternalContext, RequestHandler } from '../../types';
+import type { InternalContext, RequestHandler, Rspack } from '../../types';
 import { HttpCode } from '../helper';
 import { getFileFromUrl } from './getFileFromUrl';
-import type { OutputFileSystem } from './index';
 import { parseTokenList } from './parseTokenList';
 
 function getEtag(stat: FSStats): string {
@@ -19,7 +17,7 @@ function getEtag(stat: FSStats): string {
 
 function createReadStreamOrReadFileSync(
   filename: string,
-  outputFileSystem: OutputFileSystem,
+  outputFileSystem: Rspack.OutputFileSystem,
   start: number,
   end: number,
 ): { bufferOrStream: Buffer | ReadStream; byteLength: number } {
@@ -92,7 +90,13 @@ function destroyStream(stream: ReadStream, suppress: boolean): void {
   }
 }
 
-const parseRangeHeaders = (value: string): RangeResult | Ranges => {
+const parseRangeHeaders = async (
+  value: string,
+): Promise<RangeResult | Ranges> => {
+  const { default: rangeParser } = await import(
+    /** webpackChunkName: "range-parser" */
+    'range-parser'
+  );
   const [len, rangeHeader] = value.split('|');
   return rangeParser(Number(len), rangeHeader, {
     combine: true,
@@ -141,9 +145,9 @@ function sendError(res: ServerResponse, code: HttpCode): void {
 export function createMiddleware(
   context: InternalContext,
   ready: (callback: () => void) => void,
-  outputFileSystem: OutputFileSystem,
+  outputFileSystem: Rspack.OutputFileSystem,
 ): RequestHandler {
-  return async function middleware(req, res, next) {
+  return async function assetsMiddleware(req, res, next) {
     async function goNext() {
       return new Promise<void>((resolve) => {
         ready(() => {
@@ -386,7 +390,7 @@ export function createMiddleware(
       }
 
       if (rangeHeader) {
-        let parsedRanges: Ranges | RangeResult | [] = parseRangeHeaders(
+        let parsedRanges: Ranges | RangeResult | [] = await parseRangeHeaders(
           `${size}|${rangeHeader}`,
         );
 

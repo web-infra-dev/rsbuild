@@ -2,6 +2,7 @@ import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
 import type Ws from '../../compiled/ws/index.js';
 import { formatStatsError } from '../helpers/format';
+import { isObject } from '../helpers/index';
 import { getStatsErrors, getStatsWarnings } from '../helpers/stats';
 import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
@@ -74,21 +75,21 @@ const parseQueryString = (req: IncomingMessage) => {
 export class SocketServer {
   private wsServer!: Ws.Server;
 
-  private readonly socketsMap: Map<string, Set<Ws>> = new Map();
+  private readonly socketsMap = new Map<string, Set<Ws>>();
 
   private readonly options: DevConfig;
 
   private readonly context: InternalContext;
 
-  private initialChunksMap: Map<string, Set<string>> = new Map();
+  private initialChunksMap = new Map<string, Set<string>>();
 
   private heartbeatTimer: NodeJS.Timeout | null = null;
 
   private getOutputFileSystem: () => Rspack.OutputFileSystem;
 
-  private reportedBrowserLogs: Set<string> = new Set();
+  private reportedBrowserLogs = new Set<string>();
 
-  private currentHash: Map<string, string> = new Map();
+  private currentHash = new Map<string, string>();
 
   constructor(
     context: InternalContext,
@@ -111,8 +112,8 @@ export class SocketServer {
     }
 
     const query = parseQueryString(req);
-    const tokens = Object.values(this.context.environments).map(
-      (env) => env.webSocketToken,
+    const tokens = this.context.environmentList.map(
+      ({ webSocketToken }) => webSocketToken,
     );
 
     // If the request does not contain a valid token, reject the request.
@@ -202,7 +203,9 @@ export class SocketServer {
    * Send error messages to the client and render error overlay
    */
   public sendError(errors: Rspack.StatsError[], token: string): void {
-    const formattedErrors = errors.map((item) => formatStatsError(item));
+    const formattedErrors = errors.map((item) =>
+      formatStatsError(item, this.context.rootPath),
+    );
     this.sockWrite(
       {
         type: 'errors',
@@ -210,6 +213,22 @@ export class SocketServer {
           text: formattedErrors,
           html: genOverlayHTML(formattedErrors, this.context.rootPath),
         },
+      },
+      token,
+    );
+  }
+
+  /**
+   * Send warning messages to the client
+   */
+  public sendWarning(warnings: Rspack.StatsError[], token: string): void {
+    const formattedWarnings = warnings.map((item) =>
+      formatStatsError(item, this.context.rootPath),
+    );
+    this.sockWrite(
+      {
+        type: 'warnings',
+        data: { text: formattedWarnings },
       },
       token,
     );
@@ -290,17 +309,22 @@ export class SocketServer {
           typeof data === 'string' ? data : data.toString(),
         );
 
+        const { browserLogs } = this.context.normalizedConfig?.dev || {};
         if (
           message.type === 'client-error' &&
           // Do not report browser error when using webpack
           this.context.bundlerType === 'rspack' &&
           // Do not report browser error when build failed
-          !this.context.buildState.hasErrors
+          !this.context.buildState.hasErrors &&
+          browserLogs
         ) {
+          const stackTrace =
+            (isObject(browserLogs) && browserLogs.stackTrace) || 'summary';
           const log = await formatBrowserErrorLog(
             message,
             this.context,
             this.getOutputFileSystem(),
+            stackTrace,
           );
 
           if (!this.reportedBrowserLogs.has(log)) {
@@ -340,7 +364,7 @@ export class SocketServer {
   // Only use stats when environment is matched
   private getStats(token: string) {
     const { stats } = this.context.buildState;
-    const environment = Object.values(this.context.environments).find(
+    const environment = this.context.environmentList.find(
       ({ webSocketToken }) => webSocketToken === token,
     );
 
@@ -384,7 +408,7 @@ export class SocketServer {
     // web-infra-dev/rspack#6633
     // when initial-chunks change, reload the page
     // e.g: ['index.js'] -> ['index.js', 'lib-polyfill.js']
-    const newInitialChunks: Set<string> = new Set();
+    const newInitialChunks = new Set<string>();
     if (stats.entrypoints) {
       for (const entrypoint of Object.values(stats.entrypoints)) {
         const { chunks } = entrypoint;
@@ -446,15 +470,7 @@ export class SocketServer {
     }
 
     if (warnings.length > 0) {
-      const warningMessages = warnings.map((item) => formatStatsError(item));
-
-      this.sockWrite(
-        {
-          type: 'warnings',
-          data: { text: warningMessages },
-        },
-        token,
-      );
+      this.sendWarning(warnings, token);
       return;
     }
 

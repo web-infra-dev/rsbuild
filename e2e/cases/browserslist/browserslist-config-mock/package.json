@@ -1,6 +1,7 @@
 {
-  "private": true,
   "name": "@e2e/browserslist-config-mock",
   "version": "1.0.0",
+  "private": true,
+  "type": "module",
   "main": "index.json"
 }

@@ -1,7 +1,7 @@
 import type { RsbuildPluginAPI, Rspack } from '@rsbuild/core';
 import type { SplitVueChunkOptions } from './index.js';
 
-const isPlainObject = (obj: unknown): obj is Record<string, any> =>
+const isPlainObject = (obj: unknown): obj is Record<string, unknown> =>
   obj !== null &&
   typeof obj === 'object' &&
   Object.prototype.toString.call(obj) === '[object Object]';

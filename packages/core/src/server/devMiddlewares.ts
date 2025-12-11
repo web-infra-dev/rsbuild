@@ -1,7 +1,7 @@
 import { castArray, pick } from '../helpers';
 import { isMultiCompiler } from '../helpers/compiler';
 import { requireCompiledPackage } from '../helpers/vendors';
-import { logger } from '../logger';
+import { isVerbose } from '../logger';
 import { rspack } from '../rspack';
 import type {
   InternalContext,
@@ -16,7 +16,7 @@ import type { UpgradeEvent } from './helper';
 import { historyApiFallbackMiddleware } from './historyApiFallback';
 import {
   faviconFallbackMiddleware,
-  getBaseMiddleware,
+  getBaseUrlMiddleware,
   getHtmlCompletionMiddleware,
   getHtmlFallbackMiddleware,
   getRequestLoggerMiddleware,
@@ -157,7 +157,7 @@ const applyDefaultMiddlewares = ({
   }
 
   if (server.base && server.base !== '/') {
-    middlewares.push(getBaseMiddleware({ base: server.base }));
+    middlewares.push(getBaseUrlMiddleware({ base: server.base }));
   }
 
   const launchEditorMiddleware = requireCompiledPackage(
@@ -177,7 +177,7 @@ const applyDefaultMiddlewares = ({
     // subscribe upgrade event to handle websocket
     upgradeEvents.push(buildManager.socketServer.upgrade);
 
-    middlewares.push((req, res, next) => {
+    middlewares.push(function hotUpdateJsonFallbackMiddleware(req, res, next) {
       // [prevFullHash].hot-update.json will 404 (expected) when rsbuild restart and some file changed
       if (req.url?.endsWith('.hot-update.json') && req.method !== 'OPTIONS') {
         res.statusCode = 404;
@@ -199,11 +199,13 @@ const applyDefaultMiddlewares = ({
 
   for (const { name } of server.publicDir) {
     const sirv = requireCompiledPackage('sirv');
-    const servePublicDirMiddleware = sirv(name, {
+    const sirvMiddleware = sirv(name, {
       etag: true,
       dev: true,
     });
-    middlewares.push(servePublicDirMiddleware);
+    middlewares.push(function publicDirMiddleware(req, res, next) {
+      sirvMiddleware(req, res, next);
+    });
   }
 
   // Execute callbacks returned by the `onBeforeStartDevServer` hook.
@@ -215,16 +217,7 @@ const applyDefaultMiddlewares = ({
     callback();
   }
 
-  if (buildManager) {
-    middlewares.push(
-      getHtmlFallbackMiddleware({
-        buildManager,
-        distPath: context.distPath,
-        htmlFallback: server.htmlFallback,
-      }),
-    );
-  }
-
+  // historyApiFallback takes precedence over the default htmlFallback.
   if (server.historyApiFallback) {
     middlewares.push(
       historyApiFallbackMiddleware(
@@ -236,6 +229,16 @@ const applyDefaultMiddlewares = ({
     if (buildManager?.assetsMiddleware) {
       middlewares.push(buildManager.assetsMiddleware);
     }
+  }
+
+  if (buildManager) {
+    middlewares.push(
+      getHtmlFallbackMiddleware({
+        buildManager,
+        distPath: context.distPath,
+        htmlFallback: server.htmlFallback,
+      }),
+    );
   }
 
   middlewares.push(faviconFallbackMiddleware);
@@ -261,7 +264,7 @@ export const getDevMiddlewares = (
   const middlewares: Middlewares = [];
   const { buildManager } = options;
 
-  if (logger.level === 'verbose') {
+  if (isVerbose()) {
     middlewares.push(getRequestLoggerMiddleware());
   }
 

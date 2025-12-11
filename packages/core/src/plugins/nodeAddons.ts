@@ -3,20 +3,8 @@ import { color } from '../helpers';
 import type { RsbuildPlugin } from '../types';
 
 const getFilename = (resourcePath: string) => {
-  let basename = '';
-
-  if (resourcePath) {
-    const parsed = path.parse(resourcePath);
-    if (parsed.dir) {
-      basename = parsed.name;
-    }
-  }
-
-  if (basename) {
-    return `${basename}.node`;
-  }
-
-  return null;
+  const name = resourcePath && path.parse(resourcePath).name;
+  return name ? `${name}.node` : null;
 };
 
 export const pluginNodeAddons = (): RsbuildPlugin => ({
@@ -38,10 +26,12 @@ export const pluginNodeAddons = (): RsbuildPlugin => ({
 
         return `
 try {
-const path = require("path");
-process.dlopen(module, path.join(__dirname, "${name}"));
+  const path = require("node:path");
+  process.dlopen(module, path.join(__dirname, "${name}"));
 } catch (error) {
-throw new Error('Failed to load Node.js addon: "${name}"\\n' + error);
+  throw new Error('Failed to load Node.js addon: "${name}"', {
+    cause: error,
+  });
 }
 `;
       },

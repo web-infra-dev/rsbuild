@@ -7,6 +7,10 @@
 
 当 Rsbuild 默认的 [页面路由](/guide/basic/server#page-routing) 行为无法满足你的需求时，例如，希望在访问 `/` 时可以访问 `main.html` ，你可以通过 `server.historyApiFallback` 配置项来实现这个功能。
 
+:::tip
+`server.historyApiFallback` 的优先级高于 [server.htmlFallback](/config/server/html-fallback)。
+:::
+
 ## 示例
 
 将 `server.historyApiFallback` 设置为 `true` 时，所有未匹配到实际资源的 HTML GET 请求都会返回 `index.html`，从而保证单页应用的路由能够正常工作。
@@ -35,7 +39,9 @@ export default {
 - **类型：** `string`
 - **默认值：** `'index.html'`
 
-通过将 `historyApiFallback.index` 设置为 `main.html`，当访问根路径 `/` 或其他可能导致 404 的路由时，页面会自动重定向到 `main.html`。
+指定当启用 History API fallback 时返回的默认 HTML 文件。
+
+例如，设置 `historyApiFallback.index` 为 `main.html` 后，当用户访问未命中的路由时，服务器会自动返回 `main.html` 作为回退页面。
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -45,7 +51,6 @@ export default {
     },
   },
   server: {
-    htmlFallback: false,
     historyApiFallback: {
       index: '/main.html',
     },
@@ -66,21 +71,30 @@ type Rewrites = Array<{
 
 - **默认值：** `[]`
 
-当你的应用包含多个入口（entry）时，你可能需要将不同的访问路径重定向到不同的页面。此时，你可以通过 `rewrites` 选项来配置更灵活的重定向规则：
+`rewrites` 用于在 History API fallback 发生时，自定义请求路径与页面文件之间的映射。
+
+仅当请求未命中任何静态资源（即进入 fallback 阶段）时，这些规则才会被应用。所有规则会按照数组中的顺序依次匹配并执行。
 
 ```ts title="rsbuild.config.ts"
 export default {
   server: {
     historyApiFallback: {
       rewrites: [
+        // 将根路径重定向到 landing 页面
         { from: /^\/$/, to: '/views/landing.html' },
+        // 当访问 /subpage 开头的路径时，返回 subpage.html
         { from: /^\/subpage/, to: '/views/subpage.html' },
+        // 其他所有路径返回自定义的 404 页面
         { from: /./, to: '/views/404.html' },
       ],
     },
   },
 };
 ```
+
+:::tip
+如果你希望在非 fallback 场景下修改或转发请求，可以使用 [server.proxy](/config/server/proxy) 配置代理规则。
+:::
 
 ### htmlAcceptHeaders
 

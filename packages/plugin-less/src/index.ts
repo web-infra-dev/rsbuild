@@ -11,7 +11,7 @@ import { reduceConfigsWithContext } from 'reduce-configs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-export const isPlainObject = (obj: unknown): obj is Record<string, any> => {
+export const isPlainObject = (obj: unknown): obj is Record<string, unknown> => {
   return (
     obj !== null &&
     typeof obj === 'object' &&
@@ -73,7 +73,7 @@ export type LessLoaderOptions = {
 export type PluginLessOptions = {
   /**
    * Options passed to less-loader.
-   * @see https://github.com/webpack-contrib/less-loader
+   * @see https://github.com/webpack/less-loader
    */
   lessLoaderOptions?: ConfigChainWithContext<
     LessLoaderOptions,

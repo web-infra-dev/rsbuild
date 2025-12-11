@@ -42,9 +42,9 @@ export default defineConfig({
 
 ## 执行顺序
 
-默认情况下，插件会按照 `plugins` 数组的顺序依次执行，Rsbuild 内置插件的执行时机早于用户注册的插件。
+默认情况下，插件会按照 `plugins` 数组中的顺序依次执行，Rsbuild 内置插件的执行时机早于用户注册的插件。
 
-当插件内部使用了控制顺序的相关字段，比如 `pre`、`post` 时，执行顺序会基于它们进行调整，详见 [前置插件](/plugins/dev/core#前置插件)。
+如果插件使用了控制执行顺序的字段，比如 `enforce` 属性时，则最终的执行顺序会根据这些字段进行调整，详见 [`enforce` 属性](/plugins/dev/core#enforce-属性)。
 
 ## 条件注册
 

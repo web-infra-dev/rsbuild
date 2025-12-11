@@ -55,25 +55,49 @@ The manifest file will be output with the following structure by default:
 type FilePath = string;
 
 type ManifestList = {
+  /**
+   * A flat list of all emitted asset files.
+   */
+  allFiles: FilePath[];
+  /**
+   * Maps each entry name to its associated output files.
+   */
   entries: {
-    /** The key is the entry name, from Rsbuild's source.entry config. */
     [entryName: string]: {
+      /**
+       * Files that are required during the initial load of the entry.
+       */
       initial?: {
+        /** Initial JavaScript files for this entry. */
         js?: FilePath[];
+        /** Initial CSS files for this entry. */
         css?: FilePath[];
       };
+      /**
+       * Files that may be loaded asynchronously.
+       * Usually code-split chunks or lazily loaded chunks.
+       */
       async?: {
+        /** Async JavaScript files for this entry. */
         js?: FilePath[];
+        /** Async CSS files for this entry. */
         css?: FilePath[];
       };
-      /** HTML files related to the current entry */
+      /** HTML files generated for this entry, if any. */
       html?: FilePath[];
-      /** other assets (e.g., png, svg, source map) related to the current entry */
+      /**
+       * Additional assets associated with this entry.
+       * For example images、fonts、source maps and other non JS or CSS files.
+       */
       assets?: FilePath[];
     };
+    /**
+     * Subresource Integrity (SRI) hashes for emitted assets.
+     * The key is the asset file path, and the value is its integrity hash.
+     * This field is available only when the `security.sri` option is enabled.
+     */
+    integrity: Record<string, string>;
   };
-  /** Flatten all assets */
-  allFiles: FilePath[];
 };
 ```
 
@@ -90,6 +114,32 @@ api.onAfterBuild(({ environments }) => {
 ```
 
 > See [Environment API - manifest](/api/javascript-api/environment-api#manifest) for more details.
+
+## SRI
+
+When the [`security.sri`](/config/security/sri) option is enabled, the manifest file includes an `integrity` field that stores the SRI hash for assets that support Subresource Integrity, such as JavaScript and CSS files.
+
+```ts title="rsbuild.config.ts"
+export default {
+  security: {
+    sri: {
+      enable: 'auto',
+    },
+  },
+  output: {
+    manifest: true,
+  },
+};
+```
+
+```json title="dist/manifest.json"
+{
+  "allFiles": ["/static/js/index.[hash].js", "/index.html"],
+  "integrity": {
+    "/static/js/index.[hash].js": "sha384-[sri-hash]"
+  }
+}
+```
 
 ## Options
 
@@ -199,6 +249,70 @@ const files = [
 ];
 ```
 
+### prefix
+
+- **Type:** `boolean`
+- **Default:** `true`
+
+Controls whether the generated manifest includes the static asset prefix in file paths. The prefix is taken from [dev.assetPrefix](/config/dev/asset-prefix) and [output.assetPrefix](/config/output/asset-prefix).
+
+When `prefix` is set to `true` (the default), the manifest will include the full asset prefix.
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    assetPrefix: 'https://example.com/',
+    manifest: true,
+  },
+};
+```
+
+Example of the generated manifest:
+
+```json title="dist/manifest.json"
+{
+  "allFiles": [
+    "https://example.com/static/js/index.[hash].js",
+    "https://example.com/index.html"
+  ],
+  "entries": {
+    "index": {
+      "initial": {
+        "js": ["https://example.com/static/js/index.[hash].js"]
+      }
+    }
+  }
+}
+```
+
+If `prefix` is set to `false`, the manifest will keep the file paths relative and no asset prefix will be added.
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    assetPrefix: 'https://example.com/',
+    manifest: {
+      prefix: false,
+    },
+  },
+};
+```
+
+Example of the generated manifest:
+
+```json title="dist/manifest.json"
+{
+  "allFiles": ["static/js/index.[hash].js", "index.html"],
+  "entries": {
+    "index": {
+      "initial": {
+        "js": ["static/js/index.[hash].js"]
+      }
+    }
+  }
+}
+```
+
 ### filter
 
 - **Type:**
@@ -297,3 +411,10 @@ export default {
   },
 };
 ```
+
+## Version history
+
+| Version | Changes                 |
+| ------- | ----------------------- |
+| v1.6.8  | Added `integrity` field |
+| v1.6.12 | Added `prefix` option   |

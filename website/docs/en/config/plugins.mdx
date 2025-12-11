@@ -1,6 +1,6 @@
 # plugins
 
-Used to register Rsbuild plugins.
+Registers Rsbuild plugins.
 
 - **Type:**
 
@@ -21,7 +21,7 @@ type RsbuildPlugins = (
 
 ## Example
 
-For example, register the [Sass plugin](/plugins/list/plugin-sass) in Rsbuild.
+For example, to register the [Sass plugin](/plugins/list/plugin-sass) in Rsbuild:
 
 - Installing the plugin:
 
@@ -42,13 +42,13 @@ export default defineConfig({
 
 ## Execution order
 
-By default, plugins are executed in the order they appear in the `plugins` array. Built-in Rsbuild plugins are executed before user-registered plugins.
+By default, plugins run in the order they appear in the `plugins` array. Built-in Rsbuild plugins always execute before user-defined plugins.
 
-When a plugin internally uses fields that control the order, such as `pre` and `post`, the execution order is adjusted based on them. See [Pre Plugins](/plugins/dev/core#pre-pluginss) for more details.
+If a plugin specifies ordering controls such as the `enforce` property, the final execution sequence will be adjusted accordingly. See the [`enforce` property](/plugins/dev/core#enforce-property) for details.
 
 ## Conditional registration
 
-The falsy value in the `plugins` array will be ignored, which allows you to conveniently register plugins based on some judgment conditions:
+Falsy values in the `plugins` array are ignored, which lets you register plugins conditionally:
 
 ```ts title="rsbuild.config.ts"
 const isProd = process.env.NODE_ENV === 'production';
@@ -80,7 +80,7 @@ export default {
 
 ## Nested plugins
 
-Rsbuild also supports adding nested plugins. You can pass in an array containing multiple plugins, similar to a plugin preset collection. This is particularly useful for implementing complex functionalities that require a combination of multiple plugins (such as framework integration).
+Rsbuild also supports nested plugins. You can pass an array that contains multiple plugins, similar to a plugin preset. This is useful for complex features that combine several plugins, such as framework integrations.
 
 ```ts title="rsbuild.config.ts"
 function myPlugin() {
@@ -126,7 +126,7 @@ export default defineConfig({
 
 ## Plugin registration phase
 
-It should be noted that plugin registration can only be performed during the Rsbuild initialization phase. You cannot dynamically add other plugins within a plugin through the plugin API:
+Plugin registration only runs during the Rsbuild initialization phase. You cannot dynamically add other plugins within a plugin through the plugin API:
 
 ```ts title="rsbuild.config.ts"
 // Wrong
@@ -195,7 +195,7 @@ export default defineConfig({
 ```
 
 :::tip
-When using the transform hook in unplugin, please use the `transformInclude` hook to match the specified module. When the transform hook matches the `.html` module, it will replace the default EJS transformation of the [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin).
+When you use the transform hook in unplugin, also use the `transformInclude` hook to target specific modules. If the transform hook matches an `.html` module, it replaces the default EJS transform from the [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin).
 :::
 
 > Please ensure that the version of `unplugin` package is >= v1.6.0.

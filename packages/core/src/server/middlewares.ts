@@ -2,9 +2,8 @@ import type { IncomingMessage } from 'node:http';
 import path from 'node:path';
 import onFinished from 'on-finished';
 import { color } from '../helpers';
-import { getAssetsFromStats } from '../helpers/stats';
 import { addTrailingSlash } from '../helpers/url';
-import { logger } from '../logger';
+import { isVerbose, logger } from '../logger';
 import type {
   Connect,
   EnvironmentAPI,
@@ -41,7 +40,7 @@ const getStatusCodeColor = (status: number) => {
 };
 
 export const getRequestLoggerMiddleware: () => Connect.NextHandleFunction =
-  () => {
+  function requestLoggerMiddleware() {
     return (req, res, next) => {
       const _startAt = process.hrtime();
 
@@ -130,7 +129,7 @@ export const getHtmlCompletionMiddleware: (params: {
   distPath: string;
   buildManager: BuildManager;
 }) => RequestHandler = ({ distPath, buildManager }) => {
-  return async (req, res, next) => {
+  return async function htmlCompletionMiddleware(req, res, next) {
     if (!maybeHTMLRequest(req)) {
       next();
       return;
@@ -175,10 +174,10 @@ export const getHtmlCompletionMiddleware: (params: {
 /**
  * handle `server.base`
  */
-export const getBaseMiddleware: (params: {
+export const getBaseUrlMiddleware: (params: {
   base: string;
 }) => RequestHandler = ({ base }) => {
-  return (req, res, next) => {
+  return function baseUrlMiddleware(req, res, next) {
     const url = req.url!;
     const pathname = getUrlPathname(url);
 
@@ -232,7 +231,7 @@ export const getHtmlFallbackMiddleware: (params: {
   buildManager: BuildManager;
   htmlFallback?: HtmlFallback;
 }) => RequestHandler = ({ htmlFallback, distPath, buildManager }) => {
-  return async (req, res, next) => {
+  return async function htmlFallbackMiddleware(req, res, next) {
     if (
       !maybeHTMLRequest(req) ||
       '/favicon.ico' === req.url ||
@@ -246,7 +245,7 @@ export const getHtmlFallbackMiddleware: (params: {
     if (await isFileExists(filePath, buildManager.outputFileSystem)) {
       const newUrl = '/index.html';
 
-      if (logger.level === 'verbose') {
+      if (isVerbose()) {
         logger.debug(
           `    ${req.method} ${req.url} ${color.yellow('fallback to')} ${newUrl}`,
         );
@@ -268,9 +267,8 @@ export const getHtmlFallbackMiddleware: (params: {
  */
 export const viewingServedFilesMiddleware: (params: {
   environments: EnvironmentAPI;
-}) => RequestHandler =
-  ({ environments }) =>
-  async (req, res, next) => {
+}) => RequestHandler = ({ environments }) =>
+  async function viewingServedFilesMiddleware(req, res, next) {
     const url = req.url!;
     const pathname = getUrlPathname(url);
 
@@ -333,14 +331,12 @@ export const viewingServedFilesMiddleware: (params: {
         const list = [];
         const environment = environments[key];
         const stats = await environment.getStats();
-        const assets = getAssetsFromStats(stats);
+        const assets = Object.keys(stats.compilation.assets);
 
         res.write('<ul>');
 
         for (const asset of assets) {
-          list.push(
-            `<li><a target="_blank" href="${asset.name}">${asset.name}</a></li>`,
-          );
+          list.push(`<li><a target="_blank" href="${asset}">${asset}</a></li>`);
         }
 
         res.write(list?.join(''));

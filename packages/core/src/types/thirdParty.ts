@@ -8,6 +8,7 @@ import type Connect from '../../compiled/connect/index.js';
 import type HtmlRspackPlugin from '../../compiled/html-rspack-plugin/index.js';
 import type { AcceptedPlugin, ProcessOptions } from '../../compiled/postcss';
 import type { Rspack } from './rspack';
+import type { LiteralUnion } from './utils';
 
 export type { Connect };
 
@@ -182,7 +183,10 @@ export interface CSSLoaderOptions {
   /**
    * Allows to enable/disable CSS Modules or ICSS and setup configuration:
    */
-  modules?: boolean | string | CSSLoaderModulesOptions;
+  modules?:
+    | boolean
+    | LiteralUnion<'local' | 'global' | 'pure' | 'icss', string>
+    | CSSLoaderModulesOptions;
   /**
    * By default generation of source maps depends on the devtool option.
    */
@@ -237,7 +241,9 @@ export interface StyleLoaderOptions {
    *
    * @default 'head'
    */
-  insert?: string | ((element: HTMLElement) => void);
+  insert?:
+    | LiteralUnion<'head' | 'body', string>
+    | ((element: HTMLElement) => void);
   /**
    * Allows to setup absolute path to custom function that allows to override default behavior styleTagTransform.
    */

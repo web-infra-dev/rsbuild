@@ -116,9 +116,8 @@ export const pluginOutput = (): RsbuildPlugin => ({
               : posix.join(jsAsyncPath, jsFilename),
           )
           .publicPath(publicPath)
-          // disable pathinfo to improve compile performance
-          // the path info is useless in most cases
-          // see: https://webpack.js.org/guides/build-performance/#output-without-path-info
+          // `pathinfo` is disabled because Rspack's `moduleId` in development mode already
+          // contains the path information. Disabling it helps produce cleaner output.
           .pathinfo(false)
           // since webpack v5.54.0+, hashFunction supports xxhash64 as a faster algorithm
           // which will be used as default when experiments.futureDefaults is enabled.

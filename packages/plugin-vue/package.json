@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-vue",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Vue 3 plugin of Rsbuild",
   "homepage": "https://rsbuild.rs",
   "repository": {
@@ -29,15 +29,15 @@
   },
   "dependencies": {
     "rspack-vue-loader": "^17.4.4",
-    "webpack": "^5.102.1"
+    "webpack": "^5.103.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.15.1",
+    "@rslib/core": "0.18.4",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.18.12",
+    "@types/node": "^24.10.2",
     "typescript": "^5.9.3",
-    "vue": "^3.5.22"
+    "vue": "^3.5.25"
   },
   "peerDependencies": {
     "@rsbuild/core": "1.x"

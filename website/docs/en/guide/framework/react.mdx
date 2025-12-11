@@ -21,7 +21,7 @@ Then select `React 19` or `React 18` when prompted to "Select framework".
 
 ## Use React in an existing project
 
-To compile React's JSX syntax, you need to register the Rsbuild [React Plugin](/plugins/list/plugin-react). The plugin automatically adds the necessary configuration for building React applications.
+To compile React's JSX syntax, register the Rsbuild [React Plugin](/plugins/list/plugin-react). The plugin automatically adds the necessary configuration for building React applications.
 
 For example, register in `rsbuild.config.ts`:
 
@@ -42,15 +42,15 @@ For projects using Create React App, you can refer to the [CRA Migration Guide](
 
 Rsbuild supports converting SVG to React components via [SVGR](https://react-svgr.com/).
 
-To use SVGR, you also need to register the [SVGR plugin](/plugins/list/plugin-svgr).
+To use SVGR, register the [SVGR plugin](/plugins/list/plugin-svgr).
 
 ## React Fast Refresh
 
 Rsbuild uses React's official [Fast Refresh](https://npmjs.com/package/react-refresh) capability to perform component hot updates.
 
-Note that React Refresh requires components to follow certain standards, otherwise HMR may not work. You can use [eslint-plugin-react-refresh](https://github.com/ArnaudBarre/eslint-plugin-react-refresh) to validate your code.
+React Refresh requires components to follow certain standards, or HMR may not work. Use [eslint-plugin-react-refresh](https://github.com/ArnaudBarre/eslint-plugin-react-refresh) to validate your code.
 
-For example, if React component hot updates don't work, or component state is lost after hot updates, it's usually because your React component uses an anonymous function. React Fast Refresh requires that components have named functions, otherwise component state cannot be preserved after hot updates.
+If React component hot updates don't work, or component state is lost after updates, your React component is likely using an anonymous function. React Fast Refresh requires named functions to preserve component state after hot updates.
 
 Here are some examples of wrong usage:
 
@@ -88,8 +88,8 @@ Before using React Compiler, we recommend reading the [React Compiler documentat
 
 Steps to use React Compiler in Rsbuild:
 
-1. Upgrade `react` and `react-dom` to v19. If you can't upgrade, you can install the [react-compiler-runtime](https://npmjs.com/package/react-compiler-runtime) package, which allows the compiled code to run on versions prior to 19.
-2. React Compiler currently only provides a Babel plugin. You need to install [@rsbuild/plugin-babel](/plugins/list/plugin-babel) and [babel-plugin-react-compiler](https://npmjs.com/package/babel-plugin-react-compiler).
+1. Upgrade `react` and `react-dom` to v19. If you can't upgrade, install the [react-compiler-runtime](https://npmjs.com/package/react-compiler-runtime) package to run the compiled code on earlier versions.
+2. React Compiler currently only provides a Babel plugin. Install [@rsbuild/plugin-babel](/plugins/list/plugin-babel) and [babel-plugin-react-compiler](https://npmjs.com/package/babel-plugin-react-compiler).
 3. Register the Babel plugin in your Rsbuild config file:
 
 ```ts title="rsbuild.config.ts"
@@ -141,7 +141,7 @@ export default defineConfig({
 });
 ```
 
-For React 17 and 18 projects, you need to install [react-compiler-runtime](https://npmjs.com/package/react-compiler-runtime) and specify the `target`:
+For React 17 and 18 projects, install [react-compiler-runtime](https://npmjs.com/package/react-compiler-runtime) and specify the `target`:
 
 ```ts title="rsbuild.config.ts"
 const ReactCompilerConfig = {
@@ -157,7 +157,7 @@ const ReactCompilerConfig = {
 
 TanStack Router provides `@tanstack/router-plugin` to integrate with Rsbuild, which provides support for file-based routing. See:
 
-- [Installation guide](https://tanstack.com/router/latest/docs/framework/react/routing/installation-with-rspack)
+- [Installation guide](https://tanstack.com/router/latest/docs/framework/react/installation/with-rspack)
 - [Example project](https://github.com/TanStack/router/tree/main/examples/react/quickstart-rspack-file-based)
 
 ### React Router
@@ -175,7 +175,7 @@ See [CSS-in-JS](/guide/styling/css-in-js) for how to use CSS-in-JS in Rsbuild.
 
 Rsbuild uses SWC to compile JSX. You can customize the functions used by the compiled JSX code:
 
-- If the JSX runtime is `automatic`, use [jsxImportSource](/plugins/list/plugin-react#swcreactoptionsimportsource) to customize the import path of the JSX runtime, for example, import from Preact or Emotion.
+- If the JSX runtime is `automatic`, use [importSource](/plugins/list/plugin-react#swcreactoptionsimportsource) to customize the import path of the JSX runtime, for example, import from Preact or Emotion.
 - If the JSX runtime is `classic`, use `pragma` and `pragmaFrag` to specify the JSX function and Fragment component.
 
 > `@rsbuild/plugin-react` uses `automatic` as the default JSX runtime, see [swcReactOptions.runtime](/plugins/list/plugin-react#swcreactoptionsruntime).
@@ -195,7 +195,7 @@ export default defineConfig({
     pluginReact({
       swcReactOptions: {
         runtime: 'automatic',
-        jsxImportSource: '@emotion/react',
+        importSource: '@emotion/react',
       },
     }),
   ],

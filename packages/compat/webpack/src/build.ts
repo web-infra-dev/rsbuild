@@ -16,6 +16,7 @@ export const build = async (
 
   if (customCompiler) {
     compiler = customCompiler;
+    bundlerConfigs = customCompiler.options as WebpackConfig[];
   } else {
     const result = await createCompiler(initOptions);
     compiler = result.compiler;

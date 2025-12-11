@@ -2,7 +2,7 @@ import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
 import { getPathnameFromUrl } from '../helpers/path';
 import { requireCompiledPackage } from '../helpers/vendors';
-import { logger } from '../logger';
+import { isVerbose, logger } from '../logger';
 import type {
   Connect,
   InternalContext,
@@ -29,7 +29,7 @@ import { historyApiFallbackMiddleware } from './historyApiFallback';
 import { createHttpServer } from './httpServer';
 import {
   faviconFallbackMiddleware,
-  getBaseMiddleware,
+  getBaseUrlMiddleware,
   getRequestLoggerMiddleware,
   notFoundMiddleware,
   optionsFallbackMiddleware,
@@ -67,7 +67,7 @@ export class RsbuildProdServer {
     const { headers, proxy, historyApiFallback, compress, base, cors } =
       this.options.serverConfig;
 
-    if (logger.level === 'verbose') {
+    if (isVerbose()) {
       this.middlewares.use(getRequestLoggerMiddleware());
     }
 
@@ -115,7 +115,7 @@ export class RsbuildProdServer {
     }
 
     if (base && base !== '/') {
-      this.middlewares.use(getBaseMiddleware({ base }));
+      this.middlewares.use(getBaseUrlMiddleware({ base }));
     }
 
     this.applyStaticAssetMiddleware();
@@ -151,7 +151,7 @@ export class RsbuildProdServer {
       single: htmlFallback === 'index',
     });
 
-    this.middlewares.use((req, res, next) => {
+    this.middlewares.use(function staticAssetMiddleware(req, res, next) {
       const url = req.url;
       const assetPrefix =
         url && assetPrefixes.find((prefix) => url.startsWith(prefix));
@@ -190,7 +190,7 @@ export async function startProdServer(
       pwd: context.rootPath,
       output: {
         path: context.distPath,
-        assetPrefixes: Object.values(context.environments).map((e) =>
+        assetPrefixes: context.environmentList.map((e) =>
           getPathnameFromUrl(e.config.output.assetPrefix),
         ),
       },

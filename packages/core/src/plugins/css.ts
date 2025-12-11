@@ -21,6 +21,7 @@ import type {
   RsbuildPlugin,
   Rspack,
   RspackChain,
+  ToolsPostCSSContext,
 } from '../types';
 import { parseMinifyOptions } from './minimize';
 
@@ -62,7 +63,7 @@ export const getLightningCSSLoaderOptions = (
 // If the target is not `web` and the modules option of css-loader is enabled,
 // we must enable exportOnlyLocals to only exports the modules identifier mappings.
 // Otherwise, the compiled CSS code may contain invalid code, such as `new URL`.
-// https://github.com/webpack-contrib/css-loader#exportonlylocals
+// https://github.com/webpack/css-loader#exportonlylocals
 export const normalizeCssLoaderOptions = (
   options: CSSLoaderOptions,
   exportOnlyLocals: boolean,
@@ -147,9 +148,15 @@ const getPostcssLoaderOptions = async ({
 }): Promise<PostCSSLoaderOptions> => {
   const extraPlugins: AcceptedPlugin[] = [];
 
-  const utils = {
-    addPlugins(plugins: AcceptedPlugin | AcceptedPlugin[]) {
-      extraPlugins.push(...castArray(plugins));
+  const context: ToolsPostCSSContext = {
+    addPlugins(plugins: AcceptedPlugin | AcceptedPlugin[], options = {}) {
+      const { order = 'post' } = options;
+      const list = castArray(plugins);
+      if (order === 'pre') {
+        extraPlugins.unshift(...list);
+      } else {
+        extraPlugins.push(...list);
+      }
     },
   };
 
@@ -167,7 +174,7 @@ const getPostcssLoaderOptions = async ({
   const finalOptions = reduceConfigsWithContext({
     initial: defaultOptions,
     config: config.tools.postcss,
-    ctx: utils,
+    ctx: context,
   });
 
   finalOptions.postcssOptions ||= {};
@@ -227,19 +234,16 @@ const getPostcssLoaderOptions = async ({
 
 const getCSSLoaderOptions = ({
   config,
-  importLoaders,
   localIdentName,
   emitCss,
 }: {
   config: NormalizedEnvironmentConfig;
-  importLoaders: number;
   localIdentName: string;
   emitCss: boolean;
 }) => {
   const { cssModules } = config.output;
 
   const defaultOptions: CSSLoaderOptions = {
-    importLoaders,
     modules: {
       ...cssModules,
       localIdentName,
@@ -270,7 +274,10 @@ export const pluginCss = (): RsbuildPlugin => ({
 
     api.modifyBundlerChain({
       order: 'pre',
-      handler: async (chain, { target, isProd, CHAIN_ID, environment }) => {
+      handler: async (
+        chain,
+        { target, isProd, CHAIN_ID, environment, environments },
+      ) => {
         const rule = chain.module.rule(CHAIN_ID.RULE.CSS);
         const inlineRule = chain.module.rule(CHAIN_ID.RULE.CSS_INLINE);
         const { config } = environment;
@@ -328,13 +335,19 @@ export const pluginCss = (): RsbuildPlugin => ({
         }
 
         // Number of loaders applied before css-loader for `@import` at-rules
-        let importLoaders = 0;
+        const importLoaders = {
+          normal: 0,
+          inline: 0,
+        };
 
         // Update the normal CSS rule and the inline CSS rule
         const updateRules = (
           callback: (rule: RspackChain.Rule, type: 'normal' | 'inline') => void,
+          options: { skipNormal?: boolean } = {},
         ) => {
-          callback(rule, 'normal');
+          if (!options.skipNormal) {
+            callback(rule, 'normal');
+          }
           callback(inlineRule, 'inline');
         };
 
@@ -343,17 +356,32 @@ export const pluginCss = (): RsbuildPlugin => ({
           rule.use(CHAIN_ID.USE.CSS).loader(cssLoaderPath);
         });
 
-        if (emitCss) {
-          // `builtin:lightningcss-loader` is not supported when using webpack
-          if (
-            api.context.bundlerType === 'rspack' &&
-            config.tools.lightningcssLoader !== false
-          ) {
-            importLoaders++;
+        // `builtin:lightningcss-loader` is not supported when using webpack
+        if (
+          api.context.bundlerType === 'rspack' &&
+          config.tools.lightningcssLoader !== false
+        ) {
+          if (emitCss) {
+            importLoaders.normal++;
+          }
+          importLoaders.inline++;
 
-            const { minifyCss } = parseMinifyOptions(config);
+          const { minifyCss } = parseMinifyOptions(config);
 
-            updateRules((rule, type) => {
+          // Use the same browserslist as web bundles to ensure consistent CSS output
+          // Prevent mismatched prefixes or features between SSR and client hydration
+          let { browserslist } = environment;
+          if (target === 'node') {
+            const webEnvironment = Object.values(environments).find(
+              (env) => env.config.output.target === 'web',
+            );
+            if (webEnvironment?.browserslist) {
+              browserslist = webEnvironment.browserslist;
+            }
+          }
+
+          updateRules(
+            (rule, type) => {
               // Inline styles are not processed by Rspack's minimizers,
               // so we need to minify them via `builtin:lightningcss-loader`
               const inlineStyle =
@@ -362,7 +390,7 @@ export const pluginCss = (): RsbuildPlugin => ({
 
               const lightningcssOptions = getLightningCSSLoaderOptions(
                 config,
-                environment.browserslist,
+                browserslist,
                 minify,
               );
 
@@ -370,56 +398,72 @@ export const pluginCss = (): RsbuildPlugin => ({
                 .use(CHAIN_ID.USE.LIGHTNINGCSS)
                 .loader('builtin:lightningcss-loader')
                 .options(lightningcssOptions);
-            });
+            },
+            // If emit CSS is disabled, skip lightningcss-loader to reduce performance overhead
+            { skipNormal: !emitCss },
+          );
+        }
+
+        const postcssLoaderOptions = await getPostcssLoaderOptions({
+          config,
+          root: api.context.rootPath,
+          postcssrcCache,
+        });
+
+        // enable postcss-loader if using PostCSS plugins
+        if (
+          typeof postcssLoaderOptions.postcssOptions === 'function' ||
+          postcssLoaderOptions.postcssOptions?.plugins?.length
+        ) {
+          if (emitCss) {
+            importLoaders.normal++;
           }
+          importLoaders.inline++;
 
-          const postcssLoaderOptions = await getPostcssLoaderOptions({
-            config,
-            root: api.context.rootPath,
-            postcssrcCache,
-          });
+          const postcssLoaderPath = getCompiledPath('postcss-loader');
 
-          // enable postcss-loader if using PostCSS plugins
-          if (
-            typeof postcssLoaderOptions.postcssOptions === 'function' ||
-            postcssLoaderOptions.postcssOptions?.plugins?.length
-          ) {
-            importLoaders++;
-            const postcssLoaderPath = getCompiledPath('postcss-loader');
-
-            updateRules((rule) => {
+          updateRules(
+            (rule) => {
               rule
                 .use(CHAIN_ID.USE.POSTCSS)
                 .loader(postcssLoaderPath)
                 .options(postcssLoaderOptions);
-            });
-          }
+            },
+            // If emit CSS is disabled, skip postcss-loader to reduce performance overhead
+            { skipNormal: !emitCss },
+          );
         }
 
         const localIdentName = getCSSModulesLocalIdentName(config, isProd);
         const cssLoaderOptions = getCSSLoaderOptions({
           config,
-          importLoaders,
           localIdentName,
           emitCss,
         });
 
         updateRules((rule, type) => {
-          rule.use(CHAIN_ID.USE.CSS).options(
-            type === 'inline'
-              ? ({
-                  ...cssLoaderOptions,
-                  exportType: 'string',
-                  modules: false,
-                } satisfies CSSLoaderOptions)
-              : cssLoaderOptions,
-          );
+          let finalOptions = cssLoaderOptions;
+
+          if (type === 'inline') {
+            finalOptions = {
+              ...cssLoaderOptions,
+              exportType: 'string',
+              modules: false,
+              importLoaders: importLoaders.inline,
+            };
+          } else {
+            finalOptions = {
+              ...cssLoaderOptions,
+              importLoaders: importLoaders.normal,
+            };
+          }
+          rule.use(CHAIN_ID.USE.CSS).options(finalOptions);
 
           // CSS imports should always be treated as sideEffects
           rule.sideEffects(true);
 
           // Enable preferRelative by default, which is consistent with the default behavior of css-loader
-          // see: https://github.com/webpack-contrib/css-loader/blob/579fc13/src/plugins/postcss-import-parser.js#L234
+          // see: https://github.com/webpack/css-loader/blob/579fc13/src/plugins/postcss-import-parser.js#L234
           rule.resolve.preferRelative(true);
         });
 

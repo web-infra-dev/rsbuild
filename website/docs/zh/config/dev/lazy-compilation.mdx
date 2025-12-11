@@ -26,6 +26,11 @@ type LazyCompilationOptions =
        * 指定 client 需要请求的 server URL
        */
       serverUrl?: string;
+      /**
+       * 自定义 lazy compilation URL 的前缀
+       * @default "/lazy-compilation-using-"
+       */
+      prefix?: string;
     };
 ```
 
@@ -54,6 +59,10 @@ Lazy compilation 仅在开发阶段有效，对于生产构建不会产生影响
 
 ### 启用 Lazy compilation
 
+Rsbuild 已经默认开启了 `imports` 选项，即 lazy 编译动态引入的模块。
+
+将 `lazyCompilation` 设置为 `true` 即可开启完整的 lazy compilation 功能：
+
 ```ts title="rsbuild.config.ts"
 export default {
   dev: {
@@ -76,9 +85,21 @@ export default {
 };
 ```
 
+### 禁用 Lazy compilation
+
+将 `lazyCompilation` 设置为 `false` 来禁用 lazy compilation:
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    lazyCompilation: false,
+  },
+};
+```
+
 ### 入口模块
 
-通过 `lazyCompilation.entries` 来控制是否 lazy 编译入口模块：
+通过 `lazyCompilation.entries` 来控制是否延迟编译入口模块：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -92,14 +113,14 @@ export default {
 
 在启用 `entries` 选项后，当你启动 dev server 时，Rsbuild 不会编译所有的页面，而是仅在访问特定的页面时，才对该页面进行编译。
 
-lazy 编译入口模块时，有以下注意事项：
+延迟编译入口模块时，有以下注意事项：
 
 - 只适用于多页应用（MPA），对单页应用（SPA）没有优化效果。
 - 当你访问一个页面时，你需要等待页面编译完成才能看到页面的内容。
 
 ### 异步模块
 
-通过 `lazyCompilation.imports` 来控制是否 lazy 编译 [dynamic import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) 引入的异步模块：
+通过 `lazyCompilation.imports` 来控制是否延迟编译 [dynamic import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) 引入的异步模块：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -133,7 +154,7 @@ Rsbuild 会自动将 `<port>` 占位符替换为 server 实际监听的端口号
 
 ## 版本历史
 
-| 版本   | 变更内容                    |
-| ------ | --------------------------- |
-| v1.3.0 | 新增该选项                  |
-| v1.5.0 | 默认值由 `false` 改为当前值 |
+| 版本   | 变更内容                                                  |
+| ------ | --------------------------------------------------------- |
+| v1.3.0 | 新增该选项                                                |
+| v1.5.0 | 默认值由 `false` 改为 `{ imports: true, entries: false }` |

@@ -3,7 +3,7 @@ import path from 'node:path';
 import { expect, rspackTest } from '@e2e/helper';
 
 rspackTest('HMR should work properly', async ({ page, dev, editFile }) => {
-  const root = __dirname;
+  const root = import.meta.dirname;
   const compFilePath = path.join(root, 'src/test-temp-B.jsx');
   const compSourceCode = `const B = (props) => {
   return <div id="B">B: {props.count}</div>;

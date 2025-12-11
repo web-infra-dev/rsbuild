@@ -1,14 +1,14 @@
 # Bundle size optimization
 
-Bundle size optimization is an important part in production build because it directly affects the user experience of online users. In this document, we will introduce some common bundle size optimization methods in Rsbuild.
+Bundle size optimization is important for production builds because it directly affects user experience. This document covers common bundle size optimization methods in Rsbuild.
 
 ## Reduce duplicate dependencies
 
-It is common for web projects to bundle multiple versions of third-party dependencies. Duplicate dependencies can lead to increased bundle size and slower build speed.
+Web applications commonly bundle multiple versions of third-party dependencies. Duplicate dependencies increase bundle size and slow down builds.
 
 ### Detect duplicate dependencies
 
-You can use [Rsdoctor](https://rsdoctor.rs) to detect whether there are duplicate dependencies in the project. Rsdoctor will analyze during the build process, find any duplicate bundled dependencies and display them visually:
+You can use [Rsdoctor](https://rsdoctor.rs) to detect duplicate dependencies in your project. Rsdoctor analyzes the build, finds duplicate bundled dependencies, and displays them visually:
 
 ![](https://assets.rspack.rs/rsbuild/assets/rsdoctor-duplicated-packages.png)
 
@@ -16,9 +16,9 @@ For more details, see [Rsdoctor - Duplicate Dependency Problem](https://rsdoctor
 
 ### Eliminate duplicate dependencies
 
-We can eliminate duplicate dependencies with the package manager.
+You can eliminate duplicate dependencies using your package manager.
 
-- Rsbuild provides the [resolve.dedupe](/config/resolve/dedupe) config, which allows you to force the specified packages to be resolved from the project root directory, thereby removing duplicate packages.
+- Rsbuild provides the [resolve.dedupe](/config/resolve/dedupe) config, which forces specified packages to resolve from the project root directory, removing duplicate packages.
 
 - If you are using `pnpm >= 7.26.0`, you can use the [pnpm dedupe](https://pnpm.io/cli/dedupe) command to upgrade and eliminate duplicate dependencies.
 
@@ -26,13 +26,13 @@ We can eliminate duplicate dependencies with the package manager.
 pnpm dedupe
 ```
 
-- If you are using `pnpm < 7.26.0`, you can use [pnpm-deduplicate](https://github.com/ocavue/pnpm-deduplicate) to analyze all duplicate dependencies, then update dependencies or declare [pnpm overrides](https://pnpm.io/package_json#pnpmoverrides) to merge duplicated dependencies.
+- If you are using `pnpm < 7.26.0`, you can use [pnpm-deduplicate](https://github.com/ocavue/pnpm-deduplicate) to analyze duplicate dependencies, then update dependencies or declare [pnpm overrides](https://pnpm.io/package_json#pnpmoverrides) to merge them.
 
 ```bash
 npx pnpm-deduplicate --list
 ```
 
-- If you are using `yarn`, you can use [yarn-deduplicate](https://github.com/scinos/yarn-deduplicate) to automatically merge duplicated dependencies:
+- If you are using `yarn`, you can use [yarn-deduplicate](https://github.com/scinos/yarn-deduplicate) to automatically merge duplicate dependencies:
 
 ```bash
 npx yarn-deduplicate && yarn
@@ -46,7 +46,7 @@ To find out large third-party libraries in your project, use Rsdoctor to analyze
 
 ## Adjust browserslist
 
-Rsbuild will compile the code based on the project's browserslist config and inject some polyfills. If your project doesn't need to support legacy browsers, you can adjust the browserslist to drop support for older browsers, reducing the compilation overhead for syntax transformation and polyfills.
+Rsbuild compiles code based on your project's browserslist config and injects polyfills. If your project doesn't need to support legacy browsers, adjust the browserslist to drop support for older browsers, reducing compilation overhead for syntax transformation and polyfills.
 
 Rsbuild's default Browserslist config is:
 
@@ -64,11 +64,11 @@ For example, if you only need to be compatible with browsers above Chrome 100, y
 Please read the [Browserslist](/guide/advanced/browserslist) chapter to know more about the usage of Browserslist.
 :::
 
-## Usage polyfill
+## Use polyfill on demand
 
-If the current project's [output.polyfill](/config/output/polyfill) is set to `'entry'`, and you are certain that third-party dependencies do not require additional polyfills, you can change it to `usage`.
+If your project's [output.polyfill](/config/output/polyfill) is set to `'entry'` and you're certain that third-party dependencies don't require additional polyfills, change it to `usage`.
 
-In `usage` mode, Rsbuild analyzes the syntax used in the source code and injects the required polyfill code on demand to reduce the size of polyfill.
+In `usage` mode, Rsbuild analyzes the syntax in source code and injects only the required polyfills, reducing polyfill size.
 
 ```js
 export default {
@@ -84,7 +84,7 @@ Please read the [Browser Compatibility](/guide/advanced/browser-compatibility) c
 
 ## Image compression
 
-In general front-end projects, the size of images often accounts for a large proportion of the total bundle size of the project. So if the image size can be reduced as much as possible, it will have a significant optimization effect on the project bundle size. You can enable image compression by registering a plugin in the Rsbuild:
+In typical front-end projects, images often account for a large portion of total bundle size. Reducing image size significantly improves overall bundle size. Enable image compression by registering a plugin in Rsbuild:
 
 ```ts title="rsbuild.config.ts"
 import { pluginImageCompress } from '@rsbuild/plugin-image-compress';
@@ -98,7 +98,7 @@ See details in [@rsbuild/plugin-image-compress](https://github.com/rspack-contri
 
 ## Split chunk
 
-A great chunk splitting strategy is very important to improve the loading performance of the application. It can make full use of the browser's caching mechanism to reduce the number of requests and improve the loading speed of the application.
+A good chunk splitting strategy is important for improving application loading performance. It makes full use of the browser's caching mechanism to reduce the number of requests and improve loading speed.
 
 Several [chunk splitting strategies](/guide/optimization/code-splitting) are built into Rsbuild. These should meet the needs of most applications. You can also customize the chunk splitting config to suit your own usage scenario.
 

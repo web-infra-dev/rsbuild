@@ -14,7 +14,7 @@ import type { HistoryApiFallbackOptions, RequestHandler } from '../types';
 export function historyApiFallbackMiddleware(
   options: HistoryApiFallbackOptions = {},
 ): RequestHandler {
-  return (req, _res, next) => {
+  return function historyApiFallbackMiddleware(req, _res, next) {
     const { headers } = req;
 
     if (!req.url) {

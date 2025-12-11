@@ -2,7 +2,7 @@
 
 ## Online examples
 
-We provide online examples based on Rsbuild. These examples give you an intuitive sense of Rspack's build performance and the Rsbuild development experience:
+We provide online Rsbuild examples that showcase Rspack's build performance and Rsbuild's development experience:
 
 - [StackBlitz example](https://stackblitz.com/~/github.com/rspack-contrib/rsbuild-stackblitz-example)
 - [CodeSandbox example](https://codesandbox.io/p/github/rspack-contrib/rsbuild-codesandbox-example)
@@ -11,7 +11,7 @@ We provide online examples based on Rsbuild. These examples give you an intuitiv
 
 Rsbuild supports using [Node.js](https://nodejs.org/), [Deno](https://deno.com/), or [Bun](https://bun.sh/) as the JavaScript runtime.
 
-You can refer to the following installation guides and choose a runtime:
+Use the following installation guides to choose a runtime:
 
 - [Install Node.js](https://nodejs.org/en/download)
 - [Install Bun](https://bun.com/docs/installation)
@@ -36,52 +36,54 @@ import { PackageManagerTabs } from '@theme';
     yarn: 'yarn create rsbuild',
     pnpm: 'pnpm create rsbuild@latest',
     bun: 'bun create rsbuild@latest',
+    deno: 'deno init --npm rsbuild@latest',
   }}
 />
 
-Follow the prompts step by step. During setup, you can choose whether to add optional tools like TypeScript and ESLint.
+Follow the prompts to choose from available options, including whether to add optional tools like TypeScript and ESLint.
 
-After creating the application, run these commands:
+After creating the application, complete these steps:
 
 - Run `git init` to initialize a Git repository.
-- Run `npm install` (or your package manager's install command) to install npm dependencies.
-- Run `npm run dev` to start the development server, which runs on `http://localhost:5173` by default.
+- Run `npm install` (or your package manager's install command) to install dependencies.
+- Run `npm run dev` to start the dev server, which runs on `http://localhost:3000` by default.
 
 ### Templates
 
 When creating an application, you can choose from the following templates provided by `create-rsbuild`:
 
-| Template | Description                     | Optional Features |
-| -------- | ------------------------------- | ----------------- |
-| vanilla  | Vanilla JavaScript              | TypeScript        |
-| react    | [React 19](https://react.dev/)  | TypeScript        |
-| react18  | [React 18](https://react.dev/)  | TypeScript        |
-| vue      | [Vue 3](https://vuejs.org/)     | TypeScript        |
-| vue2     | [Vue 2](https://v2.vuejs.org/)  | TypeScript        |
-| lit      | [Lit](https://lit.dev/)         | TypeScript        |
-| preact   | [Preact](https://preactjs.com/) | TypeScript        |
-| svelte   | [Svelte 5](https://svelte.dev/) | TypeScript        |
-| solid    | [Solid](https://solidjs.com/)   | TypeScript        |
+| Template | Official docs                   | Rsbuild integration guide               |
+| -------- | ------------------------------- | --------------------------------------- |
+| vanilla  | Native JavaScript               | -                                       |
+| react    | [React 19](https://react.dev/)  | [Using React](/guide/framework/react)   |
+| react18  | [React 18](https://react.dev/)  | [Using React](/guide/framework/react)   |
+| vue      | [Vue 3](https://vuejs.org/)     | [Using Vue](/guide/framework/vue)       |
+| vue2     | [Vue 2](https://v2.vuejs.org/)  | [Using Vue](/guide/framework/vue)       |
+| lit      | [Lit](https://lit.dev/)         | -                                       |
+| preact   | [Preact](https://preactjs.com/) | [Using Preact](/guide/framework/preact) |
+| svelte   | [Svelte](https://svelte.dev/)   | [Using Svelte](/guide/framework/svelte) |
+| solid    | [Solid](https://solidjs.com/)   | [Using Solid](/guide/framework/solid)   |
 
-`create-rsbuild` provides basic templates out of the box. You can also get more templates in the following ways:
+`create-rsbuild` provides basic templates. You can find more templates at:
 
-- Visit [Rspack - Ecosystem](https://rspack.rs/guide/start/quick-start#ecosystem) to learn about various higher-level tools based on Rsbuild.
-- Visit [awesome-rstack - Starter](https://github.com/web-infra-dev/awesome-rstack?tab=readme-ov-file#starter) to find more community-maintained templates.
+- Visit [Rspack - Ecosystem](https://rspack.rs/guide/start/quick-start#ecosystem) to learn about higher-level tools built on Rsbuild.
+- Visit [awesome-rstack - Starter](https://github.com/web-infra-dev/awesome-rstack?tab=readme-ov-file#starter) for community-maintained templates.
 
 ### Optional tools
 
-`create-rsbuild` can help you set up commonly used tools, including [Biome](https://github.com/biomejs/biome), [ESLint](https://github.com/eslint/eslint), and [Prettier](https://github.com/prettier/prettier). Use the arrow keys and space bar to make your selections. If you don't need these tools, simply press Enter to skip.
+`create-rsbuild` can help you set up commonly used tools, including [Biome](https://github.com/biomejs/biome), [ESLint](https://github.com/eslint/eslint), [Prettier](https://github.com/prettier/prettier), and [Storybook](https://storybook.js.org/). Use the arrow keys to navigate and the space bar to select. Press Enter without selecting anything if you don't need these tools.
 
 ```
 ◆  Select additional tools (Use <space> to select, <enter> to continue)
 │  ◻ Add Biome for code linting and formatting
 │  ◻ Add ESLint for code linting
 │  ◻ Add Prettier for code formatting
+│  ◻ Add Storybook for component development
 └
 ```
 
 :::tip
-Biome provides similar linting and formatting features to ESLint and Prettier. If you select Biome, you typically won't need to add ESLint or Prettier, as Biome can handle both linting and formatting tasks.
+Biome provides similar linting and formatting features to ESLint and Prettier. If you select Biome, you typically won't need to add ESLint or Prettier.
 :::
 
 ### Current directory
@@ -98,38 +100,40 @@ To create an application in the current directory, set the target folder to `.`:
 │  Continue and override files
 ```
 
-### Quick creation
+### Non-interactive mode
 
-[create-rsbuild](https://npmjs.com/package/create-rsbuild) provides some CLI flags. By setting these CLI flags, you can skip the interactive selection steps and create the application with one command.
+[create-rsbuild](https://npmjs.com/package/create-rsbuild) supports a non-interactive mode through command-line options. This mode skips prompts and creates the project directly, which is useful for scripts, CI, and automation.
 
-For example, to create a React application in the `my-app` directory with one command:
+For example, the following command creates a React app in the `my-app` directory:
 
 ```bash
-npx create-rsbuild --dir my-app --template react
+npx -y create-rsbuild@latest my-app --template react
 
 # Using abbreviations
-npx create-rsbuild -d my-app -t react
+npx -y create-rsbuild@latest my-app -t react
 
 # Specify multiple tools
-npx create-rsbuild -d my-app -t react --tools eslint --tools prettier
+npx -y create-rsbuild@latest my-app -t react --tools eslint,prettier
 ```
 
 All CLI flags supported by `create-rsbuild`:
 
 ```
-Usage: create-rsbuild [options]
+Usage: create-rsbuild [dir] [options]
 
 Options:
 
-  -h, --help       display help for command
-  -d, --dir        create project in specified directory
-  -t, --template   specify the template to use
-  --tools          select additional tools (biome, eslint, prettier)
-  --override       override files in target directory
+  -h, --help            display help for command
+  -d, --dir <dir>       create project in specified directory
+  -t, --template <tpl>  specify the template to use
+  --tools <tool>        select additional tools (biome, eslint, prettier, storybook)
+  --override            override files in target directory
+  --packageName <name>  specify the package name
 
 Templates:
 
-  react-js, react-ts, vue3-js, vue3-ts, vue2-js, vue2-ts, svelte-js, svelte-ts, solid-js, solid-ts, vanilla-js, vanilla-ts
+  react-js, react-ts, vue3-js, vue3-ts, vue2-js, vue2-ts, svelte-js, svelte-ts,
+  solid-js, solid-ts, vanilla-js, vanilla-ts
 ```
 
 ## Migrate from existing projects
@@ -158,14 +162,14 @@ After installation, refer to the following documents to configure your project:
 
 ## CLI
 
-Rsbuild comes with a lightweight CLI that includes commands such as `dev` and `build`.
+Rsbuild includes a lightweight CLI with commands like `dev` and `build`.
 
 ```json title="package.json"
 {
   "scripts": {
-    // starting the dev server
+    // start the dev server
     "dev": "rsbuild dev",
-    // build the app for production
+    // build for production
     "build": "rsbuild build",
     // preview the production build locally
     "preview": "rsbuild preview"
@@ -206,7 +210,7 @@ export default {
   />
 </a>
 
-Rsbuild core package, providing CLI commands and JavaScript API.
+Core Rsbuild package that provides the CLI commands and JavaScript API.
 
 ### create-rsbuild
 

@@ -5,5 +5,5 @@ rspackTest('should allow to minify JS in dev', async ({ dev }) => {
   const files = rsbuild.getDistFiles();
   const content = getFileContent(files, '.js');
 
-  expect(content).toContain('function(){console.log("main")}');
+  expect(content).toContain('(){console.log("main")}');
 });

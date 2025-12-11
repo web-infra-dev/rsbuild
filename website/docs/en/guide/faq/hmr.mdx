@@ -1,49 +1,49 @@
 # HMR FAQ
 
-### How to troubleshooting HMR ineffective issues?
+### How to troubleshoot HMR issues?
 
-There are several possible reasons why HMR may not be work. This document will cover most common causes and provide guidance for troubleshooting. Please refer to the following content for troubleshooting.
+There are several possible reasons why HMR may not work. This document covers the most common causes and provides troubleshooting guidance.
 
-Before starting the troubleshooting process, it is helpful to have a basic understanding of how HMR works:
+Before troubleshooting, it's helpful to understand how HMR works:
 
-:::tip HMR Principle
+:::tip HMR principle
 
 1. The browser establishes a WebSocket connection with the dev server for real-time communication.
-2. Whenever the dev server finishes recompiling, it sends a notification to the browser via the WebSocket. The browser then sends a `hot-update.(js|json)` request to the dev server to load the newly compiled module.
-3. After receiving the new module, if it is a React project, React Refresh, an official React tool, is used to update React components. Other frameworks have similar tools.
+2. When the dev server finishes recompiling, it sends a notification to the browser via WebSocket. The browser then sends a `hot-update.(js|json)` request to the dev server to load the newly compiled module.
+3. After receiving the new module, React projects use React Refresh (an official React tool) to update components. Other frameworks have similar tools.
 
 :::
 
-After understanding the principle of HMR, you can follow these steps for basic troubleshooting:
+After understanding how HMR works, you can follow these troubleshooting steps:
 
 #### 1. Check the WebSocket connection
 
 Open the browser console and check for the presence of the `[HMR] connected.` log.
 
-- If it is present, the WebSocket connection is working correctly. You can continue with the following steps.
-- If it is not present, open the Network panel in Chrome and check the status of the `ws://[host]:[port]/rsbuild-hmr` request. If the request is failed, this indicates that the HMR failed because the WebSocket connection was not successfully established.
+- If present, the WebSocket connection is working correctly. Continue with the following steps.
+- If not present, open the Network panel in Chrome and check the status of the `ws://[host]:[port]/rsbuild-hmr` request. If the request failed, this indicates that HMR failed because the WebSocket connection was not established.
 
-There can be various reasons why the WebSocket connection fails to establish, such as using a network proxy that prevents the WebSocket request from reaching the dev server. You can check whether the WebSocket request address matches your dev server address. If it does not match, you can configure the WebSocket request address using [dev.client](/config/dev/client).
+The WebSocket connection can fail for various reasons, such as a network proxy preventing the WebSocket request from reaching the dev server. Check whether the WebSocket request address matches your dev server address. If it doesn't match, configure the WebSocket request address using [dev.client](/config/dev/client).
 
 #### 2. Check the hot-update requests
 
-When you modify the code of a module and trigger a recompilation, the browser sends several `hot-update.json` and `hot-update.js` requests to the dev server to fetch the updated code.
+When you modify a module's code and trigger a recompilation, the browser sends several `hot-update.json` and `hot-update.js` requests to the dev server to fetch the updated code.
 
-You can try modifying a module and inspect the content of the `hot-update.(js|json)` requests. If the content of the request is the latest code, it indicates that the hot update request is working correctly.
+Try modifying a module and inspect the content of the `hot-update.(js|json)` requests. If the request contains the latest code, the hot update request is working correctly.
 
-If the content of the request is incorrect, it is likely due to a network proxy. Check whether the address of the `hot-update.(js|json)` request matches your dev server address. If it does not match, you need to adjust the proxy rules to route the `hot-update.(js|json)` request to the dev server address.
+If the request content is incorrect, it's likely due to a network proxy. Check whether the `hot-update.(js|json)` request address matches your dev server address. If it doesn't match, adjust the proxy rules to route the `hot-update.(js|json)` requests to the dev server address.
 
 #### 3. Check for other causes
 
-If the above two steps do not reveal any issues, it is possible that other factors are causing the HMR to fail. For example, it could be that the code does not meet React's requirements for HMR. You can refer to the following questions for further troubleshooting.
+If the above steps don't reveal any issues, other factors may be causing HMR to fail. For example, the code may not meet React's HMR requirements. Refer to the following questions for further troubleshooting.
 
 ---
 
-### HMR not working when external React?
+### HMR not working with external React?
 
-To ensure that HMR works properly, we need to use the development builds of React and ReactDOM.
+To ensure HMR works properly, you need to use the development builds of React and ReactDOM.
 
-If you exclude React via `externals` when bundling, the production build of React is usually injected through CDN, and this can cause HMR to fail.
+If you exclude React via `externals` during bundling, the production build of React is typically injected through a CDN, which can cause HMR to fail.
 
 ```js
 export default {
@@ -56,17 +56,17 @@ export default {
 };
 ```
 
-To solve this problem, you need to reference the React development artifacts and install React DevTools, then hot reloading will work properly.
+To solve this problem, reference the React development builds and install React DevTools. Hot reloading will then work properly.
 
-If you are unsure about the type of React build you are using, you can refer to the [React documentation - Use the Production Build](https://legacy.reactjs.org/docs/optimizing-performance.html#use-the-production-build).
+If you're unsure which React build you're using, refer to the [React documentation - Use the Production Build](https://legacy.reactjs.org/docs/optimizing-performance.html#use-the-production-build).
 
 ---
 
-### HMR not working when setting filename hash in development mode?
+### HMR not working with filename hash in development mode?
 
-Usually, we only set the filename hash in production mode (i.e., when `process.env.NODE_ENV === 'production'`).
+Typically, filename hashes should only be set in production mode (when `process.env.NODE_ENV === 'production'`).
 
-If you set the filename hash in development mode, it may cause HMR to fail (especially for CSS files). This is because every time the file content changes, the hash value changes, preventing tools like [mini-css-extract-plugin](https://npmjs.com/package/mini-css-extract-plugin) from reading the latest file content.
+Setting filename hashes in development mode can cause HMR to fail, especially for CSS files. This is because the hash changes every time the file content changes, preventing tools like [mini-css-extract-plugin](https://npmjs.com/package/mini-css-extract-plugin) from reading the latest file content.
 
 - Correct usage:
 
@@ -97,15 +97,15 @@ export default {
 
 ---
 
-### HMR not working when use https?
+### HMR not working with HTTPS?
 
-If https is enabled, the HMR connection may fail due to a certificate issue, and if you open the console, you will get an HMR connect failed error.
+When HTTPS is enabled, the HMR connection may fail due to certificate issues. If you open the console, you'll see an HMR connection failed error.
 
 ```
 » WebSocket connection to 'wss://localhost:3000/rsbuild-hmr' failed:
 [HMR] disconnected. Attempting to reconnect.
 ```
 
-The solution to this problem is to click on "Advanced" -> "Proceed to some page (unsafe)" on the Chrome problem page.
+To solve this problem, click "Advanced" -> "Proceed to [domain] (unsafe)" in the Chrome warning page.
 
-> Tips: When accessing the page through Localhost, the words "Your connection is not private" may not appear and can be handled by visiting the Network domain.
+> Tip: When accessing the page via localhost, the "Your connection is not private" warning may not appear. In that case, access the page via a network domain instead.

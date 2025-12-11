@@ -29,10 +29,10 @@
     "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
-    "@babel/core": "^7.28.4",
+    "@babel/core": "^7.28.5",
     "@babel/plugin-proposal-decorators": "^7.28.0",
     "@babel/plugin-transform-class-properties": "^7.27.1",
-    "@babel/preset-typescript": "^7.27.1",
+    "@babel/preset-typescript": "^7.28.5",
     "@types/babel__core": "^7.20.5",
     "deepmerge": "^4.3.1",
     "reduce-configs": "^1.1.1",
@@ -40,11 +40,11 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.15.1",
+    "@rslib/core": "0.18.4",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.18.12",
+    "@types/node": "^24.10.2",
     "babel-loader": "10.0.0",
-    "prebundle": "1.4.2",
+    "prebundle": "1.6.0",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {

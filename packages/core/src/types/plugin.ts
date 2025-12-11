@@ -199,6 +199,7 @@ export type PluginManager = Pick<
 };
 
 export type RsbuildPluginApplyFn = (
+  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
   this: void,
   /**
    * The original Rsbuild configuration object (before plugin processing)
@@ -299,16 +300,18 @@ type PluginHook<T extends (...args: any[]) => any> = (
 
 type TransformResult =
   | string
+  | Buffer
   | {
-      code: string;
+      code: string | Buffer;
       map?: string | Rspack.RawSourceMap | null;
     };
 
-export type TransformContext = {
+export type TransformContext<Raw extends boolean = false> = {
   /**
    * The code of the module.
+   * When `raw` is true, this will be a Buffer instead of a string.
    */
-  code: string;
+  code: Raw extends true ? Buffer : string;
   /**
    * The directory path of the currently processed module,
    * which changes with the location of each processed module.
@@ -370,8 +373,8 @@ export type TransformContext = {
   resolve: Rspack.LoaderContext['resolve'];
 };
 
-export type TransformHandler = (
-  context: TransformContext,
+export type TransformHandler<Raw extends boolean = false> = (
+  context: TransformContext<Raw>,
 ) => MaybePromise<TransformResult>;
 
 export type TransformDescriptor = {
@@ -449,9 +452,9 @@ export type TransformDescriptor = {
   order?: HookOrder;
 };
 
-export type TransformHook = (
-  descriptor: TransformDescriptor,
-  handler: TransformHandler,
+export type TransformHook = <T extends TransformDescriptor>(
+  descriptor: T,
+  handler: TransformHandler<T['raw'] extends true ? true : false>,
 ) => void;
 
 export type ProcessAssetsStage =

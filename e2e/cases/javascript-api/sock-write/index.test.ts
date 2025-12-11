@@ -6,7 +6,7 @@ rspackTest(
   async ({ page }) => {
     let count = 0;
     const rsbuild = await createRsbuild({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
     });
 
     const server = await rsbuild.createDevServer();

@@ -4,10 +4,13 @@ exports[`environment config > should normalize environment config correctly 1`] 
 {
   "dev": {
     "assetPrefix": "/",
-    "browserLogs": true,
+    "browserLogs": {
+      "stackTrace": "summary",
+    },
     "cliShortcuts": false,
     "client": {
       "host": "",
+      "logLevel": "info",
       "overlay": true,
       "path": "/rsbuild-hmr",
       "port": "",
@@ -21,6 +24,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
   },
   "html": {
     "crossorigin": false,
+    "implementation": "js",
     "inject": "head",
     "meta": {
       "charset": {
@@ -33,6 +37,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "scriptLoading": "defer",
     "title": "Rsbuild App",
   },
+  "logLevel": "info",
   "mode": "development",
   "output": {
     "assetPrefix": "/",
@@ -158,10 +163,13 @@ exports[`environment config > should normalize environment config correctly 2`] 
 {
   "dev": {
     "assetPrefix": "/foo",
-    "browserLogs": true,
+    "browserLogs": {
+      "stackTrace": "summary",
+    },
     "cliShortcuts": false,
     "client": {
       "host": "",
+      "logLevel": "info",
       "overlay": true,
       "path": "/rsbuild-hmr",
       "port": "",
@@ -175,6 +183,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
   },
   "html": {
     "crossorigin": false,
+    "implementation": "js",
     "inject": "head",
     "meta": {
       "charset": {
@@ -187,6 +196,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "scriptLoading": "defer",
     "title": "Rsbuild App",
   },
+  "logLevel": "info",
   "mode": "development",
   "output": {
     "assetPrefix": "/",
@@ -313,10 +323,13 @@ exports[`environment config > should print environment config when inspect confi
   "ssr": {
     "dev": {
       "assetPrefix": "/",
-      "browserLogs": true,
+      "browserLogs": {
+        "stackTrace": "summary",
+      },
       "cliShortcuts": false,
       "client": {
         "host": "",
+        "logLevel": "info",
         "overlay": true,
         "path": "/rsbuild-hmr",
         "port": "",
@@ -333,6 +346,7 @@ exports[`environment config > should print environment config when inspect confi
     },
     "html": {
       "crossorigin": false,
+      "implementation": "js",
       "inject": "head",
       "meta": {
         "charset": {
@@ -345,6 +359,7 @@ exports[`environment config > should print environment config when inspect confi
       "scriptLoading": "defer",
       "title": "Rsbuild App",
     },
+    "logLevel": "info",
     "mode": "development",
     "output": {
       "assetPrefix": "/",
@@ -467,10 +482,13 @@ exports[`environment config > should print environment config when inspect confi
   "web": {
     "dev": {
       "assetPrefix": "/",
-      "browserLogs": true,
+      "browserLogs": {
+        "stackTrace": "summary",
+      },
       "cliShortcuts": false,
       "client": {
         "host": "",
+        "logLevel": "info",
         "overlay": true,
         "path": "/rsbuild-hmr",
         "port": "",
@@ -487,6 +505,7 @@ exports[`environment config > should print environment config when inspect confi
     },
     "html": {
       "crossorigin": false,
+      "implementation": "js",
       "inject": "head",
       "meta": {
         "charset": {
@@ -499,6 +518,7 @@ exports[`environment config > should print environment config when inspect confi
       "scriptLoading": "defer",
       "title": "Rsbuild App",
     },
+    "logLevel": "info",
     "mode": "development",
     "output": {
       "assetPrefix": "/",
@@ -641,10 +661,13 @@ exports[`environment config > should support modify environment config by api.mo
   "ssr": {
     "dev": {
       "assetPrefix": "/",
-      "browserLogs": true,
+      "browserLogs": {
+        "stackTrace": "summary",
+      },
       "cliShortcuts": false,
       "client": {
         "host": "",
+        "logLevel": "info",
         "overlay": true,
         "path": "/rsbuild-hmr",
         "port": "",
@@ -661,6 +684,7 @@ exports[`environment config > should support modify environment config by api.mo
     },
     "html": {
       "crossorigin": false,
+      "implementation": "js",
       "inject": "head",
       "meta": {
         "charset": {
@@ -673,6 +697,7 @@ exports[`environment config > should support modify environment config by api.mo
       "scriptLoading": "defer",
       "title": "Rsbuild App",
     },
+    "logLevel": "info",
     "mode": "development",
     "output": {
       "assetPrefix": "/",
@@ -795,10 +820,13 @@ exports[`environment config > should support modify environment config by api.mo
   "web": {
     "dev": {
       "assetPrefix": "/",
-      "browserLogs": true,
+      "browserLogs": {
+        "stackTrace": "summary",
+      },
       "cliShortcuts": false,
       "client": {
         "host": "",
+        "logLevel": "info",
         "overlay": true,
         "path": "/rsbuild-hmr",
         "port": "",
@@ -815,6 +843,7 @@ exports[`environment config > should support modify environment config by api.mo
     },
     "html": {
       "crossorigin": false,
+      "implementation": "js",
       "inject": "head",
       "meta": {
         "charset": {
@@ -827,6 +856,7 @@ exports[`environment config > should support modify environment config by api.mo
       "scriptLoading": "defer",
       "title": "Rsbuild App",
     },
+    "logLevel": "info",
     "mode": "development",
     "output": {
       "assetPrefix": "/",
@@ -950,10 +980,13 @@ exports[`environment config > should support modify environment config by api.mo
   "web1": {
     "dev": {
       "assetPrefix": "/",
-      "browserLogs": true,
+      "browserLogs": {
+        "stackTrace": "summary",
+      },
       "cliShortcuts": false,
       "client": {
         "host": "",
+        "logLevel": "info",
         "overlay": true,
         "path": "/rsbuild-hmr",
         "port": "",
@@ -970,6 +1003,7 @@ exports[`environment config > should support modify environment config by api.mo
     },
     "html": {
       "crossorigin": false,
+      "implementation": "js",
       "inject": "head",
       "meta": {
         "charset": {
@@ -982,6 +1016,7 @@ exports[`environment config > should support modify environment config by api.mo
       "scriptLoading": "defer",
       "title": "Rsbuild App",
     },
+    "logLevel": "info",
     "mode": "development",
     "output": {
       "assetPrefix": "/",
@@ -1108,10 +1143,13 @@ exports[`environment config > should support modify single environment config by
   "ssr": {
     "dev": {
       "assetPrefix": "/",
-      "browserLogs": true,
+      "browserLogs": {
+        "stackTrace": "summary",
+      },
       "cliShortcuts": false,
       "client": {
         "host": "",
+        "logLevel": "info",
         "overlay": true,
         "path": "/rsbuild-hmr",
         "port": "",
@@ -1128,6 +1166,7 @@ exports[`environment config > should support modify single environment config by
     },
     "html": {
       "crossorigin": false,
+      "implementation": "js",
       "inject": "head",
       "meta": {
         "charset": {
@@ -1140,6 +1179,7 @@ exports[`environment config > should support modify single environment config by
       "scriptLoading": "defer",
       "title": "Rsbuild App",
     },
+    "logLevel": "info",
     "mode": "development",
     "output": {
       "assetPrefix": "/",
@@ -1262,10 +1302,13 @@ exports[`environment config > should support modify single environment config by
   "web": {
     "dev": {
       "assetPrefix": "/",
-      "browserLogs": true,
+      "browserLogs": {
+        "stackTrace": "summary",
+      },
       "cliShortcuts": false,
       "client": {
         "host": "",
+        "logLevel": "info",
         "overlay": true,
         "path": "/rsbuild-hmr",
         "port": "",
@@ -1282,6 +1325,7 @@ exports[`environment config > should support modify single environment config by
     },
     "html": {
       "crossorigin": false,
+      "implementation": "js",
       "inject": "head",
       "meta": {
         "charset": {
@@ -1294,6 +1338,7 @@ exports[`environment config > should support modify single environment config by
       "scriptLoading": "defer",
       "title": "Rsbuild App",
     },
+    "logLevel": "info",
     "mode": "development",
     "output": {
       "assetPrefix": "/",
@@ -1783,6 +1828,15 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
         },
         {
+          "oneOf": [
+            {
+              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+              "type": "asset/source",
+            },
+          ],
+          "test": /\\\\\\.json\\$/i,
+        },
+        {
           "dependency": "url",
           "generator": {
             "filename": "static/wasm/[contenthash:8].module.wasm",
@@ -1957,9 +2011,21 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
               "options": {
                 "exportType": "string",
-                "importLoaders": 0,
+                "importLoaders": 1,
                 "modules": false,
                 "sourceMap": false,
+              },
+            },
+            {
+              "loader": "builtin:lightningcss-loader",
+              "options": {
+                "errorRecovery": true,
+                "targets": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
+                ],
               },
             },
           ],
@@ -2202,6 +2268,15 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
         },
         {
+          "oneOf": [
+            {
+              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+              "type": "asset/source",
+            },
+          ],
+          "test": /\\\\\\.json\\$/i,
+        },
+        {
           "dependency": "url",
           "generator": {
             "filename": "static/wasm/[contenthash:8].module.wasm",
@@ -2231,7 +2306,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     "output": {
       "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
       "chunkFilename": "[name].js",
-      "devtoolModuleFilenameTemplate": [Function],
+      "devtoolModuleFilenameTemplate": "[absolute-resource-path]",
       "filename": "bundle.js",
       "hashFunction": "xxhash64",
       "library": {

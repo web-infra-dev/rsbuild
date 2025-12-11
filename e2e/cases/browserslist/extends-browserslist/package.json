@@ -1,11 +1,12 @@
 {
-  "private": true,
   "name": "@e2e/extends-browserslist",
   "version": "1.0.0",
-  "dependencies": {
-    "@e2e/browserslist-config-mock": "workspace:*"
-  },
+  "private": true,
+  "type": "module",
   "browserslist": [
     "extends @e2e/browserslist-config-mock"
-  ]
+  ],
+  "dependencies": {
+    "@e2e/browserslist-config-mock": "workspace:*"
+  }
 }

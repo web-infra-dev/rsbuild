@@ -2,7 +2,7 @@ name: Ecosystem CI
 
 on:
   push:
-    branches: [main]
+    branches: ['main']
 
   workflow_dispatch:
     inputs:
@@ -12,11 +12,8 @@ on:
         default: 'main'
 
 permissions:
-  # Allow commenting on commits
   contents: write
-  # Allow commenting on issues
   issues: write
-  # Allow commenting on PR
   pull-requests: write
 
 jobs:
@@ -27,15 +24,9 @@ jobs:
       changed: ${{ steps.changes.outputs.changed }}
     steps:
       - name: Checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           fetch-depth: 1
-
-      - name: Install Pnpm
-        run: |
-          npm install -g corepack@latest --force
-          corepack enable
-
       - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
         id: changes
         with:
@@ -46,143 +37,31 @@ jobs:
               - "!**/*.mdx"
               - "!**/_meta.json"
               - "!**/dictionary.txt"
-
-  ecosystem_ci_notify:
-    name: Run Ecosystem CI With Notify
+  ecosystem_ci_dispatch:
+    name: Dispatch ecosystem CI
+    runs-on: ubuntu-latest
+    if: github.repository == 'web-infra-dev/rsbuild' && github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Trigger Ecosystem CI
+        uses: rspack-contrib/rstack-ecosystem-ci/.github/actions/ecosystem_ci_dispatch@dd1608e61be90afc786a7e8d5a846ae5e5a0d940 # v0.2.0
+        with:
+          github-token: ${{ secrets.REPO_RSBUILD_ECO_CI_GITHUB_TOKEN_NEXT }}
+          ecosystem-owner: web-infra-dev
+          ecosystem-repo: rsbuild
+          workflow-file: rsbuild-ecosystem-ci-selected.yml
+          client-payload: '{"ref":"${{ github.event.inputs.branch }}","repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'
+          branch: ${{ github.event.inputs.branch }}
+  ecosystem_ci_per_commit:
+    name: Run ecosystem CI per commit
     needs: changes
     runs-on: ubuntu-latest
     if: github.repository == 'web-infra-dev/rsbuild' && github.event_name != 'workflow_dispatch' && needs.changes.outputs.changed == 'true'
     steps:
-      - name: Run Ecosystem CI with notify
-        id: eco_ci
-        continue-on-error: true
-        uses: convictional/trigger-workflow-and-wait@f69fa9eedd3c62a599220f4d5745230e237904be # v1.6.5
+      - name: Trigger Ecosystem CI
+        uses: rspack-contrib/rstack-ecosystem-ci/.github/actions/ecosystem_ci_per_commit@dd1608e61be90afc786a7e8d5a846ae5e5a0d940 # v0.2.0
         with:
-          owner: 'rspack-contrib'
-          repo: 'rsbuild-ecosystem-ci'
-          workflow_file_name: 'ecosystem-ci-from-commit.yml'
-          github_token: ${{ secrets.REPO_RSBUILD_ECO_CI_GITHUB_TOKEN }}
-          ref: 'main'
-          client_payload: '{"commitSHA":"${{ github.sha }}","updateComment":true,"repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'
-
-      - name: Checkout
-        if: steps.eco_ci.outcome == 'failure'
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-        with:
-          fetch-depth: 1
-
-      - name: Install Pnpm
-        run: |
-          npm install -g corepack@latest --force
-          corepack enable
-
-      - name: Setup Node.js
-        if: steps.eco_ci.outcome == 'failure'
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
-        with:
-          node-version: 22
-          cache: 'pnpm'
-
-      - name: Get CI Result
-        id: eco-ci-result
-        if: steps.eco_ci.outcome == 'failure'
-        uses: ./.github/actions/eco-ci-result
-        with:
-          workflow-output: ${{ toJson(steps.eco_ci.outputs) }}
-
-      - id: create-commit-comment
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
-        if: steps.eco_ci.outcome == 'failure'
-        name: Create Commit Comment
-        with:
-          script: |
-            await github.rest.repos.createCommitComment({
-              commit_sha: context.sha,
-              owner: 'web-infra-dev',
-              repo: 'rsbuild',
-              body: ${{ steps.eco-ci-result.outputs.result }}
-            })
-
-  ecosystem_ci:
-    name: Run Ecosystem CI
-    runs-on: ubuntu-latest
-    if: github.repository == 'web-infra-dev/rsbuild' && github.event_name == 'workflow_dispatch'
-    steps:
-      - id: get-pr-number
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
-        name: Get PR Number
-        with:
-          script: |
-            const { data: prs } = await github.rest.pulls.list({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-            })
-
-            const pr = prs.find(pr => pr.head.ref === context.payload.inputs.branch);
-
-            if(pr) {
-              console.log(`Get PR info: ${pr.url}`)
-
-              return {
-                num: pr.number,
-                branchName: pr.head.ref,
-                repo: pr.head.repo.full_name
-              }
-            } else {
-              console.log(`can't find PR for branch: ${context.payload.inputs.branch}`)
-            }
-
-      - id: create-comment
-        name: Create Comment
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
-        if: steps.get-pr-number.outputs.result
-        with:
-          result-encoding: string
-          script: |
-            const url = `${context.serverUrl}//${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
-            const urlLink = `[Open](${url})`
-            const prData = ${{ steps.get-pr-number.outputs.result }}
-
-            const { data: comment } = await github.rest.issues.createComment({
-              issue_number: prData.num,
-              owner: 'web-infra-dev',
-              repo: 'rsbuild',
-              body: `⏳ Triggered ecosystem CI: ${urlLink}`
-            })
-            return comment.id
-
-      - name: Run Ecosystem CI
-        id: eco_ci
-        uses: convictional/trigger-workflow-and-wait@f69fa9eedd3c62a599220f4d5745230e237904be # v1.6.5
-        continue-on-error: true
-        with:
-          owner: 'rspack-contrib'
-          repo: 'rsbuild-ecosystem-ci'
-          workflow_file_name: 'ecosystem-ci-selected.yml'
-          github_token: ${{ secrets.REPO_RSBUILD_ECO_CI_GITHUB_TOKEN }}
-          ref: 'main'
-          client_payload: '{"ref":"${{ github.event.inputs.branch }}","repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'
-
-      - name: Checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-        with:
-          fetch-depth: 1
-
-      - id: eco-ci-result
-        uses: ./.github/actions/eco-ci-result
-        name: Get CI Result
-        with:
-          workflow-output: ${{ toJson(steps.eco_ci.outputs) }}
-
-      - id: update-comment
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
-        if: steps.get-pr-number.outputs.result
-        name: Update Comment
-        with:
-          script: |
-            await github.rest.issues.updateComment({
-              owner: 'web-infra-dev',
-              repo: 'rsbuild',
-              comment_id: ${{ steps.create-comment.outputs.result }},
-              body: ${{ steps.eco-ci-result.outputs.result }}
-            })
+          github-token: ${{ secrets.REPO_RSBUILD_ECO_CI_GITHUB_TOKEN_NEXT }}
+          ecosystem-owner: web-infra-dev
+          ecosystem-repo: rsbuild
+          workflow-file: rsbuild-ecosystem-ci-from-commit.yml
+          client-payload: '{"commitSHA":"${{ github.sha }}","updateComment":true,"repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'

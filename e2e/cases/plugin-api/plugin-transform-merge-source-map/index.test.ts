@@ -10,7 +10,7 @@ import {
 
 const expectSourceMap = async (files: Record<string, string>) => {
   const sourceCode = readFileSync(
-    path.join(__dirname, 'src/index.ts'),
+    path.join(import.meta.dirname, 'src/index.ts'),
     'utf-8',
   );
   const outputCode = getFileContent(files, 'index.js');
@@ -33,13 +33,13 @@ const expectSourceMap = async (files: Record<string, string>) => {
   const sourceLines = sourceCode.split('\n');
   expect(positions).toEqual([
     {
-      source: 'webpack:///src/index.ts',
+      source: '../../../src/index.ts',
       line: 2,
       column: sourceLines[1].indexOf(`'args'`),
       name: null,
     },
     {
-      source: 'webpack:///src/index.ts',
+      source: '../../../src/index.ts',
       line: 5,
       column: sourceLines[4].indexOf(`'hello'`),
       name: null,

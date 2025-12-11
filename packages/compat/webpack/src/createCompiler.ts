@@ -18,8 +18,7 @@ export async function createCompiler(options: InitConfigsOptions) {
 
   const compiler = (webpackConfigs.length === 1
     ? webpack(webpackConfigs[0])
-    : // @ts-expect-error webpack type issue
-      webpack(webpackConfigs)) as unknown as
+    : webpack(webpackConfigs)) as unknown as
     | Rspack.Compiler
     | Rspack.MultiCompiler;
 
@@ -50,7 +49,11 @@ export async function createCompiler(options: InitConfigsOptions) {
     context.buildState.hasErrors = hasErrors;
     context.socketServer?.onBuildDone();
 
-    const { message, level } = helpers.formatStats(stats, hasErrors);
+    const { message, level } = helpers.formatStats(
+      stats,
+      hasErrors,
+      context.rootPath,
+    );
 
     if (level === 'error') {
       logger.error(message);

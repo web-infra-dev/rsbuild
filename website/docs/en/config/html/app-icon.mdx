@@ -7,7 +7,7 @@ type AppIconItem = {
   src: string;
   size: number;
   target?: 'apple-touch-icon' | 'web-app-manifest';
-  purpose?: string;
+  purpose?: 'any' | 'maskable' | 'monochrome' | string;
 };
 
 type AppIcon = {

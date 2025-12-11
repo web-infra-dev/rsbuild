@@ -83,15 +83,17 @@ export default {
 
 hot-update 文件属于静态资源，如果你需要配置 hot-update 文件的 URL，请使用 [dev.assetPrefix](/config/dev/asset-prefix) 选项。
 
-## Error overlay
+## 选项
 
-通过 `dev.client.overlay` 选项，可以选择是否启用 error overlay。
+### overlay
 
-默认情况下，当编译发生错误时，Rsbuild会在浏览器中显示 error overlay，并提供错误信息和错误堆栈：
+通过 `dev.client.overlay` 选项，可以选择是否启用错误浮层。
+
+默认情况下，当编译发生错误时，Rsbuild会在浏览器中显示错误浮层，并提供错误信息和错误堆栈：
 
 ![error overlay](https://assets.rspack.rs/rsbuild/assets/rsbuild-error-overlay.png)
 
-如果需要禁用 error overlay，可以将其设置为 `false`：
+如果需要禁用错误浮层，可以将其设置为 `false`：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -104,5 +106,57 @@ export default {
 ```
 
 :::tip
-Error overlay 功能需要当前浏览器版本支持 [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)。在不支持的浏览器中，overlay 不会展示。
+错误浮层功能需要当前浏览器版本支持 [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)。在不支持的浏览器中，overlay 不会展示。
 :::
+
+### logLevel
+
+- **类型:** `'info' | 'warn' | 'error' | 'silent'`
+- **默认值:** 继承自根级的 [logLevel](/config/log-level)，默认是 `info`
+
+`dev.client.logLevel` 用于控制 Rsbuild 在浏览器控制台输出的客户端日志级别。
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      logLevel: 'warn',
+    },
+  },
+};
+```
+
+可选值有：
+
+- `'info'` - 显示所有日志（默认）
+- `'warn'` - 仅显示警告和错误
+- `'error'` - 仅显示错误
+- `'silent'` - 不显示任何 Rsbuild 客户端日志
+
+### reconnect
+
+- **类型：** `number`
+- **默认值：** `100`
+
+用于控制 WebSocket 连接断开后的最大自动重连次数。
+
+当连接中断时，Rsbuild 会按递增的时间间隔进行重连尝试。达到最大次数后将停止重连。重连成功后，HMR 和相关功能会自动恢复。
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      // 最多自动重连 3 次
+      reconnect: 3,
+    },
+  },
+};
+```
+
+将该值设为 `0` 可禁用自动重连，此时连接断开后只能通过手动刷新页面恢复。
+
+## 版本历史
+
+| 版本    | 更新内容             |
+| ------- | -------------------- |
+| v1.6.13 | 新增 `logLevel` 选项 |

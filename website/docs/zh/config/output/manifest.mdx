@@ -55,25 +55,49 @@ manifest 文件默认输出的结构为：
 type FilePath = string;
 
 type ManifestList = {
+  /**
+   * 所有构建产物文件的扁平列表
+   */
+  allFiles: FilePath[];
+  /**
+   * 将每个入口名称映射到其关联的输出文件
+   */
   entries: {
-    /** key 为 entry 名称，对应 Rsbuild 的 source.entry 配置 */
     [entryName: string]: {
+      /**
+       * 入口在初始加载阶段所需的文件
+       */
       initial?: {
+        /** 当前入口的初始 JavaScript 文件 */
         js?: FilePath[];
+        /** 当前入口的初始 CSS 文件 */
         css?: FilePath[];
       };
+      /**
+       * 异步加载的文件
+       * 通常是代码分割的 chunk 或懒加载的资源
+       */
       async?: {
+        /** 当前入口的异步 JavaScript 文件 */
         js?: FilePath[];
+        /** 当前入口的异步 CSS 文件 */
         css?: FilePath[];
       };
-      /** 当前 entry 关联的 HTML 页面 */
+      /** 当前入口生成的 HTML 文件（如果有） */
       html?: FilePath[];
-      /** 和当前 entry 相关的其他资源（如 png、svg、source map 等） */
+      /**
+       * 与当前入口关联的其他资源
+       * 例如图片、字体、source map 以及其他非 JS 或 CSS 文件
+       */
       assets?: FilePath[];
     };
+    /**
+     * 所有产物文件的子资源完整性（SRI）哈希值
+     * key 为文件路径，value 为对应的完整性哈希
+     * 仅在启用 `security.sri` 选项时才会生成该字段
+     */
+    integrity: Record<string, string>;
   };
-  /** 铺平的所有 assets */
-  allFiles: FilePath[];
 };
 ```
 
@@ -90,6 +114,32 @@ api.onAfterBuild(({ environments }) => {
 ```
 
 > 参考 [Environment API - manifest](/api/javascript-api/environment-api#manifest) 了解更多。
+
+## SRI
+
+当启用 [security.sri](/config/security/sri) 选项后，manifest 文件会包含 `integrity` 字段，用于存储支持 SRI 的资源（例如 JavaScript 和 CSS 文件）的哈希值。
+
+```ts title="rsbuild.config.ts"
+export default {
+  security: {
+    sri: {
+      enable: 'auto',
+    },
+  },
+  output: {
+    manifest: true,
+  },
+};
+```
+
+```json title="dist/manifest.json"
+{
+  "allFiles": ["/static/js/index.[hash].js", "/index.html"],
+  "integrity": {
+    "/static/js/index.[hash].js": "sha384-[sri-hash]"
+  }
+}
+```
 
 ## 选项
 
@@ -199,6 +249,70 @@ const files = [
 ];
 ```
 
+### prefix
+
+- **类型：** `boolean`
+- **默认值：** `true`
+
+控制是否在 manifest 中的文件路径前添加静态资源前缀，即 [dev.assetPrefix](/config/dev/asset-prefix) 和 [output.assetPrefix](/config/output/asset-prefix)。
+
+当 `prefix` 为 `true`（默认值）时，生成的 manifest 会包含完整的资源前缀。
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    assetPrefix: 'https://example.com/',
+    manifest: true,
+  },
+};
+```
+
+生成的 manifest 文件示例：
+
+```json title="dist/manifest.json"
+{
+  "allFiles": [
+    "https://example.com/static/js/index.[hash].js",
+    "https://example.com/index.html"
+  ],
+  "entries": {
+    "index": {
+      "initial": {
+        "js": ["https://example.com/static/js/index.[hash].js"]
+      }
+    }
+  }
+}
+```
+
+如果将 `prefix` 设置为 `false`，manifest 中的路径将保持相对形式，不会附加静态资源前缀。
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    assetPrefix: 'https://example.com/',
+    manifest: {
+      prefix: false,
+    },
+  },
+};
+```
+
+生成的 manifest 文件示例：
+
+```json title="dist/manifest.json"
+{
+  "allFiles": ["static/js/index.[hash].js", "index.html"],
+  "entries": {
+    "index": {
+      "initial": {
+        "js": ["static/js/index.[hash].js"]
+      }
+    }
+  }
+}
+```
+
 ### filter
 
 - **类型：**
@@ -297,3 +411,10 @@ export default {
   },
 };
 ```
+
+## 版本历史
+
+| 版本    | 变更内容              |
+| ------- | --------------------- |
+| v1.6.8  | 新增 `integrity` 字段 |
+| v1.6.12 | 新增 `prefix` 选项    |

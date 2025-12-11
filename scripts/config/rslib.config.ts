@@ -15,13 +15,18 @@ export const nodeMinifyConfig: Minify = {
       // preserve variable name and disable minify for easier debugging
       mangle: false,
       minify: false,
-      compress: true,
+      compress: {
+        keep_fnames: true,
+      },
     },
   },
 };
 
 export const esmConfig: LibConfig = {
   format: 'esm',
+  experiments: {
+    advancedEsm: true,
+  },
   syntax: 'es2022',
   dts: {
     build: true,

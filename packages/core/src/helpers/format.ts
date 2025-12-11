@@ -1,17 +1,45 @@
+import { sep } from 'node:path';
+import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import type { StatsError } from '@rspack/core';
+import { LAZY_COMPILATION_IDENTIFIER } from '../constants';
+import { isVerbose } from '../logger';
+import { removeLoaderChainDelimiter } from './stats';
 import { color } from './vendors';
 
-const formatFileName = (fileName: string) => {
+const formatFileName = (fileName: string, stats: StatsError, root: string) => {
   // File name may be empty when the error is not related to a file.
   // For example, when an invalid entry is provided.
   if (!fileName) {
     return '';
   }
 
-  // add default column add lines for linking
-  return /:\d+:\d+/.test(fileName)
-    ? `File: ${color.cyan(fileName)}\n`
-    : `File: ${color.cyan(`${fileName}:1:1`)}\n`;
+  // Handle data-uri virtual modules
+  const DATA_URI_PREFIX = 'data:text/javascript,';
+  if (fileName.startsWith(DATA_URI_PREFIX)) {
+    let snippet = fileName.replace(DATA_URI_PREFIX, '');
+    if (snippet.length > 30) {
+      snippet = `${snippet.slice(0, 30)}...`;
+    }
+    return `File: ${color.cyan('data-uri virtual module')} ${color.dim(`(${snippet})`)}\n`;
+  }
+
+  // Try to shorten absolute paths by replacing the project root prefix with "./".
+  // This improves readability. For example:
+  // "/Users/path/to/project/src/App.jsx" → "./src/App.jsx"
+  const prefix = root + sep;
+  if (fileName.startsWith(prefix)) {
+    fileName = fileName.replace(prefix, `.${sep}`);
+  }
+
+  if (/:\d+:\d+/.test(fileName)) {
+    return `File: ${color.cyan(fileName)}\n`;
+  }
+  if (stats.loc) {
+    return `File: ${color.cyan(`${fileName}:${stats.loc}`)}\n`;
+  }
+
+  // Add default column and lines for linking
+  return `File: ${color.cyan(`${fileName}:1:1`)}\n`;
 };
 
 function resolveFileName(stats: StatsError) {
@@ -25,7 +53,7 @@ function resolveFileName(stats: StatsError) {
     stats.moduleName;
 
   if (file) {
-    return file;
+    return removeLoaderChainDelimiter(file);
   }
 
   // `moduleIdentifier` is the absolute path with inline loaders
@@ -36,7 +64,7 @@ function resolveFileName(stats: StatsError) {
     if (matched) {
       const fileName = matched.pop();
       if (fileName) {
-        return fileName;
+        return removeLoaderChainDelimiter(fileName);
       }
     }
   }
@@ -57,15 +85,23 @@ function formatModuleTrace(stats: StatsError, errorFile: string) {
   }
 
   const moduleNames = stats.moduleTrace
-    .map((trace) => trace.originName)
-    .filter(Boolean) as string[];
+    .map(
+      (trace) =>
+        trace.originName && removeLoaderChainDelimiter(trace.originName),
+    )
+    .filter(
+      (trace) => trace && !trace.startsWith(LAZY_COMPILATION_IDENTIFIER),
+    ) as string[];
 
   if (!moduleNames.length) {
     return;
   }
 
   if (errorFile) {
-    moduleNames.unshift(`${errorFile} ${color.bold(color.red('×'))}`);
+    const formatted = removeLoaderChainDelimiter(errorFile);
+    if (moduleNames[0] !== formatted) {
+      moduleNames.unshift(formatted);
+    }
   }
 
   const rawTrace = moduleNames
@@ -73,7 +109,9 @@ function formatModuleTrace(stats: StatsError, errorFile: string) {
     .map((item) => `\n  ${item}`)
     .join('');
 
-  return color.dim(`Import traces (entry → error):${rawTrace}`);
+  return color.dim(
+    `Import traces (entry → error):${rawTrace} ${color.bold(color.red('×'))}`,
+  );
 }
 
 function hintUnknownFiles(message: string): string {
@@ -135,6 +173,18 @@ function hintUnknownFiles(message: string): string {
   return message;
 }
 
+const hintAssetsConflict = (message: string): string => {
+  const hint = 'Multiple assets emit different content to the same filename';
+
+  if (message.indexOf(hint) === -1) {
+    return message;
+  }
+
+  const extraMessage = `You may need to adjust ${color.yellow('output.filename')} configuration to prevent name conflicts. (See ${color.yellow('https://rsbuild.rs/config/output/filename')})`;
+
+  return `${message}\n${extraMessage}`;
+};
+
 /**
  * Add node polyfill tip when failed to resolve node built-in modules.
  */
@@ -161,7 +211,7 @@ const hintNodePolyfill = (message: string): string => {
     return message;
   }
 
-  const matchArray = message.match(/Can't resolve '(\w+)'/);
+  const matchArray = stripAnsi(message).match(/Can't resolve '(\w+)'/);
   if (!matchArray) {
     return message;
   }
@@ -216,19 +266,25 @@ const hintNodePolyfill = (message: string): string => {
 };
 
 // Formats Rspack stats error to readable message
-export function formatStatsError(stats: StatsError, verbose?: boolean): string {
-  let lines: string[] = [];
-  let message: string;
-
-  // Stats error object
+export function formatStatsError(stats: StatsError, root: string): string {
   const fileName = resolveFileName(stats);
-  const mainMessage = stats.message;
-  const details =
-    verbose && stats.details ? `\nDetails: ${stats.details}\n` : '';
-  const stack = verbose && stats.stack ? `\n${stats.stack}` : '';
-  const moduleTrace = formatModuleTrace(stats, fileName) ?? '';
+  let message = `${formatFileName(fileName, stats, root)}${stats.message}`;
 
-  message = `${formatFileName(fileName)}${mainMessage}${details}${stack}${moduleTrace}`;
+  // display verbose messages in debug mode
+  const verbose = isVerbose();
+  if (verbose) {
+    if (stats.details) {
+      message += `\nDetails: ${stats.details}\n`;
+    }
+    if (stats.stack) {
+      message += `\n${stats.stack}`;
+    }
+  }
+
+  const moduleTrace = formatModuleTrace(stats, fileName);
+  if (moduleTrace) {
+    message += moduleTrace;
+  }
 
   // Remove inner error message
   const innerError = '-- inner error --';
@@ -238,8 +294,9 @@ export function formatStatsError(stats: StatsError, verbose?: boolean): string {
 
   message = hintUnknownFiles(message);
   message = hintNodePolyfill(message);
+  message = hintAssetsConflict(message);
 
-  lines = message.split('\n');
+  let lines = message.split('\n');
 
   // Remove duplicated newlines
   lines = lines.filter(

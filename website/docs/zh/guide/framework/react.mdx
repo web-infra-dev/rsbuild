@@ -157,7 +157,7 @@ const ReactCompilerConfig = {
 
 TanStack Router 提供了 `@tanstack/router-plugin` 来与 Rsbuild 集成，该插件支持基于文件的路由，详见：
 
-- [安装指南](https://tanstack.com/router/latest/docs/framework/react/routing/installation-with-rspack)
+- [安装指南](https://tanstack.com/router/latest/docs/framework/react/installation/with-rspack)
 - [示例项目](https://github.com/TanStack/router/tree/main/examples/react/quickstart-rspack-file-based)
 
 ### React Router
@@ -175,7 +175,7 @@ TanStack Router 提供了 `@tanstack/router-plugin` 来与 Rsbuild 集成，该�
 
 Rsbuild 使用 SWC 来编译 JSX，你可以自定义编译后的 JSX 代码所使用的函数：
 
-- 当 JSX 的 runtime 为 `automatic` 时，使用 [jsxImportSource](/plugins/list/plugin-react#swcreactoptionsimportsource) 来自定义 JSX runtime 的导入路径，比如从 Preact 或 Emotion 中引入。
+- 当 JSX 的 runtime 为 `automatic` 时，使用 [importSource](/plugins/list/plugin-react#swcreactoptionsimportsource) 来自定义 JSX runtime 的导入路径，比如从 Preact 或 Emotion 中引入。
 - 当 JSX 的 runtime 为 `classic` 时，使用 `pragma` 和 `pragmaFrag` 来指定 JSX 函数和 Fragment 组件。
 
 > `@rsbuild/plugin-react` 默认使用的 JSX runtime 为 `automatic`，详见 [swcReactOptions.runtime](/plugins/list/plugin-react#swcreactoptionsruntime)。
@@ -195,7 +195,7 @@ export default defineConfig({
     pluginReact({
       swcReactOptions: {
         runtime: 'automatic',
-        jsxImportSource: '@emotion/react',
+        importSource: '@emotion/react',
       },
     }),
   ],

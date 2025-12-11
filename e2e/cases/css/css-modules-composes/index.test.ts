@@ -19,7 +19,9 @@ rspackTest(
     const rsbuild = await build({
       config: {
         source: {
-          entry: { external: path.resolve(__dirname, './src/external.js') },
+          entry: {
+            external: path.resolve(import.meta.dirname, './src/external.js'),
+          },
         },
       },
     });

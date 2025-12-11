@@ -1,20 +1,32 @@
 import path from 'node:path';
 import { promisify } from 'node:util';
 import { parse as parseStack, type StackFrame } from 'stacktrace-parser';
+import type {
+  InvalidOriginalMapping,
+  OriginalMapping,
+} from '../../compiled/@jridgewell/trace-mapping';
 import { SCRIPT_REGEX } from '../constants';
 import { color } from '../helpers';
 import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
-import type { InternalContext, Rspack } from '../types';
+import type { BrowserLogsStackTrace, InternalContext, Rspack } from '../types';
 import { getFileFromUrl } from './assets-middleware/getFileFromUrl';
-import type { OutputFileSystem } from './assets-middleware/index';
 import type { ClientMessageError } from './socketServer';
+
+/**
+ * Determines whether a given string is a valid method name
+ * extracted from a browser error stack trace.
+ * Excludes file paths such as "./src/App.tsx"
+ */
+const isValidMethodName = (methodName: string) => {
+  return methodName !== '<unknown>' && !/[\\/]/.test(methodName);
+};
 
 /**
  * Maps a position in compiled code to its original source position using
  * source maps.
  */
-function mapSourceMapPosition(
+function getOriginalPosition(
   rawSourceMap: string,
   line: number,
   column: number,
@@ -30,20 +42,56 @@ function mapSourceMapPosition(
 /**
  * Returns the first stack frame that looks like user code
  */
-const findSourceFrame = (parsed: StackFrame[]) => {
+const findFirstUserFrame = (parsed: StackFrame[]) => {
   return parsed.find(
     (frame) =>
       frame.file !== null &&
       frame.column !== null &&
       frame.lineNumber !== null &&
       SCRIPT_REGEX.test(frame.file),
-  ) as { file: string; column: number; lineNumber: number } | undefined;
+  ) as
+    | (StackFrame &
+        Pick<Required<StackFrame>, 'file' | 'column' | 'lineNumber'>)
+    | undefined;
+};
+
+const parseFrame = async (
+  frame: Pick<StackFrame, 'file' | 'column' | 'lineNumber'>,
+  fs: Rspack.OutputFileSystem,
+  context: InternalContext,
+) => {
+  const { file, column, lineNumber } = frame;
+  const sourceMapInfo = await getFileFromUrl(`${file}.map`, fs, context);
+
+  if (!sourceMapInfo || 'errorCode' in sourceMapInfo) {
+    return;
+  }
+
+  const readFile = promisify(fs.readFile);
+  try {
+    const sourceMap = await readFile(sourceMapInfo.filename);
+    if (sourceMap) {
+      return {
+        sourceMapPath: sourceMapInfo.filename,
+        originalPosition: getOriginalPosition(
+          sourceMap.toString(),
+          lineNumber ?? 0,
+          column ?? 0,
+        ),
+      };
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      logger.debug(`failed to map source map position: ${error.message}`);
+    }
+  }
 };
 
 /**
- * Resolve source filename and original position from runtime stack trace
+ * Resolve source filename and original position from runtime stack trace,
+ * return formatted string like `src/App.tsx:10:20`
  */
-const resolveSourceLocation = async (
+const resolveOriginalLocation = async (
   stack: string,
   fs: Rspack.OutputFileSystem,
   context: InternalContext,
@@ -54,62 +102,69 @@ const resolveSourceLocation = async (
   }
 
   // only parse JS files
-  const frame = findSourceFrame(parsed);
+  const frame = findFirstUserFrame(parsed);
   if (!frame) {
     return;
   }
 
-  const { file, column, lineNumber } = frame;
-  const sourceMapInfo = await getFileFromUrl(
-    `${file}.map`,
-    fs as OutputFileSystem,
-    context,
-  );
-
-  if (!sourceMapInfo || 'errorCode' in sourceMapInfo) {
+  const parsedFrame = await parseFrame(frame, fs, context);
+  if (!parsedFrame) {
     return;
   }
 
-  const readFile = promisify(fs.readFile);
-  try {
-    const sourceMap = await readFile(sourceMapInfo.filename);
-    if (sourceMap) {
-      return mapSourceMapPosition(sourceMap.toString(), lineNumber, column);
-    }
-  } catch (error) {
-    if (error instanceof Error) {
-      logger.debug(`failed to map source map position: ${error.message}`);
-    }
-  }
+  const { sourceMapPath, originalPosition } = parsedFrame;
+  return {
+    frame,
+    location: formatOriginalLocation(sourceMapPath, originalPosition, context),
+  };
 };
 
 /**
- * Formats error location information into a readable relative path string.
+ * Resolve a source path to a project-root-relative path.
+ * By default, the source path is relative to the source map path or is absolute.
  */
-const formatErrorLocation = async (
-  stack: string,
+const resolveSourceRelativeToRoot = (
+  source: string,
+  sourceMapPath: string,
   context: InternalContext,
-  fs: Rspack.OutputFileSystem,
 ) => {
-  const parsed = await resolveSourceLocation(stack, fs, context);
+  const absoluteSourcePath = path.isAbsolute(source)
+    ? source
+    : path.join(path.dirname(sourceMapPath), source);
+  return path.relative(context.rootPath, absoluteSourcePath);
+};
 
-  if (!parsed) {
-    return;
-  }
-
-  const { source, line, column } = parsed;
+const formatOriginalLocation = (
+  sourceMapPath: string,
+  originalMapping: OriginalMapping | InvalidOriginalMapping,
+  context: InternalContext,
+) => {
+  const { source, line, column } = originalMapping;
   if (!source) {
     return;
   }
 
-  let rawLocation = path.relative(context.rootPath, source);
+  let result = resolveSourceRelativeToRoot(source, sourceMapPath, context);
   if (line !== null) {
-    rawLocation += column === null ? `:${line}` : `:${line}:${column}`;
+    result += column === null ? `:${line}` : `:${line}:${column}`;
   }
-  return rawLocation;
+  return result;
 };
 
-const enhanceBrowserErrorLog = (log: string) => {
+const formatFrameLocation = (frame: StackFrame) => {
+  const { file, lineNumber, column } = frame;
+  if (!file) {
+    return;
+  }
+  if (lineNumber !== null) {
+    return column !== null
+      ? `${file}:${lineNumber}:${column}`
+      : `${file}:${lineNumber}`;
+  }
+  return file;
+};
+
+const enhanceErrorLogWithHints = (log: string) => {
   const isProcessUndefined = log.includes(
     'ReferenceError: process is not defined',
   );
@@ -123,6 +178,61 @@ const enhanceBrowserErrorLog = (log: string) => {
   return log;
 };
 
+const formatFullStack = async (
+  stack: string,
+  context: InternalContext,
+  fs: Rspack.OutputFileSystem,
+) => {
+  const parsed = parseStack(stack);
+
+  if (!parsed.length) {
+    return;
+  }
+
+  let result = '';
+
+  for (const frame of parsed) {
+    const parsedFrame = await parseFrame(frame, fs, context);
+    const { methodName } = frame;
+    const parts: (string | undefined)[] = [];
+
+    if (isValidMethodName(methodName)) {
+      parts.push(methodName);
+    }
+
+    if (parsedFrame) {
+      const { sourceMapPath, originalPosition } = parsedFrame;
+      const originalLocation = formatOriginalLocation(
+        sourceMapPath,
+        originalPosition,
+        context,
+      );
+      if (originalLocation) {
+        parts.push(originalLocation);
+      } else {
+        const frameString = formatFrameLocation(frame);
+        if (frameString) {
+          parts.push(frameString);
+        }
+      }
+    } else {
+      const frameString = formatFrameLocation(frame);
+      if (frameString) {
+        parts.push(frameString);
+      }
+    }
+
+    if (parts[0]) {
+      result += `\n    at ${parts[0]}`;
+    }
+    if (parts[1]) {
+      result += ` (${parts[1]})`;
+    }
+  }
+
+  return result;
+};
+
 /**
  * Formats error messages received from the browser into a log string with
  * source location information.
@@ -131,15 +241,48 @@ export const formatBrowserErrorLog = async (
   message: ClientMessageError,
   context: InternalContext,
   fs: Rspack.OutputFileSystem,
+  stackTrace: BrowserLogsStackTrace,
 ): Promise<string> => {
   let log = `${color.cyan('[browser]')} ${color.red(message.message)}`;
 
   if (message.stack) {
-    const rawLocation = await formatErrorLocation(message.stack, context, fs);
-    if (rawLocation) {
-      log += color.dim(` (${rawLocation})`);
+    switch (stackTrace) {
+      case 'summary': {
+        const resolved = await resolveOriginalLocation(
+          message.stack,
+          fs,
+          context,
+        );
+
+        if (!resolved) {
+          break;
+        }
+
+        const { frame, location } = resolved;
+        const { methodName } = frame;
+
+        let suffix = '';
+
+        if (isValidMethodName(methodName)) {
+          suffix += ` at ${methodName}`;
+        }
+        if (location) {
+          suffix += ` (${location})`;
+        }
+        log += suffix ? color.dim(suffix) : '';
+        break;
+      }
+      case 'full': {
+        const fullStack = await formatFullStack(message.stack, context, fs);
+        if (fullStack) {
+          log += fullStack;
+        }
+        break;
+      }
+      case 'none':
+        break;
     }
   }
 
-  return enhanceBrowserErrorLog(log);
+  return enhanceErrorLogWithHints(log);
 };

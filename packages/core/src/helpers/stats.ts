@@ -1,4 +1,4 @@
-import { logger } from '../logger';
+import { isVerbose } from '../logger';
 import type { ActionType, RsbuildStats, Rspack } from '../types';
 import { isMultiCompiler } from './compiler';
 import { formatStatsError } from './format';
@@ -58,49 +58,20 @@ export const getStatsWarnings = ({
   return [];
 };
 
-export const getStatsAssetsOptions = (): Rspack.StatsOptions => ({
-  assets: true,
-  cachedAssets: true,
-  groupAssetsByInfo: false,
-  groupAssetsByPath: false,
-  groupAssetsByChunk: false,
-  groupAssetsByExtension: false,
-  groupAssetsByEmitStatus: false,
-});
-
-export type RsbuildAsset = {
-  /**
-   * The name of the asset.
-   * @example 'index.html', 'static/js/index.[hash].js'
-   */
-  name: string;
-  /**
-   * The size of the asset in bytes.
-   */
-  size: number;
-};
-
-export const getAssetsFromStats = (stats: Rspack.Stats): RsbuildAsset[] => {
-  return Object.entries(stats.compilation.assets).map(([name, value]) => ({
-    name,
-    size: value.size(),
-  }));
-};
-
 function getStatsOptions(
   compiler: Rspack.Compiler | Rspack.MultiCompiler,
   action?: ActionType,
 ): Rspack.StatsOptions {
   let defaultOptions: Rspack.StatsOptions = {
     all: false,
-    // for displaying the build time
-    timings: true,
     // for displaying the build errors
     errors: true,
     // for displaying the build warnings
     warnings: true,
     // for displaying the module trace when build failed
     moduleTrace: true,
+    // for displaying the error stack in verbose mode
+    errorStack: isVerbose(),
   };
 
   if (action === 'dev') {
@@ -147,16 +118,14 @@ export function getRsbuildStats(
 export function formatStats(
   stats: RsbuildStats,
   hasErrors: boolean,
+  root: string,
 ): {
   message?: string;
   level?: string;
 } {
-  // display verbose messages in debug mode
-  const verbose = logger.level === 'verbose';
-
   if (hasErrors) {
     const errors = getStatsErrors(stats);
-    const errorMessages = errors.map((item) => formatStatsError(item, verbose));
+    const errorMessages = errors.map((item) => formatStatsError(item, root));
     return {
       message: formatErrorMessage(errorMessages),
       level: 'error',
@@ -164,9 +133,7 @@ export function formatStats(
   }
 
   const warnings = getStatsWarnings(stats);
-  const warningMessages = warnings.map((item) =>
-    formatStatsError(item, verbose),
-  );
+  const warningMessages = warnings.map((item) => formatStatsError(item, root));
 
   if (warningMessages.length) {
     const title = color.bold(
@@ -183,3 +150,15 @@ export function formatStats(
 
   return {};
 }
+
+/**
+ * Remove the loader chain delimiter from the module identifier.
+ * @example ./src/index.js!=!/node_modules/my-loader/index.js -> ./src/index.js
+ */
+export const removeLoaderChainDelimiter = (moduleId: string): string => {
+  if (isVerbose()) {
+    return moduleId;
+  }
+  const LOADER_CHAIN_SEPARATOR = '!=!';
+  return moduleId.split(LOADER_CHAIN_SEPARATOR)[0];
+};

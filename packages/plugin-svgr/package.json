@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-svgr",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "SVGR plugin for Rsbuild",
   "repository": {
     "type": "git",
@@ -38,11 +38,11 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.15.1",
+    "@rslib/core": "0.18.4",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.18.12",
+    "@types/node": "^24.10.2",
     "file-loader": "6.2.0",
-    "prebundle": "1.4.2",
+    "prebundle": "1.6.0",
     "svgo": "^3.3.2",
     "typescript": "^5.9.3",
     "url-loader": "4.1.1"

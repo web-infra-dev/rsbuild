@@ -1,11 +1,12 @@
 import { sep } from 'node:path';
+import { LAZY_COMPILATION_IDENTIFIER } from '../constants';
 import { color, prettyTime } from '../helpers';
 import { formatStats, getRsbuildStats } from '../helpers/stats';
 import { isSatisfyRspackVersion, rspackMinVersion } from '../helpers/version';
 import { registerDevHook } from '../hooks';
 import { logger } from '../logger';
 import { rspack } from '../rspack';
-import type { InternalContext, RsbuildStatsItem, Rspack } from '../types';
+import type { InternalContext, Rspack } from '../types';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 
 // keep the last 3 parts of the path to make logs clean
@@ -69,6 +70,12 @@ function printBuildLog(
     : null;
 
   if (removedFiles?.length) {
+    // workaround for https://github.com/web-infra-dev/rspack/issues/11694
+    if (removedFiles.every((item) => item.includes('virtual'))) {
+      logger.start(`building ${color.dim('virtual modules')}`);
+      return;
+    }
+
     const fileInfo = formatFileList(removedFiles, context.rootPath);
     logger.start(`building ${color.dim(`removed ${fileInfo}`)}`);
     return;
@@ -120,7 +127,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     }
   };
 
-  const lazyModules: Set<string> = new Set();
+  const lazyModules = new Set<string>();
 
   // Collect lazy compiled modules from the infrastructure logs
   compiler.hooks.infrastructureLog.tap(HOOK_NAME, (name, _, args) => {
@@ -128,7 +135,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     if (
       name === 'LazyCompilation' &&
       typeof log === 'string' &&
-      log.startsWith('lazy-compilation-proxy')
+      log.startsWith(LAZY_COMPILATION_IDENTIFIER)
     ) {
       const resource = log.split(' ')[0];
       if (!resource) {
@@ -145,11 +152,15 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     }
   });
 
+  let startTime: number | null = null;
+
   compiler.hooks.run.tap(HOOK_NAME, () => {
+    startTime = Date.now();
     context.buildState.status = 'building';
   });
 
   compiler.hooks.watchRun.tap(HOOK_NAME, (compiler) => {
+    startTime = Date.now();
     context.buildState.status = 'building';
     logRspackVersion();
 
@@ -182,6 +193,34 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     });
   }
 
+  const printTime = (index: number, hasErrors: boolean) => {
+    if (startTime === null) {
+      return;
+    }
+
+    const { name } = context.environmentList[index];
+    const time = Date.now() - startTime;
+    context.buildState.time[name] = time;
+
+    // When using multiple compilers, print the name to distinguish different environments
+    const suffix = isMultiCompiler ? color.dim(` (${name})`) : '';
+    const timeStr = `${prettyTime(time / 1000)}${suffix}`;
+
+    if (hasErrors) {
+      logger.error(`build failed in ${timeStr}`);
+    } else {
+      logger.ready(`built in ${timeStr}`);
+    }
+  };
+
+  if (isMultiCompiler) {
+    (compiler as Rspack.MultiCompiler).compilers.forEach((item, index) => {
+      item.hooks.done.tap(HOOK_NAME, (stats) => {
+        printTime(index, stats.hasErrors());
+      });
+    });
+  }
+
   compiler.hooks.done.tap(
     HOOK_NAME,
     (statsInstance: Rspack.Stats | Rspack.MultiStats) => {
@@ -193,35 +232,20 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
       context.buildState.hasErrors = hasErrors;
       context.socketServer?.onBuildDone();
 
-      const printTime = (statsItem: RsbuildStatsItem, index: number) => {
-        if (statsItem.time) {
-          const time = prettyTime(statsItem.time / 1000);
-          const { name } = rspackConfigs[index];
-
-          // When using multi compiler, print name to distinguish different compilers
-          const suffix = name && isMultiCompiler ? color.dim(` (${name})`) : '';
-          logger.ready(`built in ${time}${suffix}`);
-        }
-      };
-
-      if (!hasErrors) {
-        // only print children compiler time when multi compiler
-        if (isMultiCompiler && stats.children?.length) {
-          stats.children.forEach((c, index) => {
-            printTime(c, index);
-          });
-        } else {
-          printTime(stats, 0);
-        }
-      }
-
-      const { message, level } = formatStats(stats, hasErrors);
+      const { message, level } = formatStats(
+        stats,
+        hasErrors,
+        options.context.rootPath,
+      );
 
       if (level === 'error') {
         logger.error(message);
       }
       if (level === 'warning') {
         logger.warn(message);
+      }
+      if (!isMultiCompiler) {
+        printTime(0, hasErrors);
       }
 
       isCompiling = false;

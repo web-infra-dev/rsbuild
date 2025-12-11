@@ -12,7 +12,7 @@ const defaultOptions = {
 };
 ```
 
-Rsbuild 默认集成 PostCSS，你可以通过 `tools.postcss` 对 [postcss-loader](https://github.com/webpack-contrib/postcss-loader) 进行配置。
+Rsbuild 默认集成 PostCSS，你可以通过 `tools.postcss` 对 [postcss-loader](https://github.com/webpack/postcss-loader) 进行配置。
 
 ## Function 类型
 
@@ -94,7 +94,18 @@ export default {
 
 ### addPlugins
 
-- **类型：** `(plugins: PostCSSPlugin | PostCSSPlugin[]) => void`
+```ts
+type AddPlugins = (
+  plugins: PostCSSPlugin | PostCSSPlugin[],
+  options?: {
+    /**
+     * 控制插件在现有 PostCSS 插件列表中的添加位置
+     * @default 'post'
+     */
+    order?: 'pre' | 'post';
+  },
+) => void;
+```
 
 用于添加额外的 PostCSS 插件，你可以传入单个 PostCSS 插件，也可以传入 PostCSS 插件数组。
 
@@ -106,6 +117,18 @@ export default {
       addPlugins(require('postcss-preset-env'));
       // 批量添加插件
       addPlugins([require('postcss-preset-env'), require('postcss-import')]);
+    },
+  },
+};
+```
+
+要在已有的插件之前添加插件，设置 `order` 选项为 `pre`：
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    postcss: (config, { addPlugins }) => {
+      addPlugins(require('postcss-preset-env'), { order: 'pre' });
     },
   },
 };
@@ -153,3 +176,9 @@ Rsbuild 中使用的 PostCSS 版本为 v8，当你引入社区中的 PostCSS 插
 Rsbuild 使用 [postcss-load-config](https://github.com/postcss/postcss-load-config) 加载 PostCSS 配置文件，并将其与默认配置合并。
 
 Rsbuild 内部将 `postcss-loader` 的 `postcssOptions.config` 选项始终设置为 `false`，以避免重复加载配置文件。
+
+## 版本历史
+
+| 版本   | 变更内容                           |
+| ------ | ---------------------------------- |
+| v1.6.8 | `addPlugins` 方法新增 `order` 选项 |

@@ -3,7 +3,7 @@
 Rsbuild supports importing static assets, including images, fonts, audio, and video.
 
 :::tip What are static assets
-Static assets are files that are part of a web application and don't change during use. Examples include images, fonts, media files, stylesheets, and JavaScript files. These assets are typically stored on a web server or CDN and delivered to the user's browser when they access the application. Since they don't change, static assets can be cached by the browser, improving application performance.
+Static assets are files that are part of a web application and don't change during use. Examples include images, fonts, media files, stylesheets, and JavaScript files. These assets are typically stored on a web server or CDN and delivered to the user's browser when they access the application. Because they don't change, static assets can be cached by the browser, improving application performance.
 :::
 
 ## Asset formats
@@ -56,7 +56,7 @@ console.log(logo); // "/static/logo.[hash].png"
 export default () => <img src={logo} />;
 ```
 
-When using `new URL()` to reference `.js` or `.ts` files, they are treated as URL assets and aren't processed by Rsbuild's built-in SWC loader.
+When using `new URL()` to reference `.js` or `.ts` files, they're treated as URL assets and aren't processed by Rsbuild's built-in SWC loader.
 
 ```tsx
 // foo.ts will remain the original content and be output to the dist directory
@@ -65,7 +65,7 @@ const fooTs = new URL('./foo.ts', import.meta.url).href;
 console.log(fooTs); // "/static/foo.[hash].ts"
 ```
 
-Similarly, when using `new URL()` to reference `.css` or `.scss` files, they are treated as URL assets and aren't processed by Rsbuild's built-in CSS loaders.
+Similarly, when using `new URL()` to reference `.css` or `.scss` files, they're treated as URL assets and aren't processed by Rsbuild's built-in CSS loaders.
 
 ```tsx
 // foo.css will remain the original content and be output to the dist directory
@@ -239,7 +239,7 @@ For example, in an HTML template, the `./public/favicon.ico` file can be referen
 
 Keep these points in mind when using the `public` folder:
 
-- When referencing assets in the public folder via URL, please use absolute paths instead of relative paths to ensure that the assets can be accessed correctly after deployment.
+- When referencing assets in the public folder via URL, use absolute paths instead of relative paths to ensure assets can be accessed correctly after deployment.
 
 ```html title="src/index.html"
 <!-- Wrong -->
@@ -249,7 +249,7 @@ Keep these points in mind when using the `public` folder:
 <link rel="icon" href="/favicon.ico" />
 ```
 
-- Please avoid importing files from the public directory into the source code. The correct approach is to reference them by URL. You can place static assets imported into the source code in the `/src/assets` directory.
+- Avoid importing files from the public directory into your source code. The correct approach is to reference them by URL. You can place static assets that need to be imported into source code in the `/src/assets` directory.
 
 ```js title="src/index.js"
 // Wrong
@@ -259,7 +259,7 @@ import logo from '../public/logo.png';
 import logo from './assets/logo.png';
 ```
 
-- During the production build, the files in public folder will be copied to the output folder (default is `dist`). Please be careful to avoid name conflicts with the output files. When files in the `public` folder have the same name as outputs, the outputs have higher priority and will overwrite the files with the same name in the `public` folder. This feature can be disabled by setting [server.publicDir.copyOnBuild](/config/server/public-dir) to `false`.
+- During the production build, files in the public folder are copied to the output folder (default is `dist`). Be careful to avoid name conflicts with output files. When files in the `public` folder have the same name as outputs, the outputs have higher priority and will overwrite the conflicting public folder files. This feature can be disabled by setting [server.publicDir.copyOnBuild](/config/server/public-dir) to `false`.
 
 ### Custom behavior
 

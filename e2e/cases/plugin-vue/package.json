@@ -1,8 +1,9 @@
 {
-  "private": true,
   "name": "@e2e/vue3",
   "version": "1.0.0",
+  "private": true,
+  "type": "module",
   "dependencies": {
-    "vue": "^3.5.22"
+    "vue": "^3.5.25"
   }
 }

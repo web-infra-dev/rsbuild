@@ -2,6 +2,7 @@
   "name": "@e2e/custom-server-ssr",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "rsbuild dev",
     "dev:esm": "cross-env NODE_OPTIONS=\"--experimental-vm-modules\" TEST_ESM_LIBRARY=true rsbuild dev"

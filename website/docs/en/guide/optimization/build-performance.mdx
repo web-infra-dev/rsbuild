@@ -1,18 +1,18 @@
 # Improve build performance
 
-Rsbuild optimizes build performance by default, but you may encounter performance issues as your project grows.
+While Rsbuild optimizes build performance by default, performance issues can arise as your project grows.
 
 This document provides optional optimization strategies to improve build performance.
 
 ## Performance profiling
 
-Performance profiling helps identify bottlenecks in your project, enabling targeted optimization.
+Performance profiling helps identify bottlenecks in your project for targeted optimization.
 
 See the [Build Performance Analysis](/guide/debug/build-profiling) section.
 
 ## General optimization
 
-These general optimization methods can speed up both development and production builds.
+These general optimization methods speed up both development and production builds.
 
 ### Upgrade Rsbuild
 
@@ -20,11 +20,11 @@ Upgrading to the latest version of Rsbuild gives you access to the latest perfor
 
 ### Enable persistent cache
 
-Rsbuild provides a [performance.buildCache](/config/performance/build-cache) configuration that can significantly improve rebuild speed.
+Rsbuild provides a [performance.buildCache](/config/performance/build-cache) configuration that significantly improves rebuild speed.
 
 ### Reduce module count
 
-Optimizing the number of modules your application uses reduces bundle size and improves build performance. Read the [Bundle Size Optimization](/guide/optimization/optimize-bundle) section to learn optimization strategies.
+Optimizing the number of modules in your application reduces bundle size and improves build performance. See [Bundle Size Optimization](/guide/optimization/optimize-bundle) to learn optimization strategies.
 
 ### Optimize Tailwind CSS
 
@@ -34,7 +34,7 @@ See [Tailwind CSS v3 - Optimize build performance](/guide/styling/tailwindcss-v3
 
 ### Parallel Less compilation
 
-If your project uses the [@rsbuild/plugin-less](/plugins/list/plugin-less) plugin with a large number of Less files, you can try enabling parallel compilation to improve build performance.
+If your project uses the [@rsbuild/plugin-less](/plugins/list/plugin-less) plugin with many Less files, try enabling parallel compilation to improve build performance.
 
 See [Less Plugin - parallel](/plugins/list/plugin-less#parallel) for more details.
 
@@ -42,9 +42,9 @@ See [Less Plugin - parallel](/plugins/list/plugin-less#parallel) for more detail
 
 While Rsbuild delivers excellent build performance out of the box, certain JavaScript-based tools can negatively impact performance, particularly in large projects.
 
-- [@rsbuild/plugin-babel](/plugins/list/plugin-babel): This plugin is based on Babel. We recommend using the more performant [SWC](/guide/configuration/swc) for code transformation instead.
-- [@rsbuild/plugin-less](/plugins/list/plugin-less): The Less compiler has relatively poor performance. Consider using [@rsbuild/plugin-sass](/plugins/list/plugin-sass) or other performant CSS solutions as alternatives.
-- [terser-webpack-plugin](https://www.npmjs.com/package/terser-webpack-plugin): You can replace Terser with faster minimizers, such as Rsbuild's built-in [SWC](/guide/configuration/swc) minifier.
+- [@rsbuild/plugin-babel](/plugins/list/plugin-babel): This plugin uses Babel. We recommend using the more performant [SWC](/guide/configuration/swc) for code transformation instead.
+- [@rsbuild/plugin-less](/plugins/list/plugin-less): The Less compiler has relatively poor performance. Consider using [@rsbuild/plugin-sass](/plugins/list/plugin-sass) or other performant CSS solutions instead.
+- [terser-webpack-plugin](https://www.npmjs.com/package/terser-webpack-plugin): You can replace Terser with faster minimizers like Rsbuild's built-in [SWC](/guide/configuration/swc) minifier.
 
 ## Development optimization
 
@@ -52,7 +52,7 @@ These methods improve performance in development mode.
 
 ### Enable lazy compilation
 
-Enabling lazy compilation can significantly reduce the number of modules compiled at dev startup and improve startup time.
+Enabling lazy compilation significantly reduces the number of modules compiled during dev server startup, improving startup time.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -66,7 +66,7 @@ export default {
 
 ### Enable native watcher
 
-Enabling Rspack's [native watcher](https://rspack.rs/config/experiments#experimentsnativewatcher) can improve HMR performance in development mode.
+Enabling Rspack's [native watcher](https://rspack.rs/config/experiments#experimentsnativewatcher) improves HMR performance in development mode.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -82,9 +82,9 @@ export default {
 
 ### Source map format
 
-To provide a good debugging experience, Rsbuild uses the `cheap-module-source-map` format in development mode by default. This is a high-quality source map format with some performance overhead.
+To provide a good debugging experience, Rsbuild uses the `cheap-module-source-map` format in development mode by default. This is a high-quality source map format that comes with some performance overhead.
 
-You can improve build speed by adjusting the source map format through [output.sourceMap](/config/output/source-map).
+You can improve build speed by adjusting the source map format using [output.sourceMap](/config/output/source-map).
 
 For example, to disable source maps:
 
@@ -114,7 +114,7 @@ export default {
 
 ### Browserslist for development
 
-This strategy is similar to ["Adjust Browserslist"](/guide/optimization/optimize-bundle#adjust-browserslist). The difference is that we can set different browserslist configurations for development and production, thereby reducing compilation overhead in development.
+This strategy is similar to ["Adjust Browserslist"](/guide/optimization/optimize-bundle#adjust-browserslist), except you can set different browserslist configurations for development and production, reducing compilation overhead in development.
 
 For example, you can add the following config to `.browserslistrc` to target only the latest browsers in development while supporting a broader range in production:
 

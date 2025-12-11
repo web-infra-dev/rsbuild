@@ -1,7 +1,7 @@
 {
   "name": "@scripts/test-helper",
-  "private": true,
   "version": "1.0.1",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild"
@@ -25,12 +25,12 @@
   },
   "dependencies": {
     "@rsbuild/core": "workspace:*",
-    "@types/node": "^22.18.12",
+    "@types/node": "^24.10.2",
     "path-serializer": "0.5.1",
     "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@rslib/core": "0.15.1"
+    "@rslib/core": "0.18.4"
   },
   "publishConfig": {
     "access": "public",

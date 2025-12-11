@@ -583,7 +583,7 @@ const pluginFoo = {
 };
 
 const rsbuild = createRsbuild({
-  rsbuildConfig: {
+  config: {
     plugins: [pluginFoo],
   },
 });
@@ -595,7 +595,7 @@ Or check if a plugin exists in a specified environment:
 
 ```ts
 const rsbuild = createRsbuild({
-  rsbuildConfig: {
+  config: {
     environments: {
       web: {
         plugins: [pluginFoo],

@@ -7,8 +7,8 @@ rspackTest(
 
     await result.close();
 
-    const statsJson = result.stats?.toJson({ all: true })!;
-    expect(statsJson.name).toBe('web');
-    expect(statsJson.assets?.length).toBeGreaterThan(0);
+    const statsJson = result.stats?.toJson({ all: true });
+    expect(statsJson?.name).toBe('web');
+    expect(statsJson?.assets?.length).toBeGreaterThan(0);
   },
 );

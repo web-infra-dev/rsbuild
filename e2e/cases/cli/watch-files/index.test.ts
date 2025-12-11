@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { expect, getRandomPort, gotoPage, rspackTest, test } from '@e2e/helper';
 
-const tempConfig = path.join(__dirname, 'test-temp-config.ts');
+const tempConfig = path.join(import.meta.dirname, 'test-temp-config.ts');
 
 test.beforeEach(async () => {
   fs.writeFileSync(tempConfig, 'export default 1;');
