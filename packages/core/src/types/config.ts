@@ -800,6 +800,7 @@ export interface PerformanceConfig {
   /**
    * Analyze the size of output files.
    * @default undefined
+   * @deprecated Use Rsdoctor instead.
    */
   bundleAnalyze?: BundleAnalyzerPlugin.Options;
 

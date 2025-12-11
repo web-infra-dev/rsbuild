@@ -1,6 +1,9 @@
 import { expect, test } from '@e2e/helper';
 
-test('should resolve package.json imports field in dev', async ({ page, dev }) => {
+test('should resolve package.json imports field in dev', async ({
+  page,
+  dev,
+}) => {
   await dev();
 
   const app = page.locator('#app');
