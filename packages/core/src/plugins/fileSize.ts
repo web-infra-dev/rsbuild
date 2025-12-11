@@ -124,7 +124,7 @@ const getAssetColor = (size: number) => {
   if (size > 100 * 1000) {
     return color.yellow;
   }
-  return color.green;
+  return (input: string) => input;
 };
 
 function getHeader(
