@@ -324,7 +324,7 @@ Now, create a `.env.local` file and add the following contents:
 BAR=2
 ```
 
-The value of `BAR` is overwritten to `'2'`:
+The value of `BAR` is overridden to `'2'`:
 
 ```ts title="rsbuild.config.ts"
 console.log(import.meta.env.BAR); // '2'
@@ -333,7 +333,7 @@ console.log(process.env.BAR); // '2'
 
 ### Manually load env
 
-If you are not using the Rsbuild CLI and instead use the [JavaScript API](/api/start/index), you will need to manually call the [loadEnv](/api/javascript-api/core#loadenv) method to read environment variables and inject them via the [source.define](/config/source/define) config.
+If you are not using the Rsbuild CLI and instead use the [JavaScript API](/api/start/index), manually call the [loadEnv](/api/javascript-api/core#loadenv) method to read environment variables and inject them via the [source.define](/config/source/define) config.
 
 ```ts
 import { loadEnv, mergeRsbuildConfig } from '@rsbuild/core';
@@ -553,7 +553,7 @@ interface RsbuildTypeOptions {
 
 ### process.env
 
-If the type for `process.env` is missing, please install the dependency [@types/node](https://npmjs.com/package/@types/node):
+If types for `process.env` are missing, install [@types/node](https://npmjs.com/package/@types/node):
 
 import { PackageManagerTabs } from '@theme';
 
