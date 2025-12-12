@@ -1,5 +1,5 @@
 {
-  "name": "rsbuild-rstest-react-js",
+  "name": "rsbuild-rstest-vanilla-ts",
   "private": true,
   "version": "1.0.0",
   "scripts": {
@@ -9,7 +9,6 @@
   "devDependencies": {
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.0",
     "@rstest/core": "^0.7.2",
     "jsdom": "^27.3.0"
   }

@@ -11,6 +11,6 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
     "@rstest/core": "^0.7.2",
-    "jsdom": "^26.1.0"
+    "jsdom": "^27.3.0"
   }
 }

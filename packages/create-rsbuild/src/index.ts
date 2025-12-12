@@ -89,9 +89,10 @@ function mapRstestTemplate(templateName: string): string {
       return 'vue-js';
     case 'vue3-ts':
       return 'vue-ts';
-    default:
-      return '';
   }
+
+  const language = templateName.split('-')[1];
+  return `vanilla-${language}`;
 }
 
 create({
@@ -127,12 +128,6 @@ create({
       action: ({ templateName, distFolder, addAgentsMdSearchDirs }) => {
         const rstestTemplate = mapRstestTemplate(templateName);
 
-        if (!rstestTemplate) {
-          console.warn(
-            `No rstest template for ${templateName}, you can add it manually later.\n https://rstest.rs/guide/start/quick-start`,
-          );
-          return;
-        }
         const toolFolder = path.join(__dirname, '..', 'template-rstest');
         const subFolder = path.join(toolFolder, rstestTemplate);
 
