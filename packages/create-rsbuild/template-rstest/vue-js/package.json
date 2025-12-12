@@ -1,0 +1,16 @@
+{
+  "name": "rsbuild-rstest-vue-js",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "test": "rstest",
+    "test:watch": "rstest --watch"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/vue": "^8.1.0",
+    "@rstest/core": "^0.7.2",
+    "jsdom": "^27.3.0"
+  }
+}

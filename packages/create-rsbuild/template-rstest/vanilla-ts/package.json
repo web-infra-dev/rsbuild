@@ -1,0 +1,15 @@
+{
+  "name": "rsbuild-rstest-vanilla-ts",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "test": "rstest",
+    "test:watch": "rstest --watch"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@rstest/core": "^0.7.2",
+    "jsdom": "^27.3.0"
+  }
+}
