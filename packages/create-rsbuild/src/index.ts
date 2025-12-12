@@ -129,7 +129,7 @@ create({
 
         if (!rstestTemplate) {
           console.warn(
-            `no rstest template for ${templateName}, you can add it manually later.\n https://rstest.rs/guide/start/quick-start`,
+            `No rstest template for ${templateName}, you can add it manually later.\n https://rstest.rs/guide/start/quick-start`,
           );
           return;
         }
