@@ -32,16 +32,13 @@ jobs:
           corepack enable
 
       - name: Setup Node.js
-        if: steps.changes.outputs.changed == 'true'
         uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
         with:
           node-version: 22.x
           cache: 'pnpm'
 
       - name: Install Dependencies
-        if: steps.changes.outputs.changed == 'true'
         run: pnpm install
 
       - name: Publish Preview
-        if: steps.changes.outputs.changed == 'true'
         run: pnpx pkg-pr-new publish --pnpm ./packages/*
