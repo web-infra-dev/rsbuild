@@ -1,0 +1,44 @@
+# https://github.com/stackblitz-labs/pkg.pr.new
+name: Preview Release
+
+on:
+  # push:
+  #   branches: [main]
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to release'
+        required: true
+        default: 'main'
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    if: github.repository == 'web-infra-dev/rsbuild'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          fetch-depth: 1
+          ref: ${{ github.event.inputs.branch }}
+
+      - name: Install pnpm
+        run: |
+          npm install -g corepack@latest --force
+          corepack enable
+
+      - name: Setup Node.js
+        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
+        with:
+          node-version: 22.x
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Publish Preview
+        run: pnpx pkg-pr-new publish --pnpm ./packages/*
