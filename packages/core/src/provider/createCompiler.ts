@@ -1,4 +1,5 @@
 import { sep } from 'node:path';
+import { LAZY_COMPILATION_IDENTIFIER } from '../constants';
 import { color, prettyTime } from '../helpers';
 import { formatStats, getRsbuildStats } from '../helpers/stats';
 import { isSatisfyRspackVersion, rspackMinVersion } from '../helpers/version';
@@ -126,7 +127,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     }
   };
 
-  const lazyModules: Set<string> = new Set();
+  const lazyModules = new Set<string>();
 
   // Collect lazy compiled modules from the infrastructure logs
   compiler.hooks.infrastructureLog.tap(HOOK_NAME, (name, _, args) => {
@@ -134,7 +135,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     if (
       name === 'LazyCompilation' &&
       typeof log === 'string' &&
-      log.startsWith('lazy-compilation-proxy')
+      log.startsWith(LAZY_COMPILATION_IDENTIFIER)
     ) {
       const resource = log.split(' ')[0];
       if (!resource) {

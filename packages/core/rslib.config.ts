@@ -10,11 +10,6 @@ export const define = {
   RSBUILD_VERSION: JSON.stringify(pkgJson.version),
 };
 
-export const alias = {
-  // Bundle rspack-chain to the main JS bundle and use the pre-bundled types
-  '../../compiled/rspack-chain': 'rspack-chain',
-};
-
 const regexpMap: Record<string, RegExp> = {};
 
 for (const item of prebundleConfig.dependencies) {
@@ -84,9 +79,6 @@ export default defineConfig({
   output: {
     externals,
   },
-  resolve: {
-    alias,
-  },
   lib: [
     {
       id: 'esm_index',
@@ -100,6 +92,10 @@ export default defineConfig({
         build: true,
         // Only use tsgo in local dev for faster build, disable it in CI until it's more stable
         tsgo: !process.env.CI,
+        alias: {
+          // alias to pre-bundled types as it's public API
+          'rspack-chain': './compiled/rspack-chain/types',
+        },
       },
       output: {
         minify: nodeMinifyConfig,

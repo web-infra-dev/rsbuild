@@ -12,16 +12,15 @@ import type {
   SwcJsMinimizerRspackPluginOptions,
   SwcLoaderOptions,
 } from '@rspack/core';
+import type RspackChain from 'rspack-chain';
 import type { ChokidarOptions } from '../../compiled/chokidar/index.js';
 import type cors from '../../compiled/cors/index.js';
 import type {
   Options as HttpProxyOptions,
   Filter as ProxyFilter,
 } from '../../compiled/http-proxy-middleware/index.js';
-import type RspackChain from '../../compiled/rspack-chain';
 import type { FileDescriptor } from '../../compiled/rspack-manifest-plugin';
 import type { BundleAnalyzerPlugin } from '../../compiled/webpack-bundle-analyzer/index.js';
-import type { RsbuildAsset } from '../helpers/stats.js';
 import type { RsbuildDevServer } from '../server/devServer';
 import type {
   EnvironmentContext,
@@ -600,7 +599,7 @@ export type SriOptions = {
    * Specifies the algorithm used to compute the integrity hash.
    * @default 'sha384'
    */
-  algorithm?: SriAlgorithm;
+  algorithm?: SriAlgorithm | SriAlgorithm[];
   /**
    * Whether to enable SRI.
    * `'auto'` means it's enabled in production mode and disabled in development mode.
@@ -647,7 +646,17 @@ export type BuildCacheOptions = {
   buildDependencies?: string[];
 };
 
-export type PrintFileSizeAsset = RsbuildAsset;
+export type PrintFileSizeAsset = {
+  /**
+   * The name of the asset.
+   * @example 'index.html', 'static/js/index.[hash].js'
+   */
+  name: string;
+  /**
+   * The size of the asset in bytes.
+   */
+  size: number;
+};
 
 export type PrintFileSizeOptions = {
   /**
@@ -791,6 +800,7 @@ export interface PerformanceConfig {
   /**
    * Analyze the size of output files.
    * @default undefined
+   * @deprecated Use Rsdoctor instead.
    */
   bundleAnalyze?: BundleAnalyzerPlugin.Options;
 
@@ -1184,9 +1194,7 @@ export type ManifestData = {
   /**
    * Maps each entry name to its associated output files.
    */
-  entries: {
-    [entryName: string]: ManifestByEntry;
-  };
+  entries: Record<string, ManifestByEntry>;
   /**
    * Subresource Integrity (SRI) hashes for emitted assets.
    * The key is the asset file path, and the value is its integrity hash.
@@ -1435,18 +1443,34 @@ export type ScriptLoading = 'defer' | 'module' | 'blocking';
 export type OutputStructure = 'flat' | 'nested';
 
 /**
- * custom properties
- * e.g. { name: 'viewport' content: 'width=500, initial-scale=1' }
+ * Custom meta tag attributes.
+ * Key is the attribute name.
+ * Value is the attribute value, as a string or boolean.
+ *
+ * @example
+ * {
+ *   name: 'viewport',
+ *   content: 'width=500, initial-scale=1',
+ * }
  */
-export type MetaAttrs = { [attrName: string]: string | boolean };
+export type MetaAttrs = Record<string, string | boolean>;
 
-export type MetaOptions = {
-  /**
-   * name content pair
-   * e.g. { viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no' }`
-   */
-  [name: string]: string | false | MetaAttrs;
-};
+/**
+ * Meta options in name-content form.
+ * Key is the meta name, such as `viewport`, `description`, or `robots`.
+ * The value can be:
+ * - `string`: the content of the meta tag
+ * - `false`: explicitly disables the meta tag
+ * - `MetaAttrs`: a set of custom meta attributes
+ *
+ * @example
+ * {
+ *   viewport: 'width=device-width, initial-scale=1',
+ *   description: 'My awesome website',
+ *   robots: false,
+ * }
+ */
+export type MetaOptions = Record<string, string | false | MetaAttrs>;
 
 export type HtmlBasicTag = {
   /**
@@ -1717,8 +1741,9 @@ export type ProgressBarConfig = {
 
 export type RequestHandler = Connect.NextHandleFunction;
 
-export type EnvironmentAPI = {
-  [name: string]: {
+export type EnvironmentAPI = Record<
+  string,
+  {
     /**
      * Get stats info about current environment.
      */
@@ -1741,8 +1766,8 @@ export type EnvironmentAPI = {
      * Provides some context information about the current environment
      */
     context: EnvironmentContext;
-  };
-};
+  }
+>;
 
 export type SetupMiddlewaresContext = Pick<
   RsbuildDevServer,
@@ -2104,11 +2129,11 @@ export interface RsbuildConfig extends EnvironmentConfig {
    */
   server?: ServerConfig;
   /**
-   * Configure rsbuild config by environment.
+   * Configure Rsbuild config by environment.
+   * The key represents the environment name.
+   * The value is the Rsbuild config for the specified environment.
    */
-  environments?: {
-    [name: string]: EnvironmentConfig;
-  };
+  environments?: Record<string, EnvironmentConfig>;
   /**
    * Used to switch the bundler type.
    */
@@ -2149,7 +2174,5 @@ export type NormalizedEnvironmentConfig = TwoLevelReadonly<
 
 export type NormalizedConfig = NormalizedEnvironmentConfig & {
   provider?: unknown;
-  environments: {
-    [name: string]: NormalizedEnvironmentConfig;
-  };
+  environments: Record<string, NormalizedEnvironmentConfig>;
 };

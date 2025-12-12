@@ -24,7 +24,6 @@ const createPlugin = () => {
 rspackTest(
   'should run onBeforeDevCompile hook correctly when rebuild in dev with multiple environments',
   async ({ dev }) => {
-    process.env.NODE_ENV = 'development';
     const indexJs = join(import.meta.dirname, 'test-temp-src', 'index.js');
     await fse.outputFile(indexJs, "console.log('1');");
 
@@ -46,10 +45,14 @@ rspackTest(
       },
     });
 
+    // initial build
+    await rsbuild.expectBuildEnd();
     expect(names.includes('BeforeDevCompile')).toBeTruthy();
     expect(names.includes('BeforeEnvironmentCompile node')).toBeTruthy();
     expect(names.includes('BeforeEnvironmentCompile web')).toBeTruthy();
 
+    // clear state
+    rsbuild.clearLogs();
     names.length = 0;
 
     // rebuild
@@ -62,7 +65,5 @@ rspackTest(
       // only recompile the node environment which is affected by the file change
       'BeforeEnvironmentCompile node',
     ]);
-
-    process.env.NODE_ENV = 'test';
   },
 );

@@ -1,4 +1,4 @@
-import { type Group, OverviewGroup } from '@rspress/core/theme';
+import { type Group, OverviewGroup } from '@theme';
 import { useI18nUrl } from './utils';
 
 declare const OVERVIEW_GROUPS: Group[];

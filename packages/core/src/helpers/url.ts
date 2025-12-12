@@ -1,6 +1,6 @@
 import { posix } from 'node:path';
 import { URL } from 'node:url';
-import type RspackChain from '../../compiled/rspack-chain';
+import type RspackChain from 'rspack-chain';
 import { DEFAULT_ASSET_PREFIX } from '../constants';
 import type { Rspack } from '../types';
 
