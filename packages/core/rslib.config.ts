@@ -93,7 +93,8 @@ export default defineConfig({
         // Only use tsgo in local dev for faster build, disable it in CI until it's more stable
         tsgo: !process.env.CI,
         alias: {
-          // alias to pre-bundled types as it's public API
+          // alias to pre-bundled types as they are public API
+          rslog: './compiled/rslog',
           'rspack-chain': './compiled/rspack-chain/types',
         },
       },
