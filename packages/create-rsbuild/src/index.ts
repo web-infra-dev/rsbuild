@@ -118,16 +118,11 @@ create({
   mapESLintTemplate,
   extraTools: [
     {
-      value: 'storybook',
-      label: 'Add Storybook for component development',
-      command: 'npm create storybook@latest -- --skip-install --features docs',
-    },
-    {
       value: 'rstest',
-      label: 'Add Rstest for unit testing',
+      label: 'Rstest - testing',
+      order: 'pre',
       action: ({ templateName, distFolder, addAgentsMdSearchDirs }) => {
         const rstestTemplate = mapRstestTemplate(templateName);
-
         const toolFolder = path.join(__dirname, '..', 'template-rstest');
         const subFolder = path.join(toolFolder, rstestTemplate);
 
@@ -136,9 +131,13 @@ create({
           to: distFolder,
           isMergePackageJson: true,
         });
-
         addAgentsMdSearchDirs(toolFolder);
       },
+    },
+    {
+      value: 'storybook',
+      label: 'Storybook - component development',
+      command: 'npm create storybook@latest -- --skip-install --features docs',
     },
   ],
 });
