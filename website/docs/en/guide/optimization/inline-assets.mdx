@@ -1,8 +1,8 @@
 # Inline static assets
 
-Inlining static assets refers to embedding the content of a static asset directly in an HTML or JS file, instead of linking to an external file. This can improve website performance by reducing the number of HTTP requests the browser needs to make to load the page.
+Inlining static assets refers to embedding the content of a static asset directly in an HTML or JS file instead of linking to an external file. This can improve website performance by reducing the number of HTTP requests the browser needs to make to load the page.
 
-However, inlining static assets has some disadvantages, such as increasing the size of a single file, which may lead to slower loading. You should decide whether to inline assets based on your specific situation.
+However, inlining static assets has some disadvantages, such as increasing the size of a single file, which may lead to slower loading. Decide whether to inline assets based on your specific situation.
 
 Rsbuild automatically inlines static assets smaller than 4KiB. Sometimes you may need to manually control whether assets are inlined. This document explains how to precisely control the inlining behavior of static assets.
 
@@ -46,7 +46,7 @@ In the above example, the `foo.png` image will always be inlined, regardless of 
 
 ### Referenced from CSS file
 
-When you reference a static asset in your CSS file, you can also force inline it with the `inline` query parameter.
+When you reference a static asset in your CSS file, you can also force it to inline with the `inline` query parameter.
 
 ```css
 .foo {
@@ -91,7 +91,7 @@ Disabling asset inlining will increase the number of assets the web application 
 
 In addition to inlining static assets into JS files, Rsbuild also supports inlining JS files into HTML files.
 
-Just enable the [output.inlineScripts](/config/output/inline-scripts) config, and the generated JS files will not be written to the output directory, but will be directly inlined in the HTML file.
+Enable the [output.inlineScripts](/config/output/inline-scripts) config, and the generated JS files will not be written to the output directory but will be directly inlined in the HTML file.
 
 ```ts
 export default {
