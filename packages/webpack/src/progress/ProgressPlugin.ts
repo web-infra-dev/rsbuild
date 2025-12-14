@@ -5,8 +5,10 @@ import { bus, createFriendlyPercentage } from './helpers/index.js';
 import { createNonTTYLogger } from './helpers/nonTty.js';
 import type { Props } from './helpers/types.js';
 
-export interface ProgressOptions
-  extends Omit<Partial<Props>, 'message' | 'total' | 'current' | 'done'> {
+export interface ProgressOptions extends Omit<
+  Partial<Props>,
+  'message' | 'total' | 'current' | 'done'
+> {
   id?: string;
   prettyTime: (seconds: number) => string;
 }
