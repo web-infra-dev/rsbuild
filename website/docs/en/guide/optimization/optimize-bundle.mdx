@@ -8,7 +8,7 @@ Web applications commonly bundle multiple versions of third-party dependencies. 
 
 ### Detect duplicate dependencies
 
-You can use [Rsdoctor](https://rsdoctor.rs) to detect duplicate dependencies in your project. Rsdoctor analyzes the build, finds duplicate bundled dependencies, and displays them visually:
+You can use [Rsdoctor](https://rsdoctor.rs) to detect duplicate dependencies in your project. Rsdoctor analyzes the build, identifies duplicate bundled dependencies, and displays them visually:
 
 ![](https://assets.rspack.rs/rsbuild/assets/rsdoctor-duplicated-packages.png)
 
@@ -42,7 +42,7 @@ npx yarn-deduplicate && yarn
 
 We recommend using lightweight libraries in your project, such as replacing [moment](https://momentjs.com/) with [day.js](https://day.js.org/).
 
-To find out large third-party libraries in your project, use Rsdoctor to analyze the bundle size. For more details, see [Using Rsdoctor](/guide/debug/rsdoctor).
+To identify the largest third-party libraries in your project, analyze bundle size with Rsdoctor. For more details, see [Using Rsdoctor](/guide/debug/rsdoctor).
 
 ## Adjust browserslist
 
@@ -61,12 +61,12 @@ For example, if you only need to be compatible with browsers above Chrome 100, y
 ```
 
 :::tip
-Please read the [Browserslist](/guide/advanced/browserslist) chapter to know more about the usage of Browserslist.
+For more details on configuring Browserslist, see [Browserslist](/guide/advanced/browserslist).
 :::
 
 ## Use polyfill on demand
 
-If your project's [output.polyfill](/config/output/polyfill) is set to `'entry'` and you're certain that third-party dependencies don't require additional polyfills, change it to `usage`.
+If your project's [output.polyfill](/config/output/polyfill) is set to `'entry'` and you're certain that third-party dependencies don't require additional polyfills, switch it to `usage`.
 
 In `usage` mode, Rsbuild analyzes the syntax in source code and injects only the required polyfills, reducing polyfill size.
 
@@ -79,12 +79,12 @@ export default {
 ```
 
 :::tip
-Please read the [Browser Compatibility](/guide/advanced/browser-compatibility) chapter to know more about the usage of Browserslist.
+For more details on polyfill usage, see [Browser compatibility](/guide/advanced/browser-compatibility).
 :::
 
 ## Image compression
 
-In typical front-end projects, images often account for a large portion of total bundle size. Reducing image size significantly improves overall bundle size. Enable image compression by registering a plugin in Rsbuild:
+In typical front-end projects, images often account for a large portion of total bundle size. Reducing image size can meaningfully lower the overall bundle size. Enable image compression by registering a plugin in Rsbuild:
 
 ```ts title="rsbuild.config.ts"
 import { pluginImageCompress } from '@rsbuild/plugin-image-compress';
@@ -98,7 +98,7 @@ See details in [@rsbuild/plugin-image-compress](https://github.com/rspack-contri
 
 ## Split chunk
 
-A good chunk splitting strategy is important for improving application loading performance. It makes full use of the browser's caching mechanism to reduce the number of requests and improve loading speed.
+A good chunk splitting strategy is important for improving application loading performance. It takes advantage of browser caching to reduce the number of requests and improve loading speed.
 
 Several [chunk splitting strategies](/guide/optimization/code-splitting) are built into Rsbuild. These should meet the needs of most applications. You can also customize the chunk splitting config to suit your own usage scenario.
 
