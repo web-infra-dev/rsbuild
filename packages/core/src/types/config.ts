@@ -1887,7 +1887,15 @@ export interface DevConfig {
    * Whether to enable Hot Module Replacement.
    * @default true
    */
-  hmr?: boolean;
+  hmr?:
+    | boolean
+    | {
+        /**
+         * Skip page reload when html files change.
+         * @default false
+         */
+        skipHtmlPageReload?: boolean;
+      };
   /**
    * Whether to reload the page when file changes are detected.
    * @default true

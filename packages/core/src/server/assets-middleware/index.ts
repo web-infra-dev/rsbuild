@@ -64,11 +64,13 @@ export const setupServerHooks = ({
   compiler,
   token,
   socketServer,
+  config,
 }: {
   context: InternalContext;
   compiler: Compiler;
   token: string;
   socketServer: SocketServer;
+  config: NormalizedEnvironmentConfig;
 }): void => {
   // Node HMR is not supported yet
   if (isNodeCompiler(compiler)) {
@@ -79,12 +81,19 @@ export const setupServerHooks = ({
   let errorsCount: number | null = null;
   let warningsCount: number | null = null;
 
+  const skipHtmlPageReload =
+    typeof config.dev.hmr === 'object' && config.dev.hmr.skipHtmlPageReload;
+
   compiler.hooks.invalid.tap('rsbuild-dev-server', (fileName) => {
     errorsCount = null;
     warningsCount = null;
 
     // reload page when HTML template changed
-    if (typeof fileName === 'string' && fileName.endsWith('.html')) {
+    if (
+      !skipHtmlPageReload &&
+      typeof fileName === 'string' &&
+      fileName.endsWith('.html')
+    ) {
       socketServer.sockWrite({ type: 'static-changed' }, token);
     }
   });
@@ -243,6 +252,7 @@ export const assetsMiddleware = async ({
       compiler,
       socketServer,
       token,
+      config: environment.config,
     });
   };
 
