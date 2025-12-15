@@ -109,21 +109,20 @@ function formatModuleTrace(stats: StatsError, errorFile: string) {
   // Current moduleTrace is usually error -> entry, so reverse to entry -> error.
   let trace = moduleNames.slice().reverse();
   const MAX = 4;
-  const HEAD = 2;
-  const TAIL = 2;
 
   // Truncate long traces in non-verbose mode
   if (trace.length > MAX && !isVerbose()) {
-    const head = trace.slice(0, HEAD);
-    const tail = trace.slice(trace.length - TAIL);
-    const hiddenCount = trace.length - head.length - tail.length;
-    trace = [...head, `… (${hiddenCount} hidden)`, ...tail];
+    const HEAD = 2;
+    const TAIL = 2;
+    trace = [
+      ...trace.slice(0, HEAD),
+      `… (${trace.length - HEAD - TAIL} hidden)`,
+      ...trace.slice(trace.length - TAIL),
+    ];
   }
 
-  const rawTrace = trace.map((item) => `\n  ${item}`).join('');
-
   return color.dim(
-    `Import traces (entry → error):${rawTrace} ${color.bold(color.red('×'))}`,
+    `Import traces (entry → error):\n  ${trace.join('\n  ')} ${color.bold(color.red('×'))}`,
   );
 }
 
