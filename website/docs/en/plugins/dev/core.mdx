@@ -349,7 +349,7 @@ type TransformDescriptor = {
 
 The `descriptor` param supports the following matching conditions:
 
-- `test`: matches module's path (without query), the same as Rspack's [Rule.test](https://rspack.rs/config/module#ruletest).
+- `test`: matches module's path (without query), the same as Rspack's [rules[].test](https://rspack.rs/config/module-rules#rulestest).
 
 ```js
 api.transform({ test: /\.md$/ }, ({ code }) => {
@@ -373,7 +373,7 @@ api.transform({ test: /\.md$/, environments: ['web'] }, ({ code }) => {
 });
 ```
 
-- `resourceQuery`: matches module's query, the same as Rspack's [Rule.resourceQuery](https://rspack.rs/config/module#ruleresourcequery).
+- `resourceQuery`: matches module's query, the same as Rspack's [rules[].resourceQuery](https://rspack.rs/config/module-rules#rulesresourcequery).
 
 ```js
 // match raw query: "foo.ext?raw"
@@ -390,7 +390,7 @@ api.transform({ test: /\.node$/, raw: true }, ({ code }) => {
 });
 ```
 
-- `layer`: marks the layer of the matching module, can be used to group a group of modules into one layer, the same as Rspack's [Rule.layer](https://rspack.rs/config/module#rulelayer).
+- `layer`: marks the layer of the matching module, can be used to group a group of modules into one layer, the same as Rspack's [rules[].layer](https://rspack.rs/config/module-rules#ruleslayer).
 
 ```js
 api.transform({ test: /\.md$/, layer: 'foo' }, ({ code }) => {
@@ -398,7 +398,7 @@ api.transform({ test: /\.md$/, layer: 'foo' }, ({ code }) => {
 });
 ```
 
-- `issuerLayer`: matches the layer of the module that issues the current module, the same as Rspack's [Rule.issuerLayer](https://rspack.rs/config/module#ruleissuerlayer).
+- `issuerLayer`: matches the layer of the module that issues the current module, the same as Rspack's [rules[].issuerLayer](https://rspack.rs/config/module-rules#rulesissuerlayer).
 
 ```js
 api.transform({ test: /\.md$/, issuerLayer: 'foo' }, ({ code }) => {
@@ -406,7 +406,7 @@ api.transform({ test: /\.md$/, issuerLayer: 'foo' }, ({ code }) => {
 });
 ```
 
-- `issuer`: matches the absolute path of the module that issues the current module, the same as Rspack's [Rule.issuer](https://rspack.rs/config/module#ruleissuer).
+- `issuer`: matches the absolute path of the module that issues the current module, the same as Rspack's [rules[].issuer](https://rspack.rs/config/module-rules#rulesissuer).
 
 ```js
 api.transform({ test: /\.md$/, issuer: /\.js$/ }, ({ code }) => {
@@ -414,7 +414,7 @@ api.transform({ test: /\.md$/, issuer: /\.js$/ }, ({ code }) => {
 });
 ```
 
-- `with`: matches [import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with), the same as Rspack's [Rule.with](https://rspack.rs/config/module#rulewith).
+- `with`: matches [import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with), the same as Rspack's [rules[].with](https://rspack.rs/config/module-rules#ruleswith).
 
 ```js
 api.transform({ test: /\.md$/, with: { type: 'url' } }, ({ code }) => {
@@ -422,7 +422,7 @@ api.transform({ test: /\.md$/, with: { type: 'url' } }, ({ code }) => {
 });
 ```
 
-- `mimetype`: Matches modules based on MIME type instead of file extension. It's primarily useful for data URI module (like `data:text/javascript,...`), the same as Rspack's [Rule.mimetype](https://rspack.rs/config/module#rulemimetype).
+- `mimetype`: Matches modules based on MIME type instead of file extension. It's primarily useful for data URI module (like `data:text/javascript,...`), the same as Rspack's [rules[].mimetype](https://rspack.rs/config/module-rules#rulesmimetype).
 
 ```js
 api.transform({ mimetype: 'text/javascript' }, ({ code }) => {
@@ -430,7 +430,7 @@ api.transform({ mimetype: 'text/javascript' }, ({ code }) => {
 });
 ```
 
-- `enforce`: Specifies the execution order of the transform function, the same as Rspack's [Rule.enforce](https://rspack.rs/config/module#ruleenforce).
+- `enforce`: Specifies the execution order of the transform function, the same as Rspack's [rules[].enforce](https://rspack.rs/config/module-rules#rulesenforce).
   - When `enforce` is `pre`, the transform function will be executed before other transform functions (or Rspack loaders).
   - When `enforce` is `post`, the transform function will be executed after other transform functions (or Rspack loaders).
 

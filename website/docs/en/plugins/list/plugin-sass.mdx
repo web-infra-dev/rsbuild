@@ -86,11 +86,11 @@ pluginSass({
 
 ### include
 
-- **Type:** [RuleSetCondition](https://rspack.rs/config/module#condition)
+- **Type:** [Rspack.RuleSetCondition](https://rspack.rs/config/module-rules#condition)
 - **Default:** `/\.s(?:a|c)ss$/`
 - **Version:** `>= 1.1.0`
 
-Include some `.scss` or `.sass` files, they will be transformed by `sass-loader`. The value is the same as the `rule.test` option in Rspack.
+Include some `.scss` or `.sass` files, they will be transformed by `sass-loader`. The value is the same as the [rules[].test](https://rspack.rs/config/module-rules#rulestest) option in Rspack.
 
 For example:
 
@@ -102,7 +102,7 @@ pluginSass({
 
 ### exclude
 
-- **Type:** [RuleSetCondition](https://rspack.rs/config/module#condition)
+- **Type:** [Rspack.RuleSetCondition](https://rspack.rs/config/module-rules#condition)
 - **Default:** `undefined`
 
 Exclude some `.sass` or `.scss` files, they will not be transformed by `sass-loader`.
