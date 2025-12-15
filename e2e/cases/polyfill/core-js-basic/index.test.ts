@@ -34,7 +34,6 @@ test('should add polyfill when set polyfill entry (default)', async ({
   expect(content.includes('object.has-own.js')).toBeTruthy();
 });
 
-// @rsbuild/plugin-webpack-swc do not support groupBy yet
 rspackTest(
   'should add polyfill when set polyfill usage',
   async ({ page, buildPreview }) => {

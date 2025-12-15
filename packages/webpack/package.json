@@ -1,11 +1,11 @@
 {
-  "name": "@rsbuild/plugin-webpack-swc",
-  "version": "1.1.2",
-  "description": "SWC plugin for Rsbuild webpack provider",
+  "name": "@rsbuild/webpack",
+  "version": "1.6.2",
+  "homepage": "https://rsbuild.rs",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
-    "directory": "packages/compat/plugin-webpack-swc"
+    "directory": "packages/webpack"
   },
   "license": "MIT",
   "type": "module",
@@ -19,6 +19,7 @@
   "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
   "files": [
+    "static",
     "dist"
   ],
   "scripts": {
@@ -27,25 +28,26 @@
     "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
-    "@modern-js/swc-plugins": "0.6.11",
-    "@swc/helpers": "^0.5.17",
-    "core-js": "~3.47.0",
-    "deepmerge": "^4.3.1",
-    "lodash": "^4.17.21",
+    "copy-webpack-plugin": "11.0.0",
+    "html-webpack-plugin": "^5.6.5",
+    "mini-css-extract-plugin": "2.9.4",
     "picocolors": "^1.1.1",
-    "semver": "^7.7.3"
+    "reduce-configs": "^1.1.1",
+    "tsconfig-paths-webpack-plugin": "4.2.0",
+    "webpack": "^5.103.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/webpack": "workspace:*",
     "@rslib/core": "0.18.4",
-    "@types/lodash": "^4.17.21",
-    "@types/semver": "^7.7.1",
-    "typescript": "^5.9.3",
-    "webpack": "^5.103.0"
+    "@scripts/test-helper": "workspace:*",
+    "@types/node": "^24.10.4",
+    "ansi-escapes": "4.3.2",
+    "cli-truncate": "2.1.0",
+    "patch-console": "1.0.0",
+    "typescript": "^5.9.3"
   },
   "peerDependencies": {
-    "@rsbuild/core": "1.x"
+    "@rsbuild/core": "^1.3.21"
   },
   "publishConfig": {
     "access": "public",

@@ -8,14 +8,14 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "/path/to/rsbuild.config.ts",
       ],
       "tsconfig": [
-        "<ROOT>/packages/compat/webpack/tests/tsconfig.json",
+        "<ROOT>/packages/webpack/tests/tsconfig.json",
       ],
     },
-    "cacheDirectory": "<ROOT>/packages/compat/webpack/tests/node_modules/.cache/webpack",
+    "cacheDirectory": "<ROOT>/packages/webpack/tests/node_modules/.cache/webpack",
     "name": "web-development",
     "type": "filesystem",
   },
-  "context": "<ROOT>/packages/compat/webpack/tests",
+  "context": "<ROOT>/packages/webpack/tests",
   "devtool": "cheap-module-source-map",
   "experiments": {
     "asyncWebAssembly": true,
@@ -292,7 +292,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
     "hashFunction": "xxhash64",
-    "path": "<ROOT>/packages/compat/webpack/tests/dist",
+    "path": "<ROOT>/packages/webpack/tests/dist",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
@@ -359,7 +359,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     ],
     "plugins": [
       TsconfigPathsPlugin {
-        "absoluteBaseUrl": "<ROOT>/packages/compat/webpack/tests",
+        "absoluteBaseUrl": "<ROOT>/packages/webpack/tests",
         "baseUrl": undefined,
         "extensions": [
           ".ts",
@@ -397,14 +397,14 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
   "cache": {
     "buildDependencies": {
       "tsconfig": [
-        "<ROOT>/packages/compat/webpack/tests/tsconfig.json",
+        "<ROOT>/packages/webpack/tests/tsconfig.json",
       ],
     },
-    "cacheDirectory": "<ROOT>/packages/compat/webpack/tests/node_modules/.cache/webpack",
+    "cacheDirectory": "<ROOT>/packages/webpack/tests/node_modules/.cache/webpack",
     "name": "web-production",
     "type": "filesystem",
   },
-  "context": "<ROOT>/packages/compat/webpack/tests",
+  "context": "<ROOT>/packages/webpack/tests",
   "devtool": false,
   "experiments": {
     "asyncWebAssembly": true,
@@ -680,7 +680,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     "devtoolModuleFilenameTemplate": "[absolute-resource-path]",
     "filename": "static/js/[name].[contenthash:8].js",
     "hashFunction": "xxhash64",
-    "path": "<ROOT>/packages/compat/webpack/tests/dist",
+    "path": "<ROOT>/packages/webpack/tests/dist",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
@@ -746,7 +746,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     ],
     "plugins": [
       TsconfigPathsPlugin {
-        "absoluteBaseUrl": "<ROOT>/packages/compat/webpack/tests",
+        "absoluteBaseUrl": "<ROOT>/packages/webpack/tests",
         "baseUrl": undefined,
         "extensions": [
           ".ts",
@@ -784,14 +784,14 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "cache": {
     "buildDependencies": {
       "tsconfig": [
-        "<ROOT>/packages/compat/webpack/tests/tsconfig.json",
+        "<ROOT>/packages/webpack/tests/tsconfig.json",
       ],
     },
-    "cacheDirectory": "<ROOT>/packages/compat/webpack/tests/node_modules/.cache/webpack",
+    "cacheDirectory": "<ROOT>/packages/webpack/tests/node_modules/.cache/webpack",
     "name": "node-production",
     "type": "filesystem",
   },
-  "context": "<ROOT>/packages/compat/webpack/tests",
+  "context": "<ROOT>/packages/webpack/tests",
   "devtool": false,
   "experiments": {
     "asyncWebAssembly": true,
@@ -1073,7 +1073,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "library": {
       "type": "commonjs2",
     },
-    "path": "<ROOT>/packages/compat/webpack/tests/dist",
+    "path": "<ROOT>/packages/webpack/tests/dist",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
@@ -1124,7 +1124,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     ],
     "plugins": [
       TsconfigPathsPlugin {
-        "absoluteBaseUrl": "<ROOT>/packages/compat/webpack/tests",
+        "absoluteBaseUrl": "<ROOT>/packages/webpack/tests",
         "baseUrl": undefined,
         "extensions": [
           ".ts",
@@ -1159,14 +1159,14 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "cache": {
     "buildDependencies": {
       "tsconfig": [
-        "<ROOT>/packages/compat/webpack/tests/tsconfig.json",
+        "<ROOT>/packages/webpack/tests/tsconfig.json",
       ],
     },
-    "cacheDirectory": "<ROOT>/packages/compat/webpack/tests/node_modules/.cache/webpack",
+    "cacheDirectory": "<ROOT>/packages/webpack/tests/node_modules/.cache/webpack",
     "name": "webWorker-production",
     "type": "filesystem",
   },
-  "context": "<ROOT>/packages/compat/webpack/tests",
+  "context": "<ROOT>/packages/webpack/tests",
   "devtool": false,
   "experiments": {
     "asyncWebAssembly": true,
@@ -1434,7 +1434,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "devtoolModuleFilenameTemplate": "[absolute-resource-path]",
     "filename": "static/js/[name].[contenthash:8].js",
     "hashFunction": "xxhash64",
-    "path": "<ROOT>/packages/compat/webpack/tests/dist",
+    "path": "<ROOT>/packages/webpack/tests/dist",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
@@ -1485,7 +1485,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     ],
     "plugins": [
       TsconfigPathsPlugin {
-        "absoluteBaseUrl": "<ROOT>/packages/compat/webpack/tests",
+        "absoluteBaseUrl": "<ROOT>/packages/webpack/tests",
         "baseUrl": undefined,
         "extensions": [
           ".ts",

@@ -4,7 +4,6 @@
   "type": "module",
   "workspaces": [
     "packages/*",
-    "packages/compat/*",
     "scripts/*"
   ],
   "scripts": {
@@ -20,7 +19,7 @@
     "lint:type": "rslint",
     "prebundle": "nx run-many -t prebundle",
     "prepare": "simple-git-hooks && pnpm build",
-    "sort-package-json": "pnpx sort-package-json \"./package.json\" \"packages/*/package.json\" \"packages/compat/*/package.json\"",
+    "sort-package-json": "pnpx sort-package-json \"./package.json\" \"packages/*/package.json\"",
     "test": "rstest",
     "test:watch": "rstest watch"
   },
