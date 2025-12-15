@@ -77,7 +77,9 @@ function resolveFileName(stats: StatsError) {
  * Import traces (entry → error):
  *   ./src/index.tsx
  *   ./src/App.tsx
- *   ./src/Foo.tsx ×
+ *   … (n hidden)
+ *   ./src/Foo.tsx
+ *   ./src/Bar.tsx ×
  */
 function formatModuleTrace(stats: StatsError, errorFile: string) {
   if (!stats.moduleTrace) {
@@ -104,13 +106,23 @@ function formatModuleTrace(stats: StatsError, errorFile: string) {
     }
   }
 
-  const rawTrace = moduleNames
-    .reverse()
-    .map((item) => `\n  ${item}`)
-    .join('');
+  // Current moduleTrace is usually error -> entry, so reverse to entry -> error.
+  let trace = moduleNames.slice().reverse();
+  const MAX = 4;
+
+  // Truncate long traces in non-verbose mode
+  if (trace.length > MAX && !isVerbose()) {
+    const HEAD = 2;
+    const TAIL = 2;
+    trace = [
+      ...trace.slice(0, HEAD),
+      `… (${trace.length - HEAD - TAIL} hidden)`,
+      ...trace.slice(trace.length - TAIL),
+    ];
+  }
 
   return color.dim(
-    `Import traces (entry → error):${rawTrace} ${color.bold(color.red('×'))}`,
+    `Import traces (entry → error):\n  ${trace.join('\n  ')} ${color.bold(color.red('×'))}`,
   );
 }
 
