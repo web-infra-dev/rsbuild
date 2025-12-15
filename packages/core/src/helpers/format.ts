@@ -278,7 +278,11 @@ const hintNodePolyfill = (message: string): string => {
 };
 
 // Formats Rspack stats error to readable message
-export function formatStatsError(stats: StatsError, root: string): string {
+export function formatStatsError(
+  stats: StatsError,
+  root: string,
+  level = 'error',
+): string {
   const fileName = resolveFileName(stats);
   let message = `${formatFileName(fileName, stats, root)}${stats.message}`;
 
@@ -293,9 +297,12 @@ export function formatStatsError(stats: StatsError, root: string): string {
     }
   }
 
-  const moduleTrace = formatModuleTrace(stats, fileName);
-  if (moduleTrace) {
-    message += moduleTrace;
+  // display module trace for errors
+  if (level === 'error' || isVerbose()) {
+    const moduleTrace = formatModuleTrace(stats, fileName);
+    if (moduleTrace) {
+      message += moduleTrace;
+    }
   }
 
   // Remove inner error message
