@@ -41,8 +41,8 @@ importers:
         specifier: workspace:*
         version: link:scripts/test-helper
       '@types/node':
-        specifier: ^24.10.3
-        version: 24.10.3
+        specifier: ^24.10.4
+        version: 24.10.4
       cross-env:
         specifier: ^10.1.0
         version: 10.1.0
@@ -180,8 +180,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       '@types/node':
-        specifier: ^24.10.3
-        version: 24.10.3
+        specifier: ^24.10.4
+        version: 24.10.4
       '@types/polka':
         specifier: ^0.5.8
         version: 0.5.8
@@ -401,8 +401,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       '@types/node':
-        specifier: ^24.10.3
-        version: 24.10.3
+        specifier: ^24.10.4
+        version: 24.10.4
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -545,8 +545,8 @@ importers:
         specifier: ^2.8.19
         version: 2.8.19
       '@types/node':
-        specifier: ^24.10.3
-        version: 24.10.3
+        specifier: ^24.10.4
+        version: 24.10.4
       '@types/on-finished':
         specifier: 2.3.5
         version: 2.3.5
@@ -693,8 +693,8 @@ importers:
         specifier: 0.18.4
         version: 0.18.4(@typescript/native-preview@7.0.0-dev.20251203.1)(typescript@5.9.3)
       '@types/node':
-        specifier: ^24.10.3
-        version: 24.10.3
+        specifier: ^24.10.4
+        version: 24.10.4
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -736,8 +736,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^24.10.3
-        version: 24.10.3
+        specifier: ^24.10.4
+        version: 24.10.4
       babel-loader:
         specifier: 10.0.0
         version: 10.0.0(@babel/core@7.28.5)(webpack@5.103.0)
@@ -804,8 +804,8 @@ importers:
         specifier: 0.18.4
         version: 0.18.4(@typescript/native-preview@7.0.0-dev.20251203.1)(typescript@5.9.3)
       '@types/node':
-        specifier: ^24.10.3
-        version: 24.10.3
+        specifier: ^24.10.4
+        version: 24.10.4
       preact:
         specifier: ^10.28.0
         version: 10.28.0
@@ -832,8 +832,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^24.10.3
-        version: 24.10.3
+        specifier: ^24.10.4
+        version: 24.10.4
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -866,8 +866,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^24.10.3
-        version: 24.10.3
+        specifier: ^24.10.4
+        version: 24.10.4
       '@types/sass-loader':
         specifier: ^8.0.10
         version: 8.0.10
@@ -937,8 +937,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^24.10.3
-        version: 24.10.3
+        specifier: ^24.10.4
+        version: 24.10.4
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -962,8 +962,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^24.10.3
-        version: 24.10.3
+        specifier: ^24.10.4
+        version: 24.10.4
       svelte:
         specifier: ^5.46.0
         version: 5.46.0
@@ -1002,8 +1002,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^24.10.3
-        version: 24.10.3
+        specifier: ^24.10.4
+        version: 24.10.4
       file-loader:
         specifier: 6.2.0
         version: 6.2.0(patch_hash=c76c890d2d68ffdf70bfbc9cb235e0389df929be2e1917766b8946b1de0a8c30)(webpack@5.103.0)
@@ -1039,8 +1039,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^24.10.3
-        version: 24.10.3
+        specifier: ^24.10.4
+        version: 24.10.4
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -1082,8 +1082,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^24.10.3
-        version: 24.10.3
+        specifier: ^24.10.4
+        version: 24.10.4
       ansi-escapes:
         specifier: 4.3.2
         version: 4.3.2
@@ -1106,8 +1106,8 @@ importers:
         specifier: 0.18.4
         version: 0.18.4(@typescript/native-preview@7.0.0-dev.20251203.1)(typescript@5.9.3)
       '@types/node':
-        specifier: ^24.10.3
-        version: 24.10.3
+        specifier: ^24.10.4
+        version: 24.10.4
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20251203.1
         version: 7.0.0-dev.20251203.1
@@ -1124,8 +1124,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       '@types/node':
-        specifier: ^24.10.3
-        version: 24.10.3
+        specifier: ^24.10.4
+        version: 24.10.4
       path-serializer:
         specifier: 0.5.1
         version: 0.5.1
@@ -1167,11 +1167,11 @@ importers:
         specifier: ^1.12.1
         version: 1.12.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@shikijs/transformers':
-        specifier: ^3.19.0
-        version: 3.19.0
+        specifier: ^3.20.0
+        version: 3.20.0
       '@types/node':
-        specifier: ^24.10.3
-        version: 24.10.3
+        specifier: ^24.10.4
+        version: 24.10.4
       '@types/react':
         specifier: ^19.2.7
         version: 19.2.7
@@ -2641,8 +2641,8 @@ packages:
   '@shikijs/core@3.15.0':
     resolution: {integrity: sha512-8TOG6yG557q+fMsSVa8nkEDOZNTSxjbbR8l6lF2gyr6Np+jrPlslqDxQkN6rMXCECQ3isNPZAGszAfYoJOPGlg==}
 
-  '@shikijs/core@3.19.0':
-    resolution: {integrity: sha512-L7SrRibU7ZoYi1/TrZsJOFAnnHyLTE1SwHG1yNWjZIVCqjOEmCSuK2ZO9thnRbJG6TOkPp+Z963JmpCNw5nzvA==}
+  '@shikijs/core@3.20.0':
+    resolution: {integrity: sha512-f2ED7HYV4JEk827mtMDwe/yQ25pRiXZmtHjWF8uzZKuKiEsJR7Ce1nuQ+HhV9FzDcbIo4ObBCD9GPTzNuy9S1g==}
 
   '@shikijs/engine-javascript@3.15.0':
     resolution: {integrity: sha512-ZedbOFpopibdLmvTz2sJPJgns8Xvyabe2QbmqMTz07kt1pTzfEvKZc5IqPVO/XFiEbbNyaOpjPBkkr1vlwS+qg==}
@@ -2659,14 +2659,14 @@ packages:
   '@shikijs/themes@3.15.0':
     resolution: {integrity: sha512-8ow2zWb1IDvCKjYb0KiLNrK4offFdkfNVPXb1OZykpLCzRU6j+efkY+Y7VQjNlNFXonSw+4AOdGYtmqykDbRiQ==}
 
-  '@shikijs/transformers@3.19.0':
-    resolution: {integrity: sha512-e6vwrsyw+wx4OkcrDbL+FVCxwx8jgKiCoXzakVur++mIWVcgpzIi8vxf4/b4dVTYrV/nUx5RjinMf4tq8YV8Fw==}
+  '@shikijs/transformers@3.20.0':
+    resolution: {integrity: sha512-PrHHMRr3Q5W1qB/42kJW6laqFyWdhrPF2hNR9qjOm1xcSiAO3hAHo7HaVyHE6pMyevmy3i51O8kuGGXC78uK3g==}
 
   '@shikijs/types@3.15.0':
     resolution: {integrity: sha512-BnP+y/EQnhihgHy4oIAN+6FFtmfTekwOLsQbRw9hOKwqgNy8Bdsjq8B05oAt/ZgvIWWFrshV71ytOrlPfYjIJw==}
 
-  '@shikijs/types@3.19.0':
-    resolution: {integrity: sha512-Z2hdeEQlzuntf/BZpFG8a+Fsw9UVXdML7w0o3TgSXV3yNESGon+bs9ITkQb3Ki7zxoXOOu5oJWqZ2uto06V9iQ==}
+  '@shikijs/types@3.20.0':
+    resolution: {integrity: sha512-lhYAATn10nkZcBQ0BlzSbJA3wcmL5MXUUF8d2Zzon6saZDlToKaiRX60n2+ZaHJCmXEcZRWNzn+k9vplr8Jhsw==}
 
   '@shikijs/vscode-textmate@10.0.2':
     resolution: {integrity: sha512-83yeghZ2xxin3Nj8z1NMd/NCuca+gsYXswywDy5bHvwlWL8tpTQmzGeUuHd9FC3E/SBEMvzJRwWEOz5gGes9Qg==}
@@ -2962,8 +2962,8 @@ packages:
   '@types/node-sass@4.11.8':
     resolution: {integrity: sha512-dWWMGPX8uselSQ1MLzDvQnVz5Qy1pe7SJuUl1Yqi2NCNRkrk5DmHlP44VZmTWm+buR2T217+5zEAPbAmTwKIOQ==}
 
-  '@types/node@24.10.3':
-    resolution: {integrity: sha512-gqkrWUsS8hcm0r44yn7/xZeV1ERva/nLgrLxFRUGb7aoNMIJfZJ3AC261zDQuOAKC7MiXai1WCpYc48jAHoShQ==}
+  '@types/node@24.10.4':
+    resolution: {integrity: sha512-vnDVpYPMzs4wunl27jHrfmwojOGKya0xyM3sH+UE5iv5uPS6vX7UIoh6m+vQc5LGBq52HBKPIn/zcSZVzeDEZg==}
 
   '@types/on-finished@2.3.5':
     resolution: {integrity: sha512-XUaCx9tVIC577KsOZxKbnvGlyPt2ogNXQEq/bOQpAfPwH9sH0FbzrRsK1961jpjKlK5V+Owmw55dVjukWhwH0w==}
@@ -8234,9 +8234,9 @@ snapshots:
       '@types/hast': 3.0.4
       hast-util-to-html: 9.0.5
 
-  '@shikijs/core@3.19.0':
+  '@shikijs/core@3.20.0':
     dependencies:
-      '@shikijs/types': 3.19.0
+      '@shikijs/types': 3.20.0
       '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.4
       hast-util-to-html: 9.0.5
@@ -8269,17 +8269,17 @@ snapshots:
     dependencies:
       '@shikijs/types': 3.15.0
 
-  '@shikijs/transformers@3.19.0':
+  '@shikijs/transformers@3.20.0':
     dependencies:
-      '@shikijs/core': 3.19.0
-      '@shikijs/types': 3.19.0
+      '@shikijs/core': 3.20.0
+      '@shikijs/types': 3.20.0
 
   '@shikijs/types@3.15.0':
     dependencies:
       '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.4
 
-  '@shikijs/types@3.19.0':
+  '@shikijs/types@3.20.0':
     dependencies:
       '@shikijs/vscode-textmate': 10.0.2
       '@types/hast': 3.0.4
@@ -8493,7 +8493,7 @@ snapshots:
   '@types/body-parser@1.19.6':
     dependencies:
       '@types/connect': 3.4.38
-      '@types/node': 24.10.3
+      '@types/node': 24.10.4
 
   '@types/chai@5.2.3':
     dependencies:
@@ -8502,11 +8502,11 @@ snapshots:
 
   '@types/connect@3.4.38':
     dependencies:
-      '@types/node': 24.10.3
+      '@types/node': 24.10.4
 
   '@types/cors@2.8.19':
     dependencies:
-      '@types/node': 24.10.3
+      '@types/node': 24.10.4
 
   '@types/debug@4.1.12':
     dependencies:
@@ -8534,7 +8534,7 @@ snapshots:
 
   '@types/express-serve-static-core@5.1.0':
     dependencies:
-      '@types/node': 24.10.3
+      '@types/node': 24.10.4
       '@types/qs': 6.14.0
       '@types/range-parser': 1.2.7
       '@types/send': 1.2.0
@@ -8548,7 +8548,7 @@ snapshots:
   '@types/fs-extra@11.0.4':
     dependencies:
       '@types/jsonfile': 6.1.4
-      '@types/node': 24.10.3
+      '@types/node': 24.10.4
 
   '@types/hast@3.0.4':
     dependencies:
@@ -8560,13 +8560,13 @@ snapshots:
 
   '@types/http-proxy@1.17.16':
     dependencies:
-      '@types/node': 24.10.3
+      '@types/node': 24.10.4
 
   '@types/json-schema@7.0.15': {}
 
   '@types/jsonfile@6.1.4':
     dependencies:
-      '@types/node': 24.10.3
+      '@types/node': 24.10.4
 
   '@types/less@3.0.8': {}
 
@@ -8584,21 +8584,21 @@ snapshots:
 
   '@types/node-sass@4.11.8':
     dependencies:
-      '@types/node': 24.10.3
+      '@types/node': 24.10.4
 
-  '@types/node@24.10.3':
+  '@types/node@24.10.4':
     dependencies:
       undici-types: 7.16.0
 
   '@types/on-finished@2.3.5':
     dependencies:
-      '@types/node': 24.10.3
+      '@types/node': 24.10.4
 
   '@types/polka@0.5.8':
     dependencies:
       '@types/express': 5.0.3
       '@types/express-serve-static-core': 5.1.0
-      '@types/node': 24.10.3
+      '@types/node': 24.10.4
       '@types/trouter': 3.1.4
 
   '@types/qs@6.14.0': {}
@@ -8615,7 +8615,7 @@ snapshots:
 
   '@types/sass-loader@8.0.10':
     dependencies:
-      '@types/node': 24.10.3
+      '@types/node': 24.10.4
       '@types/node-sass': 4.11.8
       '@types/webpack': 4.41.40
       sass: 1.96.0
@@ -8625,16 +8625,16 @@ snapshots:
   '@types/send@0.17.5':
     dependencies:
       '@types/mime': 1.3.5
-      '@types/node': 24.10.3
+      '@types/node': 24.10.4
 
   '@types/send@1.2.0':
     dependencies:
-      '@types/node': 24.10.3
+      '@types/node': 24.10.4
 
   '@types/serve-static@1.15.9':
     dependencies:
       '@types/http-errors': 2.0.5
-      '@types/node': 24.10.3
+      '@types/node': 24.10.4
       '@types/send': 0.17.5
 
   '@types/source-list-map@0.1.6': {}
@@ -8659,7 +8659,7 @@ snapshots:
 
   '@types/webpack-bundle-analyzer@4.7.0':
     dependencies:
-      '@types/node': 24.10.3
+      '@types/node': 24.10.4
       tapable: 2.3.0
       webpack: 5.103.0
     transitivePeerDependencies:
@@ -8670,13 +8670,13 @@ snapshots:
 
   '@types/webpack-sources@3.2.3':
     dependencies:
-      '@types/node': 24.10.3
+      '@types/node': 24.10.4
       '@types/source-list-map': 0.1.6
       source-map: 0.7.6
 
   '@types/webpack@4.41.40':
     dependencies:
-      '@types/node': 24.10.3
+      '@types/node': 24.10.4
       '@types/tapable': 1.0.12
       '@types/uglify-js': 3.17.5
       '@types/webpack-sources': 3.2.3
@@ -8685,7 +8685,7 @@ snapshots:
 
   '@types/ws@8.18.1':
     dependencies:
-      '@types/node': 24.10.3
+      '@types/node': 24.10.4
 
   '@typescript/native-preview-darwin-arm64@7.0.0-dev.20251203.1':
     optional: true
@@ -9585,7 +9585,7 @@ snapshots:
   engine.io@6.6.4:
     dependencies:
       '@types/cors': 2.8.19
-      '@types/node': 24.10.3
+      '@types/node': 24.10.4
       accepts: 1.3.8
       base64id: 2.0.0
       cookie: 0.7.2
@@ -10365,7 +10365,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 24.10.3
+      '@types/node': 24.10.4
       merge-stream: 2.0.0
       supports-color: 8.1.1
 

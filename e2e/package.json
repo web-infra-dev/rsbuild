@@ -49,7 +49,7 @@
     "@tailwindcss/postcss": "^4.1.18",
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.21",
-    "@types/node": "^24.10.3",
+    "@types/node": "^24.10.4",
     "@types/polka": "^0.5.8",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
