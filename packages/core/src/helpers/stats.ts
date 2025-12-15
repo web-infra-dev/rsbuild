@@ -4,6 +4,10 @@ import { isMultiCompiler } from './compiler';
 import { formatStatsError } from './format';
 import { color } from './vendors';
 
+// Ensure the input string ends with a line break
+const ensureLineBreak = (input: string) =>
+  input.trim().endsWith('\n') ? input : `${input}\n`;
+
 function formatErrorMessage(errors: string[]) {
   if (!errors.length) {
     return `Build failed. No errors reported since Rspack's "stats.errors" is disabled.`;
@@ -12,7 +16,7 @@ function formatErrorMessage(errors: string[]) {
   const title = color.bold(
     color.red(errors.length > 1 ? 'Build errors: ' : 'Build error: '),
   );
-  const text = `${errors.join('\n\n')}\n`;
+  const text = ensureLineBreak(`${errors.join('\n\n')}`);
   return `${title}\n${text}`;
 }
 
@@ -143,7 +147,7 @@ export function formatStats(
     );
 
     return {
-      message: `${title}${warningMessages.join('\n\n')}\n`,
+      message: ensureLineBreak(`${title}${warningMessages.join('\n\n')}`),
       level: 'warning',
     };
   }
