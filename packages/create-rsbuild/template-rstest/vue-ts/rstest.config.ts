@@ -3,13 +3,7 @@ import { defineConfig } from '@rstest/core';
 
 // Docs: https://rstest.rs/config/
 export default defineConfig({
-  plugins: [
-    pluginVue({
-      vueLoaderOptions: {
-        isServerBuild: false,
-      },
-    }),
-  ],
+  plugins: [pluginVue()],
   testEnvironment: 'jsdom',
   setupFiles: ['./rstest.setup.ts'],
 });

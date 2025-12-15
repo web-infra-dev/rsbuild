@@ -87,6 +87,10 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
           ...userLoaderOptions.compilerOptions,
         };
         const vueLoaderOptions = {
+          // Always treat this as a client build when invoked from Rstest,
+          // since tests are executed in a DOM-based environment.
+          isServerBuild:
+            api.context.callerName === 'rstest' ? false : undefined,
           experimentalInlineMatchResource: true,
           ...userLoaderOptions,
           compilerOptions,
