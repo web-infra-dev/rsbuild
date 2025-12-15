@@ -271,7 +271,7 @@ export interface SourceConfig {
    * Specify additional JavaScript files that need to be compiled by SWC.
    * Through the `source.include` config, you can specify directories or modules
    * that need to be compiled by Rsbuild. The usage of `source.include` is
-   * consistent with [Rule.include](https://rspack.rs/config/module#ruleinclude)
+   * consistent with [rules[].include](https://rspack.rs/config/module-rules#rulesinclude)
    * in Rspack, which supports passing in strings or regular expressions to match
    * the module path.
    * @default
