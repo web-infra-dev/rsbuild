@@ -1,5 +1,5 @@
 import { defineConfig } from '@rsbuild/core';
-import { webpackProvider } from '../../packages/webpack/dist';
+import { webpackProvider } from '@rsbuild/webpack';
 
 export default defineConfig({
   provider: webpackProvider,
