@@ -40,7 +40,7 @@
     "@rslint/core": "^0.1.14",
     "@rstest/core": "^0.7.2",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^24.10.3",
+    "@types/node": "^24.10.4",
     "cross-env": "^10.1.0",
     "cspell-ban-words": "^0.0.4",
     "heading-case": "^1.0.3",
