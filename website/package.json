@@ -20,7 +20,7 @@
     "@rspress/plugin-sitemap": "2.0.0-rc.2",
     "@rstack-dev/doc-ui": "^1.12.1",
     "@shikijs/transformers": "^3.19.0",
-    "@types/node": "^24.10.3",
+    "@types/node": "^24.10.4",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "fast-glob": "^3.3.3",
