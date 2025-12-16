@@ -7,16 +7,17 @@ export function convertLinksInHtml(text: string, root?: string): string {
   /**
    * Match absolute or relative paths with line and column
    * @example
-   * 1. `./src/index.js:1:1`
-   * 2. `.\src\index.js:1:1`
-   * 3. `../Button.js:1:1`
-   * 4. `C:\Users\username\project\src\index.js:1:1`
-   * 5. `/home/user/project/src/index.js:1:1`
-   * 6. `file:///home/user/project/src/index.js:1:1`
-   * 7. `file:///C:/Users/username/project/src/index.js:1:1`
+   * 1. ./src/index.js:1:1
+   * 2. .\src\index.js:1:1
+   * 3. src/index.js:1:1
+   * 4. ../Button.js:1:1
+   * 5. C:\Users\username\project\src\index.js:1:1
+   * 6. /home/user/project/src/index.js:1:1
+   * 7. file:///home/user/project/src/index.js:1:1
+   * 8. file:///C:/Users/username/project/src/index.js:1:1
    */
   const PATH_RE =
-    /(?:\.\.?[/\\]|(file:\/\/\/)?[a-zA-Z]:\\|(file:\/\/)?\/)[^\s:]*:\d+:\d+/g;
+    /(?:\.\.?[/\\]|(file:\/\/\/)?[a-zA-Z]:\\|(file:\/\/)?\/|[A-Za-z0-9._-]+[/\\])[^\s:]*:\d+:\d+/g;
 
   const URL_RE =
     /(https?:\/\/(?:[\w-]+\.)+[a-z0-9](?:[\w-.~:/?#[\]@!$&'*+,;=])*)/gi;

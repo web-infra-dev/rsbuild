@@ -145,11 +145,10 @@ describe('convertLinksInHtml', () => {
       process.platform === 'win32'
         ? '<span style="opacity:0.5;">│</span>     at <a class="file-link" data-file="/path/to/src/index.js:1:1">.\\src\\index.js:1:1</a>\n'
         : '<span style="opacity:0.5;">│</span>     at <a class="file-link" data-file="/path/to/src/index.js:1:1">./src/index.js:1:1</a>\n';
-    console.log(ansiHTML(input));
     expect(convertLinksInHtml(ansiHTML(input), root)).toEqual(expected);
   });
 
-  it('should convert relative path as expected', () => {
+  it('should convert relative path with ./ prefix as expected', () => {
     const root = '/path/to';
     const input = '[\u001b[36;1;4m./src/index.js\u001b[0m:4:1]\n';
     const expected =
@@ -157,6 +156,16 @@ describe('convertLinksInHtml', () => {
         ? `[<span style="color:#6eecf7;font-weight:bold;text-decoration:underline;text-underline-offset:3px;"><a class="file-link" data-file="\\path\\to\\src\\index.js:4:1">./src/index.js:4:1</a></span>]\n`
         : `[<span style="color:#6eecf7;font-weight:bold;text-decoration:underline;text-underline-offset:3px;"><a class="file-link" data-file="${root}/src/index.js:4:1">./src/index.js:4:1</a></span>]\n`;
     expect(convertLinksInHtml(ansiHTML(input), root)).toEqual(expected);
+  });
+
+  it('should convert relative path without ./ prefix as expected', () => {
+    const root = '/path/to';
+    const input = ' (src/index.js:5:0)';
+    expect(convertLinksInHtml(ansiHTML(input), root)).toEqual(
+      process.platform === 'win32'
+        ? ' (<a class="file-link" data-file="\\path\\to\\src\\index.js:5:0">src/index.js:5:0</a>)'
+        : ' (<a class="file-link" data-file="/path/to/src/index.js:5:0">src/index.js:5:0</a>)',
+    );
   });
 
   it('should not convert node internal path', () => {
