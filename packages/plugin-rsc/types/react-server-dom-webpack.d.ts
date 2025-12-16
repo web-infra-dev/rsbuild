@@ -74,8 +74,7 @@ declare module 'react-server-dom-webpack/client.browser' {
   export interface Options {
     callServer?: CallServerCallback
     environmentName?: string
-    // It's optional but we want to avoid accidentally omitting it.
-    findSourceMapURL: FindSourceMapURLCallback | undefined
+    findSourceMapURL?: FindSourceMapURLCallback
     replayConsoleLogs?: boolean
     temporaryReferences?: TemporaryReferenceSet
     debugChannel?: { readable?: ReadableStream; writable?: WritableStream }

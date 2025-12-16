@@ -15,6 +15,18 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
+    },
+    "./rsc": {
+      "types": "./dist/rsc.d.ts",
+      "import": "./dist/rsc.mjs"
+    },
+    "./ssr": {
+      "types": "./dist/ssr.d.ts",
+      "import": "./dist/ssr.mjs"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "import": "./dist/client.mjs"
     }
   },
   "main": "./dist/index.cjs",
@@ -34,10 +46,12 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rslib/core": "0.18.4",
-    "prebundle": "1.6.0"
+    "prebundle": "1.6.0",
+    "react-server-dom-webpack": "^19.2.3"
   },
   "peerDependencies": {
-    "@rsbuild/core": "1.x"
+    "@rsbuild/core": "1.x",
+    "react-server-dom-webpack": "^19.2.3"
   },
   "publishConfig": {
     "access": "public",
