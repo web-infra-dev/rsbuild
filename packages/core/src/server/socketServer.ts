@@ -1,6 +1,7 @@
 import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
 import type Ws from '../../compiled/ws/index.js';
+import { DEFAULT_STACK_TRACE } from '../constants.js';
 import { formatStatsError } from '../helpers/format';
 import { isObject } from '../helpers/index';
 import { getStatsErrors, getStatsWarnings } from '../helpers/stats';
@@ -309,7 +310,12 @@ export class SocketServer {
           typeof data === 'string' ? data : data.toString(),
         );
 
-        const { browserLogs } = this.context.normalizedConfig?.dev || {};
+        const config = this.context.normalizedConfig;
+        if (!config) {
+          return;
+        }
+
+        const { browserLogs } = config.dev;
         if (
           message.type === 'client-error' &&
           // Do not report browser error when using webpack
@@ -319,7 +325,9 @@ export class SocketServer {
           browserLogs
         ) {
           const stackTrace =
-            (isObject(browserLogs) && browserLogs.stackTrace) || 'summary';
+            (isObject(browserLogs) && browserLogs.stackTrace) ||
+            DEFAULT_STACK_TRACE;
+
           const log = await formatBrowserErrorLog(
             message,
             this.context,

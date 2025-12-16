@@ -33,6 +33,7 @@ export const DEFAULT_DATA_URL_SIZE = 4096;
 export const DEFAULT_MOUNT_ID = 'root';
 export const DEFAULT_DEV_HOST = '0.0.0.0';
 export const DEFAULT_ASSET_PREFIX = '/';
+export const DEFAULT_STACK_TRACE = 'summary';
 export const DEFAULT_WEB_BROWSERSLIST: string[] = [
   'chrome >= 87',
   'edge >= 88',
