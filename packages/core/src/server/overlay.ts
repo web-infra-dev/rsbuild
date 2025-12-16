@@ -16,7 +16,7 @@ export function convertLinksInHtml(text: string, root?: string): string {
    * 7. `file:///C:/Users/username/project/src/index.js:1:1`
    */
   const PATH_RE =
-    /(?:\.\.?[/\\]|(file:\/\/\/)?[a-zA-Z]:\\|(file:\/\/)?\/)[^:]*:\d+:\d+/g;
+    /(?:\.\.?[/\\]|(file:\/\/\/)?[a-zA-Z]:\\|(file:\/\/)?\/)[^\s:]*:\d+:\d+/g;
 
   const URL_RE =
     /(https?:\/\/(?:[\w-]+\.)+[a-z0-9](?:[\w-.~:/?#[\]@!$&'*+,;=])*)/gi;
