@@ -1164,8 +1164,8 @@ importers:
         specifier: 2.0.0-rc.2
         version: 2.0.0-rc.2(@rspress/core@2.0.0-rc.2(@types/react@19.2.7))
       '@rstack-dev/doc-ui':
-        specifier: ^1.12.1
-        version: 1.12.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        specifier: ^1.12.2
+        version: 1.12.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@shikijs/transformers':
         specifier: ^3.20.0
         version: 3.20.0
@@ -2619,8 +2619,8 @@ packages:
   '@rspress/shared@2.0.0-rc.2':
     resolution: {integrity: sha512-CnU/ok1/tJHYqB3wf9mk7/YDNzfiQK7LHX1cWyqbWD6cdAdl+S9QVUKRossqGDgD1YdaKTaFsNpsK1c43XmIuw==}
 
-  '@rstack-dev/doc-ui@1.12.1':
-    resolution: {integrity: sha512-95Mm5DBpqtOkjl3DPGqW/Ld3QevYnsEaiAYr5gkq0Ifimjm4jy7b9xhHS6Q/XZD9fAYFZiTs4MUwhh3c46NrpA==}
+  '@rstack-dev/doc-ui@1.12.2':
+    resolution: {integrity: sha512-4C+tfhODxCp81ohCik9baOdbhYGNFqdwcwQMAESncF0YX3EawdNCORI1E26DqkY/F3ggfKG4qOlEAu+oOxrPxg==}
 
   '@rstest/core@0.7.3':
     resolution: {integrity: sha512-+vvbvzej4JDnICq3ItEMRzoAJB92EeUYMpkQSTh7MphlUsTOJlyNdQ7K1+xnSetvfQD1LmXCv6oIVqOIXCh4/g==}
@@ -8208,7 +8208,7 @@ snapshots:
       lodash-es: 4.17.21
       unified: 11.0.5
 
-  '@rstack-dev/doc-ui@1.12.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+  '@rstack-dev/doc-ui@1.12.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
       framer-motion: 12.23.25(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
     transitivePeerDependencies:
