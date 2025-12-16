@@ -137,7 +137,9 @@ export function formatStats(
   }
 
   const warnings = getStatsWarnings(stats);
-  const warningMessages = warnings.map((item) => formatStatsError(item, root));
+  const warningMessages = warnings.map((item) =>
+    formatStatsError(item, root, 'warning'),
+  );
 
   if (warningMessages.length) {
     const title = color.bold(

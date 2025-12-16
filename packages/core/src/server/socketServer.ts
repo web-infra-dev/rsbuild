@@ -223,7 +223,7 @@ export class SocketServer {
    */
   public sendWarning(warnings: Rspack.StatsError[], token: string): void {
     const formattedWarnings = warnings.map((item) =>
-      formatStatsError(item, this.context.rootPath),
+      formatStatsError(item, this.context.rootPath, 'warning'),
     );
     this.sockWrite(
       {
