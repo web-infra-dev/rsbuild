@@ -82,6 +82,8 @@ export const CHAIN_ID = {
     WASM: 'wasm',
     /** Rule for svelte */
     SVELTE: 'svelte',
+    /** Rule for React server component */
+    RSC_RESOLVE: 'rsc-resolve',
   },
   /** Predefined rule groups */
   ONE_OF: {
@@ -163,6 +165,9 @@ export const CHAIN_ID = {
     REACT_FAST_REFRESH: 'react-fast-refresh',
     /** SubresourceIntegrityPlugin */
     SUBRESOURCE_INTEGRITY: 'subresource-integrity',
+    RSC_SERVER: 'rsc-server-plugin',
+    RSC_CLIENT: 'rsc-client-plugin',
+    RSC_SSR_ENTRY: 'rsc-ssr-entry-plugin',
   },
   /** Predefined minimizers */
   MINIMIZER: {

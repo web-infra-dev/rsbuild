@@ -838,6 +838,18 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
+  packages/plugin-rsc:
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rslib/core':
+        specifier: 0.18.4
+        version: 0.18.4(@typescript/native-preview@7.0.0-dev.20251203.1)(typescript@5.9.3)
+      prebundle:
+        specifier: 1.6.0
+        version: 1.6.0(typescript@5.9.3)
+
   packages/plugin-sass:
     dependencies:
       deepmerge:

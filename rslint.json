@@ -16,7 +16,8 @@
           "./packages/plugin-svelte/tsconfig.json",
           "./packages/plugin-preact/tsconfig.json",
           "./packages/plugin-solid/tsconfig.json",
-          "./packages/plugin-svgr/tsconfig.json"
+          "./packages/plugin-svgr/tsconfig.json",
+          "./packages/plugin-rsc/tsconfig.json"
         ]
       }
     },
