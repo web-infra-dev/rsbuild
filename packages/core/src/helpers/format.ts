@@ -281,7 +281,7 @@ const hintNodePolyfill = (message: string): string => {
 export function formatStatsError(
   stats: StatsError,
   root: string,
-  level = 'error',
+  level: 'error' | 'warning' = 'error',
 ): string {
   const fileName = resolveFileName(stats);
   let message = `${formatFileName(fileName, stats, root)}${stats.message}`;
