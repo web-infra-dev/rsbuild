@@ -138,6 +138,17 @@ describe('convertLinksInHtml', () => {
     expect(convertLinksInHtml(ansiHTML(input), root)).toEqual(expected);
   });
 
+  it('should convert file path in stack frame', () => {
+    const input = '\u001b[2m│\u001b[0m     at /path/to/src/index.js:1:1\n';
+    const root = '/path/to';
+    const expected =
+      process.platform === 'win32'
+        ? '<span style="opacity:0.5;">│</span>     at <a class="file-link" data-file="/path/to/src/index.js:1:1">.\\src\\index.js:1:1</a>\n'
+        : '<span style="opacity:0.5;">│</span>     at <a class="file-link" data-file="/path/to/src/index.js:1:1">./src/index.js:1:1</a>\n';
+    console.log(ansiHTML(input));
+    expect(convertLinksInHtml(ansiHTML(input), root)).toEqual(expected);
+  });
+
   it('should convert relative path as expected', () => {
     const root = '/path/to';
     const input = '[\u001b[36;1;4m./src/index.js\u001b[0m:4:1]\n';
