@@ -229,7 +229,7 @@ const hintNodePolyfill = (message: string): string => {
   }
 
   const moduleName = matchArray[1];
-  const nodeModules = [
+  const nodeBuiltins = new Set([
     'assert',
     'buffer',
     'child_process',
@@ -238,39 +238,48 @@ const hintNodePolyfill = (message: string): string => {
     'constants',
     'crypto',
     'dgram',
+    'diagnostics_channel',
     'dns',
     'domain',
     'events',
     'fs',
     'http',
+    'http2',
     'https',
+    'inspector',
     'module',
     'net',
     'os',
     'path',
-    'punycode',
+    'perf_hooks',
     'process',
+    'punycode',
     'querystring',
     'readline',
     'repl',
     'stream',
+    'string_decoder',
+    'sys',
+    'timers',
+    'tls',
+    'trace_events',
+    'tty',
+    'url',
+    'util',
+    'v8',
+    'vm',
+    'wasi',
+    'worker_threads',
+    'zlib',
+    // Internal Node.js stream aliases
     '_stream_duplex',
     '_stream_passthrough',
     '_stream_readable',
     '_stream_transform',
     '_stream_writable',
-    'string_decoder',
-    'sys',
-    'timers',
-    'tls',
-    'tty',
-    'url',
-    'util',
-    'vm',
-    'zlib',
-  ];
+  ]);
 
-  if (moduleName && nodeModules.includes(moduleName)) {
+  if (moduleName && nodeBuiltins.has(moduleName)) {
     return getTips(moduleName);
   }
 
