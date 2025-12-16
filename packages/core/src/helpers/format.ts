@@ -81,7 +81,11 @@ function resolveFileName(stats: StatsError) {
  *   ./src/Foo.tsx
  *   ./src/Bar.tsx ×
  */
-function formatModuleTrace(stats: StatsError, errorFile: string) {
+function formatModuleTrace(
+  stats: StatsError,
+  errorFile: string,
+  level: 'error' | 'warning',
+) {
   if (!stats.moduleTrace) {
     return;
   }
@@ -122,7 +126,7 @@ function formatModuleTrace(stats: StatsError, errorFile: string) {
   }
 
   return color.dim(
-    `Import traces (entry → error):\n  ${trace.join('\n  ')} ${color.bold(color.red('×'))}`,
+    `Import traces (entry → ${level}):\n  ${trace.join('\n  ')} ${color.bold(color.red('×'))}`,
   );
 }
 
@@ -299,7 +303,7 @@ export function formatStatsError(
 
   // display module trace for errors
   if (level === 'error' || isVerbose()) {
-    const moduleTrace = formatModuleTrace(stats, fileName);
+    const moduleTrace = formatModuleTrace(stats, fileName, level);
     if (moduleTrace) {
       message += moduleTrace;
     }
