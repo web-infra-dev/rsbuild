@@ -5,8 +5,8 @@ import { formatStatsError } from './format';
 import { color } from './vendors';
 
 // Ensure the input string ends with a line break
-const ensureLineBreak = (input: string) =>
-  input.trim().endsWith('\n') ? input : `${input}\n`;
+const ensureTrailingNewline = (input: string) =>
+  input.replace(/[ \t]+$/, '').endsWith('\n') ? input : `${input}\n`;
 
 function formatErrorMessage(errors: string[]) {
   if (!errors.length) {
@@ -16,7 +16,7 @@ function formatErrorMessage(errors: string[]) {
   const title = color.bold(
     color.red(errors.length > 1 ? 'Build errors: ' : 'Build error: '),
   );
-  const text = ensureLineBreak(`${errors.join('\n\n')}`);
+  const text = ensureTrailingNewline(errors.join('\n\n'));
   return `${title}\n${text}`;
 }
 
@@ -147,7 +147,7 @@ export function formatStats(
     );
 
     return {
-      message: ensureLineBreak(`${title}${warningMessages.join('\n\n')}`),
+      message: ensureTrailingNewline(`${title}${warningMessages.join('\n\n')}`),
       level: 'warning',
     };
   }
