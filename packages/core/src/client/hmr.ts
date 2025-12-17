@@ -97,8 +97,19 @@ export function init({
   }
 
   // Compilation with errors (e.g. syntax error or missing modules).
-  function handleErrors({ text, html }: { text: string[]; html: string }) {
-    clearBuildErrors();
+  function handleErrors({
+    text,
+    html,
+    clearLogs = true,
+  }: {
+    text: string[];
+    html: string;
+    clearLogs?: boolean;
+  }) {
+    if (clearLogs) {
+      clearBuildErrors();
+    }
+
     hasBuildErrors = true;
 
     // Also log them to the console.

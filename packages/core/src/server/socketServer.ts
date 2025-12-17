@@ -46,7 +46,11 @@ export type ServerMessageWarnings = {
 
 export type ServerMessageErrors = {
   type: 'errors';
-  data: { text: string[]; html: string };
+  data: {
+    text: string[];
+    html: string;
+    clearLogs?: boolean;
+  };
 };
 
 export type ServerMessage =
@@ -310,18 +314,19 @@ export class SocketServer {
           typeof data === 'string' ? data : data.toString(),
         );
 
-        const config = this.context.normalizedConfig;
+        const { context } = this;
+        const config = context.normalizedConfig;
         if (!config) {
           return;
         }
 
-        const { browserLogs } = config.dev;
+        const { browserLogs, client } = config.dev;
         if (
           message.type === 'client-error' &&
           // Do not report browser error when using webpack
-          this.context.bundlerType === 'rspack' &&
+          context.bundlerType === 'rspack' &&
           // Do not report browser error when build failed
-          !this.context.buildState.hasErrors &&
+          !context.buildState.hasErrors &&
           browserLogs
         ) {
           const stackTrace =
@@ -330,7 +335,7 @@ export class SocketServer {
 
           const log = await formatBrowserErrorLog(
             message,
-            this.context,
+            context,
             this.getOutputFileSystem(),
             stackTrace,
           );
@@ -338,6 +343,25 @@ export class SocketServer {
           if (!this.reportedBrowserLogs.has(log)) {
             this.reportedBrowserLogs.add(log);
             logger.error(log);
+          }
+
+          // Render runtime errors in overlay
+          if (typeof client.overlay === 'object' && client.overlay.runtime) {
+            const html = genOverlayHTML(
+              Array.from(this.reportedBrowserLogs),
+              context.rootPath,
+            );
+            this.sockWrite(
+              {
+                type: 'errors',
+                data: {
+                  text: [],
+                  html,
+                  clearLogs: false,
+                },
+              },
+              token,
+            );
           }
         }
       } catch {}

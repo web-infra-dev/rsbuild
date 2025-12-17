@@ -1812,7 +1812,15 @@ export type ClientConfig = {
    * Whether to display an error overlay in the browser when a compilation error occurs.
    * @default true
    */
-  overlay?: boolean;
+  overlay?:
+    | boolean
+    | {
+        /**
+         * Whether to show runtime errors in the overlay.
+         * @default false
+         */
+        runtime?: boolean;
+      };
   /**
    * Controls the log level for client-side logging in the browser console.
    * @default 'info'
