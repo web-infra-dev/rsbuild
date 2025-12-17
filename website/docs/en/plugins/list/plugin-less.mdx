@@ -91,11 +91,11 @@ The `lessLoaderOptions.lessOptions` config is passed to Less. See the [Less docu
 
 ### include
 
-- **Type:** [RuleSetCondition](https://rspack.rs/config/module#condition)
+- **Type:** [Rspack.RuleSetCondition](https://rspack.rs/config/module-rules#condition)
 - **Default:** `/\.less$/`
 - **Version:** `>= 1.1.0`
 
-Include some `.less` files, they will be transformed by `less-loader`. The value is the same as the `rule.test` option in Rspack.
+Include some `.less` files, they will be transformed by `less-loader`. The value is the same as the [rules[].test](https://rspack.rs/config/module-rules#rulestest) option in Rspack.
 
 For example:
 
@@ -107,7 +107,7 @@ pluginLess({
 
 ### exclude
 
-- **Type:** [RuleSetCondition](https://rspack.rs/config/module#condition)
+- **Type:** [Rspack.RuleSetCondition](https://rspack.rs/config/module-rules#condition)
 - **Default:** `undefined`
 
 Exclude some `.less` files, they will not be transformed by `less-loader`.
@@ -136,7 +136,7 @@ pluginLess({
 });
 ```
 
-> See [Rspack - Rule.use.parallel](https://rspack.rs/config/module#ruleuseparallel) for more details.
+> See [Rspack - Rule.use.parallel](https://rspack.rs/config/module-rules#rulesuseparallel) for more details.
 
 ## Modifying Less version
 

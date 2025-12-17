@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { COMPILED_PATH } from '../constants';
-import type { RsbuildPlugin } from '../types';
+import { castArray } from '../helpers';
+import type { RsbuildPlugin, SriAlgorithm } from '../types';
 
 export const pluginSri = (): RsbuildPlugin => ({
   name: 'rsbuild:sri',
@@ -38,7 +39,10 @@ export const pluginSri = (): RsbuildPlugin => ({
         .use(rspack.experiments.SubresourceIntegrityPlugin, [
           {
             enabled: true,
-            hashFuncNames: [algorithm],
+            hashFuncNames: castArray(algorithm) as [
+              SriAlgorithm,
+              ...SriAlgorithm[],
+            ],
             htmlPlugin: path.join(COMPILED_PATH, 'html-rspack-plugin/index.js'),
           },
         ]);

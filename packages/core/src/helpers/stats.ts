@@ -4,6 +4,10 @@ import { isMultiCompiler } from './compiler';
 import { formatStatsError } from './format';
 import { color } from './vendors';
 
+// Ensure the input string ends with a line break
+const ensureTrailingNewline = (input: string) =>
+  input.replace(/[ \t]+$/, '').endsWith('\n') ? input : `${input}\n`;
+
 function formatErrorMessage(errors: string[]) {
   if (!errors.length) {
     return `Build failed. No errors reported since Rspack's "stats.errors" is disabled.`;
@@ -12,7 +16,7 @@ function formatErrorMessage(errors: string[]) {
   const title = color.bold(
     color.red(errors.length > 1 ? 'Build errors: ' : 'Build error: '),
   );
-  const text = `${errors.join('\n\n')}\n`;
+  const text = ensureTrailingNewline(errors.join('\n\n'));
   return `${title}\n${text}`;
 }
 
@@ -56,25 +60,6 @@ export const getStatsWarnings = ({
   }
 
   return [];
-};
-
-export type RsbuildAsset = {
-  /**
-   * The name of the asset.
-   * @example 'index.html', 'static/js/index.[hash].js'
-   */
-  name: string;
-  /**
-   * The size of the asset in bytes.
-   */
-  size: number;
-};
-
-export const getAssetsFromStats = (stats: Rspack.Stats): RsbuildAsset[] => {
-  return Object.entries(stats.compilation.assets).map(([name, value]) => ({
-    name,
-    size: value.size(),
-  }));
 };
 
 function getStatsOptions(
@@ -152,7 +137,9 @@ export function formatStats(
   }
 
   const warnings = getStatsWarnings(stats);
-  const warningMessages = warnings.map((item) => formatStatsError(item, root));
+  const warningMessages = warnings.map((item) =>
+    formatStatsError(item, root, 'warning'),
+  );
 
   if (warningMessages.length) {
     const title = color.bold(
@@ -162,7 +149,7 @@ export function formatStats(
     );
 
     return {
-      message: `${title}${warningMessages.join('\n\n')}\n`,
+      message: ensureTrailingNewline(`${title}${warningMessages.join('\n\n')}`),
       level: 'warning',
     };
   }

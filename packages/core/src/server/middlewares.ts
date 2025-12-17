@@ -2,7 +2,6 @@ import type { IncomingMessage } from 'node:http';
 import path from 'node:path';
 import onFinished from 'on-finished';
 import { color } from '../helpers';
-import { getAssetsFromStats } from '../helpers/stats';
 import { addTrailingSlash } from '../helpers/url';
 import { isVerbose, logger } from '../logger';
 import type {
@@ -332,14 +331,12 @@ export const viewingServedFilesMiddleware: (params: {
         const list = [];
         const environment = environments[key];
         const stats = await environment.getStats();
-        const assets = getAssetsFromStats(stats);
+        const assets = Object.keys(stats.compilation.assets);
 
         res.write('<ul>');
 
         for (const asset of assets) {
-          list.push(
-            `<li><a target="_blank" href="${asset.name}">${asset.name}</a></li>`,
-          );
+          list.push(`<li><a target="_blank" href="${asset}">${asset}</a></li>`);
         }
 
         res.write(list?.join(''));

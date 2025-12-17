@@ -1,6 +1,6 @@
 # source.include
 
-- **Type:** [Rspack.RuleSetCondition](https://rspack.rs/config/module#condition)
+- **Type:** [Rspack.RuleSetCondition](https://rspack.rs/config/module-rules#condition)
 
 Specify additional JavaScript files that need to be compiled by [SWC](/guide/configuration/swc).
 
@@ -22,7 +22,7 @@ const defaultInclude = [
 
 ## Usage
 
-Through the `source.include` configuration, you can specify directories or modules that need to be compiled by Rsbuild. The usage of `source.include` is consistent with [Rule.include](https://rspack.rs/config/module#ruleinclude) in Rspack, which supports passing in strings or regular expressions to match the module path.
+Through the `source.include` configuration, you can specify directories or modules that need to be compiled by Rsbuild. The usage of `source.include` is consistent with [rules[].include](https://rspack.rs/config/module-rules#rulesinclude) in Rspack, which supports passing in strings or regular expressions to match the module path.
 
 For example:
 

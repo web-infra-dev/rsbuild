@@ -63,9 +63,9 @@ pluginPreact({
 
 ### include
 
-Include files to be processed by the [@rspack/plugin-preact-refresh](https://github.com/rspack-contrib/rspack-plugin-preact-refresh) plugin. The value is the same as the `rule.test` option in Rspack.
+Include files to be processed by the [@rspack/plugin-preact-refresh](https://github.com/rspack-contrib/rspack-plugin-preact-refresh) plugin. The value is the same as the [rules[].test](https://rspack.rs/config/module-rules#rulestest) option in Rspack.
 
-- **Type:** [RuleSetCondition](https://rspack.rs/config/module#condition)
+- **Type:** [Rspack.RuleSetCondition](https://rspack.rs/config/module-rules#condition)
 - **Default:** `/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/`
 - **Version:** `>= v1.1.0`
 
@@ -77,9 +77,9 @@ pluginPreact({
 
 ### exclude
 
-Exclude files from being processed by the [@rspack/plugin-preact-refresh](https://github.com/rspack-contrib/rspack-plugin-preact-refresh) plugin. The value is the same as the `rule.exclude` option in Rspack.
+Exclude files from being processed by the [@rspack/plugin-preact-refresh](https://github.com/rspack-contrib/rspack-plugin-preact-refresh) plugin. The value is the same as the [rules[].exclude](https://rspack.rs/config/module-rules#rulesexclude) option in Rspack.
 
-- **Type:** [RuleSetCondition](https://rspack.rs/config/module#condition)
+- **Type:** [Rspack.RuleSetCondition](https://rspack.rs/config/module-rules#condition)
 - **Default:** `/[\\/]node_modules[\\/]/`
 - **Version:** `>= v1.1.0`
 

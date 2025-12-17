@@ -41,7 +41,7 @@ File (web)                           Size                 Gzip
 dist/static/css/index.[[hash]].css   X.X kB (+X.X kB)   X.X kB (+X.X kB)
 dist/index.html                      X.X kB (+X.X kB)   X.X kB (+X.X kB)
 dist/static/js/index.[[hash]].js     X.X kB (+X.X kB)   X.X kB (+X.X kB)
-dist/static/js/631.[[hash]].js       X.X kB (+X.X kB)   X.X kB (+X.X kB)
+dist/static/js/vendor.[[hash]].js    X.X kB (+X.X kB)   X.X kB (+X.X kB)
                             Total:   X.X kB (+X.X kB)   X.X kB (+X.X kB)`);
     rsbuild2.clearLogs();
 

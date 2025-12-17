@@ -3,9 +3,11 @@
 - **Type:**
 
 ```ts
+type SriAlgorithm = 'sha256' | 'sha384' | 'sha512';
+
 type SriOptions = {
   enable?: 'auto' | boolean;
-  algorithm?: 'sha256' | 'sha384' | 'sha512';
+  algorithm?: SriAlgorithm | SriAlgorithm[];
 };
 ```
 
@@ -100,7 +102,7 @@ export default {
 
 ### algorithm
 
-- **Type:** `'sha256' | 'sha384' | 'sha512'`
+- **Type:** `SriAlgorithm | SriAlgorithm[]`
 - **Default:** `'sha384'`
 
 Specifies the algorithm used to compute the integrity hash.
@@ -128,4 +130,22 @@ The generated value of integrity attribute will be prefixed with `sha512-`:
 ></script>
 ```
 
+Or configure multiple algorithms:
+
+```ts title="rsbuild.config.ts"
+export default {
+  security: {
+    sri: {
+      algorithm: ['sha384', 'sha256'],
+    },
+  },
+};
+```
+
 > Reference: [Cryptographic hash functions](https://www.w3.org/TR/SRI/#cryptographic-hash-functions).
+
+## Version history
+
+| Version | Changes                             |
+| ------- | ----------------------------------- |
+| v1.6.15 | Add support for multiple algorithms |

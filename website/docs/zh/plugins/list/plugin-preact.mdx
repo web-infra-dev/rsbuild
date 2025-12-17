@@ -63,9 +63,9 @@ pluginPreact({
 
 ### include
 
-指定要由 [@rspack/plugin-preact-refresh](https://github.com/rspack-contrib/rspack-plugin-preact-refresh) 插件处理的文件。这个值与 Rspack 中的 `rule.test` 选项相同。
+指定要由 [@rspack/plugin-preact-refresh](https://github.com/rspack-contrib/rspack-plugin-preact-refresh) 插件处理的文件。这个值与 Rspack 中的 [rules[].test](https://rspack.rs/zh/config/module-rules#rulestest) 选项相同。
 
-- **类型：** [RuleSetCondition](https://rspack.rs/zh/config/module#condition)
+- **类型：** [Rspack.RuleSetCondition](https://rspack.rs/zh/config/module-rules#condition)
 - **默认值：** `/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/`
 - **版本：** `>= v1.1.0`
 
@@ -77,9 +77,9 @@ pluginPreact({
 
 ### exclude
 
-排除 [@rspack/plugin-preact-refresh](https://github.com/rspack-contrib/rspack-plugin-preact-refresh) 插件处理的文件。这个值与 Rspack 中的 `rule.exclude` 选项相同。
+排除 [@rspack/plugin-preact-refresh](https://github.com/rspack-contrib/rspack-plugin-preact-refresh) 插件处理的文件。这个值与 Rspack 中的 [rules[].exclude](https://rspack.rs/zh/config/module-rules#rulesexclude) 选项相同。
 
-- **类型：** [RuleSetCondition](https://rspack.rs/zh/config/module#condition)
+- **类型：** [Rspack.RuleSetCondition](https://rspack.rs/zh/config/module-rules#condition)
 - **默认值：** `/[\\/]node_modules[\\/]/`
 - **版本：** `>= v1.1.0`
 

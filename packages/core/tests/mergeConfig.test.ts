@@ -517,8 +517,6 @@ describe('mergeRsbuildConfig', () => {
         },
       },
     });
-    expect(mergeRsbuildConfig(undefined, undefined, undefined)).toEqual(
-      {},
-    );
+    expect(mergeRsbuildConfig(undefined, undefined, undefined)).toEqual({});
   });
 });

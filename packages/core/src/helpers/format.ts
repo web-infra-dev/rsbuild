@@ -77,9 +77,15 @@ function resolveFileName(stats: StatsError) {
  * Import traces (entry → error):
  *   ./src/index.tsx
  *   ./src/App.tsx
- *   ./src/Foo.tsx ×
+ *   … (n hidden)
+ *   ./src/Foo.tsx
+ *   ./src/Bar.tsx ×
  */
-function formatModuleTrace(stats: StatsError, errorFile: string) {
+function formatModuleTrace(
+  stats: StatsError,
+  errorFile: string,
+  level: 'error' | 'warning',
+) {
   if (!stats.moduleTrace) {
     return;
   }
@@ -104,13 +110,23 @@ function formatModuleTrace(stats: StatsError, errorFile: string) {
     }
   }
 
-  const rawTrace = moduleNames
-    .reverse()
-    .map((item) => `\n  ${item}`)
-    .join('');
+  // Current moduleTrace is usually error -> entry, so reverse to entry -> error.
+  let trace = moduleNames.slice().reverse();
+  const MAX = 4;
+
+  // Truncate long traces in non-verbose mode
+  if (trace.length > MAX && !isVerbose()) {
+    const HEAD = 2;
+    const TAIL = 2;
+    trace = [
+      ...trace.slice(0, HEAD),
+      `… (${trace.length - HEAD - TAIL} hidden)`,
+      ...trace.slice(trace.length - TAIL),
+    ];
+  }
 
   return color.dim(
-    `Import traces (entry → error):${rawTrace} ${color.bold(color.red('×'))}`,
+    `Import traces (entry → ${level}):\n  ${trace.join('\n  ')} ${color.bold(color.red('×'))}`,
   );
 }
 
@@ -217,7 +233,7 @@ const hintNodePolyfill = (message: string): string => {
   }
 
   const moduleName = matchArray[1];
-  const nodeModules = [
+  const nodeBuiltins = new Set([
     'assert',
     'buffer',
     'child_process',
@@ -226,39 +242,48 @@ const hintNodePolyfill = (message: string): string => {
     'constants',
     'crypto',
     'dgram',
+    'diagnostics_channel',
     'dns',
     'domain',
     'events',
     'fs',
     'http',
+    'http2',
     'https',
+    'inspector',
     'module',
     'net',
     'os',
     'path',
-    'punycode',
+    'perf_hooks',
     'process',
+    'punycode',
     'querystring',
     'readline',
     'repl',
     'stream',
+    'string_decoder',
+    'sys',
+    'timers',
+    'tls',
+    'trace_events',
+    'tty',
+    'url',
+    'util',
+    'v8',
+    'vm',
+    'wasi',
+    'worker_threads',
+    'zlib',
+    // Internal Node.js stream aliases
     '_stream_duplex',
     '_stream_passthrough',
     '_stream_readable',
     '_stream_transform',
     '_stream_writable',
-    'string_decoder',
-    'sys',
-    'timers',
-    'tls',
-    'tty',
-    'url',
-    'util',
-    'vm',
-    'zlib',
-  ];
+  ]);
 
-  if (moduleName && nodeModules.includes(moduleName)) {
+  if (moduleName && nodeBuiltins.has(moduleName)) {
     return getTips(moduleName);
   }
 
@@ -266,7 +291,11 @@ const hintNodePolyfill = (message: string): string => {
 };
 
 // Formats Rspack stats error to readable message
-export function formatStatsError(stats: StatsError, root: string): string {
+export function formatStatsError(
+  stats: StatsError,
+  root: string,
+  level: 'error' | 'warning' = 'error',
+): string {
   const fileName = resolveFileName(stats);
   let message = `${formatFileName(fileName, stats, root)}${stats.message}`;
 
@@ -281,9 +310,12 @@ export function formatStatsError(stats: StatsError, root: string): string {
     }
   }
 
-  const moduleTrace = formatModuleTrace(stats, fileName);
-  if (moduleTrace) {
-    message += moduleTrace;
+  // display module trace for errors
+  if (level === 'error' || isVerbose()) {
+    const moduleTrace = formatModuleTrace(stats, fileName, level);
+    if (moduleTrace) {
+      message += moduleTrace;
+    }
   }
 
   // Remove inner error message

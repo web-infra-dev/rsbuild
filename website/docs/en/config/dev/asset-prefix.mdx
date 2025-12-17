@@ -5,7 +5,7 @@
 
 Set the URL prefix of static assets in [development mode](/config/mode).
 
-`assetPrefix` will affect the URLs of most of the static assets, including JavaScript files, CSS files, images, videos, etc. If an incorrect value is specified, you'll receive 404 errors while loading these resources.
+`assetPrefix` affects most static asset URLs, including JavaScript files, CSS files, images, videos, etc. If it is set incorrectly, these resources may return 404 errors.
 
 This config is only used in `development` mode. In `production` mode or `none` mode, use [output.assetPrefix](/config/output/asset-prefix) to configure the URL prefix.
 
@@ -15,7 +15,7 @@ The default value of `dev.assetPrefix` is the same as [server.base](/config/serv
 
 When `server.base` is `/foo`, `index.html` and other static assets can be accessed through `http://localhost:3000/foo/`.
 
-It should be noted that when customizing the `dev.assetPrefix` option, if you want static assets to be normally accessible through the Rsbuild dev server, `dev.assetPrefix` should contain the same URL prefix as `server.base`. For example:
+When you customize `dev.assetPrefix`, keep its URL prefix consistent with `server.base` so assets stay accessible through the Rsbuild dev server. For example:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -103,9 +103,9 @@ export default {
 
 ## Path types
 
-assetPrefix can be set to the following types of paths:
+The `assetPrefix` option accepts the following path types:
 
-- **absolute path**: This is the most common practice, can be specific server paths, like `/assets/`.
+- **absolute path**: The most common choice, including specific server paths like `/assets/`.
 - **'auto'**: Rspack will automatically calculate the path and generate relative paths based on file location.
 
 :::tip

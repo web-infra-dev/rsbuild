@@ -175,8 +175,8 @@ function applyHMREntry({
     clientConfig.port = resolvedPort;
   }
 
-  const hmrEntry = `import { init } from '${toPosixPath(join(CLIENT_PATH, 'hmr'))}';
-${config.dev.client.overlay ? `import '${toPosixPath(join(CLIENT_PATH, 'overlay'))}';` : ''}
+  const hmrEntry = `import { init } from '${toPosixPath(join(CLIENT_PATH, 'hmr.js'))}';
+${config.dev.client.overlay ? `import '${toPosixPath(join(CLIENT_PATH, 'overlay.js'))}';` : ''}
 
 init({
   token: '${token}',

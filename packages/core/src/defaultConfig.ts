@@ -8,6 +8,7 @@ import {
   DEFAULT_DEV_HOST,
   DEFAULT_MOUNT_ID,
   DEFAULT_PORT,
+  DEFAULT_STACK_TRACE,
   FAVICON_DIST_DIR,
   FONT_DIST_DIR,
   HMR_SOCKET_PATH,
@@ -46,7 +47,7 @@ const getDefaultDevConfig = (): NormalizedDevConfig => ({
   hmr: true,
   liveReload: true,
   browserLogs: {
-    stackTrace: 'summary',
+    stackTrace: DEFAULT_STACK_TRACE,
   },
   watchFiles: [],
   // Temporary placeholder, default: `${server.base}`

@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 import {
   type Argv,
   checkCancel,
+  copyFolder,
   create,
   type ESLintTemplateName,
   select,
@@ -76,6 +77,24 @@ function mapESLintTemplate(templateName: string): ESLintTemplateName {
   return `vanilla-${language}` as ESLintTemplateName;
 }
 
+function mapRstestTemplate(templateName: string): string {
+  switch (templateName) {
+    case 'react-js':
+    case 'react18-js':
+      return 'react-js';
+    case 'react-ts':
+    case 'react18-ts':
+      return 'react-ts';
+    case 'vue3-js':
+      return 'vue-js';
+    case 'vue3-ts':
+      return 'vue-ts';
+  }
+
+  const language = templateName.split('-')[1];
+  return `vanilla-${language}`;
+}
+
 create({
   root: path.resolve(__dirname, '..'),
   name: 'rsbuild',
@@ -99,8 +118,25 @@ create({
   mapESLintTemplate,
   extraTools: [
     {
+      value: 'rstest',
+      label: 'Rstest - testing',
+      order: 'pre',
+      action: ({ templateName, distFolder, addAgentsMdSearchDirs }) => {
+        const rstestTemplate = mapRstestTemplate(templateName);
+        const toolFolder = path.join(__dirname, '..', 'template-rstest');
+        const subFolder = path.join(toolFolder, rstestTemplate);
+
+        copyFolder({
+          from: subFolder,
+          to: distFolder,
+          isMergePackageJson: true,
+        });
+        addAgentsMdSearchDirs(toolFolder);
+      },
+    },
+    {
       value: 'storybook',
-      label: 'Add Storybook for component development',
+      label: 'Storybook - component development',
       command: 'npm create storybook@latest -- --skip-install --features docs',
     },
   ],

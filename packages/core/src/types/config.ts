@@ -21,7 +21,6 @@ import type {
 } from '../../compiled/http-proxy-middleware/index.js';
 import type { FileDescriptor } from '../../compiled/rspack-manifest-plugin';
 import type { BundleAnalyzerPlugin } from '../../compiled/webpack-bundle-analyzer/index.js';
-import type { RsbuildAsset } from '../helpers/stats.js';
 import type { RsbuildDevServer } from '../server/devServer';
 import type {
   EnvironmentContext,
@@ -272,7 +271,7 @@ export interface SourceConfig {
    * Specify additional JavaScript files that need to be compiled by SWC.
    * Through the `source.include` config, you can specify directories or modules
    * that need to be compiled by Rsbuild. The usage of `source.include` is
-   * consistent with [Rule.include](https://rspack.rs/config/module#ruleinclude)
+   * consistent with [rules[].include](https://rspack.rs/config/module-rules#rulesinclude)
    * in Rspack, which supports passing in strings or regular expressions to match
    * the module path.
    * @default
@@ -600,7 +599,7 @@ export type SriOptions = {
    * Specifies the algorithm used to compute the integrity hash.
    * @default 'sha384'
    */
-  algorithm?: SriAlgorithm;
+  algorithm?: SriAlgorithm | SriAlgorithm[];
   /**
    * Whether to enable SRI.
    * `'auto'` means it's enabled in production mode and disabled in development mode.
@@ -647,7 +646,17 @@ export type BuildCacheOptions = {
   buildDependencies?: string[];
 };
 
-export type PrintFileSizeAsset = RsbuildAsset;
+export type PrintFileSizeAsset = {
+  /**
+   * The name of the asset.
+   * @example 'index.html', 'static/js/index.[hash].js'
+   */
+  name: string;
+  /**
+   * The size of the asset in bytes.
+   */
+  size: number;
+};
 
 export type PrintFileSizeOptions = {
   /**
@@ -791,6 +800,7 @@ export interface PerformanceConfig {
   /**
    * Analyze the size of output files.
    * @default undefined
+   * @deprecated Use Rsdoctor instead.
    */
   bundleAnalyze?: BundleAnalyzerPlugin.Options;
 

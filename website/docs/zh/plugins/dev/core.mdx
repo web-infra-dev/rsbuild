@@ -349,7 +349,7 @@ type TransformDescriptor = {
 
 `descriptor` 参数支持设置以下匹配条件：
 
-- `test`：匹配模块的路径（不包含 query），等价于 Rspack 的 [Rule.test](https://rspack.rs/zh/config/module#ruletest)。
+- `test`：匹配模块的路径（不包含 query），等价于 Rspack 的 [rules[].test](https://rspack.rs/zh/config/module-rules#rulestest)。
 
 ```js
 api.transform({ test: /\.md$/ }, ({ code }) => {
@@ -373,7 +373,7 @@ api.transform({ test: /\.md$/, environments: ['web'] }, ({ code }) => {
 });
 ```
 
-- `resourceQuery`：匹配模块的 query，等价于 Rspack 的 [Rule.resourceQuery](https://rspack.rs/zh/config/module#ruleresourcequery)。
+- `resourceQuery`：匹配模块的 query，等价于 Rspack 的 [rules[].resourceQuery](https://rspack.rs/zh/config/module-rules#rulesresourcequery)。
 
 ```js
 // 匹配 raw query: "foo.ext?raw"
@@ -390,7 +390,7 @@ api.transform({ test: /\.node$/, raw: true }, ({ code }) => {
 });
 ```
 
-- `layer`：标识匹配的模块的 [layer](https://rspack.rs/zh/config/experiments#experimentslayers)，可以将一组模块聚合到一个 layer 中，等同于 Rspack 的 [Rule.layer](https://rspack.rs/zh/config/module#rulelayer)。
+- `layer`：标识匹配的模块的 [layer](https://rspack.rs/zh/config/experiments#experimentslayers)，可以将一组模块聚合到一个 layer 中，等同于 Rspack 的 [rules[].layer](https://rspack.rs/zh/config/module-rules#ruleslayer)。
 
 ```js
 api.transform({ test: /\.md$/, layer: 'foo' }, ({ code }) => {
@@ -398,7 +398,7 @@ api.transform({ test: /\.md$/, layer: 'foo' }, ({ code }) => {
 });
 ```
 
-- `issuerLayer`：与"引入当前模块"的模块的 [layer](https://rspack.rs/zh/config/experiments#experimentslayers) 进行匹配，等同于 Rspack 的 [Rule.issuerLayer](https://rspack.rs/zh/config/module#ruleissuerlayer)。
+- `issuerLayer`：与"引入当前模块"的模块的 [layer](https://rspack.rs/zh/config/experiments#experimentslayers) 进行匹配，等同于 Rspack 的 [rules[].issuerLayer](https://rspack.rs/zh/config/module-rules#rulesissuerlayer)。
 
 ```js
 api.transform({ test: /\.md$/, issuerLayer: 'foo' }, ({ code }) => {
@@ -406,7 +406,7 @@ api.transform({ test: /\.md$/, issuerLayer: 'foo' }, ({ code }) => {
 });
 ```
 
-- `issuer`：匹配"引入当前模块"的模块的绝对路径，等同于 Rspack 的 [Rule.issuer](https://rspack.rs/zh/config/module#ruleissuer)。
+- `issuer`：匹配"引入当前模块"的模块的绝对路径，等同于 Rspack 的 [rules[].issuer](https://rspack.rs/zh/config/module-rules#rulesissuer)。
 
 ```js
 api.transform({ test: /\.md$/, issuer: /\.js$/ }, ({ code }) => {
@@ -414,7 +414,7 @@ api.transform({ test: /\.md$/, issuer: /\.js$/ }, ({ code }) => {
 });
 ```
 
-- `with`：匹配 [import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with)，等同于 Rspack 的 [Rule.with](https://rspack.rs/zh/config/module#rulewith)。
+- `with`：匹配 [import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with)，等同于 Rspack 的 [rules[].with](https://rspack.rs/zh/config/module-rules#ruleswith)。
 
 ```js
 api.transform({ test: /\.md$/, with: { type: 'url' } }, ({ code }) => {
@@ -422,7 +422,7 @@ api.transform({ test: /\.md$/, with: { type: 'url' } }, ({ code }) => {
 });
 ```
 
-- `mimetype`：根据 MIME 类型（而非文件扩展名）匹配模块。主要用于 data URI 模块（例如 `data:text/javascript,...`），等同于 Rspack 的 [Rule.mimetype](https://rspack.rs/zh/config/module#rulemimetype)。
+- `mimetype`：根据 MIME 类型（而非文件扩展名）匹配模块。主要用于 data URI 模块（例如 `data:text/javascript,...`），等同于 Rspack 的 [rules[].mimetype](https://rspack.rs/zh/config/module-rules#rulesmimetype)。
 
 ```js
 api.transform({ mimetype: 'text/javascript' }, ({ code }) => {
@@ -430,7 +430,7 @@ api.transform({ mimetype: 'text/javascript' }, ({ code }) => {
 });
 ```
 
-- `enforce`：指定 transform 函数的执行顺序，等同于 Rspack 的 [Rule.enforce](https://rspack.rs/zh/config/module#ruleenforce)。
+- `enforce`：指定 transform 函数的执行顺序，等同于 Rspack 的 [rules[].enforce](https://rspack.rs/zh/config/module-rules#rulesenforce)。
   - 当 `enforce` 为 `pre` 时，transform 函数会在其他 transform 函数（或 Rspack loader）之前执行。
   - 当 `enforce` 为 `post` 时，transform 函数会在其他 transform 函数（或 Rspack loader）之后执行。
 

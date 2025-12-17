@@ -4,14 +4,11 @@ exports[`plugin-basic > should apply basic config correctly in development 1`] =
 {
   "context": "<ROOT>/packages/core/tests",
   "experiments": {
-    "inlineConst": false,
-    "inlineEnum": false,
     "rspackFuture": {
       "bundlerInfo": {
         "force": false,
       },
     },
-    "typeReexportsPresence": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -21,12 +18,14 @@ exports[`plugin-basic > should apply basic config correctly in development 1`] =
     "parser": {
       "javascript": {
         "exportsPresence": "error",
-        "inlineConst": false,
         "typeReexportsPresence": "tolerant",
       },
     },
   },
   "name": "web",
+  "optimization": {
+    "inlineExports": false,
+  },
   "performance": {
     "hints": false,
   },
@@ -49,14 +48,11 @@ exports[`plugin-basic > should apply basic config correctly in production 1`] = 
 {
   "context": "<ROOT>/packages/core/tests",
   "experiments": {
-    "inlineConst": true,
-    "inlineEnum": true,
     "rspackFuture": {
       "bundlerInfo": {
         "force": false,
       },
     },
-    "typeReexportsPresence": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -66,12 +62,14 @@ exports[`plugin-basic > should apply basic config correctly in production 1`] = 
     "parser": {
       "javascript": {
         "exportsPresence": "error",
-        "inlineConst": true,
         "typeReexportsPresence": "tolerant",
       },
     },
   },
   "name": "web",
+  "optimization": {
+    "inlineExports": true,
+  },
   "performance": {
     "hints": false,
   },
