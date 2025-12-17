@@ -11,14 +11,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "inlineConst": false,
-    "inlineEnum": false,
     "rspackFuture": {
       "bundlerInfo": {
         "force": false,
       },
     },
-    "typeReexportsPresence": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -32,7 +29,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "parser": {
       "javascript": {
         "exportsPresence": "error",
-        "inlineConst": false,
         "typeReexportsPresence": "tolerant",
       },
     },
@@ -390,6 +386,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "name": "web",
   "optimization": {
+    "inlineExports": false,
     "minimize": false,
     "splitChunks": {
       "cacheGroups": {
@@ -536,14 +533,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "inlineConst": true,
-    "inlineEnum": true,
     "rspackFuture": {
       "bundlerInfo": {
         "force": false,
       },
     },
-    "typeReexportsPresence": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -557,7 +551,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "parser": {
       "javascript": {
         "exportsPresence": "error",
-        "inlineConst": true,
         "typeReexportsPresence": "tolerant",
       },
     },
@@ -915,6 +908,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   },
   "name": "web",
   "optimization": {
+    "inlineExports": true,
     "minimize": true,
     "minimizer": [
       SwcJsMinimizerRspackPlugin {
@@ -1085,14 +1079,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "devtool": "cheap-module-source-map",
   "experiments": {
     "asyncWebAssembly": true,
-    "inlineConst": false,
-    "inlineEnum": false,
     "rspackFuture": {
       "bundlerInfo": {
         "force": false,
       },
     },
-    "typeReexportsPresence": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -1102,7 +1093,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "parser": {
       "javascript": {
         "exportsPresence": "error",
-        "inlineConst": false,
         "typeReexportsPresence": "tolerant",
       },
     },
@@ -1449,6 +1439,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   },
   "name": "node",
   "optimization": {
+    "inlineExports": false,
     "minimize": false,
     "splitChunks": false,
   },
@@ -1532,14 +1523,11 @@ exports[`tools.rspack > should match snapshot 1`] = `
   "devtool": "cheap-module-source-map",
   "experiments": {
     "asyncWebAssembly": true,
-    "inlineConst": false,
-    "inlineEnum": false,
     "rspackFuture": {
       "bundlerInfo": {
         "force": false,
       },
     },
-    "typeReexportsPresence": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -1553,7 +1541,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
     "parser": {
       "javascript": {
         "exportsPresence": "error",
-        "inlineConst": false,
         "typeReexportsPresence": "tolerant",
       },
     },
@@ -1923,6 +1910,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
   },
   "name": "web",
   "optimization": {
+    "inlineExports": false,
     "minimize": false,
     "splitChunks": {
       "cacheGroups": {
