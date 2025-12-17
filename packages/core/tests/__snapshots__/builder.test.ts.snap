@@ -11,14 +11,11 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "inlineConst": false,
-    "inlineEnum": false,
     "rspackFuture": {
       "bundlerInfo": {
         "force": false,
       },
     },
-    "typeReexportsPresence": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -32,7 +29,6 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
     "parser": {
       "javascript": {
         "exportsPresence": "error",
-        "inlineConst": false,
         "typeReexportsPresence": "tolerant",
       },
     },
@@ -390,6 +386,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
   },
   "name": "web",
   "optimization": {
+    "inlineExports": false,
     "minimize": false,
     "splitChunks": {
       "cacheGroups": {

@@ -1469,14 +1469,11 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     "devtool": "eval-source-map",
     "experiments": {
       "asyncWebAssembly": true,
-      "inlineConst": false,
-      "inlineEnum": false,
       "rspackFuture": {
         "bundlerInfo": {
           "force": false,
         },
       },
-      "typeReexportsPresence": true,
     },
     "infrastructureLogging": {
       "level": "error",
@@ -1490,7 +1487,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "parser": {
         "javascript": {
           "exportsPresence": "error",
-          "inlineConst": false,
           "typeReexportsPresence": "tolerant",
         },
       },
@@ -1848,6 +1844,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     },
     "name": "web",
     "optimization": {
+      "inlineExports": false,
       "minimize": false,
       "splitChunks": {
         "cacheGroups": {
@@ -1933,14 +1930,11 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     "devtool": "eval",
     "experiments": {
       "asyncWebAssembly": true,
-      "inlineConst": false,
-      "inlineEnum": false,
       "rspackFuture": {
         "bundlerInfo": {
           "force": false,
         },
       },
-      "typeReexportsPresence": true,
     },
     "infrastructureLogging": {
       "level": "error",
@@ -1950,7 +1944,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "parser": {
         "javascript": {
           "exportsPresence": "error",
-          "inlineConst": false,
           "typeReexportsPresence": "tolerant",
         },
       },
@@ -2300,6 +2293,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     },
     "name": "node",
     "optimization": {
+      "inlineExports": false,
       "minimize": false,
       "splitChunks": false,
     },
