@@ -136,15 +136,10 @@ const applyDefaultMiddlewares = ({
     const isLazyCompilationEnabled = () => {
       if (isMultiCompiler(compiler)) {
         return compiler.compilers.some(
-          (childCompiler) =>
-            childCompiler.options.experiments?.lazyCompilation ||
-            childCompiler.options.lazyCompilation,
+          (childCompiler) => childCompiler.options.lazyCompilation,
         );
       }
-      return (
-        compiler.options.experiments?.lazyCompilation ||
-        compiler.options.lazyCompilation
-      );
+      return compiler.options.lazyCompilation;
     };
 
     if (isLazyCompilationEnabled()) {
