@@ -149,9 +149,7 @@ const applyDefaultMiddlewares = ({
 
     if (isLazyCompilationEnabled()) {
       middlewares.push(
-        rspack.experiments.lazyCompilationMiddleware(
-          compiler,
-        ) as RequestHandler,
+        rspack.lazyCompilationMiddleware(compiler) as RequestHandler,
       );
     }
   }
