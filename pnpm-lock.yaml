@@ -295,8 +295,8 @@ importers:
   e2e/cases/swc-plugin:
     dependencies:
       '@swc/plugin-remove-console':
-        specifier: ^12.0.1
-        version: 12.0.1
+        specifier: ^12.1.0
+        version: 12.1.0
 
   e2e/helper:
     dependencies:
@@ -794,8 +794,8 @@ importers:
         specifier: ^1.1.4
         version: 1.1.4(@prefresh/core@1.5.9(preact@10.28.0))(@prefresh/utils@1.2.1)
       '@swc/plugin-prefresh':
-        specifier: ^12.0.1
-        version: 12.0.1
+        specifier: ^12.1.0
+        version: 12.1.0
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -2826,11 +2826,11 @@ packages:
   '@swc/helpers@0.5.17':
     resolution: {integrity: sha512-5IKx/Y13RsYd+sauPb2x+U/xZikHjolzfuDgTAl/Tdf3Q8rslRvC19NKDLgAJQ6wsqADk10ntlv08nPFw/gO/A==}
 
-  '@swc/plugin-prefresh@12.0.1':
-    resolution: {integrity: sha512-SDtHemEY29IolSamLLUz/T+jjyaDp5IwZzNyeXDsWDxiEx9IoosnEpcMuLJgikrCC8byidbd/S+WRPypILvlcw==}
+  '@swc/plugin-prefresh@12.1.0':
+    resolution: {integrity: sha512-9V0fqszt238FpYpKi/JD9ZTyaXcIyy1qGNZNhsxI0asdbhUlZWqGNPV8QMEbJwLFHfh0yjnSZJpmp1V05ZBGhg==}
 
-  '@swc/plugin-remove-console@12.0.1':
-    resolution: {integrity: sha512-QVjrV14ZsRzI6INbh/89lO4TWWjWOVchnhU0NjVWqzpwq1pTh6zScuXjHu2l6nAWbS38nIcb484Uf8Y/g8j05Q==}
+  '@swc/plugin-remove-console@12.1.0':
+    resolution: {integrity: sha512-GDOrdo/Zjd7UrprCXhffWPaI/uRVy4Yg2OpCOibUZSDlo3KpnzYGWtE2HAhjkJFUXerhLb0Ptj09vI1FTlWTmw==}
 
   '@tailwindcss/node@4.1.18':
     resolution: {integrity: sha512-DoR7U1P7iYhw16qJ49fgXUlry1t4CpXeErJHnQ44JgTSKMaZUdf17cfn5mHchfJ4KRBZRFA/Coo+MUF5+gOaCQ==}
@@ -8519,11 +8519,11 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@swc/plugin-prefresh@12.0.1':
+  '@swc/plugin-prefresh@12.1.0':
     dependencies:
       '@swc/counter': 0.1.3
 
-  '@swc/plugin-remove-console@12.0.1':
+  '@swc/plugin-remove-console@12.1.0':
     dependencies:
       '@swc/counter': 0.1.3
 
