@@ -35,7 +35,7 @@ rspackTest(
 );
 
 rspackTest(
-  'should allow to configure `tools.rspack.experiments.lazyCompilation`',
+  'should allow to configure `tools.rspack.lazyCompilation`',
   async ({ page, dev }) => {
     const rsbuild = await dev({
       config: {

@@ -36,7 +36,7 @@ export const pluginSri = (): RsbuildPlugin => ({
 
       chain
         .plugin(CHAIN_ID.PLUGIN.SUBRESOURCE_INTEGRITY)
-        .use(rspack.experiments.SubresourceIntegrityPlugin, [
+        .use(rspack.SubresourceIntegrityPlugin, [
           {
             enabled: true,
             hashFuncNames: castArray(algorithm) as [
