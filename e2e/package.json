@@ -18,7 +18,7 @@
     "react-dom": "^19.2.3",
     "react-router-dom": "^7.11.0",
     "solid-js": "^1.9.10",
-    "vue": "^3.5.25",
+    "vue": "^3.5.26",
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
@@ -55,7 +55,7 @@
     "@types/react-dom": "^19.2.3",
     "create-rsbuild": "workspace:*",
     "fast-glob": "^3.3.3",
-    "fs-extra": "^11.3.2",
+    "fs-extra": "^11.3.3",
     "playwright": "1.57.0",
     "polka": "^0.5.2",
     "tailwindcss": "^4.1.18",
