@@ -56,6 +56,9 @@ export default {
     {
       name: 'sirv',
       ignoreDts: true,
+      externals: {
+        mrmime: '../mrmime/index.js',
+      },
     },
     {
       name: 'rspack-chain',
