@@ -49,16 +49,14 @@ export const pluginBasic = (): RsbuildPlugin => ({
         if (api.context.bundlerType === 'rspack') {
           chain.module.parser.merge({
             javascript: {
-              inlineConst: isProd,
               typeReexportsPresence: 'tolerant',
             },
           });
 
+          chain.optimization.inlineExports(isProd);
+
           chain.experiments({
             ...chain.get('experiments'),
-            inlineEnum: isProd,
-            inlineConst: isProd,
-            typeReexportsPresence: true,
             rspackFuture: {
               bundlerInfo: {
                 force: false,
