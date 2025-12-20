@@ -119,7 +119,7 @@ export function init({
     id,
     message,
   }: ServerMessageResolvedClientError['data']): void {
-    // If build failed, do not render client errors in overlay
+    // If build failed, do not render client errors on overlay
     if (!createOverlay || hasBuildErrors) {
       return;
     }
