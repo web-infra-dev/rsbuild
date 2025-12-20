@@ -14,7 +14,7 @@ import type {
   Rspack,
 } from '../types';
 import { formatBrowserErrorLog } from './browserLogs';
-import { genOverlayHTML } from './overlay';
+import { renderErrorToHtml } from './overlay';
 
 interface ExtWebSocket extends Ws {
   isAlive: boolean;
@@ -49,7 +49,14 @@ export type ServerMessageErrors = {
   data: {
     text: string[];
     html: string;
-    clearLogs?: boolean;
+  };
+};
+
+export type ServerMessageResolvedClientError = {
+  type: 'resolved-client-error';
+  data: {
+    id: string;
+    message: string;
   };
 };
 
@@ -58,10 +65,12 @@ export type ServerMessage =
   | ServerMessageStaticChanged
   | ServerMessageHash
   | ServerMessageWarnings
-  | ServerMessageErrors;
+  | ServerMessageErrors
+  | ServerMessageResolvedClientError;
 
 export type ClientMessageError = {
   type: 'client-error';
+  id: string;
   message: string;
   stack?: string;
 };
@@ -208,15 +217,21 @@ export class SocketServer {
    * Send error messages to the client and render error overlay
    */
   public sendError(errors: Rspack.StatsError[], token: string): void {
+    const { rootPath } = this.context;
     const formattedErrors = errors.map((item) =>
-      formatStatsError(item, this.context.rootPath),
+      formatStatsError(item, rootPath),
     );
+    const html = formattedErrors
+      .map((error) => renderErrorToHtml(error, rootPath))
+      .join('\n\n')
+      .trim();
+
     this.sockWrite(
       {
         type: 'errors',
         data: {
           text: formattedErrors,
-          html: genOverlayHTML(formattedErrors, this.context.rootPath),
+          html,
         },
       },
       token,
@@ -347,17 +362,12 @@ export class SocketServer {
 
           // Render runtime errors in overlay
           if (typeof client.overlay === 'object' && client.overlay.runtime) {
-            const html = genOverlayHTML(
-              Array.from(this.reportedBrowserLogs),
-              context.rootPath,
-            );
             this.sockWrite(
               {
-                type: 'errors',
+                type: 'resolved-client-error',
                 data: {
-                  text: [],
-                  html,
-                  clearLogs: false,
+                  id: message.id,
+                  message: renderErrorToHtml(log),
                 },
               },
               token,

@@ -2,15 +2,17 @@ import type {
   ClientMessage,
   ClientMessageError,
   ServerMessage,
+  ServerMessageErrors,
+  ServerMessageResolvedClientError,
 } from '../server/socketServer';
 import type { LogLevel, NormalizedClientConfig } from '../types';
 import { logger } from './log';
 
-let createOverlay: undefined | ((html: string) => void);
+let createOverlay: undefined | ((title: string, content: string) => void);
 let clearOverlay: undefined | (() => void);
 
 export const registerOverlay = (
-  createFn: (html: string) => void,
+  createFn: (title: string, content: string) => void,
   clearFn: () => void,
 ): void => {
   createOverlay = createFn;
@@ -37,6 +39,8 @@ export function init({
   logger.level = logLevel;
 
   const queuedMessages: ClientMessage[] = [];
+  // Ids of the runtime errors sent to the server
+  const clientErrors: { id: string; message?: string }[] = [];
 
   // Hash of the last successful build
   let lastHash: string | undefined;
@@ -97,19 +101,8 @@ export function init({
   }
 
   // Compilation with errors (e.g. syntax error or missing modules).
-  function handleErrors({
-    text,
-    html,
-    clearLogs = true,
-  }: {
-    text: string[];
-    html: string;
-    clearLogs?: boolean;
-  }) {
-    if (clearLogs) {
-      clearBuildErrors();
-    }
-
+  function handleErrors({ text, html }: ServerMessageErrors['data']) {
+    clearBuildErrors();
     hasBuildErrors = true;
 
     // Also log them to the console.
@@ -118,8 +111,32 @@ export function init({
     }
 
     if (createOverlay) {
-      createOverlay(html);
+      createOverlay('Build failed', html);
     }
+  }
+
+  function handleResolvedClientError({
+    id,
+    message,
+  }: ServerMessageResolvedClientError['data']): void {
+    // If build failed, do not render client errors in overlay
+    if (!createOverlay || hasBuildErrors) {
+      return;
+    }
+
+    for (const item of clientErrors) {
+      if (item.id === id) {
+        item.message = message;
+      }
+    }
+
+    createOverlay(
+      'Runtime errors',
+      clientErrors
+        .map((item) => item.message)
+        .filter(Boolean)
+        .join('\n\n'),
+    );
   }
 
   // __webpack_hash__ is the hash of the current compilation.
@@ -232,6 +249,9 @@ export function init({
       case 'errors':
         handleErrors(message.data);
         break;
+      case 'resolved-client-error':
+        handleResolvedClientError(message.data);
+        break;
     }
   }
 
@@ -266,11 +286,16 @@ export function init({
   }
 
   function sendError(message: string, stack?: string) {
+    const id = `${Date.now().toString(36)}${Math.random().toString(36).slice(2)}`;
     const messageInfo: ClientMessageError = {
       type: 'client-error',
+      id,
       message,
       stack,
     };
+
+    clientErrors.push({ id });
+
     if (isSocketReady()) {
       socketSend(messageInfo);
     } else {
