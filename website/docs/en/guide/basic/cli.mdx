@@ -62,7 +62,7 @@ npx rsbuild
 
 ### Opening page
 
-The `--open` option automatically opens a page when starting the dev server (equivalent to setting [server.open](/config/server/open) to `true`).
+The `--open` option opens a page automatically when the dev server starts (equivalent to setting [server.open](/config/server/open) to `true`).
 
 ```bash
 rsbuild dev --open
@@ -109,7 +109,7 @@ Options:
 ```
 
 :::tip
-The preview command is only used for local preview. Do not use it for production servers, as it is not designed for that.
+Use the preview command only for local previews. Do not use it in production, as it is not designed for production servers.
 :::
 
 ## rsbuild inspect
@@ -148,7 +148,7 @@ rsbuild inspect --mode production
 
 ### Verbose content
 
-By default, the inspect command omits function content in the configuration object. To output complete function content, add the `--verbose` option:
+By default, the inspect command omits function bodies in the configuration object. To output complete function content, add the `--verbose` option:
 
 ```bash
 rsbuild inspect --verbose
