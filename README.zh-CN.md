@@ -29,28 +29,6 @@ Rsbuild 提供 [丰富的构建功能](https://rsbuild.rs/zh/guide/start/feature
 
 > 📊 Benchmark 结果来自 [build-tools-performance](https://github.com/rspack-contrib/build-tools-performance)。
 
-## 💡 对比其他工具
-
-Rsbuild 是与 [Vite](https://vitejs.dev/)、[Create React App](https://github.com/facebook/create-react-app) 或 [Vue CLI](https://github.com/vuejs/vue-cli) 相似的构建工具，它们都默认包含了开发服务器、命令行工具和合理的构建配置，以此来提供开箱即用的体验。
-
-![](https://assets.rspack.rs/rsbuild/assets/rsbuild-1-0-build-tools.png)
-
-### CRA / Vue CLI
-
-你可以将 Rsbuild 理解为一个现代化的 Create React App 或 Vue CLI，它与这些工具的主要区别在于：
-
-- 底层的打包工具由 webpack 替换为 Rspack，提供 5 ~ 10 倍的构建性能。
-- 与前端 UI 框架解耦，并通过 [插件](https://rsbuild.rs/zh/plugins/list/) 来支持所有 UI 框架，包括 React、Vue、Svelte、Solid 等。
-- 提供更好的扩展性，你可以通过 [配置](https://rsbuild.rs/zh/config/)、[插件 API](https://rsbuild.rs/zh/plugins/dev/) 和 [JavaScript API](https://rsbuild.rs/zh/api/start/) 来灵活地扩展 Rsbuild。
-
-### Vite
-
-Rsbuild 与 Vite 有许多相似之处，它们皆致力于提升前端的开发体验。其主要区别在于：
-
-- **生态兼容性**：Rsbuild 兼容大部分的 webpack 插件和所有 Rspack 插件，而 Vite 则是兼容 Rollup 插件。如果你目前更多地使用了 webpack 生态的插件和 loaders，那么迁移到 Rsbuild 是相对容易的。
-- **生产一致性**：Rsbuild 在开发阶段和生产构建均使用 Rspack 进行打包，因此开发和生产构建的产物具备较强的一致性，这也是 Vite 通过 Rolldown 想要实现的目标之一。
-- **模块联邦**：Rsbuild 团队与 [Module Federation](https://rsbuild.rs/zh/guide/advanced/module-federation) 的开发团队密切合作，并为 Module Federation 提供一流的支持，帮助你开发微前端架构的大型 Web 应用。
-
 ## 🔥 特性
 
 Rsbuild 具备以下特性：
