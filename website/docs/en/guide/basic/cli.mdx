@@ -49,9 +49,9 @@ The `rsbuild dev` command starts a local dev server and compiles source code for
 Usage: rsbuild dev [options]
 
 Options:
-  -o, --open [url]      Open the page in browser on startup
+  -o, --open [url]      Open the page in the browser on startup
   --port <port>         Set the port number for the server
-  --host <host>         Set the host that the server listens to
+  --host <host>         Set the host the server listens on
 ```
 
 Start the dev server by running `rsbuild` directly (equivalent to `rsbuild dev`):
@@ -62,7 +62,7 @@ npx rsbuild
 
 ### Opening page
 
-The `--open` option automatically opens a page when starting the dev server (equivalent to setting [server.open](/config/server/open) to `true`).
+The `--open` option opens a page automatically when the dev server starts (equivalent to setting [server.open](/config/server/open) to `true`).
 
 ```bash
 rsbuild dev --open
@@ -104,12 +104,12 @@ Usage: rsbuild preview [options]
 
 Options:
   -o, --open [url]      Open the page in browser on startup
-  --port <port>         Set a port number for Rsbuild server to listen
-  --host <host>         Set the host that the Rsbuild server listens to
+  --port <port>         Set the port number for the Rsbuild server to listen on
+  --host <host>         Set the host the Rsbuild server listens on
 ```
 
 :::tip
-The preview command is only used for local preview. Do not use it for production servers, as it is not designed for that.
+Use the preview command only for local previews. Do not use it in production, as it is not designed for production servers.
 :::
 
 ## rsbuild inspect
@@ -148,7 +148,7 @@ rsbuild inspect --mode production
 
 ### Verbose content
 
-By default, the inspect command omits function content in the configuration object. To output complete function content, add the `--verbose` option:
+By default, the inspect command omits function bodies in the configuration object. To output complete function content, add the `--verbose` option:
 
 ```bash
 rsbuild inspect --verbose
