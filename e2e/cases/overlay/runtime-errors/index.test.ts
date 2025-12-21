@@ -40,7 +40,7 @@ test('should show runtime errors on overlay', async ({
   );
   await logHelper.expectLog('Runtime error occurred');
   await expect(errorOverlay.locator('.title')).toHaveText('Runtime errors');
-  expect(
+  await expect(
     errorOverlay.getByText('Uncaught Error: Runtime error occurred'),
-  ).toBeTruthy();
+  ).toBeVisible();
 });
