@@ -14,7 +14,7 @@ import type {
   Rspack,
 } from '../types';
 import { formatBrowserErrorLog } from './browserLogs';
-import { genOverlayHTML } from './overlay';
+import { renderErrorToHtml } from './overlay';
 
 interface ExtWebSocket extends Ws {
   isAlive: boolean;
@@ -46,7 +46,18 @@ export type ServerMessageWarnings = {
 
 export type ServerMessageErrors = {
   type: 'errors';
-  data: { text: string[]; html: string };
+  data: {
+    text: string[];
+    html: string;
+  };
+};
+
+export type ServerMessageResolvedClientError = {
+  type: 'resolved-client-error';
+  data: {
+    id: string;
+    message: string;
+  };
 };
 
 export type ServerMessage =
@@ -54,10 +65,12 @@ export type ServerMessage =
   | ServerMessageStaticChanged
   | ServerMessageHash
   | ServerMessageWarnings
-  | ServerMessageErrors;
+  | ServerMessageErrors
+  | ServerMessageResolvedClientError;
 
 export type ClientMessageError = {
   type: 'client-error';
+  id: string;
   message: string;
   stack?: string;
 };
@@ -204,15 +217,21 @@ export class SocketServer {
    * Send error messages to the client and render error overlay
    */
   public sendError(errors: Rspack.StatsError[], token: string): void {
+    const { rootPath } = this.context;
     const formattedErrors = errors.map((item) =>
-      formatStatsError(item, this.context.rootPath),
+      formatStatsError(item, rootPath),
     );
+    const html = formattedErrors
+      .map((error) => renderErrorToHtml(error, rootPath))
+      .join('\n\n')
+      .trim();
+
     this.sockWrite(
       {
         type: 'errors',
         data: {
           text: formattedErrors,
-          html: genOverlayHTML(formattedErrors, this.context.rootPath),
+          html,
         },
       },
       token,
@@ -310,18 +329,19 @@ export class SocketServer {
           typeof data === 'string' ? data : data.toString(),
         );
 
-        const config = this.context.normalizedConfig;
+        const { context } = this;
+        const config = context.normalizedConfig;
         if (!config) {
           return;
         }
 
-        const { browserLogs } = config.dev;
+        const { browserLogs, client } = config.dev;
         if (
           message.type === 'client-error' &&
           // Do not report browser error when using webpack
-          this.context.bundlerType === 'rspack' &&
+          context.bundlerType === 'rspack' &&
           // Do not report browser error when build failed
-          !this.context.buildState.hasErrors &&
+          !context.buildState.hasErrors &&
           browserLogs
         ) {
           const stackTrace =
@@ -330,7 +350,7 @@ export class SocketServer {
 
           const log = await formatBrowserErrorLog(
             message,
-            this.context,
+            context,
             this.getOutputFileSystem(),
             stackTrace,
           );
@@ -338,6 +358,20 @@ export class SocketServer {
           if (!this.reportedBrowserLogs.has(log)) {
             this.reportedBrowserLogs.add(log);
             logger.error(log);
+          }
+
+          // Render runtime errors in overlay
+          if (typeof client.overlay === 'object' && client.overlay.runtime) {
+            this.sockWrite(
+              {
+                type: 'resolved-client-error',
+                data: {
+                  id: message.id,
+                  message: renderErrorToHtml(log),
+                },
+              },
+              token,
+            );
           }
         }
       } catch {}
