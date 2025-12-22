@@ -20,15 +20,15 @@ test('should hide overlay after resolving error', async ({
   });
 
   await editFile(join(tempSrc, 'App.jsx'), (code) =>
-    code.replace('</div>', '</aaaaa>'),
+    code.replace('</div>', '</a>'),
   );
   await logHelper.expectLog(MODULE_BUILD_FAILED_LOG);
+  await expect(page.locator(OVERLAY_ID)).toBeAttached();
 
   logHelper.clearLogs();
   await editFile(join(tempSrc, 'App.jsx'), (code) =>
-    code.replace('</aaaa>', '</div>'),
+    code.replace('</a>', '</div>'),
   );
   logHelper.expectBuildEnd();
-
-  expect(await page.locator(OVERLAY_ID).isVisible()).toBeFalsy();
+  await expect(page.locator(OVERLAY_ID)).not.toBeAttached();
 });

@@ -33,12 +33,12 @@ test('should disable error overlay when dev.client.overlay is false', async ({
 
   await expectLog(HMR_CONNECTED_LOG);
 
-  await expect(page.locator(OVERLAY_ID)).toHaveCount(0);
+  await expect(page.locator(OVERLAY_ID)).not.toBeAttached();
 
   await editFile(join(tempSrc, 'App.tsx'), (code) =>
-    code.replace('</div>', '</aaaa>'),
+    code.replace('</div>', '</a>'),
   );
 
   await expectLog(MODULE_BUILD_FAILED_LOG);
-  await expect(page.locator(OVERLAY_ID)).toHaveCount(0);
+  await expect(page.locator(OVERLAY_ID)).not.toBeAttached();
 });

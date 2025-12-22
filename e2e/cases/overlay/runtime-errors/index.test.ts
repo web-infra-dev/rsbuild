@@ -23,7 +23,7 @@ rspackTest(
     await logHelper.expectLog(HMR_CONNECTED_LOG);
 
     const errorOverlay = page.locator(OVERLAY_ID);
-    expect(await errorOverlay.locator('.title').count()).toBe(0);
+    await expect(errorOverlay.locator('.title')).not.toBeAttached();
 
     // Introduce a runtime error
     await editFile(join(tempSrc, 'App.jsx'), (code) =>
@@ -38,6 +38,6 @@ rspackTest(
     await expect(errorOverlay.locator('.title')).toHaveText('Runtime errors');
     await expect(
       errorOverlay.getByText('Uncaught Error: Runtime error occurred'),
-    ).toBeVisible();
+    ).toBeAttached();
   },
 );
