@@ -36,10 +36,10 @@ test('should show overlay correctly', async ({
   await expectLog(HMR_CONNECTED_LOG);
 
   const errorOverlay = page.locator(OVERLAY_ID);
-  expect(await errorOverlay.locator('.title').count()).toBe(0);
+  await expect(errorOverlay.locator('.title')).not.toBeAttached();
 
   await editFile(join(tempSrc, 'App.tsx'), (code) =>
-    code.replace('</div>', '</aaaaa>'),
+    code.replace('</div>', '</a>'),
   );
 
   await expectLog(MODULE_BUILD_FAILED_LOG);
