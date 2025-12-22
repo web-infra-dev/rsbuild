@@ -196,6 +196,8 @@ A extra filter to determine which resources to exclude, the usage is similar to 
 
 Whether to preload script resources that already exist in the current HTML content. By default, if a resource has been added to the current HTML via a script tag, it will not be preloaded additionally.
 
+When set to `false`, Rsbuild will generate preload tags for all resources that meet the conditions, even if they already exist in the current HTML content.
+
 ```ts title="rsbuild.config.ts"
 export default {
   performance: {
