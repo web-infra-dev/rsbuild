@@ -386,7 +386,6 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
   },
   "name": "web",
   "optimization": {
-    "inlineExports": false,
     "minimize": false,
     "splitChunks": {
       "cacheGroups": {
