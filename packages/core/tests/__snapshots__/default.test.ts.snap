@@ -386,7 +386,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "name": "web",
   "optimization": {
-    "inlineExports": false,
     "minimize": false,
     "splitChunks": {
       "cacheGroups": {
@@ -908,7 +907,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   },
   "name": "web",
   "optimization": {
-    "inlineExports": true,
     "minimize": true,
     "minimizer": [
       SwcJsMinimizerRspackPlugin {
@@ -1439,7 +1437,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   },
   "name": "node",
   "optimization": {
-    "inlineExports": false,
     "minimize": false,
     "splitChunks": false,
   },
@@ -1910,7 +1907,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
   },
   "name": "web",
   "optimization": {
-    "inlineExports": false,
     "minimize": false,
     "splitChunks": {
       "cacheGroups": {

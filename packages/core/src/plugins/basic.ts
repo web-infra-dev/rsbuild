@@ -8,7 +8,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(
-      (chain, { isDev, isProd, target, bundler, environment, CHAIN_ID }) => {
+      (chain, { isDev, target, bundler, environment, CHAIN_ID }) => {
         const { config } = environment;
 
         chain.name(environment.name);
@@ -52,8 +52,6 @@ export const pluginBasic = (): RsbuildPlugin => ({
               typeReexportsPresence: 'tolerant',
             },
           });
-
-          chain.optimization.inlineExports(isProd);
 
           chain.experiments({
             ...chain.get('experiments'),
