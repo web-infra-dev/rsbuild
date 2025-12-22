@@ -1,10 +1,17 @@
-import { expect, test } from '@e2e/helper';
+import {
+  expect,
+  OVERLAY_ID,
+  OVERLAY_TITLE_BUILD_FAILED,
+  test,
+} from '@e2e/helper';
 import type { Page } from 'playwright';
 
 const expectErrorOverlay = async (page: Page) => {
-  await page.waitForSelector('rsbuild-error-overlay', { state: 'attached' });
-  const errorOverlay = page.locator('rsbuild-error-overlay');
-  await expect(errorOverlay.locator('.title')).toHaveText('Build failed');
+  await page.waitForSelector(OVERLAY_ID, { state: 'attached' });
+  const errorOverlay = page.locator(OVERLAY_ID);
+  await expect(errorOverlay.locator('.title')).toHaveText(
+    OVERLAY_TITLE_BUILD_FAILED,
+  );
 
   // Get "<span style="color:#888">TS2322: </span>"
   const tsSpan = errorOverlay.locator('span').getByText('TS2322: ');

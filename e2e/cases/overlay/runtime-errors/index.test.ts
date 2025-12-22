@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, HMR_CONNECTED_LOG, OVERLAY_ID, rspackTest } from '@e2e/helper';
 
 rspackTest(
   'should show runtime errors on overlay',
@@ -20,9 +20,9 @@ rspackTest(
       },
     });
 
-    await logHelper.expectLog('[rsbuild] WebSocket connected.');
+    await logHelper.expectLog(HMR_CONNECTED_LOG);
 
-    const errorOverlay = page.locator('rsbuild-error-overlay');
+    const errorOverlay = page.locator(OVERLAY_ID);
     expect(await errorOverlay.locator('.title').count()).toBe(0);
 
     // Introduce a runtime error

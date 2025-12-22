@@ -1,6 +1,11 @@
 import { join } from 'node:path';
 
 export const BUILD_END_LOG = 'built in';
+export const HMR_CONNECTED_LOG = '[rsbuild] WebSocket connected.';
+export const MODULE_BUILD_FAILED_LOG = 'Module build failed';
+
+export const OVERLAY_ID = 'rsbuild-error-overlay';
+export const OVERLAY_TITLE_BUILD_FAILED = 'Build failed';
 
 export const RSBUILD_BIN_PATH = join(
   import.meta.dirname,
