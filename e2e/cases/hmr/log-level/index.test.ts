@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, HMR_CONNECTED_LOG, rspackTest } from '@e2e/helper';
 
 rspackTest(
   'should respect dev.client.logLevel when set to warn',
@@ -29,7 +29,7 @@ rspackTest(
     const locator = page.locator('#test');
     await expect(locator).toHaveText('Hello Rsbuild');
 
-    expect(expectNoLog('[rsbuild] WebSocket connected.')).toBe(true);
+    expect(expectNoLog(HMR_CONNECTED_LOG)).toBe(true);
   },
 );
 
@@ -53,7 +53,7 @@ rspackTest(
       },
     });
 
-    await expectLog('[rsbuild] WebSocket connected.');
+    await expectLog(HMR_CONNECTED_LOG);
   },
 );
 
@@ -80,7 +80,7 @@ rspackTest(
 
     const locator = page.locator('#test');
     await expect(locator).toHaveText('Hello Rsbuild');
-    expect(expectNoLog('[rsbuild] WebSocket connected.')).toBe(true);
+    expect(expectNoLog(HMR_CONNECTED_LOG)).toBe(true);
   },
 );
 

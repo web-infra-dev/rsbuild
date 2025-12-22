@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, MODULE_BUILD_FAILED_LOG, rspackTest } from '@e2e/helper';
 
 rspackTest(
   'HMR should work after fixing compilation error',
@@ -26,7 +26,7 @@ rspackTest(
       ),
     );
 
-    await rsbuild.expectLog('Module build failed');
+    await rsbuild.expectLog(MODULE_BUILD_FAILED_LOG);
 
     await editFile(join(tempSrc, 'App.tsx'), (code) =>
       code.replace(
