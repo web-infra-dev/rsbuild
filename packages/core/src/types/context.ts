@@ -40,7 +40,7 @@ export type RsbuildContext = {
   devServer?: {
     /** The hostname the server is running on. */
     hostname: string;
-    /** The port number the server is listening on. */
+    /** The actual port number the server is listening on. */
     port: number;
     /** Whether the server is using HTTPS protocol. */
     https: boolean;

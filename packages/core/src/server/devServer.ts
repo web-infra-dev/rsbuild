@@ -91,7 +91,8 @@ export type RsbuildDevServer = {
   environments: EnvironmentAPI;
   /**
    * The resolved port.
-   * By default, Rsbuild server listens on port `3000` and automatically increments the port number if the port is occupied.
+   * By default, Rsbuild server listens on port `3000` and automatically increments
+   * the port number if the port is occupied.
    */
   port: number;
   /**
