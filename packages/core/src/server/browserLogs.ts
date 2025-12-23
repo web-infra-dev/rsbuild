@@ -243,7 +243,7 @@ export const formatBrowserErrorLog = async (
   fs: Rspack.OutputFileSystem,
   stackTrace: BrowserLogsStackTrace,
 ): Promise<string> => {
-  let log = `${color.cyan(BROWSER_LOG_PREFIX)} ${color.red(message.message)}`;
+  let log = color.red(message.message);
 
   if (message.stack) {
     switch (stackTrace) {

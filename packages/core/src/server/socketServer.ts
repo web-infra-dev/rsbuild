@@ -5,7 +5,7 @@ import { BROWSER_LOG_PREFIX, DEFAULT_STACK_TRACE } from '../constants.js';
 import { formatStatsError } from '../helpers/format';
 import { isObject } from '../helpers/index';
 import { getStatsErrors, getStatsWarnings } from '../helpers/stats';
-import { requireCompiledPackage } from '../helpers/vendors';
+import { color, requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
 import type {
   DevConfig,
@@ -84,13 +84,6 @@ export type ClientMessage = ClientMessagePing | ClientMessageError;
 const parseQueryString = (req: IncomingMessage) => {
   const queryStr = req.url ? req.url.split('?')[1] : '';
   return queryStr ? Object.fromEntries(new URLSearchParams(queryStr)) : {};
-};
-
-const stripBrowserPrefix = (log: string) => {
-  if (log.includes(BROWSER_LOG_PREFIX)) {
-    return log.split(' ').slice(1).join(' ');
-  }
-  return log;
 };
 
 export class SocketServer {
@@ -364,7 +357,7 @@ export class SocketServer {
 
           if (!this.reportedBrowserLogs.has(log)) {
             this.reportedBrowserLogs.add(log);
-            logger.error(log);
+            logger.error(`${color.cyan(BROWSER_LOG_PREFIX)} ${log}`);
           }
 
           // Render runtime errors in overlay
@@ -374,7 +367,7 @@ export class SocketServer {
                 type: 'resolved-client-error',
                 data: {
                   id: message.id,
-                  message: renderErrorToHtml(stripBrowserPrefix(log)),
+                  message: renderErrorToHtml(log),
                 },
               },
               token,
