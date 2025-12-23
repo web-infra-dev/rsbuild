@@ -113,8 +113,11 @@ export const myPlugin = {
 
 ```ts
 type DevServer = {
+  /** 服务器运行时使用的 hostname */
   hostname: string;
+  /** 服务器实际监听的端口号 */
   port: number;
+  /** 是否使用 HTTPS 协议 */
   https: boolean;
 };
 ```
@@ -130,7 +133,8 @@ async function main() {
   });
   await rsbuild.startDevServer();
 
-  console.log(rsbuild.context.devServer); // { hostname: 'localhost', port: 3000, https: false }
+  // { hostname: 'localhost', port: 3000, https: false }
+  console.log(rsbuild.context.devServer);
 }
 ```
 
