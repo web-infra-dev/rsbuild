@@ -15,18 +15,6 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
-    },
-    "./rsc": {
-      "types": "./dist/rsc.d.ts",
-      "import": "./dist/rsc.mjs"
-    },
-    "./ssr": {
-      "types": "./dist/ssr.d.ts",
-      "import": "./dist/ssr.mjs"
-    },
-    "./client": {
-      "types": "./dist/client.d.ts",
-      "import": "./dist/client.mjs"
     }
   },
   "main": "./dist/index.cjs",
@@ -41,17 +29,16 @@
     "prebundle": "prebundle",
     "bump": "pnpx bumpp --no-tag"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rslib/core": "0.18.4",
     "prebundle": "1.6.0",
-    "react-server-dom-webpack": "^19.2.3"
+    "react-server-dom-rspack": "/Users/bytedance/Documents/github/compiler_compiler/rspack-rsc-runtime"
   },
   "peerDependencies": {
     "@rsbuild/core": "1.x",
-    "react-server-dom-webpack": "^19.2.3"
+    "react-server-dom-rspack": "0.0.1-alpha.1"
   },
   "publishConfig": {
     "access": "public",

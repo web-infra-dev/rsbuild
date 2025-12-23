@@ -1,8 +1,12 @@
-import type { EnvironmentConfig, RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildConfig, RsbuildPlugin, SourceConfig } from '@rsbuild/core';
+import { rspack } from '@rsbuild/core';
+import { CHAIN_ID } from '../../core/src/configChain.js';
+import { SsrEntryPlugin } from './ssrEntryPlugin.js';
 import type { PluginRSCOptions } from './types.js';
-import { SSREntryPlugin } from './ssrEntryPlugin.js';
 
 export const PLUGIN_RSC_NAME = 'rsbuild:rsc';
+
+const { createRscPlugins, RSC_LAYERS_NAMES } = rspack.experiments;
 
 const ENVIRONMENT_NAMES = {
   SERVER: 'server',
@@ -17,62 +21,81 @@ export const pluginRSC = (
   setup(api) {
     const entries = pluginOptions.entries || {};
 
-    api.modifyEnvironmentConfig((config, { name, mergeEnvironmentConfig }) => {
-      const extraConfig: EnvironmentConfig = {
+    api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
+      const serverSource: SourceConfig | undefined = entries.rsc
+        ? {
+            entry: {
+              index: {
+                import: entries.rsc,
+                layer:
+                  rspack.experiments.RSC_LAYERS_NAMES.reactServerComponents,
+              },
+            },
+          }
+        : undefined;
+
+      const clientSource: SourceConfig | undefined = entries.client
+        ? {
+            entry: {
+              index: entries.client,
+            },
+          }
+        : undefined;
+
+      const rscEnvironmentsConfig: RsbuildConfig = {
         tools: {
           swc: {
-            // TODO: fix ts type
             rspackExperiments: {
-              rsc: true,
-            } as any,
+              reactServerComponents: true,
+            },
+          },
+        },
+        environments: {
+          server: {
+            source: serverSource,
+            output: {
+              target: 'node',
+            },
+          },
+          client: {
+            source: clientSource,
+            output: {
+              target: 'web',
+            },
           },
         },
       };
-
-      if (name === ENVIRONMENT_NAMES.SERVER && entries.rsc) {
-        if (!extraConfig.source) {
-          extraConfig.source = {};
-        }
-        if (!extraConfig.source.entry) {
-          extraConfig.source.entry = {};
-        }
-        extraConfig.source.entry.rsc = entries.rsc;
-      }
-
-      if (name === ENVIRONMENT_NAMES.CLIENT && entries.client) {
-        if (!extraConfig.source) {
-          extraConfig.source = {};
-        }
-        if (!extraConfig.source.entry) {
-          extraConfig.source.entry = {};
-        }
-        extraConfig.source.entry.client = entries.client;
-      }
-
-      return mergeEnvironmentConfig(extraConfig, config);
+      return mergeRsbuildConfig(config, rscEnvironmentsConfig);
     });
 
-    // const { ServerPlugin, ClientPlugin } = createRSCPlugins();
+    let rscPlugins: ReturnType<typeof createRscPlugins>;
 
-    api.modifyBundlerChain(
-      async (chain, { CHAIN_ID, environment }) => {
-        if (environment.name == ENVIRONMENT_NAMES.SERVER) {
-          if (entries.ssr) {
-            chain.plugin(CHAIN_ID.PLUGIN.RSC_SSR_ENTRY).use(SSREntryPlugin, [entries.ssr]);
-          }
+    api.modifyBundlerChain(async (chain, { environment }) => {
+      // The RSC plugin is currently incompatible with lazyCompilation; this feature has been forcibly disabled.
+      chain.lazyCompilation(false);
 
+      if (!rscPlugins) {
+        rscPlugins = createRscPlugins();
+      }
+
+      if (environment.name === ENVIRONMENT_NAMES.SERVER) {
+        if (entries.ssr) {
+          chain
+            .plugin(CHAIN_ID.PLUGIN.RSC_SSR_ENTRY)
+            .use(SsrEntryPlugin, [entries.ssr]);
+        } else {
+          // If entries.ssr exists, SsrEntryPlugin will handle the addition, so no need to add it again.
           chain.module
             .rule(CHAIN_ID.RULE.RSC_RESOLVE)
-            .issuerLayer('react-server-component')
+            .issuerLayer(RSC_LAYERS_NAMES.reactServerComponents)
             .resolve.conditionNames.add('react-server')
             .add('...');
-
-          // chain.plugin(CHAIN_ID.PLUGIN.RSC_SERVER).use(ServerPlugin);
         }
-        if (environment.name == ENVIRONMENT_NAMES.CLIENT) {
-          // chain.plugin(CHAIN_ID.PLUGIN.RSC_CLIENT).use(ClientPlugin);
-        }
-      },
-    );
+        chain.plugin(CHAIN_ID.PLUGIN.RSC_SERVER).use(rscPlugins.ServerPlugin);
+      }
+      if (environment.name === ENVIRONMENT_NAMES.CLIENT) {
+        chain.plugin(CHAIN_ID.PLUGIN.RSC_CLIENT).use(rscPlugins.ClientPlugin);
+      }
+    });
   },
 });
