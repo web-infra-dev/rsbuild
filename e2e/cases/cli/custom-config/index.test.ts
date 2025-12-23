@@ -33,7 +33,7 @@ rspackTest(
   'should throw error when custom config not found',
   async ({ execCliSync }) => {
     expect(() => {
-      execCliSync('build --config ./custom-111.config.js', {
+      execCliSync('build --config ./custom-not-found.config.js', {
         // only capture stderr output
         stdio: ['ignore', 'ignore', 'pipe'],
       });
