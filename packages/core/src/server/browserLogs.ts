@@ -5,7 +5,7 @@ import type {
   InvalidOriginalMapping,
   OriginalMapping,
 } from '../../compiled/@jridgewell/trace-mapping';
-import { SCRIPT_REGEX } from '../constants';
+import { BROWSER_LOG_PREFIX, SCRIPT_REGEX } from '../constants';
 import { color } from '../helpers';
 import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
@@ -243,7 +243,7 @@ export const formatBrowserErrorLog = async (
   fs: Rspack.OutputFileSystem,
   stackTrace: BrowserLogsStackTrace,
 ): Promise<string> => {
-  let log = `${color.cyan('[browser]')} ${color.red(message.message)}`;
+  let log = `${color.cyan(BROWSER_LOG_PREFIX)} ${color.red(message.message)}`;
 
   if (message.stack) {
     switch (stackTrace) {

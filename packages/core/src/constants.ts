@@ -103,3 +103,5 @@ export const AUDIO_EXTENSIONS: string[] = [
 ];
 
 export const LAZY_COMPILATION_IDENTIFIER = 'lazy-compilation-proxy';
+
+export const BROWSER_LOG_PREFIX = '[browser]';

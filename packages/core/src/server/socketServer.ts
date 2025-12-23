@@ -1,7 +1,7 @@
 import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
 import type Ws from '../../compiled/ws/index.js';
-import { DEFAULT_STACK_TRACE } from '../constants.js';
+import { BROWSER_LOG_PREFIX, DEFAULT_STACK_TRACE } from '../constants.js';
 import { formatStatsError } from '../helpers/format';
 import { isObject } from '../helpers/index';
 import { getStatsErrors, getStatsWarnings } from '../helpers/stats';
@@ -84,6 +84,13 @@ export type ClientMessage = ClientMessagePing | ClientMessageError;
 const parseQueryString = (req: IncomingMessage) => {
   const queryStr = req.url ? req.url.split('?')[1] : '';
   return queryStr ? Object.fromEntries(new URLSearchParams(queryStr)) : {};
+};
+
+const stripBrowserPrefix = (log: string) => {
+  if (log.includes(BROWSER_LOG_PREFIX)) {
+    return log.split(' ').slice(1).join(' ');
+  }
+  return log;
 };
 
 export class SocketServer {
@@ -367,7 +374,7 @@ export class SocketServer {
                 type: 'resolved-client-error',
                 data: {
                   id: message.id,
-                  message: renderErrorToHtml(log),
+                  message: renderErrorToHtml(stripBrowserPrefix(log)),
                 },
               },
               token,
