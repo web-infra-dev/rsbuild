@@ -88,7 +88,9 @@ const resolveConfigPath = (root: string, customConfig?: string) => {
     if (fs.existsSync(customConfigPath)) {
       return customConfigPath;
     }
-    logger.warn(`Cannot find config file: ${color.dim(customConfigPath)}\n`);
+    throw new Error(
+      `Cannot find config file: ${color.dim(customConfigPath)}\n`,
+    );
   }
 
   const CONFIG_FILES = [
@@ -142,10 +144,10 @@ export async function loadConfig({
   // Determine the loading strategy based on the config loader type
   const useNative = Boolean(
     loader === 'native' ||
-      (loader === 'auto' &&
-        (process.features.typescript ||
-          process.versions.bun ||
-          process.versions.deno)),
+    (loader === 'auto' &&
+      (process.features.typescript ||
+        process.versions.bun ||
+        process.versions.deno)),
   );
 
   if (useNative || /\.(?:js|mjs|cjs)$/.test(configFilePath)) {
