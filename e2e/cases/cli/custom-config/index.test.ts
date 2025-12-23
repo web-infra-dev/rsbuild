@@ -37,6 +37,6 @@ rspackTest(
         // only capture stderr output
         stdio: ['ignore', 'ignore', 'pipe'],
       });
-    }).toThrowError(/Cannot find config file: .*custom-111.config.js/);
+    }).toThrowError(/Cannot find config file: .*custom-not-found.config.js/);
   },
 );
