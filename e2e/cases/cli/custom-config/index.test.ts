@@ -28,3 +28,15 @@ rspackTest(
     expect(outputFiles.length > 1).toBeTruthy();
   },
 );
+
+rspackTest(
+  'should throw error when custom config not found',
+  async ({ execCliSync }) => {
+    expect(() => {
+      execCliSync('build --config ./custom-not-found.config.js', {
+        // only capture stderr output
+        stdio: ['ignore', 'ignore', 'pipe'],
+      });
+    }).toThrowError(/Cannot find config file: .*custom-not-found.config.js/);
+  },
+);
