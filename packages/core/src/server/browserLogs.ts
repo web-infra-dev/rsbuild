@@ -5,7 +5,7 @@ import type {
   InvalidOriginalMapping,
   OriginalMapping,
 } from '../../compiled/@jridgewell/trace-mapping';
-import { BROWSER_LOG_PREFIX, SCRIPT_REGEX } from '../constants';
+import { SCRIPT_REGEX } from '../constants';
 import { color } from '../helpers';
 import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
