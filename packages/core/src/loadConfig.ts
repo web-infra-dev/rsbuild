@@ -89,7 +89,7 @@ const resolveConfigPath = (root: string, customConfig?: string) => {
       return customConfigPath;
     }
     throw new Error(
-      `Cannot find config file: ${color.dim(customConfigPath)}\n`,
+      `${color.dim('[rsbuild:loadConfig]')} Cannot find config file: ${color.dim(customConfigPath)}`,
     );
   }
 
