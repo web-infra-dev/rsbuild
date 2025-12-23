@@ -1,5 +1,11 @@
 import { join } from 'node:path';
-import { expect, test } from '@e2e/helper';
+import {
+  expect,
+  HMR_CONNECTED_LOG,
+  MODULE_BUILD_FAILED_LOG,
+  OVERLAY_ID,
+  test,
+} from '@e2e/helper';
 
 test('should disable error overlay when dev.client.overlay is false', async ({
   page,
@@ -25,14 +31,14 @@ test('should disable error overlay when dev.client.overlay is false', async ({
     },
   });
 
-  await expectLog('[rsbuild] WebSocket connected.');
+  await expectLog(HMR_CONNECTED_LOG);
 
-  await expect(page.locator('rsbuild-error-overlay')).toHaveCount(0);
+  await expect(page.locator(OVERLAY_ID)).not.toBeAttached();
 
   await editFile(join(tempSrc, 'App.tsx'), (code) =>
-    code.replace('</div>', '</aaaa>'),
+    code.replace('</div>', '</a>'),
   );
 
-  await expectLog('Module build failed');
-  await expect(page.locator('rsbuild-error-overlay')).toHaveCount(0);
+  await expectLog(MODULE_BUILD_FAILED_LOG);
+  await expect(page.locator(OVERLAY_ID)).not.toBeAttached();
 });

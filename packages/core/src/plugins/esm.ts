@@ -24,6 +24,10 @@ export const pluginEsm = (): RsbuildPlugin => ({
         );
       }
 
+      // For ESM targets, import.meta.dirname / import.meta.filename / __dirname / __filename
+      // are preserved as-is. This matches the native behavior in browsers and Node.js.
+      chain.node.set('__dirname', false).set('__filename', false);
+
       chain.output
         .module(true)
         .chunkFormat('module')

@@ -29,28 +29,6 @@ Alimentado pela arquitetura baseada em Rust do Rspack, o Rsbuild oferece um dese
 
 > 📊 Resultados do benchmark do [build-tools-performance](https://github.com/rspack-contrib/build-tools-performance).
 
-## 💡 Comparações
-
-Rsbuild é uma ferramenta de build que está no mesmo patamar do [Vite](https://vitejs.dev/), [Create React App](https://github.com/facebook/create-react-app), ou [Vue CLI](https://github.com/vuejs/vue-cli). Todos eles possuem um servidor de desenvolvimento imbutido, ferramentas de linha de comando, e configurações de build que provê uma experiência pronta para uso.
-
-![](https://assets.rspack.rs/rsbuild/assets/rsbuild-1-0-build-tools.png)
-
-### CRA / Vue CLI
-
-Você pode imaginar o Rsbuild como uma versão moderna do Create React App ou Vue CLI, com estas principais diferenças:
-
-- O bundler por baixo é trocado de webpack para Rspack, provendo 5 à 10 vezes mais rápido o desempenho de build.
-- É desacoplado de frameworks de frontend e suporta todos os frameworks de interface, por meio de [plugins](https://rsbuild.rs/plugins/list/), incluíndo React, Vue, Svelte, Solid, etc.
-- Oferece melhor extensibilidade. Você pode extender o Rsbuild flexivelmente via [Configurações](https://rsbuild.rs/config/), [Plugin API](https://rsbuild.rs/plugins/dev/), e [JavaScript API](https://rsbuild.rs/api/start/).
-
-### Vite
-
-Rsbuild compartilha muitas similaridades com Vite, assim como ambos miram em melhorar a experiência do desenvolvimento frontend. As principais diferenças são:
-
-- **Compatibilidade do ecossistema**: Rsbuild é compatível com a maioria dos plug-ins para webpack e todos os plug-ins do Rspack, enquanto Vite é compatível com plug-ins do Rollup. Se você estiver usando mais plug-ins e carregadores do ecossistema do webpack, a migração para o Rsbuild será relativamente fácil.
-- **Consistência em produção**: Rsbuild usa o Rspack para empacotamento durante as compilações de desenvolvimento e produção, garantindo assim um alto nível de consistência entre os resultados de desenvolvimento e produção. Esse também é um dos objetivos que a Vite pretende alcançar com o Rolldown.
-- **Module Federation**: O time do Rsbuild trabalha próximo com o time de [Module Federation](https://rsbuild.rs/guide/advanced/module-federation), fornecendo suporte de primeira classe para o Module Federation para ajudá-lo a desenvolver grandes aplicativos da Web com arquitetura de micro frontend.
-
 ## 🔥 Recursos
 
 O Rsbuild tem os seguintes recursos:

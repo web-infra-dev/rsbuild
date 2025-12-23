@@ -7,7 +7,6 @@ type CompiledPackages = {
   ws: typeof import('../../compiled/ws').default;
   cors: typeof import('../../compiled/cors').default;
   sirv: typeof import('../../compiled/sirv');
-  rslog: typeof import('../../compiled/rslog');
   memfs: typeof import('../../compiled/memfs');
   mrmime: typeof import('../../compiled/mrmime');
   connect: typeof import('../../compiled/connect').default;

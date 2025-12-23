@@ -1844,7 +1844,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     },
     "name": "web",
     "optimization": {
-      "inlineExports": false,
       "minimize": false,
       "splitChunks": {
         "cacheGroups": {
@@ -2293,7 +2292,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     },
     "name": "node",
     "optimization": {
-      "inlineExports": false,
       "minimize": false,
       "splitChunks": false,
     },
