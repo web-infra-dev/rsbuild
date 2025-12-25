@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { promisify } from 'node:util';
-import { parse as parseStack, type StackFrame } from 'stacktrace-parser';
+import type { StackFrame } from 'stacktrace-parser';
 import type {
   InvalidOriginalMapping,
   OriginalMapping,
@@ -11,7 +11,6 @@ import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
 import type { BrowserLogsStackTrace, InternalContext, Rspack } from '../types';
 import { getFileFromUrl } from './assets-middleware/getFileFromUrl';
-import type { ClientMessageError } from './socketServer';
 
 /**
  * Determines whether a given string is a valid method name
@@ -92,17 +91,12 @@ const parseFrame = async (
  * return formatted string like `src/App.tsx:10:20`
  */
 const resolveOriginalLocation = async (
-  stack: string,
+  stackFrames: StackFrame[],
   fs: Rspack.OutputFileSystem,
   context: InternalContext,
 ) => {
-  const parsed = parseStack(stack);
-  if (!parsed.length) {
-    return;
-  }
-
   // only parse JS files
-  const frame = findFirstUserFrame(parsed);
+  const frame = findFirstUserFrame(stackFrames);
   if (!frame) {
     return;
   }
@@ -179,19 +173,13 @@ const enhanceErrorLogWithHints = (log: string) => {
 };
 
 const formatFullStack = async (
-  stack: string,
+  stackFrames: StackFrame[],
   context: InternalContext,
   fs: Rspack.OutputFileSystem,
 ) => {
-  const parsed = parseStack(stack);
-
-  if (!parsed.length) {
-    return;
-  }
-
   let result = '';
 
-  for (const frame of parsed) {
+  for (const frame of stackFrames) {
     const parsedFrame = await parseFrame(frame, fs, context);
     const { methodName } = frame;
     const parts: (string | undefined)[] = [];
@@ -238,18 +226,19 @@ const formatFullStack = async (
  * source location information.
  */
 export const formatBrowserErrorLog = async (
-  message: ClientMessageError,
+  message: string,
   context: InternalContext,
   fs: Rspack.OutputFileSystem,
   stackTrace: BrowserLogsStackTrace,
+  stackFrames: StackFrame[] | null,
 ): Promise<string> => {
-  let log = color.red(message.message);
+  let log = color.red(message);
 
-  if (message.stack) {
+  if (stackFrames?.length) {
     switch (stackTrace) {
       case 'summary': {
         const resolved = await resolveOriginalLocation(
-          message.stack,
+          stackFrames,
           fs,
           context,
         );
@@ -273,7 +262,7 @@ export const formatBrowserErrorLog = async (
         break;
       }
       case 'full': {
-        const fullStack = await formatFullStack(message.stack, context, fs);
+        const fullStack = await formatFullStack(stackFrames, context, fs);
         if (fullStack) {
           log += fullStack;
         }

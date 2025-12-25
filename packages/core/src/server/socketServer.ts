@@ -1,5 +1,6 @@
 import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
+import { parse as parseStack } from 'stacktrace-parser';
 import type Ws from '../../compiled/ws/index.js';
 import { BROWSER_LOG_PREFIX, DEFAULT_STACK_TRACE } from '../constants.js';
 import { formatStatsError } from '../helpers/format';
@@ -324,7 +325,7 @@ export class SocketServer {
 
     socket.on('message', async (data) => {
       try {
-        const message: ClientMessage = JSON.parse(
+        const payload: ClientMessage = JSON.parse(
           // eslint-disable-next-line @typescript-eslint/no-base-to-string
           typeof data === 'string' ? data : data.toString(),
         );
@@ -337,7 +338,7 @@ export class SocketServer {
 
         const { browserLogs, client } = config.dev;
         if (
-          message.type === 'client-error' &&
+          payload.type === 'client-error' &&
           // Do not report browser error when using webpack
           context.bundlerType === 'rspack' &&
           // Do not report browser error when build failed
@@ -349,11 +350,13 @@ export class SocketServer {
             DEFAULT_STACK_TRACE;
           const outputFs = this.getOutputFileSystem();
 
+          const stackFrames = payload.stack ? parseStack(payload.stack) : null;
           const log = await formatBrowserErrorLog(
-            message,
+            payload.message,
             context,
             outputFs,
             stackTrace,
+            stackFrames,
           );
 
           if (!this.reportedBrowserLogs.has(log)) {
@@ -368,17 +371,18 @@ export class SocketServer {
               stackTrace === 'full'
                 ? log
                 : await formatBrowserErrorLog(
-                    message,
+                    payload.message,
                     context,
                     outputFs,
                     'full',
+                    stackFrames,
                   );
 
             this.sockWrite(
               {
                 type: 'resolved-client-error',
                 data: {
-                  id: message.id,
+                  id: payload.id,
                   message: renderErrorToHtml(resolvedLog),
                 },
               },
