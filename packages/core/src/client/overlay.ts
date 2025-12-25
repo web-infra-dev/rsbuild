@@ -128,7 +128,7 @@ function getOverlayHtml(title: string, content: string) {
   }
 }
 .file-link {
-  color: #6eecf7;
+  color: #61cfd8;
 }
 .url-link {
   color: #eff986;
