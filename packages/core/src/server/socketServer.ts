@@ -347,11 +347,12 @@ export class SocketServer {
           const stackTrace =
             (isObject(browserLogs) && browserLogs.stackTrace) ||
             DEFAULT_STACK_TRACE;
+          const outputFs = this.getOutputFileSystem();
 
           const log = await formatBrowserErrorLog(
             message,
             context,
-            this.getOutputFileSystem(),
+            outputFs,
             stackTrace,
           );
 
@@ -362,12 +363,23 @@ export class SocketServer {
 
           // Render runtime errors in overlay
           if (typeof client.overlay === 'object' && client.overlay.runtime) {
+            // Always display full stack trace for runtime errors
+            const resolvedLog =
+              stackTrace === 'full'
+                ? log
+                : await formatBrowserErrorLog(
+                    message,
+                    context,
+                    outputFs,
+                    'full',
+                  );
+
             this.sockWrite(
               {
                 type: 'resolved-client-error',
                 data: {
                   id: message.id,
-                  message: renderErrorToHtml(log),
+                  message: renderErrorToHtml(resolvedLog),
                 },
               },
               token,

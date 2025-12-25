@@ -35,9 +35,15 @@ rspackTest(
       ),
     );
     await logHelper.expectLog('Runtime error occurred');
+
+    // expect overlay to show runtime error
     await expect(errorOverlay.locator('.title')).toHaveText('Runtime errors');
     await expect(
       errorOverlay.getByText('Uncaught Error: Runtime error occurred'),
     ).toBeAttached();
+
+    // expect stack trace to be shown fully
+    await expect(errorOverlay.getByText('at App')).toBeAttached();
+    await expect(errorOverlay.getByText('at renderWithHooks')).toBeAttached();
   },
 );
