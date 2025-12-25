@@ -17,7 +17,9 @@ type Client = {
   // WebSocket 请求断开后的最大重连次数
   reconnect?: number;
   // 当出现编译错误时，是否在浏览器中显示 error overlay
-  overlay?: boolean;
+  overlay?: boolean | { runtime?: boolean };
+  // 控制浏览器控制台中日志的级别
+  logLevel?: 'info' | 'warn' | 'error' | 'silent';
 };
 ```
 
@@ -87,12 +89,12 @@ hot-update 文件属于静态资源，如果你需要配置 hot-update 文件的
 
 ### overlay
 
-- **类型：** `boolean`
+- **类型：** `boolean | { runtime?: boolean }`
 - **默认值：** `true`
 
 通过 `dev.client.overlay` 选项，可以选择是否启用错误浮层。
 
-默认情况下，当编译发生错误时，Rsbuild会在浏览器中显示错误浮层，并提供错误信息和错误堆栈：
+默认情况下，当编译发生错误时，Rsbuild 会在浏览器中显示错误浮层，并提供错误信息和错误堆栈：
 
 ![error overlay](https://assets.rspack.rs/rsbuild/assets/rsbuild-error-overlay.png)
 
@@ -103,6 +105,26 @@ export default {
   dev: {
     client: {
       overlay: false,
+    },
+  },
+};
+```
+
+当 `overlay` 配置为对象时，可以对不同来源的错误进行更精细的控制。
+
+#### overlay.runtime
+
+`overlay.runtime` 用于控制是否将浏览器里产生的运行时错误渲染到浮层中。
+
+当启用该选项时，Rsbuild 会在开发环境下捕获运行时错误，例如 JavaScript 执行错误和未处理的 Promise rejection，并将其显示在错误浮层中：
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      overlay: {
+        runtime: true,
+      },
     },
   },
 };
@@ -160,6 +182,7 @@ export default {
 
 ## 版本历史
 
-| 版本    | 更新内容             |
-| ------- | -------------------- |
-| v1.6.13 | 新增 `logLevel` 选项 |
+| 版本    | 更新内容                    |
+| ------- | --------------------------- |
+| v1.6.13 | 新增 `logLevel` 选项        |
+| v1.7.0  | 新增 `overlay.runtime` 选项 |

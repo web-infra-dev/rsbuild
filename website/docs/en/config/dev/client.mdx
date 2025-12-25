@@ -17,7 +17,7 @@ type Client = {
   // The maximum number of reconnection attempts after a WebSocket request is disconnected.
   reconnect?: number;
   // Whether to display an error overlay in the browser when a compilation error occurs
-  overlay?: boolean;
+  overlay?: boolean | { runtime?: boolean };
   // Controls the log level for client-side logging in the browser console
   logLevel?: 'info' | 'warn' | 'error' | 'silent';
 };
@@ -112,6 +112,26 @@ export default {
 };
 ```
 
+When `overlay` is configured as an object, it allows more fine-grained control over errors from different sources.
+
+#### overlay.runtime
+
+`overlay.runtime` controls whether runtime errors that occur in the browser are rendered in the overlay.
+
+When this option is enabled, Rsbuild captures runtime errors during development, such as JavaScript execution errors and unhandled Promise rejections, and displays them in the error overlay.
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      overlay: {
+        runtime: true,
+      },
+    },
+  },
+};
+```
+
 :::tip
 The error overlay feature requires the current browser to support [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components). If the browser does not support it, the overlay will not be displayed.
 :::
@@ -164,6 +184,7 @@ Setting this value to `0` disables automatic reconnection. In this case, the con
 
 ## Version history
 
-| Version | Changes                 |
-| ------- | ----------------------- |
-| v1.6.13 | Added `logLevel` option |
+| Version | Changes                        |
+| ------- | ------------------------------ |
+| v1.6.13 | Added `logLevel` option        |
+| v1.7.0  | Added `overlay.runtime` option |
