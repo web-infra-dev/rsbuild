@@ -9,7 +9,7 @@ import type {
 import { SCRIPT_REGEX } from '../constants';
 import { color, isRspackRuntimeModule } from '../helpers';
 import { requireCompiledPackage } from '../helpers/vendors';
-import { logger } from '../logger';
+import { isVerbose, logger } from '../logger';
 import type { BrowserLogsStackTrace, InternalContext, Rspack } from '../types';
 import { getFileFromUrl } from './assets-middleware/getFileFromUrl';
 
@@ -199,6 +199,7 @@ const formatFullStack = async (
       parts.push(methodName);
     }
 
+    let parsed = false;
     if (parsedFrame) {
       const { sourceMapPath, originalPosition } = parsedFrame;
       const originalLocation = formatOriginalLocation(
@@ -208,13 +209,13 @@ const formatFullStack = async (
       );
       if (originalLocation) {
         parts.push(originalLocation);
-      } else {
-        const frameString = formatFrameLocation(frame);
-        if (frameString) {
-          parts.push(frameString);
-        }
+        parsed = true;
       }
-    } else {
+    }
+
+    // Fallback to original frame location if source map parsing failed
+    // These frames are usually low-signal for users, so only show them in verbose mode.
+    if (!parsed && isVerbose()) {
       const frameString = formatFrameLocation(frame);
       if (frameString) {
         parts.push(frameString);
