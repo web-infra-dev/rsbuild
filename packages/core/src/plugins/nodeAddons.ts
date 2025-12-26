@@ -14,19 +14,19 @@ export const pluginNodeAddons = (): RsbuildPlugin => ({
     api.transform(
       { test: /\.node$/, targets: ['node'], raw: true },
       ({ code, emitFile, resourcePath }) => {
-        const name = getFilename(resourcePath);
+        const filename = getFilename(resourcePath);
 
-        if (name === null) {
+        if (filename === null) {
           throw new Error(
             `${color.dim('[rsbuild:node-addons]')} Failed to load Node.js addon: ${color.yellow(resourcePath)}`,
           );
         }
 
-        emitFile(name, code);
+        emitFile(filename, code);
 
         const config = api.getNormalizedConfig();
 
-        const handleErrorSnippet = `throw new Error('Failed to load Node.js addon: "${name}"', {
+        const handleErrorSnippet = `throw new Error('Failed to load Node.js addon: "${filename}"', {
     cause: error,
   });`;
 
@@ -43,7 +43,7 @@ const require = createRequire(import.meta.url);
 
 let native;
 try {
-  native = require(path.join(__dirname, "${name}"));
+  native = require(path.join(__dirname, "${filename}"));
 } catch (error) {
   ${handleErrorSnippet}
 }
@@ -56,7 +56,7 @@ export default native;
         return `
 try {
   const path = __non_webpack_require__("node:path");
-  module.exports = __non_webpack_require__(path.join(__dirname, "${name}"));
+  module.exports = __non_webpack_require__(path.join(__dirname, "${filename}"));
 } catch (error) {
   ${handleErrorSnippet}
 }
