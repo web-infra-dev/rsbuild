@@ -4,7 +4,7 @@ import { toRelativePath } from '../helpers/path';
 import { ansiHTML } from './ansiHTML';
 import { escapeHtml } from './helper';
 
-function formatDisplayPath(
+export function formatDisplayPath(
   filePath: string,
   isAbsolute: boolean,
   root?: string,
