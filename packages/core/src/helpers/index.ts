@@ -219,3 +219,6 @@ export async function hash(data: string): Promise<string> {
   const hasher = crypto.createHash('sha256');
   return hasher.update(data).digest('hex').slice(0, 16);
 }
+
+export const isRspackRuntimeModule = (identifier: string): boolean =>
+  identifier.startsWith('webpack/runtime/');
