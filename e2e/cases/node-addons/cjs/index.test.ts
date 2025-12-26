@@ -1,23 +1,29 @@
 import fs from 'node:fs';
+import { createRequire } from 'node:module';
 import { join } from 'node:path';
 import { expect, findFile, rspackTest } from '@e2e/helper';
 import fse from 'fs-extra';
 
-rspackTest('should compile Node addons correctly', async ({ build }) => {
-  const rsbuild = await build();
-  const files = rsbuild.getDistFiles();
-  const addonFile = findFile(files, 'test.darwin.node');
-  expect(fs.existsSync(addonFile)).toBeTruthy();
-
-  // the `test.darwin.node` is only compatible with darwin
-  if (process.platform === 'darwin') {
-    const { default: content } = await import('./dist/index.js' as string);
-    expect(typeof content.readLength).toEqual('function');
-  }
-});
+const require = createRequire(import.meta.url);
 
 rspackTest(
-  'should compile Node addons in the node_modules correctly',
+  'should compile Node addons correctly for CJS output',
+  async ({ build }) => {
+    const rsbuild = await build();
+    const files = rsbuild.getDistFiles();
+    const addonFile = findFile(files, 'test.darwin.node');
+    expect(fs.existsSync(addonFile)).toBeTruthy();
+
+    // the `test.darwin.node` is only compatible with darwin
+    if (process.platform === 'darwin') {
+      const { addon } = require('./dist/index.cjs');
+      expect(typeof addon.readLength).toEqual('function');
+    }
+  },
+);
+
+rspackTest(
+  'should compile Node addons in the node_modules for CJS output',
   async ({ build }) => {
     const pkgDir = join(import.meta.dirname, 'node_modules', 'node-addon-pkg');
 
@@ -52,8 +58,8 @@ rspackTest(
     expect(fs.existsSync(addonFile)).toBeTruthy();
 
     if (process.platform === 'darwin') {
-      const { default: content } = await import('./dist/index.js' as string);
-      expect(typeof content.readLength).toEqual('function');
+      const { addon } = require('./dist/index.cjs');
+      expect(typeof addon.readLength).toEqual('function');
     }
   },
 );
