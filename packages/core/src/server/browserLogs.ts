@@ -7,7 +7,7 @@ import type {
   TraceMap,
 } from '../../compiled/@jridgewell/trace-mapping';
 import { SCRIPT_REGEX } from '../constants';
-import { color } from '../helpers';
+import { color, isRspackRuntimeModule } from '../helpers';
 import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
 import type { BrowserLogsStackTrace, InternalContext, Rspack } from '../types';
@@ -127,6 +127,11 @@ const resolveSourceRelativeToRoot = (
   sourceMapPath: string,
   context: InternalContext,
 ) => {
+  // For Rspack runtime modules, return as is
+  if (isRspackRuntimeModule(source)) {
+    return source;
+  }
+
   const absoluteSourcePath = path.isAbsolute(source)
     ? source
     : path.join(path.dirname(sourceMapPath), source);

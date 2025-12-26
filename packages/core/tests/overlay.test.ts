@@ -173,6 +173,12 @@ describe('convertLinksInHtml', () => {
     expect(convertLinksInHtml(ansiHTML(input))).toEqual(input);
   });
 
+  it('should not convert Rspack runtime modules', () => {
+    const input =
+      'at __webpack_require__.O (webpack/runtime/on_chunk_loaded:1:1)';
+    expect(convertLinksInHtml(ansiHTML(input))).toEqual(input);
+  });
+
   it('should convert Windows absolute path as expected', () => {
     // only run on Windows
     if (process.platform !== 'win32') {

@@ -23,6 +23,7 @@ export function convertLinksInHtml(text: string, root?: string): string {
     /(https?:\/\/(?:[\w-]+\.)+[a-z0-9](?:[\w-.~:/?#[\]@!$&'*+,;=])*)/gi;
 
   const NODE_INTERNAL_RE = /node:internal[/\\]/;
+  const RSPACK_RUNTIME_RE = /webpack\/runtime\//;
   const FILE_URI_WINDOWS_RE = /^file:\/\/\/([A-Za-z]:)/;
   const FILE_URI_UNIX_RE = /^file:\/\//;
 
@@ -43,8 +44,8 @@ export function convertLinksInHtml(text: string, root?: string): string {
 
   const lines = text.split('\n');
   const replacedLines = lines.map((line) => {
-    // Skip processing node internal paths
-    if (NODE_INTERNAL_RE.test(line)) {
+    // Skip processing node internal paths and Rspack runtime modules
+    if (NODE_INTERNAL_RE.test(line) || RSPACK_RUNTIME_RE.test(line)) {
       return line;
     }
 
