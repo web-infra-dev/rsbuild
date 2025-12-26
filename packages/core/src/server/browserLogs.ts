@@ -4,6 +4,7 @@ import type { StackFrame } from 'stacktrace-parser';
 import type {
   InvalidOriginalMapping,
   OriginalMapping,
+  TraceMap,
 } from '../../compiled/@jridgewell/trace-mapping';
 import { SCRIPT_REGEX } from '../constants';
 import { color } from '../helpers';
@@ -21,22 +22,7 @@ const isValidMethodName = (methodName: string) => {
   return methodName !== '<unknown>' && !/[\\/]/.test(methodName);
 };
 
-/**
- * Maps a position in compiled code to its original source position using
- * source maps.
- */
-function getOriginalPosition(
-  rawSourceMap: string,
-  line: number,
-  column: number,
-) {
-  const { TraceMap, originalPositionFor } = requireCompiledPackage(
-    '@jridgewell/trace-mapping',
-  );
-  const tracer = new TraceMap(rawSourceMap);
-  const originalPosition = originalPositionFor(tracer, { line, column });
-  return originalPosition;
-}
+export type CachedTraceMap = Map<string, TraceMap>;
 
 /**
  * Returns the first stack frame that looks like user code
@@ -54,10 +40,14 @@ const findFirstUserFrame = (parsed: StackFrame[]) => {
     | undefined;
 };
 
+/**
+ * Parse a single stack frame to get original position from source map
+ */
 const parseFrame = async (
   frame: Pick<StackFrame, 'file' | 'column' | 'lineNumber'>,
   fs: Rspack.OutputFileSystem,
   context: InternalContext,
+  cachedTraceMap: CachedTraceMap,
 ) => {
   const { file, column, lineNumber } = frame;
   const sourceMapInfo = await getFileFromUrl(`${file}.map`, fs, context);
@@ -66,19 +56,33 @@ const parseFrame = async (
     return;
   }
 
-  const readFile = promisify(fs.readFile);
+  const { TraceMap, originalPositionFor } = requireCompiledPackage(
+    '@jridgewell/trace-mapping',
+  );
+
+  const sourceMapPath = sourceMapInfo.filename;
+  const needle = {
+    line: lineNumber ?? 0,
+    column: column ?? 0,
+  };
+
   try {
-    const sourceMap = await readFile(sourceMapInfo.filename);
-    if (sourceMap) {
-      return {
-        sourceMapPath: sourceMapInfo.filename,
-        originalPosition: getOriginalPosition(
-          sourceMap.toString(),
-          lineNumber ?? 0,
-          column ?? 0,
-        ),
-      };
+    let tracer = cachedTraceMap.get(sourceMapPath);
+
+    if (!tracer) {
+      const readFile = promisify(fs.readFile);
+      const sourceMap = await readFile(sourceMapPath);
+
+      if (!sourceMap) {
+        return;
+      }
+
+      tracer = new TraceMap(sourceMap.toString());
+      cachedTraceMap.set(sourceMapPath, tracer);
     }
+
+    const originalPosition = originalPositionFor(tracer, needle);
+    return { sourceMapPath, originalPosition };
   } catch (error) {
     if (error instanceof Error) {
       logger.debug(`failed to map source map position: ${error.message}`);
@@ -94,6 +98,7 @@ const resolveOriginalLocation = async (
   stackFrames: StackFrame[],
   fs: Rspack.OutputFileSystem,
   context: InternalContext,
+  cachedTraceMap: CachedTraceMap,
 ) => {
   // only parse JS files
   const frame = findFirstUserFrame(stackFrames);
@@ -101,7 +106,7 @@ const resolveOriginalLocation = async (
     return;
   }
 
-  const parsedFrame = await parseFrame(frame, fs, context);
+  const parsedFrame = await parseFrame(frame, fs, context, cachedTraceMap);
   if (!parsedFrame) {
     return;
   }
@@ -176,11 +181,12 @@ const formatFullStack = async (
   stackFrames: StackFrame[],
   context: InternalContext,
   fs: Rspack.OutputFileSystem,
+  cachedTraceMap: CachedTraceMap,
 ) => {
   let result = '';
 
   for (const frame of stackFrames) {
-    const parsedFrame = await parseFrame(frame, fs, context);
+    const parsedFrame = await parseFrame(frame, fs, context, cachedTraceMap);
     const { methodName } = frame;
     const parts: (string | undefined)[] = [];
 
@@ -231,6 +237,7 @@ export const formatBrowserErrorLog = async (
   fs: Rspack.OutputFileSystem,
   stackTrace: BrowserLogsStackTrace,
   stackFrames: StackFrame[] | null,
+  cachedTraceMap: CachedTraceMap,
 ): Promise<string> => {
   let log = color.red(message);
 
@@ -241,6 +248,7 @@ export const formatBrowserErrorLog = async (
           stackFrames,
           fs,
           context,
+          cachedTraceMap,
         );
 
         if (!resolved) {
@@ -262,7 +270,12 @@ export const formatBrowserErrorLog = async (
         break;
       }
       case 'full': {
-        const fullStack = await formatFullStack(stackFrames, context, fs);
+        const fullStack = await formatFullStack(
+          stackFrames,
+          context,
+          fs,
+          cachedTraceMap,
+        );
         if (fullStack) {
           log += fullStack;
         }
