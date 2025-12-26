@@ -177,16 +177,15 @@ function applyHMREntry({
 
   const hmrEntry = `import { init } from '${toPosixPath(join(CLIENT_PATH, 'hmr.js'))}';
 ${config.dev.client.overlay ? `import '${toPosixPath(join(CLIENT_PATH, 'overlay.js'))}';` : ''}
-
-init({
-  token: '${token}',
-  config: ${JSON.stringify(clientConfig)},
-  serverHost: ${JSON.stringify(resolvedHost)},
-  serverPort: ${resolvedPort},
-  liveReload: ${config.dev.liveReload},
-  browserLogs: ${Boolean(config.dev.browserLogs)},
-  logLevel: ${JSON.stringify(config.dev.client.logLevel)}
-});
+init(
+  '${token}',
+  ${JSON.stringify(clientConfig)},
+  ${JSON.stringify(resolvedHost)},
+  ${resolvedPort},
+  ${config.dev.liveReload},
+  ${Boolean(config.dev.browserLogs)},
+  ${JSON.stringify(config.dev.client.logLevel)}
+)
 `;
 
   new compiler.webpack.EntryPlugin(

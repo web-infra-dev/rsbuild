@@ -19,23 +19,15 @@ export const registerOverlay = (
   clearOverlay = clearFn;
 };
 
-export function init({
-  token,
-  config,
-  serverHost,
-  serverPort,
-  liveReload,
-  browserLogs,
-  logLevel,
-}: {
-  token: string;
-  config: NormalizedClientConfig;
-  serverHost: string;
-  serverPort: number;
-  liveReload: boolean;
-  browserLogs: boolean;
-  logLevel: LogLevel;
-}): void {
+export function init(
+  token: string,
+  config: NormalizedClientConfig,
+  serverHost: string,
+  serverPort: number,
+  liveReload: boolean,
+  browserLogs: boolean,
+  logLevel: LogLevel,
+): void {
   logger.level = logLevel;
 
   const queuedMessages: ClientMessage[] = [];
