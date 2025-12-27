@@ -1,7 +1,31 @@
 import path from 'node:path';
+import { NODE_MODULES_REGEX } from '../constants';
 import { toRelativePath } from '../helpers/path';
 import { ansiHTML } from './ansiHTML';
 import { escapeHtml } from './helper';
+
+export function formatDisplayPath(
+  filePath: string,
+  isAbsolute: boolean,
+  root?: string,
+): string {
+  // Format node_modules paths
+  // Input: /project/node_modules/.pnpm/foo@1.0.0/node_modules/foo/dist/index.js:0:0
+  // Output: node_modules/foo/dist/index.js:0:0
+  if (NODE_MODULES_REGEX.test(filePath)) {
+    for (const needle of ['/node_modules/', '\\node_modules\\']) {
+      const index = filePath.lastIndexOf(needle);
+      if (index !== -1) {
+        return filePath.slice(index + 1);
+      }
+    }
+  }
+
+  if (root && isAbsolute) {
+    return toRelativePath(root, filePath);
+  }
+  return filePath;
+}
 
 export function convertLinksInHtml(text: string, root?: string): string {
   /**
@@ -61,10 +85,9 @@ export function convertLinksInHtml(text: string, root?: string): string {
       const isAbsolute = path.isAbsolute(filePath);
       const absolutePath =
         root && !isAbsolute ? path.join(root, filePath) : filePath;
-      const relativePath =
-        root && isAbsolute ? toRelativePath(root, filePath) : filePath;
+      const displayPath = formatDisplayPath(filePath, isAbsolute, root);
 
-      return `<a class="file-link" data-file="${absolutePath}">${relativePath}</a>${suffix}`;
+      return `<a class="file-link" data-file="${absolutePath}">${displayPath}</a>${suffix}`;
     });
 
     replacedLine = replacedLine.replace(URL_RE, (url) => {

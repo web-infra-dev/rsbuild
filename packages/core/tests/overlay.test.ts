@@ -1,5 +1,5 @@
 import { ansiHTML } from '../src/server/ansiHTML';
-import { convertLinksInHtml } from '../src/server/overlay';
+import { convertLinksInHtml, formatDisplayPath } from '../src/server/overlay';
 
 describe('ansiHTML', () => {
   it('should convert ANSI color codes to HTML', () => {
@@ -221,5 +221,47 @@ describe('convertLinksInHtml', () => {
     expect(convertLinksInHtml(ansiHTML(input))).toEqual(`
     See <a class="url-link" href="https://example.com" target="_blank" rel="noopener noreferrer">https://example.com</a>
     at error (<a class="file-link" data-file="/path/to/src/index.js:4:1">/path/to/src/index.js:4:1</a>)`);
+  });
+});
+
+describe('formatDisplayPath', () => {
+  it('formats normal node_modules path', () => {
+    const input =
+      '/project/node_modules/react-dom/cjs/react-dom-client.development.js:1:2';
+
+    const out = formatDisplayPath(input, true, '/project');
+    expect(out).toBe(
+      'node_modules/react-dom/cjs/react-dom-client.development.js:1:2',
+    );
+  });
+
+  it('formats pnpm nested node_modules path', () => {
+    const input =
+      '/project/node_modules/.pnpm/react-dom@19.0.0_react@19.0.0/node_modules/react-dom/cjs/react-dom-client.development.js:1:1';
+
+    const out = formatDisplayPath(input, true, '/project');
+    expect(out).toBe(
+      'node_modules/react-dom/cjs/react-dom-client.development.js:1:1',
+    );
+  });
+
+  it('formats nested node_modules path on Windows', () => {
+    const input =
+      'C:\\project\\node_modules\\.pnpm\\react-dom@19.0.0_react@19.0.0\\node_modules\\react-dom\\cjs\\react-dom-client.development.js:1:1';
+
+    const out = formatDisplayPath(input, true, 'C:\\project');
+    expect(out).toBe(
+      'node_modules\\react-dom\\cjs\\react-dom-client.development.js:1:1',
+    );
+  });
+
+  it('returns relative path when not a node_modules path', () => {
+    const input = '/project/src/App.tsx:1:1';
+    const out = formatDisplayPath(input, true, '/project');
+    expect(out).toBe(
+      process.platform === 'win32'
+        ? '.\\src\\App.tsx:1:1'
+        : './src/App.tsx:1:1',
+    );
   });
 });
