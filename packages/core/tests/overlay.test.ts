@@ -258,6 +258,10 @@ describe('formatDisplayPath', () => {
   it('returns relative path when not a node_modules path', () => {
     const input = '/project/src/App.tsx:1:1';
     const out = formatDisplayPath(input, true, '/project');
-    expect(out).toBe('./src/App.tsx:1:1');
+    expect(out).toBe(
+      process.platform === 'win32'
+        ? '.\\src\\App.tsx:1:1'
+        : './src/App.tsx:1:1',
+    );
   });
 });
