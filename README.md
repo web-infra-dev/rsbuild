@@ -15,9 +15,9 @@
 
 English | [Portuguese](./README.pt-BR.md) | [简体中文](./README.zh-CN.md)
 
-Rsbuild is a high-performance build tool powered by Rspack. It provides carefully designed default configurations that deliver an out-of-the-box development experience while fully leveraging Rspack's performance.
+Rsbuild is a high-performance build tool powered by Rspack. It provides carefully designed defaults for an out-of-the-box development experience while fully leveraging Rspack's performance.
 
-Rsbuild provides a [rich set of build features](https://rsbuild.rs/guide/start/features), including compilation of TypeScript, JSX, Sass, Less, CSS Modules, Wasm, and more. It also supports Module Federation, image compression, type checking, PostCSS, Lightning CSS, and additional features.
+Rsbuild provides a [rich set of build features](https://rsbuild.rs/guide/start/features), including support for TypeScript, JSX, Sass, Less, CSS Modules, Wasm, and more. It also supports Module Federation, image compression, type checking, PostCSS, Lightning CSS, and additional features.
 
 ## 🚀 Performance
 
@@ -33,15 +33,15 @@ Powered by Rspack's Rust-based architecture, Rsbuild delivers blazing-fast perfo
 
 Rsbuild has the following features:
 
-- **Easy to configure**: One of the goals of Rsbuild is to provide out-of-the-box build capabilities for Rspack users, allowing developers to start a web project with zero configuration. In addition, Rsbuild provides a semantic build configuration API to reduce the learning curve for Rspack configuration.
+- **Easy to configure**: One of Rsbuild's goals is to give Rspack users out-of-the-box build capabilities so they can start web projects with zero configuration. Rsbuild also provides a semantic build configuration API to reduce the Rspack learning curve.
 
-- **Performance-focused**: Rsbuild integrates high-performance Rust-based tools from the community, including [Rspack](https://rspack.rs), [SWC](https://swc.rs/) and [Lightning CSS](https://lightningcss.dev/), delivering first-class build speed and development experience.
+- **Performance-focused**: Rsbuild integrates high-performance Rust-based tools from the community, including [Rspack](https://rspack.rs), [SWC](https://swc.rs/), and [Lightning CSS](https://lightningcss.dev/), delivering first-class build speed and development experience.
 
-- **Plugin ecosystem**: Rsbuild has a lightweight plugin system and includes a range of high-quality official plugins. It is also compatible with most webpack plugins and all Rspack plugins, allowing users to leverage existing community or in-house plugins in Rsbuild without rewriting code.
+- **Plugin ecosystem**: Rsbuild has a lightweight plugin system and includes a range of high-quality official plugins. It is also compatible with most webpack plugins and all Rspack plugins, allowing you to use existing community or in-house plugins without rewriting code.
 
-- **Stable artifacts**: Rsbuild is designed with a strong focus on the stability of build artifacts. It ensures high consistency between artifacts in the development and production builds, and automatically completes syntax downgrading and polyfill injection. Rsbuild also provides plugins for type checking and artifact syntax validation to prevent quality and compatibility issues in production code.
+- **Stable artifacts**: Rsbuild places a strong focus on build artifact stability. It ensures consistent artifacts in development and production builds, and automatically handles syntax downgrading and polyfill injection. Rsbuild also provides plugins for type checking and artifact syntax validation to prevent quality and compatibility issues from reaching production code.
 
-- **Framework agnostic**: Rsbuild is not coupled with any front-end UI framework. It supports frameworks like React, Vue, Svelte, Solid, and Preact through plugins, and plans to support more UI frameworks from the community in the future.
+- **Framework agnostic**: Rsbuild is not coupled to any frontend UI framework. It supports frameworks like React, Vue, Svelte, Solid, and Preact through plugins, with plans to support more UI frameworks from the community in the future.
 
 ## 📚 Getting started
 
