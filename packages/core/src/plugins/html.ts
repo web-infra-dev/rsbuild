@@ -39,7 +39,7 @@ function getInject(entryName: string, config: NormalizedEnvironmentConfig) {
 }
 
 const getDefaultTemplateContent = (mountId: string) =>
-  `<!doctype html><html><head></head><body><div id="${mountId}"></div></body></html>`;
+  `<!DOCTYPE html><html><head></head><body><div id="${mountId}"></div></body></html>`;
 
 const existTemplatePath = new Set<string>();
 

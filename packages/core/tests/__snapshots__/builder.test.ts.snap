@@ -452,7 +452,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         "scriptLoading": "defer",
         "showErrors": true,
         "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
+        "templateContent": "<!DOCTYPE html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,

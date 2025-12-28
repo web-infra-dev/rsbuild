@@ -60,11 +60,11 @@ rspackTest('should set inject via function correctly', async ({ build }) => {
 
   const fooHtml = getFileContent(files, 'foo.html');
   expect(normalizeNewlines(fooHtml)).toEqual(
-    `<!doctype html><html><head><title>Rsbuild App</title><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body><div id="root"></div><script defer src="/static/js/foo.js"></script></body></html>`,
+    `<!DOCTYPE html><html><head><title>Rsbuild App</title><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body><div id="root"></div><script defer src="/static/js/foo.js"></script></body></html>`,
   );
 
   const indexHtml = getFileContent(files, 'index.html');
   expect(normalizeNewlines(indexHtml)).toEqual(
-    `<!doctype html><html><head><title>Rsbuild App</title><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><script defer src="/static/js/index.js"></script><link href="/static/css/index.css" rel="stylesheet"></head><body><div id="root"></div></body></html>`,
+    `<!DOCTYPE html><html><head><title>Rsbuild App</title><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><script defer src="/static/js/index.js"></script><link href="/static/css/index.css" rel="stylesheet"></head><body><div id="root"></div></body></html>`,
   );
 });
