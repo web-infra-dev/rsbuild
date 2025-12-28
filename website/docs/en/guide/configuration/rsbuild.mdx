@@ -2,11 +2,11 @@
 
 Rsbuild provides a wide range of configuration options with sensible defaults for most use cases. In most scenarios, you can use Rsbuild out of the box without any configuration.
 
-When you need to customize build behavior, use these configuration options.
+When you need to customize build behavior, use the options below.
 
 ## Configuration structure
 
-The configuration structure of Rsbuild looks like this:
+The Rsbuild configuration structure looks like this:
 
 ```js title="rsbuild.config.mjs"
 export default {
@@ -50,11 +50,11 @@ export default {
 };
 ```
 
-You can find detailed descriptions of all configs on the [Configure Overview](/config/) page.
+You can find detailed descriptions of every option on the [Configure Overview](/config/) page.
 
 ## Configuration file
 
-When you use the Rsbuild CLI, it automatically reads the configuration file in the root directory of the current project and resolves it in the following order:
+When you use the Rsbuild CLI, it looks for a configuration file in the project root in the following order:
 
 - rsbuild.config.mjs
 - rsbuild.config.ts
@@ -63,7 +63,7 @@ When you use the Rsbuild CLI, it automatically reads the configuration file in t
 - rsbuild.config.mts
 - rsbuild.config.cts
 
-We recommend using `rsbuild.config.ts` and importing the `defineConfig` utility from `@rsbuild/core`. It provides friendly TypeScript type hints and autocompletion, which can help you avoid errors in the configuration.
+We recommend using `rsbuild.config.ts` and importing the `defineConfig` utility from `@rsbuild/core`. It provides TypeScript hints and autocompletion to help you avoid configuration mistakes.
 
 For example, in `rsbuild.config.ts`, you can define the Rsbuild [resolve.alias](/config/resolve/alias) configuration:
 
@@ -95,7 +95,7 @@ export default defineConfig({
 
 ## Specify config file
 
-Rsbuild CLI uses the `--config` option to specify the config file. It can be set to a relative or absolute path.
+The Rsbuild CLI uses the `--config` option to specify the config file. It can be set to a relative or absolute path.
 
 For example, if you need to use the `rsbuild.prod.config.mjs` file when running `build`, add the following scripts to `package.json`:
 
@@ -135,7 +135,7 @@ Rsbuild provides three ways to load configuration files:
 
 ### About Node.js native loader
 
-When using Node.js's native loader, please note the following limitations:
+When using Node.js's native loader, note the following limitations:
 
 1. When importing JSON files, you need to use import attributes:
 
@@ -199,7 +199,7 @@ The function accepts the following parameters:
 - **Type:** `string`
 - **Default:** `process.env.NODE_ENV`
 
-The current running environment.
+The current runtime environment.
 
 - When running `rsbuild dev`, the default value of env is `development`.
 - When running `rsbuild build` or `rsbuild preview`, the default value of env is `production`.
@@ -217,11 +217,11 @@ For example, when running `rsbuild build --env-mode test`, the value of `envMode
 
 - **Type:** `string`
 
-The current running CLI command, such as `dev`, `build`, `preview`.
+The current CLI command, such as `dev`, `build`, `preview`.
 
 ## Export async function
 
-Rsbuild also supports exporting an async function in the config file, which allows you to perform async operations:
+Rsbuild also supports exporting an async function in the config file, which lets you perform async work:
 
 ```js title="rsbuild.config.js"
 import { defineConfig } from '@rsbuild/core';
@@ -257,13 +257,13 @@ export default mergeRsbuildConfig(config1, config2);
 
 ## Debug the config
 
-You can enable Rsbuild's debug mode by adding the `DEBUG=rsbuild` environment variable when executing a build.
+You can enable Rsbuild's debug mode by setting `DEBUG=rsbuild` when running a build.
 
 ```bash
 DEBUG=rsbuild pnpm dev
 ```
 
-In debug mode, Rsbuild will write the Rsbuild config to the dist directory, which is convenient for developers to view and debug.
+In debug mode, Rsbuild writes the config to the dist directory, making it easier to inspect and debug.
 
 ```
 config inspection completed, open the following files to view the content:

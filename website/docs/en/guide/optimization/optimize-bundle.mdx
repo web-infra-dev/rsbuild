@@ -1,6 +1,6 @@
 # Bundle size optimization
 
-Bundle size optimization is important for production builds because it directly affects user experience. This document covers common bundle size optimization methods in Rsbuild.
+Bundle size optimization is critical for production builds because it directly affects user experience. This document covers common bundle-size optimization methods in Rsbuild.
 
 ## Reduce duplicate dependencies
 
@@ -40,13 +40,13 @@ npx yarn-deduplicate && yarn
 
 ## Use lightweight libraries
 
-We recommend using lightweight libraries in your project, such as replacing [moment](https://momentjs.com/) with [day.js](https://day.js.org/).
+We recommend lightweight libraries in your project, such as replacing [moment](https://momentjs.com/) with [day.js](https://day.js.org/).
 
 To identify the largest third-party libraries in your project, analyze bundle size with Rsdoctor. For more details, see [Using Rsdoctor](/guide/debug/rsdoctor).
 
 ## Adjust browserslist
 
-Rsbuild compiles code based on your project's browserslist config and injects polyfills. If your project doesn't need to support legacy browsers, adjust the browserslist to drop support for older browsers, reducing compilation overhead for syntax transformation and polyfills.
+Rsbuild compiles code based on your project's browserslist config and injects polyfills. If your project doesn't need to support legacy browsers, adjust the browserslist to drop older targets and reduce compilation overhead for syntax transforms and polyfills.
 
 Rsbuild's default Browserslist config is:
 
@@ -68,7 +68,7 @@ For more details on configuring Browserslist, see [Browserslist](/guide/advanced
 
 If your project's [output.polyfill](/config/output/polyfill) is set to `'entry'` and you're certain that third-party dependencies don't require additional polyfills, switch it to `usage`.
 
-In `usage` mode, Rsbuild analyzes the syntax in source code and injects only the required polyfills, reducing polyfill size.
+In `usage` mode, Rsbuild analyzes your source code and injects only the required polyfills, reducing polyfill size.
 
 ```js
 export default {
@@ -84,7 +84,7 @@ For more details on polyfill usage, see [Browser compatibility](/guide/advanced/
 
 ## Image compression
 
-In typical front-end projects, images often account for a large portion of total bundle size. Reducing image size can meaningfully lower the overall bundle size. Enable image compression by registering a plugin in Rsbuild:
+In typical front-end projects, images often account for a large portion of the total bundle size. Reducing image size can meaningfully lower the overall bundle size. Enable image compression by registering a plugin in Rsbuild:
 
 ```ts title="rsbuild.config.ts"
 import { pluginImageCompress } from '@rsbuild/plugin-image-compress';
@@ -98,9 +98,9 @@ See details in [@rsbuild/plugin-image-compress](https://github.com/rspack-contri
 
 ## Split chunk
 
-A good chunk splitting strategy is important for improving application loading performance. It takes advantage of browser caching to reduce the number of requests and improve loading speed.
+A good chunk splitting strategy improves application loading performance. It uses browser caching to reduce the number of requests and speed up loading.
 
-Several [chunk splitting strategies](/guide/optimization/code-splitting) are built into Rsbuild. These should meet the needs of most applications. You can also customize the chunk splitting config to suit your own usage scenario.
+Several [chunk splitting strategies](/guide/optimization/code-splitting) are built into Rsbuild. These should cover most applications. You can also customize the chunk splitting config to suit your use case.
 
 For example, split the `axios` library under node_modules into `axios.js`:
 

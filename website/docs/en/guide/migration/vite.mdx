@@ -35,7 +35,7 @@ Next, update the npm scripts in your package.json to run Rsbuild CLI commands.
 
 ## Create configuration file
 
-Create an Rsbuild configuration file `rsbuild.config.ts` in the same directory as package.json, and add the following content:
+Create an Rsbuild configuration file named `rsbuild.config.ts` alongside package.json, and add the following content:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -49,7 +49,7 @@ export default defineConfig({
 
 The default build entry points for Rsbuild and Vite are different. Vite uses `index.html` as the default entry, while Rsbuild uses `src/index.js`.
 
-When migrating from Vite to Rsbuild, you can use Rsbuild's [source.entry](/config/source/entry) to set the build entry and [html.template](/config/html/template) to set the template.
+When migrating from Vite to Rsbuild, use Rsbuild's [source.entry](/config/source/entry) to set the build entry and [html.template](/config/html/template) to set the template.
 
 Using a newly created Vite project as an example, first delete the `<script>` tags from `index.html`:
 
@@ -73,7 +73,7 @@ export default {
 };
 ```
 
-Rsbuild will automatically inject the `<script>` tags into the generated HTML files during the build process.
+Rsbuild automatically injects the `<script>` tags into the generated HTML files during the build.
 
 ## Migrating plugins
 
@@ -102,7 +102,7 @@ You can refer to [Plugin List](/plugins/list/index) to learn more about availabl
 
 ## Config migration
 
-Here is the corresponding Rsbuild configuration for Vite configuration:
+Here is the corresponding Rsbuild configuration for each Vite option:
 
 | Vite                                  | Rsbuild                                                          |
 | ------------------------------------- | ---------------------------------------------------------------- |
@@ -158,13 +158,13 @@ Here is the corresponding Rsbuild configuration for Vite configuration:
 
 Notes:
 
-- The above table does not cover all configurations of Vite, feel free to add more.
+- The table above doesn't cover every Vite option; feel free to add more.
 
 ## Environment variables
 
 Vite injects environment variables starting with `VITE_` into the client code by default, while Rsbuild injects environment variables starting with `PUBLIC_` by default (see [public variables](/guide/advanced/env-vars#public-variables)).
 
-To be compatible with Vite's behavior, you can manually call Rsbuild's [loadEnv](/api/javascript-api/core#loadenv) method to read environment variables starting with `VITE_`, and inject them into the client code through the [source.define](/config/source/define) config.
+To match Vite's behavior, you can manually call Rsbuild's [loadEnv](/api/javascript-api/core#loadenv) method to read environment variables starting with `VITE_`, and inject them into the client code through the [source.define](/config/source/define) config.
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig, loadEnv } from '@rsbuild/core';
@@ -267,12 +267,12 @@ See [Vite plugin](/guide/migration/vite-plugin) to learn how to migrate Vite plu
 
 ## Validating results
 
-After completing the above steps, you have completed the basic migration from Vite to Rsbuild. You can now run the `npm run dev` command to try starting the dev server.
+After completing the steps above, the basic migration from Vite to Rsbuild is complete. You can now run the `npm run dev` command to try starting the dev server.
 
-If you encounter any issues during the build process, please debug according to the error log, or check the Vite configuration to see if there are any necessary configurations that have not been migrated to Rsbuild.
+If you encounter issues during the build process, debug using the error log, or check the Vite configuration for any settings that haven't been migrated to Rsbuild.
 
 ## Contents supplement
 
-The current document only covers part of the migration process. If you find suitable content to add, feel free to contribute to the documentation via pull request 🤝.
+This document covers only part of the migration process. If you have content to add, feel free to contribute via a pull request 🤝.
 
 > The documentation for rsbuild can be found in the [rsbuild/website](https://github.com/web-infra-dev/rsbuild/tree/main/website) directory.
