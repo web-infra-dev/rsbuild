@@ -1,6 +1,6 @@
 # Bundle size optimization
 
-Bundle size optimization is critical for production builds because it directly affects user experience. This document covers common bundle-size optimization methods in Rsbuild.
+Bundle size optimization is critical for production builds because it directly affects user experience. This document covers common bundle size optimization methods in Rsbuild.
 
 ## Reduce duplicate dependencies
 
@@ -40,13 +40,13 @@ npx yarn-deduplicate && yarn
 
 ## Use lightweight libraries
 
-We recommend lightweight libraries in your project, such as replacing [moment](https://momentjs.com/) with [day.js](https://day.js.org/).
+We recommend using lightweight libraries in your project, such as replacing [moment](https://momentjs.com/) with [day.js](https://day.js.org/).
 
 To identify the largest third-party libraries in your project, analyze bundle size with Rsdoctor. For more details, see [Using Rsdoctor](/guide/debug/rsdoctor).
 
 ## Adjust browserslist
 
-Rsbuild compiles code based on your project's browserslist config and injects polyfills. If your project doesn't need to support legacy browsers, adjust the browserslist to drop older targets and reduce compilation overhead for syntax transforms and polyfills.
+Rsbuild compiles code based on your project's browserslist config and injects polyfills. If your project doesn't need to support legacy browsers, adjust the browserslist to drop older targets, reducing compilation overhead for syntax transforms and polyfills.
 
 Rsbuild's default Browserslist config is:
 
@@ -98,7 +98,7 @@ See details in [@rsbuild/plugin-image-compress](https://github.com/rspack-contri
 
 ## Split chunk
 
-A good chunk splitting strategy improves application loading performance. It uses browser caching to reduce the number of requests and speed up loading.
+A good chunk splitting strategy improves application loading performance. It leverages browser caching to reduce the number of requests and improve loading speed.
 
 Several [chunk splitting strategies](/guide/optimization/code-splitting) are built into Rsbuild. These should cover most applications. You can also customize the chunk splitting config to suit your use case.
 
