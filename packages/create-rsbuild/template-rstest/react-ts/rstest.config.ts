@@ -4,6 +4,6 @@ import { defineConfig } from '@rstest/core';
 // Docs: https://rstest.rs/config/
 export default defineConfig({
   plugins: [pluginReact()],
-  testEnvironment: 'jsdom',
+  testEnvironment: 'happy-dom',
   setupFiles: ['./rstest.setup.ts'],
 });

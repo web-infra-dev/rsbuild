@@ -11,6 +11,6 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/vue": "^8.1.0",
     "@rstest/core": "^0.7.7",
-    "jsdom": "^27.4.0"
+    "happy-dom": "^20.0.11"
   }
 }
