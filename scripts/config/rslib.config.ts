@@ -24,9 +24,6 @@ export const nodeMinifyConfig: Minify = {
 
 export const esmConfig: LibConfig = {
   format: 'esm',
-  experiments: {
-    advancedEsm: true,
-  },
   syntax: 'es2022',
   dts: {
     build: true,
