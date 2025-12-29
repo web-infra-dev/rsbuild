@@ -444,7 +444,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "inject": "head",
         "meta": {
           "charset": {
-            "charset": "UTF-8",
+            "charset": "utf-8",
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
@@ -994,7 +994,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "inject": "head",
         "meta": {
           "charset": {
-            "charset": "UTF-8",
+            "charset": "utf-8",
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },

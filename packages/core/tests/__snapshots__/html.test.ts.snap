@@ -31,7 +31,7 @@ exports[`plugin-html > should allow to configure html.tags 1`] = `
         "inject": "head",
         "meta": {
           "charset": {
-            "charset": "UTF-8",
+            "charset": "utf-8",
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
@@ -64,7 +64,7 @@ exports[`plugin-html > should allow to configure html.tags 1`] = `
         "inject": "head",
         "meta": {
           "charset": {
-            "charset": "UTF-8",
+            "charset": "utf-8",
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
@@ -147,7 +147,7 @@ exports[`plugin-html > should enable minify in production 1`] = `
         "inject": "head",
         "meta": {
           "charset": {
-            "charset": "UTF-8",
+            "charset": "utf-8",
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
@@ -200,7 +200,7 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
         "inject": "head",
         "meta": {
           "charset": {
-            "charset": "UTF-8",
+            "charset": "utf-8",
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
@@ -274,7 +274,7 @@ exports[`plugin-html > should support environment html config 1`] = `
           "inject": "head",
           "meta": {
             "charset": {
-              "charset": "UTF-8",
+              "charset": "utf-8",
             },
             "viewport": "width=device-width, initial-scale=1.0",
           },
@@ -324,7 +324,7 @@ exports[`plugin-html > should support environment html config 1`] = `
           "inject": "head",
           "meta": {
             "charset": {
-              "charset": "UTF-8",
+              "charset": "utf-8",
             },
             "viewport": "width=device-width, initial-scale=1.0",
           },
@@ -381,7 +381,7 @@ exports[`plugin-html > should support multi entry 1`] = `
         "inject": "head",
         "meta": {
           "charset": {
-            "charset": "UTF-8",
+            "charset": "utf-8",
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
@@ -414,7 +414,7 @@ exports[`plugin-html > should support multi entry 1`] = `
         "inject": "head",
         "meta": {
           "charset": {
-            "charset": "UTF-8",
+            "charset": "utf-8",
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },

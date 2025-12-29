@@ -28,7 +28,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "inject": "head",
     "meta": {
       "charset": {
-        "charset": "UTF-8",
+        "charset": "utf-8",
       },
       "viewport": "width=device-width, initial-scale=1.0",
     },
@@ -187,7 +187,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "inject": "head",
     "meta": {
       "charset": {
-        "charset": "UTF-8",
+        "charset": "utf-8",
       },
       "viewport": "width=device-width, initial-scale=1.0",
     },
@@ -350,7 +350,7 @@ exports[`environment config > should print environment config when inspect confi
       "inject": "head",
       "meta": {
         "charset": {
-          "charset": "UTF-8",
+          "charset": "utf-8",
         },
         "viewport": "width=device-width, initial-scale=1.0",
       },
@@ -509,7 +509,7 @@ exports[`environment config > should print environment config when inspect confi
       "inject": "head",
       "meta": {
         "charset": {
-          "charset": "UTF-8",
+          "charset": "utf-8",
         },
         "viewport": "width=device-width, initial-scale=1.0",
       },
@@ -688,7 +688,7 @@ exports[`environment config > should support modify environment config by api.mo
       "inject": "head",
       "meta": {
         "charset": {
-          "charset": "UTF-8",
+          "charset": "utf-8",
         },
         "viewport": "width=device-width, initial-scale=1.0",
       },
@@ -847,7 +847,7 @@ exports[`environment config > should support modify environment config by api.mo
       "inject": "head",
       "meta": {
         "charset": {
-          "charset": "UTF-8",
+          "charset": "utf-8",
         },
         "viewport": "width=device-width, initial-scale=1.0",
       },
@@ -1007,7 +1007,7 @@ exports[`environment config > should support modify environment config by api.mo
       "inject": "head",
       "meta": {
         "charset": {
-          "charset": "UTF-8",
+          "charset": "utf-8",
         },
         "viewport": "width=device-width, initial-scale=1.0",
       },
@@ -1170,7 +1170,7 @@ exports[`environment config > should support modify single environment config by
       "inject": "head",
       "meta": {
         "charset": {
-          "charset": "UTF-8",
+          "charset": "utf-8",
         },
         "viewport": "width=device-width, initial-scale=1.0",
       },
@@ -1329,7 +1329,7 @@ exports[`environment config > should support modify single environment config by
       "inject": "head",
       "meta": {
         "charset": {
-          "charset": "UTF-8",
+          "charset": "utf-8",
         },
         "viewport": "width=device-width, initial-scale=1.0",
       },

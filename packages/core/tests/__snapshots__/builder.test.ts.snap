@@ -444,7 +444,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         "inject": "head",
         "meta": {
           "charset": {
-            "charset": "UTF-8",
+            "charset": "utf-8",
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
