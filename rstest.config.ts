@@ -1,12 +1,15 @@
 import { defineConfig } from '@rstest/core';
-import { define } from './packages/core/rslib.config';
+import { withRslibConfig } from '@rstest/adapter-rslib';
 
 // Disable color in test
 process.env.NO_COLOR = '1';
 
 export default defineConfig({
+  extends: withRslibConfig({
+    cwd: __dirname,
+    configPath: './packages/core/rslib.config.ts',
+  }),
   source: {
-    define,
     tsconfigPath: './scripts/config/tsconfig.json',
   },
   output: {
