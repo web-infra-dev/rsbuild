@@ -752,6 +752,10 @@ const pluginParent = () => ({
 });
 ```
 
+:::tip
+If `api.expose` is called multiple times with the same `id`, the latter call will overwrite the previously exposed API.
+:::
+
 ## api.useExposed
 
 Used for plugin communication.
