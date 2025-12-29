@@ -1630,7 +1630,7 @@ export interface HtmlConfig {
    * @default
    * ```js
    * const defaultMeta = {
-   *   charset: { charset: 'UTF-8' },
+   *   charset: { charset: 'utf-8' },
    *   viewport: 'width=device-width, initial-scale=1.0',
    * };
    * ```
