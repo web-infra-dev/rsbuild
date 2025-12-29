@@ -752,6 +752,10 @@ const pluginParent = () => ({
 });
 ```
 
+:::tip
+如果 `api.expose` 被多次调用且使用了相同的 `id`，则后一次调用会覆盖前一次调用暴露的 API。
+:::
+
 ## api.useExposed
 
 用于插件间通信。
