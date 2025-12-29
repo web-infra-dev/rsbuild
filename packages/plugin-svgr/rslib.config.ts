@@ -7,9 +7,6 @@ export default defineConfig({
     ...dualPackage.lib,
     {
       format: 'esm',
-      experiments: {
-        advancedEsm: true,
-      },
       source: {
         entry: {
           loader: './src/loader.ts',
