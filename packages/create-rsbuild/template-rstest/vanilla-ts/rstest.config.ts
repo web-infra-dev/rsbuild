@@ -2,6 +2,6 @@ import { defineConfig } from '@rstest/core';
 
 // Docs: https://rstest.rs/config/
 export default defineConfig({
-  testEnvironment: 'jsdom',
+  testEnvironment: 'happy-dom',
   setupFiles: ['./rstest.setup.ts'],
 });
