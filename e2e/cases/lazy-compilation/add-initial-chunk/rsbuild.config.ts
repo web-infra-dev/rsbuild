@@ -9,9 +9,11 @@ export default defineConfig({
     },
   },
   tools: {
-    rspack(config) {
-      config.output ??= {};
-      config.output.asyncChunks = false;
+    rspack: {
+      lazyCompilation: true,
+      output: {
+        asyncChunks: false,
+      },
     },
   },
   performance: {
@@ -22,7 +24,7 @@ export default defineConfig({
         cacheGroups: {
           lib: {
             enforce: true,
-            test: /(initial\.js|core-js)/,
+            test: /initial\.js/,
             name: 'lib',
             chunks: 'all',
           },
@@ -31,11 +33,5 @@ export default defineConfig({
         },
       },
     },
-  },
-  dev: {
-    lazyCompilation: true,
-  },
-  output: {
-    polyfill: 'usage',
   },
 });
