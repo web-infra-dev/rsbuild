@@ -27,11 +27,14 @@ export default {
     'html-rspack-plugin',
     '@jridgewell/trace-mapping',
     'mrmime',
-    'memfs',
     'tinyglobby',
     'chokidar',
     'cors',
     'webpack-merge',
+    {
+      name: 'memfs',
+      minify: true,
+    },
     {
       name: 'picocolors',
       beforeBundle({ depPath }) {
@@ -133,6 +136,7 @@ export default {
     {
       name: 'postcss',
       copyDts: true,
+      minify: true,
       externals: {
         picocolors: '../picocolors/index.js',
       },
@@ -159,6 +163,7 @@ export type SourceMapGenerator = unknown;
     {
       name: 'css-loader',
       ignoreDts: true,
+      minify: true,
       externals: {
         postcss: '../postcss/index.js',
       },
