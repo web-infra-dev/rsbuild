@@ -1,3 +1,4 @@
+import { builtinModules } from 'node:module';
 import { sep } from 'node:path';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import type { StatsError } from '@rspack/core';
@@ -233,57 +234,8 @@ const hintNodePolyfill = (message: string): string => {
   }
 
   const moduleName = matchArray[1];
-  const nodeBuiltins = new Set([
-    'assert',
-    'buffer',
-    'child_process',
-    'cluster',
-    'console',
-    'constants',
-    'crypto',
-    'dgram',
-    'diagnostics_channel',
-    'dns',
-    'domain',
-    'events',
-    'fs',
-    'http',
-    'http2',
-    'https',
-    'inspector',
-    'module',
-    'net',
-    'os',
-    'path',
-    'perf_hooks',
-    'process',
-    'punycode',
-    'querystring',
-    'readline',
-    'repl',
-    'stream',
-    'string_decoder',
-    'sys',
-    'timers',
-    'tls',
-    'trace_events',
-    'tty',
-    'url',
-    'util',
-    'v8',
-    'vm',
-    'wasi',
-    'worker_threads',
-    'zlib',
-    // Internal Node.js stream aliases
-    '_stream_duplex',
-    '_stream_passthrough',
-    '_stream_readable',
-    '_stream_transform',
-    '_stream_writable',
-  ]);
 
-  if (moduleName && nodeBuiltins.has(moduleName)) {
+  if (moduleName && builtinModules.includes(moduleName)) {
     return getTips(moduleName);
   }
 
