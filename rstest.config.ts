@@ -6,7 +6,6 @@ process.env.NO_COLOR = '1';
 
 export default defineConfig({
   extends: withRslibConfig({
-    cwd: __dirname,
     configPath: './packages/core/rslib.config.ts',
   }),
   source: {
