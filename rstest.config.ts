@@ -4,6 +4,7 @@ import { withRslibConfig } from '@rstest/adapter-rslib';
 // Disable color in test
 process.env.NO_COLOR = '1';
 
+// TODO: change to test projects ['packages/*']
 export default defineConfig({
   extends: withRslibConfig({
     configPath: './packages/core/rslib.config.ts',
