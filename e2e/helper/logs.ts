@@ -101,7 +101,15 @@ export const createLogHelper = () => {
     pattern: LogPattern,
     options: MatchPatternOptions = {},
   ) => {
-    return !logs.some((log) => matchPattern(log, pattern, options));
+    const result = logs.some((log) => matchPattern(log, pattern, options));
+
+    if (result) {
+      const title = color.bold(color.red('Unexpected log found.'));
+      const unexpected = color.yellow(pattern.toString());
+      throw new Error(
+        `${title}\nUnexpected: ${unexpected}\nGet:\n${originalLogs.join('\n')}`,
+      );
+    }
   };
 
   const expectBuildEnd = async () => expectLog(BUILD_END_LOG);
