@@ -183,7 +183,7 @@ export type ToolsWebpackChainConfig = OneOrMany<
 
 export interface ToolsConfig {
   /**
-   * Configure bundler config base on [rspack-chain](https://github.com/rspack-contrib/rspack-chain)
+   * Configure bundler config base on [rspack-chain](https://github.com/rstackjs/rspack-chain)
    */
   bundlerChain?: ToolsBundlerChainConfig;
   /**
@@ -224,7 +224,7 @@ export interface ToolsConfig {
    */
   webpack?: ToolsWebpackConfig;
   /**
-   * Configure webpack by [rspack-chain](https://github.com/rspack-contrib/rspack-chain).
+   * Configure webpack by [rspack-chain](https://github.com/rstackjs/rspack-chain).
    * @requires webpack
    */
   webpackChain?: ToolsWebpackChainConfig;
@@ -1688,13 +1688,13 @@ export interface HtmlConfig {
   outputStructure?: OutputStructure;
   /**
    * Define the path to the HTML template,
-   * corresponding to the `template` config of [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin).
+   * corresponding to the `template` config of [html-rspack-plugin](https://github.com/rstackjs/html-rspack-plugin).
    * @default A built-in HTML template
    */
   template?: ChainedHtmlOption<string>;
   /**
    * Define the parameters in the HTML template,
-   * corresponding to the `templateParameters` config of [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin).
+   * corresponding to the `templateParameters` config of [html-rspack-plugin](https://github.com/rstackjs/html-rspack-plugin).
    */
   templateParameters?: ConfigChainWithContext<
     Record<string, unknown>,

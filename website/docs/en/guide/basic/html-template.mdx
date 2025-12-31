@@ -362,11 +362,11 @@ Rsbuild also supports using other template engines via plugins, such as [EJS](ht
 
 ### EJS
 
-Rsbuild's built-in template syntax has some differences from [EJS](https://ejs.co/). To use the full EJS syntax, you can use a plugin. See [rsbuild-plugin-ejs](https://github.com/rspack-contrib/rsbuild-plugin-ejs) for more details.
+Rsbuild's built-in template syntax has some differences from [EJS](https://ejs.co/). To use the full EJS syntax, you can use a plugin. See [rsbuild-plugin-ejs](https://github.com/rstackjs/rsbuild-plugin-ejs) for more details.
 
 ### Pug
 
-Rsbuild supports the [Pug](https://pugjs.org/) template engine via a plugin. See [@rsbuild/plugin-pug](https://github.com/rspack-contrib/rsbuild-plugin-pug) for more details.
+Rsbuild supports the [Pug](https://pugjs.org/) template engine via a plugin. See [@rsbuild/plugin-pug](https://github.com/rstackjs/rsbuild-plugin-pug) for more details.
 
 ## Injecting tags
 
@@ -420,7 +420,7 @@ Typically, you do not need to manually use the `htmlPlugin.tags.headTags` and `h
 
 ## HTML plugin
 
-Rsbuild internally implements HTML-related features based on [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin). It is a fork of [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin), with the same features and options.
+Rsbuild internally implements HTML-related features based on [html-rspack-plugin](https://github.com/rstackjs/html-rspack-plugin). It is a fork of [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin), with the same features and options.
 
 You can modify the html-rspack-plugin options via [tools.htmlPlugin](/config/tools/html-plugin), or disable the default html-rspack-plugin.
 
@@ -440,4 +440,4 @@ export default {
 
 ## HTML minification
 
-Rsbuild currently does not minify HTML files. If you need to minify HTML files, you can use the [rsbuild-plugin-html-minifier-terser plugin](https://github.com/rspack-contrib/rsbuild-plugin-html-minifier-terser).
+Rsbuild currently does not minify HTML files. If you need to minify HTML files, you can use the [rsbuild-plugin-html-minifier-terser plugin](https://github.com/rstackjs/rsbuild-plugin-html-minifier-terser).

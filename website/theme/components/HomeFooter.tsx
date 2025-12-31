@@ -97,7 +97,7 @@ function useFooterData() {
         },
         {
           title: 'Awesome Rstack',
-          link: 'https://github.com/web-infra-dev/awesome-rstack',
+          link: 'https://github.com/rstackjs/awesome-rstack',
         },
       ],
     },

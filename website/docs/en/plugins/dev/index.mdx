@@ -121,7 +121,7 @@ The `name` of official Rsbuild plugins uniformly uses `rsbuild:` as a prefix, fo
 
 ### Template repository
 
-[rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template) is a minimal Rsbuild plugin template repository that you can use as a basis for developing your Rsbuild plugin.
+[rsbuild-plugin-template](https://github.com/rstackjs/rsbuild-plugin-template) is a minimal Rsbuild plugin template repository that you can use as a basis for developing your Rsbuild plugin.
 
 ### Environment plugin
 
@@ -270,11 +270,11 @@ Therefore, the best way to use configuration options is to:
 Rsbuild plugin allows you to modify the built-in Rspack configuration, including:
 
 - [api.modifyRspackConfig](/plugins/dev/hooks#modifyrspackconfig): Modify the Rspack configuration object.
-- [api.modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain): Modify the Rspack configuration through [rspack-chain](https://github.com/rspack-contrib/rspack-chain).
+- [api.modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain): Modify the Rspack configuration through [rspack-chain](https://github.com/rstackjs/rspack-chain).
 
 ### Example
 
-For example, register [eslint-rspack-plugin](https://github.com/rspack-contrib/eslint-rspack-plugin) via Rsbuild plugin:
+For example, register [eslint-rspack-plugin](https://github.com/rstackjs/eslint-rspack-plugin) via Rsbuild plugin:
 
 ```ts
 import type { RsbuildPlugin } from '@rsbuild/core';

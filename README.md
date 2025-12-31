@@ -27,7 +27,7 @@ Powered by Rspack's Rust-based architecture, Rsbuild delivers blazing-fast perfo
 
 ![benchmark](https://assets.rspack.rs/rsbuild/assets/benchmark-latest.jpeg)
 
-> 📊 Benchmark results from [build-tools-performance](https://github.com/rspack-contrib/build-tools-performance).
+> 📊 Benchmark results from [build-tools-performance](https://github.com/rstackjs/build-tools-performance).
 
 ## 🔥 Features
 
@@ -63,11 +63,11 @@ Rstack is a unified JavaScript toolchain centered on Rspack, with high performan
 
 ## 🔗 Links
 
-- [awesome-rstack](https://github.com/web-infra-dev/awesome-rstack): A curated list of awesome things related to Rstack.
-- [rstack-examples](https://github.com/rspack-contrib/rstack-examples): Examples showcasing Rstack.
-- [storybook-rsbuild](https://github.com/rspack-contrib/storybook-rsbuild): Storybook builder powered by Rsbuild.
-- [rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template)：Use this template to create your own Rsbuild plugin.
-- [rstack-design-resources](https://github.com/rspack-contrib/rstack-design-resources)：Design resources for Rstack.
+- [awesome-rstack](https://github.com/rstackjs/awesome-rstack): A curated list of awesome things related to Rstack.
+- [rstack-examples](https://github.com/rstackjs/rstack-examples): Examples showcasing Rstack.
+- [storybook-rsbuild](https://github.com/rstackjs/storybook-rsbuild): Storybook builder powered by Rsbuild.
+- [rsbuild-plugin-template](https://github.com/rstackjs/rsbuild-plugin-template)：Use this template to create your own Rsbuild plugin.
+- [rstack-design-resources](https://github.com/rstackjs/rstack-design-resources)：Design resources for Rstack.
 
 ## 🤝 Contribution
 
