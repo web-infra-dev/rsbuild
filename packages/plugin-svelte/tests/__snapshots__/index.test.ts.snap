@@ -31,6 +31,10 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
       {
         "loader": "builtin:swc-loader",
         "options": {
+          "collectTypeScriptInfo": {
+            "exportedEnum": false,
+            "typeExports": true,
+          },
           "env": {
             "mode": undefined,
             "targets": [
@@ -59,10 +63,6 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
             },
-          },
-          "collectTypeScriptInfo": {
-            "exportedEnum": false,
-            "typeExports": true,
           },
         },
       },
@@ -94,6 +94,10 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
       {
         "loader": "builtin:swc-loader",
         "options": {
+          "collectTypeScriptInfo": {
+            "exportedEnum": false,
+            "typeExports": true,
+          },
           "env": {
             "mode": undefined,
             "targets": [
@@ -122,10 +126,6 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
             },
-          },
-          "collectTypeScriptInfo": {
-            "exportedEnum": false,
-            "typeExports": true,
           },
         },
       },
@@ -159,6 +159,10 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
       {
         "loader": "builtin:swc-loader",
         "options": {
+          "collectTypeScriptInfo": {
+            "exportedEnum": false,
+            "typeExports": true,
+          },
           "env": {
             "mode": undefined,
             "targets": [
@@ -187,10 +191,6 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
             },
-          },
-          "collectTypeScriptInfo": {
-            "exportedEnum": false,
-            "typeExports": true,
           },
         },
       },
@@ -222,6 +222,10 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
       {
         "loader": "builtin:swc-loader",
         "options": {
+          "collectTypeScriptInfo": {
+            "exportedEnum": false,
+            "typeExports": true,
+          },
           "env": {
             "mode": undefined,
             "targets": [
@@ -250,10 +254,6 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
             },
-          },
-          "collectTypeScriptInfo": {
-            "exportedEnum": false,
-            "typeExports": true,
           },
         },
       },
@@ -270,6 +270,10 @@ exports[`plugin-svelte > should add svelte loader and resolve config properly 1`
       {
         "loader": "builtin:swc-loader",
         "options": {
+          "collectTypeScriptInfo": {
+            "exportedEnum": false,
+            "typeExports": true,
+          },
           "env": {
             "mode": undefined,
             "targets": [
@@ -298,10 +302,6 @@ exports[`plugin-svelte > should add svelte loader and resolve config properly 1`
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
             },
-          },
-          "collectTypeScriptInfo": {
-            "exportedEnum": false,
-            "typeExports": true,
           },
         },
       },
@@ -373,6 +373,10 @@ exports[`plugin-svelte > should override default svelte-loader options throw opt
       {
         "loader": "builtin:swc-loader",
         "options": {
+          "collectTypeScriptInfo": {
+            "exportedEnum": false,
+            "typeExports": true,
+          },
           "env": {
             "mode": undefined,
             "targets": [
@@ -401,10 +405,6 @@ exports[`plugin-svelte > should override default svelte-loader options throw opt
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
             },
-          },
-          "collectTypeScriptInfo": {
-            "exportedEnum": false,
-            "typeExports": true,
           },
         },
       },
@@ -432,6 +432,10 @@ exports[`plugin-svelte > should set dev and hotReload to false in production mod
       {
         "loader": "builtin:swc-loader",
         "options": {
+          "collectTypeScriptInfo": {
+            "exportedEnum": true,
+            "typeExports": true,
+          },
           "env": {
             "mode": undefined,
             "targets": [
@@ -460,10 +464,6 @@ exports[`plugin-svelte > should set dev and hotReload to false in production mod
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
             },
-          },
-          "collectTypeScriptInfo": {
-            "exportedEnum": true,
-            "typeExports": true,
           },
         },
       },
@@ -495,6 +495,10 @@ exports[`plugin-svelte > should support pass custom preprocess options 1`] = `
       {
         "loader": "builtin:swc-loader",
         "options": {
+          "collectTypeScriptInfo": {
+            "exportedEnum": false,
+            "typeExports": true,
+          },
           "env": {
             "mode": undefined,
             "targets": [
@@ -523,10 +527,6 @@ exports[`plugin-svelte > should support pass custom preprocess options 1`] = `
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
             },
-          },
-          "collectTypeScriptInfo": {
-            "exportedEnum": false,
-            "typeExports": true,
           },
         },
       },
@@ -558,6 +558,10 @@ exports[`plugin-svelte > should turn off HMR by hand correctly 1`] = `
       {
         "loader": "builtin:swc-loader",
         "options": {
+          "collectTypeScriptInfo": {
+            "exportedEnum": false,
+            "typeExports": true,
+          },
           "env": {
             "mode": undefined,
             "targets": [
@@ -586,10 +590,6 @@ exports[`plugin-svelte > should turn off HMR by hand correctly 1`] = `
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
             },
-          },
-          "collectTypeScriptInfo": {
-            "exportedEnum": false,
-            "typeExports": true,
           },
         },
       },

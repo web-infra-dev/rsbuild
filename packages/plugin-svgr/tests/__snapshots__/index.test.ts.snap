@@ -25,6 +25,10 @@ exports[`svgr > configure SVGR options 1`] = `
         {
           "loader": "builtin:swc-loader",
           "options": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
             "env": {
               "mode": undefined,
               "targets": [
@@ -58,10 +62,6 @@ exports[`svgr > configure SVGR options 1`] = `
                   "runtime": "automatic",
                 },
               },
-            },
-            "collectTypeScriptInfo": {
-              "exportedEnum": false,
-              "typeExports": true,
             },
           },
         },
@@ -129,6 +129,10 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
         {
           "loader": "builtin:swc-loader",
           "options": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
             "env": {
               "mode": undefined,
               "targets": [
@@ -162,10 +166,6 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
                   "runtime": "automatic",
                 },
               },
-            },
-            "collectTypeScriptInfo": {
-              "exportedEnum": false,
-              "typeExports": true,
             },
           },
         },
@@ -201,6 +201,10 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
         {
           "loader": "builtin:swc-loader",
           "options": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
             "env": {
               "mode": undefined,
               "targets": [
@@ -234,10 +238,6 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
                   "runtime": "automatic",
                 },
               },
-            },
-            "collectTypeScriptInfo": {
-              "exportedEnum": false,
-              "typeExports": true,
             },
           },
         },
@@ -304,6 +304,10 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
         {
           "loader": "builtin:swc-loader",
           "options": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
             "env": {
               "mode": undefined,
               "targets": [
@@ -337,10 +341,6 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
                   "runtime": "automatic",
                 },
               },
-            },
-            "collectTypeScriptInfo": {
-              "exportedEnum": false,
-              "typeExports": true,
             },
           },
         },
@@ -376,6 +376,10 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
         {
           "loader": "builtin:swc-loader",
           "options": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
             "env": {
               "mode": undefined,
               "targets": [
@@ -409,10 +413,6 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
                   "runtime": "automatic",
                 },
               },
-            },
-            "collectTypeScriptInfo": {
-              "exportedEnum": false,
-              "typeExports": true,
             },
           },
         },
@@ -479,6 +479,10 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
         {
           "loader": "builtin:swc-loader",
           "options": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
             "env": {
               "mode": undefined,
               "targets": [
@@ -512,10 +516,6 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
                   "runtime": "automatic",
                 },
               },
-            },
-            "collectTypeScriptInfo": {
-              "exportedEnum": false,
-              "typeExports": true,
             },
           },
         },
@@ -551,6 +551,10 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
         {
           "loader": "builtin:swc-loader",
           "options": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
             "env": {
               "mode": undefined,
               "targets": [
@@ -584,10 +588,6 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
                   "runtime": "automatic",
                 },
               },
-            },
-            "collectTypeScriptInfo": {
-              "exportedEnum": false,
-              "typeExports": true,
             },
           },
         },
@@ -654,6 +654,10 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
         {
           "loader": "builtin:swc-loader",
           "options": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
             "env": {
               "mode": undefined,
               "targets": [
@@ -687,10 +691,6 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
                   "runtime": "automatic",
                 },
               },
-            },
-            "collectTypeScriptInfo": {
-              "exportedEnum": false,
-              "typeExports": true,
             },
           },
         },
@@ -726,6 +726,10 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
         {
           "loader": "builtin:swc-loader",
           "options": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
             "env": {
               "mode": undefined,
               "targets": [
@@ -759,10 +763,6 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
                   "runtime": "automatic",
                 },
               },
-            },
-            "collectTypeScriptInfo": {
-              "exportedEnum": false,
-              "typeExports": true,
             },
           },
         },
