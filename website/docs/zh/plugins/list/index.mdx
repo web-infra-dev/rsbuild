@@ -27,9 +27,9 @@
 适用于 Vue 框架的插件有：
 
 - [@rsbuild/plugin-vue](/plugins/list/plugin-vue)：提供对 Vue 3 SFC（单文件组件）的支持。
-- [@rsbuild/plugin-vue-jsx](https://github.com/rspack-contrib/rsbuild-plugin-vue-jsx)：提供对 Vue 3 JSX / TSX 语法的支持。
-- [@rsbuild/plugin-vue2](https://github.com/rspack-contrib/rsbuild-plugin-vue2)：提供对 Vue 2 SFC（单文件组件）的支持。
-- [@rsbuild/plugin-vue2-jsx](https://github.com/rspack-contrib/rsbuild-plugin-vue2-jsx)：提供对 Vue 2 JSX / TSX 语法的支持。
+- [@rsbuild/plugin-vue-jsx](https://github.com/rstackjs/rsbuild-plugin-vue-jsx)：提供对 Vue 3 JSX / TSX 语法的支持。
+- [@rsbuild/plugin-vue2](https://github.com/rstackjs/rsbuild-plugin-vue2)：提供对 Vue 2 SFC（单文件组件）的支持。
+- [@rsbuild/plugin-vue2-jsx](https://github.com/rstackjs/rsbuild-plugin-vue2-jsx)：提供对 Vue 2 JSX / TSX 语法的支持。
 
 ### Preact
 
@@ -53,29 +53,29 @@
 
 以下是与框架无关的通用插件：
 
-- [@rsbuild/plugin-assets-retry](https://github.com/rspack-contrib/rsbuild-plugin-assets-retry)：用于在静态资源加载失败时自动发起重试请求。
+- [@rsbuild/plugin-assets-retry](https://github.com/rstackjs/rsbuild-plugin-assets-retry)：用于在静态资源加载失败时自动发起重试请求。
 - [@rsbuild/plugin-babel](/plugins/list/plugin-babel)：提供对 Babel 转译能力的支持。
 - [@rsbuild/plugin-sass](/plugins/list/plugin-sass)：使用 Sass 作为 CSS 预处理器。
 - [@rsbuild/plugin-less](/plugins/list/plugin-less)：使用 Less 作为 CSS 预处理器。
 - [@rsbuild/plugin-stylus](/plugins/list/plugin-stylus)：使用 Stylus 作为 CSS 预处理器。
-- [@rsbuild/plugin-basic-ssl](https://github.com/rspack-contrib/rsbuild-plugin-basic-ssl): 为 HTTPS server 生成不受信任的自签名证书。
-- [@rsbuild/plugin-eslint](https://github.com/rspack-contrib/rsbuild-plugin-eslint)：用于在编译过程中运行 ESLint 检查。
-- [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check)：用于在单独的进程中运行 TypeScript 类型检查。
-- [@rsbuild/plugin-image-compress](https://github.com/rspack-contrib/rsbuild-plugin-image-compress)：压缩图片资源。
-- [@rsbuild/plugin-mdx](https://github.com/rspack-contrib/rsbuild-plugin-mdx)：提供 MDX 支持。
-- [@rsbuild/plugin-node-polyfill](https://github.com/rspack-contrib/rsbuild-plugin-node-polyfill)：用于注入 Node 核心模块在浏览器端的 polyfills。
-- [@rsbuild/plugin-source-build](https://github.com/rspack-contrib/rsbuild-plugin-source-build)：用于 monorepo 场景，支持引用其他子目录的源代码，并完成构建和热更新。
-- [@rsbuild/plugin-check-syntax](https://github.com/rspack-contrib/rsbuild-plugin-check-syntax)：检查构建产物的语法兼容性，判断是否存在导致兼容性问题的高级语法。
-- [@rsbuild/plugin-css-minimizer](https://github.com/rspack-contrib/rsbuild-plugin-css-minimizer)：用于自定义 CSS 压缩工具，切换到 [cssnano](https://github.com/cssnano/cssnano) 或其他工具进行 CSS 压缩。
-- [@rsbuild/plugin-typed-css-modules](https://github.com/rspack-contrib/rsbuild-plugin-typed-css-modules)：用于为 CSS Modules 文件生成类型声明。
-- [@rsbuild/plugin-pug](https://github.com/rspack-contrib/rsbuild-plugin-pug)：提供对 Pug 模板引擎的支持。
-- [@rsbuild/plugin-rem](https://github.com/rspack-contrib/rsbuild-plugin-rem)：用于实现移动端页面的 rem 自适应布局。
-- [@rsbuild/plugin-umd](https://github.com/rspack-contrib/rsbuild-plugin-umd)：用于构建 UMD 格式的产物。
-- [@rsbuild/plugin-yaml](https://github.com/rspack-contrib/rsbuild-plugin-yaml)：引用 YAML 文件，并将其转换为 JavaScript 对象。
-- [@rsbuild/plugin-toml](https://github.com/rspack-contrib/rsbuild-plugin-toml)：引用 TOML 文件，并将其转换为 JavaScript 对象。
+- [@rsbuild/plugin-basic-ssl](https://github.com/rstackjs/rsbuild-plugin-basic-ssl): 为 HTTPS server 生成不受信任的自签名证书。
+- [@rsbuild/plugin-eslint](https://github.com/rstackjs/rsbuild-plugin-eslint)：用于在编译过程中运行 ESLint 检查。
+- [@rsbuild/plugin-type-check](https://github.com/rstackjs/rsbuild-plugin-type-check)：用于在单独的进程中运行 TypeScript 类型检查。
+- [@rsbuild/plugin-image-compress](https://github.com/rstackjs/rsbuild-plugin-image-compress)：压缩图片资源。
+- [@rsbuild/plugin-mdx](https://github.com/rstackjs/rsbuild-plugin-mdx)：提供 MDX 支持。
+- [@rsbuild/plugin-node-polyfill](https://github.com/rstackjs/rsbuild-plugin-node-polyfill)：用于注入 Node 核心模块在浏览器端的 polyfills。
+- [@rsbuild/plugin-source-build](https://github.com/rstackjs/rsbuild-plugin-source-build)：用于 monorepo 场景，支持引用其他子目录的源代码，并完成构建和热更新。
+- [@rsbuild/plugin-check-syntax](https://github.com/rstackjs/rsbuild-plugin-check-syntax)：检查构建产物的语法兼容性，判断是否存在导致兼容性问题的高级语法。
+- [@rsbuild/plugin-css-minimizer](https://github.com/rstackjs/rsbuild-plugin-css-minimizer)：用于自定义 CSS 压缩工具，切换到 [cssnano](https://github.com/cssnano/cssnano) 或其他工具进行 CSS 压缩。
+- [@rsbuild/plugin-typed-css-modules](https://github.com/rstackjs/rsbuild-plugin-typed-css-modules)：用于为 CSS Modules 文件生成类型声明。
+- [@rsbuild/plugin-pug](https://github.com/rstackjs/rsbuild-plugin-pug)：提供对 Pug 模板引擎的支持。
+- [@rsbuild/plugin-rem](https://github.com/rstackjs/rsbuild-plugin-rem)：用于实现移动端页面的 rem 自适应布局。
+- [@rsbuild/plugin-umd](https://github.com/rstackjs/rsbuild-plugin-umd)：用于构建 UMD 格式的产物。
+- [@rsbuild/plugin-yaml](https://github.com/rstackjs/rsbuild-plugin-yaml)：引用 YAML 文件，并将其转换为 JavaScript 对象。
+- [@rsbuild/plugin-toml](https://github.com/rstackjs/rsbuild-plugin-toml)：引用 TOML 文件，并将其转换为 JavaScript 对象。
 
 :::tip
-你可以在 [web-infra-dev/rsbuild](https://github.com/web-infra-dev/rsbuild) 和 [rspack-contrib](https://github.com/rspack-contrib) 中找到这些插件的源代码。
+你可以在 [web-infra-dev/rsbuild](https://github.com/web-infra-dev/rsbuild) 和 [rstackjs](https://github.com/rstackjs) 中找到这些插件的源代码。
 :::
 
 ## 社区插件
@@ -86,7 +86,7 @@
 
 ### React
 
-- [rsbuild-plugin-react-router](https://github.com/rspack-contrib/rsbuild-plugin-react-router)：提供与 React Router 的集成。
+- [rsbuild-plugin-react-router](https://github.com/rstackjs/rsbuild-plugin-react-router)：提供与 React Router 的集成。
 
 ### Angular
 

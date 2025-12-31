@@ -153,7 +153,7 @@ Here is the corresponding Rsbuild configuration for [CRA configuration](https://
 | GENERATE_SOURCEMAP      | [output.sourceMap](/config/output/source-map)                                                   |
 | IMAGE_INLINE_SIZE_LIMIT | [output.dataUriLimit](/config/output/data-uri-limit)                                            |
 | FAST_REFRESH            | [dev.hmr](/config/dev/hmr)                                                                      |
-| TSC_COMPILE_ON_ERROR    | [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check)       |
+| TSC_COMPILE_ON_ERROR    | [@rsbuild/plugin-type-check](https://github.com/rstackjs/rsbuild-plugin-type-check)             |
 
 Notes:
 
@@ -311,7 +311,7 @@ Then, you can use the `npm run lint` command to run ESLint.
 
 ### Run ESLint during the build
 
-In addition to adding the `lint` command in `package.json`, you can also add the [@rsbuild/plugin-eslint](https://github.com/rspack-contrib/rsbuild-plugin-eslint) plugin to maintain the same behavior as CRA.
+In addition to adding the `lint` command in `package.json`, you can also add the [@rsbuild/plugin-eslint](https://github.com/rstackjs/rsbuild-plugin-eslint) plugin to maintain the same behavior as CRA.
 
 `@rsbuild/plugin-eslint` allows you to run ESLint during the build process.
 
@@ -339,19 +339,19 @@ To use this feature in Rsbuild, refer to the [Path Alias - jsconfig.json](/guide
 
 If your project is using [CRACO](https://craco.js.org) to override CRA configuration, you can refer to the table below for migration:
 
-| CRACO                                                                                           | Rsbuild                                                                                   |
-| ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| [webpack.configure](https://craco.js.org/docs/configuration/webpack/#webpackconfigure)          | [tools.rspack](/config/tools/rspack)                                                      |
-| [webpack.alias](https://craco.js.org/docs/configuration/webpack/#webpackalias)                  | [resolve.alias](/config/resolve/alias)                                                    |
-| [webpack.plugins.add](https://craco.js.org/docs/configuration/webpack/#webpackplugins)          | [appendPlugins of tools.rspack](/config/tools/rspack#appendplugins)                       |
-| [webpack.plugins.remove](https://craco.js.org/docs/configuration/webpack/#webpackpluginsremove) | [removePlugin of tools.rspack](/config/tools/rspack#removeplugin)                         |
-| [style.modules](https://craco.js.org/docs/configuration/style/#stylemodules)                    | [output.cssModules](/config/output/css-modules)                                           |
-| [style.css](https://craco.js.org/docs/configuration/style/#stylecss)                            | [tools.cssLoader](/config/tools/css-loader)                                               |
-| [style.sass](https://craco.js.org/docs/configuration/style/#stylesass)                          | [Sass Plugin](/plugins/list/plugin-sass)                                                  |
-| [style.postcss](https://craco.js.org/docs/configuration/style/#stylepostcss)                    | [tools.postcss](/config/tools/postcss)                                                    |
-| [babel](https://craco.js.org/docs/configuration/babel/)                                         | [Babel Plugin](/plugins/list/plugin-babel)                                                |
-| [typescript](https://craco.js.org/docs/configuration/typescript/)                               | [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check) |
-| [devServer](https://craco.js.org/docs/configuration/devserver/)                                 | [server configs](/config/index)                                                           |
+| CRACO                                                                                           | Rsbuild                                                                             |
+| ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| [webpack.configure](https://craco.js.org/docs/configuration/webpack/#webpackconfigure)          | [tools.rspack](/config/tools/rspack)                                                |
+| [webpack.alias](https://craco.js.org/docs/configuration/webpack/#webpackalias)                  | [resolve.alias](/config/resolve/alias)                                              |
+| [webpack.plugins.add](https://craco.js.org/docs/configuration/webpack/#webpackplugins)          | [appendPlugins of tools.rspack](/config/tools/rspack#appendplugins)                 |
+| [webpack.plugins.remove](https://craco.js.org/docs/configuration/webpack/#webpackpluginsremove) | [removePlugin of tools.rspack](/config/tools/rspack#removeplugin)                   |
+| [style.modules](https://craco.js.org/docs/configuration/style/#stylemodules)                    | [output.cssModules](/config/output/css-modules)                                     |
+| [style.css](https://craco.js.org/docs/configuration/style/#stylecss)                            | [tools.cssLoader](/config/tools/css-loader)                                         |
+| [style.sass](https://craco.js.org/docs/configuration/style/#stylesass)                          | [Sass Plugin](/plugins/list/plugin-sass)                                            |
+| [style.postcss](https://craco.js.org/docs/configuration/style/#stylepostcss)                    | [tools.postcss](/config/tools/postcss)                                              |
+| [babel](https://craco.js.org/docs/configuration/babel/)                                         | [Babel Plugin](/plugins/list/plugin-babel)                                          |
+| [typescript](https://craco.js.org/docs/configuration/typescript/)                               | [@rsbuild/plugin-type-check](https://github.com/rstackjs/rsbuild-plugin-type-check) |
+| [devServer](https://craco.js.org/docs/configuration/devserver/)                                 | [server configs](/config/index)                                                     |
 
 ### Example
 

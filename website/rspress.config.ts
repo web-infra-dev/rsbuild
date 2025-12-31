@@ -81,7 +81,7 @@ export default defineConfig({
         },
         {
           from: '/plugins/list/plugin-assets-retry',
-          to: 'https://github.com/rspack-contrib/rsbuild-plugin-assets-retry',
+          to: 'https://github.com/rstackjs/rsbuild-plugin-assets-retry',
         },
         {
           from: '/guide/basic/css-usage',

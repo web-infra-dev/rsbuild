@@ -27,7 +27,7 @@ Alimentado pela arquitetura baseada em Rust do Rspack, o Rsbuild oferece um dese
 
 ![benchmark](https://assets.rspack.rs/rsbuild/assets/benchmark-latest.jpeg)
 
-> 📊 Resultados do benchmark do [build-tools-performance](https://github.com/rspack-contrib/build-tools-performance).
+> 📊 Resultados do benchmark do [build-tools-performance](https://github.com/rstackjs/build-tools-performance).
 
 ## 🔥 Recursos
 
@@ -64,10 +64,10 @@ Rstack é uma cadeia de ferramentas JavaScript unificada construída em torno do
 ## 🔗 Links
 
 - [awesome-rstack](https://github.com/web-infra-dev/awesome-rstack): Uma lista com curadoria de coisas incríveis relacionadas ao Rspack e ao Rsbuild.
-- [rstack-examples](https://github.com/rspack-contrib/rstack-examples): Exemplos demonstrando ferramentas do Rstack.
-- [storybook-rsbuild](https://github.com/rspack-contrib/storybook-rsbuild): Construtor de livros de histórias desenvolvido pelo Rsbuild.
-- [rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template)：Use esse modelo para criar seu próprio plug-in do Rsbuild.
-- [rstack-design-resources](https://github.com/rspack-contrib/rstack-design-resources)：Recursos de design para Rstack.
+- [rstack-examples](https://github.com/rstackjs/rstack-examples): Exemplos demonstrando ferramentas do Rstack.
+- [storybook-rsbuild](https://github.com/rstackjs/storybook-rsbuild): Construtor de livros de histórias desenvolvido pelo Rsbuild.
+- [rsbuild-plugin-template](https://github.com/rstackjs/rsbuild-plugin-template)：Use esse modelo para criar seu próprio plug-in do Rsbuild.
+- [rstack-design-resources](https://github.com/rstackjs/rstack-design-resources)：Recursos de design para Rstack.
 
 ## 🤝 Contribuição
 

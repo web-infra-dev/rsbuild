@@ -17,9 +17,9 @@
 | Node 产物      | 可选功能，构建运行在 Node.js 环境的产物                          | <ul><li>[Node 产物](/config/output/target#node-产物)</li></ul>                                                             |
 | Web Workers    | 可选功能，使用 Web Workers                                       | <ul><li>[Web Workers](/guide/basic/web-workers)</li></ul>                                                                  |
 | 浏览器范围     | 可选功能，通过 browserslist 来设置 Web 应用需要兼容的浏览器范围  | <ul><li>[浏览器范围](/guide/advanced/browserslist)</li></ul>                                                               |
-| 兼容性检查     | 可选功能，分析构建产物中是否存在当前浏览器范围下不兼容的高级语法 | <ul><li>[@rsbuild/plugin-check-syntax](https://github.com/rspack-contrib/rsbuild-plugin-check-syntax)</li></ul>            |
+| 兼容性检查     | 可选功能，分析构建产物中是否存在当前浏览器范围下不兼容的高级语法 | <ul><li>[@rsbuild/plugin-check-syntax](https://github.com/rstackjs/rsbuild-plugin-check-syntax)</li></ul>                  |
 | 注入环境变量   | 可选功能，向代码中注入环境变量或表达式                           | <ul><li>[环境变量](/guide/advanced/env-vars)</li></ul>                                                                     |
-| Node polyfill  | 可选功能，在浏览器端注入 Node 核心模块的 polyfills               | <ul><li>[Node Polyfill 插件](https://github.com/rspack-contrib/rsbuild-plugin-node-polyfill)</li></ul>                     |
+| Node polyfill  | 可选功能，在浏览器端注入 Node 核心模块的 polyfills               | <ul><li>[Node Polyfill 插件](https://github.com/rstackjs/rsbuild-plugin-node-polyfill)</li></ul>                           |
 | TS 类型检查    | 可选功能，运行 type checker 检查代码中的类型问题                 | <ul><li>[类型检查](/guide/basic/typescript#类型检查)</li></ul>                                                             |
 | 模块联邦       | 可选功能，动态加载模块，并共享依赖关系                           | <ul><li>[模块联邦](/guide/advanced/module-federation)</li></ul>                                                            |
 
@@ -35,7 +35,7 @@
 | Less 预处理器        | 可选功能，编译 Less 文件                   | <ul><li>[CSS](/guide/styling/css-usage)</li><li>[Less 插件](/plugins/list/plugin-less)</li></ul>                |
 | Stylus 预处理器      | 可选功能，编译 Stylus 文件                 | <ul><li>[CSS](/guide/styling/css-usage)</li><li>[Stylus 插件](/plugins/list/plugin-stylus)</li></ul>            |
 | CSS Modules 编译     | 默认支持编译 CSS Modules 文件              | <ul><li>[CSS Modules](/guide/styling/css-modules)</li><li>[tools.cssLoader](/config/tools/css-loader)</li></ul> |
-| CSS Modules 类型提示 | 可选功能，生成 CSS Modules 的类型定义文件  | <ul><li>[Typed CSS Modules 插件](https://github.com/rspack-contrib/rsbuild-plugin-typed-css-modules)</li></ul>  |
+| CSS Modules 类型提示 | 可选功能，生成 CSS Modules 的类型定义文件  | <ul><li>[Typed CSS Modules 插件](https://github.com/rstackjs/rsbuild-plugin-typed-css-modules)</li></ul>        |
 | CSS 压缩             | 默认在生产模式构建时开启 CSS 压缩          | <ul><li>[CSS](/guide/styling/css-usage)</li></ul>                                                               |
 | 内联 CSS 到 JS 中    | 可选功能，将 CSS 文件内联到 JS 文件中      | <ul><li>[CSS](/guide/styling/css-usage)</li><li>[output.injectStyles](/config/output/inject-styles)</li></ul>   |
 
@@ -48,7 +48,7 @@
 | 设置 favicon  | 设置 favicon 图标               | <ul><li>[设置页面图标](/guide/basic/html-template#设置页面图标)</li><li>[html.favicon](/config/html/favicon)</li></ul>            |
 | 设置 app 图标 | 设置 Web 应用的图标             | <ul><li>[设置页面图标](/guide/basic/html-template#设置页面图标)</li><li>[html.appIcon](/config/html/app-icon)</li></ul>           |
 | EJS 模板      | 可选功能，使用 EJS 模板语法     | <ul><li>[模板引擎 - EJS](/guide/basic/html-template#ejs)</li></ul>                                                                |
-| Pug 模板引擎  | 可选功能，使用 Pug 模板语法     | <ul><li>[Pug 插件](https://github.com/rspack-contrib/rsbuild-plugin-pug)</li></ul>                                                |
+| Pug 模板引擎  | 可选功能，使用 Pug 模板语法     | <ul><li>[Pug 插件](https://github.com/rstackjs/rsbuild-plugin-pug)</li></ul>                                                      |
 | 内联 JS 文件  | 可选功能，将 JS 内联到 HTML 中  | <ul><li>[静态资源内联](/guide/optimization/inline-assets)</li><li>[output.inlineScripts](/config/output/inline-scripts)</li></ul> |
 | 内联 CSS 文件 | 可选功能，将 CSS 内联到 HTML 中 | <ul><li>[静态资源内联](/guide/optimization/inline-assets)</li><li>[output.inlineStyles](/config/output/inline-styles)</li></ul>   |
 
@@ -65,17 +65,17 @@
 
 ## UI 框架
 
-| 功能          | 描述                                    | 相关链接                                                                                      |
-| ------------- | --------------------------------------- | --------------------------------------------------------------------------------------------- |
-| React         | 可选功能，开启 React JSX 语法编译       | <ul><li>[React 插件](/plugins/list/plugin-react)</li></ul>                                    |
-| React Refresh | 可选功能，开启 React Refresh 热更新     | <ul><li>[模块热更新](/guide/advanced/hmr)</li><li>[dev.hmr](/config/dev/hmr)</li></ul>        |
-| SVGR          | 可选功能，转换 SVG 为 React 组件        | <ul><li>[SVGR 插件](/plugins/list/plugin-svgr)</li></ul>                                      |
-| Vue 3 SFC     | 可选功能，开启 Vue 3 SFC 单文件组件编译 | <ul><li>[Vue 插件](/plugins/list/plugin-vue)</li></ul>                                        |
-| Vue 3 JSX     | 可选功能，开启 Vue 3 JSX 语法编译       | <ul><li>[Vue JSX 插件](https://github.com/rspack-contrib/rsbuild-plugin-vue-jsx)</li></ul>    |
-| Vue 2 SFC     | 可选功能，开启 Vue 2 SFC 单文件组件编译 | <ul><li>[Vue 2 插件](https://github.com/rspack-contrib/rsbuild-plugin-vue2)</li></ul>         |
-| Vue 2 JSX     | 可选功能，开启 Vue 2 JSX 语法编译       | <ul><li>[Vue 2 JSX 插件](https://github.com/rspack-contrib/rsbuild-plugin-vue2-jsx)</li></ul> |
-| Svelte        | 可选功能，开启 Svelte 组件编译          | <ul><li>[Svelte 插件](/plugins/list/plugin-svelte)</li></ul>                                  |
-| Solid         | 可选功能，开启 Solid JSX 语法编译       | <ul><li>[Solid 插件](/plugins/list/plugin-solid)</li></ul>                                    |
+| 功能          | 描述                                    | 相关链接                                                                                |
+| ------------- | --------------------------------------- | --------------------------------------------------------------------------------------- |
+| React         | 可选功能，开启 React JSX 语法编译       | <ul><li>[React 插件](/plugins/list/plugin-react)</li></ul>                              |
+| React Refresh | 可选功能，开启 React Refresh 热更新     | <ul><li>[模块热更新](/guide/advanced/hmr)</li><li>[dev.hmr](/config/dev/hmr)</li></ul>  |
+| SVGR          | 可选功能，转换 SVG 为 React 组件        | <ul><li>[SVGR 插件](/plugins/list/plugin-svgr)</li></ul>                                |
+| Vue 3 SFC     | 可选功能，开启 Vue 3 SFC 单文件组件编译 | <ul><li>[Vue 插件](/plugins/list/plugin-vue)</li></ul>                                  |
+| Vue 3 JSX     | 可选功能，开启 Vue 3 JSX 语法编译       | <ul><li>[Vue JSX 插件](https://github.com/rstackjs/rsbuild-plugin-vue-jsx)</li></ul>    |
+| Vue 2 SFC     | 可选功能，开启 Vue 2 SFC 单文件组件编译 | <ul><li>[Vue 2 插件](https://github.com/rstackjs/rsbuild-plugin-vue2)</li></ul>         |
+| Vue 2 JSX     | 可选功能，开启 Vue 2 JSX 语法编译       | <ul><li>[Vue 2 JSX 插件](https://github.com/rstackjs/rsbuild-plugin-vue2-jsx)</li></ul> |
+| Svelte        | 可选功能，开启 Svelte 组件编译          | <ul><li>[Svelte 插件](/plugins/list/plugin-svelte)</li></ul>                            |
+| Solid         | 可选功能，开启 Solid JSX 语法编译       | <ul><li>[Solid 插件](/plugins/list/plugin-solid)</li></ul>                              |
 
 ## 静态资源
 
@@ -103,7 +103,7 @@
 | 优化 moment.js 体积 | 可选功能，移除 moment.js 多余的 locale 文件                    | <ul><li>[performance.removeMomentLocale](/config/performance/remove-moment-locale)</li></ul>                                       |
 | 移除重复包          | 可选功能，移除重复引用的 npm 包                                | <ul><li>[resolve.dedupe](/config/resolve/dedupe)</li></ul>                                                                         |
 | 组件库按需引入      | 可选功能，按需引入组件库的代码和样式                           | <ul><li>[source.transformImport](/config/source/transform-import)</li></ul>                                                        |
-| 图片压缩            | 可选功能，对引用的图片资源进行压缩处理                         | <ul><li>[Image compress 插件](https://github.com/rspack-contrib/rsbuild-plugin-image-compress)</li></ul>                           |
+| 图片压缩            | 可选功能，对引用的图片资源进行压缩处理                         | <ul><li>[Image compress 插件](https://github.com/rstackjs/rsbuild-plugin-image-compress)</li></ul>                                 |
 | Preload             | 可选功能，对资源进行预加载                                     | <ul><li>[performance.preload](/config/performance/preload)</li></ul>                                                               |
 | Prefetch            | 可选功能，对资源进行预获取                                     | <ul><li>[performance.prefetch](/config/performance/prefetch)</li></ul>                                                             |
 | Preconnect          | 可选功能，对资源进行预连接                                     | <ul><li>[performance.preconnect](/config/performance/preconnect)</li></ul>                                                         |
