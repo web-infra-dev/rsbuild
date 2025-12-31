@@ -144,6 +144,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           {
             "loader": "builtin:swc-loader",
             "options": {
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
+              },
               "env": {
                 "mode": undefined,
                 "targets": [
@@ -172,10 +176,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
                 },
-              },
-              "collectTypeScriptInfo": {
-                "exportedEnum": false,
-                "typeExports": true,
               },
             },
           },
@@ -200,6 +200,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           {
             "loader": "builtin:swc-loader",
             "options": {
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
+              },
               "env": {
                 "mode": undefined,
                 "targets": [
@@ -228,10 +232,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
                 },
-              },
-              "collectTypeScriptInfo": {
-                "exportedEnum": false,
-                "typeExports": true,
               },
             },
           },
@@ -661,6 +661,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           {
             "loader": "builtin:swc-loader",
             "options": {
+              "collectTypeScriptInfo": {
+                "exportedEnum": true,
+                "typeExports": true,
+              },
               "env": {
                 "mode": undefined,
                 "targets": [
@@ -689,10 +693,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
                 },
-              },
-              "collectTypeScriptInfo": {
-                "exportedEnum": true,
-                "typeExports": true,
               },
             },
           },
@@ -717,6 +717,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           {
             "loader": "builtin:swc-loader",
             "options": {
+              "collectTypeScriptInfo": {
+                "exportedEnum": true,
+                "typeExports": true,
+              },
               "env": {
                 "mode": undefined,
                 "targets": [
@@ -745,10 +749,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
                 },
-              },
-              "collectTypeScriptInfo": {
-                "exportedEnum": true,
-                "typeExports": true,
               },
             },
           },
@@ -1183,6 +1183,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           {
             "loader": "builtin:swc-loader",
             "options": {
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
+              },
               "env": {
                 "targets": [
                   "node >= 16",
@@ -1207,10 +1211,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
                 },
-              },
-              "collectTypeScriptInfo": {
-                "exportedEnum": false,
-                "typeExports": true,
               },
             },
           },
@@ -1235,6 +1235,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           {
             "loader": "builtin:swc-loader",
             "options": {
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
+              },
               "env": {
                 "targets": [
                   "node >= 16",
@@ -1259,10 +1263,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
                 },
-              },
-              "collectTypeScriptInfo": {
-                "exportedEnum": false,
-                "typeExports": true,
               },
             },
           },
@@ -1649,6 +1649,10 @@ exports[`tools.rspack > should match snapshot 1`] = `
           {
             "loader": "builtin:swc-loader",
             "options": {
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
+              },
               "env": {
                 "mode": undefined,
                 "targets": [
@@ -1677,10 +1681,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
                 },
-              },
-              "collectTypeScriptInfo": {
-                "exportedEnum": false,
-                "typeExports": true,
               },
             },
           },
@@ -1705,6 +1705,10 @@ exports[`tools.rspack > should match snapshot 1`] = `
           {
             "loader": "builtin:swc-loader",
             "options": {
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
+              },
               "env": {
                 "mode": undefined,
                 "targets": [
@@ -1733,10 +1737,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
                 },
-              },
-              "collectTypeScriptInfo": {
-                "exportedEnum": false,
-                "typeExports": true,
               },
             },
           },

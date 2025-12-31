@@ -28,6 +28,10 @@ exports[`plugins/react > should configuring \`tools.swc\` to override react runt
       {
         "loader": "builtin:swc-loader",
         "options": {
+          "collectTypeScriptInfo": {
+            "exportedEnum": false,
+            "typeExports": true,
+          },
           "env": {
             "mode": undefined,
             "targets": [
@@ -61,10 +65,6 @@ exports[`plugins/react > should configuring \`tools.swc\` to override react runt
                 "runtime": "classic",
               },
             },
-          },
-          "collectTypeScriptInfo": {
-            "exportedEnum": false,
-            "typeExports": true,
           },
         },
       },
@@ -157,6 +157,10 @@ exports[`plugins/react > should work with swc-loader 1`] = `
       {
         "loader": "builtin:swc-loader",
         "options": {
+          "collectTypeScriptInfo": {
+            "exportedEnum": false,
+            "typeExports": true,
+          },
           "env": {
             "mode": undefined,
             "targets": [
@@ -190,10 +194,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                 "runtime": "automatic",
               },
             },
-          },
-          "collectTypeScriptInfo": {
-            "exportedEnum": false,
-            "typeExports": true,
           },
         },
       },

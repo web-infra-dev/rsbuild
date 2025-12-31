@@ -144,6 +144,10 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
           {
             "loader": "builtin:swc-loader",
             "options": {
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
+              },
               "env": {
                 "mode": undefined,
                 "targets": [
@@ -172,10 +176,6 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
                 },
-              },
-              "collectTypeScriptInfo": {
-                "exportedEnum": false,
-                "typeExports": true,
               },
             },
           },
@@ -200,6 +200,10 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
           {
             "loader": "builtin:swc-loader",
             "options": {
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
+              },
               "env": {
                 "mode": undefined,
                 "targets": [
@@ -228,10 +232,6 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
                 },
-              },
-              "collectTypeScriptInfo": {
-                "exportedEnum": false,
-                "typeExports": true,
               },
             },
           },
