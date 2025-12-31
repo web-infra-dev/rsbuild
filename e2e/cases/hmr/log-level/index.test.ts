@@ -29,7 +29,7 @@ rspackTest(
     const locator = page.locator('#test');
     await expect(locator).toHaveText('Hello Rsbuild');
 
-    expect(expectNoLog(HMR_CONNECTED_LOG)).toBe(true);
+    expectNoLog(HMR_CONNECTED_LOG);
   },
 );
 
@@ -80,7 +80,7 @@ rspackTest(
 
     const locator = page.locator('#test');
     await expect(locator).toHaveText('Hello Rsbuild');
-    expect(expectNoLog(HMR_CONNECTED_LOG)).toBe(true);
+    expectNoLog(HMR_CONNECTED_LOG);
   },
 );
 
@@ -111,7 +111,7 @@ rspackTest(
 
     const locator = page.locator('#test');
     await expect(locator).toHaveText('Hello Rsbuild');
-    expect(expectNoLog('[rsbuild]')).toBe(true);
+    expectNoLog('[rsbuild]');
   },
 );
 
@@ -138,6 +138,6 @@ rspackTest(
 
     const locator = page.locator('#test');
     await expect(locator).toHaveText('Hello Rsbuild');
-    expect(expectNoLog('[rsbuild]')).toBe(true);
+    expectNoLog('[rsbuild]');
   },
 );
