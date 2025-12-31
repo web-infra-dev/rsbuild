@@ -52,7 +52,7 @@
     "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
-    "@rspack/core": "1.7.0-beta.1",
+    "@rspack/core": "1.7.0",
     "@rspack/lite-tapable": "~1.1.0",
     "@swc/helpers": "^0.5.18",
     "core-js": "~3.47.0",
