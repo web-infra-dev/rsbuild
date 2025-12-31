@@ -79,7 +79,7 @@ test('should allow to modify and return new urls', async ({
   await rsbuild.expectLog(
     `➜  Local:    http://localhost:${rsbuild.port}/test/`,
   );
-  rsbuild.expectNoLog(
+  await rsbuild.expectLog(
     /➜\s{2}Network:\s{2}http:\/\/\d{1,3}(?:\.\d{1,3}){3}:\d+\/test\//,
   );
 });
