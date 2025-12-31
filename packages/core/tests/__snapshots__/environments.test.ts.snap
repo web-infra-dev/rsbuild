@@ -1631,11 +1631,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                     "legacyDecorator": false,
                   },
                 },
-                "rspackExperiments": {
-                  "collectTypeScriptInfo": {
-                    "exportedEnum": false,
-                    "typeExports": true,
-                  },
+                "collectTypeScriptInfo": {
+                  "exportedEnum": false,
+                  "typeExports": true,
                 },
               },
             },
@@ -1689,11 +1687,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                     "legacyDecorator": false,
                   },
                 },
-                "rspackExperiments": {
-                  "collectTypeScriptInfo": {
-                    "exportedEnum": false,
-                    "typeExports": true,
-                  },
+                "collectTypeScriptInfo": {
+                  "exportedEnum": false,
+                  "typeExports": true,
                 },
               },
             },
@@ -2071,11 +2067,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                     "legacyDecorator": false,
                   },
                 },
-                "rspackExperiments": {
-                  "collectTypeScriptInfo": {
-                    "exportedEnum": false,
-                    "typeExports": true,
-                  },
+                "collectTypeScriptInfo": {
+                  "exportedEnum": false,
+                  "typeExports": true,
                 },
               },
             },
@@ -2125,11 +2119,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                     "legacyDecorator": false,
                   },
                 },
-                "rspackExperiments": {
-                  "collectTypeScriptInfo": {
-                    "exportedEnum": false,
-                    "typeExports": true,
-                  },
+                "collectTypeScriptInfo": {
+                  "exportedEnum": false,
+                  "typeExports": true,
                 },
               },
             },

@@ -173,11 +173,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "legacyDecorator": false,
                 },
               },
-              "rspackExperiments": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
-                },
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
               },
             },
           },
@@ -231,11 +229,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "legacyDecorator": false,
                 },
               },
-              "rspackExperiments": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
-                },
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
               },
             },
           },
@@ -694,11 +690,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                   "legacyDecorator": false,
                 },
               },
-              "rspackExperiments": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": true,
-                  "typeExports": true,
-                },
+              "collectTypeScriptInfo": {
+                "exportedEnum": true,
+                "typeExports": true,
               },
             },
           },
@@ -752,11 +746,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                   "legacyDecorator": false,
                 },
               },
-              "rspackExperiments": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": true,
-                  "typeExports": true,
-                },
+              "collectTypeScriptInfo": {
+                "exportedEnum": true,
+                "typeExports": true,
               },
             },
           },
@@ -1216,11 +1208,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "legacyDecorator": false,
                 },
               },
-              "rspackExperiments": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
-                },
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
               },
             },
           },
@@ -1270,11 +1260,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "legacyDecorator": false,
                 },
               },
-              "rspackExperiments": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
-                },
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
               },
             },
           },
@@ -1690,11 +1678,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "legacyDecorator": false,
                 },
               },
-              "rspackExperiments": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
-                },
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
               },
             },
           },
@@ -1748,11 +1734,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "legacyDecorator": false,
                 },
               },
-              "rspackExperiments": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
-                },
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
               },
             },
           },
