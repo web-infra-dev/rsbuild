@@ -173,11 +173,9 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
                   "legacyDecorator": false,
                 },
               },
-              "rspackExperiments": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
-                },
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
               },
             },
           },
@@ -231,11 +229,9 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
                   "legacyDecorator": false,
                 },
               },
-              "rspackExperiments": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
-                },
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
               },
             },
           },

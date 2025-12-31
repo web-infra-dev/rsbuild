@@ -53,11 +53,9 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
             "legacyDecorator": false,
           },
         },
-        "rspackExperiments": {
-          "collectTypeScriptInfo": {
-            "exportedEnum": false,
-            "typeExports": true,
-          },
+        "collectTypeScriptInfo": {
+          "exportedEnum": false,
+          "typeExports": true,
         },
       },
     },
@@ -145,11 +143,9 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
             "legacyDecorator": false,
           },
         },
-        "rspackExperiments": {
-          "collectTypeScriptInfo": {
-            "exportedEnum": false,
-            "typeExports": true,
-          },
+        "collectTypeScriptInfo": {
+          "exportedEnum": false,
+          "typeExports": true,
         },
       },
     },
@@ -234,11 +230,9 @@ exports[`plugins/babel > should apply environment config correctly 2`] = `
             "useDefineForClassFields": false,
           },
         },
-        "rspackExperiments": {
-          "collectTypeScriptInfo": {
-            "exportedEnum": false,
-            "typeExports": true,
-          },
+        "collectTypeScriptInfo": {
+          "exportedEnum": false,
+          "typeExports": true,
         },
       },
     },
@@ -324,11 +318,9 @@ exports[`plugins/babel > should set babel-loader 1`] = `
             "legacyDecorator": false,
           },
         },
-        "rspackExperiments": {
-          "collectTypeScriptInfo": {
-            "exportedEnum": false,
-            "typeExports": true,
-          },
+        "collectTypeScriptInfo": {
+          "exportedEnum": false,
+          "typeExports": true,
         },
       },
     },
@@ -413,11 +405,9 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
             "legacyDecorator": false,
           },
         },
-        "rspackExperiments": {
-          "collectTypeScriptInfo": {
-            "exportedEnum": false,
-            "typeExports": true,
-          },
+        "collectTypeScriptInfo": {
+          "exportedEnum": false,
+          "typeExports": true,
         },
       },
     },
