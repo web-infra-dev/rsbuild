@@ -105,9 +105,9 @@ export const createLogHelper = () => {
 
     if (result) {
       const title = color.bold(color.red('Unexpected log found.'));
-      const expect = color.yellow(pattern.toString());
+      const unexpected = color.yellow(pattern.toString());
       throw new Error(
-        `${title}\nUnexpected: ${expect}\nGet:\n${originalLogs.join('\n')}`,
+        `${title}\nUnexpected: ${unexpected}\nGet:\n${originalLogs.join('\n')}`,
       );
     }
   };
