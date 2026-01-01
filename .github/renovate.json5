@@ -89,13 +89,15 @@
     },
   ],
   ignoreDeps: [
+    // manually handle updates
+    'node',
+    'playwright',
     // some loaders still depend on loader-utils v2
     'loader-utils',
     // pure ESM packages can not be used now
     'ansi-escapes',
     'cli-truncate',
     'patch-console',
-    'node',
     // require Node 18
     'copy-webpack-plugin',
     // major version contains breaking changes

@@ -107,7 +107,7 @@ jobs:
       - name: Run E2E tests
         uses: docker://mcr.microsoft.com/playwright:v1.57.0-jammy
         with:
-          args: pnpm run e2e:rspack
+          args: npm run e2e:rspack
 
   # ======== e2e-webpack ========
   e2e-webpack:
@@ -153,4 +153,4 @@ jobs:
       - name: Run E2E tests
         uses: docker://mcr.microsoft.com/playwright:v1.57.0-jammy
         with:
-          args: pnpm run e2e:webpack
+          args: npm run e2e:webpack
