@@ -105,7 +105,7 @@ const parseRangeHeaders = async (
 
 const acceptedMethods = ['GET', 'HEAD'];
 
-function sendError(res: ServerResponse, code: HttpCode): void {
+function sendError(res: ServerResponse, code: number): void {
   const errorMessages = {
     [HttpCode.BadRequest]: 'Bad Request',
     [HttpCode.Forbidden]: 'Forbidden',
@@ -113,7 +113,7 @@ function sendError(res: ServerResponse, code: HttpCode): void {
     [HttpCode.PreconditionFailed]: 'Precondition Failed',
     [HttpCode.RangeNotSatisfiable]: 'Range Not Satisfiable',
     [HttpCode.InternalServerError]: 'Internal Server Error',
-  } as Record<HttpCode, string>;
+  } as Record<number, string>;
 
   const content = errorMessages[code];
   const message = `${code} ${content}`;

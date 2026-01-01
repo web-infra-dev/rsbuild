@@ -526,13 +526,13 @@ export function escapeHtml(text: string | null | undefined): string {
     .replace(/'/g, '&#39;');
 }
 
-export enum HttpCode {
-  Ok = 200,
-  NotModified = 304,
-  BadRequest = 400,
-  Forbidden = 403,
-  NotFound = 404,
-  PreconditionFailed = 412,
-  RangeNotSatisfiable = 416,
-  InternalServerError = 500,
-}
+export const HttpCode = {
+  Ok: 200,
+  NotModified: 304,
+  BadRequest: 400,
+  Forbidden: 403,
+  NotFound: 404,
+  PreconditionFailed: 412,
+  RangeNotSatisfiable: 416,
+  InternalServerError: 500,
+} as const;
