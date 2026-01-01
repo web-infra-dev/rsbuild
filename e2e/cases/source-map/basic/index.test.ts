@@ -197,7 +197,7 @@ rspackTest(
 
     const cssSourceMap = findFile(files, 'index.css.map');
     const cssSourceContent = readFileSync(
-      join(__dirname, './src/index.css'),
+      join(cwd, './src/index.css'),
       'utf-8',
     );
 
