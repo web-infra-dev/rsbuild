@@ -104,17 +104,9 @@ jobs:
         if: steps.changes.outputs.changed == 'true'
         run: pnpm install
 
-      - name: Install Playwright Browsers
+      - name: Run E2E tests
         if: steps.changes.outputs.changed == 'true'
-        run: cd ./e2e && pnpm run setup
-
-      - name: E2E Test - 1
-        if: steps.changes.outputs.changed == 'true'
-        run: pnpm run e2e:rspack --shard=1/2
-
-      - name: E2E Test - 2
-        if: steps.changes.outputs.changed == 'true'
-        run: pnpm run e2e:rspack --shard=2/2
+        run: npm run e2e:rspack
 
   # ======== e2e-webpack ========
   e2e-webpack:
@@ -157,14 +149,6 @@ jobs:
         if: steps.changes.outputs.changed == 'true'
         run: pnpm install
 
-      - name: Install Playwright Browsers
+      - name: Run E2E tests
         if: steps.changes.outputs.changed == 'true'
-        run: cd ./e2e && pnpm run setup
-
-      - name: E2E Test - 1
-        if: steps.changes.outputs.changed == 'true'
-        run: pnpm run e2e:webpack --shard=1/2
-
-      - name: E2E Test - 2
-        if: steps.changes.outputs.changed == 'true'
-        run: pnpm run e2e:webpack --shard=2/2
+        run: npm run e2e:webpack
