@@ -62,14 +62,19 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
 
         const merged = mergeEnvironmentConfig(extraConfig, config);
 
-        // Support `<style module>` in Vue SFC
+        // Support `<style module>`, `<style module="customName">` in Vue SFC
         if (merged.output.cssModules.auto === true) {
           merged.output.cssModules.auto = (path, query) => {
             // For Vue style block, the path might be like:
             // 1. `/path/to/Foo.vue`
             // 2. `/path/to/Foo.vue.css?query=...`
-            if (VUE_REGEXP.test(path) || path.includes('.vue.css')) {
-              return query.includes('type=style') && query.includes('module=');
+            if ((VUE_REGEXP.test(path) || path.includes('.vue.css')) && query) {
+              try {
+                const params = new URLSearchParams(query);
+                return params.get('type') === 'style' && params.has('module');
+              } catch {
+                return false;
+              }
             }
             return CSS_MODULES_REGEX.test(path);
           };
