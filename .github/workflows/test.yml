@@ -106,9 +106,7 @@ jobs:
 
       - name: Run E2E tests
         if: steps.changes.outputs.changed == 'true'
-        uses: docker://mcr.microsoft.com/playwright:v1.57.0-jammy
-        with:
-          args: cd e2e && npm run e2e:rspack
+        run: npm run e2e:rspack
 
   # ======== e2e-webpack ========
   e2e-webpack:
@@ -153,6 +151,4 @@ jobs:
 
       - name: Run E2E tests
         if: steps.changes.outputs.changed == 'true'
-        uses: docker://mcr.microsoft.com/playwright:v1.57.0-jammy
-        with:
-          args: cd e2e && npm run e2e:webpack
+        run: npm run e2e:webpack
