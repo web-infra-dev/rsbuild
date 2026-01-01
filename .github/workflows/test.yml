@@ -104,10 +104,6 @@ jobs:
         if: steps.changes.outputs.changed == 'true'
         run: pnpm install
 
-      - name: Install Playwright Browsers
-        if: steps.changes.outputs.changed == 'true'
-        run: cd ./e2e && pnpm run setup
-
       - name: E2E Test - 1
         if: steps.changes.outputs.changed == 'true'
         run: pnpm run e2e:rspack --shard=1/2
@@ -156,10 +152,6 @@ jobs:
       - name: Install Dependencies
         if: steps.changes.outputs.changed == 'true'
         run: pnpm install
-
-      - name: Install Playwright Browsers
-        if: steps.changes.outputs.changed == 'true'
-        run: cd ./e2e && pnpm run setup
 
       - name: E2E Test - 1
         if: steps.changes.outputs.changed == 'true'
