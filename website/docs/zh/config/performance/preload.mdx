@@ -196,7 +196,7 @@ type ResourceHintsFilter =
 
 是否对已经在当前 HTML 内容中存在的 script 资源进行预加载。默认情况下，如果某个资源已通过 script 标签添加到当前的 HTML 中，则不会进行额外的预加载。
 
-设置为 `true` 时，Rsbuild 将为所有符合条件的资源生成 preload 标签，即使这些资源已经在 HTML 中存在。
+设置为 `false` 时，Rsbuild 将为所有符合条件的资源生成 preload 标签，即使这些资源已经在 HTML 中存在。
 
 ```ts title="rsbuild.config.ts"
 export default {

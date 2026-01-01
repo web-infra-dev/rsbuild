@@ -34,15 +34,15 @@
     "loader-utils": "^2.0.4",
     "postcss": "^8.5.6",
     "reduce-configs": "^1.1.1",
-    "sass-embedded": "^1.93.2"
+    "sass-embedded": "^1.97.1"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.16.1",
+    "@rslib/core": "0.19.0",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.18.12",
+    "@types/node": "^24.10.4",
     "@types/sass-loader": "^8.0.10",
-    "prebundle": "1.4.2",
+    "prebundle": "1.6.0",
     "resolve-url-loader": "^5.0.0",
     "sass-loader": "^16.0.6",
     "typescript": "^5.9.3"

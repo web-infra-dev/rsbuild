@@ -170,7 +170,7 @@ export default {
 
 - **Type:** [EnvironmentContext](/api/javascript-api/environment-api#environment-context)
 
-Context information about the current environment.
+Context information for the current environment.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -182,11 +182,27 @@ export default {
 };
 ```
 
+### environments
+
+- **Type:** `Record<string, EnvironmentContext>`
+
+Context information for all environments.
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    bundlerChain: (chain, { environments }) => {
+      console.log(environments);
+    },
+  },
+};
+```
+
 ### HtmlPlugin
 
 - **Type:** `typeof import('html-rspack-plugin')`
 
-The default export of [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin).
+The default export of [html-rspack-plugin](https://github.com/rstackjs/html-rspack-plugin).
 
 ```ts title="rsbuild.config.ts"
 export default {

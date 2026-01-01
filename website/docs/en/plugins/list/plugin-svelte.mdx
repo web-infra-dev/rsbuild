@@ -1,6 +1,6 @@
 # Svelte plugin
 
-import { SourceCode } from '@rspress/core/theme';
+import { SourceCode } from '@theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-svelte" />
 
@@ -36,7 +36,7 @@ To customize the compilation behavior of Svelte, use the following options.
 
 ### svelteLoaderOptions
 
-Options passed to `svelte-loader`, please refer to the [svelte-loader documentation](https://github.com/sveltejs/svelte-loader) for detailed usage.
+These options are passed to `svelte-loader`. For details, see the [svelte-loader documentation](https://github.com/sveltejs/svelte-loader).
 
 - **Type:** `SvelteLoaderOptions`
 - **Default:**
@@ -64,7 +64,7 @@ pluginSvelte({
 
 ### preprocessOptions
 
-Options passed to `svelte-preprocess`, please refer to the [svelte-preprocess documentation](https://github.com/sveltejs/svelte-preprocess/blob/c2107e529da9438ea5b8060aa471119940896e40/docs/preprocessing.md) for detailed usage.
+These options are passed to `svelte-preprocess`. For details, see the [svelte-preprocess documentation](https://github.com/sveltejs/svelte-preprocess/blob/c2107e529da9438ea5b8060aa471119940896e40/docs/preprocessing.md).
 
 - **Type:** `AutoPreprocessOptions`
 - **Default:** `undefined`

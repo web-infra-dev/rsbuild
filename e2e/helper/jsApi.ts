@@ -9,8 +9,8 @@ import type {
 } from '@rsbuild/core';
 import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
 import type { Page } from 'playwright';
-import type { LogHelper } from './logs';
-import { getRandomPort, gotoPage, noop, toPosixPath } from './utils';
+import type { LogHelper } from './logs.ts';
+import { getRandomPort, gotoPage, noop, toPosixPath } from './utils.ts';
 
 const createRsbuild = async (
   rsbuildOptions: CreateRsbuildOptions & { config?: RsbuildConfig },

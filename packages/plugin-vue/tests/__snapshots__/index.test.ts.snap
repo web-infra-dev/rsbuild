@@ -11,6 +11,7 @@ exports[`plugin-vue > should add vue-loader and VueLoaderPlugin correctly 1`] = 
           "preserveWhitespace": false,
         },
         "experimentalInlineMatchResource": true,
+        "isServerBuild": undefined,
       },
     },
   ],
@@ -48,6 +49,25 @@ exports[`plugin-vue > should allow to configure vueLoader options 1`] = `
         },
         "experimentalInlineMatchResource": true,
         "hotReload": false,
+        "isServerBuild": undefined,
+      },
+    },
+  ],
+}
+`;
+
+exports[`plugin-vue > should allow to custom test condition 1`] = `
+{
+  "test": /\\\\\\.\\(vue\\|md\\)\\$/,
+  "use": [
+    {
+      "loader": "<ROOT>/node_modules/<PNPM_INNER>/rspack-vue-loader/dist/index.js",
+      "options": {
+        "compilerOptions": {
+          "preserveWhitespace": false,
+        },
+        "experimentalInlineMatchResource": true,
+        "isServerBuild": undefined,
       },
     },
   ],

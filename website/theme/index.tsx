@@ -1,10 +1,12 @@
-import { Layout as BaseLayout } from '@rspress/core/theme';
+import {
+  Layout as BaseLayout,
+  getCustomMDXComponent as basicGetCustomMDXComponent,
+} from '@rspress/core/theme-original';
 import { Announcement } from '@rstack-dev/doc-ui/announcement';
 import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
 import { HomeLayout } from './pages';
 import './index.scss';
 import { NoSSR, useLang, usePageData } from '@rspress/core/runtime';
-import { getCustomMDXComponent as basicGetCustomMDXComponent } from '@rspress/core/theme';
 import {
   Search as PluginAlgoliaSearch,
   ZH_LOCALES,
@@ -85,4 +87,4 @@ const Search = () => {
 
 export { Layout, HomeLayout, Search };
 
-export * from '@rspress/core/theme';
+export * from '@rspress/core/theme-original';

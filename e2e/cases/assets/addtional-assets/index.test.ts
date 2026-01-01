@@ -36,7 +36,7 @@ test('should support configuring additional assets matched by path', async ({
   const rsbuild = await build({
     config: {
       source: {
-        assetsInclude: path.resolve(__dirname, 'src/assets'),
+        assetsInclude: path.resolve(import.meta.dirname, 'src/assets'),
       },
     },
   });

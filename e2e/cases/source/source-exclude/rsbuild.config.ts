@@ -5,7 +5,7 @@ import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 export default defineConfig({
   plugins: [pluginCheckSyntax()],
   source: {
-    exclude: [path.resolve(__dirname, './src/test.js')],
+    exclude: [path.resolve(import.meta.dirname, './src/test.js')],
   },
   output: {
     overrideBrowserslist: ['android >= 4.4'],

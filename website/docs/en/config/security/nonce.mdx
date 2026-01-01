@@ -8,13 +8,13 @@ type Nonce = string;
 
 - **Default:** `undefined`
 
-Adding a `nonce` attribute to the scripts resources introduced for HTML. This allows the browser to determine whether the script can be executed when it parses inline scripts with matching nonce values.
+Adds a `nonce` attribute to script resources injected into HTML. This lets the browser decide whether inline scripts with matching nonce values can be executed.
 
 ## What is nonce
 
-The nonce mechanism plays a crucial role in Content Security Policy (CSP), enhancing webpage security. It allows developers to define a unique and random string value, i.e., nonce, for inline `<script>` tags and `<style>` tags within CSP.
+The nonce mechanism is a key part of Content Security Policy (CSP) and enhances webpage security. It lets developers define a unique, random string (the nonce) for inline `<script>` and `<style>` tags within CSP.
 
-When the browser parses inline scripts with matching nonce values, it allows them to be executed or applied, otherwise CSP will prevent them from running. This effectively prevents potential Cross-Site Scripting (XSS) attacks. It's worth noting that a new nonce value should be generated each time the page is accessed.
+When the browser parses inline scripts with a matching nonce, it allows them to run; otherwise, CSP blocks them. This effectively prevents potential Cross-Site Scripting (XSS) attacks. It's worth noting that a new nonce value should be generated each time the page is accessed.
 
 For more information about nonce, you can refer to:
 
@@ -23,7 +23,7 @@ For more information about nonce, you can refer to:
 
 ## Example
 
-By default, `nonce` is not enabled by Rsbuild, you can define this value based on your needs:
+Rsbuild does not enable `nonce` by default. You can define this value based on your needs:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -33,7 +33,7 @@ export default {
 };
 ```
 
-Typically, we can define a fixed value in the project, and replace it with a random value on downstream servers such as Nginx, Web Server, gateway, etc.
+Typically, you can define a placeholder value in the project, then have downstream servers such as Nginx, web servers, or gateways replace it with a random string.
 
 ## Scope of effect
 

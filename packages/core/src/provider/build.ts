@@ -19,6 +19,7 @@ export const build = async (
 
   if (customCompiler) {
     compiler = customCompiler;
+    bundlerConfigs = customCompiler.options as Rspack.Configuration[];
   } else {
     const result = await createCompiler(initOptions);
     compiler = result.compiler;

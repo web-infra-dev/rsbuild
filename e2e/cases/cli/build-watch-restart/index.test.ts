@@ -5,9 +5,15 @@ import fse from 'fs-extra';
 rspackTest(
   'should support restart build when config changed',
   async ({ execCli, logHelper }) => {
-    const indexFile = path.join(__dirname, 'src/index.js');
-    const distIndexFile = path.join(__dirname, 'dist/static/js/index.js');
-    const tempConfig = path.join(__dirname, 'test-temp-rsbuild.config.mjs');
+    const indexFile = path.join(import.meta.dirname, 'src/index.js');
+    const distIndexFile = path.join(
+      import.meta.dirname,
+      'dist/static/js/index.js',
+    );
+    const tempConfig = path.join(
+      import.meta.dirname,
+      'test-temp-rsbuild.config.mjs',
+    );
 
     fse.outputFileSync(indexFile, `console.log('hello!');`);
     fse.outputFileSync(

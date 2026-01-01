@@ -8,7 +8,7 @@ import {
 } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-const fixtures = __dirname;
+const fixtures = import.meta.dirname;
 
 test('should generate preload link when preload is defined', async ({
   build,

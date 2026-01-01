@@ -14,7 +14,9 @@ rspackTest(
       },
     });
 
-    const outputs = await readDirContents(path.join(__dirname, 'dist-custom'));
+    const outputs = await readDirContents(
+      path.join(import.meta.dirname, 'dist-custom'),
+    );
     const outputFiles = Object.keys(outputs);
 
     expect(outputFiles.length > 1).toBeTruthy();
@@ -30,7 +32,9 @@ rspackTest(
       },
     });
 
-    const outputs = await readDirContents(path.join(__dirname, 'dist-auto'));
+    const outputs = await readDirContents(
+      path.join(import.meta.dirname, 'dist-auto'),
+    );
     const outputFiles = Object.keys(outputs);
 
     expect(outputFiles.length > 1).toBeTruthy();

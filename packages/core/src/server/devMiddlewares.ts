@@ -16,10 +16,11 @@ import type { UpgradeEvent } from './helper';
 import { historyApiFallbackMiddleware } from './historyApiFallback';
 import {
   faviconFallbackMiddleware,
-  getBaseMiddleware,
+  getBaseUrlMiddleware,
   getHtmlCompletionMiddleware,
   getHtmlFallbackMiddleware,
   getRequestLoggerMiddleware,
+  notFoundMiddleware,
   viewingServedFilesMiddleware,
 } from './middlewares';
 import { createProxyMiddleware } from './proxy';
@@ -131,33 +132,25 @@ const applyDefaultMiddlewares = ({
     // We check the compiler options to determine whether lazy compilation is enabled.
     // Rsbuild users can enable lazy compilation in two ways:
     // 1. Use Rsbuild's `dev.lazyCompilation` option
-    // 2. Use Rspack's `experiments.lazyCompilation` option
-    // 3. Use Rspack's configuration top-level `lazyCompilation` option
+    // 2. Use Rspack's configuration top-level `lazyCompilation` option
     const isLazyCompilationEnabled = () => {
       if (isMultiCompiler(compiler)) {
         return compiler.compilers.some(
-          (childCompiler) =>
-            childCompiler.options.experiments?.lazyCompilation ||
-            childCompiler.options.lazyCompilation,
+          (childCompiler) => childCompiler.options.lazyCompilation,
         );
       }
-      return (
-        compiler.options.experiments?.lazyCompilation ||
-        compiler.options.lazyCompilation
-      );
+      return compiler.options.lazyCompilation;
     };
 
     if (isLazyCompilationEnabled()) {
       middlewares.push(
-        rspack.experiments.lazyCompilationMiddleware(
-          compiler,
-        ) as RequestHandler,
+        rspack.lazyCompilationMiddleware(compiler) as RequestHandler,
       );
     }
   }
 
   if (server.base && server.base !== '/') {
-    middlewares.push(getBaseMiddleware({ base: server.base }));
+    middlewares.push(getBaseUrlMiddleware({ base: server.base }));
   }
 
   const launchEditorMiddleware = requireCompiledPackage(
@@ -177,11 +170,10 @@ const applyDefaultMiddlewares = ({
     // subscribe upgrade event to handle websocket
     upgradeEvents.push(buildManager.socketServer.upgrade);
 
-    middlewares.push((req, res, next) => {
+    middlewares.push(function hotUpdateJsonFallbackMiddleware(req, res, next) {
       // [prevFullHash].hot-update.json will 404 (expected) when rsbuild restart and some file changed
       if (req.url?.endsWith('.hot-update.json') && req.method !== 'OPTIONS') {
-        res.statusCode = 404;
-        res.end();
+        notFoundMiddleware(req, res, next);
       } else {
         next();
       }
@@ -199,11 +191,13 @@ const applyDefaultMiddlewares = ({
 
   for (const { name } of server.publicDir) {
     const sirv = requireCompiledPackage('sirv');
-    const servePublicDirMiddleware = sirv(name, {
+    const sirvMiddleware = sirv(name, {
       etag: true,
       dev: true,
     });
-    middlewares.push(servePublicDirMiddleware);
+    middlewares.push(function publicDirMiddleware(req, res, next) {
+      sirvMiddleware(req, res, next);
+    });
   }
 
   // Execute callbacks returned by the `onBeforeStartDevServer` hook.
@@ -215,16 +209,7 @@ const applyDefaultMiddlewares = ({
     callback();
   }
 
-  if (buildManager) {
-    middlewares.push(
-      getHtmlFallbackMiddleware({
-        buildManager,
-        distPath: context.distPath,
-        htmlFallback: server.htmlFallback,
-      }),
-    );
-  }
-
+  // historyApiFallback takes precedence over the default htmlFallback.
   if (server.historyApiFallback) {
     middlewares.push(
       historyApiFallbackMiddleware(
@@ -236,6 +221,16 @@ const applyDefaultMiddlewares = ({
     if (buildManager?.assetsMiddleware) {
       middlewares.push(buildManager.assetsMiddleware);
     }
+  }
+
+  if (buildManager) {
+    middlewares.push(
+      getHtmlFallbackMiddleware({
+        buildManager,
+        distPath: context.distPath,
+        htmlFallback: server.htmlFallback,
+      }),
+    );
   }
 
   middlewares.push(faviconFallbackMiddleware);

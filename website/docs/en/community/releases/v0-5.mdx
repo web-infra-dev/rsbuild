@@ -51,7 +51,7 @@ import { createRsbuild } from '@rsbuild/core';
 async function startCustomServer() {
   const app = express();
   const rsbuild = await createRsbuild({
-    rsbuildConfig: {
+    config: {
       server: {
         middlewareMode: true,
       },

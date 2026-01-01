@@ -29,7 +29,7 @@ import { historyApiFallbackMiddleware } from './historyApiFallback';
 import { createHttpServer } from './httpServer';
 import {
   faviconFallbackMiddleware,
-  getBaseMiddleware,
+  getBaseUrlMiddleware,
   getRequestLoggerMiddleware,
   notFoundMiddleware,
   optionsFallbackMiddleware,
@@ -115,7 +115,7 @@ export class RsbuildProdServer {
     }
 
     if (base && base !== '/') {
-      this.middlewares.use(getBaseMiddleware({ base }));
+      this.middlewares.use(getBaseUrlMiddleware({ base }));
     }
 
     this.applyStaticAssetMiddleware();
@@ -151,7 +151,7 @@ export class RsbuildProdServer {
       single: htmlFallback === 'index',
     });
 
-    this.middlewares.use((req, res, next) => {
+    this.middlewares.use(function staticAssetMiddleware(req, res, next) {
       const url = req.url;
       const assetPrefix =
         url && assetPrefixes.find((prefix) => url.startsWith(prefix));
@@ -190,7 +190,7 @@ export async function startProdServer(
       pwd: context.rootPath,
       output: {
         path: context.distPath,
-        assetPrefixes: Object.values(context.environments).map((e) =>
+        assetPrefixes: context.environmentList.map((e) =>
           getPathnameFromUrl(e.config.output.assetPrefix),
         ),
       },

@@ -7,13 +7,13 @@ type CompiledPackages = {
   ws: typeof import('../../compiled/ws').default;
   cors: typeof import('../../compiled/cors').default;
   sirv: typeof import('../../compiled/sirv');
-  rslog: typeof import('../../compiled/rslog');
   memfs: typeof import('../../compiled/memfs');
   mrmime: typeof import('../../compiled/mrmime');
   connect: typeof import('../../compiled/connect').default;
   chokidar: typeof import('../../compiled/chokidar').default;
   tinyglobby: typeof import('../../compiled/tinyglobby');
   picocolors: typeof import('../../compiled/picocolors').default;
+  'webpack-merge': typeof import('../../compiled/webpack-merge');
   'html-rspack-plugin': typeof import('../../compiled/html-rspack-plugin').default;
   'http-proxy-middleware': typeof import('../../compiled/http-proxy-middleware');
   'webpack-bundle-analyzer': typeof import('../../compiled/webpack-bundle-analyzer');

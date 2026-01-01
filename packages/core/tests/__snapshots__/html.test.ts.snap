@@ -31,7 +31,7 @@ exports[`plugin-html > should allow to configure html.tags 1`] = `
         "inject": "head",
         "meta": {
           "charset": {
-            "charset": "UTF-8",
+            "charset": "utf-8",
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
@@ -39,7 +39,7 @@ exports[`plugin-html > should allow to configure html.tags 1`] = `
         "scriptLoading": "defer",
         "showErrors": true,
         "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
+        "templateContent": "<!DOCTYPE html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
@@ -64,7 +64,7 @@ exports[`plugin-html > should allow to configure html.tags 1`] = `
         "inject": "head",
         "meta": {
           "charset": {
-            "charset": "UTF-8",
+            "charset": "utf-8",
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
@@ -72,7 +72,7 @@ exports[`plugin-html > should allow to configure html.tags 1`] = `
         "scriptLoading": "defer",
         "showErrors": true,
         "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
+        "templateContent": "<!DOCTYPE html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
@@ -82,6 +82,7 @@ exports[`plugin-html > should allow to configure html.tags 1`] = `
     },
     RsbuildHtmlPlugin {
       "getExtraData": [Function],
+      "getHTMLPlugin": [Function],
       "name": "RsbuildHtmlPlugin",
     },
   ],
@@ -146,7 +147,7 @@ exports[`plugin-html > should enable minify in production 1`] = `
         "inject": "head",
         "meta": {
           "charset": {
-            "charset": "UTF-8",
+            "charset": "utf-8",
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
@@ -154,7 +155,7 @@ exports[`plugin-html > should enable minify in production 1`] = `
         "scriptLoading": "defer",
         "showErrors": true,
         "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
+        "templateContent": "<!DOCTYPE html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
@@ -164,6 +165,7 @@ exports[`plugin-html > should enable minify in production 1`] = `
     },
     RsbuildHtmlPlugin {
       "getExtraData": [Function],
+      "getHTMLPlugin": [Function],
       "name": "RsbuildHtmlPlugin",
     },
   ],
@@ -198,7 +200,7 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
         "inject": "head",
         "meta": {
           "charset": {
-            "charset": "UTF-8",
+            "charset": "utf-8",
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
@@ -206,7 +208,7 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
         "scriptLoading": "defer",
         "showErrors": true,
         "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
+        "templateContent": "<!DOCTYPE html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
@@ -216,6 +218,7 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
     },
     RsbuildHtmlPlugin {
       "getExtraData": [Function],
+      "getHTMLPlugin": [Function],
       "name": "RsbuildHtmlPlugin",
     },
   ],
@@ -271,7 +274,7 @@ exports[`plugin-html > should support environment html config 1`] = `
           "inject": "head",
           "meta": {
             "charset": {
-              "charset": "UTF-8",
+              "charset": "utf-8",
             },
             "viewport": "width=device-width, initial-scale=1.0",
           },
@@ -279,7 +282,7 @@ exports[`plugin-html > should support environment html config 1`] = `
           "scriptLoading": "defer",
           "showErrors": true,
           "template": "",
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"app\\"></div></body></html>",
+          "templateContent": "<!DOCTYPE html><html><head></head><body><div id=\\"app\\"></div></body></html>",
           "templateParameters": [Function],
           "title": "web",
           "xhtml": false,
@@ -289,6 +292,7 @@ exports[`plugin-html > should support environment html config 1`] = `
       },
       RsbuildHtmlPlugin {
         "getExtraData": [Function],
+        "getHTMLPlugin": [Function],
         "name": "RsbuildHtmlPlugin",
       },
     ],
@@ -320,7 +324,7 @@ exports[`plugin-html > should support environment html config 1`] = `
           "inject": "head",
           "meta": {
             "charset": {
-              "charset": "UTF-8",
+              "charset": "utf-8",
             },
             "viewport": "width=device-width, initial-scale=1.0",
           },
@@ -328,7 +332,7 @@ exports[`plugin-html > should support environment html config 1`] = `
           "scriptLoading": "defer",
           "showErrors": true,
           "template": "",
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"app1\\"></div></body></html>",
+          "templateContent": "<!DOCTYPE html><html><head></head><body><div id=\\"app1\\"></div></body></html>",
           "templateParameters": [Function],
           "title": "web1",
           "xhtml": false,
@@ -338,6 +342,7 @@ exports[`plugin-html > should support environment html config 1`] = `
       },
       RsbuildHtmlPlugin {
         "getExtraData": [Function],
+        "getHTMLPlugin": [Function],
         "name": "RsbuildHtmlPlugin",
       },
     ],
@@ -376,7 +381,7 @@ exports[`plugin-html > should support multi entry 1`] = `
         "inject": "head",
         "meta": {
           "charset": {
-            "charset": "UTF-8",
+            "charset": "utf-8",
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
@@ -384,7 +389,7 @@ exports[`plugin-html > should support multi entry 1`] = `
         "scriptLoading": "defer",
         "showErrors": true,
         "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
+        "templateContent": "<!DOCTYPE html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
@@ -409,7 +414,7 @@ exports[`plugin-html > should support multi entry 1`] = `
         "inject": "head",
         "meta": {
           "charset": {
-            "charset": "UTF-8",
+            "charset": "utf-8",
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
@@ -417,7 +422,7 @@ exports[`plugin-html > should support multi entry 1`] = `
         "scriptLoading": "defer",
         "showErrors": true,
         "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
+        "templateContent": "<!DOCTYPE html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
@@ -427,6 +432,7 @@ exports[`plugin-html > should support multi entry 1`] = `
     },
     RsbuildHtmlPlugin {
       "getExtraData": [Function],
+      "getHTMLPlugin": [Function],
       "name": "RsbuildHtmlPlugin",
     },
   ],

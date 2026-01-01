@@ -20,31 +20,25 @@
 
 ### Dev hooks
 
-仅在执行 `rsbuild dev` 命令或 `rsbuild.startDevServer()` 方法时调用。
+在执行 `rsbuild dev` 命令或 `rsbuild.startDevServer()` 方法时调用：
 
 - [onBeforeStartDevServer](#onbeforestartdevserver)：在启动开发服务器前调用。
 - [onAfterStartDevServer](#onafterstartdevserver)：在启动开发服务器后调用。
 - [onBeforeDevCompile](#onbeforedevcompile)：在每次执行开发环境构建前调用。
 - [onAfterDevCompile](#onafterdevcompile)：在每次开发模式构建结束后调用。
-
-仅在 Rsbuild restart 时，或是执行 `rsbuild.startDevServer()` 的 [close()](/api/javascript-api/instance#关闭-server) 方法时调用。
-
 - [onCloseDevServer](#onclosedevserver)：在关闭开发服务器时调用。
 
 ### Build hooks
 
-仅在执行 `rsbuild build` 命令或 `rsbuild.build()` 方法时调用。
+在执行 `rsbuild build` 命令或 `rsbuild.build()` 方法时调用：
 
 - [onBeforeBuild](#onbeforebuild)：在执行生产模式构建前调用。
 - [onAfterBuild](#onafterbuild)：在执行生产模式构建后调用，可以获取到构建结果信息。
-
-仅在 Rsbuild restart 时，或是执行 `rsbuild.build()` 的 [close()](/api/javascript-api/instance#结束构建) 方法时调用。
-
 - [onCloseBuild](#onclosebuild)：在关闭构建时调用。
 
 ### Preview hooks
 
-仅在执行 `rsbuild preview` 命令或 `rsbuild.preview()` 方法时调用。
+在执行 `rsbuild preview` 命令或 `rsbuild.preview()` 方法时调用：
 
 - [onBeforeStartProdServer](#onbeforestartprodserver)：在启动生产服务器前调用。
 - [onAfterStartProdServer](#onafterstartprodserver)：在启动生产服务器后调用。

@@ -39,7 +39,7 @@ function getInject(entryName: string, config: NormalizedEnvironmentConfig) {
 }
 
 const getDefaultTemplateContent = (mountId: string) =>
-  `<!doctype html><html><head></head><body><div id="${mountId}"></div></body></html>`;
+  `<!DOCTYPE html><html><head></head><body><div id="${mountId}"></div></body></html>`;
 
 const existTemplatePath = new Set<string>();
 
@@ -355,10 +355,11 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
         });
 
         const getExtraData = (entryName: string) => extraDataMap.get(entryName);
+        const getHTMLPlugin = () => HtmlPlugin;
 
         chain
           .plugin('rsbuild-html-plugin')
-          .use(RsbuildHtmlPlugin, [getExtraData]);
+          .use(RsbuildHtmlPlugin, [getExtraData, getHTMLPlugin]);
 
         if (config.html) {
           const { crossorigin } = config.html;

@@ -4,7 +4,7 @@
 
 import { requireCompiledPackage } from './helpers/vendors';
 import { rspack } from './rspack';
-import type { HtmlRspackPlugin } from './types';
+import type { HtmlRspackPlugin, NormalizedEnvironmentConfig } from './types';
 
 let htmlPlugin: typeof HtmlRspackPlugin;
 
@@ -17,7 +17,13 @@ export const setHTMLPlugin = (plugin: typeof HtmlRspackPlugin): void => {
   }
 };
 
-export const getHTMLPlugin = (): typeof HtmlRspackPlugin => {
+export const getHTMLPlugin = (
+  config?: NormalizedEnvironmentConfig,
+): typeof HtmlRspackPlugin => {
+  if (config?.html.implementation === 'native') {
+    // TODO: remove type assertion
+    return rspack.HtmlRspackPlugin as unknown as typeof HtmlRspackPlugin;
+  }
   if (!htmlPlugin) {
     htmlPlugin = requireCompiledPackage('html-rspack-plugin');
   }

@@ -40,7 +40,7 @@ export type RsbuildContext = {
   devServer?: {
     /** The hostname the server is running on. */
     hostname: string;
-    /** The port number the server is listening on. */
+    /** The actual port number the server is listening on. */
     port: number;
     /** Whether the server is using HTTPS protocol. */
     https: boolean;
@@ -78,6 +78,8 @@ export type BuildState = {
   status: BuildStatus;
   /** Whether there are build errors */
   hasErrors: boolean;
+  /** The build time of each environment */
+  time: Record<string, number>;
 };
 
 /** The inner context. */
@@ -96,8 +98,10 @@ export type InternalContext = RsbuildContext & {
    * can be used in all environments.
    */
   getPluginAPI?: (environment?: string) => RsbuildPluginAPI;
-  /** The environment context. */
+  /** Context information for all environments. */
   environments: Record<string, EnvironmentContext>;
+  /** Array of all environments. */
+  environmentList: EnvironmentContext[];
   /** Only build specified environment. */
   specifiedEnvironments?: string[];
   /** Build state information */

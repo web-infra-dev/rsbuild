@@ -1,8 +1,8 @@
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import type { ConsoleType } from '@rsbuild/core';
 import color from 'picocolors';
-import { BUILD_END_LOG } from './constants';
-import { toPosixPath } from './utils';
+import { BUILD_END_LOG } from './constants.ts';
+import { toPosixPath } from './utils.ts';
 
 type LogPattern = string | RegExp | ((log: string) => boolean);
 
@@ -101,7 +101,15 @@ export const createLogHelper = () => {
     pattern: LogPattern,
     options: MatchPatternOptions = {},
   ) => {
-    return !logs.some((log) => matchPattern(log, pattern, options));
+    const result = logs.some((log) => matchPattern(log, pattern, options));
+
+    if (result) {
+      const title = color.bold(color.red('Unexpected log found.'));
+      const unexpected = color.yellow(pattern.toString());
+      throw new Error(
+        `${title}\nUnexpected: ${unexpected}\nGet:\n${originalLogs.join('\n')}`,
+      );
+    }
   };
 
   const expectBuildEnd = async () => expectLog(BUILD_END_LOG);
@@ -148,7 +156,7 @@ export const proxyConsole = ({
     restores.push(() => {
       console[type] = method;
     });
-    console[type] = (...args: any[]) => {
+    console[type] = (...args: unknown[]) => {
       const logMessage = args
         .map((arg) => {
           if (typeof arg === 'string') {

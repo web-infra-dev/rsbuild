@@ -25,7 +25,7 @@ If Lightning CSS does not meet your needs, you can disable Lightning CSS and use
 Steps:
 
 1. Set [tools.lightningcssLoader](/config/tools/lightningcss-loader) to `false` to disable the Lightning CSS loader.
-2. Use [@rsbuild/plugin-css-minimizer](https://github.com/rspack-contrib/rsbuild-plugin-css-minimizer) to switch the CSS minifier from Lightning CSS to cssnano or another CSS minifier.
+2. Use [@rsbuild/plugin-css-minimizer](https://github.com/rstackjs/rsbuild-plugin-css-minimizer) to switch the CSS minifier from Lightning CSS to cssnano or another CSS minifier.
 
 ```ts title="rsbuild.config.ts"
 import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
@@ -49,7 +49,7 @@ export default {
 When building for production, Rsbuild enables Rspack's built-in [LightningCssMinimizerRspackPlugin](https://rspack.rs/plugins/rspack/lightning-css-minimizer-rspack-plugin) plugin to minify CSS assets for better transmission efficiency.
 
 - You can disable CSS minification using the [output.minify](/config/output/minify) option or customize the options for `LightningCssMinimizerRspackPlugin`.
-- You can use [@rsbuild/plugin-css-minimizer](https://github.com/rspack-contrib/rsbuild-plugin-css-minimizer) to customize the CSS minimizer, switching to [cssnano](https://github.com/cssnano/cssnano) or another CSS minimizer.
+- You can use [@rsbuild/plugin-css-minimizer](https://github.com/rstackjs/rsbuild-plugin-css-minimizer) to customize the CSS minimizer, switching to [cssnano](https://github.com/cssnano/cssnano) or another CSS minimizer.
 
 ## PostCSS
 

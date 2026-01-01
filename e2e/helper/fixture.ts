@@ -5,19 +5,19 @@ import {
   execSync,
   exec as nodeExec,
 } from 'node:child_process';
-import { promises } from 'node:fs';
+import { constants as fsConstants, promises } from 'node:fs';
 import path from 'node:path';
 import base, { expect } from '@playwright/test';
 import fse from 'fs-extra';
-import { RSBUILD_BIN_PATH } from './constants';
+import { RSBUILD_BIN_PATH } from './constants.ts';
 import {
   type Build,
   build as baseBuild,
   dev as baseDev,
   type Dev,
   type DevResult,
-} from './jsApi';
-import { type ExtendedLogHelper, proxyConsole } from './logs';
+} from './jsApi.ts';
+import { type ExtendedLogHelper, proxyConsole } from './logs.ts';
 
 function makeBox(title: string) {
   const header = `╭────────────  Logs from: "${title}" ────────────╮`;
@@ -302,6 +302,7 @@ export const test = base.extend<RsbuildFixture>({
       await fse.remove(targetDir);
       await promises.cp(path.join(cwd, 'src'), targetDir, {
         recursive: true,
+        mode: fsConstants.COPYFILE_FICLONE,
       });
       return targetDir;
     };

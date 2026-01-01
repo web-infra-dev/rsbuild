@@ -1,13 +1,13 @@
 # Vue plugin
 
-import { SourceCode } from '@rspress/core/theme';
+import { SourceCode } from '@theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-vue" />
 
 The Vue plugin provides support for Vue 3 SFC (Single File Components). The plugin internally integrates [vue-loader](https://vue-loader.vuejs.org/) v17.
 
 :::tip
-For Vue 3 JSX / TSX syntax, please use the [Vue JSX plugin](https://github.com/rspack-contrib/rsbuild-plugin-vue-jsx).
+For Vue 3 JSX / TSX syntax, please use the [Vue JSX plugin](https://github.com/rstackjs/rsbuild-plugin-vue-jsx).
 :::
 
 ## Quick start
@@ -99,6 +99,22 @@ pluginVue({
     vue: false,
     router: false,
   },
+});
+```
+
+### test
+
+Customize the matching rule for Vue Single File Components (SFC).
+
+- **Type:** [Rspack.RuleSetCondition](https://rspack.rs/config/module-rules#condition)
+- **Default:** `/\.vue$/`
+- **Version:** `>= 1.2.1`
+
+This option allows you to extend the Vue plugin to handle additional file types. For example, you can first use a plugin or loader to transform `.md` files into Vue components, then configure the `test` option in the Vue plugin to match both `.vue` and `.md` files:
+
+```ts
+pluginVue({
+  test: /\.(vue|md)$/,
 });
 ```
 

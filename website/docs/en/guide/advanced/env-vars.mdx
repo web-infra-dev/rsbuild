@@ -1,6 +1,6 @@
 # Environment variables
 
-Rsbuild supports injecting environment variables or expressions into your code during the build. This helps you distinguish between different environments or replace constants.
+Rsbuild supports injecting environment variables or expressions into your code during the build. This helps you distinguish between environments or replace constants.
 
 This chapter explains how to use environment variables in Rsbuild.
 
@@ -84,7 +84,7 @@ if (import.meta.env.PROD) {
 - **Type:** `string`
 - **Scope:** Available in source code, replaced at build time via [define](/guide/advanced/env-vars#using-define)
 
-You can use `import.meta.env.BASE_URL` in client code to access the [base path](/guide/basic/server#base-path) of the server. This base path is determined by the [server.base](/config/server/base) configuration and is helpful for referencing assets from the [public folder](/guide/basic/static-assets#public-folder) in your code.
+You can use `import.meta.env.BASE_URL` in client code to access the [base path](/guide/basic/server#base-path) of the server. This base path is determined by the [server.base](/config/server/base) configuration and is useful for referencing assets from the [public folder](/guide/basic/static-assets#public-folder) in your code.
 
 For example, set the server's base path to `/foo` using the [server.base](/config/server/base) configuration:
 
@@ -324,7 +324,7 @@ Now, create a `.env.local` file and add the following contents:
 BAR=2
 ```
 
-The value of `BAR` is overwritten to `'2'`:
+The value of `BAR` is overridden to `'2'`:
 
 ```ts title="rsbuild.config.ts"
 console.log(import.meta.env.BAR); // '2'
@@ -333,7 +333,7 @@ console.log(process.env.BAR); // '2'
 
 ### Manually load env
 
-If you are not using the Rsbuild CLI and instead use the [JavaScript API](/api/start/index), you will need to manually call the [loadEnv](/api/javascript-api/core#loadenv) method to read environment variables and inject them via the [source.define](/config/source/define) config.
+If you are not using the Rsbuild CLI and instead use the [JavaScript API](/api/start/index), you need to manually call the [loadEnv](/api/javascript-api/core#loadenv) method to read environment variables and inject them via the [source.define](/config/source/define) config.
 
 ```ts
 import { loadEnv, mergeRsbuildConfig } from '@rsbuild/core';
@@ -553,7 +553,7 @@ interface RsbuildTypeOptions {
 
 ### process.env
 
-If the type for `process.env` is missing, please install the dependency [@types/node](https://npmjs.com/package/@types/node):
+If types for `process.env` are missing, install [@types/node](https://npmjs.com/package/@types/node):
 
 import { PackageManagerTabs } from '@theme';
 

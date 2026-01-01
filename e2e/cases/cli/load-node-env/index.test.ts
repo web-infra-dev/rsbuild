@@ -8,7 +8,7 @@ rspackTest(
   async ({ execCliSync }) => {
     execCliSync('build');
     expect(
-      fs.existsSync(path.join(__dirname, 'dist/development')),
+      fs.existsSync(path.join(import.meta.dirname, 'dist/development')),
     ).toBeTruthy();
   },
 );

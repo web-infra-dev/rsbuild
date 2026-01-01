@@ -8,14 +8,15 @@ For example, if you frequently reference the `src/common/request.ts` module in y
 import request from '@request'; // resolve to `src/common/request.ts`
 ```
 
-In Rsbuild, there are two ways to set up path aliases:
+In Rsbuild, there are several ways to set up path aliases:
 
-- Use the `paths` configuration in [tsconfig.json](https://typescriptlang.org/docs/handbook/tsconfig-json.html).
-- Use the [resolve.alias](/config/resolve/alias) configuration.
+- Use the [`paths` field](#typescript-paths-field) in tsconfig.json or jsconfig.json.
+- Use the [`imports` field](#nodejs-imports-field) in package.json.
+- Use Rsbuild's [resolve.alias](#alias-configuration) configuration.
 
-## `paths` in tsconfig.json
+## TypeScript `paths` field
 
-You can configure aliases through the `paths` configuration in `tsconfig.json`, which is the recommended approach in TypeScript projects as it also resolves the TS type issues related to path aliases.
+You can configure aliases through the `paths` configuration in [tsconfig.json](https://typescriptlang.org/docs/handbook/tsconfig-json.html), which is the recommended approach in TypeScript projects as it also resolves the TS type issues related to path aliases.
 
 For example:
 
@@ -35,7 +36,7 @@ After configuring, if you reference `@common/Foo.tsx` in your code, it will be m
 You can refer to the [TypeScript - paths](https://typescriptlang.org/tsconfig#paths) documentation for more details.
 :::
 
-## jsconfig.json
+### jsconfig.json
 
 In non-TypeScript projects, if you need to set path aliases through the `paths` field in [jsconfig.json](https://code.visualstudio.com/docs/languages/jsconfig), you can use the [source.tsconfigPath](/config/source/tsconfig-path) option to set it.
 
@@ -49,7 +50,26 @@ export default {
 };
 ```
 
-## `resolve.alias` Configuration
+## Node.js `imports` field
+
+You can also use the Node.js [`imports` field](https://nodejs.org/api/packages.html#imports) to define aliases with the `#` prefix. This works out of the box and does not require additional Rsbuild configuration.
+
+```json title="package.json"
+{
+  "type": "module",
+  "imports": {
+    "#app/*": "./src/*"
+  }
+}
+```
+
+```js title="src/index.js"
+import { message } from '#app/foo';
+```
+
+For TypeScript projects, enable [`resolvePackageJsonImports`](https://www.typescriptlang.org/tsconfig/#resolvePackageJsonImports) so the TypeScript language service and compiler can understand these aliases.
+
+## Alias configuration
 
 Rsbuild provides the [resolve.alias](/config/resolve/alias) configuration option, which corresponds to the webpack/Rspack native [resolve.alias](https://rspack.rs/config/resolve#resolvealias) configuration. You can configure this option using an object or a function.
 

@@ -88,7 +88,7 @@ export const stripBase = (path: string, base: string): string => {
 };
 
 export const getRoutes = (context: InternalContext): Routes => {
-  const environmentWithHtml = Object.values(context.environments).filter(
+  const environmentWithHtml = context.environmentList.filter(
     (item) => Object.keys(item.htmlPaths).length > 0,
   );
   if (environmentWithHtml.length === 0) {
@@ -296,6 +296,14 @@ export const getPort = async ({
     }
   }
 
+  if (!found) {
+    throw new Error(
+      `${color.dim('[rsbuild:server]')} Failed to find an available port after ${
+        tryLimits + 1
+      } attempts, starting from ${color.yellow(original)}.`,
+    );
+  }
+
   if (port !== original) {
     if (strictPort) {
       throw new Error(
@@ -341,7 +349,7 @@ export const getServerConfig = async ({
 
 const getIpv4Interfaces = () => {
   const interfaces = os.networkInterfaces();
-  const ipv4Interfaces: Map<string, os.NetworkInterfaceInfo> = new Map();
+  const ipv4Interfaces = new Map<string, os.NetworkInterfaceInfo>();
 
   for (const key of Object.keys(interfaces)) {
     for (const detail of interfaces[key]!) {
@@ -518,11 +526,13 @@ export function escapeHtml(text: string | null | undefined): string {
     .replace(/'/g, '&#39;');
 }
 
-export enum HttpCode {
-  BadRequest = 400,
-  Forbidden = 403,
-  NotFound = 404,
-  PreconditionFailed = 412,
-  RangeNotSatisfiable = 416,
-  InternalServerError = 500,
-}
+export const HttpCode = {
+  Ok: 200,
+  NotModified: 304,
+  BadRequest: 400,
+  Forbidden: 403,
+  NotFound: 404,
+  PreconditionFailed: 412,
+  RangeNotSatisfiable: 416,
+  InternalServerError: 500,
+} as const;

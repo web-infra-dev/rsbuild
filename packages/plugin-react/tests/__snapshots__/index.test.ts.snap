@@ -28,6 +28,10 @@ exports[`plugins/react > should configuring \`tools.swc\` to override react runt
       {
         "loader": "builtin:swc-loader",
         "options": {
+          "collectTypeScriptInfo": {
+            "exportedEnum": false,
+            "typeExports": true,
+          },
           "env": {
             "mode": undefined,
             "targets": [
@@ -62,12 +66,6 @@ exports[`plugins/react > should configuring \`tools.swc\` to override react runt
               },
             },
           },
-          "rspackExperiments": {
-            "collectTypeScriptInfo": {
-              "exportedEnum": false,
-              "typeExports": true,
-            },
-          },
         },
       },
     ],
@@ -98,7 +96,6 @@ exports[`plugins/react > should not apply splitChunks rule when strategy is not 
 exports[`plugins/react > should set \`parser.javascript.jsx\` to \`true\` when using \`preserve\` react runtime 1`] = `
 {
   "exportsPresence": "error",
-  "inlineConst": false,
   "jsx": true,
   "typeReexportsPresence": "tolerant",
 }
@@ -160,6 +157,10 @@ exports[`plugins/react > should work with swc-loader 1`] = `
       {
         "loader": "builtin:swc-loader",
         "options": {
+          "collectTypeScriptInfo": {
+            "exportedEnum": false,
+            "typeExports": true,
+          },
           "env": {
             "mode": undefined,
             "targets": [
@@ -192,12 +193,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                 "refresh": true,
                 "runtime": "automatic",
               },
-            },
-          },
-          "rspackExperiments": {
-            "collectTypeScriptInfo": {
-              "exportedEnum": false,
-              "typeExports": true,
             },
           },
         },

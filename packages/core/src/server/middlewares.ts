@@ -2,7 +2,6 @@ import type { IncomingMessage } from 'node:http';
 import path from 'node:path';
 import onFinished from 'on-finished';
 import { color } from '../helpers';
-import { getAssetsFromStats } from '../helpers/stats';
 import { addTrailingSlash } from '../helpers/url';
 import { isVerbose, logger } from '../logger';
 import type {
@@ -13,7 +12,7 @@ import type {
   Rspack,
 } from '../types';
 import type { BuildManager } from './buildManager';
-import { joinUrlSegments, stripBase } from './helper';
+import { HttpCode, joinUrlSegments, stripBase } from './helper';
 
 export const faviconFallbackMiddleware: RequestHandler = (req, res, next) => {
   if (req.url === '/favicon.ico') {
@@ -41,7 +40,7 @@ const getStatusCodeColor = (status: number) => {
 };
 
 export const getRequestLoggerMiddleware: () => Connect.NextHandleFunction =
-  () => {
+  function requestLoggerMiddleware() {
     return (req, res, next) => {
       const _startAt = process.hrtime();
 
@@ -73,8 +72,9 @@ export const getRequestLoggerMiddleware: () => Connect.NextHandleFunction =
   };
 
 export const notFoundMiddleware: RequestHandler = (_req, res, _next) => {
-  res.statusCode = 404;
-  res.end();
+  res.statusCode = HttpCode.NotFound;
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.end('This page could not be found');
 };
 
 export const optionsFallbackMiddleware: RequestHandler = (req, res, next) => {
@@ -130,7 +130,7 @@ export const getHtmlCompletionMiddleware: (params: {
   distPath: string;
   buildManager: BuildManager;
 }) => RequestHandler = ({ distPath, buildManager }) => {
-  return async (req, res, next) => {
+  return async function htmlCompletionMiddleware(req, res, next) {
     if (!maybeHTMLRequest(req)) {
       next();
       return;
@@ -175,10 +175,10 @@ export const getHtmlCompletionMiddleware: (params: {
 /**
  * handle `server.base`
  */
-export const getBaseMiddleware: (params: {
+export const getBaseUrlMiddleware: (params: {
   base: string;
 }) => RequestHandler = ({ base }) => {
-  return (req, res, next) => {
+  return function baseUrlMiddleware(req, res, next) {
     const url = req.url!;
     const pathname = getUrlPathname(url);
 
@@ -202,7 +202,7 @@ export const getBaseMiddleware: (params: {
 
     // non-based page visit
     if (req.headers.accept?.includes('text/html')) {
-      res.writeHead(404, {
+      res.writeHead(HttpCode.NotFound, {
         'Content-Type': 'text/html',
       });
       res.end(
@@ -213,7 +213,7 @@ export const getBaseMiddleware: (params: {
     }
 
     // not found for resources
-    res.writeHead(404, {
+    res.writeHead(HttpCode.NotFound, {
       'Content-Type': 'text/plain',
     });
     res.end(
@@ -232,7 +232,7 @@ export const getHtmlFallbackMiddleware: (params: {
   buildManager: BuildManager;
   htmlFallback?: HtmlFallback;
 }) => RequestHandler = ({ htmlFallback, distPath, buildManager }) => {
-  return async (req, res, next) => {
+  return async function htmlFallbackMiddleware(req, res, next) {
     if (
       !maybeHTMLRequest(req) ||
       '/favicon.ico' === req.url ||
@@ -268,9 +268,8 @@ export const getHtmlFallbackMiddleware: (params: {
  */
 export const viewingServedFilesMiddleware: (params: {
   environments: EnvironmentAPI;
-}) => RequestHandler =
-  ({ environments }) =>
-  async (req, res, next) => {
+}) => RequestHandler = ({ environments }) =>
+  async function viewingServedFilesMiddleware(req, res, next) {
     const url = req.url!;
     const pathname = getUrlPathname(url);
 
@@ -279,7 +278,7 @@ export const viewingServedFilesMiddleware: (params: {
       return;
     }
 
-    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    res.writeHead(HttpCode.Ok, { 'Content-Type': 'text/html; charset=utf-8' });
     res.write(
       `<!DOCTYPE html>
 <html>
@@ -333,14 +332,12 @@ export const viewingServedFilesMiddleware: (params: {
         const list = [];
         const environment = environments[key];
         const stats = await environment.getStats();
-        const assets = getAssetsFromStats(stats);
+        const assets = Object.keys(stats.compilation.assets);
 
         res.write('<ul>');
 
         for (const asset of assets) {
-          list.push(
-            `<li><a target="_blank" href="${asset.name}">${asset.name}</a></li>`,
-          );
+          list.push(`<li><a target="_blank" href="${asset}">${asset}</a></li>`);
         }
 
         res.write(list?.join(''));

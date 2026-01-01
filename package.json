@@ -1,9 +1,9 @@
 {
   "name": "rsbuild-monorepo",
   "private": true,
+  "type": "module",
   "workspaces": [
     "packages/*",
-    "packages/compat/*",
     "scripts/*"
   ],
   "scripts": {
@@ -14,12 +14,12 @@
     "e2e": "cd ./e2e && pnpm e2e",
     "e2e:rspack": "cd ./e2e && pnpm e2e:rspack",
     "e2e:webpack": "cd ./e2e && pnpm e2e:webpack",
-    "format": "prettier --write . && heading-case --write",
+    "format": "prettier --experimental-cli --write . && heading-case --write",
     "lint": "biome check && pnpm lint:type",
     "lint:type": "rslint",
     "prebundle": "nx run-many -t prebundle",
     "prepare": "simple-git-hooks && pnpm build",
-    "sort-package-json": "pnpx sort-package-json \"./package.json\" \"packages/*/package.json\" \"packages/compat/*/package.json\"",
+    "sort-package-json": "pnpx sort-package-json \"./package.json\" \"packages/*/package.json\"",
     "test": "rstest",
     "test:watch": "rstest watch"
   },
@@ -27,31 +27,32 @@
     "pre-commit": "pnpm exec nano-staged"
   },
   "nano-staged": {
-    "*.{md,mdx,json,css,less,scss}": "prettier --write",
+    "*.{md,mdx,json,css,less,scss}": "prettier --experimental-cli --write",
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
       "biome check --write --no-errors-on-unmatched",
-      "prettier --write"
+      "prettier --experimental-cli --write"
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.1",
+    "@biomejs/biome": "^2.3.10",
     "@rsbuild/config": "workspace:*",
-    "@rslint/core": "^0.1.13",
-    "@rstest/core": "^0.6.0",
+    "@rstest/adapter-rslib": "^0.1.1",
+    "@rslint/core": "^0.1.14",
+    "@rstest/core": "^0.7.7",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.18.12",
+    "@types/node": "^24.10.4",
     "cross-env": "^10.1.0",
     "cspell-ban-words": "^0.0.4",
-    "heading-case": "^1.0.2",
-    "nano-staged": "^0.8.0",
-    "nx": "^22.0.1",
-    "prettier": "^3.6.2",
+    "heading-case": "^1.0.4",
+    "nano-staged": "^0.9.0",
+    "nx": "^22.3.3",
+    "prettier": "^3.7.4",
     "simple-git-hooks": "^2.13.1",
     "typescript": "^5.9.3"
   },
-  "packageManager": "pnpm@10.19.0",
+  "packageManager": "pnpm@10.26.0",
   "engines": {
     "node": ">=22.18.0",
-    "pnpm": ">=10.19.0"
+    "pnpm": ">=10.26.0"
   }
 }

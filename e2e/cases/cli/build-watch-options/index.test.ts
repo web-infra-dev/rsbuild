@@ -6,7 +6,10 @@ rspackTest(
   'should allow to custom watch options for build watch',
   async ({ execCli, logHelper, copySrcDir }) => {
     const tempSrc = await copySrcDir();
-    const distIndexFile = path.join(__dirname, 'dist/static/js/index.js');
+    const distIndexFile = path.join(
+      import.meta.dirname,
+      'dist/static/js/index.js',
+    );
     const fooFile = path.join(tempSrc, 'foo.js');
     const barFile = path.join(tempSrc, 'bar.js');
 

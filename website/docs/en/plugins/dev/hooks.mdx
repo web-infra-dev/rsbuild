@@ -1,6 +1,6 @@
 # Plugin hooks
 
-This chapter introduces the plugin hooks available for Rsbuild plugins.
+This page outlines the plugin hooks available for Rsbuild plugins.
 
 ## Overview
 
@@ -20,31 +20,25 @@ This chapter introduces the plugin hooks available for Rsbuild plugins.
 
 ### Dev hooks
 
-Called only when running the `rsbuild dev` command or the `rsbuild.startDevServer()` method.
+Called when running the `rsbuild dev` command or the `rsbuild.startDevServer()` method:
 
 - [onBeforeStartDevServer](#onbeforestartdevserver): Called before starting the dev server.
 - [onAfterStartDevServer](#onafterstartdevserver): Called after starting the dev server.
 - [onBeforeDevCompile](#onbeforedevcompile): Called before each build in development mode.
 - [onAfterDevCompile](#onafterdevcompile): Called after each build in development mode.
-
-Called only when Rsbuild is restarted or when the [close()](/api/javascript-api/instance#close-server) method of `rsbuild.startDevServer()` is executed.
-
 - [onCloseDevServer](#onclosedevserver): Called when the dev server is closed.
 
 ### Build hooks
 
-Called only when running the `rsbuild build` command or the `rsbuild.build()` method.
+Called when running the `rsbuild build` command or the `rsbuild.build()` method:
 
 - [onBeforeBuild](#onbeforebuild): Called before running the production build.
 - [onAfterBuild](#onafterbuild): Called after running the production build. You can get the build result information.
-
-Called only when Rsbuild is restarted or when the [close()](/api/javascript-api/instance#close-build) method of `rsbuild.build()` is executed.
-
 - [onCloseBuild](#onclosebuild): Called when the build is closed.
 
 ### Preview hooks
 
-Called only when running the `rsbuild preview` command or the `rsbuild.preview()` method.
+Called when running the `rsbuild preview` command or the `rsbuild.preview()` method:
 
 - [onBeforeStartProdServer](#onbeforestartprodserver): Called before starting the production server.
 - [onAfterStartProdServer](#onafterstartprodserver): Called after starting the production server.
@@ -121,7 +115,7 @@ When executing the `rsbuild preview` command or `rsbuild.preview()` method, Rsbu
 
 ## Global hooks vs environment hooks
 
-In Rsbuild, some of the plugin hooks are global hooks. The execution of these hooks is often related to Rsbuild's own startup process or global logic and is shared under all environments. Such as:
+In Rsbuild, some plugin hooks are global. These hooks relate to Rsbuild's startup process or other shared logic and run across all environments. For example:
 
 - `modifyRsbuildConfig` is used to modify the basic configuration of Rsbuild. The basic configuration will eventually be merged with the environment configuration;
 - `onBeforeStartDevServer` and `onAfterStartDevServer` are related to the Rsbuild dev server startup process, all environments share Rsbuild's dev server, middleware, and WebSocket.

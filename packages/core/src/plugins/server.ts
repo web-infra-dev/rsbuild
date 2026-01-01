@@ -62,10 +62,11 @@ export const pluginServer = (): RsbuildPlugin => ({
                 });
               }
 
-              return fs.promises.cp(publicDir, distPath, {
+              await fs.promises.cp(publicDir, distPath, {
                 recursive: true,
                 // dereference symlinks
                 dereference: true,
+                mode: fs.constants.COPYFILE_FICLONE,
               });
             }),
           );

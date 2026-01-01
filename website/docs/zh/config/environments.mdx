@@ -7,28 +7,6 @@ Rsbuild 支持同时为多个环境构建产物。你可以使用 `environments`
 - **类型：**
 
 ```ts
-interface EnvironmentConfig {
-  plugins?: RsbuildPlugins;
-  dev?: Pick<
-    DevConfig,
-    | 'hmr'
-    | 'client'
-    | 'liveReload'
-    | 'assetPrefix'
-    | 'progressBar'
-    | 'lazyCompilation'
-    | 'writeToDisk'
-  >;
-  html?: HtmlConfig;
-  tools?: ToolsConfig;
-  source?: SourceConfig;
-  output?: OutputConfig;
-  resolve?: ResolveConfig;
-  security?: SecurityConfig;
-  performance?: PerformanceConfig;
-  moduleFederation?: ModuleFederationConfig;
-}
-
 type Environments = {
   [name: string]: EnvironmentConfig;
 };
@@ -36,9 +14,16 @@ type Environments = {
 
 - **默认值：** `undefined`
 
-:::tip
-`environments` 中不支持配置 `server` 选项以及一部分 `dev` 选项，因为多个 environment 共享同一个 server 实例。
-:::
+## 可用选项
+
+`EnvironmentConfig` 是 Rsbuild 配置的一个子集，支持大部分配置项。
+
+由于多个 environment 共享同一个 server 实例，以下选项暂不支持在 `EnvironmentConfig` 中配置：
+
+- `server.*`
+- `dev.watchFiles`
+- `dev.cliShortcuts`
+- `dev.setupMiddlewares`
 
 ## 示例
 

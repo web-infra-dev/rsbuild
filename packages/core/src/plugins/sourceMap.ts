@@ -1,4 +1,3 @@
-import path from 'node:path';
 import { toPosixPath } from '../helpers/path';
 import type {
   NormalizedEnvironmentConfig,
@@ -26,24 +25,37 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
   name: 'rsbuild:source-map',
 
   setup(api) {
-    const sourceMapFilenameTemplate = ({
-      absoluteResourcePath,
-    }: {
-      absoluteResourcePath: string;
-    }) => absoluteResourcePath;
+    // Use project-relative POSIX paths in source maps:
+    // - Prevents leaking absolute system paths
+    // - Keeps maps portable across environments
+    // - Matches source map spec and debugger expectations
+    const DEFAULT_SOURCE_MAP_TEMPLATE = '[relative-resource-path]';
 
     const enableCssSourceMap = (config: NormalizedEnvironmentConfig) => {
       const { sourceMap } = config.output;
       return typeof sourceMap === 'object' && sourceMap.css;
     };
 
-    api.modifyBundlerChain((chain, { bundler, environment }) => {
+    api.modifyBundlerChain((chain, { bundler, environment, isDev, target }) => {
       const { config } = environment;
-      const devtool = getDevtool(config);
 
-      chain
-        .devtool(devtool)
-        .output.devtoolModuleFilenameTemplate(sourceMapFilenameTemplate);
+      const devtool = getDevtool(config);
+      chain.devtool(devtool);
+
+      if (
+        (isDev && target === 'web') ||
+        // webpack does not support [relative-resource-path]
+        api.context.bundlerType === 'webpack'
+      ) {
+        // Use POSIX-style absolute paths in source maps during development
+        // This ensures VS Code and browser debuggers can correctly resolve breakpoints
+        chain.output.devtoolModuleFilenameTemplate(
+          (info: { absoluteResourcePath: string }) =>
+            toPosixPath(info.absoluteResourcePath),
+        );
+      } else {
+        chain.output.devtoolModuleFilenameTemplate(DEFAULT_SOURCE_MAP_TEMPLATE);
+      }
 
       // When JS source map is disabled, but CSS source map is enabled,
       // add `SourceMapDevToolPlugin` to let Rspack generate CSS source map.
@@ -57,75 +69,5 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
         ]);
       }
     });
-
-    // Use project-relative POSIX paths in source maps:
-    // - Prevents leaking absolute system paths
-    // - Keeps maps portable across environments
-    // - Matches source map spec and debugger expectations
-    api.processAssets(
-      // Source maps has been extracted to separate files on this stage
-      { stage: 'optimize-transfer' },
-      ({ assets, compilation, sources, environment }) => {
-        // If source map is disabled, skip the processing.
-        if (
-          !compilation.options.devtool &&
-          !enableCssSourceMap(environment.config)
-        ) {
-          return;
-        }
-
-        // If devtoolModuleFilenameTemplate is not the default template,
-        // which means users want to customize it, skip the default processing.
-        if (
-          compilation.outputOptions.devtoolModuleFilenameTemplate !==
-          sourceMapFilenameTemplate
-        ) {
-          return;
-        }
-
-        const { distPath } = environment;
-
-        for (const [filename, asset] of Object.entries(assets)) {
-          if (!filename.endsWith('.map')) {
-            continue;
-          }
-
-          const rawSource = asset.source();
-          let map: Rspack.RawSourceMap;
-          try {
-            map = JSON.parse(
-              Buffer.isBuffer(rawSource) ? rawSource.toString() : rawSource,
-            );
-          } catch {
-            continue;
-          }
-
-          if (!Array.isArray(map.sources)) {
-            continue;
-          }
-
-          const mapDir = path.dirname(path.join(distPath, filename));
-
-          let isSourcesUpdated = false;
-
-          map.sources = map.sources.map((source) => {
-            if (path.isAbsolute(source)) {
-              isSourcesUpdated = true;
-              return toPosixPath(path.relative(mapDir, source));
-            }
-            return source;
-          });
-
-          if (!isSourcesUpdated) {
-            continue;
-          }
-
-          compilation.updateAsset(
-            filename,
-            new sources.RawSource(JSON.stringify(map)),
-          );
-        }
-      },
-    );
   },
 });

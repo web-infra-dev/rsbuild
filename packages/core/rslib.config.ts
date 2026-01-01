@@ -4,15 +4,10 @@ import { nodeMinifyConfig } from '@rsbuild/config/rslib.config.ts';
 import type { Rspack, rsbuild } from '@rslib/core';
 import { defineConfig } from '@rslib/core';
 import pkgJson from './package.json' with { type: 'json' };
-import prebundleConfig from './prebundle.config.mjs';
+import prebundleConfig from './prebundle.config.ts';
 
 export const define = {
   RSBUILD_VERSION: JSON.stringify(pkgJson.version),
-};
-
-export const alias = {
-  // Bundle rspack-chain to the main JS bundle and use the pre-bundled types
-  '../../compiled/rspack-chain': 'rspack-chain',
 };
 
 const regexpMap: Record<string, RegExp> = {};
@@ -84,9 +79,6 @@ export default defineConfig({
   output: {
     externals,
   },
-  resolve: {
-    alias,
-  },
   lib: [
     {
       id: 'esm_index',
@@ -97,6 +89,11 @@ export default defineConfig({
         build: true,
         // Only use tsgo in local dev for faster build, disable it in CI until it's more stable
         tsgo: !process.env.CI,
+        alias: {
+          // alias to pre-bundled types as they are public API
+          rslog: './compiled/rslog',
+          'rspack-chain': './compiled/rspack-chain/types',
+        },
       },
       output: {
         minify: nodeMinifyConfig,
@@ -150,12 +147,12 @@ export default defineConfig({
         },
         define: {
           // use define to avoid compile time evaluation of __webpack_hash__
-          WEBPACK_HASH: '__webpack_hash__',
+          BUILD_HASH: '__webpack_hash__',
         },
       },
       output: {
         target: 'web',
-        externals: ['./hmr'],
+        externals: ['./hmr.js'],
         distPath: {
           root: './dist/client',
         },

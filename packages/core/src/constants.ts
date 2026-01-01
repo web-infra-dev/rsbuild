@@ -21,6 +21,7 @@ export const ASSETS_DIST_DIR = 'static/assets';
 // loaders will be emitted to the same folder of the main bundle
 export const LOADER_PATH: string = join(__dirname);
 export const STATIC_PATH: string = join(__dirname, '../static');
+export const CLIENT_PATH: string = join(__dirname, 'client');
 export const COMPILED_PATH: string = join(__dirname, '../compiled');
 export const TS_CONFIG_FILE = 'tsconfig.json';
 export const HMR_SOCKET_PATH = '/rsbuild-hmr';
@@ -32,6 +33,7 @@ export const DEFAULT_DATA_URL_SIZE = 4096;
 export const DEFAULT_MOUNT_ID = 'root';
 export const DEFAULT_DEV_HOST = '0.0.0.0';
 export const DEFAULT_ASSET_PREFIX = '/';
+export const DEFAULT_STACK_TRACE = 'summary';
 export const DEFAULT_WEB_BROWSERSLIST: string[] = [
   'chrome >= 87',
   'edge >= 88',
@@ -99,3 +101,7 @@ export const AUDIO_EXTENSIONS: string[] = [
   'm4a',
   'opus',
 ];
+
+export const LAZY_COMPILATION_IDENTIFIER = 'lazy-compilation-proxy';
+
+export const BROWSER_LOG_PREFIX = '[browser]';

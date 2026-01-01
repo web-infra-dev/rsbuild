@@ -3,17 +3,17 @@ import path from 'node:path';
 
 import { expect, test } from '@e2e/helper';
 import type { RsbuildConfig } from '@rsbuild/core';
-import { remove } from 'fs-extra';
+import fse from 'fs-extra';
 
 test('should respect `buildCache.buildDependencies`', async ({ build }) => {
   const cacheDirectory = path.resolve(
-    __dirname,
+    import.meta.dirname,
     './node_modules/.cache/test-cache-build-dependencies',
   );
 
-  const testDepsPath = path.resolve(__dirname, './test-temp-deps.js');
+  const testDepsPath = path.resolve(import.meta.dirname, './test-temp-deps.js');
 
-  await remove(cacheDirectory);
+  await fse.remove(cacheDirectory);
 
   const getBuildConfig = (input: string) => {
     fs.writeFileSync(testDepsPath, input);

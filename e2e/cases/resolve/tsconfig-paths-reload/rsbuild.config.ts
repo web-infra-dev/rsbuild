@@ -1,7 +1,7 @@
 import { join } from 'node:path';
 import { defineConfig } from '@rsbuild/core';
 
-export const tempConfig = join(__dirname, 'test-temp-tsconfig.json');
+export const tempConfig = join(import.meta.dirname, 'test-temp-tsconfig.json');
 
 export default defineConfig({
   dev: {

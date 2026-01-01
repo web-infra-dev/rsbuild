@@ -113,8 +113,11 @@ Dev server information when running in dev mode. Available after the dev server 
 
 ```ts
 type DevServer = {
+  /** The hostname the server is running on. */
   hostname: string;
+  /** The actual port number the server is listening on. */
   port: number;
+  /** Whether the server is using HTTPS protocol. */
   https: boolean;
 };
 ```
@@ -130,7 +133,8 @@ async function main() {
   });
   await rsbuild.startDevServer();
 
-  console.log(rsbuild.context.devServer); // { hostname: 'localhost', port: 3000, https: false }
+  // { hostname: 'localhost', port: 3000, https: false }
+  console.log(rsbuild.context.devServer);
 }
 ```
 
@@ -583,7 +587,7 @@ const pluginFoo = {
 };
 
 const rsbuild = createRsbuild({
-  rsbuildConfig: {
+  config: {
     plugins: [pluginFoo],
   },
 });
@@ -595,7 +599,7 @@ Or check if a plugin exists in a specified environment:
 
 ```ts
 const rsbuild = createRsbuild({
-  rsbuildConfig: {
+  config: {
     environments: {
       web: {
         plugins: [pluginFoo],

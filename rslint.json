@@ -38,7 +38,12 @@
       "@typescript-eslint/no-implied-eval": "off",
       "@typescript-eslint/prefer-promise-reject-errors": "off",
       "@typescript-eslint/no-empty-function": "off",
-      "@typescript-eslint/no-explicit-any": "off"
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/consistent-type-definitions": "off",
+      "@typescript-eslint/ban-ts-comment": "off",
+      "@typescript-eslint/consistent-type-imports": "off",
+      "@typescript-eslint/consistent-return": "off",
+      "@typescript-eslint/consistent-generic-constructors": "off"
     }
   }
 ]

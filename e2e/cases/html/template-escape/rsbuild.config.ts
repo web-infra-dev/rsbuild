@@ -4,8 +4,8 @@ import { defineConfig } from '@rsbuild/core';
 export default defineConfig({
   source: {
     entry: {
-      foo: path.resolve(__dirname, './src/foo.js'),
-      bar: path.resolve(__dirname, './src/bar.js'),
+      foo: path.resolve(import.meta.dirname, './src/foo.js'),
+      bar: path.resolve(import.meta.dirname, './src/bar.js'),
     },
   },
   html: {

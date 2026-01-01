@@ -38,7 +38,7 @@ body:
     id: repro
     attributes:
       label: Reproduce link
-      description: 'Please provide a minimal reproduction of the issue. You can create a GitHub repo and use `npm create rsbuild@latest` as a starter. Or fork from the the [rsbuild-codesandbox-example](https://codesandbox.io/p/github/rspack-contrib/rsbuild-codesandbox-example).'
+      description: 'Please provide a minimal reproduction of the issue. You can create a GitHub repo and use `npm create rsbuild@latest` as a starter. Or fork from the the [rsbuild-codesandbox-example](https://codesandbox.io/p/github/rstackjs/rsbuild-codesandbox-example).'
       placeholder: paste link here
     validations:
       required: true

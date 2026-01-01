@@ -1,7 +1,7 @@
 import { join } from 'node:path';
 import { expect, getRandomPort, test } from '@e2e/helper';
 
-const fixtures = __dirname;
+const fixtures = import.meta.dirname;
 
 test('should access / and htmlFallback success by default', async ({
   page,

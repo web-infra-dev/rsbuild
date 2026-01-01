@@ -5,7 +5,7 @@
 Install the dependencies:
 
 ```bash
-pnpm install
+{{ packageManager }} install
 ```
 
 ## Get started
@@ -13,19 +13,19 @@ pnpm install
 Start the dev server, and the app will be available at [http://localhost:3000](http://localhost:3000).
 
 ```bash
-pnpm dev
+{{ packageManager }} run dev
 ```
 
 Build the app for production:
 
 ```bash
-pnpm build
+{{ packageManager }} run build
 ```
 
 Preview the production build locally:
 
 ```bash
-pnpm preview
+{{ packageManager }} run preview
 ```
 
 ## Learn more

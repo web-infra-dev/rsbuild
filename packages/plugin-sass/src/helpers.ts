@@ -26,9 +26,10 @@ function unpatchGlobalLocation() {
   }
 }
 
-type CompilerTapFn<CallBack extends (...args: any[]) => void = () => void> = {
-  tap: (name: string, cb: CallBack) => void;
-};
+type CompilerTapFn<CallBack extends (...args: unknown[]) => void = () => void> =
+  {
+    tap: (name: string, cb: CallBack) => void;
+  };
 
 export function patchCompilerGlobalLocation(compiler: {
   hooks: {
@@ -45,6 +46,11 @@ export function patchCompilerGlobalLocation(compiler: {
   compiler.hooks.done.tap('PatchGlobalLocation', unpatchGlobalLocation);
 }
 
+type ResolveUrlJoinItem = {
+  uri: string;
+  [key: string]: unknown;
+};
+
 /**
  * fix resolve-url-loader can't deal with resolve.alias config
  *
@@ -58,13 +64,15 @@ export const getResolveUrlJoinFn = (): ((...args: unknown[]) => void) => {
     defaultJoinGenerator,
   } = resolveUrlHelpers;
 
-  const rsbuildGenerator = asGenerator((item: any, ...rest: any[]) => {
-    // only handle relative path (not absolutely accurate, but can meet common scenarios)
-    if (!item.uri.startsWith('.')) {
-      return [null];
-    }
-    return defaultJoinGenerator(item, ...rest);
-  });
+  const rsbuildGenerator = asGenerator(
+    (item: ResolveUrlJoinItem, ...rest: unknown[]) => {
+      // only handle relative path (not absolutely accurate, but can meet common scenarios)
+      if (!item.uri.startsWith('.')) {
+        return [null];
+      }
+      return defaultJoinGenerator(item, ...rest);
+    },
+  );
   return createJoinFunction(
     'rsbuild-resolve-join-fn',
     createJoinImplementation(rsbuildGenerator),

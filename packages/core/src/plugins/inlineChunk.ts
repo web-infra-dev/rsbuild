@@ -250,16 +250,17 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
 
         const { devtool } = compiler.options;
 
+        const hasSourceMap =
+          devtool !== 'hidden-source-map' && devtool !== false;
         for (const name of inlinedAssets) {
-          // If the source map reference is removed,
-          // we do not need to preserve the source map of inlined files
-          if (devtool === 'hidden-source-map' || devtool === false) {
-            compilation.deleteAsset(name);
-          } else {
-            // use delete instead of compilation.deleteAsset
-            // because we want to preserve the related files such as source map
-            delete compilation.assets[name];
+          // Preserve source maps of inlined assets. Setting `related.sourceMap` to `null` prevents
+          // `deleteAsset` from removing the source map file.
+          if (hasSourceMap) {
+            compilation.updateAsset(name, compilation.assets[name], {
+              related: { sourceMap: null },
+            });
           }
+          compilation.deleteAsset(name);
         }
 
         inlinedAssets.clear();

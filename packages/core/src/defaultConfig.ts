@@ -8,6 +8,7 @@ import {
   DEFAULT_DEV_HOST,
   DEFAULT_MOUNT_ID,
   DEFAULT_PORT,
+  DEFAULT_STACK_TRACE,
   FAVICON_DIST_DIR,
   FONT_DIST_DIR,
   HMR_SOCKET_PATH,
@@ -46,7 +47,7 @@ const getDefaultDevConfig = (): NormalizedDevConfig => ({
   hmr: true,
   liveReload: true,
   browserLogs: {
-    stackTrace: 'summary',
+    stackTrace: DEFAULT_STACK_TRACE,
   },
   watchFiles: [],
   // Temporary placeholder, default: `${server.base}`
@@ -59,6 +60,7 @@ const getDefaultDevConfig = (): NormalizedDevConfig => ({
     host: '',
     overlay: true,
     reconnect: 100,
+    logLevel: 'info',
   },
 });
 
@@ -113,7 +115,7 @@ const getDefaultSourceConfig = (): NormalizedSourceConfig => {
 
 const getDefaultHtmlConfig = (): NormalizedHtmlConfig => ({
   meta: {
-    charset: { charset: 'UTF-8' },
+    charset: { charset: 'utf-8' },
     viewport: 'width=device-width, initial-scale=1.0',
   },
   title: 'Rsbuild App',
@@ -122,6 +124,7 @@ const getDefaultHtmlConfig = (): NormalizedHtmlConfig => ({
   crossorigin: false,
   outputStructure: 'flat',
   scriptLoading: 'defer',
+  implementation: 'js',
 });
 
 const getDefaultSecurityConfig = (): NormalizedSecurityConfig => ({
@@ -231,6 +234,7 @@ const createDefaultConfig = (): RsbuildConfig => ({
   security: getDefaultSecurityConfig(),
   performance: getDefaultPerformanceConfig(),
   environments: {},
+  logLevel: 'info',
 });
 
 export function getDefaultEntry(root: string): RsbuildEntry {
@@ -279,6 +283,12 @@ export const withDefaultConfig = async (
     }
   }
 
+  if (config.dev?.client?.logLevel === undefined) {
+    merged.dev ||= {};
+    merged.dev.client ||= {};
+    merged.dev.client.logLevel = merged.logLevel;
+  }
+
   if (merged.dev?.lazyCompilation === undefined) {
     merged.dev ||= {};
     merged.dev.lazyCompilation = {
@@ -322,11 +332,11 @@ export const normalizeConfig = (
     config.server.publicDir,
   );
 
+  const defaultConfig = createDefaultConfig();
+  defaultConfig.mode = getMode();
+
   const mergedConfig = mergeRsbuildConfig(
-    {
-      ...createDefaultConfig(),
-      mode: getMode(),
-    },
+    defaultConfig,
     config,
   ) as NormalizedConfig;
 

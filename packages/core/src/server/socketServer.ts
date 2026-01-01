@@ -1,10 +1,12 @@
 import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
+import { parse as parseStack } from 'stacktrace-parser';
 import type Ws from '../../compiled/ws/index.js';
+import { BROWSER_LOG_PREFIX, DEFAULT_STACK_TRACE } from '../constants.js';
 import { formatStatsError } from '../helpers/format';
 import { isObject } from '../helpers/index';
 import { getStatsErrors, getStatsWarnings } from '../helpers/stats';
-import { requireCompiledPackage } from '../helpers/vendors';
+import { color, requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
 import type {
   DevConfig,
@@ -12,8 +14,8 @@ import type {
   RsbuildStatsItem,
   Rspack,
 } from '../types';
-import { formatBrowserErrorLog } from './browserLogs';
-import { genOverlayHTML } from './overlay';
+import { type CachedTraceMap, formatBrowserErrorLog } from './browserLogs';
+import { renderErrorToHtml } from './overlay';
 
 interface ExtWebSocket extends Ws {
   isAlive: boolean;
@@ -45,7 +47,18 @@ export type ServerMessageWarnings = {
 
 export type ServerMessageErrors = {
   type: 'errors';
-  data: { text: string[]; html: string };
+  data: {
+    text: string[];
+    html: string;
+  };
+};
+
+export type ServerMessageResolvedClientError = {
+  type: 'resolved-client-error';
+  data: {
+    id: string;
+    message: string;
+  };
 };
 
 export type ServerMessage =
@@ -53,10 +66,12 @@ export type ServerMessage =
   | ServerMessageStaticChanged
   | ServerMessageHash
   | ServerMessageWarnings
-  | ServerMessageErrors;
+  | ServerMessageErrors
+  | ServerMessageResolvedClientError;
 
 export type ClientMessageError = {
   type: 'client-error';
+  id: string;
   message: string;
   stack?: string;
 };
@@ -75,21 +90,21 @@ const parseQueryString = (req: IncomingMessage) => {
 export class SocketServer {
   private wsServer!: Ws.Server;
 
-  private readonly socketsMap: Map<string, Set<Ws>> = new Map();
+  private readonly socketsMap = new Map<string, Set<Ws>>();
 
   private readonly options: DevConfig;
 
   private readonly context: InternalContext;
 
-  private initialChunksMap: Map<string, Set<string>> = new Map();
+  private initialChunksMap = new Map<string, Set<string>>();
 
   private heartbeatTimer: NodeJS.Timeout | null = null;
 
   private getOutputFileSystem: () => Rspack.OutputFileSystem;
 
-  private reportedBrowserLogs: Set<string> = new Set();
+  private reportedBrowserLogs = new Set<string>();
 
-  private currentHash: Map<string, string> = new Map();
+  private currentHash = new Map<string, string>();
 
   constructor(
     context: InternalContext,
@@ -112,8 +127,8 @@ export class SocketServer {
     }
 
     const query = parseQueryString(req);
-    const tokens = Object.values(this.context.environments).map(
-      (env) => env.webSocketToken,
+    const tokens = this.context.environmentList.map(
+      ({ webSocketToken }) => webSocketToken,
     );
 
     // If the request does not contain a valid token, reject the request.
@@ -203,14 +218,38 @@ export class SocketServer {
    * Send error messages to the client and render error overlay
    */
   public sendError(errors: Rspack.StatsError[], token: string): void {
-    const formattedErrors = errors.map((item) => formatStatsError(item));
+    const { rootPath } = this.context;
+    const formattedErrors = errors.map((item) =>
+      formatStatsError(item, rootPath),
+    );
+    const html = formattedErrors
+      .map((error) => renderErrorToHtml(error, rootPath))
+      .join('\n\n')
+      .trim();
+
     this.sockWrite(
       {
         type: 'errors',
         data: {
           text: formattedErrors,
-          html: genOverlayHTML(formattedErrors, this.context.rootPath),
+          html,
         },
+      },
+      token,
+    );
+  }
+
+  /**
+   * Send warning messages to the client
+   */
+  public sendWarning(warnings: Rspack.StatsError[], token: string): void {
+    const formattedWarnings = warnings.map((item) =>
+      formatStatsError(item, this.context.rootPath, 'warning'),
+    );
+    this.sockWrite(
+      {
+        type: 'warnings',
+        data: { text: formattedWarnings },
       },
       token,
     );
@@ -286,32 +325,73 @@ export class SocketServer {
 
     socket.on('message', async (data) => {
       try {
-        const message: ClientMessage = JSON.parse(
+        const payload: ClientMessage = JSON.parse(
           // eslint-disable-next-line @typescript-eslint/no-base-to-string
           typeof data === 'string' ? data : data.toString(),
         );
 
-        const { browserLogs } = this.context.normalizedConfig?.dev || {};
+        const { context } = this;
+        const config = context.normalizedConfig;
+        if (!config) {
+          return;
+        }
+
+        const { browserLogs, client } = config.dev;
         if (
-          message.type === 'client-error' &&
+          payload.type === 'client-error' &&
           // Do not report browser error when using webpack
-          this.context.bundlerType === 'rspack' &&
+          context.bundlerType === 'rspack' &&
           // Do not report browser error when build failed
-          !this.context.buildState.hasErrors &&
+          !context.buildState.hasErrors &&
           browserLogs
         ) {
           const stackTrace =
-            (isObject(browserLogs) && browserLogs.stackTrace) || 'summary';
+            (isObject(browserLogs) && browserLogs.stackTrace) ||
+            DEFAULT_STACK_TRACE;
+          const outputFs = this.getOutputFileSystem();
+
+          const stackFrames = payload.stack ? parseStack(payload.stack) : null;
+          const cachedTraceMap: CachedTraceMap = new Map();
+
           const log = await formatBrowserErrorLog(
-            message,
-            this.context,
-            this.getOutputFileSystem(),
+            payload.message,
+            context,
+            outputFs,
             stackTrace,
+            stackFrames,
+            cachedTraceMap,
           );
 
           if (!this.reportedBrowserLogs.has(log)) {
             this.reportedBrowserLogs.add(log);
-            logger.error(log);
+            logger.error(`${color.cyan(BROWSER_LOG_PREFIX)} ${log}`);
+          }
+
+          // Render runtime errors in overlay
+          if (typeof client.overlay === 'object' && client.overlay.runtime) {
+            // Always display full stack trace for runtime errors
+            const resolvedLog =
+              stackTrace === 'full'
+                ? log
+                : await formatBrowserErrorLog(
+                    payload.message,
+                    context,
+                    outputFs,
+                    'full',
+                    stackFrames,
+                    cachedTraceMap,
+                  );
+
+            this.sockWrite(
+              {
+                type: 'resolved-client-error',
+                data: {
+                  id: payload.id,
+                  message: renderErrorToHtml(resolvedLog),
+                },
+              },
+              token,
+            );
           }
         }
       } catch {}
@@ -346,7 +426,7 @@ export class SocketServer {
   // Only use stats when environment is matched
   private getStats(token: string) {
     const { stats } = this.context.buildState;
-    const environment = Object.values(this.context.environments).find(
+    const environment = this.context.environmentList.find(
       ({ webSocketToken }) => webSocketToken === token,
     );
 
@@ -390,7 +470,7 @@ export class SocketServer {
     // web-infra-dev/rspack#6633
     // when initial-chunks change, reload the page
     // e.g: ['index.js'] -> ['index.js', 'lib-polyfill.js']
-    const newInitialChunks: Set<string> = new Set();
+    const newInitialChunks = new Set<string>();
     if (stats.entrypoints) {
       for (const entrypoint of Object.values(stats.entrypoints)) {
         const { chunks } = entrypoint;
@@ -452,15 +532,7 @@ export class SocketServer {
     }
 
     if (warnings.length > 0) {
-      const warningMessages = warnings.map((item) => formatStatsError(item));
-
-      this.sockWrite(
-        {
-          type: 'warnings',
-          data: { text: warningMessages },
-        },
-        token,
-      );
+      this.sendWarning(warnings, token);
       return;
     }
 

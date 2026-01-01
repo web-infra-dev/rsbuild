@@ -4,10 +4,9 @@ import onFinished from 'on-finished';
 import type { Range, Result as RangeResult, Ranges } from 'range-parser';
 import { requireCompiledPackage } from '../../helpers/vendors';
 import { logger } from '../../logger';
-import type { InternalContext, RequestHandler } from '../../types';
+import type { InternalContext, RequestHandler, Rspack } from '../../types';
 import { HttpCode } from '../helper';
 import { getFileFromUrl } from './getFileFromUrl';
-import type { OutputFileSystem } from './index';
 import { parseTokenList } from './parseTokenList';
 
 function getEtag(stat: FSStats): string {
@@ -18,7 +17,7 @@ function getEtag(stat: FSStats): string {
 
 function createReadStreamOrReadFileSync(
   filename: string,
-  outputFileSystem: OutputFileSystem,
+  outputFileSystem: Rspack.OutputFileSystem,
   start: number,
   end: number,
 ): { bufferOrStream: Buffer | ReadStream; byteLength: number } {
@@ -106,8 +105,8 @@ const parseRangeHeaders = async (
 
 const acceptedMethods = ['GET', 'HEAD'];
 
-function sendError(res: ServerResponse, code: HttpCode): void {
-  const errorMessages: Record<HttpCode, string> = {
+function sendError(res: ServerResponse, code: number): void {
+  const errorMessages: Record<number, string> = {
     [HttpCode.BadRequest]: 'Bad Request',
     [HttpCode.Forbidden]: 'Forbidden',
     [HttpCode.NotFound]: 'Not Found',
@@ -146,9 +145,9 @@ function sendError(res: ServerResponse, code: HttpCode): void {
 export function createMiddleware(
   context: InternalContext,
   ready: (callback: () => void) => void,
-  outputFileSystem: OutputFileSystem,
+  outputFileSystem: Rspack.OutputFileSystem,
 ): RequestHandler {
-  return async function middleware(req, res, next) {
+  return async function assetsMiddleware(req, res, next) {
     async function goNext() {
       return new Promise<void>((resolve) => {
         ready(() => {
@@ -207,7 +206,7 @@ export function createMiddleware(
     function isCachable(): boolean {
       return (
         (res.statusCode >= 200 && res.statusCode < 300) ||
-        res.statusCode === 304
+        res.statusCode === HttpCode.NotModified
       );
     }
 
@@ -365,8 +364,8 @@ export function createMiddleware(
           return;
         }
 
-        if (res.statusCode === 404) {
-          res.statusCode = 200;
+        if (res.statusCode === HttpCode.NotFound) {
+          res.statusCode = HttpCode.Ok;
         }
 
         if (
@@ -378,7 +377,7 @@ export function createMiddleware(
               | undefined,
           })
         ) {
-          res.statusCode = 304;
+          res.statusCode = HttpCode.NotModified;
 
           res.removeHeader('Content-Encoding');
           res.removeHeader('Content-Language');
@@ -453,8 +452,8 @@ export function createMiddleware(
       res.setHeader('Content-Length', byteLength);
 
       if (req.method === 'HEAD') {
-        if (res.statusCode === 404) {
-          res.statusCode = 200;
+        if (res.statusCode === HttpCode.NotFound) {
+          res.statusCode = HttpCode.Ok;
         }
         res.end();
         return;

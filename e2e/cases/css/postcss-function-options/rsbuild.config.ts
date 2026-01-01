@@ -4,8 +4,8 @@ import tailwindcss from '@tailwindcss/postcss';
 export default defineConfig({
   source: {
     entry: {
-      foo: './src/foo/index.ts',
-      bar: './src/bar/index.ts',
+      foo: './src/foo/index.js',
+      bar: './src/bar/index.js',
     },
   },
   html: {
@@ -17,7 +17,9 @@ export default defineConfig({
     postcss: {
       postcssOptions(loaderContext) {
         return {
-          plugins: [tailwindcss({ base: loaderContext.context ?? __dirname })],
+          plugins: [
+            tailwindcss({ base: loaderContext.context ?? import.meta.dirname }),
+          ],
         };
       },
     },

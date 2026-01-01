@@ -182,11 +182,27 @@ export default {
 };
 ```
 
+### environments
+
+- **类型：** `Record<string, EnvironmentContext>`
+
+所有环境的上下文信息。
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    bundlerChain: (chain, { environments }) => {
+      console.log(environments);
+    },
+  },
+};
+```
+
 ### HtmlPlugin
 
 - **类型：** `typeof import('html-rspack-plugin')`
 
-对应 [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin) 插件的默认导出。
+对应 [html-rspack-plugin](https://github.com/rstackjs/html-rspack-plugin) 插件的默认导出。
 
 ```ts title="rsbuild.config.ts"
 export default {

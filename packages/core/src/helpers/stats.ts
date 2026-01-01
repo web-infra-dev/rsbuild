@@ -1,8 +1,12 @@
-import { isVerbose, logger } from '../logger';
+import { isVerbose } from '../logger';
 import type { ActionType, RsbuildStats, Rspack } from '../types';
 import { isMultiCompiler } from './compiler';
 import { formatStatsError } from './format';
 import { color } from './vendors';
+
+// Ensure the input string ends with a line break
+const ensureTrailingNewline = (input: string) =>
+  input.replace(/[ \t]+$/, '').endsWith('\n') ? input : `${input}\n`;
 
 function formatErrorMessage(errors: string[]) {
   if (!errors.length) {
@@ -12,7 +16,7 @@ function formatErrorMessage(errors: string[]) {
   const title = color.bold(
     color.red(errors.length > 1 ? 'Build errors: ' : 'Build error: '),
   );
-  const text = `${errors.join('\n\n')}\n`;
+  const text = ensureTrailingNewline(errors.join('\n\n'));
   return `${title}\n${text}`;
 }
 
@@ -58,49 +62,20 @@ export const getStatsWarnings = ({
   return [];
 };
 
-export const getStatsAssetsOptions = (): Rspack.StatsOptions => ({
-  assets: true,
-  cachedAssets: true,
-  groupAssetsByInfo: false,
-  groupAssetsByPath: false,
-  groupAssetsByChunk: false,
-  groupAssetsByExtension: false,
-  groupAssetsByEmitStatus: false,
-});
-
-export type RsbuildAsset = {
-  /**
-   * The name of the asset.
-   * @example 'index.html', 'static/js/index.[hash].js'
-   */
-  name: string;
-  /**
-   * The size of the asset in bytes.
-   */
-  size: number;
-};
-
-export const getAssetsFromStats = (stats: Rspack.Stats): RsbuildAsset[] => {
-  return Object.entries(stats.compilation.assets).map(([name, value]) => ({
-    name,
-    size: value.size(),
-  }));
-};
-
 function getStatsOptions(
   compiler: Rspack.Compiler | Rspack.MultiCompiler,
   action?: ActionType,
 ): Rspack.StatsOptions {
   let defaultOptions: Rspack.StatsOptions = {
     all: false,
-    // for displaying the build time
-    timings: true,
     // for displaying the build errors
     errors: true,
     // for displaying the build warnings
     warnings: true,
     // for displaying the module trace when build failed
     moduleTrace: true,
+    // for displaying the error stack in verbose mode
+    errorStack: isVerbose(),
   };
 
   if (action === 'dev') {
@@ -147,16 +122,14 @@ export function getRsbuildStats(
 export function formatStats(
   stats: RsbuildStats,
   hasErrors: boolean,
+  root: string,
 ): {
   message?: string;
   level?: string;
 } {
-  // display verbose messages in debug mode
-  const verbose = logger.level === 'verbose';
-
   if (hasErrors) {
     const errors = getStatsErrors(stats);
-    const errorMessages = errors.map((item) => formatStatsError(item, verbose));
+    const errorMessages = errors.map((item) => formatStatsError(item, root));
     return {
       message: formatErrorMessage(errorMessages),
       level: 'error',
@@ -165,7 +138,7 @@ export function formatStats(
 
   const warnings = getStatsWarnings(stats);
   const warningMessages = warnings.map((item) =>
-    formatStatsError(item, verbose),
+    formatStatsError(item, root, 'warning'),
   );
 
   if (warningMessages.length) {
@@ -176,7 +149,7 @@ export function formatStats(
     );
 
     return {
-      message: `${title}${warningMessages.join('\n\n')}\n`,
+      message: ensureTrailingNewline(`${title}${warningMessages.join('\n\n')}`),
       level: 'warning',
     };
   }

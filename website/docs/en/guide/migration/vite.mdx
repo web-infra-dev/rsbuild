@@ -1,10 +1,10 @@
 # Vite
 
-This chapter introduces how to migrate a Vite project to Rsbuild.
+This guide explains how to migrate a Vite project to Rsbuild.
 
 ## Installing dependencies
 
-First, you need to replace the npm dependencies of Vite with Rsbuild's dependencies.
+First, replace Vite's npm dependencies with Rsbuild's equivalents.
 
 import { PackageManagerTabs } from '@theme';
 
@@ -18,7 +18,7 @@ import { PackageManagerTabs } from '@theme';
 
 ## Updating npm scripts
 
-Next, you need to update the npm scripts in your package.json to use Rsbuild's CLI commands.
+Next, update the npm scripts in your package.json to run Rsbuild CLI commands.
 
 ```json title="package.json"
 {
@@ -35,7 +35,7 @@ Next, you need to update the npm scripts in your package.json to use Rsbuild's C
 
 ## Create configuration file
 
-Create a Rsbuild configuration file `rsbuild.config.ts` in the same directory as package.json, and add the following content:
+Create an Rsbuild configuration file named `rsbuild.config.ts` alongside package.json, and add the following content:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -49,7 +49,7 @@ export default defineConfig({
 
 The default build entry points for Rsbuild and Vite are different. Vite uses `index.html` as the default entry, while Rsbuild uses `src/index.js`.
 
-When migrating from Vite to Rsbuild, you can use Rsbuild's [source.entry](/config/source/entry) to set the build entry and [html.template](/config/html/template) to set the template.
+When migrating from Vite to Rsbuild, use Rsbuild's [source.entry](/config/source/entry) to set the build entry and [html.template](/config/html/template) to set the template.
 
 Using a newly created Vite project as an example, first delete the `<script>` tags from `index.html`:
 
@@ -58,7 +58,7 @@ Using a newly created Vite project as an example, first delete the `<script>` ta
 <script type="module" src="/src/main.ts"></script>
 ```
 
-Then add the following config.
+Then add the following configuration:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -73,36 +73,36 @@ export default {
 };
 ```
 
-Rsbuild will automatically inject the `<script>` tags into the generated HTML files during the build process.
+Rsbuild automatically injects the `<script>` tags into the generated HTML files during the build.
 
 ## Migrating plugins
 
 Most common Vite plugins can be easily migrated to Rsbuild plugins, such as:
 
-| Vite                                                                                   | Rsbuild                                                                                         |
-| -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| [@vitejs/plugin-react](https://npmjs.com/package/@vitejs/plugin-react)                 | [@rsbuild/plugin-react](/plugins/list/plugin-react)                                             |
-| [@vitejs/plugin-react-swc](https://npmjs.com/package/@vitejs/plugin-react-swc)         | [@rsbuild/plugin-react](/plugins/list/plugin-react)                                             |
-| [@vitejs/plugin-vue](https://npmjs.com/package/@vitejs/plugin-vue)                     | [@rsbuild/plugin-vue](/plugins/list/plugin-vue)                                                 |
-| [@vitejs/plugin-vue2](https://npmjs.com/package/@vitejs/plugin-vue2)                   | [@rsbuild/plugin-vue2](https://github.com/rspack-contrib/rsbuild-plugin-vue2)                   |
-| [@vitejs/plugin-vue-jsx](https://npmjs.com/package/@vitejs/plugin-vue-jsx)             | [@rsbuild/plugin-vue-jsx](https://github.com/rspack-contrib/rsbuild-plugin-vue-jsx)             |
-| [@vitejs/plugin-vue2-jsx](https://npmjs.com/package/@vitejs/plugin-vue2-jsx)           | [@rsbuild/plugin-vue2-jsx](https://github.com/rspack-contrib/rsbuild-plugin-vue2-jsx)           |
-| [@vitejs/plugin-basic-ssl](https://npmjs.com/package/@vitejs/plugin-basic-ssl)         | [@rsbuild/plugin-basic-ssl](https://github.com/rspack-contrib/rsbuild-plugin-basic-ssl)         |
-| [@vitejs/plugin-legacy](https://npmjs.com/package/@vitejs/plugin-legacy)               | No need to use, see [Browser Compatibility](/guide/advanced/browser-compatibility) for details  |
-| [@sveltejs/vite-plugin-svelte](https://npmjs.com/package/@sveltejs/vite-plugin-svelte) | [@rsbuild/plugin-svelte](/plugins/list/plugin-svelte)                                           |
-| [vite-plugin-svgr](https://npmjs.com/package/vite-plugin-svgr)                         | [@rsbuild/plugin-svgr](/plugins/list/plugin-svgr)                                               |
-| [vite-plugin-checker](https://npmjs.com/package/vite-plugin-checker)                   | [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check)       |
-| [vite-plugin-eslint](https://npmjs.com/package/vite-plugin-eslint)                     | [@rsbuild/plugin-eslint](https://github.com/rspack-contrib/rsbuild-plugin-eslint)               |
-| [vite-plugin-static-copy](https://npmjs.com/package/vite-plugin-static-copy)           | [output.copy](/config/output/copy)                                                              |
-| [vite-plugin-node-polyfills](https://npmjs.com/package/vite-plugin-node-polyfills)     | [@rsbuild/plugin-node-polyfill](https://github.com/rspack-contrib/rsbuild-plugin-node-polyfill) |
-| [vite-plugin-solid](https://npmjs.com/package/vite-plugin-solid)                       | [@rsbuild/plugin-solid](/plugins/list/plugin-solid)                                             |
-| [@preact/preset-vite](https://npmjs.com/package/@preact/preset-vite)                   | [@rsbuild/plugin-preact](/plugins/list/plugin-preact)                                           |
+| Vite                                                                                   | Rsbuild                                                                                        |
+| -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| [@vitejs/plugin-react](https://npmjs.com/package/@vitejs/plugin-react)                 | [@rsbuild/plugin-react](/plugins/list/plugin-react)                                            |
+| [@vitejs/plugin-react-swc](https://npmjs.com/package/@vitejs/plugin-react-swc)         | [@rsbuild/plugin-react](/plugins/list/plugin-react)                                            |
+| [@vitejs/plugin-vue](https://npmjs.com/package/@vitejs/plugin-vue)                     | [@rsbuild/plugin-vue](/plugins/list/plugin-vue)                                                |
+| [@vitejs/plugin-vue2](https://npmjs.com/package/@vitejs/plugin-vue2)                   | [@rsbuild/plugin-vue2](https://github.com/rstackjs/rsbuild-plugin-vue2)                        |
+| [@vitejs/plugin-vue-jsx](https://npmjs.com/package/@vitejs/plugin-vue-jsx)             | [@rsbuild/plugin-vue-jsx](https://github.com/rstackjs/rsbuild-plugin-vue-jsx)                  |
+| [@vitejs/plugin-vue2-jsx](https://npmjs.com/package/@vitejs/plugin-vue2-jsx)           | [@rsbuild/plugin-vue2-jsx](https://github.com/rstackjs/rsbuild-plugin-vue2-jsx)                |
+| [@vitejs/plugin-basic-ssl](https://npmjs.com/package/@vitejs/plugin-basic-ssl)         | [@rsbuild/plugin-basic-ssl](https://github.com/rstackjs/rsbuild-plugin-basic-ssl)              |
+| [@vitejs/plugin-legacy](https://npmjs.com/package/@vitejs/plugin-legacy)               | No need to use, see [Browser Compatibility](/guide/advanced/browser-compatibility) for details |
+| [@sveltejs/vite-plugin-svelte](https://npmjs.com/package/@sveltejs/vite-plugin-svelte) | [@rsbuild/plugin-svelte](/plugins/list/plugin-svelte)                                          |
+| [vite-plugin-svgr](https://npmjs.com/package/vite-plugin-svgr)                         | [@rsbuild/plugin-svgr](/plugins/list/plugin-svgr)                                              |
+| [vite-plugin-checker](https://npmjs.com/package/vite-plugin-checker)                   | [@rsbuild/plugin-type-check](https://github.com/rstackjs/rsbuild-plugin-type-check)            |
+| [vite-plugin-eslint](https://npmjs.com/package/vite-plugin-eslint)                     | [@rsbuild/plugin-eslint](https://github.com/rstackjs/rsbuild-plugin-eslint)                    |
+| [vite-plugin-static-copy](https://npmjs.com/package/vite-plugin-static-copy)           | [output.copy](/config/output/copy)                                                             |
+| [vite-plugin-node-polyfills](https://npmjs.com/package/vite-plugin-node-polyfills)     | [@rsbuild/plugin-node-polyfill](https://github.com/rstackjs/rsbuild-plugin-node-polyfill)      |
+| [vite-plugin-solid](https://npmjs.com/package/vite-plugin-solid)                       | [@rsbuild/plugin-solid](/plugins/list/plugin-solid)                                            |
+| [@preact/preset-vite](https://npmjs.com/package/@preact/preset-vite)                   | [@rsbuild/plugin-preact](/plugins/list/plugin-preact)                                          |
 
 You can refer to [Plugin List](/plugins/list/index) to learn more about available plugins.
 
 ## Config migration
 
-Here is the corresponding Rsbuild configuration for Vite configuration:
+Here is the corresponding Rsbuild configuration for each Vite option:
 
 | Vite                                  | Rsbuild                                                          |
 | ------------------------------------- | ---------------------------------------------------------------- |
@@ -116,6 +116,7 @@ Here is the corresponding Rsbuild configuration for Vite configuration:
 | logLevel                              | [logLevel](/config/log-level)                                    |
 | cacheDir                              | [buildCache](/config/performance/build-cache)                    |
 | publicDir                             | [server.publicDir](/config/server/public-dir)                    |
+| customLogger                          | [Custom logger](/api/javascript-api/core#custom-logger)          |
 | assetsInclude                         | [source.assetsInclude](/config/source/assets-include)            |
 | resolve.alias                         | [resolve.alias](/config/resolve/alias)                           |
 | resolve.dedupe                        | [resolve.dedupe](/config/resolve/dedupe)                         |
@@ -157,13 +158,13 @@ Here is the corresponding Rsbuild configuration for Vite configuration:
 
 Notes:
 
-- The above table does not cover all configurations of Vite, feel free to add more.
+- The table above doesn't cover every Vite option; feel free to add more.
 
 ## Environment variables
 
 Vite injects environment variables starting with `VITE_` into the client code by default, while Rsbuild injects environment variables starting with `PUBLIC_` by default (see [public variables](/guide/advanced/env-vars#public-variables)).
 
-To be compatible with Vite's behavior, you can manually call Rsbuild's [loadEnv](/api/javascript-api/core#loadenv) method to read environment variables starting with `VITE_`, and inject them into the client code through the [source.define](/config/source/define) config.
+To match Vite's behavior, you can manually call Rsbuild's [loadEnv](/api/javascript-api/core#loadenv) method to read environment variables starting with `VITE_`, and inject them into the client code through the [source.define](/config/source/define) config.
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig, loadEnv } from '@rsbuild/core';
@@ -266,12 +267,12 @@ See [Vite plugin](/guide/migration/vite-plugin) to learn how to migrate Vite plu
 
 ## Validating results
 
-After completing the above steps, you have completed the basic migration from Vite to Rsbuild. You can now run the `npm run dev` command to try starting the dev server.
+After completing the steps above, the basic migration from Vite to Rsbuild is complete. You can now run the `npm run dev` command to try starting the dev server.
 
-If you encounter any issues during the build process, please debug according to the error log, or check the Vite configuration to see if there are any necessary configurations that have not been migrated to Rsbuild.
+If you encounter issues during the build process, debug using the error log, or check the Vite configuration for any settings that haven't been migrated to Rsbuild.
 
 ## Contents supplement
 
-The current document only covers part of the migration process. If you find suitable content to add, feel free to contribute to the documentation via pull request 🤝.
+This document covers only part of the migration process. If you have content to add, feel free to contribute via a pull request 🤝.
 
 > The documentation for rsbuild can be found in the [rsbuild/website](https://github.com/web-infra-dev/rsbuild/tree/main/website) directory.

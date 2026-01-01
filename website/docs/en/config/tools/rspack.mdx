@@ -222,7 +222,7 @@ export default {
 
 - **Type:** [EnvironmentContext](/api/javascript-api/environment-api#environment-context)
 
-Context information about the current environment.
+Context information for the current environment.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -234,11 +234,27 @@ export default {
 };
 ```
 
+### environments
+
+- **Type:** `Record<string, EnvironmentContext>`
+
+Context information for all environments.
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: (chain, { environments }) => {
+      console.log(environments);
+    },
+  },
+};
+```
+
 ### HtmlPlugin
 
 - **Type:** `typeof import('html-rspack-plugin')`
 
-The default export of [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin).
+The default export of [html-rspack-plugin](https://github.com/rstackjs/html-rspack-plugin).
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -254,7 +270,7 @@ export default {
 
 - **Type:** `(rules: RuleSetRule | RuleSetRule[]) => void`
 
-Add additional [Rspack rules](https://rspack.rs/config/module#modulerules) to the head of the internal Rspack module rules array.
+Add additional [Rspack rules](https://rspack.rs/config/module-rules) to the head of the internal Rspack module rules array.
 
 It should be noted that Rspack loaders will be executed in right-to-left order. If you want the loader you added to be executed before other loaders (Normal Phase), you should use [appendRules](#appendrules) to add the rule to the end.
 
@@ -290,7 +306,7 @@ export default {
 
 - **Type:** `(rules: RuleSetRule | RuleSetRule[]) => void`
 
-Add additional [Rspack rules](https://rspack.rs/config/module#modulerules) to the end of the internal Rspack module rules array.
+Add additional [Rspack rules](https://rspack.rs/config/module-rules) to the end of the internal Rspack module rules array.
 
 For example:
 

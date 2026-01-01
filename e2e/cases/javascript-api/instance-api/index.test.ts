@@ -5,7 +5,7 @@ rspackTest(
   'should allow to call `modifyRsbuildConfig` via Rsbuild instance',
   async () => {
     const rsbuild = await createRsbuild({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
     });
     rsbuild.modifyRsbuildConfig((config) => {
       config.mode = 'none';
@@ -20,7 +20,7 @@ rspackTest(
   'should allow to call `modifyEnvironmentConfig` via Rsbuild instance',
   async () => {
     const rsbuild = await createRsbuild({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
     });
     rsbuild.modifyRsbuildConfig((config) => {
       config.mode = 'development';
@@ -37,7 +37,7 @@ rspackTest(
 
 rspackTest('should allow to call `expose` via Rsbuild instance', async () => {
   const rsbuild = await createRsbuild({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
   });
 
   rsbuild.expose('test', {

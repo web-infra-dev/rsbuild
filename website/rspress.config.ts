@@ -81,7 +81,7 @@ export default defineConfig({
         },
         {
           from: '/plugins/list/plugin-assets-retry',
-          to: 'https://github.com/rspack-contrib/rsbuild-plugin-assets-retry',
+          to: 'https://github.com/rstackjs/rsbuild-plugin-assets-retry',
         },
         {
           from: '/guide/basic/css-usage',
@@ -120,8 +120,7 @@ export default defineConfig({
   ],
   lang: 'en',
   title: 'Rsbuild',
-  description:
-    'Rsbuild is a high-performance build tool powered by Rspack. It provides out-of-the-box setup for enjoyable development experience.',
+  description: 'Rsbuild is a high-performance build tool powered by Rspack.',
   icon: 'https://assets.rspack.rs/rsbuild/favicon-128x128.png',
   logo: {
     light: 'https://assets.rspack.rs/rsbuild/navbar-logo-light.png',
@@ -168,29 +167,20 @@ export default defineConfig({
         content: 'https://bsky.app/profile/rspack.rs',
       },
     ],
+    editLink: {
+      docRepoBaseUrl:
+        'https://github.com/web-infra-dev/rsbuild/tree/main/website/docs',
+    },
     locales: [
       {
         lang: 'en',
         label: 'English',
         description,
-        editLink: {
-          docRepoBaseUrl:
-            'https://github.com/web-infra-dev/rsbuild/tree/main/website/docs',
-          text: '📝 Edit this page on GitHub',
-        },
       },
       {
         lang: 'zh',
         label: '简体中文',
-        outlineTitle: '目录',
-        prevPageText: '上一页',
-        nextPageText: '下一页',
         description: '由 Rspack 驱动的构建工具',
-        editLink: {
-          docRepoBaseUrl:
-            'https://github.com/web-infra-dev/rsbuild/tree/main/website/docs',
-          text: '📝 在 GitHub 上编辑此页',
-        },
       },
     ],
   },

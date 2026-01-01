@@ -1,6 +1,6 @@
 import { join } from 'node:path';
 import { expect, rspackTest } from '@e2e/helper';
-import { copy, remove } from 'fs-extra';
+import fse from 'fs-extra';
 
 rspackTest(
   'should recover after a missing module is restored',
@@ -22,11 +22,14 @@ rspackTest(
     await button.click();
     await expect(button).toHaveText('count: 1');
 
-    await remove(join(tempSrc, 'Button.jsx'));
+    await fse.remove(join(tempSrc, 'Button.jsx'));
     await logHelper.expectLog(`Can't resolve './Button'`);
 
     logHelper.clearLogs();
-    await copy(join(__dirname, 'src/Button.jsx'), join(tempSrc, 'Button.jsx'));
+    await fse.copy(
+      join(import.meta.dirname, 'src/Button.jsx'),
+      join(tempSrc, 'Button.jsx'),
+    );
     await logHelper.expectBuildEnd();
     await expect(page.locator('#button')).toHaveText('count: 0');
   },

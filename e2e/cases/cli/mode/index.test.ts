@@ -6,7 +6,9 @@ rspackTest(
   async ({ execCliSync }) => {
     execCliSync('build --mode development');
 
-    const outputs = await readDirContents(path.join(__dirname, 'dist'));
+    const outputs = await readDirContents(
+      path.join(import.meta.dirname, 'dist'),
+    );
     const outputFiles = Object.keys(outputs);
 
     // no filename hash in dev
@@ -24,7 +26,9 @@ rspackTest(
   async ({ execCliSync }) => {
     execCliSync('build -m development');
 
-    const outputs = await readDirContents(path.join(__dirname, 'dist'));
+    const outputs = await readDirContents(
+      path.join(import.meta.dirname, 'dist'),
+    );
     const outputFiles = Object.keys(outputs);
 
     // no filename hash in dev

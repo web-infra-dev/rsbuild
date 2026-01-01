@@ -15,7 +15,7 @@ rspackTest(
     );
     const web2JsMapPath = findFile(files, 'web2/static/js/index.js.map');
     const sourceContent = readFileSync(
-      join(__dirname, './src/index.js'),
+      join(import.meta.dirname, './src/index.js'),
       'utf-8',
     );
 

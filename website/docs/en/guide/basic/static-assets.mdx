@@ -3,7 +3,7 @@
 Rsbuild supports importing static assets, including images, fonts, audio, and video.
 
 :::tip What are static assets
-Static assets are files that are part of a web application and don't change during use. Examples include images, fonts, media files, stylesheets, and JavaScript files. These assets are typically stored on a web server or CDN and delivered to the user's browser when they access the application. Since they don't change, static assets can be cached by the browser, improving application performance.
+Static assets are files that are part of a web application and don't change during use. Examples include images, fonts, media files, stylesheets, and JavaScript files. These assets are typically stored on a web server or CDN and delivered to the user's browser when they access the application. Because they don't change, static assets can be cached by the browser, improving application performance.
 :::
 
 ## Asset formats
@@ -56,7 +56,7 @@ console.log(logo); // "/static/logo.[hash].png"
 export default () => <img src={logo} />;
 ```
 
-When using `new URL()` to reference `.js` or `.ts` files, they are treated as URL assets and aren't processed by Rsbuild's built-in SWC loader.
+When using `new URL()` to reference `.js` or `.ts` files, they're treated as URL assets and aren't processed by Rsbuild's built-in SWC loader.
 
 ```tsx
 // foo.ts will remain the original content and be output to the dist directory
@@ -65,7 +65,7 @@ const fooTs = new URL('./foo.ts', import.meta.url).href;
 console.log(fooTs); // "/static/foo.[hash].ts"
 ```
 
-Similarly, when using `new URL()` to reference `.css` or `.scss` files, they are treated as URL assets and aren't processed by Rsbuild's built-in CSS loaders.
+Similarly, when using `new URL()` to reference `.css` or `.scss` files, they're treated as URL assets and aren't processed by Rsbuild's built-in CSS loaders.
 
 ```tsx
 // foo.css will remain the original content and be output to the dist directory

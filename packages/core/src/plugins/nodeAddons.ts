@@ -3,20 +3,8 @@ import { color } from '../helpers';
 import type { RsbuildPlugin } from '../types';
 
 const getFilename = (resourcePath: string) => {
-  let basename = '';
-
-  if (resourcePath) {
-    const parsed = path.parse(resourcePath);
-    if (parsed.dir) {
-      basename = parsed.name;
-    }
-  }
-
-  if (basename) {
-    return `${basename}.node`;
-  }
-
-  return null;
+  const name = resourcePath && path.parse(resourcePath).name;
+  return name ? `${name}.node` : null;
 };
 
 export const pluginNodeAddons = (): RsbuildPlugin => ({
@@ -26,22 +14,51 @@ export const pluginNodeAddons = (): RsbuildPlugin => ({
     api.transform(
       { test: /\.node$/, targets: ['node'], raw: true },
       ({ code, emitFile, resourcePath }) => {
-        const name = getFilename(resourcePath);
+        const filename = getFilename(resourcePath);
 
-        if (name === null) {
+        if (filename === null) {
           throw new Error(
             `${color.dim('[rsbuild:node-addons]')} Failed to load Node.js addon: ${color.yellow(resourcePath)}`,
           );
         }
 
-        emitFile(name, code);
+        emitFile(filename, code);
 
+        const config = api.getNormalizedConfig();
+
+        const handleErrorSnippet = `throw new Error('Failed to load Node.js addon: "${filename}"', {
+    cause: error,
+  });`;
+
+        if (config.output.module) {
+          // ESM output
+          return `
+import path from "node:path";
+import { createRequire } from "node:module";
+import { fileURLToPath } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const require = createRequire(import.meta.url);
+
+let native;
+try {
+  native = require(path.join(__dirname, "${filename}"));
+} catch (error) {
+  ${handleErrorSnippet}
+}
+
+export default native;
+`;
+        }
+
+        // CJS output
         return `
 try {
-const path = require("path");
-process.dlopen(module, path.join(__dirname, "${name}"));
+  const path = __non_webpack_require__("node:path");
+  module.exports = __non_webpack_require__(path.join(__dirname, "${filename}"));
 } catch (error) {
-throw new Error('Failed to load Node.js addon: "${name}"\\n' + error);
+  ${handleErrorSnippet}
 }
 `;
       },

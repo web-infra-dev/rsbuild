@@ -1,23 +1,23 @@
 import { join } from 'node:path';
 
 import { expect, test } from '@e2e/helper';
-import { outputFileSync } from 'fs-extra';
+import fse from 'fs-extra';
 
 function writeDuplicatedPackage(flag: string) {
-  const fooPath = join(__dirname, 'node_modules', 'foo');
-  outputFileSync(
+  const fooPath = join(import.meta.dirname, 'node_modules', 'foo');
+  fse.outputFileSync(
     join(fooPath, 'package.json'),
     JSON.stringify({ name: 'foo', version: '1.0.0' }),
   );
-  outputFileSync(
+  fse.outputFileSync(
     join(fooPath, 'index.js'),
     'import React from "react";export default React;',
   );
-  outputFileSync(
+  fse.outputFileSync(
     join(fooPath, 'node_modules', 'react', 'package.json'),
     JSON.stringify({ name: 'react', version: '1.0.0' }),
   );
-  outputFileSync(
+  fse.outputFileSync(
     join(fooPath, 'node_modules', 'react', 'index.js'),
     `console.log("${flag}");`,
   );

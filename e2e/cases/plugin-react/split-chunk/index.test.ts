@@ -34,6 +34,25 @@ test('should not split react chunks when strategy is `all-in-one`', async ({
   expect(filesNames.find((file) => file.includes('lib-router'))).toBeFalsy();
 });
 
+test('should not split react chunks when splitChunks is disabled', async ({
+  build,
+}) => {
+  const rsbuild = await build({
+    config: {
+      plugins: [
+        pluginReact({
+          splitChunks: false,
+        }),
+      ],
+    },
+  });
+
+  const files = rsbuild.getDistFiles();
+  const filesNames = Object.keys(files);
+  expect(filesNames.find((file) => file.includes('lib-react'))).toBeFalsy();
+  expect(filesNames.find((file) => file.includes('lib-router'))).toBeFalsy();
+});
+
 test('should not override user defined cache groups', async ({ build }) => {
   const rsbuild = await build({
     config: {

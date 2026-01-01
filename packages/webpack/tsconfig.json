@@ -1,0 +1,14 @@
+{
+  "extends": "@rsbuild/config/tsconfig-node16",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "src",
+    "composite": true
+  },
+  "references": [
+    {
+      "path": "../core"
+    }
+  ],
+  "include": ["src"]
+}

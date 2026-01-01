@@ -11,14 +11,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "inlineConst": false,
-    "inlineEnum": false,
     "rspackFuture": {
       "bundlerInfo": {
         "force": false,
       },
     },
-    "typeReexportsPresence": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -32,7 +29,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "parser": {
       "javascript": {
         "exportsPresence": "error",
-        "inlineConst": false,
         "typeReexportsPresence": "tolerant",
       },
     },
@@ -148,6 +144,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           {
             "loader": "builtin:swc-loader",
             "options": {
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
+              },
               "env": {
                 "mode": undefined,
                 "targets": [
@@ -175,12 +175,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
-                },
-              },
-              "rspackExperiments": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
                 },
               },
             },
@@ -206,6 +200,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           {
             "loader": "builtin:swc-loader",
             "options": {
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
+              },
               "env": {
                 "mode": undefined,
                 "targets": [
@@ -233,12 +231,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
-                },
-              },
-              "rspackExperiments": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
                 },
               },
             },
@@ -448,7 +440,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "inject": "head",
         "meta": {
           "charset": {
-            "charset": "UTF-8",
+            "charset": "utf-8",
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
@@ -456,7 +448,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "scriptLoading": "defer",
         "showErrors": true,
         "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
+        "templateContent": "<!DOCTYPE html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
@@ -466,6 +458,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     },
     RsbuildHtmlPlugin {
       "getExtraData": [Function],
+      "getHTMLPlugin": [Function],
       "name": "RsbuildHtmlPlugin",
     },
     DefinePlugin {
@@ -535,14 +528,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "inlineConst": true,
-    "inlineEnum": true,
     "rspackFuture": {
       "bundlerInfo": {
         "force": false,
       },
     },
-    "typeReexportsPresence": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -556,7 +546,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "parser": {
       "javascript": {
         "exportsPresence": "error",
-        "inlineConst": true,
         "typeReexportsPresence": "tolerant",
       },
     },
@@ -672,6 +661,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           {
             "loader": "builtin:swc-loader",
             "options": {
+              "collectTypeScriptInfo": {
+                "exportedEnum": true,
+                "typeExports": true,
+              },
               "env": {
                 "mode": undefined,
                 "targets": [
@@ -699,12 +692,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
-                },
-              },
-              "rspackExperiments": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": true,
-                  "typeExports": true,
                 },
               },
             },
@@ -730,6 +717,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           {
             "loader": "builtin:swc-loader",
             "options": {
+              "collectTypeScriptInfo": {
+                "exportedEnum": true,
+                "typeExports": true,
+              },
               "env": {
                 "mode": undefined,
                 "targets": [
@@ -757,12 +748,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
-                },
-              },
-              "rspackExperiments": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": true,
-                  "typeExports": true,
                 },
               },
             },
@@ -962,7 +947,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   "output": {
     "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
     "chunkFilename": "static/js/async/[name].[contenthash:8].js",
-    "devtoolModuleFilenameTemplate": [Function],
+    "devtoolModuleFilenameTemplate": "[relative-resource-path]",
     "filename": "static/js/[name].[contenthash:8].js",
     "hashFunction": "xxhash64",
     "path": "<ROOT>/packages/core/tests/dist",
@@ -1001,7 +986,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "inject": "head",
         "meta": {
           "charset": {
-            "charset": "UTF-8",
+            "charset": "utf-8",
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
@@ -1009,7 +994,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "scriptLoading": "defer",
         "showErrors": true,
         "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
+        "templateContent": "<!DOCTYPE html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
@@ -1019,6 +1004,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     },
     RsbuildHtmlPlugin {
       "getExtraData": [Function],
+      "getHTMLPlugin": [Function],
       "name": "RsbuildHtmlPlugin",
     },
     DefinePlugin {
@@ -1083,14 +1069,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "devtool": "cheap-module-source-map",
   "experiments": {
     "asyncWebAssembly": true,
-    "inlineConst": false,
-    "inlineEnum": false,
     "rspackFuture": {
       "bundlerInfo": {
         "force": false,
       },
     },
-    "typeReexportsPresence": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -1100,7 +1083,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "parser": {
       "javascript": {
         "exportsPresence": "error",
-        "inlineConst": false,
         "typeReexportsPresence": "tolerant",
       },
     },
@@ -1161,9 +1143,18 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
               "exportType": "string",
-              "importLoaders": 0,
+              "importLoaders": 1,
               "modules": false,
               "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "node >= 16",
+              ],
             },
           },
         ],
@@ -1192,6 +1183,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           {
             "loader": "builtin:swc-loader",
             "options": {
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
+              },
               "env": {
                 "targets": [
                   "node >= 16",
@@ -1215,12 +1210,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
-                },
-              },
-              "rspackExperiments": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
                 },
               },
             },
@@ -1246,6 +1235,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           {
             "loader": "builtin:swc-loader",
             "options": {
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
+              },
               "env": {
                 "targets": [
                   "node >= 16",
@@ -1269,12 +1262,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
-                },
-              },
-              "rspackExperiments": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
                 },
               },
             },
@@ -1444,7 +1431,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "output": {
     "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
     "chunkFilename": "[name].js",
-    "devtoolModuleFilenameTemplate": [Function],
+    "devtoolModuleFilenameTemplate": "[relative-resource-path]",
     "filename": "[name].js",
     "hashFunction": "xxhash64",
     "library": {
@@ -1521,14 +1508,11 @@ exports[`tools.rspack > should match snapshot 1`] = `
   "devtool": "cheap-module-source-map",
   "experiments": {
     "asyncWebAssembly": true,
-    "inlineConst": false,
-    "inlineEnum": false,
     "rspackFuture": {
       "bundlerInfo": {
         "force": false,
       },
     },
-    "typeReexportsPresence": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -1542,7 +1526,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
     "parser": {
       "javascript": {
         "exportsPresence": "error",
-        "inlineConst": false,
         "typeReexportsPresence": "tolerant",
       },
     },
@@ -1666,6 +1649,10 @@ exports[`tools.rspack > should match snapshot 1`] = `
           {
             "loader": "builtin:swc-loader",
             "options": {
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
+              },
               "env": {
                 "mode": undefined,
                 "targets": [
@@ -1693,12 +1680,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
-                },
-              },
-              "rspackExperiments": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
                 },
               },
             },
@@ -1724,6 +1705,10 @@ exports[`tools.rspack > should match snapshot 1`] = `
           {
             "loader": "builtin:swc-loader",
             "options": {
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
+              },
               "env": {
                 "mode": undefined,
                 "targets": [
@@ -1751,12 +1736,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
-                },
-              },
-              "rspackExperiments": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
                 },
               },
             },

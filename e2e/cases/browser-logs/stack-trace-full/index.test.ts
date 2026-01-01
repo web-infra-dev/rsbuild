@@ -4,7 +4,7 @@ import { rspackTest } from '@e2e/helper';
 const EXPECTED_LOG = `error   [browser] Uncaught Error: foo
     at foo (src/foo.js:2:0)
     at src/index.js:3:0
-    at __webpack_require__ (http://localhost`;
+    at __webpack_require__`;
 
 rspackTest('should display formatted full stack trace', async ({ dev }) => {
   const rsbuild = await dev();

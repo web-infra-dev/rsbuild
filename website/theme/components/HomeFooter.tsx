@@ -1,5 +1,5 @@
 import { useI18n, useLang } from '@rspress/core/runtime';
-import { Link } from '@rspress/core/theme';
+import { Link } from '@theme';
 import { memo } from 'react';
 import styles from './HomeFooter.module.scss';
 
@@ -97,7 +97,7 @@ function useFooterData() {
         },
         {
           title: 'Awesome Rstack',
-          link: 'https://github.com/web-infra-dev/awesome-rstack',
+          link: 'https://github.com/rstackjs/awesome-rstack',
         },
       ],
     },

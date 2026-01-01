@@ -262,7 +262,9 @@ console.log(webStats.toJson({ all: false }));
 
 ### loadBundle
 
-在服务端加载并执行构建产物。该方法会返回入口模块导出的内容。
+用于在服务端加载并执行构建产物。调用该方法后，会返回指定入口模块导出的内容，通常用于在服务端环境中运行由 Rsbuild 构建生成的产物。
+
+`loadBundle` 会在构建完成且 [onAfterDevCompile](/plugins/dev/hooks#onafterdevcompile) hook 执行结束后返回结果。因此，无法在 `onAfterDevCompile` hook 内调用 `loadBundle`。
 
 - **类型：**
 

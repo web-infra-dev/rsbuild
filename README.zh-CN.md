@@ -7,7 +7,7 @@
 <p>
   <a href="https://discord.gg/XsaKEEk4mW"><img src="https://img.shields.io/badge/chat-discord-blue?style=flat-square&logo=discord&colorA=564341&colorB=EDED91" alt="discord channel" /></a>
   <a href="https://npmjs.com/package/@rsbuild/core"><img src="https://img.shields.io/npm/v/@rsbuild/core?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" /></a>
-  <a href="https://npmcharts.com/compare/@rsbuild/core?minimal=true"><img src="https://img.shields.io/npm/dm/@rsbuild/core.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="downloads" /></a>
+  <a href="https://npmcharts.com/compare/@rsbuild/core"><img src="https://img.shields.io/npm/dm/@rsbuild/core.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="downloads" /></a>
   <a href="https://nodejs.org/en/about/previous-releases"><img src="https://img.shields.io/node/v/@rsbuild/core.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="node version"></a>
   <a href="https://github.com/web-infra-dev/rsbuild/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="license" /></a>
   <a href="https://deepwiki.com/web-infra-dev/rsbuild"><img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki" /></a>
@@ -27,29 +27,7 @@ Rsbuild 提供 [丰富的构建功能](https://rsbuild.rs/zh/guide/start/feature
 
 ![benchmark](https://assets.rspack.rs/rsbuild/assets/benchmark-latest.jpeg)
 
-> 📊 Benchmark 结果来自 [build-tools-performance](https://github.com/rspack-contrib/build-tools-performance)。
-
-## 💡 对比其他工具
-
-Rsbuild 是与 [Vite](https://vitejs.dev/)、[Create React App](https://github.com/facebook/create-react-app) 或 [Vue CLI](https://github.com/vuejs/vue-cli) 相似的构建工具，它们都默认包含了开发服务器、命令行工具和合理的构建配置，以此来提供开箱即用的体验。
-
-![](https://assets.rspack.rs/rsbuild/assets/rsbuild-1-0-build-tools.png)
-
-### CRA / Vue CLI
-
-你可以将 Rsbuild 理解为一个现代化的 Create React App 或 Vue CLI，它与这些工具的主要区别在于：
-
-- 底层的打包工具由 webpack 替换为 Rspack，提供 5 ~ 10 倍的构建性能。
-- 与前端 UI 框架解耦，并通过 [插件](https://rsbuild.rs/zh/plugins/list/) 来支持所有 UI 框架，包括 React、Vue、Svelte、Solid 等。
-- 提供更好的扩展性，你可以通过 [配置](https://rsbuild.rs/zh/config/)、[插件 API](https://rsbuild.rs/zh/plugins/dev/) 和 [JavaScript API](https://rsbuild.rs/zh/api/start/) 来灵活地扩展 Rsbuild。
-
-### Vite
-
-Rsbuild 与 Vite 有许多相似之处，它们皆致力于提升前端的开发体验。其主要区别在于：
-
-- **生态兼容性**：Rsbuild 兼容大部分的 webpack 插件和所有 Rspack 插件，而 Vite 则是兼容 Rollup 插件。如果你目前更多地使用了 webpack 生态的插件和 loaders，那么迁移到 Rsbuild 是相对容易的。
-- **生产一致性**：Rsbuild 在开发阶段和生产构建均使用 Rspack 进行打包，因此开发和生产构建的产物具备较强的一致性，这也是 Vite 通过 Rolldown 想要实现的目标之一。
-- **模块联邦**：Rsbuild 团队与 [Module Federation](https://rsbuild.rs/zh/guide/advanced/module-federation) 的开发团队密切合作，并为 Module Federation 提供一流的支持，帮助你开发微前端架构的大型 Web 应用。
+> 📊 Benchmark 结果来自 [build-tools-performance](https://github.com/rstackjs/build-tools-performance)。
 
 ## 🔥 特性
 
@@ -85,11 +63,11 @@ Rstack 是一个以 Rspack 为核心的 JavaScript 统一工具链，具有优�
 
 ## 🔗 链接
 
-- [awesome-rstack](https://github.com/web-infra-dev/awesome-rstack)：与 Rstack 相关的精彩内容列表。
-- [rstack-examples](https://github.com/rspack-contrib/rstack-examples)：Rstack 的示例项目。
-- [storybook-rsbuild](https://github.com/rspack-contrib/storybook-rsbuild): 基于 Rsbuild 构建的 Storybook。
-- [rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template)：使用此模板创建你的 Rsbuild 插件。
-- [rstack-design-resources](https://github.com/rspack-contrib/rstack-design-resources)：Rstack 的设计资源。
+- [awesome-rstack](https://github.com/rstackjs/awesome-rstack)：与 Rstack 相关的精彩内容列表。
+- [rstack-examples](https://github.com/rstackjs/rstack-examples)：Rstack 的示例项目。
+- [storybook-rsbuild](https://github.com/rstackjs/storybook-rsbuild): 基于 Rsbuild 构建的 Storybook。
+- [rsbuild-plugin-template](https://github.com/rstackjs/rsbuild-plugin-template)：使用此模板创建你的 Rsbuild 插件。
+- [rstack-design-resources](https://github.com/rstackjs/rstack-design-resources)：Rstack 的设计资源。
 
 ## 🤝 参与贡献
 

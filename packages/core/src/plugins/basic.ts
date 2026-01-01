@@ -8,7 +8,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(
-      (chain, { isDev, isProd, target, bundler, environment, CHAIN_ID }) => {
+      (chain, { isDev, target, bundler, environment, CHAIN_ID }) => {
         const { config } = environment;
 
         chain.name(environment.name);
@@ -49,16 +49,12 @@ export const pluginBasic = (): RsbuildPlugin => ({
         if (api.context.bundlerType === 'rspack') {
           chain.module.parser.merge({
             javascript: {
-              inlineConst: isProd,
               typeReexportsPresence: 'tolerant',
             },
           });
 
           chain.experiments({
             ...chain.get('experiments'),
-            inlineEnum: isProd,
-            inlineConst: isProd,
-            typeReexportsPresence: true,
             rspackFuture: {
               bundlerInfo: {
                 force: false,

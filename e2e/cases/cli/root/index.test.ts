@@ -6,7 +6,9 @@ rspackTest(
   async ({ execCliSync }) => {
     execCliSync('build --root test');
 
-    const outputs = await readDirContents(path.join(__dirname, 'test', 'dist'));
+    const outputs = await readDirContents(
+      path.join(import.meta.dirname, 'test', 'dist'),
+    );
     const outputFiles = Object.keys(outputs);
 
     expect(
@@ -20,7 +22,9 @@ rspackTest(
   async ({ execCliSync }) => {
     execCliSync('build -r test');
 
-    const outputs = await readDirContents(path.join(__dirname, 'test', 'dist'));
+    const outputs = await readDirContents(
+      path.join(import.meta.dirname, 'test', 'dist'),
+    );
     const outputFiles = Object.keys(outputs);
 
     expect(

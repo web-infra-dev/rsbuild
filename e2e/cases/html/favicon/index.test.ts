@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { expect, findFile, getFileContent, test } from '@e2e/helper';
-import { outputFile, remove } from 'fs-extra';
+import fse from 'fs-extra';
 
 test('should emit local favicon to dist path', async ({ build }) => {
   const rsbuild = await build({
@@ -25,7 +25,7 @@ test('should allow `html.favicon` to be an absolute path', async ({
   const rsbuild = await build({
     config: {
       html: {
-        favicon: path.resolve(__dirname, '../../../assets/icon.png'),
+        favicon: path.resolve(import.meta.dirname, '../../../assets/icon.png'),
       },
     },
   });
@@ -96,8 +96,8 @@ test('should generate favicon via function correctly', async ({ build }) => {
     config: {
       source: {
         entry: {
-          foo: path.resolve(__dirname, './src/foo.js'),
-          bar: path.resolve(__dirname, './src/foo.js'),
+          foo: path.resolve(import.meta.dirname, './src/foo.js'),
+          bar: path.resolve(import.meta.dirname, './src/foo.js'),
         },
       },
       html: {
@@ -174,13 +174,13 @@ test('should allow to custom favicon dist path with a relative path starting wit
 });
 
 for (const filename of ['favicon.ico', 'favicon.png', 'favicon.svg']) {
-  const publicPath = path.join(__dirname, 'test-temp-public');
+  const publicPath = path.join(import.meta.dirname, 'test-temp-public');
 
   test(`should resolve ${filename} under public dir by default`, async ({
     build,
   }) => {
-    await remove(publicPath);
-    await outputFile(path.join(publicPath, filename), '');
+    await fse.remove(publicPath);
+    await fse.outputFile(path.join(publicPath, filename), '');
 
     const rsbuild = await build({
       config: {

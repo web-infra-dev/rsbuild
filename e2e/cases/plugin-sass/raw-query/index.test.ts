@@ -9,9 +9,11 @@ test('should allow to import raw Sass files in dev', async ({ page, dev }) => {
   const bRaw: string = await page.evaluate('window.bRaw');
   const bStyles: Record<string, string> = await page.evaluate('window.bStyles');
 
-  expect(aRaw).toBe(readFileSync(path.join(__dirname, 'src/a.scss'), 'utf-8'));
+  expect(aRaw).toBe(
+    readFileSync(path.join(import.meta.dirname, 'src/a.scss'), 'utf-8'),
+  );
   expect(bRaw).toBe(
-    readFileSync(path.join(__dirname, 'src/b.module.scss'), 'utf-8'),
+    readFileSync(path.join(import.meta.dirname, 'src/b.module.scss'), 'utf-8'),
   );
   expect(bStyles['title-class']).toBeTruthy();
 });
@@ -26,9 +28,11 @@ test('should allow to import raw Sass files in build', async ({
   const bRaw: string = await page.evaluate('window.bRaw');
   const bStyles: Record<string, string> = await page.evaluate('window.bStyles');
 
-  expect(aRaw).toBe(readFileSync(path.join(__dirname, 'src/a.scss'), 'utf-8'));
+  expect(aRaw).toBe(
+    readFileSync(path.join(import.meta.dirname, 'src/a.scss'), 'utf-8'),
+  );
   expect(bRaw).toBe(
-    readFileSync(path.join(__dirname, 'src/b.module.scss'), 'utf-8'),
+    readFileSync(path.join(import.meta.dirname, 'src/b.module.scss'), 'utf-8'),
   );
   expect(bStyles['title-class']).toBeTruthy();
 });

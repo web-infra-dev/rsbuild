@@ -1,18 +1,17 @@
 import path from 'node:path';
 import { promisify } from 'node:util';
-import { parse as parseStack, type StackFrame } from 'stacktrace-parser';
+import type { StackFrame } from 'stacktrace-parser';
 import type {
   InvalidOriginalMapping,
   OriginalMapping,
+  TraceMap,
 } from '../../compiled/@jridgewell/trace-mapping';
 import { SCRIPT_REGEX } from '../constants';
-import { color } from '../helpers';
+import { color, isRspackRuntimeModule } from '../helpers';
 import { requireCompiledPackage } from '../helpers/vendors';
-import { logger } from '../logger';
+import { isVerbose, logger } from '../logger';
 import type { BrowserLogsStackTrace, InternalContext, Rspack } from '../types';
 import { getFileFromUrl } from './assets-middleware/getFileFromUrl';
-import type { OutputFileSystem } from './assets-middleware/index';
-import type { ClientMessageError } from './socketServer';
 
 /**
  * Determines whether a given string is a valid method name
@@ -23,22 +22,7 @@ const isValidMethodName = (methodName: string) => {
   return methodName !== '<unknown>' && !/[\\/]/.test(methodName);
 };
 
-/**
- * Maps a position in compiled code to its original source position using
- * source maps.
- */
-function getOriginalPosition(
-  rawSourceMap: string,
-  line: number,
-  column: number,
-) {
-  const { TraceMap, originalPositionFor } = requireCompiledPackage(
-    '@jridgewell/trace-mapping',
-  );
-  const tracer = new TraceMap(rawSourceMap);
-  const originalPosition = originalPositionFor(tracer, { line, column });
-  return originalPosition;
-}
+export type CachedTraceMap = Map<string, TraceMap>;
 
 /**
  * Returns the first stack frame that looks like user code
@@ -56,35 +40,49 @@ const findFirstUserFrame = (parsed: StackFrame[]) => {
     | undefined;
 };
 
+/**
+ * Parse a single stack frame to get original position from source map
+ */
 const parseFrame = async (
   frame: Pick<StackFrame, 'file' | 'column' | 'lineNumber'>,
   fs: Rspack.OutputFileSystem,
   context: InternalContext,
+  cachedTraceMap: CachedTraceMap,
 ) => {
   const { file, column, lineNumber } = frame;
-  const sourceMapInfo = await getFileFromUrl(
-    `${file}.map`,
-    fs as OutputFileSystem,
-    context,
-  );
+  const sourceMapInfo = await getFileFromUrl(`${file}.map`, fs, context);
 
   if (!sourceMapInfo || 'errorCode' in sourceMapInfo) {
     return;
   }
 
-  const readFile = promisify(fs.readFile);
+  const { TraceMap, originalPositionFor } = requireCompiledPackage(
+    '@jridgewell/trace-mapping',
+  );
+
+  const sourceMapPath = sourceMapInfo.filename;
+  const needle = {
+    line: lineNumber ?? 0,
+    column: column ?? 0,
+  };
+
   try {
-    const sourceMap = await readFile(sourceMapInfo.filename);
-    if (sourceMap) {
-      return {
-        sourceMapPath: sourceMapInfo.filename,
-        originalPosition: getOriginalPosition(
-          sourceMap.toString(),
-          lineNumber ?? 0,
-          column ?? 0,
-        ),
-      };
+    let tracer = cachedTraceMap.get(sourceMapPath);
+
+    if (!tracer) {
+      const readFile = promisify(fs.readFile);
+      const sourceMap = await readFile(sourceMapPath);
+
+      if (!sourceMap) {
+        return;
+      }
+
+      tracer = new TraceMap(sourceMap.toString());
+      cachedTraceMap.set(sourceMapPath, tracer);
     }
+
+    const originalPosition = originalPositionFor(tracer, needle);
+    return { sourceMapPath, originalPosition };
   } catch (error) {
     if (error instanceof Error) {
       logger.debug(`failed to map source map position: ${error.message}`);
@@ -97,22 +95,18 @@ const parseFrame = async (
  * return formatted string like `src/App.tsx:10:20`
  */
 const resolveOriginalLocation = async (
-  stack: string,
+  stackFrames: StackFrame[],
   fs: Rspack.OutputFileSystem,
   context: InternalContext,
+  cachedTraceMap: CachedTraceMap,
 ) => {
-  const parsed = parseStack(stack);
-  if (!parsed.length) {
-    return;
-  }
-
   // only parse JS files
-  const frame = findFirstUserFrame(parsed);
+  const frame = findFirstUserFrame(stackFrames);
   if (!frame) {
     return;
   }
 
-  const parsedFrame = await parseFrame(frame, fs, context);
+  const parsedFrame = await parseFrame(frame, fs, context, cachedTraceMap);
   if (!parsedFrame) {
     return;
   }
@@ -133,6 +127,11 @@ const resolveSourceRelativeToRoot = (
   sourceMapPath: string,
   context: InternalContext,
 ) => {
+  // For Rspack runtime modules, return as is
+  if (isRspackRuntimeModule(source)) {
+    return source;
+  }
+
   const absoluteSourcePath = path.isAbsolute(source)
     ? source
     : path.join(path.dirname(sourceMapPath), source);
@@ -184,20 +183,15 @@ const enhanceErrorLogWithHints = (log: string) => {
 };
 
 const formatFullStack = async (
-  stack: string,
+  stackFrames: StackFrame[],
   context: InternalContext,
   fs: Rspack.OutputFileSystem,
+  cachedTraceMap: CachedTraceMap,
 ) => {
-  const parsed = parseStack(stack);
-
-  if (!parsed.length) {
-    return;
-  }
-
   let result = '';
 
-  for (const frame of parsed) {
-    const parsedFrame = await parseFrame(frame, fs, context);
+  for (const frame of stackFrames) {
+    const parsedFrame = await parseFrame(frame, fs, context, cachedTraceMap);
     const { methodName } = frame;
     const parts: (string | undefined)[] = [];
 
@@ -205,6 +199,7 @@ const formatFullStack = async (
       parts.push(methodName);
     }
 
+    let parsed = false;
     if (parsedFrame) {
       const { sourceMapPath, originalPosition } = parsedFrame;
       const originalLocation = formatOriginalLocation(
@@ -214,13 +209,13 @@ const formatFullStack = async (
       );
       if (originalLocation) {
         parts.push(originalLocation);
-      } else {
-        const frameString = formatFrameLocation(frame);
-        if (frameString) {
-          parts.push(frameString);
-        }
+        parsed = true;
       }
-    } else {
+    }
+
+    // Fallback to original frame location if source map parsing failed
+    // These frames are usually low-signal for users, so only show them in verbose mode.
+    if (!parsed && isVerbose()) {
       const frameString = formatFrameLocation(frame);
       if (frameString) {
         parts.push(frameString);
@@ -243,20 +238,23 @@ const formatFullStack = async (
  * source location information.
  */
 export const formatBrowserErrorLog = async (
-  message: ClientMessageError,
+  message: string,
   context: InternalContext,
   fs: Rspack.OutputFileSystem,
   stackTrace: BrowserLogsStackTrace,
+  stackFrames: StackFrame[] | null,
+  cachedTraceMap: CachedTraceMap,
 ): Promise<string> => {
-  let log = `${color.cyan('[browser]')} ${color.red(message.message)}`;
+  let log = color.red(message);
 
-  if (message.stack) {
+  if (stackFrames?.length) {
     switch (stackTrace) {
       case 'summary': {
         const resolved = await resolveOriginalLocation(
-          message.stack,
+          stackFrames,
           fs,
           context,
+          cachedTraceMap,
         );
 
         if (!resolved) {
@@ -278,7 +276,12 @@ export const formatBrowserErrorLog = async (
         break;
       }
       case 'full': {
-        const fullStack = await formatFullStack(message.stack, context, fs);
+        const fullStack = await formatFullStack(
+          stackFrames,
+          context,
+          fs,
+          cachedTraceMap,
+        );
         if (fullStack) {
           log += fullStack;
         }

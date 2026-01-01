@@ -12,7 +12,7 @@ rspackTest(
     process.env.RSDOCTOR = 'true';
 
     const rsbuild = await createRsbuild({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
     });
 
     const compiler = await rsbuild.createCompiler();
@@ -37,7 +37,7 @@ rspackTest(
     process.env.RSDOCTOR = 'false';
 
     const rsbuild = await createRsbuild({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
     });
 
     const compiler = await rsbuild.createCompiler();
@@ -63,7 +63,7 @@ rspackTest(
     process.env.RSDOCTOR = 'true';
 
     const rsbuild = await createRsbuild({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       config: {
         tools: {
           rspack: {

@@ -3,7 +3,7 @@ import { loadEnv } from '@rsbuild/core';
 
 rspackTest('should load env files correctly', () => {
   const env = loadEnv({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     mode: 'staging',
     prefixes: ['REACT_'],
   });
@@ -47,7 +47,7 @@ rspackTest('should not modify process.env if processEnv is provided', () => {
 
   const targetEnv: Record<string, string> = {};
   const env = loadEnv({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     processEnv: targetEnv,
   });
 

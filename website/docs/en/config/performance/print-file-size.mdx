@@ -11,6 +11,7 @@ type PrintFileSizeOptions =
       compressed?: boolean;
       include?: (asset: PrintFileSizeAsset) => boolean;
       exclude?: (asset: PrintFileSizeAsset) => boolean;
+      diff?: boolean;
     };
 ```
 
@@ -23,13 +24,13 @@ Whether to print the file sizes after production build.
 The default output log is as follows:
 
 ```
-  File (web)                              Size        Gzip
-  dist/static/js/lib-react.b0714b60.js    140.4 kB    45.0 kB
-  dist/static/js/index.f3fde9c7.js        1.9 kB      0.97 kB
-  dist/index.html                         0.39 kB     0.25 kB
-  dist/static/css/index.2960ac62.css      0.35 kB     0.26 kB
+File (web)                              Size        Gzip
+dist/static/js/lib-react.b0714b60.js    140.4 kB    45.0 kB
+dist/static/js/index.f3fde9c7.js        1.9 kB      0.97 kB
+dist/index.html                         0.39 kB     0.25 kB
+dist/static/css/index.2960ac62.css      0.35 kB     0.26 kB
 
-                                 Total:   143.0 kB    46.3 kB
+                               Total:   143.0 kB    46.3 kB
 ```
 
 ## Disable outputs
@@ -227,3 +228,49 @@ export default {
   },
 };
 ```
+
+### diff
+
+- **Type:** `boolean`
+- **Default:** `false`
+
+Controls whether file size differences are displayed relative to the previous build.
+
+When this option is enabled, Rsbuild records a snapshot of all output file sizes after each build. On subsequent builds, Rsbuild compares the current sizes against the previous snapshot and shows the change inline in parentheses.
+
+To enable diff output:
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    printFileSize: {
+      diff: true,
+    },
+  },
+};
+```
+
+On the second build, the output begins to include inline size deltas:
+
+```
+File (web)                              Size                  Gzip
+dist/static/js/lib-react.b0714b60.js    140.4 kB (+2.1 kB)    45.0 kB (+0.5 kB)
+dist/static/js/index.f3fde9c7.js        1.9 kB (-0.3 kB)      0.97 kB (-0.1 kB)
+dist/static/css/index.2960ac62.css      0.35 kB (+0.35 kB)    0.26 kB (+0.26 kB)
+
+                               Total:   143.0 kB (+2.15 kB)   46.3 kB (+0.66 kB)
+```
+
+- Increases are highlighted in red with a `+` prefix
+- Decreases are highlighted in green with a `-` prefix
+- Files with no change omit the diff indicator
+
+:::tip
+Snapshots are stored at `<root>/node_modules/.cache/rsbuild/file-sizes-[hash].json`, where [hash] is derived from the Rsbuild configuration file path.
+:::
+
+## Version history
+
+| Version | Changes             |
+| ------- | ------------------- |
+| v1.6.13 | Added `diff` option |

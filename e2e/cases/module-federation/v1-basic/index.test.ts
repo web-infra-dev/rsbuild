@@ -4,12 +4,12 @@ import { expect, getRandomPort, gotoPage, rspackTest } from '@e2e/helper';
 import type { RsbuildConfig } from '@rsbuild/core';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 
-const host = join(__dirname, 'host');
-const remote = join(__dirname, 'remote');
+const host = join(import.meta.dirname, 'host');
+const remote = join(import.meta.dirname, 'remote');
 
 const writeButtonCode = (text = 'Button from remote') => {
   writeFileSync(
-    join(__dirname, 'remote/src/test-temp-Button.tsx'),
+    join(import.meta.dirname, 'remote/src/test-temp-Button.tsx'),
     `const Button = () => (
   <button type="button" id="button">
     ${text}

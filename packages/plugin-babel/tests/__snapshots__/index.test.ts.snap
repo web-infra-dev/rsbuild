@@ -24,6 +24,10 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
     {
       "loader": "builtin:swc-loader",
       "options": {
+        "collectTypeScriptInfo": {
+          "exportedEnum": false,
+          "typeExports": true,
+        },
         "env": {
           "mode": undefined,
           "targets": [
@@ -51,12 +55,6 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
           "transform": {
             "decoratorVersion": "2022-03",
             "legacyDecorator": false,
-          },
-        },
-        "rspackExperiments": {
-          "collectTypeScriptInfo": {
-            "exportedEnum": false,
-            "typeExports": true,
           },
         },
       },
@@ -116,6 +114,10 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
     {
       "loader": "builtin:swc-loader",
       "options": {
+        "collectTypeScriptInfo": {
+          "exportedEnum": false,
+          "typeExports": true,
+        },
         "env": {
           "mode": undefined,
           "targets": [
@@ -143,12 +145,6 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
           "transform": {
             "decoratorVersion": "2022-03",
             "legacyDecorator": false,
-          },
-        },
-        "rspackExperiments": {
-          "collectTypeScriptInfo": {
-            "exportedEnum": false,
-            "typeExports": true,
           },
         },
       },
@@ -208,6 +204,10 @@ exports[`plugins/babel > should apply environment config correctly 2`] = `
     {
       "loader": "builtin:swc-loader",
       "options": {
+        "collectTypeScriptInfo": {
+          "exportedEnum": false,
+          "typeExports": true,
+        },
         "env": {
           "targets": [
             "node >= 16",
@@ -232,12 +232,6 @@ exports[`plugins/babel > should apply environment config correctly 2`] = `
             "decoratorMetadata": true,
             "legacyDecorator": true,
             "useDefineForClassFields": false,
-          },
-        },
-        "rspackExperiments": {
-          "collectTypeScriptInfo": {
-            "exportedEnum": false,
-            "typeExports": true,
           },
         },
       },
@@ -295,6 +289,10 @@ exports[`plugins/babel > should set babel-loader 1`] = `
     {
       "loader": "builtin:swc-loader",
       "options": {
+        "collectTypeScriptInfo": {
+          "exportedEnum": false,
+          "typeExports": true,
+        },
         "env": {
           "mode": undefined,
           "targets": [
@@ -322,12 +320,6 @@ exports[`plugins/babel > should set babel-loader 1`] = `
           "transform": {
             "decoratorVersion": "2022-03",
             "legacyDecorator": false,
-          },
-        },
-        "rspackExperiments": {
-          "collectTypeScriptInfo": {
-            "exportedEnum": false,
-            "typeExports": true,
           },
         },
       },
@@ -384,6 +376,10 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
     {
       "loader": "builtin:swc-loader",
       "options": {
+        "collectTypeScriptInfo": {
+          "exportedEnum": false,
+          "typeExports": true,
+        },
         "env": {
           "mode": undefined,
           "targets": [
@@ -411,12 +407,6 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
           "transform": {
             "decoratorVersion": "2022-03",
             "legacyDecorator": false,
-          },
-        },
-        "rspackExperiments": {
-          "collectTypeScriptInfo": {
-            "exportedEnum": false,
-            "typeExports": true,
           },
         },
       },

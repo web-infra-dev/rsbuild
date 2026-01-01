@@ -136,20 +136,15 @@ export function initPluginAPI({
     );
   }) as GetRsbuildConfig;
 
-  const exposed: { id: string | symbol; api: any }[] = [];
+  const exposed = new Map<string | symbol, any>();
 
   const expose = (id: string | symbol, api: any) => {
-    exposed.push({ id, api });
+    exposed.set(id, api);
   };
-  const useExposed = (id: string | symbol) => {
-    const matched = exposed.find((item) => item.id === id);
-    if (matched) {
-      return matched.api;
-    }
-  };
+  const useExposed = (id: string | symbol) => exposed.get(id);
 
   let transformId = 0;
-  const transformer: Record<string, TransformHandler> = {};
+  const transformer: Record<string, TransformHandler<boolean>> = {};
   const processAssetsFns: {
     environment?: string;
     descriptor: ProcessAssetsDescriptor;

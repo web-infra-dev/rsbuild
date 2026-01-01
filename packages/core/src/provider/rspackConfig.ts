@@ -2,9 +2,9 @@ import {
   type ConfigChainAsyncWithContext,
   reduceConfigsAsyncWithContext,
 } from 'reduce-configs';
-import { merge } from 'webpack-merge';
 import { CHAIN_ID, modifyBundlerChain } from '../configChain';
 import { castArray, color, getNodeEnv } from '../helpers';
+import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
 import { getHTMLPlugin } from '../pluginHelper';
 import { rspack } from '../rspack';
@@ -67,7 +67,10 @@ export function getConfigUtils(
   return {
     ...chainUtils,
 
-    mergeConfig: merge,
+    mergeConfig: (...args) => {
+      const { merge } = requireCompiledPackage('webpack-merge');
+      return merge(...args);
+    },
 
     addRules(rules) {
       const config = getCurrentConfig();
@@ -130,12 +133,14 @@ export function getConfigUtils(
 export function getChainUtils(
   target: RsbuildTarget,
   environment: EnvironmentContext,
+  environments: Record<string, EnvironmentContext>,
 ): ModifyChainUtils {
   const nodeEnv = getNodeEnv();
 
   return {
     rspack,
     environment,
+    environments,
     env: nodeEnv,
     target,
     isDev: environment.config.mode === 'development',
@@ -143,7 +148,7 @@ export function getChainUtils(
     isServer: target === 'node',
     isWebWorker: target === 'web-worker',
     CHAIN_ID,
-    HtmlPlugin: getHTMLPlugin(),
+    HtmlPlugin: getHTMLPlugin(environment.config),
   };
 }
 
@@ -177,13 +182,17 @@ function validateRspackConfig(config: Rspack.Configuration) {
 export async function generateRspackConfig({
   target,
   context,
-  environment,
+  environmentName,
 }: {
-  environment: string;
   target: RsbuildTarget;
   context: InternalContext;
+  environmentName: string;
 }): Promise<Rspack.Configuration> {
-  const chainUtils = getChainUtils(target, context.environments[environment]);
+  const chainUtils = getChainUtils(
+    target,
+    context.environments[environmentName],
+    context.environments,
+  );
   const {
     BannerPlugin,
     DefinePlugin,

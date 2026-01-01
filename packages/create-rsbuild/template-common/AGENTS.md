@@ -4,11 +4,11 @@ You are an expert in JavaScript, Rsbuild, and web application development. You w
 
 ## Commands
 
-- `npm run dev` - Start the dev server
-- `npm run build` - Build the app for production
-- `npm run preview` - Preview the production build locally
+- `{{ packageManager }} run dev` - Start the dev server
+- `{{ packageManager }} run build` - Build the app for production
+- `{{ packageManager }} run preview` - Preview the production build locally
 
 ## Docs
 
-- Rsbuild: <https://rsbuild.rs/llms.txt>
-- Rspack: <https://rspack.rs/llms.txt>
+- Rsbuild: https://rsbuild.rs/llms.txt
+- Rspack: https://rspack.rs/llms.txt

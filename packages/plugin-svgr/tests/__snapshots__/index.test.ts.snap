@@ -25,6 +25,10 @@ exports[`svgr > configure SVGR options 1`] = `
         {
           "loader": "builtin:swc-loader",
           "options": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
             "env": {
               "mode": undefined,
               "targets": [
@@ -53,16 +57,10 @@ exports[`svgr > configure SVGR options 1`] = `
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
                 "react": {
-                  "development": false,
+                  "development": true,
                   "refresh": false,
                   "runtime": "automatic",
                 },
-              },
-            },
-            "rspackExperiments": {
-              "collectTypeScriptInfo": {
-                "exportedEnum": false,
-                "typeExports": true,
               },
             },
           },
@@ -131,6 +129,10 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
         {
           "loader": "builtin:swc-loader",
           "options": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
             "env": {
               "mode": undefined,
               "targets": [
@@ -159,16 +161,10 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
                 "react": {
-                  "development": false,
+                  "development": true,
                   "refresh": false,
                   "runtime": "automatic",
                 },
-              },
-            },
-            "rspackExperiments": {
-              "collectTypeScriptInfo": {
-                "exportedEnum": false,
-                "typeExports": true,
               },
             },
           },
@@ -205,6 +201,10 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
         {
           "loader": "builtin:swc-loader",
           "options": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
             "env": {
               "mode": undefined,
               "targets": [
@@ -233,16 +233,10 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
                 "react": {
-                  "development": false,
+                  "development": true,
                   "refresh": false,
                   "runtime": "automatic",
                 },
-              },
-            },
-            "rspackExperiments": {
-              "collectTypeScriptInfo": {
-                "exportedEnum": false,
-                "typeExports": true,
               },
             },
           },
@@ -310,6 +304,10 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
         {
           "loader": "builtin:swc-loader",
           "options": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
             "env": {
               "mode": undefined,
               "targets": [
@@ -338,16 +336,10 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
                 "react": {
-                  "development": false,
+                  "development": true,
                   "refresh": false,
                   "runtime": "automatic",
                 },
-              },
-            },
-            "rspackExperiments": {
-              "collectTypeScriptInfo": {
-                "exportedEnum": false,
-                "typeExports": true,
               },
             },
           },
@@ -384,6 +376,10 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
         {
           "loader": "builtin:swc-loader",
           "options": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
             "env": {
               "mode": undefined,
               "targets": [
@@ -412,16 +408,10 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
                 "react": {
-                  "development": false,
+                  "development": true,
                   "refresh": false,
                   "runtime": "automatic",
                 },
-              },
-            },
-            "rspackExperiments": {
-              "collectTypeScriptInfo": {
-                "exportedEnum": false,
-                "typeExports": true,
               },
             },
           },
@@ -489,6 +479,10 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
         {
           "loader": "builtin:swc-loader",
           "options": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
             "env": {
               "mode": undefined,
               "targets": [
@@ -517,16 +511,10 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
                 "react": {
-                  "development": false,
+                  "development": true,
                   "refresh": false,
                   "runtime": "automatic",
                 },
-              },
-            },
-            "rspackExperiments": {
-              "collectTypeScriptInfo": {
-                "exportedEnum": false,
-                "typeExports": true,
               },
             },
           },
@@ -563,6 +551,10 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
         {
           "loader": "builtin:swc-loader",
           "options": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
             "env": {
               "mode": undefined,
               "targets": [
@@ -591,16 +583,10 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
                 "react": {
-                  "development": false,
+                  "development": true,
                   "refresh": false,
                   "runtime": "automatic",
                 },
-              },
-            },
-            "rspackExperiments": {
-              "collectTypeScriptInfo": {
-                "exportedEnum": false,
-                "typeExports": true,
               },
             },
           },
@@ -668,6 +654,10 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
         {
           "loader": "builtin:swc-loader",
           "options": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
             "env": {
               "mode": undefined,
               "targets": [
@@ -696,16 +686,10 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
                 "react": {
-                  "development": false,
+                  "development": true,
                   "refresh": false,
                   "runtime": "automatic",
                 },
-              },
-            },
-            "rspackExperiments": {
-              "collectTypeScriptInfo": {
-                "exportedEnum": false,
-                "typeExports": true,
               },
             },
           },
@@ -742,6 +726,10 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
         {
           "loader": "builtin:swc-loader",
           "options": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
             "env": {
               "mode": undefined,
               "targets": [
@@ -770,16 +758,10 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
                 "react": {
-                  "development": false,
+                  "development": true,
                   "refresh": false,
                   "runtime": "automatic",
                 },
-              },
-            },
-            "rspackExperiments": {
-              "collectTypeScriptInfo": {
-                "exportedEnum": false,
-                "typeExports": true,
               },
             },
           },

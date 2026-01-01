@@ -37,7 +37,8 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
       lookup: (extension: string) => string | undefined,
     ): AppIconItem & IconExtra => {
       const { src, size } = icon;
-      const cached = iconFormatMap.get(src);
+      const cacheKey = `${distDir}|${publicPath}|${src}`;
+      const cached = iconFormatMap.get(cacheKey);
 
       if (cached) {
         return cached;
@@ -54,7 +55,7 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
           mimeType: lookup(src),
         };
 
-        iconFormatMap.set(src, formatted);
+        iconFormatMap.set(cacheKey, formatted);
         return formatted;
       }
 
@@ -76,7 +77,7 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
         mimeType: lookup(absolutePath),
       };
 
-      iconFormatMap.set(src, formatted);
+      iconFormatMap.set(cacheKey, formatted);
       return formatted;
     };
 

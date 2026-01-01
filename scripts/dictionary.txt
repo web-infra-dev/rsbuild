@@ -3,6 +3,7 @@ analyse
 antd
 apng
 applescript
+atrule
 atrules
 attributify
 biomejs
@@ -112,6 +113,7 @@ rspack
 rspeedy
 rspress
 rstack
+rstackjs
 rstest
 ruleset
 selfsign

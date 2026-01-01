@@ -7,7 +7,7 @@ test.skip('multiple rsbuild dev servers should work correctly', async ({
   page,
 }) => {
   const rsbuild1 = await createRsbuild({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     config: {
       source: {
         entry: {
@@ -27,7 +27,7 @@ test.skip('multiple rsbuild dev servers should work correctly', async ({
   });
 
   const rsbuild2 = await createRsbuild({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     config: {
       source: {
         entry: {

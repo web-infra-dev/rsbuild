@@ -11,14 +11,11 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "inlineConst": false,
-    "inlineEnum": false,
     "rspackFuture": {
       "bundlerInfo": {
         "force": false,
       },
     },
-    "typeReexportsPresence": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -32,7 +29,6 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
     "parser": {
       "javascript": {
         "exportsPresence": "error",
-        "inlineConst": false,
         "typeReexportsPresence": "tolerant",
       },
     },
@@ -148,6 +144,10 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
           {
             "loader": "builtin:swc-loader",
             "options": {
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
+              },
               "env": {
                 "mode": undefined,
                 "targets": [
@@ -175,12 +175,6 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
-                },
-              },
-              "rspackExperiments": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
                 },
               },
             },
@@ -206,6 +200,10 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
           {
             "loader": "builtin:swc-loader",
             "options": {
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
+              },
               "env": {
                 "mode": undefined,
                 "targets": [
@@ -233,12 +231,6 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
-                },
-              },
-              "rspackExperiments": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
                 },
               },
             },
@@ -448,7 +440,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         "inject": "head",
         "meta": {
           "charset": {
-            "charset": "UTF-8",
+            "charset": "utf-8",
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
@@ -456,7 +448,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         "scriptLoading": "defer",
         "showErrors": true,
         "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
+        "templateContent": "<!DOCTYPE html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
@@ -466,6 +458,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
     },
     RsbuildHtmlPlugin {
       "getExtraData": [Function],
+      "getHTMLPlugin": [Function],
       "name": "RsbuildHtmlPlugin",
     },
     DefinePlugin {

@@ -62,13 +62,13 @@ In the [Rspack 1.0 Announcement](https://rspack.rs/blog/announcing-1-0), we intr
 
 At ByteDance, we use Rsbuild as the cornerstone of our internal web frameworks to support thousands of web projects. These projects cover diverse use cases, including desktop web applications, mobile web applications, cross-platform web applications, documentation sites, and more.
 
-For the community, we have open-sourced a high-performance toolchain based on Rsbuild, including the static site generator [Rspress](https://github.com/web-infra-dev/rspress), the library development tool [Rslib](https://github.com/web-infra-dev/rslib), the full-stack React framework [Modern.js](https://github.com/web-infra-dev/modern.js), and the [Storybook Rsbuild](https://github.com/rspack-contrib/storybook-rsbuild). The extensibility of Rsbuild allows these tools to flexibly integrate with Rsbuild and share its plugin ecosystem.
+For the community, we have open-sourced a high-performance toolchain based on Rsbuild, including the static site generator [Rspress](https://github.com/web-infra-dev/rspress), the library development tool [Rslib](https://github.com/web-infra-dev/rslib), the full-stack React framework [Modern.js](https://github.com/web-infra-dev/modern.js), and the [Storybook Rsbuild](https://github.com/rstackjs/storybook-rsbuild). The extensibility of Rsbuild allows these tools to flexibly integrate with Rsbuild and share its plugin ecosystem.
 
 After releasing Rsbuild 1.0, we also plan to collaborate with some excellent teams like [Remix](https://github.com/remix-run/remix), to bring Rsbuild to more web frameworks.
 
 ## Plugin ecosystem
 
-The Rsbuild plugin ecosystem is constantly evolving. There are currently over 50 [Rsbuild plugins](https://github.com/web-infra-dev/awesome-rstack?tab=readme-ov-file#rsbuild-plugins) available in the community. We provide several advanced features through plugins to support the development of production-grade applications, such as [type checking](https://github.com/rspack-contrib/rsbuild-plugin-type-check), [compatibility checking](https://github.com/rspack-contrib/rsbuild-plugin-check-syntax), and [static assets retry](https://github.com/rspack-contrib/rsbuild-plugin-assets-retry). Thanks to Rspack's compatibility with webpack, Rsbuild also supports most webpack plugins.
+The Rsbuild plugin ecosystem is constantly evolving. There are currently over 50 [Rsbuild plugins](https://github.com/rstackjs/awesome-rstack?tab=readme-ov-file#rsbuild-plugins) available in the community. We provide several advanced features through plugins to support the development of production-grade applications, such as [type checking](https://github.com/rstackjs/rsbuild-plugin-type-check), [compatibility checking](https://github.com/rstackjs/rsbuild-plugin-check-syntax), and [static assets retry](https://github.com/rstackjs/rsbuild-plugin-assets-retry). Thanks to Rspack's compatibility with webpack, Rsbuild also supports most webpack plugins.
 
 Compared to webpack or Rspack, the Rsbuild plugin API is more straightforward and beginner-friendly, allowing developers to easily create plugins to meet their specific needs.
 
@@ -80,7 +80,7 @@ As shown, the API style of the Rsbuild plugin is similar to esbuild, it can be d
 
 ## How to use 1.0
 
-- If you haven't used Rsbuild before, you can experience it through the [CodeSandbox example](https://codesandbox.io/p/github/rspack-contrib/rsbuild-codesandbox-example) or refer to the [Quick start](/guide/start/quick-start) to use Rsbuild.
+- If you haven't used Rsbuild before, you can experience it through the [CodeSandbox example](https://codesandbox.io/p/github/rstackjs/rsbuild-codesandbox-example) or refer to the [Quick start](/guide/start/quick-start) to use Rsbuild.
 - If you are using Rsbuild 0.7 or earlier, please note that 1.0 includes some breaking changes. You can refer to the [Migrating from 0.x](/guide/migration/rsbuild-0-x) document to upgrade.
 - Rsbuild also provides migration guides for projects that use webpack, CRA, Vue CLI, etc. See [Migrate from Existing Projects](/guide/start/quick-start#migrate-from-existing-projects).
 

@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { expect, getRandomPort, gotoPage, rspackTest } from '@e2e/helper';
 
-const tempConfig = path.join(__dirname, 'test-temp-config.ts');
+const tempConfig = path.join(import.meta.dirname, 'test-temp-config.ts');
 
 rspackTest(
   'should restart dev server when extra config file changed',

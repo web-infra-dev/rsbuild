@@ -5,7 +5,7 @@ rspackTest(
   'should allow to call `getStats` to get stats after creating dev server',
   async () => {
     const rsbuild = await createRsbuild({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       config: {
         environments: {
           node: {

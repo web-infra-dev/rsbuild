@@ -1,6 +1,6 @@
 # React plugin
 
-import { SourceCode } from '@rspress/core/theme';
+import { SourceCode } from '@theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-react" />
 
@@ -158,27 +158,28 @@ This option is used to control this behavior and determine whether the `react` a
 - **Type:**
 
 ```ts
-type SplitReactChunkOptions = {
-  react?: boolean;
-  router?: boolean;
-};
+type SplitChunks =
+  | boolean
+  | {
+      react?: boolean;
+      router?: boolean;
+    };
 ```
 
-- **Default:**
+- **Default:** `true` (equivalent to `{ react: true, router: true }`)
+
+For example, to disable all chunk splitting:
 
 ```ts
-const defaultOptions = {
-  react: true,
-  router: true,
-};
+pluginReact({ splitChunks: false });
 ```
 
-- **Example:**
+Or to disable only the `router` chunk splitting:
 
 ```ts
 pluginReact({
   splitChunks: {
-    react: false,
+    react: true,
     router: false,
   },
 });
@@ -230,7 +231,7 @@ As Windows does not support the above usage, you can also use [cross-env](https:
 
 ```ts
 type ReactRefreshOptions = {
-  // @link https://rspack.rs/config/module#condition
+  // @link https://rspack.rs/config/module-rules#condition
   test?: Rspack.RuleSetCondition;
   include?: Rspack.RuleSetCondition;
   exclude?: Rspack.RuleSetCondition;
@@ -254,7 +255,7 @@ const defaultOptions = {
 };
 ```
 
-Set the options for [@rspack/plugin-react-refresh](https://github.com/rspack-contrib/rspack-plugin-react-refresh). The passed value will be shallowly merged with the default value.
+Set the options for [@rspack/plugin-react-refresh](https://github.com/rstackjs/rspack-plugin-react-refresh). The passed value will be shallowly merged with the default value.
 
 - **Example:**
 
@@ -273,7 +274,7 @@ pluginReact({
 
 Whether to enable [React Fast Refresh](https://npmjs.com/package/react-refresh) in development mode.
 
-If `fastRefresh` is set to `true`, `@rsbuild/plugin-react` will automatically register the [@rspack/plugin-react-refresh](https://github.com/rspack-contrib/rspack-plugin-react-refresh) plugin.
+If `fastRefresh` is set to `true`, `@rsbuild/plugin-react` will automatically register the [@rspack/plugin-react-refresh](https://github.com/rstackjs/rspack-plugin-react-refresh) plugin.
 
 To disable Fast Refresh, set it to `false`:
 

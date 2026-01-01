@@ -6,11 +6,11 @@ import {
   findFile,
   getFileContent,
   mapSourceMapPositions,
-  test,
+  rspackTest,
 } from '@e2e/helper';
 import type { Rspack } from '@rsbuild/core';
 
-const cwd = __dirname;
+const cwd = import.meta.dirname;
 
 async function testSourceMapType(
   devtool: Rspack.Configuration['devtool'],
@@ -31,11 +31,11 @@ async function testSourceMapType(
   const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   const indexSourceCode = readFileSync(
-    path.join(__dirname, 'src/index.js'),
+    path.join(import.meta.dirname, 'src/index.js'),
     'utf-8',
   );
   const appSourceCode = readFileSync(
-    path.join(__dirname, 'src/App.jsx'),
+    path.join(import.meta.dirname, 'src/App.jsx'),
     'utf-8',
   );
   const outputCode = getFileContent(files, 'index.js');
@@ -79,77 +79,81 @@ const productionDevtools: Rspack.Configuration['devtool'][] = [
 ];
 
 for (const devtool of productionDevtools) {
-  test(`should generate correct "${devtool}" source map in build`, async ({
-    build,
-  }) => {
-    await testSourceMapType(devtool, build);
-  });
+  rspackTest(
+    `should generate correct "${devtool}" source map in build`,
+    async ({ build }) => {
+      await testSourceMapType(devtool, build);
+    },
+  );
 }
 
-test('should not generate source map by default in build', async ({
-  build,
-}) => {
-  const rsbuild = await build();
+rspackTest(
+  'should not generate source map by default in build',
+  async ({ build }) => {
+    const rsbuild = await build();
 
-  const files = rsbuild.getDistFiles({ sourceMaps: true });
+    const files = rsbuild.getDistFiles({ sourceMaps: true });
 
-  const jsMapPaths = Object.keys(files).filter((files) =>
-    files.endsWith('.js.map'),
-  );
-  const cssMapFiles = Object.keys(files).filter((files) =>
-    files.endsWith('.css.map'),
-  );
-  expect(jsMapPaths.length).toEqual(0);
-  expect(cssMapFiles.length).toEqual(0);
-});
+    const jsMapPaths = Object.keys(files).filter((files) =>
+      files.endsWith('.js.map'),
+    );
+    const cssMapFiles = Object.keys(files).filter((files) =>
+      files.endsWith('.css.map'),
+    );
+    expect(jsMapPaths.length).toEqual(0);
+    expect(cssMapFiles.length).toEqual(0);
+  },
+);
 
-test('should generate source map if `output.sourceMap` is true', async ({
-  build,
-}) => {
-  const rsbuild = await build({
-    config: {
-      output: {
-        sourceMap: true,
+rspackTest(
+  'should generate source map if `output.sourceMap` is true',
+  async ({ build }) => {
+    const rsbuild = await build({
+      config: {
+        output: {
+          sourceMap: true,
+        },
       },
-    },
-  });
+    });
 
-  const files = rsbuild.getDistFiles({ sourceMaps: true });
+    const files = rsbuild.getDistFiles({ sourceMaps: true });
 
-  const jsMapPaths = Object.keys(files).filter((files) =>
-    files.endsWith('.js.map'),
-  );
-  const cssMapFiles = Object.keys(files).filter((files) =>
-    files.endsWith('.css.map'),
-  );
-  expect(jsMapPaths.length).toBeGreaterThan(0);
-  expect(cssMapFiles.length).toBeGreaterThan(0);
-});
+    const jsMapPaths = Object.keys(files).filter((files) =>
+      files.endsWith('.js.map'),
+    );
+    const cssMapFiles = Object.keys(files).filter((files) =>
+      files.endsWith('.css.map'),
+    );
+    expect(jsMapPaths.length).toBeGreaterThan(0);
+    expect(cssMapFiles.length).toBeGreaterThan(0);
+  },
+);
 
-test('should not generate source map if `output.sourceMap` is false', async ({
-  build,
-}) => {
-  const rsbuild = await build({
-    config: {
-      output: {
-        sourceMap: false,
+rspackTest(
+  'should not generate source map if `output.sourceMap` is false',
+  async ({ build }) => {
+    const rsbuild = await build({
+      config: {
+        output: {
+          sourceMap: false,
+        },
       },
-    },
-  });
+    });
 
-  const files = rsbuild.getDistFiles({ sourceMaps: true });
+    const files = rsbuild.getDistFiles({ sourceMaps: true });
 
-  const jsMapPaths = Object.keys(files).filter((files) =>
-    files.endsWith('.js.map'),
-  );
-  const cssMapFiles = Object.keys(files).filter((files) =>
-    files.endsWith('.css.map'),
-  );
-  expect(jsMapPaths.length).toEqual(0);
-  expect(cssMapFiles.length).toEqual(0);
-});
+    const jsMapPaths = Object.keys(files).filter((files) =>
+      files.endsWith('.js.map'),
+    );
+    const cssMapFiles = Object.keys(files).filter((files) =>
+      files.endsWith('.css.map'),
+    );
+    expect(jsMapPaths.length).toEqual(0);
+    expect(cssMapFiles.length).toEqual(0);
+  },
+);
 
-test('should generate source map correctly in dev', async ({ dev }) => {
+rspackTest('should generate source map correctly in dev', async ({ dev }) => {
   const rsbuild = await dev();
   const files = rsbuild.getDistFiles({ sourceMaps: true });
 
@@ -165,43 +169,46 @@ test('should generate source map correctly in dev', async ({ dev }) => {
   expect(jsMap.mappings).not.toBeUndefined();
 });
 
-test('should generate source maps only for CSS files', async ({ build }) => {
-  const rsbuild = await build({
-    config: {
-      output: {
-        filenameHash: false,
-        sourceMap: {
-          js: false,
-          css: true,
+rspackTest(
+  'should generate source maps only for CSS files',
+  async ({ build }) => {
+    const rsbuild = await build({
+      config: {
+        output: {
+          filenameHash: false,
+          sourceMap: {
+            js: false,
+            css: true,
+          },
         },
       },
-    },
-  });
+    });
 
-  const files = rsbuild.getDistFiles({ sourceMaps: true });
+    const files = rsbuild.getDistFiles({ sourceMaps: true });
 
-  const jsMapPaths = Object.keys(files).filter((files) =>
-    files.endsWith('.js.map'),
-  );
-  const cssMapFiles = Object.keys(files).filter((files) =>
-    files.endsWith('.css.map'),
-  );
-  expect(jsMapPaths.length).toEqual(0);
-  expect(cssMapFiles.length).toBeGreaterThan(0);
+    const jsMapPaths = Object.keys(files).filter((files) =>
+      files.endsWith('.js.map'),
+    );
+    const cssMapFiles = Object.keys(files).filter((files) =>
+      files.endsWith('.css.map'),
+    );
+    expect(jsMapPaths.length).toEqual(0);
+    expect(cssMapFiles.length).toBeGreaterThan(0);
 
-  const cssSourceMap = findFile(files, 'index.css.map');
-  const cssSourceContent = readFileSync(
-    join(__dirname, './src/index.css'),
-    'utf-8',
-  );
+    const cssSourceMap = findFile(files, 'index.css.map');
+    const cssSourceContent = readFileSync(
+      join(__dirname, './src/index.css'),
+      'utf-8',
+    );
 
-  expect(JSON.parse(files[cssSourceMap])).toEqual({
-    file: 'static/css/index.css',
-    // cspell: disable-next-line
-    mappings: 'AADA',
-    names: [],
-    sources: ['../../../src/index.css'],
-    sourcesContent: [cssSourceContent],
-    version: 3,
-  });
-});
+    expect(JSON.parse(files[cssSourceMap])).toEqual({
+      file: 'static/css/index.css',
+      // cspell: disable-next-line
+      mappings: 'AADA',
+      names: [],
+      sources: ['../../../src/index.css'],
+      sourcesContent: [cssSourceContent],
+      version: 3,
+    });
+  },
+);

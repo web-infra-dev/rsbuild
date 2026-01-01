@@ -1,6 +1,6 @@
 # source.include
 
-- **类型：** [RuleSetCondition](https://rspack.rs/zh/config/module#condition)
+- **类型：** [Rspack.RuleSetCondition](https://rspack.rs/zh/config/module-rules#condition)
 
 用于指定额外需要被 [SWC](/guide/configuration/swc) 编译的 JavaScript 文件。
 
@@ -22,7 +22,7 @@ const defaultInclude = [
 
 ## 用法
 
-通过 `source.include` 配置项，你可以指定需要 Rsbuild 额外进行编译的目录或模块。`source.include` 的用法与 Rspack 中的 [Rule.include](https://rspack.rs/zh/config/module#ruleinclude) 一致，支持传入字符串、正则表达式来匹配模块的路径。
+通过 `source.include` 配置项，你可以指定需要 Rsbuild 额外进行编译的目录或模块。`source.include` 的用法与 Rspack 中的 [rules[].include](https://rspack.rs/zh/config/module-rules#rulesinclude) 一致，支持传入字符串、正则表达式来匹配模块的路径。
 
 比如:
 
@@ -41,7 +41,7 @@ export default {
 比较典型的使用场景是编译 node_modules 下的 npm 包，因为某些第三方依赖存在 ESNext 的语法，这可能导致在低版本浏览器上无法运行，你可以通过该选项指定需要编译的依赖，从而解决此类问题。
 
 :::tip
-如果你不确定 node_modules 中的哪些第三方依赖存在 ESNext 的语法，可以使用 [@rsbuild/plugin-check-syntax](https://github.com/rspack-contrib/rsbuild-plugin-check-syntax) 进行检查，插件可以帮助你找到存在 ESNext 语法的模块。
+如果你不确定 node_modules 中的哪些第三方依赖存在 ESNext 的语法，可以使用 [@rsbuild/plugin-check-syntax](https://github.com/rstackjs/rsbuild-plugin-check-syntax) 进行检查，插件可以帮助你找到存在 ESNext 语法的模块。
 :::
 
 以 `query-string` 为例，你可以做如下的配置：

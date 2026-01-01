@@ -1,5 +1,5 @@
 import { createRequire } from 'node:module';
-import type { EnvironmentConfig, RsbuildPlugin } from '@rsbuild/core';
+import type { EnvironmentConfig, RsbuildPlugin, Rspack } from '@rsbuild/core';
 import { type VueLoaderOptions, VueLoaderPlugin } from 'rspack-vue-loader';
 import { applySplitChunksRule } from './splitChunks.js';
 
@@ -20,6 +20,11 @@ export type SplitVueChunkOptions = {
 
 export type PluginVueOptions = {
   /**
+   * Test condition to match Vue files.
+   * @default /\.vue$/
+   */
+  test?: Rspack.RuleSetCondition;
+  /**
    * Options passed to `vue-loader`.
    * @see https://vue-loader.vuejs.org/
    */
@@ -38,6 +43,7 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
 
     setup(api) {
       const VUE_REGEXP = /\.vue$/;
+      const { test = VUE_REGEXP } = options;
       const CSS_MODULES_REGEX = /\.modules?\.\w+$/i;
 
       api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
@@ -81,6 +87,10 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
           ...userLoaderOptions.compilerOptions,
         };
         const vueLoaderOptions = {
+          // Always treat this as a client build when invoked from Rstest,
+          // since tests are executed in a DOM-based environment.
+          isServerBuild:
+            api.context.callerName === 'rstest' ? false : undefined,
           experimentalInlineMatchResource: true,
           ...userLoaderOptions,
           compilerOptions,
@@ -88,7 +98,7 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
 
         chain.module
           .rule(CHAIN_ID.RULE.VUE)
-          .test(VUE_REGEXP)
+          .test(test)
           .use(CHAIN_ID.USE.VUE)
           .loader(require.resolve('rspack-vue-loader'))
           .options(vueLoaderOptions);

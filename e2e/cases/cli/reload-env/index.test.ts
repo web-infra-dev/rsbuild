@@ -5,9 +5,9 @@ import { expectFileWithContent, getRandomPort, rspackTest } from '@e2e/helper';
 rspackTest(
   'should restart dev server when .env file is changed',
   async ({ execCli, logHelper }) => {
-    const dist = path.join(__dirname, 'dist');
-    const configFile = path.join(__dirname, 'rsbuild.config.mjs');
-    const envLocalFile = path.join(__dirname, '.env.local');
+    const dist = path.join(import.meta.dirname, 'dist');
+    const configFile = path.join(import.meta.dirname, 'rsbuild.config.mjs');
+    const envLocalFile = path.join(import.meta.dirname, '.env.local');
     const distIndex = path.join(dist, 'static/js/index.js');
 
     fs.writeFileSync(envLocalFile, 'PUBLIC_NAME=jack');

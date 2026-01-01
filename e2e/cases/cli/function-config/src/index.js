@@ -1,1 +1,1 @@
-console.log('hello!');
+console.log(DEFINED_VALUE);

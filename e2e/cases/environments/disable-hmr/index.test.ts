@@ -2,8 +2,8 @@ import { expect, rspackTest } from '@e2e/helper';
 
 rspackTest(
   'should allow to disable HMR and live reload for a specified environment',
-  async ({ dev }) => {
-    const rsbuild = await dev();
+  async ({ devOnly }) => {
+    const rsbuild = await devOnly();
 
     const files = rsbuild.getDistFiles();
     const filenames = Object.keys(files);

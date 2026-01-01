@@ -1,5 +1,6 @@
 import { expect, rspackTest } from '@e2e/helper';
 import { pluginBabel } from '@rsbuild/plugin-babel';
+import { myBabelPlugin } from './plugins/myBabelPlugin.ts';
 
 rspackTest(
   'should run babel with babel plugin correctly',
@@ -9,7 +10,7 @@ rspackTest(
         plugins: [
           pluginBabel({
             babelLoaderOptions: (_, { addPlugins }) => {
-              addPlugins([require('./plugins/myBabelPlugin')]);
+              addPlugins([myBabelPlugin]);
             },
           }),
         ],
@@ -31,7 +32,7 @@ rspackTest(
         plugins: [
           pluginBabel({
             babelLoaderOptions: (_, { addPlugins }) => {
-              addPlugins([require('./plugins/myBabelPlugin')]);
+              addPlugins([myBabelPlugin]);
             },
           }),
         ],

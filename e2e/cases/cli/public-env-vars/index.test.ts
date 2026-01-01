@@ -8,7 +8,7 @@ rspackTest(
     execCliSync('build');
 
     const content = fs.readFileSync(
-      path.join(__dirname, 'dist/static/js/index.js'),
+      path.join(import.meta.dirname, 'dist/static/js/index.js'),
       'utf-8',
     );
     expect(content).not.toContain('jack');

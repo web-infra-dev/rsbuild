@@ -21,9 +21,9 @@ export interface SvelteLoaderOptions {
   hotOptions?: {
     /** Preserve local component state */
     preserveLocalState?: boolean;
-    [key: string]: any;
+    [key: string]: unknown;
   };
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export type PluginSvelteOptions = {

@@ -1,15 +1,15 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
-import { removeSync } from 'fs-extra';
+import fse from 'fs-extra';
 
-const cwd = __dirname;
+const cwd = import.meta.dirname;
 
 test.beforeEach(() => {
   const dirs = ['dist', 'dist-1', 'dist-2', 'dist-same', 'dist-same-1'];
   for (const dir of dirs) {
     const target = join(cwd, dir);
-    removeSync(target);
+    fse.removeSync(target);
   }
 });
 

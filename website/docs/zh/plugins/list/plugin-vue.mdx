@@ -1,13 +1,13 @@
 # Vue 插件
 
-import { SourceCode } from '@rspress/core/theme';
+import { SourceCode } from '@theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-vue" />
 
 Vue 插件提供了对 Vue 3 SFC（单文件组件）的支持，插件内部集成了 [vue-loader](https://vue-loader.vuejs.org/) v17 版本。
 
 :::tip
-对于 Vue 3 JSX / TSX 语法，请使用 [Vue JSX 插件](https://github.com/rspack-contrib/rsbuild-plugin-vue-jsx)。
+对于 Vue 3 JSX / TSX 语法，请使用 [Vue JSX 插件](https://github.com/rstackjs/rsbuild-plugin-vue-jsx)。
 :::
 
 ## 快速开始
@@ -99,6 +99,22 @@ pluginVue({
     vue: false,
     router: false,
   },
+});
+```
+
+### test
+
+用于自定义 Vue 单文件组件（SFC）的匹配规则。
+
+- **类型：** [Rspack.RuleSetCondition](https://rspack.rs/zh/config/module-rules#condition)
+- **默认值：** `/\.vue$/`
+- **版本：** `>= 1.2.1`
+
+通过该选项，你可以扩展 Vue 插件对其他文件类型的处理能力。例如，先使用某个插件或 loader 将 `.md` 文件转换为 Vue 组件，然后可以在 Vue 插件中通过 `test` 选项同时匹配 `.vue` 和 `.md` 文件：
+
+```ts
+pluginVue({
+  test: /\.(vue|md)$/,
 });
 ```
 

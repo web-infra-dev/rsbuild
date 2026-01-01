@@ -1,7 +1,0 @@
-{
-  "extends": "@rsbuild/config/tsconfig",
-  "compilerOptions": {
-    "types": ["@rstest/core/globals"]
-  },
-  "include": ["./**/*.ts"]
-}

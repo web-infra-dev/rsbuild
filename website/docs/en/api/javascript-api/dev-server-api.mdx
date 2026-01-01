@@ -37,7 +37,7 @@ import express from 'express';
 async function startDevServer() {
   // Init Rsbuild
   const rsbuild = await createRsbuild({
-    rsbuildConfig: {
+    config: {
       server: {
         middlewareMode: true,
       },
@@ -63,7 +63,7 @@ async function startDevServer() {
 
 For detailed usage, see:
 
-- [Example code](https://github.com/rspack-contrib/rstack-examples/blob/main/rsbuild/express/server.mjs).
+- [Example code](https://github.com/rstackjs/rstack-examples/blob/main/rsbuild/express/server.mjs).
 - [rsbuild.createDevServer](/api/javascript-api/instance#rsbuildcreatedevserver)
 - [server.middlewareMode](/config/server/middleware-mode)
 
@@ -124,7 +124,8 @@ type RsbuildDevServer = {
   environments: EnvironmentAPI;
   /**
    * The resolved port.
-   * By default, Rsbuild server listens on port `3000` and automatically increments the port number if the port is occupied.
+   * By default, Rsbuild server listens on port `3000` and automatically increments
+   * the port number if the port is occupied.
    */
   port: number;
   /**

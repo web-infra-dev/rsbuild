@@ -199,6 +199,7 @@ export type PluginManager = Pick<
 };
 
 export type RsbuildPluginApplyFn = (
+  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
   this: void,
   /**
    * The original Rsbuild configuration object (before plugin processing)
@@ -299,16 +300,18 @@ type PluginHook<T extends (...args: any[]) => any> = (
 
 type TransformResult =
   | string
+  | Buffer
   | {
-      code: string;
+      code: string | Buffer;
       map?: string | Rspack.RawSourceMap | null;
     };
 
-export type TransformContext = {
+export type TransformContext<Raw extends boolean = false> = {
   /**
    * The code of the module.
+   * When `raw` is true, this will be a Buffer instead of a string.
    */
-  code: string;
+  code: Raw extends true ? Buffer : string;
   /**
    * The directory path of the currently processed module,
    * which changes with the location of each processed module.
@@ -370,19 +373,19 @@ export type TransformContext = {
   resolve: Rspack.LoaderContext['resolve'];
 };
 
-export type TransformHandler = (
-  context: TransformContext,
+export type TransformHandler<Raw extends boolean = false> = (
+  context: TransformContext<Raw>,
 ) => MaybePromise<TransformResult>;
 
 export type TransformDescriptor = {
   /**
-   * Include modules that match the test assertion, the same as `rule.test`
-   * @see https://rspack.rs/config/module#ruletest
+   * Include modules that match the test assertion, the same as `rules[].test`
+   * @see https://rspack.rs/config/module-rules#rulestest
    */
   test?: Rspack.RuleSetCondition;
   /**
    * A condition that matches the resource query.
-   * @see https://rspack.rs/config/module#ruleresourcequery
+   * @see https://rspack.rs/config/module-rules#rulesresourcequery
    */
   resourceQuery?: Rspack.RuleSetCondition;
   /**
@@ -406,31 +409,31 @@ export type TransformDescriptor = {
   /**
    * Marks the layer of the matching module, can be used to group a group of
    * modules into one layer
-   * @see https://rspack.rs/config/module#rulelayer
+   * @see https://rspack.rs/config/module-rules#ruleslayer
    */
   layer?: string;
   /**
    * Matches all modules that match this resource, and will match against layer of
    * the module that issued the current module.
-   * @see https://rspack.rs/config/module#ruleissuerlayer
+   * @see https://rspack.rs/config/module-rules#rulesissuerlayer
    */
   issuerLayer?: string;
   /**
    * Matches all modules that match this resource, and will match against Resource
    * (the absolute path without query and fragment) of the module that issued the
    * current module.
-   * @see https://rspack.rs/config/module#ruleissuer
+   * @see https://rspack.rs/config/module-rules#rulesissuer
    */
   issuer?: Rspack.RuleSetCondition;
   /**
    * Matches [import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with)
-   * @see https://rspack.rs/config/module#rulewith
+   * @see https://rspack.rs/config/module-rules#ruleswith
    */
   with?: Record<string, Rspack.RuleSetCondition>;
   /**
    * Matches modules based on MIME type instead of file extension. It's primarily
    * useful for data URI module (like `data:text/javascript,...`).
-   * @see https://rspack.rs/config/module#rulemimetype
+   * @see https://rspack.rs/config/module-rules#rulesmimetype
    */
   mimetype?: Rspack.RuleSetCondition;
   /**
@@ -444,14 +447,14 @@ export type TransformDescriptor = {
    * transform functions (or Rspack loaders).
    * - When specified as 'post', the transform function will execute after other
    * transform functions (or Rspack loaders).
-   * @see https://rspack.rs/config/module#ruleenforce
+   * @see https://rspack.rs/config/module-rules#rulesenforce
    */
   order?: HookOrder;
 };
 
-export type TransformHook = (
-  descriptor: TransformDescriptor,
-  handler: TransformHandler,
+export type TransformHook = <T extends TransformDescriptor>(
+  descriptor: T,
+  handler: TransformHandler<T['raw'] extends true ? true : false>,
 ) => void;
 
 export type ProcessAssetsStage =
