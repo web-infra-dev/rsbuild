@@ -527,6 +527,8 @@ export function escapeHtml(text: string | null | undefined): string {
 }
 
 export enum HttpCode {
+  Ok = 200,
+  NotModified = 304,
   BadRequest = 400,
   Forbidden = 403,
   NotFound = 404,

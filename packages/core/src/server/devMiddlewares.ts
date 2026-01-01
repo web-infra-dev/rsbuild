@@ -20,6 +20,7 @@ import {
   getHtmlCompletionMiddleware,
   getHtmlFallbackMiddleware,
   getRequestLoggerMiddleware,
+  notFoundMiddleware,
   viewingServedFilesMiddleware,
 } from './middlewares';
 import { createProxyMiddleware } from './proxy';
@@ -172,8 +173,7 @@ const applyDefaultMiddlewares = ({
     middlewares.push(function hotUpdateJsonFallbackMiddleware(req, res, next) {
       // [prevFullHash].hot-update.json will 404 (expected) when rsbuild restart and some file changed
       if (req.url?.endsWith('.hot-update.json') && req.method !== 'OPTIONS') {
-        res.statusCode = 404;
-        res.end();
+        notFoundMiddleware(req, res, next);
       } else {
         next();
       }
