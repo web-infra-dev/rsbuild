@@ -12,7 +12,7 @@ import type {
   Rspack,
 } from '../types';
 import type { BuildManager } from './buildManager';
-import { joinUrlSegments, stripBase } from './helper';
+import { HttpCode, joinUrlSegments, stripBase } from './helper';
 
 export const faviconFallbackMiddleware: RequestHandler = (req, res, next) => {
   if (req.url === '/favicon.ico') {
@@ -72,8 +72,9 @@ export const getRequestLoggerMiddleware: () => Connect.NextHandleFunction =
   };
 
 export const notFoundMiddleware: RequestHandler = (_req, res, _next) => {
-  res.statusCode = 404;
-  res.end();
+  res.statusCode = HttpCode.NotFound;
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.end('This page could not be found');
 };
 
 export const optionsFallbackMiddleware: RequestHandler = (req, res, next) => {
@@ -201,7 +202,7 @@ export const getBaseUrlMiddleware: (params: {
 
     // non-based page visit
     if (req.headers.accept?.includes('text/html')) {
-      res.writeHead(404, {
+      res.writeHead(HttpCode.NotFound, {
         'Content-Type': 'text/html',
       });
       res.end(
@@ -212,7 +213,7 @@ export const getBaseUrlMiddleware: (params: {
     }
 
     // not found for resources
-    res.writeHead(404, {
+    res.writeHead(HttpCode.NotFound, {
       'Content-Type': 'text/plain',
     });
     res.end(
@@ -277,7 +278,7 @@ export const viewingServedFilesMiddleware: (params: {
       return;
     }
 
-    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    res.writeHead(HttpCode.Ok, { 'Content-Type': 'text/html; charset=utf-8' });
     res.write(
       `<!DOCTYPE html>
 <html>

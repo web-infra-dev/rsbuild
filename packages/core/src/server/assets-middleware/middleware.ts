@@ -105,8 +105,8 @@ const parseRangeHeaders = async (
 
 const acceptedMethods = ['GET', 'HEAD'];
 
-function sendError(res: ServerResponse, code: HttpCode): void {
-  const errorMessages: Record<HttpCode, string> = {
+function sendError(res: ServerResponse, code: number): void {
+  const errorMessages: Record<number, string> = {
     [HttpCode.BadRequest]: 'Bad Request',
     [HttpCode.Forbidden]: 'Forbidden',
     [HttpCode.NotFound]: 'Not Found',
@@ -206,7 +206,7 @@ export function createMiddleware(
     function isCachable(): boolean {
       return (
         (res.statusCode >= 200 && res.statusCode < 300) ||
-        res.statusCode === 304
+        res.statusCode === HttpCode.NotModified
       );
     }
 
@@ -364,8 +364,8 @@ export function createMiddleware(
           return;
         }
 
-        if (res.statusCode === 404) {
-          res.statusCode = 200;
+        if (res.statusCode === HttpCode.NotFound) {
+          res.statusCode = HttpCode.Ok;
         }
 
         if (
@@ -377,7 +377,7 @@ export function createMiddleware(
               | undefined,
           })
         ) {
-          res.statusCode = 304;
+          res.statusCode = HttpCode.NotModified;
 
           res.removeHeader('Content-Encoding');
           res.removeHeader('Content-Language');
@@ -452,8 +452,8 @@ export function createMiddleware(
       res.setHeader('Content-Length', byteLength);
 
       if (req.method === 'HEAD') {
-        if (res.statusCode === 404) {
-          res.statusCode = 200;
+        if (res.statusCode === HttpCode.NotFound) {
+          res.statusCode = HttpCode.Ok;
         }
         res.end();
         return;
