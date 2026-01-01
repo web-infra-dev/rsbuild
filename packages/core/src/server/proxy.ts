@@ -6,7 +6,7 @@ import type {
   ProxyConfig,
   ProxyOptions,
 } from '../types';
-import type { UpgradeEvent } from './helper';
+import { HttpCode, type UpgradeEvent } from './helper';
 
 function formatProxyOptions(proxyOptions: ProxyConfig) {
   const ret: ProxyOptions[] = [];
@@ -81,7 +81,7 @@ export const createProxyMiddleware = (
           : null;
 
       if (bypassUrl === false) {
-        res.statusCode = 404;
+        res.statusCode = HttpCode.NotFound;
         next();
       } else if (typeof bypassUrl === 'string') {
         req.url = bypassUrl;
