@@ -104,13 +104,10 @@ jobs:
         if: steps.changes.outputs.changed == 'true'
         run: pnpm install
 
-      - name: E2E Test - 1
-        if: steps.changes.outputs.changed == 'true'
-        run: pnpm run e2e:rspack --shard=1/2
-
-      - name: E2E Test - 2
-        if: steps.changes.outputs.changed == 'true'
-        run: pnpm run e2e:rspack --shard=2/2
+      - name: Run E2E tests
+        uses: docker://mcr.microsoft.com/playwright:v1.57.0-jammy
+        with:
+          args: pnpm run e2e:rspack
 
   # ======== e2e-webpack ========
   e2e-webpack:
@@ -153,10 +150,7 @@ jobs:
         if: steps.changes.outputs.changed == 'true'
         run: pnpm install
 
-      - name: E2E Test - 1
-        if: steps.changes.outputs.changed == 'true'
-        run: pnpm run e2e:webpack --shard=1/2
-
-      - name: E2E Test - 2
-        if: steps.changes.outputs.changed == 'true'
-        run: pnpm run e2e:webpack --shard=2/2
+      - name: Run E2E tests
+        uses: docker://mcr.microsoft.com/playwright:v1.57.0-jammy
+        with:
+          args: pnpm run e2e:webpack
