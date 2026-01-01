@@ -105,6 +105,7 @@ jobs:
         run: pnpm install
 
       - name: Run E2E tests
+        if: steps.changes.outputs.changed == 'true'
         uses: docker://mcr.microsoft.com/playwright:v1.57.0-jammy
         with:
           args: cd e2e && npm run e2e:rspack
@@ -151,6 +152,7 @@ jobs:
         run: pnpm install
 
       - name: Run E2E tests
+        if: steps.changes.outputs.changed == 'true'
         uses: docker://mcr.microsoft.com/playwright:v1.57.0-jammy
         with:
           args: cd e2e && npm run e2e:webpack
