@@ -5,5 +5,5 @@ import { defineConfig } from '@rstest/core';
 export default defineConfig({
   plugins: [pluginVue()],
   testEnvironment: 'happy-dom',
-  setupFiles: ['./rstest.setup.ts'],
+  setupFiles: ['./tests/rstest.setup.ts'],
 });
