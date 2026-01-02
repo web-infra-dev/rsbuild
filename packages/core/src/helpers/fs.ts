@@ -81,8 +81,11 @@ export async function emptyDir(
     await Promise.all(
       entries.map(async (entry) => {
         const fullPath = path.join(dir, entry.name);
-        if (keep.some((reg) => reg.test(toPosixPath(fullPath)))) {
-          return;
+        if (keep.length) {
+          const posixFullPath = toPosixPath(fullPath);
+          if (keep.some((regex) => regex.test(posixFullPath))) {
+            return;
+          }
         }
 
         if (entry.isDirectory()) {
