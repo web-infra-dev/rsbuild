@@ -1,9 +1,9 @@
 import { defineConfig } from '@rsbuild/core';
 
-const createPostcssPlugin = (color) => {
+const createPostcssPlugin = (color: string) => {
   const plugin = () => ({
     postcssPlugin: 'simple-postcss-plugin',
-    Declaration(decl) {
+    Declaration(decl: { value: unknown }) {
       if (typeof decl.value === 'string') {
         decl.value = decl.value.replace(/red/g, color);
       }

@@ -106,7 +106,11 @@ jobs:
 
       - name: Run E2E tests
         if: steps.changes.outputs.changed == 'true'
-        run: npm run e2e:rspack
+        run: pnpm run e2e:rspack
+
+      - name: Run E2E type checker
+        if: steps.changes.outputs.changed == 'true'
+        run: cd e2e && pnpm run type-check
 
   # ======== e2e-webpack ========
   e2e-webpack:
@@ -151,4 +155,4 @@ jobs:
 
       - name: Run E2E tests
         if: steps.changes.outputs.changed == 'true'
-        run: npm run e2e:webpack
+        run: pnpm run e2e:webpack
