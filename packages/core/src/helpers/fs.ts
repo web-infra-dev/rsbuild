@@ -64,6 +64,9 @@ export async function fileExistsByCompilation(
   });
 }
 
+/**
+ * Read file asynchronously using Rspack compiler's filesystem.
+ */
 export function readFileAsync(
   fs: NonNullable<
     Rspack.Compilation['inputFileSystem'] | Rspack.OutputFileSystem
