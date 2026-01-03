@@ -1,5 +1,4 @@
 import path from 'node:path';
-import { promisify } from 'node:util';
 import type { StackFrame } from 'stacktrace-parser';
 import type {
   InvalidOriginalMapping,
@@ -8,6 +7,7 @@ import type {
 } from '../../compiled/@jridgewell/trace-mapping';
 import { SCRIPT_REGEX } from '../constants';
 import { color, isRspackRuntimeModule } from '../helpers';
+import { readFileAsync } from '../helpers/fs';
 import { requireCompiledPackage } from '../helpers/vendors';
 import { isVerbose, logger } from '../logger';
 import type { BrowserLogsStackTrace, InternalContext, Rspack } from '../types';
@@ -70,13 +70,7 @@ const parseFrame = async (
     let tracer = cachedTraceMap.get(sourceMapPath);
 
     if (!tracer) {
-      const readFile = promisify(fs.readFile);
-      const sourceMap = await readFile(sourceMapPath);
-
-      if (!sourceMap) {
-        return;
-      }
-
+      const sourceMap = await readFileAsync(fs, sourceMapPath);
       tracer = new TraceMap(sourceMap.toString());
       cachedTraceMap.set(sourceMapPath, tracer);
     }
