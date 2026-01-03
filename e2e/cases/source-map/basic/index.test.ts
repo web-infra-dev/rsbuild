@@ -3,6 +3,7 @@ import path, { join } from 'node:path';
 import {
   type Build,
   expect,
+  findFile,
   getFileContent,
   mapSourceMapPositions,
   rspackTest,
@@ -174,6 +175,7 @@ rspackTest(
     const rsbuild = await build({
       config: {
         output: {
+          filenameHash: false,
           sourceMap: {
             js: false,
             css: true,
@@ -192,5 +194,21 @@ rspackTest(
     );
     expect(jsMapPaths.length).toEqual(0);
     expect(cssMapFiles.length).toBeGreaterThan(0);
+
+    const cssSourceMap = findFile(files, 'index.css.map');
+    const cssSourceContent = readFileSync(
+      join(cwd, './src/index.css'),
+      'utf-8',
+    );
+
+    expect(JSON.parse(files[cssSourceMap])).toEqual({
+      file: 'static/css/index.css',
+      // cspell: disable-next-line
+      mappings: 'AADA',
+      names: [],
+      sources: ['../../../src/index.css'],
+      sourcesContent: [cssSourceContent],
+      version: 3,
+    });
   },
 );
