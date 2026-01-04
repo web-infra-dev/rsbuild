@@ -165,12 +165,12 @@ export const pluginSwc = (): RsbuildPlugin => ({
 
         // apply polyfill
         if (isWebTarget(target)) {
-          const polyfillMode = config.output.polyfill;
+          const { polyfill } = config.output;
 
-          if (polyfillMode !== 'off') {
-            swcConfig.env!.mode = polyfillMode;
+          if (polyfill !== 'off') {
+            swcConfig.env!.mode = polyfill;
 
-            const coreJsDir = applyCoreJs(swcConfig, polyfillMode);
+            const coreJsDir = applyCoreJs(swcConfig, polyfill);
             for (const item of [rule, dataUriRule]) {
               item.resolve.alias.set('core-js', coreJsDir);
             }
