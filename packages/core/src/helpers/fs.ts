@@ -80,7 +80,10 @@ export function readFileAsync(
         return;
       }
       if (data === undefined) {
-        throw new Error(`Failed to read file: ${filename}, data is undefined`);
+        reject(
+          new Error(`Failed to read file: ${filename}, data is undefined`),
+        );
+        return;
       }
       resolve(data);
     });
