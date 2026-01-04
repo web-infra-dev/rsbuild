@@ -168,7 +168,9 @@ export const pluginSwc = (): RsbuildPlugin => ({
           const polyfillMode = config.output.polyfill;
 
           if (polyfillMode === 'off') {
-            swcConfig.env!.mode = undefined;
+            if (swcConfig.env?.mode) {
+              delete swcConfig.env.mode;
+            }
           } else {
             swcConfig.env!.mode = polyfillMode;
 
@@ -179,16 +181,28 @@ export const pluginSwc = (): RsbuildPlugin => ({
           }
         }
 
-        const mergedSwcConfig = reduceConfigs({
+        const mergedConfig = reduceConfigs({
           initial: swcConfig,
           config: config.tools.swc,
           mergeFn: deepmerge,
         });
 
+        // `jsc.target` and `env.targets` cannot be set at the same time
+        // remove `env.targets` if `jsc.target` is set
+        if (
+          mergedConfig.jsc?.target !== undefined &&
+          mergedConfig.env?.targets !== undefined
+        ) {
+          delete mergedConfig.env.targets;
+          if (Object.keys(mergedConfig.env).length === 0) {
+            delete mergedConfig.env;
+          }
+        }
+
         rule
           .use(CHAIN_ID.USE.SWC)
           .loader(builtinSwcLoaderName)
-          .options(mergedSwcConfig);
+          .options(mergedConfig);
 
         /**
          * If a script is imported with data URI, it can be compiled by babel too.
@@ -204,7 +218,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
           .use(CHAIN_ID.USE.SWC)
           .loader(builtinSwcLoaderName)
           // Using cloned options to keep options separate from each other
-          .options(cloneDeep(mergedSwcConfig));
+          .options(cloneDeep(mergedConfig));
       },
     });
   },
