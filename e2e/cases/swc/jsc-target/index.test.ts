@@ -10,7 +10,7 @@ rspackTest(
   },
 );
 
-rspackTest('should jsc.target correctly in build', async ({ build }) => {
+rspackTest('should configure jsc.target correctly in build', async ({ build }) => {
   const rsbuild = await build();
   const files = rsbuild.getDistFiles();
   const content = getFileContent(files, 'index.js');
