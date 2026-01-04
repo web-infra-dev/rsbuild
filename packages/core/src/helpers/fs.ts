@@ -64,6 +64,32 @@ export async function fileExistsByCompilation(
   });
 }
 
+/**
+ * Read file asynchronously using Rspack compiler's filesystem.
+ */
+export function readFileAsync(
+  fs: NonNullable<
+    Rspack.Compilation['inputFileSystem'] | Rspack.OutputFileSystem
+  >,
+  filename: string,
+): Promise<Buffer | string> {
+  return new Promise((resolve, reject) => {
+    fs.readFile(filename, (err, data) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      if (data === undefined) {
+        reject(
+          new Error(`Failed to read file: ${filename}, data is undefined`),
+        );
+        return;
+      }
+      resolve(data);
+    });
+  });
+}
+
 export async function emptyDir(
   dir: string,
   keep: RegExp[] = [],

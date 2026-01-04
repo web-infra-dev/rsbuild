@@ -1,8 +1,8 @@
 import path from 'node:path';
-import { promisify } from 'node:util';
 import type { Compilation, Compiler } from '@rspack/core';
 import { color, isFunction, partition } from '../helpers';
 import { addCompilationError } from '../helpers/compiler';
+import { readFileAsync } from '../helpers/fs';
 import { ensureAssetPrefix, isURL } from '../helpers/url';
 import { logger } from '../logger';
 import type {
@@ -271,7 +271,8 @@ export class RsbuildHtmlPlugin {
         return name;
       }
 
-      if (!compilation.inputFileSystem) {
+      const inputFs = compilation.inputFileSystem;
+      if (!inputFs) {
         addCompilationError(
           compilation,
           `${color.dim('[rsbuild:html]')} Failed to read the favicon file as ${color.yellow(
@@ -285,15 +286,10 @@ export class RsbuildHtmlPlugin {
         ? favicon
         : path.join(compilation.compiler.context, favicon);
 
-      let buffer: Buffer | undefined;
+      let fileContent: Buffer | string | undefined;
 
       try {
-        buffer = await promisify(compilation.inputFileSystem.readFile)(
-          inputFilename,
-        );
-        if (!buffer) {
-          throw new Error('Buffer is undefined');
-        }
+        fileContent = await readFileAsync(inputFs, inputFilename);
       } catch (error) {
         logger.debug(`read favicon error: ${error}`);
 
@@ -306,7 +302,7 @@ export class RsbuildHtmlPlugin {
         return null;
       }
 
-      const source = new compiler.webpack.sources.RawSource(buffer, false);
+      const source = new compiler.webpack.sources.RawSource(fileContent, false);
       const outputFilename = path.posix.join(faviconDistPath, name);
       compilation.emitAsset(outputFilename, source);
 

@@ -4,7 +4,6 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { promisify } from 'node:util';
 import zlib from 'node:zlib';
 import { JS_REGEX } from '../constants';
 import { color, hash } from '../helpers';
@@ -46,10 +45,16 @@ type FormattedAsset = {
   gzipSizeLabel: string | null;
 };
 
-const gzip = promisify(zlib.gzip);
-
 async function gzipSize(input: Buffer | string) {
-  const data = await gzip(input);
+  const data = await new Promise<Buffer>((resolve, reject) => {
+    zlib.gzip(input, (err, result) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(result);
+    });
+  });
   return Buffer.byteLength(data);
 }
 

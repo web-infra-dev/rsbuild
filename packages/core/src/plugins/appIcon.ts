@@ -1,11 +1,10 @@
 import path from 'node:path';
-import { promisify } from 'node:util';
 import { color, pick } from '../helpers';
 import {
   addCompilationError,
   getPublicPathFromCompiler,
 } from '../helpers/compiler';
-import { fileExistsByCompilation } from '../helpers/fs';
+import { fileExistsByCompilation, readFileAsync } from '../helpers/fs';
 import { ensureAssetPrefix, isURL } from '../helpers/url';
 import { requireCompiledPackage } from '../helpers/vendors';
 import type { AppIconItem, HtmlBasicTag, RsbuildPlugin } from '../types';
@@ -137,19 +136,10 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
               continue;
             }
 
-            const source = await promisify(
-              compilation.inputFileSystem.readFile,
-            )(icon.absolutePath);
-
-            if (!source) {
-              addCompilationError(
-                compilation,
-                `${color.dim('[rsbuild:app-icon]')} Failed to read the icon file at ${color.yellow(
-                  icon.absolutePath,
-                )}.`,
-              );
-              continue;
-            }
+            const source = await readFileAsync(
+              compilation.inputFileSystem,
+              icon.absolutePath,
+            );
 
             compilation.emitAsset(
               icon.relativePath,
