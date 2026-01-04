@@ -183,16 +183,14 @@ export const pluginSwc = (): RsbuildPlugin => ({
           mergeFn: deepmerge,
         });
 
-        // `jsc.target` and `env.targets` cannot be set at the same time
-        // remove `env.targets` if `jsc.target` is set
+        // `jsc.target` and `env` cannot be set at the same time
+        // remove the built-in `env.targets` if `jsc.target` is set
         if (
           mergedConfig.jsc?.target !== undefined &&
-          mergedConfig.env?.targets !== undefined
+          mergedConfig.env?.targets !== undefined &&
+          Object.keys(mergedConfig.env).length === 1
         ) {
-          delete mergedConfig.env.targets;
-          if (Object.keys(mergedConfig.env).length === 0) {
-            delete mergedConfig.env;
-          }
+          delete mergedConfig.env;
         }
 
         rule
