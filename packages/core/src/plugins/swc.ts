@@ -167,11 +167,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
         if (isWebTarget(target)) {
           const polyfillMode = config.output.polyfill;
 
-          if (polyfillMode === 'off') {
-            if (swcConfig.env?.mode) {
-              delete swcConfig.env.mode;
-            }
-          } else {
+          if (polyfillMode !== 'off') {
             swcConfig.env!.mode = polyfillMode;
 
             const coreJsDir = applyCoreJs(swcConfig, polyfillMode);
