@@ -34,7 +34,6 @@ exports[`plugin-swc > should add browserslist 1`] = `
                   "typeExports": true,
                 },
                 "env": {
-                  "mode": undefined,
                   "targets": [
                     "chrome 98",
                   ],
@@ -87,7 +86,6 @@ exports[`plugin-swc > should add browserslist 1`] = `
                   "typeExports": true,
                 },
                 "env": {
-                  "mode": undefined,
                   "targets": [
                     "chrome 98",
                   ],
@@ -161,7 +159,6 @@ exports[`plugin-swc > should add pluginImport 1`] = `
                   "typeExports": true,
                 },
                 "env": {
-                  "mode": undefined,
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -224,7 +221,6 @@ exports[`plugin-swc > should add pluginImport 1`] = `
                   "typeExports": true,
                 },
                 "env": {
-                  "mode": undefined,
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -357,7 +353,6 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader 
             "typeExports": true,
           },
           "env": {
-            "mode": undefined,
             "targets": [
               "chrome >= 87",
               "edge >= 88",
@@ -413,7 +408,6 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader 
             "typeExports": true,
           },
           "env": {
-            "mode": undefined,
             "targets": [
               "chrome >= 87",
               "edge >= 88",
@@ -754,7 +748,6 @@ exports[`plugin-swc > should apply pluginImport correctly when ConfigChain 1`] =
                   "typeExports": true,
                 },
                 "env": {
-                  "mode": undefined,
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -820,7 +813,6 @@ exports[`plugin-swc > should apply pluginImport correctly when ConfigChain 1`] =
                   "typeExports": true,
                 },
                 "env": {
-                  "mode": undefined,
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -907,7 +899,6 @@ exports[`plugin-swc > should disable pluginImport when return undefined 1`] = `
                   "typeExports": true,
                 },
                 "env": {
-                  "mode": undefined,
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -963,7 +954,6 @@ exports[`plugin-swc > should disable pluginImport when return undefined 1`] = `
                   "typeExports": true,
                 },
                 "env": {
-                  "mode": undefined,
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -1165,7 +1155,6 @@ exports[`plugin-swc > should disable preset_env mode 1`] = `
                   "typeExports": true,
                 },
                 "env": {
-                  "mode": undefined,
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -1221,7 +1210,6 @@ exports[`plugin-swc > should disable preset_env mode 1`] = `
                   "typeExports": true,
                 },
                 "env": {
-                  "mode": undefined,
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",

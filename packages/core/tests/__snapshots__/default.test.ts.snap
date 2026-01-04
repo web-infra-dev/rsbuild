@@ -149,7 +149,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "typeExports": true,
               },
               "env": {
-                "mode": undefined,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -205,7 +204,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "typeExports": true,
               },
               "env": {
-                "mode": undefined,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -666,7 +664,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "typeExports": true,
               },
               "env": {
-                "mode": undefined,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -722,7 +719,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "typeExports": true,
               },
               "env": {
-                "mode": undefined,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1654,7 +1650,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "typeExports": true,
               },
               "env": {
-                "mode": undefined,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1710,7 +1705,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "typeExports": true,
               },
               "env": {
-                "mode": undefined,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",

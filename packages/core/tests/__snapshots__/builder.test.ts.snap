@@ -149,7 +149,6 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
                 "typeExports": true,
               },
               "env": {
-                "mode": undefined,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -205,7 +204,6 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
                 "typeExports": true,
               },
               "env": {
-                "mode": undefined,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",

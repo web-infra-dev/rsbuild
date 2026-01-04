@@ -29,7 +29,6 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
           "typeExports": true,
         },
         "env": {
-          "mode": undefined,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -119,7 +118,6 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
           "typeExports": true,
         },
         "env": {
-          "mode": undefined,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -294,7 +292,6 @@ exports[`plugins/babel > should set babel-loader 1`] = `
           "typeExports": true,
         },
         "env": {
-          "mode": undefined,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -381,7 +378,6 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
           "typeExports": true,
         },
         "env": {
-          "mode": undefined,
           "targets": [
             "chrome >= 87",
             "edge >= 88",

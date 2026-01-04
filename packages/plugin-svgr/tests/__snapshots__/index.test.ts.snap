@@ -30,7 +30,6 @@ exports[`svgr > configure SVGR options 1`] = `
               "typeExports": true,
             },
             "env": {
-              "mode": undefined,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -134,7 +133,6 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
               "typeExports": true,
             },
             "env": {
-              "mode": undefined,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -206,7 +204,6 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
               "typeExports": true,
             },
             "env": {
-              "mode": undefined,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -309,7 +306,6 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
               "typeExports": true,
             },
             "env": {
-              "mode": undefined,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -381,7 +377,6 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
               "typeExports": true,
             },
             "env": {
-              "mode": undefined,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -484,7 +479,6 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
               "typeExports": true,
             },
             "env": {
-              "mode": undefined,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -556,7 +550,6 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
               "typeExports": true,
             },
             "env": {
-              "mode": undefined,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -659,7 +652,6 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
               "typeExports": true,
             },
             "env": {
-              "mode": undefined,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -731,7 +723,6 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
               "typeExports": true,
             },
             "env": {
-              "mode": undefined,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
