@@ -72,3 +72,12 @@ export default {
 :::tip
 The object returned by the `tools.swc` function will be used directly as the final `builtin:swc-loader` option, and will not be merged with the built-in `builtin:swc-loader` option anymore.
 :::
+
+## Configuration conflicts
+
+In the SWC configuration, `jsc.target` (which specifies the ECMAScript version, such as `es2015`) and `env` cannot coexist.
+
+To avoid conflicts, Rsbuild adopts the following handling strategies:
+
+- If Rsbuild detects that you have manually set `jsc.target` in `tools.swc`, it will automatically remove the built-in `env.targets`.
+- If [output.polyfill](/config/output/polyfill) is configured, Rsbuild will set `env.mode`. In this case, you cannot use `jsc.target`.
