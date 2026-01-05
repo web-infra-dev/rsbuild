@@ -364,6 +364,78 @@ test('should not inline scripts or styles in dev by default when enable is unset
   ).resolves.toEqual(1);
 });
 
+test('should inline assets independently for multiple environments', async ({
+  build,
+}) => {
+  const rsbuild = await build({
+    config: {
+      environments: {
+        web: {
+          source: {
+            entry: {
+              index: './src/index.js',
+            },
+          },
+          output: {
+            filenameHash: false,
+            distPath: { root: 'dist/web' },
+            inlineScripts: true,
+            inlineStyles: true,
+          },
+        },
+        web1: {
+          source: {
+            entry: {
+              index: './src/index.js',
+            },
+          },
+          output: {
+            filenameHash: false,
+            distPath: { root: 'dist/web1' },
+            inlineScripts: true,
+            inlineStyles: true,
+          },
+        },
+      },
+      tools: toolsConfig,
+    },
+  });
+
+  const files = rsbuild.getDistFiles();
+
+  const getHtml = (root: string) => {
+    const htmlPath = Object.keys(files).find(
+      (file) => file.includes(root) && file.endsWith('/index.html'),
+    );
+    expect(htmlPath).toBeTruthy();
+    return files[htmlPath!];
+  };
+
+  const webHtml = getHtml('/dist/web/');
+  const web1Html = getHtml('/dist/web1/');
+
+  expect(webHtml).toContain('window.test');
+  expect(web1Html).toContain('window.test');
+
+  const countJs = (root: string) =>
+    Object.keys(files).filter(
+      (file) =>
+        file.includes(root) &&
+        file.endsWith('.js') &&
+        !file.includes('/async/'),
+    ).length;
+
+  const countCss = (root: string) =>
+    Object.keys(files).filter(
+      (file) => file.includes(root) && file.endsWith('.css'),
+    ).length;
+
+  expect(countJs('/dist/web/')).toEqual(0);
+  expect(countJs('/dist/web1/')).toEqual(0);
+  expect(countCss('/dist/web/')).toEqual(0);
+  expect(countCss('/dist/web1/')).toEqual(0);
+});
+
 test('should update source mapping URL in build', async ({ build }) => {
   const assetPrefix = 'https://example.com/base/';
   const rsbuild = await build({
