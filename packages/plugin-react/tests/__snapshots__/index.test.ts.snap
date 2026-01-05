@@ -33,7 +33,6 @@ exports[`plugins/react > should configuring \`tools.swc\` to override react runt
             "typeExports": true,
           },
           "env": {
-            "mode": undefined,
             "targets": [
               "chrome >= 87",
               "edge >= 88",
@@ -162,7 +161,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
             "typeExports": true,
           },
           "env": {
-            "mode": undefined,
             "targets": [
               "chrome >= 87",
               "edge >= 88",

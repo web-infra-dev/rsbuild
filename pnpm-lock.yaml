@@ -295,7 +295,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/core
 
-  e2e/cases/swc-plugin:
+  e2e/cases/swc/swc-plugin:
     dependencies:
       '@swc/plugin-remove-console':
         specifier: ^12.3.0

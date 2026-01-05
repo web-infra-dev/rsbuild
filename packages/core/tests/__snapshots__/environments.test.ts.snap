@@ -1607,7 +1607,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                   "typeExports": true,
                 },
                 "env": {
-                  "mode": undefined,
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -1663,7 +1662,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                   "typeExports": true,
                 },
                 "env": {
-                  "mode": undefined,
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",

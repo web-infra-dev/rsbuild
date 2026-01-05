@@ -165,30 +165,38 @@ export const pluginSwc = (): RsbuildPlugin => ({
 
         // apply polyfill
         if (isWebTarget(target)) {
-          const polyfillMode = config.output.polyfill;
+          const { polyfill } = config.output;
 
-          if (polyfillMode === 'off') {
-            swcConfig.env!.mode = undefined;
-          } else {
-            swcConfig.env!.mode = polyfillMode;
+          if (polyfill !== 'off') {
+            swcConfig.env!.mode = polyfill;
 
-            const coreJsDir = applyCoreJs(swcConfig, polyfillMode);
+            const coreJsDir = applyCoreJs(swcConfig, polyfill);
             for (const item of [rule, dataUriRule]) {
               item.resolve.alias.set('core-js', coreJsDir);
             }
           }
         }
 
-        const mergedSwcConfig = reduceConfigs({
+        const mergedConfig = reduceConfigs({
           initial: swcConfig,
           config: config.tools.swc,
           mergeFn: deepmerge,
         });
 
+        // `jsc.target` and `env` cannot be set at the same time
+        // remove the built-in `env.targets` if `jsc.target` is set
+        if (
+          mergedConfig.jsc?.target !== undefined &&
+          mergedConfig.env?.targets !== undefined &&
+          Object.keys(mergedConfig.env).length === 1
+        ) {
+          delete mergedConfig.env;
+        }
+
         rule
           .use(CHAIN_ID.USE.SWC)
           .loader(builtinSwcLoaderName)
-          .options(mergedSwcConfig);
+          .options(mergedConfig);
 
         /**
          * If a script is imported with data URI, it can be compiled by babel too.
@@ -204,7 +212,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
           .use(CHAIN_ID.USE.SWC)
           .loader(builtinSwcLoaderName)
           // Using cloned options to keep options separate from each other
-          .options(cloneDeep(mergedSwcConfig));
+          .options(cloneDeep(mergedConfig));
       },
     });
   },
