@@ -80,4 +80,4 @@ In the SWC configuration, `jsc.target` (which specifies the ECMAScript version, 
 To avoid conflicts, Rsbuild adopts the following handling strategies:
 
 - If Rsbuild detects that you have manually set `jsc.target` in `tools.swc`, it will automatically remove the built-in `env.targets`.
-- If [output.polyfill](/config/output/polyfill) is configured, Rsbuild will set `env.mode`. In this case, you cannot use `jsc.target`.
+- If [output.polyfill](/config/output/polyfill) is configured, Rsbuild will force set `env.mode`. In this case, you cannot use `jsc.target`.
