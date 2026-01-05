@@ -108,12 +108,22 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
   name: 'rsbuild:inline-chunk',
 
   setup(api) {
-    const inlinedAssets = new Set<string>();
+    const inlineAssetsByEnvironment = new Map<string, Set<string>>();
+
+    const getInlinedAssetsSet = (name: string) => {
+      let set = inlineAssetsByEnvironment.get(name);
+      if (!set) {
+        set = new Set<string>();
+        inlineAssetsByEnvironment.set(name, set);
+      }
+      return set;
+    };
 
     const getInlinedScriptTag = (
       publicPath: string,
       tag: HtmlBasicTag,
       compilation: Rspack.Compilation,
+      inlinedAssets: Set<string>,
       scriptTests: InlineChunkTest[],
       config: NormalizedEnvironmentConfig,
     ) => {
@@ -163,6 +173,7 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
       publicPath: string,
       tag: HtmlBasicTag,
       compilation: Rspack.Compilation,
+      inlinedAssets: Set<string>,
       styleTests: InlineChunkTest[],
       config: NormalizedEnvironmentConfig,
     ) => {
@@ -210,6 +221,7 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
       publicPath: string,
       tag: HtmlBasicTag,
       compilation: Rspack.Compilation,
+      inlinedAssets: Set<string>,
       scriptTests: InlineChunkTest[],
       styleTests: InlineChunkTest[],
       config: NormalizedEnvironmentConfig,
@@ -219,6 +231,7 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
           publicPath,
           tag,
           compilation,
+          inlinedAssets,
           scriptTests,
           config,
         );
@@ -228,6 +241,7 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
           publicPath,
           tag,
           compilation,
+          inlinedAssets,
           styleTests,
           config,
         );
@@ -243,8 +257,9 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
          */
         stage: 'summarize',
       },
-      ({ compiler, compilation }) => {
-        if (inlinedAssets.size === 0) {
+      ({ compiler, compilation, environment }) => {
+        const inlinedAssets = inlineAssetsByEnvironment.get(environment.name);
+        if (!inlinedAssets || inlinedAssets.size === 0) {
           return;
         }
 
@@ -253,10 +268,14 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
         const hasSourceMap =
           devtool !== 'hidden-source-map' && devtool !== false;
         for (const name of inlinedAssets) {
+          const asset = compilation.assets[name];
+          if (!asset) {
+            continue;
+          }
           // Preserve source maps of inlined assets. Setting `related.sourceMap` to `null` prevents
           // `deleteAsset` from removing the source map file.
           if (hasSourceMap) {
-            compilation.updateAsset(name, compilation.assets[name], {
+            compilation.updateAsset(name, asset, {
               related: { sourceMap: null },
             });
           }
@@ -275,6 +294,8 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
           return { headTags, bodyTags };
         }
 
+        const inlinedAssets = getInlinedAssetsSet(environment.name);
+
         const { scriptTests, styleTests } = getInlineTests(config);
 
         if (!scriptTests.length && !styleTests.length) {
@@ -288,6 +309,7 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
             publicPath,
             tag,
             compilation,
+            inlinedAssets,
             scriptTests,
             styleTests,
             environment.config,
