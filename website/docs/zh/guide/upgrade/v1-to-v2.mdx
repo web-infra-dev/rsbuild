@@ -3,3 +3,12 @@
 当前文档列出了从 Rsbuild 1.x 到 2.0 的所有不兼容更新，你可以参考此文档来迁移。
 
 > 本指南仍在持续完善中。随着 Rsbuild 2.0 Beta 的推进，相关内容将逐步补充。
+
+## 移除 webpack 支持
+
+Rsbuild 2.0 不再支持使用 webpack 作为打包工具。在 Rsbuild 1.x 版本中，该能力主要用于验证 Rspack 与 webpack 之间的兼容性。随着 Rspack 的逐步成熟和稳定，这一用途已不再必要，因此相关支持被正式移除。
+
+具体变更如下：
+
+- 不再提供 `@rsbuild/webpack` 包。
+- 不再提供 `@rsbuild/plugin-webpack-swc` 包。
