@@ -8,6 +8,7 @@ import { removeLeadingSlash } from './helpers/url';
 import type { TransformLoaderOptions } from './loader/transformLoader';
 import { logger } from './logger';
 import { isEnvironmentMatch } from './pluginManager';
+import { rspack } from './rspack';
 import type {
   GetRsbuildConfig,
   InternalContext,
@@ -41,11 +42,8 @@ export function getHTMLPathByEntry(
   return removeLeadingSlash(posix.join(prefix, filename));
 }
 
-const mapProcessAssetsStage = (
-  compiler: Compiler,
-  stage: ProcessAssetsStage,
-) => {
-  const { Compilation } = compiler.webpack;
+const mapProcessAssetsStage = (stage: ProcessAssetsStage) => {
+  const { Compilation } = rspack;
   switch (stage) {
     case 'additional':
       return Compilation.PROCESS_ASSETS_STAGE_ADDITIONAL;
@@ -198,7 +196,7 @@ export function initPluginAPI({
             childCompiler.__rsbuildTransformer = transformer;
           });
 
-          const { sources } = compiler.webpack;
+          const { sources } = rspack;
 
           for (const {
             descriptor,
@@ -224,7 +222,7 @@ export function initPluginAPI({
             compilation.hooks.processAssets.tapPromise(
               {
                 name: pluginName,
-                stage: mapProcessAssetsStage(compiler, descriptor.stage),
+                stage: mapProcessAssetsStage(descriptor.stage),
               },
               async (assets) =>
                 handler({

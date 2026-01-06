@@ -1,4 +1,5 @@
 import { DEFAULT_ASSET_PREFIX } from '../constants';
+import { rspack } from '../rspack';
 import type { Rspack } from '../types';
 
 export const isMultiCompiler = (
@@ -39,7 +40,5 @@ export const addCompilationError = (
   compilation: Rspack.Compilation,
   message: string,
 ): void => {
-  compilation.errors.push(
-    new compilation.compiler.webpack.WebpackError(message),
-  );
+  compilation.errors.push(new rspack.WebpackError(message));
 };

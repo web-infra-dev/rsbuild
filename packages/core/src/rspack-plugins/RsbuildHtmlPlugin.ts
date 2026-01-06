@@ -5,6 +5,7 @@ import { addCompilationError } from '../helpers/compiler';
 import { readFileAsync } from '../helpers/fs';
 import { ensureAssetPrefix, isURL } from '../helpers/url';
 import { logger } from '../logger';
+import { rspack } from '../rspack';
 import type {
   EnvironmentContext,
   HtmlBasicTag,
@@ -302,7 +303,7 @@ export class RsbuildHtmlPlugin {
         return null;
       }
 
-      const source = new compiler.webpack.sources.RawSource(fileContent, false);
+      const source = new rspack.sources.RawSource(fileContent, false);
       const outputFilename = path.posix.join(faviconDistPath, name);
       compilation.emitAsset(outputFilename, source);
 

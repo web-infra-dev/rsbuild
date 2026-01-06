@@ -14,6 +14,7 @@ import { createVirtualModule, pick } from '../../helpers';
 import { applyToCompiler, isMultiCompiler } from '../../helpers/compiler';
 import { toPosixPath } from '../../helpers/path';
 import { logger } from '../../logger';
+import { rspack } from '../../rspack';
 import type {
   InternalContext,
   NormalizedConfig,
@@ -188,11 +189,9 @@ init(
 )
 `;
 
-  new compiler.webpack.EntryPlugin(
-    compiler.context,
-    createVirtualModule(hmrEntry),
-    { name: undefined },
-  ).apply(compiler);
+  new rspack.EntryPlugin(compiler.context, createVirtualModule(hmrEntry), {
+    name: undefined,
+  }).apply(compiler);
 }
 
 /**

@@ -1,5 +1,6 @@
 import { createVirtualModule } from '../helpers';
 import { applyToCompiler } from '../helpers/compiler';
+import { rspack } from '../rspack';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginNonce = (): RsbuildPlugin => ({
@@ -32,7 +33,7 @@ export const pluginNonce = (): RsbuildPlugin => ({
         const injectCode = createVirtualModule(
           `__webpack_nonce__ = "${nonce}";`,
         );
-        new compiler.webpack.EntryPlugin(compiler.context, injectCode, {
+        new rspack.EntryPlugin(compiler.context, injectCode, {
           name: undefined,
         }).apply(compiler);
       });
