@@ -21,23 +21,10 @@ function applyAlias({
   config: NormalizedEnvironmentConfig;
   rootPath: string;
 }) {
-  let mergedAlias = reduceConfigs({
+  const mergedAlias = reduceConfigs({
     initial: {},
     config: config.resolve.alias,
   });
-
-  // TODO: remove `source.alias` in the next major version
-  if (config.source.alias) {
-    logger.warn(
-      `${color.dim('[rsbuild:config]')} The ${color.yellow(
-        '"source.alias"',
-      )} config is deprecated, use ${color.yellow('"resolve.alias"')} instead.`,
-    );
-    mergedAlias = reduceConfigs({
-      initial: mergedAlias,
-      config: config.source.alias,
-    });
-  }
 
   if (config.resolve.dedupe) {
     for (const pkgName of config.resolve.dedupe) {

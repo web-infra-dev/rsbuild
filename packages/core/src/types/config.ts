@@ -229,11 +229,6 @@ export type Decorators = {
 
 export interface SourceConfig {
   /**
-   * @deprecated Use `resolve.alias` instead.
-   * `source.alias` will be removed in v2.0.0.
-   */
-  alias?: ConfigChain<Alias>;
-  /**
    * @deprecated Use `resolve.aliasStrategy` instead.
    * `source.aliasStrategy` will be removed in v2.0.0.
    */

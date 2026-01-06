@@ -4,6 +4,21 @@ This document lists all breaking changes from Rsbuild 1.x to 2.0. Use it as a mi
 
 > This guide is a work in progress. Content will be added incrementally as Rsbuild 2.0 beta evolves.
 
+## Remove `source.alias`
+
+The deprecated `source.alias` option has been removed. Use [resolve.alias](/config/resolve/alias) instead.
+
+```diff
+export default {
+- source: {
++ resolve: {
+    alias: {
+      '@': './src',
+    },
+  },
+};
+```
+
 ## Dropping webpack support
 
 Rsbuild 2.0 no longer supports using webpack as the bundler. In Rsbuild 1.x, this capability was mainly used to validate compatibility between Rspack and webpack. As Rspack has gradually matured and stabilized, this purpose is no longer necessary, so the related support has been removed.
