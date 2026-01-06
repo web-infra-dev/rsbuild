@@ -49,7 +49,6 @@ import { pluginSri } from './plugins/sri';
 import { pluginSwc } from './plugins/swc';
 import { pluginTarget } from './plugins/target';
 import { pluginWasm } from './plugins/wasm';
-import * as providerHelpers from './provider/helpers';
 import { initRsbuildConfig } from './provider/initConfigs';
 import { rspackProvider } from './provider/provider';
 import { startProdServer } from './server/prodServer';
@@ -207,7 +206,6 @@ export async function createRsbuild(
     context,
     pluginManager,
     rsbuildOptions: resolvedOptions,
-    helpers: providerHelpers,
   });
 
   const preview = async (options: PreviewOptions = {}) => {

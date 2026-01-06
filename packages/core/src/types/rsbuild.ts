@@ -1,6 +1,5 @@
 import type { Compiler, MultiCompiler } from '@rspack/core';
 import type { LoadEnvOptions } from '../loadEnv';
-import type * as providerHelpers from '../provider/helpers';
 import type { RsbuildDevServer } from '../server/devServer';
 import type { StartServerResult } from '../server/helper';
 import type {
@@ -195,13 +194,10 @@ export type ProviderInstance = Pick<
   inspectConfig: InspectConfig;
 };
 
-export type RsbuildProviderHelpers = typeof providerHelpers;
-
 export type RsbuildProvider = (options: {
   context: InternalContext;
   pluginManager: PluginManager;
   rsbuildOptions: ResolvedCreateRsbuildOptions;
-  helpers: RsbuildProviderHelpers;
 }) => Promise<ProviderInstance> | ProviderInstance;
 
 export type AddPluginsOptions = {
