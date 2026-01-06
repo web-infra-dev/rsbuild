@@ -79,9 +79,6 @@ export const pluginCache = (): RsbuildPlugin => ({
 
     api.modifyBundlerChain(async (chain, { environment, env }) => {
       const { config } = environment;
-
-      // Enable webpack persistent cache by default
-      // Rspack's persistent cache is still experimental and should be manually enabled
       const { buildCache = false } = config.performance;
 
       if (buildCache === false) {

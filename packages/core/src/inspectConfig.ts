@@ -19,7 +19,6 @@ import type {
   PluginManager,
   RsbuildPlugin,
   Rspack,
-  WebpackConfig,
 } from './types';
 
 const normalizePluginObject = (plugin: RsbuildPlugin): RsbuildPlugin => {
@@ -95,9 +94,7 @@ export async function outputInspectConfigFiles({
   rawEnvironmentConfigs,
   inspectOptions,
   rawExtraConfigs,
-  configType,
 }: {
-  configType: string;
   rawExtraConfigs?: RawConfig[];
   rawEnvironmentConfigs: RawConfig[];
   rawBundlerConfigs: RawConfig[];
@@ -129,7 +126,7 @@ export async function outputInspectConfigFiles({
       };
     }),
     ...rawBundlerConfigs.map(({ name, content }) => {
-      const outputFile = `${configType}.config.${name}.mjs`;
+      const outputFile = `rspack.config.${name}.mjs`;
       let outputFilePath = join(outputPath, outputFile);
 
       // if filename is conflict, add a random id to the filename.
@@ -139,7 +136,7 @@ export async function outputInspectConfigFiles({
 
       return {
         path: outputFilePath,
-        label: `${upperFirst(configType)} Config (${name})`,
+        label: `Rspack Config (${name})`,
         content,
       };
     }),
@@ -192,17 +189,15 @@ const getInspectOutputPath = (
   return join(context.distPath, RSBUILD_OUTPUTS_PATH);
 };
 
-export async function inspectConfig<B extends 'rspack' | 'webpack' = 'rspack'>({
+export async function inspectConfig({
   context,
   pluginManager,
   bundlerConfigs,
   inspectOptions = {},
-  bundler = 'rspack',
 }: InitConfigsOptions & {
   inspectOptions?: InspectConfigOptions;
-  bundlerConfigs: B extends 'rspack' ? Rspack.Configuration[] : WebpackConfig[];
-  bundler?: 'rspack' | 'webpack';
-}): Promise<InspectConfigResult<B>> {
+  bundlerConfigs: Rspack.Configuration[];
+}): Promise<InspectConfigResult> {
   if (inspectOptions.mode) {
     setNodeEnv(inspectOptions.mode);
   } else if (!getNodeEnv()) {
@@ -246,7 +241,6 @@ export async function inspectConfig<B extends 'rspack' | 'webpack' = 'rspack'>({
         ...inspectOptions,
         outputPath,
       },
-      configType: bundler,
     });
   }
 

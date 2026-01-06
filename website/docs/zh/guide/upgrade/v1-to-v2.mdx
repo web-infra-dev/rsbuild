@@ -10,6 +10,9 @@ Rsbuild 2.0 不再支持使用 webpack 作为打包工具。在 Rsbuild 1.x 版�
 
 具体变更如下：
 
-- 不再提供 `@rsbuild/webpack` 包。
-- 不再提供 `@rsbuild/plugin-webpack-swc` 包。
-- `context.bundlerType` 的类型中不再包含 `webpack`。
+- 移除 `@rsbuild/webpack` 包。
+- 移除 `@rsbuild/plugin-webpack-swc` 包。
+- 移除 `tools.webpack` 和 `tools.webpackChain` 配置项。
+- 移除 `api.modifyWebpackChain` 和 `api.modifyWebpackConfig` 插件钩子。
+- 移除 `api.context.bundlerType` 中的 `webpack` 类型。
+- 移除 webpack 相关的类型。

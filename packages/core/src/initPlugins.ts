@@ -387,18 +387,6 @@ export function initPluginAPI({
         handler,
       });
     },
-    modifyWebpackChain: (handler) => {
-      hooks.modifyWebpackChain.tapEnvironment({
-        environment,
-        handler,
-      });
-    },
-    modifyWebpackConfig: (handler) => {
-      hooks.modifyWebpackConfig.tapEnvironment({
-        environment,
-        handler,
-      });
-    },
     modifyEnvironmentConfig: (handler) => {
       hooks.modifyEnvironmentConfig.tapEnvironment({
         environment,

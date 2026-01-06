@@ -2,8 +2,6 @@ import type {
   CssExtractRspackLoaderOptions,
   CssExtractRspackPluginOptions,
 } from '@rspack/core';
-/** @ts-ignore `webpack` type only exists when `@rsbuild/webpack` is installed */
-import type { Configuration as WebpackConfig } from 'webpack';
 import type Connect from '../../compiled/connect/index.js';
 import type HtmlRspackPlugin from '../../compiled/html-rspack-plugin/index.js';
 import type { AcceptedPlugin, ProcessOptions } from '../../compiled/postcss';
@@ -18,8 +16,6 @@ export interface CSSExtractOptions {
   pluginOptions?: CssExtractRspackPluginOptions;
   loaderOptions?: CssExtractRspackLoaderOptions;
 }
-
-export type { WebpackConfig };
 
 /**
  * A loose PostCSS plugin type that accepts plugins from different

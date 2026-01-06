@@ -356,7 +356,6 @@ export const pluginCss = (): RsbuildPlugin => ({
           rule.use(CHAIN_ID.USE.CSS).loader(cssLoaderPath);
         });
 
-        // `builtin:lightningcss-loader` is not supported when using webpack
         if (config.tools.lightningcssLoader !== false) {
           if (emitCss) {
             importLoaders.normal++;

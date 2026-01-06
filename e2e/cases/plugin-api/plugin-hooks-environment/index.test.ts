@@ -10,9 +10,6 @@ const createPlugin = () => {
       api.modifyRspackConfig((_config, { environment }) => {
         names.push(`ModifyBundlerConfig ${environment.name}`);
       });
-      api.modifyWebpackChain((_config, { environment }) => {
-        names.push(`ModifyBundlerConfig ${environment.name}`);
-      });
       api.modifyRsbuildConfig(() => {
         names.push('ModifyRsbuildConfig');
       });

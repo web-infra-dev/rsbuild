@@ -28,11 +28,7 @@ import type {
   ModifyChainUtils,
   Routes,
 } from './hooks';
-import type {
-  ModifyWebpackChainUtils,
-  ModifyWebpackConfigUtils,
-  RsbuildPlugins,
-} from './plugin';
+import type { RsbuildPlugins } from './plugin';
 import type { RsbuildEntry, RsbuildMode, RsbuildTarget } from './rsbuild';
 import type { BundlerPluginInstance, Rspack, RspackRule } from './rspack';
 import type {
@@ -44,7 +40,6 @@ import type {
   LoosePostCSSPlugin,
   PostCSSLoaderOptions,
   StyleLoaderOptions,
-  WebpackConfig,
 } from './thirdParty';
 import type {
   ConfigChain,
@@ -172,15 +167,6 @@ export type ToolsRspackConfig = OneOrMany<
     ) => MaybePromise<Rspack.Configuration | void>)
 >;
 
-export type ToolsWebpackConfig = ConfigChainWithContext<
-  WebpackConfig,
-  ModifyWebpackConfigUtils
->;
-
-export type ToolsWebpackChainConfig = OneOrMany<
-  (chain: RspackChain, utils: ModifyWebpackChainUtils) => void
->;
-
 export interface ToolsConfig {
   /**
    * Configure bundler config base on [rspack-chain](https://github.com/rstackjs/rspack-chain)
@@ -218,16 +204,6 @@ export interface ToolsConfig {
    * Configure Rspack.
    */
   rspack?: ToolsRspackConfig;
-  /**
-   * Configure [webpack](https://webpack.js.org/).
-   * @requires webpack
-   */
-  webpack?: ToolsWebpackConfig;
-  /**
-   * Configure webpack by [rspack-chain](https://github.com/rstackjs/rspack-chain).
-   * @requires webpack
-   */
-  webpackChain?: ToolsWebpackChainConfig;
 }
 
 export type NormalizedToolsConfig = ToolsConfig & {

@@ -10,7 +10,6 @@ const require = createRequire(import.meta.url);
 
 type RsdoctorExports = {
   RsdoctorRspackPlugin: { new (): BundlerPluginInstance };
-  RsdoctorWebpackPlugin: { new (): BundlerPluginInstance };
 };
 
 type MaybeRsdoctorPlugin = Configuration['plugins'] & {
