@@ -20,10 +20,6 @@ Create aliases for module paths to simplify import paths or redirect module refe
 
 For TypeScript projects, configure [compilerOptions.paths](https://typescriptlang.org/tsconfig#paths) in your `tsconfig.json` file. Rsbuild automatically recognizes these settings, so you don't need to configure `resolve.alias` separately. For more details, see [Path Aliases](/guide/advanced/alias).
 
-:::tip
-In versions prior to Rsbuild 1.1.7, you can use `source.alias` to set alias, but it will be removed in the next major version.
-:::
-
 ## Basic usage
 
 `resolve.alias` accepts an object where the `key` is the module path in your source code to replace, and the `value` is the target path for the module mapping.
