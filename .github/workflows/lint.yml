@@ -2,10 +2,10 @@ name: Lint
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, v1.x]
 
   push:
-    branches: [main]
+    branches: [main, v1.x]
 
   workflow_dispatch:
 
