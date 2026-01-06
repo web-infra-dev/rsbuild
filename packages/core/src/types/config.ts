@@ -2119,10 +2119,6 @@ export interface RsbuildConfig extends EnvironmentConfig {
    */
   environments?: Record<string, EnvironmentConfig>;
   /**
-   * Used to switch the bundler type.
-   */
-  provider?: unknown;
-  /**
    * @private
    */
   _privateMeta?: RsbuildConfigMeta;
@@ -2157,6 +2153,5 @@ export type NormalizedEnvironmentConfig = TwoLevelReadonly<
 >;
 
 export type NormalizedConfig = NormalizedEnvironmentConfig & {
-  provider?: unknown;
   environments: Record<string, NormalizedEnvironmentConfig>;
 };
