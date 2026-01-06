@@ -36,6 +36,11 @@
   },
   {
     "type": "dir-section-header",
+    "name": "upgrade",
+    "label": "Upgrade"
+  },
+  {
+    "type": "dir-section-header",
     "name": "migration",
     "label": "Migration"
   },

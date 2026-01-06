@@ -36,6 +36,11 @@
   },
   {
     "type": "dir-section-header",
+    "name": "upgrade",
+    "label": "升级"
+  },
+  {
+    "type": "dir-section-header",
     "name": "migration",
     "label": "迁移"
   },

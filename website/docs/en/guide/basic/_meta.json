@@ -8,6 +8,5 @@
   "wasm-assets",
   "typescript",
   "web-workers",
-  "static-deploy",
-  "upgrade-rsbuild"
+  "static-deploy"
 ]
