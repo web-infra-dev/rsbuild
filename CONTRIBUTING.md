@@ -89,8 +89,8 @@ pnpm run e2e
 If you need to run a specified test, you can add keywords to filter:
 
 ```sh
-# Only run test cases which contains `vue` keyword in file path with Rspack
-pnpm e2e:rspack vue
+# Only run test cases which contains `css` keyword in file path
+pnpm e2e css
 ```
 
 ---
