@@ -12,8 +12,6 @@
     "check-spell": "pnpx cspell && heading-case",
     "doc": "cd website && pnpm dev",
     "e2e": "cd ./e2e && pnpm e2e",
-    "e2e:rspack": "cd ./e2e && pnpm e2e:rspack",
-    "e2e:webpack": "cd ./e2e && pnpm e2e:webpack",
     "format": "prettier --experimental-cli --write . && heading-case --write",
     "lint": "biome check && pnpm lint:type",
     "lint:type": "rslint",

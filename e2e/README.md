@@ -16,15 +16,8 @@ Most of the E2E tests in Rsbuild are run by both Rspack and webpack at the same 
 # Run all test cases, including Rspack and webpack
 pnpm e2e
 
-# Run test cases for Rspack
-pnpm e2e:rspack
-
-# Run test cases for webpack
-pnpm e2e:webpack
-
 # Run specific test case, such as "css"
-pnpm e2e:webpack css
-pnpm e2e:rspack css
+pnpm e2e css
 ```
 
 ## Debugging
