@@ -82,10 +82,6 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
   name: 'rsbuild:rspack-profile',
 
   setup(api) {
-    if (api.context.bundlerType === 'webpack') {
-      return;
-    }
-
     const { RSPACK_PROFILE } = process.env;
     if (!RSPACK_PROFILE) {
       return;

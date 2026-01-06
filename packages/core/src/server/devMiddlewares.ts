@@ -122,11 +122,7 @@ const applyDefaultMiddlewares = ({
   }
 
   // enable lazy compilation
-  if (
-    context.action === 'dev' &&
-    context.bundlerType === 'rspack' &&
-    buildManager
-  ) {
+  if (context.action === 'dev' && buildManager) {
     const { compiler } = buildManager;
 
     // We check the compiler options to determine whether lazy compilation is enabled.

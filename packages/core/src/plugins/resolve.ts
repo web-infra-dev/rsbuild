@@ -170,12 +170,7 @@ export const pluginResolve = (): RsbuildPlugin => ({
         const aliasStrategy =
           config.source.aliasStrategy ?? config.resolve.aliasStrategy;
 
-        if (
-          tsconfigPath &&
-          // Only Rspack has the tsConfig option
-          api.context.bundlerType === 'rspack' &&
-          aliasStrategy === 'prefer-tsconfig'
-        ) {
+        if (tsconfigPath && aliasStrategy === 'prefer-tsconfig') {
           chain.resolve.tsConfig({
             configFile: tsconfigPath,
             // read `paths` in referenced tsconfig files

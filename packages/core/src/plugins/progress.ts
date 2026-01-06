@@ -4,11 +4,6 @@ export const pluginProgress = (): RsbuildPlugin => ({
   name: 'rsbuild:progress',
 
   setup(api) {
-    // This plugin uses Rspack builtin progress plugin and is not suitable for webpack
-    if (api.context.bundlerType === 'webpack') {
-      return;
-    }
-
     api.modifyBundlerChain((chain, { CHAIN_ID, environment, rspack }) => {
       const { config } = environment;
       const options = config.dev.progressBar;

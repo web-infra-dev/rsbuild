@@ -148,11 +148,6 @@ export const pluginSwc = (): RsbuildPlugin => ({
           rsbuildTarget: target,
         });
 
-        // Rspack builtin SWC is not suitable for webpack
-        if (api.context.bundlerType === 'webpack') {
-          return;
-        }
-
         const swcConfig = getDefaultSwcConfig({
           browserslist,
           cacheRoot,

@@ -130,7 +130,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
           });
         }
 
-        if (config.output.copy && api.context.bundlerType === 'rspack') {
+        if (config.output.copy) {
           const { copy } = config.output;
           const options = Array.isArray(copy) ? { patterns: copy } : copy;
 

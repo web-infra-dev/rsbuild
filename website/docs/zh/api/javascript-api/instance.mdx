@@ -162,18 +162,6 @@ if (rsbuild.context.action === 'dev') {
 }
 ```
 
-### context.bundlerType
-
-当前执行构建的构建工具类型。
-
-- **类型：**
-
-```ts
-type bundlerType = 'rspack' | 'webpack';
-```
-
-> Rsbuild 内部支持切换到 webpack 进行对照测试，因此提供了该字段进行区分，通常你不需要使用此字段。
-
 ## rsbuild.environments
 
 ### target
