@@ -146,16 +146,7 @@ export const pluginResolve = (): RsbuildPlugin => ({
           .test(/\.m?js/)
           .resolve.set('fullySpecified', false);
 
-        if (config.source.aliasStrategy) {
-          logger.warn(
-            `${color.dim('[rsbuild:config]')} The ${color.yellow(
-              '"source.aliasStrategy"',
-            )} config is deprecated, use ${color.yellow('"resolve.aliasStrategy"')} instead.`,
-          );
-        }
-
-        const aliasStrategy =
-          config.source.aliasStrategy ?? config.resolve.aliasStrategy;
+        const { aliasStrategy } = config.resolve;
 
         if (tsconfigPath && aliasStrategy === 'prefer-tsconfig') {
           chain.resolve.tsConfig({

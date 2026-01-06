@@ -19,6 +19,19 @@ export default {
 };
 ```
 
+## 移除 `source.aliasStrategy`
+
+废弃的 `source.aliasStrategy` 选项已被移除，使用 [resolve.aliasStrategy](/config/resolve/alias-strategy) 进行替代。
+
+```diff
+export default {
+- source: {
++ resolve: {
+    aliasStrategy: 'prefer-alias',
+  },
+};
+```
+
 ## 移除 webpack 支持
 
 Rsbuild 2.0 不再支持使用 webpack 作为打包工具。在 Rsbuild 1.x 版本中，该能力主要用于验证 Rspack 与 webpack 之间的兼容性。随着 Rspack 的逐步成熟和稳定，这一用途已不再必要，因此相关支持被正式移除。

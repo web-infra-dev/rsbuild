@@ -19,6 +19,19 @@ export default {
 };
 ```
 
+## Remove `source.aliasStrategy`
+
+The deprecated `source.aliasStrategy` option has been removed. Use [resolve.aliasStrategy](/config/resolve/alias-strategy) instead.
+
+```diff
+export default {
+- source: {
++ resolve: {
+    aliasStrategy: 'prefer-alias',
+  },
+};
+```
+
 ## Dropping webpack support
 
 Rsbuild 2.0 no longer supports using webpack as the bundler. In Rsbuild 1.x, this capability was mainly used to validate compatibility between Rspack and webpack. As Rspack has gradually matured and stabilized, this purpose is no longer necessary, so the related support has been removed.
