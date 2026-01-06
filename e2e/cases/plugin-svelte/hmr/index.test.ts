@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
-rspackTest('HMR should work properly', async ({ page, dev, editFile }) => {
+test('HMR should work properly', async ({ page, dev, editFile }) => {
   const cwd = import.meta.dirname;
   const bPath = path.join(cwd, 'src/test-temp-B.svelte');
   fs.writeFileSync(

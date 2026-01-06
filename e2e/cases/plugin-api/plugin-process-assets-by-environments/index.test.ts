@@ -1,18 +1,17 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 import type { RsbuildPluginAPI } from '@rsbuild/core';
 
-rspackTest(
-  'should allow plugin to process assets by environments',
-  async ({ build }) => {
-    const rsbuild = await build();
-    expect(existsSync(join(rsbuild.distPath, 'static/index.js'))).toBeFalsy();
-    expect(existsSync(join(rsbuild.distPath, 'server/index.js'))).toBeTruthy();
-  },
-);
+test('should allow plugin to process assets by environments', async ({
+  build,
+}) => {
+  const rsbuild = await build();
+  expect(existsSync(join(rsbuild.distPath, 'static/index.js'))).toBeFalsy();
+  expect(existsSync(join(rsbuild.distPath, 'server/index.js'))).toBeTruthy();
+});
 
-rspackTest('should filter environments correctly', async ({ build }) => {
+test('should filter environments correctly', async ({ build }) => {
   const rsbuild = await build({
     config: {
       plugins: [

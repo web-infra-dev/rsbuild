@@ -1,7 +1,7 @@
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 import { loadEnv } from '@rsbuild/core';
 
-rspackTest('should load env files correctly', () => {
+test('should load env files correctly', () => {
   const env = loadEnv({
     cwd: import.meta.dirname,
     mode: 'staging',
@@ -42,7 +42,7 @@ rspackTest('should load env files correctly', () => {
   expect(process.env.REACT_NAME).toEqual(undefined);
 });
 
-rspackTest('should not modify process.env if processEnv is provided', () => {
+test('should not modify process.env if processEnv is provided', () => {
   delete process.env.REACT_NAME;
 
   const targetEnv: Record<string, string> = {};

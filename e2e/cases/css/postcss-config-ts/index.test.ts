@@ -1,6 +1,6 @@
-import { expect, getFileContent, rspackTest } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 
-rspackTest('should load postcss.config.ts correctly', async ({ build }) => {
+test('should load postcss.config.ts correctly', async ({ build }) => {
   const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();

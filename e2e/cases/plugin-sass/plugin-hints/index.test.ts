@@ -1,6 +1,6 @@
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
-rspackTest('should print Sass plugin hints as expected', async ({ build }) => {
+test('should print Sass plugin hints as expected', async ({ build }) => {
   const rsbuild = await build({
     catchBuildError: true,
   });

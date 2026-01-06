@@ -1,6 +1,6 @@
-import { expect, getFileContent, rspackTest } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 
-rspackTest('should emit multiple CSS files correctly', async ({ build }) => {
+test('should emit multiple CSS files correctly', async ({ build }) => {
   const rsbuild = await build();
   const files = rsbuild.getDistFiles();
   expect(getFileContent(files, 'entry1.css')).toContain('#entry1{color:red}');

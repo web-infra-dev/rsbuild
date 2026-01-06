@@ -311,22 +311,3 @@ export const test = base.extend<RsbuildFixture>({
 });
 
 export { expect };
-
-export const rspackTest = ((): typeof test => {
-  if (process.env.PROVIDE_TYPE !== 'webpack') {
-    return test;
-  }
-
-  const testSkip = test.skip;
-  // @ts-expect-error
-  testSkip.describe = test.describe.skip;
-  // @ts-expect-error
-  testSkip.fail = test.describe.skip;
-  // @ts-expect-error
-  testSkip.only = test.only;
-  // @ts-expect-error
-  return testSkip as typeof test.skip & {
-    describe: typeof test.describe.skip;
-    only: typeof test.only;
-  };
-})();

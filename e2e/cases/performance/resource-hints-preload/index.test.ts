@@ -1,11 +1,5 @@
 import { join } from 'node:path';
-import {
-  expect,
-  findFile,
-  getFileContent,
-  rspackTest,
-  test,
-} from '@e2e/helper';
+import { expect, findFile, getFileContent, test } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = import.meta.dirname;
@@ -222,66 +216,64 @@ test('should generate preload link with include array', async ({ build }) => {
   ).toBeTruthy();
 });
 
-rspackTest(
-  'should not generate preload link for inlined assets',
-  async ({ build }) => {
-    const rsbuild = await build({
-      config: {
-        plugins: [pluginReact()],
-        source: {
-          entry: {
-            main: join(fixtures, 'src/page1/index.ts'),
-          },
-        },
-        output: {
-          inlineScripts: true,
-          inlineStyles: true,
-        },
-        performance: {
-          preload: true,
+test('should not generate preload link for inlined assets', async ({
+  build,
+}) => {
+  const rsbuild = await build({
+    config: {
+      plugins: [pluginReact()],
+      source: {
+        entry: {
+          main: join(fixtures, 'src/page1/index.ts'),
         },
       },
-    });
+      output: {
+        inlineScripts: true,
+        inlineStyles: true,
+      },
+      performance: {
+        preload: true,
+      },
+    },
+  });
 
-    const files = rsbuild.getDistFiles();
-    const content = getFileContent(files, '.html');
+  const files = rsbuild.getDistFiles();
+  const content = getFileContent(files, '.html');
 
-    // image.png
-    expect(content.match(/rel="preload" as="/g)?.length).toBe(1);
-  },
-);
+  // image.png
+  expect(content.match(/rel="preload" as="/g)?.length).toBe(1);
+});
 
-rspackTest(
-  'should not generate preload link for inlined assets with test option',
-  async ({ build }) => {
-    const rsbuild = await build({
-      config: {
-        plugins: [pluginReact()],
-        source: {
-          entry: {
-            main: join(fixtures, 'src/page1/index.ts'),
-          },
-        },
-        output: {
-          inlineScripts: {
-            enable: 'auto',
-            test: /\.js$/,
-          },
-          inlineStyles: {
-            enable: 'auto',
-            test: /\.css$/,
-          },
-        },
-        performance: {
-          preload: true,
+test('should not generate preload link for inlined assets with test option', async ({
+  build,
+}) => {
+  const rsbuild = await build({
+    config: {
+      plugins: [pluginReact()],
+      source: {
+        entry: {
+          main: join(fixtures, 'src/page1/index.ts'),
         },
       },
-    });
+      output: {
+        inlineScripts: {
+          enable: 'auto',
+          test: /\.js$/,
+        },
+        inlineStyles: {
+          enable: 'auto',
+          test: /\.css$/,
+        },
+      },
+      performance: {
+        preload: true,
+      },
+    },
+  });
 
-    const files = rsbuild.getDistFiles();
-    const content = getFileContent(files, '.html');
+  const files = rsbuild.getDistFiles();
+  const content = getFileContent(files, '.html');
 
-    // image.png
-    expect(content.match(/rel="preload" as="/g)?.length).toBe(1);
-  },
-);
+  // image.png
+  expect(content.match(/rel="preload" as="/g)?.length).toBe(1);
+});

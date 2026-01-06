@@ -1,143 +1,153 @@
 import { join } from 'node:path';
-import { expect, HMR_CONNECTED_LOG, rspackTest } from '@e2e/helper';
+import { expect, HMR_CONNECTED_LOG, test } from '@e2e/helper';
 
-rspackTest(
-  'should respect dev.client.logLevel when set to warn',
-  async ({ page, dev, logHelper, copySrcDir }) => {
-    const tempSrc = await copySrcDir();
-    const { addLog, expectNoLog } = logHelper;
+test('should respect dev.client.logLevel when set to warn', async ({
+  page,
+  dev,
+  logHelper,
+  copySrcDir,
+}) => {
+  const tempSrc = await copySrcDir();
+  const { addLog, expectNoLog } = logHelper;
 
-    page.on('console', (consoleMessage) => {
-      addLog(consoleMessage.text());
-    });
+  page.on('console', (consoleMessage) => {
+    addLog(consoleMessage.text());
+  });
 
-    await dev({
-      config: {
-        dev: {
-          client: {
-            logLevel: 'warn',
-          },
-        },
-        source: {
-          entry: {
-            index: join(tempSrc, 'index.tsx'),
-          },
+  await dev({
+    config: {
+      dev: {
+        client: {
+          logLevel: 'warn',
         },
       },
-    });
-
-    const locator = page.locator('#test');
-    await expect(locator).toHaveText('Hello Rsbuild');
-
-    expectNoLog(HMR_CONNECTED_LOG);
-  },
-);
-
-rspackTest(
-  'should show info logs when dev.client.logLevel is info (default)',
-  async ({ page, dev, logHelper, copySrcDir }) => {
-    const tempSrc = await copySrcDir();
-    const { expectLog, addLog } = logHelper;
-
-    page.on('console', (consoleMessage) => {
-      addLog(consoleMessage.text());
-    });
-
-    await dev({
-      config: {
-        source: {
-          entry: {
-            index: join(tempSrc, 'index.tsx'),
-          },
+      source: {
+        entry: {
+          index: join(tempSrc, 'index.tsx'),
         },
       },
-    });
+    },
+  });
 
-    await expectLog(HMR_CONNECTED_LOG);
-  },
-);
+  const locator = page.locator('#test');
+  await expect(locator).toHaveText('Hello Rsbuild');
 
-rspackTest(
-  'should inherit root logLevel when dev.client.logLevel is not set',
-  async ({ page, dev, logHelper, copySrcDir }) => {
-    const tempSrc = await copySrcDir();
-    const { addLog, expectNoLog } = logHelper;
+  expectNoLog(HMR_CONNECTED_LOG);
+});
 
-    page.on('console', (consoleMessage) => {
-      addLog(consoleMessage.text());
-    });
+test('should show info logs when dev.client.logLevel is info (default)', async ({
+  page,
+  dev,
+  logHelper,
+  copySrcDir,
+}) => {
+  const tempSrc = await copySrcDir();
+  const { expectLog, addLog } = logHelper;
 
-    await dev({
-      config: {
-        logLevel: 'error',
-        source: {
-          entry: {
-            index: join(tempSrc, 'index.tsx'),
-          },
+  page.on('console', (consoleMessage) => {
+    addLog(consoleMessage.text());
+  });
+
+  await dev({
+    config: {
+      source: {
+        entry: {
+          index: join(tempSrc, 'index.tsx'),
         },
       },
-    });
+    },
+  });
 
-    const locator = page.locator('#test');
-    await expect(locator).toHaveText('Hello Rsbuild');
-    expectNoLog(HMR_CONNECTED_LOG);
-  },
-);
+  await expectLog(HMR_CONNECTED_LOG);
+});
 
-rspackTest(
-  'should suppress all logs when dev.client.logLevel is silent',
-  async ({ page, dev, logHelper, copySrcDir }) => {
-    const tempSrc = await copySrcDir();
-    const { addLog, expectNoLog } = logHelper;
+test('should inherit root logLevel when dev.client.logLevel is not set', async ({
+  page,
+  dev,
+  logHelper,
+  copySrcDir,
+}) => {
+  const tempSrc = await copySrcDir();
+  const { addLog, expectNoLog } = logHelper;
 
-    page.on('console', (consoleMessage) => {
-      addLog(consoleMessage.text());
-    });
+  page.on('console', (consoleMessage) => {
+    addLog(consoleMessage.text());
+  });
 
-    await dev({
-      config: {
-        dev: {
-          client: {
-            logLevel: 'silent',
-          },
-        },
-        source: {
-          entry: {
-            index: join(tempSrc, 'index.tsx'),
-          },
+  await dev({
+    config: {
+      logLevel: 'error',
+      source: {
+        entry: {
+          index: join(tempSrc, 'index.tsx'),
         },
       },
-    });
+    },
+  });
 
-    const locator = page.locator('#test');
-    await expect(locator).toHaveText('Hello Rsbuild');
-    expectNoLog('[rsbuild]');
-  },
-);
+  const locator = page.locator('#test');
+  await expect(locator).toHaveText('Hello Rsbuild');
+  expectNoLog(HMR_CONNECTED_LOG);
+});
 
-rspackTest(
-  'should inherit silent mode from root logLevel',
-  async ({ page, dev, logHelper, copySrcDir }) => {
-    const tempSrc = await copySrcDir();
-    const { addLog, expectNoLog } = logHelper;
+test('should suppress all logs when dev.client.logLevel is silent', async ({
+  page,
+  dev,
+  logHelper,
+  copySrcDir,
+}) => {
+  const tempSrc = await copySrcDir();
+  const { addLog, expectNoLog } = logHelper;
 
-    page.on('console', (consoleMessage) => {
-      addLog(consoleMessage.text());
-    });
+  page.on('console', (consoleMessage) => {
+    addLog(consoleMessage.text());
+  });
 
-    await dev({
-      config: {
-        logLevel: 'silent',
-        source: {
-          entry: {
-            index: join(tempSrc, 'index.tsx'),
-          },
+  await dev({
+    config: {
+      dev: {
+        client: {
+          logLevel: 'silent',
         },
       },
-    });
+      source: {
+        entry: {
+          index: join(tempSrc, 'index.tsx'),
+        },
+      },
+    },
+  });
 
-    const locator = page.locator('#test');
-    await expect(locator).toHaveText('Hello Rsbuild');
-    expectNoLog('[rsbuild]');
-  },
-);
+  const locator = page.locator('#test');
+  await expect(locator).toHaveText('Hello Rsbuild');
+  expectNoLog('[rsbuild]');
+});
+
+test('should inherit silent mode from root logLevel', async ({
+  page,
+  dev,
+  logHelper,
+  copySrcDir,
+}) => {
+  const tempSrc = await copySrcDir();
+  const { addLog, expectNoLog } = logHelper;
+
+  page.on('console', (consoleMessage) => {
+    addLog(consoleMessage.text());
+  });
+
+  await dev({
+    config: {
+      logLevel: 'silent',
+      source: {
+        entry: {
+          index: join(tempSrc, 'index.tsx'),
+        },
+      },
+    },
+  });
+
+  const locator = page.locator('#test');
+  await expect(locator).toHaveText('Hello Rsbuild');
+  expectNoLog('[rsbuild]');
+});

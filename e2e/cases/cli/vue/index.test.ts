@@ -1,7 +1,7 @@
 import path from 'node:path';
-import { expect, readDirContents, rspackTest } from '@e2e/helper';
+import { expect, readDirContents, test } from '@e2e/helper';
 
-rspackTest('should build Vue SFC correctly', async ({ execCliSync }) => {
+test('should build Vue SFC correctly', async ({ execCliSync }) => {
   execCliSync('build');
 
   const outputs = await readDirContents(path.join(import.meta.dirname, 'dist'));

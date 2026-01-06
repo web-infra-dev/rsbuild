@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expect, rspackTest, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
-rspackTest('HMR should work properly', async ({ page, dev, editFile }) => {
+test('HMR should work properly', async ({ page, dev, editFile }) => {
   // Prefresh does not work as expected on Windows
   if (process.platform === 'win32') {
     test.skip();

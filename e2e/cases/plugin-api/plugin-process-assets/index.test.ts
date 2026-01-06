@@ -1,6 +1,6 @@
-import { expect, findFile, rspackTest } from '@e2e/helper';
+import { expect, findFile, test } from '@e2e/helper';
 
-rspackTest('should allow plugin to process assets', async ({ build }) => {
+test('should allow plugin to process assets', async ({ build }) => {
   const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();

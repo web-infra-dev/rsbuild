@@ -1,18 +1,15 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
-rspackTest(
-  'should inject public env vars to client',
-  async ({ execCliSync }) => {
-    execCliSync('build');
+test('should inject public env vars to client', async ({ execCliSync }) => {
+  execCliSync('build');
 
-    const content = fs.readFileSync(
-      path.join(import.meta.dirname, 'dist/static/js/index.js'),
-      'utf-8',
-    );
-    expect(content).not.toContain('jack');
-    expect(content).toContain('"process.env","rose"');
-    expect(content).toContain('"import.meta.env","rose"');
-  },
-);
+  const content = fs.readFileSync(
+    path.join(import.meta.dirname, 'dist/static/js/index.js'),
+    'utf-8',
+  );
+  expect(content).not.toContain('jack');
+  expect(content).toContain('"process.env","rose"');
+  expect(content).toContain('"import.meta.env","rose"');
+});

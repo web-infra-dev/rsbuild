@@ -1,11 +1,12 @@
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
-rspackTest(
-  'should allow to configure `cssLoader.exportType` as `string` in development',
-  async ({ page, dev }) => {
-    await dev();
+test('should allow to configure `cssLoader.exportType` as `string` in development', async ({
+  page,
+  dev,
+}) => {
+  await dev();
 
-    expect(await page.evaluate('window.a')).toBe(`.the-a-class {
+  expect(await page.evaluate('window.a')).toBe(`.the-a-class {
   color: red;
 }
 
@@ -14,20 +15,20 @@ rspackTest(
 }
 `);
 
-    expect(
-      (await page.evaluate<string>('window.b')).includes(
-        '.src-b-module__the-b-class',
-      ),
-    ).toBeTruthy();
-  },
-);
+  expect(
+    (await page.evaluate<string>('window.b')).includes(
+      '.src-b-module__the-b-class',
+    ),
+  ).toBeTruthy();
+});
 
-rspackTest(
-  'should allow to configure `cssLoader.exportType` as `string` in production',
-  async ({ page, buildPreview }) => {
-    await buildPreview();
+test('should allow to configure `cssLoader.exportType` as `string` in production', async ({
+  page,
+  buildPreview,
+}) => {
+  await buildPreview();
 
-    expect(await page.evaluate('window.a')).toBe(`.the-a-class {
+  expect(await page.evaluate('window.a')).toBe(`.the-a-class {
   color: red;
 }
 
@@ -36,8 +37,7 @@ rspackTest(
 }
 `);
 
-    expect(
-      (await page.evaluate<string>('window.b')).includes('.the-b-class-'),
-    ).toBeTruthy();
-  },
-);
+  expect(
+    (await page.evaluate<string>('window.b')).includes('.the-b-class-'),
+  ).toBeTruthy();
+});

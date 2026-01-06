@@ -5,7 +5,7 @@ import {
   getDistFiles,
   getFileContent,
   mapSourceMapPositions,
-  rspackTest,
+  test,
 } from '@e2e/helper';
 
 const expectSourceMap = async (files: Record<string, string>) => {
@@ -47,22 +47,20 @@ const expectSourceMap = async (files: Record<string, string>) => {
   ]);
 };
 
-rspackTest(
-  'should merge source map when plugin transforms code in build',
-  async ({ build }) => {
-    const rsbuild = await build();
-    const files = rsbuild.getDistFiles({ sourceMaps: true });
+test('should merge source map when plugin transforms code in build', async ({
+  build,
+}) => {
+  const rsbuild = await build();
+  const files = rsbuild.getDistFiles({ sourceMaps: true });
 
-    await expectSourceMap(files);
-  },
-);
+  await expectSourceMap(files);
+});
 
-rspackTest(
-  'should merge source map when plugin transforms code in dev',
-  async ({ dev }) => {
-    const rsbuild = await dev();
-    const files = await getDistFiles(rsbuild.distPath, true);
+test('should merge source map when plugin transforms code in dev', async ({
+  dev,
+}) => {
+  const rsbuild = await dev();
+  const files = await getDistFiles(rsbuild.distPath, true);
 
-    await expectSourceMap(files);
-  },
-);
+  await expectSourceMap(files);
+});

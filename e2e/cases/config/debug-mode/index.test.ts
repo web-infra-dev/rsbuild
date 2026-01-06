@@ -6,10 +6,7 @@ const getRsbuildConfig = (dist: string) =>
   path.resolve(import.meta.dirname, `./${dist}/.rsbuild/rsbuild.config.mjs`);
 
 const getBundlerConfig = (dist: string) =>
-  path.resolve(
-    import.meta.dirname,
-    `./${dist}/.rsbuild/${process.env.PROVIDE_TYPE || 'rspack'}.config.web.mjs`,
-  );
+  path.resolve(import.meta.dirname, `./${dist}/.rsbuild/rspack.config.web.mjs`);
 
 test('should generate config files in debug mode when build', async ({
   build,

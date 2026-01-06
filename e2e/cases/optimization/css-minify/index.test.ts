@@ -1,6 +1,6 @@
-import { expect, getFileContent, rspackTest } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 
-rspackTest('should allow to minify CSS in dev', async ({ dev }) => {
+test('should allow to minify CSS in dev', async ({ dev }) => {
   const rsbuild = await dev();
   const files = rsbuild.getDistFiles();
 

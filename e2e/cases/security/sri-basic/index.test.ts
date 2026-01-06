@@ -1,25 +1,25 @@
-import { expect, getFileContent, rspackTest, test } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 
-rspackTest(
-  'should generate integrity attributes for script and style tags in build',
-  async ({ page, buildPreview }) => {
-    const rsbuild = await buildPreview();
+test('should generate integrity attributes for script and style tags in build', async ({
+  page,
+  buildPreview,
+}) => {
+  const rsbuild = await buildPreview();
 
-    const files = rsbuild.getDistFiles();
-    const html = getFileContent(files, 'index.html');
+  const files = rsbuild.getDistFiles();
+  const html = getFileContent(files, 'index.html');
 
-    expect(html).toMatch(
-      /<script defer src="\/static\/js\/index\.\w{8}\.js" integrity="sha384-[A-Za-z0-9+/=]+"/,
-    );
+  expect(html).toMatch(
+    /<script defer src="\/static\/js\/index\.\w{8}\.js" integrity="sha384-[A-Za-z0-9+/=]+"/,
+  );
 
-    expect(html).toMatch(
-      /link href="\/static\/css\/index\.\w{8}\.css" rel="stylesheet" integrity="sha384-[A-Za-z0-9+/=]+"/,
-    );
+  expect(html).toMatch(
+    /link href="\/static\/css\/index\.\w{8}\.css" rel="stylesheet" integrity="sha384-[A-Za-z0-9+/=]+"/,
+  );
 
-    const testEl = page.locator('#root');
-    await expect(testEl).toHaveText('Hello Rsbuild!');
-  },
-);
+  const testEl = page.locator('#root');
+  await expect(testEl).toHaveText('Hello Rsbuild!');
+});
 
 test('should not generate integrity attributes for script and style tags in dev', async ({
   page,
