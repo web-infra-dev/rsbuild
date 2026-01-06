@@ -28,10 +28,7 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
       }
 
       // Add Rsdoctor plugin to start analysis.
-      const isRspack = api.context.bundlerType === 'rspack';
-      const pluginName = isRspack
-        ? 'RsdoctorRspackPlugin'
-        : 'RsdoctorWebpackPlugin';
+      const pluginName = 'RsdoctorRspackPlugin';
 
       const isRsdoctorPlugin = (plugin: MaybeRsdoctorPlugin) =>
         plugin?.isRsdoctorPlugin === true ||
@@ -48,9 +45,7 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
         }
       }
 
-      const packageName = isRspack
-        ? '@rsdoctor/rspack-plugin'
-        : '@rsdoctor/webpack-plugin';
+      const packageName = '@rsdoctor/rspack-plugin';
       let packagePath: string;
 
       try {

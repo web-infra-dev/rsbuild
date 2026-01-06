@@ -195,15 +195,13 @@ export async function createContext(
       ? options.environment
       : undefined;
 
-  const bundlerType = userConfig.provider ? 'webpack' : 'rspack';
-
   return {
     version: RSBUILD_VERSION,
     rootPath,
     distPath: '',
     cachePath,
     callerName: options.callerName,
-    bundlerType,
+    bundlerType: 'rspack',
     environments: {},
     environmentList: [],
     publicPathnames: [],

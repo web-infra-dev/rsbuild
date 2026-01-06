@@ -5,7 +5,7 @@ import type { EnvironmentContext } from './hooks';
 import type { RsbuildPluginAPI } from './plugin';
 import type { RsbuildStats } from './rsbuild';
 
-export type BundlerType = 'rspack' | 'webpack';
+export type BundlerType = 'rspack';
 
 export type ActionType = 'dev' | 'build' | 'preview';
 
@@ -53,7 +53,8 @@ export type RsbuildContext = {
    */
   action?: ActionType;
   /**
-   * The bundler type, can be `rspack` or `webpack`.
+   * The bundler type, currently only `rspack` is supported.
+   * @deprecated Do not use this field, it will be removed in future versions.
    */
   bundlerType: BundlerType;
   /**

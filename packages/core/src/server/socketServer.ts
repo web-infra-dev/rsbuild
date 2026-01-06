@@ -339,8 +339,6 @@ export class SocketServer {
         const { browserLogs, client } = config.dev;
         if (
           payload.type === 'client-error' &&
-          // Do not report browser error when using webpack
-          context.bundlerType === 'rspack' &&
           // Do not report browser error when build failed
           !context.buildState.hasErrors &&
           browserLogs

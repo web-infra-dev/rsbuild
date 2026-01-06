@@ -6,11 +6,6 @@ export function pluginModuleFederation(): RsbuildPlugin {
     name: 'rsbuild:module-federation',
 
     setup(api) {
-      // Rspack only
-      if (api.context.bundlerType === 'webpack') {
-        return;
-      }
-
       api.modifyRsbuildConfig((config) => {
         const { moduleFederation } = config;
 

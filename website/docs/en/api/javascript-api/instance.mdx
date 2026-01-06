@@ -162,18 +162,6 @@ if (rsbuild.context.action === 'dev') {
 }
 ```
 
-### context.bundlerType
-
-The bundler type for the current build.
-
-- **Type:**
-
-```ts
-type bundlerType = 'rspack' | 'webpack';
-```
-
-> Rsbuild internally supports switching to webpack for comparative testing, so this field is provided for differentiation. Usually, you do not need to use this field.
-
 ## rsbuild.build
 
 Runs a production build, generating optimized production bundles and writing them to the output directory.

@@ -42,11 +42,7 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
       const devtool = getDevtool(config);
       chain.devtool(devtool);
 
-      if (
-        (isDev && target === 'web') ||
-        // webpack does not support [relative-resource-path]
-        api.context.bundlerType === 'webpack'
-      ) {
+      if (isDev && target === 'web') {
         // Use POSIX-style absolute paths in source maps during development
         // This ensures VS Code and browser debuggers can correctly resolve breakpoints
         chain.output.devtoolModuleFilenameTemplate(

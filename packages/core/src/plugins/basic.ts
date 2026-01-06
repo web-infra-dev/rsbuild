@@ -46,22 +46,20 @@ export const pluginBasic = (): RsbuildPlugin => ({
             .use(bundler.HotModuleReplacementPlugin);
         }
 
-        if (api.context.bundlerType === 'rspack') {
-          chain.module.parser.merge({
-            javascript: {
-              typeReexportsPresence: 'tolerant',
-            },
-          });
+        chain.module.parser.merge({
+          javascript: {
+            typeReexportsPresence: 'tolerant',
+          },
+        });
 
-          chain.experiments({
-            ...chain.get('experiments'),
-            rspackFuture: {
-              bundlerInfo: {
-                force: false,
-              },
+        chain.experiments({
+          ...chain.get('experiments'),
+          rspackFuture: {
+            bundlerInfo: {
+              force: false,
             },
-          });
-        }
+          },
+        });
       },
     );
   },

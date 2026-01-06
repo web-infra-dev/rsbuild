@@ -87,8 +87,6 @@ export const pluginMinimize = (): RsbuildPlugin => ({
   name: 'rsbuild:minimize',
 
   setup(api) {
-    const isRspack = api.context.bundlerType === 'rspack';
-
     api.modifyBundlerChain((chain, { environment, CHAIN_ID, rspack }) => {
       const { config } = environment;
       const { minifyJs, minifyCss, jsOptions, cssOptions } =
@@ -96,7 +94,7 @@ export const pluginMinimize = (): RsbuildPlugin => ({
 
       chain.optimization.minimize(minifyJs || minifyCss);
 
-      if (minifyJs && isRspack) {
+      if (minifyJs) {
         chain.optimization
           .minimizer(CHAIN_ID.MINIMIZER.JS)
           .use(rspack.SwcJsMinimizerRspackPlugin, [
@@ -105,7 +103,7 @@ export const pluginMinimize = (): RsbuildPlugin => ({
           .end();
       }
 
-      if (minifyCss && isRspack) {
+      if (minifyCss) {
         const loaderOptions = getLightningCSSLoaderOptions(
           config,
           environment.browserslist,

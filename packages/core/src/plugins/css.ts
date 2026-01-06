@@ -357,10 +357,7 @@ export const pluginCss = (): RsbuildPlugin => ({
         });
 
         // `builtin:lightningcss-loader` is not supported when using webpack
-        if (
-          api.context.bundlerType === 'rspack' &&
-          config.tools.lightningcssLoader !== false
-        ) {
+        if (config.tools.lightningcssLoader !== false) {
           if (emitCss) {
             importLoaders.normal++;
           }
