@@ -124,7 +124,6 @@ export type InspectConfigResult = {
   };
 };
 
-// Allow user to manually narrow Compiler type
 export type CreateCompiler = () => Promise<Compiler | MultiCompiler>;
 
 export type CreateRsbuildOptions = {
