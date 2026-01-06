@@ -1,4 +1,4 @@
-import { expect, rspackTest, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 import { defaultAllowedOrigins } from '@rsbuild/core';
 
 test('should expose `defaultAllowedOrigins`', async () => {
@@ -37,7 +37,7 @@ test('should include CORS headers for preview server if `cors` is `true`', async
   expect(response.headers()['access-control-allow-origin']).toEqual('*');
 });
 
-rspackTest('should include CORS headers for MF', async ({ request, dev }) => {
+test('should include CORS headers for MF', async ({ request, dev }) => {
   const rsbuild = await dev({
     config: {
       moduleFederation: {

@@ -1,42 +1,16 @@
 import assert from 'node:assert';
 import { join } from 'node:path';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
-import type {
-  CreateRsbuildOptions,
-  BuildResult as RsbuildBuildResult,
-  RsbuildConfig,
-  RsbuildInstance,
+import {
+  type CreateRsbuildOptions,
+  createRsbuild,
+  type BuildResult as RsbuildBuildResult,
+  type RsbuildConfig,
+  type RsbuildInstance,
 } from '@rsbuild/core';
-import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
 import type { Page } from 'playwright';
 import type { LogHelper } from './logs.ts';
 import { getRandomPort, gotoPage, noop, toPosixPath } from './utils.ts';
-
-const createRsbuild = async (
-  rsbuildOptions: CreateRsbuildOptions & { config?: RsbuildConfig },
-) => {
-  const { createRsbuild } = await import('@rsbuild/core');
-
-  if (process.env.PROVIDE_TYPE === 'rspack') {
-    const rsbuild = await createRsbuild(rsbuildOptions);
-
-    return rsbuild;
-  }
-
-  const { webpackProvider } = await import('@rsbuild/webpack');
-
-  rsbuildOptions.config ||= {};
-  rsbuildOptions.config.provider = webpackProvider;
-
-  const rsbuild = await createRsbuild(rsbuildOptions);
-
-  const swc = pluginSwc();
-  if (!rsbuild.isPluginExists(swc.name)) {
-    rsbuild.addPlugins([swc]);
-  }
-
-  return rsbuild;
-};
 
 const updateConfigForTest = async (
   originalConfig: RsbuildConfig,

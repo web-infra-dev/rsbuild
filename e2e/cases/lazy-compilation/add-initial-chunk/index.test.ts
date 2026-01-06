@@ -1,16 +1,16 @@
-import { expect, rspackTest, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
 // https://github.com/web-infra-dev/rspack/issues/6633
-rspackTest(
-  'should render pages correctly when using lazy compilation and add new initial chunk',
-  async ({ page, dev }) => {
-    // TODO: fixme on Windows
-    if (process.platform === 'win32') {
-      test.skip();
-    }
+test('should render pages correctly when using lazy compilation and add new initial chunk', async ({
+  page,
+  dev,
+}) => {
+  // TODO: fixme on Windows
+  if (process.platform === 'win32') {
+    test.skip();
+  }
 
-    await dev();
+  await dev();
 
-    await expect(page.locator('#test')).toHaveText('Hello World!');
-  },
-);
+  await expect(page.locator('#test')).toHaveText('Hello World!');
+});

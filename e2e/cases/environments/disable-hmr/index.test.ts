@@ -1,23 +1,22 @@
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
-rspackTest(
-  'should allow to disable HMR and live reload for a specified environment',
-  async ({ devOnly }) => {
-    const rsbuild = await devOnly();
+test('should allow to disable HMR and live reload for a specified environment', async ({
+  devOnly,
+}) => {
+  const rsbuild = await devOnly();
 
-    const files = rsbuild.getDistFiles();
-    const filenames = Object.keys(files);
+  const files = rsbuild.getDistFiles();
+  const filenames = Object.keys(files);
 
-    const fooJs = filenames.find((filename) =>
-      filename.includes('dist/static/js/foo.js'),
-    );
-    const barJs = filenames.find((filename) =>
-      filename.includes('dist/static/js/bar.js'),
-    );
-    const fooContent = files[fooJs!];
-    const barContent = files[barJs!];
+  const fooJs = filenames.find((filename) =>
+    filename.includes('dist/static/js/foo.js'),
+  );
+  const barJs = filenames.find((filename) =>
+    filename.includes('dist/static/js/bar.js'),
+  );
+  const fooContent = files[fooJs!];
+  const barContent = files[barJs!];
 
-    expect(fooContent.includes('dist/client/hmr.js')).toBeTruthy();
-    expect(barContent.includes('dist/client/hmr.js')).toBeFalsy();
-  },
-);
+  expect(fooContent.includes('dist/client/hmr.js')).toBeTruthy();
+  expect(barContent.includes('dist/client/hmr.js')).toBeFalsy();
+});

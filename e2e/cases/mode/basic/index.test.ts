@@ -1,4 +1,4 @@
-import { expect, getFileContent, rspackTest, test } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 
 test('should allow to set development mode when building', async ({
   build,
@@ -42,31 +42,30 @@ test('should allow to set none mode when building', async ({ build }) => {
   expect(indexJs).toContain('// this is a comment');
 });
 
-rspackTest(
-  'should allow to set production mode when starting dev server',
-  async ({ dev }) => {
-    const rsbuild = await dev({
-      config: {
-        mode: 'production',
-      },
-    });
+test('should allow to set production mode when starting dev server', async ({
+  dev,
+}) => {
+  const rsbuild = await dev({
+    config: {
+      mode: 'production',
+    },
+  });
 
-    const files = rsbuild.getDistFiles({ sourceMaps: true });
+  const files = rsbuild.getDistFiles({ sourceMaps: true });
 
-    // should have filename hash in build
-    const indexJs = getFileContent(
-      files,
-      (key) => /static\/js\/index\.\w+\.js/.test(key),
-      { ignoreHash: false },
-    );
+  // should have filename hash in build
+  const indexJs = getFileContent(
+    files,
+    (key) => /static\/js\/index\.\w+\.js/.test(key),
+    { ignoreHash: false },
+  );
 
-    // should replace `process.env.NODE_ENV` with `'production'`
-    expect(indexJs).toContain('this is production mode!');
+  // should replace `process.env.NODE_ENV` with `'production'`
+  expect(indexJs).toContain('this is production mode!');
 
-    // should remove comments
-    expect(indexJs).not.toContain('// this is a comment');
+  // should remove comments
+  expect(indexJs).not.toContain('// this is a comment');
 
-    // should not have JavaScript source map
-    expect(() => getFileContent(files, '.js.map')).toThrow();
-  },
-);
+  // should not have JavaScript source map
+  expect(() => getFileContent(files, '.js.map')).toThrow();
+});

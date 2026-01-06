@@ -1,4 +1,4 @@
-import { expect, rspackTest, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 
 test('should run stage 3 decorators correctly', async ({
@@ -12,20 +12,20 @@ test('should run stage 3 decorators correctly', async ({
   expect(await page.evaluate('window.field')).toBe('message');
 });
 
-rspackTest(
-  'should run stage 3 decorators correctly with babel-plugin',
-  async ({ page, buildPreview }) => {
-    await buildPreview({
-      config: {
-        plugins: [pluginBabel()],
-      },
-    });
+test('should run stage 3 decorators correctly with babel-plugin', async ({
+  page,
+  buildPreview,
+}) => {
+  await buildPreview({
+    config: {
+      plugins: [pluginBabel()],
+    },
+  });
 
-    expect(await page.evaluate('window.message')).toBe('hello');
-    expect(await page.evaluate('window.method')).toBe('targetMethod');
-    expect(await page.evaluate('window.field')).toBe('message');
-  },
-);
+  expect(await page.evaluate('window.message')).toBe('hello');
+  expect(await page.evaluate('window.method')).toBe('targetMethod');
+  expect(await page.evaluate('window.field')).toBe('message');
+});
 
 test.fail(
   'stage 3 decorators do not support decoratorBeforeExport',

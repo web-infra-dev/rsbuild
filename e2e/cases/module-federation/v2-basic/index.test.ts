@@ -1,6 +1,6 @@
 import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { expect, getRandomPort, gotoPage, rspackTest } from '@e2e/helper';
+import { expect, getRandomPort, gotoPage, test } from '@e2e/helper';
 import type { RsbuildConfig } from '@rsbuild/core';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 
@@ -19,7 +19,7 @@ export default Button;`,
   );
 };
 
-rspackTest('should run module federation in dev', async ({ page, devOnly }) => {
+test('should run module federation in dev', async ({ page, devOnly }) => {
   writeButtonCode();
 
   const remotePort = await getRandomPort();
@@ -43,38 +43,33 @@ rspackTest('should run module federation in dev', async ({ page, devOnly }) => {
   await expect(page.locator('#button')).toHaveText('Button from remote');
 });
 
-rspackTest(
-  'should allow remote module to perform HMR',
-  async ({ page, devOnly }) => {
-    writeButtonCode();
+test('should allow remote module to perform HMR', async ({ page, devOnly }) => {
+  writeButtonCode();
 
-    const remotePort = await getRandomPort();
+  const remotePort = await getRandomPort();
 
-    process.env.REMOTE_PORT = remotePort.toString();
+  process.env.REMOTE_PORT = remotePort.toString();
 
-    const remoteApp = await devOnly({
-      cwd: remote,
-    });
-    const hostApp = await devOnly({
-      cwd: host,
-    });
+  const remoteApp = await devOnly({
+    cwd: remote,
+  });
+  const hostApp = await devOnly({
+    cwd: host,
+  });
 
-    await gotoPage(page, remoteApp);
-    await expect(page.locator('#title')).toHaveText('Remote');
-    await expect(page.locator('#button')).toHaveText('Button from remote');
+  await gotoPage(page, remoteApp);
+  await expect(page.locator('#title')).toHaveText('Remote');
+  await expect(page.locator('#button')).toHaveText('Button from remote');
 
-    await gotoPage(page, hostApp);
-    await expect(page.locator('#title')).toHaveText('Host');
-    await expect(page.locator('#button')).toHaveText('Button from remote');
+  await gotoPage(page, hostApp);
+  await expect(page.locator('#title')).toHaveText('Host');
+  await expect(page.locator('#button')).toHaveText('Button from remote');
 
-    writeButtonCode('Button from remote (HMR)');
-    await expect(page.locator('#button')).toHaveText(
-      'Button from remote (HMR)',
-    );
-  },
-);
+  writeButtonCode('Button from remote (HMR)');
+  await expect(page.locator('#button')).toHaveText('Button from remote (HMR)');
+});
 
-rspackTest('should downgrade syntax as expected', async ({ build }) => {
+test('should downgrade syntax as expected', async ({ build }) => {
   writeButtonCode();
 
   const remotePort = await getRandomPort();

@@ -1,9 +1,4 @@
-import {
-  type BuildResult,
-  expect,
-  getFileContent,
-  rspackTest,
-} from '@e2e/helper';
+import { type BuildResult, expect, getFileContent, test } from '@e2e/helper';
 
 declare global {
   interface Window {
@@ -19,125 +14,125 @@ const expectCSSContext = async (rsbuild: BuildResult) => {
   );
 };
 
-rspackTest(
-  'should compile CSS Modules with exportLocalsConvention camelCaseOnly',
-  async ({ page, buildPreview }) => {
-    const rsbuild = await buildPreview({
-      config: {
-        output: {
-          cssModules: {
-            exportLocalsConvention: 'camelCaseOnly',
-          },
+test('should compile CSS Modules with exportLocalsConvention camelCaseOnly', async ({
+  page,
+  buildPreview,
+}) => {
+  const rsbuild = await buildPreview({
+    config: {
+      output: {
+        cssModules: {
+          exportLocalsConvention: 'camelCaseOnly',
         },
       },
-    });
+    },
+  });
 
-    await expectCSSContext(rsbuild);
+  await expectCSSContext(rsbuild);
 
-    const styles = await page.evaluate(() => window.styles);
-    expect(Object.keys(styles)).toEqual([
-      'theDashClass',
-      'theCamelClass',
-      'theUnderscoreClass',
-    ]);
-  },
-);
+  const styles = await page.evaluate(() => window.styles);
+  expect(Object.keys(styles)).toEqual([
+    'theDashClass',
+    'theCamelClass',
+    'theUnderscoreClass',
+  ]);
+});
 
-rspackTest(
-  'should compile CSS Modules with exportLocalsConvention camelCase',
-  async ({ page, buildPreview }) => {
-    const rsbuild = await buildPreview({
-      config: {
-        output: {
-          cssModules: {
-            exportLocalsConvention: 'camelCase',
-          },
+test('should compile CSS Modules with exportLocalsConvention camelCase', async ({
+  page,
+  buildPreview,
+}) => {
+  const rsbuild = await buildPreview({
+    config: {
+      output: {
+        cssModules: {
+          exportLocalsConvention: 'camelCase',
         },
       },
-    });
+    },
+  });
 
-    await expectCSSContext(rsbuild);
+  await expectCSSContext(rsbuild);
 
-    const styles = await page.evaluate(() => window.styles);
-    expect(Object.keys(styles)).toEqual([
-      'the-dash-class',
-      'theDashClass',
-      'theCamelClass',
-      'the_underscore_class',
-      'theUnderscoreClass',
-    ]);
-  },
-);
+  const styles = await page.evaluate(() => window.styles);
+  expect(Object.keys(styles)).toEqual([
+    'the-dash-class',
+    'theDashClass',
+    'theCamelClass',
+    'the_underscore_class',
+    'theUnderscoreClass',
+  ]);
+});
 
-rspackTest(
-  'should compile CSS Modules with exportLocalsConvention dashes',
-  async ({ page, buildPreview }) => {
-    const rsbuild = await buildPreview({
-      config: {
-        output: {
-          cssModules: {
-            exportLocalsConvention: 'dashes',
-          },
+test('should compile CSS Modules with exportLocalsConvention dashes', async ({
+  page,
+  buildPreview,
+}) => {
+  const rsbuild = await buildPreview({
+    config: {
+      output: {
+        cssModules: {
+          exportLocalsConvention: 'dashes',
         },
       },
-    });
+    },
+  });
 
-    await expectCSSContext(rsbuild);
+  await expectCSSContext(rsbuild);
 
-    const styles = await page.evaluate(() => window.styles);
-    expect(Object.keys(styles)).toEqual([
-      'the-dash-class',
-      'theDashClass',
-      'theCamelClass',
-      'the_underscore_class',
-    ]);
-  },
-);
+  const styles = await page.evaluate(() => window.styles);
+  expect(Object.keys(styles)).toEqual([
+    'the-dash-class',
+    'theDashClass',
+    'theCamelClass',
+    'the_underscore_class',
+  ]);
+});
 
-rspackTest(
-  'should compile CSS Modules with exportLocalsConvention dashesOnly',
-  async ({ page, buildPreview }) => {
-    const rsbuild = await buildPreview({
-      config: {
-        output: {
-          cssModules: {
-            exportLocalsConvention: 'dashesOnly',
-          },
+test('should compile CSS Modules with exportLocalsConvention dashesOnly', async ({
+  page,
+  buildPreview,
+}) => {
+  const rsbuild = await buildPreview({
+    config: {
+      output: {
+        cssModules: {
+          exportLocalsConvention: 'dashesOnly',
         },
       },
-    });
+    },
+  });
 
-    await expectCSSContext(rsbuild);
+  await expectCSSContext(rsbuild);
 
-    const styles = await page.evaluate(() => window.styles);
-    expect(Object.keys(styles)).toEqual([
-      'theDashClass',
-      'theCamelClass',
-      'the_underscore_class',
-    ]);
-  },
-);
+  const styles = await page.evaluate(() => window.styles);
+  expect(Object.keys(styles)).toEqual([
+    'theDashClass',
+    'theCamelClass',
+    'the_underscore_class',
+  ]);
+});
 
-rspackTest(
-  'should compile CSS Modules with exportLocalsConvention asIs',
-  async ({ page, buildPreview }) => {
-    const rsbuild = await buildPreview({
-      config: {
-        output: {
-          cssModules: {
-            exportLocalsConvention: 'asIs',
-          },
+test('should compile CSS Modules with exportLocalsConvention asIs', async ({
+  page,
+  buildPreview,
+}) => {
+  const rsbuild = await buildPreview({
+    config: {
+      output: {
+        cssModules: {
+          exportLocalsConvention: 'asIs',
         },
       },
-    });
+    },
+  });
 
-    await expectCSSContext(rsbuild);
+  await expectCSSContext(rsbuild);
 
-    const styles = await page.evaluate(() => window.styles);
-    expect(Object.keys(styles)).toEqual([
-      'the-dash-class',
-      'theCamelClass',
-      'the_underscore_class',
-    ]);
-  },
-);
+  const styles = await page.evaluate(() => window.styles);
+  expect(Object.keys(styles)).toEqual([
+    'the-dash-class',
+    'theCamelClass',
+    'the_underscore_class',
+  ]);
+});

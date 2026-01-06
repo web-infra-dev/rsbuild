@@ -1,11 +1,5 @@
 import path from 'node:path';
-import {
-  expect,
-  getFileContent,
-  normalizeNewlines,
-  rspackTest,
-  test,
-} from '@e2e/helper';
+import { expect, getFileContent, normalizeNewlines, test } from '@e2e/helper';
 import { pluginRem } from '@rsbuild/plugin-rem';
 
 test('should preserve the expected script injection order', async ({
@@ -37,7 +31,7 @@ test('should preserve the expected script injection order', async ({
   expect(html.indexOf('/js/index')).toBe(html.lastIndexOf('/js/index'));
 });
 
-rspackTest('should set inject via function correctly', async ({ build }) => {
+test('should set inject via function correctly', async ({ build }) => {
   const rsbuild = await build({
     config: {
       source: {

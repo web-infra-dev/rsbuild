@@ -1,4 +1,4 @@
-import { expect, rspackTest, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
 declare global {
   interface Window {
@@ -147,7 +147,7 @@ test('should define vars in none mode correctly', async ({
   );
 });
 
-rspackTest('should allow to disable NODE_ENV injection', async ({ build }) => {
+test('should allow to disable NODE_ENV injection', async ({ build }) => {
   const rsbuild = await build({
     config: {
       mode: 'production',

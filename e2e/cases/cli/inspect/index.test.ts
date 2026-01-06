@@ -1,12 +1,12 @@
 import path from 'node:path';
-import { expect, readDirContents, rspackTest } from '@e2e/helper';
+import { expect, readDirContents, test } from '@e2e/helper';
 import fse from 'fs-extra';
 
 const clean = () => {
   fse.removeSync(path.join(import.meta.dirname, 'dist'));
 };
 
-rspackTest('should run inspect command correctly', async ({ execCliSync }) => {
+test('should run inspect command correctly', async ({ execCliSync }) => {
   clean();
 
   execCliSync('inspect');
@@ -29,48 +29,44 @@ rspackTest('should run inspect command correctly', async ({ execCliSync }) => {
   expect(files[rspackConfig!]).toContain("mode: 'development'");
 });
 
-rspackTest(
-  'should run inspect command with mode option correctly',
-  async ({ execCliSync }) => {
-    clean();
+test('should run inspect command with mode option correctly', async ({
+  execCliSync,
+}) => {
+  clean();
 
-    execCliSync('inspect --mode production');
+  execCliSync('inspect --mode production');
 
-    const files = await readDirContents(
-      path.join(import.meta.dirname, 'dist/.rsbuild'),
-    );
-    const fileNames = Object.keys(files);
+  const files = await readDirContents(
+    path.join(import.meta.dirname, 'dist/.rsbuild'),
+  );
+  const fileNames = Object.keys(files);
 
-    const config = fileNames.find((item) =>
-      item.includes('rsbuild.config.mjs'),
-    );
-    expect(config).toBeTruthy();
+  const config = fileNames.find((item) => item.includes('rsbuild.config.mjs'));
+  expect(config).toBeTruthy();
 
-    const rspackConfig = fileNames.find((item) =>
-      item.includes('rspack.config.web.mjs'),
-    );
-    expect(rspackConfig).toBeTruthy();
-    expect(files[rspackConfig!]).toContain("mode: 'production'");
-  },
-);
+  const rspackConfig = fileNames.find((item) =>
+    item.includes('rspack.config.web.mjs'),
+  );
+  expect(rspackConfig).toBeTruthy();
+  expect(files[rspackConfig!]).toContain("mode: 'production'");
+});
 
-rspackTest(
-  'should run inspect command with output option correctly',
-  async ({ execCliSync }) => {
-    clean();
+test('should run inspect command with output option correctly', async ({
+  execCliSync,
+}) => {
+  clean();
 
-    execCliSync('inspect --output foo');
+  execCliSync('inspect --output foo');
 
-    const outputs = await readDirContents(
-      path.join(import.meta.dirname, 'dist/foo'),
-    );
-    const outputFiles = Object.keys(outputs);
+  const outputs = await readDirContents(
+    path.join(import.meta.dirname, 'dist/foo'),
+  );
+  const outputFiles = Object.keys(outputs);
 
-    expect(
-      outputFiles.find((item) => item.includes('rsbuild.config.mjs')),
-    ).toBeTruthy();
-    expect(
-      outputFiles.find((item) => item.includes('rspack.config.web.mjs')),
-    ).toBeTruthy();
-  },
-);
+  expect(
+    outputFiles.find((item) => item.includes('rsbuild.config.mjs')),
+  ).toBeTruthy();
+  expect(
+    outputFiles.find((item) => item.includes('rspack.config.web.mjs')),
+  ).toBeTruthy();
+});

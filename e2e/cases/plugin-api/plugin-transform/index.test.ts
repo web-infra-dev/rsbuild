@@ -1,6 +1,6 @@
-import { expect, getFileContent, rspackTest } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 
-rspackTest('should allow plugin to transform code', async ({ build }) => {
+test('should allow plugin to transform code', async ({ build }) => {
   const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();

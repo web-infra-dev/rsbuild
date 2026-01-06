@@ -1,4 +1,4 @@
-import { expect, getFileContent, rspackTest, test } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 
 test('should allow to filter files in manifest', async ({ build }) => {
   const rsbuild = await build({
@@ -32,38 +32,35 @@ test('should allow to filter files in manifest', async ({ build }) => {
   });
 });
 
-rspackTest(
-  'should allow to include license files in manifest',
-  async ({ build }) => {
-    const rsbuild = await build({
-      config: {
-        output: {
-          manifest: {
-            filter: () => true,
-          },
-          filenameHash: false,
+test('should allow to include license files in manifest', async ({ build }) => {
+  const rsbuild = await build({
+    config: {
+      output: {
+        manifest: {
+          filter: () => true,
         },
-        performance: {
-          chunkSplit: {
-            strategy: 'all-in-one',
-          },
+        filenameHash: false,
+      },
+      performance: {
+        chunkSplit: {
+          strategy: 'all-in-one',
         },
       },
-    });
+    },
+  });
 
-    const files = rsbuild.getDistFiles();
+  const files = rsbuild.getDistFiles();
 
-    const manifestContent = getFileContent(files, 'manifest.json');
-    const manifest = JSON.parse(manifestContent);
+  const manifestContent = getFileContent(files, 'manifest.json');
+  const manifest = JSON.parse(manifestContent);
 
-    expect(Object.keys(manifest.allFiles).length).toBe(3);
+  expect(Object.keys(manifest.allFiles).length).toBe(3);
 
-    expect(manifest.entries.index).toMatchObject({
-      initial: {
-        js: ['/static/js/index.js'],
-      },
-      html: ['/index.html'],
-      assets: ['/static/js/index.js.LICENSE.txt'],
-    });
-  },
-);
+  expect(manifest.entries.index).toMatchObject({
+    initial: {
+      js: ['/static/js/index.js'],
+    },
+    html: ['/index.html'],
+    assets: ['/static/js/index.js.LICENSE.txt'],
+  });
+});

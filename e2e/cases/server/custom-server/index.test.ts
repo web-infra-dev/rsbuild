@@ -1,10 +1,10 @@
-import { expect, gotoPage, rspackTest } from '@e2e/helper';
+import { expect, gotoPage, test } from '@e2e/helper';
 // @ts-expect-error
 import { startDevServerPure } from './scripts/pureServer.js';
 // @ts-expect-error
 import { startDevServer } from './scripts/server.js';
 
-rspackTest('should support a custom dev server', async ({ page }) => {
+test('should support a custom dev server', async ({ page }) => {
   const { config, close } = await startDevServer(import.meta.dirname);
 
   await gotoPage(page, config);
@@ -21,26 +21,25 @@ rspackTest('should support a custom dev server', async ({ page }) => {
   await close();
 });
 
-rspackTest(
-  'should support a custom dev server without compilation',
-  async ({ page }) => {
-    const { config, close } = await startDevServerPure(import.meta.dirname);
-    const indexRes = await gotoPage(page, config);
+test('should support a custom dev server without compilation', async ({
+  page,
+}) => {
+  const { config, close } = await startDevServerPure(import.meta.dirname);
+  const indexRes = await gotoPage(page, config);
 
-    expect(indexRes?.status()).toBe(404);
+  expect(indexRes?.status()).toBe(404);
 
-    const url1 = new URL(`http://localhost:${config.port}/bbb`);
+  const url1 = new URL(`http://localhost:${config.port}/bbb`);
 
-    const res = await page.goto(url1.href);
+  const res = await page.goto(url1.href);
 
-    expect(await res?.text()).toBe('Hello polka!');
+  expect(await res?.text()).toBe('Hello polka!');
 
-    const url2 = new URL(`http://localhost:${config.port}/test`);
+  const url2 = new URL(`http://localhost:${config.port}/test`);
 
-    const res2 = await page.goto(url2.href);
+  const res2 = await page.goto(url2.href);
 
-    expect(await res2?.text()).toBe('Hello polka!');
+  expect(await res2?.text()).toBe('Hello polka!');
 
-    await close();
-  },
-);
+  await close();
+});

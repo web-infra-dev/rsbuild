@@ -1,28 +1,25 @@
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
-rspackTest(
-  'should render basic React component in dev',
-  async ({ page, dev }) => {
-    await dev();
+test('should render basic React component in dev', async ({ page, dev }) => {
+  await dev();
 
-    const button = page.locator('#button');
-    await expect(button).toHaveText('count: 0');
-    await button.click();
-    await expect(button).toHaveText('count: 1');
-  },
-);
+  const button = page.locator('#button');
+  await expect(button).toHaveText('count: 0');
+  await button.click();
+  await expect(button).toHaveText('count: 1');
+});
 
-rspackTest(
-  'should render basic React component in build',
-  async ({ page, buildPreview }) => {
-    const rsbuild = await buildPreview();
+test('should render basic React component in build', async ({
+  page,
+  buildPreview,
+}) => {
+  const rsbuild = await buildPreview();
 
-    const button = page.locator('#button');
-    await expect(button).toHaveText('count: 0');
-    await button.click();
-    await expect(button).toHaveText('count: 1');
+  const button = page.locator('#button');
+  await expect(button).toHaveText('count: 0');
+  await button.click();
+  await expect(button).toHaveText('count: 1');
 
-    const index = await rsbuild.getIndexBundle();
-    expect(index).toContain('memo_cache_sentinel');
-  },
-);
+  const index = await rsbuild.getIndexBundle();
+  expect(index).toContain('memo_cache_sentinel');
+});

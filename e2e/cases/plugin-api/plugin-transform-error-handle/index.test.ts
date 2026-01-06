@@ -1,6 +1,6 @@
-import { rspackTest } from '@e2e/helper';
+import { test } from '@e2e/helper';
 
-rspackTest('should handle transform error in dev', async ({ devOnly }) => {
+test('should handle transform error in dev', async ({ devOnly }) => {
   const rsbuild = await devOnly();
 
   await rsbuild.expectLog(

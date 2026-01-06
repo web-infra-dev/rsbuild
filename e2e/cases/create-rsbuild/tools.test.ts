@@ -1,9 +1,9 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 import { createAndValidate } from './helper';
 
-rspackTest('should create project with eslint as expected', async () => {
+test('should create project with eslint as expected', async () => {
   const { dir, pkgJson, clean } = await createAndValidate(
     import.meta.dirname,
     'vanilla',
@@ -18,7 +18,7 @@ rspackTest('should create project with eslint as expected', async () => {
   await clean();
 });
 
-rspackTest('should create project with prettier as expected', async () => {
+test('should create project with prettier as expected', async () => {
   const { dir, pkgJson, clean } = await createAndValidate(
     import.meta.dirname,
     'vanilla',
@@ -33,27 +33,24 @@ rspackTest('should create project with prettier as expected', async () => {
   await clean();
 });
 
-rspackTest(
-  'should create project with ESLint and prettier as expected',
-  async () => {
-    const { dir, pkgJson, clean } = await createAndValidate(
-      import.meta.dirname,
-      'vanilla',
-      {
-        name: 'test-temp-eslint-prettier',
-        tools: ['eslint', 'prettier'],
-        clean: false,
-      },
-    );
-    expect(pkgJson.devDependencies.eslint).toBeTruthy();
-    expect(pkgJson.devDependencies.prettier).toBeTruthy();
-    expect(existsSync(join(dir, '.prettierrc'))).toBeTruthy();
-    expect(existsSync(join(dir, 'eslint.config.mjs'))).toBeTruthy();
-    await clean();
-  },
-);
+test('should create project with ESLint and prettier as expected', async () => {
+  const { dir, pkgJson, clean } = await createAndValidate(
+    import.meta.dirname,
+    'vanilla',
+    {
+      name: 'test-temp-eslint-prettier',
+      tools: ['eslint', 'prettier'],
+      clean: false,
+    },
+  );
+  expect(pkgJson.devDependencies.eslint).toBeTruthy();
+  expect(pkgJson.devDependencies.prettier).toBeTruthy();
+  expect(existsSync(join(dir, '.prettierrc'))).toBeTruthy();
+  expect(existsSync(join(dir, 'eslint.config.mjs'))).toBeTruthy();
+  await clean();
+});
 
-rspackTest('should create React project with ESLint as expected', async () => {
+test('should create React project with ESLint as expected', async () => {
   const { dir, pkgJson, clean } = await createAndValidate(
     import.meta.dirname,
     'react-ts',
@@ -69,7 +66,7 @@ rspackTest('should create React project with ESLint as expected', async () => {
   await clean();
 });
 
-rspackTest('should create Vue project with ESLint as expected', async () => {
+test('should create Vue project with ESLint as expected', async () => {
   const { dir, pkgJson, clean } = await createAndValidate(
     import.meta.dirname,
     'vue3-ts',
@@ -85,7 +82,7 @@ rspackTest('should create Vue project with ESLint as expected', async () => {
   await clean();
 });
 
-rspackTest('should create project with biome as expected', async () => {
+test('should create project with biome as expected', async () => {
   const { dir, pkgJson, clean } = await createAndValidate(
     import.meta.dirname,
     'vanilla',

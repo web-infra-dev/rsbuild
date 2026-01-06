@@ -1,4 +1,4 @@
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 import { createRsbuild, type RsbuildPlugin } from '@rsbuild/core';
 
 type ParentAPI = {
@@ -28,7 +28,7 @@ const pluginParent2: RsbuildPlugin = {
   },
 };
 
-rspackTest('should allow plugin to expose and consume API', async () => {
+test('should allow plugin to expose and consume API', async () => {
   const pluginChild: RsbuildPlugin = {
     name: 'plugin-child',
     setup(api) {
@@ -46,7 +46,7 @@ rspackTest('should allow plugin to expose and consume API', async () => {
   await rsbuild.build();
 });
 
-rspackTest('should override the previous exposed API', async () => {
+test('should override the previous exposed API', async () => {
   const pluginChild: RsbuildPlugin = {
     name: 'plugin-child',
     setup(api) {

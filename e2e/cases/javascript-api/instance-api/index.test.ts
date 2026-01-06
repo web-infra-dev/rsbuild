@@ -1,41 +1,35 @@
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 import { createRsbuild, type RsbuildPlugin } from '@rsbuild/core';
 
-rspackTest(
-  'should allow to call `modifyRsbuildConfig` via Rsbuild instance',
-  async () => {
-    const rsbuild = await createRsbuild({
-      cwd: import.meta.dirname,
-    });
-    rsbuild.modifyRsbuildConfig((config) => {
-      config.mode = 'none';
-    });
+test('should allow to call `modifyRsbuildConfig` via Rsbuild instance', async () => {
+  const rsbuild = await createRsbuild({
+    cwd: import.meta.dirname,
+  });
+  rsbuild.modifyRsbuildConfig((config) => {
+    config.mode = 'none';
+  });
 
-    const result = await rsbuild.inspectConfig();
-    expect(result.origin.rsbuildConfig.mode).toBe('none');
-  },
-);
+  const result = await rsbuild.inspectConfig();
+  expect(result.origin.rsbuildConfig.mode).toBe('none');
+});
 
-rspackTest(
-  'should allow to call `modifyEnvironmentConfig` via Rsbuild instance',
-  async () => {
-    const rsbuild = await createRsbuild({
-      cwd: import.meta.dirname,
-    });
-    rsbuild.modifyRsbuildConfig((config) => {
-      config.mode = 'development';
-    });
-    rsbuild.modifyEnvironmentConfig((config) => {
-      config.mode = 'none';
-    });
+test('should allow to call `modifyEnvironmentConfig` via Rsbuild instance', async () => {
+  const rsbuild = await createRsbuild({
+    cwd: import.meta.dirname,
+  });
+  rsbuild.modifyRsbuildConfig((config) => {
+    config.mode = 'development';
+  });
+  rsbuild.modifyEnvironmentConfig((config) => {
+    config.mode = 'none';
+  });
 
-    const result = await rsbuild.inspectConfig();
-    expect(result.origin.rsbuildConfig.mode).toBe('development');
-    expect(result.origin.environmentConfigs.web.mode).toBe('none');
-  },
-);
+  const result = await rsbuild.inspectConfig();
+  expect(result.origin.rsbuildConfig.mode).toBe('development');
+  expect(result.origin.environmentConfigs.web.mode).toBe('none');
+});
 
-rspackTest('should allow to call `expose` via Rsbuild instance', async () => {
+test('should allow to call `expose` via Rsbuild instance', async () => {
   const rsbuild = await createRsbuild({
     cwd: import.meta.dirname,
   });

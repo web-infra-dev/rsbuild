@@ -1,6 +1,6 @@
-import { expect, rspackTest } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
-rspackTest('should set the hash format to fullhash', async ({ build }) => {
+test('should set the hash format to fullhash', async ({ build }) => {
   const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();

@@ -1,13 +1,7 @@
-import {
-  expect,
-  findFile,
-  getFileContent,
-  rspackTest,
-  test,
-} from '@e2e/helper';
+import { expect, findFile, getFileContent, test } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-rspackTest('legalComments linked (default)', async ({ page, buildPreview }) => {
+test('legalComments linked (default)', async ({ page, buildPreview }) => {
   const rsbuild = await buildPreview({
     config: {
       plugins: [pluginReact()],

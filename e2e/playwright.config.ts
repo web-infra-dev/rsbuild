@@ -1,6 +1,5 @@
 import { defineConfig } from '@playwright/test';
 
-process.env.PROVIDE_TYPE ||= 'rspack';
 // https://playwright.dev/docs/service-workers-experimental
 process.env.PW_EXPERIMENTAL_SERVICE_WORKER_NETWORK_EVENTS = '1';
 
