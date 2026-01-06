@@ -32,6 +32,13 @@ export default {
 };
 ```
 
+## Remove HTML template parameters
+
+The deprecated template parameters has been removed from `html.templateParameters`
+
+- `webpackConfig`: use `rspackConfig` instead.
+- `htmlWebpackPlugin`: use `htmlPlugin` instead.
+
 ## Dropping webpack support
 
 Rsbuild 2.0 no longer supports using webpack as the bundler. In Rsbuild 1.x, this capability was mainly used to validate compatibility between Rspack and webpack. As Rspack has gradually matured and stabilized, this purpose is no longer necessary, so the related support has been removed.
