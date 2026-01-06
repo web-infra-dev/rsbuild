@@ -19,8 +19,6 @@ exports[`initHooks > should init hooks correctly 1`] = `
   "modifyHTMLTags",
   "modifyRspackConfig",
   "modifyBundlerChain",
-  "modifyWebpackChain",
-  "modifyWebpackConfig",
   "modifyRsbuildConfig",
   "modifyEnvironmentConfig",
   "onBeforeEnvironmentCompile",
