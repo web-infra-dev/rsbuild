@@ -1,15 +1,16 @@
-import { JS_DIST_DIR } from '../constants';
+import { JS_DIST_DIR } from './constants';
 import {
   updateContextByNormalizedConfig,
   updateEnvironmentContext,
-} from '../createContext';
-import { getDefaultEntry, normalizeConfig } from '../defaultConfig';
-import { camelCase, color, pick } from '../helpers';
-import { ensureAbsolutePath } from '../helpers/path';
-import { inspectConfig } from '../inspectConfig';
-import { isDebug, logger } from '../logger';
-import { mergeRsbuildConfig } from '../mergeConfig';
-import { initPlugins } from '../pluginManager';
+} from './createContext';
+import { getDefaultEntry, normalizeConfig } from './defaultConfig';
+import { camelCase, color, pick } from './helpers';
+import { ensureAbsolutePath } from './helpers/path';
+import { inspectConfig } from './inspectConfig';
+import { isDebug, logger } from './logger';
+import { mergeRsbuildConfig } from './mergeConfig';
+import { initPlugins } from './pluginManager';
+import { generateRspackConfig } from './rspackConfig';
 import type {
   AllowedEnvironmentDevKeys,
   EnvironmentConfig,
@@ -23,8 +24,7 @@ import type {
   ResolvedCreateRsbuildOptions,
   RsbuildEntry,
   Rspack,
-} from '../types';
-import { generateRspackConfig } from './rspackConfig';
+} from './types';
 
 const allowedEnvironmentDevKeys: AllowedEnvironmentDevKeys[] = [
   'hmr',
@@ -116,7 +116,6 @@ const initEnvironmentConfigs = (
     environments,
     dev,
     server: _server,
-    provider: _provider,
     ...baseConfig
   } = normalizedConfig;
 

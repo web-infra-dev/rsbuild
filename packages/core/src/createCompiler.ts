@@ -1,13 +1,13 @@
 import { sep } from 'node:path';
-import { LAZY_COMPILATION_IDENTIFIER } from '../constants';
-import { color, prettyTime } from '../helpers';
-import { formatStats, getRsbuildStats } from '../helpers/stats';
-import { isSatisfyRspackVersion, rspackMinVersion } from '../helpers/version';
-import { registerDevHook } from '../hooks';
-import { logger } from '../logger';
-import { rspack } from '../rspack';
-import type { InternalContext, Rspack } from '../types';
+import { LAZY_COMPILATION_IDENTIFIER } from './constants';
+import { color, prettyTime } from './helpers';
+import { formatStats, getRsbuildStats } from './helpers/stats';
+import { isSatisfyRspackVersion, rspackMinVersion } from './helpers/version';
+import { registerDevHook } from './hooks';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
+import { logger } from './logger';
+import { rspack } from './rspack';
+import type { InternalContext, Rspack } from './types';
 
 // keep the last 3 parts of the path to make logs clean
 function cutPath(originalFilePath: string, root: string) {

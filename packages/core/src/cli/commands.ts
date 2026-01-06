@@ -1,8 +1,8 @@
 import cac, { type CAC, type Command } from 'cac';
+import { RSPACK_BUILD_ERROR } from '../build';
 import { color } from '../helpers';
 import type { ConfigLoader } from '../loadConfig';
 import { logger } from '../logger';
-import { RSPACK_BUILD_ERROR } from '../provider/build';
 import { onBeforeRestartServer } from '../restart';
 import type { LogLevel, RsbuildMode } from '../types';
 import { init } from './init';

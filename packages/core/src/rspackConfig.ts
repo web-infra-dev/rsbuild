@@ -2,12 +2,12 @@ import {
   type ConfigChainAsyncWithContext,
   reduceConfigsAsyncWithContext,
 } from 'reduce-configs';
-import { CHAIN_ID, modifyBundlerChain } from '../configChain';
-import { castArray, color, getNodeEnv } from '../helpers';
-import { requireCompiledPackage } from '../helpers/vendors';
-import { logger } from '../logger';
-import { getHTMLPlugin } from '../pluginHelper';
-import { rspack } from '../rspack';
+import { CHAIN_ID, modifyBundlerChain } from './configChain';
+import { castArray, color, getNodeEnv } from './helpers';
+import { requireCompiledPackage } from './helpers/vendors';
+import { logger } from './logger';
+import { getHTMLPlugin } from './pluginHelper';
+import { rspack } from './rspack';
 import type {
   EnvironmentContext,
   InternalContext,
@@ -16,7 +16,7 @@ import type {
   NarrowedRspackConfig,
   RsbuildTarget,
   Rspack,
-} from '../types';
+} from './types';
 
 async function modifyRspackConfig(
   context: InternalContext,

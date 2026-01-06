@@ -8,12 +8,12 @@ export async function modifyBundlerChain(
 ): Promise<RspackChain> {
   logger.debug('applying modifyBundlerChain hook');
 
-  const bundlerChain = new RspackChain();
+  const rspackChain = new RspackChain();
 
   const [modifiedBundlerChain] =
     await context.hooks.modifyBundlerChain.callChain({
       environment: utils.environment.name,
-      args: [bundlerChain, utils],
+      args: [rspackChain, utils],
     });
 
   if (utils.environment.config.tools?.bundlerChain) {

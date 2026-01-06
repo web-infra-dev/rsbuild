@@ -8,8 +8,8 @@ import {
   setNodeEnv,
   upperFirst,
 } from './helpers';
+import type { InitConfigsOptions } from './initConfigs';
 import { logger } from './logger';
-import type { InitConfigsOptions } from './provider/initConfigs';
 import type {
   InspectConfigOptions,
   InspectConfigResult,

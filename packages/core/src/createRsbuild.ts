@@ -1,5 +1,7 @@
 import { existsSync } from 'node:fs';
 import { isPromise } from 'node:util/types';
+import { build as baseBuild } from './build';
+import { createCompiler as baseCreateCompiler } from './createCompiler';
 import { createContext } from './createContext';
 import {
   castArray,
@@ -10,7 +12,12 @@ import {
   setNodeEnv,
 } from './helpers';
 import { isEmptyDir } from './helpers/fs';
+import {
+  initConfigs as baseInitConfigs,
+  initRsbuildConfig,
+} from './initConfigs';
 import { initPluginAPI } from './initPlugins';
+import { inspectConfig as baseInspectConfig } from './inspectConfig';
 import { type LoadEnvResult, loadEnv } from './loadEnv';
 import { isDebug, logger } from './logger';
 import { createPluginManager } from './pluginManager';
@@ -49,8 +56,7 @@ import { pluginSri } from './plugins/sri';
 import { pluginSwc } from './plugins/swc';
 import { pluginTarget } from './plugins/target';
 import { pluginWasm } from './plugins/wasm';
-import { initRsbuildConfig } from './provider/initConfigs';
-import { rspackProvider } from './provider/provider';
+import { createDevServer as baseCreateDevServer } from './server/devServer';
 import { startProdServer } from './server/prodServer';
 import type {
   Build,
@@ -58,6 +64,7 @@ import type {
   CreateDevServer,
   CreateRsbuildOptions,
   Falsy,
+  InitConfigsOptions,
   InspectConfig,
   InternalContext,
   PluginManager,
@@ -67,8 +74,8 @@ import type {
   RsbuildInstance,
   RsbuildPlugin,
   RsbuildPlugins,
-  RsbuildProvider,
   StartDevServer,
+  StartDevServerOptions,
 } from './types';
 
 function applyDefaultPlugins(
@@ -200,13 +207,15 @@ export async function createRsbuild(
   applyDefaultPlugins(pluginManager, context);
   logger.debug('default plugins registered');
 
-  const provider = (config.provider as RsbuildProvider) || rspackProvider;
-
-  const providerInstance = await provider({
-    context,
-    pluginManager,
-    rsbuildOptions: resolvedOptions,
-  });
+  const createCompiler = (async () => {
+    initAction();
+    const result = await baseCreateCompiler({
+      context,
+      pluginManager,
+      rsbuildOptions: resolvedOptions,
+    });
+    return result.compiler;
+  }) as CreateCompiler;
 
   const preview = async (options: PreviewOptions = {}) => {
     context.action = 'preview';
@@ -240,14 +249,17 @@ export async function createRsbuild(
     return startProdServer(context, config, options);
   };
 
-  const build: Build = async (...args) => {
+  const build: Build = async (options) => {
     context.action = 'build';
 
     if (!getNodeEnv()) {
       setNodeEnv('production');
     }
 
-    const buildInstance = await providerInstance.build(...args);
+    const buildInstance = await baseBuild(
+      { context, pluginManager, rsbuildOptions: resolvedOptions },
+      options,
+    );
     return {
       ...buildInstance,
       close: async () => {
@@ -257,24 +269,40 @@ export async function createRsbuild(
     };
   };
 
-  const startDevServer: StartDevServer = (...args) => {
+  const startDevServer: StartDevServer = async (
+    options?: StartDevServerOptions,
+  ) => {
     context.action = 'dev';
 
     if (!getNodeEnv()) {
       setNodeEnv('development');
     }
 
-    return providerInstance.startDevServer(...args);
+    const config = await initRsbuildConfig({ context, pluginManager });
+    const server = await baseCreateDevServer(
+      { context, pluginManager, rsbuildOptions: resolvedOptions },
+      createCompiler,
+      config,
+      options,
+    );
+
+    return server.listen();
   };
 
-  const createDevServer: CreateDevServer = (...args) => {
+  const createDevServer: CreateDevServer = async (options) => {
     context.action = 'dev';
 
     if (!getNodeEnv()) {
       setNodeEnv('development');
     }
 
-    return providerInstance.createDevServer(...args);
+    const config = await initRsbuildConfig({ context, pluginManager });
+    return baseCreateDevServer(
+      { context, pluginManager, rsbuildOptions: resolvedOptions },
+      createCompiler,
+      config,
+      options,
+    );
   };
 
   const initAction = () => {
@@ -283,14 +311,51 @@ export async function createRsbuild(
     }
   };
 
-  const createCompiler: CreateCompiler = (...args) => {
+  const inspectConfig: InspectConfig = async (inspectOptions) => {
     initAction();
-    return providerInstance.createCompiler(...args);
+
+    const bundlerConfigs = (
+      await baseInitConfigs({
+        context,
+        pluginManager,
+        rsbuildOptions: resolvedOptions,
+      })
+    ).rspackConfigs;
+
+    return baseInspectConfig({
+      context,
+      pluginManager,
+      rsbuildOptions: resolvedOptions,
+      inspectOptions,
+      bundlerConfigs,
+    });
   };
 
-  const inspectConfig: InspectConfig = async (...args) => {
-    initAction();
-    return providerInstance.inspectConfig(...args);
+  const initConfigs = async (options?: InitConfigsOptions) => {
+    if (
+      context.action &&
+      options?.action &&
+      context.action !== options.action
+    ) {
+      // Calling initConfigs multiple times with different actions
+      throw new Error(
+        `\
+[rsbuild] initConfigs() can only be called with the same action type.
+  - Expected: ${context.action}
+  - Actual: ${options?.action}`,
+      );
+    }
+
+    if (options?.action) {
+      context.action = options.action;
+    }
+
+    const { rspackConfigs } = await baseInitConfigs({
+      context,
+      pluginManager,
+      rsbuildOptions: resolvedOptions,
+    });
+    return rspackConfigs;
   };
 
   const rsbuild: RsbuildInstance = {
@@ -300,6 +365,7 @@ export async function createRsbuild(
     createCompiler,
     createDevServer,
     inspectConfig,
+    initConfigs,
     ...pick(pluginManager, [
       'addPlugins',
       'getPlugins',
@@ -330,7 +396,6 @@ export async function createRsbuild(
       'onDevCompileDone',
       'onExit',
     ]),
-    ...pick(providerInstance, ['initConfigs']),
   };
 
   if (envs) {

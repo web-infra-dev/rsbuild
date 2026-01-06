@@ -7,8 +7,8 @@ import type {
   NormalizedEnvironmentConfig,
   RsbuildConfig,
 } from './config';
-import type { InternalContext, RsbuildContext } from './context';
-import type { PluginManager, RsbuildPlugin, RsbuildPluginAPI } from './plugin';
+import type { RsbuildContext } from './context';
+import type { RsbuildPlugin, RsbuildPluginAPI } from './plugin';
 import type { Rspack } from './rspack';
 import type { Falsy } from './utils';
 
@@ -125,7 +125,7 @@ export type InspectConfigResult = {
 };
 
 // Allow user to manually narrow Compiler type
-export type CreateCompiler = <C = Compiler | MultiCompiler>() => Promise<C>;
+export type CreateCompiler = () => Promise<Compiler | MultiCompiler>;
 
 export type CreateRsbuildOptions = {
   /**
@@ -182,23 +182,6 @@ export type StartDevServer = (
 export type InspectConfig = (
   options?: InspectConfigOptions,
 ) => Promise<InspectConfigResult>;
-
-export type ProviderInstance = Pick<
-  RsbuildInstance,
-  'build' | 'createCompiler' | 'createDevServer' | 'startDevServer'
-> & {
-  initConfigs: (
-    options?: InitConfigsOptions,
-  ) => Promise<Rspack.Configuration[]>;
-
-  inspectConfig: InspectConfig;
-};
-
-export type RsbuildProvider = (options: {
-  context: InternalContext;
-  pluginManager: PluginManager;
-  rsbuildOptions: ResolvedCreateRsbuildOptions;
-}) => Promise<ProviderInstance> | ProviderInstance;
 
 export type AddPluginsOptions = {
   /**
