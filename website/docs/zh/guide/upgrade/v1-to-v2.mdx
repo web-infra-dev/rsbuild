@@ -39,6 +39,27 @@ export default {
 - `webpackConfig`：使用 `rspackConfig` 代替。
 - `htmlWebpackPlugin`：使用 `htmlPlugin` 代替。
 
+## 移除 `performance.profile`
+
+`performance.profile` 选项已被移除。如果你依赖它来输出 stats JSON 文件，可以在自定义插件中调用 [stats.toJson()](/api/javascript-api/instance#stats-object) 代替：
+
+```ts
+import { writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+const statsJsonPlugin = {
+  name: 'stats-json-plugin',
+  setup(api) {
+    api.onAfterBuild(({ stats }) => {
+      writeFileSync(
+        join(api.context.distPath, 'stats.json'),
+        JSON.stringify(stats?.toJson({}), null, 2),
+      );
+    });
+  },
+};
+```
+
 ## 移除 webpack 支持
 
 Rsbuild 2.0 不再支持使用 webpack 作为打包工具。在 Rsbuild 1.x 版本中，该能力主要用于验证 Rspack 与 webpack 之间的兼容性。随着 Rspack 的逐步成熟和稳定，这一用途已不再必要，因此相关支持被正式移除。
