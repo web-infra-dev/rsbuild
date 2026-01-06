@@ -172,7 +172,6 @@ export type {
   RsbuildPluginAPI,
   RsbuildPlugins,
   RsbuildProvider,
-  RsbuildProviderHelpers,
   RsbuildTarget,
   RspackChain,
   RspackRule,
