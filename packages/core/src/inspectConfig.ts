@@ -19,7 +19,6 @@ import type {
   PluginManager,
   RsbuildPlugin,
   Rspack,
-  WebpackConfig,
 } from './types';
 
 const normalizePluginObject = (plugin: RsbuildPlugin): RsbuildPlugin => {
@@ -192,7 +191,7 @@ const getInspectOutputPath = (
   return join(context.distPath, RSBUILD_OUTPUTS_PATH);
 };
 
-export async function inspectConfig<B extends 'rspack' | 'webpack' = 'rspack'>({
+export async function inspectConfig({
   context,
   pluginManager,
   bundlerConfigs,
@@ -200,9 +199,9 @@ export async function inspectConfig<B extends 'rspack' | 'webpack' = 'rspack'>({
   bundler = 'rspack',
 }: InitConfigsOptions & {
   inspectOptions?: InspectConfigOptions;
-  bundlerConfigs: B extends 'rspack' ? Rspack.Configuration[] : WebpackConfig[];
+  bundlerConfigs: Rspack.Configuration[];
   bundler?: 'rspack' | 'webpack';
-}): Promise<InspectConfigResult<B>> {
+}): Promise<InspectConfigResult> {
   if (inspectOptions.mode) {
     setNodeEnv(inspectOptions.mode);
   } else if (!getNodeEnv()) {

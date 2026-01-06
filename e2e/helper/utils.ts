@@ -157,9 +157,6 @@ export const recordPluginHooks = () => {
       api.modifyRspackConfig(() => {
         hooks.push('ModifyBundlerConfig');
       });
-      api.modifyWebpackChain(() => {
-        hooks.push('ModifyBundlerConfig');
-      });
       api.modifyRsbuildConfig(() => {
         hooks.push('ModifyRsbuildConfig');
       });

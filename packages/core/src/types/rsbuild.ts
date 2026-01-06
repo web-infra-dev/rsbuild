@@ -11,7 +11,6 @@ import type {
 import type { InternalContext, RsbuildContext } from './context';
 import type { PluginManager, RsbuildPlugin, RsbuildPluginAPI } from './plugin';
 import type { Rspack } from './rspack';
-import type { WebpackConfig } from './thirdParty';
 import type { Falsy } from './utils';
 
 export type Bundler = 'rspack' | 'webpack';
@@ -117,16 +116,14 @@ export type InspectConfigOptions = {
   extraConfigs?: Record<string, unknown>;
 };
 
-export type InspectConfigResult<B extends 'rspack' | 'webpack' = 'rspack'> = {
+export type InspectConfigResult = {
   rsbuildConfig: string;
   bundlerConfigs: string[];
   environmentConfigs: string[];
   origin: {
     rsbuildConfig: Omit<NormalizedConfig, 'environments'>;
     environmentConfigs: Record<string, NormalizedEnvironmentConfig>;
-    bundlerConfigs: B extends 'rspack'
-      ? Rspack.Configuration[]
-      : WebpackConfig[];
+    bundlerConfigs: Rspack.Configuration[];
   };
 };
 
@@ -185,11 +182,11 @@ export type StartDevServer = (
   options?: StartDevServerOptions,
 ) => Promise<StartServerResult>;
 
-export type InspectConfig<B extends 'rspack' | 'webpack' = 'rspack'> = (
+export type InspectConfig = (
   options?: InspectConfigOptions,
-) => Promise<InspectConfigResult<B>>;
+) => Promise<InspectConfigResult>;
 
-export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = Pick<
+export type ProviderInstance = Pick<
   RsbuildInstance,
   'build' | 'createCompiler' | 'createDevServer' | 'startDevServer'
 > & {
@@ -197,20 +194,19 @@ export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = Pick<
 
   initConfigs: (
     options?: InitConfigsOptions,
-  ) => Promise<B extends 'rspack' ? Rspack.Configuration[] : WebpackConfig[]>;
+  ) => Promise<Rspack.Configuration[]>;
 
-  inspectConfig: InspectConfig<B>;
+  inspectConfig: InspectConfig;
 };
 
 export type RsbuildProviderHelpers = typeof providerHelpers;
 
-export type RsbuildProvider<B extends 'rspack' | 'webpack' = 'rspack'> =
-  (options: {
-    context: InternalContext;
-    pluginManager: PluginManager;
-    rsbuildOptions: ResolvedCreateRsbuildOptions;
-    helpers: RsbuildProviderHelpers;
-  }) => Promise<ProviderInstance<B>> | ProviderInstance<B>;
+export type RsbuildProvider = (options: {
+  context: InternalContext;
+  pluginManager: PluginManager;
+  rsbuildOptions: ResolvedCreateRsbuildOptions;
+  helpers: RsbuildProviderHelpers;
+}) => Promise<ProviderInstance> | ProviderInstance;
 
 export type AddPluginsOptions = {
   /**

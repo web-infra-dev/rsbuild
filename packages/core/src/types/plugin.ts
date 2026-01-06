@@ -1,10 +1,3 @@
-/** @ts-ignore `webpack` type only exists when `@rsbuild/webpack` is installed */
-import type {
-  RuleSetRule,
-  Configuration as WebpackConfig,
-  WebpackPluginInstance,
-} from 'webpack';
-import type { ChainIdentifier } from '../configChain';
 import type { Logger } from '../logger';
 import type {
   ModifyRspackConfigUtils,
@@ -12,13 +5,11 @@ import type {
   NormalizedConfig,
   NormalizedEnvironmentConfig,
   RsbuildConfig,
-  RspackMerge,
 } from './config';
 import type { RsbuildContext } from './context';
 import type {
   EnvironmentContext,
   ModifyBundlerChainFn,
-  ModifyChainUtils,
   ModifyEnvironmentConfigFn,
   ModifyHTMLFn,
   ModifyHTMLTagsFn,
@@ -44,8 +35,7 @@ import type {
   RsbuildInstance,
   RsbuildTarget,
 } from './rsbuild';
-import type { Rspack, RspackChain } from './rspack';
-import type { HtmlRspackPlugin } from './thirdParty';
+import type { Rspack } from './rspack';
 import type { Falsy, MaybePromise } from './utils';
 
 type HookOrder = 'pre' | 'post' | 'default';
@@ -147,43 +137,6 @@ export type ModifyRspackConfigFn = (
   config: NarrowedRspackConfig,
   utils: ModifyRspackConfigUtils,
 ) => MaybePromise<Rspack.Configuration | void>;
-
-export type ModifyWebpackChainUtils = ModifyChainUtils & {
-  /** @ts-ignore `webpack` type only exists when `@rsbuild/webpack` is installed */
-  webpack: typeof import('webpack');
-  CHAIN_ID: ChainIdentifier;
-  /**
-   * @deprecated Use target instead.
-   */
-  name: string;
-  /**
-   * @deprecated Use HtmlPlugin instead.
-   */
-  HtmlWebpackPlugin: typeof HtmlRspackPlugin;
-};
-
-export type ModifyWebpackConfigUtils = ModifyWebpackChainUtils & {
-  addRules: (rules: RuleSetRule | RuleSetRule[]) => void;
-  appendRules: (rules: RuleSetRule | RuleSetRule[]) => void;
-  prependPlugins: (
-    plugins: WebpackPluginInstance | WebpackPluginInstance[],
-  ) => void;
-  appendPlugins: (
-    plugins: WebpackPluginInstance | WebpackPluginInstance[],
-  ) => void;
-  removePlugin: (pluginName: string) => void;
-  mergeConfig: RspackMerge;
-};
-
-export type ModifyWebpackChainFn = (
-  chain: RspackChain,
-  utils: ModifyWebpackChainUtils,
-) => Promise<void> | void;
-
-export type ModifyWebpackConfigFn = (
-  config: WebpackConfig,
-  utils: ModifyWebpackConfigUtils,
-) => Promise<WebpackConfig | void> | WebpackConfig | void;
 
 export type PluginMeta = {
   environment?: AddPluginsOptions['environment'];
@@ -617,16 +570,6 @@ export type RsbuildPluginAPI = Readonly<{
    * or return a new object to replace the previous object.
    */
   modifyRsbuildConfig: PluginHook<ModifyRsbuildConfigFn>;
-  /**
-   * Allows you to modify the webpack configuration using the `rspack-chain` API,
-   * providing the same functionality as `tools.bundlerChain`.
-   */
-  modifyWebpackChain: PluginHook<ModifyWebpackChainFn>;
-  /**
-   * To modify the webpack config, you can directly modify the config object,
-   * or return a new object to replace the previous object.
-   */
-  modifyWebpackConfig: PluginHook<ModifyWebpackConfigFn>;
   /**
    * A callback function that is triggered after running the production build.
    * You can access the build result information via the

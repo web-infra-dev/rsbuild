@@ -11,8 +11,6 @@ import type {
   ModifyHTMLTagsFn,
   ModifyRsbuildConfigFn,
   ModifyRspackConfigFn,
-  ModifyWebpackChainFn,
-  ModifyWebpackConfigFn,
   OnAfterBuildFn,
   OnAfterCreateCompilerFn,
   OnAfterDevCompileFn,
@@ -216,8 +214,6 @@ export function initHooks(): {
   modifyHTMLTags: EnvironmentAsyncHook<ModifyHTMLTagsFn>;
   modifyRspackConfig: EnvironmentAsyncHook<ModifyRspackConfigFn>;
   modifyBundlerChain: EnvironmentAsyncHook<ModifyBundlerChainFn>;
-  modifyWebpackChain: EnvironmentAsyncHook<ModifyWebpackChainFn>;
-  modifyWebpackConfig: EnvironmentAsyncHook<ModifyWebpackConfigFn>;
   modifyRsbuildConfig: AsyncHook<ModifyRsbuildConfigFn>;
   modifyEnvironmentConfig: EnvironmentAsyncHook<ModifyEnvironmentConfigFn>;
   onBeforeEnvironmentCompile: EnvironmentAsyncHook<OnBeforeEnvironmentCompileFn>;
@@ -241,8 +237,6 @@ export function initHooks(): {
     modifyHTMLTags: createEnvironmentAsyncHook<ModifyHTMLTagsFn>(),
     modifyRspackConfig: createEnvironmentAsyncHook<ModifyRspackConfigFn>(),
     modifyBundlerChain: createEnvironmentAsyncHook<ModifyBundlerChainFn>(),
-    modifyWebpackChain: createEnvironmentAsyncHook<ModifyWebpackChainFn>(),
-    modifyWebpackConfig: createEnvironmentAsyncHook<ModifyWebpackConfigFn>(),
     modifyRsbuildConfig: createAsyncHook<ModifyRsbuildConfigFn>(),
     modifyEnvironmentConfig:
       createEnvironmentAsyncHook<ModifyEnvironmentConfigFn>(),

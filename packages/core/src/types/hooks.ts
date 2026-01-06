@@ -11,7 +11,7 @@ import type {
 } from './config';
 import type { RsbuildEntry, RsbuildTarget } from './rsbuild';
 import type { Rspack } from './rspack';
-import type { HtmlRspackPlugin, WebpackConfig } from './thirdParty';
+import type { HtmlRspackPlugin } from './thirdParty';
 import type { MaybePromise } from './utils';
 
 type CompileCommonParams = {
@@ -19,36 +19,32 @@ type CompileCommonParams = {
   isWatch: boolean;
 };
 
-export type OnBeforeEnvironmentCompileFn<B = 'rspack'> = (
+export type OnBeforeEnvironmentCompileFn = (
   params: CompileCommonParams & {
     environment: EnvironmentContext;
-    bundlerConfig?: B extends 'rspack' ? Rspack.Configuration : WebpackConfig;
+    bundlerConfig?: Rspack.Configuration;
   },
 ) => MaybePromise<void>;
 
 export type OnCloseBuildFn = () => MaybePromise<void>;
 
-export type OnBeforeBuildFn<B = 'rspack'> = (
+export type OnBeforeBuildFn = (
   params: CompileCommonParams & {
     /**
      * Context information for all environments.
      */
     environments: Record<string, EnvironmentContext>;
-    bundlerConfigs?: B extends 'rspack'
-      ? Rspack.Configuration[]
-      : WebpackConfig[];
+    bundlerConfigs?: Rspack.Configuration[];
   },
 ) => MaybePromise<void>;
 
-export type OnBeforeDevCompileFn<B = 'rspack'> = (
+export type OnBeforeDevCompileFn = (
   params: CompileCommonParams & {
     /**
      * Context information for all environments.
      */
     environments: Record<string, EnvironmentContext>;
-    bundlerConfigs?: B extends 'rspack'
-      ? Rspack.Configuration[]
-      : WebpackConfig[];
+    bundlerConfigs?: Rspack.Configuration[];
   },
 ) => MaybePromise<void>;
 
@@ -125,8 +121,8 @@ export type OnAfterStartProdServerFn = (params: {
   environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;
 
-export type OnBeforeCreateCompilerFn<B = 'rspack'> = (params: {
-  bundlerConfigs: B extends 'rspack' ? Rspack.Configuration[] : WebpackConfig[];
+export type OnBeforeCreateCompilerFn = (params: {
+  bundlerConfigs: Rspack.Configuration[];
   /**
    * Context information for all environments.
    */

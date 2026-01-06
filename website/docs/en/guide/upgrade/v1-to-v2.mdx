@@ -10,6 +10,9 @@ Rsbuild 2.0 no longer supports using webpack as the bundler. In Rsbuild 1.x, thi
 
 The specific changes are as follows:
 
-- The `@rsbuild/webpack` package is no longer provided.
-- The `@rsbuild/plugin-webpack-swc` package is no longer provided.
-- The type of `context.bundlerType` no longer includes `webpack`.
+- Removed the `@rsbuild/webpack` package.
+- Removed the `@rsbuild/plugin-webpack-swc` package.
+- Removed the `tools.webpack` and `tools.webpackChain` configuration options.
+- Removed the `api.modifyWebpackChain` and `api.modifyWebpackConfig` plugin hooks.
+- Removed the `webpack` type from the `api.context.bundlerType`.
+- Removed webpack-related types.
