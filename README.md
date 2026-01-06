@@ -19,6 +19,10 @@ Rsbuild is a high-performance build tool powered by Rspack. It provides carefull
 
 Rsbuild provides a [rich set of build features](https://rsbuild.rs/guide/start/features), including support for TypeScript, JSX, Sass, Less, CSS Modules, Wasm, and more. It also supports Module Federation, image compression, type checking, PostCSS, Lightning CSS, and additional features.
 
+> [!NOTE]
+> The `main` branch is under active development for **Rsbuild 2.0**.  
+> The stable **1.x** releases are maintained in the [v1.x](https://github.com/web-infra-dev/rsbuild/tree/v1.x) branch.
+
 ## 🚀 Performance
 
 Powered by Rspack's Rust-based architecture, Rsbuild delivers blazing-fast performance to speed up your development workflow.

@@ -10,8 +10,9 @@ Fork this repository to your own GitHub account and then clone it locally.
 
 ## Branches
 
-- `main` -> Rsbuild v1.x
-- `v0.x` -> Rsbuild v0.x
+- [main](https://github.com/web-infra-dev/rsbuild/tree/main) -> Rsbuild v2.x
+- [v1.x](https://github.com/web-infra-dev/rsbuild/tree/v1.x) -> Rsbuild v1.x
+- [v0.x](https://github.com/web-infra-dev/rsbuild/tree/v0.x) -> Rsbuild v0.x
 
 ### Install Node.js
 
