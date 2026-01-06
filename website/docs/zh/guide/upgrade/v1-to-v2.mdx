@@ -32,6 +32,13 @@ export default {
 };
 ```
 
+## 移除 HTML 模板参数
+
+`html.templateParameters` 中废弃的默认参数已被移除：
+
+- `webpackConfig`：使用 `rspackConfig` 代替。
+- `htmlWebpackPlugin`：使用 `htmlPlugin` 代替。
+
 ## 移除 webpack 支持
 
 Rsbuild 2.0 不再支持使用 webpack 作为打包工具。在 Rsbuild 1.x 版本中，该能力主要用于验证 Rspack 与 webpack 之间的兼容性。随着 Rspack 的逐步成熟和稳定，这一用途已不再必要，因此相关支持被正式移除。
