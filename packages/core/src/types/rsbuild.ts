@@ -13,8 +13,6 @@ import type { PluginManager, RsbuildPlugin, RsbuildPluginAPI } from './plugin';
 import type { Rspack } from './rspack';
 import type { Falsy } from './utils';
 
-export type Bundler = 'rspack' | 'webpack';
-
 export type StartDevServerOptions = {
   /**
    * Using a custom Rspack Compiler object.
@@ -190,8 +188,6 @@ export type ProviderInstance = Pick<
   RsbuildInstance,
   'build' | 'createCompiler' | 'createDevServer' | 'startDevServer'
 > & {
-  readonly bundler: Bundler;
-
   initConfigs: (
     options?: InitConfigsOptions,
   ) => Promise<Rspack.Configuration[]>;

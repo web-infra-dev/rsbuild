@@ -94,9 +94,7 @@ export async function outputInspectConfigFiles({
   rawEnvironmentConfigs,
   inspectOptions,
   rawExtraConfigs,
-  configType,
 }: {
-  configType: string;
   rawExtraConfigs?: RawConfig[];
   rawEnvironmentConfigs: RawConfig[];
   rawBundlerConfigs: RawConfig[];
@@ -128,7 +126,7 @@ export async function outputInspectConfigFiles({
       };
     }),
     ...rawBundlerConfigs.map(({ name, content }) => {
-      const outputFile = `${configType}.config.${name}.mjs`;
+      const outputFile = `rspack.config.${name}.mjs`;
       let outputFilePath = join(outputPath, outputFile);
 
       // if filename is conflict, add a random id to the filename.
@@ -138,7 +136,7 @@ export async function outputInspectConfigFiles({
 
       return {
         path: outputFilePath,
-        label: `${upperFirst(configType)} Config (${name})`,
+        label: `Rspack Config (${name})`,
         content,
       };
     }),
@@ -196,11 +194,9 @@ export async function inspectConfig({
   pluginManager,
   bundlerConfigs,
   inspectOptions = {},
-  bundler = 'rspack',
 }: InitConfigsOptions & {
   inspectOptions?: InspectConfigOptions;
   bundlerConfigs: Rspack.Configuration[];
-  bundler?: 'rspack' | 'webpack';
 }): Promise<InspectConfigResult> {
   if (inspectOptions.mode) {
     setNodeEnv(inspectOptions.mode);
@@ -245,7 +241,6 @@ export async function inspectConfig({
         ...inspectOptions,
         outputPath,
       },
-      configType: bundler,
     });
   }
 
