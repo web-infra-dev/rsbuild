@@ -24,7 +24,7 @@ export const nodeMinifyConfig: Minify = {
 
 export const esmConfig: LibConfig = {
   format: 'esm',
-  syntax: 'es2022',
+  syntax: 'es2023',
   dts: {
     build: true,
     // Only use tsgo in local dev for faster build, disable it in CI until it's more stable
@@ -37,7 +37,7 @@ export const esmConfig: LibConfig = {
 
 export const cjsConfig: LibConfig = {
   format: 'cjs',
-  syntax: 'es2022',
+  syntax: 'es2023',
   output: {
     minify: nodeMinifyConfig,
   },
