@@ -133,11 +133,7 @@ export async function createDevServer<
   options: Options,
   createCompiler: CreateCompiler,
   config: NormalizedConfig,
-  {
-    compiler: customCompiler,
-    getPortSilently,
-    runCompile = true,
-  }: CreateDevServerOptions = {},
+  { getPortSilently, runCompile = true }: CreateDevServerOptions = {},
 ): Promise<RsbuildDevServer> {
   logger.debug('create dev server');
 
@@ -188,7 +184,7 @@ export async function createDevServer<
   });
 
   const startCompile: () => Promise<BuildManager> = async () => {
-    const compiler = customCompiler || (await createCompiler());
+    const compiler = await createCompiler();
 
     if (!compiler) {
       throw new Error(
