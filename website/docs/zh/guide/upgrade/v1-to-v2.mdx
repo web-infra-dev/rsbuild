@@ -10,6 +10,14 @@
 
 Rsbuild 2.0 最低支持版本为 Node.js 20.19+ 或 22.12+。
 
+## Pure ESM 包
+
+`@rsbuild/core` 现已以 pure ESM 包的形式发布，并移除了自身的 CommonJS 构建产物。这一调整仅影响 Rsbuild 本身的发布形式，使安装体积减少了约 500KB。
+
+在 Node.js 20 及以上版本中，运行时已原生支持通过 `require()` 加载 ESM 模块。因此，对大多数仍通过 JavaScript API 使用 Rsbuild 的项目来说，这一变更通常不会带来实际影响，也无需额外修改现有代码。
+
+> 这一变更不影响 Rsbuild 构建 CommonJS 产物的能力，相关的构建行为和配置方式也保持不变。
+
 ## 配置
 
 ### 移除 `source.alias`
