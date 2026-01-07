@@ -124,19 +124,6 @@ export default defineConfig({
       },
     },
     {
-      id: 'cjs_index',
-      format: 'cjs',
-      syntax: 'es2023',
-      source: {
-        entry: {
-          index: './src/index.ts',
-        },
-      },
-      output: {
-        minify: nodeMinifyConfig,
-      },
-    },
-    {
       id: 'esm_client',
       format: 'esm',
       syntax: 'es2017',
