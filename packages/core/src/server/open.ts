@@ -1,6 +1,6 @@
+import { URL } from 'node:url';
 import { STATIC_PATH } from '../constants';
 import { castArray, color } from '../helpers';
-import { canParse } from '../helpers/url';
 import { logger } from '../logger';
 import type { NormalizedConfig, Routes } from '../types';
 import { getHostInUrl } from './helper';
@@ -138,7 +138,7 @@ export const replacePortPlaceholder = (url: string, port: number): string =>
   url.replace(/<port>/g, String(port));
 
 export function resolveUrl(str: string, base: string): string {
-  if (canParse(str)) {
+  if (URL.canParse(str)) {
     return str;
   }
 
