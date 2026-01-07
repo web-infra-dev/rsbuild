@@ -4,7 +4,9 @@ This document lists all breaking changes from Rsbuild 1.x to 2.0. Use it as a mi
 
 > This guide is a work in progress. Content will be added incrementally as Rsbuild 2.0 beta evolves.
 
-## Remove `source.alias`
+## Configuration
+
+### Remove `source.alias`
 
 The deprecated `source.alias` option has been removed. Use [resolve.alias](/config/resolve/alias) instead.
 
@@ -19,7 +21,7 @@ export default {
 };
 ```
 
-## Remove `source.aliasStrategy`
+### Remove `source.aliasStrategy`
 
 The deprecated `source.aliasStrategy` option has been removed. Use [resolve.aliasStrategy](/config/resolve/alias-strategy) instead.
 
@@ -32,7 +34,7 @@ export default {
 };
 ```
 
-## Remove `performance.bundleAnalyze`
+### Remove `performance.bundleAnalyze`
 
 The deprecated `performance.bundleAnalyze` option has been removed.
 
@@ -56,14 +58,7 @@ export default {
 };
 ```
 
-## Remove HTML template parameters
-
-The deprecated template parameters have been removed from `html.templateParameters`
-
-- `webpackConfig`: use `rspackConfig` instead.
-- `htmlWebpackPlugin`: use `htmlPlugin` instead.
-
-## Remove `performance.profile`
+### Remove `performance.profile`
 
 The `performance.profile` option has been removed. If you relied on it to emit a stats JSON file, use [stats.toJson()](/api/javascript-api/instance#stats-object) in a custom plugin instead:
 
@@ -83,6 +78,17 @@ const statsJsonPlugin = {
   },
 };
 ```
+
+### Remove HTML template parameters
+
+The deprecated template parameters have been removed from `html.templateParameters`
+
+- `webpackConfig`: use `rspackConfig` instead.
+- `htmlWebpackPlugin`: use `htmlPlugin` instead.
+
+## JavaScript API
+
+- Removed the deprecated `compiler` parameter from `rsbuild.build()`.
 
 ## Dropping webpack support
 

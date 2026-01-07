@@ -52,11 +52,6 @@ export type BuildOptions = {
    * @default false
    */
   watch?: boolean;
-  /**
-   * Using a custom Rspack Compiler object.
-   * @deprecated This is no longer supported and will be removed in a future version.
-   */
-  compiler?: Compiler | MultiCompiler;
 };
 
 export type Build = (options?: BuildOptions) => Promise<BuildResult>;
