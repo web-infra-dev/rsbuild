@@ -584,7 +584,7 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
       });
 
       if (logs) {
-        logger.log(logs.join('\n'));
+        logger.log(logs.join(''));
       }
 
       // Save current sizes for next build comparison (only if diff is enabled)
