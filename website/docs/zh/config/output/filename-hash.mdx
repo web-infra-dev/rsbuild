@@ -40,16 +40,16 @@ hash 的默认格式为 `contenthash:8`，即基于文件内容生成 8 位 hash
 ```ts title="rsbuild.config.ts"
 export default {
   output: {
-    filenameHash: 'fullhash:16',
+    filenameHash: 'chunkhash:16',
   },
 };
 ```
 
 可选的 hash 格式为：
 
-- `fullhash`：整个编译过程的哈希值，如果任何一个文件发生变动，整个项目的所有输出文件的哈希值都会改变
+- `contenthash`（推荐）：文件内容的哈希值，只有当文件本身的内容发生变更时，哈希值才会改变。
 - `chunkhash`：chunk 的哈希值，如果 chunk 内容（及其包含的模块）发生改变，哈希值才会改变。
-- `contenthash`：文件内容的哈希值，只有当文件本身的内容发生变更时，哈希值才会改变。
+- `fullhash`：整个编译过程的哈希值，如果任何一个文件发生变动，整个项目的所有输出文件的哈希值都会改变
 
 ### 注意事项
 
