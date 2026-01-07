@@ -14,11 +14,6 @@ import type { Falsy } from './utils';
 
 export type StartDevServerOptions = {
   /**
-   * Using a custom Rspack Compiler object.
-   * @deprecated This is no longer supported and will be removed in a future version.
-   */
-  compiler?: Compiler | MultiCompiler;
-  /**
    * Whether to get port silently and not print any logs.
    * @default false
    */
