@@ -24,7 +24,7 @@ In Node.js 20 and later, the runtime natively supports loading ESM modules via [
 
 The deprecated `source.alias` option has been removed. Use [resolve.alias](/config/resolve/alias) instead.
 
-```diff
+```diff title="rsbuild.config.ts"
 export default {
 - source: {
 + resolve: {
@@ -39,7 +39,7 @@ export default {
 
 The deprecated `source.aliasStrategy` option has been removed. Use [resolve.aliasStrategy](/config/resolve/alias-strategy) instead.
 
-```diff
+```diff title="rsbuild.config.ts"
 export default {
 - source: {
 + resolve: {
@@ -56,7 +56,7 @@ In earlier versions, Rsbuild bundled `webpack-bundle-analyzer` by default. Rsdoc
 
 Use [Rsdoctor](/guide/debug/rsdoctor) to analyze bundle size, or register [webpack-bundle-analyzer](https://www.npmjs.com/package/webpack-bundle-analyzer) yourself via [tools.rspack](/config/tools/rspack):
 
-```ts
+```ts title="rsbuild.config.ts"
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 export default {
@@ -76,7 +76,7 @@ export default {
 
 The `performance.profile` option has been removed. If you relied on it to emit a stats JSON file, use [stats.toJson()](/api/javascript-api/instance#stats-object) in a custom plugin instead:
 
-```ts
+```ts title="rsbuild.config.ts"
 import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -91,6 +91,10 @@ const statsJsonPlugin = {
     });
   },
 };
+
+export default {
+  plugins: [statsJsonPlugin],
+};
 ```
 
 ### Remove HTML template parameters
@@ -99,6 +103,21 @@ The deprecated template parameters have been removed from `html.templateParamete
 
 - `webpackConfig`: use `rspackConfig` instead.
 - `htmlWebpackPlugin`: use `htmlPlugin` instead.
+
+### Node minification
+
+For Node targets, production builds no longer enable minification by default.
+
+Server bundles now prioritize debuggability, clear stack traces, and stable runtime behavior over bundle size. If you still want minified output, opt in with [output.minify](/config/output/minify):
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'node',
+    minify: true,
+  },
+};
+```
 
 ## JavaScript API
 
