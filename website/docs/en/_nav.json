@@ -32,7 +32,11 @@
         "link": "https://github.com/web-infra-dev/rsbuild/releases"
       },
       {
-        "text": "Rsbuild 0.x Doc",
+        "text": "Rsbuild 1.x Docs",
+        "link": "http://v1.rsbuild.rs/"
+      },
+      {
+        "text": "Rsbuild 0.x Docs",
         "link": "http://v0.rsbuild.rs/"
       }
     ]
