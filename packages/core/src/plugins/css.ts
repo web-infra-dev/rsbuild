@@ -362,17 +362,18 @@ export const pluginCss = (): RsbuildPlugin => ({
           }
           importLoaders.inline++;
 
-          const { minifyCss } = parseMinifyOptions(config);
-
-          // Use the same browserslist as web bundles to ensure consistent CSS output
-          // Prevent mismatched prefixes or features between SSR and client hydration
+          let minifyCss = parseMinifyOptions(config).minifyCss;
           let { browserslist } = environment;
+
+          // Use the same browserslist and minification as web bundles to ensure consistent
+          // CSS output. Prevent mismatched prefixes or features between SSR and client hydration.
           if (target === 'node') {
             const webEnvironment = Object.values(environments).find(
               (env) => env.config.output.target === 'web',
             );
-            if (webEnvironment?.browserslist) {
+            if (webEnvironment) {
               browserslist = webEnvironment.browserslist;
+              minifyCss = parseMinifyOptions(webEnvironment.config).minifyCss;
             }
           }
 

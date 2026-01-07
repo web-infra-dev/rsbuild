@@ -18,6 +18,6 @@ test('should build Vue SFC with CSS Modules correctly in build for node target',
 
   const files = rsbuild.getDistFiles();
   const indexJs = getFileContent(files, 'index.js');
-  expect(indexJs).toMatch(/"red-\w{6}"/);
-  expect(indexJs).toMatch(/"blue-\w{6}"/);
+  expect(indexJs).toMatch(/`red-\w{6}`/);
+  expect(indexJs).toMatch(/`blue-\w{6}`/);
 });
