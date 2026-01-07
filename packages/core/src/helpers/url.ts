@@ -18,16 +18,6 @@ export const urlJoin = (base: string, path: string) => {
   return `${urlProtocol}://${posix.join(baseUrl, path)}`;
 };
 
-// Can be replaced with URL.canParse when we drop support for Node.js 18
-export const canParse = (url: string): boolean => {
-  try {
-    new URL(url);
-    return true;
-  } catch {
-    return false;
-  }
-};
-
 export const ensureAssetPrefix = (
   url: string,
   assetPrefix: Rspack.PublicPath = DEFAULT_ASSET_PREFIX,
@@ -42,7 +32,7 @@ export const ensureAssetPrefix = (
   // If str is an complete URL, just return it.
   // Only absolute url with hostname & protocol can be parsed into URL instance.
   // e.g. str is https://example.com/foo.js
-  if (canParse(url)) {
+  if (URL.canParse(url)) {
     return url;
   }
 
