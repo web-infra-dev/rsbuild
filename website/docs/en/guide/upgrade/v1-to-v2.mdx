@@ -32,6 +32,30 @@ export default {
 };
 ```
 
+## Remove `performance.bundleAnalyze`
+
+The deprecated `performance.bundleAnalyze` option has been removed.
+
+In earlier versions, Rsbuild bundled `webpack-bundle-analyzer` by default. Rsdoctor now provides built-in bundle size analysis, so this functionality no longer needs to live inside `@rsbuild/core`. Removing it also helps reduce the installation size.
+
+Use [Rsdoctor](/guide/debug/rsdoctor) to analyze bundle size, or register [webpack-bundle-analyzer](https://www.npmjs.com/package/webpack-bundle-analyzer) yourself via [tools.rspack](/config/tools/rspack):
+
+```ts
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+
+export default {
+  tools: {
+    rspack: {
+      plugins: [
+        new BundleAnalyzerPlugin({
+          analyzerMode: 'static',
+        }),
+      ],
+    },
+  },
+};
+```
+
 ## Remove HTML template parameters
 
 The deprecated template parameters have been removed from `html.templateParameters`
