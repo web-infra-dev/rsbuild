@@ -4,7 +4,7 @@ export default defineConfig({
   lib: [
     {
       format: 'esm',
-      syntax: 'es2022',
+      syntax: 'es2023',
     },
   ],
 });

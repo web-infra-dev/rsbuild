@@ -83,7 +83,7 @@ export default defineConfig({
     {
       id: 'esm_index',
       format: 'esm',
-      syntax: 'es2022',
+      syntax: 'es2023',
       plugins: [pluginFixDtsTypes],
       dts: {
         build: true,
@@ -108,7 +108,7 @@ export default defineConfig({
     {
       id: 'esm_loaders',
       format: 'esm',
-      syntax: 'es2022',
+      syntax: 'es2023',
       source: {
         entry: {
           ignoreCssLoader: './src/loader/ignoreCssLoader.ts',
@@ -126,7 +126,7 @@ export default defineConfig({
     {
       id: 'cjs_index',
       format: 'cjs',
-      syntax: 'es2022',
+      syntax: 'es2023',
       source: {
         entry: {
           index: './src/index.ts',
