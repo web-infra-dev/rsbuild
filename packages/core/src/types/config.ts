@@ -12,10 +12,10 @@ import type {
   SwcJsMinimizerRspackPluginOptions,
   SwcLoaderOptions,
 } from '@rspack/core';
+import type cors from 'cors';
 import type RspackChain from 'rspack-chain';
 import type { FileDescriptor } from 'rspack-manifest-plugin';
 import type { ChokidarOptions } from '../../compiled/chokidar/index.js';
-import type cors from '../../compiled/cors/index.js';
 import type {
   Options as HttpProxyOptions,
   Filter as ProxyFilter,
