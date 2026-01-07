@@ -110,19 +110,6 @@ export default {
       },
     },
     {
-      name: 'webpack-bundle-analyzer',
-      minify: true,
-      externals: {
-        webpack: 'webpack',
-      },
-      afterBundle(task) {
-        // webpack type does not exist, use `@rspack/core` instead
-        replaceFileContent(join(task.distPath, 'index.d.ts'), (content) =>
-          content.replace("from 'webpack'", 'from "@rspack/core"'),
-        );
-      },
-    },
-    {
       name: 'style-loader',
       ignoreDts: true,
       afterBundle: (task) => {

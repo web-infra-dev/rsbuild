@@ -424,8 +424,6 @@ function ModifyBundlerChain(
 - **示例：**
 
 ```ts
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-
 const myPlugin = () => ({
   setup(api) {
     api.modifyBundlerChain((chain, utils) => {
@@ -433,7 +431,9 @@ const myPlugin = () => ({
         chain.devtool('eval');
       }
 
-      chain.plugin('bundle-analyze').use(BundleAnalyzerPlugin);
+      chain
+        .plugin('circular-dependency')
+        .use(utils.rspack.CircularDependencyRspackPlugin);
     });
   },
 });

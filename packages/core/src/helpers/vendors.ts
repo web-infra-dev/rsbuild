@@ -16,7 +16,6 @@ type CompiledPackages = {
   'webpack-merge': typeof import('../../compiled/webpack-merge');
   'html-rspack-plugin': typeof import('../../compiled/html-rspack-plugin').default;
   'http-proxy-middleware': typeof import('../../compiled/http-proxy-middleware');
-  'webpack-bundle-analyzer': typeof import('../../compiled/webpack-bundle-analyzer');
   'rspack-manifest-plugin': typeof import('../../compiled/rspack-manifest-plugin');
   'launch-editor-middleware': typeof import('../../compiled/launch-editor-middleware');
   '@jridgewell/remapping': typeof import('../../compiled/@jridgewell/remapping');

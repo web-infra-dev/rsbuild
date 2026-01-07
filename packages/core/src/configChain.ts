@@ -147,8 +147,6 @@ export const CHAIN_ID = {
     MANIFEST: 'webpack-manifest',
     /** ForkTsCheckerWebpackPlugin */
     TS_CHECKER: 'ts-checker',
-    /** WebpackBundleAnalyzer */
-    BUNDLE_ANALYZER: 'bundle-analyze',
     /** ModuleFederationPlugin */
     MODULE_FEDERATION: 'module-federation',
     /** HtmlResourceHintsPlugin (prefetch) */

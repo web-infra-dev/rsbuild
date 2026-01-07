@@ -20,7 +20,6 @@ import type {
   Filter as ProxyFilter,
 } from '../../compiled/http-proxy-middleware/index.js';
 import type { FileDescriptor } from '../../compiled/rspack-manifest-plugin';
-import type { BundleAnalyzerPlugin } from '../../compiled/webpack-bundle-analyzer/index.js';
 import type { RsbuildDevServer } from '../server/devServer';
 import type {
   EnvironmentContext,
@@ -762,13 +761,6 @@ export interface PerformanceConfig {
    * @default { strategy: 'split-by-experience' }
    */
   chunkSplit?: ChunkSplit;
-
-  /**
-   * Analyze the size of output files.
-   * @default undefined
-   * @deprecated Use Rsdoctor instead.
-   */
-  bundleAnalyze?: BundleAnalyzerPlugin.Options;
 
   /**
    * Used to control resource `Preconnect`.

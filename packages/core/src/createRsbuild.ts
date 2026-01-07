@@ -24,7 +24,6 @@ import { createPluginManager } from './pluginManager';
 import { pluginAppIcon } from './plugins/appIcon';
 import { pluginAsset } from './plugins/asset';
 import { pluginBasic } from './plugins/basic';
-import { pluginBundleAnalyzer } from './plugins/bundleAnalyzer';
 import { pluginCache } from './plugins/cache';
 import { pluginCleanOutput } from './plugins/cleanOutput';
 import { pluginCss } from './plugins/css';
@@ -109,7 +108,6 @@ function applyDefaultPlugins(
     pluginInlineChunk(),
     pluginRsdoctor(),
     pluginResourceHints(),
-    pluginBundleAnalyzer(),
     pluginServer(),
     pluginManifest(),
     pluginModuleFederation(),

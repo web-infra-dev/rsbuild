@@ -32,6 +32,30 @@ export default {
 };
 ```
 
+## 移除 `performance.bundleAnalyze`
+
+废弃的 `performance.bundleAnalyze` 选项已被移除。
+
+早期 Rsbuild 内置了 `webpack-bundle-analyzer`，但如今 Rsdoctor 已支持产物体积分析，因此无需在 `@rsbuild/core` 中继续内置；同时移除内置依赖可以降低安装体积。
+
+推荐使用 [Rsdoctor](/guide/debug/rsdoctor) 分析产物体积，或通过 [tools.rspack](/config/tools/rspack) 自行注册 [webpack-bundle-analyzer](https://www.npmjs.com/package/webpack-bundle-analyzer)：
+
+```ts
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+
+export default {
+  tools: {
+    rspack: {
+      plugins: [
+        new BundleAnalyzerPlugin({
+          analyzerMode: 'static',
+        }),
+      ],
+    },
+  },
+};
+```
+
 ## 移除 HTML 模板参数
 
 `html.templateParameters` 中废弃的默认参数已被移除：
