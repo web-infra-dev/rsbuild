@@ -1370,7 +1370,6 @@ export interface NormalizedOutputConfig extends OutputConfig {
   dataUriLimit: number | NormalizedDataUriLimit;
   manifest: ManifestConfig;
   module: boolean;
-  minify: Minify;
   inlineScripts: InlineChunkConfig;
   inlineStyles: InlineChunkConfig;
   injectStyles: boolean;
