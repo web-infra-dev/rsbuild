@@ -40,16 +40,16 @@ You can set `output.filenameHash` to other formats supported by Rspack and custo
 ```ts title="rsbuild.config.ts"
 export default {
   output: {
-    filenameHash: 'fullhash:16',
+    filenameHash: 'chunkhash:16',
   },
 };
 ```
 
 The optional hash formats are:
 
-- `fullhash`: The hash value of the entire compilation. If any file changes, the hash values of all output files in the entire project will change.
+- `contenthash` (recommended): The hash value of the file content. The hash value will only change when the content of the file itself changes.
 - `chunkhash`: The hash value of the chunk. The hash value will only change when the content of the chunk (and its included modules) changes.
-- `contenthash`: The hash value of the file content. The hash value will only change when the content of the file itself changes.
+- `fullhash`: The hash value of the entire compilation. If any file changes, the hash values of all output files in the entire project will change.
 
 ### Notes
 
