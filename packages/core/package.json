@@ -31,6 +31,7 @@
     },
     "./package.json": "./package.json"
   },
+  "types": "./dist-types/index.d.ts",
   "bin": {
     "rsbuild": "./bin/rsbuild.js"
   },
