@@ -10,34 +10,23 @@ export const RSPACK_BUILD_ERROR = 'Rspack build failed.';
 
 export const build = async (
   initOptions: InitConfigsOptions,
-  { watch, compiler: customCompiler }: BuildOptions = {},
+  { watch }: BuildOptions = {},
 ): Promise<ReturnType<Build>> => {
   const { context } = initOptions;
-
-  let compiler: Rspack.Compiler | Rspack.MultiCompiler;
-  let bundlerConfigs: Rspack.Configuration[] | undefined;
-
-  if (customCompiler) {
-    compiler = customCompiler;
-    bundlerConfigs = customCompiler.options as Rspack.Configuration[];
-  } else {
-    const result = await createCompiler(initOptions);
-    compiler = result.compiler;
-    bundlerConfigs = result.rspackConfigs;
-  }
+  const { compiler, rspackConfigs } = await createCompiler(initOptions);
 
   registerBuildHook({
     context,
-    bundlerConfigs,
+    rspackConfigs,
     compiler,
     isWatch: Boolean(watch),
     MultiStatsCtor: rspack.MultiStats,
   });
 
   if (watch) {
-    const watchOptions: WatchOptions[] = bundlerConfigs
-      ? bundlerConfigs.map((options) => options.watchOptions || {})
-      : [];
+    const watchOptions: WatchOptions[] = rspackConfigs.map(
+      (options) => options.watchOptions || {},
+    );
 
     compiler.watch(
       watchOptions.length > 1 ? watchOptions : watchOptions[0] || {},

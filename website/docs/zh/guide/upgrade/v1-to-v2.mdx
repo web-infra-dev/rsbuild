@@ -4,7 +4,9 @@
 
 > 本指南仍在持续完善中。随着 Rsbuild 2.0 Beta 的推进，相关内容将逐步补充。
 
-## 移除 `source.alias`
+## 配置
+
+### 移除 `source.alias`
 
 废弃的 `source.alias` 选项已被移除，使用 [resolve.alias](/config/resolve/alias) 进行替代。
 
@@ -19,7 +21,7 @@ export default {
 };
 ```
 
-## 移除 `source.aliasStrategy`
+### 移除 `source.aliasStrategy`
 
 废弃的 `source.aliasStrategy` 选项已被移除，使用 [resolve.aliasStrategy](/config/resolve/alias-strategy) 进行替代。
 
@@ -32,7 +34,7 @@ export default {
 };
 ```
 
-## 移除 `performance.bundleAnalyze`
+### 移除 `performance.bundleAnalyze`
 
 废弃的 `performance.bundleAnalyze` 选项已被移除。
 
@@ -56,14 +58,7 @@ export default {
 };
 ```
 
-## 移除 HTML 模板参数
-
-`html.templateParameters` 中废弃的默认参数已被移除：
-
-- `webpackConfig`：使用 `rspackConfig` 代替。
-- `htmlWebpackPlugin`：使用 `htmlPlugin` 代替。
-
-## 移除 `performance.profile`
+### 移除 `performance.profile`
 
 `performance.profile` 选项已被移除。如果你依赖它来输出 stats JSON 文件，可以在自定义插件中调用 [stats.toJson()](/api/javascript-api/instance#stats-object) 代替：
 
@@ -83,6 +78,17 @@ const statsJsonPlugin = {
   },
 };
 ```
+
+### 移除 HTML 模板参数
+
+`html.templateParameters` 中废弃的默认参数已被移除：
+
+- `webpackConfig`：使用 `rspackConfig` 代替。
+- `htmlWebpackPlugin`：使用 `htmlPlugin` 代替。
+
+## JavaScript API
+
+- 移除 `rsbuild.build()` 中废弃的 `compiler` 参数
 
 ## 移除 webpack 支持
 

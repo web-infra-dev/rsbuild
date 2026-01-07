@@ -354,10 +354,10 @@ export const registerBuildHook = ({
   context,
   isWatch,
   compiler,
-  bundlerConfigs,
+  rspackConfigs,
   MultiStatsCtor,
 }: {
-  bundlerConfigs: Rspack.Configuration[];
+  rspackConfigs: Rspack.Configuration[];
   context: InternalContext;
   compiler: Rspack.Compiler | Rspack.MultiCompiler;
   isWatch: boolean;
@@ -369,7 +369,7 @@ export const registerBuildHook = ({
 
   const beforeCompile = async () =>
     context.hooks.onBeforeBuild.callBatch({
-      bundlerConfigs,
+      bundlerConfigs: rspackConfigs,
       environments: context.environments,
       isWatch,
       isFirstCompile,
@@ -381,7 +381,7 @@ export const registerBuildHook = ({
       environment: environment.name,
       args: [
         {
-          bundlerConfig: bundlerConfigs[buildIndex],
+          bundlerConfig: rspackConfigs[buildIndex],
           environment,
           isWatch,
           isFirstCompile,
