@@ -43,7 +43,6 @@ import { pluginMoment } from './plugins/moment';
 import { pluginNodeAddons } from './plugins/nodeAddons';
 import { pluginNonce } from './plugins/nonce';
 import { pluginOutput } from './plugins/output';
-import { pluginPerformance } from './plugins/performance';
 import { pluginProgress } from './plugins/progress';
 import { pluginResolve } from './plugins/resolve';
 import { pluginResourceHints } from './plugins/resourceHints';
@@ -110,7 +109,6 @@ function applyDefaultPlugins(
     pluginInlineChunk(),
     pluginRsdoctor(),
     pluginResourceHints(),
-    pluginPerformance(),
     pluginBundleAnalyzer(),
     pluginServer(),
     pluginManifest(),

@@ -39,6 +39,27 @@ The deprecated template parameters have been removed from `html.templateParamete
 - `webpackConfig`: use `rspackConfig` instead.
 - `htmlWebpackPlugin`: use `htmlPlugin` instead.
 
+## Remove `performance.profile`
+
+The `performance.profile` option has been removed. If you relied on it to emit a stats JSON file, use [stats.toJson()](/api/javascript-api/instance#stats-object) in a custom plugin instead:
+
+```ts
+import { writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+const statsJsonPlugin = {
+  name: 'stats-json-plugin',
+  setup(api) {
+    api.onAfterBuild(({ stats }) => {
+      writeFileSync(
+        join(api.context.distPath, 'stats.json'),
+        JSON.stringify(stats?.toJson({}), null, 2),
+      );
+    });
+  },
+};
+```
+
 ## Dropping webpack support
 
 Rsbuild 2.0 no longer supports using webpack as the bundler. In Rsbuild 1.x, this capability was mainly used to validate compatibility between Rspack and webpack. As Rspack has gradually matured and stabilized, this purpose is no longer necessary, so the related support has been removed.

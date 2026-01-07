@@ -820,13 +820,6 @@ export interface PerformanceConfig {
    * @default undefined
    */
   prefetch?: true | PrefetchOptions;
-
-  /**
-   * Whether capture timing information for each module,
-   * same as the [profile](https://rspack.rs/config/other-options#profile) config of Rspack.
-   * @default false
-   */
-  profile?: boolean;
 }
 
 export interface NormalizedPerformanceConfig extends PerformanceConfig {
