@@ -13,17 +13,34 @@ type Minify =
     };
 ```
 
-- **Default:** `true`
+- **Default:**
+  - `true` when [output.target](/config/output/target) is `web` or `web-worker`.
+  - `false` when [output.target](/config/output/target) is `node`.
 
-Controls code minification in production mode and configures minimizer options.
+Controls whether code minification is enabled in production builds, and provides configuration options for the minimizers.
 
-JavaScript and CSS code are automatically minified in production mode to improve page performance. To disable minification entirely, set `minify` to `false`. Control specific minification behavior using the detailed `minify` options:
+By default, production builds for the `web` and `web-worker` targets automatically minify JavaScript and CSS to improve runtime performance. For the `node` target, minification is not enabled by default in production builds unless explicitly opted in.
+
+To disable minification entirely, set `minify` to `false`. You can also fine-tune the behavior and scope of minification through the detailed `minify` configuration options.
 
 :::tip
 Rsbuild uses [SWC](/guide/configuration/swc) to minify JavaScript code and [Lightning CSS](/guide/styling/css-usage#lightning-css) to minify CSS code by default.
 :::
 
 ## Example
+
+### Enable minification
+
+Enable code minification for the `node` target:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'node',
+    minify: true,
+  },
+};
+```
 
 ### Disable minification
 
@@ -212,3 +229,9 @@ export default {
 :::tip
 When using a custom JS minifier, the `minify.jsOptions` option will no longer take effect.
 :::
+
+## Version history
+
+| Version | Changes                               |
+| ------- | ------------------------------------- |
+| v2.0.0  | Defaults to `false` for `node` target |
