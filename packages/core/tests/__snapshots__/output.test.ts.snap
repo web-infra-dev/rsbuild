@@ -5,12 +5,10 @@ exports[`plugin-output > output config should works when target is node 1`] = `
   "output": {
     "chunkFilename": "bundle/foo.js",
     "filename": "bundle/foo.js",
-    "hashFunction": "xxhash64",
     "library": {
       "type": "commonjs2",
     },
     "path": "<ROOT>/packages/core/tests/dist",
-    "pathinfo": false,
     "publicPath": "/",
   },
   "plugins": [
@@ -26,12 +24,10 @@ exports[`plugin-output > should allow to custom server directory with distPath.r
   "output": {
     "chunkFilename": "[name].js",
     "filename": "[name].js",
-    "hashFunction": "xxhash64",
     "library": {
       "type": "commonjs2",
     },
     "path": "<ROOT>/packages/core/tests/dist/server",
-    "pathinfo": false,
     "publicPath": "/",
   },
   "plugins": [
@@ -47,9 +43,7 @@ exports[`plugin-output > should allow to set distPath.js and distPath.css to emp
   "output": {
     "chunkFilename": "async/[name].js",
     "filename": "[name].js",
-    "hashFunction": "xxhash64",
     "path": "<ROOT>/packages/core/tests/dist",
-    "pathinfo": false,
     "publicPath": "/",
   },
   "plugins": [
@@ -65,9 +59,7 @@ exports[`plugin-output > should allow to use copy plugin 1`] = `
   "output": {
     "chunkFilename": "static/js/async/[name].js",
     "filename": "static/js/[name].js",
-    "hashFunction": "xxhash64",
     "path": "<ROOT>/packages/core/tests/dist",
-    "pathinfo": false,
     "publicPath": "/",
   },
   "plugins": [
@@ -96,9 +88,7 @@ exports[`plugin-output > should allow to use copy plugin with multiple config 1`
   "output": {
     "chunkFilename": "static/js/async/[name].js",
     "filename": "static/js/[name].js",
-    "hashFunction": "xxhash64",
     "path": "<ROOT>/packages/core/tests/dist",
-    "pathinfo": false,
     "publicPath": "/",
   },
   "plugins": [
@@ -129,9 +119,7 @@ exports[`plugin-output > should allow to use filename.js to modify filename 1`] 
   "output": {
     "chunkFilename": "static/js/async/foo.js",
     "filename": "static/js/foo.js",
-    "hashFunction": "xxhash64",
     "path": "<ROOT>/packages/core/tests/dist",
-    "pathinfo": false,
     "publicPath": "/",
   },
   "plugins": [
@@ -147,9 +135,7 @@ exports[`plugin-output > should set output correctly 1`] = `
   "output": {
     "chunkFilename": "static/js/async/[name].js",
     "filename": "static/js/[name].js",
-    "hashFunction": "xxhash64",
     "path": "<ROOT>/packages/core/tests/dist",
-    "pathinfo": false,
     "publicPath": "/",
   },
   "plugins": [
