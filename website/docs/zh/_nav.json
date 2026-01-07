@@ -32,8 +32,12 @@
         "link": "https://github.com/web-infra-dev/rsbuild/releases"
       },
       {
+        "text": "Rsbuild 1.x 文档",
+        "link": "https://v1.rsbuild.rs/zh/"
+      },
+      {
         "text": "Rsbuild 0.x 文档",
-        "link": "http://v0.rsbuild.rs/zh/"
+        "link": "https://v0.rsbuild.rs/zh/"
       }
     ]
   }
