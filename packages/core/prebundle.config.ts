@@ -22,19 +22,11 @@ export default {
   },
   dependencies: [
     'ws',
-    'connect',
-    'rspack-manifest-plugin',
     'html-rspack-plugin',
     '@jridgewell/trace-mapping',
     'mrmime',
-    'tinyglobby',
     'chokidar',
-    'cors',
     'webpack-merge',
-    {
-      name: 'memfs',
-      minify: true,
-    },
     {
       name: 'picocolors',
       beforeBundle({ depPath }) {

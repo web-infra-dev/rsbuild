@@ -65,7 +65,7 @@ const applySetupMiddlewares = (
 
 export type Middlewares = (RequestHandler | [string, RequestHandler])[];
 
-const applyDefaultMiddlewares = ({
+const applyDefaultMiddlewares = async ({
   config,
   buildManager,
   context,
@@ -74,14 +74,16 @@ const applyDefaultMiddlewares = ({
   postCallbacks,
 }: RsbuildDevMiddlewareOptions & {
   middlewares: Middlewares;
-}): {
+}): Promise<{
   onUpgrade: UpgradeEvent;
-} => {
+}> => {
   const upgradeEvents: UpgradeEvent[] = [];
   const { server } = config;
 
   if (server.cors) {
-    const corsMiddleware = requireCompiledPackage('cors');
+    const { default: corsMiddleware } = await import(
+      /* webpackChunkName: "cors" */ 'cors'
+    );
     middlewares.push(
       corsMiddleware(typeof server.cors === 'boolean' ? {} : server.cors),
     );
@@ -246,9 +248,9 @@ export type GetDevMiddlewaresResult = {
   middlewares: Middlewares;
 };
 
-export const getDevMiddlewares = (
+export const getDevMiddlewares = async (
   options: RsbuildDevMiddlewareOptions,
-): GetDevMiddlewaresResult => {
+): Promise<GetDevMiddlewaresResult> => {
   const middlewares: Middlewares = [];
   const { buildManager } = options;
 
@@ -264,7 +266,7 @@ export const getDevMiddlewares = (
 
   middlewares.push(...before);
 
-  const { onUpgrade } = applyDefaultMiddlewares({
+  const { onUpgrade } = await applyDefaultMiddlewares({
     ...options,
     middlewares,
   });
