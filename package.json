@@ -7,7 +7,7 @@
     "scripts/*"
   ],
   "scripts": {
-    "build": "cross-env NX_DAEMON=false nx run-many -t build --exclude @examples/* @e2e/* rsbuild-* --parallel=10",
+    "build": "cross-env NX_DAEMON=false nx run-many -t build --exclude @examples/* @e2e/* rsbuild-* --parallel=10 --no-tui",
     "check-dependency-version": "pnpx check-dependency-version-consistency . --ignore-dep loader-utils",
     "check-spell": "pnpx cspell && heading-case",
     "doc": "cd website && pnpm dev",
