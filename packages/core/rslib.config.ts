@@ -85,6 +85,14 @@ export default defineConfig({
       format: 'esm',
       syntax: 'es2023',
       plugins: [pluginFixDtsTypes],
+      source: {
+        entry: {
+          index: './src/index.ts',
+          ignoreCssLoader: './src/loader/ignoreCssLoader.ts',
+          transformLoader: './src/loader/transformLoader.ts',
+          transformRawLoader: './src/loader/transformRawLoader.ts',
+        },
+      },
       dts: {
         build: true,
         // Only use tsgo in local dev for faster build, disable it in CI until it's more stable
@@ -97,30 +105,21 @@ export default defineConfig({
       },
       output: {
         minify: nodeMinifyConfig,
+        filename: {
+          js: ({ chunk }) => {
+            // Use `.mjs` for Rspack loaders
+            if (chunk?.name?.endsWith('Loader')) {
+              return '[name].mjs';
+            }
+            return `[name].js`;
+          },
+        },
       },
       shims: {
         esm: {
           // For `postcss-load-config`
           __filename: true,
         },
-      },
-    },
-    {
-      id: 'esm_loaders',
-      format: 'esm',
-      syntax: 'es2023',
-      source: {
-        entry: {
-          ignoreCssLoader: './src/loader/ignoreCssLoader.ts',
-          transformLoader: './src/loader/transformLoader.ts',
-          transformRawLoader: './src/loader/transformRawLoader.ts',
-        },
-      },
-      output: {
-        filename: {
-          js: '[name].mjs',
-        },
-        minify: nodeMinifyConfig,
       },
     },
     {
