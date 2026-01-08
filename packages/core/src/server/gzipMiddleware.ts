@@ -20,11 +20,11 @@ const shouldCompress = (res: ServerResponse) => {
   return size === undefined || Number(size) > 1024;
 };
 
-export const gzipMiddleware = ({
+export function gzipMiddleware({
   filter,
   level = zlib.constants.Z_BEST_SPEED,
-}: CompressOptions = {}): RequestHandler =>
-  function gzipMiddleware(req, res, next): void {
+}: CompressOptions = {}): RequestHandler {
+  return function gzipMiddleware(req, res, next): void {
     if (filter && !filter(req, res)) {
       next();
       return;
@@ -138,3 +138,4 @@ export const gzipMiddleware = ({
 
     next();
   };
+}

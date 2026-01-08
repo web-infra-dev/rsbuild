@@ -7,10 +7,10 @@ import { isPlainObject, pick } from '../helpers';
 import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';
 import { getLightningCSSLoaderOptions } from './css';
 
-export const getSwcMinimizerOptions = (
+export function getSwcMinimizerOptions(
   config: NormalizedEnvironmentConfig,
   jsOptions?: SwcJsMinimizerRspackPluginOptions,
-): SwcJsMinimizerRspackPluginOptions => {
+): SwcJsMinimizerRspackPluginOptions {
   const options: SwcJsMinimizerRspackPluginOptions = {};
 
   options.minimizerOptions ||= {};
@@ -54,16 +54,14 @@ export const getSwcMinimizerOptions = (
   }
 
   return options;
-};
+}
 
-export const parseMinifyOptions = (
-  config: NormalizedEnvironmentConfig,
-): {
+export function parseMinifyOptions(config: NormalizedEnvironmentConfig): {
   minifyJs: boolean;
   minifyCss: boolean;
   jsOptions?: SwcJsMinimizerRspackPluginOptions;
   cssOptions?: LightningCssMinimizerRspackPluginOptions;
-} => {
+} {
   const isProd = config.mode === 'production';
 
   // For `web` and `web-worker` targets, minify is true by default in production mode
@@ -84,7 +82,7 @@ export const parseMinifyOptions = (
     jsOptions: minify.jsOptions,
     cssOptions: minify.cssOptions,
   };
-};
+}
 
 export const pluginMinimize = (): RsbuildPlugin => ({
   name: 'rsbuild:minimize',

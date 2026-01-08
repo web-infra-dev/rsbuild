@@ -35,12 +35,10 @@ function formatProxyOptions(proxyOptions: ProxyConfig) {
   return ret;
 }
 
-export const createProxyMiddleware = (
-  proxyOptions: ProxyConfig,
-): {
+export function createProxyMiddleware(proxyOptions: ProxyConfig): {
   middlewares: Middleware[];
   upgrade: UpgradeEvent;
-} => {
+} {
   // If it is not an array, it may be an object that uses the context attribute
   // or an object in the form of { source: ProxyDetail }
   const formattedOptions = formatProxyOptions(proxyOptions);
@@ -112,4 +110,4 @@ export const createProxyMiddleware = (
     middlewares,
     upgrade: handleUpgrade,
   };
-};
+}
