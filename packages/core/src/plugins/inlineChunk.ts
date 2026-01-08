@@ -62,12 +62,10 @@ function matchTests(
   });
 }
 
-export const getInlineTests = (
-  config: NormalizedEnvironmentConfig,
-): {
+export function getInlineTests(config: NormalizedEnvironmentConfig): {
   scriptTests: InlineChunkTest[];
   styleTests: InlineChunkTest[];
-} => {
+} {
   const isProd = config.mode === 'production';
   const { inlineStyles, inlineScripts } = config.output;
   const scriptTests: InlineChunkTest[] = [];
@@ -102,7 +100,7 @@ export const getInlineTests = (
   }
 
   return { scriptTests, styleTests };
-};
+}
 
 export const pluginInlineChunk = (): RsbuildPlugin => ({
   name: 'rsbuild:inline-chunk',

@@ -17,9 +17,9 @@ export const setHTMLPlugin = (plugin: typeof HtmlRspackPlugin): void => {
   }
 };
 
-export const getHTMLPlugin = (
+export function getHTMLPlugin(
   config?: NormalizedEnvironmentConfig,
-): typeof HtmlRspackPlugin => {
+): typeof HtmlRspackPlugin {
   if (config?.html.implementation === 'native') {
     // TODO: remove type assertion
     return rspack.HtmlRspackPlugin as unknown as typeof HtmlRspackPlugin;
@@ -28,7 +28,7 @@ export const getHTMLPlugin = (
     htmlPlugin = requireCompiledPackage('html-rspack-plugin');
   }
   return htmlPlugin;
-};
+}
 
 let cssExtractPlugin: unknown;
 
