@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
@@ -132,6 +133,32 @@ create({
           isMergePackageJson: true,
         });
         addAgentsMdSearchDirs(toolFolder);
+      },
+    },
+    {
+      value: 'tailwindcss',
+      label: 'Tailwind CSS - styling',
+      action: async ({ distFolder }) => {
+        const from = path.join(__dirname, '..', 'template-tailwindcss');
+        copyFolder({
+          from: from,
+          to: distFolder,
+          isMergePackageJson: true,
+        });
+
+        // Insert tailwindcss import to main CSS file
+        const mainCssFile = ['index.css', 'App.css'];
+        for (const cssFile of mainCssFile) {
+          const filePath = path.join(distFolder, 'src', cssFile);
+          if (fs.existsSync(filePath)) {
+            const content = await fs.promises.readFile(filePath, 'utf-8');
+            await fs.promises.writeFile(
+              filePath,
+              `@import 'tailwindcss';\n\n${content}`,
+            );
+            break;
+          }
+        }
       },
     },
     {

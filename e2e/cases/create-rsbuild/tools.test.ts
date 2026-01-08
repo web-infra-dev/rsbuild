@@ -1,4 +1,4 @@
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 import { createAndValidate } from './helper';
@@ -30,6 +30,47 @@ test('should create project with prettier as expected', async () => {
   );
   expect(pkgJson.devDependencies.prettier).toBeTruthy();
   expect(existsSync(join(dir, '.prettierrc'))).toBeTruthy();
+  await clean();
+});
+
+test('should create project with tailwindcss as expected', async () => {
+  const { dir, pkgJson, clean } = await createAndValidate(
+    import.meta.dirname,
+    'vanilla',
+    {
+      name: 'test-temp-tailwindcss',
+      tools: ['tailwindcss'],
+      clean: false,
+    },
+  );
+  expect(pkgJson.devDependencies.tailwindcss).toBeTruthy();
+  expect(pkgJson.devDependencies['@tailwindcss/postcss']).toBeTruthy();
+  expect(existsSync(join(dir, 'postcss.config.mjs'))).toBeTruthy();
+
+  const cssFile = join(dir, 'src/index.css');
+  expect(existsSync(cssFile)).toBeTruthy();
+  const cssContent = readFileSync(cssFile, 'utf-8');
+  expect(cssContent.includes("@import 'tailwindcss';")).toBeTruthy();
+  await clean();
+});
+
+test('should create React project with tailwindcss as expected', async () => {
+  const { dir, pkgJson, clean } = await createAndValidate(
+    import.meta.dirname,
+    'react',
+    {
+      name: 'test-temp-tailwindcss',
+      tools: ['tailwindcss'],
+      clean: false,
+    },
+  );
+  expect(pkgJson.devDependencies.tailwindcss).toBeTruthy();
+  expect(pkgJson.devDependencies['@tailwindcss/postcss']).toBeTruthy();
+  expect(existsSync(join(dir, 'postcss.config.mjs'))).toBeTruthy();
+  const cssFile = join(dir, 'src/App.css');
+  expect(existsSync(cssFile)).toBeTruthy();
+  const cssContent = readFileSync(cssFile, 'utf-8');
+  expect(cssContent.includes("@import 'tailwindcss';")).toBeTruthy();
   await clean();
 });
 

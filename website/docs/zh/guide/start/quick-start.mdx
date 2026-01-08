@@ -71,15 +71,16 @@ import { PackageManagerTabs } from '@theme';
 
 ### 可选工具
 
-`create-rsbuild` 能够帮助你设置一些常用的工具，包括 [Biome](https://github.com/biomejs/biome)、[ESLint](https://github.com/eslint/eslint)、[prettier](https://github.com/prettier/prettier) 和 [Storybook](https://storybook.js.org/)，你可以使用上下箭头和空格进行选择。如果你不需要这些工具，可以直接按回车跳过。
+`create-rsbuild` 能够帮助你设置一些常用的工具，包括 [Rstest](https://rstest.rs)、[Biome](https://github.com/biomejs/biome)、[ESLint](https://github.com/eslint/eslint)、[prettier](https://github.com/prettier/prettier)、[Tailwind CSS](https://tailwindcss.com) 和 [Storybook](https://storybook.js.org/)，你可以使用上下箭头和空格进行选择。如果你不需要这些工具，可以直接按回车跳过。
 
 ```
 ◆  Select additional tools (Use <space> to select, <enter> to continue)
-│  ◻ Add Biome for code linting and formatting
-│  ◻ Add ESLint for code linting
-│  ◻ Add Prettier for code formatting
-│  ◻ Add Storybook for component development
-│  ◻ Add Rstest for unit testing
+│  ◻ Rstest - testing
+│  ◻ Biome - linting & formatting
+│  ◻ ESLint - linting
+│  ◻ Prettier - formatting
+│  ◻ Tailwind CSS - styling
+│  ◻ Storybook - component development
 └
 ```
 
@@ -127,7 +128,7 @@ Options:
   -h, --help            display help for command
   -d, --dir <dir>       create project in specified directory
   -t, --template <tpl>  specify the template to use
-  --tools <tool>        select additional tools (biome, eslint, prettier, storybook, rstest)
+  --tools <tool>        add additional tools, comma separated
   --override            override files in target directory
   --packageName <name>  specify the package name
 
@@ -135,6 +136,9 @@ Templates:
 
   react-js, react-ts, vue3-js, vue3-ts, vue2-js, vue2-ts, svelte-js, svelte-ts,
   solid-js, solid-ts, vanilla-js, vanilla-ts
+
+Optional tools:
+  rstest, biome, eslint, prettier, tailwindcss, storybook
 ```
 
 ## 从现有项目迁移
