@@ -99,7 +99,7 @@ async function openBrowser(url: string): Promise<boolean> {
   }
 
   const { apps, default: baseOpen } = await import(
-    /** webpackChunkName: "open" */
+    /* webpackChunkName: "open" */
     'open'
   );
 

@@ -1,5 +1,5 @@
+import type { SourceMapInput } from '@jridgewell/trace-mapping';
 import type { LoaderDefinition, RawSourceMap } from '@rspack/core';
-import { requireCompiledPackage } from '../helpers/vendors';
 import type { EnvironmentContext } from '../types';
 
 export type TransformLoaderOptions = {
@@ -7,16 +7,21 @@ export type TransformLoaderOptions = {
   getEnvironment: () => EnvironmentContext;
 };
 
-const mergeSourceMap = (
+const mergeSourceMap = async (
   originalSourceMap?: RawSourceMap | string,
   generatedSourceMap?: RawSourceMap | string | null,
-): RawSourceMap | string | undefined => {
+): Promise<RawSourceMap | string | undefined> => {
   if (!originalSourceMap || !generatedSourceMap) {
     return generatedSourceMap ?? originalSourceMap;
   }
 
-  const remapping = requireCompiledPackage('@jridgewell/remapping');
-  return remapping([generatedSourceMap, originalSourceMap], () => null);
+  const { default: remapping } = await import(
+    /* webpackChunkName: "remapping" */ '@jridgewell/remapping'
+  );
+  return remapping(
+    [generatedSourceMap, originalSourceMap] as SourceMapInput[],
+    () => null,
+  ) as RawSourceMap;
 };
 
 const transformLoader: LoaderDefinition<TransformLoaderOptions> =
@@ -64,7 +69,7 @@ const transformLoader: LoaderDefinition<TransformLoaderOptions> =
         return;
       }
 
-      const mergedMap = mergeSourceMap(map, result.map);
+      const mergedMap = await mergeSourceMap(map, result.map);
       callback(null, result.code, mergedMap);
     } catch (error) {
       if (error instanceof Error) {

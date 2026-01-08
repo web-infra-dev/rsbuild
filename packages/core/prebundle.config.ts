@@ -23,7 +23,6 @@ export default {
   dependencies: [
     'ws',
     'html-rspack-plugin',
-    '@jridgewell/trace-mapping',
     'mrmime',
     'chokidar',
     'webpack-merge',
@@ -154,13 +153,6 @@ export type SourceMapGenerator = unknown;
         postcss: '../postcss/index.js',
       },
       ignoreDts: true,
-    },
-    {
-      name: '@jridgewell/remapping',
-      ignoreDts: true,
-      externals: {
-        '@jridgewell/trace-mapping': '../trace-mapping/index.js',
-      },
     },
   ],
 } satisfies Config;

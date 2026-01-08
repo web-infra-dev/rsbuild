@@ -1,14 +1,13 @@
 import path from 'node:path';
-import type { StackFrame } from 'stacktrace-parser';
 import type {
   InvalidOriginalMapping,
   OriginalMapping,
   TraceMap,
-} from '../../compiled/@jridgewell/trace-mapping';
+} from '@jridgewell/trace-mapping';
+import type { StackFrame } from 'stacktrace-parser';
 import { SCRIPT_REGEX } from '../constants';
 import { color, isRspackRuntimeModule } from '../helpers';
 import { readFileAsync } from '../helpers/fs';
-import { requireCompiledPackage } from '../helpers/vendors';
 import { isVerbose, logger } from '../logger';
 import type { BrowserLogsStackTrace, InternalContext, Rspack } from '../types';
 import { getFileFromUrl } from './assets-middleware/getFileFromUrl';
@@ -56,8 +55,9 @@ const parseFrame = async (
     return;
   }
 
-  const { TraceMap, originalPositionFor } = requireCompiledPackage(
-    '@jridgewell/trace-mapping',
+  const { TraceMap, originalPositionFor } = await import(
+    /* webpackChunkName: "trace-mapping" */
+    '@jridgewell/trace-mapping'
   );
 
   const sourceMapPath = sourceMapInfo.filename;

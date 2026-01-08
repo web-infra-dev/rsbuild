@@ -13,8 +13,6 @@ type CompiledPackages = {
   'html-rspack-plugin': typeof import('../../compiled/html-rspack-plugin').default;
   'http-proxy-middleware': typeof import('../../compiled/http-proxy-middleware');
   'launch-editor-middleware': typeof import('../../compiled/launch-editor-middleware');
-  '@jridgewell/remapping': typeof import('../../compiled/@jridgewell/remapping');
-  '@jridgewell/trace-mapping': typeof import('../../compiled/@jridgewell/trace-mapping');
 };
 
 /**
