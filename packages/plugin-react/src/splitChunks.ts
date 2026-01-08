@@ -1,10 +1,10 @@
 import type { RsbuildPluginAPI, Rspack } from '@rsbuild/core';
 import type { SplitReactChunkOptions } from './index.js';
 
-export const applySplitChunksRule = (
+export function applySplitChunksRule(
   api: RsbuildPluginAPI,
   options: SplitReactChunkOptions | boolean,
-): void => {
+): void {
   api.modifyBundlerChain((chain, { environment, isProd }) => {
     const { config } = environment;
     if (
@@ -59,4 +59,4 @@ export const applySplitChunksRule = (
       },
     });
   });
-};
+}

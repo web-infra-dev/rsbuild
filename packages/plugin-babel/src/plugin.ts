@@ -56,10 +56,10 @@ async function getCacheIdentifier(options: BabelLoaderOptions) {
   return identifier;
 }
 
-export const getDefaultBabelOptions = (
+export function getDefaultBabelOptions(
   config: NormalizedEnvironmentConfig,
   context: RsbuildContext,
-): BabelLoaderOptions => {
+): BabelLoaderOptions {
   const isLegacyDecorators = config.source.decorators.version === 'legacy';
 
   const options: BabelLoaderOptions = {
@@ -102,7 +102,7 @@ export const getDefaultBabelOptions = (
   }
 
   return options;
-};
+}
 
 export const pluginBabel = (
   options: PluginBabelOptions = {},

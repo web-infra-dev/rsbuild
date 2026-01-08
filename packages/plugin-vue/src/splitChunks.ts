@@ -6,13 +6,13 @@ const isPlainObject = (obj: unknown): obj is Record<string, unknown> =>
   typeof obj === 'object' &&
   Object.prototype.toString.call(obj) === '[object Object]';
 
-export const applySplitChunksRule = (
+export function applySplitChunksRule(
   api: RsbuildPluginAPI,
   options: SplitVueChunkOptions = {
     vue: true,
     router: true,
   },
-): void => {
+): void {
   api.modifyBundlerChain((chain, { environment }) => {
     const { config } = environment;
     if (config.performance.chunkSplit.strategy !== 'split-by-experience') {
@@ -59,4 +59,4 @@ export const applySplitChunksRule = (
       },
     });
   });
-};
+}
