@@ -23,7 +23,6 @@ export default {
   dependencies: [
     'ws',
     'html-rspack-plugin',
-    'mrmime',
     'chokidar',
     'webpack-merge',
     {
@@ -45,13 +44,6 @@ export default {
       ignoreDts: true,
       externals: {
         picocolors: '../picocolors/index.js',
-      },
-    },
-    {
-      name: 'sirv',
-      ignoreDts: true,
-      externals: {
-        mrmime: '../mrmime/index.js',
       },
     },
     {

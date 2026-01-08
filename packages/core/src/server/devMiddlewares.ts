@@ -187,15 +187,19 @@ const applyDefaultMiddlewares = async ({
     );
   }
 
-  for (const { name } of server.publicDir) {
-    const sirv = requireCompiledPackage('sirv');
-    const sirvMiddleware = sirv(name, {
-      etag: true,
-      dev: true,
-    });
-    middlewares.push(function publicDirMiddleware(req, res, next) {
-      sirvMiddleware(req, res, next);
-    });
+  if (server.publicDir.length) {
+    const { default: sirv } = await import(
+      /* webpackChunkName: "sirv" */ 'sirv'
+    );
+    for (const { name } of server.publicDir) {
+      const sirvMiddleware = sirv(name, {
+        etag: true,
+        dev: true,
+      });
+      middlewares.push(function publicDirMiddleware(req, res, next) {
+        sirvMiddleware(req, res, next);
+      });
+    }
   }
 
   // Execute callbacks returned by the `onBeforeStartDevServer` hook.
