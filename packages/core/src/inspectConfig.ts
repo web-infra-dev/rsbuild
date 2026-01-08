@@ -157,7 +157,6 @@ export async function inspectConfig({
     inspectOptions.verbose,
   );
 
-  const environmentConfigs: Record<string, NormalizedEnvironmentConfig> = {};
   const stringifiedEnvironmentConfigs: ConfigItem[] = [];
 
   for (const [name, config] of Object.entries(environments)) {
@@ -172,7 +171,6 @@ export async function inspectConfig({
       name,
       content: stringifyConfig(normalizedEnvConfig, inspectOptions.verbose),
     });
-    environmentConfigs[name] = normalizedEnvConfig;
   }
 
   const outputPath = getInspectOutputPath(context, inspectOptions);
