@@ -1,7 +1,4 @@
 {
-  "name": "rsbuild-rstest-react-ts",
-  "private": true,
-  "version": "1.0.0",
   "scripts": {
     "test": "rstest",
     "test:watch": "rstest --watch"

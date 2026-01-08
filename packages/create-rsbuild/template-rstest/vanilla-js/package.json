@@ -1,7 +1,4 @@
 {
-  "name": "rsbuild-rstest-vanilla-js",
-  "private": true,
-  "version": "1.0.0",
   "scripts": {
     "test": "rstest",
     "test:watch": "rstest --watch"
