@@ -99,6 +99,5 @@
     // Temporary ignore
     'less',
     'tinyglobby',
-    '@typescript/native-preview',
   ],
 }

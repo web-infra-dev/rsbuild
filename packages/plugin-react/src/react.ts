@@ -10,10 +10,10 @@ import type { PluginReactOptions } from './index.js';
 
 const require = createRequire(import.meta.url);
 
-export const applyBasicReactSupport = (
+export function applyBasicReactSupport(
   api: RsbuildPluginAPI,
   options: PluginReactOptions,
-): void => {
+): void {
   const REACT_REFRESH_PATH = options.fastRefresh
     ? require.resolve('react-refresh')
     : '';
@@ -72,9 +72,8 @@ export const applyBasicReactSupport = (
         path.dirname(REACT_REFRESH_PATH),
       );
 
-      const { ReactRefreshRspackPlugin } = await import(
-        '@rspack/plugin-react-refresh'
-      );
+      const { ReactRefreshRspackPlugin } =
+        await import('@rspack/plugin-react-refresh');
 
       const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
 
@@ -91,9 +90,9 @@ export const applyBasicReactSupport = (
         ]);
     },
   );
-};
+}
 
-export const applyReactProfiler = (api: RsbuildPluginAPI): void => {
+export function applyReactProfiler(api: RsbuildPluginAPI): void {
   api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
     if (config.mode !== 'production') {
       return;
@@ -150,4 +149,4 @@ export const applyReactProfiler = (api: RsbuildPluginAPI): void => {
     );
     chain.resolve.alias.set('scheduler/tracing', 'scheduler/tracing-profiling');
   });
-};
+}

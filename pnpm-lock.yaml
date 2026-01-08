@@ -522,7 +522,7 @@ importers:
         version: 0.3.31
       '@rslib/core':
         specifier: 0.19.1
-        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20251203.1)(typescript@5.9.3)
+        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20260107.1)(typescript@5.9.3)
       '@types/connect':
         specifier: 3.4.38
         version: 3.4.38
@@ -670,7 +670,7 @@ importers:
         version: link:../plugin-vue
       '@rslib/core':
         specifier: 0.19.1
-        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20251203.1)(typescript@5.9.3)
+        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20260107.1)(typescript@5.9.3)
       '@types/node':
         specifier: ^24.10.4
         version: 24.10.4
@@ -710,7 +710,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.19.1
-        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20251203.1)(typescript@5.9.3)
+        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20260107.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -741,7 +741,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.19.1
-        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20251203.1)(typescript@5.9.3)
+        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20260107.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -781,7 +781,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.19.1
-        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20251203.1)(typescript@5.9.3)
+        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20260107.1)(typescript@5.9.3)
       '@types/node':
         specifier: ^24.10.4
         version: 24.10.4
@@ -806,7 +806,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.19.1
-        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20251203.1)(typescript@5.9.3)
+        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20260107.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -840,7 +840,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.19.1
-        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20251203.1)(typescript@5.9.3)
+        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20260107.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -880,7 +880,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.19.1
-        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20251203.1)(typescript@5.9.3)
+        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20260107.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -911,7 +911,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.19.1
-        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20251203.1)(typescript@5.9.3)
+        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20260107.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -936,7 +936,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.19.1
-        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20251203.1)(typescript@5.9.3)
+        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20260107.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -976,7 +976,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.19.1
-        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20251203.1)(typescript@5.9.3)
+        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20260107.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1013,7 +1013,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.19.1
-        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20251203.1)(typescript@5.9.3)
+        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20260107.1)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1034,13 +1034,13 @@ importers:
         version: link:../../packages/core
       '@rslib/core':
         specifier: 0.19.1
-        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20251203.1)(typescript@5.9.3)
+        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20260107.1)(typescript@5.9.3)
       '@types/node':
         specifier: ^24.10.4
         version: 24.10.4
       '@typescript/native-preview':
-        specifier: 7.0.0-dev.20251203.1
-        version: 7.0.0-dev.20251203.1
+        specifier: ^7.0.0-dev.20260107.1
+        version: 7.0.0-dev.20260107.1
       rsbuild-plugin-arethetypeswrong:
         specifier: 0.1.1
         version: 0.1.1(@rsbuild/core@packages+core)(typescript@5.9.3)
@@ -1065,7 +1065,7 @@ importers:
     devDependencies:
       '@rslib/core':
         specifier: 0.19.1
-        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20251203.1)(typescript@5.9.3)
+        version: 0.19.1(@typescript/native-preview@7.0.0-dev.20260107.1)(typescript@5.9.3)
 
   website:
     devDependencies:
@@ -2909,43 +2909,43 @@ packages:
   '@types/ws@8.18.1':
     resolution: {integrity: sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==}
 
-  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20251203.1':
-    resolution: {integrity: sha512-gMPW/y89KANC0fIqdudxwsxUOHTOyujaOGxyj4IOaFLIP+8/gofawsmdf9HVniPq4xCT7tMpiqa/b9btxJ5nGw==}
+  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20260107.1':
+    resolution: {integrity: sha512-IlmAcBuRJ16iP458tHhnsuE5ANzZkkO0m9y5WSgxrSj2Y5pVHa8mE5mC9SMFDLeUiLUAJ0kyXU0/LeDUOYtxXQ==}
     cpu: [arm64]
     os: [darwin]
 
-  '@typescript/native-preview-darwin-x64@7.0.0-dev.20251203.1':
-    resolution: {integrity: sha512-BG/bCAZcTGNM4bQMwY4hI0l70QaxQW9qwJ04GZJL02LAnaQVai8o5X/ghU6awkXFt9CTXdXBWn+hKNb+IiHG+w==}
+  '@typescript/native-preview-darwin-x64@7.0.0-dev.20260107.1':
+    resolution: {integrity: sha512-33mTAoeFzwrfikWpo+nfWDgasAAuoLLtRoAZAVYQmCTVZed0yqrNED2tI8bsHYAsqlau/T66qb7cWXQjJ6aT5g==}
     cpu: [x64]
     os: [darwin]
 
-  '@typescript/native-preview-linux-arm64@7.0.0-dev.20251203.1':
-    resolution: {integrity: sha512-UGrYYbYbyjlklDubWE93E84WU6jrCGsjpJ2+/GFf4keB3IUrvg9lRqgQ3DUYW4p5kXJR+YC42HnG+OXkN+s6Pw==}
+  '@typescript/native-preview-linux-arm64@7.0.0-dev.20260107.1':
+    resolution: {integrity: sha512-3euY/vSJQ0L8WfMYDQ/2DtImNtnBevIN+g3qU18LiKv1Be/MNld/Wk7zmvAdvbQ1lXCAFeGG8dGa5NHpVIQE2A==}
     cpu: [arm64]
     os: [linux]
 
-  '@typescript/native-preview-linux-arm@7.0.0-dev.20251203.1':
-    resolution: {integrity: sha512-iGrXfVUWtXgiaiVX7FhFVYFz3qFklta2kQEx0VX+km/tBVFMt+egI36tflKYuR7UE5n+0kboKldtyKgmfGrrjQ==}
+  '@typescript/native-preview-linux-arm@7.0.0-dev.20260107.1':
+    resolution: {integrity: sha512-zYrp5E/Mda2nKTR+ahT2+hPOXJE7MoJdhyxw8Uzdoy/buETnS+UBCEdahb9Wx2cxFyXpZpiHuNOOGujfJgIv+Q==}
     cpu: [arm]
     os: [linux]
 
-  '@typescript/native-preview-linux-x64@7.0.0-dev.20251203.1':
-    resolution: {integrity: sha512-s3VZtFQGktU1ph0q3v8T2tVsgTrRoiaWFknt2vrErxKnzfQgChWOlM0o7Geaj/y1dnrOGWO/cHwMCSb7vd2fgw==}
+  '@typescript/native-preview-linux-x64@7.0.0-dev.20260107.1':
+    resolution: {integrity: sha512-5lD2j5RyG6ShedMghgMZ+yK4sFf0KnqQhRBndgC9PY6W+QaqvyVrCUURN28TAj4C6oea/Xs8DYMCafEGrv7pPA==}
     cpu: [x64]
     os: [linux]
 
-  '@typescript/native-preview-win32-arm64@7.0.0-dev.20251203.1':
-    resolution: {integrity: sha512-rcaW7Kn7Ja8J17wmc9UuOjf0LmlqPQYYnqQTdh/kj72FcK4l+8P7b1LcViQFcsOAiIcRZBKrEVZnZXNQxYdHMQ==}
+  '@typescript/native-preview-win32-arm64@7.0.0-dev.20260107.1':
+    resolution: {integrity: sha512-eGPP25i28mhjtAsaQLG85HMWYagaz4c6KE5HmSn0z1Tr3CZFet2wnmoBe71mcFQJbLfXJ37PCJg6GB6oNuJh5Q==}
     cpu: [arm64]
     os: [win32]
 
-  '@typescript/native-preview-win32-x64@7.0.0-dev.20251203.1':
-    resolution: {integrity: sha512-+DSMCGE7VZWjYzbWDuIenBW2tUclUqAGi7pcOgGq3BpwPEqyVhdQh5ggOk087xgshBv5Wj/yAdXA9gQFAFxpEQ==}
+  '@typescript/native-preview-win32-x64@7.0.0-dev.20260107.1':
+    resolution: {integrity: sha512-t7UCZLnQqE93RGSP1YAqu1eegVJX5KhgwSuaTO62cf+UeptEz7cuIP0vPVNxyzial5bKvOoXekkWXQ4u5G1wlQ==}
     cpu: [x64]
     os: [win32]
 
-  '@typescript/native-preview@7.0.0-dev.20251203.1':
-    resolution: {integrity: sha512-u6kHGmbkB4WQ2XjQUVq6PixV92biRclTBAq8r09L/MGzsiVREdYzf/Bf1W4aTDcDSu6UQ3hjtBR6hROQRPrMXQ==}
+  '@typescript/native-preview@7.0.0-dev.20260107.1':
+    resolution: {integrity: sha512-GkMZ4alU9Pr/5pUjZRzA9NMQ2wadrCPN+YHhjOlr8VM2gCFoSg5+ewLVMu4ZcdjdJDs8DUcCyuHQiW6Zr5iBvQ==}
     hasBin: true
 
   '@ungap/structured-clone@1.3.0':
@@ -7574,10 +7574,10 @@ snapshots:
       - '@rspack/core'
       - webpack
 
-  '@rslib/core@0.19.1(@typescript/native-preview@7.0.0-dev.20251203.1)(typescript@5.9.3)':
+  '@rslib/core@0.19.1(@typescript/native-preview@7.0.0-dev.20260107.1)(typescript@5.9.3)':
     dependencies:
       '@rsbuild/core': 1.7.1
-      rsbuild-plugin-dts: 0.19.1(@rsbuild/core@1.7.1)(@typescript/native-preview@7.0.0-dev.20251203.1)(typescript@5.9.3)
+      rsbuild-plugin-dts: 0.19.1(@rsbuild/core@1.7.1)(@typescript/native-preview@7.0.0-dev.20260107.1)(typescript@5.9.3)
     optionalDependencies:
       typescript: 5.9.3
     transitivePeerDependencies:
@@ -7929,7 +7929,7 @@ snapshots:
 
   '@rstest/adapter-rslib@0.1.1(@rslib/core@0.19.1(typescript@5.9.3))(typescript@5.9.3)':
     dependencies:
-      '@rslib/core': 0.19.1(@typescript/native-preview@7.0.0-dev.20251203.1)(typescript@5.9.3)
+      '@rslib/core': 0.19.1(@typescript/native-preview@7.0.0-dev.20260107.1)(typescript@5.9.3)
     optionalDependencies:
       typescript: 5.9.3
 
@@ -8379,36 +8379,36 @@ snapshots:
     dependencies:
       '@types/node': 24.10.4
 
-  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20251203.1':
+  '@typescript/native-preview-darwin-arm64@7.0.0-dev.20260107.1':
     optional: true
 
-  '@typescript/native-preview-darwin-x64@7.0.0-dev.20251203.1':
+  '@typescript/native-preview-darwin-x64@7.0.0-dev.20260107.1':
     optional: true
 
-  '@typescript/native-preview-linux-arm64@7.0.0-dev.20251203.1':
+  '@typescript/native-preview-linux-arm64@7.0.0-dev.20260107.1':
     optional: true
 
-  '@typescript/native-preview-linux-arm@7.0.0-dev.20251203.1':
+  '@typescript/native-preview-linux-arm@7.0.0-dev.20260107.1':
     optional: true
 
-  '@typescript/native-preview-linux-x64@7.0.0-dev.20251203.1':
+  '@typescript/native-preview-linux-x64@7.0.0-dev.20260107.1':
     optional: true
 
-  '@typescript/native-preview-win32-arm64@7.0.0-dev.20251203.1':
+  '@typescript/native-preview-win32-arm64@7.0.0-dev.20260107.1':
     optional: true
 
-  '@typescript/native-preview-win32-x64@7.0.0-dev.20251203.1':
+  '@typescript/native-preview-win32-x64@7.0.0-dev.20260107.1':
     optional: true
 
-  '@typescript/native-preview@7.0.0-dev.20251203.1':
+  '@typescript/native-preview@7.0.0-dev.20260107.1':
     optionalDependencies:
-      '@typescript/native-preview-darwin-arm64': 7.0.0-dev.20251203.1
-      '@typescript/native-preview-darwin-x64': 7.0.0-dev.20251203.1
-      '@typescript/native-preview-linux-arm': 7.0.0-dev.20251203.1
-      '@typescript/native-preview-linux-arm64': 7.0.0-dev.20251203.1
-      '@typescript/native-preview-linux-x64': 7.0.0-dev.20251203.1
-      '@typescript/native-preview-win32-arm64': 7.0.0-dev.20251203.1
-      '@typescript/native-preview-win32-x64': 7.0.0-dev.20251203.1
+      '@typescript/native-preview-darwin-arm64': 7.0.0-dev.20260107.1
+      '@typescript/native-preview-darwin-x64': 7.0.0-dev.20260107.1
+      '@typescript/native-preview-linux-arm': 7.0.0-dev.20260107.1
+      '@typescript/native-preview-linux-arm64': 7.0.0-dev.20260107.1
+      '@typescript/native-preview-linux-x64': 7.0.0-dev.20260107.1
+      '@typescript/native-preview-win32-arm64': 7.0.0-dev.20260107.1
+      '@typescript/native-preview-win32-x64': 7.0.0-dev.20260107.1
 
   '@ungap/structured-clone@1.3.0': {}
 
@@ -11297,12 +11297,12 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': link:packages/core
 
-  rsbuild-plugin-dts@0.19.1(@rsbuild/core@1.7.1)(@typescript/native-preview@7.0.0-dev.20251203.1)(typescript@5.9.3):
+  rsbuild-plugin-dts@0.19.1(@rsbuild/core@1.7.1)(@typescript/native-preview@7.0.0-dev.20260107.1)(typescript@5.9.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
       '@rsbuild/core': 1.7.1
     optionalDependencies:
-      '@typescript/native-preview': 7.0.0-dev.20251203.1
+      '@typescript/native-preview': 7.0.0-dev.20260107.1
       typescript: 5.9.3
 
   rsbuild-plugin-google-analytics@1.0.4(@rsbuild/core@packages+core):
