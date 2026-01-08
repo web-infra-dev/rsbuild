@@ -30,7 +30,7 @@ const normalizePluginObject = (plugin: RsbuildPlugin): RsbuildPlugin => {
   };
 };
 
-export const getRsbuildInspectConfig = ({
+export function getRsbuildInspectConfig({
   normalizedConfig,
   inspectOptions,
   pluginManager,
@@ -40,13 +40,13 @@ export const getRsbuildInspectConfig = ({
   pluginManager: PluginManager;
 }): {
   rawRsbuildConfig: string;
-  rsbuildConfig: InspectConfigResult['origin']['rsbuildConfig'];
+  rsbuildConfig: Omit<NormalizedConfig, 'environments'>;
   rawEnvironmentConfigs: {
     name: string;
     content: string;
   }[];
-  environmentConfigs: InspectConfigResult['origin']['environmentConfigs'];
-} => {
+  environmentConfigs: Record<string, NormalizedEnvironmentConfig>;
+} {
   const { environments, ...rsbuildConfig } = normalizedConfig;
 
   const debugConfig: Omit<NormalizedConfig, 'environments'> = {
@@ -63,7 +63,7 @@ export const getRsbuildInspectConfig = ({
   }[] = [];
 
   for (const [name, config] of Object.entries(environments)) {
-    const debugConfig = {
+    const debugConfig: NormalizedEnvironmentConfig = {
       ...config,
       plugins: pluginManager
         .getPlugins({ environment: name })
@@ -82,7 +82,7 @@ export const getRsbuildInspectConfig = ({
     environmentConfigs: environments,
     rawEnvironmentConfigs,
   };
-};
+}
 
 type RawConfig = {
   name: string;

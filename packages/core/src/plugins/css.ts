@@ -35,11 +35,11 @@ const getCSSModulesLocalIdentName = (
     ? '[local]-[hash:base64:6]'
     : '[path][name]__[local]-[hash:base64:6]');
 
-export const getLightningCSSLoaderOptions = (
+export function getLightningCSSLoaderOptions(
   config: NormalizedEnvironmentConfig,
   targets: string[],
   minify: boolean,
-): Rspack.LightningcssLoaderOptions => {
+): Rspack.LightningcssLoaderOptions {
   const userOptions =
     typeof config.tools.lightningcssLoader === 'object'
       ? config.tools.lightningcssLoader
@@ -58,7 +58,7 @@ export const getLightningCSSLoaderOptions = (
     initial: initialOptions,
     config: userOptions,
   });
-};
+}
 
 // If the target is not `web` and the modules option of css-loader is enabled,
 // we must enable exportOnlyLocals to only exports the modules identifier mappings.
