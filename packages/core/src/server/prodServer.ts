@@ -72,7 +72,9 @@ export class RsbuildProdServer {
     }
 
     if (cors) {
-      const corsMiddleware = requireCompiledPackage('cors');
+      const { default: corsMiddleware } = await import(
+        /* webpackChunkName: "cors" */ 'cors'
+      );
       this.middlewares.use(
         corsMiddleware(typeof cors === 'boolean' ? {} : cors),
       );
@@ -181,7 +183,9 @@ export async function startProdServer(
     config,
   });
 
-  const connect = requireCompiledPackage('connect');
+  const { default: connect } = await import(
+    /* webpackChunkName: "connect" */ 'connect'
+  );
   const middlewares = connect();
 
   const serverConfig = config.server;

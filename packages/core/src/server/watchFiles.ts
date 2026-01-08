@@ -136,7 +136,9 @@ export async function createChokidar(
   });
 
   if (globPatterns.length) {
-    const { glob } = requireCompiledPackage('tinyglobby');
+    const { glob } = await import(
+      /* webpackChunkName: "tinyglobby" */ 'tinyglobby'
+    );
     // interop default to make both CJS and ESM work
     const files = await glob(globPatterns, {
       cwd: root,

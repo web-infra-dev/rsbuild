@@ -2,11 +2,10 @@ import type {
   FileDescriptor,
   InternalOptions,
   ManifestPluginOptions,
-} from '../../compiled/rspack-manifest-plugin';
+} from 'rspack-manifest-plugin';
 import { color, isObject } from '../helpers';
 import { getPublicPathFromCompiler } from '../helpers/compiler';
 import { ensureAssetPrefix } from '../helpers/url';
-import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
 import { recursiveChunkEntryNames } from '../rspack-plugins/resource-hints/doesChunkBelongToHtml';
 import type {
@@ -209,7 +208,7 @@ export const pluginManifest = (): RsbuildPlugin => ({
   setup(api) {
     const manifestFilenames = new Map<string, string>();
 
-    api.modifyBundlerChain((chain, { CHAIN_ID, environment, isDev }) => {
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment, isDev }) => {
       const {
         output: { manifest },
         dev: { writeToDisk },
@@ -221,8 +220,8 @@ export const pluginManifest = (): RsbuildPlugin => ({
 
       const manifestOptions = normalizeManifestObjectConfig(manifest);
 
-      const { RspackManifestPlugin } = requireCompiledPackage(
-        'rspack-manifest-plugin',
+      const { RspackManifestPlugin } = await import(
+        /* webpackChunkName: "manifest-plugin" */ 'rspack-manifest-plugin'
       );
       const { htmlPaths } = environment;
 

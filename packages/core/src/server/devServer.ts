@@ -6,7 +6,6 @@ import {
   isMultiCompiler,
 } from '../helpers/compiler';
 import { getPathnameFromUrl } from '../helpers/path';
-import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
 import { onBeforeRestartServer, restartDevServer } from '../restart';
 import type {
@@ -340,7 +339,9 @@ export async function createDevServer<
     };
   });
 
-  const connect = requireCompiledPackage('connect');
+  const { default: connect } = await import(
+    /* webpackChunkName: "connect" */ 'connect'
+  );
   const middlewares = connect();
 
   const httpServer = middlewareMode
@@ -454,7 +455,7 @@ export async function createDevServer<
     root,
   });
 
-  devMiddlewares = getDevMiddlewares({
+  devMiddlewares = await getDevMiddlewares({
     buildManager,
     config,
     devServerAPI,

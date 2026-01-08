@@ -5,18 +5,13 @@ const require = createRequire(import.meta.url);
 
 type CompiledPackages = {
   ws: typeof import('../../compiled/ws').default;
-  cors: typeof import('../../compiled/cors').default;
   sirv: typeof import('../../compiled/sirv');
-  memfs: typeof import('../../compiled/memfs');
   mrmime: typeof import('../../compiled/mrmime');
-  connect: typeof import('../../compiled/connect').default;
   chokidar: typeof import('../../compiled/chokidar').default;
-  tinyglobby: typeof import('../../compiled/tinyglobby');
   picocolors: typeof import('../../compiled/picocolors').default;
   'webpack-merge': typeof import('../../compiled/webpack-merge');
   'html-rspack-plugin': typeof import('../../compiled/html-rspack-plugin').default;
   'http-proxy-middleware': typeof import('../../compiled/http-proxy-middleware');
-  'rspack-manifest-plugin': typeof import('../../compiled/rspack-manifest-plugin');
   'launch-editor-middleware': typeof import('../../compiled/launch-editor-middleware');
   '@jridgewell/remapping': typeof import('../../compiled/@jridgewell/remapping');
   '@jridgewell/trace-mapping': typeof import('../../compiled/@jridgewell/trace-mapping');

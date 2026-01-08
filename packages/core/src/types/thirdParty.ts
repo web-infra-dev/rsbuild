@@ -2,7 +2,7 @@ import type {
   CssExtractRspackLoaderOptions,
   CssExtractRspackPluginOptions,
 } from '@rspack/core';
-import type Connect from '../../compiled/connect/index.js';
+import type Connect from 'connect';
 import type HtmlRspackPlugin from '../../compiled/html-rspack-plugin/index.js';
 import type { AcceptedPlugin, ProcessOptions } from '../../compiled/postcss';
 import type { Rspack } from './rspack';
