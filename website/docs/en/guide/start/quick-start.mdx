@@ -71,15 +71,16 @@ When creating an application, you can choose from the following templates provid
 
 ### Optional tools
 
-`create-rsbuild` can help you set up commonly used tools, including [Biome](https://github.com/biomejs/biome), [ESLint](https://github.com/eslint/eslint), [Prettier](https://github.com/prettier/prettier), and [Storybook](https://storybook.js.org/). Use the arrow keys to navigate and the space bar to select. Press Enter without selecting anything to skip these tools.
+`create-rsbuild` can help you set up commonly used tools, including [Rstest](https://rstest.rs), [Biome](https://github.com/biomejs/biome), [ESLint](https://github.com/eslint/eslint), [Prettier](https://github.com/prettier/prettier), [Tailwind CSS](https://tailwindcss.com) and [Storybook](https://storybook.js.org/). Use the arrow keys to navigate and the space bar to select. Press Enter without selecting anything to skip these tools.
 
 ```
 ◆  Select additional tools (Use <space> to select, <enter> to continue)
-│  ◻ Add Biome for code linting and formatting
-│  ◻ Add ESLint for code linting
-│  ◻ Add Prettier for code formatting
-│  ◻ Add Storybook for component development
-│  ◻ Add Rstest for unit testing
+│  ◻ Rstest - testing
+│  ◻ Biome - linting & formatting
+│  ◻ ESLint - linting
+│  ◻ Prettier - formatting
+│  ◻ Tailwind CSS - styling
+│  ◻ Storybook - component development
 └
 ```
 
@@ -127,7 +128,7 @@ Options:
   -h, --help            display help for command
   -d, --dir <dir>       create project in specified directory
   -t, --template <tpl>  specify the template to use
-  --tools <tool>        select additional tools (biome, eslint, prettier, storybook, rstest)
+  --tools <tool>        add additional tools, comma separated
   --override            override files in target directory
   --packageName <name>  specify the package name
 
@@ -135,6 +136,9 @@ Templates:
 
   react-js, react-ts, vue3-js, vue3-ts, vue2-js, vue2-ts, svelte-js, svelte-ts,
   solid-js, solid-ts, vanilla-js, vanilla-ts
+
+Optional tools:
+  rstest, biome, eslint, prettier, tailwindcss, storybook
 ```
 
 ## Migrate from existing projects
