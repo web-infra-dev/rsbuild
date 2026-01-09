@@ -60,13 +60,13 @@ test('should allow to set `server.cors` config', async ({
 
   // Check CORS headers
   const remoteResponse = await request.get(
-    `http://127.0.0.1:${remoteApp.port}`,
+    `http://localhost:${remoteApp.port}`,
   );
   expect(remoteResponse.headers()['access-control-allow-origin']).toEqual(
     'https://localhost',
   );
 
-  const hostResponse = await request.get(`http://127.0.0.1:${hostApp.port}`);
+  const hostResponse = await request.get(`http://localhost:${hostApp.port}`);
   expect(hostResponse.headers()['access-control-allow-origin']).toEqual(
     'https://localhost',
   );

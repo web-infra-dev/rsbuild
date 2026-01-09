@@ -20,7 +20,7 @@ test('should print server urls correctly by default', async ({
   expect(await page.evaluate(() => window.test)).toBe(1);
 
   await rsbuild.expectLog(`➜  Local:    ${url}`);
-  await rsbuild.expectLog(NETWORK_LOG_REGEX);
+  rsbuild.expectNoLog(NETWORK_LOG_REGEX);
 
   expect(rsbuild.logs.find((log) => log.includes('/./'))).toBeFalsy();
 });
@@ -69,6 +69,7 @@ test('should allow to modify and return new urls', async ({
   const rsbuild = await devOnly({
     config: {
       server: {
+        host: '0.0.0.0',
         printUrls: ({ urls }) => urls.map((url) => `${url}/test`),
       },
     },

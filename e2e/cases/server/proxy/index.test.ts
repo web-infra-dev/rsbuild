@@ -8,6 +8,9 @@ test('should apply basic proxy rules', async ({ dev, page }) => {
   const rsbuild1 = await dev({
     cwd: cwd1,
     config: {
+      server: {
+        host: '0.0.0.0',
+      },
       dev: {
         assetPrefix: true,
       },

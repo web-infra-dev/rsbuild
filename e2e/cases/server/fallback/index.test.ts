@@ -4,7 +4,7 @@ test('should return 204 for OPTIONS requests when no middleware handles them', a
   dev,
 }) => {
   const rsbuild = await dev();
-  const response = await fetch(`http://127.0.0.1:${rsbuild.port}`, {
+  const response = await fetch(`http://localhost:${rsbuild.port}`, {
     headers: {
       'content-type': 'application/json',
     },
@@ -40,7 +40,7 @@ test('should return 200 with custom headers for OPTIONS requests handled by midd
     },
   });
 
-  const response = await fetch(`http://127.0.0.1:${rsbuild.port}`, {
+  const response = await fetch(`http://localhost:${rsbuild.port}`, {
     headers: {
       'content-type': 'application/json',
     },
