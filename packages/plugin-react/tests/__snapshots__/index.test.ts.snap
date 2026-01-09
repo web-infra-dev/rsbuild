@@ -119,6 +119,7 @@ ReactRefreshRspackPlugin {
     "injectEntry": true,
     "injectLoader": true,
     "overlay": false,
+    "reactRefreshLoader": "builtin:react-refresh-loader",
     "reloadOnRuntimeErrors": false,
     "resourceQuery": {
       "not": /\\^\\\\\\?raw\\$/,
