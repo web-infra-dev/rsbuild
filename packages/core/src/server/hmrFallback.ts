@@ -1,3 +1,4 @@
+import { LOCALHOST } from '../constants';
 import { isWildcardHost } from './helper';
 
 /**
@@ -10,8 +11,8 @@ import { isWildcardHost } from './helper';
 async function getLocalhostResolvedAddress(): Promise<string | undefined> {
   const { promises: dns } = await import('node:dns');
   const [defaultLookup, explicitLookup] = await Promise.all([
-    dns.lookup('localhost'),
-    dns.lookup('localhost', { verbatim: true }),
+    dns.lookup(LOCALHOST),
+    dns.lookup(LOCALHOST, { verbatim: true }),
   ]);
   const match =
     defaultLookup.family === explicitLookup.family &&
@@ -20,9 +21,9 @@ async function getLocalhostResolvedAddress(): Promise<string | undefined> {
 }
 
 export async function resolveHostname(
-  host: string | undefined = 'localhost',
+  host: string | undefined = LOCALHOST,
 ): Promise<string> {
-  if (host === 'localhost') {
+  if (host === LOCALHOST) {
     const resolvedAddress = await getLocalhostResolvedAddress();
     if (resolvedAddress) {
       return resolvedAddress;
@@ -30,5 +31,5 @@ export async function resolveHostname(
   }
 
   // If possible, set the host name to localhost
-  return host === undefined || isWildcardHost(host) ? 'localhost' : host;
+  return host === undefined || isWildcardHost(host) ? LOCALHOST : host;
 }

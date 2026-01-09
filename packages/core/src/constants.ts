@@ -27,11 +27,13 @@ export const TS_CONFIG_FILE = 'tsconfig.json';
 export const HMR_SOCKET_PATH = '/rsbuild-hmr';
 export const RSBUILD_OUTPUTS_PATH = '.rsbuild';
 
+export const LOCALHOST = 'localhost';
+export const ALL_INTERFACES_IPV4 = '0.0.0.0';
+
 // Defaults
 export const DEFAULT_PORT = 3000;
 export const DEFAULT_DATA_URL_SIZE = 4096;
 export const DEFAULT_MOUNT_ID = 'root';
-export const DEFAULT_DEV_HOST = '0.0.0.0';
 export const DEFAULT_ASSET_PREFIX = '/';
 export const DEFAULT_STACK_TRACE = 'summary';
 export const DEFAULT_WEB_BROWSERSLIST: string[] = [
