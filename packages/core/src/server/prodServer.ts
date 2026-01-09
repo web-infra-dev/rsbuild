@@ -1,7 +1,6 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
 import { getPathnameFromUrl } from '../helpers/path';
-import { requireCompiledPackage } from '../helpers/vendors';
 import { isVerbose, logger } from '../logger';
 import type {
   Connect,
@@ -120,7 +119,7 @@ export class RsbuildProdServer {
       this.middlewares.use(getBaseUrlMiddleware({ base }));
     }
 
-    this.applyStaticAssetMiddleware();
+    await this.applyStaticAssetMiddleware();
 
     if (historyApiFallback) {
       this.middlewares.use(
@@ -130,7 +129,7 @@ export class RsbuildProdServer {
       );
 
       // ensure fallback request can be handled by sirv
-      this.applyStaticAssetMiddleware();
+      await this.applyStaticAssetMiddleware();
     }
 
     this.middlewares.use(faviconFallbackMiddleware);
@@ -138,13 +137,15 @@ export class RsbuildProdServer {
     this.middlewares.use(notFoundMiddleware);
   }
 
-  private applyStaticAssetMiddleware() {
+  private async applyStaticAssetMiddleware() {
     const {
       output: { path, assetPrefixes },
       serverConfig: { htmlFallback },
     } = this.options;
 
-    const sirv = requireCompiledPackage('sirv');
+    const { default: sirv } = await import(
+      /* webpackChunkName: "sirv" */ 'sirv'
+    );
 
     const assetsMiddleware = sirv(path, {
       etag: true,

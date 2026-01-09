@@ -6,7 +6,6 @@ import {
 } from '../helpers/compiler';
 import { fileExistsByCompilation, readFileAsync } from '../helpers/fs';
 import { ensureAssetPrefix, isURL } from '../helpers/url';
-import { requireCompiledPackage } from '../helpers/vendors';
 import type { AppIconItem, HtmlBasicTag, RsbuildPlugin } from '../types';
 
 type IconExtra = {
@@ -90,7 +89,7 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
           return;
         }
 
-        const { lookup } = requireCompiledPackage('mrmime');
+        const { lookup } = await import('mrmime');
 
         const distDir = config.output.distPath.image;
         const manifestFile = appIcon.filename ?? 'manifest.webmanifest';

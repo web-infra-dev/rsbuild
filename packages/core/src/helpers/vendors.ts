@@ -5,8 +5,6 @@ const require = createRequire(import.meta.url);
 
 type CompiledPackages = {
   ws: typeof import('../../compiled/ws').default;
-  sirv: typeof import('../../compiled/sirv');
-  mrmime: typeof import('../../compiled/mrmime');
   chokidar: typeof import('../../compiled/chokidar').default;
   picocolors: typeof import('../../compiled/picocolors').default;
   'webpack-merge': typeof import('../../compiled/webpack-merge');

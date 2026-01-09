@@ -81,7 +81,7 @@ export default defineConfig({
   },
   lib: [
     {
-      id: 'esm_index',
+      id: 'node',
       format: 'esm',
       syntax: 'es2023',
       plugins: [pluginFixDtsTypes],
@@ -123,7 +123,7 @@ export default defineConfig({
       },
     },
     {
-      id: 'esm_client',
+      id: 'client',
       format: 'esm',
       syntax: 'es2017',
       source: {
