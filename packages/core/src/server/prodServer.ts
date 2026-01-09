@@ -258,6 +258,7 @@ export async function startProdServer(
             protocol,
             printUrls: serverConfig.printUrls,
             trailingLineBreak: !cliShortcutsEnabled,
+            originalConfig: context.originalConfig,
           });
 
         const openPage = async () => {
