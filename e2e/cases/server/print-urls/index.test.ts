@@ -1,7 +1,4 @@
-import { expect, test } from '@e2e/helper';
-
-const NETWORK_LOG_REGEX =
-  /➜\s{2}Network:\s{2}http:\/\/\d{1,3}(?:\.\d{1,3}){3}:\d+/;
+import { expect, NETWORK_LOG_REGEX, test } from '@e2e/helper';
 
 test('should print server urls correctly by default', async ({
   page,

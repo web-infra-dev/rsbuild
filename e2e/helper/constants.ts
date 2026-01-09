@@ -16,3 +16,6 @@ export const CREATE_RSBUILD_BIN_PATH = join(
   import.meta.dirname,
   '../node_modules/create-rsbuild/bin.js',
 );
+
+export const NETWORK_LOG_REGEX =
+  /➜\s{2}Network:\s{2}http:\/\/\d{1,3}(?:\.\d{1,3}){3}:\d+/;

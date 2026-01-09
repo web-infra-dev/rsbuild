@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { ALL_INTERFACES_IPV4 } from '../constants';
 import { createRsbuild } from '../createRsbuild';
 import { castArray } from '../helpers';
 import { ensureAbsolutePath } from '../helpers/path';
@@ -50,7 +51,8 @@ const loadConfig = async (root: string) => {
   }
 
   if (commonOpts.host) {
-    config.server.host = commonOpts.host;
+    config.server.host =
+      commonOpts.host === true ? ALL_INTERFACES_IPV4 : commonOpts.host;
   }
 
   if (commonOpts.port) {
