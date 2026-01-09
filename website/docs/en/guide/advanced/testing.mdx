@@ -63,6 +63,37 @@ npm run test
 npm run test:watch
 ```
 
+#### Configuring Rstest
+
+Rstest provides various configuration options that can be set by creating an `rstest.config.ts` file in the root of your project. Here is an example configuration file:
+
+```ts title="rstest.config.ts"
+import { defineConfig } from '@rstest/core';
+
+export default defineConfig({
+  include: ['test/**/*.test.ts'],
+  testEnvironment: 'node',
+});
+```
+
+In the configuration file, you can specify test file matching patterns, set the test environment, configure code coverage, etc. For detailed information on all available configuration options, please refer to the [Rstest documentation](https://rstest.rs/config).
+
+#### Reusing Rsbuild configuration
+
+`@rstest/adapter-rsbuild` is the official adapter that lets Rstest reuse your existing Rsbuild configuration. This keeps your test and build environments aligned and avoids duplicated setup.
+
+```ts title="rstest.config.ts"
+import { defineConfig } from '@rstest/core';
+import { withRsbuildConfig } from '@rstest/adapter-rsbuild';
+
+export default defineConfig({
+  extends: withRsbuildConfig(),
+  // Additional rstest-specific configuration
+});
+```
+
+For more information about the `withRsbuildConfig` function, please refer to the [Rstest documentation](https://rstest.rs/guide/integration/rsbuild#reuse-rsbuild-config).
+
 These are the basic steps for using Rstest. Check the [Rstest documentation](https://rstest.rs/guide/start/) for more usage details.
 
 ### Examples
