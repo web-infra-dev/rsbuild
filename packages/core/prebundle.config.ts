@@ -26,25 +26,8 @@ export default {
     'chokidar',
     'webpack-merge',
     {
-      name: 'picocolors',
-      beforeBundle({ depPath }) {
-        const typesFile = join(depPath, 'types.ts');
-        // Fix type bundle
-        if (fs.existsSync(typesFile)) {
-          fs.renameSync(typesFile, join(depPath, 'types.d.ts'));
-        }
-      },
-    },
-    {
       name: 'rslog',
       dtsOnly: true,
-    },
-    {
-      name: 'launch-editor-middleware',
-      ignoreDts: true,
-      externals: {
-        picocolors: '../picocolors/index.js',
-      },
     },
     {
       name: 'rspack-chain',
@@ -107,9 +90,6 @@ export default {
       name: 'postcss',
       copyDts: true,
       minify: true,
-      externals: {
-        picocolors: '../picocolors/index.js',
-      },
       afterBundle(task) {
         // source-map-js type does not exist, use a stub instead
         replaceFileContent(join(task.distPath, 'lib/postcss.d.ts'), (content) =>

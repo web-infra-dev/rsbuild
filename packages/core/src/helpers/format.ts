@@ -2,10 +2,10 @@ import { builtinModules } from 'node:module';
 import { sep } from 'node:path';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import type { StatsError } from '@rspack/core';
+import color from 'picocolors';
 import { LAZY_COMPILATION_IDENTIFIER } from '../constants';
 import { isVerbose } from '../logger';
 import { removeLoaderChainDelimiter } from './stats';
-import { color } from './vendors';
 
 const formatFileName = (fileName: string, stats: StatsError, root: string) => {
   // File name may be empty when the error is not related to a file.

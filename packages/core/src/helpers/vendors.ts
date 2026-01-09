@@ -6,11 +6,9 @@ const require = createRequire(import.meta.url);
 type CompiledPackages = {
   ws: typeof import('../../compiled/ws').default;
   chokidar: typeof import('../../compiled/chokidar').default;
-  picocolors: typeof import('../../compiled/picocolors').default;
   'webpack-merge': typeof import('../../compiled/webpack-merge');
   'html-rspack-plugin': typeof import('../../compiled/html-rspack-plugin').default;
   'http-proxy-middleware': typeof import('../../compiled/http-proxy-middleware');
-  'launch-editor-middleware': typeof import('../../compiled/launch-editor-middleware');
 };
 
 /**
@@ -23,6 +21,3 @@ type CompiledPackages = {
 export const requireCompiledPackage = <T extends keyof CompiledPackages>(
   name: T,
 ): CompiledPackages[T] => require(`${COMPILED_PATH}/${name}/index.js`);
-
-export const color: typeof import('../../compiled/picocolors').default =
-  requireCompiledPackage('picocolors');
