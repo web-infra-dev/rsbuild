@@ -5,7 +5,6 @@ import {
   CSS_DIST_DIR,
   DEFAULT_ASSET_PREFIX,
   DEFAULT_DATA_URL_SIZE,
-  DEFAULT_DEV_HOST,
   DEFAULT_MOUNT_ID,
   DEFAULT_PORT,
   DEFAULT_STACK_TRACE,
@@ -14,6 +13,7 @@ import {
   HMR_SOCKET_PATH,
   HTML_DIST_DIR,
   IMAGE_DIST_DIR,
+  LOCALHOST,
   MEDIA_DIST_DIR,
   ROOT_DIST_DIR,
   SVG_DIST_DIR,
@@ -88,7 +88,7 @@ const getDefaultServerConfig = (): Omit<
   'publicDir'
 > => ({
   port: DEFAULT_PORT,
-  host: DEFAULT_DEV_HOST,
+  host: LOCALHOST,
   open: false,
   base: '/',
   htmlFallback: 'index',

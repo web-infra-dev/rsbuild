@@ -1,8 +1,9 @@
 import { posix } from 'node:path';
 import {
+  ALL_INTERFACES_IPV4,
   DEFAULT_ASSET_PREFIX,
-  DEFAULT_DEV_HOST,
   DEFAULT_PORT,
+  LOCALHOST,
 } from '../constants';
 import { getFilename } from '../helpers';
 import { formatPublicPath, urlJoin } from '../helpers/url';
@@ -35,15 +36,13 @@ function getPublicPath({
     publicPath = dev.assetPrefix;
   } else if (dev.assetPrefix) {
     const protocol = context.devServer?.https ? 'https' : 'http';
-    const hostname = context.devServer?.hostname || DEFAULT_DEV_HOST;
+    const hostname = context.devServer?.hostname || LOCALHOST;
 
-    if (hostname === DEFAULT_DEV_HOST) {
-      const localHostname = 'localhost';
-      // If user not specify the hostname, it would use 0.0.0.0
-      // The http://0.0.0.0:port can't visit on Windows, so we shouldn't set publicPath as `//0.0.0.0:${port}/`;
+    if (hostname === ALL_INTERFACES_IPV4) {
+      // http://0.0.0.0:port can't visit on Windows, so we shouldn't set publicPath as `//0.0.0.0:${port}/`;
       // Relative to docs:
       // - https://github.com/quarkusio/quarkus/issues/12246
-      publicPath = `${protocol}://${localHostname}:<port>/`;
+      publicPath = `${protocol}://localhost:<port>/`;
     } else {
       publicPath = `${protocol}://${hostname}:<port>/`;
     }

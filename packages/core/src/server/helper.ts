@@ -3,7 +3,7 @@ import type { Http2SecureServer } from 'node:http2';
 import type { Socket } from 'node:net';
 import os from 'node:os';
 import { posix, relative, sep } from 'node:path';
-import { DEFAULT_DEV_HOST } from '../constants';
+import { ALL_INTERFACES_IPV4, LOCALHOST } from '../constants';
 import { color, isFunction } from '../helpers';
 import { getCommonParentPath } from '../helpers/path';
 import { addTrailingSlash, removeLeadingSlash } from '../helpers/url';
@@ -370,7 +370,7 @@ const getIpv4Interfaces = () => {
 
 export const isWildcardHost = (host: string): boolean => {
   const wildcardHosts = new Set([
-    '0.0.0.0',
+    ALL_INTERFACES_IPV4,
     '::',
     '0000:0000:0000:0000:0000:0000:0000:0000',
   ]);
@@ -379,7 +379,7 @@ export const isWildcardHost = (host: string): boolean => {
 
 const isLoopbackHost = (host: string) => {
   const loopbackHosts = new Set([
-    'localhost',
+    LOCALHOST,
     '127.0.0.1',
     '::1',
     '0000:0000:0000:0000:0000:0000:0000:0001',
@@ -388,8 +388,8 @@ const isLoopbackHost = (host: string) => {
 };
 
 export const getHostInUrl = async (host: string): Promise<string> => {
-  if (host === DEFAULT_DEV_HOST) {
-    return 'localhost';
+  if (host === ALL_INTERFACES_IPV4 || host === LOCALHOST) {
+    return LOCALHOST;
   }
 
   const { isIPv6 } = await import('node:net');
@@ -432,7 +432,7 @@ export const getAddressUrls = async ({
   port: number;
   host?: string;
 }): Promise<AddressUrl[]> => {
-  if (host && host !== DEFAULT_DEV_HOST) {
+  if (host && host !== ALL_INTERFACES_IPV4) {
     const url = concatUrl({
       port,
       host: await getHostInUrl(host),
@@ -460,7 +460,7 @@ export const getAddressUrls = async ({
 
       addressUrls.push({
         label: LOCAL_LABEL,
-        url: concatUrl({ host: 'localhost', port, protocol }),
+        url: concatUrl({ host: LOCALHOST, port, protocol }),
       });
       hasLocalUrl = true;
     } else {

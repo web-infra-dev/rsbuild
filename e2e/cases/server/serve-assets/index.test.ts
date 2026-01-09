@@ -2,7 +2,7 @@ import { expect, test } from '@e2e/helper';
 
 test('should serve static files', async ({ request, dev }) => {
   const rsbuild = await dev();
-  const baseUrl = `http://127.0.0.1:${rsbuild.port}`;
+  const baseUrl = `http://localhost:${rsbuild.port}`;
   const resText = await request.get(`${baseUrl}/foo.txt`);
   expect(await resText.text()).toContain('bar');
   const resIndexJs = await request.get(`${baseUrl}/static/js/index.js`);
@@ -11,7 +11,7 @@ test('should serve static files', async ({ request, dev }) => {
 
 test('should return 403 for path traversal', async ({ request, dev }) => {
   const rsbuild = await dev();
-  const baseUrl = `http://127.0.0.1:${rsbuild.port}`;
+  const baseUrl = `http://localhost:${rsbuild.port}`;
   const res = await request.get(`${baseUrl}/..%2f../foo.txt`);
   expect(res.status()).toEqual(403);
   expect(await res.text()).toContain('Forbidden');
@@ -20,7 +20,7 @@ test('should return 403 for path traversal', async ({ request, dev }) => {
 
 test('should return 400 for null byte injection', async ({ request, dev }) => {
   const rsbuild = await dev();
-  const baseUrl = `http://127.0.0.1:${rsbuild.port}`;
+  const baseUrl = `http://localhost:${rsbuild.port}`;
   const res = await request.get(`${baseUrl}/foo%00bar.js`);
   expect(res.status()).toEqual(400);
   expect(await res.text()).toContain('Bad Request');
@@ -29,7 +29,7 @@ test('should return 400 for null byte injection', async ({ request, dev }) => {
 
 test('should return 400 for invalid pathname', async ({ request, dev }) => {
   const rsbuild = await dev();
-  const baseUrl = `http://127.0.0.1:${rsbuild.port}`;
+  const baseUrl = `http://localhost:${rsbuild.port}`;
   const res = await request.get(`${baseUrl}/foo%E0%A4bar.js`);
   expect(res.status()).toEqual(400);
   expect(await res.text()).toContain('Bad Request');

@@ -8,6 +8,7 @@
  */
 import type { IncomingMessage } from 'node:http';
 import { URL } from 'node:url';
+import { LOCALHOST } from '../constants';
 import { logger } from '../logger';
 import type { HistoryApiFallbackOptions, RequestHandler } from '../types';
 
@@ -133,8 +134,7 @@ export function historyApiFallbackMiddleware(
 
 function parseReqUrl(req: IncomingMessage) {
   const proto = req.headers['x-forwarded-proto'] || 'http';
-  const host =
-    req.headers['x-forwarded-host'] || req.headers.host || 'localhost';
+  const host = req.headers['x-forwarded-host'] || req.headers.host || LOCALHOST;
   try {
     return new URL(req.url || '/', `${proto}://${host}`);
   } catch {
