@@ -51,13 +51,22 @@ Usage: rsbuild dev [options]
 Options:
   -o, --open [url]      启动时是否在浏览器中打开页面
   --port <port>         设置 Rsbuild server 监听的端口号
-  --host <host>         指定 Rsbuild server 启动时监听的 host
+  --host [host]         指定 Rsbuild server 启动时监听的 host
 ```
 
 你也可以直接运行 `rsbuild` 来启动 dev server，等同于运行 `rsbuild dev`。
 
 ```bash
 npx rsbuild
+```
+
+默认情况下，dev server 仅监听 `localhost`。当传入 `--host` 且未指定值时，服务器会监听所有网络接口：
+
+```bash
+npx rsbuild dev --host
+
+# 等同于：
+npx rsbuild dev --host 0.0.0.0
 ```
 
 ### 打开页面
@@ -105,7 +114,7 @@ Usage: rsbuild preview [options]
 Options:
   -o, --open [url]      启动时是否在浏览器中打开页面
   --port <port>         设置 Rsbuild server 监听的端口号
-  --host <host>         指定 Rsbuild server 启动时监听的 host
+  --host [host]         指定 Rsbuild server 启动时监听的 host
 ```
 
 :::tip
