@@ -17,6 +17,7 @@ test('should print server urls correctly by default', async ({
   expect(await page.evaluate(() => window.test)).toBe(1);
 
   await rsbuild.expectLog(`➜  Local:    ${url}`);
+  await rsbuild.expectLog('➜  Network:  use --host to expose');
   rsbuild.expectNoLog(NETWORK_LOG_REGEX);
 
   expect(rsbuild.logs.find((log) => log.includes('/./'))).toBeFalsy();

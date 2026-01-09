@@ -231,6 +231,7 @@ export async function createDevServer<
       protocol,
       printUrls: config.server.printUrls,
       trailingLineBreak: !cliShortcutsEnabled,
+      originalConfig: context.originalConfig,
     });
 
   const openPage = async () => {

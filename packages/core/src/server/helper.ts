@@ -14,6 +14,7 @@ import type {
   OutputStructure,
   PrintUrls,
   Routes,
+  RsbuildConfig,
   RsbuildEntry,
 } from '../types';
 
@@ -184,6 +185,7 @@ export function printServerURLs({
   protocol,
   printUrls,
   trailingLineBreak = true,
+  originalConfig,
 }: {
   urls: { url: string; label: string }[];
   port: number;
@@ -191,6 +193,7 @@ export function printServerURLs({
   protocol: string;
   printUrls?: PrintUrls;
   trailingLineBreak?: boolean;
+  originalConfig?: Readonly<RsbuildConfig>;
 }): string | null {
   if (printUrls === false) {
     return null;
@@ -234,6 +237,10 @@ export function printServerURLs({
   }
 
   let message = getURLMessages(urls, routes);
+
+  if (originalConfig && originalConfig.server?.host === undefined) {
+    message += `  ➜  ${color.dim('Network:')}  ${color.dim('use')} ${color.bold('--host')} ${color.dim('to expose')}\n`;
+  }
 
   if (!trailingLineBreak && message.endsWith('\n')) {
     message = message.slice(0, -1);
