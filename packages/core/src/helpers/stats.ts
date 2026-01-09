@@ -1,8 +1,8 @@
+import color from 'picocolors';
 import { isVerbose } from '../logger';
 import type { ActionType, RsbuildStats, Rspack } from '../types';
 import { isMultiCompiler } from './compiler';
 import { formatStatsError } from './format';
-import { color } from './vendors';
 
 // Ensure the input string ends with a line break
 const ensureTrailingNewline = (input: string) =>

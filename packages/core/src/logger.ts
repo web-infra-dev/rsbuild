@@ -12,8 +12,9 @@
  * This convention helps distinguish between normal operations
  * and important alerts that require attention.
  */
+
+import color from 'picocolors';
 import { type Logger, logger } from 'rslog';
-import { color } from './helpers/vendors';
 
 export const isDebug = (): boolean => {
   if (!process.env.DEBUG) {

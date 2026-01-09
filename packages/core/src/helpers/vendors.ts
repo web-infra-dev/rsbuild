@@ -1,8 +1,5 @@
 import { createRequire } from 'node:module';
-import color from 'picocolors';
 import { COMPILED_PATH } from '../constants';
-
-export { color };
 
 const require = createRequire(import.meta.url);
 

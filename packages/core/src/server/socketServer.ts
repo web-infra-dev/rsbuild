@@ -3,10 +3,10 @@ import type { Socket } from 'node:net';
 import { parse as parseStack } from 'stacktrace-parser';
 import type Ws from '../../compiled/ws/index.js';
 import { BROWSER_LOG_PREFIX, DEFAULT_STACK_TRACE } from '../constants.js';
+import { color, isObject } from '../helpers';
 import { formatStatsError } from '../helpers/format';
-import { isObject } from '../helpers/index';
 import { getStatsErrors, getStatsWarnings } from '../helpers/stats';
-import { color, requireCompiledPackage } from '../helpers/vendors';
+import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
 import type {
   DevConfig,
