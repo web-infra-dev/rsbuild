@@ -1,6 +1,5 @@
 import { castArray, pick } from '../helpers';
 import { isMultiCompiler } from '../helpers/compiler';
-import { requireCompiledPackage } from '../helpers/vendors';
 import { isVerbose } from '../logger';
 import { rspack } from '../rspack';
 import type {
@@ -151,8 +150,10 @@ const applyDefaultMiddlewares = async ({
     middlewares.push(getBaseUrlMiddleware({ base: server.base }));
   }
 
-  const launchEditorMiddleware = requireCompiledPackage(
-    'launch-editor-middleware',
+  const { default: launchEditorMiddleware } = await import(
+    /* webpackChunkName: "launch-editor-middleware" */
+    // @ts-ignore launch-editor-middleware has no types
+    'launch-editor-middleware'
   );
   middlewares.push(['/__open-in-editor', launchEditorMiddleware()]);
 
