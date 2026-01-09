@@ -80,7 +80,7 @@ export default defineConfig({
 
 #### 复用 Rsbuild 配置
 
-`@rstest/adapter-rsbuild` 是 Rstest 官方提供的适配器，允许 Rstest 自动继承现有 Rsbuild 配置文件中的配置。这样可以确保测试环境与构建配置一致，避免重复配置。
+`@rstest/adapter-rsbuild` 是 Rstest 官方提供的适配器，用于复用你现有的 Rsbuild 配置文件。这样可以确保测试环境与构建配置一致，避免重复配置。
 
 ```ts title="rstest.config.ts"
 import { defineConfig } from '@rstest/core';
