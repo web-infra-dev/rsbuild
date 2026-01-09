@@ -63,6 +63,37 @@ npm run test
 npm run test:watch
 ```
 
+#### 配置 Rstest
+
+Rstest 提供了多种配置选项，可以通过在项目根目录创建 `rstest.config.ts` 文件来进行配置。以下是一个示例配置文件：
+
+```ts title="rstest.config.ts"
+import { defineConfig } from '@rstest/core';
+
+export default defineConfig({
+  include: ['test/**/*.test.ts'],
+  testEnvironment: 'node',
+});
+```
+
+你可以在配置文件中指定测试文件的匹配模式、设置测试环境、配置代码覆盖率等。有关所有可用配置选项的详细信息，请参阅 [Rstest 文档](https://rstest.rs/config)。
+
+#### 复用 Rsbuild 配置
+
+`@rstest/adapter-rsbuild` 是 Rstest 官方提供的适配器，允许 Rstest 自动继承现有 Rsbuild 配置文件中的配置。这样可以确保测试环境与构建配置一致，避免重复配置。
+
+```ts title="rstest.config.ts"
+import { defineConfig } from '@rstest/core';
+import { withRsbuildConfig } from '@rstest/adapter-rsbuild';
+
+export default defineConfig({
+  extends: withRsbuildConfig(),
+  // 额外的 rstest 特定配置
+});
+```
+
+关于 `withRsbuildConfig` 函数的更多信息，请参阅 [Rstest 文档](https://rstest.rs/zh/guide/integration/rsbuild#%E5%A4%8D%E7%94%A8-rsbuild-%E9%85%8D%E7%BD%AE)。
+
 以上就是使用 Rstest 的基本步骤，查看 [Rstest 文档](https://rstest.rs/zh/guide/start/) 了解更多用法。
 
 ### 示例

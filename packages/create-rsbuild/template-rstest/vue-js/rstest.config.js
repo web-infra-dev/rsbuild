@@ -1,9 +1,8 @@
-import { pluginVue } from '@rsbuild/plugin-vue';
+import { withRsbuildConfig } from '@rstest/adapter-rsbuild';
 import { defineConfig } from '@rstest/core';
 
 // Docs: https://rstest.rs/config/
 export default defineConfig({
-  plugins: [pluginVue()],
-  testEnvironment: 'happy-dom',
+  extends: withRsbuildConfig(),
   setupFiles: ['./tests/rstest.setup.js'],
 });
