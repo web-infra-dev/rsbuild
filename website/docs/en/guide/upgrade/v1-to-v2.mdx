@@ -20,6 +20,28 @@ In Node.js 20 and later, the runtime natively supports loading ESM modules via [
 
 ## Configuration
 
+### Default server host
+
+The default value of [server.host](/config/server/host) has changed from `'0.0.0.0'` to `'localhost'`.
+
+This change prevents the dev server from being exposed to the local network by default, ensuring "secure by default" behavior.
+
+If you need to access the server from other devices on the same network (e.g., for mobile testing), you can manually set the host to `'0.0.0.0'`:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    host: '0.0.0.0',
+  },
+};
+```
+
+Alternatively, you can use the `--host` CLI flag to enable network access on demand:
+
+```bash
+rsbuild dev --host
+```
+
 ### Remove `source.alias`
 
 The deprecated `source.alias` option has been removed. Use [resolve.alias](/config/resolve/alias) instead.
