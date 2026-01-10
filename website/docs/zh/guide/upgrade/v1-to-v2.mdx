@@ -20,6 +20,28 @@ Rsbuild 2.0 最低支持版本为 Node.js 20.19+ 或 22.12+。
 
 ## 配置
 
+### 默认 host 变更
+
+[server.host](/config/server/host) 的默认值从 `'0.0.0.0'` 变更为 `'localhost'`。
+
+这防止了开发服务器默认暴露在局域网中，从而确保了"默认安全"。
+
+如果你需要从同一局域网内的其他设备访问服务器（例如进行移动端测试），可以将 host 手动设置为 `'0.0.0.0'`：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    host: '0.0.0.0',
+  },
+};
+```
+
+你也可以使用 CLI 的 `--host` 选项来开启网络访问：
+
+```bash
+rsbuild dev --host
+```
+
 ### 移除 `source.alias`
 
 废弃的 `source.alias` 选项已被移除，使用 [resolve.alias](/config/resolve/alias) 进行替代。
