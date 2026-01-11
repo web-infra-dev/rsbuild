@@ -132,6 +132,11 @@ const initEnvironmentConfigs = (
       config.output.distPath.js = isServer ? '' : JS_DIST_DIR;
     }
 
+    // For node target, default to ESM output
+    if (config.output.module === undefined) {
+      config.output.module = isServer;
+    }
+
     return config;
   };
 

@@ -234,7 +234,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "inlineStyles": false,
     "legalComments": "linked",
     "manifest": false,
-    "module": false,
+    "module": true,
     "polyfill": "off",
     "sourceMap": {
       "css": false,
@@ -1903,6 +1903,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     "devtool": "eval",
     "experiments": {
       "asyncWebAssembly": true,
+      "outputModule": true,
       "rspackFuture": {
         "bundlerInfo": {
           "force": false,
@@ -2261,6 +2262,10 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       ],
     },
     "name": "node",
+    "node": {
+      "__dirname": false,
+      "__filename": false,
+    },
     "optimization": {
       "minimize": false,
       "splitChunks": false,
@@ -2268,14 +2273,18 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     "output": {
       "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
       "chunkFilename": "[name].js",
+      "chunkFormat": "module",
+      "chunkLoading": "import",
       "devtoolModuleFilenameTemplate": "[relative-resource-path]",
       "filename": "bundle.js",
       "library": {
-        "type": "commonjs2",
+        "type": "module",
       },
+      "module": true,
       "path": "<ROOT>/dist",
       "publicPath": "/",
       "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
+      "workerChunkLoading": "import",
     },
     "performance": {
       "hints": false,

@@ -53,7 +53,6 @@ export default defineConfig({
     },
     node: {
       output: {
-        module: true,
         target: 'node',
       },
       source: {

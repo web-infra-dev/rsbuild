@@ -1061,6 +1061,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "devtool": "cheap-module-source-map",
   "experiments": {
     "asyncWebAssembly": true,
+    "outputModule": true,
     "rspackFuture": {
       "bundlerInfo": {
         "force": false,
@@ -1416,6 +1417,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     ],
   },
   "name": "node",
+  "node": {
+    "__dirname": false,
+    "__filename": false,
+  },
   "optimization": {
     "minimize": false,
     "splitChunks": false,
@@ -1423,14 +1428,18 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "output": {
     "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
     "chunkFilename": "[name].js",
+    "chunkFormat": "module",
+    "chunkLoading": "import",
     "devtoolModuleFilenameTemplate": "[relative-resource-path]",
     "filename": "[name].js",
     "library": {
-      "type": "commonjs2",
+      "type": "module",
     },
+    "module": true,
     "path": "<ROOT>/packages/core/tests/dist",
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
+    "workerChunkLoading": "import",
   },
   "performance": {
     "hints": false,

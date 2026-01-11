@@ -181,7 +181,6 @@ const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
   },
   legalComments: 'linked',
   injectStyles: false,
-  module: false,
   manifest: false,
   sourceMap: {
     js: undefined,
@@ -262,48 +261,52 @@ export function getDefaultEntry(root: string): RsbuildEntry {
 
 export const withDefaultConfig = async (
   rootPath: string,
-  config: RsbuildConfig,
+  userConfig: RsbuildConfig,
 ): Promise<RsbuildConfig> => {
-  const merged = mergeRsbuildConfig(createDefaultConfig(), config);
+  const config = mergeRsbuildConfig(createDefaultConfig(), userConfig);
 
-  merged.root ||= rootPath;
-  merged.source ||= {};
+  config.root ||= rootPath;
+  config.source ||= {};
 
-  if (merged.server?.base) {
-    if (config.dev?.assetPrefix === undefined) {
-      merged.dev ||= {};
-      merged.dev.assetPrefix = merged.server.base;
+  // Inherit server.base to output.assetPrefix and dev.assetPrefix if not specified
+  if (config.server?.base) {
+    if (userConfig.dev?.assetPrefix === undefined) {
+      config.dev ||= {};
+      config.dev.assetPrefix = config.server.base;
     }
 
-    if (config.output?.assetPrefix === undefined) {
-      merged.output ||= {};
-      merged.output.assetPrefix = merged.server.base;
+    if (userConfig.output?.assetPrefix === undefined) {
+      config.output ||= {};
+      config.output.assetPrefix = config.server.base;
     }
   }
 
-  if (config.dev?.client?.logLevel === undefined) {
-    merged.dev ||= {};
-    merged.dev.client ||= {};
-    merged.dev.client.logLevel = merged.logLevel;
+  // Inherit logLevel to dev.client.logLevel if not specified
+  if (userConfig.dev?.client?.logLevel === undefined) {
+    config.dev ||= {};
+    config.dev.client ||= {};
+    config.dev.client.logLevel = config.logLevel;
   }
 
-  if (merged.dev?.lazyCompilation === undefined) {
-    merged.dev ||= {};
-    merged.dev.lazyCompilation = {
+  // Enable lazyCompilation imports by default
+  if (config.dev?.lazyCompilation === undefined) {
+    config.dev ||= {};
+    config.dev.lazyCompilation = {
       imports: true,
       entries: false,
     };
   }
 
-  if (!merged.source.tsconfigPath) {
+  // Auto detect tsconfigPath
+  if (!config.source.tsconfigPath) {
     const tsconfigPath = join(rootPath, TS_CONFIG_FILE);
 
     if (await isFileExists(tsconfigPath)) {
-      merged.source.tsconfigPath = tsconfigPath;
+      config.source.tsconfigPath = tsconfigPath;
     }
   }
 
-  return merged;
+  return config;
 };
 
 /**
