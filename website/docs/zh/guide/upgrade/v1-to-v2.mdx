@@ -146,21 +146,6 @@ export default {
 - `webpackConfig`：使用 `rspackConfig` 代替。
 - `htmlWebpackPlugin`：使用 `htmlPlugin` 代替。
 
-### Node 压缩
-
-在 Node 目标下，生产环境构建默认不再开启压缩。
-
-服务端产物会优先保证可调试性、清晰的堆栈信息与稳定的运行时行为，而非体积。如果你仍需要压缩产物，可以显式开启 [output.minify](/config/output/minify):
-
-```ts title="rsbuild.config.ts"
-export default {
-  output: {
-    target: 'node',
-    minify: true,
-  },
-};
-```
-
 ## JavaScript API
 
 - 移除 `rsbuild.build()` 中废弃的 `compiler` 参数

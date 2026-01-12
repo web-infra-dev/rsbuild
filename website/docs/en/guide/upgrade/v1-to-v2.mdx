@@ -146,21 +146,6 @@ The deprecated template parameters have been removed from `html.templateParamete
 - `webpackConfig`: use `rspackConfig` instead.
 - `htmlWebpackPlugin`: use `htmlPlugin` instead.
 
-### Node minification
-
-For Node targets, production builds no longer enable minification by default.
-
-Server bundles now prioritize debuggability, clear stack traces, and stable runtime behavior over bundle size. If you still want minified output, opt in with [output.minify](/config/output/minify):
-
-```ts title="rsbuild.config.ts"
-export default {
-  output: {
-    target: 'node',
-    minify: true,
-  },
-};
-```
-
 ## JavaScript API
 
 - Removed the deprecated `compiler` parameter from `rsbuild.build()`.
