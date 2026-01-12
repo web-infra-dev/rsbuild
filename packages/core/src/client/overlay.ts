@@ -189,18 +189,25 @@ function getOverlayHtml(title: string, content: string) {
 }
 
 function createOverlay(title: string, content: string) {
-  if (!customElements || !customElements.get(overlayId)) {
+  const warn = () => {
     logger.warn(
       '[rsbuild] Error overlay disabled: Custom Elements not supported in this environment.',
     );
+  };
+  if (!customElements || !customElements.get(overlayId)) {
+    warn();
     return;
   }
 
   clearOverlay();
 
-  const overlay = document.createElement(overlayId) as ErrorOverlay;
-  overlay.init(getOverlayHtml(title, content));
-  document.body.appendChild(overlay);
+  try {
+    const overlay = document.createElement(overlayId) as ErrorOverlay;
+    overlay.init(getOverlayHtml(title, content));
+    document.body.appendChild(overlay);
+  } catch (_err) {
+    warn();
+  }
 }
 
 function clearOverlay() {
