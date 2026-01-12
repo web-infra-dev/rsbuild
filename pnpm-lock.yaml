@@ -1002,8 +1002,8 @@ importers:
   packages/plugin-vue:
     dependencies:
       rspack-vue-loader:
-        specifier: ^17.4.4
-        version: 17.4.4(vue@3.5.26(typescript@5.9.3))(webpack@5.104.1)
+        specifier: ^17.4.5
+        version: 17.4.5(vue@3.5.26(typescript@5.9.3))(webpack@5.104.1)
       webpack:
         specifier: ^5.104.1
         version: 5.104.1
@@ -5368,12 +5368,12 @@ packages:
       '@rspack/core':
         optional: true
 
-  rspack-vue-loader@17.4.4:
-    resolution: {integrity: sha512-T4rkTZWg9hC7DZapTaJcIphser4ogsTffH/rwnX0pwMpNKjv1XKLBPa5Icd/xNPOh1NiKVxoxcT+gb8NQliukA==}
+  rspack-vue-loader@17.4.5:
+    resolution: {integrity: sha512-i88hGa4mySkwiP7HqRICIAhomcMdkNCZ5tQGcxkcUWmDfC2QfeQegFBEKY4RdbuxJ3p1Ocj/Ul6Sh4yl6L7mDg==}
     peerDependencies:
       '@vue/compiler-sfc': '*'
       vue: '*'
-      webpack: ^4.1.0 || ^5.0.0-0
+      webpack: ^5.0.0
     peerDependenciesMeta:
       '@vue/compiler-sfc':
         optional: true
@@ -11059,7 +11059,7 @@ snapshots:
     optionalDependencies:
       '@rspack/core': 1.7.1(@swc/helpers@0.5.18)
 
-  rspack-vue-loader@17.4.4(vue@3.5.26(typescript@5.9.3))(webpack@5.104.1):
+  rspack-vue-loader@17.4.5(vue@3.5.26(typescript@5.9.3))(webpack@5.104.1):
     dependencies:
       chalk: 4.1.2
       watchpack: 2.5.0
