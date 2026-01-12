@@ -42,6 +42,26 @@ Alternatively, you can use the `--host` CLI flag to enable network access on dem
 rsbuild dev --host
 ```
 
+### Node output
+
+When [output.target](/config/output/target) is set to `node`, Rsbuild 2.0 defaults to ESM output via [output.module](/config/output/module) and keeps [output.minify](/config/output/minify) disabled. In Rsbuild 1.x, the default was CommonJS output with minification enabled.
+
+This keeps Node bundles aligned with modern ESM conventions while preserving clearer stack traces for debugging.
+
+As a result, your runtime needs to load ESM bundles (for example, set `"type": "module"` in package.json or use `.mjs` output) unless you opt back into CommonJS.
+
+To restore v1 behavior, explicitly disable ESM output and enable minification:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'node',
+    module: false,
+    minify: true,
+  },
+};
+```
+
 ### Remove `source.alias`
 
 The deprecated `source.alias` option has been removed. Use [resolve.alias](/config/resolve/alias) instead.
@@ -125,21 +145,6 @@ The deprecated template parameters have been removed from `html.templateParamete
 
 - `webpackConfig`: use `rspackConfig` instead.
 - `htmlWebpackPlugin`: use `htmlPlugin` instead.
-
-### Node minification
-
-For Node targets, production builds no longer enable minification by default.
-
-Server bundles now prioritize debuggability, clear stack traces, and stable runtime behavior over bundle size. If you still want minified output, opt in with [output.minify](/config/output/minify):
-
-```ts title="rsbuild.config.ts"
-export default {
-  output: {
-    target: 'node',
-    minify: true,
-  },
-};
-```
 
 ## JavaScript API
 
