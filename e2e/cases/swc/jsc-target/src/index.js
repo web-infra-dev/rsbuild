@@ -1,8 +1,8 @@
-const a = {
+const baz = {
   foo: 'bar',
 };
-const b = {
-  ...a,
+const copy = {
+  ...baz,
 };
 
-console.log(b);
+console.log(copy);
