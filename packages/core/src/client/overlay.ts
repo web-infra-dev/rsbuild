@@ -7,16 +7,7 @@ const {
 } = typeof window !== 'undefined' ? window : globalThis;
 
 class ErrorOverlay extends HTMLElement {
-  constructor(html: string) {
-    super();
-
-    if (!this.attachShadow) {
-      logger.warn(
-        '[rsbuild] Error overlay disabled: Shadow DOM not supported in this browser.',
-      );
-      return;
-    }
-
+  init(html: string) {
     const root = this.attachShadow({ mode: 'open' });
     root.innerHTML = html;
 
@@ -198,8 +189,18 @@ function getOverlayHtml(title: string, content: string) {
 }
 
 function createOverlay(title: string, content: string) {
+  if (!customElements || !customElements.get(overlayId)) {
+    logger.warn(
+      '[rsbuild] Error overlay disabled: Custom Elements not supported in this environment.',
+    );
+    return;
+  }
+
   clearOverlay();
-  document.body.appendChild(new ErrorOverlay(getOverlayHtml(title, content)));
+
+  const overlay = document.createElement(overlayId) as ErrorOverlay;
+  overlay.init(getOverlayHtml(title, content));
+  document.body.appendChild(overlay);
 }
 
 function clearOverlay() {
