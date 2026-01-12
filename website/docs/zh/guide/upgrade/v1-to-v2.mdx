@@ -42,6 +42,26 @@ export default {
 rsbuild dev --host
 ```
 
+### Node 产物
+
+当 [output.target](/config/output/target) 为 `node` 时，Rsbuild 2.0 会通过 [output.module](/config/output/module) 默认输出 ESM 产物，并保持 [output.minify](/config/output/minify) 关闭。在 Rsbuild 1.x 中，默认行为是输出 CommonJS 且开启压缩。
+
+该调整更贴近 Node 的现代 ESM 生态，同时保留更清晰的调试堆栈与排查体验。
+
+因此运行时需要支持加载 ESM（例如在 package.json 中设置 `"type": "module"` 或输出 `.mjs` 文件），否则需要显式切回 CommonJS。
+
+如果你希望恢复 v1 的行为，可以显式禁用 ESM 并开启压缩：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'node',
+    module: false,
+    minify: true,
+  },
+};
+```
+
 ### 移除 `source.alias`
 
 废弃的 `source.alias` 选项已被移除，使用 [resolve.alias](/config/resolve/alias) 进行替代。
