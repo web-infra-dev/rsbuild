@@ -28,7 +28,7 @@ function isEqualSet(a: Set<string>, b: Set<string>): boolean {
 const CHECK_SOCKETS_INTERVAL = 30000;
 
 export type ServerMessageStaticChanged = {
-  type: 'static-changed' | 'content-changed';
+  type: 'static-changed';
 };
 
 export type ServerMessageHash = {

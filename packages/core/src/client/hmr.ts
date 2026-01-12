@@ -232,7 +232,6 @@ export function init(
         break;
       // Triggered when static files changed
       case 'static-changed':
-      case 'content-changed':
         reloadPage();
         break;
       case 'warnings':
