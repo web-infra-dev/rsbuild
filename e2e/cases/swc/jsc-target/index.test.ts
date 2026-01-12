@@ -6,13 +6,16 @@ rspackTest(
     const rsbuild = await devOnly();
     const files = rsbuild.getDistFiles();
     const content = getFileContent(files, 'index.js');
-    expect(content).not.toContain('...a');
+    expect(content).not.toContain('...baz');
   },
 );
 
-rspackTest('should configure jsc.target correctly in build', async ({ build }) => {
-  const rsbuild = await build();
-  const files = rsbuild.getDistFiles();
-  const content = getFileContent(files, 'index.js');
-  expect(content).not.toContain('...a');
-});
+rspackTest(
+  'should configure jsc.target correctly in build',
+  async ({ build }) => {
+    const rsbuild = await build();
+    const files = rsbuild.getDistFiles();
+    const content = getFileContent(files, 'index.js');
+    expect(content).not.toContain('...baz');
+  },
+);
