@@ -6,6 +6,6 @@ export default defineConfig({
     filename: {
       js: '[name].cjs',
     },
-    minify: false,
+    module: false,
   },
 });
