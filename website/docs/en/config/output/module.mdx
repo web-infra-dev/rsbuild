@@ -1,13 +1,13 @@
 # output.module
 
 - **Type:** `boolean`
-- **Default:** `false`
+- **Default:** `true` when `output.target` is `node`, otherwise `false`
 
 Whether to output JavaScript files in ES modules format.
 
 :::tip
 
-- This feature is currently experimental and only available when [output.target](/config/output/target) is `'web'` or `'node'`.
+- This option is only available when [output.target](/config/output/target) is `'web'` or `'node'`.
 - If you need to build JavaScript libraries in ESM format, we recommend using [Rslib](https://rslib.rs), which is an out-of-the-box library development tool built on top of Rsbuild.
 
 :::
@@ -32,20 +32,20 @@ When `output.module` is enabled, Rsbuild automatically adds `type="module"` to t
 
 ## Node.js applications
 
-When building Node.js applications, Rsbuild outputs CommonJS format by default. You can set `output.module` to `true` to output ES modules format:
+When building Node.js applications, Rsbuild outputs ES modules format by default. You can set `output.module` to `false` to output CommonJS format instead:
 
 ```ts title="rsbuild.config.ts"
 export default {
   output: {
     target: 'node',
-    module: true,
+    module: false,
   },
 };
 ```
 
 ### Running ESM bundles
 
-To properly run ESM bundles in Node.js, you can choose either of the following approaches:
+Choose either of the following approaches to run ESM bundles in Node.js:
 
 1. Set the `type` field in package.json to `'module'`:
 
@@ -69,7 +69,8 @@ export default {
 
 ## Version history
 
-| Version | Changes                     |
-| ------- | --------------------------- |
-| v1.5.0  | Added this option           |
-| v1.6.0  | Support for `target: 'web'` |
+| Version | Changes                             |
+| ------- | ----------------------------------- |
+| v1.5.0  | Added this option                   |
+| v1.6.0  | Support for `target: 'web'`         |
+| v2.0.0  | Default to ESM for `target: 'node'` |
