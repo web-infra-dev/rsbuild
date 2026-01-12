@@ -27,8 +27,6 @@ const externals: Rspack.Configuration['externals'] = [
   'webpack',
   '@rspack/core',
   '@rsbuild/core',
-  '@rsbuild/core/client/hmr',
-  '@rsbuild/core/client/overlay',
   // yaml and tsx are optional dependencies of `postcss-load-config`
   'yaml',
   'tsx/cjs/api',

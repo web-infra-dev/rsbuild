@@ -18,14 +18,6 @@
       "types": "./dist-types/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./client/hmr": {
-      "types": "./dist-types/client/hmr.d.ts",
-      "default": "./dist/client/hmr.js"
-    },
-    "./client/overlay": {
-      "types": "./dist-types/client/overlay.d.ts",
-      "default": "./dist/client/overlay.js"
-    },
     "./types": {
       "types": "./types.d.ts"
     },
