@@ -1,3 +1,5 @@
+import { PackageManagerTabs } from '@theme';
+
 # 从 v1 升级到 v2
 
 当前文档列出了从 Rsbuild 1.x 到 2.0 的所有不兼容更新，你可以参考此文档来迁移。
@@ -17,6 +19,14 @@ Rsbuild 2.0 最低支持版本为 Node.js 20.19+ 或 22.12+。
 在 Node.js 20 及以上版本中，运行时已原生支持通过 [require(esm)](https://nodejs.org/api/modules.html#loading-ecmascript-modules-using-require) 加载 ESM 模块。因此，对大多数仍通过 JavaScript API 使用 Rsbuild 的项目来说，这一变更通常不会带来实际影响，也无需额外修改现有代码。
 
 > 这一变更不影响 Rsbuild 构建 CommonJS 产物的能力，相关的构建行为和配置方式也保持不变。
+
+## Polyfill 依赖变更
+
+[core-js](https://www.npmjs.com/package/core-js) 从 `@rsbuild/core` 的默认依赖变更为可选的 peer 依赖，以减小安装体积。
+
+如果你启用了 [output.polyfill](/config/output/polyfill)，请在项目中安装 `core-js` v3：
+
+<PackageManagerTabs command="add core-js" />
 
 ## 配置
 
