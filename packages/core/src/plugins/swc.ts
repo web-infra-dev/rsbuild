@@ -5,6 +5,7 @@ import type { SwcLoaderOptions } from '@rspack/core';
 import deepmerge from 'deepmerge';
 import { reduceConfigs } from 'reduce-configs';
 import {
+  __dirname,
   NODE_MODULES_REGEX,
   PLUGIN_SWC_NAME,
   RAW_QUERY_REGEX,
@@ -233,25 +234,10 @@ const getCoreJsVersion = (corejsPkgPath: string) => {
 const resolveCoreJsPath = (rootPath: string) => {
   try {
     return require.resolve('core-js/package.json', {
-      paths: [rootPath],
+      // Resolve from both project root and current directory
+      paths: [rootPath, __dirname],
     });
-  } catch {}
-
-  try {
-    return require.resolve('core-js/package.json');
-  } catch {}
-
-  return undefined;
-};
-
-function applyCoreJs(
-  swcConfig: SwcLoaderOptions,
-  polyfillMode: Polyfill,
-  rootPath: string,
-) {
-  const coreJsPath = resolveCoreJsPath(rootPath);
-
-  if (!coreJsPath) {
+  } catch {
     throw new Error(
       `${color.dim('[rsbuild:polyfill]')} Failed to resolve ${color.yellow(
         'core-js',
@@ -260,7 +246,14 @@ function applyCoreJs(
       )} to use polyfills.`,
     );
   }
+};
 
+function applyCoreJs(
+  swcConfig: SwcLoaderOptions,
+  polyfillMode: Polyfill,
+  rootPath: string,
+) {
+  const coreJsPath = resolveCoreJsPath(rootPath);
   const version = getCoreJsVersion(coreJsPath);
   const coreJsDir = path.dirname(coreJsPath);
 
