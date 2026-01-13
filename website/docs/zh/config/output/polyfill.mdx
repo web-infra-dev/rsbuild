@@ -7,6 +7,14 @@
 
 > 请查看 [Polyfill 方案](/guide/advanced/browser-compatibility#polyfill-mode) 了解详细内容。
 
+## 安装 core-js
+
+当你启用 polyfill 注入时，请确保项目中已安装 [core-js](https://github.com/zloirock/core-js) v3，它是一个流行的 JavaScript polyfill 库。
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add core-js" />
+
 ## 可选值
 
 ### usage
@@ -48,3 +56,9 @@ export default {
   },
 };
 ```
+
+## 版本历史
+
+| 版本   | 变更内容                       |
+| ------ | ------------------------------ |
+| v2.0.0 | Rsbuild 不再默认依赖 `core-js` |

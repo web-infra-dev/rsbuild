@@ -160,9 +160,9 @@ If you see an error like this during compilation, it means [core-js](https://git
 Module not found: Can't resolve 'core-js/modules/es.error.cause.js'
 ```
 
-Usually, you don't need to install `core-js` because Rsbuild includes `core-js` v3 by default.
+Rsbuild relies on the project's `core-js` when polyfill injection is enabled, so make sure `core-js` v3 is installed in your project.
 
-If `core-js` cannot be found, the issue may be:
+If `core-js` still cannot be found, the issue may be:
 
 1. Your project overrides Rsbuild's built-in `alias` configuration, causing incorrect `core-js` path resolution. Check your `alias` configuration.
 2. Some code depends on `core-js` v2. Find the corresponding code and upgrade to `core-js` v3.

@@ -164,7 +164,7 @@ Node.js 官方文档中有对以下参数更详细的解释：
 Module not found: Can't resolve 'core-js/modules/es.error.cause.js'
 ```
 
-通常来说，你无须在项目中安装 `core-js`，因为 Rsbuild 已经内置了一份 `core-js` v3。
+当你启用 polyfill 注入时，请确保项目中已安装 `core-js` v3。
 
 如果出现 `core-js` 找不到的报错，可能有以下几个原因：
 
