@@ -73,6 +73,9 @@ importers:
 
   e2e:
     dependencies:
+      core-js:
+        specifier: ^3.47.0
+        version: 3.47.0
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -508,7 +511,7 @@ importers:
         specifier: ^0.5.18
         version: 0.5.18
       core-js:
-        specifier: ~3.47.0
+        specifier: '>= 3.0.0'
         version: 3.47.0
       jiti:
         specifier: ^2.6.1

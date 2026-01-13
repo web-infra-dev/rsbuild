@@ -45,8 +45,15 @@
     "@rspack/core": "~1.7.2",
     "@rspack/lite-tapable": "~1.1.0",
     "@swc/helpers": "^0.5.18",
-    "core-js": "~3.47.0",
     "jiti": "^2.6.1"
+  },
+  "peerDependencies": {
+    "core-js": ">= 3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "core-js": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@jridgewell/remapping": "^2.3.5",
