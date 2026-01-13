@@ -165,9 +165,15 @@ export const pluginSwc = (): RsbuildPlugin => ({
           if (polyfill !== 'off') {
             swcConfig.env!.mode = polyfill;
 
-            const coreJsDir = applyCoreJs(swcConfig, polyfill);
-            for (const item of [rule, dataUriRule]) {
-              item.resolve.alias.set('core-js', coreJsDir);
+            const coreJsDir = applyCoreJs(
+              swcConfig,
+              polyfill,
+              api.context.rootPath,
+            );
+            if (coreJsDir) {
+              for (const item of [rule, dataUriRule]) {
+                item.resolve.alias.set('core-js', coreJsDir);
+              }
             }
           }
         }
@@ -224,8 +230,37 @@ const getCoreJsVersion = (corejsPkgPath: string) => {
   }
 };
 
-function applyCoreJs(swcConfig: SwcLoaderOptions, polyfillMode: Polyfill) {
-  const coreJsPath = require.resolve('core-js/package.json');
+const resolveCoreJsPath = (rootPath: string) => {
+  try {
+    return require.resolve('core-js/package.json', {
+      paths: [rootPath],
+    });
+  } catch {}
+
+  try {
+    return require.resolve('core-js/package.json');
+  } catch {}
+
+  return undefined;
+};
+
+function applyCoreJs(
+  swcConfig: SwcLoaderOptions,
+  polyfillMode: Polyfill,
+  rootPath: string,
+) {
+  const coreJsPath = resolveCoreJsPath(rootPath);
+
+  if (!coreJsPath) {
+    throw new Error(
+      `${color.dim('[rsbuild:polyfill]')} Failed to resolve ${color.yellow(
+        'core-js',
+      )} dependency. Install ${color.yellow(
+        'core-js >= 3.0.0',
+      )} to use polyfills.`,
+    );
+  }
+
   const version = getCoreJsVersion(coreJsPath);
   const coreJsDir = path.dirname(coreJsPath);
 
