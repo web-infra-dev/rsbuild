@@ -234,6 +234,7 @@ const getCoreJsVersion = (corejsPkgPath: string) => {
 const resolveCoreJsPath = (rootPath: string) => {
   try {
     return require.resolve('core-js/package.json', {
+      // Resolve from both project root and current directory
       paths: [rootPath, __dirname],
     });
   } catch {
