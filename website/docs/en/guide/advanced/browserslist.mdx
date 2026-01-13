@@ -14,6 +14,14 @@ When you specify a browser range through Browserslist, Rsbuild compiles JavaScri
 
 If you enable [output.polyfill](/config/output/polyfill), Rsbuild will also inject the corresponding polyfill code based on browserslist. **When you only need to support more modern browsers, the build process will introduce less compatibility code and polyfills, reducing the bundle size.**
 
+1. Install the [core-js](https://github.com/zloirock/core-js) dependency:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add core-js" />
+
+2. Enable polyfill injection in the config file:
+
 ```ts title="rsbuild.config.ts"
 export default {
   output: {
@@ -22,7 +30,7 @@ export default {
 };
 ```
 
-For example, when you need to be compatible with IE11, Rsbuild will compile the code to ES5 and inject the polyfills required by IE11 through [core-js](https://github.com/zloirock/core-js).
+For example, when you need to be compatible with IE11, Rsbuild will compile the code to ES5 and inject the polyfills required by IE11 through `core-js`.
 
 > Please refer to [Browser compatibility](/guide/advanced/browser-compatibility) for more information.
 

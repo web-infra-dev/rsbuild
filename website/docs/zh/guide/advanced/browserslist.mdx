@@ -14,6 +14,14 @@ Rsbuild 支持通过 [Browserslist](https://browsersl.ist/) 来设置 Web 应用
 
 如果你开启了 [output.polyfill](/config/output/polyfill)，Rsbuild 还会基于 browserslist 注入相应的 polyfill 代码。**当你只需要兼容更现代的浏览器时，构建过程会引入更少的兼容代码和 polyfills，从而减少包体积。**
 
+1. 安装 [core-js](https://github.com/zloirock/core-js) 依赖：
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add core-js" />
+
+2. 在配置文件中开启 polyfill 注入：
+
 ```ts title="rsbuild.config.ts"
 export default {
   output: {
@@ -22,7 +30,7 @@ export default {
 };
 ```
 
-比如，当你需要适配 IE11 浏览器时，Rsbuild 会将代码编译至 ES5，并通过 [core-js](https://github.com/zloirock/core-js) 注入 IE11 所需的 polyfill。
+比如，当你需要适配 IE11 浏览器时，Rsbuild 会将代码编译至 ES5，并通过 `core-js` 注入 IE11 所需的 polyfill。
 
 > 请参考 [浏览器兼容性](/guide/advanced/browser-compatibility) 了解更多。
 
