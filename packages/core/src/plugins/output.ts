@@ -61,9 +61,7 @@ function getPublicPath({
 
   const defaultPort = server.port ?? DEFAULT_PORT;
   const port = isDev ? (context.devServer?.port ?? defaultPort) : defaultPort;
-  const replacedPath = replacePortPlaceholder(publicPath, port);
-  // For empty string, preserve it as-is to enable relative paths (important for node targets)
-  return replacedPath === '' ? replacedPath : formatPublicPath(replacedPath);
+  return formatPublicPath(replacePortPlaceholder(publicPath, port));
 }
 
 const getJsAsyncPath = (
