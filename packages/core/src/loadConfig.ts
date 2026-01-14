@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { __filename } from './constants';
 import { color, getNodeEnv, isObject } from './helpers';
 import { logger } from './logger';
 import type { RsbuildConfig } from './types';
@@ -170,7 +169,7 @@ export async function loadConfig({
   if (configExport === undefined) {
     try {
       const { createJiti } = await import('jiti');
-      const jiti = createJiti(__filename, {
+      const jiti = createJiti(import.meta.filename, {
         // disable require cache to support restart CLI and read the new config
         moduleCache: false,
         interopDefault: true,

@@ -5,7 +5,6 @@ import type { SwcLoaderOptions } from '@rspack/core';
 import deepmerge from 'deepmerge';
 import { reduceConfigs } from 'reduce-configs';
 import {
-  __dirname,
   NODE_MODULES_REGEX,
   PLUGIN_SWC_NAME,
   RAW_QUERY_REGEX,
@@ -235,7 +234,7 @@ const resolveCoreJsPath = (rootPath: string) => {
   try {
     return require.resolve('core-js/package.json', {
       // Resolve from both project root and current directory
-      paths: [rootPath, __dirname],
+      paths: [rootPath, import.meta.dirname],
     });
   } catch {
     throw new Error(

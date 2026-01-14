@@ -6,7 +6,7 @@ import { getRoutes, normalizeUrl } from '../src/server/helper';
 import type { InternalContext } from '../src/types';
 
 test('should getRoutes correctly', () => {
-  const cwd = __dirname;
+  const cwd = import.meta.dirname;
   expect(
     getRoutes({
       distPath: join(cwd, 'dist'),

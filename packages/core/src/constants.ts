@@ -1,8 +1,5 @@
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
 
-export const __filename: string = fileURLToPath(import.meta.url);
-export const __dirname: string = dirname(__filename);
 export const isDeno: boolean = typeof Deno !== 'undefined';
 export const isWindows: boolean = process.platform === 'win32';
 
@@ -18,11 +15,13 @@ export const WASM_DIST_DIR = 'static/wasm';
 export const IMAGE_DIST_DIR = 'static/image';
 export const MEDIA_DIST_DIR = 'static/media';
 export const ASSETS_DIST_DIR = 'static/assets';
+
+const dirname = import.meta.dirname;
 // loaders will be emitted to the same folder of the main bundle
-export const LOADER_PATH: string = join(__dirname);
-export const STATIC_PATH: string = join(__dirname, '../static');
-export const CLIENT_PATH: string = join(__dirname, 'client');
-export const COMPILED_PATH: string = join(__dirname, '../compiled');
+export const LOADER_PATH: string = dirname;
+export const STATIC_PATH: string = join(dirname, '../static');
+export const CLIENT_PATH: string = join(dirname, 'client');
+export const COMPILED_PATH: string = join(dirname, '../compiled');
 export const TS_CONFIG_FILE = 'tsconfig.json';
 export const HMR_SOCKET_PATH = '/rsbuild-hmr';
 export const RSBUILD_OUTPUTS_PATH = '.rsbuild';
