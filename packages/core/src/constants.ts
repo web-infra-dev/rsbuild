@@ -36,15 +36,18 @@ export const DEFAULT_DATA_URL_SIZE = 4096;
 export const DEFAULT_MOUNT_ID = 'root';
 export const DEFAULT_ASSET_PREFIX = '/';
 export const DEFAULT_STACK_TRACE = 'summary';
+// Defaults to "baseline widely available on 2025-05-01"
+// https://browsersl.ist/#q=baseline+widely+available+on+2025-05-01
 export const DEFAULT_WEB_BROWSERSLIST: string[] = [
-  'chrome >= 87',
-  'edge >= 88',
-  'firefox >= 78',
-  'safari >= 14',
+  'chrome >= 107',
+  'edge >= 107',
+  'firefox >= 104',
+  'safari >= 16',
 ];
 export const DEFAULT_BROWSERSLIST: Record<string, string[]> = {
   web: DEFAULT_WEB_BROWSERSLIST,
   'web-worker': DEFAULT_WEB_BROWSERSLIST,
+  // Node.js 18 reached its EOL on April 30, 2025
   node: ['node >= 20'],
 };
 
