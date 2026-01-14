@@ -25,8 +25,8 @@ Controls whether and how server URLs are printed when the server starts.
 By default, when you start the dev server or preview server, Rsbuild will print the following logs:
 
 ```
-  ➜ Local:    http://localhost:3000
-  ➜ Network:  http://192.168.0.1:3000
+  ➜  Local:    http://localhost:3000
+  ➜  Network:  use --host to expose
 ```
 
 ## Custom logging
@@ -50,8 +50,8 @@ export default {
 Output:
 
 ```
-  ➜ Local:    http://localhost:3000/base/
-  ➜ Network:  http://192.168.0.1:3000/base/
+  ➜  Local:    http://localhost:3000/base/
+  ➜  Network:  use --host to expose
 ```
 
 You may also return an array containing both strings and objects. Each object may include an optional `label` that overrides the default `Local:` or `Network:` label; if omitted, the default label is used:
@@ -69,9 +69,9 @@ export default {
 Output:
 
 ```
-  ➜ Local:    http://localhost:3000/
-  ➜ Network:  http://192.168.0.1:3000/
-  ➜ Custom:   https://example.com/
+  ➜  Local:    http://localhost:3000/
+  ➜  Custom:   https://example.com/
+  ➜  Network:  use --host to expose
 ```
 
 ### Fully customizable
@@ -144,7 +144,7 @@ export default {
 Output:
 
 ```
-  ➜ Local:    http://localhost:3000
+  ➜  Local:    http://localhost:3000
 ```
 
 ## Version history

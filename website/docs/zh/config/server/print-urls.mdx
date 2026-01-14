@@ -25,8 +25,8 @@ type PrintUrls =
 默认情况下，当你启动 dev server 或 preview server 后，Rsbuild 会输出以下日志信息：
 
 ```
-  ➜ Local:    http://localhost:3000
-  ➜ Network:  http://192.168.0.1:3000
+  ➜  Local:    http://localhost:3000
+  ➜  Network:  use --host to expose
 ```
 
 ## 自定义日志
@@ -50,8 +50,8 @@ export default {
 输出为：
 
 ```
-  ➜ Local:    http://localhost:3000/base/
-  ➜ Network:  http://192.168.0.1:3000/base/
+  ➜  Local:    http://localhost:3000/base/
+  ➜  Network:  use --host to expose
 ```
 
 你还可以返回一个同时包含字符串和对象的数组。
@@ -70,9 +70,9 @@ export default {
 输出为：
 
 ```
-  ➜ Local:    http://localhost:3000/
-  ➜ Network:  http://192.168.0.1:3000/
-  ➜ Custom:   https://example.com/
+  ➜  Local:    http://localhost:3000/
+  ➜  Custom:   https://example.com/
+  ➜  Network:  use --host to expose
 ```
 
 ### 完全自定义
@@ -145,7 +145,7 @@ export default {
 输出：
 
 ```
-  ➜ Local:    http://localhost:3000
+  ➜  Local:    http://localhost:3000
 ```
 
 ## 版本历史
