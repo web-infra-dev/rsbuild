@@ -78,10 +78,10 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
             "options": {
               "errorRecovery": true,
               "targets": [
-                "chrome >= 87",
-                "edge >= 88",
-                "firefox >= 78",
-                "safari >= 14",
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
               ],
             },
           },
@@ -110,10 +110,10 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
             "options": {
               "errorRecovery": true,
               "targets": [
-                "chrome >= 87",
-                "edge >= 88",
-                "firefox >= 78",
-                "safari >= 14",
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
               ],
             },
           },
@@ -150,10 +150,10 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
               },
               "env": {
                 "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
+                  "chrome >= 107",
+                  "edge >= 107",
+                  "firefox >= 104",
+                  "safari >= 16",
                 ],
               },
               "isModule": "unknown",
@@ -205,10 +205,10 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
               },
               "env": {
                 "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
+                  "chrome >= 107",
+                  "edge >= 107",
+                  "firefox >= 104",
+                  "safari >= 16",
                 ],
               },
               "isModule": "unknown",

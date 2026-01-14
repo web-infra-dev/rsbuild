@@ -48,10 +48,10 @@ describe('plugin-minimize', () => {
               "minimizerOptions": {
                 "errorRecovery": true,
                 "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
+                  "chrome >= 107",
+                  "edge >= 107",
+                  "firefox >= 104",
+                  "safari >= 16",
                 ],
               },
             },
@@ -207,10 +207,10 @@ describe('plugin-minimize', () => {
               "minimizerOptions": {
                 "errorRecovery": true,
                 "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
+                  "chrome >= 107",
+                  "edge >= 107",
+                  "firefox >= 104",
+                  "safari >= 16",
                 ],
               },
             },
@@ -268,10 +268,10 @@ describe('plugin-minimize', () => {
               "minimizerOptions": {
                 "errorRecovery": true,
                 "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
+                  "chrome >= 107",
+                  "edge >= 107",
+                  "firefox >= 104",
+                  "safari >= 16",
                 ],
               },
             },
@@ -323,10 +323,10 @@ describe('plugin-minimize', () => {
               "minimizerOptions": {
                 "errorRecovery": true,
                 "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
+                  "chrome >= 107",
+                  "edge >= 107",
+                  "firefox >= 104",
+                  "safari >= 16",
                 ],
               },
             },

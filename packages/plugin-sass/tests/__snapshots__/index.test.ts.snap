@@ -40,10 +40,10 @@ exports[`plugin-sass > should add sass-loader 1`] = `
         "options": {
           "errorRecovery": true,
           "targets": [
-            "chrome >= 87",
-            "edge >= 88",
-            "firefox >= 78",
-            "safari >= 14",
+            "chrome >= 107",
+            "edge >= 107",
+            "firefox >= 104",
+            "safari >= 16",
           ],
         },
       },
@@ -89,10 +89,10 @@ exports[`plugin-sass > should add sass-loader 1`] = `
         "options": {
           "errorRecovery": true,
           "targets": [
-            "chrome >= 87",
-            "edge >= 88",
-            "firefox >= 78",
-            "safari >= 14",
+            "chrome >= 107",
+            "edge >= 107",
+            "firefox >= 104",
+            "safari >= 16",
           ],
         },
       },
@@ -167,10 +167,10 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
         "options": {
           "errorRecovery": true,
           "targets": [
-            "chrome >= 87",
-            "edge >= 88",
-            "firefox >= 78",
-            "safari >= 14",
+            "chrome >= 107",
+            "edge >= 107",
+            "firefox >= 104",
+            "safari >= 16",
           ],
         },
       },
@@ -216,10 +216,10 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
         "options": {
           "errorRecovery": true,
           "targets": [
-            "chrome >= 87",
-            "edge >= 88",
-            "firefox >= 78",
-            "safari >= 14",
+            "chrome >= 107",
+            "edge >= 107",
+            "firefox >= 104",
+            "safari >= 16",
           ],
         },
       },
@@ -297,10 +297,10 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
         "options": {
           "errorRecovery": true,
           "targets": [
-            "chrome >= 87",
-            "edge >= 88",
-            "firefox >= 78",
-            "safari >= 14",
+            "chrome >= 107",
+            "edge >= 107",
+            "firefox >= 104",
+            "safari >= 16",
           ],
         },
       },
@@ -349,10 +349,10 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
         "options": {
           "errorRecovery": true,
           "targets": [
-            "chrome >= 87",
-            "edge >= 88",
-            "firefox >= 78",
-            "safari >= 14",
+            "chrome >= 107",
+            "edge >= 107",
+            "firefox >= 104",
+            "safari >= 16",
           ],
         },
       },
@@ -427,10 +427,10 @@ exports[`plugin-sass > should allow to use legacy API and mute deprecation warni
         "options": {
           "errorRecovery": true,
           "targets": [
-            "chrome >= 87",
-            "edge >= 88",
-            "firefox >= 78",
-            "safari >= 14",
+            "chrome >= 107",
+            "edge >= 107",
+            "firefox >= 104",
+            "safari >= 16",
           ],
         },
       },
@@ -477,10 +477,10 @@ exports[`plugin-sass > should allow to use legacy API and mute deprecation warni
         "options": {
           "errorRecovery": true,
           "targets": [
-            "chrome >= 87",
-            "edge >= 88",
-            "firefox >= 78",
-            "safari >= 14",
+            "chrome >= 107",
+            "edge >= 107",
+            "firefox >= 104",
+            "safari >= 16",
           ],
         },
       },

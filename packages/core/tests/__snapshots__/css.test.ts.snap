@@ -43,10 +43,10 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
             "options": {
               "errorRecovery": true,
               "targets": [
-                "chrome >= 87",
-                "edge >= 88",
-                "firefox >= 78",
-                "safari >= 14",
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
               ],
             },
           },
@@ -75,10 +75,10 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
             "options": {
               "errorRecovery": true,
               "targets": [
-                "chrome >= 87",
-                "edge >= 88",
-                "firefox >= 78",
-                "safari >= 14",
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
               ],
             },
           },
@@ -234,10 +234,10 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
             "options": {
               "errorRecovery": true,
               "targets": [
-                "chrome >= 87",
-                "edge >= 88",
-                "firefox >= 78",
-                "safari >= 14",
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
               ],
             },
           },
@@ -266,10 +266,10 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
             "options": {
               "errorRecovery": true,
               "targets": [
-                "chrome >= 87",
-                "edge >= 88",
-                "firefox >= 78",
-                "safari >= 14",
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
               ],
             },
           },
@@ -331,10 +331,10 @@ exports[`should ensure isolation of PostCSS config objects between different bui
         "options": {
           "errorRecovery": true,
           "targets": [
-            "chrome >= 87",
-            "edge >= 88",
-            "firefox >= 78",
-            "safari >= 14",
+            "chrome >= 107",
+            "edge >= 107",
+            "firefox >= 104",
+            "safari >= 16",
           ],
         },
       },
@@ -378,10 +378,10 @@ exports[`should ensure isolation of PostCSS config objects between different bui
         "options": {
           "errorRecovery": true,
           "targets": [
-            "chrome >= 87",
-            "edge >= 88",
-            "firefox >= 78",
-            "safari >= 14",
+            "chrome >= 107",
+            "edge >= 107",
+            "firefox >= 104",
+            "safari >= 16",
           ],
         },
       },
@@ -451,10 +451,10 @@ exports[`should ensure isolation of PostCSS config objects between different bui
         "options": {
           "errorRecovery": true,
           "targets": [
-            "chrome >= 87",
-            "edge >= 88",
-            "firefox >= 78",
-            "safari >= 14",
+            "chrome >= 107",
+            "edge >= 107",
+            "firefox >= 104",
+            "safari >= 16",
           ],
         },
       },
@@ -498,10 +498,10 @@ exports[`should ensure isolation of PostCSS config objects between different bui
         "options": {
           "errorRecovery": true,
           "targets": [
-            "chrome >= 87",
-            "edge >= 88",
-            "firefox >= 78",
-            "safari >= 14",
+            "chrome >= 107",
+            "edge >= 107",
+            "firefox >= 104",
+            "safari >= 16",
           ],
         },
       },
