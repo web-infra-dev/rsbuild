@@ -208,7 +208,7 @@ exports[`plugins/babel > should apply environment config correctly 2`] = `
         },
         "env": {
           "targets": [
-            "node >= 16",
+            "node >= 20",
           ],
         },
         "isModule": "unknown",

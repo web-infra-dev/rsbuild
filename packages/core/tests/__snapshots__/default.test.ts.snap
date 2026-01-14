@@ -1146,7 +1146,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "options": {
               "errorRecovery": true,
               "targets": [
-                "node >= 16",
+                "node >= 20",
               ],
             },
           },
@@ -1182,7 +1182,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               },
               "env": {
                 "targets": [
-                  "node >= 16",
+                  "node >= 20",
                 ],
               },
               "isModule": "unknown",
@@ -1234,7 +1234,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               },
               "env": {
                 "targets": [
-                  "node >= 16",
+                  "node >= 20",
                 ],
               },
               "isModule": "unknown",

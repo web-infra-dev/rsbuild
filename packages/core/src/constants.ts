@@ -45,7 +45,7 @@ export const DEFAULT_WEB_BROWSERSLIST: string[] = [
 export const DEFAULT_BROWSERSLIST: Record<string, string[]> = {
   web: DEFAULT_WEB_BROWSERSLIST,
   'web-worker': DEFAULT_WEB_BROWSERSLIST,
-  node: ['node >= 16'],
+  node: ['node >= 20'],
 };
 
 // RegExp

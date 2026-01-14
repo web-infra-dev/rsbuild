@@ -2027,7 +2027,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                 },
                 "env": {
                   "targets": [
-                    "node >= 16",
+                    "node >= 20",
                   ],
                 },
                 "isModule": "unknown",
@@ -2079,7 +2079,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                 },
                 "env": {
                   "targets": [
-                    "node >= 16",
+                    "node >= 20",
                   ],
                 },
                 "isModule": "unknown",
