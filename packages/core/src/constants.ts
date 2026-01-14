@@ -3,8 +3,6 @@ import { join } from 'node:path';
 export const isDeno: boolean = typeof Deno !== 'undefined';
 export const isWindows: boolean = process.platform === 'win32';
 
-const { dirname } = import.meta;
-
 // Paths
 export const ROOT_DIST_DIR = 'dist';
 export const HTML_DIST_DIR = './';
@@ -17,6 +15,8 @@ export const WASM_DIST_DIR = 'static/wasm';
 export const IMAGE_DIST_DIR = 'static/image';
 export const MEDIA_DIST_DIR = 'static/media';
 export const ASSETS_DIST_DIR = 'static/assets';
+
+const dirname = import.meta.dirname;
 // loaders will be emitted to the same folder of the main bundle
 export const LOADER_PATH: string = dirname;
 export const STATIC_PATH: string = join(dirname, '../static');
