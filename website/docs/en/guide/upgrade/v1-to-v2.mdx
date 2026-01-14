@@ -6,11 +6,52 @@ This document lists all breaking changes from Rsbuild 1.x to 2.0. Use it as a mi
 
 > This guide is a work in progress. Content will be added incrementally as Rsbuild 2.0 beta evolves.
 
+## Default browserslist updated
+
+In Rsbuild 2.0, the default browserslist have been updated to better reflect the modern web platform baseline.
+
+### Web target
+
+The default web browserslist has moved to a more modern [baseline](https://web-platform-dx.github.io/web-features/), the new default corresponds to [`baseline widely available on 2025-05-01`](https://browsersl.ist/#q=baseline+widely+available+on+2025-05-01)):
+
+- Chrome 87 → 107
+- Edge 88 → 107
+- Firefox 78 → 104
+- Safari 14 → 16
+
+This change affects JavaScript and CSS transformations, as well as polyfill behavior.
+
+If your project defines its own browserslist configuration, for example via `.browserslistrc` or `package.json#browserslist`, Rsbuild will continue to use it. The defaults only apply when no browserslist configuration is found.
+
+To keep the previous behavior, create a `.browserslistrc` file in your project root:
+
+```text title=".browserslistrc"
+chrome >= 87
+edge >= 88
+firefox >= 78
+safari >= 14
+```
+
+### Node target
+
+Rsbuild 2.0 also updates the default Node.js target. Since Node.js 18 reached end of life on April, 2025, Rsbuild now defaults to Node 20+.
+
+- Node 16 → 20
+
+To keep the previous behavior, use [output.overrideBrowserslist](/config/output/override-browserslist):
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'node',
+    overrideBrowserslist: ['node >= 16'],
+  },
+};
+```
+
 ## Node.js support
 
-Node.js 18 reached its [end of life](https://nodejs.org/en/about/eol) on April, 2025, so it is no longer supported by Rsbuild 2.0.
-
-Rsbuild 2.0 requires Node.js 20.19+ or 22.12+.
+Rsbuild 2.0 requires Node.js 20.19+ or 22.12+, Node.js 18 is no longer supported.
 
 ## Pure ESM package
 
@@ -22,7 +63,7 @@ In Node.js 20 and later, the runtime natively supports loading ESM modules via [
 
 ## Polyfill dependency change
 
-[core-js](https://www.npmjs.com/package/core-js) has been changed from a default dependency of `@rsbuild/core` to an optional peer dependency to reduce installation size.
+[core-js](https://www.npmjs.com/package/core-js) has been changed from a default dependency of `@rsbuild/core` to an optional peer dependency, which reduces the installation size by 1.2 MB.
 
 If you enabled [output.polyfill](/config/output/polyfill), install `core-js` v3 in your project:
 

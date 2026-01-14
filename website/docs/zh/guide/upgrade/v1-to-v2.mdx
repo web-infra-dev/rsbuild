@@ -6,11 +6,52 @@ import { PackageManagerTabs } from '@theme';
 
 > 本指南仍在持续完善中。随着 Rsbuild 2.0 Beta 的推进，相关内容将逐步补充。
 
+## 默认 browserslist 更新
+
+在 Rsbuild 2.0 中，默认的 browserslist 已进行更新，以更好地反映现代 Web 平台的基线水平。
+
+### Web 产物
+
+默认的 Web browserslist 已升级到更现代的 [Baseline](https://web-platform-dx.github.io/web-features/)。新的默认值对应于 [`2025-05-01 widely available`](https://browsersl.ist/#q=baseline+widely+available+on+2025-05-01)：
+
+- Chrome 87 → 107
+- Edge 88 → 107
+- Firefox 78 → 104
+- Safari 14 → 16
+
+这一变化会影响 JavaScript 和 CSS 的转换结果，以及 polyfill 的注入方式。
+
+如果你的项目已经定义了自己的 browserslist 配置，例如通过 `.browserslistrc` 或 `package.json#browserslist`，Rsbuild 将继续使用该配置。默认值只会在未检测到任何 browserslist 配置时生效。
+
+如果你希望保持之前的行为，可以在项目根目录创建一个 `.browserslistrc` 文件：
+
+```text title=".browserslistrc"
+chrome >= 87
+edge >= 88
+firefox >= 78
+safari >= 14
+```
+
+### Node 产物
+
+Rsbuild 2.0 也更新了默认的 Node.js 产物版本。由于 Node.js 18 已于 2025 年 4 月 [结束维护](https://nodejs.org/en/about/eol)，Rsbuild 现在默认使用 Node 20+。
+
+- Node 16 → 20
+
+如果你希望保持之前的行为，可以通过 [output.overrideBrowserslist](/config/output/override-browserslist) 进行配置：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'node',
+    overrideBrowserslist: ['node >= 16'],
+  },
+};
+```
+
 ## Node.js 支持
 
-由于 Node.js 18 已经在 2025 年 4 月 [结束维护](https://nodejs.org/en/about/eol)，Rsbuild 2.0 将不再支持该版本。
-
-Rsbuild 2.0 最低支持版本为 Node.js 20.19+ 或 22.12+。
+Rsbuild 2.0 最低支持的 Node.js 版本为 20.19+ 或 22.12+，不再支持 Node.js 18。
 
 ## Pure ESM 包
 
@@ -22,7 +63,7 @@ Rsbuild 2.0 最低支持版本为 Node.js 20.19+ 或 22.12+。
 
 ## Polyfill 依赖变更
 
-[core-js](https://www.npmjs.com/package/core-js) 从 `@rsbuild/core` 的默认依赖变更为可选的 peer 依赖，以减小安装体积。
+[core-js](https://www.npmjs.com/package/core-js) 从 `@rsbuild/core` 的默认依赖变更为可选的 peer 依赖，这减少了 1.2MB 的安装体积。
 
 如果你启用了 [output.polyfill](/config/output/polyfill)，请在项目中安装 `core-js` v3：
 
