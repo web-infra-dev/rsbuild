@@ -43,13 +43,13 @@ Rsbuild sets different default Browserslist values according to [output.target](
 If `output.target` is `web`, Rsbuild will use the following Browserslist by default:
 
 ```yaml title=".browserslistrc"
-chrome >= 87
-edge >= 88
-firefox >= 78
-safari >= 14
+chrome >= 107
+edge >= 107
+firefox >= 104
+safari >= 16
 ```
 
-With this browser range, the build output will be compatible with browsers that support [native ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules).
+> This browser range matches [Baseline](https://web-platform-dx.github.io/web-features/) widely available as of [2025-05-01](https://browsersl.ist/#q=baseline+widely+available+on+2025-05-01).
 
 ### Node target
 
@@ -64,10 +64,10 @@ node >= 20
 If `output.target` is `web-worker`, Rsbuild will default to using the following Browserslist (consistent with the `web` target):
 
 ```yaml title=".browserslistrc"
-chrome >= 87
-edge >= 88
-firefox >= 78
-safari >= 14
+chrome >= 107
+edge >= 107
+firefox >= 104
+safari >= 16
 ```
 
 ## Set browserslist
@@ -116,10 +116,10 @@ For example, set values based on keys in the `package.json`:
 {
   "browserslist": {
     "production": [
-      "chrome >= 87",
-      "edge >= 88",
-      "firefox >= 78",
-      "safari >= 14"
+      "chrome >= 107",
+      "edge >= 107",
+      "firefox >= 104",
+      "safari >= 16"
     ],
     "development": [
       "last 1 chrome version",
@@ -134,10 +134,10 @@ Or in `.browserslistrc`:
 
 ```yaml title=".browserslistrc"
 [production]
-chrome >= 87
-edge >= 88
-firefox >= 78
-safari >= 14
+chrome >= 107
+edge >= 107
+firefox >= 104
+safari >= 16
 
 [development]
 last 1 chrome version
@@ -185,7 +185,7 @@ The above Browserslist will compile the code to ES5. For the specific browser li
 
 If you don't need to be compatible with IE 11, you can adjust browserslist for more performant output, such as:
 
-- Set to browsers that support native ES Modules (recommended):
+- Set to browsers that support native ES Modules:
 
 ```yaml title=".browserslistrc"
 chrome >= 87
