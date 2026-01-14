@@ -69,7 +69,7 @@ export default {
 - 不会生成 HTML 文件，与 HTML 相关的逻辑也不会执行，因为 Node.js 环境不需要 HTML。
 - 不会开启默认的拆包策略，但 dynamic import 依然可以生效。
 - 不会开启热更新相关的能力。
-- 将 Browserslist 的默认值设置为 `['node >= 16']`。
+- 将 Browserslist 的默认值设置为 `['node >= 20']`。
 - 将 [output.emitCss](/config/output/emit-css) 的默认值设置为 `false`。这意味着 CSS 代码不会被抽取为单独的文件，但产物中会包含 CSS Modules 的 id 信息。
 
 ### Node addons
