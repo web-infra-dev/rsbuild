@@ -32,6 +32,13 @@ function getPublicPath({
     if (typeof output.assetPrefix === 'string') {
       publicPath = output.assetPrefix;
     }
+  } else if (
+    typeof output.assetPrefix === 'string' &&
+    output.assetPrefix !== DEFAULT_ASSET_PREFIX
+  ) {
+    // In dev mode, prefer environment-specific `output.assetPrefix` over `dev.assetPrefix`
+    // but only if it's explicitly set to a non-default value
+    publicPath = output.assetPrefix;
   } else if (typeof dev.assetPrefix === 'string') {
     publicPath = dev.assetPrefix;
   } else if (dev.assetPrefix) {
@@ -54,7 +61,9 @@ function getPublicPath({
 
   const defaultPort = server.port ?? DEFAULT_PORT;
   const port = isDev ? (context.devServer?.port ?? defaultPort) : defaultPort;
-  return formatPublicPath(replacePortPlaceholder(publicPath, port));
+  const replacedPath = replacePortPlaceholder(publicPath, port);
+  // For empty string, preserve it as-is to enable relative paths (important for node targets)
+  return replacedPath === '' ? replacedPath : formatPublicPath(replacedPath);
 }
 
 const getJsAsyncPath = (
