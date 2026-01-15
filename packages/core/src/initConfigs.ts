@@ -136,6 +136,11 @@ const initEnvironmentConfigs = (
     if (config.output.module === undefined) {
       config.output.module = isServer;
     }
+    // For `web` and `web-worker` targets, minify is true by default in production mode
+    // For `node` target, minify is false by default
+    if (config.output.minify === undefined) {
+      config.output.minify = !isServer;
+    }
 
     return config;
   };
