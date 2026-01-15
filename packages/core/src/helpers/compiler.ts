@@ -15,8 +15,7 @@ export const getPublicPathFromCompiler = (
 
   if (typeof publicPath === 'string') {
     // 'auto' is a magic value in Rspack and behave like `publicPath: ""`
-    // Empty string is a valid value representing a relative path and should be preserved
-    if (publicPath === 'auto' || publicPath === '') {
+    if (publicPath === 'auto') {
       return '';
     }
     return publicPath.endsWith('/') ? publicPath : `${publicPath}/`;

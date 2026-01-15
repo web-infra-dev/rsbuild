@@ -62,7 +62,7 @@ export const formatPublicPath = (
   withSlash = true,
 ): string => {
   // 'auto' is a magic value in Rspack and we should not add trailing slash
-  // Empty string is a valid value representing a relative path and should be preserved
+  // Empty string is a valid value representing a relative path and should be preserved (important for node targets)
   if (publicPath === 'auto' || publicPath === '') {
     return publicPath;
   }

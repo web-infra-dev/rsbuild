@@ -16,14 +16,27 @@ import type {
 
 function getPublicPath({
   isDev,
+  isServer,
   config,
   context,
 }: {
   isDev: boolean;
+  isServer: boolean;
   config: NormalizedEnvironmentConfig;
   context: RsbuildContext;
 }) {
   const { dev, output, server } = config;
+
+  // For server targets (node), use empty string or explicit assetPrefix to enable relative paths
+  // This is important for worker_threads and other node-specific imports
+  // See: https://github.com/web-infra-dev/rsbuild/issues/6539
+  if (isServer) {
+    if (!isDev && typeof output.assetPrefix === 'string') {
+      return output.assetPrefix;
+    }
+    // For node targets in dev mode, use empty string by default
+    return '';
+  }
 
   let publicPath = DEFAULT_ASSET_PREFIX;
 
@@ -90,6 +103,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
         const publicPath = getPublicPath({
           config,
           isDev,
+          isServer,
           context: api.context,
         });
 
