@@ -63,10 +63,10 @@ export function parseMinifyOptions(config: NormalizedEnvironmentConfig): {
   cssOptions?: LightningCssMinimizerRspackPluginOptions;
 } {
   const isProd = config.mode === 'production';
-  const { minify } = config.output;
+  const { minify = true } = config.output;
 
-  if (typeof minify === 'boolean' || minify === undefined) {
-    const shouldMinify = Boolean(minify) && isProd;
+  if (typeof minify === 'boolean') {
+    const shouldMinify = minify && isProd;
     return {
       minifyJs: shouldMinify,
       minifyCss: shouldMinify,
