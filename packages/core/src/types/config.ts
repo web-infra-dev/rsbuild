@@ -294,14 +294,14 @@ export interface SourceConfig {
 export type TransformImport = {
   libraryName: string;
   libraryDirectory?: string;
+  customName?: string;
+  customStyleName?: string;
   style?: string | boolean;
   styleLibraryDirectory?: string;
   camelToDashComponentName?: boolean;
   transformToDefaultImport?: boolean;
-  // Use a loose type to compat webpack
-  customName?: any;
-  // Use a loose type to compat webpack
-  customStyleName?: any;
+  ignoreEsComponent?: string[];
+  ignoreStyleComponent?: string[];
 };
 
 type TransformImportFn = (

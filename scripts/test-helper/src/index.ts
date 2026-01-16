@@ -83,7 +83,7 @@ export async function createStubRsbuild({
     return configs[index];
   };
 
-  /** Match rspack/webpack plugin by constructor name. */
+  /** Match Rspack plugin by constructor name. */
   const matchBundlerPlugin = async (pluginName: string, index?: number) => {
     const config = await unwrapConfig(index);
 

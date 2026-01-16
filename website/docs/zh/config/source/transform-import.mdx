@@ -7,12 +7,14 @@ type TransformImport =
   | Array<{
       libraryName: string;
       libraryDirectory?: string;
+      customName?: string;
+      customStyleName?: string;
       style?: string | boolean;
       styleLibraryDirectory?: string;
       camelToDashComponentName?: boolean;
       transformToDefaultImport?: boolean;
-      customName?: string;
-      customStyleName?: string;
+      ignoreEsComponent?: string[];
+      ignoreStyleComponent?: string[];
     }>
   | Function;
 ```
