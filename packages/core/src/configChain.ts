@@ -124,8 +124,6 @@ export const CHAIN_ID = {
     LIGHTNINGCSS: 'lightningcss',
     /** ignore-css-loader */
     IGNORE_CSS: 'ignore-css',
-    /** css-modules-typescript-loader */
-    CSS_MODULES_TS: 'css-modules-typescript',
     /** CssExtractRspackPlugin.loader */
     MINI_CSS_EXTRACT: 'mini-css-extract',
     /** resolve-url-loader */
@@ -143,8 +141,8 @@ export const CHAIN_ID = {
     DEFINE: 'define',
     /** ProgressPlugin */
     PROGRESS: 'progress',
-    /** WebpackManifestPlugin */
-    MANIFEST: 'webpack-manifest',
+    /** RspackManifestPlugin */
+    MANIFEST: 'rspack-manifest',
     /** ForkTsCheckerWebpackPlugin */
     TS_CHECKER: 'ts-checker',
     /** ModuleFederationPlugin */
@@ -168,11 +166,6 @@ export const CHAIN_ID = {
     JS: 'js',
     /** LightningCssMinimizerRspackPlugin */
     CSS: 'css',
-  },
-  /** Predefined resolve plugins */
-  RESOLVE_PLUGIN: {
-    /** TsConfigPathsPlugin */
-    TS_CONFIG_PATHS: 'ts-config-paths',
   },
 } as const;
 
