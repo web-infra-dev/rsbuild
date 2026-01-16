@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@rsbuild/core": "^2.0.0-0",
-    "@rsbuild/plugin-vue2": "^1.0.5",
+    "@rsbuild/plugin-vue2": "^1.0.6",
     "typescript": "^5.9.3"
   }
 }
