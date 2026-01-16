@@ -34,7 +34,13 @@ function getPublicPath({
     if (!isDev && typeof output.assetPrefix === 'string') {
       return output.assetPrefix;
     }
-    // For node targets in dev mode, use empty string by default
+    // In dev mode, if server.base is set, use it for SSR hydration compatibility
+    // Otherwise, use empty string by default for node targets
+    if (isDev && server.base && server.base !== '/') {
+      // Use server.base as a relative path (no protocol/hostname) for node targets
+      return formatPublicPath(server.base);
+    }
+    // For node targets in dev mode without server.base, use empty string
     return '';
   }
 
