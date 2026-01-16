@@ -31,7 +31,7 @@ function checkProcessEnvSecurity(define: DefinePluginOptions) {
   };
 
   // Check `{ 'process.env': process.env }`
-  if (isPlainObject(value)) {
+  if (typeof value === 'object') {
     check(value as Record<string, unknown>);
     return;
   }
