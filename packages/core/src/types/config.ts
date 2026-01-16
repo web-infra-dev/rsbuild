@@ -5,6 +5,7 @@ import type { URL } from 'node:url';
 import type {
   Configuration,
   CopyRspackPluginOptions,
+  DefinePluginOptions,
   Externals,
   LightningCssMinimizerRspackPluginOptions,
   ModuleFederationPluginOptions,
@@ -211,9 +212,6 @@ export type NormalizedToolsConfig = ToolsConfig & {
 
 export type Alias = Record<string, string | false | (string | false)[]>;
 
-// Use a loose type to compat webpack
-export type Define = Record<string, any>;
-
 export type AliasStrategy = 'prefer-tsconfig' | 'prefer-alias';
 
 export type Decorators = {
@@ -277,7 +275,7 @@ export interface SourceConfig {
    * Replaces variables in your code with other values or expressions at compile time.
    * This is useful for enabling different behavior between development and production builds.
    */
-  define?: Define;
+  define?: DefinePluginOptions;
   /**
    * Configuring decorators syntax.
    */
@@ -311,7 +309,7 @@ type TransformImportFn = (
 ) => TransformImport[] | void;
 
 export interface NormalizedSourceConfig extends SourceConfig {
-  define: Define;
+  define: DefinePluginOptions;
   preEntry: string[];
   decorators: Required<Decorators>;
 }

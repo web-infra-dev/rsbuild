@@ -1,9 +1,10 @@
+import type { DefinePluginOptions } from '@rspack/core';
 import { color } from '../helpers';
 import { getPublicPathFromChain } from '../helpers/url';
 import { logger } from '../logger';
-import type { Define, RsbuildPlugin } from '../types';
+import type { RsbuildPlugin } from '../types';
 
-function checkProcessEnvSecurity(define: Define) {
+function checkProcessEnvSecurity(define: DefinePluginOptions) {
   const value = define['process.env'];
 
   if (!value) {
@@ -31,7 +32,7 @@ function checkProcessEnvSecurity(define: Define) {
 
   // Check `{ 'process.env': process.env }`
   if (typeof value === 'object') {
-    check(value);
+    check(value as Record<string, unknown>);
     return;
   }
 
@@ -53,7 +54,7 @@ export const pluginDefine = (): RsbuildPlugin => ({
       const baseUrl = JSON.stringify(config.server.base);
       const assetPrefix = JSON.stringify(getPublicPathFromChain(chain, false));
 
-      const builtinVars: Define = {
+      const builtinVars: DefinePluginOptions = {
         'import.meta.env': {
           MODE: JSON.stringify(config.mode),
           DEV: config.mode === 'development',
