@@ -1,5 +1,5 @@
 import type { DefinePluginOptions } from '@rspack/core';
-import { color, isPlainObject } from '../helpers';
+import { color } from '../helpers';
 import { getPublicPathFromChain } from '../helpers/url';
 import { logger } from '../logger';
 import type { RsbuildPlugin } from '../types';
