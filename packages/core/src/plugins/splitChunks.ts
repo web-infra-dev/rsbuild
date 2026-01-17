@@ -22,11 +22,11 @@ interface SplitChunksContext {
    */
   forceSplittingGroups: CacheGroups;
   /**
-   * Default split config in webpack
+   * Default split config in Rspack
    */
   defaultConfig: Exclude<SplitChunks, false>;
   /**
-   * User webpack `splitChunks` config
+   * User Rspack `splitChunks` config
    */
   override: Exclude<SplitChunks, false>;
   /**
