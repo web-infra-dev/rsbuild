@@ -117,7 +117,7 @@ export const pluginMinimize = (): RsbuildPlugin => ({
               ? environment.browserslist
               : loaderOptions.targets,
             ...pick(loaderOptions, [
-              'draft',
+              'drafts',
               'include',
               'exclude',
               'nonStandard',
