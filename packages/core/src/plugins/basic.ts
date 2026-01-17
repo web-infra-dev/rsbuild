@@ -51,15 +51,6 @@ export const pluginBasic = (): RsbuildPlugin => ({
             typeReexportsPresence: 'tolerant',
           },
         });
-
-        chain.experiments({
-          ...chain.get('experiments'),
-          rspackFuture: {
-            bundlerInfo: {
-              force: false,
-            },
-          },
-        });
       },
     );
   },

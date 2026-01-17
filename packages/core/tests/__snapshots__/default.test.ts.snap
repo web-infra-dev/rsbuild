@@ -11,11 +11,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "rspackFuture": {
-      "bundlerInfo": {
-        "force": false,
-      },
-    },
   },
   "infrastructureLogging": {
     "level": "error",
@@ -394,6 +389,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "output": {
     "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+    "bundlerInfo": {
+      "force": false,
+    },
     "chunkFilename": "static/js/async/[name].js",
     "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
@@ -524,11 +522,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "rspackFuture": {
-      "bundlerInfo": {
-        "force": false,
-      },
-    },
   },
   "infrastructureLogging": {
     "level": "error",
@@ -940,6 +933,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   },
   "output": {
     "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+    "bundlerInfo": {
+      "force": false,
+    },
     "chunkFilename": "static/js/async/[name].[contenthash:8].js",
     "devtoolModuleFilenameTemplate": "[relative-resource-path]",
     "filename": "static/js/[name].[contenthash:8].js",
@@ -1062,11 +1058,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "experiments": {
     "asyncWebAssembly": true,
     "outputModule": true,
-    "rspackFuture": {
-      "bundlerInfo": {
-        "force": false,
-      },
-    },
   },
   "infrastructureLogging": {
     "level": "error",
@@ -1427,6 +1418,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   },
   "output": {
     "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+    "bundlerInfo": {
+      "force": false,
+    },
     "chunkFilename": "[name].js",
     "chunkFormat": "module",
     "chunkLoading": "import",
@@ -1507,11 +1501,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
   "devtool": "cheap-module-source-map",
   "experiments": {
     "asyncWebAssembly": true,
-    "rspackFuture": {
-      "bundlerInfo": {
-        "force": false,
-      },
-    },
   },
   "infrastructureLogging": {
     "level": "error",
@@ -1902,6 +1891,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
   },
   "output": {
     "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+    "bundlerInfo": {
+      "force": false,
+    },
     "chunkFilename": "static/js/async/[name].js",
     "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",

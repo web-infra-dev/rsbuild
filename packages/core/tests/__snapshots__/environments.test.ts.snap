@@ -1460,11 +1460,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     "devtool": "eval-source-map",
     "experiments": {
       "asyncWebAssembly": true,
-      "rspackFuture": {
-        "bundlerInfo": {
-          "force": false,
-        },
-      },
     },
     "infrastructureLogging": {
       "level": "error",
@@ -1843,6 +1838,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     },
     "output": {
       "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+      "bundlerInfo": {
+        "force": false,
+      },
       "chunkFilename": "static/js/async/[name].js",
       "devtoolModuleFilenameTemplate": [Function],
       "filename": "static/js/[name].js",
@@ -1913,11 +1911,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     "experiments": {
       "asyncWebAssembly": true,
       "outputModule": true,
-      "rspackFuture": {
-        "bundlerInfo": {
-          "force": false,
-        },
-      },
     },
     "infrastructureLogging": {
       "level": "error",
@@ -2281,6 +2274,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     },
     "output": {
       "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+      "bundlerInfo": {
+        "force": false,
+      },
       "chunkFilename": "[name].js",
       "chunkFormat": "module",
       "chunkLoading": "import",

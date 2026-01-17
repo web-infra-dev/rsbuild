@@ -11,11 +11,6 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "rspackFuture": {
-      "bundlerInfo": {
-        "force": false,
-      },
-    },
   },
   "infrastructureLogging": {
     "level": "error",
@@ -394,6 +389,9 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
   },
   "output": {
     "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+    "bundlerInfo": {
+      "force": false,
+    },
     "chunkFilename": "static/js/async/[name].js",
     "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
