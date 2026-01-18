@@ -9,6 +9,6 @@
     "@testing-library/react": "^16.3.1",
     "@rstest/core": "^0.7.9",
     "@rstest/adapter-rsbuild": "^0.1.0",
-    "happy-dom": "^20.1.0"
+    "happy-dom": "^20.3.1"
   }
 }
