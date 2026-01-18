@@ -146,7 +146,6 @@ const getDefaultToolsConfig = (): NormalizedToolsConfig => ({
 const getDefaultPerformanceConfig = (): NormalizedPerformanceConfig => ({
   printFileSize: true,
   removeConsole: false,
-  removeMomentLocale: false,
   chunkSplit: {
     strategy: 'split-by-experience',
   },
