@@ -114,7 +114,10 @@ export const pluginOutput = (): RsbuildPlugin => ({
                 }
               : posix.join(jsAsyncPath, jsFilename),
           )
-          .publicPath(publicPath);
+          .publicPath(publicPath)
+          .bundlerInfo({
+            force: false,
+          });
 
         if (isServer) {
           chain.output.library({

@@ -3,13 +3,6 @@
 exports[`plugin-basic > should apply basic config correctly in development 1`] = `
 {
   "context": "<ROOT>/packages/core/tests",
-  "experiments": {
-    "rspackFuture": {
-      "bundlerInfo": {
-        "force": false,
-      },
-    },
-  },
   "infrastructureLogging": {
     "level": "error",
   },
@@ -44,13 +37,6 @@ exports[`plugin-basic > should apply basic config correctly in development 1`] =
 exports[`plugin-basic > should apply basic config correctly in production 1`] = `
 {
   "context": "<ROOT>/packages/core/tests",
-  "experiments": {
-    "rspackFuture": {
-      "bundlerInfo": {
-        "force": false,
-      },
-    },
-  },
   "infrastructureLogging": {
     "level": "error",
   },

@@ -34,11 +34,12 @@
   "devDependencies": {
     "@biomejs/biome": "^2.3.11",
     "@rsbuild/config": "workspace:*",
-    "@rstest/adapter-rslib": "^0.1.1",
     "@rslint/core": "^0.2.0",
+    "@rstest/adapter-rslib": "^0.1.1",
     "@rstest/core": "^0.7.9",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^24.10.9",
+    "browserslist-load-config": "1.0.1",
     "cross-env": "^10.1.0",
     "cspell-ban-words": "^0.0.4",
     "heading-case": "^1.0.4",
@@ -46,7 +47,8 @@
     "nx": "^22.3.3",
     "prettier": "^3.8.0",
     "simple-git-hooks": "^2.13.1",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "watchpack": "^2.5.1"
   },
   "packageManager": "pnpm@10.28.0",
   "engines": {

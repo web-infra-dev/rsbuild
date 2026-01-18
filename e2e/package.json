@@ -9,6 +9,7 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "@module-federation/runtime-tools": "0.22.1",
     "core-js": "^3.47.0",
     "lodash": "^4.17.21",
     "moment": "^2.30.1",
