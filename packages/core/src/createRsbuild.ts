@@ -38,7 +38,6 @@ import { pluginLazyCompilation } from './plugins/lazyCompilation';
 import { pluginManifest } from './plugins/manifest';
 import { pluginMinimize } from './plugins/minimize';
 import { pluginModuleFederation } from './plugins/moduleFederation';
-import { pluginMoment } from './plugins/moment';
 import { pluginNodeAddons } from './plugins/nodeAddons';
 import { pluginNonce } from './plugins/nonce';
 import { pluginOutput } from './plugins/output';
@@ -95,7 +94,6 @@ function applyDefaultPlugins(
     pluginHtml(context),
     pluginAppIcon(),
     pluginWasm(),
-    pluginMoment(),
     pluginNodeAddons(),
     pluginDefine(),
     pluginCss(),

@@ -736,12 +736,6 @@ export interface PerformanceConfig {
   removeConsole?: boolean | ConsoleType[];
 
   /**
-   * Whether to remove the locales of [moment.js](https://momentjs.com/).
-   * @default false
-   */
-  removeMomentLocale?: boolean;
-
-  /**
    * To enable or configure persistent build cache.
    * @experimental This feature is experimental and may be changed in the future.
    * @default false
