@@ -165,6 +165,14 @@ export default {
 };
 ```
 
+### 移除 `performance.removeMomentLocale`
+
+`performance.removeMomentLocale` 选项已被移除。
+
+该选项原本用于从产物中移除 Moment.js 的语言包。但在 Rspack v2 中，Moment 的 locales 默认不会被打包，因此该选项已不再需要。
+
+> 背景信息可参考 [web-infra-dev/rsbuild#6991](https://github.com/web-infra-dev/rsbuild/pull/6991)。
+
 ### 移除 `performance.profile`
 
 `performance.profile` 选项已被移除。如果你依赖它来输出 stats JSON 文件，可以在自定义插件中调用 [stats.toJson()](/api/javascript-api/instance#stats-object) 代替：
