@@ -165,6 +165,14 @@ export default {
 };
 ```
 
+### Remove `performance.removeMomentLocale`
+
+The `performance.removeMomentLocale` option has been removed.
+
+This option existed to drop Moment.js locale data from the bundle, but Rspack v2 does not include Moment locales by default, so the option is no longer necessary.
+
+> For background, see [web-infra-dev/rsbuild#6991](https://github.com/web-infra-dev/rsbuild/pull/6991).
+
 ### Remove `performance.profile`
 
 The `performance.profile` option has been removed. If you relied on it to emit a stats JSON file, use [stats.toJson()](/api/javascript-api/instance#stats-object) in a custom plugin instead:
