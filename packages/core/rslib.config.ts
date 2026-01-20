@@ -1,8 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { nodeMinifyConfig } from '@rsbuild/config/rslib.config.ts';
-import type { Rspack, rsbuild } from '@rslib/core';
-import { defineConfig } from '@rslib/core';
+import { defineConfig, type Rspack, rsbuild } from '@rslib/core';
 import pkgJson from './package.json' with { type: 'json' };
 import prebundleConfig from './prebundle.config.ts';
 
@@ -70,6 +69,35 @@ const pluginFixDtsTypes: rsbuild.RsbuildPlugin = {
   },
 };
 
+class RspackRuntimeReplacePlugin {
+  static readonly pluginName = 'RspackRuntimeReplacePlugin';
+
+  apply(compiler: Rspack.Compiler) {
+    const RSPACK_MODULE_HOT = 'RSPACK_MODULE_HOT';
+    const RSPACK_INTERCEPT_MODULE_EXECUTION = 'RSPACK_INTERCEPT_MODULE_EXECUTION';
+
+    compiler.hooks.thisCompilation.tap(RspackRuntimeReplacePlugin.pluginName, compilation => {
+      compilation.hooks.processAssets.tap({
+        name: RspackRuntimeReplacePlugin.pluginName,
+        stage: rsbuild.rspack.Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_INLINE,
+      }, assets => {
+        for (const name in assets) {
+          const asset = assets[name];
+          if (name.endsWith('.js')) {
+            const source = asset.source();
+            if (source.includes(RSPACK_MODULE_HOT) || source.includes(RSPACK_INTERCEPT_MODULE_EXECUTION)) {
+              const replacedSource = source
+                .replace(RSPACK_MODULE_HOT, 'module.hot')
+                .replace(RSPACK_INTERCEPT_MODULE_EXECUTION, rsbuild.rspack.RuntimeGlobals.interceptModuleExecution);
+              compilation.updateAsset(name, new rsbuild.rspack.sources.RawSource(replacedSource));
+            }
+          }
+        }
+      });
+    });
+  }
+}
+
 export default defineConfig({
   source: {
     define,
@@ -133,6 +161,12 @@ export default defineConfig({
           // use define to avoid compile time evaluation of __webpack_hash__
           BUILD_HASH: '__webpack_hash__',
         },
+      },
+      tools: {
+        rspack(config) {
+          config.plugins.push(new RspackRuntimeReplacePlugin());
+          return config;
+        }
       },
       output: {
         target: 'web',

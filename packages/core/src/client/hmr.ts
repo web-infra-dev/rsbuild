@@ -19,6 +19,8 @@ export const registerOverlay = (
   clearOverlay = clearFn;
 };
 
+type CustomListenersMap = Map<string, ((data: any) => void)[]>
+
 export function init(
   token: string,
   config: NormalizedClientConfig,
@@ -33,6 +35,8 @@ export function init(
   const queuedMessages: ClientMessage[] = [];
   // Ids of the runtime errors sent to the server
   const clientErrors: { id: string; message?: string }[] = [];
+
+  const customListenersMap: CustomListenersMap = new Map();
 
   // Hash of the last successful build
   let lastHash: string | undefined;
@@ -243,6 +247,15 @@ export function init(
       case 'resolved-client-error':
         handleResolvedClientError(message.data);
         break;
+      case 'custom':
+        const { event, ...rest } = message.data;
+        if (event) {
+          const cbs = customListenersMap.get(event)
+          if (cbs) {
+            cbs.forEach(cb => cb(rest));
+          }
+        }
+        break;
     }
   }
 
@@ -356,6 +369,40 @@ export function init(
       sendError(message, error instanceof Error ? error.stack : undefined);
     });
     window.addEventListener('unhandledrejection', onUnhandledRejection);
+  }
+
+  // @ts-expect-error
+  if (RSPACK_MODULE_HOT) {
+    // @ts-expect-error
+    RSPACK_INTERCEPT_MODULE_EXECUTION.push(options => {
+      const module = options.module;
+      const newListeners: CustomListenersMap = new Map();
+  
+      module.hot.on = (
+        event: string,
+        cb: (payload: any) => void
+      ) => {
+        const addToMap = (map: Map<string, any[]>) => {
+          const existing = map.get(event) || []
+          existing.push(cb)
+          map.set(event, existing)
+        }
+        addToMap(customListenersMap)
+        addToMap(newListeners)
+      };
+
+      module.hot.dispose(() => {
+        for (const [event, staleFns] of newListeners) {
+          const listeners = customListenersMap.get(event)
+          if (listeners) {
+            customListenersMap.set(
+              event,
+              listeners.filter((l) => !staleFns.includes(l)),
+            )
+          }
+        }
+      });
+    })
   }
 
   connect();
