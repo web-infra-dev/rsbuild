@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { nodeMinifyConfig } from '@rsbuild/config/rslib.config.ts';
-import { defineConfig, type Rspack, rsbuild } from '@rslib/core';
+import { defineConfig, type Rspack, type rsbuild } from '@rslib/core';
 import pkgJson from './package.json' with { type: 'json' };
 import prebundleConfig from './prebundle.config.ts';
 
@@ -77,14 +77,15 @@ class RspackRuntimeReplacePlugin {
     const RSPACK_INTERCEPT_MODULE_EXECUTION =
       'RSPACK_INTERCEPT_MODULE_EXECUTION';
 
+    const { Compilation, RuntimeGlobals, sources } = compiler.rspack;
+
     compiler.hooks.thisCompilation.tap(
       RspackRuntimeReplacePlugin.pluginName,
       (compilation) => {
         compilation.hooks.processAssets.tap(
           {
             name: RspackRuntimeReplacePlugin.pluginName,
-            stage:
-              rsbuild.rspack.Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_INLINE,
+            stage: Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_INLINE,
           },
           (assets) => {
             for (const name in assets) {
@@ -96,14 +97,14 @@ class RspackRuntimeReplacePlugin {
                   source.includes(RSPACK_INTERCEPT_MODULE_EXECUTION)
                 ) {
                   const replacedSource = source
-                    .replace(RSPACK_MODULE_HOT, 'module.hot')
-                    .replace(
+                    .replaceAll(RSPACK_MODULE_HOT, 'module.hot')
+                    .replaceAll(
                       RSPACK_INTERCEPT_MODULE_EXECUTION,
-                      rsbuild.rspack.RuntimeGlobals.interceptModuleExecution,
+                      RuntimeGlobals.interceptModuleExecution,
                     );
                   compilation.updateAsset(
                     name,
-                    new rsbuild.rspack.sources.RawSource(replacedSource),
+                    new sources.RawSource(replacedSource),
                   );
                 }
               }

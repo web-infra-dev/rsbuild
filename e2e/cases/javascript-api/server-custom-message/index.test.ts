@@ -51,10 +51,7 @@ test('should dispose old HMR event callbacks after page reload', async ({
     );
 
     // 2) Modify the source file to trigger an HMR update.
-    await fs.writeFile(
-      indexPath,
-      originalSource.replace("console.log('hello')", "console.log('hi')"),
-    );
+    await fs.writeFile(indexPath, originalSource.replace('hello', 'hi'));
 
     // 3) Trigger again. If old callback leaked, we'd observe multiple runs.
     await expectPoll(() => page.evaluate('window.__count')).toBe(
