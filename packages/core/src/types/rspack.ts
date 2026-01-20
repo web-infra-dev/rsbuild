@@ -10,4 +10,4 @@ declare module '@rspack/core' {
   }
 }
 
-export type RspackRule = Rspack.RuleSetRules[0];
+export type RspackRule = Rspack.RuleSetRules[number];
