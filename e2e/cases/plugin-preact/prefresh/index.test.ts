@@ -2,8 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { expect, test } from '@e2e/helper';
 
-// TODO: Fix this test
-test.skip('HMR should work properly', async ({ page, dev, editFile }) => {
+test('HMR should work properly', async ({ page, dev, editFile }) => {
   // Prefresh does not work as expected on Windows
   if (process.platform === 'win32') {
     test.skip();
