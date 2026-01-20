@@ -74,27 +74,44 @@ class RspackRuntimeReplacePlugin {
 
   apply(compiler: Rspack.Compiler) {
     const RSPACK_MODULE_HOT = 'RSPACK_MODULE_HOT';
-    const RSPACK_INTERCEPT_MODULE_EXECUTION = 'RSPACK_INTERCEPT_MODULE_EXECUTION';
+    const RSPACK_INTERCEPT_MODULE_EXECUTION =
+      'RSPACK_INTERCEPT_MODULE_EXECUTION';
 
-    compiler.hooks.thisCompilation.tap(RspackRuntimeReplacePlugin.pluginName, compilation => {
-      compilation.hooks.processAssets.tap({
-        name: RspackRuntimeReplacePlugin.pluginName,
-        stage: rsbuild.rspack.Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_INLINE,
-      }, assets => {
-        for (const name in assets) {
-          const asset = assets[name];
-          if (name.endsWith('.js')) {
-            const source = asset.source();
-            if (source.includes(RSPACK_MODULE_HOT) || source.includes(RSPACK_INTERCEPT_MODULE_EXECUTION)) {
-              const replacedSource = source
-                .replace(RSPACK_MODULE_HOT, 'module.hot')
-                .replace(RSPACK_INTERCEPT_MODULE_EXECUTION, rsbuild.rspack.RuntimeGlobals.interceptModuleExecution);
-              compilation.updateAsset(name, new rsbuild.rspack.sources.RawSource(replacedSource));
+    compiler.hooks.thisCompilation.tap(
+      RspackRuntimeReplacePlugin.pluginName,
+      (compilation) => {
+        compilation.hooks.processAssets.tap(
+          {
+            name: RspackRuntimeReplacePlugin.pluginName,
+            stage:
+              rsbuild.rspack.Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_INLINE,
+          },
+          (assets) => {
+            for (const name in assets) {
+              const asset = assets[name];
+              if (name.endsWith('.js')) {
+                const source = asset.source();
+                if (
+                  source.includes(RSPACK_MODULE_HOT) ||
+                  source.includes(RSPACK_INTERCEPT_MODULE_EXECUTION)
+                ) {
+                  const replacedSource = source
+                    .replace(RSPACK_MODULE_HOT, 'module.hot')
+                    .replace(
+                      RSPACK_INTERCEPT_MODULE_EXECUTION,
+                      rsbuild.rspack.RuntimeGlobals.interceptModuleExecution,
+                    );
+                  compilation.updateAsset(
+                    name,
+                    new rsbuild.rspack.sources.RawSource(replacedSource),
+                  );
+                }
+              }
             }
-          }
-        }
-      });
-    });
+          },
+        );
+      },
+    );
   }
 }
 
@@ -166,7 +183,7 @@ export default defineConfig({
         rspack(config) {
           config.plugins.push(new RspackRuntimeReplacePlugin());
           return config;
-        }
+        },
       },
       output: {
         target: 'web',

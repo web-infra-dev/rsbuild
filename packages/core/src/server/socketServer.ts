@@ -66,7 +66,7 @@ export type ServerCustomMessage = {
   data: {
     event: string;
   } & Record<string, any>;
-}
+};
 
 export type ServerMessage =
   | ServerMessageOk

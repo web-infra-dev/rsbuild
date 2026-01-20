@@ -11,6 +11,51 @@ import { logger } from './log';
 let createOverlay: undefined | ((title: string, content: string) => void);
 let clearOverlay: undefined | (() => void);
 
+type CustomListenersMap = Map<string, ((data: any) => void)[]>;
+
+// Install a patched `module.hot.on` that records per-module listeners and
+// removes them from the global map when the module is disposed.
+function setupCustomHMRListeners(customListenersMap: CustomListenersMap): void {
+  // @ts-expect-error
+  RSPACK_INTERCEPT_MODULE_EXECUTION.push((options: any) => {
+    const module = options.module as {
+      hot: {
+        on: (event: string, cb: (payload: any) => void) => void;
+        dispose: (cb: () => void) => void;
+      };
+    };
+
+    const newListeners: CustomListenersMap = new Map();
+
+    const addToMap = (
+      map: CustomListenersMap,
+      event: string,
+      cb: (payload: any) => void,
+    ) => {
+      const existing = map.get(event) ?? [];
+      existing.push(cb);
+      map.set(event, existing);
+    };
+
+    module.hot.on = (event: string, cb: (payload: any) => void) => {
+      addToMap(customListenersMap, event, cb);
+      addToMap(newListeners, event, cb);
+    };
+
+    module.hot.dispose(() => {
+      for (const [event, staleFns] of newListeners) {
+        const listeners = customListenersMap.get(event);
+        if (!listeners) continue;
+
+        customListenersMap.set(
+          event,
+          listeners.filter((l) => !staleFns.includes(l)),
+        );
+      }
+    });
+  });
+}
+
 export const registerOverlay = (
   createFn: (title: string, content: string) => void,
   clearFn: () => void,
@@ -18,8 +63,6 @@ export const registerOverlay = (
   createOverlay = createFn;
   clearOverlay = clearFn;
 };
-
-type CustomListenersMap = Map<string, ((data: any) => void)[]>
 
 export function init(
   token: string,
@@ -247,15 +290,18 @@ export function init(
       case 'resolved-client-error':
         handleResolvedClientError(message.data);
         break;
-      case 'custom':
+      case 'custom': {
         const { event, ...rest } = message.data;
         if (event) {
-          const cbs = customListenersMap.get(event)
+          const cbs = customListenersMap.get(event);
           if (cbs) {
-            cbs.forEach(cb => cb(rest));
+            cbs.forEach((cb) => {
+              cb(rest);
+            });
           }
         }
         break;
+      }
     }
   }
 
@@ -373,36 +419,7 @@ export function init(
 
   // @ts-expect-error
   if (RSPACK_MODULE_HOT) {
-    // @ts-expect-error
-    RSPACK_INTERCEPT_MODULE_EXECUTION.push(options => {
-      const module = options.module;
-      const newListeners: CustomListenersMap = new Map();
-  
-      module.hot.on = (
-        event: string,
-        cb: (payload: any) => void
-      ) => {
-        const addToMap = (map: Map<string, any[]>) => {
-          const existing = map.get(event) || []
-          existing.push(cb)
-          map.set(event, existing)
-        }
-        addToMap(customListenersMap)
-        addToMap(newListeners)
-      };
-
-      module.hot.dispose(() => {
-        for (const [event, staleFns] of newListeners) {
-          const listeners = customListenersMap.get(event)
-          if (listeners) {
-            customListenersMap.set(
-              event,
-              listeners.filter((l) => !staleFns.includes(l)),
-            )
-          }
-        }
-      });
-    })
+    setupCustomHMRListeners(customListenersMap);
   }
 
   connect();
