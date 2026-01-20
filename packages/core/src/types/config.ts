@@ -3,7 +3,6 @@ import type { SecureServerSessionOptions } from 'node:http2';
 import type { ServerOptions as HttpsServerOptions } from 'node:https';
 import type { URL } from 'node:url';
 import type {
-  Configuration,
   CopyRspackPluginOptions,
   DefinePluginOptions,
   Externals,
@@ -30,7 +29,7 @@ import type {
 } from './hooks';
 import type { RsbuildPlugins } from './plugin';
 import type { RsbuildEntry, RsbuildMode, RsbuildTarget } from './rsbuild';
-import type { BundlerPluginInstance, Rspack, RspackRule } from './rspack';
+import type { Rspack, RspackRule } from './rspack';
 import type {
   Connect,
   CSSExtractOptions,
@@ -100,10 +99,10 @@ export type ModifyRspackConfigUtils = ModifyChainUtils & {
   addRules: (rules: RspackRule | RspackRule[]) => void;
   appendRules: (rules: RspackRule | RspackRule[]) => void;
   prependPlugins: (
-    plugins: BundlerPluginInstance | BundlerPluginInstance[],
+    plugins: Rspack.RspackPluginInstance | Rspack.RspackPluginInstance[],
   ) => void;
   appendPlugins: (
-    plugins: BundlerPluginInstance | BundlerPluginInstance[],
+    plugins: Rspack.RspackPluginInstance | Rspack.RspackPluginInstance[],
   ) => void;
   removePlugin: (pluginName: string) => void;
   mergeConfig: RspackMerge;
@@ -811,13 +810,7 @@ export interface NormalizedPerformanceConfig extends PerformanceConfig {
   chunkSplit: ChunkSplit;
 }
 
-export type SplitChunks = Configuration extends {
-  optimization?: {
-    splitChunks?: infer P;
-  };
-}
-  ? P
-  : never;
+export type SplitChunks = Rspack.OptimizationSplitChunksOptions | false;
 
 export type ForceSplitting = RegExp[] | Record<string, RegExp>;
 

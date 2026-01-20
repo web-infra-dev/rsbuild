@@ -2,11 +2,11 @@ import { color, isFunction } from './helpers';
 import { logger } from './logger';
 import type {
   AddPlugins,
-  BundlerPluginInstance,
   InternalContext,
   PluginManager,
   PluginMeta,
   RsbuildPlugin,
+  Rspack,
 } from './types';
 
 function validatePlugin(plugin: unknown) {
@@ -24,9 +24,9 @@ function validatePlugin(plugin: unknown) {
     return;
   }
 
-  if (isFunction((plugin as BundlerPluginInstance).apply)) {
+  if (isFunction((plugin as Rspack.RspackPluginInstance).apply)) {
     const { name = 'SomeWebpackPlugin' } =
-      (plugin as BundlerPluginInstance).constructor || {};
+      (plugin as Rspack.RspackPluginInstance).constructor || {};
 
     const messages = [
       `${color.yellow(

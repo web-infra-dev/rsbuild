@@ -10,12 +10,4 @@ declare module '@rspack/core' {
   }
 }
 
-export interface BundlerPluginInstance {
-  [index: string]: any;
-  apply: (compiler: any) => void;
-}
-
-/** T[] => T */
-type GetElementType<T extends any[]> = T extends (infer U)[] ? U : never;
-
-export type RspackRule = GetElementType<Rspack.RuleSetRules>;
+export type RspackRule = Rspack.RuleSetRules[0];

@@ -338,7 +338,13 @@ export default {
 
 ### prependPlugins
 
-- **类型：** `(plugins: BundlerPluginInstance | BundlerPluginInstance[]) => void`
+- **类型：**
+
+```ts
+function prependPlugins(
+  plugins: Rspack.RspackPluginInstance | Rspack.RspackPluginInstance[],
+): void;
+```
 
 在内部 Rspack 插件数组头部添加额外的插件，数组头部的插件会优先执行。
 
@@ -358,7 +364,13 @@ export default {
 
 ### appendPlugins
 
-- **类型：** `(plugins: BundlerPluginInstance | BundlerPluginInstance[]) => void`
+- **类型：**
+
+```ts
+function appendPlugins(
+  plugins: Rspack.RspackPluginInstance | Rspack.RspackPluginInstance[],
+): void;
+```
 
 在内部 Rspack 插件数组尾部添加额外的插件，数组尾部的插件会在最后执行。
 

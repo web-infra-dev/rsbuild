@@ -4,12 +4,12 @@ import type { Configuration } from '@rspack/core';
 import { isWindows } from '../constants';
 import { color } from '../helpers';
 import { logger } from '../logger';
-import type { BundlerPluginInstance, RsbuildPlugin } from '../types';
+import type { RsbuildPlugin, Rspack } from '../types';
 
 const require = createRequire(import.meta.url);
 
 type RsdoctorExports = {
-  RsdoctorRspackPlugin: { new (): BundlerPluginInstance };
+  RsdoctorRspackPlugin: { new (): Rspack.RspackPluginInstance };
 };
 
 type MaybeRsdoctorPlugin = Configuration['plugins'] & {

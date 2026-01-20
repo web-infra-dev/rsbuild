@@ -24,11 +24,11 @@ interface SplitChunksContext {
   /**
    * Default split config in Rspack
    */
-  defaultConfig: Exclude<SplitChunks, false>;
+  defaultConfig: Rspack.OptimizationSplitChunksOptions;
   /**
    * User Rspack `splitChunks` config
    */
-  override: Exclude<SplitChunks, false>;
+  override: Rspack.OptimizationSplitChunksOptions;
   /**
    * User Rsbuild `chunkSplit` config
    */
@@ -244,7 +244,7 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
 
         const { config } = environment;
 
-        const defaultConfig: Exclude<SplitChunks, false> = {
+        const defaultConfig: Rspack.OptimizationSplitChunksOptions = {
           chunks: config.moduleFederation?.options?.exposes
             ? // split only `async` chunks for module federation provider app
               // this ensures that remote entries are not affected by chunk splitting
