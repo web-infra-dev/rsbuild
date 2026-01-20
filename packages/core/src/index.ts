@@ -43,7 +43,6 @@ export type {
   Build,
   BuildOptions,
   BuildResult,
-  BundlerPluginInstance,
   Charset,
   CleanDistPath,
   CleanDistPathObject,
