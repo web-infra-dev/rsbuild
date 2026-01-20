@@ -17,11 +17,11 @@ test('should trigger the client HMR handler when dev server sends a custom messa
   try {
     await gotoPage(page, server);
 
-    const before = await page.evaluate('window.__count');
+    const before = await page.evaluate<number>('window.__count');
 
     server.sockWrite('custom', { event: 'count' });
 
-    await expectPoll(() => page.evaluate('window.__count')).toBe(before + 1);
+    await expectPoll(() => page.evaluate<number>('window.__count')).toBe(before + 1);
   } finally {
     await server.close();
   }
@@ -44,9 +44,9 @@ test('should dispose old HMR event callbacks after page reload', async ({
     await gotoPage(page, server);
 
     // 1) Trigger once and assert callback executed.
-    const afterFirst = await page.evaluate('window.__count');
+    const afterFirst = await page.evaluate<number>('window.__count');
     server.sockWrite('custom', { event: 'count' });
-    await expectPoll(() => page.evaluate('window.__count')).toBe(
+    await expectPoll(() => page.evaluate<number>('window.__count')).toBe(
       afterFirst + 1,
     );
 
@@ -54,11 +54,11 @@ test('should dispose old HMR event callbacks after page reload', async ({
     await fs.writeFile(indexPath, originalSource.replace('hello', 'hi'));
 
     // 3) Trigger again. If old callback leaked, we'd observe multiple runs.
-    await expectPoll(() => page.evaluate('window.__count')).toBe(
+    await expectPoll(() => page.evaluate<number>('window.__count')).toBe(
       afterFirst + 1,
     );
     server.sockWrite('custom', { event: 'count' });
-    await expectPoll(() => page.evaluate('window.__count')).toBe(
+    await expectPoll(() => page.evaluate<number>('window.__count')).toBe(
       afterFirst + 2,
     );
   } finally {
