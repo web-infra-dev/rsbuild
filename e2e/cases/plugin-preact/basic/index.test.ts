@@ -1,10 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-// TODO: Fix this test
-test.skip('should render basic Preact component in dev', async ({
-  page,
-  dev,
-}) => {
+test('should render basic Preact component in dev', async ({ page, dev }) => {
   await dev();
 
   const button = page.locator('#button');

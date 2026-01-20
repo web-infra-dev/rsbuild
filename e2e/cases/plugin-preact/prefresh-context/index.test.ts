@@ -2,8 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { expect, test } from '@e2e/helper';
 
-// TODO: Fix this test
-test.skip('HMR should work properly with `createContext`', async ({
+test('HMR should work properly with `createContext`', async ({
   page,
   dev,
   editFile,
