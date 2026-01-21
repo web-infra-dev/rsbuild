@@ -92,10 +92,6 @@ Rstack 是一个以 Rspack 为核心的 JavaScript 统一工具链，具有优�
 
 你也可以加入 [飞书群](https://applink.feishu.cn/client/chat/chatter/add_by_link?link_token=3c3vca77-bfc0-4ef5-b62b-9c5c9c92f1b4) 与大家一起交流。
 
-## 🌟 质量
-
-Rsbuild 通过 [Web Infra QoS](https://web-infra-qos.netlify.app?product=rsbuild&metrics=bundle-size) 来观测核心指标的变化情况，比如 bundle size、compile speed 和 install size。
-
 ## 🙏 致谢
 
 Rsbuild 受到社区中几个杰出项目的启发。我们想要对以下项目表示认可和诚挚的感谢：
@@ -103,8 +99,6 @@ Rsbuild 受到社区中几个杰出项目的启发。我们想要对以下项目
 - 多个插件的实现受到 [create-react-app](https://github.com/facebook/create-react-app) 的启发
 - 多个实用工具函数改编自 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)
 - 一些 API 设计模式受到 [Vite](https://github.com/vitejs/vite) 的影响
-
-特别感谢 [Netlify](https://netlify.com/) 为 Rsbuild 文档网站提供托管服务。
 
 ## 📖 License
 

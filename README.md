@@ -94,10 +94,6 @@ This repo has adopted the ByteDance open source code of conduct. Please check [C
 
 Come and chat with us on [Discord](https://discord.gg/XsaKEEk4mW)! The Rstack team and users are active there, and we're always looking for contributions.
 
-## 🌟 Quality
-
-Rsbuild uses [Web Infra QoS](https://web-infra-qos.netlify.app?product=rsbuild&metrics=bundle-size) to observe the trend of key metrics, such as bundle size, compile speed and install size.
-
 ## 🙏 Credits
 
 Rsbuild has been inspired by several outstanding projects in the community. We would like to acknowledge and express our sincere gratitude to the following projects:
@@ -105,8 +101,6 @@ Rsbuild has been inspired by several outstanding projects in the community. We w
 - Various plugin implementations have been inspired by [create-react-app](https://github.com/facebook/create-react-app)
 - Multiple utility functions have been adapted from [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)
 - Several API design patterns have been influenced by [Vite](https://github.com/vitejs/vite)
-
-Special thanks to [Netlify](https://netlify.com/) for providing hosting services for the Rsbuild documentation website.
 
 ## 📖 License
 
