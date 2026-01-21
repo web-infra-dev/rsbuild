@@ -42,7 +42,7 @@
     "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
-    "@rspack/core": "2.0.0-canary-20260116",
+    "@rspack/core": "2.0.0-canary.20260120",
     "@rspack/lite-tapable": "~1.1.0",
     "@swc/helpers": "^0.5.18",
     "jiti": "^2.6.1"
