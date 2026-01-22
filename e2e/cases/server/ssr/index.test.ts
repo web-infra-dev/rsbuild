@@ -5,9 +5,8 @@ test('support SSR', async ({ page, devOnly }) => {
 
   const url = new URL(`http://localhost:${rsbuild.port}`);
 
-  const res = await page.goto(url.href);
-
-  expect(await res?.text()).toMatch(/Rsbuild with React/);
+  await page.goto(url.href);
+  await expect(page.locator('body')).toContainText('Rsbuild with React');
 
   await page.goto(url.href);
 
@@ -29,9 +28,8 @@ test('support SSR with external', async ({ page, devOnly }) => {
 
   const url = new URL(`http://localhost:${rsbuild.port}`);
 
-  const res = await page.goto(url.href);
-
-  expect(await res?.text()).toMatch(/Rsbuild with React/);
+  await page.goto(url.href);
+  await expect(page.locator('body')).toContainText('Rsbuild with React');
 
   await page.goto(url.href);
 
@@ -46,9 +44,8 @@ test('support SSR with esm target', async ({ page, devOnly }) => {
 
   const url1 = new URL(`http://localhost:${rsbuild.port}`);
 
-  const res = await page.goto(url1.href);
-
-  expect(await res?.text()).toMatch(/Rsbuild with React/);
+  await page.goto(url1.href);
+  await expect(page.locator('body')).toContainText('Rsbuild with React');
 
   delete process.env.TEST_ESM_LIBRARY;
 });
@@ -69,9 +66,8 @@ test('support SSR with esm target & external', async ({ page, devOnly }) => {
 
   const url1 = new URL(`http://localhost:${rsbuild.port}`);
 
-  const res = await page.goto(url1.href);
-
-  expect(await res?.text()).toMatch(/Rsbuild with React/);
+  await page.goto(url1.href);
+  await expect(page.locator('body')).toContainText('Rsbuild with React');
 
   delete process.env.TEST_ESM_LIBRARY;
 });
@@ -80,12 +76,10 @@ test('support SSR with split chunk', async ({ page, devOnly }) => {
   process.env.TEST_SPLIT_CHUNK = '1';
 
   const rsbuild = await devOnly();
-
   const url1 = new URL(`http://localhost:${rsbuild.port}`);
 
-  const res = await page.goto(url1.href);
-
-  expect(await res?.text()).toMatch(/Rsbuild with React/);
+  await page.goto(url1.href);
+  await expect(page.locator('body')).toContainText('Rsbuild with React');
 
   delete process.env.TEST_SPLIT_CHUNK;
 });
