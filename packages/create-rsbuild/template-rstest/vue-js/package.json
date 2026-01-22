@@ -7,8 +7,8 @@
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/vue": "^8.1.0",
-    "@rstest/core": "^0.7.9",
-    "@rstest/adapter-rsbuild": "^0.1.0",
+    "@rstest/core": "^0.8.0",
+    "@rstest/adapter-rsbuild": "^0.2.0",
     "happy-dom": "^20.3.3"
   }
 }
