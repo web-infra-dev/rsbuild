@@ -1,9 +1,14 @@
 import { join } from 'node:path';
 import { expect, HMR_CONNECTED_LOG, test } from '@e2e/helper';
-import { logger } from '@rsbuild/core';
+import { type LogLevel, logger } from '@rsbuild/core';
 
+let originalLevel: LogLevel;
+
+test.beforeEach(() => {
+  originalLevel = logger.level as LogLevel;
+});
 test.afterEach(() => {
-  logger.level = 'info'; // reset logger level after each test
+  logger.level = originalLevel;
 });
 
 test('should respect dev.client.logLevel when set to warn', async ({
