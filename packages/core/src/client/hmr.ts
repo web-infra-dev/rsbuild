@@ -17,43 +17,47 @@ type CustomListenersMap = Map<string, ((data: any) => void)[]>;
 // removes them from the global map when the module is disposed.
 function setupCustomHMRListeners(customListenersMap: CustomListenersMap): void {
   // @ts-expect-error
-  RSPACK_INTERCEPT_MODULE_EXECUTION.push((options: unknown) => {
-    const module = options.module as {
-      hot: {
-        on: (event: string, cb: (payload: any) => void) => void;
-        dispose: (cb: () => void) => void;
+  RSPACK_INTERCEPT_MODULE_EXECUTION.push(
+    (options: {
+      module: {
+        hot: {
+          on: (event: string, cb: (payload: any) => void) => void;
+          dispose: (cb: () => void) => void;
+        };
       };
-    };
+    }) => {
+      const module = options.module;
 
-    const newListeners: CustomListenersMap = new Map();
+      const newListeners: CustomListenersMap = new Map();
 
-    const addToMap = (
-      map: CustomListenersMap,
-      event: string,
-      cb: (payload: any) => void,
-    ) => {
-      const existing = map.get(event) ?? [];
-      existing.push(cb);
-      map.set(event, existing);
-    };
+      const addToMap = (
+        map: CustomListenersMap,
+        event: string,
+        cb: (payload: any) => void,
+      ) => {
+        const existing = map.get(event) ?? [];
+        existing.push(cb);
+        map.set(event, existing);
+      };
 
-    module.hot.on = (event: string, cb: (payload: any) => void) => {
-      addToMap(customListenersMap, event, cb);
-      addToMap(newListeners, event, cb);
-    };
+      module.hot.on = (event: string, cb: (payload: any) => void) => {
+        addToMap(customListenersMap, event, cb);
+        addToMap(newListeners, event, cb);
+      };
 
-    module.hot.dispose(() => {
-      for (const [event, staleFns] of newListeners) {
-        const listeners = customListenersMap.get(event);
-        if (!listeners) continue;
+      module.hot.dispose(() => {
+        for (const [event, staleFns] of newListeners) {
+          const listeners = customListenersMap.get(event);
+          if (!listeners) continue;
 
-        customListenersMap.set(
-          event,
-          listeners.filter((l) => !staleFns.includes(l)),
-        );
-      }
-    });
-  });
+          customListenersMap.set(
+            event,
+            listeners.filter((l) => !staleFns.includes(l)),
+          );
+        }
+      });
+    },
+  );
 }
 
 export const registerOverlay = (
