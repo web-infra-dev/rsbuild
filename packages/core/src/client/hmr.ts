@@ -17,7 +17,7 @@ type CustomListenersMap = Map<string, ((data: any) => void)[]>;
 // removes them from the global map when the module is disposed.
 function setupCustomHMRListeners(customListenersMap: CustomListenersMap): void {
   // @ts-expect-error
-  RSPACK_INTERCEPT_MODULE_EXECUTION.push((options: any) => {
+  RSPACK_INTERCEPT_MODULE_EXECUTION.push((options: unknown) => {
     const module = options.module as {
       hot: {
         on: (event: string, cb: (payload: any) => void) => void;
@@ -291,12 +291,12 @@ export function init(
         handleResolvedClientError(message.data);
         break;
       case 'custom': {
-        const { event, ...rest } = message.data;
+        const { event, data } = message.data;
         if (event) {
           const cbs = customListenersMap.get(event);
           if (cbs) {
             cbs.forEach((cb) => {
-              cb(rest);
+              cb(data);
             });
           }
         }

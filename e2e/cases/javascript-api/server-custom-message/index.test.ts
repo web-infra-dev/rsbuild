@@ -21,7 +21,9 @@ test('should trigger the client HMR handler when dev server sends a custom messa
 
     server.sockWrite('custom', { event: 'count' });
 
-    await expectPoll(() => page.evaluate<number>('window.__count')).toBe(before + 1);
+    await expectPoll(() => page.evaluate<number>('window.__count')).toBe(
+      before + 1,
+    );
   } finally {
     await server.close();
   }
