@@ -36,7 +36,7 @@
     "@rsbuild/config": "workspace:*",
     "@rslint/core": "^0.2.0",
     "@rstest/adapter-rslib": "^0.1.1",
-    "@rstest/core": "^0.7.9",
+    "@rstest/core": "^0.8.0",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^24.10.9",
     "cross-env": "^10.1.0",
