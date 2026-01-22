@@ -69,6 +69,15 @@ const pluginFixDtsTypes: rsbuild.RsbuildPlugin = {
   },
 };
 
+// Rslib currently doesn't provide a way to preserve `__webpack_require__.*`
+// references in the emitted bundle.
+//
+// To work around this, we use "magic" placeholder identifiers during authoring
+// (e.g. `RSPACK_MODULE_HOT`, `RSPACK_INTERCEPT_MODULE_EXECUTION`) so rslib
+// won't try to resolve/transform `__webpack_require__.*` at build time.
+//
+// After bundling, this plugin performs a plain string replacement to swap
+// those placeholders back to the actual Rspack runtime globals.
 class RspackRuntimeReplacePlugin {
   static readonly pluginName = 'RspackRuntimeReplacePlugin';
 
