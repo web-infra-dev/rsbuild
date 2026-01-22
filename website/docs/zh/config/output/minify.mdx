@@ -17,7 +17,7 @@ type Minify =
   - 当 [output.target](/config/output/target) 为 `web` 或 `web-worker` 时为 `true`。
   - 当 [output.target](/config/output/target) 为 `node` 时为 `false`。
 
-用于设置是否在生产模式下开启代码压缩，以及提供选项来配置压缩工具。
+用于设置开启代码压缩，以及提供选项来配置压缩工具。
 
 默认情况下，生产模式下的 `web` 和 `web-worker` 构建产物会自动压缩 JavaScript 和 CSS，以提升页面性能。`node` 目标在生产构建时默认不启用压缩，除非你显式开启。
 
@@ -65,7 +65,7 @@ export default {
 - **类型：** `boolean`
 - **默认值：** `true`
 
-是否在开启对 JavaScript 代码的压缩：
+是否开启对 JavaScript 代码的压缩：
 
 - `true`: 在生产模式下开启压缩。
 - `false`: 在所有模式下禁用压缩。
@@ -125,7 +125,7 @@ export default {
 - **类型：** `boolean`
 - **默认值：** `true`
 
-是否在开启对 CSS 代码的压缩：
+是否开启对 CSS 代码的压缩：
 
 - `true`: 在生产模式下开启压缩。
 - `false`: 在所有模式下禁用压缩。
