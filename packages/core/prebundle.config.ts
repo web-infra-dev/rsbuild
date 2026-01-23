@@ -23,8 +23,12 @@ export default {
   dependencies: [
     'ws',
     'html-rspack-plugin',
-    'chokidar',
     'webpack-merge',
+    {
+      name: 'chokidar',
+      copyDts: true,
+      dtsOnly: true,
+    },
     {
       name: 'rslog',
       dtsOnly: true,
