@@ -1,6 +1,5 @@
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
-import { mfConfig } from './moduleFederation.config';
 
 export default defineConfig({
   plugins: [pluginReact()],
@@ -11,6 +10,22 @@ export default defineConfig({
     port: Number(process.env.REMOTE_PORT) || 3002,
   },
   moduleFederation: {
-    options: mfConfig,
+    options: {
+      name: 'remote',
+      exposes: {
+        './Button': './src/test-temp-Button',
+      },
+      filename: 'remoteEntry.js',
+      shared: {
+        react: {
+          singleton: true,
+          requiredVersion: '^19.0.0',
+        },
+        'react-dom': {
+          singleton: true,
+          requiredVersion: '^19.0.0',
+        },
+      },
+    },
   },
 });
