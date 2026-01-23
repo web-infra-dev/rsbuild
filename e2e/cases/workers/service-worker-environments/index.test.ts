@@ -11,15 +11,12 @@ const waitForServiceWorker = async (page: Page) => {
   // Wait for the service worker to be registered and activated
   // This is more reliable than waiting for Playwright's 'serviceworker' event
   // because the SW might already be registered before we set up the listener
-  await page.waitForFunction(
-    () => {
-      return (
-        window.navigator.serviceWorker.controller !== null &&
-        window.swStatus === 'ready'
-      );
-    },
-    { timeout: 10000 },
-  );
+  await page.waitForFunction(() => {
+    return (
+      window.navigator.serviceWorker.controller !== null &&
+      (window.swStatus === 'ready' || window.swStatus === 'error')
+    );
+  });
 
   // Verify the service worker is properly activated
   const swState = await page.evaluate(async () => {
@@ -31,9 +28,9 @@ const waitForServiceWorker = async (page: Page) => {
     };
   });
 
+  expect(swState.swStatus).toBe('ready');
   expect(swState.hasController).toBe(true);
   expect(swState.state).toBe('activated');
-  expect(swState.swStatus).toBe('ready');
 };
 
 test('should compile service worker in build', async ({
