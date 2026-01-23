@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
@@ -7,7 +8,7 @@ export default defineConfig({
         rules: [
           {
             with: { type: 'json' },
-            loader: import.meta.resolve('./loaderWith.js'),
+            loader: fileURLToPath(import.meta.resolve('./loaderWith.js')),
           },
         ],
       },
