@@ -1,5 +1,6 @@
 import type { CopyOptions } from 'node:fs';
 import fs from 'node:fs';
+import path from 'node:path';
 import { isDeno } from '../constants';
 import { color } from '../helpers';
 import { dedupeNestedPaths } from '../helpers/path';
@@ -71,7 +72,7 @@ export const pluginServer = (): RsbuildPlugin => ({
           );
 
           shouldCopy = (source: string) => {
-            const relativePath = source.slice(publicDir.length + 1);
+            const relativePath = path.relative(publicDir, source);
 
             if (!relativePath) {
               return true;
