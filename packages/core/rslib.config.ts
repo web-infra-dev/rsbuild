@@ -1,8 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { nodeMinifyConfig } from '@rsbuild/config/rslib.config.ts';
-import type { Rspack, rsbuild } from '@rslib/core';
-import { defineConfig } from '@rslib/core';
+import { defineConfig, type Rspack, type rsbuild } from '@rslib/core';
 import pkgJson from './package.json' with { type: 'json' };
 import prebundleConfig from './prebundle.config.ts';
 
@@ -70,6 +69,62 @@ const pluginFixDtsTypes: rsbuild.RsbuildPlugin = {
   },
 };
 
+// Rslib currently doesn't provide a way to preserve `__webpack_require__.*`
+// references in the emitted bundle.
+//
+// To work around this, we use "magic" placeholder identifiers during authoring
+// (e.g. `RSPACK_MODULE_HOT`, `RSPACK_INTERCEPT_MODULE_EXECUTION`) so rslib
+// won't try to resolve/transform `__webpack_require__.*` at build time.
+//
+// After bundling, this plugin performs a plain string replacement to swap
+// those placeholders back to the actual Rspack runtime globals.
+class RspackRuntimeReplacePlugin {
+  static readonly pluginName = 'RspackRuntimeReplacePlugin';
+
+  apply(compiler: Rspack.Compiler) {
+    const RSPACK_MODULE_HOT = 'RSPACK_MODULE_HOT';
+    const RSPACK_INTERCEPT_MODULE_EXECUTION =
+      'RSPACK_INTERCEPT_MODULE_EXECUTION';
+
+    const { Compilation, RuntimeGlobals, sources } = compiler.rspack;
+
+    compiler.hooks.thisCompilation.tap(
+      RspackRuntimeReplacePlugin.pluginName,
+      (compilation) => {
+        compilation.hooks.processAssets.tap(
+          {
+            name: RspackRuntimeReplacePlugin.pluginName,
+            stage: Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_INLINE,
+          },
+          (assets) => {
+            for (const name in assets) {
+              const asset = assets[name];
+              if (name.endsWith('.js')) {
+                const source = asset.source();
+                if (
+                  source.includes(RSPACK_MODULE_HOT) ||
+                  source.includes(RSPACK_INTERCEPT_MODULE_EXECUTION)
+                ) {
+                  const replacedSource = source
+                    .replaceAll(RSPACK_MODULE_HOT, 'module.hot')
+                    .replaceAll(
+                      RSPACK_INTERCEPT_MODULE_EXECUTION,
+                      RuntimeGlobals.interceptModuleExecution,
+                    );
+                  compilation.updateAsset(
+                    name,
+                    new sources.RawSource(replacedSource),
+                  );
+                }
+              }
+            }
+          },
+        );
+      },
+    );
+  }
+}
+
 export default defineConfig({
   source: {
     define,
@@ -132,6 +187,12 @@ export default defineConfig({
         define: {
           // use define to avoid compile time evaluation of __webpack_hash__
           BUILD_HASH: '__webpack_hash__',
+        },
+      },
+      tools: {
+        rspack(config) {
+          config.plugins.push(new RspackRuntimeReplacePlugin());
+          return config;
         },
       },
       output: {
