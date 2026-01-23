@@ -13,51 +13,58 @@ let clearOverlay: undefined | (() => void);
 
 type CustomListenersMap = Map<string, ((data: any) => void)[]>;
 
+type ModuleHot = {
+  on: (event: string, cb: (payload: any) => void) => void;
+  dispose: (cb: () => void) => void;
+};
+
+declare const RSPACK_MODULE_HOT: ModuleHot | undefined;
+
+type InterceptModuleExecutionOptions = {
+  module: {
+    hot: ModuleHot;
+  };
+};
+
+declare const RSPACK_INTERCEPT_MODULE_EXECUTION: ((
+  options: InterceptModuleExecutionOptions,
+) => void)[];
+
 // Install a patched `module.hot.on` that records per-module listeners and
 // removes them from the global map when the module is disposed.
 function setupCustomHMRListeners(customListenersMap: CustomListenersMap): void {
-  // @ts-expect-error
-  RSPACK_INTERCEPT_MODULE_EXECUTION.push(
-    (options: {
-      module: {
-        hot: {
-          on: (event: string, cb: (payload: any) => void) => void;
-          dispose: (cb: () => void) => void;
-        };
-      };
-    }) => {
-      const module = options.module;
+  RSPACK_INTERCEPT_MODULE_EXECUTION.push((options) => {
+    const { module } = options;
 
-      const newListeners: CustomListenersMap = new Map();
+    const newListeners: CustomListenersMap = new Map();
 
-      const addToMap = (
-        map: CustomListenersMap,
-        event: string,
-        cb: (payload: any) => void,
-      ) => {
-        const existing = map.get(event) ?? [];
-        existing.push(cb);
-        map.set(event, existing);
-      };
+    const addToMap = (
+      map: CustomListenersMap,
+      event: string,
+      cb: (payload: any) => void,
+    ) => {
+      const existing = map.get(event) ?? [];
+      existing.push(cb);
+      map.set(event, existing);
+    };
 
-      module.hot.on = (event: string, cb: (payload: any) => void) => {
-        addToMap(customListenersMap, event, cb);
-        addToMap(newListeners, event, cb);
-      };
+    module.hot.on = (event: string, cb: (payload: any) => void) => {
+      addToMap(customListenersMap, event, cb);
+      addToMap(newListeners, event, cb);
+    };
 
-      module.hot.dispose(() => {
-        for (const [event, staleFns] of newListeners) {
-          const listeners = customListenersMap.get(event);
-          if (!listeners) continue;
+    module.hot.dispose(() => {
+      for (const [event, staleFns] of newListeners) {
+        const listeners = customListenersMap.get(event);
+        if (!listeners) continue;
 
-          customListenersMap.set(
-            event,
-            listeners.filter((l) => !staleFns.includes(l)),
-          );
-        }
-      });
-    },
-  );
+        customListenersMap.set(
+          event,
+          listeners.filter((l) => !staleFns.includes(l)),
+        );
+      }
+    });
+  });
 }
 
 export const registerOverlay = (
@@ -421,7 +428,6 @@ export function init(
     window.addEventListener('unhandledrejection', onUnhandledRejection);
   }
 
-  // @ts-expect-error
   if (RSPACK_MODULE_HOT) {
     setupCustomHMRListeners(customListenersMap);
   }
