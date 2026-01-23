@@ -5,7 +5,6 @@ const require = createRequire(import.meta.url);
 
 type CompiledPackages = {
   ws: typeof import('../../compiled/ws').default;
-  chokidar: typeof import('../../compiled/chokidar').default;
   'webpack-merge': typeof import('../../compiled/webpack-merge');
   'html-rspack-plugin': typeof import('../../compiled/html-rspack-plugin').default;
   'http-proxy-middleware': typeof import('../../compiled/http-proxy-middleware');

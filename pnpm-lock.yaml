@@ -551,8 +551,8 @@ importers:
         specifier: ^6.7.14
         version: 6.7.14
       chokidar:
-        specifier: ^4.0.3
-        version: 4.0.3
+        specifier: ^5.0.0
+        version: 5.0.0
       connect:
         specifier: 3.7.0
         version: 3.7.0
@@ -602,8 +602,8 @@ importers:
         specifier: 8.2.0
         version: 8.2.0(patch_hash=7434af0286aadb1ef0e2daed0d97ebc69f717990e106d650e6e515683e89988a)(@rspack/core@2.0.0-alpha.0(@module-federation/runtime-tools@0.22.1)(@swc/helpers@0.5.18))(postcss@8.5.6)(typescript@5.9.3)(webpack@5.104.1)
       prebundle:
-        specifier: 1.6.0
-        version: 1.6.0(typescript@5.9.3)
+        specifier: 1.6.2
+        version: 1.6.2(typescript@5.9.3)
       range-parser:
         specifier: ^1.2.1
         version: 1.2.1
@@ -724,8 +724,8 @@ importers:
         specifier: 10.0.0
         version: 10.0.0(@babel/core@7.28.6)(webpack@5.104.1)
       prebundle:
-        specifier: 1.6.0
-        version: 1.6.0(typescript@5.9.3)
+        specifier: 1.6.2
+        version: 1.6.2(typescript@5.9.3)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -758,8 +758,8 @@ importers:
         specifier: ^12.3.0
         version: 12.3.0(@rspack/core@1.7.2(@swc/helpers@0.5.18))(less@4.3.0)(webpack@5.104.1)
       prebundle:
-        specifier: 1.6.0
-        version: 1.6.0(typescript@5.9.3)
+        specifier: 1.6.2
+        version: 1.6.2(typescript@5.9.3)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -854,8 +854,8 @@ importers:
         specifier: ^8.0.10
         version: 8.0.10
       prebundle:
-        specifier: 1.6.0
-        version: 1.6.0(typescript@5.9.3)
+        specifier: 1.6.2
+        version: 1.6.2(typescript@5.9.3)
       resolve-url-loader:
         specifier: ^5.0.0
         version: 5.0.0
@@ -990,8 +990,8 @@ importers:
         specifier: 6.2.0
         version: 6.2.0(patch_hash=c76c890d2d68ffdf70bfbc9cb235e0389df929be2e1917766b8946b1de0a8c30)(webpack@5.104.1)
       prebundle:
-        specifier: 1.6.0
-        version: 1.6.0(typescript@5.9.3)
+        specifier: 1.6.2
+        version: 1.6.2(typescript@5.9.3)
       svgo:
         specifier: ^3.3.2
         version: 3.3.2
@@ -3476,6 +3476,10 @@ packages:
     resolution: {integrity: sha512-Qgzu8kfBvo+cA4962jnP1KkS6Dop5NS6g7R5LFYJr4b8Ub94PPQXUksCw9PvXoeXPRRddRNC5C1JQUR2SMGtnA==}
     engines: {node: '>= 14.16.0'}
 
+  chokidar@5.0.0:
+    resolution: {integrity: sha512-TQMmc3w+5AxjpL8iIiwebF73dRDF4fBIieAqGn9RGCWaEVwQ6Fb2cGe31Yns0RRIzii5goJ1Y7xbMwo1TxMplw==}
+    engines: {node: '>= 20.19.0'}
+
   chrome-trace-event@1.0.4:
     resolution: {integrity: sha512-rNjApaLzuwaOTjCiT8lSDdGN1APCiqkChLMJxJPWLunPAt5fy8xgU9/jNOchV84wfIxrA0lRQB7oCT8jrn/wrQ==}
     engines: {node: '>=6.0'}
@@ -5299,13 +5303,8 @@ packages:
   preact@10.28.2:
     resolution: {integrity: sha512-lbteaWGzGHdlIuiJ0l2Jq454m6kcpI1zNje6d8MlGAFlYvP2GO4ibnat7P74Esfz4sPTdM6UxtTwh/d3pwM9JA==}
 
-  prebundle@1.6.0:
-    resolution: {integrity: sha512-mv0rUfY/V5RUN/1GI4c6JvNSl8ClsosOBGDFtwePwr76t3DIsc0AzIBwc4ug39awgt00iGPIbb5OReL5NJ4arQ==}
-    hasBin: true
-
-  prettier@3.7.4:
-    resolution: {integrity: sha512-v6UNi1+3hSlVvv8fSaoUbggEM5VErKmmpGA7Pl3HF8V6uKY7rvClBOJlH6yNwQtfTueNkGVpOv/mtWL9L4bgRA==}
-    engines: {node: '>=14'}
+  prebundle@1.6.2:
+    resolution: {integrity: sha512-LQBxHze1WbN9wn1aEend5nRWU0Ae3UvrXJqRPsi6GGJtQcd21KviUZCVul3EYv73CRL3ts9Vlg9Hg+XibeyTlQ==}
     hasBin: true
 
   prettier@3.8.0:
@@ -5396,6 +5395,10 @@ packages:
   readdirp@4.1.2:
     resolution: {integrity: sha512-GDhwkLfywWL2s6vEjyhri+eXmfH6j1L7JE27WhqLeYzoh/A3DBaYGEj2H/HFZCn/kMfim73FXxEJTw06WtxQwg==}
     engines: {node: '>= 14.18.0'}
+
+  readdirp@5.0.0:
+    resolution: {integrity: sha512-9u/XQ1pvrQtYyMpZe7DXKv2p5CNvyVwzUB6uhLAnQwHMSgKMBR62lc7AHljaeteeHXn11XTAaLLUVZYVZyuRBQ==}
+    engines: {node: '>= 20.19.0'}
 
   recma-build-jsx@1.0.0:
     resolution: {integrity: sha512-8GtdyqaBcDfva+GUKDr3nev3VpKAhup1+RvkMvUxURHpW7QyIvk9F5wz7Vzo06CEMSilw6uArgRqhpiUcWp8ew==}
@@ -9053,6 +9056,10 @@ snapshots:
     dependencies:
       readdirp: 4.1.2
 
+  chokidar@5.0.0:
+    dependencies:
+      readdirp: 5.0.0
+
   chrome-trace-event@1.0.4: {}
 
   clean-css@5.3.3:
@@ -11151,18 +11158,16 @@ snapshots:
 
   preact@10.28.2: {}
 
-  prebundle@1.6.0(typescript@5.9.3):
+  prebundle@1.6.2(typescript@5.9.3):
     dependencies:
       '@vercel/ncc': 0.38.4
       cac: 6.7.14
-      prettier: 3.7.4
+      prettier: 3.8.0
       rollup: 4.55.1
       rollup-plugin-dts: 6.3.0(rollup@4.55.1)(typescript@5.9.3)
       terser: 5.44.1
     transitivePeerDependencies:
       - typescript
-
-  prettier@3.7.4: {}
 
   prettier@3.8.0: {}
 
@@ -11234,6 +11239,8 @@ snapshots:
       picomatch: 2.3.1
 
   readdirp@4.1.2: {}
+
+  readdirp@5.0.0: {}
 
   recma-build-jsx@1.0.0:
     dependencies:
@@ -11388,7 +11395,7 @@ snapshots:
       rollup: 4.55.1
       typescript: 5.9.3
     optionalDependencies:
-      '@babel/code-frame': 7.27.1
+      '@babel/code-frame': 7.28.6
 
   rollup@4.55.1:
     dependencies:
