@@ -7,7 +7,7 @@ export default defineConfig({
         rules: [
           {
             with: { type: 'json' },
-            loader: require.resolve('./loaderWith.js'),
+            loader: import.meta.resolve('./loaderWith.js'),
           },
         ],
       },
