@@ -416,6 +416,11 @@ export type PublicDirOptions = {
    * @default false
    */
   watch?: boolean;
+  /**
+   * Glob patterns of files to ignore when copying from the public directory.
+   * @default undefined
+   */
+  ignore?: string[];
 };
 
 export type PublicDir = false | PublicDirOptions | PublicDirOptions[];
