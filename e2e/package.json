@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@module-federation/runtime-tools": "0.22.1",
-    "core-js": "^3.47.0",
+    "core-js": "^3.48.0",
     "lodash": "^4.17.21",
     "preact": "^10.28.2",
     "react": "^19.2.3",
