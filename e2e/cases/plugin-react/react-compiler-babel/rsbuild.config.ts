@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from '@rsbuild/core';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginReact } from '@rsbuild/plugin-react';
@@ -8,7 +9,9 @@ export default defineConfig({
     pluginBabel({
       include: /\.(?:jsx|tsx)$/,
       babelLoaderOptions(opts) {
-        opts.plugins?.unshift(require.resolve('babel-plugin-react-compiler'));
+        opts.plugins?.unshift(
+          fileURLToPath(import.meta.resolve('babel-plugin-react-compiler')),
+        );
       },
     }),
   ],

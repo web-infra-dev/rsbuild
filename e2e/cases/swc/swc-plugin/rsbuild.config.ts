@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
@@ -7,7 +8,7 @@ export default defineConfig({
         experimental: {
           plugins: [
             [
-              require.resolve('@swc/plugin-remove-console'),
+              fileURLToPath(import.meta.resolve('@swc/plugin-remove-console')),
               {
                 exclude: ['error'],
               },

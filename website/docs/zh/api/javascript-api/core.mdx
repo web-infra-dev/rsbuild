@@ -137,6 +137,13 @@ function loadConfig(params?: {
   path?: string;
   meta?: Record<string, unknown>;
   envMode?: string;
+  /**
+   * 指定配置文件加载器，可选值为 `auto`、`jiti` 或 `native`。
+   * - `auto`：优先使用 Node.js 原生加载器，若加载失败则回退到 jiti
+   * - `jiti`：使用 jiti 作为加载器，开箱即用地支持 TypeScript 和 ESM
+   * - `native`：使用 Node.js 原生加载器，要求 Node.js >= 22.6 且原生支持 TypeScript
+   * @default 'auto'
+   */
   loader?: 'auto' | 'jiti' | 'native';
 }): Promise<{
   content: RsbuildConfig;
