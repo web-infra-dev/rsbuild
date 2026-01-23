@@ -8,22 +8,29 @@ declare global {
 }
 
 const waitForServiceWorker = async (page: Page) => {
-  // Setup service worker in playwright
-  const context = page.context();
-  const serviceWorkerPromise = context.waitForEvent('serviceworker');
-  await page.reload();
-  await serviceWorkerPromise;
-  await page.evaluate(async () => {
-    const registration = await window.navigator.serviceWorker.getRegistration();
-    if (registration?.active?.state === 'activated') {
-      return;
-    }
-    await new Promise((res) =>
-      window.navigator.serviceWorker.addEventListener('controllerchange', res),
+  // Wait for the service worker to be registered and activated
+  // This is more reliable than waiting for Playwright's 'serviceworker' event
+  // because the SW might already be registered before we set up the listener
+  await page.waitForFunction(() => {
+    return (
+      window.navigator.serviceWorker.controller !== null &&
+      (window.swStatus === 'ready' || window.swStatus === 'error')
     );
   });
 
-  expect(await page.evaluate(() => window.swStatus)).toBe('ready');
+  // Verify the service worker is properly activated
+  const swState = await page.evaluate(async () => {
+    const registration = await window.navigator.serviceWorker.getRegistration();
+    return {
+      hasController: window.navigator.serviceWorker.controller !== null,
+      state: registration?.active?.state,
+      swStatus: window.swStatus,
+    };
+  });
+
+  expect(swState.swStatus).toBe('ready');
+  expect(swState.hasController).toBe(true);
+  expect(swState.state).toBe('activated');
 };
 
 test('should compile service worker in build', async ({
