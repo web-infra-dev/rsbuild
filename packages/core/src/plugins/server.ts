@@ -54,7 +54,7 @@ export const pluginServer = (): RsbuildPlugin => ({
         // Create filter function for ignore patterns
         let shouldCopy: CopyOptions['filter'] | undefined;
 
-        if (ignore.length) {
+        if (ignore?.length) {
           const { globSync } = await import('tinyglobby');
 
           const ignoredList = globSync(ignore, {
