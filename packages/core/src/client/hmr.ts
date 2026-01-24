@@ -11,7 +11,7 @@ import { logger } from './log';
 let createOverlay: undefined | ((title: string, content: string) => void);
 let clearOverlay: undefined | (() => void);
 
-type CustomListenersMap = Map<string, ((data: any) => void)[]>;
+type CustomListenersMap = Map<string, ((data: unknown) => void)[]>;
 
 declare const RSPACK_MODULE_HOT: Rspack.Hot | undefined;
 
@@ -28,14 +28,14 @@ function setupCustomHMRListeners(customListenersMap: CustomListenersMap): void {
     const addToMap = (
       map: CustomListenersMap,
       event: string,
-      cb: (payload: any) => void,
+      cb: (payload: unknown) => void,
     ) => {
-      const existing = map.get(event) ?? [];
+      const existing = map.get(event) || [];
       existing.push(cb);
       map.set(event, existing);
     };
 
-    module.hot.on = (event: string, cb: (payload: any) => void) => {
+    module.hot.on = (event: string, cb: (payload: unknown) => void) => {
       addToMap(customListenersMap, event, cb);
       addToMap(newListeners, event, cb);
     };
