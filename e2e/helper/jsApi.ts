@@ -6,6 +6,7 @@ import {
   createRsbuild,
   type BuildResult as RsbuildBuildResult,
   type RsbuildConfig,
+  type RsbuildDevServer,
   type RsbuildInstance,
 } from '@rsbuild/core';
 import type { Page } from 'playwright';
@@ -128,6 +129,11 @@ export async function dev({
       })
     : Promise.resolve();
 
+  let server: RsbuildDevServer | undefined;
+  rsbuild.onBeforeStartDevServer((context) => {
+    server = context.server;
+  });
+
   const result = await rsbuild.startDevServer();
 
   await wait;
@@ -142,6 +148,7 @@ export async function dev({
     ...result,
     ...logHelper!,
     distPath,
+    server,
     instance: rsbuild,
     getDistFiles: ({ sourceMaps }: { sourceMaps?: boolean } = {}) =>
       sourceMaps ? getOutputFiles() : filterSourceMaps(getOutputFiles()),
