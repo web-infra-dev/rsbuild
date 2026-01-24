@@ -22,7 +22,7 @@ test('should dispose old HMR event callbacks after page reload', async ({
   copySrcDir,
 }) => {
   const srcDir = await copySrcDir();
-  const indexPath = path.join(srcDir, 'index.js');
+  const indexPath = path.join(srcDir, 'index.ts');
   const { server } = await dev({
     config: {
       source: {
