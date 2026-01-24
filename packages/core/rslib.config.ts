@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { nodeMinifyConfig } from '@rsbuild/config/rslib.config.ts';
-import { defineConfig, type Rsbuild, type Rspack, rspack } from '@rslib/core';
+import { defineConfig, type Rsbuild, type Rspack } from '@rslib/core';
 import pkgJson from './package.json' with { type: 'json' };
 import prebundleConfig from './prebundle.config.ts';
 
@@ -87,7 +87,7 @@ const replacePlugin: Rsbuild.RsbuildPlugin = {
 
     api.processAssets(
       { stage: 'optimize-inline' },
-      ({ assets, compilation, sources }) => {
+      ({ assets, compiler, compilation, sources }) => {
         for (const name of Object.keys(assets)) {
           const asset = assets[name];
           if (!name.endsWith('.js')) {
@@ -106,7 +106,7 @@ const replacePlugin: Rsbuild.RsbuildPlugin = {
             .replaceAll(RSPACK_MODULE_HOT, 'module.hot')
             .replaceAll(
               RSPACK_INTERCEPT_MODULE_EXECUTION,
-              rspack.RuntimeGlobals.interceptModuleExecution,
+              compiler.rspack.RuntimeGlobals.interceptModuleExecution,
             );
           compilation.updateAsset(name, new sources.RawSource(replacedSource));
         }
