@@ -1,3 +1,5 @@
+/// <reference types="@rsbuild/core/types" />
+
 console.log('hello');
 
 declare global {
