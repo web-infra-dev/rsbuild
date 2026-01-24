@@ -30,7 +30,8 @@
       "!**/*.svelte",
       "!**/template-lit-*/src/my-element.*",
       "!e2e/cases/browser-logs/skip-build-error/src",
-      "!e2e/**/*.html"
+      "!e2e/**/*.html",
+      "!packages/core/types.d.ts"
     ],
     "ignoreUnknown": true
   },
