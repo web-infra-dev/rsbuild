@@ -71,7 +71,7 @@ interface ImportMeta {
 
 declare namespace Rspack {
   interface Hot {
-    on: (event: string, cb: (payload: any) => void) => void;
+    on: <Payload = any>(event: string, cb: (payload: Payload) => void) => void;
   }
 }
 

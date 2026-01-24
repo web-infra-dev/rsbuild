@@ -35,7 +35,7 @@ function setupCustomHMRListeners(customListenersMap: CustomListenersMap): void {
       map.set(event, existing);
     };
 
-    module.hot.on = (event: string, cb: (payload: unknown) => void) => {
+    module.hot.on = (event: string, cb: (payload: any) => void) => {
       addToMap(customListenersMap, event, cb);
       addToMap(newListeners, event, cb);
     };
