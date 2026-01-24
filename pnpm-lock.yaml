@@ -1032,9 +1032,6 @@ importers:
 
   scripts/config:
     devDependencies:
-      '@rsbuild/core':
-        specifier: workspace:*
-        version: link:../../packages/core
       '@rslib/core':
         specifier: 0.19.2
         version: 0.19.2(@typescript/native-preview@7.0.0-dev.20260118.1)(typescript@5.9.3)
@@ -1046,7 +1043,7 @@ importers:
         version: 7.0.0-dev.20260118.1
       rsbuild-plugin-arethetypeswrong:
         specifier: 0.1.1
-        version: 0.1.1(@rsbuild/core@packages+core)(typescript@5.9.3)
+        version: 0.1.1(@rsbuild/core@1.7.2)(typescript@5.9.3)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -11428,11 +11425,11 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.55.1
       fsevents: 2.3.3
 
-  rsbuild-plugin-arethetypeswrong@0.1.1(@rsbuild/core@packages+core)(typescript@5.9.3):
+  rsbuild-plugin-arethetypeswrong@0.1.1(@rsbuild/core@1.7.2)(typescript@5.9.3):
     dependencies:
       typescript: 5.9.3
     optionalDependencies:
-      '@rsbuild/core': link:packages/core
+      '@rsbuild/core': 1.7.2
 
   rsbuild-plugin-dts@0.19.2(@rsbuild/core@1.7.1)(@typescript/native-preview@7.0.0-dev.20260118.1)(typescript@5.9.3):
     dependencies:

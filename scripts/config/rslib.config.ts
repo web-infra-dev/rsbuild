@@ -1,5 +1,4 @@
-import type { Minify } from '@rsbuild/core';
-import { defineConfig, type LibConfig } from '@rslib/core';
+import { defineConfig, type LibConfig, type Rsbuild } from '@rslib/core';
 import { pluginAreTheTypesWrong } from 'rsbuild-plugin-arethetypeswrong';
 
 export const commonExternals: Array<string | RegExp> = [
@@ -7,7 +6,7 @@ export const commonExternals: Array<string | RegExp> = [
   /[\\/]compiled[\\/]/,
 ];
 
-export const nodeMinifyConfig: Minify = {
+export const nodeMinifyConfig: Rsbuild.Minify = {
   js: true,
   css: false,
   jsOptions: {
