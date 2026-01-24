@@ -268,9 +268,10 @@ console.log(webStats.toJson({ all: false }));
 - **Type:**
 
 ```ts
-type SockWrite =
-  | ((type: 'static-changed') => void)
-  | ((type: 'custom', data?: { event: string; data?: any }) => void);
+type SockWrite = {
+  (type: 'static-changed'): void;
+  (type: 'custom', data?: { event: string; data?: any }): void;
+};
 ```
 
 Sends some message to HMR client, and then the HMR client will take different actions depending on the message type.
