@@ -130,6 +130,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "publicDir": [
       {
         "copyOnBuild": "auto",
+        "ignore": [],
         "name": "<ROOT>/public",
         "watch": false,
       },
@@ -287,6 +288,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "publicDir": [
       {
         "copyOnBuild": "auto",
+        "ignore": [],
         "name": "<ROOT>/public",
         "watch": false,
       },
@@ -448,6 +450,7 @@ exports[`environment config > should print environment config when inspect confi
       "publicDir": [
         {
           "copyOnBuild": "auto",
+          "ignore": [],
           "name": "<ROOT>/public",
           "watch": false,
         },
@@ -605,6 +608,7 @@ exports[`environment config > should print environment config when inspect confi
       "publicDir": [
         {
           "copyOnBuild": "auto",
+          "ignore": [],
           "name": "<ROOT>/public",
           "watch": false,
         },
@@ -782,6 +786,7 @@ exports[`environment config > should support modify environment config by api.mo
       "publicDir": [
         {
           "copyOnBuild": "auto",
+          "ignore": [],
           "name": "<ROOT>/public",
           "watch": false,
         },
@@ -940,6 +945,7 @@ exports[`environment config > should support modify environment config by api.mo
       "publicDir": [
         {
           "copyOnBuild": "auto",
+          "ignore": [],
           "name": "<ROOT>/public",
           "watch": false,
         },
@@ -1098,6 +1104,7 @@ exports[`environment config > should support modify environment config by api.mo
       "publicDir": [
         {
           "copyOnBuild": "auto",
+          "ignore": [],
           "name": "<ROOT>/public",
           "watch": false,
         },
@@ -1258,6 +1265,7 @@ exports[`environment config > should support modify single environment config by
       "publicDir": [
         {
           "copyOnBuild": "auto",
+          "ignore": [],
           "name": "<ROOT>/public",
           "watch": false,
         },
@@ -1416,6 +1424,7 @@ exports[`environment config > should support modify single environment config by
       "publicDir": [
         {
           "copyOnBuild": "auto",
+          "ignore": [],
           "name": "<ROOT>/public",
           "watch": false,
         },

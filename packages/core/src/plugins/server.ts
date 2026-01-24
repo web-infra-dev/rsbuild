@@ -1,4 +1,6 @@
+import type { CopyOptions } from 'node:fs';
 import fs from 'node:fs';
+import path from 'node:path';
 import { isDeno } from '../constants';
 import { color } from '../helpers';
 import { dedupeNestedPaths } from '../helpers/path';
@@ -30,7 +32,8 @@ export const pluginServer = (): RsbuildPlugin => ({
       }
       const config = api.getNormalizedConfig();
 
-      for (const { name: publicDir, copyOnBuild } of config.server.publicDir) {
+      for (const { name: publicDir, copyOnBuild, ignore } of config.server
+        .publicDir) {
         if (copyOnBuild === false) {
           continue;
         }
@@ -48,6 +51,38 @@ export const pluginServer = (): RsbuildPlugin => ({
             )
             .map(({ distPath }) => distPath),
         );
+
+        // Create filter function for ignore patterns
+        let shouldCopy: CopyOptions['filter'] | undefined;
+
+        if (ignore?.length) {
+          const { globSync } = await import('tinyglobby');
+
+          const ignoredList = globSync(ignore, {
+            cwd: publicDir,
+            absolute: false,
+            dot: true,
+            onlyFiles: false,
+          });
+
+          const ignoredSet = new Set(
+            ignoredList.map((item) =>
+              item.replace(/\\/g, '/').replace(/\/$/, ''),
+            ), // normalize path separators for Windows
+          );
+
+          shouldCopy = (source: string) => {
+            const relativePath = path.relative(publicDir, source);
+
+            if (!relativePath) {
+              return true;
+            }
+
+            const normalizedPath = relativePath.replace(/\\/g, '/');
+
+            return !ignoredSet.has(normalizedPath);
+          };
+        }
 
         try {
           // async errors will missing error stack on copy, move
@@ -67,6 +102,7 @@ export const pluginServer = (): RsbuildPlugin => ({
                 // dereference symlinks
                 dereference: true,
                 mode: fs.constants.COPYFILE_FICLONE,
+                filter: shouldCopy,
               });
             }),
           );

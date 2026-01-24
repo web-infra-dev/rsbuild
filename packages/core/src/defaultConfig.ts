@@ -355,6 +355,7 @@ const normalizePublicDirs = (
     name: join(rootPath, 'public'),
     copyOnBuild: 'auto',
     watch: false,
+    ignore: [],
   };
 
   // enable public dir by default
