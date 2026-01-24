@@ -13,29 +13,16 @@ let clearOverlay: undefined | (() => void);
 
 type CustomListenersMap = Map<string, ((data: any) => void)[]>;
 
-type ModuleHot = {
-  on: (event: string, cb: (payload: any) => void) => void;
-  dispose: (cb: () => void) => void;
-};
+declare const RSPACK_MODULE_HOT: Rspack.Hot | undefined;
 
-declare const RSPACK_MODULE_HOT: ModuleHot | undefined;
-
-type InterceptModuleExecutionOptions = {
-  module: {
-    hot: ModuleHot;
-  };
-};
-
-declare const RSPACK_INTERCEPT_MODULE_EXECUTION: ((
-  options: InterceptModuleExecutionOptions,
-) => void)[];
+declare const RSPACK_INTERCEPT_MODULE_EXECUTION: ((options: {
+  module: { hot: Rspack.Hot };
+}) => void)[];
 
 // Install a patched `module.hot.on` that records per-module listeners and
 // removes them from the global map when the module is disposed.
 function setupCustomHMRListeners(customListenersMap: CustomListenersMap): void {
-  RSPACK_INTERCEPT_MODULE_EXECUTION.push((options) => {
-    const { module } = options;
-
+  RSPACK_INTERCEPT_MODULE_EXECUTION.push(({ module }) => {
     const newListeners: CustomListenersMap = new Map();
 
     const addToMap = (

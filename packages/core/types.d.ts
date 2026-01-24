@@ -69,6 +69,12 @@ interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
 
+declare namespace Rspack {
+  interface Hot {
+    on: (event: string, cb: (payload: any) => void) => void;
+  }
+}
+
 /**
  * Image assets
  */
