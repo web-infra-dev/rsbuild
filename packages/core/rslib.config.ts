@@ -88,7 +88,7 @@ const replacePlugin: Rsbuild.RsbuildPlugin = {
     api.processAssets(
       { stage: 'optimize-inline' },
       ({ assets, compilation, sources }) => {
-        for (const name in assets) {
+        for (const name of Object.keys(assets)) {
           const asset = assets[name];
           if (!name.endsWith('.js')) {
             continue;
