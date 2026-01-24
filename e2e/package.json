@@ -9,7 +9,7 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "@module-federation/runtime-tools": "0.22.1",
+    "@module-federation/runtime-tools": "0.23.0",
     "core-js": "^3.48.0",
     "lodash": "^4.17.21",
     "preact": "^10.28.2",
@@ -23,8 +23,8 @@
   "devDependencies": {
     "@e2e/assets": "workspace:*",
     "@e2e/helper": "workspace:*",
-    "@module-federation/enhanced": "0.22.1",
-    "@module-federation/rsbuild-plugin": "0.22.1",
+    "@module-federation/enhanced": "0.23.0",
+    "@module-federation/rsbuild-plugin": "0.23.0",
     "@playwright/test": "1.57.0",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
