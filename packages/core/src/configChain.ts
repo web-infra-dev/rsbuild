@@ -42,38 +42,18 @@ export const CHAIN_ID = {
     MEDIA: 'media',
     /** Rule for additional assets */
     ADDITIONAL_ASSETS: 'additional-assets',
-    /** Rule for js */
+    /** Rule for JS */
     JS: 'js',
-    /** Rule for raw js */
-    JS_RAW: 'js-raw',
     /** Rule for data uri encoded javascript */
     JS_DATA_URI: 'js-data-uri',
-    /** Rule for ts */
-    TS: 'ts',
     /** Rule for CSS */
     CSS: 'css',
-    /** Rule for raw CSS */
-    CSS_RAW: 'css-raw',
-    /** Rule for inline CSS */
-    CSS_INLINE: 'css-inline',
     /** Rule for Less */
     LESS: 'less',
-    /** Rule for raw Less */
-    LESS_RAW: 'less-raw',
-    /** Rule for inline Less */
-    LESS_INLINE: 'less-inline',
     /** Rule for Sass */
     SASS: 'sass',
-    /** Rule for raw Sass */
-    SASS_RAW: 'sass-raw',
-    /** Rule for inline Sass */
-    SASS_INLINE: 'sass-inline',
     /** Rule for stylus */
     STYLUS: 'stylus',
-    /** Rule for raw stylus */
-    STYLUS_RAW: 'stylus-raw',
-    /** Rule for inline stylus */
-    STYLUS_INLINE: 'stylus-inline',
     /** Rule for svg */
     SVG: 'svg',
     /** Rule for Vue */
@@ -85,8 +65,26 @@ export const CHAIN_ID = {
   },
   /** Predefined rule groups */
   ONE_OF: {
+    /** JS oneOf rules */
     JS_MAIN: 'js-main',
     JS_RAW: 'js-raw',
+    /** CSS oneOf rules */
+    CSS_MAIN: 'css-main',
+    CSS_RAW: 'css-raw',
+    CSS_INLINE: 'css-inline',
+    /** Less oneOf rules */
+    LESS_MAIN: 'less-main',
+    LESS_RAW: 'less-raw',
+    LESS_INLINE: 'less-inline',
+    /** Sass oneOf rules */
+    SASS_MAIN: 'sass-main',
+    SASS_RAW: 'sass-raw',
+    SASS_INLINE: 'sass-inline',
+    /** Stylus oneOf rules */
+    STYLUS_MAIN: 'stylus-main',
+    STYLUS_RAW: 'stylus-raw',
+    STYLUS_INLINE: 'stylus-inline',
+    /** SVG oneOf rules */
     SVG: 'svg',
     SVG_RAW: 'svg-asset-raw',
     SVG_URL: 'svg-asset-url',

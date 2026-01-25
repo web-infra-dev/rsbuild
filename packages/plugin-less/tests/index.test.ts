@@ -108,8 +108,8 @@ describe('plugin-less', () => {
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
-    expect(matchRules(bundlerConfigs[0], 'a.less').length).toBe(2);
-    expect(matchRules(bundlerConfigs[0], 'b.less').length).toBe(5);
+    expect(matchRules(bundlerConfigs[0], 'a.less').length).toBe(1);
+    expect(matchRules(bundlerConfigs[0], 'b.less').length).toBe(2);
   });
 
   it('should be compatible with Rsbuild < 1.3.0', async () => {
@@ -136,7 +136,7 @@ describe('plugin-less', () => {
     await rsbuild.initConfigs();
 
     const bundlerConfigs = await rsbuild.initConfigs();
-    expect(matchRules(bundlerConfigs[0], 'a.less').length).toBe(2);
+    expect(matchRules(bundlerConfigs[0], 'a.less').length).toBe(1);
     expect(matchRules(bundlerConfigs[0], 'a.less?inline').length).toBe(0);
   });
 });

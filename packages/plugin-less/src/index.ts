@@ -183,28 +183,32 @@ export const pluginLess = (
     api.modifyBundlerChain((chain, { CHAIN_ID, environment }) => {
       const { config } = environment;
 
+      const cssRule = chain.module.rules.get(CHAIN_ID.RULE.CSS);
       const lessRule = chain.module
         .rule(findRuleId(chain, CHAIN_ID.RULE.LESS))
         .test(include)
+        .dependency(cssRule.get('dependency'))
         .resolve.preferRelative(true)
         .end();
+      const cssInlineRule = cssRule.oneOfs.get(CHAIN_ID.ONE_OF.CSS_INLINE);
+      const cssRawRule = cssRule.oneOfs.get(CHAIN_ID.ONE_OF.CSS_RAW);
 
-      // Rsbuild < 1.3.0 does not have the raw and inline rules
-      const inlineRule = CHAIN_ID.RULE.CSS_INLINE
-        ? chain.module
-            .rule(findRuleId(chain, CHAIN_ID.RULE.LESS_INLINE))
-            .test(include)
-        : null;
+      // Inline Less for `?inline` imports
+      const lessInlineRule = lessRule
+        .oneOf(CHAIN_ID.ONE_OF.LESS_INLINE)
+        .type('javascript/auto')
+        .resourceQuery(cssInlineRule.get('resourceQuery'));
 
-      // Support for importing raw Less files
-      if (CHAIN_ID.RULE.CSS_RAW) {
-        const cssRawRule = chain.module.rules.get(CHAIN_ID.RULE.CSS_RAW);
-        chain.module
-          .rule(CHAIN_ID.RULE.LESS_RAW)
-          .test(include)
-          .type('asset/source')
-          .resourceQuery(cssRawRule.get('resourceQuery'));
-      }
+      // Raw Less for `?raw` imports
+      lessRule
+        .oneOf(CHAIN_ID.ONE_OF.LESS_RAW)
+        .type('asset/source')
+        .resourceQuery(cssRawRule.get('resourceQuery'));
+
+      // Main Less transform
+      const lessMainRule = lessRule
+        .oneOf(CHAIN_ID.ONE_OF.LESS_MAIN)
+        .type('javascript/auto');
 
       const { sourceMap } = config.output;
       const { excludes, options } = getLessLoaderOptions(
@@ -213,15 +217,15 @@ export const pluginLess = (
         api.context.rootPath,
       );
 
-      // Update the normal rule and the inline rule
+      // Update the main rule and the inline rule
       const updateRules = (
-        callback: (rule: RspackChain.Rule, type: 'normal' | 'inline') => void,
+        callback: (
+          rule: RspackChain.Rule<RspackChain.Rule>,
+          type: 'main' | 'inline',
+        ) => void,
       ) => {
-        callback(lessRule, 'normal');
-
-        if (inlineRule) {
-          callback(inlineRule, 'inline');
-        }
+        callback(lessMainRule, 'main');
+        callback(lessInlineRule, 'inline');
       };
 
       const lessLoaderPath = path.join(
@@ -238,15 +242,16 @@ export const pluginLess = (
         }
 
         // Copy the builtin CSS rules
-        const cssRule = chain.module.rules.get(
-          type === 'normal' ? CHAIN_ID.RULE.CSS : CHAIN_ID.RULE.CSS_INLINE,
-        );
+        const cssBranchRule =
+          type === 'main'
+            ? cssRule.oneOfs.get(CHAIN_ID.ONE_OF.CSS_MAIN)
+            : cssInlineRule;
         rule.dependency(cssRule.get('dependency'));
-        rule.sideEffects(cssRule.get('sideEffects'));
-        rule.resourceQuery(cssRule.get('resourceQuery'));
+        rule.sideEffects(cssBranchRule.get('sideEffects'));
+        rule.resourceQuery(cssBranchRule.get('resourceQuery'));
 
-        for (const id of Object.keys(cssRule.uses.entries())) {
-          const loader = cssRule.uses.get(id);
+        for (const id of Object.keys(cssBranchRule.uses.entries())) {
+          const loader = cssBranchRule.uses.get(id);
           const options = loader.get('options') ?? {};
           const clonedOptions = deepmerge<Record<string, any>>({}, options);
 

@@ -278,32 +278,32 @@ export const pluginCss = (): RsbuildPlugin => ({
         chain,
         { target, isProd, CHAIN_ID, environment, environments },
       ) => {
-        const rule = chain.module.rule(CHAIN_ID.RULE.CSS);
-        const inlineRule = chain.module.rule(CHAIN_ID.RULE.CSS_INLINE);
+        const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
         const { config } = environment;
 
-        rule
+        cssRule
           .test(CSS_REGEX)
-          // specify type to allow enabling Rspack `experiments.css`
-          .type('javascript/auto')
           // When using `new URL('./path/to/foo.css', import.meta.url)`,
           // the module should be treated as an asset module rather than a JS module.
-          .dependency({ not: 'url' })
-          // exclude `import './foo.css?raw'` and `import './foo.css?inline'`
-          .resourceQuery({ not: [RAW_QUERY_REGEX, INLINE_QUERY_REGEX] });
+          .dependency({ not: 'url' });
 
         // Support for `import inlineCss from "a.css?inline"`
-        inlineRule
-          .test(CSS_REGEX)
+        const inlineRule = cssRule
+          .oneOf(CHAIN_ID.ONE_OF.CSS_INLINE)
           .type('javascript/auto')
           .resourceQuery(INLINE_QUERY_REGEX);
 
         // Support for `import rawCss from "a.css?raw"`
-        chain.module
-          .rule(CHAIN_ID.RULE.CSS_RAW)
-          .test(CSS_REGEX)
+        cssRule
+          .oneOf(CHAIN_ID.ONE_OF.CSS_RAW)
           .type('asset/source')
           .resourceQuery(RAW_QUERY_REGEX);
+
+        // Default CSS handling
+        const mainRule = cssRule
+          .oneOf(CHAIN_ID.ONE_OF.CSS_MAIN)
+          // specify type for `CssExtractRspackPlugin` to work properly
+          .type('javascript/auto');
 
         const emitCss = config.output.emitCss ?? target === 'web';
 
@@ -316,20 +316,20 @@ export const pluginCss = (): RsbuildPlugin => ({
               initial: {},
               config: config.tools.styleLoader,
             });
-            rule
+            mainRule
               .use(CHAIN_ID.USE.STYLE)
               .loader(getCompiledPath('style-loader'))
               .options(styleLoaderOptions);
           }
           // use CssExtractRspackPlugin loader
           else {
-            rule
+            mainRule
               .use(CHAIN_ID.USE.MINI_CSS_EXTRACT)
               .loader(getCssExtractPlugin().loader)
               .options(config.tools.cssExtract.loaderOptions);
           }
         } else {
-          rule
+          mainRule
             .use(CHAIN_ID.USE.IGNORE_CSS)
             .loader(path.join(LOADER_PATH, 'ignoreCssLoader.mjs'));
         }
@@ -342,11 +342,14 @@ export const pluginCss = (): RsbuildPlugin => ({
 
         // Update the normal CSS rule and the inline CSS rule
         const updateRules = (
-          callback: (rule: RspackChain.Rule, type: 'normal' | 'inline') => void,
-          options: { skipNormal?: boolean } = {},
+          callback: (
+            rule: RspackChain.Rule<RspackChain.Rule>,
+            type: 'main' | 'inline',
+          ) => void,
+          options: { skipMain?: boolean } = {},
         ) => {
-          if (!options.skipNormal) {
-            callback(rule, 'normal');
+          if (!options.skipMain) {
+            callback(mainRule, 'main');
           }
           callback(inlineRule, 'inline');
         };
@@ -397,7 +400,7 @@ export const pluginCss = (): RsbuildPlugin => ({
                 .options(lightningcssOptions);
             },
             // If emit CSS is disabled, skip lightningcss-loader to reduce performance overhead
-            { skipNormal: !emitCss },
+            { skipMain: !emitCss },
           );
         }
 
@@ -427,7 +430,7 @@ export const pluginCss = (): RsbuildPlugin => ({
                 .options(postcssLoaderOptions);
             },
             // If emit CSS is disabled, skip postcss-loader to reduce performance overhead
-            { skipNormal: !emitCss },
+            { skipMain: !emitCss },
           );
         }
 
@@ -465,8 +468,11 @@ export const pluginCss = (): RsbuildPlugin => ({
         });
 
         const isStringExport = cssLoaderOptions.exportType === 'string';
-        if (isStringExport && rule.uses.has(CHAIN_ID.USE.MINI_CSS_EXTRACT)) {
-          rule.uses.delete(CHAIN_ID.USE.MINI_CSS_EXTRACT);
+        if (
+          isStringExport &&
+          mainRule.uses.has(CHAIN_ID.USE.MINI_CSS_EXTRACT)
+        ) {
+          mainRule.uses.delete(CHAIN_ID.USE.MINI_CSS_EXTRACT);
         }
 
         // Apply CSS extract plugin if not using style-loader and emitCss is true
