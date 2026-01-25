@@ -267,11 +267,12 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         .set('generator', generatorOptions);
 
       // apply current JS transform rule to SVGR rules
-      const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
-      const jsTransformRule = jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_TRANSFORM);
+      const jsRule = chain.module.rules
+        .get(CHAIN_ID.RULE.JS)
+        .oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
 
       [CHAIN_ID.USE.SWC, CHAIN_ID.USE.BABEL].some((jsUseId) => {
-        const use = jsTransformRule.uses.get(jsUseId);
+        const use = jsRule.uses.get(jsUseId);
 
         if (!use) {
           return false;

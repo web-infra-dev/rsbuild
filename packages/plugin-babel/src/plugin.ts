@@ -163,10 +163,8 @@ export const pluginBabel = (
         } else {
           // already set source.include / exclude in plugin-swc
           const jsRule = chain.module.rule(CHAIN_ID.RULE.JS).test(SCRIPT_REGEX);
-          const jsTransformRule = jsRule.oneOfs.get(
-            CHAIN_ID.ONE_OF.JS_TRANSFORM,
-          );
-          jsTransformRule
+          const jsMainRule = jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
+          jsMainRule
             .use(CHAIN_ID.USE.BABEL)
             .after(CHAIN_ID.USE.SWC)
             .loader(babelLoader)

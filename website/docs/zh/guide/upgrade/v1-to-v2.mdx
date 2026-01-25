@@ -240,7 +240,7 @@ Rsbuild 内置的 JS 和 CSS 转换规则现在使用了 [oneOf](https://rspack.
 
 内置 JS 规则现在拆分为两个 `oneOf` 分支：
 
-- `CHAIN_ID.ONE_OF.JS_TRANSFORM`：用于 SWC 转换
+- `CHAIN_ID.ONE_OF.JS_MAIN`：用于 SWC 转换
 - `CHAIN_ID.ONE_OF.JS_RAW`：用于处理 `?raw` 导入
 
 如果你之前在 `CHAIN_ID.RULE.JS` 上添加 loader，现在需要改为在对应的 `oneOf` 上配置：
@@ -253,7 +253,7 @@ export default {
 
 -     jsRule.use('my-loader').loader('my-loader');
 +     jsRule
-+       .oneOf(CHAIN_ID.ONE_OF.JS_TRANSFORM)
++       .oneOf(CHAIN_ID.ONE_OF.JS_MAIN)
 +       .use('my-loader')
 +       .loader('my-loader');
     },
