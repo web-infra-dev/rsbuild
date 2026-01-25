@@ -192,7 +192,7 @@ export const modifyBabelLoaderOptions = ({
   const rules = [
     chain.module.rules
       .get(CHAIN_ID.RULE.JS)
-      .oneOfs.get(CHAIN_ID.ONE_OF.JS_TRANSFORM),
+      .oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN),
     chain.module.rules.get(CHAIN_ID.RULE.JS_DATA_URI),
     chain.module.rules.get(BABEL_JS_RULE),
   ].filter(Boolean);

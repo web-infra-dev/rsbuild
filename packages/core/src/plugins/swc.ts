@@ -132,8 +132,8 @@ export const pluginSwc = (): RsbuildPlugin => ({
           .type('asset/source');
 
         // Transform TypeScript/JSX/ESNext code
-        const transformRule = rule
-          .oneOf(CHAIN_ID.ONE_OF.JS_TRANSFORM)
+        const mainRule = rule
+          .oneOf(CHAIN_ID.ONE_OF.JS_MAIN)
           .type('javascript/auto');
 
         const dataUriRule = chain.module
@@ -172,7 +172,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
               api.context.rootPath,
             );
             if (coreJsDir) {
-              for (const item of [transformRule, dataUriRule]) {
+              for (const item of [mainRule, dataUriRule]) {
                 item.resolve.alias.set('core-js', coreJsDir);
               }
             }
@@ -195,7 +195,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
           delete mergedConfig.env;
         }
 
-        transformRule
+        mainRule
           .use(CHAIN_ID.USE.SWC)
           .loader(builtinSwcLoaderName)
           .options(mergedConfig);

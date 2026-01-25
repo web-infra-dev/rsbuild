@@ -240,7 +240,7 @@ The built-in JS and CSS transform rules now use [oneOf](https://rspack.rs/config
 
 The built-in JS rule is now split into two `oneOf` branches:
 
-- `CHAIN_ID.ONE_OF.JS_TRANSFORM`: for SWC transforms
+- `CHAIN_ID.ONE_OF.JS_MAIN`: for SWC transforms
 - `CHAIN_ID.ONE_OF.JS_RAW`: for `?raw` imports
 
 If you previously added loaders on `CHAIN_ID.RULE.JS`, move them to the corresponding `oneOf` branch:
@@ -253,7 +253,7 @@ export default {
 
 -     jsRule.use('my-loader').loader('my-loader');
 +     jsRule
-+       .oneOf(CHAIN_ID.ONE_OF.JS_TRANSFORM)
++       .oneOf(CHAIN_ID.ONE_OF.JS_MAIN)
 +       .use('my-loader')
 +       .loader('my-loader');
     },
