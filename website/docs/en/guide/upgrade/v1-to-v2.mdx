@@ -231,3 +231,32 @@ The specific changes are as follows:
 - Removed the `api.modifyWebpackChain` and `api.modifyWebpackConfig` plugin hooks.
 - Removed the `webpack` type from the `api.context.bundlerType`.
 - Removed webpack-related types.
+
+## Built-in rule changes
+
+The built-in JS and CSS transform rules now use [oneOf](https://rspack.rs/config/module-rules#rulesoneof) to separate different branches. If you customized the JS or CSS rules with [tools.bundlerChain](/config/tools/bundler-chain#toolsbundlerchain) or [api.modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain), you may need to adjust your configuration.
+
+### JavaScript rule
+
+The built-in JS rule is now split into two `oneOf` branches:
+
+- `CHAIN_ID.ONE_OF.JS_TRANSFORM`: for SWC transforms
+- `CHAIN_ID.ONE_OF.JS_RAW`: for `?raw` imports
+
+If you previously added loaders on `CHAIN_ID.RULE.JS`, move them to the corresponding `oneOf` branch:
+
+```diff title="rsbuild.config.ts"
+export default {
+  tools: {
+    bundlerChain(chain, { CHAIN_ID }) {
+      const jsRule = chain.module.rule(CHAIN_ID.RULE.JS);
+
+-     jsRule.use('my-loader').loader('my-loader');
++     jsRule
++       .oneOf(CHAIN_ID.ONE_OF.JS_TRANSFORM)
++       .use('my-loader')
++       .loader('my-loader');
+    },
+  },
+};
+```
