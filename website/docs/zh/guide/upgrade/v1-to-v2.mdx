@@ -231,3 +231,32 @@ Rsbuild 2.0 不再支持使用 webpack 作为打包工具。在 Rsbuild 1.x 版�
 - 移除 `api.modifyWebpackChain` 和 `api.modifyWebpackConfig` 插件钩子。
 - 移除 `api.context.bundlerType` 中的 `webpack` 类型。
 - 移除 webpack 相关的类型。
+
+## 内置规则变化
+
+Rsbuild 内置的 JS 和 CSS 转换规则现在使用了 [oneOf](https://rspack.rs/config/module-rules#rulesoneof) 来区分不同的分支，如果你使用 [tools.bundlerChain](/config/tools/bundler-chain#toolsbundlerchain) 或 [api.modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain) 修改了 JS 或 CSS 规则，可能需要进行相应调整。
+
+### JS 规则
+
+内置 JS 规则现在拆分为两个 `oneOf` 分支：
+
+- `CHAIN_ID.ONE_OF.JS_TRANSFORM`：用于 SWC 转换
+- `CHAIN_ID.ONE_OF.JS_RAW`：用于处理 `?raw` 导入
+
+如果你之前在 `CHAIN_ID.RULE.JS` 上添加 loader，现在需要改为在对应的 `oneOf` 上配置：
+
+```diff title="rsbuild.config.ts"
+export default {
+  tools: {
+    bundlerChain(chain, { CHAIN_ID }) {
+      const jsRule = chain.module.rule(CHAIN_ID.RULE.JS);
+
+-     jsRule.use('my-loader').loader('my-loader');
++     jsRule
++       .oneOf(CHAIN_ID.ONE_OF.JS_TRANSFORM)
++       .use('my-loader')
++       .loader('my-loader');
+    },
+  },
+};
+```
