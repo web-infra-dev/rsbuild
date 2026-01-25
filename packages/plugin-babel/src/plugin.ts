@@ -140,7 +140,7 @@ export const pluginBabel = (
         if (include || exclude) {
           const rule = chain.module
             .rule(BABEL_JS_RULE)
-            // run babel loader before the builtin SWC loader
+            // run babel loader before the builtin JS rule
             // https://stackoverflow.com/questions/32234329/what-is-the-loader-order-for-webpack
             .after(CHAIN_ID.RULE.JS);
 
@@ -162,9 +162,11 @@ export const pluginBabel = (
             .options(babelOptions);
         } else {
           // already set source.include / exclude in plugin-swc
-          const rule = chain.module.rule(CHAIN_ID.RULE.JS);
-          rule
-            .test(SCRIPT_REGEX)
+          const jsRule = chain.module.rule(CHAIN_ID.RULE.JS).test(SCRIPT_REGEX);
+          const jsTransformRule = jsRule.oneOfs.get(
+            CHAIN_ID.ONE_OF.JS_TRANSFORM,
+          );
+          jsTransformRule
             .use(CHAIN_ID.USE.BABEL)
             .after(CHAIN_ID.USE.SWC)
             .loader(babelLoader)

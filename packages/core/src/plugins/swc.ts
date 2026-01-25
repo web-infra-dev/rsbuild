@@ -121,19 +121,20 @@ export const pluginSwc = (): RsbuildPlugin => ({
         const rule = chain.module
           .rule(CHAIN_ID.RULE.JS)
           .test(SCRIPT_REGEX)
-          .type('javascript/auto')
           // When using `new URL('./path/to/foo.js', import.meta.url)`,
           // the module should be treated as an asset module rather than a JS module.
-          .dependency({ not: 'url' })
-          // exclude `import './foo.js?raw'`
-          .resourceQuery({ not: RAW_QUERY_REGEX });
+          .dependency({ not: 'url' });
 
         // Support for `import rawJs from "a.js?raw"`
-        chain.module
-          .rule(CHAIN_ID.RULE.JS_RAW)
-          .test(SCRIPT_REGEX)
-          .type('asset/source')
-          .resourceQuery(RAW_QUERY_REGEX);
+        rule
+          .oneOf(CHAIN_ID.ONE_OF.JS_RAW)
+          .resourceQuery(RAW_QUERY_REGEX)
+          .type('asset/source');
+
+        // Transform TypeScript/JSX/ESNext code
+        const transformRule = rule
+          .oneOf(CHAIN_ID.ONE_OF.JS_TRANSFORM)
+          .type('javascript/auto');
 
         const dataUriRule = chain.module
           .rule(CHAIN_ID.RULE.JS_DATA_URI)
@@ -171,7 +172,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
               api.context.rootPath,
             );
             if (coreJsDir) {
-              for (const item of [rule, dataUriRule]) {
+              for (const item of [transformRule, dataUriRule]) {
                 item.resolve.alias.set('core-js', coreJsDir);
               }
             }
@@ -194,7 +195,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
           delete mergedConfig.env;
         }
 
-        rule
+        transformRule
           .use(CHAIN_ID.USE.SWC)
           .loader(builtinSwcLoaderName)
           .options(mergedConfig);
