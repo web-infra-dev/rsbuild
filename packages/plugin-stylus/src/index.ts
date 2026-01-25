@@ -86,49 +86,56 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
 
       const test = /\.styl(us)?$/;
 
+      const cssRule = chain.module.rules.get(CHAIN_ID.RULE.CSS);
       const rule = chain.module
         .rule(CHAIN_ID.RULE.STYLUS)
         .test(test)
+        .dependency(cssRule.get('dependency'))
         .resolve.preferRelative(true)
         .end();
+      const cssInlineRule = cssRule.oneOfs.get(CHAIN_ID.ONE_OF.CSS_INLINE);
+      const cssRawRule = cssRule.oneOfs.get(CHAIN_ID.ONE_OF.CSS_RAW);
 
-      // Rsbuild < 1.3.0 does not have the raw and inline rules
-      const inlineRule = CHAIN_ID.RULE.CSS_INLINE
-        ? chain.module.rule(CHAIN_ID.RULE.STYLUS_INLINE).test(test)
-        : null;
+      // Inline Stylus for `?inline` imports
+      const stylusInlineRule = rule
+        .oneOf(CHAIN_ID.ONE_OF.STYLUS_INLINE)
+        .type('javascript/auto')
+        .resourceQuery(cssInlineRule.get('resourceQuery'));
 
-      // Support for importing raw Stylus files
-      if (CHAIN_ID.RULE.CSS_RAW) {
-        const cssRawRule = chain.module.rules.get(CHAIN_ID.RULE.CSS_RAW);
-        chain.module
-          .rule(CHAIN_ID.RULE.STYLUS_RAW)
-          .test(test)
-          .type('asset/source')
-          .resourceQuery(cssRawRule.get('resourceQuery'));
-      }
+      // Raw Stylus for `?raw` imports
+      rule
+        .oneOf(CHAIN_ID.ONE_OF.STYLUS_RAW)
+        .type('asset/source')
+        .resourceQuery(cssRawRule.get('resourceQuery'));
 
-      // Update the normal rule and the inline rule
+      // Main Stylus transform
+      const stylusMainRule = rule
+        .oneOf(CHAIN_ID.ONE_OF.STYLUS_MAIN)
+        .type('javascript/auto');
+
+      // Update the main rule and the inline rule
       const updateRules = (
-        callback: (rule: RspackChain.Rule, type: 'normal' | 'inline') => void,
+        callback: (
+          rule: RspackChain.Rule<RspackChain.Rule>,
+          type: 'main' | 'inline',
+        ) => void,
       ) => {
-        callback(rule, 'normal');
-
-        if (inlineRule) {
-          callback(inlineRule, 'inline');
-        }
+        callback(stylusMainRule, 'main');
+        callback(stylusInlineRule, 'inline');
       };
 
       updateRules((rule, type) => {
         // Copy the builtin CSS rules
-        const cssRule = chain.module.rules.get(
-          type === 'normal' ? CHAIN_ID.RULE.CSS : CHAIN_ID.RULE.CSS_INLINE,
-        );
+        const cssBranchRule =
+          type === 'main'
+            ? cssRule.oneOfs.get(CHAIN_ID.ONE_OF.CSS_MAIN)
+            : cssInlineRule;
         rule.dependency(cssRule.get('dependency'));
-        rule.sideEffects(cssRule.get('sideEffects'));
-        rule.resourceQuery(cssRule.get('resourceQuery'));
+        rule.sideEffects(cssBranchRule.get('sideEffects'));
+        rule.resourceQuery(cssBranchRule.get('resourceQuery'));
 
-        for (const id of Object.keys(cssRule.uses.entries())) {
-          const loader = cssRule.uses.get(id);
+        for (const id of Object.keys(cssBranchRule.uses.entries())) {
+          const loader = cssBranchRule.uses.get(id);
           const options = loader.get('options') ?? {};
           const clonedOptions = deepmerge<Record<string, any>>({}, options);
 

@@ -8,86 +8,82 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
         "dependency": {
           "not": "url",
         },
-        "resolve": {
-          "preferRelative": true,
-        },
-        "resourceQuery": {
-          "not": [
-            /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-          ],
-        },
-        "sideEffects": true,
-        "test": /\\\\\\.css\\$/,
-        "type": "javascript/auto",
-        "use": [
+        "oneOf": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-            "options": {
-              "importLoaders": 1,
-              "modules": {
-                "auto": [Function],
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
+            "resolve": {
+              "preferRelative": true,
+            },
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+            "sideEffects": true,
+            "type": "javascript/auto",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+                "options": {
+                  "exportType": "string",
+                  "importLoaders": 1,
+                  "modules": false,
+                  "sourceMap": false,
+                },
               },
-              "sourceMap": false,
-            },
+              {
+                "loader": "builtin:lightningcss-loader",
+                "options": {
+                  "errorRecovery": true,
+                  "targets": [
+                    "chrome >= 107",
+                    "edge >= 107",
+                    "firefox >= 104",
+                    "safari >= 16",
+                  ],
+                },
+              },
+            ],
           },
           {
-            "loader": "builtin:lightningcss-loader",
-            "options": {
-              "errorRecovery": true,
-              "targets": [
-                "chrome >= 107",
-                "edge >= 107",
-                "firefox >= 104",
-                "safari >= 16",
-              ],
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
+          },
+          {
+            "resolve": {
+              "preferRelative": true,
             },
+            "sideEffects": true,
+            "type": "javascript/auto",
+            "use": [
+              {
+                "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+              },
+              {
+                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+                "options": {
+                  "importLoaders": 1,
+                  "modules": {
+                    "auto": [Function],
+                    "exportGlobals": false,
+                    "exportLocalsConvention": "camelCase",
+                    "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                    "namedExport": false,
+                  },
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "builtin:lightningcss-loader",
+                "options": {
+                  "errorRecovery": true,
+                  "targets": [
+                    "chrome >= 107",
+                    "edge >= 107",
+                    "firefox >= 104",
+                    "safari >= 16",
+                  ],
+                },
+              },
+            ],
           },
         ],
-      },
-      {
-        "resolve": {
-          "preferRelative": true,
-        },
-        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-        "sideEffects": true,
         "test": /\\\\\\.css\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-            "options": {
-              "exportType": "string",
-              "importLoaders": 1,
-              "modules": false,
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "builtin:lightningcss-loader",
-            "options": {
-              "errorRecovery": true,
-              "targets": [
-                "chrome >= 107",
-                "edge >= 107",
-                "firefox >= 104",
-                "safari >= 16",
-              ],
-            },
-          },
-        ],
-      },
-      {
-        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-        "test": /\\\\\\.css\\$/,
-        "type": "asset/source",
       },
     ],
   },
@@ -114,72 +110,68 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
         "dependency": {
           "not": "url",
         },
-        "resolve": {
-          "preferRelative": true,
-        },
-        "resourceQuery": {
-          "not": [
-            /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-          ],
-        },
-        "sideEffects": true,
-        "test": /\\\\\\.css\\$/,
-        "type": "javascript/auto",
-        "use": [
+        "oneOf": [
           {
-            "loader": "<ROOT>/packages/core/src/ignoreCssLoader.mjs",
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-            "options": {
-              "importLoaders": 0,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "exportOnlyLocals": true,
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
+            "resolve": {
+              "preferRelative": true,
+            },
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+            "sideEffects": true,
+            "type": "javascript/auto",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+                "options": {
+                  "exportType": "string",
+                  "importLoaders": 1,
+                  "modules": false,
+                  "sourceMap": false,
+                },
               },
-              "sourceMap": false,
-            },
-          },
-        ],
-      },
-      {
-        "resolve": {
-          "preferRelative": true,
-        },
-        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-        "sideEffects": true,
-        "test": /\\\\\\.css\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-            "options": {
-              "exportType": "string",
-              "importLoaders": 1,
-              "modules": false,
-              "sourceMap": false,
-            },
+              {
+                "loader": "builtin:lightningcss-loader",
+                "options": {
+                  "errorRecovery": true,
+                  "targets": [
+                    "node >= 20",
+                  ],
+                },
+              },
+            ],
           },
           {
-            "loader": "builtin:lightningcss-loader",
-            "options": {
-              "errorRecovery": true,
-              "targets": [
-                "node >= 20",
-              ],
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
+          },
+          {
+            "resolve": {
+              "preferRelative": true,
             },
+            "sideEffects": true,
+            "type": "javascript/auto",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/core/src/ignoreCssLoader.mjs",
+              },
+              {
+                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+                "options": {
+                  "importLoaders": 0,
+                  "modules": {
+                    "auto": true,
+                    "exportGlobals": false,
+                    "exportLocalsConvention": "camelCase",
+                    "exportOnlyLocals": true,
+                    "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                    "namedExport": false,
+                  },
+                  "sourceMap": false,
+                },
+              },
+            ],
           },
         ],
-      },
-      {
-        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.css\\$/,
-        "type": "asset/source",
       },
     ],
   },
@@ -199,26 +191,164 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
         "dependency": {
           "not": "url",
         },
+        "oneOf": [
+          {
+            "resolve": {
+              "preferRelative": true,
+            },
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+            "sideEffects": true,
+            "type": "javascript/auto",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+                "options": {
+                  "exportType": "string",
+                  "importLoaders": 1,
+                  "modules": false,
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "builtin:lightningcss-loader",
+                "options": {
+                  "errorRecovery": true,
+                  "targets": [
+                    "chrome >= 107",
+                    "edge >= 107",
+                    "firefox >= 104",
+                    "safari >= 16",
+                  ],
+                },
+              },
+            ],
+          },
+          {
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
+          },
+          {
+            "resolve": {
+              "preferRelative": true,
+            },
+            "sideEffects": true,
+            "type": "javascript/auto",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/core/compiled/style-loader/index.js",
+              },
+              {
+                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+                "options": {
+                  "importLoaders": 1,
+                  "modules": {
+                    "auto": true,
+                    "exportGlobals": false,
+                    "exportLocalsConvention": "camelCase",
+                    "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                    "namedExport": false,
+                  },
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "builtin:lightningcss-loader",
+                "options": {
+                  "errorRecovery": true,
+                  "targets": [
+                    "chrome >= 107",
+                    "edge >= 107",
+                    "firefox >= 104",
+                    "safari >= 16",
+                  ],
+                },
+              },
+            ],
+          },
+        ],
+        "test": /\\\\\\.css\\$/,
+      },
+    ],
+  },
+  "plugins": [
+    {
+      "name": "RsbuildCorePlugin",
+    },
+  ],
+}
+`;
+
+exports[`should ensure isolation of PostCSS config objects between different builds 1`] = `
+[
+  {
+    "dependency": {
+      "not": "url",
+    },
+    "oneOf": [
+      {
         "resolve": {
           "preferRelative": true,
         },
-        "resourceQuery": {
-          "not": [
-            /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-          ],
-        },
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
-        "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<ROOT>/packages/core/compiled/style-loader/index.js",
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
+              "importLoaders": 2,
+              "modules": false,
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/core/compiled/postcss-loader/index.js",
+            "options": {
+              "implementation": "<ROOT>/packages/core/compiled/postcss/index.js",
+              "postcssOptions": {
+                "config": false,
+                "plugins": [
+                  {
+                    "postcssPlugin": "foo",
+                  },
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+      {
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/source",
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "sideEffects": true,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
-              "importLoaders": 1,
+              "importLoaders": 2,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -241,22 +371,49 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
               ],
             },
           },
+          {
+            "loader": "<ROOT>/packages/core/compiled/postcss-loader/index.js",
+            "options": {
+              "implementation": "<ROOT>/packages/core/compiled/postcss/index.js",
+              "postcssOptions": {
+                "config": false,
+                "plugins": [
+                  {
+                    "postcssPlugin": "foo",
+                  },
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
         ],
       },
+    ],
+    "test": /\\\\\\.css\\$/,
+  },
+]
+`;
+
+exports[`should ensure isolation of PostCSS config objects between different builds 2`] = `
+[
+  {
+    "dependency": {
+      "not": "url",
+    },
+    "oneOf": [
       {
         "resolve": {
           "preferRelative": true,
         },
         "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
-        "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
               "exportType": "string",
-              "importLoaders": 1,
+              "importLoaders": 2,
               "modules": false,
               "sourceMap": false,
             },
@@ -273,259 +430,82 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
               ],
             },
           },
+          {
+            "loader": "<ROOT>/packages/core/compiled/postcss-loader/index.js",
+            "options": {
+              "implementation": "<ROOT>/packages/core/compiled/postcss/index.js",
+              "postcssOptions": {
+                "config": false,
+                "plugins": [
+                  {
+                    "postcssPlugin": "bar",
+                  },
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
         ],
       },
       {
         "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-        "test": /\\\\\\.css\\$/,
         "type": "asset/source",
       },
-    ],
-  },
-  "plugins": [
-    {
-      "name": "RsbuildCorePlugin",
-    },
-  ],
-}
-`;
-
-exports[`should ensure isolation of PostCSS config objects between different builds 1`] = `
-[
-  {
-    "dependency": {
-      "not": "url",
-    },
-    "resolve": {
-      "preferRelative": true,
-    },
-    "resourceQuery": {
-      "not": [
-        /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-        /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-      ],
-    },
-    "sideEffects": true,
-    "test": /\\\\\\.css\\$/,
-    "type": "javascript/auto",
-    "use": [
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
-      },
-      {
-        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-        "options": {
-          "importLoaders": 2,
-          "modules": {
-            "auto": true,
-            "exportGlobals": false,
-            "exportLocalsConvention": "camelCase",
-            "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-            "namedExport": false,
+        "resolve": {
+          "preferRelative": true,
+        },
+        "sideEffects": true,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
           },
-          "sourceMap": false,
-        },
-      },
-      {
-        "loader": "builtin:lightningcss-loader",
-        "options": {
-          "errorRecovery": true,
-          "targets": [
-            "chrome >= 107",
-            "edge >= 107",
-            "firefox >= 104",
-            "safari >= 16",
-          ],
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/core/compiled/postcss-loader/index.js",
-        "options": {
-          "implementation": "<ROOT>/packages/core/compiled/postcss/index.js",
-          "postcssOptions": {
-            "config": false,
-            "plugins": [
-              {
-                "postcssPlugin": "foo",
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "importLoaders": 2,
+              "modules": {
+                "auto": true,
+                "exportGlobals": false,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                "namedExport": false,
               },
-            ],
+              "sourceMap": false,
+            },
           },
-          "sourceMap": false,
-        },
-      },
-    ],
-  },
-  {
-    "resolve": {
-      "preferRelative": true,
-    },
-    "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-    "sideEffects": true,
-    "test": /\\\\\\.css\\$/,
-    "type": "javascript/auto",
-    "use": [
-      {
-        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-        "options": {
-          "exportType": "string",
-          "importLoaders": 2,
-          "modules": false,
-          "sourceMap": false,
-        },
-      },
-      {
-        "loader": "builtin:lightningcss-loader",
-        "options": {
-          "errorRecovery": true,
-          "targets": [
-            "chrome >= 107",
-            "edge >= 107",
-            "firefox >= 104",
-            "safari >= 16",
-          ],
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/core/compiled/postcss-loader/index.js",
-        "options": {
-          "implementation": "<ROOT>/packages/core/compiled/postcss/index.js",
-          "postcssOptions": {
-            "config": false,
-            "plugins": [
-              {
-                "postcssPlugin": "foo",
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/core/compiled/postcss-loader/index.js",
+            "options": {
+              "implementation": "<ROOT>/packages/core/compiled/postcss/index.js",
+              "postcssOptions": {
+                "config": false,
+                "plugins": [
+                  {
+                    "postcssPlugin": "bar",
+                  },
+                ],
               },
-            ],
+              "sourceMap": false,
+            },
           },
-          "sourceMap": false,
-        },
+        ],
       },
     ],
-  },
-  {
-    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
     "test": /\\\\\\.css\\$/,
-    "type": "asset/source",
-  },
-]
-`;
-
-exports[`should ensure isolation of PostCSS config objects between different builds 2`] = `
-[
-  {
-    "dependency": {
-      "not": "url",
-    },
-    "resolve": {
-      "preferRelative": true,
-    },
-    "resourceQuery": {
-      "not": [
-        /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-        /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-      ],
-    },
-    "sideEffects": true,
-    "test": /\\\\\\.css\\$/,
-    "type": "javascript/auto",
-    "use": [
-      {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
-      },
-      {
-        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-        "options": {
-          "importLoaders": 2,
-          "modules": {
-            "auto": true,
-            "exportGlobals": false,
-            "exportLocalsConvention": "camelCase",
-            "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-            "namedExport": false,
-          },
-          "sourceMap": false,
-        },
-      },
-      {
-        "loader": "builtin:lightningcss-loader",
-        "options": {
-          "errorRecovery": true,
-          "targets": [
-            "chrome >= 107",
-            "edge >= 107",
-            "firefox >= 104",
-            "safari >= 16",
-          ],
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/core/compiled/postcss-loader/index.js",
-        "options": {
-          "implementation": "<ROOT>/packages/core/compiled/postcss/index.js",
-          "postcssOptions": {
-            "config": false,
-            "plugins": [
-              {
-                "postcssPlugin": "bar",
-              },
-            ],
-          },
-          "sourceMap": false,
-        },
-      },
-    ],
-  },
-  {
-    "resolve": {
-      "preferRelative": true,
-    },
-    "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-    "sideEffects": true,
-    "test": /\\\\\\.css\\$/,
-    "type": "javascript/auto",
-    "use": [
-      {
-        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-        "options": {
-          "exportType": "string",
-          "importLoaders": 2,
-          "modules": false,
-          "sourceMap": false,
-        },
-      },
-      {
-        "loader": "builtin:lightningcss-loader",
-        "options": {
-          "errorRecovery": true,
-          "targets": [
-            "chrome >= 107",
-            "edge >= 107",
-            "firefox >= 104",
-            "safari >= 16",
-          ],
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/core/compiled/postcss-loader/index.js",
-        "options": {
-          "implementation": "<ROOT>/packages/core/compiled/postcss/index.js",
-          "postcssOptions": {
-            "config": false,
-            "plugins": [
-              {
-                "postcssPlugin": "bar",
-              },
-            ],
-          },
-          "sourceMap": false,
-        },
-      },
-    ],
-  },
-  {
-    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-    "test": /\\\\\\.css\\$/,
-    "type": "asset/source",
   },
 ]
 `;

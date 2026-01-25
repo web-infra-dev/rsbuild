@@ -77,8 +77,8 @@ describe('plugin-sass', () => {
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
-    expect(matchRules(bundlerConfigs[0], 'a.scss').length).toBe(2);
-    expect(matchRules(bundlerConfigs[0], 'b.scss').length).toBe(5);
+    expect(matchRules(bundlerConfigs[0], 'a.scss').length).toBe(1);
+    expect(matchRules(bundlerConfigs[0], 'b.scss').length).toBe(2);
   });
 
   it('should be compatible with Rsbuild < 1.3.0', async () => {
@@ -105,7 +105,7 @@ describe('plugin-sass', () => {
     await rsbuild.initConfigs();
 
     const bundlerConfigs = await rsbuild.initConfigs();
-    expect(matchRules(bundlerConfigs[0], 'a.scss').length).toBe(2);
+    expect(matchRules(bundlerConfigs[0], 'a.scss').length).toBe(1);
     expect(matchRules(bundlerConfigs[0], 'a.scss?inline').length).toBe(0);
   });
 });

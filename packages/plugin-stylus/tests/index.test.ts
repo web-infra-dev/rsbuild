@@ -53,7 +53,7 @@ describe('plugin-stylus', () => {
     await rsbuild.initConfigs();
 
     const bundlerConfigs = await rsbuild.initConfigs();
-    expect(matchRules(bundlerConfigs[0], 'a.styl').length).toBe(2);
+    expect(matchRules(bundlerConfigs[0], 'a.styl').length).toBe(1);
     expect(matchRules(bundlerConfigs[0], 'a.styl?inline').length).toBe(0);
   });
 });

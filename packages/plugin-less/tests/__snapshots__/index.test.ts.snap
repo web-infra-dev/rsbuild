@@ -6,107 +6,111 @@ exports[`plugin-less > should add less-loader 1`] = `
     "dependency": {
       "not": "url",
     },
+    "oneOf": [
+      {
+        "dependency": {
+          "not": "url",
+        },
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+        "sideEffects": true,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
+              "importLoaders": 2,
+              "modules": false,
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
+            "options": {
+              "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
+              "lessOptions": {
+                "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/node_modules",
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+      {
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/source",
+      },
+      {
+        "dependency": {
+          "not": "url",
+        },
+        "sideEffects": true,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+          },
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "importLoaders": 2,
+              "modules": {
+                "auto": true,
+                "exportGlobals": false,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                "namedExport": false,
+              },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
+            "options": {
+              "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
+              "lessOptions": {
+                "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/node_modules",
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+    ],
     "resolve": {
       "preferRelative": true,
     },
-    "resourceQuery": {
-      "not": [
-        /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-        /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-      ],
-    },
-    "sideEffects": true,
     "test": /\\\\\\.less\\$/,
-    "use": [
-      {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
-      },
-      {
-        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-        "options": {
-          "importLoaders": 2,
-          "modules": {
-            "auto": true,
-            "exportGlobals": false,
-            "exportLocalsConvention": "camelCase",
-            "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-            "namedExport": false,
-          },
-          "sourceMap": false,
-        },
-      },
-      {
-        "loader": "builtin:lightningcss-loader",
-        "options": {
-          "errorRecovery": true,
-          "targets": [
-            "chrome >= 107",
-            "edge >= 107",
-            "firefox >= 104",
-            "safari >= 16",
-          ],
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
-        "options": {
-          "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
-          "lessOptions": {
-            "javascriptEnabled": true,
-            "paths": [
-              "<ROOT>/node_modules",
-            ],
-          },
-          "sourceMap": false,
-        },
-      },
-    ],
-  },
-  {
-    "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-    "sideEffects": true,
-    "test": /\\\\\\.less\\$/,
-    "use": [
-      {
-        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-        "options": {
-          "exportType": "string",
-          "importLoaders": 2,
-          "modules": false,
-          "sourceMap": false,
-        },
-      },
-      {
-        "loader": "builtin:lightningcss-loader",
-        "options": {
-          "errorRecovery": true,
-          "targets": [
-            "chrome >= 107",
-            "edge >= 107",
-            "firefox >= 104",
-            "safari >= 16",
-          ],
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
-        "options": {
-          "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
-          "lessOptions": {
-            "javascriptEnabled": true,
-            "paths": [
-              "<ROOT>/node_modules",
-            ],
-          },
-          "sourceMap": false,
-        },
-      },
-    ],
-  },
-  {
-    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-    "test": /\\\\\\.less\\$/,
-    "type": "asset/source",
   },
 ]
 `;
@@ -117,107 +121,111 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
     "dependency": {
       "not": "url",
     },
+    "oneOf": [
+      {
+        "dependency": {
+          "not": "url",
+        },
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+        "sideEffects": true,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
+              "importLoaders": 2,
+              "modules": false,
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
+            "options": {
+              "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
+              "lessOptions": {
+                "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/node_modules",
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+      {
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/source",
+      },
+      {
+        "dependency": {
+          "not": "url",
+        },
+        "sideEffects": true,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/compiled/style-loader/index.js",
+          },
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "importLoaders": 2,
+              "modules": {
+                "auto": true,
+                "exportGlobals": false,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                "namedExport": false,
+              },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
+            "options": {
+              "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
+              "lessOptions": {
+                "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/node_modules",
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+    ],
     "resolve": {
       "preferRelative": true,
     },
-    "resourceQuery": {
-      "not": [
-        /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-        /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-      ],
-    },
-    "sideEffects": true,
     "test": /\\\\\\.less\\$/,
-    "use": [
-      {
-        "loader": "<ROOT>/packages/core/compiled/style-loader/index.js",
-      },
-      {
-        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-        "options": {
-          "importLoaders": 2,
-          "modules": {
-            "auto": true,
-            "exportGlobals": false,
-            "exportLocalsConvention": "camelCase",
-            "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-            "namedExport": false,
-          },
-          "sourceMap": false,
-        },
-      },
-      {
-        "loader": "builtin:lightningcss-loader",
-        "options": {
-          "errorRecovery": true,
-          "targets": [
-            "chrome >= 107",
-            "edge >= 107",
-            "firefox >= 104",
-            "safari >= 16",
-          ],
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
-        "options": {
-          "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
-          "lessOptions": {
-            "javascriptEnabled": true,
-            "paths": [
-              "<ROOT>/node_modules",
-            ],
-          },
-          "sourceMap": false,
-        },
-      },
-    ],
-  },
-  {
-    "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-    "sideEffects": true,
-    "test": /\\\\\\.less\\$/,
-    "use": [
-      {
-        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-        "options": {
-          "exportType": "string",
-          "importLoaders": 2,
-          "modules": false,
-          "sourceMap": false,
-        },
-      },
-      {
-        "loader": "builtin:lightningcss-loader",
-        "options": {
-          "errorRecovery": true,
-          "targets": [
-            "chrome >= 107",
-            "edge >= 107",
-            "firefox >= 104",
-            "safari >= 16",
-          ],
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
-        "options": {
-          "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
-          "lessOptions": {
-            "javascriptEnabled": true,
-            "paths": [
-              "<ROOT>/node_modules",
-            ],
-          },
-          "sourceMap": false,
-        },
-      },
-    ],
-  },
-  {
-    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-    "test": /\\\\\\.less\\$/,
-    "type": "asset/source",
   },
 ]
 `;
@@ -228,113 +236,117 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
     "dependency": {
       "not": "url",
     },
-    "exclude": [
-      /node_modules/,
+    "oneOf": [
+      {
+        "dependency": {
+          "not": "url",
+        },
+        "exclude": [
+          /node_modules/,
+        ],
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+        "sideEffects": true,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
+              "importLoaders": 2,
+              "modules": false,
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
+            "options": {
+              "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
+              "lessOptions": {
+                "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/node_modules",
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+      {
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/source",
+      },
+      {
+        "dependency": {
+          "not": "url",
+        },
+        "exclude": [
+          /node_modules/,
+        ],
+        "sideEffects": true,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+          },
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "importLoaders": 2,
+              "modules": {
+                "auto": true,
+                "exportGlobals": false,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                "namedExport": false,
+              },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
+            "options": {
+              "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
+              "lessOptions": {
+                "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/node_modules",
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
     ],
     "resolve": {
       "preferRelative": true,
     },
-    "resourceQuery": {
-      "not": [
-        /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-        /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-      ],
-    },
-    "sideEffects": true,
     "test": /\\\\\\.less\\$/,
-    "use": [
-      {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
-      },
-      {
-        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-        "options": {
-          "importLoaders": 2,
-          "modules": {
-            "auto": true,
-            "exportGlobals": false,
-            "exportLocalsConvention": "camelCase",
-            "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-            "namedExport": false,
-          },
-          "sourceMap": false,
-        },
-      },
-      {
-        "loader": "builtin:lightningcss-loader",
-        "options": {
-          "errorRecovery": true,
-          "targets": [
-            "chrome >= 107",
-            "edge >= 107",
-            "firefox >= 104",
-            "safari >= 16",
-          ],
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
-        "options": {
-          "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
-          "lessOptions": {
-            "javascriptEnabled": true,
-            "paths": [
-              "<ROOT>/node_modules",
-            ],
-          },
-          "sourceMap": false,
-        },
-      },
-    ],
-  },
-  {
-    "exclude": [
-      /node_modules/,
-    ],
-    "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-    "sideEffects": true,
-    "test": /\\\\\\.less\\$/,
-    "use": [
-      {
-        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-        "options": {
-          "exportType": "string",
-          "importLoaders": 2,
-          "modules": false,
-          "sourceMap": false,
-        },
-      },
-      {
-        "loader": "builtin:lightningcss-loader",
-        "options": {
-          "errorRecovery": true,
-          "targets": [
-            "chrome >= 107",
-            "edge >= 107",
-            "firefox >= 104",
-            "safari >= 16",
-          ],
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
-        "options": {
-          "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
-          "lessOptions": {
-            "javascriptEnabled": true,
-            "paths": [
-              "<ROOT>/node_modules",
-            ],
-          },
-          "sourceMap": false,
-        },
-      },
-    ],
-  },
-  {
-    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-    "test": /\\\\\\.less\\$/,
-    "type": "asset/source",
   },
 ]
 `;
@@ -345,107 +357,111 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
     "dependency": {
       "not": "url",
     },
+    "oneOf": [
+      {
+        "dependency": {
+          "not": "url",
+        },
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+        "sideEffects": true,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
+              "importLoaders": 2,
+              "modules": false,
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
+            "options": {
+              "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
+              "lessOptions": {
+                "javascriptEnabled": false,
+                "paths": [
+                  "<ROOT>/node_modules",
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+      {
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/source",
+      },
+      {
+        "dependency": {
+          "not": "url",
+        },
+        "sideEffects": true,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+          },
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "importLoaders": 2,
+              "modules": {
+                "auto": true,
+                "exportGlobals": false,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                "namedExport": false,
+              },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
+            "options": {
+              "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
+              "lessOptions": {
+                "javascriptEnabled": false,
+                "paths": [
+                  "<ROOT>/node_modules",
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+    ],
     "resolve": {
       "preferRelative": true,
     },
-    "resourceQuery": {
-      "not": [
-        /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-        /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-      ],
-    },
-    "sideEffects": true,
     "test": /\\\\\\.less\\$/,
-    "use": [
-      {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
-      },
-      {
-        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-        "options": {
-          "importLoaders": 2,
-          "modules": {
-            "auto": true,
-            "exportGlobals": false,
-            "exportLocalsConvention": "camelCase",
-            "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-            "namedExport": false,
-          },
-          "sourceMap": false,
-        },
-      },
-      {
-        "loader": "builtin:lightningcss-loader",
-        "options": {
-          "errorRecovery": true,
-          "targets": [
-            "chrome >= 107",
-            "edge >= 107",
-            "firefox >= 104",
-            "safari >= 16",
-          ],
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
-        "options": {
-          "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
-          "lessOptions": {
-            "javascriptEnabled": false,
-            "paths": [
-              "<ROOT>/node_modules",
-            ],
-          },
-          "sourceMap": false,
-        },
-      },
-    ],
-  },
-  {
-    "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-    "sideEffects": true,
-    "test": /\\\\\\.less\\$/,
-    "use": [
-      {
-        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-        "options": {
-          "exportType": "string",
-          "importLoaders": 2,
-          "modules": false,
-          "sourceMap": false,
-        },
-      },
-      {
-        "loader": "builtin:lightningcss-loader",
-        "options": {
-          "errorRecovery": true,
-          "targets": [
-            "chrome >= 107",
-            "edge >= 107",
-            "firefox >= 104",
-            "safari >= 16",
-          ],
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
-        "options": {
-          "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
-          "lessOptions": {
-            "javascriptEnabled": false,
-            "paths": [
-              "<ROOT>/node_modules",
-            ],
-          },
-          "sourceMap": false,
-        },
-      },
-    ],
-  },
-  {
-    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-    "test": /\\\\\\.less\\$/,
-    "type": "asset/source",
   },
 ]
 `;
@@ -456,121 +472,125 @@ exports[`plugin-less > should allow to use Less plugins 1`] = `
     "dependency": {
       "not": "url",
     },
+    "oneOf": [
+      {
+        "dependency": {
+          "not": "url",
+        },
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+        "sideEffects": true,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
+              "importLoaders": 2,
+              "modules": false,
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
+            "options": {
+              "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
+              "lessOptions": {
+                "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/node_modules",
+                ],
+                "plugins": [
+                  MockPlugin {
+                    "options": {
+                      "foo": "bar",
+                    },
+                  },
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+      {
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/source",
+      },
+      {
+        "dependency": {
+          "not": "url",
+        },
+        "sideEffects": true,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+          },
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "importLoaders": 2,
+              "modules": {
+                "auto": true,
+                "exportGlobals": false,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                "namedExport": false,
+              },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
+            "options": {
+              "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
+              "lessOptions": {
+                "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/node_modules",
+                ],
+                "plugins": [
+                  MockPlugin {
+                    "options": {
+                      "foo": "bar",
+                    },
+                  },
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+    ],
     "resolve": {
       "preferRelative": true,
     },
-    "resourceQuery": {
-      "not": [
-        /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-        /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-      ],
-    },
-    "sideEffects": true,
     "test": /\\\\\\.less\\$/,
-    "use": [
-      {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
-      },
-      {
-        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-        "options": {
-          "importLoaders": 2,
-          "modules": {
-            "auto": true,
-            "exportGlobals": false,
-            "exportLocalsConvention": "camelCase",
-            "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-            "namedExport": false,
-          },
-          "sourceMap": false,
-        },
-      },
-      {
-        "loader": "builtin:lightningcss-loader",
-        "options": {
-          "errorRecovery": true,
-          "targets": [
-            "chrome >= 107",
-            "edge >= 107",
-            "firefox >= 104",
-            "safari >= 16",
-          ],
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
-        "options": {
-          "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
-          "lessOptions": {
-            "javascriptEnabled": true,
-            "paths": [
-              "<ROOT>/node_modules",
-            ],
-            "plugins": [
-              MockPlugin {
-                "options": {
-                  "foo": "bar",
-                },
-              },
-            ],
-          },
-          "sourceMap": false,
-        },
-      },
-    ],
-  },
-  {
-    "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-    "sideEffects": true,
-    "test": /\\\\\\.less\\$/,
-    "use": [
-      {
-        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-        "options": {
-          "exportType": "string",
-          "importLoaders": 2,
-          "modules": false,
-          "sourceMap": false,
-        },
-      },
-      {
-        "loader": "builtin:lightningcss-loader",
-        "options": {
-          "errorRecovery": true,
-          "targets": [
-            "chrome >= 107",
-            "edge >= 107",
-            "firefox >= 104",
-            "safari >= 16",
-          ],
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
-        "options": {
-          "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
-          "lessOptions": {
-            "javascriptEnabled": true,
-            "paths": [
-              "<ROOT>/node_modules",
-            ],
-            "plugins": [
-              MockPlugin {
-                "options": {
-                  "foo": "bar",
-                },
-              },
-            ],
-          },
-          "sourceMap": false,
-        },
-      },
-    ],
-  },
-  {
-    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-    "test": /\\\\\\.less\\$/,
-    "type": "asset/source",
   },
 ]
 `;
