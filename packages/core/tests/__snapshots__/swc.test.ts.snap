@@ -20,52 +20,52 @@ exports[`plugin-swc > should add browserslist 1`] = `
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           ],
-          "resourceQuery": {
-            "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-          },
-          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-          "type": "javascript/auto",
-          "use": [
+          "oneOf": [
             {
-              "loader": "builtin:swc-loader",
-              "options": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
+              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+              "type": "asset/source",
+            },
+            {
+              "type": "javascript/auto",
+              "use": [
+                {
+                  "loader": "builtin:swc-loader",
+                  "options": {
+                    "collectTypeScriptInfo": {
+                      "exportedEnum": false,
+                      "typeExports": true,
+                    },
+                    "env": {
+                      "targets": [
+                        "chrome 98",
+                      ],
+                    },
+                    "isModule": "unknown",
+                    "jsc": {
+                      "experimental": {
+                        "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                        "keepImportAttributes": true,
+                      },
+                      "externalHelpers": true,
+                      "output": {
+                        "charset": "utf8",
+                      },
+                      "parser": {
+                        "decorators": true,
+                        "syntax": "typescript",
+                        "tsx": false,
+                      },
+                      "transform": {
+                        "decoratorVersion": "2022-03",
+                        "legacyDecorator": false,
+                      },
+                    },
+                  },
                 },
-                "env": {
-                  "targets": [
-                    "chrome 98",
-                  ],
-                },
-                "isModule": "unknown",
-                "jsc": {
-                  "experimental": {
-                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
-                    "keepImportAttributes": true,
-                  },
-                  "externalHelpers": true,
-                  "output": {
-                    "charset": "utf8",
-                  },
-                  "parser": {
-                    "decorators": true,
-                    "syntax": "typescript",
-                    "tsx": false,
-                  },
-                  "transform": {
-                    "decoratorVersion": "2022-03",
-                    "legacyDecorator": false,
-                  },
-                },
-              },
+              ],
             },
           ],
-        },
-        {
-          "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-          "type": "asset/source",
         },
         {
           "mimetype": {
@@ -145,62 +145,62 @@ exports[`plugin-swc > should add pluginImport 1`] = `
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           ],
-          "resourceQuery": {
-            "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-          },
-          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-          "type": "javascript/auto",
-          "use": [
+          "oneOf": [
             {
-              "loader": "builtin:swc-loader",
-              "options": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
-                },
-                "env": {
-                  "targets": [
-                    "chrome >= 107",
-                    "edge >= 107",
-                    "firefox >= 104",
-                    "safari >= 16",
-                  ],
-                },
-                "isModule": "unknown",
-                "jsc": {
-                  "experimental": {
-                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
-                    "keepImportAttributes": true,
-                  },
-                  "externalHelpers": true,
-                  "output": {
-                    "charset": "utf8",
-                  },
-                  "parser": {
-                    "decorators": true,
-                    "syntax": "typescript",
-                    "tsx": false,
-                  },
-                  "transform": {
-                    "decoratorVersion": "2022-03",
-                    "legacyDecorator": false,
-                  },
-                },
-                "rspackExperiments": {
-                  "import": [
-                    {
-                      "libraryName": "foo",
+              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+              "type": "asset/source",
+            },
+            {
+              "type": "javascript/auto",
+              "use": [
+                {
+                  "loader": "builtin:swc-loader",
+                  "options": {
+                    "collectTypeScriptInfo": {
+                      "exportedEnum": false,
+                      "typeExports": true,
                     },
-                  ],
+                    "env": {
+                      "targets": [
+                        "chrome >= 107",
+                        "edge >= 107",
+                        "firefox >= 104",
+                        "safari >= 16",
+                      ],
+                    },
+                    "isModule": "unknown",
+                    "jsc": {
+                      "experimental": {
+                        "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                        "keepImportAttributes": true,
+                      },
+                      "externalHelpers": true,
+                      "output": {
+                        "charset": "utf8",
+                      },
+                      "parser": {
+                        "decorators": true,
+                        "syntax": "typescript",
+                        "tsx": false,
+                      },
+                      "transform": {
+                        "decoratorVersion": "2022-03",
+                        "legacyDecorator": false,
+                      },
+                    },
+                    "rspackExperiments": {
+                      "import": [
+                        {
+                          "libraryName": "foo",
+                        },
+                      ],
+                    },
+                  },
                 },
-              },
+              ],
             },
           ],
-        },
-        {
-          "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-          "type": "asset/source",
         },
         {
           "mimetype": {
@@ -282,26 +282,26 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to be function type 1`] 
       },
       /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
     ],
-    "resourceQuery": {
-      "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-    },
-    "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-    "type": "javascript/auto",
-    "use": [
+    "oneOf": [
       {
-        "loader": "builtin:swc-loader",
-        "options": {
-          "jsc": {
-            "externalHelpers": false,
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/source",
+      },
+      {
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "builtin:swc-loader",
+            "options": {
+              "jsc": {
+                "externalHelpers": false,
+              },
+            },
           },
-        },
+        ],
       },
     ],
-  },
-  {
-    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-    "type": "asset/source",
   },
   {
     "mimetype": {
@@ -339,55 +339,55 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader 
       },
       /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
     ],
-    "resourceQuery": {
-      "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-    },
-    "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-    "type": "javascript/auto",
-    "use": [
+    "oneOf": [
       {
-        "loader": "builtin:swc-loader",
-        "options": {
-          "collectTypeScriptInfo": {
-            "exportedEnum": false,
-            "typeExports": true,
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/source",
+      },
+      {
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "builtin:swc-loader",
+            "options": {
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
+              },
+              "env": {
+                "targets": [
+                  "chrome >= 107",
+                  "edge >= 107",
+                  "firefox >= 104",
+                  "safari >= 16",
+                ],
+              },
+              "isModule": "unknown",
+              "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  "keepImportAttributes": true,
+                },
+                "externalHelpers": false,
+                "output": {
+                  "charset": "utf8",
+                },
+                "parser": {
+                  "decorators": true,
+                  "syntax": "typescript",
+                  "tsx": false,
+                },
+                "transform": {
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
+                },
+              },
+            },
           },
-          "env": {
-            "targets": [
-              "chrome >= 107",
-              "edge >= 107",
-              "firefox >= 104",
-              "safari >= 16",
-            ],
-          },
-          "isModule": "unknown",
-          "jsc": {
-            "experimental": {
-              "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
-              "keepImportAttributes": true,
-            },
-            "externalHelpers": false,
-            "output": {
-              "charset": "utf8",
-            },
-            "parser": {
-              "decorators": true,
-              "syntax": "typescript",
-              "tsx": false,
-            },
-            "transform": {
-              "decoratorVersion": "2022-03",
-              "legacyDecorator": false,
-            },
-          },
-        },
+        ],
       },
     ],
-  },
-  {
-    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-    "type": "asset/source",
   },
   {
     "mimetype": {
@@ -457,70 +457,70 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
       },
       /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
     ],
-    "resolve": {
-      "alias": {
-        "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-      },
-    },
-    "resourceQuery": {
-      "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-    },
-    "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-    "type": "javascript/auto",
-    "use": [
+    "oneOf": [
       {
-        "loader": "builtin:swc-loader",
-        "options": {
-          "collectTypeScriptInfo": {
-            "exportedEnum": false,
-            "typeExports": true,
-          },
-          "env": {
-            "coreJs": "3.47",
-            "mode": "usage",
-            "shippedProposals": true,
-            "targets": [
-              "chrome >= 107",
-              "edge >= 107",
-              "firefox >= 104",
-              "safari >= 16",
-            ],
-          },
-          "isModule": "unknown",
-          "jsc": {
-            "experimental": {
-              "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
-              "keepImportAttributes": true,
-            },
-            "externalHelpers": true,
-            "output": {
-              "charset": "utf8",
-            },
-            "parser": {
-              "decorators": true,
-              "syntax": "typescript",
-              "tsx": false,
-            },
-            "transform": {
-              "decoratorVersion": "2022-03",
-              "legacyDecorator": false,
-            },
-          },
-          "rspackExperiments": {
-            "import": [
-              {
-                "libraryName": "foo",
-              },
-            ],
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/source",
+      },
+      {
+        "resolve": {
+          "alias": {
+            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
           },
         },
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "builtin:swc-loader",
+            "options": {
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
+              },
+              "env": {
+                "coreJs": "3.47",
+                "mode": "usage",
+                "shippedProposals": true,
+                "targets": [
+                  "chrome >= 107",
+                  "edge >= 107",
+                  "firefox >= 104",
+                  "safari >= 16",
+                ],
+              },
+              "isModule": "unknown",
+              "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  "keepImportAttributes": true,
+                },
+                "externalHelpers": true,
+                "output": {
+                  "charset": "utf8",
+                },
+                "parser": {
+                  "decorators": true,
+                  "syntax": "typescript",
+                  "tsx": false,
+                },
+                "transform": {
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
+                },
+              },
+              "rspackExperiments": {
+                "import": [
+                  {
+                    "libraryName": "foo",
+                  },
+                ],
+              },
+            },
+          },
+        ],
       },
     ],
-  },
-  {
-    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-    "type": "asset/source",
   },
   {
     "mimetype": {
@@ -603,59 +603,59 @@ exports[`plugin-swc > should apply environment config correctly 2`] = `
       },
       /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
     ],
-    "resourceQuery": {
-      "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-    },
-    "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-    "type": "javascript/auto",
-    "use": [
+    "oneOf": [
       {
-        "loader": "builtin:swc-loader",
-        "options": {
-          "collectTypeScriptInfo": {
-            "exportedEnum": false,
-            "typeExports": true,
-          },
-          "env": {
-            "targets": [
-              "node >= 20",
-            ],
-          },
-          "isModule": "unknown",
-          "jsc": {
-            "experimental": {
-              "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
-              "keepImportAttributes": true,
-            },
-            "externalHelpers": true,
-            "output": {
-              "charset": "utf8",
-            },
-            "parser": {
-              "decorators": true,
-              "syntax": "typescript",
-              "tsx": false,
-            },
-            "transform": {
-              "decoratorVersion": "2022-03",
-              "legacyDecorator": false,
-            },
-          },
-          "rspackExperiments": {
-            "import": [
-              {
-                "libraryName": "bar",
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/source",
+      },
+      {
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "builtin:swc-loader",
+            "options": {
+              "collectTypeScriptInfo": {
+                "exportedEnum": false,
+                "typeExports": true,
               },
-            ],
+              "env": {
+                "targets": [
+                  "node >= 20",
+                ],
+              },
+              "isModule": "unknown",
+              "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  "keepImportAttributes": true,
+                },
+                "externalHelpers": true,
+                "output": {
+                  "charset": "utf8",
+                },
+                "parser": {
+                  "decorators": true,
+                  "syntax": "typescript",
+                  "tsx": false,
+                },
+                "transform": {
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
+                },
+              },
+              "rspackExperiments": {
+                "import": [
+                  {
+                    "libraryName": "bar",
+                  },
+                ],
+              },
+            },
           },
-        },
+        ],
       },
     ],
-  },
-  {
-    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-    "type": "asset/source",
   },
   {
     "mimetype": {
@@ -734,65 +734,65 @@ exports[`plugin-swc > should apply pluginImport correctly when ConfigChain 1`] =
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           ],
-          "resourceQuery": {
-            "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-          },
-          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-          "type": "javascript/auto",
-          "use": [
+          "oneOf": [
             {
-              "loader": "builtin:swc-loader",
-              "options": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
-                },
-                "env": {
-                  "targets": [
-                    "chrome >= 107",
-                    "edge >= 107",
-                    "firefox >= 104",
-                    "safari >= 16",
-                  ],
-                },
-                "isModule": "unknown",
-                "jsc": {
-                  "experimental": {
-                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
-                    "keepImportAttributes": true,
-                  },
-                  "externalHelpers": true,
-                  "output": {
-                    "charset": "utf8",
-                  },
-                  "parser": {
-                    "decorators": true,
-                    "syntax": "typescript",
-                    "tsx": false,
-                  },
-                  "transform": {
-                    "decoratorVersion": "2022-03",
-                    "legacyDecorator": false,
-                  },
-                },
-                "rspackExperiments": {
-                  "import": [
-                    {
-                      "libraryName": "foo",
+              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+              "type": "asset/source",
+            },
+            {
+              "type": "javascript/auto",
+              "use": [
+                {
+                  "loader": "builtin:swc-loader",
+                  "options": {
+                    "collectTypeScriptInfo": {
+                      "exportedEnum": false,
+                      "typeExports": true,
                     },
-                    {
-                      "libraryName": "bar",
+                    "env": {
+                      "targets": [
+                        "chrome >= 107",
+                        "edge >= 107",
+                        "firefox >= 104",
+                        "safari >= 16",
+                      ],
                     },
-                  ],
+                    "isModule": "unknown",
+                    "jsc": {
+                      "experimental": {
+                        "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                        "keepImportAttributes": true,
+                      },
+                      "externalHelpers": true,
+                      "output": {
+                        "charset": "utf8",
+                      },
+                      "parser": {
+                        "decorators": true,
+                        "syntax": "typescript",
+                        "tsx": false,
+                      },
+                      "transform": {
+                        "decoratorVersion": "2022-03",
+                        "legacyDecorator": false,
+                      },
+                    },
+                    "rspackExperiments": {
+                      "import": [
+                        {
+                          "libraryName": "foo",
+                        },
+                        {
+                          "libraryName": "bar",
+                        },
+                      ],
+                    },
+                  },
                 },
-              },
+              ],
             },
           ],
-        },
-        {
-          "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-          "type": "asset/source",
         },
         {
           "mimetype": {
@@ -885,55 +885,55 @@ exports[`plugin-swc > should disable pluginImport when return undefined 1`] = `
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           ],
-          "resourceQuery": {
-            "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-          },
-          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-          "type": "javascript/auto",
-          "use": [
+          "oneOf": [
             {
-              "loader": "builtin:swc-loader",
-              "options": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
+              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+              "type": "asset/source",
+            },
+            {
+              "type": "javascript/auto",
+              "use": [
+                {
+                  "loader": "builtin:swc-loader",
+                  "options": {
+                    "collectTypeScriptInfo": {
+                      "exportedEnum": false,
+                      "typeExports": true,
+                    },
+                    "env": {
+                      "targets": [
+                        "chrome >= 107",
+                        "edge >= 107",
+                        "firefox >= 104",
+                        "safari >= 16",
+                      ],
+                    },
+                    "isModule": "unknown",
+                    "jsc": {
+                      "experimental": {
+                        "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                        "keepImportAttributes": true,
+                      },
+                      "externalHelpers": true,
+                      "output": {
+                        "charset": "utf8",
+                      },
+                      "parser": {
+                        "decorators": true,
+                        "syntax": "typescript",
+                        "tsx": false,
+                      },
+                      "transform": {
+                        "decoratorVersion": "2022-03",
+                        "legacyDecorator": false,
+                      },
+                    },
+                  },
                 },
-                "env": {
-                  "targets": [
-                    "chrome >= 107",
-                    "edge >= 107",
-                    "firefox >= 104",
-                    "safari >= 16",
-                  ],
-                },
-                "isModule": "unknown",
-                "jsc": {
-                  "experimental": {
-                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
-                    "keepImportAttributes": true,
-                  },
-                  "externalHelpers": true,
-                  "output": {
-                    "charset": "utf8",
-                  },
-                  "parser": {
-                    "decorators": true,
-                    "syntax": "typescript",
-                    "tsx": false,
-                  },
-                  "transform": {
-                    "decoratorVersion": "2022-03",
-                    "legacyDecorator": false,
-                  },
-                },
-              },
+              ],
             },
           ],
-        },
-        {
-          "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-          "type": "asset/source",
         },
         {
           "mimetype": {
@@ -1016,52 +1016,52 @@ exports[`plugin-swc > should disable preset_env in target other than web 1`] = `
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           ],
-          "resourceQuery": {
-            "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-          },
-          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-          "type": "javascript/auto",
-          "use": [
+          "oneOf": [
             {
-              "loader": "builtin:swc-loader",
-              "options": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
+              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+              "type": "asset/source",
+            },
+            {
+              "type": "javascript/auto",
+              "use": [
+                {
+                  "loader": "builtin:swc-loader",
+                  "options": {
+                    "collectTypeScriptInfo": {
+                      "exportedEnum": false,
+                      "typeExports": true,
+                    },
+                    "env": {
+                      "targets": [
+                        "node >= 20",
+                      ],
+                    },
+                    "isModule": "unknown",
+                    "jsc": {
+                      "experimental": {
+                        "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                        "keepImportAttributes": true,
+                      },
+                      "externalHelpers": true,
+                      "output": {
+                        "charset": "utf8",
+                      },
+                      "parser": {
+                        "decorators": true,
+                        "syntax": "typescript",
+                        "tsx": false,
+                      },
+                      "transform": {
+                        "decoratorVersion": "2022-03",
+                        "legacyDecorator": false,
+                      },
+                    },
+                  },
                 },
-                "env": {
-                  "targets": [
-                    "node >= 20",
-                  ],
-                },
-                "isModule": "unknown",
-                "jsc": {
-                  "experimental": {
-                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
-                    "keepImportAttributes": true,
-                  },
-                  "externalHelpers": true,
-                  "output": {
-                    "charset": "utf8",
-                  },
-                  "parser": {
-                    "decorators": true,
-                    "syntax": "typescript",
-                    "tsx": false,
-                  },
-                  "transform": {
-                    "decoratorVersion": "2022-03",
-                    "legacyDecorator": false,
-                  },
-                },
-              },
+              ],
             },
           ],
-        },
-        {
-          "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-          "type": "asset/source",
         },
         {
           "mimetype": {
@@ -1141,55 +1141,55 @@ exports[`plugin-swc > should disable preset_env mode 1`] = `
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           ],
-          "resourceQuery": {
-            "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-          },
-          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-          "type": "javascript/auto",
-          "use": [
+          "oneOf": [
             {
-              "loader": "builtin:swc-loader",
-              "options": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
+              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+              "type": "asset/source",
+            },
+            {
+              "type": "javascript/auto",
+              "use": [
+                {
+                  "loader": "builtin:swc-loader",
+                  "options": {
+                    "collectTypeScriptInfo": {
+                      "exportedEnum": false,
+                      "typeExports": true,
+                    },
+                    "env": {
+                      "targets": [
+                        "chrome >= 107",
+                        "edge >= 107",
+                        "firefox >= 104",
+                        "safari >= 16",
+                      ],
+                    },
+                    "isModule": "unknown",
+                    "jsc": {
+                      "experimental": {
+                        "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                        "keepImportAttributes": true,
+                      },
+                      "externalHelpers": true,
+                      "output": {
+                        "charset": "utf8",
+                      },
+                      "parser": {
+                        "decorators": true,
+                        "syntax": "typescript",
+                        "tsx": false,
+                      },
+                      "transform": {
+                        "decoratorVersion": "2022-03",
+                        "legacyDecorator": false,
+                      },
+                    },
+                  },
                 },
-                "env": {
-                  "targets": [
-                    "chrome >= 107",
-                    "edge >= 107",
-                    "firefox >= 104",
-                    "safari >= 16",
-                  ],
-                },
-                "isModule": "unknown",
-                "jsc": {
-                  "experimental": {
-                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
-                    "keepImportAttributes": true,
-                  },
-                  "externalHelpers": true,
-                  "output": {
-                    "charset": "utf8",
-                  },
-                  "parser": {
-                    "decorators": true,
-                    "syntax": "typescript",
-                    "tsx": false,
-                  },
-                  "transform": {
-                    "decoratorVersion": "2022-03",
-                    "legacyDecorator": false,
-                  },
-                },
-              },
+              ],
             },
           ],
-        },
-        {
-          "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-          "type": "asset/source",
         },
         {
           "mimetype": {
@@ -1273,62 +1273,62 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           ],
-          "resolve": {
-            "alias": {
-              "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-            },
-          },
-          "resourceQuery": {
-            "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-          },
-          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-          "type": "javascript/auto",
-          "use": [
+          "oneOf": [
             {
-              "loader": "builtin:swc-loader",
-              "options": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
-                },
-                "env": {
-                  "coreJs": "3.47",
-                  "mode": "entry",
-                  "targets": [
-                    "chrome >= 107",
-                    "edge >= 107",
-                    "firefox >= 104",
-                    "safari >= 16",
-                  ],
-                },
-                "isModule": "unknown",
-                "jsc": {
-                  "experimental": {
-                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
-                    "keepImportAttributes": true,
-                  },
-                  "externalHelpers": true,
-                  "output": {
-                    "charset": "utf8",
-                  },
-                  "parser": {
-                    "decorators": true,
-                    "syntax": "typescript",
-                    "tsx": false,
-                  },
-                  "transform": {
-                    "decoratorVersion": "2022-03",
-                    "legacyDecorator": false,
-                  },
+              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+              "type": "asset/source",
+            },
+            {
+              "resolve": {
+                "alias": {
+                  "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
                 },
               },
+              "type": "javascript/auto",
+              "use": [
+                {
+                  "loader": "builtin:swc-loader",
+                  "options": {
+                    "collectTypeScriptInfo": {
+                      "exportedEnum": false,
+                      "typeExports": true,
+                    },
+                    "env": {
+                      "coreJs": "3.47",
+                      "mode": "entry",
+                      "targets": [
+                        "chrome >= 107",
+                        "edge >= 107",
+                        "firefox >= 104",
+                        "safari >= 16",
+                      ],
+                    },
+                    "isModule": "unknown",
+                    "jsc": {
+                      "experimental": {
+                        "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                        "keepImportAttributes": true,
+                      },
+                      "externalHelpers": true,
+                      "output": {
+                        "charset": "utf8",
+                      },
+                      "parser": {
+                        "decorators": true,
+                        "syntax": "typescript",
+                        "tsx": false,
+                      },
+                      "transform": {
+                        "decoratorVersion": "2022-03",
+                        "legacyDecorator": false,
+                      },
+                    },
+                  },
+                },
+              ],
             },
           ],
-        },
-        {
-          "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-          "type": "asset/source",
         },
         {
           "mimetype": {
@@ -1416,63 +1416,63 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           ],
-          "resolve": {
-            "alias": {
-              "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-            },
-          },
-          "resourceQuery": {
-            "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-          },
-          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-          "type": "javascript/auto",
-          "use": [
+          "oneOf": [
             {
-              "loader": "builtin:swc-loader",
-              "options": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
-                },
-                "env": {
-                  "coreJs": "3.47",
-                  "mode": "usage",
-                  "shippedProposals": true,
-                  "targets": [
-                    "chrome >= 107",
-                    "edge >= 107",
-                    "firefox >= 104",
-                    "safari >= 16",
-                  ],
-                },
-                "isModule": "unknown",
-                "jsc": {
-                  "experimental": {
-                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
-                    "keepImportAttributes": true,
-                  },
-                  "externalHelpers": true,
-                  "output": {
-                    "charset": "utf8",
-                  },
-                  "parser": {
-                    "decorators": true,
-                    "syntax": "typescript",
-                    "tsx": false,
-                  },
-                  "transform": {
-                    "decoratorVersion": "2022-03",
-                    "legacyDecorator": false,
-                  },
+              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+              "type": "asset/source",
+            },
+            {
+              "resolve": {
+                "alias": {
+                  "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
                 },
               },
+              "type": "javascript/auto",
+              "use": [
+                {
+                  "loader": "builtin:swc-loader",
+                  "options": {
+                    "collectTypeScriptInfo": {
+                      "exportedEnum": false,
+                      "typeExports": true,
+                    },
+                    "env": {
+                      "coreJs": "3.47",
+                      "mode": "usage",
+                      "shippedProposals": true,
+                      "targets": [
+                        "chrome >= 107",
+                        "edge >= 107",
+                        "firefox >= 104",
+                        "safari >= 16",
+                      ],
+                    },
+                    "isModule": "unknown",
+                    "jsc": {
+                      "experimental": {
+                        "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                        "keepImportAttributes": true,
+                      },
+                      "externalHelpers": true,
+                      "output": {
+                        "charset": "utf8",
+                      },
+                      "parser": {
+                        "decorators": true,
+                        "syntax": "typescript",
+                        "tsx": false,
+                      },
+                      "transform": {
+                        "decoratorVersion": "2022-03",
+                        "legacyDecorator": false,
+                      },
+                    },
+                  },
+                },
+              ],
             },
           ],
-        },
-        {
-          "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-          "type": "asset/source",
         },
         {
           "mimetype": {
@@ -1562,62 +1562,62 @@ exports[`plugin-swc > should has correct core-js 1`] = `
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           ],
-          "resolve": {
-            "alias": {
-              "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-            },
-          },
-          "resourceQuery": {
-            "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-          },
-          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-          "type": "javascript/auto",
-          "use": [
+          "oneOf": [
             {
-              "loader": "builtin:swc-loader",
-              "options": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
-                },
-                "env": {
-                  "coreJs": "3.47",
-                  "mode": "entry",
-                  "targets": [
-                    "chrome >= 107",
-                    "edge >= 107",
-                    "firefox >= 104",
-                    "safari >= 16",
-                  ],
-                },
-                "isModule": "unknown",
-                "jsc": {
-                  "experimental": {
-                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
-                    "keepImportAttributes": true,
-                  },
-                  "externalHelpers": true,
-                  "output": {
-                    "charset": "utf8",
-                  },
-                  "parser": {
-                    "decorators": true,
-                    "syntax": "typescript",
-                    "tsx": false,
-                  },
-                  "transform": {
-                    "decoratorVersion": "2022-03",
-                    "legacyDecorator": false,
-                  },
+              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+              "type": "asset/source",
+            },
+            {
+              "resolve": {
+                "alias": {
+                  "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
                 },
               },
+              "type": "javascript/auto",
+              "use": [
+                {
+                  "loader": "builtin:swc-loader",
+                  "options": {
+                    "collectTypeScriptInfo": {
+                      "exportedEnum": false,
+                      "typeExports": true,
+                    },
+                    "env": {
+                      "coreJs": "3.47",
+                      "mode": "entry",
+                      "targets": [
+                        "chrome >= 107",
+                        "edge >= 107",
+                        "firefox >= 104",
+                        "safari >= 16",
+                      ],
+                    },
+                    "isModule": "unknown",
+                    "jsc": {
+                      "experimental": {
+                        "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                        "keepImportAttributes": true,
+                      },
+                      "externalHelpers": true,
+                      "output": {
+                        "charset": "utf8",
+                      },
+                      "parser": {
+                        "decorators": true,
+                        "syntax": "typescript",
+                        "tsx": false,
+                      },
+                      "transform": {
+                        "decoratorVersion": "2022-03",
+                        "legacyDecorator": false,
+                      },
+                    },
+                  },
+                },
+              ],
             },
           ],
-        },
-        {
-          "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-          "type": "asset/source",
         },
         {
           "mimetype": {
@@ -1705,52 +1705,52 @@ exports[`plugin-swc > should has correct core-js 2`] = `
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           ],
-          "resourceQuery": {
-            "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-          },
-          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-          "type": "javascript/auto",
-          "use": [
+          "oneOf": [
             {
-              "loader": "builtin:swc-loader",
-              "options": {
-                "collectTypeScriptInfo": {
-                  "exportedEnum": false,
-                  "typeExports": true,
+              "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+              "type": "asset/source",
+            },
+            {
+              "type": "javascript/auto",
+              "use": [
+                {
+                  "loader": "builtin:swc-loader",
+                  "options": {
+                    "collectTypeScriptInfo": {
+                      "exportedEnum": false,
+                      "typeExports": true,
+                    },
+                    "env": {
+                      "targets": [
+                        "node >= 20",
+                      ],
+                    },
+                    "isModule": "unknown",
+                    "jsc": {
+                      "experimental": {
+                        "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                        "keepImportAttributes": true,
+                      },
+                      "externalHelpers": true,
+                      "output": {
+                        "charset": "utf8",
+                      },
+                      "parser": {
+                        "decorators": true,
+                        "syntax": "typescript",
+                        "tsx": false,
+                      },
+                      "transform": {
+                        "decoratorVersion": "2022-03",
+                        "legacyDecorator": false,
+                      },
+                    },
+                  },
                 },
-                "env": {
-                  "targets": [
-                    "node >= 20",
-                  ],
-                },
-                "isModule": "unknown",
-                "jsc": {
-                  "experimental": {
-                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
-                    "keepImportAttributes": true,
-                  },
-                  "externalHelpers": true,
-                  "output": {
-                    "charset": "utf8",
-                  },
-                  "parser": {
-                    "decorators": true,
-                    "syntax": "typescript",
-                    "tsx": false,
-                  },
-                  "transform": {
-                    "decoratorVersion": "2022-03",
-                    "legacyDecorator": false,
-                  },
-                },
-              },
+              ],
             },
           ],
-        },
-        {
-          "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-          "type": "asset/source",
         },
         {
           "mimetype": {

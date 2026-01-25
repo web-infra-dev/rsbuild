@@ -1,6 +1,6 @@
-import type { RsbuildConfig } from '@rsbuild/core';
+import { createRsbuild, type RsbuildConfig } from '@rsbuild/core';
 import { pluginBabel } from '@rsbuild/plugin-babel';
-import { createStubRsbuild } from '@scripts/test-helper';
+import { matchRules } from '@scripts/test-helper';
 import { pluginSolid } from '../src';
 
 describe('plugin-solid', () => {
@@ -11,30 +11,32 @@ describe('plugin-solid', () => {
   };
 
   it('should apply solid preset correctly', async () => {
-    const rsbuild = await createStubRsbuild({
-      config: rsbuildConfig,
-      plugins: [pluginSolid(), pluginBabel()],
+    const rsbuild = await createRsbuild({
+      config: {
+        ...rsbuildConfig,
+        plugins: [pluginSolid(), pluginBabel()],
+      },
     });
-    const config = await rsbuild.unwrapConfig();
-
-    expect(config).toMatchSnapshot();
+    const config = await rsbuild.initConfigs();
+    expect(matchRules(config[0], 'a.tsx')[0]).toMatchSnapshot();
   });
 
   it('should allow to configure solid preset options', async () => {
-    const rsbuild = await createStubRsbuild({
-      config: rsbuildConfig,
-      plugins: [
-        pluginSolid({
-          solidPresetOptions: {
-            generate: 'ssr',
-            hydratable: true,
-          },
-        }),
-        pluginBabel(),
-      ],
+    const rsbuild = await createRsbuild({
+      config: {
+        ...rsbuildConfig,
+        plugins: [
+          pluginSolid({
+            solidPresetOptions: {
+              generate: 'ssr',
+              hydratable: true,
+            },
+          }),
+          pluginBabel(),
+        ],
+      },
     });
-    const config = await rsbuild.unwrapConfig();
-
-    expect(config).toMatchSnapshot();
+    const config = await rsbuild.initConfigs();
+    expect(matchRules(config[0], 'a.tsx')[0]).toMatchSnapshot();
   });
 });
