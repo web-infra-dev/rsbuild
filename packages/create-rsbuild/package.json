@@ -35,7 +35,7 @@
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
     "@rsbuild/plugin-preact": "workspace:*",
-    "@rsbuild/plugin-react": "workspace:^1.1.0",
+    "@rsbuild/plugin-react": "workspace:*",
     "@rsbuild/plugin-solid": "workspace:*",
     "@rsbuild/plugin-svelte": "workspace:*",
     "@rsbuild/plugin-vue": "workspace:*",

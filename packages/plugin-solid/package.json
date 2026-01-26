@@ -28,7 +28,7 @@
     "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
-    "@rsbuild/plugin-babel": "workspace:*",
+    "@rsbuild/plugin-babel": "workspace:^2.0.0-0",
     "babel-preset-solid": "^1.9.10",
     "solid-refresh": "0.6.3"
   },

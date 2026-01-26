@@ -29,7 +29,7 @@
     "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
-    "@rsbuild/plugin-react": "workspace:^1.1.0",
+    "@rsbuild/plugin-react": "workspace:^2.0.0-0",
     "@svgr/core": "8.1.0",
     "@svgr/plugin-jsx": "8.1.0",
     "@svgr/plugin-svgo": "8.1.0",
