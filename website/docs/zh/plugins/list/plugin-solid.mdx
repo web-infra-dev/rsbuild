@@ -10,11 +10,15 @@ Solid 插件提供了对 Solid 的支持，插件内部集成了 [babel-preset-s
 
 ### 安装插件
 
-你可以通过如下的命令安装插件:
-
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @rsbuild/plugin-babel @rsbuild/plugin-solid -D" />
+- 使用 `@rsbuild/core` v1 时：
+
+<PackageManagerTabs command="add @rsbuild/plugin-babel@1 @rsbuild/plugin-solid@1 -D" />
+
+- 使用 `@rsbuild/core` v2 时：
+
+<PackageManagerTabs command="add @rsbuild/plugin-babel@alpha @rsbuild/plugin-solid@alpha -D" />
 
 ### 注册插件
 
