@@ -100,6 +100,14 @@ export const pluginSass = (
   setup(api) {
     const { rewriteUrls = true, include = /\.s(?:a|c)ss$/ } = pluginOptions;
 
+    const CSS_MAIN = 'css-main';
+    const CSS_INLINE = 'css-inline';
+    const CSS_RAW = 'css-raw';
+    const SASS_MAIN = 'sass-main';
+    const SASS_INLINE = 'sass-inline';
+    const SASS_RAW = 'sass-raw';
+    const isV1 = api.context.version.startsWith('1.');
+
     api.onAfterCreateCompiler(({ compiler }) => {
       patchCompilerGlobalLocation(compiler);
     });
@@ -117,42 +125,51 @@ export const pluginSass = (
         rewriteUrls ? true : isUseSourceMap,
       );
 
-      const cssRule = chain.module.rules.get(CHAIN_ID.RULE.CSS);
-      const rule = chain.module
+      const sassRule = chain.module
         .rule(findRuleId(chain, CHAIN_ID.RULE.SASS))
         .test(include)
-        .dependency(cssRule.get('dependency'))
+        .dependency({ not: 'url' })
         .resolve.preferRelative(true)
         .end();
-      const cssInlineRule = cssRule.oneOfs.get(CHAIN_ID.ONE_OF.CSS_INLINE);
-      const cssRawRule = cssRule.oneOfs.get(CHAIN_ID.ONE_OF.CSS_RAW);
+
+      if (isV1) {
+        chain.module.rule(SASS_RAW).test(include);
+        chain.module.rule(SASS_INLINE).test(include);
+      }
+
+      const getRule = (id: string) => {
+        // Compatibility for Rsbuild v1
+        if (isV1) {
+          // Map `css-main` to `css` in v1
+          return chain.module.rule(id.replace('-main', ''));
+        }
+        return (
+          id.startsWith('sass-')
+            ? sassRule
+            : chain.module.rule(CHAIN_ID.RULE.CSS)
+        ).oneOf(id);
+      };
 
       // Inline Sass for `?inline` imports
-      const sassInlineRule = rule
-        .oneOf(CHAIN_ID.ONE_OF.SASS_INLINE)
-        .type('javascript/auto')
-        .resourceQuery(cssInlineRule.get('resourceQuery'));
+      const sassInlineRule = getRule(SASS_INLINE);
 
       // Raw Sass for `?raw` imports
-      rule
-        .oneOf(CHAIN_ID.ONE_OF.SASS_RAW)
+      getRule(SASS_RAW)
         .type('asset/source')
-        .resourceQuery(cssRawRule.get('resourceQuery'));
+        .resourceQuery(getRule(CSS_RAW).get('resourceQuery'));
 
       // Main Sass transform
-      const sassMainRule = rule
-        .oneOf(CHAIN_ID.ONE_OF.SASS_MAIN)
-        .type('javascript/auto');
+      const sassMainRule = getRule(SASS_MAIN);
 
       // Update the main rule and the inline rule
       const updateRules = (
         callback: (
-          rule: RspackChain.Rule<RspackChain.Rule>,
-          type: 'main' | 'inline',
+          rule: RspackChain.Rule<unknown>,
+          cssBranchRule: RspackChain.Rule<unknown>,
         ) => void,
       ) => {
-        callback(sassMainRule, 'main');
-        callback(sassInlineRule, 'inline');
+        callback(sassMainRule, getRule(CSS_MAIN));
+        callback(sassInlineRule, getRule(CSS_INLINE));
       };
 
       const sassLoaderPath = path.join(
@@ -173,7 +190,7 @@ export const pluginSass = (
         sourceMap: false,
       };
 
-      updateRules((rule, type) => {
+      updateRules((rule, cssBranchRule) => {
         for (const item of excludes) {
           rule.exclude.add(item);
         }
@@ -182,13 +199,9 @@ export const pluginSass = (
         }
 
         // Copy the builtin CSS rules
-        const cssBranchRule =
-          type === 'main'
-            ? cssRule.oneOfs.get(CHAIN_ID.ONE_OF.CSS_MAIN)
-            : cssInlineRule;
-        rule.dependency(cssRule.get('dependency'));
-        rule.sideEffects(cssBranchRule.get('sideEffects'));
-        rule.resourceQuery(cssBranchRule.get('resourceQuery'));
+        rule
+          .sideEffects(cssBranchRule.get('sideEffects'))
+          .resourceQuery(cssBranchRule.get('resourceQuery'));
 
         for (const id of Object.keys(cssBranchRule.uses.entries())) {
           const loader = cssBranchRule.uses.get(id);
