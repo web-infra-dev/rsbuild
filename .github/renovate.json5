@@ -91,6 +91,7 @@
   ignoreDeps: [
     // manually handle updates
     'node',
+    '@rspack/core',
     // some loaders still depend on loader-utils v2
     'loader-utils',
     // major version contains breaking changes
