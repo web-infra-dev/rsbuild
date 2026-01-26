@@ -72,10 +72,6 @@ export const CHAIN_ID = {
     CSS_MAIN: 'css-main',
     CSS_RAW: 'css-raw',
     CSS_INLINE: 'css-inline',
-    /** Stylus oneOf rules */
-    STYLUS_MAIN: 'stylus-main',
-    STYLUS_RAW: 'stylus-raw',
-    STYLUS_INLINE: 'stylus-inline',
     /** SVG oneOf rules */
     SVG: 'svg',
     SVG_RAW: 'svg-asset-raw',

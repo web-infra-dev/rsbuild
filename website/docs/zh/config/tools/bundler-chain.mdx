@@ -245,19 +245,16 @@ Rsbuild 中预先定义了一些常用的 Chain ID，你可以通过这些 ID �
 
 `ONE_OF.[ID]` 用于定位规则内部 `oneOf` 的具体分支，比如主分支或 `?raw`/`?inline` 分支；它不是顶层规则，而是挂在 `RULE.JS`、`RULE.CSS` 等规则下面。
 
-| ID                     | 描述                                         |
-| ---------------------- | -------------------------------------------- |
-| `ONE_OF.JS_MAIN`       | `RULE.JS` 下的主分支（SWC 转换）             |
-| `ONE_OF.JS_RAW`        | `RULE.JS` 下的 `?raw` 分支                   |
-| `ONE_OF.CSS_MAIN`      | `RULE.CSS` 下的主分支                        |
-| `ONE_OF.CSS_RAW`       | `RULE.CSS` 下的 `?raw` 分支                  |
-| `ONE_OF.CSS_INLINE`    | `RULE.CSS` 下的 `?inline` 分支               |
-| `ONE_OF.STYLUS_MAIN`   | `RULE.STYLUS` 下的主分支                     |
-| `ONE_OF.STYLUS_RAW`    | `RULE.STYLUS` 下的 `?raw` 分支               |
-| `ONE_OF.STYLUS_INLINE` | `RULE.STYLUS` 下的 `?inline` 分支            |
-| `ONE_OF.SVG_URL`       | SVG 输出为独立文件的分支                     |
-| `ONE_OF.SVG_INLINE`    | SVG 内联为 data URI 的分支                   |
-| `ONE_OF.SVG_ASSETS`    | SVG 在 data URI 与独立文件之间自动选择的分支 |
+| ID                  | 描述                                         |
+| ------------------- | -------------------------------------------- |
+| `ONE_OF.JS_MAIN`    | `RULE.JS` 下的主分支（SWC 转换）             |
+| `ONE_OF.JS_RAW`     | `RULE.JS` 下的 `?raw` 分支                   |
+| `ONE_OF.CSS_MAIN`   | `RULE.CSS` 下的主分支                        |
+| `ONE_OF.CSS_RAW`    | `RULE.CSS` 下的 `?raw` 分支                  |
+| `ONE_OF.CSS_INLINE` | `RULE.CSS` 下的 `?inline` 分支               |
+| `ONE_OF.SVG_URL`    | SVG 输出为独立文件的分支                     |
+| `ONE_OF.SVG_INLINE` | SVG 内联为 data URI 的分支                   |
+| `ONE_OF.SVG_ASSET`  | SVG 在 data URI 与独立文件之间自动选择的分支 |
 
 ### CHAIN_ID.USE
 
