@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-svgr",
-  "version": "1.2.4",
+  "version": "2.0.0-alpha.2",
   "description": "SVGR plugin for Rsbuild",
   "repository": {
     "type": "git",
@@ -48,7 +48,7 @@
     "url-loader": "4.1.1"
   },
   "peerDependencies": {
-    "@rsbuild/core": "^1.0.0 || ^2.0.0-0"
+    "@rsbuild/core": "^2.0.0-0"
   },
   "publishConfig": {
     "access": "public",
