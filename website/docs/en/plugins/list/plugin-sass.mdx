@@ -14,13 +14,14 @@ Install the plugin using this command:
 
 import { PackageManagerTabs } from '@theme';
 
-- When using `@rsbuild/core` v1:
+<PackageManagerTabs command="add @rsbuild/plugin-sass -D" />
 
-<PackageManagerTabs command="add @rsbuild/plugin-sass@1 -D" />
+:::tip
 
-- When using `@rsbuild/core` v2:
+- The Sass plugin only supports @rsbuild/core versions >= 0.7.0.
+- If the @rsbuild/core version is lower than 0.7.0, it has built-in support for the Sass plugin; you don't need to install it.
 
-<PackageManagerTabs command="add @rsbuild/plugin-sass@alpha -D" />
+:::
 
 ### Register plugin
 

@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-babel",
-  "version": "2.0.0-alpha.3",
+  "version": "1.0.7",
   "description": "Babel plugin for Rsbuild",
   "repository": {
     "type": "git",
@@ -48,7 +48,7 @@
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
-    "@rsbuild/core": "^2.0.0-0"
+    "@rsbuild/core": "^1.0.0 || ^2.0.0-0"
   },
   "publishConfig": {
     "access": "public",
