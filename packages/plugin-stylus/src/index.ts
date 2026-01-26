@@ -72,6 +72,14 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
   name: PLUGIN_STYLUS_NAME,
 
   setup(api) {
+    const CSS_MAIN = 'css-main';
+    const CSS_INLINE = 'css-inline';
+    const CSS_RAW = 'css-raw';
+    const STYLUS_MAIN = 'stylus-main';
+    const STYLUS_INLINE = 'stylus-inline';
+    const STYLUS_RAW = 'stylus-raw';
+    const isV1 = api.context.version.startsWith('1.');
+
     api.modifyBundlerChain((chain, { CHAIN_ID, environment }) => {
       const { config } = environment;
 
@@ -85,54 +93,58 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
       });
 
       const test = /\.styl(us)?$/;
-
-      const cssRule = chain.module.rules.get(CHAIN_ID.RULE.CSS);
-      const rule = chain.module
+      const stylusRule = chain.module
         .rule(CHAIN_ID.RULE.STYLUS)
         .test(test)
-        .dependency(cssRule.get('dependency'))
+        .dependency({ not: 'url' })
         .resolve.preferRelative(true)
         .end();
-      const cssInlineRule = cssRule.oneOfs.get(CHAIN_ID.ONE_OF.CSS_INLINE);
-      const cssRawRule = cssRule.oneOfs.get(CHAIN_ID.ONE_OF.CSS_RAW);
+
+      if (isV1) {
+        chain.module.rule(STYLUS_RAW).test(test);
+        chain.module.rule(STYLUS_INLINE).test(test);
+      }
+
+      const getRule = (id: string) => {
+        // Compatibility for Rsbuild v1
+        if (isV1) {
+          // Map `css-main` to `css` in v1
+          return chain.module.rule(id.replace('-main', ''));
+        }
+        return (
+          id.startsWith('stylus-')
+            ? stylusRule
+            : chain.module.rule(CHAIN_ID.RULE.CSS)
+        ).oneOf(id);
+      };
 
       // Inline Stylus for `?inline` imports
-      const stylusInlineRule = rule
-        .oneOf(CHAIN_ID.ONE_OF.STYLUS_INLINE)
-        .type('javascript/auto')
-        .resourceQuery(cssInlineRule.get('resourceQuery'));
+      const stylusInlineRule = getRule(STYLUS_INLINE);
 
       // Raw Stylus for `?raw` imports
-      rule
-        .oneOf(CHAIN_ID.ONE_OF.STYLUS_RAW)
+      getRule(STYLUS_RAW)
         .type('asset/source')
-        .resourceQuery(cssRawRule.get('resourceQuery'));
+        .resourceQuery(getRule(CSS_RAW).get('resourceQuery'));
 
       // Main Stylus transform
-      const stylusMainRule = rule
-        .oneOf(CHAIN_ID.ONE_OF.STYLUS_MAIN)
-        .type('javascript/auto');
+      const stylusMainRule = getRule(STYLUS_MAIN);
 
       // Update the main rule and the inline rule
       const updateRules = (
         callback: (
-          rule: RspackChain.Rule<RspackChain.Rule>,
-          type: 'main' | 'inline',
+          rule: RspackChain.Rule<unknown>,
+          cssBranchRule: RspackChain.Rule<unknown>,
         ) => void,
       ) => {
-        callback(stylusMainRule, 'main');
-        callback(stylusInlineRule, 'inline');
+        callback(stylusMainRule, getRule(CSS_MAIN));
+        callback(stylusInlineRule, getRule(CSS_INLINE));
       };
 
-      updateRules((rule, type) => {
+      updateRules((rule, cssBranchRule) => {
         // Copy the builtin CSS rules
-        const cssBranchRule =
-          type === 'main'
-            ? cssRule.oneOfs.get(CHAIN_ID.ONE_OF.CSS_MAIN)
-            : cssInlineRule;
-        rule.dependency(cssRule.get('dependency'));
-        rule.sideEffects(cssBranchRule.get('sideEffects'));
-        rule.resourceQuery(cssBranchRule.get('resourceQuery'));
+        rule
+          .sideEffects(cssBranchRule.get('sideEffects'))
+          .resourceQuery(cssBranchRule.get('resourceQuery'));
 
         for (const id of Object.keys(cssBranchRule.uses.entries())) {
           const loader = cssBranchRule.uses.get(id);

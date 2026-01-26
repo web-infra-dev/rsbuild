@@ -245,19 +245,16 @@ For example, the `RULE.STYLUS` rule exists only when the Stylus plugin is regist
 
 `ONE_OF.[ID]` points to a specific branch inside a rule's `oneOf` list, such as the main branch or `?raw`/`?inline` branches. It is not a top-level rule; it lives under `RULE.JS`, `RULE.CSS`, and similar rules.
 
-| ID                     | Description                                             |
-| ---------------------- | ------------------------------------------------------- |
-| `ONE_OF.JS_MAIN`       | Main JS branch under `RULE.JS` (SWC transforms)         |
-| `ONE_OF.JS_RAW`        | `?raw` branch under `RULE.JS`                           |
-| `ONE_OF.CSS_MAIN`      | Main CSS branch under `RULE.CSS`                        |
-| `ONE_OF.CSS_RAW`       | `?raw` branch under `RULE.CSS`                          |
-| `ONE_OF.CSS_INLINE`    | `?inline` branch under `RULE.CSS`                       |
-| `ONE_OF.STYLUS_MAIN`   | Main Stylus branch under `RULE.STYLUS`                  |
-| `ONE_OF.STYLUS_RAW`    | `?raw` branch under `RULE.STYLUS`                       |
-| `ONE_OF.STYLUS_INLINE` | `?inline` branch under `RULE.STYLUS`                    |
-| `ONE_OF.SVG_URL`       | SVG branch for emitting a separate file                 |
-| `ONE_OF.SVG_INLINE`    | SVG branch for inlining as data URI                     |
-| `ONE_OF.SVG_ASSETS`    | SVG branch for auto selection between data URI and file |
+| ID                  | Description                                             |
+| ------------------- | ------------------------------------------------------- |
+| `ONE_OF.JS_MAIN`    | Main JS branch under `RULE.JS` (SWC transforms)         |
+| `ONE_OF.JS_RAW`     | `?raw` branch under `RULE.JS`                           |
+| `ONE_OF.CSS_MAIN`   | Main CSS branch under `RULE.CSS`                        |
+| `ONE_OF.CSS_RAW`    | `?raw` branch under `RULE.CSS`                          |
+| `ONE_OF.CSS_INLINE` | `?inline` branch under `RULE.CSS`                       |
+| `ONE_OF.SVG_URL`    | SVG branch for emitting a separate file                 |
+| `ONE_OF.SVG_INLINE` | SVG branch for inlining as data URI                     |
+| `ONE_OF.SVG_ASSETS` | SVG branch for auto selection between data URI and file |
 
 ### CHAIN_ID.USE
 

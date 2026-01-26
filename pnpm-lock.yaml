@@ -918,6 +918,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rsbuild/core-v1':
+        specifier: npm:@rsbuild/core@^1.7.2
+        version: '@rsbuild/core@1.7.2'
       '@rslib/core':
         specifier: 0.19.3
         version: 0.19.3(@typescript/native-preview@7.0.0-dev.20260124.1)(typescript@5.9.3)
