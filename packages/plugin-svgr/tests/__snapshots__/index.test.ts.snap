@@ -7,7 +7,7 @@ exports[`svgr > configure SVGR options 1`] = `
       "generator": {
         "filename": "static/svg/[name].[contenthash:8].svg",
       },
-      "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+      "resourceQuery": /\\^\\\\\\?url\\$/,
       "type": "asset/resource",
     },
     {
@@ -110,7 +110,7 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
       "generator": {
         "filename": "static/svg/[name].[contenthash:8].svg",
       },
-      "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+      "resourceQuery": /\\^\\\\\\?url\\$/,
       "type": "asset/resource",
     },
     {
@@ -283,7 +283,7 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
       "generator": {
         "filename": "static/svg/[name].[contenthash:8].svg",
       },
-      "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+      "resourceQuery": /\\^\\\\\\?url\\$/,
       "type": "asset/resource",
     },
     {
@@ -456,7 +456,7 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
       "generator": {
         "filename": "static/svg/[name].[contenthash:8].svg",
       },
-      "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+      "resourceQuery": /\\^\\\\\\?url\\$/,
       "type": "asset/resource",
     },
     {
@@ -629,7 +629,7 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
       "generator": {
         "filename": "static/svg/[name].[contenthash:8].svg",
       },
-      "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+      "resourceQuery": /\\^\\\\\\?url\\$/,
       "type": "asset/resource",
     },
     {

@@ -38,11 +38,11 @@ const chainStaticAssetRule = ({
     generatorOptions.emit = false;
   }
 
-  // get asset URL: "foo.png?url" or "foo.png?__inline=false"
+  // get asset URL: "foo.png?url"
   rule
     .oneOf(`${assetType}-asset-url`)
     .type('asset/resource')
-    .resourceQuery(/^\?(__inline=false|url)$/)
+    .resourceQuery(/^\?url$/)
     .set('generator', generatorOptions);
 
   // get inlined base64 content: "foo.png?inline"
