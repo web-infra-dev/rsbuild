@@ -34,6 +34,10 @@
       {
         "text": "Rsbuild 0.x Doc",
         "link": "http://v0.rsbuild.rs/"
+      },
+      {
+        "text": "Rsbuild 2.x Doc",
+        "link": "http://v2.rsbuild.rs/"
       }
     ]
   }

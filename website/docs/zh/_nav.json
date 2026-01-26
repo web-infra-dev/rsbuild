@@ -34,6 +34,10 @@
       {
         "text": "Rsbuild 0.x 文档",
         "link": "http://v0.rsbuild.rs/zh/"
+      },
+      {
+        "text": "Rsbuild 2.x 文档",
+        "link": "http://v2.rsbuild.rs/zh/"
       }
     ]
   }
