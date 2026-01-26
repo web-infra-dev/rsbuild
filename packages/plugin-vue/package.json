@@ -33,11 +33,11 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.19.2",
+    "@rslib/core": "0.19.3",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^24.10.9",
     "typescript": "^5.9.3",
-    "vue": "^3.5.26"
+    "vue": "^3.5.27"
   },
   "peerDependencies": {
     "@rsbuild/core": "^1.0.0 || ^2.0.0-0"
