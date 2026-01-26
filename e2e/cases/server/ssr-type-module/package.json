@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "cross-env NODE_OPTIONS=--experimental-vm-modules rsbuild dev"
+    "dev": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" rsbuild dev"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*"

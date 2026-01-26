@@ -57,7 +57,7 @@ export class EsmRunner extends CommonJsRunner {
       let esm = esmCache.get(file.path);
       if (!esm) {
         esm = new vm.SourceTextModule(file.content, {
-          identifier: `${esmIdentifier}-${file.path}`,
+          identifier: file.path,
           // no attribute
           url: `${pathToFileURL(file.path).href}?${esmIdentifier}`,
           // run in current execution context
@@ -82,9 +82,8 @@ export class EsmRunner extends CommonJsRunner {
           return asModule(
             await _require(
               path.dirname(
-                referencingModule.identifier
-                  ? referencingModule.identifier.slice(esmIdentifier.length + 1)
-                  : fileURLToPath((referencingModule as any).url),
+                referencingModule.identifier ??
+                  fileURLToPath((referencingModule as any).url),
               ),
               specifier,
               {
