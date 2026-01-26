@@ -243,7 +243,7 @@ The built-in JS rule is now split into two `oneOf` branches:
 - `CHAIN_ID.ONE_OF.JS_MAIN`: for SWC transforms
 - `CHAIN_ID.ONE_OF.JS_RAW`: for `?raw` imports
 
-If you previously added loaders on `CHAIN_ID.RULE.JS`, move them to the corresponding `oneOf` branch:
+If you previously added loaders on `CHAIN_ID.RULE.JS`, move them to the `JS_MAIN` branch:
 
 ```diff title="rsbuild.config.ts"
 export default {
@@ -260,3 +260,31 @@ export default {
   },
 };
 ```
+
+### CSS rule
+
+The built-in CSS rule is split into three `oneOf` branches:
+
+- `CHAIN_ID.ONE_OF.CSS_MAIN`: normal CSS transforms
+- `CHAIN_ID.ONE_OF.CSS_RAW`: for `?raw` imports
+- `CHAIN_ID.ONE_OF.CSS_INLINE`: for `?inline` imports
+
+If you previously added loaders on `CHAIN_ID.RULE.CSS`, move them to the `CSS_MAIN` branch:
+
+```diff title="rsbuild.config.ts"
+export default {
+  tools: {
+    bundlerChain(chain, { CHAIN_ID }) {
+      const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
+
+-     cssRule.use('my-css-loader').loader('my-css-loader');
++     cssRule
++       .oneOf(CHAIN_ID.ONE_OF.CSS_MAIN)
++       .use('my-css-loader')
++       .loader('my-css-loader');
+    },
+  },
+};
+```
+
+The built-in rules in the Less/Sass/Stylus plugins have the same `oneOf` change, so update customizations to use the corresponding `ONE_OF` branches there as well.

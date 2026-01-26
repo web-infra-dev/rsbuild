@@ -243,7 +243,7 @@ Rsbuild 内置的 JS 和 CSS 转换规则现在使用了 [oneOf](https://rspack.
 - `CHAIN_ID.ONE_OF.JS_MAIN`：用于 SWC 转换
 - `CHAIN_ID.ONE_OF.JS_RAW`：用于处理 `?raw` 导入
 
-如果你之前在 `CHAIN_ID.RULE.JS` 上添加 loader，现在需要改为在对应的 `oneOf` 上配置：
+如果你之前在 `CHAIN_ID.RULE.JS` 上添加 loader，需要迁移到 `JS_MAIN` 分支：
 
 ```diff title="rsbuild.config.ts"
 export default {
@@ -260,3 +260,31 @@ export default {
   },
 };
 ```
+
+### CSS 规则
+
+内置 CSS 规则拆分为三个 `oneOf` 分支：
+
+- `CHAIN_ID.ONE_OF.CSS_MAIN`：常规 CSS 转换
+- `CHAIN_ID.ONE_OF.CSS_RAW`：用于处理 `?raw` 导入
+- `CHAIN_ID.ONE_OF.CSS_INLINE`：用于处理 `?inline` 导入
+
+如果你之前在 `CHAIN_ID.RULE.CSS` 上添加 loader，需要迁移到 `CSS_MAIN` 分支：
+
+```diff title="rsbuild.config.ts"
+export default {
+  tools: {
+    bundlerChain(chain, { CHAIN_ID }) {
+      const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
+
+-     cssRule.use('my-css-loader').loader('my-css-loader');
++     cssRule
++       .oneOf(CHAIN_ID.ONE_OF.CSS_MAIN)
++       .use('my-css-loader')
++       .loader('my-css-loader');
+    },
+  },
+};
+```
+
+Less / Sass / Stylus 插件的内置规则也已采用相同的 `oneOf` 结构，修改规则时请使用对应的 `ONE_OF` 分支。
