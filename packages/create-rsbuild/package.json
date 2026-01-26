@@ -33,9 +33,9 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/plugin-babel": "workspace:*",
+    "@rsbuild/plugin-babel": "workspace:^2.0.0-0",
     "@rsbuild/plugin-preact": "workspace:*",
-    "@rsbuild/plugin-react": "workspace:*",
+    "@rsbuild/plugin-react": "workspace:^2.0.0-0",
     "@rsbuild/plugin-solid": "workspace:*",
     "@rsbuild/plugin-svelte": "workspace:*",
     "@rsbuild/plugin-vue": "workspace:*",

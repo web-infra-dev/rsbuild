@@ -654,13 +654,13 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rsbuild/plugin-babel':
-        specifier: workspace:*
+        specifier: workspace:^2.0.0-0
         version: link:../plugin-babel
       '@rsbuild/plugin-preact':
         specifier: workspace:*
         version: link:../plugin-preact
       '@rsbuild/plugin-react':
-        specifier: workspace:*
+        specifier: workspace:^2.0.0-0
         version: link:../plugin-react
       '@rsbuild/plugin-solid':
         specifier: workspace:*
