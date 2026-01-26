@@ -10,18 +10,15 @@ import { SourceCode } from '@theme';
 
 ### 安装插件
 
-你可以通过如下的命令安装插件:
-
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @rsbuild/plugin-less -D" />
+- 使用 `@rsbuild/core` v1 时：
 
-:::tip
+<PackageManagerTabs command="add @rsbuild/plugin-less@1 -D" />
 
-- Less 插件仅支持 @rsbuild/core >= 0.7.0 版本。
-- 当 @rsbuild/core 版本小于 0.7.0 时，内置支持 Less 插件，你不需要安装该插件。
+- 使用 `@rsbuild/core` v2 时：
 
-:::
+<PackageManagerTabs command="add @rsbuild/plugin-less@alpha -D" />
 
 ### 注册插件
 
