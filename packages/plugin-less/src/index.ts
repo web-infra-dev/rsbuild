@@ -180,35 +180,45 @@ export const pluginLess = (
   setup(api) {
     const { include = /\.less$/, parallel = false } = pluginOptions;
 
+    const CSS_MAIN = 'css-main';
+    const CSS_INLINE = 'css-inline';
+    const CSS_RAW = 'css-raw';
+    const LESS_MAIN = 'less-main';
+    const LESS_INLINE = 'less-inline';
+    const LESS_RAW = 'less-raw';
+
     api.modifyBundlerChain((chain, { CHAIN_ID, environment }) => {
       const { config } = environment;
+      const isV1 = api.context.version.startsWith('1.');
 
-      const cssRule = chain.module.rules.get(CHAIN_ID.RULE.CSS);
-      const lessRule = chain.module
+      chain.module
         .rule(findRuleId(chain, CHAIN_ID.RULE.LESS))
         .test(include)
-        .dependency(cssRule.get('dependency'))
+        .dependency({ not: 'url' })
         .resolve.preferRelative(true)
         .end();
-      const cssInlineRule = cssRule.oneOfs.get(CHAIN_ID.ONE_OF.CSS_INLINE);
-      const cssRawRule = cssRule.oneOfs.get(CHAIN_ID.ONE_OF.CSS_RAW);
+
+      const getRule = (id: string) => {
+        // Compatibility for Rsbuild v1
+        if (isV1) {
+          // Map `css-main` to `css` in v1
+          return chain.module.rule(id.replace('-main', ''));
+        }
+        return chain.module
+          .rule(id.startsWith('less-') ? CHAIN_ID.RULE.LESS : CHAIN_ID.RULE.CSS)
+          .oneOf(id);
+      };
 
       // Inline Less for `?inline` imports
-      const lessInlineRule = lessRule
-        .oneOf(CHAIN_ID.ONE_OF.LESS_INLINE)
-        .type('javascript/auto')
-        .resourceQuery(cssInlineRule.get('resourceQuery'));
+      const lessInlineRule = getRule(LESS_INLINE).type('javascript/auto');
 
       // Raw Less for `?raw` imports
-      lessRule
-        .oneOf(CHAIN_ID.ONE_OF.LESS_RAW)
+      getRule(LESS_RAW)
         .type('asset/source')
-        .resourceQuery(cssRawRule.get('resourceQuery'));
+        .resourceQuery(getRule(CSS_RAW).get('resourceQuery'));
 
       // Main Less transform
-      const lessMainRule = lessRule
-        .oneOf(CHAIN_ID.ONE_OF.LESS_MAIN)
-        .type('javascript/auto');
+      const lessMainRule = getRule(LESS_MAIN).type('javascript/auto');
 
       const { sourceMap } = config.output;
       const { excludes, options } = getLessLoaderOptions(
@@ -220,12 +230,12 @@ export const pluginLess = (
       // Update the main rule and the inline rule
       const updateRules = (
         callback: (
-          rule: RspackChain.Rule<RspackChain.Rule>,
-          type: 'main' | 'inline',
+          rule: RspackChain.Rule<unknown>,
+          cssBranchRule: RspackChain.Rule<unknown>,
         ) => void,
       ) => {
-        callback(lessMainRule, 'main');
-        callback(lessInlineRule, 'inline');
+        callback(lessMainRule, getRule(CSS_MAIN));
+        callback(lessInlineRule, getRule(CSS_INLINE));
       };
 
       const lessLoaderPath = path.join(
@@ -233,7 +243,7 @@ export const pluginLess = (
         '../compiled/less-loader/index.js',
       );
 
-      updateRules((rule, type) => {
+      updateRules((rule, cssBranchRule) => {
         for (const item of excludes) {
           rule.exclude.add(item);
         }
@@ -242,13 +252,9 @@ export const pluginLess = (
         }
 
         // Copy the builtin CSS rules
-        const cssBranchRule =
-          type === 'main'
-            ? cssRule.oneOfs.get(CHAIN_ID.ONE_OF.CSS_MAIN)
-            : cssInlineRule;
-        rule.dependency(cssRule.get('dependency'));
-        rule.sideEffects(cssBranchRule.get('sideEffects'));
-        rule.resourceQuery(cssBranchRule.get('resourceQuery'));
+        rule
+          .sideEffects(cssBranchRule.get('sideEffects'))
+          .resourceQuery(cssBranchRule.get('resourceQuery'));
 
         for (const id of Object.keys(cssBranchRule.uses.entries())) {
           const loader = cssBranchRule.uses.get(id);

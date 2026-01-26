@@ -8,9 +8,6 @@ exports[`plugin-less > should add less-loader 1`] = `
     },
     "oneOf": [
       {
-        "dependency": {
-          "not": "url",
-        },
         "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
         "type": "javascript/auto",
@@ -56,9 +53,6 @@ exports[`plugin-less > should add less-loader 1`] = `
         "type": "asset/source",
       },
       {
-        "dependency": {
-          "not": "url",
-        },
         "sideEffects": true,
         "type": "javascript/auto",
         "use": [
@@ -123,9 +117,6 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
     },
     "oneOf": [
       {
-        "dependency": {
-          "not": "url",
-        },
         "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
         "type": "javascript/auto",
@@ -171,9 +162,6 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
         "type": "asset/source",
       },
       {
-        "dependency": {
-          "not": "url",
-        },
         "sideEffects": true,
         "type": "javascript/auto",
         "use": [
@@ -230,6 +218,138 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
 ]
 `;
 
+exports[`plugin-less > should add less-loader for Rsbuild v1 1`] = `
+[
+  {
+    "dependency": {
+      "not": "url",
+    },
+    "resolve": {
+      "preferRelative": true,
+    },
+    "resourceQuery": {
+      "not": [
+        /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+      ],
+    },
+    "sideEffects": true,
+    "test": /\\\\\\.less\\$/,
+    "type": "javascript/auto",
+    "use": [
+      {
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+      },
+      {
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rsbuild/core/compiled/css-loader/index.js",
+        "options": {
+          "importLoaders": 2,
+          "modules": {
+            "auto": true,
+            "exportGlobals": false,
+            "exportLocalsConvention": "camelCase",
+            "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+            "namedExport": false,
+          },
+          "sourceMap": false,
+        },
+      },
+      {
+        "loader": "builtin:lightningcss-loader",
+        "options": {
+          "errorRecovery": true,
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
+        "options": {
+          "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
+          "lessOptions": {
+            "javascriptEnabled": true,
+            "paths": [
+              "<ROOT>/node_modules",
+            ],
+          },
+          "sourceMap": false,
+        },
+      },
+    ],
+  },
+]
+`;
+
+exports[`plugin-less > should add less-loader for Rsbuild v1 2`] = `
+[
+  {
+    "dependency": {
+      "not": "url",
+    },
+    "resolve": {
+      "preferRelative": true,
+    },
+    "resourceQuery": {
+      "not": [
+        /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+      ],
+    },
+    "sideEffects": true,
+    "test": /\\\\\\.less\\$/,
+    "type": "javascript/auto",
+    "use": [
+      {
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+      },
+      {
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rsbuild/core/compiled/css-loader/index.js",
+        "options": {
+          "importLoaders": 2,
+          "modules": {
+            "auto": true,
+            "exportGlobals": false,
+            "exportLocalsConvention": "camelCase",
+            "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+            "namedExport": false,
+          },
+          "sourceMap": false,
+        },
+      },
+      {
+        "loader": "builtin:lightningcss-loader",
+        "options": {
+          "errorRecovery": true,
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
+        "options": {
+          "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
+          "lessOptions": {
+            "javascriptEnabled": true,
+            "paths": [
+              "<ROOT>/node_modules",
+            ],
+          },
+          "sourceMap": false,
+        },
+      },
+    ],
+  },
+]
+`;
+
 exports[`plugin-less > should add less-loader with excludes 1`] = `
 [
   {
@@ -238,9 +358,6 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
     },
     "oneOf": [
       {
-        "dependency": {
-          "not": "url",
-        },
         "exclude": [
           /node_modules/,
         ],
@@ -289,9 +406,6 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
         "type": "asset/source",
       },
       {
-        "dependency": {
-          "not": "url",
-        },
         "exclude": [
           /node_modules/,
         ],
@@ -359,9 +473,6 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
     },
     "oneOf": [
       {
-        "dependency": {
-          "not": "url",
-        },
         "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
         "type": "javascript/auto",
@@ -407,9 +518,6 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
         "type": "asset/source",
       },
       {
-        "dependency": {
-          "not": "url",
-        },
         "sideEffects": true,
         "type": "javascript/auto",
         "use": [
@@ -474,9 +582,6 @@ exports[`plugin-less > should allow to use Less plugins 1`] = `
     },
     "oneOf": [
       {
-        "dependency": {
-          "not": "url",
-        },
         "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
         "type": "javascript/auto",
@@ -529,9 +634,6 @@ exports[`plugin-less > should allow to use Less plugins 1`] = `
         "type": "asset/source",
       },
       {
-        "dependency": {
-          "not": "url",
-        },
         "sideEffects": true,
         "type": "javascript/auto",
         "use": [

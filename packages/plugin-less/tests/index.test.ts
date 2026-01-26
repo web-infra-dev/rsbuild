@@ -1,4 +1,5 @@
-import { createRsbuild } from '@rsbuild/core';
+import { createRsbuild, type Rspack } from '@rsbuild/core';
+import { createRsbuild as createRsbuildV1 } from '@rsbuild/core-v1';
 import { matchRules } from '@scripts/test-helper';
 import { pluginLess } from '../src';
 
@@ -12,6 +13,22 @@ describe('plugin-less', () => {
 
     const bundlerConfigs = await rsbuild.initConfigs();
     expect(matchRules(bundlerConfigs[0], 'a.less')).toMatchSnapshot();
+  });
+
+  it('should add less-loader for Rsbuild v1', async () => {
+    const rsbuild = await createRsbuildV1({
+      config: {
+        plugins: [pluginLess()],
+      },
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+    expect(
+      matchRules(bundlerConfigs[0] as Rspack.Configuration, 'a.less'),
+    ).toMatchSnapshot();
+    expect(
+      matchRules(bundlerConfigs[0] as Rspack.Configuration, 'a.less'),
+    ).toMatchSnapshot();
   });
 
   it('should add less-loader and css-loader when injectStyles', async () => {
