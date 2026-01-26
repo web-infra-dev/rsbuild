@@ -231,25 +231,39 @@ Rsbuild 中预先定义了一些常用的 Chain ID，你可以通过这些 ID �
 | `RULE.JS`     | 处理 `js` 和 `ts` 的规则                                                |
 | `RULE.SVG`    | 处理 `svg` 的规则                                                       |
 | `RULE.CSS`    | 处理 `css` 的规则                                                       |
-| `RULE.LESS`   | 处理 `less` 的规则                                                      |
-| `RULE.SASS`   | 处理 `sass` 的规则                                                      |
 | `RULE.WASM`   | 处理 `wasm` 的规则                                                      |
 | `RULE.FONT`   | 处理 `font` 的规则                                                      |
 | `RULE.IMAGE`  | 处理 `image` 的规则                                                     |
 | `RULE.MEDIA`  | 处理 `media` 的规则                                                     |
 | `RULE.VUE`    | 处理 `vue` 的规则（依赖 [Vue 插件](/plugins/list/plugin-vue)）          |
+| `RULE.LESS`   | 处理 `less` 的规则（依赖 [Less 插件](/plugins/list/plugin-less)）       |
+| `RULE.SASS`   | 处理 `sass` 的规则（依赖 [Sass 插件](/plugins/list/plugin-sass)）       |
 | `RULE.SVELTE` | 处理 `svelte` 的规则（依赖 [Svelte 插件](/plugins/list/plugin-svelte)） |
 | `RULE.STYLUS` | 处理 `stylus` 的规则（依赖 [Stylus 插件](/plugins/list/plugin-stylus)） |
 
 ### CHAIN_ID.ONE_OF
 
-通过 `ONE_OF.[ID]` 可以匹配到规则数组中的某一类规则。
+`ONE_OF.[ID]` 用于定位规则内部 `oneOf` 的具体分支，比如主分支或 `?raw`/`?inline` 分支；它不是顶层规则，而是挂在 `RULE.JS`、`RULE.CSS` 等规则下面。
 
-| ID                  | 描述                                                |
-| ------------------- | --------------------------------------------------- |
-| `ONE_OF.SVG_URL`    | 处理 SVG 的规则，输出为单独文件                     |
-| `ONE_OF.SVG_INLINE` | 处理 SVG 的规则，作为 data URI 内联到 bundle 中     |
-| `ONE_OF.SVG_ASSETS` | 处理 SVG 的规则，在 data URI 和单独文件之间自动选择 |
+| ID                     | 描述                                         |
+| ---------------------- | -------------------------------------------- |
+| `ONE_OF.JS_MAIN`       | `RULE.JS` 下的主分支（SWC 转换）             |
+| `ONE_OF.JS_RAW`        | `RULE.JS` 下的 `?raw` 分支                   |
+| `ONE_OF.CSS_MAIN`      | `RULE.CSS` 下的主分支                        |
+| `ONE_OF.CSS_RAW`       | `RULE.CSS` 下的 `?raw` 分支                  |
+| `ONE_OF.CSS_INLINE`    | `RULE.CSS` 下的 `?inline` 分支               |
+| `ONE_OF.LESS_MAIN`     | `RULE.LESS` 下的主分支                       |
+| `ONE_OF.LESS_RAW`      | `RULE.LESS` 下的 `?raw` 分支                 |
+| `ONE_OF.LESS_INLINE`   | `RULE.LESS` 下的 `?inline` 分支              |
+| `ONE_OF.SASS_MAIN`     | `RULE.SASS` 下的主分支                       |
+| `ONE_OF.SASS_RAW`      | `RULE.SASS` 下的 `?raw` 分支                 |
+| `ONE_OF.SASS_INLINE`   | `RULE.SASS` 下的 `?inline` 分支              |
+| `ONE_OF.STYLUS_MAIN`   | `RULE.STYLUS` 下的主分支                     |
+| `ONE_OF.STYLUS_RAW`    | `RULE.STYLUS` 下的 `?raw` 分支               |
+| `ONE_OF.STYLUS_INLINE` | `RULE.STYLUS` 下的 `?inline` 分支            |
+| `ONE_OF.SVG_URL`       | SVG 输出为独立文件的分支                     |
+| `ONE_OF.SVG_INLINE`    | SVG 内联为 data URI 的分支                   |
+| `ONE_OF.SVG_ASSETS`    | SVG 在 data URI 与独立文件之间自动选择的分支 |
 
 ### CHAIN_ID.USE
 

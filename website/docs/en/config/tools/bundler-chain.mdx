@@ -231,26 +231,39 @@ For example, the `RULE.STYLUS` rule exists only when the Stylus plugin is regist
 | `RULE.JS`     | Rule for `js` and `ts`                                                    |
 | `RULE.SVG`    | Rule for `svg`                                                            |
 | `RULE.CSS`    | Rule for `css`                                                            |
-| `RULE.LESS`   | Rule for `less`                                                           |
-| `RULE.SASS`   | Rule for `sass`                                                           |
-| `RULE.YAML`   | Rule for `yaml`                                                           |
 | `RULE.WASM`   | Rule for `WASM`                                                           |
 | `RULE.FONT`   | Rule for `font`                                                           |
 | `RULE.IMAGE`  | Rule for `image`                                                          |
 | `RULE.MEDIA`  | Rule for `media`                                                          |
 | `RULE.VUE`    | Rule for `vue` (requires [Vue plugin](/plugins/list/plugin-vue))          |
+| `RULE.LESS`   | Rule for `less` (requires [Less plugin](/plugins/list/plugin-less))       |
+| `RULE.SASS`   | Rule for `sass` (requires [Sass plugin](/plugins/list/plugin-sass))       |
 | `RULE.SVELTE` | Rule for `svelte` (requires [Svelte plugin](/plugins/list/plugin-svelte)) |
 | `RULE.STYLUS` | Rule for `stylus` (requires [Stylus plugin](/plugins/list/plugin-stylus)) |
 
 ### CHAIN_ID.ONE_OF
 
-`ONE_OF.[ID]` can match a certain type of rule in the rule array.
+`ONE_OF.[ID]` points to a specific branch inside a rule's `oneOf` list, such as the main branch or `?raw`/`?inline` branches. It is not a top-level rule; it lives under `RULE.JS`, `RULE.CSS`, and similar rules.
 
-| ID                  | Description                                                        |
-| ------------------- | ------------------------------------------------------------------ |
-| `ONE_OF.SVG_URL`    | Rules for SVG, output as a separate file                           |
-| `ONE_OF.SVG_INLINE` | Rules for SVG, inlined into bundles as data URIs                   |
-| `ONE_OF.SVG_ASSETS` | Rules for SVG, automatic choice between data URI and separate file |
+| ID                     | Description                                             |
+| ---------------------- | ------------------------------------------------------- |
+| `ONE_OF.JS_MAIN`       | Main JS branch under `RULE.JS` (SWC transforms)         |
+| `ONE_OF.JS_RAW`        | `?raw` branch under `RULE.JS`                           |
+| `ONE_OF.CSS_MAIN`      | Main CSS branch under `RULE.CSS`                        |
+| `ONE_OF.CSS_RAW`       | `?raw` branch under `RULE.CSS`                          |
+| `ONE_OF.CSS_INLINE`    | `?inline` branch under `RULE.CSS`                       |
+| `ONE_OF.LESS_MAIN`     | Main Less branch under `RULE.LESS`                      |
+| `ONE_OF.LESS_RAW`      | `?raw` branch under `RULE.LESS`                         |
+| `ONE_OF.LESS_INLINE`   | `?inline` branch under `RULE.LESS`                      |
+| `ONE_OF.SASS_MAIN`     | Main Sass branch under `RULE.SASS`                      |
+| `ONE_OF.SASS_RAW`      | `?raw` branch under `RULE.SASS`                         |
+| `ONE_OF.SASS_INLINE`   | `?inline` branch under `RULE.SASS`                      |
+| `ONE_OF.STYLUS_MAIN`   | Main Stylus branch under `RULE.STYLUS`                  |
+| `ONE_OF.STYLUS_RAW`    | `?raw` branch under `RULE.STYLUS`                       |
+| `ONE_OF.STYLUS_INLINE` | `?inline` branch under `RULE.STYLUS`                    |
+| `ONE_OF.SVG_URL`       | SVG branch for emitting a separate file                 |
+| `ONE_OF.SVG_INLINE`    | SVG branch for inlining as data URI                     |
+| `ONE_OF.SVG_ASSETS`    | SVG branch for auto selection between data URI and file |
 
 ### CHAIN_ID.USE
 
