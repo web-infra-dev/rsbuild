@@ -8,12 +8,8 @@ exports[`plugin-sass > should add sass-loader 1`] = `
     },
     "oneOf": [
       {
-        "dependency": {
-          "not": "url",
-        },
         "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -64,11 +60,7 @@ exports[`plugin-sass > should add sass-loader 1`] = `
         "type": "asset/source",
       },
       {
-        "dependency": {
-          "not": "url",
-        },
         "sideEffects": true,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
@@ -139,12 +131,8 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
     },
     "oneOf": [
       {
-        "dependency": {
-          "not": "url",
-        },
         "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -195,11 +183,7 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
         "type": "asset/source",
       },
       {
-        "dependency": {
-          "not": "url",
-        },
         "sideEffects": true,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/packages/core/compiled/style-loader/index.js",
@@ -262,6 +246,133 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
 ]
 `;
 
+exports[`plugin-sass > should add sass-loader for Rsbuild v1 1`] = `
+[
+  {
+    "dependency": {
+      "not": "url",
+    },
+    "resolve": {
+      "preferRelative": true,
+    },
+    "resourceQuery": {
+      "not": [
+        /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+      ],
+    },
+    "sideEffects": true,
+    "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
+    "use": [
+      {
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+      },
+      {
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rsbuild/core/compiled/css-loader/index.js",
+        "options": {
+          "importLoaders": 3,
+          "modules": {
+            "auto": true,
+            "exportGlobals": false,
+            "exportLocalsConvention": "camelCase",
+            "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+            "namedExport": false,
+          },
+          "sourceMap": false,
+        },
+      },
+      {
+        "loader": "builtin:lightningcss-loader",
+        "options": {
+          "errorRecovery": true,
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/plugin-sass/compiled/resolve-url-loader/index.js",
+        "options": {
+          "join": [Function],
+          "sourceMap": false,
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/plugin-sass/compiled/sass-loader/index.js",
+        "options": {
+          "api": "modern-compiler",
+          "implementation": "<ROOT>/node_modules/<PNPM_INNER>/sass-embedded/dist/lib/index.js",
+          "sassOptions": {
+            "quietDeps": true,
+            "silenceDeprecations": [
+              "import",
+            ],
+          },
+          "sourceMap": true,
+        },
+      },
+    ],
+  },
+  {
+    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+    "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
+    "type": "asset/source",
+  },
+  {
+    "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+    "sideEffects": true,
+    "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
+    "use": [
+      {
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rsbuild/core/compiled/css-loader/index.js",
+        "options": {
+          "exportType": "string",
+          "importLoaders": 3,
+          "modules": false,
+          "sourceMap": false,
+        },
+      },
+      {
+        "loader": "builtin:lightningcss-loader",
+        "options": {
+          "errorRecovery": true,
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/plugin-sass/compiled/resolve-url-loader/index.js",
+        "options": {
+          "join": [Function],
+          "sourceMap": false,
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/plugin-sass/compiled/sass-loader/index.js",
+        "options": {
+          "api": "modern-compiler",
+          "implementation": "<ROOT>/node_modules/<PNPM_INNER>/sass-embedded/dist/lib/index.js",
+          "sassOptions": {
+            "quietDeps": true,
+            "silenceDeprecations": [
+              "import",
+            ],
+          },
+          "sourceMap": true,
+        },
+      },
+    ],
+  },
+]
+`;
+
 exports[`plugin-sass > should add sass-loader with excludes 1`] = `
 [
   {
@@ -270,15 +381,11 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
     },
     "oneOf": [
       {
-        "dependency": {
-          "not": "url",
-        },
         "exclude": [
           /node_modules/,
         ],
         "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -329,14 +436,10 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
         "type": "asset/source",
       },
       {
-        "dependency": {
-          "not": "url",
-        },
         "exclude": [
           /node_modules/,
         ],
         "sideEffects": true,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
@@ -407,12 +510,8 @@ exports[`plugin-sass > should allow to use legacy API and mute deprecation warni
     },
     "oneOf": [
       {
-        "dependency": {
-          "not": "url",
-        },
         "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -464,11 +563,7 @@ exports[`plugin-sass > should allow to use legacy API and mute deprecation warni
         "type": "asset/source",
       },
       {
-        "dependency": {
-          "not": "url",
-        },
         "sideEffects": true,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
