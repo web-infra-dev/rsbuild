@@ -289,14 +289,14 @@ if (someCondition) {
 
 #### custom
 
-You can also send custom messages with optional data to the browser and handle them via HMR events:
+You can also send custom messages via `custom` type with optional data to the browser and handle them via HMR events:
 
 ```ts title="server.js"
 const rsbuildServer = await rsbuild.createDevServer();
 rsbuildServer.sockWrite('custom', { event: 'count', data: { value: 1 } });
 ```
 
-Use `import.meta.webpackHot.on()` on the client side to listen for the custom event and handle the data:
+Rsbuild extends the `on()` method on Rspack’s [import.meta.webpackHot](https://rspack.rs/api/runtime-api/hmr) object. It allows you to listen for custom events in the browser and handle the associated data:
 
 ```ts title="client.js"
 if (import.meta.webpackHot) {

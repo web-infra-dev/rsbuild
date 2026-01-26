@@ -285,16 +285,16 @@ if (someCondition) {
 
 #### custom
 
-你也可以向浏览器发送自定义消息，并携带可选的 data，然后通过 HMR 事件进行处理：
+你也可以通过 `custom` 类型向浏览器发送自定义消息，并携带可选的 data，然后通过 HMR 事件进行处理：
 
-```ts title="server"
+```ts title="server.js"
 const rsbuildServer = await rsbuild.createDevServer();
 rsbuildServer.sockWrite('custom', { event: 'count', data: { value: 1 } });
 ```
 
-在客户端使用 `import.meta.webpackHot.on()` 来监听自定义事件，并处理数据：
+Rsbuild 在 Rspack 的 [import.meta.webpackHot](https://rspack.rs/api/runtime-api/hmr) 对象上扩展了 `on()` 方法，它允许你在浏览器端监听自定义事件，并处理数据：
 
-```ts title="client"
+```ts title="client.js"
 if (import.meta.webpackHot) {
   import.meta.webpackHot.on('count', (data) => {
     console.log('count update', data.value);
