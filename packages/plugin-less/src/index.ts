@@ -202,7 +202,7 @@ export const pluginLess = (
         // Compatibility for Rsbuild v1
         if (isV1) {
           // Map `css-main` to `css` in v1
-          return chain.module.rule(id.replace('-main', ''));
+          return chain.module.rule(id.replace('-main', '')).test(include);
         }
         return chain.module
           .rule(id.startsWith('less-') ? CHAIN_ID.RULE.LESS : CHAIN_ID.RULE.CSS)
