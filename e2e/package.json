@@ -11,13 +11,13 @@
   "dependencies": {
     "@module-federation/runtime-tools": "0.23.0",
     "core-js": "^3.48.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "preact": "^10.28.2",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-router-dom": "^7.13.0",
-    "solid-js": "^1.9.10",
-    "vue": "^3.5.26",
+    "solid-js": "^1.9.11",
+    "vue": "^3.5.27",
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
@@ -48,7 +48,7 @@
     "@types/lodash": "^4.17.23",
     "@types/node": "^24.10.9",
     "@types/polka": "^0.5.8",
-    "@types/react": "^19.2.8",
+    "@types/react": "^19.2.9",
     "@types/react-dom": "^19.2.3",
     "create-rsbuild": "workspace:*",
     "fast-glob": "^3.3.3",
