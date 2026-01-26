@@ -125,7 +125,7 @@ export const pluginSass = (
         rewriteUrls ? true : isUseSourceMap,
       );
 
-      chain.module
+      const sassRule = chain.module
         .rule(findRuleId(chain, CHAIN_ID.RULE.SASS))
         .test(include)
         .dependency({ not: 'url' })
@@ -143,9 +143,11 @@ export const pluginSass = (
           // Map `css-main` to `css` in v1
           return chain.module.rule(id.replace('-main', ''));
         }
-        return chain.module
-          .rule(id.startsWith('sass-') ? CHAIN_ID.RULE.SASS : CHAIN_ID.RULE.CSS)
-          .oneOf(id);
+        return (
+          id.startsWith('sass-')
+            ? sassRule
+            : chain.module.rule(CHAIN_ID.RULE.CSS)
+        ).oneOf(id);
       };
 
       // Inline Sass for `?inline` imports
