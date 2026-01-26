@@ -10,7 +10,6 @@ exports[`plugin-less > should add less-loader 1`] = `
       {
         "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -54,7 +53,6 @@ exports[`plugin-less > should add less-loader 1`] = `
       },
       {
         "sideEffects": true,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
@@ -119,7 +117,6 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
       {
         "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -163,7 +160,6 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
       },
       {
         "sideEffects": true,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/packages/core/compiled/style-loader/index.js",
@@ -235,7 +231,6 @@ exports[`plugin-less > should add less-loader for Rsbuild v1 1`] = `
     },
     "sideEffects": true,
     "test": /\\\\\\.less\\$/,
-    "type": "javascript/auto",
     "use": [
       {
         "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
@@ -251,6 +246,52 @@ exports[`plugin-less > should add less-loader for Rsbuild v1 1`] = `
             "localIdentName": "[path][name]__[local]-[hash:base64:6]",
             "namedExport": false,
           },
+          "sourceMap": false,
+        },
+      },
+      {
+        "loader": "builtin:lightningcss-loader",
+        "options": {
+          "errorRecovery": true,
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
+        "options": {
+          "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
+          "lessOptions": {
+            "javascriptEnabled": true,
+            "paths": [
+              "<ROOT>/node_modules",
+            ],
+          },
+          "sourceMap": false,
+        },
+      },
+    ],
+  },
+  {
+    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+    "test": /\\\\\\.less\\$/,
+    "type": "asset/source",
+  },
+  {
+    "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+    "sideEffects": true,
+    "test": /\\\\\\.less\\$/,
+    "use": [
+      {
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rsbuild/core/compiled/css-loader/index.js",
+        "options": {
+          "exportType": "string",
+          "importLoaders": 2,
+          "modules": false,
           "sourceMap": false,
         },
       },
@@ -297,7 +338,6 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
         ],
         "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -344,7 +384,6 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
           /node_modules/,
         ],
         "sideEffects": true,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
@@ -409,7 +448,6 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
       {
         "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -453,7 +491,6 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
       },
       {
         "sideEffects": true,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
@@ -518,7 +555,6 @@ exports[`plugin-less > should allow to use Less plugins 1`] = `
       {
         "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -569,7 +605,6 @@ exports[`plugin-less > should allow to use Less plugins 1`] = `
       },
       {
         "sideEffects": true,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
