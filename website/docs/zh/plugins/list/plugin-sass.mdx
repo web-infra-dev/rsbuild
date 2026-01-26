@@ -10,15 +10,18 @@ import { SourceCode } from '@theme';
 
 ### 安装插件
 
+你可以通过如下的命令安装插件:
+
 import { PackageManagerTabs } from '@theme';
 
-- 使用 `@rsbuild/core` v1 时：
+<PackageManagerTabs command="add @rsbuild/plugin-sass -D" />
 
-<PackageManagerTabs command="add @rsbuild/plugin-sass@1 -D" />
+:::tip
 
-- 使用 `@rsbuild/core` v2 时：
+- Sass 插件仅支持 @rsbuild/core >= 0.7.0 版本。
+- 当 @rsbuild/core 版本小于 0.7.0 时，内置支持 Sass 插件，你不需要安装该插件。
 
-<PackageManagerTabs command="add @rsbuild/plugin-sass@alpha -D" />
+:::
 
 ### 注册插件
 

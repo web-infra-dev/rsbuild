@@ -10,15 +10,18 @@ Use [Less](https://lesscss.org/) as the CSS preprocessor, implemented based on [
 
 ### Install plugin
 
+You can install the plugin using the following command:
+
 import { PackageManagerTabs } from '@theme';
 
-- When using `@rsbuild/core` v1:
+<PackageManagerTabs command="add @rsbuild/plugin-less -D" />
 
-<PackageManagerTabs command="add @rsbuild/plugin-less@1 -D" />
+:::tip
 
-- When using `@rsbuild/core` v2:
+- The Less plugin only supports @rsbuild/core versions >= 0.7.0.
+- If the @rsbuild/core version is lower than 0.7.0, it has built-in support for the Less plugin, you do not need to install it.
 
-<PackageManagerTabs command="add @rsbuild/plugin-less@alpha -D" />
+:::
 
 ### Register plugin
 
