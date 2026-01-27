@@ -66,10 +66,10 @@ export const CHAIN_ID = {
   /** Predefined rule groups */
   ONE_OF: {
     /** JS oneOf rules */
-    JS_MAIN: 'js-main',
+    JS_MAIN: 'js',
     JS_RAW: 'js-raw',
     /** CSS oneOf rules */
-    CSS_MAIN: 'css-main',
+    CSS_MAIN: 'css',
     CSS_RAW: 'css-raw',
     CSS_INLINE: 'css-inline',
     /** SVG oneOf rules */

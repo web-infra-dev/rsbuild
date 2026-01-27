@@ -15,7 +15,6 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
             },
             "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "sideEffects": true,
-            "type": "javascript/auto",
             "use": [
               {
                 "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -49,7 +48,6 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
               "preferRelative": true,
             },
             "sideEffects": true,
-            "type": "javascript/auto",
             "use": [
               {
                 "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
@@ -117,7 +115,6 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
             },
             "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "sideEffects": true,
-            "type": "javascript/auto",
             "use": [
               {
                 "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -148,7 +145,6 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
               "preferRelative": true,
             },
             "sideEffects": true,
-            "type": "javascript/auto",
             "use": [
               {
                 "loader": "<ROOT>/packages/core/src/ignoreCssLoader.mjs",
@@ -198,7 +194,6 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
             },
             "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "sideEffects": true,
-            "type": "javascript/auto",
             "use": [
               {
                 "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -232,7 +227,6 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
               "preferRelative": true,
             },
             "sideEffects": true,
-            "type": "javascript/auto",
             "use": [
               {
                 "loader": "<ROOT>/packages/core/compiled/style-loader/index.js",
@@ -291,7 +285,6 @@ exports[`should ensure isolation of PostCSS config objects between different bui
         },
         "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -340,7 +333,6 @@ exports[`should ensure isolation of PostCSS config objects between different bui
           "preferRelative": true,
         },
         "sideEffects": true,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
@@ -407,7 +399,6 @@ exports[`should ensure isolation of PostCSS config objects between different bui
         },
         "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
         "sideEffects": true,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -456,7 +447,6 @@ exports[`should ensure isolation of PostCSS config objects between different bui
           "preferRelative": true,
         },
         "sideEffects": true,
-        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",

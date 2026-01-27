@@ -45,7 +45,6 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
             },
             "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "sideEffects": true,
-            "type": "javascript/auto",
             "use": [
               {
                 "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -79,7 +78,6 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
               "preferRelative": true,
             },
             "sideEffects": true,
-            "type": "javascript/auto",
             "use": [
               {
                 "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",

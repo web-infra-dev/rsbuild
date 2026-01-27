@@ -100,10 +100,10 @@ export const pluginSass = (
   setup(api) {
     const { rewriteUrls = true, include = /\.s(?:a|c)ss$/ } = pluginOptions;
 
-    const CSS_MAIN = 'css-main';
+    const CSS_MAIN = 'css';
     const CSS_INLINE = 'css-inline';
     const CSS_RAW = 'css-raw';
-    const SASS_MAIN = 'sass-main';
+    const SASS_MAIN = 'sass';
     const SASS_INLINE = 'sass-inline';
     const SASS_RAW = 'sass-raw';
     const isV1 = api.context.version.startsWith('1.');
@@ -140,11 +140,10 @@ export const pluginSass = (
       const getRule = (id: string) => {
         // Compatibility for Rsbuild v1
         if (isV1) {
-          // Map `css-main` to `css` in v1
-          return chain.module.rule(id.replace('-main', ''));
+          return chain.module.rule(id);
         }
         return (
-          id.startsWith('sass-')
+          id.startsWith('sass')
             ? sassRule
             : chain.module.rule(CHAIN_ID.RULE.CSS)
         ).oneOf(id);
@@ -200,7 +199,7 @@ export const pluginSass = (
 
         // Copy the builtin CSS rules
         rule
-          .sideEffects(cssBranchRule.get('sideEffects'))
+          .sideEffects(true)
           .resourceQuery(cssBranchRule.get('resourceQuery'));
 
         for (const id of Object.keys(cssBranchRule.uses.entries())) {
