@@ -1,4 +1,5 @@
-import { createRsbuild } from '@rsbuild/core';
+import { createRsbuild, type Rspack } from '@rsbuild/core';
+import { createRsbuild as createRsbuildV1 } from '@rsbuild/core-v1';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { matchRules } from '@scripts/test-helper';
 import { type PluginSvgrOptions, pluginSvgr } from '../src';
@@ -64,5 +65,20 @@ describe('svgr', () => {
 
     const config = await rsbuild.initConfigs();
     expect(matchRules(config[0], 'a.svg')[0]).toMatchSnapshot();
+  });
+
+  it.each(cases)('$name with Rsbuild v1', async (item) => {
+    const rsbuild = await createRsbuildV1({
+      cwd: import.meta.dirname,
+      config: {
+        mode: 'development',
+        plugins: [pluginSvgr(item.pluginConfig), pluginReact()],
+      },
+    });
+
+    const config = await rsbuild.initConfigs();
+    expect(
+      matchRules(config[0] as Rspack.Configuration, 'a.svg')[0],
+    ).toMatchSnapshot();
   });
 });
