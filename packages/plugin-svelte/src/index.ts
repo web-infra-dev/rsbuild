@@ -125,9 +125,14 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
             },
           };
 
+          // Compatibility for Rsbuild v1
+          const isV1 = api.context.version.startsWith('1.');
           const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
-          const jsMainRule = jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
+          const jsMainRule = isV1
+            ? jsRule
+            : jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
           const swcUse = jsMainRule.uses.get(CHAIN_ID.USE.SWC);
+
           const svelteRule = chain.module
             .rule(CHAIN_ID.RULE.SVELTE)
             .test(/\.svelte$/);
