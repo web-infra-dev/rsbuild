@@ -161,9 +161,12 @@ export const pluginBabel = (
             .loader(babelLoader)
             .options(babelOptions);
         } else {
-          // already set source.include / exclude in plugin-swc
+          // Compatibility for Rsbuild v1
+          const isV1 = api.context.version.startsWith('1.');
           const jsRule = chain.module.rule(CHAIN_ID.RULE.JS).test(SCRIPT_REGEX);
-          const jsMainRule = jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
+          const jsMainRule = isV1
+            ? jsRule
+            : jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
           jsMainRule
             .use(CHAIN_ID.USE.BABEL)
             .after(CHAIN_ID.USE.SWC)
