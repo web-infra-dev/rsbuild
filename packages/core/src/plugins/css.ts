@@ -290,7 +290,6 @@ export const pluginCss = (): RsbuildPlugin => ({
         // Support for `import inlineCss from "a.css?inline"`
         const inlineRule = cssRule
           .oneOf(CHAIN_ID.ONE_OF.CSS_INLINE)
-          .type('javascript/auto')
           .resourceQuery(INLINE_QUERY_REGEX);
 
         // Support for `import rawCss from "a.css?raw"`
@@ -300,10 +299,7 @@ export const pluginCss = (): RsbuildPlugin => ({
           .resourceQuery(RAW_QUERY_REGEX);
 
         // Default CSS handling
-        const mainRule = cssRule
-          .oneOf(CHAIN_ID.ONE_OF.CSS_MAIN)
-          // specify type for `CssExtractRspackPlugin` to work properly
-          .type('javascript/auto');
+        const mainRule = cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_MAIN);
 
         const emitCss = config.output.emitCss ?? target === 'web';
 

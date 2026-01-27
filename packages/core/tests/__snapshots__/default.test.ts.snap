@@ -45,7 +45,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
             "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "sideEffects": true,
-            "type": "javascript/auto",
             "use": [
               {
                 "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -79,7 +78,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               "preferRelative": true,
             },
             "sideEffects": true,
-            "type": "javascript/auto",
             "use": [
               {
                 "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
@@ -552,7 +550,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             },
             "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "sideEffects": true,
-            "type": "javascript/auto",
             "use": [
               {
                 "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -587,7 +584,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
               "preferRelative": true,
             },
             "sideEffects": true,
-            "type": "javascript/auto",
             "use": [
               {
                 "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
@@ -1080,7 +1076,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
             "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "sideEffects": true,
-            "type": "javascript/auto",
             "use": [
               {
                 "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -1111,7 +1106,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               "preferRelative": true,
             },
             "sideEffects": true,
-            "type": "javascript/auto",
             "use": [
               {
                 "loader": "<ROOT>/packages/core/dist/ignoreCssLoader.mjs",
@@ -1531,7 +1525,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
             },
             "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "sideEffects": true,
-            "type": "javascript/auto",
             "use": [
               {
                 "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -1565,7 +1558,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
               "preferRelative": true,
             },
             "sideEffects": true,
-            "type": "javascript/auto",
             "use": [
               {
                 "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",

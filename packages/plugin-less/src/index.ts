@@ -180,10 +180,10 @@ export const pluginLess = (
   setup(api) {
     const { include = /\.less$/, parallel = false } = pluginOptions;
 
-    const CSS_MAIN = 'css-main';
+    const CSS_MAIN = 'css';
     const CSS_INLINE = 'css-inline';
     const CSS_RAW = 'css-raw';
-    const LESS_MAIN = 'less-main';
+    const LESS_MAIN = 'less';
     const LESS_INLINE = 'less-inline';
     const LESS_RAW = 'less-raw';
     const isV1 = api.context.version.startsWith('1.');
@@ -206,11 +206,10 @@ export const pluginLess = (
       const getRule = (id: string) => {
         // Compatibility for Rsbuild v1
         if (isV1) {
-          // Map `css-main` to `css` in v1
-          return chain.module.rule(id.replace('-main', ''));
+          return chain.module.rule(id);
         }
         return (
-          id.startsWith('less-')
+          id.startsWith('less')
             ? lessRule
             : chain.module.rule(CHAIN_ID.RULE.CSS)
         ).oneOf(id);
@@ -260,7 +259,7 @@ export const pluginLess = (
 
         // Copy the builtin CSS rules
         rule
-          .sideEffects(cssBranchRule.get('sideEffects'))
+          .sideEffects(true)
           .resourceQuery(cssBranchRule.get('resourceQuery'));
 
         for (const id of Object.keys(cssBranchRule.uses.entries())) {

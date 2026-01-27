@@ -72,10 +72,10 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
   name: PLUGIN_STYLUS_NAME,
 
   setup(api) {
-    const CSS_MAIN = 'css-main';
+    const CSS_MAIN = 'css';
     const CSS_INLINE = 'css-inline';
     const CSS_RAW = 'css-raw';
-    const STYLUS_MAIN = 'stylus-main';
+    const STYLUS_MAIN = 'stylus';
     const STYLUS_INLINE = 'stylus-inline';
     const STYLUS_RAW = 'stylus-raw';
     const isV1 = api.context.version.startsWith('1.');
@@ -108,11 +108,10 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
       const getRule = (id: string) => {
         // Compatibility for Rsbuild v1
         if (isV1) {
-          // Map `css-main` to `css` in v1
-          return chain.module.rule(id.replace('-main', ''));
+          return chain.module.rule(id);
         }
         return (
-          id.startsWith('stylus-')
+          id.startsWith('stylus')
             ? stylusRule
             : chain.module.rule(CHAIN_ID.RULE.CSS)
         ).oneOf(id);
@@ -143,7 +142,7 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
       updateRules((rule, cssBranchRule) => {
         // Copy the builtin CSS rules
         rule
-          .sideEffects(cssBranchRule.get('sideEffects'))
+          .sideEffects(true)
           .resourceQuery(cssBranchRule.get('resourceQuery'));
 
         for (const id of Object.keys(cssBranchRule.uses.entries())) {

@@ -1494,7 +1494,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               },
               "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
               "sideEffects": true,
-              "type": "javascript/auto",
               "use": [
                 {
                   "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -1528,7 +1527,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                 "preferRelative": true,
               },
               "sideEffects": true,
-              "type": "javascript/auto",
               "use": [
                 {
                   "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
@@ -1937,7 +1935,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               },
               "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
               "sideEffects": true,
-              "type": "javascript/auto",
               "use": [
                 {
                   "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -1971,7 +1968,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                 "preferRelative": true,
               },
               "sideEffects": true,
-              "type": "javascript/auto",
               "use": [
                 {
                   "loader": "<ROOT>/packages/core/src/ignoreCssLoader.mjs",
