@@ -1681,7 +1681,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               "generator": {
                 "filename": "static/image/[name].[contenthash:8][ext]",
               },
-              "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+              "resourceQuery": /\\^\\\\\\?url\\$/,
               "type": "asset/resource",
             },
             {
@@ -1712,7 +1712,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               "generator": {
                 "filename": "static/svg/[name].[contenthash:8].svg",
               },
-              "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+              "resourceQuery": /\\^\\\\\\?url\\$/,
               "type": "asset/resource",
             },
             {
@@ -1743,7 +1743,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               "generator": {
                 "filename": "static/media/[name].[contenthash:8][ext]",
               },
-              "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+              "resourceQuery": /\\^\\\\\\?url\\$/,
               "type": "asset/resource",
             },
             {
@@ -1774,7 +1774,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               "generator": {
                 "filename": "static/font/[name].[contenthash:8][ext]",
               },
-              "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+              "resourceQuery": /\\^\\\\\\?url\\$/,
               "type": "asset/resource",
             },
             {
@@ -2106,7 +2106,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               "generator": {
                 "filename": "static/image/[name].[contenthash:8][ext]",
               },
-              "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+              "resourceQuery": /\\^\\\\\\?url\\$/,
               "type": "asset/resource",
             },
             {
@@ -2137,7 +2137,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               "generator": {
                 "filename": "static/svg/[name].[contenthash:8].svg",
               },
-              "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+              "resourceQuery": /\\^\\\\\\?url\\$/,
               "type": "asset/resource",
             },
             {
@@ -2168,7 +2168,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               "generator": {
                 "filename": "static/media/[name].[contenthash:8][ext]",
               },
-              "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+              "resourceQuery": /\\^\\\\\\?url\\$/,
               "type": "asset/resource",
             },
             {
@@ -2199,7 +2199,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               "generator": {
                 "filename": "static/font/[name].[contenthash:8][ext]",
               },
-              "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+              "resourceQuery": /\\^\\\\\\?url\\$/,
               "type": "asset/resource",
             },
             {
