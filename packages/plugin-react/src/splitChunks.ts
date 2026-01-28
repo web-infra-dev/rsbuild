@@ -1,5 +1,27 @@
-import type { RsbuildPluginAPI, Rspack } from '@rsbuild/core';
+import type {
+  NormalizedEnvironmentConfig,
+  RsbuildPluginAPI,
+  Rspack,
+} from '@rsbuild/core';
 import type { SplitReactChunkOptions } from './index.js';
+
+const isDefaultPreset = (config: NormalizedEnvironmentConfig) => {
+  const { performance, splitChunks } = config;
+
+  // Compatible with legacy `performance.chunkSplit` option
+  if (
+    performance.chunkSplit &&
+    typeof splitChunks === 'object' &&
+    Object.keys(splitChunks).length === 0
+  ) {
+    return performance.chunkSplit?.strategy === 'split-by-experience';
+  }
+
+  if (typeof splitChunks === 'object') {
+    return !splitChunks.preset || splitChunks.preset === 'default';
+  }
+  return false;
+};
 
 export function applySplitChunksRule(
   api: RsbuildPluginAPI,
@@ -7,10 +29,7 @@ export function applySplitChunksRule(
 ): void {
   api.modifyBundlerChain((chain, { environment, isProd }) => {
     const { config } = environment;
-    if (
-      config.performance.chunkSplit.strategy !== 'split-by-experience' ||
-      options === false
-    ) {
+    if (!isDefaultPreset(config) || options === false) {
       return;
     }
 

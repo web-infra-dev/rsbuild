@@ -1,187 +1,91 @@
-import { createStubRsbuild } from '@scripts/test-helper';
+import { createRsbuild } from '../src';
 import {
   getPackageNameFromModulePath,
   MODULE_PATH_REGEX,
-  pluginSplitChunks,
 } from '../src/plugins/splitChunks';
 
 describe('plugin-split-chunks', () => {
-  it('should set split-by-experience config', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginSplitChunks()],
+  it('should set `default` preset by default', async () => {
+    const rsbuild = await createRsbuild({
       config: {
-        performance: {
-          chunkSplit: {
-            strategy: 'split-by-experience',
-          },
-        },
         output: {
           polyfill: 'entry',
         },
       },
     });
 
-    const config = await rsbuild.unwrapConfig();
-    expect(config).toMatchSnapshot();
+    const config = await rsbuild.initConfigs();
+    expect(config[0].optimization?.splitChunks).toMatchSnapshot();
   });
 
-  it('should set split-by-experience config correctly when polyfill is off', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginSplitChunks()],
+  it('should set `per-package` preset', async () => {
+    const rsbuild = await createRsbuild({
       config: {
-        performance: {
-          chunkSplit: {
-            strategy: 'split-by-experience',
-          },
-        },
-        output: {
-          polyfill: 'off',
-        },
-      },
-    });
-
-    const config = await rsbuild.unwrapConfig();
-    expect(config).toMatchSnapshot();
-  });
-
-  it('should set split-by-module config', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginSplitChunks()],
-      config: {
-        performance: {
-          chunkSplit: {
-            strategy: 'split-by-module',
-          },
-        },
         output: {
           polyfill: 'entry',
         },
+        splitChunks: {
+          preset: 'per-package',
+        },
       },
     });
 
-    const config = await rsbuild.unwrapConfig();
-    expect(config).toMatchSnapshot();
+    const config = await rsbuild.initConfigs();
+    expect(config[0].optimization?.splitChunks).toMatchSnapshot();
   });
 
-  it('should set single-vendor config', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginSplitChunks()],
+  it('should set `single-vendor` preset', async () => {
+    const rsbuild = await createRsbuild({
       config: {
-        performance: {
-          chunkSplit: {
-            strategy: 'single-vendor',
-          },
-        },
         output: {
           polyfill: 'entry',
         },
+        splitChunks: {
+          preset: 'single-vendor',
+        },
       },
     });
 
-    const config = await rsbuild.unwrapConfig();
-    expect(config).toMatchSnapshot();
+    const config = await rsbuild.initConfigs();
+    expect(config[0].optimization?.splitChunks).toMatchSnapshot();
   });
 
-  it('should set single-size config', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginSplitChunks()],
+  it('should disable split chunks', async () => {
+    const rsbuild = await createRsbuild({
       config: {
-        performance: {
-          chunkSplit: {
-            strategy: 'split-by-size',
-            minSize: 1000,
-            maxSize: 5000,
-          },
-        },
         output: {
           polyfill: 'entry',
         },
+        splitChunks: false,
       },
     });
 
-    const config = await rsbuild.unwrapConfig();
-    expect(config).toMatchSnapshot();
+    const config = await rsbuild.initConfigs();
+    expect(config[0].optimization?.splitChunks).toEqual(false);
   });
 
-  it('should set all-in-one config', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginSplitChunks()],
+  it('should merge split chunks options', async () => {
+    const rsbuild = await createRsbuild({
       config: {
-        performance: {
-          chunkSplit: {
-            strategy: 'all-in-one',
-          },
-        },
         output: {
           polyfill: 'entry',
         },
-      },
-    });
-
-    const config = await rsbuild.unwrapConfig();
-    expect(config).toMatchSnapshot();
-  });
-
-  it('should set custom config', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginSplitChunks()],
-      config: {
-        performance: {
-          chunkSplit: {
-            strategy: 'custom',
-            forceSplitting: [/react/],
-            splitChunks: {
-              cacheGroups: {},
+        splitChunks: {
+          preset: 'default',
+          cacheGroups: {
+            commons: {
+              name: 'commons',
+              test: /[\\/]src[\\/]commons[\\/]/,
+              minChunks: 2,
+              priority: -10,
             },
           },
         },
-        output: {
-          polyfill: 'entry',
-        },
       },
     });
 
-    const config = await rsbuild.unwrapConfig();
-    expect(config).toMatchSnapshot();
-  });
-
-  it('should allow forceSplitting to be an object', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginSplitChunks()],
-      config: {
-        performance: {
-          chunkSplit: {
-            strategy: 'custom',
-            forceSplitting: {
-              axios: /axios/,
-            },
-            splitChunks: {
-              cacheGroups: {},
-            },
-          },
-        },
-        output: {
-          polyfill: 'entry',
-        },
-      },
-    });
-
-    const config = await rsbuild.unwrapConfig();
-    expect(config).toMatchSnapshot();
-  });
-
-  it('should not split chunks when target is node', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginSplitChunks()],
-      config: {
-        output: {
-          target: 'node',
-        },
-      },
-    });
-
-    const config = await rsbuild.unwrapConfig();
-    expect(config).toMatchSnapshot();
+    const config = await rsbuild.initConfigs();
+    expect(config[0].optimization?.splitChunks).toMatchSnapshot();
   });
 });
 
