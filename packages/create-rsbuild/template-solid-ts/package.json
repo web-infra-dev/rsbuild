@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@rsbuild/core": "^2.0.0-alpha.2",
-    "@rsbuild/plugin-babel": "^1.0.7",
+    "@rsbuild/plugin-babel": "^1.1.0",
     "@rsbuild/plugin-solid": "^1.0.7",
     "typescript": "^5.9.3"
   }
