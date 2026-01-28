@@ -1,6 +1,5 @@
 import path from 'node:path';
-import type { Compilation, Compiler } from '@rspack/core';
-import { rspack } from '@rspack/core';
+import { rspack, type Compilation, type Compiler } from '@rspack/core';
 import { color, isFunction, partition } from '../helpers';
 import { addCompilationError } from '../helpers/compiler';
 import { readFileAsync } from '../helpers/fs';
