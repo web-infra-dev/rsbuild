@@ -1,5 +1,4 @@
 import fs from 'node:fs';
-import { createRequire } from 'node:module';
 import path from 'node:path';
 import type { SwcLoaderOptions } from '@rspack/core';
 import deepmerge from 'deepmerge';
@@ -16,6 +15,7 @@ import {
   color,
   isFunction,
   isWebTarget,
+  require,
 } from '../helpers';
 import { normalizeRuleConditionPath } from '../helpers/path';
 import type {
@@ -27,8 +27,6 @@ import type {
   RspackChain,
   TransformImport,
 } from '../types';
-
-const require = createRequire(import.meta.url);
 
 const builtinSwcLoaderName = 'builtin:swc-loader';
 

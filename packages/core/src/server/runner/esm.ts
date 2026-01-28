@@ -1,13 +1,10 @@
-import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import type { SourceTextModule } from 'node:vm';
-import { color } from '../../helpers';
+import { color, require } from '../../helpers';
 import { asModule } from './asModule';
 import { CommonJsRunner } from './cjs';
 import { EsmMode, type RunnerRequirer } from './type';
-
-const require = createRequire(import.meta.url);
 
 export class EsmRunner extends CommonJsRunner {
   protected createRunner(): void {

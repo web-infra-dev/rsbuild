@@ -1,7 +1,6 @@
-import { createRequire } from 'node:module';
 import { dirname, sep } from 'node:path';
 import { reduceConfigs } from 'reduce-configs';
-import { castArray, color } from '../helpers';
+import { castArray, color, require } from '../helpers';
 import { ensureAbsolutePath } from '../helpers/path';
 import { logger } from '../logger';
 import type {
@@ -9,8 +8,6 @@ import type {
   RsbuildPlugin,
   RspackChain,
 } from '../types';
-
-const require = createRequire(import.meta.url);
 
 function applyAlias({
   chain,
