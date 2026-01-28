@@ -2069,8 +2069,9 @@ export interface RsbuildConfig extends EnvironmentConfig {
    */
   dev?: DevConfig;
   /**
-   * Options for the Rsbuild server,
-   * will take effect during local development and preview.
+   * Options for the Rsbuild server.
+   * Mainly applies to local development and preview.
+   * Some options (e.g. `publicDir`, `base`) also affect production builds.
    */
   server?: ServerConfig;
   /**
