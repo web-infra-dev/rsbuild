@@ -8,7 +8,12 @@
  */
 
 import { join } from 'node:path';
-import { rspack, type Compiler, type MultiCompiler, type Watching } from '@rspack/core';
+import {
+  type Compiler,
+  type MultiCompiler,
+  rspack,
+  type Watching,
+} from '@rspack/core';
 import { CLIENT_PATH } from '../../constants';
 import { createVirtualModule, pick } from '../../helpers';
 import { applyToCompiler, isMultiCompiler } from '../../helpers/compiler';
