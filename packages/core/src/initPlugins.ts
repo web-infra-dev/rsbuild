@@ -1,6 +1,5 @@
 import { join, posix } from 'node:path';
-import type { Compiler } from '@rspack/core';
-import { rspack } from '@rspack/core';
+import { rspack, type Compiler } from '@rspack/core';
 import { LOADER_PATH } from './constants';
 import { createPublicContext } from './createContext';
 import { color, getFilename } from './helpers';
