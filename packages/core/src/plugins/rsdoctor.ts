@@ -1,12 +1,9 @@
-import { createRequire } from 'node:module';
 import { pathToFileURL } from 'node:url';
 import type { Configuration } from '@rspack/core';
 import { isWindows } from '../constants';
-import { color } from '../helpers';
+import { color, require } from '../helpers';
 import { logger } from '../logger';
 import type { RsbuildPlugin, Rspack } from '../types';
-
-const require = createRequire(import.meta.url);
 
 type RsdoctorExports = {
   RsdoctorRspackPlugin: { new (): Rspack.RspackPluginInstance };

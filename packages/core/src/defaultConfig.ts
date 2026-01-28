@@ -1,4 +1,3 @@
-import { createRequire } from 'node:module';
 import { dirname, isAbsolute, join } from 'node:path';
 import {
   ASSETS_DIST_DIR,
@@ -20,7 +19,7 @@ import {
   TS_CONFIG_FILE,
   WASM_DIST_DIR,
 } from './constants';
-import { getNodeEnv } from './helpers';
+import { getNodeEnv, require } from './helpers';
 import { findExists, isFileExists } from './helpers/fs';
 import { mergeRsbuildConfig } from './mergeConfig';
 import type {
@@ -40,8 +39,6 @@ import type {
   RsbuildEntry,
   RsbuildMode,
 } from './types';
-
-const require = createRequire(import.meta.url);
 
 const getDefaultDevConfig = (): NormalizedDevConfig => ({
   hmr: true,

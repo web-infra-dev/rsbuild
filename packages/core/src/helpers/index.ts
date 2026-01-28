@@ -9,6 +9,8 @@ import type {
   Rspack,
 } from '../types';
 
+export { require } from './vendors';
+
 export { color, RspackChain };
 
 export const getNodeEnv = (): string => process.env.NODE_ENV || '';
