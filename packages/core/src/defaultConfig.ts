@@ -143,9 +143,6 @@ const getDefaultToolsConfig = (): NormalizedToolsConfig => ({
 const getDefaultPerformanceConfig = (): NormalizedPerformanceConfig => ({
   printFileSize: true,
   removeConsole: false,
-  chunkSplit: {
-    strategy: 'split-by-experience',
-  },
 });
 
 const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
@@ -225,6 +222,7 @@ const createDefaultConfig = (): RsbuildConfig => ({
   output: getDefaultOutputConfig(),
   tools: getDefaultToolsConfig(),
   security: getDefaultSecurityConfig(),
+  splitChunks: {},
   performance: getDefaultPerformanceConfig(),
   environments: {},
   logLevel: 'info',

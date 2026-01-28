@@ -87,9 +87,6 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "target": "web",
   },
   "performance": {
-    "chunkSplit": {
-      "strategy": "split-by-experience",
-    },
     "printFileSize": true,
     "removeConsole": false,
   },
@@ -147,6 +144,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
     },
     "preEntry": [],
   },
+  "splitChunks": {},
   "tools": {
     "cssExtract": {
       "loaderOptions": {},
@@ -245,9 +243,6 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "target": "node",
   },
   "performance": {
-    "chunkSplit": {
-      "strategy": "split-by-experience",
-    },
     "printFileSize": true,
     "removeConsole": false,
   },
@@ -305,6 +300,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
     },
     "preEntry": [],
   },
+  "splitChunks": {},
   "tools": {
     "cssExtract": {
       "loaderOptions": {},
@@ -407,9 +403,6 @@ exports[`environment config > should print environment config when inspect confi
       "target": "web",
     },
     "performance": {
-      "chunkSplit": {
-        "strategy": "split-by-experience",
-      },
       "printFileSize": true,
       "removeConsole": false,
     },
@@ -467,6 +460,7 @@ exports[`environment config > should print environment config when inspect confi
       },
       "preEntry": [],
     },
+    "splitChunks": {},
     "tools": {
       "cssExtract": {
         "loaderOptions": {},
@@ -565,9 +559,6 @@ exports[`environment config > should print environment config when inspect confi
       "target": "web",
     },
     "performance": {
-      "chunkSplit": {
-        "strategy": "split-by-experience",
-      },
       "printFileSize": true,
       "removeConsole": false,
     },
@@ -625,6 +616,7 @@ exports[`environment config > should print environment config when inspect confi
       },
       "preEntry": [],
     },
+    "splitChunks": {},
     "tools": {
       "cssExtract": {
         "loaderOptions": {},
@@ -743,9 +735,6 @@ exports[`environment config > should support modify environment config by api.mo
       "target": "web",
     },
     "performance": {
-      "chunkSplit": {
-        "strategy": "split-by-experience",
-      },
       "printFileSize": true,
       "removeConsole": false,
     },
@@ -803,6 +792,7 @@ exports[`environment config > should support modify environment config by api.mo
       },
       "preEntry": [],
     },
+    "splitChunks": {},
     "tools": {
       "cssExtract": {
         "loaderOptions": {},
@@ -901,9 +891,6 @@ exports[`environment config > should support modify environment config by api.mo
       "target": "web",
     },
     "performance": {
-      "chunkSplit": {
-        "strategy": "split-by-experience",
-      },
       "printFileSize": true,
       "removeConsole": false,
     },
@@ -962,6 +949,7 @@ exports[`environment config > should support modify environment config by api.mo
       },
       "preEntry": [],
     },
+    "splitChunks": {},
     "tools": {
       "cssExtract": {
         "loaderOptions": {},
@@ -1060,9 +1048,6 @@ exports[`environment config > should support modify environment config by api.mo
       "target": "web",
     },
     "performance": {
-      "chunkSplit": {
-        "strategy": "split-by-experience",
-      },
       "printFileSize": true,
       "removeConsole": false,
     },
@@ -1119,6 +1104,7 @@ exports[`environment config > should support modify environment config by api.mo
       "entry": {},
       "preEntry": [],
     },
+    "splitChunks": {},
     "tools": {
       "cssExtract": {
         "loaderOptions": {},
@@ -1222,9 +1208,6 @@ exports[`environment config > should support modify single environment config by
       "target": "web",
     },
     "performance": {
-      "chunkSplit": {
-        "strategy": "split-by-experience",
-      },
       "printFileSize": true,
       "removeConsole": false,
     },
@@ -1282,6 +1265,7 @@ exports[`environment config > should support modify single environment config by
       },
       "preEntry": [],
     },
+    "splitChunks": {},
     "tools": {
       "cssExtract": {
         "loaderOptions": {},
@@ -1380,9 +1364,6 @@ exports[`environment config > should support modify single environment config by
       "target": "web",
     },
     "performance": {
-      "chunkSplit": {
-        "strategy": "split-by-experience",
-      },
       "printFileSize": true,
       "removeConsole": false,
     },
@@ -1441,6 +1422,7 @@ exports[`environment config > should support modify single environment config by
       },
       "preEntry": [],
     },
+    "splitChunks": {},
     "tools": {
       "cssExtract": {
         "loaderOptions": {},

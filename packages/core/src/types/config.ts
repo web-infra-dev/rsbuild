@@ -754,7 +754,7 @@ export interface PerformanceConfig {
 
   /**
    * Configure the chunk splitting strategy.
-   * @default { strategy: 'split-by-experience' }
+   * @deprecated Use `splitChunks` instead.
    */
   chunkSplit?: ChunkSplit;
 
@@ -812,10 +812,17 @@ export interface PerformanceConfig {
 
 export interface NormalizedPerformanceConfig extends PerformanceConfig {
   printFileSize: PrintFileSizeOptions | boolean;
-  chunkSplit: ChunkSplit;
 }
 
 export type SplitChunks = Rspack.OptimizationSplitChunksOptions | false;
+
+export type SplitChunksPreset = 'default' | 'single-vendor' | 'per-package';
+
+export type SplitChunksConfig = Rspack.OptimizationSplitChunksOptions & {
+  preset?: SplitChunksPreset;
+};
+
+export type NormalizedSplitChunksConfig = SplitChunksConfig;
 
 export type ForceSplitting = RegExp[] | Record<string, RegExp>;
 
@@ -2027,6 +2034,10 @@ export interface EnvironmentConfig {
    */
   performance?: PerformanceConfig;
   /**
+   * Options for chunk splitting.
+   */
+  splitChunks?: SplitChunksConfig | false;
+  /**
    * Options for module federation.
    */
   moduleFederation?: ModuleFederationConfig;
@@ -2100,6 +2111,7 @@ export type MergedEnvironmentConfig = {
   plugins?: RsbuildPlugins;
   security: NormalizedSecurityConfig;
   performance: NormalizedPerformanceConfig;
+  splitChunks: NormalizedSplitChunksConfig | false;
   moduleFederation?: ModuleFederationConfig;
 };
 
