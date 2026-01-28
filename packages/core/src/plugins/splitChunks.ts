@@ -268,63 +268,61 @@ function getSplitChunksByPreset(
 export const pluginSplitChunks = (): RsbuildPlugin => ({
   name: 'rsbuild:split-chunks',
   setup(api) {
-    api.modifyBundlerChain(
-      async (chain, { environment, isServer, isWebWorker }) => {
-        if (isServer || isWebWorker) {
-          chain.optimization.splitChunks(false);
+    api.modifyBundlerChain((chain, { environment, isServer, isWebWorker }) => {
+      if (isServer || isWebWorker) {
+        chain.optimization.splitChunks(false);
 
-          // web worker does not support dynamic imports, dynamicImportMode need set to eager
-          if (isWebWorker) {
-            chain.module.parser.merge({
-              javascript: {
-                dynamicImportMode: 'eager',
-              },
-            });
-          }
-
-          return;
+        // web worker does not support dynamic imports, dynamicImportMode need set to eager
+        if (isWebWorker) {
+          chain.module.parser.merge({
+            javascript: {
+              dynamicImportMode: 'eager',
+            },
+          });
         }
 
-        const { config } = environment;
-        const { splitChunks } = config;
-        const { chunkSplit } = config.performance;
-
-        // Compatible with legacy `performance.chunkSplit` option
-        if (
-          chunkSplit &&
-          splitChunks !== false &&
-          Object.keys(splitChunks).length === 0
-        ) {
-          chain.optimization.splitChunks(
-            makeLegacySplitChunksOptions(
-              chunkSplit,
-              config,
-              api.context.rootPath,
-            ),
-          );
-          return;
-        }
-
-        if (chunkSplit) {
-          logger.warn(
-            '[rsbuild:config] Both `performance.chunkSplit` and `splitChunks` are set. The `performance.chunkSplit` option is deprecated and will not work. Use `splitChunks` instead.',
-          );
-        }
-
-        if (splitChunks === false) {
-          chain.optimization.splitChunks(false);
-          return;
-        }
-
-        const { preset = 'default', ...rest } = splitChunks;
-
-        chain.optimization.splitChunks({
-          ...getDefaultSplitChunks(config),
-          ...getSplitChunksByPreset(config, preset),
-          ...rest,
-        });
         return;
-      },
-    );
+      }
+
+      const { config } = environment;
+      const { splitChunks } = config;
+      const { chunkSplit } = config.performance;
+
+      // Compatible with legacy `performance.chunkSplit` option
+      if (
+        chunkSplit &&
+        splitChunks !== false &&
+        Object.keys(splitChunks).length === 0
+      ) {
+        chain.optimization.splitChunks(
+          makeLegacySplitChunksOptions(
+            chunkSplit,
+            config,
+            api.context.rootPath,
+          ),
+        );
+        return;
+      }
+
+      if (chunkSplit) {
+        logger.warn(
+          '[rsbuild:config] Both `performance.chunkSplit` and `splitChunks` are set. The `performance.chunkSplit` option is deprecated and will not work. Use `splitChunks` instead.',
+        );
+      }
+
+      if (splitChunks === false) {
+        chain.optimization.splitChunks(false);
+        return;
+      }
+
+      const { preset = 'default', ...rest } = splitChunks;
+
+      chain.optimization.splitChunks({
+        ...getDefaultSplitChunks(config),
+        ...getSplitChunksByPreset(config, preset),
+        ...rest,
+      });
+      return;
+    });
   },
 });
