@@ -43,7 +43,8 @@
       "@typescript-eslint/ban-ts-comment": "off",
       "@typescript-eslint/consistent-type-imports": "off",
       "@typescript-eslint/consistent-return": "off",
-      "@typescript-eslint/consistent-generic-constructors": "off"
+      "@typescript-eslint/consistent-generic-constructors": "off",
+      "@typescript-eslint/no-require-imports": "off"
     }
   }
 ]
