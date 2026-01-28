@@ -1,5 +1,4 @@
-import type { WatchOptions } from '@rspack/core';
-import { rspack } from '@rspack/core';
+import { rspack, type WatchOptions } from '@rspack/core';
 import { createCompiler } from './createCompiler';
 import { registerBuildHook } from './hooks';
 import type { InitConfigsOptions } from './initConfigs';
