@@ -19,7 +19,7 @@ function getCacheDirectory(
       ? cacheDirectory
       : join(context.rootPath, cacheDirectory);
   }
-  return join(context.cachePath, context.bundlerType);
+  return join(context.cachePath, 'rspack');
 }
 
 /**

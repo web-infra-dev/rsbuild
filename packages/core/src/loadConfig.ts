@@ -175,7 +175,7 @@ export async function loadConfig({
         interopDefault: true,
         // Always use native `require()` for these packages,
         // This avoids `@rspack/core` being loaded twice.
-        nativeModules: ['@rspack/core', 'typescript'],
+        nativeModules: ['typescript'],
       });
 
       configExport = await jiti.import<RsbuildConfigExport>(configFilePath, {
