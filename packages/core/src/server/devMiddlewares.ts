@@ -1,7 +1,7 @@
+import { rspack } from '@rspack/core';
 import { castArray, pick } from '../helpers';
 import { isMultiCompiler } from '../helpers/compiler';
 import { isVerbose } from '../logger';
-import { rspack } from '../rspack';
 import type {
   InternalContext,
   NormalizedConfig,

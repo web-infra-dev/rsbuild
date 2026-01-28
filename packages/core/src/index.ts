@@ -4,7 +4,7 @@
  */
 
 import type * as Rspack from '@rspack/core';
-import { rspack } from './rspack';
+import { rspack } from '@rspack/core';
 
 export { runCLI } from './cli';
 export { createRsbuild } from './createRsbuild';

@@ -1,4 +1,4 @@
-import { rspack } from '../rspack';
+import { rspack } from '@rspack/core';
 import type { RsbuildPlugin } from '../types';
 
 export function pluginModuleFederation(): RsbuildPlugin {

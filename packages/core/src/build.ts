@@ -1,9 +1,8 @@
-import type { WatchOptions } from '@rspack/core';
+import { rspack, type WatchOptions } from '@rspack/core';
 import { createCompiler } from './createCompiler';
 import { registerBuildHook } from './hooks';
 import type { InitConfigsOptions } from './initConfigs';
 import { logger } from './logger';
-import { rspack } from './rspack';
 import type { Build, BuildOptions, Rspack } from './types';
 
 export const RSPACK_BUILD_ERROR = 'Rspack build failed.';
