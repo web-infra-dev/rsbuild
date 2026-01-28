@@ -208,7 +208,7 @@ const getDefaultSplitChunks = (
       'all',
 });
 
-async function makeLegacySplitChunksOptions(
+function makeLegacySplitChunksOptions(
   chunkSplit: ChunkSplit,
   config: NormalizedEnvironmentConfig,
   rootPath: string,
@@ -296,7 +296,7 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
           Object.keys(splitChunks).length === 0
         ) {
           chain.optimization.splitChunks(
-            await makeLegacySplitChunksOptions(
+            makeLegacySplitChunksOptions(
               chunkSplit,
               config,
               api.context.rootPath,

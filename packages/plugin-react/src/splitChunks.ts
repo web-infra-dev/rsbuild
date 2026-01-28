@@ -20,6 +20,7 @@ const isDefaultPreset = (config: NormalizedEnvironmentConfig) => {
   if (typeof splitChunks === 'object') {
     return !splitChunks.preset || splitChunks.preset === 'default';
   }
+  return false;
 };
 
 export function applySplitChunksRule(
