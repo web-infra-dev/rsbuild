@@ -9,12 +9,12 @@
 
 import { join } from 'node:path';
 import type { Compiler, MultiCompiler, Watching } from '@rspack/core';
+import { rspack } from '@rspack/core';
 import { CLIENT_PATH } from '../../constants';
 import { createVirtualModule, pick } from '../../helpers';
 import { applyToCompiler, isMultiCompiler } from '../../helpers/compiler';
 import { toPosixPath } from '../../helpers/path';
 import { logger } from '../../logger';
-import { rspack } from '../../rspack';
 import type {
   InternalContext,
   NormalizedConfig,

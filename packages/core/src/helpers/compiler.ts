@@ -1,5 +1,5 @@
+import { rspack } from '@rspack/core';
 import { DEFAULT_ASSET_PREFIX } from '../constants';
-import { rspack } from '../rspack';
 import type { Rspack } from '../types';
 
 export const isMultiCompiler = (
