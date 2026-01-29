@@ -16,22 +16,16 @@ export default defineConfig({
       },
     },
   },
-  performance: {
-    chunkSplit: {
-      strategy: 'custom',
-      override: {
+  splitChunks: {
+    cacheGroups: {
+      lib: {
+        enforce: true,
+        test: /initial\.js/,
+        name: 'lib',
         chunks: 'all',
-        cacheGroups: {
-          lib: {
-            enforce: true,
-            test: /initial\.js/,
-            name: 'lib',
-            chunks: 'all',
-          },
-          default: false,
-          defaultVendors: false,
-        },
       },
+      default: false,
+      defaultVendors: false,
     },
   },
 });

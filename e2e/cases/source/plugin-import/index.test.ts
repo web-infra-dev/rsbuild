@@ -14,11 +14,7 @@ test('should import with template config', async ({ build }) => {
           },
         ],
       },
-      performance: {
-        chunkSplit: {
-          strategy: 'all-in-one',
-        },
-      },
+      splitChunks: false,
     },
   });
   const files = rsbuild.getDistFiles({ sourceMaps: true });
@@ -31,11 +27,7 @@ test('should not transformImport by default', async ({ build }) => {
 
   const rsbuild = await build({
     config: {
-      performance: {
-        chunkSplit: {
-          strategy: 'all-in-one',
-        },
-      },
+      splitChunks: false,
     },
   });
   const files = rsbuild.getDistFiles({ sourceMaps: true });

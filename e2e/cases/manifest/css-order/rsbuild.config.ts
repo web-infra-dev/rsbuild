@@ -12,9 +12,7 @@ export default defineConfig({
     manifest: true,
     filenameHash: false,
   },
-  performance: {
-    chunkSplit: {
-      strategy: 'split-by-module',
-    },
+  splitChunks: {
+    preset: 'per-package',
   },
 });

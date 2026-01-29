@@ -15,11 +15,7 @@ const config: RsbuildConfig = {
     sourceMap: false,
     filenameHash: false,
   },
-  performance: {
-    chunkSplit: {
-      strategy: 'all-in-one',
-    },
-  },
+  splitChunks: false,
 };
 
 test('should generate custom manifest data in build', async ({ build }) => {
