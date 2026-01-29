@@ -10,11 +10,7 @@ test('should remove prefix from manifest', async ({ build }) => {
         },
         filenameHash: false,
       },
-      performance: {
-        chunkSplit: {
-          strategy: 'all-in-one',
-        },
-      },
+      splitChunks: false,
     },
   });
 

@@ -5,11 +5,7 @@ test('legalComments linked (default)', async ({ page, buildPreview }) => {
   const rsbuild = await buildPreview({
     config: {
       plugins: [pluginReact()],
-      performance: {
-        chunkSplit: {
-          strategy: 'all-in-one',
-        },
-      },
+      splitChunks: false,
     },
   });
 
@@ -39,11 +35,7 @@ test('should omit legal comments when legalComments is set to "none"', async ({
   const rsbuild = await buildPreview({
     config: {
       plugins: [pluginReact()],
-      performance: {
-        chunkSplit: {
-          strategy: 'all-in-one',
-        },
-      },
+      splitChunks: false,
       output: {
         legalComments: 'none',
       },
@@ -68,11 +60,7 @@ test('should inline legal comments when legalComments is set to "inline"', async
   const rsbuild = await buildPreview({
     config: {
       plugins: [pluginReact()],
-      performance: {
-        chunkSplit: {
-          strategy: 'all-in-one',
-        },
-      },
+      splitChunks: false,
       output: {
         legalComments: 'inline',
       },

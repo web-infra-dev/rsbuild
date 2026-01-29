@@ -1,11 +1,7 @@
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
-  performance: {
-    chunkSplit: {
-      strategy: 'all-in-one',
-    },
-  },
+  splitChunks: false,
   output: {
     filenameHash: false,
   },

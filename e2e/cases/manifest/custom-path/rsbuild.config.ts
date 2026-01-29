@@ -5,9 +5,5 @@ export default defineConfig({
     manifest: './custom/my-manifest.json',
     filenameHash: false,
   },
-  performance: {
-    chunkSplit: {
-      strategy: 'all-in-one',
-    },
-  },
+  splitChunks: false,
 });

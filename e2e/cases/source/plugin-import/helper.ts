@@ -74,11 +74,7 @@ export function shareTest(
       },
       transformImport: [transformImport],
     },
-    performance: {
-      chunkSplit: {
-        strategy: 'all-in-one',
-      },
-    },
+    splitChunks: false,
   };
 
   test(msg, async ({ build }) => {

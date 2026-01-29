@@ -7,11 +7,7 @@ test('should generate manifest file in output', async ({ build }) => {
         manifest: true,
         filenameHash: false,
       },
-      performance: {
-        chunkSplit: {
-          strategy: 'all-in-one',
-        },
-      },
+      splitChunks: false,
     },
   });
 
@@ -42,11 +38,7 @@ test('should always write manifest to disk when in dev', async ({ dev }) => {
         manifest: true,
         filenameHash: false,
       },
-      performance: {
-        chunkSplit: {
-          strategy: 'all-in-one',
-        },
-      },
+      splitChunks: false,
     },
   });
 
