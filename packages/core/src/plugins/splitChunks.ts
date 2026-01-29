@@ -48,29 +48,20 @@ function getForceSplittingGroups(
 
 function resolveDefaultPreset(
   config: NormalizedEnvironmentConfig,
-): CacheGroups {
-  const groups: CacheGroups = {};
-
-  const packageRegExps: Record<string, RegExp> = {
-    axios: /node_modules[\\/]axios(-.+)?[\\/]/,
-  };
-
+): Rspack.OptimizationSplitChunksOptions {
   const { polyfill } = config.output;
   if (polyfill === 'entry' || polyfill === 'usage') {
-    packageRegExps.polyfill =
-      /node_modules[\\/](?:tslib|core-js|@swc[\\/]helpers)[\\/]/;
-  }
-
-  for (const [name, test] of Object.entries(packageRegExps)) {
-    const key = `lib-${name}`;
-
-    groups[key] = {
-      test,
-      priority: 0,
-      name: key,
+    return {
+      cacheGroups: {
+        polyfill: {
+          name: 'lib-polyfill',
+          test: /node_modules[\\/](?:tslib|core-js|@swc[\\/]helpers)[\\/]/,
+          priority: 0,
+        },
+      },
     };
   }
-  return groups;
+  return {};
 }
 
 function resolvePerPackagePreset(): Rspack.OptimizationSplitChunksOptions {
@@ -92,14 +83,16 @@ function resolvePerPackagePreset(): Rspack.OptimizationSplitChunksOptions {
   };
 }
 
-function resolveSingleVendorPreset(): CacheGroups {
+function resolveSingleVendorPreset(): Rspack.OptimizationSplitChunksOptions {
   return {
-    singleVendor: {
-      test: NODE_MODULES_REGEX,
-      priority: 0,
-      chunks: 'all',
-      name: 'vendor',
-      enforce: true,
+    cacheGroups: {
+      singleVendor: {
+        test: NODE_MODULES_REGEX,
+        priority: 0,
+        chunks: 'all',
+        name: 'vendor',
+        enforce: true,
+      },
     },
   };
 }
@@ -110,7 +103,7 @@ function splitByExperience(ctx: Context): SplitChunks {
     ...getDefaultSplitChunks(config),
     ...override,
     cacheGroups: {
-      ...resolveDefaultPreset(config),
+      ...resolveDefaultPreset(config)?.cacheGroups,
       ...forceSplittingGroups,
       ...override.cacheGroups,
     },
@@ -191,7 +184,7 @@ function singleVendor(ctx: Context): SplitChunks {
     ...getDefaultSplitChunks(config),
     ...override,
     cacheGroups: {
-      ...resolveSingleVendorPreset(),
+      ...resolveSingleVendorPreset().cacheGroups,
       ...forceSplittingGroups,
       ...override.cacheGroups,
     },
@@ -256,9 +249,9 @@ function getSplitChunksByPreset(
 
   switch (preset) {
     case 'default':
-      return { cacheGroups: resolveDefaultPreset(config) };
+      return resolveDefaultPreset(config);
     case 'single-vendor':
-      return { cacheGroups: resolveSingleVendorPreset() };
+      return resolveSingleVendorPreset();
     case 'per-package':
       return resolvePerPackagePreset();
     default:

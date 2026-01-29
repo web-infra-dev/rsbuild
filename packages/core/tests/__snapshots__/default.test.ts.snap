@@ -371,13 +371,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   "optimization": {
     "minimize": false,
     "splitChunks": {
-      "cacheGroups": {
-        "lib-axios": {
-          "name": "lib-axios",
-          "priority": 0,
-          "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
-        },
-      },
       "chunks": "all",
     },
   },
@@ -909,13 +902,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       },
     ],
     "splitChunks": {
-      "cacheGroups": {
-        "lib-axios": {
-          "name": "lib-axios",
-          "priority": 0,
-          "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
-        },
-      },
       "chunks": "all",
     },
   },
@@ -1855,13 +1841,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
   "optimization": {
     "minimize": false,
     "splitChunks": {
-      "cacheGroups": {
-        "lib-axios": {
-          "name": "lib-axios",
-          "priority": 0,
-          "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
-        },
-      },
       "chunks": "all",
     },
   },

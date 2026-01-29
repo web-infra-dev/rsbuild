@@ -30,7 +30,6 @@ When using strategies other than `all-in-one`, Rspack's default splitting rules 
 Rsbuild uses the `split-by-experience` strategy by default, an optimization strategy based on practical experience. When your application uses the following npm packages, they're automatically split into separate chunks:
 
 - `lib-polyfill.js`: Contains `core-js`, `@swc/helpers`, `tslib`
-- `lib-axios.js`: Contains `axios`
 - `lib-react.js`: Provided by [@rsbuild/plugin-react](/plugins/list/plugin-react#splitchunks)
 - `lib-vue.js`: Provided by [@rsbuild/plugin-vue](/plugins/list/plugin-vue#splitchunks)
 

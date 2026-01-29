@@ -1802,13 +1802,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     "optimization": {
       "minimize": false,
       "splitChunks": {
-        "cacheGroups": {
-          "lib-axios": {
-            "name": "lib-axios",
-            "priority": 0,
-            "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
-          },
-        },
         "chunks": "all",
       },
     },

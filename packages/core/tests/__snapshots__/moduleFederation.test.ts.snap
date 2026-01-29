@@ -40,13 +40,7 @@ exports[`plugin-module-federation > should set environment module federation con
   {
     "optimization": {
       "splitChunks": {
-        "cacheGroups": {
-          "lib-axios": {
-            "name": "lib-axios",
-            "priority": 0,
-            "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
-          },
-        },
+        "cacheGroups": {},
         "chunks": "all",
       },
     },
