@@ -17,7 +17,7 @@ exports[`plugin-split-chunks > should merge split chunks options 1`] = `
 exports[`plugin-split-chunks > should set \`default\` preset by default 1`] = `
 {
   "cacheGroups": {
-    "polyfill": {
+    "lib-polyfill": {
       "name": "lib-polyfill",
       "priority": 0,
       "test": /node_modules\\[\\\\\\\\/\\]\\(\\?:tslib\\|core-js\\|@swc\\[\\\\\\\\/\\]helpers\\)\\[\\\\\\\\/\\]/,
