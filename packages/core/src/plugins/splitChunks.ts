@@ -53,7 +53,7 @@ function resolveDefaultPreset(
   if (polyfill === 'entry' || polyfill === 'usage') {
     return {
       cacheGroups: {
-        polyfill: {
+        'lib-polyfill': {
           name: 'lib-polyfill',
           test: /node_modules[\\/](?:tslib|core-js|@swc[\\/]helpers)[\\/]/,
           priority: 0,

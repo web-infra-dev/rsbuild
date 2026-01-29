@@ -9,7 +9,7 @@ export default defineConfig({
   // Retry on CI
   retries: isCI ? 3 : 0,
   // Print line for each test being run in CI
-  reporter: [['list'], ['html']],
+  reporter: isCI ? [['list'], ['html']] : 'list',
   use: {
     // Use the built-in Chrome browser to speed up CI tests
     channel: isCI ? 'chrome' : undefined,
