@@ -153,13 +153,14 @@ function splitByModule(ctx: Context): SplitChunks {
 }
 
 function splitBySize(ctx: Context): SplitChunks {
-  const { override, forceSplittingGroups, config, userConfig } =
-    ctx as Context & { userConfig: SplitBySize };
+  const { override, forceSplittingGroups, config } = ctx;
+  const { minSize = 0, maxSize = Number.POSITIVE_INFINITY } = config.performance
+    .chunkSplit as SplitBySize;
 
   return {
     ...getDefaultSplitChunks(config),
-    minSize: userConfig.minSize ?? 0,
-    maxSize: userConfig.maxSize ?? Number.POSITIVE_INFINITY,
+    minSize,
+    maxSize,
     ...override,
     cacheGroups: {
       ...forceSplittingGroups,
