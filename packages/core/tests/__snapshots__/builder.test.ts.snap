@@ -371,13 +371,6 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
   "optimization": {
     "minimize": false,
     "splitChunks": {
-      "cacheGroups": {
-        "lib-axios": {
-          "name": "lib-axios",
-          "priority": 0,
-          "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
-        },
-      },
       "chunks": "all",
     },
   },

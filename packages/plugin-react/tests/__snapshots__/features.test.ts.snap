@@ -3,11 +3,6 @@
 exports[`splitChunks > should apply antd/semi/... splitChunks rule when pkg is installed 1`] = `
 {
   "cacheGroups": {
-    "lib-axios": {
-      "name": "lib-axios",
-      "priority": 0,
-      "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
-    },
     "react": {
       "name": "lib-react",
       "priority": 0,
@@ -25,13 +20,7 @@ exports[`splitChunks > should apply antd/semi/... splitChunks rule when pkg is i
 
 exports[`splitChunks > should apply splitChunks.react/router plugin option when strategy is split-by-experience 1`] = `
 {
-  "cacheGroups": {
-    "lib-axios": {
-      "name": "lib-axios",
-      "priority": 0,
-      "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
-    },
-  },
+  "cacheGroups": {},
   "chunks": "all",
 }
 `;
