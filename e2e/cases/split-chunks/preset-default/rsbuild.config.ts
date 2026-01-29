@@ -5,5 +5,6 @@ export default defineConfig({
   plugins: [pluginReact()],
   output: {
     polyfill: 'entry',
+    filenameHash: false,
   },
 });

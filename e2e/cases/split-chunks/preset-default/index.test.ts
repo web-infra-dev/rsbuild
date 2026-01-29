@@ -7,9 +7,10 @@ test('should apply default preset as expected', async ({ build }) => {
   const jsFiles = Object.keys(files)
     .filter((name) => name.endsWith('.js'))
     .map((name) => basename(name));
-
-  expect(jsFiles.length).toEqual(4);
-  expect(jsFiles.find((file) => file.includes('lib-polyfill'))).toBeTruthy();
-  expect(jsFiles.find((file) => file.includes('lib-react'))).toBeTruthy();
-  expect(jsFiles.find((file) => file.includes('lib-router'))).toBeTruthy();
+  expect(jsFiles.sort()).toEqual([
+    'index.js',
+    'lib-polyfill.js',
+    'lib-react.js',
+    'lib-router.js',
+  ]);
 });
