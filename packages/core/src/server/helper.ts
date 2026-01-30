@@ -335,10 +335,8 @@ export const getServerConfig = async ({
   portTip: string | undefined;
 }> => {
   const { host, port: originalPort, strictPort } = config.server;
-  const resolvedHost =
-    typeof host === 'string' ? host : host ? ALL_INTERFACES_IPV4 : LOCALHOST;
   const port = await getPort({
-    host: resolvedHost,
+    host,
     port: originalPort,
     strictPort,
   });
@@ -350,7 +348,7 @@ export const getServerConfig = async ({
 
   return {
     port,
-    host: resolvedHost,
+    host,
     https,
     portTip,
   };
