@@ -1,5 +1,6 @@
 import { dirname, isAbsolute, join } from 'node:path';
 import {
+  ALL_INTERFACES_IPV4,
   ASSETS_DIST_DIR,
   CSS_DIST_DIR,
   DEFAULT_ASSET_PREFIX,
@@ -322,6 +323,7 @@ export const normalizeConfig = (
   };
 
   config.server ||= {};
+  config.server.host = normalizeHost(config.server.host);
   config.server.publicDir = normalizePublicDirs(
     rootPath,
     config.server.publicDir,
@@ -336,6 +338,13 @@ export const normalizeConfig = (
   ) as NormalizedConfig;
 
   return mergedConfig;
+};
+
+const normalizeHost = (host?: string | boolean): string => {
+  if (typeof host === 'string') {
+    return host;
+  }
+  return host === true ? ALL_INTERFACES_IPV4 : LOCALHOST;
 };
 
 const normalizePublicDirs = (
