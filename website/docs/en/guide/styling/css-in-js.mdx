@@ -82,17 +82,13 @@ export default defineConfig({
       },
     }),
   ],
-  performance: {
-    chunkSplit: {
-      override: {
-        cacheGroups: {
-          vanilla: {
-            test: /@vanilla-extract\/webpack-plugin/,
-            // make sure the chunk contains modules created by @vanilla-extract/webpack-plugin has stable id in development mode to avoid HMR issues
-            name: process.env.NODE_ENV === 'development' && 'vanilla',
-            chunks: 'all',
-          },
-        },
+  splitChunks: {
+    cacheGroups: {
+      vanilla: {
+        test: /@vanilla-extract\/webpack-plugin/,
+        // make sure the chunk contains modules created by @vanilla-extract/webpack-plugin has stable id in development mode to avoid HMR issues
+        name: process.env.NODE_ENV === 'development' && 'vanilla',
+        chunks: 'all',
       },
     },
   },

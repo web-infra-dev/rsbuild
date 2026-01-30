@@ -66,7 +66,7 @@ pluginVue({
 
 ### splitChunks
 
-When [chunkSplit.strategy](/config/performance/chunk-split) set to `split-by-experience`, Rsbuild will automatically split `vue` and `router` related packages into separate chunks by default:
+When using Rsbuild's [default split chunks preset](/config/split-chunks#default), this plugin splits `vue` and `router` related packages into separate chunks:
 
 - `lib-vue.js`: includes `vue`, `vue-loader`, and their sub-dependencies (`@vue/shared`, `@vue/reactivity`, `@vue/runtime-dom`, `@vue/runtime-core`).
 - `lib-router.js`: includes `vue-router`.
