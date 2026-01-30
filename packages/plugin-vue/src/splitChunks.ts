@@ -36,7 +36,8 @@ export function applySplitChunksRule(
   },
 ): void {
   api.modifyBundlerChain((chain, { environment }) => {
-    if (!isDefaultPreset(environment.config)) {
+    const { config } = environment;
+    if (!isDefaultPreset(config) || config.output.target !== 'web') {
       return;
     }
 
