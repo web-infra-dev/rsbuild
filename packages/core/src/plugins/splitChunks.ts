@@ -100,7 +100,7 @@ function resolveSingleVendorPreset(): Rspack.OptimizationSplitChunksOptions {
 function splitByExperience(ctx: Context): SplitChunks {
   const { override, config, forceSplittingGroups } = ctx;
   return {
-    ...getDefaultSplitChunks(config),
+    ...getDefaultSplitChunksForWeb(config),
     ...override,
     cacheGroups: {
       ...resolveDefaultPreset(config)?.cacheGroups,
@@ -134,7 +134,7 @@ function splitByModule(ctx: Context): SplitChunks {
   const { config, override, forceSplittingGroups } = ctx;
   const perPackageOptions = resolvePerPackagePreset();
   return {
-    ...getDefaultSplitChunks(config),
+    ...getDefaultSplitChunksForWeb(config),
     ...perPackageOptions,
     ...override,
     cacheGroups: {
@@ -151,7 +151,7 @@ function splitBySize(ctx: Context): SplitChunks {
     .chunkSplit as SplitBySize;
 
   return {
-    ...getDefaultSplitChunks(config),
+    ...getDefaultSplitChunksForWeb(config),
     minSize,
     maxSize,
     ...override,
@@ -165,7 +165,7 @@ function splitBySize(ctx: Context): SplitChunks {
 function splitCustom(ctx: Context): SplitChunks {
   const { config, override, forceSplittingGroups } = ctx;
   return {
-    ...getDefaultSplitChunks(config),
+    ...getDefaultSplitChunksForWeb(config),
     ...override,
     cacheGroups: {
       ...forceSplittingGroups,
@@ -181,7 +181,7 @@ function allInOne(_ctx: Context): SplitChunks {
 function singleVendor(ctx: Context): SplitChunks {
   const { config, override, forceSplittingGroups } = ctx;
   return {
-    ...getDefaultSplitChunks(config),
+    ...getDefaultSplitChunksForWeb(config),
     ...override,
     cacheGroups: {
       ...resolveSingleVendorPreset().cacheGroups,
@@ -191,7 +191,7 @@ function singleVendor(ctx: Context): SplitChunks {
   };
 }
 
-const getDefaultSplitChunks = (
+const getDefaultSplitChunksForWeb = (
   config: NormalizedEnvironmentConfig,
 ): Rspack.OptimizationSplitChunksOptions => ({
   chunks: config.moduleFederation?.options?.exposes
@@ -263,26 +263,34 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
   name: 'rsbuild:split-chunks',
   setup(api) {
     api.modifyBundlerChain((chain, { environment, isServer, isWebWorker }) => {
-      if (isServer || isWebWorker) {
-        chain.optimization.splitChunks(false);
+      const { config } = environment;
+      const { splitChunks } = config;
 
-        // web worker does not support dynamic imports, dynamicImportMode need set to eager
-        if (isWebWorker) {
-          chain.module.parser.merge({
-            javascript: {
-              dynamicImportMode: 'eager',
-            },
+      // web worker does not support dynamic imports, dynamicImportMode need set to eager
+      if (isWebWorker) {
+        chain.module.parser.merge({
+          javascript: {
+            dynamicImportMode: 'eager',
+          },
+        });
+      }
+
+      if (isServer || isWebWorker) {
+        // Disable split chunks by default for server and worker builds
+        if (splitChunks === false || Object.keys(splitChunks).length === 0) {
+          chain.optimization.splitChunks(false);
+        } else {
+          const { preset, ...rest } = splitChunks;
+          chain.optimization.splitChunks({
+            ...getSplitChunksByPreset(config, preset),
+            ...rest,
           });
         }
-
         return;
       }
 
-      const { config } = environment;
-      const { splitChunks } = config;
-      const { chunkSplit } = config.performance;
-
       // Compatible with legacy `performance.chunkSplit` option
+      const { chunkSplit } = config.performance;
       if (
         chunkSplit &&
         splitChunks !== false &&
@@ -306,17 +314,14 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
 
       if (splitChunks === false) {
         chain.optimization.splitChunks(false);
-        return;
+      } else {
+        const { preset = 'default', ...rest } = splitChunks;
+        chain.optimization.splitChunks({
+          ...getDefaultSplitChunksForWeb(config),
+          ...getSplitChunksByPreset(config, preset),
+          ...rest,
+        });
       }
-
-      const { preset = 'default', ...rest } = splitChunks;
-
-      chain.optimization.splitChunks({
-        ...getDefaultSplitChunks(config),
-        ...getSplitChunksByPreset(config, preset),
-        ...rest,
-      });
-      return;
     });
   },
 });

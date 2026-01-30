@@ -10,19 +10,21 @@ type SplitChunksConfig =
   | false;
 ```
 
-- **默认值：** `{ preset: 'default', chunks: 'all' }`
+- **默认值：** 基于 [output.target](/config/output/target)：
+  - `output.target` 为 `'web'` 时，为 `{ preset: 'default', chunks: 'all' }`
+  - `output.target` 为其他值时，为 `false`
 - **版本：** `>= 2.0.0`
 
 `splitChunks` 用于配置 Rsbuild 的 chunk 拆分策略。
 
 该选项基于 Rspack 的 `optimization.splitChunks` 实现，并在其基础上扩展了 `preset` 选项，用于快速启用 Rsbuild 提供的一组常用拆分预设。
 
-除 `preset` 之外，其余配置项的行为与 Rspack 的 `splitChunks` 保持一致，更多用法请参考 [Rspack 文档](https://rspack.rs/plugins/webpack/split-chunks-plugin)。
+除 `preset` 之外，其余配置项的行为与 Rspack 的 `splitChunks` 保持一致，更多用法请参考 [Rspack 文档](https://rspack.rs/zh/plugins/webpack/split-chunks-plugin)。
 
 ## splitChunks.preset
 
-- **类型：** `'default' | 'per-package' | 'single-vendor'`
-- **默认值：** `'default'`
+- **类型：** `'default' | 'per-package' | 'single-vendor' | undefined`
+- **默认值：** `output.target` 为 `'web'` 时为 `'default'`，其他值时为 `undefined`
 
 `preset` 用于启用 Rsbuild 内置的拆包预设，以简化常见的 chunk 拆分场景。
 
