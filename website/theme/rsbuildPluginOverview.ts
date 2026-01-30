@@ -38,6 +38,10 @@ export const rsbuildPluginOverview: RsbuildPlugin = {
             text: 'environments',
             link: '/config/environments',
           },
+          {
+            text: 'splitChunks',
+            link: '/config/split-chunks',
+          },
         ],
       },
     ];

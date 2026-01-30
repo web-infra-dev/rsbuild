@@ -17,6 +17,7 @@
   "plugins",
   "log-level",
   "environments",
+  "split-chunks",
   {
     "type": "dir-section-header",
     "name": "dev",
