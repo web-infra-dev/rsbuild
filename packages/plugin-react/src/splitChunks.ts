@@ -29,7 +29,11 @@ export function applySplitChunksRule(
 ): void {
   api.modifyBundlerChain((chain, { environment, isProd }) => {
     const { config } = environment;
-    if (!isDefaultPreset(config) || options === false) {
+    if (
+      !isDefaultPreset(config) ||
+      config.output.target !== 'web' ||
+      options === false
+    ) {
       return;
     }
 
