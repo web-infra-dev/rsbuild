@@ -478,9 +478,12 @@ export interface ServerConfig {
   https?: HttpsServerOptions | SecureServerSessionOptions;
   /**
    * Specify the host that the Rsbuild server listens to.
-   * @default '0.0.0.0'
+   * - `string`: specify a hostname or IP address to listen on.
+   * - `true`: equals to `0.0.0.0`, listen on all interfaces.
+   * - `false`: equals to `localhost`
+   * @default 'localhost'
    */
-  host?: string;
+  host?: string | boolean;
   /**
    * Adds headers to all responses.
    */
@@ -550,13 +553,14 @@ export interface ServerConfig {
 }
 
 export type NormalizedServerConfig = {
+  host: string;
   publicDir: Required<PublicDirOptions>[];
 } & Omit<
   Optional<
     Required<ServerConfig>,
     'headers' | 'https' | 'historyApiFallback' | 'proxy'
   >,
-  'publicDir'
+  'host' | 'publicDir'
 >;
 
 export type SriAlgorithm = 'sha256' | 'sha384' | 'sha512';

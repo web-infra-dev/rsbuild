@@ -1,11 +1,19 @@
 # server.host
 
-- **Type:** `string`
+- **Type:** `string | boolean`
 - **Default:** `localhost`
 
 Specify the host that the Rsbuild server listens to.
 
-By default, the Rsbuild server listens on `localhost`. If you want the Rsbuild server to listen to all IPv4 network interfaces (including public network addresses), you can set it to `0.0.0.0`:
+By default, the Rsbuild server listens on `localhost`. You can configure it in the following ways:
+
+- `string`: specify a hostname or IP address to listen on.
+- `true`: equals to `0.0.0.0`, listen on all IPv4 interfaces.
+- `false`: equals to `localhost`.
+
+## All IPv4 interfaces
+
+To listen to all IPv4 network interfaces (including public network addresses), set it to `0.0.0.0` or `true`:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -54,3 +62,4 @@ At this point, you can access the page via `http://[::1]:3000/`.
 | Version | Changes                                             |
 | ------- | --------------------------------------------------- |
 | v2.0.0  | Default value changed from `0.0.0.0` to `localhost` |
+| v2.0.0  | Support `boolean` type                              |
