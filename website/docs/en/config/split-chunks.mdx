@@ -10,7 +10,9 @@ type SplitChunksConfig =
   | false;
 ```
 
-- **Default:** `{ preset: 'default', chunks: 'all' }`
+- **Default:** based on [output.target](/config/output/target):
+  - When `output.target` is `'web'`, the default is `{ preset: 'default', chunks: 'all' }`
+  - When `output.target` is any other value, the default is `false`
 - **Version:** `>= 2.0.0`
 
 `splitChunks` is used to configure Rsbuild's chunk splitting strategy.
@@ -21,8 +23,8 @@ Apart from the `preset` option, all other options behave the same as in Rspack. 
 
 ## splitChunks.preset
 
-- **Type:** `'default' | 'per-package' | 'single-vendor'`
-- **Default:** `'default'`
+- **Type:** `'default' | 'per-package' | 'single-vendor' | undefined`
+- **Default:** `'default'` when `output.target` is `'web'`, `undefined` otherwise
 
 `preset` is used to enable the built-in presets in Rsbuild to simplify common chunk splitting scenarios.
 
