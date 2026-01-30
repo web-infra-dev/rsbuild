@@ -82,17 +82,13 @@ export default defineConfig({
       },
     }),
   ],
-  performance: {
-    chunkSplit: {
-      override: {
-        cacheGroups: {
-          vanilla: {
-            test: /@vanilla-extract\/webpack-plugin/,
-            // 确保在开发模式下 @vanilla-extract/webpack-plugin 产生虚拟模块所在的 Chunk id 稳定以避免 HMR 问题
-            name: process.env.NODE_ENV === 'development' && 'vanilla',
-            chunks: 'all',
-          },
-        },
+  splitChunks: {
+    cacheGroups: {
+      vanilla: {
+        test: /@vanilla-extract\/webpack-plugin/,
+        // 确保在开发模式下 @vanilla-extract/webpack-plugin 产生虚拟模块所在的 Chunk id 稳定以避免 HMR 问题
+        name: process.env.NODE_ENV === 'development' && 'vanilla',
+        chunks: 'all',
       },
     },
   },
