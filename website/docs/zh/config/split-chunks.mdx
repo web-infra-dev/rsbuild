@@ -15,9 +15,9 @@ type SplitChunksConfig =
 
 `splitChunks` 用于配置 Rsbuild 的 chunk 拆分策略。
 
-该选项基于 Rspack 的 `optimization.splitChunks` 配置，并在其基础上扩展了一个 `preset` 选项，用于快速启用 Rsbuild 提供的预设。
+该选项基于 Rspack 的 `optimization.splitChunks` 实现，并在其基础上扩展了 `preset` 选项，用于快速启用 Rsbuild 提供的一组常用拆分预设。
 
-除了 `preset` 之外，其余配置项与 Rspack 的 `splitChunks` 完全一致，更多用法请参考 [Rspack 文档](https://rspack.rs/plugins/webpack/split-chunks-plugin)。
+除 `preset` 之外，其余配置项的行为与 Rspack 的 `splitChunks` 保持一致，更多用法请参考 [Rspack 文档](https://rspack.rs/plugins/webpack/split-chunks-plugin)。
 
 ## splitChunks.preset
 

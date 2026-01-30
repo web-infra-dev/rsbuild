@@ -15,9 +15,9 @@ type SplitChunksConfig =
 
 `splitChunks` is used to configure Rsbuild's chunk splitting strategy.
 
-This option is based on Rspack's `optimization.splitChunks` configuration and extends it with a `preset` option to quickly enable the presets provided by Rsbuild.
+It is built on top of Rspack's `optimization.splitChunks` and extends it with an additional `preset` option, which provides several Rsbuild-specific presets for common use cases.
 
-Except for `preset`, the rest of the options are identical to Rspack's `splitChunks`. For more details, see the [Rspack documentation](https://rspack.rs/plugins/webpack/split-chunks-plugin).
+Apart from the `preset` option, all other options behave the same as in Rspack. For more details, see the [Rspack documentation](https://rspack.rs/plugins/webpack/split-chunks-plugin).
 
 ## splitChunks.preset
 
