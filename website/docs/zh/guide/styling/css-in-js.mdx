@@ -86,7 +86,7 @@ export default defineConfig({
     cacheGroups: {
       vanilla: {
         test: /@vanilla-extract\/webpack-plugin/,
-        // make sure the chunk contains modules created by @vanilla-extract/webpack-plugin has stable id in development mode to avoid HMR issues
+        // 确保在开发模式下 @vanilla-extract/webpack-plugin 产生虚拟模块所在的 Chunk id 稳定以避免 HMR 问题
         name: process.env.NODE_ENV === 'development' && 'vanilla',
         chunks: 'all',
       },

@@ -86,7 +86,8 @@ export default defineConfig({
     cacheGroups: {
       vanilla: {
         test: /@vanilla-extract\/webpack-plugin/,
-        // make sure the chunk contains modules created by @vanilla-extract/webpack-plugin has stable id in development mode to avoid HMR issues
+        // make sure that chunks containing modules created by @vanilla-extract/webpack-plugin have stable IDs
+        // in development mode to avoid HMR issues
         name: process.env.NODE_ENV === 'development' && 'vanilla',
         chunks: 'all',
       },
