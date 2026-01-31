@@ -820,7 +820,19 @@ export interface NormalizedPerformanceConfig extends PerformanceConfig {
 
 export type SplitChunks = Rspack.OptimizationSplitChunksOptions | false;
 
-export type SplitChunksPreset = 'default' | 'single-vendor' | 'per-package';
+/**
+ * Split chunks preset rules.
+ * - `default`: splits polyfills when enabled and applies extra groups when using
+ * framework plugins.
+ * - `per-package`: splits dependencies in `node_modules` by npm package.
+ * - `single-vendor`: splits all `node_modules` dependencies into one vendor chunk.
+ * - `none`: disables Rsbuild preset rules.
+ */
+export type SplitChunksPreset =
+  | 'default'
+  | 'single-vendor'
+  | 'per-package'
+  | 'none';
 
 export type SplitChunksConfig = Rspack.OptimizationSplitChunksOptions & {
   preset?: SplitChunksPreset;

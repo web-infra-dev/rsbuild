@@ -254,6 +254,8 @@ function getSplitChunksByPreset(
       return resolveSingleVendorPreset();
     case 'per-package':
       return resolvePerPackagePreset();
+    case 'none':
+      return {};
     default:
       throw new Error(`[rsbuild] Unknown splitChunks preset: ${preset}`);
   }
@@ -266,7 +268,7 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
       const { config } = environment;
       const { splitChunks } = config;
 
-      // web worker does not support dynamic imports, dynamicImportMode need set to eager
+      // Web Workers does not support dynamic imports, dynamicImportMode need set to eager
       if (isWebWorker) {
         chain.module.parser.merge({
           javascript: {
@@ -280,7 +282,7 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
         if (splitChunks === false || Object.keys(splitChunks).length === 0) {
           chain.optimization.splitChunks(false);
         } else {
-          const { preset, ...rest } = splitChunks;
+          const { preset = 'none', ...rest } = splitChunks;
           chain.optimization.splitChunks({
             ...getSplitChunksByPreset(config, preset),
             ...rest,
