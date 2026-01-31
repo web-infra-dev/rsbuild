@@ -268,7 +268,7 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
       const { config } = environment;
       const { splitChunks } = config;
 
-      // Web Workers does not support dynamic imports, dynamicImportMode need set to eager
+      // Web Workers do not support dynamic imports; dynamicImportMode needs to be set to 'eager'
       if (isWebWorker) {
         chain.module.parser.merge({
           javascript: {
