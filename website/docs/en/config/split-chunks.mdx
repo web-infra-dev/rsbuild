@@ -17,9 +17,7 @@ type SplitChunksConfig =
 
 `splitChunks` is used to configure Rsbuild's chunk splitting strategy.
 
-It is built on top of Rspack's `optimization.splitChunks` and extends it with an additional `preset` option, which provides several Rsbuild-specific presets for common use cases.
-
-Apart from the `preset` option, all other options behave the same as in Rspack. For more details, see the [Rspack documentation](https://rspack.rs/plugins/webpack/split-chunks-plugin).
+It is built on top of Rspack's [optimization.splitChunks](https://rspack.rs/plugins/webpack/split-chunks-plugin) and extends it with an additional `preset` option, which provides several Rsbuild-specific presets for common use cases.
 
 ## splitChunks.preset
 
@@ -27,8 +25,6 @@ Apart from the `preset` option, all other options behave the same as in Rspack. 
 - **Default:** `'default'` when `output.target` is `'web'`, `undefined` otherwise
 
 `preset` is used to enable the built-in presets in Rsbuild to simplify common chunk splitting scenarios.
-
-When `preset` is configured, Rsbuild will first apply the corresponding preset rules, then merge them with the user's `splitChunks` options. The user options take higher priority.
 
 ### default
 
@@ -69,6 +65,33 @@ export default {
   },
 };
 ```
+
+## Other options
+
+Apart from the `preset` option, all other options behave the same as in Rspack. For detailed usage, see the [Rspack documentation](https://rspack.rs/plugins/webpack/split-chunks-plugin).
+
+```ts title="rsbuild.config.ts"
+export default {
+  splitChunks: {
+    // Rsbuild-specific option
+    preset: 'default',
+    // Rspack options
+    chunks: 'all',
+    minSize: 20 * 1024,
+    cacheGroups: {
+      vendors: {
+        test: /[\\/]node_modules[\\/]/,
+        name: 'vendors',
+        priority: -10,
+      },
+    },
+  },
+};
+```
+
+:::tip
+Rsbuild first converts the preset rules into a configuration object, then merges it with the `splitChunks` options you provide. The user-defined `splitChunks` configuration takes higher priority.
+:::
 
 ## Disable chunk splitting
 
