@@ -12,7 +12,7 @@ test('should generate chunks for each package when preset is "per-package"', asy
 
   const reactFile = findFile(
     files,
-    (name) => name.includes('npm.react') && files[name].includes('React'),
+    (name) => name.includes('npm-react') && files[name].includes('React'),
   );
   expect(reactFile).toBeTruthy();
 
@@ -22,7 +22,7 @@ test('should generate chunks for each package when preset is "per-package"', asy
 
   expect(jsFiles.length).toEqual(4);
   expect(jsFiles).toContain('index.js');
-  expect(jsFiles.find((file) => file.includes('npm.react'))).toBeTruthy();
-  expect(jsFiles.find((file) => file.includes('npm.react-dom'))).toBeTruthy();
-  expect(jsFiles.find((file) => file.includes('npm.scheduler'))).toBeTruthy();
+  expect(jsFiles.find((file) => file.includes('npm-react'))).toBeTruthy();
+  expect(jsFiles.find((file) => file.includes('npm-react-dom'))).toBeTruthy();
+  expect(jsFiles.find((file) => file.includes('npm-scheduler'))).toBeTruthy();
 });

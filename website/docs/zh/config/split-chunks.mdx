@@ -44,7 +44,7 @@ export default {
 
 ### per-package
 
-`per-package` 会按照 npm 包粒度对 `node_modules` 中的依赖进行拆分，每个包对应一个独立的 chunk。
+`per-package` 会按照 npm 包粒度对 `node_modules` 中的依赖进行拆分，每个包对应一个独立的 chunk，生成类似 `npm-react.js` 或 `npm-vue_core.js` 的 chunk 名。
 
 ```ts title="rsbuild.config.ts"
 export default {
