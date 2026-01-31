@@ -21,8 +21,8 @@ It is built on top of Rspack's [optimization.splitChunks](https://rspack.rs/plug
 
 ## splitChunks.preset
 
-- **Type:** `'default' | 'per-package' | 'single-vendor' | undefined`
-- **Default:** `'default'` when `output.target` is `'web'`, `undefined` otherwise
+- **Type:** `'default' | 'per-package' | 'single-vendor' | 'none' | undefined`
+- **Default:** `'default'` when `output.target` is `'web'`, `none` otherwise
 
 `preset` is used to enable the built-in presets in Rsbuild to simplify common chunk splitting scenarios.
 
@@ -62,6 +62,18 @@ export default {
 export default {
   splitChunks: {
     preset: 'single-vendor',
+  },
+};
+```
+
+### none
+
+`none` disables Rsbuild's built-in preset rules. This is useful when you want to rely on Rspack defaults or only use your custom options.
+
+```ts title="rsbuild.config.ts"
+export default {
+  splitChunks: {
+    preset: 'none',
   },
 };
 ```

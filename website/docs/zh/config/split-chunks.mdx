@@ -21,8 +21,8 @@ type SplitChunksConfig =
 
 ## splitChunks.preset
 
-- **类型：** `'default' | 'per-package' | 'single-vendor' | undefined`
-- **默认值：** `output.target` 为 `'web'` 时为 `'default'`，其他值时为 `undefined`
+- **类型：** `'default' | 'per-package' | 'single-vendor' | 'none' | undefined`
+- **默认值：** `output.target` 为 `'web'` 时为 `'default'`，其他值时为 `none`
 
 `preset` 用于启用 Rsbuild 内置的拆包预设，以简化常见的 chunk 拆分场景。
 
@@ -62,6 +62,19 @@ export default {
 export default {
   splitChunks: {
     preset: 'single-vendor',
+  },
+};
+```
+
+### none
+
+`none` 会关闭 Rsbuild 内置的预设规则。当你希望使用 Rspack 的默认行为或仅使用自定义配置时可以使用。
+
+```ts title="rsbuild.config.ts"
+export default {
+  splitChunks: {
+    preset: 'none',
+    // 其他自定义配置...
   },
 };
 ```
