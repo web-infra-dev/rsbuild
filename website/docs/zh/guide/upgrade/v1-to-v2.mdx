@@ -270,14 +270,14 @@ export default {
 };
 ```
 
-- `strategy: 'custom'` + `override` → `splitChunks.preset: 'none'`
+- `strategy: 'custom'` + `splitChunks` → `splitChunks.preset: 'none'`
 
 ```diff title="rsbuild.config.ts"
 export default {
 -  performance: {
 -    chunkSplit: {
 -      strategy: 'custom',
--      override: {
+-      splitChunks: {
 -        // ...
 -      },
 -    },
@@ -304,6 +304,23 @@ export default {
 +    preset: 'none',
 +    minSize: 20000,
 +    maxSize: 50000,
++  },
+};
+```
+
+- `override` → 直接使用 `splitChunks`
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      override: {
+-        // ...
+-      },
+-    },
+-  },
++  splitChunks: {
++    // ...
 +  },
 };
 ```
