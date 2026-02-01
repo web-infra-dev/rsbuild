@@ -123,11 +123,7 @@ export function getPackageNameFromModulePath(
   }
 
   const [, scope, name] = handleModuleContext;
-  const packageName = ['npm', (scope ?? '').replace('@', ''), name]
-    .filter(Boolean)
-    .join('.');
-
-  return packageName;
+  return `npm-${scope ? `${scope.replace('@', '')}_` : ''}${name}`;
 }
 
 function splitByModule(ctx: Context): SplitChunks {
