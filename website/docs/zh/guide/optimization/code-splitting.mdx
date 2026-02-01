@@ -1,10 +1,32 @@
-# 代码拆分
+# 代码分割
 
-良好的拆包策略对于提升应用的加载性能是十分重要的，可以充分利用浏览器的缓存机制，减少请求数量，加快页面加载速度。
+代码分割是将代码拆分为多个 chunk 的过程，用于按需加载代码并提升性能。通过合理地拆分代码，可以减少首屏加载体积，加快页面加载速度。
 
-在 Rsbuild 中内置了多种拆包策略，可以满足大部分应用的需求，你也可以根据自己的使用场景，自定义拆包配置。
+:::tip
+chunk 通常对应一个构建后的资源文件，浏览器可以分别请求和缓存这些 chunk，而不是一次性加载全部代码。
+:::
 
-> 参考：[Rspack - 代码拆分](https://rspack.rs/zh/guide/optimization/code-splitting) 了解更多细节。
+> 参考文档：[Rspack - 代码分割](https://rspack.rs/zh/guide/optimization/code-splitting)。
+
+## 使用动态 import
+
+通过使用 [动态 import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import)，可以将首屏不需要的代码分割为异步的 chunks，并在需要时再加载。
+
+当 Rsbuild 解析到 `import()` 语法时，会自动将对应的模块拆分为新的 chunk，并在运行时按需加载。
+
+对于体积较大的模块，无论是本地模块还是第三方依赖，都可以通过动态 import 延迟加载：
+
+```js
+// 本地模块
+import('./bigModule.ts').then((bigModule) => {
+  console.log(bigModule);
+});
+
+// 第三方依赖
+import('some-package').then((somePackage) => {
+  console.log(somePackage);
+});
+```
 
 ## 拆包策略
 
@@ -234,24 +256,3 @@ export default {
 ```
 
 其中，`override` 配置会与 Rspack 的 `splitChunks` 配置进行合并，具体配置项请参考 [Rspack - splitChunks](https://rspack.rs/zh/config/optimization#optimizationsplitchunks)。
-
-## 使用 Dynamic import 拆包
-
-除了 `chunkSplit` 配置，使用 [dynamic import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) 拆包也是一项重要的优化手段，它可以有效减少首屏的包体积。
-
-:::tip 关于 dynamic import
-Dynamic import 是 ECMAScript 2020 引入的一个新特性，它允许你动态地加载一些 JavaScript 模块。Rsbuild 底层的 Rspack 默认支持 dynamic import，所以你可以直接在代码中使用它。
-:::
-
-当打包工具遇到 `import()` 语法时，它会自动将相关的代码分割成一个新的 chunk，并在运行时按需加载。
-
-例如，项目中有一个大的模块 `bigModule.ts`（也可以是一个第三方依赖），你可以使用 dynamic import 来按需加载它：
-
-```js
-// 在某个需要使用 bigModule 的地方
-import('./bigModule.ts').then((bigModule) => {
-  // 使用 bigModule
-});
-```
-
-当你运行构建命令时，`bigModule.ts` 就会被自动分割成一个新的 chunk，并在运行时按需加载。

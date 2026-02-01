@@ -1,10 +1,34 @@
 # Code splitting
 
-A good chunk splitting strategy is important for improving application load performance. It leverages browser caching to reduce requests and improve loading speed.
+Code splitting is the process of breaking code into multiple chunks to enable on-demand loading and improve performance. With a well-designed splitting strategy, you can reduce the initial load size and speed up page rendering.
 
-Several [chunk splitting strategies](/guide/optimization/code-splitting) are built into Rsbuild to meet the needs of most applications. You can also customize chunk splitting configuration for specific use cases.
+:::tip
+A chunk usually corresponds to a built output asset. The browser can request and cache these chunks separately instead of loading all code at once.
+:::
 
-> See [Rspack - Code Splitting](https://rspack.rs/guide/optimization/code-splitting) for more details.
+> Reference: [Rspack - Code Splitting](https://rspack.rs/guide/optimization/code-splitting).
+
+## Using dynamic import
+
+By using [dynamic import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import), you can split code that is not required for the initial render into async chunks and load it only when needed.
+
+When Rsbuild encounters the `import()` syntax, it automatically splits the referenced module into a new chunk and loads it on demand at runtime.
+
+For large modules, whether local modules or third-party dependencies, dynamic import can be used to defer loading:
+
+```js
+// Local module
+import('./bigModule.ts').then((bigModule) => {
+  console.log(bigModule);
+});
+```
+
+```js
+// Third-party dependency
+import('some-package').then((somePackage) => {
+  console.log(somePackage);
+});
+```
 
 ## Strategies
 
@@ -238,24 +262,3 @@ export default {
 ```
 
 The `override` config will be merged with Rspack's `splitChunks` config. For specific config details, see [Rspack - splitChunks](https://rspack.rs/config/optimization#optimizationsplitchunks).
-
-## Using dynamic import for code splitting
-
-Beyond the `chunkSplit` configuration, [dynamic import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) is another important optimization technique that can effectively reduce initial bundle size.
-
-:::tip About dynamic import
-Dynamic import, introduced in ECMAScript 2020, allows you to load JavaScript modules dynamically. Rspack supports dynamic import by default, so you can use it directly in your code.
-:::
-
-When the bundler encounters `import()` syntax, it automatically splits the relevant code into a new chunk and loads it on-demand at runtime.
-
-For example, if your project has a large module called `bigModule.ts` (which can also be a third-party dependency), you can use dynamic import to load it on-demand:
-
-```js
-// Somewhere in your code where you need to use bigModule
-import('./bigModule.ts').then((bigModule) => {
-  // Use bigModule here
-});
-```
-
-When you run the build command, `bigModule.ts` will be automatically split into a new chunk and loaded on-demand at runtime.
