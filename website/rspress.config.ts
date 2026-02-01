@@ -80,6 +80,10 @@ export default defineConfig({
           to: '/config/resolve/alias-strategy',
         },
         {
+          from: '/config/performance/chunk-split',
+          to: '/config/split-chunks',
+        },
+        {
           from: '/plugins/list/plugin-assets-retry',
           to: 'https://github.com/rstackjs/rsbuild-plugin-assets-retry',
         },
