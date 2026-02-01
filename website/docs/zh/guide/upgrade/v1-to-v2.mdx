@@ -204,6 +204,137 @@ export default {
 };
 ```
 
+### 迁移 `performance.chunkSplit`
+
+`performance.chunkSplit` 在 Rsbuild 2.0 中已废弃，但暂未移除，仍可继续使用。
+
+推荐使用新的 [splitChunks](/config/split-chunks) 选项代替，新选项对齐了 Rspack 的 [optimization.splitChunks](https://rspack.rs/zh/plugins/webpack/split-chunks-plugin) 配置，并提供了与 `performance.chunkSplit.strategy` 相似的预设选项。
+
+#### strategy
+
+- `strategy: 'split-by-experience'` → `splitChunks.preset: 'default'`
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      strategy: 'split-by-experience',
+-    },
+-  },
++  splitChunks: {
++    preset: 'default',
++  },
+};
+```
+
+- `strategy: 'split-by-module'` → `splitChunks.preset: 'per-package'`
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      strategy: 'split-by-module',
+-    },
+-  },
++  splitChunks: {
++    preset: 'per-package',
++  },
+};
+```
+
+- `strategy: 'single-vendor'` → `splitChunks.preset: 'single-vendor'`
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      strategy: 'single-vendor',
+-    },
+-  },
++  splitChunks: {
++    preset: 'single-vendor',
++  },
+};
+```
+
+- `strategy: 'all-in-one'` → 关闭拆包
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      strategy: 'all-in-one',
+-    },
+-  },
++  splitChunks: false,
+};
+```
+
+- `strategy: 'custom'` + `override` → `splitChunks.preset: 'none'`
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      strategy: 'custom',
+-      override: {
+-        // ...
+-      },
+-    },
+-  },
++  splitChunks: {
++    preset: 'none',
++    // ...
++  },
+};
+```
+
+- `strategy: 'split-by-size'` → 直接配置 `minSize` / `maxSize`
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      strategy: 'split-by-size',
+-      minSize: 20000,
+-      maxSize: 50000,
+-    },
+-  },
++  splitChunks: {
++    preset: 'none',
++    minSize: 20000,
++    maxSize: 50000,
++  },
+};
+```
+
+#### forceSplitting
+
+`forceSplitting` 是对 `cacheGroups` 的语法糖，可以直接替换为 `cacheGroups`：
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      forceSplitting: {
+-        axios: /node_modules[\\/]axios/,
+-      },
+-    },
+-  },
++  splitChunks: {
++    cacheGroups: {
++      axios: {
++        test: /node_modules[\\/]axios/,
++        name: 'axios',
++        chunks: 'all',
++        priority: 0,
++        enforce: true,
++      },
++    },
++  },
+};
+```
+
 ### 移除 HTML 模板参数
 
 `html.templateParameters` 中废弃的默认参数已被移除：
