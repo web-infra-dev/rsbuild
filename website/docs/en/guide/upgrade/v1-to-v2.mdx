@@ -204,6 +204,154 @@ export default {
 };
 ```
 
+### Migrate `performance.chunkSplit`
+
+`performance.chunkSplit` is deprecated in Rsbuild 2.0, but not removed yet, so it still works.
+
+We recommend migrating to the new [splitChunks](/config/split-chunks) option. It aligns with Rspack's [optimization.splitChunks](https://rspack.rs/plugins/webpack/split-chunks-plugin) and provides presets that mirror `performance.chunkSplit.strategy`.
+
+#### strategy
+
+- `strategy: 'split-by-experience'` → `splitChunks.preset: 'default'`
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      strategy: 'split-by-experience',
+-    },
+-  },
++  splitChunks: {
++    preset: 'default',
++  },
+};
+```
+
+- `strategy: 'split-by-module'` → `splitChunks.preset: 'per-package'`
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      strategy: 'split-by-module',
+-    },
+-  },
++  splitChunks: {
++    preset: 'per-package',
++  },
+};
+```
+
+- `strategy: 'single-vendor'` → `splitChunks.preset: 'single-vendor'`
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      strategy: 'single-vendor',
+-    },
+-  },
++  splitChunks: {
++    preset: 'single-vendor',
++  },
+};
+```
+
+- `strategy: 'all-in-one'` → disable chunk splitting
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      strategy: 'all-in-one',
+-    },
+-  },
++  splitChunks: false,
+};
+```
+
+- `strategy: 'custom'` + `splitChunks` → `splitChunks.preset: 'none'`
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      strategy: 'custom',
+-      splitChunks: {
+-        // ...
+-      },
+-    },
+-  },
++  splitChunks: {
++    preset: 'none',
++    // ...
++  },
+};
+```
+
+- `strategy: 'split-by-size'` → configure `minSize` / `maxSize` directly
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      strategy: 'split-by-size',
+-      minSize: 20000,
+-      maxSize: 50000,
+-    },
+-  },
++  splitChunks: {
++    preset: 'none',
++    minSize: 20000,
++    maxSize: 50000,
++  },
+};
+```
+
+- `override` → `splitChunks` directly
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      override: {
+-        // ...
+-      },
+-    },
+-  },
++  splitChunks: {
++    // ...
++  },
+};
+```
+
+#### forceSplitting
+
+`forceSplitting` is syntactic sugar for `cacheGroups`, so you can replace it directly with `cacheGroups`:
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      forceSplitting: {
+-        axios: /node_modules[\\/]axios/,
+-      },
+-    },
+-  },
++  splitChunks: {
++    cacheGroups: {
++      axios: {
++        test: /node_modules[\\/]axios/,
++        name: 'axios',
++        chunks: 'all',
++        priority: 0, // Use 1 when using single-vendor preset
++        enforce: true,
++      },
++    },
++  },
+};
+```
+
 ### Remove HTML template parameters
 
 The deprecated template parameters have been removed from `html.templateParameters`
