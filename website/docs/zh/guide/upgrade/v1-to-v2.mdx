@@ -344,7 +344,7 @@ export default {
 +        test: /node_modules[\\/]axios/,
 +        name: 'axios',
 +        chunks: 'all',
-+        priority: 0,
++        priority: 0, // 使用 single-vendor 时可设置为 1
 +        enforce: true,
 +      },
 +    },
