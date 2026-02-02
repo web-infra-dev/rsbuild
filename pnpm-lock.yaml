@@ -1108,9 +1108,6 @@ importers:
       '@rspress/plugin-client-redirects':
         specifier: ^2.0.1
         version: 2.0.1(@rspress/core@2.0.1(@module-federation/runtime-tools@0.23.0)(@types/react@19.2.10)(core-js@3.48.0))
-      '@rspress/plugin-llms':
-        specifier: ^2.0.1
-        version: 2.0.1(@rspress/core@2.0.1(@module-federation/runtime-tools@0.23.0)(@types/react@19.2.10)(core-js@3.48.0))
       '@rspress/plugin-rss':
         specifier: ^2.0.1
         version: 2.0.1(@rspress/core@2.0.1(@module-federation/runtime-tools@0.23.0)(@types/react@19.2.10)(core-js@3.48.0))
@@ -2469,12 +2466,6 @@ packages:
 
   '@rspress/plugin-client-redirects@2.0.1':
     resolution: {integrity: sha512-6KPLnHEHPlH/GJzlO1345vqXwmzEI4V4xePLYY+e8jArzDW0RhrXgy9s0WRJup77lLAUNUDcKTBGX9k8pKrH4w==}
-    engines: {node: ^20.19.0 || >=22.12.0}
-    peerDependencies:
-      '@rspress/core': ^2.0.1
-
-  '@rspress/plugin-llms@2.0.1':
-    resolution: {integrity: sha512-7CRCz0C/DIr46NkIp4uTX/yq6xTj/ljW+7HcsljmUwBAzzaMQdQb1Orv6ufg52esdiJBvpW4xdq9XohAVRPHdw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       '@rspress/core': ^2.0.1
@@ -7837,17 +7828,6 @@ snapshots:
   '@rspress/plugin-client-redirects@2.0.1(@rspress/core@2.0.1(@module-federation/runtime-tools@0.23.0)(@types/react@19.2.10)(core-js@3.48.0))':
     dependencies:
       '@rspress/core': 2.0.1(@module-federation/runtime-tools@0.23.0)(@types/react@19.2.10)(core-js@3.48.0)
-
-  '@rspress/plugin-llms@2.0.1(@rspress/core@2.0.1(@module-federation/runtime-tools@0.23.0)(@types/react@19.2.10)(core-js@3.48.0))':
-    dependencies:
-      '@rspress/core': 2.0.1(@module-federation/runtime-tools@0.23.0)(@types/react@19.2.10)(core-js@3.48.0)
-      remark-mdx: 3.1.1
-      remark-parse: 11.0.0
-      remark-stringify: 11.0.0
-      unified: 11.0.5
-      unist-util-visit: 5.0.0
-    transitivePeerDependencies:
-      - supports-color
 
   '@rspress/plugin-rss@2.0.1(@rspress/core@2.0.1(@module-federation/runtime-tools@0.23.0)(@types/react@19.2.10)(core-js@3.48.0))':
     dependencies:
