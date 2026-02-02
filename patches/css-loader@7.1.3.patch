@@ -1,7 +1,7 @@
 # postcss-loader and css-loader use `semver` to compare PostCSS ast version,
 # Rsbuild uses the same PostCSS version and do not need the comparison.
 diff --git a/dist/index.js b/dist/index.js
-index 11afa0f317e59dd940048aa732aa8d3a0c336370..b638b4d7758273ac55654f2b188b780f095dc6fa 100644
+index 8b904795f80459386cf98c469dbaad2bc14e1376..f3720456b5ab68516fa18eac914efe42b22c70b1 100644
 --- a/dist/index.js
 +++ b/dist/index.js
 @@ -5,9 +5,6 @@ Object.defineProperty(exports, "__esModule", {
@@ -13,8 +13,8 @@ index 11afa0f317e59dd940048aa732aa8d3a0c336370..b638b4d7758273ac55654f2b188b780f
 -var _options = _interopRequireDefault(require("./options.json"));
  var _plugins = require("./plugins");
  var _utils = require("./utils");
- function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-@@ -17,7 +14,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
+ function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+@@ -17,7 +14,7 @@ function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e
  */
  
  async function loader(content, map, meta) {
