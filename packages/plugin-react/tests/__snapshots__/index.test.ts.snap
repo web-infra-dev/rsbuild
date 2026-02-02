@@ -1,5 +1,28 @@
 // Rstest Snapshot v1
 
+exports[`plugins/react > should apply splitChunks with Rsbuild v1 1`] = `
+{
+  "cacheGroups": {
+    "lib-axios": {
+      "name": "lib-axios",
+      "priority": 0,
+      "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
+    },
+    "react": {
+      "name": "lib-react",
+      "priority": 0,
+      "test": /node_modules\\[\\\\\\\\/\\]\\(\\?:react\\|react-dom\\|scheduler\\|react-refresh\\|@rspack\\[\\\\\\\\/\\]plugin-react-refresh\\)\\[\\\\\\\\/\\]/,
+    },
+    "router": {
+      "name": "lib-router",
+      "priority": 0,
+      "test": /node_modules\\[\\\\\\\\/\\]\\(\\?:react-router\\|react-router-dom\\|history\\|@remix-run\\[\\\\\\\\/\\]router\\)\\[\\\\\\\\/\\]/,
+    },
+  },
+  "chunks": "all",
+}
+`;
+
 exports[`plugins/react > should configuring \`tools.swc\` to override react runtime 1`] = `
 [
   {
