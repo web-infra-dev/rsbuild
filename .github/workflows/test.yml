@@ -110,7 +110,7 @@ jobs:
 
       - name: E2E reporter
         if: always()
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f #https://github.com/actions/upload-artifact/releases/tag/v6.0.0
+        uses: actions/upload-artifact@47309c993abb98030a35d55ef7ff34b7fa1074b5 #https://github.com/actions/upload-artifact/releases/tag/v6.0.0
         with:
           name: E2E-report-${{ matrix.os }}
           if-no-files-found: warn
