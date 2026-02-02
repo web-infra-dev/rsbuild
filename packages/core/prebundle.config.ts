@@ -39,10 +39,6 @@ export default {
     },
     {
       name: 'http-proxy-middleware',
-      externals: {
-        // express is a peer dependency, no need to provide express type
-        express: 'express',
-      },
       beforeBundle(task) {
         replaceFileContent(
           join(task.depPath, 'dist/types.d.ts'),
