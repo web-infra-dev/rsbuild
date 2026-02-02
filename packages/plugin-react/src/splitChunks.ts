@@ -6,7 +6,7 @@ import type {
 import type { SplitReactChunkOptions } from './index.js';
 
 const isDefaultPreset = (config: NormalizedEnvironmentConfig) => {
-  const { performance, splitChunks } = config;
+  const { performance, splitChunks = {} } = config;
 
   // Compatible with legacy `performance.chunkSplit` option
   if (
