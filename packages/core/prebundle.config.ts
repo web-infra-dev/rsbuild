@@ -17,7 +17,6 @@ export default {
   prettier: true,
   externals: {
     '@rspack/core': '@rspack/core',
-    '@rspack/lite-tapable': '@rspack/lite-tapable',
     typescript: 'typescript',
   },
   dependencies: [

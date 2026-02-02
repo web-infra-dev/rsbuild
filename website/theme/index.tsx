@@ -3,7 +3,7 @@ import { Announcement } from '@rstack-dev/doc-ui/announcement';
 import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
 import { HomeLayout } from './pages';
 import './index.scss';
-import { NoSSR, useLang, usePageData } from '@rspress/core/runtime';
+import { NoSSR, useLang, usePage } from '@rspress/core/runtime';
 import {
   Search as PluginAlgoliaSearch,
   ZH_LOCALES,
@@ -13,7 +13,7 @@ import {
 const ANNOUNCEMENT_URL = '';
 
 const Layout = () => {
-  const { page } = usePageData();
+  const { page } = usePage();
   const lang = useLang();
 
   return (
