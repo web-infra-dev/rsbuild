@@ -411,13 +411,6 @@ export default {
 };
 ```
 
-### Remove HTML template parameters
-
-The deprecated template parameters have been removed from `html.templateParameters`
-
-- `webpackConfig`: use `rspackConfig` instead.
-- `htmlWebpackPlugin`: use `htmlPlugin` instead.
-
 ## JavaScript API
 
 - Removed the deprecated `compiler` parameter from `rsbuild.build()`.
@@ -499,3 +492,6 @@ The built-in rules in the Less/Sass/Stylus plugins have the same `oneOf` change,
 ## Others
 
 - The query parameter `?__inline=false` has been removed, use `?url` instead.
+- The deprecated template parameters have been removed from `html.templateParameters`
+  - `webpackConfig`: use `rspackConfig` instead.
+  - `htmlWebpackPlugin`: use `htmlPlugin` instead.
