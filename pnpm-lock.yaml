@@ -504,9 +504,6 @@ importers:
       '@rspack/core':
         specifier: 2.0.0-alpha.1
         version: 2.0.0-alpha.1(@module-federation/runtime-tools@0.23.0)(@swc/helpers@0.5.18)
-      '@rspack/lite-tapable':
-        specifier: ~1.1.0
-        version: 1.1.0
       '@swc/helpers':
         specifier: ^0.5.18
         version: 0.5.18
