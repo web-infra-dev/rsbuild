@@ -333,10 +333,6 @@ export type ProxyOptions = HttpProxyOptions & {
    * - Return a Promise to handle the request asynchronously.
    */
   bypass?: ProxyBypass;
-  /**
-   * Used to proxy multiple specified paths to the same target.
-   */
-  context?: ProxyFilter;
 };
 
 export type ProxyConfig =

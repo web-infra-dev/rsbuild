@@ -39,10 +39,6 @@ export default {
     },
     {
       name: 'http-proxy-middleware',
-      externals: {
-        // express is a peer dependency, no need to provide express type
-        express: 'express',
-      },
       beforeBundle(task) {
         replaceFileContent(
           join(task.depPath, 'dist/types.d.ts'),
@@ -51,23 +47,6 @@ export default {
               "import type * as httpProxy from 'http-proxy'",
               "import type httpProxy from 'http-proxy'",
             )}`,
-        );
-      },
-      afterBundle(task) {
-        replaceFileContent(
-          join(task.distPath, 'index.d.ts'),
-          (content) =>
-            // TODO: Due to the breaking change of http-proxy-middleware, it needs to be upgraded in rsbuild 2.0
-            // https://github.com/chimurai/http-proxy-middleware/pull/730
-            `${content
-              .replace('express.Request', 'http.IncomingMessage')
-              .replace('express.Response', 'http.ServerResponse')
-              .replace("import * as express from 'express';", '')
-              .replace(
-                'extends express.RequestHandler {',
-                `{
-  (req: Request, res: Response, next?: (err?: any) => void): void | Promise<void>;`,
-              )}`,
         );
       },
     },

@@ -5,7 +5,7 @@ export default defineConfig({
     cors: true,
     proxy: [
       {
-        context: ['/api'],
+        pathFilter: '/api',
         target: 'http://somepagewhichdoesnotexist.com:9000',
         changeOrigin: true,
         secure: false,
