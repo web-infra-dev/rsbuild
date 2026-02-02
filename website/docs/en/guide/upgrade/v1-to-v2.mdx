@@ -127,7 +127,7 @@ export default {
   server: {
     proxy: [
 -     { context: '/api', target: 'http://localhost:3000' },
-+     { pathFilter: '/api', target: 'http://localhost:3000' },
++     { pathFilter: '/api', target: 'http://localhost:3000/api' },
     ],
   },
 };
