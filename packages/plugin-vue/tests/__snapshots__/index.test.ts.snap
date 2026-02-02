@@ -74,6 +74,29 @@ exports[`plugin-vue > should allow to custom test condition 1`] = `
 }
 `;
 
+exports[`plugin-vue > should apply splitChunks with Rsbuild v1 1`] = `
+{
+  "cacheGroups": {
+    "lib-axios": {
+      "name": "lib-axios",
+      "priority": 0,
+      "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
+    },
+    "router": {
+      "name": "lib-router",
+      "priority": 0,
+      "test": /node_modules\\[\\\\\\\\/\\]vue-router\\[\\\\\\\\/\\]/,
+    },
+    "vue": {
+      "name": "lib-vue",
+      "priority": 0,
+      "test": /node_modules\\[\\\\\\\\/\\]\\(\\?:vue\\|rspack-vue-loader\\|@vue\\[\\\\\\\\/\\]shared\\|@vue\\[\\\\\\\\/\\]reactivity\\|@vue\\[\\\\\\\\/\\]runtime-dom\\|@vue\\[\\\\\\\\/\\]runtime-core\\)\\[\\\\\\\\/\\]/,
+    },
+  },
+  "chunks": "all",
+}
+`;
+
 exports[`plugin-vue > should define feature flags correctly 1`] = `
 DefinePlugin {
   "_args": [
