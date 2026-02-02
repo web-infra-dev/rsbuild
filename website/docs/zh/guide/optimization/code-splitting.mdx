@@ -34,15 +34,15 @@ Rsbuild 提供了 [splitChunks](/config/split-chunks) 选项来配置构建时�
 
 通过 `splitChunks`，你可以自定义 chunk 拆分规则，例如控制哪些模块被拆分到同一个 chunk 中，以及设置 chunk 的最小体积等条件，从而更好地平衡加载性能与请求数量。
 
-在下面的示例中，React 会被单独拆分到一个名为 `react.js` 的 chunk 中：
+在下面的示例中，axios 会被单独拆分到一个名为 `axios.js` 的 chunk 中：
 
 ```ts
 export default {
   splitChunks: {
     cacheGroups: {
-      react: {
-        test: /[\\/]node_modules[\\/]react[\\/]/,
-        name: 'react',
+      axios: {
+        test: /[\\/]node_modules[\\/]axios[\\/]/,
+        name: 'axios',
         chunks: 'all',
       },
     },

@@ -34,15 +34,15 @@ Rsbuild provides the [splitChunks](/config/split-chunks) option to configure how
 
 With `splitChunks`, you can customize chunk splitting rules. For example, you can control which modules are grouped into the same chunk and set conditions such as the minimum chunk size. This helps strike a better balance between load performance and the number of network requests.
 
-In the example below, React is split into a separate chunk named `react.js`:
+In the example below, axios is split into a separate chunk named `axios.js`:
 
 ```ts
 export default {
   splitChunks: {
     cacheGroups: {
-      react: {
-        test: /[\\/]node_modules[\\/]react[\\/]/,
-        name: 'react',
+      axios: {
+        test: /[\\/]node_modules[\\/]axios[\\/]/,
+        name: 'axios',
         chunks: 'all',
       },
     },
