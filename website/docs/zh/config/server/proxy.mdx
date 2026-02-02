@@ -7,10 +7,7 @@ import type { Options } from 'http-proxy-middleware';
 
 type ProxyOptions = Options & { bypass?: ProxyBypass };
 
-type ProxyConfig =
-  | ProxyOptions
-  | ProxyOptions[]
-  | Record<string, string | ProxyOptions>;
+type ProxyConfig = ProxyOptions[] | Record<string, string | ProxyOptions>;
 ```
 
 - **默认值：** `undefined`
@@ -55,16 +52,16 @@ export default {
 
 Rsbuild v1 基于 `http-proxy-middleware` v2，而 Rsbuild v2 基于 `http-proxy-middleware` v3。
 
-`http-proxy-middleware` v2 会在转发时，会自动将代理的路径拼接到目标地址。v3 不再提供这一行为，因此需要在 `target` 中显式包含该路径。
+`http-proxy-middleware` v2 在转发时会自动将代理的路径拼接到目标地址。v3 不再提供这一行为，因此需要在 `target` 中显式包含该路径。
 
-```ts title="rsbuild.config.ts"
+```diff title="rsbuild.config.ts"
 export default {
   server: {
     proxy: {
-      // http-proxy-middleware v2
-      '/api': 'http://localhost:3000',
-      // http-proxy-middleware v3
-      '/api': 'http://localhost:3000/api',
+-      // http-proxy-middleware v2
+-      '/api': 'http://localhost:3000',
++      // http-proxy-middleware v3
++      '/api': 'http://localhost:3000/api',
     },
   },
 };

@@ -10,39 +10,34 @@ import type {
 import { HttpCode, type UpgradeEvent } from './helper';
 
 function formatProxyOptions(proxyOptions: ProxyConfig) {
-  const ret: ProxyOptions[] = [];
+  const logPrefix = color.dim('[http-proxy-middleware]: ');
+  const defaultOptions: ProxyOptions = {
+    changeOrigin: true,
+    logger: {
+      info(msg: string) {
+        logger.debug(logPrefix + msg);
+      },
+      warn: (msg: string) => {
+        logger.warn(logPrefix + msg);
+      },
+      error: (msg: string) => {
+        logger.error(logPrefix + msg);
+      },
+    },
+  };
 
   if (Array.isArray(proxyOptions)) {
-    ret.push(...proxyOptions);
-  } else if ('target' in proxyOptions) {
-    ret.push(proxyOptions);
-  } else {
-    const logPrefix = color.dim('[http-proxy-middleware]: ');
-    const defaultOptions: ProxyOptions = {
-      changeOrigin: true,
-      logger: {
-        info(msg: string) {
-          logger.debug(logPrefix + msg);
-        },
-        warn: (msg: string) => {
-          logger.warn(logPrefix + msg);
-        },
-        error: (msg: string) => {
-          logger.error(logPrefix + msg);
-        },
-      },
-    };
-
-    for (const [pathFilter, value] of Object.entries(proxyOptions)) {
-      ret.push({
-        ...defaultOptions,
-        pathFilter,
-        ...(typeof value === 'string' ? { target: value } : value),
-      });
-    }
+    return proxyOptions.map((options) => ({
+      ...defaultOptions,
+      ...options,
+    }));
   }
 
-  return ret;
+  return Object.entries(proxyOptions).map(([pathFilter, value]) => ({
+    ...defaultOptions,
+    pathFilter,
+    ...(typeof value === 'string' ? { target: value } : value),
+  }));
 }
 
 export function createProxyMiddleware(proxyOptions: ProxyConfig): {
