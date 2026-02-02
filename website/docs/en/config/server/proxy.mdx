@@ -3,15 +3,21 @@
 - **Type:**
 
 ```ts
+import type { Options } from 'http-proxy-middleware';
+
+type ProxyOptions = Options & { bypass?: ProxyBypass };
+
 type ProxyConfig =
-  | Record<string, string | ProxyOptions>
+  | ProxyOptions
   | ProxyOptions[]
-  | ProxyOptions;
+  | Record<string, string | ProxyOptions>;
 ```
 
 - **Default:** `undefined`
 
-Configure proxy rules for the dev server or preview server to proxy requests to the specified service.
+Configure proxy rules for the dev server or preview server, and forward requests to the specified service.
+
+This feature is powered by [http-proxy-middleware v3](https://github.com/chimurai/http-proxy-middleware). You can use [all options](https://github.com/chimurai/http-proxy-middleware/tree/master?tab=readme-ov-file#options) provided by `http-proxy-middleware`, plus the extra [bypass](#bypass) option from Rsbuild.
 
 ## Example
 
@@ -23,7 +29,7 @@ export default {
     proxy: {
       // http://localhost:3000/api -> http://localhost:3000/api
       // http://localhost:3000/api/foo -> http://localhost:3000/api/foo
-      '/api': 'http://localhost:3000',
+      '/api': 'http://localhost:3000/api',
     },
   },
 };
@@ -39,7 +45,7 @@ export default {
     proxy: {
       // http://localhost:3000/api -> https://nodejs.org/api
       // http://localhost:3000/api/foo -> https://nodejs.org/api/foo
-      '/api': 'https://nodejs.org',
+      '/api': 'https://nodejs.org/api',
     },
   },
 };
@@ -47,17 +53,17 @@ export default {
 
 ### Path rewrite
 
-If you do not want `/api` to be passed along, we need to rewrite the path:
+Use `pathRewrite` to rewrite request paths. For example, rewrite `/foo` to `/bar`:
 
 ```ts title="rsbuild.config.ts"
 export default {
   server: {
     proxy: {
-      // http://localhost:3000/api -> http://localhost:3000
-      // http://localhost:3000/api/foo -> http://localhost:3000/foo
-      '/api': {
+      // http://localhost:3000/foo -> http://localhost:3000/bar
+      // http://localhost:3000/foo/baz -> http://localhost:3000/bar/baz
+      '/foo': {
         target: 'http://localhost:3000',
-        pathRewrite: { '^/api': '' },
+        pathRewrite: { '^/foo': '/bar' },
       },
     },
   },
@@ -81,55 +87,57 @@ export default {
 };
 ```
 
-## Options
+### Path filter
 
-The Rsbuild server proxy uses the [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware/tree/2.x) package. Check out its documentation for more advanced usage.
+[pathFilter](https://github.com/chimurai/http-proxy-middleware/blob/master/recipes/pathFilter.md) is used to select which requests should be proxied. The `path` used for matching is the request URL pathname.
 
-The full type definition of Rsbuild server proxy is:
+For example, proxy requests under `/auth` and `/api` to the target service:
 
-```ts
-import type { Options as HttpProxyOptions } from 'http-proxy-middleware';
-
-type Filter = string | string[] | ((pathname: string, req: Request) => boolean);
-
-type ProxyOptions = HttpProxyOptions & {
-  bypass?: (
-    req: IncomingMessage,
-    res: ServerResponse,
-    proxyOptions: ProxyOptions,
-  ) => MaybePromise<string | undefined | null | boolean>;
-  context?: Filter;
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    proxy: [
+      {
+        pathFilter: ['/auth', '/api'],
+        target: 'http://localhost:3000',
+      },
+    ],
+  },
 };
-
-type ProxyConfig =
-  | ProxyOptions
-  | ProxyOptions[]
-  | Record<string, string>
-  | Record<string, ProxyOptions>;
 ```
 
-In addition to the `http-proxy-middleware` options, Rsbuild also supports the `bypass` and `context` options.
+## Extra options
 
 ### bypass
 
-Sometimes you don't want to proxy everything. You can bypass the proxy based on the return value of a `bypass` function.
+- **Type:**
 
-In the function, you have access to the request, response, and proxy options.
+```ts
+type ProxyBypass = (
+  req: IncomingMessage,
+  res: ServerResponse,
+  proxyOptions: ProxyOptions,
+) => MaybePromise<string | undefined | null | boolean>;
+```
+
+In some cases, you may not want to proxy every request. Use the `bypass` function to skip the proxy.
+
+Inside the function, you have access to the request, response, and proxy options.
 
 - Return `null` or `undefined` to continue processing the request with proxy.
-- Return `true` to continue processing the request without proxy.
+- Return `true` to skip the proxy and continue processing the request.
 - Return `false` to produce a 404 error for the request.
-- Return a path to serve from, instead of continuing to proxy the request.
+- Return a specific path to replace the original request path.
 - Return a Promise to handle the request asynchronously.
 
-For example, for a browser request, you want to serve an HTML page, but for an API request, you want to proxy it. You could configure it like this:
+For example, you may want to serve HTML for browser requests, but keep proxying API requests:
 
 ```ts title="rsbuild.config.ts"
 export default {
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: 'http://localhost:3000/api',
         bypass(req, res, proxyOptions) {
           if (req.headers.accept.indexOf('html') !== -1) {
             console.log('Skipping proxy for browser request.');
@@ -138,23 +146,6 @@ export default {
         },
       },
     },
-  },
-};
-```
-
-### context
-
-Used to proxy multiple specified paths to the same target.
-
-```ts title="rsbuild.config.ts"
-export default {
-  server: {
-    proxy: [
-      {
-        context: ['/auth', '/api'],
-        target: 'http://localhost:3000',
-      },
-    ],
   },
 };
 ```
