@@ -325,11 +325,12 @@ export type { ProxyFilter };
 
 export type ProxyOptions = HttpProxyOptions & {
   /**
-   * Bypass the proxy based on the return value of a function.
+   * Use the `bypass` function to skip the proxy.
+   * Inside the function, you have access to the request, response, and proxy options.
    * - Return `null` or `undefined` to continue processing the request with proxy.
-   * - Return `true` to continue processing the request without proxy.
+   * - Return `true` to skip the proxy and continue processing the request.
    * - Return `false` to produce a 404 error for the request.
-   * - Return a path to serve from, instead of continuing to proxy the request.
+   * - Return a specific path to replace the original request path.
    * - Return a Promise to handle the request asynchronously.
    */
   bypass?: ProxyBypass;
@@ -337,8 +338,7 @@ export type ProxyOptions = HttpProxyOptions & {
 
 export type ProxyConfig =
   | Record<string, string | ProxyOptions>
-  | ProxyOptions[]
-  | ProxyOptions;
+  | ProxyOptions[];
 
 export type HistoryApiFallbackContext = {
   match: RegExpMatchArray;

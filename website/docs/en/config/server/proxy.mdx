@@ -7,10 +7,7 @@ import type { Options } from 'http-proxy-middleware';
 
 type ProxyOptions = Options & { bypass?: ProxyBypass };
 
-type ProxyConfig =
-  | ProxyOptions
-  | ProxyOptions[]
-  | Record<string, string | ProxyOptions>;
+type ProxyConfig = ProxyOptions[] | Record<string, string | ProxyOptions>;
 ```
 
 - **Default:** `undefined`
@@ -57,14 +54,14 @@ Rsbuild v1 is based on `http-proxy-middleware` v2, while Rsbuild v2 is based on 
 
 In `http-proxy-middleware` v2, the proxied path is automatically appended to the target URL during forwarding. This behavior is no longer provided in v3, so the path must be explicitly included in the `target`.
 
-```ts title="rsbuild.config.ts"
+```diff title="rsbuild.config.ts"
 export default {
   server: {
     proxy: {
-      // http-proxy-middleware v2
-      '/api': 'http://localhost:3000',
-      // http-proxy-middleware v3
-      '/api': 'http://localhost:3000/api',
+-      // http-proxy-middleware v2
+-      '/api': 'http://localhost:3000',
++      // http-proxy-middleware v3
++      '/api': 'http://localhost:3000/api',
     },
   },
 };
