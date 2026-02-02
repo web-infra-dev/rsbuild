@@ -1,4 +1,5 @@
 import type { RequestHandler } from '../../compiled/http-proxy-middleware/index.js';
+import { color } from '../helpers';
 import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
 import type {
@@ -16,19 +17,24 @@ function formatProxyOptions(proxyOptions: ProxyConfig) {
   } else if ('target' in proxyOptions) {
     ret.push(proxyOptions);
   } else {
-    for (const [context, options] of Object.entries(proxyOptions)) {
-      const opts: ProxyOptions = {
-        context,
-        changeOrigin: true,
-        logLevel: 'warn',
-        logProvider: () => logger,
-      };
-      if (typeof options === 'string') {
-        opts.target = options;
-      } else {
-        Object.assign(opts, options);
-      }
-      ret.push(opts);
+    const logPrefix = color.dim('[http-proxy-middleware]: ');
+    const defaultOptions: ProxyOptions = {
+      changeOrigin: true,
+      logger: {
+        info(msg: string) {
+          logger.debug(logPrefix + msg);
+        },
+        warn: (msg: string) => logger.warn(logPrefix + msg),
+        error: (msg: string) => logger.error(logPrefix + msg),
+      },
+    };
+
+    for (const [pathFilter, value] of Object.entries(proxyOptions)) {
+      ret.push({
+        ...defaultOptions,
+        pathFilter,
+        ...(typeof value === 'string' ? { target: value } : value),
+      });
     }
   }
 
@@ -50,27 +56,7 @@ export function createProxyMiddleware(proxyOptions: ProxyConfig): {
   );
 
   for (const opts of formattedOptions) {
-    const { onProxyRes } = opts;
-
-    /**
-     * Fix SSE close events
-     * Can be removed after updating to http-proxy-middleware v3
-     * @link https://github.com/chimurai/http-proxy-middleware/issues/678
-     * @link https://github.com/http-party/node-http-proxy/issues/1520#issue-877626125
-     */
-    opts.onProxyRes = (proxyRes, _req, res) => {
-      // call user's onProxyRes if provided
-      if (onProxyRes) {
-        onProxyRes(proxyRes, _req, res);
-      }
-      res.on('close', () => {
-        if (!res.writableEnded) {
-          proxyRes.destroy();
-        }
-      });
-    };
-
-    const proxyMiddleware = baseMiddleware(opts.context!, opts);
+    const proxyMiddleware = baseMiddleware(opts);
 
     const middleware: Middleware = async (req, res, next) => {
       const bypassUrl =
