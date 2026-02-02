@@ -51,6 +51,25 @@ export default {
 };
 ```
 
+### 版本差异
+
+Rsbuild v1 基于 `http-proxy-middleware` v2，而 Rsbuild v2 基于 `http-proxy-middleware` v3。
+
+`http-proxy-middleware` v2 会在转发时，会自动将代理的路径拼接到目标地址。v3 不再提供这一行为，因此需要在 `target` 中显式包含该路径。
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    proxy: {
+      // http-proxy-middleware v2
+      '/api': 'http://localhost:3000',
+      // http-proxy-middleware v3
+      '/api': 'http://localhost:3000/api',
+    },
+  },
+};
+```
+
 ### 重写路径
 
 通过 `pathRewrite` 可以重写请求路径，例如把 `/foo` 的请求改写为目标服务的 `/bar`：
