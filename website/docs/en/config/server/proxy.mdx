@@ -51,6 +51,25 @@ export default {
 };
 ```
 
+### Version differences
+
+Rsbuild v1 is based on `http-proxy-middleware` v2, while Rsbuild v2 is based on `http-proxy-middleware` v3.
+
+In `http-proxy-middleware` v2, the proxied path is automatically appended to the target URL during forwarding. This behavior is no longer provided in v3, so the path must be explicitly included in the `target`.
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    proxy: {
+      // http-proxy-middleware v2
+      '/api': 'http://localhost:3000',
+      // http-proxy-middleware v3
+      '/api': 'http://localhost:3000/api',
+    },
+  },
+};
+```
+
 ### Path rewrite
 
 Use `pathRewrite` to rewrite request paths. For example, rewrite `/foo` to `/bar`:
