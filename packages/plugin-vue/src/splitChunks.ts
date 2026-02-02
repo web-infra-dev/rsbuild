@@ -14,14 +14,9 @@ const isDefaultPreset = (config: NormalizedEnvironmentConfig) => {
   const { performance, splitChunks } = config;
 
   // Compatible with legacy `performance.chunkSplit` option
-  if (
-    performance.chunkSplit &&
-    typeof splitChunks === 'object' &&
-    Object.keys(splitChunks).length === 0
-  ) {
+  if (performance.chunkSplit) {
     return performance.chunkSplit?.strategy === 'split-by-experience';
   }
-
   if (typeof splitChunks === 'object') {
     return !splitChunks.preset || splitChunks.preset === 'default';
   }

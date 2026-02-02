@@ -1,4 +1,5 @@
 import { createRsbuild } from '@rsbuild/core';
+import { createRsbuild as createRsbuildV1 } from '@rsbuild/core-v1';
 import { matchPlugin, matchRules } from '@scripts/test-helper';
 import { pluginVue } from '../src';
 
@@ -54,5 +55,16 @@ describe('plugin-vue', () => {
     });
     const config = await rsbuild.initConfigs();
     expect(matchRules(config[0], 'a.md')[0]).toMatchSnapshot();
+  });
+
+  it('should apply splitChunks with Rsbuild v1', async () => {
+    const rsbuild = await createRsbuildV1({
+      config: {
+        plugins: [pluginVue()],
+      },
+    });
+
+    const config = await rsbuild.initConfigs();
+    expect(config[0].optimization?.splitChunks).toMatchSnapshot();
   });
 });
