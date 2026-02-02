@@ -24,8 +24,12 @@ function formatProxyOptions(proxyOptions: ProxyConfig) {
         info(msg: string) {
           logger.debug(logPrefix + msg);
         },
-        warn: (msg: string) => logger.warn(logPrefix + msg),
-        error: (msg: string) => logger.error(logPrefix + msg),
+        warn: (msg: string) => {
+          logger.warn(logPrefix + msg);
+        },
+        error: (msg: string) => {
+          logger.error(logPrefix + msg);
+        },
       },
     };
 
