@@ -23,7 +23,6 @@ export default {
     'ws',
     'html-rspack-plugin',
     'webpack-merge',
-    'http-proxy-middleware',
     {
       name: 'chokidar',
       copyDts: true,
@@ -37,6 +36,23 @@ export default {
       name: 'rspack-chain',
       copyDts: true,
       dtsOnly: true,
+    },
+    {
+      name: 'http-proxy-middleware',
+      externals: {
+        // express is a peer dependency, no need to provide express type
+        express: 'express',
+      },
+      beforeBundle(task) {
+        replaceFileContent(
+          join(task.depPath, 'dist/types.d.ts'),
+          (content) =>
+            `${content.replace(
+              "import type * as httpProxy from 'http-proxy'",
+              "import type httpProxy from 'http-proxy'",
+            )}`,
+        );
+      },
     },
     {
       name: 'style-loader',
