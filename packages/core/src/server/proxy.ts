@@ -85,7 +85,9 @@ export function createProxyMiddleware(proxyOptions: ProxyConfig): {
 
     // only proxy WebSocket request when user specified
     // fix WebSocket error when user forget filter HMR path
-    opts.ws && proxyMiddlewares.push(proxyMiddleware);
+    if (opts.ws) {
+      proxyMiddlewares.push(proxyMiddleware);
+    }
   }
 
   const handleUpgrade: UpgradeEvent = (req, socket, head) => {
