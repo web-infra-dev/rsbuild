@@ -13,8 +13,8 @@
  * and important alerts that require attention.
  */
 
-import color from 'picocolors';
 import { type Logger, logger } from 'rslog';
+import { color } from './helpers/color';
 
 export const isDebug = (): boolean => {
   if (!process.env.DEBUG) {

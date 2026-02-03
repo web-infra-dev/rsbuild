@@ -1,6 +1,6 @@
-import color from 'picocolors';
 import { isVerbose } from '../logger';
 import type { ActionType, RsbuildStats, Rspack } from '../types';
+import { color } from './color';
 import { isMultiCompiler } from './compiler';
 import { formatStatsError } from './format';
 

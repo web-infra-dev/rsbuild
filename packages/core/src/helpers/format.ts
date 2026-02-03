@@ -2,9 +2,9 @@ import { builtinModules } from 'node:module';
 import { sep } from 'node:path';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import type { StatsError } from '@rspack/core';
-import color from 'picocolors';
 import { LAZY_COMPILATION_IDENTIFIER } from '../constants';
 import { isVerbose } from '../logger';
+import { color } from './color';
 import { removeLoaderChainDelimiter } from './stats';
 
 const formatFileName = (fileName: string, stats: StatsError, root: string) => {
