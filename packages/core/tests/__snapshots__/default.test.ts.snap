@@ -1031,7 +1031,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "devtool": "cheap-module-source-map",
   "experiments": {
     "asyncWebAssembly": true,
-    "outputModule": true,
   },
   "infrastructureLogging": {
     "level": "error",

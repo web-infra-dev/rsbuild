@@ -1879,7 +1879,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     "devtool": "eval",
     "experiments": {
       "asyncWebAssembly": true,
-      "outputModule": true,
     },
     "infrastructureLogging": {
       "level": "error",

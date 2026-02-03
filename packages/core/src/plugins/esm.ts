@@ -33,11 +33,6 @@ export const pluginEsm = (): RsbuildPlugin => ({
         .chunkFormat('module')
         .chunkLoading('import')
         .workerChunkLoading('import');
-
-      chain.experiments({
-        ...chain.get('experiments'),
-        outputModule: true,
-      });
     });
   },
 });
