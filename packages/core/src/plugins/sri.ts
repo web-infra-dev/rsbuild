@@ -8,12 +8,7 @@ export const pluginSri = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain((chain, { environment, CHAIN_ID, rspack }) => {
-      const { config, htmlPaths } = environment;
-
-      if (Object.keys(htmlPaths).length === 0) {
-        return;
-      }
-
+      const { config } = environment;
       const { sri } = config.security;
       const enable =
         sri.enable === 'auto' ? config.mode === 'production' : sri.enable;
