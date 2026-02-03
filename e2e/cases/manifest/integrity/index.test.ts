@@ -1,18 +1,25 @@
 import { expect, getFileContent, test } from '@e2e/helper';
 import type { ManifestData } from '@rsbuild/core';
 
-test('should generate manifest file with integrity in build', async ({
-  build,
+const checkManifestIntegrity = (rsbuild: {
+  getDistFiles: () => Record<string, string>;
 }) => {
-  const rsbuild = await build();
   const files = rsbuild.getDistFiles();
   const manifestContent = getFileContent(files, 'manifest.json');
   const manifest = JSON.parse(manifestContent) as ManifestData;
+
   manifest.allFiles.forEach((item) => {
     if (item.endsWith('.js')) {
       expect(manifest.integrity[item]).toBeTruthy();
     }
   });
+};
+
+test('should generate manifest file with integrity in build', async ({
+  build,
+}) => {
+  const rsbuild = await build();
+  checkManifestIntegrity(rsbuild);
 });
 
 test('should generate manifest file with integrity in build when html plugin is disabled', async ({
@@ -25,26 +32,12 @@ test('should generate manifest file with integrity in build when html plugin is 
       },
     },
   });
-  const files = rsbuild.getDistFiles();
-  const manifestContent = getFileContent(files, 'manifest.json');
-  const manifest = JSON.parse(manifestContent) as ManifestData;
-  manifest.allFiles.forEach((item) => {
-    if (item.endsWith('.js')) {
-      expect(manifest.integrity[item]).toBeTruthy();
-    }
-  });
+  checkManifestIntegrity(rsbuild);
 });
 
 test('should generate manifest file with integrity in dev', async ({ dev }) => {
   const rsbuild = await dev();
-  const files = rsbuild.getDistFiles();
-  const manifestContent = getFileContent(files, 'manifest.json');
-  const manifest = JSON.parse(manifestContent) as ManifestData;
-  manifest.allFiles.forEach((item) => {
-    if (item.endsWith('.js')) {
-      expect(manifest.integrity[item]).toBeTruthy();
-    }
-  });
+  checkManifestIntegrity(rsbuild);
 });
 
 test('should generate manifest file with integrity in dev when html plugin is disabled', async ({
@@ -57,12 +50,5 @@ test('should generate manifest file with integrity in dev when html plugin is di
       },
     },
   });
-  const files = rsbuild.getDistFiles();
-  const manifestContent = getFileContent(files, 'manifest.json');
-  const manifest = JSON.parse(manifestContent) as ManifestData;
-  manifest.allFiles.forEach((item) => {
-    if (item.endsWith('.js')) {
-      expect(manifest.integrity[item]).toBeTruthy();
-    }
-  });
+  checkManifestIntegrity(rsbuild);
 });
