@@ -602,8 +602,8 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1
       rslog:
-        specifier: ^1.3.2
-        version: 1.3.2
+        specifier: ^2.0.0
+        version: 2.0.0
       rspack-chain:
         specifier: ^2.0.0-alpha.0
         version: 2.0.0-alpha.0(@rspack/core@2.0.0-beta.0(@module-federation/runtime-tools@0.24.0)(@swc/helpers@0.5.18))
@@ -5503,6 +5503,10 @@ packages:
 
   rslog@1.3.2:
     resolution: {integrity: sha512-1YyYXBvN0a2b1MSIDLwDTqqgjDzRKxUg/S/+KO6EAgbtZW1B3fdLHAMhEEtvk1patJYMqcRvlp3HQwnxj7AdGQ==}
+
+  rslog@2.0.0:
+    resolution: {integrity: sha512-YdUL4bkGCT9z8o6mD0Dcmns0+30UnR7DZpDMlC4w/D0YNapbJE9S0g20na+p1zBfwWqsqRyxNXNtrp/kfWqwEQ==}
+    engines: {node: ^20.19.0 || >=22.12.0}
 
   rspack-chain@2.0.0-alpha.0:
     resolution: {integrity: sha512-Ct4sTec9EBSAEtKYUE+Y/hBqY+45sqAYRKopSCNVZyf4HbrE5Wgq51hrcOEnrTxdNZUYcwP57eSiJxuEbNOvOw==}
@@ -11349,6 +11353,8 @@ snapshots:
       '@rsbuild/core': link:packages/core
 
   rslog@1.3.2: {}
+
+  rslog@2.0.0: {}
 
   rspack-chain@2.0.0-alpha.0(@rspack/core@2.0.0-beta.0(@module-federation/runtime-tools@0.24.0)(@swc/helpers@0.5.18)):
     dependencies:
