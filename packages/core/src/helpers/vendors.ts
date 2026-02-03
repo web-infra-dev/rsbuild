@@ -5,7 +5,6 @@ type CompiledPackages = {
   ws: typeof import('../../compiled/ws').default;
   'webpack-merge': typeof import('../../compiled/webpack-merge');
   'html-rspack-plugin': typeof import('../../compiled/html-rspack-plugin').default;
-  'http-proxy-middleware': typeof import('../../compiled/http-proxy-middleware');
 };
 
 export const require: NodeJS.Require = createRequire(import.meta.url);

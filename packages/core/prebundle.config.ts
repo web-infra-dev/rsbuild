@@ -39,6 +39,7 @@ export default {
     },
     {
       name: 'http-proxy-middleware',
+      dtsOnly: true,
       beforeBundle(task) {
         replaceFileContent(
           join(task.depPath, 'dist/types.d.ts'),

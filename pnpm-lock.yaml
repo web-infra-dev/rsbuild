@@ -552,7 +552,7 @@ importers:
         version: 5.0.0
       connect:
         specifier: 3.7.0
-        version: 3.7.0
+        version: 3.7.0(supports-color@10.2.2)
       cors:
         specifier: ^2.8.6
         version: 2.8.6
@@ -570,7 +570,7 @@ importers:
         version: 6.1.6(@rspack/core@2.0.0-alpha.1(@module-federation/runtime-tools@0.23.0)(@swc/helpers@0.5.18))
       http-proxy-middleware:
         specifier: ^3.0.5
-        version: 3.0.5
+        version: 3.0.5(supports-color@10.2.2)
       launch-editor-middleware:
         specifier: ^2.12.0
         version: 2.12.0
@@ -625,6 +625,9 @@ importers:
       style-loader:
         specifier: 3.3.4
         version: 3.3.4(webpack@5.104.1)
+      supports-color:
+        specifier: ^10.2.2
+        version: 10.2.2
       tinyglobby:
         specifier: 0.2.14
         version: 0.2.14
@@ -5865,6 +5868,10 @@ packages:
     resolution: {integrity: sha512-H+ue8Zo4vJmV2nRjpx86P35lzwDT3nItnIsocgumgr0hHMQ+ZGq5vrERg9kJBo5AWGmxZDhzDo+WVIJqkB0cGA==}
     engines: {node: '>=16'}
 
+  supports-color@10.2.2:
+    resolution: {integrity: sha512-SS+jx45GF1QjgEXQx4NJZV9ImqmO2NPz5FNsIHrsDjh2YsHnawpan7SNQ1o8NuhrbHZy9AZhIoCUiCeaW/C80g==}
+    engines: {node: '>=18'}
+
   supports-color@7.2.0:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
     engines: {node: '>=8'}
@@ -6420,7 +6427,7 @@ snapshots:
       '@babel/types': 7.29.0
       '@jridgewell/remapping': 2.3.5
       convert-source-map: 2.0.0
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@10.2.2)
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -6614,7 +6621,7 @@ snapshots:
       '@babel/parser': 7.28.6
       '@babel/template': 7.28.6
       '@babel/types': 7.28.6
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
 
@@ -6626,7 +6633,7 @@ snapshots:
       '@babel/parser': 7.29.0
       '@babel/template': 7.28.6
       '@babel/types': 7.29.0
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
 
@@ -8645,7 +8652,7 @@ snapshots:
 
   axios@1.13.2:
     dependencies:
-      follow-redirects: 1.15.11(debug@4.4.3)
+      follow-redirects: 1.15.11(debug@4.4.3(supports-color@10.2.2))
       form-data: 4.0.5
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
@@ -8863,10 +8870,10 @@ snapshots:
 
   confbox@0.2.2: {}
 
-  connect@3.7.0:
+  connect@3.7.0(supports-color@10.2.2):
     dependencies:
-      debug: 2.6.9
-      finalhandler: 1.1.2
+      debug: 2.6.9(supports-color@10.2.2)
+      finalhandler: 1.1.2(supports-color@10.2.2)
       parseurl: 1.3.3
       utils-merge: 1.0.1
     transitivePeerDependencies:
@@ -8993,17 +9000,21 @@ snapshots:
 
   date-format@4.0.14: {}
 
-  debug@2.6.9:
+  debug@2.6.9(supports-color@10.2.2):
     dependencies:
       ms: 2.0.0
+    optionalDependencies:
+      supports-color: 10.2.2
 
   debug@4.3.7:
     dependencies:
       ms: 2.1.3
 
-  debug@4.4.3:
+  debug@4.4.3(supports-color@10.2.2):
     dependencies:
       ms: 2.1.3
+    optionalDependencies:
+      supports-color: 10.2.2
 
   decode-named-character-reference@1.2.0:
     dependencies:
@@ -9130,7 +9141,7 @@ snapshots:
       base64id: 2.0.0
       cookie: 0.7.2
       cors: 2.8.6
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@10.2.2)
       engine.io-parser: 5.2.3
       ws: 8.18.3
     transitivePeerDependencies:
@@ -9330,9 +9341,9 @@ snapshots:
     dependencies:
       to-regex-range: 5.0.1
 
-  finalhandler@1.1.2:
+  finalhandler@1.1.2(supports-color@10.2.2):
     dependencies:
-      debug: 2.6.9
+      debug: 2.6.9(supports-color@10.2.2)
       encodeurl: 1.0.2
       escape-html: 1.0.3
       on-finished: 2.3.0
@@ -9361,9 +9372,9 @@ snapshots:
 
   flexsearch@0.8.212: {}
 
-  follow-redirects@1.15.11(debug@4.4.3):
+  follow-redirects@1.15.11(debug@4.4.3(supports-color@10.2.2)):
     optionalDependencies:
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@10.2.2)
 
   foreground-child@3.3.1:
     dependencies:
@@ -9696,21 +9707,21 @@ snapshots:
       statuses: 2.0.2
       toidentifier: 1.0.1
 
-  http-proxy-middleware@3.0.5:
+  http-proxy-middleware@3.0.5(supports-color@10.2.2):
     dependencies:
       '@types/http-proxy': 1.17.17
-      debug: 4.4.3
-      http-proxy: 1.18.1(patch_hash=424b689da454f1f336d635615733f30568882789c1173f861c30f95ba8b05723)(debug@4.4.3)
+      debug: 4.4.3(supports-color@10.2.2)
+      http-proxy: 1.18.1(patch_hash=424b689da454f1f336d635615733f30568882789c1173f861c30f95ba8b05723)(debug@4.4.3(supports-color@10.2.2))
       is-glob: 4.0.3
       is-plain-object: 5.0.0
       micromatch: 4.0.8
     transitivePeerDependencies:
       - supports-color
 
-  http-proxy@1.18.1(patch_hash=424b689da454f1f336d635615733f30568882789c1173f861c30f95ba8b05723)(debug@4.4.3):
+  http-proxy@1.18.1(patch_hash=424b689da454f1f336d635615733f30568882789c1173f861c30f95ba8b05723)(debug@4.4.3(supports-color@10.2.2)):
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.15.11(debug@4.4.3)
+      follow-redirects: 1.15.11(debug@4.4.3(supports-color@10.2.2))
       requires-port: 1.0.0
     transitivePeerDependencies:
       - debug
@@ -10056,7 +10067,7 @@ snapshots:
   log4js@6.9.1:
     dependencies:
       date-format: 4.0.14
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@10.2.2)
       flatted: 3.3.3
       rfdc: 1.4.1
       streamroller: 3.1.5
@@ -10540,7 +10551,7 @@ snapshots:
   micromark@4.0.2:
     dependencies:
       '@types/debug': 4.1.12
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@10.2.2)
       decode-named-character-reference: 1.2.0
       devlop: 1.1.0
       micromark-core-commonmark: 2.0.3
@@ -11472,7 +11483,7 @@ snapshots:
 
   socket.io-adapter@2.5.6:
     dependencies:
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@10.2.2)
       ws: 8.18.3
     transitivePeerDependencies:
       - bufferutil
@@ -11482,7 +11493,7 @@ snapshots:
   socket.io-parser@4.2.5:
     dependencies:
       '@socket.io/component-emitter': 3.1.2
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
 
@@ -11547,7 +11558,7 @@ snapshots:
   streamroller@3.1.5:
     dependencies:
       date-format: 4.0.14
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@10.2.2)
       fs-extra: 8.1.0
     transitivePeerDependencies:
       - supports-color
@@ -11609,7 +11620,7 @@ snapshots:
   stylus@0.64.0:
     dependencies:
       '@adobe/css-tools': 4.3.3
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@10.2.2)
       glob: 10.5.0
       sax: 1.4.4
       source-map: 0.7.6
@@ -11619,6 +11630,8 @@ snapshots:
   superjson@2.2.6:
     dependencies:
       copy-anything: 4.0.5
+
+  supports-color@10.2.2: {}
 
   supports-color@7.2.0:
     dependencies:

@@ -15,11 +15,11 @@ import type {
 import type { CorsOptions } from 'cors';
 import type RspackChain from 'rspack-chain';
 import type { FileDescriptor } from 'rspack-manifest-plugin';
-import type { ChokidarOptions } from '../../compiled/chokidar/index.js';
+import type { ChokidarOptions } from '../../compiled/chokidar';
 import type {
   Options as HttpProxyOptions,
   Filter as ProxyFilter,
-} from '../../compiled/http-proxy-middleware/index.js';
+} from '../../compiled/http-proxy-middleware';
 import type { RsbuildDevServer } from '../server/devServer';
 import type {
   EnvironmentContext,
