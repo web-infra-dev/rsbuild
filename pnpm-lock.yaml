@@ -517,7 +517,7 @@ importers:
   packages/core:
     dependencies:
       '@rspack/core':
-        specifier: ^1.7.5
+        specifier: ~1.7.5
         version: 1.7.5(@swc/helpers@0.5.18)
       '@rspack/lite-tapable':
         specifier: ~1.1.0
