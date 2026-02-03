@@ -37,24 +37,27 @@ rspackTest(
   },
 );
 
-test('should set output.charset to ascii in build', async ({
-  page,
-  buildPreview,
-}) => {
-  const rsbuild = await buildPreview({
-    config: {
-      output: {
-        charset: 'ascii',
+rspackTest(
+  'should set output.charset to ascii in build',
+  async ({ page, buildPreview }) => {
+    const rsbuild = await buildPreview({
+      config: {
+        output: {
+          charset: 'ascii',
+        },
       },
-    },
-  });
+    });
 
-  expect(await page.evaluate('window.testA')).toBe(utf8Str);
-  expect(await page.evaluate('window.testB')).toStrictEqual(expectedObject);
+    expect(await page.evaluate('window.testA')).toBe(utf8Str);
+    expect(await page.evaluate('window.testB')).toStrictEqual(expectedObject);
 
-  const content = await rsbuild.getIndexBundle();
-  expect(content.includes(asciiStr)).toBeTruthy();
-});
+    const content = await rsbuild.getIndexBundle();
+
+    expect(
+      content.includes("\\u4F60\\u597D world! I'm \\uD83E\\uDD80"),
+    ).toBeTruthy();
+  },
+);
 
 test('should use utf8 charset in dev by default', async ({ page, dev }) => {
   const rsbuild = await dev();
@@ -71,15 +74,15 @@ test('should use utf8 charset in dev by default', async ({ page, dev }) => {
   expect(content.includes(utf8Str)).toBeTruthy();
 });
 
-test('should use utf8 charset in build by default', async ({
-  page,
-  buildPreview,
-}) => {
-  const rsbuild = await buildPreview();
+rspackTest(
+  'should use utf8 charset in build by default',
+  async ({ page, buildPreview }) => {
+    const rsbuild = await buildPreview();
 
-  expect(await page.evaluate('window.testA')).toBe(utf8Str);
-  expect(await page.evaluate('window.testB')).toStrictEqual(expectedObject);
+    expect(await page.evaluate('window.testA')).toBe(utf8Str);
+    expect(await page.evaluate('window.testB')).toStrictEqual(expectedObject);
 
-  const content = await rsbuild.getIndexBundle();
-  expect(content.includes(utf8Str)).toBeTruthy();
-});
+    const content = await rsbuild.getIndexBundle();
+    expect(content.includes("你好 world! I'm \\uD83E\\uDD80")).toBeTruthy();
+  },
+);
