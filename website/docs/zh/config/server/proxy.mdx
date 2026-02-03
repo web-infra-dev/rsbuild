@@ -24,25 +24,25 @@ type ProxyConfig = ProxyOptions[] | Record<string, string | ProxyOptions>;
 export default {
   server: {
     proxy: {
-      // http://localhost:3000/api -> http://localhost:3000/api
-      // http://localhost:3000/api/foo -> http://localhost:3000/api/foo
-      '/api': 'http://localhost:3000/api',
+      // http://localhost/api -> https://example.com/api
+      // http://localhost/api/foo -> https://example.com/api/foo
+      '/api': 'https://example.com/api',
     },
   },
 };
 ```
 
-此时，`/api/users` 会被代理到 `http://localhost:3000/api/users`。
+此时，`/api/users` 会被代理到 `https://example.com/api/users`。
 
-你也可以代理到线上域名，例如：
+你也可以代理到本地服务：
 
 ```ts title="rsbuild.config.ts"
 export default {
   server: {
     proxy: {
-      // http://localhost:3000/api -> https://nodejs.org/api
-      // http://localhost:3000/api/foo -> https://nodejs.org/api/foo
-      '/api': 'https://nodejs.org/api',
+      // http://localhost:3000/api -> http://localhost:3001/api
+      // http://localhost:3000/api/foo -> http://localhost:3001/api/foo
+      '/api': 'http://localhost:3001/api',
     },
   },
 };
@@ -59,9 +59,9 @@ export default {
   server: {
     proxy: {
 -      // http-proxy-middleware v2
--      '/api': 'http://localhost:3000',
+-      '/api': 'https://example.com',
 +      // http-proxy-middleware v3
-+      '/api': 'http://localhost:3000/api',
++      '/api': 'https://example.com/api',
     },
   },
 };
@@ -75,10 +75,10 @@ export default {
 export default {
   server: {
     proxy: {
-      // http://localhost:3000/foo -> http://localhost:3000/bar
-      // http://localhost:3000/foo/baz -> http://localhost:3000/bar/baz
+      // http://localhost:3000/foo -> https://example.com/bar
+      // http://localhost:3000/foo/baz -> https://example.com/bar/baz
       '/foo': {
-        target: 'http://localhost:3000',
+        target: 'https://example.com',
         pathRewrite: { '^/foo': '/bar' },
       },
     },
@@ -95,7 +95,8 @@ export default {
   server: {
     proxy: {
       '/rsbuild-hmr': {
-        target: 'http://localhost:3000', // 将会代理到 ws://localhost:3000/rsbuild-hmr
+        // 代理到 ws://localhost:3001/rsbuild-hmr
+        target: 'http://localhost:3001',
         ws: true,
       },
     },
@@ -115,7 +116,7 @@ export default {
     proxy: [
       {
         pathFilter: ['/auth', '/api'],
-        target: 'http://localhost:3000',
+        target: 'https://example.com',
       },
     ],
   },
@@ -153,7 +154,7 @@ export default {
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3000/api',
+        target: 'https://example.com/api',
         bypass(req, res, proxyOptions) {
           if (req.headers.accept.indexOf('html') !== -1) {
             console.log('Skipping proxy for browser request.');
