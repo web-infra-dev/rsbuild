@@ -99,6 +99,65 @@ export default {
 rsbuild dev --host
 ```
 
+### Proxy 中间件升级
+
+Rsbuild 依赖的 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) 从 v2 升级到了 v3，部分配置项与行为发生变化。
+
+你可以根据以下示例进行迁移，或查看 [http-proxy-middleware v3 迁移指南](https://github.com/chimurai/http-proxy-middleware/blob/master/MIGRATION.md#v3-breaking-changes) 了解更多细节。
+
+- `http-proxy-middleware` v2 在转发时会自动将代理的路径拼接到目标地址，而 v3 不再提供这一行为，因此需要在 `target` 中显式包含该路径。
+
+```diff title="rsbuild.config.ts"
+export default {
+  server: {
+    proxy: {
+      '/api': {
+-       target: 'http://localhost:3000',
++       target: 'http://localhost:3000/api',
+      },
+    },
+  },
+};
+```
+
+- `context` 选项替换为 `pathFilter`：
+
+```diff title="rsbuild.config.ts"
+export default {
+  server: {
+    proxy: [
+-     { context: '/api', target: 'http://localhost:3000' },
++     { pathFilter: '/api', target: 'http://localhost:3000/api' },
+    ],
+  },
+};
+```
+
+- 事件改为使用 `on` 统一配置：
+
+```diff title="rsbuild.config.ts"
+export default {
+  server: {
+    proxy: {
+      '/api': {
+-       onOpen: () => {},
+-       onClose: () => {},
+-       onError: () => {},
+-       onProxyReq: () => {},
+-       onProxyRes: () => {},
++       on: {
++         open: () => {},
++         close: () => {},
++         error: () => {},
++         proxyReq: () => {},
++         proxyRes: () => {},
++       },
+      },
+    },
+  },
+};
+```
+
 ### Node 产物
 
 当 [output.target](/config/output/target) 为 `node` 时，Rsbuild 2.0 会通过 [output.module](/config/output/module) 默认输出 ESM 产物，并保持 [output.minify](/config/output/minify) 关闭。在 Rsbuild 1.x 中，默认行为是输出 CommonJS 且开启压缩。
@@ -206,9 +265,9 @@ export default {
 
 ### 迁移 `performance.chunkSplit`
 
-`performance.chunkSplit` 在 Rsbuild 2.0 中已废弃，但暂未移除，仍可继续使用。
+`performance.chunkSplit` 已在 Rsbuild 2.0 中废弃，但暂未移除，仍可继续使用。
 
-推荐使用新的 [splitChunks](/config/split-chunks) 选项代替，新选项对齐了 Rspack 的 [optimization.splitChunks](https://rspack.rs/zh/plugins/webpack/split-chunks-plugin) 配置，并提供了与 `performance.chunkSplit.strategy` 相似的预设选项。
+我们推荐使用新的 [splitChunks](/config/split-chunks) 选项代替它，新选项对齐了 Rspack 的 [optimization.splitChunks](https://rspack.rs/zh/plugins/webpack/split-chunks-plugin) 配置，并提供了与 `performance.chunkSplit.strategy` 相似的预设选项。
 
 #### strategy
 
@@ -352,13 +411,6 @@ export default {
 };
 ```
 
-### 移除 HTML 模板参数
-
-`html.templateParameters` 中废弃的默认参数已被移除：
-
-- `webpackConfig`：使用 `rspackConfig` 代替。
-- `htmlWebpackPlugin`：使用 `htmlPlugin` 代替。
-
 ## JavaScript API
 
 - 移除 `rsbuild.build()` 中废弃的 `compiler` 参数
@@ -440,3 +492,6 @@ Less / Sass / Stylus 插件的内置规则也已采用相同的 `oneOf` 结构�
 ## 其他
 
 - 查询参数 `?__inline=false` 已被移除，使用 `?url` 代替。
+- `html.templateParameters` 中废弃的默认参数已被移除：
+  - `webpackConfig`：使用 `rspackConfig` 代替。
+  - `htmlWebpackPlugin`：使用 `htmlPlugin` 代替。

@@ -99,6 +99,65 @@ Alternatively, you can use the `--host` CLI flag to enable network access on dem
 rsbuild dev --host
 ```
 
+### Proxy middleware upgraded
+
+Rsbuild has upgraded its dependency on [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) from v2 to v3. Some options and behaviors have changed.
+
+You can follow the examples below to migrate your config, or check the [http-proxy-middleware v3 migration guide](https://github.com/chimurai/http-proxy-middleware/blob/master/MIGRATION.md#v3-breaking-changes) for more details.
+
+- In `http-proxy-middleware` v2, the proxied path is automatically appended to the target URL during forwarding. This behavior is no longer provided in v3, so the path must be explicitly included in the `target`.
+
+```diff title="rsbuild.config.ts"
+export default {
+  server: {
+    proxy: {
+      '/api': {
+-       target: 'http://localhost:3000',
++       target: 'http://localhost:3000/api',
+      },
+    },
+  },
+};
+```
+
+- The `context` option is replaced by `pathFilter`:
+
+```diff title="rsbuild.config.ts"
+export default {
+  server: {
+    proxy: [
+-     { context: '/api', target: 'http://localhost:3000' },
++     { pathFilter: '/api', target: 'http://localhost:3000/api' },
+    ],
+  },
+};
+```
+
+- Proxy events are now configured in a unified way using the `on` option:
+
+```diff title="rsbuild.config.ts"
+export default {
+  server: {
+    proxy: {
+      '/api': {
+-       onOpen: () => {},
+-       onClose: () => {},
+-       onError: () => {},
+-       onProxyReq: () => {},
+-       onProxyRes: () => {},
++       on: {
++         open: () => {},
++         close: () => {},
++         error: () => {},
++         proxyReq: () => {},
++         proxyRes: () => {},
++       },
+      },
+    },
+  },
+};
+```
+
 ### Node output
 
 When [output.target](/config/output/target) is set to `node`, Rsbuild 2.0 defaults to ESM output via [output.module](/config/output/module) and keeps [output.minify](/config/output/minify) disabled. In Rsbuild 1.x, the default was CommonJS output with minification enabled.
@@ -352,13 +411,6 @@ export default {
 };
 ```
 
-### Remove HTML template parameters
-
-The deprecated template parameters have been removed from `html.templateParameters`
-
-- `webpackConfig`: use `rspackConfig` instead.
-- `htmlWebpackPlugin`: use `htmlPlugin` instead.
-
 ## JavaScript API
 
 - Removed the deprecated `compiler` parameter from `rsbuild.build()`.
@@ -440,3 +492,6 @@ The built-in rules in the Less/Sass/Stylus plugins have the same `oneOf` change,
 ## Others
 
 - The query parameter `?__inline=false` has been removed, use `?url` instead.
+- The deprecated template parameters have been removed from `html.templateParameters`
+  - `webpackConfig`: use `rspackConfig` instead.
+  - `htmlWebpackPlugin`: use `htmlPlugin` instead.
