@@ -1,6 +1,5 @@
-import { stripVTControlCharacters as stripAnsi } from 'node:util';
+import { stripVTControlCharacters as stripAnsi, styleText } from 'node:util';
 import type { ConsoleType } from '@rsbuild/core';
-import color from 'picocolors';
 import { BUILD_END_LOG } from './constants.ts';
 import { toPosixPath } from './utils.ts';
 
@@ -72,10 +71,11 @@ export const createLogHelper = () => {
 
     return new Promise<boolean>((resolve, reject) => {
       const timeoutId = setTimeout(() => {
-        const title = color.bold(
-          color.red('Timeout: Expected log not found within 5 seconds.'),
+        const title = styleText(
+          ['bold', 'red'],
+          'Timeout: Expected log not found within 5 seconds.',
         );
-        const expect = color.yellow(pattern.toString());
+        const expect = styleText('yellow', pattern.toString());
         reject(
           new Error(
             `${title}\nExpect: ${expect}\nGet:\n${originalLogs.join('\n')}`,
@@ -104,8 +104,8 @@ export const createLogHelper = () => {
     const result = logs.some((log) => matchPattern(log, pattern, options));
 
     if (result) {
-      const title = color.bold(color.red('Unexpected log found.'));
-      const unexpected = color.yellow(pattern.toString());
+      const title = styleText(['bold', 'red'], 'Unexpected log found.');
+      const unexpected = styleText('yellow', pattern.toString());
       throw new Error(
         `${title}\nUnexpected: ${unexpected}\nGet:\n${originalLogs.join('\n')}`,
       );

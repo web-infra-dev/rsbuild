@@ -1,5 +1,4 @@
 import deepmerge from 'deepmerge';
-import color from 'picocolors';
 import RspackChain from 'rspack-chain';
 import type {
   FilenameConfig,
@@ -8,6 +7,7 @@ import type {
   RsbuildTarget,
   Rspack,
 } from '../types';
+import { color } from './color';
 
 export { require } from './vendors';
 

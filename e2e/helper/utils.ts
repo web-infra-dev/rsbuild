@@ -3,10 +3,10 @@ import net from 'node:net';
 import { platform } from 'node:os';
 import { join, sep } from 'node:path';
 import { URL } from 'node:url';
+import { styleText } from 'node:util';
 import { originalPositionFor, TraceMap } from '@jridgewell/trace-mapping';
 import { logger, type RsbuildPlugin } from '@rsbuild/core';
 import glob, { type Options as GlobOptions } from 'fast-glob';
-import color from 'picocolors';
 import type { Page } from 'playwright';
 import { expect } from './fixture.ts';
 
@@ -295,7 +295,7 @@ export const findFile = (
   }
 
   throw new Error(
-    `Unable to find file matching "${color.cyan(matcher.toString())}"`,
+    `Unable to find file matching "${styleText('cyan', matcher.toString())}"`,
   );
 };
 
