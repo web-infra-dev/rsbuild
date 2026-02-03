@@ -1,6 +1,5 @@
-import type { RequestHandler } from '../../compiled/http-proxy-middleware/index.js';
+import type { RequestHandler } from '../../compiled/http-proxy-middleware';
 import { color } from '../helpers';
-import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
 import type {
   RequestHandler as Middleware,
@@ -40,18 +39,20 @@ function formatProxyOptions(proxyOptions: ProxyConfig) {
   }));
 }
 
-export function createProxyMiddleware(proxyOptions: ProxyConfig): {
+export async function createProxyMiddleware(
+  proxyOptions: ProxyConfig,
+): Promise<{
   middlewares: Middleware[];
   upgrade: UpgradeEvent;
-} {
+}> {
   // If it is not an array, it may be an object that uses the context attribute
   // or an object in the form of { source: ProxyDetail }
   const formattedOptions = formatProxyOptions(proxyOptions);
   const proxyMiddlewares: RequestHandler[] = [];
   const middlewares: Middleware[] = [];
 
-  const { createProxyMiddleware: baseMiddleware } = requireCompiledPackage(
-    'http-proxy-middleware',
+  const { createProxyMiddleware: baseMiddleware } = await import(
+    /* webpackChunkName: "http-proxy-middleware" */ 'http-proxy-middleware'
   );
 
   for (const opts of formattedOptions) {
