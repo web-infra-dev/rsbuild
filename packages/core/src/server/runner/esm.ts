@@ -12,8 +12,7 @@ export class EsmRunner extends CommonJsRunner {
     this.requirers.set('cjs', this.getRequire());
     this.requirers.set('esm', this.createEsmRequirer());
 
-    const outputModule =
-      this._options.compilerOptions.experiments?.outputModule;
+    const outputModule = this._options.compilerOptions.output.module;
 
     this.requirers.set('entry', (currentDirectory, modulePath, context) => {
       const file = this.getFile(modulePath, currentDirectory);
