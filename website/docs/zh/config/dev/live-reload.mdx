@@ -1,13 +1,13 @@
 # dev.liveReload
 
-- **类型：** `boolean`
+- **类型：** `boolean | { html?: boolean }`
 - **默认值：** `true`
 
 是否在源文件变更时自动刷新页面。
 
 默认情况下，Rsbuild 会优先使用 HMR 来更新模块。当 HMR 功能被禁用，或者某些场景 HMR 无法生效时，会自动降级到 liveReload。
 
-请查看 [模块热更新](/guide/advanced/hmr) 来了解更多内容。
+> 查看 [模块热更新](/guide/advanced/hmr) 来了解更多内容。
 
 ## 禁用 live reload
 
@@ -21,3 +21,30 @@ export default {
   },
 };
 ```
+
+## 选项
+
+### liveReload.html
+
+- **类型：** `boolean`
+- **默认值：** `true`
+
+默认情况下，Rsbuild 会在 HTML 模板变更时触发整页刷新。
+
+当 `liveReload` 为对象时，你可以将 `liveReload.html` 设为 `false` 来避免在 HTML 模板变更时触发整页刷新：
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    liveReload: {
+      html: false,
+    },
+  },
+};
+```
+
+## 版本历史
+
+| 版本   | 变更内容         |
+| ------ | ---------------- |
+| v2.0.0 | 新增 `html` 选项 |

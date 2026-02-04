@@ -1,13 +1,13 @@
 # dev.liveReload
 
-- **Type:** `boolean`
+- **Type:** `boolean | { html?: boolean }`
 - **Default:** `true`
 
 Whether to reload the page when source files are changed.
 
 By default, Rsbuild uses HMR as the preferred method to update modules. If HMR is disabled or cannot be used in certain scenarios, it will automatically fallback to liveReload.
 
-Please refer to [Hot Module Replacement](/guide/advanced/hmr) for more information.
+> Refer to [Hot Module Replacement](/guide/advanced/hmr) for more information.
 
 ## Disabling live reload
 
@@ -21,3 +21,30 @@ export default {
   },
 };
 ```
+
+## Options
+
+### liveReload.html
+
+- **Type:** `boolean`
+- **Default:** `true`
+
+By default, Rsbuild triggers a full page reload when the HTML template changes.
+
+When `liveReload` is an object, set `liveReload.html` to `false` to prevent a full page reload when the HTML template changes:
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    liveReload: {
+      html: false,
+    },
+  },
+};
+```
+
+## Version history
+
+| Version | Changes             |
+| ------- | ------------------- |
+| v2.0.0  | Added `html` option |

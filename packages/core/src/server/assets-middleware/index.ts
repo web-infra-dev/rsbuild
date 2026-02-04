@@ -21,6 +21,7 @@ import { toPosixPath } from '../../helpers/path';
 import { logger } from '../../logger';
 import type {
   InternalContext,
+  LiveReload,
   NormalizedConfig,
   NormalizedEnvironmentConfig,
   RequestHandler,
@@ -43,6 +44,21 @@ export type AssetsMiddlewareClose = (
 export type AssetsMiddleware = RequestHandler & {
   watch: () => void;
   close: AssetsMiddlewareClose;
+};
+
+type NormalizedLiveReload = {
+  enabled: boolean;
+  html: boolean;
+};
+
+const normalizeLiveReload = (liveReload: LiveReload): NormalizedLiveReload => {
+  if (typeof liveReload === 'boolean') {
+    return { enabled: liveReload, html: liveReload };
+  }
+  return {
+    enabled: true,
+    html: liveReload.html !== false,
+  };
 };
 
 export const isClientCompiler = (compiler: Compiler): boolean => {
@@ -69,11 +85,13 @@ export const setupServerHooks = ({
   compiler,
   token,
   socketServer,
+  liveReload,
 }: {
   context: InternalContext;
   compiler: Compiler;
   token: string;
   socketServer: SocketServer;
+  liveReload: LiveReload;
 }): void => {
   // Node HMR is not supported yet
   if (isNodeCompiler(compiler)) {
@@ -89,7 +107,11 @@ export const setupServerHooks = ({
     warningsCount = null;
 
     // reload page when HTML template changed
-    if (typeof fileName === 'string' && fileName.endsWith('.html')) {
+    if (
+      typeof fileName === 'string' &&
+      fileName.endsWith('.html') &&
+      normalizeLiveReload(liveReload).html
+    ) {
       socketServer.sockWrite({ type: 'static-changed' }, token);
     }
   });
@@ -175,6 +197,10 @@ function applyHMREntry({
     return;
   }
 
+  const { enabled: liveReloadEnabled } = normalizeLiveReload(
+    config.dev.liveReload,
+  );
+
   const clientConfig = { ...config.dev.client };
   if (clientConfig.port === '<port>') {
     clientConfig.port = resolvedPort;
@@ -187,7 +213,7 @@ init(
   ${JSON.stringify(clientConfig)},
   ${JSON.stringify(resolvedHost)},
   ${resolvedPort},
-  ${config.dev.liveReload},
+  ${liveReloadEnabled},
   ${Boolean(config.dev.browserLogs)},
   ${JSON.stringify(config.dev.client.logLevel)}
 )
@@ -245,6 +271,7 @@ export const assetsMiddleware = async ({
       compiler,
       socketServer,
       token,
+      liveReload: environment.config.dev.liveReload,
     });
   };
 
