@@ -36,7 +36,7 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
       return typeof sourceMap === 'object' && sourceMap.css;
     };
 
-    api.modifyBundlerChain((chain, { bundler, environment, isDev, target }) => {
+    api.modifyBundlerChain((chain, { rspack, environment, isDev, target }) => {
       const { config } = environment;
 
       const devtool = getDevtool(config);
@@ -56,7 +56,7 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
       // When JS source map is disabled, but CSS source map is enabled,
       // add `SourceMapDevToolPlugin` to let Rspack generate CSS source map.
       if (!devtool && enableCssSourceMap(config)) {
-        chain.plugin('source-map-css').use(bundler.SourceMapDevToolPlugin, [
+        chain.plugin('source-map-css').use(rspack.SourceMapDevToolPlugin, [
           {
             test: /\.css$/,
             filename: '[file].map[query]',

@@ -193,25 +193,10 @@ export async function generateRspackConfig({
     context.environments[environmentName],
     context.environments,
   );
-  const {
-    BannerPlugin,
-    DefinePlugin,
-    IgnorePlugin,
-    ProvidePlugin,
-    SourceMapDevToolPlugin,
-    HotModuleReplacementPlugin,
-  } = rspack;
 
   const chain = await modifyBundlerChain(context, {
     ...chainUtils,
-    bundler: {
-      BannerPlugin,
-      DefinePlugin,
-      IgnorePlugin,
-      ProvidePlugin,
-      SourceMapDevToolPlugin,
-      HotModuleReplacementPlugin,
-    },
+    bundler: rspack,
   });
 
   let rspackConfig = chain.toConfig();
