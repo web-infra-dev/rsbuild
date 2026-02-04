@@ -53,8 +53,8 @@ importers:
         specifier: ^0.0.4
         version: 0.0.4
       heading-case:
-        specifier: ^1.0.4
-        version: 1.0.4
+        specifier: ^1.0.6
+        version: 1.0.6
       nano-staged:
         specifier: ^0.9.0
         version: 0.9.0
@@ -4266,8 +4266,8 @@ packages:
   hastscript@9.0.1:
     resolution: {integrity: sha512-g7df9rMFX/SPi34tyGCyUBREQoKkapwdY/T04Qn9TDWfHhAYt4/I0gMVirzK5wEzeUqIjEB+LXC/ypb7Aqno5w==}
 
-  heading-case@1.0.4:
-    resolution: {integrity: sha512-cZz+T8C5hzxDelYHhin9Fzq/9lYF2FeUpXl7KVizIV2eEwSbJ7ZT9FpixgQGz8kvhTj0d8zC+EsyYO/QVmZzgg==}
+  heading-case@1.0.6:
+    resolution: {integrity: sha512-yGJVdhNejrGETI7JEslt8e+iPZAGNwwlzbiFCWqdp3QfsR5C0qHUasRhG33Af1wUrDet3b/VERECIJ4VrjaiRA==}
     hasBin: true
 
   homedir-polyfill@1.0.3:
@@ -9879,7 +9879,7 @@ snapshots:
       property-information: 7.1.0
       space-separated-tokens: 2.0.2
 
-  heading-case@1.0.4: {}
+  heading-case@1.0.6: {}
 
   homedir-polyfill@1.0.3:
     dependencies:
