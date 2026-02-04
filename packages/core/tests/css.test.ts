@@ -36,6 +36,10 @@ describe('normalizeCssLoaderOptions', () => {
 });
 
 describe('plugin-css', () => {
+  afterEach(() => {
+    rs.unstubAllEnvs();
+  });
+
   it('should enable source map when output.sourceMap.css is true', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
@@ -71,8 +75,7 @@ describe('plugin-css', () => {
   });
 
   it('should disable source map in production by default', async () => {
-    const { NODE_ENV } = process.env;
-    process.env.NODE_ENV = 'production';
+    rs.stubEnv('NODE_ENV', 'production');
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
@@ -81,8 +84,6 @@ describe('plugin-css', () => {
     const bundlerConfigs = await rsbuild.initConfigs();
 
     expect(JSON.stringify(bundlerConfigs[0])).toContain('"sourceMap":false');
-
-    process.env.NODE_ENV = NODE_ENV;
   });
 
   it('should allow to custom cssModules.localIdentName', async () => {
