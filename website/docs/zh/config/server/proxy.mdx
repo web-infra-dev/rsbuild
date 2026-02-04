@@ -137,7 +137,7 @@ export default {
       '/api': {
         target: 'https://example.com',
         bypass(req, res, proxyOptions) {
-          if (req.headers.accept.indexOf('html') !== -1) {
+          if ((req.headers.accept || '').includes('html')) {
             console.log('Skipping proxy for browser request.');
             return '/index.html';
           }
