@@ -317,20 +317,11 @@ export type ModifyChainUtils = {
   HtmlPlugin: typeof HtmlRspackPlugin;
 };
 
-interface PluginInstance {
-  apply: (compiler: any) => void;
-  [k: string]: any;
-}
-
 export type ModifyBundlerChainUtils = ModifyChainUtils & {
-  bundler: {
-    BannerPlugin: PluginInstance;
-    DefinePlugin: PluginInstance;
-    IgnorePlugin: PluginInstance;
-    ProvidePlugin: PluginInstance;
-    SourceMapDevToolPlugin: PluginInstance;
-    HotModuleReplacementPlugin: PluginInstance;
-  };
+  /**
+   * @deprecated Use `rspack` instead.
+   */
+  bundler: typeof rspack;
 };
 
 export type ModifyBundlerChainFn = (

@@ -48,7 +48,7 @@ export const pluginDefine = (): RsbuildPlugin => ({
   name: 'rsbuild:define',
 
   setup(api) {
-    api.modifyBundlerChain((chain, { CHAIN_ID, bundler, environment }) => {
+    api.modifyBundlerChain((chain, { CHAIN_ID, rspack, environment }) => {
       const { config } = environment;
 
       const baseUrl = JSON.stringify(config.server.base);
@@ -72,7 +72,7 @@ export const pluginDefine = (): RsbuildPlugin => ({
 
       chain
         .plugin(CHAIN_ID.PLUGIN.DEFINE)
-        .use(bundler.DefinePlugin, [mergedDefine]);
+        .use(rspack.DefinePlugin, [mergedDefine]);
     });
   },
 });
