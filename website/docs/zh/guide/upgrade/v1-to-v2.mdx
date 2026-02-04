@@ -6,9 +6,42 @@ import { PackageManagerTabs } from '@theme';
 
 > 本指南仍在持续完善中。随着 Rsbuild 2.0 Beta 的推进，相关内容将逐步补充。
 
-## 升级 Rspack v2
+## 使用 Agent Skills
 
-Rsbuild v2 现在依赖 [@rspack/core](https://www.npmjs.com/package/@rspack/core) v2。
+如果你在使用支持 Skills 的 Coding Agent，可以安装 [rsbuild-v2-upgrade](https://github.com/rstackjs/agent-skills#rsbuild-v2-upgrade) 技能来辅助完成 v1 到 v2 的升级流程。
+
+```bash
+npx skills add rstackjs/agent-skills --skill rsbuild-v2-upgrade
+```
+
+安装后，让 Coding Agent 协助完成升级即可。
+
+## 升级 Rsbuild 到 v2
+
+- 将 `@rsbuild/core` 升级到 2.0 Beta 版本：
+
+```diff
+{
+  "devDependencies": {
+-   "@rsbuild/core": "^1.0.0",
++   "@rsbuild/core": "^2.0.0-beta.0"
+  }
+}
+```
+
+- 将 Rsbuild 插件升级到最新版本：
+
+```bash
+# 升级当前目录
+npx taze major --include /rsbuild/ -w
+
+# 或递归升级整个 monorepo
+npx taze major --include /rsbuild/ -w -r
+```
+
+## Rspack v2
+
+Rsbuild v2 现在依赖 [@rspack/core](https://www.npmjs.com/package/@rspack/core) v2，如果你使用了自定义的 Rspack 配置或插件，可能需要进行相应的调整。
 
 参考 [Rspack v2 升级指南](https://github.com/web-infra-dev/rspack/discussions/9270) 了解所有不兼容更新。
 
