@@ -64,8 +64,9 @@ Rstack 是一个以 Rspack 为核心的 JavaScript 统一工具链，具有优�
 ## 🔗 链接
 
 - [awesome-rstack](https://github.com/rstackjs/awesome-rstack)：与 Rstack 相关的精彩内容列表。
+- [agent-skills](https://github.com/rstackjs/agent-skills)：Rstack 的 Agent Skills 合集。
 - [rstack-examples](https://github.com/rstackjs/rstack-examples)：Rstack 的示例项目。
-- [storybook-rsbuild](https://github.com/rstackjs/storybook-rsbuild): 基于 Rsbuild 构建的 Storybook。
+- [storybook-rsbuild](https://github.com/rstackjs/storybook-rsbuild)：基于 Rsbuild 构建的 Storybook。
 - [rsbuild-plugin-template](https://github.com/rstackjs/rsbuild-plugin-template)：使用此模板创建你的 Rsbuild 插件。
 - [rstack-design-resources](https://github.com/rstackjs/rstack-design-resources)：Rstack 的设计资源。
 
