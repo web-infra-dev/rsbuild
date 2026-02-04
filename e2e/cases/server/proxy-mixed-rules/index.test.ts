@@ -22,9 +22,9 @@ test('should apply mixed proxy rules', async ({ dev, page }) => {
     config: {
       server: {
         proxy: {
-          '/foo': `http://127.0.0.1:${rsbuild1.port}/`,
+          '/foo': `http://127.0.0.1:${rsbuild1.port}`,
           '/bar': {
-            target: `http://127.0.0.1:${rsbuild1.port}/`,
+            target: `http://127.0.0.1:${rsbuild1.port}`,
           },
         },
       },
