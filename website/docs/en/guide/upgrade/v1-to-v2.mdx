@@ -105,21 +105,6 @@ Rsbuild has upgraded its dependency on [http-proxy-middleware](https://github.co
 
 You can follow the examples below to migrate your config, or check the [http-proxy-middleware v3 migration guide](https://github.com/chimurai/http-proxy-middleware/blob/master/MIGRATION.md#v3-breaking-changes) for more details.
 
-- In `http-proxy-middleware` v2, the proxied path is automatically appended to the target URL during forwarding. This behavior is no longer provided in v3, so the path must be explicitly included in the `target`.
-
-```diff title="rsbuild.config.ts"
-export default {
-  server: {
-    proxy: {
-      '/api': {
--       target: 'https://example.com',
-+       target: 'https://example.com/api',
-      },
-    },
-  },
-};
-```
-
 - The `context` option is replaced by `pathFilter`:
 
 ```diff title="rsbuild.config.ts"
@@ -127,7 +112,7 @@ export default {
   server: {
     proxy: [
 -     { context: '/api', target: 'https://example.com' },
-+     { pathFilter: '/api', target: 'https://example.com/api' },
++     { pathFilter: '/api', target: 'https://example.com' },
     ],
   },
 };

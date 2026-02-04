@@ -105,21 +105,6 @@ Rsbuild 依赖的 [http-proxy-middleware](https://github.com/chimurai/http-proxy
 
 你可以根据以下示例进行迁移，或查看 [http-proxy-middleware v3 迁移指南](https://github.com/chimurai/http-proxy-middleware/blob/master/MIGRATION.md#v3-breaking-changes) 了解更多细节。
 
-- `http-proxy-middleware` v2 在转发时会自动将代理的路径拼接到目标地址，而 v3 不再提供这一行为，因此需要在 `target` 中显式包含该路径。
-
-```diff title="rsbuild.config.ts"
-export default {
-  server: {
-    proxy: {
-      '/api': {
--       target: 'https://example.com',
-+       target: 'https://example.com/api',
-      },
-    },
-  },
-};
-```
-
 - `context` 选项替换为 `pathFilter`：
 
 ```diff title="rsbuild.config.ts"
@@ -127,7 +112,7 @@ export default {
   server: {
     proxy: [
 -     { context: '/api', target: 'https://example.com' },
-+     { pathFilter: '/api', target: 'https://example.com/api' },
++     { pathFilter: '/api', target: 'https://example.com' },
     ],
   },
 };
