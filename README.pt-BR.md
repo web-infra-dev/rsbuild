@@ -64,6 +64,7 @@ Rstack é uma cadeia de ferramentas JavaScript unificada construída em torno do
 ## 🔗 Links
 
 - [awesome-rstack](https://github.com/rstackjs/awesome-rstack): Uma lista com curadoria de coisas incríveis relacionadas ao Rspack e ao Rsbuild.
+- [agent-skills](https://github.com/rstackjs/agent-skills): A collection of Agent Skills for Rstack.
 - [rstack-examples](https://github.com/rstackjs/rstack-examples): Exemplos demonstrando ferramentas do Rstack.
 - [storybook-rsbuild](https://github.com/rstackjs/storybook-rsbuild): Construtor de livros de histórias desenvolvido pelo Rsbuild.
 - [rsbuild-plugin-template](https://github.com/rstackjs/rsbuild-plugin-template)：Use esse modelo para criar seu próprio plug-in do Rsbuild.
