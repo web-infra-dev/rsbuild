@@ -99,65 +99,6 @@ export default {
 rsbuild dev --host
 ```
 
-### Proxy 中间件升级
-
-Rsbuild 依赖的 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) 从 v2 升级到了 v3，部分配置项与行为发生变化。
-
-你可以根据以下示例进行迁移，或查看 [http-proxy-middleware v3 迁移指南](https://github.com/chimurai/http-proxy-middleware/blob/master/MIGRATION.md#v3-breaking-changes) 了解更多细节。
-
-- `http-proxy-middleware` v2 在转发时会自动将代理的路径拼接到目标地址，而 v3 不再提供这一行为，因此需要在 `target` 中显式包含该路径。
-
-```diff title="rsbuild.config.ts"
-export default {
-  server: {
-    proxy: {
-      '/api': {
--       target: 'https://example.com',
-+       target: 'https://example.com/api',
-      },
-    },
-  },
-};
-```
-
-- `context` 选项替换为 `pathFilter`：
-
-```diff title="rsbuild.config.ts"
-export default {
-  server: {
-    proxy: [
--     { context: '/api', target: 'https://example.com' },
-+     { pathFilter: '/api', target: 'https://example.com/api' },
-    ],
-  },
-};
-```
-
-- 事件改为使用 `on` 统一配置：
-
-```diff title="rsbuild.config.ts"
-export default {
-  server: {
-    proxy: {
-      '/api': {
--       onOpen: () => {},
--       onClose: () => {},
--       onError: () => {},
--       onProxyReq: () => {},
--       onProxyRes: () => {},
-+       on: {
-+         open: () => {},
-+         close: () => {},
-+         error: () => {},
-+         proxyReq: () => {},
-+         proxyRes: () => {},
-+       },
-      },
-    },
-  },
-};
-```
-
 ### Node 产物
 
 当 [output.target](/config/output/target) 为 `node` 时，Rsbuild 2.0 会通过 [output.module](/config/output/module) 默认输出 ESM 产物，并保持 [output.minify](/config/output/minify) 关闭。在 Rsbuild 1.x 中，默认行为是输出 CommonJS 且开启压缩。
@@ -408,6 +349,53 @@ export default {
 +      },
 +    },
 +  },
+};
+```
+
+### Proxy 中间件升级
+
+Rsbuild 依赖的 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) 从 v2 升级到了 v3，个别配置项发生了变化。
+
+你可以根据以下示例进行迁移，或查看 [http-proxy-middleware v3 迁移指南](https://github.com/chimurai/http-proxy-middleware/blob/master/MIGRATION.md#v3-breaking-changes) 了解更多细节。
+
+- `context` 选项替换为 `pathFilter`：
+
+```diff title="rsbuild.config.ts"
+export default {
+  server: {
+    proxy: [
+      {
+-       context: '/api',
++       pathFilter: '/api',
+        target: 'https://example.com',
+      },
+    ],
+  },
+};
+```
+
+- 事件改为使用 `on` 统一配置：
+
+```diff title="rsbuild.config.ts"
+export default {
+  server: {
+    proxy: {
+      '/api': {
+-       onOpen: () => {},
+-       onClose: () => {},
+-       onError: () => {},
+-       onProxyReq: () => {},
+-       onProxyRes: () => {},
++       on: {
++         open: () => {},
++         close: () => {},
++         error: () => {},
++         proxyReq: () => {},
++         proxyRes: () => {},
++       },
+      },
+    },
+  },
 };
 ```
 

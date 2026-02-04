@@ -26,7 +26,7 @@ export default {
     proxy: {
       // http://localhost/api -> https://example.com/api
       // http://localhost/api/foo -> https://example.com/api/foo
-      '/api': 'https://example.com/api',
+      '/api': 'https://example.com',
     },
   },
 };
@@ -42,26 +42,7 @@ export default {
     proxy: {
       // http://localhost:3000/api -> http://localhost:3001/api
       // http://localhost:3000/api/foo -> http://localhost:3001/api/foo
-      '/api': 'http://localhost:3001/api',
-    },
-  },
-};
-```
-
-### 版本差异
-
-Rsbuild v1 基于 `http-proxy-middleware` v2，而 Rsbuild v2 基于 `http-proxy-middleware` v3。
-
-`http-proxy-middleware` v2 在转发时会自动将代理的路径拼接到目标地址，而 v3 不再提供这一行为，因此需要在 `target` 中显式包含该路径。
-
-```diff title="rsbuild.config.ts"
-export default {
-  server: {
-    proxy: {
--      // http-proxy-middleware v2
--      '/api': 'https://example.com',
-+      // http-proxy-middleware v3
-+      '/api': 'https://example.com/api',
+      '/api': 'http://localhost:3001',
     },
   },
 };
@@ -96,7 +77,7 @@ export default {
     proxy: {
       '/rsbuild-hmr': {
         // 代理到 ws://localhost:3001/rsbuild-hmr
-        target: 'http://localhost:3001/rsbuild-hmr',
+        target: 'http://localhost:3001',
         ws: true,
       },
     },
@@ -154,9 +135,9 @@ export default {
   server: {
     proxy: {
       '/api': {
-        target: 'https://example.com/api',
+        target: 'https://example.com',
         bypass(req, res, proxyOptions) {
-          if (req.headers.accept.indexOf('html') !== -1) {
+          if ((req.headers.accept || '').includes('html')) {
             console.log('Skipping proxy for browser request.');
             return '/index.html';
           }

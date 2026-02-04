@@ -26,7 +26,7 @@ export default {
     proxy: {
       // http://localhost/api -> https://example.com/api
       // http://localhost/api/foo -> https://example.com/api/foo
-      '/api': 'https://example.com/api',
+      '/api': 'https://example.com',
     },
   },
 };
@@ -42,26 +42,7 @@ export default {
     proxy: {
       // http://localhost:3000/api -> http://localhost:3001/api
       // http://localhost:3000/api/foo -> http://localhost:3001/api/foo
-      '/api': 'http://localhost:3001/api',
-    },
-  },
-};
-```
-
-### Version differences
-
-Rsbuild v1 is based on `http-proxy-middleware` v2, while Rsbuild v2 is based on `http-proxy-middleware` v3.
-
-In `http-proxy-middleware` v2, the proxied path is automatically appended to the target URL during forwarding. This behavior is no longer provided in v3, so the path must be explicitly included in the `target`.
-
-```diff title="rsbuild.config.ts"
-export default {
-  server: {
-    proxy: {
--      // http-proxy-middleware v2
--      '/api': 'https://example.com',
-+      // http-proxy-middleware v3
-+      '/api': 'https://example.com/api',
+      '/api': 'http://localhost:3001',
     },
   },
 };
@@ -96,7 +77,7 @@ export default {
     proxy: {
       '/rsbuild-hmr': {
         // Proxy to ws://localhost:3001/rsbuild-hmr
-        target: 'http://localhost:3001/rsbuild-hmr',
+        target: 'http://localhost:3001',
         ws: true,
       },
     },
@@ -154,9 +135,9 @@ export default {
   server: {
     proxy: {
       '/api': {
-        target: 'https://example.com/api',
+        target: 'https://example.com',
         bypass(req, res, proxyOptions) {
-          if (req.headers.accept.indexOf('html') !== -1) {
+          if ((req.headers.accept || '').includes('html')) {
             console.log('Skipping proxy for browser request.');
             return '/index.html';
           }
