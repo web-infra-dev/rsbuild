@@ -99,50 +99,6 @@ Alternatively, you can use the `--host` CLI flag to enable network access on dem
 rsbuild dev --host
 ```
 
-### Proxy middleware upgraded
-
-Rsbuild has upgraded its dependency on [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) from v2 to v3. Some options and behaviors have changed.
-
-You can follow the examples below to migrate your config, or check the [http-proxy-middleware v3 migration guide](https://github.com/chimurai/http-proxy-middleware/blob/master/MIGRATION.md#v3-breaking-changes) for more details.
-
-- The `context` option is replaced by `pathFilter`:
-
-```diff title="rsbuild.config.ts"
-export default {
-  server: {
-    proxy: [
--     { context: '/api', target: 'https://example.com' },
-+     { pathFilter: '/api', target: 'https://example.com' },
-    ],
-  },
-};
-```
-
-- Proxy events are now configured in a unified way using the `on` option:
-
-```diff title="rsbuild.config.ts"
-export default {
-  server: {
-    proxy: {
-      '/api': {
--       onOpen: () => {},
--       onClose: () => {},
--       onError: () => {},
--       onProxyReq: () => {},
--       onProxyRes: () => {},
-+       on: {
-+         open: () => {},
-+         close: () => {},
-+         error: () => {},
-+         proxyReq: () => {},
-+         proxyRes: () => {},
-+       },
-      },
-    },
-  },
-};
-```
-
 ### Node output
 
 When [output.target](/config/output/target) is set to `node`, Rsbuild 2.0 defaults to ESM output via [output.module](/config/output/module) and keeps [output.minify](/config/output/minify) disabled. In Rsbuild 1.x, the default was CommonJS output with minification enabled.
@@ -393,6 +349,53 @@ export default {
 +      },
 +    },
 +  },
+};
+```
+
+### Proxy middleware upgraded
+
+Rsbuild has upgraded its dependency on [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) from v2 to v3 and some options have changed.
+
+You can follow the examples below to migrate your config, or check the [http-proxy-middleware v3 migration guide](https://github.com/chimurai/http-proxy-middleware/blob/master/MIGRATION.md#v3-breaking-changes) for more details.
+
+- The `context` option is replaced by `pathFilter`:
+
+```diff title="rsbuild.config.ts"
+export default {
+  server: {
+    proxy: [
+      {
+-       context: '/api',
++       pathFilter: '/api',
+        target: 'https://example.com',
+      },
+    ],
+  },
+};
+```
+
+- Proxy events are now configured in a unified way using the `on` option:
+
+```diff title="rsbuild.config.ts"
+export default {
+  server: {
+    proxy: {
+      '/api': {
+-       onOpen: () => {},
+-       onClose: () => {},
+-       onError: () => {},
+-       onProxyReq: () => {},
+-       onProxyRes: () => {},
++       on: {
++         open: () => {},
++         close: () => {},
++         error: () => {},
++         proxyReq: () => {},
++         proxyRes: () => {},
++       },
+      },
+    },
+  },
 };
 ```
 
