@@ -3,8 +3,12 @@ import { matchPlugin } from '@scripts/test-helper';
 import { createRsbuild, type RsbuildPlugin } from '../src';
 
 describe('environment config', () => {
+  afterEach(() => {
+    rs.unstubAllEnvs();
+  });
+
   it('should normalize context correctly', async () => {
-    process.env.NODE_ENV = 'development';
+    rs.stubEnv('NODE_ENV', 'development');
     const cwd = process.cwd();
     const rsbuild = await createRsbuild({
       cwd,
@@ -35,7 +39,7 @@ describe('environment config', () => {
   });
 
   it('should support modify environment config by api.modifyRsbuildConfig', async () => {
-    process.env.NODE_ENV = 'development';
+    rs.stubEnv('NODE_ENV', 'development');
     const rsbuild = await createRsbuild({
       config: {
         resolve: {
@@ -98,7 +102,7 @@ describe('environment config', () => {
   });
 
   it('should support modify single environment config by api.modifyEnvironmentConfig', async () => {
-    process.env.NODE_ENV = 'development';
+    rs.stubEnv('NODE_ENV', 'development');
     const rsbuild = await createRsbuild({
       config: {
         resolve: {
@@ -156,7 +160,7 @@ describe('environment config', () => {
   });
 
   it('should support add single environment plugin', async () => {
-    process.env.NODE_ENV = 'development';
+    rs.stubEnv('NODE_ENV', 'development');
     const plugin: (pluginId: string) => RsbuildPlugin = (pluginId) => ({
       name: 'test-environment',
       setup(api) {
@@ -203,7 +207,7 @@ describe('environment config', () => {
   });
 
   it('should support run specified environment', async () => {
-    process.env.NODE_ENV = 'development';
+    rs.stubEnv('NODE_ENV', 'development');
 
     const pluginLogs: string[] = [];
 
@@ -239,7 +243,7 @@ describe('environment config', () => {
   });
 
   it('should normalize environment config correctly', async () => {
-    process.env.NODE_ENV = 'development';
+    rs.stubEnv('NODE_ENV', 'development');
     const rsbuild = await createRsbuild({
       config: {
         resolve: {
@@ -294,7 +298,7 @@ describe('environment config', () => {
   });
 
   it('should print environment config when inspect config', async () => {
-    process.env.NODE_ENV = 'development';
+    rs.stubEnv('NODE_ENV', 'development');
     const rsbuild = await createRsbuild({
       config: {
         resolve: {
@@ -329,6 +333,7 @@ describe('environment config', () => {
   });
 
   it('tools.rspack / bundlerChain can be configured in environment config', async () => {
+    rs.stubEnv('NODE_ENV', 'development');
     const rsbuild = await createRsbuild({
       config: {
         tools: {
@@ -369,6 +374,7 @@ describe('environment config', () => {
   });
 
   it('dev.hmr can be configured in environment config', async () => {
+    rs.stubEnv('NODE_ENV', 'development');
     const rsbuild = await createRsbuild({
       config: {
         environments: {

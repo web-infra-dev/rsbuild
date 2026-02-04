@@ -4,6 +4,10 @@ import { matchRules } from '@scripts/test-helper';
 import { pluginSvelte } from '../src';
 
 describe('plugin-svelte', () => {
+  afterEach(() => {
+    rs.unstubAllEnvs();
+  });
+
   it('should add svelte loader and resolve config properly', async () => {
     const rsbuild = await createRsbuild({
       cwd: __dirname,
@@ -46,8 +50,7 @@ describe('plugin-svelte', () => {
   });
 
   it('should set dev and hotReload to false in production mode', async () => {
-    const { NODE_ENV } = process.env;
-    process.env.NODE_ENV = 'production';
+    rs.stubEnv('NODE_ENV', 'production');
     const rsbuild = await createRsbuild({
       cwd: __dirname,
       config: {
@@ -56,7 +59,6 @@ describe('plugin-svelte', () => {
     });
     const bundlerConfigs = await rsbuild.initConfigs();
     expect(matchRules(bundlerConfigs[0], 'a.svelte')).toMatchSnapshot();
-    process.env.NODE_ENV = NODE_ENV;
   });
 
   it('should turn off HMR by hand correctly', async () => {

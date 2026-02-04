@@ -2,8 +2,12 @@ import { createStubRsbuild } from '@scripts/test-helper';
 import { pluginMinimize } from '../src/plugins/minimize';
 
 describe('plugin-minimize', () => {
+  afterEach(() => {
+    rs.unstubAllEnvs();
+  });
+
   it('should not apply minimizer in development', async () => {
-    process.env.NODE_ENV = 'development';
+    rs.stubEnv('NODE_ENV', 'development');
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
@@ -12,12 +16,10 @@ describe('plugin-minimize', () => {
     const bundlerConfigs = await rsbuild.initConfigs();
 
     expect(bundlerConfigs[0].optimization?.minimizer).toBeUndefined();
-
-    process.env.NODE_ENV = 'test';
   });
 
   it('should apply minimizer in production', async () => {
-    process.env.NODE_ENV = 'production';
+    rs.stubEnv('NODE_ENV', 'production');
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
@@ -62,12 +64,10 @@ describe('plugin-minimize', () => {
       ]
     `,
     );
-
-    process.env.NODE_ENV = 'test';
   });
 
   it('should not apply minimizer for JS when output.minify.js is false', async () => {
-    process.env.NODE_ENV = 'production';
+    rs.stubEnv('NODE_ENV', 'production');
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
@@ -86,12 +86,10 @@ describe('plugin-minimize', () => {
     expect(bundlerConfigs[0].optimization?.minimizer?.[0]).toMatchObject({
       name: 'LightningCssMinimizerRspackPlugin',
     });
-
-    process.env.NODE_ENV = 'test';
   });
 
   it('should not minimize when both output.minify.js and output.minify.css are false', async () => {
-    process.env.NODE_ENV = 'production';
+    rs.stubEnv('NODE_ENV', 'production');
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
@@ -108,12 +106,10 @@ describe('plugin-minimize', () => {
     const bundlerConfigs = await rsbuild.initConfigs();
 
     expect(bundlerConfigs[0].optimization?.minimize).toBe(false);
-
-    process.env.NODE_ENV = 'test';
   });
 
   it('should not apply minimizer for CSS when output.minify.css is false', async () => {
-    process.env.NODE_ENV = 'production';
+    rs.stubEnv('NODE_ENV', 'production');
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
@@ -132,12 +128,10 @@ describe('plugin-minimize', () => {
     expect(bundlerConfigs[0].optimization?.minimizer?.[0]).toMatchObject({
       name: 'SwcJsMinimizerRspackPlugin',
     });
-
-    process.env.NODE_ENV = 'test';
   });
 
   it('should accept and merge options for JS minimizer', async () => {
-    process.env.NODE_ENV = 'production';
+    rs.stubEnv('NODE_ENV', 'production');
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
@@ -163,12 +157,10 @@ describe('plugin-minimize', () => {
         },
       ],
     });
-
-    process.env.NODE_ENV = 'test';
   });
 
   it('should dropConsole when performance.removeConsole is true', async () => {
-    process.env.NODE_ENV = 'production';
+    rs.stubEnv('NODE_ENV', 'production');
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
@@ -221,12 +213,10 @@ describe('plugin-minimize', () => {
       ]
     `,
     );
-
-    process.env.NODE_ENV = 'test';
   });
 
   it('should remove specific console when performance.removeConsole is array', async () => {
-    process.env.NODE_ENV = 'production';
+    rs.stubEnv('NODE_ENV', 'production');
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
@@ -282,12 +272,10 @@ describe('plugin-minimize', () => {
       ]
     `,
     );
-
-    process.env.NODE_ENV = 'test';
   });
 
   it('should set asciiOnly false when output.charset is utf8', async () => {
-    process.env.NODE_ENV = 'production';
+    rs.stubEnv('NODE_ENV', 'production');
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginMinimize()],
@@ -337,7 +325,5 @@ describe('plugin-minimize', () => {
       ]
     `,
     );
-
-    process.env.NODE_ENV = 'test';
   });
 });
