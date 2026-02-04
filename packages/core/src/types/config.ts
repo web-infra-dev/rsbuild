@@ -1826,6 +1826,16 @@ export type WriteToDisk = boolean | ((filename: string) => boolean);
 
 export type BrowserLogsStackTrace = 'summary' | 'full' | 'none';
 
+export type LiveReload =
+  | boolean
+  | {
+      /**
+       * Whether to trigger a full page reload when the HTML template changes.
+       * @default true
+       */
+      html?: boolean;
+    };
+
 export interface DevConfig {
   /**
    * Controls whether to forward browser runtime errors to the terminal. When `true`, the dev
@@ -1856,7 +1866,7 @@ export interface DevConfig {
    * Whether to reload the page when file changes are detected.
    * @default true
    */
-  liveReload?: boolean;
+  liveReload?: LiveReload;
   /**
    * Set the URL prefix of static assets in development mode,
    * similar to the [output.publicPath](https://rspack.rs/config/output#outputpublicpath)
