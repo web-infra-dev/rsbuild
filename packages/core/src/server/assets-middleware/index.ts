@@ -52,18 +52,13 @@ type NormalizedLiveReload = {
 };
 
 const normalizeLiveReload = (liveReload: LiveReload): NormalizedLiveReload => {
-  if (liveReload === false) {
-    return { enabled: false, html: false };
+  if (typeof liveReload === 'boolean') {
+    return { enabled: liveReload, html: liveReload };
   }
-
-  if (typeof liveReload === 'object') {
-    return {
-      enabled: true,
-      html: liveReload.html !== false,
-    };
-  }
-
-  return { enabled: true, html: true };
+  return {
+    enabled: true,
+    html: liveReload.html !== false,
+  };
 };
 
 export const isClientCompiler = (compiler: Compiler): boolean => {
