@@ -280,6 +280,7 @@ export async function initRsbuildConfig({
         ...environmentConfig.dev,
       },
       server: normalizedBaseConfig.server,
+      preview: normalizedBaseConfig.preview,
     };
 
     const { tsconfigPath } = normalizedEnvironmentConfig.source;
