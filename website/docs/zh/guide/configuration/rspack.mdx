@@ -292,9 +292,9 @@ export default {
 ```js title="rsbuild.config.mjs"
 export default {
   tools: {
-    bundlerChain: (chain, { bundler, CHAIN_ID }) => {
+    bundlerChain: (chain, { rspack, CHAIN_ID }) => {
       // 新增插件
-      chain.plugin('custom-define').use(bundler.DefinePlugin, [
+      chain.plugin('custom-define').use(rspack.DefinePlugin, [
         {
           'process.env': {
             NODE_ENV: JSON.stringify(process.env.NODE_ENV),

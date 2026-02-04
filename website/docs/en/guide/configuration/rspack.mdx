@@ -290,9 +290,9 @@ Here are examples of adding, modifying, and deleting Rspack plugins.
 ```js title="rsbuild.config.mjs"
 export default {
   tools: {
-    bundlerChain: (chain, { bundler, CHAIN_ID }) => {
+    bundlerChain: (chain, { rspack, CHAIN_ID }) => {
       // Add plugin
-      chain.plugin('custom-define').use(bundler.DefinePlugin, [
+      chain.plugin('custom-define').use(rspack.DefinePlugin, [
         {
           'process.env': {
             NODE_ENV: JSON.stringify(process.env.NODE_ENV),
