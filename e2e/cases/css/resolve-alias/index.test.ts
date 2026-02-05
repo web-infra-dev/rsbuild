@@ -7,6 +7,6 @@ test('should compile CSS with alias correctly', async ({ build }) => {
   const content = getFileContent(files, '.css');
 
   expect(content).toMatch(
-    /\.the-a-class{color:red;background-image:url\(\/static\/image\/icon\.\w{8}\.png\)}\.the-b-class{color:#00f;background-image:url\(\/static\/image\/icon\.\w{8}\.png\)}\.the-c-class{color:#ff0;background-image:url\(\/static\/image\/icon\.\w{8}\.png\)}/,
+    /\.the-a-class{color:red;background-image:url\(\/static\/image\/icon\.\w{10}\.png\)}\.the-b-class{color:#00f;background-image:url\(\/static\/image\/icon\.\w{10}\.png\)}\.the-c-class{color:#ff0;background-image:url\(\/static\/image\/icon\.\w{10}\.png\)}/,
   );
 });

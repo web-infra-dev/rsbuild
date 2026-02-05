@@ -12,7 +12,7 @@ test('should generate integrity attributes in build with native html plugin', as
     /<script crossorigin defer integrity="sha384-[A-Za-z0-9+/=]+"/,
   );
   expect(html).toMatch(
-    /link crossorigin href="\/static\/css\/index\.\w{8}\.css" integrity="sha384-[A-Za-z0-9+/=]+"/,
+    /link crossorigin href="\/static\/css\/index\.\w{10}\.css" integrity="sha384-[A-Za-z0-9+/=]+"/,
   );
 
   const testEl = page.locator('#root');

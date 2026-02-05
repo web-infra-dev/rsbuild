@@ -20,7 +20,7 @@ export function extractFileSizeLogs(logs: string[]) {
       result.push(
         toPosixPath(
           log
-            .replace(/\.[a-z0-9]{8}\./g, '.[[hash]].')
+            .replace(/\.[a-z0-9]{8,10}\./g, '.[[hash]].')
             .replace(/\d+\.\d+ kB/g, 'X.X kB')
             .replace(/\s+$/gm, ''),
         ),

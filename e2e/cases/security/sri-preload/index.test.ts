@@ -10,7 +10,7 @@ test('generate integrity for preload tags in build', async ({
   const html = getFileContent(files, 'index.html');
 
   expect(html).toMatch(
-    /<link href="\/static\/js\/async\/foo\.\w{8}\.js" rel="preload" as="script" integrity="sha384-[A-Za-z0-9+/=]+"/,
+    /<link href="\/static\/js\/async\/foo\.\w{10}\.js" rel="preload" as="script" integrity="sha384-[A-Za-z0-9+/=]+"/,
   );
 
   const testEl = page.locator('#root');
