@@ -18,7 +18,7 @@ exports[`plugin-vue > should add vue-loader and VueLoaderPlugin correctly 1`] = 
 }
 `;
 
-exports[`plugin-vue > should add vue-loader and VueLoaderPlugin correctly 2`] = `null`;
+exports[`plugin-vue > should add vue-loader and VueLoaderPlugin correctly 2`] = `VueLoaderPlugin {}`;
 
 exports[`plugin-vue > should add vue-loader and VueLoaderPlugin correctly 3`] = `
 {
