@@ -23,16 +23,6 @@ Rsbuild provides a [rich set of build features](https://rsbuild.rs/guide/start/f
 > The `main` branch is under active development for **Rsbuild 2.0**.  
 > The stable **1.x** releases are maintained in the [v1.x](https://github.com/web-infra-dev/rsbuild/tree/v1.x) branch.
 
-## 🚀 Performance
-
-Powered by Rspack's Rust-based architecture, Rsbuild delivers blazing-fast performance to speed up your development workflow.
-
-⚡️ **Build 1000 React components:**
-
-![benchmark](https://assets.rspack.rs/rsbuild/assets/benchmark-latest.jpeg)
-
-> 📊 Benchmark results from [build-tools-performance](https://github.com/rstackjs/build-tools-performance).
-
 ## 🔥 Features
 
 Rsbuild has the following features:
@@ -47,9 +37,10 @@ Rsbuild has the following features:
 
 - **Framework agnostic**: Rsbuild is not coupled to any frontend UI framework. It supports frameworks like React, Vue, Svelte, Solid, and Preact through plugins, with plans to support more UI frameworks from the community in the future.
 
-## 📚 Getting started
+## 📚 Documentation
 
-To get started with Rsbuild, see the [Quick start](https://rsbuild.rs/guide/start/quick-start).
+- [Rsbuild v2 docs](https://v2.rsbuild.rs)
+- [Rsbuild v1 docs](https://rsbuild.rs/)
 
 ## 🦀 Rstack
 
