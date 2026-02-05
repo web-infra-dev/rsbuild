@@ -15,7 +15,7 @@
 
 [English](./README.md) | [Portuguese](./README.pt-BR.md) | 简体中文
 
-Rsbuild 是一个由 [Rspack](https://rspack.rs/) 驱动的现代 Web 应用构建工具。
+Rsbuild 是一个由 [Rspack](https://rspack.rs/zh/) 驱动的现代 Web 应用构建工具。
 
 它提供快速的构建体验和高度优化的构建产物，同时保持配置简单一致，并支持通过插件进行扩展。
 
