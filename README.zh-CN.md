@@ -19,16 +19,6 @@ Rsbuild 是由 [Rspack](https://rspack.rs/) 驱动的高性能构建工具，它
 
 Rsbuild 提供 [丰富的构建功能](https://rsbuild.rs/zh/guide/start/features)，包括编译 TypeScript，JSX，Sass，Less，CSS Modules，Wasm，以及其他资源，也支持模块联邦、图片压缩、类型检查、PostCSS，Lightning CSS 等功能。
 
-## 🚀 性能
-
-基于 Rspack 的 Rust 架构，Rsbuild 能够提供极致的构建性能，为你带来全新的开发体验。
-
-⚡️ **构建 1000 个 React 组件：**
-
-![benchmark](https://assets.rspack.rs/rsbuild/assets/benchmark-latest.jpeg)
-
-> 📊 Benchmark 结果来自 [build-tools-performance](https://github.com/rstackjs/build-tools-performance)。
-
 ## 🔥 特性
 
 Rsbuild 具备以下特性：
@@ -43,9 +33,10 @@ Rsbuild 具备以下特性：
 
 - **框架无关**：Rsbuild 不与前端 UI 框架耦合，并通过插件来支持 React、Vue、Svelte、Solid、Preact 等框架，未来也计划支持社区中更多的 UI 框架。
 
-## 📚 快速上手
+## 📚 文档
 
-你可以参考 [快速上手](https://rsbuild.rs/zh/guide/start/quick-start) 来开始体验 Rsbuild。
+- [Rsbuild v2 文档](https://v2.rsbuild.rs/zh/)
+- [Rsbuild v1 文档](https://rsbuild.rs/zh/)
 
 ## 🦀 Rstack
 

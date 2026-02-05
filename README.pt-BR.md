@@ -19,16 +19,6 @@ Rsbuild é uma ferramenta de build de alta performance com base no Rspack. Ele f
 
 Rsbuild provê [ricas funcionalidades de build](https://rsbuild.rs/guide/start/features), incluindo a compilação de TypeScript, JSX, Sass, Less, CSS Modules, Wasm, e outros. Ele também suporta Module Federation, compressão de imagem, checagem de tipos, PostCSS, Lightning CSS, e mais.
 
-## 🚀 Desempenho
-
-Alimentado pela arquitetura baseada em Rust do Rspack, o Rsbuild oferece um desempenho extremamente rápido que irá remodelar seu fluxo de trabalho de desenvolvimento.
-
-⚡️ **Construa 1000 componentes React:**
-
-![benchmark](https://assets.rspack.rs/rsbuild/assets/benchmark-latest.jpeg)
-
-> 📊 Resultados do benchmark do [build-tools-performance](https://github.com/rstackjs/build-tools-performance).
-
 ## 🔥 Recursos
 
 O Rsbuild tem os seguintes recursos:
@@ -43,9 +33,10 @@ O Rsbuild tem os seguintes recursos:
 
 - **Framework Agnóstico**: Rsbuild não está acoplado a nenhuma estrutura de interface do usuário de frontend. Ele oferece suporte a estruturas como React, Vue, Svelte, Solid e Preact por meio de plug-ins, e planeja oferecer suporte a mais estruturas de IU da comunidade no futuro.
 
-## 📚 Primeiros passos
+## 📚 Documentação
 
-Para começar a usar o Rsbuild, consulte a seção [Início Rápido](https://rsbuild.rs/guide/start/quick-start).
+- [Rsbuild v2 docs](https://v2.rsbuild.rs)
+- [Rsbuild v1 docs](https://rsbuild.rs/)
 
 ## 🦀 Rstack
 
