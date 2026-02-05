@@ -15,9 +15,9 @@
 
 [English](./README.md) | [Portuguese](./README.pt-BR.md) | 简体中文
 
-Rsbuild 是由 [Rspack](https://rspack.rs/) 驱动的高性能构建工具，它默认包含了一套精心设计的构建配置，提供开箱即用的开发体验，并能够充分发挥出 Rspack 的性能优势。
+Rsbuild 是一个由 [Rspack](https://rspack.rs/) 驱动的现代 Web 应用构建工具。
 
-Rsbuild 提供 [丰富的构建功能](https://rsbuild.rs/zh/guide/start/features)，包括编译 TypeScript，JSX，Sass，Less，CSS Modules，Wasm，以及其他资源，也支持模块联邦、图片压缩、类型检查、PostCSS，Lightning CSS 等功能。
+它提供快速的构建体验和高度优化的构建产物，同时保持配置简单一致，并支持通过插件进行扩展。
 
 ## 🔥 特性
 

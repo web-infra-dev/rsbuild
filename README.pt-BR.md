@@ -15,9 +15,9 @@
 
 [English](./README.md) | Portuguese | [简体中文](./README.zh-CN.md)
 
-Rsbuild é uma ferramenta de build de alta performance com base no Rspack. Ele fornece um conjunto de configurações de compilação padrão cuidadosamente projetadas, oferecendo uma experiência de desenvolvimento pronta para uso e pode liberar totalmente as vantagens de desempenho do Rspack.
+O Rsbuild é uma ferramenta moderna de build para aplicações web, baseada no [Rspack](https://rspack.rs/).
 
-Rsbuild provê [ricas funcionalidades de build](https://rsbuild.rs/guide/start/features), incluindo a compilação de TypeScript, JSX, Sass, Less, CSS Modules, Wasm, e outros. Ele também suporta Module Federation, compressão de imagem, checagem de tipos, PostCSS, Lightning CSS, e mais.
+Ele oferece builds rápidos e uma saída de produção otimizada, mantendo a configuração simples, consistente e extensível por meio de plugins.
 
 ## 🔥 Recursos
 
