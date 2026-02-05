@@ -1017,11 +1017,8 @@ importers:
   packages/plugin-vue:
     dependencies:
       rspack-vue-loader:
-        specifier: ^17.4.5
-        version: 17.4.5(vue@3.5.27(typescript@5.9.3))(webpack@5.104.1)
-      webpack:
-        specifier: ^5.104.1
-        version: 5.104.1
+        specifier: ^17.5.0
+        version: 17.5.0(@rspack/core@2.0.0-canary-20260116(@module-federation/runtime-tools@0.24.0)(@swc/helpers@0.5.18))(vue@3.5.27(typescript@5.9.3))
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -5587,13 +5584,15 @@ packages:
       '@rspack/core':
         optional: true
 
-  rspack-vue-loader@17.4.5:
-    resolution: {integrity: sha512-i88hGa4mySkwiP7HqRICIAhomcMdkNCZ5tQGcxkcUWmDfC2QfeQegFBEKY4RdbuxJ3p1Ocj/Ul6Sh4yl6L7mDg==}
+  rspack-vue-loader@17.5.0:
+    resolution: {integrity: sha512-hJrL2+jytfTs6ORHBOKTh5lU7BVZvmv7afELuQfyEpGC1ll7MKj1BxlgAIbhd6pZwoEwfdH79Lewtwe4VOlfCQ==}
     peerDependencies:
+      '@rspack/core': ^1.0.0 || ^2.0.0-0
       '@vue/compiler-sfc': '*'
       vue: '*'
-      webpack: ^5.0.0
     peerDependenciesMeta:
+      '@rspack/core':
+        optional: true
       '@vue/compiler-sfc':
         optional: true
       vue:
@@ -11492,12 +11491,12 @@ snapshots:
     optionalDependencies:
       '@rspack/core': 2.0.0-beta.0(@module-federation/runtime-tools@0.24.0)(@swc/helpers@0.5.18)
 
-  rspack-vue-loader@17.4.5(vue@3.5.27(typescript@5.9.3))(webpack@5.104.1):
+  rspack-vue-loader@17.5.0(@rspack/core@2.0.0-canary-20260116(@module-federation/runtime-tools@0.24.0)(@swc/helpers@0.5.18))(vue@3.5.27(typescript@5.9.3)):
     dependencies:
+      '@rspack/lite-tapable': 1.1.0
       chalk: 4.1.2
-      watchpack: 2.5.0
-      webpack: 5.104.1
     optionalDependencies:
+      '@rspack/core': 2.0.0-canary-20260116(@module-federation/runtime-tools@0.24.0)(@swc/helpers@0.5.18)
       vue: 3.5.27(typescript@5.9.3)
 
   rspress-plugin-font-open-sans@1.0.3(@rspress/core@2.0.2(@module-federation/runtime-tools@0.24.0)(@types/react@19.2.10)(core-js@3.48.0)):
