@@ -24,25 +24,25 @@ const devDefaultFilename = {
   html: '[name].html',
   js: '[name].js',
   css: '[name].css',
-  svg: '[name].[contenthash:8].svg',
-  font: '[name].[contenthash:8][ext]',
-  wasm: '[contenthash:8].module.wasm',
-  image: '[name].[contenthash:8][ext]',
-  media: '[name].[contenthash:8][ext]',
-  assets: '[name].[contenthash:8][ext]',
+  svg: '[name].[contenthash:10].svg',
+  font: '[name].[contenthash:10][ext]',
+  wasm: '[contenthash:10].module.wasm',
+  image: '[name].[contenthash:10][ext]',
+  media: '[name].[contenthash:10][ext]',
+  assets: '[name].[contenthash:10][ext]',
 };
 
 // Production mode
 const prodDefaultFilename = {
   html: '[name].html',
-  js: output.target === 'node' ? '[name].js' : '[name].[contenthash:8].js',
-  css: '[name].[contenthash:8].css',
-  svg: '[name].[contenthash:8].svg',
-  font: '[name].[contenthash:8][ext]',
-  wasm: '[contenthash:8].module.wasm',
-  image: '[name].[contenthash:8][ext]',
-  media: '[name].[contenthash:8][ext]',
-  assets: '[name].[contenthash:8][ext]',
+  js: output.target === 'node' ? '[name].js' : '[name].[contenthash:10].js',
+  css: '[name].[contenthash:10].css',
+  svg: '[name].[contenthash:10].svg',
+  font: '[name].[contenthash:10][ext]',
+  wasm: '[contenthash:10].module.wasm',
+  image: '[name].[contenthash:10][ext]',
+  media: '[name].[contenthash:10][ext]',
+  assets: '[name].[contenthash:10][ext]',
 };
 ```
 
@@ -95,7 +95,7 @@ const isProd = process.env.NODE_ENV === 'production';
 export default {
   output: {
     filename: {
-      js: isProd ? '[name]_script.[contenthash:8].js' : '[name]_script.js',
+      js: isProd ? '[name]_script.[contenthash:10].js' : '[name]_script.js',
     },
   },
 };
@@ -169,7 +169,7 @@ export default {
         console.log(pathData); // You can check the contents of pathData here
 
         if (pathData.chunk?.name === 'index') {
-          return isProd ? '[name].[contenthash:8].js' : '[name].js';
+          return isProd ? '[name].[contenthash:10].js' : '[name].js';
         }
         return '/some-path/[name].js';
       },
@@ -188,7 +188,7 @@ export default {
     filename: {
       css: (pathData, assetInfo) => {
         if (pathData.chunk?.name === 'index') {
-          return isProd ? '[name].[contenthash:8].css' : '[name].css';
+          return isProd ? '[name].[contenthash:10].css' : '[name].css';
         }
         return '/some-path/[name].css';
       },
@@ -228,8 +228,8 @@ const isProd = process.env.NODE_ENV === 'production';
 export default {
   output: {
     filename: {
-      js: isProd ? '[name].js?v=[contenthash:8]' : `[name].js`,
-      css: isProd ? '[name].css?v=[contenthash:8]' : `[name].css`,
+      js: isProd ? '[name].js?v=[contenthash:10]' : `[name].js`,
+      css: isProd ? '[name].css?v=[contenthash:10]' : `[name].css`,
     },
   },
 };

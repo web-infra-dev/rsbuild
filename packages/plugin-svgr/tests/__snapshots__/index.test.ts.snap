@@ -5,7 +5,7 @@ exports[`svgr > configure SVGR options 1`] = `
   "oneOf": [
     {
       "generator": {
-        "filename": "static/svg/[name].[contenthash:8].svg",
+        "filename": "static/svg/[name].[contenthash:10].svg",
       },
       "resourceQuery": /\\^\\\\\\?url\\$/,
       "type": "asset/resource",
@@ -89,7 +89,7 @@ exports[`svgr > configure SVGR options 1`] = `
     },
     {
       "generator": {
-        "filename": "static/svg/[name].[contenthash:8].svg",
+        "filename": "static/svg/[name].[contenthash:10].svg",
       },
       "parser": {
         "dataUrlCondition": {
@@ -211,7 +211,7 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
   "oneOf": [
     {
       "generator": {
-        "filename": "static/svg/[name].[contenthash:8].svg",
+        "filename": "static/svg/[name].[contenthash:10].svg",
       },
       "resourceQuery": /\\^\\\\\\?url\\$/,
       "type": "asset/resource",
@@ -365,7 +365,7 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
     },
     {
       "generator": {
-        "filename": "static/svg/[name].[contenthash:8].svg",
+        "filename": "static/svg/[name].[contenthash:10].svg",
       },
       "parser": {
         "dataUrlCondition": {
@@ -557,7 +557,7 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
   "oneOf": [
     {
       "generator": {
-        "filename": "static/svg/[name].[contenthash:8].svg",
+        "filename": "static/svg/[name].[contenthash:10].svg",
       },
       "resourceQuery": /\\^\\\\\\?url\\$/,
       "type": "asset/resource",
@@ -711,7 +711,7 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
     },
     {
       "generator": {
-        "filename": "static/svg/[name].[contenthash:8].svg",
+        "filename": "static/svg/[name].[contenthash:10].svg",
       },
       "parser": {
         "dataUrlCondition": {
@@ -903,7 +903,7 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
   "oneOf": [
     {
       "generator": {
-        "filename": "static/svg/[name].[contenthash:8].svg",
+        "filename": "static/svg/[name].[contenthash:10].svg",
       },
       "resourceQuery": /\\^\\\\\\?url\\$/,
       "type": "asset/resource",
@@ -1057,7 +1057,7 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
     },
     {
       "generator": {
-        "filename": "static/svg/[name].[contenthash:8].svg",
+        "filename": "static/svg/[name].[contenthash:10].svg",
       },
       "parser": {
         "dataUrlCondition": {
@@ -1249,7 +1249,7 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
   "oneOf": [
     {
       "generator": {
-        "filename": "static/svg/[name].[contenthash:8].svg",
+        "filename": "static/svg/[name].[contenthash:10].svg",
       },
       "resourceQuery": /\\^\\\\\\?url\\$/,
       "type": "asset/resource",
@@ -1403,14 +1403,14 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
           "loader": "<ROOT>/packages/plugin-svgr/compiled/url-loader/index.js",
           "options": {
             "limit": 4096,
-            "name": "static/svg/[name].[contenthash:8].svg",
+            "name": "static/svg/[name].[contenthash:10].svg",
           },
         },
       ],
     },
     {
       "generator": {
-        "filename": "static/svg/[name].[contenthash:8].svg",
+        "filename": "static/svg/[name].[contenthash:10].svg",
       },
       "parser": {
         "dataUrlCondition": {

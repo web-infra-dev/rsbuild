@@ -1659,7 +1659,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "oneOf": [
             {
               "generator": {
-                "filename": "static/image/[name].[contenthash:8][ext]",
+                "filename": "static/image/[name].[contenthash:10][ext]",
               },
               "resourceQuery": /\\^\\\\\\?url\\$/,
               "type": "asset/resource",
@@ -1674,7 +1674,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             },
             {
               "generator": {
-                "filename": "static/image/[name].[contenthash:8][ext]",
+                "filename": "static/image/[name].[contenthash:10][ext]",
               },
               "parser": {
                 "dataUrlCondition": {
@@ -1690,7 +1690,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "oneOf": [
             {
               "generator": {
-                "filename": "static/svg/[name].[contenthash:8].svg",
+                "filename": "static/svg/[name].[contenthash:10].svg",
               },
               "resourceQuery": /\\^\\\\\\?url\\$/,
               "type": "asset/resource",
@@ -1705,7 +1705,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             },
             {
               "generator": {
-                "filename": "static/svg/[name].[contenthash:8].svg",
+                "filename": "static/svg/[name].[contenthash:10].svg",
               },
               "parser": {
                 "dataUrlCondition": {
@@ -1721,7 +1721,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "oneOf": [
             {
               "generator": {
-                "filename": "static/media/[name].[contenthash:8][ext]",
+                "filename": "static/media/[name].[contenthash:10][ext]",
               },
               "resourceQuery": /\\^\\\\\\?url\\$/,
               "type": "asset/resource",
@@ -1736,7 +1736,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             },
             {
               "generator": {
-                "filename": "static/media/[name].[contenthash:8][ext]",
+                "filename": "static/media/[name].[contenthash:10][ext]",
               },
               "parser": {
                 "dataUrlCondition": {
@@ -1752,7 +1752,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "oneOf": [
             {
               "generator": {
-                "filename": "static/font/[name].[contenthash:8][ext]",
+                "filename": "static/font/[name].[contenthash:10][ext]",
               },
               "resourceQuery": /\\^\\\\\\?url\\$/,
               "type": "asset/resource",
@@ -1767,7 +1767,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             },
             {
               "generator": {
-                "filename": "static/font/[name].[contenthash:8][ext]",
+                "filename": "static/font/[name].[contenthash:10][ext]",
               },
               "parser": {
                 "dataUrlCondition": {
@@ -1791,7 +1791,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
         {
           "dependency": "url",
           "generator": {
-            "filename": "static/wasm/[contenthash:8].module.wasm",
+            "filename": "static/wasm/[contenthash:10].module.wasm",
           },
           "test": /\\\\\\.wasm\\$/,
           "type": "asset/resource",
@@ -1806,7 +1806,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       },
     },
     "output": {
-      "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+      "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
       "bundlerInfo": {
         "force": false,
       },
@@ -1815,7 +1815,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "filename": "static/js/[name].js",
       "path": "<ROOT>/dist",
       "publicPath": "/",
-      "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
+      "webassemblyModuleFilename": "static/wasm/[contenthash:10].module.wasm",
     },
     "performance": {
       "hints": false,
@@ -2074,7 +2074,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "oneOf": [
             {
               "generator": {
-                "filename": "static/image/[name].[contenthash:8][ext]",
+                "filename": "static/image/[name].[contenthash:10][ext]",
               },
               "resourceQuery": /\\^\\\\\\?url\\$/,
               "type": "asset/resource",
@@ -2089,7 +2089,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             },
             {
               "generator": {
-                "filename": "static/image/[name].[contenthash:8][ext]",
+                "filename": "static/image/[name].[contenthash:10][ext]",
               },
               "parser": {
                 "dataUrlCondition": {
@@ -2105,7 +2105,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "oneOf": [
             {
               "generator": {
-                "filename": "static/svg/[name].[contenthash:8].svg",
+                "filename": "static/svg/[name].[contenthash:10].svg",
               },
               "resourceQuery": /\\^\\\\\\?url\\$/,
               "type": "asset/resource",
@@ -2120,7 +2120,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             },
             {
               "generator": {
-                "filename": "static/svg/[name].[contenthash:8].svg",
+                "filename": "static/svg/[name].[contenthash:10].svg",
               },
               "parser": {
                 "dataUrlCondition": {
@@ -2136,7 +2136,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "oneOf": [
             {
               "generator": {
-                "filename": "static/media/[name].[contenthash:8][ext]",
+                "filename": "static/media/[name].[contenthash:10][ext]",
               },
               "resourceQuery": /\\^\\\\\\?url\\$/,
               "type": "asset/resource",
@@ -2151,7 +2151,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             },
             {
               "generator": {
-                "filename": "static/media/[name].[contenthash:8][ext]",
+                "filename": "static/media/[name].[contenthash:10][ext]",
               },
               "parser": {
                 "dataUrlCondition": {
@@ -2167,7 +2167,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "oneOf": [
             {
               "generator": {
-                "filename": "static/font/[name].[contenthash:8][ext]",
+                "filename": "static/font/[name].[contenthash:10][ext]",
               },
               "resourceQuery": /\\^\\\\\\?url\\$/,
               "type": "asset/resource",
@@ -2182,7 +2182,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             },
             {
               "generator": {
-                "filename": "static/font/[name].[contenthash:8][ext]",
+                "filename": "static/font/[name].[contenthash:10][ext]",
               },
               "parser": {
                 "dataUrlCondition": {
@@ -2206,7 +2206,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
         {
           "dependency": "url",
           "generator": {
-            "filename": "static/wasm/[contenthash:8].module.wasm",
+            "filename": "static/wasm/[contenthash:10].module.wasm",
           },
           "test": /\\\\\\.wasm\\$/,
           "type": "asset/resource",
@@ -2235,7 +2235,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "splitChunks": false,
     },
     "output": {
-      "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+      "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
       "bundlerInfo": {
         "force": false,
       },
@@ -2250,7 +2250,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "module": true,
       "path": "<ROOT>/dist",
       "publicPath": "/",
-      "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
+      "webassemblyModuleFilename": "static/wasm/[contenthash:10].module.wasm",
       "workerChunkLoading": "import",
     },
     "performance": {

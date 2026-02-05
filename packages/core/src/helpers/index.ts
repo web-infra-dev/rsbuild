@@ -84,7 +84,7 @@ export function getFilename(
   isServer?: boolean,
 ) {
   const { filename, filenameHash } = config.output;
-  const defaultHash = '[contenthash:8]';
+  const defaultHash = '[contenthash:10]';
 
   const getHash = () => {
     if (typeof filenameHash === 'string') {
