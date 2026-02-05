@@ -628,9 +628,6 @@ importers:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
-      webpack:
-        specifier: ^5.104.1
-        version: 5.104.1
       webpack-merge:
         specifier: 6.0.1
         version: 6.0.1

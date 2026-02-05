@@ -94,7 +94,6 @@
     "supports-color": "^10.2.2",
     "tinyglobby": "0.2.14",
     "typescript": "^5.9.3",
-    "webpack": "^5.104.1",
     "webpack-merge": "6.0.1",
     "ws": "^8.19.0"
   },
