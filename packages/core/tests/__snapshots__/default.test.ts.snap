@@ -228,7 +228,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "static/image/[name].[contenthash:8][ext]",
+              "filename": "static/image/[name].[contenthash:10][ext]",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -243,7 +243,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           },
           {
             "generator": {
-              "filename": "static/image/[name].[contenthash:8][ext]",
+              "filename": "static/image/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -259,7 +259,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -274,7 +274,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           },
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
             "parser": {
               "dataUrlCondition": {
@@ -290,7 +290,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -305,7 +305,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           },
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -321,7 +321,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -336,7 +336,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           },
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -360,7 +360,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       {
         "dependency": "url",
         "generator": {
-          "filename": "static/wasm/[contenthash:8].module.wasm",
+          "filename": "static/wasm/[contenthash:10].module.wasm",
         },
         "test": /\\\\\\.wasm\\$/,
         "type": "asset/resource",
@@ -375,7 +375,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     },
   },
   "output": {
-    "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+    "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
     "bundlerInfo": {
       "force": false,
     },
@@ -384,7 +384,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "filename": "static/js/[name].js",
     "path": "<ROOT>/packages/core/tests/dist",
     "publicPath": "/",
-    "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
+    "webassemblyModuleFilename": "static/wasm/[contenthash:10].module.wasm",
   },
   "performance": {
     "hints": false,
@@ -726,7 +726,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "oneOf": [
           {
             "generator": {
-              "filename": "static/image/[name].[contenthash:8][ext]",
+              "filename": "static/image/[name].[contenthash:10][ext]",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -741,7 +741,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           },
           {
             "generator": {
-              "filename": "static/image/[name].[contenthash:8][ext]",
+              "filename": "static/image/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -757,7 +757,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "oneOf": [
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -772,7 +772,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           },
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
             "parser": {
               "dataUrlCondition": {
@@ -788,7 +788,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "oneOf": [
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -803,7 +803,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           },
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -819,7 +819,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "oneOf": [
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -834,7 +834,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           },
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -858,7 +858,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       {
         "dependency": "url",
         "generator": {
-          "filename": "static/wasm/[contenthash:8].module.wasm",
+          "filename": "static/wasm/[contenthash:10].module.wasm",
         },
         "test": /\\\\\\.wasm\\$/,
         "type": "asset/resource",
@@ -906,16 +906,16 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     },
   },
   "output": {
-    "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+    "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
     "bundlerInfo": {
       "force": false,
     },
-    "chunkFilename": "static/js/async/[name].[contenthash:8].js",
+    "chunkFilename": "static/js/async/[name].[contenthash:10].js",
     "devtoolModuleFilenameTemplate": "[relative-resource-path]",
-    "filename": "static/js/[name].[contenthash:8].js",
+    "filename": "static/js/[name].[contenthash:10].js",
     "path": "<ROOT>/packages/core/tests/dist",
     "publicPath": "/",
-    "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
+    "webassemblyModuleFilename": "static/wasm/[contenthash:10].module.wasm",
   },
   "performance": {
     "hints": false,
@@ -923,8 +923,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   "plugins": [
     CssExtractRspackPlugin {
       "options": {
-        "chunkFilename": "static/css/async/[name].[contenthash:8].css",
-        "filename": "static/css/[name].[contenthash:8].css",
+        "chunkFilename": "static/css/async/[name].[contenthash:10].css",
+        "filename": "static/css/[name].[contenthash:10].css",
         "ignoreOrder": true,
       },
     },
@@ -1223,7 +1223,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "oneOf": [
           {
             "generator": {
-              "filename": "static/image/[name].[contenthash:8][ext]",
+              "filename": "static/image/[name].[contenthash:10][ext]",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -1238,7 +1238,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           },
           {
             "generator": {
-              "filename": "static/image/[name].[contenthash:8][ext]",
+              "filename": "static/image/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -1254,7 +1254,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "oneOf": [
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -1269,7 +1269,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           },
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
             "parser": {
               "dataUrlCondition": {
@@ -1285,7 +1285,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "oneOf": [
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -1300,7 +1300,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           },
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -1316,7 +1316,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "oneOf": [
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -1331,7 +1331,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           },
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -1355,7 +1355,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       {
         "dependency": "url",
         "generator": {
-          "filename": "static/wasm/[contenthash:8].module.wasm",
+          "filename": "static/wasm/[contenthash:10].module.wasm",
         },
         "test": /\\\\\\.wasm\\$/,
         "type": "asset/resource",
@@ -1384,7 +1384,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "splitChunks": false,
   },
   "output": {
-    "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+    "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
     "bundlerInfo": {
       "force": false,
     },
@@ -1399,7 +1399,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "module": true,
     "path": "<ROOT>/packages/core/tests/dist",
     "publicPath": "/",
-    "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
+    "webassemblyModuleFilename": "static/wasm/[contenthash:10].module.wasm",
     "workerChunkLoading": "import",
   },
   "performance": {
@@ -1693,7 +1693,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "static/image/[name].[contenthash:8][ext]",
+              "filename": "static/image/[name].[contenthash:10][ext]",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -1708,7 +1708,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
           },
           {
             "generator": {
-              "filename": "static/image/[name].[contenthash:8][ext]",
+              "filename": "static/image/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -1724,7 +1724,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -1739,7 +1739,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
           },
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
             "parser": {
               "dataUrlCondition": {
@@ -1755,7 +1755,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -1770,7 +1770,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
           },
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -1786,7 +1786,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -1801,7 +1801,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
           },
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -1825,7 +1825,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
       {
         "dependency": "url",
         "generator": {
-          "filename": "static/wasm/[contenthash:8].module.wasm",
+          "filename": "static/wasm/[contenthash:10].module.wasm",
         },
         "test": /\\\\\\.wasm\\$/,
         "type": "asset/resource",
@@ -1844,7 +1844,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
     },
   },
   "output": {
-    "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+    "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
     "bundlerInfo": {
       "force": false,
     },
@@ -1853,7 +1853,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
     "filename": "static/js/[name].js",
     "path": "<ROOT>/packages/core/tests/dist",
     "publicPath": "/",
-    "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
+    "webassemblyModuleFilename": "static/wasm/[contenthash:10].module.wasm",
   },
   "performance": {
     "hints": false,

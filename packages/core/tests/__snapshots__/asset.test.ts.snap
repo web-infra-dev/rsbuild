@@ -8,7 +8,7 @@ exports[`plugin-asset > should add image rules correctly 1`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "static/image/[name].[contenthash:8][ext]",
+              "filename": "static/image/[name].[contenthash:10][ext]",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -23,7 +23,7 @@ exports[`plugin-asset > should add image rules correctly 1`] = `
           },
           {
             "generator": {
-              "filename": "static/image/[name].[contenthash:8][ext]",
+              "filename": "static/image/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -39,7 +39,7 @@ exports[`plugin-asset > should add image rules correctly 1`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -54,7 +54,7 @@ exports[`plugin-asset > should add image rules correctly 1`] = `
           },
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
             "parser": {
               "dataUrlCondition": {
@@ -70,7 +70,7 @@ exports[`plugin-asset > should add image rules correctly 1`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -85,7 +85,7 @@ exports[`plugin-asset > should add image rules correctly 1`] = `
           },
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -101,7 +101,7 @@ exports[`plugin-asset > should add image rules correctly 1`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -116,7 +116,7 @@ exports[`plugin-asset > should add image rules correctly 1`] = `
           },
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -140,7 +140,7 @@ exports[`plugin-asset > should add image rules correctly 1`] = `
     ],
   },
   "output": {
-    "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+    "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
   },
   "plugins": [
     {
@@ -158,7 +158,7 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "[name].[contenthash:8][ext]",
+              "filename": "[name].[contenthash:10][ext]",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -173,7 +173,7 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
           },
           {
             "generator": {
-              "filename": "[name].[contenthash:8][ext]",
+              "filename": "[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -189,7 +189,7 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -204,7 +204,7 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
           },
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
             "parser": {
               "dataUrlCondition": {
@@ -220,7 +220,7 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -235,7 +235,7 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
           },
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -251,7 +251,7 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -266,7 +266,7 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
           },
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -290,7 +290,7 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
     ],
   },
   "output": {
-    "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+    "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
   },
   "plugins": [
     {
@@ -308,7 +308,7 @@ exports[`plugin-asset > should allow to use distPath.image to modify dist path 1
         "oneOf": [
           {
             "generator": {
-              "filename": "foo/[name].[contenthash:8][ext]",
+              "filename": "foo/[name].[contenthash:10][ext]",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -323,7 +323,7 @@ exports[`plugin-asset > should allow to use distPath.image to modify dist path 1
           },
           {
             "generator": {
-              "filename": "foo/[name].[contenthash:8][ext]",
+              "filename": "foo/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -339,7 +339,7 @@ exports[`plugin-asset > should allow to use distPath.image to modify dist path 1
         "oneOf": [
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -354,7 +354,7 @@ exports[`plugin-asset > should allow to use distPath.image to modify dist path 1
           },
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
             "parser": {
               "dataUrlCondition": {
@@ -370,7 +370,7 @@ exports[`plugin-asset > should allow to use distPath.image to modify dist path 1
         "oneOf": [
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -385,7 +385,7 @@ exports[`plugin-asset > should allow to use distPath.image to modify dist path 1
           },
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -401,7 +401,7 @@ exports[`plugin-asset > should allow to use distPath.image to modify dist path 1
         "oneOf": [
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -416,7 +416,7 @@ exports[`plugin-asset > should allow to use distPath.image to modify dist path 1
           },
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -440,7 +440,7 @@ exports[`plugin-asset > should allow to use distPath.image to modify dist path 1
     ],
   },
   "output": {
-    "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+    "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
   },
   "plugins": [
     {
@@ -489,7 +489,7 @@ exports[`plugin-asset > should allow to use filename.image to modify filename 1`
         "oneOf": [
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -504,7 +504,7 @@ exports[`plugin-asset > should allow to use filename.image to modify filename 1`
           },
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
             "parser": {
               "dataUrlCondition": {
@@ -520,7 +520,7 @@ exports[`plugin-asset > should allow to use filename.image to modify filename 1`
         "oneOf": [
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -535,7 +535,7 @@ exports[`plugin-asset > should allow to use filename.image to modify filename 1`
           },
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -551,7 +551,7 @@ exports[`plugin-asset > should allow to use filename.image to modify filename 1`
         "oneOf": [
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
             "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
@@ -566,7 +566,7 @@ exports[`plugin-asset > should allow to use filename.image to modify filename 1`
           },
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -590,7 +590,7 @@ exports[`plugin-asset > should allow to use filename.image to modify filename 1`
     ],
   },
   "output": {
-    "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+    "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
   },
   "plugins": [
     {

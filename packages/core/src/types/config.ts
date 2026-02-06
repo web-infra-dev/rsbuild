@@ -943,34 +943,34 @@ export type FilenameConfig = {
    * The name of the JavaScript files.
    * @default
    * - dev: '[name].js'
-   * - prod: '[name].[contenthash:8].js'
+   * - prod: '[name].[contenthash:10].js'
    */
   js?: Rspack.Filename;
   /**
    * The name of the CSS files.
    * @default
    * - dev: '[name].css'
-   * - prod: '[name].[contenthash:8].css'
+   * - prod: '[name].[contenthash:10].css'
    */
   css?: Rspack.CssFilename;
   /**
    * The name of the SVG images.
-   * @default '[name].[contenthash:8].svg'
+   * @default '[name].[contenthash:10].svg'
    */
   svg?: Rspack.AssetModuleFilename;
   /**
    * The name of the font files.
-   * @default '[name].[contenthash:8][ext]'
+   * @default '[name].[contenthash:10][ext]'
    */
   font?: Rspack.AssetModuleFilename;
   /**
    * The name of non-SVG images.
-   * @default '[name].[contenthash:8][ext]'
+   * @default '[name].[contenthash:10][ext]'
    */
   image?: Rspack.AssetModuleFilename;
   /**
    * The name of media assets, such as video.
-   * @default '[name].[contenthash:8][ext]'
+   * @default '[name].[contenthash:10][ext]'
    */
   media?: Rspack.AssetModuleFilename;
   /**
@@ -980,7 +980,7 @@ export type FilenameConfig = {
   wasm?: Rspack.WebassemblyModuleFilename;
   /**
    * The name of other assets, except for above (image, svg, font, html, wasm...)
-   * @default '[name].[contenthash:8][ext]'
+   * @default '[name].[contenthash:10][ext]'
    */
   assets?: Rspack.AssetModuleFilename;
 };
