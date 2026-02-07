@@ -18,7 +18,7 @@ export const pluginNodeAddons = (): RsbuildPlugin => ({
 
         if (filename === null) {
           throw new Error(
-            `${color.dim('[rsbuild:node-addons]')} Failed to load Node.js addon: ${color.yellow(resourcePath)}`,
+            `${color.dim('[rsbuild:nodeAddons]')} Failed to load Node.js addon: ${color.yellow(resourcePath)}`,
           );
         }
 

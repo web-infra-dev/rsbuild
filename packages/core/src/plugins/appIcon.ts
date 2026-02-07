@@ -22,7 +22,7 @@ type IconExtra = {
 );
 
 export const pluginAppIcon = (): RsbuildPlugin => ({
-  name: 'rsbuild:app-icon',
+  name: 'rsbuild:appIcon',
 
   setup(api) {
     const htmlTagsMap = new Map<string, HtmlBasicTag[]>();
@@ -103,7 +103,7 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
           if (icon.target === 'web-app-manifest' && !appIcon.name) {
             addCompilationError(
               compilation,
-              `${color.dim('[rsbuild:app-icon]')} ${color.yellow(
+              `${color.dim('[rsbuild:appIcon]')} ${color.yellow(
                 '"appIcon.name"',
               )} is required when ${color.yellow('"target"')} is ${color.yellow(
                 '"web-app-manifest"',
@@ -116,7 +116,7 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
             if (!compilation.inputFileSystem) {
               addCompilationError(
                 compilation,
-                `${color.dim('[rsbuild:app-icon]')} Failed to read the icon file as ${color.yellow(
+                `${color.dim('[rsbuild:appIcon]')} Failed to read the icon file as ${color.yellow(
                   '"compilation.inputFileSystem"',
                 )} is not available.`,
               );
@@ -128,7 +128,7 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
             ) {
               addCompilationError(
                 compilation,
-                `${color.dim('[rsbuild:app-icon]')} Failed to find the icon file at ${color.yellow(
+                `${color.dim('[rsbuild:appIcon]')} Failed to find the icon file at ${color.yellow(
                   icon.absolutePath,
                 )}.`,
               );
