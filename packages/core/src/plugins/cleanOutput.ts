@@ -133,6 +133,17 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
 
       // Use `for...of` to handle nested directories correctly
       for (const pathInfo of pathInfos) {
+        // Users may mistakenly set `distDist.root` to '/'
+        if (pathInfo.path === '/') {
+          const prefix = color.dim('[rsbuild:cleanDistPath]');
+          throw new Error(
+            `${prefix} Refusing to clean output at ${color.cyan(
+              `"${pathInfo.path}"`,
+            )}. Update ${color.yellow(
+              '`output.distPath.root`',
+            )} or set ${color.yellow('`output.cleanDistPath`')} to false.`,
+          );
+        }
         await emptyDir(pathInfo.path, pathInfo.keep);
       }
     };
