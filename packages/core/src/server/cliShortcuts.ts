@@ -5,6 +5,11 @@ import type { CliShortcut, NormalizedConfig } from '../types/config';
 export const isCliShortcutsEnabled = (config: NormalizedConfig): boolean =>
   config.dev.cliShortcuts && isTTY('stdin');
 
+// Normalize user input so shortcuts are case-insensitive
+// and still work with accidental surrounding whitespace.
+export const normalizeShortcutInput = (input: string): string =>
+  input.trim().toLocaleLowerCase();
+
 export async function setupCliShortcuts({
   help = true,
   openPage,
@@ -84,6 +89,8 @@ export async function setupCliShortcuts({
   });
 
   rl.on('line', (input) => {
+    input = normalizeShortcutInput(input);
+
     if (input === 'h') {
       let message = `\n  ${color.bold(color.blue('Shortcuts:'))}\n`;
       for (const shortcut of shortcuts) {
