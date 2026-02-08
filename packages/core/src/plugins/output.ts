@@ -16,33 +16,14 @@ import type {
 
 function getPublicPath({
   isDev,
-  isServer,
   config,
   context,
 }: {
   isDev: boolean;
-  isServer: boolean;
   config: NormalizedEnvironmentConfig;
   context: RsbuildContext;
 }) {
   const { dev, output, server } = config;
-
-  // For server targets (node), use empty string or explicit assetPrefix to enable relative paths
-  // This is important for worker_threads and other node-specific imports
-  // See: https://github.com/web-infra-dev/rsbuild/issues/6539
-  if (isServer) {
-    if (!isDev && typeof output.assetPrefix === 'string') {
-      return output.assetPrefix;
-    }
-    // In dev mode, if server.base is set, use it for SSR hydration compatibility
-    // Otherwise, use empty string by default for node targets
-    if (isDev && server.base && server.base !== '/') {
-      // Use server.base as a relative path (no protocol/hostname) for node targets
-      return formatPublicPath(server.base);
-    }
-    // For node targets in dev mode without server.base, use empty string
-    return '';
-  }
 
   let publicPath = DEFAULT_ASSET_PREFIX;
 
@@ -51,13 +32,6 @@ function getPublicPath({
     if (typeof output.assetPrefix === 'string') {
       publicPath = output.assetPrefix;
     }
-  } else if (
-    typeof output.assetPrefix === 'string' &&
-    output.assetPrefix !== DEFAULT_ASSET_PREFIX
-  ) {
-    // In dev mode, prefer environment-specific `output.assetPrefix` over `dev.assetPrefix`
-    // but only if it's explicitly set to a non-default value
-    publicPath = output.assetPrefix;
   } else if (typeof dev.assetPrefix === 'string') {
     publicPath = dev.assetPrefix;
   } else if (dev.assetPrefix) {
@@ -109,7 +83,6 @@ export const pluginOutput = (): RsbuildPlugin => ({
         const publicPath = getPublicPath({
           config,
           isDev,
-          isServer,
           context: api.context,
         });
 
@@ -141,7 +114,10 @@ export const pluginOutput = (): RsbuildPlugin => ({
                 }
               : posix.join(jsAsyncPath, jsFilename),
           )
-          .publicPath(publicPath);
+          .publicPath(publicPath)
+          .bundlerInfo({
+            force: false,
+          });
 
         if (isServer) {
           chain.output.library({
