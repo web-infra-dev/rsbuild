@@ -21,7 +21,7 @@ pnpm e2e
 # focused work
 npx nx build @rsbuild/core
 pnpm test packages/core/tests/foo.test.ts
-pnpm e2e foo/index.test.ts
+pnpm e2e css
 ```
 
 ## Project structure
