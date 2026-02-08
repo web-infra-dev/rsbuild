@@ -1,5 +1,6 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
+import { castArray } from '../helpers';
 import { getPathnameFromUrl } from '../helpers/path';
 import { isVerbose, logger } from '../logger';
 import type {
@@ -7,6 +8,8 @@ import type {
   InternalContext,
   NormalizedConfig,
   PreviewOptions,
+  PreviewSetupMiddlewaresFn,
+  RequestHandler,
   ServerConfig,
 } from '../types';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
@@ -43,6 +46,7 @@ type RsbuildProdServerOptions = {
     assetPrefixes: string[];
   };
   serverConfig: ServerConfig;
+  setupMiddlewares?: PreviewSetupMiddlewaresFn | PreviewSetupMiddlewaresFn[];
 };
 
 export class RsbuildProdServer {
@@ -62,9 +66,35 @@ export class RsbuildProdServer {
     await this.applyDefaultMiddlewares();
   }
 
+  private applySetupMiddlewares(): {
+    before: RequestHandler[];
+    after: RequestHandler[];
+  } {
+    const setupMiddlewares = this.options.setupMiddlewares || [];
+
+    const before: RequestHandler[] = [];
+    const after: RequestHandler[] = [];
+
+    for (const handler of castArray(setupMiddlewares)) {
+      handler({
+        unshift: (...handlers) => before.unshift(...handlers),
+        push: (...handlers) => after.push(...handlers),
+      });
+    }
+
+    return { before, after };
+  }
+
   private async applyDefaultMiddlewares() {
     const { headers, proxy, historyApiFallback, compress, base, cors } =
       this.options.serverConfig;
+
+    // Order: setupMiddlewares.unshift => internal middleware => setupMiddlewares.push
+    const { before, after } = this.applySetupMiddlewares();
+
+    for (const middleware of before) {
+      this.middlewares.use(middleware);
+    }
 
     if (isVerbose()) {
       this.middlewares.use(getRequestLoggerMiddleware());
@@ -130,6 +160,11 @@ export class RsbuildProdServer {
 
       // ensure fallback request can be handled by sirv
       await this.applyStaticAssetMiddleware();
+    }
+
+    // Apply setupMiddlewares.push after internal middlewares (consistent with dev server)
+    for (const middleware of after) {
+      this.middlewares.use(middleware);
     }
 
     this.middlewares.use(faviconFallbackMiddleware);
@@ -200,6 +235,7 @@ export async function startProdServer(
         ),
       },
       serverConfig,
+      setupMiddlewares: config.preview.setupMiddlewares,
     },
     middlewares,
   );

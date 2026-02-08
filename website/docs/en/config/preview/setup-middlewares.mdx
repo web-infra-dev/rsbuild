@@ -1,0 +1,96 @@
+# preview.setupMiddlewares
+
+- **Type:**
+
+```ts
+type PreviewSetupMiddlewaresFn = (middlewares: {
+  unshift: (...handlers: RequestHandler[]) => void;
+  push: (...handlers: RequestHandler[]) => void;
+}) => void;
+
+type SetupMiddlewares = PreviewSetupMiddlewaresFn | PreviewSetupMiddlewaresFn[];
+```
+
+- **Default:** `undefined`
+- **Version:** `>= 2.0.0`
+
+Used to add custom middleware to the preview server.
+
+Unlike [dev.setupMiddlewares](/config/dev/setup-middlewares), this does not receive a server context since preview mode has no HMR or environment API.
+
+## Basic usage
+
+`setupMiddlewares` function receives a `middlewares` object, you can add custom middleware by `unshift` and `push` methods:
+
+- Use `unshift` to prepend middleware to the array, executed earlier than the built-in middleware.
+- Use `push` to append middleware to the array, executed later than the built-in middleware.
+
+```ts title="rsbuild.config.ts"
+export default {
+  preview: {
+    setupMiddlewares: (middlewares) => {
+      middlewares.unshift((req, res, next) => {
+        console.log('first');
+        next();
+      });
+
+      middlewares.push((req, res, next) => {
+        console.log('last');
+        next();
+      });
+    },
+  },
+};
+```
+
+## Authentication example
+
+A common use case is adding authentication middleware for the preview server:
+
+```ts title="rsbuild.config.ts"
+export default {
+  preview: {
+    setupMiddlewares: (middlewares) => {
+      middlewares.unshift((req, res, next) => {
+        const token = req.headers['authorization'];
+
+        if (!isValidToken(token)) {
+          res.writeHead(401, { 'Content-Type': 'text/plain' });
+          res.end('Unauthorized');
+          return;
+        }
+
+        next();
+      });
+    },
+  },
+};
+```
+
+## Multiple functions
+
+`setupMiddlewares` also supports passing an array, each item of which is a function to set up middlewares:
+
+```ts title="rsbuild.config.ts"
+export default {
+  preview: {
+    setupMiddlewares: [
+      (middlewares) => {
+        middlewares.unshift(authMiddleware);
+      },
+      (middlewares) => {
+        middlewares.push(logMiddleware);
+      },
+    ],
+  },
+};
+```
+
+## Difference from dev.setupMiddlewares
+
+| Feature        | dev.setupMiddlewares | preview.setupMiddlewares      |
+| -------------- | -------------------- | ----------------------------- |
+| Mode           | Development          | Preview                       |
+| `sockWrite`    | ✅ Available         | ❌ Not available              |
+| `environments` | ✅ Available         | ❌ Not available              |
+| Use case       | HMR, SSR, etc.       | Authentication, logging, etc. |
