@@ -15,7 +15,10 @@ export const getPublicPathFromCompiler = (
 
   if (typeof publicPath === 'string') {
     // 'auto' is a magic value in Rspack and behave like `publicPath: ""`
-    if (publicPath === 'auto') {
+    // Empty string is a valid value representing a relative path and should be preserved
+    // This is important for server targets (node) to enable relative paths for worker_threads
+    // See: https://github.com/web-infra-dev/rsbuild/issues/6539
+    if (publicPath === 'auto' || publicPath === '') {
       return '';
     }
     return publicPath.endsWith('/') ? publicPath : `${publicPath}/`;
