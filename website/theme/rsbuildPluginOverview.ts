@@ -35,6 +35,10 @@ export const rsbuildPluginOverview: RsbuildPlugin = {
             link: '/config/log-level',
           },
           {
+            text: 'splitChunks',
+            link: '/config/split-chunks',
+          },
+          {
             text: 'environments',
             link: '/config/environments',
           },

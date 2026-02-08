@@ -1,8 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { nodeMinifyConfig } from '@rsbuild/config/rslib.config.ts';
-import type { Rspack, rsbuild } from '@rslib/core';
-import { defineConfig } from '@rslib/core';
+import { defineConfig, type Rsbuild, type Rspack } from '@rslib/core';
 import pkgJson from './package.json' with { type: 'json' };
 import prebundleConfig from './prebundle.config.ts';
 
@@ -24,7 +23,6 @@ for (const item of prebundleConfig.dependencies) {
 }
 
 const externals: Rspack.Configuration['externals'] = [
-  'webpack',
   '@rspack/core',
   '@rsbuild/core',
   // yaml and tsx are optional dependencies of `postcss-load-config`
@@ -49,7 +47,7 @@ const externals: Rspack.Configuration['externals'] = [
   },
 ];
 
-const pluginFixDtsTypes: rsbuild.RsbuildPlugin = {
+const pluginFixDtsTypes: Rsbuild.RsbuildPlugin = {
   name: 'fix-dts-types',
   setup(api) {
     api.onAfterBuild(() => {
@@ -67,6 +65,52 @@ const pluginFixDtsTypes: rsbuild.RsbuildPlugin = {
         'utf8',
       );
     });
+  },
+};
+
+// Rslib currently doesn't provide a way to preserve `__webpack_require__.*`
+// references in the emitted bundle.
+//
+// To work around this, we use "magic" placeholder identifiers during authoring
+// (e.g. `RSPACK_MODULE_HOT`, `RSPACK_INTERCEPT_MODULE_EXECUTION`) so rslib
+// won't try to resolve/transform `__webpack_require__.*` at build time.
+//
+// After bundling, this plugin performs a plain string replacement to swap
+// those placeholders back to the actual Rspack runtime globals.
+const replacePlugin: Rsbuild.RsbuildPlugin = {
+  name: 'replace-plugin',
+  setup(api) {
+    const RSPACK_MODULE_HOT = 'RSPACK_MODULE_HOT';
+    const RSPACK_INTERCEPT_MODULE_EXECUTION =
+      'RSPACK_INTERCEPT_MODULE_EXECUTION';
+
+    api.processAssets(
+      { stage: 'optimize-inline' },
+      ({ assets, compiler, compilation, sources }) => {
+        for (const name of Object.keys(assets)) {
+          const asset = assets[name];
+          if (!name.endsWith('.js')) {
+            continue;
+          }
+
+          const source = asset.source().toString();
+          if (
+            !source.includes(RSPACK_MODULE_HOT) &&
+            !source.includes(RSPACK_INTERCEPT_MODULE_EXECUTION)
+          ) {
+            continue;
+          }
+
+          const replacedSource = source
+            .replaceAll(RSPACK_MODULE_HOT, 'module.hot')
+            .replaceAll(
+              RSPACK_INTERCEPT_MODULE_EXECUTION,
+              compiler.rspack.RuntimeGlobals.interceptModuleExecution,
+            );
+          compilation.updateAsset(name, new sources.RawSource(replacedSource));
+        }
+      },
+    );
   },
 };
 
@@ -141,6 +185,7 @@ export default defineConfig({
           root: './dist/client',
         },
       },
+      plugins: [replacePlugin],
     },
   ],
 });

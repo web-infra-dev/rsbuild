@@ -6,6 +6,45 @@ This document lists all breaking changes from Rsbuild 1.x to 2.0. Use it as a mi
 
 > This guide is a work in progress. Content will be added incrementally as Rsbuild 2.0 beta evolves.
 
+## Using Agent Skills
+
+If you are using a Coding Agent that supports Skills, install the [rsbuild-v2-upgrade](https://github.com/rstackjs/agent-skills#rsbuild-v2-upgrade) skill to help with the upgrade process from v1 to v2.
+
+```bash
+npx skills add rstackjs/agent-skills --skill rsbuild-v2-upgrade
+```
+
+After installation, let the Coding Agent guide you through the upgrade.
+
+## Upgrade Rsbuild to v2
+
+- Upgrade `@rsbuild/core` to the 2.0 Beta release:
+
+```diff
+{
+  "devDependencies": {
+-   "@rsbuild/core": "^1.0.0",
++   "@rsbuild/core": "^2.0.0-beta.0"
+  }
+}
+```
+
+- Upgrade all Rsbuild plugins to their latest versions:
+
+```bash
+# Upgrade dependencies in the current directory
+npx taze major --include /rsbuild/ -w
+
+# Or recursively upgrade the entire monorepo
+npx taze major --include /rsbuild/ -w -r
+```
+
+## Rspack v2
+
+Rsbuild v2 now depends on [@rspack/core](https://www.npmjs.com/package/@rspack/core) v2. If you use custom Rspack configurations or plugins, you may need to make corresponding adjustments.
+
+See the [Rspack v2 upgrade guide](https://github.com/web-infra-dev/rspack/discussions/9270) for all breaking changes.
+
 ## Default browserslist updated
 
 In Rsbuild 2.0, the default browserslist have been updated to better reflect the modern web platform baseline.
@@ -165,6 +204,14 @@ export default {
 };
 ```
 
+### Remove `performance.removeMomentLocale`
+
+The `performance.removeMomentLocale` option has been removed.
+
+This option existed to drop Moment.js locale data from the bundle, but Rspack v2 does not include Moment locales by default, so the option is no longer necessary.
+
+> For background, see [web-infra-dev/rsbuild#6991](https://github.com/web-infra-dev/rsbuild/pull/6991).
+
 ### Remove `performance.profile`
 
 The `performance.profile` option has been removed. If you relied on it to emit a stats JSON file, use [stats.toJson()](/api/javascript-api/instance#stats-object) in a custom plugin instead:
@@ -190,18 +237,207 @@ export default {
 };
 ```
 
-### Remove HTML template parameters
+### Migrate `performance.chunkSplit`
 
-The deprecated template parameters have been removed from `html.templateParameters`
+`performance.chunkSplit` is deprecated in Rsbuild 2.0, but not removed yet, so it still works.
 
-- `webpackConfig`: use `rspackConfig` instead.
-- `htmlWebpackPlugin`: use `htmlPlugin` instead.
+We recommend migrating to the new [splitChunks](/config/split-chunks) option. It aligns with Rspack's [optimization.splitChunks](https://rspack.rs/plugins/webpack/split-chunks-plugin) and provides presets that mirror `performance.chunkSplit.strategy`.
+
+#### strategy
+
+- `strategy: 'split-by-experience'` → `splitChunks.preset: 'default'`
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      strategy: 'split-by-experience',
+-    },
+-  },
++  splitChunks: {
++    preset: 'default',
++  },
+};
+```
+
+- `strategy: 'split-by-module'` → `splitChunks.preset: 'per-package'`
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      strategy: 'split-by-module',
+-    },
+-  },
++  splitChunks: {
++    preset: 'per-package',
++  },
+};
+```
+
+- `strategy: 'single-vendor'` → `splitChunks.preset: 'single-vendor'`
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      strategy: 'single-vendor',
+-    },
+-  },
++  splitChunks: {
++    preset: 'single-vendor',
++  },
+};
+```
+
+- `strategy: 'all-in-one'` → disable chunk splitting
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      strategy: 'all-in-one',
+-    },
+-  },
++  splitChunks: false,
+};
+```
+
+- `strategy: 'custom'` + `splitChunks` → `splitChunks.preset: 'none'`
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      strategy: 'custom',
+-      splitChunks: {
+-        // ...
+-      },
+-    },
+-  },
++  splitChunks: {
++    preset: 'none',
++    // ...
++  },
+};
+```
+
+- `strategy: 'split-by-size'` → configure `minSize` / `maxSize` directly
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      strategy: 'split-by-size',
+-      minSize: 20000,
+-      maxSize: 50000,
+-    },
+-  },
++  splitChunks: {
++    preset: 'none',
++    minSize: 20000,
++    maxSize: 50000,
++  },
+};
+```
+
+- `override` → `splitChunks` directly
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      override: {
+-        // ...
+-      },
+-    },
+-  },
++  splitChunks: {
++    // ...
++  },
+};
+```
+
+#### forceSplitting
+
+`forceSplitting` is syntactic sugar for `cacheGroups`, so you can replace it directly with `cacheGroups`:
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      forceSplitting: {
+-        axios: /node_modules[\\/]axios/,
+-      },
+-    },
+-  },
++  splitChunks: {
++    cacheGroups: {
++      axios: {
++        test: /node_modules[\\/]axios/,
++        name: 'axios',
++        chunks: 'all',
++        priority: 0, // Use 1 when using single-vendor preset
++        enforce: true,
++      },
++    },
++  },
+};
+```
+
+### Proxy middleware upgraded
+
+Rsbuild has upgraded its dependency on [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) from v2 to v3 and some options have changed.
+
+You can follow the examples below to migrate your config, or check the [http-proxy-middleware v3 migration guide](https://github.com/chimurai/http-proxy-middleware/blob/master/MIGRATION.md#v3-breaking-changes) for more details.
+
+- The `context` option is replaced by `pathFilter`:
+
+```diff title="rsbuild.config.ts"
+export default {
+  server: {
+    proxy: [
+      {
+-       context: '/api',
++       pathFilter: '/api',
+        target: 'https://example.com',
+      },
+    ],
+  },
+};
+```
+
+- Proxy events are now configured in a unified way using the `on` option:
+
+```diff title="rsbuild.config.ts"
+export default {
+  server: {
+    proxy: {
+      '/api': {
+-       onOpen: () => {},
+-       onClose: () => {},
+-       onError: () => {},
+-       onProxyReq: () => {},
+-       onProxyRes: () => {},
++       on: {
++         open: () => {},
++         close: () => {},
++         error: () => {},
++         proxyReq: () => {},
++         proxyRes: () => {},
++       },
+      },
+    },
+  },
+};
+```
 
 ## JavaScript API
 
 - Removed the deprecated `compiler` parameter from `rsbuild.build()`.
 - Removed the deprecated `compiler` parameter from `rsbuild.startDevServer()`.
 - Removed the deprecated [content-changed](/api/javascript-api/dev-server-api#sockwrite) message type from `sockWrite`, use `static-changed` instead.
+- The default value of the `loader` parameter of [loadConfig](/api/javascript-api/core#loadconfig) method has changed from `jiti` to `auto`, preferring the native Node.js loader.
 
 ## Dropping webpack support
 
@@ -216,3 +452,67 @@ The specific changes are as follows:
 - Removed the `api.modifyWebpackChain` and `api.modifyWebpackConfig` plugin hooks.
 - Removed the `webpack` type from the `api.context.bundlerType`.
 - Removed webpack-related types.
+
+## Built-in rule changes
+
+The built-in JS and CSS transform rules now use [oneOf](https://rspack.rs/config/module-rules#rulesoneof) to separate different branches. If you customized the JS or CSS rules with [tools.bundlerChain](/config/tools/bundler-chain#toolsbundlerchain) or [api.modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain), you may need to adjust your configuration.
+
+### JavaScript rule
+
+The built-in JS rule is now split into two `oneOf` branches:
+
+- `CHAIN_ID.ONE_OF.JS_MAIN`: for SWC transforms
+- `CHAIN_ID.ONE_OF.JS_RAW`: for `?raw` imports
+
+If you previously added loaders on `CHAIN_ID.RULE.JS`, move them to the `JS_MAIN` branch:
+
+```diff title="rsbuild.config.ts"
+export default {
+  tools: {
+    bundlerChain(chain, { CHAIN_ID }) {
+      const jsRule = chain.module.rule(CHAIN_ID.RULE.JS);
+
+-     jsRule.use('my-loader').loader('my-loader');
++     jsRule
++       .oneOf(CHAIN_ID.ONE_OF.JS_MAIN)
++       .use('my-loader')
++       .loader('my-loader');
+    },
+  },
+};
+```
+
+### CSS rule
+
+The built-in CSS rule is split into three `oneOf` branches:
+
+- `CHAIN_ID.ONE_OF.CSS_MAIN`: normal CSS transforms
+- `CHAIN_ID.ONE_OF.CSS_RAW`: for `?raw` imports
+- `CHAIN_ID.ONE_OF.CSS_INLINE`: for `?inline` imports
+
+If you previously added loaders on `CHAIN_ID.RULE.CSS`, move them to the `CSS_MAIN` branch:
+
+```diff title="rsbuild.config.ts"
+export default {
+  tools: {
+    bundlerChain(chain, { CHAIN_ID }) {
+      const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
+
+-     cssRule.use('my-css-loader').loader('my-css-loader');
++     cssRule
++       .oneOf(CHAIN_ID.ONE_OF.CSS_MAIN)
++       .use('my-css-loader')
++       .loader('my-css-loader');
+    },
+  },
+};
+```
+
+The built-in rules in the Less/Sass/Stylus plugins have the same `oneOf` change, so update customizations to use the corresponding `ONE_OF` branches there as well.
+
+## Others
+
+- The query parameter `?__inline=false` has been removed, use `?url` instead.
+- The deprecated template parameters have been removed from `html.templateParameters`
+  - `webpackConfig`: use `rspackConfig` instead.
+  - `htmlWebpackPlugin`: use `htmlPlugin` instead.

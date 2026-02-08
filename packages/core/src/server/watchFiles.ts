@@ -1,6 +1,5 @@
-import type { FSWatcher } from '../../compiled/chokidar/index.js';
+import type { FSWatcher } from '../../compiled/chokidar';
 import { castArray } from '../helpers';
-import { requireCompiledPackage } from '../helpers/vendors';
 import type {
   ChokidarOptions,
   DevConfig,
@@ -123,7 +122,9 @@ export async function createChokidar(
   root: string,
   options: ChokidarOptions,
 ): Promise<FSWatcher> {
-  const chokidar = requireCompiledPackage('chokidar');
+  const { default: chokidar } = await import(
+    /* webpackChunkName: "chokidar" */ 'chokidar'
+  );
 
   const watchFiles = new Set<string>();
 

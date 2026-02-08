@@ -30,6 +30,11 @@
       matchPackageNames: ['/rspress/'],
     },
     {
+      groupName: 'Rstest',
+      groupSlug: 'rstest',
+      matchPackageNames: ['/rstest/'],
+    },
+    {
       groupName: 'Rslib',
       groupSlug: 'rslib',
       matchPackageNames: ['/rslib/'],
@@ -38,11 +43,6 @@
       groupName: 'Sass',
       groupSlug: 'sass',
       matchPackageNames: ['/sass/'],
-    },
-    {
-      groupName: 'ESLint',
-      groupSlug: 'eslint',
-      matchPackageNames: ['/eslint/'],
     },
     {
       groupName: 'Module Federation',
@@ -91,6 +91,7 @@
   ignoreDeps: [
     // manually handle updates
     'node',
+    '@rspack/core',
     // some loaders still depend on loader-utils v2
     'loader-utils',
     // major version contains breaking changes

@@ -245,13 +245,7 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
 
         const finalOptions = await Promise.all(
           entryNames.map(async (entryName) => {
-            // EntryDescription type is different between webpack and Rspack
-            const entryValue = entries[entryName].values() as (
-              | string
-              | string[]
-              | EntryDescription
-            )[];
-
+            const entryValue = entries[entryName].values();
             const chunks = getChunks(entryName, entryValue);
             const inject = getInject(entryName, config);
             const filename = htmlPaths[entryName];

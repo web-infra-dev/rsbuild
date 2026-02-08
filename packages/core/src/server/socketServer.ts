@@ -61,13 +61,22 @@ export type ServerMessageResolvedClientError = {
   };
 };
 
+export type ServerCustomMessage = {
+  type: 'custom';
+  data: {
+    event: string;
+    data?: any;
+  };
+};
+
 export type ServerMessage =
   | ServerMessageOk
   | ServerMessageStaticChanged
   | ServerMessageHash
   | ServerMessageWarnings
   | ServerMessageErrors
-  | ServerMessageResolvedClientError;
+  | ServerMessageResolvedClientError
+  | ServerCustomMessage;
 
 export type ClientMessageError = {
   type: 'client-error';

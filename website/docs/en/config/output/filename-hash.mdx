@@ -33,7 +33,7 @@ dist/static/js/index.js
 
 ### Hash format
 
-The default hash format is `contenthash:8`, which generates an 8-bit hash based on the content of the file.
+The default hash format is `contenthash:10`, which generates a 10-character hash based on the content of the file.
 
 You can set `output.filenameHash` to other formats supported by Rspack and customize the length.
 
@@ -56,3 +56,9 @@ The optional hash formats are:
 - [output.filename](/config/output/filename) has a higher priority than `output.filenameHash`.
 - By default, when the target is not `web`, the hash will not be included in the filename of the output files, such as Node.js bundles.
 - By default, the filename in development mode does not include a hash.
+
+## Version history
+
+| Version | Changes                                  |
+| ------- | ---------------------------------------- |
+| v2.0.0  | Default hash length changed from 8 to 10 |

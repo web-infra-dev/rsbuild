@@ -1,9 +1,12 @@
 import { createRsbuild } from '../src';
 
 describe('should use Rspack as the default bundler', () => {
+  afterEach(() => {
+    rs.unstubAllEnvs();
+  });
+
   it('apply Rspack correctly', async () => {
-    const { NODE_ENV } = process.env;
-    process.env.NODE_ENV = 'development';
+    rs.stubEnv('NODE_ENV', 'development');
     const rsbuild = await createRsbuild({
       config: {
         source: {
@@ -17,8 +20,6 @@ describe('should use Rspack as the default bundler', () => {
     const bundlerConfigs = await rsbuild.initConfigs();
 
     expect(bundlerConfigs[0]).toMatchSnapshot();
-
-    process.env.NODE_ENV = NODE_ENV;
   });
 });
 

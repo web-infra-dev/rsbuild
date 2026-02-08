@@ -3,8 +3,8 @@ import type { SecureServerSessionOptions } from 'node:http2';
 import type { ServerOptions as HttpsServerOptions } from 'node:https';
 import type { URL } from 'node:url';
 import type {
-  Configuration,
   CopyRspackPluginOptions,
+  DefinePluginOptions,
   Externals,
   LightningCssMinimizerRspackPluginOptions,
   ModuleFederationPluginOptions,
@@ -15,11 +15,11 @@ import type {
 import type { CorsOptions } from 'cors';
 import type RspackChain from 'rspack-chain';
 import type { FileDescriptor } from 'rspack-manifest-plugin';
-import type { ChokidarOptions } from '../../compiled/chokidar/index.js';
+import type { ChokidarOptions } from '../../compiled/chokidar';
 import type {
   Options as HttpProxyOptions,
   Filter as ProxyFilter,
-} from '../../compiled/http-proxy-middleware/index.js';
+} from '../../compiled/http-proxy-middleware';
 import type { RsbuildDevServer } from '../server/devServer';
 import type {
   EnvironmentContext,
@@ -29,7 +29,7 @@ import type {
 } from './hooks';
 import type { RsbuildPlugins } from './plugin';
 import type { RsbuildEntry, RsbuildMode, RsbuildTarget } from './rsbuild';
-import type { BundlerPluginInstance, Rspack, RspackRule } from './rspack';
+import type { Rspack, RspackRule } from './rspack';
 import type {
   Connect,
   CSSExtractOptions,
@@ -99,10 +99,10 @@ export type ModifyRspackConfigUtils = ModifyChainUtils & {
   addRules: (rules: RspackRule | RspackRule[]) => void;
   appendRules: (rules: RspackRule | RspackRule[]) => void;
   prependPlugins: (
-    plugins: BundlerPluginInstance | BundlerPluginInstance[],
+    plugins: Rspack.RspackPluginInstance | Rspack.RspackPluginInstance[],
   ) => void;
   appendPlugins: (
-    plugins: BundlerPluginInstance | BundlerPluginInstance[],
+    plugins: Rspack.RspackPluginInstance | Rspack.RspackPluginInstance[],
   ) => void;
   removePlugin: (pluginName: string) => void;
   mergeConfig: RspackMerge;
@@ -211,9 +211,6 @@ export type NormalizedToolsConfig = ToolsConfig & {
 
 export type Alias = Record<string, string | false | (string | false)[]>;
 
-// Use a loose type to compat webpack
-export type Define = Record<string, any>;
-
 export type AliasStrategy = 'prefer-tsconfig' | 'prefer-alias';
 
 export type Decorators = {
@@ -277,7 +274,7 @@ export interface SourceConfig {
    * Replaces variables in your code with other values or expressions at compile time.
    * This is useful for enabling different behavior between development and production builds.
    */
-  define?: Define;
+  define?: DefinePluginOptions;
   /**
    * Configuring decorators syntax.
    */
@@ -296,14 +293,14 @@ export interface SourceConfig {
 export type TransformImport = {
   libraryName: string;
   libraryDirectory?: string;
+  customName?: string;
+  customStyleName?: string;
   style?: string | boolean;
   styleLibraryDirectory?: string;
   camelToDashComponentName?: boolean;
   transformToDefaultImport?: boolean;
-  // Use a loose type to compat webpack
-  customName?: any;
-  // Use a loose type to compat webpack
-  customStyleName?: any;
+  ignoreEsComponent?: string[];
+  ignoreStyleComponent?: string[];
 };
 
 type TransformImportFn = (
@@ -311,7 +308,7 @@ type TransformImportFn = (
 ) => TransformImport[] | void;
 
 export interface NormalizedSourceConfig extends SourceConfig {
-  define: Define;
+  define: DefinePluginOptions;
   preEntry: string[];
   decorators: Required<Decorators>;
 }
@@ -328,24 +325,20 @@ export type { ProxyFilter };
 
 export type ProxyOptions = HttpProxyOptions & {
   /**
-   * Bypass the proxy based on the return value of a function.
+   * Use the `bypass` function to skip the proxy.
+   * Inside the function, you have access to the request, response, and proxy options.
    * - Return `null` or `undefined` to continue processing the request with proxy.
-   * - Return `true` to continue processing the request without proxy.
+   * - Return `true` to skip the proxy and continue processing the request.
    * - Return `false` to produce a 404 error for the request.
-   * - Return a path to serve from, instead of continuing to proxy the request.
+   * - Return a specific path to replace the original request path.
    * - Return a Promise to handle the request asynchronously.
    */
   bypass?: ProxyBypass;
-  /**
-   * Used to proxy multiple specified paths to the same target.
-   */
-  context?: ProxyFilter;
 };
 
 export type ProxyConfig =
   | Record<string, string | ProxyOptions>
-  | ProxyOptions[]
-  | ProxyOptions;
+  | ProxyOptions[];
 
 export type HistoryApiFallbackContext = {
   match: RegExpMatchArray;
@@ -419,6 +412,11 @@ export type PublicDirOptions = {
    * @default false
    */
   watch?: boolean;
+  /**
+   * Glob patterns of files to ignore when copying from the public directory.
+   * @default undefined
+   */
+  ignore?: string[];
 };
 
 export type PublicDir = false | PublicDirOptions | PublicDirOptions[];
@@ -476,9 +474,12 @@ export interface ServerConfig {
   https?: HttpsServerOptions | SecureServerSessionOptions;
   /**
    * Specify the host that the Rsbuild server listens to.
-   * @default '0.0.0.0'
+   * - `string`: specify a hostname or IP address to listen on.
+   * - `true`: equals to `0.0.0.0`, listen on all interfaces.
+   * - `false`: equals to `localhost`
+   * @default 'localhost'
    */
-  host?: string;
+  host?: string | boolean;
   /**
    * Adds headers to all responses.
    */
@@ -548,13 +549,14 @@ export interface ServerConfig {
 }
 
 export type NormalizedServerConfig = {
+  host: string;
   publicDir: Required<PublicDirOptions>[];
 } & Omit<
   Optional<
     Required<ServerConfig>,
     'headers' | 'https' | 'historyApiFallback' | 'proxy'
   >,
-  'publicDir'
+  'host' | 'publicDir'
 >;
 
 export type SriAlgorithm = 'sha256' | 'sha384' | 'sha512';
@@ -738,12 +740,6 @@ export interface PerformanceConfig {
   removeConsole?: boolean | ConsoleType[];
 
   /**
-   * Whether to remove the locales of [moment.js](https://momentjs.com/).
-   * @default false
-   */
-  removeMomentLocale?: boolean;
-
-  /**
    * To enable or configure persistent build cache.
    * @experimental This feature is experimental and may be changed in the future.
    * @default false
@@ -758,7 +754,7 @@ export interface PerformanceConfig {
 
   /**
    * Configure the chunk splitting strategy.
-   * @default { strategy: 'split-by-experience' }
+   * @deprecated Use `splitChunks` instead.
    */
   chunkSplit?: ChunkSplit;
 
@@ -816,16 +812,29 @@ export interface PerformanceConfig {
 
 export interface NormalizedPerformanceConfig extends PerformanceConfig {
   printFileSize: PrintFileSizeOptions | boolean;
-  chunkSplit: ChunkSplit;
 }
 
-export type SplitChunks = Configuration extends {
-  optimization?: {
-    splitChunks?: infer P;
-  };
-}
-  ? P
-  : never;
+export type SplitChunks = Rspack.OptimizationSplitChunksOptions | false;
+
+/**
+ * Split chunks preset rules.
+ * - `default`: splits polyfills when enabled and applies extra groups when using
+ * framework plugins.
+ * - `per-package`: splits dependencies in `node_modules` by npm package.
+ * - `single-vendor`: splits all `node_modules` dependencies into one vendor chunk.
+ * - `none`: disables Rsbuild preset rules.
+ */
+export type SplitChunksPreset =
+  | 'default'
+  | 'single-vendor'
+  | 'per-package'
+  | 'none';
+
+export type SplitChunksConfig = Rspack.OptimizationSplitChunksOptions & {
+  preset?: SplitChunksPreset;
+};
+
+export type NormalizedSplitChunksConfig = SplitChunksConfig;
 
 export type ForceSplitting = RegExp[] | Record<string, RegExp>;
 
@@ -934,34 +943,34 @@ export type FilenameConfig = {
    * The name of the JavaScript files.
    * @default
    * - dev: '[name].js'
-   * - prod: '[name].[contenthash:8].js'
+   * - prod: '[name].[contenthash:10].js'
    */
   js?: Rspack.Filename;
   /**
    * The name of the CSS files.
    * @default
    * - dev: '[name].css'
-   * - prod: '[name].[contenthash:8].css'
+   * - prod: '[name].[contenthash:10].css'
    */
   css?: Rspack.CssFilename;
   /**
    * The name of the SVG images.
-   * @default '[name].[contenthash:8].svg'
+   * @default '[name].[contenthash:10].svg'
    */
   svg?: Rspack.AssetModuleFilename;
   /**
    * The name of the font files.
-   * @default '[name].[contenthash:8][ext]'
+   * @default '[name].[contenthash:10][ext]'
    */
   font?: Rspack.AssetModuleFilename;
   /**
    * The name of non-SVG images.
-   * @default '[name].[contenthash:8][ext]'
+   * @default '[name].[contenthash:10][ext]'
    */
   image?: Rspack.AssetModuleFilename;
   /**
    * The name of media assets, such as video.
-   * @default '[name].[contenthash:8][ext]'
+   * @default '[name].[contenthash:10][ext]'
    */
   media?: Rspack.AssetModuleFilename;
   /**
@@ -971,7 +980,7 @@ export type FilenameConfig = {
   wasm?: Rspack.WebassemblyModuleFilename;
   /**
    * The name of other assets, except for above (image, svg, font, html, wasm...)
-   * @default '[name].[contenthash:8][ext]'
+   * @default '[name].[contenthash:10][ext]'
    */
   assets?: Rspack.AssetModuleFilename;
 };
@@ -1817,6 +1826,16 @@ export type WriteToDisk = boolean | ((filename: string) => boolean);
 
 export type BrowserLogsStackTrace = 'summary' | 'full' | 'none';
 
+export type LiveReload =
+  | boolean
+  | {
+      /**
+       * Whether to trigger a full page reload when the HTML template changes.
+       * @default true
+       */
+      html?: boolean;
+    };
+
 export interface DevConfig {
   /**
    * Controls whether to forward browser runtime errors to the terminal. When `true`, the dev
@@ -1847,7 +1866,7 @@ export interface DevConfig {
    * Whether to reload the page when file changes are detected.
    * @default true
    */
-  liveReload?: boolean;
+  liveReload?: LiveReload;
   /**
    * Set the URL prefix of static assets in development mode,
    * similar to the [output.publicPath](https://rspack.rs/config/output#outputpublicpath)
@@ -2037,6 +2056,10 @@ export interface EnvironmentConfig {
    */
   performance?: PerformanceConfig;
   /**
+   * Options for chunk splitting.
+   */
+  splitChunks?: SplitChunksConfig | false;
+  /**
    * Options for module federation.
    */
   moduleFederation?: ModuleFederationConfig;
@@ -2079,8 +2102,9 @@ export interface RsbuildConfig extends EnvironmentConfig {
    */
   dev?: DevConfig;
   /**
-   * Options for the Rsbuild server,
-   * will take effect during local development and preview.
+   * Options for the Rsbuild server.
+   * Mainly applies to local development and preview.
+   * Some options (e.g. `publicDir`, `base`) also affect production builds.
    */
   server?: ServerConfig;
   /**
@@ -2109,6 +2133,7 @@ export type MergedEnvironmentConfig = {
   plugins?: RsbuildPlugins;
   security: NormalizedSecurityConfig;
   performance: NormalizedPerformanceConfig;
+  splitChunks: NormalizedSplitChunksConfig | false;
   moduleFederation?: ModuleFederationConfig;
 };
 

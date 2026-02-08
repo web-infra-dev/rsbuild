@@ -5,7 +5,8 @@ test('support SSR load esm with type module', async ({ page, devOnly }) => {
 
   const url1 = new URL(`http://localhost:${rsbuild.port}`);
 
-  const res = await page.goto(url1.href);
+  await page.goto(url1.href);
+  const body = page.locator('body');
 
-  expect(await res?.text()).toMatch(/Rsbuild with React/);
+  await expect(body).toContainText('Rsbuild with React');
 });

@@ -3,6 +3,8 @@ import { useI18nUrl } from './utils';
 
 declare const OVERVIEW_GROUPS: Group[];
 
+export type { Group };
+
 export default function Overview() {
   const tUrl = useI18nUrl();
 

@@ -2,7 +2,6 @@ import { pluginSass } from '@rsbuild/plugin-sass';
 import { defineConfig } from '@rspress/core';
 import { pluginAlgolia } from '@rspress/plugin-algolia';
 import { pluginClientRedirects } from '@rspress/plugin-client-redirects';
-import { pluginLlms } from '@rspress/plugin-llms';
 import { pluginRss } from '@rspress/plugin-rss';
 import { pluginSitemap } from '@rspress/plugin-sitemap';
 import {
@@ -21,7 +20,6 @@ const description = 'The Rspack-based build tool';
 export default defineConfig({
   plugins: [
     pluginAlgolia(),
-    pluginLlms(),
     pluginSitemap({
       siteUrl,
     }),
@@ -80,6 +78,10 @@ export default defineConfig({
           to: '/config/resolve/alias-strategy',
         },
         {
+          from: '/config/performance/chunk-split',
+          to: '/config/split-chunks',
+        },
+        {
           from: '/plugins/list/plugin-assets-retry',
           to: 'https://github.com/rstackjs/rsbuild-plugin-assets-retry',
         },
@@ -126,6 +128,7 @@ export default defineConfig({
     light: 'https://assets.rspack.rs/rsbuild/navbar-logo-light.png',
     dark: 'https://assets.rspack.rs/rsbuild/navbar-logo-dark.png',
   },
+  llms: true,
   markdown: {
     shiki: {
       langs: ['styl', 'html', 'toml'],

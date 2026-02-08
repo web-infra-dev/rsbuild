@@ -2,113 +2,191 @@
 
 exports[`plugin-solid > should allow to configure solid preset options 1`] = `
 {
-  "module": {
-    "rules": [
-      {
-        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "use": [
-          {
-            "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
-            "options": {
-              "babelrc": false,
-              "compact": false,
-              "configFile": false,
-              "parserOpts": {
-                "plugins": [
-                  "jsx",
-                  "typescript",
-                ],
-              },
-              "plugins": [
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
-                  {
-                    "version": "2022-03",
-                  },
-                ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/babel.cjs",
-                ],
-              ],
-              "presets": [
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/babel-preset-solid/index.js",
-                  {
-                    "generate": "ssr",
-                    "hydratable": true,
-                  },
-                ],
+  "dependency": {
+    "not": "url",
+  },
+  "include": [
+    {
+      "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+    },
+    /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+  ],
+  "oneOf": [
+    {
+      "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+      "type": "asset/source",
+    },
+    {
+      "type": "javascript/auto",
+      "use": [
+        {
+          "loader": "builtin:swc-loader",
+          "options": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
+            "env": {
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
               ],
             },
+            "isModule": "unknown",
+            "jsc": {
+              "experimental": {
+                "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                "keepImportAttributes": true,
+              },
+              "externalHelpers": true,
+              "output": {
+                "charset": "utf8",
+              },
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": false,
+              },
+              "transform": {
+                "decoratorVersion": "2022-03",
+                "legacyDecorator": false,
+              },
+            },
           },
-        ],
-      },
-    ],
-  },
-  "plugins": [
-    {
-      "name": "RsbuildCorePlugin",
+        },
+        {
+          "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
+          "options": {
+            "babelrc": false,
+            "compact": false,
+            "configFile": false,
+            "parserOpts": {
+              "plugins": [
+                "jsx",
+                "typescript",
+              ],
+            },
+            "plugins": [
+              [
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                {
+                  "version": "2022-03",
+                },
+              ],
+              [
+                "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/babel.cjs",
+              ],
+            ],
+            "presets": [
+              [
+                "<ROOT>/node_modules/<PNPM_INNER>/babel-preset-solid/index.js",
+                {
+                  "generate": "ssr",
+                  "hydratable": true,
+                },
+              ],
+            ],
+          },
+        },
+      ],
     },
   ],
-  "resolve": {
-    "alias": {
-      "solid-refresh": "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/solid-refresh.mjs",
-    },
-  },
+  "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
 }
 `;
 
 exports[`plugin-solid > should apply solid preset correctly 1`] = `
 {
-  "module": {
-    "rules": [
-      {
-        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "use": [
-          {
-            "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
-            "options": {
-              "babelrc": false,
-              "compact": false,
-              "configFile": false,
-              "parserOpts": {
-                "plugins": [
-                  "jsx",
-                  "typescript",
-                ],
-              },
-              "plugins": [
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
-                  {
-                    "version": "2022-03",
-                  },
-                ],
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/babel.cjs",
-                ],
-              ],
-              "presets": [
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/babel-preset-solid/index.js",
-                  {},
-                ],
+  "dependency": {
+    "not": "url",
+  },
+  "include": [
+    {
+      "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+    },
+    /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+  ],
+  "oneOf": [
+    {
+      "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+      "type": "asset/source",
+    },
+    {
+      "type": "javascript/auto",
+      "use": [
+        {
+          "loader": "builtin:swc-loader",
+          "options": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
+            "env": {
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
               ],
             },
+            "isModule": "unknown",
+            "jsc": {
+              "experimental": {
+                "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                "keepImportAttributes": true,
+              },
+              "externalHelpers": true,
+              "output": {
+                "charset": "utf8",
+              },
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": false,
+              },
+              "transform": {
+                "decoratorVersion": "2022-03",
+                "legacyDecorator": false,
+              },
+            },
           },
-        ],
-      },
-    ],
-  },
-  "plugins": [
-    {
-      "name": "RsbuildCorePlugin",
+        },
+        {
+          "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
+          "options": {
+            "babelrc": false,
+            "compact": false,
+            "configFile": false,
+            "parserOpts": {
+              "plugins": [
+                "jsx",
+                "typescript",
+              ],
+            },
+            "plugins": [
+              [
+                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                {
+                  "version": "2022-03",
+                },
+              ],
+              [
+                "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/babel.cjs",
+              ],
+            ],
+            "presets": [
+              [
+                "<ROOT>/node_modules/<PNPM_INNER>/babel-preset-solid/index.js",
+                {},
+              ],
+            ],
+          },
+        },
+      ],
     },
   ],
-  "resolve": {
-    "alias": {
-      "solid-refresh": "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/solid-refresh.mjs",
-    },
-  },
+  "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
 }
 `;

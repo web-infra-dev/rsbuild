@@ -16,6 +16,7 @@
   "mode",
   "plugins",
   "log-level",
+  "split-chunks",
   "environments",
   {
     "type": "dir-section-header",

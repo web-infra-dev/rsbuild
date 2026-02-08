@@ -48,7 +48,7 @@ export type LoadConfigOptions = {
    * - 'auto': Use native Node.js loader first, fallback to jiti if failed
    * - 'jiti': Use `jiti` as loader, which supports TypeScript and ESM out of the box
    * - 'native': Use native Node.js loader, requires TypeScript support in Node.js >= 22.6
-   * @default 'jiti'
+   * @default 'auto'
    */
   loader?: ConfigLoader;
 };
@@ -121,7 +121,7 @@ export async function loadConfig({
   path,
   envMode,
   meta,
-  loader = 'jiti',
+  loader = 'auto',
 }: LoadConfigOptions = {}): Promise<LoadConfigResult> {
   const configFilePath = resolveConfigPath(cwd, path);
 
@@ -175,7 +175,7 @@ export async function loadConfig({
         interopDefault: true,
         // Always use native `require()` for these packages,
         // This avoids `@rspack/core` being loaded twice.
-        nativeModules: ['@rspack/core', 'typescript'],
+        nativeModules: ['typescript'],
       });
 
       configExport = await jiti.import<RsbuildConfigExport>(configFilePath, {

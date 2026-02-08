@@ -85,7 +85,7 @@ export default {
   tools: {
     htmlPlugin(config, { entryName }) {
       if (process.env.NODE_ENV === 'production') {
-        config.filename = `${entryName}.[contenthash:8].html`;
+        config.filename = `${entryName}.[contenthash:10].html`;
       }
     },
   },

@@ -4,7 +4,7 @@
  */
 
 import type * as Rspack from '@rspack/core';
-import { rspack } from './rspack';
+import { rspack } from '@rspack/core';
 
 export { runCLI } from './cli';
 export { createRsbuild } from './createRsbuild';
@@ -43,7 +43,6 @@ export type {
   Build,
   BuildOptions,
   BuildResult,
-  BundlerPluginInstance,
   Charset,
   CleanDistPath,
   CleanDistPathObject,
@@ -118,6 +117,7 @@ export type {
   NormalizedSecurityConfig,
   NormalizedServerConfig,
   NormalizedSourceConfig,
+  NormalizedSplitChunksConfig,
   NormalizedToolsConfig,
   OnAfterBuildFn,
   OnAfterCreateCompilerFn,
@@ -183,6 +183,8 @@ export type {
   SourceConfig,
   SourceMap,
   SplitChunks,
+  SplitChunksConfig,
+  SplitChunksPreset,
   SriAlgorithm,
   SriOptions,
   StartDevServerOptions,

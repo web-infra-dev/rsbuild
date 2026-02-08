@@ -14,9 +14,8 @@ test('should support a custom dev server', async ({ page }) => {
 
   const url1 = new URL(`http://localhost:${config.port}/bbb`);
 
-  const res = await page.goto(url1.href);
-
-  expect(await res?.text()).toBe('Hello polka!');
+  await page.goto(url1.href);
+  await expect(page.locator('body')).toContainText('Hello polka!');
 
   await close();
 });
@@ -31,9 +30,8 @@ test('should support a custom dev server without compilation', async ({
 
   const url1 = new URL(`http://localhost:${config.port}/bbb`);
 
-  const res = await page.goto(url1.href);
-
-  expect(await res?.text()).toBe('Hello polka!');
+  await page.goto(url1.href);
+  await expect(page.locator('body')).toContainText('Hello polka!');
 
   const url2 = new URL(`http://localhost:${config.port}/test`);
 

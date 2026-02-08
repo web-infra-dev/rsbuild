@@ -63,10 +63,7 @@ export function parseMinifyOptions(config: NormalizedEnvironmentConfig): {
   cssOptions?: LightningCssMinimizerRspackPluginOptions;
 } {
   const isProd = config.mode === 'production';
-
-  // For `web` and `web-worker` targets, minify is true by default in production mode
-  // For `node` target, minify is false by default
-  const { minify = config.output.target !== 'node' } = config.output;
+  const { minify = true } = config.output;
 
   if (typeof minify === 'boolean') {
     const shouldMinify = minify && isProd;
@@ -120,7 +117,7 @@ export const pluginMinimize = (): RsbuildPlugin => ({
               ? environment.browserslist
               : loaderOptions.targets,
             ...pick(loaderOptions, [
-              'draft',
+              'drafts',
               'include',
               'exclude',
               'nonStandard',

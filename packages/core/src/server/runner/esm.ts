@@ -1,13 +1,10 @@
-import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import type { SourceTextModule } from 'node:vm';
-import { color } from '../../helpers';
+import { color, require } from '../../helpers';
 import { asModule } from './asModule';
 import { CommonJsRunner } from './cjs';
 import { EsmMode, type RunnerRequirer } from './type';
-
-const require = createRequire(import.meta.url);
 
 export class EsmRunner extends CommonJsRunner {
   protected createRunner(): void {
@@ -15,8 +12,7 @@ export class EsmRunner extends CommonJsRunner {
     this.requirers.set('cjs', this.getRequire());
     this.requirers.set('esm', this.createEsmRequirer());
 
-    const outputModule =
-      this._options.compilerOptions.experiments?.outputModule;
+    const outputModule = this._options.compilerOptions.output.module;
 
     this.requirers.set('entry', (currentDirectory, modulePath, context) => {
       const file = this.getFile(modulePath, currentDirectory);
@@ -57,7 +53,7 @@ export class EsmRunner extends CommonJsRunner {
       let esm = esmCache.get(file.path);
       if (!esm) {
         esm = new vm.SourceTextModule(file.content, {
-          identifier: `${esmIdentifier}-${file.path}`,
+          identifier: file.path,
           // no attribute
           url: `${pathToFileURL(file.path).href}?${esmIdentifier}`,
           // run in current execution context
@@ -82,9 +78,8 @@ export class EsmRunner extends CommonJsRunner {
           return asModule(
             await _require(
               path.dirname(
-                referencingModule.identifier
-                  ? referencingModule.identifier.slice(esmIdentifier.length + 1)
-                  : fileURLToPath((referencingModule as any).url),
+                referencingModule.identifier ??
+                  fileURLToPath((referencingModule as any).url),
               ),
               specifier,
               {

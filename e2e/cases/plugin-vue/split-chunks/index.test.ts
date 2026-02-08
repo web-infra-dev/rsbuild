@@ -20,11 +20,7 @@ test('should not split vue chunks when strategy is `all-in-one`', async ({
   const rsbuild = await build({
     config: {
       plugins: [pluginVue()],
-      performance: {
-        chunkSplit: {
-          strategy: 'all-in-one',
-        },
-      },
+      splitChunks: false,
     },
   });
 
@@ -38,15 +34,11 @@ test('should not override user defined cache groups', async ({ build }) => {
   const rsbuild = await build({
     config: {
       plugins: [pluginVue()],
-      performance: {
-        chunkSplit: {
-          override: {
-            cacheGroups: {
-              vue: {
-                name: 'my-vue',
-                test: /vue/,
-              },
-            },
+      splitChunks: {
+        cacheGroups: {
+          vue: {
+            name: 'my-vue',
+            test: /vue/,
           },
         },
       },

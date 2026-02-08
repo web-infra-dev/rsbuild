@@ -6,6 +6,45 @@ import { PackageManagerTabs } from '@theme';
 
 > 本指南仍在持续完善中。随着 Rsbuild 2.0 Beta 的推进，相关内容将逐步补充。
 
+## 使用 Agent Skills
+
+如果你在使用支持 Skills 的 Coding Agent，可以安装 [rsbuild-v2-upgrade](https://github.com/rstackjs/agent-skills#rsbuild-v2-upgrade) 技能来辅助完成 v1 到 v2 的升级流程。
+
+```bash
+npx skills add rstackjs/agent-skills --skill rsbuild-v2-upgrade
+```
+
+安装后，让 Coding Agent 协助完成升级即可。
+
+## 升级 Rsbuild 到 v2
+
+- 将 `@rsbuild/core` 升级到 2.0 Beta 版本：
+
+```diff
+{
+  "devDependencies": {
+-   "@rsbuild/core": "^1.0.0",
++   "@rsbuild/core": "^2.0.0-beta.0"
+  }
+}
+```
+
+- 将 Rsbuild 插件升级到最新版本：
+
+```bash
+# 升级当前目录
+npx taze major --include /rsbuild/ -w
+
+# 或递归升级整个 monorepo
+npx taze major --include /rsbuild/ -w -r
+```
+
+## Rspack v2
+
+Rsbuild v2 现在依赖 [@rspack/core](https://www.npmjs.com/package/@rspack/core) v2，如果你使用了自定义的 Rspack 配置或插件，可能需要进行相应的调整。
+
+参考 [Rspack v2 升级指南](https://github.com/web-infra-dev/rspack/discussions/9270) 了解所有不兼容更新。
+
 ## 默认 browserslist 更新
 
 在 Rsbuild 2.0 中，默认的 browserslist 已进行更新，以更好地反映现代 Web 平台的基线水平。
@@ -165,6 +204,14 @@ export default {
 };
 ```
 
+### 移除 `performance.removeMomentLocale`
+
+`performance.removeMomentLocale` 选项已被移除。
+
+该选项原本用于从产物中移除 Moment.js 的语言包。但在 Rspack v2 中，Moment 的 locales 默认不会被打包，因此该选项已不再需要。
+
+> 背景信息可参考 [web-infra-dev/rsbuild#6991](https://github.com/web-infra-dev/rsbuild/pull/6991)。
+
 ### 移除 `performance.profile`
 
 `performance.profile` 选项已被移除。如果你依赖它来输出 stats JSON 文件，可以在自定义插件中调用 [stats.toJson()](/api/javascript-api/instance#stats-object) 代替：
@@ -190,18 +237,207 @@ export default {
 };
 ```
 
-### 移除 HTML 模板参数
+### 迁移 `performance.chunkSplit`
 
-`html.templateParameters` 中废弃的默认参数已被移除：
+`performance.chunkSplit` 已在 Rsbuild 2.0 中废弃，但暂未移除，仍可继续使用。
 
-- `webpackConfig`：使用 `rspackConfig` 代替。
-- `htmlWebpackPlugin`：使用 `htmlPlugin` 代替。
+我们推荐使用新的 [splitChunks](/config/split-chunks) 选项代替它，新选项对齐了 Rspack 的 [optimization.splitChunks](https://rspack.rs/zh/plugins/webpack/split-chunks-plugin) 配置，并提供了与 `performance.chunkSplit.strategy` 相似的预设选项。
+
+#### strategy
+
+- `strategy: 'split-by-experience'` → `splitChunks.preset: 'default'`
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      strategy: 'split-by-experience',
+-    },
+-  },
++  splitChunks: {
++    preset: 'default',
++  },
+};
+```
+
+- `strategy: 'split-by-module'` → `splitChunks.preset: 'per-package'`
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      strategy: 'split-by-module',
+-    },
+-  },
++  splitChunks: {
++    preset: 'per-package',
++  },
+};
+```
+
+- `strategy: 'single-vendor'` → `splitChunks.preset: 'single-vendor'`
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      strategy: 'single-vendor',
+-    },
+-  },
++  splitChunks: {
++    preset: 'single-vendor',
++  },
+};
+```
+
+- `strategy: 'all-in-one'` → 关闭拆包
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      strategy: 'all-in-one',
+-    },
+-  },
++  splitChunks: false,
+};
+```
+
+- `strategy: 'custom'` + `splitChunks` → `splitChunks.preset: 'none'`
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      strategy: 'custom',
+-      splitChunks: {
+-        // ...
+-      },
+-    },
+-  },
++  splitChunks: {
++    preset: 'none',
++    // ...
++  },
+};
+```
+
+- `strategy: 'split-by-size'` → 直接配置 `minSize` / `maxSize`
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      strategy: 'split-by-size',
+-      minSize: 20000,
+-      maxSize: 50000,
+-    },
+-  },
++  splitChunks: {
++    preset: 'none',
++    minSize: 20000,
++    maxSize: 50000,
++  },
+};
+```
+
+- `override` → 直接使用 `splitChunks`
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      override: {
+-        // ...
+-      },
+-    },
+-  },
++  splitChunks: {
++    // ...
++  },
+};
+```
+
+#### forceSplitting
+
+`forceSplitting` 是对 `cacheGroups` 的语法糖，可以直接替换为 `cacheGroups`：
+
+```diff title="rsbuild.config.ts"
+export default {
+-  performance: {
+-    chunkSplit: {
+-      forceSplitting: {
+-        axios: /node_modules[\\/]axios/,
+-      },
+-    },
+-  },
++  splitChunks: {
++    cacheGroups: {
++      axios: {
++        test: /node_modules[\\/]axios/,
++        name: 'axios',
++        chunks: 'all',
++        priority: 0, // 使用 single-vendor 时可设置为 1
++        enforce: true,
++      },
++    },
++  },
+};
+```
+
+### Proxy 中间件升级
+
+Rsbuild 依赖的 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) 从 v2 升级到了 v3，个别配置项发生了变化。
+
+你可以根据以下示例进行迁移，或查看 [http-proxy-middleware v3 迁移指南](https://github.com/chimurai/http-proxy-middleware/blob/master/MIGRATION.md#v3-breaking-changes) 了解更多细节。
+
+- `context` 选项替换为 `pathFilter`：
+
+```diff title="rsbuild.config.ts"
+export default {
+  server: {
+    proxy: [
+      {
+-       context: '/api',
++       pathFilter: '/api',
+        target: 'https://example.com',
+      },
+    ],
+  },
+};
+```
+
+- 事件改为使用 `on` 统一配置：
+
+```diff title="rsbuild.config.ts"
+export default {
+  server: {
+    proxy: {
+      '/api': {
+-       onOpen: () => {},
+-       onClose: () => {},
+-       onError: () => {},
+-       onProxyReq: () => {},
+-       onProxyRes: () => {},
++       on: {
++         open: () => {},
++         close: () => {},
++         error: () => {},
++         proxyReq: () => {},
++         proxyRes: () => {},
++       },
+      },
+    },
+  },
+};
+```
 
 ## JavaScript API
 
 - 移除 `rsbuild.build()` 中废弃的 `compiler` 参数
 - 移除 `rsbuild.startDevServer()` 中废弃的 `compiler` 参数
 - 移除 [sockWrite](/api/javascript-api/dev-server-api#sockwrite) 中废弃的 `content-changed` 消息类型，使用 `static-changed` 代替
+- [loadConfig](/api/javascript-api/core#loadconfig) 方法的 `loader` 参数的默认值从 `jiti` 变更为 `auto`，优先使用原生 Node.js 加载器
 
 ## 移除 webpack 支持
 
@@ -216,3 +452,67 @@ Rsbuild 2.0 不再支持使用 webpack 作为打包工具。在 Rsbuild 1.x 版�
 - 移除 `api.modifyWebpackChain` 和 `api.modifyWebpackConfig` 插件钩子。
 - 移除 `api.context.bundlerType` 中的 `webpack` 类型。
 - 移除 webpack 相关的类型。
+
+## 内置规则变化
+
+Rsbuild 内置的 JS 和 CSS 转换规则现在使用了 [oneOf](https://rspack.rs/config/module-rules#rulesoneof) 来区分不同的分支，如果你使用 [tools.bundlerChain](/config/tools/bundler-chain#toolsbundlerchain) 或 [api.modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain) 修改了 JS 或 CSS 规则，可能需要进行相应调整。
+
+### JS 规则
+
+内置 JS 规则现在拆分为两个 `oneOf` 分支：
+
+- `CHAIN_ID.ONE_OF.JS_MAIN`：用于 SWC 转换
+- `CHAIN_ID.ONE_OF.JS_RAW`：用于处理 `?raw` 导入
+
+如果你之前在 `CHAIN_ID.RULE.JS` 上添加 loader，需要迁移到 `JS_MAIN` 分支：
+
+```diff title="rsbuild.config.ts"
+export default {
+  tools: {
+    bundlerChain(chain, { CHAIN_ID }) {
+      const jsRule = chain.module.rule(CHAIN_ID.RULE.JS);
+
+-     jsRule.use('my-loader').loader('my-loader');
++     jsRule
++       .oneOf(CHAIN_ID.ONE_OF.JS_MAIN)
++       .use('my-loader')
++       .loader('my-loader');
+    },
+  },
+};
+```
+
+### CSS 规则
+
+内置 CSS 规则拆分为三个 `oneOf` 分支：
+
+- `CHAIN_ID.ONE_OF.CSS_MAIN`：常规 CSS 转换
+- `CHAIN_ID.ONE_OF.CSS_RAW`：用于处理 `?raw` 导入
+- `CHAIN_ID.ONE_OF.CSS_INLINE`：用于处理 `?inline` 导入
+
+如果你之前在 `CHAIN_ID.RULE.CSS` 上添加 loader，需要迁移到 `CSS_MAIN` 分支：
+
+```diff title="rsbuild.config.ts"
+export default {
+  tools: {
+    bundlerChain(chain, { CHAIN_ID }) {
+      const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
+
+-     cssRule.use('my-css-loader').loader('my-css-loader');
++     cssRule
++       .oneOf(CHAIN_ID.ONE_OF.CSS_MAIN)
++       .use('my-css-loader')
++       .loader('my-css-loader');
+    },
+  },
+};
+```
+
+Less / Sass / Stylus 插件的内置规则也已采用相同的 `oneOf` 结构，修改规则时请使用对应的 `ONE_OF` 分支。
+
+## 其他
+
+- 查询参数 `?__inline=false` 已被移除，使用 `?url` 代替。
+- `html.templateParameters` 中废弃的默认参数已被移除：
+  - `webpackConfig`：使用 `rspackConfig` 代替。
+  - `htmlWebpackPlugin`：使用 `htmlPlugin` 代替。

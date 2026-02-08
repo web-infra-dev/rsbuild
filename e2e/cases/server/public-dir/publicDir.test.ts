@@ -397,3 +397,42 @@ test('should reload page when custom publicDir file changes', async ({
   // reset file
   await fse.outputFile(file, 'a111');
 });
+
+test('should ignore files matching ignore patterns when copying publicDir', async ({
+  build,
+}) => {
+  await fse.outputFile(
+    join(import.meta.dirname, 'public', 'test-temp-file.txt'),
+    'a',
+  );
+  await fse.outputFile(
+    join(import.meta.dirname, 'public', 'config.prd.js'),
+    'should be ignored',
+  );
+
+  const rsbuild = await build({
+    config: {
+      server: {
+        publicDir: {
+          ignore: ['**/config.prd.js'],
+        },
+      },
+      output: {
+        distPath: 'dist-build-ignore',
+      },
+    },
+  });
+
+  const files = await getDistFiles(rsbuild.distPath);
+  const filenames = Object.keys(files);
+
+  expect(
+    filenames.some((filename) => filename.includes('test-temp-file.txt')),
+  ).toBeTruthy();
+  expect(
+    filenames.some((filename) => filename.includes('config.prd.js')),
+  ).toBeFalsy();
+
+  await fse.remove(join(import.meta.dirname, 'public', 'test-temp-file.txt'));
+  await fse.remove(join(import.meta.dirname, 'public', 'config.prd.js'));
+});

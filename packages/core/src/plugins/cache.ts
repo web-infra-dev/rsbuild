@@ -19,7 +19,7 @@ function getCacheDirectory(
       ? cacheDirectory
       : join(context.rootPath, cacheDirectory);
   }
-  return join(context.cachePath, context.bundlerType);
+  return join(context.cachePath, 'rspack');
 }
 
 /**
@@ -106,18 +106,14 @@ export const pluginCache = (): RsbuildPlugin => ({
         ? `${environment.name}-${env}-${await hash(JSON.stringify(cacheConfig.cacheDigest))}`
         : `${environment.name}-${env}`;
 
-      chain.cache(true);
-      chain.experiments({
-        ...chain.get('experiments'),
-        cache: {
-          type: 'persistent',
-          version: cacheVersion,
-          storage: {
-            type: 'filesystem',
-            directory: cacheDirectory,
-          },
-          buildDependencies: Object.values(buildDependencies).flat(),
+      chain.cache({
+        type: 'persistent',
+        version: cacheVersion,
+        storage: {
+          type: 'filesystem',
+          directory: cacheDirectory,
         },
+        buildDependencies: Object.values(buildDependencies).flat(),
       });
     });
 

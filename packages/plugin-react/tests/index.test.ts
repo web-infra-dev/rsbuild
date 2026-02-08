@@ -1,7 +1,12 @@
+import { createRsbuild as createRsbuildV1 } from '@rsbuild/core-v1';
 import { createStubRsbuild, matchRules } from '@scripts/test-helper';
 import { pluginReact } from '../src';
 
 describe('plugins/react', () => {
+  afterEach(() => {
+    rs.unstubAllEnvs();
+  });
+
   it('should work with swc-loader', async () => {
     const rsbuild = await createStubRsbuild({
       config: {
@@ -119,6 +124,17 @@ describe('plugins/react', () => {
     ).toBeFalsy();
   });
 
+  it('should apply splitChunks with Rsbuild v1', async () => {
+    const rsbuild = await createRsbuildV1({
+      config: {
+        plugins: [pluginReact()],
+      },
+    });
+
+    const config = await rsbuild.initConfigs();
+    expect(config[0].optimization?.splitChunks).toMatchSnapshot();
+  });
+
   it('should not apply splitChunks rule when strategy is not split-by-experience', async () => {
     const rsbuild = await createStubRsbuild({
       config: {
@@ -155,7 +171,7 @@ describe('plugins/react', () => {
   });
 
   it('should allow to add react plugin as single environment plugin', async () => {
-    process.env.NODE_ENV = 'production';
+    rs.stubEnv('NODE_ENV', 'production');
 
     const rsbuild = await createStubRsbuild({
       config: {
@@ -184,7 +200,5 @@ describe('plugins/react', () => {
 
     expect(bundlerConfigs[1]).not.toContain('lib-react');
     expect(environmentConfigs[1]).not.toContain('keep_classnames');
-
-    delete process.env.NODE_ENV;
   });
 });

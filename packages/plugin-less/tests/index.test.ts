@@ -1,4 +1,5 @@
-import { createRsbuild, type RsbuildPluginAPI } from '@rsbuild/core';
+import { createRsbuild, type Rspack } from '@rsbuild/core';
+import { createRsbuild as createRsbuildV1 } from '@rsbuild/core-v1';
 import { matchRules } from '@scripts/test-helper';
 import { pluginLess } from '../src';
 
@@ -12,6 +13,19 @@ describe('plugin-less', () => {
 
     const bundlerConfigs = await rsbuild.initConfigs();
     expect(matchRules(bundlerConfigs[0], 'a.less')).toMatchSnapshot();
+  });
+
+  it('should add less-loader for Rsbuild v1', async () => {
+    const rsbuild = await createRsbuildV1({
+      config: {
+        plugins: [pluginLess()],
+      },
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+    expect(
+      matchRules(bundlerConfigs[0] as Rspack.Configuration, 'a.less'),
+    ).toMatchSnapshot();
   });
 
   it('should add less-loader and css-loader when injectStyles', async () => {
@@ -108,35 +122,7 @@ describe('plugin-less', () => {
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
-    expect(matchRules(bundlerConfigs[0], 'a.less').length).toBe(2);
-    expect(matchRules(bundlerConfigs[0], 'b.less').length).toBe(5);
-  });
-
-  it('should be compatible with Rsbuild < 1.3.0', async () => {
-    const rsbuild = await createRsbuild({
-      config: {
-        plugins: [
-          {
-            name: 'rsbuild-plugin-test',
-            post: ['rsbuild:css'],
-            setup(api: RsbuildPluginAPI) {
-              // Mock the behavior of Rsbuild < 1.3.0
-              api.modifyBundlerChain((chain, { CHAIN_ID }) => {
-                chain.module.rules.delete(CHAIN_ID.RULE.CSS_INLINE);
-                // @ts-expect-error
-                delete CHAIN_ID.RULE.CSS_INLINE;
-              });
-            },
-          },
-          pluginLess(),
-        ],
-      },
-    });
-
-    await rsbuild.initConfigs();
-
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(matchRules(bundlerConfigs[0], 'a.less').length).toBe(2);
-    expect(matchRules(bundlerConfigs[0], 'a.less?inline').length).toBe(0);
+    expect(matchRules(bundlerConfigs[0], 'a.less').length).toBe(1);
+    expect(matchRules(bundlerConfigs[0], 'b.less').length).toBe(2);
   });
 });

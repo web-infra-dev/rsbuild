@@ -1,6 +1,6 @@
-import { createRequire } from 'node:module';
 import { dirname, isAbsolute, join } from 'node:path';
 import {
+  ALL_INTERFACES_IPV4,
   ASSETS_DIST_DIR,
   CSS_DIST_DIR,
   DEFAULT_ASSET_PREFIX,
@@ -20,7 +20,7 @@ import {
   TS_CONFIG_FILE,
   WASM_DIST_DIR,
 } from './constants';
-import { getNodeEnv } from './helpers';
+import { getNodeEnv, require } from './helpers';
 import { findExists, isFileExists } from './helpers/fs';
 import { mergeRsbuildConfig } from './mergeConfig';
 import type {
@@ -40,8 +40,6 @@ import type {
   RsbuildEntry,
   RsbuildMode,
 } from './types';
-
-const require = createRequire(import.meta.url);
 
 const getDefaultDevConfig = (): NormalizedDevConfig => ({
   hmr: true,
@@ -146,10 +144,6 @@ const getDefaultToolsConfig = (): NormalizedToolsConfig => ({
 const getDefaultPerformanceConfig = (): NormalizedPerformanceConfig => ({
   printFileSize: true,
   removeConsole: false,
-  removeMomentLocale: false,
-  chunkSplit: {
-    strategy: 'split-by-experience',
-  },
 });
 
 const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
@@ -229,6 +223,7 @@ const createDefaultConfig = (): RsbuildConfig => ({
   output: getDefaultOutputConfig(),
   tools: getDefaultToolsConfig(),
   security: getDefaultSecurityConfig(),
+  splitChunks: {},
   performance: getDefaultPerformanceConfig(),
   environments: {},
   logLevel: 'info',
@@ -328,6 +323,7 @@ export const normalizeConfig = (
   };
 
   config.server ||= {};
+  config.server.host = normalizeHost(config.server.host);
   config.server.publicDir = normalizePublicDirs(
     rootPath,
     config.server.publicDir,
@@ -344,6 +340,13 @@ export const normalizeConfig = (
   return mergedConfig;
 };
 
+const normalizeHost = (host?: string | boolean): string => {
+  if (typeof host === 'string') {
+    return host;
+  }
+  return host === true ? ALL_INTERFACES_IPV4 : LOCALHOST;
+};
+
 const normalizePublicDirs = (
   rootPath: string,
   publicDir?: PublicDir,
@@ -356,6 +359,7 @@ const normalizePublicDirs = (
     name: join(rootPath, 'public'),
     copyOnBuild: 'auto',
     watch: false,
+    ignore: [],
   };
 
   // enable public dir by default

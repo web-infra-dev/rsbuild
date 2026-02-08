@@ -174,11 +174,11 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
 
       svgrOptions.svgoConfig = dedupeSvgoPlugins(svgrOptions.svgoConfig);
 
-      // get asset URL: "foo.svg?url" or "foo.svg?__inline=false"
+      // get asset URL: "foo.svg?url"
       rule
         .oneOf(CHAIN_ID.ONE_OF.SVG_URL)
         .type('asset/resource')
-        .resourceQuery(/^\?(__inline=false|url)$/)
+        .resourceQuery(/^\?url$/)
         .set('generator', generatorOptions);
 
       // get inlined base64 content: "foo.svg?inline"
@@ -266,11 +266,15 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         })
         .set('generator', generatorOptions);
 
-      // apply current JS transform rule to SVGR rules
+      // Compatibility for Rsbuild v1
+      const isV1 = api.context.version.startsWith('1.');
       const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
+      const jsMainRule = isV1
+        ? jsRule
+        : jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
 
       [CHAIN_ID.USE.SWC, CHAIN_ID.USE.BABEL].some((jsUseId) => {
-        const use = jsRule.uses.get(jsUseId);
+        const use = jsMainRule.uses.get(jsUseId);
 
         if (!use) {
           return false;
@@ -299,6 +303,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
             });
           }
 
+          // apply current JS transform loader to SVGR rules
           rule
             .oneOf(oneOfId)
             .use(jsUseId)

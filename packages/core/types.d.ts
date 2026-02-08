@@ -11,7 +11,7 @@
  * }
  * ```
  */
-// biome-ignore lint/suspicious/noEmptyInterface: placeholder
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface RsbuildTypeOptions {}
 
 /**
@@ -67,6 +67,12 @@ interface ImportMetaEnv extends Record<ImportMetaEnvFallbackKey, any> {
 }
 interface ImportMeta {
   readonly env: ImportMetaEnv;
+}
+
+declare namespace Rspack {
+  interface Hot {
+    on: <Data = any>(event: string, cb: (data: Data) => void) => void;
+  }
 }
 
 /**
@@ -280,9 +286,7 @@ declare module '*?raw' {
 /**
  * CSS Modules
  */
-type CSSModuleClasses = {
-  readonly [key: string]: string;
-};
+type CSSModuleClasses = Readonly<Record<string, string>>;
 declare module '*.module.css' {
   const classes: CSSModuleClasses;
   export default classes;

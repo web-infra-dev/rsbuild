@@ -1,4 +1,5 @@
-import { createRsbuild } from '@rsbuild/core';
+import { createRsbuild, type Rspack } from '@rsbuild/core';
+import { createRsbuild as createRsbuildV1 } from '@rsbuild/core-v1';
 import { matchRules } from '@scripts/test-helper';
 import { pluginBabel } from '../src';
 
@@ -20,6 +21,27 @@ describe('plugins/babel', () => {
 
     const config = await rsbuild.initConfigs();
     expect(matchRules(config[0], 'a.tsx')[0]).toMatchSnapshot();
+  });
+
+  it('babel-loader should works with builtin:swc-loader for Rsbuild v1', async () => {
+    const rsbuild = await createRsbuildV1({
+      cwd: import.meta.dirname,
+      config: {
+        plugins: [pluginBabel()],
+        source: {
+          include: [/node_modules[\\/]query-string[\\/]/],
+          exclude: ['src/example'],
+        },
+        performance: {
+          buildCache: false,
+        },
+      },
+    });
+
+    const config = await rsbuild.initConfigs();
+    expect(
+      matchRules(config[0] as Rspack.Configuration, 'a.tsx')[0],
+    ).toMatchSnapshot();
   });
 
   it('should apply environment config correctly', async () => {

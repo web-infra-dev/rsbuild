@@ -1,3 +1,4 @@
+import { rspack } from '@rspack/core';
 import {
   type ConfigChainAsyncWithContext,
   reduceConfigsAsyncWithContext,
@@ -7,7 +8,6 @@ import { castArray, color, getNodeEnv } from './helpers';
 import { requireCompiledPackage } from './helpers/vendors';
 import { logger } from './logger';
 import { getHTMLPlugin } from './pluginHelper';
-import { rspack } from './rspack';
 import type {
   EnvironmentContext,
   InternalContext,
@@ -193,25 +193,10 @@ export async function generateRspackConfig({
     context.environments[environmentName],
     context.environments,
   );
-  const {
-    BannerPlugin,
-    DefinePlugin,
-    IgnorePlugin,
-    ProvidePlugin,
-    SourceMapDevToolPlugin,
-    HotModuleReplacementPlugin,
-  } = rspack;
 
   const chain = await modifyBundlerChain(context, {
     ...chainUtils,
-    bundler: {
-      BannerPlugin,
-      DefinePlugin,
-      IgnorePlugin,
-      ProvidePlugin,
-      SourceMapDevToolPlugin,
-      HotModuleReplacementPlugin,
-    },
+    bundler: rspack,
   });
 
   let rspackConfig = chain.toConfig();

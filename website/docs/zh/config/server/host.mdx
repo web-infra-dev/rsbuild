@@ -1,11 +1,19 @@
 # server.host
 
-- **类型：** `string`
+- **类型：** `string | boolean`
 - **默认值：** `localhost`
 
 指定 Rsbuild server 启动时监听的 host。
 
-默认情况下，Rsbuild server 会监听 `localhost`。如果你希望 Rsbuild server 监听所有 IPv4 的网络接口（包括公网地址），可以设置为 `0.0.0.0`：
+默认情况下，Rsbuild server 会监听 `localhost`。你可以通过以下方式配置：
+
+- `string`：指定要监听的主机名或 IP 地址。
+- `true`：等同于 `0.0.0.0`，监听所有 IPv4 网络接口。
+- `false`：等同于 `localhost`。
+
+## 所有 IPv4 网络接口
+
+如果你希望 Rsbuild server 监听所有 IPv4 的网络接口（包括公网地址），可以设置为 `0.0.0.0` 或 `true`：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -51,6 +59,6 @@ export default {
 
 ## 版本历史
 
-| 版本   | 变更内容                            |
-| ------ | ----------------------------------- |
-| v2.0.0 | 默认值从 `0.0.0.0` 改为 `localhost` |
+| 版本   | 变更内容                                                 |
+| ------ | -------------------------------------------------------- |
+| v2.0.0 | 默认值从 `0.0.0.0` 改为 `localhost`，支持 `boolean` 类型 |

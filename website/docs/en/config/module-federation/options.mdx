@@ -18,7 +18,6 @@ When you set the `moduleFederation.options` option, Rsbuild will take the follow
 - Automatically register the [ModuleFederationPlugin](https://rspack.rs/plugins/webpack/module-federation-plugin) plugin, and pass the value of `options` to the plugin.
 - Set the default value of the provider's [dev.assetPrefix](/config/dev/asset-prefix) configuration to `true`. This will ensure that the static asset URL is correct for remote modules.
 - Set the default value of Rspack's [output.uniqueName](https://rspack.rs/config/output#outputuniquename) configuration to `moduleFederation.options.name`, this allows HMR to work as expected.
-- Turn off the `split-by-experience` rules in Rsbuild's [performance.chunkSplit](/config/performance/chunk-split) as it may conflict with shared modules, refer to [#3161](https://github.com/module-federation/module-federation-examples/issues/3161).
 
 ## Usage
 

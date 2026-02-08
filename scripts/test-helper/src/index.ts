@@ -1,12 +1,10 @@
 import { isPromise } from 'node:util/types';
 import type {
-  BundlerPluginInstance,
   CreateRsbuildOptions,
   RsbuildInstance,
   RsbuildPlugin,
   RsbuildPlugins,
   Rspack,
-  RspackRule,
 } from '@rsbuild/core';
 
 /** Match plugin by constructor name. */
@@ -35,7 +33,9 @@ export async function createStubRsbuild({
 }): Promise<
   RsbuildInstance & {
     unwrapConfig: () => Promise<Record<string, any>>;
-    matchBundlerPlugin: (name: string) => Promise<BundlerPluginInstance | null>;
+    matchBundlerPlugin: (
+      name: string,
+    ) => Promise<Rspack.RspackPluginInstance | null>;
   }
 > {
   const { createRsbuild } = await import('@rsbuild/core');
@@ -83,11 +83,11 @@ export async function createStubRsbuild({
     return configs[index];
   };
 
-  /** Match rspack/webpack plugin by constructor name. */
+  /** Match Rspack plugin by constructor name. */
   const matchBundlerPlugin = async (pluginName: string, index?: number) => {
     const config = await unwrapConfig(index);
 
-    return matchPlugin(config, pluginName) as BundlerPluginInstance;
+    return matchPlugin(config, pluginName) as Rspack.RspackPluginInstance;
   };
 
   return {
@@ -100,7 +100,7 @@ export async function createStubRsbuild({
 export function matchRules(
   config: Rspack.Configuration,
   testFile: string,
-): RspackRule[] {
+): Rspack.RuleSetRules {
   if (!config.module?.rules) {
     return [];
   }

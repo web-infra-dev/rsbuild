@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-preact",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "Preact plugin for Rsbuild",
   "repository": {
     "type": "git",
@@ -29,18 +29,18 @@
   "dependencies": {
     "@prefresh/core": "^1.5.9",
     "@prefresh/utils": "^1.2.1",
-    "@rspack/plugin-preact-refresh": "^1.1.4",
-    "@swc/plugin-prefresh": "^12.3.0"
+    "@rspack/plugin-preact-refresh": "^1.1.5",
+    "@swc/plugin-prefresh": "^12.5.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.19.1",
-    "@types/node": "^24.10.7",
-    "preact": "^10.28.2",
+    "@rslib/core": "0.19.4",
+    "@types/node": "^24.10.10",
+    "preact": "^10.28.3",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
-    "@rsbuild/core": "1.x"
+    "@rsbuild/core": "^1.0.0 || ^2.0.0-0"
   },
   "publishConfig": {
     "access": "public",

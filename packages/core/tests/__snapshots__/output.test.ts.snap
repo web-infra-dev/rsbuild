@@ -3,6 +3,9 @@
 exports[`plugin-output > output config should works when target is node 1`] = `
 {
   "output": {
+    "bundlerInfo": {
+      "force": false,
+    },
     "chunkFilename": "bundle/foo.js",
     "filename": "bundle/foo.js",
     "library": {
@@ -22,6 +25,9 @@ exports[`plugin-output > output config should works when target is node 1`] = `
 exports[`plugin-output > should allow to custom server directory with distPath.root 1`] = `
 {
   "output": {
+    "bundlerInfo": {
+      "force": false,
+    },
     "chunkFilename": "[name].js",
     "filename": "[name].js",
     "library": {
@@ -41,6 +47,9 @@ exports[`plugin-output > should allow to custom server directory with distPath.r
 exports[`plugin-output > should allow to set distPath.js and distPath.css to empty string 1`] = `
 {
   "output": {
+    "bundlerInfo": {
+      "force": false,
+    },
     "chunkFilename": "async/[name].js",
     "filename": "[name].js",
     "path": "<ROOT>/packages/core/tests/dist",
@@ -57,6 +66,9 @@ exports[`plugin-output > should allow to set distPath.js and distPath.css to emp
 exports[`plugin-output > should allow to use copy plugin 1`] = `
 {
   "output": {
+    "bundlerInfo": {
+      "force": false,
+    },
     "chunkFilename": "static/js/async/[name].js",
     "filename": "static/js/[name].js",
     "path": "<ROOT>/packages/core/tests/dist",
@@ -86,6 +98,9 @@ exports[`plugin-output > should allow to use copy plugin 1`] = `
 exports[`plugin-output > should allow to use copy plugin with multiple config 1`] = `
 {
   "output": {
+    "bundlerInfo": {
+      "force": false,
+    },
     "chunkFilename": "static/js/async/[name].js",
     "filename": "static/js/[name].js",
     "path": "<ROOT>/packages/core/tests/dist",
@@ -117,6 +132,9 @@ exports[`plugin-output > should allow to use copy plugin with multiple config 1`
 exports[`plugin-output > should allow to use filename.js to modify filename 1`] = `
 {
   "output": {
+    "bundlerInfo": {
+      "force": false,
+    },
     "chunkFilename": "static/js/async/foo.js",
     "filename": "static/js/foo.js",
     "path": "<ROOT>/packages/core/tests/dist",
@@ -133,6 +151,9 @@ exports[`plugin-output > should allow to use filename.js to modify filename 1`] 
 exports[`plugin-output > should set output correctly 1`] = `
 {
   "output": {
+    "bundlerInfo": {
+      "force": false,
+    },
     "chunkFilename": "static/js/async/[name].js",
     "filename": "static/js/[name].js",
     "path": "<ROOT>/packages/core/tests/dist",

@@ -42,38 +42,18 @@ export const CHAIN_ID = {
     MEDIA: 'media',
     /** Rule for additional assets */
     ADDITIONAL_ASSETS: 'additional-assets',
-    /** Rule for js */
+    /** Rule for JS */
     JS: 'js',
-    /** Rule for raw js */
-    JS_RAW: 'js-raw',
     /** Rule for data uri encoded javascript */
     JS_DATA_URI: 'js-data-uri',
-    /** Rule for ts */
-    TS: 'ts',
     /** Rule for CSS */
     CSS: 'css',
-    /** Rule for raw CSS */
-    CSS_RAW: 'css-raw',
-    /** Rule for inline CSS */
-    CSS_INLINE: 'css-inline',
     /** Rule for Less */
     LESS: 'less',
-    /** Rule for raw Less */
-    LESS_RAW: 'less-raw',
-    /** Rule for inline Less */
-    LESS_INLINE: 'less-inline',
     /** Rule for Sass */
     SASS: 'sass',
-    /** Rule for raw Sass */
-    SASS_RAW: 'sass-raw',
-    /** Rule for inline Sass */
-    SASS_INLINE: 'sass-inline',
     /** Rule for stylus */
     STYLUS: 'stylus',
-    /** Rule for raw stylus */
-    STYLUS_RAW: 'stylus-raw',
-    /** Rule for inline stylus */
-    STYLUS_INLINE: 'stylus-inline',
     /** Rule for svg */
     SVG: 'svg',
     /** Rule for Vue */
@@ -85,6 +65,14 @@ export const CHAIN_ID = {
   },
   /** Predefined rule groups */
   ONE_OF: {
+    /** JS oneOf rules */
+    JS_MAIN: 'js',
+    JS_RAW: 'js-raw',
+    /** CSS oneOf rules */
+    CSS_MAIN: 'css',
+    CSS_RAW: 'css-raw',
+    CSS_INLINE: 'css-inline',
+    /** SVG oneOf rules */
     SVG: 'svg',
     SVG_RAW: 'svg-asset-raw',
     SVG_URL: 'svg-asset-url',
@@ -124,8 +112,6 @@ export const CHAIN_ID = {
     LIGHTNINGCSS: 'lightningcss',
     /** ignore-css-loader */
     IGNORE_CSS: 'ignore-css',
-    /** css-modules-typescript-loader */
-    CSS_MODULES_TS: 'css-modules-typescript',
     /** CssExtractRspackPlugin.loader */
     MINI_CSS_EXTRACT: 'mini-css-extract',
     /** resolve-url-loader */
@@ -143,8 +129,8 @@ export const CHAIN_ID = {
     DEFINE: 'define',
     /** ProgressPlugin */
     PROGRESS: 'progress',
-    /** WebpackManifestPlugin */
-    MANIFEST: 'webpack-manifest',
+    /** RspackManifestPlugin */
+    MANIFEST: 'rspack-manifest',
     /** ForkTsCheckerWebpackPlugin */
     TS_CHECKER: 'ts-checker',
     /** ModuleFederationPlugin */
@@ -168,11 +154,6 @@ export const CHAIN_ID = {
     JS: 'js',
     /** LightningCssMinimizerRspackPlugin */
     CSS: 'css',
-  },
-  /** Predefined resolve plugins */
-  RESOLVE_PLUGIN: {
-    /** TsConfigPathsPlugin */
-    TS_CONFIG_PATHS: 'ts-config-paths',
   },
 } as const;
 

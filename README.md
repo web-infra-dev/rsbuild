@@ -15,23 +15,13 @@
 
 English | [Portuguese](./README.pt-BR.md) | [简体中文](./README.zh-CN.md)
 
-Rsbuild is a high-performance build tool powered by Rspack. It provides carefully designed defaults for an out-of-the-box development experience while fully leveraging Rspack's performance.
+Rsbuild is a modern build tool for web applications, powered by [Rspack](https://rspack.rs/).
 
-Rsbuild provides a [rich set of build features](https://rsbuild.rs/guide/start/features), including support for TypeScript, JSX, Sass, Less, CSS Modules, Wasm, and more. It also supports Module Federation, image compression, type checking, PostCSS, Lightning CSS, and additional features.
+It delivers fast builds and optimized production output, while keeping configuration simple, consistent, and extensible through plugins.
 
 > [!NOTE]
 > The `main` branch is under active development for **Rsbuild 2.0**.  
 > The stable **1.x** releases are maintained in the [v1.x](https://github.com/web-infra-dev/rsbuild/tree/v1.x) branch.
-
-## 🚀 Performance
-
-Powered by Rspack's Rust-based architecture, Rsbuild delivers blazing-fast performance to speed up your development workflow.
-
-⚡️ **Build 1000 React components:**
-
-![benchmark](https://assets.rspack.rs/rsbuild/assets/benchmark-latest.jpeg)
-
-> 📊 Benchmark results from [build-tools-performance](https://github.com/rstackjs/build-tools-performance).
 
 ## 🔥 Features
 
@@ -47,9 +37,10 @@ Rsbuild has the following features:
 
 - **Framework agnostic**: Rsbuild is not coupled to any frontend UI framework. It supports frameworks like React, Vue, Svelte, Solid, and Preact through plugins, with plans to support more UI frameworks from the community in the future.
 
-## 📚 Getting started
+## 📚 Documentation
 
-To get started with Rsbuild, see the [Quick start](https://rsbuild.rs/guide/start/quick-start).
+- [Rsbuild v2 docs](https://v2.rsbuild.rs)
+- [Rsbuild v1 docs](https://rsbuild.rs/)
 
 ## 🦀 Rstack
 
@@ -68,6 +59,7 @@ Rstack is a unified JavaScript toolchain centered on Rspack, with high performan
 ## 🔗 Links
 
 - [awesome-rstack](https://github.com/rstackjs/awesome-rstack): A curated list of awesome things related to Rstack.
+- [agent-skills](https://github.com/rstackjs/agent-skills): A collection of Agent Skills for Rstack.
 - [rstack-examples](https://github.com/rstackjs/rstack-examples): Examples showcasing Rstack.
 - [storybook-rsbuild](https://github.com/rstackjs/storybook-rsbuild): Storybook builder powered by Rsbuild.
 - [rsbuild-plugin-template](https://github.com/rstackjs/rsbuild-plugin-template)：Use this template to create your own Rsbuild plugin.
@@ -94,10 +86,6 @@ This repo has adopted the ByteDance open source code of conduct. Please check [C
 
 Come and chat with us on [Discord](https://discord.gg/XsaKEEk4mW)! The Rstack team and users are active there, and we're always looking for contributions.
 
-## 🌟 Quality
-
-Rsbuild uses [Web Infra QoS](https://web-infra-qos.netlify.app?product=rsbuild&metrics=bundle-size) to observe the trend of key metrics, such as bundle size, compile speed and install size.
-
 ## 🙏 Credits
 
 Rsbuild has been inspired by several outstanding projects in the community. We would like to acknowledge and express our sincere gratitude to the following projects:
@@ -105,8 +93,6 @@ Rsbuild has been inspired by several outstanding projects in the community. We w
 - Various plugin implementations have been inspired by [create-react-app](https://github.com/facebook/create-react-app)
 - Multiple utility functions have been adapted from [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)
 - Several API design patterns have been influenced by [Vite](https://github.com/vitejs/vite)
-
-Special thanks to [Netlify](https://netlify.com/) for providing hosting services for the Rsbuild documentation website.
 
 ## 📖 License
 

@@ -1,7 +1,7 @@
+import { rspack } from '@rspack/core';
 import { castArray, pick } from '../helpers';
 import { isMultiCompiler } from '../helpers/compiler';
 import { isVerbose } from '../logger';
-import { rspack } from '../rspack';
 import type {
   InternalContext,
   NormalizedConfig,
@@ -103,9 +103,8 @@ const applyDefaultMiddlewares = async ({
   // Apply proxy middleware
   // each proxy configuration creates its own middleware instance
   if (server.proxy) {
-    const { middlewares: proxyMiddlewares, upgrade } = createProxyMiddleware(
-      server.proxy,
-    );
+    const { middlewares: proxyMiddlewares, upgrade } =
+      await createProxyMiddleware(server.proxy);
     upgradeEvents.push(upgrade);
 
     for (const middleware of proxyMiddlewares) {

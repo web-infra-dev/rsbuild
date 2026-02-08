@@ -17,14 +17,17 @@ export default {
   prettier: true,
   externals: {
     '@rspack/core': '@rspack/core',
-    '@rspack/lite-tapable': '@rspack/lite-tapable',
     typescript: 'typescript',
   },
   dependencies: [
     'ws',
     'html-rspack-plugin',
-    'chokidar',
     'webpack-merge',
+    {
+      name: 'chokidar',
+      copyDts: true,
+      dtsOnly: true,
+    },
     {
       name: 'rslog',
       dtsOnly: true,
@@ -33,20 +36,10 @@ export default {
       name: 'rspack-chain',
       copyDts: true,
       dtsOnly: true,
-      // rspack-chain provides ESM types
-      afterBundle(task) {
-        const pkgJsonPath = join(task.distPath, 'package.json');
-        const pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf-8'));
-        pkgJson.type = 'module';
-        fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson));
-      },
     },
     {
       name: 'http-proxy-middleware',
-      externals: {
-        // express is a peer dependency, no need to provide express type
-        express: 'express',
-      },
+      dtsOnly: true,
       beforeBundle(task) {
         replaceFileContent(
           join(task.depPath, 'dist/types.d.ts'),
@@ -55,23 +48,6 @@ export default {
               "import type * as httpProxy from 'http-proxy'",
               "import type httpProxy from 'http-proxy'",
             )}`,
-        );
-      },
-      afterBundle(task) {
-        replaceFileContent(
-          join(task.distPath, 'index.d.ts'),
-          (content) =>
-            // TODO: Due to the breaking change of http-proxy-middleware, it needs to be upgraded in rsbuild 2.0
-            // https://github.com/chimurai/http-proxy-middleware/pull/730
-            `${content
-              .replace('express.Request', 'http.IncomingMessage')
-              .replace('express.Response', 'http.ServerResponse')
-              .replace("import * as express from 'express';", '')
-              .replace(
-                'extends express.RequestHandler {',
-                `{
-  (req: Request, res: Response, next?: (err?: any) => void): void | Promise<void>;`,
-              )}`,
         );
       },
     },

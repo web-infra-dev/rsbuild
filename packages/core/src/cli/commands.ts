@@ -207,7 +207,7 @@ export function setupCommands(): void {
       if (section.title?.startsWith('For more info')) {
         section.title = color.dim('  For details on a sub-command, run');
         section.body = color.dim('  $ rsbuild <command> -h');
-      } else {
+      } else if (section.title) {
         section.title = color.cyan(section.title);
       }
     }

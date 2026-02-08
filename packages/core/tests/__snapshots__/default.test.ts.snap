@@ -11,11 +11,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "rspackFuture": {
-      "bundlerInfo": {
-        "force": false,
-      },
-    },
   },
   "infrastructureLogging": {
     "level": "error",
@@ -43,86 +38,80 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "dependency": {
           "not": "url",
         },
-        "resolve": {
-          "preferRelative": true,
-        },
-        "resourceQuery": {
-          "not": [
-            /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-          ],
-        },
-        "sideEffects": true,
-        "test": /\\\\\\.css\\$/,
-        "type": "javascript/auto",
-        "use": [
+        "oneOf": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-            "options": {
-              "importLoaders": 1,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
+            "resolve": {
+              "preferRelative": true,
+            },
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+            "sideEffects": true,
+            "use": [
+              {
+                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+                "options": {
+                  "exportType": "string",
+                  "importLoaders": 1,
+                  "modules": false,
+                  "sourceMap": false,
+                },
               },
-              "sourceMap": false,
-            },
+              {
+                "loader": "builtin:lightningcss-loader",
+                "options": {
+                  "errorRecovery": true,
+                  "targets": [
+                    "chrome >= 107",
+                    "edge >= 107",
+                    "firefox >= 104",
+                    "safari >= 16",
+                  ],
+                },
+              },
+            ],
           },
           {
-            "loader": "builtin:lightningcss-loader",
-            "options": {
-              "errorRecovery": true,
-              "targets": [
-                "chrome >= 107",
-                "edge >= 107",
-                "firefox >= 104",
-                "safari >= 16",
-              ],
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
+          },
+          {
+            "resolve": {
+              "preferRelative": true,
             },
+            "sideEffects": true,
+            "use": [
+              {
+                "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+              },
+              {
+                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+                "options": {
+                  "importLoaders": 1,
+                  "modules": {
+                    "auto": true,
+                    "exportGlobals": false,
+                    "exportLocalsConvention": "camelCase",
+                    "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                    "namedExport": false,
+                  },
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "builtin:lightningcss-loader",
+                "options": {
+                  "errorRecovery": true,
+                  "targets": [
+                    "chrome >= 107",
+                    "edge >= 107",
+                    "firefox >= 104",
+                    "safari >= 16",
+                  ],
+                },
+              },
+            ],
           },
         ],
-      },
-      {
-        "resolve": {
-          "preferRelative": true,
-        },
-        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-        "sideEffects": true,
         "test": /\\\\\\.css\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-            "options": {
-              "exportType": "string",
-              "importLoaders": 1,
-              "modules": false,
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "builtin:lightningcss-loader",
-            "options": {
-              "errorRecovery": true,
-              "targets": [
-                "chrome >= 107",
-                "edge >= 107",
-                "firefox >= 104",
-                "safari >= 16",
-              ],
-            },
-          },
-        ],
-      },
-      {
-        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-        "test": /\\\\\\.css\\$/,
-        "type": "asset/source",
       },
       {
         "dependency": {
@@ -135,55 +124,55 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
         ],
-        "resourceQuery": {
-          "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-        },
-        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "javascript/auto",
-        "use": [
+        "oneOf": [
           {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "collectTypeScriptInfo": {
-                "exportedEnum": false,
-                "typeExports": true,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
+          },
+          {
+            "type": "javascript/auto",
+            "use": [
+              {
+                "loader": "builtin:swc-loader",
+                "options": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
+                  },
+                  "env": {
+                    "targets": [
+                      "chrome >= 107",
+                      "edge >= 107",
+                      "firefox >= 104",
+                      "safari >= 16",
+                    ],
+                  },
+                  "isModule": "unknown",
+                  "jsc": {
+                    "experimental": {
+                      "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                      "keepImportAttributes": true,
+                    },
+                    "externalHelpers": true,
+                    "output": {
+                      "charset": "utf8",
+                    },
+                    "parser": {
+                      "decorators": true,
+                      "syntax": "typescript",
+                      "tsx": false,
+                    },
+                    "transform": {
+                      "decoratorVersion": "2022-03",
+                      "legacyDecorator": false,
+                    },
+                  },
+                },
               },
-              "env": {
-                "targets": [
-                  "chrome >= 107",
-                  "edge >= 107",
-                  "firefox >= 104",
-                  "safari >= 16",
-                ],
-              },
-              "isModule": "unknown",
-              "jsc": {
-                "experimental": {
-                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
-                  "keepImportAttributes": true,
-                },
-                "externalHelpers": true,
-                "output": {
-                  "charset": "utf8",
-                },
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": false,
-                },
-                "transform": {
-                  "decoratorVersion": "2022-03",
-                  "legacyDecorator": false,
-                },
-              },
-            },
+            ],
           },
         ],
-      },
-      {
-        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "asset/source",
       },
       {
         "mimetype": {
@@ -239,9 +228,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "static/image/[name].[contenthash:8][ext]",
+              "filename": "static/image/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+            "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
           },
           {
@@ -254,7 +243,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           },
           {
             "generator": {
-              "filename": "static/image/[name].[contenthash:8][ext]",
+              "filename": "static/image/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -270,9 +259,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
-            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+            "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
           },
           {
@@ -285,7 +274,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           },
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
             "parser": {
               "dataUrlCondition": {
@@ -301,9 +290,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+            "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
           },
           {
@@ -316,7 +305,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           },
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -332,9 +321,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+            "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
           },
           {
@@ -347,7 +336,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           },
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -371,7 +360,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       {
         "dependency": "url",
         "generator": {
-          "filename": "static/wasm/[contenthash:8].module.wasm",
+          "filename": "static/wasm/[contenthash:10].module.wasm",
         },
         "test": /\\\\\\.wasm\\$/,
         "type": "asset/resource",
@@ -382,24 +371,20 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   "optimization": {
     "minimize": false,
     "splitChunks": {
-      "cacheGroups": {
-        "lib-axios": {
-          "name": "lib-axios",
-          "priority": 0,
-          "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
-        },
-      },
       "chunks": "all",
     },
   },
   "output": {
-    "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+    "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
+    "bundlerInfo": {
+      "force": false,
+    },
     "chunkFilename": "static/js/async/[name].js",
     "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
     "path": "<ROOT>/packages/core/tests/dist",
     "publicPath": "/",
-    "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
+    "webassemblyModuleFilename": "static/wasm/[contenthash:10].module.wasm",
   },
   "performance": {
     "hints": false,
@@ -524,11 +509,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "rspackFuture": {
-      "bundlerInfo": {
-        "force": false,
-      },
-    },
   },
   "infrastructureLogging": {
     "level": "error",
@@ -556,87 +536,81 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "dependency": {
           "not": "url",
         },
-        "resolve": {
-          "preferRelative": true,
-        },
-        "resourceQuery": {
-          "not": [
-            /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-          ],
-        },
-        "sideEffects": true,
-        "test": /\\\\\\.css\\$/,
-        "type": "javascript/auto",
-        "use": [
+        "oneOf": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-            "options": {
-              "importLoaders": 1,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[local]-[hash:base64:6]",
-                "namedExport": false,
+            "resolve": {
+              "preferRelative": true,
+            },
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+            "sideEffects": true,
+            "use": [
+              {
+                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+                "options": {
+                  "exportType": "string",
+                  "importLoaders": 1,
+                  "modules": false,
+                  "sourceMap": false,
+                },
               },
-              "sourceMap": false,
-            },
+              {
+                "loader": "builtin:lightningcss-loader",
+                "options": {
+                  "errorRecovery": true,
+                  "minify": true,
+                  "targets": [
+                    "chrome >= 107",
+                    "edge >= 107",
+                    "firefox >= 104",
+                    "safari >= 16",
+                  ],
+                },
+              },
+            ],
           },
           {
-            "loader": "builtin:lightningcss-loader",
-            "options": {
-              "errorRecovery": true,
-              "targets": [
-                "chrome >= 107",
-                "edge >= 107",
-                "firefox >= 104",
-                "safari >= 16",
-              ],
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
+          },
+          {
+            "resolve": {
+              "preferRelative": true,
             },
+            "sideEffects": true,
+            "use": [
+              {
+                "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+              },
+              {
+                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+                "options": {
+                  "importLoaders": 1,
+                  "modules": {
+                    "auto": true,
+                    "exportGlobals": false,
+                    "exportLocalsConvention": "camelCase",
+                    "localIdentName": "[local]-[hash:base64:6]",
+                    "namedExport": false,
+                  },
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "builtin:lightningcss-loader",
+                "options": {
+                  "errorRecovery": true,
+                  "targets": [
+                    "chrome >= 107",
+                    "edge >= 107",
+                    "firefox >= 104",
+                    "safari >= 16",
+                  ],
+                },
+              },
+            ],
           },
         ],
-      },
-      {
-        "resolve": {
-          "preferRelative": true,
-        },
-        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-        "sideEffects": true,
         "test": /\\\\\\.css\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-            "options": {
-              "exportType": "string",
-              "importLoaders": 1,
-              "modules": false,
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "builtin:lightningcss-loader",
-            "options": {
-              "errorRecovery": true,
-              "minify": true,
-              "targets": [
-                "chrome >= 107",
-                "edge >= 107",
-                "firefox >= 104",
-                "safari >= 16",
-              ],
-            },
-          },
-        ],
-      },
-      {
-        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-        "test": /\\\\\\.css\\$/,
-        "type": "asset/source",
       },
       {
         "dependency": {
@@ -648,55 +622,55 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "resourceQuery": {
-          "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-        },
-        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "javascript/auto",
-        "use": [
+        "oneOf": [
           {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "collectTypeScriptInfo": {
-                "exportedEnum": true,
-                "typeExports": true,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
+          },
+          {
+            "type": "javascript/auto",
+            "use": [
+              {
+                "loader": "builtin:swc-loader",
+                "options": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": true,
+                    "typeExports": true,
+                  },
+                  "env": {
+                    "targets": [
+                      "chrome >= 107",
+                      "edge >= 107",
+                      "firefox >= 104",
+                      "safari >= 16",
+                    ],
+                  },
+                  "isModule": "unknown",
+                  "jsc": {
+                    "experimental": {
+                      "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                      "keepImportAttributes": true,
+                    },
+                    "externalHelpers": true,
+                    "output": {
+                      "charset": "utf8",
+                    },
+                    "parser": {
+                      "decorators": true,
+                      "syntax": "typescript",
+                      "tsx": false,
+                    },
+                    "transform": {
+                      "decoratorVersion": "2022-03",
+                      "legacyDecorator": false,
+                    },
+                  },
+                },
               },
-              "env": {
-                "targets": [
-                  "chrome >= 107",
-                  "edge >= 107",
-                  "firefox >= 104",
-                  "safari >= 16",
-                ],
-              },
-              "isModule": "unknown",
-              "jsc": {
-                "experimental": {
-                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
-                  "keepImportAttributes": true,
-                },
-                "externalHelpers": true,
-                "output": {
-                  "charset": "utf8",
-                },
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": false,
-                },
-                "transform": {
-                  "decoratorVersion": "2022-03",
-                  "legacyDecorator": false,
-                },
-              },
-            },
+            ],
           },
         ],
-      },
-      {
-        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "asset/source",
       },
       {
         "mimetype": {
@@ -752,9 +726,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "oneOf": [
           {
             "generator": {
-              "filename": "static/image/[name].[contenthash:8][ext]",
+              "filename": "static/image/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+            "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
           },
           {
@@ -767,7 +741,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           },
           {
             "generator": {
-              "filename": "static/image/[name].[contenthash:8][ext]",
+              "filename": "static/image/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -783,9 +757,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "oneOf": [
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
-            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+            "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
           },
           {
@@ -798,7 +772,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           },
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
             "parser": {
               "dataUrlCondition": {
@@ -814,9 +788,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "oneOf": [
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+            "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
           },
           {
@@ -829,7 +803,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           },
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -845,9 +819,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "oneOf": [
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+            "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
           },
           {
@@ -860,7 +834,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           },
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -884,7 +858,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       {
         "dependency": "url",
         "generator": {
-          "filename": "static/wasm/[contenthash:8].module.wasm",
+          "filename": "static/wasm/[contenthash:10].module.wasm",
         },
         "test": /\\\\\\.wasm\\$/,
         "type": "asset/resource",
@@ -928,24 +902,20 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       },
     ],
     "splitChunks": {
-      "cacheGroups": {
-        "lib-axios": {
-          "name": "lib-axios",
-          "priority": 0,
-          "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
-        },
-      },
       "chunks": "all",
     },
   },
   "output": {
-    "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
-    "chunkFilename": "static/js/async/[name].[contenthash:8].js",
+    "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
+    "bundlerInfo": {
+      "force": false,
+    },
+    "chunkFilename": "static/js/async/[name].[contenthash:10].js",
     "devtoolModuleFilenameTemplate": "[relative-resource-path]",
-    "filename": "static/js/[name].[contenthash:8].js",
+    "filename": "static/js/[name].[contenthash:10].js",
     "path": "<ROOT>/packages/core/tests/dist",
     "publicPath": "/",
-    "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
+    "webassemblyModuleFilename": "static/wasm/[contenthash:10].module.wasm",
   },
   "performance": {
     "hints": false,
@@ -953,8 +923,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   "plugins": [
     CssExtractRspackPlugin {
       "options": {
-        "chunkFilename": "static/css/async/[name].[contenthash:8].css",
-        "filename": "static/css/[name].[contenthash:8].css",
+        "chunkFilename": "static/css/async/[name].[contenthash:10].css",
+        "filename": "static/css/[name].[contenthash:10].css",
         "ignoreOrder": true,
       },
     },
@@ -1061,12 +1031,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "devtool": "cheap-module-source-map",
   "experiments": {
     "asyncWebAssembly": true,
-    "outputModule": true,
-    "rspackFuture": {
-      "bundlerInfo": {
-        "force": false,
-      },
-    },
   },
   "infrastructureLogging": {
     "level": "error",
@@ -1090,72 +1054,66 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "dependency": {
           "not": "url",
         },
-        "resolve": {
-          "preferRelative": true,
-        },
-        "resourceQuery": {
-          "not": [
-            /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-          ],
-        },
-        "sideEffects": true,
-        "test": /\\\\\\.css\\$/,
-        "type": "javascript/auto",
-        "use": [
+        "oneOf": [
           {
-            "loader": "<ROOT>/packages/core/dist/ignoreCssLoader.mjs",
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-            "options": {
-              "importLoaders": 0,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "exportOnlyLocals": true,
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
+            "resolve": {
+              "preferRelative": true,
+            },
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+            "sideEffects": true,
+            "use": [
+              {
+                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+                "options": {
+                  "exportType": "string",
+                  "importLoaders": 1,
+                  "modules": false,
+                  "sourceMap": false,
+                },
               },
-              "sourceMap": false,
-            },
-          },
-        ],
-      },
-      {
-        "resolve": {
-          "preferRelative": true,
-        },
-        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-        "sideEffects": true,
-        "test": /\\\\\\.css\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-            "options": {
-              "exportType": "string",
-              "importLoaders": 1,
-              "modules": false,
-              "sourceMap": false,
-            },
+              {
+                "loader": "builtin:lightningcss-loader",
+                "options": {
+                  "errorRecovery": true,
+                  "targets": [
+                    "node >= 20",
+                  ],
+                },
+              },
+            ],
           },
           {
-            "loader": "builtin:lightningcss-loader",
-            "options": {
-              "errorRecovery": true,
-              "targets": [
-                "node >= 20",
-              ],
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
+          },
+          {
+            "resolve": {
+              "preferRelative": true,
             },
+            "sideEffects": true,
+            "use": [
+              {
+                "loader": "<ROOT>/packages/core/dist/ignoreCssLoader.mjs",
+              },
+              {
+                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+                "options": {
+                  "importLoaders": 0,
+                  "modules": {
+                    "auto": true,
+                    "exportGlobals": false,
+                    "exportLocalsConvention": "camelCase",
+                    "exportOnlyLocals": true,
+                    "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                    "namedExport": false,
+                  },
+                  "sourceMap": false,
+                },
+              },
+            ],
           },
         ],
-      },
-      {
-        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.css\\$/,
-        "type": "asset/source",
       },
       {
         "dependency": {
@@ -1167,52 +1125,52 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "resourceQuery": {
-          "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-        },
-        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "javascript/auto",
-        "use": [
+        "oneOf": [
           {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "collectTypeScriptInfo": {
-                "exportedEnum": false,
-                "typeExports": true,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
+          },
+          {
+            "type": "javascript/auto",
+            "use": [
+              {
+                "loader": "builtin:swc-loader",
+                "options": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
+                  },
+                  "env": {
+                    "targets": [
+                      "node >= 20",
+                    ],
+                  },
+                  "isModule": "unknown",
+                  "jsc": {
+                    "experimental": {
+                      "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                      "keepImportAttributes": true,
+                    },
+                    "externalHelpers": true,
+                    "output": {
+                      "charset": "utf8",
+                    },
+                    "parser": {
+                      "decorators": true,
+                      "syntax": "typescript",
+                      "tsx": false,
+                    },
+                    "transform": {
+                      "decoratorVersion": "2022-03",
+                      "legacyDecorator": false,
+                    },
+                  },
+                },
               },
-              "env": {
-                "targets": [
-                  "node >= 20",
-                ],
-              },
-              "isModule": "unknown",
-              "jsc": {
-                "experimental": {
-                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
-                  "keepImportAttributes": true,
-                },
-                "externalHelpers": true,
-                "output": {
-                  "charset": "utf8",
-                },
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": false,
-                },
-                "transform": {
-                  "decoratorVersion": "2022-03",
-                  "legacyDecorator": false,
-                },
-              },
-            },
+            ],
           },
         ],
-      },
-      {
-        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "asset/source",
       },
       {
         "mimetype": {
@@ -1265,9 +1223,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "oneOf": [
           {
             "generator": {
-              "filename": "static/image/[name].[contenthash:8][ext]",
+              "filename": "static/image/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+            "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
           },
           {
@@ -1280,7 +1238,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           },
           {
             "generator": {
-              "filename": "static/image/[name].[contenthash:8][ext]",
+              "filename": "static/image/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -1296,9 +1254,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "oneOf": [
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
-            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+            "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
           },
           {
@@ -1311,7 +1269,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           },
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
             "parser": {
               "dataUrlCondition": {
@@ -1327,9 +1285,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "oneOf": [
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+            "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
           },
           {
@@ -1342,7 +1300,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           },
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -1358,9 +1316,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "oneOf": [
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+            "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
           },
           {
@@ -1373,7 +1331,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           },
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -1397,7 +1355,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       {
         "dependency": "url",
         "generator": {
-          "filename": "static/wasm/[contenthash:8].module.wasm",
+          "filename": "static/wasm/[contenthash:10].module.wasm",
         },
         "test": /\\\\\\.wasm\\$/,
         "type": "asset/resource",
@@ -1426,7 +1384,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "splitChunks": false,
   },
   "output": {
-    "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+    "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
+    "bundlerInfo": {
+      "force": false,
+    },
     "chunkFilename": "[name].js",
     "chunkFormat": "module",
     "chunkLoading": "import",
@@ -1438,7 +1399,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "module": true,
     "path": "<ROOT>/packages/core/tests/dist",
     "publicPath": "/",
-    "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
+    "webassemblyModuleFilename": "static/wasm/[contenthash:10].module.wasm",
     "workerChunkLoading": "import",
   },
   "performance": {
@@ -1507,11 +1468,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
   "devtool": "cheap-module-source-map",
   "experiments": {
     "asyncWebAssembly": true,
-    "rspackFuture": {
-      "bundlerInfo": {
-        "force": false,
-      },
-    },
   },
   "infrastructureLogging": {
     "level": "error",
@@ -1547,86 +1503,80 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "dependency": {
           "not": "url",
         },
-        "resolve": {
-          "preferRelative": true,
-        },
-        "resourceQuery": {
-          "not": [
-            /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-          ],
-        },
-        "sideEffects": true,
-        "test": /\\\\\\.css\\$/,
-        "type": "javascript/auto",
-        "use": [
+        "oneOf": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-            "options": {
-              "importLoaders": 1,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
+            "resolve": {
+              "preferRelative": true,
+            },
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+            "sideEffects": true,
+            "use": [
+              {
+                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+                "options": {
+                  "exportType": "string",
+                  "importLoaders": 1,
+                  "modules": false,
+                  "sourceMap": false,
+                },
               },
-              "sourceMap": false,
-            },
+              {
+                "loader": "builtin:lightningcss-loader",
+                "options": {
+                  "errorRecovery": true,
+                  "targets": [
+                    "chrome >= 107",
+                    "edge >= 107",
+                    "firefox >= 104",
+                    "safari >= 16",
+                  ],
+                },
+              },
+            ],
           },
           {
-            "loader": "builtin:lightningcss-loader",
-            "options": {
-              "errorRecovery": true,
-              "targets": [
-                "chrome >= 107",
-                "edge >= 107",
-                "firefox >= 104",
-                "safari >= 16",
-              ],
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
+          },
+          {
+            "resolve": {
+              "preferRelative": true,
             },
+            "sideEffects": true,
+            "use": [
+              {
+                "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+              },
+              {
+                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+                "options": {
+                  "importLoaders": 1,
+                  "modules": {
+                    "auto": true,
+                    "exportGlobals": false,
+                    "exportLocalsConvention": "camelCase",
+                    "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                    "namedExport": false,
+                  },
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "builtin:lightningcss-loader",
+                "options": {
+                  "errorRecovery": true,
+                  "targets": [
+                    "chrome >= 107",
+                    "edge >= 107",
+                    "firefox >= 104",
+                    "safari >= 16",
+                  ],
+                },
+              },
+            ],
           },
         ],
-      },
-      {
-        "resolve": {
-          "preferRelative": true,
-        },
-        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-        "sideEffects": true,
         "test": /\\\\\\.css\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-            "options": {
-              "exportType": "string",
-              "importLoaders": 1,
-              "modules": false,
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "builtin:lightningcss-loader",
-            "options": {
-              "errorRecovery": true,
-              "targets": [
-                "chrome >= 107",
-                "edge >= 107",
-                "firefox >= 104",
-                "safari >= 16",
-              ],
-            },
-          },
-        ],
-      },
-      {
-        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-        "test": /\\\\\\.css\\$/,
-        "type": "asset/source",
       },
       {
         "dependency": {
@@ -1639,55 +1589,55 @@ exports[`tools.rspack > should match snapshot 1`] = `
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
         ],
-        "resourceQuery": {
-          "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-        },
-        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "javascript/auto",
-        "use": [
+        "oneOf": [
           {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "collectTypeScriptInfo": {
-                "exportedEnum": false,
-                "typeExports": true,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
+          },
+          {
+            "type": "javascript/auto",
+            "use": [
+              {
+                "loader": "builtin:swc-loader",
+                "options": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
+                  },
+                  "env": {
+                    "targets": [
+                      "chrome >= 107",
+                      "edge >= 107",
+                      "firefox >= 104",
+                      "safari >= 16",
+                    ],
+                  },
+                  "isModule": "unknown",
+                  "jsc": {
+                    "experimental": {
+                      "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                      "keepImportAttributes": true,
+                    },
+                    "externalHelpers": true,
+                    "output": {
+                      "charset": "utf8",
+                    },
+                    "parser": {
+                      "decorators": true,
+                      "syntax": "typescript",
+                      "tsx": false,
+                    },
+                    "transform": {
+                      "decoratorVersion": "2022-03",
+                      "legacyDecorator": false,
+                    },
+                  },
+                },
               },
-              "env": {
-                "targets": [
-                  "chrome >= 107",
-                  "edge >= 107",
-                  "firefox >= 104",
-                  "safari >= 16",
-                ],
-              },
-              "isModule": "unknown",
-              "jsc": {
-                "experimental": {
-                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
-                  "keepImportAttributes": true,
-                },
-                "externalHelpers": true,
-                "output": {
-                  "charset": "utf8",
-                },
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": false,
-                },
-                "transform": {
-                  "decoratorVersion": "2022-03",
-                  "legacyDecorator": false,
-                },
-              },
-            },
+            ],
           },
         ],
-      },
-      {
-        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "asset/source",
       },
       {
         "mimetype": {
@@ -1743,9 +1693,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "static/image/[name].[contenthash:8][ext]",
+              "filename": "static/image/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+            "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
           },
           {
@@ -1758,7 +1708,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
           },
           {
             "generator": {
-              "filename": "static/image/[name].[contenthash:8][ext]",
+              "filename": "static/image/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -1774,9 +1724,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
-            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+            "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
           },
           {
@@ -1789,7 +1739,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
           },
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
             "parser": {
               "dataUrlCondition": {
@@ -1805,9 +1755,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+            "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
           },
           {
@@ -1820,7 +1770,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
           },
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -1836,9 +1786,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "oneOf": [
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+            "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
           },
           {
@@ -1851,7 +1801,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
           },
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -1875,7 +1825,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
       {
         "dependency": "url",
         "generator": {
-          "filename": "static/wasm/[contenthash:8].module.wasm",
+          "filename": "static/wasm/[contenthash:10].module.wasm",
         },
         "test": /\\\\\\.wasm\\$/,
         "type": "asset/resource",
@@ -1890,24 +1840,20 @@ exports[`tools.rspack > should match snapshot 1`] = `
   "optimization": {
     "minimize": false,
     "splitChunks": {
-      "cacheGroups": {
-        "lib-axios": {
-          "name": "lib-axios",
-          "priority": 0,
-          "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
-        },
-      },
       "chunks": "all",
     },
   },
   "output": {
-    "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+    "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
+    "bundlerInfo": {
+      "force": false,
+    },
     "chunkFilename": "static/js/async/[name].js",
     "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
     "path": "<ROOT>/packages/core/tests/dist",
     "publicPath": "/",
-    "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
+    "webassemblyModuleFilename": "static/wasm/[contenthash:10].module.wasm",
   },
   "performance": {
     "hints": false,

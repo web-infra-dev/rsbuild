@@ -265,15 +265,44 @@ console.log(webStats.toJson({ all: false }));
 
 ### sockWrite
 
-- **Type:** `(type: 'static-changed') => void`
+- **Type:**
+
+```ts
+type SockWrite = {
+  (type: 'static-changed'): void;
+  (type: 'custom', data?: { event: string; data?: any }): void;
+};
+```
 
 Sends some message to HMR client, and then the HMR client will take different actions depending on the message type.
 
-For example, if you send a `'static-changed'` message, the page will reload.
+#### static-changed
+
+If you send a `'static-changed'` message, the page will reload.
 
 ```ts
 const rsbuildServer = await rsbuild.createDevServer();
 if (someCondition) {
   rsbuildServer.sockWrite('static-changed');
+}
+```
+
+#### custom
+
+You can also send custom messages via `custom` type with optional data to the browser and handle them via HMR events:
+
+```ts title="server.js"
+const rsbuildServer = await rsbuild.createDevServer();
+rsbuildServer.sockWrite('custom', { event: 'count', data: { value: 1 } });
+```
+
+Rsbuild extends the `on()` method on Rspack’s [import.meta.webpackHot](https://rspack.rs/api/runtime-api/hmr) object. It allows you to listen for custom events in the browser and handle the associated data:
+
+```ts title="client.js"
+if (import.meta.webpackHot) {
+  import.meta.webpackHot.on('count', (data) => {
+    console.log('count update', data.value);
+  });
+  import.meta.webpackHot.accept();
 }
 ```

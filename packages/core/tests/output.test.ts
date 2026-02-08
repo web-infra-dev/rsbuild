@@ -3,6 +3,10 @@ import { createRsbuild } from '../src';
 import { pluginOutput } from '../src/plugins/output';
 
 describe('plugin-output', () => {
+  afterEach(() => {
+    rs.unstubAllEnvs();
+  });
+
   it('should set output correctly', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
@@ -151,7 +155,7 @@ describe('plugin-output', () => {
   });
 
   it('should replace `<port>` placeholder with default port', async () => {
-    rstest.stubEnv('NODE_ENV', 'development');
+    rs.stubEnv('NODE_ENV', 'development');
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
       config: {
@@ -166,7 +170,7 @@ describe('plugin-output', () => {
   });
 
   it('should replace `<port>` placeholder with server.port', async () => {
-    rstest.stubEnv('NODE_ENV', 'development');
+    rs.stubEnv('NODE_ENV', 'development');
     const rsbuild = await createRsbuild({
       config: {
         server: { port: 4000 },
@@ -177,11 +181,10 @@ describe('plugin-output', () => {
     });
     const [config] = await rsbuild.initConfigs();
     expect(config?.output?.publicPath).toEqual('http://example-4000.com:4000/');
-    rstest.unstubAllEnvs();
   });
 
   it('should replace `<port>` placeholder of `output.assetPrefix` with default port', async () => {
-    rstest.stubEnv('NODE_ENV', 'production');
+    rs.stubEnv('NODE_ENV', 'production');
     const rsbuild = await createRsbuild({
       config: {
         output: {
@@ -192,6 +195,5 @@ describe('plugin-output', () => {
 
     const [config] = await rsbuild.initConfigs();
     expect(config?.output?.publicPath).toEqual('http://example.com:3000/');
-    rstest.unstubAllEnvs();
   });
 });

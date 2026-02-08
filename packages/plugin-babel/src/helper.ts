@@ -189,14 +189,17 @@ export const modifyBabelLoaderOptions = ({
   CHAIN_ID: ChainIdentifier;
   modifier: (config: BabelTransformOptions) => BabelTransformOptions;
 }): void => {
-  const ruleIds = [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI, BABEL_JS_RULE];
+  const rules = [
+    chain.module.rules
+      .get(CHAIN_ID.RULE.JS)
+      .oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN),
+    chain.module.rules.get(CHAIN_ID.RULE.JS_DATA_URI),
+    chain.module.rules.get(BABEL_JS_RULE),
+  ].filter(Boolean);
 
-  for (const ruleId of ruleIds) {
-    if (chain.module.rules.has(ruleId)) {
-      const rule = chain.module.rule(ruleId);
-      if (rule.uses.has(CHAIN_ID.USE.BABEL)) {
-        rule.use(CHAIN_ID.USE.BABEL).tap(modifier);
-      }
+  for (const rule of rules) {
+    if (rule.uses.has(CHAIN_ID.USE.BABEL)) {
+      rule.use(CHAIN_ID.USE.BABEL).tap(modifier);
     }
   }
 };

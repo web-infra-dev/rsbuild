@@ -8,7 +8,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(
-      (chain, { isDev, target, bundler, environment, CHAIN_ID }) => {
+      (chain, { isDev, target, rspack, environment, CHAIN_ID }) => {
         const { config } = environment;
 
         chain.name(environment.name);
@@ -43,21 +43,12 @@ export const pluginBasic = (): RsbuildPlugin => ({
         if (usingHMR) {
           chain
             .plugin(CHAIN_ID.PLUGIN.HMR)
-            .use(bundler.HotModuleReplacementPlugin);
+            .use(rspack.HotModuleReplacementPlugin);
         }
 
         chain.module.parser.merge({
           javascript: {
             typeReexportsPresence: 'tolerant',
-          },
-        });
-
-        chain.experiments({
-          ...chain.get('experiments'),
-          rspackFuture: {
-            bundlerInfo: {
-              force: false,
-            },
           },
         });
       },

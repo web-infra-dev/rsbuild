@@ -180,31 +180,51 @@ export const pluginLess = (
   setup(api) {
     const { include = /\.less$/, parallel = false } = pluginOptions;
 
+    const CSS_MAIN = 'css';
+    const CSS_INLINE = 'css-inline';
+    const CSS_RAW = 'css-raw';
+    const LESS_MAIN = 'less';
+    const LESS_INLINE = 'less-inline';
+    const LESS_RAW = 'less-raw';
+    const isV1 = api.context.version.startsWith('1.');
+
     api.modifyBundlerChain((chain, { CHAIN_ID, environment }) => {
       const { config } = environment;
 
       const lessRule = chain.module
         .rule(findRuleId(chain, CHAIN_ID.RULE.LESS))
         .test(include)
+        .dependency({ not: 'url' })
         .resolve.preferRelative(true)
         .end();
 
-      // Rsbuild < 1.3.0 does not have the raw and inline rules
-      const inlineRule = CHAIN_ID.RULE.CSS_INLINE
-        ? chain.module
-            .rule(findRuleId(chain, CHAIN_ID.RULE.LESS_INLINE))
-            .test(include)
-        : null;
-
-      // Support for importing raw Less files
-      if (CHAIN_ID.RULE.CSS_RAW) {
-        const cssRawRule = chain.module.rules.get(CHAIN_ID.RULE.CSS_RAW);
-        chain.module
-          .rule(CHAIN_ID.RULE.LESS_RAW)
-          .test(include)
-          .type('asset/source')
-          .resourceQuery(cssRawRule.get('resourceQuery'));
+      if (isV1) {
+        chain.module.rule(LESS_RAW).test(include);
+        chain.module.rule(LESS_INLINE).test(include);
       }
+
+      const getRule = (id: string) => {
+        // Compatibility for Rsbuild v1
+        if (isV1) {
+          return chain.module.rule(id);
+        }
+        return (
+          id.startsWith('less')
+            ? lessRule
+            : chain.module.rule(CHAIN_ID.RULE.CSS)
+        ).oneOf(id);
+      };
+
+      // Inline Less for `?inline` imports
+      const lessInlineRule = getRule(LESS_INLINE);
+
+      // Raw Less for `?raw` imports
+      getRule(LESS_RAW)
+        .type('asset/source')
+        .resourceQuery(getRule(CSS_RAW).get('resourceQuery'));
+
+      // Main Less transform
+      const lessMainRule = getRule(LESS_MAIN);
 
       const { sourceMap } = config.output;
       const { excludes, options } = getLessLoaderOptions(
@@ -213,15 +233,15 @@ export const pluginLess = (
         api.context.rootPath,
       );
 
-      // Update the normal rule and the inline rule
+      // Update the main rule and the inline rule
       const updateRules = (
-        callback: (rule: RspackChain.Rule, type: 'normal' | 'inline') => void,
+        callback: (
+          rule: RspackChain.Rule<unknown>,
+          cssBranchRule: RspackChain.Rule<unknown>,
+        ) => void,
       ) => {
-        callback(lessRule, 'normal');
-
-        if (inlineRule) {
-          callback(inlineRule, 'inline');
-        }
+        callback(lessMainRule, getRule(CSS_MAIN));
+        callback(lessInlineRule, getRule(CSS_INLINE));
       };
 
       const lessLoaderPath = path.join(
@@ -229,7 +249,7 @@ export const pluginLess = (
         '../compiled/less-loader/index.js',
       );
 
-      updateRules((rule, type) => {
+      updateRules((rule, cssBranchRule) => {
         for (const item of excludes) {
           rule.exclude.add(item);
         }
@@ -238,15 +258,12 @@ export const pluginLess = (
         }
 
         // Copy the builtin CSS rules
-        const cssRule = chain.module.rules.get(
-          type === 'normal' ? CHAIN_ID.RULE.CSS : CHAIN_ID.RULE.CSS_INLINE,
-        );
-        rule.dependency(cssRule.get('dependency'));
-        rule.sideEffects(cssRule.get('sideEffects'));
-        rule.resourceQuery(cssRule.get('resourceQuery'));
+        rule
+          .sideEffects(true)
+          .resourceQuery(cssBranchRule.get('resourceQuery'));
 
-        for (const id of Object.keys(cssRule.uses.entries())) {
-          const loader = cssRule.uses.get(id);
+        for (const id of Object.keys(cssBranchRule.uses.entries())) {
+          const loader = cssBranchRule.uses.get(id);
           const options = loader.get('options') ?? {};
           const clonedOptions = deepmerge<Record<string, any>>({}, options);
 

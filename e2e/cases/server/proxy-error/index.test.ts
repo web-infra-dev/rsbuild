@@ -5,5 +5,6 @@ test('should handle proxy error', async ({ dev, page }) => {
 
   const res = await page.goto(`http://localhost:${rsbuild.port}/api`);
   expect(res?.status()).toBe(504);
-  await rsbuild.expectLog('Error occurred while proxying request');
+  const body = await res?.text();
+  expect(body).toContain('Error occurred while trying to proxy');
 });

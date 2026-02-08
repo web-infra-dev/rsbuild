@@ -1,5 +1,5 @@
 import { join, posix } from 'node:path';
-import type { Compiler } from '@rspack/core';
+import { type Compiler, rspack } from '@rspack/core';
 import { LOADER_PATH } from './constants';
 import { createPublicContext } from './createContext';
 import { color, getFilename } from './helpers';
@@ -8,7 +8,6 @@ import { removeLeadingSlash } from './helpers/url';
 import type { TransformLoaderOptions } from './loader/transformLoader';
 import { logger } from './logger';
 import { isEnvironmentMatch } from './pluginManager';
-import { rspack } from './rspack';
 import type {
   GetRsbuildConfig,
   InternalContext,

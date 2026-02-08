@@ -5,9 +5,7 @@ export default defineConfig({
     manifest: true,
     filenameHash: false,
   },
-  performance: {
-    chunkSplit: {
-      strategy: 'single-vendor',
-    },
+  splitChunks: {
+    preset: 'single-vendor',
   },
 });

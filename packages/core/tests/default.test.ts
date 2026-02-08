@@ -1,33 +1,30 @@
 import { createStubRsbuild } from '@scripts/test-helper';
 import type { RsbuildPlugin } from '../src';
 
+afterEach(() => {
+  rs.unstubAllEnvs();
+});
+
 describe('applyDefaultPlugins', () => {
   it('should apply default plugins correctly', async () => {
-    const { NODE_ENV } = process.env;
-    process.env.NODE_ENV = 'development';
+    rs.stubEnv('NODE_ENV', 'development');
     const rsbuild = await createStubRsbuild({});
 
     const bundlerConfigs = await rsbuild.initConfigs();
     expect(bundlerConfigs[0]).toMatchSnapshot();
-
-    process.env.NODE_ENV = NODE_ENV;
   });
 
   it('should apply default plugins correctly when prod', async () => {
-    const { NODE_ENV } = process.env;
-    process.env.NODE_ENV = 'production';
+    rs.stubEnv('NODE_ENV', 'production');
 
     const rsbuild = await createStubRsbuild({});
 
     const bundlerConfigs = await rsbuild.initConfigs();
     expect(bundlerConfigs[0]).toMatchSnapshot();
-
-    process.env.NODE_ENV = NODE_ENV;
   });
 
   it('should apply default plugins correctly when target = node', async () => {
-    const { NODE_ENV } = process.env;
-    process.env.NODE_ENV = 'test';
+    rs.stubEnv('NODE_ENV', 'test');
     const rsbuild = await createStubRsbuild({
       config: {
         mode: 'development',
@@ -40,14 +37,12 @@ describe('applyDefaultPlugins', () => {
     const bundlerConfigs = await rsbuild.initConfigs();
 
     expect(bundlerConfigs[0]).toMatchSnapshot();
-    process.env.NODE_ENV = NODE_ENV;
   });
 });
 
 describe('tools.rspack', () => {
   it('should match snapshot', async () => {
-    const { NODE_ENV } = process.env;
-    process.env.NODE_ENV = 'development';
+    rs.stubEnv('NODE_ENV', 'development');
 
     class TestPlugin {
       readonly name: string = 'TestPlugin';
@@ -80,8 +75,6 @@ describe('tools.rspack', () => {
     const bundlerConfigs = await rsbuild.initConfigs();
 
     expect(bundlerConfigs[0]).toMatchSnapshot();
-
-    process.env.NODE_ENV = NODE_ENV;
   });
 });
 

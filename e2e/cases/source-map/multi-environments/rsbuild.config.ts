@@ -5,11 +5,7 @@ export default defineConfig({
     sourceMap: true,
     filenameHash: false,
   },
-  performance: {
-    chunkSplit: {
-      strategy: 'all-in-one',
-    },
-  },
+  splitChunks: false,
   environments: {
     web1: {},
     web2: {

@@ -9,11 +9,7 @@ test('should allow to filter files in manifest', async ({ build }) => {
         },
         filenameHash: false,
       },
-      performance: {
-        chunkSplit: {
-          strategy: 'all-in-one',
-        },
-      },
+      splitChunks: false,
     },
   });
 
@@ -41,11 +37,7 @@ test('should allow to include license files in manifest', async ({ build }) => {
         },
         filenameHash: false,
       },
-      performance: {
-        chunkSplit: {
-          strategy: 'all-in-one',
-        },
-      },
+      splitChunks: false,
     },
   });
 

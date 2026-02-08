@@ -1,5 +1,5 @@
-import type { RequestHandler } from '../../compiled/http-proxy-middleware/index.js';
-import { requireCompiledPackage } from '../helpers/vendors';
+import type { RequestHandler } from '../../compiled/http-proxy-middleware';
+import { color } from '../helpers';
 import { logger } from '../logger';
 import type {
   RequestHandler as Middleware,
@@ -9,68 +9,54 @@ import type {
 import { HttpCode, type UpgradeEvent } from './helper';
 
 function formatProxyOptions(proxyOptions: ProxyConfig) {
-  const ret: ProxyOptions[] = [];
+  const logPrefix = color.dim('[http-proxy-middleware]: ');
+  const defaultOptions: ProxyOptions = {
+    changeOrigin: true,
+    logger: {
+      info(msg: string) {
+        logger.debug(logPrefix + msg);
+      },
+      warn: (msg: string) => {
+        logger.warn(logPrefix + msg);
+      },
+      error: (msg: string) => {
+        logger.error(logPrefix + msg);
+      },
+    },
+  };
 
   if (Array.isArray(proxyOptions)) {
-    ret.push(...proxyOptions);
-  } else if ('target' in proxyOptions) {
-    ret.push(proxyOptions);
-  } else {
-    for (const [context, options] of Object.entries(proxyOptions)) {
-      const opts: ProxyOptions = {
-        context,
-        changeOrigin: true,
-        logLevel: 'warn',
-        logProvider: () => logger,
-      };
-      if (typeof options === 'string') {
-        opts.target = options;
-      } else {
-        Object.assign(opts, options);
-      }
-      ret.push(opts);
-    }
+    return proxyOptions.map((options) => ({
+      ...defaultOptions,
+      ...options,
+    }));
   }
 
-  return ret;
+  return Object.entries(proxyOptions).map(([pathFilter, value]) => ({
+    ...defaultOptions,
+    pathFilter,
+    ...(typeof value === 'string' ? { target: value } : value),
+  }));
 }
 
-export function createProxyMiddleware(proxyOptions: ProxyConfig): {
+export async function createProxyMiddleware(
+  proxyOptions: ProxyConfig,
+): Promise<{
   middlewares: Middleware[];
   upgrade: UpgradeEvent;
-} {
+}> {
   // If it is not an array, it may be an object that uses the context attribute
   // or an object in the form of { source: ProxyDetail }
   const formattedOptions = formatProxyOptions(proxyOptions);
   const proxyMiddlewares: RequestHandler[] = [];
   const middlewares: Middleware[] = [];
 
-  const { createProxyMiddleware: baseMiddleware } = requireCompiledPackage(
-    'http-proxy-middleware',
+  const { createProxyMiddleware: baseMiddleware } = await import(
+    /* webpackChunkName: "http-proxy-middleware" */ 'http-proxy-middleware'
   );
 
   for (const opts of formattedOptions) {
-    const { onProxyRes } = opts;
-
-    /**
-     * Fix SSE close events
-     * Can be removed after updating to http-proxy-middleware v3
-     * @link https://github.com/chimurai/http-proxy-middleware/issues/678
-     * @link https://github.com/http-party/node-http-proxy/issues/1520#issue-877626125
-     */
-    opts.onProxyRes = (proxyRes, _req, res) => {
-      // call user's onProxyRes if provided
-      if (onProxyRes) {
-        onProxyRes(proxyRes, _req, res);
-      }
-      res.on('close', () => {
-        if (!res.writableEnded) {
-          proxyRes.destroy();
-        }
-      });
-    };
-
-    const proxyMiddleware = baseMiddleware(opts.context!, opts);
+    const proxyMiddleware = baseMiddleware(opts);
 
     const middleware: Middleware = async (req, res, next) => {
       const bypassUrl =
@@ -95,7 +81,9 @@ export function createProxyMiddleware(proxyOptions: ProxyConfig): {
 
     // only proxy WebSocket request when user specified
     // fix WebSocket error when user forget filter HMR path
-    opts.ws && proxyMiddlewares.push(proxyMiddleware);
+    if (opts.ws) {
+      proxyMiddlewares.push(proxyMiddleware);
+    }
   }
 
   const handleUpgrade: UpgradeEvent = (req, socket, head) => {

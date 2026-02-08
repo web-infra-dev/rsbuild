@@ -148,11 +148,7 @@ test('should transform module federation runtime with SWC', async ({
       sourceMap: true,
       overrideBrowserslist: ['Chrome >= 51'],
     },
-    performance: {
-      chunkSplit: {
-        strategy: 'all-in-one',
-      },
-    },
+    splitChunks: false,
     plugins: [
       pluginCheckSyntax({
         // MF runtime contains dynamic import, which can not pass syntax checking

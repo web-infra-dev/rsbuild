@@ -1,6 +1,6 @@
+import { rspack } from '@rspack/core';
 import { createVirtualModule } from '../helpers';
 import { applyToCompiler } from '../helpers/compiler';
-import { rspack } from '../rspack';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginNonce = (): RsbuildPlugin => ({

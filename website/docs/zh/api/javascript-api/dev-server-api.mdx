@@ -261,15 +261,44 @@ console.log(webStats.toJson({ all: false }));
 
 ### sockWrite
 
-- **类型:** `(type: 'static-changed') => void`
+- **类型:**
+
+```ts
+type SockWrite = {
+  (type: 'static-changed'): void;
+  (type: 'custom', data?: { event: string; data?: any }): void;
+};
+```
 
 向 HMR 客户端传递一些消息，HMR 客户端将根据接收到的消息类型进行不同的处理。
 
-例如，如果你发送一个 `'static-changed'` 的消息，页面将会重新加载。
+#### static-changed
+
+如果你发送一个 `'static-changed'` 的消息，页面将会重新加载。
 
 ```ts
 const rsbuildServer = await rsbuild.createDevServer();
 if (someCondition) {
   rsbuildServer.sockWrite('static-changed');
+}
+```
+
+#### custom
+
+你也可以通过 `custom` 类型向浏览器发送自定义消息，并携带可选的 data，然后通过 HMR 事件进行处理：
+
+```ts title="server.js"
+const rsbuildServer = await rsbuild.createDevServer();
+rsbuildServer.sockWrite('custom', { event: 'count', data: { value: 1 } });
+```
+
+Rsbuild 在 Rspack 的 [import.meta.webpackHot](https://rspack.rs/api/runtime-api/hmr) 对象上扩展了 `on()` 方法，它允许你在浏览器端监听自定义事件，并处理数据：
+
+```ts title="client.js"
+if (import.meta.webpackHot) {
+  import.meta.webpackHot.on('count', (data) => {
+    console.log('count update', data.value);
+  });
+  import.meta.webpackHot.accept();
 }
 ```

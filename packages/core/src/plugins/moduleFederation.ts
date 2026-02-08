@@ -1,4 +1,4 @@
-import { rspack } from '../rspack';
+import { rspack } from '@rspack/core';
 import type { RsbuildPlugin } from '../types';
 
 export function pluginModuleFederation(): RsbuildPlugin {
@@ -47,20 +47,6 @@ export function pluginModuleFederation(): RsbuildPlugin {
       api.modifyEnvironmentConfig((config) => {
         if (!config.moduleFederation?.options) {
           return;
-        }
-
-        /**
-         * Currently, splitChunks will take precedence over module federation shared modules.
-         * So we need to disable the default split chunks rules to make shared modules to work properly.
-         * @see https://github.com/module-federation/module-federation-examples/issues/3161
-         */
-        if (
-          config.performance?.chunkSplit?.strategy === 'split-by-experience'
-        ) {
-          config.performance.chunkSplit = {
-            ...config.performance.chunkSplit,
-            strategy: 'custom',
-          };
         }
 
         // Module Federation runtime uses ES6+ syntax,

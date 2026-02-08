@@ -11,6 +11,49 @@ import { logger } from './log';
 let createOverlay: undefined | ((title: string, content: string) => void);
 let clearOverlay: undefined | (() => void);
 
+type CustomListenersMap = Map<string, ((data: unknown) => void)[]>;
+
+declare const RSPACK_MODULE_HOT: Rspack.Hot | undefined;
+
+declare const RSPACK_INTERCEPT_MODULE_EXECUTION: ((options: {
+  module: { hot: Rspack.Hot };
+}) => void)[];
+
+// Install a patched `module.hot.on` that records per-module listeners and
+// removes them from the global map when the module is disposed.
+function setupCustomHMRListeners(customListenersMap: CustomListenersMap): void {
+  RSPACK_INTERCEPT_MODULE_EXECUTION.push(({ module }) => {
+    const newListeners: CustomListenersMap = new Map();
+
+    const addToMap = (
+      map: CustomListenersMap,
+      event: string,
+      cb: (payload: unknown) => void,
+    ) => {
+      const existing = map.get(event) || [];
+      existing.push(cb);
+      map.set(event, existing);
+    };
+
+    module.hot.on = (event: string, cb: (payload: any) => void) => {
+      addToMap(customListenersMap, event, cb);
+      addToMap(newListeners, event, cb);
+    };
+
+    module.hot.dispose(() => {
+      for (const [event, staleFns] of newListeners) {
+        const listeners = customListenersMap.get(event);
+        if (!listeners) continue;
+
+        customListenersMap.set(
+          event,
+          listeners.filter((l) => !staleFns.includes(l)),
+        );
+      }
+    });
+  });
+}
+
 export const registerOverlay = (
   createFn: (title: string, content: string) => void,
   clearFn: () => void,
@@ -33,6 +76,8 @@ export function init(
   const queuedMessages: ClientMessage[] = [];
   // Ids of the runtime errors sent to the server
   const clientErrors: { id: string; message?: string }[] = [];
+
+  const customListenersMap: CustomListenersMap = new Map();
 
   // Hash of the last successful build
   let lastHash: string | undefined;
@@ -243,6 +288,18 @@ export function init(
       case 'resolved-client-error':
         handleResolvedClientError(message.data);
         break;
+      case 'custom': {
+        const { event, data } = message.data;
+        if (event) {
+          const cbs = customListenersMap.get(event);
+          if (cbs) {
+            cbs.forEach((cb) => {
+              cb(data);
+            });
+          }
+        }
+        break;
+      }
     }
   }
 
@@ -356,6 +413,10 @@ export function init(
       sendError(message, error instanceof Error ? error.stack : undefined);
     });
     window.addEventListener('unhandledrejection', onUnhandledRejection);
+  }
+
+  if (RSPACK_MODULE_HOT) {
+    setupCustomHMRListeners(customListenersMap);
   }
 
   connect();

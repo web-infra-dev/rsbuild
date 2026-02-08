@@ -6,98 +6,94 @@ exports[`plugin-stylus > should add stylus loader config correctly 1`] = `
     "dependency": {
       "not": "url",
     },
+    "oneOf": [
+      {
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+        "sideEffects": true,
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
+              "importLoaders": 2,
+              "modules": false,
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+          },
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/stylus-loader/dist/cjs.js",
+            "options": {
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+      {
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/source",
+      },
+      {
+        "sideEffects": true,
+        "use": [
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+          },
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "importLoaders": 2,
+              "modules": {
+                "auto": true,
+                "exportGlobals": false,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                "namedExport": false,
+              },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+          },
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/stylus-loader/dist/cjs.js",
+            "options": {
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+    ],
     "resolve": {
       "preferRelative": true,
     },
-    "resourceQuery": {
-      "not": [
-        /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-        /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-      ],
-    },
-    "sideEffects": true,
     "test": /\\\\\\.styl\\(us\\)\\?\\$/,
-    "use": [
-      {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
-      },
-      {
-        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-        "options": {
-          "importLoaders": 2,
-          "modules": {
-            "auto": true,
-            "exportGlobals": false,
-            "exportLocalsConvention": "camelCase",
-            "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-            "namedExport": false,
-          },
-          "sourceMap": false,
-        },
-      },
-      {
-        "loader": "builtin:lightningcss-loader",
-        "options": {
-          "errorRecovery": true,
-          "targets": [
-            "chrome >= 107",
-            "edge >= 107",
-            "firefox >= 104",
-            "safari >= 16",
-          ],
-        },
-      },
-      {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/stylus-loader/dist/cjs.js",
-        "options": {
-          "sourceMap": false,
-        },
-      },
-    ],
-  },
-  {
-    "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-    "sideEffects": true,
-    "test": /\\\\\\.styl\\(us\\)\\?\\$/,
-    "use": [
-      {
-        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-        "options": {
-          "exportType": "string",
-          "importLoaders": 2,
-          "modules": false,
-          "sourceMap": false,
-        },
-      },
-      {
-        "loader": "builtin:lightningcss-loader",
-        "options": {
-          "errorRecovery": true,
-          "targets": [
-            "chrome >= 107",
-            "edge >= 107",
-            "firefox >= 104",
-            "safari >= 16",
-          ],
-        },
-      },
-      {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/stylus-loader/dist/cjs.js",
-        "options": {
-          "sourceMap": false,
-        },
-      },
-    ],
-  },
-  {
-    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-    "test": /\\\\\\.styl\\(us\\)\\?\\$/,
-    "type": "asset/source",
   },
 ]
 `;
 
-exports[`plugin-stylus > should allow to configure stylus options 1`] = `
+exports[`plugin-stylus > should add stylus loader for Rsbuild v1 1`] = `
 [
   {
     "dependency": {
@@ -119,7 +115,7 @@ exports[`plugin-stylus > should allow to configure stylus options 1`] = `
         "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
       },
       {
-        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rsbuild/core/compiled/css-loader/index.js",
         "options": {
           "importLoaders": 2,
           "modules": {
@@ -137,10 +133,10 @@ exports[`plugin-stylus > should allow to configure stylus options 1`] = `
         "options": {
           "errorRecovery": true,
           "targets": [
-            "chrome >= 107",
-            "edge >= 107",
-            "firefox >= 104",
-            "safari >= 16",
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
           ],
         },
       },
@@ -148,12 +144,14 @@ exports[`plugin-stylus > should allow to configure stylus options 1`] = `
         "loader": "<ROOT>/node_modules/<PNPM_INNER>/stylus-loader/dist/cjs.js",
         "options": {
           "sourceMap": false,
-          "stylusOptions": {
-            "lineNumbers": false,
-          },
         },
       },
     ],
+  },
+  {
+    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+    "test": /\\\\\\.styl\\(us\\)\\?\\$/,
+    "type": "asset/source",
   },
   {
     "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
@@ -161,7 +159,7 @@ exports[`plugin-stylus > should allow to configure stylus options 1`] = `
     "test": /\\\\\\.styl\\(us\\)\\?\\$/,
     "use": [
       {
-        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rsbuild/core/compiled/css-loader/index.js",
         "options": {
           "exportType": "string",
           "importLoaders": 2,
@@ -174,10 +172,10 @@ exports[`plugin-stylus > should allow to configure stylus options 1`] = `
         "options": {
           "errorRecovery": true,
           "targets": [
-            "chrome >= 107",
-            "edge >= 107",
-            "firefox >= 104",
-            "safari >= 16",
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
           ],
         },
       },
@@ -185,17 +183,108 @@ exports[`plugin-stylus > should allow to configure stylus options 1`] = `
         "loader": "<ROOT>/node_modules/<PNPM_INNER>/stylus-loader/dist/cjs.js",
         "options": {
           "sourceMap": false,
-          "stylusOptions": {
-            "lineNumbers": false,
-          },
         },
       },
     ],
   },
+]
+`;
+
+exports[`plugin-stylus > should allow to configure stylus options 1`] = `
+[
   {
-    "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+    "dependency": {
+      "not": "url",
+    },
+    "oneOf": [
+      {
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+        "sideEffects": true,
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
+              "importLoaders": 2,
+              "modules": false,
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+          },
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/stylus-loader/dist/cjs.js",
+            "options": {
+              "sourceMap": false,
+              "stylusOptions": {
+                "lineNumbers": false,
+              },
+            },
+          },
+        ],
+      },
+      {
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/source",
+      },
+      {
+        "sideEffects": true,
+        "use": [
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+          },
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "importLoaders": 2,
+              "modules": {
+                "auto": true,
+                "exportGlobals": false,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                "namedExport": false,
+              },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+          },
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/stylus-loader/dist/cjs.js",
+            "options": {
+              "sourceMap": false,
+              "stylusOptions": {
+                "lineNumbers": false,
+              },
+            },
+          },
+        ],
+      },
+    ],
+    "resolve": {
+      "preferRelative": true,
+    },
     "test": /\\\\\\.styl\\(us\\)\\?\\$/,
-    "type": "asset/source",
   },
 ]
 `;

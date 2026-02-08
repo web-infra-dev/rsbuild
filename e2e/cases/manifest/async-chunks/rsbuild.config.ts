@@ -5,9 +5,5 @@ export default defineConfig({
     manifest: true,
     filenameHash: false,
   },
-  performance: {
-    chunkSplit: {
-      strategy: 'all-in-one',
-    },
-  },
+  splitChunks: false,
 });

@@ -96,23 +96,8 @@ export default {
 
 详见 [@rsbuild/plugin-image-compress](https://github.com/rstackjs/rsbuild-plugin-image-compress)。
 
-## 代码拆包
+## 代码分割
 
-良好的拆包策略对于提升应用的加载性能是十分重要的，可以充分利用浏览器的缓存机制，减少请求数量，加快页面加载速度。
+合理的代码分割策略有助于提升应用的加载性能。通过将代码分割为合适的 chunk，可以更好地利用浏览器缓存，减少不必要的请求，从而改善页面的加载效率。
 
-在 Rsbuild 中内置了[多种拆包策略](/guide/optimization/code-splitting)，可以满足大部分应用的需求，你也可以根据自己的使用场景，自定义拆包配置。
-
-比如将 node_modules 下的 `axios` 库拆分到 `axios.js` 中：
-
-```js
-export default {
-  performance: {
-    chunkSplit: {
-      strategy: 'split-by-experience',
-      forceSplitting: {
-        axios: /node_modules[\\/]axios/,
-      },
-    },
-  },
-};
-```
+参考 [代码分割](/guide/optimization/code-splitting) 了解如何进行代码分割。

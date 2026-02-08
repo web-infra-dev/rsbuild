@@ -96,23 +96,8 @@ export default {
 
 See details in [@rsbuild/plugin-image-compress](https://github.com/rstackjs/rsbuild-plugin-image-compress).
 
-## Split chunk
+## Code splitting
 
-A good chunk splitting strategy improves application loading performance. It leverages browser caching to reduce the number of requests and improve loading speed.
+A well-designed code splitting strategy improves application load performance. By breaking code into appropriately sized chunks, you can leverage browser caching more effectively and reduce unnecessary network requests, leading to faster page loads.
 
-Several [chunk splitting strategies](/guide/optimization/code-splitting) are built into Rsbuild. These should cover most applications. You can also customize the chunk splitting config to suit your use case.
-
-For example, split the `axios` library under node_modules into `axios.js`:
-
-```js
-export default {
-  performance: {
-    chunkSplit: {
-      strategy: 'split-by-experience',
-      forceSplitting: {
-        axios: /node_modules[\\/]axios/,
-      },
-    },
-  },
-};
-```
+See [Code splitting](/guide/optimization/code-splitting) for details on how to apply code splitting.

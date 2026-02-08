@@ -11,11 +11,6 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "rspackFuture": {
-      "bundlerInfo": {
-        "force": false,
-      },
-    },
   },
   "infrastructureLogging": {
     "level": "error",
@@ -43,86 +38,80 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         "dependency": {
           "not": "url",
         },
-        "resolve": {
-          "preferRelative": true,
-        },
-        "resourceQuery": {
-          "not": [
-            /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-          ],
-        },
-        "sideEffects": true,
-        "test": /\\\\\\.css\\$/,
-        "type": "javascript/auto",
-        "use": [
+        "oneOf": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-            "options": {
-              "importLoaders": 1,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
+            "resolve": {
+              "preferRelative": true,
+            },
+            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+            "sideEffects": true,
+            "use": [
+              {
+                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+                "options": {
+                  "exportType": "string",
+                  "importLoaders": 1,
+                  "modules": false,
+                  "sourceMap": false,
+                },
               },
-              "sourceMap": false,
-            },
+              {
+                "loader": "builtin:lightningcss-loader",
+                "options": {
+                  "errorRecovery": true,
+                  "targets": [
+                    "chrome >= 107",
+                    "edge >= 107",
+                    "firefox >= 104",
+                    "safari >= 16",
+                  ],
+                },
+              },
+            ],
           },
           {
-            "loader": "builtin:lightningcss-loader",
-            "options": {
-              "errorRecovery": true,
-              "targets": [
-                "chrome >= 107",
-                "edge >= 107",
-                "firefox >= 104",
-                "safari >= 16",
-              ],
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
+          },
+          {
+            "resolve": {
+              "preferRelative": true,
             },
+            "sideEffects": true,
+            "use": [
+              {
+                "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+              },
+              {
+                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+                "options": {
+                  "importLoaders": 1,
+                  "modules": {
+                    "auto": true,
+                    "exportGlobals": false,
+                    "exportLocalsConvention": "camelCase",
+                    "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                    "namedExport": false,
+                  },
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "builtin:lightningcss-loader",
+                "options": {
+                  "errorRecovery": true,
+                  "targets": [
+                    "chrome >= 107",
+                    "edge >= 107",
+                    "firefox >= 104",
+                    "safari >= 16",
+                  ],
+                },
+              },
+            ],
           },
         ],
-      },
-      {
-        "resolve": {
-          "preferRelative": true,
-        },
-        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-        "sideEffects": true,
         "test": /\\\\\\.css\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-            "options": {
-              "exportType": "string",
-              "importLoaders": 1,
-              "modules": false,
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "builtin:lightningcss-loader",
-            "options": {
-              "errorRecovery": true,
-              "targets": [
-                "chrome >= 107",
-                "edge >= 107",
-                "firefox >= 104",
-                "safari >= 16",
-              ],
-            },
-          },
-        ],
-      },
-      {
-        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-        "test": /\\\\\\.css\\$/,
-        "type": "asset/source",
       },
       {
         "dependency": {
@@ -135,55 +124,55 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
         ],
-        "resourceQuery": {
-          "not": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-        },
-        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "javascript/auto",
-        "use": [
+        "oneOf": [
           {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "collectTypeScriptInfo": {
-                "exportedEnum": false,
-                "typeExports": true,
+            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "asset/source",
+          },
+          {
+            "type": "javascript/auto",
+            "use": [
+              {
+                "loader": "builtin:swc-loader",
+                "options": {
+                  "collectTypeScriptInfo": {
+                    "exportedEnum": false,
+                    "typeExports": true,
+                  },
+                  "env": {
+                    "targets": [
+                      "chrome >= 107",
+                      "edge >= 107",
+                      "firefox >= 104",
+                      "safari >= 16",
+                    ],
+                  },
+                  "isModule": "unknown",
+                  "jsc": {
+                    "experimental": {
+                      "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                      "keepImportAttributes": true,
+                    },
+                    "externalHelpers": true,
+                    "output": {
+                      "charset": "utf8",
+                    },
+                    "parser": {
+                      "decorators": true,
+                      "syntax": "typescript",
+                      "tsx": false,
+                    },
+                    "transform": {
+                      "decoratorVersion": "2022-03",
+                      "legacyDecorator": false,
+                    },
+                  },
+                },
               },
-              "env": {
-                "targets": [
-                  "chrome >= 107",
-                  "edge >= 107",
-                  "firefox >= 104",
-                  "safari >= 16",
-                ],
-              },
-              "isModule": "unknown",
-              "jsc": {
-                "experimental": {
-                  "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
-                  "keepImportAttributes": true,
-                },
-                "externalHelpers": true,
-                "output": {
-                  "charset": "utf8",
-                },
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": false,
-                },
-                "transform": {
-                  "decoratorVersion": "2022-03",
-                  "legacyDecorator": false,
-                },
-              },
-            },
+            ],
           },
         ],
-      },
-      {
-        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "asset/source",
       },
       {
         "mimetype": {
@@ -239,9 +228,9 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         "oneOf": [
           {
             "generator": {
-              "filename": "static/image/[name].[contenthash:8][ext]",
+              "filename": "static/image/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+            "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
           },
           {
@@ -254,7 +243,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
           },
           {
             "generator": {
-              "filename": "static/image/[name].[contenthash:8][ext]",
+              "filename": "static/image/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -270,9 +259,9 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         "oneOf": [
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
-            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+            "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
           },
           {
@@ -285,7 +274,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
           },
           {
             "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
+              "filename": "static/svg/[name].[contenthash:10].svg",
             },
             "parser": {
               "dataUrlCondition": {
@@ -301,9 +290,9 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         "oneOf": [
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+            "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
           },
           {
@@ -316,7 +305,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
           },
           {
             "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
+              "filename": "static/media/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -332,9 +321,9 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         "oneOf": [
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?\\(__inline=false\\|url\\)\\$/,
+            "resourceQuery": /\\^\\\\\\?url\\$/,
             "type": "asset/resource",
           },
           {
@@ -347,7 +336,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
           },
           {
             "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
+              "filename": "static/font/[name].[contenthash:10][ext]",
             },
             "parser": {
               "dataUrlCondition": {
@@ -371,7 +360,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
       {
         "dependency": "url",
         "generator": {
-          "filename": "static/wasm/[contenthash:8].module.wasm",
+          "filename": "static/wasm/[contenthash:10].module.wasm",
         },
         "test": /\\\\\\.wasm\\$/,
         "type": "asset/resource",
@@ -382,24 +371,20 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
   "optimization": {
     "minimize": false,
     "splitChunks": {
-      "cacheGroups": {
-        "lib-axios": {
-          "name": "lib-axios",
-          "priority": 0,
-          "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
-        },
-      },
       "chunks": "all",
     },
   },
   "output": {
-    "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+    "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
+    "bundlerInfo": {
+      "force": false,
+    },
     "chunkFilename": "static/js/async/[name].js",
     "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
     "path": "<ROOT>/dist",
     "publicPath": "/",
-    "webassemblyModuleFilename": "static/wasm/[contenthash:8].module.wasm",
+    "webassemblyModuleFilename": "static/wasm/[contenthash:10].module.wasm",
   },
   "performance": {
     "hints": false,

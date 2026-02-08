@@ -6,6 +6,10 @@ import { pluginHtml } from '../src/plugins/html';
 describe('plugin-html', () => {
   const stubContext = {} as InternalContext;
 
+  afterEach(() => {
+    rs.unstubAllEnvs();
+  });
+
   it('should register html plugin correctly', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(stubContext)],
@@ -69,8 +73,7 @@ describe('plugin-html', () => {
   });
 
   it('should enable minify in production', async () => {
-    const { NODE_ENV } = process.env;
-    process.env.NODE_ENV = 'production';
+    rs.stubEnv('NODE_ENV', 'production');
 
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml(stubContext)],
@@ -78,8 +81,6 @@ describe('plugin-html', () => {
     const config = await rsbuild.unwrapConfig();
 
     expect(config).toMatchSnapshot();
-
-    process.env.NODE_ENV = NODE_ENV;
   });
 
   it('should allow to modify plugin options by tools.htmlPlugin', async () => {

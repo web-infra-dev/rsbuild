@@ -50,7 +50,7 @@ test('should set output.charset to ascii in build', async ({
   expect(await page.evaluate('window.testB')).toStrictEqual(expectedObject);
 
   const content = await rsbuild.getIndexBundle();
-  expect(content.includes(asciiStr)).toBeTruthy();
+  expect(content.includes(`\\u4F60\\u597D world! I'm \\u{1F980}`)).toBeTruthy();
 });
 
 test('should use utf8 charset in dev by default', async ({ page, dev }) => {
