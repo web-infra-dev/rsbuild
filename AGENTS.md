@@ -1,32 +1,42 @@
 # AGENTS.md
 
-This monorepo contains the Rsbuild build tool, plugins, and related packages. Rsbuild is a high-performance JavaScript build tool powered by Rspack.
+## Stack
 
-## Setup
+- Node.js `22+`
+- `pnpm` workspace + `Nx` monorepo
+- TypeScript (strict mode), Rspack/Rsbuild ecosystem
+- Test runner: `rstest`
 
-- Enable Corepack and install deps: `npm install corepack -g && corepack enable && pnpm install`
-- Node.js 22+
+## Commands (run early)
 
-## Commands
+```bash
+# setup
+corepack enable && pnpm install
 
-- **Build**: `pnpm build` (all packages) | `npx nx build @rsbuild/core` (specific)
-- **Test**: `pnpm test` (unit tests) | `pnpm test:watch` (watch mode) | `pnpm e2e` (E2E tests)
-- **Single test**: `pnpm test packages/core/src/foo.test.ts` (unit test) | `pnpm e2e cli/base/index.test.ts` (E2E test)
-- **Lint**: `pnpm lint` (REQUIRED before commits) | `pnpm format` (format code)
+# dev checks
+pnpm lint
+pnpm test
+pnpm e2e
+
+# focused work
+npx nx build @rsbuild/core
+pnpm test packages/core/tests/foo.test.ts
+pnpm e2e css
+```
+
+## Project structure
+
+```text
+packages/core/              # core + CLI
+packages/plugin-*/          # official plugins
+packages/create-rsbuild/    # scaffolding tool
+e2e/                        # end-to-end tests
+examples/                   # runnable examples
+website/                    # docs site
+```
 
 ## Code style
 
-- **Formatting**: Single quotes, Prettier
-- **Types**: TypeScript strict mode
-- **Naming**: camelCase files/functions, PascalCase components/classes, kebab-case packages
-
-## Architecture
-
-- **Structure**: Monorepo (Pnpm + Nx)
-  - `packages/core/`: Main Rsbuild package with CLI
-  - `packages/plugin-*/`: Official plugins (React, Vue, Sass, etc.)
-  - `packages/create-rsbuild/`: Project scaffolding
-  - `e2e/`: End-to-end tests
-  - `examples/`: Basic examples
-  - `website/`: Documentation
-- **Testing**: `.test.ts` files, use `rstest` runner
+- Use single quotes and existing Prettier conventions.
+- Keep TypeScript strict-safe; avoid `any`.
+- Naming: camelCase (functions/files), PascalCase (types/classes).
