@@ -97,7 +97,7 @@ export type SourceMapGenerator = unknown;
     {
       name: 'postcss-loader',
       externals: {
-        jiti: 'jiti',
+        jiti: '../jiti',
         postcss: '../postcss/index.js',
       },
       ignoreDts: true,
