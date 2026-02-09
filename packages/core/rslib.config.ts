@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import path, { join } from 'node:path';
+import path from 'node:path';
 import { nodeMinifyConfig } from '@rsbuild/config/rslib.config.ts';
 import { defineConfig, type Rsbuild, type Rspack } from '@rslib/core';
 import pkgJson from './package.json' with { type: 'json' };
@@ -150,9 +150,9 @@ export default defineConfig({
           patterns: [
             {
               from: './node_modules/jiti',
-              to: join(import.meta.dirname, 'compiled/jiti'),
+              to: path.join(import.meta.dirname, 'compiled/jiti'),
               globOptions: {
-                ignore: ['node_modules/**'],
+                dot: false,
               },
             },
           ],
