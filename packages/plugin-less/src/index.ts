@@ -285,7 +285,8 @@ export const pluginLess = (
         }
       });
 
-      if (parallel) {
+      // `experiments.parallelLoader` is no longer required in Rspack 2.0+
+      if (parallel && isV1) {
         chain.experiments({
           ...chain.get('experiments'),
           parallelLoader: true,
