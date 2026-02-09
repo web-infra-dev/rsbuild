@@ -33,9 +33,9 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/core-v1": "npm:@rsbuild/core@^1.7.3",
-    "@rslib/core": "0.19.4",
+    "@rslib/core": "0.19.5",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^24.10.10",
+    "@types/node": "^24.10.12",
     "typescript": "^5.9.3",
     "vue": "^3.5.27"
   },
