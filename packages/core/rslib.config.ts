@@ -38,6 +38,9 @@ const externals: Rspack.Configuration['externals'] = [
             `"${name}" is not allowed to be imported, use "requireCompiledPackage" instead.`,
           );
         }
+        if (/jiti/.test(request)) {
+          return callback(undefined, '../compiled/jiti/lib/jiti.mjs');
+        }
         if (test.test(request)) {
           return callback(undefined, `../compiled/${name}/index.js`);
         }
@@ -122,6 +125,46 @@ export default defineConfig({
     externals,
   },
   lib: [
+    // Build client modules and copy dependencies to compiled folder
+    {
+      id: 'prepare',
+      format: 'esm',
+      syntax: 'es2017',
+      source: {
+        entry: {
+          hmr: 'src/client/hmr.ts',
+          overlay: 'src/client/overlay.ts',
+        },
+        define: {
+          // use define to avoid compile time evaluation of __webpack_hash__
+          BUILD_HASH: '__webpack_hash__',
+        },
+      },
+      output: {
+        target: 'web',
+        externals: ['./hmr.js'],
+        distPath: {
+          root: './dist/client',
+        },
+        copy: {
+          patterns: [
+            {
+              from: './node_modules/jiti',
+              to: path.join(import.meta.dirname, 'compiled/jiti'),
+              globOptions: {
+                dot: false,
+              },
+            },
+          ],
+        },
+      },
+      performance: {
+        printFileSize: {
+          exclude: (asset) => /compiled/.test(asset.name),
+        },
+      },
+      plugins: [replacePlugin],
+    },
     {
       id: 'node',
       format: 'esm',
@@ -163,29 +206,12 @@ export default defineConfig({
           __filename: true,
         },
       },
-    },
-    {
-      id: 'client',
-      format: 'esm',
-      syntax: 'es2017',
-      source: {
-        entry: {
-          hmr: 'src/client/hmr.ts',
-          overlay: 'src/client/overlay.ts',
-        },
-        define: {
-          // use define to avoid compile time evaluation of __webpack_hash__
-          BUILD_HASH: '__webpack_hash__',
+      tools: {
+        rspack: {
+          // Wait the pre compiler to copy jiti to compiled folder
+          dependencies: ['prepare'],
         },
       },
-      output: {
-        target: 'web',
-        externals: ['./hmr.js'],
-        distPath: {
-          root: './dist/client',
-        },
-      },
-      plugins: [replacePlugin],
     },
   ],
 });
