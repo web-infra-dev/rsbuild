@@ -2,9 +2,6 @@
 
 exports[`plugin-wasm > should add wasm rule properly 1`] = `
 {
-  "experiments": {
-    "asyncWebAssembly": true,
-  },
   "module": {
     "rules": [
       {
