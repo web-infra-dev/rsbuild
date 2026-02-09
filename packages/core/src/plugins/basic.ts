@@ -31,10 +31,10 @@ export const pluginBasic = (): RsbuildPlugin => ({
         // Disable performance hints, these logs are too complex
         chain.performance.hints(false);
 
-        // Align with the futureDefaults of webpack 6
         chain.module.parser.merge({
           javascript: {
             exportsPresence: 'error',
+            typeReexportsPresence: 'tolerant',
           },
         });
 
@@ -45,12 +45,6 @@ export const pluginBasic = (): RsbuildPlugin => ({
             .plugin(CHAIN_ID.PLUGIN.HMR)
             .use(rspack.HotModuleReplacementPlugin);
         }
-
-        chain.module.parser.merge({
-          javascript: {
-            typeReexportsPresence: 'tolerant',
-          },
-        });
       },
     );
   },
