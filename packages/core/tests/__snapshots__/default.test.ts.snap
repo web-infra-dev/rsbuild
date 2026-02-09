@@ -9,9 +9,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "./src/index.js",
     ],
   },
-  "experiments": {
-    "asyncWebAssembly": true,
-  },
   "infrastructureLogging": {
     "level": "error",
   },
@@ -506,9 +503,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "index": [
       "./src/index.js",
     ],
-  },
-  "experiments": {
-    "asyncWebAssembly": true,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -1029,9 +1023,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
 {
   "context": "<ROOT>/packages/core/tests",
   "devtool": "cheap-module-source-map",
-  "experiments": {
-    "asyncWebAssembly": true,
-  },
   "infrastructureLogging": {
     "level": "error",
   },
@@ -1466,9 +1457,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
 {
   "context": "<ROOT>/packages/core/tests",
   "devtool": "cheap-module-source-map",
-  "experiments": {
-    "asyncWebAssembly": true,
-  },
   "infrastructureLogging": {
     "level": "error",
   },

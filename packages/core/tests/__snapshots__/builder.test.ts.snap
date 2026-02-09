@@ -9,9 +9,6 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
       "./src/index.js",
     ],
   },
-  "experiments": {
-    "asyncWebAssembly": true,
-  },
   "infrastructureLogging": {
     "level": "error",
   },

@@ -14,11 +14,6 @@ export const pluginWasm = (): RsbuildPlugin => ({
         getFilename(config, 'wasm', isProd),
       );
 
-      chain.experiments({
-        ...chain.get('experiments'),
-        asyncWebAssembly: true,
-      });
-
       chain.output.webassemblyModuleFilename(filename);
 
       // support new URL('./abc.wasm', import.meta.url)
