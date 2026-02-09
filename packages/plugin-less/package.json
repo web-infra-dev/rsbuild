@@ -36,11 +36,11 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/core-v1": "npm:@rsbuild/core@^1.7.3",
-    "@rslib/core": "0.19.4",
+    "@rslib/core": "0.19.5",
     "@scripts/test-helper": "workspace:*",
     "@types/less": "^3.0.8",
     "less": "4.3.0",
-    "less-loader": "^12.3.0",
+    "less-loader": "^12.3.1",
     "prebundle": "1.6.2",
     "typescript": "^5.9.3"
   },
