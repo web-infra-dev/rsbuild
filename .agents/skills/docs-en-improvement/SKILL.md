@@ -13,7 +13,7 @@ description: Improve English documentation under `website/docs/en` by rewriting 
 
 3. Preserve original meaning exactly; do not introduce new claims or remove technical details.
 
-4. If a file in `docs/en` is updated, check the mirrored file in `website/docs/zh` and apply equivalent updates when needed.
+4. If a file in `website/docs/en` is updated, check the mirrored file in `website/docs/zh` and apply equivalent updates when needed.
 
 ## Constraints
 
