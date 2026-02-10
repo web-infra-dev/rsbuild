@@ -6,6 +6,8 @@ This website is built with [Rspress](https://github.com/web-infra-dev/rspress), 
 
 Currently Rsbuild provides documentation in English and Chinese. If you can use Chinese, please update both documents at the same time. Otherwise, just update the English documentation.
 
+You can use the local skill at `.agents/skills/sync-zh-en-docs` to sync zh/en docs.
+
 ## Writing style guide
 
 The same as Rspack: [Writing style guide](https://github.com/web-infra-dev/rspack/tree/main/website#writing-style-guide).
