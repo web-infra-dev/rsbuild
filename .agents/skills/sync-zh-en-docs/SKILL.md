@@ -1,6 +1,6 @@
 ---
 name: sync-zh-en-docs
-description: Sync uncommitted docs between `website/docs/zh` and `website/docs/en`. Use for zh/en doc alignment, bidirectional `.md`/`.mdx` translation, consistent technical writing, and final formatting with `pnpm format`.
+description: Sync uncommitted docs between `website/docs/zh` and `website/docs/en`. Use when authors update docs in one language and need to align the mirrored `.md`/`.mdx` file in the other language.
 ---
 
 # Sync Zh/En Documentation
