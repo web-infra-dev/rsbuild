@@ -37,3 +37,5 @@ test('test 1 + 1', () => {
   expect(1 + 1).toBe(2);
 });
 ```
+
+You can use the local skill at [`write-e2e-cases`](../.agents/skills/write-e2e-cases/SKILL.md) to add new test cases.
