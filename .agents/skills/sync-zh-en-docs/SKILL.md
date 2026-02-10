@@ -7,7 +7,7 @@ description: Sync uncommitted docs between `website/docs/zh` and `website/docs/e
 
 ## Steps
 
-1. Check uncommitted changes:
+1. Check uncommitted changes under `website/docs/zh` and `website/docs/en`.
 
 2. Translate each changed file to the counterpart path (`zh` <-> `en`), and keep:
 
