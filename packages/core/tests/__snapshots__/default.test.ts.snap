@@ -20,7 +20,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   "module": {
     "parser": {
       "javascript": {
-        "exportsPresence": "error",
         "typeReexportsPresence": "tolerant",
       },
     },
@@ -515,7 +514,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   "module": {
     "parser": {
       "javascript": {
-        "exportsPresence": "error",
         "typeReexportsPresence": "tolerant",
       },
     },
@@ -1030,7 +1028,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "module": {
     "parser": {
       "javascript": {
-        "exportsPresence": "error",
         "typeReexportsPresence": "tolerant",
       },
     },
@@ -1468,7 +1465,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
   "module": {
     "parser": {
       "javascript": {
-        "exportsPresence": "error",
         "typeReexportsPresence": "tolerant",
       },
     },
