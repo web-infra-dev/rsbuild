@@ -10,7 +10,6 @@ exports[`plugin-basic > should apply basic config correctly in development 1`] =
   "module": {
     "parser": {
       "javascript": {
-        "exportsPresence": "error",
         "typeReexportsPresence": "tolerant",
       },
     },
@@ -44,7 +43,6 @@ exports[`plugin-basic > should apply basic config correctly in production 1`] = 
   "module": {
     "parser": {
       "javascript": {
-        "exportsPresence": "error",
         "typeReexportsPresence": "tolerant",
       },
     },

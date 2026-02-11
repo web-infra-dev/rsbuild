@@ -20,7 +20,6 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
   "module": {
     "parser": {
       "javascript": {
-        "exportsPresence": "error",
         "typeReexportsPresence": "tolerant",
       },
     },

@@ -1451,7 +1451,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     "module": {
       "parser": {
         "javascript": {
-          "exportsPresence": "error",
           "typeReexportsPresence": "tolerant",
         },
       },
@@ -1881,7 +1880,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
     "module": {
       "parser": {
         "javascript": {
-          "exportsPresence": "error",
           "typeReexportsPresence": "tolerant",
         },
       },

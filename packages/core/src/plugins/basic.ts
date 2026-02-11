@@ -33,7 +33,6 @@ export const pluginBasic = (): RsbuildPlugin => ({
 
         chain.module.parser.merge({
           javascript: {
-            exportsPresence: 'error',
             typeReexportsPresence: 'tolerant',
           },
         });
