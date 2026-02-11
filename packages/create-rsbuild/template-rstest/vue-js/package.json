@@ -9,6 +9,6 @@
     "@testing-library/vue": "^8.1.0",
     "@rstest/core": "^0.8.3",
     "@rstest/adapter-rsbuild": "^0.2.0",
-    "happy-dom": "^20.5.3"
+    "happy-dom": "^20.6.1"
   }
 }
