@@ -42,7 +42,7 @@
     "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
-    "@rspack/core": "2.0.0-beta.0",
+    "@rspack/core": "2.0.0-beta.2",
     "@swc/helpers": "^0.5.18"
   },
   "peerDependencies": {
