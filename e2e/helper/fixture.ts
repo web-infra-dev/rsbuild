@@ -50,7 +50,7 @@ type SharedAssertionContext = {
   result: DevResult | BuildResult;
 };
 
-type runDevAndBuild = (
+type RunDevAndBuild = (
   assert: (context: SharedAssertionContext) => Promise<void> | void,
   options?: {
     options?: DevOptions | BuildOptions;
@@ -120,7 +120,7 @@ type RsbuildFixture = {
   /**
    * Run shared assertions for both dev and build in one call.
    */
-  runDevAndBuild: runDevAndBuild;
+  runDevAndBuild: RunDevAndBuild;
   /**
    * Edit a file in the test file's cwd.
    * @param filename The filename. If it is not absolute, it will be resolved
