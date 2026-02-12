@@ -12,9 +12,12 @@ import fse from 'fs-extra';
 import { RSBUILD_BIN_PATH } from './constants.ts';
 import {
   type Build,
+  type BuildOptions,
+  type BuildResult,
   build as baseBuild,
   dev as baseDev,
   type Dev,
+  type DevOptions,
   type DevResult,
 } from './jsApi.ts';
 import { type ExtendedLogHelper, proxyConsole } from './logs.ts';
@@ -41,6 +44,31 @@ type Exec = (
 };
 
 type ExecSync = (command: string, options?: ExecSyncOptions) => string;
+
+type SharedAssertionContext = {
+  mode: 'dev' | 'build';
+  result: DevResult | BuildResult;
+};
+
+type runDevAndBuild = (
+  assert: (context: SharedAssertionContext) => Promise<void> | void,
+  options?: {
+    options?: DevOptions | BuildOptions;
+    /**
+     * Whether to run the dev or preview server.
+     * @default true
+     */
+    serve?: boolean;
+    /**
+     * Assertions to run on the dev server result.
+     */
+    devAssert?: (result: DevResult) => Promise<void> | void;
+    /**
+     * Assertions to run on the build result.
+     */
+    buildAssert?: (result: BuildResult) => Promise<void> | void;
+  },
+) => Promise<void>;
 
 type RsbuildFixture = {
   /**
@@ -89,6 +117,10 @@ type RsbuildFixture = {
    * The fixture auto-closes after the test.
    */
   devOnly: Dev;
+  /**
+   * Run shared assertions for both dev and build in one call.
+   */
+  runDevAndBuild: runDevAndBuild;
   /**
    * Edit a file in the test file's cwd.
    * @param filename The filename. If it is not absolute, it will be resolved
@@ -240,6 +272,23 @@ export const test = base.extend<RsbuildFixture>({
         await close();
       }
     }
+  },
+
+  runDevAndBuild: async ({ dev, devOnly, build, buildPreview }, use) => {
+    await use(
+      async (
+        assert,
+        { serve = true, options, devAssert, buildAssert } = {},
+      ) => {
+        const devResult = await (serve ? dev : devOnly)(options);
+        await assert({ mode: 'dev', result: devResult });
+        await devAssert?.(devResult);
+
+        const buildResult = await (serve ? buildPreview : build)(options);
+        await assert({ mode: 'build', result: buildResult });
+        await buildAssert?.(buildResult);
+      },
+    );
   },
 
   editFile: async ({ cwd }, use) => {
