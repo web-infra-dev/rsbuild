@@ -1,23 +1,18 @@
 import { expect, test } from '@e2e/helper';
 import { getPolyfillContent } from '../helper';
 
-test('should read browserslist for development env correctly', async ({
-  dev,
-}) => {
-  const rsbuild = await dev();
+test('should read browserslist correctly', async ({ runDevAndBuild }) => {
+  await runDevAndBuild(
+    async ({ mode, result }) => {
+      const files = result.getDistFiles({ sourceMaps: true });
+      const content = getPolyfillContent(files);
 
-  const files = rsbuild.getDistFiles({ sourceMaps: true });
-  const content = getPolyfillContent(files);
-
-  expect(content.includes('es.string.replace-all')).toBeFalsy();
-});
-
-test('should read browserslist for production env correctly', async ({
-  build,
-}) => {
-  const rsbuild = await build();
-  const files = rsbuild.getDistFiles({ sourceMaps: true });
-  const content = getPolyfillContent(files);
-
-  expect(content.includes('es.string.replace-all')).toBeTruthy();
+      if (mode === 'dev') {
+        expect(content.includes('es.string.replace-all')).toBeFalsy();
+      } else {
+        expect(content.includes('es.string.replace-all')).toBeTruthy();
+      }
+    },
+    { serve: false },
+  );
 });

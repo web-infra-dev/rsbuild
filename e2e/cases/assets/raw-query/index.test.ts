@@ -4,32 +4,18 @@ import { expect, test } from '@e2e/helper';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 
-test('should return raw asset content with `?raw` in dev', async ({
+test('should return raw asset content with `?raw`', async ({
   page,
-  dev,
+  runDevAndBuild,
 }) => {
-  await dev();
-
-  expect(await page.evaluate('window.rawSvg')).toEqual(
-    await promises.readFile(
-      join(import.meta.dirname, '../../../assets/circle.svg'),
-      'utf-8',
-    ),
-  );
-});
-
-test('should return raw asset content with `?raw` in build', async ({
-  page,
-  buildPreview,
-}) => {
-  await buildPreview();
-
-  expect(await page.evaluate('window.rawSvg')).toEqual(
-    await promises.readFile(
-      join(import.meta.dirname, '../../../assets/circle.svg'),
-      'utf-8',
-    ),
-  );
+  await runDevAndBuild(async () => {
+    expect(await page.evaluate('window.rawSvg')).toEqual(
+      await promises.readFile(
+        join(import.meta.dirname, '../../../assets/circle.svg'),
+        'utf-8',
+      ),
+    );
+  });
 });
 
 test('should return raw SVG content with `?raw` when using pluginSvgr', async ({

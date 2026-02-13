@@ -12,48 +12,52 @@ test.beforeAll(async () => {
   await fse.remove(cacheDirectory);
 });
 
-test('should use `buildCache.cacheDirectory` as expected in dev', async ({
-  dev,
+test('should use `buildCache.cacheDirectory` as expected', async ({
+  runDevAndBuild,
 }) => {
-  const customDirectory = path.resolve(
+  const devDirectory = path.resolve(
     import.meta.dirname,
     './node_modules/.cache2/dev',
   );
-  await fse.remove(customDirectory);
-
-  await dev({
-    config: {
-      performance: {
-        buildCache: {
-          cacheDirectory: customDirectory,
+  await fse.remove(devDirectory);
+  await runDevAndBuild(
+    async () => {
+      await expectFile(devDirectory);
+      expect(fs.existsSync(cacheDirectory)).toBeFalsy();
+    },
+    {
+      options: {
+        config: {
+          performance: {
+            buildCache: {
+              cacheDirectory: devDirectory,
+            },
+          },
         },
       },
     },
-  });
+  );
 
-  await expectFile(customDirectory);
-  expect(fs.existsSync(cacheDirectory)).toBeFalsy();
-});
-
-test('should use `buildCache.cacheDirectory` as expected in build', async ({
-  build,
-}) => {
-  const customDirectory = path.resolve(
+  const buildDirectory = path.resolve(
     import.meta.dirname,
     './node_modules/.cache2/build',
   );
-  await fse.remove(customDirectory);
-
-  await build({
-    config: {
-      performance: {
-        buildCache: {
-          cacheDirectory: customDirectory,
+  await fse.remove(buildDirectory);
+  await runDevAndBuild(
+    async () => {
+      await expectFile(buildDirectory);
+      expect(fs.existsSync(cacheDirectory)).toBeFalsy();
+    },
+    {
+      options: {
+        config: {
+          performance: {
+            buildCache: {
+              cacheDirectory: buildDirectory,
+            },
+          },
         },
       },
     },
-  });
-
-  await expectFile(customDirectory);
-  expect(fs.existsSync(cacheDirectory)).toBeFalsy();
+  );
 });

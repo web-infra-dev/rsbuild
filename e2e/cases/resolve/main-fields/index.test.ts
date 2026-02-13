@@ -16,49 +16,37 @@ fse.copy(
   ),
 );
 
-test('should apply resolve.mainFields as expected in dev', async ({
+test('should apply resolve.mainFields as expected', async ({
   page,
-  dev,
+  runDevAndBuild,
 }) => {
-  await dev({
-    config: {
-      resolve: {
-        mainFields: ['custom', 'module', 'main'],
+  await runDevAndBuild(
+    async () => {
+      expect(await page.evaluate(() => window.test)).toBe('custom');
+    },
+    {
+      options: {
+        config: {
+          resolve: {
+            mainFields: ['custom', 'module', 'main'],
+          },
+        },
       },
     },
-  });
-  expect(await page.evaluate(() => window.test)).toBe('custom');
+  );
 
-  await dev({
-    config: {
-      resolve: {
-        mainFields: ['main', 'module'],
+  await runDevAndBuild(
+    async () => {
+      expect(await page.evaluate(() => window.test)).toBe('main');
+    },
+    {
+      options: {
+        config: {
+          resolve: {
+            mainFields: ['main', 'module'],
+          },
+        },
       },
     },
-  });
-  expect(await page.evaluate(() => window.test)).toBe('main');
-});
-
-test('should apply resolve.conditionNames as expected in build', async ({
-  page,
-  buildPreview,
-}) => {
-  await buildPreview({
-    config: {
-      resolve: {
-        mainFields: ['custom', 'module', 'main'],
-      },
-    },
-  });
-  expect(await page.evaluate(() => window.test)).toBe('custom');
-
-  await buildPreview({
-    config: {
-      resolve: {
-        mainFields: ['main', 'module'],
-      },
-    },
-  });
-
-  expect(await page.evaluate(() => window.test)).toBe('main');
+  );
 });

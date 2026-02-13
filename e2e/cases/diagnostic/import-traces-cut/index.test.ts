@@ -7,20 +7,19 @@ const EXPECTED_LOG = `Import traces (entry → error):
   ./src/child5.js
   ./src/child6.js ×`;
 
-test('should truncate long import trace and show hidden count in dev', async ({
-  dev,
+test('should truncate long import trace and show hidden count', async ({
+  runDevAndBuild,
 }) => {
-  const rsbuild = await dev();
-  await rsbuild.expectLog(EXPECTED_LOG);
-});
-
-test('should truncate long import trace and show hidden count in build', async ({
-  build,
-}) => {
-  const rsbuild = await build({
-    catchBuildError: true,
-  });
-
-  expect(rsbuild.buildError).toBeTruthy();
-  await rsbuild.expectLog(EXPECTED_LOG);
+  await runDevAndBuild(
+    async ({ mode, result }) => {
+      if (mode === 'build') {
+        expect(result.buildError).toBeTruthy();
+      }
+      await result.expectLog(EXPECTED_LOG);
+    },
+    {
+      serve: false,
+      options: { catchBuildError: true },
+    },
+  );
 });

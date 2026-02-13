@@ -16,50 +16,38 @@ fse.copy(
   ),
 );
 
-test('should apply resolve.conditionNames as expected in dev', async ({
+test('should apply resolve.conditionNames as expected', async ({
   page,
-  dev,
+  runDevAndBuild,
 }) => {
-  await dev({
-    config: {
-      resolve: {
-        conditionNames: ['custom', 'import', 'require'],
+  await runDevAndBuild(
+    async () => {
+      expect(await page.evaluate(() => window.test)).toBe('custom');
+    },
+    {
+      options: {
+        config: {
+          resolve: {
+            conditionNames: ['custom', 'import', 'require'],
+          },
+        },
       },
     },
-  });
-  expect(await page.evaluate(() => window.test)).toBe('custom');
+  );
 
-  await dev({
-    config: {
-      resolve: {
-        conditionNames: ['require', 'import'],
+  await runDevAndBuild(
+    async () => {
+      // The key order in the `exports` object determines priority
+      expect(await page.evaluate(() => window.test)).toBe('import');
+    },
+    {
+      options: {
+        config: {
+          resolve: {
+            conditionNames: ['require', 'import'],
+          },
+        },
       },
     },
-  });
-  expect(await page.evaluate(() => window.test)).toBe('import');
-});
-
-test('should apply resolve.conditionNames as expected in build', async ({
-  page,
-  buildPreview,
-}) => {
-  await buildPreview({
-    config: {
-      resolve: {
-        conditionNames: ['custom', 'import', 'require'],
-      },
-    },
-  });
-  expect(await page.evaluate(() => window.test)).toBe('custom');
-
-  await buildPreview({
-    config: {
-      resolve: {
-        conditionNames: ['require', 'import'],
-      },
-    },
-  });
-
-  // The key order in the `exports` object determines priority
-  expect(await page.evaluate(() => window.test)).toBe('import');
+  );
 });
