@@ -1,19 +1,11 @@
 import { expect, test } from '@e2e/helper';
 
-test('should render element with classic JSX runtime in build', async ({
+test('should render element with classic JSX runtime', async ({
   page,
-  buildPreview,
+  runDevAndBuild,
 }) => {
-  await buildPreview();
-  const testEl = page.locator('#test');
-  await expect(testEl).toHaveText('Hello Rsbuild!');
-});
-
-test('should render element with classic JSX runtime in dev', async ({
-  page,
-  dev,
-}) => {
-  await dev();
-  const testEl = page.locator('#test');
-  await expect(testEl).toHaveText('Hello Rsbuild!');
+  await runDevAndBuild(async () => {
+    const testEl = page.locator('#test');
+    await expect(testEl).toHaveText('Hello Rsbuild!');
+  });
 });

@@ -1,19 +1,11 @@
 import { expect, test } from '@e2e/helper';
 
-test('should compile basic svelte component properly in build', async ({
+test('should compile basic svelte component properly', async ({
   page,
-  buildPreview,
+  runDevAndBuild,
 }) => {
-  await buildPreview();
-  const title = page.locator('#title');
-  await expect(title).toHaveText('Hello world!');
-});
-
-test('should compile basic svelte component properly in dev', async ({
-  page,
-  dev,
-}) => {
-  await dev();
-  const title = page.locator('#title');
-  await expect(title).toHaveText('Hello world!');
+  await runDevAndBuild(async () => {
+    const title = page.locator('#title');
+    await expect(title).toHaveText('Hello world!');
+  });
 });

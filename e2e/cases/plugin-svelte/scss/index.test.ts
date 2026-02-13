@@ -1,23 +1,13 @@
 import { expect, test } from '@e2e/helper';
 
-test('should compile svelte component with sass in build', async ({
+test('should compile svelte component with sass', async ({
   page,
-  buildPreview,
+  runDevAndBuild,
 }) => {
-  await buildPreview();
-  const title = page.locator('#title');
-  await expect(title).toHaveText('Hello world!');
-  // use the text color to assert the compilation result
-  await expect(title).toHaveCSS('color', 'rgb(255, 62, 0)');
-});
-
-test('should compile svelte component with sass in dev', async ({
-  page,
-  dev,
-}) => {
-  await dev();
-  const title = page.locator('#title');
-  await expect(title).toHaveText('Hello world!');
-  // use the text color to assert the compilation result
-  await expect(title).toHaveCSS('color', 'rgb(255, 62, 0)');
+  await runDevAndBuild(async () => {
+    const title = page.locator('#title');
+    await expect(title).toHaveText('Hello world!');
+    // use the text color to assert the compilation result
+    await expect(title).toHaveCSS('color', 'rgb(255, 62, 0)');
+  });
 });
