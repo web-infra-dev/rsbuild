@@ -1,17 +1,13 @@
 import { test } from '@e2e/helper';
 
-test('should support calling `close()` multiple times in dev', async ({
-  dev,
+test('should support calling `close()` multiple times', async ({
+  runDevAndBuild,
 }) => {
-  const result = await dev();
-  await result.close();
-  await result.close();
-});
-
-test('should support calling `close()` multiple times in preview', async ({
-  build,
-}) => {
-  const result = await build();
-  await result.close();
-  await result.close();
+  await runDevAndBuild(
+    async ({ result }) => {
+      await result.close();
+      await result.close();
+    },
+    { serve: false },
+  );
 });

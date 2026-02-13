@@ -5,16 +5,17 @@ const EXPECTED_LOG = `Import traces (entry → error):
   ./src/App.vue
   ./src/App.vue.css?vue&type=style`;
 
-test('should print Vue SFC import traces in dev', async ({ dev }) => {
-  const rsbuild = await dev();
-  await rsbuild.expectLog(EXPECTED_LOG);
-});
-
-test('should print Vue SFC import traces in build', async ({ build }) => {
-  const rsbuild = await build({
-    catchBuildError: true,
-  });
-
-  expect(rsbuild.buildError).toBeTruthy();
-  await rsbuild.expectLog(EXPECTED_LOG);
+test('should print Vue SFC import traces', async ({ runDevAndBuild }) => {
+  await runDevAndBuild(
+    async ({ mode, result }) => {
+      if (mode === 'build') {
+        expect(result.buildError).toBeTruthy();
+      }
+      await result.expectLog(EXPECTED_LOG);
+    },
+    {
+      serve: false,
+      options: { catchBuildError: true },
+    },
+  );
 });

@@ -1,12 +1,11 @@
 import { expect, test } from '@e2e/helper';
 
-test('should allow to configure `cssLoader.exportType` as `string` in development', async ({
+test('should allow to configure `cssLoader.exportType` as `string`', async ({
   page,
-  dev,
+  runDevAndBuild,
 }) => {
-  await dev();
-
-  expect(await page.evaluate('window.a')).toBe(`.the-a-class {
+  await runDevAndBuild(async ({ mode }) => {
+    expect(await page.evaluate('window.a')).toBe(`.the-a-class {
   color: red;
 }
 
@@ -15,29 +14,16 @@ test('should allow to configure `cssLoader.exportType` as `string` in developmen
 }
 `);
 
-  expect(
-    (await page.evaluate<string>('window.b')).includes(
-      '.src-b-module__the-b-class',
-    ),
-  ).toBeTruthy();
-});
-
-test('should allow to configure `cssLoader.exportType` as `string` in production', async ({
-  page,
-  buildPreview,
-}) => {
-  await buildPreview();
-
-  expect(await page.evaluate('window.a')).toBe(`.the-a-class {
-  color: red;
-}
-
-.the-a-class .child-class {
-  color: #00f;
-}
-`);
-
-  expect(
-    (await page.evaluate<string>('window.b')).includes('.the-b-class-'),
-  ).toBeTruthy();
+    if (mode === 'dev') {
+      expect(
+        (await page.evaluate<string>('window.b')).includes(
+          '.src-b-module__the-b-class',
+        ),
+      ).toBeTruthy();
+    } else {
+      expect(
+        (await page.evaluate<string>('window.b')).includes('.the-b-class-'),
+      ).toBeTruthy();
+    }
+  });
 });

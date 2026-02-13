@@ -45,10 +45,15 @@ type Exec = (
 
 type ExecSync = (command: string, options?: ExecSyncOptions) => string;
 
-type SharedAssertionContext = {
-  mode: 'dev' | 'build';
-  result: DevResult | BuildResult;
-};
+type SharedAssertionContext =
+  | {
+      mode: 'dev';
+      result: DevResult;
+    }
+  | {
+      mode: 'build';
+      result: BuildResult;
+    };
 
 type RunDevAndBuild = (
   assert: (context: SharedAssertionContext) => Promise<void> | void,
@@ -59,14 +64,6 @@ type RunDevAndBuild = (
      * @default true
      */
     serve?: boolean;
-    /**
-     * Assertions to run on the dev server result.
-     */
-    devAssert?: (result: DevResult) => Promise<void> | void;
-    /**
-     * Assertions to run on the build result.
-     */
-    buildAssert?: (result: BuildResult) => Promise<void> | void;
   },
 ) => Promise<void>;
 
@@ -275,20 +272,12 @@ export const test = base.extend<RsbuildFixture>({
   },
 
   runDevAndBuild: async ({ dev, devOnly, build, buildPreview }, use) => {
-    await use(
-      async (
-        assert,
-        { serve = true, options, devAssert, buildAssert } = {},
-      ) => {
-        const devResult = await (serve ? dev : devOnly)(options);
-        await assert({ mode: 'dev', result: devResult });
-        await devAssert?.(devResult);
-
-        const buildResult = await (serve ? buildPreview : build)(options);
-        await assert({ mode: 'build', result: buildResult });
-        await buildAssert?.(buildResult);
-      },
-    );
+    await use(async (assert, { serve = true, options } = {}) => {
+      const devResult = await (serve ? dev : devOnly)(options);
+      await assert({ mode: 'dev', result: devResult });
+      const buildResult = await (serve ? buildPreview : build)(options);
+      await assert({ mode: 'build', result: buildResult });
+    });
   },
 
   editFile: async ({ cwd }, use) => {

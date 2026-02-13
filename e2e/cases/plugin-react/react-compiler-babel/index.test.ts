@@ -1,25 +1,18 @@
 import { expect, test } from '@e2e/helper';
 
-test('should render basic React component in dev', async ({ page, dev }) => {
-  await dev();
-
-  const button = page.locator('#button');
-  await expect(button).toHaveText('count: 0');
-  await button.click();
-  await expect(button).toHaveText('count: 1');
-});
-
-test('should render basic React component in build', async ({
+test('should render basic React component', async ({
   page,
-  buildPreview,
+  runDevAndBuild,
 }) => {
-  const rsbuild = await buildPreview();
+  await runDevAndBuild(async ({ mode, result }) => {
+    const button = page.locator('#button');
+    await expect(button).toHaveText('count: 0');
+    await button.click();
+    await expect(button).toHaveText('count: 1');
 
-  const button = page.locator('#button');
-  await expect(button).toHaveText('count: 0');
-  await button.click();
-  await expect(button).toHaveText('count: 1');
-
-  const index = await rsbuild.getIndexBundle();
-  expect(index).toContain('memo_cache_sentinel');
+    if (mode === 'build') {
+      const index = await result.getIndexBundle();
+      expect(index).toContain('memo_cache_sentinel');
+    }
+  });
 });

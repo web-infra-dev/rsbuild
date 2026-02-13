@@ -2,17 +2,13 @@ import { expect, test } from '@e2e/helper';
 
 const utf8Str = `你好 world! I'm 🦀`;
 
-test('should resolve emoji filename in dev', async ({ page, dev }) => {
-  await dev();
-  expect(await page.evaluate('window.test')).toBe(utf8Str);
-});
+test('should resolve emoji filename', async ({ page, runDevAndBuild }) => {
+  await runDevAndBuild(async ({ mode, result }) => {
+    expect(await page.evaluate('window.test')).toBe(utf8Str);
 
-test('should resolve emoji filename in build', async ({
-  page,
-  buildPreview,
-}) => {
-  const rsbuild = await buildPreview();
-  const content = await rsbuild.getIndexBundle();
-  expect(await page.evaluate('window.test')).toBe(utf8Str);
-  expect(content.includes(utf8Str)).toBeTruthy();
+    if (mode === 'build') {
+      const content = await result.getIndexBundle();
+      expect(content.includes(utf8Str)).toBeTruthy();
+    }
+  });
 });
