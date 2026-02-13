@@ -1,19 +1,10 @@
 import { expect, test } from '@e2e/helper';
 
-test('should allow to use the `using` declaration for explicit resource management in development', async ({
+test('should allow to use the `using` declaration for explicit resource management', async ({
   page,
-  dev,
+  runDevAndBuild,
 }) => {
-  await dev();
-
-  expect(await page.evaluate('window.disposeCounter')).toEqual(4);
-});
-
-test('should allow to use the `using` declaration for explicit resource management in production', async ({
-  page,
-  buildPreview,
-}) => {
-  await buildPreview();
-
-  expect(await page.evaluate('window.disposeCounter')).toEqual(4);
+  await runDevAndBuild(async () => {
+    expect(await page.evaluate('window.disposeCounter')).toEqual(4);
+  });
 });

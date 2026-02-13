@@ -1,26 +1,13 @@
-import { expect, gotoPage, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
-test('should allow to define global variables in development', async ({
-  dev,
+test('should allow to define global variables', async ({
   page,
+  runDevAndBuild,
 }) => {
-  const rsbuild = await dev();
-  await gotoPage(page, rsbuild);
-
-  const testEl = page.locator('#test-el');
-  await expect(testEl).toHaveText('aaaaa');
-});
-
-test('should allow to define global variables in build', async ({
-  page,
-  buildPreview,
-}) => {
-  const rsbuild = await buildPreview();
-
-  await gotoPage(page, rsbuild);
-
-  const testEl = page.locator('#test-el');
-  await expect(testEl).toHaveText('aaaaa');
+  await runDevAndBuild(async () => {
+    const testEl = page.locator('#test-el');
+    await expect(testEl).toHaveText('aaaaa');
+  });
 });
 
 test('should warn when define `process.env`', async ({ buildPreview }) => {

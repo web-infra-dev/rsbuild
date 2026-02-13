@@ -1,19 +1,11 @@
 import { expect, test } from '@e2e/helper';
 
-test('should allow to configure pre-entry in development', async ({
-  dev,
+test('should allow to configure pre-entry', async ({
   page,
+  runDevAndBuild,
 }) => {
-  await dev();
-  await expect(page.innerHTML('#test-el')).resolves.toBe('aaaaa');
-  await expect(page.evaluate('window.aa')).resolves.toBe(2);
-});
-
-test('should allow to configure pre-entry in build', async ({
-  page,
-  buildPreview,
-}) => {
-  await buildPreview();
-  await expect(page.innerHTML('#test-el')).resolves.toBe('aaaaa');
-  await expect(page.evaluate('window.aa')).resolves.toBe(2);
+  await runDevAndBuild(async () => {
+    await expect(page.innerHTML('#test-el')).resolves.toBe('aaaaa');
+    await expect(page.evaluate('window.aa')).resolves.toBe(2);
+  });
 });

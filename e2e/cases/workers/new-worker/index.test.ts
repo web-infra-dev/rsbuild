@@ -1,23 +1,12 @@
 import { expect, test } from '@e2e/helper';
 
-test('should build a web worker in build using the new Worker syntax', async ({
+test('should build a web worker using the new Worker syntax', async ({
   page,
-  buildPreview,
+  runDevAndBuild,
 }) => {
-  await buildPreview();
-
-  await expect(page.locator('#root')).toHaveText(
-    'The Answer to the Ultimate Question of Life, The Universe, and Everything: 42',
-  );
-});
-
-test('should build a web worker in dev using the new Worker', async ({
-  page,
-  dev,
-}) => {
-  await dev();
-
-  await expect(page.locator('#root')).toHaveText(
-    'The Answer to the Ultimate Question of Life, The Universe, and Everything: 42',
-  );
+  await runDevAndBuild(async () => {
+    await expect(page.locator('#root')).toHaveText(
+      'The Answer to the Ultimate Question of Life, The Universe, and Everything: 42',
+    );
+  });
 });
