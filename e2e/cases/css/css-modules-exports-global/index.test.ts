@@ -1,6 +1,6 @@
 import { expect, getFileContent, test } from '@e2e/helper';
 
-test('should exports global in CSS Modules correctly', async ({
+test('should export globals in CSS Modules correctly', async ({
   page,
   runDevAndBuild,
 }) => {
