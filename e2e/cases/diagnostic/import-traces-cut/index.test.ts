@@ -8,18 +8,15 @@ const EXPECTED_LOG = `Import traces (entry → error):
   ./src/child6.js ×`;
 
 test('should truncate long import trace and show hidden count', async ({
-  runDevAndBuild,
+  runBoth,
 }) => {
-  await runDevAndBuild(
+  await runBoth(
     async ({ mode, result }) => {
       if (mode === 'build') {
         expect(result.buildError).toBeTruthy();
       }
       await result.expectLog(EXPECTED_LOG);
     },
-    {
-      serve: false,
-      options: { catchBuildError: true },
-    },
+    { catchBuildError: true },
   );
 });

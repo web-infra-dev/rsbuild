@@ -2,9 +2,9 @@ import { expect, test } from '@e2e/helper';
 
 test('should allow to import inline Less files', async ({
   page,
-  runDevAndBuild,
+  runBothServe,
 }) => {
-  await runDevAndBuild(async ({ mode }) => {
+  await runBothServe(async ({ mode }) => {
     const aInline: string = await page.evaluate('window.aInline');
     const bInline: string = await page.evaluate('window.bInline');
     const bStyles: Record<string, string> =

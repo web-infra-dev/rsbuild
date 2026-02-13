@@ -2,9 +2,9 @@ import { expect, test } from '@e2e/helper';
 
 test('should allow to import inline CSS files', async ({
   page,
-  runDevAndBuild,
+  runBothServe,
 }) => {
-  await runDevAndBuild(async ({ mode }) => {
+  await runBothServe(async ({ mode }) => {
     for (const key of ['aInline1', 'aInline2', 'aInline3', 'aInline4']) {
       const inline: string = await page.evaluate(`window.${key}`);
       if (mode === 'dev') {

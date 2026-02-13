@@ -18,34 +18,30 @@ fse.copy(
 
 test('should apply resolve.conditionNames as expected', async ({
   page,
-  runDevAndBuild,
+  runBothServe,
 }) => {
-  await runDevAndBuild(
+  await runBothServe(
     async () => {
       expect(await page.evaluate(() => window.test)).toBe('custom');
     },
     {
-      options: {
-        config: {
-          resolve: {
-            conditionNames: ['custom', 'import', 'require'],
-          },
+      config: {
+        resolve: {
+          conditionNames: ['custom', 'import', 'require'],
         },
       },
     },
   );
 
-  await runDevAndBuild(
+  await runBothServe(
     async () => {
       // The key order in the `exports` object determines priority
       expect(await page.evaluate(() => window.test)).toBe('import');
     },
     {
-      options: {
-        config: {
-          resolve: {
-            conditionNames: ['require', 'import'],
-          },
+      config: {
+        resolve: {
+          conditionNames: ['require', 'import'],
         },
       },
     },

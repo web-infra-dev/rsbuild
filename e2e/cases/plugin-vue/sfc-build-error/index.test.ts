@@ -4,15 +4,12 @@ const EXPECTED_FILE =
   /File: \.\/src\/App\.vue\.js\?vue&type=script&lang=js:1:1-\d+/;
 const EXPECTED_ERROR = `× ESModulesLinkingError: export 'default' (reexported as 'default') was not found`;
 
-test('should display Vue compilation error', async ({ runDevAndBuild }) => {
-  await runDevAndBuild(
+test('should display Vue compilation error', async ({ runBoth }) => {
+  await runBoth(
     async ({ result }) => {
       await result.expectLog(EXPECTED_FILE, { strict: true });
       await result.expectLog(EXPECTED_ERROR);
     },
-    {
-      serve: false,
-      options: { catchBuildError: true },
-    },
+    { catchBuildError: true },
   );
 });

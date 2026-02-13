@@ -18,33 +18,29 @@ fse.copy(
 
 test('should apply resolve.mainFields as expected', async ({
   page,
-  runDevAndBuild,
+  runBothServe,
 }) => {
-  await runDevAndBuild(
+  await runBothServe(
     async () => {
       expect(await page.evaluate(() => window.test)).toBe('custom');
     },
     {
-      options: {
-        config: {
-          resolve: {
-            mainFields: ['custom', 'module', 'main'],
-          },
+      config: {
+        resolve: {
+          mainFields: ['custom', 'module', 'main'],
         },
       },
     },
   );
 
-  await runDevAndBuild(
+  await runBothServe(
     async () => {
       expect(await page.evaluate(() => window.test)).toBe('main');
     },
     {
-      options: {
-        config: {
-          resolve: {
-            mainFields: ['main', 'module'],
-          },
+      config: {
+        resolve: {
+          mainFields: ['main', 'module'],
         },
       },
     },

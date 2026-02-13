@@ -1,10 +1,7 @@
 import { expect, gotoPage, test } from '@e2e/helper';
 
-test('should run SWC Wasm plugin correctly', async ({
-  page,
-  runDevAndBuild,
-}) => {
-  await runDevAndBuild(
+test('should run SWC Wasm plugin correctly', async ({ page, runBoth }) => {
+  await runBoth(
     async ({ result }) => {
       const msgPromise = page.waitForEvent('console');
       await gotoPage(page, result);
@@ -12,9 +9,6 @@ test('should run SWC Wasm plugin correctly', async ({
       const msg = await msgPromise;
       expect(await msg.args()[0].jsonValue()).toEqual('this is error');
     },
-    {
-      serve: false,
-      options: { runServer: true },
-    },
+    { runServer: true },
   );
 });

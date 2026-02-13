@@ -7,18 +7,15 @@ const EXPECTED_LOG = `Import traces (entry → error):
   ./src/child3.js ×`;
 
 test('should print import traces if module build failed', async ({
-  runDevAndBuild,
+  runBoth,
 }) => {
-  await runDevAndBuild(
+  await runBoth(
     async ({ mode, result }) => {
       if (mode === 'build') {
         expect(result.buildError).toBeTruthy();
       }
       await result.expectLog(EXPECTED_LOG);
     },
-    {
-      serve: false,
-      options: { catchBuildError: true },
-    },
+    { catchBuildError: true },
   );
 });

@@ -2,9 +2,9 @@ import { expect, test } from '@e2e/helper';
 
 test('should allow to configure `cssLoader.exportType` as `string`', async ({
   page,
-  runDevAndBuild,
+  runBothServe,
 }) => {
-  await runDevAndBuild(async ({ mode }) => {
+  await runBothServe(async ({ mode }) => {
     expect(await page.evaluate('window.a')).toBe(`.the-a-class {
   color: red;
 }
