@@ -345,7 +345,12 @@ export class SocketServer {
           return;
         }
 
-        const { browserLogs, client } = config.dev;
+        const environment = this.getEnvironmentByToken(token);
+        if (!environment) {
+          return;
+        }
+
+        const { browserLogs, client } = environment.config.dev;
         if (
           payload.type === 'client-error' &&
           // Do not report browser error when build failed
@@ -430,12 +435,16 @@ export class SocketServer {
     });
   }
 
+  private getEnvironmentByToken(token: string) {
+    return this.context.environmentList.find(
+      ({ webSocketToken }) => webSocketToken === token,
+    );
+  }
+
   // Only use stats when environment is matched
   private getStats(token: string) {
     const { stats } = this.context.buildState;
-    const environment = this.context.environmentList.find(
-      ({ webSocketToken }) => webSocketToken === token,
-    );
+    const environment = this.getEnvironmentByToken(token);
 
     if (!stats || !environment) {
       return;
