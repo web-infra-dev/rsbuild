@@ -2,9 +2,9 @@ import { expect, test } from '@e2e/helper';
 
 test('should allow to define global variables', async ({
   page,
-  runDevAndBuild,
+  runBothServe,
 }) => {
-  await runDevAndBuild(async () => {
+  await runBothServe(async () => {
     const testEl = page.locator('#test-el');
     await expect(testEl).toHaveText('aaaaa');
   });

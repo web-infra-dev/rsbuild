@@ -55,16 +55,9 @@ type SharedAssertionContext =
       result: BuildResult;
     };
 
-type RunDevAndBuild = (
+type RunBoth = (
   assert: (context: SharedAssertionContext) => Promise<void> | void,
-  options?: {
-    options?: DevOptions | BuildOptions;
-    /**
-     * Whether to run the dev or preview server.
-     * @default true
-     */
-    serve?: boolean;
-  },
+  options?: DevOptions | BuildOptions,
 ) => Promise<void>;
 
 type RsbuildFixture = {
@@ -115,9 +108,13 @@ type RsbuildFixture = {
    */
   devOnly: Dev;
   /**
-   * Run shared assertions for both dev and build in one call.
+   * Run shared assertions for devOnly and build in one call.
    */
-  runDevAndBuild: RunDevAndBuild;
+  runBoth: RunBoth;
+  /**
+   * Run shared assertions for both served dev and preview build in one call.
+   */
+  runBothServe: RunBoth;
   /**
    * Edit a file in the test file's cwd.
    * @param filename The filename. If it is not absolute, it will be resolved
@@ -271,11 +268,20 @@ export const test = base.extend<RsbuildFixture>({
     }
   },
 
-  runDevAndBuild: async ({ dev, devOnly, build, buildPreview }, use) => {
-    await use(async (assert, { serve = true, options } = {}) => {
-      const devResult = await (serve ? dev : devOnly)(options);
+  runBoth: async ({ devOnly, build }, use) => {
+    await use(async (assert, options) => {
+      const devResult = await devOnly(options);
       await assert({ mode: 'dev', result: devResult });
-      const buildResult = await (serve ? buildPreview : build)(options);
+      const buildResult = await build(options);
+      await assert({ mode: 'build', result: buildResult });
+    });
+  },
+
+  runBothServe: async ({ dev, buildPreview }, use) => {
+    await use(async (assert, options) => {
+      const devResult = await dev(options);
+      await assert({ mode: 'dev', result: devResult });
+      const buildResult = await buildPreview(options);
       await assert({ mode: 'build', result: buildResult });
     });
   },

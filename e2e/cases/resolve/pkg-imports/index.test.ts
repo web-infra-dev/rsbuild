@@ -2,9 +2,9 @@ import { expect, test } from '@e2e/helper';
 
 test('should resolve package.json#imports correctly', async ({
   page,
-  runDevAndBuild,
+  runBothServe,
 }) => {
-  await runDevAndBuild(async () => {
+  await runBothServe(async () => {
     const foo = page.locator('#foo');
     await expect(foo).toHaveText('foo');
     const test = page.locator('#test');

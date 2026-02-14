@@ -4,9 +4,9 @@ import { expect, test } from '@e2e/helper';
 
 test('should allow to import raw Sass files', async ({
   page,
-  runDevAndBuild,
+  runBothServe,
 }) => {
-  await runDevAndBuild(async () => {
+  await runBothServe(async () => {
     const aRaw: string = await page.evaluate('window.aRaw');
     const bRaw: string = await page.evaluate('window.bRaw');
     const bStyles: Record<string, string> =

@@ -2,8 +2,8 @@ import { expect, test } from '@e2e/helper';
 
 const utf8Str = `你好 world! I'm 🦀`;
 
-test('should resolve emoji filename', async ({ page, runDevAndBuild }) => {
-  await runDevAndBuild(async ({ mode, result }) => {
+test('should resolve emoji filename', async ({ page, runBothServe }) => {
+  await runBothServe(async ({ mode, result }) => {
     expect(await page.evaluate('window.test')).toBe(utf8Str);
 
     if (mode === 'build') {

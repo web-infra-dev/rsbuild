@@ -2,9 +2,9 @@ import { expect, test } from '@e2e/helper';
 
 test('should build Vue SFC with CSS Modules correctly', async ({
   page,
-  runDevAndBuild,
+  runBothServe,
 }) => {
-  await runDevAndBuild(async () => {
+  await runBothServe(async () => {
     const test1 = page.locator('#test1');
     const test2 = page.locator('#test2');
     const test3 = page.locator('#test3');

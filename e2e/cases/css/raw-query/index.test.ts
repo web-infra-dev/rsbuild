@@ -2,11 +2,8 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { expect, test } from '@e2e/helper';
 
-test('should allow to import raw CSS files', async ({
-  page,
-  runDevAndBuild,
-}) => {
-  await runDevAndBuild(async () => {
+test('should allow to import raw CSS files', async ({ page, runBothServe }) => {
+  await runBothServe(async () => {
     const aContent = readFileSync(
       path.join(import.meta.dirname, 'src/a.css'),
       'utf-8',

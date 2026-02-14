@@ -2,9 +2,9 @@ import { expect, getFileContent, test } from '@e2e/helper';
 
 test('should compile less with `parallel` option', async ({
   page,
-  runDevAndBuild,
+  runBothServe,
 }) => {
-  await runDevAndBuild(async ({ mode, result }) => {
+  await runBothServe(async ({ mode, result }) => {
     const body = page.locator('body');
     await expect(body).toHaveCSS('background-color', 'rgb(255, 0, 0)');
     await expect(body).toHaveCSS('font-size', '16px');

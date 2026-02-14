@@ -6,9 +6,9 @@ import { pluginSvgr } from '@rsbuild/plugin-svgr';
 
 test('should return raw asset content with `?raw`', async ({
   page,
-  runDevAndBuild,
+  runBothServe,
 }) => {
-  await runDevAndBuild(async () => {
+  await runBothServe(async () => {
     expect(await page.evaluate('window.rawSvg')).toEqual(
       await promises.readFile(
         join(import.meta.dirname, '../../../assets/circle.svg'),
