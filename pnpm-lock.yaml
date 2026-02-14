@@ -1054,8 +1054,8 @@ importers:
         specifier: ^7.0.0-dev.20260208.1
         version: 7.0.0-dev.20260208.1
       rsbuild-plugin-arethetypeswrong:
-        specifier: 0.1.1
-        version: 0.1.1(@rsbuild/core@1.7.3)(typescript@5.9.3)
+        specifier: 0.2.0
+        version: 0.2.0(@rsbuild/core@2.0.0-beta.4(@module-federation/runtime-tools@2.0.0)(core-js@3.48.0))(typescript@5.9.3)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -2106,6 +2106,16 @@ packages:
 
   '@rsbuild/core@2.0.0-beta.1':
     resolution: {integrity: sha512-m7L3oi4evTDODcY+Qk3cmY/p7GCaauSRe00D0AkXVohNvxFBt7F49uPwBSThS24I9d31zFuAED2jFqBeBlDqWw==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    hasBin: true
+    peerDependencies:
+      core-js: '>= 3.0.0'
+    peerDependenciesMeta:
+      core-js:
+        optional: true
+
+  '@rsbuild/core@2.0.0-beta.4':
+    resolution: {integrity: sha512-V2gA7NQ74sFVWinV003i1fz1T5RmWwr97+AqhXRB7iegT0d+caZUO85/S0piEF3dp/Gtj8/Kx+WV2tcVyHMjvw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -5410,11 +5420,11 @@ packages:
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
-  rsbuild-plugin-arethetypeswrong@0.1.1:
-    resolution: {integrity: sha512-5N16/v3NfXJpmhg7lL/lrWeXI+ejOiQDBD1Fyj3zBCEccV0WxET4pI4hINXFYBCGRef12rzoRxPORAVIOFEcJg==}
-    engines: {node: '>=18'}
+  rsbuild-plugin-arethetypeswrong@0.2.0:
+    resolution: {integrity: sha512-GspBN3YA/p0A3KR4q+yYzw8Oa5R4u6J4nokJAXOMIoMswwK5k91AfTgfZch8A/SmPCshfBL79MVjb30B93muDA==}
+    engines: {node: '>=18.20.8'}
     peerDependencies:
-      '@rsbuild/core': '*'
+      '@rsbuild/core': ^1.0.0 || ^2.0.0-0
       typescript: '*'
     peerDependenciesMeta:
       '@rsbuild/core':
@@ -7363,6 +7373,16 @@ snapshots:
       core-js: 3.48.0
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
+
+  '@rsbuild/core@2.0.0-beta.4(@module-federation/runtime-tools@2.0.0)(core-js@3.48.0)':
+    dependencies:
+      '@rspack/core': 2.0.0-beta.2(@module-federation/runtime-tools@2.0.0)(@swc/helpers@0.5.18)
+      '@swc/helpers': 0.5.18
+    optionalDependencies:
+      core-js: 3.48.0
+    transitivePeerDependencies:
+      - '@module-federation/runtime-tools'
+    optional: true
 
   '@rsbuild/plugin-babel@1.1.0(@rsbuild/core@packages+core)':
     dependencies:
@@ -11179,11 +11199,11 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.57.1
       fsevents: 2.3.3
 
-  rsbuild-plugin-arethetypeswrong@0.1.1(@rsbuild/core@1.7.3)(typescript@5.9.3):
+  rsbuild-plugin-arethetypeswrong@0.2.0(@rsbuild/core@2.0.0-beta.4(@module-federation/runtime-tools@2.0.0)(core-js@3.48.0))(typescript@5.9.3):
     dependencies:
       typescript: 5.9.3
     optionalDependencies:
-      '@rsbuild/core': 1.7.3
+      '@rsbuild/core': 2.0.0-beta.4(@module-federation/runtime-tools@2.0.0)(core-js@3.48.0)
 
   rsbuild-plugin-dts@0.19.5(@rsbuild/core@1.7.3)(@typescript/native-preview@7.0.0-dev.20260208.1)(typescript@5.9.3):
     dependencies:

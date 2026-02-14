@@ -7,7 +7,7 @@
     "@rslib/core": "0.19.5",
     "@types/node": "^24.10.12",
     "@typescript/native-preview": "^7.0.0-dev.20260208.1",
-    "rsbuild-plugin-arethetypeswrong": "0.1.1",
+    "rsbuild-plugin-arethetypeswrong": "0.2.0",
     "typescript": "^5.9.3"
   }
 }
