@@ -60,6 +60,12 @@ export default {
 };
 ```
 
+:::tip
+不建议将 `name` 设置为源代码目录（如 `src`）。因为 public 目录会在生产构建时被复制到输出目录，可能带来源代码泄露风险。
+
+如果需要使用该目录，也可以将 [copyOnBuild](#copyonbuild) 设置为 `false`，避免在构建产物中拷贝相关文件。
+:::
+
 ### copyOnBuild
 
 - **类型：** `boolean | 'auto'`
