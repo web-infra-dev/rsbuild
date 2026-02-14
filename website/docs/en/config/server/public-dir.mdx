@@ -60,6 +60,12 @@ export default {
 };
 ```
 
+:::tip
+We do not recommend setting `name` to the source code directory (such as `src`). Since the public directory will be copied to the output directory during production builds, this may introduce a risk of unintentionally exposing source code.
+
+If you do need to use that directory, set [copyOnBuild](#copyonbuild) to `false` to prevent those files from being included in the build output.
+:::
+
 ### copyOnBuild
 
 - **Type:** `boolean | 'auto'`
