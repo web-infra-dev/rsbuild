@@ -1,16 +1,31 @@
-import { expect, test } from '@e2e/helper';
+import {
+  expect,
+  gotoPage,
+  HMR_CONNECTED_LOG,
+  OVERLAY_ID,
+  test,
+} from '@e2e/helper';
 
 test('should allow to set different dev.client.overlay.runtime for multiple environments', async ({
-  dev,
+  page,
+  devOnly,
+  logHelper,
 }) => {
-  const rsbuild = await dev();
+  const { expectLog, addLog } = logHelper;
+  page.on('console', (consoleMessage) => {
+    addLog(consoleMessage.text());
+  });
 
-  const files = rsbuild.getDistFiles();
-  const filenames = Object.keys(files);
+  const rsbuild = await devOnly();
 
-  const fooJs = filenames.find((name) => name.endsWith('foo.js'));
-  const barJs = filenames.find((name) => name.endsWith('bar.js'));
+  await gotoPage(page, rsbuild, 'foo');
+  await expectLog(HMR_CONNECTED_LOG);
+  await expect(page.locator(OVERLAY_ID).locator('.title')).toHaveText(
+    'Runtime errors',
+  );
 
-  expect(files[fooJs!]).toMatch(/"runtime":\s*true/);
-  expect(files[barJs!]).toMatch(/"runtime":\s*false/);
+  logHelper.clearLogs();
+  await gotoPage(page, rsbuild, 'bar');
+  await expectLog(HMR_CONNECTED_LOG);
+  await expect(page.locator(OVERLAY_ID)).not.toBeAttached();
 });

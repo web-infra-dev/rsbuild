@@ -1,1 +1,1 @@
-console.log('bar');
+throw new Error('Bar runtime error');

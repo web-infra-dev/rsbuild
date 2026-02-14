@@ -1,1 +1,1 @@
-console.log('foo');
+throw new Error('Foo runtime error');
