@@ -90,7 +90,6 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "printFileSize": true,
     "removeConsole": false,
   },
-  "preview": {},
   "resolve": {
     "alias": {
       "@common": "./src/common",
@@ -247,7 +246,6 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "printFileSize": true,
     "removeConsole": false,
   },
-  "preview": {},
   "resolve": {
     "alias": {
       "@common": "./src/common",
@@ -408,7 +406,6 @@ exports[`environment config > should print environment config when inspect confi
       "printFileSize": true,
       "removeConsole": false,
     },
-    "preview": {},
     "resolve": {
       "alias": {
         "@common": "./src/common",
@@ -565,7 +562,6 @@ exports[`environment config > should print environment config when inspect confi
       "printFileSize": true,
       "removeConsole": false,
     },
-    "preview": {},
     "resolve": {
       "alias": {
         "@common": "./src/common",
@@ -742,7 +738,6 @@ exports[`environment config > should support modify environment config by api.mo
       "printFileSize": true,
       "removeConsole": false,
     },
-    "preview": {},
     "resolve": {
       "alias": {
         "@common": "./src/common",
@@ -899,7 +894,6 @@ exports[`environment config > should support modify environment config by api.mo
       "printFileSize": true,
       "removeConsole": false,
     },
-    "preview": {},
     "resolve": {
       "alias": {
         "@common": "./src/common",
@@ -1057,7 +1051,6 @@ exports[`environment config > should support modify environment config by api.mo
       "printFileSize": true,
       "removeConsole": false,
     },
-    "preview": {},
     "resolve": {
       "alias": {
         "@common": "./src/common",
@@ -1218,7 +1211,6 @@ exports[`environment config > should support modify single environment config by
       "printFileSize": true,
       "removeConsole": false,
     },
-    "preview": {},
     "resolve": {
       "alias": {
         "@common": "./src/common",
@@ -1375,7 +1367,6 @@ exports[`environment config > should support modify single environment config by
       "printFileSize": true,
       "removeConsole": false,
     },
-    "preview": {},
     "resolve": {
       "alias": {
         "@common": "./src/common",
