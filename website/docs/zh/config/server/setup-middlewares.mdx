@@ -83,12 +83,3 @@ export default {
   },
 };
 ```
-
-## 与 dev.setupMiddlewares 的区别
-
-| 特性           | server.setupMiddlewares | dev.setupMiddlewares |
-| -------------- | ----------------------- | -------------------- |
-| 模式           | 开发模式 + 预览模式     | 仅开发模式           |
-| `sockWrite`    | ❌ 不可用               | ✅ 可用              |
-| `environments` | ❌ 不可用               | ✅ 可用              |
-| 使用场景       | serve 场景通用中间件    | HMR、SSR 等          |

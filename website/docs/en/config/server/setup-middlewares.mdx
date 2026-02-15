@@ -83,12 +83,3 @@ export default {
   },
 };
 ```
-
-## Difference from dev.setupMiddlewares
-
-| Feature        | server.setupMiddlewares     | dev.setupMiddlewares |
-| -------------- | --------------------------- | -------------------- |
-| Mode           | Development + Preview       | Development only     |
-| `sockWrite`    | ❌ Not available            | ✅ Available         |
-| `environments` | ❌ Not available            | ✅ Available         |
-| Use case       | Shared middleware for serve | HMR, SSR, etc.       |
