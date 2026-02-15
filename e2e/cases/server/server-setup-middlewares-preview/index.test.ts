@@ -1,5 +1,31 @@
 import { expect, test } from '@e2e/helper';
 
+test('should apply server.setupMiddlewares in both dev and preview mode', async ({
+  runBothServe,
+}) => {
+  await runBothServe(
+    async ({ result }) => {
+      const res = await fetch(`http://localhost:${result.port}/api/shared`);
+      expect(await res.text()).toBe('shared-ok');
+    },
+    {
+      config: {
+        server: {
+          setupMiddlewares: (middlewares) => {
+            middlewares.unshift((req, res, next) => {
+              if (req.url === '/api/shared') {
+                res.end('shared-ok');
+                return;
+              }
+              next();
+            });
+          },
+        },
+      },
+    },
+  );
+});
+
 test('should apply setupMiddlewares in preview mode', async ({
   page,
   buildPreview,
@@ -8,7 +34,7 @@ test('should apply setupMiddlewares in preview mode', async ({
 
   await buildPreview({
     config: {
-      preview: {
+      server: {
         setupMiddlewares: (middlewares) => {
           middlewares.unshift((_req, _res, next) => {
             middlewareCount++;
@@ -29,7 +55,7 @@ test('should apply setupMiddlewares.unshift for custom API route', async ({
 }) => {
   const rsbuild = await buildPreview({
     config: {
-      preview: {
+      server: {
         setupMiddlewares: (middlewares) => {
           middlewares.unshift((req, res, next) => {
             if (req.url === '/api/test') {
@@ -57,7 +83,7 @@ test('should support multiple setupMiddlewares functions', async ({
 
   await buildPreview({
     config: {
-      preview: {
+      server: {
         setupMiddlewares: [
           (middlewares) => {
             middlewares.unshift((_req, _res, next) => {
