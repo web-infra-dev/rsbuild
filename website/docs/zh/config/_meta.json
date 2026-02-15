@@ -25,11 +25,6 @@
   },
   {
     "type": "dir-section-header",
-    "name": "preview",
-    "label": "Preview 选项"
-  },
-  {
-    "type": "dir-section-header",
     "name": "resolve",
     "label": "Resolve 选项"
   },

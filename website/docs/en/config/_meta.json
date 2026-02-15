@@ -25,11 +25,6 @@
   },
   {
     "type": "dir-section-header",
-    "name": "preview",
-    "label": "Preview options"
-  },
-  {
-    "type": "dir-section-header",
     "name": "resolve",
     "label": "Resolve options"
   },
