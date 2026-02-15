@@ -14,7 +14,7 @@ type OnBeforeStartDevServerFn = (params: {
    * Context information for all environments.
    */
   environments: Record<string, EnvironmentContext>;
-}) => MaybePromise<void>;
+}) => MaybePromise<(() => void) | void>;
 
 function OnBeforeStartDevServer(callback: OnBeforeStartDevServerFn): void;
 ```
