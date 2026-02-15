@@ -8,9 +8,9 @@ import type {
   InternalContext,
   NormalizedConfig,
   PreviewOptions,
-  PreviewSetupMiddlewaresFn,
   RequestHandler,
   ServerConfig,
+  ServerSetupMiddlewaresFn,
 } from '../types';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
 import {
@@ -46,7 +46,7 @@ type RsbuildProdServerOptions = {
     assetPrefixes: string[];
   };
   serverConfig: ServerConfig;
-  setupMiddlewares?: PreviewSetupMiddlewaresFn | PreviewSetupMiddlewaresFn[];
+  setupMiddlewares?: ServerSetupMiddlewaresFn | ServerSetupMiddlewaresFn[];
 };
 
 export class RsbuildProdServer {
@@ -235,7 +235,7 @@ export async function startProdServer(
         ),
       },
       serverConfig,
-      setupMiddlewares: config.preview.setupMiddlewares,
+      setupMiddlewares: config.server.setupMiddlewares,
     },
     middlewares,
   );

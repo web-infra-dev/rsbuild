@@ -1,22 +1,20 @@
-# preview.setupMiddlewares
+# server.setupMiddlewares
 
 - **Type:**
 
 ```ts
-type PreviewSetupMiddlewaresFn = (middlewares: {
+type ServerSetupMiddlewaresFn = (middlewares: {
   unshift: (...handlers: RequestHandler[]) => void;
   push: (...handlers: RequestHandler[]) => void;
 }) => void;
 
-type SetupMiddlewares = PreviewSetupMiddlewaresFn | PreviewSetupMiddlewaresFn[];
+type SetupMiddlewares = ServerSetupMiddlewaresFn | ServerSetupMiddlewaresFn[];
 ```
 
 - **Default:** `undefined`
 - **Version:** `>= 2.0.0`
 
-Used to add custom middleware to the preview server.
-
-Unlike [dev.setupMiddlewares](/config/dev/setup-middlewares), this does not receive a server context since preview mode has no HMR or environment API.
+Add custom middleware to both dev server and preview server.
 
 ## Basic usage
 
@@ -27,7 +25,7 @@ Unlike [dev.setupMiddlewares](/config/dev/setup-middlewares), this does not rece
 
 ```ts title="rsbuild.config.ts"
 export default {
-  preview: {
+  server: {
     setupMiddlewares: (middlewares) => {
       middlewares.unshift((req, res, next) => {
         console.log('first');
@@ -45,11 +43,11 @@ export default {
 
 ## Authentication example
 
-A common use case is adding authentication middleware for the preview server:
+A common use case is adding authentication middleware to both dev and preview servers:
 
 ```ts title="rsbuild.config.ts"
 export default {
-  preview: {
+  server: {
     setupMiddlewares: (middlewares) => {
       middlewares.unshift((req, res, next) => {
         const token = req.headers['authorization'];
@@ -73,7 +71,7 @@ export default {
 
 ```ts title="rsbuild.config.ts"
 export default {
-  preview: {
+  server: {
     setupMiddlewares: [
       (middlewares) => {
         middlewares.unshift(authMiddleware);
@@ -85,12 +83,3 @@ export default {
   },
 };
 ```
-
-## Difference from dev.setupMiddlewares
-
-| Feature        | dev.setupMiddlewares | preview.setupMiddlewares      |
-| -------------- | -------------------- | ----------------------------- |
-| Mode           | Development          | Preview                       |
-| `sockWrite`    | ✅ Available         | ❌ Not available              |
-| `environments` | ✅ Available         | ❌ Not available              |
-| Use case       | HMR, SSR, etc.       | Authentication, logging, etc. |

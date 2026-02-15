@@ -546,6 +546,11 @@ export interface ServerConfig {
    * @default false
    */
   middlewareMode?: boolean;
+  /**
+   * Add custom middleware to both dev server and preview server.
+   * @default undefined
+   */
+  setupMiddlewares?: ServerSetupMiddlewaresFn | ServerSetupMiddlewaresFn[];
 }
 
 export type NormalizedServerConfig = {
@@ -554,27 +559,15 @@ export type NormalizedServerConfig = {
 } & Omit<
   Optional<
     Required<ServerConfig>,
-    'headers' | 'https' | 'historyApiFallback' | 'proxy'
+    'headers' | 'https' | 'historyApiFallback' | 'proxy' | 'setupMiddlewares'
   >,
   'host' | 'publicDir'
 >;
 
-export type PreviewSetupMiddlewaresFn = (middlewares: {
+export type ServerSetupMiddlewaresFn = (middlewares: {
   unshift: (...handlers: RequestHandler[]) => void;
   push: (...handlers: RequestHandler[]) => void;
 }) => void;
-
-export interface PreviewConfig {
-  /**
-   * Used to add custom middleware to the preview server.
-   * Unlike `dev.setupMiddlewares`, this does not receive a server context
-   * since preview mode has no HMR or environment API.
-   * @default undefined
-   */
-  setupMiddlewares?: PreviewSetupMiddlewaresFn | PreviewSetupMiddlewaresFn[];
-}
-
-export type NormalizedPreviewConfig = PreviewConfig;
 
 export type SriAlgorithm = 'sha256' | 'sha384' | 'sha512';
 
@@ -2125,10 +2118,6 @@ export interface RsbuildConfig extends EnvironmentConfig {
    */
   server?: ServerConfig;
   /**
-   * Options for the preview server (rsbuild preview).
-   */
-  preview?: PreviewConfig;
-  /**
    * Configure Rsbuild config by environment.
    * The key represents the environment name.
    * The value is the Rsbuild config for the specified environment.
@@ -2165,7 +2154,6 @@ export type NormalizedEnvironmentConfig = TwoLevelReadonly<
   Omit<MergedEnvironmentConfig, 'dev'> & {
     dev: NormalizedDevConfig;
     server: NormalizedServerConfig;
-    preview: NormalizedPreviewConfig;
     _privateMeta?: RsbuildConfigMeta;
   }
 >;

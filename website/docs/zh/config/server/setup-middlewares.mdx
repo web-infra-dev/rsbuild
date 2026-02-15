@@ -1,22 +1,20 @@
-# preview.setupMiddlewares
+# server.setupMiddlewares
 
 - **类型：**
 
 ```ts
-type PreviewSetupMiddlewaresFn = (middlewares: {
+type ServerSetupMiddlewaresFn = (middlewares: {
   unshift: (...handlers: RequestHandler[]) => void;
   push: (...handlers: RequestHandler[]) => void;
 }) => void;
 
-type SetupMiddlewares = PreviewSetupMiddlewaresFn | PreviewSetupMiddlewaresFn[];
+type SetupMiddlewares = ServerSetupMiddlewaresFn | ServerSetupMiddlewaresFn[];
 ```
 
 - **默认值：** `undefined`
 - **版本：** `>= 2.0.0`
 
-用于给 preview 服务器添加自定义中间件。
-
-与 [dev.setupMiddlewares](/zh/config/dev/setup-middlewares) 不同，此配置不会接收 server context，因为 preview 模式没有 HMR 或 environment API。
+用于给 dev server 和 preview server 同时添加自定义中间件。
 
 ## 基本用法
 
@@ -27,7 +25,7 @@ type SetupMiddlewares = PreviewSetupMiddlewaresFn | PreviewSetupMiddlewaresFn[];
 
 ```ts title="rsbuild.config.ts"
 export default {
-  preview: {
+  server: {
     setupMiddlewares: (middlewares) => {
       middlewares.unshift((req, res, next) => {
         console.log('first');
@@ -45,11 +43,11 @@ export default {
 
 ## 认证示例
 
-一个常见的使用场景是为 preview 服务器添加认证中间件：
+一个常见的使用场景是为 dev 和 preview 服务器同时添加认证中间件：
 
 ```ts title="rsbuild.config.ts"
 export default {
-  preview: {
+  server: {
     setupMiddlewares: (middlewares) => {
       middlewares.unshift((req, res, next) => {
         const token = req.headers['authorization'];
@@ -73,7 +71,7 @@ export default {
 
 ```ts title="rsbuild.config.ts"
 export default {
-  preview: {
+  server: {
     setupMiddlewares: [
       (middlewares) => {
         middlewares.unshift(authMiddleware);
@@ -85,12 +83,3 @@ export default {
   },
 };
 ```
-
-## 与 dev.setupMiddlewares 的区别
-
-| 特性           | dev.setupMiddlewares | preview.setupMiddlewares |
-| -------------- | -------------------- | ------------------------ |
-| 模式           | 开发模式             | 预览模式                 |
-| `sockWrite`    | ✅ 可用              | ❌ 不可用                |
-| `environments` | ✅ 可用              | ❌ 不可用                |
-| 使用场景       | HMR、SSR 等          | 认证、日志等             |

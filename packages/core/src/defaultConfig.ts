@@ -29,7 +29,6 @@ import type {
   NormalizedHtmlConfig,
   NormalizedOutputConfig,
   NormalizedPerformanceConfig,
-  NormalizedPreviewConfig,
   NormalizedResolveConfig,
   NormalizedSecurityConfig,
   NormalizedServerConfig,
@@ -99,8 +98,6 @@ const getDefaultServerConfig = (): Omit<
   },
   middlewareMode: false,
 });
-
-const getDefaultPreviewConfig = (): NormalizedPreviewConfig => ({});
 
 let swcHelpersPath: string;
 
@@ -220,7 +217,6 @@ const getDefaultResolveConfig = (): NormalizedResolveConfig => {
 const createDefaultConfig = (): RsbuildConfig => ({
   dev: getDefaultDevConfig(),
   server: getDefaultServerConfig(),
-  preview: getDefaultPreviewConfig(),
   html: getDefaultHtmlConfig(),
   resolve: getDefaultResolveConfig(),
   source: getDefaultSourceConfig(),

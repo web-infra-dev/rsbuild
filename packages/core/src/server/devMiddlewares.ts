@@ -39,7 +39,10 @@ const applySetupMiddlewares = (
   config: NormalizedConfig,
   devServerAPI: RsbuildDevServer,
 ) => {
-  const setupMiddlewares = config.dev.setupMiddlewares || [];
+  const setupMiddlewares = [
+    ...castArray(config.server.setupMiddlewares || []),
+    ...castArray(config.dev.setupMiddlewares || []),
+  ];
 
   const serverOptions: SetupMiddlewaresContext = pick(devServerAPI, [
     'sockWrite',
@@ -49,7 +52,7 @@ const applySetupMiddlewares = (
   const before: RequestHandler[] = [];
   const after: RequestHandler[] = [];
 
-  for (const handler of castArray(setupMiddlewares)) {
+  for (const handler of setupMiddlewares) {
     handler(
       {
         unshift: (...handlers) => before.unshift(...handlers),
