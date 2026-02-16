@@ -1,0 +1,128 @@
+# server.setup
+
+- **Type:**
+
+```ts
+type ServerSetupContext =
+  | {
+      action: 'dev';
+      server: RsbuildDevServer;
+      environments: Record<string, EnvironmentContext>;
+    }
+  | {
+      action: 'preview';
+      server: {
+        middlewares: Connect.Server;
+      };
+      environments?: never;
+    };
+
+type ServerSetupFn = (
+  context: ServerSetupContext,
+) => void | (() => void | Promise<void>) | Promise<void | (() => void)>;
+
+type ServerSetup = ServerSetupFn | ServerSetupFn[];
+```
+
+- **Default:** `undefined`
+- **Version:** `>= 2.0.0`
+
+Run setup logic for both dev and preview servers.
+
+Primarily used to register middleware, and can also run other startup tasks. Similar to [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) and [onBeforeStartProdServer](/plugins/dev/hooks#onbeforestartprodserver) hooks.
+
+## Basic usage
+
+`server.setup` receives a `context` object:
+
+- `context.action`: `'dev'` or `'preview'`.
+- `context.server.middlewares`: the connect app instance. Use `middlewares.use(...)` to register middleware.
+- `context.environments`: only available when `action === 'dev'`.
+
+`server.setup` is mainly for registering middleware, and can also run other startup tasks.
+It is similar to `onBeforeStartDevServer` and `onBeforeStartProdServer`, but configured in `rsbuild.config.ts`.
+
+The setup function runs before Rsbuild registers built-in middlewares, so middlewares added in setup run earlier than built-ins.
+It can return a callback, and that callback runs after built-in middlewares are registered.
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    setup: ({ server }) => {
+      server.middlewares.use((req, res, next) => {
+        console.log('first');
+        next();
+      });
+    },
+  },
+};
+```
+
+## Post callback
+
+Use a returned callback to register middleware after built-in middlewares:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    setup: ({ server }) => {
+      server.middlewares.use((req, _res, next) => {
+        if (req.url === '/api/before') {
+          console.log('before built-ins');
+        }
+        next();
+      });
+
+      return () => {
+        server.middlewares.use((req, _res, next) => {
+          if (req.url === '/api/after') {
+            console.log('after built-ins');
+          }
+          next();
+        });
+      };
+    },
+  },
+};
+```
+
+## Multiple functions
+
+`server.setup` also supports passing an array:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    setup: [
+      ({ server }) => {
+        server.middlewares.use(authMiddleware);
+      },
+      ({ server }) => {
+        server.middlewares.use(logMiddleware);
+      },
+    ],
+  },
+};
+```
+
+## Dev-only APIs
+
+In dev mode, you can access dev-only capabilities such as `server.sockWrite`:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    setup: (context) => {
+      if (context.action !== 'dev') {
+        return;
+      }
+
+      context.server.middlewares.use((_req, _res, next) => {
+        next();
+      });
+
+      context.server.sockWrite('static-changed');
+    },
+  },
+};
+```

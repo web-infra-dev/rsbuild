@@ -1,0 +1,128 @@
+# server.setup
+
+- **类型：**
+
+```ts
+type ServerSetupContext =
+  | {
+      action: 'dev';
+      server: RsbuildDevServer;
+      environments: Record<string, EnvironmentContext>;
+    }
+  | {
+      action: 'preview';
+      server: {
+        middlewares: Connect.Server;
+      };
+      environments?: never;
+    };
+
+type ServerSetupFn = (
+  context: ServerSetupContext,
+) => void | (() => void | Promise<void>) | Promise<void | (() => void)>;
+
+type ServerSetup = ServerSetupFn | ServerSetupFn[];
+```
+
+- **默认值：** `undefined`
+- **版本：** `>= 2.0.0`
+
+用于在 dev 和 preview 服务器启动时执行初始化逻辑。
+
+通常用于注册中间件，也可以在启动阶段运行其他任务。用法类似于 [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) 和 [onBeforeStartProdServer](/plugins/dev/hooks#onbeforestartprodserver) hooks。
+
+## 基本用法
+
+`server.setup` 会接收一个 `context` 对象：
+
+- `context.action`：`'dev'` 或 `'preview'`。
+- `context.server.middlewares`：connect app 实例，可通过 `middlewares.use(...)` 注册中间件。
+- `context.environments`：仅在 `action === 'dev'` 时可用。
+
+`server.setup` 主要用于注册中间件，也可以执行其他启动逻辑。
+它与 `onBeforeStartDevServer`、`onBeforeStartProdServer` 作用类似，但通过 `rsbuild.config.ts` 直接配置。
+
+`setup` 本身会在 Rsbuild 注册内置中间件前执行，因此其中注册的中间件会早于内置中间件。
+`setup` 还可以返回一个回调，该回调会在内置中间件注册完成后执行。
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    setup: ({ server }) => {
+      server.middlewares.use((req, res, next) => {
+        console.log('first');
+        next();
+      });
+    },
+  },
+};
+```
+
+## 后置回调
+
+你可以通过返回回调，在内置中间件之后注册中间件：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    setup: ({ server }) => {
+      server.middlewares.use((req, _res, next) => {
+        if (req.url === '/api/before') {
+          console.log('before built-ins');
+        }
+        next();
+      });
+
+      return () => {
+        server.middlewares.use((req, _res, next) => {
+          if (req.url === '/api/after') {
+            console.log('after built-ins');
+          }
+          next();
+        });
+      };
+    },
+  },
+};
+```
+
+## 多个函数
+
+`server.setup` 也支持传入数组：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    setup: [
+      ({ server }) => {
+        server.middlewares.use(authMiddleware);
+      },
+      ({ server }) => {
+        server.middlewares.use(logMiddleware);
+      },
+    ],
+  },
+};
+```
+
+## 仅开发模式可用的能力
+
+在开发模式下，可以访问 `server.sockWrite` 等 dev-only 能力：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    setup: (context) => {
+      if (context.action !== 'dev') {
+        return;
+      }
+
+      context.server.middlewares.use((_req, _res, next) => {
+        next();
+      });
+
+      context.server.sockWrite('static-changed');
+    },
+  },
+};
+```
