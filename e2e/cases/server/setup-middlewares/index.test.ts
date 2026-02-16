@@ -65,7 +65,7 @@ test('should expose dev-only abilities via server.setup context', async ({
             return;
           }
 
-          context.middlewares.use((_req, _res, next) => {
+          context.server.middlewares.use((_req, _res, next) => {
             count++;
             next();
           });

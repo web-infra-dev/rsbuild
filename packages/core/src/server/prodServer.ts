@@ -197,7 +197,9 @@ export async function startProdServer(
   const middlewares = connect();
   const postSetupCallbacks = await applyServerSetup(config.server.setup, {
     action: 'preview',
-    middlewares,
+    server: {
+      middlewares,
+    },
   });
 
   const serverConfig = config.server;

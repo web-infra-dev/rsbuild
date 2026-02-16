@@ -11,8 +11,8 @@ test('should apply server.setup in both dev and preview mode', async ({
     {
       config: {
         server: {
-          setup: ({ middlewares }) => {
-            middlewares.use((req, res, next) => {
+          setup: ({ server }) => {
+            server.middlewares.use((req, res, next) => {
               if (req.url === '/api/shared') {
                 res.end('shared-ok');
                 return;
@@ -35,8 +35,8 @@ test('should apply server.setup in preview mode', async ({
   await buildPreview({
     config: {
       server: {
-        setup: ({ middlewares }) => {
-          middlewares.use((_req, _res, next) => {
+        setup: ({ server }) => {
+          server.middlewares.use((_req, _res, next) => {
             middlewareCount++;
             next();
           });
@@ -56,8 +56,8 @@ test('should apply server.setup for custom API route', async ({
   const rsbuild = await buildPreview({
     config: {
       server: {
-        setup: ({ middlewares }) => {
-          middlewares.use((req, res, next) => {
+        setup: ({ server }) => {
+          server.middlewares.use((req, res, next) => {
             if (req.url === '/api/test') {
               res.end('api-ok');
               return;
@@ -85,14 +85,14 @@ test('should support multiple server.setup functions', async ({
     config: {
       server: {
         setup: [
-          ({ middlewares }) => {
-            middlewares.use((_req, _res, next) => {
+          ({ server }) => {
+            server.middlewares.use((_req, _res, next) => {
               firstCalled = true;
               next();
             });
           },
-          ({ middlewares }) => {
-            middlewares.use((_req, _res, next) => {
+          ({ server }) => {
+            server.middlewares.use((_req, _res, next) => {
               secondCalled = true;
               next();
             });
@@ -116,8 +116,8 @@ test('should run returned callback after internal middlewares', async ({
       server: {
         historyApiFallback: false,
         htmlFallback: false,
-        setup: ({ middlewares }) => {
-          middlewares.use((req, _res, next) => {
+        setup: ({ server }) => {
+          server.middlewares.use((req, _res, next) => {
             if (req.url === '/api/order') {
               req.headers['x-server-setup-order'] = 'before';
             }
@@ -125,7 +125,7 @@ test('should run returned callback after internal middlewares', async ({
           });
 
           return () => {
-            middlewares.use((req, res, next) => {
+            server.middlewares.use((req, res, next) => {
               if (req.url === '/api/order') {
                 res.end(req.headers['x-server-setup-order']);
                 return;

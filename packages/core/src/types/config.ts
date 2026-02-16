@@ -581,10 +581,6 @@ export type ServerSetupContext =
        */
       action: 'dev';
       /**
-       * The connect app instance used by Rsbuild server.
-       */
-      middlewares: Connect.Server;
-      /**
        * Dev server instance, only available in dev mode.
        */
       server: RsbuildDevServer;
@@ -599,13 +595,14 @@ export type ServerSetupContext =
        */
       action: 'preview';
       /**
-       * The connect app instance used by Rsbuild server.
+       * Preview server instance.
        */
-      middlewares: Connect.Server;
-      /**
-       * Not available in preview mode.
-       */
-      server?: never;
+      server: {
+        /**
+         * The connect app instance used by Rsbuild server.
+         */
+        middlewares: Connect.Server;
+      };
       /**
        * Not available in preview mode.
        */

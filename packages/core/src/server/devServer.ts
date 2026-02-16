@@ -437,7 +437,6 @@ export async function createDevServer<
 
   const setupPostCallbacks = await applyServerSetup(config.server.setup, {
     action: 'dev',
-    middlewares,
     server: devServerAPI,
     environments: context.environments,
   });
