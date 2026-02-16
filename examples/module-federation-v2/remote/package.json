@@ -11,8 +11,8 @@
     "react-dom": "^19.2.4"
   },
   "devDependencies": {
-    "@module-federation/enhanced": "2.0.0",
-    "@module-federation/rsbuild-plugin": "2.0.0",
+    "@module-federation/enhanced": "2.0.1",
+    "@module-federation/rsbuild-plugin": "2.0.1",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-react": "workspace:*"
   }

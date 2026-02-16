@@ -9,7 +9,7 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "@module-federation/runtime-tools": "2.0.0",
+    "@module-federation/runtime-tools": "2.0.1",
     "core-js": "^3.48.0",
     "lodash": "^4.17.23",
     "preact": "^10.28.3",
@@ -17,14 +17,14 @@
     "react-dom": "^19.2.4",
     "react-router-dom": "^7.13.0",
     "solid-js": "^1.9.11",
-    "vue": "^3.5.27",
+    "vue": "^3.5.28",
     "vue-router": "^5.0.2"
   },
   "devDependencies": {
     "@e2e/assets": "workspace:*",
     "@e2e/helper": "workspace:*",
-    "@module-federation/enhanced": "2.0.0",
-    "@module-federation/rsbuild-plugin": "2.0.0",
+    "@module-federation/enhanced": "2.0.1",
+    "@module-federation/rsbuild-plugin": "2.0.1",
     "@playwright/test": "1.58.2",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
@@ -46,9 +46,9 @@
     "@tailwindcss/postcss": "^4.1.18",
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.23",
-    "@types/node": "^24.10.12",
+    "@types/node": "^24.10.13",
     "@types/polka": "^0.5.8",
-    "@types/react": "^19.2.13",
+    "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "create-rsbuild": "workspace:*",
     "fast-glob": "^3.3.3",

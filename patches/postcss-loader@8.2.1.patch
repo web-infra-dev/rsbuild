@@ -32,7 +32,7 @@ index b69663d2ef81e83d18163f76c38cfbb04abd18f8..ee609ebe7e4578c3046b880c6517613b
        root
      } = meta.ast);
 diff --git a/dist/utils.js b/dist/utils.js
-index dcb3bd576f3cff42e2ea9615df8f79687b2bdbf6..d58f27dc4887b5159b1409ae311be4558613082e 100644
+index 74a4fd455b8d83c4e7dc19bbe91265f2c4e8e7af..01a4751085ce0db7776b5419a526331abe8d86d6 100644
 --- a/dist/utils.js
 +++ b/dist/utils.js
 @@ -15,7 +15,7 @@ exports.warningFactory = warningFactory;
