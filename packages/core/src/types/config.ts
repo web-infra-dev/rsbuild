@@ -548,9 +548,19 @@ export interface ServerConfig {
   middlewareMode?: boolean;
   /**
    * Add custom middleware to both dev server and preview server.
+   *
+   * The setup function runs before Rsbuild registers built-in middlewares,
+   * so middlewares added in setup will run earlier than built-ins.
+   *
+   * The setup function can return a callback. The callback will run after
+   * built-in middlewares are registered, so middlewares added in the callback
+   * will run later than built-ins.
+   *
+   * In dev mode, the context includes `server` and `environments`, which gives
+   * access to dev-only capabilities like `server.sockWrite`.
    * @default undefined
    */
-  setupMiddlewares?: ServerSetupMiddlewaresFn | ServerSetupMiddlewaresFn[];
+  setup?: ServerSetupFn | ServerSetupFn[];
 }
 
 export type NormalizedServerConfig = {
@@ -559,15 +569,53 @@ export type NormalizedServerConfig = {
 } & Omit<
   Optional<
     Required<ServerConfig>,
-    'headers' | 'https' | 'historyApiFallback' | 'proxy' | 'setupMiddlewares'
+    'headers' | 'https' | 'historyApiFallback' | 'proxy' | 'setup'
   >,
   'host' | 'publicDir'
 >;
 
-export type ServerSetupMiddlewaresFn = (middlewares: {
-  unshift: (...handlers: RequestHandler[]) => void;
-  push: (...handlers: RequestHandler[]) => void;
-}) => void;
+export type ServerSetupContext =
+  | {
+      /**
+       * Action type of current server.
+       */
+      action: 'dev';
+      /**
+       * Dev server instance, only available in dev mode.
+       */
+      server: RsbuildDevServer;
+      /**
+       * Environment contexts of all environments, only available in dev mode.
+       */
+      environments: Record<string, EnvironmentContext>;
+    }
+  | {
+      /**
+       * Action type of current server.
+       */
+      action: 'preview';
+      /**
+       * Preview server instance.
+       */
+      server: {
+        /**
+         * The connect app instance used by Rsbuild server.
+         */
+        middlewares: Connect.Server;
+      };
+      /**
+       * Not available in preview mode.
+       */
+      environments?: never;
+    };
+
+/**
+ * Server setup function.
+ * Return a callback to run after built-in middlewares are registered.
+ */
+export type ServerSetupFn = (
+  context: ServerSetupContext,
+) => MaybePromise<(() => MaybePromise<void>) | void>;
 
 export type SriAlgorithm = 'sha256' | 'sha384' | 'sha512';
 

@@ -1,6 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('should apply server.setupMiddlewares in both dev and preview mode', async ({
+test('should apply server.setup in both dev and preview mode', async ({
   runBothServe,
 }) => {
   await runBothServe(
@@ -11,8 +11,8 @@ test('should apply server.setupMiddlewares in both dev and preview mode', async 
     {
       config: {
         server: {
-          setupMiddlewares: (middlewares) => {
-            middlewares.unshift((req, res, next) => {
+          setup: ({ server }) => {
+            server.middlewares.use((req, res, next) => {
               if (req.url === '/api/shared') {
                 res.end('shared-ok');
                 return;
@@ -26,7 +26,7 @@ test('should apply server.setupMiddlewares in both dev and preview mode', async 
   );
 });
 
-test('should apply setupMiddlewares in preview mode', async ({
+test('should apply server.setup in preview mode', async ({
   page,
   buildPreview,
 }) => {
@@ -35,8 +35,8 @@ test('should apply setupMiddlewares in preview mode', async ({
   await buildPreview({
     config: {
       server: {
-        setupMiddlewares: (middlewares) => {
-          middlewares.unshift((_req, _res, next) => {
+        setup: ({ server }) => {
+          server.middlewares.use((_req, _res, next) => {
             middlewareCount++;
             next();
           });
@@ -50,14 +50,14 @@ test('should apply setupMiddlewares in preview mode', async ({
   expect(middlewareCount).toBeGreaterThanOrEqual(1);
 });
 
-test('should apply setupMiddlewares.unshift for custom API route', async ({
+test('should apply server.setup for custom API route', async ({
   buildPreview,
 }) => {
   const rsbuild = await buildPreview({
     config: {
       server: {
-        setupMiddlewares: (middlewares) => {
-          middlewares.unshift((req, res, next) => {
+        setup: ({ server }) => {
+          server.middlewares.use((req, res, next) => {
             if (req.url === '/api/test') {
               res.end('api-ok');
               return;
@@ -69,12 +69,12 @@ test('should apply setupMiddlewares.unshift for custom API route', async ({
     },
   });
 
-  // Test custom API route via unshift
+  // Test custom API route via server.setup
   const res = await fetch(`http://localhost:${rsbuild.port}/api/test`);
   expect(await res.text()).toBe('api-ok');
 });
 
-test('should support multiple setupMiddlewares functions', async ({
+test('should support multiple server.setup functions', async ({
   page,
   buildPreview,
 }) => {
@@ -84,15 +84,15 @@ test('should support multiple setupMiddlewares functions', async ({
   await buildPreview({
     config: {
       server: {
-        setupMiddlewares: [
-          (middlewares) => {
-            middlewares.unshift((_req, _res, next) => {
+        setup: [
+          ({ server }) => {
+            server.middlewares.use((_req, _res, next) => {
               firstCalled = true;
               next();
             });
           },
-          (middlewares) => {
-            middlewares.unshift((_req, _res, next) => {
+          ({ server }) => {
+            server.middlewares.use((_req, _res, next) => {
               secondCalled = true;
               next();
             });
@@ -106,4 +106,38 @@ test('should support multiple setupMiddlewares functions', async ({
   await expect(locator).toHaveText('Hello Rsbuild!');
   expect(firstCalled).toBe(true);
   expect(secondCalled).toBe(true);
+});
+
+test('should run returned callback after internal middlewares', async ({
+  buildPreview,
+}) => {
+  const rsbuild = await buildPreview({
+    config: {
+      server: {
+        historyApiFallback: false,
+        htmlFallback: false,
+        setup: ({ server }) => {
+          server.middlewares.use((req, _res, next) => {
+            if (req.url === '/api/order') {
+              req.headers['x-server-setup-order'] = 'before';
+            }
+            next();
+          });
+
+          return () => {
+            server.middlewares.use((req, res, next) => {
+              if (req.url === '/api/order') {
+                res.end(req.headers['x-server-setup-order']);
+                return;
+              }
+              next();
+            });
+          };
+        },
+      },
+    },
+  });
+
+  const res = await fetch(`http://localhost:${rsbuild.port}/api/order`);
+  expect(await res.text()).toBe('before');
 });

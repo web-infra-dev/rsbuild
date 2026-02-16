@@ -45,6 +45,7 @@ import {
 import { createHttpServer } from './httpServer';
 import { notFoundMiddleware, optionsFallbackMiddleware } from './middlewares';
 import { open } from './open';
+import { applyServerSetup } from './serverSetup';
 import type { ServerMessage } from './socketServer';
 import { setupWatchFiles, type WatchFilesResult } from './watchFiles';
 
@@ -434,12 +435,20 @@ export async function createDevServer<
     open: openPage,
   };
 
-  const postCallbacks = (
+  const setupPostCallbacks = await applyServerSetup(config.server.setup, {
+    action: 'dev',
+    server: devServerAPI,
+    environments: context.environments,
+  });
+
+  const hookPostCallbacks = (
     await context.hooks.onBeforeStartDevServer.callBatch({
       server: devServerAPI,
       environments: context.environments,
     })
   ).filter((item) => typeof item === 'function');
+
+  const postCallbacks = [...hookPostCallbacks, ...setupPostCallbacks];
 
   if (runCompile) {
     // print server url should between listen and beforeCompile
@@ -463,14 +472,6 @@ export async function createDevServer<
     context,
     postCallbacks,
   });
-
-  for (const item of devMiddlewares.middlewares) {
-    if (Array.isArray(item)) {
-      middlewares.use(...item);
-    } else {
-      middlewares.use(item);
-    }
-  }
 
   // start watching
   buildManager?.watch();
