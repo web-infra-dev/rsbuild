@@ -394,6 +394,27 @@ await rsbuild.startDevServer({
 
 ## rsbuild.createDevServer
 
+- **类型：**
+
+```ts
+type CreateDevServerOptions = {
+  /**
+   * 是否在启动时静默获取端口号，不输出任何日志
+   * @default false
+   */
+  getPortSilently?: boolean;
+  /**
+   * 是否触发 Rsbuild 编译
+   * @default true
+   */
+  runCompile?: boolean;
+};
+
+function createDevServer(
+  options?: CreateDevServerOptions,
+): Promise<RsbuildDevServer>;
+```
+
 Rsbuild 配备了一个内置的开发服务器，当你执行 `rsbuild dev` 时，将启动 Rsbuild dev server，并提供页面预览、路由、模块热更新等功能。
 
 - 如果你需要将 Rsbuild dev server 集成到自定义的 server 中，可以通过 `createDevServer` 方法创建一个 dev server 实例，请参考 [Dev server API](/api/javascript-api/dev-server-api) 了解所有可用的 API。

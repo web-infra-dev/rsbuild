@@ -371,6 +371,27 @@ await rsbuild.startDevServer({
 
 ## rsbuild.createDevServer
 
+- **Type:**
+
+```ts
+type CreateDevServerOptions = {
+  /**
+   * Whether to get port silently and not print any logs.
+   * @default false
+   */
+  getPortSilently?: boolean;
+  /**
+   * Whether to trigger Rsbuild compilation
+   * @default true
+   */
+  runCompile?: boolean;
+};
+
+function createDevServer(
+  options?: CreateDevServerOptions,
+): Promise<RsbuildDevServer>;
+```
+
 Rsbuild includes a built-in dev server designed to improve the development experience. When you run the `rsbuild dev` command, the server starts automatically and provides features such as page preview, routing, and hot module reloading.
 
 - To integrate the Rsbuild dev server into a custom server, you can use the `createDevServer` method to create a dev server instance. Please refer to [Dev server API](/api/javascript-api/dev-server-api) for all available APIs.

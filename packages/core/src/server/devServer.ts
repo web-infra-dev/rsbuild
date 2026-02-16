@@ -60,10 +60,23 @@ export type SockWrite = <T extends ServerMessage['type']>(
 
 export type RsbuildDevServer = {
   /**
-   * The `connect` app instance.
-   * Can be used to attach custom middlewares to the dev server.
+   * Notifies Rsbuild that the custom server has successfully started.
+   * Rsbuild will trigger the `onAfterStartDevServer` hook at this stage.
    */
-  middlewares: Connect.Server;
+  afterListen: () => Promise<void>;
+  /**
+   * Close the Rsbuild server.
+   */
+  close: () => Promise<void>;
+  /**
+   * Activate socket connection.
+   * This ensures that HMR works properly.
+   */
+  connectWebSocket: (options: { server: HTTPServer }) => void;
+  /**
+   * Environment API of Rsbuild server.
+   */
+  environments: EnvironmentAPI;
   /**
    * The Node.js HTTP server instance.
    * - Will be `Http2SecureServer` if `server.https` config is used.
@@ -85,9 +98,14 @@ export type RsbuildDevServer = {
     };
   }>;
   /**
-   * Environment API of Rsbuild server.
+   * The `connect` app instance.
+   * Can be used to attach custom middlewares to the dev server.
    */
-  environments: EnvironmentAPI;
+  middlewares: Connect.Server;
+  /**
+   * Open URL in the browser after starting the server.
+   */
+  open: () => Promise<void>;
   /**
    * The resolved port.
    * By default, Rsbuild server listens on port `3000` and automatically increments
@@ -95,27 +113,9 @@ export type RsbuildDevServer = {
    */
   port: number;
   /**
-   * Notifies Rsbuild that the custom server has successfully started.
-   * Rsbuild will trigger the `onAfterStartDevServer` hook at this stage.
-   */
-  afterListen: () => Promise<void>;
-  /**
-   * Activate socket connection.
-   * This ensures that HMR works properly.
-   */
-  connectWebSocket: (options: { server: HTTPServer }) => void;
-  /**
-   * Close the Rsbuild server.
-   */
-  close: () => Promise<void>;
-  /**
    * Print the server URLs.
    */
   printUrls: () => void;
-  /**
-   * Open URL in the browser after starting the server.
-   */
-  open: () => Promise<void>;
   /**
    * Allows middleware to send some message to HMR client, and then the HMR
    * client will take different actions depending on the message type.
