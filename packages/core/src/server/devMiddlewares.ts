@@ -30,20 +30,18 @@ export type RsbuildDevMiddlewareOptions = {
   buildManager?: BuildManager;
   devServerAPI: RsbuildDevServer;
   /**
-   * Callbacks returned by the `onBeforeStartDevServer` hook.
+   * Callbacks returned by `onBeforeStartDevServer` hook and `server.setup` config
    */
-  postCallbacks: (() => void)[];
+  postCallbacks: (() => Promise<void> | void)[];
 };
 
 const applySetupMiddlewares = (
   config: NormalizedConfig,
   devServerAPI: RsbuildDevServer,
 ) => {
-  const setupMiddlewares = [
-    ...castArray(config.server.setupMiddlewares || []),
-    ...castArray(config.dev.setupMiddlewares || []),
-  ];
-
+  const setupMiddlewares = config.dev.setupMiddlewares
+    ? castArray(config.dev.setupMiddlewares)
+    : [];
   const serverOptions: SetupMiddlewaresContext = pick(devServerAPI, [
     'sockWrite',
     'environments',
@@ -205,13 +203,13 @@ const applyDefaultMiddlewares = async ({
     }
   }
 
-  // Execute callbacks returned by the `onBeforeStartDevServer` hook.
+  // Execute callbacks returned by the `onBeforeStartDevServer` hook and `server.setup` config.
   // This is the ideal place for users to add custom middleware because:
   // 1. It runs after most of the default middleware
   // 2. It runs before fallback middleware
   // This ensures custom middleware can intercept requests before any fallback handling
   for (const callback of postCallbacks) {
-    callback();
+    await callback();
   }
 
   // historyApiFallback takes precedence over the default htmlFallback.

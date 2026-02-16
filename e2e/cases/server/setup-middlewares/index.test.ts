@@ -50,3 +50,33 @@ test('should apply to trigger page reload via the `static-changed` type of sockW
   reloadPage?.();
   expectPoll(() => count > previousCount).toBeTruthy();
 });
+
+test('should expose dev-only abilities via server.setup context', async ({
+  dev,
+}) => {
+  let count = 0;
+  let reloadPage: undefined | (() => void);
+
+  await dev({
+    config: {
+      server: {
+        setup: (context) => {
+          if (context.action !== 'dev') {
+            return;
+          }
+
+          context.middlewares.use((_req, _res, next) => {
+            count++;
+            next();
+          });
+
+          reloadPage = () => context.server.sockWrite('static-changed');
+        },
+      },
+    },
+  });
+
+  const previousCount = count;
+  reloadPage?.();
+  expectPoll(() => count > previousCount).toBeTruthy();
+});
