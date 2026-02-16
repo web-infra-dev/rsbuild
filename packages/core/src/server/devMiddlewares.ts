@@ -3,6 +3,7 @@ import { castArray, pick } from '../helpers';
 import { isMultiCompiler } from '../helpers/compiler';
 import { isVerbose } from '../logger';
 import type {
+  Connect,
   InternalContext,
   NormalizedConfig,
   RequestHandler,
@@ -63,8 +64,6 @@ const applySetupMiddlewares = (
   return { before, after };
 };
 
-export type Middlewares = (RequestHandler | [string, RequestHandler])[];
-
 const applyDefaultMiddlewares = async ({
   config,
   buildManager,
@@ -73,7 +72,7 @@ const applyDefaultMiddlewares = async ({
   middlewares,
   postCallbacks,
 }: RsbuildDevMiddlewareOptions & {
-  middlewares: Middlewares;
+  middlewares: Connect.Server;
 }): Promise<{
   onUpgrade: UpgradeEvent;
 }> => {
@@ -84,7 +83,7 @@ const applyDefaultMiddlewares = async ({
     const { default: corsMiddleware } = await import(
       /* webpackChunkName: "cors" */ 'cors'
     );
-    middlewares.push(
+    middlewares.use(
       corsMiddleware(typeof server.cors === 'boolean' ? {} : server.cors),
     );
   }
@@ -93,7 +92,7 @@ const applyDefaultMiddlewares = async ({
   // `server.headers` can override `server.cors`
   const { headers } = server;
   if (headers) {
-    middlewares.push((_req, res, next) => {
+    middlewares.use((_req, res, next) => {
       for (const [key, value] of Object.entries(headers)) {
         res.setHeader(key, value);
       }
@@ -109,7 +108,7 @@ const applyDefaultMiddlewares = async ({
     upgradeEvents.push(upgrade);
 
     for (const middleware of proxyMiddlewares) {
-      middlewares.push(middleware);
+      middlewares.use(middleware);
     }
   }
 
@@ -117,7 +116,7 @@ const applyDefaultMiddlewares = async ({
   // but before other middleware to ensure responses are properly compressed
   const { compress } = server;
   if (compress) {
-    middlewares.push(
+    middlewares.use(
       gzipMiddleware(typeof compress === 'object' ? compress : undefined),
     );
   }
@@ -140,14 +139,14 @@ const applyDefaultMiddlewares = async ({
     };
 
     if (isLazyCompilationEnabled()) {
-      middlewares.push(
+      middlewares.use(
         rspack.lazyCompilationMiddleware(compiler) as RequestHandler,
       );
     }
   }
 
   if (server.base && server.base !== '/') {
-    middlewares.push(getBaseUrlMiddleware({ base: server.base }));
+    middlewares.use(getBaseUrlMiddleware({ base: server.base }));
   }
 
   const { default: launchEditorMiddleware } = await import(
@@ -155,21 +154,21 @@ const applyDefaultMiddlewares = async ({
     // @ts-ignore launch-editor-middleware has no types
     'launch-editor-middleware'
   );
-  middlewares.push(['/__open-in-editor', launchEditorMiddleware()]);
+  middlewares.use('/__open-in-editor', launchEditorMiddleware());
 
-  middlewares.push(
+  middlewares.use(
     viewingServedFilesMiddleware({
       environments: devServerAPI.environments,
     }),
   );
 
   if (buildManager) {
-    middlewares.push(buildManager.assetsMiddleware);
+    middlewares.use(buildManager.assetsMiddleware);
 
     // subscribe upgrade event to handle websocket
     upgradeEvents.push(buildManager.socketServer.upgrade);
 
-    middlewares.push(function hotUpdateJsonFallbackMiddleware(req, res, next) {
+    middlewares.use(function hotUpdateJsonFallbackMiddleware(req, res, next) {
       // [prevFullHash].hot-update.json will 404 (expected) when rsbuild restart and some file changed
       if (req.url?.endsWith('.hot-update.json') && req.method !== 'OPTIONS') {
         notFoundMiddleware(req, res, next);
@@ -180,7 +179,7 @@ const applyDefaultMiddlewares = async ({
   }
 
   if (buildManager) {
-    middlewares.push(
+    middlewares.use(
       getHtmlCompletionMiddleware({
         buildManager,
         distPath: context.distPath,
@@ -197,7 +196,7 @@ const applyDefaultMiddlewares = async ({
         etag: true,
         dev: true,
       });
-      middlewares.push(function publicDirMiddleware(req, res, next) {
+      middlewares.use(function publicDirMiddleware(req, res, next) {
         sirvMiddleware(req, res, next);
       });
     }
@@ -214,7 +213,7 @@ const applyDefaultMiddlewares = async ({
 
   // historyApiFallback takes precedence over the default htmlFallback.
   if (server.historyApiFallback) {
-    middlewares.push(
+    middlewares.use(
       historyApiFallbackMiddleware(
         server.historyApiFallback === true ? {} : server.historyApiFallback,
       ),
@@ -222,12 +221,12 @@ const applyDefaultMiddlewares = async ({
 
     // ensure fallback request can be handled by compilation middleware
     if (buildManager?.assetsMiddleware) {
-      middlewares.push(buildManager.assetsMiddleware);
+      middlewares.use(buildManager.assetsMiddleware);
     }
   }
 
   if (buildManager) {
-    middlewares.push(
+    middlewares.use(
       getHtmlFallbackMiddleware({
         buildManager,
         distPath: context.distPath,
@@ -236,7 +235,7 @@ const applyDefaultMiddlewares = async ({
     );
   }
 
-  middlewares.push(faviconFallbackMiddleware);
+  middlewares.use(faviconFallbackMiddleware);
 
   return {
     onUpgrade: (...args) => {
@@ -250,17 +249,16 @@ const applyDefaultMiddlewares = async ({
 export type GetDevMiddlewaresResult = {
   close: () => Promise<void>;
   onUpgrade: UpgradeEvent;
-  middlewares: Middlewares;
 };
 
 export const getDevMiddlewares = async (
   options: RsbuildDevMiddlewareOptions,
 ): Promise<GetDevMiddlewaresResult> => {
-  const middlewares: Middlewares = [];
-  const { buildManager } = options;
+  const { buildManager, devServerAPI } = options;
+  const { middlewares } = devServerAPI;
 
   if (isVerbose()) {
-    middlewares.push(getRequestLoggerMiddleware());
+    middlewares.use(getRequestLoggerMiddleware());
   }
 
   // Order: setupMiddlewares.unshift => internal middleware => setupMiddlewares.push
@@ -269,20 +267,23 @@ export const getDevMiddlewares = async (
     options.devServerAPI,
   );
 
-  middlewares.push(...before);
+  for (const middleware of before) {
+    middlewares.use(middleware);
+  }
 
   const { onUpgrade } = await applyDefaultMiddlewares({
     ...options,
     middlewares,
   });
 
-  middlewares.push(...after);
+  for (const middleware of after) {
+    middlewares.use(middleware);
+  }
 
   return {
     close: async () => {
       await buildManager?.close();
     },
     onUpgrade,
-    middlewares,
   };
 };

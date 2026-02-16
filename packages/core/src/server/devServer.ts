@@ -473,14 +473,6 @@ export async function createDevServer<
     postCallbacks,
   });
 
-  for (const item of devMiddlewares.middlewares) {
-    if (Array.isArray(item)) {
-      middlewares.use(...item);
-    } else {
-      middlewares.use(item);
-    }
-  }
-
   // start watching
   buildManager?.watch();
 
