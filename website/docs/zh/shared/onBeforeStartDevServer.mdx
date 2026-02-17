@@ -5,6 +5,8 @@
 - **类型：**
 
 ```ts
+type MaybePromise<T> = T | Promise<T>;
+
 type OnBeforeStartDevServerFn = (params: {
   /**
    * The dev server instance, the same as the return value of `createDevServer`.
@@ -14,7 +16,7 @@ type OnBeforeStartDevServerFn = (params: {
    * Context information for all environments.
    */
   environments: Record<string, EnvironmentContext>;
-}) => MaybePromise<(() => void) | void>;
+}) => MaybePromise<(() => MaybePromise<void>) | void>;
 
 function OnBeforeStartDevServer(callback: OnBeforeStartDevServerFn): void;
 ```

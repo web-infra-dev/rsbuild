@@ -94,7 +94,7 @@ export type OnBeforeStartDevServerFn = (params: {
    * Context information for all environments.
    */
   environments: Record<string, EnvironmentContext>;
-}) => MaybePromise<(() => void) | void>;
+}) => MaybePromise<(() => MaybePromise<void>) | void>;
 
 export type OnBeforeStartProdServerFn = () => MaybePromise<void>;
 
