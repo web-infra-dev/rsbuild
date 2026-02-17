@@ -3,23 +3,11 @@
 - **类型：**
 
 ```ts
-type ServerSetupContext =
-  | {
-      action: 'dev';
-      server: RsbuildDevServer;
-      environments: Record<string, EnvironmentContext>;
-    }
-  | {
-      action: 'preview';
-      server: {
-        middlewares: Connect.Server;
-      };
-      environments?: never;
-    };
+type MaybePromise<T> = T | Promise<T>;
 
 type ServerSetupFn = (
   context: ServerSetupContext,
-) => void | (() => void | Promise<void>) | Promise<void | (() => void)>;
+) => MaybePromise<(() => MaybePromise<void>) | void>;
 
 type ServerSetup = ServerSetupFn | ServerSetupFn[];
 ```
@@ -34,6 +22,22 @@ type ServerSetup = ServerSetupFn | ServerSetupFn[];
 ## 基本用法
 
 `server.setup` 会接收一个 `context` 对象：
+
+```ts
+type ServerSetupContext =
+  | {
+      action: 'dev';
+      server: RsbuildDevServer;
+      environments: Record<string, EnvironmentContext>;
+    }
+  | {
+      action: 'preview';
+      server: {
+        middlewares: Connect.Server;
+      };
+      environments?: never;
+    };
+```
 
 - `context.action`：`'dev'` 或 `'preview'`。
 - `context.server.middlewares`：connect app 实例，可通过 `middlewares.use(...)` 注册中间件。

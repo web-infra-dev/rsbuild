@@ -3,23 +3,11 @@
 - **Type:**
 
 ```ts
-type ServerSetupContext =
-  | {
-      action: 'dev';
-      server: RsbuildDevServer;
-      environments: Record<string, EnvironmentContext>;
-    }
-  | {
-      action: 'preview';
-      server: {
-        middlewares: Connect.Server;
-      };
-      environments?: never;
-    };
+type MaybePromise<T> = T | Promise<T>;
 
 type ServerSetupFn = (
   context: ServerSetupContext,
-) => void | (() => void | Promise<void>) | Promise<void | (() => void)>;
+) => MaybePromise<(() => MaybePromise<void>) | void>;
 
 type ServerSetup = ServerSetupFn | ServerSetupFn[];
 ```
@@ -34,6 +22,22 @@ Primarily used to register middleware, and can also run other startup tasks. Sim
 ## Basic usage
 
 `server.setup` receives a `context` object:
+
+```ts
+type ServerSetupContext =
+  | {
+      action: 'dev';
+      server: RsbuildDevServer;
+      environments: Record<string, EnvironmentContext>;
+    }
+  | {
+      action: 'preview';
+      server: {
+        middlewares: Connect.Server;
+      };
+      environments?: never;
+    };
+```
 
 - `context.action`: `'dev'` or `'preview'`.
 - `context.server.middlewares`: the connect app instance. Use `middlewares.use(...)` to register middleware.
