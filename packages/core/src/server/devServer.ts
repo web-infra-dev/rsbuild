@@ -247,6 +247,7 @@ export async function createDevServer<
 
   let fileWatcher: WatchFilesResult | undefined;
   let devMiddlewares: GetDevMiddlewaresResult | undefined;
+  let buildManager: BuildManager | undefined;
 
   const cleanupGracefulShutdown = middlewareMode
     ? null
@@ -457,7 +458,7 @@ export async function createDevServer<
     await beforeCreateCompiler();
   }
 
-  const buildManager = runCompile ? await startCompile() : undefined;
+  buildManager = runCompile ? await startCompile() : undefined;
 
   fileWatcher = await setupWatchFiles({
     config,
