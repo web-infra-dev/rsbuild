@@ -200,6 +200,7 @@ export async function startProdServer(
     server: {
       middlewares,
     },
+    environments: context.environments,
   });
 
   const serverConfig = config.server;

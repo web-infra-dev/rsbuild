@@ -35,7 +35,7 @@ type ServerSetupContext =
       server: {
         middlewares: Connect.Server;
       };
-      environments?: never;
+      environments: Record<string, EnvironmentContext>;
     };
 ```
 
