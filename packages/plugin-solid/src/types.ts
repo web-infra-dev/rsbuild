@@ -11,8 +11,13 @@ export type SolidPresetOptions = {
    */
   moduleName?: string;
   /**
-   * The output mode of the compiler. Can be "dom"(default), "ssr". "dom" is standard output. "ssr" is for server side rendering of strings.
-   * @default 'dom'
+   * The output mode of the compiler.
+   * Can be:
+   * - "dom" is standard output
+   * - "ssr" is for server side rendering of strings.
+   * - "universal" is for using custom renderers from solid-js/universal
+   *
+   * @default "dom"
    */
   generate?: 'ssr' | 'dom' | 'universal';
   /**
