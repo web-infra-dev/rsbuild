@@ -35,13 +35,13 @@ type ServerSetupContext =
       server: {
         middlewares: Connect.Server;
       };
-      environments?: never;
+      environments: Record<string, EnvironmentContext>;
     };
 ```
 
 - `context.action`：`'dev'` 或 `'preview'`。
 - `context.server.middlewares`：connect app 实例，可通过 `middlewares.use(...)` 注册中间件。
-- `context.environments`：仅在 `action === 'dev'` 时可用。
+- `context.environments`：所有环境的上下文信息。
 
 `server.setup` 主要用于注册中间件，也可以执行其他启动逻辑。
 它与 `onBeforeStartDevServer`、`onBeforeStartProdServer` 作用类似，但通过 `rsbuild.config.ts` 直接配置。

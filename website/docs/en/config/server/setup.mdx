@@ -35,13 +35,13 @@ type ServerSetupContext =
       server: {
         middlewares: Connect.Server;
       };
-      environments?: never;
+      environments: Record<string, EnvironmentContext>;
     };
 ```
 
 - `context.action`: `'dev'` or `'preview'`.
 - `context.server.middlewares`: the connect app instance. Use `middlewares.use(...)` to register middleware.
-- `context.environments`: only available when `action === 'dev'`.
+- `context.environments`: environment contexts of all environments.
 
 `server.setup` is mainly for registering middleware, and can also run other startup tasks.
 It is similar to `onBeforeStartDevServer` and `onBeforeStartProdServer`, but configured in `rsbuild.config.ts`.

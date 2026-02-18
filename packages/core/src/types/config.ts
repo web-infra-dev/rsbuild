@@ -577,7 +577,19 @@ export type NormalizedServerConfig = {
   'host' | 'publicDir'
 >;
 
-export type ServerSetupContext =
+export type RsbuildProdServer = {
+  /**
+   * The connect app instance used by Rsbuild server.
+   */
+  middlewares: Connect.Server;
+};
+
+export type ServerSetupContext = {
+  /**
+   * Environment contexts of all environments.
+   */
+  environments: Record<string, EnvironmentContext>;
+} & (
   | {
       /**
        * Action type of current server.
@@ -587,10 +599,6 @@ export type ServerSetupContext =
        * Dev server instance, only available in dev mode.
        */
       server: RsbuildDevServer;
-      /**
-       * Environment contexts of all environments, only available in dev mode.
-       */
-      environments: Record<string, EnvironmentContext>;
     }
   | {
       /**
@@ -598,19 +606,11 @@ export type ServerSetupContext =
        */
       action: 'preview';
       /**
-       * Preview server instance.
+       * Preview server instance, only available in preview mode.
        */
-      server: {
-        /**
-         * The connect app instance used by Rsbuild server.
-         */
-        middlewares: Connect.Server;
-      };
-      /**
-       * Not available in preview mode.
-       */
-      environments?: never;
-    };
+      server: RsbuildProdServer;
+    }
+);
 
 /**
  * Server setup function.
