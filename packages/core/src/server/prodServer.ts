@@ -48,7 +48,14 @@ type RsbuildProdServerOptions = {
   postSetupCallbacks?: (() => MaybePromise<void>)[];
 };
 
-export class RsbuildProdServer {
+export type RsbuildProdServer = {
+  /**
+   * The connect app instance used by Rsbuild server.
+   */
+  middlewares: Connect.Server;
+};
+
+export class ProdServer {
   private app!: Server | Http2SecureServer;
   private options: RsbuildProdServerOptions;
   public middlewares: Connect.Server;
@@ -204,7 +211,7 @@ export async function startProdServer(
   });
 
   const serverConfig = config.server;
-  const server = new RsbuildProdServer(
+  const server = new ProdServer(
     {
       pwd: context.rootPath,
       output: {
@@ -219,7 +226,12 @@ export async function startProdServer(
     middlewares,
   );
 
-  await context.hooks.onBeforeStartProdServer.callBatch();
+  await context.hooks.onBeforeStartProdServer.callBatch({
+    server: {
+      middlewares: server.middlewares,
+    },
+    environments: context.environments,
+  });
 
   const httpServer = await createHttpServer({
     serverConfig,

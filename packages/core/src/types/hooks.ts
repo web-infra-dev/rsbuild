@@ -1,6 +1,7 @@
 import type { rspack } from '@rspack/core';
 import type { ChainIdentifier, ManifestData } from '..';
 import type { RsbuildDevServer } from '../server/devServer';
+import type { RsbuildProdServer } from '../server/prodServer';
 import type { RspackChain } from '../types';
 import type {
   EnvironmentConfig,
@@ -96,7 +97,16 @@ export type OnBeforeStartDevServerFn = (params: {
   environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<(() => MaybePromise<void>) | void>;
 
-export type OnBeforeStartProdServerFn = () => MaybePromise<void>;
+export type OnBeforeStartProdServerFn = (params: {
+  /**
+   * The preview server instance.
+   */
+  server: RsbuildProdServer;
+  /**
+   * Context information for all environments.
+   */
+  environments: Record<string, EnvironmentContext>;
+}) => MaybePromise<void>;
 
 export type Routes = {
   entryName: string;

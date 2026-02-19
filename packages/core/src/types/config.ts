@@ -21,6 +21,7 @@ import type {
   Filter as ProxyFilter,
 } from '../../compiled/http-proxy-middleware';
 import type { RsbuildDevServer } from '../server/devServer';
+import type { RsbuildProdServer } from '../server/prodServer';
 import type {
   EnvironmentContext,
   ModifyBundlerChainUtils,
@@ -576,13 +577,6 @@ export type NormalizedServerConfig = {
   >,
   'host' | 'publicDir'
 >;
-
-export type RsbuildProdServer = {
-  /**
-   * The connect app instance used by Rsbuild server.
-   */
-  middlewares: Connect.Server;
-};
 
 export type ServerSetupContext = {
   /**

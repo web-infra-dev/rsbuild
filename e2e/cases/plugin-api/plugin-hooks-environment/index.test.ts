@@ -53,8 +53,11 @@ const createPlugin = () => {
         expect(time).toBeGreaterThan(0);
         names.push(`AfterEnvironmentCompile ${environment.name}`);
       });
-      api.onBeforeStartProdServer(() => {
-        names.push('BeforeStartProdServer');
+      api.onBeforeStartProdServer(({ server, environments }) => {
+        expect(typeof server.middlewares.use).toBe('function');
+        names.push(
+          `BeforeStartProdServer ${Object.keys(environments).sort().join(',')}`,
+        );
       });
       api.onCloseDevServer(() => {
         names.push('CloseDevServer');
@@ -127,6 +130,25 @@ test('should run plugin hooks correctly when running build with multiple environ
     'AfterEnvironmentCompile node',
     'AfterBuild',
   ]);
+});
+
+test('should expose server and environments in onBeforeStartProdServer', async ({
+  build,
+}) => {
+  const { plugin, names } = createPlugin();
+  const rsbuild = await build({
+    runServer: true,
+    config: {
+      plugins: [plugin],
+      environments: {
+        web: {},
+        node: {},
+      },
+    },
+  });
+
+  await rsbuild.close();
+  expect(names).toContain('BeforeStartProdServer node,web');
 });
 
 test('should run plugin hooks correctly when running startDevServer with multiple environments', async ({
