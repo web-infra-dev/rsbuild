@@ -32,9 +32,7 @@ type ServerSetupContext =
     }
   | {
       action: 'preview';
-      server: {
-        middlewares: Connect.Server;
-      };
+      server: RsbuildProdServer;
       environments: Record<string, EnvironmentContext>;
     };
 ```

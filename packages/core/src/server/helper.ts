@@ -9,6 +9,7 @@ import { getCommonParentPath } from '../helpers/path';
 import { addTrailingSlash, removeLeadingSlash } from '../helpers/url';
 import { logger } from '../logger';
 import type {
+  Connect,
   InternalContext,
   NormalizedConfig,
   OutputStructure,
@@ -543,3 +544,13 @@ export const HttpCode = {
   RangeNotSatisfiable: 416,
   InternalServerError: 500,
 } as const;
+
+/**
+ * The public server API shared by both the dev and preview servers.
+ */
+export type RsbuildServerBase = {
+  /**
+   * The connect app instance used by Rsbuild server.
+   */
+  middlewares: Connect.Server;
+};
