@@ -919,8 +919,10 @@ import OnBeforeStartProdServer from '@zh/shared/onBeforeStartProdServer.mdx';
 - **示例：**
 
 ```ts
-rsbuild.onBeforeStartProdServer(() => {
+rsbuild.onBeforeStartProdServer(({ server, environments }) => {
   console.log('before start!');
+  console.log('the server is ', server);
+  console.log('the environments contexts are: ', environments);
 });
 ```
 
