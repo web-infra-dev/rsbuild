@@ -1,14 +1,9 @@
-import type { Server } from 'node:http';
-import type { Http2SecureServer } from 'node:http2';
 import { getPathnameFromUrl } from '../helpers/path';
 import { isVerbose, logger } from '../logger';
 import type {
-  Connect,
   InternalContext,
-  MaybePromise,
   NormalizedConfig,
   PreviewOptions,
-  ServerConfig,
 } from '../types';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
 import {
@@ -39,149 +34,7 @@ import { open } from './open';
 import { createProxyMiddleware } from './proxy';
 import { applyServerSetup } from './serverSetup';
 
-type ProdServerOptions = {
-  distPath: string;
-  assetPrefixes: string[];
-  serverConfig: ServerConfig;
-  postSetupCallbacks?: (() => MaybePromise<void>)[];
-};
-
 export type RsbuildProdServer = RsbuildServerBase;
-
-export class ProdServer {
-  private app!: Server | Http2SecureServer;
-  private options: ProdServerOptions;
-  public middlewares: Connect.Server;
-
-  constructor(options: ProdServerOptions, middlewares: Connect.Server) {
-    this.options = options;
-    this.middlewares = middlewares;
-  }
-
-  // Complete the preparation of services
-  public async onInit(app: Server | Http2SecureServer): Promise<void> {
-    this.app = app;
-
-    await this.applyDefaultMiddlewares();
-  }
-
-  private async applyDefaultMiddlewares() {
-    const { headers, proxy, historyApiFallback, compress, base, cors } =
-      this.options.serverConfig;
-
-    if (isVerbose()) {
-      this.middlewares.use(getRequestLoggerMiddleware());
-    }
-
-    if (cors) {
-      const { default: corsMiddleware } = await import(
-        /* webpackChunkName: "cors" */ 'cors'
-      );
-      this.middlewares.use(
-        corsMiddleware(typeof cors === 'boolean' ? {} : cors),
-      );
-    }
-
-    // apply `server.headers` option
-    // `server.headers` can override `server.cors`
-    if (headers) {
-      this.middlewares.use((_req, res, next) => {
-        for (const [key, value] of Object.entries(headers)) {
-          res.setHeader(key, value);
-        }
-        next();
-      });
-    }
-
-    // Apply proxy middleware
-    // each proxy configuration creates its own middleware instance
-    if (proxy) {
-      const { middlewares, upgrade } = await createProxyMiddleware(proxy);
-
-      for (const middleware of middlewares) {
-        this.middlewares.use(middleware);
-      }
-
-      this.app.on('upgrade', upgrade);
-    }
-
-    // compression is placed after proxy middleware to avoid breaking SSE (Server-Sent Events),
-    // but before other middlewares to ensure responses are properly compressed
-    if (compress) {
-      const { constants } = await import('node:zlib');
-      this.middlewares.use(
-        gzipMiddleware({
-          // simulates the common gzip compression rates
-          level: constants.Z_DEFAULT_COMPRESSION,
-          ...(typeof compress === 'object' ? compress : undefined),
-        }),
-      );
-    }
-
-    if (base && base !== '/') {
-      this.middlewares.use(getBaseUrlMiddleware({ base }));
-    }
-
-    await this.applyStaticAssetMiddleware();
-
-    if (historyApiFallback) {
-      this.middlewares.use(
-        historyApiFallbackMiddleware(
-          historyApiFallback === true ? {} : historyApiFallback,
-        ),
-      );
-
-      // ensure fallback request can be handled by sirv
-      await this.applyStaticAssetMiddleware();
-    }
-
-    for (const callback of this.options.postSetupCallbacks || []) {
-      await callback();
-    }
-
-    this.middlewares.use(faviconFallbackMiddleware);
-    this.middlewares.use(optionsFallbackMiddleware);
-    this.middlewares.use(notFoundMiddleware);
-  }
-
-  private async applyStaticAssetMiddleware() {
-    const {
-      distPath,
-      assetPrefixes,
-      serverConfig: { htmlFallback },
-    } = this.options;
-
-    const { default: sirv } = await import(
-      /* webpackChunkName: "sirv" */ 'sirv'
-    );
-
-    const assetsMiddleware = sirv(distPath, {
-      etag: true,
-      dev: true,
-      ignores: ['favicon.ico'],
-      single: htmlFallback === 'index',
-    });
-
-    this.middlewares.use(function staticAssetMiddleware(req, res, next) {
-      const url = req.url;
-      const assetPrefix =
-        url && assetPrefixes.find((prefix) => url.startsWith(prefix));
-
-      // handling assetPrefix
-      if (assetPrefix && url?.startsWith(assetPrefix)) {
-        req.url = url.slice(assetPrefix.length);
-        assetsMiddleware(req, res, (...args: unknown[]) => {
-          req.url = url;
-          next(...args);
-        });
-      } else {
-        assetsMiddleware(req, res, next);
-      }
-    });
-  }
-
-  public async close(): Promise<void> {}
-}
 
 export async function startProdServer(
   context: InternalContext,
@@ -202,23 +55,16 @@ export async function startProdServer(
     middlewares,
   };
 
-  const postSetupCallbacks = await applyServerSetup(config.server.setup, {
+  const serverConfig = config.server;
+
+  const postSetupCallbacks = await applyServerSetup(serverConfig.setup, {
     action: 'preview',
     server: prodServer,
     environments: context.environments,
   });
 
-  const serverConfig = config.server;
-  const server = new ProdServer(
-    {
-      distPath: context.distPath,
-      assetPrefixes: context.environmentList.map((e) =>
-        getPathnameFromUrl(e.config.output.assetPrefix),
-      ),
-      serverConfig,
-      postSetupCallbacks,
-    },
-    middlewares,
+  const assetPrefixes = context.environmentList.map((e) =>
+    getPathnameFromUrl(e.config.output.assetPrefix),
   );
 
   await context.hooks.onBeforeStartProdServer.callBatch({
@@ -228,11 +74,119 @@ export async function startProdServer(
 
   const httpServer = await createHttpServer({
     serverConfig,
-    middlewares: server.middlewares,
+    middlewares,
   });
   const serverTerminator = getServerTerminator(httpServer);
 
-  await server.onInit(httpServer);
+  const applyStaticAssetMiddleware = async () => {
+    const { default: sirv } = await import(
+      /* webpackChunkName: "sirv" */ 'sirv'
+    );
+
+    const assetsMiddleware = sirv(context.distPath, {
+      etag: true,
+      dev: true,
+      ignores: ['favicon.ico'],
+      single: serverConfig.htmlFallback === 'index',
+    });
+
+    middlewares.use(function staticAssetMiddleware(req, res, next) {
+      const url = req.url;
+      const assetPrefix =
+        url && assetPrefixes.find((prefix) => url.startsWith(prefix));
+
+      // handling assetPrefix
+      if (assetPrefix && url?.startsWith(assetPrefix)) {
+        req.url = url.slice(assetPrefix.length);
+        assetsMiddleware(req, res, (...args: unknown[]) => {
+          req.url = url;
+          next(...args);
+        });
+      } else {
+        assetsMiddleware(req, res, next);
+      }
+    });
+  };
+
+  const applyDefaultMiddlewares = async () => {
+    const { headers, proxy, historyApiFallback, compress, base, cors } =
+      serverConfig;
+
+    if (isVerbose()) {
+      middlewares.use(getRequestLoggerMiddleware());
+    }
+
+    if (cors) {
+      const { default: corsMiddleware } = await import(
+        /* webpackChunkName: "cors" */ 'cors'
+      );
+      middlewares.use(corsMiddleware(typeof cors === 'boolean' ? {} : cors));
+    }
+
+    // apply `server.headers` option
+    // `server.headers` can override `server.cors`
+    if (headers) {
+      middlewares.use((_req, res, next) => {
+        for (const [key, value] of Object.entries(headers)) {
+          res.setHeader(key, value);
+        }
+        next();
+      });
+    }
+
+    // Apply proxy middleware
+    // each proxy configuration creates its own middleware instance
+    if (proxy) {
+      const { middlewares: proxyMiddlewares, upgrade } =
+        await createProxyMiddleware(proxy);
+
+      for (const middleware of proxyMiddlewares) {
+        middlewares.use(middleware);
+      }
+
+      httpServer.on('upgrade', upgrade);
+    }
+
+    // compression is placed after proxy middleware to avoid breaking SSE (Server-Sent Events),
+    // but before other middlewares to ensure responses are properly compressed
+    if (compress) {
+      const { constants } = await import('node:zlib');
+      middlewares.use(
+        gzipMiddleware({
+          // simulates the common gzip compression rates
+          level: constants.Z_DEFAULT_COMPRESSION,
+          ...(typeof compress === 'object' ? compress : undefined),
+        }),
+      );
+    }
+
+    if (base && base !== '/') {
+      middlewares.use(getBaseUrlMiddleware({ base }));
+    }
+
+    await applyStaticAssetMiddleware();
+
+    if (historyApiFallback) {
+      middlewares.use(
+        historyApiFallbackMiddleware(
+          historyApiFallback === true ? {} : historyApiFallback,
+        ),
+      );
+
+      // ensure fallback request can be handled by sirv
+      await applyStaticAssetMiddleware();
+    }
+
+    for (const callback of postSetupCallbacks) {
+      await callback();
+    }
+
+    middlewares.use(faviconFallbackMiddleware);
+    middlewares.use(optionsFallbackMiddleware);
+    middlewares.use(notFoundMiddleware);
+  };
+
+  await applyDefaultMiddlewares();
 
   return new Promise<StartServerResult>((resolve) => {
     httpServer.listen(
@@ -262,7 +216,7 @@ export async function startProdServer(
               // ensure closeServer is only called once
               removeCleanup(closeServer);
               cleanupGracefulShutdown();
-              await Promise.all([server.close(), serverTerminator()]);
+              await serverTerminator();
             })();
           }
           return closingPromise;
