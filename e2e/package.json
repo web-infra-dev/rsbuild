@@ -43,7 +43,7 @@
     "@rsbuild/plugin-vue-jsx": "^1.1.2",
     "@rsdoctor/rspack-plugin": "1.5.2",
     "@scripts/test-helper": "workspace:*",
-    "@tailwindcss/postcss": "^4.1.18",
+    "@tailwindcss/postcss": "^4.2.0",
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.23",
     "@types/node": "^24.10.13",
@@ -55,7 +55,7 @@
     "fs-extra": "^11.3.3",
     "playwright": "1.58.2",
     "polka": "^0.5.2",
-    "tailwindcss": "^4.1.18",
+    "tailwindcss": "^4.2.0",
     "typescript": "^5.9.3"
   }
 }
