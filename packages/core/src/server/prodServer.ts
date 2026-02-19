@@ -23,6 +23,7 @@ import {
   getServerConfig,
   getServerTerminator,
   printServerURLs,
+  type RsbuildServerBase,
   type StartServerResult,
 } from './helper';
 import { historyApiFallbackMiddleware } from './historyApiFallback';
@@ -38,29 +39,21 @@ import { open } from './open';
 import { createProxyMiddleware } from './proxy';
 import { applyServerSetup } from './serverSetup';
 
-type RsbuildProdServerOptions = {
-  pwd: string;
-  output: {
-    path: string;
-    assetPrefixes: string[];
-  };
+type ProdServerOptions = {
+  distPath: string;
+  assetPrefixes: string[];
   serverConfig: ServerConfig;
   postSetupCallbacks?: (() => MaybePromise<void>)[];
 };
 
-export type RsbuildProdServer = {
-  /**
-   * The connect app instance used by Rsbuild server.
-   */
-  middlewares: Connect.Server;
-};
+export type RsbuildProdServer = RsbuildServerBase;
 
 export class ProdServer {
   private app!: Server | Http2SecureServer;
-  private options: RsbuildProdServerOptions;
+  private options: ProdServerOptions;
   public middlewares: Connect.Server;
 
-  constructor(options: RsbuildProdServerOptions, middlewares: Connect.Server) {
+  constructor(options: ProdServerOptions, middlewares: Connect.Server) {
     this.options = options;
     this.middlewares = middlewares;
   }
@@ -153,7 +146,8 @@ export class ProdServer {
 
   private async applyStaticAssetMiddleware() {
     const {
-      output: { path, assetPrefixes },
+      distPath,
+      assetPrefixes,
       serverConfig: { htmlFallback },
     } = this.options;
 
@@ -161,7 +155,7 @@ export class ProdServer {
       /* webpackChunkName: "sirv" */ 'sirv'
     );
 
-    const assetsMiddleware = sirv(path, {
+    const assetsMiddleware = sirv(distPath, {
       etag: true,
       dev: true,
       ignores: ['favicon.ico'],
@@ -213,13 +207,10 @@ export async function startProdServer(
   const serverConfig = config.server;
   const server = new ProdServer(
     {
-      pwd: context.rootPath,
-      output: {
-        path: context.distPath,
-        assetPrefixes: context.environmentList.map((e) =>
-          getPathnameFromUrl(e.config.output.assetPrefix),
-        ),
-      },
+      distPath: context.distPath,
+      assetPrefixes: context.environmentList.map((e) =>
+        getPathnameFromUrl(e.config.output.assetPrefix),
+      ),
       serverConfig,
       postSetupCallbacks,
     },
