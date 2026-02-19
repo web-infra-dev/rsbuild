@@ -9,7 +9,6 @@ import { getPathnameFromUrl } from '../helpers/path';
 import { logger } from '../logger';
 import { onBeforeRestartServer, restartDevServer } from '../restart';
 import type {
-  Connect,
   CreateCompiler,
   CreateDevServerOptions,
   EnvironmentAPI,
@@ -39,6 +38,7 @@ import {
   getServerConfig,
   getServerTerminator,
   printServerURLs,
+  type RsbuildServerBase,
   type StartServerResult,
   stripBase,
 } from './helper';
@@ -59,7 +59,7 @@ export type SockWrite = <T extends ServerMessage['type']>(
   data?: ExtractSocketMessageData<T>,
 ) => void;
 
-export type RsbuildDevServer = {
+export type RsbuildDevServer = RsbuildServerBase & {
   /**
    * Notifies Rsbuild that the custom server has successfully started.
    * Rsbuild will trigger the `onAfterStartDevServer` hook at this stage.
@@ -99,20 +99,9 @@ export type RsbuildDevServer = {
     };
   }>;
   /**
-   * The `connect` app instance.
-   * Can be used to attach custom middlewares to the dev server.
-   */
-  middlewares: Connect.Server;
-  /**
    * Open URL in the browser after starting the server.
    */
   open: () => Promise<void>;
-  /**
-   * The resolved port.
-   * By default, Rsbuild server listens on port `3000` and automatically increments
-   * the port number if the port is occupied.
-   */
-  port: number;
   /**
    * Print the server URLs.
    */
@@ -360,7 +349,7 @@ export async function createDevServer<
       data,
     } as ServerMessage);
 
-  const devServerAPI: RsbuildDevServer = {
+  const devServer: RsbuildDevServer = {
     port,
     middlewares,
     environments: environmentAPI,
@@ -404,15 +393,15 @@ export async function createDevServer<
 
             logger.debug('listen dev server done');
 
-            await devServerAPI.afterListen();
+            await devServer.afterListen();
 
-            onBeforeRestartServer(devServerAPI.close);
+            onBeforeRestartServer(devServer.close);
 
             resolve({
               port,
               urls: urls.map((item) => item.url),
               server: {
-                close: devServerAPI.close,
+                close: devServer.close,
               },
             });
           },
@@ -438,13 +427,13 @@ export async function createDevServer<
 
   const setupPostCallbacks = await applyServerSetup(config.server.setup, {
     action: 'dev',
-    server: devServerAPI,
+    server: devServer,
     environments: context.environments,
   });
 
   const hookPostCallbacks = (
     await context.hooks.onBeforeStartDevServer.callBatch({
-      server: devServerAPI,
+      server: devServer,
       environments: context.environments,
     })
   ).filter((item) => typeof item === 'function');
@@ -469,7 +458,7 @@ export async function createDevServer<
   devMiddlewares = await getDevMiddlewares({
     buildManager,
     config,
-    devServerAPI,
+    devServer,
     context,
     postCallbacks,
   });
@@ -479,5 +468,5 @@ export async function createDevServer<
 
   logger.debug('create dev server done');
 
-  return devServerAPI;
+  return devServer;
 }
