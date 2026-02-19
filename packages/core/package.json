@@ -74,7 +74,7 @@
     "html-rspack-plugin": "6.1.7",
     "http-proxy-middleware": "^3.0.5",
     "jiti": "^2.6.1",
-    "launch-editor-middleware": "^2.12.0",
+    "launch-editor-middleware": "^2.13.0",
     "memfs": "^4.56.10",
     "mrmime": "^2.0.1",
     "on-finished": "2.4.1",
