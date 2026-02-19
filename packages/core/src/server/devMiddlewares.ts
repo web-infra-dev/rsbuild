@@ -29,7 +29,7 @@ export type RsbuildDevMiddlewareOptions = {
   config: NormalizedConfig;
   context: InternalContext;
   buildManager?: BuildManager;
-  devServerAPI: RsbuildDevServer;
+  devServer: RsbuildDevServer;
   /**
    * Callbacks returned by `onBeforeStartDevServer` hook and `server.setup` config
    */
@@ -38,12 +38,12 @@ export type RsbuildDevMiddlewareOptions = {
 
 const applySetupMiddlewares = (
   config: NormalizedConfig,
-  devServerAPI: RsbuildDevServer,
+  devServer: RsbuildDevServer,
 ) => {
   const setupMiddlewares = config.dev.setupMiddlewares
     ? castArray(config.dev.setupMiddlewares)
     : [];
-  const serverOptions: SetupMiddlewaresContext = pick(devServerAPI, [
+  const serverOptions: SetupMiddlewaresContext = pick(devServer, [
     'sockWrite',
     'environments',
   ]);
@@ -68,7 +68,7 @@ const applyDefaultMiddlewares = async ({
   config,
   buildManager,
   context,
-  devServerAPI,
+  devServer,
   middlewares,
   postCallbacks,
 }: RsbuildDevMiddlewareOptions & {
@@ -158,7 +158,7 @@ const applyDefaultMiddlewares = async ({
 
   middlewares.use(
     viewingServedFilesMiddleware({
-      environments: devServerAPI.environments,
+      environments: devServer.environments,
     }),
   );
 
@@ -254,8 +254,8 @@ export type GetDevMiddlewaresResult = {
 export const getDevMiddlewares = async (
   options: RsbuildDevMiddlewareOptions,
 ): Promise<GetDevMiddlewaresResult> => {
-  const { buildManager, devServerAPI } = options;
-  const { middlewares } = devServerAPI;
+  const { buildManager, devServer } = options;
+  const { middlewares } = devServer;
 
   if (isVerbose()) {
     middlewares.use(getRequestLoggerMiddleware());
@@ -264,7 +264,7 @@ export const getDevMiddlewares = async (
   // Order: setupMiddlewares.unshift => internal middleware => setupMiddlewares.push
   const { before, after } = applySetupMiddlewares(
     options.config,
-    options.devServerAPI,
+    options.devServer,
   );
 
   for (const middleware of before) {

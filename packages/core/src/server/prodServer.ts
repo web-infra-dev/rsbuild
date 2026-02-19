@@ -196,11 +196,15 @@ export async function startProdServer(
     /* webpackChunkName: "connect" */ 'connect'
   );
   const middlewares = connect();
+
+  const prodServer = {
+    port,
+    middlewares,
+  };
+
   const postSetupCallbacks = await applyServerSetup(config.server.setup, {
     action: 'preview',
-    server: {
-      middlewares,
-    },
+    server: prodServer,
     environments: context.environments,
   });
 
@@ -218,9 +222,7 @@ export async function startProdServer(
   );
 
   await context.hooks.onBeforeStartProdServer.callBatch({
-    server: {
-      middlewares: server.middlewares,
-    },
+    server: prodServer,
     environments: context.environments,
   });
 

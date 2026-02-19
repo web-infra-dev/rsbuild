@@ -550,7 +550,14 @@ export const HttpCode = {
  */
 export type RsbuildServerBase = {
   /**
-   * The connect app instance used by Rsbuild server.
+   * The `connect` app instance.
+   * Can be used to attach custom middlewares to the server.
    */
   middlewares: Connect.Server;
+  /**
+   * The resolved port.
+   * By default, Rsbuild server listens on port `3000` and automatically increments
+   * the port number if the port is occupied.
+   */
+  port: number;
 };
