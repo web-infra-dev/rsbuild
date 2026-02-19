@@ -938,8 +938,10 @@ import OnBeforeStartProdServer from '@en/shared/onBeforeStartProdServer.mdx';
 ```ts
 const myPlugin = () => ({
   setup(api) {
-    api.onBeforeStartProdServer(() => {
+    api.onBeforeStartProdServer(({ server, environments }) => {
       console.log('before start!');
+      console.log('the server is ', server);
+      console.log('the environments contexts are: ', environments);
     });
   },
 });

@@ -1,7 +1,22 @@
 在启动生产预览服务器前调用。
 
+可以通过 `server` 参数访问生产服务器并注册自定义的中间件。
+
 - **类型：**
 
 ```ts
-function OnBeforeStartProdServer(callback: () => Promise<void> | void): void;
+type MaybePromise<T> = T | Promise<T>;
+
+type OnBeforeStartProdServerFn = (params: {
+  /**
+   * 生产预览服务器实例
+   */
+  server: RsbuildProdServer;
+  /**
+   * 所有 environments 的上下文信息
+   */
+  environments: Record<string, EnvironmentContext>;
+}) => MaybePromise<void>;
+
+function OnBeforeStartProdServer(callback: OnBeforeStartProdServerFn): void;
 ```

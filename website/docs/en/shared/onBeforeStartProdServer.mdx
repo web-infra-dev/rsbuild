@@ -1,7 +1,22 @@
 Called before starting the production preview server.
 
+Use the `server` parameter to access the production server and register custom middlewares.
+
 - **Type:**
 
 ```ts
-function OnBeforeStartProdServer(callback: () => Promise<void> | void): void;
+type MaybePromise<T> = T | Promise<T>;
+
+type OnBeforeStartProdServerFn = (params: {
+  /**
+   * The preview server instance.
+   */
+  server: RsbuildProdServer;
+  /**
+   * Context information for all environments.
+   */
+  environments: Record<string, EnvironmentContext>;
+}) => MaybePromise<void>;
+
+function OnBeforeStartProdServer(callback: OnBeforeStartProdServerFn): void;
 ```
