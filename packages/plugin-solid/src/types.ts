@@ -11,10 +11,15 @@ export type SolidPresetOptions = {
    */
   moduleName?: string;
   /**
-   * The output mode of the compiler. Can be "dom"(default), "ssr". "dom" is standard output. "ssr" is for server side rendering of strings.
-   * @default 'dom'
+   * The output mode of the compiler.
+   * Can be:
+   * - "dom" is standard output
+   * - "ssr" is for server side rendering of strings.
+   * - "universal" is for using custom renderers from solid-js/universal
+   *
+   * @default "dom"
    */
-  generate?: 'dom' | 'ssr';
+  generate?: 'ssr' | 'dom' | 'universal';
   /**
    * Indicate whether the output should contain hydratable markers.
    * @default false
@@ -61,8 +66,24 @@ export type SolidPresetOptions = {
    */
   validate?: boolean;
   /**
-   * Removes unnecessary closing tags from the template output.
-   * @default true
+   * Remove unnecessary closing tags from template strings. More info here:
+   * https://github.com/solidjs/solid/blob/main/CHANGELOG.md#smaller-templates
+   *
+   * @default false
    */
   omitNestedClosingTags?: boolean;
+  /**
+   * Remove the last closing tag from template strings. Enabled by default even when `omitNestedClosingTags` is disabled.
+   * Can be disabled for compatibility for some browser-like environments.
+   *
+   * @default true
+   */
+  omitLastClosingTag?: boolean;
+  /**
+   * Remove unnecessary quotes from template strings.
+   * Can be disabled for compatibility for some browser-like environments.
+   *
+   * @default true
+   */
+  omitQuotes?: boolean;
 };
