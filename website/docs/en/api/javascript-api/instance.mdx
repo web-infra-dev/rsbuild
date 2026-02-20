@@ -297,13 +297,7 @@ type StartServerResult = {
    * The actual port used by the server.
    */
   port: number;
-  server: {
-    /**
-     * Close the server.
-     * In development mode, this will call the `onCloseDevServer` hook.
-     */
-    close: () => Promise<void>;
-  };
+  server: RsbuildDevServer;
 };
 
 function StartDevServer(
@@ -342,7 +336,7 @@ Once the dev server starts successfully, these logs appear:
 
 - `urls`: URLs to access dev server.
 - `port`: The actual listening port number.
-- `server`: Server instance object.
+- `server`: Server instance, see [Dev server API](/api/javascript-api/dev-server-api) for more details.
 
 ```ts
 const { urls, port } = await rsbuild.startDevServer();
@@ -352,7 +346,7 @@ console.log(port); // 3000
 
 ### Close server
 
-Call the `close()` method to close the dev server, trigger the [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) hook, and perform cleanup operations.
+Call the `server.close()` method to close the dev server, trigger the [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) hook, and perform cleanup operations.
 
 ```ts
 const { server } = await rsbuild.startDevServer();

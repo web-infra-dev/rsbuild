@@ -91,13 +91,7 @@ export type RsbuildDevServer = RsbuildServerBase & {
    * Start listening on the Rsbuild dev server.
    * Do not call this method if you are using a custom server.
    */
-  listen: () => Promise<{
-    port: number;
-    urls: string[];
-    server: {
-      close: () => Promise<void>;
-    };
-  }>;
+  listen: () => Promise<StartServerResult<RsbuildDevServer>>;
   /**
    * Open URL in the browser after starting the server.
    */
@@ -366,7 +360,7 @@ export async function createDevServer<
 
       context.hooks.onCloseDevServer.tap(serverTerminator);
 
-      return new Promise<StartServerResult>((resolve) => {
+      return new Promise<StartServerResult<RsbuildDevServer>>((resolve) => {
         httpServer.listen(
           {
             host,
@@ -398,9 +392,7 @@ export async function createDevServer<
             resolve({
               port,
               urls: urls.map((item) => item.url),
-              server: {
-                close: devServer.close,
-              },
+              server: devServer,
             });
           },
         );
