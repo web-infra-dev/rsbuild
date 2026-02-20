@@ -35,10 +35,10 @@ import {
 import {
   getAddressUrls,
   getRoutes,
-  getServerConfig,
   getServerTerminator,
   printServerURLs,
   type RsbuildServerBase,
+  resolvePort,
   type StartServerResult,
   stripBase,
 } from './helper';
@@ -126,18 +126,16 @@ export async function createDevServer<
 ): Promise<RsbuildDevServer> {
   logger.debug('create dev server');
 
-  const { port, host, https, portTip } = await getServerConfig({
-    config,
-  });
-  const { middlewareMode } = config.server;
+  const { port, portTip } = await resolvePort(config);
+  const { middlewareMode, host } = config.server;
+  const isHttps = Boolean(config.server.https);
   const { context } = options;
   const routes = getRoutes(context);
-  const root = context.rootPath;
 
   context.devServer = {
     hostname: host,
     port,
-    https,
+    https: isHttps,
   };
 
   let lastStats: Rspack.Stats[];
@@ -208,7 +206,7 @@ export async function createDevServer<
     return buildManager;
   };
 
-  const protocol = https ? 'https' : 'http';
+  const protocol = isHttps ? 'https' : 'http';
   const urls = await getAddressUrls({ protocol, port, host });
 
   const cliShortcutsEnabled = isCliShortcutsEnabled(config);
@@ -226,10 +224,10 @@ export async function createDevServer<
 
   const openPage = async () => {
     return open({
-      https,
       port,
       routes,
       config,
+      protocol,
       clearCache: true,
     });
   };
@@ -452,7 +450,7 @@ export async function createDevServer<
   fileWatcher = await setupWatchFiles({
     config,
     buildManager,
-    root,
+    root: context.rootPath,
   });
 
   devMiddlewares = await getDevMiddlewares({
