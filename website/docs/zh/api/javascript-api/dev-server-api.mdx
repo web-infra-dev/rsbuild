@@ -79,7 +79,8 @@ type RsbuildDevServer = {
    */
   afterListen: () => Promise<void>;
   /**
-   * 关闭 Rsbuild server
+   * 关闭 server
+   * 这会触发 `onCloseDevServer` 钩子
    */
   close: () => Promise<void>;
   /**

@@ -79,7 +79,8 @@ type RsbuildDevServer = {
    */
   afterListen: () => Promise<void>;
   /**
-   * Close the Rsbuild server.
+   * Close the server.
+   * This will call the `onCloseDevServer` hook.
    */
   close: () => Promise<void>;
   /**
