@@ -184,7 +184,7 @@ export async function startProdServer(
   return new Promise<StartServerResult>((resolve) => {
     httpServer.listen(
       {
-        host: serverConfig,
+        host,
         port,
       },
       async () => {
