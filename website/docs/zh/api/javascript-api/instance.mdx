@@ -320,13 +320,7 @@ type StartServerResult = {
    * 服务器实际使用的端口号
    */
   port: number;
-  server: {
-    /**
-     * 关闭服务器
-     * 在开发模式下，此方法会调用 `onCloseDevServer` 钩子
-     */
-    close: () => Promise<void>;
-  };
+  server: RsbuildDevServer;
 };
 
 function StartDevServer(
@@ -365,7 +359,7 @@ try {
 
 - `urls`：访问 dev server 的 URLs
 - `port` 实际监听的端口号
-- `server`：Server 实例对象
+- `server`：Server 实例对象，详见 [Dev server API](/api/javascript-api/dev-server-api)
 
 ```ts
 const { urls, port } = await rsbuild.startDevServer();
@@ -375,7 +369,7 @@ console.log(port); // 3000
 
 ### 关闭 server
 
-调用 `close()` 方法会关闭开发服务器，触发 [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) 钩子，并执行必要的清理操作。
+调用 `server.close()` 方法会关闭开发服务器，触发 [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) 钩子，并执行必要的清理操作。
 
 ```ts
 const { server } = await rsbuild.startDevServer();

@@ -28,7 +28,15 @@ export type UpgradeEvent = (
   head: any,
 ) => void;
 
-export type StartServerResult = {
+export type StartServerResult<
+  T = {
+    /**
+     * Close the server.
+     * In development mode, this will call the `onCloseDevServer` hook.
+     */
+    close: () => Promise<void>;
+  },
+> = {
   /**
    * The URLs that server is listening on.
    */
@@ -37,13 +45,7 @@ export type StartServerResult = {
    * The actual port used by the server.
    */
   port: number;
-  server: {
-    /**
-     * Close the server.
-     * In development mode, this will call the `onCloseDevServer` hook.
-     */
-    close: () => Promise<void>;
-  };
+  server: T;
 };
 
 // remove repeat '/'

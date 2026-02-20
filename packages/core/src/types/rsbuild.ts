@@ -166,7 +166,7 @@ export type CreateDevServer = (
 
 export type StartDevServer = (
   options?: StartDevServerOptions,
-) => Promise<StartServerResult>;
+) => Promise<StartServerResult<RsbuildDevServer>>;
 
 export type InspectConfig = (
   options?: InspectConfigOptions,

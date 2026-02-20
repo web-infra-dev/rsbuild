@@ -109,9 +109,7 @@ type RsbuildDevServer = {
   listen: () => Promise<{
     port: number;
     urls: string[];
-    server: {
-      close: () => Promise<void>;
-    };
+    server: RsbuildDevServer;
   }>;
   /**
    * The `connect` app instance.
