@@ -251,8 +251,8 @@ importers:
   e2e/cases/plugin-svelte:
     dependencies:
       svelte:
-        specifier: ^5.51.2
-        version: 5.51.2
+        specifier: ^5.53.0
+        version: 5.53.0
     devDependencies:
       less:
         specifier: 4.3.0
@@ -464,8 +464,8 @@ importers:
   examples/svelte:
     dependencies:
       svelte:
-        specifier: ^5.51.2
-        version: 5.51.2
+        specifier: ^5.53.0
+        version: 5.53.0
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -935,10 +935,10 @@ importers:
     dependencies:
       svelte-loader:
         specifier: 3.2.4
-        version: 3.2.4(svelte@5.51.2)
+        version: 3.2.4(svelte@5.53.0)
       svelte-preprocess:
         specifier: ^6.0.3
-        version: 6.0.3(@babel/core@7.29.0)(less@4.3.0)(postcss-load-config@6.0.1(jiti@2.6.1)(postcss@8.5.6)(yaml@2.8.2))(postcss@8.5.6)(sass@1.97.3)(stylus@0.64.0)(svelte@5.51.2)(typescript@5.9.3)
+        version: 6.0.3(@babel/core@7.29.0)(less@4.3.0)(postcss-load-config@6.0.1(jiti@2.6.1)(postcss@8.5.6)(yaml@2.8.2))(postcss@8.5.6)(sass@1.97.3)(stylus@0.64.0)(svelte@5.53.0)(typescript@5.9.3)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -956,8 +956,8 @@ importers:
         specifier: ^24.10.13
         version: 24.10.13
       svelte:
-        specifier: ^5.51.2
-        version: 5.51.2
+        specifier: ^5.53.0
+        version: 5.53.0
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -3738,8 +3738,8 @@ packages:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
     engines: {node: '>=8'}
 
-  devalue@5.6.2:
-    resolution: {integrity: sha512-nPRkjWzzDQlsejL1WVifk5rvcFi/y1onBRxjaFMjZeR9mFpqu2gmAZ9xUB9/IEanEP/vBtGeGganC/GO1fmufg==}
+  devalue@5.6.3:
+    resolution: {integrity: sha512-nc7XjUU/2Lb+SvEFVGcWLiKkzfw8+qHI7zn8WYXKkLMgfGSHbgCEaR6bJpev8Cm6Rmrb19Gfd/tZvGqx9is3wg==}
 
   devlop@1.1.0:
     resolution: {integrity: sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==}
@@ -6059,8 +6059,8 @@ packages:
       typescript:
         optional: true
 
-  svelte@5.51.2:
-    resolution: {integrity: sha512-AqApqNOxVS97V4Ko9UHTHeSuDJrwauJhZpLDs1gYD8Jk48ntCSWD7NxKje+fnGn5Ja1O3u2FzQZHPdifQjXe3w==}
+  svelte@5.53.0:
+    resolution: {integrity: sha512-7dhHkSamGS2vtoBmIW2hRab+gl5Z60alEHZB4910ePqqJNxAWnDAxsofVmlZ2tREmWyHNE+A1nCKwICAquoD2A==}
     engines: {node: '>=18'}
 
   svg-parser@2.0.4:
@@ -9270,7 +9270,7 @@ snapshots:
 
   detect-libc@2.1.2: {}
 
-  devalue@5.6.2: {}
+  devalue@5.6.3: {}
 
   devlop@1.1.0:
     dependencies:
@@ -11875,20 +11875,20 @@ snapshots:
 
   svelte-dev-helper@1.1.9: {}
 
-  svelte-hmr@0.14.12(svelte@5.51.2):
+  svelte-hmr@0.14.12(svelte@5.53.0):
     dependencies:
-      svelte: 5.51.2
+      svelte: 5.53.0
 
-  svelte-loader@3.2.4(svelte@5.51.2):
+  svelte-loader@3.2.4(svelte@5.53.0):
     dependencies:
       loader-utils: 2.0.4
-      svelte: 5.51.2
+      svelte: 5.53.0
       svelte-dev-helper: 1.1.9
-      svelte-hmr: 0.14.12(svelte@5.51.2)
+      svelte-hmr: 0.14.12(svelte@5.53.0)
 
-  svelte-preprocess@6.0.3(@babel/core@7.29.0)(less@4.3.0)(postcss-load-config@6.0.1(jiti@2.6.1)(postcss@8.5.6)(yaml@2.8.2))(postcss@8.5.6)(sass@1.97.3)(stylus@0.64.0)(svelte@5.51.2)(typescript@5.9.3):
+  svelte-preprocess@6.0.3(@babel/core@7.29.0)(less@4.3.0)(postcss-load-config@6.0.1(jiti@2.6.1)(postcss@8.5.6)(yaml@2.8.2))(postcss@8.5.6)(sass@1.97.3)(stylus@0.64.0)(svelte@5.53.0)(typescript@5.9.3):
     dependencies:
-      svelte: 5.51.2
+      svelte: 5.53.0
     optionalDependencies:
       '@babel/core': 7.29.0
       less: 4.3.0
@@ -11898,7 +11898,7 @@ snapshots:
       stylus: 0.64.0
       typescript: 5.9.3
 
-  svelte@5.51.2:
+  svelte@5.53.0:
     dependencies:
       '@jridgewell/remapping': 2.3.5
       '@jridgewell/sourcemap-codec': 1.5.5
@@ -11909,7 +11909,7 @@ snapshots:
       aria-query: 5.3.2
       axobject-query: 4.1.0
       clsx: 2.1.1
-      devalue: 5.6.2
+      devalue: 5.6.3
       esm-env: 1.2.2
       esrap: 2.2.2
       is-reference: 3.0.3
