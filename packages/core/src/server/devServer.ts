@@ -66,11 +66,6 @@ export type RsbuildDevServer = RsbuildServerBase & {
    */
   afterListen: () => Promise<void>;
   /**
-   * Close the server.
-   * This will call the `onCloseDevServer` hook.
-   */
-  close: () => Promise<void>;
-  /**
    * Activate socket connection.
    * This ensures that HMR works properly.
    */

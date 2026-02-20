@@ -57,10 +57,28 @@ export async function startProdServer(
     middlewares,
   });
 
+  const cleanupGracefulShutdown = setupGracefulShutdown();
+  const serverTerminator = getServerTerminator(httpServer);
+
+  let closingPromise: Promise<void> | null = null;
+
+  const closeServer = async () => {
+    if (!closingPromise) {
+      closingPromise = (async () => {
+        // ensure closeServer is only called once
+        removeCleanup(closeServer);
+        cleanupGracefulShutdown();
+        await serverTerminator();
+      })();
+    }
+    return closingPromise;
+  };
+
   const prodServer: RsbuildProdServer = {
     httpServer,
     port,
     middlewares,
+    close: closeServer,
   };
 
   const isHttps = Boolean(serverConfig.https);
@@ -75,8 +93,6 @@ export async function startProdServer(
     server: prodServer,
     environments: context.environments,
   });
-
-  const serverTerminator = getServerTerminator(httpServer);
 
   const applyStaticAssetMiddleware = async () => {
     const { default: sirv } = await import(
@@ -202,22 +218,6 @@ export async function startProdServer(
         const protocol = isHttps ? 'https' : 'http';
         const urls = await getAddressUrls({ protocol, port, host });
         const cliShortcutsEnabled = isCliShortcutsEnabled(config);
-
-        const cleanupGracefulShutdown = setupGracefulShutdown();
-
-        let closingPromise: Promise<void> | null = null;
-
-        const closeServer = async () => {
-          if (!closingPromise) {
-            closingPromise = (async () => {
-              // ensure closeServer is only called once
-              removeCleanup(closeServer);
-              cleanupGracefulShutdown();
-              await serverTerminator();
-            })();
-          }
-          return closingPromise;
-        };
 
         registerCleanup(closeServer);
 
