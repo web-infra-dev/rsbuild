@@ -544,6 +544,15 @@ export const HttpCode = {
  */
 export type RsbuildServerBase = {
   /**
+   * The Node.js HTTP server instance.
+   * - Will be `Http2SecureServer` if `server.https` config is used.
+   * - Will be `null` if `server.middlewareMode` is enabled.
+   */
+  httpServer:
+    | import('node:http').Server
+    | import('node:http2').Http2SecureServer
+    | null;
+  /**
    * The `connect` app instance.
    * Can be used to attach custom middlewares to the server.
    */

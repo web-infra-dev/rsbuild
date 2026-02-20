@@ -47,14 +47,22 @@ export async function startProdServer(
   const middlewares = connect();
 
   const { port, portTip } = await resolvePort(config);
-  const prodServer = {
-    port,
-    middlewares,
-  };
 
   const serverConfig = config.server;
   const { host, headers, proxy, historyApiFallback, compress, base, cors } =
     serverConfig;
+
+  const httpServer = await createHttpServer({
+    serverConfig,
+    middlewares,
+  });
+
+  const prodServer: RsbuildProdServer = {
+    httpServer,
+    port,
+    middlewares,
+  };
+
   const isHttps = Boolean(serverConfig.https);
 
   const postSetupCallbacks = await applyServerSetup(serverConfig.setup, {
@@ -68,10 +76,6 @@ export async function startProdServer(
     environments: context.environments,
   });
 
-  const httpServer = await createHttpServer({
-    serverConfig,
-    middlewares,
-  });
   const serverTerminator = getServerTerminator(httpServer);
 
   const applyStaticAssetMiddleware = async () => {

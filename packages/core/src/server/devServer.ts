@@ -66,7 +66,8 @@ export type RsbuildDevServer = RsbuildServerBase & {
    */
   afterListen: () => Promise<void>;
   /**
-   * Close the Rsbuild server.
+   * Close the server.
+   * This will call the `onCloseDevServer` hook.
    */
   close: () => Promise<void>;
   /**
@@ -78,15 +79,6 @@ export type RsbuildDevServer = RsbuildServerBase & {
    * Environment API of Rsbuild server.
    */
   environments: EnvironmentAPI;
-  /**
-   * The Node.js HTTP server instance.
-   * - Will be `Http2SecureServer` if `server.https` config is used.
-   * - Will be `null` if `server.middlewareMode` is enabled.
-   */
-  httpServer:
-    | import('node:http').Server
-    | import('node:http2').Http2SecureServer
-    | null;
   /**
    * Start listening on the Rsbuild dev server.
    * Do not call this method if you are using a custom server.
