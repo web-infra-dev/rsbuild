@@ -325,14 +325,10 @@ export const getPort = async ({
   return port;
 };
 
-export const getServerConfig = async ({
-  config,
-}: {
-  config: NormalizedConfig;
-}): Promise<{
+export const resolvePort = async (
+  config: NormalizedConfig,
+): Promise<{
   port: number;
-  host: string;
-  https: boolean;
   portTip: string | undefined;
 }> => {
   const { host, port: originalPort, strictPort } = config.server;
@@ -341,16 +337,12 @@ export const getServerConfig = async ({
     port: originalPort,
     strictPort,
   });
-  const https = Boolean(config.server.https);
   const portTip =
     port !== originalPort
       ? `port ${originalPort} is in use, ${color.yellow(`using port ${port}.`)}`
       : undefined;
-
   return {
     port,
-    host,
-    https,
     portTip,
   };
 };
@@ -432,11 +424,11 @@ const getUrlLabel = (url: string) => {
 type AddressUrl = { label: string; url: string };
 
 export const getAddressUrls = async ({
-  protocol = 'http',
+  protocol,
   port,
   host,
 }: {
-  protocol?: string;
+  protocol: string;
   port: number;
   host?: string;
 }): Promise<AddressUrl[]> => {

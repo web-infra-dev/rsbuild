@@ -15,11 +15,12 @@ export const pluginServer = (): RsbuildPlugin => ({
     const onStartServer: OnAfterStartDevServerFn = ({ port, routes }) => {
       const config = api.getNormalizedConfig();
       if (config.server.open) {
+        const protocol = api.context.devServer?.https ? 'https' : 'http';
         open({
-          https: api.context.devServer?.https,
           port,
           routes,
           config,
+          protocol,
         });
       }
     };

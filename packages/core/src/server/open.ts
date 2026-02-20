@@ -176,16 +176,16 @@ const normalizeOpenConfig = (
 };
 
 export async function open({
-  https,
   port,
   routes,
   config,
+  protocol,
   clearCache,
 }: {
-  https?: boolean;
   port: number;
   routes: Routes;
   config: NormalizedConfig;
+  protocol: string;
   clearCache?: boolean;
 }): Promise<void> {
   // Skip auto-opening browser in CodeSandbox since it's already
@@ -202,7 +202,6 @@ export async function open({
   }
 
   const urls: string[] = [];
-  const protocol = https ? 'https' : 'http';
   const host = await getHostInUrl(config.server.host);
   const baseUrl = `${protocol}://${host}:${port}`;
 
