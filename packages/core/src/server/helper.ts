@@ -18,6 +18,8 @@ import type {
   RsbuildConfig,
   RsbuildEntry,
 } from '../types';
+import type { RsbuildDevServer } from './devServer';
+import type { RsbuildProdServer } from './prodServer';
 
 /**
  * It used to subscribe http upgrade event
@@ -28,15 +30,7 @@ export type UpgradeEvent = (
   head: any,
 ) => void;
 
-export type StartServerResult<
-  T = {
-    /**
-     * Close the server.
-     * In development mode, this will call the `onCloseDevServer` hook.
-     */
-    close: () => Promise<void>;
-  },
-> = {
+export type ServerStartResult<T> = {
   /**
    * The URLs that server is listening on.
    */
@@ -45,8 +39,15 @@ export type StartServerResult<
    * The actual port used by the server.
    */
   port: number;
+  /**
+   * The dev server or preview server instance.
+   */
   server: T;
 };
+
+export type StartDevServerResult = ServerStartResult<RsbuildDevServer>;
+
+export type StartProdServerResult = ServerStartResult<RsbuildProdServer>;
 
 // remove repeat '/'
 export const normalizeUrl = (url: string): string =>

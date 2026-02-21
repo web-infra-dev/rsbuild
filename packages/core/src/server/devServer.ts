@@ -39,7 +39,7 @@ import {
   printServerURLs,
   type RsbuildServerBase,
   resolvePort,
-  type StartServerResult,
+  type StartDevServerResult,
   stripBase,
 } from './helper';
 import { createHttpServer } from './httpServer';
@@ -78,7 +78,7 @@ export type RsbuildDevServer = RsbuildServerBase & {
    * Start listening on the Rsbuild dev server.
    * Do not call this method if you are using a custom server.
    */
-  listen: () => Promise<StartServerResult<RsbuildDevServer>>;
+  listen: () => Promise<StartDevServerResult>;
   /**
    * Open URL in the browser after starting the server.
    */
@@ -347,7 +347,7 @@ export async function createDevServer<
 
       context.hooks.onCloseDevServer.tap(serverTerminator);
 
-      return new Promise<StartServerResult<RsbuildDevServer>>((resolve) => {
+      return new Promise<StartDevServerResult>((resolve) => {
         httpServer.listen(
           {
             host,

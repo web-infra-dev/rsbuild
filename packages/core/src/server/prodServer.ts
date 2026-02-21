@@ -19,7 +19,7 @@ import {
   printServerURLs,
   type RsbuildServerBase,
   resolvePort,
-  type StartServerResult,
+  type StartProdServerResult,
 } from './helper';
 import { historyApiFallbackMiddleware } from './historyApiFallback';
 import { createHttpServer } from './httpServer';
@@ -40,7 +40,7 @@ export async function startProdServer(
   context: InternalContext,
   config: NormalizedConfig,
   { getPortSilently }: PreviewOptions = {},
-): Promise<StartServerResult> {
+): Promise<StartProdServerResult> {
   const { default: connect } = await import(
     /* webpackChunkName: "connect" */ 'connect'
   );
@@ -201,7 +201,7 @@ export async function startProdServer(
   middlewares.use(optionsFallbackMiddleware);
   middlewares.use(notFoundMiddleware);
 
-  return new Promise<StartServerResult>((resolve) => {
+  return new Promise<StartProdServerResult>((resolve) => {
     httpServer.listen(
       {
         host,
@@ -266,9 +266,7 @@ export async function startProdServer(
         resolve({
           port,
           urls: urls.map((item) => item.url),
-          server: {
-            close: closeServer,
-          },
+          server: prodServer,
         });
       },
     );
