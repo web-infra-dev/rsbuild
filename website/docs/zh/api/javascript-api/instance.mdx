@@ -439,7 +439,7 @@ type PreviewOptions = {
   checkDistDir?: boolean;
 };
 
-type StartProdServerResult = {
+type StartPreviewServerResult = {
   /**
    * 服务器监听的 URLs
    */
@@ -448,10 +448,10 @@ type StartProdServerResult = {
    * 服务器实际使用的端口号
    */
   port: number;
-  server: RsbuildProdServer;
+  server: RsbuildPreviewServer;
 };
 
-function preview(options?: PreviewOptions): Promise<StartProdServerResult>;
+function preview(options?: PreviewOptions): Promise<StartPreviewServerResult>;
 ```
 
 - **示例：**

@@ -37,7 +37,7 @@ export type { RsbuildDevServer } from './server/devServer';
 export type {
   ServerStartResult,
   StartDevServerResult,
-  StartProdServerResult,
+  StartPreviewServerResult,
 } from './server/helper';
 // Types
 export type {

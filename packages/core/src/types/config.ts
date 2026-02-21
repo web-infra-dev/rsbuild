@@ -21,7 +21,7 @@ import type {
   Filter as ProxyFilter,
 } from '../../compiled/http-proxy-middleware';
 import type { RsbuildDevServer } from '../server/devServer';
-import type { RsbuildProdServer } from '../server/prodServer';
+import type { RsbuildPreviewServer } from '../server/previewServer';
 import type {
   EnvironmentContext,
   ModifyBundlerChainUtils,
@@ -602,7 +602,7 @@ export type ServerSetupContext = {
       /**
        * Preview server instance, only available in preview mode.
        */
-      server: RsbuildProdServer;
+      server: RsbuildPreviewServer;
     }
 );
 

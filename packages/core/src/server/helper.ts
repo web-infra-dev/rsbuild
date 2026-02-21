@@ -19,7 +19,7 @@ import type {
   RsbuildEntry,
 } from '../types';
 import type { RsbuildDevServer } from './devServer';
-import type { RsbuildProdServer } from './prodServer';
+import type { RsbuildPreviewServer } from './previewServer';
 
 /**
  * It used to subscribe http upgrade event
@@ -47,7 +47,7 @@ export type ServerStartResult<T> = {
 
 export type StartDevServerResult = ServerStartResult<RsbuildDevServer>;
 
-export type StartProdServerResult = ServerStartResult<RsbuildProdServer>;
+export type StartPreviewServerResult = ServerStartResult<RsbuildPreviewServer>;
 
 // remove repeat '/'
 export const normalizeUrl = (url: string): string =>

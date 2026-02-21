@@ -54,7 +54,7 @@ import { pluginSwc } from './plugins/swc';
 import { pluginTarget } from './plugins/target';
 import { pluginWasm } from './plugins/wasm';
 import { createDevServer as baseCreateDevServer } from './server/devServer';
-import { startProdServer } from './server/prodServer';
+import { startPreviewServer } from './server/previewServer';
 import type {
   Build,
   CreateCompiler,
@@ -240,7 +240,7 @@ export async function createRsbuild(
       }
     }
 
-    return startProdServer(context, config, options);
+    return startPreviewServer(context, config, options);
   };
 
   const build: Build = async (options) => {

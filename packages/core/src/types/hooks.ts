@@ -1,7 +1,7 @@
 import type { rspack } from '@rspack/core';
 import type { ChainIdentifier, ManifestData } from '..';
 import type { RsbuildDevServer } from '../server/devServer';
-import type { RsbuildProdServer } from '../server/prodServer';
+import type { RsbuildPreviewServer } from '../server/previewServer';
 import type { RspackChain } from '../types';
 import type {
   EnvironmentConfig,
@@ -101,7 +101,7 @@ export type OnBeforeStartProdServerFn = (params: {
   /**
    * The preview server instance.
    */
-  server: RsbuildProdServer;
+  server: RsbuildPreviewServer;
   /**
    * Context information for all environments.
    */
