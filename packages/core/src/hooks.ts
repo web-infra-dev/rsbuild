@@ -16,13 +16,13 @@ import type {
   OnAfterDevCompileFn,
   OnAfterEnvironmentCompileFn,
   OnAfterStartDevServerFn,
-  OnAfterStartProdServerFn,
+  OnAfterStartPreviewServerFn,
   OnBeforeBuildFn,
   OnBeforeCreateCompilerFn,
   OnBeforeDevCompileFn,
   OnBeforeEnvironmentCompileFn,
   OnBeforeStartDevServerFn,
-  OnBeforeStartProdServerFn,
+  OnBeforeStartPreviewServerFn,
   OnCloseBuildFn,
   OnCloseDevServerFn,
   OnExitFn,
@@ -205,8 +205,8 @@ export function initHooks(): {
   onCloseDevServer: AsyncHook<OnCloseDevServerFn>;
   onAfterStartDevServer: AsyncHook<OnAfterStartDevServerFn>;
   onBeforeStartDevServer: AsyncHook<OnBeforeStartDevServerFn>;
-  onAfterStartProdServer: AsyncHook<OnAfterStartProdServerFn>;
-  onBeforeStartProdServer: AsyncHook<OnBeforeStartProdServerFn>;
+  onAfterStartPreviewServer: AsyncHook<OnAfterStartPreviewServerFn>;
+  onBeforeStartPreviewServer: AsyncHook<OnBeforeStartPreviewServerFn>;
   onAfterCreateCompiler: AsyncHook<OnAfterCreateCompilerFn>;
   onBeforeCreateCompiler: AsyncHook<OnBeforeCreateCompilerFn>;
   /**  The following hooks are related to the environment */
@@ -229,8 +229,8 @@ export function initHooks(): {
     onCloseDevServer: createAsyncHook<OnCloseDevServerFn>(),
     onAfterStartDevServer: createAsyncHook<OnAfterStartDevServerFn>(),
     onBeforeStartDevServer: createAsyncHook<OnBeforeStartDevServerFn>(),
-    onAfterStartProdServer: createAsyncHook<OnAfterStartProdServerFn>(),
-    onBeforeStartProdServer: createAsyncHook<OnBeforeStartProdServerFn>(),
+    onAfterStartPreviewServer: createAsyncHook<OnAfterStartPreviewServerFn>(),
+    onBeforeStartPreviewServer: createAsyncHook<OnBeforeStartPreviewServerFn>(),
     onAfterCreateCompiler: createAsyncHook<OnAfterCreateCompilerFn>(),
     onBeforeCreateCompiler: createAsyncHook<OnBeforeCreateCompilerFn>(),
     modifyHTML: createEnvironmentAsyncHook<ModifyHTMLFn>(),

@@ -551,7 +551,7 @@ export interface ServerConfig {
    * Run setup logic for both dev and preview servers.
    *
    * Primarily used to register middleware, and can also run other startup
-   * tasks. Similar to `onBeforeStartDevServer` and `onBeforeStartProdServer` hooks.
+   * tasks. Similar to `onBeforeStartDevServer` and `onBeforeStartPreviewServer` hooks.
    *
    * The setup function runs before Rsbuild registers built-in middlewares,
    * so middlewares added in setup will run earlier than built-ins.

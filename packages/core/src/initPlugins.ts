@@ -357,8 +357,8 @@ export function initPluginAPI({
     onAfterStartDevServer: hooks.onAfterStartDevServer.tap,
     onBeforeCreateCompiler: hooks.onBeforeCreateCompiler.tap,
     onBeforeStartDevServer: hooks.onBeforeStartDevServer.tap,
-    onAfterStartProdServer: hooks.onAfterStartProdServer.tap,
-    onBeforeStartProdServer: hooks.onBeforeStartProdServer.tap,
+    onAfterStartPreviewServer: hooks.onAfterStartPreviewServer.tap,
+    onBeforeStartPreviewServer: hooks.onBeforeStartPreviewServer.tap,
     modifyRsbuildConfig: hooks.modifyRsbuildConfig.tap,
     modifyHTML: (handler) => {
       hooks.modifyHTML.tapEnvironment({

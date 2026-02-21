@@ -19,13 +19,13 @@ import type {
   OnAfterDevCompileFn,
   OnAfterEnvironmentCompileFn,
   OnAfterStartDevServerFn,
-  OnAfterStartProdServerFn,
+  OnAfterStartPreviewServerFn,
   OnBeforeBuildFn,
   OnBeforeCreateCompilerFn,
   OnBeforeDevCompileFn,
   OnBeforeEnvironmentCompileFn,
   OnBeforeStartDevServerFn,
-  OnBeforeStartProdServerFn,
+  OnBeforeStartPreviewServerFn,
   OnCloseBuildFn,
   OnCloseDevServerFn,
   OnExitFn,
@@ -599,11 +599,11 @@ export type RsbuildPluginAPI = Readonly<{
    */
   onAfterStartDevServer: PluginHook<OnAfterStartDevServerFn>;
   /**
-   * Called after starting the production preview server, you can get the port
+   * Called after starting the preview server, you can get the port
    * number with the `port` parameter, and the page routes info with the
    * `routes` parameter.
    */
-  onAfterStartProdServer: PluginHook<OnAfterStartProdServerFn>;
+  onAfterStartPreviewServer: PluginHook<OnAfterStartPreviewServerFn>;
   /**
    * A callback function that is triggered before the production build is executed.
    */
@@ -627,9 +627,9 @@ export type RsbuildPluginAPI = Readonly<{
    */
   onBeforeStartDevServer: PluginHook<OnBeforeStartDevServerFn>;
   /**
-   * Called before starting the production preview server.
+   * Called before starting the preview server.
    */
-  onBeforeStartProdServer: PluginHook<OnBeforeStartProdServerFn>;
+  onBeforeStartPreviewServer: PluginHook<OnBeforeStartPreviewServerFn>;
   /**
    * Called when closing the build instance. Can be used to perform cleanup
    * operations when the building is closed.

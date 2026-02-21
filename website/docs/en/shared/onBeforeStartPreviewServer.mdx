@@ -1,4 +1,4 @@
-Called before starting the production preview server.
+Called before starting the preview server.
 
 Use the `server` parameter to access the preview server and register custom middlewares.
 
@@ -7,7 +7,7 @@ Use the `server` parameter to access the preview server and register custom midd
 ```ts
 type MaybePromise<T> = T | Promise<T>;
 
-type OnBeforeStartProdServerFn = (params: {
+type OnBeforeStartPreviewServerFn = (params: {
   /**
    * The preview server instance.
    */
@@ -18,5 +18,7 @@ type OnBeforeStartProdServerFn = (params: {
   environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;
 
-function OnBeforeStartProdServer(callback: OnBeforeStartProdServerFn): void;
+function OnBeforeStartPreviewServer(
+  callback: OnBeforeStartPreviewServerFn,
+): void;
 ```

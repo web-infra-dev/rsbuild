@@ -40,8 +40,8 @@ Called when running the `rsbuild build` command or the `rsbuild.build()` method:
 
 Called when running the `rsbuild preview` command or the `rsbuild.preview()` method:
 
-- [onBeforeStartProdServer](#onbeforestartprodserver): Called before starting the preview server.
-- [onAfterStartProdServer](#onafterstartprodserver): Called after starting the preview server.
+- [onBeforeStartPreviewServer](#onbeforestartpreviewserver): Called before starting the preview server.
+- [onAfterStartPreviewServer](#onafterstartpreviewserver): Called after starting the preview server.
 
 ## Hooks order
 
@@ -109,8 +109,8 @@ When executing the `rsbuild preview` command or `rsbuild.preview()` method, Rsbu
 
 - [modifyRsbuildConfig](#modifyrsbuildconfig)
 - [modifyEnvironmentConfig](#modifyenvironmentconfig)
-- [onBeforeStartProdServer](#onbeforestartprodserver)
-- [onAfterStartProdServer](#onafterstartprodserver)
+- [onBeforeStartPreviewServer](#onbeforestartpreviewserver)
+- [onAfterStartPreviewServer](#onafterstartpreviewserver)
 - [onExit](#onexit)
 
 ## Global hooks vs environment hooks
@@ -135,8 +135,8 @@ Correspondingly, there are some plugin hooks that are related to the current env
 - [onBeforeBuild](#onbeforebuild)
 - [onAfterBuild](#onafterbuild)
 - [onCloseBuild](#onclosebuild)
-- [onBeforeStartProdServer](#onbeforestartprodserver)
-- [onAfterStartProdServer](#onafterstartprodserver)
+- [onBeforeStartPreviewServer](#onbeforestartpreviewserver)
+- [onAfterStartPreviewServer](#onafterstartpreviewserver)
 - [onExit](#onexit)
 
 ### Environment hooks
@@ -927,18 +927,18 @@ const myPlugin = () => ({
 
 ## Preview hooks
 
-### onBeforeStartProdServer
+### onBeforeStartPreviewServer
 
-import OnBeforeStartProdServer from '@en/shared/onBeforeStartProdServer.mdx';
+import OnBeforeStartPreviewServer from '@en/shared/onBeforeStartPreviewServer.mdx';
 
-<OnBeforeStartProdServer />
+<OnBeforeStartPreviewServer />
 
 - **Example:**
 
 ```ts
 const myPlugin = () => ({
   setup(api) {
-    api.onBeforeStartProdServer(({ server, environments }) => {
+    api.onBeforeStartPreviewServer(({ server, environments }) => {
       console.log('before start!');
       console.log('the server is ', server);
       console.log('the environments contexts are: ', environments);
@@ -947,18 +947,18 @@ const myPlugin = () => ({
 });
 ```
 
-### onAfterStartProdServer
+### onAfterStartPreviewServer
 
-import OnAfterStartProdServer from '@en/shared/onAfterStartProdServer.mdx';
+import OnAfterStartPreviewServer from '@en/shared/onAfterStartPreviewServer.mdx';
 
-<OnAfterStartProdServer />
+<OnAfterStartPreviewServer />
 
 - **Example:**
 
 ```ts
 const myPlugin = () => ({
   setup(api) {
-    api.onAfterStartProdServer(({ port, routes }) => {
+    api.onAfterStartPreviewServer(({ port, routes }) => {
       console.log('this port is: ', port);
       console.log('this routes is: ', routes);
     });

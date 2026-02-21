@@ -26,7 +26,7 @@ export const pluginServer = (): RsbuildPlugin => ({
     };
 
     api.onAfterStartDevServer(onStartServer);
-    api.onAfterStartProdServer(onStartServer);
+    api.onAfterStartPreviewServer(onStartServer);
     api.onBeforeBuild(async ({ isFirstCompile, environments }) => {
       if (!isFirstCompile) {
         return;

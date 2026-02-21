@@ -116,7 +116,7 @@ test('should run plugin hooks correctly when running preview', async () => {
   expect(hooks).toEqual([
     'ModifyRsbuildConfig',
     'ModifyEnvironmentConfig',
-    'BeforeStartProdServer',
-    'AfterStartProdServer',
+    'BeforeStartPreviewServer',
+    'AfterStartPreviewServer',
   ]);
 });

@@ -1,6 +1,6 @@
-在启动预览服务器后调用，你可以通过 `port` 参数获得预览服务器监听的端口号，通过 `routes` 获得页面路由信息。
+Called after starting the preview server, you can get the port number with the `port` parameter, and the page routes info with the `routes` parameter.
 
-- **类型：**
+- **Type:**
 
 ```ts
 type Routes = Array<{
@@ -8,7 +8,7 @@ type Routes = Array<{
   pathname: string;
 }>;
 
-function OnAfterStartProdServer(
+function OnAfterStartPreviewServer(
   callback: (params: {
     port: number;
     routes: Routes;

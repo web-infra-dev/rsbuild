@@ -89,7 +89,7 @@ export async function startPreviewServer(
     environments: context.environments,
   });
 
-  await context.hooks.onBeforeStartProdServer.callBatch({
+  await context.hooks.onBeforeStartPreviewServer.callBatch({
     server: previewServer,
     environments: context.environments,
   });
@@ -209,7 +209,7 @@ export async function startPreviewServer(
       },
       async () => {
         const routes = getRoutes(context);
-        await context.hooks.onAfterStartProdServer.callBatch({
+        await context.hooks.onAfterStartPreviewServer.callBatch({
           port,
           routes,
           environments: context.environments,
