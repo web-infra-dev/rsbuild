@@ -80,14 +80,6 @@ export type RsbuildDevServer = RsbuildServerBase & {
    */
   listen: () => Promise<StartDevServerResult>;
   /**
-   * Open URL in the browser after starting the server.
-   */
-  open: () => Promise<void>;
-  /**
-   * Print the server URLs.
-   */
-  printUrls: () => void;
-  /**
    * Allows middleware to send some message to HMR client, and then the HMR
    * client will take different actions depending on the message type.
    * - `static-changed`: The page will reload.
