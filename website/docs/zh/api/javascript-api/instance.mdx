@@ -311,7 +311,7 @@ type StartDevServerOptions = {
   getPortSilently?: boolean;
 };
 
-type StartServerResult = {
+type StartDevServerResult = {
   /**
    * 服务器监听的 URLs
    */
@@ -325,7 +325,7 @@ type StartServerResult = {
 
 function StartDevServer(
   options?: StartDevServerOptions,
-): Promise<StartServerResult>;
+): Promise<StartDevServerResult>;
 ```
 
 - **示例：**
@@ -359,7 +359,7 @@ try {
 
 - `urls`：访问 dev server 的 URLs
 - `port` 实际监听的端口号
-- `server`：Server 实例对象，详见 [Dev server API](/api/javascript-api/dev-server-api)
+- `server`：Server 实例对象，详见 [Server API](/api/javascript-api/dev-server-api)
 
 ```ts
 const { urls, port } = await rsbuild.startDevServer();
@@ -439,7 +439,7 @@ type PreviewOptions = {
   checkDistDir?: boolean;
 };
 
-type StartServerResult = {
+type StartProdServerResult = {
   /**
    * 服务器监听的 URLs
    */
@@ -448,15 +448,10 @@ type StartServerResult = {
    * 服务器实际使用的端口号
    */
   port: number;
-  server: {
-    /**
-     * 关闭服务器
-     */
-    close: () => Promise<void>;
-  };
+  server: RsbuildProdServer;
 };
 
-function preview(options?: PreviewOptions): Promise<StartServerResult>;
+function preview(options?: PreviewOptions): Promise<StartProdServerResult>;
 ```
 
 - **示例：**
@@ -483,7 +478,7 @@ try {
 
 - `urls`：访问 Server 的 URLs
 - `port` 实际监听的端口号
-- `server`：Server 实例对象
+- `server`：Server 实例对象，详见 [Server API](/api/javascript-api/dev-server-api)
 
 ```ts
 const { urls, port } = await rsbuild.preview();

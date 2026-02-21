@@ -34,7 +34,11 @@ export { ensureAssetPrefix } from './helpers/url';
 export { type Logger, logger } from './logger';
 export { mergeRsbuildConfig } from './mergeConfig';
 export type { RsbuildDevServer } from './server/devServer';
-export type { StartServerResult } from './server/helper';
+export type {
+  ServerStartResult,
+  StartDevServerResult,
+  StartProdServerResult,
+} from './server/helper';
 // Types
 export type {
   AliasStrategy,

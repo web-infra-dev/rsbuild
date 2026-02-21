@@ -1,7 +1,10 @@
 import type { Compiler, MultiCompiler } from '@rspack/core';
 import type { LoadEnvOptions } from '../loadEnv';
 import type { RsbuildDevServer } from '../server/devServer';
-import type { StartServerResult } from '../server/helper';
+import type {
+  StartDevServerResult,
+  StartProdServerResult,
+} from '../server/helper';
 import type {
   NormalizedConfig,
   NormalizedEnvironmentConfig,
@@ -166,7 +169,7 @@ export type CreateDevServer = (
 
 export type StartDevServer = (
   options?: StartDevServerOptions,
-) => Promise<StartServerResult<RsbuildDevServer>>;
+) => Promise<StartDevServerResult>;
 
 export type InspectConfig = (
   options?: InspectConfigOptions,
@@ -231,7 +234,7 @@ export type RsbuildInstance = {
    * Start a server to preview the production build locally.
    * This method should be executed after `rsbuild.build`.
    */
-  preview: (options?: PreviewOptions) => Promise<StartServerResult>;
+  preview: (options?: PreviewOptions) => Promise<StartProdServerResult>;
   /**
    * Initialize and return the internal Rspack configurations used by Rsbuild.
    * This method processes all plugins and configurations to generate the final

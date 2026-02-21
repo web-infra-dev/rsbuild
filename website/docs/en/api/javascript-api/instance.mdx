@@ -288,7 +288,7 @@ type StartDevServerOptions = {
   getPortSilently?: boolean;
 };
 
-type StartServerResult = {
+type StartDevServerResult = {
   /**
    * The URLs that server is listening on.
    */
@@ -302,7 +302,7 @@ type StartServerResult = {
 
 function StartDevServer(
   options?: StartDevServerOptions,
-): Promise<StartServerResult>;
+): Promise<StartDevServerResult>;
 ```
 
 - **Example:**
@@ -336,7 +336,7 @@ Once the dev server starts successfully, these logs appear:
 
 - `urls`: URLs to access dev server.
 - `port`: The actual listening port number.
-- `server`: Server instance, see [Dev server API](/api/javascript-api/dev-server-api) for more details.
+- `server`: Server instance, see [Server API](/api/javascript-api/dev-server-api) for more details.
 
 ```ts
 const { urls, port } = await rsbuild.startDevServer();
@@ -416,7 +416,7 @@ type PreviewOptions = {
   checkDistDir?: boolean;
 };
 
-type StartServerResult = {
+type StartProdServerResult = {
   /**
    * The URLs that server is listening on.
    */
@@ -425,15 +425,10 @@ type StartServerResult = {
    * The actual port used by the server.
    */
   port: number;
-  server: {
-    /**
-     * Close the server.
-     */
-    close: () => Promise<void>;
-  };
+  server: RsbuildProdServer;
 };
 
-function preview(options?: PreviewOptions): Promise<StartServerResult>;
+function preview(options?: PreviewOptions): Promise<StartProdServerResult>;
 ```
 
 - **Example:**
@@ -460,7 +455,7 @@ try {
 
 - `urls`: URLs to access server.
 - `port`: The actual listening port number.
-- `server`: Server instance object.
+- `server`: Server instanceServer instance, see [Server API](/api/javascript-api/dev-server-api) for more details.
 
 ```ts
 const { urls, port } = await rsbuild.preview();
