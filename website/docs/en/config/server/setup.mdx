@@ -32,7 +32,7 @@ type ServerSetupContext =
     }
   | {
       action: 'preview';
-      server: RsbuildProdServer;
+      server: RsbuildPreviewServer;
       environments: Record<string, EnvironmentContext>;
     };
 ```

@@ -416,7 +416,7 @@ type PreviewOptions = {
   checkDistDir?: boolean;
 };
 
-type StartProdServerResult = {
+type StartPreviewServerResult = {
   /**
    * The URLs that server is listening on.
    */
@@ -425,10 +425,10 @@ type StartProdServerResult = {
    * The actual port used by the server.
    */
   port: number;
-  server: RsbuildProdServer;
+  server: RsbuildPreviewServer;
 };
 
-function preview(options?: PreviewOptions): Promise<StartProdServerResult>;
+function preview(options?: PreviewOptions): Promise<StartPreviewServerResult>;
 ```
 
 - **Example:**
@@ -455,7 +455,7 @@ try {
 
 - `urls`: URLs to access server.
 - `port`: The actual listening port number.
-- `server`: Server instanceServer instance, see [Server API](/api/javascript-api/dev-server-api) for more details.
+- `server`: Server instance, see [Server API](/api/javascript-api/dev-server-api) for more details.
 
 ```ts
 const { urls, port } = await rsbuild.preview();

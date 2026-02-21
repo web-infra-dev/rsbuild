@@ -19,7 +19,7 @@ import {
   printServerURLs,
   type RsbuildServerBase,
   resolvePort,
-  type StartProdServerResult,
+  type StartPreviewServerResult,
 } from './helper';
 import { historyApiFallbackMiddleware } from './historyApiFallback';
 import { createHttpServer } from './httpServer';
@@ -34,13 +34,13 @@ import { open } from './open';
 import { createProxyMiddleware } from './proxy';
 import { applyServerSetup } from './serverSetup';
 
-export type RsbuildProdServer = RsbuildServerBase;
+export type RsbuildPreviewServer = RsbuildServerBase;
 
-export async function startProdServer(
+export async function startPreviewServer(
   context: InternalContext,
   config: NormalizedConfig,
   { getPortSilently }: PreviewOptions = {},
-): Promise<StartProdServerResult> {
+): Promise<StartPreviewServerResult> {
   const { default: connect } = await import(
     /* webpackChunkName: "connect" */ 'connect'
   );
@@ -74,7 +74,7 @@ export async function startProdServer(
     return closingPromise;
   };
 
-  const prodServer: RsbuildProdServer = {
+  const previewServer: RsbuildPreviewServer = {
     httpServer,
     port,
     middlewares,
@@ -85,12 +85,12 @@ export async function startProdServer(
 
   const postSetupCallbacks = await applyServerSetup(serverConfig.setup, {
     action: 'preview',
-    server: prodServer,
+    server: previewServer,
     environments: context.environments,
   });
 
   await context.hooks.onBeforeStartProdServer.callBatch({
-    server: prodServer,
+    server: previewServer,
     environments: context.environments,
   });
 
@@ -201,7 +201,7 @@ export async function startProdServer(
   middlewares.use(optionsFallbackMiddleware);
   middlewares.use(notFoundMiddleware);
 
-  return new Promise<StartProdServerResult>((resolve) => {
+  return new Promise<StartPreviewServerResult>((resolve) => {
     httpServer.listen(
       {
         host,
@@ -266,7 +266,7 @@ export async function startProdServer(
         resolve({
           port,
           urls: urls.map((item) => item.url),
-          server: prodServer,
+          server: previewServer,
         });
       },
     );

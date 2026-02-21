@@ -1,6 +1,6 @@
 Called before starting the production preview server.
 
-Use the `server` parameter to access the production server and register custom middlewares.
+Use the `server` parameter to access the preview server and register custom middlewares.
 
 - **Type:**
 
@@ -11,7 +11,7 @@ type OnBeforeStartProdServerFn = (params: {
   /**
    * The preview server instance.
    */
-  server: RsbuildProdServer;
+  server: RsbuildPreviewServer;
   /**
    * Context information for all environments.
    */
