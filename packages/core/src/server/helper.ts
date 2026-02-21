@@ -545,7 +545,7 @@ export const HttpCode = {
 export type RsbuildServerBase = {
   /**
    * Close the server.
-   * This will call the `onCloseDevServer` hook in development mode.
+   * In the dev server, this will call the `onCloseDevServer` hook.
    */
   close: () => Promise<void>;
   /**
