@@ -35,10 +35,12 @@ export { type Logger, logger } from './logger';
 export { mergeRsbuildConfig } from './mergeConfig';
 export type { RsbuildDevServer } from './server/devServer';
 export type {
+  RsbuildServerBase,
   ServerStartResult,
   StartDevServerResult,
   StartPreviewServerResult,
 } from './server/helper';
+export type { RsbuildPreviewServer } from './server/previewServer';
 // Types
 export type {
   AliasStrategy,
