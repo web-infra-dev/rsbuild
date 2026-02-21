@@ -40,8 +40,8 @@
 
 在执行 `rsbuild preview` 命令或 `rsbuild.preview()` 方法时调用：
 
-- [onBeforeStartProdServer](#onbeforestartprodserver)：在启动预览服务器前调用。
-- [onAfterStartProdServer](#onafterstartprodserver)：在启动预览服务器后调用。
+- [onBeforeStartPreviewServer](#onbeforestartprodserver)：在启动预览服务器前调用。
+- [onAfterStartPreviewServer](#onafterstartprodserver)：在启动预览服务器后调用。
 
 ## Hooks 顺序
 
@@ -109,8 +109,8 @@
 
 - [modifyRsbuildConfig](#modifyrsbuildconfig)
 - [modifyEnvironmentConfig](#modifyenvironmentconfig)
-- [onBeforeStartProdServer](#onbeforestartprodserver)
-- [onAfterStartProdServer](#onafterstartprodserver)
+- [onBeforeStartPreviewServer](#onbeforestartprodserver)
+- [onAfterStartPreviewServer](#onafterstartprodserver)
 - [onExit](#onexit)
 
 ## Global hooks vs environment hooks
@@ -135,8 +135,8 @@
 - [onBeforeBuild](#onbeforebuild)
 - [onAfterBuild](#onafterbuild)
 - [onCloseBuild](#onclosebuild)
-- [onBeforeStartProdServer](#onbeforestartprodserver)
-- [onAfterStartProdServer](#onafterstartprodserver)
+- [onBeforeStartPreviewServer](#onbeforestartprodserver)
+- [onAfterStartPreviewServer](#onafterstartprodserver)
 - [onExit](#onexit)
 
 ### Environment hooks
@@ -923,18 +923,18 @@ const myPlugin = () => ({
 
 ## Preview hooks
 
-### onBeforeStartProdServer
+### onBeforeStartPreviewServer
 
-import OnBeforeStartProdServer from '@zh/shared/onBeforeStartProdServer.mdx';
+import OnBeforeStartPreviewServer from '@zh/shared/onBeforeStartPreviewServer.mdx';
 
-<OnBeforeStartProdServer />
+<OnBeforeStartPreviewServer />
 
 - **示例：**
 
 ```ts
 const myPlugin = () => ({
   setup(api) {
-    api.onBeforeStartProdServer(({ server, environments }) => {
+    api.onBeforeStartPreviewServer(({ server, environments }) => {
       console.log('before start!');
       console.log('the server is ', server);
       console.log('the environments contexts are: ', environments);
@@ -943,18 +943,18 @@ const myPlugin = () => ({
 });
 ```
 
-### onAfterStartProdServer
+### onAfterStartPreviewServer
 
-import OnAfterStartProdServer from '@zh/shared/onAfterStartProdServer.mdx';
+import OnAfterStartPreviewServer from '@zh/shared/onAfterStartPreviewServer.mdx';
 
-<OnAfterStartProdServer />
+<OnAfterStartPreviewServer />
 
 - **示例：**
 
 ```ts
 const myPlugin = () => ({
   setup(api) {
-    api.onAfterStartProdServer(({ port, routes }) => {
+    api.onAfterStartPreviewServer(({ port, routes }) => {
       console.log('this port is: ', port);
       console.log('this routes is: ', routes);
     });

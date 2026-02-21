@@ -897,36 +897,36 @@ rsbuild.onCloseDevServer(async () => {
 });
 ```
 
-## rsbuild.onBeforeStartProdServer
+## rsbuild.onBeforeStartPreviewServer
 
-> 功能与 [onBeforeStartProdServer](/plugins/dev/hooks#onbeforestartprodserver) 插件 hook 一致。
+> 功能与 [onBeforeStartPreviewServer](/plugins/dev/hooks#onbeforestartprodserver) 插件 hook 一致。
 
-import OnBeforeStartProdServer from '@zh/shared/onBeforeStartProdServer.mdx';
+import OnBeforeStartPreviewServer from '@zh/shared/onBeforeStartPreviewServer.mdx';
 
-<OnBeforeStartProdServer />
+<OnBeforeStartPreviewServer />
 
 - **示例：**
 
 ```ts
-rsbuild.onBeforeStartProdServer(({ server, environments }) => {
+rsbuild.onBeforeStartPreviewServer(({ server, environments }) => {
   console.log('before start!');
   console.log('the server is ', server);
   console.log('the environments contexts are: ', environments);
 });
 ```
 
-## rsbuild.onAfterStartProdServer
+## rsbuild.onAfterStartPreviewServer
 
-> 功能与 [onAfterStartProdServer](/plugins/dev/hooks#onafterstartprodserver) 插件 hook 一致。
+> 功能与 [onAfterStartPreviewServer](/plugins/dev/hooks#onafterstartprodserver) 插件 hook 一致。
 
-import OnAfterStartProdServer from '@zh/shared/onAfterStartProdServer.mdx';
+import OnAfterStartPreviewServer from '@zh/shared/onAfterStartPreviewServer.mdx';
 
-<OnAfterStartProdServer />
+<OnAfterStartPreviewServer />
 
 - **示例：**
 
 ```ts
-rsbuild.onAfterStartProdServer(({ port, routes }) => {
+rsbuild.onAfterStartPreviewServer(({ port, routes }) => {
   console.log('this port is: ', port);
   console.log('this routes is: ', routes);
 });

@@ -437,7 +437,14 @@ export default {
 - Removed the deprecated `compiler` parameter from `rsbuild.build()`.
 - Removed the deprecated `compiler` parameter from `rsbuild.startDevServer()`.
 - Removed the deprecated [content-changed](/api/javascript-api/dev-server-api#sockwrite) message type from `sockWrite`, use `static-changed` instead.
+- Renamed `rsbuild.onAfterStartProdServer` method to `rsbuild.onAfterStartPreviewServer`
+- Renamed `rsbuild.onBeforeStartProdServer` method to `rsbuild.onBeforeStartPreviewServer`
 - The default value of the `loader` parameter of [loadConfig](/api/javascript-api/core#loadconfig) method has changed from `jiti` to `auto`, preferring the native Node.js loader.
+
+## Plugin API
+
+- Renamed `api.onAfterStartProdServer` hook to `api.onAfterStartPreviewServer`
+- Renamed `api.onBeforeStartProdServer` hook to `api.onBeforeStartPreviewServer`
 
 ## Dropping webpack support
 

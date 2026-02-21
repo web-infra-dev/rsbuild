@@ -17,7 +17,7 @@ type ServerSetup = ServerSetupFn | ServerSetupFn[];
 
 Run setup logic for both dev and preview servers.
 
-Primarily used to register middleware, and can also run other startup tasks. Similar to [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) and [onBeforeStartProdServer](/plugins/dev/hooks#onbeforestartprodserver) hooks.
+Primarily used to register middleware, and can also run other startup tasks. Similar to [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) and [onBeforeStartPreviewServer](/plugins/dev/hooks#onbeforestartprodserver) hooks.
 
 ## Basic usage
 
@@ -42,7 +42,7 @@ type ServerSetupContext =
 - `context.environments`: environment contexts of all environments.
 
 `server.setup` is mainly for registering middleware, and can also run other startup tasks.
-It is similar to `onBeforeStartDevServer` and `onBeforeStartProdServer`, but configured in `rsbuild.config.ts`.
+It is similar to `onBeforeStartDevServer` and `onBeforeStartPreviewServer`, but configured in `rsbuild.config.ts`.
 
 The setup function runs before Rsbuild registers built-in middlewares, so middlewares added in setup run earlier than built-ins.
 It can return a callback, and that callback runs after built-in middlewares are registered.

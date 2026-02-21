@@ -875,36 +875,36 @@ rsbuild.onCloseDevServer(async () => {
 });
 ```
 
-## rsbuild.onBeforeStartProdServer
+## rsbuild.onBeforeStartPreviewServer
 
-> Provides the same functionality as the [onBeforeStartProdServer](/plugins/dev/hooks#onbeforestartprodserver) plugin hook.
+> Provides the same functionality as the [onBeforeStartPreviewServer](/plugins/dev/hooks#onbeforestartprodserver) plugin hook.
 
-import OnBeforeStartProdServer from '@en/shared/onBeforeStartProdServer.mdx';
+import OnBeforeStartPreviewServer from '@en/shared/onBeforeStartPreviewServer.mdx';
 
-<OnBeforeStartProdServer />
+<OnBeforeStartPreviewServer />
 
 - **Example:**
 
 ```ts
-rsbuild.onBeforeStartProdServer(({ server, environments }) => {
+rsbuild.onBeforeStartPreviewServer(({ server, environments }) => {
   console.log('before start!');
   console.log('the server is ', server);
   console.log('the environments contexts are: ', environments);
 });
 ```
 
-## rsbuild.onAfterStartProdServer
+## rsbuild.onAfterStartPreviewServer
 
-> Provides the same functionality as the [onAfterStartProdServer](/plugins/dev/hooks#onafterstartprodserver) plugin hook.
+> Provides the same functionality as the [onAfterStartPreviewServer](/plugins/dev/hooks#onafterstartprodserver) plugin hook.
 
-import OnAfterStartProdServer from '@en/shared/onAfterStartProdServer.mdx';
+import OnAfterStartPreviewServer from '@en/shared/onAfterStartPreviewServer.mdx';
 
-<OnAfterStartProdServer />
+<OnAfterStartPreviewServer />
 
 - **Example:**
 
 ```ts
-rsbuild.onAfterStartProdServer(({ port, routes }) => {
+rsbuild.onAfterStartPreviewServer(({ port, routes }) => {
   console.log('this port is: ', port);
   console.log('this routes is: ', routes);
 });

@@ -97,7 +97,7 @@ export type OnBeforeStartDevServerFn = (params: {
   environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<(() => MaybePromise<void>) | void>;
 
-export type OnBeforeStartProdServerFn = (params: {
+export type OnBeforeStartPreviewServerFn = (params: {
   /**
    * The preview server instance.
    */
@@ -122,7 +122,7 @@ export type OnAfterStartDevServerFn = (params: {
   environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;
 
-export type OnAfterStartProdServerFn = (params: {
+export type OnAfterStartPreviewServerFn = (params: {
   port: number;
   routes: Routes;
   /**
