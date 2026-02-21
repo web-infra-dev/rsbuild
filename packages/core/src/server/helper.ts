@@ -544,6 +544,11 @@ export const HttpCode = {
  */
 export type RsbuildServerBase = {
   /**
+   * Close the server.
+   * In the dev server, this will call the `onCloseDevServer` hook.
+   */
+  close: () => Promise<void>;
+  /**
    * The Node.js HTTP server instance.
    * - Will be `Http2SecureServer` if `server.https` config is used.
    * - Will be `null` if `server.middlewareMode` is enabled.
