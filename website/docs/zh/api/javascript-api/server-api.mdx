@@ -94,7 +94,7 @@ async function startDevServer() {
 在 dev server 和 preview server 中都可用的公共方法和属性。
 
 ```ts
-type ServerBase = {
+type RsbuildServerBase = {
   /**
    * 关闭 server
    * 在 dev server 中会触发 `onCloseDevServer` 钩子
@@ -110,17 +110,8 @@ type ServerBase = {
     | import('node:http2').Http2SecureServer
     | null;
   /**
-   * 监听 Rsbuild dev server
-   * 当你使用自定义 server 时，不需要调用该方法
-   */
-  listen: () => Promise<{
-    port: number;
-    urls: string[];
-    server: RsbuildDevServer;
-  }>;
-  /**
    * `connect` 实例
-   * 可用于向 dev server 附加自定义中间件
+   * 可用于向 server 附加自定义中间件
    */
   middlewares: Connect.Server;
   /**
@@ -136,7 +127,7 @@ type ServerBase = {
 仅在 dev server 中可用的方法和属性。
 
 ```ts
-type RsbuildDevServer = ServerBase & {
+type RsbuildDevServer = RsbuildServerBase & {
   /**
    * 通知 Rsbuild 自定义 Server 已启动
    * Rsbuild 会在此阶段触发 `onAfterStartDevServer` 钩子
@@ -207,7 +198,9 @@ const server = app.listen(rsbuildServer.port, async () => {
 - **类型:** `() => Promise<void>`
 - **适用范围:** 通用
 
-调用 `close()` 方法来触发 [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) 钩子，并执行必要的清理操作。
+调用 `close()` 方法来执行必要的清理操作。
+
+在 dev server 中，这还会触发 [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) 钩子。
 
 ```ts
 import { createRsbuild } from '@rsbuild/core';
@@ -272,7 +265,7 @@ console.log(webStats.toJson({ all: false }));
 - **类型：** `Connect.Server`
 - **适用范围:** 通用
 
-`connect` 实例，可用于向开发服务器附加自定义中间件。
+`connect` 实例，可用于向服务器附加自定义中间件。
 
 > 查看 [中间件](/guide/basic/server#middleware) 了解更多。
 

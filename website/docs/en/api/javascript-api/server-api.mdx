@@ -94,7 +94,7 @@ For detailed usage, see:
 Common methods and properties that are available in both dev and preview servers.
 
 ```ts
-type ServerBase = {
+type RsbuildServerBase = {
   /**
    * Close the server.
    * In the dev server, this will call the `onCloseDevServer` hook.
@@ -110,17 +110,8 @@ type ServerBase = {
     | import('node:http2').Http2SecureServer
     | null;
   /**
-   * Start listening on the Rsbuild dev server.
-   * Do not call this method if you are using a custom server.
-   */
-  listen: () => Promise<{
-    port: number;
-    urls: string[];
-    server: RsbuildDevServer;
-  }>;
-  /**
    * The `connect` app instance.
-   * Can be used to attach custom middleware to the dev server.
+   * Can be used to attach custom middleware to the server.
    */
   middlewares: Connect.Server;
   /**
@@ -137,7 +128,7 @@ type ServerBase = {
 Additional methods and properties that are only available in dev servers.
 
 ```ts
-type RsbuildDevServer = ServerBase & {
+type RsbuildDevServer = RsbuildServerBase & {
   /**
    * Notifies Rsbuild that the custom server has successfully started.
    * Rsbuild will trigger the `onAfterStartDevServer` hook at this stage.
@@ -209,7 +200,9 @@ const server = app.listen(rsbuildServer.port, async () => {
 - **Type:** `() => Promise<void>`
 - **Server type:** Shared
 
-Calling the `close()` method to trigger the [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) hook and perform necessary cleanup operations.
+Calling the `close()` method to perform necessary cleanup operations.
+
+In the dev server, this will also trigger the [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) hook.
 
 ```ts
 import { createRsbuild } from '@rsbuild/core';
@@ -276,7 +269,7 @@ console.log(webStats.toJson({ all: false }));
 - **Type:** `Connect.Server`
 - **Server type:** Shared
 
-The `connect` instance. Can be used to attach custom middleware to the dev server.
+The `connect` instance. Can be used to attach custom middleware to the server.
 
 > See [Middleware](/guide/basic/server#middleware) to learn more.
 
