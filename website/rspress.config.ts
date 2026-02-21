@@ -74,6 +74,10 @@ export default defineConfig({
           to: '/config/resolve/alias',
         },
         {
+          from: '/api/javascript-api/dev-server-api',
+          to: '/api/javascript-api/server-api',
+        },
+        {
           from: '/config/source/alias-strategy',
           to: '/config/resolve/alias-strategy',
         },

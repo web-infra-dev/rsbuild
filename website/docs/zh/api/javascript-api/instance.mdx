@@ -359,7 +359,7 @@ try {
 
 - `urls`：访问 dev server 的 URLs
 - `port` 实际监听的端口号
-- `server`：Server 实例对象，详见 [Server API](/api/javascript-api/dev-server-api)
+- `server`：Server 实例对象，详见 [Server API](/api/javascript-api/server-api)
 
 ```ts
 const { urls, port } = await rsbuild.startDevServer();
@@ -411,7 +411,7 @@ function createDevServer(
 
 Rsbuild 配备了一个内置的开发服务器，当你执行 `rsbuild dev` 时，将启动 Rsbuild dev server，并提供页面预览、路由、模块热更新等功能。
 
-- 如果你需要将 Rsbuild dev server 集成到自定义的 server 中，可以通过 `createDevServer` 方法创建一个 dev server 实例，请参考 [Dev server API](/api/javascript-api/dev-server-api) 了解所有可用的 API。
+- 如果你需要将 Rsbuild dev server 集成到自定义的 server 中，可以通过 `createDevServer` 方法创建一个 dev server 实例，请参考 [Server API](/api/javascript-api/server-api) 了解所有可用的 API。
 - 如果你需要直接使用 Rsbuild dev server 启动项目，可以直接使用 [rsbuild.startDevServer](#rsbuildstartdevserver) 方法。 `rsbuild.startDevServer` 实际上是以下代码的语法糖：
 
 ```ts
@@ -478,7 +478,7 @@ try {
 
 - `urls`：访问 Server 的 URLs
 - `port` 实际监听的端口号
-- `server`：Server 实例对象，详见 [Server API](/api/javascript-api/dev-server-api)
+- `server`：Server 实例对象，详见 [Server API](/api/javascript-api/server-api)
 
 ```ts
 const { urls, port } = await rsbuild.preview();
