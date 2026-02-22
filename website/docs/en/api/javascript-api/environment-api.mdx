@@ -215,7 +215,7 @@ const webSocketUrl = `ws://localhost:${port}${pathname}?token=${webSocketToken}`
 
 Environment API provides some APIs related to the multi-environment build.
 
-You can use environment API via [rsbuild.createDevServer()](/api/javascript-api/instance#rsbuildcreatedevserver) or [dev.setupMiddlewares](/config/dev/setup-middlewares), which allows you to get the build outputs information for a specific environment in the server side.
+You can use environment API via [rsbuild.createDevServer()](/api/javascript-api/instance#rsbuildcreatedevserver) or [server.setup](/config/server/setup), which allows you to get the build outputs information for a specific environment in the server side.
 
 ```ts
 type EnvironmentAPI = {
