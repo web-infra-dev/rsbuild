@@ -87,96 +87,98 @@ For detailed usage, see:
 - [rsbuild.createDevServer](/api/javascript-api/instance#rsbuildcreatedevserver)
 - [server.middlewareMode](/config/server/middleware-mode)
 
-## Type definitions
-
-### Shared API
+## Shared API
 
 Common methods and properties that are available in both dev and preview servers.
 
+### close
+
+- **Type:** `() => Promise<void>`
+
+Calling the `close()` method to perform necessary cleanup operations.
+
+In the dev server, this will also trigger the [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) hook.
+
 ```ts
-type RsbuildServerBase = {
-  /**
-   * Close the server.
-   * In the dev server, this will call the `onCloseDevServer` hook.
-   */
-  close: () => Promise<void>;
-  /**
-   * The Node.js HTTP server instance.
-   * - Will be `Http2SecureServer` if `server.https` config is used.
-   * - Will be `null` if `server.middlewareMode` is enabled.
-   */
-  httpServer:
-    | import('node:http').Server
-    | import('node:http2').Http2SecureServer
-    | null;
-  /**
-   * The `connect` app instance.
-   * Can be used to attach custom middleware to the server.
-   */
-  middlewares: Connect.Server;
-  /**
-   * Open URL in the browser after starting the server.
-   */
-  open: () => Promise<void>;
-  /**
-   * The resolved port.
-   * By default, Rsbuild server listens on port `3000` and automatically increments
-   * the port number if the port is occupied.
-   */
-  port: number;
-  /**
-   * Print the server URLs.
-   */
-  printUrls: () => void;
-};
+import { createRsbuild } from '@rsbuild/core';
+
+const rsbuild = await createRsbuild();
+const rsbuildServer = await rsbuild.createDevServer();
+
+await rsbuildServer.close();
 ```
 
-### Dev server API
+### httpServer
+
+- **Type:** `import('node:http').Server | import('node:http2').Http2SecureServer | null`
+
+The Node.js HTTP server instance.
+
+- If [server.https](/config/server/https) is enabled, this is an `Http2SecureServer`.
+- If [server.middlewareMode](/config/server/middleware-mode) is enabled, this is `null`.
+
+### middlewares
+
+- **Type:** `Connect.Server`
+
+The `connect` instance. Can be used to attach custom middleware to the server.
+
+```ts
+const rsbuildServer = await rsbuild.createDevServer();
+
+rsbuildServer.middlewares.use((req, res, next) => {
+  if (req.url === '/foo') {
+    res.end('ok');
+    return;
+  }
+  next();
+});
+```
+
+> See [Middleware](/guide/basic/server#middleware) to learn more.
+
+### open
+
+- **Type:** `() => Promise<void>`
+
+Open URL in the browser after starting the server.
+
+```ts
+const { server } = await rsbuild.startDevServer();
+await server.open();
+```
+
+### port
+
+- **Type:** `number`
+
+The resolved port number.
+
+It starts from [server.port](/config/server/port) by default, and automatically increments to an available port when occupied.
+
+```ts
+const { server } = await rsbuild.startDevServer();
+console.log(server.port);
+```
+
+### printUrls
+
+- **Type:** `() => void`
+
+Print the server URLs.
+
+```ts
+const { server } = await rsbuild.startDevServer();
+server.printUrls();
+```
+
+## Dev server API
 
 Additional methods and properties that are only available in dev servers.
-
-```ts
-type RsbuildDevServer = RsbuildServerBase & {
-  /**
-   * Notifies Rsbuild that the custom server has successfully started.
-   * Rsbuild will trigger the `onAfterStartDevServer` hook at this stage.
-   */
-  afterListen: () => Promise<void>;
-  /**
-   * Activates the WebSocket connection.
-   * This ensures that HMR works properly.
-   */
-  connectWebSocket: (options: {
-    server: import('node:http').Server | import('node:http2').Http2SecureServer;
-  }) => void;
-  /**
-   * Environment API of Rsbuild server.
-   */
-  environments: EnvironmentAPI;
-  /**
-   * Start listening on the Rsbuild dev server.
-   * Do not call this method if you are using a custom server.
-   */
-  listen: () => Promise<{
-    port: number;
-    urls: string[];
-    server: RsbuildDevServer;
-  }>;
-  /**
-   * Allows middleware to send some message to HMR client, and then the HMR
-   * client will take different actions depending on the message type.
-   * - `static-changed`: The page will reload.
-   */
-  sockWrite: SockWrite;
-};
-```
-
-## API
 
 ### afterListen
 
 - **Type:** `() => Promise<void>`
-- **Server type:** Dev-only
 
 Notifies Rsbuild that the custom server has successfully started. Rsbuild will trigger the [onAfterStartDevServer](/plugins/dev/hooks#onafterstartdevserver) hook at this stage.
 
@@ -195,28 +197,9 @@ const server = app.listen(rsbuildServer.port, async () => {
 });
 ```
 
-### close
-
-- **Type:** `() => Promise<void>`
-- **Server type:** Shared
-
-Calling the `close()` method to perform necessary cleanup operations.
-
-In the dev server, this will also trigger the [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) hook.
-
-```ts
-import { createRsbuild } from '@rsbuild/core';
-
-const rsbuild = await createRsbuild();
-const rsbuildServer = await rsbuild.createDevServer();
-
-await rsbuildServer.close();
-```
-
 ### connectWebSocket
 
 - **Type:**
-- **Server type:** Dev-only
 
 ```ts
 type ConnectWebSocket = (options: {
@@ -253,7 +236,6 @@ rsbuildServer.connectWebSocket({ server: httpServer });
 ### environments
 
 - **Type:** [EnvironmentAPI](/api/javascript-api/environment-api#environment-api)
-- **Server type:** Dev-only
 
 Provides Rsbuild's [environment API](/api/javascript-api/environment-api#environment-api), which allows you to get the build outputs information for a specific environment in the server side.
 
@@ -264,43 +246,24 @@ const webStats = await rsbuildServer.environments.web.getStats();
 console.log(webStats.toJson({ all: false }));
 ```
 
-### middlewares
+### listen
 
-- **Type:** `Connect.Server`
-- **Server type:** Shared
+- **Type:** `() => Promise<{ port: number; urls: string[]; server: RsbuildDevServer }>`
 
-The `connect` instance. Can be used to attach custom middleware to the server.
+Starts the server and returns the listening result.
 
-> See [Middleware](/guide/basic/server#middleware) to learn more.
-
-### open
-
-- **Type:** `() => Promise<void>`
-- **Server type:** Shared
-
-Open URL in the browser after starting the server.
+If you are using [server.middlewareMode](/config/server/middleware-mode), you usually don't need to call this method.
 
 ```ts
-const { server } = await rsbuild.startDevServer();
-await server.open();
-```
+const rsbuildServer = await rsbuild.createDevServer();
+const { port, urls } = await rsbuildServer.listen();
 
-### printUrls
-
-- **Type:** `() => void`
-- **Server type:** Shared
-
-Print the server URLs.
-
-```ts
-const { server } = await rsbuild.startDevServer();
-server.printUrls();
+console.log(port, urls);
 ```
 
 ### sockWrite
 
 - **Type:**
-- **Server type:** Dev-only
 
 ```ts
 type SockWrite = {
