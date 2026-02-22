@@ -1,6 +1,6 @@
 import { expect, expectPoll, test } from '@e2e/helper';
 
-test('should apply custom middleware via `server.setup`', async ({
+test('should apply custom middleware via `setupMiddlewares`', async ({
   page,
   dev,
 }) => {
@@ -8,13 +8,9 @@ test('should apply custom middleware via `server.setup`', async ({
 
   await dev({
     config: {
-      server: {
-        setup: ({ action, server }) => {
-          if (action !== 'dev') {
-            return;
-          }
-
-          server.middlewares.use((_req, _res, next) => {
+      dev: {
+        setupMiddlewares: (middlewares) => {
+          middlewares.unshift((_req, _res, next) => {
             count++;
             next();
           });
@@ -28,7 +24,7 @@ test('should apply custom middleware via `server.setup`', async ({
   expect(count).toBeGreaterThanOrEqual(1);
 });
 
-test('should apply to trigger page reload via the `static-changed` type of sockWrite in server.setup', async ({
+test('should apply to trigger page reload via the `static-changed` type of sockWrite in setupMiddlewares', async ({
   dev,
 }) => {
   let count = 0;
@@ -36,17 +32,13 @@ test('should apply to trigger page reload via the `static-changed` type of sockW
 
   await dev({
     config: {
-      server: {
-        setup: ({ action, server }) => {
-          if (action !== 'dev') {
-            return;
-          }
-
-          server.middlewares.use((_req, _res, next) => {
+      dev: {
+        setupMiddlewares: (middlewares, { sockWrite }) => {
+          middlewares.unshift((_req, _res, next) => {
             count++;
             next();
           });
-          reloadPage = () => server.sockWrite('static-changed');
+          reloadPage = () => sockWrite('static-changed');
         },
       },
     },
