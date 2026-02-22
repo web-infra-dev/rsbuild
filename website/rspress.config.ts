@@ -74,6 +74,10 @@ export default defineConfig({
           to: '/config/resolve/alias',
         },
         {
+          from: '/config/dev/setup-middlewares',
+          to: '/config/server/setup',
+        },
+        {
           from: '/api/javascript-api/dev-server-api',
           to: '/api/javascript-api/server-api',
         },
