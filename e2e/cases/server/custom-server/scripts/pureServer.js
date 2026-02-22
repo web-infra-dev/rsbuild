@@ -9,10 +9,12 @@ export async function startDevServerPure(fixtures) {
       server: {
         htmlFallback: false,
         middlewareMode: true,
-      },
-      dev: {
-        setupMiddlewares: (middlewares) => {
-          middlewares.unshift((req, res, next) => {
+        setup: ({ action, server }) => {
+          if (action !== 'dev') {
+            return;
+          }
+
+          server.middlewares.use((req, res, next) => {
             if (req.url === '/test') {
               res.writeHead(302, {
                 Location: '/bbb',

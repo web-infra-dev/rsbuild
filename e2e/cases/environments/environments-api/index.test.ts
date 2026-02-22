@@ -1,6 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('should expose the environment API in setupMiddlewares', async ({
+test('should expose the environment API in server.setup', async ({
   dev,
   page,
 }) => {
@@ -8,16 +8,20 @@ test('should expose the environment API in setupMiddlewares', async ({
 
   const rsbuild = await dev({
     config: {
-      dev: {
-        setupMiddlewares: (middlewares, { environments }) => {
-          middlewares.unshift(async (req, _res, next) => {
+      server: {
+        setup: ({ action, server }) => {
+          if (action !== 'dev') {
+            return;
+          }
+
+          server.middlewares.use(async (req, _res, next) => {
             if (req.url === '/') {
-              const webStats = await environments.web.getStats();
+              const webStats = await server.environments.web.getStats();
 
               expect(webStats.toJson().name).toBe('web');
 
               assertionsCount++;
-              const web1Stats = await environments.web1.getStats();
+              const web1Stats = await server.environments.web1.getStats();
 
               expect(web1Stats.toJson().name).toBe('web1');
               assertionsCount++;
