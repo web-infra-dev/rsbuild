@@ -216,7 +216,7 @@ const webSocketUrl = `ws://localhost:${port}${pathname}?token=${webSocketToken}`
 
 Environment API 提供一些与多环境构建相关的 API。
 
-你可以通过 [rsbuild.createDevServer()](/api/javascript-api/instance#rsbuildcreatedevserver) 或 [dev.setupMiddlewares](/config/dev/setup-middlewares) 使用 environment API，这允许你在服务端获取特定环境下的构建产物信息。
+你可以通过 [rsbuild.createDevServer()](/api/javascript-api/instance#rsbuildcreatedevserver) 或 [server.setup](/config/server/setup) 使用 environment API，这允许你在服务端获取特定环境下的构建产物信息。
 
 ```ts
 type EnvironmentAPI = {

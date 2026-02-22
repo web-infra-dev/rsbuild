@@ -134,7 +134,7 @@ Below are the Rsbuild configuration options that correspond to Rspack CLI's `dev
 | [devServer.open](https://rspack.rs/config/dev-server#devserveropen)                               | [server.open](/config/server/open)                               |
 | [devServer.port](https://rspack.rs/config/dev-server#devserverport)                               | [server.port](/config/server/port)                               |
 | [devServer.proxy](https://rspack.rs/config/dev-server#devserverproxy)                             | [server.proxy](/config/server/proxy)                             |
-| [devServer.setupMiddlewares](https://rspack.rs/config/dev-server#devserversetupmiddlewares)       | [dev.setupMiddlewares](/config/dev/setup-middlewares)            |
+| [devServer.setupMiddlewares](https://rspack.rs/config/dev-server#devserversetupmiddlewares)       | [server.setup](/config/server/setup)                             |
 | [devServer.static](https://rspack.rs/config/dev-server#devserverstatic)                           | [server.publicDir](/config/server/public-dir)                    |
 | [devServer.watchFiles](https://rspack.rs/config/dev-server#devserverwatchfiles)                   | [dev.watchFiles](/config/dev/watch-files)                        |
 
@@ -148,13 +148,13 @@ Rsbuild's middleware implementation is built on [connect](https://github.com/sen
 
 Rsbuild provides three ways to register middleware:
 
-1. Use the [dev.setupMiddlewares](/config/dev/setup-middlewares) configuration.
+1. Use the [server.setup](/config/server/setup) configuration.
 
 ```ts title="rsbuild.config.ts"
 export default {
-  dev: {
-    setupMiddlewares: (middlewares) => {
-      middlewares.push((req, res, next) => {
+  server: {
+    setup: ({ server }) => {
+      server.middlewares.use((req, res, next) => {
         next();
       });
     },
@@ -202,9 +202,9 @@ const app = express();
 app.use(expressMiddleware);
 
 export default {
-  dev: {
-    setupMiddlewares: (middlewares) => {
-      middlewares.unshift(app);
+  server: {
+    setup: ({ server }) => {
+      server.middlewares.use(app);
     },
   },
 };
