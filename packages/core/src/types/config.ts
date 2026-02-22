@@ -1962,6 +1962,7 @@ export interface DevConfig {
       };
   /**
    * Used to add custom middleware to the dev server.
+   * @deprecated Use `server.setup` instead
    * @default undefined
    */
   setupMiddlewares?: SetupMiddlewaresFn | SetupMiddlewaresFn[];
