@@ -225,12 +225,11 @@ const applyDefaultMiddlewares = async ({
     }
   }
 
-  if (buildManager) {
+  if (buildManager && server.htmlFallback) {
     middlewares.use(
       getHtmlFallbackMiddleware({
         buildManager,
         distPath: context.distPath,
-        htmlFallback: server.htmlFallback,
       }),
     );
   }

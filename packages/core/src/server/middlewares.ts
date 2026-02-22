@@ -4,13 +4,7 @@ import onFinished from 'on-finished';
 import { color } from '../helpers';
 import { addTrailingSlash } from '../helpers/url';
 import { isVerbose, logger } from '../logger';
-import type {
-  Connect,
-  EnvironmentAPI,
-  HtmlFallback,
-  RequestHandler,
-  Rspack,
-} from '../types';
+import type { Connect, EnvironmentAPI, RequestHandler, Rspack } from '../types';
 import type { BuildManager } from './buildManager';
 import { HttpCode, joinUrlSegments, stripBase } from './helper';
 
@@ -230,14 +224,9 @@ export const getBaseUrlMiddleware: (params: {
 export const getHtmlFallbackMiddleware: (params: {
   distPath: string;
   buildManager: BuildManager;
-  htmlFallback?: HtmlFallback;
-}) => RequestHandler = ({ htmlFallback, distPath, buildManager }) => {
+}) => RequestHandler = ({ distPath, buildManager }) => {
   return async function htmlFallbackMiddleware(req, res, next) {
-    if (
-      !maybeHTMLRequest(req) ||
-      '/favicon.ico' === req.url ||
-      htmlFallback !== 'index'
-    ) {
+    if (!maybeHTMLRequest(req) || '/favicon.ico' === req.url) {
       next();
       return;
     }
