@@ -87,94 +87,98 @@ async function startDevServer() {
 - [rsbuild.createDevServer](/api/javascript-api/instance#rsbuildcreatedevserver)
 - [server.middlewareMode](/config/server/middleware-mode)
 
-## 类型定义
-
-### 共享 API
+## 共享 API
 
 在 dev server 和 preview server 中都可用的公共方法和属性。
 
+### close
+
+- **类型:** `() => Promise<void>`
+
+调用 `close()` 方法来执行必要的清理操作。
+
+在 dev server 中，这还会触发 [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) 钩子。
+
 ```ts
-type RsbuildServerBase = {
-  /**
-   * 关闭 server
-   * 在 dev server 中会触发 `onCloseDevServer` 钩子
-   */
-  close: () => Promise<void>;
-  /**
-   * Node.js HTTP 服务器实例
-   * - 如果使用了 `server.https` 配置，则为 `Http2SecureServer`
-   * - 如果开启了 `server.middlewareMode` 配置，则为 `null`
-   */
-  httpServer:
-    | import('node:http').Server
-    | import('node:http2').Http2SecureServer
-    | null;
-  /**
-   * `connect` 实例
-   * 可用于向 server 附加自定义中间件
-   */
-  middlewares: Connect.Server;
-  /**
-   * 启动服务器后，在浏览器中打开 URL
-   */
-  open: () => Promise<void>;
-  /**
-   * 解析后的端口号
-   * 默认情况下，Rsbuild server 会监听 `3000` 端口，如果端口被占用，则自动递增端口号
-   */
-  port: number;
-  /**
-   * 打印 server URLs
-   */
-  printUrls: () => void;
-};
+import { createRsbuild } from '@rsbuild/core';
+
+const rsbuild = await createRsbuild();
+const rsbuildServer = await rsbuild.createDevServer();
+
+await rsbuildServer.close();
 ```
 
-### Dev server API
+### httpServer
+
+- **类型:** `import('node:http').Server | import('node:http2').Http2SecureServer | null`
+
+Node.js HTTP 服务实例。
+
+- 如果启用了 [server.https](/config/server/https)，则为 `Http2SecureServer`。
+- 如果启用了 [server.middlewareMode](/config/server/middleware-mode)，则为 `null`。
+
+### middlewares
+
+- **类型：** `Connect.Server`
+
+`connect` 实例，可用于向服务器附加自定义中间件。
+
+```ts
+const rsbuildServer = await rsbuild.createDevServer();
+
+rsbuildServer.middlewares.use((req, res, next) => {
+  if (req.url === '/foo') {
+    res.end('ok');
+    return;
+  }
+  next();
+});
+```
+
+> 查看 [中间件](/guide/basic/server#middleware) 了解更多。
+
+### open
+
+- **类型：** `() => Promise<void>`
+
+启动服务器后，在浏览器中打开 URL。
+
+```ts
+const { server } = await rsbuild.startDevServer();
+await server.open();
+```
+
+### port
+
+- **类型:** `number`
+
+解析后的端口号。
+
+默认从 [server.port](/config/server/port) 开始，如果端口被占用会自动递增并使用可用端口。
+
+```ts
+const { server } = await rsbuild.startDevServer();
+console.log(server.port);
+```
+
+### printUrls
+
+- **类型：** `() => void`
+
+打印 server URLs。
+
+```ts
+const { server } = await rsbuild.startDevServer();
+server.printUrls();
+```
+
+## Dev server API
 
 仅在 dev server 中可用的方法和属性。
-
-```ts
-type RsbuildDevServer = RsbuildServerBase & {
-  /**
-   * 通知 Rsbuild 自定义 Server 已启动
-   * Rsbuild 会在此阶段触发 `onAfterStartDevServer` 钩子
-   */
-  afterListen: () => Promise<void>;
-  /**
-   * 激活 WebSocket 连接
-   * 这确保了 HMR 正常工作
-   */
-  connectWebSocket: (options: {
-    server: import('node:http').Server | import('node:http2').Http2SecureServer;
-  }) => void;
-  /**
-   * Rsbuild server 提供的 environment API
-   */
-  environments: EnvironmentAPI;
-  /**
-   * 监听 Rsbuild dev server
-   * 当你使用自定义 server 时，不需要调用该方法
-   */
-  listen: () => Promise<{
-    port: number;
-    urls: string[];
-    server: RsbuildDevServer;
-  }>;
-  /**
-   * 允许中间件向 HMR 客户端发送一些消息，HMR 客户端将根据接收到的消息类型进行不同的处理。
-   * - `static-changed`: 页面将会重新加载。
-   */
-  sockWrite: SockWrite;
-};
-```
-
-## API
 
 ### afterListen
 
 - **类型:** `() => Promise<void>`
-- **适用范围:** Dev 专有
 
 通知 Rsbuild 自定义的开发服务器已成功启动，Rsbuild 将在这个阶段触发 [onAfterStartDevServer](/plugins/dev/hooks#onafterstartdevserver) 钩子。
 
@@ -193,28 +197,9 @@ const server = app.listen(rsbuildServer.port, async () => {
 });
 ```
 
-### close
-
-- **类型:** `() => Promise<void>`
-- **适用范围:** 通用
-
-调用 `close()` 方法来执行必要的清理操作。
-
-在 dev server 中，这还会触发 [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) 钩子。
-
-```ts
-import { createRsbuild } from '@rsbuild/core';
-
-const rsbuild = await createRsbuild();
-const rsbuildServer = await rsbuild.createDevServer();
-
-await rsbuildServer.close();
-```
-
 ### connectWebSocket
 
 - **类型:**
-- **适用范围:** Dev 专有
 
 ```ts
 type ConnectWebSocket = (options: {
@@ -248,8 +233,7 @@ rsbuildServer.connectWebSocket({ server: httpServer });
 
 ### environments
 
-- **Type:** [EnvironmentAPI](/api/javascript-api/environment-api#environment-api)
-- **适用范围:** Dev 专有
+- **类型:** [EnvironmentAPI](/api/javascript-api/environment-api#environment-api)
 
 提供 Rsbuild 的 [environment API](/api/javascript-api/environment-api#environment-api)，这允许你在服务端获取特定环境下的构建产物信息。
 
@@ -260,43 +244,24 @@ const webStats = await rsbuildServer.environments.web.getStats();
 console.log(webStats.toJson({ all: false }));
 ```
 
-### middlewares
+### listen
 
-- **类型：** `Connect.Server`
-- **适用范围:** 通用
+- **类型:** `() => Promise<{ port: number; urls: string[]; server: RsbuildDevServer }>`
 
-`connect` 实例，可用于向服务器附加自定义中间件。
+启动 Rsbuild dev server 并返回监听结果。
 
-> 查看 [中间件](/guide/basic/server#middleware) 了解更多。
-
-### open
-
-- **类型：** `() => Promise<void>`
-- **适用范围:** 通用
-
-启动服务器后，在浏览器中打开 URL。
+使用 [server.middlewareMode](/config/server/middleware-mode) 时不需要调用该方法。
 
 ```ts
-const { server } = await rsbuild.startDevServer();
-await server.open();
-```
+const rsbuildServer = await rsbuild.createDevServer();
+const { port, urls } = await rsbuildServer.listen();
 
-### printUrls
-
-- **类型：** `() => void`
-- **适用范围:** 通用
-
-打印 server URLs。
-
-```ts
-const { server } = await rsbuild.startDevServer();
-server.printUrls();
+console.log(port, urls);
 ```
 
 ### sockWrite
 
 - **类型:**
-- **适用范围:** Dev 专有
 
 ```ts
 type SockWrite = {
