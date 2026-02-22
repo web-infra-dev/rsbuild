@@ -230,14 +230,9 @@ export const getBaseUrlMiddleware: (params: {
 export const getHtmlFallbackMiddleware: (params: {
   distPath: string;
   buildManager: BuildManager;
-  htmlFallback?: HtmlFallback;
-}) => RequestHandler = ({ htmlFallback, distPath, buildManager }) => {
+}) => RequestHandler = ({ distPath, buildManager }) => {
   return async function htmlFallbackMiddleware(req, res, next) {
-    if (
-      !maybeHTMLRequest(req) ||
-      '/favicon.ico' === req.url ||
-      htmlFallback !== 'index'
-    ) {
+    if (!maybeHTMLRequest(req) || '/favicon.ico' === req.url) {
       next();
       return;
     }
