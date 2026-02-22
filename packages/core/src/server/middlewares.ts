@@ -4,13 +4,7 @@ import onFinished from 'on-finished';
 import { color } from '../helpers';
 import { addTrailingSlash } from '../helpers/url';
 import { isVerbose, logger } from '../logger';
-import type {
-  Connect,
-  EnvironmentAPI,
-  HtmlFallback,
-  RequestHandler,
-  Rspack,
-} from '../types';
+import type { Connect, EnvironmentAPI, RequestHandler, Rspack } from '../types';
 import type { BuildManager } from './buildManager';
 import { HttpCode, joinUrlSegments, stripBase } from './helper';
 
