@@ -564,9 +564,17 @@ export type RsbuildServerBase = {
    */
   middlewares: Connect.Server;
   /**
+   * Open URL in the browser after starting the server.
+   */
+  open: () => Promise<void>;
+  /**
    * The resolved port.
    * By default, Rsbuild server listens on port `3000` and automatically increments
    * the port number if the port is occupied.
    */
   port: number;
+  /**
+   * Print the server URLs.
+   */
+  printUrls: () => void;
 };

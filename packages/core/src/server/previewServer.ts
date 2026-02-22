@@ -51,6 +51,11 @@ export async function startPreviewServer(
   const serverConfig = config.server;
   const { host, headers, proxy, historyApiFallback, compress, base, cors } =
     serverConfig;
+  const isHttps = Boolean(serverConfig.https);
+  const protocol = isHttps ? 'https' : 'http';
+  const routes = getRoutes(context);
+  const urls = await getAddressUrls({ protocol, port, host });
+  const cliShortcutsEnabled = isCliShortcutsEnabled(config);
 
   const httpServer = await createHttpServer({
     serverConfig,
@@ -74,14 +79,35 @@ export async function startPreviewServer(
     return closingPromise;
   };
 
+  const printUrls = () =>
+    printServerURLs({
+      urls,
+      port,
+      routes,
+      protocol,
+      printUrls: serverConfig.printUrls,
+      trailingLineBreak: !cliShortcutsEnabled,
+      originalConfig: context.originalConfig,
+    });
+
+  const openPage = async () => {
+    return open({
+      port,
+      routes,
+      config,
+      protocol,
+      clearCache: true,
+    });
+  };
+
   const previewServer: RsbuildPreviewServer = {
     httpServer,
     port,
     middlewares,
     close: closeServer,
+    printUrls,
+    open: openPage,
   };
-
-  const isHttps = Boolean(serverConfig.https);
 
   const postSetupCallbacks = await applyServerSetup(serverConfig.setup, {
     action: 'preview',
@@ -208,40 +234,13 @@ export async function startPreviewServer(
         port,
       },
       async () => {
-        const routes = getRoutes(context);
         await context.hooks.onAfterStartPreviewServer.callBatch({
           port,
           routes,
           environments: context.environments,
         });
 
-        const protocol = isHttps ? 'https' : 'http';
-        const urls = await getAddressUrls({ protocol, port, host });
-        const cliShortcutsEnabled = isCliShortcutsEnabled(config);
-
         registerCleanup(closeServer);
-
-        const printUrls = () =>
-          printServerURLs({
-            urls,
-            port,
-            routes,
-            protocol,
-            printUrls: serverConfig.printUrls,
-            trailingLineBreak: !cliShortcutsEnabled,
-            originalConfig: context.originalConfig,
-          });
-
-        const openPage = async () => {
-          return open({
-            port,
-            routes,
-            config,
-            protocol,
-            clearCache: true,
-          });
-        };
-
         printUrls();
 
         if (cliShortcutsEnabled) {

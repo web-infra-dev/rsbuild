@@ -115,11 +115,19 @@ type RsbuildServerBase = {
    */
   middlewares: Connect.Server;
   /**
+   * Open URL in the browser after starting the server.
+   */
+  open: () => Promise<void>;
+  /**
    * The resolved port.
    * By default, Rsbuild server listens on port `3000` and automatically increments
    * the port number if the port is occupied.
    */
   port: number;
+  /**
+   * Print the server URLs.
+   */
+  printUrls: () => void;
 };
 ```
 
@@ -154,14 +162,6 @@ type RsbuildDevServer = RsbuildServerBase & {
     urls: string[];
     server: RsbuildDevServer;
   }>;
-  /**
-   * Open URL in the browser after starting the server.
-   */
-  open: () => Promise<void>;
-  /**
-   * Print the server URLs.
-   */
-  printUrls: () => void;
   /**
    * Allows middleware to send some message to HMR client, and then the HMR
    * client will take different actions depending on the message type.
@@ -272,6 +272,30 @@ console.log(webStats.toJson({ all: false }));
 The `connect` instance. Can be used to attach custom middleware to the server.
 
 > See [Middleware](/guide/basic/server#middleware) to learn more.
+
+### open
+
+- **Type:** `() => Promise<void>`
+- **Server type:** Shared
+
+Open URL in the browser after starting the server.
+
+```ts
+const { server } = await rsbuild.startDevServer();
+await server.open();
+```
+
+### printUrls
+
+- **Type:** `() => void`
+- **Server type:** Shared
+
+Print the server URLs.
+
+```ts
+const { server } = await rsbuild.startDevServer();
+server.printUrls();
+```
 
 ### sockWrite
 

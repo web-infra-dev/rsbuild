@@ -115,10 +115,18 @@ type RsbuildServerBase = {
    */
   middlewares: Connect.Server;
   /**
+   * 启动服务器后，在浏览器中打开 URL
+   */
+  open: () => Promise<void>;
+  /**
    * 解析后的端口号
    * 默认情况下，Rsbuild server 会监听 `3000` 端口，如果端口被占用，则自动递增端口号
    */
   port: number;
+  /**
+   * 打印 server URLs
+   */
+  printUrls: () => void;
 };
 ```
 
@@ -153,14 +161,6 @@ type RsbuildDevServer = RsbuildServerBase & {
     urls: string[];
     server: RsbuildDevServer;
   }>;
-  /**
-   * 启动服务器后，在浏览器中打开 URL
-   */
-  open: () => Promise<void>;
-  /**
-   * 打印 server URLs
-   */
-  printUrls: () => void;
   /**
    * 允许中间件向 HMR 客户端发送一些消息，HMR 客户端将根据接收到的消息类型进行不同的处理。
    * - `static-changed`: 页面将会重新加载。
@@ -268,6 +268,30 @@ console.log(webStats.toJson({ all: false }));
 `connect` 实例，可用于向服务器附加自定义中间件。
 
 > 查看 [中间件](/guide/basic/server#middleware) 了解更多。
+
+### open
+
+- **类型：** `() => Promise<void>`
+- **适用范围:** 通用
+
+启动服务器后，在浏览器中打开 URL。
+
+```ts
+const { server } = await rsbuild.startDevServer();
+await server.open();
+```
+
+### printUrls
+
+- **类型：** `() => void`
+- **适用范围:** 通用
+
+打印 server URLs。
+
+```ts
+const { server } = await rsbuild.startDevServer();
+server.printUrls();
+```
 
 ### sockWrite
 
