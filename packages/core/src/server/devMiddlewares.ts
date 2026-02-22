@@ -1,7 +1,7 @@
 import { rspack } from '@rspack/core';
 import { castArray, pick } from '../helpers';
 import { isMultiCompiler } from '../helpers/compiler';
-import { isVerbose } from '../logger';
+import { isVerbose, logger } from '../logger';
 import type {
   Connect,
   InternalContext,
@@ -43,6 +43,13 @@ const applySetupMiddlewares = (
   const setupMiddlewares = config.dev.setupMiddlewares
     ? castArray(config.dev.setupMiddlewares)
     : [];
+
+  if (setupMiddlewares.length) {
+    logger.warn(
+      '[rsbuild] `dev.setupMiddlewares` is deprecated, use `server.setup` instead',
+    );
+  }
+
   const serverOptions: SetupMiddlewaresContext = pick(devServer, [
     'sockWrite',
     'environments',
