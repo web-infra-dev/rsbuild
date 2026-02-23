@@ -10,12 +10,12 @@
     "svelte-check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "dependencies": {
-    "svelte": "^5.53.0"
+    "svelte": "^5.53.2"
   },
   "devDependencies": {
     "@rsbuild/core": "^2.0.0-beta.4",
     "@rsbuild/plugin-svelte": "^1.1.0",
-    "svelte-check": "^4.4.0",
+    "svelte-check": "^4.4.3",
     "typescript": "^5.9.3"
   }
 }

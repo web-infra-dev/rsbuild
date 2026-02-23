@@ -15,7 +15,7 @@ engineStrict: true
 hoistPattern: []
 
 patchedDependencies:
-  css-loader@7.1.3: patches/css-loader@7.1.3.patch
+  css-loader@7.1.4: patches/css-loader@7.1.4.patch
   file-loader: patches/file-loader@6.2.0.patch
   http-proxy@1.18.1: patches/http-proxy@1.18.1.patch
   postcss-loader@8.2.1: patches/postcss-loader@8.2.1.patch

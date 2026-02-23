@@ -1,7 +1,7 @@
 # postcss-loader and css-loader use `semver` to compare PostCSS ast version,
 # Rsbuild uses the same PostCSS version and do not need the comparison.
 diff --git a/dist/index.js b/dist/index.js
-index 8b904795f80459386cf98c469dbaad2bc14e1376..f3720456b5ab68516fa18eac914efe42b22c70b1 100644
+index 8b904795f80459386cf98c469dbaad2bc14e1376..90a6fe9434b042be009c0cc9f9873fcd3e15da3e 100644
 --- a/dist/index.js
 +++ b/dist/index.js
 @@ -5,9 +5,6 @@ Object.defineProperty(exports, "__esModule", {
@@ -28,7 +28,7 @@ index 8b904795f80459386cf98c469dbaad2bc14e1376..f3720456b5ab68516fa18eac914efe42
        ast
      } = meta;
 -    if (ast && ast.type === "postcss" && (0, _semver.satisfies)(ast.version, `^${_package.default.version}`)) {
-+    if (ast && ast.type === "postcss" ) {
++    if (ast && ast.type === "postcss") {
        // eslint-disable-next-line no-param-reassign
        content = ast.root;
      }

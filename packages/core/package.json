@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@rspack/core": "2.0.0-beta.2",
-    "@swc/helpers": "^0.5.18"
+    "@swc/helpers": "^0.5.19"
   },
   "peerDependencies": {
     "core-js": ">= 3.0.0"
@@ -68,7 +68,7 @@
     "chokidar": "^5.0.0",
     "connect": "3.7.0",
     "cors": "^2.8.6",
-    "css-loader": "7.1.3",
+    "css-loader": "7.1.4",
     "deepmerge": "^4.3.1",
     "dotenv-expand": "12.0.3",
     "html-rspack-plugin": "6.1.7",
