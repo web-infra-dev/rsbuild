@@ -3,12 +3,12 @@ import {
   defineConfig,
   logger,
   type RequestHandler,
-  type SetupMiddlewaresContext,
+  type RsbuildDevServer,
 } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 export const serverRender =
-  ({ environments }: SetupMiddlewaresContext): RequestHandler =>
+  ({ environments }: RsbuildDevServer): RequestHandler =>
   async (_req, res, _next) => {
     const bundle = await environments.node.loadBundle<{
       render: () => string;
@@ -28,10 +28,16 @@ export default defineConfig({
   dev: {
     // enable writeToDisk to make sure the sourcemap files are generated on disk for debugging
     writeToDisk: inspector.url() !== undefined,
-    setupMiddlewares: ({ unshift }, context) => {
-      const serverRenderMiddleware = serverRender(context);
+  },
+  server: {
+    setup: ({ action, server }) => {
+      if (action !== 'dev') {
+        return;
+      }
 
-      unshift(async (req, res, next) => {
+      const serverRenderMiddleware = serverRender(server);
+
+      const middleware: RequestHandler = async (req, res, next) => {
         if (req.method === 'GET' && req.url === '/') {
           try {
             await serverRenderMiddleware(req, res, next);
@@ -43,7 +49,9 @@ export default defineConfig({
         } else {
           next();
         }
-      });
+      };
+
+      server.middlewares.use(middleware);
     },
   },
   environments: {

@@ -20,10 +20,8 @@ test('should return 200 with custom headers for OPTIONS requests handled by midd
     config: {
       server: {
         cors: false,
-      },
-      dev: {
-        setupMiddlewares: (middlewares) => {
-          middlewares.push((req, res, next) => {
+        setup: ({ server }) => {
+          server.middlewares.use((req, res, next) => {
             if (req.method === 'OPTIONS') {
               res.statusCode = 200;
               res.setHeader(
