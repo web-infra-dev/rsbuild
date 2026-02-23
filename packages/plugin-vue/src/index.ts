@@ -42,8 +42,7 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
     name: PLUGIN_VUE_NAME,
 
     setup(api) {
-      const VUE_REGEXP = /\.vue$/;
-      const { test = VUE_REGEXP } = options;
+      const { test = /\.vue$/ } = options;
       const CSS_MODULES_REGEX = /\.modules?\.\w+$/i;
 
       api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
@@ -68,7 +67,7 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
             // For Vue style block, the path might be like:
             // 1. `/path/to/Foo.vue`
             // 2. `/path/to/Foo.vue.css?query=...`
-            if ((VUE_REGEXP.test(path) || path.includes('.vue.css')) && query) {
+            if ((path.endsWith('.vue') || path.includes('.vue.css')) && query) {
               try {
                 const params = new URLSearchParams(query);
                 return params.get('type') === 'style' && params.has('module');
