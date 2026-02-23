@@ -45,7 +45,7 @@ export function historyApiFallbackMiddleware(
       return;
     }
 
-    if (headers.accept.indexOf('application/json') === 0) {
+    if (headers.accept.startsWith('application/json')) {
       logger.debug(
         'Not rewriting',
         req.method,
@@ -93,7 +93,7 @@ export function historyApiFallbackMiddleware(
           ? rule
           : rule({ parsedUrl, match, request: req });
 
-      if (rewriteTarget.charAt(0) !== '/') {
+      if (!rewriteTarget.startsWith('/')) {
         logger.debug(
           'We recommend using an absolute path for the rewrite target.',
           'Received a non-absolute rewrite target',

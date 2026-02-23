@@ -44,7 +44,10 @@
       "@typescript-eslint/consistent-type-imports": "off",
       "@typescript-eslint/consistent-return": "off",
       "@typescript-eslint/consistent-generic-constructors": "off",
-      "@typescript-eslint/no-require-imports": "off"
+      "@typescript-eslint/no-require-imports": "off",
+      "@typescript-eslint/no-non-null-assertion": "off",
+      "@typescript-eslint/prefer-readonly": "off",
+      "@typescript-eslint/no-inferrable-types": "off"
     }
   }
 ]
