@@ -34,7 +34,7 @@
   "devDependencies": {
     "@biomejs/biome": "^2.4.4",
     "@rsbuild/config": "workspace:*",
-    "@rslint/core": "0.2.1",
+    "@rslint/core": "0.2.0",
     "@rstest/adapter-rslib": "^0.2.0",
     "@rstest/core": "^0.8.5",
     "@scripts/test-helper": "workspace:*",
