@@ -49,14 +49,7 @@
     "rules": {
       "recommended": true,
       "correctness": {
-        "useUniqueElementIds": "off",
         "useHookAtTopLevel": "off"
-      },
-      "complexity": {
-        "noImportantStyles": "off"
-      },
-      "a11y": {
-        "useHtmlLang": "off"
       },
       "style": {
         "noNonNullAssertion": "off",
