@@ -36,7 +36,7 @@
     "@rsbuild/core": "workspace:*",
     "@rslib/core": "0.19.6",
     "@types/node": "^24.10.13",
-    "preact": "^10.28.3",
+    "preact": "^10.28.4",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
