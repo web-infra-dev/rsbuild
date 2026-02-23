@@ -4,14 +4,12 @@ test('should load postcss.config.ts correctly', async ({ build }) => {
   const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();
-  const indexCssContent = getFileContent(files, 'index.css');
-  expect(indexCssContent).toContain(
+  const indexCss = getFileContent(files, 'index.css');
+  expect(indexCss).toContain(
     '.text-3xl{font-size:var(--text-3xl);line-height:var(--tw-leading,var(--text-3xl--line-height))}',
   );
-  expect(indexCssContent).toContain(
+  expect(indexCss).toContain(
     '.font-bold{--tw-font-weight:var(--font-weight-bold);font-weight:var(--font-weight-bold)}',
   );
-  expect(indexCssContent).toContain(
-    '.underline{text-decoration-line:underline}',
-  );
+  expect(indexCss).toContain('.underline{text-decoration-line:underline}');
 });
