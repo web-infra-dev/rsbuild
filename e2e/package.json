@@ -44,6 +44,7 @@
     "@rsdoctor/rspack-plugin": "1.5.2",
     "@scripts/test-helper": "workspace:*",
     "@tailwindcss/postcss": "^4.2.0",
+    "@tailwindcss/webpack": "^4.2.0",
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.24",
     "@types/node": "^24.10.13",
