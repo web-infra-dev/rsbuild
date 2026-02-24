@@ -1,6 +1,6 @@
 import { expect, getFileContent, test } from '@e2e/helper';
 
-test('should generate tailwindcss utilities correctly', async ({ build }) => {
+test('should generate tailwindcss utilities correctly with loader', async ({ build }) => {
   const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();
