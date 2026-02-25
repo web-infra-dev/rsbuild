@@ -548,20 +548,15 @@ export interface ServerConfig {
    */
   middlewareMode?: boolean;
   /**
-   * Run setup logic for both dev and preview servers.
+   * Run setup logic when the Rsbuild dev server or preview server start,
+   * such as registering custom middleware or running pre-start tasks.
    *
-   * Primarily used to register middleware, and can also run other startup
-   * tasks. Similar to `onBeforeStartDevServer` and `onBeforeStartPreviewServer` hooks.
+   * When `server.setup` is called, Rsbuild built-in middlewares are not registered yet,
+   * so middlewares you add run earlier than built-ins.
    *
-   * The setup function runs before Rsbuild registers built-in middlewares,
-   * so middlewares added in setup will run earlier than built-ins.
+   * `server.setup` can return a callback function. After built-in middlewares are registered,
+   * Rsbuild will execute that callback. Middlewares registered in the callback run later than built-ins.
    *
-   * The setup function can return a callback. The callback will run after
-   * built-in middlewares are registered, so middlewares added in the callback
-   * will run later than built-ins.
-   *
-   * In dev mode, the context includes `server` and `environments`, which gives
-   * access to dev-only capabilities like `server.sockWrite`.
    * @default undefined
    */
   setup?: ServerSetupFn | ServerSetupFn[];
