@@ -127,7 +127,7 @@ export default {
         return;
       }
 
-      server.middlewares.use((_req, _res, next) => {
+      server.middlewares.use(async (_req, _res, next) => {
         const result = await server.environments.node.loadBundle('main');
         console.log(result);
         next();
