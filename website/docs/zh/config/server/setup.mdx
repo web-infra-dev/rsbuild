@@ -15,11 +15,63 @@ type ServerSetup = ServerSetupFn | ServerSetupFn[];
 - **默认值：** `undefined`
 - **版本：** `>= 2.0.0`
 
-用于在 dev 和 preview 服务器启动时执行初始化逻辑。
+在 Rsbuild 的开发服务器或预览服务器启动时执行初始化逻辑，例如注册自定义的中间件、执行前置任务等。
 
-通常用于注册中间件，也可以在启动阶段运行其他任务。用法类似于 [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) 和 [onBeforeStartPreviewServer](/plugins/dev/hooks#onbeforestartpreviewserver) hooks。
+## 示例
 
-## 基本用法
+### 注册中间件
+
+添加一个中间件，用于在请求处理前打印日志：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    setup: ({ server }) => {
+      server.middlewares.use((req, res, next) => {
+        console.log('first');
+        next();
+      });
+    },
+  },
+};
+```
+
+### 环境区分
+
+在 `server.setup` 中，你可以根据 `context.action` 来区分当前是开发服务器还是预览服务器。
+
+例如，向开发服务器添加一个中间件：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    setup: ({ server, action }) => {
+      if (action === 'dev') {
+        server.middlewares.use((req, res, next) => {
+          console.log('dev middleware');
+          next();
+        });
+      }
+    },
+  },
+};
+```
+
+### 异步函数
+
+`server.setup` 允许你传入异步函数，例如：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    setup: async ({ server, action }) => {
+      return someAsyncTask();
+    },
+  },
+};
+```
+
+## 上下文对象
 
 `server.setup` 会接收一个 `context` 对象：
 
@@ -37,49 +89,24 @@ type ServerSetupContext =
     };
 ```
 
-- `context.action`：`'dev'` 或 `'preview'`。
-- `context.server.middlewares`：connect app 实例，可通过 `middlewares.use(...)` 注册中间件。
+- `context.action`：`'dev'` 代表开发服务器，`'preview'` 代表预览服务器。
+- `context.server`：服务器实例，参考 [Server API](/api/javascript-api/server-api) 了解更多。
 - `context.environments`：所有环境的上下文信息。
 
-`server.setup` 主要用于注册中间件，也可以执行其他启动逻辑。
-它与 `onBeforeStartDevServer`、`onBeforeStartPreviewServer` 作用类似，但通过 `rsbuild.config.ts` 直接配置。
+## 中间件执行顺序
 
-`setup` 本身会在 Rsbuild 注册内置中间件前执行，因此其中注册的中间件会早于内置中间件。
-`setup` 还可以返回一个回调，该回调会在内置中间件注册完成后执行。
+当 `server.setup` 被调用时，Rsbuild 内置的中间件还未注册，因此你添加的中间件会早于内置中间件执行。
 
-```ts title="rsbuild.config.ts"
-export default {
-  server: {
-    setup: ({ server }) => {
-      server.middlewares.use((req, res, next) => {
-        console.log('first');
-        next();
-      });
-    },
-  },
-};
-```
-
-## 后置回调
-
-你可以通过返回回调，在内置中间件之后注册中间件：
+`server.setup` 允许你返回一个回调函数，当 Rsbuild 内置的中间件注册完成后，会执行你返回的回调函数，在回调函数中注册的中间件会晚于内置中间件执行。
 
 ```ts title="rsbuild.config.ts"
 export default {
   server: {
     setup: ({ server }) => {
-      server.middlewares.use((req, _res, next) => {
-        if (req.url === '/api/before') {
-          console.log('before built-ins');
-        }
-        next();
-      });
-
+      // the returned callback will be called when the default
+      // middlewares are registered
       return () => {
-        server.middlewares.use((req, _res, next) => {
-          if (req.url === '/api/after') {
-            console.log('after built-ins');
-          }
+        server.middlewares.use((req, res, next) => {
           next();
         });
       };
@@ -88,9 +115,31 @@ export default {
 };
 ```
 
-## 多个函数
+## Environments API
 
-`server.setup` 也支持传入数组：
+在开发模式下，可以访问 Rsbuild 的 [Environments API](/api/javascript-api/environment-api)：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    setup: ({ server, action }) => {
+      if (action !== 'dev') {
+        return;
+      }
+
+      server.middlewares.use(async (_req, _res, next) => {
+        const result = await server.environments.node.loadBundle('main');
+        console.log(result);
+        next();
+      });
+    },
+  },
+};
+```
+
+## 数组形式
+
+`server.setup` 也支持传入数组来执行多个函数：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -103,28 +152,6 @@ export default {
         server.middlewares.use(logMiddleware);
       },
     ],
-  },
-};
-```
-
-## 仅开发模式可用的能力
-
-在开发模式下，可以访问 `server.sockWrite` 等 dev-only 能力：
-
-```ts title="rsbuild.config.ts"
-export default {
-  server: {
-    setup: (context) => {
-      if (context.action !== 'dev') {
-        return;
-      }
-
-      context.server.middlewares.use((_req, _res, next) => {
-        next();
-      });
-
-      context.server.sockWrite('static-changed');
-    },
   },
 };
 ```
