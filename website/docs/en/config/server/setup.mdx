@@ -122,13 +122,13 @@ In development mode, you can access Rsbuild's [Environments API](/api/javascript
 ```ts title="rsbuild.config.ts"
 export default {
   server: {
-    setup: ({ server, action, environments }) => {
+    setup: ({ server, action }) => {
       if (action !== 'dev') {
         return;
       }
 
       server.middlewares.use(async (_req, _res, next) => {
-        const result = await environments.node.loadBundle('main');
+        const result = await server.environments.node.loadBundle('main');
         console.log(result);
         next();
       });
