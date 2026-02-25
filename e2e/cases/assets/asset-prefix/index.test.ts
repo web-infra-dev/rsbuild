@@ -80,8 +80,7 @@ test('should inject assetPrefix to env var and template correctly', async ({
     },
   });
 
-  await expect(page.locator('#prefix1')).toHaveText('http://example.com');
-  await expect(page.locator('#prefix2')).toHaveText('http://example.com');
+  await expect(page.locator('#prefix')).toHaveText('http://example.com');
 });
 
 test('should use output.assetPrefix in none mode', async ({ build }) => {
