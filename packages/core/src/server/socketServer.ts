@@ -473,14 +473,12 @@ export class SocketServer {
       }
 
       const result = this.getStats(webSocketToken);
-      if (!result) {
-        continue;
+      if (result) {
+        this.initialChunksMap.set(
+          webSocketToken,
+          this.getInitialChunks(result.stats),
+        );
       }
-
-      this.initialChunksMap.set(
-        webSocketToken,
-        this.getInitialChunks(result.stats),
-      );
     }
   }
 
