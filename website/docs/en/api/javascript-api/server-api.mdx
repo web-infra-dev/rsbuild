@@ -1,8 +1,22 @@
 # Server API
 
-Rsbuild provides server APIs for both dev and preview servers, available through plugin hooks and JavaScript API.
+Rsbuild provides server APIs for both dev and preview servers, available through configuration, plugin hooks, and JavaScript API.
 
 ## How to use
+
+### Configuration
+
+Rsbuild provides the [server.setup](/config/server/setup) option to access dev and preview server instances.
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    setup: ({ server }) => {
+      console.log('the server is ', server);
+    },
+  },
+};
+```
 
 ### Plugin hooks
 
