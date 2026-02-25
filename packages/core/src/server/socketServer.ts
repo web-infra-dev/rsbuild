@@ -213,6 +213,7 @@ export class SocketServer {
 
   public onBuildDone(): void {
     this.reportedBrowserLogs.clear();
+    this.ensureInitialChunks();
 
     if (!this.socketsMap.size) {
       return;
@@ -441,6 +442,52 @@ export class SocketServer {
     );
   }
 
+  private getInitialChunks(stats: RsbuildStatsItem) {
+    const initialChunks = new Set<string>();
+
+    if (!stats.entrypoints) {
+      return initialChunks;
+    }
+
+    for (const entrypoint of Object.values(stats.entrypoints)) {
+      const { chunks } = entrypoint;
+
+      if (!Array.isArray(chunks)) {
+        continue;
+      }
+
+      for (const chunkName of chunks) {
+        if (!chunkName) {
+          continue;
+        }
+        initialChunks.add(String(chunkName));
+      }
+    }
+
+    return initialChunks;
+  }
+
+  // Cache initial chunks for environments that have no baseline yet.
+  // This keeps comparison stable even when no client socket is connected
+  // during the first completed build.
+  private ensureInitialChunks() {
+    for (const { webSocketToken } of this.context.environmentList) {
+      if (this.initialChunksMap.has(webSocketToken)) {
+        continue;
+      }
+
+      const result = this.getStats(webSocketToken);
+      if (!result) {
+        continue;
+      }
+
+      this.initialChunksMap.set(
+        webSocketToken,
+        this.getInitialChunks(result.stats),
+      );
+    }
+  }
+
   // Only use stats when environment is matched
   private getStats(token: string) {
     const { stats } = this.context.buildState;
@@ -486,23 +533,7 @@ export class SocketServer {
     // web-infra-dev/rspack#6633
     // when initial-chunks change, reload the page
     // e.g: ['index.js'] -> ['index.js', 'lib-polyfill.js']
-    const newInitialChunks = new Set<string>();
-    if (stats.entrypoints) {
-      for (const entrypoint of Object.values(stats.entrypoints)) {
-        const { chunks } = entrypoint;
-
-        if (!Array.isArray(chunks)) {
-          continue;
-        }
-
-        for (const chunkName of chunks) {
-          if (!chunkName) {
-            continue;
-          }
-          newInitialChunks.add(String(chunkName));
-        }
-      }
-    }
+    const newInitialChunks = this.getInitialChunks(stats);
 
     const initialChunks = this.initialChunksMap.get(token);
     const shouldReload =
