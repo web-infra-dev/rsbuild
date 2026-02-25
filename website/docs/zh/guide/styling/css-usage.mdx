@@ -61,8 +61,10 @@ Rsbuild 使用 [postcss-load-config](https://github.com/postcss/postcss-load-con
 
 ```js title="postcss.config.cjs"
 module.exports = {
-  'postcss-px-to-viewport': {
-    viewportWidth: 375,
+  plugins: {
+    'postcss-px-to-viewport': {
+      viewportWidth: 375,
+    },
   },
 };
 ```
