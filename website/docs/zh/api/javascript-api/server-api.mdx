@@ -4,6 +4,20 @@ Rsbuild 提供了面向 dev server 和 preview server 的 server API，可通过
 
 ## 如何使用
 
+### 配置
+
+Rsbuild 提供了 [server.setup](/config/server/setup) 选项，可以访问 dev server 和 preview server 实例。
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    setup: ({ server }) => {
+      console.log('the server is ', server);
+    },
+  },
+};
+```
+
 ### 插件 hooks
 
 插件作者可通过 [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) 和 [onBeforeStartPreviewServer](/plugins/dev/hooks#onbeforestartpreviewserver) 钩子访问 dev server 和 preview server 实例。

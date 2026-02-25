@@ -91,7 +91,7 @@ type ServerSetupContext =
 
 - `context.action`: `'dev'` means dev server, `'preview'` means preview server.
 - `context.server`: server instance. See [Server API](/api/javascript-api/server-api) for more details.
-- `context.environments`: context information for all environments.
+- `context.environments`: context information for all environments. Note that this differs from `server.environments`, which is the [Environments API](/api/javascript-api/environment-api).
 
 ## Middleware execution order
 
