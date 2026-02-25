@@ -15,7 +15,7 @@ type ServerSetup = ServerSetupFn | ServerSetupFn[];
 - **Default:** `undefined`
 - **Version:** `>= 2.0.0`
 
-Run setup logic when the Rsbuild dev server or preview server start, such as registering custom middleware or running pre-start tasks.
+Run setup logic when the Rsbuild dev server or preview server starts, such as registering custom middleware or running pre-start tasks.
 
 ## Examples
 
@@ -104,7 +104,7 @@ export default {
   server: {
     setup: ({ server }) => {
       // the returned callback will be called when the default
-      // middleware are registered
+      // middlewares are registered
       return () => {
         server.middlewares.use((req, res, next) => {
           next();

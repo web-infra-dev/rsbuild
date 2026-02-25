@@ -548,7 +548,7 @@ export interface ServerConfig {
    */
   middlewareMode?: boolean;
   /**
-   * Run setup logic when the Rsbuild dev server or preview server start,
+   * Run setup logic when the Rsbuild dev server or preview server starts,
    * such as registering custom middleware or running pre-start tasks.
    *
    * When `server.setup` is called, Rsbuild built-in middlewares are not registered yet,

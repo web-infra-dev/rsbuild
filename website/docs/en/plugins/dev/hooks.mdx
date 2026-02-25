@@ -808,7 +808,7 @@ const myPlugin = () => ({
   setup(api) {
     api.onBeforeStartDevServer(({ server }) => {
       // the returned callback will be called when the default
-      // middleware are registered
+      // middlewares are registered
       return () => {
         server.middlewares.use((req, res, next) => {
           next();
