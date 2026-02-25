@@ -451,16 +451,12 @@ export class SocketServer {
 
     for (const entrypoint of Object.values(stats.entrypoints)) {
       const { chunks } = entrypoint;
-
-      if (!Array.isArray(chunks)) {
-        continue;
-      }
-
-      for (const chunkName of chunks) {
-        if (!chunkName) {
-          continue;
+      if (Array.isArray(chunks)) {
+        for (const chunkName of chunks) {
+          if (chunkName) {
+            initialChunks.add(String(chunkName));
+          }
         }
-        initialChunks.add(String(chunkName));
       }
     }
 
