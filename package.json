@@ -52,5 +52,10 @@
   "engines": {
     "node": ">=22.18.0",
     "pnpm": ">=10.30.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "@rslib/core": "https://pkg.pr.new/@rslib/core@802a7fe"
+    }
   }
 }

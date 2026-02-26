@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  '@rslib/core': https://pkg.pr.new/@rslib/core@802a7fe
+
 patchedDependencies:
   css-loader@7.1.4:
     hash: b504d70330b6625a20bc0cb1428c9787350fe6413c2947f42bd88ff22123a019
@@ -518,8 +521,8 @@ importers:
         specifier: ^0.3.31
         version: 0.3.31
       '@rslib/core':
-        specifier: 0.19.6
-        version: 0.19.6(@typescript/native-preview@7.0.0-dev.20260215.1)(typescript@5.9.3)
+        specifier: https://pkg.pr.new/@rslib/core@802a7fe
+        version: https://pkg.pr.new/@rslib/core@802a7fe(@module-federation/runtime-tools@2.0.1)(@typescript/native-preview@7.0.0-dev.20260215.1)(core-js@3.48.0)(typescript@5.9.3)
       '@types/connect':
         specifier: 3.4.38
         version: 3.4.38
@@ -666,8 +669,8 @@ importers:
         specifier: workspace:*
         version: link:../plugin-vue
       '@rslib/core':
-        specifier: 0.19.6
-        version: 0.19.6(@typescript/native-preview@7.0.0-dev.20260215.1)(typescript@5.9.3)
+        specifier: https://pkg.pr.new/@rslib/core@802a7fe
+        version: https://pkg.pr.new/@rslib/core@802a7fe(@module-federation/runtime-tools@2.0.1)(@typescript/native-preview@7.0.0-dev.20260215.1)(core-js@3.48.0)(typescript@5.9.3)
       '@types/node':
         specifier: ^24.10.13
         version: 24.10.13
@@ -709,8 +712,8 @@ importers:
         specifier: npm:@rsbuild/core@^1.7.3
         version: '@rsbuild/core@1.7.3'
       '@rslib/core':
-        specifier: 0.19.6
-        version: 0.19.6(@typescript/native-preview@7.0.0-dev.20260215.1)(typescript@5.9.3)
+        specifier: https://pkg.pr.new/@rslib/core@802a7fe
+        version: https://pkg.pr.new/@rslib/core@802a7fe(@module-federation/runtime-tools@2.0.1)(@typescript/native-preview@7.0.0-dev.20260215.1)(core-js@3.48.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -743,8 +746,8 @@ importers:
         specifier: npm:@rsbuild/core@^1.7.3
         version: '@rsbuild/core@1.7.3'
       '@rslib/core':
-        specifier: 0.19.6
-        version: 0.19.6(@typescript/native-preview@7.0.0-dev.20260215.1)(typescript@5.9.3)
+        specifier: https://pkg.pr.new/@rslib/core@802a7fe
+        version: https://pkg.pr.new/@rslib/core@802a7fe(@module-federation/runtime-tools@2.0.1)(@typescript/native-preview@7.0.0-dev.20260215.1)(core-js@3.48.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -783,8 +786,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.19.6
-        version: 0.19.6(@typescript/native-preview@7.0.0-dev.20260215.1)(typescript@5.9.3)
+        specifier: https://pkg.pr.new/@rslib/core@802a7fe
+        version: https://pkg.pr.new/@rslib/core@802a7fe(@module-federation/runtime-tools@2.0.1)(@typescript/native-preview@7.0.0-dev.20260215.1)(core-js@3.48.0)(typescript@5.9.3)
       '@types/node':
         specifier: ^24.10.13
         version: 24.10.13
@@ -811,8 +814,8 @@ importers:
         specifier: npm:@rsbuild/core@^1.7.3
         version: '@rsbuild/core@1.7.3'
       '@rslib/core':
-        specifier: 0.19.6
-        version: 0.19.6(@typescript/native-preview@7.0.0-dev.20260215.1)(typescript@5.9.3)
+        specifier: https://pkg.pr.new/@rslib/core@802a7fe
+        version: https://pkg.pr.new/@rslib/core@802a7fe(@module-federation/runtime-tools@2.0.1)(@typescript/native-preview@7.0.0-dev.20260215.1)(core-js@3.48.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -848,8 +851,8 @@ importers:
         specifier: npm:@rsbuild/core@^1.7.3
         version: '@rsbuild/core@1.7.3'
       '@rslib/core':
-        specifier: 0.19.6
-        version: 0.19.6(@typescript/native-preview@7.0.0-dev.20260215.1)(typescript@5.9.3)
+        specifier: https://pkg.pr.new/@rslib/core@802a7fe
+        version: https://pkg.pr.new/@rslib/core@802a7fe(@module-federation/runtime-tools@2.0.1)(@typescript/native-preview@7.0.0-dev.20260215.1)(core-js@3.48.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -888,8 +891,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.19.6
-        version: 0.19.6(@typescript/native-preview@7.0.0-dev.20260215.1)(typescript@5.9.3)
+        specifier: https://pkg.pr.new/@rslib/core@802a7fe
+        version: https://pkg.pr.new/@rslib/core@802a7fe(@module-federation/runtime-tools@2.0.1)(@typescript/native-preview@7.0.0-dev.20260215.1)(core-js@3.48.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -922,8 +925,8 @@ importers:
         specifier: npm:@rsbuild/core@^1.7.3
         version: '@rsbuild/core@1.7.3'
       '@rslib/core':
-        specifier: 0.19.6
-        version: 0.19.6(@typescript/native-preview@7.0.0-dev.20260215.1)(typescript@5.9.3)
+        specifier: https://pkg.pr.new/@rslib/core@802a7fe
+        version: https://pkg.pr.new/@rslib/core@802a7fe(@module-federation/runtime-tools@2.0.1)(@typescript/native-preview@7.0.0-dev.20260215.1)(core-js@3.48.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -950,8 +953,8 @@ importers:
         specifier: npm:@rsbuild/core@^1.7.3
         version: '@rsbuild/core@1.7.3'
       '@rslib/core':
-        specifier: 0.19.6
-        version: 0.19.6(@typescript/native-preview@7.0.0-dev.20260215.1)(typescript@5.9.3)
+        specifier: https://pkg.pr.new/@rslib/core@802a7fe
+        version: https://pkg.pr.new/@rslib/core@802a7fe(@module-federation/runtime-tools@2.0.1)(@typescript/native-preview@7.0.0-dev.20260215.1)(core-js@3.48.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -993,8 +996,8 @@ importers:
         specifier: npm:@rsbuild/core@^1.7.3
         version: '@rsbuild/core@1.7.3'
       '@rslib/core':
-        specifier: 0.19.6
-        version: 0.19.6(@typescript/native-preview@7.0.0-dev.20260215.1)(typescript@5.9.3)
+        specifier: https://pkg.pr.new/@rslib/core@802a7fe
+        version: https://pkg.pr.new/@rslib/core@802a7fe(@module-federation/runtime-tools@2.0.1)(@typescript/native-preview@7.0.0-dev.20260215.1)(core-js@3.48.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1030,8 +1033,8 @@ importers:
         specifier: npm:@rsbuild/core@^1.7.3
         version: '@rsbuild/core@1.7.3'
       '@rslib/core':
-        specifier: 0.19.6
-        version: 0.19.6(@typescript/native-preview@7.0.0-dev.20260215.1)(typescript@5.9.3)
+        specifier: https://pkg.pr.new/@rslib/core@802a7fe
+        version: https://pkg.pr.new/@rslib/core@802a7fe(@module-federation/runtime-tools@2.0.1)(@typescript/native-preview@7.0.0-dev.20260215.1)(core-js@3.48.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1048,8 +1051,8 @@ importers:
   scripts/config:
     devDependencies:
       '@rslib/core':
-        specifier: 0.19.6
-        version: 0.19.6(@typescript/native-preview@7.0.0-dev.20260215.1)(typescript@5.9.3)
+        specifier: https://pkg.pr.new/@rslib/core@802a7fe
+        version: https://pkg.pr.new/@rslib/core@802a7fe(@module-federation/runtime-tools@2.0.1)(@typescript/native-preview@7.0.0-dev.20260215.1)(core-js@3.48.0)(typescript@5.9.3)
       '@types/node':
         specifier: ^24.10.13
         version: 24.10.13
@@ -1079,8 +1082,8 @@ importers:
         version: 5.9.3
     devDependencies:
       '@rslib/core':
-        specifier: 0.19.6
-        version: 0.19.6(@typescript/native-preview@7.0.0-dev.20260215.1)(typescript@5.9.3)
+        specifier: https://pkg.pr.new/@rslib/core@802a7fe
+        version: https://pkg.pr.new/@rslib/core@802a7fe(@module-federation/runtime-tools@2.0.1)(@typescript/native-preview@7.0.0-dev.20260215.1)(core-js@3.48.0)(typescript@5.9.3)
 
   website:
     devDependencies:
@@ -2280,6 +2283,20 @@ packages:
 
   '@rslib/core@0.19.6':
     resolution: {integrity: sha512-/znUZlPX252DhAf2WvzmkZ2rBi85d8TadkABYvWoUGAVGsmFOiX+anDwLOqQ+7m5KsMFzM/SCqB2yEBvAj/T2g==}
+    engines: {node: '>=18.12.0'}
+    hasBin: true
+    peerDependencies:
+      '@microsoft/api-extractor': ^7
+      typescript: ^5
+    peerDependenciesMeta:
+      '@microsoft/api-extractor':
+        optional: true
+      typescript:
+        optional: true
+
+  '@rslib/core@https://pkg.pr.new/@rslib/core@802a7fe':
+    resolution: {integrity: sha512-2dqdiVq/Xbx7W9iReyzrP/zd3tPg1m07ivhUTA16TU5tb82XoWkUAxgk/7r8NwH34tKzuyhj0gwuGKxhlnHu8g==, tarball: https://pkg.pr.new/@rslib/core@802a7fe}
+    version: 0.19.6
     engines: {node: '>=18.12.0'}
     hasBin: true
     peerDependencies:
@@ -5545,6 +5562,23 @@ packages:
       typescript:
         optional: true
 
+  rsbuild-plugin-dts@https://pkg.pr.new/web-infra-dev/rslib/rsbuild-plugin-dts@802a7fe:
+    resolution: {integrity: sha512-okN5bTPaYjzgmYkHf2p3Uan+QNjglDdgPPj5R4qkiln/bz0svXr9YJizTqkoEtSflqZoeElMWlvHo0EuvzOKXg==, tarball: https://pkg.pr.new/web-infra-dev/rslib/rsbuild-plugin-dts@802a7fe}
+    version: 0.19.6
+    engines: {node: '>=18.12.0'}
+    peerDependencies:
+      '@microsoft/api-extractor': ^7
+      '@rsbuild/core': 1.x
+      '@typescript/native-preview': 7.x
+      typescript: ^5
+    peerDependenciesMeta:
+      '@microsoft/api-extractor':
+        optional: true
+      '@typescript/native-preview':
+        optional: true
+      typescript:
+        optional: true
+
   rsbuild-plugin-google-analytics@1.0.5:
     resolution: {integrity: sha512-1qSMjmH3HBNMIyrRjBFHQKmTdL86VNc42HjL3z25z4k4n+N7+cl9UvpD5ou3G6YAn1jNJ2GS2pia+PKNyaTzmg==}
     peerDependencies:
@@ -7595,7 +7629,6 @@ snapshots:
       core-js: 3.48.0
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
-    optional: true
 
   '@rsbuild/plugin-babel@1.1.0(@rsbuild/core@packages+core)':
     dependencies:
@@ -7764,14 +7797,25 @@ snapshots:
       - '@rspack/core'
       - webpack
 
-  '@rslib/core@0.19.6(@typescript/native-preview@7.0.0-dev.20260215.1)(typescript@5.9.3)':
+  '@rslib/core@0.19.6(typescript@5.9.3)':
     dependencies:
       '@rsbuild/core': 1.7.3
-      rsbuild-plugin-dts: 0.19.6(@rsbuild/core@1.7.3)(@typescript/native-preview@7.0.0-dev.20260215.1)(typescript@5.9.3)
+      rsbuild-plugin-dts: 0.19.6(@rsbuild/core@1.7.3)(typescript@5.9.3)
     optionalDependencies:
       typescript: 5.9.3
     transitivePeerDependencies:
       - '@typescript/native-preview'
+
+  '@rslib/core@https://pkg.pr.new/@rslib/core@802a7fe(@module-federation/runtime-tools@2.0.1)(@typescript/native-preview@7.0.0-dev.20260215.1)(core-js@3.48.0)(typescript@5.9.3)':
+    dependencies:
+      '@rsbuild/core': 2.0.0-beta.6(@module-federation/runtime-tools@2.0.1)(core-js@3.48.0)
+      rsbuild-plugin-dts: https://pkg.pr.new/web-infra-dev/rslib/rsbuild-plugin-dts@802a7fe(@rsbuild/core@2.0.0-beta.6(@module-federation/runtime-tools@2.0.1)(core-js@3.48.0))(@typescript/native-preview@7.0.0-dev.20260215.1)(typescript@5.9.3)
+    optionalDependencies:
+      typescript: 5.9.3
+    transitivePeerDependencies:
+      - '@module-federation/runtime-tools'
+      - '@typescript/native-preview'
+      - core-js
 
   '@rslint/core@0.2.1':
     optionalDependencies:
@@ -8069,7 +8113,7 @@ snapshots:
 
   '@rstest/adapter-rslib@0.2.0(@rslib/core@0.19.6(typescript@5.9.3))(@rstest/core@0.8.5)(typescript@5.9.3)':
     dependencies:
-      '@rslib/core': 0.19.6(@typescript/native-preview@7.0.0-dev.20260215.1)(typescript@5.9.3)
+      '@rslib/core': 0.19.6(typescript@5.9.3)
       '@rstest/core': 0.8.5
     optionalDependencies:
       typescript: 5.9.3
@@ -11464,10 +11508,17 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': 2.0.0-beta.6(@module-federation/runtime-tools@2.0.1)(core-js@3.48.0)
 
-  rsbuild-plugin-dts@0.19.6(@rsbuild/core@1.7.3)(@typescript/native-preview@7.0.0-dev.20260215.1)(typescript@5.9.3):
+  rsbuild-plugin-dts@0.19.6(@rsbuild/core@1.7.3)(typescript@5.9.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
       '@rsbuild/core': 1.7.3
+    optionalDependencies:
+      typescript: 5.9.3
+
+  rsbuild-plugin-dts@https://pkg.pr.new/web-infra-dev/rslib/rsbuild-plugin-dts@802a7fe(@rsbuild/core@2.0.0-beta.6(@module-federation/runtime-tools@2.0.1)(core-js@3.48.0))(@typescript/native-preview@7.0.0-dev.20260215.1)(typescript@5.9.3):
+    dependencies:
+      '@ast-grep/napi': 0.37.0
+      '@rsbuild/core': 2.0.0-beta.6(@module-federation/runtime-tools@2.0.1)(core-js@3.48.0)
     optionalDependencies:
       '@typescript/native-preview': 7.0.0-dev.20260215.1
       typescript: 5.9.3
