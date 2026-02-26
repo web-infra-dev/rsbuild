@@ -1,12 +1,11 @@
 import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
 import { parse as parseStack } from 'stacktrace-parser';
-import type Ws from '../../compiled/ws/index.js';
+import type { WebSocket, WebSocketServer } from 'ws';
 import { BROWSER_LOG_PREFIX, DEFAULT_STACK_TRACE } from '../constants.js';
 import { color, isObject } from '../helpers';
 import { formatStatsError } from '../helpers/format';
 import { getStatsErrors, getStatsWarnings } from '../helpers/stats';
-import { requireCompiledPackage } from '../helpers/vendors';
 import { logger } from '../logger';
 import type {
   DevConfig,
@@ -17,7 +16,7 @@ import type {
 import { type CachedTraceMap, formatBrowserErrorLog } from './browserLogs';
 import { renderErrorToHtml } from './overlay';
 
-interface ExtWebSocket extends Ws {
+interface ExtWebSocket extends WebSocket {
   isAlive: boolean;
 }
 
@@ -97,9 +96,9 @@ const parseQueryString = (req: IncomingMessage) => {
 };
 
 export class SocketServer {
-  private wsServer!: Ws.Server;
+  private wsServer!: WebSocketServer;
 
-  private readonly socketsMap = new Map<string, Set<Ws>>();
+  private readonly socketsMap = new Map<string, Set<WebSocket>>();
 
   private readonly options: DevConfig;
 
@@ -183,12 +182,12 @@ export class SocketServer {
   }
 
   // create socket, install socket handler, bind socket event
-  public prepare(): void {
+  public async prepare(): Promise<void> {
     this.clearHeartbeatTimer();
 
-    const ws = requireCompiledPackage('ws');
+    const { WebSocketServer } = await import(/* webpackChunkName: "ws" */ 'ws');
 
-    this.wsServer = new ws.Server({
+    this.wsServer = new WebSocketServer({
       noServer: true,
       path: this.options.client?.path,
     });
@@ -274,7 +273,7 @@ export class SocketServer {
   public sockWrite(message: ServerMessage, token?: string): void {
     const messageStr = JSON.stringify(message);
 
-    const sendToSockets = (sockets: Set<Ws>) => {
+    const sendToSockets = (sockets: Set<WebSocket>) => {
       for (const socket of sockets) {
         this.send(socket, messageStr);
       }
@@ -581,7 +580,7 @@ export class SocketServer {
   }
 
   // send message to connecting socket
-  private send(socket: Ws, message: string) {
+  private send(socket: WebSocket, message: string) {
     if (socket.readyState !== socket.OPEN) {
       return;
     }
