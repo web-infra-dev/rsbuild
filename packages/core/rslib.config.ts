@@ -184,8 +184,15 @@ export default defineConfig({
         tsgo: !process.env.CI,
         alias: {
           // alias to pre-bundled types as they are public API
+          cors: './compiled/cors',
           rslog: './compiled/rslog',
+          connect: './compiled/connect',
+          postcss: './compiled/postcss',
+          chokidar: './compiled/chokidar',
           'rspack-chain': './compiled/rspack-chain/types',
+          'html-rspack-plugin': './compiled/html-rspack-plugin',
+          'http-proxy-middleware': './compiled/http-proxy-middleware',
+          'rspack-manifest-plugin': './compiled/rspack-manifest-plugin',
         },
       },
       output: {

@@ -1,4 +1,4 @@
-import type { FSWatcher } from '../../compiled/chokidar';
+import type { FSWatcher } from 'chokidar';
 import { castArray } from '../helpers';
 import type {
   ChokidarOptions,

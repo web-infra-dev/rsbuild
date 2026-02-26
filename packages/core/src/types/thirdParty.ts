@@ -3,8 +3,8 @@ import type {
   CssExtractRspackPluginOptions,
 } from '@rspack/core';
 import type Connect from 'connect';
-import type HtmlRspackPlugin from '../../compiled/html-rspack-plugin';
-import type { AcceptedPlugin, ProcessOptions } from '../../compiled/postcss';
+import type HtmlRspackPlugin from 'html-rspack-plugin';
+import type { AcceptedPlugin, ProcessOptions } from 'postcss';
 import type { Rspack } from './rspack';
 import type { LiteralUnion } from './utils';
 

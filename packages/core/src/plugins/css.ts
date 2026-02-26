@@ -1,8 +1,8 @@
 import path, { posix } from 'node:path';
 import deepmerge from 'deepmerge';
+import type { AcceptedPlugin, PluginCreator } from 'postcss';
 import postcssrc from 'postcss-load-config';
 import { reduceConfigs, reduceConfigsWithContext } from 'reduce-configs';
-import type { AcceptedPlugin, PluginCreator } from '../../compiled/postcss';
 import {
   CSS_REGEX,
   INLINE_QUERY_REGEX,

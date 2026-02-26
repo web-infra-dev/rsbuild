@@ -1,5 +1,5 @@
 import path from 'node:path';
-import type { ChokidarOptions } from '../compiled/chokidar';
+import type { ChokidarOptions } from 'chokidar';
 import { init } from './cli/init';
 import { color, isTTY } from './helpers';
 import { logger } from './logger';
