@@ -25,7 +25,18 @@ export default {
     'webpack-merge',
     {
       name: 'chokidar',
-      copyDts: true,
+      dtsOnly: true,
+    },
+    {
+      name: 'cors',
+      dtsOnly: true,
+    },
+    {
+      name: 'connect',
+      dtsOnly: true,
+    },
+    {
+      name: 'rspack-manifest-plugin',
       dtsOnly: true,
     },
     {

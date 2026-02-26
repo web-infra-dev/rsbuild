@@ -12,14 +12,14 @@ import type {
   SwcJsMinimizerRspackPluginOptions,
   SwcLoaderOptions,
 } from '@rspack/core';
-import type { CorsOptions } from 'cors';
-import type RspackChain from 'rspack-chain';
-import type { FileDescriptor } from 'rspack-manifest-plugin';
-import type { ChokidarOptions } from '../../compiled/chokidar';
+import type { ChokidarOptions } from 'chokidar';
+import type Cors from 'cors';
 import type {
   Options as HttpProxyOptions,
   Filter as ProxyFilter,
-} from '../../compiled/http-proxy-middleware';
+} from 'http-proxy-middleware';
+import type RspackChain from 'rspack-chain';
+import type { FileDescriptor } from 'rspack-manifest-plugin';
 import type { RsbuildDevServer } from '../server/devServer';
 import type { RsbuildPreviewServer } from '../server/previewServer';
 import type {
@@ -525,7 +525,7 @@ export interface ServerConfig {
    *
    * @link https://github.com/expressjs/cors
    */
-  cors?: boolean | CorsOptions;
+  cors?: boolean | Cors.CorsOptions;
   /**
    * Configure proxy rules for the dev server or preview server to proxy requests to
    * the specified service.

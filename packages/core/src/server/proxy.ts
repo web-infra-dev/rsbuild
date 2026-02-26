@@ -1,4 +1,4 @@
-import type { RequestHandler } from '../../compiled/http-proxy-middleware';
+import type { RequestHandler } from 'http-proxy-middleware';
 import { color } from '../helpers';
 import { logger } from '../logger';
 import type {

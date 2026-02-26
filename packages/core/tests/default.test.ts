@@ -122,7 +122,7 @@ describe('bundlerApi', () => {
             .type('javascript/auto')
             .test(/\.ya?ml$/)
             .use('yaml')
-            .loader('../../compiled/yaml-loader');
+            .loader('yaml-loader');
         });
       },
     };
@@ -141,7 +141,7 @@ describe('bundlerApi', () => {
               "type": "javascript/auto",
               "use": [
                 {
-                  "loader": "../../compiled/yaml-loader",
+                  "loader": "yaml-loader",
                 },
               ],
             },
