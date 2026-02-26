@@ -1,0 +1,6 @@
+{
+  "name": "@e2e/type-tests",
+  "scripts": {
+    "type-check": "tsc --noEmit"
+  }
+}
