@@ -284,7 +284,11 @@ import 'react-app-polyfill/ie11'; // [!code --]
 import 'react-app-polyfill/stable'; // [!code --]
 ```
 
-2. Configure [output.polyfill](/config/output/polyfill):
+2. Install `core-js`:
+
+<PackageManagerTabs command="add core-js" />
+
+3. Configure [output.polyfill](/config/output/polyfill):
 
 ```ts title="rsbuild.config.ts"
 export default {
