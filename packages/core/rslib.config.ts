@@ -7,6 +7,9 @@ import prebundleConfig from './prebundle.config.ts';
 
 export const define = {
   RSBUILD_VERSION: JSON.stringify(pkgJson.version),
+  // `ws` internal env vars
+  'process.env.WS_NO_BUFFER_UTIL': true,
+  'process.env.WS_NO_UTF_8_VALIDATE': true,
 };
 
 const regexpMap: Record<string, RegExp> = {};
