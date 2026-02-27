@@ -55,7 +55,8 @@
   },
   "pnpm": {
     "overrides": {
-      "@rslib/core": "https://pkg.pr.new/@rslib/core@802a7fe"
+      "@rslib/core": "https://pkg.pr.new/@rslib/core@802a7fe",
+      "@rspack/core": "2.0.0-beta.4"
     }
   }
 }
