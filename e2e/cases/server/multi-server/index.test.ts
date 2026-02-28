@@ -1,6 +1,8 @@
 import { expect, getRandomPort, test } from '@e2e/helper';
+import { createConnectHandler } from '@e2e/helper/server';
+import { createAdaptorServer } from '@hono/node-server';
 import { createRsbuild } from '@rsbuild/core';
-import polka from 'polka';
+import { Hono } from 'hono';
 
 // TODO: flaky test
 test.skip('multiple rsbuild dev servers should work correctly', async ({
@@ -52,14 +54,22 @@ test.skip('multiple rsbuild dev servers should work correctly', async ({
   const rsbuildServer1 = await rsbuild1.createDevServer();
   const rsbuildServer2 = await rsbuild2.createDevServer();
 
-  const app = polka();
+  const app = new Hono();
+  const app1Handler = createConnectHandler(rsbuildServer1.middlewares);
+  const app2Handler = createConnectHandler(rsbuildServer2.middlewares);
 
-  app.use('/app1', rsbuildServer1.middlewares);
-  app.use('/app2', rsbuildServer2.middlewares);
+  app.all('/app1', app1Handler);
+  app.all('/app1/*', app1Handler);
+  app.all('/app2', app2Handler);
+  app.all('/app2/*', app2Handler);
 
   const port = await getRandomPort();
+  const server = createAdaptorServer({ fetch: app.fetch });
 
-  const { server } = app.listen({ port });
+  await new Promise<void>((resolve) => {
+    server.listen(port, () => resolve());
+  });
+
   page.goto(`http://localhost:${port}/app1`);
   await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild1!');
 
@@ -69,5 +79,5 @@ test.skip('multiple rsbuild dev servers should work correctly', async ({
   await rsbuildServer1.close();
   await rsbuildServer2.close();
 
-  server?.close();
+  server.close();
 });

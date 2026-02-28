@@ -1,5 +1,7 @@
+import { createConnectHandler } from '@e2e/helper/server';
+import { createAdaptorServer } from '@hono/node-server';
 import { createRsbuild } from '@rsbuild/core';
-import polka from 'polka';
+import { Hono } from 'hono';
 
 // Start custom dev server without compile
 export async function startDevServerPure(fixtures) {
@@ -29,23 +31,20 @@ export async function startDevServerPure(fixtures) {
     },
   });
 
-  const app = polka();
+  const app = new Hono();
 
   const rsbuildServer = await rsbuild.createDevServer({ runCompile: false });
 
-  app.get('/aaa', (_req, res) => {
-    res.end('Hello World!');
-  });
+  app.get('/aaa', (c) => c.text('Hello World!'));
+  app.get('/bbb', (c) => c.text('Hello hono!'));
+  app.all('*', createConnectHandler(rsbuildServer.middlewares));
 
-  app.use(rsbuildServer.middlewares);
+  const server = createAdaptorServer({ fetch: app.fetch });
 
-  app.get('/bbb', (_req, res) => {
-    res.end('Hello polka!');
+  await new Promise((resolve) => {
+    server.listen(rsbuildServer.port, resolve);
   });
-
-  const { server } = app.listen({ port: rsbuildServer.port }, async () => {
-    await rsbuildServer.afterListen();
-  });
+  await rsbuildServer.afterListen();
 
   return {
     config: { port: rsbuildServer.port },
