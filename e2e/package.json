@@ -23,6 +23,7 @@
   "devDependencies": {
     "@e2e/assets": "workspace:*",
     "@e2e/helper": "workspace:*",
+    "@hono/node-server": "^1.19.9",
     "@module-federation/enhanced": "2.0.1",
     "@module-federation/rsbuild-plugin": "2.0.1",
     "@playwright/test": "1.58.2",
@@ -48,14 +49,13 @@
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.24",
     "@types/node": "^24.10.13",
-    "@types/polka": "^0.5.8",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "create-rsbuild": "workspace:*",
     "fast-glob": "^3.3.3",
     "fs-extra": "^11.3.3",
+    "hono": "^4.12.3",
     "playwright": "1.58.2",
-    "polka": "^0.5.2",
     "tailwindcss": "^4.2.0",
     "typescript": "^5.9.3"
   }

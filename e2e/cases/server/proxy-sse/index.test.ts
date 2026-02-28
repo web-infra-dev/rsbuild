@@ -1,5 +1,6 @@
 import { expect, getRandomPort, test } from '@e2e/helper';
-import polka from 'polka';
+import { createAdaptorServer } from '@hono/node-server';
+import { Hono } from 'hono';
 
 test('should proxy SSE request', async ({ dev, page }) => {
   const ssePort = await getRandomPort();
@@ -16,19 +17,22 @@ test('should proxy SSE request', async ({ dev, page }) => {
     },
   });
 
-  const app = polka();
+  const app = new Hono();
 
-  app.get('/sse', (_req, res) => {
-    res.setHeader('Content-Type', 'text/event-stream');
-    res.setHeader('Cache-Control', 'no-cache');
-    res.setHeader('Connection', 'keep-alive');
-    res.flushHeaders();
-    res.write('data: Hello SSE1\n');
-    res.write('data: Hello SSE2\n');
+  app.get('/sse', () => {
+    return new Response('data: Hello SSE1\n\ndata: Hello SSE2\n\n', {
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        Connection: 'keep-alive',
+      },
+    });
   });
 
+  const server = createAdaptorServer({ fetch: app.fetch });
+
   await new Promise<void>((resolve) => {
-    app.listen(ssePort, () => resolve());
+    server.listen(ssePort, () => resolve());
   });
 
   const sseUrl = `http://localhost:${rsbuild.port}/api/sse`;
@@ -58,5 +62,5 @@ test('should proxy SSE request', async ({ dev, page }) => {
   expect(result.text).toContain('Hello SSE1');
   expect(result.text).toContain('Hello SSE2');
 
-  app.server?.close();
+  server.close();
 });
