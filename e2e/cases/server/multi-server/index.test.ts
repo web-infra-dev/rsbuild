@@ -4,13 +4,11 @@ import { createAdaptorServer } from '@hono/node-server';
 import { createRsbuild } from '@rsbuild/core';
 import { Hono } from 'hono';
 
-// TODO: flaky test
-test.skip('multiple rsbuild dev servers should work correctly', async ({
-  page,
-}) => {
+test('multiple rsbuild dev servers should work correctly', async ({ page }) => {
   const rsbuild1 = await createRsbuild({
     cwd: import.meta.dirname,
     config: {
+      mode: 'development',
       source: {
         entry: {
           index: './src/index1',
@@ -31,6 +29,7 @@ test.skip('multiple rsbuild dev servers should work correctly', async ({
   const rsbuild2 = await createRsbuild({
     cwd: import.meta.dirname,
     config: {
+      mode: 'development',
       source: {
         entry: {
           index: './src/index2',
@@ -69,6 +68,21 @@ test.skip('multiple rsbuild dev servers should work correctly', async ({
   await new Promise<void>((resolve) => {
     server.listen(port, () => resolve());
   });
+
+  // try {
+  //   await page.goto(`http://localhost:${port}/app1`);
+  //   await expect(page.locator('#test')).toHaveText('Hello Rsbuild1!');
+
+  //   await page.goto(`http://localhost:${port}/app2`);
+  //   await expect(page.locator('#test')).toHaveText('Hello Rsbuild2!');
+  // } finally {
+  //   await rsbuildServer1.close();
+  //   await rsbuildServer2.close();
+
+  //   await new Promise<void>((resolve) => {
+  //     server.close(() => resolve());
+  //   });
+  // }
 
   page.goto(`http://localhost:${port}/app1`);
   await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild1!');

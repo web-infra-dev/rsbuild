@@ -11,7 +11,7 @@
     "check-dependency-version": "pnpx check-dependency-version-consistency . --ignore-dep loader-utils",
     "check-spell": "pnpx cspell && heading-case",
     "doc": "cd website && node --run dev",
-    "e2e": "cd ./e2e && node --run e2e",
+    "e2e": "cd ./e2e && pnpm e2e",
     "format": "prettier --experimental-cli --write . && heading-case --write",
     "lint": "biome check && node --run lint:type",
     "lint:type": "rslint",
