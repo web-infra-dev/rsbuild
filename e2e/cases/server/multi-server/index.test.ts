@@ -69,21 +69,6 @@ test('multiple rsbuild dev servers should work correctly', async ({ page }) => {
     server.listen(port, () => resolve());
   });
 
-  // try {
-  //   await page.goto(`http://localhost:${port}/app1`);
-  //   await expect(page.locator('#test')).toHaveText('Hello Rsbuild1!');
-
-  //   await page.goto(`http://localhost:${port}/app2`);
-  //   await expect(page.locator('#test')).toHaveText('Hello Rsbuild2!');
-  // } finally {
-  //   await rsbuildServer1.close();
-  //   await rsbuildServer2.close();
-
-  //   await new Promise<void>((resolve) => {
-  //     server.close(() => resolve());
-  //   });
-  // }
-
   page.goto(`http://localhost:${port}/app1`);
   await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild1!');
 
