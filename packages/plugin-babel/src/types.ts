@@ -31,14 +31,12 @@ export interface SharedBabelPresetReactOptions {
   throwIfNamespace?: boolean;
 }
 
-export interface AutomaticRuntimePresetReactOptions
-  extends SharedBabelPresetReactOptions {
+export interface AutomaticRuntimePresetReactOptions extends SharedBabelPresetReactOptions {
   runtime?: 'automatic';
   importSource?: string;
 }
 
-export interface ClassicRuntimePresetReactOptions
-  extends SharedBabelPresetReactOptions {
+export interface ClassicRuntimePresetReactOptions extends SharedBabelPresetReactOptions {
   runtime?: 'classic';
   pragma?: string;
   pragmaFrag?: string;

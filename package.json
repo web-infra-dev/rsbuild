@@ -7,16 +7,16 @@
     "scripts/*"
   ],
   "scripts": {
-    "build": "pnpm --filter \"./packages/*\" --filter \"./scripts/*\" run build",
+    "build": "pnpm --workspace-concurrency=10 --filter \"./packages/*\" --filter \"./scripts/*\" run build",
     "check-dependency-version": "pnpx check-dependency-version-consistency . --ignore-dep loader-utils",
     "check-spell": "pnpx cspell && heading-case",
-    "doc": "cd website && pnpm dev",
-    "e2e": "cd ./e2e && pnpm e2e",
+    "doc": "cd website && node --run dev",
+    "e2e": "cd ./e2e && node --run e2e",
     "format": "prettier --experimental-cli --write . && heading-case --write",
-    "lint": "biome check && pnpm lint:type",
+    "lint": "biome check && node --run lint:type",
     "lint:type": "rslint",
-    "prebundle": "pnpm --filter \"./packages/*\" run prebundle",
-    "prepare": "simple-git-hooks && pnpm prebundle && pnpm build",
+    "prebundle": "pnpm --parallel --filter \"./packages/*\" run prebundle",
+    "prepare": "simple-git-hooks && node --run prebundle && node --run build",
     "sort-package-json": "pnpx sort-package-json \"./package.json\" \"packages/*/package.json\"",
     "test": "rstest",
     "test:watch": "rstest watch"
