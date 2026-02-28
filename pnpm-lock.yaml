@@ -362,6 +362,9 @@ importers:
 
   examples/module-federation/host:
     dependencies:
+      '@module-federation/runtime-tools':
+        specifier: 2.0.1
+        version: 2.0.1
       react:
         specifier: ^19.2.4
         version: 19.2.4
@@ -378,6 +381,9 @@ importers:
 
   examples/module-federation/remote:
     dependencies:
+      '@module-federation/runtime-tools':
+        specifier: 2.0.1
+        version: 2.0.1
       react:
         specifier: ^19.2.4
         version: 19.2.4
