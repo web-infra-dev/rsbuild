@@ -267,9 +267,9 @@ const myPlugin = () => ({
 const myPlugin = () => ({
   setup(api) {
     api.onAfterDevCompile(({ environments }) => {
-      environments.forEach((environment) => {
-        console.log('environment', environment);
-      });
+      for (const name in environments) {
+        console.log(name, environments[name]);
+      }
     });
   },
 });
