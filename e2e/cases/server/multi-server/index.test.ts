@@ -4,13 +4,11 @@ import { createAdaptorServer } from '@hono/node-server';
 import { createRsbuild } from '@rsbuild/core';
 import { Hono } from 'hono';
 
-// TODO: flaky test
-test.skip('multiple rsbuild dev servers should work correctly', async ({
-  page,
-}) => {
+test('multiple rsbuild dev servers should work correctly', async ({ page }) => {
   const rsbuild1 = await createRsbuild({
     cwd: import.meta.dirname,
     config: {
+      mode: 'development',
       source: {
         entry: {
           index: './src/index1',
@@ -31,6 +29,7 @@ test.skip('multiple rsbuild dev servers should work correctly', async ({
   const rsbuild2 = await createRsbuild({
     cwd: import.meta.dirname,
     config: {
+      mode: 'development',
       source: {
         entry: {
           index: './src/index2',
