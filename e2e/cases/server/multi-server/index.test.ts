@@ -2,7 +2,7 @@ import { expect, getRandomPort, test } from '@e2e/helper';
 import { createConnectHandler } from '@e2e/helper/server';
 import { createAdaptorServer } from '@hono/node-server';
 import { createRsbuild } from '@rsbuild/core';
-import { Hono } from 'hono';
+import { Hono, RegExpRouter } from 'hono';
 
 // TODO: flaky test
 test.skip('multiple rsbuild dev servers should work correctly', async ({
