@@ -61,7 +61,7 @@ jobs:
 
       - name: Unit Test
         if: steps.changes.outputs.changed == 'true'
-        run: pnpm test
+        run: node --run test
 
   # ======== e2e ========
   e2e:
@@ -106,7 +106,7 @@ jobs:
 
       - name: Run E2E tests
         if: steps.changes.outputs.changed == 'true'
-        run: pnpm run e2e
+        run: node --run e2e
 
       - name: E2E reporter
         if: always()
@@ -120,4 +120,4 @@ jobs:
 
       - name: Run E2E type checker
         if: steps.changes.outputs.changed == 'true'
-        run: cd e2e && pnpm run type-check
+        run: cd e2e && node --run type-check

@@ -18,5 +18,5 @@ description: Sync uncommitted docs between `website/docs/zh` and `website/docs/e
 3. Format and verify:
 
 ```bash
-pnpm format
+node --run format
 ```

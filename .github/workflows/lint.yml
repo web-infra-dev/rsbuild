@@ -37,10 +37,10 @@ jobs:
         run: pnpm install
 
       - name: Lint
-        run: pnpm lint
+        run: node --run lint
 
       - name: Check Spell
-        run: pnpm check-spell
+        run: node --run check-spell
 
       - name: Check Dependency Version
-        run: pnpm check-dependency-version
+        run: node --run check-dependency-version
