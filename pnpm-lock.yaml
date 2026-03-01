@@ -304,6 +304,8 @@ importers:
         specifier: ^0.3.31
         version: 0.3.31
 
+  e2e/type-tests: {}
+
   examples/lit:
     devDependencies:
       '@rsbuild/core':
