@@ -94,9 +94,6 @@
     '@rspack/core',
     // some loaders still depend on loader-utils v2
     'loader-utils',
-    // major version contains breaking changes
-    'style-loader',
-    'http-proxy-middleware',
     // Temporary ignore
     'less',
     'tinyglobby',
