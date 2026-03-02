@@ -623,8 +623,8 @@ importers:
         specifier: ^0.1.11
         version: 0.1.11
       style-loader:
-        specifier: 3.3.4
-        version: 3.3.4(webpack@5.105.3)
+        specifier: ^4.0.0
+        version: 4.0.0(webpack@5.105.3)
       supports-color:
         specifier: ^10.2.2
         version: 10.2.2
@@ -5718,11 +5718,11 @@ packages:
     resolution: {integrity: sha512-uCC2VHvQRYu+lMh4My/sFNmF2klFymLX1wHJeXnbEJERpV/ZsVuonzerjfrGpIGF7LBVa1O7i9kjiWvJiFck8g==}
     engines: {node: '>=0.10.0'}
 
-  style-loader@3.3.4:
-    resolution: {integrity: sha512-0WqXzrsMTyb8yjZJHDqwmnwRJvhALK9LfRtRc6B4UTWe8AijYLZYZ9thuJTZc2VfQWINADW/j+LiJnfy2RoC1w==}
-    engines: {node: '>= 12.13.0'}
+  style-loader@4.0.0:
+    resolution: {integrity: sha512-1V4WqhhZZgjVAVJyt7TdDPZoPBPNHbekX4fWnCJL1yQukhCeZhJySUL+gL9y6sNdN95uEOS83Y55SqHcP7MzLA==}
+    engines: {node: '>= 18.12.0'}
     peerDependencies:
-      webpack: ^5.0.0
+      webpack: ^5.27.0
 
   style-to-js@1.1.21:
     resolution: {integrity: sha512-RjQetxJrrUJLQPHbLku6U/ocGtzyjbJMP9lCNK7Ag0CNh690nSH8woqWH9u16nMjYBAok+i7JO1NP2pOy8IsPQ==}
@@ -11277,7 +11277,7 @@ snapshots:
 
   strip-bom-string@1.0.0: {}
 
-  style-loader@3.3.4(webpack@5.105.3):
+  style-loader@4.0.0(webpack@5.105.3):
     dependencies:
       webpack: 5.105.3
 

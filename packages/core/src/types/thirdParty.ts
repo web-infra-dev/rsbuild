@@ -231,23 +231,24 @@ export interface StyleLoaderOptions {
    */
   attributes?: Record<string, string>;
   /**
-   * By default, the style-loader appends <style>/<link> elements to the end of the style target, which is the <head> tag of the page unless specified by insert.
+   * By default, style-loader appends <style>/<link> elements to the end of the style target,
+   * which is the <head> tag of the page unless specified by insert.
    * This will cause CSS created by the loader to take priority over CSS already present in the target.
    * You can use other values if the standard behavior is not suitable for you, but we do not recommend doing this.
+   * If you target an iframe, make sure you have sufficient access rights.
+   *
+   * Supports:
+   * - a CSS selector where styles are injected
+   * - an absolute path to a custom insert module
    *
    * @default 'head'
    */
-  insert?:
-    | LiteralUnion<'head' | 'body', string>
-    | ((element: HTMLElement) => void);
+  insert?: LiteralUnion<'head' | 'body', string>;
   /**
-   * Allows to setup absolute path to custom function that allows to override default behavior styleTagTransform.
+   * Allows to setup an absolute path to a custom module that overrides
+   * the default styleTagTransform behavior.
+   *
+   * @default undefined
    */
-  styleTagTransform?:
-    | string
-    | ((
-        css: string,
-        styleElement: HTMLStyleElement,
-        options: Record<string, any>,
-      ) => void);
+  styleTagTransform?: string;
 }
