@@ -15,9 +15,9 @@
     "preact": "^10.28.4",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "react-router-dom": "^7.13.0",
+    "react-router-dom": "^7.13.1",
     "solid-js": "^1.9.11",
-    "vue": "^3.5.28",
+    "vue": "^3.5.29",
     "vue-router": "^5.0.3"
   },
   "devDependencies": {
@@ -44,11 +44,11 @@
     "@rsbuild/plugin-vue-jsx": "^1.1.2",
     "@rsdoctor/rspack-plugin": "1.5.2",
     "@scripts/test-helper": "workspace:*",
-    "@tailwindcss/postcss": "^4.2.0",
-    "@tailwindcss/webpack": "^4.2.0",
+    "@tailwindcss/postcss": "^4.2.1",
+    "@tailwindcss/webpack": "^4.2.1",
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.24",
-    "@types/node": "^24.10.13",
+    "@types/node": "^24.11.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "create-rsbuild": "workspace:*",
@@ -56,7 +56,7 @@
     "fs-extra": "^11.3.3",
     "hono": "^4.12.3",
     "playwright": "1.58.2",
-    "tailwindcss": "^4.2.0",
+    "tailwindcss": "^4.2.1",
     "typescript": "^5.9.3"
   }
 }

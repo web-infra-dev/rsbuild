@@ -41,7 +41,7 @@
     "@rsbuild/core-v1": "npm:@rsbuild/core@^1.7.3",
     "@rslib/core": "0.19.6",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^24.10.13",
+    "@types/node": "^24.11.0",
     "@types/sass-loader": "^8.0.10",
     "prebundle": "1.6.2",
     "resolve-url-loader": "^5.0.0",
