@@ -3,17 +3,12 @@
   "version": "2.0.0-beta.6",
   "description": "Create a new Rsbuild project",
   "homepage": "https://rsbuild.rs",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
     "directory": "packages/create-rsbuild"
   },
-  "license": "MIT",
-  "type": "module",
-  "exports": {
-    ".": "./dist/index.js"
-  },
-  "main": "./dist/index.js",
   "bin": {
     "create-rsbuild": "./bin.js"
   },
@@ -22,6 +17,15 @@
     "dist",
     "bin.js"
   ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build -w",
@@ -45,9 +49,5 @@
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
   }
 }

@@ -1,8 +1,8 @@
 {
   "name": "@rsbuild/config",
   "version": "1.0.1",
-  "type": "module",
   "private": true,
+  "type": "module",
   "devDependencies": {
     "@rslib/core": "0.19.6",
     "@types/node": "^24.11.0",

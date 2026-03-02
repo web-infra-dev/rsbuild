@@ -1,8 +1,8 @@
 {
-  "private": true,
   "name": "@rsbuild/e2e",
-  "type": "module",
   "version": "1.0.0",
+  "private": true,
+  "type": "module",
   "scripts": {
     "setup": "pnpm exec playwright install chromium --with-deps",
     "e2e": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules --no-warnings\" playwright test",

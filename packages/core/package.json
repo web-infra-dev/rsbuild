@@ -6,24 +6,12 @@
   "bugs": {
     "url": "https://github.com/web-infra-dev/rsbuild/issues"
   },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
     "directory": "packages/core"
   },
-  "license": "MIT",
-  "type": "module",
-  "exports": {
-    ".": {
-      "types": "./dist-types/index.d.ts",
-      "default": "./dist/index.js"
-    },
-    "./types": {
-      "types": "./types.d.ts"
-    },
-    "./package.json": "./package.json"
-  },
-  "types": "./dist-types/index.d.ts",
   "bin": {
     "rsbuild": "./bin/rsbuild.js"
   },
@@ -35,6 +23,22 @@
     "compiled",
     "types.d.ts"
   ],
+  "type": "module",
+  "types": "./dist-types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist-types/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./types": {
+      "types": "./types.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build -w",
@@ -44,14 +48,6 @@
   "dependencies": {
     "@rspack/core": "2.0.0-beta.4",
     "@swc/helpers": "^0.5.19"
-  },
-  "peerDependencies": {
-    "core-js": ">= 3.0.0"
-  },
-  "peerDependenciesMeta": {
-    "core-js": {
-      "optional": true
-    }
   },
   "devDependencies": {
     "@jridgewell/remapping": "^2.3.5",
@@ -97,11 +93,15 @@
     "webpack-merge": "6.0.1",
     "ws": "^8.19.0"
   },
+  "peerDependencies": {
+    "core-js": ">= 3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "core-js": {
+      "optional": true
+    }
+  },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
   }
 }

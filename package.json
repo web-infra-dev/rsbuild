@@ -1,17 +1,19 @@
 {
   "name": "rsbuild-monorepo",
   "private": true,
-  "type": "module",
   "workspaces": [
     "packages/*",
     "scripts/*"
   ],
+  "type": "module",
   "scripts": {
     "build": "pnpm --workspace-concurrency=10 --filter \"./packages/*\" --filter \"./scripts/*\" run build",
     "check-dependency-version": "pnpx check-dependency-version-consistency . --ignore-dep loader-utils",
     "check-spell": "pnpx cspell && heading-case",
     "doc": "cd website && node --run dev",
     "e2e": "cd ./e2e && pnpm e2e",
+    "prettier": "prettier --experimental-cli --write .",
+    "oxfmt": "oxfmt",
     "format": "prettier --experimental-cli --write . && heading-case --write",
     "lint": "biome check && node --run lint:type",
     "lint:type": "rslint",
@@ -20,16 +22,6 @@
     "sort-package-json": "pnpx sort-package-json \"./package.json\" \"packages/*/package.json\"",
     "test": "rstest",
     "test:watch": "rstest watch"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "pnpm exec nano-staged"
-  },
-  "nano-staged": {
-    "*.{md,mdx,json,css,less,scss}": "prettier --experimental-cli --write",
-    "*.{js,jsx,ts,tsx,mjs,cjs}": [
-      "biome check --write --no-errors-on-unmatched",
-      "prettier --experimental-cli --write"
-    ]
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.4",
@@ -43,13 +35,24 @@
     "cspell-ban-words": "^0.0.4",
     "heading-case": "^1.0.7",
     "nano-staged": "^0.9.0",
+    "oxfmt": "^0.35.0",
     "prettier": "^3.8.1",
     "simple-git-hooks": "^2.13.1",
     "typescript": "^5.9.3"
   },
-  "packageManager": "pnpm@10.30.0",
+  "simple-git-hooks": {
+    "pre-commit": "pnpm exec nano-staged"
+  },
+  "nano-staged": {
+    "*.{md,mdx,json,css,less,scss}": "prettier --experimental-cli --write",
+    "*.{js,jsx,ts,tsx,mjs,cjs}": [
+      "biome check --write --no-errors-on-unmatched",
+      "prettier --experimental-cli --write"
+    ]
+  },
   "engines": {
     "node": ">=22.18.0",
     "pnpm": ">=10.30.0"
-  }
+  },
+  "packageManager": "pnpm@10.30.0"
 }

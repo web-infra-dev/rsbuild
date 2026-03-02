@@ -30,7 +30,3 @@ const getResource = () => {
 for (await using x of [getResource()]) {
   x.test();
 }
-
-for await (await using x of [getResource()]) {
-  x.test();
-}

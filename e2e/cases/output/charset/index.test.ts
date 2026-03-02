@@ -10,7 +10,7 @@ const expectedObject = {
   ð: 'd',
   þ: 'o',
   Д: 'A',
-  '𝒩': 'a',
+  𝒩: 'a',
 };
 
 test('should set output.charset to ascii', async ({ page, runBothServe }) => {

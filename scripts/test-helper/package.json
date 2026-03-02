@@ -2,12 +2,16 @@
   "name": "@scripts/test-helper",
   "version": "1.0.1",
   "private": true,
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild"
   },
-  "license": "MIT",
+  "files": [
+    "dist"
+  ],
   "type": "module",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.js",
@@ -15,10 +19,10 @@
       "require": "./dist/index.cjs"
     }
   },
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build -w"
@@ -31,9 +35,5 @@
   },
   "devDependencies": {
     "@rslib/core": "0.19.6"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
   }
 }

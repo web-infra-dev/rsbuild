@@ -3,13 +3,19 @@
   "version": "1.6.0",
   "description": "Less plugin for Rsbuild",
   "homepage": "https://rsbuild.rs",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
     "directory": "packages/plugin-less"
   },
-  "license": "MIT",
+  "files": [
+    "dist",
+    "compiled"
+  ],
   "type": "module",
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -17,12 +23,10 @@
       "require": "./dist/index.cjs"
     }
   },
-  "main": "./dist/index.cjs",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist",
-    "compiled"
-  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build -w",
@@ -46,9 +50,5 @@
   },
   "peerDependencies": {
     "@rsbuild/core": "^1.3.0 || ^2.0.0-0"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
   }
 }
