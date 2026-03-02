@@ -1,6 +1,7 @@
 {
   "name": "@scripts/test-helper",
   "private": true,
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild"
@@ -8,7 +9,10 @@
   "license": "MIT",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
   },
   "dependencies": {
     "@rsbuild/core": "workspace:*",

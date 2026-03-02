@@ -1,6 +1,7 @@
 {
   "name": "@rsbuild/config",
   "type": "module",
+  "version": "1.0.0",
   "private": true,
   "devDependencies": {
     "@rslib/core": "0.19.6",
