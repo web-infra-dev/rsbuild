@@ -1,6 +1,6 @@
 {
   "name": "@scripts/test-helper",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "private": true,
   "repository": {
     "type": "git",
@@ -9,28 +9,13 @@
   "license": "MIT",
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.js",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    }
-  },
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "rslib build",
-    "dev": "rslib build -w"
+    ".": "./src/index.ts"
   },
   "dependencies": {
     "@rsbuild/core": "workspace:*",
     "@types/node": "^24.11.0",
     "path-serializer": "0.5.1",
     "typescript": "^5.9.3"
-  },
-  "devDependencies": {
-    "@rslib/core": "0.19.6"
   },
   "publishConfig": {
     "access": "public",

@@ -1074,10 +1074,6 @@ importers:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
-    devDependencies:
-      '@rslib/core':
-        specifier: 0.19.6
-        version: 0.19.6(@typescript/native-preview@7.0.0-dev.20260301.1)(typescript@5.9.3)
 
   website:
     devDependencies:
