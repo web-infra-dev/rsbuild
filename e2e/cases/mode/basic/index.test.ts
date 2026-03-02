@@ -43,8 +43,24 @@ test('should allow to set none mode when building', async ({ build }) => {
 });
 
 test('should allow to set production mode when starting dev server', async ({
+  page,
   dev,
+  logHelper,
 }) => {
+  const browserErrors: string[] = [];
+  const pageErrors: string[] = [];
+
+  page.on('console', (consoleMessage) => {
+    const text = consoleMessage.text();
+    logHelper.addLog(text);
+    if (consoleMessage.type() === 'error') {
+      browserErrors.push(text);
+    }
+  });
+  page.on('pageerror', (error) => {
+    pageErrors.push(error.message);
+  });
+
   const rsbuild = await dev({
     config: {
       mode: 'production',
@@ -62,6 +78,13 @@ test('should allow to set production mode when starting dev server', async ({
 
   // should replace `process.env.NODE_ENV` with `'production'`
   expect(indexJs).toContain('this is production mode!');
+
+  // should print the expected runtime log after page visit
+  await logHelper.expectLog('this is production mode!');
+
+  // should not have runtime errors in browser
+  expect(browserErrors).toEqual([]);
+  expect(pageErrors).toEqual([]);
 
   // should remove comments
   expect(indexJs).not.toContain('// this is a comment');
