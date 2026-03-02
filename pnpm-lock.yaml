@@ -701,9 +701,6 @@ importers:
       reduce-configs:
         specifier: ^1.1.1
         version: 1.1.1
-      upath:
-        specifier: 2.0.1
-        version: 2.0.1
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
