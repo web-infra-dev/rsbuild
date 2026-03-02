@@ -299,6 +299,29 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
+  it('should merge dev.writeToDisk correctly', () => {
+    const fn1 = () => false;
+    const fn2 = () => true;
+    expect(
+      mergeRsbuildConfig(
+        {
+          dev: {
+            writeToDisk: fn1,
+          },
+        },
+        {
+          dev: {
+            writeToDisk: fn2,
+          },
+        },
+      ),
+    ).toEqual({
+      dev: {
+        writeToDisk: fn2,
+      },
+    });
+  });
+
   it('should merge Rspack plugins as expected', () => {
     class A {
       a = 1;
