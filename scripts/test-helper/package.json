@@ -1,6 +1,5 @@
 {
   "name": "@scripts/test-helper",
-  "version": "1.0.0",
   "private": true,
   "repository": {
     "type": "git",
