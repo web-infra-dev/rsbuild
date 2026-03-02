@@ -96,6 +96,5 @@
     'loader-utils',
     // Temporary ignore
     'less',
-    'tinyglobby',
   ],
 }
