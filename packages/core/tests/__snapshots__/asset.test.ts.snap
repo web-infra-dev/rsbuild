@@ -1,601 +1,145 @@
 // Rstest Snapshot v1
 
 exports[`plugin-asset > should add image rules correctly 1`] = `
-{
-  "module": {
-    "rules": [
+[
+  {
+    "oneOf": [
       {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/image/[name].[contenthash:10][ext]",
-            },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/inline",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
-            "generator": {
-              "filename": "static/image/[name].[contenthash:10][ext]",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 4096,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\|cur\\)\\$/i,
+        "generator": {
+          "filename": "static/image/[name].[contenthash:10][ext]",
+        },
+        "resourceQuery": /\\^\\\\\\?url\\$/,
+        "type": "asset/resource",
       },
       {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:10].svg",
-            },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/inline",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:10].svg",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 4096,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.svg\\$/i,
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/inline",
       },
       {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/media/[name].[contenthash:10][ext]",
-            },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/inline",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
-            "generator": {
-              "filename": "static/media/[name].[contenthash:10][ext]",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 4096,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mov\\|mp3\\|wav\\|flac\\|aac\\|m4a\\|opus\\)\\$/i,
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/source",
       },
       {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/font/[name].[contenthash:10][ext]",
-            },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
-            "type": "asset/resource",
+        "generator": {
+          "filename": "static/image/[name].[contenthash:10][ext]",
+        },
+        "parser": {
+          "dataUrlCondition": {
+            "maxSize": 4096,
           },
-          {
-            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/inline",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
-            "generator": {
-              "filename": "static/font/[name].[contenthash:10][ext]",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 4096,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
-      },
-      {
-        "oneOf": [
-          {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-        ],
-        "test": /\\\\\\.json\\$/i,
+        },
+        "type": "asset",
       },
     ],
+    "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\|cur\\)\\$/i,
   },
-  "output": {
-    "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
-  },
-  "plugins": [
-    {
-      "name": "RsbuildCorePlugin",
-    },
-  ],
-}
+]
 `;
 
 exports[`plugin-asset > should add image rules correctly 2`] = `
-{
-  "module": {
-    "rules": [
+[
+  {
+    "oneOf": [
       {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "[name].[contenthash:10][ext]",
-            },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/inline",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
-            "generator": {
-              "filename": "[name].[contenthash:10][ext]",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 4096,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\|cur\\)\\$/i,
+        "generator": {
+          "filename": "[name].[contenthash:10][ext]",
+        },
+        "resourceQuery": /\\^\\\\\\?url\\$/,
+        "type": "asset/resource",
       },
       {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:10].svg",
-            },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/inline",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:10].svg",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 4096,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.svg\\$/i,
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/inline",
       },
       {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/media/[name].[contenthash:10][ext]",
-            },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/inline",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
-            "generator": {
-              "filename": "static/media/[name].[contenthash:10][ext]",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 4096,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mov\\|mp3\\|wav\\|flac\\|aac\\|m4a\\|opus\\)\\$/i,
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/source",
       },
       {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/font/[name].[contenthash:10][ext]",
-            },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
-            "type": "asset/resource",
+        "generator": {
+          "filename": "[name].[contenthash:10][ext]",
+        },
+        "parser": {
+          "dataUrlCondition": {
+            "maxSize": 4096,
           },
-          {
-            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/inline",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
-            "generator": {
-              "filename": "static/font/[name].[contenthash:10][ext]",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 4096,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
-      },
-      {
-        "oneOf": [
-          {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-        ],
-        "test": /\\\\\\.json\\$/i,
+        },
+        "type": "asset",
       },
     ],
+    "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\|cur\\)\\$/i,
   },
-  "output": {
-    "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
-  },
-  "plugins": [
-    {
-      "name": "RsbuildCorePlugin",
-    },
-  ],
-}
+]
 `;
 
-exports[`plugin-asset > should allow to use distPath.image to modify dist path 1`] = `
-{
-  "module": {
-    "rules": [
+exports[`plugin-asset > should allow using distPath.image to modify dist path 1`] = `
+[
+  {
+    "oneOf": [
       {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "foo/[name].[contenthash:10][ext]",
-            },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/inline",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
-            "generator": {
-              "filename": "foo/[name].[contenthash:10][ext]",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 4096,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\|cur\\)\\$/i,
+        "generator": {
+          "filename": "foo/[name].[contenthash:10][ext]",
+        },
+        "resourceQuery": /\\^\\\\\\?url\\$/,
+        "type": "asset/resource",
       },
       {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:10].svg",
-            },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/inline",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:10].svg",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 4096,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.svg\\$/i,
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/inline",
       },
       {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/media/[name].[contenthash:10][ext]",
-            },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/inline",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
-            "generator": {
-              "filename": "static/media/[name].[contenthash:10][ext]",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 4096,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mov\\|mp3\\|wav\\|flac\\|aac\\|m4a\\|opus\\)\\$/i,
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/source",
       },
       {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/font/[name].[contenthash:10][ext]",
-            },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
-            "type": "asset/resource",
+        "generator": {
+          "filename": "foo/[name].[contenthash:10][ext]",
+        },
+        "parser": {
+          "dataUrlCondition": {
+            "maxSize": 4096,
           },
-          {
-            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/inline",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
-            "generator": {
-              "filename": "static/font/[name].[contenthash:10][ext]",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 4096,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
-      },
-      {
-        "oneOf": [
-          {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-        ],
-        "test": /\\\\\\.json\\$/i,
+        },
+        "type": "asset",
       },
     ],
+    "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\|cur\\)\\$/i,
   },
-  "output": {
-    "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
-  },
-  "plugins": [
-    {
-      "name": "RsbuildCorePlugin",
-    },
-  ],
-}
+]
 `;
 
-exports[`plugin-asset > should allow to use filename.image to modify filename 1`] = `
-{
-  "module": {
-    "rules": [
+exports[`plugin-asset > should allow using filename.image to modify filename 1`] = `
+[
+  {
+    "oneOf": [
       {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/image/foo[ext]",
-            },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/inline",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
-            "generator": {
-              "filename": "static/image/foo[ext]",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 4096,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\|cur\\)\\$/i,
+        "generator": {
+          "filename": "static/image/foo[ext]",
+        },
+        "resourceQuery": /\\^\\\\\\?url\\$/,
+        "type": "asset/resource",
       },
       {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:10].svg",
-            },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/inline",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:10].svg",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 4096,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.svg\\$/i,
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/inline",
       },
       {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/media/[name].[contenthash:10][ext]",
-            },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/inline",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
-            "generator": {
-              "filename": "static/media/[name].[contenthash:10][ext]",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 4096,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mov\\|mp3\\|wav\\|flac\\|aac\\|m4a\\|opus\\)\\$/i,
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/source",
       },
       {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/font/[name].[contenthash:10][ext]",
-            },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
-            "type": "asset/resource",
+        "generator": {
+          "filename": "static/image/foo[ext]",
+        },
+        "parser": {
+          "dataUrlCondition": {
+            "maxSize": 4096,
           },
-          {
-            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/inline",
-          },
-          {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
-            "generator": {
-              "filename": "static/font/[name].[contenthash:10][ext]",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 4096,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
-      },
-      {
-        "oneOf": [
-          {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-        ],
-        "test": /\\\\\\.json\\$/i,
+        },
+        "type": "asset",
       },
     ],
+    "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\|cur\\)\\$/i,
   },
-  "output": {
-    "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
-  },
-  "plugins": [
-    {
-      "name": "RsbuildCorePlugin",
-    },
-  ],
-}
+]
 `;

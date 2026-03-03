@@ -1,275 +1,241 @@
 // Rstest Snapshot v1
 
 exports[`plugin-css > should use custom cssModules rule when using output.cssModules config 1`] = `
-{
-  "module": {
-    "rules": [
+[
+  {
+    "dependency": {
+      "not": "url",
+    },
+    "oneOf": [
       {
-        "dependency": {
-          "not": "url",
+        "resolve": {
+          "preferRelative": true,
         },
-        "oneOf": [
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+        "sideEffects": true,
+        "use": [
           {
-            "resolve": {
-              "preferRelative": true,
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
+              "importLoaders": 1,
+              "modules": false,
+              "sourceMap": false,
             },
-            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-            "sideEffects": true,
-            "use": [
-              {
-                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-                "options": {
-                  "exportType": "string",
-                  "importLoaders": 1,
-                  "modules": false,
-                  "sourceMap": false,
-                },
-              },
-              {
-                "loader": "builtin:lightningcss-loader",
-                "options": {
-                  "errorRecovery": true,
-                  "targets": [
-                    "chrome >= 107",
-                    "edge >= 107",
-                    "firefox >= 104",
-                    "safari >= 16",
-                  ],
-                },
-              },
-            ],
           },
           {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
-            "resolve": {
-              "preferRelative": true,
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
             },
-            "sideEffects": true,
-            "use": [
-              {
-                "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
-              },
-              {
-                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-                "options": {
-                  "importLoaders": 1,
-                  "modules": {
-                    "auto": [Function],
-                    "exportGlobals": false,
-                    "exportLocalsConvention": "camelCase",
-                    "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                    "namedExport": false,
-                  },
-                  "sourceMap": false,
-                },
-              },
-              {
-                "loader": "builtin:lightningcss-loader",
-                "options": {
-                  "errorRecovery": true,
-                  "targets": [
-                    "chrome >= 107",
-                    "edge >= 107",
-                    "firefox >= 104",
-                    "safari >= 16",
-                  ],
-                },
-              },
-            ],
           },
         ],
-        "test": /\\\\\\.css\\$/,
+      },
+      {
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/source",
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "sideEffects": true,
+        "use": [
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+          },
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "importLoaders": 1,
+              "modules": {
+                "auto": [Function],
+                "exportGlobals": false,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                "namedExport": false,
+              },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+          },
+        ],
       },
     ],
+    "test": /\\\\\\.css\\$/,
   },
-  "plugins": [
-    CssExtractRspackPlugin {
-      "options": {
-        "chunkFilename": "static/css/async/[name].css",
-        "filename": "static/css/[name].css",
-        "ignoreOrder": true,
-      },
-    },
-    {
-      "name": "RsbuildCorePlugin",
-    },
-  ],
-}
+]
 `;
 
 exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyles is true and target is node 1`] = `
-{
-  "module": {
-    "rules": [
+[
+  {
+    "dependency": {
+      "not": "url",
+    },
+    "oneOf": [
       {
-        "dependency": {
-          "not": "url",
+        "resolve": {
+          "preferRelative": true,
         },
-        "oneOf": [
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+        "sideEffects": true,
+        "use": [
           {
-            "resolve": {
-              "preferRelative": true,
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
+              "importLoaders": 1,
+              "modules": false,
+              "sourceMap": false,
             },
-            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-            "sideEffects": true,
-            "use": [
-              {
-                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-                "options": {
-                  "exportType": "string",
-                  "importLoaders": 1,
-                  "modules": false,
-                  "sourceMap": false,
-                },
-              },
-              {
-                "loader": "builtin:lightningcss-loader",
-                "options": {
-                  "errorRecovery": true,
-                  "targets": [
-                    "node >= 20",
-                  ],
-                },
-              },
-            ],
           },
           {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
-            "resolve": {
-              "preferRelative": true,
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "node >= 20",
+              ],
             },
-            "sideEffects": true,
-            "use": [
-              {
-                "loader": "<ROOT>/packages/core/src/ignoreCssLoader.mjs",
-              },
-              {
-                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-                "options": {
-                  "importLoaders": 0,
-                  "modules": {
-                    "auto": true,
-                    "exportGlobals": false,
-                    "exportLocalsConvention": "camelCase",
-                    "exportOnlyLocals": true,
-                    "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                    "namedExport": false,
-                  },
-                  "sourceMap": false,
-                },
-              },
-            ],
           },
         ],
-        "test": /\\\\\\.css\\$/,
+      },
+      {
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/source",
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "sideEffects": true,
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/src/ignoreCssLoader.mjs",
+          },
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "importLoaders": 0,
+              "modules": {
+                "auto": true,
+                "exportGlobals": false,
+                "exportLocalsConvention": "camelCase",
+                "exportOnlyLocals": true,
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                "namedExport": false,
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
       },
     ],
+    "test": /\\\\\\.css\\$/,
   },
-  "plugins": [
-    {
-      "name": "RsbuildCorePlugin",
-    },
-  ],
-}
+]
 `;
 
 exports[`plugin-css injectStyles > should use css-loader + style-loader when injectStyles is true 1`] = `
-{
-  "module": {
-    "rules": [
+[
+  {
+    "dependency": {
+      "not": "url",
+    },
+    "oneOf": [
       {
-        "dependency": {
-          "not": "url",
+        "resolve": {
+          "preferRelative": true,
         },
-        "oneOf": [
+        "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
+        "sideEffects": true,
+        "use": [
           {
-            "resolve": {
-              "preferRelative": true,
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
+              "importLoaders": 1,
+              "modules": false,
+              "sourceMap": false,
             },
-            "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
-            "sideEffects": true,
-            "use": [
-              {
-                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-                "options": {
-                  "exportType": "string",
-                  "importLoaders": 1,
-                  "modules": false,
-                  "sourceMap": false,
-                },
-              },
-              {
-                "loader": "builtin:lightningcss-loader",
-                "options": {
-                  "errorRecovery": true,
-                  "targets": [
-                    "chrome >= 107",
-                    "edge >= 107",
-                    "firefox >= 104",
-                    "safari >= 16",
-                  ],
-                },
-              },
-            ],
           },
           {
-            "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
-            "type": "asset/source",
-          },
-          {
-            "resolve": {
-              "preferRelative": true,
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
             },
-            "sideEffects": true,
-            "use": [
-              {
-                "loader": "<ROOT>/packages/core/compiled/style-loader/index.js",
-              },
-              {
-                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
-                "options": {
-                  "importLoaders": 1,
-                  "modules": {
-                    "auto": true,
-                    "exportGlobals": false,
-                    "exportLocalsConvention": "camelCase",
-                    "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                    "namedExport": false,
-                  },
-                  "sourceMap": false,
-                },
-              },
-              {
-                "loader": "builtin:lightningcss-loader",
-                "options": {
-                  "errorRecovery": true,
-                  "targets": [
-                    "chrome >= 107",
-                    "edge >= 107",
-                    "firefox >= 104",
-                    "safari >= 16",
-                  ],
-                },
-              },
-            ],
           },
         ],
-        "test": /\\\\\\.css\\$/,
+      },
+      {
+        "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "asset/source",
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "sideEffects": true,
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/compiled/style-loader/index.js",
+          },
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "importLoaders": 1,
+              "modules": {
+                "auto": true,
+                "exportGlobals": false,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                "namedExport": false,
+              },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "errorRecovery": true,
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+          },
+        ],
       },
     ],
+    "test": /\\\\\\.css\\$/,
   },
-  "plugins": [
-    {
-      "name": "RsbuildCorePlugin",
-    },
-  ],
-}
+]
 `;
 
 exports[`should ensure isolation of PostCSS config objects between different builds 1`] = `

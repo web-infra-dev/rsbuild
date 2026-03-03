@@ -8,7 +8,7 @@ beforeEach(() => {
   consoleLogSpy.mockImplementation(() => {});
 });
 
-test('formatRoutes', () => {
+test('should format routes correctly', () => {
   expect(
     formatRoutes(
       {
@@ -162,7 +162,7 @@ test('formatRoutes', () => {
   ]);
 });
 
-test('printServerURLs', () => {
+test('should print server URLs correctly', () => {
   let message: string | null;
 
   message = printServerURLs({
@@ -244,8 +244,8 @@ test('printServerURLs', () => {
   expect(message).toEqual(null);
 });
 
-describe('test dev server', () => {
-  test('check isClientCompiler', () => {
+describe('dev server', () => {
+  test('should detect client compilers correctly', () => {
     expect(isClientCompiler(rspack({}))).toBeTruthy();
 
     expect(
@@ -274,7 +274,7 @@ describe('test dev server', () => {
   });
 });
 
-test('local origins regex', () => {
+test('should match local origins correctly', () => {
   expect(defaultAllowedOrigins.test('http://localhost:3000')).toBeTruthy();
   expect(defaultAllowedOrigins.test('http://foo.localhost:3000')).toBeTruthy();
   expect(defaultAllowedOrigins.test('http://127.0.0.1:3000')).toBeTruthy();

@@ -5,7 +5,7 @@ import { ensureAssetPrefix } from '../src/helpers/url';
 import { getRoutes, normalizeUrl } from '../src/server/helper';
 import type { InternalContext } from '../src/types';
 
-test('should getRoutes correctly', () => {
+test('should get routes correctly', () => {
   const cwd = import.meta.dirname;
   expect(
     getRoutes({
@@ -87,7 +87,7 @@ test('should getRoutes correctly', () => {
   ]);
 });
 
-test('should pretty time correctly', () => {
+test('should format time correctly', () => {
   expect(prettyTime(0.0012)).toEqual('0.001 s');
   expect(prettyTime(0.0123)).toEqual('0.01 s');
   expect(prettyTime(0.1234)).toEqual('0.12 s');
@@ -140,7 +140,7 @@ describe('pick', () => {
   });
 });
 
-it('normalizeUrl', () => {
+it('should normalize URLs correctly', () => {
   expect(normalizeUrl('https://www.example.com/static//a')).toBe(
     'https://www.example.com/static/a',
   );
@@ -158,7 +158,7 @@ describe('ensureAssetPrefix', () => {
   const ASSET_PREFIX = 'https://www.example.com/static/';
   const CAPITAL_ASSET_PREFIX = 'https://www.{{CDN}}.com/{{CDN_PATH}}/';
 
-  it('should handle relative url', () => {
+  it('should handle relative URLs', () => {
     expect(ensureAssetPrefix('foo/bar.js', ASSET_PREFIX)).toBe(
       'https://www.example.com/static/foo/bar.js',
     );
@@ -170,14 +170,14 @@ describe('ensureAssetPrefix', () => {
     expect(ensureAssetPrefix('/foo/bar.js', '/')).toBe('/foo/bar.js');
   });
 
-  it('should handle absolute url', () => {
+  it('should handle absolute URLs', () => {
     expect(ensureAssetPrefix('/foo/bar.js', ASSET_PREFIX)).toBe(
       'https://www.example.com/static/foo/bar.js',
     );
     expect(ensureAssetPrefix('/foo/bar.js', '/')).toBe('/foo/bar.js');
   });
 
-  it('should handle absolute url with hostname & protocol', () => {
+  it('should handle absolute URLs with hostname and protocol', () => {
     expect(ensureAssetPrefix('http://foo.com/bar.js', ASSET_PREFIX)).toBe(
       'http://foo.com/bar.js',
     );
@@ -186,7 +186,7 @@ describe('ensureAssetPrefix', () => {
     );
   });
 
-  it('should handle absolute url with double slash', () => {
+  it('should handle absolute URLs with double slash', () => {
     expect(ensureAssetPrefix('//foo.com/bar.js', ASSET_PREFIX)).toBe(
       '//foo.com/bar.js',
     );
@@ -271,7 +271,7 @@ test('should dedupeNestedPaths correctly', async () => {
   ]);
 });
 
-test('should isWebTarget work correctly', () => {
+test('should detect web targets correctly', () => {
   // Test with single targets
   expect(isWebTarget('web')).toBe(true);
   expect(isWebTarget('node')).toBe(false);

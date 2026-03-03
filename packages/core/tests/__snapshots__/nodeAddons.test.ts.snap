@@ -1,27 +1,18 @@
 // Rstest Snapshot v1
 
 exports[`plugin-node-addons > should add node addons rule properly 1`] = `
-{
-  "module": {
-    "rules": [
+[
+  {
+    "test": /\\\\\\.node\\$/,
+    "use": [
       {
-        "test": /\\\\\\.node\\$/,
-        "use": [
-          {
-            "loader": "<ROOT>/packages/core/dist/transformRawLoader.mjs",
-            "options": {
-              "getEnvironment": [Function],
-              "id": "rsbuild-transform-0",
-            },
-          },
-        ],
+        "loader": "<ROOT>/packages/core/src/transformRawLoader.mjs",
+        "options": {
+          "getEnvironment": [Function],
+          "id": "rsbuild-transform-0",
+        },
       },
     ],
   },
-  "plugins": [
-    {
-      "name": "RsbuildCorePlugin",
-    },
-  ],
-}
+]
 `;

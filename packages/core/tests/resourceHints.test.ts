@@ -1,7 +1,7 @@
 import { getResourceType } from '../src/rspack-plugins/resource-hints/getResourceType';
 
-describe('getResourceType test', () => {
-  it('should return as attribute', () => {
+describe('getResourceType', () => {
+  it('should return script for JavaScript files', () => {
     expect(
       getResourceType({
         href: '"/chunk/vendors.js"',
@@ -10,7 +10,7 @@ describe('getResourceType test', () => {
     ).toBe('script');
   });
 
-  it('should return as attribute', () => {
+  it('should return image for image files', () => {
     expect(
       getResourceType({
         href: '/image/logo.png',

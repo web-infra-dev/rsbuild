@@ -1,10 +1,9 @@
-import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginWasm } from '../src/plugins/wasm';
+import { matchRules } from '@scripts/test-helper';
+import { createRsbuild } from '../src';
 
 describe('plugin-wasm', () => {
   it('should add wasm rule properly', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginWasm()],
+    const rsbuild = await createRsbuild({
       config: {
         output: {
           distPath: {
@@ -14,8 +13,8 @@ describe('plugin-wasm', () => {
       },
     });
 
-    const config = await rsbuild.unwrapConfig();
+    const config = (await rsbuild.initConfigs())[0];
 
-    expect(config).toMatchSnapshot();
+    expect(matchRules(config, 'a.wasm')).toMatchSnapshot();
   });
 });

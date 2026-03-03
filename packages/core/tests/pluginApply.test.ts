@@ -1,33 +1,32 @@
-import { createStubRsbuild } from '@scripts/test-helper';
+import { createRsbuild } from '../src';
 
 describe('pluginApply', () => {
   it('should apply plugin correctly', async () => {
     const setup = rstest.fn();
 
-    const rsbuild = await createStubRsbuild({
-      plugins: [
-        {
-          name: 'plugin-test',
-          apply: 'build',
-          setup,
+    const rsbuild = await createRsbuild();
+    rsbuild.addPlugins([
+      {
+        name: 'plugin-test',
+        apply: 'build',
+        setup,
+      },
+      {
+        name: 'plugin-test2',
+        setup,
+      },
+      {
+        name: 'plugin-test3',
+        apply(config, { action }) {
+          return (
+            config.mode === 'development' ||
+            action === 'build' ||
+            action === 'dev'
+          );
         },
-        {
-          name: 'plugin-test2',
-          setup,
-        },
-        {
-          name: 'plugin-test3',
-          apply(config, { action }) {
-            return (
-              config.mode === 'development' ||
-              action === 'build' ||
-              action === 'dev'
-            );
-          },
-          setup,
-        },
-      ],
-    });
+        setup,
+      },
+    ]);
 
     await rsbuild.initConfigs();
 
@@ -37,29 +36,28 @@ describe('pluginApply', () => {
   it('should apply plugin correctly with action', async () => {
     const setup = rstest.fn();
 
-    const rsbuild = await createStubRsbuild({
-      plugins: [
-        {
-          name: 'plugin-test',
-          apply: 'build',
-          setup() {
-            expect.fail('should not apply this plugin');
-          },
+    const rsbuild = await createRsbuild();
+    rsbuild.addPlugins([
+      {
+        name: 'plugin-test',
+        apply: 'build',
+        setup() {
+          expect.fail('should not apply this plugin');
         },
-        {
-          name: 'plugin-test2',
-          apply: 'serve',
-          setup,
+      },
+      {
+        name: 'plugin-test2',
+        apply: 'serve',
+        setup,
+      },
+      {
+        name: 'plugin-test3',
+        apply(_, { action }) {
+          return action === 'preview';
         },
-        {
-          name: 'plugin-test3',
-          apply(_, { action }) {
-            return action === 'preview';
-          },
-          setup,
-        },
-      ],
-    });
+        setup,
+      },
+    ]);
 
     await rsbuild.initConfigs({
       action: 'dev',
@@ -70,22 +68,21 @@ describe('pluginApply', () => {
 
   it('should not return the same config when called multiple times', async () => {
     const setup = rstest.fn();
-    const rsbuild = await createStubRsbuild({
-      plugins: [
-        {
-          name: 'plugin-test',
-          apply: 'build',
-          setup() {
-            expect.fail('should not apply this plugin');
-          },
+    const rsbuild = await createRsbuild();
+    rsbuild.addPlugins([
+      {
+        name: 'plugin-test',
+        apply: 'build',
+        setup() {
+          expect.fail('should not apply this plugin');
         },
-        {
-          name: 'plugin-test2',
-          apply: 'serve',
-          setup,
-        },
-      ],
-    });
+      },
+      {
+        name: 'plugin-test2',
+        apply: 'serve',
+        setup,
+      },
+    ]);
 
     const [config1] = await rsbuild.initConfigs({
       action: 'dev',
@@ -106,18 +103,17 @@ describe('pluginApply', () => {
     expect(config2).not.toBe(config3);
   });
 
-  it('should throw error when called with different action type', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [
-        {
-          name: 'plugin-test',
-          apply: 'build',
-          setup() {
-            expect.fail('should not apply this plugin');
-          },
+  it('should throw an error when called with different action type', async () => {
+    const rsbuild = await createRsbuild();
+    rsbuild.addPlugins([
+      {
+        name: 'plugin-test',
+        apply: 'build',
+        setup() {
+          expect.fail('should not apply this plugin');
         },
-      ],
-    });
+      },
+    ]);
 
     await rsbuild.initConfigs({ action: 'dev' });
 

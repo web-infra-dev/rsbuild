@@ -1,7 +1,7 @@
 import type { RsbuildPlugin } from '../src';
 import { sortPluginsByEnforce } from '../src/pluginManager';
 
-describe('sort plugins by enforce', () => {
+describe('sort plugins by enforce order', () => {
   it('should sort plugins with different enforce values', () => {
     const plugins: RsbuildPlugin[] = [
       { name: 'normal-1', setup: () => {} },
@@ -27,7 +27,7 @@ describe('sort plugins by enforce', () => {
     ]);
   });
 
-  it('should handle plugins with only pre enforce', () => {
+  it('should handle plugins with only "pre" enforce', () => {
     const plugins: RsbuildPlugin[] = [
       { name: 'normal-1', setup: () => {} },
       { name: 'pre-1', setup: () => {}, enforce: 'pre' },
@@ -43,7 +43,7 @@ describe('sort plugins by enforce', () => {
     expect(names).toEqual(['pre-1', 'pre-2', 'normal-1', 'normal-2']);
   });
 
-  it('should handle plugins with only post enforce', () => {
+  it('should handle plugins with only "post" enforce', () => {
     const plugins: RsbuildPlugin[] = [
       { name: 'normal-1', setup: () => {} },
       { name: 'post-1', setup: () => {}, enforce: 'post' },

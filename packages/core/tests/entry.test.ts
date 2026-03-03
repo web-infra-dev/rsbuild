@@ -1,5 +1,4 @@
-import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginEntry } from '../src/plugins/entry';
+import { createRsbuild } from '../src';
 
 describe('plugin-entry', () => {
   const cases = [
@@ -40,8 +39,7 @@ describe('plugin-entry', () => {
   ];
 
   it.each(cases)('$name', async (item) => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry()],
+    const rsbuild = await createRsbuild({
       config: {
         source: {
           entry: item.entry as unknown as Record<string, string | string[]>,
@@ -50,14 +48,13 @@ describe('plugin-entry', () => {
       },
     });
 
-    const config = await rsbuild.unwrapConfig();
+    const config = (await rsbuild.initConfigs())[0];
 
     expect(config.entry).toEqual(item.expected);
   });
 
-  it('should apply environments entry config correctly', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry()],
+  it('should apply environment entry config correctly', async () => {
+    const rsbuild = await createRsbuild({
       config: {
         environments: {
           web: {
@@ -79,12 +76,11 @@ describe('plugin-entry', () => {
     });
 
     const configs = await rsbuild.initConfigs();
-    expect(configs).toMatchSnapshot();
+    expect(configs.map((config) => config.entry)).toMatchSnapshot();
   });
 
   it('should apply different environments entry config correctly', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry()],
+    const rsbuild = await createRsbuild({
       config: {
         environments: {
           web: {
@@ -107,6 +103,6 @@ describe('plugin-entry', () => {
 
     const configs = await rsbuild.initConfigs();
 
-    expect(configs).toMatchSnapshot();
+    expect(configs.map((config) => config.entry)).toMatchSnapshot();
   });
 });
