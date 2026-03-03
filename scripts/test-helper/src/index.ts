@@ -4,13 +4,14 @@ import type { Rspack } from '@rsbuild/core';
 export const matchPlugin = (
   config: Rspack.Configuration,
   pluginName: string,
+  all?: boolean,
 ) => {
   const result = config.plugins?.filter(
     (item) => item?.constructor.name === pluginName,
   );
 
   if (Array.isArray(result)) {
-    return result[0] || null;
+    return all ? result : result[0] || null;
   }
   return result || null;
 };

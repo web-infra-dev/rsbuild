@@ -143,7 +143,7 @@ describe('plugin-html', () => {
       (item) => item?.constructor.name === 'HtmlRspackPlugin',
     ).length;
     expect(htmlPluginCount).toEqual(2);
-    expect(matchPlugin(config, 'HtmlRspackPlugin')).toMatchSnapshot();
+    expect(matchPlugin(config, 'HtmlRspackPlugin', true)).toMatchSnapshot();
   });
 
   it('should allow configuring html.tags', async () => {
@@ -165,7 +165,7 @@ describe('plugin-html', () => {
       (item) => item?.constructor.name === 'HtmlRspackPlugin',
     ).length;
     expect(htmlPluginCount).toEqual(2);
-    expect(matchPlugin(config, 'HtmlRspackPlugin')).toMatchSnapshot();
+    expect(matchPlugin(config, 'HtmlRspackPlugin', true)).toMatchSnapshot();
   });
 
   it('should support environment-specific HTML config', async () => {
