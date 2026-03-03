@@ -1,11 +1,4 @@
-import { isPromise } from 'node:util/types';
-import type {
-  CreateRsbuildOptions,
-  RsbuildInstance,
-  RsbuildPlugin,
-  RsbuildPlugins,
-  Rspack,
-} from '@rsbuild/core';
+import type { Rspack } from '@rsbuild/core';
 
 /** Match plugin by constructor name. */
 export const matchPlugin = (
@@ -21,81 +14,6 @@ export const matchPlugin = (
   }
   return result || null;
 };
-
-/**
- * different with rsbuild createRsbuild. support add custom plugins instead of applyDefaultPlugins.
- */
-export async function createStubRsbuild({
-  plugins,
-  ...options
-}: CreateRsbuildOptions & {
-  plugins?: RsbuildPlugins;
-}): Promise<
-  RsbuildInstance & {
-    unwrapConfig: () => Promise<Record<string, any>>;
-    matchBundlerPlugin: (
-      name: string,
-    ) => Promise<Rspack.RspackPluginInstance | null>;
-  }
-> {
-  const { createRsbuild } = await import('@rsbuild/core');
-
-  const rsbuildConfig =
-    typeof options.rsbuildConfig === 'function'
-      ? await options.rsbuildConfig()
-      : options.rsbuildConfig || {};
-
-  const rsbuildOptions = {
-    cwd: process.env.REBUILD_TEST_SUITE_CWD || process.cwd(),
-    ...options,
-    rsbuildConfig,
-  };
-
-  // mock default entry
-  if (!rsbuildConfig.source?.entry && !rsbuildConfig.environments) {
-    rsbuildConfig.source ||= {};
-    rsbuildConfig.source.entry = {
-      index: './src/index.js',
-    };
-  }
-
-  const rsbuild = await createRsbuild(rsbuildOptions);
-
-  const getFlattenedPlugins = async (pluginOptions: RsbuildPlugins) => {
-    let plugins = pluginOptions;
-    do {
-      plugins = (await Promise.all(plugins)).flat(
-        Number.POSITIVE_INFINITY as 1,
-      );
-    } while (plugins.some((v) => isPromise(v)));
-
-    return plugins as Array<RsbuildPlugin | false | null | undefined>;
-  };
-
-  if (plugins) {
-    // remove all builtin plugins
-    rsbuild.removePlugins(rsbuild.getPlugins().map((item) => item.name));
-    rsbuild.addPlugins(await getFlattenedPlugins(plugins));
-  }
-
-  const unwrapConfig = async (index = 0) => {
-    const configs = await rsbuild.initConfigs();
-    return configs[index];
-  };
-
-  /** Match Rspack plugin by constructor name. */
-  const matchBundlerPlugin = async (pluginName: string, index?: number) => {
-    const config = await unwrapConfig(index);
-
-    return matchPlugin(config, pluginName) as Rspack.RspackPluginInstance;
-  };
-
-  return {
-    ...rsbuild,
-    unwrapConfig,
-    matchBundlerPlugin,
-  };
-}
 
 export function matchRules(
   config: Rspack.Configuration,

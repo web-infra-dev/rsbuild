@@ -160,7 +160,7 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
-  it('should not modify the original objects when the merged config modified', () => {
+  it('should not modify the original objects when the merged config is modified', () => {
     const obj: RsbuildConfig = {
       resolve: {
         alias: {},

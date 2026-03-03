@@ -1,14 +1,37 @@
 // Rstest Snapshot v1
 
-exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
-{
-  "context": "<ROOT>/packages/core/tests",
-  "devtool": "cheap-module-source-map",
-  "entry": {
-    "index": [
-      "./src/index.js",
+exports[`bundler API > should format modifyBundlerChain rules correctly 1`] = `
+[
+  {
+    "test": /\\\\\\.ya\\?ml\\$/,
+    "type": "javascript/auto",
+    "use": [
+      {
+        "loader": "yaml-loader",
+      },
     ],
   },
+]
+`;
+
+exports[`bundler API > should support using builtinLoader in modifyBundlerChain 1`] = `
+[
+  {
+    "test": /\\\\\\.ya\\?ml\\$/,
+    "type": "javascript/auto",
+    "use": [
+      {
+        "loader": "builtin:yaml-loader",
+      },
+    ],
+  },
+]
+`;
+
+exports[`should apply default plugins correctly 1`] = `
+{
+  "context": "<ROOT>",
+  "devtool": "cheap-module-source-map",
   "infrastructureLogging": {
     "level": "error",
   },
@@ -146,7 +169,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "isModule": "unknown",
                   "jsc": {
                     "experimental": {
-                      "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                      "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
                       "keepImportAttributes": true,
                     },
                     "externalHelpers": true,
@@ -199,7 +222,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               "isModule": "unknown",
               "jsc": {
                 "experimental": {
-                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
                   "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
@@ -378,7 +401,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "chunkFilename": "static/js/async/[name].js",
     "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
-    "path": "<ROOT>/packages/core/tests/dist",
+    "path": "<ROOT>/dist",
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[contenthash:10].module.wasm",
   },
@@ -393,50 +416,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "ignoreOrder": true,
       },
     },
-    {
+    RsbuildCorePlugin {
       "name": "RsbuildCorePlugin",
     },
     HotModuleReplacementPlugin {
       "affectedHooks": undefined,
       "name": "HotModuleReplacementPlugin",
-    },
-    HtmlRspackPlugin {
-      "options": {
-        "base": false,
-        "cache": true,
-        "chunks": [
-          "index",
-        ],
-        "chunksSortMode": "auto",
-        "compile": true,
-        "entryName": "index",
-        "excludeChunks": [],
-        "favicon": false,
-        "filename": "index.html",
-        "hash": false,
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "utf-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "publicPath": "auto",
-        "scriptLoading": "defer",
-        "showErrors": true,
-        "template": "",
-        "templateContent": "<!DOCTYPE html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-        "xhtml": false,
-        Symbol(entryName): "index",
-      },
-      "version": 6,
-    },
-    RsbuildHtmlPlugin {
-      "getExtraData": [Function],
-      "getHTMLPlugin": [Function],
-      "name": "RsbuildHtmlPlugin",
     },
     DefinePlugin {
       "_args": [
@@ -460,17 +445,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "alias": {
       "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
     },
-    "extensionAlias": {
-      ".js": [
-        ".js",
-        ".ts",
-        ".tsx",
-      ],
-      ".jsx": [
-        ".jsx",
-        ".tsx",
-      ],
-    },
     "extensions": [
       ".ts",
       ".tsx",
@@ -479,10 +453,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       ".jsx",
       ".json",
     ],
-    "tsConfig": {
-      "configFile": "<ROOT>/packages/core/tests/tsconfig.json",
-      "references": "auto",
-    },
   },
   "target": [
     "web",
@@ -494,15 +464,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
 }
 `;
 
-exports[`applyDefaultPlugins > should apply default plugins correctly when prod 1`] = `
+exports[`should apply default plugins correctly in production 1`] = `
 {
-  "context": "<ROOT>/packages/core/tests",
+  "context": "<ROOT>",
   "devtool": false,
-  "entry": {
-    "index": [
-      "./src/index.js",
-    ],
-  },
   "infrastructureLogging": {
     "level": "error",
   },
@@ -640,7 +605,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                   "isModule": "unknown",
                   "jsc": {
                     "experimental": {
-                      "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                      "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
                       "keepImportAttributes": true,
                     },
                     "externalHelpers": true,
@@ -693,7 +658,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
               "isModule": "unknown",
               "jsc": {
                 "experimental": {
-                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
                   "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
@@ -905,7 +870,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "chunkFilename": "static/js/async/[name].[contenthash:10].js",
     "devtoolModuleFilenameTemplate": "[relative-resource-path]",
     "filename": "static/js/[name].[contenthash:10].js",
-    "path": "<ROOT>/packages/core/tests/dist",
+    "path": "<ROOT>/dist",
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[contenthash:10].module.wasm",
   },
@@ -920,46 +885,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "ignoreOrder": true,
       },
     },
-    {
+    RsbuildCorePlugin {
       "name": "RsbuildCorePlugin",
-    },
-    HtmlRspackPlugin {
-      "options": {
-        "base": false,
-        "cache": true,
-        "chunks": [
-          "index",
-        ],
-        "chunksSortMode": "auto",
-        "compile": true,
-        "entryName": "index",
-        "excludeChunks": [],
-        "favicon": false,
-        "filename": "index.html",
-        "hash": false,
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "utf-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "publicPath": "auto",
-        "scriptLoading": "defer",
-        "showErrors": true,
-        "template": "",
-        "templateContent": "<!DOCTYPE html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-        "xhtml": false,
-        Symbol(entryName): "index",
-      },
-      "version": 6,
-    },
-    RsbuildHtmlPlugin {
-      "getExtraData": [Function],
-      "getHTMLPlugin": [Function],
-      "name": "RsbuildHtmlPlugin",
     },
     DefinePlugin {
       "_args": [
@@ -983,17 +910,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "alias": {
       "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
     },
-    "extensionAlias": {
-      ".js": [
-        ".js",
-        ".ts",
-        ".tsx",
-      ],
-      ".jsx": [
-        ".jsx",
-        ".tsx",
-      ],
-    },
     "extensions": [
       ".ts",
       ".tsx",
@@ -1002,10 +918,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       ".jsx",
       ".json",
     ],
-    "tsConfig": {
-      "configFile": "<ROOT>/packages/core/tests/tsconfig.json",
-      "references": "auto",
-    },
   },
   "target": [
     "web",
@@ -1017,9 +929,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
 }
 `;
 
-exports[`applyDefaultPlugins > should apply default plugins correctly when target = node 1`] = `
+exports[`should apply default plugins correctly when target is node 1`] = `
 {
-  "context": "<ROOT>/packages/core/tests",
+  "context": "<ROOT>",
   "devtool": "cheap-module-source-map",
   "infrastructureLogging": {
     "level": "error",
@@ -1081,7 +993,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "sideEffects": true,
             "use": [
               {
-                "loader": "<ROOT>/packages/core/dist/ignoreCssLoader.mjs",
+                "loader": "<ROOT>/packages/core/src/ignoreCssLoader.mjs",
               },
               {
                 "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -1136,7 +1048,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "isModule": "unknown",
                   "jsc": {
                     "experimental": {
-                      "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                      "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
                       "keepImportAttributes": true,
                     },
                     "externalHelpers": true,
@@ -1186,7 +1098,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               "isModule": "unknown",
               "jsc": {
                 "experimental": {
-                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
                   "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
@@ -1352,7 +1264,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.node\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/core/dist/transformRawLoader.mjs",
+            "loader": "<ROOT>/packages/core/src/transformRawLoader.mjs",
             "options": {
               "getEnvironment": [Function],
               "id": "rsbuild-transform-0",
@@ -1385,7 +1297,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       "type": "module",
     },
     "module": true,
-    "path": "<ROOT>/packages/core/tests/dist",
+    "path": "<ROOT>/dist",
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[contenthash:10].module.wasm",
     "workerChunkLoading": "import",
@@ -1394,7 +1306,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "hints": false,
   },
   "plugins": [
-    {
+    RsbuildCorePlugin {
       "name": "RsbuildCorePlugin",
     },
     DefinePlugin {
@@ -1419,17 +1331,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "alias": {
       "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
     },
-    "extensionAlias": {
-      ".js": [
-        ".js",
-        ".ts",
-        ".tsx",
-      ],
-      ".jsx": [
-        ".jsx",
-        ".tsx",
-      ],
-    },
     "extensions": [
       ".ts",
       ".tsx",
@@ -1438,10 +1339,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       ".jsx",
       ".json",
     ],
-    "tsConfig": {
-      "configFile": "<ROOT>/packages/core/tests/tsconfig.json",
-      "references": "auto",
-    },
   },
   "target": "node",
   "watchOptions": {
@@ -1452,7 +1349,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
 
 exports[`tools.rspack > should match snapshot 1`] = `
 {
-  "context": "<ROOT>/packages/core/tests",
+  "context": "<ROOT>",
   "devtool": "cheap-module-source-map",
   "infrastructureLogging": {
     "level": "error",
@@ -1599,7 +1496,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "isModule": "unknown",
                   "jsc": {
                     "experimental": {
-                      "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                      "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
                       "keepImportAttributes": true,
                     },
                     "externalHelpers": true,
@@ -1652,7 +1549,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
               "isModule": "unknown",
               "jsc": {
                 "experimental": {
-                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
                   "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
@@ -1835,7 +1732,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
     "chunkFilename": "static/js/async/[name].js",
     "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
-    "path": "<ROOT>/packages/core/tests/dist",
+    "path": "<ROOT>/dist",
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[contenthash:10].module.wasm",
   },
@@ -1853,7 +1750,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "ignoreOrder": true,
       },
     },
-    {
+    RsbuildCorePlugin {
       "name": "RsbuildCorePlugin",
     },
     HotModuleReplacementPlugin {
@@ -1882,17 +1779,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
     "alias": {
       "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
     },
-    "extensionAlias": {
-      ".js": [
-        ".js",
-        ".ts",
-        ".tsx",
-      ],
-      ".jsx": [
-        ".jsx",
-        ".tsx",
-      ],
-    },
     "extensions": [
       ".ts",
       ".tsx",
@@ -1901,10 +1787,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
       ".jsx",
       ".json",
     ],
-    "tsConfig": {
-      "configFile": "<ROOT>/packages/core/tests/tsconfig.json",
-      "references": "auto",
-    },
   },
   "target": [
     "web",

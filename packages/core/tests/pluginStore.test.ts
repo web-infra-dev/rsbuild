@@ -2,7 +2,7 @@ import type { InternalContext, RsbuildPluginAPI } from '../src';
 import { createPluginManager, initPlugins } from '../src/pluginManager';
 
 describe('initPlugins', () => {
-  it('should sort plugin correctly', async () => {
+  it('should sort plugins correctly', async () => {
     const pluginManager = createPluginManager();
     const result: number[] = [];
 
@@ -45,7 +45,7 @@ describe('initPlugins', () => {
     expect(result).toEqual([2, 0, 3, 1]);
   });
 
-  it('should allow to remove plugin', async () => {
+  it('should allow removing plugins', async () => {
     const pluginManager = createPluginManager();
     const result: number[] = [];
 
@@ -135,8 +135,8 @@ describe('initPlugins', () => {
   });
 });
 
-describe('pluginManager', () => {
-  it('should add / remove / get specific environment plugin correctly', async () => {
+describe('plugin manager', () => {
+  it('should add, remove, and get environment-specific plugins correctly', async () => {
     const pluginManager = createPluginManager();
 
     pluginManager.addPlugins([

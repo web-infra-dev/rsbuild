@@ -1,26 +1,14 @@
 // Rstest Snapshot v1
 
 exports[`plugin-wasm > should add wasm rule properly 1`] = `
-{
-  "module": {
-    "rules": [
-      {
-        "dependency": "url",
-        "generator": {
-          "filename": "static/wasm/[contenthash:10].module.wasm",
-        },
-        "test": /\\\\\\.wasm\\$/,
-        "type": "asset/resource",
-      },
-    ],
-  },
-  "output": {
-    "webassemblyModuleFilename": "static/wasm/[contenthash:10].module.wasm",
-  },
-  "plugins": [
-    {
-      "name": "RsbuildCorePlugin",
+[
+  {
+    "dependency": "url",
+    "generator": {
+      "filename": "static/wasm/[contenthash:10].module.wasm",
     },
-  ],
-}
+    "test": /\\\\\\.wasm\\$/,
+    "type": "asset/resource",
+  },
+]
 `;

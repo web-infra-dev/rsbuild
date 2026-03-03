@@ -1,43 +1,41 @@
-import { createStubRsbuild } from '@scripts/test-helper';
-import type { RsbuildPlugin } from '../src';
+import { matchRules } from '@scripts/test-helper';
+import { createRsbuild, type RsbuildPlugin } from '../src';
 
 afterEach(() => {
   rs.unstubAllEnvs();
 });
 
-describe('applyDefaultPlugins', () => {
-  it('should apply default plugins correctly', async () => {
-    rs.stubEnv('NODE_ENV', 'development');
-    const rsbuild = await createStubRsbuild({});
+it('should apply default plugins correctly', async () => {
+  rs.stubEnv('NODE_ENV', 'development');
+  const rsbuild = await createRsbuild();
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0]).toMatchSnapshot();
-  });
+  const bundlerConfigs = await rsbuild.initConfigs();
+  expect(bundlerConfigs[0]).toMatchSnapshot();
+});
 
-  it('should apply default plugins correctly when prod', async () => {
-    rs.stubEnv('NODE_ENV', 'production');
+it('should apply default plugins correctly in production', async () => {
+  rs.stubEnv('NODE_ENV', 'production');
 
-    const rsbuild = await createStubRsbuild({});
+  const rsbuild = await createRsbuild();
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0]).toMatchSnapshot();
-  });
+  const bundlerConfigs = await rsbuild.initConfigs();
+  expect(bundlerConfigs[0]).toMatchSnapshot();
+});
 
-  it('should apply default plugins correctly when target = node', async () => {
-    rs.stubEnv('NODE_ENV', 'test');
-    const rsbuild = await createStubRsbuild({
-      config: {
-        mode: 'development',
-        output: {
-          target: 'node',
-        },
+it('should apply default plugins correctly when target is node', async () => {
+  rs.stubEnv('NODE_ENV', 'test');
+  const rsbuild = await createRsbuild({
+    config: {
+      mode: 'development',
+      output: {
+        target: 'node',
       },
-    });
-
-    const bundlerConfigs = await rsbuild.initConfigs();
-
-    expect(bundlerConfigs[0]).toMatchSnapshot();
+    },
   });
+
+  const bundlerConfigs = await rsbuild.initConfigs();
+
+  expect(bundlerConfigs[0]).toMatchSnapshot();
 });
 
 describe('tools.rspack', () => {
@@ -50,7 +48,7 @@ describe('tools.rspack', () => {
       apply() {}
     }
 
-    const rsbuild = await createStubRsbuild({
+    const rsbuild = await createRsbuild({
       config: {
         tools: {
           rspack: (_config, { addRules, prependPlugins, appendRules }) => {
@@ -78,8 +76,8 @@ describe('tools.rspack', () => {
   });
 });
 
-describe('bundlerApi', () => {
-  it('test modifyBundlerChain and api order', async () => {
+describe('bundler API', () => {
+  it('should preserve API order when using modifyBundlerChain', async () => {
     const testPlugin: RsbuildPlugin = {
       name: 'plugin-devtool',
       setup(api) {
@@ -94,25 +92,18 @@ describe('bundlerApi', () => {
       },
     };
 
-    const rsbuild = await createStubRsbuild({
-      plugins: [testPlugin],
+    const rsbuild = await createRsbuild({
+      config: {
+        plugins: [testPlugin],
+      },
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0]).toMatchInlineSnapshot(`
-      {
-        "devtool": "hidden-source-map",
-        "plugins": [
-          {
-            "name": "RsbuildCorePlugin",
-          },
-        ],
-        "target": "node",
-      }
-    `);
+    expect(bundlerConfigs[0].target).toBe('node');
+    expect(bundlerConfigs[0].devtool).toBe('hidden-source-map');
   });
 
-  it('test modifyBundlerChain rule format correctly', async () => {
+  it('should format modifyBundlerChain rules correctly', async () => {
     const testPlugin: RsbuildPlugin = {
       name: 'plugin-devtool',
       setup(api) {
@@ -127,36 +118,17 @@ describe('bundlerApi', () => {
       },
     };
 
-    const rsbuild = await createStubRsbuild({
-      plugins: [testPlugin],
+    const rsbuild = await createRsbuild({
+      config: {
+        plugins: [testPlugin],
+      },
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0]).toMatchInlineSnapshot(`
-      {
-        "module": {
-          "rules": [
-            {
-              "test": /\\\\\\.ya\\?ml\\$/,
-              "type": "javascript/auto",
-              "use": [
-                {
-                  "loader": "yaml-loader",
-                },
-              ],
-            },
-          ],
-        },
-        "plugins": [
-          {
-            "name": "RsbuildCorePlugin",
-          },
-        ],
-      }
-    `);
+    expect(matchRules(bundlerConfigs[0], 'a.yaml')).toMatchSnapshot();
   });
 
-  it('test modifyBundlerChain use builtinLoader', async () => {
+  it('should support using builtinLoader in modifyBundlerChain', async () => {
     const testPlugin: RsbuildPlugin = {
       name: 'plugin-test',
       setup(api) {
@@ -171,39 +143,20 @@ describe('bundlerApi', () => {
       },
     };
 
-    const rsbuild = await createStubRsbuild({
-      plugins: [testPlugin],
+    const rsbuild = await createRsbuild({
+      config: {
+        plugins: [testPlugin],
+      },
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0]).toMatchInlineSnapshot(`
-      {
-        "module": {
-          "rules": [
-            {
-              "test": /\\\\\\.ya\\?ml\\$/,
-              "type": "javascript/auto",
-              "use": [
-                {
-                  "loader": "builtin:yaml-loader",
-                },
-              ],
-            },
-          ],
-        },
-        "plugins": [
-          {
-            "name": "RsbuildCorePlugin",
-          },
-        ],
-      }
-    `);
+    expect(matchRules(bundlerConfigs[0], 'a.yaml')).toMatchSnapshot();
   });
 });
 
-describe('default value', () => {
-  it('should apply server.base as assetPrefix default value', async () => {
-    const rsbuild = await createStubRsbuild({
+describe('default values', () => {
+  it('should apply server.base as the default assetPrefix value', async () => {
+    const rsbuild = await createRsbuild({
       config: {
         server: {
           base: '/base',
@@ -218,8 +171,8 @@ describe('default value', () => {
     expect(rsbuildConfig.output.assetPrefix).toBe('/base');
   });
 
-  it('should apply dev / output assetPrefix value correctly', async () => {
-    const rsbuild = await createStubRsbuild({
+  it('should apply dev and output assetPrefix values correctly', async () => {
+    const rsbuild = await createRsbuild({
       config: {
         server: {
           base: '/base',
@@ -240,8 +193,8 @@ describe('default value', () => {
     expect(rsbuildConfig.output.assetPrefix).toBe('/');
   });
 
-  it('should apply root logLevel as dev.client.logLevel default value', async () => {
-    const rsbuild = await createStubRsbuild({
+  it('should apply root logLevel as the default dev.client.logLevel', async () => {
+    const rsbuild = await createRsbuild({
       config: {
         logLevel: 'warn',
       },
@@ -254,7 +207,7 @@ describe('default value', () => {
   });
 
   it('should apply explicit dev.client.logLevel over root logLevel', async () => {
-    const rsbuild = await createStubRsbuild({
+    const rsbuild = await createRsbuild({
       config: {
         logLevel: 'warn',
         dev: {
@@ -272,9 +225,7 @@ describe('default value', () => {
   });
 
   it('should default dev.client.logLevel to info', async () => {
-    const rsbuild = await createStubRsbuild({
-      config: {},
-    });
+    const rsbuild = await createRsbuild();
 
     const {
       origin: { rsbuildConfig },
@@ -282,8 +233,8 @@ describe('default value', () => {
     expect(rsbuildConfig.dev.client.logLevel).toBe('info');
   });
 
-  it('should apply dev.client.logLevel as silent', async () => {
-    const rsbuild = await createStubRsbuild({
+  it('should set dev.client.logLevel to silent', async () => {
+    const rsbuild = await createRsbuild({
       config: {
         dev: {
           client: {
@@ -299,8 +250,8 @@ describe('default value', () => {
     expect(rsbuildConfig.dev.client.logLevel).toBe('silent');
   });
 
-  it('should inherit root logLevel silent to dev.client.logLevel', async () => {
-    const rsbuild = await createStubRsbuild({
+  it('should inherit root logLevel `silent` to dev.client.logLevel', async () => {
+    const rsbuild = await createRsbuild({
       config: {
         logLevel: 'silent',
       },

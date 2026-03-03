@@ -69,7 +69,7 @@ describe('ansiHTML', () => {
     expect(ansiHTML(input)).toEqual(expected);
   });
 
-  it('should convert multiple styles ', () => {
+  it('should convert multiple styles', () => {
     const input = '\x1B[31;1;4mHello, World!\x1B[0m';
     const expected =
       '<span style="color:#fb6a6a;font-weight:bold;text-decoration:underline;text-underline-offset:3px;">Hello, World!</span>';

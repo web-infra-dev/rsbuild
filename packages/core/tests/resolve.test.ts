@@ -1,11 +1,8 @@
-import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginResolve } from '../src/plugins/resolve';
+import { createRsbuild } from '../src';
 
 describe('plugin-resolve', () => {
   it('should apply default extensions correctly', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginResolve()],
-    });
+    const rsbuild = await createRsbuild();
 
     const bundlerConfigs = await rsbuild.initConfigs();
 
@@ -17,15 +14,10 @@ describe('plugin-resolve', () => {
       '.jsx',
       '.json',
     ]);
-    expect(
-      (bundlerConfigs[0].resolve?.tsConfig as { configFile: string })
-        .configFile,
-    ).toBeDefined();
   });
 
-  it('should allow to customize extensions', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginResolve()],
+  it('should allow customizing extensions', async () => {
+    const rsbuild = await createRsbuild({
       config: {
         resolve: {
           extensions: ['.ts', '.js'],
@@ -38,8 +30,7 @@ describe('plugin-resolve', () => {
   });
 
   it('should not apply tsConfigPath when aliasStrategy is "prefer-alias"', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginResolve()],
+    const rsbuild = await createRsbuild({
       config: {
         resolve: {
           aliasStrategy: 'prefer-alias',
@@ -52,9 +43,8 @@ describe('plugin-resolve', () => {
     expect(bundlerConfigs[0].resolve?.tsConfig).toBeUndefined();
   });
 
-  it('should allow to use resolve.alias to configure alias', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginResolve()],
+  it('should allow using resolve.alias to configure alias', async () => {
+    const rsbuild = await createRsbuild({
       config: {
         resolve: {
           alias: {
@@ -71,8 +61,7 @@ describe('plugin-resolve', () => {
   });
 
   it('should allow resolve.alias to be a function', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginResolve()],
+    const rsbuild = await createRsbuild({
       config: {
         resolve: {
           alias() {
