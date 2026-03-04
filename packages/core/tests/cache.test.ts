@@ -1,5 +1,4 @@
-import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginCache } from '../src/plugins/cache';
+import { createRsbuild } from '../src';
 
 describe('plugin-cache', () => {
   const cases = [
@@ -53,8 +52,7 @@ describe('plugin-cache', () => {
   ];
 
   it.each(cases)('$name', async (item) => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginCache()],
+    const rsbuild = await createRsbuild({
       config: item.config || {
         performance: {
           buildCache: true,
@@ -62,8 +60,8 @@ describe('plugin-cache', () => {
       },
     });
 
-    const config = await rsbuild.unwrapConfig();
+    const config = (await rsbuild.initConfigs())[0];
 
-    expect(config).toMatchSnapshot();
+    expect(config.cache).toMatchSnapshot();
   });
 });

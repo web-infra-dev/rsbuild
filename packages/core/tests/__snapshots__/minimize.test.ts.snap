@@ -1,0 +1,154 @@
+// Rstest Snapshot v1
+
+exports[`plugin-minimize > should apply minimizer in production 1`] = `
+[
+  SwcJsMinimizerRspackPlugin {
+    "_args": [
+      {
+        "extractComments": true,
+        "minimizerOptions": {
+          "format": {
+            "asciiOnly": false,
+          },
+        },
+      },
+    ],
+    "affectedHooks": "compilation",
+    "name": "SwcJsMinimizerRspackPlugin",
+  },
+  LightningCssMinimizerRspackPlugin {
+    "_args": [
+      {
+        "minimizerOptions": {
+          "errorRecovery": true,
+          "targets": [
+            "chrome >= 107",
+            "edge >= 107",
+            "firefox >= 104",
+            "safari >= 16",
+          ],
+        },
+      },
+    ],
+    "affectedHooks": undefined,
+    "name": "LightningCssMinimizerRspackPlugin",
+  },
+]
+`;
+
+exports[`plugin-minimize > should dropConsole when performance.removeConsole is true 1`] = `
+[
+  SwcJsMinimizerRspackPlugin {
+    "_args": [
+      {
+        "extractComments": true,
+        "minimizerOptions": {
+          "compress": {
+            "drop_console": true,
+          },
+          "format": {
+            "asciiOnly": false,
+          },
+        },
+      },
+    ],
+    "affectedHooks": "compilation",
+    "name": "SwcJsMinimizerRspackPlugin",
+  },
+  LightningCssMinimizerRspackPlugin {
+    "_args": [
+      {
+        "minimizerOptions": {
+          "errorRecovery": true,
+          "targets": [
+            "chrome >= 107",
+            "edge >= 107",
+            "firefox >= 104",
+            "safari >= 16",
+          ],
+        },
+      },
+    ],
+    "affectedHooks": undefined,
+    "name": "LightningCssMinimizerRspackPlugin",
+  },
+]
+`;
+
+exports[`plugin-minimize > should remove specific console when performance.removeConsole is array 1`] = `
+[
+  SwcJsMinimizerRspackPlugin {
+    "_args": [
+      {
+        "extractComments": true,
+        "minimizerOptions": {
+          "compress": {
+            "pure_funcs": [
+              "console.log",
+              "console.warn",
+            ],
+          },
+          "format": {
+            "asciiOnly": false,
+          },
+        },
+      },
+    ],
+    "affectedHooks": "compilation",
+    "name": "SwcJsMinimizerRspackPlugin",
+  },
+  LightningCssMinimizerRspackPlugin {
+    "_args": [
+      {
+        "minimizerOptions": {
+          "errorRecovery": true,
+          "targets": [
+            "chrome >= 107",
+            "edge >= 107",
+            "firefox >= 104",
+            "safari >= 16",
+          ],
+        },
+      },
+    ],
+    "affectedHooks": undefined,
+    "name": "LightningCssMinimizerRspackPlugin",
+  },
+]
+`;
+
+exports[`plugin-minimize > should set asciiOnly false when output.charset is utf8 1`] = `
+[
+  SwcJsMinimizerRspackPlugin {
+    "_args": [
+      {
+        "extractComments": true,
+        "minimizerOptions": {
+          "format": {
+            "asciiOnly": false,
+          },
+        },
+      },
+    ],
+    "affectedHooks": "compilation",
+    "name": "SwcJsMinimizerRspackPlugin",
+  },
+  LightningCssMinimizerRspackPlugin {
+    "_args": [
+      {
+        "minimizerOptions": {
+          "errorRecovery": true,
+          "targets": [
+            "chrome >= 107",
+            "edge >= 107",
+            "firefox >= 104",
+            "safari >= 16",
+          ],
+        },
+      },
+    ],
+    "affectedHooks": undefined,
+    "name": "LightningCssMinimizerRspackPlugin",
+  },
+]
+`;

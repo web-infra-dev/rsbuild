@@ -1,10 +1,9 @@
-import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginDefine } from '../src/plugins/define';
+import { matchPlugin } from '@scripts/test-helper';
+import { createRsbuild } from '../src';
 
 describe('plugin-define', () => {
   test('should register define plugin correctly', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginDefine()],
+    const rsbuild = await createRsbuild({
       config: {
         source: {
           define: {
@@ -14,7 +13,7 @@ describe('plugin-define', () => {
       },
     });
 
-    const config = await rsbuild.unwrapConfig();
-    expect(config).toMatchSnapshot();
+    const config = (await rsbuild.initConfigs())[0];
+    expect(matchPlugin(config, 'DefinePlugin')).toMatchSnapshot();
   });
 });

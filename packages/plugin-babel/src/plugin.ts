@@ -8,7 +8,6 @@ import type {
   RsbuildContext,
   RsbuildPlugin,
 } from '@rsbuild/core';
-import deepmerge from 'deepmerge';
 import { applyUserBabelConfig, BABEL_JS_RULE, castArray } from './helper.js';
 import type { BabelLoaderOptions, PluginBabelOptions } from './types.js';
 
@@ -69,7 +68,7 @@ export function getDefaultBabelOptions(
     plugins: [
       [
         require.resolve('@babel/plugin-proposal-decorators'),
-        config.source.decorators,
+        { ...config.source.decorators },
       ],
       // If you are using @babel/preset-env and legacy decorators, you must ensure the class elements transform is enabled regardless of your targets, because Babel only supports compiling legacy decorators when also compiling class properties:
       // see https://babeljs.io/docs/babel-plugin-proposal-decorators#legacy
@@ -81,7 +80,7 @@ export function getDefaultBabelOptions(
       // TODO: only apply preset-typescript for ts file (isTSX & allExtensions false)
       [
         require.resolve('@babel/preset-typescript'),
-        DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS,
+        { ...DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS },
       ],
     ],
   };
@@ -115,7 +114,7 @@ export const pluginBabel = (
       const baseOptions = getDefaultBabelOptions(config, api.context);
 
       const mergedOptions = applyUserBabelConfig(
-        deepmerge({}, baseOptions),
+        baseOptions,
         options.babelLoaderOptions,
       );
 

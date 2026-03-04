@@ -1,6 +1,5 @@
-import { createStubRsbuild } from '@scripts/test-helper';
+import { matchPlugin } from '@scripts/test-helper';
 import { createRsbuild } from '../src';
-import { pluginOutput } from '../src/plugins/output';
 
 describe('plugin-output', () => {
   afterEach(() => {
@@ -8,17 +7,14 @@ describe('plugin-output', () => {
   });
 
   it('should set output correctly', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginOutput()],
-    });
+    const rsbuild = await createRsbuild();
 
     const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0]).toMatchSnapshot();
+    expect(bundlerConfigs[0].output).toMatchSnapshot();
   });
 
-  it('should allow to custom server directory with distPath.root', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginOutput()],
+  it('should allow customizing server directory with distPath.root', async () => {
+    const rsbuild = await createRsbuild({
       config: {
         output: {
           target: 'node',
@@ -30,12 +26,11 @@ describe('plugin-output', () => {
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0]).toMatchSnapshot();
+    expect(bundlerConfigs[0].output).toMatchSnapshot();
   });
 
-  it('should allow to set distPath.js and distPath.css to empty string', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginOutput()],
+  it('should allow setting distPath.js and distPath.css to empty string', async () => {
+    const rsbuild = await createRsbuild({
       config: {
         output: {
           distPath: {
@@ -47,12 +42,11 @@ describe('plugin-output', () => {
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0]).toMatchSnapshot();
+    expect(bundlerConfigs[0].output).toMatchSnapshot();
   });
 
-  it('should allow to custom async js path via distPath.jsAsync', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginOutput()],
+  it('should allow customizing async js path via distPath.jsAsync', async () => {
+    const rsbuild = await createRsbuild({
       config: {
         output: {
           distPath: {
@@ -68,9 +62,8 @@ describe('plugin-output', () => {
     );
   });
 
-  it('should allow to use filename.js to modify filename', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginOutput()],
+  it('should allow using filename.js to modify filename', async () => {
+    const rsbuild = await createRsbuild({
       config: {
         output: {
           filename: {
@@ -82,12 +75,11 @@ describe('plugin-output', () => {
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0]).toMatchSnapshot();
+    expect(bundlerConfigs[0].output).toMatchSnapshot();
   });
 
-  it('output config should works when target is node', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginOutput()],
+  it('should apply output config when target is node', async () => {
+    const rsbuild = await createRsbuild({
       config: {
         output: {
           target: 'node',
@@ -103,12 +95,11 @@ describe('plugin-output', () => {
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0]).toMatchSnapshot();
+    expect(bundlerConfigs[0].output).toMatchSnapshot();
   });
 
-  it('should allow to use copy plugin', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginOutput()],
+  it('should allow using copy plugin', async () => {
+    const rsbuild = await createRsbuild({
       config: {
         output: {
           copy: {
@@ -123,12 +114,13 @@ describe('plugin-output', () => {
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0]).toMatchSnapshot();
+    expect(
+      matchPlugin(bundlerConfigs[0], 'CopyRspackPlugin'),
+    ).toMatchSnapshot();
   });
 
-  it('should allow to use copy plugin with multiple config', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginOutput()],
+  it('should allow using copy plugin with multiple configurations', async () => {
+    const rsbuild = await createRsbuild({
       config: {
         output: {
           copy: [
@@ -151,13 +143,14 @@ describe('plugin-output', () => {
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0]).toMatchSnapshot();
+    expect(
+      matchPlugin(bundlerConfigs[0], 'CopyRspackPlugin'),
+    ).toMatchSnapshot();
   });
 
   it('should replace `<port>` placeholder with default port', async () => {
     rs.stubEnv('NODE_ENV', 'development');
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginOutput()],
+    const rsbuild = await createRsbuild({
       config: {
         dev: {
           assetPrefix: 'http://example-<port>.com:<port>/',

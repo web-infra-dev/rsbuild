@@ -61,7 +61,7 @@ jobs:
 
       - name: Unit Test
         if: steps.changes.outputs.changed == 'true'
-        run: pnpm test
+        run: node --run test
 
   # ======== e2e ========
   e2e:
@@ -106,11 +106,11 @@ jobs:
 
       - name: Run E2E tests
         if: steps.changes.outputs.changed == 'true'
-        run: pnpm run e2e
+        run: node --run e2e
 
       - name: E2E reporter
         if: always()
-        uses: actions/upload-artifact@47309c993abb98030a35d55ef7ff34b7fa1074b5 #https://github.com/actions/upload-artifact/releases/tag/v6.0.0
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #https://github.com/actions/upload-artifact/releases/tag/v6.0.0
         with:
           name: E2E-report-${{ matrix.os }}
           if-no-files-found: warn
@@ -120,4 +120,4 @@ jobs:
 
       - name: Run E2E type checker
         if: steps.changes.outputs.changed == 'true'
-        run: cd e2e && pnpm run type-check
+        run: cd e2e && node --run type-check

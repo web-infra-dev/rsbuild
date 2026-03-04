@@ -1,168 +1,124 @@
 // Rstest Snapshot v1
 
-exports[`plugin-output > output config should works when target is node 1`] = `
+exports[`plugin-output > should allow customizing server directory with distPath.root 1`] = `
 {
-  "output": {
-    "bundlerInfo": {
-      "force": false,
-    },
-    "chunkFilename": "bundle/foo.js",
-    "filename": "bundle/foo.js",
-    "library": {
-      "type": "commonjs2",
-    },
-    "path": "<ROOT>/packages/core/tests/dist",
-    "publicPath": "/",
+  "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
+  "bundlerInfo": {
+    "force": false,
   },
-  "plugins": [
-    {
-      "name": "RsbuildCorePlugin",
-    },
-  ],
+  "chunkFilename": "[name].js",
+  "chunkFormat": "module",
+  "chunkLoading": "import",
+  "devtoolModuleFilenameTemplate": "[relative-resource-path]",
+  "filename": "[name].js",
+  "library": {
+    "type": "module",
+  },
+  "module": true,
+  "path": "<ROOT>/dist/server",
+  "publicPath": "/",
+  "webassemblyModuleFilename": "static/wasm/[contenthash:10].module.wasm",
+  "workerChunkLoading": "import",
 }
 `;
 
-exports[`plugin-output > should allow to custom server directory with distPath.root 1`] = `
+exports[`plugin-output > should allow setting distPath.js and distPath.css to empty string 1`] = `
 {
-  "output": {
-    "bundlerInfo": {
-      "force": false,
-    },
-    "chunkFilename": "[name].js",
-    "filename": "[name].js",
-    "library": {
-      "type": "commonjs2",
-    },
-    "path": "<ROOT>/packages/core/tests/dist/server",
-    "publicPath": "/",
+  "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
+  "bundlerInfo": {
+    "force": false,
   },
-  "plugins": [
-    {
-      "name": "RsbuildCorePlugin",
-    },
-  ],
+  "chunkFilename": "async/[name].js",
+  "devtoolModuleFilenameTemplate": "[relative-resource-path]",
+  "filename": "[name].js",
+  "path": "<ROOT>/dist",
+  "publicPath": "/",
+  "webassemblyModuleFilename": "static/wasm/[contenthash:10].module.wasm",
 }
 `;
 
-exports[`plugin-output > should allow to set distPath.js and distPath.css to empty string 1`] = `
-{
-  "output": {
-    "bundlerInfo": {
-      "force": false,
-    },
-    "chunkFilename": "async/[name].js",
-    "filename": "[name].js",
-    "path": "<ROOT>/packages/core/tests/dist",
-    "publicPath": "/",
-  },
-  "plugins": [
+exports[`plugin-output > should allow using copy plugin 1`] = `
+CopyRspackPlugin {
+  "_args": [
     {
-      "name": "RsbuildCorePlugin",
-    },
-  ],
-}
-`;
-
-exports[`plugin-output > should allow to use copy plugin 1`] = `
-{
-  "output": {
-    "bundlerInfo": {
-      "force": false,
-    },
-    "chunkFilename": "static/js/async/[name].js",
-    "filename": "static/js/[name].js",
-    "path": "<ROOT>/packages/core/tests/dist",
-    "publicPath": "/",
-  },
-  "plugins": [
-    {
-      "name": "RsbuildCorePlugin",
-    },
-    CopyRspackPlugin {
-      "_args": [
+      "patterns": [
         {
-          "patterns": [
-            {
-              "from": "test",
-            },
-          ],
+          "from": "test",
         },
       ],
-      "affectedHooks": undefined,
-      "name": "CopyRspackPlugin",
     },
   ],
+  "affectedHooks": undefined,
+  "name": "CopyRspackPlugin",
 }
 `;
 
-exports[`plugin-output > should allow to use copy plugin with multiple config 1`] = `
-{
-  "output": {
-    "bundlerInfo": {
-      "force": false,
-    },
-    "chunkFilename": "static/js/async/[name].js",
-    "filename": "static/js/[name].js",
-    "path": "<ROOT>/packages/core/tests/dist",
-    "publicPath": "/",
-  },
-  "plugins": [
+exports[`plugin-output > should allow using copy plugin with multiple configurations 1`] = `
+CopyRspackPlugin {
+  "_args": [
     {
-      "name": "RsbuildCorePlugin",
-    },
-    CopyRspackPlugin {
-      "_args": [
+      "patterns": [
         {
-          "patterns": [
-            {
-              "from": "test",
-            },
-            "src/assets/",
-            "tests/",
-          ],
+          "from": "test",
         },
+        "src/assets/",
+        "tests/",
       ],
-      "affectedHooks": undefined,
-      "name": "CopyRspackPlugin",
     },
   ],
+  "affectedHooks": undefined,
+  "name": "CopyRspackPlugin",
 }
 `;
 
-exports[`plugin-output > should allow to use filename.js to modify filename 1`] = `
+exports[`plugin-output > should allow using filename.js to modify filename 1`] = `
 {
-  "output": {
-    "bundlerInfo": {
-      "force": false,
-    },
-    "chunkFilename": "static/js/async/foo.js",
-    "filename": "static/js/foo.js",
-    "path": "<ROOT>/packages/core/tests/dist",
-    "publicPath": "/",
+  "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
+  "bundlerInfo": {
+    "force": false,
   },
-  "plugins": [
-    {
-      "name": "RsbuildCorePlugin",
-    },
-  ],
+  "chunkFilename": "static/js/async/foo.js",
+  "devtoolModuleFilenameTemplate": "[relative-resource-path]",
+  "filename": "static/js/foo.js",
+  "path": "<ROOT>/dist",
+  "publicPath": "/",
+  "webassemblyModuleFilename": "static/wasm/[contenthash:10].module.wasm",
+}
+`;
+
+exports[`plugin-output > should apply output config when target is node 1`] = `
+{
+  "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
+  "bundlerInfo": {
+    "force": false,
+  },
+  "chunkFilename": "bundle/foo.js",
+  "chunkFormat": "module",
+  "chunkLoading": "import",
+  "devtoolModuleFilenameTemplate": "[relative-resource-path]",
+  "filename": "bundle/foo.js",
+  "library": {
+    "type": "module",
+  },
+  "module": true,
+  "path": "<ROOT>/dist",
+  "publicPath": "/",
+  "webassemblyModuleFilename": "static/wasm/[contenthash:10].module.wasm",
+  "workerChunkLoading": "import",
 }
 `;
 
 exports[`plugin-output > should set output correctly 1`] = `
 {
-  "output": {
-    "bundlerInfo": {
-      "force": false,
-    },
-    "chunkFilename": "static/js/async/[name].js",
-    "filename": "static/js/[name].js",
-    "path": "<ROOT>/packages/core/tests/dist",
-    "publicPath": "/",
+  "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
+  "bundlerInfo": {
+    "force": false,
   },
-  "plugins": [
-    {
-      "name": "RsbuildCorePlugin",
-    },
-  ],
+  "chunkFilename": "static/js/async/[name].js",
+  "devtoolModuleFilenameTemplate": "[relative-resource-path]",
+  "filename": "static/js/[name].js",
+  "path": "<ROOT>/dist",
+  "publicPath": "/",
+  "webassemblyModuleFilename": "static/wasm/[contenthash:10].module.wasm",
 }
 `;

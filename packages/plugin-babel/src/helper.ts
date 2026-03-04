@@ -2,7 +2,6 @@ import { isAbsolute, normalize, sep } from 'node:path';
 import type { PluginOptions as BabelPluginOptions } from '@babel/core';
 import type { ChainIdentifier, RspackChain } from '@rsbuild/core';
 import { reduceConfigsWithContext } from 'reduce-configs';
-import upath from 'upath';
 import type {
   BabelConfigUtils,
   BabelLoaderOptions,
@@ -23,8 +22,8 @@ export const castArray = <T>(arr?: T | T[]): T[] => {
 };
 
 const normalizeToPosixPath = (p: string | undefined) =>
-  upath
-    .normalizeSafe(normalize(p || ''))
+  normalize(p || '')
+    .replace(/\\/g, '/')
     .replace(/^([a-zA-Z]+):/, (_, m: string) => `/${m.toLowerCase()}`);
 
 // compatible with Windows path

@@ -1,13 +1,13 @@
-import { createStubRsbuild } from '@scripts/test-helper';
+import { createRsbuild } from '../src';
 import { createEnvironmentAsyncHook, initHooks } from '../src/hooks';
 
 describe('initHooks', () => {
-  test('should init hooks correctly', async () => {
+  test('should initialize hooks correctly', async () => {
     const hooks = initHooks();
     expect(Object.keys(hooks)).toMatchSnapshot();
   });
 
-  test('createEnvironmentAsyncHook should only works in specified environment', async () => {
+  test('should run createEnvironmentAsyncHook only in the specified environment', async () => {
     const logs: string[] = [];
     const hookA = createEnvironmentAsyncHook();
     hookA.tap((msg) => {
@@ -40,7 +40,7 @@ describe('initHooks', () => {
 });
 
 describe('onExit hook', () => {
-  test('should listen to process exit when calling api.onExit', async () => {
+  test('should listen for process exit when calling api.onExit', async () => {
     const exitCbs: Array<(...args: any[]) => void> = [];
     const spy = rstest.spyOn(process, 'on');
     spy.mockImplementation((event, cb) => {
@@ -51,17 +51,16 @@ describe('onExit hook', () => {
     });
 
     const onExit = rstest.fn();
-    const rsbuild = await createStubRsbuild({
-      plugins: [
-        {
-          name: 'foo',
-          setup(api) {
-            api.onExit(onExit);
-          },
+    const rsbuild = await createRsbuild();
+    rsbuild.addPlugins([
+      {
+        name: 'foo',
+        setup(api) {
+          api.onExit(onExit);
         },
-      ],
-    });
-    await rsbuild.unwrapConfig();
+      },
+    ]);
+    await rsbuild.initConfigs();
 
     for (const cb of exitCbs) {
       cb();

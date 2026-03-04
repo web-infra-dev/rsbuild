@@ -13,7 +13,7 @@ describe('plugin-open', () => {
     ).toEqual('http://localhost:3000/path/');
   });
 
-  it('#resolveUrl - should resolve url correctly', () => {
+  it('#resolveUrl - should resolve URL correctly', () => {
     const baseUrl = 'http://localhost';
     expect(resolveUrl('https://example.com', baseUrl)).toEqual(
       'https://example.com',

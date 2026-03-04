@@ -1,5 +1,7 @@
+import { createConnectHandler } from '@e2e/helper/server';
+import { createAdaptorServer } from '@hono/node-server';
 import { createRsbuild } from '@rsbuild/core';
-import polka from 'polka';
+import { Hono } from 'hono';
 
 export async function startDevServer(fixtures) {
   const rsbuild = await createRsbuild({
@@ -12,25 +14,22 @@ export async function startDevServer(fixtures) {
     },
   });
 
-  const app = polka();
+  const app = new Hono();
 
   const rsbuildServer = await rsbuild.createDevServer();
 
   const { middlewares, close, port } = rsbuildServer;
 
-  app.get('/aaa', (_req, res) => {
-    res.end('Hello World!');
-  });
+  app.get('/aaa', (c) => c.text('Hello World!'));
+  app.get('/bbb', (c) => c.text('Hello hono!'));
+  app.all('*', createConnectHandler(middlewares));
 
-  app.use(middlewares);
+  const server = createAdaptorServer({ fetch: app.fetch });
 
-  app.get('/bbb', (_req, res) => {
-    res.end('Hello polka!');
+  await new Promise((resolve) => {
+    server.listen(port, resolve);
   });
-
-  const { server } = app.listen({ port }, async () => {
-    await rsbuildServer.afterListen();
-  });
+  await rsbuildServer.afterListen();
 
   rsbuildServer.connectWebSocket({ server });
 

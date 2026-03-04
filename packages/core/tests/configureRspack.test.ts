@@ -93,7 +93,7 @@ describe('configure Rspack', () => {
     expect(config[0].devtool).toEqual('eval');
   });
 
-  it('should allow to use tools.bundlerChain to modify config', async () => {
+  it('should allow using tools.bundlerChain to modify config', async () => {
     const rsbuild = await createRsbuild({
       config: {
         tools: {
@@ -140,7 +140,7 @@ describe('configure Rspack', () => {
     });
   });
 
-  it('should allow to append and prepend plugins', async () => {
+  it('should allow append and prepend plugins', async () => {
     const rsbuild = await createRsbuild({
       config: {
         tools: {
@@ -163,7 +163,7 @@ describe('configure Rspack', () => {
     );
   });
 
-  it('should allow to remove plugins', async () => {
+  it('should allow removing plugins', async () => {
     const rsbuild = await createRsbuild({
       config: {
         tools: {
@@ -180,7 +180,7 @@ describe('configure Rspack', () => {
     expect(matchPlugin(config[0], 'DefinePlugin')).toBeFalsy();
   });
 
-  it('should allow to add rules', async () => {
+  it('should allow adding rules', async () => {
     const newRule = {
       test: /\.foo$/,
       loader: 'foo-loader',

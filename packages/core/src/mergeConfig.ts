@@ -12,6 +12,7 @@ const OVERRIDE_PATHS = new Set([
   'resolve.extensions',
   'resolve.conditionNames',
   'resolve.mainFields',
+  'dev.writeToDisk',
   'provider',
 ]);
 

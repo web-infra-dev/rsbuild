@@ -90,7 +90,7 @@ describe('plugin-split-chunks', () => {
 });
 
 describe('getPackageNameFromModulePath', () => {
-  it('should parse correct path fragment in npm/yarn', async () => {
+  it('should parse the correct path fragment in npm/yarn', async () => {
     let modulePath = '/path/to/node_modules/@scope/package-name/index.js';
     let [, scope, name] = modulePath.match(MODULE_PATH_REGEX)!;
     expect(scope).toBe('@scope');
@@ -102,7 +102,7 @@ describe('getPackageNameFromModulePath', () => {
     expect(name).toBe('package-name');
   });
 
-  it('should parse correct path fragment in pnpm', async () => {
+  it('should parse the correct path fragment in pnpm', async () => {
     let modulePath =
       '/path/to/node_modules/.pnpm/@scope+package-name@1.0.0/node_modules/@scope/package-name/index.js';
     let [, scope, name] = modulePath.match(MODULE_PATH_REGEX)!;
@@ -116,7 +116,7 @@ describe('getPackageNameFromModulePath', () => {
     expect(name).toBe('package-name');
   });
 
-  it('should return correct package name in npm/yarn', () => {
+  it('should return the correct package name in npm/yarn', () => {
     let modulePath = '/path/to/node_modules/@scope/package-name/index.js';
     expect(getPackageNameFromModulePath(modulePath)).toBe(
       'npm-scope_package-name',
@@ -126,7 +126,7 @@ describe('getPackageNameFromModulePath', () => {
     expect(getPackageNameFromModulePath(modulePath)).toBe('npm-package-name');
   });
 
-  it('should return correct package name in pnpm', () => {
+  it('should return the correct package name in pnpm', () => {
     let modulePath =
       '/path/to/node_modules/.pnpm/@scope+package-name@1.0.0/node_modules/@scope/package-name/index.js';
     expect(getPackageNameFromModulePath(modulePath)).toBe(

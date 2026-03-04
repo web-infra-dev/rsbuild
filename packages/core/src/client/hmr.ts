@@ -13,8 +13,6 @@ let clearOverlay: undefined | (() => void);
 
 type CustomListenersMap = Map<string, ((data: unknown) => void)[]>;
 
-declare const RSPACK_MODULE_HOT: Rspack.Hot | undefined;
-
 declare const RSPACK_INTERCEPT_MODULE_EXECUTION: ((options: {
   module: { hot: Rspack.Hot };
 }) => void)[];
@@ -415,7 +413,7 @@ export function init(
     window.addEventListener('unhandledrejection', onUnhandledRejection);
   }
 
-  if (RSPACK_MODULE_HOT) {
+  if (import.meta.webpackHot) {
     setupCustomHMRListeners(customListenersMap);
   }
 

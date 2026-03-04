@@ -1,92 +1,97 @@
-import { createStubRsbuild } from '@scripts/test-helper';
-import type { HtmlConfig, InternalContext } from '../src';
-import { pluginEntry } from '../src/plugins/entry';
-import { pluginHtml } from '../src/plugins/html';
+import { matchPlugin } from '@scripts/test-helper';
+import { createRsbuild, type HtmlConfig } from '../src';
 
 describe('plugin-html', () => {
-  const stubContext = {} as InternalContext;
+  const defaultEntryConfig = {
+    source: {
+      entry: {
+        index: './src/index.js',
+      },
+    },
+  };
 
   afterEach(() => {
     rs.unstubAllEnvs();
   });
 
   it('should register html plugin correctly', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml(stubContext)],
+    const rsbuild = await createRsbuild({
+      config: defaultEntryConfig,
     });
-    const config = await rsbuild.unwrapConfig();
+    const config = (await rsbuild.initConfigs())[0];
 
-    expect(await rsbuild.matchBundlerPlugin('HtmlRspackPlugin')).toBeTruthy();
-    expect(config).toMatchSnapshot();
+    expect(matchPlugin(config, 'HtmlRspackPlugin')).toMatchSnapshot();
   });
 
   it('should not register html plugin when target is node', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml(stubContext)],
+    const rsbuild = await createRsbuild({
       config: {
+        ...defaultEntryConfig,
         output: {
           target: 'node',
         },
       },
     });
-    expect(await rsbuild.matchBundlerPlugin('HtmlRspackPlugin')).toBeFalsy();
+    const config = (await rsbuild.initConfigs())[0];
+    expect(matchPlugin(config, 'HtmlRspackPlugin')).toBeFalsy();
   });
 
   it('should not register html plugin when target is web-worker', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml(stubContext)],
+    const rsbuild = await createRsbuild({
       config: {
+        ...defaultEntryConfig,
         output: {
           target: 'web-worker',
         },
       },
     });
-    expect(await rsbuild.matchBundlerPlugin('HtmlRspackPlugin')).toBeFalsy();
+    const config = (await rsbuild.initConfigs())[0];
+    expect(matchPlugin(config, 'HtmlRspackPlugin')).toBeFalsy();
   });
 
-  it('should allow to set favicon by html.favicon option', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml(stubContext)],
+  it('should allow setting favicon by html.favicon option', async () => {
+    const rsbuild = await createRsbuild({
       config: {
+        ...defaultEntryConfig,
         html: {
           favicon: './src/favicon.ico',
         },
       },
     });
-    const config = await rsbuild.unwrapConfig();
+    const config = (await rsbuild.initConfigs())[0];
 
-    expect(config).toMatchSnapshot();
+    expect(matchPlugin(config, 'HtmlRspackPlugin')).toMatchSnapshot();
   });
 
-  it('should allow to set inject by html.inject option', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml(stubContext)],
+  it('should allow setting inject by html.inject option', async () => {
+    const rsbuild = await createRsbuild({
       config: {
+        ...defaultEntryConfig,
         html: {
           inject: 'body',
         },
       },
     });
-    const config = await rsbuild.unwrapConfig();
+    const config = (await rsbuild.initConfigs())[0];
 
-    expect(config).toMatchSnapshot();
+    expect(matchPlugin(config, 'HtmlRspackPlugin')).toMatchSnapshot();
   });
 
   it('should enable minify in production', async () => {
     rs.stubEnv('NODE_ENV', 'production');
 
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml(stubContext)],
+    const rsbuild = await createRsbuild({
+      config: defaultEntryConfig,
     });
-    const config = await rsbuild.unwrapConfig();
+    const config = (await rsbuild.initConfigs())[0];
 
-    expect(config).toMatchSnapshot();
+    expect(matchPlugin(config, 'HtmlRspackPlugin')).toMatchSnapshot();
   });
 
-  it('should allow to modify plugin options by tools.htmlPlugin', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml(stubContext)],
+  it('should allow modifying plugin options via tools.htmlPlugin', async () => {
+    const rsbuild = await createRsbuild({
       config: {
+        ...defaultEntryConfig,
         tools: {
           htmlPlugin(_config, utils) {
             expect(utils.entryName).toEqual('index');
@@ -97,27 +102,27 @@ describe('plugin-html', () => {
         },
       },
     });
-    const config = await rsbuild.unwrapConfig();
+    const config = (await rsbuild.initConfigs())[0];
 
-    expect(config).toMatchSnapshot();
+    expect(matchPlugin(config, 'HtmlRspackPlugin')).toMatchSnapshot();
   });
 
-  it('should allow to disable html plugin', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml(stubContext)],
+  it('should allow disabling html plugin', async () => {
+    const rsbuild = await createRsbuild({
       config: {
+        ...defaultEntryConfig,
         tools: {
           htmlPlugin: false,
         },
       },
     });
 
-    expect(await rsbuild.matchBundlerPlugin('HtmlRspackPlugin')).toBeFalsy();
+    const config = (await rsbuild.initConfigs())[0];
+    expect(matchPlugin(config, 'HtmlRspackPlugin')).toBeFalsy();
   });
 
-  it('should support multi entry', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml(stubContext)],
+  it('should support multiple entries', async () => {
+    const rsbuild = await createRsbuild({
       config: {
         source: {
           entry: {
@@ -132,14 +137,17 @@ describe('plugin-html', () => {
         },
       },
     });
-    const config = await rsbuild.unwrapConfig();
+    const config = (await rsbuild.initConfigs())[0];
 
-    expect(config).toMatchSnapshot();
+    const htmlPluginCount = config.plugins?.filter(
+      (item) => item?.constructor.name === 'HtmlRspackPlugin',
+    ).length;
+    expect(htmlPluginCount).toEqual(2);
+    expect(matchPlugin(config, 'HtmlRspackPlugin', true)).toMatchSnapshot();
   });
 
-  it('should allow to configure html.tags', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml(stubContext)],
+  it('should allow configuring html.tags', async () => {
+    const rsbuild = await createRsbuild({
       config: {
         source: {
           entry: {
@@ -152,13 +160,16 @@ describe('plugin-html', () => {
         },
       },
     });
-    const config = await rsbuild.unwrapConfig();
-    expect(config).toMatchSnapshot();
+    const config = (await rsbuild.initConfigs())[0];
+    const htmlPluginCount = config.plugins?.filter(
+      (item) => item?.constructor.name === 'HtmlRspackPlugin',
+    ).length;
+    expect(htmlPluginCount).toEqual(2);
+    expect(matchPlugin(config, 'HtmlRspackPlugin', true)).toMatchSnapshot();
   });
 
-  it('should support environment html config', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml(stubContext)],
+  it('should support environment-specific HTML config', async () => {
+    const rsbuild = await createRsbuild({
       config: {
         environments: {
           web: {
@@ -193,21 +204,25 @@ describe('plugin-html', () => {
     });
     const configs = await rsbuild.initConfigs();
 
-    expect(configs).toMatchSnapshot();
+    expect(
+      configs.map((config) => matchPlugin(config, 'HtmlRspackPlugin')),
+    ).toMatchSnapshot();
   });
 
   it.each<{ value: HtmlConfig['inject']; message: string }>([
     { value: false, message: 'false' },
     { value: () => false, message: '() => false' },
   ])(
-    'should stop injecting <script> if inject is $message',
+    'should stop injecting script tag if inject is $message',
     async ({ value }) => {
-      const rsbuild = await createStubRsbuild({
-        plugins: [pluginEntry(), pluginHtml(stubContext)],
-        config: { html: { inject: value } },
+      const rsbuild = await createRsbuild({
+        config: {
+          ...defaultEntryConfig,
+          html: { inject: value },
+        },
       });
-      const config = await rsbuild.unwrapConfig();
-      expect(config).toMatchSnapshot();
+      const config = (await rsbuild.initConfigs())[0];
+      expect(matchPlugin(config, 'HtmlRspackPlugin')).toMatchSnapshot();
     },
   );
 });

@@ -38,7 +38,7 @@ describe('environment config', () => {
     expect(rsbuild.context.distPath).toBe(join(cwd, 'dist1'));
   });
 
-  it('should support modify environment config by api.modifyRsbuildConfig', async () => {
+  it('should support modifying environment config by api.modifyRsbuildConfig', async () => {
     rs.stubEnv('NODE_ENV', 'development');
     const rsbuild = await createRsbuild({
       config: {
@@ -101,7 +101,7 @@ describe('environment config', () => {
     expect(environmentConfigs).toMatchSnapshot();
   });
 
-  it('should support modify single environment config by api.modifyEnvironmentConfig', async () => {
+  it('should support modifying single environment config by api.modifyEnvironmentConfig', async () => {
     rs.stubEnv('NODE_ENV', 'development');
     const rsbuild = await createRsbuild({
       config: {
@@ -159,7 +159,7 @@ describe('environment config', () => {
     expect(environmentConfigs).toMatchSnapshot();
   });
 
-  it('should support add single environment plugin', async () => {
+  it('should support adding a single environment plugin', async () => {
     rs.stubEnv('NODE_ENV', 'development');
     const plugin: (pluginId: string) => RsbuildPlugin = (pluginId) => ({
       name: 'test-environment',
@@ -206,7 +206,7 @@ describe('environment config', () => {
     ).toMatchSnapshot();
   });
 
-  it('should support run specified environment', async () => {
+  it('should support running the specified environment', async () => {
     rs.stubEnv('NODE_ENV', 'development');
 
     const pluginLogs: string[] = [];
@@ -297,7 +297,7 @@ describe('environment config', () => {
     ).toMatchSnapshot();
   });
 
-  it('should print environment config when inspect config', async () => {
+  it('should print environment config when inspecting config', async () => {
     rs.stubEnv('NODE_ENV', 'development');
     const rsbuild = await createRsbuild({
       config: {
@@ -332,7 +332,7 @@ describe('environment config', () => {
     expect(environmentConfigs).toMatchSnapshot();
   });
 
-  it('tools.rspack / bundlerChain can be configured in environment config', async () => {
+  it('should allow configuring tools.rspack and bundlerChain in environment config', async () => {
     rs.stubEnv('NODE_ENV', 'development');
     const rsbuild = await createRsbuild({
       config: {
@@ -373,7 +373,7 @@ describe('environment config', () => {
     expect(configs).toMatchSnapshot();
   });
 
-  it('dev.hmr can be configured in environment config', async () => {
+  it('should allow configuring dev.hmr in environment config', async () => {
     rs.stubEnv('NODE_ENV', 'development');
     const rsbuild = await createRsbuild({
       config: {
