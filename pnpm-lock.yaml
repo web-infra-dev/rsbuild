@@ -36,10 +36,10 @@ importers:
         version: 0.2.1
       '@rstest/adapter-rslib':
         specifier: ^0.2.0
-        version: 0.2.0(@rslib/core@0.19.6(typescript@5.9.3))(@rstest/core@0.8.5)(typescript@5.9.3)
+        version: 0.2.0(@rslib/core@0.19.6(typescript@5.9.3))(@rstest/core@0.9.0(@module-federation/runtime-tools@2.0.1)(core-js@3.48.0))(typescript@5.9.3)
       '@rstest/core':
-        specifier: ^0.8.5
-        version: 0.8.5
+        specifier: ^0.9.0
+        version: 0.9.0(@module-federation/runtime-tools@2.0.1)(core-js@3.48.0)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:scripts/test-helper
@@ -2572,9 +2572,9 @@ packages:
       typescript:
         optional: true
 
-  '@rstest/core@0.8.5':
-    resolution: {integrity: sha512-4E9pXpy2Jxy1+J4mqGnsVQn7gVnkIv2lA7AbwAY0Zy90jJo+YCchpTGosba/jhBJJhETRAr3GIkPUECxFoyQ9A==}
-    engines: {node: '>=18.12.0'}
+  '@rstest/core@0.9.0':
+    resolution: {integrity: sha512-YL0TlUUMDgSF3uZ9ZiaqJokST7x+Zlou/FsMDk62CfOuNGUt2jGEt+wH7iZ9h2PJCUmj/e47uAFtjpqY8NeoOA==}
+    engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
       happy-dom: '*'
@@ -5878,6 +5878,10 @@ packages:
     resolution: {integrity: sha512-Zba82s87IFq9A9XmjiX5uZA/ARWDrB03OHlq+Vw1fSdt0I+4/Kutwy8BP4Y/y/aORMo61FQ0vIb5j44vSo5Pkg==}
     engines: {node: ^18.0.0 || >=20.0.0}
 
+  tinypool@2.1.0:
+    resolution: {integrity: sha512-Pugqs6M0m7Lv1I7FtxN4aoyToKg1C4tu+/381vH35y8oENM/Ai7f7C4StcoK4/+BSw9ebcS8jRiVrORFKCALLw==}
+    engines: {node: ^20.0.0 || >=22.0.0}
+
   to-regex-range@5.0.1:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
@@ -7254,7 +7258,6 @@ snapshots:
       core-js: 3.48.0
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
-    optional: true
 
   '@rsbuild/plugin-babel@1.1.0(@rsbuild/core@packages+core)':
     dependencies:
@@ -7625,7 +7628,6 @@ snapshots:
       '@rspack/binding-win32-arm64-msvc': 2.0.0-beta.3
       '@rspack/binding-win32-ia32-msvc': 2.0.0-beta.3
       '@rspack/binding-win32-x64-msvc': 2.0.0-beta.3
-    optional: true
 
   '@rspack/binding@2.0.0-beta.4':
     optionalDependencies:
@@ -7662,7 +7664,6 @@ snapshots:
     optionalDependencies:
       '@module-federation/runtime-tools': 2.0.1
       '@swc/helpers': 0.5.19
-    optional: true
 
   '@rspack/core@2.0.0-beta.4(@module-federation/runtime-tools@2.0.1)(@swc/helpers@0.5.19)':
     dependencies:
@@ -7780,18 +7781,21 @@ snapshots:
       - react
       - react-dom
 
-  '@rstest/adapter-rslib@0.2.0(@rslib/core@0.19.6(typescript@5.9.3))(@rstest/core@0.8.5)(typescript@5.9.3)':
+  '@rstest/adapter-rslib@0.2.0(@rslib/core@0.19.6(typescript@5.9.3))(@rstest/core@0.9.0(@module-federation/runtime-tools@2.0.1)(core-js@3.48.0))(typescript@5.9.3)':
     dependencies:
       '@rslib/core': 0.19.6(@typescript/native-preview@7.0.0-dev.20260301.1)(typescript@5.9.3)
-      '@rstest/core': 0.8.5
+      '@rstest/core': 0.9.0(@module-federation/runtime-tools@2.0.1)(core-js@3.48.0)
     optionalDependencies:
       typescript: 5.9.3
 
-  '@rstest/core@0.8.5':
+  '@rstest/core@0.9.0(@module-federation/runtime-tools@2.0.1)(core-js@3.48.0)':
     dependencies:
-      '@rsbuild/core': 1.7.3
+      '@rsbuild/core': 2.0.0-beta.6(@module-federation/runtime-tools@2.0.1)(core-js@3.48.0)
       '@types/chai': 5.2.3
-      tinypool: 1.1.1
+      tinypool: 2.1.0
+    transitivePeerDependencies:
+      - '@module-federation/runtime-tools'
+      - core-js
 
   '@shikijs/core@3.23.0':
     dependencies:
@@ -11407,6 +11411,8 @@ snapshots:
       picomatch: 4.0.3
 
   tinypool@1.1.1: {}
+
+  tinypool@2.1.0: {}
 
   to-regex-range@5.0.1:
     dependencies:
