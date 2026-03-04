@@ -32,7 +32,7 @@
   "dependencies": {
     "deepmerge": "^4.3.1",
     "loader-utils": "^2.0.4",
-    "postcss": "^8.5.6",
+    "postcss": "^8.5.8",
     "reduce-configs": "^1.1.1",
     "sass-embedded": "^1.97.3"
   },
