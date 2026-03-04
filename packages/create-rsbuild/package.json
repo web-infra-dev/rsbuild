@@ -23,8 +23,8 @@
     "bin.js"
   ],
   "scripts": {
-    "build": "rslib build",
-    "dev": "rslib build -w",
+    "build": "rslib build --syntax es2023",
+    "dev": "rslib build --syntax es2023 -w",
     "start": "node ./dist/index.js",
     "bump": "pnpx bumpp --no-tag"
   },
