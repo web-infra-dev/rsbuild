@@ -1,14 +1,12 @@
 import type { Module, ModuleLinker, SyntheticModule } from 'node:vm';
 
-const isModuleNamespaceObject = (
-  value: unknown,
-): value is Record<string, any> => {
-  return Object.prototype.toString.call(value) === '[object Module]';
-};
+const isEsModuleIndicator = (moduleExports: Record<string, unknown>) =>
+  moduleExports?.__esModule ||
+  Object.prototype.toString.call(moduleExports) === '[object Module]';
 
 export const asModule = async (
-  moduleExports: Record<string, any>,
-  context: Record<string, any>,
+  moduleExports: Record<string, unknown>,
+  context: Record<string, unknown>,
   unlinked?: boolean,
 ): Promise<Module | SyntheticModule> => {
   const { Module, SyntheticModule } = await import('node:vm');
@@ -24,11 +22,8 @@ export const asModule = async (
     () => {
       for (const name of exports) {
         if (name === 'default') {
-          const isEsModuleIndicator =
-            isModuleNamespaceObject(moduleExports) ||
-            (moduleExports && moduleExports.__esModule);
           const defaultExport =
-            isEsModuleIndicator && 'default' in moduleExports
+            isEsModuleIndicator(moduleExports) && 'default' in moduleExports
               ? moduleExports.default
               : moduleExports;
           syntheticModule.setExport(name, defaultExport);
