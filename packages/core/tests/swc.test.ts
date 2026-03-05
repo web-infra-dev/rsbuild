@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { matchRules } from '@scripts/test-helper';
 import { createRsbuild, type RsbuildConfig } from '../src';
 
@@ -195,6 +196,7 @@ async function matchConfigSnapshot(config: RsbuildConfig) {
   config.source.entry = {
     main: './src/index.js',
   };
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
   const rsbuild = await createRsbuild({
     config,
