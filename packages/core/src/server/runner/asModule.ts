@@ -1,7 +1,6 @@
 import type { Module, ModuleLinker, SyntheticModule } from 'node:vm';
 
-const isEsModuleIndicator = (moduleExports: Record<string, unknown>) =>
-  moduleExports?.__esModule ||
+const isModuleNamespaceObject = (moduleExports: Record<string, unknown>) =>
   Object.prototype.toString.call(moduleExports) === '[object Module]';
 
 export const asModule = async (
@@ -23,7 +22,7 @@ export const asModule = async (
       for (const name of exports) {
         if (name === 'default') {
           const defaultExport =
-            isEsModuleIndicator(moduleExports) && 'default' in moduleExports
+            isModuleNamespaceObject(moduleExports) && 'default' in moduleExports
               ? moduleExports.default
               : moduleExports;
           syntheticModule.setExport(name, defaultExport);
