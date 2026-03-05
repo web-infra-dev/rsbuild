@@ -1,3 +1,4 @@
+import path from 'node:path';
 import { matchRules } from '@scripts/test-helper';
 import { createRsbuild, type RsbuildConfig } from '../src';
 
@@ -195,7 +196,10 @@ async function matchConfigSnapshot(config: RsbuildConfig) {
     main: './src/index.js',
   };
 
-  const rsbuild = await createRsbuild({ config });
+  const rsbuild = await createRsbuild({
+    config,
+    cwd: path.join(__dirname, '..'),
+  });
   const bundlerConfigs = await rsbuild.initConfigs();
   expect(
     bundlerConfigs.map((bundlerConfig) => matchRules(bundlerConfig, 'a.js')),
