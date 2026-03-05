@@ -24,8 +24,11 @@ export const asModule = async (
     () => {
       for (const name of exports) {
         if (name === 'default') {
+          const isEsModuleIndicator =
+            isModuleNamespaceObject(moduleExports) ||
+            (moduleExports && moduleExports.__esModule);
           const defaultExport =
-            isModuleNamespaceObject(moduleExports) && 'default' in moduleExports
+            isEsModuleIndicator && 'default' in moduleExports
               ? moduleExports.default
               : moduleExports;
           syntheticModule.setExport(name, defaultExport);
