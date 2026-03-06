@@ -1,0 +1,7 @@
+{
+  "extends": "@rsbuild/config/tsconfig",
+  "compilerOptions": {
+    "skipLibCheck": false
+  },
+  "include": ["index.ts"]
+}
