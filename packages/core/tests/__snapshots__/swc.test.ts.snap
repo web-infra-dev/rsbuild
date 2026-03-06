@@ -322,7 +322,7 @@ exports[`plugin-swc > should apply overrideBrowserslist 1`] = `
                 "isModule": "unknown",
                 "jsc": {
                   "experimental": {
-                    "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                    "cacheRoot": "<ROOT>/packages/core/node_modules/.cache/.swc",
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
@@ -395,7 +395,7 @@ exports[`plugin-swc > should apply pluginImport 1`] = `
                 "isModule": "unknown",
                 "jsc": {
                   "experimental": {
-                    "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                    "cacheRoot": "<ROOT>/packages/core/node_modules/.cache/.swc",
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
@@ -475,7 +475,7 @@ exports[`plugin-swc > should apply pluginImport correctly with ConfigChain 1`] =
                 "isModule": "unknown",
                 "jsc": {
                   "experimental": {
-                    "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                    "cacheRoot": "<ROOT>/packages/core/node_modules/.cache/.swc",
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
@@ -558,7 +558,7 @@ exports[`plugin-swc > should disable pluginImport when it returns undefined 1`] 
                 "isModule": "unknown",
                 "jsc": {
                   "experimental": {
-                    "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                    "cacheRoot": "<ROOT>/packages/core/node_modules/.cache/.swc",
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
@@ -628,7 +628,7 @@ exports[`plugin-swc > should disable preset-env for non-web targets 1`] = `
                 "isModule": "unknown",
                 "jsc": {
                   "experimental": {
-                    "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                    "cacheRoot": "<ROOT>/packages/core/node_modules/.cache/.swc",
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
@@ -701,7 +701,7 @@ exports[`plugin-swc > should disable preset-env mode 1`] = `
                 "isModule": "unknown",
                 "jsc": {
                   "experimental": {
-                    "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                    "cacheRoot": "<ROOT>/packages/core/node_modules/.cache/.swc",
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
@@ -781,7 +781,7 @@ exports[`plugin-swc > should enable preset-env in entry mode 1`] = `
                 "isModule": "unknown",
                 "jsc": {
                   "experimental": {
-                    "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                    "cacheRoot": "<ROOT>/packages/core/node_modules/.cache/.swc",
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
@@ -862,7 +862,7 @@ exports[`plugin-swc > should enable preset-env in usage mode 1`] = `
                 "isModule": "unknown",
                 "jsc": {
                   "experimental": {
-                    "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                    "cacheRoot": "<ROOT>/packages/core/node_modules/.cache/.swc",
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
@@ -942,7 +942,7 @@ exports[`plugin-swc > should use the correct core-js version 1`] = `
                 "isModule": "unknown",
                 "jsc": {
                   "experimental": {
-                    "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                    "cacheRoot": "<ROOT>/packages/core/node_modules/.cache/.swc",
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
@@ -1012,7 +1012,7 @@ exports[`plugin-swc > should use the correct core-js version 2`] = `
                 "isModule": "unknown",
                 "jsc": {
                   "experimental": {
-                    "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                    "cacheRoot": "<ROOT>/packages/core/node_modules/.cache/.swc",
                     "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
