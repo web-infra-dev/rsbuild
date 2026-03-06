@@ -32,7 +32,7 @@ const externals: Rspack.Configuration['externals'] = [
   'yaml',
   'tsx/cjs/api',
   // allow to `require('events')`
-  { events: 'commonjs events' },
+  { events: 'node-commonjs events' },
   // externalize pre-bundled dependencies
   ({ request }, callback) => {
     const entries = Object.entries(regexpMap);
