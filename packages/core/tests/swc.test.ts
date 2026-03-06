@@ -2,6 +2,8 @@ import path from 'node:path';
 import { matchRules } from '@scripts/test-helper';
 import { createRsbuild, type RsbuildConfig } from '../src';
 
+const defaultCwd = path.join(import.meta.dirname, '..');
+
 describe('plugin-swc', () => {
   it('should disable preset-env for non-web targets', async () => {
     await matchConfigSnapshot({
@@ -106,6 +108,7 @@ describe('plugin-swc', () => {
 
   it('should allow using `tools.swc` to configure swc-loader options', async () => {
     const rsbuild = await createRsbuild({
+      cwd: defaultCwd,
       config: {
         tools: {
           swc: {
@@ -126,6 +129,7 @@ describe('plugin-swc', () => {
 
   it('should allow `tools.swc` to be a function', async () => {
     const rsbuild = await createRsbuild({
+      cwd: defaultCwd,
       config: {
         tools: {
           swc() {
@@ -148,6 +152,7 @@ describe('plugin-swc', () => {
 
   it('should apply environment config correctly', async () => {
     const rsbuild = await createRsbuild({
+      cwd: defaultCwd,
       config: {
         environments: {
           web: {
@@ -198,7 +203,7 @@ async function matchConfigSnapshot(config: RsbuildConfig) {
 
   const rsbuild = await createRsbuild({
     config,
-    cwd: path.join(import.meta.dirname, '..'),
+    cwd: defaultCwd,
   });
   const bundlerConfigs = await rsbuild.initConfigs();
   expect(
