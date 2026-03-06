@@ -127,7 +127,6 @@ export default defineConfig({
     // Build client modules and copy dependencies to compiled folder
     {
       id: 'prepare',
-      format: 'esm',
       syntax: 'es2017',
       source: {
         entry: {
@@ -166,7 +165,6 @@ export default defineConfig({
     },
     {
       id: 'node',
-      format: 'esm',
       syntax: 'es2023',
       plugins: [pluginFixDtsTypes],
       source: {
