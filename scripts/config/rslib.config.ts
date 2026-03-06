@@ -22,7 +22,6 @@ export const nodeMinifyConfig: Rsbuild.Minify = {
 };
 
 export const esmConfig: LibConfig = {
-  format: 'esm',
   syntax: 'es2023',
   dts: {
     build: true,
