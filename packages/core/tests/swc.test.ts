@@ -106,6 +106,7 @@ describe('plugin-swc', () => {
 
   it('should allow using `tools.swc` to configure swc-loader options', async () => {
     const rsbuild = await createRsbuild({
+      cwd: path.join(import.meta.dirname, '..'),
       config: {
         tools: {
           swc: {
@@ -126,6 +127,7 @@ describe('plugin-swc', () => {
 
   it('should allow `tools.swc` to be a function', async () => {
     const rsbuild = await createRsbuild({
+      cwd: path.join(import.meta.dirname, '..'),
       config: {
         tools: {
           swc() {
@@ -148,6 +150,7 @@ describe('plugin-swc', () => {
 
   it('should apply environment config correctly', async () => {
     const rsbuild = await createRsbuild({
+      cwd: path.join(import.meta.dirname, '..'),
       config: {
         environments: {
           web: {
