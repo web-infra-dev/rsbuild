@@ -290,6 +290,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/core
 
+  e2e/cases/server/ssr-load-bundle-external/_node_modules/esm-pkg: {}
+
   e2e/cases/server/ssr-type-module:
     devDependencies:
       '@rsbuild/core':
@@ -1010,7 +1012,7 @@ importers:
         version: 1.6.2(typescript@5.9.3)
       svgo:
         specifier: ^3.3.2
-        version: 3.3.2
+        version: 3.3.3
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -1059,7 +1061,7 @@ importers:
         version: 7.0.0-dev.20260303.1
       rsbuild-plugin-arethetypeswrong:
         specifier: 0.2.0
-        version: 0.2.0(@rsbuild/core@2.0.0-beta.6(@module-federation/runtime-tools@2.0.1)(core-js@3.48.0))(typescript@5.9.3)
+        version: 0.2.0(@rsbuild/core@2.0.0-beta.7(@module-federation/runtime-tools@2.0.1)(core-js@3.48.0))(typescript@5.9.3)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -2088,6 +2090,16 @@ packages:
       core-js:
         optional: true
 
+  '@rsbuild/core@2.0.0-beta.7':
+    resolution: {integrity: sha512-LjcLaugWJj2Zvjaw9CVJiHOpo3aNyLUuk8tqzVa2TOhHPyfJZ3/NnqMi0NtI+vkCce456J1+BNSvtrWH1Z5/fg==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    hasBin: true
+    peerDependencies:
+      core-js: '>= 3.0.0'
+    peerDependenciesMeta:
+      core-js:
+        optional: true
+
   '@rsbuild/plugin-babel@1.1.0':
     resolution: {integrity: sha512-stkd2Gc9ruXDNKnPt75BORteuMFZz3s3GzuDprbldOzU0r0+56seQ2JhWGd4NhJMnJvviKxNkiTISsYU+LlVEg==}
     peerDependencies:
@@ -2671,10 +2683,6 @@ packages:
     resolution: {integrity: sha512-HNE5lnCgPTLoWoK5DBeICgO3Cga3nsx/yJt98a4b6Z/mhCK8JjehXYv6AZIApLFSn8ctHtGWdNLS5PY2Xws8dw==}
     peerDependencies:
       webpack: ^5
-
-  '@trysound/sax@0.2.0':
-    resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
-    engines: {node: '>=10.13.0'}
 
   '@tybys/wasm-util@0.10.1':
     resolution: {integrity: sha512-9tTaPJLSiejZKx+Bmog4uSubteqTvFrVrURwkmHixBo0G4seD0zUxp98E1DzUBJxLQ3NPwXrGKDiVjwx/DpPsg==}
@@ -3598,6 +3606,10 @@ packages:
 
   enhanced-resolve@5.19.0:
     resolution: {integrity: sha512-phv3E1Xl4tQOShqSte26C7Fl84EwUdZsyOuSSk9qtAGyyQs2s3jJzComh+Abf4g187lUUAvH+H26omrqia2aGg==}
+    engines: {node: '>=10.13.0'}
+
+  enhanced-resolve@5.20.0:
+    resolution: {integrity: sha512-/ce7+jQ1PQ6rVXwe+jKEg5hW5ciicHwIQUagZkp6IufBoY3YDgdTTY1azVs0qoRgVmvsNB+rbjLJxDAeHHtwsQ==}
     engines: {node: '>=10.13.0'}
 
   entities@4.5.0:
@@ -4980,9 +4992,6 @@ packages:
   rambda@9.4.2:
     resolution: {integrity: sha512-++euMfxnl7OgaEKwXh9QqThOjMeta2HH001N1v4mYQzBjJBnmXBh2BCK6dZAbICFVXOFUVD3xFG0R3ZPU0mxXw==}
 
-  randombytes@2.1.0:
-    resolution: {integrity: sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==}
-
   range-parser@1.2.1:
     resolution: {integrity: sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==}
     engines: {node: '>= 0.6'}
@@ -5409,6 +5418,10 @@ packages:
     resolution: {integrity: sha512-1n3r/tGXO6b6VXMdFT54SHzT9ytu9yr7TaELowdYpMqY/Ao7EnlQGmAQ1+RatX7Tkkdm6hONI2owqNx2aZj5Sw==}
     engines: {node: '>=11.0.0'}
 
+  sax@1.5.0:
+    resolution: {integrity: sha512-21IYA3Q5cQf089Z6tgaUTr7lDAyzoTPx5HRtbhsME8Udispad8dC/+sziTNugOEx54ilvatQ9YCzl4KQLPcRHA==}
+    engines: {node: '>=11.0.0'}
+
   scheduler@0.27.0:
     resolution: {integrity: sha512-eNv+WrVbKu1f3vbYJT/xtiF5syA5HPIMtf9IgY/nKg0sWqzAUEvqY/xm7OcZc/qafLx/iO9FgOmeSAp4v5ti/Q==}
 
@@ -5450,9 +5463,6 @@ packages:
     resolution: {integrity: sha512-vFKC2IEtQnVhpT78h1Yp8wzwrf8CM+MzKMHGJZfBtzhZNycRFnXsHk6E5TxIkkMsgNS7mdX3AGB7x2QM2di4lA==}
     engines: {node: '>=10'}
     hasBin: true
-
-  serialize-javascript@6.0.2:
-    resolution: {integrity: sha512-Saa1xPByTTq2gdeFZYLLo+RFE35NHZkAbqZeWNd3BpzppeVisAqpDjcp8dyf6uIvEqJRd46jemmyA4iFIeVk8g==}
 
   seroval-plugins@1.5.0:
     resolution: {integrity: sha512-EAHqADIQondwRZIdeW2I636zgsODzoBDwb3PT/+7TLDWyw1Dy/Xv7iGUIEXXav7usHDE9HVhOU61irI3EnyyHA==}
@@ -5702,8 +5712,8 @@ packages:
   svg-parser@2.0.4:
     resolution: {integrity: sha512-e4hG1hRwoOdRb37cIMSgzNsxyzKfayW6VOflrwvR+/bzrkyxY/31WkbgnQpgtrNp1SdpJvpUAGTa/ZoiPNDuRQ==}
 
-  svgo@3.3.2:
-    resolution: {integrity: sha512-OoohrmuUlBs8B8o6MB2Aevn+pRIH9zDALSR+6hhqVfa6fRwG/Qw9VUMSMW9VNg2CFc/MTIfabtdOVl9ODIJjpw==}
+  svgo@3.3.3:
+    resolution: {integrity: sha512-+wn7I4p7YgJhHs38k2TNjy1vCfPIfLIJWR5MnCStsN8WuuTcBnRKcMHQLMM2ijxGZmDoZwNv8ipl5aTTen62ng==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -5726,8 +5736,8 @@ packages:
     resolution: {integrity: sha512-g9ljZiwki/LfxmQADO3dEY1CbpmXT5Hm2fJ+QaGKwSXUylMybePR7/67YW7jOrrvjEgL1Fmz5kzyAjWVWLlucg==}
     engines: {node: '>=6'}
 
-  terser-webpack-plugin@5.3.16:
-    resolution: {integrity: sha512-h9oBFCWrq78NyWWVcSwZarJkZ01c2AyGrzs1crmHZO3QUg9D61Wu4NPjBy69n7JqylFF5y+CsUZYmYEIZ3mR+Q==}
+  terser-webpack-plugin@5.3.17:
+    resolution: {integrity: sha512-YR7PtUp6GMU91BgSJmlaX/rS2lGDbAF7D+Wtq7hRO+MiljNmodYvqslzCFiYVAgW+Qoaaia/QUIP4lGXufjdZw==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
       '@swc/core': '*'
@@ -7109,6 +7119,16 @@ snapshots:
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
 
+  '@rsbuild/core@2.0.0-beta.7(@module-federation/runtime-tools@2.0.1)(core-js@3.48.0)':
+    dependencies:
+      '@rspack/core': 2.0.0-beta.5(@module-federation/runtime-tools@2.0.1)(@swc/helpers@0.5.19)
+      '@swc/helpers': 0.5.19
+    optionalDependencies:
+      core-js: 3.48.0
+    transitivePeerDependencies:
+      - '@module-federation/runtime-tools'
+    optional: true
+
   '@rsbuild/plugin-babel@1.1.0(@rsbuild/core@packages+core)':
     dependencies:
       '@babel/core': 7.29.0
@@ -7692,7 +7712,7 @@ snapshots:
       '@svgr/core': 8.1.0(typescript@5.9.3)
       cosmiconfig: 8.3.6(typescript@5.9.3)
       deepmerge: 4.3.1
-      svgo: 3.3.2
+      svgo: 3.3.3
     transitivePeerDependencies:
       - typescript
 
@@ -7786,8 +7806,6 @@ snapshots:
       '@tailwindcss/oxide': 4.2.1
       tailwindcss: 4.2.1
       webpack: 5.105.3
-
-  '@trysound/sax@0.2.0': {}
 
   '@tybys/wasm-util@0.10.1':
     dependencies:
@@ -8760,6 +8778,11 @@ snapshots:
       tapable: 2.3.0
 
   enhanced-resolve@5.19.0:
+    dependencies:
+      graceful-fs: 4.2.11
+      tapable: 2.3.0
+
+  enhanced-resolve@5.20.0:
     dependencies:
       graceful-fs: 4.2.11
       tapable: 2.3.0
@@ -10181,7 +10204,7 @@ snapshots:
   needle@3.3.1:
     dependencies:
       iconv-lite: 0.6.3
-      sax: 1.4.4
+      sax: 1.5.0
     optional: true
 
   negotiator@0.6.3: {}
@@ -10438,10 +10461,6 @@ snapshots:
 
   rambda@9.4.2: {}
 
-  randombytes@2.1.0:
-    dependencies:
-      safe-buffer: 5.2.1
-
   range-parser@1.2.1: {}
 
   react-dom@19.2.4(react@19.2.4):
@@ -10664,11 +10683,11 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.59.0
       fsevents: 2.3.3
 
-  rsbuild-plugin-arethetypeswrong@0.2.0(@rsbuild/core@2.0.0-beta.6(@module-federation/runtime-tools@2.0.1)(core-js@3.48.0))(typescript@5.9.3):
+  rsbuild-plugin-arethetypeswrong@0.2.0(@rsbuild/core@2.0.0-beta.7(@module-federation/runtime-tools@2.0.1)(core-js@3.48.0))(typescript@5.9.3):
     dependencies:
       typescript: 5.9.3
     optionalDependencies:
-      '@rsbuild/core': 2.0.0-beta.6(@module-federation/runtime-tools@2.0.1)(core-js@3.48.0)
+      '@rsbuild/core': 2.0.0-beta.7(@module-federation/runtime-tools@2.0.1)(core-js@3.48.0)
 
   rsbuild-plugin-dts@0.19.6(@rsbuild/core@1.7.3(@module-federation/runtime-tools@2.0.1))(typescript@5.9.3):
     dependencies:
@@ -10841,6 +10860,8 @@ snapshots:
 
   sax@1.4.4: {}
 
+  sax@1.5.0: {}
+
   scheduler@0.27.0: {}
 
   schema-utils@3.3.0:
@@ -10877,10 +10898,6 @@ snapshots:
   semver@7.6.3: {}
 
   semver@7.7.4: {}
-
-  serialize-javascript@6.0.2:
-    dependencies:
-      randombytes: 2.1.0
 
   seroval-plugins@1.5.0(seroval@1.5.0):
     dependencies:
@@ -11129,15 +11146,15 @@ snapshots:
 
   svg-parser@2.0.4: {}
 
-  svgo@3.3.2:
+  svgo@3.3.3:
     dependencies:
-      '@trysound/sax': 0.2.0
       commander: 7.2.0
       css-select: 5.2.2
       css-tree: 2.3.1
       css-what: 6.2.2
       csso: 5.0.5
       picocolors: 1.1.1
+      sax: 1.5.0
 
   sync-child-process@1.0.2:
     dependencies:
@@ -11151,12 +11168,11 @@ snapshots:
 
   tapable@2.3.0: {}
 
-  terser-webpack-plugin@5.3.16(webpack@5.105.3):
+  terser-webpack-plugin@5.3.17(webpack@5.105.3):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       jest-worker: 27.5.1
       schema-utils: 4.3.3
-      serialize-javascript: 6.0.2
       terser: 5.46.0
       webpack: 5.105.3
 
@@ -11408,7 +11424,7 @@ snapshots:
       acorn-import-phases: 1.0.4(acorn@8.16.0)
       browserslist: 4.28.1
       chrome-trace-event: 1.0.4
-      enhanced-resolve: 5.19.0
+      enhanced-resolve: 5.20.0
       es-module-lexer: 2.0.0
       eslint-scope: 5.1.1
       events: 3.3.0
@@ -11420,7 +11436,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 4.3.3
       tapable: 2.3.0
-      terser-webpack-plugin: 5.3.16(webpack@5.105.3)
+      terser-webpack-plugin: 5.3.17(webpack@5.105.3)
       watchpack: 2.5.1
       webpack-sources: 3.3.4
     transitivePeerDependencies:
@@ -11468,7 +11484,7 @@ snapshots:
 
   xml-js@1.6.11:
     dependencies:
-      sax: 1.4.4
+      sax: 1.5.0
 
   yallist@3.1.1: {}
 
