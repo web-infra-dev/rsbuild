@@ -1,6 +1,5 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import {
   type Argv,
   checkCancel,
@@ -9,8 +8,6 @@ import {
   type ESLintTemplateName,
   select,
 } from 'create-rstack';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const frameworkAlias: Record<string, string> = {
   vue: 'vue3',
@@ -96,8 +93,10 @@ function mapRstestTemplate(templateName: string): string {
   return `vanilla-${language}`;
 }
 
+const root = path.join(import.meta.dirname, '..');
+
 create({
-  root: path.resolve(__dirname, '..'),
+  root,
   name: 'rsbuild',
   templates: [
     'vanilla-js',
@@ -124,7 +123,7 @@ create({
       order: 'pre',
       action: ({ templateName, distFolder, addAgentsMdSearchDirs }) => {
         const rstestTemplate = mapRstestTemplate(templateName);
-        const toolFolder = path.join(__dirname, '..', 'template-rstest');
+        const toolFolder = path.join(root, 'template-rstest');
         const subFolder = path.join(toolFolder, rstestTemplate);
 
         copyFolder({
@@ -139,7 +138,7 @@ create({
       value: 'tailwindcss',
       label: 'Tailwind CSS - styling',
       action: async ({ distFolder }) => {
-        const from = path.join(__dirname, '..', 'template-tailwindcss');
+        const from = path.join(root, 'template-tailwindcss');
         copyFolder({
           from: from,
           to: distFolder,
