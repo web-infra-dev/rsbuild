@@ -7,6 +7,9 @@ import prebundleConfig from './prebundle.config.ts';
 
 export const define = {
   RSBUILD_VERSION: JSON.stringify(pkgJson.version),
+  // `ws` internal env vars
+  'process.env.WS_NO_BUFFER_UTIL': true,
+  'process.env.WS_NO_UTF_8_VALIDATE': true,
 };
 
 const regexpMap: Record<string, RegExp> = {};
@@ -28,6 +31,8 @@ const externals: Rspack.Configuration['externals'] = [
   // yaml and tsx are optional dependencies of `postcss-load-config`
   'yaml',
   'tsx/cjs/api',
+  // allow to `require('events')`
+  { events: 'node-commonjs node:events' },
   // externalize pre-bundled dependencies
   ({ request }, callback) => {
     const entries = Object.entries(regexpMap);

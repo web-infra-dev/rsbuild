@@ -2,7 +2,6 @@ import { createRequire } from 'node:module';
 import { COMPILED_PATH } from '../constants';
 
 type CompiledPackages = {
-  ws: typeof import('../../compiled/ws').default;
   'webpack-merge': typeof import('../../compiled/webpack-merge');
   'html-rspack-plugin': typeof import('../../compiled/html-rspack-plugin').default;
 };

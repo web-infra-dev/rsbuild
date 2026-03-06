@@ -48,7 +48,7 @@ export class BuildManager {
 
   public async init(): Promise<void> {
     await this.setupCompilationMiddleware();
-    this.socketServer.prepare();
+    await this.socketServer.prepare();
 
     // Get the latest outputFileSystem from assets middleware
     const { compiler } = this;
