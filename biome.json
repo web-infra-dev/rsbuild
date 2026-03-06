@@ -21,7 +21,6 @@
       "**/scripts/**",
       "**/website/**",
       "!**/node_modules",
-      "!**/.nx",
       "!**/dist",
       "!**/dist-*",
       "!**/doc_build",

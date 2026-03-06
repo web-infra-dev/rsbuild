@@ -1,5 +1,4 @@
-import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginMinimize } from '../src/plugins/minimize';
+import { createRsbuild } from '../src';
 
 describe('plugin-minimize', () => {
   afterEach(() => {
@@ -9,9 +8,7 @@ describe('plugin-minimize', () => {
   it('should not apply minimizer in development', async () => {
     rs.stubEnv('NODE_ENV', 'development');
 
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginMinimize()],
-    });
+    const rsbuild = await createRsbuild();
 
     const bundlerConfigs = await rsbuild.initConfigs();
 
@@ -21,56 +18,17 @@ describe('plugin-minimize', () => {
   it('should apply minimizer in production', async () => {
     rs.stubEnv('NODE_ENV', 'production');
 
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginMinimize()],
-    });
+    const rsbuild = await createRsbuild();
 
     const bundlerConfigs = await rsbuild.initConfigs();
 
-    expect(bundlerConfigs[0].optimization?.minimizer).toMatchInlineSnapshot(
-      `
-      [
-        SwcJsMinimizerRspackPlugin {
-          "_args": [
-            {
-              "extractComments": true,
-              "minimizerOptions": {
-                "format": {
-                  "asciiOnly": false,
-                },
-              },
-            },
-          ],
-          "affectedHooks": "compilation",
-          "name": "SwcJsMinimizerRspackPlugin",
-        },
-        LightningCssMinimizerRspackPlugin {
-          "_args": [
-            {
-              "minimizerOptions": {
-                "errorRecovery": true,
-                "targets": [
-                  "chrome >= 107",
-                  "edge >= 107",
-                  "firefox >= 104",
-                  "safari >= 16",
-                ],
-              },
-            },
-          ],
-          "affectedHooks": undefined,
-          "name": "LightningCssMinimizerRspackPlugin",
-        },
-      ]
-    `,
-    );
+    expect(bundlerConfigs[0].optimization?.minimizer).toMatchSnapshot();
   });
 
   it('should not apply minimizer for JS when output.minify.js is false', async () => {
     rs.stubEnv('NODE_ENV', 'production');
 
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginMinimize()],
+    const rsbuild = await createRsbuild({
       config: {
         output: {
           minify: {
@@ -91,8 +49,7 @@ describe('plugin-minimize', () => {
   it('should not minimize when both output.minify.js and output.minify.css are false', async () => {
     rs.stubEnv('NODE_ENV', 'production');
 
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginMinimize()],
+    const rsbuild = await createRsbuild({
       config: {
         output: {
           minify: {
@@ -111,8 +68,7 @@ describe('plugin-minimize', () => {
   it('should not apply minimizer for CSS when output.minify.css is false', async () => {
     rs.stubEnv('NODE_ENV', 'production');
 
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginMinimize()],
+    const rsbuild = await createRsbuild({
       config: {
         output: {
           minify: {
@@ -133,8 +89,7 @@ describe('plugin-minimize', () => {
   it('should accept and merge options for JS minimizer', async () => {
     rs.stubEnv('NODE_ENV', 'production');
 
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginMinimize()],
+    const rsbuild = await createRsbuild({
       config: {
         output: {
           minify: {
@@ -162,8 +117,7 @@ describe('plugin-minimize', () => {
   it('should dropConsole when performance.removeConsole is true', async () => {
     rs.stubEnv('NODE_ENV', 'production');
 
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginMinimize()],
+    const rsbuild = await createRsbuild({
       config: {
         performance: {
           removeConsole: true,
@@ -173,53 +127,13 @@ describe('plugin-minimize', () => {
 
     const bundlerConfigs = await rsbuild.initConfigs();
 
-    expect(bundlerConfigs[0].optimization?.minimizer).toMatchInlineSnapshot(
-      `
-      [
-        SwcJsMinimizerRspackPlugin {
-          "_args": [
-            {
-              "extractComments": true,
-              "minimizerOptions": {
-                "compress": {
-                  "drop_console": true,
-                },
-                "format": {
-                  "asciiOnly": false,
-                },
-              },
-            },
-          ],
-          "affectedHooks": "compilation",
-          "name": "SwcJsMinimizerRspackPlugin",
-        },
-        LightningCssMinimizerRspackPlugin {
-          "_args": [
-            {
-              "minimizerOptions": {
-                "errorRecovery": true,
-                "targets": [
-                  "chrome >= 107",
-                  "edge >= 107",
-                  "firefox >= 104",
-                  "safari >= 16",
-                ],
-              },
-            },
-          ],
-          "affectedHooks": undefined,
-          "name": "LightningCssMinimizerRspackPlugin",
-        },
-      ]
-    `,
-    );
+    expect(bundlerConfigs[0].optimization?.minimizer).toMatchSnapshot();
   });
 
   it('should remove specific console when performance.removeConsole is array', async () => {
     rs.stubEnv('NODE_ENV', 'production');
 
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginMinimize()],
+    const rsbuild = await createRsbuild({
       config: {
         performance: {
           removeConsole: ['log', 'warn'],
@@ -228,57 +142,13 @@ describe('plugin-minimize', () => {
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
-
-    expect(bundlerConfigs[0].optimization?.minimizer).toMatchInlineSnapshot(
-      `
-      [
-        SwcJsMinimizerRspackPlugin {
-          "_args": [
-            {
-              "extractComments": true,
-              "minimizerOptions": {
-                "compress": {
-                  "pure_funcs": [
-                    "console.log",
-                    "console.warn",
-                  ],
-                },
-                "format": {
-                  "asciiOnly": false,
-                },
-              },
-            },
-          ],
-          "affectedHooks": "compilation",
-          "name": "SwcJsMinimizerRspackPlugin",
-        },
-        LightningCssMinimizerRspackPlugin {
-          "_args": [
-            {
-              "minimizerOptions": {
-                "errorRecovery": true,
-                "targets": [
-                  "chrome >= 107",
-                  "edge >= 107",
-                  "firefox >= 104",
-                  "safari >= 16",
-                ],
-              },
-            },
-          ],
-          "affectedHooks": undefined,
-          "name": "LightningCssMinimizerRspackPlugin",
-        },
-      ]
-    `,
-    );
+    expect(bundlerConfigs[0].optimization?.minimizer).toMatchSnapshot();
   });
 
   it('should set asciiOnly false when output.charset is utf8', async () => {
     rs.stubEnv('NODE_ENV', 'production');
 
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginMinimize()],
+    const rsbuild = await createRsbuild({
       config: {
         output: {
           charset: 'utf8',
@@ -287,43 +157,6 @@ describe('plugin-minimize', () => {
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
-
-    expect(bundlerConfigs[0].optimization?.minimizer).toMatchInlineSnapshot(
-      `
-      [
-        SwcJsMinimizerRspackPlugin {
-          "_args": [
-            {
-              "extractComments": true,
-              "minimizerOptions": {
-                "format": {
-                  "asciiOnly": false,
-                },
-              },
-            },
-          ],
-          "affectedHooks": "compilation",
-          "name": "SwcJsMinimizerRspackPlugin",
-        },
-        LightningCssMinimizerRspackPlugin {
-          "_args": [
-            {
-              "minimizerOptions": {
-                "errorRecovery": true,
-                "targets": [
-                  "chrome >= 107",
-                  "edge >= 107",
-                  "firefox >= 104",
-                  "safari >= 16",
-                ],
-              },
-            },
-          ],
-          "affectedHooks": undefined,
-          "name": "LightningCssMinimizerRspackPlugin",
-        },
-      ]
-    `,
-    );
+    expect(bundlerConfigs[0].optimization?.minimizer).toMatchSnapshot();
   });
 });

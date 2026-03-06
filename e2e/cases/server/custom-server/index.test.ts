@@ -15,7 +15,7 @@ test('should support a custom dev server', async ({ page }) => {
   const url1 = new URL(`http://localhost:${config.port}/bbb`);
 
   await page.goto(url1.href);
-  await expect(page.locator('body')).toContainText('Hello polka!');
+  await expect(page.locator('body')).toContainText('Hello hono!');
 
   await close();
 });
@@ -31,13 +31,13 @@ test('should support a custom dev server without compilation', async ({
   const url1 = new URL(`http://localhost:${config.port}/bbb`);
 
   await page.goto(url1.href);
-  await expect(page.locator('body')).toContainText('Hello polka!');
+  await expect(page.locator('body')).toContainText('Hello hono!');
 
   const url2 = new URL(`http://localhost:${config.port}/test`);
 
   const res2 = await page.goto(url2.href);
 
-  expect(await res2?.text()).toBe('Hello polka!');
+  expect(await res2?.text()).toBe('Hello hono!');
 
   await close();
 });

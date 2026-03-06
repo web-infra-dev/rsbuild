@@ -20,7 +20,6 @@ export default {
     typescript: 'typescript',
   },
   dependencies: [
-    'ws',
     'html-rspack-plugin',
     'webpack-merge',
     {

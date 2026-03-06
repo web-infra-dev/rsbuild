@@ -39,7 +39,7 @@ describe('getHTMLPathByEntry', () => {
     expect(htmlPath).toEqual('my-html/main/index.html');
   });
 
-  it('should allow to disable html folder', async () => {
+  it('should allow disabling html folder', async () => {
     const htmlPath = getHTMLPathByEntry('main', {
       output: {
         distPath: {

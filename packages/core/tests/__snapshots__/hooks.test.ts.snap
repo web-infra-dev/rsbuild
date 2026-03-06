@@ -1,6 +1,6 @@
 // Rstest Snapshot v1
 
-exports[`initHooks > should init hooks correctly 1`] = `
+exports[`initHooks > should initialize hooks correctly 1`] = `
 [
   "onExit",
   "onCloseBuild",

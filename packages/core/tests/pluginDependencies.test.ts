@@ -1,8 +1,8 @@
 import type { RsbuildPlugin } from '../src';
 import { sortPluginsByDependencies } from '../src/pluginManager';
 
-describe('sort plugins by dependencies', () => {
-  it('should verify each plugin', () => {
+describe('sort plugins by dependency order', () => {
+  it('should sort plugins with dependencies correctly', () => {
     const cases = [
       { name: '1' },
       { name: '2', pre: [], post: [] },
@@ -121,7 +121,7 @@ describe('sort plugins by dependencies', () => {
     );
   });
 
-  it('should throw error when plugin has ring', () => {
+  it('should throw an error when plugins have a dependency cycle', () => {
     const cases = [
       { name: '1', pre: [], post: [] },
       { name: '2', pre: [], post: ['5'] },
@@ -161,7 +161,7 @@ describe('sort plugins by dependencies', () => {
       },
     ];
 
-    const result = sortPluginsByDependencies(cases);
+    const result = sortPluginsByDependencies(cases as any[]);
 
     expect(result).toEqual([
       {

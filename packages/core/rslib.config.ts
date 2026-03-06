@@ -7,6 +7,9 @@ import prebundleConfig from './prebundle.config.ts';
 
 export const define = {
   RSBUILD_VERSION: JSON.stringify(pkgJson.version),
+  // `ws` internal env vars
+  'process.env.WS_NO_BUFFER_UTIL': true,
+  'process.env.WS_NO_UTF_8_VALIDATE': true,
 };
 
 const regexpMap: Record<string, RegExp> = {};
@@ -28,6 +31,8 @@ const externals: Rspack.Configuration['externals'] = [
   // yaml and tsx are optional dependencies of `postcss-load-config`
   'yaml',
   'tsx/cjs/api',
+  // allow to `require('events')`
+  { events: 'node-commonjs node:events' },
   // externalize pre-bundled dependencies
   ({ request }, callback) => {
     const entries = Object.entries(regexpMap);
@@ -75,7 +80,7 @@ const pluginFixDtsTypes: Rsbuild.RsbuildPlugin = {
 // references in the emitted bundle.
 //
 // To work around this, we use "magic" placeholder identifiers during authoring
-// (e.g. `RSPACK_MODULE_HOT`, `RSPACK_INTERCEPT_MODULE_EXECUTION`) so rslib
+// (e.g. `RSPACK_INTERCEPT_MODULE_EXECUTION`) so rslib
 // won't try to resolve/transform `__webpack_require__.*` at build time.
 //
 // After bundling, this plugin performs a plain string replacement to swap
@@ -83,7 +88,6 @@ const pluginFixDtsTypes: Rsbuild.RsbuildPlugin = {
 const replacePlugin: Rsbuild.RsbuildPlugin = {
   name: 'replace-plugin',
   setup(api) {
-    const RSPACK_MODULE_HOT = 'RSPACK_MODULE_HOT';
     const RSPACK_INTERCEPT_MODULE_EXECUTION =
       'RSPACK_INTERCEPT_MODULE_EXECUTION';
 
@@ -97,19 +101,14 @@ const replacePlugin: Rsbuild.RsbuildPlugin = {
           }
 
           const source = asset.source().toString();
-          if (
-            !source.includes(RSPACK_MODULE_HOT) &&
-            !source.includes(RSPACK_INTERCEPT_MODULE_EXECUTION)
-          ) {
+          if (!source.includes(RSPACK_INTERCEPT_MODULE_EXECUTION)) {
             continue;
           }
 
-          const replacedSource = source
-            .replaceAll(RSPACK_MODULE_HOT, 'module.hot')
-            .replaceAll(
-              RSPACK_INTERCEPT_MODULE_EXECUTION,
-              compiler.rspack.RuntimeGlobals.interceptModuleExecution,
-            );
+          const replacedSource = source.replaceAll(
+            RSPACK_INTERCEPT_MODULE_EXECUTION,
+            compiler.rspack.RuntimeGlobals.interceptModuleExecution,
+          );
           compilation.updateAsset(name, new sources.RawSource(replacedSource));
         }
       },

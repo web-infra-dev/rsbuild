@@ -2,167 +2,94 @@
 
 exports[`plugin-module-federation > should set environment module federation config correctly 1`] = `
 [
-  {
-    "optimization": {
-      "splitChunks": {
-        "cacheGroups": {},
-        "chunks": "async",
+  ModuleFederationPlugin {
+    "_options": {
+      "exposes": {
+        "./Button": "./src/Button",
       },
-    },
-    "output": {
-      "uniqueName": "remote",
-    },
-    "plugins": [
-      {
-        "name": "RsbuildCorePlugin",
-      },
-      ModuleFederationPlugin {
-        "_options": {
-          "exposes": {
-            "./Button": "./src/Button",
-          },
-          "filename": "remoteEntry.js",
-          "name": "remote",
-          "shared": {
-            "react": {
-              "requiredVersion": "^19.0.0",
-              "singleton": true,
-            },
-            "react-dom": {
-              "requiredVersion": "^19.0.0",
-              "singleton": true,
-            },
-          },
+      "filename": "remoteEntry.js",
+      "name": "remote",
+      "shared": {
+        "react": {
+          "requiredVersion": "^19.0.0",
+          "singleton": true,
         },
-        "_treeShakingSharedPlugin": undefined,
-      },
-    ],
-  },
-  {
-    "optimization": {
-      "splitChunks": {
-        "cacheGroups": {},
-        "chunks": "all",
+        "react-dom": {
+          "requiredVersion": "^19.0.0",
+          "singleton": true,
+        },
       },
     },
-    "plugins": [
-      {
-        "name": "RsbuildCorePlugin",
-      },
-    ],
+    "_treeShakingSharedPlugin": undefined,
   },
+  null,
 ]
 `;
 
 exports[`plugin-module-federation > should set module federation and environment chunkSplit config correctly 1`] = `
 [
-  {
-    "optimization": {
-      "splitChunks": {
-        "cacheGroups": {},
-        "chunks": "async",
+  ModuleFederationPlugin {
+    "_options": {
+      "exposes": {
+        "./Button": "./src/Button",
       },
-    },
-    "output": {
-      "uniqueName": "remote",
-    },
-    "plugins": [
-      {
-        "name": "RsbuildCorePlugin",
-      },
-      ModuleFederationPlugin {
-        "_options": {
-          "exposes": {
-            "./Button": "./src/Button",
-          },
-          "filename": "remoteEntry.js",
-          "name": "remote",
-          "shared": {
-            "react": {
-              "requiredVersion": "^19.0.0",
-              "singleton": true,
-            },
-            "react-dom": {
-              "requiredVersion": "^19.0.0",
-              "singleton": true,
-            },
-          },
+      "filename": "remoteEntry.js",
+      "name": "remote",
+      "shared": {
+        "react": {
+          "requiredVersion": "^19.0.0",
+          "singleton": true,
         },
-        "_treeShakingSharedPlugin": undefined,
+        "react-dom": {
+          "requiredVersion": "^19.0.0",
+          "singleton": true,
+        },
       },
-    ],
+    },
+    "_treeShakingSharedPlugin": undefined,
   },
-  {
-    "optimization": {
-      "splitChunks": false,
-    },
-    "output": {
-      "uniqueName": "remote",
-    },
-    "plugins": [
-      {
-        "name": "RsbuildCorePlugin",
+  ModuleFederationPlugin {
+    "_options": {
+      "exposes": {
+        "./Button": "./src/Button",
       },
-      ModuleFederationPlugin {
-        "_options": {
-          "exposes": {
-            "./Button": "./src/Button",
-          },
-          "filename": "remoteEntry.js",
-          "name": "remote",
-          "shared": {
-            "react": {
-              "requiredVersion": "^19.0.0",
-              "singleton": true,
-            },
-            "react-dom": {
-              "requiredVersion": "^19.0.0",
-              "singleton": true,
-            },
-          },
+      "filename": "remoteEntry.js",
+      "name": "remote",
+      "shared": {
+        "react": {
+          "requiredVersion": "^19.0.0",
+          "singleton": true,
         },
-        "_treeShakingSharedPlugin": undefined,
+        "react-dom": {
+          "requiredVersion": "^19.0.0",
+          "singleton": true,
+        },
       },
-    ],
+    },
+    "_treeShakingSharedPlugin": undefined,
   },
 ]
 `;
 
 exports[`plugin-module-federation > should set module federation config 1`] = `
-{
-  "optimization": {
-    "splitChunks": {
-      "cacheGroups": {},
-      "chunks": "async",
+ModuleFederationPlugin {
+  "_options": {
+    "exposes": {
+      "./Button": "./src/Button",
     },
-  },
-  "output": {
-    "uniqueName": "remote",
-  },
-  "plugins": [
-    {
-      "name": "RsbuildCorePlugin",
-    },
-    ModuleFederationPlugin {
-      "_options": {
-        "exposes": {
-          "./Button": "./src/Button",
-        },
-        "filename": "remoteEntry.js",
-        "name": "remote",
-        "shared": {
-          "react": {
-            "requiredVersion": "^19.0.0",
-            "singleton": true,
-          },
-          "react-dom": {
-            "requiredVersion": "^19.0.0",
-            "singleton": true,
-          },
-        },
+    "filename": "remoteEntry.js",
+    "name": "remote",
+    "shared": {
+      "react": {
+        "requiredVersion": "^19.0.0",
+        "singleton": true,
       },
-      "_treeShakingSharedPlugin": undefined,
+      "react-dom": {
+        "requiredVersion": "^19.0.0",
+        "singleton": true,
+      },
     },
-  ],
+  },
+  "_treeShakingSharedPlugin": undefined,
 }
 `;

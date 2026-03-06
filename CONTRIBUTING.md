@@ -47,7 +47,7 @@ git checkout -b MY_BRANCH_NAME
 Build the package you want to change:
 
 ```sh
-npx nx build @rsbuild/core
+pnpm --filter core run build
 ```
 
 Build everything:

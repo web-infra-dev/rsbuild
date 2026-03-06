@@ -160,7 +160,7 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
-  it('should not modify the original objects when the merged config modified', () => {
+  it('should not modify the original objects when the merged config is modified', () => {
     const obj: RsbuildConfig = {
       resolve: {
         alias: {},
@@ -295,6 +295,29 @@ describe('mergeRsbuildConfig', () => {
             },
           },
         },
+      },
+    });
+  });
+
+  it('should merge dev.writeToDisk correctly', () => {
+    const fn1 = () => false;
+    const fn2 = () => true;
+    expect(
+      mergeRsbuildConfig(
+        {
+          dev: {
+            writeToDisk: fn1,
+          },
+        },
+        {
+          dev: {
+            writeToDisk: fn2,
+          },
+        },
+      ),
+    ).toEqual({
+      dev: {
+        writeToDisk: fn2,
       },
     });
   });

@@ -267,9 +267,9 @@ For some global plugin hooks (such as [onAfterDevCompile](/plugins/dev/hooks#ona
 const myPlugin = () => ({
   setup(api) {
     api.onAfterDevCompile(({ environments }) => {
-      environments.forEach((environment) => {
-        console.log('environment', environment);
-      });
+      for (const name in environments) {
+        console.log(name, environments[name]);
+      }
     });
   },
 });

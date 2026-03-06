@@ -8,6 +8,10 @@
     ".": {
       "types": "./index.ts",
       "default": "./index.ts"
+    },
+    "./server": {
+      "types": "./server.ts",
+      "default": "./server.ts"
     }
   },
   "dependencies": {

@@ -1,7 +1,7 @@
 import { createPluginManager } from '../src/pluginManager';
 
 describe('createPluginManager', () => {
-  it('addPlugins and removePlugins works', () => {
+  it('should add and remove plugins correctly', () => {
     const pluginManager = createPluginManager();
     expect(pluginManager.getPlugins()).toEqual([]);
     pluginManager.addPlugins([

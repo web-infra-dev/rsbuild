@@ -7,16 +7,16 @@
     "scripts/*"
   ],
   "scripts": {
-    "build": "cross-env NX_DAEMON=false nx run-many -t build --exclude @examples/* @e2e/* rsbuild-* --parallel=10 --no-tui",
+    "build": "pnpm --workspace-concurrency=10 --filter \"./packages/*\" --filter \"./scripts/*\" run build",
     "check-dependency-version": "pnpx check-dependency-version-consistency . --ignore-dep loader-utils",
     "check-spell": "pnpx cspell && heading-case",
-    "doc": "cd website && pnpm dev",
+    "doc": "cd website && node --run dev",
     "e2e": "cd ./e2e && pnpm e2e",
     "format": "prettier --experimental-cli --write . && heading-case --write",
-    "lint": "biome check && pnpm lint:type",
+    "lint": "biome check && node --run lint:type",
     "lint:type": "rslint",
-    "prebundle": "nx run-many -t prebundle",
-    "prepare": "simple-git-hooks && pnpm build",
+    "prebundle": "pnpm --parallel --filter \"./packages/*\" run prebundle",
+    "prepare": "simple-git-hooks && node --run prebundle && node --run build",
     "sort-package-json": "pnpx sort-package-json \"./package.json\" \"packages/*/package.json\"",
     "test": "rstest",
     "test:watch": "rstest watch"
@@ -32,18 +32,17 @@
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.4",
+    "@biomejs/biome": "^2.4.5",
     "@rsbuild/config": "workspace:*",
     "@rslint/core": "0.2.1",
-    "@rstest/adapter-rslib": "^0.2.0",
-    "@rstest/core": "^0.8.5",
+    "@rstest/adapter-rslib": "^0.2.1",
+    "@rstest/core": "^0.9.0",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^24.10.13",
+    "@types/node": "^24.11.0",
     "cross-env": "^10.1.0",
     "cspell-ban-words": "^0.0.4",
     "heading-case": "^1.0.7",
     "nano-staged": "^0.9.0",
-    "nx": "^22.5.2",
     "prettier": "^3.8.1",
     "simple-git-hooks": "^2.13.1",
     "typescript": "^5.9.3"
@@ -52,5 +51,10 @@
   "engines": {
     "node": ">=22.18.0",
     "pnpm": ">=10.30.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "@rslib/core": "https://pkg.pr.new/@rslib/core@9731774"
+    }
   }
 }

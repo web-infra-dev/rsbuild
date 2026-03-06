@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/core",
-  "version": "2.0.0-beta.6",
+  "version": "2.0.0-beta.7",
   "description": "The Rspack-based build tool.",
   "homepage": "https://rsbuild.rs",
   "bugs": {
@@ -42,7 +42,7 @@
     "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
-    "@rspack/core": "2.0.0-beta.3",
+    "@rspack/core": "2.0.0-beta.5",
     "@swc/helpers": "^0.5.19"
   },
   "peerDependencies": {
@@ -59,12 +59,12 @@
     "@rslib/core": "0.19.6",
     "@types/connect": "3.4.38",
     "@types/cors": "^2.8.19",
-    "@types/node": "^24.10.13",
+    "@types/node": "^24.11.0",
     "@types/on-finished": "2.3.5",
     "@types/range-parser": "^1.2.7",
     "@types/ws": "^8.18.1",
     "browserslist-load-config": "1.0.1",
-    "cac": "^6.7.14",
+    "cac": "^7.0.0",
     "chokidar": "^5.0.0",
     "connect": "3.7.0",
     "cors": "^2.8.6",
@@ -74,12 +74,12 @@
     "html-rspack-plugin": "6.1.7",
     "http-proxy-middleware": "^3.0.5",
     "jiti": "^2.6.1",
-    "launch-editor-middleware": "^2.13.0",
+    "launch-editor-middleware": "^2.13.1",
     "memfs": "^4.56.10",
     "mrmime": "^2.0.1",
     "on-finished": "2.4.1",
     "open": "^11.0.0",
-    "postcss": "^8.5.6",
+    "postcss": "^8.5.8",
     "postcss-load-config": "6.0.1",
     "postcss-loader": "8.2.1",
     "prebundle": "1.6.2",
@@ -90,9 +90,9 @@
     "rspack-manifest-plugin": "5.2.1",
     "sirv": "^3.0.2",
     "stacktrace-parser": "^0.1.11",
-    "style-loader": "3.3.4",
+    "style-loader": "^4.0.0",
     "supports-color": "^10.2.2",
-    "tinyglobby": "0.2.14",
+    "tinyglobby": "^0.2.15",
     "typescript": "^5.9.3",
     "webpack-merge": "6.0.1",
     "ws": "^8.19.0"
