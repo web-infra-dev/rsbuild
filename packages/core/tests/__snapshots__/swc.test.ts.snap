@@ -86,7 +86,7 @@ exports[`plugin-swc > should allow using \`tools.swc\` to configure swc-loader o
               "isModule": "unknown",
               "jsc": {
                 "experimental": {
-                  "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                  "cacheRoot": "<ROOT>/packages/core/node_modules/.cache/.swc",
                   "keepImportAttributes": true,
                 },
                 "externalHelpers": false,
@@ -168,7 +168,7 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
               "isModule": "unknown",
               "jsc": {
                 "experimental": {
-                  "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                  "cacheRoot": "<ROOT>/packages/core/node_modules/.cache/.swc",
                   "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
@@ -246,7 +246,7 @@ exports[`plugin-swc > should apply environment config correctly 2`] = `
               "isModule": "unknown",
               "jsc": {
                 "experimental": {
-                  "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                  "cacheRoot": "<ROOT>/packages/core/node_modules/.cache/.swc",
                   "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
