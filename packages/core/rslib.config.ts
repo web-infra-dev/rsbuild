@@ -31,6 +31,8 @@ const externals: Rspack.Configuration['externals'] = [
   // yaml and tsx are optional dependencies of `postcss-load-config`
   'yaml',
   'tsx/cjs/api',
+  // allow to `require('events')`
+  { events: 'events commonjs' },
   // externalize pre-bundled dependencies
   ({ request }, callback) => {
     const entries = Object.entries(regexpMap);
