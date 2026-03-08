@@ -615,8 +615,8 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1
       rslog:
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: ^2.0.1
+        version: 2.0.1
       rspack-chain:
         specifier: ^2.0.0-beta.0
         version: 2.0.0-beta.0(@rspack/core@2.0.0-beta.5(@module-federation/runtime-tools@2.1.0)(@swc/helpers@0.5.19))
@@ -2214,7 +2214,7 @@ packages:
         optional: true
 
   '@rslib/core@https://pkg.pr.new/@rslib/core@9731774':
-    resolution: {tarball: https://pkg.pr.new/@rslib/core@9731774}
+    resolution: {integrity: sha512-s7N9iB+o6TRSZRgk+OhcTV6gvJVML6rikXe4PNaKnJb0eNkYHhVVttHCkMTi1hbVGiwRL/PG8d+bI+vsIq3JrQ==, tarball: https://pkg.pr.new/@rslib/core@9731774}
     version: 0.19.6
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
@@ -5192,7 +5192,7 @@ packages:
         optional: true
 
   rsbuild-plugin-dts@https://pkg.pr.new/web-infra-dev/rslib/rsbuild-plugin-dts@9731774:
-    resolution: {tarball: https://pkg.pr.new/web-infra-dev/rslib/rsbuild-plugin-dts@9731774}
+    resolution: {integrity: sha512-KXfmt0Yn1nl4wp4GLlkeddXS4g4r0ERZMZhNnoZNDI/OBi3kRwrfJuyZLYr7urt+wpicMebh+Wjqo1BATthp5Q==, tarball: https://pkg.pr.new/web-infra-dev/rslib/rsbuild-plugin-dts@9731774}
     version: 0.19.6
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
@@ -5227,8 +5227,8 @@ packages:
   rslog@1.3.2:
     resolution: {integrity: sha512-1YyYXBvN0a2b1MSIDLwDTqqgjDzRKxUg/S/+KO6EAgbtZW1B3fdLHAMhEEtvk1patJYMqcRvlp3HQwnxj7AdGQ==}
 
-  rslog@2.0.0:
-    resolution: {integrity: sha512-YdUL4bkGCT9z8o6mD0Dcmns0+30UnR7DZpDMlC4w/D0YNapbJE9S0g20na+p1zBfwWqsqRyxNXNtrp/kfWqwEQ==}
+  rslog@2.0.1:
+    resolution: {integrity: sha512-BdZYILSV4V5Ms7IweGZyo9udJZHQCeUm5cEzlA8KzeY4aEJr2QA6qYWGzgA7yShBU7Igp3qQM6krKUXzze5pqw==}
     engines: {node: ^20.19.0 || >=22.12.0}
 
   rspack-chain@2.0.0-beta.0:
@@ -10695,7 +10695,7 @@ snapshots:
 
   rslog@1.3.2: {}
 
-  rslog@2.0.0: {}
+  rslog@2.0.1: {}
 
   rspack-chain@2.0.0-beta.0(@rspack/core@2.0.0-beta.5(@module-federation/runtime-tools@2.1.0)(@swc/helpers@0.5.19)):
     optionalDependencies:

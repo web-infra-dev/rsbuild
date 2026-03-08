@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 import nodeModule from 'node:module';
-import process from 'node:process';
 
 // enable on-disk code caching of all modules loaded by Node.js
 // requires Nodejs >= 22.8.0
