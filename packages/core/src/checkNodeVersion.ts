@@ -5,7 +5,7 @@ function checkNodeVersion() {
 
   const [majorStr, minorStr] = node.split('.');
   const major = parseInt(majorStr, 10);
-  const minor = parseInt(minorStr, 10);
+  const minor = parseInt(minorStr || '0', 10);
   const supported =
     (major === 20 && minor >= 19) ||
     (major === 22 && minor >= 12) ||
