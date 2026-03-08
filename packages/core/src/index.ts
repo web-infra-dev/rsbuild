@@ -3,6 +3,7 @@
  * the public API of @rsbuild/core.
  */
 
+import './checkNodeVersion';
 import type * as Rspack from '@rspack/core';
 import { rspack } from '@rspack/core';
 
