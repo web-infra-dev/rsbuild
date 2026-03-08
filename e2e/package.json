@@ -48,7 +48,7 @@
     "@tailwindcss/webpack": "^4.2.1",
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.24",
-    "@types/node": "^24.11.0",
+    "@types/node": "^24.12.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "create-rsbuild": "workspace:*",
