@@ -2214,7 +2214,7 @@ packages:
         optional: true
 
   '@rslib/core@https://pkg.pr.new/@rslib/core@9731774':
-    resolution: {integrity: sha512-s7N9iB+o6TRSZRgk+OhcTV6gvJVML6rikXe4PNaKnJb0eNkYHhVVttHCkMTi1hbVGiwRL/PG8d+bI+vsIq3JrQ==}
+    resolution: {tarball: https://pkg.pr.new/@rslib/core@9731774}
     version: 0.19.6
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
