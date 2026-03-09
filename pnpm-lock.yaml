@@ -530,9 +530,6 @@ importers:
       '@rslib/core':
         specifier: 0.20.0-canary-202603091
         version: 0.20.0-canary-202603091(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
-      '@types/connect':
-        specifier: 3.4.38
-        version: 3.4.38
       '@types/cors':
         specifier: ^2.8.19
         version: 2.8.19
