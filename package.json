@@ -32,7 +32,7 @@
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.5",
+    "@biomejs/biome": "^2.4.6",
     "@rsbuild/config": "workspace:*",
     "@rslint/core": "0.2.1",
     "@rstest/adapter-rslib": "^0.2.1",

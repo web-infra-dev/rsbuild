@@ -44,7 +44,7 @@
     "@types/node": "^24.12.0",
     "file-loader": "6.2.0",
     "prebundle": "1.6.2",
-    "svgo": "^3.3.2",
+    "svgo": "^3.3.3",
     "typescript": "^5.9.3",
     "url-loader": "4.1.1"
   },

@@ -75,7 +75,7 @@
     "http-proxy-middleware": "^3.0.5",
     "jiti": "^2.6.1",
     "launch-editor-middleware": "^2.13.1",
-    "memfs": "^4.56.10",
+    "memfs": "^4.56.11",
     "mrmime": "^2.0.1",
     "on-finished": "2.4.1",
     "open": "^11.0.0",
