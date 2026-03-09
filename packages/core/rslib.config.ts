@@ -44,10 +44,12 @@ const externals: Rspack.Configuration['externals'] = [
           );
         }
         if (/jiti/.test(request)) {
-          return callback(undefined, '../compiled/jiti/lib/jiti.mjs');
+          callback(undefined, '../compiled/jiti/lib/jiti.mjs');
+          return;
         }
         if (test.test(request)) {
-          return callback(undefined, `../compiled/${name}/index.js`);
+          callback(undefined, `../compiled/${name}/index.js`);
+          return;
         }
       }
     }
@@ -183,9 +185,9 @@ export default defineConfig({
           // alias to pre-bundled types as they are public API
           cors: './compiled/cors',
           rslog: './compiled/rslog',
-          connect: './compiled/connect',
           postcss: './compiled/postcss',
           chokidar: './compiled/chokidar',
+          'connect-next': './compiled/connect-next',
           'rspack-chain': './compiled/rspack-chain/types',
           'html-rspack-plugin': './compiled/html-rspack-plugin',
           'http-proxy-middleware': './compiled/http-proxy-middleware',
