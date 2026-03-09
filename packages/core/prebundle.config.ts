@@ -31,7 +31,7 @@ export default {
       dtsOnly: true,
     },
     {
-      name: 'connect',
+      name: 'connect-next',
       dtsOnly: true,
     },
     {
@@ -51,13 +51,11 @@ export default {
       name: 'http-proxy-middleware',
       dtsOnly: true,
       beforeBundle(task) {
-        replaceFileContent(
-          join(task.depPath, 'dist/types.d.ts'),
-          (content) =>
-            `${content.replace(
-              "import type * as httpProxy from 'http-proxy'",
-              "import type httpProxy from 'http-proxy'",
-            )}`,
+        replaceFileContent(join(task.depPath, 'dist/types.d.ts'), (content) =>
+          content.replace(
+            "import type * as httpProxy from 'http-proxy'",
+            "import type httpProxy from 'http-proxy'",
+          ),
         );
       },
     },
