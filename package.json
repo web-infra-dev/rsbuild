@@ -54,7 +54,7 @@
   },
   "pnpm": {
     "overrides": {
-      "@rslib/core": "https://pkg.pr.new/@rslib/core@9731774"
+      "@rslib/core": "0.20.0-canary-202603091"
     }
   }
 }
