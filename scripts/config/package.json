@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "private": true,
   "devDependencies": {
-    "@rslib/core": "0.19.6",
+    "@rslib/core": "0.20.0-canary-202603101",
     "@types/node": "^24.12.0",
     "@typescript/native-preview": "7.0.0-dev.20260308.1",
     "rsbuild-plugin-arethetypeswrong": "0.2.0",
