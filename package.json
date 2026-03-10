@@ -51,10 +51,5 @@
   "engines": {
     "node": ">=22.18.0",
     "pnpm": ">=10.31.0"
-  },
-  "pnpm": {
-    "overrides": {
-      "@rslib/core": "0.20.0-canary-202603091"
-    }
   }
 }
