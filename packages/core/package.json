@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/core",
-  "version": "2.0.0-beta.7",
+  "version": "2.0.0-beta.8",
   "description": "The Rspack-based build tool.",
   "homepage": "https://rsbuild.rs",
   "bugs": {
@@ -42,7 +42,7 @@
     "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
-    "@rspack/core": "2.0.0-beta.5",
+    "@rspack/core": "2.0.0-beta.6",
     "@swc/helpers": "^0.5.19"
   },
   "peerDependencies": {
@@ -56,8 +56,7 @@
   "devDependencies": {
     "@jridgewell/remapping": "^2.3.5",
     "@jridgewell/trace-mapping": "^0.3.31",
-    "@rslib/core": "0.19.6",
-    "@types/connect": "3.4.38",
+    "@rslib/core": "0.20.0-canary-202603101",
     "@types/cors": "^2.8.19",
     "@types/node": "^24.12.0",
     "@types/on-finished": "2.3.5",
@@ -66,7 +65,7 @@
     "browserslist-load-config": "1.0.1",
     "cac": "^7.0.0",
     "chokidar": "^5.0.0",
-    "connect": "3.7.0",
+    "connect-next": "4.0.0",
     "cors": "^2.8.6",
     "css-loader": "7.1.4",
     "deepmerge": "^4.3.1",
@@ -75,7 +74,7 @@
     "http-proxy-middleware": "^3.0.5",
     "jiti": "^2.6.1",
     "launch-editor-middleware": "^2.13.1",
-    "memfs": "^4.56.10",
+    "memfs": "^4.56.11",
     "mrmime": "^2.0.1",
     "on-finished": "2.4.1",
     "open": "^11.0.0",

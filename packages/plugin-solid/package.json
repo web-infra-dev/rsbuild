@@ -30,11 +30,11 @@
   "dependencies": {
     "@rsbuild/plugin-babel": "workspace:*",
     "babel-preset-solid": "^1.9.10",
-    "solid-refresh": "^0.7.7"
+    "solid-refresh": "^0.7.8"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.19.6",
+    "@rslib/core": "0.20.0-canary-202603101",
     "@scripts/test-helper": "workspace:*",
     "@types/babel__core": "^7.20.5",
     "typescript": "^5.9.3"

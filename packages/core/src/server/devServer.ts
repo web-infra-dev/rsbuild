@@ -302,8 +302,8 @@ export async function createDevServer<
     };
   });
 
-  const { default: connect } = await import(
-    /* webpackChunkName: "connect" */ 'connect'
+  const { connect } = await import(
+    /* webpackChunkName: "connect-next" */ 'connect-next'
   );
   const middlewares = connect();
 

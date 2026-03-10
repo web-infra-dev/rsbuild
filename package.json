@@ -32,7 +32,7 @@
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.5",
+    "@biomejs/biome": "^2.4.6",
     "@rsbuild/config": "workspace:*",
     "@rslint/core": "0.2.1",
     "@rstest/adapter-rslib": "^0.2.1",
@@ -47,14 +47,9 @@
     "simple-git-hooks": "^2.13.1",
     "typescript": "^5.9.3"
   },
-  "packageManager": "pnpm@10.30.0",
+  "packageManager": "pnpm@10.31.0",
   "engines": {
     "node": ">=22.18.0",
-    "pnpm": ">=10.30.0"
-  },
-  "pnpm": {
-    "overrides": {
-      "@rslib/core": "https://pkg.pr.new/@rslib/core@9731774"
-    }
+    "pnpm": ">=10.31.0"
   }
 }
