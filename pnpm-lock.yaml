@@ -36,7 +36,7 @@ importers:
         version: 0.2.1
       '@rstest/adapter-rslib':
         specifier: ^0.2.1
-        version: 0.2.1(@rslib/core@0.20.0-canary-202603101(@module-federation/runtime-tools@2.1.0)(core-js@3.48.0)(typescript@5.9.3))(@rstest/core@0.9.0(@module-federation/runtime-tools@2.1.0)(core-js@3.48.0))(typescript@5.9.3)
+        version: 0.2.1(@rslib/core@0.20.0(@module-federation/runtime-tools@2.1.0)(core-js@3.48.0)(typescript@5.9.3))(@rstest/core@0.9.0(@module-federation/runtime-tools@2.1.0)(core-js@3.48.0))(typescript@5.9.3)
       '@rstest/core':
         specifier: ^0.9.0
         version: 0.9.0(@module-federation/runtime-tools@2.1.0)(core-js@3.48.0)
@@ -525,8 +525,8 @@ importers:
         specifier: ^0.3.31
         version: 0.3.31
       '@rslib/core':
-        specifier: 0.20.0-canary-202603101
-        version: 0.20.0-canary-202603101(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
+        specifier: 0.20.0
+        version: 0.20.0(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
       '@types/cors':
         specifier: ^2.8.19
         version: 2.8.19
@@ -670,8 +670,8 @@ importers:
         specifier: workspace:*
         version: link:../plugin-vue
       '@rslib/core':
-        specifier: 0.20.0-canary-202603101
-        version: 0.20.0-canary-202603101(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
+        specifier: 0.20.0
+        version: 0.20.0(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
       '@types/node':
         specifier: ^24.12.0
         version: 24.12.0
@@ -707,8 +707,8 @@ importers:
         specifier: npm:@rsbuild/core@^1.7.3
         version: '@rsbuild/core@1.7.3'
       '@rslib/core':
-        specifier: 0.20.0-canary-202603101
-        version: 0.20.0-canary-202603101(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
+        specifier: 0.20.0
+        version: 0.20.0(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -741,8 +741,8 @@ importers:
         specifier: npm:@rsbuild/core@^1.7.3
         version: '@rsbuild/core@1.7.3'
       '@rslib/core':
-        specifier: 0.20.0-canary-202603101
-        version: 0.20.0-canary-202603101(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
+        specifier: 0.20.0
+        version: 0.20.0(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -781,8 +781,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.20.0-canary-202603101
-        version: 0.20.0-canary-202603101(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
+        specifier: 0.20.0
+        version: 0.20.0(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
       '@types/node':
         specifier: ^24.12.0
         version: 24.12.0
@@ -809,8 +809,8 @@ importers:
         specifier: npm:@rsbuild/core@^1.7.3
         version: '@rsbuild/core@1.7.3'
       '@rslib/core':
-        specifier: 0.20.0-canary-202603101
-        version: 0.20.0-canary-202603101(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
+        specifier: 0.20.0
+        version: 0.20.0(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -846,8 +846,8 @@ importers:
         specifier: npm:@rsbuild/core@^1.7.3
         version: '@rsbuild/core@1.7.3'
       '@rslib/core':
-        specifier: 0.20.0-canary-202603101
-        version: 0.20.0-canary-202603101(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
+        specifier: 0.20.0
+        version: 0.20.0(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -886,8 +886,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.20.0-canary-202603101
-        version: 0.20.0-canary-202603101(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
+        specifier: 0.20.0
+        version: 0.20.0(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -920,8 +920,8 @@ importers:
         specifier: npm:@rsbuild/core@^1.7.3
         version: '@rsbuild/core@1.7.3'
       '@rslib/core':
-        specifier: 0.20.0-canary-202603101
-        version: 0.20.0-canary-202603101(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
+        specifier: 0.20.0
+        version: 0.20.0(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -948,8 +948,8 @@ importers:
         specifier: npm:@rsbuild/core@^1.7.3
         version: '@rsbuild/core@1.7.3'
       '@rslib/core':
-        specifier: 0.20.0-canary-202603101
-        version: 0.20.0-canary-202603101(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
+        specifier: 0.20.0
+        version: 0.20.0(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -991,8 +991,8 @@ importers:
         specifier: npm:@rsbuild/core@^1.7.3
         version: '@rsbuild/core@1.7.3'
       '@rslib/core':
-        specifier: 0.20.0-canary-202603101
-        version: 0.20.0-canary-202603101(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
+        specifier: 0.20.0
+        version: 0.20.0(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1028,8 +1028,8 @@ importers:
         specifier: npm:@rsbuild/core@^1.7.3
         version: '@rsbuild/core@1.7.3'
       '@rslib/core':
-        specifier: 0.20.0-canary-202603101
-        version: 0.20.0-canary-202603101(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
+        specifier: 0.20.0
+        version: 0.20.0(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1046,8 +1046,8 @@ importers:
   scripts/config:
     devDependencies:
       '@rslib/core':
-        specifier: 0.20.0-canary-202603101
-        version: 0.20.0-canary-202603101(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
+        specifier: 0.20.0
+        version: 0.20.0(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
       '@types/node':
         specifier: ^24.12.0
         version: 24.12.0
@@ -2103,6 +2103,16 @@ packages:
       core-js:
         optional: true
 
+  '@rsbuild/core@2.0.0-beta.8':
+    resolution: {integrity: sha512-MUxbKJPE1agOK3eCHjKvBIiA+CcZ0TJU/ANKDBLMjK2Er+wq4r5c2ne53+Pi7DtIExoMbSSWBx+RP3CMewKGVA==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    hasBin: true
+    peerDependencies:
+      core-js: '>= 3.0.0'
+    peerDependenciesMeta:
+      core-js:
+        optional: true
+
   '@rsbuild/core@2.0.0-canary-20260309140114':
     resolution: {integrity: sha512-xVBn15queLoGcqN6ykJ9c35x4HDJei81t8q27naK0IvbUopLPH3X0pGtw7ibEuV6u++42SJEFGE7jnKXVhqhoA==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -2194,8 +2204,8 @@ packages:
   '@rsdoctor/utils@1.5.3':
     resolution: {integrity: sha512-il43MVkZGZd79+HEnxjEkjSgEWaVKdHmp562Cc4BBk4xGpbtTqCF4sX4BEBIBGxCgZ/0NuZM3k2KzEasJLlCRg==}
 
-  '@rslib/core@0.20.0-canary-202603101':
-    resolution: {integrity: sha512-dfCuYPNXtNkcH7Rt/is3jmGO53mS/aCj/Dd3eJf8/wZw2Br7fy442JF4ooNgoiKSlYMKfnuD3PXgdBvnIxWzPg==}
+  '@rslib/core@0.20.0':
+    resolution: {integrity: sha512-hsRwjMbBla8lyKIVR0gFsK5M3j+LSbFOTafvbT0QR90ehZXwlu+EhpHJv8v/uIRT50RVlgCrcT+LCVr1oU3pbA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -5256,8 +5266,8 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  rsbuild-plugin-dts@0.20.0-canary-202603101:
-    resolution: {integrity: sha512-JwNf1NrkJX0GAkhGg0yp7VNYvrd8JCWDX15mCMiYpzAzDhQRTJmoWE625JQy+aoUJAXHDzO+69kMnibYKYrWKQ==}
+  rsbuild-plugin-dts@0.20.0:
+    resolution: {integrity: sha512-CnTJTB59zzQFjPVEjpOaaEw5BeK/eTY6kwt4l5Lr9d3HQk3VRDSKfLWY/hpeZMbZzpCk2TqLrqIhS6a+jg7k7g==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       '@microsoft/api-extractor': ^7
@@ -7189,6 +7199,15 @@ snapshots:
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
 
+  '@rsbuild/core@2.0.0-beta.8(@module-federation/runtime-tools@2.1.0)(core-js@3.48.0)':
+    dependencies:
+      '@rspack/core': 2.0.0-beta.6(@module-federation/runtime-tools@2.1.0)(@swc/helpers@0.5.19)
+      '@swc/helpers': 0.5.19
+    optionalDependencies:
+      core-js: 3.48.0
+    transitivePeerDependencies:
+      - '@module-federation/runtime-tools'
+
   '@rsbuild/core@2.0.0-canary-20260309140114(@module-federation/runtime-tools@2.1.0)(core-js@3.48.0)':
     dependencies:
       '@rspack/core': '@rspack-canary/core@2.0.0-canary-511d0b77-20260309140114(@module-federation/runtime-tools@2.1.0)(@swc/helpers@0.5.19)'
@@ -7197,6 +7216,7 @@ snapshots:
       core-js: 3.48.0
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
+    optional: true
 
   '@rsbuild/plugin-babel@1.1.0(@rsbuild/core@packages+core)':
     dependencies:
@@ -7366,10 +7386,10 @@ snapshots:
       - '@rspack/core'
       - webpack
 
-  '@rslib/core@0.20.0-canary-202603101(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)':
+  '@rslib/core@0.20.0(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)':
     dependencies:
-      '@rsbuild/core': 2.0.0-canary-20260309140114(@module-federation/runtime-tools@2.1.0)(core-js@3.48.0)
-      rsbuild-plugin-dts: 0.20.0-canary-202603101(@rsbuild/core@2.0.0-canary-20260309140114(@module-federation/runtime-tools@2.1.0)(core-js@3.48.0))(@typescript/native-preview@7.0.0-dev.20260308.1)(typescript@5.9.3)
+      '@rsbuild/core': 2.0.0-beta.8(@module-federation/runtime-tools@2.1.0)(core-js@3.48.0)
+      rsbuild-plugin-dts: 0.20.0(@rsbuild/core@2.0.0-beta.8(@module-federation/runtime-tools@2.1.0)(core-js@3.48.0))(@typescript/native-preview@7.0.0-dev.20260308.1)(typescript@5.9.3)
     optionalDependencies:
       typescript: 5.9.3
     transitivePeerDependencies:
@@ -7448,6 +7468,7 @@ snapshots:
       '@rspack/binding-win32-arm64-msvc': '@rspack-canary/binding-win32-arm64-msvc@2.0.0-canary-511d0b77-20260309140114'
       '@rspack/binding-win32-ia32-msvc': '@rspack-canary/binding-win32-ia32-msvc@2.0.0-canary-511d0b77-20260309140114'
       '@rspack/binding-win32-x64-msvc': '@rspack-canary/binding-win32-x64-msvc@2.0.0-canary-511d0b77-20260309140114'
+    optional: true
 
   '@rspack-canary/core@2.0.0-canary-511d0b77-20260309140114(@module-federation/runtime-tools@2.1.0)(@swc/helpers@0.5.19)':
     dependencies:
@@ -7455,6 +7476,7 @@ snapshots:
     optionalDependencies:
       '@module-federation/runtime-tools': 2.1.0
       '@swc/helpers': 0.5.19
+    optional: true
 
   '@rspack/binding-darwin-arm64@1.7.7':
     optional: true
@@ -7762,9 +7784,9 @@ snapshots:
       - react
       - react-dom
 
-  '@rstest/adapter-rslib@0.2.1(@rslib/core@0.20.0-canary-202603101(@module-federation/runtime-tools@2.1.0)(core-js@3.48.0)(typescript@5.9.3))(@rstest/core@0.9.0(@module-federation/runtime-tools@2.1.0)(core-js@3.48.0))(typescript@5.9.3)':
+  '@rstest/adapter-rslib@0.2.1(@rslib/core@0.20.0(@module-federation/runtime-tools@2.1.0)(core-js@3.48.0)(typescript@5.9.3))(@rstest/core@0.9.0(@module-federation/runtime-tools@2.1.0)(core-js@3.48.0))(typescript@5.9.3)':
     dependencies:
-      '@rslib/core': 0.20.0-canary-202603101(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
+      '@rslib/core': 0.20.0(@module-federation/runtime-tools@2.1.0)(@typescript/native-preview@7.0.0-dev.20260308.1)(core-js@3.48.0)(typescript@5.9.3)
       '@rstest/core': 0.9.0(@module-federation/runtime-tools@2.1.0)(core-js@3.48.0)
     optionalDependencies:
       typescript: 5.9.3
@@ -10790,10 +10812,10 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': 2.0.0-canary-20260309140114(@module-federation/runtime-tools@2.1.0)(core-js@3.48.0)
 
-  rsbuild-plugin-dts@0.20.0-canary-202603101(@rsbuild/core@2.0.0-canary-20260309140114(@module-federation/runtime-tools@2.1.0)(core-js@3.48.0))(@typescript/native-preview@7.0.0-dev.20260308.1)(typescript@5.9.3):
+  rsbuild-plugin-dts@0.20.0(@rsbuild/core@2.0.0-beta.8(@module-federation/runtime-tools@2.1.0)(core-js@3.48.0))(@typescript/native-preview@7.0.0-dev.20260308.1)(typescript@5.9.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
-      '@rsbuild/core': 2.0.0-canary-20260309140114(@module-federation/runtime-tools@2.1.0)(core-js@3.48.0)
+      '@rsbuild/core': 2.0.0-beta.8(@module-federation/runtime-tools@2.1.0)(core-js@3.48.0)
     optionalDependencies:
       '@typescript/native-preview': 7.0.0-dev.20260308.1
       typescript: 5.9.3

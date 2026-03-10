@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.20.0-canary-202603101",
+    "@rslib/core": "0.20.0",
     "@types/node": "^24.12.0",
     "preact": "^10.28.4",
     "typescript": "^5.9.3"
