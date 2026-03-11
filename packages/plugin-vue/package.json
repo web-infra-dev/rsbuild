@@ -42,6 +42,11 @@
   "peerDependencies": {
     "@rsbuild/core": "^1.0.0 || ^2.0.0-0"
   },
+  "peerDependenciesMeta": {
+    "@rsbuild/core": {
+      "optional": true
+    }
+  },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
