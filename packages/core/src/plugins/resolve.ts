@@ -43,7 +43,9 @@ function applyAlias({
             paths: [rootPath],
           }),
         );
-      } catch {}
+      } catch {
+        // ignore
+      }
 
       // some package does not export `package.json`,
       // so we try to resolve the package by its name

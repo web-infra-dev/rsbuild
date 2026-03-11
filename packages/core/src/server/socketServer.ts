@@ -406,7 +406,9 @@ export class SocketServer {
             );
           }
         }
-      } catch {}
+      } catch {
+        // ignore
+      }
     });
 
     let sockets = this.socketsMap.get(token);

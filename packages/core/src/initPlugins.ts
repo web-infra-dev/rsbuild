@@ -127,10 +127,11 @@ export function initPluginAPI({
         return context.config;
       case 'normalized':
         return getNormalizedConfig();
+      default:
+        throw new Error(
+          `${color.dim('[rsbuild]')} ${color.yellow('getRsbuildConfig')} get an invalid type param.`,
+        );
     }
-    throw new Error(
-      `${color.dim('[rsbuild]')} ${color.yellow('getRsbuildConfig')} get an invalid type param.`,
-    );
   }) as GetRsbuildConfig;
 
   const exposed = new Map<string | symbol, any>();
