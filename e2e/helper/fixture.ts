@@ -173,14 +173,12 @@ const setupExecOptions = <T extends ExecOptions | ExecSyncOptions>(
 };
 
 export const test = base.extend<RsbuildFixture>({
-  // biome-ignore lint/correctness/noEmptyPattern: required by playwright
   cwd: async ({}, use, { file }) => {
     const cwd = path.dirname(file);
     await use(cwd);
   },
 
   logHelper: [
-    // biome-ignore lint/correctness/noEmptyPattern: required by playwright
     async ({}, use, testInfo) => {
       const logHelper = proxyConsole();
       await use(logHelper);

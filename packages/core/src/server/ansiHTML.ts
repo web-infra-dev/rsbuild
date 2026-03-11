@@ -31,7 +31,6 @@ export function ansiHTML(text: string): string {
   const ansiCodes: string[] = [];
   // Replace with markup
   let ret = text.replace(
-    // biome-ignore lint/suspicious/noControlCharactersInRegex: allowed
     /\x1B\[([0-9;]+)m/g,
     (_match: string, sequences: string): string => {
       let style = '';
