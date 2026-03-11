@@ -6,6 +6,7 @@ import type {
   Rspack,
   RspackChain,
 } from '@rsbuild/core';
+import type Less from 'less';
 import deepmerge from 'deepmerge';
 import { reduceConfigsWithContext } from 'reduce-configs';
 
@@ -26,7 +27,7 @@ export type LessLoaderOptions = {
    * Options passed to less.
    * @see https://lesscss.org/usage/#less-options
    */
-  lessOptions?: import('less').Options;
+  lessOptions?: Less.Options;
   /**
    * Prepends or appends Less code to the actual entry file.
    * This is especially useful when some of your Less variables
