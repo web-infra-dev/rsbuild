@@ -724,6 +724,9 @@ importers:
 
   packages/plugin-less:
     dependencies:
+      '@types/less':
+        specifier: ^3.0.8
+        version: 3.0.8
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -749,12 +752,6 @@ importers:
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
-      '@types/less':
-        specifier: ^3.0.8
-        version: 3.0.8
-      prebundle:
-        specifier: 1.6.2
-        version: 1.6.2(typescript@5.9.3)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
