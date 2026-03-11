@@ -129,7 +129,7 @@ export function initPluginAPI({
         return getNormalizedConfig();
       default:
         throw new Error(
-          `${color.dim('[rsbuild]')} ${color.yellow('getRsbuildConfig')} get an invalid type param.`,
+          `${color.dim('[rsbuild]')} ${color.yellow('getRsbuildConfig')} received an invalid type parameter.`,
         );
     }
   }) as GetRsbuildConfig;
