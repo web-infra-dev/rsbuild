@@ -12,20 +12,7 @@ if (enableCompileCache) {
   }
 }
 
-function checkNodeVersion() {
-  const { node, bun, deno } = process.versions;
-  if (!node || bun || deno) {
-    return;
-  }
-  if (Number(node.split('.')[0]) < 20) {
-    throw new Error(
-      `Unsupported Node.js version "${node}", Rsbuild requires Node.js 20+.`,
-    );
-  }
-}
-
 async function main() {
-  checkNodeVersion();
   const { runCLI } = await import('../dist/index.js');
   runCLI();
 }
