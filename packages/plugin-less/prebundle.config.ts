@@ -32,12 +32,5 @@ export default {
         );
       },
     },
-    {
-      name: 'less-loader',
-      ignoreDts: true,
-      externals: {
-        less: 'less',
-      },
-    },
   ],
 } satisfies Config;

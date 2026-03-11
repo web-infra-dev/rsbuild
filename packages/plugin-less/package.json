@@ -32,6 +32,7 @@
   "dependencies": {
     "deepmerge": "^4.3.1",
     "less": "^4.6.2",
+    "less-loader": "^12.3.1",
     "reduce-configs": "^1.1.1"
   },
   "devDependencies": {
@@ -40,7 +41,6 @@
     "@rslib/core": "0.20.0",
     "@scripts/test-helper": "workspace:*",
     "@types/less": "^3.0.8",
-    "less-loader": "^12.3.1",
     "prebundle": "1.6.2",
     "typescript": "^5.9.3"
   },

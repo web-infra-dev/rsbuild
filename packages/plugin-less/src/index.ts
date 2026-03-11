@@ -1,5 +1,4 @@
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import type {
   ConfigChainWithContext,
   RsbuildPlugin,
@@ -11,7 +10,6 @@ import { reduceConfigsWithContext } from 'reduce-configs';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const isPlainObject = (obj: unknown): obj is Record<string, unknown> => {
   return (
@@ -246,10 +244,7 @@ export const pluginLess = (
         callback(lessInlineRule, getRule(CSS_INLINE));
       };
 
-      const lessLoaderPath = path.join(
-        __dirname,
-        '../compiled/less-loader/index.js',
-      );
+      const lessLoaderPath = require.resolve('less-loader');
 
       updateRules((rule, cssBranchRule) => {
         for (const item of excludes) {
