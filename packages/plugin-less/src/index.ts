@@ -1,5 +1,4 @@
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import type {
   ConfigChainWithContext,
   RsbuildPlugin,
@@ -8,8 +7,9 @@ import type {
 } from '@rsbuild/core';
 import deepmerge from 'deepmerge';
 import { reduceConfigsWithContext } from 'reduce-configs';
+import { createRequire } from 'node:module';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const require = createRequire(import.meta.url);
 
 export const isPlainObject = (obj: unknown): obj is Record<string, unknown> => {
   return (
@@ -54,7 +54,7 @@ export type LessLoaderOptions = {
   /**
    * Determines which implementation of Less to use.
    * Can be used to override the pre-bundled version of less.
-   * @default "@rsbuild/plugin-less/compiled/less/index.js"
+   * @default "less"
    */
   implementation?: unknown;
   /**
@@ -125,7 +125,7 @@ const getLessLoaderOptions = (
       paths: [path.join(rootPath, 'node_modules')],
     },
     sourceMap: isUseCssSourceMap,
-    implementation: path.join(__dirname, '../compiled/less/index.js'),
+    implementation: require.resolve('less'),
   };
 
   const mergeFn = (
@@ -244,10 +244,7 @@ export const pluginLess = (
         callback(lessInlineRule, getRule(CSS_INLINE));
       };
 
-      const lessLoaderPath = path.join(
-        __dirname,
-        '../compiled/less-loader/index.js',
-      );
+      const lessLoaderPath = require.resolve('less-loader');
 
       updateRules((rule, cssBranchRule) => {
         for (const item of excludes) {
