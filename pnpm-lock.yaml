@@ -727,6 +727,12 @@ importers:
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
+      less:
+        specifier: ^4.6.2
+        version: 4.6.2
+      less-loader:
+        specifier: ^12.3.1
+        version: 12.3.1(@rspack/core@2.0.0-beta.6(@module-federation/runtime-tools@2.1.0)(@swc/helpers@0.5.19))(less@4.6.2)(webpack@5.105.4)
       reduce-configs:
         specifier: ^1.1.1
         version: 1.1.1
@@ -746,12 +752,6 @@ importers:
       '@types/less':
         specifier: ^3.0.8
         version: 3.0.8
-      less:
-        specifier: 4.3.0
-        version: 4.3.0
-      less-loader:
-        specifier: ^12.3.1
-        version: 12.3.1(@rspack/core@2.0.0-beta.6(@module-federation/runtime-tools@2.1.0)(@swc/helpers@0.5.19))(less@4.3.0)(webpack@5.105.4)
       prebundle:
         specifier: 1.6.2
         version: 1.6.2(typescript@5.9.3)
@@ -936,7 +936,7 @@ importers:
         version: 3.2.4(svelte@5.53.7)
       svelte-preprocess:
         specifier: ^6.0.3
-        version: 6.0.3(@babel/core@7.29.0)(less@4.3.0)(postcss-load-config@6.0.1(jiti@2.6.1)(postcss@8.5.8)(yaml@2.8.2))(postcss@8.5.8)(sass@1.97.3)(stylus@0.64.0)(svelte@5.53.7)(typescript@5.9.3)
+        version: 6.0.3(@babel/core@7.29.0)(less@4.6.2)(postcss-load-config@6.0.1(jiti@2.6.1)(postcss@8.5.8)(yaml@2.8.2))(postcss@8.5.8)(sass@1.97.3)(stylus@0.64.0)(svelte@5.53.7)(typescript@5.9.3)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -3402,6 +3402,10 @@ packages:
   copy-anything@2.0.6:
     resolution: {integrity: sha512-1j20GZTsvKNkc4BY3NpMOM8tt///wY3FpIzozTOFO2ffuZcV61nojHXVKIy3WM+7ADCy5FVhdZYHYDdgTU0yJw==}
 
+  copy-anything@3.0.5:
+    resolution: {integrity: sha512-yCEafptTtb4bk7GLEQoM8KVJpxAfdBJYaXyzQEgQQQgYrZiDp8SJmGKlYza6CYjEDNstAdNdKA3UuoULlEbS6w==}
+    engines: {node: '>=12.13'}
+
   copy-anything@4.0.5:
     resolution: {integrity: sha512-7Vv6asjS4gMOuILabD3l739tsaxFQmC+a7pLZm02zyvs8p977bL3zEgq3yDk5rn9B0PbYgIv++jmHcuUab4RhA==}
     engines: {node: '>=18'}
@@ -4176,6 +4180,10 @@ packages:
   is-what@3.14.1:
     resolution: {integrity: sha512-sNxgpk9793nzSs7bA6JQJGeIuRBQhAaNGG77kzYQgMkrID+lS6SlK07K5LaptscDlSaIgH+GPFzf+d75FVxozA==}
 
+  is-what@4.1.16:
+    resolution: {integrity: sha512-ZhMwEosbFJkA0YhFnNDgTM4ZxDRsS6HqTo7qsZM08fehyRYIYa0yHu5R6mgo1n/8MgaPBXiPimPD77baVFYg+A==}
+    engines: {node: '>=12.13'}
+
   is-what@5.5.0:
     resolution: {integrity: sha512-oG7cgbmg5kLYae2N5IVd3jm2s+vldjxJzK1pcu9LfpGuQ93MQSzo0okvRna+7y5ifrD+20FE8FvjusyGaz14fw==}
     engines: {node: '>=18'}
@@ -4280,6 +4288,11 @@ packages:
   less@4.3.0:
     resolution: {integrity: sha512-X9RyH9fvemArzfdP8Pi3irr7lor2Ok4rOttDXBhlwDg+wKQsXOXgHWduAJE1EsF7JJx0w0bcO6BC6tCKKYnXKA==}
     engines: {node: '>=14'}
+    hasBin: true
+
+  less@4.6.2:
+    resolution: {integrity: sha512-/f26k/Z8VOtdkmubElnfZGtNoOlnZN6E1g9WkPkRmsz/FNVaaArbwCIMflPdH//RJeowfuTPmdZSp9zyEYQ1gQ==}
+    engines: {node: '>=18'}
     hasBin: true
 
   lightningcss-android-arm64@1.31.1:
@@ -8520,6 +8533,10 @@ snapshots:
     dependencies:
       is-what: 3.14.1
 
+  copy-anything@3.0.5:
+    dependencies:
+      is-what: 4.1.16
+
   copy-anything@4.0.5:
     dependencies:
       is-what: 5.5.0
@@ -9348,6 +9365,8 @@ snapshots:
 
   is-what@3.14.1: {}
 
+  is-what@4.1.16: {}
+
   is-what@5.5.0: {}
 
   is-windows@1.0.2: {}
@@ -9424,9 +9443,9 @@ snapshots:
       picocolors: 1.1.1
       shell-quote: 1.8.3
 
-  less-loader@12.3.1(@rspack/core@2.0.0-beta.6(@module-federation/runtime-tools@2.1.0)(@swc/helpers@0.5.19))(less@4.3.0)(webpack@5.105.4):
+  less-loader@12.3.1(@rspack/core@2.0.0-beta.6(@module-federation/runtime-tools@2.1.0)(@swc/helpers@0.5.19))(less@4.6.2)(webpack@5.105.4):
     dependencies:
-      less: 4.3.0
+      less: 4.6.2
     optionalDependencies:
       '@rspack/core': 2.0.0-beta.6(@module-federation/runtime-tools@2.1.0)(@swc/helpers@0.5.19)
       webpack: 5.105.4
@@ -9436,6 +9455,19 @@ snapshots:
       copy-anything: 2.0.6
       parse-node-version: 1.0.1
       tslib: 2.8.1
+    optionalDependencies:
+      errno: 0.1.8
+      graceful-fs: 4.2.11
+      image-size: 0.5.5
+      make-dir: 2.1.0
+      mime: 1.6.0
+      needle: 3.3.1
+      source-map: 0.6.1
+
+  less@4.6.2:
+    dependencies:
+      copy-anything: 3.0.5
+      parse-node-version: 1.0.1
     optionalDependencies:
       errno: 0.1.8
       graceful-fs: 4.2.11
@@ -10986,12 +11018,12 @@ snapshots:
       svelte-dev-helper: 1.1.9
       svelte-hmr: 0.14.12(svelte@5.53.7)
 
-  svelte-preprocess@6.0.3(@babel/core@7.29.0)(less@4.3.0)(postcss-load-config@6.0.1(jiti@2.6.1)(postcss@8.5.8)(yaml@2.8.2))(postcss@8.5.8)(sass@1.97.3)(stylus@0.64.0)(svelte@5.53.7)(typescript@5.9.3):
+  svelte-preprocess@6.0.3(@babel/core@7.29.0)(less@4.6.2)(postcss-load-config@6.0.1(jiti@2.6.1)(postcss@8.5.8)(yaml@2.8.2))(postcss@8.5.8)(sass@1.97.3)(stylus@0.64.0)(svelte@5.53.7)(typescript@5.9.3):
     dependencies:
       svelte: 5.53.7
     optionalDependencies:
       '@babel/core': 7.29.0
-      less: 4.3.0
+      less: 4.6.2
       postcss: 8.5.8
       postcss-load-config: 6.0.1(jiti@2.6.1)(postcss@8.5.8)(yaml@2.8.2)
       sass: 1.97.3
