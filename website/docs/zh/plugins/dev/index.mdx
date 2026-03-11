@@ -344,3 +344,35 @@ const myPlugin = {
   },
 };
 ```
+
+## 依赖声明
+
+发布 Rsbuild 插件时，应该在 `package.json` 中声明 `@rsbuild/core` 的 `peerDependencies`，并在 `devDependencies` 中安装它用于开发：
+
+```json
+{
+  "peerDependencies": {
+    "@rsbuild/core": "^2.0.0"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "^2.0.0"
+  }
+}
+```
+
+如果插件只引用了 `@rsbuild/core` 的类型导出，可以将其声明为 optional peer dependency：
+
+```json
+{
+  "peerDependencies": {
+    "@rsbuild/core": "^2.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@rsbuild/core": {
+      "optional": true
+    }
+  }
+}
+```
+
+这种情况下，插件在被基于 Rsbuild 的上层工具（如 Rslib 或 Rspress）使用时，不会产生不必要的 peer dependency 警告。

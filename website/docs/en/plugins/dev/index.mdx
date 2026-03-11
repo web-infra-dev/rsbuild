@@ -343,3 +343,35 @@ const myPlugin = {
   },
 };
 ```
+
+## Dependency declaration
+
+When publishing an Rsbuild plugin, you should declare `@rsbuild/core` in `peerDependencies` in `package.json`, and install it in `devDependencies` for local development:
+
+```json
+{
+  "peerDependencies": {
+    "@rsbuild/core": "^2.0.0"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "^2.0.0"
+  }
+}
+```
+
+If your plugin only references types from `@rsbuild/core`, you can declare it as an optional peer dependency:
+
+```json
+{
+  "peerDependencies": {
+    "@rsbuild/core": "^2.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@rsbuild/core": {
+      "optional": true
+    }
+  }
+}
+```
+
+In this case, the plugin will not produce unnecessary peer dependency warnings when it is used by higher-level tools based on Rsbuild, such as Rslib or Rspress.
