@@ -27,7 +27,6 @@ function parse(src: Buffer) {
   lines = lines.replace(/\r\n?/gm, '\n');
 
   let match: RegExpExecArray | null;
-  // biome-ignore lint/suspicious/noAssignInExpressions: allowed
   while ((match = DOTENV_LINE.exec(lines)) != null) {
     const key = match[1];
 

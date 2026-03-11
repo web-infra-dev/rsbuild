@@ -8,6 +8,5 @@ test('should compile template with es template correctly', async ({
   const files = rsbuild.getDistFiles();
 
   const indexHtml = getFileContent(files, 'index.html');
-  // biome-ignore lint/suspicious/noTemplateCurlyInString: should ignore string
   expect(indexHtml).toContain("const baseUrl = match ? `${match[0]}/` : '/'");
 });

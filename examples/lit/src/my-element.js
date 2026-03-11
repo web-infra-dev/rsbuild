@@ -1,4 +1,3 @@
-// biome-ignore lint/style/useFilenamingConvention: lint components use kebab-case
 import { css, html, LitElement } from 'lit';
 
 export class MyElement extends LitElement {

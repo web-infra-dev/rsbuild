@@ -25,7 +25,6 @@ export class BuildManager {
 
   public compiler: Rspack.Compiler | Rspack.MultiCompiler;
 
-  // biome-ignore lint/correctness/noUnusedPrivateClassMembers: Biome bug
   private config: NormalizedConfig;
 
   private resolvedPort: number;

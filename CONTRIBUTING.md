@@ -97,13 +97,13 @@ pnpm e2e css
 
 ## Linting
 
-Run [Biome](https://github.com/biomejs/biome) to keep code style consistent:
+Run [Rslint](https://github.com/web-infra-dev/rslint) to keep code style consistent:
 
 ```sh
 pnpm run lint
 ```
 
-For VS Code users, you can install the [Biome VS Code extension](https://marketplace.visualstudio.com/items?itemName=biomejs.biome) to see lints while typing.
+Install the [Rslint VS Code extension](https://marketplace.visualstudio.com/items?itemName=rstack.rslint) to see lints while typing.
 
 ---
 

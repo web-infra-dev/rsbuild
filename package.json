@@ -13,8 +13,7 @@
     "doc": "cd website && node --run dev",
     "e2e": "cd ./e2e && pnpm e2e",
     "format": "prettier --experimental-cli --write . && heading-case --write",
-    "lint": "biome check && node --run lint:type",
-    "lint:type": "rslint",
+    "lint": "rslint",
     "prebundle": "pnpm --parallel --filter \"./packages/*\" run prebundle",
     "prepare": "simple-git-hooks && node --run prebundle && node --run build",
     "sort-package-json": "pnpx sort-package-json \"./package.json\" \"packages/*/package.json\"",
@@ -27,12 +26,11 @@
   "nano-staged": {
     "*.{md,mdx,json,css,less,scss}": "prettier --experimental-cli --write",
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
-      "biome check --write --no-errors-on-unmatched",
+      "rslint",
       "prettier --experimental-cli --write"
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.6",
     "@rsbuild/config": "workspace:*",
     "@rslint/core": "0.2.1",
     "@rstest/adapter-rslib": "^0.2.1",
