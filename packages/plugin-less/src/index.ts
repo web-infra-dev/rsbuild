@@ -8,7 +8,9 @@ import type {
 } from '@rsbuild/core';
 import deepmerge from 'deepmerge';
 import { reduceConfigsWithContext } from 'reduce-configs';
+import { createRequire } from 'node:module';
 
+const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const isPlainObject = (obj: unknown): obj is Record<string, unknown> => {
@@ -54,7 +56,7 @@ export type LessLoaderOptions = {
   /**
    * Determines which implementation of Less to use.
    * Can be used to override the pre-bundled version of less.
-   * @default "@rsbuild/plugin-less/compiled/less/index.js"
+   * @default "less"
    */
   implementation?: unknown;
   /**
@@ -125,7 +127,7 @@ const getLessLoaderOptions = (
       paths: [path.join(rootPath, 'node_modules')],
     },
     sourceMap: isUseCssSourceMap,
-    implementation: path.join(__dirname, '../compiled/less/index.js'),
+    implementation: require.resolve('less'),
   };
 
   const mergeFn = (

@@ -16,13 +16,10 @@ function replaceFileContent(
 export default {
   prettier: true,
   dependencies: [
-    // prebundle less to make correct the types
+    // prebundle less types
     {
       name: 'less',
-      externals: {
-        // needle is an optional dependency and no need to bundle it.
-        needle: 'needle',
-      },
+      dtsOnly: true,
       // bundle namespace child (hoisting) not supported yet
       beforeBundle: () => {
         replaceFileContent(
