@@ -2,7 +2,6 @@ import { promises } from 'node:fs';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import type { EnvironmentConfig, RsbuildPlugin } from '@rsbuild/core';
-import { logger } from '@rsbuild/core';
 import type { CompileOptions } from 'svelte/compiler';
 import { sveltePreprocess } from 'svelte-preprocess';
 
@@ -66,7 +65,7 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
           }),
         );
       } catch (err) {
-        logger.error(
+        api.logger.error(
           'Cannot resolve `svelte` package under the project directory, did you forget to install it?',
         );
         throw new Error('[rsbuild:svelte] Failed to resolve `svelte` package', {
