@@ -298,6 +298,7 @@ export function init(
         }
         break;
       }
+      // no default
     }
   }
 

@@ -40,7 +40,9 @@ function checkProcessEnvSecurity(define: DefinePluginOptions) {
   if (typeof value === 'string') {
     try {
       check(JSON.parse(value));
-    } catch {}
+    } catch {
+      // ignore
+    }
   }
 }
 

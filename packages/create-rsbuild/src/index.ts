@@ -70,9 +70,9 @@ function mapESLintTemplate(templateName: string): ESLintTemplateName {
       return 'react-js';
     case 'react18-ts':
       return 'react-ts';
+    default:
+      return `vanilla-${templateName.split('-')[1]}` as ESLintTemplateName;
   }
-  const language = templateName.split('-')[1];
-  return `vanilla-${language}` as ESLintTemplateName;
 }
 
 function mapRstestTemplate(templateName: string): string {
@@ -87,10 +87,9 @@ function mapRstestTemplate(templateName: string): string {
       return 'vue-js';
     case 'vue3-ts':
       return 'vue-ts';
+    default:
+      return `vanilla-${templateName.split('-')[1]}`;
   }
-
-  const language = templateName.split('-')[1];
-  return `vanilla-${language}`;
 }
 
 const root = path.join(import.meta.dirname, '..');

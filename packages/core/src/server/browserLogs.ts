@@ -283,6 +283,7 @@ export const formatBrowserErrorLog = async (
       }
       case 'none':
         break;
+      // no default
     }
   }
 
