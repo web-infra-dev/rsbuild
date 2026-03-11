@@ -8,7 +8,6 @@ import type {
 } from '@rsbuild/core';
 import deepmerge from 'deepmerge';
 import { reduceConfigsWithContext } from 'reduce-configs';
-import type { Options as LessOptions } from 'less';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -27,7 +26,7 @@ export type LessLoaderOptions = {
    * Options passed to less.
    * @see https://lesscss.org/usage/#less-options
    */
-  lessOptions?: LessOptions;
+  lessOptions?: import('less').Options;
   /**
    * Prepends or appends Less code to the actual entry file.
    * This is especially useful when some of your Less variables
