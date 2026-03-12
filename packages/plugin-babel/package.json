@@ -42,8 +42,8 @@
     "@rslib/core": "0.20.0",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^24.12.0",
-    "babel-loader": "10.1.0",
-    "prebundle": "1.6.2",
+    "babel-loader": "10.1.1",
+    "prebundle": "1.6.4",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {

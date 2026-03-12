@@ -8,7 +8,7 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "vue": "^3.5.29"
+    "vue": "^3.5.30"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",

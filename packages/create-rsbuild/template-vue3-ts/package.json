@@ -9,11 +9,11 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "vue": "^3.5.29"
+    "vue": "^3.5.30"
   },
   "devDependencies": {
-    "@rsbuild/core": "^2.0.0-beta.7",
-    "@rsbuild/plugin-vue": "^1.2.6",
+    "@rsbuild/core": "^2.0.0-canary-20260309140114",
+    "@rsbuild/plugin-vue": "^1.2.7",
     "typescript": "^5.9.3"
   }
 }
