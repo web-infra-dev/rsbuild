@@ -12,7 +12,7 @@
     "@module-federation/runtime-tools": "2.1.0",
     "core-js": "^3.48.0",
     "lodash": "^4.17.23",
-    "preact": "^10.28.4",
+    "preact": "^10.29.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-router-dom": "^7.13.1",
