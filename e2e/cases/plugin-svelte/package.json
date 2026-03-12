@@ -4,10 +4,10 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "svelte": "^5.53.7"
+    "svelte": "^5.53.10"
   },
   "devDependencies": {
-    "less": "^4.6.2",
+    "less": "^4.6.3",
     "sass": "^1.97.3",
     "stylus": "0.64.0"
   }

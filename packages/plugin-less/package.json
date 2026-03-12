@@ -41,7 +41,7 @@
     "@rslib/core": "0.20.0",
     "@scripts/test-helper": "workspace:*",
     "@types/less": "^3.0.8",
-    "prebundle": "1.6.2",
+    "prebundle": "1.6.4",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {

@@ -81,7 +81,7 @@
     "postcss": "^8.5.8",
     "postcss-load-config": "6.0.1",
     "postcss-loader": "8.2.1",
-    "prebundle": "1.6.2",
+    "prebundle": "1.6.4",
     "range-parser": "^1.2.1",
     "reduce-configs": "^1.1.1",
     "rslog": "^2.0.1",
