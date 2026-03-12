@@ -8,7 +8,6 @@ import type {
 import deepmerge from 'deepmerge';
 import { reduceConfigsWithContext } from 'reduce-configs';
 import { createRequire } from 'node:module';
-import { pathToFileURL } from 'node:url';
 
 const require = createRequire(import.meta.url);
 
@@ -126,7 +125,6 @@ const getLessLoaderOptions = (
       paths: [path.join(rootPath, 'node_modules')],
     },
     sourceMap: isUseCssSourceMap,
-    implementation: pathToFileURL(require.resolve('less')),
   };
 
   const mergeFn = (
