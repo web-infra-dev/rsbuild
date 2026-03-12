@@ -125,7 +125,6 @@ const getLessLoaderOptions = (
       paths: [path.join(rootPath, 'node_modules')],
     },
     sourceMap: isUseCssSourceMap,
-    implementation: require.resolve('less'),
   };
 
   const mergeFn = (
