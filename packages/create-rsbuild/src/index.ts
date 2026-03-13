@@ -134,6 +134,20 @@ create({
       },
     },
     {
+      value: 'react-compiler',
+      label: 'React Compiler - optimization',
+      order: 'pre',
+      when: (template) => template === 'react-js' || template === 'react-ts',
+      action: ({ templateName, distFolder }) => {
+        const toolFolder = path.join(root, 'template-react-compiler');
+        copyFolder({
+          from: path.join(toolFolder, templateName),
+          to: distFolder,
+          isMergePackageJson: true,
+        });
+      },
+    },
+    {
       value: 'tailwindcss',
       label: 'Tailwind CSS - styling',
       action: async ({ distFolder }) => {

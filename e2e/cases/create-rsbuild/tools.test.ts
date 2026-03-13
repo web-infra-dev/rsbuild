@@ -137,3 +137,49 @@ test('should create project with biome as expected', async () => {
   expect(existsSync(join(dir, 'biome.json'))).toBeTruthy();
   await clean();
 });
+
+test('should create React project with react-compiler as expected', async () => {
+  const { dir, pkgJson, clean } = await createAndValidate(
+    import.meta.dirname,
+    'react',
+    {
+      name: 'test-temp-react-compiler',
+      tools: ['react-compiler'],
+      clean: false,
+    },
+  );
+  expect(pkgJson.devDependencies['@rsbuild/plugin-babel']).toBeTruthy();
+  expect(pkgJson.devDependencies['babel-plugin-react-compiler']).toBeTruthy();
+  expect(pkgJson.dependencies['react-compiler-runtime']).toBeFalsy();
+
+  const configFile = join(dir, 'rsbuild.config.js');
+  expect(existsSync(configFile)).toBeTruthy();
+
+  const configContent = readFileSync(configFile, 'utf-8');
+  expect(configContent.includes('pluginBabel({')).toBeTruthy();
+  expect(configContent.includes("'babel-plugin-react-compiler'")).toBeTruthy();
+  await clean();
+});
+
+test('should ignore react-compiler for non-React projects', async () => {
+  const { dir, pkgJson, clean } = await createAndValidate(
+    import.meta.dirname,
+    'vanilla',
+    {
+      name: 'test-temp-vanilla-react-compiler',
+      tools: ['react-compiler'],
+      clean: false,
+    },
+  );
+  expect(pkgJson.devDependencies['@rsbuild/plugin-babel']).toBeFalsy();
+  expect(pkgJson.devDependencies['babel-plugin-react-compiler']).toBeFalsy();
+  expect(pkgJson.dependencies?.['react-compiler-runtime']).toBeFalsy();
+
+  const configFile = join(dir, 'rsbuild.config.js');
+  expect(existsSync(configFile)).toBeTruthy();
+
+  const configContent = readFileSync(configFile, 'utf-8');
+  expect(configContent.includes('pluginBabel')).toBeFalsy();
+  expect(configContent.includes('react-compiler')).toBeFalsy();
+  await clean();
+});
