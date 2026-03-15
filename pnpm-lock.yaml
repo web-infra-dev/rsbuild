@@ -1097,8 +1097,8 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5(@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.48.0)(micromark-util-types@2.0.2)(micromark@4.0.2))
       '@rstack-dev/doc-ui':
-        specifier: ^1.12.4
-        version: 1.12.4(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        specifier: ^1.12.5
+        version: 1.12.5
       '@shikijs/transformers':
         specifier: ^4.0.2
         version: 4.0.2
@@ -2484,8 +2484,8 @@ packages:
   '@rspress/shared@2.0.5':
     resolution: {integrity: sha512-Wdhh+VjU8zJWoVLhv9KJTRAZQ4X2V/Z81Lo2D0hQsa0Kj5F3EaxlMt5/dhX7DoflqNuZPZk/e7CSUB+gO/Umlg==}
 
-  '@rstack-dev/doc-ui@1.12.4':
-    resolution: {integrity: sha512-gKFCRH6Zr4HAyr4X7WLsUL+J0sFMsS8YMq4GrMCXmbXCdJHp6Pd/rAXXm4x6eASExZfx1C1wGb/aQIihfpi9LA==}
+  '@rstack-dev/doc-ui@1.12.5':
+    resolution: {integrity: sha512-fwPRz8R52VHVW1u8SFH7uqon4IL2BAfYwrNDEPlB4rPAz+DrOkhag16oQtcQ2ApUXTInrQjEOXK9TaqfP02MXg==}
 
   '@rstest/adapter-rslib@0.2.1':
     resolution: {integrity: sha512-JGOjyNMpgIgKiQhSoTBt3Dr1zdxMURY422EDoA7p6wkqoG8R2OIRoXH5KLgorvhfpOzAjfx6Y3HlKaGJ+pRRjw==}
@@ -3884,20 +3884,6 @@ packages:
     resolution: {integrity: sha512-8RipRLol37bNs2bhoV67fiTEvdTrbMUYcFTiy3+wuuOnUog2QBHCZWXDRijWQfAkhBj2Uf5UnVaiWwA5vdd82w==}
     engines: {node: '>= 6'}
 
-  framer-motion@12.34.3:
-    resolution: {integrity: sha512-v81ecyZKYO/DfpTwHivqkxSUBzvceOpoI+wLfgCgoUIKxlFKEXdg0oR9imxwXumT4SFy8vRk9xzJ5l3/Du/55Q==}
-    peerDependencies:
-      '@emotion/is-prop-valid': '*'
-      react: ^18.0.0 || ^19.0.0
-      react-dom: ^18.0.0 || ^19.0.0
-    peerDependenciesMeta:
-      '@emotion/is-prop-valid':
-        optional: true
-      react:
-        optional: true
-      react-dom:
-        optional: true
-
   fs-extra@11.3.0:
     resolution: {integrity: sha512-Z4XaCL6dUDHfP/jT25jJKMmtxvuwbkrD1vNSMFlo9lNLY2c5FHYSQgHPRZUjAB26TpDEoW9HCOgplrdbaPV/ew==}
     engines: {node: '>=14.14'}
@@ -4719,12 +4705,6 @@ packages:
 
   mlly@1.8.0:
     resolution: {integrity: sha512-l8D9ODSRWLe2KHJSifWGwBqpTZXIXTeo8mlKjY+E2HAakaTeNpqAyBZ8GSqLzHgw4XmHmC8whvpjJNMbFZN7/g==}
-
-  motion-dom@12.34.3:
-    resolution: {integrity: sha512-sYgFe+pR9aIM7o4fhs2aXtOI+oqlUd33N9Yoxcgo1Fv7M20sRkHtCmzE/VRNIcq7uNJ+qio+Xubt1FXH3pQ+eQ==}
-
-  motion-utils@12.29.2:
-    resolution: {integrity: sha512-G3kc34H2cX2gI63RqU+cZq+zWRRPSsNIOjpdl9TN4AQwC4sgwYPl/Q/Obf/d53nOm569T0fYK+tcoSV50BWx8A==}
 
   mrmime@2.0.1:
     resolution: {integrity: sha512-Y3wQdFg2Va6etvQ5I82yUhGdsKrcYox6p7FfL1LbK2J4V01F9TGlepTIhnK24t7koZibmg82KGglhA1XK5IsLQ==}
@@ -7766,13 +7746,7 @@ snapshots:
       - '@module-federation/runtime-tools'
       - core-js
 
-  '@rstack-dev/doc-ui@1.12.4(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
-    dependencies:
-      framer-motion: 12.34.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-    transitivePeerDependencies:
-      - '@emotion/is-prop-valid'
-      - react
-      - react-dom
+  '@rstack-dev/doc-ui@1.12.5': {}
 
   '@rstest/adapter-rslib@0.2.1(@rslib/core@0.20.0(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0)(typescript@5.9.3))(@rstest/core@0.9.2(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0))(typescript@5.9.3)':
     dependencies:
@@ -9237,15 +9211,6 @@ snapshots:
       hasown: 2.0.2
       mime-types: 2.1.35
 
-  framer-motion@12.34.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
-    dependencies:
-      motion-dom: 12.34.3
-      motion-utils: 12.29.2
-      tslib: 2.8.1
-    optionalDependencies:
-      react: 19.2.4
-      react-dom: 19.2.4(react@19.2.4)
-
   fs-extra@11.3.0:
     dependencies:
       graceful-fs: 4.2.11
@@ -10383,12 +10348,6 @@ snapshots:
       pathe: 2.0.3
       pkg-types: 1.3.1
       ufo: 1.6.3
-
-  motion-dom@12.34.3:
-    dependencies:
-      motion-utils: 12.29.2
-
-  motion-utils@12.29.2: {}
 
   mrmime@2.0.1: {}
 
