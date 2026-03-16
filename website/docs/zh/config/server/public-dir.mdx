@@ -22,6 +22,7 @@ type PublicDir = false | PublicDirOptions | PublicDirOptions[];
 const defaultValue = {
   name: 'public',
   copyOnBuild: 'auto',
+  ignore: [],
   watch: false,
 };
 ```
@@ -133,7 +134,7 @@ export default {
 - **类型：** `string[]`
 - **默认值：** `[]`
 
-用于在生产构建时复制 `public` 目录时，指定需要忽略的文件或目录的 glob 匹配模式。
+用于在生产构建复制 `public` 目录时，指定需要忽略的文件或目录的 glob 匹配模式。
 
 该选项只影响构建阶段的复制行为，不会影响开发服务器对静态文件的访问。
 
