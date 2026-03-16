@@ -303,7 +303,9 @@ importers:
         specifier: ^0.3.31
         version: 0.3.31
 
-  e2e/type-tests: {}
+  e2e/type-tests/resolution-bundler: {}
+
+  e2e/type-tests/resolution-nodenext: {}
 
   examples/lit:
     devDependencies:
