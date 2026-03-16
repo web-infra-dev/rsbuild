@@ -414,7 +414,8 @@ export type PublicDirOptions = {
    */
   watch?: boolean;
   /**
-   * Glob patterns of files to ignore when copying from the public directory.
+   * Glob patterns for files or directories to ignore when copying the public directory
+   * during production builds.
    * @default undefined
    */
   ignore?: string[];
