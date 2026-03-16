@@ -1,9 +1,9 @@
 {
   "extends": "@rsbuild/config/tsconfig",
   "compilerOptions": {
-    "skipLibCheck": false,
     "module": "ES2022",
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "skipLibCheck": false
   },
   "include": ["index.ts"]
 }
