@@ -609,8 +609,8 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1
       rspack-chain:
-        specifier: ^2.0.0-beta.0
-        version: 2.0.0-beta.0(@rspack/core@2.0.0-beta.7(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19))
+        specifier: ^2.0.0-beta.1
+        version: 2.0.0-beta.1(@rspack/core@2.0.0-beta.7(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19))
       rspack-manifest-plugin:
         specifier: 5.2.1
         version: 5.2.1(@rspack/core@2.0.0-beta.7(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19))
@@ -5297,8 +5297,8 @@ packages:
     resolution: {integrity: sha512-BdZYILSV4V5Ms7IweGZyo9udJZHQCeUm5cEzlA8KzeY4aEJr2QA6qYWGzgA7yShBU7Igp3qQM6krKUXzze5pqw==}
     engines: {node: ^20.19.0 || >=22.12.0}
 
-  rspack-chain@2.0.0-beta.0:
-    resolution: {integrity: sha512-m+4RRbsqvSmWX1mYAXEcT9Dp9jH1m5cTUH6GCDxr6PXFTAWWwNzuqVIa/YGnBkchfZ+TGvWaA3aqeRgrUnU7nA==}
+  rspack-chain@2.0.0-beta.1:
+    resolution: {integrity: sha512-c6fqodltURg34X61A2Kby0cr81Y8PEKq6CDGi6CDZ5Bk5AoS3E93CIHk0Wfhijy9wNCn7+pw8IfDanJPIkTobg==}
     peerDependencies:
       '@rspack/core': ^2.0.0-0
     peerDependenciesMeta:
@@ -11005,7 +11005,7 @@ snapshots:
 
   rslog@2.0.1: {}
 
-  rspack-chain@2.0.0-beta.0(@rspack/core@2.0.0-beta.7(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19)):
+  rspack-chain@2.0.0-beta.1(@rspack/core@2.0.0-beta.7(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19)):
     optionalDependencies:
       '@rspack/core': 2.0.0-beta.7(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19)
 
