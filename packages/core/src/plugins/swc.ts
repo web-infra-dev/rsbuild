@@ -291,9 +291,8 @@ function applyTransformImport(
   const finalPluginImport = reduceTransformImportConfig(pluginImport);
 
   if (finalPluginImport?.length) {
-    swcConfig.rspackExperiments ??= {};
-    swcConfig.rspackExperiments.import ??= [];
-    swcConfig.rspackExperiments.import.push(...finalPluginImport);
+    swcConfig.transformImport ??= [];
+    swcConfig.transformImport.push(...finalPluginImport);
   }
 }
 

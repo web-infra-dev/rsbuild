@@ -185,13 +185,11 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
                   "legacyDecorator": false,
                 },
               },
-              "rspackExperiments": {
-                "import": [
-                  {
-                    "libraryName": "foo",
-                  },
-                ],
-              },
+              "transformImport": [
+                {
+                  "libraryName": "foo",
+                },
+              ],
             },
           },
         ],
@@ -263,13 +261,11 @@ exports[`plugin-swc > should apply environment config correctly 2`] = `
                   "legacyDecorator": false,
                 },
               },
-              "rspackExperiments": {
-                "import": [
-                  {
-                    "libraryName": "bar",
-                  },
-                ],
-              },
+              "transformImport": [
+                {
+                  "libraryName": "bar",
+                },
+              ],
             },
           },
         ],
@@ -412,13 +408,11 @@ exports[`plugin-swc > should apply pluginImport 1`] = `
                     "legacyDecorator": false,
                   },
                 },
-                "rspackExperiments": {
-                  "import": [
-                    {
-                      "libraryName": "foo",
-                    },
-                  ],
-                },
+                "transformImport": [
+                  {
+                    "libraryName": "foo",
+                  },
+                ],
               },
             },
           ],
@@ -492,16 +486,14 @@ exports[`plugin-swc > should apply pluginImport correctly with ConfigChain 1`] =
                     "legacyDecorator": false,
                   },
                 },
-                "rspackExperiments": {
-                  "import": [
-                    {
-                      "libraryName": "foo",
-                    },
-                    {
-                      "libraryName": "bar",
-                    },
-                  ],
-                },
+                "transformImport": [
+                  {
+                    "libraryName": "foo",
+                  },
+                  {
+                    "libraryName": "bar",
+                  },
+                ],
               },
             },
           ],
