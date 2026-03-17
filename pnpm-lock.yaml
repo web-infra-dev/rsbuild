@@ -33,10 +33,10 @@ importers:
         version: 0.2.3
       '@rstest/adapter-rslib':
         specifier: ^0.2.1
-        version: 0.2.1(@rslib/core@0.20.0(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0)(typescript@5.9.3))(@rstest/core@0.9.2(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0))(typescript@5.9.3)
+        version: 0.2.1(@rslib/core@0.20.0(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0)(typescript@5.9.3))(@rstest/core@0.9.2(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0))(typescript@5.9.3)
       '@rstest/core':
         specifier: ^0.9.2
-        version: 0.9.2(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0)
+        version: 0.9.2(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:scripts/test-helper
@@ -71,8 +71,8 @@ importers:
         specifier: 2.2.1
         version: 2.2.1(node-fetch@2.7.0(encoding@0.1.13))
       core-js:
-        specifier: ^3.48.0
-        version: 3.48.0
+        specifier: ^3.49.0
+        version: 3.49.0
       lodash:
         specifier: ^4.17.23
         version: 4.17.23
@@ -523,7 +523,7 @@ importers:
         version: 0.3.31
       '@rslib/core':
         specifier: 0.20.0
-        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.48.0)(typescript@5.9.3)
+        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0)(typescript@5.9.3)
       '@types/cors':
         specifier: ^2.8.19
         version: 2.8.19
@@ -668,7 +668,7 @@ importers:
         version: link:../plugin-vue
       '@rslib/core':
         specifier: 0.20.0
-        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.48.0)(typescript@5.9.3)
+        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.49.0)(typescript@5.9.3)
       '@types/node':
         specifier: ^24.12.0
         version: 24.12.0
@@ -705,7 +705,7 @@ importers:
         version: '@rsbuild/core@1.7.3'
       '@rslib/core':
         specifier: 0.20.0
-        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.48.0)(typescript@5.9.3)
+        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.49.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -745,7 +745,7 @@ importers:
         version: '@rsbuild/core@1.7.3'
       '@rslib/core':
         specifier: 0.20.0
-        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.48.0)(typescript@5.9.3)
+        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.49.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -779,7 +779,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.20.0
-        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.48.0)(typescript@5.9.3)
+        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.49.0)(typescript@5.9.3)
       '@types/node':
         specifier: ^24.12.0
         version: 24.12.0
@@ -807,7 +807,7 @@ importers:
         version: '@rsbuild/core@1.7.3'
       '@rslib/core':
         specifier: 0.20.0
-        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.48.0)(typescript@5.9.3)
+        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.49.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -844,7 +844,7 @@ importers:
         version: '@rsbuild/core@1.7.3'
       '@rslib/core':
         specifier: 0.20.0
-        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.48.0)(typescript@5.9.3)
+        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.49.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -884,7 +884,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.20.0
-        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.48.0)(typescript@5.9.3)
+        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.49.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -918,7 +918,7 @@ importers:
         version: '@rsbuild/core@1.7.3'
       '@rslib/core':
         specifier: 0.20.0
-        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.48.0)(typescript@5.9.3)
+        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.49.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -946,7 +946,7 @@ importers:
         version: '@rsbuild/core@1.7.3'
       '@rslib/core':
         specifier: 0.20.0
-        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.48.0)(typescript@5.9.3)
+        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.49.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -989,7 +989,7 @@ importers:
         version: '@rsbuild/core@1.7.3'
       '@rslib/core':
         specifier: 0.20.0
-        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.48.0)(typescript@5.9.3)
+        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.49.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1026,7 +1026,7 @@ importers:
         version: '@rsbuild/core@1.7.3'
       '@rslib/core':
         specifier: 0.20.0
-        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.48.0)(typescript@5.9.3)
+        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.49.0)(typescript@5.9.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1044,7 +1044,7 @@ importers:
     devDependencies:
       '@rslib/core':
         specifier: 0.20.0
-        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.48.0)(typescript@5.9.3)
+        version: 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.49.0)(typescript@5.9.3)
       '@types/node':
         specifier: ^24.12.0
         version: 24.12.0
@@ -1053,7 +1053,7 @@ importers:
         version: 7.0.0-dev.20260315.1
       rsbuild-plugin-arethetypeswrong:
         specifier: 0.2.0
-        version: 0.2.0(@rsbuild/core@2.0.0-beta.8(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0))(typescript@5.9.3)
+        version: 0.2.0(@rsbuild/core@2.0.0-beta.9(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0))(typescript@5.9.3)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -1083,19 +1083,19 @@ importers:
         version: link:../packages/plugin-sass
       '@rspress/core':
         specifier: ^2.0.5
-        version: 2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.48.0)(micromark-util-types@2.0.2)(micromark@4.0.2)
+        version: 2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2)
       '@rspress/plugin-algolia':
         specifier: ^2.0.5
-        version: 2.0.5(@algolia/client-search@5.49.2)(@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.48.0)(micromark-util-types@2.0.2)(micromark@4.0.2))(@types/react@19.2.14)(algoliasearch@5.49.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(search-insights@2.17.3)
+        version: 2.0.5(@algolia/client-search@5.49.2)(@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2))(@types/react@19.2.14)(algoliasearch@5.49.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(search-insights@2.17.3)
       '@rspress/plugin-client-redirects':
         specifier: ^2.0.5
-        version: 2.0.5(@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.48.0)(micromark-util-types@2.0.2)(micromark@4.0.2))
+        version: 2.0.5(@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2))
       '@rspress/plugin-rss':
         specifier: ^2.0.5
-        version: 2.0.5(@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.48.0)(micromark-util-types@2.0.2)(micromark@4.0.2))
+        version: 2.0.5(@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2))
       '@rspress/plugin-sitemap':
         specifier: ^2.0.5
-        version: 2.0.5(@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.48.0)(micromark-util-types@2.0.2)(micromark@4.0.2))
+        version: 2.0.5(@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2))
       '@rstack-dev/doc-ui':
         specifier: ^1.12.5
         version: 1.12.5
@@ -1128,7 +1128,7 @@ importers:
         version: 1.1.2(@rsbuild/core@packages+core)
       rspress-plugin-font-open-sans:
         specifier: ^1.0.3
-        version: 1.0.3(@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.48.0)(micromark-util-types@2.0.2)(micromark@4.0.2))
+        version: 1.0.3(@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2))
       rspress-plugin-sitemap:
         specifier: ^1.2.1
         version: 1.2.1
@@ -2050,6 +2050,16 @@ packages:
 
   '@rsbuild/core@2.0.0-beta.8':
     resolution: {integrity: sha512-MUxbKJPE1agOK3eCHjKvBIiA+CcZ0TJU/ANKDBLMjK2Er+wq4r5c2ne53+Pi7DtIExoMbSSWBx+RP3CMewKGVA==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    hasBin: true
+    peerDependencies:
+      core-js: '>= 3.0.0'
+    peerDependenciesMeta:
+      core-js:
+        optional: true
+
+  '@rsbuild/core@2.0.0-beta.9':
+    resolution: {integrity: sha512-WRDnxRWqIO+/RawCKwL2nB6EDAOuGqDznuIkVih4r5H5OEW+WgfcV/U8PUgn+n6+ZfFaXNBJnZBCsgKSNcHfXA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -3510,6 +3520,9 @@ packages:
 
   core-js@3.48.0:
     resolution: {integrity: sha512-zpEHTy1fjTMZCKLHUZoVeylt9XrzaIN2rbPXEt0k+q7JE5CkCZdo6bNq55bn24a69CH7ErAVLKijxJja4fw+UQ==}
+
+  core-js@3.49.0:
+    resolution: {integrity: sha512-es1U2+YTtzpwkxVLwAFdSpaIMyQaq0PBgm3YD1W3Qpsn1NAmO3KSgZfu+oGSWVu6NvLHoHCV/aYcsE5wiB7ALg==}
 
   cors@2.8.6:
     resolution: {integrity: sha512-tJtZBBHA6vjIAaF6EnIaq6laBBP9aq/Y3ouVJjEfoHbRBcHBAHYcMh/w8LDrk2PvIMMq8gmopa5D4V8RmbrxGw==}
@@ -7296,12 +7309,12 @@ snapshots:
       core-js: 3.47.0
       jiti: 2.6.1
 
-  '@rsbuild/core@2.0.0-beta.6(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0)':
+  '@rsbuild/core@2.0.0-beta.6(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0)':
     dependencies:
       '@rspack/core': 2.0.0-beta.3(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19)
       '@swc/helpers': 0.5.19
     optionalDependencies:
-      core-js: 3.48.0
+      core-js: 3.49.0
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
 
@@ -7313,6 +7326,25 @@ snapshots:
       core-js: 3.48.0
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
+
+  '@rsbuild/core@2.0.0-beta.8(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0)':
+    dependencies:
+      '@rspack/core': 2.0.0-beta.6(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19)
+      '@swc/helpers': 0.5.19
+    optionalDependencies:
+      core-js: 3.49.0
+    transitivePeerDependencies:
+      - '@module-federation/runtime-tools'
+
+  '@rsbuild/core@2.0.0-beta.9(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0)':
+    dependencies:
+      '@rspack/core': 2.0.0-beta.7(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19)
+      '@swc/helpers': 0.5.19
+    optionalDependencies:
+      core-js: 3.49.0
+    transitivePeerDependencies:
+      - '@module-federation/runtime-tools'
+    optional: true
 
   '@rsbuild/plugin-babel@1.1.0(@rsbuild/core@packages+core)':
     dependencies:
@@ -7338,9 +7370,9 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': link:packages/core
 
-  '@rsbuild/plugin-react@1.4.5(@rsbuild/core@2.0.0-beta.6(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0))':
+  '@rsbuild/plugin-react@1.4.5(@rsbuild/core@2.0.0-beta.6(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0))':
     dependencies:
-      '@rsbuild/core': 2.0.0-beta.6(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0)
+      '@rsbuild/core': 2.0.0-beta.6(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0)
       '@rspack/plugin-react-refresh': 1.6.1(react-refresh@0.18.0)
       react-refresh: 0.18.0
     transitivePeerDependencies:
@@ -7473,10 +7505,21 @@ snapshots:
       - '@rspack/core'
       - webpack
 
-  '@rslib/core@0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.48.0)(typescript@5.9.3)':
+  '@rslib/core@0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.49.0)(typescript@5.9.3)':
+    dependencies:
+      '@rsbuild/core': 2.0.0-beta.8(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0)
+      rsbuild-plugin-dts: 0.20.0(@rsbuild/core@2.0.0-beta.8(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0))(@typescript/native-preview@7.0.0-dev.20260315.1)(typescript@5.9.3)
+    optionalDependencies:
+      typescript: 5.9.3
+    transitivePeerDependencies:
+      - '@module-federation/runtime-tools'
+      - '@typescript/native-preview'
+      - core-js
+
+  '@rslib/core@0.20.0(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0)(typescript@5.9.3)':
     dependencies:
       '@rsbuild/core': 2.0.0-beta.8(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0)
-      rsbuild-plugin-dts: 0.20.0(@rsbuild/core@2.0.0-beta.8(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0))(@typescript/native-preview@7.0.0-dev.20260315.1)(typescript@5.9.3)
+      rsbuild-plugin-dts: 0.20.0(@rsbuild/core@2.0.0-beta.8(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0))(typescript@5.9.3)
     optionalDependencies:
       typescript: 5.9.3
     transitivePeerDependencies:
@@ -7772,13 +7815,13 @@ snapshots:
       '@rspack/resolver-binding-win32-ia32-msvc': 0.2.6
       '@rspack/resolver-binding-win32-x64-msvc': 0.2.6
 
-  '@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.48.0)(micromark-util-types@2.0.2)(micromark@4.0.2)':
+  '@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2)':
     dependencies:
       '@mdx-js/mdx': 3.1.1
       '@mdx-js/react': 3.1.1(@types/react@19.2.14)(react@19.2.4)
-      '@rsbuild/core': 2.0.0-beta.6(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0)
-      '@rsbuild/plugin-react': 1.4.5(@rsbuild/core@2.0.0-beta.6(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0))
-      '@rspress/shared': 2.0.5(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0)
+      '@rsbuild/core': 2.0.0-beta.6(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0)
+      '@rsbuild/plugin-react': 1.4.5(@rsbuild/core@2.0.0-beta.6(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0))
+      '@rspress/shared': 2.0.5(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0)
       '@shikijs/rehype': 4.0.1
       '@types/unist': 3.0.3
       '@unhead/react': 2.1.9(react@19.2.4)
@@ -7829,11 +7872,11 @@ snapshots:
       - supports-color
       - webpack-hot-middleware
 
-  '@rspress/plugin-algolia@2.0.5(@algolia/client-search@5.49.2)(@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.48.0)(micromark-util-types@2.0.2)(micromark@4.0.2))(@types/react@19.2.14)(algoliasearch@5.49.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(search-insights@2.17.3)':
+  '@rspress/plugin-algolia@2.0.5(@algolia/client-search@5.49.2)(@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2))(@types/react@19.2.14)(algoliasearch@5.49.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(search-insights@2.17.3)':
     dependencies:
       '@docsearch/css': 4.6.0
       '@docsearch/react': 4.6.0(@algolia/client-search@5.49.2)(@types/react@19.2.14)(algoliasearch@5.49.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(search-insights@2.17.3)
-      '@rspress/core': 2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.48.0)(micromark-util-types@2.0.2)(micromark@4.0.2)
+      '@rspress/core': 2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2)
     transitivePeerDependencies:
       - '@algolia/client-search'
       - '@types/react'
@@ -7842,22 +7885,22 @@ snapshots:
       - react-dom
       - search-insights
 
-  '@rspress/plugin-client-redirects@2.0.5(@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.48.0)(micromark-util-types@2.0.2)(micromark@4.0.2))':
+  '@rspress/plugin-client-redirects@2.0.5(@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2))':
     dependencies:
-      '@rspress/core': 2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.48.0)(micromark-util-types@2.0.2)(micromark@4.0.2)
+      '@rspress/core': 2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2)
 
-  '@rspress/plugin-rss@2.0.5(@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.48.0)(micromark-util-types@2.0.2)(micromark@4.0.2))':
+  '@rspress/plugin-rss@2.0.5(@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2))':
     dependencies:
-      '@rspress/core': 2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.48.0)(micromark-util-types@2.0.2)(micromark@4.0.2)
+      '@rspress/core': 2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2)
       feed: 5.2.0
 
-  '@rspress/plugin-sitemap@2.0.5(@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.48.0)(micromark-util-types@2.0.2)(micromark@4.0.2))':
+  '@rspress/plugin-sitemap@2.0.5(@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2))':
     dependencies:
-      '@rspress/core': 2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.48.0)(micromark-util-types@2.0.2)(micromark@4.0.2)
+      '@rspress/core': 2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2)
 
-  '@rspress/shared@2.0.5(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0)':
+  '@rspress/shared@2.0.5(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0)':
     dependencies:
-      '@rsbuild/core': 2.0.0-beta.6(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0)
+      '@rsbuild/core': 2.0.0-beta.6(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0)
       '@shikijs/rehype': 4.0.1
       gray-matter: 4.0.3
       lodash-es: 4.17.23
@@ -7868,16 +7911,16 @@ snapshots:
 
   '@rstack-dev/doc-ui@1.12.5': {}
 
-  '@rstest/adapter-rslib@0.2.1(@rslib/core@0.20.0(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0)(typescript@5.9.3))(@rstest/core@0.9.2(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0))(typescript@5.9.3)':
+  '@rstest/adapter-rslib@0.2.1(@rslib/core@0.20.0(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0)(typescript@5.9.3))(@rstest/core@0.9.2(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0))(typescript@5.9.3)':
     dependencies:
-      '@rslib/core': 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.48.0)(typescript@5.9.3)
-      '@rstest/core': 0.9.2(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0)
+      '@rslib/core': 0.20.0(@module-federation/runtime-tools@2.2.1)(@typescript/native-preview@7.0.0-dev.20260315.1)(core-js@3.49.0)(typescript@5.9.3)
+      '@rstest/core': 0.9.2(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0)
     optionalDependencies:
       typescript: 5.9.3
 
-  '@rstest/core@0.9.2(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0)':
+  '@rstest/core@0.9.2(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0)':
     dependencies:
-      '@rsbuild/core': 2.0.0-beta.8(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0)
+      '@rsbuild/core': 2.0.0-beta.8(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0)
       '@types/chai': 5.2.3
       tinypool: 2.1.0
     transitivePeerDependencies:
@@ -8903,6 +8946,8 @@ snapshots:
   core-js@3.47.0: {}
 
   core-js@3.48.0: {}
+
+  core-js@3.49.0: {}
 
   cors@2.8.6:
     dependencies:
@@ -10979,16 +11024,23 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.59.0
       fsevents: 2.3.3
 
-  rsbuild-plugin-arethetypeswrong@0.2.0(@rsbuild/core@2.0.0-beta.8(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0))(typescript@5.9.3):
+  rsbuild-plugin-arethetypeswrong@0.2.0(@rsbuild/core@2.0.0-beta.9(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0))(typescript@5.9.3):
     dependencies:
       typescript: 5.9.3
     optionalDependencies:
-      '@rsbuild/core': 2.0.0-beta.8(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0)
+      '@rsbuild/core': 2.0.0-beta.9(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0)
 
-  rsbuild-plugin-dts@0.20.0(@rsbuild/core@2.0.0-beta.8(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0))(@typescript/native-preview@7.0.0-dev.20260315.1)(typescript@5.9.3):
+  rsbuild-plugin-dts@0.20.0(@rsbuild/core@2.0.0-beta.8(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0))(typescript@5.9.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
       '@rsbuild/core': 2.0.0-beta.8(@module-federation/runtime-tools@2.2.1)(core-js@3.48.0)
+    optionalDependencies:
+      typescript: 5.9.3
+
+  rsbuild-plugin-dts@0.20.0(@rsbuild/core@2.0.0-beta.8(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0))(@typescript/native-preview@7.0.0-dev.20260315.1)(typescript@5.9.3):
+    dependencies:
+      '@ast-grep/napi': 0.37.0
+      '@rsbuild/core': 2.0.0-beta.8(@module-federation/runtime-tools@2.2.1)(core-js@3.49.0)
     optionalDependencies:
       '@typescript/native-preview': 7.0.0-dev.20260315.1
       typescript: 5.9.3
@@ -11023,9 +11075,9 @@ snapshots:
       '@rspack/core': 2.0.0-beta.7(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19)
       vue: 3.5.30(typescript@5.9.3)
 
-  rspress-plugin-font-open-sans@1.0.3(@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.48.0)(micromark-util-types@2.0.2)(micromark@4.0.2)):
+  rspress-plugin-font-open-sans@1.0.3(@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2)):
     dependencies:
-      '@rspress/core': 2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.48.0)(micromark-util-types@2.0.2)(micromark@4.0.2)
+      '@rspress/core': 2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2)
 
   rspress-plugin-sitemap@1.2.1: {}
 
