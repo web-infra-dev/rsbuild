@@ -13,7 +13,6 @@
   "exports": {
     ".": "./dist/index.js"
   },
-  "main": "./dist/index.js",
   "bin": {
     "create-rsbuild": "./bin.js"
   },
