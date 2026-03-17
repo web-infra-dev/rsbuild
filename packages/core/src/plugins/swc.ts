@@ -288,11 +288,10 @@ function applyTransformImport(
   swcConfig: SwcLoaderOptions,
   pluginImport?: NormalizedSourceConfig['transformImport'],
 ) {
-  const finalPluginImport = reduceTransformImportConfig(pluginImport);
-
-  if (finalPluginImport?.length) {
+  const finalConfig = reduceTransformImportConfig(pluginImport);
+  if (finalConfig?.length) {
     swcConfig.transformImport ??= [];
-    swcConfig.transformImport.push(...finalPluginImport);
+    swcConfig.transformImport.push(...finalConfig);
   }
 }
 
