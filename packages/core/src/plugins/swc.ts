@@ -288,12 +288,10 @@ function applyTransformImport(
   swcConfig: SwcLoaderOptions,
   pluginImport?: NormalizedSourceConfig['transformImport'],
 ) {
-  const finalPluginImport = reduceTransformImportConfig(pluginImport);
-
-  if (finalPluginImport?.length) {
-    swcConfig.rspackExperiments ??= {};
-    swcConfig.rspackExperiments.import ??= [];
-    swcConfig.rspackExperiments.import.push(...finalPluginImport);
+  const finalConfig = reduceTransformImportConfig(pluginImport);
+  if (finalConfig?.length) {
+    swcConfig.transformImport ??= [];
+    swcConfig.transformImport.push(...finalConfig);
   }
 }
 

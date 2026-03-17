@@ -42,7 +42,7 @@
     "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
-    "@rspack/core": "2.0.0-beta.6",
+    "@rspack/core": "2.0.0-beta.7",
     "@swc/helpers": "^0.5.19"
   },
   "peerDependencies": {
@@ -85,7 +85,7 @@
     "range-parser": "^1.2.1",
     "reduce-configs": "^1.1.1",
     "rslog": "^2.0.1",
-    "rspack-chain": "^2.0.0-beta.0",
+    "rspack-chain": "^2.0.0-beta.1",
     "rspack-manifest-plugin": "5.2.1",
     "sirv": "^3.0.2",
     "stacktrace-parser": "^0.1.11",
