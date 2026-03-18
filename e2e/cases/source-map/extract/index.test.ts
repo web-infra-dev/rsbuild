@@ -1,3 +1,4 @@
+import path from 'node:path';
 import {
   type Build,
   expect,
@@ -5,6 +6,32 @@ import {
   mapSourceMapPositions,
   test,
 } from '@e2e/helper';
+import fse from 'fs-extra';
+
+const setupMappedPackage = () => {
+  const packageDir = path.resolve(
+    import.meta.dirname,
+    'node_modules/mapped-package',
+  );
+
+  fse.outputJsonSync(path.join(packageDir, 'package.json'), {
+    name: 'mapped-package',
+    version: '1.0.0',
+    type: 'module',
+  });
+  fse.outputFileSync(
+    path.join(packageDir, 'index.js'),
+    "export const value = 'from-package-ts';\nconsole.log(value);\n//# sourceMappingURL=index.js.map\n",
+  );
+  fse.outputFileSync(
+    path.join(packageDir, 'index.js.map'),
+    '{"version":3,"file":"index.js","sourceRoot":"","sources":["index.ts"],"sourcesContent":["export const value = \'from-package-ts\';\\nconsole.log(value);\\n"],"names":[],"mappings":"AAAA,MAAM,CAAC,MAAM,KAAK,GAAG,iBAAiB,CAAC;AACvC,OAAO,CAAC,GAAG,CAAC,KAAK,CAAC,CAAC"}',
+  );
+  fse.outputFileSync(
+    path.join(packageDir, 'index.ts'),
+    "export const value = 'from-package-ts';\nconsole.log(value);\n",
+  );
+};
 
 const getGeneratedPosition = (code: string, search: string) => {
   const offset = code.indexOf(search);
@@ -28,6 +55,8 @@ async function buildWithExtract(
     | boolean
     | { js?: boolean | { include?: RegExp[]; exclude?: RegExp[] } },
 ) {
+  setupMappedPackage();
+
   return build({
     config: {
       output: {
