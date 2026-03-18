@@ -1072,6 +1072,28 @@ export type NormalizedDataUriLimit = Required<DataUriLimit>;
 
 export type Polyfill = 'usage' | 'entry' | 'off';
 
+export type SourceMapExtractTarget = {
+  /**
+   * Include files that should extract existing source maps.
+   */
+  include?: RuleSetCondition[];
+  /**
+   * Exclude files that should not extract existing source maps.
+   */
+  exclude?: RuleSetCondition[];
+};
+
+export type SourceMapExtract =
+  | boolean
+  | {
+      /**
+       * Whether to extract source map from matching JavaScript files.
+       * `true` means extract from all files matched by the built-in JS rule.
+       * @default false
+       */
+      js?: boolean | SourceMapExtractTarget;
+    };
+
 export type SourceMap = {
   /**
    * The source map type for JavaScript files.
@@ -1083,6 +1105,11 @@ export type SourceMap = {
    * @default false
    */
   css?: boolean;
+  /**
+   * Whether to extract source maps from matching input files.
+   * @default false
+   */
+  extract?: SourceMapExtract;
 };
 
 export type CSSModulesLocalsConvention =
@@ -1358,6 +1385,7 @@ export interface OutputConfig {
    * const defaultSourceMap = {
    *   js: isDev ? 'cheap-module-source-map' : false,
    *   css: false,
+   *   extract: false,
    * };
    * ```
    */
@@ -1421,6 +1449,7 @@ export interface NormalizedOutputConfig extends OutputConfig {
     | {
         js?: Rspack.Configuration['devtool'];
         css: boolean;
+        extract: SourceMapExtract;
       };
   cleanDistPath: CleanDistPath;
   filenameHash: boolean | string;
