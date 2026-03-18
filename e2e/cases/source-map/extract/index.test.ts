@@ -25,6 +25,7 @@ const setupMappedPackage = () => {
   );
   fse.outputFileSync(
     path.join(packageDir, 'index.js.map'),
+    // cspell:disable-next-line
     '{"version":3,"file":"index.js","sourceRoot":"","sources":["index.ts"],"sourcesContent":["export const value = \'from-package-ts\';\\nconsole.log(value);\\n"],"names":[],"mappings":"AAAA,MAAM,CAAC,MAAM,KAAK,GAAG,iBAAiB,CAAC;AACvC,OAAO,CAAC,GAAG,CAAC,KAAK,CAAC,CAAC"}',
   );
   fse.outputFileSync(
