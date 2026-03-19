@@ -1,8 +1,11 @@
-import { toPosixPath } from '../helpers/path';
+import { JS_REGEX } from '../constants';
+import { normalizeRuleConditionPath, toPosixPath } from '../helpers/path';
 import type {
   NormalizedEnvironmentConfig,
   RsbuildPlugin,
   Rspack,
+  RspackChain,
+  SourceMapExtractTarget,
 } from '../types';
 
 const getDevtool = (config: NormalizedEnvironmentConfig): Rspack.DevTool => {
@@ -35,6 +38,73 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
       const { sourceMap } = config.output;
       return typeof sourceMap === 'object' && sourceMap.css;
     };
+
+    const normalizeExtractTarget = (
+      target: boolean | SourceMapExtractTarget | undefined,
+    ): false | SourceMapExtractTarget => {
+      if (!target) return false;
+      if (target === true) return {};
+
+      return {
+        include: target.include?.map(normalizeRuleConditionPath),
+        exclude: target.exclude?.map(normalizeRuleConditionPath),
+      };
+    };
+
+    const getExtractConfig = (config: NormalizedEnvironmentConfig) => {
+      const { sourceMap } = config.output;
+
+      if (typeof sourceMap !== 'object' || !sourceMap.extract) return false;
+      if (sourceMap.extract === true) return { js: {} };
+
+      const js = normalizeExtractTarget(sourceMap.extract.js);
+      if (!js) return false;
+
+      return { js } as const;
+    };
+
+    const applyExtractRule = (
+      chain: RspackChain,
+      name: string,
+      test: RegExp,
+      target: false | SourceMapExtractTarget,
+    ) => {
+      if (!target) return;
+
+      const rule = chain.module
+        .rule(name)
+        .test(test)
+        .set('extractSourceMap', true);
+
+      const { include, exclude } = target;
+
+      if (include) {
+        for (const condition of include) {
+          rule.include.add(condition);
+        }
+      }
+
+      if (exclude) {
+        for (const condition of exclude) {
+          rule.exclude.add(condition);
+        }
+      }
+    };
+
+    api.modifyBundlerChain({
+      order: 'pre',
+      handler: (chain, { environment }) => {
+        const extractConfig = getExtractConfig(environment.config);
+        if (!extractConfig) return;
+
+        applyExtractRule(
+          chain,
+          'source-map-extract-js',
+          JS_REGEX,
+          extractConfig.js,
+        );
+      },
+    });
 
     api.modifyBundlerChain((chain, { rspack, environment, isDev, target }) => {
       const { config } = environment;
