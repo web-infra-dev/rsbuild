@@ -70,18 +70,18 @@ exports[`plugin-solid > should allow to configure solid preset options 1`] = `
             },
             "plugins": [
               [
-                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                "<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
                 {
                   "version": "2022-03",
                 },
               ],
               [
-                "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/babel.cjs",
+                "<PNPM_INNER>/solid-refresh/dist/babel.cjs",
               ],
             ],
             "presets": [
               [
-                "<ROOT>/node_modules/<PNPM_INNER>/babel-preset-solid/index.js",
+                "<PNPM_INNER>/babel-preset-solid/index.js",
                 {
                   "generate": "ssr",
                   "hydratable": true,
@@ -167,18 +167,18 @@ exports[`plugin-solid > should apply solid preset correctly 1`] = `
             },
             "plugins": [
               [
-                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                "<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
                 {
                   "version": "2022-03",
                 },
               ],
               [
-                "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/babel.cjs",
+                "<PNPM_INNER>/solid-refresh/dist/babel.cjs",
               ],
             ],
             "presets": [
               [
-                "<ROOT>/node_modules/<PNPM_INNER>/babel-preset-solid/index.js",
+                "<PNPM_INNER>/babel-preset-solid/index.js",
                 {},
               ],
             ],

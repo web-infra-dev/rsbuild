@@ -72,7 +72,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "sideEffects": true,
               "use": [
                 {
-                  "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+                  "loader": "<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
                 },
                 {
                   "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -416,7 +416,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
     ],
     "resolve": {
       "alias": {
-        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+        "@swc/helpers": "<PNPM_INNER>/@swc/helpers",
       },
       "extensions": [
         ".ts",
@@ -837,7 +837,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
     ],
     "resolve": {
       "alias": {
-        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+        "@swc/helpers": "<PNPM_INNER>/@swc/helpers",
       },
       "extensions": [
         ".ts",
@@ -950,7 +950,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
   "resolve": {
     "alias": {
       "@common": "./src/common",
-      "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+      "@swc/helpers": "<PNPM_INNER>/@swc/helpers",
     },
     "aliasStrategy": "prefer-tsconfig",
     "extensions": [
@@ -1107,7 +1107,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
   "resolve": {
     "alias": {
       "@common": "./src/common",
-      "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+      "@swc/helpers": "<PNPM_INNER>/@swc/helpers",
     },
     "aliasStrategy": "prefer-tsconfig",
     "extensions": [
@@ -1268,7 +1268,7 @@ exports[`environment config > should print environment config when inspecting co
     "resolve": {
       "alias": {
         "@common": "./src/common",
-        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+        "@swc/helpers": "<PNPM_INNER>/@swc/helpers",
       },
       "aliasStrategy": "prefer-tsconfig",
       "extensions": [
@@ -1425,7 +1425,7 @@ exports[`environment config > should print environment config when inspecting co
     "resolve": {
       "alias": {
         "@common": "./src/common",
-        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+        "@swc/helpers": "<PNPM_INNER>/@swc/helpers",
       },
       "aliasStrategy": "prefer-tsconfig",
       "extensions": [
@@ -1492,12 +1492,12 @@ exports[`environment config > should print environment config when inspecting co
 exports[`environment config > should support adding a single environment plugin 1`] = `
 {
   "ssr": {
-    "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+    "@swc/helpers": "<PNPM_INNER>/@swc/helpers",
     "global": "ssr",
     "ssr": "ssr",
   },
   "web": {
-    "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+    "@swc/helpers": "<PNPM_INNER>/@swc/helpers",
     "global": "web",
     "web": "web",
   },
@@ -1602,7 +1602,7 @@ exports[`environment config > should support modifying environment config by api
     "resolve": {
       "alias": {
         "@common": "./src/common",
-        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+        "@swc/helpers": "<PNPM_INNER>/@swc/helpers",
       },
       "aliasStrategy": "prefer-tsconfig",
       "extensions": [
@@ -1760,7 +1760,7 @@ exports[`environment config > should support modifying environment config by api
       "alias": {
         "@common": "./src/common",
         "@common1": "./src/common1",
-        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+        "@swc/helpers": "<PNPM_INNER>/@swc/helpers",
       },
       "aliasStrategy": "prefer-tsconfig",
       "extensions": [
@@ -1918,7 +1918,7 @@ exports[`environment config > should support modifying environment config by api
       "alias": {
         "@common": "./src/common",
         "@common1": "./src/common1",
-        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+        "@swc/helpers": "<PNPM_INNER>/@swc/helpers",
       },
       "aliasStrategy": "prefer-tsconfig",
       "extensions": [
@@ -2078,7 +2078,7 @@ exports[`environment config > should support modifying single environment config
     "resolve": {
       "alias": {
         "@common": "./src/common",
-        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+        "@swc/helpers": "<PNPM_INNER>/@swc/helpers",
       },
       "aliasStrategy": "prefer-tsconfig",
       "extensions": [
@@ -2236,7 +2236,7 @@ exports[`environment config > should support modifying single environment config
       "alias": {
         "@common": "./src/common",
         "@common1": "./src/common1",
-        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+        "@swc/helpers": "<PNPM_INNER>/@swc/helpers",
       },
       "aliasStrategy": "prefer-tsconfig",
       "extensions": [

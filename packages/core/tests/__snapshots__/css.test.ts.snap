@@ -48,7 +48,7 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
         "sideEffects": true,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+            "loader": "<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -301,7 +301,7 @@ exports[`should ensure isolation of PostCSS config objects between different bui
         "sideEffects": true,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+            "loader": "<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -415,7 +415,7 @@ exports[`should ensure isolation of PostCSS config objects between different bui
         "sideEffects": true,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+            "loader": "<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
