@@ -142,7 +142,7 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
       {
         "resolve": {
           "alias": {
-            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+            "core-js": "<PNPM_INNER>/core-js",
           },
         },
         "type": "javascript/auto",
@@ -748,7 +748,7 @@ exports[`plugin-swc > should enable preset-env in entry mode 1`] = `
         {
           "resolve": {
             "alias": {
-              "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+              "core-js": "<PNPM_INNER>/core-js",
             },
           },
           "type": "javascript/auto",
@@ -828,7 +828,7 @@ exports[`plugin-swc > should enable preset-env in usage mode 1`] = `
         {
           "resolve": {
             "alias": {
-              "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+              "core-js": "<PNPM_INNER>/core-js",
             },
           },
           "type": "javascript/auto",
@@ -909,7 +909,7 @@ exports[`plugin-swc > should use the correct core-js version 1`] = `
         {
           "resolve": {
             "alias": {
-              "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+              "core-js": "<PNPM_INNER>/core-js",
             },
           },
           "type": "javascript/auto",
