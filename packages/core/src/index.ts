@@ -188,6 +188,8 @@ export type {
   SetupMiddlewaresFn,
   SourceConfig,
   SourceMap,
+  SourceMapExtract,
+  SourceMapExtractTarget,
   SplitChunks,
   SplitChunksConfig,
   SplitChunksPreset,

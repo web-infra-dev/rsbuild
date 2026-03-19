@@ -938,6 +938,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "polyfill": "off",
     "sourceMap": {
       "css": false,
+      "extract": false,
       "js": undefined,
     },
     "target": "web",
@@ -1094,6 +1095,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "polyfill": "off",
     "sourceMap": {
       "css": false,
+      "extract": false,
       "js": undefined,
     },
     "target": "node",
@@ -1254,6 +1256,7 @@ exports[`environment config > should print environment config when inspecting co
       "polyfill": "off",
       "sourceMap": {
         "css": false,
+        "extract": false,
         "js": undefined,
       },
       "target": "web",
@@ -1410,6 +1413,7 @@ exports[`environment config > should print environment config when inspecting co
       "polyfill": "off",
       "sourceMap": {
         "css": false,
+        "extract": false,
         "js": undefined,
       },
       "target": "web",
@@ -1586,6 +1590,7 @@ exports[`environment config > should support modifying environment config by api
       "polyfill": "off",
       "sourceMap": {
         "css": false,
+        "extract": false,
         "js": undefined,
       },
       "target": "web",
@@ -1742,6 +1747,7 @@ exports[`environment config > should support modifying environment config by api
       "polyfill": "off",
       "sourceMap": {
         "css": false,
+        "extract": false,
         "js": undefined,
       },
       "target": "web",
@@ -1899,6 +1905,7 @@ exports[`environment config > should support modifying environment config by api
       "polyfill": "off",
       "sourceMap": {
         "css": false,
+        "extract": false,
         "js": undefined,
       },
       "target": "web",
@@ -2059,6 +2066,7 @@ exports[`environment config > should support modifying single environment config
       "polyfill": "off",
       "sourceMap": {
         "css": false,
+        "extract": false,
         "js": undefined,
       },
       "target": "web",
@@ -2215,6 +2223,7 @@ exports[`environment config > should support modifying single environment config
       "polyfill": "off",
       "sourceMap": {
         "css": false,
+        "extract": false,
         "js": undefined,
       },
       "target": "web",
