@@ -12,6 +12,16 @@ type SourceMap =
   | {
       js?: Rspack.Configuration['devtool'];
       css?: boolean;
+      extract?:
+        | boolean
+        | {
+            js?:
+              | boolean
+              | {
+                  include?: Rspack.RuleSetCondition[];
+                  exclude?: Rspack.RuleSetCondition[];
+                };
+          };
     };
 ```
 
@@ -21,6 +31,7 @@ type SourceMap =
 const defaultSourceMap = {
   js: mode === 'development' ? 'cheap-module-source-map' : false,
   css: false,
+  extract: false,
 };
 ```
 
@@ -128,6 +139,40 @@ export default {
     injectStyles: true,
     sourceMap: {
       css: process.env.NODE_ENV === 'development',
+    },
+  },
+};
+```
+
+## 提取 source map
+
+使用 `sourceMap.extract` 可以从匹配的 JavaScript 文件中提取已有的 source map。这在某个包已经同时产出 `.js` 和 `.js.map` 文件时会很有用。
+
+要为内置 JS 规则匹配到的所有文件开启提取，可以这样配置：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    sourceMap: {
+      js: 'source-map',
+      extract: true,
+    },
+  },
+};
+```
+
+你也可以通过 `include` 或 `exclude` 将提取范围限制到特定文件：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    sourceMap: {
+      js: 'source-map',
+      extract: {
+        js: {
+          include: [/node_modules[\\/]some-package[\\/]/],
+        },
+      },
     },
   },
 };
