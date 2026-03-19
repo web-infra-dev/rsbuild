@@ -1,4 +1,5 @@
 import { defineConfig } from '@rsbuild/core';
+// @ts-ignore temp file
 import content from './test-temp-config';
 
 export default defineConfig({

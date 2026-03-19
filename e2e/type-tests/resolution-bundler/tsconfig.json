@@ -1,6 +1,8 @@
 {
   "extends": "@rsbuild/config/tsconfig",
   "compilerOptions": {
+    "module": "ES2022",
+    "moduleResolution": "bundler",
     "skipLibCheck": false
   },
   "include": ["index.ts"]
