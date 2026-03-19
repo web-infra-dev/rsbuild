@@ -1097,7 +1097,7 @@ export type SourceMapExtract =
        * or `exclude` to limit extraction to specific files.
        *
        * This option is implemented based on Rspack's
-       * `module.rules.extractSourceMap` and can replace `source-map-loader`.
+       * `module.rules[].extractSourceMap` and can replace `source-map-loader`.
        * @default false
        */
       js?: boolean | SourceMapExtractTarget;

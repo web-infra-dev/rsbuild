@@ -149,7 +149,7 @@ export default {
 使用 `sourceMap.extract` 可以从匹配的 JavaScript 文件中提取已有的 source map。这在第三方包已经同时产出 `.js` 和 `.js.map` 文件时会很有用。
 
 :::tip
-该功能基于 Rspack 的 [`module.rules.extractSourceMap`](https://rspack.rs/config/module-rules#rulesextractsourcemap) 实现，可以替代 `source-map-loader`。
+该功能基于 Rspack 的 [`module.rules[].extractSourceMap`](https://rspack.rs/zh/config/module-rules#rulesextractsourcemap) 实现，可以替代 `source-map-loader`。
 :::
 
 要为所有 JavaScript 文件开启提取，可以这样配置：

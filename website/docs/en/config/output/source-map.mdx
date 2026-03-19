@@ -149,7 +149,7 @@ export default {
 Use `sourceMap.extract` to extract existing source maps from matched JavaScript files. This is useful when a third-party package already ships both `.js` and `.js.map` files.
 
 :::tip
-This option is implemented based on Rspack's [`module.rules.extractSourceMap`](https://rspack.rs/config/module-rules#rulesextractsourcemap) and can replace `source-map-loader`.
+This option is implemented based on Rspack's [`module.rules[].extractSourceMap`](https://rspack.rs/config/module-rules#rulesextractsourcemap) and can replace `source-map-loader`.
 :::
 
 To enable extraction for all JavaScript files:
