@@ -158,7 +158,6 @@ const applyDefaultMiddlewares = async ({
 
   const { default: launchEditorMiddleware } = await import(
     /* webpackChunkName: "launch-editor-middleware" */
-    // @ts-ignore launch-editor-middleware has no types
     'launch-editor-middleware'
   );
   middlewares.use('/__open-in-editor', launchEditorMiddleware());
