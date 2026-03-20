@@ -34,6 +34,9 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
     // - Matches source map spec and debugger expectations
     const DEFAULT_SOURCE_MAP_TEMPLATE = '[relative-resource-path]';
 
+    const DEFAULT_FALLBACK_SOURCE_MAP_TEMPLATE =
+      '[relative-resource-path]?[hash]';
+
     const enableCssSourceMap = (config: NormalizedEnvironmentConfig) => {
       const { sourceMap } = config.output;
       return typeof sourceMap === 'object' && sourceMap.css;
@@ -119,8 +122,15 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
           (info: { absoluteResourcePath: string }) =>
             toPosixPath(info.absoluteResourcePath),
         );
+        chain.output.devtoolFallbackModuleFilenameTemplate(
+          (info: { absoluteResourcePath: string; hash: string }) =>
+            `${toPosixPath(info.absoluteResourcePath)}?${info.hash}`,
+        );
       } else {
         chain.output.devtoolModuleFilenameTemplate(DEFAULT_SOURCE_MAP_TEMPLATE);
+        chain.output.devtoolFallbackModuleFilenameTemplate(
+          DEFAULT_FALLBACK_SOURCE_MAP_TEMPLATE,
+        );
       }
 
       // When JS source map is disabled, but CSS source map is enabled,
