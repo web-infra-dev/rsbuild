@@ -1129,9 +1129,6 @@ importers:
       rspress-plugin-font-open-sans:
         specifier: ^1.0.3
         version: 1.0.3(@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2))
-      rspress-plugin-sitemap:
-        specifier: ^1.2.1
-        version: 1.2.1
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -5349,9 +5346,6 @@ packages:
     resolution: {integrity: sha512-17i7uUqvyy5k51ggZJ5xoP9duqC2W76GcBviIu400VXXAQEZx3JzZWPcGz9gGmVaFHAkH19NtZK0EYKfneX4rw==}
     peerDependencies:
       '@rspress/core': ^2.0.0-beta.24 || ^2.0.0
-
-  rspress-plugin-sitemap@1.2.1:
-    resolution: {integrity: sha512-JMf2/SKerX3oiFuNaRAnPJxOtBl5hOF0qupK63Fh9CaTb6Mn440iximV+1V0fd/XeOhHlN0oLJPFUDrrkgkcwg==}
 
   run-applescript@7.1.0:
     resolution: {integrity: sha512-DPe5pVFaAsinSaV6QjQ6gdiedWDcRCbUuiQfQa2wmWV7+xC9bGulGI8+TdRmoFkAPaBXk8CrAbnlY2ISniJ47Q==}
@@ -11085,8 +11079,6 @@ snapshots:
   rspress-plugin-font-open-sans@1.0.3(@rspress/core@2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2)):
     dependencies:
       '@rspress/core': 2.0.5(@module-federation/runtime-tools@2.2.1)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2)
-
-  rspress-plugin-sitemap@1.2.1: {}
 
   run-applescript@7.1.0: {}
 
