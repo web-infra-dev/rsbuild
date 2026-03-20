@@ -13,7 +13,12 @@
  * and important alerts that require attention.
  */
 
-import { createLogger as baseCreateLogger, type Logger, logger } from 'rslog';
+import {
+  color,
+  createLogger as baseCreateLogger,
+  type Logger,
+  logger,
+} from 'rslog';
 
 export const isDebug = (): boolean => {
   if (!process.env.DEBUG) {
@@ -39,6 +44,16 @@ function getTime() {
 
   return `${hours}:${minutes}:${seconds}`;
 }
+
+logger.override({
+  debug: (message, ...args) => {
+    if (logger.level !== 'verbose') {
+      return;
+    }
+    const time = color.gray(getTime());
+    console.log(`  ${color.magenta('rsbuild')} ${time} ${message}`, ...args);
+  },
+});
 
 export const createLogger = (
   ...args: Parameters<typeof baseCreateLogger>
