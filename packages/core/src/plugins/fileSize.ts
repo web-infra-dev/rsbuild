@@ -293,14 +293,7 @@ async function printFileSizes(
     const assets: StatsAsset[] = Object.entries(stats.compilation.assets).map(
       ([assetName, value]) => {
         const filePath = assetName.split('?')[0];
-        let content: string | Buffer;
-        try {
-          content = value.source();
-        } catch {
-          // webpack removes source after emitting
-          // read from file system instead
-          content = fs.readFileSync(path.join(distPath, filePath));
-        }
+        const content = value.source();
         return {
           filePath,
           size: Buffer.byteLength(content),
