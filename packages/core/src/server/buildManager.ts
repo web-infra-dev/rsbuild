@@ -87,7 +87,8 @@ export class BuildManager {
   public readFileSync = (fileName: string): string => {
     if ('readFileSync' in this.outputFileSystem) {
       // bundle require needs a synchronous method. Rspack's OutputFileSystem type only
-      // declares the async API, but the actual implementation here is `node:fs` or `memfs`.
+      // declares the async API, but most implementations still provide readFileSync,
+      // for example `node:fs` or `memfs`.
       return (this.outputFileSystem as typeof fs).readFileSync(
         fileName,
         'utf-8',
