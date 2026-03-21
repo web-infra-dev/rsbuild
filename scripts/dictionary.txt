@@ -146,6 +146,7 @@ tsbuildinfo
 tsdoc
 tsgo
 twoslash
+TYPELESS
 uncompiled
 unocss
 unpatch
