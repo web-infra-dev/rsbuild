@@ -13,7 +13,12 @@
  * and important alerts that require attention.
  */
 
-import { color, type Logger, logger } from 'rslog';
+import {
+  color,
+  createLogger as baseCreateLogger,
+  type Logger,
+  logger,
+} from 'rslog';
 
 export const isDebug = (): boolean => {
   if (!process.env.DEBUG) {
@@ -49,6 +54,18 @@ logger.override({
     console.log(`  ${color.magenta('rsbuild')} ${time} ${message}`, ...args);
   },
 });
+
+export const createLogger = (
+  ...args: Parameters<typeof baseCreateLogger>
+): ReturnType<typeof baseCreateLogger> => {
+  const instance = baseCreateLogger(...args);
+
+  if (isDebug() && args[0]?.level === undefined) {
+    instance.level = 'verbose';
+  }
+
+  return instance;
+};
 
 export { logger };
 export type { Logger };
