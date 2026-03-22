@@ -13,8 +13,8 @@ import type { Logger } from '../logger';
 import type { HistoryApiFallbackOptions, RequestHandler } from '../types';
 
 export function historyApiFallbackMiddleware(
-  options: HistoryApiFallbackOptions = {},
   logger: Logger,
+  options: HistoryApiFallbackOptions = {},
 ): RequestHandler {
   return function historyApiFallbackMiddleware(req, _res, next) {
     const { headers } = req;

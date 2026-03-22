@@ -214,8 +214,8 @@ export async function startPreviewServer(
   if (historyApiFallback) {
     middlewares.use(
       historyApiFallbackMiddleware(
-        historyApiFallback === true ? {} : historyApiFallback,
         logger,
+        historyApiFallback === true ? {} : historyApiFallback,
       ),
     );
 

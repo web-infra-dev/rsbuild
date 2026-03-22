@@ -224,8 +224,8 @@ const applyDefaultMiddlewares = async ({
   if (server.historyApiFallback) {
     middlewares.use(
       historyApiFallbackMiddleware(
-        server.historyApiFallback === true ? {} : server.historyApiFallback,
         logger,
+        server.historyApiFallback === true ? {} : server.historyApiFallback,
       ),
     );
 

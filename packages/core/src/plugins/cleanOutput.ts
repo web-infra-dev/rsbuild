@@ -143,7 +143,7 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
             )} or set ${color.yellow('`output.cleanDistPath`')} to false.`,
           );
         }
-        await emptyDir(pathInfo.path, pathInfo.keep);
+        await emptyDir(pathInfo.path, api.logger, pathInfo.keep);
       }
     };
 
