@@ -6,7 +6,7 @@ import { color, getFilename } from './helpers';
 import { exitHook } from './helpers/exitHook';
 import { removeLeadingSlash } from './helpers/url';
 import type { TransformLoaderOptions } from './loader/transformLoader';
-import { logger } from './logger';
+import type { Logger } from './logger';
 import { isEnvironmentMatch } from './pluginManager';
 import type {
   GetRsbuildConfig,
@@ -28,6 +28,7 @@ import type {
 export function getHTMLPathByEntry(
   entryName: string,
   config: NormalizedEnvironmentConfig,
+  logger: Logger,
 ): string {
   const filename = getFilename(config, 'html').replace('[name]', entryName);
   const prefix = config.output.distPath.html;

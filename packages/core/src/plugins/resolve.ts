@@ -2,7 +2,7 @@ import { dirname, sep } from 'node:path';
 import { reduceConfigs } from 'reduce-configs';
 import { castArray, color, require } from '../helpers';
 import { ensureAbsolutePath } from '../helpers/path';
-import { logger } from '../logger';
+import type { Logger } from '../logger';
 import type {
   NormalizedEnvironmentConfig,
   RsbuildPlugin,
@@ -13,10 +13,12 @@ function applyAlias({
   chain,
   config,
   rootPath,
+  logger,
 }: {
   chain: RspackChain;
   config: NormalizedEnvironmentConfig;
   rootPath: string;
+  logger: Logger;
 }) {
   const mergedAlias = reduceConfigs({
     initial: {},
@@ -135,6 +137,7 @@ export const pluginResolve = (): RsbuildPlugin => ({
           chain,
           config,
           rootPath: api.context.rootPath,
+          logger: api.logger,
         });
 
         // compatible with legacy packages with type="module"

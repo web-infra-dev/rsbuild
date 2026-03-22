@@ -1,7 +1,7 @@
 import { URL } from 'node:url';
 import { STATIC_PATH } from '../constants';
 import { castArray, color } from '../helpers';
-import { logger } from '../logger';
+import type { Logger } from '../logger';
 import type { NormalizedConfig, Routes } from '../types';
 import { getHostInUrl } from './helper';
 
@@ -55,7 +55,7 @@ const shouldTryAppleScript = (browser?: string, browserArgs?: string) => {
  * Copyright (c) 2015-present, Facebook, Inc.
  * https://github.com/facebook/create-react-app/blob/master/LICENSE
  */
-async function openBrowser(url: string): Promise<boolean> {
+async function openBrowser(url: string, logger: Logger): Promise<boolean> {
   const browser = process.env.BROWSER;
   const browserArgs = process.env.BROWSER_ARGS;
 
@@ -181,12 +181,14 @@ export async function open({
   config,
   protocol,
   clearCache,
+  logger,
 }: {
   port: number;
   routes: Routes;
   config: NormalizedConfig;
   protocol: string;
   clearCache?: boolean;
+  logger: Logger;
 }): Promise<void> {
   // Skip auto-opening browser in CodeSandbox since it's already
   // a web-based environment.
@@ -230,7 +232,7 @@ export async function open({
      * It can prevent opening the same URL multiple times.
      */
     if (!openedURLs.includes(url)) {
-      openBrowser(url);
+      openBrowser(url, logger);
       openedURLs.push(url);
     }
   }

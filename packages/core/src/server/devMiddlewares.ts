@@ -1,7 +1,7 @@
 import { rspack } from '@rspack/core';
 import { castArray, pick } from '../helpers';
 import { isMultiCompiler } from '../helpers/compiler';
-import { isVerbose, logger } from '../logger';
+import { isVerbose, type Logger } from '../logger';
 import type {
   Connect,
   InternalContext,
@@ -39,6 +39,7 @@ export type RsbuildDevMiddlewareOptions = {
 const applySetupMiddlewares = (
   config: NormalizedConfig,
   devServer: RsbuildDevServer,
+  logger: Logger,
 ) => {
   const setupMiddlewares = config.dev.setupMiddlewares
     ? castArray(config.dev.setupMiddlewares)
@@ -85,6 +86,7 @@ const applyDefaultMiddlewares = async ({
 }> => {
   const upgradeEvents: UpgradeEvent[] = [];
   const { server } = config;
+  const { logger } = context;
 
   if (server.cors) {
     const { default: corsMiddleware } = await import(
@@ -111,7 +113,7 @@ const applyDefaultMiddlewares = async ({
   // each proxy configuration creates its own middleware instance
   if (server.proxy) {
     const { middlewares: proxyMiddlewares, upgrade } =
-      await createProxyMiddleware(server.proxy);
+      await createProxyMiddleware(server.proxy, logger);
     upgradeEvents.push(upgrade);
 
     for (const middleware of proxyMiddlewares) {
@@ -165,6 +167,7 @@ const applyDefaultMiddlewares = async ({
   middlewares.use(
     viewingServedFilesMiddleware({
       environments: devServer.environments,
+      logger,
     }),
   );
 
@@ -222,6 +225,7 @@ const applyDefaultMiddlewares = async ({
     middlewares.use(
       historyApiFallbackMiddleware(
         server.historyApiFallback === true ? {} : server.historyApiFallback,
+        logger,
       ),
     );
 
@@ -236,6 +240,7 @@ const applyDefaultMiddlewares = async ({
       getHtmlFallbackMiddleware({
         buildManager,
         distPath: context.distPath,
+        logger,
       }),
     );
   }
@@ -259,17 +264,19 @@ export type GetDevMiddlewaresResult = {
 export const getDevMiddlewares = async (
   options: RsbuildDevMiddlewareOptions,
 ): Promise<GetDevMiddlewaresResult> => {
-  const { buildManager, devServer } = options;
+  const { buildManager, context, devServer } = options;
   const { middlewares } = devServer;
+  const { logger } = context;
 
-  if (isVerbose()) {
-    middlewares.use(getRequestLoggerMiddleware());
+  if (isVerbose(logger)) {
+    middlewares.use(getRequestLoggerMiddleware(logger));
   }
 
   // Order: setupMiddlewares.unshift => internal middleware => setupMiddlewares.push
   const { before, after } = applySetupMiddlewares(
     options.config,
     options.devServer,
+    logger,
   );
 
   for (const middleware of before) {

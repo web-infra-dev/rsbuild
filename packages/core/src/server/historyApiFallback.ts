@@ -9,11 +9,12 @@
 import type { IncomingMessage } from 'node:http';
 import { URL } from 'node:url';
 import { LOCALHOST } from '../constants';
-import { logger } from '../logger';
+import type { Logger } from '../logger';
 import type { HistoryApiFallbackOptions, RequestHandler } from '../types';
 
 export function historyApiFallbackMiddleware(
   options: HistoryApiFallbackOptions = {},
+  logger: Logger,
 ): RequestHandler {
   return function historyApiFallbackMiddleware(req, _res, next) {
     const { headers } = req;

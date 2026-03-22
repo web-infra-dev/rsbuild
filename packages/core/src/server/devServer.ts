@@ -6,7 +6,6 @@ import {
   isMultiCompiler,
 } from '../helpers/compiler';
 import { getPathnameFromUrl } from '../helpers/path';
-import { logger } from '../logger';
 import { onBeforeRestartServer, restartDevServer } from '../restart';
 import type {
   CreateCompiler,
@@ -97,12 +96,13 @@ export async function createDevServer<
   config: NormalizedConfig,
   { getPortSilently, runCompile = true }: CreateDevServerOptions = {},
 ): Promise<RsbuildDevServer> {
+  const { context } = options;
+  const { logger } = context;
   logger.debug('create dev server');
 
   const { port, portTip } = await resolvePort(config);
   const { middlewareMode, host } = config.server;
   const isHttps = Boolean(config.server.https);
-  const { context } = options;
   const routes = getRoutes(context);
 
   context.devServer = {
@@ -193,6 +193,7 @@ export async function createDevServer<
       printUrls: config.server.printUrls,
       trailingLineBreak: !cliShortcutsEnabled,
       originalConfig: context.originalConfig,
+      logger,
     });
 
   const openPage = async () => {
@@ -202,6 +203,7 @@ export async function createDevServer<
       config,
       protocol,
       clearCache: true,
+      logger,
     });
   };
 
@@ -248,6 +250,7 @@ export async function createDevServer<
         restartServer: () => restartDevServer({ clear: false }),
         help: shortcutsOptions.help,
         customShortcuts: shortcutsOptions.custom,
+        logger,
       });
       context.hooks.onCloseDevServer.tap(cleanup);
     }
