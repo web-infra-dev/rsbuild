@@ -145,7 +145,7 @@ export function updateContextByNormalizedConfig(
 }
 
 export function createPublicContext(
-  context: RsbuildContext,
+  context: InternalContext,
 ): Readonly<RsbuildContext> {
   const exposedKeys: (keyof RsbuildContext)[] = [
     'action',
@@ -166,8 +166,8 @@ export function createPublicContext(
       }
       return undefined;
     },
-    set(_, prop: keyof RsbuildContext) {
-      logger.error(
+    set(target, prop: keyof RsbuildContext) {
+      target.logger.error(
         `Context is readonly, you can not assign to the "context.${prop}" prop.`,
       );
       return true;
@@ -200,6 +200,7 @@ export async function createContext(
     rootPath,
     distPath: '',
     cachePath,
+    logger: userConfig.customLogger ?? logger,
     callerName: options.callerName,
     bundlerType: 'rspack',
     environments: {},

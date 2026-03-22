@@ -22,6 +22,7 @@ import type RspackChain from 'rspack-chain';
 import type { FileDescriptor } from 'rspack-manifest-plugin';
 import type { RsbuildDevServer } from '../server/devServer';
 import type { RsbuildPreviewServer } from '../server/previewServer';
+import type { Logger } from '../logger';
 import type {
   EnvironmentContext,
   ModifyBundlerChainUtils,
@@ -2188,6 +2189,11 @@ export interface RsbuildConfig extends EnvironmentConfig {
    * @default 'info'
    */
   logLevel?: LogLevel;
+  /**
+   * Use a custom logger instance for the current Rsbuild instance.
+   * You can create one via `createLogger()`.
+   */
+  customLogger?: Logger;
   /**
    * Options for local development.
    */

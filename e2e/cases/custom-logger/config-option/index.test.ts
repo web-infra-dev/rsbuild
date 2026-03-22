@@ -1,0 +1,68 @@
+import { expect, test } from '@e2e/helper';
+import {
+  createLogger,
+  createRsbuild,
+  logger,
+  type Logger,
+  type RsbuildPlugin,
+} from '@rsbuild/core';
+
+test('should use default logger for api.logger when customLogger is not set', async () => {
+  let pluginLogger: Logger | undefined;
+
+  const loggerPlugin: RsbuildPlugin = {
+    name: 'logger-plugin',
+    setup(api) {
+      pluginLogger = api.logger;
+    },
+  };
+
+  const rsbuild = await createRsbuild({
+    cwd: import.meta.dirname,
+    config: {
+      plugins: [loggerPlugin],
+    },
+  });
+
+  await rsbuild.initConfigs();
+
+  expect(pluginLogger).toBe(logger);
+});
+
+test('should use customLogger for api.logger', async () => {
+  let pluginLogger: Logger | undefined;
+  const customLogger = createLogger();
+
+  const loggerPlugin: RsbuildPlugin = {
+    name: 'logger-plugin',
+    setup(api) {
+      pluginLogger = api.logger;
+    },
+  };
+
+  const rsbuild = await createRsbuild({
+    cwd: import.meta.dirname,
+    config: {
+      customLogger,
+      plugins: [loggerPlugin],
+    },
+  });
+
+  await rsbuild.initConfigs();
+
+  expect(pluginLogger).toBe(customLogger);
+});
+
+test('should apply logLevel to customLogger', async () => {
+  const customLogger = createLogger();
+
+  await createRsbuild({
+    cwd: import.meta.dirname,
+    config: {
+      customLogger,
+      logLevel: 'error',
+    },
+  });
+
+  expect(customLogger.level).toBe('error');
+});
