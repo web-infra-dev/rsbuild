@@ -7,7 +7,7 @@ import {
   type RsbuildPlugin,
 } from '@rsbuild/core';
 
-test('should use default logger for api.logger when customLogger is not set', async () => {
+test('should use the current instance logger for api.logger when customLogger is not set', async () => {
   let pluginLogger: Logger | undefined;
 
   const loggerPlugin: RsbuildPlugin = {
@@ -26,7 +26,8 @@ test('should use default logger for api.logger when customLogger is not set', as
 
   await rsbuild.initConfigs();
 
-  expect(pluginLogger).toBe(logger);
+  expect(pluginLogger).toBe(rsbuild.logger);
+  expect(pluginLogger).not.toBe(logger);
 });
 
 test('should use customLogger for api.logger', async () => {
