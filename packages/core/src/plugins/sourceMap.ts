@@ -34,6 +34,9 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
     // - Matches source map spec and debugger expectations
     const DEFAULT_SOURCE_MAP_TEMPLATE = '[relative-resource-path]';
 
+    const DEFAULT_FALLBACK_SOURCE_MAP_TEMPLATE =
+      '[relative-resource-path]?[hash]';
+
     const enableCssSourceMap = (config: NormalizedEnvironmentConfig) => {
       const { sourceMap } = config.output;
       return typeof sourceMap === 'object' && sourceMap.css;
@@ -116,11 +119,30 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
         // Use POSIX-style absolute paths in source maps during development
         // This ensures VS Code and browser debuggers can correctly resolve breakpoints
         chain.output.devtoolModuleFilenameTemplate(
-          (info: { absoluteResourcePath: string }) =>
-            toPosixPath(info.absoluteResourcePath),
+          (info: { absoluteResourcePath: string; identifier: string }) => {
+            if (info.absoluteResourcePath.includes('\\UndefinedError.vue')) {
+              return `${info.identifier}`;
+            }
+            return toPosixPath(info.absoluteResourcePath);
+          },
+        );
+        chain.output.devtoolFallbackModuleFilenameTemplate(
+          (info: {
+            absoluteResourcePath: string;
+            hash: string;
+            identifier: string;
+          }) => {
+            if (info.absoluteResourcePath.includes('\\UndefinedError.vue')) {
+              return `${info.identifier}?${info.hash}`;
+            }
+            return `${toPosixPath(info.absoluteResourcePath)}?${info.hash}`;
+          },
         );
       } else {
         chain.output.devtoolModuleFilenameTemplate(DEFAULT_SOURCE_MAP_TEMPLATE);
+        chain.output.devtoolFallbackModuleFilenameTemplate(
+          DEFAULT_FALLBACK_SOURCE_MAP_TEMPLATE,
+        );
       }
 
       // When JS source map is disabled, but CSS source map is enabled,

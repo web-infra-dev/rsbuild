@@ -42,7 +42,7 @@
     "bump": "pnpx bumpp --no-tag"
   },
   "dependencies": {
-    "@rspack/core": "2.0.0-beta.7",
+    "@rspack/core": "npm:@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523",
     "@swc/helpers": "^0.5.19"
   },
   "peerDependencies": {

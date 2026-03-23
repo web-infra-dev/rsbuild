@@ -4,11 +4,6 @@ test('should forward Vue runtime error logs to terminal', async ({
   devOnly,
   page,
 }) => {
-  // TODO: fix Windows source map issue
-  if (process.platform === 'win32') {
-    test.skip();
-  }
-
   const rsbuild = await devOnly();
 
   await gotoPage(page, rsbuild, '/undefinedError');
