@@ -37,8 +37,6 @@ description: Use when asked to create a pull request for this repository. It ens
 6. Fill `Related Links` with issue links, design docs, related PRs, or discussion pages.
    If there is no relevant link, leave a short note such as `None`.
 
-7. Push the branch only after re-checking the branch name.
-   Never push `main`.
-   Use `git push -u origin HEAD`.
+7. Push the branch only after re-checking the branch name. Never push `main`.
 
 8. Create the PR with `gh pr create`.
