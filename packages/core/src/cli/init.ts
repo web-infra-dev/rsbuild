@@ -94,8 +94,7 @@ export async function init({
     env.split(','),
   );
 
-  let logError: typeof defaultLogger.error =
-    defaultLogger.error.bind(defaultLogger);
+  let logger = defaultLogger;
 
   try {
     const cwd = process.cwd();
@@ -115,7 +114,7 @@ export async function init({
               mode: commonOpts.envMode,
             },
     });
-    logError = rsbuild.logger.error.bind(rsbuild.logger);
+    logger = rsbuild.logger;
 
     rsbuild.onBeforeCreateCompiler(() => {
       // Skip watching files when not in dev mode or not in build watch mode
@@ -156,7 +155,7 @@ export async function init({
     return rsbuild;
   } catch (err) {
     if (isRestart) {
-      logError(err);
+      logger.error(err);
     } else {
       throw err;
     }
