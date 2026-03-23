@@ -523,7 +523,8 @@ export type RsbuildPluginAPI = Readonly<{
   /**
    * A logger instance used to output log information in a unified format.
    * Use this instead of `console.log` to maintain consistent logging with Rsbuild.
-   * Equivalent to `import { logger } from '@rsbuild/core'`.
+   * It is associated with the current Rsbuild instance and reflects
+   * `config.customLogger` when provided.
    */
   logger: Logger;
   /**

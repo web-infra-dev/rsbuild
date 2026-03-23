@@ -7,7 +7,7 @@ import { ALL_INTERFACES_IPV4, LOCALHOST } from '../constants';
 import { color, isFunction } from '../helpers';
 import { getCommonParentPath } from '../helpers/path';
 import { addTrailingSlash, removeLeadingSlash } from '../helpers/url';
-import { logger } from '../logger';
+import type { Logger } from '../logger';
 import type {
   Connect,
   InternalContext,
@@ -194,6 +194,7 @@ export function printServerURLs({
   printUrls,
   trailingLineBreak = true,
   originalConfig,
+  logger,
 }: {
   urls: { url: string; label: string }[];
   port: number;
@@ -202,6 +203,7 @@ export function printServerURLs({
   printUrls?: PrintUrls;
   trailingLineBreak?: boolean;
   originalConfig?: Readonly<RsbuildConfig>;
+  logger: Logger;
 }): string | null {
   if (printUrls === false) {
     return null;

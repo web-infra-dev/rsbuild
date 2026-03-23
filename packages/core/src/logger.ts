@@ -1,4 +1,9 @@
 /**
+ * The default logger exported from this module is mainly for CLI/bootstrap
+ * scenarios and backwards compatibility. When writing core runtime code,
+ * prefer `context.logger` or `api.logger` so logs stay scoped to the current
+ * Rsbuild instance.
+ *
  * Logging message case convention:
  *
  * Info, ready, success and debug messages:
@@ -13,7 +18,12 @@
  * and important alerts that require attention.
  */
 
-import { color, type Logger, logger } from 'rslog';
+import {
+  color,
+  createLogger as baseCreateLogger,
+  type Logger,
+  logger as defaultLogger,
+} from 'rslog';
 
 export const isDebug = (): boolean => {
   if (!process.env.DEBUG) {
@@ -24,11 +34,12 @@ export const isDebug = (): boolean => {
   return ['rsbuild', 'builder', '*'].some((key) => values.includes(key));
 };
 
-export const isVerbose = (): boolean => logger.level === 'verbose';
+export const isVerbose = (targetLogger: Pick<Logger, 'level'>): boolean =>
+  targetLogger.level === 'verbose';
 
 // setup the logger level
 if (isDebug()) {
-  logger.level = 'verbose';
+  defaultLogger.level = 'verbose';
 }
 
 function getTime() {
@@ -40,15 +51,33 @@ function getTime() {
   return `${hours}:${minutes}:${seconds}`;
 }
 
-logger.override({
-  debug: (message, ...args) => {
-    if (logger.level !== 'verbose') {
-      return;
-    }
-    const time = color.gray(getTime());
-    console.log(`  ${color.magenta('rsbuild')} ${time} ${message}`, ...args);
-  },
-});
+function applyDebugOverride(targetLogger: Logger) {
+  targetLogger.override({
+    debug: (message, ...args) => {
+      if (targetLogger.level !== 'verbose') {
+        return;
+      }
+      const time = color.gray(getTime());
+      console.log(`  ${color.magenta('rsbuild')} ${time} ${message}`, ...args);
+    },
+  });
+}
 
-export { logger };
+applyDebugOverride(defaultLogger);
+
+export const createLogger = (
+  ...args: Parameters<typeof baseCreateLogger>
+): ReturnType<typeof baseCreateLogger> => {
+  const instance = baseCreateLogger(...args);
+
+  if (isDebug() && args[0]?.level === undefined) {
+    instance.level = 'verbose';
+  }
+
+  applyDebugOverride(instance);
+
+  return instance;
+};
+
+export { defaultLogger };
 export type { Logger };

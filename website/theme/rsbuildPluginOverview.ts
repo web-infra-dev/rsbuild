@@ -42,6 +42,10 @@ export const rsbuildPluginOverview: RsbuildPlugin = {
             text: 'environments',
             link: '/config/environments',
           },
+          {
+            text: 'customLogger',
+            link: '/config/custom-logger',
+          },
         ],
       },
     ];

@@ -18,7 +18,6 @@ import { CLIENT_PATH } from '../../constants';
 import { createVirtualModule, pick } from '../../helpers';
 import { applyToCompiler, isMultiCompiler } from '../../helpers/compiler';
 import { toPosixPath } from '../../helpers/path';
-import { logger } from '../../logger';
 import type {
   InternalContext,
   LiveReload,
@@ -243,6 +242,7 @@ export const assetsMiddleware = async ({
   socketServer: SocketServer;
   resolvedPort: number;
 }): Promise<AssetsMiddleware> => {
+  const { logger } = context;
   const resolvedHost = await resolveHostname(config.server.host);
   const { environments, environmentList } = context;
 
@@ -299,7 +299,7 @@ export const assetsMiddleware = async ({
     environmentList,
   );
   if (writeToDisk) {
-    setupWriteToDisk(compilers, writeToDisk);
+    setupWriteToDisk(compilers, writeToDisk, logger);
   }
 
   const outputFileSystem = await setupOutputFileSystem(writeToDisk, compilers);

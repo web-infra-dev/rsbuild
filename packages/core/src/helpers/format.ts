@@ -4,7 +4,7 @@ import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import type { StatsError } from '@rspack/core';
 import { color } from 'rslog';
 import { LAZY_COMPILATION_IDENTIFIER } from '../constants';
-import { isVerbose } from '../logger';
+import { isVerbose, type Logger } from '../logger';
 import { removeLoaderChainDelimiter } from './stats';
 
 const formatFileName = (fileName: string, stats: StatsError, root: string) => {
@@ -43,7 +43,7 @@ const formatFileName = (fileName: string, stats: StatsError, root: string) => {
   return `File: ${color.cyan(`${fileName}:1:1`)}\n`;
 };
 
-function resolveFileName(stats: StatsError) {
+function resolveFileName(stats: StatsError, logger: Logger) {
   const file =
     // `file` is a custom file path related to the stats error. For example,
     // ts-checker-rspack-plugin sets the module path of type errors to this field.
@@ -54,7 +54,7 @@ function resolveFileName(stats: StatsError) {
     stats.moduleName;
 
   if (file) {
-    return removeLoaderChainDelimiter(file);
+    return removeLoaderChainDelimiter(file, logger);
   }
 
   // `moduleIdentifier` is the absolute path with inline loaders
@@ -65,7 +65,7 @@ function resolveFileName(stats: StatsError) {
     if (matched) {
       const fileName = matched.pop();
       if (fileName) {
-        return removeLoaderChainDelimiter(fileName);
+        return removeLoaderChainDelimiter(fileName, logger);
       }
     }
   }
@@ -86,6 +86,7 @@ function formatModuleTrace(
   stats: StatsError,
   errorFile: string,
   level: 'error' | 'warning',
+  logger: Logger,
 ) {
   if (!stats.moduleTrace) {
     return;
@@ -94,7 +95,8 @@ function formatModuleTrace(
   const moduleNames = stats.moduleTrace
     .map(
       (trace) =>
-        trace.originName && removeLoaderChainDelimiter(trace.originName),
+        trace.originName &&
+        removeLoaderChainDelimiter(trace.originName, logger),
     )
     .filter(
       (trace) => trace && !trace.startsWith(LAZY_COMPILATION_IDENTIFIER),
@@ -105,7 +107,7 @@ function formatModuleTrace(
   }
 
   if (errorFile) {
-    const formatted = removeLoaderChainDelimiter(errorFile);
+    const formatted = removeLoaderChainDelimiter(errorFile, logger);
     if (moduleNames[0] !== formatted) {
       moduleNames.unshift(formatted);
     }
@@ -116,7 +118,7 @@ function formatModuleTrace(
   const MAX = 4;
 
   // Truncate long traces in non-verbose mode
-  if (trace.length > MAX && !isVerbose()) {
+  if (trace.length > MAX && !isVerbose(logger)) {
     const HEAD = 2;
     const TAIL = 2;
     trace = [
@@ -247,12 +249,13 @@ export function formatStatsError(
   stats: StatsError,
   root: string,
   level: 'error' | 'warning' = 'error',
+  logger: Logger,
 ): string {
-  const fileName = resolveFileName(stats);
+  const fileName = resolveFileName(stats, logger);
   let message = `${formatFileName(fileName, stats, root)}${stats.message}`;
 
   // display verbose messages in debug mode
-  const verbose = isVerbose();
+  const verbose = isVerbose(logger);
   if (verbose) {
     if (stats.details) {
       message += `\nDetails: ${stats.details}\n`;
@@ -263,8 +266,8 @@ export function formatStatsError(
   }
 
   // display module trace for errors
-  if (level === 'error' || isVerbose()) {
-    const moduleTrace = formatModuleTrace(stats, fileName, level);
+  if (level === 'error' || isVerbose(logger)) {
+    const moduleTrace = formatModuleTrace(stats, fileName, level, logger);
     if (moduleTrace) {
       message += moduleTrace;
     }

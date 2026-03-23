@@ -1,20 +1,19 @@
 import { defineConfig, logger } from '@rsbuild/core';
 
-const defaultReady = logger.ready;
-
 logger.override({
-  ready: (message) => {
-    console.log(`[READY] ${message}`);
+  info: (message) => {
+    console.log(`[TEST] ${message}`);
   },
 });
 
 export default defineConfig({
+  customLogger: logger,
   plugins: [
     {
-      name: 'restore-logger',
+      name: 'restore-global-logger',
       setup(api) {
         api.onAfterBuild(() => {
-          logger.ready = defaultReady;
+          logger.info('hello world');
         });
       },
     },

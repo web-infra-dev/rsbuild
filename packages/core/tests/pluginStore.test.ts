@@ -1,9 +1,9 @@
-import type { InternalContext, RsbuildPluginAPI } from '../src';
+import { logger, type InternalContext, type RsbuildPluginAPI } from '../src';
 import { createPluginManager, initPlugins } from '../src/pluginManager';
 
 describe('initPlugins', () => {
   it('should sort plugins correctly', async () => {
-    const pluginManager = createPluginManager();
+    const pluginManager = createPluginManager(logger);
     const result: number[] = [];
 
     pluginManager.addPlugins([
@@ -38,6 +38,7 @@ describe('initPlugins', () => {
     await initPlugins({
       pluginManager,
       context: {
+        logger,
         getPluginAPI: () => ({}) as RsbuildPluginAPI,
       } as InternalContext,
     });
@@ -46,7 +47,7 @@ describe('initPlugins', () => {
   });
 
   it('should allow removing plugins', async () => {
-    const pluginManager = createPluginManager();
+    const pluginManager = createPluginManager(logger);
     const result: number[] = [];
 
     pluginManager.addPlugins([
@@ -74,6 +75,7 @@ describe('initPlugins', () => {
     await initPlugins({
       pluginManager,
       context: {
+        logger,
         getPluginAPI: () => ({}) as RsbuildPluginAPI,
       } as InternalContext,
     });
@@ -82,7 +84,7 @@ describe('initPlugins', () => {
   });
 
   it('should remove environment plugin correctly', async () => {
-    const pluginManager = createPluginManager();
+    const pluginManager = createPluginManager(logger);
     const result: number[] = [];
 
     pluginManager.addPlugins(
@@ -127,6 +129,7 @@ describe('initPlugins', () => {
     await initPlugins({
       pluginManager,
       context: {
+        logger,
         getPluginAPI: () => ({}) as RsbuildPluginAPI,
       } as InternalContext,
     });
@@ -137,7 +140,7 @@ describe('initPlugins', () => {
 
 describe('plugin manager', () => {
   it('should add, remove, and get environment-specific plugins correctly', async () => {
-    const pluginManager = createPluginManager();
+    const pluginManager = createPluginManager(logger);
 
     pluginManager.addPlugins([
       {

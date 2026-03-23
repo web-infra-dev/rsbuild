@@ -1,5 +1,5 @@
 import { color, isFunction } from './helpers';
-import { logger } from './logger';
+import type { Logger } from './logger';
 import type {
   AddPlugins,
   InternalContext,
@@ -66,7 +66,7 @@ export const isEnvironmentMatch = (
 ): boolean =>
   pluginEnvironment === specifiedEnvironment || pluginEnvironment === undefined;
 
-export function createPluginManager(): PluginManager {
+export function createPluginManager(logger: Logger): PluginManager {
   let plugins: PluginMeta[] = [];
 
   const addPlugins: AddPlugins = (newPlugins, options) => {
@@ -256,7 +256,7 @@ export async function initPlugins({
   context: InternalContext;
   pluginManager: PluginManager;
 }): Promise<void> {
-  logger.debug('initializing plugins');
+  context.logger.debug('initializing plugins');
 
   let plugins = pluginManager.getAllPluginsWithMeta();
   plugins = sortPluginsByEnforce(plugins);
@@ -317,5 +317,5 @@ export async function initPlugins({
     await setup(context.getPluginAPI!(environment));
   }
 
-  logger.debug('plugins initialized');
+  context.logger.debug('plugins initialized');
 }

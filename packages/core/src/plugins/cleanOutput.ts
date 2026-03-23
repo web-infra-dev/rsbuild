@@ -2,7 +2,6 @@ import { join, sep } from 'node:path';
 import { RSBUILD_OUTPUTS_PATH } from '../constants';
 import { color } from '../helpers';
 import { emptyDir } from '../helpers/fs';
-import { logger } from '../logger';
 import type {
   CleanDistPath,
   CleanDistPathObject,
@@ -89,14 +88,14 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
           };
         }
 
-        logger.warn(
+        api.logger.warn(
           'The dist path is not a subdir of root path, Rsbuild will not empty it.',
         );
-        logger.warn(
+        api.logger.warn(
           `Please set ${color.yellow('`output.cleanDistPath`')} config manually.`,
         );
-        logger.warn(`Current root path: ${color.dim(rootPath)}`);
-        logger.warn(`Current dist path: ${color.dim(distPath)}`);
+        api.logger.warn(`Current root path: ${color.dim(rootPath)}`);
+        api.logger.warn(`Current dist path: ${color.dim(distPath)}`);
         return undefined;
       }
 
@@ -144,7 +143,7 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
             )} or set ${color.yellow('`output.cleanDistPath`')} to false.`,
           );
         }
-        await emptyDir(pathInfo.path, pathInfo.keep);
+        await emptyDir(pathInfo.path, api.logger, pathInfo.keep);
       }
     };
 

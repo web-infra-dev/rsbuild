@@ -1,6 +1,6 @@
 import type { RequestHandler } from 'http-proxy-middleware';
 import { color } from '../helpers';
-import { logger } from '../logger';
+import type { Logger } from '../logger';
 import type {
   RequestHandler as Middleware,
   ProxyConfig,
@@ -8,7 +8,7 @@ import type {
 } from '../types';
 import { HttpCode, type UpgradeEvent } from './helper';
 
-function formatProxyOptions(proxyOptions: ProxyConfig) {
+function formatProxyOptions(proxyOptions: ProxyConfig, logger: Logger) {
   const logPrefix = color.dim('[http-proxy-middleware]: ');
   const defaultOptions: ProxyOptions = {
     changeOrigin: true,
@@ -41,13 +41,14 @@ function formatProxyOptions(proxyOptions: ProxyConfig) {
 
 export async function createProxyMiddleware(
   proxyOptions: ProxyConfig,
+  logger: Logger,
 ): Promise<{
   middlewares: Middleware[];
   upgrade: UpgradeEvent;
 }> {
   // If it is not an array, it may be an object that uses the context attribute
   // or an object in the form of { source: ProxyDetail }
-  const formattedOptions = formatProxyOptions(proxyOptions);
+  const formattedOptions = formatProxyOptions(proxyOptions, logger);
   const proxyMiddlewares: RequestHandler[] = [];
   const middlewares: Middleware[] = [];
 

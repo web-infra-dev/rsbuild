@@ -11,11 +11,11 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-sass": "workspace:*",
-    "@rspress/core": "^2.0.5",
-    "@rspress/plugin-algolia": "^2.0.5",
-    "@rspress/plugin-client-redirects": "^2.0.5",
-    "@rspress/plugin-rss": "^2.0.5",
-    "@rspress/plugin-sitemap": "^2.0.5",
+    "@rspress/core": "^2.0.6",
+    "@rspress/plugin-algolia": "^2.0.6",
+    "@rspress/plugin-client-redirects": "^2.0.6",
+    "@rspress/plugin-rss": "^2.0.6",
+    "@rspress/plugin-sitemap": "^2.0.6",
     "@rstack-dev/doc-ui": "^1.12.5",
     "@shikijs/transformers": "^4.0.2",
     "@types/node": "^24.12.0",
@@ -27,7 +27,6 @@
     "rsbuild-plugin-google-analytics": "^1.0.5",
     "rsbuild-plugin-open-graph": "^1.1.2",
     "rspress-plugin-font-open-sans": "^1.0.3",
-    "rspress-plugin-sitemap": "^1.2.1",
     "typescript": "^5.9.3"
   }
 }

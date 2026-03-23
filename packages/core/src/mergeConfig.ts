@@ -14,6 +14,7 @@ const OVERRIDE_PATHS = new Set([
   'resolve.mainFields',
   'dev.writeToDisk',
   'provider',
+  'customLogger',
 ]);
 
 /**

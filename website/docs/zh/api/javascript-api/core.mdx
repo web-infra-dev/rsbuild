@@ -419,11 +419,31 @@ const mergedConfig = {
 
 在 Rsbuild 中，大部分支持函数值的选项都使用上述规则，比如 `tools.postcss`、`tools.less`、`tools.bundlerChain` 等。
 
+## createLogger
+
+基于 [rslog](https://github.com/rstackjs/rslog) 创建一个独立的 logger 实例。当你需要自定义日志级别或覆盖日志方法，同时又不想修改共享的 [logger](#logger) 单例时，可以使用该方法。
+
+创建出的 logger 也可以传给 [customLogger](/config/custom-logger) 配置项使用。
+
+- **示例：**
+
+```ts
+import { createLogger } from '@rsbuild/core';
+
+const logger = createLogger({ level: 'warn' });
+
+logger.warn('This is a warning message');
+logger.error('This is an error message');
+
+// Will not print
+logger.info('This is an info message');
+```
+
 ## logger
 
-提供统一日志输出格式的实例，可以用于代替 `console.log`，保持与 Rsbuild 一致的日志输出格式。
+一个基于 [rslog](https://github.com/rstackjs/rslog) 的共享 logger 实例，可以用于代替 `console.log`，保持与 Rsbuild 一致的日志输出格式。
 
-基于 [rslog](https://github.com/rstackjs/rslog)。
+如果你希望为不同的 Rsbuild 实例或插件维护独立的 logger 状态，请使用 [createLogger](#createlogger)，而不是直接修改这个单例实例。
 
 - **示例：**
 

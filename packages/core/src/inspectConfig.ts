@@ -9,7 +9,7 @@ import {
   upperFirst,
 } from './helpers';
 import type { InitConfigsOptions } from './initConfigs';
-import { logger } from './logger';
+import type { Logger } from './logger';
 import type {
   InspectConfigOptions,
   InspectConfigResult,
@@ -39,6 +39,7 @@ async function emitConfigFiles({
   environmentConfigs,
   extraConfigs,
   inspectOptions,
+  logger,
 }: {
   extraConfigs?: ConfigItem[];
   environmentConfigs: ConfigItem[];
@@ -46,6 +47,7 @@ async function emitConfigFiles({
   inspectOptions: InspectConfigOptions & {
     outputPath: string;
   };
+  logger: Logger;
 }): Promise<void> {
   const { outputPath } = inspectOptions;
   const isSingle = environmentConfigs.length === 1;
@@ -192,6 +194,7 @@ export async function inspectConfig({
       bundlerConfigs: stringifiedBundlerConfigs,
       environmentConfigs: stringifiedEnvironmentConfigs,
       extraConfigs: stringifiedExtraConfigs,
+      logger: context.logger,
       inspectOptions: {
         ...inspectOptions,
         outputPath,

@@ -419,11 +419,31 @@ By this way, we can ensure that when merging multiple configuration objects, the
 
 In Rsbuild, most options that support function values use this rule, such as `tools.postcss`, `tools.less`, `tools.bundlerChain`, etc.
 
+## createLogger
+
+Creates an isolated logger instance based on [rslog](https://github.com/rstackjs/rslog). Use this when you need custom log levels or overrides without mutating the shared [logger](#logger) singleton.
+
+The created logger can also be passed to the [customLogger](/config/custom-logger) config option.
+
+- **Example:**
+
+```ts
+import { createLogger } from '@rsbuild/core';
+
+const logger = createLogger({ level: 'warn' });
+
+logger.warn('This is a warning message');
+logger.error('This is an error message');
+
+// Will not print
+logger.info('This is an info message');
+```
+
 ## logger
 
-A logger instance used to output log information in a unified format. Use this instead of `console.log` to maintain consistent logging with Rsbuild.
+A shared logger instance based on [rslog](https://github.com/rstackjs/rslog), used to output log information in a unified format. Use this instead of `console.log` to maintain consistent logging with Rsbuild.
 
-Based on [rslog](https://github.com/rstackjs/rslog).
+If you need isolated logger state for different Rsbuild instances or plugins, use [createLogger](#createlogger) instead of mutating this singleton instance.
 
 - **Example:**
 
