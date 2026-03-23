@@ -17,7 +17,7 @@ description: Use when asked to create a pull request for this repository. It ens
 
 3. Read `.github/PULL_REQUEST_TEMPLATE.md` and keep its structure exactly.
 
-4. Draft the PR title in the repository's standard format, requires Conventional Commits, and recent history confirms these common patterns:
+4. Draft the PR title in the repository's standard format, which follows Conventional Commits. Common patterns:
    - `feat(core): add ...`
    - `fix(plugin-less): ...`
    - `docs: ...`
