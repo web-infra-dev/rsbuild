@@ -51,15 +51,19 @@ function getTime() {
   return `${hours}:${minutes}:${seconds}`;
 }
 
-defaultLogger.override({
-  debug: (message, ...args) => {
-    if (defaultLogger.level !== 'verbose') {
-      return;
-    }
-    const time = color.gray(getTime());
-    console.log(`  ${color.magenta('rsbuild')} ${time} ${message}`, ...args);
-  },
-});
+function applyDebugOverride(targetLogger: Logger) {
+  targetLogger.override({
+    debug: (message, ...args) => {
+      if (targetLogger.level !== 'verbose') {
+        return;
+      }
+      const time = color.gray(getTime());
+      console.log(`  ${color.magenta('rsbuild')} ${time} ${message}`, ...args);
+    },
+  });
+}
+
+applyDebugOverride(defaultLogger);
 
 export const createLogger = (
   ...args: Parameters<typeof baseCreateLogger>
@@ -69,6 +73,8 @@ export const createLogger = (
   if (isDebug() && args[0]?.level === undefined) {
     instance.level = 'verbose';
   }
+
+  applyDebugOverride(instance);
 
   return instance;
 };

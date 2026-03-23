@@ -172,7 +172,7 @@ if (rsbuild.context.action === 'dev') {
 
 - **Type:** [Logger](/api/javascript-api/core#logger)
 
-When `config.customLogger` is provided, `rsbuild.logger` references that logger instance. Otherwise, it falls back to the shared [logger](/api/javascript-api/core#logger).
+When `config.customLogger` is provided, `rsbuild.logger` references that logger instance. Otherwise, Rsbuild creates a dedicated logger for the current instance.
 
 This property provides the same logger as [api.logger](/plugins/dev/core#apilogger) in Rsbuild plugins.
 
