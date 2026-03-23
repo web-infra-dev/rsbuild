@@ -84,7 +84,7 @@
     "prebundle": "1.6.4",
     "range-parser": "^1.2.1",
     "reduce-configs": "^1.1.1",
-    "rslog": "^2.0.1",
+    "rslog": "^2.1.0",
     "rspack-chain": "^2.0.0-beta.1",
     "rspack-manifest-plugin": "5.2.1",
     "sirv": "^3.0.2",

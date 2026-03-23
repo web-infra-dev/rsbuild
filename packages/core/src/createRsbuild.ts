@@ -19,7 +19,7 @@ import {
 import { initPluginAPI } from './initPlugins';
 import { inspectConfig as baseInspectConfig } from './inspectConfig';
 import { type LoadEnvResult, loadEnv } from './loadEnv';
-import { createLogger, isDebug } from './logger';
+import { createLogger, defaultLogger, isDebug } from './logger';
 import { createPluginManager } from './pluginManager';
 import { pluginAppIcon } from './plugins/appIcon';
 import { pluginAsset } from './plugins/asset';
@@ -175,8 +175,16 @@ export async function createRsbuild(
     ? await configOrFactory()
     : configOrFactory || {};
 
-  const logger = config.customLogger ?? createLogger();
+  const logger =
+    config.customLogger ??
+    // Inherit the default logger options and level,
+    // but create a new instance to keep the logger instance isolated.
+    createLogger({
+      ...defaultLogger.options,
+      level: defaultLogger.level,
+    });
 
+  // Apply `logLevel` from config if it's specified
   // Debug mode should always use verbose logs
   if (config.logLevel && !isDebug()) {
     logger.level = config.logLevel;

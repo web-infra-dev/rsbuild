@@ -37,7 +37,7 @@
     "@rstest/core": "^0.9.4",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^24.12.0",
-    "@typescript/native-preview": "7.0.0-dev.20260322.1",
+    "@typescript/native-preview": "7.0.0-dev.20260315.1",
     "cross-env": "^10.1.0",
     "cspell-ban-words": "^0.0.4",
     "heading-case": "^1.0.7",
