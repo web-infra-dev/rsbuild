@@ -3,7 +3,7 @@ import { createRsbuild } from '../createRsbuild';
 import { castArray } from '../helpers';
 import { ensureAbsolutePath } from '../helpers/path';
 import { loadConfig as baseLoadConfig } from '../loadConfig';
-import { logger } from '../logger';
+import type { Logger } from '../logger';
 import { watchFilesForRestart } from '../restart';
 import type { RsbuildInstance } from '../types';
 import type { CommonOptions } from './commands';
@@ -80,10 +80,12 @@ export async function init({
   cliOptions,
   isRestart,
   isBuildWatch = false,
+  logger,
 }: {
   cliOptions?: CommonOptions;
   isRestart?: boolean;
   isBuildWatch?: boolean;
+  logger: Logger;
 }): Promise<RsbuildInstance | undefined> {
   if (cliOptions) {
     commonOpts = cliOptions;

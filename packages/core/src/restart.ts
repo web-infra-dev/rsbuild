@@ -2,7 +2,7 @@ import path from 'node:path';
 import type { ChokidarOptions } from 'chokidar';
 import { init } from './cli/init';
 import { color, isTTY } from './helpers';
-import { logger } from './logger';
+import { logger as defaultLogger, type Logger } from './logger';
 import { createChokidar } from './server/watchFiles';
 import type { RsbuildInstance } from './types';
 
@@ -27,10 +27,12 @@ const beforeRestart = async ({
   filePath,
   clear = true,
   id,
+  logger,
 }: {
   filePath?: string;
   clear?: boolean;
   id: string;
+  logger: Logger;
 }): Promise<void> => {
   if (clear) {
     clearConsole();
@@ -52,13 +54,15 @@ const beforeRestart = async ({
 export const restartDevServer = async ({
   filePath,
   clear = true,
+  logger,
 }: {
   filePath?: string;
   clear?: boolean;
-} = {}): Promise<boolean> => {
-  await beforeRestart({ filePath, clear, id: 'server' });
+  logger: Logger;
+}): Promise<boolean> => {
+  await beforeRestart({ filePath, clear, id: 'server', logger });
 
-  const rsbuild = await init({ isRestart: true });
+  const rsbuild = await init({ isRestart: true, logger });
 
   // Skip the following logic if restart failed,
   // maybe user is editing config file and write some invalid config
@@ -73,13 +77,15 @@ export const restartDevServer = async ({
 const restartBuild = async ({
   filePath,
   clear = true,
+  logger,
 }: {
   filePath?: string;
   clear?: boolean;
-} = {}): Promise<boolean> => {
-  await beforeRestart({ filePath, clear, id: 'build' });
+  logger: Logger;
+}): Promise<boolean> => {
+  await beforeRestart({ filePath, clear, id: 'build', logger });
 
-  const rsbuild = await init({ isRestart: true, isBuildWatch: true });
+  const rsbuild = await init({ isRestart: true, isBuildWatch: true, logger });
 
   // Skip the following logic if restart failed,
   // maybe user is editing config file and write some invalid config
@@ -108,6 +114,8 @@ export async function watchFilesForRestart({
   }
 
   const root = rsbuild.context.rootPath;
+  const logger =
+    rsbuild.getRsbuildConfig('original').customLogger ?? defaultLogger;
   const watcher = await createChokidar(files, root, {
     // do not trigger add for initial files
     ignoreInitial: true,
@@ -125,8 +133,8 @@ export async function watchFilesForRestart({
     restarting = true;
 
     const restarted = isBuildWatch
-      ? await restartBuild({ filePath })
-      : await restartDevServer({ filePath });
+      ? await restartBuild({ filePath, logger })
+      : await restartDevServer({ filePath, logger });
 
     if (restarted) {
       await watcher.close();

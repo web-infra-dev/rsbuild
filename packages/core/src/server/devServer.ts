@@ -247,7 +247,7 @@ export async function createDevServer<
         openPage,
         closeServer,
         printUrls,
-        restartServer: () => restartDevServer({ clear: false }),
+        restartServer: () => restartDevServer({ clear: false, logger }),
         help: shortcutsOptions.help,
         customShortcuts: shortcutsOptions.custom,
         logger,
