@@ -6,7 +6,7 @@ import { hash } from './helpers';
 import { ensureAbsolutePath, getCommonParentPath } from './helpers/path';
 import { initHooks } from './hooks';
 import { getHTMLPathByEntry } from './initPlugins';
-import { logger as defaultLogger, type Logger } from './logger';
+import { defaultLogger, type Logger } from './logger';
 import type {
   EnvironmentContext,
   InternalContext,

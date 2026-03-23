@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { expand } from 'dotenv-expand';
 import { color, getNodeEnv } from './helpers';
 import { isFileSync } from './helpers/fs';
-import { logger } from './logger';
+import { defaultLogger } from './logger';
 
 const DOTENV_LINE =
   /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/gm;
@@ -148,7 +148,7 @@ export function loadEnv({
 
   for (const envPath of filePaths) {
     Object.assign(parsed, parse(fs.readFileSync(envPath)));
-    logger.debug('loaded env file:', envPath);
+    defaultLogger.debug('loaded env file:', envPath);
   }
 
   // dotenv-expand does not override existing env vars by default,
