@@ -510,7 +510,7 @@ importers:
     dependencies:
       '@rspack/core':
         specifier: npm:@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523
-        version: '@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19)'
+        version: '@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.3)(@swc/helpers@0.5.19)'
       '@swc/helpers':
         specifier: ^0.5.19
         version: 0.5.19
@@ -559,7 +559,7 @@ importers:
         version: 2.8.6
       css-loader:
         specifier: 7.1.4
-        version: 7.1.4(patch_hash=b504d70330b6625a20bc0cb1428c9787350fe6413c2947f42bd88ff22123a019)(@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19))(webpack@5.105.4)
+        version: 7.1.4(patch_hash=b504d70330b6625a20bc0cb1428c9787350fe6413c2947f42bd88ff22123a019)(@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.3)(@swc/helpers@0.5.19))(webpack@5.105.4)
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -568,7 +568,7 @@ importers:
         version: 12.0.3
       html-rspack-plugin:
         specifier: 6.1.7
-        version: 6.1.7(@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19))
+        version: 6.1.7(@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.3)(@swc/helpers@0.5.19))
       http-proxy-middleware:
         specifier: ^3.0.5
         version: 3.0.5(supports-color@10.2.2)
@@ -598,7 +598,7 @@ importers:
         version: 6.0.1(jiti@2.6.1)(postcss@8.5.8)(yaml@2.8.2)
       postcss-loader:
         specifier: 8.2.1
-        version: 8.2.1(patch_hash=4829849d58d8366cd82cbdab1947d15f9e6d33e70f1e3d5310daffff152dff14)(@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19))(postcss@8.5.8)(typescript@5.9.3)(webpack@5.105.4)
+        version: 8.2.1(patch_hash=4829849d58d8366cd82cbdab1947d15f9e6d33e70f1e3d5310daffff152dff14)(@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.3)(@swc/helpers@0.5.19))(postcss@8.5.8)(typescript@5.9.3)(webpack@5.105.4)
       prebundle:
         specifier: 1.6.4
         version: 1.6.4(typescript@5.9.3)
@@ -613,10 +613,10 @@ importers:
         version: 2.0.1
       rspack-chain:
         specifier: ^2.0.0-beta.1
-        version: 2.0.0-beta.1(@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19))
+        version: 2.0.0-beta.1(@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.3)(@swc/helpers@0.5.19))
       rspack-manifest-plugin:
         specifier: 5.2.1
-        version: 5.2.1(@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19))
+        version: 5.2.1(@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.3)(@swc/helpers@0.5.19))
       sirv:
         specifier: ^3.0.2
         version: 3.0.2
@@ -7660,11 +7660,11 @@ snapshots:
       '@rspack/binding-win32-ia32-msvc': '@rspack-canary/binding-win32-ia32-msvc@2.0.0-canary-74bd6e57-20260323093523'
       '@rspack/binding-win32-x64-msvc': '@rspack-canary/binding-win32-x64-msvc@2.0.0-canary-74bd6e57-20260323093523'
 
-  '@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19)':
+  '@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.3)(@swc/helpers@0.5.19)':
     dependencies:
       '@rspack/binding': '@rspack-canary/binding@2.0.0-canary-74bd6e57-20260323093523'
     optionalDependencies:
-      '@module-federation/runtime-tools': 2.2.1(node-fetch@2.7.0(encoding@0.1.13))
+      '@module-federation/runtime-tools': 2.2.3(node-fetch@2.7.0(encoding@0.1.13))
       '@swc/helpers': 0.5.19
 
   '@rspack/binding-darwin-arm64@1.7.7':
@@ -9080,7 +9080,7 @@ snapshots:
 
   cspell-ban-words@0.0.4: {}
 
-  css-loader@7.1.4(patch_hash=b504d70330b6625a20bc0cb1428c9787350fe6413c2947f42bd88ff22123a019)(@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19))(webpack@5.105.4):
+  css-loader@7.1.4(patch_hash=b504d70330b6625a20bc0cb1428c9787350fe6413c2947f42bd88ff22123a019)(@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.3)(@swc/helpers@0.5.19))(webpack@5.105.4):
     dependencies:
       icss-utils: 5.1.0(postcss@8.5.8)
       postcss: 8.5.8
@@ -9091,7 +9091,7 @@ snapshots:
       postcss-value-parser: 4.2.0
       semver: 7.7.4
     optionalDependencies:
-      '@rspack/core': '@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19)'
+      '@rspack/core': '@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.3)(@swc/helpers@0.5.19)'
       webpack: 5.105.4
 
   css-select@5.2.2:
@@ -9727,11 +9727,11 @@ snapshots:
       relateurl: 0.2.7
       terser: 5.46.0
 
-  html-rspack-plugin@6.1.7(@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19)):
+  html-rspack-plugin@6.1.7(@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.3)(@swc/helpers@0.5.19)):
     dependencies:
       '@rspack/lite-tapable': 1.1.0
     optionalDependencies:
-      '@rspack/core': '@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19)'
+      '@rspack/core': '@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.3)(@swc/helpers@0.5.19)'
 
   html-void-elements@3.0.0: {}
 
@@ -10787,14 +10787,14 @@ snapshots:
       postcss: 8.5.8
       yaml: 2.8.2
 
-  postcss-loader@8.2.1(patch_hash=4829849d58d8366cd82cbdab1947d15f9e6d33e70f1e3d5310daffff152dff14)(@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19))(postcss@8.5.8)(typescript@5.9.3)(webpack@5.105.4):
+  postcss-loader@8.2.1(patch_hash=4829849d58d8366cd82cbdab1947d15f9e6d33e70f1e3d5310daffff152dff14)(@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.3)(@swc/helpers@0.5.19))(postcss@8.5.8)(typescript@5.9.3)(webpack@5.105.4):
     dependencies:
       cosmiconfig: 9.0.0(typescript@5.9.3)
       jiti: 2.6.1
       postcss: 8.5.8
       semver: 7.7.4
     optionalDependencies:
-      '@rspack/core': '@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19)'
+      '@rspack/core': '@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.3)(@swc/helpers@0.5.19)'
       webpack: 5.105.4
     transitivePeerDependencies:
       - typescript
@@ -11141,15 +11141,15 @@ snapshots:
 
   rslog@2.0.1: {}
 
-  rspack-chain@2.0.0-beta.1(@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19)):
+  rspack-chain@2.0.0-beta.1(@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.3)(@swc/helpers@0.5.19)):
     optionalDependencies:
-      '@rspack/core': '@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19)'
+      '@rspack/core': '@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.3)(@swc/helpers@0.5.19)'
 
-  rspack-manifest-plugin@5.2.1(@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19)):
+  rspack-manifest-plugin@5.2.1(@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.3)(@swc/helpers@0.5.19)):
     dependencies:
       '@rspack/lite-tapable': 1.1.0
     optionalDependencies:
-      '@rspack/core': '@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.1)(@swc/helpers@0.5.19)'
+      '@rspack/core': '@rspack-canary/core@2.0.0-canary-74bd6e57-20260323093523(@module-federation/runtime-tools@2.2.3)(@swc/helpers@0.5.19)'
 
   rspack-vue-loader@17.5.0(@rspack/core@2.0.0-beta.7(@module-federation/runtime-tools@2.2.3)(@swc/helpers@0.5.19))(vue@3.5.30(typescript@5.9.3)):
     dependencies:
