@@ -1,5 +1,11 @@
 import { matchRules } from '@scripts/test-helper';
-import { createRsbuild, type RsbuildPlugin } from '../src';
+import {
+  createLogger,
+  createRsbuild,
+  logger,
+  type Logger,
+  type RsbuildPlugin,
+} from '../src';
 
 afterEach(() => {
   rs.unstubAllEnvs();
@@ -36,6 +42,52 @@ it('should apply default plugins correctly when target is node', async () => {
   const bundlerConfigs = await rsbuild.initConfigs();
 
   expect(bundlerConfigs[0]).toMatchSnapshot();
+});
+
+it('should expose the current instance logger', async () => {
+  let pluginLogger: Logger | undefined;
+
+  const loggerPlugin: RsbuildPlugin = {
+    name: 'logger-plugin',
+    setup(api) {
+      pluginLogger = api.logger;
+    },
+  };
+
+  const rsbuild = await createRsbuild({
+    config: {
+      plugins: [loggerPlugin],
+    },
+  });
+
+  await rsbuild.initConfigs();
+
+  expect(rsbuild.logger).toBe(logger);
+  expect(rsbuild.logger).toBe(pluginLogger);
+});
+
+it('should expose customLogger on the current instance', async () => {
+  let pluginLogger: Logger | undefined;
+  const customLogger = createLogger();
+
+  const loggerPlugin: RsbuildPlugin = {
+    name: 'logger-plugin',
+    setup(api) {
+      pluginLogger = api.logger;
+    },
+  };
+
+  const rsbuild = await createRsbuild({
+    config: {
+      customLogger,
+      plugins: [loggerPlugin],
+    },
+  });
+
+  await rsbuild.initConfigs();
+
+  expect(rsbuild.logger).toBe(customLogger);
+  expect(rsbuild.logger).toBe(pluginLogger);
 });
 
 describe('tools.rspack', () => {
