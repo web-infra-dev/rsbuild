@@ -42,9 +42,3 @@ export default {
 ::: note
 当 [开启调试模式](/guide/debug/debug-mode) 时，始终会输出所有日志。
 :::
-
-## 局限性
-
-目前你无法为每一个 Rsbuild 实例设置内置 logger 的不同日志级别，因为 Rsbuild 内部有一个全局共享的 [logger](/api/javascript-api/core#logger) 实例，所有 Rsbuild 实例都会共享这个 logger 实例。
-
-如果你需要在自定义代码或插件中使用独立的 logger，可以通过 [createLogger](/api/javascript-api/core#createlogger) 创建单独的 logger 实例，而不是直接修改这个共享单例。

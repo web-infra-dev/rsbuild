@@ -42,9 +42,3 @@ export default {
 ::: note
 In [debug mode](/guide/debug/debug-mode), Rsbuild always outputs all logs.
 :::
-
-## Limitations
-
-Rsbuild currently cannot set different log levels for its built-in logger per instance because all instances share a global [logger](/api/javascript-api/core#logger).
-
-If you need an isolated logger in custom code or plugins, use [createLogger](/api/javascript-api/core#createlogger) to create a separate logger instance instead of mutating the shared singleton.
