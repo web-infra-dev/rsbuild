@@ -423,6 +423,8 @@ const mergedConfig = {
 
 基于 [rslog](https://github.com/rstackjs/rslog) 创建一个独立的 logger 实例。当你需要自定义日志级别或覆盖日志方法，同时又不想修改共享的 [logger](#logger) 单例时，可以使用该方法。
 
+创建出的 logger 也可以传给 [customLogger](/config/custom-logger) 配置项使用。
+
 - **示例：**
 
 ```ts

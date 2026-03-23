@@ -423,6 +423,8 @@ In Rsbuild, most options that support function values use this rule, such as `to
 
 Creates an isolated logger instance based on [rslog](https://github.com/rstackjs/rslog). Use this when you need custom log levels or overrides without mutating the shared [logger](#logger) singleton.
 
+The created logger can also be passed to the [customLogger](/config/custom-logger) config option.
+
 - **Example:**
 
 ```ts
