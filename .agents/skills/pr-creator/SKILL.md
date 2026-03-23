@@ -9,7 +9,7 @@ description: Use when asked to create a pull request for this repository. It ens
 
 1. Confirm the current branch with `git branch --show-current`.
    If it is `main`, create and switch to a new branch before doing anything else.
-   Use a descriptive branch name, preferably `feat/<topic>` or `fix/<topic>`.
+   Use a descriptive branch name, preferably `feat-<topic>` or `fix-<topic>`.
 
 2. Review local changes with `git status --short`.
    Do not revert unrelated user changes.
