@@ -22,7 +22,7 @@ import {
   color,
   createLogger as baseCreateLogger,
   type Logger,
-  logger,
+  logger as defaultLogger,
 } from 'rslog';
 
 export const isDebug = (): boolean => {
@@ -39,7 +39,7 @@ export const isVerbose = (targetLogger: Pick<Logger, 'level'>): boolean =>
 
 // setup the logger level
 if (isDebug()) {
-  logger.level = 'verbose';
+  defaultLogger.level = 'verbose';
 }
 
 function getTime() {
@@ -51,9 +51,9 @@ function getTime() {
   return `${hours}:${minutes}:${seconds}`;
 }
 
-logger.override({
+defaultLogger.override({
   debug: (message, ...args) => {
-    if (logger.level !== 'verbose') {
+    if (defaultLogger.level !== 'verbose') {
       return;
     }
     const time = color.gray(getTime());
@@ -73,5 +73,5 @@ export const createLogger = (
   return instance;
 };
 
-export { logger };
+export { defaultLogger };
 export type { Logger };

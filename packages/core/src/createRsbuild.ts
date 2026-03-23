@@ -19,7 +19,7 @@ import {
 import { initPluginAPI } from './initPlugins';
 import { inspectConfig as baseInspectConfig } from './inspectConfig';
 import { type LoadEnvResult, loadEnv } from './loadEnv';
-import { isDebug, logger as defaultLogger } from './logger';
+import { defaultLogger, isDebug } from './logger';
 import { createPluginManager } from './pluginManager';
 import { pluginAppIcon } from './plugins/appIcon';
 import { pluginAsset } from './plugins/asset';

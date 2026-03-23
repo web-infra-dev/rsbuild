@@ -1,4 +1,4 @@
-import { isDebug, logger } from '../logger';
+import { defaultLogger, isDebug } from '../logger';
 import type { LogLevel } from '../types';
 import { setupCommands } from './commands';
 
@@ -23,7 +23,7 @@ function showGreeting() {
   const isBun = npm_execpath?.includes('.bun');
   const isNodeRun = Boolean(NODE_RUN_SCRIPT_NAME);
   const prefix = isNpx || isBun || isNodeRun ? '\n' : '';
-  logger.greet(`${prefix}Rsbuild v${RSBUILD_VERSION}\n`);
+  defaultLogger.greet(`${prefix}Rsbuild v${RSBUILD_VERSION}\n`);
 }
 
 // ensure log level is set before any log is printed
@@ -34,7 +34,7 @@ function setupLogLevel() {
   if (logLevelIndex !== -1) {
     const level = process.argv[logLevelIndex + 1];
     if (level && ['warn', 'error', 'silent'].includes(level) && !isDebug()) {
-      logger.level = level as LogLevel;
+      defaultLogger.level = level as LogLevel;
     }
   }
 }
@@ -50,8 +50,8 @@ export function runCLI(): void {
   try {
     setupCommands();
   } catch (err) {
-    logger.error('Failed to start Rsbuild CLI.');
-    logger.error(err);
+    defaultLogger.error('Failed to start Rsbuild CLI.');
+    defaultLogger.error(err);
     process.exit(1);
   }
 }

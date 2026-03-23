@@ -2,7 +2,7 @@ import path from 'node:path';
 import type { ChokidarOptions } from 'chokidar';
 import { init } from './cli/init';
 import { color, isTTY } from './helpers';
-import { logger as defaultLogger, type Logger } from './logger';
+import { defaultLogger, type Logger } from './logger';
 import { createChokidar } from './server/watchFiles';
 import type { RsbuildInstance } from './types';
 
