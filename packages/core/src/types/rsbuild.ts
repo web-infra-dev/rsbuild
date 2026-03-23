@@ -197,8 +197,8 @@ export type AddPlugins = (
 export type RsbuildInstance = {
   /**
    * The logger associated with the current Rsbuild instance.
-   * It reflects `config.customLogger` when provided, otherwise falls back to
-   * the shared default logger.
+   * It reflects `config.customLogger` when provided, otherwise uses a logger
+   * created specifically for the current Rsbuild instance.
    */
   logger: Logger;
   /**

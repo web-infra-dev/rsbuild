@@ -6,7 +6,7 @@ import { hash } from './helpers';
 import { ensureAbsolutePath, getCommonParentPath } from './helpers/path';
 import { initHooks } from './hooks';
 import { getHTMLPathByEntry } from './initPlugins';
-import { defaultLogger, type Logger } from './logger';
+import type { Logger } from './logger';
 import type {
   EnvironmentContext,
   InternalContext,
@@ -183,6 +183,7 @@ export function createPublicContext(
 export async function createContext(
   options: ResolvedCreateRsbuildOptions,
   userConfig: RsbuildConfig,
+  logger: Logger,
 ): Promise<InternalContext> {
   const { cwd } = options;
   const rootPath = userConfig.root
@@ -201,7 +202,7 @@ export async function createContext(
     rootPath,
     distPath: '',
     cachePath,
-    logger: userConfig.customLogger ?? defaultLogger,
+    logger,
     callerName: options.callerName,
     bundlerType: 'rspack',
     environments: {},

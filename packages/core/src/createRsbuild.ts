@@ -19,7 +19,7 @@ import {
 import { initPluginAPI } from './initPlugins';
 import { inspectConfig as baseInspectConfig } from './inspectConfig';
 import { type LoadEnvResult, loadEnv } from './loadEnv';
-import { defaultLogger, isDebug } from './logger';
+import { createLogger, isDebug } from './logger';
 import { createPluginManager } from './pluginManager';
 import { pluginAppIcon } from './plugins/appIcon';
 import { pluginAsset } from './plugins/asset';
@@ -175,7 +175,7 @@ export async function createRsbuild(
     ? await configOrFactory()
     : configOrFactory || {};
 
-  const logger = config.customLogger ?? defaultLogger;
+  const logger = config.customLogger ?? createLogger();
 
   // Debug mode should always use verbose logs
   if (config.logLevel && !isDebug()) {
@@ -193,7 +193,7 @@ export async function createRsbuild(
 
   const pluginManager = createPluginManager(logger);
 
-  const context = await createContext(resolvedOptions, config);
+  const context = await createContext(resolvedOptions, config, logger);
 
   const getPluginAPI = initPluginAPI({ context, pluginManager });
   context.getPluginAPI = getPluginAPI;
