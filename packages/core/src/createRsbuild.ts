@@ -191,7 +191,7 @@ export async function createRsbuild(
     rsbuildConfig: config,
   };
 
-  const pluginManager = createPluginManager();
+  const pluginManager = createPluginManager(logger);
 
   const context = await createContext(resolvedOptions, config);
 

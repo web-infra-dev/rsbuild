@@ -1,4 +1,9 @@
 /**
+ * The default logger exported from this module is mainly for CLI/bootstrap
+ * scenarios and backwards compatibility. When writing core runtime code,
+ * prefer `context.logger` or `api.logger` so logs stay scoped to the current
+ * Rsbuild instance.
+ *
  * Logging message case convention:
  *
  * Info, ready, success and debug messages:
@@ -29,7 +34,8 @@ export const isDebug = (): boolean => {
   return ['rsbuild', 'builder', '*'].some((key) => values.includes(key));
 };
 
-export const isVerbose = (): boolean => logger.level === 'verbose';
+export const isVerbose = (targetLogger: Pick<Logger, 'level'>): boolean =>
+  targetLogger.level === 'verbose';
 
 // setup the logger level
 if (isDebug()) {

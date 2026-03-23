@@ -7,7 +7,7 @@ import path from 'node:path';
 import zlib from 'node:zlib';
 import { JS_REGEX } from '../constants';
 import { color, hash } from '../helpers';
-import { logger } from '../logger';
+import type { Logger } from '../logger';
 import type {
   InternalContext,
   NormalizedEnvironmentConfig,
@@ -89,6 +89,7 @@ async function loadPrevSnapshots(
 async function saveSnapshots(
   snapshotPath: string,
   snapshots: SizeSnapshots,
+  logger: Logger,
 ): Promise<void> {
   try {
     await fs.promises.mkdir(path.dirname(snapshotPath), { recursive: true });
@@ -572,17 +573,17 @@ export const pluginFileSize = (context: InternalContext): RsbuildPlugin => ({
           return sizeLogs.join('\n');
         }),
       ).catch((err: unknown) => {
-        logger.warn('Failed to print file size.');
-        logger.warn(err);
+        api.logger.warn('Failed to print file size.');
+        api.logger.warn(err);
       });
 
       if (logs) {
-        logger.log(logs.join(''));
+        api.logger.log(logs.join(''));
       }
 
       // Save current sizes for next build comparison (only if diff is enabled)
       if (showDiff) {
-        await saveSnapshots(snapshotPath, nextSnapshots);
+        await saveSnapshots(snapshotPath, nextSnapshots, api.logger);
       }
     });
   },

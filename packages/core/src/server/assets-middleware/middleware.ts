@@ -2,7 +2,6 @@ import type { Stats as FSStats, ReadStream } from 'node:fs';
 import type { ServerResponse } from 'node:http';
 import onFinished from 'on-finished';
 import type { Range, Result as RangeResult, Ranges } from 'range-parser';
-import { logger } from '../../logger';
 import type { InternalContext, RequestHandler, Rspack } from '../../types';
 import { HttpCode } from '../helper';
 import { getFileFromUrl } from './getFileFromUrl';
@@ -146,6 +145,7 @@ export function createMiddleware(
   ready: (callback: () => void) => void,
   outputFileSystem: Rspack.OutputFileSystem,
 ): RequestHandler {
+  const { logger } = context;
   return async function assetsMiddleware(req, res, next) {
     async function goNext() {
       return new Promise<void>((resolve) => {

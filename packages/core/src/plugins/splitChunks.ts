@@ -1,5 +1,4 @@
 import { NODE_MODULES_REGEX } from '../constants';
-import { logger } from '../logger';
 import type {
   ChunkSplit,
   ForceSplitting,
@@ -305,7 +304,7 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
       }
 
       if (chunkSplit) {
-        logger.warn(
+        api.logger.warn(
           '[rsbuild:config] Both `performance.chunkSplit` and `splitChunks` are set. The `performance.chunkSplit` option is deprecated and will not work. Use `splitChunks` instead.',
         );
       }

@@ -1,12 +1,11 @@
 import { castArray, RspackChain } from './helpers';
-import { logger } from './logger';
 import type { InternalContext, ModifyBundlerChainUtils } from './types';
 
 export async function modifyBundlerChain(
   context: InternalContext,
   utils: ModifyBundlerChainUtils,
 ): Promise<RspackChain> {
-  logger.debug('applying modifyBundlerChain hook');
+  context.logger.debug('applying modifyBundlerChain hook');
 
   const rspackChain = new RspackChain();
 
@@ -22,7 +21,7 @@ export async function modifyBundlerChain(
     }
   }
 
-  logger.debug('applied modifyBundlerChain hook');
+  context.logger.debug('applied modifyBundlerChain hook');
 
   return modifiedBundlerChain;
 }

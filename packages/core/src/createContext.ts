@@ -6,7 +6,7 @@ import { hash } from './helpers';
 import { ensureAbsolutePath, getCommonParentPath } from './helpers/path';
 import { initHooks } from './hooks';
 import { getHTMLPathByEntry } from './initPlugins';
-import { logger } from './logger';
+import { logger as defaultLogger, type Logger } from './logger';
 import type {
   EnvironmentContext,
   InternalContext,
@@ -67,6 +67,7 @@ export function getBrowserslistByEnvironment(
 const getEnvironmentHTMLPaths = (
   entry: RsbuildEntry,
   config: NormalizedEnvironmentConfig,
+  logger: Logger,
 ) => {
   if (config.output.target !== 'web' || config.tools.htmlPlugin === false) {
     return {};
@@ -81,7 +82,7 @@ const getEnvironmentHTMLPaths = (
       Array.isArray(entryValue) ||
       entryValue.html !== false
     ) {
-      prev[key] = getHTMLPathByEntry(key, config);
+      prev[key] = getHTMLPathByEntry(key, config, logger);
     }
 
     return prev;
@@ -98,7 +99,7 @@ export async function updateEnvironmentContext(
     const browserslist = getBrowserslistByEnvironment(context.rootPath, config);
 
     const { entry = {}, tsconfigPath } = config.source;
-    const htmlPaths = getEnvironmentHTMLPaths(entry, config);
+    const htmlPaths = getEnvironmentHTMLPaths(entry, config, context.logger);
     const webSocketToken =
       context.action === 'dev' ? await hash(context.rootPath + name) : '';
 
@@ -123,7 +124,7 @@ export async function updateEnvironmentContext(
         if (prop === 'manifest') {
           target[prop] = newValue;
         } else {
-          logger.error(
+          context.logger.error(
             `EnvironmentContext is readonly, you can not assign to the "environment.${prop}" prop.`,
           );
         }
@@ -200,7 +201,7 @@ export async function createContext(
     rootPath,
     distPath: '',
     cachePath,
-    logger: userConfig.customLogger ?? logger,
+    logger: userConfig.customLogger ?? defaultLogger,
     callerName: options.callerName,
     bundlerType: 'rspack',
     environments: {},

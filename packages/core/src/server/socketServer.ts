@@ -6,7 +6,6 @@ import { BROWSER_LOG_PREFIX, DEFAULT_STACK_TRACE } from '../constants.js';
 import { color, isObject } from '../helpers';
 import { formatStatsError } from '../helpers/format';
 import { getStatsErrors, getStatsWarnings } from '../helpers/stats';
-import { logger } from '../logger';
 import type {
   DevConfig,
   InternalContext,
@@ -193,8 +192,7 @@ export class SocketServer {
     });
 
     this.wsServer.on('error', (err: Error) => {
-      // only dev server, use default logger
-      logger.error(err);
+      this.context.logger.error(err);
     });
 
     this.heartbeatTimer = setTimeout(
@@ -229,7 +227,7 @@ export class SocketServer {
   public sendError(errors: Rspack.StatsError[], token: string): void {
     const { rootPath } = this.context;
     const formattedErrors = errors.map((item) =>
-      formatStatsError(item, rootPath),
+      formatStatsError(item, rootPath, 'error', this.context.logger),
     );
     const html = formattedErrors
       .map((error) => renderErrorToHtml(error, rootPath))
@@ -253,7 +251,12 @@ export class SocketServer {
    */
   public sendWarning(warnings: Rspack.StatsError[], token: string): void {
     const formattedWarnings = warnings.map((item) =>
-      formatStatsError(item, this.context.rootPath, 'warning'),
+      formatStatsError(
+        item,
+        this.context.rootPath,
+        'warning',
+        this.context.logger,
+      ),
     );
     this.sockWrite(
       {
@@ -376,7 +379,9 @@ export class SocketServer {
 
           if (!this.reportedBrowserLogs.has(log)) {
             this.reportedBrowserLogs.add(log);
-            logger.error(`${color.cyan(BROWSER_LOG_PREFIX)} ${log}`);
+            this.context.logger.error(
+              `${color.cyan(BROWSER_LOG_PREFIX)} ${log}`,
+            );
           }
 
           // Render runtime errors in overlay

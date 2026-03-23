@@ -1,10 +1,10 @@
 import type { DefinePluginOptions } from '@rspack/core';
 import { color } from '../helpers';
 import { getPublicPathFromChain } from '../helpers/url';
-import { logger } from '../logger';
+import type { Logger } from '../logger';
 import type { RsbuildPlugin } from '../types';
 
-function checkProcessEnvSecurity(define: DefinePluginOptions) {
+function checkProcessEnvSecurity(define: DefinePluginOptions, logger: Logger) {
   const value = define['process.env'];
 
   if (!value) {
@@ -70,7 +70,7 @@ export const pluginDefine = (): RsbuildPlugin => ({
 
       const mergedDefine = { ...builtinVars, ...config.source.define };
 
-      checkProcessEnvSecurity(mergedDefine);
+      checkProcessEnvSecurity(mergedDefine, api.logger);
 
       chain
         .plugin(CHAIN_ID.PLUGIN.DEFINE)

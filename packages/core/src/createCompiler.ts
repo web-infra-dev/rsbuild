@@ -6,7 +6,6 @@ import { formatStats, getRsbuildStats } from './helpers/stats';
 import { isSatisfyRspackVersion, rspackMinVersion } from './helpers/version';
 import { registerDevHook } from './hooks';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
-import { logger } from './logger';
 import type { InternalContext, Rspack } from './types';
 
 // keep the last 3 parts of the path to make logs clean
@@ -52,6 +51,7 @@ function printBuildLog(
   context: InternalContext,
   lazyModules: Set<string>,
 ) {
+  const { logger } = context;
   const { modifiedFiles } = compiler;
   const changedFiles = modifiedFiles?.size
     ? Array.from(modifiedFiles)
@@ -88,10 +88,10 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
   compiler: Rspack.Compiler | Rspack.MultiCompiler;
   rspackConfigs: Rspack.Configuration[];
 }> {
-  logger.debug('creating compiler');
-
   const HOOK_NAME = 'rsbuild:compiler';
   const { context } = options;
+  const { logger } = context;
+  logger.debug('creating compiler');
   const { rspackConfigs } = await initConfigs(options);
 
   await context.hooks.onBeforeCreateCompiler.callBatch({
@@ -224,7 +224,12 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
   compiler.hooks.done.tap(
     HOOK_NAME,
     (statsInstance: Rspack.Stats | Rspack.MultiStats) => {
-      const stats = getRsbuildStats(statsInstance, compiler, context.action);
+      const stats = getRsbuildStats(
+        statsInstance,
+        compiler,
+        logger,
+        context.action,
+      );
       const hasErrors = statsInstance.hasErrors();
 
       context.buildState.stats = stats;
@@ -236,6 +241,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
         stats,
         hasErrors,
         options.context.rootPath,
+        logger,
       );
 
       if (level === 'error') {

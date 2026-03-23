@@ -66,3 +66,23 @@ test('should apply logLevel to customLogger', async () => {
 
   expect(customLogger.level).toBe('error');
 });
+
+test('should use customLogger for build logs', async ({ build }) => {
+  const customLogger = createLogger();
+
+  customLogger.override({
+    ready(message) {
+      console.log(`[CUSTOM_READY] ${message}`);
+    },
+  });
+
+  const rsbuild = await build({
+    config: {
+      customLogger,
+    },
+  });
+
+  expect(
+    rsbuild.logs.find((item) => item.includes('[CUSTOM_READY] built in')),
+  ).toBeTruthy();
+});
