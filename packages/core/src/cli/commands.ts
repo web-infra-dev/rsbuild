@@ -107,7 +107,7 @@ export function setupCommands(): void {
 
   devCommand.action(async (options: DevOptions) => {
     try {
-      const rsbuild = await init({ cliOptions: options });
+      const rsbuild = await init({ cliOptions: options, logger });
       await rsbuild?.startDevServer();
     } catch (err) {
       logger.error('Failed to start dev server.');
@@ -130,6 +130,7 @@ export function setupCommands(): void {
         const rsbuild = await init({
           cliOptions: options,
           isBuildWatch: options.watch,
+          logger,
         });
         const buildInstance = await rsbuild?.build({
           watch: options.watch,
@@ -156,7 +157,7 @@ export function setupCommands(): void {
 
   previewCommand.action(async (options: PreviewOptions) => {
     try {
-      const rsbuild = await init({ cliOptions: options });
+      const rsbuild = await init({ cliOptions: options, logger });
       await rsbuild?.preview();
     } catch (err) {
       logger.error('Failed to start preview server.');
@@ -170,7 +171,7 @@ export function setupCommands(): void {
     .option('--verbose', 'Show complete function definitions in output')
     .action(async (options: InspectOptions) => {
       try {
-        const rsbuild = await init({ cliOptions: options });
+        const rsbuild = await init({ cliOptions: options, logger });
         await rsbuild?.inspectConfig({
           verbose: options.verbose,
           outputPath: options.output,
