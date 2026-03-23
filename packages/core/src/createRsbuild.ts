@@ -355,6 +355,7 @@ export async function createRsbuild(
   };
 
   const rsbuild: RsbuildInstance = {
+    logger: context.logger,
     build,
     preview,
     startDevServer,
