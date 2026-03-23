@@ -2,7 +2,7 @@ import path from 'node:path';
 import type { ChokidarOptions } from 'chokidar';
 import { init } from './cli/init';
 import { color, isTTY } from './helpers';
-import { defaultLogger, type Logger } from './logger';
+import type { Logger } from './logger';
 import { createChokidar } from './server/watchFiles';
 import type { RsbuildInstance } from './types';
 
@@ -62,7 +62,7 @@ export const restartDevServer = async ({
 }): Promise<boolean> => {
   await beforeRestart({ filePath, clear, id: 'server', logger });
 
-  const rsbuild = await init({ isRestart: true, logger });
+  const rsbuild = await init({ isRestart: true });
 
   // Skip the following logic if restart failed,
   // maybe user is editing config file and write some invalid config
@@ -85,7 +85,7 @@ const restartBuild = async ({
 }): Promise<boolean> => {
   await beforeRestart({ filePath, clear, id: 'build', logger });
 
-  const rsbuild = await init({ isRestart: true, isBuildWatch: true, logger });
+  const rsbuild = await init({ isRestart: true, isBuildWatch: true });
 
   // Skip the following logic if restart failed,
   // maybe user is editing config file and write some invalid config
@@ -114,8 +114,6 @@ export async function watchFilesForRestart({
   }
 
   const root = rsbuild.context.rootPath;
-  const logger =
-    rsbuild.getRsbuildConfig('original').customLogger ?? defaultLogger;
   const watcher = await createChokidar(files, root, {
     // do not trigger add for initial files
     ignoreInitial: true,
@@ -133,13 +131,13 @@ export async function watchFilesForRestart({
     restarting = true;
 
     const restarted = isBuildWatch
-      ? await restartBuild({ filePath, logger })
-      : await restartDevServer({ filePath, logger });
+      ? await restartBuild({ filePath, logger: rsbuild.logger })
+      : await restartDevServer({ filePath, logger: rsbuild.logger });
 
     if (restarted) {
       await watcher.close();
     } else {
-      logger.error(
+      rsbuild.logger.error(
         isBuildWatch ? 'Restart build failed.' : 'Restart server failed.',
       );
     }

@@ -177,7 +177,7 @@ export async function createRsbuild(
 
   const logger = config.customLogger ?? defaultLogger;
 
-  // debug mode should always verbose logs
+  // Debug mode should always use verbose logs
   if (config.logLevel && !isDebug()) {
     logger.level = config.logLevel;
   }

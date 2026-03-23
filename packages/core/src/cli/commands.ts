@@ -105,16 +105,22 @@ export function setupCommands(): void {
   applyServerOptions(devCommand);
   applyServerOptions(previewCommand);
 
+  let logger = defaultLogger;
+
   devCommand.action(async (options: DevOptions) => {
     try {
       const rsbuild = await init({
         cliOptions: options,
-        logger: defaultLogger,
       });
-      await rsbuild?.startDevServer();
+      if (!rsbuild) {
+        return;
+      }
+
+      logger = rsbuild.logger;
+      await rsbuild.startDevServer();
     } catch (err) {
-      defaultLogger.error('Failed to start dev server.');
-      defaultLogger.error(err);
+      logger.error('Failed to start dev server.');
+      logger.error(err);
       process.exit(1);
     }
   });
@@ -133,27 +139,32 @@ export function setupCommands(): void {
         const rsbuild = await init({
           cliOptions: options,
           isBuildWatch: options.watch,
-          logger: defaultLogger,
         });
-        const buildInstance = await rsbuild?.build({
+        if (!rsbuild) {
+          return;
+        }
+
+        logger = rsbuild.logger;
+
+        const buildResult = await rsbuild.build({
           watch: options.watch,
         });
 
-        if (buildInstance) {
+        if (buildResult) {
           if (options.watch) {
-            onBeforeRestartServer(buildInstance.close);
+            onBeforeRestartServer(buildResult.close);
           } else {
-            await buildInstance.close();
+            await buildResult.close();
           }
         }
       } catch (err) {
         const isRspackError =
           err instanceof Error && err.message === RSPACK_BUILD_ERROR;
         if (!isRspackError) {
-          defaultLogger.error('Failed to build.');
+          logger.error('Failed to build.');
         }
 
-        defaultLogger.error(err);
+        logger.error(err);
         process.exit(1);
       }
     });
@@ -162,12 +173,17 @@ export function setupCommands(): void {
     try {
       const rsbuild = await init({
         cliOptions: options,
-        logger: defaultLogger,
       });
-      await rsbuild?.preview();
+
+      if (!rsbuild) {
+        return;
+      }
+
+      logger = rsbuild.logger;
+      await rsbuild.preview();
     } catch (err) {
-      defaultLogger.error('Failed to start preview server.');
-      defaultLogger.error(err);
+      logger.error('Failed to start preview server.');
+      logger.error(err);
       process.exit(1);
     }
   });
@@ -179,16 +195,21 @@ export function setupCommands(): void {
       try {
         const rsbuild = await init({
           cliOptions: options,
-          logger: defaultLogger,
         });
-        await rsbuild?.inspectConfig({
+
+        if (!rsbuild) {
+          return;
+        }
+
+        logger = rsbuild.logger;
+        await rsbuild.inspectConfig({
           verbose: options.verbose,
           outputPath: options.output,
           writeToDisk: true,
         });
       } catch (err) {
-        defaultLogger.error('Failed to inspect config.');
-        defaultLogger.error(err);
+        logger.error('Failed to inspect config.');
+        logger.error(err);
         process.exit(1);
       }
     });
