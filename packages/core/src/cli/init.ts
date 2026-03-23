@@ -3,7 +3,7 @@ import { createRsbuild } from '../createRsbuild';
 import { castArray } from '../helpers';
 import { ensureAbsolutePath } from '../helpers/path';
 import { loadConfig as baseLoadConfig } from '../loadConfig';
-import type { Logger } from '../logger';
+import { defaultLogger } from '../logger';
 import { watchFilesForRestart } from '../restart';
 import type { RsbuildInstance } from '../types';
 import type { CommonOptions } from './commands';
@@ -80,12 +80,10 @@ export async function init({
   cliOptions,
   isRestart,
   isBuildWatch = false,
-  logger,
 }: {
   cliOptions?: CommonOptions;
   isRestart?: boolean;
   isBuildWatch?: boolean;
-  logger: Logger;
 }): Promise<RsbuildInstance | undefined> {
   if (cliOptions) {
     commonOpts = cliOptions;
@@ -95,6 +93,9 @@ export async function init({
   commonOpts.environment = commonOpts.environment?.flatMap((env) =>
     env.split(','),
   );
+
+  let logError: typeof defaultLogger.error =
+    defaultLogger.error.bind(defaultLogger);
 
   try {
     const cwd = process.cwd();
@@ -114,6 +115,7 @@ export async function init({
               mode: commonOpts.envMode,
             },
     });
+    logError = rsbuild.logger.error.bind(rsbuild.logger);
 
     rsbuild.onBeforeCreateCompiler(() => {
       // Skip watching files when not in dev mode or not in build watch mode
@@ -154,7 +156,7 @@ export async function init({
     return rsbuild;
   } catch (err) {
     if (isRestart) {
-      logger.error(err);
+      logError(err);
     } else {
       throw err;
     }

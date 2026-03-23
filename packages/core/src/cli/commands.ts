@@ -109,7 +109,6 @@ export function setupCommands(): void {
     try {
       const rsbuild = await init({
         cliOptions: options,
-        logger: defaultLogger,
       });
       await rsbuild?.startDevServer();
     } catch (err) {
@@ -133,7 +132,6 @@ export function setupCommands(): void {
         const rsbuild = await init({
           cliOptions: options,
           isBuildWatch: options.watch,
-          logger: defaultLogger,
         });
         const buildInstance = await rsbuild?.build({
           watch: options.watch,
@@ -162,7 +160,6 @@ export function setupCommands(): void {
     try {
       const rsbuild = await init({
         cliOptions: options,
-        logger: defaultLogger,
       });
       await rsbuild?.preview();
     } catch (err) {
@@ -179,7 +176,6 @@ export function setupCommands(): void {
       try {
         const rsbuild = await init({
           cliOptions: options,
-          logger: defaultLogger,
         });
         await rsbuild?.inspectConfig({
           verbose: options.verbose,
