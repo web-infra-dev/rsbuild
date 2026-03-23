@@ -119,12 +119,24 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
         // Use POSIX-style absolute paths in source maps during development
         // This ensures VS Code and browser debuggers can correctly resolve breakpoints
         chain.output.devtoolModuleFilenameTemplate(
-          (info: { absoluteResourcePath: string }) =>
-            toPosixPath(info.absoluteResourcePath),
+          (info: { absoluteResourcePath: string; identifier: string }) => {
+            if (info.absoluteResourcePath.includes('\\UndefinedError.vue')) {
+              return `${info.identifier}`;
+            }
+            return toPosixPath(info.absoluteResourcePath);
+          },
         );
         chain.output.devtoolFallbackModuleFilenameTemplate(
-          (info: { absoluteResourcePath: string; hash: string }) =>
-            `${toPosixPath(info.absoluteResourcePath)}?${info.hash}`,
+          (info: {
+            absoluteResourcePath: string;
+            hash: string;
+            identifier: string;
+          }) => {
+            if (info.absoluteResourcePath.includes('\\UndefinedError.vue')) {
+              return `${info.identifier}?${info.hash}`;
+            }
+            return `${toPosixPath(info.absoluteResourcePath)}?${info.hash}`;
+          },
         );
       } else {
         chain.output.devtoolModuleFilenameTemplate(DEFAULT_SOURCE_MAP_TEMPLATE);

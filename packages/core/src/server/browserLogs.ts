@@ -71,6 +71,15 @@ const parseFrame = async (
 
     if (!tracer) {
       const sourceMap = await readFileAsync(fs, sourceMapPath);
+
+      process.stderr.write(
+        JSON.stringify(JSON.parse(sourceMap as string).sources, null, 2),
+      );
+      process.stderr.write(
+        `--------- source map for ${sourceMapPath} ----------\n`,
+      );
+      process.stderr.write(sourceMap);
+
       tracer = new TraceMap(sourceMap.toString());
       cachedTraceMap.set(sourceMapPath, tracer);
     }
