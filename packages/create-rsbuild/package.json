@@ -40,7 +40,7 @@
     "@rsbuild/plugin-vue": "workspace:*",
     "@rslib/core": "0.20.0",
     "@types/node": "^24.12.0",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.2"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"

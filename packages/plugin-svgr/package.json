@@ -44,7 +44,7 @@
     "file-loader": "6.2.0",
     "prebundle": "1.6.4",
     "svgo": "^3.3.3",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.2",
     "url-loader": "4.1.1"
   },
   "peerDependencies": {

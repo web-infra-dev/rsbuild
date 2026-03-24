@@ -92,7 +92,7 @@
     "style-loader": "^4.0.0",
     "supports-color": "^10.2.2",
     "tinyglobby": "^0.2.15",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.2",
     "webpack-merge": "6.0.1",
     "ws": "^8.20.0"
   },

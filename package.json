@@ -44,7 +44,7 @@
     "nano-staged": "^0.9.0",
     "prettier": "^3.8.1",
     "simple-git-hooks": "^2.13.1",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.2"
   },
   "packageManager": "pnpm@10.32.1",
   "engines": {
