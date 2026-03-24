@@ -168,13 +168,9 @@ if (rsbuild.context.action === 'dev') {
 
 ## rsbuild.logger
 
-`rsbuild.logger` 表示当前 Rsbuild 实例所关联的 logger。
+`rsbuild.logger` 表示当前 Rsbuild 实例所关联的 logger，详见 [日志](/guide/advanced/logging)。
 
 - **类型：** [Logger](/api/javascript-api/core#logger)
-
-当配置了 `config.customLogger` 时，`rsbuild.logger` 会引用该 logger 实例；否则 Rsbuild 会为当前实例创建一个专属 logger。
-
-该属性与 Rsbuild 插件中的 [api.logger](/plugins/dev/core#apilogger) 指向同一个 logger。
 
 - **示例：**
 

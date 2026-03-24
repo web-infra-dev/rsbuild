@@ -168,13 +168,9 @@ if (rsbuild.context.action === 'dev') {
 
 ## rsbuild.logger
 
-`rsbuild.logger` is the logger associated with the current Rsbuild instance.
+`rsbuild.logger` is the logger associated with the current Rsbuild instance. See [Logging](/guide/advanced/logging) for more details.
 
 - **Type:** [Logger](/api/javascript-api/core#logger)
-
-When `config.customLogger` is provided, `rsbuild.logger` references that logger instance. Otherwise, Rsbuild creates a dedicated logger for the current instance.
-
-This property provides the same logger as [api.logger](/plugins/dev/core#apilogger) in Rsbuild plugins.
 
 - **Example:**
 

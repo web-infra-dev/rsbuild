@@ -421,9 +421,9 @@ In Rsbuild, most options that support function values use this rule, such as `to
 
 ## createLogger
 
-Creates an isolated logger instance based on [rslog](https://github.com/rstackjs/rslog). Use this when you need custom log levels or overrides without mutating the shared [logger](#logger) singleton.
+Creates an isolated logger instance. The created logger can also be passed to the [customLogger](/config/custom-logger) config option.
 
-The created logger can also be passed to the [customLogger](/config/custom-logger) config option.
+> See [Logging](/guide/advanced/logging) for more details.
 
 - **Example:**
 
@@ -441,81 +441,16 @@ logger.info('This is an info message');
 
 ## logger
 
-A shared logger instance based on [rslog](https://github.com/rstackjs/rslog), used to output log information in a unified format. Use this instead of `console.log` to maintain consistent logging with Rsbuild.
+A global logger instance that can be used to output logs in a format consistent with Rsbuild.
 
-If you need isolated logger state for different Rsbuild instances or plugins, use [createLogger](#createlogger) instead of mutating this singleton instance.
+> See [Logging](/guide/advanced/logging) for more details.
 
 - **Example:**
 
 ```ts
 import { logger } from '@rsbuild/core';
 
-// A gradient welcome log
-logger.greet(`\n➜ Rsbuild v1.0.0\n`);
-
-// Info
 logger.info('This is an info message');
-
-// Start
-logger.start('This is a start message');
-
-// Warn
-logger.warn('This is a warning message');
-
-// Ready
-logger.ready('This is a ready message');
-
-// Success
-logger.success('This is a success message');
-
-// Error
-logger.error('This is an error message');
-logger.error(new Error('This is an error message with stack'));
-
-// Debug
-logger.debug('This is a debug message');
-
-// Same as console.log
-logger.log('This is a log message');
-```
-
-### Custom logger
-
-You can use the `logger.override` method to override partial or all methods of the default logger:
-
-```ts
-import { logger } from '@rsbuild/core';
-
-logger.override({
-  log: (message) => {
-    console.log(`[log] ${message}`);
-  },
-  info: (message) => {
-    console.log(`[info] ${message}`);
-  },
-  warn: (message) => {
-    console.warn(`[warn] ${message}`);
-  },
-  start: (message) => {
-    console.log(`[start] ${message}`);
-  },
-  ready: (message) => {
-    console.log(`[ready] ${message}`);
-  },
-  error: (message) => {
-    console.error(`[error] ${message}`);
-  },
-  success: (message) => {
-    console.error(`[success] ${message}`);
-  },
-  debug: (message) => {
-    if (process.env.DEBUG) {
-      console.log(`[debug] ${message}`);
-    }
-  },
-});
-
-logger.info('hello'); // [info] hello
 ```
 
 ## rspack

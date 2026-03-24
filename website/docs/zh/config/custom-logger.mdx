@@ -9,6 +9,8 @@ description: '为当前 Rsbuild 实例指定独立的 logger。推荐配合 crea
 
 为当前 Rsbuild 实例指定一个自定义 logger。
 
+> 查看 [日志](/guide/advanced/logging) 了解更多。
+
 ## 示例
 
 使用 [createLogger](/api/javascript-api/core#createlogger) 来创建一个新的 logger 实例。
@@ -24,15 +26,6 @@ export default defineConfig({
   customLogger: logger,
 });
 ```
-
-## 全局 logger 与实例 logger
-
-Rsbuild 提供了两种获取 logger 的方式：
-
-- 全局 logger 是从 `@rsbuild/core` 导出的共享 [logger](/api/javascript-api/core#logger) 单例。
-- 实例 logger 是当前 Rsbuild 实例关联的 logger，可以通过 [rsbuild.logger](/api/javascript-api/instance#rsbuildlogger) 获取，在插件中也可以通过 [api.logger](/plugins/dev/core#apilogger) 获取。
-
-当未配置 `customLogger` 时，Rsbuild 会为当前实例创建一个专属 logger；当配置了 `customLogger` 时，实例 logger 则会引用该自定义 logger。
 
 ## 版本历史
 

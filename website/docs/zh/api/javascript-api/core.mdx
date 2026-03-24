@@ -421,9 +421,9 @@ const mergedConfig = {
 
 ## createLogger
 
-基于 [rslog](https://github.com/rstackjs/rslog) 创建一个独立的 logger 实例。当你需要自定义日志级别或覆盖日志方法，同时又不想修改共享的 [logger](#logger) 单例时，可以使用该方法。
+创建一个独立的 logger 实例，创建出的 logger 也可以传给 [customLogger](/config/custom-logger) 配置项使用。
 
-创建出的 logger 也可以传给 [customLogger](/config/custom-logger) 配置项使用。
+> 详见 [日志](/guide/advanced/logging)。
 
 - **示例：**
 
@@ -441,81 +441,17 @@ logger.info('This is an info message');
 
 ## logger
 
-一个基于 [rslog](https://github.com/rstackjs/rslog) 的共享 logger 实例，可以用于代替 `console.log`，保持与 Rsbuild 一致的日志输出格式。
+全局 logger 实例，可以用于输出与 Rsbuild 一致的日志格式。
 
-如果你希望为不同的 Rsbuild 实例或插件维护独立的 logger 状态，请使用 [createLogger](#createlogger)，而不是直接修改这个单例实例。
+> 详见 [日志](/guide/advanced/logging)。
 
 - **示例：**
 
 ```ts
 import { logger } from '@rsbuild/core';
 
-// A gradient welcome log
-logger.greet(`\n➜ Rsbuild v1.0.0\n`);
-
 // Info
 logger.info('This is an info message');
-
-// Start
-logger.start('This is a start message');
-
-// Warn
-logger.warn('This is a warning message');
-
-// Ready
-logger.ready('This is a ready message');
-
-// Success
-logger.success('This is a success message');
-
-// Error
-logger.error('This is an error message');
-logger.error(new Error('This is an error message with stack'));
-
-// Debug
-logger.debug('This is a debug message');
-
-// Same as console.log
-logger.log('This is a log message');
-```
-
-### 自定义 Logger
-
-你可以使用 `logger.override` 方法来覆盖默认 logger 的部分或全部方法：
-
-```ts
-import { logger } from '@rsbuild/core';
-
-logger.override({
-  log: (message) => {
-    console.log(`[log] ${message}`);
-  },
-  info: (message) => {
-    console.log(`[info] ${message}`);
-  },
-  warn: (message) => {
-    console.warn(`[warn] ${message}`);
-  },
-  start: (message) => {
-    console.log(`[start] ${message}`);
-  },
-  ready: (message) => {
-    console.log(`[ready] ${message}`);
-  },
-  error: (message) => {
-    console.error(`[error] ${message}`);
-  },
-  success: (message) => {
-    console.error(`[success] ${message}`);
-  },
-  debug: (message) => {
-    if (process.env.DEBUG) {
-      console.log(`[debug] ${message}`);
-    }
-  },
-});
-
-logger.info('hello'); // [info] hello
 ```
 
 ## rspack

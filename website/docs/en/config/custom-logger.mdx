@@ -9,6 +9,8 @@ description: 'Use customLogger to attach a logger instance to the current Rsbuil
 
 Uses a custom logger instance for the current Rsbuild instance.
 
+> See [Logging](/guide/advanced/logging) for more details.
+
 ## Example
 
 Use [createLogger](/api/javascript-api/core#createlogger) to create a new logger instance.
@@ -24,15 +26,6 @@ export default defineConfig({
   customLogger: logger,
 });
 ```
-
-## Global logger vs instance logger
-
-Rsbuild provides two ways to access a logger:
-
-- The global logger is the shared [logger](/api/javascript-api/core#logger) singleton exported from `@rsbuild/core`.
-- The instance logger is the logger associated with the current Rsbuild instance, exposed as [rsbuild.logger](/api/javascript-api/instance#rsbuildlogger) or [api.logger](/plugins/dev/core#apilogger) in plugins.
-
-When `customLogger` is not set, Rsbuild creates a dedicated logger for the current instance. When `customLogger` is set, the instance logger references that custom logger instead.
 
 ## Version history
 
