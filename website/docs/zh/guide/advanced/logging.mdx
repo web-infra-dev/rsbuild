@@ -65,7 +65,7 @@ export default defineConfig({
 可以通过 `prefix` 为每条日志附加固定前缀：
 
 ```ts title="rsbuild.config.ts"
-import { createLogger, defineConfig } from '@rsbuild/core';
+import { createLogger } from '@rsbuild/core';
 
 const logger = createLogger({
   prefix: '[web]',
@@ -79,7 +79,7 @@ logger.info('hello'); // info    [web] hello
 可以通过 `override()` 覆盖 logger 的部分方法，以使用自定义的输出格式：
 
 ```ts title="rsbuild.config.ts"
-import { createLogger, defineConfig } from '@rsbuild/core';
+import { createLogger } from '@rsbuild/core';
 
 const logger = createLogger();
 
@@ -105,7 +105,7 @@ logger.warn('world'); // [warn] world
 ```ts
 import { createRsbuild } from '@rsbuild/core';
 
-const rsbuild = createRsbuild();
+const rsbuild = await createRsbuild();
 
 rsbuild.logger.info('Hello from rsbuild.logger');
 ```
