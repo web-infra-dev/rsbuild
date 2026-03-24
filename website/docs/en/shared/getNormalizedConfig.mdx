@@ -7,11 +7,10 @@ We recommend using this method to get the Rsbuild config.
 - **Type:**
 
 ```ts
-/** Get the Rsbuild configuration of the specified environment */
-function GetNormalizedConfig(options: {
-  environment: string;
-}): Readonly<NormalizedEnvironmentConfig>;
-
-/** Get all Rsbuild configurations */
-function GetNormalizedConfig(): Readonly<NormalizedConfig>;
+type GetNormalizedConfig = {
+  /** Get all normalized Rsbuild configurations */
+  (): NormalizedConfig;
+  /** Get the normalized Rsbuild configuration of the specified environment */
+  (options: { environment: string }): NormalizedEnvironmentConfig;
+};
 ```
