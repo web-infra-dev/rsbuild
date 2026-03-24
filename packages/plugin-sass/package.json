@@ -25,8 +25,7 @@
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build -w",
-    "prebundle": "prebundle",
-    "bump": "pnpx bumpp --no-tag"
+    "prebundle": "prebundle"
   },
   "dependencies": {
     "deepmerge": "^4.3.1",

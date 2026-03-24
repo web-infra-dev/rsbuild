@@ -22,8 +22,7 @@
   ],
   "scripts": {
     "build": "rslib build",
-    "dev": "rslib build -w",
-    "bump": "pnpx bumpp --no-tag"
+    "dev": "rslib build -w"
   },
   "dependencies": {
     "@prefresh/core": "^1.5.9",

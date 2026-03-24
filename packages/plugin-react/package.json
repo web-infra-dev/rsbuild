@@ -22,8 +22,7 @@
   ],
   "scripts": {
     "build": "rslib build",
-    "dev": "rslib build -w",
-    "bump": "pnpx bumpp --no-tag"
+    "dev": "rslib build -w"
   },
   "dependencies": {
     "@rspack/plugin-react-refresh": "^1.6.1",

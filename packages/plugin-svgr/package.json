@@ -24,8 +24,7 @@
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build -w",
-    "prebundle": "prebundle",
-    "bump": "pnpx bumpp --no-tag"
+    "prebundle": "prebundle"
   },
   "dependencies": {
     "@rsbuild/plugin-react": "workspace:^1.1.0",

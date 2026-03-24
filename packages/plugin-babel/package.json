@@ -24,8 +24,7 @@
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build -w",
-    "prebundle": "prebundle",
-    "bump": "pnpx bumpp --no-tag"
+    "prebundle": "prebundle"
   },
   "dependencies": {
     "@babel/core": "^7.29.0",

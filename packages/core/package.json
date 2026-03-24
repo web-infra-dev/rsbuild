@@ -38,8 +38,7 @@
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build -w",
-    "prebundle": "prebundle",
-    "bump": "pnpx bumpp --no-tag"
+    "prebundle": "prebundle"
   },
   "dependencies": {
     "@rspack/core": "2.0.0-beta.8",
