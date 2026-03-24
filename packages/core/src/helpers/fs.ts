@@ -7,7 +7,7 @@ import { toPosixPath } from './path';
 export const isFileSync = (filePath: string): boolean | undefined => {
   try {
     return fs.statSync(filePath, { throwIfNoEntry: false })?.isFile();
-  } catch (_) {
+  } catch {
     return false;
   }
 };

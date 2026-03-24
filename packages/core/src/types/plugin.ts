@@ -489,10 +489,10 @@ export type ProcessAssetsHook = (
   handler: ProcessAssetsHandler,
 ) => void;
 
-declare function getNormalizedConfig(): NormalizedConfig;
-declare function getNormalizedConfig(options: {
-  environment: string;
-}): NormalizedEnvironmentConfig;
+export type GetNormalizedConfig = {
+  (): NormalizedConfig;
+  (options: { environment: string }): NormalizedEnvironmentConfig;
+};
 
 /**
  * The API interface provided to Rsbuild plugins through the `setup` function.
@@ -519,7 +519,7 @@ export type RsbuildPluginAPI = Readonly<{
    * environment, this method must be called after the
    * `modifyRsbuildConfig` hook is executed.
    */
-  getNormalizedConfig: typeof getNormalizedConfig;
+  getNormalizedConfig: GetNormalizedConfig;
   /**
    * A logger instance used to output log information in a unified format.
    * Use this instead of `console.log` to maintain consistent logging with Rsbuild.

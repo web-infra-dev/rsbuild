@@ -87,3 +87,46 @@ test('should use customLogger for build logs', async ({ build }) => {
     rsbuild.logs.find((item) => item.includes('[CUSTOM_READY] built in')),
   ).toBeTruthy();
 });
+
+test('should use customLogger for dev server logs', async ({ devOnly }) => {
+  const customLogger = createLogger();
+
+  customLogger.override({
+    log(message) {
+      console.log(`[CUSTOM_LOG] ${message}`);
+    },
+  });
+
+  const rsbuild = await devOnly({
+    config: {
+      customLogger,
+    },
+  });
+
+  await rsbuild.expectLog(
+    (log) => log.includes('[CUSTOM_LOG]') && log.includes('Local:'),
+  );
+});
+
+test('should use customLogger for preview server logs', async ({ build }) => {
+  const customLogger = createLogger();
+
+  customLogger.override({
+    log(message) {
+      console.log(`[CUSTOM_LOG] ${message}`);
+    },
+  });
+
+  const rsbuild = await build({
+    runServer: true,
+    config: {
+      customLogger,
+    },
+  });
+
+  expect(
+    rsbuild.logs.find(
+      (item) => item.includes('[CUSTOM_LOG]') && item.includes('Local:'),
+    ),
+  ).toBeTruthy();
+});
