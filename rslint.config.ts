@@ -1,10 +1,7 @@
 import { defineConfig, ts } from '@rslint/core';
 
 export default defineConfig([
-  {
-    // Global ignores — entry with only `ignores` excludes matching files from all rules
-    ignores: ['**/dist/**', '**/dist-types/**', '**/compiled/**'],
-  },
+  { ignores: ['**/dist/**', '**/dist-types/**', '**/compiled/**'] },
   ts.configs.recommended,
   {
     languageOptions: {
@@ -15,7 +12,6 @@ export default defineConfig([
     rules: {
       '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
-      'no-constant-binary-expression': 'off',
     },
   },
 ]);
