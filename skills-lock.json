@@ -1,6 +1,11 @@
 {
   "version": 1,
   "skills": {
+    "pr-creator": {
+      "source": "rstackjs/agent-skills",
+      "sourceType": "github",
+      "computedHash": "0818eb81ec601e1d410d26c54b44a34231061db173cad0c40ce3b91bfb16f38e"
+    },
     "rspress-description-generator": {
       "source": "rstackjs/agent-skills",
       "sourceType": "github",
