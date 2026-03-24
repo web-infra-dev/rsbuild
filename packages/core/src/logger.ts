@@ -58,7 +58,11 @@ function applyDebugOverride(targetLogger: Logger) {
         return;
       }
       const time = color.gray(getTime());
-      console.log(`  ${color.magenta('rsbuild')} ${time} ${message}`, ...args);
+      const loggerConsole = targetLogger.options.console ?? console;
+      loggerConsole.log(
+        `  ${color.magenta('rsbuild')} ${time} ${message}`,
+        ...args,
+      );
     },
   });
 }

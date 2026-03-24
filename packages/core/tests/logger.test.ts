@@ -73,3 +73,23 @@ it('should expose customLogger on the current instance', async () => {
   expect(rsbuild.logger).toBe(customLogger);
   expect(rsbuild.logger).toBe(pluginLogger);
 });
+
+it('should use the custom console for debug override', () => {
+  const customConsole = {
+    log: rstest.fn(),
+    warn: rstest.fn(),
+    error: rstest.fn(),
+  };
+
+  const customLogger = createLogger({
+    console: customConsole,
+    level: 'verbose',
+  });
+
+  customLogger.debug('hello');
+
+  expect(customConsole.log).toHaveBeenCalledTimes(1);
+  expect(customConsole.log).toHaveBeenCalledWith(
+    expect.stringContaining('hello'),
+  );
+});
