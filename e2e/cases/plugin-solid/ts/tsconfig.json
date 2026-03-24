@@ -1,7 +1,6 @@
 {
   "extends": "@rsbuild/config/tsconfig",
   "compilerOptions": {
-    "module": "ESNext",
     "jsx": "preserve",
     "jsxImportSource": "solid-js"
   },

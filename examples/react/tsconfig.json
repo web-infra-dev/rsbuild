@@ -2,9 +2,7 @@
   "compilerOptions": {
     "target": "ES2022",
     "lib": ["DOM", "ES2022"],
-    "module": "ESNext",
     "jsx": "react-jsx",
-    "strict": true,
     "skipLibCheck": true,
     "verbatimModuleSyntax": true,
     "resolveJsonModule": true,

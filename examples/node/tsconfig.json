@@ -2,8 +2,7 @@
   "compilerOptions": {
     "target": "ES2022",
     "lib": ["ES2022"],
-    "module": "ESNext",
-    "strict": true,
+    "types": ["node"],
     "skipLibCheck": true,
     "verbatimModuleSyntax": true,
     "resolveJsonModule": true,
