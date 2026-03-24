@@ -35,6 +35,8 @@ description: Use when asked to create a pull request for this repository. It ens
      - `This PR updates the English docs to clarify how the extraction option works and when to enable it.`
 
 6. Fill `Related Links` with issue links, design docs, related PRs, or discussion pages.
+   If the PR upgrades an npm dependency, add a link to the upgraded version's release notes or tag page when available.
+   Example: `https://github.com/web-infra-dev/rspack/releases/tag/v1.0.0`
    If there is no relevant link, leave a short note such as `None`.
 
 7. Push the branch only after re-checking the branch name. Never push `main`.
