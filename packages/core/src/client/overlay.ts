@@ -205,7 +205,7 @@ function createOverlay(title: string, content: string) {
     const overlay = document.createElement(overlayId) as ErrorOverlay;
     overlay.init(getOverlayHtml(title, content));
     document.body.appendChild(overlay);
-  } catch (_err) {
+  } catch {
     warn();
   }
 }
