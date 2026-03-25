@@ -8,13 +8,6 @@ test('should create react project as expected', async () => {
   expect(pkgJson.devDependencies['@rsbuild/plugin-react']).toBeTruthy();
 });
 
-test('should create react18 project as expected', async () => {
-  const { pkgJson } = await createAndValidate(import.meta.dirname, 'react18');
-  expect(pkgJson.dependencies.react.startsWith('^18')).toBeTruthy();
-  expect(pkgJson.dependencies['react-dom'].startsWith('^18')).toBeTruthy();
-  expect(pkgJson.devDependencies['@rsbuild/plugin-react']).toBeTruthy();
-});
-
 test('should create preact project as expected', async () => {
   const { pkgJson } = await createAndValidate(import.meta.dirname, 'preact');
   expect(pkgJson.dependencies.preact).toBeTruthy();
