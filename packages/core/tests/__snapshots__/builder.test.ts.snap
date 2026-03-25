@@ -376,6 +376,7 @@ exports[`default bundler > should use Rspack by default 1`] = `
       "force": false,
     },
     "chunkFilename": "static/js/async/[name].js",
+    "devtoolFallbackModuleFilenameTemplate": [Function],
     "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
     "path": "<ROOT>/dist",

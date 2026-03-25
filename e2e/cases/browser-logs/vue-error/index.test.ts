@@ -16,12 +16,12 @@ test('should forward Vue runtime error logs to terminal', async ({
 
   await gotoPage(page, rsbuild, '/undefinedError');
   await rsbuild.expectLog(
-    /error {3}\[browser] Uncaught TypeError: Cannot read properties of undefined \(reading 'name'\) at Proxy\.render \(src\/UndefinedError\.vue(\?[a-f0-9]+)?:2:0\)/,
+    /error {3}\[browser\] Uncaught TypeError: Cannot read properties of undefined \(reading 'name'\) at Proxy\.render \(src[\\/]UndefinedError\.vue(\?[a-f0-9]+)?:2:0\)/,
   );
 
   await gotoPage(page, rsbuild, '/eventError');
   await page.click('button');
   await rsbuild.expectLog(
-    /error {3}\[browser] Uncaught TypeError: Cannot read properties of null \(reading 'someMethod'\) at handleClick \(src\/EventError\.vue(\?[a-f0-9]+)?:8:0\)/,
+    /error {3}\[browser\] Uncaught TypeError: Cannot read properties of null \(reading 'someMethod'\) at handleClick \(src[\\/]EventError\.vue(\?[a-f0-9]+)?:8:0\)/,
   );
 });

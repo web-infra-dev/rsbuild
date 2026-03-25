@@ -372,6 +372,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
         "force": false,
       },
       "chunkFilename": "static/js/async/[name].js",
+      "devtoolFallbackModuleFilenameTemplate": [Function],
       "devtoolModuleFilenameTemplate": [Function],
       "filename": "static/js/[name].js",
       "path": "<ROOT>/dist",
@@ -799,6 +800,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
       "chunkFilename": "[name].js",
       "chunkFormat": "module",
       "chunkLoading": "import",
+      "devtoolFallbackModuleFilenameTemplate": "[relative-resource-path]?[hash]",
       "devtoolModuleFilenameTemplate": "[relative-resource-path]",
       "filename": "bundle.js",
       "library": {
