@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "rsbuild dev",
+    "dev": "rsbuild",
     "build": "rsbuild build"
   },
   "dependencies": {

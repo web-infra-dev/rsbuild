@@ -49,7 +49,7 @@ Set the `RSPACK_PROFILE` environment variable to capture an Rspack build perform
 ```json title="package.json"
 {
   "scripts": {
-    "dev:profile": "RSPACK_PROFILE=OVERVIEW rsbuild dev",
+    "dev:profile": "RSPACK_PROFILE=OVERVIEW rsbuild",
     "build:profile": "RSPACK_PROFILE=OVERVIEW rsbuild build"
   }
 }
@@ -60,7 +60,7 @@ Because Windows does not support this syntax, you can use [cross-env](https://np
 ```json title="package.json"
 {
   "scripts": {
-    "dev:profile": "cross-env RSPACK_PROFILE=OVERVIEW rsbuild dev",
+    "dev:profile": "cross-env RSPACK_PROFILE=OVERVIEW rsbuild",
     "build:profile": "cross-env RSPACK_PROFILE=OVERVIEW rsbuild build"
   },
   "devDependencies": {

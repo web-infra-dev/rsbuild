@@ -104,30 +104,30 @@ Rsbuild uses the [open](https://github.com/sindresorhus/open) library to open br
 
 ```bash
 # Chrome
-BROWSER=chrome npx rsbuild dev
+BROWSER=chrome npx rsbuild
 
 # Edge
-BROWSER=edge npx rsbuild dev
+BROWSER=edge npx rsbuild
 
 # Firefox
-BROWSER=firefox npx rsbuild dev
+BROWSER=firefox npx rsbuild
 ```
 
 On Windows, use [cross-env](https://npmjs.com/package/cross-env) to set the environment variable:
 
 ```bash
 npm i cross-env -D
-cross-env BROWSER=chrome npx rsbuild dev
+cross-env BROWSER=chrome npx rsbuild
 ```
 
 You can also refer to the [app option](https://github.com/sindresorhus/open#app) documentation from `open` for additional `BROWSER` values, such as OS-specific browser names:
 
 ```bash
 # macOS
-BROWSER="google chrome" npx rsbuild dev
+BROWSER="google chrome" npx rsbuild
 
 # Linux
-BROWSER="google-chrome" npx rsbuild dev
+BROWSER="google-chrome" npx rsbuild
 ```
 
 ### Browser arguments
@@ -135,7 +135,7 @@ BROWSER="google-chrome" npx rsbuild dev
 Pass browser arguments through `BROWSER_ARGS`, separating multiple arguments with spaces:
 
 ```bash
-BROWSER=chrome BROWSER_ARGS="--incognito" npx rsbuild dev
+BROWSER=chrome BROWSER_ARGS="--incognito" npx rsbuild
 ```
 
 ### AppleScript
@@ -156,7 +156,7 @@ The following are the browser names supported by AppleScript:
 For example:
 
 ```bash
-BROWSER="Google Chrome Canary" npx rsbuild dev
+BROWSER="Google Chrome Canary" npx rsbuild
 ```
 
 ### Configure environment variable
