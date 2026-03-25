@@ -25,11 +25,9 @@ If the version is missing, ask for it before making changes.
 
 5. Create a commit with this exact message: `release: v<version>`
 
-6. Create a git tag with this exact name: `v<version>`
+6. Push the branch, then create a GitHub PR with `gh pr create`. Use the same text for the PR title as the commit message: `release: v<version>`
 
-7. Push the branch and tag, then create a GitHub PR with `gh pr create`. Use the same text for the PR title as the commit message: `release: v<version>`
-
-8. If `.github/PULL_REQUEST_TEMPLATE.md` exists, keep its structure.
+7. If `.github/PULL_REQUEST_TEMPLATE.md` exists, keep its structure.
    Fill it with:
    - `Summary`: `Release @rsbuild/core and create-rsbuild <version>.`
    - `Related Links`: `https://github.com/web-infra-dev/rsbuild/releases/tag/v<version>`
