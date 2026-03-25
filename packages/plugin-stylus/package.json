@@ -22,8 +22,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "rslib build",
-    "dev": "rslib build -w"
+    "build": "rslib",
+    "dev": "rslib -w"
   },
   "dependencies": {
     "deepmerge": "^4.3.1",

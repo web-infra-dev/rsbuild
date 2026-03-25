@@ -23,8 +23,8 @@
     "compiled"
   ],
   "scripts": {
-    "build": "rslib build",
-    "dev": "rslib build -w",
+    "build": "rslib",
+    "dev": "rslib -w",
     "prebundle": "prebundle"
   },
   "dependencies": {

@@ -22,8 +22,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "rslib build",
-    "dev": "rslib build -w"
+    "build": "rslib",
+    "dev": "rslib -w"
   },
   "dependencies": {
     "rspack-vue-loader": "^17.5.0"

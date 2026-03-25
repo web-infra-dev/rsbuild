@@ -22,8 +22,8 @@
     "bin.js"
   ],
   "scripts": {
-    "build": "rslib build --syntax es2023",
-    "dev": "rslib build --syntax es2023 -w",
+    "build": "rslib --syntax es2023",
+    "dev": "rslib --syntax es2023 -w",
     "start": "node ./dist/index.js"
   },
   "dependencies": {

@@ -21,8 +21,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "rslib build",
-    "dev": "rslib build -w"
+    "build": "rslib",
+    "dev": "rslib -w"
   },
   "dependencies": {
     "svelte-loader": "3.2.4",
