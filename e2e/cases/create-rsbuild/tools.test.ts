@@ -157,6 +157,10 @@ test('should create React project with react-compiler as expected', async () => 
 
   const configContent = readFileSync(configFile, 'utf-8');
   expect(configContent.includes('pluginBabel({')).toBeTruthy();
+  expect(configContent.includes('include: /\\.[jt]sx?$/')).toBeTruthy();
+  expect(
+    configContent.includes('exclude: [/[\\\\/]node_modules[\\\\/]/]'),
+  ).toBeTruthy();
   expect(configContent.includes("'babel-plugin-react-compiler'")).toBeTruthy();
   await clean();
 });
