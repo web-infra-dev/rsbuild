@@ -39,7 +39,7 @@ rspackTest(
 
 rspackTest(
   'should set output.charset to ascii in build',
-  async ({ page, buildPreview }) => {
+  async ({ page, buildPreview, logHelper }) => {
     const rsbuild = await buildPreview({
       config: {
         output: {
@@ -51,8 +51,8 @@ rspackTest(
     expect(await page.evaluate('window.testA')).toBe(utf8Str);
     expect(await page.evaluate('window.testB')).toStrictEqual(expectedObject);
 
+    logHelper.restore();
     const content = await rsbuild.getIndexBundle();
-
     expect(
       content.includes("\\u4F60\\u597D world! I'm \\uD83E\\uDD80"),
     ).toBeTruthy();
@@ -83,6 +83,6 @@ rspackTest(
     expect(await page.evaluate('window.testB')).toStrictEqual(expectedObject);
 
     const content = await rsbuild.getIndexBundle();
-    expect(content.includes("你好 world! I'm \\uD83E\\uDD80")).toBeTruthy();
+    expect(content.includes(utf8Str)).toBeTruthy();
   },
 );

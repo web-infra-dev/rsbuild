@@ -13,6 +13,6 @@ rspackTest(
     const rsbuild = await buildPreview();
     const content = await rsbuild.getIndexBundle();
     expect(await page.evaluate('window.test')).toBe(utf8Str);
-    expect(content.includes("你好 world! I'm \\uD83E\\uDD80")).toBeTruthy();
+    expect(content.includes(utf8Str)).toBeTruthy();
   },
 );
