@@ -116,10 +116,34 @@ export default {
         webpack: 'webpack',
       },
       afterBundle(task) {
+        const distDir = join(task.distPath, 'dist');
+        const bundledEntryPath = join(task.distPath, 'index.js');
+        const distEntryPath = join(distDir, 'index.js');
+
+        // Keep the package entry at the root, but execute the bundled file from
+        // `dist/index.js` so webpack-bundle-analyzer still resolves `../public`
+        // relative to its own package directory.
+        fs.mkdirSync(distDir, { recursive: true });
+        fs.renameSync(bundledEntryPath, distEntryPath);
+        fs.copyFileSync(
+          join(task.distPath, 'package.json'),
+          join(distDir, 'package.json'),
+        );
+        fs.writeFileSync(
+          bundledEntryPath,
+          "module.exports = require('./dist/index.js');\n",
+        );
+
         // webpack type does not exist, use `@rspack/core` instead
         replaceFileContent(join(task.distPath, 'index.d.ts'), (content) =>
           content.replace("from 'webpack'", 'from "@rspack/core"'),
         );
+
+        // Static report generation in webpack-bundle-analyzer v5 resolves
+        // `public/viewer.js` from the package root at runtime.
+        fs.cpSync(join(task.depPath, 'public'), join(task.distPath, 'public'), {
+          recursive: true,
+        });
       },
     },
     {

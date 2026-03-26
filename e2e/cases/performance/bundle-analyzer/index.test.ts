@@ -32,3 +32,22 @@ test('should emit bundle analyze report correctly when build', async ({
   await rsbuild.expectLog('Webpack Bundle Analyzer saved report to');
   expect(filePaths.length).toBe(1);
 });
+
+test('should surface stats file write errors when statsFilename points to a directory', async ({
+  build,
+}) => {
+  const rsbuild = await build({
+    config: {
+      performance: {
+        bundleAnalyze: {
+          generateStatsFile: true,
+          statsFilename: '.',
+        },
+      },
+    },
+  });
+
+  await rsbuild.expectLog('Webpack Bundle Analyzer error saving stats file to');
+  await rsbuild.expectLog('EISDIR');
+  expect(rsbuild.buildError).toBeFalsy();
+});
