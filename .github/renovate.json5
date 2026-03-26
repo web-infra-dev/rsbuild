@@ -65,21 +65,10 @@
       matchDepTypes: ['peerDependencies'],
       enabled: false,
     },
-    // keep React 18 and Vue 2 template
+    // keep Vue 2 template
     {
-      matchPaths: [
-        '**/template-react18-js/**',
-        '**/template-react18-ts/**',
-        '**/template-vue2-js/**',
-        '**/template-vue2-ts/**',
-      ],
-      matchPackageNames: [
-        'vue',
-        'react',
-        'react-dom',
-        '@types/react',
-        '@types/react-dom',
-      ],
+      matchPaths: ['**/template-vue2-js/**', '**/template-vue2-ts/**'],
+      matchPackageNames: ['vue'],
       enabled: false,
     },
     {

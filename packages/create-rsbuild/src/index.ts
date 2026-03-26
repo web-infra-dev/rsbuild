@@ -29,7 +29,6 @@ async function getTemplateName({ template }: Argv) {
       options: [
         { value: 'vanilla', label: 'Vanilla' },
         { value: 'react', label: 'React 19' },
-        { value: 'react18', label: 'React 18' },
         { value: 'vue3', label: 'Vue 3' },
         { value: 'vue2', label: 'Vue 2' },
         { value: 'lit', label: 'Lit' },
@@ -66,10 +65,6 @@ function mapESLintTemplate(templateName: string): ESLintTemplateName {
     case 'vue2-ts':
     case 'vue3-ts':
       return 'vue-ts';
-    case 'react18-js':
-      return 'react-js';
-    case 'react18-ts':
-      return 'react-ts';
     default:
       return `vanilla-${templateName.split('-')[1]}` as ESLintTemplateName;
   }
@@ -78,10 +73,8 @@ function mapESLintTemplate(templateName: string): ESLintTemplateName {
 function mapRstestTemplate(templateName: string): string {
   switch (templateName) {
     case 'react-js':
-    case 'react18-js':
       return 'react-js';
     case 'react-ts':
-    case 'react18-ts':
       return 'react-ts';
     case 'vue3-js':
       return 'vue-js';
@@ -102,8 +95,6 @@ create({
     'vanilla-ts',
     'react-js',
     'react-ts',
-    'react18-js',
-    'react18-ts',
     'vue3-js',
     'vue3-ts',
     'vue2-js',
