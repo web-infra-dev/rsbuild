@@ -106,7 +106,7 @@ export default defineConfig({
     pluginReact(),
     pluginBabel({
       include: /\.[jt]sx?$/,
-      exclude: [/node_modules/],
+      exclude: [/[\\/]node_modules[\\/]/],
       babelLoaderOptions(opts) {
         opts.plugins?.unshift('babel-plugin-react-compiler');
       },
@@ -141,7 +141,7 @@ export default defineConfig({
     pluginReact(),
     pluginBabel({
       include: /\.[jt]sx?$/,
-      exclude: [/node_modules/],
+      exclude: [/[\\/]node_modules[\\/]/],
       babelLoaderOptions(opts) {
         opts.plugins?.unshift([
           'babel-plugin-react-compiler',
