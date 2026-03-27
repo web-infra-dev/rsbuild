@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "@rspack/core": "2.0.0-beta.8",
-    "@swc/helpers": "^0.5.19"
+    "@swc/helpers": "^0.5.20"
   },
   "peerDependencies": {
     "core-js": ">= 3.0.0"

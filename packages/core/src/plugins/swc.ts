@@ -312,8 +312,10 @@ function applySwcDecoratorConfig(
       swcConfig.jsc.transform.useDefineForClassFields = false;
       break;
     case '2022-03':
+    case '2023-11':
       swcConfig.jsc.transform.legacyDecorator = false;
-      swcConfig.jsc.transform.decoratorVersion = '2022-03';
+      // TODO `@swc/types` does not include `2023-11` yet.
+      (swcConfig.jsc.transform.decoratorVersion as string) = version;
       break;
     default:
       throw new Error(

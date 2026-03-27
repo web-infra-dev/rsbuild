@@ -222,7 +222,8 @@ export type Decorators = {
    */
   version?:
     | 'legacy' // stage 1
-    | '2022-03'; // stage 3
+    | '2022-03' // stage 3
+    | '2023-11'; // stage 3
 };
 
 export interface SourceConfig {

@@ -113,6 +113,79 @@ exports[`plugin-swc > should allow using \`tools.swc\` to configure swc-loader o
 ]
 `;
 
+exports[`plugin-swc > should apply decorators version 2023-11 1`] = `
+[
+  [
+    {
+      "resolve": {
+        "fullySpecified": false,
+      },
+      "test": /\\\\\\.m\\?js/,
+    },
+    {
+      "dependency": {
+        "not": "url",
+      },
+      "include": [
+        {
+          "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+        },
+        /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+      ],
+      "oneOf": [
+        {
+          "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+          "type": "asset/source",
+        },
+        {
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "collectTypeScriptInfo": {
+                  "exportedEnum": false,
+                  "typeExports": true,
+                },
+                "env": {
+                  "targets": [
+                    "chrome >= 107",
+                    "edge >= 107",
+                    "firefox >= 104",
+                    "safari >= 16",
+                  ],
+                },
+                "isModule": "unknown",
+                "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/packages/core/node_modules/.cache/.swc",
+                    "keepImportAttributes": true,
+                  },
+                  "externalHelpers": true,
+                  "output": {
+                    "charset": "utf8",
+                  },
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": false,
+                  },
+                  "transform": {
+                    "decoratorVersion": "2023-11",
+                    "legacyDecorator": false,
+                  },
+                },
+              },
+            },
+          ],
+        },
+      ],
+      "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+    },
+  ],
+]
+`;
+
 exports[`plugin-swc > should apply environment config correctly 1`] = `
 [
   {
