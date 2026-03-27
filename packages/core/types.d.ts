@@ -11,7 +11,7 @@
  * }
  * ```
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+// rslint-disable-next-line @typescript-eslint/no-empty-interface
 interface RsbuildTypeOptions {}
 
 /**

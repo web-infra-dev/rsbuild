@@ -76,7 +76,7 @@ export class CommonJsRunner extends BasicRunner {
         paths: [_currentDirectory],
       });
 
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      // rslint-disable-next-line @typescript-eslint/no-require-imports
       return require(
         resolvedPath.startsWith('node:') ? resolvedPath.slice(5) : resolvedPath,
       );
@@ -85,7 +85,7 @@ export class CommonJsRunner extends BasicRunner {
 
   protected createCjsRequirer(): RunnerRequirer {
     const requireCache = Object.create(null);
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    // rslint-disable-next-line @typescript-eslint/no-require-imports
     const vm = require('node:vm') as typeof import('node:vm');
 
     return (currentDirectory, modulePath, context = {}) => {

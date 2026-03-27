@@ -152,7 +152,7 @@ export type PluginManager = Pick<
 };
 
 export type RsbuildPluginApplyFn = (
-  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+  // rslint-disable-next-line @typescript-eslint/no-invalid-void-type
   this: void,
   /**
    * The original Rsbuild configuration object (before plugin processing)

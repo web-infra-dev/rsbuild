@@ -36,7 +36,7 @@ export class EsmRunner extends CommonJsRunner {
   protected createEsmRequirer(): RunnerRequirer {
     const esmCache = new Map<string, SourceTextModule>();
     const esmIdentifier = this._options.name;
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    // rslint-disable-next-line @typescript-eslint/no-require-imports
     const vm = require('node:vm') as typeof import('node:vm');
 
     return (currentDirectory, modulePath, context = {}) => {
