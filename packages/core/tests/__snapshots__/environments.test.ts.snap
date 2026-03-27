@@ -155,7 +155,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
                         "tsx": false,
                       },
                       "transform": {
-                        "decoratorVersion": "2022-03",
+                        "decoratorVersion": "2023-11",
                         "legacyDecorator": false,
                       },
                     },
@@ -208,7 +208,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
                     "tsx": false,
                   },
                   "transform": {
-                    "decoratorVersion": "2022-03",
+                    "decoratorVersion": "2023-11",
                     "legacyDecorator": false,
                   },
                 },
@@ -570,7 +570,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
                         "tsx": false,
                       },
                       "transform": {
-                        "decoratorVersion": "2022-03",
+                        "decoratorVersion": "2023-11",
                         "legacyDecorator": false,
                       },
                     },
@@ -620,7 +620,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
                     "tsx": false,
                   },
                   "transform": {
-                    "decoratorVersion": "2022-03",
+                    "decoratorVersion": "2023-11",
                     "legacyDecorator": false,
                   },
                 },
@@ -995,7 +995,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
   },
   "source": {
     "decorators": {
-      "version": "2022-03",
+      "version": "2023-11",
     },
     "define": {},
     "entry": {
@@ -1152,7 +1152,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
   },
   "source": {
     "decorators": {
-      "version": "2022-03",
+      "version": "2023-11",
     },
     "define": {},
     "entry": {
@@ -1313,7 +1313,7 @@ exports[`environment config > should print environment config when inspecting co
     },
     "source": {
       "decorators": {
-        "version": "2022-03",
+        "version": "2023-11",
       },
       "define": {},
       "entry": {
@@ -1470,7 +1470,7 @@ exports[`environment config > should print environment config when inspecting co
     },
     "source": {
       "decorators": {
-        "version": "2022-03",
+        "version": "2023-11",
       },
       "define": {},
       "entry": {
@@ -1647,7 +1647,7 @@ exports[`environment config > should support modifying environment config by api
     },
     "source": {
       "decorators": {
-        "version": "2022-03",
+        "version": "2023-11",
       },
       "define": {},
       "entry": {
@@ -1805,7 +1805,7 @@ exports[`environment config > should support modifying environment config by api
     },
     "source": {
       "decorators": {
-        "version": "2022-03",
+        "version": "2023-11",
       },
       "define": {},
       "entry": {
@@ -1963,7 +1963,7 @@ exports[`environment config > should support modifying environment config by api
     },
     "source": {
       "decorators": {
-        "version": "2022-03",
+        "version": "2023-11",
       },
       "define": {},
       "entry": {},
@@ -2123,7 +2123,7 @@ exports[`environment config > should support modifying single environment config
     },
     "source": {
       "decorators": {
-        "version": "2022-03",
+        "version": "2023-11",
       },
       "define": {},
       "entry": {
@@ -2281,7 +2281,7 @@ exports[`environment config > should support modifying single environment config
     },
     "source": {
       "decorators": {
-        "version": "2022-03",
+        "version": "2023-11",
       },
       "define": {},
       "entry": {

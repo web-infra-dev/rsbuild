@@ -17,7 +17,7 @@ type Decorators = {
 ## decorators.version
 
 - **类型：** `'legacy' | '2022-03' | '2023-11'`
-- **默认值：** `'2022-03'`
+- **默认值：** `'2023-11'`
 
 指定需要使用的装饰器语法版本。
 
@@ -25,7 +25,7 @@ type Decorators = {
 
 ### 2023-11
 
-`2023-11` 对应 2023 年 11 月版本的 Stage 3 装饰器提案。
+`2023-11` 对应 2023 年 11 月版本的 Stage 3 装饰器提案，也是 Rsbuild 默认使用的装饰器版本。
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -70,3 +70,9 @@ export default {
 ```
 
 > 参考：[A Complete Guide to TypeScript Decorators](https://mirone.me/a-complete-guide-to-typescript-decorator/)、[TypeScript Decorators](https://typescriptlang.org/docs/handbook/decorators.html)。
+
+## 版本历史
+
+| 版本   | 变更内容                                               |
+| ------ | ------------------------------------------------------ |
+| v2.0.0 | 新增 `2023-11` 版本，默认值从 `2022-03` 改为 `2023-11` |

@@ -17,7 +17,7 @@ Used to configure the decorators syntax.
 ## decorators.version
 
 - **Type:** `'legacy' | '2022-03' | '2023-11'`
-- **Default:** `'2022-03'`
+- **Default:** `'2023-11'`
 
 Specify the decorator syntax version to be used.
 
@@ -25,7 +25,7 @@ If you want to know the differences between different decorators versions, you c
 
 ### 2023-11
 
-`2023-11` corresponds to the November 2023 version of the Stage 3 decorator proposal.
+`2023-11` corresponds to the November 2023 version of the Stage 3 decorator proposal. This is the default decorators version used by Rsbuild.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -70,3 +70,9 @@ export default {
 ```
 
 > References: [A Complete Guide to TypeScript Decorators](https://mirone.me/a-complete-guide-to-typescript-decorator/), [TypeScript Decorators](https://typescriptlang.org/docs/handbook/decorators.html).
+
+## Version history
+
+| Version | Changes                                                                    |
+| ------- | -------------------------------------------------------------------------- |
+| v2.0.0  | Added `2023-11` version, default value changed from `2022-03` to `2023-11` |

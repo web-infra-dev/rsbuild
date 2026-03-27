@@ -182,7 +182,7 @@ exports[`should apply default plugins correctly 1`] = `
                       "tsx": false,
                     },
                     "transform": {
-                      "decoratorVersion": "2022-03",
+                      "decoratorVersion": "2023-11",
                       "legacyDecorator": false,
                     },
                   },
@@ -235,7 +235,7 @@ exports[`should apply default plugins correctly 1`] = `
                   "tsx": false,
                 },
                 "transform": {
-                  "decoratorVersion": "2022-03",
+                  "decoratorVersion": "2023-11",
                   "legacyDecorator": false,
                 },
               },
@@ -619,7 +619,7 @@ exports[`should apply default plugins correctly in production 1`] = `
                       "tsx": false,
                     },
                     "transform": {
-                      "decoratorVersion": "2022-03",
+                      "decoratorVersion": "2023-11",
                       "legacyDecorator": false,
                     },
                   },
@@ -672,7 +672,7 @@ exports[`should apply default plugins correctly in production 1`] = `
                   "tsx": false,
                 },
                 "transform": {
-                  "decoratorVersion": "2022-03",
+                  "decoratorVersion": "2023-11",
                   "legacyDecorator": false,
                 },
               },
@@ -1063,7 +1063,7 @@ exports[`should apply default plugins correctly when target is node 1`] = `
                       "tsx": false,
                     },
                     "transform": {
-                      "decoratorVersion": "2022-03",
+                      "decoratorVersion": "2023-11",
                       "legacyDecorator": false,
                     },
                   },
@@ -1113,7 +1113,7 @@ exports[`should apply default plugins correctly when target is node 1`] = `
                   "tsx": false,
                 },
                 "transform": {
-                  "decoratorVersion": "2022-03",
+                  "decoratorVersion": "2023-11",
                   "legacyDecorator": false,
                 },
               },
@@ -1512,7 +1512,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                       "tsx": false,
                     },
                     "transform": {
-                      "decoratorVersion": "2022-03",
+                      "decoratorVersion": "2023-11",
                       "legacyDecorator": false,
                     },
                   },
@@ -1565,7 +1565,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "tsx": false,
                 },
                 "transform": {
-                  "decoratorVersion": "2022-03",
+                  "decoratorVersion": "2023-11",
                   "legacyDecorator": false,
                 },
               },

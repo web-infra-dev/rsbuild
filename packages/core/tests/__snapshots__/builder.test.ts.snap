@@ -159,7 +159,7 @@ exports[`default bundler > should use Rspack by default 1`] = `
                       "tsx": false,
                     },
                     "transform": {
-                      "decoratorVersion": "2022-03",
+                      "decoratorVersion": "2023-11",
                       "legacyDecorator": false,
                     },
                   },
@@ -212,7 +212,7 @@ exports[`default bundler > should use Rspack by default 1`] = `
                   "tsx": false,
                 },
                 "transform": {
-                  "decoratorVersion": "2022-03",
+                  "decoratorVersion": "2023-11",
                   "legacyDecorator": false,
                 },
               },

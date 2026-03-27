@@ -106,7 +106,7 @@ const getDefaultSourceConfig = (): NormalizedSourceConfig => {
     define: {},
     preEntry: [],
     decorators: {
-      version: '2022-03',
+      version: '2023-11',
     },
   };
 };

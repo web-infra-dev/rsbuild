@@ -1,7 +1,7 @@
 import { expect, test } from '@e2e/helper';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 
-test('should use legacy decorators by default', async ({
+test('should use 2023-11 decorators by default', async ({
   page,
   buildPreview,
 }) => {
@@ -12,7 +12,7 @@ test('should use legacy decorators by default', async ({
   expect(await page.evaluate('window.ccc')).toBe('hello world');
 });
 
-test('should allow to use stage 3 decorators', async ({
+test('should allow to use 2022-03 decorators', async ({
   page,
   buildPreview,
 }) => {
@@ -31,7 +31,7 @@ test('should allow to use stage 3 decorators', async ({
   expect(await page.evaluate('window.ccc')).toBe('hello world');
 });
 
-test('should allow to use 2023-11 decorators', async ({
+test('should allow to use legacy decorators', async ({
   page,
   buildPreview,
 }) => {
@@ -39,7 +39,7 @@ test('should allow to use 2023-11 decorators', async ({
     config: {
       source: {
         decorators: {
-          version: '2023-11',
+          version: 'legacy',
         },
       },
     },
@@ -50,7 +50,7 @@ test('should allow to use 2023-11 decorators', async ({
   expect(await page.evaluate('window.ccc')).toBe('hello world');
 });
 
-test('should use legacy decorators with babel-plugin', async ({
+test('should use 2023-11 decorators with babel-plugin by default', async ({
   page,
   buildPreview,
 }) => {
@@ -65,7 +65,7 @@ test('should use legacy decorators with babel-plugin', async ({
   expect(await page.evaluate('window.ccc')).toBe('hello world');
 });
 
-test('should allow to use stage 3 decorators with babel-plugin', async ({
+test('should allow to use 2022-03 decorators with babel-plugin', async ({
   page,
   buildPreview,
 }) => {
@@ -85,7 +85,7 @@ test('should allow to use stage 3 decorators with babel-plugin', async ({
   expect(await page.evaluate('window.ccc')).toBe('hello world');
 });
 
-test('should allow to use 2023-11 decorators with babel-plugin', async ({
+test('should allow to use legacy decorators with babel-plugin', async ({
   page,
   buildPreview,
 }) => {
@@ -94,7 +94,7 @@ test('should allow to use 2023-11 decorators with babel-plugin', async ({
       plugins: [pluginBabel()],
       source: {
         decorators: {
-          version: '2023-11',
+          version: 'legacy',
         },
       },
     },

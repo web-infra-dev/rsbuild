@@ -218,7 +218,7 @@ export type AliasStrategy = 'prefer-tsconfig' | 'prefer-alias';
 export type Decorators = {
   /**
    * Specify the version of decorators to use.
-   * @default '2022-03'
+   * @default '2023-11'
    */
   version?:
     | 'legacy' // stage 1
