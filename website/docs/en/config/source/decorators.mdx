@@ -21,11 +21,17 @@ Used to configure the decorators syntax.
 
 Specify the decorator syntax version to be used.
 
+In most cases, `2023-11` is the recommended choice:
+
+- `2023-11`: the latest supported Stage 3 decorators proposal and the default used by Rsbuild.
+- `2022-03`: the earlier Stage 3 proposal.
+- `legacy`: the legacy Stage 1 proposal, mainly for projects that still rely on `experimentalDecorators`.
+
 If you want to know the differences between different decorators versions, you can refer to: [How does this proposal compare to other versions of decorators?](https://github.com/tc39/proposal-decorators#how-does-this-proposal-compare-to-other-versions-of-decorators)
 
 ### 2023-11
 
-`2023-11` corresponds to the November 2023 version of the Stage 3 decorator proposal. This is the default decorators version used by Rsbuild.
+`2023-11` corresponds to the November 2023 version of the Stage 3 decorator proposal.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -58,6 +64,8 @@ export default {
 ### legacy
 
 Equivalent to TypeScript's `experimentalDecorators: true`.
+
+This is based on the legacy Stage 1 decorators proposal. It will not receive new feature updates, and Babel and TypeScript may behave differently in some edge cases. It is recommended to migrate to `2023-11` when possible.
 
 ```ts title="rsbuild.config.ts"
 export default {

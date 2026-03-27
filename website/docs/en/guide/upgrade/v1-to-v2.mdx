@@ -136,6 +136,22 @@ Alternatively, you can use the `--host` CLI flag to enable network access on dem
 rsbuild --host
 ```
 
+### Default decorators version
+
+The default value of [source.decorators.version](/config/source/decorators#decoratorsversion) has changed from `2022-03` to `2023-11`.
+
+For most projects, this change has little practical impact. If your project depends on the previous default behavior, set the decorators version explicitly:
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    decorators: {
+      version: '2022-03',
+    },
+  },
+};
+```
+
 ### Node output
 
 When [output.target](/config/output/target) is set to `node`, Rsbuild 2.0 defaults to ESM output via [output.module](/config/output/module) and keeps [output.minify](/config/output/minify) disabled. In Rsbuild 1.x, the default was CommonJS output with minification enabled.

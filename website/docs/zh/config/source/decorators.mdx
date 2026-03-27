@@ -21,11 +21,17 @@ type Decorators = {
 
 指定需要使用的装饰器语法版本。
 
+大多数情况下，推荐使用 `2023-11`：
+
+- `2023-11`：最新的 Stage 3 装饰器提案，也是 Rsbuild 的默认值。
+- `2022-03`：较早的 Stage 3 装饰器提案。
+- `legacy`：旧版 Stage 1 装饰器提案，主要用于仍依赖 TypeScript 的 `experimentalDecorators` 语义的项目。
+
 如果你希望了解不同装饰器版本的区别，可以参考：[How does this proposal compare to other versions of decorators?](https://github.com/tc39/proposal-decorators#how-does-this-proposal-compare-to-other-versions-of-decorators)
 
 ### 2023-11
 
-`2023-11` 对应 2023 年 11 月版本的 Stage 3 装饰器提案，也是 Rsbuild 默认使用的装饰器版本。
+`2023-11` 对应 2023 年 11 月版本的 Stage 3 装饰器提案。
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -58,6 +64,8 @@ export default {
 ### legacy
 
 等价于 TypeScript 的 `experimentalDecorators: true`。
+
+它基于旧版的 Stage 1 装饰器提案，不会再引入新的特性更新，并且在一些边界场景下 Babel 与 TypeScript 的行为可能存在差异。建议在条件允许时迁移到 `2023-11`。
 
 ```ts title="rsbuild.config.ts"
 export default {

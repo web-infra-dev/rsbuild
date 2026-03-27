@@ -136,6 +136,22 @@ export default {
 rsbuild --host
 ```
 
+### 默认 decorators 版本
+
+[source.decorators.version](/config/source/decorators#decoratorsversion) 的默认值从 `2022-03` 变更为 `2023-11`。
+
+对大多数项目来说，这一变化带来的实际影响很小。如果你的项目依赖此前的默认行为，可以显式指定 decorators 版本：
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    decorators: {
+      version: '2022-03',
+    },
+  },
+};
+```
+
 ### Node 产物
 
 当 [output.target](/config/output/target) 为 `node` 时，Rsbuild 2.0 会通过 [output.module](/config/output/module) 默认输出 ESM 产物，并保持 [output.minify](/config/output/minify) 关闭。在 Rsbuild 1.x 中，默认行为是输出 CommonJS 且开启压缩。
