@@ -76,7 +76,7 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
     "test": /\\\\\\.\\(\\?:svelte\\\\\\.js\\|svelte\\\\\\.ts\\)\\$/,
     "use": [
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
+        "loader": "<PNPM_INNER>/svelte-loader/index.js",
         "options": {
           "compilerOptions": {
             "dev": false,
@@ -202,7 +202,7 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
     "test": /\\\\\\.\\(\\?:svelte\\\\\\.js\\|svelte\\\\\\.ts\\)\\$/,
     "use": [
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
+        "loader": "<PNPM_INNER>/svelte-loader/index.js",
         "options": {
           "compilerOptions": {
             "dev": false,
@@ -301,7 +301,7 @@ exports[`plugin-svelte > should add svelte loader and resolve config properly 1`
         },
       },
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
+        "loader": "<PNPM_INNER>/svelte-loader/index.js",
         "options": {
           "compilerOptions": {
             "dev": false,
@@ -323,7 +323,7 @@ exports[`plugin-svelte > should add svelte loader and resolve config properly 1`
 exports[`plugin-svelte > should add svelte loader and resolve config properly 2`] = `
 {
   "alias": {
-    "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+    "@swc/helpers": "<PNPM_INNER>/@swc/helpers",
   },
   "conditionNames": [
     "svelte",
@@ -403,7 +403,7 @@ exports[`plugin-svelte > should add svelte loader and resolve config properly fo
         },
       },
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
+        "loader": "<PNPM_INNER>/svelte-loader/index.js",
         "options": {
           "compilerOptions": {
             "dev": false,
@@ -425,7 +425,7 @@ exports[`plugin-svelte > should add svelte loader and resolve config properly fo
 exports[`plugin-svelte > should add svelte loader and resolve config properly for Rsbuild v1 2`] = `
 {
   "alias": {
-    "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+    "@swc/helpers": "<PNPM_INNER>/@swc/helpers",
   },
   "conditionNames": [
     "svelte",
@@ -505,7 +505,7 @@ exports[`plugin-svelte > should override default svelte-loader options throw opt
         },
       },
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
+        "loader": "<PNPM_INNER>/svelte-loader/index.js",
         "options": {
           "compilerOptions": {
             "dev": false,
@@ -563,7 +563,7 @@ exports[`plugin-svelte > should set dev and hotReload to false in production mod
         },
       },
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
+        "loader": "<PNPM_INNER>/svelte-loader/index.js",
         "options": {
           "compilerOptions": {
             "dev": false,
@@ -625,7 +625,7 @@ exports[`plugin-svelte > should support pass custom preprocess options 1`] = `
         },
       },
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
+        "loader": "<PNPM_INNER>/svelte-loader/index.js",
         "options": {
           "compilerOptions": {
             "dev": false,
@@ -687,7 +687,7 @@ exports[`plugin-svelte > should turn off HMR by hand correctly 1`] = `
         },
       },
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
+        "loader": "<PNPM_INNER>/svelte-loader/index.js",
         "options": {
           "compilerOptions": {
             "dev": false,

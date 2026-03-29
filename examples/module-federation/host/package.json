@@ -3,11 +3,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "rsbuild dev",
+    "dev": "rsbuild",
     "build": "rsbuild build"
   },
   "dependencies": {
-    "@module-federation/runtime-tools": "2.2.1",
+    "@module-federation/runtime-tools": "2.3.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },

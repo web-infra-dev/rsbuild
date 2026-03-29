@@ -8,7 +8,7 @@ import type { StackFrame } from 'stacktrace-parser';
 import { SCRIPT_REGEX } from '../constants';
 import { color, isRspackRuntimeModule } from '../helpers';
 import { readFileAsync } from '../helpers/fs';
-import { isVerbose, logger } from '../logger';
+import { isVerbose } from '../logger';
 import type { BrowserLogsStackTrace, InternalContext, Rspack } from '../types';
 import { getFileFromUrl } from './assets-middleware/getFileFromUrl';
 
@@ -79,7 +79,9 @@ const parseFrame = async (
     return { sourceMapPath, originalPosition };
   } catch (error) {
     if (error instanceof Error) {
-      logger.debug(`failed to map source map position: ${error.message}`);
+      context.logger.debug(
+        `failed to map source map position: ${error.message}`,
+      );
     }
   }
 };
@@ -209,7 +211,7 @@ const formatFullStack = async (
 
     // Fallback to original frame location if source map parsing failed
     // These frames are usually low-signal for users, so only show them in verbose mode.
-    if (!parsed && isVerbose()) {
+    if (!parsed && isVerbose(context.logger)) {
       const frameString = formatFrameLocation(frame);
       if (frameString) {
         parts.push(frameString);

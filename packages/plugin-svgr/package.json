@@ -16,17 +16,15 @@
       "require": "./dist/index.cjs"
     }
   },
-  "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
     "compiled"
   ],
   "scripts": {
-    "build": "rslib build",
-    "dev": "rslib build -w",
-    "prebundle": "prebundle",
-    "bump": "pnpx bumpp --no-tag"
+    "build": "rslib",
+    "dev": "rslib -w",
+    "prebundle": "prebundle"
   },
   "dependencies": {
     "@rsbuild/plugin-react": "workspace:^1.1.0",
@@ -45,7 +43,7 @@
     "file-loader": "6.2.0",
     "prebundle": "1.6.4",
     "svgo": "^3.3.3",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.2",
     "url-loader": "4.1.1"
   },
   "peerDependencies": {

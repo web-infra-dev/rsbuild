@@ -1,5 +1,5 @@
 import { color } from 'rslog';
-import { isVerbose } from '../logger';
+import { isVerbose, type Logger } from '../logger';
 import type { ActionType, RsbuildStats, Rspack } from '../types';
 import { isMultiCompiler } from './compiler';
 import { formatStatsError } from './format';
@@ -64,6 +64,7 @@ export const getStatsWarnings = ({
 
 function getStatsOptions(
   compiler: Rspack.Compiler | Rspack.MultiCompiler,
+  logger: Logger,
   action?: ActionType,
 ): Rspack.StatsOptions {
   let defaultOptions: Rspack.StatsOptions = {
@@ -75,7 +76,7 @@ function getStatsOptions(
     // for displaying the module trace when build failed
     moduleTrace: true,
     // for displaying the error stack in verbose mode
-    errorStack: isVerbose(),
+    errorStack: isVerbose(logger),
   };
 
   if (action === 'dev') {
@@ -113,9 +114,10 @@ function getStatsOptions(
 export function getRsbuildStats(
   statsInstance: Rspack.Stats | Rspack.MultiStats,
   compiler: Rspack.Compiler | Rspack.MultiCompiler,
+  logger: Logger,
   action?: ActionType,
 ): RsbuildStats {
-  const statsOptions = getStatsOptions(compiler, action);
+  const statsOptions = getStatsOptions(compiler, logger, action);
   return statsInstance.toJson(statsOptions) as RsbuildStats;
 }
 
@@ -123,13 +125,16 @@ export function formatStats(
   stats: RsbuildStats,
   hasErrors: boolean,
   root: string,
+  logger: Logger,
 ): {
   message?: string;
   level?: string;
 } {
   if (hasErrors) {
     const errors = getStatsErrors(stats);
-    const errorMessages = errors.map((item) => formatStatsError(item, root));
+    const errorMessages = errors.map((item) =>
+      formatStatsError(item, root, 'error', logger),
+    );
     return {
       message: formatErrorMessage(errorMessages),
       level: 'error',
@@ -138,7 +143,7 @@ export function formatStats(
 
   const warnings = getStatsWarnings(stats);
   const warningMessages = warnings.map((item) =>
-    formatStatsError(item, root, 'warning'),
+    formatStatsError(item, root, 'warning', logger),
   );
 
   if (warningMessages.length) {
@@ -161,8 +166,11 @@ export function formatStats(
  * Remove the loader chain delimiter from the module identifier.
  * @example ./src/index.js!=!/node_modules/my-loader/index.js -> ./src/index.js
  */
-export const removeLoaderChainDelimiter = (moduleId: string): string => {
-  if (isVerbose()) {
+export const removeLoaderChainDelimiter = (
+  moduleId: string,
+  logger: Logger,
+): string => {
+  if (isVerbose(logger)) {
     return moduleId;
   }
   const LOADER_CHAIN_SEPARATOR = '!=!';

@@ -12,6 +12,16 @@ type SourceMap =
   | {
       js?: Rspack.Configuration['devtool'];
       css?: boolean;
+      extract?:
+        | boolean
+        | {
+            js?:
+              | boolean
+              | {
+                  include?: Rspack.RuleSetCondition[];
+                  exclude?: Rspack.RuleSetCondition[];
+                };
+          };
     };
 ```
 
@@ -21,6 +31,7 @@ type SourceMap =
 const defaultSourceMap = {
   js: mode === 'development' ? 'cheap-module-source-map' : false,
   css: false,
+  extract: false,
 };
 ```
 
@@ -132,3 +143,47 @@ export default {
   },
 };
 ```
+
+## Extract source map
+
+Use `sourceMap.extract` to extract existing source maps from matched JavaScript files. This is useful when a third-party package already ships both `.js` and `.js.map` files.
+
+:::tip
+This option is implemented based on Rspack's [`module.rules[].extractSourceMap`](https://rspack.rs/config/module-rules#rulesextractsourcemap) and can replace `source-map-loader`.
+:::
+
+To enable extraction for all JavaScript files:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    sourceMap: {
+      js: 'source-map',
+      extract: true,
+    },
+  },
+};
+```
+
+Use `include` or `exclude` to limit extraction to specific files, which can help reduce performance overhead:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    sourceMap: {
+      js: 'source-map',
+      extract: {
+        js: {
+          include: [/node_modules[\\/]some-package[\\/]/],
+        },
+      },
+    },
+  },
+};
+```
+
+## Version history
+
+| Version | Changes                          |
+| ------- | -------------------------------- |
+| v2.0.0  | Added `sourceMap.extract` option |

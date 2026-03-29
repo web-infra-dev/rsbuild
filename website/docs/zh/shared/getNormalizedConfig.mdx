@@ -7,11 +7,10 @@
 - **类型：**
 
 ```ts
-/** 获取指定环境的 Rsbuild 配置 */
-function GetNormalizedConfig(options: {
-  environment: string;
-}): Readonly<NormalizedEnvironmentConfig>;
-
-/** 获取全部的 Rsbuild 配置 */
-function GetNormalizedConfig(): Readonly<NormalizedConfig>;
+type GetNormalizedConfig = {
+  /** 获取归一化后的全部 Rsbuild 配置 */
+  (): NormalizedConfig;
+  /** 获取指定环境的归一化 Rsbuild 配置 */
+  (options: { environment: string }): NormalizedEnvironmentConfig;
+};
 ```

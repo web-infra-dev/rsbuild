@@ -2,7 +2,7 @@ import path from 'node:path';
 import type { ChokidarOptions } from 'chokidar';
 import { init } from './cli/init';
 import { color, isTTY } from './helpers';
-import { logger } from './logger';
+import type { Logger } from './logger';
 import { createChokidar } from './server/watchFiles';
 import type { RsbuildInstance } from './types';
 
@@ -27,10 +27,12 @@ const beforeRestart = async ({
   filePath,
   clear = true,
   id,
+  logger,
 }: {
   filePath?: string;
   clear?: boolean;
   id: string;
+  logger: Logger;
 }): Promise<void> => {
   if (clear) {
     clearConsole();
@@ -52,11 +54,13 @@ const beforeRestart = async ({
 export const restartDevServer = async ({
   filePath,
   clear = true,
+  logger,
 }: {
   filePath?: string;
   clear?: boolean;
-} = {}): Promise<boolean> => {
-  await beforeRestart({ filePath, clear, id: 'server' });
+  logger: Logger;
+}): Promise<boolean> => {
+  await beforeRestart({ filePath, clear, id: 'server', logger });
 
   const rsbuild = await init({ isRestart: true });
 
@@ -73,11 +77,13 @@ export const restartDevServer = async ({
 const restartBuild = async ({
   filePath,
   clear = true,
+  logger,
 }: {
   filePath?: string;
   clear?: boolean;
-} = {}): Promise<boolean> => {
-  await beforeRestart({ filePath, clear, id: 'build' });
+  logger: Logger;
+}): Promise<boolean> => {
+  await beforeRestart({ filePath, clear, id: 'build', logger });
 
   const rsbuild = await init({ isRestart: true, isBuildWatch: true });
 
@@ -125,13 +131,13 @@ export async function watchFilesForRestart({
     restarting = true;
 
     const restarted = isBuildWatch
-      ? await restartBuild({ filePath })
-      : await restartDevServer({ filePath });
+      ? await restartBuild({ filePath, logger: rsbuild.logger })
+      : await restartDevServer({ filePath, logger: rsbuild.logger });
 
     if (restarted) {
       await watcher.close();
     } else {
-      logger.error(
+      rsbuild.logger.error(
         isBuildWatch ? 'Restart build failed.' : 'Restart server failed.',
       );
     }

@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { color, getNodeEnv, isObject } from './helpers';
-import { logger } from './logger';
+import { defaultLogger } from './logger';
 import type { RsbuildConfig } from './types';
 
 export type ConfigParams = {
@@ -126,7 +126,7 @@ export async function loadConfig({
   const configFilePath = resolveConfigPath(cwd, path);
 
   if (!configFilePath) {
-    logger.debug('no config file found.');
+    defaultLogger.debug('no config file found.');
     return {
       content: {},
       filePath: configFilePath,
@@ -157,12 +157,12 @@ export async function loadConfig({
     } catch (err) {
       const errorMessage = `Failed to load file with native loader: ${color.dim(configFilePath)}`;
       if (loader === 'native') {
-        logger.error(errorMessage);
+        defaultLogger.error(errorMessage);
         throw err;
       }
 
-      logger.debug(`${errorMessage}, fallback to jiti.`);
-      logger.debug(err);
+      defaultLogger.debug(`${errorMessage}, fallback to jiti.`);
+      defaultLogger.debug(err);
     }
   }
 
@@ -182,7 +182,7 @@ export async function loadConfig({
         default: true,
       });
     } catch (err) {
-      logger.error(
+      defaultLogger.error(
         `Failed to load file with jiti: ${color.dim(configFilePath)}`,
       );
       throw err;
@@ -221,7 +221,7 @@ export async function loadConfig({
     );
   }
 
-  logger.debug('configuration loaded from:', configFilePath);
+  defaultLogger.debug('configuration loaded from:', configFilePath);
 
   return {
     content: applyMetaInfo(configExport),

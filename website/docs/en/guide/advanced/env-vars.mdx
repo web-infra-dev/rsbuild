@@ -252,7 +252,7 @@ Rsbuild also supports reading `.env.[mode]` and `.env.[mode].local` files. You c
 For example, set the env mode as `test`:
 
 ```bash
-npx rsbuild dev --env-mode test
+npx rsbuild --env-mode test
 ```
 
 Rsbuild will read these files in the following order and merge their contents. If the same environment variable is defined in multiple files, files loaded later will override those loaded earlier:
@@ -298,7 +298,7 @@ By default, the `.env` file is located in the root directory of the project. You
 For example, to specify the env directory as `config`:
 
 ```bash
-npx rsbuild dev --env-dir config
+npx rsbuild --env-dir config
 ```
 
 Rsbuild will then read `./config/.env` and other env files from that directory.
@@ -360,7 +360,7 @@ const mergedConfig = mergeRsbuildConfig(
 You can disable loading `.env` files by using the `--no-env` flag in the CLI.
 
 ```bash
-npx rsbuild dev --no-env
+npx rsbuild --no-env
 ```
 
 When using the `--no-env` flag, Rsbuild CLI will not read any `.env` files. You can then manage environment variables using other tools, such as [dotenvx](https://dotenvx.com/).

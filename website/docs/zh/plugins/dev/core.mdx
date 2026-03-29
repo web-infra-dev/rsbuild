@@ -246,9 +246,9 @@ const pluginFoo = () => ({
 
 ## api.logger
 
-提供统一日志输出格式的实例，可以用于代替 `console.log`，保持与 Rsbuild 一致的日志输出格式。
+提供统一日志输出格式的实例，可以用于输出与 Rsbuild 一致的日志格式。
 
-等价于 `import { logger } from '@rsbuild/core'`。
+> 详见 [日志](/guide/advanced/logging)。
 
 - **版本：** `>= 1.4.0`
 - **示例：**
@@ -262,8 +262,6 @@ const pluginLogging = () => ({
   },
 });
 ```
-
-> `api.logger` 基于 [rslog](https://github.com/rstackjs/rslog)，查看 [logger](/api/javascript-api/core#logger) 了解更多。
 
 ## api.isPluginExists
 

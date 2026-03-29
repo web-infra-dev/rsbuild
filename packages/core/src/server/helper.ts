@@ -7,7 +7,7 @@ import { ALL_INTERFACES_IPV4, LOCALHOST } from '../constants';
 import { color, isFunction } from '../helpers';
 import { getCommonParentPath } from '../helpers/path';
 import { addTrailingSlash, removeLeadingSlash } from '../helpers/url';
-import { logger } from '../logger';
+import type { Logger } from '../logger';
 import type {
   Connect,
   InternalContext,
@@ -151,10 +151,14 @@ function getURLMessages(
 ) {
   if (routes.length <= 1) {
     const pathname = routes.length ? routes[0].pathname : '';
+    const maxTrimmedLength = Math.max(
+      ...urls.map((u) => u.label.trimEnd().length),
+    );
+    const padWidth = Math.max(maxTrimmedLength + 2, 10);
     return urls
       .map(({ label, url }) => {
         const normalizedPathname = normalizeUrl(`${url}${pathname}`);
-        const prefix = `➜  ${color.dim(label.padEnd(10))}`;
+        const prefix = `➜  ${color.dim(label.trimEnd().padEnd(padWidth))}`;
         return `  ${prefix}${color.cyan(normalizedPathname)}\n`;
       })
       .join('');
@@ -190,6 +194,7 @@ export function printServerURLs({
   printUrls,
   trailingLineBreak = true,
   originalConfig,
+  logger,
 }: {
   urls: { url: string; label: string }[];
   port: number;
@@ -198,6 +203,7 @@ export function printServerURLs({
   printUrls?: PrintUrls;
   trailingLineBreak?: boolean;
   originalConfig?: Readonly<RsbuildConfig>;
+  logger: Logger;
 }): string | null {
   if (printUrls === false) {
     return null;

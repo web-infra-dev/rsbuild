@@ -2,6 +2,7 @@
   "alias",
   "env-vars",
   "hmr",
+  "logging",
   "browserslist",
   "browser-compatibility",
   "module-federation",

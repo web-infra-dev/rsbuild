@@ -4,7 +4,7 @@ description: 'Rsbuild 内置了一个轻量的命令行工具，包含 rsbuild d
 
 # 命令行工具
 
-Rsbuild 内置了一个轻量的命令行工具，包含 [rsbuild dev](#rsbuild-dev)、[rsbuild build](#rsbuild-build) 等命令。
+Rsbuild 内置了一个轻量的命令行工具，包含 [rsbuild dev](#rsbuild)、[rsbuild build](#rsbuild-build) 等命令。
 
 ## 查看所有命令
 
@@ -45,12 +45,14 @@ Rsbuild CLI 提供了一些公共选项，可以用于所有命令：
 | `--no-env`                 | 禁用 `.env` 文件的加载                                                                                               |
 | `-r, --root <root>`        | 指定项目根目录（绝对路径或者相对于 [cwd](https://nodejs.org/api/process.html#processcwd) 的路径）                    |
 
-## rsbuild dev
+## rsbuild
 
-`rsbuild dev` 命令用于启动一个本地开发服务器，对源代码进行开发模式编译。
+`rsbuild` 命令用于启动本地开发服务器，并以开发模式编译源代码。`rsbuild dev` 是 `rsbuild` 的别名。
 
 ```bash
-Usage: rsbuild dev [options]
+Usage:
+  rsbuild [options]
+  rsbuild dev [options]
 
 Options:
   -o, --open [url]      启动时是否在浏览器中打开页面
@@ -58,21 +60,15 @@ Options:
   --host [host]         指定 Rsbuild server 启动时监听的 host
 ```
 
-你也可以直接运行 `rsbuild` 来启动 dev server，等同于运行 `rsbuild dev`。
-
-```bash
-npx rsbuild
-```
-
 ### 指定 Host \{#specifying-host}
 
 默认情况下，dev server 仅监听 `localhost`。当传入 `--host` 且未指定值时，服务器会监听所有网络接口：
 
 ```bash
-npx rsbuild dev --host
+npx rsbuild --host
 
 # 等同于：
-npx rsbuild dev --host 0.0.0.0
+npx rsbuild --host 0.0.0.0
 ```
 
 ### 打开页面
@@ -80,19 +76,19 @@ npx rsbuild dev --host 0.0.0.0
 通过 `--open` 选项可以在启动 dev server 时自动打开页面，等同于将 [server.open](/config/server/open) 设置为 `true`。
 
 ```bash
-rsbuild dev --open
+rsbuild --open
 ```
 
 `--open` 选项也支持指定需要打开的 URL 地址，比如：
 
 ```bash
-rsbuild dev --open http://localhost:3000/foo
+rsbuild --open http://localhost:3000/foo
 ```
 
 `--open` 选项也可以缩写为 `-o`：
 
 ```bash
-rsbuild dev -o
+rsbuild -o
 ```
 
 :::tip

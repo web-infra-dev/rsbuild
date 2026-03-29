@@ -1,4 +1,5 @@
 import type { Hooks } from '../hooks';
+import type { Logger } from '../logger';
 import type { SocketServer } from '../server/socketServer';
 import type { NormalizedConfig, RsbuildConfig } from './config';
 import type { EnvironmentContext } from './hooks';
@@ -85,6 +86,8 @@ export type BuildState = {
 
 /** The inner context. */
 export type InternalContext = RsbuildContext & {
+  /** The logger associated with current Rsbuild instance. */
+  logger: Logger;
   /** All hooks. */
   hooks: Readonly<Hooks>;
   /** Current Rsbuild config. */

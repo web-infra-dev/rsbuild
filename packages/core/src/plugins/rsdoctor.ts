@@ -2,7 +2,6 @@ import { pathToFileURL } from 'node:url';
 import type { Configuration } from '@rspack/core';
 import { isWindows } from '../constants';
 import { color, require } from '../helpers';
-import { logger } from '../logger';
 import type { RsbuildPlugin, Rspack } from '../types';
 
 type RsdoctorExports = {
@@ -49,7 +48,7 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
           paths: [api.context.rootPath],
         });
       } catch {
-        logger.warn(
+        api.logger.warn(
           `\`process.env.RSDOCTOR\` enabled, please install ${color.bold(color.yellow(packageName))} package.`,
         );
         return;
@@ -62,7 +61,7 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
           : packagePath;
         module = await import(moduleURL);
       } catch {
-        logger.error(
+        api.logger.error(
           `\`process.env.RSDOCTOR\` enabled, but failed to load ${color.bold(color.yellow(packageName))} module.`,
         );
         return;
@@ -77,7 +76,7 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
         config.plugins.push(new module[pluginName]());
       }
 
-      logger.info(`${color.bold(color.yellow(packageName))} enabled.`);
+      api.logger.info(`${color.bold(color.yellow(packageName))} enabled.`);
     });
   },
 });

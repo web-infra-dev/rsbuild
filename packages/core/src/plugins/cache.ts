@@ -1,7 +1,6 @@
 import { isAbsolute, join } from 'node:path';
 import { hash } from '../helpers';
 import { findExists, isFileExists } from '../helpers/fs';
-import { logger } from '../logger';
 import type {
   BuildCacheOptions,
   EnvironmentContext,
@@ -119,7 +118,7 @@ export const pluginCache = (): RsbuildPlugin => ({
 
     api.onAfterCreateCompiler(() => {
       if (cacheEnabled) {
-        logger.debug('Rspack persistent cache enabled');
+        api.logger.debug('Rspack persistent cache enabled');
       }
     });
   },

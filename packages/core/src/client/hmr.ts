@@ -364,7 +364,7 @@ export function init(
     } else {
       try {
         message = JSON.stringify(reason);
-      } catch (_) {
+      } catch {
         return;
       }
     }

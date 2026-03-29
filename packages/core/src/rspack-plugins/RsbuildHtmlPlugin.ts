@@ -4,7 +4,7 @@ import { color, isFunction, partition } from '../helpers';
 import { addCompilationError } from '../helpers/compiler';
 import { readFileAsync } from '../helpers/fs';
 import { ensureAssetPrefix, isURL } from '../helpers/url';
-import { logger } from '../logger';
+import type { Logger } from '../logger';
 import type {
   EnvironmentContext,
   HtmlBasicTag,
@@ -260,10 +260,12 @@ export class RsbuildHtmlPlugin {
       compilation,
       favicon,
       faviconDistPath,
+      logger,
     }: {
       compilation: Rspack.Compilation;
       favicon: string;
       faviconDistPath: string;
+      logger: Logger;
     }) => {
       const name = path.basename(favicon);
 
@@ -315,12 +317,14 @@ export class RsbuildHtmlPlugin {
       faviconDistPath,
       compilation,
       publicPath,
+      logger,
     }: {
       headTags: HtmlTagObject[];
       favicon: string;
       faviconDistPath: string;
       compilation: Rspack.Compilation;
       publicPath: string;
+      logger: Logger;
     }) => {
       let href = favicon;
 
@@ -329,6 +333,7 @@ export class RsbuildHtmlPlugin {
           compilation,
           favicon,
           faviconDistPath,
+          logger,
         });
 
         if (name === null) {
@@ -401,6 +406,7 @@ export class RsbuildHtmlPlugin {
             faviconDistPath,
             compilation,
             publicPath: data.publicPath,
+            logger: context.logger,
           });
         }
 

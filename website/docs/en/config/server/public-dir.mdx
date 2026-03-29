@@ -10,6 +10,7 @@ description: 'By default, Rsbuild uses the public directory for serving public a
 type PublicDirOptions = {
   name?: string;
   copyOnBuild?: boolean | 'auto';
+  ignore?: string[];
   watch?: boolean;
 };
 type PublicDir = false | PublicDirOptions | PublicDirOptions[];
@@ -21,6 +22,7 @@ type PublicDir = false | PublicDirOptions | PublicDirOptions[];
 const defaultValue = {
   name: 'public',
   copyOnBuild: 'auto',
+  ignore: [],
   watch: false,
 };
 ```
@@ -127,6 +129,27 @@ When performing [multi-environment builds](/guide/advanced/environments), Rsbuil
 - The distDir of the `web` environment is `dist`, and the distDir of the `web1` environment is `dist/web1`. Due to the nested relationship between `dist` and `dist/web1`, the public directory files are only copied to the `dist` directory.
 - The distDir of the `esm` environment is `dist/esm`, and the distDir of the `cjs` environment is `dist/cjs`. Since there is no nesting relationship between `dist/esm` and `dist/cjs`, the public directory files will be copied to both the `dist/esm` and `dist/cjs` directories.
 
+### ignore
+
+- **Type:** `string[]`
+- **Default:** `[]`
+
+Glob patterns for files or directories to ignore when copying the public directory during production builds.
+
+This option only affects the copy behavior during build. It does not affect static file serving in the dev server.
+
+For example, ignore `foo.js` when copying the public directory:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    publicDir: {
+      ignore: ['**/foo.js'],
+    },
+  },
+};
+```
+
 ### watch
 
 - **Type:** `boolean`
@@ -179,3 +202,9 @@ export default {
   },
 };
 ```
+
+## Version history
+
+| Version | Changes                   |
+| ------- | ------------------------- |
+| v2.0.0  | Added the `ignore` option |

@@ -8,7 +8,7 @@ description: 'If you want to know the differences between different decorators v
 
 ```ts
 type Decorators = {
-  version?: 'legacy' | '2022-03';
+  version?: 'legacy' | '2022-03' | '2023-11';
 };
 ```
 
@@ -16,12 +16,28 @@ Used to configure the decorators syntax.
 
 ## decorators.version
 
-- **Type:** `'legacy' | '2022-03'`
+- **Type:** `'legacy' | '2022-03' | '2023-11'`
 - **Default:** `'2022-03'`
 
 Specify the decorator syntax version to be used.
 
 If you want to know the differences between different decorators versions, you can refer to: [How does this proposal compare to other versions of decorators?](https://github.com/tc39/proposal-decorators#how-does-this-proposal-compare-to-other-versions-of-decorators)
+
+### 2023-11
+
+`2023-11` corresponds to the November 2023 version of the Stage 3 decorator proposal.
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    decorators: {
+      version: '2023-11',
+    },
+  },
+};
+```
+
+> References: [tc39/proposal-decorators](https://github.com/tc39/proposal-decorators), [@babel/plugin-proposal-decorators](https://babeljs.io/docs/babel-plugin-proposal-decorators).
 
 ### 2022-03
 
@@ -37,10 +53,7 @@ export default {
 };
 ```
 
-Reference documentation:
-
-- [JavaScript meta programming with the 2022-03 decorators API](https://2ality.com/2022/10/javascript-decorators.html)
-- [TypeScript 5.0 Decorators](https://typescriptlang.org/docs/handbook/release-notes/typescript-5-0.html#decorators)
+> References: [JavaScript meta programming with the 2022-03 decorators API](https://2ality.com/2022/10/javascript-decorators.html), [TypeScript 5.0 Decorators](https://typescriptlang.org/docs/handbook/release-notes/typescript-5-0.html#decorators).
 
 ### legacy
 
@@ -56,7 +69,4 @@ export default {
 };
 ```
 
-Reference documentation:
-
-- [A Complete Guide to TypeScript Decorators](https://mirone.me/a-complete-guide-to-typescript-decorator/)
-- [TypeScript Decorators](https://typescriptlang.org/docs/handbook/decorators.html)
+> References: [A Complete Guide to TypeScript Decorators](https://mirone.me/a-complete-guide-to-typescript-decorator/), [TypeScript Decorators](https://typescriptlang.org/docs/handbook/decorators.html).

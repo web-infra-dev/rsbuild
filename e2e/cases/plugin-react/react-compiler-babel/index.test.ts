@@ -10,6 +10,10 @@ test('should render basic React component', async ({ page, runBothServe }) => {
     if (mode === 'build') {
       const index = await result.getIndexBundle();
       expect(index).toContain('memo_cache_sentinel');
+      const hookStart = index.indexOf('const useCounter = ()=>{');
+      expect(hookStart).toBeGreaterThan(-1);
+      const hookSnippet = index.slice(hookStart, hookStart + 400);
+      expect(hookSnippet).toContain('compiler_runtime.c');
     }
   });
 });

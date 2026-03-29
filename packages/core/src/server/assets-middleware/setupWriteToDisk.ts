@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import type { Compilation, Compiler } from '@rspack/core';
-import { logger } from '../../logger';
+import type { Logger } from '../../logger';
 import type { EnvironmentContext, NormalizedDevConfig } from '../../types';
 
 declare module '@rspack/core' {
@@ -45,6 +45,7 @@ export const resolveWriteToDiskConfig = (
 export function setupWriteToDisk(
   compilers: Compiler[],
   writeToDisk: ResolvedWriteToDisk,
+  logger: Logger,
 ): void {
   for (const compiler of compilers) {
     compiler.hooks.emit.tap('DevMiddleware', () => {

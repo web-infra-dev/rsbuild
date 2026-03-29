@@ -19,6 +19,8 @@
 import type { Chunk, ChunkGroup, Compilation } from '@rspack/core';
 import type { ResourceHintsIncludeType } from '../../types';
 
+const LICENSE_ASSET_REGEX = /\.LICENSE\.txt$/;
+
 function isAsyncChunk(chunk: Chunk | ChunkGroup): boolean {
   if ('canBeInitial' in chunk) {
     return !chunk.canBeInitial();
@@ -58,23 +60,12 @@ export function extractChunks(
   }
 
   if (includeType === 'all-assets') {
-    // Every asset, regardless of which chunk it's in.
-    // Wrap it in a single, "pseudo-chunk" return value.
-    // Note: webpack5 will extract license default, we do not need to preload them
-    // @ts-expect-error
-    const licenseAssets = [...(compilation.assetsInfo?.values() || [])]
-      .map((info) => {
-        if (info.related?.license) {
-          return info.related.license;
-        }
-        return false;
-      })
-      .filter(Boolean);
-
+    // Linked legal comments are emitted as separate *.LICENSE.txt assets and
+    // should not be hinted.
     return [
       {
         files: Object.keys(compilation.assets).filter(
-          (t) => !licenseAssets.includes(t),
+          (file) => !LICENSE_ASSET_REGEX.test(file),
         ),
       },
     ];

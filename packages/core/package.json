@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/core",
-  "version": "2.0.0-beta.8",
+  "version": "2.0.0-beta.10",
   "description": "The Rspack-based build tool.",
   "homepage": "https://rsbuild.rs",
   "bugs": {
@@ -36,14 +36,13 @@
     "types.d.ts"
   ],
   "scripts": {
-    "build": "rslib build",
-    "dev": "rslib build -w",
-    "prebundle": "prebundle",
-    "bump": "pnpx bumpp --no-tag"
+    "build": "rslib",
+    "dev": "rslib -w",
+    "prebundle": "prebundle"
   },
   "dependencies": {
-    "@rspack/core": "2.0.0-beta.6",
-    "@swc/helpers": "^0.5.19"
+    "@rspack/core": "2.0.0-beta.9",
+    "@swc/helpers": "^0.5.20"
   },
   "peerDependencies": {
     "core-js": ">= 3.0.0"
@@ -73,8 +72,8 @@
     "html-rspack-plugin": "6.1.7",
     "http-proxy-middleware": "^3.0.5",
     "jiti": "^2.6.1",
-    "launch-editor-middleware": "^2.13.1",
-    "memfs": "^4.56.11",
+    "launch-editor-middleware": "^2.13.2",
+    "memfs": "^4.57.1",
     "mrmime": "^2.0.1",
     "on-finished": "2.4.1",
     "open": "^11.0.0",
@@ -84,17 +83,17 @@
     "prebundle": "1.6.4",
     "range-parser": "^1.2.1",
     "reduce-configs": "^1.1.1",
-    "rslog": "^2.0.1",
-    "rspack-chain": "^2.0.0-beta.0",
+    "rslog": "^2.1.0",
+    "rspack-chain": "^2.0.0-beta.1",
     "rspack-manifest-plugin": "5.2.1",
     "sirv": "^3.0.2",
     "stacktrace-parser": "^0.1.11",
     "style-loader": "^4.0.0",
     "supports-color": "^10.2.2",
     "tinyglobby": "^0.2.15",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.2",
     "webpack-merge": "6.0.1",
-    "ws": "^8.19.0"
+    "ws": "^8.20.0"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"

@@ -6,7 +6,6 @@ import type {
 import { color, isObject } from '../helpers';
 import { getPublicPathFromCompiler } from '../helpers/compiler';
 import { ensureAssetPrefix } from '../helpers/url';
-import { logger } from '../logger';
 import { recursiveChunkEntryNames } from '../rspack-plugins/resource-hints/doesChunkBelongToHtml';
 import type {
   EnvironmentContext,
@@ -260,7 +259,7 @@ export const pluginManifest = (): RsbuildPlugin => ({
       const uniqueFilenames = new Set(filenames);
 
       if (uniqueFilenames.size !== filenames.length) {
-        logger.warn(
+        api.logger.warn(
           `${color.dim('[rsbuild:manifest]')} The ${color.yellow(
             '"manifest.filename"',
           )} option must be unique when there are multiple environments (${environmentNames.join(

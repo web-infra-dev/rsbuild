@@ -220,6 +220,32 @@ test('should generate prefetch link by config (distinguish html)', async ({
   expect(content2.match(/rel="prefetch"/g)?.length).toBe(3);
 });
 
+test('should not generate prefetch link for linked legal comment assets in all-assets mode', async ({
+  build,
+}) => {
+  const rsbuild = await build({
+    config: {
+      plugins: [pluginReact()],
+      source: {
+        entry: {
+          main: join(fixtures, 'src/page1/index.ts'),
+        },
+      },
+      performance: {
+        prefetch: {
+          type: 'all-assets',
+        },
+      },
+    },
+  });
+
+  const files = rsbuild.getDistFiles();
+  const licenseFileName = findFile(files, /\.LICENSE\.txt$/);
+  const content = getFileContent(files, '.html');
+  expect(licenseFileName).toBeTruthy();
+  expect(content.includes('.LICENSE.txt')).toBeFalsy();
+});
+
 test('should not generate prefetch link for inlined assets', async ({
   build,
 }) => {

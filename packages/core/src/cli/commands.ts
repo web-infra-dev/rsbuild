@@ -2,7 +2,7 @@ import cac, { type CAC, type Command } from 'cac';
 import { RSPACK_BUILD_ERROR } from '../build';
 import { color } from '../helpers';
 import type { ConfigLoader } from '../loadConfig';
-import { logger } from '../logger';
+import { defaultLogger } from '../logger';
 import { onBeforeRestartServer } from '../restart';
 import type { LogLevel, RsbuildMode } from '../types';
 import { init } from './init';
@@ -105,10 +105,19 @@ export function setupCommands(): void {
   applyServerOptions(devCommand);
   applyServerOptions(previewCommand);
 
+  let logger = defaultLogger;
+
   devCommand.action(async (options: DevOptions) => {
     try {
-      const rsbuild = await init({ cliOptions: options });
-      await rsbuild?.startDevServer();
+      const rsbuild = await init({
+        cliOptions: options,
+      });
+      if (!rsbuild) {
+        return;
+      }
+
+      logger = rsbuild.logger;
+      await rsbuild.startDevServer();
     } catch (err) {
       logger.error('Failed to start dev server.');
       logger.error(err);
@@ -131,15 +140,21 @@ export function setupCommands(): void {
           cliOptions: options,
           isBuildWatch: options.watch,
         });
-        const buildInstance = await rsbuild?.build({
+        if (!rsbuild) {
+          return;
+        }
+
+        logger = rsbuild.logger;
+
+        const buildResult = await rsbuild.build({
           watch: options.watch,
         });
 
-        if (buildInstance) {
+        if (buildResult) {
           if (options.watch) {
-            onBeforeRestartServer(buildInstance.close);
+            onBeforeRestartServer(buildResult.close);
           } else {
-            await buildInstance.close();
+            await buildResult.close();
           }
         }
       } catch (err) {
@@ -156,8 +171,16 @@ export function setupCommands(): void {
 
   previewCommand.action(async (options: PreviewOptions) => {
     try {
-      const rsbuild = await init({ cliOptions: options });
-      await rsbuild?.preview();
+      const rsbuild = await init({
+        cliOptions: options,
+      });
+
+      if (!rsbuild) {
+        return;
+      }
+
+      logger = rsbuild.logger;
+      await rsbuild.preview();
     } catch (err) {
       logger.error('Failed to start preview server.');
       logger.error(err);
@@ -170,8 +193,16 @@ export function setupCommands(): void {
     .option('--verbose', 'Show complete function definitions in output')
     .action(async (options: InspectOptions) => {
       try {
-        const rsbuild = await init({ cliOptions: options });
-        await rsbuild?.inspectConfig({
+        const rsbuild = await init({
+          cliOptions: options,
+        });
+
+        if (!rsbuild) {
+          return;
+        }
+
+        logger = rsbuild.logger;
+        await rsbuild.inspectConfig({
           verbose: options.verbose,
           outputPath: options.output,
           writeToDisk: true,

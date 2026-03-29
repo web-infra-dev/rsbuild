@@ -7,7 +7,7 @@ import { getDefaultEntry, normalizeConfig } from './defaultConfig';
 import { camelCase, color, pick } from './helpers';
 import { ensureAbsolutePath } from './helpers/path';
 import { inspectConfig } from './inspectConfig';
-import { isDebug, logger } from './logger';
+import { isDebug } from './logger';
 import { mergeRsbuildConfig } from './mergeConfig';
 import { initPlugins } from './pluginManager';
 import { generateRspackConfig } from './rspackConfig';
@@ -38,7 +38,7 @@ const allowedEnvironmentDevKeys: AllowedEnvironmentDevKeys[] = [
 ];
 
 async function modifyRsbuildConfig(context: InternalContext) {
-  logger.debug('applying modifyRsbuildConfig hook');
+  context.logger.debug('applying modifyRsbuildConfig hook');
 
   const pluginsCount = context.config.plugins?.length ?? 0;
   const [modified] = await context.hooks.modifyRsbuildConfig.callChain(
@@ -49,14 +49,14 @@ async function modifyRsbuildConfig(context: InternalContext) {
 
   const newPluginsCount = modified.plugins?.length ?? 0;
   if (newPluginsCount !== pluginsCount) {
-    logger.warn(
+    context.logger.warn(
       `${color.dim('[rsbuild]')} Cannot change plugins via ${color.yellow(
         'modifyRsbuildConfig',
       )} as plugins are already initialized when it executes.`,
     );
   }
 
-  logger.debug('applied modifyRsbuildConfig hook');
+  context.logger.debug('applied modifyRsbuildConfig hook');
 }
 
 async function modifyEnvironmentConfig(
@@ -64,7 +64,7 @@ async function modifyEnvironmentConfig(
   config: MergedEnvironmentConfig,
   name: string,
 ) {
-  logger.debug(`applying modifyEnvironmentConfig hook (${name})`);
+  context.logger.debug(`applying modifyEnvironmentConfig hook (${name})`);
 
   const [modified] = await context.hooks.modifyEnvironmentConfig.callChain({
     environment: name,
@@ -78,7 +78,7 @@ async function modifyEnvironmentConfig(
     ],
   });
 
-  logger.debug(`applied modifyEnvironmentConfig hook (${name})`);
+  context.logger.debug(`applied modifyEnvironmentConfig hook (${name})`);
 
   return modified;
 }
@@ -184,7 +184,10 @@ const initEnvironmentConfigs = (
   };
 };
 
-const validateRsbuildConfig = (config: NormalizedConfig) => {
+const validateRsbuildConfig = (
+  context: InternalContext,
+  config: NormalizedConfig,
+) => {
   if (config.server.base && !config.server.base.startsWith('/')) {
     throw new Error(
       `${color.dim('[rsbuild:config]')} The ${color.yellow(
@@ -204,7 +207,7 @@ const validateRsbuildConfig = (config: NormalizedConfig) => {
   for (const name of environmentNames) {
     // ensure environment names are filesystem and property access safe
     if (!environmentNameRegexp.test(name)) {
-      logger.warn(
+      context.logger.warn(
         `${color.dim('[rsbuild:config]')} Environment name "${color.yellow(name)}" contains invalid characters. Only letters, numbers, "-", "_", and "$" are allowed.`,
       );
     }
@@ -316,7 +319,7 @@ export async function initRsbuildConfig({
 
   await updateEnvironmentContext(context, environments);
   updateContextByNormalizedConfig(context);
-  validateRsbuildConfig(context.normalizedConfig);
+  validateRsbuildConfig(context, context.normalizedConfig);
 
   return context.normalizedConfig;
 }

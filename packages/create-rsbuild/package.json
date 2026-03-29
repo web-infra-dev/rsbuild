@@ -1,6 +1,6 @@
 {
   "name": "create-rsbuild",
-  "version": "2.0.0-beta.8",
+  "version": "2.0.0-beta.10",
   "description": "Create a new Rsbuild project",
   "homepage": "https://rsbuild.rs",
   "repository": {
@@ -13,7 +13,6 @@
   "exports": {
     ".": "./dist/index.js"
   },
-  "main": "./dist/index.js",
   "bin": {
     "create-rsbuild": "./bin.js"
   },
@@ -23,10 +22,9 @@
     "bin.js"
   ],
   "scripts": {
-    "build": "rslib build --syntax es2023",
-    "dev": "rslib build --syntax es2023 -w",
-    "start": "node ./dist/index.js",
-    "bump": "pnpx bumpp --no-tag"
+    "build": "rslib --syntax es2023",
+    "dev": "rslib --syntax es2023 -w",
+    "start": "node ./dist/index.js"
   },
   "dependencies": {
     "create-rstack": "1.8.1"
@@ -41,7 +39,7 @@
     "@rsbuild/plugin-vue": "workspace:*",
     "@rslib/core": "0.20.0",
     "@types/node": "^24.12.0",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.2"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"

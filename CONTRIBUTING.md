@@ -141,9 +141,7 @@ feat(core): Add `myOption` config
 
 Repository maintainers can publish a new version of changed packages to npm.
 
-1. Checkout a new release branch, for example `release_v1.2.0`
-2. Run `pnpm bump` in the package directory to update the version of each package.
-3. Create a pull request, the title should be `release: v1.2.0`.
-4. Run the [release action](https://github.com/web-infra-dev/rsbuild/actions/workflows/release.yml) to publish packages to npm.
-5. Merge the release pull request to `main`.
-6. Generate the [release notes](https://github.com/web-infra-dev/rsbuild/releases) via GitHub, see [Automatically generated release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes)
+1. Use `release-core` skill to update the version.
+2. Run the [release action](https://github.com/web-infra-dev/rsbuild/actions/workflows/release.yml) to publish packages to npm.
+3. Merge the release pull request to `main`.
+4. Generate the [release notes](https://github.com/web-infra-dev/rsbuild/releases) via GitHub, see [Automatically generated release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes).

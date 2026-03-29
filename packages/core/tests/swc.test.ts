@@ -106,6 +106,16 @@ describe('plugin-swc', () => {
     });
   });
 
+  it('should apply decorators version 2023-11', async () => {
+    await matchConfigSnapshot({
+      source: {
+        decorators: {
+          version: '2023-11',
+        },
+      },
+    });
+  });
+
   it('should allow using `tools.swc` to configure swc-loader options', async () => {
     const rsbuild = await createRsbuild({
       cwd: defaultCwd,

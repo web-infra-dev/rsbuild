@@ -2,7 +2,6 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { rspack } from '@rspack/core';
 import { color } from '../helpers';
-import { logger } from '../logger';
 import type { RsbuildPlugin } from '../types';
 
 enum TracePreset {
@@ -111,7 +110,7 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
       }
 
       rspack.experiments.globalTrace.cleanup();
-      logger.info(`profile file saved to ${color.cyan(traceOutput)}`);
+      api.logger.info(`profile file saved to ${color.cyan(traceOutput)}`);
     });
   },
 });

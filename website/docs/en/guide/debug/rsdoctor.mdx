@@ -25,7 +25,7 @@ import { PackageManagerTabs } from '@theme';
 ```json title="package.json"
 {
   "scripts": {
-    "dev:rsdoctor": "RSDOCTOR=true rsbuild dev",
+    "dev:rsdoctor": "RSDOCTOR=true rsbuild",
     "build:rsdoctor": "RSDOCTOR=true rsbuild build"
   }
 }
@@ -36,7 +36,7 @@ Because Windows does not support this syntax, you can use [cross-env](https://np
 ```json title="package.json"
 {
   "scripts": {
-    "dev:rsdoctor": "cross-env RSDOCTOR=true rsbuild dev",
+    "dev:rsdoctor": "cross-env RSDOCTOR=true rsbuild",
     "build:rsdoctor": "cross-env RSDOCTOR=true rsbuild build"
   },
   "devDependencies": {

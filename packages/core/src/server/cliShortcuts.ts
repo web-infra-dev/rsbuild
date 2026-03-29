@@ -1,5 +1,5 @@
 import { color, isTTY } from '../helpers';
-import { logger } from '../logger';
+import type { Logger } from '../logger';
 import type { CliShortcut, NormalizedConfig } from '../types/config';
 
 export const isCliShortcutsEnabled = (config: NormalizedConfig): boolean =>
@@ -17,6 +17,7 @@ export async function setupCliShortcuts({
   printUrls,
   restartServer,
   customShortcuts,
+  logger,
 }: {
   help?: boolean | string;
   openPage: () => Promise<void>;
@@ -24,6 +25,7 @@ export async function setupCliShortcuts({
   printUrls: () => void;
   restartServer?: () => Promise<boolean>;
   customShortcuts?: (shortcuts: CliShortcut[]) => CliShortcut[];
+  logger: Logger;
 }): Promise<() => void> {
   let shortcuts = [
     {

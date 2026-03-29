@@ -2,10 +2,8 @@
   "compilerOptions": {
     "target": "ES2022",
     "lib": ["DOM", "ES2022"],
-    "module": "ESNext",
     "jsx": "preserve",
     "jsxImportSource": "vue",
-    "strict": true,
     "skipLibCheck": true,
     "verbatimModuleSyntax": true,
     "resolveJsonModule": true,

@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "rsbuild dev",
-    "dev:esm": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" TEST_ESM_LIBRARY=true rsbuild dev"
+    "dev": "rsbuild",
+    "dev:esm": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" TEST_ESM_LIBRARY=true rsbuild"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*"

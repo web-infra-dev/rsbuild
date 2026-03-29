@@ -1,5 +1,6 @@
 import type { Compiler, MultiCompiler } from '@rspack/core';
 import type { LoadEnvOptions } from '../loadEnv';
+import type { Logger } from '../logger';
 import type { RsbuildDevServer } from '../server/devServer';
 import type {
   StartDevServerResult,
@@ -194,6 +195,12 @@ export type AddPlugins = (
 ) => void;
 
 export type RsbuildInstance = {
+  /**
+   * The logger associated with the current Rsbuild instance.
+   * It reflects `config.customLogger` when provided, otherwise uses a logger
+   * created specifically for the current Rsbuild instance.
+   */
+  logger: Logger;
   /**
    * Register one or more Rsbuild plugins, which can be called multiple times.
    * This method needs to be called before compiling. If it is called after

@@ -4,7 +4,7 @@ description: 'Rsbuild includes a lightweight CLI with commands like rsbuild dev 
 
 # CLI
 
-Rsbuild includes a lightweight CLI with commands like [rsbuild dev](#rsbuild-dev) and [rsbuild build](#rsbuild-build).
+Rsbuild includes a lightweight CLI with commands like [rsbuild dev](#rsbuild) and [rsbuild build](#rsbuild-build).
 
 ## All commands
 
@@ -45,12 +45,14 @@ The Rsbuild CLI includes several common flags that work with all commands:
 | `--no-env`                 | Disable loading of `.env` files                                                                                                            |
 | `-r, --root <root>`        | Set the project root directory (absolute path or relative to [cwd](https://nodejs.org/api/process.html#processcwd))                        |
 
-## rsbuild dev
+## rsbuild
 
-The `rsbuild dev` command starts a local dev server and compiles source code for development.
+The `rsbuild` command starts a local dev server and compiles source code for development. `rsbuild dev` is an alias for `rsbuild`.
 
 ```bash
-Usage: rsbuild dev [options]
+Usage:
+  rsbuild [options]
+  rsbuild dev [options]
 
 Options:
   -o, --open [url]      Open the page in browser on startup
@@ -58,21 +60,15 @@ Options:
   --host [host]         Set the host that the server listens to
 ```
 
-Start the dev server by running `rsbuild` directly (equivalent to `rsbuild dev`):
-
-```bash
-npx rsbuild
-```
-
 ### Specifying host
 
 By default, the dev server listens on `localhost`. Passing `--host` without a value will make the server listen on all network interfaces:
 
 ```bash
-npx rsbuild dev --host
+npx rsbuild --host
 
 # equivalent to:
-npx rsbuild dev --host 0.0.0.0
+npx rsbuild --host 0.0.0.0
 ```
 
 ### Opening page
@@ -80,19 +76,19 @@ npx rsbuild dev --host 0.0.0.0
 The `--open` option opens a page automatically when the dev server starts (equivalent to setting [server.open](/config/server/open) to `true`).
 
 ```bash
-rsbuild dev --open
+rsbuild --open
 ```
 
 The `--open` option also accepts a specific URL to open. For example:
 
 ```bash
-rsbuild dev --open http://localhost:3000/foo
+rsbuild --open http://localhost:3000/foo
 ```
 
 The `--open` option can also be abbreviated to `-o`:
 
 ```bash
-rsbuild dev -o
+rsbuild -o
 ```
 
 :::tip

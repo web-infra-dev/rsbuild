@@ -30,7 +30,7 @@ Next, update the npm scripts in your package.json to run Rsbuild CLI commands.
     "dev": "vite", // [!code --]
     "build": "vite build", // [!code --]
     "preview": "vite preview", // [!code --]
-    "dev": "rsbuild dev", // [!code ++]
+    "dev": "rsbuild", // [!code ++]
     "build": "rsbuild build", // [!code ++]
     "preview": "rsbuild preview" // [!code ++]
   }
@@ -123,7 +123,7 @@ Here is the corresponding Rsbuild configuration for each Vite option:
 | logLevel                              | [logLevel](/config/log-level)                                    |
 | cacheDir                              | [buildCache](/config/performance/build-cache)                    |
 | publicDir                             | [server.publicDir](/config/server/public-dir)                    |
-| customLogger                          | [Custom logger](/api/javascript-api/core#custom-logger)          |
+| customLogger                          | [customLogger](/config/custom-logger)                            |
 | assetsInclude                         | [source.assetsInclude](/config/source/assets-include)            |
 | resolve.alias                         | [resolve.alias](/config/resolve/alias)                           |
 | resolve.dedupe                        | [resolve.dedupe](/config/resolve/dedupe)                         |

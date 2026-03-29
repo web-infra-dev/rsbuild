@@ -21,6 +21,7 @@ export const pluginServer = (): RsbuildPlugin => ({
           routes,
           config,
           protocol,
+          logger: api.logger,
         });
       }
     };

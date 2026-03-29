@@ -60,7 +60,6 @@ When creating an application, you can choose from the following templates provid
 | -------- | ------------------------------- | --------------------------------------- |
 | vanilla  | Native JavaScript               | -                                       |
 | react    | [React 19](https://react.dev/)  | [Using React](/guide/framework/react)   |
-| react18  | [React 18](https://react.dev/)  | [Using React](/guide/framework/react)   |
 | vue      | [Vue 3](https://vuejs.org/)     | [Using Vue](/guide/framework/vue)       |
 | vue2     | [Vue 2](https://v2.vuejs.org/)  | [Using Vue](/guide/framework/vue)       |
 | lit      | [Lit](https://lit.dev/)         | -                                       |
@@ -178,8 +177,8 @@ Rsbuild includes a lightweight CLI with commands like `dev` and `build`.
 ```json title="package.json"
 {
   "scripts": {
-    // start the dev server
-    "dev": "rsbuild dev",
+    // start the dev server, equivalent to "rsbuild dev"
+    "dev": "rsbuild",
     // build for production
     "build": "rsbuild build",
     // preview the production build locally

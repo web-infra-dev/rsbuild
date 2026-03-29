@@ -84,6 +84,10 @@ export default defineConfig({
 });
 ```
 
+:::tip
+If Node.js shows the `[MODULE_TYPELESS_PACKAGE_JSON]` warning for `rsbuild.config.ts`, you can add `"type": "module"` to package.json or rename the file to `rsbuild.config.mts` to resolve the warning.
+:::
+
 If you are developing a non-TypeScript project, you can use the `.mjs` format for the configuration file:
 
 ```js title="rsbuild.config.mjs"

@@ -2,6 +2,7 @@ import { rspack } from '@rspack/core';
 import { defaultAllowedOrigins } from '../src/defaultConfig';
 import { isClientCompiler } from '../src/server/assets-middleware';
 import { formatRoutes, printServerURLs } from '../src/server/helper';
+import { logger } from '../src';
 
 beforeEach(() => {
   const consoleLogSpy = rstest.spyOn(console, 'log');
@@ -168,6 +169,7 @@ test('should print server URLs correctly', () => {
   message = printServerURLs({
     port: 3000,
     protocol: 'http',
+    logger,
     urls: [
       {
         url: 'http://localhost:3000',
@@ -195,6 +197,7 @@ test('should print server URLs correctly', () => {
   message = printServerURLs({
     port: 3000,
     protocol: 'http',
+    logger,
     urls: [
       {
         url: 'http://localhost:3000',
@@ -237,6 +240,7 @@ test('should print server URLs correctly', () => {
   message = printServerURLs({
     port: 3000,
     protocol: 'http',
+    logger,
     urls: [],
     routes: [],
   });

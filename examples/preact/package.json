@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "rsbuild dev --open",
+    "dev": "rsbuild --open",
     "build": "rsbuild build",
     "preview": "rsbuild preview"
   },
@@ -13,6 +13,6 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-preact": "workspace:*",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.2"
   }
 }

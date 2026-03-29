@@ -85,6 +85,26 @@ describe('plugins/babel', () => {
     }
   });
 
+  it('should apply decorators version 2023-11 correctly', async () => {
+    const rsbuild = await createRsbuild({
+      cwd: import.meta.dirname,
+      config: {
+        plugins: [pluginBabel()],
+        source: {
+          decorators: {
+            version: '2023-11',
+          },
+        },
+        performance: {
+          buildCache: false,
+        },
+      },
+    });
+
+    const configs = await rsbuild.initConfigs();
+    expect(matchRules(configs[0], 'a.tsx')[0]).toMatchSnapshot();
+  });
+
   it('should set babel-loader', async () => {
     const rsbuild = await createRsbuild({
       cwd: import.meta.dirname,

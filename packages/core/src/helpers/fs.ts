@@ -1,13 +1,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { logger } from '../logger';
+import type { Logger } from '../logger';
 import type { Rspack } from '../types';
 import { toPosixPath } from './path';
 
 export const isFileSync = (filePath: string): boolean | undefined => {
   try {
     return fs.statSync(filePath, { throwIfNoEntry: false })?.isFile();
-  } catch (_) {
+  } catch {
     return false;
   }
 };
@@ -92,6 +92,7 @@ export function readFileAsync(
 
 export async function emptyDir(
   dir: string,
+  logger: Logger,
   keep: RegExp[] = [],
   checkExists = true,
 ): Promise<void> {
@@ -115,7 +116,7 @@ export async function emptyDir(
         }
 
         if (entry.isDirectory()) {
-          await emptyDir(fullPath, keep, false);
+          await emptyDir(fullPath, logger, keep, false);
           if (!keep.length) {
             await fs.promises.rmdir(fullPath);
           }

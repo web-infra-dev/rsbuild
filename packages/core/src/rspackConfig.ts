@@ -6,7 +6,7 @@ import {
 import { CHAIN_ID, modifyBundlerChain } from './configChain';
 import { castArray, color, getNodeEnv } from './helpers';
 import { requireCompiledPackage } from './helpers/vendors';
-import { logger } from './logger';
+import type { Logger } from './logger';
 import { getHTMLPlugin } from './pluginHelper';
 import type {
   EnvironmentContext,
@@ -23,7 +23,7 @@ async function modifyRspackConfig(
   rspackConfig: Rspack.Configuration,
   chainUtils: ModifyChainUtils,
 ) {
-  logger.debug('applying modifyRspackConfig hook');
+  context.logger.debug('applying modifyRspackConfig hook');
 
   let currentConfig = rspackConfig;
 
@@ -56,7 +56,7 @@ async function modifyRspackConfig(
     });
   }
 
-  logger.debug('applied modifyRspackConfig hook');
+  context.logger.debug('applied modifyRspackConfig hook');
   return currentConfig;
 }
 
@@ -152,7 +152,7 @@ export function getChainUtils(
   };
 }
 
-function validateRspackConfig(config: Rspack.Configuration) {
+function validateRspackConfig(config: Rspack.Configuration, logger: Logger) {
   // validate plugins
   if (config.plugins) {
     for (const plugin of config.plugins) {
@@ -203,7 +203,7 @@ export async function generateRspackConfig({
 
   rspackConfig = await modifyRspackConfig(context, rspackConfig, chainUtils);
 
-  validateRspackConfig(rspackConfig);
+  validateRspackConfig(rspackConfig, context.logger);
 
   return rspackConfig;
 }

@@ -21,8 +21,7 @@ function patchGlobalLocation() {
 
 function unpatchGlobalLocation() {
   if (global.location?.[GLOBAL_PATCHED_SYMBOL]) {
-    // @ts-expect-error
-    delete global.location;
+    delete (global as { location?: Location }).location;
   }
 }
 

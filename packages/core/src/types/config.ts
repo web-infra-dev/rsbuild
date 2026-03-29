@@ -22,6 +22,7 @@ import type RspackChain from 'rspack-chain';
 import type { FileDescriptor } from 'rspack-manifest-plugin';
 import type { RsbuildDevServer } from '../server/devServer';
 import type { RsbuildPreviewServer } from '../server/previewServer';
+import type { Logger } from '../logger';
 import type {
   EnvironmentContext,
   ModifyBundlerChainUtils,
@@ -221,7 +222,8 @@ export type Decorators = {
    */
   version?:
     | 'legacy' // stage 1
-    | '2022-03'; // stage 3
+    | '2022-03' // stage 3
+    | '2023-11'; // stage 3
 };
 
 export interface SourceConfig {
@@ -414,8 +416,9 @@ export type PublicDirOptions = {
    */
   watch?: boolean;
   /**
-   * Glob patterns of files to ignore when copying from the public directory.
-   * @default undefined
+   * Glob patterns for files or directories to ignore when copying the public directory
+   * during production builds.
+   * @default []
    */
   ignore?: string[];
 };
@@ -1071,6 +1074,37 @@ export type NormalizedDataUriLimit = Required<DataUriLimit>;
 
 export type Polyfill = 'usage' | 'entry' | 'off';
 
+export type SourceMapExtractTarget = {
+  /**
+   * Include matched JavaScript files whose existing source maps should be
+   * extracted.
+   */
+  include?: RuleSetCondition[];
+  /**
+   * Exclude matched JavaScript files whose existing source maps should not be
+   * extracted.
+   */
+  exclude?: RuleSetCondition[];
+};
+
+export type SourceMapExtract =
+  | boolean
+  | {
+      /**
+       * Whether to extract existing source maps from matching JavaScript files.
+       * This is useful when a third-party package already ships both `.js` and
+       * `.js.map` files.
+       *
+       * `true` means extract from all JavaScript files. You can also use `include`
+       * or `exclude` to limit extraction to specific files.
+       *
+       * This option is implemented based on Rspack's
+       * `module.rules[].extractSourceMap` and can replace `source-map-loader`.
+       * @default false
+       */
+      js?: boolean | SourceMapExtractTarget;
+    };
+
 export type SourceMap = {
   /**
    * The source map type for JavaScript files.
@@ -1082,6 +1116,12 @@ export type SourceMap = {
    * @default false
    */
   css?: boolean;
+  /**
+   * Whether to extract existing source maps from matching input files.
+   * Currently only JavaScript files are supported.
+   * @default false
+   */
+  extract?: SourceMapExtract;
 };
 
 export type CSSModulesLocalsConvention =
@@ -1357,6 +1397,7 @@ export interface OutputConfig {
    * const defaultSourceMap = {
    *   js: isDev ? 'cheap-module-source-map' : false,
    *   css: false,
+   *   extract: false,
    * };
    * ```
    */
@@ -1420,6 +1461,7 @@ export interface NormalizedOutputConfig extends OutputConfig {
     | {
         js?: Rspack.Configuration['devtool'];
         css: boolean;
+        extract: SourceMapExtract;
       };
   cleanDistPath: CleanDistPath;
   filenameHash: boolean | string;
@@ -2148,6 +2190,11 @@ export interface RsbuildConfig extends EnvironmentConfig {
    * @default 'info'
    */
   logLevel?: LogLevel;
+  /**
+   * Use a custom logger instance for the current Rsbuild instance.
+   * You can create one via `createLogger()`.
+   */
+  customLogger?: Logger;
   /**
    * Options for local development.
    */

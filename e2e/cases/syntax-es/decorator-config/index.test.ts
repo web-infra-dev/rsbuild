@@ -31,6 +31,25 @@ test('should allow to use stage 3 decorators', async ({
   expect(await page.evaluate('window.ccc')).toBe('hello world');
 });
 
+test('should allow to use 2023-11 decorators', async ({
+  page,
+  buildPreview,
+}) => {
+  await buildPreview({
+    config: {
+      source: {
+        decorators: {
+          version: '2023-11',
+        },
+      },
+    },
+  });
+
+  expect(await page.evaluate('window.aaa')).toBe('hello');
+  expect(await page.evaluate('window.bbb')).toBe('world');
+  expect(await page.evaluate('window.ccc')).toBe('hello world');
+});
+
 test('should use legacy decorators with babel-plugin', async ({
   page,
   buildPreview,
@@ -56,6 +75,26 @@ test('should allow to use stage 3 decorators with babel-plugin', async ({
       source: {
         decorators: {
           version: '2022-03',
+        },
+      },
+    },
+  });
+
+  expect(await page.evaluate('window.aaa')).toBe('hello');
+  expect(await page.evaluate('window.bbb')).toBe('world');
+  expect(await page.evaluate('window.ccc')).toBe('hello world');
+});
+
+test('should allow to use 2023-11 decorators with babel-plugin', async ({
+  page,
+  buildPreview,
+}) => {
+  await buildPreview({
+    config: {
+      plugins: [pluginBabel()],
+      source: {
+        decorators: {
+          version: '2023-11',
         },
       },
     },

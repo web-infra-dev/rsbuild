@@ -179,6 +179,7 @@ const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
   sourceMap: {
     js: undefined,
     css: false,
+    extract: false,
   },
   filenameHash: true,
   inlineScripts: false,

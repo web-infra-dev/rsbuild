@@ -68,7 +68,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
             "configFile": false,
             "plugins": [
               [
-                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                "<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
                 {
                   "version": "2022-03",
                 },
@@ -76,7 +76,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
             ],
             "presets": [
               [
-                "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                "<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
                 {
                   "allExtensions": true,
                   "allowDeclareFields": true,
@@ -161,7 +161,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader for R
         "configFile": false,
         "plugins": [
           [
-            "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+            "<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
             {
               "version": "2022-03",
             },
@@ -169,7 +169,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader for R
         ],
         "presets": [
           [
-            "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+            "<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
             {
               "allExtensions": true,
               "allowDeclareFields": true,
@@ -182,6 +182,97 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader for R
       },
     },
   ],
+}
+`;
+
+exports[`plugins/babel > should apply decorators version 2023-11 correctly 1`] = `
+{
+  "dependency": {
+    "not": "url",
+  },
+  "include": [
+    {
+      "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+    },
+    /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+  ],
+  "oneOf": [
+    {
+      "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+      "type": "asset/source",
+    },
+    {
+      "type": "javascript/auto",
+      "use": [
+        {
+          "loader": "builtin:swc-loader",
+          "options": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
+            "env": {
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+            "isModule": "unknown",
+            "jsc": {
+              "experimental": {
+                "cacheRoot": "<ROOT>/packages/plugin-babel/tests/node_modules/.cache/.swc",
+                "keepImportAttributes": true,
+              },
+              "externalHelpers": true,
+              "output": {
+                "charset": "utf8",
+              },
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": false,
+              },
+              "transform": {
+                "decoratorVersion": "2023-11",
+                "legacyDecorator": false,
+              },
+            },
+          },
+        },
+        {
+          "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
+          "options": {
+            "babelrc": false,
+            "compact": false,
+            "configFile": false,
+            "plugins": [
+              [
+                "<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                {
+                  "version": "2023-11",
+                },
+              ],
+            ],
+            "presets": [
+              [
+                "<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                {
+                  "allExtensions": true,
+                  "allowDeclareFields": true,
+                  "allowNamespaces": true,
+                  "isTSX": true,
+                  "optimizeConstEnums": true,
+                },
+              ],
+            ],
+          },
+        },
+      ],
+    },
+  ],
+  "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
 }
 `;
 
@@ -252,7 +343,7 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
             "configFile": false,
             "plugins": [
               [
-                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                "<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
                 {
                   "version": "2022-03",
                 },
@@ -260,7 +351,7 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
             ],
             "presets": [
               [
-                "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                "<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
                 {
                   "allExtensions": true,
                   "allowDeclareFields": true,
@@ -344,16 +435,16 @@ exports[`plugins/babel > should apply environment config correctly 2`] = `
             "configFile": false,
             "plugins": [
               [
-                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                "<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
                 {
                   "version": "legacy",
                 },
               ],
-              "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
+              "<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
             ],
             "presets": [
               [
-                "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                "<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
                 {
                   "allExtensions": true,
                   "allowDeclareFields": true,
@@ -436,7 +527,7 @@ exports[`plugins/babel > should set babel-loader 1`] = `
             "configFile": false,
             "plugins": [
               [
-                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                "<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
                 {
                   "version": "2022-03",
                 },
@@ -444,7 +535,7 @@ exports[`plugins/babel > should set babel-loader 1`] = `
             ],
             "presets": [
               [
-                "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                "<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
                 {
                   "allExtensions": true,
                   "allowDeclareFields": true,
@@ -530,7 +621,7 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
             "configFile": false,
             "plugins": [
               [
-                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                "<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
                 {
                   "version": "2022-03",
                 },
@@ -546,7 +637,7 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
             ],
             "presets": [
               [
-                "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
+                "<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
                 {
                   "allExtensions": true,
                   "allowDeclareFields": true,

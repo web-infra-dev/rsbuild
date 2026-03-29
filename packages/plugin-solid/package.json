@@ -17,15 +17,13 @@
       "require": "./dist/index.cjs"
     }
   },
-  "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "rslib build",
-    "dev": "rslib build -w",
-    "bump": "pnpx bumpp --no-tag"
+    "build": "rslib",
+    "dev": "rslib -w"
   },
   "dependencies": {
     "@rsbuild/plugin-babel": "workspace:*",
@@ -37,7 +35,7 @@
     "@rslib/core": "0.20.0",
     "@scripts/test-helper": "workspace:*",
     "@types/babel__core": "^7.20.5",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.2"
   },
   "peerDependencies": {
     "@rsbuild/core": "^1.0.0 || ^2.0.0-0"

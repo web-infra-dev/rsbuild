@@ -142,9 +142,9 @@ This means:
 
 ## Decorators version
 
-Rsbuild does not read the `experimentalDecorators` option in `tsconfig.json`, instead, it provides the [decorators.version](/config/source/decorators#decoratorsversion) configuration to specify the decorator version.
+Rsbuild does not read the `experimentalDecorators` option in `tsconfig.json`. Instead, it provides the [decorators.version](/config/source/decorators#decoratorsversion) option to specify the decorator version.
 
-By default, Rsbuild uses the `2022-03` version of the decorators, you can also set it to `legacy` to use the legacy decorators:
+By default, Rsbuild uses the `2022-03` decorators version. You can set it to `legacy` or `2023-11` when needed:
 
 ```ts title="rsbuild.config.ts"
 export default {

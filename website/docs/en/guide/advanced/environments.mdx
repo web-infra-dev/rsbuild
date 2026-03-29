@@ -129,16 +129,16 @@ By default, Rsbuild will build all environments in the Rsbuild configuration whe
 
 ```bash
 # Build for all environments by default
-rsbuild dev
+rsbuild
 
 # Build for the web environment
-rsbuild dev --environment web
+rsbuild --environment web
 
 # Build for the web and ssr environments
-rsbuild dev --environment web --environment node
+rsbuild --environment web --environment node
 
 # Building multiple environments can be shortened to:
-rsbuild dev --environment web,node
+rsbuild --environment web,node
 ```
 
 ## Add plugins for specified environment

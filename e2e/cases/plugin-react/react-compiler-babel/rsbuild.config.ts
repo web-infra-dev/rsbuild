@@ -4,10 +4,14 @@ import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 export default defineConfig({
+  output: {
+    minify: false,
+  },
   plugins: [
     pluginReact(),
     pluginBabel({
-      include: /\.(?:jsx|tsx)$/,
+      include: /\.[jt]sx?$/,
+      exclude: [/[\\/]node_modules[\\/]/],
       babelLoaderOptions(opts) {
         opts.plugins?.unshift(
           fileURLToPath(import.meta.resolve('babel-plugin-react-compiler')),

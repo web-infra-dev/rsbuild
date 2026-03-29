@@ -3,13 +3,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "rsbuild dev --open",
+    "dev": "rsbuild --open",
     "build": "rsbuild build",
     "preview": "rsbuild preview"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "lit": "^3.3.2",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.2"
   }
 }

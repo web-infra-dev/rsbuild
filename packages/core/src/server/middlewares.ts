@@ -3,7 +3,7 @@ import path from 'node:path';
 import onFinished from 'on-finished';
 import { color } from '../helpers';
 import { addTrailingSlash } from '../helpers/url';
-import { isVerbose, logger } from '../logger';
+import { isVerbose, type Logger } from '../logger';
 import type { Connect, EnvironmentAPI, RequestHandler, Rspack } from '../types';
 import type { BuildManager } from './buildManager';
 import { HttpCode, joinUrlSegments, stripBase } from './helper';
@@ -33,37 +33,38 @@ const getStatusCodeColor = (status: number) => {
   return (res: number) => res;
 };
 
-export const getRequestLoggerMiddleware: () => Connect.NextHandleFunction =
-  function requestLoggerMiddleware() {
-    return (req, res, next) => {
-      const _startAt = process.hrtime();
+export const getRequestLoggerMiddleware = (
+  logger: Logger,
+): Connect.NextHandleFunction => {
+  return (req, res, next) => {
+    const _startAt = process.hrtime();
 
-      const logRequest = () => {
-        const method = req.method;
-        const url = req.originalUrl || req.url;
-        const status = Number(res.statusCode);
+    const logRequest = () => {
+      const method = req.method;
+      const url = req.originalUrl || req.url;
+      const status = Number(res.statusCode);
 
-        // get status color
-        const statusColor = getStatusCodeColor(status);
+      // get status color
+      const statusColor = getStatusCodeColor(status);
 
-        const endAt = process.hrtime();
+      const endAt = process.hrtime();
 
-        const totalTime =
-          (endAt[0] - _startAt[0]) * 1e3 + (endAt[1] - _startAt[1]) * 1e-6;
+      const totalTime =
+        (endAt[0] - _startAt[0]) * 1e3 + (endAt[1] - _startAt[1]) * 1e-6;
 
-        // :status :method :url :total-time ms
-        logger.debug(
-          `${statusColor(status)} ${method} ${url} ${color.dim(
-            `${totalTime.toFixed(3)} ms`,
-          )}`,
-        );
-      };
-
-      onFinished(res, logRequest);
-
-      next();
+      // :status :method :url :total-time ms
+      logger.debug(
+        `${statusColor(status)} ${method} ${url} ${color.dim(
+          `${totalTime.toFixed(3)} ms`,
+        )}`,
+      );
     };
+
+    onFinished(res, logRequest);
+
+    next();
   };
+};
 
 export const notFoundMiddleware: RequestHandler = (_req, res, _next) => {
   res.statusCode = HttpCode.NotFound;
@@ -224,7 +225,8 @@ export const getBaseUrlMiddleware: (params: {
 export const getHtmlFallbackMiddleware: (params: {
   distPath: string;
   buildManager: BuildManager;
-}) => RequestHandler = ({ distPath, buildManager }) => {
+  logger: Logger;
+}) => RequestHandler = ({ distPath, buildManager, logger }) => {
   return async function htmlFallbackMiddleware(req, res, next) {
     if (!maybeHTMLRequest(req) || '/favicon.ico' === req.url) {
       next();
@@ -235,7 +237,7 @@ export const getHtmlFallbackMiddleware: (params: {
     if (await isFileExists(filePath, buildManager.outputFileSystem)) {
       const newUrl = '/index.html';
 
-      if (isVerbose()) {
+      if (isVerbose(logger)) {
         logger.debug(
           `    ${req.method} ${req.url} ${color.yellow('fallback to')} ${newUrl}`,
         );
@@ -257,7 +259,8 @@ export const getHtmlFallbackMiddleware: (params: {
  */
 export const viewingServedFilesMiddleware: (params: {
   environments: EnvironmentAPI;
-}) => RequestHandler = ({ environments }) =>
+  logger: Logger;
+}) => RequestHandler = ({ environments, logger }) =>
   async function viewingServedFilesMiddleware(req, res, next) {
     const url = req.url!;
     const pathname = getUrlPathname(url);

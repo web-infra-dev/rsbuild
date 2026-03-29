@@ -1,5 +1,5 @@
 import { getPathnameFromUrl } from '../helpers/path';
-import { isVerbose, logger } from '../logger';
+import { isVerbose } from '../logger';
 import type {
   InternalContext,
   NormalizedConfig,
@@ -41,6 +41,7 @@ export async function startPreviewServer(
   config: NormalizedConfig,
   { getPortSilently }: PreviewOptions = {},
 ): Promise<StartPreviewServerResult> {
+  const { logger } = context;
   const { connect } = await import(
     /* webpackChunkName: "connect-next" */ 'connect-next'
   );
@@ -88,6 +89,7 @@ export async function startPreviewServer(
       printUrls: serverConfig.printUrls,
       trailingLineBreak: !cliShortcutsEnabled,
       originalConfig: context.originalConfig,
+      logger,
     });
 
   const openPage = async () => {
@@ -97,6 +99,7 @@ export async function startPreviewServer(
       config,
       protocol,
       clearCache: true,
+      logger,
     });
   };
 
@@ -154,8 +157,8 @@ export async function startPreviewServer(
     });
   };
 
-  if (isVerbose()) {
-    middlewares.use(getRequestLoggerMiddleware());
+  if (isVerbose(logger)) {
+    middlewares.use(getRequestLoggerMiddleware(logger));
   }
 
   if (cors) {
@@ -180,7 +183,7 @@ export async function startPreviewServer(
   // each proxy configuration creates its own middleware instance
   if (proxy) {
     const { middlewares: proxyMiddlewares, upgrade } =
-      await createProxyMiddleware(proxy);
+      await createProxyMiddleware(proxy, logger);
 
     for (const middleware of proxyMiddlewares) {
       middlewares.use(middleware);
@@ -211,6 +214,7 @@ export async function startPreviewServer(
   if (historyApiFallback) {
     middlewares.use(
       historyApiFallbackMiddleware(
+        logger,
         historyApiFallback === true ? {} : historyApiFallback,
       ),
     );
@@ -255,6 +259,7 @@ export async function startPreviewServer(
             printUrls,
             help: shortcutsOptions.help,
             customShortcuts: shortcutsOptions.custom,
+            logger,
           });
         }
 

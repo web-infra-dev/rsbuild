@@ -9,20 +9,17 @@
     "useDefineForClassFields": true,
 
     /* modules */
-    "module": "ESNext",
     "moduleDetection": "force",
     "moduleResolution": "bundler",
     "verbatimModuleSyntax": true,
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
-    "noUncheckedSideEffectImports": true,
     "paths": {
       "react": ["./node_modules/preact/compat/"],
       "react-dom": ["./node_modules/preact/compat/"]
     },
 
     /* type checking */
-    "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true
   },

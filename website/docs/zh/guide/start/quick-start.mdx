@@ -60,7 +60,6 @@ import { PackageManagerTabs } from '@theme';
 | ------- | ------------------------------- | -------------------------------------- |
 | vanilla | 原生 JavaScript                 | -                                      |
 | react   | [React 19](https://react.dev/)  | [使用 React](/guide/framework/react)   |
-| react18 | [React 18](https://react.dev/)  | [使用 React](/guide/framework/react)   |
 | vue     | [Vue 3](https://vuejs.org/)     | [使用 Vue](/guide/framework/vue)       |
 | vue2    | [Vue 2](https://v2.vuejs.org/)  | [使用 Vue](/guide/framework/vue)       |
 | lit     | [Lit](https://lit.dev/)         | -                                      |
@@ -178,8 +177,8 @@ Rsbuild 内置了一个轻量的命令行工具，包含 dev、build 等命令�
 ```json title="package.json"
 {
   "scripts": {
-    // 启动开发服务器
-    "dev": "rsbuild dev",
+    // 启动开发服务器，等价于 "rsbuild dev"
+    "dev": "rsbuild",
     // 构建用于生产的应用
     "build": "rsbuild build",
     // 在本地预览生产版本

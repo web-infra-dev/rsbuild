@@ -246,9 +246,9 @@ const pluginFoo = () => ({
 
 ## api.logger
 
-A logger instance used to output log information in a unified format. Use this instead of `console.log` to maintain consistent logging with Rsbuild.
+A logger instance that can be used to output logs in a format consistent with Rsbuild.
 
-Equivalent to `import { logger } from '@rsbuild/core'`.
+> See [Logging](/guide/advanced/logging) for more details.
 
 - **Version:** `>= 1.4.0`
 - **Example:**
@@ -262,8 +262,6 @@ const pluginLogging = () => ({
   },
 });
 ```
-
-> `api.logger` is based on [rslog](https://github.com/rstackjs/rslog), see [logger](/api/javascript-api/core#logger) for more details.
 
 ## api.isPluginExists
 

@@ -21,7 +21,7 @@ import { PackageManagerTabs } from '@theme';
   }}
 />
 
-然后在 `Select framework` 时选择 `React 19` 或 `React 18` 即可。
+然后在 `Select framework` 时选择 `React 19` 即可。
 
 ## 在已有项目中使用 React
 
@@ -105,7 +105,8 @@ export default defineConfig({
   plugins: [
     pluginReact(),
     pluginBabel({
-      include: /\.(?:jsx|tsx)$/,
+      include: /\.[jt]sx?$/,
+      exclude: [/[\\/]node_modules[\\/]/],
       babelLoaderOptions(opts) {
         opts.plugins?.unshift('babel-plugin-react-compiler');
       },
@@ -113,6 +114,12 @@ export default defineConfig({
   ],
 });
 ```
+
+:::tip
+`include` 使用 `/\.[jt]sx?$/` 来匹配 `.js`、`.jsx`、`.ts` 和 `.tsx` 文件。这样可以确保 React Compiler 能够优化组件和[自定义 Hooks](https://zh-hans.react.dev/learn/reusing-logic-with-custom-hooks)，因为自定义 Hooks 通常定义在 `.ts` 文件中。`exclude` 中的 `node_modules` 可以防止编译器处理第三方依赖。
+
+如果你只想编译 JSX/TSX 文件，可以使用 `include: /\.(?:jsx|tsx)$/`，但 `.ts` 文件中的自定义 Hooks 将不会被优化。
+:::
 
 > 你也可以参考 [示例项目](https://github.com/rstackjs/rstack-examples/tree/main/rsbuild/react-compiler-babel)。
 
@@ -133,7 +140,8 @@ export default defineConfig({
   plugins: [
     pluginReact(),
     pluginBabel({
-      include: /\.(?:jsx|tsx)$/,
+      include: /\.[jt]sx?$/,
+      exclude: [/[\\/]node_modules[\\/]/],
       babelLoaderOptions(opts) {
         opts.plugins?.unshift([
           'babel-plugin-react-compiler',
