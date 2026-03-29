@@ -9,7 +9,7 @@
     "type-check": "tsc && pnpm run --filter @e2e/type-tests type-check"
   },
   "dependencies": {
-    "@module-federation/runtime-tools": "2.2.3",
+    "@module-federation/runtime-tools": "2.3.0",
     "core-js": "^3.49.0",
     "lodash": "^4.17.23",
     "preact": "^10.29.0",
@@ -24,8 +24,8 @@
     "@e2e/assets": "workspace:*",
     "@e2e/helper": "workspace:*",
     "@hono/node-server": "^1.19.11",
-    "@module-federation/enhanced": "2.2.3",
-    "@module-federation/rsbuild-plugin": "2.2.3",
+    "@module-federation/enhanced": "2.3.0",
+    "@module-federation/rsbuild-plugin": "2.3.0",
     "@playwright/test": "1.58.2",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
