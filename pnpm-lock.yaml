@@ -286,6 +286,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/core
 
+  e2e/cases/server/ssr-load-bundle-external/_node_modules/cjs-undefined-pkg: {}
+
   e2e/cases/server/ssr-load-bundle-external/_node_modules/esm-pkg: {}
 
   e2e/cases/server/ssr-type-module:
