@@ -30,6 +30,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
               "exportedEnum": false,
               "typeExports": true,
             },
+            "detectSyntax": "auto",
             "env": {
               "targets": [
                 "chrome >= 107",
@@ -50,8 +51,6 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
               },
               "parser": {
                 "decorators": true,
-                "syntax": "typescript",
-                "tsx": false,
               },
               "transform": {
                 "decoratorVersion": "2022-03",
@@ -211,6 +210,7 @@ exports[`plugins/babel > should apply decorators version 2023-11 correctly 1`] =
               "exportedEnum": false,
               "typeExports": true,
             },
+            "detectSyntax": "auto",
             "env": {
               "targets": [
                 "chrome >= 107",
@@ -231,8 +231,6 @@ exports[`plugins/babel > should apply decorators version 2023-11 correctly 1`] =
               },
               "parser": {
                 "decorators": true,
-                "syntax": "typescript",
-                "tsx": false,
               },
               "transform": {
                 "decoratorVersion": "2023-11",
@@ -305,6 +303,7 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
               "exportedEnum": false,
               "typeExports": true,
             },
+            "detectSyntax": "auto",
             "env": {
               "targets": [
                 "chrome >= 107",
@@ -325,8 +324,6 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
               },
               "parser": {
                 "decorators": true,
-                "syntax": "typescript",
-                "tsx": false,
               },
               "transform": {
                 "decoratorVersion": "2022-03",
@@ -399,6 +396,7 @@ exports[`plugins/babel > should apply environment config correctly 2`] = `
               "exportedEnum": false,
               "typeExports": true,
             },
+            "detectSyntax": "auto",
             "env": {
               "targets": [
                 "node >= 20",
@@ -416,8 +414,6 @@ exports[`plugins/babel > should apply environment config correctly 2`] = `
               },
               "parser": {
                 "decorators": true,
-                "syntax": "typescript",
-                "tsx": false,
               },
               "transform": {
                 "decoratorMetadata": true,
@@ -489,6 +485,7 @@ exports[`plugins/babel > should set babel-loader 1`] = `
               "exportedEnum": false,
               "typeExports": true,
             },
+            "detectSyntax": "auto",
             "env": {
               "targets": [
                 "chrome >= 107",
@@ -509,8 +506,6 @@ exports[`plugins/babel > should set babel-loader 1`] = `
               },
               "parser": {
                 "decorators": true,
-                "syntax": "typescript",
-                "tsx": false,
               },
               "transform": {
                 "decoratorVersion": "2022-03",
@@ -580,6 +575,7 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
               "exportedEnum": false,
               "typeExports": true,
             },
+            "detectSyntax": "auto",
             "env": {
               "targets": [
                 "chrome >= 107",
@@ -600,8 +596,6 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
               },
               "parser": {
                 "decorators": true,
-                "syntax": "typescript",
-                "tsx": false,
               },
               "transform": {
                 "decoratorVersion": "2022-03",

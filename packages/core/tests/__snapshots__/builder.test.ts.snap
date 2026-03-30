@@ -135,6 +135,7 @@ exports[`default bundler > should use Rspack by default 1`] = `
                     "exportedEnum": false,
                     "typeExports": true,
                   },
+                  "detectSyntax": "auto",
                   "env": {
                     "targets": [
                       "chrome >= 107",
@@ -155,8 +156,6 @@ exports[`default bundler > should use Rspack by default 1`] = `
                     },
                     "parser": {
                       "decorators": true,
-                      "syntax": "typescript",
-                      "tsx": false,
                     },
                     "transform": {
                       "decoratorVersion": "2022-03",
@@ -188,6 +187,7 @@ exports[`default bundler > should use Rspack by default 1`] = `
                 "exportedEnum": false,
                 "typeExports": true,
               },
+              "detectSyntax": "auto",
               "env": {
                 "targets": [
                   "chrome >= 107",
@@ -208,8 +208,6 @@ exports[`default bundler > should use Rspack by default 1`] = `
                 },
                 "parser": {
                   "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": false,
                 },
                 "transform": {
                   "decoratorVersion": "2022-03",

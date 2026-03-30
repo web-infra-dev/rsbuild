@@ -37,6 +37,7 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
                 "exportedEnum": false,
                 "typeExports": true,
               },
+              "detectSyntax": "auto",
               "env": {
                 "targets": [
                   "chrome >= 107",
@@ -57,8 +58,6 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
                 },
                 "parser": {
                   "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": false,
                 },
                 "transform": {
                   "decoratorVersion": "2022-03",
@@ -97,6 +96,7 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
             "exportedEnum": false,
             "typeExports": true,
           },
+          "detectSyntax": "auto",
           "env": {
             "targets": [
               "chrome >= 107",
@@ -117,8 +117,6 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
             },
             "parser": {
               "decorators": true,
-              "syntax": "typescript",
-              "tsx": false,
             },
             "transform": {
               "decoratorVersion": "2022-03",
@@ -163,6 +161,7 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
                 "exportedEnum": false,
                 "typeExports": true,
               },
+              "detectSyntax": "auto",
               "env": {
                 "targets": [
                   "chrome >= 107",
@@ -183,8 +182,6 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
                 },
                 "parser": {
                   "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": false,
                 },
                 "transform": {
                   "decoratorVersion": "2022-03",
@@ -223,6 +220,7 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
             "exportedEnum": false,
             "typeExports": true,
           },
+          "detectSyntax": "auto",
           "env": {
             "targets": [
               "chrome >= 107",
@@ -243,8 +241,6 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
             },
             "parser": {
               "decorators": true,
-              "syntax": "typescript",
-              "tsx": false,
             },
             "transform": {
               "decoratorVersion": "2022-03",
@@ -270,6 +266,7 @@ exports[`plugin-svelte > should add svelte loader and resolve config properly 1`
             "exportedEnum": false,
             "typeExports": true,
           },
+          "detectSyntax": "auto",
           "env": {
             "targets": [
               "chrome >= 107",
@@ -290,8 +287,6 @@ exports[`plugin-svelte > should add svelte loader and resolve config properly 1`
             },
             "parser": {
               "decorators": true,
-              "syntax": "typescript",
-              "tsx": false,
             },
             "transform": {
               "decoratorVersion": "2022-03",
@@ -474,6 +469,7 @@ exports[`plugin-svelte > should override default svelte-loader options throw opt
             "exportedEnum": false,
             "typeExports": true,
           },
+          "detectSyntax": "auto",
           "env": {
             "targets": [
               "chrome >= 107",
@@ -494,8 +490,6 @@ exports[`plugin-svelte > should override default svelte-loader options throw opt
             },
             "parser": {
               "decorators": true,
-              "syntax": "typescript",
-              "tsx": false,
             },
             "transform": {
               "decoratorVersion": "2022-03",
@@ -532,6 +526,7 @@ exports[`plugin-svelte > should set dev and hotReload to false in production mod
             "exportedEnum": true,
             "typeExports": true,
           },
+          "detectSyntax": "auto",
           "env": {
             "targets": [
               "chrome >= 107",
@@ -552,8 +547,6 @@ exports[`plugin-svelte > should set dev and hotReload to false in production mod
             },
             "parser": {
               "decorators": true,
-              "syntax": "typescript",
-              "tsx": false,
             },
             "transform": {
               "decoratorVersion": "2022-03",
@@ -594,6 +587,7 @@ exports[`plugin-svelte > should support pass custom preprocess options 1`] = `
             "exportedEnum": false,
             "typeExports": true,
           },
+          "detectSyntax": "auto",
           "env": {
             "targets": [
               "chrome >= 107",
@@ -614,8 +608,6 @@ exports[`plugin-svelte > should support pass custom preprocess options 1`] = `
             },
             "parser": {
               "decorators": true,
-              "syntax": "typescript",
-              "tsx": false,
             },
             "transform": {
               "decoratorVersion": "2022-03",
@@ -656,6 +648,7 @@ exports[`plugin-svelte > should turn off HMR by hand correctly 1`] = `
             "exportedEnum": false,
             "typeExports": true,
           },
+          "detectSyntax": "auto",
           "env": {
             "targets": [
               "chrome >= 107",
@@ -676,8 +669,6 @@ exports[`plugin-svelte > should turn off HMR by hand correctly 1`] = `
             },
             "parser": {
               "decorators": true,
-              "syntax": "typescript",
-              "tsx": false,
             },
             "transform": {
               "decoratorVersion": "2022-03",

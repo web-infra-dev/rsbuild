@@ -20,6 +20,7 @@ export function applyBasicReactSupport(
 
   api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
     const isDev = config.mode === 'development';
+    const isV1 = api.context.version.startsWith('1.');
     const usingHMR = isDev && config.dev.hmr && config.output.target === 'web';
 
     const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
@@ -33,11 +34,15 @@ export function applyBasicReactSupport(
       tools: {
         swc: {
           jsc: {
-            parser: {
-              syntax: 'typescript',
-              // enable supports for JSX/TSX compilation
-              tsx: true,
-            },
+            ...(isV1
+              ? {
+                  parser: {
+                    syntax: 'typescript',
+                    // enable supports for JSX/TSX compilation
+                    tsx: true,
+                  },
+                }
+              : {}),
             transform: {
               react: reactOptions,
             },

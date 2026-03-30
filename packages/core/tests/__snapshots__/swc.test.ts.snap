@@ -75,6 +75,7 @@ exports[`plugin-swc > should allow using \`tools.swc\` to configure swc-loader o
                 "exportedEnum": false,
                 "typeExports": true,
               },
+              "detectSyntax": "auto",
               "env": {
                 "targets": [
                   "chrome >= 107",
@@ -95,8 +96,6 @@ exports[`plugin-swc > should allow using \`tools.swc\` to configure swc-loader o
                 },
                 "parser": {
                   "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": false,
                 },
                 "transform": {
                   "decoratorVersion": "2022-03",
@@ -147,6 +146,7 @@ exports[`plugin-swc > should apply decorators version 2023-11 1`] = `
                   "exportedEnum": false,
                   "typeExports": true,
                 },
+                "detectSyntax": "auto",
                 "env": {
                   "targets": [
                     "chrome >= 107",
@@ -167,8 +167,6 @@ exports[`plugin-swc > should apply decorators version 2023-11 1`] = `
                   },
                   "parser": {
                     "decorators": true,
-                    "syntax": "typescript",
-                    "tsx": false,
                   },
                   "transform": {
                     "decoratorVersion": "2023-11",
@@ -227,6 +225,7 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
                 "exportedEnum": false,
                 "typeExports": true,
               },
+              "detectSyntax": "auto",
               "env": {
                 "coreJs": "3.48",
                 "mode": "usage",
@@ -250,8 +249,6 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
                 },
                 "parser": {
                   "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": false,
                 },
                 "transform": {
                   "decoratorVersion": "2022-03",
@@ -309,6 +306,7 @@ exports[`plugin-swc > should apply environment config correctly 2`] = `
                 "exportedEnum": false,
                 "typeExports": true,
               },
+              "detectSyntax": "auto",
               "env": {
                 "targets": [
                   "node >= 20",
@@ -326,8 +324,6 @@ exports[`plugin-swc > should apply environment config correctly 2`] = `
                 },
                 "parser": {
                   "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": false,
                 },
                 "transform": {
                   "decoratorVersion": "2022-03",
@@ -383,6 +379,7 @@ exports[`plugin-swc > should apply overrideBrowserslist 1`] = `
                   "exportedEnum": false,
                   "typeExports": true,
                 },
+                "detectSyntax": "auto",
                 "env": {
                   "targets": [
                     "chrome 98",
@@ -400,8 +397,6 @@ exports[`plugin-swc > should apply overrideBrowserslist 1`] = `
                   },
                   "parser": {
                     "decorators": true,
-                    "syntax": "typescript",
-                    "tsx": false,
                   },
                   "transform": {
                     "decoratorVersion": "2022-03",
@@ -453,6 +448,7 @@ exports[`plugin-swc > should apply pluginImport 1`] = `
                   "exportedEnum": false,
                   "typeExports": true,
                 },
+                "detectSyntax": "auto",
                 "env": {
                   "targets": [
                     "chrome >= 107",
@@ -473,8 +469,6 @@ exports[`plugin-swc > should apply pluginImport 1`] = `
                   },
                   "parser": {
                     "decorators": true,
-                    "syntax": "typescript",
-                    "tsx": false,
                   },
                   "transform": {
                     "decoratorVersion": "2022-03",
@@ -531,6 +525,7 @@ exports[`plugin-swc > should apply pluginImport correctly with ConfigChain 1`] =
                   "exportedEnum": false,
                   "typeExports": true,
                 },
+                "detectSyntax": "auto",
                 "env": {
                   "targets": [
                     "chrome >= 107",
@@ -551,8 +546,6 @@ exports[`plugin-swc > should apply pluginImport correctly with ConfigChain 1`] =
                   },
                   "parser": {
                     "decorators": true,
-                    "syntax": "typescript",
-                    "tsx": false,
                   },
                   "transform": {
                     "decoratorVersion": "2022-03",
@@ -612,6 +605,7 @@ exports[`plugin-swc > should disable pluginImport when it returns undefined 1`] 
                   "exportedEnum": false,
                   "typeExports": true,
                 },
+                "detectSyntax": "auto",
                 "env": {
                   "targets": [
                     "chrome >= 107",
@@ -632,8 +626,6 @@ exports[`plugin-swc > should disable pluginImport when it returns undefined 1`] 
                   },
                   "parser": {
                     "decorators": true,
-                    "syntax": "typescript",
-                    "tsx": false,
                   },
                   "transform": {
                     "decoratorVersion": "2022-03",
@@ -685,6 +677,7 @@ exports[`plugin-swc > should disable preset-env for non-web targets 1`] = `
                   "exportedEnum": false,
                   "typeExports": true,
                 },
+                "detectSyntax": "auto",
                 "env": {
                   "targets": [
                     "node >= 20",
@@ -702,8 +695,6 @@ exports[`plugin-swc > should disable preset-env for non-web targets 1`] = `
                   },
                   "parser": {
                     "decorators": true,
-                    "syntax": "typescript",
-                    "tsx": false,
                   },
                   "transform": {
                     "decoratorVersion": "2022-03",
@@ -755,6 +746,7 @@ exports[`plugin-swc > should disable preset-env mode 1`] = `
                   "exportedEnum": false,
                   "typeExports": true,
                 },
+                "detectSyntax": "auto",
                 "env": {
                   "targets": [
                     "chrome >= 107",
@@ -775,8 +767,6 @@ exports[`plugin-swc > should disable preset-env mode 1`] = `
                   },
                   "parser": {
                     "decorators": true,
-                    "syntax": "typescript",
-                    "tsx": false,
                   },
                   "transform": {
                     "decoratorVersion": "2022-03",
@@ -833,6 +823,7 @@ exports[`plugin-swc > should enable preset-env in entry mode 1`] = `
                   "exportedEnum": false,
                   "typeExports": true,
                 },
+                "detectSyntax": "auto",
                 "env": {
                   "coreJs": "3.48",
                   "mode": "entry",
@@ -855,8 +846,6 @@ exports[`plugin-swc > should enable preset-env in entry mode 1`] = `
                   },
                   "parser": {
                     "decorators": true,
-                    "syntax": "typescript",
-                    "tsx": false,
                   },
                   "transform": {
                     "decoratorVersion": "2022-03",
@@ -913,6 +902,7 @@ exports[`plugin-swc > should enable preset-env in usage mode 1`] = `
                   "exportedEnum": false,
                   "typeExports": true,
                 },
+                "detectSyntax": "auto",
                 "env": {
                   "coreJs": "3.48",
                   "mode": "usage",
@@ -936,8 +926,6 @@ exports[`plugin-swc > should enable preset-env in usage mode 1`] = `
                   },
                   "parser": {
                     "decorators": true,
-                    "syntax": "typescript",
-                    "tsx": false,
                   },
                   "transform": {
                     "decoratorVersion": "2022-03",
@@ -994,6 +982,7 @@ exports[`plugin-swc > should use the correct core-js version 1`] = `
                   "exportedEnum": false,
                   "typeExports": true,
                 },
+                "detectSyntax": "auto",
                 "env": {
                   "coreJs": "3.48",
                   "mode": "entry",
@@ -1016,8 +1005,6 @@ exports[`plugin-swc > should use the correct core-js version 1`] = `
                   },
                   "parser": {
                     "decorators": true,
-                    "syntax": "typescript",
-                    "tsx": false,
                   },
                   "transform": {
                     "decoratorVersion": "2022-03",
@@ -1069,6 +1056,7 @@ exports[`plugin-swc > should use the correct core-js version 2`] = `
                   "exportedEnum": false,
                   "typeExports": true,
                 },
+                "detectSyntax": "auto",
                 "env": {
                   "targets": [
                     "node >= 20",
@@ -1086,8 +1074,6 @@ exports[`plugin-swc > should use the correct core-js version 2`] = `
                   },
                   "parser": {
                     "decorators": true,
-                    "syntax": "typescript",
-                    "tsx": false,
                   },
                   "transform": {
                     "decoratorVersion": "2022-03",

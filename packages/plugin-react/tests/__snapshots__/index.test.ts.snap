@@ -57,6 +57,7 @@ exports[`plugins/react > should configuring \`tools.swc\` to override react runt
                 "exportedEnum": false,
                 "typeExports": true,
               },
+              "detectSyntax": "auto",
               "env": {
                 "targets": [
                   "chrome >= 107",
@@ -77,8 +78,6 @@ exports[`plugins/react > should configuring \`tools.swc\` to override react runt
                 },
                 "parser": {
                   "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
                 },
                 "transform": {
                   "decoratorVersion": "2022-03",
@@ -185,6 +184,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                 "exportedEnum": false,
                 "typeExports": true,
               },
+              "detectSyntax": "auto",
               "env": {
                 "targets": [
                   "chrome >= 107",
@@ -205,8 +205,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                 },
                 "parser": {
                   "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
                 },
                 "transform": {
                   "decoratorVersion": "2022-03",

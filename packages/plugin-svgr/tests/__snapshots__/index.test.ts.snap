@@ -29,6 +29,7 @@ exports[`svgr > configure SVGR options 1`] = `
               "exportedEnum": false,
               "typeExports": true,
             },
+            "detectSyntax": "auto",
             "env": {
               "targets": [
                 "chrome >= 107",
@@ -49,8 +50,6 @@ exports[`svgr > configure SVGR options 1`] = `
               },
               "parser": {
                 "decorators": true,
-                "syntax": "typescript",
-                "tsx": true,
               },
               "transform": {
                 "decoratorVersion": "2022-03",
@@ -235,6 +234,7 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
               "exportedEnum": false,
               "typeExports": true,
             },
+            "detectSyntax": "auto",
             "env": {
               "targets": [
                 "chrome >= 107",
@@ -255,8 +255,6 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
               },
               "parser": {
                 "decorators": true,
-                "syntax": "typescript",
-                "tsx": true,
               },
               "transform": {
                 "decoratorVersion": "2022-03",
@@ -306,6 +304,7 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
               "exportedEnum": false,
               "typeExports": true,
             },
+            "detectSyntax": "auto",
             "env": {
               "targets": [
                 "chrome >= 107",
@@ -326,8 +325,6 @@ exports[`svgr > exportType default / mixedImport false 1`] = `
               },
               "parser": {
                 "decorators": true,
-                "syntax": "typescript",
-                "tsx": true,
               },
               "transform": {
                 "decoratorVersion": "2022-03",
@@ -581,6 +578,7 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
               "exportedEnum": false,
               "typeExports": true,
             },
+            "detectSyntax": "auto",
             "env": {
               "targets": [
                 "chrome >= 107",
@@ -601,8 +599,6 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
               },
               "parser": {
                 "decorators": true,
-                "syntax": "typescript",
-                "tsx": true,
               },
               "transform": {
                 "decoratorVersion": "2022-03",
@@ -652,6 +648,7 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
               "exportedEnum": false,
               "typeExports": true,
             },
+            "detectSyntax": "auto",
             "env": {
               "targets": [
                 "chrome >= 107",
@@ -672,8 +669,6 @@ exports[`svgr > exportType default / mixedImport true 1`] = `
               },
               "parser": {
                 "decorators": true,
-                "syntax": "typescript",
-                "tsx": true,
               },
               "transform": {
                 "decoratorVersion": "2022-03",
@@ -927,6 +922,7 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
               "exportedEnum": false,
               "typeExports": true,
             },
+            "detectSyntax": "auto",
             "env": {
               "targets": [
                 "chrome >= 107",
@@ -947,8 +943,6 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
               },
               "parser": {
                 "decorators": true,
-                "syntax": "typescript",
-                "tsx": true,
               },
               "transform": {
                 "decoratorVersion": "2022-03",
@@ -998,6 +992,7 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
               "exportedEnum": false,
               "typeExports": true,
             },
+            "detectSyntax": "auto",
             "env": {
               "targets": [
                 "chrome >= 107",
@@ -1018,8 +1013,6 @@ exports[`svgr > exportType named / mixedImport false 1`] = `
               },
               "parser": {
                 "decorators": true,
-                "syntax": "typescript",
-                "tsx": true,
               },
               "transform": {
                 "decoratorVersion": "2022-03",
@@ -1273,6 +1266,7 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
               "exportedEnum": false,
               "typeExports": true,
             },
+            "detectSyntax": "auto",
             "env": {
               "targets": [
                 "chrome >= 107",
@@ -1293,8 +1287,6 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
               },
               "parser": {
                 "decorators": true,
-                "syntax": "typescript",
-                "tsx": true,
               },
               "transform": {
                 "decoratorVersion": "2022-03",
@@ -1344,6 +1336,7 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
               "exportedEnum": false,
               "typeExports": true,
             },
+            "detectSyntax": "auto",
             "env": {
               "targets": [
                 "chrome >= 107",
@@ -1364,8 +1357,6 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
               },
               "parser": {
                 "decorators": true,
-                "syntax": "typescript",
-                "tsx": true,
               },
               "transform": {
                 "decoratorVersion": "2022-03",
