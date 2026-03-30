@@ -7,6 +7,7 @@ type CheckResult = {
   nativeType: string;
   loadBundleResult: string;
   nativeResult: string;
+  loadBundleUndefinedType: string;
 };
 
 test.beforeAll(() => {
@@ -34,4 +35,5 @@ test('should align loadBundle ESM default import with native Node.js', async ({
   expect(result.nativeType).toBe('function');
   expect(result.loadBundleType).toBe(result.nativeType);
   expect(result.loadBundleResult).toBe(result.nativeResult);
+  expect(result.loadBundleUndefinedType).toBe('undefined');
 });

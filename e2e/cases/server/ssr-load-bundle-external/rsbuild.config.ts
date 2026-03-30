@@ -16,6 +16,7 @@ export default defineConfig({
         try {
           const bundle = await server.environments.node.loadBundle<{
             helloType: string;
+            undefinedType: string;
             result: string;
           }>('index');
           // @ts-expect-error
@@ -30,6 +31,7 @@ export default defineConfig({
               typeof nativeDefault === 'function'
                 ? nativeDefault()
                 : `BUG: native default is ${typeof nativeDefault}`,
+            loadBundleUndefinedType: bundle.undefinedType,
           };
 
           res.setHeader('Content-Type', 'application/json');
@@ -59,7 +61,7 @@ export default defineConfig({
       },
       output: {
         target: 'node',
-        externals: ['esm-pkg'],
+        externals: ['esm-pkg', 'cjs-undefined-pkg'],
       },
     },
   },
