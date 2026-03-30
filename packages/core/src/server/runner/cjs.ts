@@ -18,12 +18,8 @@ export class CommonJsRunner extends BasicRunner {
   protected createGlobalContext(): BasicGlobalContext {
     return {
       console: console,
-      setTimeout: ((
-        cb: (...args: any[]) => void,
-        ms: number | undefined,
-        ...args: any
-      ) => {
-        const timeout = setTimeout(cb, ms, ...args);
+      setTimeout: ((...args: Parameters<typeof setTimeout>) => {
+        const timeout = setTimeout(...args);
         timeout.unref();
         return timeout;
       }) as typeof setTimeout,
@@ -37,7 +33,7 @@ export class CommonJsRunner extends BasicRunner {
       console: this.globalContext!.console,
       setTimeout: this.globalContext!.setTimeout,
       clearTimeout: this.globalContext!.clearTimeout,
-      nsObj: (m: Record<string, any>) => {
+      nsObj: (m: Record<string, unknown>) => {
         Object.defineProperty(m, Symbol.toStringTag, {
           value: 'Module',
         });
@@ -84,7 +80,7 @@ export class CommonJsRunner extends BasicRunner {
   }
 
   protected createCjsRequirer(): RunnerRequirer {
-    const requireCache = Object.create(null);
+    const requireCache: Record<string, ModuleObject> = Object.create(null);
     // rslint-disable-next-line @typescript-eslint/no-require-imports
     const vm = require('node:vm') as typeof import('node:vm');
 

@@ -56,7 +56,7 @@ export abstract class BasicRunner implements Runner {
       this._options.dist,
       file.startsWith('./') ? file : `./${file}`,
     );
-    if (typeof res === 'object' && 'then' in res) {
+    if (res && typeof res === 'object' && 'then' in res) {
       return res as Promise<unknown>;
     }
     return Promise.resolve(res);
@@ -116,10 +116,7 @@ export abstract class BasicRunner implements Runner {
   }
 
   protected preExecute(_code: string, _file: BasicRunnerFile): void {}
-  protected postExecute(
-    _m: Record<string, any>,
-    _file: BasicRunnerFile,
-  ): void {}
+  protected postExecute(_m: ModuleObject, _file: BasicRunnerFile): void {}
 
   protected createRunner(): void {
     this.requirers.set(
