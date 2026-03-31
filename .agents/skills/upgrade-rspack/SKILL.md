@@ -15,7 +15,7 @@ If the version is missing, ask for it before making changes.
 
 1. Check the worktree with `git status --short`. If there are uncommitted edits, stop and ask the user how to proceed.
 
-2. Find every package.json that declares `@rspack/core`. Update each matched dependency version to the target version.
+2. Run `pnpm update @rspack/core@<version> --recursive` to update the dependency across all packages in the workspace.
 
 3. Run `pnpm i` at the repository root.
 
