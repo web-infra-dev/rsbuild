@@ -474,7 +474,7 @@ export function createMiddleware(
         'error',
         (error: NodeJS.ErrnoException) => {
           cleanup();
-          // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
+          // rslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
           switch (error.code) {
             case 'ENAMETOOLONG':
             case 'ENOENT':

@@ -3,8 +3,21 @@ import type { Module, ModuleLinker, SyntheticModule } from 'node:vm';
 const isModuleNamespaceObject = (moduleExports: Record<string, unknown>) =>
   Object.prototype.toString.call(moduleExports) === '[object Module]';
 
+const normalizeModuleExports = (
+  moduleExports: unknown,
+): Record<string, unknown> => {
+  if (
+    moduleExports !== null &&
+    (typeof moduleExports === 'object' || typeof moduleExports === 'function')
+  ) {
+    return moduleExports as Record<string, unknown>;
+  }
+
+  return { default: moduleExports };
+};
+
 export const asModule = async (
-  moduleExports: Record<string, unknown>,
+  moduleExports: unknown,
   context: Record<string, unknown>,
   unlinked?: boolean,
 ): Promise<Module | SyntheticModule> => {
@@ -14,7 +27,10 @@ export const asModule = async (
     return moduleExports;
   }
 
-  const exports = [...new Set(['default', ...Object.keys(moduleExports)])];
+  const normalizedModuleExports = normalizeModuleExports(moduleExports);
+  const exports = [
+    ...new Set(['default', ...Object.keys(normalizedModuleExports)]),
+  ];
 
   const syntheticModule = new SyntheticModule(
     exports,
@@ -22,12 +38,13 @@ export const asModule = async (
       for (const name of exports) {
         if (name === 'default') {
           const defaultExport =
-            isModuleNamespaceObject(moduleExports) && 'default' in moduleExports
-              ? moduleExports.default
+            isModuleNamespaceObject(normalizedModuleExports) &&
+            'default' in normalizedModuleExports
+              ? normalizedModuleExports.default
               : moduleExports;
           syntheticModule.setExport(name, defaultExport);
         } else {
-          syntheticModule.setExport(name, moduleExports[name]);
+          syntheticModule.setExport(name, normalizedModuleExports[name]);
         }
       }
     },

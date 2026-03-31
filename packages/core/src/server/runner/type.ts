@@ -7,7 +7,7 @@ export type RunnerRequirer = (
     file?: BasicRunnerFile;
     esmMode?: EsmMode;
   },
-) => Record<string, any> | Promise<Record<string, any>>;
+) => unknown | Promise<unknown>;
 
 export type BasicRunnerFile = {
   path: string;
@@ -23,14 +23,14 @@ export enum EsmMode {
 
 export interface BasicModuleScope {
   console: Console;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface BasicGlobalContext {
   console: Console;
   setTimeout: typeof setTimeout;
   clearTimeout: typeof clearTimeout;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export type ModuleObject = { exports: unknown };

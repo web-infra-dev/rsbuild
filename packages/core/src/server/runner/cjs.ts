@@ -18,12 +18,8 @@ export class CommonJsRunner extends BasicRunner {
   protected createGlobalContext(): BasicGlobalContext {
     return {
       console: console,
-      setTimeout: ((
-        cb: (...args: any[]) => void,
-        ms: number | undefined,
-        ...args: any
-      ) => {
-        const timeout = setTimeout(cb, ms, ...args);
+      setTimeout: ((...args: Parameters<typeof setTimeout>) => {
+        const timeout = setTimeout(...args);
         timeout.unref();
         return timeout;
       }) as typeof setTimeout,
@@ -37,7 +33,7 @@ export class CommonJsRunner extends BasicRunner {
       console: this.globalContext!.console,
       setTimeout: this.globalContext!.setTimeout,
       clearTimeout: this.globalContext!.clearTimeout,
-      nsObj: (m: Record<string, any>) => {
+      nsObj: (m: Record<string, unknown>) => {
         Object.defineProperty(m, Symbol.toStringTag, {
           value: 'Module',
         });
@@ -76,7 +72,7 @@ export class CommonJsRunner extends BasicRunner {
         paths: [_currentDirectory],
       });
 
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      // rslint-disable-next-line @typescript-eslint/no-require-imports
       return require(
         resolvedPath.startsWith('node:') ? resolvedPath.slice(5) : resolvedPath,
       );
@@ -84,8 +80,8 @@ export class CommonJsRunner extends BasicRunner {
   }
 
   protected createCjsRequirer(): RunnerRequirer {
-    const requireCache = Object.create(null);
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const requireCache: Record<string, ModuleObject> = Object.create(null);
+    // rslint-disable-next-line @typescript-eslint/no-require-imports
     const vm = require('node:vm') as typeof import('node:vm');
 
     return (currentDirectory, modulePath, context = {}) => {

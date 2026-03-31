@@ -1,0 +1,8 @@
+{
+  "name": "@type-tests/resolution-bundler",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "type-check": "tsc --noEmit"
+  }
+}

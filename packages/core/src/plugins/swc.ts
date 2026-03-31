@@ -74,11 +74,10 @@ function getDefaultSwcConfig({
   isProd: boolean;
 }): SwcLoaderOptions {
   return {
+    detectSyntax: 'auto',
     jsc: {
       externalHelpers: true,
       parser: {
-        tsx: false,
-        syntax: 'typescript',
         decorators: true,
       },
       experimental: {

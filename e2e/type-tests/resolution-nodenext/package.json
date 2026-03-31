@@ -1,6 +1,7 @@
 {
-  "name": "@e2e/type-tests",
+  "name": "@type-tests/resolution-nodenext",
   "private": true,
+  "type": "module",
   "scripts": {
     "type-check": "tsc --noEmit"
   }

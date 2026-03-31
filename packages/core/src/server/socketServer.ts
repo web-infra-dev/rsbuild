@@ -338,7 +338,7 @@ export class SocketServer {
     socket.on('message', async (data) => {
       try {
         const payload: ClientMessage = JSON.parse(
-          // eslint-disable-next-line @typescript-eslint/no-base-to-string
+          // rslint-disable-next-line @typescript-eslint/no-base-to-string
           typeof data === 'string' ? data : data.toString(),
         );
 
