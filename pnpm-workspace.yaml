@@ -9,6 +9,7 @@ packages:
   - '!**/dist-*/**'
   - '!**/create-rsbuild/template-*/**'
   - '!**/test-temp-*/**'
+  - '!**/_node_modules/**'
 
 engineStrict: true
 

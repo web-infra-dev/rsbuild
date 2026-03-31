@@ -1,5 +1,5 @@
 {
-  "extends": "@rsbuild/config/tsconfig",
+  "extends": "@scripts/config/tsconfig",
   "compilerOptions": {
     "module": "NodeNext",
     "moduleResolution": "NodeNext",

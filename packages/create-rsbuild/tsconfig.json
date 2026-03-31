@@ -1,5 +1,5 @@
 {
-  "extends": "@rsbuild/config/tsconfig-nodenext",
+  "extends": "@scripts/config/tsconfig-nodenext",
   "compilerOptions": {
     "outDir": "./dist"
   },
