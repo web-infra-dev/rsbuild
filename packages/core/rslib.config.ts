@@ -69,7 +69,7 @@ const pluginFixDtsTypes: Rsbuild.RsbuildPlugin = {
       fs.writeFileSync(
         pkgPath,
         JSON.stringify({
-          '//': 'This file is for making TypeScript work with moduleResolution node16+.',
+          '//': 'This file is for making TypeScript work with moduleResolution nodenext.',
           version: '1.0.0',
         }),
         'utf8',

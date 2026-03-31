@@ -28,15 +28,6 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
   name: 'rsbuild:source-map',
 
   setup(api) {
-    // Use project-relative POSIX paths in source maps:
-    // - Prevents leaking absolute system paths
-    // - Keeps maps portable across environments
-    // - Matches source map spec and debugger expectations
-    const DEFAULT_SOURCE_MAP_TEMPLATE = '[relative-resource-path]';
-
-    const DEFAULT_FALLBACK_SOURCE_MAP_TEMPLATE =
-      '[relative-resource-path]?[hash]';
-
     const enableCssSourceMap = (config: NormalizedEnvironmentConfig) => {
       const { sourceMap } = config.output;
       return typeof sourceMap === 'object' && sourceMap.css;
@@ -115,23 +106,26 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
       const devtool = getDevtool(config);
       chain.devtool(devtool);
 
+      // Use project-relative POSIX paths in source maps:
+      // - Prevents leaking absolute system paths
+      // - Keeps maps portable across environments
+      // - Matches source map spec and debugger expectations
+      let sourceMapTemplate: Rspack.DevtoolModuleFilenameTemplate =
+        '[relative-resource-path]';
+      let sourceMapFallbackTemplate: Rspack.DevtoolFallbackModuleFilenameTemplate =
+        '[relative-resource-path]?[hash]';
+
       if (isDev && target === 'web') {
+        sourceMapTemplate = (info) => toPosixPath(info.absoluteResourcePath);
         // Use POSIX-style absolute paths in source maps during development
         // This ensures VS Code and browser debuggers can correctly resolve breakpoints
-        chain.output.devtoolModuleFilenameTemplate(
-          (info: { absoluteResourcePath: string }) =>
-            toPosixPath(info.absoluteResourcePath),
-        );
-        chain.output.devtoolFallbackModuleFilenameTemplate(
-          (info: { absoluteResourcePath: string; hash: string }) =>
-            `${toPosixPath(info.absoluteResourcePath)}?${info.hash}`,
-        );
-      } else {
-        chain.output.devtoolModuleFilenameTemplate(DEFAULT_SOURCE_MAP_TEMPLATE);
-        chain.output.devtoolFallbackModuleFilenameTemplate(
-          DEFAULT_FALLBACK_SOURCE_MAP_TEMPLATE,
-        );
+        sourceMapFallbackTemplate = (info) =>
+          `${toPosixPath(info.absoluteResourcePath)}?${info.hash}`;
       }
+
+      chain.output
+        .devtoolModuleFilenameTemplate(sourceMapTemplate)
+        .devtoolFallbackModuleFilenameTemplate(sourceMapFallbackTemplate);
 
       // When JS source map is disabled, but CSS source map is enabled,
       // add `SourceMapDevToolPlugin` to let Rspack generate CSS source map.
@@ -140,6 +134,8 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
           {
             test: /\.css$/,
             filename: '[file].map[query]',
+            moduleFilenameTemplate: sourceMapTemplate,
+            fallbackModuleFilenameTemplate: sourceMapFallbackTemplate,
           },
         ]);
       }
