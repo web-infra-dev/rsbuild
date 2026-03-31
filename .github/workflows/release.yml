@@ -58,4 +58,4 @@ jobs:
 
       - name: Publish to npm
         run: |
-          pnpm -r publish --tag ${{ github.event.inputs.npm_tag }} --publish-branch ${{ github.event.inputs.branch }}
+          pnpm --filter './packages/*' -r publish --tag ${{ github.event.inputs.npm_tag }} --publish-branch ${{ github.event.inputs.branch }}
