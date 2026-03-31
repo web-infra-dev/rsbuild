@@ -25,9 +25,6 @@ importers:
 
   .:
     devDependencies:
-      '@rsbuild/config':
-        specifier: workspace:*
-        version: link:scripts/config
       '@rslint/core':
         specifier: ^0.3.3
         version: 0.3.3(jiti@2.6.1)
@@ -37,6 +34,9 @@ importers:
       '@rstest/core':
         specifier: ^0.9.5
         version: 0.9.5(core-js@3.49.0)
+      '@scripts/config':
+        specifier: workspace:*
+        version: link:scripts/config
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:scripts/test-helper

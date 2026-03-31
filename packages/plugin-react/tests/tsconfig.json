@@ -1,5 +1,5 @@
 {
-  "extends": "@rsbuild/config/tsconfig",
+  "extends": "@scripts/config/tsconfig",
   "compilerOptions": {
     "types": ["@rstest/core/globals"]
   },
