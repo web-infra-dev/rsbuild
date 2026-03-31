@@ -31,4 +31,4 @@ If the version is missing, ask for it before making changes.
    Create the PR with:
    - Title: `feat(deps): update @rspack/core to <version>`
    - `Summary`: `Update @rspack/core to <version>.`
-   - `Related Links`: `https://github.com/web-infra-dev/rspack/releases/tag/<version>`
+   - `Related Links`: `https://github.com/web-infra-dev/rspack/releases/tag/v<version>`
