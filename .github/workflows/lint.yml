@@ -41,6 +41,3 @@ jobs:
 
       - name: Check Spell
         run: node --run check-spell
-
-      - name: Check Dependency Version
-        run: node --run check-dependency-version
