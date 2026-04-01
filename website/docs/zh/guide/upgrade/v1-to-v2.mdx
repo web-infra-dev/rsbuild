@@ -8,8 +8,6 @@ import { PackageManagerTabs } from '@theme';
 
 当前文档列出了从 Rsbuild 1.x 到 2.0 的所有不兼容更新，你可以参考此文档来迁移。
 
-> 本指南仍在持续完善中。随着 Rsbuild 2.0 Beta 的推进，相关内容将逐步补充。
-
 ## 使用 Agent Skills
 
 如果你在使用支持 Skills 的 Coding Agent，可以安装 [rsbuild-v2-upgrade](https://github.com/rstackjs/agent-skills#rsbuild-v2-upgrade) 技能来辅助完成 v1 到 v2 的升级流程。
@@ -22,13 +20,13 @@ npx skills add rstackjs/agent-skills --skill rsbuild-v2-upgrade
 
 ## 升级 Rsbuild 到 v2
 
-- 将 `@rsbuild/core` 升级到 2.0 Beta 版本：
+- 将 `@rsbuild/core` 升级到 2.0 RC 版本：
 
 ```diff
 {
   "devDependencies": {
 -   "@rsbuild/core": "^1.0.0",
-+   "@rsbuild/core": "^2.0.0-beta.0"
++   "@rsbuild/core": "^2.0.0-rc.0"
   }
 }
 ```
