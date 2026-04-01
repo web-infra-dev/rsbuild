@@ -35,8 +35,8 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/core-v1": "npm:@rsbuild/core@^1.7.4",
-    "@rslib/core": "0.20.1",
+    "@rsbuild/core-v1": "npm:@rsbuild/core@^1.7.5",
+    "@rslib/core": "0.20.2",
     "@scripts/test-helper": "workspace:*",
     "@types/less": "^3.0.8",
     "prebundle": "1.6.4",
