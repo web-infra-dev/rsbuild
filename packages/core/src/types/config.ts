@@ -18,7 +18,7 @@ import type {
   Options as HttpProxyOptions,
   Filter as ProxyFilter,
 } from 'http-proxy-middleware';
-import type RspackChain from 'rspack-chain';
+import type { RspackChain } from 'rspack-chain';
 import type { FileDescriptor } from 'rspack-manifest-plugin';
 import type { RsbuildDevServer } from '../server/devServer';
 import type { RsbuildPreviewServer } from '../server/previewServer';
