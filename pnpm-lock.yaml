@@ -286,6 +286,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/core
 
+  e2e/cases/source/transform-import-package/fixture-package: {}
+
   e2e/cases/swc/swc-plugin:
     dependencies:
       '@swc/plugin-remove-console':
