@@ -1,1 +1,1 @@
-export default 'transformImport test succeed';
+module.exports = 'transformImport test succeed';
