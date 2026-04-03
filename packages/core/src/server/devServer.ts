@@ -51,7 +51,9 @@ import { setupWatchFiles, type WatchFilesResult } from './watchFiles';
 type HTTPServer = Server | Http2SecureServer;
 
 type ExtractSocketMessageData<T extends ServerMessage['type']> =
-  Extract<ServerMessage, { type: T }> extends { data: infer D } ? D : undefined;
+  'data' extends keyof Extract<ServerMessage, { type: T }>
+    ? Extract<ServerMessage, { type: T }>['data']
+    : undefined;
 
 export type SockWrite = <T extends ServerMessage['type']>(
   type: T,
