@@ -20,7 +20,11 @@ test('should allow to call `sockWrite` after creating dev server', async ({
   await gotoPage(page, server);
   expectPoll(() => count > 0).toBeTruthy();
 
-  const previousCount = count;
+  let previousCount = count;
+  server.sockWrite('full-reload');
+  expectPoll(() => count > previousCount).toBeTruthy();
+
+  previousCount = count;
   server.sockWrite('static-changed');
   expectPoll(() => count > previousCount).toBeTruthy();
 

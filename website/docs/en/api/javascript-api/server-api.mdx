@@ -285,6 +285,7 @@ console.log(port, urls);
 
 ```ts
 type SockWrite = {
+  (type: 'full-reload'): void;
   (type: 'static-changed'): void;
   (type: 'custom', data?: { event: string; data?: any }): void;
 };
@@ -292,16 +293,18 @@ type SockWrite = {
 
 Sends some message to HMR client, and then the HMR client will take different actions depending on the message type.
 
-#### static-changed
+#### full-reload
 
-If you send a `'static-changed'` message, the page will reload.
+If you send a `'full-reload'` message, the page will reload.
 
 ```ts
 const rsbuildServer = await rsbuild.createDevServer();
 if (someCondition) {
-  rsbuildServer.sockWrite('static-changed');
+  rsbuildServer.sockWrite('full-reload');
 }
 ```
+
+> `'static-changed'` is an alias of `'full-reload'`.
 
 #### custom
 

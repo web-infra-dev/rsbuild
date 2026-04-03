@@ -25,8 +25,8 @@ function isEqualSet(a: Set<string>, b: Set<string>): boolean {
 
 const CHECK_SOCKETS_INTERVAL = 30000;
 
-export type ServerMessageStaticChanged = {
-  type: 'static-changed';
+export type ServerMessageFullReload = {
+  type: 'full-reload' | 'static-changed';
 };
 
 export type ServerMessageHash = {
@@ -69,7 +69,7 @@ export type ServerCustomMessage = {
 
 export type ServerMessage =
   | ServerMessageOk
-  | ServerMessageStaticChanged
+  | ServerMessageFullReload
   | ServerMessageHash
   | ServerMessageWarnings
   | ServerMessageErrors
@@ -544,7 +544,7 @@ export class SocketServer {
     this.initialChunksMap.set(token, newInitialChunks);
 
     if (shouldReload) {
-      this.sockWrite({ type: 'static-changed' }, token);
+      this.sockWrite({ type: 'full-reload' }, token);
       return;
     }
 

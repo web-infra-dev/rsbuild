@@ -81,7 +81,9 @@ export type RsbuildDevServer = RsbuildServerBase & {
   /**
    * Allows middleware to send some message to HMR client, and then the HMR
    * client will take different actions depending on the message type.
-   * - `static-changed`: The page will reload.
+   * - `full-reload`: The page will reload.
+   * - `static-changed`: Alias of `full-reload` for backward compatibility.
+   * - `custom`: Send custom messages via `custom` type with optional data to the browser and handle them via HMR events.
    */
   sockWrite: SockWrite;
 };

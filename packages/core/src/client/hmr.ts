@@ -190,7 +190,7 @@ export function init(
           err,
         );
       }
-      reloadPage();
+      fullReload();
       return;
     }
 
@@ -225,7 +225,7 @@ export function init(
 
     // HotModuleReplacementPlugin is not registered in Rspack configuration
     // fallback to reload page
-    reloadPage();
+    fullReload();
   }
 
   let socket: WebSocket | null = null;
@@ -273,9 +273,10 @@ export function init(
       case 'ok':
         handleSuccess();
         break;
-      // Triggered when static files changed
+      // Triggered when the client must perform a full page reload.
+      case 'full-reload':
       case 'static-changed':
-        reloadPage();
+        fullReload();
         break;
       case 'warnings':
         handleWarnings(message.data);
@@ -401,7 +402,7 @@ export function init(
     }
   }
 
-  function reloadPage() {
+  function fullReload() {
     if (liveReload) {
       window.location.reload();
     }
