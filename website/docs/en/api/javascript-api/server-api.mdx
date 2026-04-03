@@ -312,7 +312,10 @@ You can also send custom messages via `custom` type with optional data to the br
 
 ```ts title="server.js"
 const rsbuildServer = await rsbuild.createDevServer();
-rsbuildServer.sockWrite('custom', { event: 'count', data: { value: 1 } });
+rsbuildServer.sockWrite('custom', {
+  event: 'count',
+  data: { value: 1 },
+});
 ```
 
 Rsbuild extends the `on()` method on Rspack’s [import.meta.webpackHot](https://rspack.rs/api/runtime-api/hmr) object. It allows you to listen for custom events in the browser and handle the associated data:

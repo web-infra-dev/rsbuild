@@ -310,7 +310,10 @@ if (someCondition) {
 
 ```ts title="server.js"
 const rsbuildServer = await rsbuild.createDevServer();
-rsbuildServer.sockWrite('custom', { event: 'count', data: { value: 1 } });
+rsbuildServer.sockWrite('custom', {
+  event: 'count',
+  data: { value: 1 },
+});
 ```
 
 Rsbuild 在 Rspack 的 [import.meta.webpackHot](https://rspack.rs/api/runtime-api/hmr) 对象上扩展了 `on()` 方法，它允许你在浏览器端监听自定义事件，并处理数据：
