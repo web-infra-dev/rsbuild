@@ -285,7 +285,7 @@ console.log(port, urls);
 type SockWrite = {
   (type: 'full-reload'): void;
   (type: 'static-changed'): void;
-  (type: 'custom', data?: { event: string; data?: any }): void;
+  (type: 'custom', data: { event: string; data?: any }): void;
 };
 ```
 
