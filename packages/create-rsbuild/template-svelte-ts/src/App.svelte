@@ -1,5 +1,10 @@
 <script lang="ts">
-  let { tool, framework } = $props();
+  type Props = {
+    tool: string;
+    framework: string;
+  };
+
+  let { tool, framework }: Props = $props();
 </script>
 
 <main>
