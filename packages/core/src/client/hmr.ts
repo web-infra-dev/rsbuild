@@ -416,8 +416,10 @@ export function init(
     if (path?.endsWith('.html')) {
       const pathname = decodeURI(location.pathname);
       const targetPath = base + path.slice(1);
+      const targetPathWithoutExt = targetPath.slice(0, -'.html'.length);
       if (
         pathname === targetPath ||
+        pathname === targetPathWithoutExt ||
         (pathname.endsWith('/') && `${pathname}index.html` === targetPath)
       ) {
         location.reload();
