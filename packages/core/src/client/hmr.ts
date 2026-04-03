@@ -3,6 +3,7 @@ import type {
   ClientMessageError,
   ServerMessage,
   ServerMessageErrors,
+  ServerMessageFullReload,
   ServerMessageResolvedClientError,
 } from '../server/socketServer';
 import type { LogLevel, NormalizedClientConfig } from '../types';
@@ -65,6 +66,7 @@ export function init(
   config: NormalizedClientConfig,
   serverHost: string,
   serverPort: number,
+  serverBase: string,
   liveReload: boolean,
   browserLogs: boolean,
   logLevel: LogLevel,
@@ -80,6 +82,7 @@ export function init(
   // Hash of the last successful build
   let lastHash: string | undefined;
   let hasBuildErrors = false;
+  const base = serverBase.endsWith('/') ? serverBase : `${serverBase}/`;
 
   function formatURL(fallback?: boolean) {
     const { location } = self;
@@ -275,6 +278,8 @@ export function init(
         break;
       // Triggered when the client must perform a full page reload.
       case 'full-reload':
+        fullReload(message.data);
+        break;
       case 'static-changed':
         fullReload();
         break;
@@ -402,10 +407,25 @@ export function init(
     }
   }
 
-  function fullReload() {
-    if (liveReload) {
-      window.location.reload();
+  function fullReload(data?: ServerMessageFullReload['data']) {
+    if (!liveReload) {
+      return;
     }
+
+    const path = data?.path;
+    if (path?.endsWith('.html')) {
+      const pathname = decodeURI(location.pathname);
+      const targetPath = base + path.slice(1);
+      if (
+        pathname === targetPath ||
+        (pathname.endsWith('/') && `${pathname}index.html` === targetPath)
+      ) {
+        location.reload();
+      }
+      return;
+    }
+
+    location.reload();
   }
 
   if (browserLogs && typeof window !== 'undefined') {

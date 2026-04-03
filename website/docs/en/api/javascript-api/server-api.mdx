@@ -285,7 +285,7 @@ console.log(port, urls);
 
 ```ts
 type SockWrite = {
-  (type: 'full-reload'): void;
+  (type: 'full-reload', data?: { path?: string }): void;
   (type: 'static-changed'): void;
   (type: 'custom', data: { event: string; data?: any }): void;
 };
@@ -302,6 +302,17 @@ const rsbuildServer = await rsbuild.createDevServer();
 if (someCondition) {
   rsbuildServer.sockWrite('full-reload');
 }
+```
+
+When `path` is provided and ends with `.html`, Rsbuild only reloads the page whose current URL matches that HTML path.
+
+The path should be relative to the dev server root and should not include `server.base`.
+
+```ts
+const rsbuildServer = await rsbuild.createDevServer();
+rsbuildServer.sockWrite('full-reload', {
+  path: '/foo.html',
+});
 ```
 
 > `'static-changed'` is an alias of `'full-reload'`.

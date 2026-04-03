@@ -283,7 +283,7 @@ console.log(port, urls);
 
 ```ts
 type SockWrite = {
-  (type: 'full-reload'): void;
+  (type: 'full-reload', data?: { path?: string }): void;
   (type: 'static-changed'): void;
   (type: 'custom', data: { event: string; data?: any }): void;
 };
@@ -300,6 +300,17 @@ const rsbuildServer = await rsbuild.createDevServer();
 if (someCondition) {
   rsbuildServer.sockWrite('full-reload');
 }
+```
+
+当传入 `path` 且它以 `.html` 结尾时，Rsbuild 只会重新加载当前 URL 与该 HTML 路径匹配的页面。
+
+这个路径应当相对于 dev server 根路径，并且不应包含 `server.base`。
+
+```ts
+const rsbuildServer = await rsbuild.createDevServer();
+rsbuildServer.sockWrite('full-reload', {
+  path: '/foo.html',
+});
 ```
 
 > `'static-changed'` 是 `'full-reload'` 的一个别名。

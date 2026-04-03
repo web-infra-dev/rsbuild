@@ -26,7 +26,20 @@ function isEqualSet(a: Set<string>, b: Set<string>): boolean {
 const CHECK_SOCKETS_INTERVAL = 30000;
 
 export type ServerMessageFullReload = {
-  type: 'full-reload' | 'static-changed';
+  type: 'full-reload';
+  data?: {
+    /**
+     * If `path` is an HTML path, only the matching page will reload.
+     * The path should be relative to the dev server root and should not
+     * include `server.base`.
+     * @example `/foo.html`
+     */
+    path?: string;
+  };
+};
+
+export type ServerMessageStaticChanged = {
+  type: 'static-changed';
 };
 
 export type ServerMessageHash = {
@@ -70,6 +83,7 @@ export type ServerCustomMessage = {
 export type ServerMessage =
   | ServerMessageOk
   | ServerMessageFullReload
+  | ServerMessageStaticChanged
   | ServerMessageHash
   | ServerMessageWarnings
   | ServerMessageErrors

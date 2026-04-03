@@ -212,6 +212,7 @@ init(
   ${JSON.stringify(clientConfig)},
   ${JSON.stringify(resolvedHost)},
   ${resolvedPort},
+  ${JSON.stringify(config.server.base)},
   ${liveReloadEnabled},
   ${Boolean(config.dev.browserLogs)},
   ${JSON.stringify(config.dev.client.logLevel)}
