@@ -304,7 +304,9 @@ if (someCondition) {
 
 当传入 `path` 且它以 `.html` 结尾时，Rsbuild 只会重新加载当前 URL 与该 HTML 路径匹配的页面。
 
-这个路径应当相对于 dev server 根路径，并且不应包含 `server.base`。
+当 `path` 为 `'*'` 时，Rsbuild 会重新加载所有页面。
+
+HTML 路径应当相对于 dev server 根路径，并且不应包含 `server.base`。
 
 ```ts
 const rsbuildServer = await rsbuild.createDevServer();

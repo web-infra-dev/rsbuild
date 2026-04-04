@@ -30,8 +30,8 @@ export type ServerMessageFullReload = {
   data?: {
     /**
      * If `path` is an HTML path, only the matching page will reload.
-     * The path should be relative to the dev server root and should not
-     * include `server.base`.
+     * The HTML path should be relative to the dev server root and should not
+     * include `server.base`. Use `'*'` to reload all pages.
      * @example `/foo.html`
      */
     path?: string;

@@ -28,6 +28,12 @@ test('should allow to call `sockWrite` after creating dev server', async ({
   server.sockWrite('static-changed');
   expectPoll(() => count > previousCount).toBeTruthy();
 
+  previousCount = count;
+  server.sockWrite('full-reload', {
+    path: '*',
+  });
+  expectPoll(() => count > previousCount).toBeTruthy();
+
   await server.close();
 });
 

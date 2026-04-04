@@ -306,7 +306,9 @@ if (someCondition) {
 
 When `path` is provided and ends with `.html`, Rsbuild only reloads the page whose current URL matches that HTML path.
 
-The path should be relative to the dev server root and should not include `server.base`.
+When `path` is `'*'`, Rsbuild reloads all pages.
+
+The HTML path should be relative to the dev server root and should not include `server.base`.
 
 ```ts
 const rsbuildServer = await rsbuild.createDevServer();
