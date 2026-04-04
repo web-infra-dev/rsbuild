@@ -29,6 +29,7 @@ test('should apply custom middleware via `server.setup`', async ({
 });
 
 test('should apply to trigger page reload via the `full-reload` type of sockWrite in server.setup', async ({
+  page,
   dev,
 }) => {
   let count = 0;
@@ -52,7 +53,8 @@ test('should apply to trigger page reload via the `full-reload` type of sockWrit
     },
   });
 
+  await expect(page.locator('#test')).toHaveText('Hello Rsbuild!');
   const previousCount = count;
   reloadPage?.();
-  expectPoll(() => count > previousCount).toBeTruthy();
+  await expectPoll(() => count > previousCount).toBeTruthy();
 });

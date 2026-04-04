@@ -4,35 +4,39 @@ import { createRsbuild } from '@rsbuild/core';
 test('should allow to call `sockWrite` after creating dev server', async ({
   page,
 }) => {
-  let count = 0;
   const rsbuild = await createRsbuild({
     cwd: import.meta.dirname,
   });
 
   const server = await rsbuild.createDevServer();
 
-  server.middlewares.use((_req, _res, next) => {
-    count++;
-    next();
-  });
-
   await server.listen();
   await gotoPage(page, server);
-  expectPoll(() => count > 0).toBeTruthy();
+  const button = page.locator('#button');
+  await expect(button).toHaveText('count: 0');
 
-  let previousCount = count;
+  await button.click();
+  await expect(button).toHaveText('count: 1');
+  let loadPromise = page.waitForEvent('load');
   server.sockWrite('full-reload');
-  expectPoll(() => count > previousCount).toBeTruthy();
+  await loadPromise;
+  await expect(button).toHaveText('count: 0');
 
-  previousCount = count;
+  await button.click();
+  await expect(button).toHaveText('count: 1');
+  loadPromise = page.waitForEvent('load');
   server.sockWrite('static-changed');
-  expectPoll(() => count > previousCount).toBeTruthy();
+  await loadPromise;
+  await expect(button).toHaveText('count: 0');
 
-  previousCount = count;
+  await button.click();
+  await expect(button).toHaveText('count: 1');
+  loadPromise = page.waitForEvent('load');
   server.sockWrite('full-reload', {
     path: '*',
   });
-  expectPoll(() => count > previousCount).toBeTruthy();
+  await loadPromise;
+  await expect(button).toHaveText('count: 0');
 
   await server.close();
 });
