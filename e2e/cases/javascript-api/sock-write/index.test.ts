@@ -1,4 +1,4 @@
-import { expect, expectPoll, gotoPage, test } from '@e2e/helper';
+import { expect, gotoPage, test } from '@e2e/helper';
 import { createRsbuild } from '@rsbuild/core';
 
 test('should allow to call `sockWrite` after creating dev server', async ({
