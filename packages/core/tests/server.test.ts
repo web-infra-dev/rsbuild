@@ -2,6 +2,8 @@ import { rspack } from '@rspack/core';
 import { defaultAllowedOrigins } from '../src/defaultConfig';
 import { isClientCompiler } from '../src/server/assets-middleware';
 import { formatRoutes, printServerURLs } from '../src/server/helper';
+import { createHttpServer } from '../src/server/httpServer';
+import type { Connect } from '../src/types';
 import { logger } from '../src';
 
 beforeEach(() => {
@@ -276,6 +278,23 @@ describe('dev server', () => {
       ),
     ).toBeFalsy();
   });
+});
+
+test('should use Http2SecureServer when https and proxy are both enabled', async () => {
+  const middlewares = ((_: unknown, __: unknown, next: () => void) =>
+    next()) as unknown as Connect.Server;
+
+  const server = await createHttpServer({
+    serverConfig: {
+      https: {},
+      proxy: {
+        '/api': 'http://127.0.0.1:3001',
+      },
+    },
+    middlewares,
+  });
+
+  expect(server.constructor.name).toBe('Http2SecureServer');
 });
 
 test('should match local origins correctly', () => {
