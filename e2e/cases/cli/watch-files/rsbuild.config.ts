@@ -1,4 +1,5 @@
 import { defineConfig } from '@rsbuild/core';
+// rslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore temp file
 import content from './test-temp-config';
 
