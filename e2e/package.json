@@ -52,7 +52,7 @@
     "create-rsbuild": "workspace:*",
     "fast-glob": "^3.3.3",
     "fs-extra": "^11.3.4",
-    "hono": "^4.12.10",
+    "hono": "^4.12.11",
     "playwright": "1.58.2",
     "tailwindcss": "^4.2.2",
     "typescript": "^6.0.2"
