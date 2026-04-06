@@ -33,7 +33,7 @@
     "@rsbuild/core-v1": "npm:@rsbuild/core@^1.7.5",
     "@rslib/core": "0.20.3",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^24.12.0",
+    "@types/node": "^24.12.2",
     "typescript": "^6.0.2"
   },
   "peerDependencies": {

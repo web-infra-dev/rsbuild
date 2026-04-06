@@ -39,7 +39,7 @@
     "@rsbuild/core-v1": "npm:@rsbuild/core@^1.7.5",
     "@rslib/core": "0.20.3",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^24.12.0",
+    "@types/node": "^24.12.2",
     "file-loader": "6.2.0",
     "prebundle": "1.6.4",
     "svgo": "^3.3.3",

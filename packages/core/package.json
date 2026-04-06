@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "@rspack/core": "2.0.0-rc.0",
-    "@swc/helpers": "^0.5.20"
+    "@swc/helpers": "^0.5.21"
   },
   "peerDependencies": {
     "core-js": ">= 3.0.0"
@@ -57,7 +57,7 @@
     "@jridgewell/trace-mapping": "^0.3.31",
     "@rslib/core": "0.20.3",
     "@types/cors": "^2.8.19",
-    "@types/node": "^24.12.0",
+    "@types/node": "^24.12.2",
     "@types/on-finished": "2.3.5",
     "@types/range-parser": "^1.2.7",
     "@types/ws": "^8.18.1",
@@ -70,7 +70,7 @@
     "deepmerge": "^4.3.1",
     "dotenv-expand": "12.0.3",
     "html-rspack-plugin": "6.1.8",
-    "http-proxy-middleware": "^4.0.0-beta.2",
+    "http-proxy-middleware": "^4.0.0-beta.3",
     "jiti": "^2.6.1",
     "launch-editor-middleware": "^2.13.2",
     "memfs": "^4.57.1",
@@ -82,7 +82,7 @@
     "postcss-loader": "8.2.1",
     "prebundle": "1.6.4",
     "range-parser": "^1.2.1",
-    "reduce-configs": "^1.1.1",
+    "reduce-configs": "^1.1.2",
     "rslog": "^2.1.1",
     "rspack-chain": "^2.0.0-rc.1",
     "rspack-manifest-plugin": "5.2.1",
