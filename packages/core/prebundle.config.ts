@@ -51,7 +51,7 @@ export default {
       name: 'http-proxy-middleware',
       dtsOnly: true,
       afterBundle(task) {
-        // Fix missing Hono types in http-proxy-middleware
+        // Suppress missing-module errors for optional Hono peer type imports in generated d.ts files.
         replaceFileContent(join(task.distPath, 'index.d.ts'), (content) => {
           const ignore = '@ts-ignore';
           return content.replace(
