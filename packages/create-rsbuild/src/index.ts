@@ -170,4 +170,11 @@ create({
       command: 'npm create storybook@latest -- --skip-install --features docs',
     },
   ],
+  extraSkills: [
+    {
+      value: 'rsbuild-best-practices',
+      label: 'Rsbuild - best practices',
+      source: 'rstackjs/agent-skills',
+    },
+  ],
 });
