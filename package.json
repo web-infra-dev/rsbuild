@@ -11,7 +11,7 @@
     "check-spell": "pnpx cspell && heading-case",
     "doc": "cd website && node --run dev",
     "e2e": "cd ./e2e && pnpm e2e",
-    "format": "prettier --experimental-cli --write . && heading-case --write",
+    "format": "prettier --experimental-cli -w . && heading-case --write",
     "lint": "rslint",
     "prebundle": "pnpm --parallel --filter \"./packages/*\" run prebundle",
     "prepare": "simple-git-hooks && node --run prebundle && node --run build",
@@ -20,13 +20,12 @@
     "test:watch": "rstest watch"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm exec nano-staged"
+    "pre-commit": "./node_modules/.bin/nano-staged"
   },
   "nano-staged": {
-    "*.{md,mdx,json,css,less,scss}": "prettier --experimental-cli --write",
-    "*.{js,jsx,ts,tsx,mjs,cjs}": [
+    "*": [
       "rslint",
-      "prettier --experimental-cli --write"
+      "prettier --experimental-cli -w"
     ]
   },
   "devDependencies": {
