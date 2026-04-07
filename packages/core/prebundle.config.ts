@@ -50,13 +50,19 @@ export default {
     {
       name: 'http-proxy-middleware',
       dtsOnly: true,
-      beforeBundle(task) {
-        replaceFileContent(join(task.depPath, 'dist/types.d.ts'), (content) =>
-          content.replace(
-            "import type * as httpProxy from 'http-proxy'",
-            "import type httpProxy from 'http-proxy'",
-          ),
-        );
+      afterBundle(task) {
+        // Fix missing Hono types in http-proxy-middleware
+        replaceFileContent(join(task.distPath, 'index.d.ts'), (content) => {
+          const ignore = '@ts-ignore';
+          return content.replace(
+            `import { HttpBindings } from '@hono/node-server';
+import { MiddlewareHandler } from 'hono';`,
+            `// ${ignore}
+import { HttpBindings } from '@hono/node-server';
+// ${ignore}
+import { MiddlewareHandler } from 'hono';`,
+          );
+        });
       },
     },
     {

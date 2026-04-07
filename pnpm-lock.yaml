@@ -561,8 +561,8 @@ importers:
         specifier: 6.1.8
         version: 6.1.8(@rspack/core@2.0.0-rc.0(@emnapi/core@1.8.1)(@emnapi/runtime@1.8.1)(@module-federation/runtime-tools@2.3.1)(@swc/helpers@0.5.21))
       http-proxy-middleware:
-        specifier: 4.0.0-beta.2
-        version: 4.0.0-beta.2(supports-color@10.2.2)
+        specifier: 4.0.0-beta.3
+        version: 4.0.0-beta.3(supports-color@10.2.2)
       jiti:
         specifier: ^2.6.1
         version: 2.6.1
@@ -4127,8 +4127,8 @@ packages:
   htmlparser2@10.0.0:
     resolution: {integrity: sha512-TwAZM+zE5Tq3lrEHvOlvwgj1XLWQCtaaibSN11Q+gGBAS7Y1uZSWwXXRe4iF6OXnaq1riyQAPFOBtYc77Mxq0g==}
 
-  http-proxy-middleware@4.0.0-beta.2:
-    resolution: {integrity: sha512-ELwx+by6D9k8hOdSTC2YdzygA5NqHBow2nO/GPlT4kCuBPDTBBm3WU8fLtabwnE63rdiI4FKRzlEjyTkVkDIQA==}
+  http-proxy-middleware@4.0.0-beta.3:
+    resolution: {integrity: sha512-wxwujnPix6nWzqhZg7d6OEyhELLUwWMGpJOcHveX95/5q8sIOV9viOEYg8ersC3SfTiX3FNT2Ju2u7EDxOtfdw==}
     engines: {node: ^22.12.0 || >=24.0.0}
 
   httpxy@0.5.0:
@@ -4233,10 +4233,6 @@ packages:
 
   is-plain-object@2.0.4:
     resolution: {integrity: sha512-h5PpgXkWitc38BBMYawTYMWJHFZJVnBquFE57xFpjB8pJFiF6gZ+bU+WyI/yqXiFR5mdLsgYNaPe8uao6Uv9Og==}
-    engines: {node: '>=0.10.0'}
-
-  is-plain-object@5.0.0:
-    resolution: {integrity: sha512-VRSzKkbMm5jMDoKLbltAkFQ5Qr7VDiTFGXxYFXXowVj387GeGNOCsOH6Msy00SGZ3Fp84b1Naa1psqgcCIEP5Q==}
     engines: {node: '>=0.10.0'}
 
   is-reference@3.0.3:
@@ -9566,12 +9562,12 @@ snapshots:
       domutils: 3.2.2
       entities: 6.0.1
 
-  http-proxy-middleware@4.0.0-beta.2(supports-color@10.2.2):
+  http-proxy-middleware@4.0.0-beta.3(supports-color@10.2.2):
     dependencies:
       debug: 4.4.3(supports-color@10.2.2)
       httpxy: 0.5.0
       is-glob: 4.0.3
-      is-plain-object: 5.0.0
+      is-plain-obj: 4.1.0
       micromatch: 4.0.8
     transitivePeerDependencies:
       - supports-color
@@ -9650,8 +9646,6 @@ snapshots:
   is-plain-object@2.0.4:
     dependencies:
       isobject: 3.0.1
-
-  is-plain-object@5.0.0: {}
 
   is-reference@3.0.3:
     dependencies:
