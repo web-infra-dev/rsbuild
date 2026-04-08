@@ -227,7 +227,7 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
               },
               "detectSyntax": "auto",
               "env": {
-                "coreJs": "3.48",
+                "coreJs": "3.49",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -825,7 +825,7 @@ exports[`plugin-swc > should enable preset-env in entry mode 1`] = `
                 },
                 "detectSyntax": "auto",
                 "env": {
-                  "coreJs": "3.48",
+                  "coreJs": "3.49",
                   "mode": "entry",
                   "targets": [
                     "chrome >= 107",
@@ -904,7 +904,7 @@ exports[`plugin-swc > should enable preset-env in usage mode 1`] = `
                 },
                 "detectSyntax": "auto",
                 "env": {
-                  "coreJs": "3.48",
+                  "coreJs": "3.49",
                   "mode": "usage",
                   "shippedProposals": true,
                   "targets": [
@@ -984,7 +984,7 @@ exports[`plugin-swc > should use the correct core-js version 1`] = `
                 },
                 "detectSyntax": "auto",
                 "env": {
-                  "coreJs": "3.48",
+                  "coreJs": "3.49",
                   "mode": "entry",
                   "targets": [
                     "chrome >= 107",
