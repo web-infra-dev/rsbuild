@@ -787,8 +787,8 @@ importers:
   packages/plugin-react:
     dependencies:
       '@rspack/plugin-react-refresh':
-        specifier: 2.0.0-beta.0
-        version: 2.0.0-beta.0(@rspack/core@2.0.0-rc.1(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@module-federation/runtime-tools@2.3.1)(@swc/helpers@0.5.21))(react-refresh@0.18.0)
+        specifier: 2.0.0
+        version: 2.0.0(@rspack/core@2.0.0-rc.1(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@module-federation/runtime-tools@2.3.1)(@swc/helpers@0.5.21))(react-refresh@0.18.0)
       react-refresh:
         specifier: ^0.18.0
         version: 0.18.0
@@ -2571,8 +2571,8 @@ packages:
       webpack-hot-middleware:
         optional: true
 
-  '@rspack/plugin-react-refresh@2.0.0-beta.0':
-    resolution: {integrity: sha512-IYCtmYpOHVFuzxf/SYu0XCUoyw8zzAmTzu3AN1r/ZstOuniXWW3D9Jy0mELqe07tMQkcqwsXxSRqibfyI8H5nA==}
+  '@rspack/plugin-react-refresh@2.0.0':
+    resolution: {integrity: sha512-Cf6CxBStNDJbiXMc/GmsvG1G8PRlUpa0MSfWsMTI+e8npzuTN/p8nwLs3shriBZOLciqgkSZpBtPTd10BLpj1g==}
     peerDependencies:
       '@rspack/core': ^2.0.0-0
       react-refresh: '>=0.10.0 <1.0.0'
@@ -7903,7 +7903,7 @@ snapshots:
       html-entities: 2.6.0
       react-refresh: 0.18.0
 
-  '@rspack/plugin-react-refresh@2.0.0-beta.0(@rspack/core@2.0.0-rc.1(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@module-federation/runtime-tools@2.3.1)(@swc/helpers@0.5.21))(react-refresh@0.18.0)':
+  '@rspack/plugin-react-refresh@2.0.0(@rspack/core@2.0.0-rc.1(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@module-federation/runtime-tools@2.3.1)(@swc/helpers@0.5.21))(react-refresh@0.18.0)':
     dependencies:
       react-refresh: 0.18.0
     optionalDependencies:
