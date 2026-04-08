@@ -111,7 +111,7 @@ export const setupServerHooks = ({
       fileName.endsWith('.html') &&
       normalizeLiveReload(liveReload).html
     ) {
-      socketServer.sockWrite({ type: 'static-changed' }, token);
+      socketServer.sockWrite({ type: 'full-reload' }, token);
     }
   });
 
@@ -212,6 +212,7 @@ init(
   ${JSON.stringify(clientConfig)},
   ${JSON.stringify(resolvedHost)},
   ${resolvedPort},
+  ${JSON.stringify(config.server.base)},
   ${liveReloadEnabled},
   ${Boolean(config.dev.browserLogs)},
   ${JSON.stringify(config.dev.client.logLevel)}

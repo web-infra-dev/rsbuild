@@ -1,6 +1,15 @@
+<script lang="ts">
+  type Props = {
+    tool: string;
+    framework: string;
+  };
+
+  let { tool, framework }: Props = $props();
+</script>
+
 <main>
   <div class="content">
-    <h1>Rsbuild with Svelte</h1>
+    <h1>{tool} with {framework}</h1>
     <p>Start building amazing things with Rsbuild.</p>
   </div>
 </main>

@@ -170,7 +170,7 @@ async function startWatchFiles(
 
   watcher.on('change', () => {
     buildManager.socketServer.sockWrite({
-      type: 'static-changed',
+      type: 'full-reload',
     });
   });
 

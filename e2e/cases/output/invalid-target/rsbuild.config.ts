@@ -1,8 +1,8 @@
-import { defineConfig } from '@rsbuild/core';
+import { defineConfig, type OutputConfig } from '@rsbuild/core';
 
 export default defineConfig({
   output: {
-    // @ts-expect-error intentional invalid target for testing
+    // invalid target for testing
     target: 'foo',
-  },
+  } as unknown as OutputConfig,
 });

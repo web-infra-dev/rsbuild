@@ -1,6 +1,6 @@
 import deepmerge from 'deepmerge';
 import { color } from 'rslog';
-import RspackChain from 'rspack-chain';
+import { RspackChain } from 'rspack-chain';
 import type {
   FilenameConfig,
   NormalizedConfig,

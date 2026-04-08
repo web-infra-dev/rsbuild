@@ -19,8 +19,7 @@ export default defineConfig({
             undefinedType: string;
             result: string;
           }>('index');
-          // @ts-expect-error
-          const nativeModule = await import('esm-pkg');
+          const nativeModule = await import('esm-pkg' as string);
           const nativeDefault = nativeModule.default;
 
           const payload = {

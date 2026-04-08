@@ -173,12 +173,14 @@ const setupExecOptions = <T extends ExecOptions | ExecSyncOptions>(
 };
 
 export const test = base.extend<RsbuildFixture>({
+  // rslint-disable-next-line no-empty-pattern
   cwd: async ({}, use, { file }) => {
     const cwd = path.dirname(file);
     await use(cwd);
   },
 
   logHelper: [
+    // rslint-disable-next-line no-empty-pattern
     async ({}, use, testInfo) => {
       const logHelper = proxyConsole();
       await use(logHelper);

@@ -51,7 +51,9 @@ import { setupWatchFiles, type WatchFilesResult } from './watchFiles';
 type HTTPServer = Server | Http2SecureServer;
 
 type ExtractSocketMessageData<T extends ServerMessage['type']> =
-  Extract<ServerMessage, { type: T }> extends { data: infer D } ? D : undefined;
+  'data' extends keyof Extract<ServerMessage, { type: T }>
+    ? Extract<ServerMessage, { type: T }>['data']
+    : undefined;
 
 export type SockWrite = <T extends ServerMessage['type']>(
   type: T,
@@ -81,7 +83,9 @@ export type RsbuildDevServer = RsbuildServerBase & {
   /**
    * Allows middleware to send some message to HMR client, and then the HMR
    * client will take different actions depending on the message type.
-   * - `static-changed`: The page will reload.
+   * - `full-reload`: The page will reload.
+   * - `static-changed`: Alias of `full-reload` for backward compatibility.
+   * - `custom`: Send custom messages via `custom` type with optional data to the browser and handle them via HMR events.
    */
   sockWrite: SockWrite;
 };

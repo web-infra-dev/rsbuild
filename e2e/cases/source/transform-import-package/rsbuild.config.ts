@@ -4,8 +4,8 @@ export default defineConfig({
   source: {
     transformImport: [
       {
-        libraryName: 'lodash',
-        customName: 'lodash/{{ member }}',
+        libraryName: 'fixture-package',
+        customName: 'fixture-package/{{ member }}',
       },
     ],
   },

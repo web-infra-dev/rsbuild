@@ -25,6 +25,7 @@ test('should apply custom middleware via `setupMiddlewares`', async ({
 });
 
 test('should apply to trigger page reload via the `static-changed` type of sockWrite in setupMiddlewares', async ({
+  page,
   dev,
 }) => {
   let count = 0;
@@ -44,7 +45,8 @@ test('should apply to trigger page reload via the `static-changed` type of sockW
     },
   });
 
+  await expect(page.locator('#test')).toHaveText('Hello Rsbuild!');
   const previousCount = count;
   reloadPage?.();
-  expectPoll(() => count > previousCount).toBeTruthy();
+  await expectPoll(() => count > previousCount).toBeTruthy();
 });

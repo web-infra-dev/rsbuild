@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { nodeMinifyConfig } from '@rsbuild/config/rslib.config.ts';
+import { nodeMinifyConfig } from '@scripts/config/rslib.config.ts';
 import { defineConfig, type Rsbuild, type Rspack } from '@rslib/core';
 import pkgJson from './package.json' with { type: 'json' };
 import prebundleConfig from './prebundle.config.ts';

@@ -1,10 +1,7 @@
 import { expect, gotoPage, test } from '@e2e/helper';
-// @ts-expect-error
-import { startDevServerPure } from './scripts/pureServer.js';
-// @ts-expect-error
-import { startDevServer } from './scripts/server.js';
 
 test('should support a custom dev server', async ({ page }) => {
+  const { startDevServer } = await import('./scripts/server.js' as string);
   const { config, close } = await startDevServer(import.meta.dirname);
 
   await gotoPage(page, config);
@@ -23,6 +20,9 @@ test('should support a custom dev server', async ({ page }) => {
 test('should support a custom dev server without compilation', async ({
   page,
 }) => {
+  const { startDevServerPure } = await import(
+    './scripts/pureServer.js' as string
+  );
   const { config, close } = await startDevServerPure(import.meta.dirname);
   const indexRes = await gotoPage(page, config);
 

@@ -14,15 +14,10 @@ export const createHttpServer = async ({
   middlewares: Connect.Server;
 }): Promise<Http2SecureServer | Server> => {
   if (serverConfig.https) {
-    // http-proxy does not supports http2
-    if (serverConfig.proxy) {
-      const { createServer } = await import('node:https');
-      return createServer(serverConfig.https, middlewares);
-    }
-
     const { createSecureServer } = await import('node:http2');
     return createSecureServer(
       {
+        // Keep HTTP/1 clients working
         allowHTTP1: true,
         // increase the maximum memory (MiB)
         maxSessionMemory: 1024,

@@ -285,23 +285,39 @@ console.log(port, urls);
 
 ```ts
 type SockWrite = {
+  (type: 'full-reload', data?: { path?: string }): void;
   (type: 'static-changed'): void;
-  (type: 'custom', data?: { event: string; data?: any }): void;
+  (type: 'custom', data: { event: string; data?: any }): void;
 };
 ```
 
 Sends some message to HMR client, and then the HMR client will take different actions depending on the message type.
 
-#### static-changed
+#### full-reload
 
-If you send a `'static-changed'` message, the page will reload.
+If you send a `'full-reload'` message, the page will reload.
 
 ```ts
 const rsbuildServer = await rsbuild.createDevServer();
 if (someCondition) {
-  rsbuildServer.sockWrite('static-changed');
+  rsbuildServer.sockWrite('full-reload');
 }
 ```
+
+When `path` is provided and ends with `.html`, Rsbuild only reloads the page whose current URL matches that HTML path.
+
+When `path` is `'*'`, Rsbuild reloads all pages.
+
+The HTML path should be relative to the dev server root and should not include `server.base`.
+
+```ts
+const rsbuildServer = await rsbuild.createDevServer();
+rsbuildServer.sockWrite('full-reload', {
+  path: '/foo.html',
+});
+```
+
+> `'static-changed'` is an alias of `'full-reload'`.
 
 #### custom
 
@@ -309,7 +325,10 @@ You can also send custom messages via `custom` type with optional data to the br
 
 ```ts title="server.js"
 const rsbuildServer = await rsbuild.createDevServer();
-rsbuildServer.sockWrite('custom', { event: 'count', data: { value: 1 } });
+rsbuildServer.sockWrite('custom', {
+  event: 'count',
+  data: { value: 1 },
+});
 ```
 
 Rsbuild extends the `on()` method on Rspack’s [import.meta.webpackHot](https://rspack.rs/api/runtime-api/hmr) object. It allows you to listen for custom events in the browser and handle the associated data:

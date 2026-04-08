@@ -28,7 +28,8 @@ test('should apply custom middleware via `server.setup`', async ({
   expect(count).toBeGreaterThanOrEqual(1);
 });
 
-test('should apply to trigger page reload via the `static-changed` type of sockWrite in server.setup', async ({
+test('should apply to trigger page reload via the `full-reload` type of sockWrite in server.setup', async ({
+  page,
   dev,
 }) => {
   let count = 0;
@@ -46,13 +47,14 @@ test('should apply to trigger page reload via the `static-changed` type of sockW
             count++;
             next();
           });
-          reloadPage = () => server.sockWrite('static-changed');
+          reloadPage = () => server.sockWrite('full-reload');
         },
       },
     },
   });
 
+  await expect(page.locator('#test')).toHaveText('Hello Rsbuild!');
   const previousCount = count;
   reloadPage?.();
-  expectPoll(() => count > previousCount).toBeTruthy();
+  await expectPoll(() => count > previousCount).toBeTruthy();
 });

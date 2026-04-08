@@ -12,17 +12,12 @@ const expectErrorOverlay = async (page: Page) => {
   await expect(errorOverlay.locator('.title')).toHaveText(
     OVERLAY_TITLE_BUILD_FAILED,
   );
-
-  // Get "<span style="color:#888">TS2322: </span>"
-  const tsSpan = errorOverlay.locator('span').getByText('TS2322: ');
-  expect(await tsSpan.getAttribute('style')).toEqual('color:#888;');
-
-  // The first link is "<a class="file-link">./path/to/src/index.ts:3:1</a>"
-  const firstLink = errorOverlay.locator('.file-link').first();
-  const linkText = await firstLink.textContent();
-  expect(
-    linkText?.endsWith('/src/index.ts:3:1') && linkText.startsWith('.'),
-  ).toBeTruthy();
+  await expect(errorOverlay).toContainText(
+    "TS2322: Type 'string' is not assignable to type 'number'.",
+  );
+  await expect(errorOverlay.locator('.file-link').first()).toHaveText(
+    /^\.(?:.*[\\/])?src[\\/]index\.ts:3:1$/,
+  );
 };
 
 test('should display type errors on overlay correctly', async ({

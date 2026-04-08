@@ -3,6 +3,7 @@ import type {
   ClientMessageError,
   ServerMessage,
   ServerMessageErrors,
+  ServerMessageFullReload,
   ServerMessageResolvedClientError,
 } from '../server/socketServer';
 import type { LogLevel, NormalizedClientConfig } from '../types';
@@ -65,6 +66,7 @@ export function init(
   config: NormalizedClientConfig,
   serverHost: string,
   serverPort: number,
+  serverBase: string,
   liveReload: boolean,
   browserLogs: boolean,
   logLevel: LogLevel,
@@ -80,6 +82,7 @@ export function init(
   // Hash of the last successful build
   let lastHash: string | undefined;
   let hasBuildErrors = false;
+  const base = serverBase.endsWith('/') ? serverBase : `${serverBase}/`;
 
   function formatURL(fallback?: boolean) {
     const { location } = self;
@@ -190,7 +193,7 @@ export function init(
           err,
         );
       }
-      reloadPage();
+      fullReload();
       return;
     }
 
@@ -225,7 +228,7 @@ export function init(
 
     // HotModuleReplacementPlugin is not registered in Rspack configuration
     // fallback to reload page
-    reloadPage();
+    fullReload();
   }
 
   let socket: WebSocket | null = null;
@@ -273,9 +276,12 @@ export function init(
       case 'ok':
         handleSuccess();
         break;
-      // Triggered when static files changed
+      // Triggered when the client must perform a full page reload.
+      case 'full-reload':
+        fullReload(message.data);
+        break;
       case 'static-changed':
-        reloadPage();
+        fullReload();
         break;
       case 'warnings':
         handleWarnings(message.data);
@@ -401,10 +407,27 @@ export function init(
     }
   }
 
-  function reloadPage() {
-    if (liveReload) {
-      window.location.reload();
+  function fullReload(data?: ServerMessageFullReload['data']) {
+    if (!liveReload) {
+      return;
     }
+
+    const path = data?.path;
+    if (path?.endsWith('.html')) {
+      const pathname = decodeURI(location.pathname);
+      const targetPath = base + path.slice(1);
+      const targetPathWithoutExt = targetPath.slice(0, -'.html'.length);
+      if (
+        pathname === targetPath ||
+        pathname === targetPathWithoutExt ||
+        (pathname.endsWith('/') && `${pathname}index.html` === targetPath)
+      ) {
+        location.reload();
+      }
+      return;
+    }
+
+    location.reload();
   }
 
   if (browserLogs && typeof window !== 'undefined') {

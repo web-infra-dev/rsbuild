@@ -31,12 +31,12 @@
     "deepmerge": "^4.3.1",
     "less": "^4.6.4",
     "less-loader": "^12.3.2",
-    "reduce-configs": "^1.1.1"
+    "reduce-configs": "^1.1.2"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/core-v1": "npm:@rsbuild/core@^1.7.4",
-    "@rslib/core": "0.20.1",
+    "@rsbuild/core-v1": "npm:@rsbuild/core@^1.7.5",
+    "@rslib/core": "0.20.3",
     "@scripts/test-helper": "workspace:*",
     "@types/less": "^3.0.8",
     "prebundle": "1.6.4",

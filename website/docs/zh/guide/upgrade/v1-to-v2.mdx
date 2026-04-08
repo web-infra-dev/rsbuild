@@ -8,8 +8,6 @@ import { PackageManagerTabs } from '@theme';
 
 当前文档列出了从 Rsbuild 1.x 到 2.0 的所有不兼容更新，你可以参考此文档来迁移。
 
-> 本指南仍在持续完善中。随着 Rsbuild 2.0 Beta 的推进，相关内容将逐步补充。
-
 ## 使用 Agent Skills
 
 如果你在使用支持 Skills 的 Coding Agent，可以安装 [rsbuild-v2-upgrade](https://github.com/rstackjs/agent-skills#rsbuild-v2-upgrade) 技能来辅助完成 v1 到 v2 的升级流程。
@@ -22,13 +20,13 @@ npx skills add rstackjs/agent-skills --skill rsbuild-v2-upgrade
 
 ## 升级 Rsbuild 到 v2
 
-- 将 `@rsbuild/core` 升级到 2.0 Beta 版本：
+- 将 `@rsbuild/core` 升级到 2.0 RC 版本：
 
 ```diff
 {
   "devDependencies": {
 -   "@rsbuild/core": "^1.0.0",
-+   "@rsbuild/core": "^2.0.0-beta.0"
++   "@rsbuild/core": "^2.0.0-rc.0"
   }
 }
 ```
@@ -407,9 +405,9 @@ export default {
 
 ### Proxy 中间件升级
 
-Rsbuild 依赖的 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) 从 v2 升级到了 v3，个别配置项发生了变化。
+Rsbuild 依赖的 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) 从 v2 升级到了 v4，个别配置项发生了变化。
 
-你可以根据以下示例进行迁移，或查看 [http-proxy-middleware v3 迁移指南](https://github.com/chimurai/http-proxy-middleware/blob/master/MIGRATION.md#v3-breaking-changes) 了解更多细节。
+你可以根据以下示例进行迁移，或查看 [http-proxy-middleware v3 不兼容更新](https://github.com/chimurai/http-proxy-middleware/blob/master/MIGRATION.md#v3-breaking-changes) 了解更多细节。
 
 - `context` 选项替换为 `pathFilter`：
 
@@ -456,7 +454,7 @@ export default {
 
 - 移除 `rsbuild.build()` 中废弃的 `compiler` 参数
 - 移除 `rsbuild.startDevServer()` 中废弃的 `compiler` 参数
-- 移除 [sockWrite](/api/javascript-api/server-api#sockwrite) 中废弃的 `content-changed` 消息类型，使用 `static-changed` 代替
+- 移除 [sockWrite](/api/javascript-api/server-api#sockwrite) 中废弃的 `content-changed` 消息类型。使用 `full-reload` 代替
 - 重命名 `rsbuild.onAfterStartProdServer` 方法为 `rsbuild.onAfterStartPreviewServer`
 - 重命名 `rsbuild.onBeforeStartProdServer` 方法为 `rsbuild.onBeforeStartPreviewServer`
 - [loadConfig](/api/javascript-api/core#loadconfig) 方法的 `loader` 参数的默认值从 `jiti` 变更为 `auto`，优先使用原生 Node.js 加载器
