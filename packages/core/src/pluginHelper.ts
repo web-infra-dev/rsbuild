@@ -1,5 +1,6 @@
 /**
- * This file is used to get/set the global instance for html-plugin and css-extract plugin.
+ * This file is used to get the global instance for html-plugin and get/set the
+ * global instance for css-extract plugin.
  */
 
 import { rspack } from '@rspack/core';
@@ -7,15 +8,6 @@ import { requireCompiledPackage } from './helpers/vendors';
 import type { HtmlRspackPlugin, NormalizedEnvironmentConfig } from './types';
 
 let htmlPlugin: typeof HtmlRspackPlugin;
-
-/**
- * This method is used to override the Rsbuild default html-plugin (html-rspack-plugin).
- */
-export const setHTMLPlugin = (plugin: typeof HtmlRspackPlugin): void => {
-  if (plugin) {
-    htmlPlugin = plugin;
-  }
-};
 
 export function getHTMLPlugin(
   config?: NormalizedEnvironmentConfig,
