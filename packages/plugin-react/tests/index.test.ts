@@ -1,4 +1,4 @@
-import { createRsbuild, type Rspack } from '@rsbuild/core';
+import { createRsbuild } from '@rsbuild/core';
 import { createRsbuild as createRsbuildV1 } from '@rsbuild/core-v1';
 import { matchPlugin, matchRules } from '@scripts/test-helper';
 import { pluginReact } from '../src';
@@ -122,36 +122,16 @@ describe('plugins/react', () => {
     expect(matchPlugin(config[0], 'ReactRefreshRspackPlugin')).toBeFalsy();
   });
 
-  it('should apply splitChunks with Rsbuild v1', async () => {
+  it('should throw an error when using Rsbuild v1', async () => {
     const rsbuild = await createRsbuildV1({
       config: {
         plugins: [pluginReact()],
       },
     });
 
-    const config = await rsbuild.initConfigs();
-    expect(config[0].optimization?.splitChunks).toMatchSnapshot();
-  });
-
-  it('should apply react refresh with Rsbuild v1', async () => {
-    const rsbuild = await createRsbuildV1({
-      config: {
-        mode: 'development',
-        source: {
-          include: [/foo/],
-          exclude: [/bar/],
-        },
-        plugins: [pluginReact()],
-      },
-    });
-
-    const config = await rsbuild.initConfigs();
-    expect(
-      matchPlugin(
-        config[0] as Rspack.Configuration,
-        'ReactRefreshRspackPlugin',
-      ),
-    ).toMatchSnapshot();
+    await expect(() => rsbuild.initConfigs()).rejects.toThrow(
+      /"@rsbuild\/plugin-react" v2 requires "@rsbuild\/core" >= 2\.0\. Please upgrade "@rsbuild\/core" or use "@rsbuild\/plugin-react" v1\./,
+    );
   });
 
   it('should not apply splitChunks rule when strategy is not split-by-experience', async () => {

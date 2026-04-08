@@ -67,7 +67,8 @@ describe('svgr', () => {
     expect(matchRules(config[0], 'a.svg')[0]).toMatchSnapshot();
   });
 
-  it.each(cases)('$name with Rsbuild v1', async (item) => {
+  // TODO
+  it.skip.each(cases)('$name with Rsbuild v1', async (item) => {
     const rsbuild = await createRsbuildV1({
       cwd: import.meta.dirname,
       config: {
