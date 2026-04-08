@@ -56,7 +56,7 @@ export type PluginReactOptions = {
 export const PLUGIN_REACT_NAME = 'rsbuild:react';
 
 function assertCoreVersion(version: string): void {
-  if (version.startsWith('1.')) {
+  if (version.split('.')[0] === '1') {
     throw new Error(
       `"@rsbuild/plugin-react" v2 requires "@rsbuild/core" >= 2.0. Please upgrade "@rsbuild/core" or use "@rsbuild/plugin-react" v1.`,
     );
