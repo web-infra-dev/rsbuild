@@ -77,7 +77,10 @@ export const pluginOutput = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(
-      (chain, { CHAIN_ID, isDev, isProd, isServer, environment, rspack }) => {
+      (
+        chain,
+        { CHAIN_ID, isDev, isProd, isServer, environment, rspack, target },
+      ) => {
         const { distPath, config } = environment;
 
         const publicPath = getPublicPath({
@@ -116,11 +119,30 @@ export const pluginOutput = (): RsbuildPlugin => ({
           )
           .publicPath(publicPath);
 
+        const isESM = config.output.module;
+
         if (isServer) {
           chain.output.library({
-            type: 'commonjs2',
+            type: isESM ? 'module' : 'commonjs2',
             ...(chain.output.get('library') || {}),
           });
+        }
+
+        if (isESM) {
+          if (target === 'web-worker') {
+            throw new Error(
+              '[rsbuild:config] `output.module: true` is not supported for web-worker target.',
+            );
+          }
+
+          // For ESM targets, import.meta.dirname / import.meta.filename / __dirname / __filename
+          // are preserved as-is. This matches the native behavior in browsers and Node.js.
+          chain.node.set('__dirname', false).set('__filename', false);
+          chain.output
+            .module(true)
+            .chunkFormat('module')
+            .chunkLoading('import')
+            .workerChunkLoading('import');
         }
 
         if (config.output.copy) {
