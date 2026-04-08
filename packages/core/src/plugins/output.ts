@@ -123,8 +123,8 @@ export const pluginOutput = (): RsbuildPlugin => ({
 
         if (isServer) {
           chain.output.library({
-            type: isESM ? 'module' : 'commonjs2',
             ...(chain.output.get('library') || {}),
+            type: isESM ? 'module' : 'commonjs2',
           });
         }
 
