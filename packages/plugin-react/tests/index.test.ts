@@ -1,4 +1,4 @@
-import { createRsbuild } from '@rsbuild/core';
+import { createRsbuild, type Rspack } from '@rsbuild/core';
 import { createRsbuild as createRsbuildV1 } from '@rsbuild/core-v1';
 import { matchPlugin, matchRules } from '@scripts/test-helper';
 import { pluginReact } from '../src';
@@ -131,6 +131,27 @@ describe('plugins/react', () => {
 
     const config = await rsbuild.initConfigs();
     expect(config[0].optimization?.splitChunks).toMatchSnapshot();
+  });
+
+  it('should apply react refresh with Rsbuild v1', async () => {
+    const rsbuild = await createRsbuildV1({
+      config: {
+        mode: 'development',
+        source: {
+          include: [/foo/],
+          exclude: [/bar/],
+        },
+        plugins: [pluginReact()],
+      },
+    });
+
+    const config = await rsbuild.initConfigs();
+    expect(
+      matchPlugin(
+        config[0] as Rspack.Configuration,
+        'ReactRefreshRspackPlugin',
+      ),
+    ).toMatchSnapshot();
   });
 
   it('should not apply splitChunks rule when strategy is not split-by-experience', async () => {

@@ -1,5 +1,32 @@
 // Rstest Snapshot v1
 
+exports[`plugins/react > should apply react refresh with Rsbuild v1 1`] = `
+ReactRefreshRspackPlugin {
+  "options": {
+    "exclude": [
+      /bar/,
+    ],
+    "forceEnable": false,
+    "include": [
+      {
+        "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+      },
+      /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+      /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
+      /foo/,
+    ],
+    "injectEntry": true,
+    "injectLoader": true,
+    "reactRefreshLoader": "builtin:react-refresh-loader",
+    "reloadOnRuntimeErrors": false,
+    "resourceQuery": {
+      "not": /\\^\\\\\\?raw\\$/,
+    },
+    "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+  },
+}
+`;
+
 exports[`plugins/react > should apply splitChunks with Rsbuild v1 1`] = `
 {
   "cacheGroups": {
@@ -139,7 +166,6 @@ ReactRefreshRspackPlugin {
     ],
     "injectEntry": true,
     "injectLoader": true,
-    "overlay": false,
     "reactRefreshLoader": "builtin:react-refresh-loader",
     "reloadOnRuntimeErrors": false,
     "resourceQuery": {
