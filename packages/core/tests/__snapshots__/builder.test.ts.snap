@@ -370,9 +370,6 @@ exports[`default bundler > should use Rspack by default 1`] = `
   },
   "output": {
     "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
-    "bundlerInfo": {
-      "force": false,
-    },
     "chunkFilename": "static/js/async/[name].js",
     "devtoolFallbackModuleFilenameTemplate": [Function],
     "devtoolModuleFilenameTemplate": [Function],

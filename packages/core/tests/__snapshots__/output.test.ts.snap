@@ -3,9 +3,6 @@
 exports[`plugin-output > should allow customizing server directory with distPath.root 1`] = `
 {
   "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
-  "bundlerInfo": {
-    "force": false,
-  },
   "chunkFilename": "[name].js",
   "chunkFormat": "module",
   "chunkLoading": "import",
@@ -26,9 +23,6 @@ exports[`plugin-output > should allow customizing server directory with distPath
 exports[`plugin-output > should allow setting distPath.js and distPath.css to empty string 1`] = `
 {
   "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
-  "bundlerInfo": {
-    "force": false,
-  },
   "chunkFilename": "async/[name].js",
   "devtoolFallbackModuleFilenameTemplate": "[relative-resource-path]?[hash]",
   "devtoolModuleFilenameTemplate": "[relative-resource-path]",
@@ -76,9 +70,6 @@ CopyRspackPlugin {
 exports[`plugin-output > should allow using filename.js to modify filename 1`] = `
 {
   "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
-  "bundlerInfo": {
-    "force": false,
-  },
   "chunkFilename": "static/js/async/foo.js",
   "devtoolFallbackModuleFilenameTemplate": "[relative-resource-path]?[hash]",
   "devtoolModuleFilenameTemplate": "[relative-resource-path]",
@@ -92,9 +83,6 @@ exports[`plugin-output > should allow using filename.js to modify filename 1`] =
 exports[`plugin-output > should apply output config when target is node 1`] = `
 {
   "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
-  "bundlerInfo": {
-    "force": false,
-  },
   "chunkFilename": "bundle/foo.js",
   "chunkFormat": "module",
   "chunkLoading": "import",
@@ -115,9 +103,6 @@ exports[`plugin-output > should apply output config when target is node 1`] = `
 exports[`plugin-output > should set output correctly 1`] = `
 {
   "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
-  "bundlerInfo": {
-    "force": false,
-  },
   "chunkFilename": "static/js/async/[name].js",
   "devtoolFallbackModuleFilenameTemplate": "[relative-resource-path]?[hash]",
   "devtoolModuleFilenameTemplate": "[relative-resource-path]",

@@ -393,9 +393,6 @@ exports[`should apply default plugins correctly 1`] = `
   },
   "output": {
     "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
-    "bundlerInfo": {
-      "force": false,
-    },
     "chunkFilename": "static/js/async/[name].js",
     "devtoolFallbackModuleFilenameTemplate": [Function],
     "devtoolModuleFilenameTemplate": [Function],
@@ -861,9 +858,6 @@ exports[`should apply default plugins correctly in production 1`] = `
   },
   "output": {
     "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
-    "bundlerInfo": {
-      "force": false,
-    },
     "chunkFilename": "static/js/async/[name].[contenthash:10].js",
     "devtoolFallbackModuleFilenameTemplate": "[relative-resource-path]?[hash]",
     "devtoolModuleFilenameTemplate": "[relative-resource-path]",
@@ -1281,9 +1275,6 @@ exports[`should apply default plugins correctly when target is node 1`] = `
   },
   "output": {
     "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
-    "bundlerInfo": {
-      "force": false,
-    },
     "chunkFilename": "[name].js",
     "chunkFormat": "module",
     "chunkLoading": "import",
@@ -1721,9 +1712,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
   },
   "output": {
     "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
-    "bundlerInfo": {
-      "force": false,
-    },
     "chunkFilename": "static/js/async/[name].js",
     "devtoolFallbackModuleFilenameTemplate": [Function],
     "devtoolModuleFilenameTemplate": [Function],
