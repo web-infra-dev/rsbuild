@@ -15,8 +15,8 @@ const expectErrorOverlay = async (page: Page) => {
   await expect(errorOverlay).toContainText(
     "TS2322: Type 'string' is not assignable to type 'number'.",
   );
-  await expect(errorOverlay).toContainText(
-    './cases/overlay/type-errors/src/index.ts:3:1',
+  await expect(errorOverlay.locator('.file-link').first()).toHaveText(
+    /^\.(?:.*[\\/])?src[\\/]index\.ts:3:1$/,
   );
 };
 
