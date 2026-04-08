@@ -1,3 +1,4 @@
+import { rspack } from '@rspack/core';
 import path, { posix } from 'node:path';
 import deepmerge from 'deepmerge';
 import type { AcceptedPlugin, PluginCreator } from 'postcss';
@@ -11,7 +12,6 @@ import {
 } from '../constants';
 import { castArray, color, getFilename } from '../helpers';
 import { getCompiledPath } from '../helpers/path';
-import { getCssExtractPlugin } from '../pluginHelper';
 import type {
   CSSLoaderModulesMode,
   CSSLoaderOptions,
@@ -321,7 +321,7 @@ export const pluginCss = (): RsbuildPlugin => ({
           else {
             mainRule
               .use(CHAIN_ID.USE.MINI_CSS_EXTRACT)
-              .loader(getCssExtractPlugin().loader)
+              .loader(rspack.CssExtractRspackPlugin.loader)
               .options(config.tools.cssExtract.loaderOptions);
           }
         } else {
@@ -485,7 +485,7 @@ export const pluginCss = (): RsbuildPlugin => ({
 
           chain
             .plugin(CHAIN_ID.PLUGIN.MINI_CSS_EXTRACT)
-            .use(getCssExtractPlugin(), [
+            .use(rspack.CssExtractRspackPlugin, [
               {
                 filename: isCssFilenameFn
                   ? (...args) => {

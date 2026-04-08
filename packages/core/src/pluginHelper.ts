@@ -1,6 +1,5 @@
 /**
- * This file is used to get the global instance for html-plugin and get/set the
- * global instance for css-extract plugin.
+ * This file is used to get the global instance for html-plugin.
  */
 
 import { rspack } from '@rspack/core';
@@ -21,16 +20,3 @@ export function getHTMLPlugin(
   }
   return htmlPlugin;
 }
-
-let cssExtractPlugin: unknown;
-
-export const setCssExtractPlugin = (plugin: unknown): void => {
-  cssExtractPlugin = plugin;
-};
-
-export const getCssExtractPlugin = (): typeof rspack.CssExtractRspackPlugin => {
-  if (cssExtractPlugin) {
-    return cssExtractPlugin as typeof rspack.CssExtractRspackPlugin;
-  }
-  return rspack.CssExtractRspackPlugin;
-};
