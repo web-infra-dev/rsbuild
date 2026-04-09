@@ -48,7 +48,15 @@ export const pureEsmPackage = defineConfig({
       externals: commonExternals,
     },
   },
-  plugins: [pluginAreTheTypesWrong({ enable: Boolean(process.env.CI) })],
+  plugins: [
+    pluginAreTheTypesWrong({
+      enable: Boolean(process.env.CI),
+      areTheTypesWrongOptions: {
+        // Pure ESM packages are expected to be import-only in Node.
+        ignoreRules: ['cjs-resolves-to-esm'],
+      },
+    }),
+  ],
 });
 
 export const dualPackage = defineConfig({
