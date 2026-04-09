@@ -3,8 +3,7 @@ import { isPlainObject, isWebTarget, pick, prettyTime } from '../src/helpers';
 import { dedupeNestedPaths, getCommonParentPath } from '../src/helpers/path';
 import { ensureAssetPrefix } from '../src/helpers/url';
 import { getRoutes, normalizeUrl } from '../src/server/helper';
-import type { InternalContext } from '../src/types';
-import type { RsbuildTarget } from '../dist-types';
+import type { RsbuildTarget, InternalContext } from '../src/types';
 
 test('should get routes correctly', () => {
   const cwd = import.meta.dirname;
