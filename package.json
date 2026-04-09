@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@scripts/config": "workspace:*",
-    "@rslint/core": "^0.3.4",
+    "@rslint/core": "^0.4.0",
     "@rstest/adapter-rslib": "^0.2.2",
     "@rstest/core": "^0.9.6",
     "@scripts/test-helper": "workspace:*",

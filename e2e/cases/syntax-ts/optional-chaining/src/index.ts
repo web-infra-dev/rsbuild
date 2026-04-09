@@ -1,3 +1,4 @@
+// rslint-disable
 declare global {
   interface Window {
     optionalChainingTest: string;

@@ -2,5 +2,10 @@ import { FooService } from './decorator';
 
 console.log(FooService);
 
-// @ts-ignore
+declare global {
+  interface Window {
+    FooService: boolean;
+  }
+}
+
 window.FooService = Boolean(FooService);

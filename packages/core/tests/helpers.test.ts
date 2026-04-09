@@ -4,6 +4,7 @@ import { dedupeNestedPaths, getCommonParentPath } from '../src/helpers/path';
 import { ensureAssetPrefix } from '../src/helpers/url';
 import { getRoutes, normalizeUrl } from '../src/server/helper';
 import type { InternalContext } from '../src/types';
+import type { RsbuildTarget } from '../dist-types';
 
 test('should get routes correctly', () => {
   const cwd = import.meta.dirname;
@@ -286,11 +287,8 @@ test('should detect web targets correctly', () => {
   expect(isWebTarget('web-worker')).toBe(true);
   expect(isWebTarget(['web-worker'])).toBe(true);
   expect(isWebTarget(['web-worker', 'node'])).toBe(true);
-
-  // @ts-expect-error
-  expect(isWebTarget('web-worker-special')).toBe(false);
-  // @ts-expect-error
-  expect(isWebTarget('something-web-worker-else')).toBe(false);
+  expect(isWebTarget('web-worker-special' as RsbuildTarget)).toBe(false);
+  expect(isWebTarget('something-web-worker-else' as RsbuildTarget)).toBe(false);
 });
 
 describe('isPlainObject', () => {

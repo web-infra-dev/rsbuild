@@ -1,8 +1,14 @@
+declare global {
+  interface Window {
+    aaa: string;
+    bbb: string;
+  }
+}
+
 class BarService {}
 
 const injectable: any = (..._args: any[]) => {
   return () => {
-    // @ts-ignore
     window.aaa = 'hello';
   };
 };
@@ -10,7 +16,6 @@ const injectable: any = (..._args: any[]) => {
 const inject: any = (arg0: any, ..._args: any[]) => {
   return () => {
     if (arg0 === BarService) {
-      // @ts-ignore
       window.bbb = 'world';
     }
   };

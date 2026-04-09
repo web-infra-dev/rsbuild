@@ -106,6 +106,7 @@ describe('plugin-svelte', () => {
               /** Add a custom language preprocessor */
               potatoLanguage: ({ content }: { content: string }) => {
                 const { code, map } =
+                  // rslint-disable-next-line @typescript-eslint/no-require-imports
                   require('potato-language').render(content);
                 return { code, map };
               },
