@@ -1,4 +1,4 @@
-import { createRsbuild, type Rspack } from '@rsbuild/core';
+import { createRsbuild } from '@rsbuild/core';
 import { createRsbuild as createRsbuildV1 } from '@rsbuild/core-v1';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { matchRules } from '@scripts/test-helper';
@@ -67,19 +67,15 @@ describe('svgr', () => {
     expect(matchRules(config[0], 'a.svg')[0]).toMatchSnapshot();
   });
 
-  // TODO
-  it.skip.each(cases)('$name with Rsbuild v1', async (item) => {
+  it('should throw an error when using Rsbuild v1', async () => {
     const rsbuild = await createRsbuildV1({
-      cwd: import.meta.dirname,
       config: {
-        mode: 'development',
-        plugins: [pluginSvgr(item.pluginConfig), pluginReact()],
+        plugins: [pluginSvgr()],
       },
     });
 
-    const config = await rsbuild.initConfigs();
-    expect(
-      matchRules(config[0] as Rspack.Configuration, 'a.svg')[0],
-    ).toMatchSnapshot();
+    await expect(() => rsbuild.initConfigs()).rejects.toThrow(
+      /"@rsbuild\/plugin-svgr" v2 requires "@rsbuild\/core" >= 2\.0\. Please upgrade "@rsbuild\/core" or use "@rsbuild\/plugin-svgr" v1\./,
+    );
   });
 });

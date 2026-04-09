@@ -135,12 +135,22 @@ const dedupeSvgoPlugins = (config: SvgoConfig): SvgoConfig => {
 
 export const PLUGIN_SVGR_NAME = 'rsbuild:svgr';
 
+function assertCoreVersion(version: string): void {
+  if (version.split('.')[0] === '1') {
+    throw new Error(
+      `"@rsbuild/plugin-svgr" v2 requires "@rsbuild/core" >= 2.0. Please upgrade "@rsbuild/core" or use "@rsbuild/plugin-svgr" v1.`,
+    );
+  }
+}
+
 export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
   name: PLUGIN_SVGR_NAME,
 
   pre: [PLUGIN_REACT_NAME],
 
   setup(api) {
+    assertCoreVersion(api.context.version);
+
     api.modifyBundlerChain((chain, { CHAIN_ID, environment }) => {
       const { config } = environment;
       const { dataUriLimit } = config.output;
@@ -266,12 +276,8 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         })
         .set('generator', generatorOptions);
 
-      // Compatibility for Rsbuild v1
-      const isV1 = api.context.version.startsWith('1.');
       const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
-      const jsMainRule = isV1
-        ? jsRule
-        : jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
+      const jsMainRule = jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
 
       [CHAIN_ID.USE.SWC, CHAIN_ID.USE.BABEL].some((jsUseId) => {
         const use = jsMainRule.uses.get(jsUseId);
