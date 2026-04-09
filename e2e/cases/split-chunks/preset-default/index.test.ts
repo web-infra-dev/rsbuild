@@ -11,6 +11,5 @@ test('should apply default preset as expected', async ({ build }) => {
     'index.js',
     'lib-polyfill.js',
     'lib-react.js',
-    'lib-router.js',
   ]);
 });

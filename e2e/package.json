@@ -14,10 +14,8 @@
     "preact": "^10.29.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "react-router-dom": "^7.14.0",
     "solid-js": "^1.9.12",
-    "vue": "^3.5.32",
-    "vue-router": "^5.0.4"
+    "vue": "^3.5.32"
   },
   "devDependencies": {
     "@e2e/assets": "workspace:*",

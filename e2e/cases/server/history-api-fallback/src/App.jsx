@@ -1,25 +1,26 @@
-import { BrowserRouter, Link, Outlet, Route, Routes } from 'react-router-dom';
+const pathname =
+  typeof window === 'undefined' ? '/' : window.location.pathname || '/';
 
-export const App = () => (
-  <BrowserRouter>
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <div>
-            home
-            <div>
-              <Link to="/a">A</Link>
-            </div>
-            <div>
-              <Link to="/b">B</Link>
-            </div>
-            <Outlet />
-          </div>
-        }
-      />
-      <Route path="/a" element={<div>A</div>} />
-      <Route path="/b" element={<div>B</div>} />
-    </Routes>
-  </BrowserRouter>
-);
+const renderPage = () => {
+  if (pathname === '/a') {
+    return <div>A</div>;
+  }
+
+  if (pathname === '/b') {
+    return <div>B</div>;
+  }
+
+  return (
+    <div>
+      home
+      <div>
+        <a href="/a">A</a>
+      </div>
+      <div>
+        <a href="/b">B</a>
+      </div>
+    </div>
+  );
+};
+
+export const App = () => renderPage();

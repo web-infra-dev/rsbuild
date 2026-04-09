@@ -12,6 +12,5 @@ test('should not apply built-in preset rules when preset is "none"', async ({
 
   expect(jsFiles).toContain('index.js');
   expect(jsFiles.some((file) => file.includes('lib-react'))).toBeFalsy();
-  expect(jsFiles.some((file) => file.includes('lib-router'))).toBeFalsy();
   expect(jsFiles.some((file) => file.includes('lib-polyfill'))).toBeFalsy();
 });

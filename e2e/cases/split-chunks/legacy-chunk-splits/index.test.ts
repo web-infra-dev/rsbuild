@@ -11,7 +11,6 @@ test('should split react chunks correctly', async ({ build }) => {
   const files = rsbuild.getDistFiles();
   const filesNames = Object.keys(files);
   expect(filesNames.find((file) => file.includes('lib-react'))).toBeTruthy();
-  expect(filesNames.find((file) => file.includes('lib-router'))).toBeTruthy();
 });
 
 test('should not split react chunks when strategy is `all-in-one`', async ({
@@ -31,7 +30,6 @@ test('should not split react chunks when strategy is `all-in-one`', async ({
   const files = rsbuild.getDistFiles();
   const filesNames = Object.keys(files);
   expect(filesNames.find((file) => file.includes('lib-react'))).toBeFalsy();
-  expect(filesNames.find((file) => file.includes('lib-router'))).toBeFalsy();
 });
 
 test('should not split react chunks when splitChunks is disabled', async ({
@@ -50,7 +48,6 @@ test('should not split react chunks when splitChunks is disabled', async ({
   const files = rsbuild.getDistFiles();
   const filesNames = Object.keys(files);
   expect(filesNames.find((file) => file.includes('lib-react'))).toBeFalsy();
-  expect(filesNames.find((file) => file.includes('lib-router'))).toBeFalsy();
 });
 
 test('should not override user defined cache groups', async ({ build }) => {
