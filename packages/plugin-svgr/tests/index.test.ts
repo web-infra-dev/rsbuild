@@ -1,3 +1,5 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import { createRsbuild } from '@rsbuild/core';
 import { createRsbuild as createRsbuildV1 } from '@rsbuild/core-v1';
 import { pluginReact } from '@rsbuild/plugin-react';
@@ -77,5 +79,27 @@ describe('svgr', () => {
     await expect(() => rsbuild.initConfigs()).rejects.toThrow(
       /"@rsbuild\/plugin-svgr" v2 requires "@rsbuild\/core" >= 2\.0\. Please upgrade "@rsbuild\/core" or use "@rsbuild\/plugin-svgr" v1\./,
     );
+  });
+
+  it('should publish as a pure ESM package', async () => {
+    const packageJson = JSON.parse(
+      await fs.readFile(
+        path.join(import.meta.dirname, '../package.json'),
+        'utf8',
+      ),
+    ) as {
+      exports: {
+        '.': {
+          default: string;
+          require?: string;
+          types: string;
+        };
+      };
+    };
+
+    expect(packageJson.exports['.']).toEqual({
+      types: './dist/index.d.ts',
+      default: './dist/index.js',
+    });
   });
 });
