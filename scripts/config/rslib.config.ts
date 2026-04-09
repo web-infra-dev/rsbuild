@@ -41,6 +41,15 @@ export const cjsConfig: LibConfig = {
   },
 };
 
+export const pureEsmPackage = defineConfig({
+  lib: [esmConfig],
+  tools: {
+    rspack: {
+      externals: commonExternals,
+    },
+  },
+});
+
 export const dualPackage = defineConfig({
   lib: [esmConfig, cjsConfig],
   tools: {
