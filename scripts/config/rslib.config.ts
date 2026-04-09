@@ -48,6 +48,7 @@ export const pureEsmPackage = defineConfig({
       externals: commonExternals,
     },
   },
+  plugins: [pluginAreTheTypesWrong({ enable: Boolean(process.env.CI) })],
 });
 
 export const dualPackage = defineConfig({
