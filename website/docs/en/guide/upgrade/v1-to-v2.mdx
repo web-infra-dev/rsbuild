@@ -20,24 +20,27 @@ After installation, let the Coding Agent guide you through the upgrade.
 
 ## Upgrade Rsbuild to v2
 
-- Upgrade `@rsbuild/core` to the 2.0 RC release:
+- Upgrade `@rsbuild/core` to the 2.0 RC release.
 
-```diff
+- If you use `@rsbuild/plugin-react` or `@rsbuild/plugin-svgr`, upgrade them to the 2.0 RC release as well to keep them compatible with `@rsbuild/core`. For example:
+
+```json
 {
   "devDependencies": {
--   "@rsbuild/core": "^1.0.0",
-+   "@rsbuild/core": "^2.0.0-rc.0"
+    "@rsbuild/core": "^2.0.0-rc.0",
+    "@rsbuild/plugin-react": "^2.0.0-rc.0",
+    "@rsbuild/plugin-svgr": "^2.0.0-rc.0"
   }
 }
 ```
 
-- Upgrade all Rsbuild plugins to their latest versions:
+- For other Rsbuild plugins, we recommend upgrading to the latest version too:
 
 ```bash
-# Upgrade dependencies in the current directory
+# Upgrade Rsbuild dependencies in the current directory
 npx taze major --include /rsbuild/ -w
 
-# Or recursively upgrade the entire monorepo
+# Or recursively upgrade Rsbuild dependencies in the entire monorepo
 npx taze major --include /rsbuild/ -w -r
 ```
 
