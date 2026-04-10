@@ -27,7 +27,7 @@
     "start": "node ./dist/index.js"
   },
   "dependencies": {
-    "create-rstack": "1.9.0"
+    "create-rstack": "1.9.1"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",

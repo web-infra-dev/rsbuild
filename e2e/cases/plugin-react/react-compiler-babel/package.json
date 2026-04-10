@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
   },
   "devDependencies": {
     "babel-plugin-react-compiler": "^1.0.0"

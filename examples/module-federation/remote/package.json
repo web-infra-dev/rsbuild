@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "@module-federation/runtime-tools": "2.3.1",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
