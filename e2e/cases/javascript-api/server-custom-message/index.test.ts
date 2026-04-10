@@ -1,14 +1,14 @@
 import path from 'node:path';
 import { expectPoll, test } from '@e2e/helper';
 
-test('should trigger the client HMR handler when dev server sends a custom message via `sockWrite`', async ({
+test('should trigger the client HMR handler when dev server sends a custom message', async ({
   page,
   dev,
 }) => {
   const { server } = await dev();
   const before = await page.evaluate<number>('window.__count');
 
-  server?.sockWrite('custom', { event: 'count' });
+  server?.environments.web.hot.send('custom', { event: 'count' });
 
   await expectPoll(() => page.evaluate<number>('window.__count')).toBe(
     before + 1,
@@ -35,7 +35,7 @@ test('should dispose old HMR event callbacks after page reload', async ({
 
   // 1) Trigger once and assert callback executed.
   const afterFirst = await page.evaluate<number>('window.__count');
-  server?.sockWrite('custom', { event: 'count' });
+  server?.environments.web.hot.send('custom', { event: 'count' });
   await expectPoll(() => page.evaluate<number>('window.__count')).toBe(
     afterFirst + 1,
   );
@@ -47,7 +47,7 @@ test('should dispose old HMR event callbacks after page reload', async ({
   await expectPoll(() => page.evaluate<number>('window.__count')).toBe(
     afterFirst + 1,
   );
-  server?.sockWrite('custom', { event: 'count' });
+  server?.environments.web.hot.send('custom', { event: 'count' });
   await expectPoll(() => page.evaluate<number>('window.__count')).toBe(
     afterFirst + 2,
   );

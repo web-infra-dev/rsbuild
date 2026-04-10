@@ -278,7 +278,7 @@ export async function createDevServer<
   const createHotSend =
     (token?: string): HotSend =>
     (type, data) =>
-      state.buildManager?.socketServer.sockWrite(
+      state.buildManager?.socketServer.sendMessage(
         {
           type,
           data,

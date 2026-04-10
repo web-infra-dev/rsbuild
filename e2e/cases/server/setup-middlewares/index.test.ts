@@ -28,7 +28,7 @@ test('should apply custom middleware via `server.setup`', async ({
   expect(count).toBeGreaterThanOrEqual(1);
 });
 
-test('should apply to trigger page reload via the `full-reload` type of sockWrite in server.setup', async ({
+test('should apply to trigger page reload via `environment.hot.send` in server.setup', async ({
   page,
   dev,
 }) => {
@@ -47,7 +47,7 @@ test('should apply to trigger page reload via the `full-reload` type of sockWrit
             count++;
             next();
           });
-          reloadPage = () => server.sockWrite('full-reload');
+          reloadPage = () => server.environments.web.hot.send('full-reload');
         },
       },
     },

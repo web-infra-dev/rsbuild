@@ -248,7 +248,7 @@ export class SocketServer {
       .join('\n\n')
       .trim();
 
-    this.sockWrite(
+    this.sendMessage(
       {
         type: 'errors',
         data: {
@@ -272,7 +272,7 @@ export class SocketServer {
         this.context.logger,
       ),
     );
-    this.sockWrite(
+    this.sendMessage(
       {
         type: 'warnings',
         data: { text: formattedWarnings },
@@ -282,17 +282,17 @@ export class SocketServer {
   }
 
   /**
-   * Write message to each socket
+   * Send a server message to matching client sockets.
    * @param message - The message to send
    * @param token - The token of the socket to send the message to,
    * if not provided, the message will be sent to all sockets
    */
-  public sockWrite(message: ServerMessage, token?: string): void {
+  public sendMessage(message: ServerMessage, token?: string): void {
     const messageStr = JSON.stringify(message);
 
     const sendToSockets = (sockets: Set<WebSocket>) => {
       for (const socket of sockets) {
-        this.send(socket, messageStr);
+        this.sendRawMessage(socket, messageStr);
       }
     };
 
@@ -413,7 +413,7 @@ export class SocketServer {
                     cachedTraceMap,
                   );
 
-            this.sockWrite(
+            this.sendMessage(
               {
                 type: 'resolved-client-error',
                 data: {
@@ -558,7 +558,7 @@ export class SocketServer {
     this.initialChunksMap.set(token, newInitialChunks);
 
     if (shouldReload) {
-      this.sockWrite({ type: 'full-reload' }, token);
+      this.sendMessage({ type: 'full-reload' }, token);
       return;
     }
 
@@ -574,11 +574,11 @@ export class SocketServer {
         warnings.length === 0 &&
         prevHash === stats.hash
       ) {
-        this.sockWrite({ type: 'ok' }, token);
+        this.sendMessage({ type: 'ok' }, token);
         return;
       }
 
-      this.sockWrite(
+      this.sendMessage(
         {
           type: 'hash',
           data: stats.hash,
@@ -597,11 +597,11 @@ export class SocketServer {
       return;
     }
 
-    this.sockWrite({ type: 'ok' }, token);
+    this.sendMessage({ type: 'ok' }, token);
   }
 
-  // send message to connecting socket
-  private send(socket: WebSocket, message: string) {
+  // send a serialized message to a specific socket
+  private sendRawMessage(socket: WebSocket, message: string) {
     if (socket.readyState !== socket.OPEN) {
       return;
     }
