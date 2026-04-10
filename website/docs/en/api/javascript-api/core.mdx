@@ -160,7 +160,7 @@ function loadConfig(params?: {
 ```ts
 import { loadConfig } from '@rsbuild/core';
 
-// Load `rsbuild.config.*` file by default
+// Load `rsbuild.config.*` from cwd using the default lookup order
 const { content } = await loadConfig();
 
 console.log(content); // -> Rsbuild config object
@@ -171,6 +171,17 @@ const rsbuild = await createRsbuild({
 ```
 
 If the Rsbuild config file does not exist in the cwd directory, the return value of the loadConfig method is `{ content: {}, filePath: null }`.
+
+When `path` is not specified, `loadConfig` searches for config files in the following order:
+
+- `rsbuild.config.ts`
+- `rsbuild.config.js`
+- `rsbuild.config.mts`
+- `rsbuild.config.mjs`
+- `rsbuild.config.cts`
+- `rsbuild.config.cjs`
+
+If multiple config files exist at the same time, `loadConfig` uses the first matching file in this list.
 
 ### Specify the configuration file
 

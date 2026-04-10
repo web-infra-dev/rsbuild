@@ -59,14 +59,16 @@ export default {
 
 ## 配置文件
 
-当你使用 Rsbuild 的 CLI 命令时，Rsbuild 会自动读取当前项目根目录下的配置文件，按照以下顺序进行解析：
+当你使用 Rsbuild 的 CLI 命令时，或者在未指定 `path` 的情况下调用 `loadConfig` 时，Rsbuild 会自动读取当前项目根目录下的配置文件，并按以下顺序进行解析：
 
-- rsbuild.config.mjs
 - rsbuild.config.ts
 - rsbuild.config.js
-- rsbuild.config.cjs
 - rsbuild.config.mts
+- rsbuild.config.mjs
 - rsbuild.config.cts
+- rsbuild.config.cjs
+
+如果同时存在多个配置文件，Rsbuild 会使用这个列表中第一个匹配到的文件。
 
 我们推荐使用 `rsbuild.config.ts`，并从 `@rsbuild/core` 中导入 `defineConfig` 工具函数, 它提供了友好的 TypeScript 类型推导和自动补全，可以帮助你避免配置中的错误。
 

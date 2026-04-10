@@ -59,14 +59,16 @@ You can find detailed descriptions of every option on the [Configure Overview](/
 
 ## Configuration file
 
-When you use the Rsbuild CLI, it looks for a configuration file in the project root in the following order:
+When you use the Rsbuild CLI, or call `loadConfig` without specifying `path`, Rsbuild looks for a configuration file in the project root in the following order:
 
-- rsbuild.config.mjs
 - rsbuild.config.ts
 - rsbuild.config.js
-- rsbuild.config.cjs
 - rsbuild.config.mts
+- rsbuild.config.mjs
 - rsbuild.config.cts
+- rsbuild.config.cjs
+
+If multiple config files exist at the same time, Rsbuild uses the first matching file in this list.
 
 We recommend using `rsbuild.config.ts` and importing the `defineConfig` utility from `@rsbuild/core`. It provides TypeScript hints and autocompletion to help you avoid configuration mistakes.
 
