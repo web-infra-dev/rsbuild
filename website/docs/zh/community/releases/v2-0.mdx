@@ -18,6 +18,16 @@ Rsbuild 2.0 是基于 Rspack 2.0 的构建工具，致力于为 Web 开发者带
 2.0 版本引入了许多改进：
 
 - Rsbuild 现在是一个 Pure ESM 包。
-- 不再支持 Node.js 18，最低支持 Node.js 20。
+- 不再支持 Node.js 18，最低支持 Node.js 20.19+ / 22.12+。
 - 依赖数量从 14 个减少到 5 个，安装体积减少 2 MB。
 - ...
+
+## Pure ESM 包
+
+[@rsbuild/core](https://www.npmjs.com/package/@rsbuild/core) 现已以 pure ESM 包的形式发布，并移除了自身的 CommonJS 构建产物。这一调整仅影响 Rsbuild 本身的发布形式，使安装体积减少了约 500KB。
+
+在 Node.js 20 及以上版本中，运行时已原生支持通过 [require(esm)](https://nodejs.org/api/modules.html#loading-ecmascript-modules-using-require) 加载 ESM 模块。因此，对大多数仍通过 JavaScript API 使用 Rsbuild 的项目来说，这一变更通常不会带来实际影响，也无需额外修改现有代码。
+
+## Node.js 支持
+
+Rsbuild 2.0 最低支持的 Node.js 版本为 20.19+ 或 22.12+，由于 Node.js 18 已在 2025 年 4 月底结束维护，我们在 2.0 中移除了对它的支持。

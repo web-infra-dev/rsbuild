@@ -8,3 +8,9 @@ _April 22, 2026_
 # Announcing Rsbuild 2.0
 
 TODO
+
+## Pure ESM package
+
+[@rsbuild/core](https://www.npmjs.com/package/@rsbuild/core) is now published as a pure ESM package, and its CommonJS build output has been removed. This change only affects how Rsbuild itself is published, reducing the installation size by about 500 KB.
+
+In Node.js 20 and later, the runtime natively supports loading ESM modules via [require(esm)](https://nodejs.org/api/modules.html#loading-ecmascript-modules-using-require). As a result, for most projects that use Rsbuild through its JavaScript API, this change should have no practical impact and does not require any code modifications.
