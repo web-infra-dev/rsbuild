@@ -229,7 +229,7 @@ type EnvironmentAPI = {
     loadBundle: <T = unknown>(entryName: string) => Promise<T>;
     getTransformedHtml: (entryName: string) => Promise<string>;
     hot: {
-      send: SockWrite;
+      send: HotSend;
     };
   };
 };
