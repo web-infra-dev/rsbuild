@@ -211,9 +211,11 @@ export async function createDevServer<
     });
   };
 
-  let fileWatcher: WatchFilesResult | undefined;
-  let devMiddlewares: GetDevMiddlewaresResult | undefined;
-  let buildManager: BuildManager | undefined;
+  const state: {
+    fileWatcher?: WatchFilesResult;
+    devMiddlewares?: GetDevMiddlewaresResult;
+    buildManager?: BuildManager;
+  } = {};
 
   const cleanupGracefulShutdown = middlewareMode
     ? null
@@ -228,7 +230,10 @@ export async function createDevServer<
         removeCleanup(closeServer);
         cleanupGracefulShutdown?.();
         await context.hooks.onCloseDevServer.callBatch();
-        await Promise.all([devMiddlewares?.close(), fileWatcher?.close()]);
+        await Promise.all([
+          state.devMiddlewares?.close(),
+          state.fileWatcher?.close(),
+        ]);
       })();
     }
     return closingPromise;
@@ -280,29 +285,29 @@ export async function createDevServer<
     environmentAPI[environment.name] = {
       context: environment,
       getStats: async () => {
-        if (!buildManager) {
+        if (!state.buildManager) {
           throw new Error(getErrorMsg('getStats'));
         }
         await waitLastCompileDone;
         return lastStats[index];
       },
       loadBundle: async <T>(entryName: string) => {
-        if (!buildManager) {
+        if (!state.buildManager) {
           throw new Error(getErrorMsg('loadBundle'));
         }
         await waitLastCompileDone;
         return cacheableLoadBundle(lastStats[index], entryName, {
-          readFileSync: buildManager.readFileSync,
+          readFileSync: state.buildManager.readFileSync,
           environment,
         }) as T;
       },
       getTransformedHtml: async (entryName: string) => {
-        if (!buildManager) {
+        if (!state.buildManager) {
           throw new Error(getErrorMsg('getTransformedHtml'));
         }
         await waitLastCompileDone;
         return cacheableTransformedHtml(lastStats[index], entryName, {
-          readFileSync: buildManager.readFileSync,
+          readFileSync: state.buildManager.readFileSync,
           environment,
         });
       },
@@ -322,7 +327,7 @@ export async function createDevServer<
       });
 
   const sockWrite: SockWrite = (type, data) =>
-    buildManager?.socketServer.sockWrite({
+    state.buildManager?.socketServer.sockWrite({
       type,
       data,
     } as ServerMessage);
@@ -365,8 +370,8 @@ export async function createDevServer<
             // 404 fallback middleware should be the last middleware
             middlewares.use(notFoundMiddleware);
 
-            if (devMiddlewares) {
-              httpServer.on('upgrade', devMiddlewares.onUpgrade);
+            if (state.devMiddlewares) {
+              httpServer.on('upgrade', state.devMiddlewares.onUpgrade);
             }
 
             logger.debug('listen dev server done');
@@ -392,8 +397,8 @@ export async function createDevServer<
       });
     },
     connectWebSocket: ({ server }: { server: HTTPServer }) => {
-      if (devMiddlewares) {
-        server.on('upgrade', devMiddlewares.onUpgrade);
+      if (state.devMiddlewares) {
+        server.on('upgrade', state.devMiddlewares.onUpgrade);
       }
     },
     close: closeServer,
@@ -423,16 +428,16 @@ export async function createDevServer<
     await beforeCreateCompiler();
   }
 
-  buildManager = runCompile ? await startCompile() : undefined;
+  state.buildManager = runCompile ? await startCompile() : undefined;
 
-  fileWatcher = await setupWatchFiles({
+  state.fileWatcher = await setupWatchFiles({
     config,
-    buildManager,
+    buildManager: state.buildManager,
     root: context.rootPath,
   });
 
-  devMiddlewares = await getDevMiddlewares({
-    buildManager,
+  state.devMiddlewares = await getDevMiddlewares({
+    buildManager: state.buildManager,
     config,
     devServer,
     context,
@@ -440,7 +445,7 @@ export async function createDevServer<
   });
 
   // start watching
-  buildManager?.watch();
+  state.buildManager?.watch();
 
   logger.debug('create dev server done');
 

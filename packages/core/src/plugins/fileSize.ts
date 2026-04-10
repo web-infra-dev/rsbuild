@@ -417,9 +417,8 @@ async function printFileSizes(
     );
 
     for (const asset of assets) {
-      let { sizeLabel, sizeLabelLength, gzipSizeLabel } = asset;
-      const { filenameLength } = asset;
-      let { filenameLabel } = asset;
+      let { sizeLabel, filenameLabel } = asset;
+      const { sizeLabelLength, gzipSizeLabel, filenameLength } = asset;
 
       if (sizeLabelLength < maxSizeLength) {
         const rightPadding = ' '.repeat(maxSizeLength - sizeLabelLength);
