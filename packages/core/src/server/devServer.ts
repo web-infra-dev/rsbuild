@@ -55,7 +55,7 @@ type ExtractSocketMessageData<T extends ServerMessage['type']> =
     ? Extract<ServerMessage, { type: T }>['data']
     : undefined;
 
-export type SockWrite = <T extends ServerMessage['type']>(
+export type HotSend = <T extends ServerMessage['type']>(
   type: T,
   data?: ExtractSocketMessageData<T>,
 ) => void;
@@ -87,7 +87,7 @@ export type RsbuildDevServer = RsbuildServerBase & {
    * - `static-changed`: Alias of `full-reload` for backward compatibility.
    * - `custom`: Send custom messages via `custom` type with optional data to the browser and handle them via HMR events.
    */
-  sockWrite: SockWrite;
+  sockWrite: HotSend;
 };
 
 export async function createDevServer<
@@ -275,6 +275,16 @@ export async function createDevServer<
   );
 
   const environmentAPI: EnvironmentAPI = {};
+  const createHotSend =
+    (token?: string): HotSend =>
+    (type, data) =>
+      state.buildManager?.socketServer.sockWrite(
+        {
+          type,
+          data,
+        } as ServerMessage,
+        token,
+      );
 
   const getErrorMsg = (method: string) =>
     `${color.dim('[rsbuild:server]')} Can not call ` +
@@ -284,6 +294,9 @@ export async function createDevServer<
   context.environmentList.forEach((environment, index) => {
     environmentAPI[environment.name] = {
       context: environment,
+      hot: {
+        send: createHotSend(environment.webSocketToken),
+      },
       getStats: async () => {
         if (!state.buildManager) {
           throw new Error(getErrorMsg('getStats'));
@@ -326,11 +339,7 @@ export async function createDevServer<
         middlewares,
       });
 
-  const sockWrite: SockWrite = (type, data) =>
-    state.buildManager?.socketServer.sockWrite({
-      type,
-      data,
-    } as ServerMessage);
+  const sockWrite = createHotSend();
 
   const devServer: RsbuildDevServer = {
     port,

@@ -229,6 +229,9 @@ type EnvironmentAPI = {
     getStats: () => Promise<Stats>;
     loadBundle: <T = unknown>(entryName: string) => Promise<T>;
     getTransformedHtml: (entryName: string) => Promise<string>;
+    hot: {
+      send: SockWrite;
+    };
   };
 };
 ```
@@ -305,3 +308,28 @@ const html = await environments.web.getTransformedHtml('main');
 ```
 
 该方法会返回完整的 HTML 字符串，包含了所有通过 HTML 插件注入的资源和内容。
+
+### hot.send
+
+向当前 environment 对应的客户端发送 HMR 消息。
+
+它和 [server.sockWrite](/api/javascript-api/server-api#sockwrite) 的行为一致，区别是只会影响当前匹配的 environment。
+
+- **类型：**
+
+```ts
+type SockWrite = {
+  (type: 'full-reload', data?: { path?: string }): void;
+  (type: 'static-changed'): void;
+  (type: 'custom', data: { event: string; data?: any }): void;
+};
+```
+
+- **示例：**
+
+```ts
+environments.web.hot.send('custom', {
+  event: 'count',
+  data: { value: 1 },
+});
+```

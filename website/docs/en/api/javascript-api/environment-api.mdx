@@ -228,6 +228,9 @@ type EnvironmentAPI = {
     getStats: () => Promise<Stats>;
     loadBundle: <T = unknown>(entryName: string) => Promise<T>;
     getTransformedHtml: (entryName: string) => Promise<string>;
+    hot: {
+      send: SockWrite;
+    };
   };
 };
 ```
@@ -304,3 +307,28 @@ const html = await environments.web.getTransformedHtml('main');
 ```
 
 This method returns the complete HTML string, including all resources and content injected through HTML plugins.
+
+### hot.send
+
+Send an HMR message to the client of the current environment only.
+
+This works the same as [server.sockWrite](/api/javascript-api/server-api#sockwrite), but it only affects the matched environment.
+
+- **Type:**
+
+```ts
+type SockWrite = {
+  (type: 'full-reload', data?: { path?: string }): void;
+  (type: 'static-changed'): void;
+  (type: 'custom', data: { event: string; data?: any }): void;
+};
+```
+
+- **Example:**
+
+```ts
+environments.web.hot.send('custom', {
+  event: 'count',
+  data: { value: 1 },
+});
+```
