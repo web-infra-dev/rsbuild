@@ -317,18 +317,55 @@ This works the same as [server.sockWrite](/api/javascript-api/server-api#sockwri
 - **Type:**
 
 ```ts
-type SockWrite = {
+type HotSend = {
   (type: 'full-reload', data?: { path?: string }): void;
   (type: 'static-changed'): void;
   (type: 'custom', data: { event: string; data?: any }): void;
 };
 ```
 
-- **Example:**
+#### full-reload
+
+If you send a `'full-reload'` message, the page will reload.
+
+```ts
+if (someCondition) {
+  environments.web.hot.send('full-reload');
+}
+```
+
+When `path` is provided and ends with `.html`, Rsbuild only reloads the page whose current URL matches that HTML path in the current environment.
+
+When `path` is `'*'`, Rsbuild reloads all pages in the current environment.
+
+The HTML path should be relative to the dev server root and should not include `server.base`.
+
+```ts
+environments.web.hot.send('full-reload', {
+  path: '/foo.html',
+});
+```
+
+> `'static-changed'` is an alias of `'full-reload'`.
+
+#### custom
+
+You can also send custom messages via `custom` type with optional data to the browser and handle them via HMR events:
 
 ```ts
 environments.web.hot.send('custom', {
   event: 'count',
   data: { value: 1 },
 });
+```
+
+Rsbuild extends the `on()` method on Rspack’s [import.meta.webpackHot](https://rspack.rs/api/runtime-api/hmr) object. It allows you to listen for custom events in the browser and handle the associated data:
+
+```ts title="client.js"
+if (import.meta.webpackHot) {
+  import.meta.webpackHot.on('count', (data) => {
+    console.log('count update', data.value);
+  });
+  import.meta.webpackHot.accept();
+}
 ```
