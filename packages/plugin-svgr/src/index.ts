@@ -1,5 +1,4 @@
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
 import { PLUGIN_REACT_NAME } from '@rsbuild/plugin-react';
 import type { Config as BaseSvgrOptions } from '@svgr/core';
@@ -11,8 +10,6 @@ import type { Config as SvgoConfig } from 'svgo';
 type SvgrOptions = Omit<BaseSvgrOptions, 'svgoConfig'> & {
   svgoConfig?: SvgoConfig;
 };
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 type SvgoPluginConfig = NonNullable<SvgoConfig['plugins']>[0];
 
@@ -211,7 +208,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         .type('javascript/auto')
         .resourceQuery(options.query || /react/)
         .use(CHAIN_ID.USE.SVGR)
-        .loader(path.resolve(__dirname, './loader.mjs'))
+        .loader(path.join(import.meta.dirname, 'loader.mjs'))
         .options({
           ...svgrOptions,
           exportType: 'default',
@@ -242,7 +239,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
           // The issuer option ensures that SVGR will only apply if the SVG is imported from a JS file.
           .set('issuer', issuer)
           .use(CHAIN_ID.USE.SVGR)
-          .loader(path.resolve(__dirname, './loader.mjs'))
+          .loader(path.join(import.meta.dirname, 'loader.mjs'))
           .options({
             ...svgrOptions,
             exportType,
@@ -256,7 +253,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         if (mixedImport && exportType === 'named') {
           svgRule
             .use(CHAIN_ID.USE.URL)
-            .loader(path.resolve(__dirname, './assetLoader.mjs'))
+            .loader(path.join(import.meta.dirname, 'assetLoader.mjs'))
             .options({
               limit: maxSize,
               name: generatorOptions?.filename,
