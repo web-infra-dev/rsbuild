@@ -8,6 +8,7 @@ export default defineConfig({
     {
       source: {
         entry: {
+          assetLoader: './src/assetLoader.ts',
           loader: './src/loader.ts',
         },
       },

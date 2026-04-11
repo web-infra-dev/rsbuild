@@ -17,13 +17,11 @@
   },
   "types": "./dist/index.d.ts",
   "files": [
-    "dist",
-    "compiled"
+    "dist"
   ],
   "scripts": {
     "build": "rslib",
-    "dev": "rslib -w",
-    "prebundle": "prebundle"
+    "dev": "rslib -w"
   },
   "dependencies": {
     "@rsbuild/plugin-react": "workspace:^2.0.0-rc.2",
@@ -39,11 +37,8 @@
     "@rslib/core": "0.21.0",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^24.12.2",
-    "file-loader": "6.2.0",
-    "prebundle": "1.6.4",
     "svgo": "^3.3.3",
-    "typescript": "^6.0.2",
-    "url-loader": "4.1.1"
+    "typescript": "^6.0.2"
   },
   "peerDependencies": {
     "@rsbuild/core": "^2.0.0-0"

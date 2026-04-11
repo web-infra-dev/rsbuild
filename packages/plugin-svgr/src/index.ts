@@ -256,7 +256,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         if (mixedImport && exportType === 'named') {
           svgRule
             .use(CHAIN_ID.USE.URL)
-            .loader(path.join(__dirname, '../compiled', 'url-loader/index.js'))
+            .loader(path.resolve(__dirname, './assetLoader.mjs'))
             .options({
               limit: maxSize,
               name: generatorOptions?.filename,

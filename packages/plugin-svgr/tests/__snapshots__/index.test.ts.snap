@@ -769,7 +769,7 @@ exports[`svgr > exportType named / mixedImport true 1`] = `
           },
         },
         {
-          "loader": "<ROOT>/packages/plugin-svgr/compiled/url-loader/index.js",
+          "loader": "<ROOT>/packages/plugin-svgr/src/assetLoader.mjs",
           "options": {
             "limit": 4096,
             "name": "static/svg/[name].[contenthash:10].svg",
