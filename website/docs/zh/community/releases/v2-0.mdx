@@ -23,7 +23,7 @@ _April 22, 2026_
   - [构建 Node 产物时默认输出 ESM](#esm-node-产物)
   - [默认使用 '2023-11' 装饰器版本](#装饰器版本更新)
 - 更安全：
-  - [开发服务器默认仅监听 'localhost'](#默认-host-变化)
+  - [默认仅监听 'localhost'](#默认-host-变化)
   - [Proxy 中间件升级，支持 HTTP/2 代理](#proxy-中间件升级)
 - 更轻量：
   - [依赖数量从 14 个减少到 5 个](#精简依赖)
@@ -76,7 +76,7 @@ export default {
 
 ## 默认 host 变化
 
-[server.host](/config/server/host) 的默认值从 `'0.0.0.0'` 调整为 `'localhost'`。这意味着开发服务器默认仅监听本机，不再对局域网内的其他设备开放。
+[server.host](/config/server/host) 的默认值从 `'0.0.0.0'` 调整为 `'localhost'`。这意味着开发和预览服务器默认仅监听本机，不再对局域网内的其他设备开放。
 
 这一调整遵循「默认安全」的原则。在大多数本地开发场景中，开发服务器无需对外暴露。仅监听本机地址可以减少意外暴露，降低在共享网络环境中被扫描或攻击的风险。
 
@@ -98,7 +98,7 @@ rsbuild --host
 
 ## Proxy 中间件升级
 
-开发服务器使用的 Proxy 中间件已升级至最新版本。[http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) 由 v2 升级到了 v4，同时其底层依赖从已经停止维护的 `http-proxy` 切换为由 unjs 社区积极维护的 [httpxy](https://npmx.dev/package/httpxy)。
+开发服务器使用的 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) 已经从 v2 升级至最新的 v4 版本，同时其底层依赖从已经停止维护的 `http-proxy` 切换为由 unjs 社区积极维护的 [httpxy](https://npmx.dev/package/httpxy)。
 
 这主要带来几点改进：
 
