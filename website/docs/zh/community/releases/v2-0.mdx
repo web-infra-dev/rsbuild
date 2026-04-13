@@ -15,7 +15,7 @@ _April 22, 2026_
 
 Rsbuild 2.0 是基于 Rspack 2.0 的构建工具，致力于为 Web 开发者带来现代化、开箱即用的开发体验。为了帮助社区平稳升级到 2.0，我们发布了 20 多个预览版本，并进行了为期三个月的充分测试。目前，许多基于 Rsbuild 的工具已经升级到 Rsbuild 2.0，包括 [Rslib](https://github.com/web-infra-dev/rslib)、[Rstest](https://github.com/web-infra-dev/rstest)、[Rspress](https://github.com/web-infra-dev/rspress)、[Storybook Rsbuild](https://github.com/rstackjs/storybook-rsbuild) 以及 [Modern.js](https://github.com/web-infra-dev/modern.js) 等。
 
-2.0 版本引入了许多改进：
+2.0 版本的主要改进包括：
 
 - Rsbuild 现在是一个 Pure ESM 包。
 - 不再支持 Node.js 18，最低支持 Node.js 20.19+ / 22.12+。
@@ -33,3 +33,15 @@ Rsbuild 2.0 是基于 Rspack 2.0 的构建工具，致力于为 Web 开发者带
 Rsbuild 2.0 最低支持的 Node.js 版本为 `20.19+` 或 `22.12+`。由于 Node.js 18 已于 2025 年 4 月底结束维护，Rsbuild 2.0 不再继续支持该版本。
 
 我们通常会在某个 Node.js 版本进入 EOL 约一年后再移除支持，以为社区和用户预留更充足的升级时间。
+
+## Proxy 中间件升级
+
+Rsbuild 2.0 升级了开发服务器使用的 Proxy 中间件，将 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) 从 v2 升级到了 v4，底层依赖从已经停止维护的 `http-proxy` 切换为由 unjs 社区积极维护的 [httpxy](https://npmx.dev/package/httpxy)。
+
+这主要带来几点改进：
+
+- 支持 HTTP/2 代理
+- 解决已知的安全问题
+- 不再依赖 Node.js 已废弃的 `url.parse()` API
+
+> `server.proxy` 的部分字段已发生变更，升级时请参考 [从 v1 升级到 v2](/guide/upgrade/v1-to-v2#proxy-中间件升级)。

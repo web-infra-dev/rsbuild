@@ -44,6 +44,7 @@ frontends
 fullhash
 fullhref
 gzipped
+httpxy
 icss
 idents
 iife
@@ -148,6 +149,7 @@ tsgo
 twoslash
 TYPELESS
 uncompiled
+unjs
 unocss
 unpatch
 unplugin
