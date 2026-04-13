@@ -106,20 +106,13 @@ export class CommonJsRunner extends BasicRunner {
 
       const args = Object.keys(currentModuleScope);
       const argValues = args.map((arg) => currentModuleScope[arg]);
-
-      const codeDefinition = `(function(${args.join(', ')}) {`;
-      const code = `${codeDefinition}${file.content}\n})`;
-
-      this.preExecute(code, file);
+      this.preExecute(file.content, file);
       const dynamicImport = new Function(
         'specifier',
         'return import(specifier)',
       );
-      // Runs the compiled code contained by the `vm.Script` within the context of the current `global` object.
-      const fn = vm.runInThisContext(code, {
+      const fn = vm.compileFunction(file.content, args, {
         filename: file.path,
-        lineOffset: 0,
-        columnOffset: -codeDefinition.length,
         // Specify how the modules should be loaded during the evaluation of this script when `import()` is called.
         importModuleDynamically: async (specifier) => {
           const result = await dynamicImport(specifier);
