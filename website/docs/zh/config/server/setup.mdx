@@ -95,7 +95,7 @@ type ServerSetupContext =
 
 - `context.action`：`'dev'` 代表开发服务器，`'preview'` 代表预览服务器。
 - `context.server`：服务器实例，参考 [Server API](/api/javascript-api/server-api) 了解更多。
-- `context.environments`：所有环境的上下文信息。需要注意，这与 `server.environments` 不同，后者为 [Environments API](/api/javascript-api/environment-api)。
+- `context.environments`：所有环境的上下文信息。需要注意，这与 `server.environments` 不同，后者为 [Environment API](/api/javascript-api/environment-api)。
 
 ## 中间件执行顺序
 
@@ -119,9 +119,9 @@ export default {
 };
 ```
 
-## Environments API
+## Environment API
 
-在开发模式下，可以访问 Rsbuild 的 [Environments API](/api/javascript-api/environment-api)：
+在开发模式下，可以访问 Rsbuild 的 [Environment API](/api/javascript-api/environment-api)：
 
 ```ts title="rsbuild.config.ts"
 export default {

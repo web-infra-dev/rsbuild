@@ -10,8 +10,6 @@ export default defineConfig([
     },
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
-      // TODO: Rslint bug
-      'prefer-const': 'off',
     },
   },
 ]);

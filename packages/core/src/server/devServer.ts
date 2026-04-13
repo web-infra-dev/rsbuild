@@ -55,7 +55,7 @@ type ExtractSocketMessageData<T extends ServerMessage['type']> =
     ? Extract<ServerMessage, { type: T }>['data']
     : undefined;
 
-export type SockWrite = <T extends ServerMessage['type']>(
+export type HotSend = <T extends ServerMessage['type']>(
   type: T,
   data?: ExtractSocketMessageData<T>,
 ) => void;
@@ -87,7 +87,7 @@ export type RsbuildDevServer = RsbuildServerBase & {
    * - `static-changed`: Alias of `full-reload` for backward compatibility.
    * - `custom`: Send custom messages via `custom` type with optional data to the browser and handle them via HMR events.
    */
-  sockWrite: SockWrite;
+  sockWrite: HotSend;
 };
 
 export async function createDevServer<
@@ -211,9 +211,11 @@ export async function createDevServer<
     });
   };
 
-  let fileWatcher: WatchFilesResult | undefined;
-  let devMiddlewares: GetDevMiddlewaresResult | undefined;
-  let buildManager: BuildManager | undefined;
+  const state: {
+    fileWatcher?: WatchFilesResult;
+    devMiddlewares?: GetDevMiddlewaresResult;
+    buildManager?: BuildManager;
+  } = {};
 
   const cleanupGracefulShutdown = middlewareMode
     ? null
@@ -228,7 +230,10 @@ export async function createDevServer<
         removeCleanup(closeServer);
         cleanupGracefulShutdown?.();
         await context.hooks.onCloseDevServer.callBatch();
-        await Promise.all([devMiddlewares?.close(), fileWatcher?.close()]);
+        await Promise.all([
+          state.devMiddlewares?.close(),
+          state.fileWatcher?.close(),
+        ]);
       })();
     }
     return closingPromise;
@@ -270,6 +275,16 @@ export async function createDevServer<
   );
 
   const environmentAPI: EnvironmentAPI = {};
+  const createHotSend =
+    (token?: string): HotSend =>
+    (type, data) =>
+      state.buildManager?.socketServer.sendMessage(
+        {
+          type,
+          data,
+        } as ServerMessage,
+        token,
+      );
 
   const getErrorMsg = (method: string) =>
     `${color.dim('[rsbuild:server]')} Can not call ` +
@@ -279,30 +294,33 @@ export async function createDevServer<
   context.environmentList.forEach((environment, index) => {
     environmentAPI[environment.name] = {
       context: environment,
+      hot: {
+        send: createHotSend(environment.webSocketToken),
+      },
       getStats: async () => {
-        if (!buildManager) {
+        if (!state.buildManager) {
           throw new Error(getErrorMsg('getStats'));
         }
         await waitLastCompileDone;
         return lastStats[index];
       },
       loadBundle: async <T>(entryName: string) => {
-        if (!buildManager) {
+        if (!state.buildManager) {
           throw new Error(getErrorMsg('loadBundle'));
         }
         await waitLastCompileDone;
         return cacheableLoadBundle(lastStats[index], entryName, {
-          readFileSync: buildManager.readFileSync,
+          readFileSync: state.buildManager.readFileSync,
           environment,
         }) as T;
       },
       getTransformedHtml: async (entryName: string) => {
-        if (!buildManager) {
+        if (!state.buildManager) {
           throw new Error(getErrorMsg('getTransformedHtml'));
         }
         await waitLastCompileDone;
         return cacheableTransformedHtml(lastStats[index], entryName, {
-          readFileSync: buildManager.readFileSync,
+          readFileSync: state.buildManager.readFileSync,
           environment,
         });
       },
@@ -321,11 +339,7 @@ export async function createDevServer<
         middlewares,
       });
 
-  const sockWrite: SockWrite = (type, data) =>
-    buildManager?.socketServer.sockWrite({
-      type,
-      data,
-    } as ServerMessage);
+  const sockWrite = createHotSend();
 
   const devServer: RsbuildDevServer = {
     port,
@@ -365,8 +379,8 @@ export async function createDevServer<
             // 404 fallback middleware should be the last middleware
             middlewares.use(notFoundMiddleware);
 
-            if (devMiddlewares) {
-              httpServer.on('upgrade', devMiddlewares.onUpgrade);
+            if (state.devMiddlewares) {
+              httpServer.on('upgrade', state.devMiddlewares.onUpgrade);
             }
 
             logger.debug('listen dev server done');
@@ -392,8 +406,8 @@ export async function createDevServer<
       });
     },
     connectWebSocket: ({ server }: { server: HTTPServer }) => {
-      if (devMiddlewares) {
-        server.on('upgrade', devMiddlewares.onUpgrade);
+      if (state.devMiddlewares) {
+        server.on('upgrade', state.devMiddlewares.onUpgrade);
       }
     },
     close: closeServer,
@@ -423,16 +437,16 @@ export async function createDevServer<
     await beforeCreateCompiler();
   }
 
-  buildManager = runCompile ? await startCompile() : undefined;
+  state.buildManager = runCompile ? await startCompile() : undefined;
 
-  fileWatcher = await setupWatchFiles({
+  state.fileWatcher = await setupWatchFiles({
     config,
-    buildManager,
+    buildManager: state.buildManager,
     root: context.rootPath,
   });
 
-  devMiddlewares = await getDevMiddlewares({
-    buildManager,
+  state.devMiddlewares = await getDevMiddlewares({
+    buildManager: state.buildManager,
     config,
     devServer,
     context,
@@ -440,7 +454,7 @@ export async function createDevServer<
   });
 
   // start watching
-  buildManager?.watch();
+  state.buildManager?.watch();
 
   logger.debug('create dev server done');
 

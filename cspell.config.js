@@ -1,6 +1,6 @@
-const { banWords } = require('cspell-ban-words');
+import { banWords } from 'cspell-ban-words';
 
-module.exports = {
+export default {
   version: '0.2',
   language: 'en',
   files: ['**/*.{ts,tsx,js,jsx,md,mdx}'],

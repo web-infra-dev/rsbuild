@@ -111,7 +111,7 @@ export const setupServerHooks = ({
       fileName.endsWith('.html') &&
       normalizeLiveReload(liveReload).html
     ) {
-      socketServer.sockWrite({ type: 'full-reload' }, token);
+      socketServer.sendMessage({ type: 'full-reload' }, token);
     }
   });
 

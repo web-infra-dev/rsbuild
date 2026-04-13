@@ -282,7 +282,7 @@ console.log(port, urls);
 - **类型:**
 
 ```ts
-type SockWrite = {
+type HotSend = {
   (type: 'full-reload', data?: { path?: string }): void;
   (type: 'static-changed'): void;
   (type: 'custom', data: { event: string; data?: any }): void;
@@ -291,10 +291,6 @@ type SockWrite = {
 
 向 HMR 客户端传递一些消息，HMR 客户端将根据接收到的消息类型进行不同的处理。
 
-#### full-reload
-
-如果你发送一个 `'full-reload'` 的消息，页面将会重新加载。
-
 ```ts
 const rsbuildServer = await rsbuild.createDevServer();
 if (someCondition) {
@@ -302,40 +298,6 @@ if (someCondition) {
 }
 ```
 
-当传入 `path` 且它以 `.html` 结尾时，Rsbuild 只会重新加载当前 URL 与该 HTML 路径匹配的页面。
-
-当 `path` 为 `'*'` 时，Rsbuild 会重新加载所有页面。
-
-HTML 路径应当相对于 dev server 根路径，并且不应包含 `server.base`。
-
-```ts
-const rsbuildServer = await rsbuild.createDevServer();
-rsbuildServer.sockWrite('full-reload', {
-  path: '/foo.html',
-});
-```
-
-> `'static-changed'` 是 `'full-reload'` 的一个别名。
-
-#### custom
-
-你也可以通过 `custom` 类型向浏览器发送自定义消息，并携带可选的 data，然后通过 HMR 事件进行处理：
-
-```ts title="server.js"
-const rsbuildServer = await rsbuild.createDevServer();
-rsbuildServer.sockWrite('custom', {
-  event: 'count',
-  data: { value: 1 },
-});
-```
-
-Rsbuild 在 Rspack 的 [import.meta.webpackHot](https://rspack.rs/api/runtime-api/hmr) 对象上扩展了 `on()` 方法，它允许你在浏览器端监听自定义事件，并处理数据：
-
-```ts title="client.js"
-if (import.meta.webpackHot) {
-  import.meta.webpackHot.on('count', (data) => {
-    console.log('count update', data.value);
-  });
-  import.meta.webpackHot.accept();
-}
-```
+:::tip
+不推荐使用 `sockWrite` 作为消息发送 API，建议优先使用 [hot.send](/api/javascript-api/environment-api#hotsend)。
+:::

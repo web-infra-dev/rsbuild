@@ -92,15 +92,15 @@ const resolveConfigPath = (root: string, customConfig?: string) => {
     );
   }
 
+  // Resolve the most commonly used config file types first
+  // to improve lookup performance.
   const CONFIG_FILES = [
-    // `.mjs` and `.ts` are the most used configuration types,
-    // so we resolve them first for performance
-    'rsbuild.config.mjs',
     'rsbuild.config.ts',
     'rsbuild.config.js',
-    'rsbuild.config.cjs',
     'rsbuild.config.mts',
+    'rsbuild.config.mjs',
     'rsbuild.config.cts',
+    'rsbuild.config.cjs',
   ];
 
   for (const file of CONFIG_FILES) {

@@ -160,7 +160,7 @@ function loadConfig(params?: {
 ```ts
 import { loadConfig } from '@rsbuild/core';
 
-// 默认加载 `rsbuild.config.*` 配置文件
+// 按默认查找顺序从 cwd 加载 `rsbuild.config.*` 配置文件
 const { content } = await loadConfig();
 
 console.log(content); // -> Rsbuild config object
@@ -171,6 +171,17 @@ const rsbuild = await createRsbuild({
 ```
 
 如果 cwd 目录下不存在 Rsbuild 配置文件，loadConfig 方法的返回值为 `{ content: {}, filePath: null }`。
+
+当未指定 `path` 时，`loadConfig` 会按以下顺序查找配置文件：
+
+- `rsbuild.config.ts`
+- `rsbuild.config.js`
+- `rsbuild.config.mts`
+- `rsbuild.config.mjs`
+- `rsbuild.config.cts`
+- `rsbuild.config.cjs`
+
+如果同时存在多个配置文件，`loadConfig` 会使用这个列表中第一个匹配到的文件。
 
 ### 指定配置文件
 

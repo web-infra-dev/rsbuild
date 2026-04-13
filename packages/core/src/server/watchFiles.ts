@@ -169,7 +169,7 @@ async function startWatchFiles(
   const watcher = await createChokidar(paths, root, options);
 
   watcher.on('change', () => {
-    buildManager.socketServer.sockWrite({
+    buildManager.socketServer.sendMessage({
       type: 'full-reload',
     });
   });

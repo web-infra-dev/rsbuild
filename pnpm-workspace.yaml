@@ -19,8 +19,6 @@ dedupePeers: true
 
 patchedDependencies:
   css-loader@7.1.4: patches/css-loader@7.1.4.patch
-  file-loader: patches/file-loader@6.2.0.patch
   postcss-loader@8.2.1: patches/postcss-loader@8.2.1.patch
-  url-loader: patches/url-loader@4.1.1.patch
 
 strictPeerDependencies: false
