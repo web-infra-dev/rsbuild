@@ -17,13 +17,16 @@ Rsbuild 2.0 是基于 Rspack 2.0 的构建工具，致力于为 Web 开发者带
 
 2.0 版本的主要改进包括：
 
-- `@rsbuild/core` 现在是一个 Pure ESM 包
-- 不再支持 Node.js 18，最低支持 Node.js `20.19+` / `22.12+`
-- 更轻量，依赖数量从 14 个减少到 5 个，安装体积减少 2 MB
-- 当构建 Node 产物时，默认输出 ESM 代码而不是 CommonJS
-- 开发服务器默认仅监听 `localhost`，减少安全风险
-- 默认使用 `2023-11` decorators 版本，与最新规范一致
-- 升级 Proxy 中间件，支持 HTTP/2 代理
+- 更现代：
+  - [@rsbuild/core 现在是 Pure ESM 包](#pure-esm-包)
+  - [不再支持 Node.js 18](#nodejs-支持)
+  - [构建 Node 产物时默认输出 ESM](#esm-node-产物)
+  - [默认使用 '2023-11' 装饰器版本](#装饰器版本更新)
+- 更安全：
+  - [开发服务器默认仅监听 'localhost'](#默认-host-变化)
+  - [Proxy 中间件升级，支持 HTTP/2 代理](#proxy-中间件升级)
+- 更轻量：
+  - 依赖数量从 14 个减少到 5 个，安装体积减少 2 MB
 
 ## Pure ESM 包
 
