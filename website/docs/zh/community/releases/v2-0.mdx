@@ -20,6 +20,7 @@ _April 22, 2026_
 - 更现代：
   - [@rsbuild/core 现在是 Pure ESM 包](#pure-esm-包)
   - [不再支持 Node.js 18](#nodejs-支持)
+  - [默认兼容范围更新](#默认兼容范围更新)
   - [构建 Node 产物时默认输出 ESM](#esm-node-产物)
   - [默认使用 '2023-11' 装饰器版本](#装饰器版本更新)
 - 更安全：
@@ -39,6 +40,23 @@ _April 22, 2026_
 从 2.0 开始，Rsbuild 最低支持的 Node.js 版本为 `20.19+` 或 `22.12+`。由于 Node.js 18 已于 2025 年 4 月底结束维护，2.0 也不再继续支持该版本。
 
 > 我们通常会在某个 Node.js 版本进入 EOL 约一年后再移除支持，以为社区和用户预留更充足的升级时间。
+
+## 默认兼容范围更新
+
+Rsbuild 2.0 调整了默认的兼容范围，使产物面向更现代的浏览器和 Node.js 版本。
+
+对于 Web 产物，默认的 browserslist 现在对齐到 [Baseline](https://web-platform-dx.github.io/web-features/) 在 `2025-05-01` 达到广泛可用的浏览器范围，对应的版本变化如下：
+
+- Chrome 87 → 107
+- Edge 88 → 107
+- Firefox 78 → 104
+- Safari 14 → 16
+
+这意味着在未显式配置 browserslist 的项目中，Rsbuild 会默认输出更现代的 JavaScript 和 CSS，编译引入的语法降级与 polyfill 也会更少。
+
+对于 Node 产物，默认目标版本也从 Node 16 提升到 Node 20，与 Node.js 的长期支持版本保持一致。
+
+如果你已经通过 `.browserslistrc`、`package.json#browserslist` 或 [output.overrideBrowserslist](/config/output/override-browserslist) 指定了兼容范围，则不会受到上述调整的影响。
 
 ## ESM Node 产物
 
