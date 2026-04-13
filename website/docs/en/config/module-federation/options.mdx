@@ -2,6 +2,8 @@
 description: "Used to configure the Rspack's Module Federation plugin (Module Federation v1.5)."
 ---
 
+import { PackageManagerTabs } from '@theme';
+
 # moduleFederation.options
 
 - **Type:** [Rspack.ModuleFederationPluginOptions](https://rspack.rs/plugins/webpack/module-federation-plugin#options)
@@ -38,7 +40,11 @@ export default defineConfig({
 });
 ```
 
-Please refer to the [ModuleFederationPlugin](https://rspack.rs/plugins/webpack/module-federation-plugin) document for all available options.
+This option depends on the runtime package [@module-federation/runtime-tools](https://www.npmjs.com/package/@module-federation/runtime-tools), which provides runtime support for Module Federation. Install it first:
+
+<PackageManagerTabs command="add @module-federation/runtime-tools" />
+
+> Refer to the [ModuleFederationPlugin](https://rspack.rs/plugins/webpack/module-federation-plugin) document for all available options.
 
 ## Example
 

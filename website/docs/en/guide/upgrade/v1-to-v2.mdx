@@ -101,13 +101,23 @@ Rsbuild 2.0 requires Node.js 20.19+ or 22.12+, Node.js 18 is no longer supported
 
 [@rsbuild/core](https://www.npmjs.com/package/@rsbuild/core) is now published as a pure ESM package.
 
-## Polyfill dependency change
+## Dependency changes
 
-[core-js](https://www.npmjs.com/package/core-js) has been changed from a default dependency of `@rsbuild/core` to an optional peer dependency, which reduces the installation size by 1.2 MB.
+### Polyfill
+
+[core-js](https://www.npmjs.com/package/core-js) polyfill has been changed from a default dependency of `@rsbuild/core` to an optional peer dependency, which reduces the installation size by 1.2 MB.
 
 If you enabled [output.polyfill](/config/output/polyfill), install `core-js` v3 in your project:
 
 <PackageManagerTabs command="add core-js" />
+
+### Module Federation
+
+If you use the [moduleFederation.options](/config/module-federation/options) option, install [@module-federation/runtime-tools](https://www.npmjs.com/package/@module-federation/runtime-tools) manually in your project, it is an optional peer dependency of `@rspack/core`:
+
+<PackageManagerTabs command="add @module-federation/runtime-tools" />
+
+This change only affects projects that use Module Federation v1.5 through `moduleFederation.options`. If you are using Module Federation v2, no action is required.
 
 ## Configuration
 

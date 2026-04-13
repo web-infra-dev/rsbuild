@@ -101,13 +101,23 @@ Rsbuild 2.0 最低支持的 Node.js 版本为 20.19+ 或 22.12+，不再支持 N
 
 [@rsbuild/core](https://www.npmjs.com/package/@rsbuild/core) 现已以 pure ESM 包的形式发布。
 
-## Polyfill 依赖变更
+## 依赖变更
 
-[core-js](https://www.npmjs.com/package/core-js) 从 `@rsbuild/core` 的默认依赖变更为可选的 peer 依赖，这减少了 1.2MB 的安装体积。
+### Polyfill
+
+[core-js](https://www.npmjs.com/package/core-js) polyfill 从 `@rsbuild/core` 的默认依赖变更为可选的 peer 依赖，这减少了 1.2MB 的安装体积。
 
 如果你启用了 [output.polyfill](/config/output/polyfill)，请在项目中安装 `core-js` v3：
 
 <PackageManagerTabs command="add core-js" />
+
+### Module Federation
+
+如果你使用了 [moduleFederation.options](/config/module-federation/options) 选项，请在项目中手动安装 [@module-federation/runtime-tools](https://www.npmjs.com/package/@module-federation/runtime-tools)，它现在是 `@rspack/core` 的 optional peer 依赖：
+
+<PackageManagerTabs command="add @module-federation/runtime-tools" />
+
+这一变更仅影响通过 `moduleFederation.options` 使用 Module Federation v1.5 的项目。如果你使用的是 Module Federation v2，则不受影响。
 
 ## 配置
 
