@@ -21,6 +21,7 @@ Rsbuild 2.0 是基于 Rspack 2.0 的构建工具，致力于为 Web 开发者带
 - 不再支持 Node.js 18，最低支持 Node.js 20.19+ / 22.12+。
 - 依赖数量从 14 个减少到 5 个，安装体积减少 2 MB。
 - 当构建 Node 应用时，默认输出未压缩的 ESM 代码。
+- 默认使用 `2023-11` decorators 版本，与最新规范一致。
 - 升级 Proxy 中间件，支持 HTTP/2 代理
 
 ## Pure ESM 包
@@ -49,6 +50,22 @@ export default {
     target: 'node',
     module: false,
     minify: true,
+  },
+};
+```
+
+## 装饰器版本
+
+随着底层 SWC 支持 `2023-11` 装饰器版本，Rsbuild 将 [decorators.version](/config/source/decorators#decoratorsversion) 默认值从 `2022-03` 调整为 `2023-11`。
+
+`2023-11` 是当前最新的提案版本，对应 2023 年 11 月 TC39 会议后的规范，同时也是 Babel 8 的默认行为。如果你需要保留旧行为，可以显式指定版本：
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    decorators: {
+      version: '2022-03',
+    },
   },
 };
 ```
