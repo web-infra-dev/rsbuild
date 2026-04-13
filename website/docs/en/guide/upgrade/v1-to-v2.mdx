@@ -105,13 +105,23 @@ In Node.js 20 and later, the runtime natively supports loading ESM modules via [
 
 > This does not affect Rsbuild's ability to build CommonJS output. All related build behavior and configuration options remain unchanged.
 
-## Polyfill dependency change
+## Dependencies change
 
-[core-js](https://www.npmjs.com/package/core-js) has been changed from a default dependency of `@rsbuild/core` to an optional peer dependency, which reduces the installation size by 1.2 MB.
+### Polyfill
+
+[core-js](https://www.npmjs.com/package/core-js) polyfill has been changed from a default dependency of `@rsbuild/core` to an optional peer dependency, which reduces the installation size by 1.2 MB.
 
 If you enabled [output.polyfill](/config/output/polyfill), install `core-js` v3 in your project:
 
 <PackageManagerTabs command="add core-js" />
+
+### Module Federation
+
+If you use the [moduleFederation.options](/config/module-federation/options) option, install `@module-federation/runtime-tools` manually in your project. In Rsbuild v2, it is now an optional peer dependency:
+
+<PackageManagerTabs command="add @module-federation/runtime-tools" />
+
+This change only affects projects that use Module Federation v1.5 through `moduleFederation.options`. If you are using Module Federation v2, no action is required.
 
 ## Configuration
 

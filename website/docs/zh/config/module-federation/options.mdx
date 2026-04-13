@@ -2,6 +2,8 @@
 description: '用于配置 Rspack 模块联邦插件（对应模块联邦 v1.5）。'
 ---
 
+import { PackageManagerTabs } from '@theme';
+
 # moduleFederation.options
 
 - **类型：** [Rspack.ModuleFederationPluginOptions](https://rspack.rs/zh/plugins/webpack/module-federation-plugin#options)
@@ -38,7 +40,11 @@ export default defineConfig({
 });
 ```
 
-请参考 [ModuleFederationPlugin](https://rspack.rs/zh/plugins/webpack/module-federation-plugin) 文档来了解所有可用的选项。
+该选项依赖运行时包 [@module-federation/runtime-tools](https://www.npmjs.com/package/@module-federation/runtime-tools)，用于提供模块联邦的运行时支持。请先安装该依赖：
+
+<PackageManagerTabs command="add @module-federation/runtime-tools" />
+
+> 参考 [ModuleFederationPlugin](https://rspack.rs/zh/plugins/webpack/module-federation-plugin) 文档来了解所有可用的选项。
 
 ## 示例
 
