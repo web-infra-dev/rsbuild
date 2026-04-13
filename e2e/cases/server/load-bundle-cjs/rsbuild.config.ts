@@ -40,6 +40,7 @@ export default defineConfig({
     node: {
       output: {
         target: 'node',
+        module: false,
       },
       source: {
         entry: {
