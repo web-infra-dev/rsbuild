@@ -17,10 +17,11 @@ Rsbuild 2.0 是基于 Rspack 2.0 的构建工具，致力于为 Web 开发者带
 
 2.0 版本的主要改进包括：
 
-- Rsbuild 现在是一个 Pure ESM 包。
-- 不再支持 Node.js 18，最低支持 Node.js 20.19+ / 22.12+。
-- 依赖数量从 14 个减少到 5 个，安装体积减少 2 MB。
-- 当构建 Node 应用时，默认输出未压缩的 ESM 代码。
+- `@rsbuild/core` 现在是一个 Pure ESM 包。
+- 不再支持 Node.js 18，最低支持 Node.js `20.19+` / `22.12+`。
+- 更轻量，依赖数量从 14 个减少到 5 个，安装体积减少 2 MB。
+- 当构建 Node 产物时，默认输出 ESM 代码而不是 CommonJS。
+- 开发服务器默认仅监听 `localhost`，减少安全风险。
 - 默认使用 `2023-11` decorators 版本，与最新规范一致。
 - 升级 Proxy 中间件，支持 HTTP/2 代理
 
@@ -68,6 +69,28 @@ export default {
     },
   },
 };
+```
+
+## 默认 host 变化
+
+Rsbuild 2.0 将 [server.host](/config/server/host) 的默认值从 `'0.0.0.0'` 调整为 `'localhost'`。这意味着开发服务器默认仅监听本机，不再对局域网内的其他设备开放。
+
+这一调整遵循「默认安全」的原则。在大多数本地开发场景中，开发服务器无需对外暴露。仅监听本机地址可以减少意外暴露，降低在共享网络环境中被扫描或攻击的风险。
+
+如果你需要在局域网设备上访问页面，可以显式开启网络访问：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    host: '0.0.0.0',
+  },
+};
+```
+
+也可以通过 CLI 的 `--host` 参数快速开启：
+
+```bash
+rsbuild --host
 ```
 
 ## Proxy 中间件升级
