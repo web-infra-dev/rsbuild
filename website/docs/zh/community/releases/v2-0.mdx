@@ -26,7 +26,7 @@ Rsbuild 2.0 是基于 Rspack 2.0 的构建工具，致力于为 Web 开发者带
   - [开发服务器默认仅监听 'localhost'](#默认-host-变化)
   - [Proxy 中间件升级，支持 HTTP/2 代理](#proxy-中间件升级)
 - 更轻量：
-  - 依赖数量从 14 个减少到 5 个，安装体积减少 2 MB
+  - [依赖数量从 14 个减少到 5 个，安装体积减少 2 MB](#精简依赖)
 
 ## Pure ESM 包
 
@@ -107,3 +107,13 @@ Rsbuild 2.0 升级了开发服务器使用的 Proxy 中间件，将 [http-proxy-
 - 不再依赖 Node.js 已废弃的 `url.parse()` API
 
 > `server.proxy` 的部分字段已发生变更，升级时请参考 [从 v1 升级到 v2](/guide/upgrade/v1-to-v2#proxy-中间件升级)。
+
+## 精简依赖
+
+Rsbuild 2.0 对默认依赖进行了精简，将仅在特定场景下使用的包移出默认依赖，使依赖数量从 14 个减少到 5 个，安装体积约减少 2 MB。
+
+本次调整主要涉及：
+
+- 不再默认安装 `core-js`，在启用 [output.polyfill](/config/output/polyfill) 时需要手动安装。
+- 不再默认安装 `@module-federation/runtime-tools` 不再默认安装，在通过 [moduleFederation.options](/config/module-federation/options) 时需要手动安装，Module Federation 2.0 不受影响。
+- 移除 `webpack-bundle-analyzer` 依赖，推荐使用 [Rsdoctor](/guide/debug/rsdoctor) 进行产物分析，或自行安装和注册 `webpack-bundle-analyzer`。
