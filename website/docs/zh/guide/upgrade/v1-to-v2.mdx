@@ -1,12 +1,12 @@
 ---
-description: '当前文档列出了从 Rsbuild 1.x 到 2.0 的所有不兼容更新，你可以参考此文档来迁移。'
+description: '当前文档列出了从 Rsbuild v1 到 2.0 的所有不兼容更新，你可以参考此文档来迁移。'
 ---
 
 import { PackageManagerTabs } from '@theme';
 
 # 从 v1 升级到 v2
 
-当前文档列出了从 Rsbuild 1.x 到 2.0 的所有不兼容更新，你可以参考此文档来迁移。
+当前文档列出了从 Rsbuild v1 到 2.0 的所有不兼容更新，你可以参考此文档来迁移。
 
 ## 使用 Agent Skills
 
@@ -151,7 +151,7 @@ export default {
 
 ### Node 产物
 
-当 [output.target](/config/output/target) 为 `node` 时，Rsbuild 2.0 会通过 [output.module](/config/output/module) 默认输出 ESM 产物，并保持 [output.minify](/config/output/minify) 关闭。在 Rsbuild 1.x 中，默认行为是输出 CommonJS 且开启压缩。
+当 [output.target](/config/output/target) 为 `node` 时，Rsbuild 2.0 会通过 [output.module](/config/output/module) 默认输出 ESM 产物，并保持 [output.minify](/config/output/minify) 关闭。在 Rsbuild v1 中，默认行为是输出 CommonJS 且开启压缩。
 
 该调整更贴近 Node 的现代 ESM 生态，同时保留更清晰的调试堆栈与排查体验。
 
@@ -465,7 +465,7 @@ export default {
 
 ## 移除 webpack 支持
 
-Rsbuild 2.0 不再支持使用 webpack 作为打包工具。在 Rsbuild 1.x 版本中，该能力主要用于验证 Rspack 与 webpack 之间的兼容性。随着 Rspack 的逐步成熟和稳定，这一用途已不再必要，因此相关支持被正式移除。
+Rsbuild 2.0 不再支持使用 webpack 作为打包工具。在 Rsbuild v1 版本中，该能力主要用于验证 Rspack 与 webpack 之间的兼容性。随着 Rspack 的逐步成熟和稳定，这一用途已不再必要，因此相关支持被正式移除。
 
 具体变更如下：
 

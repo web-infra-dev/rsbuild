@@ -20,6 +20,7 @@ Rsbuild 2.0 是基于 Rspack 2.0 的构建工具，致力于为 Web 开发者带
 - Rsbuild 现在是一个 Pure ESM 包。
 - 不再支持 Node.js 18，最低支持 Node.js 20.19+ / 22.12+。
 - 依赖数量从 14 个减少到 5 个，安装体积减少 2 MB。
+- 当构建 Node 应用时，默认输出未压缩的 ESM 代码。
 - 升级 Proxy 中间件，支持 HTTP/2 代理
 
 ## Pure ESM 包
@@ -33,6 +34,24 @@ Rsbuild 2.0 是基于 Rspack 2.0 的构建工具，致力于为 Web 开发者带
 Rsbuild 2.0 最低支持的 Node.js 版本为 `20.19+` 或 `22.12+`。由于 Node.js 18 已于 2025 年 4 月底结束维护，Rsbuild 2.0 不再继续支持该版本。
 
 我们通常会在某个 Node.js 版本进入 EOL 约一年后再移除支持，以为社区和用户预留更充足的升级时间。
+
+## ESM Node 产物
+
+在构建 Node.js 产物时，Rsbuild 2.0 默认输出未压缩的 ES modules 代码。而在 Rsbuild v1 中，默认产物为压缩后的 CommonJS 代码。
+
+这一调整更符合现代 Node 应用的主流实践。同时，服务端代码默认不压缩，有助于保留清晰的调试堆栈，提升问题排查效率。
+
+需要注意的是，运行时需要具备加载 ESM 的能力。例如在 `package.json` 中设置 `"type": "module"`，或者使用 `.mjs` 作为输出文件扩展名。如果你的项目仍依赖 CommonJS，可以显式切回原有行为：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'node',
+    module: false,
+    minify: true,
+  },
+};
+```
 
 ## Proxy 中间件升级
 

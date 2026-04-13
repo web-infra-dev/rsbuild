@@ -1,12 +1,12 @@
 ---
-description: 'This document lists all breaking changes from Rsbuild 1.x to 2.0. Use it as a migration reference.'
+description: 'This document lists all breaking changes from Rsbuild v1 to 2.0. Use it as a migration reference.'
 ---
 
 import { PackageManagerTabs } from '@theme';
 
 # Upgrading from v1 to v2
 
-This document lists all breaking changes from Rsbuild 1.x to 2.0. Use it as a migration reference.
+This document lists all breaking changes from Rsbuild v1 to 2.0. Use it as a migration reference.
 
 ## Using Agent Skills
 
@@ -151,7 +151,7 @@ export default {
 
 ### Node output
 
-When [output.target](/config/output/target) is set to `node`, Rsbuild 2.0 defaults to ESM output via [output.module](/config/output/module) and keeps [output.minify](/config/output/minify) disabled. In Rsbuild 1.x, the default was CommonJS output with minification enabled.
+When [output.target](/config/output/target) is set to `node`, Rsbuild 2.0 defaults to ESM output via [output.module](/config/output/module) and keeps [output.minify](/config/output/minify) disabled. In Rsbuild v1, the default was CommonJS output with minification enabled.
 
 This keeps Node bundles aligned with modern ESM conventions while preserving clearer stack traces for debugging.
 
@@ -465,7 +465,7 @@ export default {
 
 ## Dropping webpack support
 
-Rsbuild 2.0 no longer supports using webpack as the bundler. In Rsbuild 1.x, this capability was mainly used to validate compatibility between Rspack and webpack. As Rspack has gradually matured and stabilized, this purpose is no longer necessary, so the related support has been removed.
+Rsbuild 2.0 no longer supports using webpack as the bundler. In Rsbuild v1, this capability was mainly used to validate compatibility between Rspack and webpack. As Rspack has gradually matured and stabilized, this purpose is no longer necessary, so the related support has been removed.
 
 The specific changes are as follows:
 
