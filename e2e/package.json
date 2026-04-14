@@ -9,7 +9,7 @@
     "type-check": "tsc && pnpm run --filter @type-tests/* type-check"
   },
   "dependencies": {
-    "@module-federation/runtime-tools": "2.3.1",
+    "@module-federation/runtime-tools": "2.3.2",
     "core-js": "^3.49.0",
     "preact": "^10.29.1",
     "react": "^19.2.5",
@@ -21,8 +21,8 @@
     "@e2e/assets": "workspace:*",
     "@e2e/helper": "workspace:*",
     "@hono/node-server": "^1.19.14",
-    "@module-federation/enhanced": "2.3.1",
-    "@module-federation/rsbuild-plugin": "2.3.1",
+    "@module-federation/enhanced": "2.3.2",
+    "@module-federation/rsbuild-plugin": "2.3.2",
     "@playwright/test": "1.59.1",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
@@ -39,7 +39,7 @@
     "@rsbuild/plugin-type-check": "^1.3.4",
     "@rsbuild/plugin-vue": "workspace:*",
     "@rsbuild/plugin-vue-jsx": "^2.0.0",
-    "@rsdoctor/rspack-plugin": "1.5.7",
+    "@rsdoctor/rspack-plugin": "1.5.8",
     "@scripts/test-helper": "workspace:*",
     "@tailwindcss/postcss": "^4.2.2",
     "@tailwindcss/webpack": "^4.2.2",
