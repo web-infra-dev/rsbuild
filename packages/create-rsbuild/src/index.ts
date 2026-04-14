@@ -129,7 +129,7 @@ create({
       label: 'React Compiler - optimization',
       order: 'pre',
       when: ({ templateName }) =>
-        templateName === 'react-js' || templateName === 'react-ts',
+        ['react-js', 'react-ts'].includes(templateName),
       action: ({ templateName, distFolder }) => {
         const toolFolder = path.join(root, 'template-react-compiler');
         copyFolder({
