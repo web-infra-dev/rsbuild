@@ -28,7 +28,7 @@ async function getTemplateName({ template }: Argv) {
       message: 'Select framework',
       options: [
         { value: 'vanilla', label: 'Vanilla' },
-        { value: 'react', label: 'React 19' },
+        { value: 'react', label: 'React' },
         { value: 'vue3', label: 'Vue 3' },
         { value: 'vue2', label: 'Vue 2' },
         { value: 'lit', label: 'Lit' },
@@ -174,6 +174,11 @@ create({
     {
       value: 'rsbuild-best-practices',
       label: 'Rsbuild - best practices',
+      source: 'rstackjs/agent-skills',
+    },
+    {
+      value: 'rstest-best-practices',
+      label: 'Rstest - best practices',
       source: 'rstackjs/agent-skills',
     },
   ],
