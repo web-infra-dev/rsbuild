@@ -7,6 +7,7 @@ export default defineConfig([
       parserOptions: {
         project: [
           './packages/*/tsconfig.json',
+          './scripts/*/tsconfig.json',
           './examples/*/tsconfig.json',
           './e2e/tsconfig.json',
           './e2e/type-tests/*/tsconfig.json',
