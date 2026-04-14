@@ -2,7 +2,7 @@ import { type BuildResult, expect, getFileContent, test } from '@e2e/helper';
 
 declare global {
   interface Window {
-    [key: string]: Record<string, string>;
+    styles: Record<string, string>;
   }
 }
 
