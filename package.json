@@ -12,7 +12,7 @@
     "doc": "cd website && node --run dev",
     "e2e": "cd ./e2e && pnpm e2e",
     "format": "prettier --experimental-cli --write . && heading-case --write",
-    "lint": "rslint",
+    "lint": "rslint --type-check",
     "prebundle": "pnpm --parallel --filter \"./packages/*\" run prebundle",
     "prepare": "simple-git-hooks && node --run prebundle && node --run build",
     "sort-package-json": "pnpx sort-package-json \"./package.json\" \"packages/*/package.json\"",
@@ -25,7 +25,7 @@
   "nano-staged": {
     "*.{md,mdx,json,css,less,scss}": "prettier --experimental-cli --write",
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
-      "rslint",
+      "rslint --type-check",
       "prettier --experimental-cli --write"
     ]
   },

@@ -7,6 +7,7 @@ This folder contains the E2E test cases of Rsbuild. The E2E suite is powered by 
 - `cases`: Test cases covering different Rsbuild features.
 - `assets`: Common static assets, can be accessed using the `@e2e/assets` package.
 - `scripts`: Shared helpers, can be accessed using the `@e2e/helper` package.
+- `type-tests`: Test cases for type checking, checked via `rslint --type-check`.
 
 ## Commands
 

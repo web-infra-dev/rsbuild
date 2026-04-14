@@ -5,8 +5,7 @@
   "version": "1.0.0",
   "scripts": {
     "setup": "pnpm exec playwright install chromium --with-deps",
-    "e2e": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules --no-warnings\" playwright test",
-    "type-check": "tsc && pnpm run --filter @type-tests/* type-check"
+    "e2e": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules --no-warnings\" playwright test"
   },
   "dependencies": {
     "@module-federation/runtime-tools": "2.3.2",
