@@ -31,6 +31,7 @@ _April 22, 2026_
 - 新特性：
   - [支持开发服务器与客户端通信](#通信-api)
   - [支持自定义 logger](#支持自定义-logger)
+  - [支持扩展内置 Server](#扩展内置-server)
 
 ## Pure ESM 包
 
@@ -190,3 +191,27 @@ export default defineConfig({
 ```
 
 > 查看 [日志指南](/guide/advanced/logging) 了解更多。
+
+## 扩展内置 Server
+
+Rsbuild 2.0 新增了 [server.setup](/config/server/setup) 选项，用于在开发服务器或预览服务器启动时执行初始化逻辑。
+
+该选项相较于原有的 `server.setupMiddlewares` 更为强大，用于对 Rsbuild 内置服务器进行定制，例如注册中间件、执行启动前任务，或根据 dev / preview 模式注入不同逻辑。通过 `server.setup`，这些能力可以直接在 Rsbuild 配置中完成。
+
+例如，为本地开发和预览环境添加一个简单的接口：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    setup: ({ server }) => {
+      server.middlewares.use((req, res, next) => {
+        if (req.url === '/api/health') {
+          res.end('ok');
+          return;
+        }
+        next();
+      });
+    },
+  },
+};
+```
