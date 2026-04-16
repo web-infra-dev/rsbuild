@@ -1,5 +1,5 @@
 {
-  "name": "rsbuild-vue2-js",
+  "name": "rsbuild-vue-js",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -9,10 +9,10 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "vue": "^2.7.16"
+    "vue": "^3.5.32"
   },
   "devDependencies": {
-    "@rsbuild/core": "^2.0.0-beta.7",
-    "@rsbuild/plugin-vue2": "^1.1.1"
+    "@rsbuild/core": "^2.0.0-rc.3",
+    "@rsbuild/plugin-vue": "^1.2.7"
   }
 }

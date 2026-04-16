@@ -1,4 +1,4 @@
-import { expect, test } from '@e2e/helper';
+import { expect, getRandomPort, HMR_CONNECTED_LOG, test } from '@e2e/helper';
 import { createRsbuild } from '@rsbuild/core';
 
 test('should send HMR messages to the matched environment only', async ({
@@ -8,6 +8,9 @@ test('should send HMR messages to the matched environment only', async ({
   const rsbuild = await createRsbuild({
     cwd: import.meta.dirname,
     config: {
+      server: {
+        port: await getRandomPort(),
+      },
       environments: {
         web: {},
         web1: {
@@ -34,9 +37,19 @@ test('should send HMR messages to the matched environment only', async ({
 
   await server.listen();
   const web1Page = await context.newPage();
+  const pageHmrConnected = page.waitForEvent('console', {
+    predicate: (message) => message.text() === HMR_CONNECTED_LOG,
+  });
+  const web1PageHmrConnected = web1Page.waitForEvent('console', {
+    predicate: (message) => message.text() === HMR_CONNECTED_LOG,
+  });
 
-  await page.goto(`http://localhost:${server.port}`);
-  await web1Page.goto(`http://localhost:${server.port}/web1/html1/main`);
+  await Promise.all([
+    page.goto(`http://localhost:${server.port}`),
+    web1Page.goto(`http://localhost:${server.port}/web1/html1/main`),
+    pageHmrConnected,
+    web1PageHmrConnected,
+  ]);
 
   await expect(page.locator('#title')).toHaveText('web');
   await expect(web1Page.locator('#title')).toHaveText('web1');

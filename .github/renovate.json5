@@ -80,8 +80,6 @@
   ignoreDeps: [
     // manually handle updates
     'node',
-    '@rspack/core',
-    '@rsbuild/core',
     // some loaders still depend on loader-utils v2
     'loader-utils',
   ],

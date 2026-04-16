@@ -1,5 +1,5 @@
 ---
-description: 'At build time, prevent some import dependencies from being packed into bundles in your code, and instead fetch them externally at runtime.'
+description: 'Use output.externals to specify which modules should not be bundled by Rsbuild, and instead use implementations provided by the external environment.'
 ---
 
 # output.externals
@@ -17,25 +17,34 @@ type Externals =
 
 - **Default:** `undefined`
 
-At build time, prevent some `import` dependencies from being packed into bundles in your code, and instead fetch them externally at runtime.
+Use this option to specify which modules should not be bundled by Rsbuild, and instead use implementations provided by the external environment.
 
-> For more information, please see: [Rspack Externals](https://rspack.rs/config/externals).
+For example, if your page already loads React from a CDN, or if you're building a library and want consumers to install `react` themselves, you can declare it as an external. This reduces bundle size and avoids including the same dependency twice.
+
+This is commonly used in library development, and is also useful in app scenarios such as loading dependencies from a CDN or relying on dependencies injected by the host environment.
+
+> For more details, see the Rspack [Externals](https://rspack.rs/config/externals) documentation.
 
 ## Examples
 
 ### Basic usage
 
-Exclude the `react-dom` dependency from the output bundle. To get this module at runtime, the value of `react-dom` will globally retrieve the `ReactDOM` variable.
+For example, you can exclude `react-dom` from the output bundle and access the module at runtime through the global `ReactDOM` variable:
 
 ```ts title="rsbuild.config.ts"
 export default {
   output: {
     externals: {
       'react-dom': 'ReactDOM',
+      'react-dom/client': 'ReactDOM',
     },
   },
 };
 ```
+
+Note that string matching for module names is exact. That means you need to explicitly declare subpath imports such as `react-dom/client`.
+
+If you need to match a group of similar import patterns, use [regular expressions](#regular-expressions) or a function for more flexible matching logic.
 
 ### Array format
 
@@ -88,7 +97,7 @@ Then you can use the external libraries in your source code:
 const response = await window.axios.get('/api/users');
 ```
 
-### RegExp patterns
+### Regular expressions
 
 Use regular expressions to match multiple modules with a pattern:
 

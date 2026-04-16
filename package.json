@@ -12,7 +12,7 @@
     "doc": "cd website && node --run dev",
     "e2e": "cd ./e2e && pnpm e2e",
     "format": "prettier --experimental-cli --write . && heading-case --write",
-    "lint": "rslint",
+    "lint": "rslint --type-check",
     "prebundle": "pnpm --parallel --filter \"./packages/*\" run prebundle",
     "prepare": "simple-git-hooks && node --run prebundle && node --run build",
     "sort-package-json": "pnpx sort-package-json \"./package.json\" \"packages/*/package.json\"",
@@ -25,18 +25,18 @@
   "nano-staged": {
     "*.{md,mdx,json,css,less,scss}": "prettier --experimental-cli --write",
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
-      "rslint",
+      "rslint --type-check",
       "prettier --experimental-cli --write"
     ]
   },
   "devDependencies": {
     "@scripts/config": "workspace:*",
-    "@rslint/core": "^0.4.1",
+    "@rslint/core": "^0.4.2",
     "@rstest/adapter-rslib": "^0.2.2",
     "@rstest/core": "^0.9.7",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^24.12.2",
-    "@typescript/native-preview": "7.0.0-dev.20260412.1",
+    "@typescript/native-preview": "7.0.0-dev.20260414.1",
     "cross-env": "^10.1.0",
     "cspell-ban-words": "^0.0.4",
     "heading-case": "^1.1.0",

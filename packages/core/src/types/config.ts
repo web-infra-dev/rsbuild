@@ -1308,8 +1308,8 @@ export interface OutputConfig {
    */
   target?: RsbuildTarget;
   /**
-   * At build time, prevent some `import` dependencies from being packed into bundles in
-   * your code, and instead fetch them externally at runtime.
+   * Use this option to specify which modules should not be bundled by Rsbuild, and instead
+   * use implementations provided by the external environment.
    * For more information, please see: [Rspack Externals](https://rspack.rs/config/externals)
    * @default undefined
    */

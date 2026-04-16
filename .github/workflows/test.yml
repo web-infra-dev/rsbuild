@@ -107,7 +107,3 @@ jobs:
       - name: Run E2E tests
         if: steps.changes.outputs.changed == 'true'
         run: node --run e2e
-
-      - name: Run E2E type checker
-        if: steps.changes.outputs.changed == 'true'
-        run: cd e2e && node --run type-check

@@ -1,5 +1,5 @@
 ---
-description: '在构建时，防止将代码中某些 import 的依赖包打包到 bundle 中，而是在运行时再去从外部获取这些依赖。'
+description: 'output.externals 用于指定哪些模块不需要被 Rsbuild 打包，而是直接使用外部环境中提供的实现。'
 ---
 
 # output.externals
@@ -17,25 +17,34 @@ type Externals =
 
 - **默认值：** `undefined`
 
-在构建时，防止将代码中某些 `import` 的依赖包打包到 bundle 中，而是在运行时再去从外部获取这些依赖。
+用于指定哪些模块不需要被 Rsbuild 打包，而是直接使用外部环境中提供的实现。
 
-> 更多用法供参考：[Rspack Externals](https://rspack.rs/zh/config/externals)。
+例如，当页面已经通过 CDN 引入了 React，或你开发的库希望由使用方自行安装 `react` 时，可以将其声明为 external。这可以减少打包产物的体积，同时避免重复引入相同依赖。
+
+该能力常用于库开发场景，同时在应用侧接入 CDN、使用宿主环境注入依赖等场景中也同样适用。
+
+> 更多用法请参考 Rspack 的 [Externals](https://rspack.rs/zh/config/externals) 文档。
 
 ## 示例
 
 ### 基础用法
 
-将 `react-dom` 依赖从构建产物中剔除。为了在运行时获取这个模块, `react-dom` 的值将全局检索 `ReactDOM` 变量。
+例如，将 `react-dom` 从构建产物中排除，并在运行时通过全局变量 `ReactDOM` 来获取该模块：
 
 ```ts title="rsbuild.config.ts"
 export default {
   output: {
     externals: {
       'react-dom': 'ReactDOM',
+      'react-dom/client': 'ReactDOM',
     },
   },
 };
 ```
+
+值得注意的是，当在 `externals` 中以字符串形式指定模块名时，匹配规则为精确匹配。因此需要显式声明 `react-dom/client` 等子路径导入。
+
+如果你需要匹配一组相似的导入形式，可以改用[正则表达式](#正则表达式)，或者使用函数来实现更灵活的匹配逻辑。
 
 ### 数组格式
 
@@ -88,7 +97,7 @@ export default {
 const response = await window.axios.get('/api/users');
 ```
 
-### 正则表达式模式
+### 正则表达式
 
 使用正则表达式来匹配具有特定模式的多个模块：
 
