@@ -14,16 +14,16 @@ test('should create preact project as expected', async () => {
   expect(pkgJson.devDependencies['@rsbuild/plugin-preact']).toBeTruthy();
 });
 
-test('should create vue3 project as expected', async () => {
-  const { pkgJson } = await createAndValidate(import.meta.dirname, 'vue3');
+test('should create vue project as expected', async () => {
+  const { pkgJson } = await createAndValidate(import.meta.dirname, 'vue');
   expect(pkgJson.dependencies.vue).toBeTruthy();
   expect(pkgJson.devDependencies['@rsbuild/plugin-vue']).toBeTruthy();
 });
 
-test('should create vue2 project as expected', async () => {
-  const { pkgJson } = await createAndValidate(import.meta.dirname, 'vue2');
+test('should create vue3 project alias as expected', async () => {
+  const { pkgJson } = await createAndValidate(import.meta.dirname, 'vue3');
   expect(pkgJson.dependencies.vue).toBeTruthy();
-  expect(pkgJson.devDependencies['@rsbuild/plugin-vue2']).toBeTruthy();
+  expect(pkgJson.devDependencies['@rsbuild/plugin-vue']).toBeTruthy();
 });
 
 test('should create lit project as expected', async () => {

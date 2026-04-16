@@ -1,10 +1,10 @@
 ---
-description: '在这篇文档中，你可以了解到如何基于 Rsbuild 来构建一个 Vue 3 或 Vue 2 应用。'
+description: '在这篇文档中，你可以了解到如何基于 Rsbuild 构建 Vue 应用，以及如何支持 Vue 2。'
 ---
 
 # Vue
 
-在这篇文档中，你可以了解到如何基于 Rsbuild 来构建一个 Vue 3 或 Vue 2 应用。
+在这篇文档中，你可以了解到如何基于 Rsbuild 构建 Vue 应用，以及如何支持 Vue 2。
 
 ## 创建 Vue 应用
 
@@ -21,11 +21,11 @@ import { PackageManagerTabs } from '@theme';
   }}
 />
 
-然后在 `Select framework` 时选择 `Vue 3` 或 `Vue 2` 即可。
+然后在 `Select framework` 时选择 `Vue` 即可。
 
 ## Vue 3
 
-### 在已有项目中使用 Vue 3
+### 在已有项目中使用 Vue
 
 为了能够编译 Vue 的 SFC（单文件组件），你需要注册 Rsbuild 的 [Vue 插件](/plugins/list/plugin-vue)，插件会自动添加 Vue 构建所需的配置。
 
@@ -46,7 +46,7 @@ export default defineConfig({
 
 ### 使用 Vue JSX 语法
 
-如果你需要使用 Vue 的 JSX 语法，还需要注册 Rsbuild 的 [Vue 3 JSX 插件](https://github.com/rstackjs/rsbuild-plugin-vue-jsx)。
+如果你需要使用 Vue 的 JSX 语法，还需要注册 Rsbuild 的 [Vue JSX 插件](https://github.com/rstackjs/rsbuild-plugin-vue-jsx)。
 
 ### TypeScript 支持
 

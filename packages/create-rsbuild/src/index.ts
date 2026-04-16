@@ -10,7 +10,7 @@ import {
 } from 'create-rstack';
 
 const frameworkAlias: Record<string, string> = {
-  vue: 'vue3',
+  vue3: 'vue',
   'solid-js': 'solid',
 };
 
@@ -29,8 +29,7 @@ async function getTemplateName({ template }: Argv) {
       options: [
         { value: 'vanilla', label: 'Vanilla' },
         { value: 'react', label: 'React' },
-        { value: 'vue3', label: 'Vue 3' },
-        { value: 'vue2', label: 'Vue 2' },
+        { value: 'vue', label: 'Vue' },
         { value: 'lit', label: 'Lit' },
         { value: 'preact', label: 'Preact' },
         { value: 'svelte', label: 'Svelte' },
@@ -59,10 +58,10 @@ function mapESLintTemplate(templateName: string): ESLintTemplateName {
     case 'svelte-js':
     case 'svelte-ts':
       return templateName;
-    case 'vue2-js':
+    case 'vue-js':
     case 'vue3-js':
       return 'vue-js';
-    case 'vue2-ts':
+    case 'vue-ts':
     case 'vue3-ts':
       return 'vue-ts';
     default:
@@ -76,8 +75,10 @@ function mapRstestTemplate(templateName: string): string {
       return 'react-js';
     case 'react-ts':
       return 'react-ts';
+    case 'vue-js':
     case 'vue3-js':
       return 'vue-js';
+    case 'vue-ts':
     case 'vue3-ts':
       return 'vue-ts';
     default:
@@ -95,10 +96,8 @@ create({
     'vanilla-ts',
     'react-js',
     'react-ts',
-    'vue3-js',
-    'vue3-ts',
-    'vue2-js',
-    'vue2-ts',
+    'vue-js',
+    'vue-ts',
     'svelte-js',
     'svelte-ts',
     'solid-js',

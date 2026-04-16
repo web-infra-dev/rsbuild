@@ -110,7 +110,7 @@ test('should create React project with ESLint as expected', async () => {
 test('should create Vue project with ESLint as expected', async () => {
   const { dir, pkgJson, clean } = await createAndValidate(
     import.meta.dirname,
-    'vue3-ts',
+    'vue-ts',
     {
       name: 'test-temp-vue-eslint',
       tools: ['eslint'],
