@@ -29,9 +29,10 @@ _April 22, 2026_
 - 更轻量：
   - [依赖数量从 14 个减少到 5 个](#精简依赖)
 - 新特性：
-  - [支持开发服务器与客户端通信](#通信-api)
-  - [支持自定义 logger](#支持自定义-logger)
-  - [支持扩展内置 Server](#扩展内置-server)
+  - [开发服务器与客户端通信](#通信-api)
+  - [扩展内置 Server](#扩展内置-server)
+  - [自定义 logger](#支持自定义-logger)
+  - [脚手架更新](#脚手架更新)
 
 ## Pure ESM 包
 
@@ -171,27 +172,6 @@ if (import.meta.webpackHot) {
 }
 ```
 
-## 支持自定义 logger
-
-Rsbuild 2.0 新增了 [customLogger](/config/custom-logger) 选项，用于为当前实例配置 logger。
-
-这允许你为不同 Rsbuild 实例设置不同的日志级别、输出前缀，或者接入自定义的日志系统，而无需修改 [全局 logger 实例](/api/javascript-api/core#logger)。
-
-```ts title="rsbuild.config.ts"
-import { createLogger, defineConfig } from '@rsbuild/core';
-
-const customLogger = createLogger({
-  level: 'warn',
-  prefix: '[web]',
-});
-
-export default defineConfig({
-  customLogger,
-});
-```
-
-> 查看 [日志指南](/guide/advanced/logging) 了解更多。
-
 ## 扩展内置 Server
 
 Rsbuild 2.0 新增了 [server.setup](/config/server/setup) 选项，用于在开发服务器或预览服务器启动时执行初始化逻辑。
@@ -215,3 +195,33 @@ export default {
   },
 };
 ```
+
+## 支持自定义 logger
+
+Rsbuild 2.0 新增了 [customLogger](/config/custom-logger) 选项，用于为当前实例配置 logger。
+
+这允许你为不同 Rsbuild 实例设置不同的日志级别、输出前缀，或者接入自定义的日志系统，而无需修改 [全局 logger 实例](/api/javascript-api/core#logger)。
+
+```ts title="rsbuild.config.ts"
+import { createLogger, defineConfig } from '@rsbuild/core';
+
+const customLogger = createLogger({
+  level: 'warn',
+  prefix: '[web]',
+});
+
+export default defineConfig({
+  customLogger,
+});
+```
+
+> 查看 [日志指南](/guide/advanced/logging) 了解更多。
+
+## 脚手架更新
+
+在核心能力升级的同时，`create-rsbuild` 也进行了同步更新，使新项目的初始化流程更加贴近当前的开发实践：
+
+- 默认生成 `AGENTS.md` 文件，并支持在初始化时安装 [rsbuild-best-practice](https://github.com/rstackjs/agent-skills?tab=readme-ov-file#rsbuild-skills) 等 Agent Skills。
+- 创建 React 项目时，可以选择 [React Compiler](/guide/framework/react#react-compiler) 作为可选工具。
+- 新增对 [Rslint](https://github.com/web-infra-dev/rslint) 的实验性支持，Rslint 是基于 `typescript-go` 的高性能代码检查工具。
+- 移除过时的 React 18 和 Vue 2 模板。
