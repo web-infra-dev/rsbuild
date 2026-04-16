@@ -1,7 +1,8 @@
 {
   "extends": "@scripts/config/tsconfig-nodenext",
   "compilerOptions": {
-    "outDir": "./dist"
+    "rootDir": "src",
+    "outDir": "dist"
   },
   "include": ["src"]
 }

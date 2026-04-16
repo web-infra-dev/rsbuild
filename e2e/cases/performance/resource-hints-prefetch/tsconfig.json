@@ -2,7 +2,7 @@
   "extends": "@scripts/config/tsconfig",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "outDir": "./dist"
+    "outDir": "dist"
   },
   "include": ["src", "index.test.ts"]
 }
