@@ -181,6 +181,7 @@ create({
       value: 'rstest-best-practices',
       label: 'Rstest - best practices',
       source: 'rstackjs/agent-skills',
+      when: ({ tools }) => tools.includes('rstest'),
     },
   ],
 });
