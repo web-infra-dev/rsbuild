@@ -32,6 +32,7 @@ _April 22, 2026_
   - [开发服务器与客户端通信](#通信-api)
   - [扩展内置 Server](#扩展内置-server)
   - [自定义 logger](#支持自定义-logger)
+  - [改进拆包配置](#改进拆包配置)
   - [脚手架更新](#脚手架更新)
 - [升级指南](#升级至-rsbuild-20)
 
@@ -218,6 +219,25 @@ export default defineConfig({
 
 > 查看 [日志指南](/guide/advanced/logging) 了解更多。
 
+## 改进拆包配置
+
+在 1.x 中，Rsbuild 通过 [performance.chunkSplit](https://v1.rsbuild.rs/config/performance/chunk-split) 封装了常见的拆包策略，但它的设计与 Rspack 的 `splitChunks` 差异较大，开发者需要额外理解 `strategy`、`forceSplitting` 等概念。对于 coding agent，也难以直接生成符合社区习惯的 `splitChunks` 配置，往往还需额外转换。
+
+因此，Rsbuild 2.0 提供了新的 [splitChunks](/config/split-chunks) 选项。它的行为与 Rspack 的 `splitChunks` 完全对齐，并通过额外的 `preset` 选项来提供预设配置。
+
+例如，使用 `per-package` 预设将每个 package 拆分成一个独立的 chunk：
+
+```ts title="rsbuild.config.ts"
+export default {
+  splitChunks: {
+    preset: 'per-package',
+    chunks: 'all',
+  },
+};
+```
+
+> `performance.chunkSplit` 已在 2.0 中废弃，但现有配置仍可继续使用。建议参考 [迁移 performance.chunkSplit](/guide/upgrade/v1-to-v2#迁移-performancechunksplit) 进行迁移。
+
 ## 脚手架更新
 
 在核心能力升级的同时，`create-rsbuild` 也进行了同步更新，使新项目的初始化流程更加贴近当前的开发实践：
@@ -226,6 +246,7 @@ export default defineConfig({
 - 创建 React 项目时，可以选择 [React Compiler](/guide/framework/react#react-compiler) 作为可选工具。
 - 新增对 [Rslint](https://github.com/web-infra-dev/rslint) 的实验性支持，Rslint 是基于 `typescript-go` 的高性能代码检查工具。
 - 移除过时的 React 18 和 Vue 2 模板。
+  可以改成这样：
 
 ## 升级至 Rsbuild 2.0
 
