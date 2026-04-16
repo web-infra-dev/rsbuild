@@ -186,7 +186,7 @@ create({
       value: 'vercel-react-best-practices',
       label: 'React best practices',
       source: 'vercel-labs/agent-skills',
-      when: ({ templateName }) => templateName.includes('react'),
+      when: ({ templateName }) => templateName.startsWith('react-'),
     },
   ],
 });
