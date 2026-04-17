@@ -173,14 +173,20 @@ create({
   extraSkills: [
     {
       value: 'rsbuild-best-practices',
-      label: 'Rsbuild - best practices',
+      label: 'Rsbuild best practices',
       source: 'rstackjs/agent-skills',
     },
     {
       value: 'rstest-best-practices',
-      label: 'Rstest - best practices',
+      label: 'Rstest best practices',
       source: 'rstackjs/agent-skills',
       when: ({ tools }) => tools.includes('rstest'),
+    },
+    {
+      value: 'vercel-react-best-practices',
+      label: 'React best practices',
+      source: 'vercel-labs/agent-skills',
+      when: ({ templateName }) => templateName.startsWith('react-'),
     },
   ],
 });
