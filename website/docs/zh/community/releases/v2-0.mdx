@@ -17,133 +17,26 @@ _April 22, 2026_
 
 2.0 版本的主要改进包括：
 
+- 新特性：
+  - [React Server Components 支持](#react-server-components-支持)
+  - [开发服务器与客户端通信](#开发服务器与客户端通信)
+  - [支持扩展内置 Server](#扩展内置-server)
+  - [支持自定义 logger](#支持自定义-logger)
+  - [更易用的拆包配置](#更易用的拆包配置)
+  - [create-rsbuild 模板更新](#create-rsbuild-模板更新)
+- 更轻量：
+  - [默认依赖从 13 个减少到 4 个](#精简依赖)
+- 更安全：
+  - [默认仅监听 'localhost'](#默认-host-变化)
+  - [Proxy 中间件升级，支持 HTTP/2 代理](#proxy-中间件升级)
 - 更现代：
   - [Pure ESM 包](#pure-esm-包)
   - [不再支持 Node.js 18](#nodejs-支持)
   - [默认目标环境更新](#默认目标环境更新)
   - [默认输出 ESM Node.js 产物](#esm-nodejs-产物)
   - [默认使用 '2023-11' 装饰器版本](#装饰器版本更新)
-- 更安全：
-  - [默认仅监听 'localhost'](#默认-host-变化)
-  - [Proxy 中间件升级，支持 HTTP/2 代理](#proxy-中间件升级)
-- 更轻量：
-  - [依赖数量从 14 个减少到 5 个](#精简依赖)
-- 新特性：
-  - [React Server Components 支持](#rsc-支持)
-  - [支持开发服务器与客户端通信](#通信-api)
-  - [支持扩展内置 Server](#扩展内置-server)
-  - [支持自定义 logger](#支持自定义-logger)
-  - [更易用的拆包配置](#改进拆包配置)
-  - [模板更新](#模板更新)
 
-## Pure ESM 包
-
-[@rsbuild/core](https://www.npmjs.com/package/@rsbuild/core) 现已以 pure ESM 包的形式发布，并移除了自身的 CommonJS 构建产物。这一调整仅影响 Rsbuild 本身的发布形式，使安装体积减少了约 500KB。
-
-在 Node.js 20 及以上版本中，运行时已原生支持通过 [require(esm)](https://nodejs.org/api/modules.html#loading-ecmascript-modules-using-require) 加载 ESM 模块。因此，对大多数仍通过 JavaScript API 使用 Rsbuild 的项目来说，这一变更通常不会带来实际影响，也无需额外修改现有代码。
-
-## Node.js 支持
-
-从 2.0 开始，Rsbuild 最低支持的 Node.js 版本为 `20.19+` 或 `22.12+`。由于 Node.js 18 已于 2025 年 4 月底结束维护，2.0 也不再继续支持该版本。
-
-> 我们通常会在某个 Node.js 版本进入 EOL 约一年后再移除支持，以为社区和用户预留更充足的升级时间。
-
-## 默认目标环境更新
-
-Rsbuild 2.0 调整了默认的目标环境，使产物面向更现代的浏览器和 Node.js 版本。
-
-对于 Web 产物，默认的 browserslist 现在对齐到 [Baseline](https://web-platform-dx.github.io/web-features/) 在 `2025-05-01` 达到广泛可用的浏览器范围，对应的版本变化如下：
-
-- Chrome 87 → 107
-- Edge 88 → 107
-- Firefox 78 → 104
-- Safari 14 → 16
-
-这意味着在未显式配置 browserslist 的情况下，Rsbuild 会默认输出更现代的 JavaScript 和 CSS，同时减少语法降级和 polyfill 的引入。
-
-对于 Node.js 产物，默认目标版本也从 Node 16 提升至 Node 20，与当前的长期支持版本保持一致。
-
-如果你已经通过 `.browserslistrc`、`package.json#browserslist` 或 [output.overrideBrowserslist](/config/output/override-browserslist) 目标环境，则不会受到上述调整的影响。
-
-## ESM Node.js 产物
-
-在构建 Node.js 产物时，Rsbuild 2.0 默认输出未压缩的 ES modules 代码。而在 Rsbuild v1 中，默认产物为压缩后的 CommonJS 代码。
-
-这一调整更符合现代 Node 应用的主流实践。同时，服务端代码默认不压缩，有助于保留清晰的调试堆栈，提升问题排查效率。
-
-需要注意的是，运行时需要具备加载 ESM 的能力。例如在 `package.json` 中设置 `"type": "module"`，或者使用 `.mjs` 作为输出文件扩展名。如果你的项目仍依赖 CommonJS，可以显式切回原有行为：
-
-```ts title="rsbuild.config.ts"
-export default {
-  output: {
-    target: 'node',
-    module: false,
-    minify: true,
-  },
-};
-```
-
-## 装饰器版本更新
-
-随着底层 SWC 支持 `2023-11` 装饰器版本，Rsbuild 将 [decorators.version](/config/source/decorators#decoratorsversion) 默认值从 `2022-03` 调整为 `2023-11`。
-
-`2023-11` 是当前最新的提案版本，对应 2023 年 11 月 TC39 会议后的规范，同时也是 Babel 8 的默认行为。如果你需要保留旧行为，可以显式指定版本：
-
-```ts title="rsbuild.config.ts"
-export default {
-  source: {
-    decorators: {
-      version: '2022-03',
-    },
-  },
-};
-```
-
-## 默认 host 变化
-
-[server.host](/config/server/host) 的默认值从 `'0.0.0.0'` 调整为 `'localhost'`。开发和预览服务器默认仅监听本机，不再对局域网内的其他设备开放。
-
-这一调整遵循「默认安全」的原则。在大多数本地开发场景中，开发服务器无需对外暴露。仅监听本机地址可以减少意外暴露，降低在共享网络环境中被扫描或攻击的风险。
-
-如果你需要在局域网设备上访问页面，可以显式开启网络访问：
-
-```ts title="rsbuild.config.ts"
-export default {
-  server: {
-    host: '0.0.0.0',
-  },
-};
-```
-
-也可以通过 CLI 的 `--host` 参数快速开启：
-
-```bash
-rsbuild --host
-```
-
-## Proxy 中间件升级
-
-开发服务器使用的 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) 已经从 v2 升级至最新的 v4 版本，同时其底层依赖从已经停止维护的 `http-proxy` 切换为由 unjs 社区积极维护的 [httpxy](https://npmx.dev/package/httpxy)。
-
-这主要带来几点改进：
-
-- 支持 HTTP/2 代理
-- 解决已知的安全问题
-- 不再依赖 Node.js 已废弃的 `url.parse()` API
-
-> `server.proxy` 的部分字段已发生变更，升级时请参考 [从 v1 升级到 v2](/guide/upgrade/v1-to-v2#proxy-中间件升级)。
-
-## 精简依赖
-
-Rsbuild 2.0 对默认依赖进行了精简，将仅在特定场景下使用的包移出默认依赖，使依赖数量从 14 个减少到 5 个，安装体积约减少 2 MB。
-
-本次调整主要涉及：
-
-- 不再默认安装 `core-js`，在使用 [output.polyfill](/config/output/polyfill) 时需要手动安装。
-- 不再默认安装 `@module-federation/runtime-tools`，在使用 [moduleFederation.options](/config/module-federation/options) 时需要手动安装，Module Federation 2.0 不受影响。
-- 移除 `webpack-bundle-analyzer` 依赖，推荐使用 [Rsdoctor](/guide/debug/rsdoctor) 进行产物分析，或自行安装和注册 `webpack-bundle-analyzer`。
-
-## RSC 支持
+## React Server Components 支持
 
 [React Server Components](https://react.dev/reference/rsc/server-components) (RSC) 是一种预先渲染的 React 组件类型，它将数据获取与组件逻辑结合起来，并减少发送到客户端的 JavaScript。
 
@@ -174,9 +67,9 @@ export default defineConfig({
 
 目前该插件仍处于实验阶段。它已经能够运行 React Router 的 [RSC 示例](https://github.com/rstackjs/rsbuild-plugin-rsc/tree/main/examples/react-router)，也已经在 [Modern.js 框架](https://modernjs.dev/guides/basic-features/render/rsc) 中落地使用。同时，我们也在与 TanStack 团队合作，计划在后续版本中提供对 [TanStack RSC](https://tanstack.com/blog/react-server-components) 的支持。
 
-## 通信 API
+## 开发服务器与客户端通信
 
-在支持 React Server Components 的过程中，我们发现，一些场景需要在 dev server 与浏览器之间进行通信。例如，服务端完成某些操作后，需要主动通知客户端执行对应逻辑。
+在支持 React Server Components 的过程中，我们发现，一些场景需要在开发服务器与浏览器之间进行通信。例如，服务端完成某些操作后，需要主动通知客户端执行对应逻辑。
 
 为此，Rsbuild 2.0 提供了一组通信 API：
 
@@ -250,7 +143,7 @@ export default defineConfig({
 
 > 查看 [日志指南](/guide/advanced/logging) 了解更多。
 
-## 改进拆包配置
+## 更易用的拆包配置
 
 在 1.x 中，Rsbuild 通过 [performance.chunkSplit](https://v1.rsbuild.rs/config/performance/chunk-split) 封装了常见的拆包策略，但它的设计与 Rspack 的 `splitChunks` 差异较大，开发者需要额外理解 `strategy`、`forceSplitting` 等概念。对于 coding agent，也难以直接生成符合社区习惯的 `splitChunks` 配置，往往还需额外转换。
 
@@ -269,7 +162,7 @@ export default {
 
 > `performance.chunkSplit` 已在 2.0 中废弃，但现有配置仍可继续使用。建议参考 [迁移 performance.chunkSplit](/guide/upgrade/v1-to-v2#迁移-performancechunksplit) 进行迁移。
 
-## 模板更新
+## create-rsbuild 模板更新
 
 在核心能力升级的同时，我们也更新了 `create-rsbuild` 中的模板，使新项目的初始化流程更加贴近当前的开发实践：
 
@@ -277,6 +170,113 @@ export default {
 - 创建 React 项目时，可以选择 [React Compiler](/guide/framework/react#react-compiler) 作为可选工具。
 - 新增对 [Rslint](https://github.com/web-infra-dev/rslint) 的实验性支持，Rslint 是基于 `typescript-go` 的高性能代码检查工具。
 - 移除过时的 React 18 和 Vue 2 模板。
+
+## 精简依赖
+
+Rsbuild 2.0 对默认依赖进行了精简，将仅在特定场景下使用的包移出默认依赖，使默认依赖的数量从 13 个减少到 4 个，安装体积约减少 2 MB。
+
+本次调整主要涉及：
+
+- 不再默认安装 `core-js`，在使用 [output.polyfill](/config/output/polyfill) 时需要手动安装。
+- 不再默认安装 `@module-federation/runtime-tools`，在使用 [moduleFederation.options](/config/module-federation/options) 时需要手动安装，Module Federation 2.0 不受影响。
+- 移除 `webpack-bundle-analyzer` 依赖，推荐使用 [Rsdoctor](/guide/debug/rsdoctor) 进行产物分析，或自行安装和注册 `webpack-bundle-analyzer`。
+
+## 默认 host 变化
+
+[server.host](/config/server/host) 的默认值从 `'0.0.0.0'` 调整为 `'localhost'`。开发和预览服务器默认仅监听本机，不再对局域网内的其他设备开放。
+
+这一调整遵循「默认安全」的原则。在大多数本地开发场景中，开发服务器无需对外暴露。仅监听本机地址可以减少意外暴露，降低在共享网络环境中被扫描或攻击的风险。
+
+如果你需要在局域网设备上访问页面，可以显式开启网络访问：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    host: '0.0.0.0',
+  },
+};
+```
+
+也可以通过 CLI 的 `--host` 参数快速开启：
+
+```bash
+rsbuild --host
+```
+
+## Proxy 中间件升级
+
+开发服务器使用的 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) 已经从 v2 升级至最新的 v4 版本，同时其底层依赖从已经停止维护的 `http-proxy` 切换为由 unjs 社区积极维护的 [httpxy](https://npmx.dev/package/httpxy)。
+
+这主要带来几点改进：
+
+- 支持 HTTP/2 代理
+- 解决已知的安全问题
+- 不再依赖 Node.js 已废弃的 `url.parse()` API
+
+> `server.proxy` 的部分字段已发生变更，升级时请参考 [从 v1 升级到 v2](/guide/upgrade/v1-to-v2#proxy-中间件升级)。
+
+## Pure ESM 包
+
+[@rsbuild/core](https://www.npmjs.com/package/@rsbuild/core) 现已以 pure ESM 包的形式发布，并移除了自身的 CommonJS 构建产物。这一调整仅影响 Rsbuild 本身的发布形式，使安装体积减少了约 500KB。
+
+在 Node.js 20 及以上版本中，运行时已原生支持通过 [require(esm)](https://nodejs.org/api/modules.html#loading-ecmascript-modules-using-require) 加载 ESM 模块。因此，对大多数仍通过 JavaScript API 使用 Rsbuild 的项目来说，这一变更通常不会带来实际影响，也无需额外修改现有代码。
+
+## Node.js 支持
+
+从 2.0 开始，Rsbuild 最低支持的 Node.js 版本为 `20.19+` 或 `22.12+`。由于 Node.js 18 已于 2025 年 4 月底结束维护，2.0 也不再继续支持该版本。
+
+> 我们通常会在某个 Node.js 版本进入 EOL 约一年后再移除支持，以为社区和用户预留更充足的升级时间。
+
+## 默认目标环境更新
+
+Rsbuild 2.0 调整了默认的目标环境，使产物面向更现代的浏览器和 Node.js 版本。
+
+对于 Web 产物，默认的 browserslist 现在对齐到 [Baseline](https://web-platform-dx.github.io/web-features/) 在 `2025-05-01` 达到广泛可用的浏览器范围，对应的版本变化如下：
+
+- Chrome 87 → 107
+- Edge 88 → 107
+- Firefox 78 → 104
+- Safari 14 → 16
+
+这意味着在未显式配置 browserslist 的情况下，Rsbuild 会默认输出更现代的 JavaScript 和 CSS，同时减少语法降级和 polyfill 的引入。
+
+对于 Node.js 产物，默认目标版本也从 Node 16 提升至 Node 20，与当前的长期支持版本保持一致。
+
+如果你已经通过 `.browserslistrc`、`package.json#browserslist` 或 [output.overrideBrowserslist](/config/output/override-browserslist) 目标环境，则不会受到上述调整的影响。
+
+## ESM Node.js 产物
+
+在构建 Node.js 产物时，Rsbuild 2.0 默认输出未压缩的 ES modules 代码。而在 Rsbuild v1 中，默认产物为压缩后的 CommonJS 代码。
+
+这一调整更符合现代 Node 应用的主流实践。同时，服务端代码默认不压缩，有助于保留清晰的调试堆栈，提升问题排查效率。
+
+需要注意的是，运行时需要具备加载 ESM 的能力。例如在 `package.json` 中设置 `"type": "module"`，或者使用 `.mjs` 作为输出文件扩展名。如果你的项目仍依赖 CommonJS，可以显式切回原有行为：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'node',
+    module: false,
+    minify: true,
+  },
+};
+```
+
+## 装饰器版本更新
+
+随着底层 SWC 支持 `2023-11` 装饰器版本，Rsbuild 将 [decorators.version](/config/source/decorators#decoratorsversion) 默认值从 `2022-03` 调整为 `2023-11`。
+
+`2023-11` 是当前最新的提案版本，对应 2023 年 11 月 TC39 会议后的规范，同时也是 Babel 8 的默认行为。如果你需要保留旧行为，可以显式指定版本：
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    decorators: {
+      version: '2022-03',
+    },
+  },
+};
+```
 
 ## 升级至 Rsbuild 2.0
 
