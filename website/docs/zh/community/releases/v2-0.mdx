@@ -30,12 +30,11 @@ _April 22, 2026_
   - [依赖数量从 14 个减少到 5 个](#精简依赖)
 - 新特性：
   - [React Server Components 支持](#rsc-支持)
-  - [开发服务器与客户端通信](#通信-api)
-  - [扩展内置 Server](#扩展内置-server)
-  - [自定义 logger](#支持自定义-logger)
-  - [改进拆包配置](#改进拆包配置)
-  - [脚手架更新](#脚手架更新)
-- [升级指南](#升级至-rsbuild-20)
+  - [支持开发服务器与客户端通信](#通信-api)
+  - [支持扩展内置 Server](#扩展内置-server)
+  - [支持自定义 logger](#支持自定义-logger)
+  - [更易用的拆包配置](#改进拆包配置)
+  - [更现代的模板](#模板更新)
 
 ## Pure ESM 包
 
@@ -270,9 +269,9 @@ export default {
 
 > `performance.chunkSplit` 已在 2.0 中废弃，但现有配置仍可继续使用。建议参考 [迁移 performance.chunkSplit](/guide/upgrade/v1-to-v2#迁移-performancechunksplit) 进行迁移。
 
-## 脚手架更新
+## 模板更新
 
-在核心能力升级的同时，`create-rsbuild` 也进行了同步更新，使新项目的初始化流程更加贴近当前的开发实践：
+在核心能力升级的同时，我们也更新了 `create-rsbuild` 中的模板，使新项目的初始化流程更加贴近当前的开发实践：
 
 - 默认生成 `AGENTS.md` 文件，并支持在初始化时安装 [rsbuild-best-practice](https://github.com/rstackjs/agent-skills?tab=readme-ov-file#rsbuild-skills) 等 Agent Skills。
 - 创建 React 项目时，可以选择 [React Compiler](/guide/framework/react#react-compiler) 作为可选工具。
@@ -290,3 +289,15 @@ npx skills add rstackjs/agent-skills --skill rsbuild-v2-upgrade
 ```
 
 完整的升级指南及所有不兼容变更，请参考 [从 v1 升级到 v2](/guide/upgrade/v1-to-v2)。
+
+## 致谢
+
+Rsbuild 由 Rstack 团队主导开发，同时也离不开社区贡献者与所有用户的共同参与。自 1.0 发布以来，许多开发者通过贡献推动了 Rsbuild 的演进，在此感谢所有参与其中的朋友：
+
+[@9aoy](https://github.com/9aoy)、[@adammark](https://github.com/adammark)、[@alexUXUI](https://github.com/alexUXUI)、[@bodia-uz](https://github.com/bodia-uz)、[@Brennvo](https://github.com/Brennvo)、[@caohuilin](https://github.com/caohuilin)、[@Cheese-Yu](https://github.com/Cheese-Yu)、[@chenjiahan](https://github.com/chenjiahan)、[@Chevindu](https://github.com/Chevindu)、[@Colin3191](https://github.com/Colin3191)、[@colinaaa](https://github.com/colinaaa)、[@CPunisher](https://github.com/CPunisher)、
+[@davide97g](https://github.com/davide97g)、[@Deku-nattsu](https://github.com/Deku-nattsu)、[@DeveshSapkale](https://github.com/DeveshSapkale)、[@dovigod](https://github.com/dovigod)、[@Draculabo](https://github.com/Draculabo)、[@escaton](https://github.com/escaton)、[@fansenze](https://github.com/fansenze)、[@fi3ework](https://github.com/fi3ework)、[@gaoachao](https://github.com/gaoachao)、[@GiveMe-A-Name](https://github.com/GiveMe-A-Name)、[@GRAMMAC1](https://github.com/GRAMMAC1)、[@hai-x](https://github.com/hai-x)、
+[@hangCode2001](https://github.com/hangCode2001)、[@hardfist](https://github.com/hardfist)、[@hasnum-stack](https://github.com/hasnum-stack)、[@htoooth](https://github.com/htoooth)、[@Huxpro](https://github.com/Huxpro)、[@ianzone](https://github.com/ianzone)、[@iceprosurface](https://github.com/iceprosurface)、[@JounQin](https://github.com/JounQin)、[@JSerFeng](https://github.com/JSerFeng)、[@JSH-data](https://github.com/JSH-data)、[@junhea](https://github.com/junhea)、[@junxiongchu](https://github.com/junxiongchu)、
+[@lguzzon](https://github.com/lguzzon)、[@LingyuCoder](https://github.com/LingyuCoder)、[@lluisemper](https://github.com/lluisemper)、[@lxKylin](https://github.com/lxKylin)、[@mhutter](https://github.com/mhutter)、[@miownag](https://github.com/miownag)、[@mycoin](https://github.com/mycoin)、[@nikhilsnayak](https://github.com/nikhilsnayak)、[@notzheng](https://github.com/notzheng)、[@Nsttt](https://github.com/Nsttt)、[@puxiao](https://github.com/puxiao)、[@qmakani](https://github.com/qmakani)、
+[@RobHannay](https://github.com/RobHannay)、[@roli-lpci](https://github.com/roli-lpci)、[@s-chance](https://github.com/s-chance)、[@s-r-x](https://github.com/s-r-x)、[@sagar-dwivedi](https://github.com/sagar-dwivedi)、[@Sang-Sang33](https://github.com/Sang-Sang33)、[@schu34](https://github.com/schu34)、[@ScriptedAlchemy](https://github.com/ScriptedAlchemy)、[@Shucei](https://github.com/Shucei)、[@shulaoda](https://github.com/shulaoda)、[@Simon-He95](https://github.com/Simon-He95)、[@slobo](https://github.com/slobo)、
+[@snatvb](https://github.com/snatvb)、[@SoonIter](https://github.com/SoonIter)、[@stormslowly](https://github.com/stormslowly)、[@SyMind](https://github.com/SyMind)、[@T9-Forever](https://github.com/T9-Forever)、[@thinkasany](https://github.com/thinkasany)、[@Timeless0911](https://github.com/Timeless0911)、[@TinsFox](https://github.com/TinsFox)、[@vegerot](https://github.com/vegerot)、[@VenDream](https://github.com/VenDream)、[@wangi4myself](https://github.com/wangi4myself)、[@wChenonly](https://github.com/wChenonly)、
+[@wjw99830](https://github.com/wjw99830)、[@wralith](https://github.com/wralith)、[@wxiaoyun](https://github.com/wxiaoyun)、[@xbzhang2020](https://github.com/xbzhang2020)、[@xettri](https://github.com/xettri)、[@xiaohp](https://github.com/xiaohp)、[@xuexb](https://github.com/xuexb)、[@xun082](https://github.com/xun082)、[@yifancong](https://github.com/yifancong)、[@ymq001](https://github.com/ymq001)、[@zalishchuk](https://github.com/zalishchuk)
