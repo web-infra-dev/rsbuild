@@ -198,8 +198,12 @@ export default defineConfig({
   head: [
     ({ routePath }) => {
       const getOgImage = () => {
-        if (routePath.endsWith('releases/v1-0')) {
-          return 'assets/rsbuild-og-image-v1-0.png';
+        if (
+          routePath.includes('releases/v1-') ||
+          routePath.includes('releases/v2-')
+        ) {
+          const version = routePath.split('releases/v')[1];
+          return `assets/rsbuild-og-image-v${version}.png`;
         }
         return 'rsbuild-og-image.png';
       };
