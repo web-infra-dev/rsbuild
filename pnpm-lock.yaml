@@ -258,6 +258,8 @@ importers:
 
   e2e/cases/resolve/pkg-imports: {}
 
+  e2e/cases/resolve/pkg-imports-hash-slash: {}
+
   e2e/cases/server/custom-server: {}
 
   e2e/cases/server/ssr:
