@@ -18,7 +18,7 @@
     "@rsbuild/core": "workspace:*",
     "@types/node": "^24.12.2",
     "path-serializer": "0.6.0",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.3"
   },
   "publishConfig": {
     "access": "public",
