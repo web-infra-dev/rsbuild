@@ -31,6 +31,7 @@ datauri
 deepmerge
 docgen
 dotenvx
+downleveling
 dppx
 envinfo
 estree
@@ -149,6 +150,7 @@ tsgo
 twoslash
 TYPELESS
 uncompiled
+unminified
 unjs
 unocss
 unpatch
