@@ -14,6 +14,6 @@
   "devDependencies": {
     "@rsbuild/core": "^2.0.0-rc.4",
     "@rsbuild/plugin-preact": "^1.7.2",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.3"
   }
 }
