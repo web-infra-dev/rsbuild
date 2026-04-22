@@ -948,7 +948,7 @@ importers:
   packages/plugin-svgr:
     dependencies:
       '@rsbuild/plugin-react':
-        specifier: workspace:^2.0.0-rc.4
+        specifier: workspace:^2.0.0
         version: link:../plugin-react
       '@svgr/core':
         specifier: 8.1.0
