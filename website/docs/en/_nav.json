@@ -20,9 +20,9 @@
     "activeMatch": "/api/"
   },
   {
-    "text": "Community",
-    "link": "/community/",
-    "activeMatch": "/community/"
+    "text": "Blog",
+    "link": "/blog/",
+    "activeMatch": "/blog/"
   },
   {
     "text": "Version",

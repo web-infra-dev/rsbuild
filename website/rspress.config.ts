@@ -29,8 +29,8 @@ export default defineConfig({
       feed: [
         {
           id: 'releases-rss',
-          test: '/community/releases/v',
-          title: 'Rsbuild Releases',
+          test: '/blog/v',
+          title: 'Rsbuild Blogs',
           language: 'en',
           output: {
             type: 'rss',
@@ -39,8 +39,8 @@ export default defineConfig({
         },
         {
           id: 'releases-atom',
-          test: '/community/releases/v',
-          title: 'Rsbuild Releases',
+          test: '/blog/v',
+          title: 'Rsbuild Blogs',
           language: 'en',
           output: {
             type: 'atom',
@@ -48,8 +48,8 @@ export default defineConfig({
         },
         {
           id: 'releases-rss-zh',
-          test: '/zh/community/releases/v',
-          title: 'Rsbuild Releases',
+          test: '/zh/blog/v',
+          title: 'Rsbuild Blogs',
           language: 'zh-CN',
           output: {
             type: 'rss',
@@ -58,8 +58,8 @@ export default defineConfig({
         },
         {
           id: 'releases-atom-zh',
-          test: '/zh/community/releases/v',
-          title: 'Rsbuild Releases',
+          test: '/zh/blog/v',
+          title: 'Rsbuild Blogs',
           language: 'zh-CN',
           output: {
             type: 'atom',
@@ -125,6 +125,20 @@ export default defineConfig({
           from: '/guide/basic/configure-swc',
           to: '/guide/configuration/swc',
         },
+        ...[
+          'v0-1',
+          'v0-2',
+          'v0-3',
+          'v0-4',
+          'v0-5',
+          'v0-6',
+          'v0-7',
+          'v1-0',
+          'v2-0',
+        ].map((version) => ({
+          from: `/community/releases/${version}`,
+          to: `/blog/${version}`,
+        })),
       ],
     }),
   ],
