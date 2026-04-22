@@ -9,7 +9,9 @@ type FilenameTemplate =
 export type SvgAssetLoaderOptions = {
   limit: number;
   name: FilenameTemplate;
-  publicPath?: string | ((filename: string) => string);
+  publicPath?:
+    | string
+    | ((url: string, resourcePath: string, context: string) => string);
 };
 
 type RawLoaderDefinition<OptionsType = {}> = ((
@@ -60,9 +62,13 @@ const assetLoader: RawLoaderDefinition<SvgAssetLoaderOptions> = function (
    */
   const publicPathCode =
     typeof publicPath === 'function'
-      ? JSON.stringify(publicPath(filename))
+      ? JSON.stringify(
+          publicPath(filename, this.resourcePath, this.rootContext),
+        )
       : typeof publicPath === 'string'
-        ? JSON.stringify(`${publicPath}${filename}`)
+        ? JSON.stringify(
+            `${publicPath.endsWith('/') ? publicPath : `${publicPath}/`}${filename}`,
+          )
         : `__webpack_public_path__ + ${JSON.stringify(filename)}`;
 
   return `export default ${publicPathCode};`;
