@@ -73,9 +73,13 @@ export function getInlineTests(config: NormalizedEnvironmentConfig): {
 
   if (inlineScripts) {
     if (inlineScripts === true) {
-      isProd && scriptTests.push(JS_REGEX);
+      if (isProd) {
+        scriptTests.push(JS_REGEX);
+      }
     } else if (isRegExp(inlineScripts) || isFunction(inlineScripts)) {
-      isProd && scriptTests.push(inlineScripts);
+      if (isProd) {
+        scriptTests.push(inlineScripts);
+      }
     } else {
       const enabled =
         inlineScripts.enable === 'auto' ? isProd : inlineScripts.enable;
@@ -87,9 +91,13 @@ export function getInlineTests(config: NormalizedEnvironmentConfig): {
 
   if (inlineStyles) {
     if (inlineStyles === true) {
-      isProd && styleTests.push(CSS_REGEX);
+      if (isProd) {
+        styleTests.push(CSS_REGEX);
+      }
     } else if (isRegExp(inlineStyles) || isFunction(inlineStyles)) {
-      isProd && styleTests.push(inlineStyles);
+      if (isProd) {
+        styleTests.push(inlineStyles);
+      }
     } else {
       const enable =
         inlineStyles.enable === 'auto' ? isProd : inlineStyles.enable;

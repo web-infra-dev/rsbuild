@@ -509,7 +509,11 @@ export function getServerTerminator(
       }
       if (listened) {
         server.close((err) => {
-          err ? reject(err) : resolve();
+          if (err) {
+            reject(err);
+          } else {
+            resolve();
+          }
         });
       } else {
         resolve();

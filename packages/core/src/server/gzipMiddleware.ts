@@ -74,7 +74,7 @@ export function gzipMiddleware({
         });
 
         for (const listener of listeners) {
-          gzip.on.apply(gzip, listener);
+          gzip.on(...listener);
         }
       } else {
         for (const listener of listeners) {
