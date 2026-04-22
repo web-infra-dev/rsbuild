@@ -640,7 +640,7 @@ importers:
         specifier: workspace:*
         version: link:../plugin-preact
       '@rsbuild/plugin-react':
-        specifier: workspace:^2.0.0
+        specifier: workspace:*
         version: link:../plugin-react
       '@rsbuild/plugin-solid':
         specifier: workspace:*
