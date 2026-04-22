@@ -1,5 +1,4 @@
-// Lazy compilation was stabilized in Rspack v1.5.0
-export const rspackMinVersion = '1.5.0';
+export const rspackMinVersion = '2.0.0';
 
 const compareSemver = (version1: string, version2: string) => {
   const parts1 = version1.split('.').map(Number);
