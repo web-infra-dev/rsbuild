@@ -1,0 +1,41 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "schedule:weekly",
+    "helpers:pinGitHubActionDigests"
+  ],
+  "packageRules": [
+    {
+      "groupName": "Babel",
+      "groupSlug": "babel",
+      "matchPackageNames": ["/babel/"]
+    },
+    {
+      "groupName": "Rspress",
+      "groupSlug": "rspress",
+      "matchPackageNames": ["/rspress/"]
+    },
+    {
+      "groupName": "Sass",
+      "groupSlug": "sass",
+      "matchPackageNames": ["/sass/"]
+    },
+    {
+      "groupName": "Module Federation",
+      "groupSlug": "module-federation",
+      "matchPackageNames": ["/module-federation/"]
+    },
+    {
+      "groupName": "all patch dependencies",
+      "groupSlug": "all-patch",
+      "matchUpdateTypes": ["patch"],
+      "matchPackageNames": ["*"]
+    },
+    {
+      "matchDepTypes": ["peerDependencies"],
+      "enabled": false
+    }
+  ],
+  "ignoreDeps": ["loader-utils"]
+}
