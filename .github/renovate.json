@@ -37,5 +37,5 @@
       "enabled": false
     }
   ],
-  "ignoreDeps": ["loader-utils"]
+  "ignoreDeps": ["loader-utils", "@rsbuild/core-v1"]
 }
