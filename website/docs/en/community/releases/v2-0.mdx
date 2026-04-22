@@ -11,13 +11,13 @@ _April 22, 2026_
 
 We are pleased to announce the official release of Rsbuild 2.0.
 
-Rsbuild is a modern build tool powered by Rspack, and an important part of the Rstack ecosystem. Around Rsbuild, we have built a set of higher-level tools, including [Rspress](https://github.com/web-infra-dev/rspress), [Rslib](https://github.com/web-infra-dev/rslib), [Rstest](https://github.com/rstackjs/rstest), [Storybook Rsbuild](https://github.com/rstackjs/storybook-rsbuild), and more. These tools share a unified build foundation and plugin system through Rsbuild, providing a consistent development experience across application development, library builds, documentation sites, and testing.
+Rsbuild is a modern build tool powered by Rspack and a key part of the Rstack ecosystem. Around it, we've built a set of higher-level tools, including [Rspress](https://github.com/web-infra-dev/rspress), [Rslib](https://github.com/web-infra-dev/rslib), [Rstest](https://github.com/rstackjs/rstest), [Storybook Rsbuild](https://github.com/rstackjs/storybook-rsbuild), and more. These tools share a unified build foundation and plugin system through Rsbuild, delivering a consistent development experience across application development, library builds, documentation sites, and testing.
 
-Since the 1.0 release, Rsbuild's weekly npm downloads have grown by more than **15x**, and it has become the preferred build tool for new Rspack projects. At the same time, more teams have been migrating from tools such as webpack and Create React App to Rsbuild, improving both build performance and developer experience.
+Since the 1.0 release, Rsbuild's weekly npm downloads have grown by more than **15x**, and it has become the preferred build tool for new Rspack projects. More teams are also migrating from tools such as webpack and Create React App to Rsbuild to improve both build performance and developer experience.
 
 ![](https://assets.rspack.rs/rsbuild/assets/rsbuild-2-0-downloads.png)
 
-To help the ecosystem upgrade smoothly to 2.0, we spent three months validating and refining the release, publishing more than 20 preview versions along the way. Rslib, Rstest, Rspress, Storybook Rsbuild, and Modern.js have all completed the upgrade and are now running reliably in production.
+To help the ecosystem upgrade smoothly to 2.0, we spent three months validating and refining this release, publishing more than 20 preview versions along the way. Rslib, Rstest, Rspress, Storybook Rsbuild, and Modern.js have all completed the upgrade and are now running stably in production.
 
 The main improvements in 2.0 include:
 
@@ -43,15 +43,15 @@ The main improvements in 2.0 include:
 
 ## Upgrade to Rspack 2.0
 
-Rsbuild 2.0 is powered by Rspack 2.0. This brings faster build performance, new output optimization capabilities, and many underlying improvements.
+Rsbuild 2.0 is powered by Rspack 2.0. This brings faster builds, new output optimization capabilities, and many improvements under the hood.
 
 For more details, see the [Rspack 2.0 announcement post](https://rspack.rs/zh/blog/announcing-2-0).
 
 ## React Server Components support
 
-[React Server Components](https://react.dev/reference/rsc/server-components) (RSC) are a type of pre-rendered React component that combine data fetching with component logic while reducing the amount of JavaScript sent to the client.
+[React Server Components](https://react.dev/reference/rsc/server-components) (RSC) are a type of pre-rendered React component that combines data fetching and component logic while reducing the amount of JavaScript sent to the client.
 
-To make it easier for Rsbuild-based web apps and frameworks to use RSC, we introduced the [rsbuild-plugin-rsc](https://github.com/rstackjs/rsbuild-plugin-rsc) plugin. The plugin is built on top of Rspack's built-in RSC support, and uses Rsbuild's [Environments API](/guide/advanced/environments) to organize multiple environments such as client and server in a unified way. This reduces both integration and configuration costs.
+To make RSC easier to use in Rsbuild-based web apps and frameworks, we introduced the [rsbuild-plugin-rsc](https://github.com/rstackjs/rsbuild-plugin-rsc) plugin. It is built on top of Rspack's built-in RSC support and uses Rsbuild's [Environments API](/guide/advanced/environments) to organize multiple environments, such as client and server, in a unified way. This reduces both integration and configuration costs.
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -76,9 +76,9 @@ export default defineConfig({
 });
 ```
 
-The plugin is still experimental. It can already run the [RSC example](https://github.com/rstackjs/rsbuild-plugin-rsc/tree/main/examples/react-router) for React Router, and it has also been adopted in the [Modern.js framework](https://modernjs.dev/guides/basic-features/render/rsc).
+The plugin is still experimental. It can already run the [React Router RSC example](https://github.com/rstackjs/rsbuild-plugin-rsc/tree/main/examples/react-router), and it has also been adopted by the [Modern.js framework](https://modernjs.dev/guides/basic-features/render/rsc).
 
-We're also working with the [TanStack](https://tanstack.com/) team and plan to support [TanStack Start](https://tanstack.com/start) and [TanStack's RSC](https://tanstack.com/blog/react-server-components) in future releases. TanStack Start is a full-stack framework built on TanStack Router, and we're excited to explore more possibilities for RSC together.
+We're also working with the [TanStack](https://tanstack.com/) team and plan to add support for [TanStack Start](https://tanstack.com/start) and [TanStack's RSC](https://tanstack.com/blog/react-server-components) in future releases. TanStack Start is a full-stack framework built on TanStack Router, and we're excited to explore more possibilities for RSC together.
 
 ## Dev server and client communication
 
@@ -89,7 +89,7 @@ To support this, Rsbuild 2.0 provides a set of communication APIs:
 - The server can send messages to the client for the current environment through [hot.send](/api/javascript-api/environment-api#hotsend)
 - The client can listen to these custom events through `import.meta.webpackHot.on`
 
-These APIs reuse the existing HMR channel, so no additional WebSocket connection is needed. Messages are also sent only to the matching environment, which avoids unnecessary broadcasting.
+These APIs reuse the existing HMR channel, so no additional WebSocket connection is required. Messages are sent only to the matching environment, avoiding unnecessary broadcasts.
 
 For example, when server-side state changes, you can notify the client to update instead of triggering a full page refresh:
 
@@ -115,7 +115,7 @@ if (import.meta.webpackHot) {
 
 Rsbuild 2.0 adds the [server.setup](/config/server/setup) option, which allows you to run initialization logic when the dev server or preview server starts.
 
-Compared with the existing `server.setupMiddlewares`, this option is more capable. It can be used to customize the built-in Rsbuild server by registering middleware, running tasks before startup, or injecting different logic for dev and preview mode. With `server.setup`, these tasks can be handled directly in the Rsbuild config.
+Compared with the existing `server.setupMiddlewares`, this option is more powerful. You can use it to customize the built-in Rsbuild server by registering middleware, running tasks before startup, or injecting different logic for dev and preview modes. With `server.setup`, these tasks can be handled directly in the Rsbuild config.
 
 For example, you can add a simple endpoint for local development and preview:
 
@@ -137,9 +137,9 @@ export default {
 
 ## Custom logger support
 
-With the new [customLogger](/config/custom-logger) option, you can define different loggers for different Rsbuild instances.
+With the new [customLogger](/config/custom-logger) option, you can define a different logger for each Rsbuild instance.
 
-This makes it possible to use different log levels, output prefixes, or custom logging systems for different Rsbuild instances, without modifying the [global logger instance](/api/javascript-api/core#logger).
+This makes it possible to use different log levels, output prefixes, or custom logging systems without modifying the [global logger instance](/api/javascript-api/core#logger).
 
 ```ts title="rsbuild.config.ts"
 import { createLogger, defineConfig } from '@rsbuild/core';
@@ -158,9 +158,9 @@ export default defineConfig({
 
 ## Easier chunk splitting configuration
 
-In 1.x, Rsbuild provided common chunk splitting strategies through [performance.chunkSplit](https://v1.rsbuild.rs/config/performance/chunk-split). However, its design was quite different from Rspack's `splitChunks`, so developers had to learn additional concepts such as `strategy` and `forceSplitting`. It was also harder for coding agents to generate `splitChunks` configurations that match community conventions directly, and extra conversion was often needed.
+In 1.x, Rsbuild provided common chunk splitting strategies through [performance.chunkSplit](https://v1.rsbuild.rs/config/performance/chunk-split). However, its design differed significantly from Rspack's `splitChunks`, so developers had to learn additional concepts such as `strategy` and `forceSplitting`. It also made it harder for coding agents to generate `splitChunks` configurations that matched community conventions directly, often requiring extra conversion.
 
-For this reason, Rsbuild 2.0 introduces the new [splitChunks](/config/split-chunks) option. Its behavior is fully aligned with Rspack's `splitChunks`, while an additional `preset` option provides built-in presets.
+For this reason, Rsbuild 2.0 introduces the new [splitChunks](/config/split-chunks) option. Its behavior is fully aligned with Rspack's `splitChunks`, and an additional `preset` option provides built-in presets.
 
 For example, you can use the `per-package` preset to split each package into a separate chunk:
 
@@ -177,28 +177,28 @@ export default {
 
 ## create-rsbuild template updates
 
-Along with the core improvements, we also updated the templates in `create-rsbuild` to make project scaffolding better aligned with current development practices:
+Alongside the core improvements, we also updated the templates in `create-rsbuild` to make project scaffolding better aligned with current development practices:
 
 - `AGENTS.md` is now generated by default, and you can install Agent Skills such as [rsbuild-best-practice](https://github.com/rstackjs/agent-skills?tab=readme-ov-file#rsbuild-skills) during initialization.
 - When creating a React project, you can choose [React Compiler](/guide/framework/react#react-compiler) as an optional tool.
-- Experimental support for [Rslint](https://github.com/web-infra-dev/rslint) has been added. Rslint is a high-performance linter based on `typescript-go`.
+- Experimental support for [Rslint](https://github.com/web-infra-dev/rslint) has been added. Rslint is a high-performance linter built on `typescript-go`.
 - Outdated React 18 and Vue 2 templates have been removed.
 
 ## Reduced dependencies
 
-Rsbuild 2.0 trims its default dependencies by moving packages that are only needed in specific scenarios out of the default install set. This reduces the number of default dependencies from 13 to 4, and cuts installation size by about 2 MB.
+Rsbuild 2.0 reduces its default dependencies by moving packages that are only needed in specific scenarios out of the default install set. This reduces the number of default dependencies from 13 to 4 and cuts installation size by about 2 MB.
 
 The main changes are:
 
-- [core-js](https://www.npmjs.com/package/core-js) is no longer installed by default. You need to install it manually when using [output.polyfill](/config/output/polyfill).
-- [@module-federation/runtime-tools](https://www.npmjs.com/package/@module-federation/runtime-tools) is no longer installed by default. You need to install it manually when using [moduleFederation.options](/config/module-federation/options). Module Federation 2.0 is not affected.
+- [core-js](https://www.npmjs.com/package/core-js) is no longer installed by default. Install it manually when using [output.polyfill](/config/output/polyfill).
+- [@module-federation/runtime-tools](https://www.npmjs.com/package/@module-federation/runtime-tools) is no longer installed by default. Install it manually when using [moduleFederation.options](/config/module-federation/options). Module Federation 2.0 is not affected.
 - The [webpack-bundle-analyzer](https://www.npmjs.com/package/webpack-bundle-analyzer) dependency has been removed. We recommend using [Rsdoctor](/guide/debug/rsdoctor) for bundle analysis, or installing and registering `webpack-bundle-analyzer` yourself.
 
 ## Default host change
 
 The default value of [server.host](/config/server/host) has changed from `'0.0.0.0'` to `'localhost'`. By default, the dev server and preview server now listen only on the local machine and are no longer exposed to other devices on the local network.
 
-This change follows a secure-by-default principle. In most local development scenarios, the dev server does not need to be exposed externally. Listening only on the local address reduces accidental exposure and lowers the risk of scanning or attacks on shared networks.
+This change follows a secure-by-default principle. In most local development scenarios, the dev server does not need to be exposed externally. Listening only on the local address reduces accidental exposure and lowers the risk of scans or attacks on shared networks.
 
 If you need to access the page from devices on the local network, you can enable network access explicitly:
 
@@ -220,7 +220,7 @@ rsbuild --host
 
 The [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) used by the dev server has been upgraded from v2 to the latest v4 release. At the same time, its underlying dependency has been switched from the unmaintained [http-proxy](https://www.npmjs.com/package/http-proxy) to [httpxy](https://npmx.dev/package/httpxy), which is actively maintained by the [unjs community](https://github.com/unjs).
 
-This mainly brings a few improvements:
+This brings several improvements:
 
 - HTTP/2 proxy support
 - Fixes for known security issues
@@ -230,21 +230,21 @@ This mainly brings a few improvements:
 
 ## Pure ESM package
 
-[@rsbuild/core](https://www.npmjs.com/package/@rsbuild/core) is now published as a pure ESM package, and its CommonJS build output has been removed. This change only affects how Rsbuild itself is published, reducing the installation size by about 500 KB.
+[@rsbuild/core](https://www.npmjs.com/package/@rsbuild/core) is now published as a pure ESM package, and its CommonJS build output has been removed. This change only affects how Rsbuild itself is distributed, reducing installation size by about 500 KB.
 
 In Node.js 20 and later, the runtime natively supports loading ESM modules through [require(esm)](https://nodejs.org/api/modules.html#loading-ecmascript-modules-using-require). For most projects that still use Rsbuild through its JavaScript API, this change should have no practical impact and does not require any code changes.
 
 ## Node.js support
 
-Starting from 2.0, the minimum supported Node.js versions for Rsbuild are `20.19+` or `22.12+`. Since Node.js 18 reached end-of-life in late April 2025, 2.0 no longer supports it.
+Starting from 2.0, the minimum supported Node.js versions for Rsbuild are `20.19+` or `22.12+`. Since Node.js 18 reached end of life in late April 2025, 2.0 no longer supports it.
 
 > We usually remove support for a Node.js version about one year after it enters EOL, to give the community and users more time to upgrade.
 
 ## Updated default targets
 
-Rsbuild 2.0 updates its default targets so the output is aimed at more modern browsers and Node.js versions.
+Rsbuild 2.0 updates its default targets so build output targets more modern browsers and Node.js versions.
 
-For web output, the default browserslist now aligns with the widely available range defined by [Baseline](https://web-platform-dx.github.io/web-features/). Specifically, it uses the target set for [2025-05-01](https://browsersl.ist/#q=baseline+widely+available+on+2025-05-01), which represents the set of Web platform capabilities widely supported by mainstream browsers as of that date.
+For web output, the default browserslist now aligns with the widely available range defined by [Baseline](https://web-platform-dx.github.io/web-features/). Specifically, it uses the target set for [2025-05-01](https://browsersl.ist/#q=baseline+widely+available+on+2025-05-01), which represents the Web platform capabilities widely supported by mainstream browsers at that point.
 
 The default values change as follows:
 
@@ -253,7 +253,7 @@ The default values change as follows:
 - Firefox 78 -> 104
 - Safari 14 -> 16
 
-This means that, if you do not explicitly configure browserslist, Rsbuild will generate more modern JavaScript and CSS by default while reducing syntax downleveling and polyfills.
+This means that if you do not explicitly configure browserslist, Rsbuild will generate more modern JavaScript and CSS by default while reducing syntax downleveling and polyfills.
 
 For Node.js output, the default target version is also raised from Node.js 16 to Node.js 20.
 
@@ -261,7 +261,7 @@ If you have already configured the target environment explicitly through `.brows
 
 ## ESM Node.js output
 
-When building Node.js output, Rsbuild 2.0 now generates unminified ES modules by default, instead of the minified CommonJS output used by default in Rsbuild v1.
+For Node.js output, Rsbuild 2.0 now generates unminified ES modules by default instead of the minified CommonJS output used in Rsbuild v1.
 
 This better matches common practice in modern Node.js applications. At the same time, leaving server-side code unminified by default helps preserve readable stack traces and makes debugging easier.
 
@@ -279,9 +279,9 @@ export default {
 
 ## Updated decorator version
 
-As the underlying SWC now supports the `2023-11` decorator version, Rsbuild updates the default value of [decorators.version](/config/source/decorators#decoratorsversion) from `2022-03` to `2023-11`.
+With the underlying SWC now supporting the `2023-11` decorator version, Rsbuild updates the default value of [decorators.version](/config/source/decorators#decoratorsversion) from `2022-03` to `2023-11`.
 
-`2023-11` is the latest proposal version. It corresponds to the specification after the TC39 meeting in November 2023, and it is also the default behavior in Babel 8. If you need to keep the old behavior, you can specify the version explicitly:
+`2023-11` is the latest proposal version. It corresponds to the specification after the TC39 meeting in November 2023 and is also the default behavior in Babel 8. If you need to keep the old behavior, you can specify the version explicitly:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -295,9 +295,9 @@ export default {
 
 ## Upgrading to Rsbuild 2.0
 
-For most projects, upgrading to Rsbuild 2.0 should be relatively smooth. Although 2.0 introduces some default behavior changes and breaking changes, most of them come with a clear migration path, and in most cases you do not need to modify application code.
+For most projects, upgrading to Rsbuild 2.0 should be relatively smooth. Although 2.0 introduces some default behavior and breaking changes, most come with a clear migration path, and in most cases you do not need to modify application code.
 
-If you are using a coding agent with skill support, you can install the [rsbuild-v2-upgrade](https://github.com/rstackjs/agent-skills#rsbuild-v2-upgrade) skill to let the agent help with dependency upgrades, configuration updates, and migration checks automatically, reducing manual work.
+If you are using a coding agent with skill support, you can install the [rsbuild-v2-upgrade](https://github.com/rstackjs/agent-skills#rsbuild-v2-upgrade) skill to let the agent automatically help with dependency upgrades, configuration updates, and migration checks, reducing manual work.
 
 ```bash
 npx skills add rstackjs/agent-skills --skill rsbuild-v2-upgrade
@@ -307,7 +307,7 @@ For the full migration guide and the complete list of breaking changes, see [Mig
 
 ## Acknowledgments
 
-Rsbuild is primarily developed by the Rstack team, and it also depends on the contributions of community members and all of its users. Since the 1.0 release, many developers have helped move Rsbuild forward through their contributions. We would like to thank everyone who has been part of that journey:
+Rsbuild is primarily developed by the Rstack team, and it also relies on contributions from community members and support from users. Since the 1.0 release, many developers have helped move Rsbuild forward through their contributions. We would like to thank everyone who has been part of that journey:
 
 {/* cspell:disable */}
 
