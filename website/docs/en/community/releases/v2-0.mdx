@@ -71,7 +71,7 @@ export default defineConfig({
 
 The plugin is still experimental. It can already run the [RSC example](https://github.com/rstackjs/rsbuild-plugin-rsc/tree/main/examples/react-router) for React Router, and it has also been adopted in the [Modern.js framework](https://modernjs.dev/guides/basic-features/render/rsc).
 
-We are also working with the [TanStack](https://tanstack.com/) team to provide support for [TanStack Start](https://tanstack.com/start) and [TanStack RSC](https://tanstack.com/blog/react-server-components) in future releases. TanStack Start is a full-stack framework built on TanStack Router, and we are looking forward to exploring more possibilities for RSC together across different use cases.
+We're also working with the [TanStack](https://tanstack.com/) team and plan to support [TanStack Start](https://tanstack.com/start) and [TanStack's RSC](https://tanstack.com/blog/react-server-components) in future releases. TanStack Start is a full-stack framework built on TanStack Router, and we're excited to explore more possibilities for RSC together.
 
 ## Dev server and client communication
 
@@ -237,7 +237,7 @@ Starting from 2.0, the minimum supported Node.js versions for Rsbuild are `20.19
 
 Rsbuild 2.0 updates its default targets so the output is aimed at more modern browsers and Node.js versions.
 
-For web output, the default browserslist now aligns with the widely available [Baseline](https://web-platform-dx.github.io/web-features/) range for [2025-05-01](https://browsersl.ist/#q=baseline+widely+available+on+2025-05-01). In other words, it targets the set of Web platform features broadly available in mainstream browsers as of May 1, 2025.
+For web output, the default browserslist now aligns with the widely available range defined by [Baseline](https://web-platform-dx.github.io/web-features/). Specifically, it uses the target set for [2025-05-01](https://browsersl.ist/#q=baseline+widely+available+on+2025-05-01), which represents the set of Web platform capabilities widely supported by mainstream browsers as of that date.
 
 The default values change as follows:
 
@@ -248,7 +248,7 @@ The default values change as follows:
 
 This means that, if you do not explicitly configure browserslist, Rsbuild will generate more modern JavaScript and CSS by default while reducing syntax downleveling and polyfills.
 
-For Node.js output, the default target version is also raised from Node.js 16 to Node.js 20, matching the current LTS release.
+For Node.js output, the default target version is also raised from Node.js 16 to Node.js 20.
 
 If you have already configured the target environment explicitly through `.browserslistrc`, `package.json#browserslist`, or [output.overrideBrowserslist](/config/output/override-browserslist), these changes will not affect your project.
 
