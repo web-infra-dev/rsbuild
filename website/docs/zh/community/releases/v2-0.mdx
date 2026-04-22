@@ -17,11 +17,12 @@ Rsbuild 是一个由 Rspack 驱动的现代 Web 应用构建工具，也是 Rsta
 
 ![](https://assets.rspack.rs/rsbuild/assets/rsbuild-2-0-downloads.png)
 
-为了帮助生态平稳升级到 2.0，我们投入了三个月进行验证与打磨，期间发布了 20 多个预览版本。目前，Rslib、Rstest、Rspress、Storybook Rsbuild 和 [Modern.js](https://github.com/web-infra-dev/modern.js) 均已完成升级，并在生产环境中稳定运行。
+为了帮助生态平稳升级到 2.0，我们投入了三个月进行验证与打磨，期间发布了 20 多个预览版本。目前，Rslib、Rstest、Rspress、Storybook Rsbuild 和 Modern.js 均已完成升级，并在生产环境中稳定运行。
 
 2.0 版本的主要改进包括：
 
 - 新特性：
+  - [升级 Rspack 2.0](#升级-rspack-20)
   - [React Server Components 支持](#react-server-components-支持)
   - [开发服务器与客户端通信](#开发服务器与客户端通信)
   - [支持扩展内置 Server](#扩展内置-server)
@@ -39,6 +40,12 @@ Rsbuild 是一个由 Rspack 驱动的现代 Web 应用构建工具，也是 Rsta
   - [默认目标环境更新](#默认目标环境更新)
   - [默认输出 ESM Node.js 产物](#esm-nodejs-产物)
   - [默认使用 '2023-11' 装饰器版本](#装饰器版本更新)
+
+## 升级 Rspack 2.0
+
+Rsbuild 2.0 基于 Rspack 2.0 实现，因此也继承了 Rspack 2.0 在构建性能、产物优化和底层能力上的一系列改进。
+
+参考 [Rspack 2.0 博客](https://rspack.rs/zh/blog/announcing-2-0) 了解这部分变更。
 
 ## React Server Components 支持
 
