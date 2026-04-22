@@ -35,8 +35,8 @@ Rsbuild 具备以下特性：
 
 ## 📚 文档
 
-- [Rsbuild v2 文档](https://v2.rsbuild.rs/zh/)
-- [Rsbuild v1 文档](https://rsbuild.rs/zh/)
+- [Rsbuild v2 文档](https://rsbuild.rs/zh/)
+- [Rsbuild v1 文档](https://v1.rsbuild.rs/zh/)
 
 ## 🦀 Rstack
 

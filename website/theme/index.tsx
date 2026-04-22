@@ -10,7 +10,7 @@ import {
 } from '@rspress/plugin-algolia/runtime';
 
 // Enable announcement when we have something to announce
-const ANNOUNCEMENT_URL = '';
+const ANNOUNCEMENT_URL = '/blog/v2-0';
 
 const Layout = () => {
   const { page } = usePage();
@@ -28,10 +28,10 @@ const Layout = () => {
               }
               message={
                 lang === 'en'
-                  ? 'Rsbuild 1.0 has been released!'
-                  : 'Rsbuild 1.0 正式发布！'
+                  ? 'Rsbuild 2.0 has been released!'
+                  : 'Rsbuild 2.0 正式发布！'
               }
-              localStorageKey="rsbuild-announcement-closed"
+              localStorageKey="rsbuild-v2-announcement-closed"
               display={page.pageType === 'home'}
             />
           </NoSSR>

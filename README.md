@@ -39,8 +39,8 @@ Rsbuild has the following features:
 
 ## 📚 Documentation
 
-- [Rsbuild v2 docs](https://v2.rsbuild.rs)
-- [Rsbuild v1 docs](https://rsbuild.rs/)
+- [Rsbuild v2 docs](https://rsbuild.rs)
+- [Rsbuild v1 docs](https://v1.rsbuild.rs/)
 
 ## 🦀 Rstack
 
