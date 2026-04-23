@@ -179,8 +179,7 @@ export default defineConfig({
       },
       dts: {
         build: true,
-        // Only use tsgo in local dev for faster build, disable it in CI until it's more stable
-        tsgo: !process.env.CI,
+        tsgo: true,
         alias: {
           // alias to pre-bundled types as they are public API
           cors: './compiled/cors',
