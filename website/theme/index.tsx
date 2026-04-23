@@ -5,7 +5,6 @@ import {
   type DocLayoutProps,
 } from '@rspress/core/theme-original';
 import { Announcement } from '@rstack-dev/doc-ui/announcement';
-import { ConfigProvider } from '@rstack-dev/doc-ui/antd';
 import { BlogBackButton } from '@rstack-dev/doc-ui/blog-back-button';
 import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
 import { HomeLayout } from './pages';
@@ -45,43 +44,27 @@ const Layout = () => {
   const lang = useLang();
 
   return (
-    <ConfigProvider
-      theme={{
-        // Update tokens for Collapse in dark mode
-        token: {
-          colorBorder: 'var(--rp-c-divider)',
-        },
-        components: {
-          Collapse: {
-            contentBg: 'transparent',
-          },
-        },
-      }}
-    >
-      <BaseLayout
-        beforeNavTitle={<NavIcon />}
-        beforeNav={
-          ANNOUNCEMENT_URL ? (
-            <NoSSR>
-              <Announcement
-                href={
-                  lang === 'en'
-                    ? ANNOUNCEMENT_URL
-                    : `/${lang}${ANNOUNCEMENT_URL}`
-                }
-                message={
-                  lang === 'en'
-                    ? 'Rsbuild 2.0 has been released!'
-                    : 'Rsbuild 2.0 正式发布！'
-                }
-                localStorageKey="rsbuild-v2-announcement-closed"
-                display={page.pageType === 'home'}
-              />
-            </NoSSR>
-          ) : null
-        }
-      />
-    </ConfigProvider>
+    <BaseLayout
+      beforeNavTitle={<NavIcon />}
+      beforeNav={
+        ANNOUNCEMENT_URL ? (
+          <NoSSR>
+            <Announcement
+              href={
+                lang === 'en' ? ANNOUNCEMENT_URL : `/${lang}${ANNOUNCEMENT_URL}`
+              }
+              message={
+                lang === 'en'
+                  ? 'Rsbuild 2.0 has been released!'
+                  : 'Rsbuild 2.0 正式发布！'
+              }
+              localStorageKey="rsbuild-v2-announcement-closed"
+              display={page.pageType === 'home'}
+            />
+          </NoSSR>
+        ) : null
+      }
+    />
   );
 };
 const Search = () => {
