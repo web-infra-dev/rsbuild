@@ -36,7 +36,7 @@
     "@rstest/core": "^0.9.8",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^24.12.2",
-    "@typescript/native-preview": "7.0.0-dev.20260419.1",
+    "@typescript/native-preview": "7.0.0-dev.20260422.1",
     "cross-env": "^10.1.0",
     "cspell-ban-words": "^0.0.4",
     "heading-case": "^1.1.0",
@@ -45,7 +45,7 @@
     "simple-git-hooks": "^2.13.1",
     "typescript": "^6.0.3"
   },
-  "packageManager": "pnpm@10.33.0",
+  "packageManager": "pnpm@10.33.1",
   "engines": {
     "node": ">=22.18.0",
     "pnpm": ">=10.33.0"
