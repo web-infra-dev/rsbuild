@@ -19,6 +19,7 @@ classname
 codegen
 codesandbox
 codeva
+chenjiahan
 compat
 consolas
 contentful
