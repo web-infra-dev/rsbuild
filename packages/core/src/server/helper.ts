@@ -192,6 +192,7 @@ export function printServerURLs({
   routes,
   protocol,
   printUrls,
+  fallbackPathname,
   trailingLineBreak = true,
   originalConfig,
   logger,
@@ -201,6 +202,7 @@ export function printServerURLs({
   routes: Routes;
   protocol: string;
   printUrls?: PrintUrls;
+  fallbackPathname?: string;
   trailingLineBreak?: boolean;
   originalConfig?: Readonly<RsbuildConfig>;
   logger: Logger;
@@ -241,12 +243,19 @@ export function printServerURLs({
     return null;
   }
 
+  // When there are no HTML routes, print the server base URL as the default
+  // access path.
+  const printableRoutes =
+    routes.length === 0 && !useCustomUrl && fallbackPathname
+      ? [{ entryName: 'index', pathname: formatPrefix(fallbackPathname) }]
+      : routes;
+
   // If no routes and not use custom url, skip printing
-  if (routes.length === 0 && !useCustomUrl) {
+  if (printableRoutes.length === 0 && !useCustomUrl) {
     return null;
   }
 
-  let message = getURLMessages(urls, routes);
+  let message = getURLMessages(urls, printableRoutes);
 
   if (originalConfig && originalConfig.server?.host === undefined) {
     message += `  ➜  ${color.dim('Network:')}  ${color.dim('use')} ${color.bold('--host')} ${color.dim('to expose')}\n`;

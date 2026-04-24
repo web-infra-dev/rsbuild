@@ -248,6 +248,30 @@ test('should print server URLs correctly', () => {
   });
 
   expect(message).toEqual(null);
+
+  message = printServerURLs({
+    port: 3000,
+    protocol: 'http',
+    logger,
+    urls: [
+      {
+        url: 'http://localhost:3000',
+        label: 'local',
+      },
+      {
+        url: 'http://192.168.0.1:3000/',
+        label: 'network',
+      },
+    ],
+    routes: [],
+    fallbackPathname: '/foo',
+  });
+
+  expect(message!).toMatchInlineSnapshot(`
+    "  ➜  local     http://localhost:3000/foo/
+      ➜  network   http://192.168.0.1:3000/foo/
+    "
+  `);
 });
 
 describe('dev server', () => {

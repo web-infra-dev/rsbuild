@@ -109,6 +109,15 @@ export async function createDevServer<
   const isHttps = Boolean(config.server.https);
   const routes = getRoutes(context);
 
+  // SSR or backend-integrated apps may not generate HTML upfront. In that case,
+  // keep printing the dev server base URL for web targets so users still get
+  // a meaningful address, while node target stay silent.
+  const fallbackPathname =
+    routes.length === 0 &&
+    context.environmentList.some((item) => item.config.output.target === 'web')
+      ? config.server.base
+      : undefined;
+
   context.devServer = {
     hostname: host,
     port,
@@ -195,6 +204,7 @@ export async function createDevServer<
       routes,
       protocol,
       printUrls: config.server.printUrls,
+      fallbackPathname,
       trailingLineBreak: !cliShortcutsEnabled,
       originalConfig: context.originalConfig,
       logger,

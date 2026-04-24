@@ -131,9 +131,11 @@ export default {
 
 ### 禁用 HTML
 
-当 [tools.htmlPlugin](/config/tools/html-plugin) 被设置为 `false` 时，Rsbuild 不会生成 HTML 文件，也不会输出 server 的 URL 地址。
+当 [tools.htmlPlugin](/config/tools/html-plugin) 被设置为 `false` 时，Rsbuild 不会生成 HTML 文件。
 
-但你仍然可以通过 `server.printUrls` 函数来输出 URL 地址，它具有更高的优先级。
+此时，如果至少存在一个 `output.target: 'web'` 的环境，Rsbuild 会默认输出 `server.base` 对应的 URL；否则 Rsbuild 不会输出 server 的 URL 地址。
+
+你仍然可以通过 `server.printUrls` 函数来自定义输出的 URL 地址，它具有更高的优先级。
 
 ```ts title="rsbuild.config.ts"
 export default {

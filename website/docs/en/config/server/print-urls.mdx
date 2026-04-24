@@ -130,9 +130,11 @@ export default {
 
 ### HTML disabled
 
-If [tools.htmlPlugin](/config/tools/html-plugin) is set to `false`, Rsbuild will not generate HTML files or output the server URL.
+If [tools.htmlPlugin](/config/tools/html-plugin) is set to `false`, Rsbuild will not generate HTML files.
 
-However, you can still print the server URLs using the `server.printUrls` function, which has a higher priority.
+In this case, if there is at least one environment with `output.target: 'web'`, Rsbuild will print the URL corresponding to `server.base` by default. Otherwise, Rsbuild will not print the server URLs.
+
+You can still customize the printed URLs using the `server.printUrls` function, which has a higher priority.
 
 ```ts title="rsbuild.config.ts"
 export default {
