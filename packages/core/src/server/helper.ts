@@ -246,7 +246,7 @@ export function printServerURLs({
   // When there are no HTML routes, print the server base URL as the default
   // access path.
   const printableRoutes =
-    routes.length === 0 && !useCustomUrl && fallbackPathname
+    routes.length === 0 && !useCustomUrl && fallbackPathname !== undefined
       ? [{ entryName: 'index', pathname: formatPrefix(fallbackPathname) }]
       : routes;
 

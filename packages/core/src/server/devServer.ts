@@ -111,7 +111,7 @@ export async function createDevServer<
 
   // SSR or backend-integrated apps may not generate HTML upfront. In that case,
   // keep printing the dev server base URL for web targets so users still get
-  // a meaningful address, while node target stay silent.
+  // a meaningful address, while node targets stay silent.
   const fallbackPathname =
     routes.length === 0 &&
     context.environmentList.some((item) => item.config.output.target === 'web')
