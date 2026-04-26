@@ -17,6 +17,9 @@ const HASH_PLACEHOLDER_REGEX =
 
 const normalizePath = (value: string) => value.replace(/\\/g, '/');
 
+const getCSSUrlAssetName = (sourceFilename: string, ext: string) =>
+  ext ? sourceFilename.slice(0, -ext.length) : sourceFilename;
+
 const isCSSModules = (
   modules: CSSLoaderOptions['modules'],
   resourcePath: string,
@@ -110,10 +113,10 @@ export const pitch: PitchLoaderDefinitionFunction<CSSUrlLoaderOptions> =
     const content = getCSSContent(moduleExports);
 
     const ext = path.extname(this.resourcePath);
-    const name = path.basename(this.resourcePath, ext);
     const sourceFilename = normalizePath(
       path.relative(this.rootContext, this.resourcePath),
     );
+    const name = getCSSUrlAssetName(sourceFilename, ext);
     const contentHash = getContentHash(this, content);
     const pathData: PathData = {
       filename: sourceFilename,
