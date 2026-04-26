@@ -14,9 +14,7 @@ test('should pass asset info to CSS URL filename function', async ({
       'window.getCssUrlResult()',
     );
 
-    expect(styleUrl).toMatch(
-      /\/static\/css\/from-asset-info\/src\/style\.css$/,
-    );
+    expect(styleUrl).toMatch(/\/static\/css\/from-asset-info\/style\.css$/);
     expect(styleContent).toContain('.filename-function-class');
   });
 });

@@ -18,6 +18,17 @@ const HASH_PLACEHOLDER_REGEX =
 
 const normalizePath = (value: string) => value.replace(/\\/g, '/');
 
+const getRelativePath = (root: string, resourcePath: string) => {
+  const relativePath = path.relative(root, resourcePath);
+  if (
+    relativePath &&
+    !relativePath.startsWith('..') &&
+    !path.isAbsolute(relativePath)
+  ) {
+    return normalizePath(relativePath);
+  }
+};
+
 const getCSSUrlAssetName = (sourceFilename: string, ext: string) =>
   ext ? sourceFilename.slice(0, -ext.length) : sourceFilename;
 
@@ -117,7 +128,10 @@ export const pitch: PitchLoaderDefinitionFunction<CSSUrlLoaderOptions> =
     const sourceFilename = normalizePath(
       path.relative(this.rootContext, this.resourcePath),
     );
-    const name = getCSSUrlAssetName(sourceFilename, ext);
+    const nameSource =
+      getRelativePath(path.join(this.rootContext, 'src'), this.resourcePath) ??
+      sourceFilename;
+    const name = getCSSUrlAssetName(nameSource, ext);
     const contentHash = getContentHash(this, content);
     const pathData: PathData = {
       contentHash,
