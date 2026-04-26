@@ -29,6 +29,11 @@ const getRelativePath = (root: string, resourcePath: string) => {
   }
 };
 
+const getCSSUrlNameSource = (root: string, resourcePath: string) =>
+  getRelativePath(path.join(root, 'src'), resourcePath) ??
+  getRelativePath(root, resourcePath) ??
+  path.basename(resourcePath);
+
 const getCSSUrlAssetName = (sourceFilename: string, ext: string) =>
   ext ? sourceFilename.slice(0, -ext.length) : sourceFilename;
 
@@ -128,9 +133,7 @@ export const pitch: PitchLoaderDefinitionFunction<CSSUrlLoaderOptions> =
     const sourceFilename = normalizePath(
       path.relative(this.rootContext, this.resourcePath),
     );
-    const nameSource =
-      getRelativePath(path.join(this.rootContext, 'src'), this.resourcePath) ??
-      sourceFilename;
+    const nameSource = getCSSUrlNameSource(this.rootContext, this.resourcePath);
     const name = getCSSUrlAssetName(nameSource, ext);
     const contentHash = getContentHash(this, content);
     const pathData: PathData = {

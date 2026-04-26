@@ -1,5 +1,6 @@
 import aStyleUrl from './a/index.css?url';
 import bStyleUrl from './b/index.css?url';
+import externalStyleUrl from '../../_shared/external.css?url';
 import styleUrl from './style.css?url';
 
 const target = document.createElement('div');
@@ -13,6 +14,8 @@ window.getCssUrlResult = async () => ({
   aStyleUrl,
   bStyleContent: await fetch(bStyleUrl).then((res) => res.text()),
   bStyleUrl,
+  externalStyleContent: await fetch(externalStyleUrl).then((res) => res.text()),
+  externalStyleUrl,
   styleUrl,
   styleContent: await fetch(styleUrl).then((res) => res.text()),
   targetColor: getComputedStyle(target).color,
