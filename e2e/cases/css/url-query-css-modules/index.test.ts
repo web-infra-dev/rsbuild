@@ -1,7 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-const EXPECTED_ERROR =
-  '[rsbuild:css] CSS Modules do not support the ?url query. Use ?inline to import the compiled CSS content as a string.';
+const EXPECTED_ERROR = 'CSS Modules do not support the ?url query';
 
 test('should throw error when importing CSS Modules with `?url`', async ({
   build,
