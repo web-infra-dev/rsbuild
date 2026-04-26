@@ -1,5 +1,6 @@
 import path from 'node:path';
 import type {
+  AssetInfo,
   LoaderDefinitionFunction,
   PathData,
   PitchLoaderDefinitionFunction,
@@ -7,7 +8,7 @@ import type {
 import type { CSSLoaderOptions } from '../types';
 
 type CSSUrlLoaderOptions = {
-  filename: string | ((pathData: PathData) => string);
+  filename: string | ((pathData: PathData, assetInfo?: AssetInfo) => string);
   modules: CSSLoaderOptions['modules'];
 };
 
@@ -126,9 +127,12 @@ export const pitch: PitchLoaderDefinitionFunction<CSSUrlLoaderOptions> =
         },
       },
     };
+    const assetInfo: AssetInfo = {
+      sourceFilename,
+    };
     const filenameTemplate =
       typeof options.filename === 'function'
-        ? options.filename(pathData)
+        ? options.filename(pathData, assetInfo)
         : options.filename;
     const { path: filename, info } = this._compilation.getAssetPathWithInfo(
       filenameTemplate,
@@ -137,9 +141,9 @@ export const pitch: PitchLoaderDefinitionFunction<CSSUrlLoaderOptions> =
 
     this.emitFile(filename, content, undefined, {
       ...info,
+      ...assetInfo,
       immutable:
         info.immutable || HASH_PLACEHOLDER_REGEX.test(filenameTemplate),
-      sourceFilename,
     });
 
     return `export default __webpack_public_path__ + ${JSON.stringify(filename)};`;
