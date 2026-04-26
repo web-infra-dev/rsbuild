@@ -172,6 +172,7 @@ export default defineConfig({
       source: {
         entry: {
           index: './src/index.ts',
+          cssUrlLoader: './src/loader/cssUrlLoader.ts',
           ignoreCssLoader: './src/loader/ignoreCssLoader.ts',
           transformLoader: './src/loader/transformLoader.ts',
           transformRawLoader: './src/loader/transformRawLoader.ts',

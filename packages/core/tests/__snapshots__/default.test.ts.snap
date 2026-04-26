@@ -62,6 +62,48 @@ exports[`should apply default plugins correctly 1`] = `
             "resolve": {
               "preferRelative": true,
             },
+            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "use": [
+              {
+                "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
+                "options": {
+                  "filename": "static/css/[name].css",
+                  "modules": {
+                    "auto": true,
+                    "exportGlobals": false,
+                    "exportLocalsConvention": "camelCase",
+                    "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                    "namedExport": false,
+                  },
+                },
+              },
+              {
+                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+                "options": {
+                  "exportType": "string",
+                  "importLoaders": 1,
+                  "modules": false,
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "builtin:lightningcss-loader",
+                "options": {
+                  "errorRecovery": true,
+                  "targets": [
+                    "chrome >= 107",
+                    "edge >= 107",
+                    "firefox >= 104",
+                    "safari >= 16",
+                  ],
+                },
+              },
+            ],
+          },
+          {
+            "resolve": {
+              "preferRelative": true,
+            },
             "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "sideEffects": true,
             "use": [
@@ -490,6 +532,49 @@ exports[`should apply default plugins correctly in production 1`] = `
           "not": "url",
         },
         "oneOf": [
+          {
+            "resolve": {
+              "preferRelative": true,
+            },
+            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "use": [
+              {
+                "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
+                "options": {
+                  "filename": "static/css/[name].[contenthash:10].css",
+                  "modules": {
+                    "auto": true,
+                    "exportGlobals": false,
+                    "exportLocalsConvention": "camelCase",
+                    "localIdentName": "[local]-[hash:base64:6]",
+                    "namedExport": false,
+                  },
+                },
+              },
+              {
+                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+                "options": {
+                  "exportType": "string",
+                  "importLoaders": 1,
+                  "modules": false,
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "builtin:lightningcss-loader",
+                "options": {
+                  "errorRecovery": true,
+                  "minify": true,
+                  "targets": [
+                    "chrome >= 107",
+                    "edge >= 107",
+                    "firefox >= 104",
+                    "safari >= 16",
+                  ],
+                },
+              },
+            ],
+          },
           {
             "resolve": {
               "preferRelative": true,
@@ -951,6 +1036,46 @@ exports[`should apply default plugins correctly when target is node 1`] = `
             "resolve": {
               "preferRelative": true,
             },
+            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "use": [
+              {
+                "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
+                "options": {
+                  "filename": "static/css/[name].css",
+                  "modules": {
+                    "auto": true,
+                    "exportGlobals": false,
+                    "exportLocalsConvention": "camelCase",
+                    "exportOnlyLocals": true,
+                    "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                    "namedExport": false,
+                  },
+                },
+              },
+              {
+                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+                "options": {
+                  "exportType": "string",
+                  "importLoaders": 1,
+                  "modules": false,
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "builtin:lightningcss-loader",
+                "options": {
+                  "errorRecovery": true,
+                  "targets": [
+                    "node >= 20",
+                  ],
+                },
+              },
+            ],
+          },
+          {
+            "resolve": {
+              "preferRelative": true,
+            },
             "resourceQuery": /\\[\\?&\\]inline\\(\\?:&\\|=\\|\\$\\)/,
             "sideEffects": true,
             "use": [
@@ -1373,6 +1498,48 @@ exports[`tools.rspack > should match snapshot 1`] = `
           "not": "url",
         },
         "oneOf": [
+          {
+            "resolve": {
+              "preferRelative": true,
+            },
+            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "use": [
+              {
+                "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
+                "options": {
+                  "filename": "static/css/[name].css",
+                  "modules": {
+                    "auto": true,
+                    "exportGlobals": false,
+                    "exportLocalsConvention": "camelCase",
+                    "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                    "namedExport": false,
+                  },
+                },
+              },
+              {
+                "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+                "options": {
+                  "exportType": "string",
+                  "importLoaders": 1,
+                  "modules": false,
+                  "sourceMap": false,
+                },
+              },
+              {
+                "loader": "builtin:lightningcss-loader",
+                "options": {
+                  "errorRecovery": true,
+                  "targets": [
+                    "chrome >= 107",
+                    "edge >= 107",
+                    "firefox >= 104",
+                    "safari >= 16",
+                  ],
+                },
+              },
+            ],
+          },
           {
             "resolve": {
               "preferRelative": true,

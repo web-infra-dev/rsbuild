@@ -1,0 +1,148 @@
+import path from 'node:path';
+import type {
+  LoaderDefinitionFunction,
+  PathData,
+  PitchLoaderDefinitionFunction,
+} from '@rspack/core';
+import type { CSSLoaderOptions } from '../types';
+
+type CSSUrlLoaderOptions = {
+  filename: string | ((pathData: PathData) => string);
+  modules: CSSLoaderOptions['modules'];
+};
+
+const CSS_MODULE_REGEX = /\.module\.\w+$/i;
+const HASH_PLACEHOLDER_REGEX =
+  /\[(?:[^:\]]+:)?(?:chunkhash|contenthash|hash|fullhash)(?::[^\]]+)?]/i;
+
+const normalizePath = (value: string) => value.replace(/\\/g, '/');
+
+const isCSSModules = (
+  modules: CSSLoaderOptions['modules'],
+  resourcePath: string,
+  resourceQuery: string,
+  resourceFragment: string,
+) => {
+  if (!modules) {
+    return false;
+  }
+
+  if (modules === true || typeof modules === 'string') {
+    return true;
+  }
+
+  const { auto } = modules;
+
+  if (auto === false) {
+    return false;
+  }
+
+  if (auto instanceof RegExp) {
+    return auto.test(resourcePath);
+  }
+
+  if (typeof auto === 'function') {
+    return auto(resourcePath, resourceQuery, resourceFragment);
+  }
+
+  return CSS_MODULE_REGEX.test(resourcePath);
+};
+
+const getCSSContent = (moduleExports: unknown): string => {
+  const content =
+    moduleExports &&
+    typeof moduleExports === 'object' &&
+    'default' in moduleExports
+      ? moduleExports.default
+      : moduleExports;
+
+  if (typeof content !== 'string') {
+    throw new Error(
+      '[rsbuild:css] Expected CSS ?url imports to export a string.',
+    );
+  }
+
+  return content;
+};
+
+const getContentHash = (
+  loaderContext: ThisParameterType<
+    LoaderDefinitionFunction<CSSUrlLoaderOptions>
+  >,
+  content: string,
+) => {
+  const hash = loaderContext.utils.createHash(
+    loaderContext._compilation.outputOptions.hashFunction,
+  );
+  hash.update(Buffer.from(content));
+
+  return hash.digest(
+    loaderContext._compilation.outputOptions.hashDigest || 'hex',
+  );
+};
+
+const cssUrlLoader: LoaderDefinitionFunction<CSSUrlLoaderOptions> = function (
+  source,
+) {
+  return source;
+};
+
+export const pitch: PitchLoaderDefinitionFunction<CSSUrlLoaderOptions> =
+  async function (remainingRequest) {
+    const options = this.getOptions();
+
+    if (
+      isCSSModules(
+        options.modules,
+        this.resourcePath,
+        this.resourceQuery,
+        this.resourceFragment,
+      )
+    ) {
+      throw new Error(
+        '[rsbuild:css] CSS Modules do not support the ?url query. Use ?inline to import the compiled CSS content as a string.',
+      );
+    }
+
+    const moduleExports = await this.importModule(
+      `${this.resourcePath}.rspack[javascript/auto]!=!!!${remainingRequest}`,
+    );
+    const content = getCSSContent(moduleExports);
+
+    const ext = path.extname(this.resourcePath);
+    const name = path.basename(this.resourcePath, ext);
+    const sourceFilename = normalizePath(
+      path.relative(this.rootContext, this.resourcePath),
+    );
+    const contentHash = getContentHash(this, content);
+    const pathData: PathData = {
+      filename: sourceFilename,
+      contentHash,
+      chunk: {
+        name,
+        hash: contentHash,
+        contentHash: {
+          css: contentHash,
+        },
+      },
+    };
+    const filenameTemplate =
+      typeof options.filename === 'function'
+        ? options.filename(pathData)
+        : options.filename;
+    const { path: filename, info } = this._compilation.getAssetPathWithInfo(
+      filenameTemplate,
+      pathData,
+    );
+
+    this.emitFile(filename, content, undefined, {
+      ...info,
+      immutable:
+        info.immutable || HASH_PLACEHOLDER_REGEX.test(filenameTemplate),
+      sourceFilename,
+    });
+
+    return `export default __webpack_public_path__ + ${JSON.stringify(filename)};`;
+  };
+
+export default cssUrlLoader;

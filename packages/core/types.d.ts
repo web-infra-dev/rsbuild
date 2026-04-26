@@ -239,10 +239,13 @@ declare module '*.toml' {
 
 /**
  * Imports the file as a URL string.
- * @note Only works for static assets by default.
+ * @note Only works for static assets and CSS files by default.
  * @example
  * import logoUrl from './logo.png?url'
  * console.log(logoUrl) // 'http://example.com/logo.123456.png'
+ *
+ * import cssUrl from './style.css?url'
+ * console.log(cssUrl) // 'http://example.com/style.123456.css'
  */
 declare module '*?url' {
   const content: string;

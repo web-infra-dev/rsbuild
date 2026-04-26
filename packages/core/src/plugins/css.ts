@@ -287,6 +287,14 @@ export const pluginCss = (): RsbuildPlugin => ({
           // the module should be treated as an asset module rather than a JS module.
           .dependency({ not: 'url' });
 
+        // Support for `import cssUrl from "a.css?url"`
+        const urlRule = cssRule
+          .oneOf(CHAIN_ID.ONE_OF.CSS_URL)
+          .resourceQuery(/^\?url$/);
+        urlRule
+          .use(CHAIN_ID.USE.CSS_URL)
+          .loader(path.join(LOADER_PATH, 'cssUrlLoader.mjs'));
+
         // Support for `import inlineCss from "a.css?inline"`
         const inlineRule = cssRule
           .oneOf(CHAIN_ID.ONE_OF.CSS_INLINE)
@@ -336,11 +344,11 @@ export const pluginCss = (): RsbuildPlugin => ({
           inline: 0,
         };
 
-        // Update the normal CSS rule and the inline CSS rule
+        // Update CSS rules that share the CSS transform pipeline.
         const updateRules = (
           callback: (
             rule: RspackChain.Rule<RspackChain.Rule>,
-            type: 'main' | 'inline',
+            type: 'main' | 'inline' | 'url',
           ) => void,
           options: { skipMain?: boolean } = {},
         ) => {
@@ -348,6 +356,7 @@ export const pluginCss = (): RsbuildPlugin => ({
             callback(mainRule, 'main');
           }
           callback(inlineRule, 'inline');
+          callback(urlRule, 'url');
         };
 
         const cssLoaderPath = getCompiledPath('css-loader');
@@ -381,7 +390,9 @@ export const pluginCss = (): RsbuildPlugin => ({
               // Inline styles are not processed by Rspack's minimizers,
               // so we need to minify them via `builtin:lightningcss-loader`
               const inlineStyle =
-                type === 'inline' || config.output.injectStyles;
+                type === 'inline' ||
+                type === 'url' ||
+                config.output.injectStyles;
               const minify = inlineStyle && minifyCss;
 
               const lightningcssOptions = getLightningCSSLoaderOptions(
@@ -440,7 +451,7 @@ export const pluginCss = (): RsbuildPlugin => ({
         updateRules((rule, type) => {
           let finalOptions = cssLoaderOptions;
 
-          if (type === 'inline') {
+          if (type === 'inline' || type === 'url') {
             finalOptions = {
               ...cssLoaderOptions,
               exportType: 'string',
@@ -455,12 +466,27 @@ export const pluginCss = (): RsbuildPlugin => ({
           }
           rule.use(CHAIN_ID.USE.CSS).options(finalOptions);
 
-          // CSS imports should always be treated as sideEffects
-          rule.sideEffects(true);
+          if (type !== 'url') {
+            // CSS imports should always be treated as sideEffects.
+            // CSS ?url only exports a URL string and does not apply styles.
+            rule.sideEffects(true);
+          }
 
           // Enable preferRelative by default, which is consistent with the default behavior of css-loader
           // see: https://github.com/webpack/css-loader/blob/579fc13/src/plugins/postcss-import-parser.js#L234
           rule.resolve.preferRelative(true);
+        });
+
+        const cssUrlFilename = getFilename(config, 'css', isProd);
+        const cssUrlPath = config.output.distPath.css;
+
+        urlRule.use(CHAIN_ID.USE.CSS_URL).options({
+          filename:
+            typeof cssUrlFilename === 'function'
+              ? (pathData: Rspack.PathData, assetInfo?: Rspack.AssetInfo) =>
+                  posix.join(cssUrlPath, cssUrlFilename(pathData, assetInfo))
+              : posix.join(cssUrlPath, cssUrlFilename),
+          modules: cssLoaderOptions.modules,
         });
 
         const isStringExport = cssLoaderOptions.exportType === 'string';

@@ -70,6 +70,7 @@ export const CHAIN_ID = {
     /** CSS oneOf rules */
     CSS_MAIN: 'css',
     CSS_RAW: 'css-raw',
+    CSS_URL: 'css-url',
     CSS_INLINE: 'css-inline',
     /** SVG oneOf rules */
     SVG: 'svg',
@@ -85,6 +86,8 @@ export const CHAIN_ID = {
     TS: 'ts',
     /** css-loader */
     CSS: 'css',
+    /** CSS URL loader */
+    CSS_URL: 'css-url',
     /** sass-loader */
     SASS: 'sass',
     /** less-loader */
