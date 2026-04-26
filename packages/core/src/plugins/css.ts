@@ -478,23 +478,14 @@ export const pluginCss = (): RsbuildPlugin => ({
         });
 
         const cssUrlFilename = getFilename(config, 'css', isProd);
-        // CSS ?url assets are named by source path to avoid basename collisions.
-        const cssUrlFilenameTemplate =
-          typeof cssUrlFilename === 'string' &&
-          config.output.filename.css === undefined
-            ? cssUrlFilename.replace(/\[name\]/g, '[path][name]')
-            : cssUrlFilename;
         const cssUrlPath = config.output.distPath.css;
 
         urlRule.use(CHAIN_ID.USE.CSS_URL).options({
           filename:
-            typeof cssUrlFilenameTemplate === 'function'
+            typeof cssUrlFilename === 'function'
               ? (pathData: Rspack.PathData, assetInfo?: Rspack.AssetInfo) =>
-                  posix.join(
-                    cssUrlPath,
-                    cssUrlFilenameTemplate(pathData, assetInfo),
-                  )
-              : posix.join(cssUrlPath, cssUrlFilenameTemplate),
+                  posix.join(cssUrlPath, cssUrlFilename(pathData, assetInfo))
+              : posix.join(cssUrlPath, cssUrlFilename),
           modules: cssLoaderOptions.modules,
         });
 

@@ -120,7 +120,6 @@ export const pitch: PitchLoaderDefinitionFunction<CSSUrlLoaderOptions> =
     const name = getCSSUrlAssetName(sourceFilename, ext);
     const contentHash = getContentHash(this, content);
     const pathData: PathData = {
-      filename: sourceFilename,
       contentHash,
       chunk: {
         name,
