@@ -1,6 +1,6 @@
 import aStyleUrl from './a/index.css?url';
 import bStyleUrl from './b/index.css?url';
-import externalStyleUrl from '../../_shared/external.css?url';
+import externalStyleUrl from '../shared/external.css?url';
 import styleUrl from './style.css?url';
 
 const target = document.createElement('div');
