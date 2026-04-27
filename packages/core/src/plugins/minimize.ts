@@ -7,6 +7,36 @@ import { isPlainObject, pick } from '../helpers';
 import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';
 import { getLightningCSSLoaderOptions } from './css';
 
+const CONSOLE_METHODS = [
+  'assert',
+  'clear',
+  'count',
+  'countReset',
+  'debug',
+  'dir',
+  'dirxml',
+  'error',
+  'group',
+  'groupCollapsed',
+  'groupEnd',
+  'info',
+  'log',
+  'profile',
+  'profileEnd',
+  'table',
+  'time',
+  'timeEnd',
+  'timeLog',
+  'timeStamp',
+  'trace',
+  'warn',
+];
+
+const getConsolePureFuncs = (methods: readonly string[]) =>
+  methods.map((method) => `console.${method}`);
+
+const ALL_CONSOLE_PURE_FUNCS = getConsolePureFuncs(CONSOLE_METHODS);
+
 export function getSwcMinimizerOptions(
   config: NormalizedEnvironmentConfig,
   jsOptions?: SwcJsMinimizerRspackPluginOptions,
@@ -20,12 +50,11 @@ export function getSwcMinimizerOptions(
 
   if (removeConsole === true) {
     options.minimizerOptions.compress = {
-      drop_console: true,
+      pure_funcs: ALL_CONSOLE_PURE_FUNCS,
     };
   } else if (Array.isArray(removeConsole)) {
-    const pureFuncs = removeConsole.map((method) => `console.${method}`);
     options.minimizerOptions.compress = {
-      pure_funcs: pureFuncs,
+      pure_funcs: getConsolePureFuncs(removeConsole),
     };
   }
 

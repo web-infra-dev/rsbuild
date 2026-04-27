@@ -45,4 +45,10 @@ test('should remove all console correctly', async ({ build }) => {
     debug: false,
     error: false,
   });
+
+  const files = rsbuild.getDistFiles();
+  const content = getFileContent(files, 'index.js');
+
+  expect(content).not.toContain('test-console-side-effect');
+  expect(content).toContain('side-effect-preserved');
 });
