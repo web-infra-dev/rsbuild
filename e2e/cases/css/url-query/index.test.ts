@@ -1,4 +1,4 @@
-import { expect, getFileContent, test } from '@e2e/helper';
+import { expect, findFile, getFileContent, test } from '@e2e/helper';
 
 type CssUrlResult = {
   aStyleContent: string;
@@ -46,4 +46,23 @@ test('should return transformed CSS URL with `?url`', async ({
       expect(html).not.toMatch(/<link[^>]+rel="stylesheet"/);
     }
   });
+});
+
+test('should emit hashed CSS files for `?url` in production', async ({
+  build,
+}) => {
+  const rsbuild = await build({
+    config: {
+      output: {
+        filenameHash: true,
+      },
+    },
+  });
+  const files = rsbuild.getDistFiles();
+  const styleFile = findFile(files, /style\.[a-f0-9]{10}\.css$/, {
+    ignoreHash: false,
+  });
+  const jsContent = getFileContent(files, 'index.js');
+  expect(files[styleFile]).toContain('.url-query-class');
+  expect(jsContent).toMatch(/static\/css\/style\.[a-f0-9]{10}\.css/);
 });
