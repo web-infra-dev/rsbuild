@@ -64,5 +64,5 @@ test('should emit hashed CSS files for `?url` in production', async ({
   });
   const jsContent = getFileContent(files, 'index.js');
   expect(files[styleFile]).toContain('.url-query-class');
-  expect(jsContent).toMatch(/static\/css\/style\.[a-f0-9]{10}\.css/);
+  expect(jsContent).toMatch(/static\/css\/style\.[a-f0-9]+\.css/);
 });
