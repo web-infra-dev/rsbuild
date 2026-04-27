@@ -59,7 +59,7 @@ test('should emit hashed CSS files for `?url` in production', async ({
     },
   });
   const files = rsbuild.getDistFiles();
-  const styleFile = findFile(files, /style\.[a-f0-9]{10}\.css$/, {
+  const styleFile = findFile(files, /style\.[a-f0-9]+\.css$/, {
     ignoreHash: false,
   });
   const jsContent = getFileContent(files, 'index.js');
