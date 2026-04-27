@@ -127,9 +127,7 @@ export const pitch: PitchLoaderDefinitionFunction<CSSUrlLoaderOptions> =
       );
     }
 
-    const moduleExports = await this.importModule(
-      `${this.resourcePath}.rspack[javascript/auto]!=!!!${remainingRequest}`,
-    );
+    const moduleExports = await this.importModule(`!!${remainingRequest}`);
     const content = getCSSContent(moduleExports);
 
     const ext = path.extname(this.resourcePath);
