@@ -210,3 +210,26 @@ Using `import "*.css?raw"` has the following behaviors:
 - Rsbuild >= 1.3.0 supports the `?raw` query parameter.
 
 :::
+
+### url
+
+Rsbuild supports importing the URL of a compiled CSS file in JavaScript by using the `?url` query parameter.
+
+```ts title="src/index.js"
+import styleUrl from './style.css?url';
+
+console.log(styleUrl); // Output the URL of the compiled CSS file
+```
+
+Using `import "*.css?url"` has the following behaviors:
+
+- Get the URL of the compiled CSS file, processed by Lightning CSS, PostCSS and CSS preprocessors
+- The CSS file will be emitted as a separate asset
+- The CSS styles will not be automatically applied to the page
+
+:::tip
+
+- Rsbuild's Sass, Less, and Stylus plugins also support the `?url` query parameter.
+- Rsbuild >= 2.0.2 supports the `?url` query parameter.
+
+:::
