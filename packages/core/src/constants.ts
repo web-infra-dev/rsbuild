@@ -64,6 +64,11 @@ export const RAW_QUERY_REGEX: RegExp = /[?&]raw(?:&|=|$)/;
  * Matches patterns like: `?inline`, `?inline&other=value`, `?other=value&inline`, `?inline=value`
  */
 export const INLINE_QUERY_REGEX: RegExp = /[?&]inline(?:&|=|$)/;
+/**
+ * Regular expression to match the 'url' query parameter.
+ * Matches patterns like: `?url`, `?url&other=value`, `?other=value&url`, `?url=value`
+ */
+export const URL_QUERY_REGEX: RegExp = /[?&]url(?:&|=|$)/;
 export const NODE_MODULES_REGEX: RegExp = /[\\/]node_modules[\\/]/;
 
 // Plugins

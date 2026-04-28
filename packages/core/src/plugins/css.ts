@@ -9,6 +9,7 @@ import {
   INLINE_QUERY_REGEX,
   LOADER_PATH,
   RAW_QUERY_REGEX,
+  URL_QUERY_REGEX,
 } from '../constants';
 import { castArray, color, getFilename } from '../helpers';
 import { getCompiledPath } from '../helpers/path';
@@ -290,7 +291,7 @@ export const pluginCss = (): RsbuildPlugin => ({
         // Support for `import cssUrl from "a.css?url"`
         const urlRule = cssRule
           .oneOf(CHAIN_ID.ONE_OF.CSS_URL)
-          .resourceQuery(/^\?url$/);
+          .resourceQuery(URL_QUERY_REGEX);
         urlRule
           .use(CHAIN_ID.USE.CSS_URL)
           .loader(path.join(LOADER_PATH, 'cssUrlLoader.mjs'));

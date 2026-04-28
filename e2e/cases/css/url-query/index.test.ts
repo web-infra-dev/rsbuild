@@ -9,6 +9,12 @@ type CssUrlResult = {
   externalStyleUrl: string;
   styleUrl: string;
   styleContent: string;
+  urlLeadingQueryContent: string;
+  urlLeadingQueryUrl: string;
+  urlTrailingQueryContent: string;
+  urlTrailingQueryUrl: string;
+  urlValueQueryContent: string;
+  urlValueQueryUrl: string;
   targetColor: string;
 };
 
@@ -26,6 +32,12 @@ test('should return transformed CSS URL with `?url`', async ({
       externalStyleUrl,
       styleUrl,
       styleContent,
+      urlLeadingQueryContent,
+      urlLeadingQueryUrl,
+      urlTrailingQueryContent,
+      urlTrailingQueryUrl,
+      urlValueQueryContent,
+      urlValueQueryUrl,
       targetColor,
     } = await page.evaluate<CssUrlResult>('window.getCssUrlResult()');
 
@@ -39,6 +51,16 @@ test('should return transformed CSS URL with `?url`', async ({
     expect(aStyleUrl).not.toBe(bStyleUrl);
     expect(externalStyleUrl).toMatch(/\/static\/css\/shared\/external\.css$/);
     expect(externalStyleContent).toContain('.external-url-query');
+    expect(urlLeadingQueryUrl).toMatch(
+      /\/static\/css\/url-leading-query\.css$/,
+    );
+    expect(urlLeadingQueryContent).toContain('.url-leading-query');
+    expect(urlTrailingQueryUrl).toMatch(
+      /\/static\/css\/url-trailing-query\.css$/,
+    );
+    expect(urlTrailingQueryContent).toContain('.url-trailing-query');
+    expect(urlValueQueryUrl).toMatch(/\/static\/css\/url-value-query\.css$/);
+    expect(urlValueQueryContent).toContain('.url-value-query');
     expect(targetColor).toBe('rgb(0, 0, 0)');
 
     if (mode === 'build') {

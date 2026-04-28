@@ -10,6 +10,7 @@ import {
   IMAGE_EXTENSIONS,
   INLINE_QUERY_REGEX,
   RAW_QUERY_REGEX,
+  URL_QUERY_REGEX,
   VIDEO_EXTENSIONS,
 } from '../constants';
 import { getFilename } from '../helpers';
@@ -42,7 +43,7 @@ const chainStaticAssetRule = ({
   rule
     .oneOf(`${assetType}-asset-url`)
     .type('asset/resource')
-    .resourceQuery(/^\?url$/)
+    .resourceQuery(URL_QUERY_REGEX)
     .set('generator', generatorOptions);
 
   // get inlined base64 content: "foo.png?inline"
