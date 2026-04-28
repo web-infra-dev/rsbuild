@@ -17,6 +17,7 @@ import {
 import { CLIENT_PATH } from '../../constants';
 import { createVirtualModule, pick } from '../../helpers';
 import { applyToCompiler, isMultiCompiler } from '../../helpers/compiler';
+import { isOverlayEnabled } from '../../helpers/overlayConfig';
 import { toPosixPath } from '../../helpers/path';
 import type {
   InternalContext,
@@ -206,7 +207,7 @@ function applyHMREntry({
   }
 
   const hmrEntry = `import { init } from '${toPosixPath(join(CLIENT_PATH, 'hmr.js'))}';
-${config.dev.client.overlay ? `import '${toPosixPath(join(CLIENT_PATH, 'overlay.js'))}';` : ''}
+${isOverlayEnabled(config.dev.client.overlay) ? `import '${toPosixPath(join(CLIENT_PATH, 'overlay.js'))}';` : ''}
 init(
   '${token}',
   ${JSON.stringify(clientConfig)},

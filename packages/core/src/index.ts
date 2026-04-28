@@ -142,6 +142,7 @@ export type {
   OnDevCompileDoneFn,
   OnExitFn,
   OutputConfig,
+  OverlayOptions,
   OutputStructure,
   PerformanceConfig,
   PluginManager,

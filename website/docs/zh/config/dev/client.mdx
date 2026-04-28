@@ -20,8 +20,8 @@ type Client = {
   host?: string;
   // WebSocket 请求断开后的最大重连次数
   reconnect?: number;
-  // 当出现编译错误时，是否在浏览器中显示 error overlay
-  overlay?: boolean | { runtime?: boolean };
+  // 是否在浏览器中显示 error overlay
+  overlay?: boolean | { errors?: boolean; runtime?: boolean };
   // 控制浏览器控制台中日志的级别
   logLevel?: 'info' | 'warn' | 'error' | 'silent';
 };
@@ -93,7 +93,7 @@ hot-update 文件属于静态资源，如果你需要配置 hot-update 文件的
 
 ### overlay
 
-- **类型：** `boolean | { runtime?: boolean }`
+- **类型：** `boolean | { errors?: boolean; runtime?: boolean }`
 - **默认值：** `true`
 
 通过 `dev.client.overlay` 选项，可以选择是否启用错误浮层。
@@ -116,7 +116,31 @@ export default {
 
 当 `overlay` 配置为对象时，可以对不同来源的错误进行更精细的控制。
 
+#### overlay.errors
+
+- **类型：** `boolean`
+- **默认值：** `true`
+
+`overlay.errors` 用于控制是否将构建错误渲染到浮层中。
+
+当禁用该选项时，构建错误仍会打印到浏览器控制台，但不会显示错误浮层：
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      overlay: {
+        errors: false,
+      },
+    },
+  },
+};
+```
+
 #### overlay.runtime
+
+- **类型：** `boolean`
+- **默认值：** `false`
 
 `overlay.runtime` 用于控制是否将浏览器里产生的运行时错误渲染到浮层中。
 
@@ -190,3 +214,4 @@ export default {
 | ------- | --------------------------- |
 | v1.6.13 | 新增 `logLevel` 选项        |
 | v1.7.0  | 新增 `overlay.runtime` 选项 |
+| v2.0.3  | 新增 `overlay.errors` 选项  |

@@ -5,6 +5,7 @@ import type { WebSocket, WebSocketServer } from 'ws';
 import { BROWSER_LOG_PREFIX, DEFAULT_STACK_TRACE } from '../constants.js';
 import { color, isObject } from '../helpers';
 import { formatStatsError } from '../helpers/format';
+import { isRuntimeOverlayEnabled } from '../helpers/overlayConfig';
 import { getStatsErrors, getStatsWarnings } from '../helpers/stats';
 import type {
   DevConfig,
@@ -236,7 +237,7 @@ export class SocketServer {
   }
 
   /**
-   * Send error messages to the client and render error overlay
+   * Send error messages to the client.
    */
   public sendError(errors: Rspack.StatsError[], token: string): void {
     const { rootPath } = this.context;
@@ -399,7 +400,7 @@ export class SocketServer {
           }
 
           // Render runtime errors in overlay
-          if (typeof client.overlay === 'object' && client.overlay.runtime) {
+          if (isRuntimeOverlayEnabled(client.overlay)) {
             // Always display full stack trace for runtime errors
             const resolvedLog =
               // Reuse the formatted full log to avoid parsing the stack again.

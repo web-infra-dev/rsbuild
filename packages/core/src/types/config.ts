@@ -1834,6 +1834,19 @@ export type SetupMiddlewaresFn = (
   server: SetupMiddlewaresContext,
 ) => void;
 
+export type OverlayOptions = {
+  /**
+   * Whether to show build errors in the overlay.
+   * @default true
+   */
+  errors?: boolean;
+  /**
+   * Whether to show runtime errors in the overlay.
+   * @default false
+   */
+  runtime?: boolean;
+};
+
 export type ClientConfig = {
   /**
    * The path for the WebSocket request.
@@ -1861,18 +1874,10 @@ export type ClientConfig = {
    */
   reconnect?: number;
   /**
-   * Whether to display an error overlay in the browser when a compilation error occurs.
+   * Whether to display an error overlay in the browser.
    * @default true
    */
-  overlay?:
-    | boolean
-    | {
-        /**
-         * Whether to show runtime errors in the overlay.
-         * @default false
-         */
-        runtime?: boolean;
-      };
+  overlay?: boolean | OverlayOptions;
   /**
    * Controls the log level for client-side logging in the browser console.
    * @default 'info'
