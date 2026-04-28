@@ -322,6 +322,41 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
+  it('should merge dev.client.overlay.errors correctly', () => {
+    const fn1 = () => false;
+    const fn2 = () => true;
+    expect(
+      mergeRsbuildConfig(
+        {
+          dev: {
+            client: {
+              overlay: {
+                errors: fn1,
+              },
+            },
+          },
+        },
+        {
+          dev: {
+            client: {
+              overlay: {
+                errors: fn2,
+              },
+            },
+          },
+        },
+      ),
+    ).toEqual({
+      dev: {
+        client: {
+          overlay: {
+            errors: fn2,
+          },
+        },
+      },
+    });
+  });
+
   it('should merge Rspack plugins as expected', () => {
     class A {
       a = 1;
