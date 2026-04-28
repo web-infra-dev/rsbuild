@@ -8,6 +8,7 @@ test('should send HMR messages to the matched environment only', async ({
   const rsbuild = await createRsbuild({
     cwd: import.meta.dirname,
     config: {
+      mode: 'development',
       server: {
         port: await getRandomPort(),
       },
