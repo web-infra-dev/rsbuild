@@ -104,6 +104,7 @@ export const pluginSass = (
     const CSS_INLINE = 'css-inline';
     const CSS_RAW = 'css-raw';
     const SASS_MAIN = 'sass';
+    const SASS_URL = 'sass-url';
     const SASS_INLINE = 'sass-inline';
     const SASS_RAW = 'sass-raw';
     const isV1 = api.context.version.startsWith('1.');
@@ -132,6 +133,10 @@ export const pluginSass = (
         .resolve.preferRelative(true)
         .end();
 
+      const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
+      const cssUrlRuleId = CHAIN_ID.ONE_OF.CSS_URL;
+      const hasCssUrlRule = cssUrlRuleId && cssRule.oneOfs.has(cssUrlRuleId);
+
       if (isV1) {
         chain.module.rule(SASS_RAW).test(include);
         chain.module.rule(SASS_INLINE).test(include);
@@ -142,12 +147,11 @@ export const pluginSass = (
         if (isV1) {
           return chain.module.rule(id);
         }
-        return (
-          id.startsWith('sass')
-            ? sassRule
-            : chain.module.rule(CHAIN_ID.RULE.CSS)
-        ).oneOf(id);
+        return (id.startsWith('sass') ? sassRule : cssRule).oneOf(id);
       };
+
+      // Sass URL for `?url` imports.
+      const sassUrlRule = hasCssUrlRule && getRule(SASS_URL);
 
       // Inline Sass for `?inline` imports
       const sassInlineRule = getRule(SASS_INLINE);
@@ -160,15 +164,19 @@ export const pluginSass = (
       // Main Sass transform
       const sassMainRule = getRule(SASS_MAIN);
 
-      // Update the main rule and the inline rule
+      // Update the main, inline and URL rules.
       const updateRules = (
         callback: (
           rule: RspackChain.Rule<unknown>,
           cssBranchRule: RspackChain.Rule<unknown>,
+          type: 'main' | 'inline' | 'url',
         ) => void,
       ) => {
-        callback(sassMainRule, getRule(CSS_MAIN));
-        callback(sassInlineRule, getRule(CSS_INLINE));
+        if (sassUrlRule) {
+          callback(sassUrlRule, getRule(cssUrlRuleId), 'url');
+        }
+        callback(sassMainRule, getRule(CSS_MAIN), 'main');
+        callback(sassInlineRule, getRule(CSS_INLINE), 'inline');
       };
 
       const sassLoaderPath = path.join(
@@ -189,7 +197,7 @@ export const pluginSass = (
         sourceMap: false,
       };
 
-      updateRules((rule, cssBranchRule) => {
+      updateRules((rule, cssBranchRule, type) => {
         for (const item of excludes) {
           rule.exclude.add(item);
         }
@@ -198,9 +206,10 @@ export const pluginSass = (
         }
 
         // Copy the builtin CSS rules
-        rule
-          .sideEffects(true)
-          .resourceQuery(cssBranchRule.get('resourceQuery'));
+        if (type !== 'url') {
+          rule.sideEffects(true);
+        }
+        rule.resourceQuery(cssBranchRule.get('resourceQuery'));
 
         for (const id of Object.keys(cssBranchRule.uses.entries())) {
           const loader = cssBranchRule.uses.get(id);
