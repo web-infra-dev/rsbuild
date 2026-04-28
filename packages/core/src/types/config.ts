@@ -1836,10 +1836,12 @@ export type SetupMiddlewaresFn = (
 
 export type OverlayOptions = {
   /**
-   * Whether to show build errors in the overlay.
+   * Whether to show build errors in the overlay. You can pass a filter
+   * function to control which formatted build errors are rendered.
+   * Return false from the filter function to hide a specific error.
    * @default true
    */
-  errors?: boolean;
+  errors?: boolean | ((error: Error) => boolean);
   /**
    * Whether to show runtime errors in the overlay.
    * @default false

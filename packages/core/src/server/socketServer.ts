@@ -244,7 +244,23 @@ export class SocketServer {
     const formattedErrors = errors.map((item) =>
       formatStatsError(item, rootPath, 'error', this.context.logger),
     );
-    const html = formattedErrors
+
+    const environment = this.getEnvironmentByToken(token);
+    const overlay = environment?.config.dev.client.overlay;
+    let overlayErrors = formattedErrors;
+
+    if (
+      overlay &&
+      typeof overlay === 'object' &&
+      typeof overlay.errors === 'function'
+    ) {
+      const { errors: filter } = overlay;
+      overlayErrors = formattedErrors.filter((error) =>
+        filter(new Error(error)),
+      );
+    }
+
+    const html = overlayErrors
       .map((error) => renderErrorToHtml(error, rootPath))
       .join('\n\n')
       .trim();

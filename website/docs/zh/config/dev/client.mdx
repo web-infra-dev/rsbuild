@@ -21,7 +21,7 @@ type Client = {
   // WebSocket 请求断开后的最大重连次数
   reconnect?: number;
   // 是否在浏览器中显示 error overlay
-  overlay?: boolean | { errors?: boolean; runtime?: boolean };
+  overlay?: boolean | OverlayOptions;
   // 控制浏览器控制台中日志的级别
   logLevel?: 'info' | 'warn' | 'error' | 'silent';
 };
@@ -93,7 +93,7 @@ hot-update 文件属于静态资源，如果你需要配置 hot-update 文件的
 
 ### overlay
 
-- **类型：** `boolean | { errors?: boolean; runtime?: boolean }`
+- **类型：** `boolean | { errors?: boolean | ((error: Error) => boolean); runtime?: boolean }`
 - **默认值：** `true`
 
 通过 `dev.client.overlay` 选项，可以选择是否启用错误浮层。
@@ -118,7 +118,7 @@ export default {
 
 #### overlay.errors
 
-- **类型：** `boolean`
+- **类型：** `boolean | ((error: Error) => boolean)`
 - **默认值：** `true`
 
 `overlay.errors` 用于控制是否将构建错误渲染到浮层中。
@@ -131,6 +131,20 @@ export default {
     client: {
       overlay: {
         errors: false,
+      },
+    },
+  },
+};
+```
+
+你也可以传入一个过滤函数，用于控制哪些格式化后的构建错误会渲染到浮层中。当某个构建错误被过滤掉时，它仍会打印到浏览器控制台，但不会显示在错误浮层中：
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      overlay: {
+        errors: (error) => !error.message.includes('Ignore this error'),
       },
     },
   },

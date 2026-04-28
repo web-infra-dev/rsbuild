@@ -21,7 +21,7 @@ type Client = {
   // The maximum number of reconnection attempts after a WebSocket request is disconnected.
   reconnect?: number;
   // Whether to display an error overlay in the browser
-  overlay?: boolean | { errors?: boolean; runtime?: boolean };
+  overlay?: boolean | OverlayOptions;
   // Controls the log level for client-side logging in the browser console
   logLevel?: 'info' | 'warn' | 'error' | 'silent';
 };
@@ -95,7 +95,7 @@ Hot-update files are considered to be static assets. If you need to configure th
 
 ### overlay
 
-- **Type:** `boolean | { errors?: boolean; runtime?: boolean }`
+- **Type:** `boolean | { errors?: boolean | ((error: Error) => boolean); runtime?: boolean }`
 - **Default:** `true`
 
 The `dev.client.overlay` option allows you to choose whether or not to enable the error overlay feature.
@@ -120,7 +120,7 @@ When `overlay` is configured as an object, it allows more fine-grained control o
 
 #### overlay.errors
 
-- **Type:** `boolean`
+- **Type:** `boolean | ((error: Error) => boolean)`
 - **Default:** `true`
 
 `overlay.errors` controls whether build errors are rendered in the overlay.
@@ -133,6 +133,20 @@ export default {
     client: {
       overlay: {
         errors: false,
+      },
+    },
+  },
+};
+```
+
+You can also pass a filter function to control which formatted build errors are rendered. When a build error is filtered out, it will still be printed in the browser console, but will not be displayed in the error overlay.
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      overlay: {
+        errors: (error) => !error.message.includes('Ignore this error'),
       },
     },
   },
