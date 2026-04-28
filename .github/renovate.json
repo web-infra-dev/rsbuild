@@ -5,6 +5,7 @@
     "schedule:weekly",
     "helpers:pinGitHubActionDigests"
   ],
+  "rangeStrategy": "bump",
   "packageRules": [
     {
       "groupName": "Babel",
