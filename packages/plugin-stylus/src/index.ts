@@ -76,6 +76,7 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
     const CSS_INLINE = 'css-inline';
     const CSS_RAW = 'css-raw';
     const STYLUS_MAIN = 'stylus';
+    const STYLUS_URL = 'stylus-url';
     const STYLUS_INLINE = 'stylus-inline';
     const STYLUS_RAW = 'stylus-raw';
     const isV1 = api.context.version.startsWith('1.');
@@ -100,6 +101,10 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
         .resolve.preferRelative(true)
         .end();
 
+      const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
+      const cssUrlRuleId = CHAIN_ID.ONE_OF.CSS_URL;
+      const hasCssUrlRule = cssUrlRuleId && cssRule.oneOfs.has(cssUrlRuleId);
+
       if (isV1) {
         chain.module.rule(STYLUS_RAW).test(test);
         chain.module.rule(STYLUS_INLINE).test(test);
@@ -110,12 +115,11 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
         if (isV1) {
           return chain.module.rule(id);
         }
-        return (
-          id.startsWith('stylus')
-            ? stylusRule
-            : chain.module.rule(CHAIN_ID.RULE.CSS)
-        ).oneOf(id);
+        return (id.startsWith('stylus') ? stylusRule : cssRule).oneOf(id);
       };
+
+      // Stylus URL for `?url` imports.
+      const stylusUrlRule = hasCssUrlRule && getRule(STYLUS_URL);
 
       // Inline Stylus for `?inline` imports
       const stylusInlineRule = getRule(STYLUS_INLINE);
@@ -128,22 +132,27 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
       // Main Stylus transform
       const stylusMainRule = getRule(STYLUS_MAIN);
 
-      // Update the main rule and the inline rule
+      // Update the main, inline and URL rules.
       const updateRules = (
         callback: (
           rule: RspackChain.Rule<unknown>,
           cssBranchRule: RspackChain.Rule<unknown>,
+          type: 'main' | 'inline' | 'url',
         ) => void,
       ) => {
-        callback(stylusMainRule, getRule(CSS_MAIN));
-        callback(stylusInlineRule, getRule(CSS_INLINE));
+        if (stylusUrlRule) {
+          callback(stylusUrlRule, getRule(cssUrlRuleId), 'url');
+        }
+        callback(stylusMainRule, getRule(CSS_MAIN), 'main');
+        callback(stylusInlineRule, getRule(CSS_INLINE), 'inline');
       };
 
-      updateRules((rule, cssBranchRule) => {
+      updateRules((rule, cssBranchRule, type) => {
         // Copy the builtin CSS rules
-        rule
-          .sideEffects(true)
-          .resourceQuery(cssBranchRule.get('resourceQuery'));
+        if (type !== 'url') {
+          rule.sideEffects(true);
+        }
+        rule.resourceQuery(cssBranchRule.get('resourceQuery'));
 
         for (const id of Object.keys(cssBranchRule.uses.entries())) {
           const loader = cssBranchRule.uses.get(id);
