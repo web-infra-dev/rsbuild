@@ -227,15 +227,10 @@ console.log(styleUrl); // 输出编译后 CSS 文件的 URL
 - CSS 文件会作为单独的资源输出
 - CSS 样式不会自动应用到页面中
 
-:::note
-
-`?url` 查询参数不支持 CSS Modules，比如 `.module.css?url`。CSS Modules 会被编译为 class name 映射，而 `?url` 需要输出编译后的 CSS 资源并返回它的 URL。如果你需要将编译后的 CSS 内容作为字符串导入，请改用 `?inline`。如果你希望对 `.module.css` 文件使用 `?url`，请通过 [output.cssModules.auto](/config/output/css-modules#cssmodulesauto) 关闭该文件的 CSS Modules 匹配。
-
-:::
-
 :::tip
 
 - Rsbuild 的 Sass、Less 和 Stylus 插件也支持 `?url` 查询参数。
+- `?url` 查询参数不支持 CSS Modules，比如 `.module.css?url`，因为 CSS Modules 会被编译为 class name 映射，而不是输出 CSS 资源 URL。请使用 `?inline` 将编译后的 CSS 内容作为字符串导入，或通过 [output.cssModules.auto](/config/output/css-modules#cssmodulesauto) 关闭该文件的 CSS Modules 匹配。
 - Rsbuild >= 2.0.2 支持 `?url` 查询参数。
 
 :::
