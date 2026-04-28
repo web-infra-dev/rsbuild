@@ -402,6 +402,7 @@ export class SocketServer {
           if (typeof client.overlay === 'object' && client.overlay.runtime) {
             // Always display full stack trace for runtime errors
             const resolvedLog =
+              // Reuse the formatted full log to avoid parsing the stack again.
               stackTrace === 'full'
                 ? log
                 : await formatBrowserErrorLog(

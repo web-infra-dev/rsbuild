@@ -21,6 +21,14 @@ const isValidMethodName = (methodName: string) => {
   return methodName !== '<unknown>' && !/[\\/]/.test(methodName);
 };
 
+const isRspackRuntimeStack = (value?: string): boolean => {
+  if (!value) {
+    return false;
+  }
+
+  return value.includes('__webpack_require__') || isRspackRuntimeModule(value);
+};
+
 export type CachedTraceMap = Map<string, TraceMap>;
 
 /**
@@ -184,17 +192,22 @@ const formatFullStack = async (
   fs: Rspack.OutputFileSystem,
   cachedTraceMap: CachedTraceMap,
 ) => {
-  let result = '';
+  const formattedFrames: {
+    text: string;
+    isRspackRuntime: boolean;
+    hasLocation: boolean;
+  }[] = [];
 
   for (const frame of stackFrames) {
     const parsedFrame = await parseFrame(frame, fs, context, cachedTraceMap);
     const { methodName } = frame;
-    const parts: (string | undefined)[] = [];
+    const parts: string[] = [];
 
     if (isValidMethodName(methodName)) {
       parts.push(methodName);
     }
 
+    let location: string | undefined;
     let parsed = false;
     if (parsedFrame) {
       const { sourceMapPath, originalPosition } = parsedFrame;
@@ -204,6 +217,7 @@ const formatFullStack = async (
         context,
       );
       if (originalLocation) {
+        location = originalLocation;
         parts.push(originalLocation);
         parsed = true;
       }
@@ -214,19 +228,32 @@ const formatFullStack = async (
     if (!parsed && isVerbose(context.logger)) {
       const frameString = formatFrameLocation(frame);
       if (frameString) {
+        location = frameString;
         parts.push(frameString);
       }
     }
 
-    if (parts[0]) {
-      result += `\n    at ${parts[0]}`;
-    }
-    if (parts[1]) {
-      result += ` (${parts[1]})`;
+    const [first, second] = parts;
+    if (first) {
+      const isRspackRuntime =
+        isRspackRuntimeStack(methodName) || isRspackRuntimeStack(location);
+      formattedFrames.push({
+        text: second ? `\n    at ${first} (${second})` : `\n    at ${first}`,
+        isRspackRuntime,
+        hasLocation: location !== undefined,
+      });
     }
   }
 
-  return result;
+  // Hide Rspack runtime frames only when other useful stack frames with locations exist.
+  const shouldFilterRspackRuntime = formattedFrames.some(
+    (frame) => !frame.isRspackRuntime && frame.hasLocation,
+  );
+
+  return formattedFrames
+    .filter((frame) => !(shouldFilterRspackRuntime && frame.isRspackRuntime))
+    .map((frame) => frame.text)
+    .join('');
 };
 
 /**
