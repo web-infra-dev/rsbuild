@@ -183,6 +183,7 @@ export const pluginLess = (
     const CSS_INLINE = 'css-inline';
     const CSS_RAW = 'css-raw';
     const LESS_MAIN = 'less';
+    const LESS_URL = 'less-url';
     const LESS_INLINE = 'less-inline';
     const LESS_RAW = 'less-raw';
     const isV1 = api.context.version.startsWith('1.');
@@ -214,6 +215,13 @@ export const pluginLess = (
         ).oneOf(id);
       };
 
+      const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
+      const cssUrlRuleId = CHAIN_ID.ONE_OF.CSS_URL;
+      const hasCssUrlRule = cssUrlRuleId && cssRule.oneOfs.has(cssUrlRuleId);
+
+      // Less URL for `?url` imports.
+      const lessUrlRule = hasCssUrlRule && getRule(LESS_URL);
+
       // Inline Less for `?inline` imports
       const lessInlineRule = getRule(LESS_INLINE);
 
@@ -232,20 +240,24 @@ export const pluginLess = (
         api.context.rootPath,
       );
 
-      // Update the main rule and the inline rule
+      // Update the main, inline and URL rules.
       const updateRules = (
         callback: (
           rule: RspackChain.Rule<unknown>,
           cssBranchRule: RspackChain.Rule<unknown>,
+          type: 'main' | 'inline' | 'url',
         ) => void,
       ) => {
-        callback(lessMainRule, getRule(CSS_MAIN));
-        callback(lessInlineRule, getRule(CSS_INLINE));
+        if (lessUrlRule) {
+          callback(lessUrlRule, getRule(cssUrlRuleId), 'url');
+        }
+        callback(lessMainRule, getRule(CSS_MAIN), 'main');
+        callback(lessInlineRule, getRule(CSS_INLINE), 'inline');
       };
 
       const lessLoaderPath = require.resolve('less-loader');
 
-      updateRules((rule, cssBranchRule) => {
+      updateRules((rule, cssBranchRule, type) => {
         for (const item of excludes) {
           rule.exclude.add(item);
         }
@@ -254,9 +266,10 @@ export const pluginLess = (
         }
 
         // Copy the builtin CSS rules
-        rule
-          .sideEffects(true)
-          .resourceQuery(cssBranchRule.get('resourceQuery'));
+        if (type !== 'url') {
+          rule.sideEffects(true);
+        }
+        rule.resourceQuery(cssBranchRule.get('resourceQuery'));
 
         for (const id of Object.keys(cssBranchRule.uses.entries())) {
           const loader = cssBranchRule.uses.get(id);
