@@ -215,7 +215,7 @@ console.log(rawCss); // 输出 CSS 文件的原始内容
 
 Rsbuild 支持通过 `?url` 查询参数引用 CSS 文件编译后的 URL，并将其作为字符串导入到 JavaScript 中。
 
-```ts title="src/index.js"
+```js title="src/index.js"
 import styleUrl from './style.css?url';
 
 console.log(styleUrl); // 输出编译后 CSS 文件的 URL
