@@ -4,11 +4,13 @@
     "pr-creator": {
       "source": "rstackjs/agent-skills",
       "sourceType": "github",
-      "computedHash": "0818eb81ec601e1d410d26c54b44a34231061db173cad0c40ce3b91bfb16f38e"
+      "skillPath": "skills/pr-creator/SKILL.md",
+      "computedHash": "a632c60f135594b5ec098ce6196c85395e448ade27882292bf0b68f9192e8278"
     },
     "rspress-description-generator": {
       "source": "rstackjs/agent-skills",
       "sourceType": "github",
+      "skillPath": "skills/rspress-description-generator/SKILL.md",
       "computedHash": "ca2693ca055d1b4e5903bdfacab522f46ca0e13cbc5db59e6c9589fdc8efc6ad"
     }
   }
