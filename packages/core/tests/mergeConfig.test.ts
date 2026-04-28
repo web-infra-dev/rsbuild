@@ -357,6 +357,24 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
+  it('should override single callback options correctly', () => {
+    const filter1 = () => false;
+    const filter2 = () => true;
+
+    expect(
+      mergeRsbuildConfig(
+        { server: { compress: { filter: filter1 } } },
+        { server: { compress: { filter: filter2 } } },
+      ),
+    ).toEqual({
+      server: {
+        compress: {
+          filter: filter2,
+        },
+      },
+    });
+  });
+
   it('should merge Rspack plugins as expected', () => {
     class A {
       a = 1;
