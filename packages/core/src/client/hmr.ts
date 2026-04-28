@@ -155,8 +155,6 @@ export function init(
         (typeof overlay === 'object' && overlay.errors !== false))
     ) {
       createOverlay('Build failed', html);
-    } else if (clearOverlay) {
-      clearOverlay();
     }
   }
 
