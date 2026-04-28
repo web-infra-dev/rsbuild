@@ -227,6 +227,12 @@ Using `import "*.css?url"` has the following behaviors:
 - The CSS file will be emitted as a separate asset
 - The CSS styles will not be automatically applied to the page
 
+:::note
+
+The `?url` query parameter does not support CSS Modules, such as `.module.css?url`. CSS Modules are compiled as class name mappings, while `?url` needs to emit a compiled CSS asset and return its URL. If you need to import the compiled CSS content as a string, use `?inline` instead. To use `?url` with a `.module.css` filename, disable CSS Modules matching for that file through [output.cssModules.auto](/config/output/css-modules#cssmodulesauto).
+
+:::
+
 :::tip
 
 - Rsbuild's Sass, Less, and Stylus plugins also support the `?url` query parameter.
