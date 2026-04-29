@@ -29,11 +29,17 @@ const getErrorField = (
 };
 
 const formatErrorLikeMessage = (error: unknown): string | undefined => {
-  const message = getErrorField(error, 'message');
-  if (message) {
-    const name = getErrorField(error, 'name');
-    return name ? `${name}: ${message}` : message;
+  if (!(error instanceof Error)) {
+    return;
   }
+
+  const message = getErrorField(error, 'message');
+  if (message === undefined) {
+    return;
+  }
+
+  const name = getErrorField(error, 'name');
+  return name ? `${name}: ${message}` : message;
 };
 
 // Install a patched `module.hot.on` that records per-module listeners and
