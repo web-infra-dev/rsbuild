@@ -62,7 +62,7 @@ exports[`should apply default plugins correctly 1`] = `
             "resolve": {
               "preferRelative": true,
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "use": [
               {
                 "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
@@ -289,7 +289,7 @@ exports[`should apply default plugins correctly 1`] = `
             "generator": {
               "filename": "static/image/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/resource",
           },
           {
@@ -320,7 +320,7 @@ exports[`should apply default plugins correctly 1`] = `
             "generator": {
               "filename": "static/svg/[name].[contenthash:10].svg",
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/resource",
           },
           {
@@ -351,7 +351,7 @@ exports[`should apply default plugins correctly 1`] = `
             "generator": {
               "filename": "static/media/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/resource",
           },
           {
@@ -382,7 +382,7 @@ exports[`should apply default plugins correctly 1`] = `
             "generator": {
               "filename": "static/font/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/resource",
           },
           {
@@ -536,7 +536,7 @@ exports[`should apply default plugins correctly in production 1`] = `
             "resolve": {
               "preferRelative": true,
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "use": [
               {
                 "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
@@ -764,7 +764,7 @@ exports[`should apply default plugins correctly in production 1`] = `
             "generator": {
               "filename": "static/image/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/resource",
           },
           {
@@ -795,7 +795,7 @@ exports[`should apply default plugins correctly in production 1`] = `
             "generator": {
               "filename": "static/svg/[name].[contenthash:10].svg",
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/resource",
           },
           {
@@ -826,7 +826,7 @@ exports[`should apply default plugins correctly in production 1`] = `
             "generator": {
               "filename": "static/media/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/resource",
           },
           {
@@ -857,7 +857,7 @@ exports[`should apply default plugins correctly in production 1`] = `
             "generator": {
               "filename": "static/font/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/resource",
           },
           {
@@ -1036,7 +1036,7 @@ exports[`should apply default plugins correctly when target is node 1`] = `
             "resolve": {
               "preferRelative": true,
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "use": [
               {
                 "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
@@ -1240,7 +1240,7 @@ exports[`should apply default plugins correctly when target is node 1`] = `
             "generator": {
               "filename": "static/image/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/resource",
           },
           {
@@ -1271,7 +1271,7 @@ exports[`should apply default plugins correctly when target is node 1`] = `
             "generator": {
               "filename": "static/svg/[name].[contenthash:10].svg",
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/resource",
           },
           {
@@ -1302,7 +1302,7 @@ exports[`should apply default plugins correctly when target is node 1`] = `
             "generator": {
               "filename": "static/media/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/resource",
           },
           {
@@ -1333,7 +1333,7 @@ exports[`should apply default plugins correctly when target is node 1`] = `
             "generator": {
               "filename": "static/font/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/resource",
           },
           {
@@ -1502,7 +1502,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "resolve": {
               "preferRelative": true,
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "use": [
               {
                 "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
@@ -1729,7 +1729,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "generator": {
               "filename": "static/image/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/resource",
           },
           {
@@ -1760,7 +1760,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "generator": {
               "filename": "static/svg/[name].[contenthash:10].svg",
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/resource",
           },
           {
@@ -1791,7 +1791,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "generator": {
               "filename": "static/media/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/resource",
           },
           {
@@ -1822,7 +1822,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "generator": {
               "filename": "static/font/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/resource",
           },
           {

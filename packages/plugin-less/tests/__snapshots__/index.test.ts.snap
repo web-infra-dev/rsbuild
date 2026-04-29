@@ -8,7 +8,7 @@ exports[`plugin-less > should add less-loader 1`] = `
     },
     "oneOf": [
       {
-        "resourceQuery": /\\^\\\\\\?url\\$/,
+        "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
         "use": [
           {
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
@@ -164,7 +164,7 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
     },
     "oneOf": [
       {
-        "resourceQuery": /\\^\\\\\\?url\\$/,
+        "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
         "use": [
           {
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
@@ -432,7 +432,7 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
         "exclude": [
           /node_modules/,
         ],
-        "resourceQuery": /\\^\\\\\\?url\\$/,
+        "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
         "use": [
           {
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
@@ -594,7 +594,7 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
     },
     "oneOf": [
       {
-        "resourceQuery": /\\^\\\\\\?url\\$/,
+        "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
         "use": [
           {
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
@@ -750,7 +750,7 @@ exports[`plugin-less > should allow to use Less plugins 1`] = `
     },
     "oneOf": [
       {
-        "resourceQuery": /\\^\\\\\\?url\\$/,
+        "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
         "use": [
           {
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",

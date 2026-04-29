@@ -35,7 +35,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "resolve": {
                 "preferRelative": true,
               },
-              "resourceQuery": /\\^\\\\\\?url\\$/,
+              "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
               "use": [
                 {
                   "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
@@ -262,7 +262,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "generator": {
                 "filename": "static/image/[name].[contenthash:10][ext]",
               },
-              "resourceQuery": /\\^\\\\\\?url\\$/,
+              "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/resource",
             },
             {
@@ -293,7 +293,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "generator": {
                 "filename": "static/svg/[name].[contenthash:10].svg",
               },
-              "resourceQuery": /\\^\\\\\\?url\\$/,
+              "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/resource",
             },
             {
@@ -324,7 +324,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "generator": {
                 "filename": "static/media/[name].[contenthash:10][ext]",
               },
-              "resourceQuery": /\\^\\\\\\?url\\$/,
+              "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/resource",
             },
             {
@@ -355,7 +355,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "generator": {
                 "filename": "static/font/[name].[contenthash:10][ext]",
               },
-              "resourceQuery": /\\^\\\\\\?url\\$/,
+              "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/resource",
             },
             {
@@ -502,7 +502,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "resolve": {
                 "preferRelative": true,
               },
-              "resourceQuery": /\\^\\\\\\?url\\$/,
+              "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
               "use": [
                 {
                   "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
@@ -712,7 +712,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "generator": {
                 "filename": "static/image/[name].[contenthash:10][ext]",
               },
-              "resourceQuery": /\\^\\\\\\?url\\$/,
+              "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/resource",
             },
             {
@@ -743,7 +743,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "generator": {
                 "filename": "static/svg/[name].[contenthash:10].svg",
               },
-              "resourceQuery": /\\^\\\\\\?url\\$/,
+              "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/resource",
             },
             {
@@ -774,7 +774,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "generator": {
                 "filename": "static/media/[name].[contenthash:10][ext]",
               },
-              "resourceQuery": /\\^\\\\\\?url\\$/,
+              "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/resource",
             },
             {
@@ -805,7 +805,7 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
               "generator": {
                 "filename": "static/font/[name].[contenthash:10][ext]",
               },
-              "resourceQuery": /\\^\\\\\\?url\\$/,
+              "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/resource",
             },
             {

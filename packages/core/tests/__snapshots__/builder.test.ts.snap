@@ -39,7 +39,7 @@ exports[`default bundler > should use Rspack by default 1`] = `
             "resolve": {
               "preferRelative": true,
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "use": [
               {
                 "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
@@ -266,7 +266,7 @@ exports[`default bundler > should use Rspack by default 1`] = `
             "generator": {
               "filename": "static/image/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/resource",
           },
           {
@@ -297,7 +297,7 @@ exports[`default bundler > should use Rspack by default 1`] = `
             "generator": {
               "filename": "static/svg/[name].[contenthash:10].svg",
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/resource",
           },
           {
@@ -328,7 +328,7 @@ exports[`default bundler > should use Rspack by default 1`] = `
             "generator": {
               "filename": "static/media/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/resource",
           },
           {
@@ -359,7 +359,7 @@ exports[`default bundler > should use Rspack by default 1`] = `
             "generator": {
               "filename": "static/font/[name].[contenthash:10][ext]",
             },
-            "resourceQuery": /\\^\\\\\\?url\\$/,
+            "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/resource",
           },
           {

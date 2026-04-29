@@ -8,7 +8,7 @@ exports[`plugin-asset > should add image rules correctly 1`] = `
         "generator": {
           "filename": "static/image/[name].[contenthash:10][ext]",
         },
-        "resourceQuery": /\\^\\\\\\?url\\$/,
+        "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
         "type": "asset/resource",
       },
       {
@@ -44,7 +44,7 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
         "generator": {
           "filename": "[name].[contenthash:10][ext]",
         },
-        "resourceQuery": /\\^\\\\\\?url\\$/,
+        "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
         "type": "asset/resource",
       },
       {
@@ -80,7 +80,7 @@ exports[`plugin-asset > should allow using distPath.image to modify dist path 1`
         "generator": {
           "filename": "foo/[name].[contenthash:10][ext]",
         },
-        "resourceQuery": /\\^\\\\\\?url\\$/,
+        "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
         "type": "asset/resource",
       },
       {
@@ -116,7 +116,7 @@ exports[`plugin-asset > should allow using filename.image to modify filename 1`]
         "generator": {
           "filename": "static/image/foo[ext]",
         },
-        "resourceQuery": /\\^\\\\\\?url\\$/,
+        "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
         "type": "asset/resource",
       },
       {

@@ -8,7 +8,7 @@ exports[`plugin-stylus > should add stylus loader config correctly 1`] = `
     },
     "oneOf": [
       {
-        "resourceQuery": /\\^\\\\\\?url\\$/,
+        "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
         "use": [
           {
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",
@@ -243,7 +243,7 @@ exports[`plugin-stylus > should allow to configure stylus options 1`] = `
     },
     "oneOf": [
       {
-        "resourceQuery": /\\^\\\\\\?url\\$/,
+        "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
         "use": [
           {
             "loader": "<ROOT>/packages/core/dist/cssUrlLoader.mjs",

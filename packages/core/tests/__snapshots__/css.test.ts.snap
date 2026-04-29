@@ -11,7 +11,7 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
         "resolve": {
           "preferRelative": true,
         },
-        "resourceQuery": /\\^\\\\\\?url\\$/,
+        "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
         "use": [
           {
             "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
@@ -137,7 +137,7 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
         "resolve": {
           "preferRelative": true,
         },
-        "resourceQuery": /\\^\\\\\\?url\\$/,
+        "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
         "use": [
           {
             "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
@@ -247,7 +247,7 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
         "resolve": {
           "preferRelative": true,
         },
-        "resourceQuery": /\\^\\\\\\?url\\$/,
+        "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
         "use": [
           {
             "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
@@ -373,7 +373,7 @@ exports[`should ensure isolation of PostCSS config objects between different bui
         "resolve": {
           "preferRelative": true,
         },
-        "resourceQuery": /\\^\\\\\\?url\\$/,
+        "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
         "use": [
           {
             "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
@@ -544,7 +544,7 @@ exports[`should ensure isolation of PostCSS config objects between different bui
         "resolve": {
           "preferRelative": true,
         },
-        "resourceQuery": /\\^\\\\\\?url\\$/,
+        "resourceQuery": /\\[\\?&\\]url\\(\\?:&\\|=\\|\\$\\)/,
         "use": [
           {
             "loader": "<ROOT>/packages/core/src/cssUrlLoader.mjs",
