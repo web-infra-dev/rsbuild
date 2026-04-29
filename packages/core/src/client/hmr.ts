@@ -22,8 +22,8 @@ const getErrorField = (
   error: unknown,
   field: keyof Error,
 ): string | undefined => {
-  if (error && typeof error === 'object') {
-    const value = (error as Error)[field];
+  if (error instanceof Error) {
+    const value = error[field];
     return value === undefined ? undefined : String(value);
   }
 };
