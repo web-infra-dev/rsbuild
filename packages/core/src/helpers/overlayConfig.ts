@@ -7,7 +7,9 @@ export const isBuildOverlayEnabled = (
 
 export const isRuntimeOverlayEnabled = (
   overlay: ClientConfig['overlay'],
-): boolean => typeof overlay === 'object' && overlay.runtime === true;
+): boolean =>
+  typeof overlay === 'object' &&
+  (overlay.runtime === true || typeof overlay.runtime === 'function');
 
 export const isOverlayEnabled = (overlay: ClientConfig['overlay']): boolean =>
   isBuildOverlayEnabled(overlay) || isRuntimeOverlayEnabled(overlay);

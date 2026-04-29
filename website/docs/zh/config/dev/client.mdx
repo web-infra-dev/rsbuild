@@ -93,7 +93,17 @@ hot-update 文件属于静态资源，如果你需要配置 hot-update 文件的
 
 ### overlay
 
-- **类型：** `boolean | { errors?: boolean | ((error: Error) => boolean); runtime?: boolean }`
+- **类型：**
+
+```ts
+type Overlay =
+  | boolean
+  | {
+      errors?: boolean | ((error: Error) => boolean);
+      runtime?: boolean | ((error: Error) => boolean);
+    };
+```
+
 - **默认值：** `true`
 
 通过 `dev.client.overlay` 选项，可以选择是否启用错误浮层。
@@ -153,7 +163,7 @@ export default {
 
 #### overlay.runtime
 
-- **类型：** `boolean`
+- **类型：** `boolean | ((error: Error) => boolean)`
 - **默认值：** `false`
 
 `overlay.runtime` 用于控制是否将浏览器里产生的运行时错误渲染到浮层中。
@@ -166,6 +176,21 @@ export default {
     client: {
       overlay: {
         runtime: true,
+      },
+    },
+  },
+};
+```
+
+你也可以传入一个过滤函数，用于控制哪些运行时错误会渲染到浮层中。过滤函数在 Node.js 中执行，并且 `error.name` 会设置为浏览器端原始错误的名称。
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      overlay: {
+        runtime: (error) =>
+          error.name !== 'AbortError' && error.message.includes('Foo'),
       },
     },
   },

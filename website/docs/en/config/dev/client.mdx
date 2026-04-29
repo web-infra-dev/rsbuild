@@ -95,7 +95,17 @@ Hot-update files are considered to be static assets. If you need to configure th
 
 ### overlay
 
-- **Type:** `boolean | { errors?: boolean | ((error: Error) => boolean); runtime?: boolean }`
+- **Type:**
+
+```ts
+type Overlay =
+  | boolean
+  | {
+      errors?: boolean | ((error: Error) => boolean);
+      runtime?: boolean | ((error: Error) => boolean);
+    };
+```
+
 - **Default:** `true`
 
 The `dev.client.overlay` option allows you to choose whether or not to enable the error overlay feature.
@@ -155,7 +165,7 @@ export default {
 
 #### overlay.runtime
 
-- **Type:** `boolean`
+- **Type:** `boolean | ((error: Error) => boolean)`
 - **Default:** `false`
 
 `overlay.runtime` controls whether runtime errors that occur in the browser are rendered in the overlay.
@@ -168,6 +178,21 @@ export default {
     client: {
       overlay: {
         runtime: true,
+      },
+    },
+  },
+};
+```
+
+You can also pass a filter function to control which runtime errors are rendered. The filter function runs in Node.js, and `error.name` is set to the original error name from the browser.
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      overlay: {
+        runtime: (error) =>
+          error.name !== 'AbortError' && error.message.includes('Foo'),
       },
     },
   },

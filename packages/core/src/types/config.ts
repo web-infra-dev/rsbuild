@@ -1843,10 +1843,12 @@ export type OverlayOptions = {
    */
   errors?: boolean | ((error: Error) => boolean);
   /**
-   * Whether to show runtime errors in the overlay.
+   * Whether to show runtime errors in the overlay. You can pass a filter
+   * function to control which runtime errors are rendered.
+   * Return false from the filter function to hide a specific error.
    * @default false
    */
-  runtime?: boolean;
+  runtime?: boolean | ((error: Error) => boolean);
 };
 
 export type ClientConfig = {

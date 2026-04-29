@@ -18,6 +18,24 @@ declare const RSPACK_INTERCEPT_MODULE_EXECUTION: ((options: {
   module: { hot: Rspack.Hot };
 }) => void)[];
 
+const getErrorField = (
+  error: unknown,
+  field: keyof Error,
+): string | undefined => {
+  if (error && typeof error === 'object') {
+    const value = (error as Error)[field];
+    return value === undefined ? undefined : String(value);
+  }
+};
+
+const formatErrorLikeMessage = (error: unknown): string | undefined => {
+  const message = getErrorField(error, 'message');
+  if (message) {
+    const name = getErrorField(error, 'name');
+    return name ? `${name}: ${message}` : message;
+  }
+};
+
 // Install a patched `module.hot.on` that records per-module listeners and
 // removes them from the global map when the module is disposed.
 function setupCustomHMRListeners(customListenersMap: CustomListenersMap): void {
@@ -347,13 +365,14 @@ export function init(
     }
   }
 
-  function sendError(message: string, stack?: string) {
+  function sendError(message: string, error?: unknown) {
     const id = `${Date.now().toString(36)}${Math.random().toString(36).slice(2)}`;
     const messageInfo: ClientMessageError = {
       type: 'client-error',
       id,
       message,
-      stack,
+      name: getErrorField(error, 'name'),
+      stack: getErrorField(error, 'stack'),
     };
 
     clientErrors.push({ id });
@@ -367,13 +386,10 @@ export function init(
 
   function onUnhandledRejection({ reason }: PromiseRejectionEvent) {
     let message: string;
-    let stack: string | undefined;
 
-    if (reason instanceof Error) {
-      message = reason.name
-        ? `${reason.name}: ${reason.message}`
-        : reason.message;
-      stack = reason.stack;
+    const errorMessage = formatErrorLikeMessage(reason);
+    if (errorMessage !== undefined) {
+      message = errorMessage;
     } else if (typeof reason === 'string') {
       message = reason;
     } else {
@@ -384,7 +400,7 @@ export function init(
       }
     }
 
-    sendError(`Uncaught (in promise) ${message}`, stack);
+    sendError(`Uncaught (in promise) ${message}`, reason);
   }
 
   // Establishing a WebSocket connection with the server.
@@ -441,7 +457,7 @@ export function init(
 
   if (browserLogs && typeof window !== 'undefined') {
     window.addEventListener('error', ({ message, error }) => {
-      sendError(message, error instanceof Error ? error.stack : undefined);
+      sendError(message, error);
     });
     window.addEventListener('unhandledrejection', onUnhandledRejection);
   }

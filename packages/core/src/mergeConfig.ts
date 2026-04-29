@@ -20,6 +20,7 @@ const OVERRIDE_PATHS = new Set([
   'resolve.mainFields',
   'dev.writeToDisk',
   'dev.client.overlay.errors',
+  'dev.client.overlay.runtime',
   'provider',
   'customLogger',
 ]);

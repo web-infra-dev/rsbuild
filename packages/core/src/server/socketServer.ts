@@ -8,6 +8,7 @@ import { formatStatsError } from '../helpers/format';
 import { isRuntimeOverlayEnabled } from '../helpers/overlayConfig';
 import { getStatsErrors, getStatsWarnings } from '../helpers/stats';
 import type {
+  ClientConfig,
   DevConfig,
   InternalContext,
   RsbuildStatsItem,
@@ -95,6 +96,7 @@ export type ClientMessageError = {
   type: 'client-error';
   id: string;
   message: string;
+  name?: string;
   stack?: string;
 };
 
@@ -107,6 +109,29 @@ export type ClientMessage = ClientMessagePing | ClientMessageError;
 const parseQueryString = (req: IncomingMessage) => {
   const queryStr = req.url ? req.url.split('?')[1] : '';
   return queryStr ? Object.fromEntries(new URLSearchParams(queryStr)) : {};
+};
+
+const createRuntimeError = (payload: ClientMessageError): Error => {
+  const error = new Error(payload.message);
+  if (payload.name) {
+    error.name = payload.name;
+  }
+  return error;
+};
+
+const shouldShowRuntimeErrorOverlay = (
+  overlay: ClientConfig['overlay'],
+  payload: ClientMessageError,
+): boolean => {
+  if (!isRuntimeOverlayEnabled(overlay)) {
+    return false;
+  }
+
+  if (typeof overlay === 'object' && typeof overlay.runtime === 'function') {
+    return overlay.runtime(createRuntimeError(payload));
+  }
+
+  return true;
 };
 
 export class SocketServer {
@@ -416,7 +441,7 @@ export class SocketServer {
           }
 
           // Render runtime errors in overlay
-          if (isRuntimeOverlayEnabled(client.overlay)) {
+          if (shouldShowRuntimeErrorOverlay(client.overlay, payload)) {
             // Always display full stack trace for runtime errors
             const resolvedLog =
               // Reuse the formatted full log to avoid parsing the stack again.
