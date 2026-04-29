@@ -116,6 +116,9 @@ const createRuntimeError = (payload: ClientMessageError): Error => {
   if (payload.name) {
     error.name = payload.name;
   }
+  if (payload.stack) {
+    error.stack = payload.stack;
+  }
   return error;
 };
 
