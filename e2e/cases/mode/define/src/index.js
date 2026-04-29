@@ -1,7 +1,9 @@
 try {
   console.log('[value] process.env.NODE_ENV', process.env.NODE_ENV);
   console.log('[value] import.meta.env.MODE', import.meta.env.MODE);
-} catch {}
+} catch {
+  // do nothing
+}
 
 if (import.meta.env.MODE === 'development') {
   window['import.meta.env.MODE === "development"'] = true;
