@@ -1,7 +1,6 @@
 import { createRequire } from 'node:module';
 import type { RsbuildPlugin, RspackChain } from '@rsbuild/core';
 import deepmerge from 'deepmerge';
-import { reduceConfigs } from 'reduce-configs';
 
 const require = createRequire(import.meta.url);
 
@@ -85,13 +84,10 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
       const { config } = environment;
 
       const { sourceMap } = config.output;
-      const mergedOptions = reduceConfigs({
-        initial: {
-          sourceMap: typeof sourceMap === 'boolean' ? sourceMap : sourceMap.css,
-        },
-        config: options,
-        mergeFn: deepmerge,
-      });
+      const mergedOptions = {
+        sourceMap: typeof sourceMap === 'boolean' ? sourceMap : sourceMap.css,
+        ...options,
+      };
 
       const test = /\.styl(us)?$/;
       const stylusRule = chain.module
