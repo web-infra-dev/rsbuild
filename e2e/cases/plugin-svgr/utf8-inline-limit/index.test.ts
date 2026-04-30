@@ -1,6 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('should not inline utf8 svg when byte length exceeds limit', async ({
+test('should not inline utf8 SVG when byte length exceeds limit', async ({
   page,
   buildPreview,
 }) => {
