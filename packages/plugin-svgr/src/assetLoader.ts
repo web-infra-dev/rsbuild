@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { Buffer } from 'node:buffer';
 import type { Rspack } from '@rsbuild/core';
 import { interpolateName } from 'loader-utils';
 
@@ -32,7 +33,11 @@ const assetLoader: RawLoaderDefinition<SvgAssetLoaderOptions> = function (
   const { limit, name, publicPath } = this.getOptions();
 
   if (content.length <= limit) {
-    const dataUrl = `data:${SVG_MIME_TYPE};base64,${content.toString('base64')}`;
+    const encoded = Buffer.isBuffer(content)
+      ? content.toString('base64')
+      : Buffer.from(content, 'utf8').toString('base64');
+
+    const dataUrl = `data:${SVG_MIME_TYPE};base64,${encoded}`;
     return `export default ${JSON.stringify(dataUrl)}`;
   }
 
