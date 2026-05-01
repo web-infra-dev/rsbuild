@@ -599,6 +599,9 @@ importers:
       rspack-manifest-plugin:
         specifier: 5.2.1
         version: 5.2.1(@rspack/core@2.0.1)
+      rspack-merge:
+        specifier: 0.1.1
+        version: 0.1.1
       sirv:
         specifier: ^3.0.2
         version: 3.0.2
@@ -617,9 +620,6 @@ importers:
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
-      webpack-merge:
-        specifier: 6.0.1
-        version: 6.0.1
       ws:
         specifier: ^8.20.0
         version: 8.20.0
@@ -3397,10 +3397,6 @@ packages:
     resolution: {integrity: sha512-D5J+kHaVb/wKSFcyyV75uCn8fiY4sV38XJoe4CUyGQ+mOU/fMVYUdH1hJC+CJQ5uY3EnW27SbJYS4X8BiLrAFg==}
     engines: {node: '>= 10.0'}
 
-  clone-deep@4.0.1:
-    resolution: {integrity: sha512-neHB9xuzh/wk0dIHweyAXv2aPGZIVk3pLMe+/RNzINf17fe0OG96QroktYAUm7SM1PBnzTabaLboqqxDyMU+SQ==}
-    engines: {node: '>=6'}
-
   clsx@2.1.1:
     resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
     engines: {node: '>=6'}
@@ -3830,10 +3826,6 @@ packages:
     resolution: {integrity: sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==}
     engines: {node: '>=10'}
 
-  flat@5.0.2:
-    resolution: {integrity: sha512-b6suED+5/3rTpUBdG1gupIl8MPFCAMA0QXwmljLhvCUKcUvdE4gWky9zpuGCcXHOsz4J9wPGNWq6OKpmIzz3hQ==}
-    hasBin: true
-
   flexsearch@0.8.212:
     resolution: {integrity: sha512-wSyJr1GUWoOOIISRu+X2IXiOcVfg9qqBRyCPRUdLMIGJqPzMo+jMRlvE83t14v1j0dRMEaBbER/adQjp6Du2pw==}
 
@@ -4090,10 +4082,6 @@ packages:
     resolution: {integrity: sha512-+Pgi+vMuUNkJyExiMBt5IlFoMyKnr5zhJ4Uspz58WOhBF5QoIZkFyNHIbBAtHwzVAgk5RtndVNsDRN61/mmDqg==}
     engines: {node: '>=12'}
 
-  is-plain-object@2.0.4:
-    resolution: {integrity: sha512-h5PpgXkWitc38BBMYawTYMWJHFZJVnBquFE57xFpjB8pJFiF6gZ+bU+WyI/yqXiFR5mdLsgYNaPe8uao6Uv9Og==}
-    engines: {node: '>=0.10.0'}
-
   is-reference@3.0.3:
     resolution: {integrity: sha512-ixkJoqQvAP88E6wLydLGGqCJsrFUnqoH6HnaczB8XmDH1oaWU+xxdptvikTgaEhtZ53Ky6YXiBuUI2WXLMCwjw==}
 
@@ -4111,10 +4099,6 @@ packages:
 
   isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
-
-  isobject@3.0.1:
-    resolution: {integrity: sha512-WhB9zCku7EGTj/HQQRz5aUQEUeoQZH2bWcltRErOpymJ4boYE6wL9Tbr23krRPSZ+C5zqNSrSw+Cc7sZZ4b7vg==}
-    engines: {node: '>=0.10.0'}
 
   isomorphic-ws@5.0.0:
     resolution: {integrity: sha512-muId7Zzn9ywDsyXgTIafTry2sV3nySZeUDe6YedVd1Hvuuep5AsIlqK+XefWpYTyJG5e503F2xIuT2lcU6rCSw==}
@@ -4164,10 +4148,6 @@ packages:
 
   jsonfile@6.2.0:
     resolution: {integrity: sha512-FGuPw30AdOIUTRMC2OMRtQV+jkVj2cfPqSeWXv1NEAJ1qZ5zb1X6z1mFhbfOB/iy3ssJCD+3KuZ8r8C3uVFlAg==}
-
-  kind-of@6.0.3:
-    resolution: {integrity: sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==}
-    engines: {node: '>=0.10.0'}
 
   launch-editor-middleware@2.13.2:
     resolution: {integrity: sha512-kI7VqA9g6mhoeQ6YdNgd+gKLaeuWHAUR8oDM8vFtt924wG8HbI2XO0n/hSX2ML4hcJbTgUihuPHfpnPjIKMdJg==}
@@ -5079,6 +5059,9 @@ packages:
       '@rspack/core':
         optional: true
 
+  rspack-merge@0.1.1:
+    resolution: {integrity: sha512-RHKi8nECjP0lM1V7RnM+8G8dRvWgrsnntzfogJQz7oSHo104ca4jsL3KN/0gru233n/lVGrqDPDNlCA4x0UNlg==}
+
   rspack-vue-loader@17.5.0:
     resolution: {integrity: sha512-hJrL2+jytfTs6ORHBOKTh5lU7BVZvmv7afELuQfyEpGC1ll7MKj1BxlgAIbhd6pZwoEwfdH79Lewtwe4VOlfCQ==}
     peerDependencies:
@@ -5309,10 +5292,6 @@ packages:
 
   set-cookie-parser@2.7.2:
     resolution: {integrity: sha512-oeM1lpU/UvhTxw+g3cIfxXHyJRc/uidd3yK1P242gzHds0udQBYzs3y8j4gCCW+ZJ7ad0yctld8RYO+bdurlvw==}
-
-  shallow-clone@3.0.1:
-    resolution: {integrity: sha512-/6KqX+GVUdqPuPPd2LxDDxzX6CAbjJehAAOKlNpqqUpAqPM6HeL8f+o3a+JsyGjn2lv0WY8UsTgUJjU9Ok55NA==}
-    engines: {node: '>=8'}
 
   shebang-command@2.0.0:
     resolution: {integrity: sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==}
@@ -5726,10 +5705,6 @@ packages:
   webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
 
-  webpack-merge@6.0.1:
-    resolution: {integrity: sha512-hXXvrjtx2PLYx4qruKl+kyRSLc52V+cCvMxRjmKwoA+CBbbF5GfIBtR6kCvl0fYGqTUPKB+1ktVmTHqMOzgCBg==}
-    engines: {node: '>=18.0.0'}
-
   webpack-sources@3.4.0:
     resolution: {integrity: sha512-gHwIe1cgBvvfLeu1Yz/dcFpmHfKDVxxyqI+kzqmuxZED81z2ChxpyqPaWcNqigPywhaEke7AjSGga+kxY55gjQ==}
     engines: {node: '>=10.13.0'}
@@ -5755,9 +5730,6 @@ packages:
     resolution: {integrity: sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==}
     engines: {node: '>= 8'}
     hasBin: true
-
-  wildcard@2.0.1:
-    resolution: {integrity: sha512-CC1bOL87PIWSBhDcTrdeLo6eGT7mCFtrg0uIJtqJUFyK+eJnzl8A1niH56uu7KMa5XFrtiV+AQuHO3n7DsHnLQ==}
 
   wrap-ansi@7.0.0:
     resolution: {integrity: sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==}
@@ -8438,12 +8410,6 @@ snapshots:
     dependencies:
       source-map: 0.6.1
 
-  clone-deep@4.0.1:
-    dependencies:
-      is-plain-object: 2.0.4
-      kind-of: 6.0.3
-      shallow-clone: 3.0.1
-
   clsx@2.1.1: {}
 
   collapse-white-space@2.1.0: {}
@@ -8840,8 +8806,6 @@ snapshots:
       locate-path: 6.0.0
       path-exists: 4.0.0
 
-  flat@5.0.2: {}
-
   flexsearch@0.8.212: {}
 
   foreground-child@3.3.1:
@@ -9154,10 +9118,6 @@ snapshots:
 
   is-plain-obj@4.1.0: {}
 
-  is-plain-object@2.0.4:
-    dependencies:
-      isobject: 3.0.1
-
   is-reference@3.0.3:
     dependencies:
       '@types/estree': 1.0.8
@@ -9171,8 +9131,6 @@ snapshots:
       is-inside-container: 1.0.0
 
   isexe@2.0.0: {}
-
-  isobject@3.0.1: {}
 
   isomorphic-ws@5.0.0(ws@8.18.0):
     dependencies:
@@ -9215,8 +9173,6 @@ snapshots:
       universalify: 2.0.1
     optionalDependencies:
       graceful-fs: 4.2.11
-
-  kind-of@6.0.3: {}
 
   launch-editor-middleware@2.13.2:
     dependencies:
@@ -10388,6 +10344,8 @@ snapshots:
     optionalDependencies:
       '@rspack/core': 2.0.1(@module-federation/runtime-tools@2.3.3)(@swc/helpers@0.5.21)
 
+  rspack-merge@0.1.1: {}
+
   rspack-vue-loader@17.5.0(@rspack/core@2.0.1)(vue@3.5.33):
     dependencies:
       '@rspack/lite-tapable': 1.1.0
@@ -10558,10 +10516,6 @@ snapshots:
   seroval@1.5.0: {}
 
   set-cookie-parser@2.7.2: {}
-
-  shallow-clone@3.0.1:
-    dependencies:
-      kind-of: 6.0.3
 
   shebang-command@2.0.0:
     dependencies:
@@ -10985,12 +10939,6 @@ snapshots:
 
   webidl-conversions@3.0.1: {}
 
-  webpack-merge@6.0.1:
-    dependencies:
-      clone-deep: 4.0.1
-      flat: 5.0.2
-      wildcard: 2.0.1
-
   webpack-sources@3.4.0: {}
 
   webpack@5.105.4:
@@ -11037,8 +10985,6 @@ snapshots:
   which@2.0.2:
     dependencies:
       isexe: 2.0.0
-
-  wildcard@2.0.1: {}
 
   wrap-ansi@7.0.0:
     dependencies:

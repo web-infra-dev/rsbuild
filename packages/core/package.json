@@ -86,13 +86,13 @@
     "rslog": "^2.1.1",
     "rspack-chain": "^2.0.1",
     "rspack-manifest-plugin": "5.2.1",
+    "rspack-merge": "0.1.1",
     "sirv": "^3.0.2",
     "stacktrace-parser": "^0.1.11",
     "style-loader": "^4.0.0",
     "supports-color": "^10.2.2",
     "tinyglobby": "^0.2.16",
     "typescript": "^6.0.3",
-    "webpack-merge": "6.0.1",
     "ws": "^8.20.0"
   },
   "engines": {

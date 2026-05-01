@@ -21,7 +21,6 @@ export default {
   },
   dependencies: [
     'html-rspack-plugin',
-    'webpack-merge',
     {
       name: 'chokidar',
       dtsOnly: true,

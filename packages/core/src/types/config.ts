@@ -91,7 +91,7 @@ export type ToolsHtmlPluginConfig = ConfigChainWithContext<
   }
 >;
 
-// equivalent to import('webpack-merge').merge
+// equivalent to import('rspack-merge').merge
 export type RspackMerge = (
   firstConfiguration: Rspack.Configuration | Rspack.Configuration[],
   ...configurations: Rspack.Configuration[]
