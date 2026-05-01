@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-svgr",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "SVGR plugin for Rsbuild",
   "repository": {
     "type": "git",
