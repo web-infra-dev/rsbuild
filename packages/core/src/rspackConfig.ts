@@ -14,15 +14,9 @@ import type {
   ModifyChainUtils,
   ModifyRspackConfigUtils,
   NarrowedRspackConfig,
-  RspackMerge,
   RsbuildTarget,
   Rspack,
 } from './types';
-
-const mergeRspackConfig: RspackMerge = (
-  firstConfiguration,
-  ...configurations
-) => merge(firstConfiguration, ...configurations);
 
 async function modifyRspackConfig(
   context: InternalContext,
@@ -73,7 +67,7 @@ export function getConfigUtils(
   return {
     ...chainUtils,
 
-    mergeConfig: mergeRspackConfig,
+    mergeConfig: merge,
 
     addRules(rules) {
       const config = getCurrentConfig();
