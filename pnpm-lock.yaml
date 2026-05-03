@@ -552,8 +552,8 @@ importers:
         specifier: 6.1.8
         version: 6.1.8(@rspack/core@2.0.1)
       http-proxy-middleware:
-        specifier: 4.0.0-beta.5
-        version: 4.0.0-beta.5(supports-color@10.2.2)
+        specifier: 4.0.0-beta.6
+        version: 4.0.0-beta.6(supports-color@10.2.2)
       jiti:
         specifier: ^2.6.1
         version: 2.6.1
@@ -3982,9 +3982,9 @@ packages:
   htmlparser2@10.0.0:
     resolution: {integrity: sha512-TwAZM+zE5Tq3lrEHvOlvwgj1XLWQCtaaibSN11Q+gGBAS7Y1uZSWwXXRe4iF6OXnaq1riyQAPFOBtYc77Mxq0g==}
 
-  http-proxy-middleware@4.0.0-beta.5:
-    resolution: {integrity: sha512-MfX/V4s3KClxqrkNlNifS9xCgfsFZ051pzCbmHkC/8QIigCXCtTv2W8jgsbIxnmWl8gP3bszZdAuDQe9yuPHOQ==}
-    engines: {node: ^22.12.0 || >=24.0.0}
+  http-proxy-middleware@4.0.0-beta.6:
+    resolution: {integrity: sha512-EPKiEXKknFswiM8Z9ngBz1Y/mdkKB3018WVEZdbITGFBq//NjHC6brw4CQnj7SEL8uBuye1GTStGG7fH7bwrqQ==}
+    engines: {node: ^22.15.0 || >=24.0.0}
 
   httpxy@0.5.1:
     resolution: {integrity: sha512-JPhqYiixe1A1I+MXDewWDZqeudBGU8Q9jCHYN8ML+779RQzLjTi78HBvWz4jMxUD6h2/vUL12g4q/mFM0OUw1A==}
@@ -9039,7 +9039,7 @@ snapshots:
       domutils: 3.2.2
       entities: 6.0.1
 
-  http-proxy-middleware@4.0.0-beta.5(supports-color@10.2.2):
+  http-proxy-middleware@4.0.0-beta.6(supports-color@10.2.2):
     dependencies:
       debug: 4.4.3(supports-color@10.2.2)
       httpxy: 0.5.1

@@ -49,23 +49,6 @@ export default {
     {
       name: 'http-proxy-middleware',
       dtsOnly: true,
-      afterBundle(task) {
-        // Suppress missing-module errors for optional Hono peer type imports in generated d.ts files.
-        replaceFileContent(join(task.distPath, 'index.d.ts'), (content) => {
-          const ignore = '@ts-ignore';
-          return content
-            .replace(
-              `import { HttpBindings } from '@hono/node-server';`,
-              `// ${ignore}
-import { HttpBindings } from '@hono/node-server';`,
-            )
-            .replace(
-              `import { MiddlewareHandler } from 'hono';`,
-              `// ${ignore}
-import { MiddlewareHandler } from 'hono';`,
-            );
-        });
-      },
     },
     {
       name: 'style-loader',
