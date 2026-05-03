@@ -15,7 +15,7 @@ The built-in Rspack config in Rsbuild may change with iterations, and these chan
 
 ## Object type
 
-`tools.rspack` accepts an object that gets deep merged with the built-in Rspack configuration through [webpack-merge](https://github.com/survivejs/webpack-merge).
+`tools.rspack` accepts an object that gets deep merged with the built-in Rspack configuration through [rspack-merge](https://github.com/rstackjs/rspack-merge).
 
 For example, add `resolve.alias` configuration:
 
@@ -33,7 +33,7 @@ export default {
 };
 ```
 
-When merging configurations, `webpack-merge` will automatically concatenate arrays such as `plugins`, `module.rules`, `resolve.extensions`, etc.
+When merging configurations, `rspack-merge` will automatically concatenate arrays such as `plugins`, `module.rules`, `resolve.extensions`, etc.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -414,7 +414,7 @@ export default {
 
 - **Type:** `(...configs:Rspack.Configuration[]) =>Rspack.Configuration`
 
-Used to merge multiple Rspack configs, the same as [webpack-merge](https://github.com/survivejs/webpack-merge).
+Used to merge multiple Rspack configs, the same as [rspack-merge](https://github.com/rstackjs/rspack-merge).
 
 ```ts title="rsbuild.config.ts"
 export default {
