@@ -34,6 +34,12 @@
       "matchPackageNames": ["*"]
     },
     {
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["engines"],
+      "matchPackageNames": ["node"],
+      "enabled": false
+    },
+    {
       "matchDepTypes": ["peerDependencies"],
       "enabled": false
     }
