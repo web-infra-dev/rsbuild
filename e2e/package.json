@@ -14,12 +14,12 @@
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "solid-js": "^1.9.12",
-    "vue": "^3.5.32"
+    "vue": "^3.5.33"
   },
   "devDependencies": {
     "@e2e/assets": "workspace:*",
     "@e2e/helper": "workspace:*",
-    "@hono/node-server": "^2.0.0",
+    "@hono/node-server": "^2.0.1",
     "@module-federation/enhanced": "2.4.0",
     "@module-federation/rsbuild-plugin": "2.4.0",
     "@playwright/test": "1.59.1",
@@ -40,8 +40,8 @@
     "@rsbuild/plugin-vue-jsx": "^2.0.0",
     "@rsdoctor/rspack-plugin": "1.5.9",
     "@scripts/test-helper": "workspace:*",
-    "@tailwindcss/postcss": "^4.2.2",
-    "@tailwindcss/webpack": "^4.2.2",
+    "@tailwindcss/postcss": "^4.2.4",
+    "@tailwindcss/webpack": "^4.2.4",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^24.12.2",
     "@types/react": "^19.2.14",
@@ -49,9 +49,9 @@
     "create-rsbuild": "workspace:*",
     "fast-glob": "^3.3.3",
     "fs-extra": "^11.3.4",
-    "hono": "^4.12.14",
+    "hono": "^4.12.16",
     "playwright": "1.59.1",
-    "tailwindcss": "^4.2.2",
+    "tailwindcss": "^4.2.4",
     "typescript": "^6.0.3"
   }
 }
