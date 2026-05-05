@@ -7,6 +7,11 @@ const require = createRequire(import.meta.url);
 
 export type PluginSolidOptions = {
   /**
+   * Whether to inject Solid Refresh for HMR in development mode.
+   * @default true
+   */
+  hot?: boolean;
+  /**
    * Options passed to `babel-preset-solid`.
    * @see https://npmjs.com/package/babel-preset-solid
    */
@@ -16,6 +21,8 @@ export type PluginSolidOptions = {
 export const PLUGIN_SOLID_NAME = 'rsbuild:solid';
 
 export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
+  const { hot = true } = options;
+
   return {
     name: PLUGIN_SOLID_NAME,
 
@@ -45,7 +52,7 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
               babelOptions.parserOpts = { plugins: ['jsx', 'typescript'] };
 
               const usingHMR =
-                !isProd && environmentConfig.dev.hmr && target === 'web';
+                hot && !isProd && environmentConfig.dev.hmr && target === 'web';
               if (usingHMR) {
                 babelOptions.plugins ??= [];
                 babelOptions.plugins.push([

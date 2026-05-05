@@ -50,6 +50,23 @@ describe('plugin-solid', () => {
     ]);
   });
 
+  it('should allow disabling solid refresh', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        ...rsbuildConfig,
+        plugins: [pluginSolid({ hot: false }), pluginBabel()],
+      },
+    });
+    const config = await rsbuild.initConfigs();
+
+    expect(
+      JSON.stringify(matchRules(config[0], 'a.tsx')[0]).includes(
+        'solid-refresh',
+      ),
+    ).toEqual(false);
+    expect(config[0].resolve?.alias?.['solid-refresh']).toEqual(undefined);
+  });
+
   it('should allow to configure solid preset options', async () => {
     const rsbuild = await createRsbuild({
       config: {

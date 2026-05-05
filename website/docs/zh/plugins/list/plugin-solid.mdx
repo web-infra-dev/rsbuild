@@ -57,6 +57,20 @@ Solid 插件会将 `solid` 添加到 Rsbuild 的 [resolve.conditionNames](/confi
 
 如果你需要自定义 Solid 的编译行为，可以使用以下配置项。
 
+### hot
+
+是否在开发模式下注入 [Solid Refresh](https://github.com/solidjs/solid-refresh) 以支持 HMR。该选项仅在 Rsbuild HMR 启用时生效，不会影响生产环境构建。
+
+- **类型：** `boolean`
+- **默认值：** `true`
+- **示例：**
+
+```ts
+pluginSolid({
+  hot: false,
+});
+```
+
 ### solidPresetOptions
 
 传递给 `babel-preset-solid` 的选项，请查阅 [babel-preset-solid 文档](https://npmjs.com/package/babel-preset-solid) 来了解具体用法。

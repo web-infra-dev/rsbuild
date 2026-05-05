@@ -61,6 +61,20 @@ If you configure `resolve.conditionNames`, the plugin preserves your configured 
 
 To customize the compilation behavior of Solid, use the following options.
 
+### hot
+
+Whether to inject [Solid Refresh](https://github.com/solidjs/solid-refresh) for HMR in development mode. This only takes effect when Rsbuild HMR is enabled and does not affect production builds.
+
+- **Type:** `boolean`
+- **Default:** `true`
+- **Example:**
+
+```ts
+pluginSolid({
+  hot: false,
+});
+```
+
 ### solidPresetOptions
 
 These options are passed to `babel-preset-solid`. For details, see the [babel-preset-solid documentation](https://npmjs.com/package/babel-preset-solid).
