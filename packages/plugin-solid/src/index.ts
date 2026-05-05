@@ -7,6 +7,11 @@ const require = createRequire(import.meta.url);
 
 export type PluginSolidOptions = {
   /**
+   * Whether to resolve Solid's development runtime in development mode.
+   * @default true
+   */
+  dev?: boolean;
+  /**
    * Whether to inject Solid Refresh for HMR in development mode.
    * @default true
    */
@@ -21,7 +26,7 @@ export type PluginSolidOptions = {
 export const PLUGIN_SOLID_NAME = 'rsbuild:solid';
 
 export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
-  const { hot = true } = options;
+  const { dev, hot = true } = options;
 
   return {
     name: PLUGIN_SOLID_NAME,
@@ -29,10 +34,17 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
     setup(api) {
       api.modifyEnvironmentConfig((config) => {
         const conditionNames = config.resolve.conditionNames ?? ['...'];
+        const useDevRuntime =
+          dev === true || (dev !== false && config.mode === 'development');
+
         // Prefer Solid-specific exports while preserving user conditions or Rspack defaults.
-        config.resolve.conditionNames = conditionNames.includes('solid')
-          ? conditionNames
-          : ['solid', ...conditionNames];
+        config.resolve.conditionNames = [
+          ...new Set([
+            'solid',
+            ...(useDevRuntime ? ['development'] : []),
+            ...conditionNames,
+          ]),
+        ];
       });
 
       api.modifyBundlerChain(

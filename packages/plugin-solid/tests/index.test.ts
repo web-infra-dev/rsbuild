@@ -32,10 +32,27 @@ describe('plugin-solid', () => {
     expect(config[0].resolve?.conditionNames).toEqual(['solid', '...']);
   });
 
+  it('should add development resolve condition in development mode', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        ...rsbuildConfig,
+        mode: 'development',
+        plugins: [pluginSolid()],
+      },
+    });
+    const config = await rsbuild.initConfigs();
+    expect(config[0].resolve?.conditionNames).toEqual([
+      'solid',
+      'development',
+      '...',
+    ]);
+  });
+
   it('should preserve user resolve condition names', async () => {
     const rsbuild = await createRsbuild({
       config: {
         ...rsbuildConfig,
+        mode: 'development',
         resolve: {
           conditionNames: ['custom', 'import'],
         },
@@ -45,8 +62,48 @@ describe('plugin-solid', () => {
     const config = await rsbuild.initConfigs();
     expect(config[0].resolve?.conditionNames).toEqual([
       'solid',
+      'development',
       'custom',
       'import',
+    ]);
+  });
+
+  it('should allow disabling solid development condition', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        ...rsbuildConfig,
+        plugins: [pluginSolid({ dev: false })],
+      },
+    });
+    const config = await rsbuild.initConfigs();
+    expect(config[0].resolve?.conditionNames).toEqual(['solid', '...']);
+  });
+
+  it('should not add development condition in production mode by default', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        ...rsbuildConfig,
+        mode: 'production',
+        plugins: [pluginSolid()],
+      },
+    });
+    const config = await rsbuild.initConfigs();
+    expect(config[0].resolve?.conditionNames).toEqual(['solid', '...']);
+  });
+
+  it('should allow forcing solid development condition in production mode', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        ...rsbuildConfig,
+        mode: 'production',
+        plugins: [pluginSolid({ dev: true })],
+      },
+    });
+    const config = await rsbuild.initConfigs();
+    expect(config[0].resolve?.conditionNames).toEqual([
+      'solid',
+      'development',
+      '...',
     ]);
   });
 

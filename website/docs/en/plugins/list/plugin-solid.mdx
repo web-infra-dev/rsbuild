@@ -55,11 +55,27 @@ Babel compilation will introduce extra overhead, in the example above, we use `i
 
 The Solid plugin adds `solid` to Rsbuild's [resolve.conditionNames](/config/resolve/condition-names). This allows package exports to resolve Solid-specific entries when they are available.
 
-If you configure `resolve.conditionNames`, the plugin preserves your configured values and prepends `solid`.
+In development mode, the plugin also adds `development` to resolve Solid's development runtime. You can disable this behavior with [`dev: false`](#dev).
+
+If you configure `resolve.conditionNames`, the plugin preserves your configured values and prepends these Solid conditions.
 
 ## Options
 
 To customize the compilation behavior of Solid, use the following options.
+
+### dev
+
+Whether to resolve Solid's development runtime in development mode. Set it to `false` to disable the `development` condition, or set it to `true` to force the `development` condition in production mode.
+
+- **Type:** `boolean`
+- **Default:** `true` in development mode, `false` in production mode
+- **Example:**
+
+```ts
+pluginSolid({
+  dev: false,
+});
+```
 
 ### hot
 
