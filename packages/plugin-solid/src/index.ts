@@ -34,8 +34,7 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
     setup(api) {
       api.modifyEnvironmentConfig((config) => {
         const conditionNames = config.resolve.conditionNames ?? ['...'];
-        const useDevRuntime =
-          dev === true || (dev !== false && config.mode === 'development');
+        const useDevRuntime = dev ?? config.mode === 'development';
 
         // Prefer Solid-specific exports while preserving user conditions or Rspack defaults.
         config.resolve.conditionNames = [
