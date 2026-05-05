@@ -7,8 +7,8 @@ const require = createRequire(import.meta.url);
 
 export type PluginSolidOptions = {
   /**
-   * Whether to resolve Solid's development runtime in development mode.
-   * @default true
+   * Whether to resolve Solid's development runtime.
+   * @default `true` in development mode, `false` in production mode
    */
   dev?: boolean;
   /**

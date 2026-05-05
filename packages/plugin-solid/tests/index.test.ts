@@ -72,6 +72,7 @@ describe('plugin-solid', () => {
     const rsbuild = await createRsbuild({
       config: {
         ...rsbuildConfig,
+        mode: 'development',
         plugins: [pluginSolid({ dev: false })],
       },
     });
