@@ -57,6 +57,7 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
                 babelOptions.plugins ??= [];
                 babelOptions.plugins.push([
                   require.resolve('solid-refresh/babel'),
+                  { bundler: 'rspack-esm' },
                 ]);
 
                 chain.resolve.alias.set(

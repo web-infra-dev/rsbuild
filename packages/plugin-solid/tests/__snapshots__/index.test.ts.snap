@@ -76,6 +76,9 @@ exports[`plugin-solid > should allow to configure solid preset options 1`] = `
               ],
               [
                 "<PNPM_INNER>/solid-refresh/dist/babel.cjs",
+                {
+                  "bundler": "rspack-esm",
+                },
               ],
             ],
             "presets": [
@@ -172,6 +175,9 @@ exports[`plugin-solid > should apply solid preset correctly 1`] = `
               ],
               [
                 "<PNPM_INNER>/solid-refresh/dist/babel.cjs",
+                {
+                  "bundler": "rspack-esm",
+                },
               ],
             ],
             "presets": [
