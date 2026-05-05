@@ -73,17 +73,19 @@ pluginSolid({
 });
 ```
 
-### hot
+### refresh.disabled
 
-是否在开发模式下注入 [Solid Refresh](https://github.com/solidjs/solid-refresh) 以支持 HMR。该选项仅在 Rsbuild HMR 启用时生效，不会影响生产环境构建。
+是否在开发模式下禁用 [Solid Refresh](https://github.com/solidjs/solid-refresh) HMR。该选项只控制 Solid Refresh 注入，不会禁用 Rsbuild HMR。
 
 - **类型：** `boolean`
-- **默认值：** `true`
+- **默认值：** `false`
 - **示例：**
 
 ```ts
 pluginSolid({
-  hot: false,
+  refresh: {
+    disabled: true,
+  },
 });
 ```
 

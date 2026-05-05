@@ -12,10 +12,15 @@ export type PluginSolidOptions = {
    */
   dev?: boolean;
   /**
-   * Whether to inject Solid Refresh for HMR in development mode.
-   * @default true
+   * Configure Solid Refresh for HMR in development mode.
    */
-  hot?: boolean;
+  refresh?: {
+    /**
+     * Whether to disable Solid Refresh while keeping Rsbuild HMR enabled.
+     * @default false
+     */
+    disabled?: boolean;
+  };
   /**
    * Options passed to `babel-preset-solid`.
    * @see https://npmjs.com/package/babel-preset-solid
@@ -26,7 +31,7 @@ export type PluginSolidOptions = {
 export const PLUGIN_SOLID_NAME = 'rsbuild:solid';
 
 export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
-  const { dev, hot = true } = options;
+  const { dev } = options;
 
   return {
     name: PLUGIN_SOLID_NAME,
@@ -62,8 +67,12 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
               ];
               babelOptions.parserOpts = { plugins: ['jsx', 'typescript'] };
 
+              // `refresh.disabled` only disables Solid Refresh transforms; Rsbuild HMR can stay enabled.
               const usingHMR =
-                hot && !isProd && environmentConfig.dev.hmr && target === 'web';
+                options.refresh?.disabled !== true &&
+                !isProd &&
+                environmentConfig.dev.hmr &&
+                target === 'web';
               if (usingHMR) {
                 babelOptions.plugins ??= [];
                 babelOptions.plugins.push([

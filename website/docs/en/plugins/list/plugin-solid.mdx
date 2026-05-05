@@ -77,17 +77,19 @@ pluginSolid({
 });
 ```
 
-### hot
+### refresh.disabled
 
-Whether to inject [Solid Refresh](https://github.com/solidjs/solid-refresh) for HMR in development mode. This only takes effect when Rsbuild HMR is enabled and does not affect production builds.
+Whether to disable [Solid Refresh](https://github.com/solidjs/solid-refresh) for HMR in development mode. This only controls Solid Refresh injection and does not disable Rsbuild HMR.
 
 - **Type:** `boolean`
-- **Default:** `true`
+- **Default:** `false`
 - **Example:**
 
 ```ts
 pluginSolid({
-  hot: false,
+  refresh: {
+    disabled: true,
+  },
 });
 ```
 

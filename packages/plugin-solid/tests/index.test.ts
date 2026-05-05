@@ -108,11 +108,11 @@ describe('plugin-solid', () => {
     ]);
   });
 
-  it('should allow disabling solid refresh', async () => {
+  it('should allow disabling solid refresh via refresh.disabled', async () => {
     const rsbuild = await createRsbuild({
       config: {
         ...rsbuildConfig,
-        plugins: [pluginSolid({ hot: false }), pluginBabel()],
+        plugins: [pluginSolid({ refresh: { disabled: true } }), pluginBabel()],
       },
     });
     const config = await rsbuild.initConfigs();
