@@ -21,6 +21,35 @@ describe('plugin-solid', () => {
     expect(matchRules(config[0], 'a.tsx')[0]).toMatchSnapshot();
   });
 
+  it('should add solid resolve condition', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        ...rsbuildConfig,
+        plugins: [pluginSolid()],
+      },
+    });
+    const config = await rsbuild.initConfigs();
+    expect(config[0].resolve?.conditionNames).toEqual(['solid', '...']);
+  });
+
+  it('should preserve user resolve condition names', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        ...rsbuildConfig,
+        resolve: {
+          conditionNames: ['custom', 'import'],
+        },
+        plugins: [pluginSolid()],
+      },
+    });
+    const config = await rsbuild.initConfigs();
+    expect(config[0].resolve?.conditionNames).toEqual([
+      'solid',
+      'custom',
+      'import',
+    ]);
+  });
+
   it('should allow to configure solid preset options', async () => {
     const rsbuild = await createRsbuild({
       config: {

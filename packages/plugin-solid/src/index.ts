@@ -20,6 +20,14 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
     name: PLUGIN_SOLID_NAME,
 
     setup(api) {
+      api.modifyEnvironmentConfig((config) => {
+        const conditionNames = config.resolve.conditionNames ?? ['...'];
+        // Prefer Solid-specific exports while preserving user conditions or Rspack defaults.
+        config.resolve.conditionNames = conditionNames.includes('solid')
+          ? conditionNames
+          : ['solid', ...conditionNames];
+      });
+
       api.modifyBundlerChain(
         (chain, { CHAIN_ID, environment, isProd, target }) => {
           const environmentConfig = environment.config;

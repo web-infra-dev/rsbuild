@@ -47,6 +47,12 @@ Babel 编译会产生额外的编译开销，在上述例子中，我们通过 `
 
 :::
 
+## 解析行为
+
+Solid 插件会将 `solid` 添加到 Rsbuild 的 [resolve.conditionNames](/config/resolve/condition-names) 中，使 package exports 可以解析到 Solid 专属的入口。
+
+如果你配置了 `resolve.conditionNames`，插件会保留已有配置，并在前面添加 `solid`。
+
 ## 选项
 
 如果你需要自定义 Solid 的编译行为，可以使用以下配置项。

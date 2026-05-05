@@ -51,6 +51,12 @@ Babel compilation will introduce extra overhead, in the example above, we use `i
 
 :::
 
+## Resolution behavior
+
+The Solid plugin adds `solid` to Rsbuild's [resolve.conditionNames](/config/resolve/condition-names). This allows package exports to resolve Solid-specific entries when they are available.
+
+If you configure `resolve.conditionNames`, the plugin preserves your configured values and prepends `solid`.
+
 ## Options
 
 To customize the compilation behavior of Solid, use the following options.
