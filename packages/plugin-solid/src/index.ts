@@ -12,6 +12,11 @@ export type PluginSolidOptions = {
    */
   dev?: boolean;
   /**
+   * Whether to generate output for Solid SSR.
+   * @default false
+   */
+  ssr?: boolean;
+  /**
    * Configure Solid Refresh for HMR in development mode.
    */
   refresh?: {
@@ -31,7 +36,7 @@ export type PluginSolidOptions = {
 export const PLUGIN_SOLID_NAME = 'rsbuild:solid';
 
 export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
-  const { dev } = options;
+  const { dev, ssr, solidPresetOptions } = options;
 
   return {
     name: PLUGIN_SOLID_NAME,
@@ -59,10 +64,20 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
             chain,
             CHAIN_ID,
             modifier: (babelOptions) => {
+              // Apply SSR defaults before user options so explicit values can override them.
+              const defaultPresetOptions: SolidPresetOptions = ssr
+                ? target === 'node'
+                  ? { generate: 'ssr', hydratable: true }
+                  : { generate: 'dom', hydratable: true }
+                : {};
+
               babelOptions.presets = [
                 [
                   require.resolve('babel-preset-solid'),
-                  options.solidPresetOptions || {},
+                  {
+                    ...defaultPresetOptions,
+                    ...(solidPresetOptions || {}),
+                  },
                 ],
               ];
               babelOptions.parserOpts = { plugins: ['jsx', 'typescript'] };

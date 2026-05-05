@@ -89,6 +89,22 @@ pluginSolid({
 });
 ```
 
+### ssr
+
+是否生成 Solid SSR 输出。启用后，插件会为 Node.js target 设置 `generate: 'ssr'` 和 `hydratable: true`，为其他 target 设置 `generate: 'dom'` 和 `hydratable: true`。
+
+`solidPresetOptions` 中的配置会覆盖这些默认值。
+
+- **类型：** `boolean`
+- **默认值：** `false`
+- **示例：**
+
+```ts
+pluginSolid({
+  ssr: true,
+});
+```
+
 ### solidPresetOptions
 
 传递给 `babel-preset-solid` 的选项，请查阅 [babel-preset-solid 文档](https://npmjs.com/package/babel-preset-solid) 来了解具体用法。

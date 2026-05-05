@@ -93,6 +93,22 @@ pluginSolid({
 });
 ```
 
+### ssr
+
+Whether to generate output for Solid SSR. When enabled, the plugin uses `generate: 'ssr'` and `hydratable: true` for Node.js targets, and uses `generate: 'dom'` and `hydratable: true` for other targets.
+
+Values in `solidPresetOptions` will override these defaults.
+
+- **Type:** `boolean`
+- **Default:** `false`
+- **Example:**
+
+```ts
+pluginSolid({
+  ssr: true,
+});
+```
+
 ### solidPresetOptions
 
 These options are passed to `babel-preset-solid`. For details, see the [babel-preset-solid documentation](https://npmjs.com/package/babel-preset-solid).

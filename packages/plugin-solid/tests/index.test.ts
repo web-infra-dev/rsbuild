@@ -125,6 +125,57 @@ describe('plugin-solid', () => {
     expect(config[0].resolve?.alias?.['solid-refresh']).toEqual(undefined);
   });
 
+  it('should use hydratable dom output for ssr option on web target', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        ...rsbuildConfig,
+        plugins: [pluginSolid({ ssr: true }), pluginBabel()],
+      },
+    });
+    const config = await rsbuild.initConfigs();
+    const rule = matchRules(config[0], 'a.tsx')[0] as RuleWithBabelPreset;
+    expect(rule).toMatchSnapshot();
+  });
+
+  it('should use ssr output for ssr option on node target', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        ...rsbuildConfig,
+        output: {
+          target: 'node',
+        },
+        plugins: [pluginSolid({ ssr: true }), pluginBabel()],
+      },
+    });
+    const config = await rsbuild.initConfigs();
+    const rule = matchRules(config[0], 'a.tsx')[0] as RuleWithBabelPreset;
+    expect(rule).toMatchSnapshot();
+  });
+
+  it('should allow solid preset options to override ssr defaults', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        ...rsbuildConfig,
+        output: {
+          target: 'node',
+        },
+        plugins: [
+          pluginSolid({
+            ssr: true,
+            solidPresetOptions: {
+              generate: 'universal',
+              hydratable: false,
+            },
+          }),
+          pluginBabel(),
+        ],
+      },
+    });
+    const config = await rsbuild.initConfigs();
+    const rule = matchRules(config[0], 'a.tsx')[0] as RuleWithBabelPreset;
+    expect(rule).toMatchSnapshot();
+  });
+
   it('should allow to configure solid preset options', async () => {
     const rsbuild = await createRsbuild({
       config: {
