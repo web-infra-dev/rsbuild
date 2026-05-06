@@ -1424,6 +1424,7 @@ export interface OutputConfig {
    * always include hash in all modes.
    * - `false`: Disable filename hash.
    * - `string`: Enable filename hash and customize the hash format, such as `'contenthash:16'`.
+   * - `object`: An object to configure filename hash behavior.
    * @default true
    */
   filenameHash?: FilenameHash;

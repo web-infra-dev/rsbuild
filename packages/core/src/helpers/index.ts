@@ -69,7 +69,7 @@ const normalizeFilenameHash = (
   if (typeof filenameHash === 'string') {
     return {
       enable: Boolean(filenameHash),
-      format: filenameHash,
+      format: filenameHash || DEFAULT_FILENAME_HASH,
     };
   }
 
