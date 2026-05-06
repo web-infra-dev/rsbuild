@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-solid",
-  "version": "2.0.0-alpha.0",
+  "version": "2.0.0-beta.0",
   "description": "Solid plugin for Rsbuild",
   "homepage": "https://rsbuild.rs",
   "repository": {
