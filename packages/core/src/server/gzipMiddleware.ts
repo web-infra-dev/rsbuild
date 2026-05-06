@@ -1,9 +1,47 @@
-import type { ServerResponse } from 'node:http';
+import type {
+  OutgoingHttpHeader,
+  OutgoingHttpHeaders,
+  ServerResponse,
+} from 'node:http';
 import zlib from 'node:zlib';
 import type { CompressOptions, RequestHandler } from '../types';
 
 const ENCODING_REGEX = /\bgzip\b/;
 const CONTENT_TYPE_REGEX = /text|javascript|\/json|xml/i;
+type WriteHeadHeaders = OutgoingHttpHeaders | OutgoingHttpHeader[];
+
+const setWriteHeadHeaders = (
+  res: ServerResponse,
+  headers: WriteHeadHeaders,
+) => {
+  if (Array.isArray(headers)) {
+    const seen = new Set<string>();
+
+    for (let index = 0; index < headers.length; index += 2) {
+      const key = String(headers[index]);
+      const value = headers[index + 1];
+
+      if (value !== undefined) {
+        const lowerKey = key.toLowerCase();
+        if (!seen.has(lowerKey)) {
+          seen.add(lowerKey);
+          res.removeHeader(key);
+        }
+
+        res.appendHeader(key, Array.isArray(value) ? value : String(value));
+      }
+    }
+    return;
+  }
+
+  for (const key of Object.keys(headers)) {
+    const value = headers[key];
+
+    if (value !== undefined) {
+      res.setHeader(key, value);
+    }
+  }
+};
 
 const shouldCompress = (res: ServerResponse) => {
   // already compressed
@@ -55,7 +93,8 @@ export function gzipMiddleware({
       }
       started = true;
 
-      if (shouldCompress(res)) {
+      const compress = shouldCompress(res);
+      if (compress) {
         res.setHeader('Content-Encoding', 'gzip');
         res.removeHeader('Content-Length');
 
@@ -91,24 +130,23 @@ export function gzipMiddleware({
       }
     };
 
-    res.writeHead = (status, reason, headers?) => {
+    res.writeHead = (
+      status: number,
+      reason?: string | WriteHeadHeaders,
+      headers?: WriteHeadHeaders,
+    ) => {
       writeHeadStatus = status;
-
-      if (typeof reason === 'string') {
-        writeHeadMessage = reason;
-      }
+      writeHeadMessage = typeof reason === 'string' ? reason : undefined;
 
       const resolvedHeaders = typeof reason === 'string' ? headers : reason;
       if (resolvedHeaders) {
-        for (const [key, value] of Object.entries(resolvedHeaders)) {
-          res.setHeader(key, value);
-        }
+        setWriteHeadHeaders(res, resolvedHeaders);
       }
 
       return res;
     };
 
-    res.write = (...args: unknown[]) => {
+    res.write = (...args: any[]) => {
       start();
       return gzip
         ? gzip.write(...(args as Parameters<typeof write>))
@@ -117,9 +155,12 @@ export function gzipMiddleware({
 
     res.end = (...args: any[]) => {
       start();
-      return gzip
-        ? (gzip.end as unknown as typeof end)(...args)
-        : end.apply(res, args as Parameters<typeof end>);
+      if (gzip) {
+        (gzip.end as (...args: any[]) => void)(...args);
+        return res;
+      }
+
+      return end.apply(res, args as Parameters<typeof end>);
     };
 
     res.on = (type, listener) => {
