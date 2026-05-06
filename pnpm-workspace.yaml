@@ -28,3 +28,12 @@ allowBuilds:
   core-js: false
   simple-git-hooks: false
   svelte-preprocess: false
+
+minimumReleaseAgeExclude:
+- '@rspack/*'
+- '@rsbuild/*'
+- '@rslib/*'
+- '@rspress/*'
+- '@rstest/*'
+- '@rsdoctor/*'
+- '@rslint/*'
