@@ -72,6 +72,7 @@ export type {
   EnvironmentConfig,
   EnvironmentContext,
   FilenameConfig,
+  FilenameHash,
   HistoryApiFallbackContext,
   HistoryApiFallbackOptions,
   HtmlBasicTag,

@@ -32,6 +32,7 @@ describe('getHTMLPathByEntry', () => {
             html: 'my-html',
           },
           filename: {},
+          filenameHash: {},
         },
         html: {
           outputStructure: 'nested',
@@ -52,6 +53,7 @@ describe('getHTMLPathByEntry', () => {
             html: 'html',
           },
           filename: {},
+          filenameHash: {},
         },
         html: {
           outputStructure: 'flat',

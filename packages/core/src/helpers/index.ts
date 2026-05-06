@@ -3,6 +3,7 @@ import { color } from 'rslog';
 import { RspackChain } from 'rspack-chain';
 import type {
   FilenameConfig,
+  FilenameHash,
   NormalizedConfig,
   NormalizedEnvironmentConfig,
   RsbuildTarget,
@@ -50,6 +51,34 @@ export const cloneDeep = <T>(value: T): T => {
   });
 };
 
+const DEFAULT_FILENAME_HASH = 'contenthash:10';
+
+const normalizeFilenameHash = (
+  filenameHash: FilenameHash,
+): {
+  enable: boolean | 'always';
+  format: string;
+} => {
+  if (typeof filenameHash === 'boolean') {
+    return {
+      enable: filenameHash,
+      format: DEFAULT_FILENAME_HASH,
+    };
+  }
+
+  if (typeof filenameHash === 'string') {
+    return {
+      enable: Boolean(filenameHash),
+      format: filenameHash,
+    };
+  }
+
+  return {
+    enable: filenameHash.enable ?? true,
+    format: filenameHash.format ?? DEFAULT_FILENAME_HASH,
+  };
+};
+
 export function getFilename(
   config: NormalizedConfig | NormalizedEnvironmentConfig,
   type: 'js',
@@ -84,20 +113,26 @@ export function getFilename(
   isServer?: boolean,
 ) {
   const { filename, filenameHash } = config.output;
-  const defaultHash = '[contenthash:10]';
+  const hashConfig = normalizeFilenameHash(filenameHash);
+  const hashTemplate = `[${hashConfig.format}]`;
 
-  const getHash = () => {
-    if (typeof filenameHash === 'string') {
-      return filenameHash ? `.[${filenameHash}]` : '';
+  const getHash = () => (hashConfig.enable !== false ? `.${hashTemplate}` : '');
+
+  const getJsCssHash = (flag?: boolean) => {
+    if (
+      hashConfig.enable === 'always' ||
+      (hashConfig.enable === true && flag)
+    ) {
+      return `.${hashTemplate}`;
     }
-    return filenameHash ? `.${defaultHash}` : '';
+    return '';
   };
 
   switch (type) {
     case 'js':
-      return filename.js ?? `[name]${isProd && !isServer ? getHash() : ''}.js`;
+      return filename.js ?? `[name]${getJsCssHash(isProd && !isServer)}.js`;
     case 'css':
-      return filename.css ?? `[name]${isProd ? getHash() : ''}.css`;
+      return filename.css ?? `[name]${getJsCssHash(isProd)}.css`;
     case 'svg':
       return filename.svg ?? `[name]${getHash()}.svg`;
     case 'font':
@@ -109,9 +144,7 @@ export function getFilename(
     case 'assets':
       return filename.assets ?? `[name]${getHash()}[ext]`;
     case 'wasm': {
-      const hash =
-        typeof filenameHash === 'string' ? `[${filenameHash}]` : defaultHash;
-      return filename.wasm ?? `${hash}.module.wasm`;
+      return filename.wasm ?? `${hashTemplate}.module.wasm`;
     }
     case 'html':
       if (filename.html) {

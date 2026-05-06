@@ -1038,6 +1038,25 @@ export type FilenameConfig = {
   assets?: Rspack.AssetModuleFilename;
 };
 
+export type FilenameHash =
+  | boolean
+  | string
+  | {
+      /**
+       * Controls whether to add filename hash.
+       * - `true`: JavaScript and CSS filenames include hash in production mode.
+       * - `false`: Disable filename hash.
+       * - `'always'`: JavaScript and CSS filenames include hash in all modes.
+       * @default true
+       */
+      enable?: boolean | 'always';
+      /**
+       * The filename hash format.
+       * @default 'contenthash:10'
+       */
+      format?: string;
+    };
+
 export type DataUriLimit = {
   /**
    * The data URI limit of the SVG image.
@@ -1400,10 +1419,14 @@ export interface OutputConfig {
    */
   sourceMap?: boolean | SourceMap;
   /**
-   * Whether to add filename hash after production build.
+   * Whether to add filename hash.
+   * - `true`: JavaScript and CSS filenames include hash in production mode, while other assets
+   * always include hash in all modes.
+   * - `false`: Disable filename hash.
+   * - `string`: Enable filename hash and customize the hash format, such as `'contenthash:16'`.
    * @default true
    */
-  filenameHash?: boolean | string;
+  filenameHash?: FilenameHash;
   /**
    * Whether to inline output scripts files (.js files) into HTML with `<script>` tags.
    * @default false
@@ -1461,7 +1484,7 @@ export interface NormalizedOutputConfig extends OutputConfig {
         extract: SourceMapExtract;
       };
   cleanDistPath: CleanDistPath;
-  filenameHash: boolean | string;
+  filenameHash: FilenameHash;
   assetPrefix: string;
   dataUriLimit: number | NormalizedDataUriLimit;
   manifest: ManifestConfig;
