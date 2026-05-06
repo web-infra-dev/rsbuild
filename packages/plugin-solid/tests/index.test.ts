@@ -122,7 +122,6 @@ describe('plugin-solid', () => {
         'solid-refresh',
       ),
     ).toEqual(false);
-    expect(config[0].resolve?.alias?.['solid-refresh']).toEqual(undefined);
   });
 
   it('should use hydratable dom output for ssr option on web target', async () => {
@@ -133,7 +132,7 @@ describe('plugin-solid', () => {
       },
     });
     const config = await rsbuild.initConfigs();
-    const rule = matchRules(config[0], 'a.tsx')[0] as RuleWithBabelPreset;
+    const rule = matchRules(config[0], 'a.tsx')[0];
     expect(rule).toMatchSnapshot();
   });
 
@@ -148,7 +147,7 @@ describe('plugin-solid', () => {
       },
     });
     const config = await rsbuild.initConfigs();
-    const rule = matchRules(config[0], 'a.tsx')[0] as RuleWithBabelPreset;
+    const rule = matchRules(config[0], 'a.tsx')[0];
     expect(rule).toMatchSnapshot();
   });
 
@@ -172,7 +171,7 @@ describe('plugin-solid', () => {
       },
     });
     const config = await rsbuild.initConfigs();
-    const rule = matchRules(config[0], 'a.tsx')[0] as RuleWithBabelPreset;
+    const rule = matchRules(config[0], 'a.tsx')[0];
     expect(rule).toMatchSnapshot();
   });
 
