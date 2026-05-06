@@ -29,12 +29,7 @@ describe('plugin-output', () => {
     const bundlerConfigs = await rsbuild.initConfigs();
     const [config] = bundlerConfigs;
 
-    expect(config.output?.filename).toEqual(
-      'static/js/[name].[contenthash:10].js',
-    );
-    expect(config.output?.chunkFilename).toEqual(
-      'static/js/async/[name].[contenthash:10].js',
-    );
+    expect(config.output).toMatchSnapshot();
     expect(matchPlugin(config, 'CssExtractRspackPlugin')).toMatchObject({
       options: {
         filename: 'static/css/[name].[contenthash:10].css',
@@ -59,18 +54,7 @@ describe('plugin-output', () => {
     const bundlerConfigs = await rsbuild.initConfigs();
     const [config] = bundlerConfigs;
 
-    expect(config.output?.filename).toEqual(
-      'static/js/[name].[contenthash:16].js',
-    );
-    expect(config.output?.chunkFilename).toEqual(
-      'static/js/async/[name].[contenthash:16].js',
-    );
-    expect(config.output?.assetModuleFilename).toEqual(
-      'static/assets/[name].[contenthash:16][ext]',
-    );
-    expect(config.output?.webassemblyModuleFilename).toEqual(
-      'static/wasm/[contenthash:16].module.wasm',
-    );
+    expect(config.output).toMatchSnapshot();
     expect(matchPlugin(config, 'CssExtractRspackPlugin')).toMatchObject({
       options: {
         filename: 'static/css/[name].[contenthash:16].css',
@@ -95,14 +79,7 @@ describe('plugin-output', () => {
     const bundlerConfigs = await rsbuild.initConfigs();
     const [config] = bundlerConfigs;
 
-    expect(config.output?.filename).toEqual('static/js/[name].js');
-    expect(config.output?.chunkFilename).toEqual('static/js/async/[name].js');
-    expect(config.output?.assetModuleFilename).toEqual(
-      'static/assets/[name][ext]',
-    );
-    expect(config.output?.webassemblyModuleFilename).toEqual(
-      'static/wasm/[contenthash:10].module.wasm',
-    );
+    expect(config.output).toMatchSnapshot();
     expect(matchPlugin(config, 'CssExtractRspackPlugin')).toMatchObject({
       options: {
         filename: 'static/css/[name].css',

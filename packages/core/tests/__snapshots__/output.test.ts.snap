@@ -1,5 +1,18 @@
 // Rstest Snapshot v1
 
+exports[`plugin-output > should allow customizing filename hash format with object config 1`] = `
+{
+  "assetModuleFilename": "static/assets/[name].[contenthash:16][ext]",
+  "chunkFilename": "static/js/async/[name].[contenthash:16].js",
+  "devtoolFallbackModuleFilenameTemplate": "[relative-resource-path]?[hash]",
+  "devtoolModuleFilenameTemplate": "[relative-resource-path]",
+  "filename": "static/js/[name].[contenthash:16].js",
+  "path": "<ROOT>/dist",
+  "publicPath": "/",
+  "webassemblyModuleFilename": "static/wasm/[contenthash:16].module.wasm",
+}
+`;
+
 exports[`plugin-output > should allow customizing server directory with distPath.root 1`] = `
 {
   "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
@@ -17,6 +30,32 @@ exports[`plugin-output > should allow customizing server directory with distPath
   "publicPath": "/",
   "webassemblyModuleFilename": "static/wasm/[contenthash:10].module.wasm",
   "workerChunkLoading": "import",
+}
+`;
+
+exports[`plugin-output > should allow disabling filename hash with object config 1`] = `
+{
+  "assetModuleFilename": "static/assets/[name][ext]",
+  "chunkFilename": "static/js/async/[name].js",
+  "devtoolFallbackModuleFilenameTemplate": "[relative-resource-path]?[hash]",
+  "devtoolModuleFilenameTemplate": "[relative-resource-path]",
+  "filename": "static/js/[name].js",
+  "path": "<ROOT>/dist",
+  "publicPath": "/",
+  "webassemblyModuleFilename": "static/wasm/[contenthash:10].module.wasm",
+}
+`;
+
+exports[`plugin-output > should allow enabling filename hash in development mode 1`] = `
+{
+  "assetModuleFilename": "static/assets/[name].[contenthash:10][ext]",
+  "chunkFilename": "static/js/async/[name].[contenthash:10].js",
+  "devtoolFallbackModuleFilenameTemplate": [Function],
+  "devtoolModuleFilenameTemplate": [Function],
+  "filename": "static/js/[name].[contenthash:10].js",
+  "path": "<ROOT>/dist",
+  "publicPath": "/",
+  "webassemblyModuleFilename": "static/wasm/[contenthash:10].module.wasm",
 }
 `;
 
