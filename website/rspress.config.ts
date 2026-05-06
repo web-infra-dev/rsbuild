@@ -20,7 +20,9 @@ const description = 'The Rspack-based build tool';
 
 export default defineConfig({
   plugins: [
-    pluginAlgolia(),
+    pluginAlgolia({
+      verificationContent: '65929C33AE3BE529',
+    }),
     pluginLlms(),
     pluginSitemap({
       siteUrl,
