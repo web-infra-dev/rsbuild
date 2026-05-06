@@ -316,20 +316,18 @@ export async function createRsbuild(
   const inspectConfig: InspectConfig = async (inspectOptions) => {
     initAction();
 
-    const bundlerConfigs = (
-      await baseInitConfigs({
-        context,
-        pluginManager,
-        rsbuildOptions: resolvedOptions,
-      })
-    ).rspackConfigs;
+    const { rspackConfigs } = await baseInitConfigs({
+      context,
+      pluginManager,
+      rsbuildOptions: resolvedOptions,
+    });
 
     return baseInspectConfig({
       context,
       pluginManager,
       rsbuildOptions: resolvedOptions,
       inspectOptions,
-      bundlerConfigs,
+      bundlerConfigs: rspackConfigs,
     });
   };
 

@@ -130,10 +130,10 @@ describe('plugin-swc', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
+    const rspackConfigs = await rsbuild.initConfigs();
 
-    for (const bundlerConfig of bundlerConfigs) {
-      expect(matchRules(bundlerConfig, 'a.js')).toMatchSnapshot();
+    for (const rspackConfig of rspackConfigs) {
+      expect(matchRules(rspackConfig, 'a.js')).toMatchSnapshot();
     }
   });
 
@@ -153,10 +153,10 @@ describe('plugin-swc', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
+    const rspackConfigs = await rsbuild.initConfigs();
 
-    for (const bundlerConfig of bundlerConfigs) {
-      expect(matchRules(bundlerConfig, 'a.js')).toMatchSnapshot();
+    for (const rspackConfig of rspackConfigs) {
+      expect(matchRules(rspackConfig, 'a.js')).toMatchSnapshot();
     }
   });
 
@@ -197,10 +197,10 @@ describe('plugin-swc', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
+    const rspackConfigs = await rsbuild.initConfigs();
 
-    for (const bundlerConfig of bundlerConfigs) {
-      expect(matchRules(bundlerConfig, 'a.js')).toMatchSnapshot();
+    for (const rspackConfig of rspackConfigs) {
+      expect(matchRules(rspackConfig, 'a.js')).toMatchSnapshot();
     }
   });
 });
@@ -215,8 +215,8 @@ async function matchConfigSnapshot(config: RsbuildConfig) {
     config,
     cwd: defaultCwd,
   });
-  const bundlerConfigs = await rsbuild.initConfigs();
+  const rspackConfigs = await rsbuild.initConfigs();
   expect(
-    bundlerConfigs.map((bundlerConfig) => matchRules(bundlerConfig, 'a.js')),
+    rspackConfigs.map((rspackConfig) => matchRules(rspackConfig, 'a.js')),
   ).toMatchSnapshot();
 }

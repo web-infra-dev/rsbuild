@@ -10,9 +10,9 @@ describe('plugin-minimize', () => {
 
     const rsbuild = await createRsbuild();
 
-    const bundlerConfigs = await rsbuild.initConfigs();
+    const rspackConfigs = await rsbuild.initConfigs();
 
-    expect(bundlerConfigs[0].optimization?.minimizer).toBeUndefined();
+    expect(rspackConfigs[0].optimization?.minimizer).toBeUndefined();
   });
 
   it('should apply minimizer in production', async () => {
@@ -20,9 +20,9 @@ describe('plugin-minimize', () => {
 
     const rsbuild = await createRsbuild();
 
-    const bundlerConfigs = await rsbuild.initConfigs();
+    const rspackConfigs = await rsbuild.initConfigs();
 
-    expect(bundlerConfigs[0].optimization?.minimizer).toMatchSnapshot();
+    expect(rspackConfigs[0].optimization?.minimizer).toMatchSnapshot();
   });
 
   it('should not apply minimizer for JS when output.minify.js is false', async () => {
@@ -38,10 +38,10 @@ describe('plugin-minimize', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
+    const rspackConfigs = await rsbuild.initConfigs();
 
-    expect(bundlerConfigs[0].optimization?.minimizer?.length).toBe(1);
-    expect(bundlerConfigs[0].optimization?.minimizer?.[0]).toMatchObject({
+    expect(rspackConfigs[0].optimization?.minimizer?.length).toBe(1);
+    expect(rspackConfigs[0].optimization?.minimizer?.[0]).toMatchObject({
       name: 'LightningCssMinimizerRspackPlugin',
     });
   });
@@ -60,9 +60,9 @@ describe('plugin-minimize', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
+    const rspackConfigs = await rsbuild.initConfigs();
 
-    expect(bundlerConfigs[0].optimization?.minimize).toBe(false);
+    expect(rspackConfigs[0].optimization?.minimize).toBe(false);
   });
 
   it('should not apply minimizer for CSS when output.minify.css is false', async () => {
@@ -78,10 +78,10 @@ describe('plugin-minimize', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
+    const rspackConfigs = await rsbuild.initConfigs();
 
-    expect(bundlerConfigs[0].optimization?.minimizer?.length).toBe(1);
-    expect(bundlerConfigs[0].optimization?.minimizer?.[0]).toMatchObject({
+    expect(rspackConfigs[0].optimization?.minimizer?.length).toBe(1);
+    expect(rspackConfigs[0].optimization?.minimizer?.[0]).toMatchObject({
       name: 'SwcJsMinimizerRspackPlugin',
     });
   });
@@ -101,11 +101,11 @@ describe('plugin-minimize', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
+    const rspackConfigs = await rsbuild.initConfigs();
 
     // implicit assert the order of minimizers here,
     // could also be a guard for the order of minimizers
-    expect(bundlerConfigs[0].optimization?.minimizer?.[0]).toMatchObject({
+    expect(rspackConfigs[0].optimization?.minimizer?.[0]).toMatchObject({
       _args: [
         {
           exclude: 'no_js_minify',
@@ -125,9 +125,9 @@ describe('plugin-minimize', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
+    const rspackConfigs = await rsbuild.initConfigs();
 
-    expect(bundlerConfigs[0].optimization?.minimizer).toMatchSnapshot();
+    expect(rspackConfigs[0].optimization?.minimizer).toMatchSnapshot();
   });
 
   it('should remove specific console when performance.removeConsole is array', async () => {
@@ -141,8 +141,8 @@ describe('plugin-minimize', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0].optimization?.minimizer).toMatchSnapshot();
+    const rspackConfigs = await rsbuild.initConfigs();
+    expect(rspackConfigs[0].optimization?.minimizer).toMatchSnapshot();
   });
 
   it('should set asciiOnly false when output.charset is utf8', async () => {
@@ -156,7 +156,7 @@ describe('plugin-minimize', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0].optimization?.minimizer).toMatchSnapshot();
+    const rspackConfigs = await rsbuild.initConfigs();
+    expect(rspackConfigs[0].optimization?.minimizer).toMatchSnapshot();
   });
 });

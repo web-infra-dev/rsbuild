@@ -9,8 +9,8 @@ it('should apply default plugins correctly', async () => {
   rs.stubEnv('NODE_ENV', 'development');
   const rsbuild = await createRsbuild();
 
-  const bundlerConfigs = await rsbuild.initConfigs();
-  expect(bundlerConfigs[0]).toMatchSnapshot();
+  const rspackConfigs = await rsbuild.initConfigs();
+  expect(rspackConfigs[0]).toMatchSnapshot();
 });
 
 it('should apply default plugins correctly in production', async () => {
@@ -18,8 +18,8 @@ it('should apply default plugins correctly in production', async () => {
 
   const rsbuild = await createRsbuild();
 
-  const bundlerConfigs = await rsbuild.initConfigs();
-  expect(bundlerConfigs[0]).toMatchSnapshot();
+  const rspackConfigs = await rsbuild.initConfigs();
+  expect(rspackConfigs[0]).toMatchSnapshot();
 });
 
 it('should apply default plugins correctly when target is node', async () => {
@@ -33,9 +33,9 @@ it('should apply default plugins correctly when target is node', async () => {
     },
   });
 
-  const bundlerConfigs = await rsbuild.initConfigs();
+  const rspackConfigs = await rsbuild.initConfigs();
 
-  expect(bundlerConfigs[0]).toMatchSnapshot();
+  expect(rspackConfigs[0]).toMatchSnapshot();
 });
 
 describe('tools.rspack', () => {
@@ -70,9 +70,9 @@ describe('tools.rspack', () => {
         },
       },
     });
-    const bundlerConfigs = await rsbuild.initConfigs();
+    const rspackConfigs = await rsbuild.initConfigs();
 
-    expect(bundlerConfigs[0]).toMatchSnapshot();
+    expect(rspackConfigs[0]).toMatchSnapshot();
   });
 });
 
@@ -98,9 +98,9 @@ describe('bundler API', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0].target).toBe('node');
-    expect(bundlerConfigs[0].devtool).toBe('hidden-source-map');
+    const rspackConfigs = await rsbuild.initConfigs();
+    expect(rspackConfigs[0].target).toBe('node');
+    expect(rspackConfigs[0].devtool).toBe('hidden-source-map');
   });
 
   it('should format modifyBundlerChain rules correctly', async () => {
@@ -124,8 +124,8 @@ describe('bundler API', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(matchRules(bundlerConfigs[0], 'a.yaml')).toMatchSnapshot();
+    const rspackConfigs = await rsbuild.initConfigs();
+    expect(matchRules(rspackConfigs[0], 'a.yaml')).toMatchSnapshot();
   });
 
   it('should support using builtinLoader in modifyBundlerChain', async () => {
@@ -149,8 +149,8 @@ describe('bundler API', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(matchRules(bundlerConfigs[0], 'a.yaml')).toMatchSnapshot();
+    const rspackConfigs = await rsbuild.initConfigs();
+    expect(matchRules(rspackConfigs[0], 'a.yaml')).toMatchSnapshot();
   });
 });
 

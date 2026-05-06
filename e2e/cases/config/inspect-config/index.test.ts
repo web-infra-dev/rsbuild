@@ -23,7 +23,7 @@ const rsbuildNodeConfig = path.resolve(
   import.meta.dirname,
   './dist/.rsbuild/rsbuild.config.node.mjs',
 );
-const bundlerConfig = path.resolve(
+const rspackConfig = path.resolve(
   import.meta.dirname,
   `./dist/.rsbuild/rspack.config.web.mjs`,
 );
@@ -46,12 +46,12 @@ test('should generate config files when writeToDisk is true', async ({
     writeToDisk: true,
   });
 
-  expect(fs.existsSync(bundlerConfig)).toBeTruthy();
+  expect(fs.existsSync(rspackConfig)).toBeTruthy();
   expect(fs.existsSync(rsbuildConfig)).toBeTruthy();
   await expectLog(INSPECT_LOG);
 
   await fse.remove(rsbuildConfig);
-  await fse.remove(bundlerConfig);
+  await fse.remove(rspackConfig);
 });
 
 test('should generate config files correctly when output is specified', async ({
@@ -67,7 +67,7 @@ test('should generate config files correctly when output is specified', async ({
     outputPath: 'foo',
   });
 
-  const bundlerConfig = path.resolve(
+  const rspackConfig = path.resolve(
     import.meta.dirname,
     `./dist/foo/rspack.config.web.mjs`,
   );
@@ -77,12 +77,12 @@ test('should generate config files correctly when output is specified', async ({
     './dist/foo/rsbuild.config.mjs',
   );
 
-  expect(fs.existsSync(bundlerConfig)).toBeTruthy();
+  expect(fs.existsSync(rspackConfig)).toBeTruthy();
   expect(fs.existsSync(rsbuildConfig)).toBeTruthy();
   await expectLog(INSPECT_LOG);
 
   await fse.remove(rsbuildConfig);
-  await fse.remove(bundlerConfig);
+  await fse.remove(rspackConfig);
 });
 
 test('should generate bundler config for node when target contains node', async ({
@@ -108,13 +108,13 @@ test('should generate bundler config for node when target contains node', async 
   });
 
   expect(fs.existsSync(rsbuildNodeConfig)).toBeTruthy();
-  expect(fs.existsSync(bundlerConfig)).toBeTruthy();
+  expect(fs.existsSync(rspackConfig)).toBeTruthy();
   expect(fs.existsSync(bundlerNodeConfig)).toBeTruthy();
   await expectLog(INSPECT_LOG);
 
   await fse.remove(rsbuildConfig);
   await fse.remove(rsbuildNodeConfig);
-  await fse.remove(bundlerConfig);
+  await fse.remove(rspackConfig);
   await fse.remove(bundlerNodeConfig);
 });
 
@@ -127,7 +127,7 @@ test('should not generate config files when writeToDisk is false', async () => {
   });
 
   expect(fs.existsSync(rsbuildConfig)).toBeFalsy();
-  expect(fs.existsSync(bundlerConfig)).toBeFalsy();
+  expect(fs.existsSync(rspackConfig)).toBeFalsy();
 });
 
 test('should allow to specify absolute output path', async ({ logHelper }) => {

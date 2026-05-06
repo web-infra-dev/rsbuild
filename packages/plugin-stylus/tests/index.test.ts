@@ -11,8 +11,8 @@ describe('plugin-stylus', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(matchRules(bundlerConfigs[0], 'a.styl')).toMatchSnapshot();
+    const rspackConfigs = await rsbuild.initConfigs();
+    expect(matchRules(rspackConfigs[0], 'a.styl')).toMatchSnapshot();
   });
 
   it('should add stylus loader for Rsbuild v1', async () => {
@@ -22,9 +22,9 @@ describe('plugin-stylus', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
+    const rspackConfigs = await rsbuild.initConfigs();
     expect(
-      matchRules(bundlerConfigs[0] as Rspack.Configuration, 'a.styl'),
+      matchRules(rspackConfigs[0] as Rspack.Configuration, 'a.styl'),
     ).toMatchSnapshot();
   });
 
@@ -40,7 +40,7 @@ describe('plugin-stylus', () => {
         ],
       },
     });
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(matchRules(bundlerConfigs[0], 'a.styl')).toMatchSnapshot();
+    const rspackConfigs = await rsbuild.initConfigs();
+    expect(matchRules(rspackConfigs[0], 'a.styl')).toMatchSnapshot();
   });
 });

@@ -79,9 +79,9 @@ describe('plugins/babel', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    for (const bundlerConfig of bundlerConfigs) {
-      expect(matchRules(bundlerConfig, 'a.tsx')[0]).toMatchSnapshot();
+    const rspackConfigs = await rsbuild.initConfigs();
+    for (const rspackConfig of rspackConfigs) {
+      expect(matchRules(rspackConfig, 'a.tsx')[0]).toMatchSnapshot();
     }
   });
 

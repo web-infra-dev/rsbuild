@@ -9,8 +9,8 @@ describe('plugin-output', () => {
   it('should set output correctly', async () => {
     const rsbuild = await createRsbuild();
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0].output).toMatchSnapshot();
+    const rspackConfigs = await rsbuild.initConfigs();
+    expect(rspackConfigs[0].output).toMatchSnapshot();
   });
 
   it('should allow enabling filename hash in development mode', async () => {
@@ -26,8 +26,8 @@ describe('plugin-output', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    const [config] = bundlerConfigs;
+    const rspackConfigs = await rsbuild.initConfigs();
+    const [config] = rspackConfigs;
 
     expect(config.output).toMatchSnapshot();
     expect(matchPlugin(config, 'CssExtractRspackPlugin')).toMatchObject({
@@ -51,8 +51,8 @@ describe('plugin-output', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    const [config] = bundlerConfigs;
+    const rspackConfigs = await rsbuild.initConfigs();
+    const [config] = rspackConfigs;
 
     expect(config.output).toMatchSnapshot();
     expect(matchPlugin(config, 'CssExtractRspackPlugin')).toMatchObject({
@@ -76,8 +76,8 @@ describe('plugin-output', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    const [config] = bundlerConfigs;
+    const rspackConfigs = await rsbuild.initConfigs();
+    const [config] = rspackConfigs;
 
     expect(config.output).toMatchSnapshot();
     expect(matchPlugin(config, 'CssExtractRspackPlugin')).toMatchObject({
@@ -100,8 +100,8 @@ describe('plugin-output', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0].output).toMatchSnapshot();
+    const rspackConfigs = await rsbuild.initConfigs();
+    expect(rspackConfigs[0].output).toMatchSnapshot();
   });
 
   it('should allow setting distPath.js and distPath.css to empty string', async () => {
@@ -116,8 +116,8 @@ describe('plugin-output', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0].output).toMatchSnapshot();
+    const rspackConfigs = await rsbuild.initConfigs();
+    expect(rspackConfigs[0].output).toMatchSnapshot();
   });
 
   it('should allow customizing async js path via distPath.jsAsync', async () => {
@@ -131,8 +131,8 @@ describe('plugin-output', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0].output?.chunkFilename).toEqual(
+    const rspackConfigs = await rsbuild.initConfigs();
+    expect(rspackConfigs[0].output?.chunkFilename).toEqual(
       'custom/js/[name].js',
     );
   });
@@ -149,8 +149,8 @@ describe('plugin-output', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0].output).toMatchSnapshot();
+    const rspackConfigs = await rsbuild.initConfigs();
+    expect(rspackConfigs[0].output).toMatchSnapshot();
   });
 
   it('should apply output config when target is node', async () => {
@@ -169,8 +169,8 @@ describe('plugin-output', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0].output).toMatchSnapshot();
+    const rspackConfigs = await rsbuild.initConfigs();
+    expect(rspackConfigs[0].output).toMatchSnapshot();
   });
 
   it('should allow using copy plugin', async () => {
@@ -188,10 +188,8 @@ describe('plugin-output', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(
-      matchPlugin(bundlerConfigs[0], 'CopyRspackPlugin'),
-    ).toMatchSnapshot();
+    const rspackConfigs = await rsbuild.initConfigs();
+    expect(matchPlugin(rspackConfigs[0], 'CopyRspackPlugin')).toMatchSnapshot();
   });
 
   it('should allow using copy plugin with multiple configurations', async () => {
@@ -217,10 +215,8 @@ describe('plugin-output', () => {
       },
     });
 
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(
-      matchPlugin(bundlerConfigs[0], 'CopyRspackPlugin'),
-    ).toMatchSnapshot();
+    const rspackConfigs = await rsbuild.initConfigs();
+    expect(matchPlugin(rspackConfigs[0], 'CopyRspackPlugin')).toMatchSnapshot();
   });
 
   it('should replace `<port>` placeholder with default port', async () => {
