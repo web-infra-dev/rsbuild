@@ -151,7 +151,7 @@ describe('plugin-solid', () => {
     expect(rule).toMatchSnapshot();
   });
 
-  it('should allow solid preset options to override ssr defaults', async () => {
+  it('should allow solid options to override ssr defaults', async () => {
     const rsbuild = await createRsbuild({
       config: {
         ...rsbuildConfig,
@@ -161,7 +161,7 @@ describe('plugin-solid', () => {
         plugins: [
           pluginSolid({
             ssr: true,
-            solidPresetOptions: {
+            solid: {
               generate: 'universal',
               hydratable: false,
             },
@@ -175,7 +175,26 @@ describe('plugin-solid', () => {
     expect(rule).toMatchSnapshot();
   });
 
-  it('should allow to configure solid preset options', async () => {
+  it('should allow to configure solid options', async () => {
+    const rsbuild = await createRsbuild({
+      config: {
+        ...rsbuildConfig,
+        plugins: [
+          pluginSolid({
+            solid: {
+              generate: 'ssr',
+              hydratable: true,
+            },
+          }),
+          pluginBabel(),
+        ],
+      },
+    });
+    const config = await rsbuild.initConfigs();
+    expect(matchRules(config[0], 'a.tsx')[0]).toMatchSnapshot();
+  });
+
+  it('should allow deprecated solidPresetOptions alias', async () => {
     const rsbuild = await createRsbuild({
       config: {
         ...rsbuildConfig,

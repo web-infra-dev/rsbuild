@@ -1,6 +1,105 @@
 // Rstest Snapshot v1
 
-exports[`plugin-solid > should allow solid preset options to override ssr defaults 1`] = `
+exports[`plugin-solid > should allow deprecated solidPresetOptions alias 1`] = `
+{
+  "dependency": {
+    "not": "url",
+  },
+  "include": [
+    {
+      "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+    },
+    /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+  ],
+  "oneOf": [
+    {
+      "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
+      "type": "asset/source",
+    },
+    {
+      "type": "javascript/auto",
+      "use": [
+        {
+          "loader": "builtin:swc-loader",
+          "options": {
+            "collectTypeScriptInfo": {
+              "exportedEnum": false,
+              "typeExports": true,
+            },
+            "detectSyntax": "auto",
+            "env": {
+              "targets": [
+                "chrome >= 107",
+                "edge >= 107",
+                "firefox >= 104",
+                "safari >= 16",
+              ],
+            },
+            "isModule": "unknown",
+            "jsc": {
+              "experimental": {
+                "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                "keepImportAttributes": true,
+              },
+              "externalHelpers": true,
+              "output": {
+                "charset": "utf8",
+              },
+              "parser": {
+                "decorators": true,
+              },
+              "transform": {
+                "decoratorVersion": "2023-11",
+                "legacyDecorator": false,
+              },
+            },
+          },
+        },
+        {
+          "loader": "<ROOT>/packages/plugin-babel/compiled/babel-loader/index.js",
+          "options": {
+            "babelrc": false,
+            "compact": false,
+            "configFile": false,
+            "parserOpts": {
+              "plugins": [
+                "jsx",
+                "typescript",
+              ],
+            },
+            "plugins": [
+              [
+                "<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
+                {
+                  "version": "2023-11",
+                },
+              ],
+              [
+                "<PNPM_INNER>/solid-refresh/dist/babel.cjs",
+                {
+                  "bundler": "rspack-esm",
+                },
+              ],
+            ],
+            "presets": [
+              [
+                "<PNPM_INNER>/babel-preset-solid/index.js",
+                {
+                  "generate": "ssr",
+                  "hydratable": true,
+                },
+              ],
+            ],
+          },
+        },
+      ],
+    },
+  ],
+  "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+}
+`;
+
+exports[`plugin-solid > should allow solid options to override ssr defaults 1`] = `
 {
   "dependency": {
     "not": "url",
@@ -90,7 +189,7 @@ exports[`plugin-solid > should allow solid preset options to override ssr defaul
 }
 `;
 
-exports[`plugin-solid > should allow to configure solid preset options 1`] = `
+exports[`plugin-solid > should allow to configure solid options 1`] = `
 {
   "dependency": {
     "not": "url",
