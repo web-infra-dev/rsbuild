@@ -27,8 +27,8 @@
   },
   "dependencies": {
     "@rsbuild/plugin-babel": "workspace:*",
-    "babel-preset-solid": "^1.9.12",
-    "solid-refresh": "^0.7.8"
+    "babel-preset-solid": ">=2.0.0-beta.0 <2.0.0-experimental.0",
+    "solid-refresh": ">=0.8.0-next.7 < 0.8.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
@@ -38,7 +38,9 @@
     "typescript": "^6.0.3"
   },
   "peerDependencies": {
-    "@rsbuild/core": "^1.0.0 || ^2.0.0-0"
+    "@rsbuild/core": "^1.0.0 || ^2.0.0-0",
+    "@solidjs/web": ">=2.0.0-beta.0 <2.0.0-experimental.0",
+    "solid-js": ">=2.0.0-beta.0 <2.0.0-experimental.0"
   },
   "peerDependenciesMeta": {
     "@rsbuild/core": {
