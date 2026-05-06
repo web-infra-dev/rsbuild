@@ -26,5 +26,5 @@ strictPeerDependencies: false
 allowBuilds:
   '@parcel/watcher': true
   core-js: false
-  simple-git-hooks: true
+  simple-git-hooks: false
   svelte-preprocess: false
