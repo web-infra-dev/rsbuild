@@ -75,7 +75,7 @@ const Search = () => {
       docSearchProps={{
         appId: 'LBYJGZQY5U', // cspell:disable-line
         apiKey: 'ecb541ceb2b67d7f23e12e6fb4772c0f', // cspell:disable-line
-        indexName: 'rsbuild',
+        indexName: 'rsbuild-v1',
         searchParameters: {
           facetFilters: [`lang:${lang}`],
         },
