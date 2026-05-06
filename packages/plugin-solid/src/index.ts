@@ -82,8 +82,8 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
                   require.resolve('babel-preset-solid'),
                   {
                     ...defaultPresetOptions,
-                    ...(solidPresetOptions || {}),
-                    ...(solid || {}),
+                    ...solidPresetOptions,
+                    ...solid,
                   },
                 ],
               ];
