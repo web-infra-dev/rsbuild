@@ -13,13 +13,13 @@ browserslistrc
 bundleless
 cachable
 caniuse
+chenjiahan
 chunkhash
 Chunktmp
 classname
 codegen
 codesandbox
 codeva
-chenjiahan
 compat
 consolas
 contentful
@@ -126,6 +126,7 @@ shiki
 shikijs
 sirv
 sokra
+solidjs
 speedscope
 srcset
 stacktracey
@@ -151,8 +152,8 @@ tsgo
 twoslash
 TYPELESS
 uncompiled
-unminified
 unjs
+unminified
 unocss
 unpatch
 unplugin
