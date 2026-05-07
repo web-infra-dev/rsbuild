@@ -1,13 +1,17 @@
 import { createConnectHandler } from '@e2e/helper/server';
+import { getRandomPort } from '@e2e/helper';
 import { createAdaptorServer } from '@hono/node-server';
 import { createRsbuild } from '@rsbuild/core';
 import { Hono } from 'hono';
 
 export async function startDevServer(fixtures) {
+  const customServerPort = await getRandomPort();
+
   const rsbuild = await createRsbuild({
     cwd: fixtures,
     config: {
       server: {
+        port: customServerPort,
         htmlFallback: false,
         middlewareMode: true,
       },
@@ -27,7 +31,7 @@ export async function startDevServer(fixtures) {
   const server = createAdaptorServer({ fetch: app.fetch });
 
   await new Promise((resolve) => {
-    server.listen(port, resolve);
+    server.listen({ host: 'localhost', port }, resolve);
   });
   await rsbuildServer.afterListen();
 
