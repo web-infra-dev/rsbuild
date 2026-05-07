@@ -31,12 +31,12 @@
   },
   "devDependencies": {
     "@scripts/config": "workspace:*",
-    "@rslint/core": "^0.5.1",
+    "@rslint/core": "^0.5.2",
     "@rstest/adapter-rslib": "^0.2.2",
     "@rstest/core": "^0.9.10",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^24.12.2",
-    "@typescript/native-preview": "7.0.0-dev.20260503.1",
+    "@typescript/native-preview": "7.0.0-dev.20260506.1",
     "cross-env": "^10.1.0",
     "cspell-ban-words": "^0.0.4",
     "heading-case": "^1.1.0",
@@ -45,9 +45,9 @@
     "simple-git-hooks": "^2.13.1",
     "typescript": "^6.0.3"
   },
-  "packageManager": "pnpm@10.33.2",
+  "packageManager": "pnpm@10.33.4",
   "engines": {
     "node": ">=22.18.0",
-    "pnpm": ">=10.33.2"
+    "pnpm": ">=10.33.4"
   }
 }

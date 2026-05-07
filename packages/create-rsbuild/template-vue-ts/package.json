@@ -9,10 +9,10 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "vue": "^3.5.33"
+    "vue": "^3.5.34"
   },
   "devDependencies": {
-    "@rsbuild/core": "^2.0.3",
+    "@rsbuild/core": "^2.0.5",
     "@rsbuild/plugin-vue": "^1.2.7",
     "typescript": "^6.0.3"
   }
