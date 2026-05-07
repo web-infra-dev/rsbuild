@@ -6,8 +6,12 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
-  css-loader@7.1.4: b504d70330b6625a20bc0cb1428c9787350fe6413c2947f42bd88ff22123a019
-  postcss-loader@8.2.1: 4829849d58d8366cd82cbdab1947d15f9e6d33e70f1e3d5310daffff152dff14
+  css-loader@7.1.4:
+    hash: b504d70330b6625a20bc0cb1428c9787350fe6413c2947f42bd88ff22123a019
+    path: patches/css-loader@7.1.4.patch
+  postcss-loader@8.2.1:
+    hash: 4829849d58d8366cd82cbdab1947d15f9e6d33e70f1e3d5310daffff152dff14
+    path: patches/postcss-loader@8.2.1.patch
 
 importers:
 

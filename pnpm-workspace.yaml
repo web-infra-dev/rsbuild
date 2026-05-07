@@ -22,3 +22,18 @@ patchedDependencies:
   postcss-loader@8.2.1: patches/postcss-loader@8.2.1.patch
 
 strictPeerDependencies: false
+
+allowBuilds:
+  '@parcel/watcher': true
+  core-js: false
+  simple-git-hooks: false
+  svelte-preprocess: false
+
+minimumReleaseAgeExclude:
+  - '@rspack/*'
+  - '@rsbuild/*'
+  - '@rslib/*'
+  - '@rspress/*'
+  - '@rstest/*'
+  - '@rsdoctor/*'
+  - '@rslint/*'
