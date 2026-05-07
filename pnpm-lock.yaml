@@ -1015,9 +1015,6 @@ importers:
 
   scripts/config:
     devDependencies:
-      '@rsbuild/core':
-        specifier: ^2.0.0-beta.7
-        version: 2.0.3(@module-federation/runtime-tools@2.4.0)(core-js@3.49.0)
       '@rslib/core':
         specifier: 0.21.3
         version: 0.21.3(@module-federation/runtime-tools@2.4.0)(@typescript/native-preview@7.0.0-dev.20260506.1)(core-js@3.49.0)(typescript@6.0.3)
