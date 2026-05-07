@@ -15,7 +15,7 @@
   },
   "mdx.validate.validateFileLinks": "ignore",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "typescript.tsdk": "node_modules/typescript/lib",
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
   "json.schemas": [
     {
       "fileMatch": ["**/_meta.json"],
