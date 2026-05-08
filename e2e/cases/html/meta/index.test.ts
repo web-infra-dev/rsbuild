@@ -1,3 +1,4 @@
+import path from 'node:path';
 import { expect, getFileContent, normalizeNewlines, test } from '@e2e/helper';
 
 test('should not inject charset meta if template already contains it', async ({
@@ -18,4 +19,40 @@ test('should not inject charset meta if template already contains it', async ({
   </body>
 </html>
 `);
+});
+
+test('should generate meta tags via function for each entry', async ({
+  build,
+}) => {
+  const rsbuild = await build({
+    config: {
+      source: {
+        entry: {
+          foo: path.resolve(import.meta.dirname, './src/index.js'),
+          bar: path.resolve(import.meta.dirname, './src/index.js'),
+        },
+      },
+      html: {
+        meta({ entryName }) {
+          return {
+            charset: { charset: 'utf-8' },
+            description: `${entryName} page`,
+            'og:title': {
+              property: 'og:title',
+              content: entryName,
+            },
+          };
+        },
+      },
+    },
+  });
+  const files = rsbuild.getDistFiles();
+
+  const fooHtml = getFileContent(files, 'foo.html');
+  expect(fooHtml).toContain('<meta name="description" content="foo page">');
+  expect(fooHtml).toContain('<meta property="og:title" content="foo">');
+
+  const barHtml = getFileContent(files, 'bar.html');
+  expect(barHtml).toContain('<meta name="description" content="bar page">');
+  expect(barHtml).toContain('<meta property="og:title" content="bar">');
 });
