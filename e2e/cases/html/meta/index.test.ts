@@ -35,7 +35,6 @@ test('should generate meta tags via function for each entry', async ({
       html: {
         meta({ entryName }) {
           return {
-            charset: { charset: 'utf-8' },
             description: `${entryName} page`,
             'og:title': {
               property: 'og:title',
