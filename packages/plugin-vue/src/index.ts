@@ -82,7 +82,7 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
         return merged;
       });
 
-      api.modifyBundlerChain((chain, { CHAIN_ID }) => {
+      api.modifyBundlerChain((chain, { CHAIN_ID, environment, target }) => {
         chain.resolve.extensions.add('.vue');
 
         const userLoaderOptions = options.vueLoaderOptions ?? {};
@@ -90,12 +90,15 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
           preserveWhitespace: false,
           ...userLoaderOptions.compilerOptions,
         };
+        const emitCss = environment.config.output.emitCss ?? target === 'web';
         const vueLoaderOptions = {
           // Always treat this as a client build when invoked from Rstest,
           // since tests are executed in a DOM-based environment.
           isServerBuild:
             api.context.callerName === 'rstest' ? false : undefined,
-          experimentalInlineMatchResource: true,
+          // Keep non-emitting targets on the original SFC resource so CSS Modules
+          // hashes match the client build during SSR hydration.
+          experimentalInlineMatchResource: emitCss,
           ...userLoaderOptions,
           compilerOptions,
         };
