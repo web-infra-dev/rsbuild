@@ -8,6 +8,7 @@ import type { CompressOptions, RequestHandler } from '../types';
 
 const ENCODING_REGEX = /\bgzip\b/;
 const CONTENT_TYPE_REGEX = /text|javascript|\/json|xml/i;
+const SSE_CONTENT_TYPE_REGEX = /(?:^|;)\s*text\/event-stream(?:\s*(?:;|$))/i;
 type WriteHeadHeaders = OutgoingHttpHeaders | OutgoingHttpHeader[];
 
 const setWriteHeadHeaders = (
@@ -50,6 +51,10 @@ const shouldCompress = (res: ServerResponse) => {
   }
 
   const contentType = String(res.getHeader('Content-Type'));
+  if (contentType && SSE_CONTENT_TYPE_REGEX.test(contentType)) {
+    return false;
+  }
+
   if (contentType && !CONTENT_TYPE_REGEX.test(contentType)) {
     return false;
   }
