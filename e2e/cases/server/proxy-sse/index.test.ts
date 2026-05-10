@@ -1,19 +1,10 @@
 import { expect, getRandomPort, test } from '@e2e/helper';
+import { promisify } from 'node:util';
 import zlib from 'node:zlib';
 import { createAdaptorServer } from '@hono/node-server';
 import { Hono } from 'hono';
 
-const gunzip = (buffer: Buffer) => {
-  return new Promise<Buffer>((resolve, reject) => {
-    zlib.gunzip(buffer, (error, result) => {
-      if (error) {
-        reject(error);
-        return;
-      }
-      resolve(result);
-    });
-  });
-};
+const gunzip = promisify(zlib.gunzip);
 
 test('should proxy SSE request', async ({ dev, page }) => {
   const ssePort = await getRandomPort();
@@ -120,7 +111,7 @@ test('should not gzip proxied SSE responses', async ({ dev, request }) => {
       },
     });
     const headers = response.headers();
-    const rawBody = Buffer.from(await response.body());
+    const rawBody = await response.body();
     const text = headers['content-encoding'] === 'gzip'
       ? (await gunzip(rawBody)).toString('utf8')
       : rawBody.toString('utf8');
