@@ -8,8 +8,10 @@ import type { CompressOptions, RequestHandler } from '../types';
 
 const ENCODING_REGEX = /\bgzip\b/;
 const CONTENT_TYPE_REGEX = /text|javascript|\/json|xml/i;
-const SSE_CONTENT_TYPE_REGEX = /(?:^|;)\s*text\/event-stream(?:\s*(?:;|$))/i;
 type WriteHeadHeaders = OutgoingHttpHeaders | OutgoingHttpHeader[];
+
+const getMimeType = (contentType: string) =>
+  contentType.split(';', 1)[0].trim().toLowerCase();
 
 const setWriteHeadHeaders = (
   res: ServerResponse,
@@ -50,12 +52,20 @@ const shouldCompress = (res: ServerResponse) => {
     return false;
   }
 
-  const contentType = String(res.getHeader('Content-Type'));
-  if (contentType && SSE_CONTENT_TYPE_REGEX.test(contentType)) {
+  const contentType = res.getHeader('Content-Type');
+  if (!contentType) {
     return false;
   }
 
-  if (contentType && !CONTENT_TYPE_REGEX.test(contentType)) {
+  const contentTypeValue = String(contentType);
+
+  // Only compress text-like responses by default to avoid transforming binary assets.
+  if (!CONTENT_TYPE_REGEX.test(contentTypeValue)) {
+    return false;
+  }
+
+  // SSE is text-like, but gzip buffering can delay event delivery.
+  if (getMimeType(contentTypeValue) === 'text/event-stream') {
     return false;
   }
 

@@ -151,6 +151,31 @@ test('should not compress responses with writeHead content-encoding', async () =
   }
 });
 
+test('should not compress responses without content-type', async () => {
+  const server = createServer((req, res) => {
+    gzipMiddleware()(req, res, () => {
+      res.end('hello '.repeat(300));
+    });
+  });
+
+  const port = await listen(server);
+
+  try {
+    const response = await fetch(`http://localhost:${port}`, {
+      headers: {
+        'accept-encoding': 'gzip',
+      },
+    });
+    const text = await response.text();
+
+    expect(response.headers.get('content-encoding')).toBeNull();
+    expect(response.headers.get('content-type')).toBeNull();
+    expect(text).toBe('hello '.repeat(300));
+  } finally {
+    await closeServer(server);
+  }
+});
+
 test('should not compress text/event-stream responses', async () => {
   const server = createServer((req, res) => {
     gzipMiddleware()(req, res, () => {
