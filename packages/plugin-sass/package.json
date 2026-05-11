@@ -37,13 +37,13 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/core-v1": "npm:@rsbuild/core@^1.7.5",
-    "@rslib/core": "0.21.3",
+    "@rslib/core": "0.21.4",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^24.12.2",
+    "@types/node": "^24.12.3",
     "@types/sass-loader": "^8.0.10",
     "prebundle": "1.6.4",
     "resolve-url-loader": "^5.0.0",
-    "sass-loader": "^16.0.7",
+    "sass-loader": "^16.0.8",
     "typescript": "^6.0.3"
   },
   "peerDependencies": {
