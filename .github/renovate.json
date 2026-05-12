@@ -3,7 +3,8 @@
   "extends": [
     "config:recommended",
     "schedule:weekly",
-    "helpers:pinGitHubActionDigests"
+    "helpers:pinGitHubActionDigests",
+    "github>rstackjs/renovate:security"
   ],
   "rangeStrategy": "bump",
   "packageRules": [
