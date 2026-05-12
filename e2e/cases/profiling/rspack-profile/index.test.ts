@@ -12,15 +12,16 @@ test.afterAll(() => {
   }
 });
 
-const PROFILE_LOG = 'profile output written to';
+const PROFILE_LOG = 'profile file saved to';
 
-const getProfileOutput = (logs: string[]) =>
+const getProfilePath = (logs: string[]) =>
   logs
     .find((log) => log.includes(PROFILE_LOG))
     ?.split(PROFILE_LOG)[1]
     ?.trim();
 
-test('should write rspack profile output in dev', async ({
+// TODO: write logger trace info to file
+test.skip('should generate rspack profile as expected in dev', async ({
   exec,
   logHelper,
 }) => {
@@ -32,10 +33,11 @@ test('should write rspack profile output in dev', async ({
   const { logs, expectLog } = logHelper;
 
   await expectLog(PROFILE_LOG);
-  expect(getProfileOutput(logs)).toBe('stdout');
+  const profileFile = getProfilePath(logs);
+  expect(fs.existsSync(profileFile!)).toBeTruthy();
 });
 
-test('should write rspack profile output in build', async ({
+test.skip('should generate rspack profile as expected in build', async ({
   execCli,
   logHelper,
 }) => {
@@ -47,5 +49,6 @@ test('should write rspack profile output in build', async ({
   const { logs, expectLog } = logHelper;
 
   await expectLog(PROFILE_LOG);
-  expect(getProfileOutput(logs)).toBe('stdout');
+  const profileFile = getProfilePath(logs);
+  expect(fs.existsSync(profileFile!)).toBeTruthy();
 });

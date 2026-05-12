@@ -9,8 +9,7 @@ enum TracePreset {
   ALL = 'ALL', // contains all trace events
 }
 
-const DEFAULT_TRACE_LAYER = 'logger';
-const stdioTraceOutputs = new Set(['stdout', 'stderr']);
+type TraceLayer = 'perfetto' | 'logger';
 
 function resolveLayer(value: TracePreset): string {
   const overviewTraceFilter = 'info';
@@ -40,7 +39,7 @@ async function ensureFileDir(outputFilePath: string) {
 async function applyProfile(
   root: string,
   filterValue: TracePreset,
-  traceLayer = DEFAULT_TRACE_LAYER,
+  traceLayer: TraceLayer,
   traceOutput?: string,
 ) {
   if (traceLayer !== 'perfetto' && traceLayer !== 'logger') {
@@ -69,9 +68,10 @@ async function applyProfile(
 
   const filter = resolveLayer(filterValue);
 
-  if (!stdioTraceOutputs.has(traceOutput)) {
+  if (traceLayer === 'perfetto') {
     await ensureFileDir(traceOutput);
   }
+
   await rspack.experiments.globalTrace.register(
     filter,
     traceLayer,
@@ -87,7 +87,7 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
   name: 'rsbuild:rspack-profile',
 
   setup(api) {
-    const { RSPACK_PROFILE } = process.env;
+    const { RSPACK_PROFILE, RSPACK_TRACE_LAYER = 'logger' } = process.env;
     if (!RSPACK_PROFILE) {
       return;
     }
@@ -98,7 +98,7 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
       traceOutput = await applyProfile(
         api.context.rootPath,
         RSPACK_PROFILE as TracePreset,
-        process.env.RSPACK_TRACE_LAYER,
+        RSPACK_TRACE_LAYER as TraceLayer,
         process.env.RSPACK_TRACE_OUTPUT,
       );
     };
@@ -116,10 +116,11 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
       }
 
       rspack.experiments.globalTrace.cleanup();
-      const profileMessage = stdioTraceOutputs.has(traceOutput)
-        ? 'profile output written to'
-        : 'profile file saved to';
-      api.logger.info(`${profileMessage} ${color.cyan(traceOutput)}`);
+
+      if (RSPACK_TRACE_LAYER === 'perfetto') {
+        const profileMessage = 'profile file saved to';
+        api.logger.info(`${profileMessage} ${color.cyan(traceOutput)}`);
+      }
     });
   },
 });
