@@ -215,6 +215,25 @@ importers:
         specifier: ^5.1.0
         version: 5.1.0(webpack@5.106.2)
 
+  e2e/cases/output/auto-external:
+    dependencies:
+      auto-external-pkg:
+        specifier: link:./fixtures/auto-external-pkg
+        version: link:fixtures/auto-external-pkg
+    devDependencies:
+      auto-external-dev-pkg:
+        specifier: link:./fixtures/auto-external-dev-pkg
+        version: link:fixtures/auto-external-dev-pkg
+      auto-external-peer-pkg:
+        specifier: link:./fixtures/auto-external-peer-pkg
+        version: link:fixtures/auto-external-peer-pkg
+
+  e2e/cases/output/auto-external/fixtures/auto-external-dev-pkg: {}
+
+  e2e/cases/output/auto-external/fixtures/auto-external-peer-pkg: {}
+
+  e2e/cases/output/auto-external/fixtures/auto-external-pkg: {}
+
   e2e/cases/plugin-react/react-compiler-babel:
     dependencies:
       react:

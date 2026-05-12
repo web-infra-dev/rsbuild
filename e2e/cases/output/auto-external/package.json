@@ -1,13 +1,15 @@
 {
   "name": "auto-external-test",
   "private": true,
+  "type": "module",
   "dependencies": {
-    "auto-external-pkg": "1.0.0"
+    "auto-external-pkg": "link:./fixtures/auto-external-pkg"
   },
   "peerDependencies": {
     "auto-external-peer-pkg": "1.0.0"
   },
   "devDependencies": {
-    "auto-external-dev-pkg": "1.0.0"
+    "auto-external-dev-pkg": "link:./fixtures/auto-external-dev-pkg",
+    "auto-external-peer-pkg": "link:./fixtures/auto-external-peer-pkg"
   }
 }
