@@ -24,11 +24,14 @@ patchedDependencies:
 strictPeerDependencies: false
 
 allowBuilds:
-  '@parcel/watcher': true
+  '@parcel/watcher': false
   core-js: false
   simple-git-hooks: false
   svelte-preprocess: false
+strictDepBuilds: true
 
+# Reduce the risk of installing compromised packages
+minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
   - '@rspack/*'
   - '@rsbuild/*'
