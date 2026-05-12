@@ -38,6 +38,7 @@ patchedDependencies:
   css-loader@7.1.4: patches/css-loader@7.1.4.patch
   postcss-loader@8.2.1: patches/postcss-loader@8.2.1.patch
 
+# Prevent un-reviewed build scripts
 strictDepBuilds: true
 
 strictPeerDependencies: false
