@@ -9,6 +9,9 @@ enum TracePreset {
   ALL = 'ALL', // contains all trace events
 }
 
+const DEFAULT_TRACE_LAYER = 'logger';
+const stdioTraceOutputs = new Set(['stdout', 'stderr']);
+
 function resolveLayer(value: TracePreset): string {
   const overviewTraceFilter = 'info';
   const allTraceFilter = 'trace';
@@ -32,11 +35,12 @@ async function ensureFileDir(outputFilePath: string) {
  * `RSPACK_PROFILE=ALL` // all trace events
  * `RSPACK_PROFILE=OVERVIEW` // overview trace events
  * `RSPACK_PROFILE=warn,tokio::net=info` // trace filter from  https://docs.rs/tracing-subscriber/latest/tracing_subscriber/filter/struct.EnvFilter.html#example-syntax
+ * `RSPACK_TRACE_LAYER=perfetto` // requires the Rspack debug package
  */
 async function applyProfile(
   root: string,
   filterValue: TracePreset,
-  traceLayer = 'perfetto',
+  traceLayer = DEFAULT_TRACE_LAYER,
   traceOutput?: string,
 ) {
   if (traceLayer !== 'perfetto' && traceLayer !== 'logger') {
@@ -65,7 +69,9 @@ async function applyProfile(
 
   const filter = resolveLayer(filterValue);
 
-  await ensureFileDir(traceOutput);
+  if (!stdioTraceOutputs.has(traceOutput)) {
+    await ensureFileDir(traceOutput);
+  }
   await rspack.experiments.globalTrace.register(
     filter,
     traceLayer,
@@ -110,7 +116,10 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
       }
 
       rspack.experiments.globalTrace.cleanup();
-      api.logger.info(`profile file saved to ${color.cyan(traceOutput)}`);
+      const profileMessage = stdioTraceOutputs.has(traceOutput)
+        ? 'profile output written to'
+        : 'profile file saved to';
+      api.logger.info(`${profileMessage} ${color.cyan(traceOutput)}`);
     });
   },
 });

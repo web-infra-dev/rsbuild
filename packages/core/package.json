@@ -41,7 +41,7 @@
     "prebundle": "prebundle"
   },
   "dependencies": {
-    "@rspack/core": "~2.0.2",
+    "@rspack/core": "~2.0.3",
     "@swc/helpers": "^0.5.21"
   },
   "peerDependencies": {
