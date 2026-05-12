@@ -22,7 +22,7 @@ Rsbuild 本身不内置测试框架，它可以与各种流行的测试工具配
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @rstest/core -D" />
+<PackageManagerTabs command="add @rstest/core @rstest/adapter-rsbuild -D" />
 
 #### 配置脚本
 
@@ -69,22 +69,7 @@ npm run test:watch
 
 #### 配置 Rstest
 
-Rstest 提供了多种配置选项，可以通过在项目根目录创建 `rstest.config.ts` 文件来进行配置。以下是一个示例配置文件：
-
-```ts title="rstest.config.ts"
-import { defineConfig } from '@rstest/core';
-
-export default defineConfig({
-  include: ['test/**/*.test.ts'],
-  testEnvironment: 'node',
-});
-```
-
-你可以在配置文件中指定测试文件的匹配模式、设置测试环境、配置代码覆盖率等。有关所有可用配置选项的详细信息，请参阅 [Rstest 文档](https://rstest.rs/config)。
-
-#### 复用 Rsbuild 配置
-
-`@rstest/adapter-rsbuild` 是 Rstest 官方提供的适配器，用于复用你现有的 Rsbuild 配置文件。这样可以确保测试环境与构建配置一致，避免重复配置。
+在项目根目录创建 `rstest.config.ts` 文件，并使用 [@rstest/adapter-rsbuild](https://rstest.rs/zh/guide/integration/rsbuild#%E5%A4%8D%E7%94%A8-rsbuild-%E9%85%8D%E7%BD%AE) 复用已有的 Rsbuild 配置：
 
 ```ts title="rstest.config.ts"
 import { defineConfig } from '@rstest/core';
@@ -96,7 +81,7 @@ export default defineConfig({
 });
 ```
 
-关于 `withRsbuildConfig` 函数的更多信息，请参阅 [Rstest 文档](https://rstest.rs/zh/guide/integration/rsbuild#%E5%A4%8D%E7%94%A8-rsbuild-%E9%85%8D%E7%BD%AE)。
+你可以在同一个配置文件中添加 Rstest 特定的配置，例如测试文件匹配规则、setup 文件和代码覆盖率。
 
 以上就是使用 Rstest 的基本步骤，查看 [Rstest 文档](https://rstest.rs/zh/guide/start/) 了解更多用法。
 
