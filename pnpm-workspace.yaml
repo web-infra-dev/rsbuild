@@ -11,24 +11,17 @@ packages:
   - '!**/test-temp-*/**'
   - '!**/_node_modules/**'
 
-engineStrict: true
-
-hoistPattern: []
-
-dedupePeers: true
-
-patchedDependencies:
-  css-loader@7.1.4: patches/css-loader@7.1.4.patch
-  postcss-loader@8.2.1: patches/postcss-loader@8.2.1.patch
-
-strictPeerDependencies: false
-
 allowBuilds:
   '@parcel/watcher': false
   core-js: false
   simple-git-hooks: false
   svelte-preprocess: false
-strictDepBuilds: true
+
+dedupePeers: true
+
+engineStrict: true
+
+hoistPattern: []
 
 # Reduce the risk of installing compromised packages
 minimumReleaseAge: 1440
@@ -40,3 +33,12 @@ minimumReleaseAgeExclude:
   - '@rstest/*'
   - '@rsdoctor/*'
   - '@rslint/*'
+
+patchedDependencies:
+  css-loader@7.1.4: patches/css-loader@7.1.4.patch
+  postcss-loader@8.2.1: patches/postcss-loader@8.2.1.patch
+
+# Prevent un-reviewed build scripts
+strictDepBuilds: true
+
+strictPeerDependencies: false
