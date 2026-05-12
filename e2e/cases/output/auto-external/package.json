@@ -1,0 +1,13 @@
+{
+  "name": "auto-external-test",
+  "private": true,
+  "dependencies": {
+    "auto-external-pkg": "1.0.0"
+  },
+  "peerDependencies": {
+    "auto-external-peer-pkg": "1.0.0"
+  },
+  "devDependencies": {
+    "auto-external-dev-pkg": "1.0.0"
+  }
+}

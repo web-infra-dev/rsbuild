@@ -1,9 +1,43 @@
+import { mkdtempSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { join, sep } from 'node:path';
 import { isPlainObject, isWebTarget, pick, prettyTime } from '../src/helpers';
 import { dedupeNestedPaths, getCommonParentPath } from '../src/helpers/path';
+import { readPackageJson } from '../src/helpers/packageJson';
 import { ensureAssetPrefix } from '../src/helpers/url';
 import { getRoutes, normalizeUrl } from '../src/server/helper';
-import type { RsbuildTarget, InternalContext } from '../src/types';
+import type { InternalContext, RsbuildTarget } from '../src/types';
+
+describe('readPackageJson', () => {
+  it('should read package.json from root path', () => {
+    const root = mkdtempSync(join(tmpdir(), 'rsbuild-package-json-'));
+    writeFileSync(
+      join(root, 'package.json'),
+      JSON.stringify({
+        name: 'test-package',
+        dependencies: {
+          foo: '1.0.0',
+        },
+      }),
+    );
+
+    expect(readPackageJson(root)).toEqual({
+      name: 'test-package',
+      dependencies: {
+        foo: '1.0.0',
+      },
+    });
+  });
+
+  it('should return undefined when package.json does not exist or is invalid', () => {
+    const missingRoot = mkdtempSync(join(tmpdir(), 'rsbuild-package-json-'));
+    expect(readPackageJson(missingRoot)).toBeUndefined();
+
+    const invalidRoot = mkdtempSync(join(tmpdir(), 'rsbuild-package-json-'));
+    writeFileSync(join(invalidRoot, 'package.json'), '{ invalid json');
+    expect(readPackageJson(invalidRoot)).toBeUndefined();
+  });
+});
 
 test('should get routes correctly', () => {
   const cwd = import.meta.dirname;

@@ -1317,6 +1317,31 @@ export type CleanDistPathObject = {
 
 export type CleanDistPath = boolean | 'auto' | CleanDistPathObject;
 
+export type AutoExternal =
+  | boolean
+  | {
+      /**
+       * Whether to automatically externalize dependencies of type `dependencies`.
+       * @default true
+       */
+      dependencies?: boolean;
+      /**
+       * Whether to automatically externalize dependencies of type `optionalDependencies`.
+       * @default true
+       */
+      optionalDependencies?: boolean;
+      /**
+       * Whether to automatically externalize dependencies of type `peerDependencies`.
+       * @default true
+       */
+      peerDependencies?: boolean;
+      /**
+       * Whether to automatically externalize dependencies of type `devDependencies`.
+       * @default false
+       */
+      devDependencies?: boolean;
+    };
+
 export interface OutputConfig {
   /**
    * Setting the build target for Rsbuild.
@@ -1330,6 +1355,12 @@ export interface OutputConfig {
    * @default undefined
    */
   externals?: Externals;
+  /**
+   * Automatically externalize dependencies declared in the root package.json.
+   * This option will generate `externals` rules for matching dependencies and their subpath imports.
+   * @default false
+   */
+  autoExternal?: AutoExternal;
   /**
    * Set the directory of the output files.
    * Rsbuild will emit files to the specified subdirectory according to the file type.

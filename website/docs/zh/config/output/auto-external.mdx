@@ -1,0 +1,140 @@
+---
+description: '使用 output.autoExternal 自动 external package.json 中声明的依赖。'
+---
+
+# output.autoExternal
+
+- **类型：**
+
+```ts
+type AutoExternal =
+  | boolean
+  | {
+      dependencies?: boolean;
+      optionalDependencies?: boolean;
+      devDependencies?: boolean;
+      peerDependencies?: boolean;
+    };
+```
+
+- **默认值：** `false`
+
+用于自动 external 根目录 `package.json` 中声明的依赖。开启后，Rsbuild 会读取 `<root>/package.json` 中的依赖字段，并将匹配到的包名转换为 [output.externals](/config/output/externals) 规则。
+
+这个能力适用于 Node.js 或 SSR bundle 场景。例如，一些依赖需要由运行时加载，而不是被打进 bundle，包括观测 SDK、原生插件，或依赖运行时 instrumentation 的包。
+
+:::tip
+
+`output.autoExternal` 默认关闭。在普通 Web 应用构建中，依赖通常需要被打进 bundle，浏览器才能直接运行产物。如果你在 Web target 中开启 `output.autoExternal`，需要确保被 external 的依赖能在运行时被提供，例如通过 CDN、import map 或宿主环境注入。
+
+:::
+
+## 默认行为
+
+当 `output.autoExternal` 为 `true` 时，以下依赖类型默认会被 external：
+
+- `dependencies`
+- `optionalDependencies`
+- `peerDependencies`
+
+以下依赖类型默认不会被 external：
+
+- `devDependencies`
+
+它等价于如下配置：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    autoExternal: {
+      dependencies: true,
+      optionalDependencies: true,
+      peerDependencies: true,
+      devDependencies: false,
+    },
+  },
+};
+```
+
+## 子路径导入
+
+Rsbuild 也会 external 匹配依赖的子路径导入。例如，如果 `react` 声明在 `dependencies` 中，下面两个导入都会被 external：
+
+```ts
+import React from 'react';
+import { jsx } from 'react/jsx-runtime';
+```
+
+## 示例
+
+### 开启自动 external
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'node',
+    autoExternal: true,
+  },
+};
+```
+
+### 自定义依赖类型
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'node',
+    autoExternal: {
+      dependencies: true,
+      optionalDependencies: true,
+      peerDependencies: true,
+      devDependencies: true,
+    },
+  },
+};
+```
+
+### 关闭某类依赖
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'node',
+    autoExternal: {
+      peerDependencies: false,
+    },
+  },
+};
+```
+
+## 与 output.externals 的关系
+
+`output.externals` 的优先级高于 `output.autoExternal`。你可以通过 `output.externals` 手动定制特定包的 external 格式，再通过 `output.autoExternal` 自动处理 `package.json` 中剩余的依赖。
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'node',
+    externals: {
+      react: 'react-18',
+    },
+    autoExternal: true,
+  },
+};
+```
+
+在上面的例子中，`react` 会遵循手动配置的 `output.externals`，不会使用自动生成的 external 规则。
+
+:::tip
+
+当 [output.target](/config/output/target) 为 `web-worker` 时，Rsbuild 会移除 `externals` 配置，因此 `output.autoExternal` 不会生效。这是因为 Web Worker 运行在独立的全局作用域中，无法访问主页面通过 CDN 脚本或宿主环境注入到 `window` 上的全局变量。
+
+:::
+
+## 与 Rspack 配置的关系
+
+`output.autoExternal` 不是 Rspack 原生配置项，而是 Rsbuild 基于 Rspack [externals](https://rspack.rs/zh/config/externals) 能力提供的上层封装。开启后，Rsbuild 会读取 `<root>/package.json` 中选中的依赖字段，为每个依赖生成 external 匹配规则，并注入到底层 Rspack `externals` 配置中。
+
+对于每个匹配到的依赖，Rsbuild 会同时生成精确包名匹配和子路径匹配规则。例如 `react` 会匹配 `react`，也会匹配 `react/jsx-runtime` 等子路径导入。
+
+如果你需要完全控制 external 的匹配方式、运行时模块名或与其他 Rspack 配置组合，可以继续使用 [output.externals](/config/output/externals) 或 [tools.rspack](/config/tools/rspack)。

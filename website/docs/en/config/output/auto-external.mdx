@@ -1,0 +1,140 @@
+---
+description: 'Use output.autoExternal to automatically externalize dependencies declared in package.json.'
+---
+
+# output.autoExternal
+
+- **Type:**
+
+```ts
+type AutoExternal =
+  | boolean
+  | {
+      dependencies?: boolean;
+      optionalDependencies?: boolean;
+      devDependencies?: boolean;
+      peerDependencies?: boolean;
+    };
+```
+
+- **Default:** `false`
+
+Automatically externalize dependencies declared in the root `package.json`. When enabled, Rsbuild reads the dependency fields from `<root>/package.json` and converts the matched package names into [output.externals](/config/output/externals) rules.
+
+This is useful for Node.js or SSR bundles where some dependencies should be loaded by the runtime instead of being bundled, such as observability SDKs, native addons, or dependencies that rely on runtime instrumentation.
+
+:::tip
+
+`output.autoExternal` is disabled by default. In normal web app builds, dependencies are usually bundled so that the browser can run the output directly. If you enable `output.autoExternal` for a web target, make sure the externalized dependencies are available at runtime, for example through a CDN, import map, or host environment.
+
+:::
+
+## Default behavior
+
+When `output.autoExternal` is `true`, the following dependency types are externalized by default:
+
+- `dependencies`
+- `optionalDependencies`
+- `peerDependencies`
+
+The following dependency type is not externalized by default:
+
+- `devDependencies`
+
+This is equivalent to the following configuration:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    autoExternal: {
+      dependencies: true,
+      optionalDependencies: true,
+      peerDependencies: true,
+      devDependencies: false,
+    },
+  },
+};
+```
+
+## Subpath imports
+
+Rsbuild also externalizes subpath imports of matched dependencies. For example, if `react` is declared in `dependencies`, both of the following imports will be externalized:
+
+```ts
+import React from 'react';
+import { jsx } from 'react/jsx-runtime';
+```
+
+## Examples
+
+### Enable auto externalization
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'node',
+    autoExternal: true,
+  },
+};
+```
+
+### Customize dependency types
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'node',
+    autoExternal: {
+      dependencies: true,
+      optionalDependencies: true,
+      peerDependencies: true,
+      devDependencies: true,
+    },
+  },
+};
+```
+
+### Disable a dependency type
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'node',
+    autoExternal: {
+      peerDependencies: false,
+    },
+  },
+};
+```
+
+## Relationship with output.externals
+
+`output.externals` has higher priority than `output.autoExternal`. You can use `output.externals` to manually customize the external format for specific packages, and use `output.autoExternal` to handle the remaining dependencies from `package.json`.
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'node',
+    externals: {
+      react: 'react-18',
+    },
+    autoExternal: true,
+  },
+};
+```
+
+In the example above, `react` follows the manual `output.externals` configuration instead of the automatically generated rule.
+
+:::tip
+
+If [output.target](/config/output/target) is `web-worker`, Rsbuild removes the `externals` configuration, so `output.autoExternal` will not take effect. This is because a Web Worker runs in an isolated global scope and cannot access global variables injected into `window` by CDN scripts or the host page.
+
+:::
+
+## Relationship with Rspack config
+
+`output.autoExternal` is not a native Rspack option. It is a higher-level Rsbuild option built on top of Rspack [externals](https://rspack.rs/config/externals). When enabled, Rsbuild reads the selected dependency fields from `<root>/package.json`, generates external matching rules for each dependency, and injects them into the underlying Rspack `externals` configuration.
+
+For each matched dependency, Rsbuild generates both an exact package-name match and a subpath match. For example, `react` matches both `react` and subpath imports such as `react/jsx-runtime`.
+
+If you need full control over external matching, runtime module names, or how externals are combined with other Rspack options, you can continue to use [output.externals](/config/output/externals) or [tools.rspack](/config/tools/rspack).
