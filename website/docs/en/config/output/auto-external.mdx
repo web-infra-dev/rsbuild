@@ -125,6 +125,8 @@ export default {
 
 In the example above, `react` follows the manual `output.externals` configuration instead of the automatically generated rule.
 
+When a package is configured in `output.externals`, Rsbuild does not generate any auto externalization rules for that package, including its subpath imports. For example, if you configure `react` in `output.externals`, imports such as `react/jsx-runtime` should also be added to `output.externals` if you want them to remain externalized.
+
 :::tip
 
 If [output.target](/config/output/target) is `web-worker`, Rsbuild removes the `externals` configuration, so `output.autoExternal` will not take effect. This is because a Web Worker runs in an isolated global scope and cannot access global variables injected into `window` by CDN scripts or the host page.

@@ -125,6 +125,8 @@ export default {
 
 在上面的例子中，`react` 会遵循手动配置的 `output.externals`，不会使用自动生成的 external 规则。
 
+当某个包被配置在 `output.externals` 中时，Rsbuild 不会再为该包生成任何自动 external 规则，包括该包的子路径导入。例如，如果你在 `output.externals` 中配置了 `react`，那么如果你希望 `react/jsx-runtime` 等导入仍然保持 external，也需要将它们添加到 `output.externals` 中。
+
 :::tip
 
 当 [output.target](/config/output/target) 为 `web-worker` 时，Rsbuild 会移除 `externals` 配置，因此 `output.autoExternal` 不会生效。这是因为 Web Worker 运行在独立的全局作用域中，无法访问主页面通过 CDN 脚本或宿主环境注入到 `window` 上的全局变量。
