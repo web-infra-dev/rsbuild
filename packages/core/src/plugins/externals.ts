@@ -65,7 +65,7 @@ export const composeAutoExternalRules = (options: {
     .reduce<string[]>((prev, type) => {
       if (externalOptions[type]) {
         const deps = pkgJson[type];
-        return deps ? prev.concat(Object.keys(deps)) : prev;
+        return isPlainObject(deps) ? prev.concat(Object.keys(deps)) : prev;
       }
       return prev;
     }, [])
