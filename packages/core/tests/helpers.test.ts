@@ -9,7 +9,7 @@ import { getRoutes, normalizeUrl } from '../src/server/helper';
 import type { InternalContext, RsbuildTarget } from '../src/types';
 
 describe('readPackageJson', () => {
-  it('should read package.json from root path', () => {
+  it('should read package.json from root path', async () => {
     const root = mkdtempSync(join(tmpdir(), 'rsbuild-package-json-'));
     writeFileSync(
       join(root, 'package.json'),
@@ -21,7 +21,7 @@ describe('readPackageJson', () => {
       }),
     );
 
-    expect(readPackageJson(root)).toEqual({
+    await expect(readPackageJson(root)).resolves.toEqual({
       name: 'test-package',
       dependencies: {
         foo: '1.0.0',
@@ -29,13 +29,13 @@ describe('readPackageJson', () => {
     });
   });
 
-  it('should return undefined when package.json does not exist or is invalid', () => {
+  it('should return undefined when package.json does not exist or is invalid', async () => {
     const missingRoot = mkdtempSync(join(tmpdir(), 'rsbuild-package-json-'));
-    expect(readPackageJson(missingRoot)).toBeUndefined();
+    await expect(readPackageJson(missingRoot)).resolves.toBeUndefined();
 
     const invalidRoot = mkdtempSync(join(tmpdir(), 'rsbuild-package-json-'));
     writeFileSync(join(invalidRoot, 'package.json'), '{ invalid json');
-    expect(readPackageJson(invalidRoot)).toBeUndefined();
+    await expect(readPackageJson(invalidRoot)).resolves.toBeUndefined();
   });
 });
 

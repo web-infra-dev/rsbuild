@@ -1,4 +1,4 @@
-import fs from 'node:fs';
+import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
 export type PackageJson = Partial<{
@@ -10,15 +10,13 @@ export type PackageJson = Partial<{
   devDependencies: Record<string, string>;
 }>;
 
-export const readPackageJson = (rootPath: string): PackageJson | undefined => {
+export const readPackageJson = async (
+  rootPath: string,
+): Promise<PackageJson | undefined> => {
   const pkgJsonPath = join(rootPath, 'package.json');
 
-  if (!fs.existsSync(pkgJsonPath)) {
-    return undefined;
-  }
-
   try {
-    return JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8')) as PackageJson;
+    return JSON.parse(await readFile(pkgJsonPath, 'utf8')) as PackageJson;
   } catch {
     return undefined;
   }

@@ -101,8 +101,8 @@ const mergeExternals = (
 export function pluginExternals(): RsbuildPlugin {
   return {
     name: 'rsbuild:externals',
-    setup(api) {
-      const pkgJson = readPackageJson(api.context.rootPath);
+    async setup(api) {
+      const pkgJson = await readPackageJson(api.context.rootPath);
       let hasWarnedReadPackageJsonFailed = false;
 
       api.modifyBundlerChain((chain, { environment }) => {
