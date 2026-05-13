@@ -25,16 +25,7 @@ const defaultAutoExternalOptions = {
   devDependencies: false,
 };
 
-const escapeRegExp = (str: string): string =>
-  str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
-
-export const composeAutoExternalRules = (options: {
-  autoExternal?: AutoExternal;
-  pkgJson?: PackageJson;
-  userExternals?: Externals;
-}): (string | RegExp)[] | undefined => {
-  const { autoExternal, pkgJson, userExternals } = options;
-
+const resolveAutoExternalOptions = (autoExternal?: AutoExternal) => {
   if (autoExternal === undefined || autoExternal === false) {
     return undefined;
   }
@@ -44,11 +35,23 @@ export const composeAutoExternalRules = (options: {
     ...(autoExternal === true ? {} : autoExternal),
   };
 
-  if (!dependencyTypes.some((type) => externalOptions[type])) {
-    return undefined;
-  }
+  return dependencyTypes.some((type) => externalOptions[type])
+    ? externalOptions
+    : undefined;
+};
 
-  if (!pkgJson) {
+const escapeRegExp = (str: string): string =>
+  str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
+
+export const composeAutoExternalRules = (options: {
+  autoExternal?: AutoExternal;
+  pkgJson?: PackageJson;
+  userExternals?: Externals;
+}): (string | RegExp)[] | undefined => {
+  const { autoExternal, pkgJson, userExternals } = options;
+  const externalOptions = resolveAutoExternalOptions(autoExternal);
+
+  if (!externalOptions || !pkgJson) {
     return undefined;
   }
 
@@ -101,14 +104,21 @@ const mergeExternals = (
 export function pluginExternals(): RsbuildPlugin {
   return {
     name: 'rsbuild:externals',
-    async setup(api) {
-      const pkgJson = await readPackageJson(api.context.rootPath);
+    setup(api) {
+      let pkgJson: PackageJson | undefined;
+      let hasReadPackageJson = false;
       let hasWarnedReadPackageJsonFailed = false;
 
-      api.modifyBundlerChain((chain, { environment }) => {
+      api.modifyBundlerChain(async (chain, { environment }) => {
         const { autoExternal, externals } = environment.config.output;
+        const externalOptions = resolveAutoExternalOptions(autoExternal);
 
-        if (autoExternal && !pkgJson && !hasWarnedReadPackageJsonFailed) {
+        if (externalOptions && !hasReadPackageJson) {
+          pkgJson = await readPackageJson(api.context.rootPath);
+          hasReadPackageJson = true;
+        }
+
+        if (externalOptions && !pkgJson && !hasWarnedReadPackageJsonFailed) {
           api.logger.warn(
             'The `output.autoExternal` configuration will not be applied because reading package.json failed.',
           );
