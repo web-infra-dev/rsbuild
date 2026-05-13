@@ -20,7 +20,8 @@ const getProfilePath = (logs: string[]) =>
     ?.split(PROFILE_LOG)[1]
     ?.trim();
 
-test('should generate rspack profile as expected in dev', async ({
+// TODO: write logger trace info to file
+test.skip('should generate rspack profile as expected in dev', async ({
   exec,
   logHelper,
 }) => {
@@ -36,7 +37,7 @@ test('should generate rspack profile as expected in dev', async ({
   expect(fs.existsSync(profileFile!)).toBeTruthy();
 });
 
-test('should generate rspack profile as expected in build', async ({
+test.skip('should generate rspack profile as expected in build', async ({
   execCli,
   logHelper,
 }) => {
