@@ -132,11 +132,3 @@ export default {
 当 [output.target](/config/output/target) 为 `web-worker` 时，Rsbuild 会移除 `externals` 配置，因此 `output.autoExternal` 不会生效。这是因为 Web Worker 运行在独立的全局作用域中，无法访问主页面通过 CDN 脚本或宿主环境注入到 `window` 上的全局变量。
 
 :::
-
-## 与 Rspack 配置的关系
-
-`output.autoExternal` 不是 Rspack 原生配置项，而是 Rsbuild 基于 Rspack [externals](https://rspack.rs/zh/config/externals) 能力提供的上层封装。开启后，Rsbuild 会读取 `<root>/package.json` 中选中的依赖字段，为每个依赖生成 external 匹配规则，并注入到底层 Rspack `externals` 配置中。
-
-对于每个匹配到的依赖，Rsbuild 会同时生成精确包名匹配和子路径匹配规则。例如 `react` 会匹配 `react`，也会匹配 `react/jsx-runtime` 等子路径导入。
-
-如果你需要完全控制 external 的匹配方式、运行时模块名或与其他 Rspack 配置组合，可以继续使用 [output.externals](/config/output/externals) 或 [tools.rspack](/config/tools/rspack)。

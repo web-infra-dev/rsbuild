@@ -132,11 +132,3 @@ When a package is configured in `output.externals`, Rsbuild does not generate an
 If [output.target](/config/output/target) is `web-worker`, Rsbuild removes the `externals` configuration, so `output.autoExternal` will not take effect. This is because a Web Worker runs in an isolated global scope and cannot access global variables injected into `window` by CDN scripts or the host page.
 
 :::
-
-## Relationship with Rspack config
-
-`output.autoExternal` is not a native Rspack option. It is a higher-level Rsbuild option built on top of Rspack [externals](https://rspack.rs/config/externals). When enabled, Rsbuild reads the selected dependency fields from `<root>/package.json`, generates external matching rules for each dependency, and injects them into the underlying Rspack `externals` configuration.
-
-For each matched dependency, Rsbuild generates both an exact package-name match and a subpath match. For example, `react` matches both `react` and subpath imports such as `react/jsx-runtime`.
-
-If you need full control over external matching, runtime module names, or how externals are combined with other Rspack options, you can continue to use [output.externals](/config/output/externals) or [tools.rspack](/config/tools/rspack).
