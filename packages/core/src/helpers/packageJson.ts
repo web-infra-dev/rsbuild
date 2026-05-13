@@ -1,5 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { isFileExists } from './fs';
 
 export type PackageJson = Partial<{
   name: string;
@@ -14,6 +15,10 @@ export const readPackageJson = async (
   rootPath: string,
 ): Promise<PackageJson | undefined> => {
   const pkgJsonPath = join(rootPath, 'package.json');
+
+  if (!(await isFileExists(pkgJsonPath))) {
+    return undefined;
+  }
 
   try {
     return JSON.parse(await readFile(pkgJsonPath, 'utf8')) as PackageJson;
