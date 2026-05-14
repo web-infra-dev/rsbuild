@@ -46,6 +46,7 @@ export type {
   AliasStrategy,
   AppIcon,
   AppIconItem,
+  AutoExternal,
   Build,
   BuildOptions,
   BuildResult,
