@@ -125,7 +125,9 @@ export default {
 
 在上面的例子中，`react` 会遵循手动配置的 `output.externals`，不会使用自动生成的 external 规则。
 
-当某个包被配置在 `output.externals` 中时，Rsbuild 不会再为该包生成任何自动 external 规则，包括该包的子路径导入。例如，如果你在 `output.externals` 中配置了 `react`，那么如果你希望 `react/jsx-runtime` 等导入仍然保持 external，也需要将它们添加到 `output.externals` 中。
+当 `output.externals` 使用对象形式配置时，Rsbuild 会跳过对象 key 中对应包名的自动 external 规则。例如，如果你在 `output.externals` 中配置了 `react`，Rsbuild 不会再为 `react` 或其子路径导入（如 `react/jsx-runtime`）生成自动 external 规则。如果你希望这些子路径导入仍然保持 external，也需要将它们添加到 `output.externals` 中。
+
+对于数组、函数或正则表达式等更复杂的 `output.externals` 配置，Rsbuild 会将它们与 `output.autoExternal` 生成的规则合并。如果最终行为不符合预期，可以使用 `DEBUG=rsbuild` 或 `rsbuild inspect` 查看实际生效的 externals 配置。
 
 :::tip
 
