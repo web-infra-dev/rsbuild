@@ -33,6 +33,8 @@ minimumReleaseAgeExclude:
   - '@rstest/*'
   - '@rsdoctor/*'
   - '@rslint/*'
+  # Renovate security update: svelte@5.55.7
+  - svelte@5.55.7
 
 patchedDependencies:
   css-loader@7.1.4: patches/css-loader@7.1.4.patch
