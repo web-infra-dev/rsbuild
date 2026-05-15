@@ -3,7 +3,7 @@
 ## Stack
 
 - Node.js `22+`
-- `pnpm` workspace + `Nx` monorepo
+- `pnpm` workspace monorepo
 - TypeScript (strict mode), Rspack/Rsbuild ecosystem
 - Test runner: `rstest`
 
@@ -17,6 +17,11 @@ corepack enable && pnpm install
 pnpm lint
 pnpm test
 pnpm e2e
+
+# build / format / docs
+pnpm run build
+pnpm format
+pnpm doc
 
 # focused work
 pnpm --filter core run build
