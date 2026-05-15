@@ -19,7 +19,7 @@ pnpm test
 pnpm e2e
 
 # build / format / docs
-pnpm run build
+pnpm build
 pnpm format
 pnpm doc
 
