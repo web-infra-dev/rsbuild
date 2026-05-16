@@ -4,7 +4,7 @@ description: '用于指定额外需要被 SWC 编译的 JavaScript 文件。'
 
 # source.include
 
-- **类型：** [Rspack.RuleSetCondition](https://rspack.rs/zh/config/module-rules#condition)
+- **类型：** [Rspack.RuleSetCondition](https://rspack.rs/zh/config/module-rules#condition)`[]`
 
 用于指定额外需要被 [SWC](/guide/configuration/swc) 编译的 JavaScript 文件。
 
@@ -19,7 +19,7 @@ description: '用于指定额外需要被 SWC 编译的 JavaScript 文件。'
 
 ```ts
 const defaultInclude = [
-  { not: /[\\/]node_modules[\\/]/ }
+  { not: /[\\/]node_modules[\\/]/ },
   /\.(?:ts|tsx|jsx|mts|cts)$/,
 ];
 ```
