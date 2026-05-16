@@ -154,7 +154,7 @@ pluginReact({
 
 当使用 Rsbuild 的 [默认拆包 preset](/config/split-chunks#default) 时，该插件会将与 `react` 和 `react-router` 相关的包拆分到独立的 chunk 中。
 
-- `lib-react.js`：包含 `react`、`react-dom`，以及它们的子依赖（`scheduler`）。
+- `lib-react.js`：包含 `react`、`react-dom`，以及它们的子依赖（`scheduler`）。在开发环境下，它还会包含 React Fast Refresh 运行时包（`react-refresh`、`@rspack/plugin-react-refresh`）。
 - `lib-router.js`：包含 `react-router`、`react-router-dom`，以及它们的子依赖（`history`，`@remix-run/router`）。
 
 该选项用于控制这一行为，决定是否需要将 `react` 和 `router` 相关的包拆分为单独的 chunk。

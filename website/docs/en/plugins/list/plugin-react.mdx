@@ -154,7 +154,7 @@ Most of the time, you should use the plugin's [fastRefresh](#fastrefresh) option
 
 When using Rsbuild's [default split chunks preset](/config/split-chunks#default), this plugin splits `react` and `react-router` related packages into separate chunks:
 
-- `lib-react.js`: includes `react`, `react-dom`, and their sub-dependencies (`scheduler`).
+- `lib-react.js`: includes `react`, `react-dom`, and their sub-dependencies (`scheduler`). In development, it also includes React Fast Refresh runtime packages (`react-refresh`, `@rspack/plugin-react-refresh`).
 - `lib-router.js`: includes `react-router`, `react-router-dom`, and their sub-dependencies (`history`, `@remix-run/router`).
 
 This option is used to control this behavior and determine whether the `react` and `router` related packages need to be split into separate chunks.

@@ -95,6 +95,19 @@ type PluginSvgrOptions = {
    * @default false
    */
   mixedImport?: boolean;
+  /**
+   * Custom query suffix to match SVGR transformation.
+   * @default /react/
+   */
+  query?: RegExp;
+  /**
+   * Exclude some SVG files, they will not be transformed by SVGR.
+   */
+  exclude?: Rspack.RuleSetCondition;
+  /**
+   * Exclude some modules, the SVGs imported by these modules will not be transformed by SVGR.
+   */
+  excludeImporter?: Rspack.RuleSetCondition;
 };
 ```
 
@@ -166,7 +179,7 @@ const mergedSvgoConfig = {
       name: 'preset-default',
       params: {
         overrides: {
-          removeViewBox: true,
+          removeViewBox: false,
           cleanupIds: false,
         },
       },
@@ -261,7 +274,7 @@ We recommend using `?react` to convert an SVG into a React component rather than
 - **Type:** `RegExp`
 - **Default:** `/react/`
 
-Used to custom the query suffix to match SVGR transformation.
+Customize the query suffix used to match SVGR transformation.
 
 For example, if you need to match import paths with the `?svgr` suffix:
 

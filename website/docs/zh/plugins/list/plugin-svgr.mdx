@@ -95,6 +95,19 @@ type PluginSvgrOptions = {
    * @default false
    */
   mixedImport?: boolean;
+  /**
+   * 自定义匹配 SVGR 转换的 query 后缀
+   * @default /react/
+   */
+  query?: RegExp;
+  /**
+   * 排除一部分 SVG 文件，这些文件不会经过 SVGR 处理
+   */
+  exclude?: Rspack.RuleSetCondition;
+  /**
+   * 排除一部分模块，这些模块引用的 SVG 文件不会经过 SVGR 处理
+   */
+  excludeImporter?: Rspack.RuleSetCondition;
 };
 ```
 
@@ -157,7 +170,7 @@ pluginSvgr({
 });
 ```
 
-合并后的 `svgoConfig` `如下：
+合并后的 `svgoConfig` 如下：
 
 ```ts
 const mergedSvgoConfig = {
@@ -166,7 +179,7 @@ const mergedSvgoConfig = {
       name: 'preset-default',
       params: {
         overrides: {
-          removeViewBox: true,
+          removeViewBox: false,
           cleanupIds: false,
         },
       },

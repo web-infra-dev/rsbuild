@@ -803,9 +803,9 @@ const myPlugin = () => ({
 });
 ```
 
-When `onBeforeStartDevServer` is called, the default middleware of Rsbuild are not registered yet, so the middleware you add will run before the default middleware.
+When `onBeforeStartDevServer` is called, the default Rsbuild middlewares are not registered yet, so the middleware you add will run before the default middlewares.
 
-`onBeforeStartDevServer` allows you to return a callback function, which will be called when the default middleware of Rsbuild are registered. The middleware you register in the callback function will run after the default middleware.
+`onBeforeStartDevServer` allows you to return a callback function, which will be called when the default Rsbuild middlewares are registered. The middleware you register in the callback function will run after the default middlewares.
 
 ```ts
 const myPlugin = () => ({
