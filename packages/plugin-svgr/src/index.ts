@@ -37,7 +37,7 @@ export type PluginSvgrOptions = {
   query?: RegExp;
 
   /**
-   * Exclude some SVG files, they will not be transformed by SVGR.
+   * Exclude specific SVG files from SVGR transformation.
    */
   exclude?: Rspack.RuleSetCondition;
 
