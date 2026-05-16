@@ -1,5 +1,5 @@
 ---
-description: 'The Vue plugin provides support for Vue 3 SFC (Single File Components). The plugin internally integrates vue-loader v17.'
+description: 'The Vue plugin provides support for Vue 3 SFC (Single File Components). The plugin internally integrates rspack-vue-loader.'
 ---
 
 # Vue plugin
@@ -8,7 +8,7 @@ import { SourceCode } from '@theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-vue" />
 
-The Vue plugin provides support for Vue 3 SFC (Single File Components). The plugin internally integrates [vue-loader](https://vue-loader.vuejs.org/) v17.
+The Vue plugin provides support for Vue 3 SFC (Single File Components). The plugin internally integrates [rspack-vue-loader](https://npmjs.com/package/rspack-vue-loader).
 
 :::tip
 For Vue 3 JSX / TSX syntax, please use the [Vue JSX plugin](https://github.com/rstackjs/rsbuild-plugin-vue-jsx).
@@ -44,7 +44,7 @@ Customize Vue compilation behavior with these options:
 
 ### vueLoaderOptions
 
-Options passed to `vue-loader`. See the [vue-loader documentation](https://vue-loader.vuejs.org/) for detailed usage.
+Options passed to `rspack-vue-loader`. See the [Vue Loader documentation](https://vue-loader.vuejs.org/) for detailed usage.
 
 - **Type:** `VueLoaderOptions`
 - **Default:**
@@ -72,7 +72,7 @@ pluginVue({
 
 When using Rsbuild's [default split chunks preset](/config/split-chunks#default), this plugin splits `vue` and `router` related packages into separate chunks:
 
-- `lib-vue.js`: includes `vue`, `vue-loader`, and their sub-dependencies (`@vue/shared`, `@vue/reactivity`, `@vue/runtime-dom`, `@vue/runtime-core`).
+- `lib-vue.js`: includes `vue`, `rspack-vue-loader`, and their sub-dependencies (`@vue/shared`, `@vue/reactivity`, `@vue/runtime-dom`, `@vue/runtime-core`).
 - `lib-router.js`: includes `vue-router`.
 
 This option is used to control this behavior and determine whether the `vue` and `router` related packages need to be split into separate chunks.

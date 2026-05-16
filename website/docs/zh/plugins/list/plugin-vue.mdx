@@ -1,5 +1,5 @@
 ---
-description: 'Vue 插件提供了对 Vue 3 SFC（单文件组件）的支持，插件内部集成了 vue-loader v17 版本。'
+description: 'Vue 插件提供了对 Vue 3 SFC（单文件组件）的支持，插件内部集成了 rspack-vue-loader。'
 ---
 
 # Vue 插件
@@ -8,7 +8,7 @@ import { SourceCode } from '@theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-vue" />
 
-Vue 插件提供了对 Vue 3 SFC（单文件组件）的支持，插件内部集成了 [vue-loader](https://vue-loader.vuejs.org/) v17 版本。
+Vue 插件提供了对 Vue 3 SFC（单文件组件）的支持，插件内部集成了 [rspack-vue-loader](https://npmjs.com/package/rspack-vue-loader)。
 
 :::tip
 对于 Vue 3 JSX / TSX 语法，请使用 [Vue JSX 插件](https://github.com/rstackjs/rsbuild-plugin-vue-jsx)。
@@ -44,7 +44,7 @@ export default {
 
 ### vueLoaderOptions
 
-传递给 `vue-loader` 的选项，请查阅 [vue-loader 文档](https://vue-loader.vuejs.org/) 来了解具体用法。
+传递给 `rspack-vue-loader` 的选项，请查阅 [Vue Loader 文档](https://vue-loader.vuejs.org/) 来了解具体用法。
 
 - **类型：** `VueLoaderOptions`
 - **默认值：**
@@ -72,7 +72,7 @@ pluginVue({
 
 当使用 Rsbuild 的 [默认拆包 preset](/config/split-chunks#default) 时，该插件会将与 `vue` 和 `vue-router` 相关的包拆分到独立的 chunk 中。
 
-- `lib-vue.js`：包含 `vue`、`vue-loader`，以及它们的子依赖（`@vue/shared`，`@vue/reactivity`，`@vue/runtime-dom`，`@vue/runtime-core`）。
+- `lib-vue.js`：包含 `vue`、`rspack-vue-loader`，以及它们的子依赖（`@vue/shared`，`@vue/reactivity`，`@vue/runtime-dom`，`@vue/runtime-core`）。
 - `lib-router.js`：包含 `vue-router`。
 
 该选项用于控制这一行为，决定是否需要将 `vue` 和 `router` 相关的包拆分为单独的 chunk。
