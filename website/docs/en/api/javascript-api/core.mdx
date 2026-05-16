@@ -286,7 +286,7 @@ type LoadEnvResult = {
   cleanup: () => void;
 };
 
-function loadEnv(options: LoadEnvOptions): LoadEnvResult;
+function loadEnv(options?: LoadEnvOptions): LoadEnvResult;
 ````
 
 - **Example:**
@@ -511,9 +511,11 @@ function ensureAssetPrefix(
   // URL string to be processed, can be a relative path or an absolute URL
   url: string,
   // URL prefix to be appended
-  assetPrefix: string
+  assetPrefix?: Rspack.PublicPath,
 ) => string;
 ```
+
+If `assetPrefix` is not passed, Rsbuild uses the default asset prefix `/`. If `assetPrefix` is `'auto'` or a function, this helper returns the input URL unchanged.
 
 - **Example:**
 

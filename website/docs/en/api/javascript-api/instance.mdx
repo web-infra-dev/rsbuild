@@ -572,18 +572,27 @@ This method needs to be called before compiling. If it is called after compiling
 - **Type:**
 
 ```ts
-function RemovePlugins(pluginNames: string[]): void;
+function RemovePlugins(
+  pluginNames: string[],
+  options?: {
+    /**
+     * Remove the plugin in the specified environment.
+     * If environment is not specified, remove it in all environments.
+     */
+    environment: string;
+  },
+): void;
 ```
 
 - **Example:**
 
 ```ts
 // add plugin
-const pluginFoo = pluginFoo();
-rsbuild.addPlugins(pluginFoo);
+const foo = pluginFoo();
+rsbuild.addPlugins([foo]);
 
 // remove plugin
-rsbuild.removePlugins([pluginFoo.name]);
+rsbuild.removePlugins([foo.name]);
 ```
 
 ## rsbuild.isPluginExists

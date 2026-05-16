@@ -1,5 +1,5 @@
 ---
-description: 'Rsbuild JavaScript API 参考，涵盖rsbuild.context、rsbuild.environments、rsbuild.build等核心接口和用法。'
+description: 'Rsbuild JavaScript API 参考，涵盖 rsbuild.context、rsbuild.build 等核心接口和用法。'
 ---
 
 # Rsbuild instance
@@ -178,28 +178,6 @@ if (rsbuild.context.action === 'dev') {
 const rsbuild = await createRsbuild();
 
 rsbuild.logger.info('build started');
-```
-
-## rsbuild.environments
-
-### target
-
-构建产物类型，对应 Rsbuild 的 [output.target](/config/output/target) 配置。
-
-- **类型：**
-
-```ts
-type RsbuildTarget = 'web' | 'node' | 'web-worker';
-```
-
-### tsconfigPath
-
-tsconfig.json 文件的绝对路径，若项目中不存在 tsconfig.json 文件，则为 `undefined`。
-
-- **类型：**
-
-```ts
-type TsconfigPath = string | undefined;
 ```
 
 ## rsbuild.build
@@ -595,18 +573,27 @@ console.log(rsbuild.getPlugins({ environment: 'web' }));
 - **类型：**
 
 ```ts
-function RemovePlugins(pluginNames: string[]): void;
+function RemovePlugins(
+  pluginNames: string[],
+  options?: {
+    /**
+     * 移除指定 environment 中的插件。
+     * 如果未指定 environment，则会从所有 environment 中移除。
+     */
+    environment: string;
+  },
+): void;
 ```
 
 - **示例：**
 
 ```ts
 // 添加插件
-const pluginFoo = pluginFoo();
-rsbuild.addPlugins(pluginFoo);
+const foo = pluginFoo();
+rsbuild.addPlugins([foo]);
 
 // 移除插件
-rsbuild.removePlugins([pluginFoo.name]);
+rsbuild.removePlugins([foo.name]);
 ```
 
 ## rsbuild.isPluginExists

@@ -286,7 +286,7 @@ type LoadEnvResult = {
   cleanup: () => void;
 };
 
-function loadEnv(options: LoadEnvOptions): LoadEnvResult;
+function loadEnv(options?: LoadEnvOptions): LoadEnvResult;
 ````
 
 - **示例：**
@@ -512,9 +512,11 @@ function ensureAssetPrefix(
   // 需要处理的 URL 字符串。可以是相对路径或绝对 URL
   url: string,
   // 需要拼接的 URL 前缀
-  assetPrefix: string
+  assetPrefix?: Rspack.PublicPath,
 ) => string;
 ```
+
+如果未传入 `assetPrefix`，Rsbuild 会使用默认的资源前缀 `/`。如果 `assetPrefix` 为 `'auto'` 或函数，该函数会直接返回传入的 URL。
 
 - **示例：**
 
