@@ -127,16 +127,21 @@ Options:
   -d, --dir <dir>       create project in specified directory
   -t, --template <tpl>  specify the template to use
   --tools <tool>        add additional tools, comma separated
+  --skill <skill>       add optional skills, comma separated
   --override            override files in target directory
   --packageName <name>  specify the package name
+  --template-version <ver>  specify the npm template version
 
-Templates:
+Available templates:
 
-  react-js, react-ts, vue-js, vue-ts, svelte-js, svelte-ts,
-  solid-js, solid-ts, vanilla-js, vanilla-ts
+  vanilla-js, vanilla-ts, react-js, react-ts, vue-js, vue-ts,
+  svelte-js, svelte-ts, solid-js, solid-ts
 
 Optional tools:
-  react-compiler, rstest, biome, eslint, prettier, tailwindcss, storybook
+  react-compiler, rstest, eslint, rslint, biome, prettier, tailwindcss, storybook
+
+Optional skills:
+  rsbuild-best-practices, rstest-best-practices, vercel-react-best-practices
 ```
 
 ## Migrate from existing projects

@@ -107,13 +107,13 @@ import { PackageManagerTabs } from '@theme';
 例如，以下命令将在 `my-app` 目录中创建一个 React 应用：
 
 ```bash
-npx -y create-rsbuild --dir my-app --template react
+npx -y create-rsbuild@latest my-app --template react
 
 # 使用缩写
-npx -y create-rsbuild -d my-app -t react
+npx -y create-rsbuild@latest my-app -t react
 
 # 指定多个 tools
-npx -y create-rsbuild -d my-app -t react --tools eslint,prettier
+npx -y create-rsbuild@latest my-app -t react --tools eslint,prettier
 ```
 
 `create-rsbuild` 完整的 CLI 选项如下：
@@ -127,16 +127,21 @@ Options:
   -d, --dir <dir>       create project in specified directory
   -t, --template <tpl>  specify the template to use
   --tools <tool>        add additional tools, comma separated
+  --skill <skill>       add optional skills, comma separated
   --override            override files in target directory
   --packageName <name>  specify the package name
+  --template-version <ver>  specify the npm template version
 
-Templates:
+Available templates:
 
-  react-js, react-ts, vue-js, vue-ts, svelte-js, svelte-ts,
-  solid-js, solid-ts, vanilla-js, vanilla-ts
+  vanilla-js, vanilla-ts, react-js, react-ts, vue-js, vue-ts,
+  svelte-js, svelte-ts, solid-js, solid-ts
 
 Optional tools:
-  react-compiler, rstest, biome, eslint, prettier, tailwindcss, storybook
+  react-compiler, rstest, eslint, rslint, biome, prettier, tailwindcss, storybook
+
+Optional skills:
+  rsbuild-best-practices, rstest-best-practices, vercel-react-best-practices
 ```
 
 ## 从现有项目迁移
