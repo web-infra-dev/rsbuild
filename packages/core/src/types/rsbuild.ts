@@ -229,7 +229,7 @@ export type RsbuildInstance = {
        * Remove the plugin in the specified environment.
        * If environment is not specified, remove it in all environments.
        */
-      environment: string;
+      environment?: string;
     },
   ) => void;
   /**
