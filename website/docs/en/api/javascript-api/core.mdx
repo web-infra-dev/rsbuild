@@ -349,19 +349,19 @@ function mergeRsbuildConfig(
 import { mergeRsbuildConfig } from '@rsbuild/core';
 
 const config1 = {
-  dev: {
-    https: false,
+  server: {
+    compress: false,
   },
 };
 const config2 = {
-  dev: {
-    https: true,
+  server: {
+    compress: true,
   },
 };
 
 const mergedConfig = mergeRsbuildConfig(config1, config2);
 
-console.log(mergedConfig); // { dev: { https: true } }
+console.log(mergedConfig); // { server: { compress: true } }
 ```
 
 > This method will not modify the config object in the input parameter.

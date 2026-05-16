@@ -11,6 +11,7 @@ type Compress =
   | boolean
   | {
       filter?: (req: IncomingMessage, res: ServerResponse) => boolean;
+      level?: number;
     };
 ```
 
