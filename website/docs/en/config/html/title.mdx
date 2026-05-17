@@ -4,7 +4,7 @@ description: 'If the HTML template used in the current project already includes 
 
 # html.title
 
-- **Type:** `string ｜ Function`
+- **Type:** `string | Function`
 - **Default:** `'Rsbuild App'`
 
 Set the title tag of the HTML page.
@@ -36,7 +36,10 @@ The `title` tag generated in HTML will be:
 - **Type:**
 
 ```ts
-type TitleFunction = ({ value: string; entryName: string }) => string | void;
+type TitleFunction = (context: {
+  value: string;
+  entryName: string;
+}) => string | void;
 ```
 
 When `html.title` is of type Function, the function receives an object as the argument, and the object's values include:

@@ -4,7 +4,7 @@ description: '配置该选项后，在编译过程中会自动将图标拷贝至
 
 # html.favicon
 
-- **类型：** `string ｜ Function`
+- **类型：** `string | Function`
 - **默认值：** 自动读取 public 目录下的 favicon 文件
 
 设置页面的 favicon 图标，可以设置为：
@@ -96,7 +96,10 @@ export default {
 - **类型：**
 
 ```ts
-type FaviconFunction = ({ value: string; entryName: string }) => string | void;
+type FaviconFunction = (context: {
+  value: string;
+  entryName: string;
+}) => string | void;
 ```
 
 当 `html.favicon` 为 Function 类型时，函数接收一个对象作为入参，对象的值包括：

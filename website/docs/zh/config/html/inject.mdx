@@ -67,7 +67,10 @@ export default {
 - **类型：**
 
 ```ts
-type InjectFunction = ({ value: ScriptInject; entryName: string }) => string | void;
+type InjectFunction = (context: {
+  value: ScriptInject;
+  entryName: string;
+}) => ScriptInject | void;
 ```
 
 当 `html.inject` 为 Function 类型时，函数接收一个对象作为入参，对象的值包括：

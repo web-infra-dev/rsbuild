@@ -37,7 +37,10 @@ export default {
 - **Type:**
 
 ```ts
-type TemplateFunction = ({ value: string; entryName: string }) => string | void;
+type TemplateFunction = (context: {
+  value: string;
+  entryName: string;
+}) => string | void;
 ```
 
 When `html.template` is of type Function, the function receives an object as an argument, with the following properties:
