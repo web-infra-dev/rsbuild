@@ -72,6 +72,11 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
       const {
         performance: { preload, prefetch },
       } = config;
+
+      if (!preload && !prefetch) {
+        return;
+      }
+
       const HTMLCount = chain.entryPoints.values().length;
       const excludes = getInlineExcludes(config);
 
