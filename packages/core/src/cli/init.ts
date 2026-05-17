@@ -90,9 +90,11 @@ export async function init({
   }
 
   // Build multiple environments can be shortened to: --environment name1,name2
-  commonOpts.environment = commonOpts.environment?.flatMap((env) =>
-    env.split(','),
-  );
+  if (commonOpts.environment?.some((env) => env.includes(','))) {
+    commonOpts.environment = commonOpts.environment.flatMap((env) =>
+      env.split(','),
+    );
+  }
 
   let logger = defaultLogger;
 

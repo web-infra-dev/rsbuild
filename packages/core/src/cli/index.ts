@@ -4,12 +4,12 @@ import { setupCommands } from './commands';
 
 const { argv } = process;
 
-function initNodeEnv() {
+function initNodeEnv(command: string | undefined) {
   if (!process.env.NODE_ENV) {
-    const command = argv[2];
-    process.env.NODE_ENV = ['build', 'preview'].includes(command)
-      ? 'production'
-      : 'development';
+    process.env.NODE_ENV =
+      command === 'build' || command === 'preview'
+        ? 'production'
+        : 'development';
   }
 }
 
@@ -28,7 +28,11 @@ function showGreeting() {
 
 // ensure log level is set before any log is printed
 function setupLogLevel() {
-  const logLevelIndex = process.argv.findIndex(
+  if (argv.length <= 3) {
+    return;
+  }
+
+  const logLevelIndex = argv.findIndex(
     (item) => item === '--log-level' || item === '--logLevel',
   );
   if (logLevelIndex !== -1) {
@@ -40,7 +44,9 @@ function setupLogLevel() {
 }
 
 export function runCLI(): void {
-  initNodeEnv();
+  const command = argv[2];
+
+  initNodeEnv(command);
   setupLogLevel();
   showGreeting();
 
