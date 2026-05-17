@@ -614,8 +614,8 @@ export type RsbuildPluginAPI = Readonly<{
    */
   onBeforeDevCompile: PluginHook<OnBeforeDevCompileFn>;
   /**
-   * A callback function that is triggered after the Rspack Compiler instance has been
-   * created, but before the build process begins. This hook is called when you
+   * A callback function that is triggered before the Rspack Compiler instance is
+   * created. This hook is called when you
    * run `rsbuild.startDevServer`, `rsbuild.build`, or `rsbuild.createCompiler`.
    */
   onBeforeCreateCompiler: PluginHook<OnBeforeCreateCompilerFn>;
