@@ -122,6 +122,11 @@ const initEnvironmentConfigs = (
   const isEnvironmentEnabled = (name: string) =>
     !specifiedEnvironments || specifiedEnvironments.includes(name);
 
+  const baseEnvironmentConfig = {
+    ...baseConfig,
+    dev: pick(dev, allowedEnvironmentDevKeys),
+  };
+
   const applyEnvironmentDefaultConfig = (config: MergedEnvironmentConfig) => {
     if (!config.source.entry || Object.keys(config.source.entry).length === 0) {
       config.source.entry = getDefaultEntryWithMemo();
@@ -151,13 +156,7 @@ const initEnvironmentConfigs = (
         .filter(([name]) => isEnvironmentEnabled(name))
         .map(([name, config]) => {
           const environmentConfig = {
-            ...mergeRsbuildConfig(
-              {
-                ...baseConfig,
-                dev: pick(dev, allowedEnvironmentDevKeys),
-              },
-              config,
-            ),
+            ...mergeRsbuildConfig(baseEnvironmentConfig, config),
           } as unknown as MergedEnvironmentConfig;
 
           return [name, applyEnvironmentDefaultConfig(environmentConfig)];
@@ -178,8 +177,7 @@ const initEnvironmentConfigs = (
 
   return {
     [defaultEnvironmentName]: applyEnvironmentDefaultConfig({
-      ...baseConfig,
-      dev: pick(dev, allowedEnvironmentDevKeys),
+      ...baseEnvironmentConfig,
     } as MergedEnvironmentConfig),
   };
 };
