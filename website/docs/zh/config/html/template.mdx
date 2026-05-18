@@ -37,7 +37,10 @@ export default {
 - **类型：**
 
 ```ts
-type TemplateFunction = ({ value: string; entryName: string }) => string | void;
+type TemplateFunction = (context: {
+  value: string;
+  entryName: string;
+}) => string | void;
 ```
 
 当 `html.template` 为 Function 类型时，函数接收一个对象作为入参，对象的值包括：
@@ -45,7 +48,7 @@ type TemplateFunction = ({ value: string; entryName: string }) => string | void;
 - `value`：Rsbuild 的默认 template 配置。
 - `entryName`: 当前入口的名称。
 
-在 MPA（多页面应用）场景下，你可以基于入口名称返回不同的 `template` 路口，从而为每个页面设置不同的模板：
+在 MPA（多页面应用）场景下，你可以基于入口名称返回不同的 `template` 路径，从而为每个页面设置不同的模板：
 
 ```ts title="rsbuild.config.ts"
 export default {

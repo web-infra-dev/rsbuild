@@ -145,7 +145,8 @@ function loadConfig(params?: {
    * Specify the config loader, can be `auto`, `jiti` or `native`.
    * - 'auto': Use native Node.js loader first, fallback to jiti if failed
    * - 'jiti': Use jiti as loader, which supports TypeScript and ESM out of the box
-   * - 'native': Use native Node.js loader, requires TypeScript support in Node.js >= 22.6
+   * - 'native': Use native Node.js loader. TypeScript config files require
+   *   native TypeScript support, such as Node.js 22.6+.
    * @default 'auto'
    */
   loader?: 'auto' | 'jiti' | 'native';
@@ -333,7 +334,7 @@ loadEnv({ processEnv: { ...process.env } });
 
 Used to merge multiple Rsbuild configuration objects.
 
-The `mergeRsbuildConfig` function takes multiple configuration objects as parameters. It deep merges each configuration object, automatically combining multiple function values into an array of sequentially executed functions, and returns a merged configuration object.
+The `mergeRsbuildConfig` function takes multiple configuration objects as parameters. It deeply merges each configuration object, automatically combining multiple function values into an array of sequentially executed functions, and returns a new merged configuration object without modifying the input configuration objects.
 
 - **Type:**
 

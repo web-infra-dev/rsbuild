@@ -4,16 +4,16 @@ description: 'Reference for the Rsbuild html.favicon option, including behavior,
 
 # html.favicon
 
-- **Type:** `string ｜ Function`
+- **Type:** `string | Function`
 - **Default:** Automatically detects favicon files in the `public` directory
 
-Set the favicon icon path for all pages, can be set as:
+Sets the favicon icon path for all pages. It can be set to:
 
 - a URL.
 - an absolute file path.
 - a relative path relative to the project [root](/config/root).
 
-After config this option, the favicon will be automatically copied to the dist directory during the compilation, and the corresponding `link` tag will be added to the HTML.
+After you configure this option, the favicon will be automatically copied to the dist directory during compilation, and the corresponding `link` tag will be added to the HTML.
 
 :::tip
 Rsbuild also provides [html.appIcon](/config/html/app-icon) to set the icon of the web application.
@@ -96,7 +96,10 @@ export default {
 - **Type:**
 
 ```ts
-type FaviconFunction = ({ value: string; entryName: string }) => string | void;
+type FaviconFunction = (context: {
+  value: string;
+  entryName: string;
+}) => string | void;
 ```
 
 When `html.favicon` is of type Function, the function receives an object as input, with the following properties:

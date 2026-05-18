@@ -9,10 +9,10 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "solid-js": "^1.9.12"
+    "solid-js": "^1.9.13"
   },
   "devDependencies": {
-    "@rsbuild/core": "^2.0.5",
+    "@rsbuild/core": "^2.0.6",
     "@rsbuild/plugin-babel": "^1.1.2",
     "@rsbuild/plugin-solid": "^1.2.0",
     "typescript": "^6.0.3"

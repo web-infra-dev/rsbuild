@@ -11,9 +11,9 @@ Set the inject position of the `<script>` tag.
 
 Can be set to the following values:
 
-- `'head'`: The `<script>` tag will be inject inside the `<head>` tag.
-- `'body'`: The `<script>` tag is inject at the end of the `<body>` tag.
-- `true`: Automatic judgement based on the [html.scriptLoading](/config/html/script-loading), if set to 'blocking', it will inject into the `<body>` tag, otherwise it will inject into the `<head>` tag.
+- `'head'`: The `<script>` tag will be injected inside the `<head>` tag.
+- `'body'`: The `<script>` tag will be injected at the end of the `<body>` tag.
+- `true`: Automatically choose the injection position based on [html.scriptLoading](/config/html/script-loading). If it is set to `'blocking'`, the tag will be injected into the `<body>` tag; otherwise, it will be injected into the `<head>` tag.
 - `false`: `<script>` tags will not be injected.
 
 ## Default inject position
@@ -67,7 +67,10 @@ You will see that the script tag is generated at the end of the body tag:
 - **Type:**
 
 ```ts
-type InjectFunction = ({ value: ScriptInject; entryName: string }) => string | void;
+type InjectFunction = (context: {
+  value: ScriptInject;
+  entryName: string;
+}) => ScriptInject | void;
 ```
 
 When `html.inject` is of type Function, the function receives an object as its parameter, with the following properties:
