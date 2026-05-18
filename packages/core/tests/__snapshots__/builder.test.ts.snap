@@ -164,6 +164,15 @@ exports[`default bundler > should use Rspack by default 1`] = `
         ],
         "oneOf": [
           {
+            "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "javascript/auto",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/core/src/workerQueryLoader.mjs",
+              },
+            ],
+          },
+          {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
