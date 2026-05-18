@@ -12,7 +12,7 @@ const HASH_PLACEHOLDER_REGEX =
 const SOURCE_MAPPING_URL_REGEX =
   /(?:\/\*# sourceMappingURL=.*?\*\/|\/\/# sourceMappingURL=.*)$/gm;
 
-type WorkerQueryLoaderOptions = {
+type WorkerLoaderOptions = {
   name?: string;
 };
 
@@ -121,7 +121,7 @@ const getCompilerPlugin = <T>(getPlugin: () => T): T => {
 };
 
 const compileInlineWorker = (
-  loaderContext: LoaderContext<WorkerQueryLoaderOptions>,
+  loaderContext: LoaderContext<WorkerLoaderOptions>,
 ): Promise<string> => {
   const callbackCompiler = loaderContext._compiler;
   const compilation = loaderContext._compilation;
@@ -229,8 +229,8 @@ const compileInlineWorker = (
   });
 };
 
-const workerQueryLoader: LoaderDefinition<WorkerQueryLoaderOptions> =
-  async function workerQueryLoader(): Promise<void> {
+const workerLoader: LoaderDefinition<WorkerLoaderOptions> =
+  async function workerLoader(): Promise<void> {
     const callback = this.async();
     const isModule = Boolean(this._compilation.outputOptions.module);
 
@@ -250,4 +250,4 @@ const workerQueryLoader: LoaderDefinition<WorkerQueryLoaderOptions> =
     }
   };
 
-export default workerQueryLoader;
+export default workerLoader;

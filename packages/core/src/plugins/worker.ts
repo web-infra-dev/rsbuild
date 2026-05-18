@@ -19,7 +19,7 @@ export const pluginWorker = (): RsbuildPlugin => ({
           .resourceQuery(WORKER_QUERY_REGEX)
           .type('javascript/auto')
           .use(CHAIN_ID.USE.WORKER_QUERY)
-          .loader(path.join(LOADER_PATH, 'workerQueryLoader.mjs'));
+          .loader(path.join(LOADER_PATH, 'workerLoader.mjs'));
       },
     });
   },

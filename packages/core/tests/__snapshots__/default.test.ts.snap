@@ -191,7 +191,7 @@ exports[`should apply default plugins correctly 1`] = `
             "type": "javascript/auto",
             "use": [
               {
-                "loader": "<ROOT>/packages/core/src/workerQueryLoader.mjs",
+                "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
               },
             ],
           },
@@ -675,7 +675,7 @@ exports[`should apply default plugins correctly in production 1`] = `
             "type": "javascript/auto",
             "use": [
               {
-                "loader": "<ROOT>/packages/core/src/workerQueryLoader.mjs",
+                "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
               },
             ],
           },
@@ -1649,7 +1649,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "javascript/auto",
             "use": [
               {
-                "loader": "<ROOT>/packages/core/src/workerQueryLoader.mjs",
+                "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
               },
             ],
           },

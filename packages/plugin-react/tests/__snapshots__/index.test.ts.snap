@@ -25,7 +25,7 @@ exports[`plugins/react > should configuring \`tools.swc\` to override react runt
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<ROOT>/packages/core/dist/workerQueryLoader.mjs",
+            "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
           },
         ],
       },
@@ -160,7 +160,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<ROOT>/packages/core/dist/workerQueryLoader.mjs",
+            "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
           },
         ],
       },

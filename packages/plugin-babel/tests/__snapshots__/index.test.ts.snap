@@ -21,7 +21,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
       "type": "javascript/auto",
       "use": [
         {
-          "loader": "<ROOT>/packages/core/dist/workerQueryLoader.mjs",
+          "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
         },
       ],
     },
@@ -210,7 +210,7 @@ exports[`plugins/babel > should apply decorators version 2023-11 correctly 1`] =
       "type": "javascript/auto",
       "use": [
         {
-          "loader": "<ROOT>/packages/core/dist/workerQueryLoader.mjs",
+          "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
         },
       ],
     },
@@ -312,7 +312,7 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
       "type": "javascript/auto",
       "use": [
         {
-          "loader": "<ROOT>/packages/core/dist/workerQueryLoader.mjs",
+          "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
         },
       ],
     },
@@ -503,7 +503,7 @@ exports[`plugins/babel > should set babel-loader 1`] = `
       "type": "javascript/auto",
       "use": [
         {
-          "loader": "<ROOT>/packages/core/dist/workerQueryLoader.mjs",
+          "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
         },
       ],
     },
@@ -602,7 +602,7 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
       "type": "javascript/auto",
       "use": [
         {
-          "loader": "<ROOT>/packages/core/dist/workerQueryLoader.mjs",
+          "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
         },
       ],
     },

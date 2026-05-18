@@ -28,7 +28,7 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<ROOT>/packages/core/dist/workerQueryLoader.mjs",
+            "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
           },
         ],
       },
@@ -161,7 +161,7 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<ROOT>/packages/core/dist/workerQueryLoader.mjs",
+            "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
           },
         ],
       },
