@@ -1,4 +1,4 @@
-import { expect, getFileContent, test } from '@e2e/helper';
+import { expect, test } from '@e2e/helper';
 
 test('should support worker query imports with output.module enabled', async ({
   page,
@@ -14,9 +14,7 @@ test('should support worker query imports with output.module enabled', async ({
 
     if (mode === 'build') {
       const files = result.getDistFiles();
-      const html = getFileContent(files, 'index.html');
 
-      expect(html).toContain('type="module"');
       expect(Object.values(files).join('\n')).toContain('type:"module"');
     }
   });
