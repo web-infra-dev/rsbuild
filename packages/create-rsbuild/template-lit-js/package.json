@@ -9,9 +9,9 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "lit": "^3.3.2"
+    "lit": "^3.3.3"
   },
   "devDependencies": {
-    "@rsbuild/core": "^2.0.5"
+    "@rsbuild/core": "^2.0.6"
   }
 }
