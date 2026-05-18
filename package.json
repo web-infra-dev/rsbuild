@@ -32,8 +32,8 @@
   "devDependencies": {
     "@scripts/config": "workspace:*",
     "@rslint/core": "^0.5.3",
-    "@rstest/adapter-rslib": "^0.2.2",
-    "@rstest/core": "^0.9.10",
+    "@rstest/adapter-rslib": "^0.10.0",
+    "@rstest/core": "^0.10.0",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^24.12.4",
     "@typescript/native-preview": "7.0.0-dev.20260516.1",
