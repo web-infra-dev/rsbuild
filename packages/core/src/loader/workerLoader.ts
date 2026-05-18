@@ -142,7 +142,7 @@ const compileInlineWorker = (
       workerChunkLoading: outputOptions.workerChunkLoading,
       wasmLoading: outputOptions.wasmLoading,
       workerWasmLoading: outputOptions.workerWasmLoading,
-    } as Compilation['outputOptions'],
+    },
     [],
   );
 
