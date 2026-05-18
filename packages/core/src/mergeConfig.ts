@@ -145,9 +145,6 @@ export const mergeRsbuildConfig = <T = RsbuildConfig>(
   if (configs.length === 2) {
     return merge(configs[0], configs[1]) as T;
   }
-  if (configs.length === 1) {
-    return configs[0];
-  }
   if (configs.length === 0) {
     return {} as T;
   }
