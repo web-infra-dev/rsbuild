@@ -187,6 +187,15 @@ exports[`should apply default plugins correctly 1`] = `
         ],
         "oneOf": [
           {
+            "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "javascript/auto",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
+              },
+            ],
+          },
+          {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },
@@ -661,6 +670,15 @@ exports[`should apply default plugins correctly in production 1`] = `
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
         "oneOf": [
+          {
+            "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "javascript/auto",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
+              },
+            ],
+          },
           {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
@@ -1626,6 +1644,15 @@ exports[`tools.rspack > should match snapshot 1`] = `
           /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
         ],
         "oneOf": [
+          {
+            "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "javascript/auto",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
+              },
+            ],
+          },
           {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",

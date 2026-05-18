@@ -66,6 +66,7 @@ export const CHAIN_ID = {
   ONE_OF: {
     /** JS oneOf rules */
     JS_MAIN: 'js',
+    JS_WORKER: 'js-worker',
     JS_RAW: 'js-raw',
     /** CSS oneOf rules */
     CSS_MAIN: 'css',
@@ -100,6 +101,8 @@ export const CHAIN_ID = {
     VUE: 'vue',
     /** swc-loader */
     SWC: 'swc',
+    /** worker query loader */
+    WORKER_QUERY: 'worker-query',
     /** svgr */
     SVGR: 'svgr',
     /** babel-loader */

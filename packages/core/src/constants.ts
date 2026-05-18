@@ -69,6 +69,11 @@ export const INLINE_QUERY_REGEX: RegExp = /[?&]inline(?:&|=|$)/;
  * Matches patterns like: `?url`, `?url&other=value`, `?other=value&url`, `?url=value`
  */
 export const URL_QUERY_REGEX: RegExp = /[?&]url(?:&|=|$)/;
+/**
+ * Regular expression to match the 'worker' query parameter.
+ * Matches patterns like: `?worker`, `?worker&inline`, `?inline&worker`, `?worker=value`
+ */
+export const WORKER_QUERY_REGEX: RegExp = /[?&]worker(?:&|=|$)/;
 export const NODE_MODULES_REGEX: RegExp = /[\\/]node_modules[\\/]/;
 
 // Plugins

@@ -13,6 +13,15 @@ exports[`plugin-solid > should allow deprecated solidPresetOptions alias 1`] = `
   ],
   "oneOf": [
     {
+      "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+      "type": "javascript/auto",
+      "use": [
+        {
+          "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
+        },
+      ],
+    },
+    {
       "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
       "type": "asset/source",
     },
@@ -202,6 +211,15 @@ exports[`plugin-solid > should allow to configure solid options 1`] = `
   ],
   "oneOf": [
     {
+      "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+      "type": "javascript/auto",
+      "use": [
+        {
+          "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
+        },
+      ],
+    },
+    {
       "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
       "type": "asset/source",
     },
@@ -301,6 +319,15 @@ exports[`plugin-solid > should apply solid preset correctly 1`] = `
   ],
   "oneOf": [
     {
+      "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+      "type": "javascript/auto",
+      "use": [
+        {
+          "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
+        },
+      ],
+    },
+    {
       "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
       "type": "asset/source",
     },
@@ -396,6 +423,15 @@ exports[`plugin-solid > should use hydratable dom output for ssr option on web t
     /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
   ],
   "oneOf": [
+    {
+      "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+      "type": "javascript/auto",
+      "use": [
+        {
+          "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
+        },
+      ],
+    },
     {
       "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
       "type": "asset/source",
