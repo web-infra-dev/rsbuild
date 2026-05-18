@@ -253,6 +253,39 @@ declare module '*?url' {
 }
 
 /**
+ * Imports the file as a Web Worker constructor.
+ * @example
+ * import MyWorker from './worker.ts?worker';
+ * const worker = new MyWorker();
+ */
+declare module '*?worker' {
+  const WorkerConstructor: {
+    new (options?: { name?: string }): Worker;
+  };
+  export default WorkerConstructor;
+}
+
+/**
+ * Imports the file as an inline Web Worker constructor.
+ * @example
+ * import MyWorker from './worker.ts?worker&inline';
+ * const worker = new MyWorker();
+ */
+declare module '*?worker&inline' {
+  const WorkerConstructor: {
+    new (options?: { name?: string }): Worker;
+  };
+  export default WorkerConstructor;
+}
+
+declare module '*?inline&worker' {
+  const WorkerConstructor: {
+    new (options?: { name?: string }): Worker;
+  };
+  export default WorkerConstructor;
+}
+
+/**
  * Imports the file content as a base64 encoded string.
  * @note Only works for static assets and CSS files by default.
  * @example

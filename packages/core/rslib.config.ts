@@ -176,6 +176,7 @@ export default defineConfig({
           ignoreCssLoader: './src/loader/ignoreCssLoader.ts',
           transformLoader: './src/loader/transformLoader.ts',
           transformRawLoader: './src/loader/transformRawLoader.ts',
+          workerQueryLoader: './src/loader/workerQueryLoader.ts',
         },
       },
       dts: {

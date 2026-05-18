@@ -52,6 +52,7 @@ import { pluginSri } from './plugins/sri';
 import { pluginSwc } from './plugins/swc';
 import { pluginTarget } from './plugins/target';
 import { pluginWasm } from './plugins/wasm';
+import { pluginWorker } from './plugins/worker';
 import { createDevServer as baseCreateDevServer } from './server/devServer';
 import { startPreviewServer } from './server/previewServer';
 import type {
@@ -98,6 +99,7 @@ function applyDefaultPlugins(
     pluginCss(),
     pluginMinimize(),
     pluginProgress(),
+    pluginWorker(),
     pluginSwc(),
     pluginExternals(),
     pluginSplitChunks(),
