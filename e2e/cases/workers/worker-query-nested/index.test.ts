@@ -5,14 +5,8 @@ test('should support worker query imports inside workers', async ({
   runBothServe,
 }) => {
   await runBothServe(async () => {
-    await expect(page.locator('#nested-worker')).toHaveText(
-      /nested-worker http/,
-    );
-    await expect(page.locator('#nested-sub-worker')).toHaveText(
-      'sub-worker:nested-sub-worker',
-    );
-    await expect(page.locator('#nested-constructor-worker')).toHaveText(
-      'constructor-worker',
-    );
+    await expect(page.locator('#worker')).toHaveText(/main http/);
+    await expect(page.locator('#sub')).toHaveText('sub:sub');
+    await expect(page.locator('#ctor')).toHaveText('ctor');
   });
 });

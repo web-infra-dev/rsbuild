@@ -5,11 +5,7 @@ test('should support self reference worker query imports', async ({
   runBothServe,
 }) => {
   await runBothServe(async () => {
-    await expect(page.locator('#self-reference-worker')).toContainText(
-      'pong: main',
-    );
-    await expect(page.locator('#self-reference-worker')).toContainText(
-      'pong: nested',
-    );
+    await expect(page.locator('#worker')).toContainText('pong: main');
+    await expect(page.locator('#worker')).toContainText('pong: nested');
   });
 });

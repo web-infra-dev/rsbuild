@@ -138,6 +138,11 @@ const compileInlineWorker = (
 
   new rspack.webworker.WebWorkerTemplatePlugin().apply(childCompiler);
 
+  // Inline workers run from Blob/data URLs, so dynamic import chunks cannot be
+  // loaded by relative URLs. Use eager imports to keep the worker in one file.
+  childCompiler.options.module.parser.javascript ??= {};
+  childCompiler.options.module.parser.javascript.dynamicImportMode = 'eager';
+
   new rspack.LoaderTargetPlugin('webworker').apply(childCompiler);
 
   new rspack.EntryPlugin(

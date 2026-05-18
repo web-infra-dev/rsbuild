@@ -5,15 +5,11 @@ test('should support inline worker query imports', async ({
   runBothServe,
 }) => {
   await runBothServe(async ({ mode, result }) => {
-    await expect(page.locator('#inline-worker')).toHaveText(
-      'named-inline-worker: 42 named-inline-worker rsbuild-inline-worker-marker',
+    await expect(page.locator('#worker')).toHaveText(
+      'named: 42 named inline-marker',
     );
-    await expect(page.locator('#inline-worker-reordered')).toHaveText(
-      'inline-worker-reordered: 42',
-    );
-    await expect(page.locator('#inline-worker-unicode')).toHaveText(
-      '\u2022pong\u2022',
-    );
+    await expect(page.locator('#reordered')).toHaveText('reordered: 42');
+    await expect(page.locator('#unicode')).toHaveText('\u2022pong\u2022');
 
     if (mode === 'build') {
       const files = result.getDistFiles();
@@ -22,9 +18,7 @@ test('should support inline worker query imports', async ({
       );
 
       expect(emittedInlineWorkerFiles).toEqual([]);
-      expect(Object.values(files).join('\n')).toContain(
-        'rsbuild-inline-worker-marker',
-      );
+      expect(Object.values(files).join('\n')).toContain('inline-marker');
     }
   });
 });

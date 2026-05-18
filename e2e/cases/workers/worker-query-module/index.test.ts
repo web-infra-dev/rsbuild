@@ -5,12 +5,8 @@ test('should support worker query imports with output.module enabled', async ({
   runBothServe,
 }) => {
   await runBothServe(async ({ mode, result }) => {
-    await expect(page.locator('#module-worker')).toHaveText(
-      'module-worker: module message',
-    );
-    await expect(page.locator('#module-inline-worker')).toHaveText(
-      'inline-module-worker: inline module message',
-    );
+    await expect(page.locator('#worker')).toHaveText('worker: msg');
+    await expect(page.locator('#inline')).toHaveText('inline: msg');
 
     if (mode === 'build') {
       const files = result.getDistFiles();

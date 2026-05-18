@@ -2,9 +2,9 @@ import InlineWorker from './inline-worker?worker&inline';
 import InlineWorkerReordered from './inline-worker?inline&worker';
 
 document.body.innerHTML = `
-  <div id="inline-worker"></div>
-  <div id="inline-worker-reordered"></div>
-  <div id="inline-worker-unicode"></div>
+  <div id="worker"></div>
+  <div id="reordered"></div>
+  <div id="unicode"></div>
 `;
 
 const setText = (selector: string, text: string) => {
@@ -28,22 +28,17 @@ const runWorker = (
 };
 
 runWorker(
-  new InlineWorker({ name: 'named-inline-worker' }),
-  'named-inline-worker',
-  '#inline-worker',
+  new InlineWorker({ name: 'named' }),
+  'named',
+  '#worker',
   (data) => `${data.text} ${data.name} ${data.marker}`,
 );
 
 runWorker(
   new InlineWorkerReordered(),
-  'inline-worker-reordered',
-  '#inline-worker-reordered',
+  'reordered',
+  '#reordered',
   (data) => data.text,
 );
 
-runWorker(
-  new InlineWorker(),
-  'unicode',
-  '#inline-worker-unicode',
-  (data) => data.text,
-);
+runWorker(new InlineWorker(), 'unicode', '#unicode', (data) => data.text);

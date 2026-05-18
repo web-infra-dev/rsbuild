@@ -1,4 +1,4 @@
 self.postMessage({
-  text: self.name || 'constructor-worker',
-  type: 'constructor-worker',
+  text: self.name || 'ctor',
+  type: 'ctor',
 });
