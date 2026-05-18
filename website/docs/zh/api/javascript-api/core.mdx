@@ -145,7 +145,8 @@ function loadConfig(params?: {
    * 指定配置文件加载器，可选值为 `auto`、`jiti` 或 `native`。
    * - `auto`：优先使用 Node.js 原生加载器，若加载失败则回退到 jiti
    * - `jiti`：使用 jiti 作为加载器，开箱即用地支持 TypeScript 和 ESM
-   * - `native`：使用 Node.js 原生加载器，要求 Node.js >= 22.6 且原生支持 TypeScript
+   * - `native`：使用 Node.js 原生加载器。TypeScript 配置文件要求运行时原生支持
+   *   TypeScript，例如 Node.js 22.6+
    * @default 'auto'
    */
   loader?: 'auto' | 'jiti' | 'native';
@@ -333,7 +334,7 @@ loadEnv({ processEnv: { ...process.env } });
 
 用于合并多份 Rsbuild 配置对象。
 
-`mergeRsbuildConfig` 函数接收多个配置对象作为参数，它会将每一个配置对象进行深层合并，自动将多个函数项合并为顺序执行的函数数组，返回一个合并后的配置对象。
+`mergeRsbuildConfig` 函数接收多个配置对象作为参数。它会对每个配置对象进行深层合并，自动将多个函数项合并为顺序执行的函数数组，并返回一个新的合并配置对象，不会修改传入的配置对象。
 
 - **类型：**
 
