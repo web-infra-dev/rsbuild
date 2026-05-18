@@ -31,10 +31,10 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/core-v1": "npm:@rsbuild/core@^1.7.5",
-    "@rslib/core": "0.21.4",
+    "@rslib/core": "0.21.5",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^24.12.3",
-    "svelte": "^5.55.5",
+    "@types/node": "^24.12.4",
+    "svelte": "^5.55.7",
     "typescript": "^6.0.3"
   },
   "peerDependencies": {
