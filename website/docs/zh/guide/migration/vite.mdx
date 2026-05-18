@@ -51,7 +51,7 @@ export default defineConfig({
 
 ## 构建入口
 
-Rsbuild 与 Vite 默认的构建入口不同，Vite 使用 `index.html` 作为默认入口，而 Rsbuild 使用 `src/index.js`。
+Rsbuild 与 Vite 默认的构建入口不同，Vite 使用 `index.html` 作为默认入口，而 Rsbuild 会自动检测 `src/index.*` 模块，例如 `src/index.ts` 或 `src/index.js`。
 
 从 Vite 迁移到 Rsbuild 时，你可以使用 Rsbuild 提供的 [source.entry](/config/source/entry) 来设置构建入口，[html.template](/config/html/template) 来设置模板。
 
