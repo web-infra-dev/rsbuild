@@ -19,6 +19,11 @@
       "matchPackageNames": ["/rspress/"]
     },
     {
+      "groupName": "Rstest",
+      "groupSlug": "rstest",
+      "matchPackageNames": ["/rstest/"]
+    },
+    {
       "groupName": "Sass",
       "groupSlug": "sass",
       "matchPackageNames": ["/sass/"]
