@@ -15,14 +15,17 @@ description: Use when adding or updating Rsbuild end-to-end tests in `e2e/cases`
 
 4. Add Playwright cases under `e2e/cases`, following existing directory patterns.
 
-5. Keep assertions focused and readable; avoid redundant setup and checks.
+5. Use short, direct, and stable assertions. Avoid redundant setup and checks.
 
 6. Run `pnpm e2e` to validate.
 
 ## Case Structure
 
 - Include a `src` directory in every case (required).
-- Add `rsbuild.config.ts` only when needed.
+- If a test file uses one non-dynamic, fixed Rsbuild config, prefer putting it
+  in `rsbuild.config.ts` instead of passing it inline to `build` or `dev`.
+- Add inline config only when the test needs dynamic values, per-test variants,
+  or multiple config shapes in the same file.
 - Split into multiple case directories when cases need different `src` code or different Rsbuild configs.
 
 ## Constraints
