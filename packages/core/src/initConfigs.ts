@@ -155,9 +155,10 @@ const initEnvironmentConfigs = (
       Object.entries(environments)
         .filter(([name]) => isEnvironmentEnabled(name))
         .map(([name, config]) => {
-          const environmentConfig = {
-            ...mergeRsbuildConfig(baseEnvironmentConfig, config),
-          } as unknown as MergedEnvironmentConfig;
+          const environmentConfig = mergeRsbuildConfig(
+            baseEnvironmentConfig,
+            config,
+          ) as unknown as MergedEnvironmentConfig;
 
           return [name, applyEnvironmentDefaultConfig(environmentConfig)];
         }),
