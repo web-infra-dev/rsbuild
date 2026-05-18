@@ -122,6 +122,11 @@ const initEnvironmentConfigs = (
   const isEnvironmentEnabled = (name: string) =>
     !specifiedEnvironments || specifiedEnvironments.includes(name);
 
+  const baseEnvironmentConfig = {
+    ...baseConfig,
+    dev: pick(dev, allowedEnvironmentDevKeys),
+  };
+
   const applyEnvironmentDefaultConfig = (config: MergedEnvironmentConfig) => {
     if (!config.source.entry || Object.keys(config.source.entry).length === 0) {
       config.source.entry = getDefaultEntryWithMemo();
@@ -136,6 +141,7 @@ const initEnvironmentConfigs = (
     if (config.output.module === undefined) {
       config.output.module = isServer;
     }
+
     // For `web` and `web-worker` targets, minify is true by default in production mode
     // For `node` target, minify is false by default
     if (config.output.minify === undefined) {
@@ -150,15 +156,10 @@ const initEnvironmentConfigs = (
       Object.entries(environments)
         .filter(([name]) => isEnvironmentEnabled(name))
         .map(([name, config]) => {
-          const environmentConfig = {
-            ...mergeRsbuildConfig(
-              {
-                ...baseConfig,
-                dev: pick(dev, allowedEnvironmentDevKeys),
-              },
-              config,
-            ),
-          } as unknown as MergedEnvironmentConfig;
+          const environmentConfig = mergeRsbuildConfig(
+            baseEnvironmentConfig,
+            config,
+          ) as unknown as MergedEnvironmentConfig;
 
           return [name, applyEnvironmentDefaultConfig(environmentConfig)];
         }),
@@ -177,10 +178,9 @@ const initEnvironmentConfigs = (
   }
 
   return {
-    [defaultEnvironmentName]: applyEnvironmentDefaultConfig({
-      ...baseConfig,
-      dev: pick(dev, allowedEnvironmentDevKeys),
-    } as MergedEnvironmentConfig),
+    [defaultEnvironmentName]: applyEnvironmentDefaultConfig(
+      baseEnvironmentConfig as MergedEnvironmentConfig,
+    ),
   };
 };
 
