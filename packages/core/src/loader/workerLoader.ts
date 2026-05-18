@@ -123,10 +123,10 @@ const getCompilerPlugin = <T>(getPlugin: () => T): T => {
 const compileInlineWorker = (
   loaderContext: LoaderContext<WorkerLoaderOptions>,
 ): Promise<string> => {
-  const callbackCompiler = loaderContext._compiler;
+  const compiler = loaderContext._compiler;
   const compilation = loaderContext._compilation;
-  const rspack = callbackCompiler.webpack;
-  const outputOptions = compilation.outputOptions;
+  const { rspack } = compiler;
+  const { outputOptions } = compilation;
   const compilerName = `rsbuild-worker ${loaderContext.resourcePath}`;
 
   const childCompiler = compilation.createChildCompiler(
