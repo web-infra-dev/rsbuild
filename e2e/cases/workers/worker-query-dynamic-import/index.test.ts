@@ -5,8 +5,6 @@ test('should support dynamic imports inside worker query imports', async ({
   runBothServe,
 }) => {
   await runBothServe(async () => {
-    await expect(page.locator('#dynamic-import-worker')).toHaveText(
-      'module-a:module-b',
-    );
+    await expect(page.locator('#worker')).toHaveText('a:b');
   });
 });

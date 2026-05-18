@@ -3,7 +3,7 @@ import QueryWorker from './query-worker?worker';
 
 document.body.innerHTML = `
   <div id="worker"></div>
-  <div id="mjs-worker"></div>
+  <div id="mjs"></div>
 `;
 
 const setText = (selector: string, text: string) => {
@@ -27,10 +27,10 @@ const runWorker = (
 };
 
 runWorker(
-  new QueryWorker({ name: 'named-query-worker' }),
+  new QueryWorker({ name: 'named' }),
   'ping',
   '#worker',
   (data) => data.text,
 );
 
-runWorker(new MjsWorker(), 'mjs-worker', '#mjs-worker', (data) => data.text);
+runWorker(new MjsWorker(), 'mjs', '#mjs', (data) => data.text);

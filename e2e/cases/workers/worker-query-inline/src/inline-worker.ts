@@ -1,6 +1,6 @@
 import { formatMessage } from './message';
 
-const marker = 'rsbuild-inline-worker-marker';
+const marker = 'inline-marker';
 
 self.onmessage = ({ data }) => {
   self.postMessage({
