@@ -136,7 +136,7 @@ export default {
 当你在代码中通过 dynamic import 的方式引入模块时，该模块会被单独打包成一个文件，它默认的命名规则如下：
 
 - 在开发模式下会基于模块路径生成名称，比如 `dist/static/js/async/src_add_ts.js`。
-- 在生产模式下会是一个随机的数字 id，比如 `dist/static/js/async/798.27e3083e.js`，这是为了避免在生产模式中泄露源代码的路径，同时字符数也更少。
+- 在生产模式下会是一个随机的数字 id，比如 `dist/static/js/async/798.27e3083eab.js`，这是为了避免在生产模式中泄露源代码的路径，同时字符数也更少。
 
 ```js title="src/index.ts"
 const { add } = await import('./add.ts');
@@ -245,8 +245,8 @@ export default {
 <!DOCTYPE html>
 <html>
   <head>
-    <script defer src="/static/js/index.js?v=b8565050"></script>
-    <link href="/static/css/index.css?v=02d157ca" rel="stylesheet" />
+    <script defer src="/static/js/index.js?v=b8565050ab"></script>
+    <link href="/static/css/index.css?v=02d157caab" rel="stylesheet" />
   </head>
 </html>
 ```

@@ -28,13 +28,13 @@ Whether to print the file sizes after production build.
 The default output log is as follows:
 
 ```
-File (web)                              Size        Gzip
-dist/static/js/lib-react.b0714b60.js    140.4 kB    45.0 kB
-dist/static/js/index.f3fde9c7.js        1.9 kB      0.97 kB
-dist/index.html                         0.39 kB     0.25 kB
-dist/static/css/index.2960ac62.css      0.35 kB     0.26 kB
+File (web)                                Size        Gzip
+dist/static/js/lib-react.b0714b60ab.js    140.4 kB    45.0 kB
+dist/static/js/index.f3fde9c7ab.js        1.9 kB      0.97 kB
+dist/index.html                           0.39 kB     0.25 kB
+dist/static/css/index.2960ac62ab.css      0.35 kB     0.26 kB
 
-                               Total:   143.0 kB    46.3 kB
+                                 Total:   143.0 kB    46.3 kB
 ```
 
 ## Disable outputs
@@ -257,12 +257,12 @@ export default {
 On the second build, the output begins to include inline size deltas:
 
 ```
-File (web)                              Size                  Gzip
-dist/static/js/lib-react.b0714b60.js    140.4 kB (+2.1 kB)    45.0 kB (+0.5 kB)
-dist/static/js/index.f3fde9c7.js        1.9 kB (-0.3 kB)      0.97 kB (-0.1 kB)
-dist/static/css/index.2960ac62.css      0.35 kB (+0.35 kB)    0.26 kB (+0.26 kB)
+File (web)                                Size                  Gzip
+dist/static/js/lib-react.b0714b60ab.js    140.4 kB (+2.1 kB)    45.0 kB (+0.5 kB)
+dist/static/js/index.f3fde9c7ab.js        1.9 kB (-0.3 kB)      0.97 kB (-0.1 kB)
+dist/static/css/index.2960ac62ab.css      0.35 kB (+0.35 kB)    0.26 kB (+0.26 kB)
 
-                               Total:   143.0 kB (+2.15 kB)   46.3 kB (+0.66 kB)
+                                 Total:   143.0 kB (+2.15 kB)   46.3 kB (+0.66 kB)
 ```
 
 - Increases are highlighted in red with a `+` prefix

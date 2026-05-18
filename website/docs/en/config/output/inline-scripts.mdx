@@ -101,14 +101,14 @@ export default {
 ```
 
 :::tip
-Production filenames include a hash value by default, such as `static/js/main.18a568e5.js`. In regular expressions, use `\w+` to match the hash.
+Production filenames include a hash value by default, such as `static/js/main.18a568e5ab.js`. In regular expressions, use `\w+` to match the hash.
 :::
 
 ### Using function
 
 You can also set `output.inlineScripts` to a function that accepts the following parameters:
 
-- `name`: The filename, such as `static/js/main.18a568e5.js`.
+- `name`: The filename, such as `static/js/main.18a568e5ab.js`.
 - `size`: The file size in bytes.
 
 For example, if we want to inline assets that are smaller than 10 kB, we can add the following configuration:
