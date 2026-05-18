@@ -22,10 +22,9 @@ description: Use when adding or updating Rsbuild end-to-end tests in `e2e/cases`
 ## Case Structure
 
 - Include a `src` directory in every case (required).
-- If a test file uses one non-dynamic, fixed Rsbuild config, prefer putting it
-  in `rsbuild.config.ts` instead of passing it inline to `build` or `dev`.
-- Add inline config only when the test needs dynamic values, per-test variants,
-  or multiple config shapes in the same file.
+- Prefer putting static Rsbuild configurations in rsbuild.config.ts to enable
+  easier debugging via npx rsbuild.
+- Use inline config for dynamic values or minor per-test variations.
 - Split into multiple case directories when cases need different `src` code or different Rsbuild configs.
 
 ## Constraints
