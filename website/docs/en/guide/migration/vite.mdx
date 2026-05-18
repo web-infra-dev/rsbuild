@@ -51,7 +51,7 @@ export default defineConfig({
 
 ## Build entry
 
-The default build entry points for Rsbuild and Vite are different. Vite uses `index.html` as the default entry, while Rsbuild uses `src/index.js`.
+The default build entry points for Rsbuild and Vite are different. Vite uses `index.html` as the default entry, while Rsbuild auto-detects a `src/index.*` module such as `src/index.ts` or `src/index.js`.
 
 When migrating from Vite to Rsbuild, use Rsbuild's [source.entry](/config/source/entry) to set the build entry and [html.template](/config/html/template) to set the template.
 

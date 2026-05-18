@@ -58,7 +58,7 @@ export default {
 ```ts
 const defaultOptions = {
   babelrc: false,
-  compact: false,
+  compact: config.mode === 'production',
   configFile: false,
   plugins: [
     ['@babel/plugin-proposal-decorators', config.source.decorators],
@@ -196,6 +196,40 @@ pluginBabel({
 pluginBabel({
   babelLoaderOptions: (config, { removePresets }) => {
     removePresets('@babel/preset-env');
+  },
+});
+```
+
+##### modifyPresetEnvOptions
+
+- **类型：** `(options: PresetEnvOptions) => void`
+
+修改已有的 `@babel/preset-env` 预设选项。如果 `config.presets` 中不存在该预设，则该函数不会产生效果。
+
+```js
+pluginBabel({
+  babelLoaderOptions: (config, { addPresets, modifyPresetEnvOptions }) => {
+    addPresets(['@babel/preset-env']);
+    modifyPresetEnvOptions({
+      targets: ['chrome >= 107'],
+    });
+  },
+});
+```
+
+##### modifyPresetReactOptions
+
+- **类型：** `(options: PresetReactOptions) => void`
+
+修改已有的 `@babel/preset-react` 预设选项。如果 `config.presets` 中不存在该预设，则该函数不会产生效果。
+
+```js
+pluginBabel({
+  babelLoaderOptions: (config, { addPresets, modifyPresetReactOptions }) => {
+    addPresets(['@babel/preset-react']);
+    modifyPresetReactOptions({
+      runtime: 'automatic',
+    });
   },
 });
 ```

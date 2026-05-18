@@ -50,11 +50,12 @@ Options passed to `rspack-vue-loader`. See the [Vue Loader documentation](https:
 - **Default:**
 
 ```js
+const emitCss = config.output.emitCss ?? config.output.target === 'web';
 const defaultOptions = {
   compilerOptions: {
     preserveWhitespace: false,
   },
-  experimentalInlineMatchResource: true,
+  experimentalInlineMatchResource: emitCss,
 };
 ```
 

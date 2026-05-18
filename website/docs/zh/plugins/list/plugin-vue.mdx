@@ -50,11 +50,12 @@ export default {
 - **默认值：**
 
 ```js
+const emitCss = config.output.emitCss ?? config.output.target === 'web';
 const defaultOptions = {
   compilerOptions: {
     preserveWhitespace: false,
   },
-  experimentalInlineMatchResource: true,
+  experimentalInlineMatchResource: emitCss,
 };
 ```
 

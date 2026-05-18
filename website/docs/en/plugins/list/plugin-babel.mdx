@@ -58,7 +58,7 @@ These options are passed to `babel-loader`. For details, see the [babel-loader d
 ```ts
 const defaultOptions = {
   babelrc: false,
-  compact: false,
+  compact: config.mode === 'production',
   configFile: false,
   plugins: [
     ['@babel/plugin-proposal-decorators', config.source.decorators],
@@ -104,7 +104,7 @@ pluginBabel({
 The second parameter of the function provides some more convenient utility functions. Please continue reading the documentation below.
 
 :::tip
-The above example is just for reference, usually you do not need to manually configure `babel-plugin-import`, because the Rsbuild already provides a more general `source.transformImport` configuration.
+The above example is just for reference. Usually you do not need to manually configure `babel-plugin-import`, because Rsbuild already provides a more general `source.transformImport` configuration.
 :::
 
 #### Object type
@@ -197,6 +197,40 @@ To remove the Babel preset configuration, pass in the name of the preset to be r
 pluginBabel({
   babelLoaderOptions: (config, { removePresets }) => {
     removePresets('@babel/preset-env');
+  },
+});
+```
+
+##### modifyPresetEnvOptions
+
+- **Type:** `(options: PresetEnvOptions) => void`
+
+Modify the options of an existing `@babel/preset-env` preset. If the preset is not present in `config.presets`, this function has no effect.
+
+```js
+pluginBabel({
+  babelLoaderOptions: (config, { addPresets, modifyPresetEnvOptions }) => {
+    addPresets(['@babel/preset-env']);
+    modifyPresetEnvOptions({
+      targets: ['chrome >= 107'],
+    });
+  },
+});
+```
+
+##### modifyPresetReactOptions
+
+- **Type:** `(options: PresetReactOptions) => void`
+
+Modify the options of an existing `@babel/preset-react` preset. If the preset is not present in `config.presets`, this function has no effect.
+
+```js
+pluginBabel({
+  babelLoaderOptions: (config, { addPresets, modifyPresetReactOptions }) => {
+    addPresets(['@babel/preset-react']);
+    modifyPresetReactOptions({
+      runtime: 'automatic',
+    });
   },
 });
 ```
