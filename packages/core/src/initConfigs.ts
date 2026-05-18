@@ -141,6 +141,7 @@ const initEnvironmentConfigs = (
     if (config.output.module === undefined) {
       config.output.module = isServer;
     }
+
     // For `web` and `web-worker` targets, minify is true by default in production mode
     // For `node` target, minify is false by default
     if (config.output.minify === undefined) {
@@ -177,9 +178,9 @@ const initEnvironmentConfigs = (
   }
 
   return {
-    [defaultEnvironmentName]: applyEnvironmentDefaultConfig({
-      ...baseEnvironmentConfig,
-    } as MergedEnvironmentConfig),
+    [defaultEnvironmentName]: applyEnvironmentDefaultConfig(
+      baseEnvironmentConfig as MergedEnvironmentConfig,
+    ),
   };
 };
 
