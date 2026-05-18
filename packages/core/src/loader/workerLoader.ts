@@ -110,16 +110,6 @@ const deleteAsset = (compilation: Compilation, filename: string) => {
   }
 };
 
-const getCompilerPlugin = <T>(getPlugin: () => T): T => {
-  const plugin = getPlugin();
-  if (!plugin) {
-    throw new Error(
-      '[rsbuild:worker] The current Rspack version does not support inline worker compilation.',
-    );
-  }
-  return plugin;
-};
-
 const compileInlineWorker = (
   context: LoaderContext<WorkerLoaderOptions>,
 ): Promise<string> => {
@@ -146,9 +136,7 @@ const compileInlineWorker = (
     [],
   );
 
-  new (getCompilerPlugin(
-    () => rspack.webworker.WebWorkerTemplatePlugin,
-  ))().apply(childCompiler);
+  new rspack.webworker.WebWorkerTemplatePlugin().apply(childCompiler);
 
   new rspack.LoaderTargetPlugin('webworker').apply(childCompiler);
 
