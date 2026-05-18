@@ -21,8 +21,8 @@ importers:
         specifier: ^0.5.3
         version: 0.5.3(jiti@2.7.0)
       '@rstest/adapter-rslib':
-        specifier: ^0.2.2
-        version: 0.2.2(@rslib/core@0.21.5)(@rstest/core@0.9.10)(typescript@6.0.3)
+        specifier: ^0.10.0
+        version: 0.10.0(@rslib/core@0.21.5)(@rstest/core@0.9.10)(typescript@6.0.3)
       '@rstest/core':
         specifier: ^0.9.10
         version: 0.9.10(@module-federation/runtime-tools@2.4.0)(core-js@3.49.0)
@@ -2525,11 +2525,11 @@ packages:
   '@rstack-dev/doc-ui@1.13.3':
     resolution: {integrity: sha512-g9T8mG1I5ch3CHnzktl/PPFwJmxgRBLUi8NC6pGDwp3JQfKzaylDNK2LcPM4kjLP60+9fv2gFDSrLHE6jFu8uQ==}
 
-  '@rstest/adapter-rslib@0.2.2':
-    resolution: {integrity: sha512-pDfROoS8EY5mzxEmy9KVcd+Xila3QYeovlygCVmoc5p95qJ+3h+adr+elHFy/OZWUn/GMDHwYfhAR7BHQyQUKA==}
+  '@rstest/adapter-rslib@0.10.0':
+    resolution: {integrity: sha512-QNgVrFSP9190+VoZ+2IlzALxGE+Av46c+8qFFUwmCfGA/uxfJMiiyHX28gmdxGXIYcvjZBRij8a4QJq4Wke8jA==}
     peerDependencies:
       '@rslib/core': '>=0.18.6'
-      '@rstest/core': '>=0.7.7'
+      '@rstest/core': ^0.10.0
       typescript: ^5 || ^6
     peerDependenciesMeta:
       typescript:
@@ -7415,7 +7415,7 @@ snapshots:
 
   '@rstack-dev/doc-ui@1.13.3': {}
 
-  '@rstest/adapter-rslib@0.2.2(@rslib/core@0.21.5)(@rstest/core@0.9.10)(typescript@6.0.3)':
+  '@rstest/adapter-rslib@0.10.0(@rslib/core@0.21.5)(@rstest/core@0.9.10)(typescript@6.0.3)':
     dependencies:
       '@rslib/core': 0.21.5(@module-federation/runtime-tools@2.4.0)(@typescript/native-preview@7.0.0-dev.20260516.1)(core-js@3.49.0)(typescript@6.0.3)
       '@rstest/core': 0.9.10(@module-federation/runtime-tools@2.4.0)(core-js@3.49.0)
