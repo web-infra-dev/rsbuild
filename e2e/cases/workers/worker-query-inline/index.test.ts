@@ -13,12 +13,16 @@ test('should support inline worker query imports', async ({
 
     if (mode === 'build') {
       const files = result.getDistFiles();
+      const jsFiles = Object.keys(files).filter((filename) =>
+        filename.endsWith('.js'),
+      );
       const emittedInlineWorkerFiles = Object.keys(files).filter((filename) =>
         /inline-worker\.[\w-]+\.js$/.test(filename),
       );
 
+      expect(jsFiles).toHaveLength(1);
       expect(emittedInlineWorkerFiles).toEqual([]);
-      expect(Object.values(files).join('\n')).toContain('inline-marker');
+      expect(files[jsFiles[0]]).toContain('inline-marker');
     }
   });
 });
