@@ -2,7 +2,6 @@
 dist
 compiled
 doc_build
-.agents
 pnpm-lock.yaml
 skills-lock.yaml
 
