@@ -10,8 +10,12 @@ test('should support worker query imports with output.module enabled', async ({
 
     if (mode === 'build') {
       const files = result.getDistFiles();
+      const indexFile = Object.keys(files).find((filename) =>
+        /\/static\/js\/index\.[\w-]+\.js$/.test(filename),
+      );
 
-      expect(Object.values(files).join('\n')).toContain('type:"module"');
+      expect(indexFile).toBeDefined();
+      expect(files[indexFile!]).toContain('type:"module"');
     }
   });
 });

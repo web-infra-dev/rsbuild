@@ -7,8 +7,6 @@ import type {
 
 const INLINE_QUERY_REGEX = /[?&]inline(?:&|=|$)/;
 const JS_FILE_REGEX = /\.m?js(?:\?.*)?$/;
-const HASH_PLACEHOLDER_REGEX =
-  /\[(?:[^:\]]+:)?(?:chunkhash|contenthash|hash|fullhash)(?::[^\]]+)?]/i;
 const SOURCE_MAPPING_URL_REGEX =
   /(?:\/\*# sourceMappingURL=.*?\*\/|\/\/# sourceMappingURL=.*)$/gm;
 
@@ -80,30 +78,6 @@ export default function WorkerWrapper(options) {
 }`;
 };
 
-const getChildFilename = (
-  filename: Compilation['outputOptions']['filename'],
-): string => {
-  if (typeof filename !== 'string') {
-    return 'static/js/[name].worker.js';
-  }
-
-  return HASH_PLACEHOLDER_REGEX.test(filename)
-    ? filename
-    : filename.replace(/\.js(?:\?.*)?$/i, '.worker.js');
-};
-
-const getChildChunkFilename = (
-  chunkFilename: Compilation['outputOptions']['chunkFilename'],
-): string => {
-  if (typeof chunkFilename !== 'string') {
-    return 'static/js/async/[name].worker.js';
-  }
-
-  return HASH_PLACEHOLDER_REGEX.test(chunkFilename)
-    ? chunkFilename
-    : chunkFilename.replace(/\.js(?:\?.*)?$/i, '.worker.js');
-};
-
 const deleteAsset = (compilation: Compilation, filename: string) => {
   if (compilation.getAsset(filename)) {
     compilation.deleteAsset(filename);
@@ -122,8 +96,6 @@ const compileInlineWorker = (
   const childCompiler = compilation.createChildCompiler(
     compilerName,
     {
-      filename: getChildFilename(outputOptions.filename),
-      chunkFilename: getChildChunkFilename(outputOptions.chunkFilename),
       publicPath: outputOptions.publicPath,
       globalObject: 'self',
       module: outputOptions.module,
