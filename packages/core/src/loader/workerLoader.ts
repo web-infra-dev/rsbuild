@@ -121,13 +121,13 @@ const getCompilerPlugin = <T>(getPlugin: () => T): T => {
 };
 
 const compileInlineWorker = (
-  loaderContext: LoaderContext<WorkerLoaderOptions>,
+  context: LoaderContext<WorkerLoaderOptions>,
 ): Promise<string> => {
-  const compiler = loaderContext._compiler;
-  const compilation = loaderContext._compilation;
+  const compiler = context._compiler;
+  const compilation = context._compilation;
   const { rspack } = compiler;
   const { outputOptions } = compilation;
-  const compilerName = `rsbuild-worker ${loaderContext.resourcePath}`;
+  const compilerName = `rsbuild-worker ${context.resourcePath}`;
 
   const childCompiler = compilation.createChildCompiler(
     compilerName,
@@ -153,9 +153,9 @@ const compileInlineWorker = (
   new rspack.LoaderTargetPlugin('webworker').apply(childCompiler);
 
   new rspack.EntryPlugin(
-    loaderContext.context ?? path.dirname(loaderContext.resourcePath),
-    loaderContext.resourcePath,
-    path.parse(loaderContext.resourcePath).name,
+    context.context ?? path.dirname(context.resourcePath),
+    context.resourcePath,
+    path.parse(context.resourcePath).name,
   ).apply(childCompiler);
 
   return new Promise((resolve, reject) => {
@@ -169,7 +169,7 @@ const compileInlineWorker = (
       if (!entry || !childCompilation) {
         reject(
           new Error(
-            `[rsbuild:worker] Failed to compile inline worker "${loaderContext.resourcePath}".`,
+            `[rsbuild:worker] Failed to compile inline worker "${context.resourcePath}".`,
           ),
         );
         return;
@@ -182,7 +182,7 @@ const compileInlineWorker = (
       if (!workerFilename) {
         reject(
           new Error(
-            `[rsbuild:worker] Failed to find the inline worker output for "${loaderContext.resourcePath}".`,
+            `[rsbuild:worker] Failed to find the inline worker output for "${context.resourcePath}".`,
           ),
         );
         return;
@@ -195,7 +195,7 @@ const compileInlineWorker = (
       if (extraJsFiles.length > 0) {
         reject(
           new Error(
-            `[rsbuild:worker] Inline workers do not support code splitting yet. Use ?worker instead, or remove dynamic imports from "${loaderContext.resourcePath}".`,
+            `[rsbuild:worker] Inline workers do not support code splitting yet. Use ?worker instead, or remove dynamic imports from "${context.resourcePath}".`,
           ),
         );
         return;
@@ -215,13 +215,13 @@ const compileInlineWorker = (
       deleteAsset(compilation, `${workerFilename}.map`);
 
       for (const file of childCompilation.fileDependencies) {
-        loaderContext.addDependency(file);
+        context.addDependency(file);
       }
-      for (const context of childCompilation.contextDependencies) {
-        loaderContext.addContextDependency(context);
+      for (const dir of childCompilation.contextDependencies) {
+        context.addContextDependency(dir);
       }
       for (const missing of childCompilation.missingDependencies) {
-        loaderContext.addMissingDependency(missing);
+        context.addMissingDependency(missing);
       }
 
       resolve(asset.source.source().toString());
