@@ -17,6 +17,7 @@ jobs:
         with:
           days-before-stale: -1
           days-before-pr-close: -1
+          remove-pr-stale-when-updated: false
           days-before-issue-close: 5
           stale-issue-label: 'need reproduction'
           close-issue-message: |
