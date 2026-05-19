@@ -67,9 +67,7 @@ Supported in Rsbuild v2.0.7 and later.
 
 #### Importing package workers
 
-JavaScript files in `node_modules` are not compiled by Rsbuild by default. The `?worker` query is applied to the resolved worker file, so this can affect package workers whether the import is written in your app code or inside the package itself.
-
-If a `?worker` request resolves to a JavaScript file in `node_modules` and the worker is not handled as expected, add the package that contains the worker file to [source.include](/config/source/include):
+JavaScript files in `node_modules` are not compiled by Rsbuild by default. If a `?worker` request resolves to a JavaScript file in `node_modules` and the worker is not handled as expected, add the package that contains the worker file to [source.include](/config/source/include):
 
 ```ts title="rsbuild.config.ts"
 export default {
