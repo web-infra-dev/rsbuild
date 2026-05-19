@@ -121,6 +121,15 @@ exports[`plugin-solid > should allow solid options to override ssr defaults 1`] 
   ],
   "oneOf": [
     {
+      "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+      "type": "javascript/auto",
+      "use": [
+        {
+          "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
+        },
+      ],
+    },
+    {
       "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
       "type": "asset/source",
     },
@@ -531,6 +540,15 @@ exports[`plugin-solid > should use ssr output for ssr option on node target 1`] 
     /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
   ],
   "oneOf": [
+    {
+      "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+      "type": "javascript/auto",
+      "use": [
+        {
+          "loader": "<ROOT>/packages/core/dist/workerLoader.mjs",
+        },
+      ],
+    },
     {
       "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
       "type": "asset/source",

@@ -1162,6 +1162,15 @@ exports[`should apply default plugins correctly when target is node 1`] = `
         ],
         "oneOf": [
           {
+            "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+            "type": "javascript/auto",
+            "use": [
+              {
+                "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
+              },
+            ],
+          },
+          {
             "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
             "type": "asset/source",
           },

@@ -625,6 +625,15 @@ exports[`environment config > should allow configuring tools.rspack and bundlerC
           ],
           "oneOf": [
             {
+              "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+              "type": "javascript/auto",
+              "use": [
+                {
+                  "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
+                },
+              ],
+            },
+            {
               "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
               "type": "asset/source",
             },

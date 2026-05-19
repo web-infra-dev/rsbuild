@@ -329,6 +329,15 @@ exports[`plugin-swc > should apply environment config correctly 2`] = `
     ],
     "oneOf": [
       {
+        "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
+          },
+        ],
+      },
+      {
         "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
         "type": "asset/source",
       },
@@ -735,6 +744,15 @@ exports[`plugin-swc > should disable preset-env for non-web targets 1`] = `
         /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
       ],
       "oneOf": [
+        {
+          "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
+            },
+          ],
+        },
         {
           "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "type": "asset/source",
@@ -1150,6 +1168,15 @@ exports[`plugin-swc > should use the correct core-js version 2`] = `
         /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
       ],
       "oneOf": [
+        {
+          "resourceQuery": /\\[\\?&\\]worker\\(\\?:&\\|=\\|\\$\\)/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "<ROOT>/packages/core/src/workerLoader.mjs",
+            },
+          ],
+        },
         {
           "resourceQuery": /\\[\\?&\\]raw\\(\\?:&\\|=\\|\\$\\)/,
           "type": "asset/source",
