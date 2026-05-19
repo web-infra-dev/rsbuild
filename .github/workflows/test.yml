@@ -9,8 +9,7 @@ on:
 
   workflow_dispatch:
 
-permissions:
-  contents: read
+permissions: {}
 
 env:
   # Configure Node.js memory limit to 6GB (default GitHub Actions limit is 7GB)
@@ -21,6 +20,8 @@ jobs:
   ut:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
+    permissions:
+      contents: read
     strategy:
       matrix:
         # run ut on macOS, as SWC cases will fail on Ubuntu CI
@@ -67,6 +68,8 @@ jobs:
   e2e:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 15
+    permissions:
+      contents: read
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
