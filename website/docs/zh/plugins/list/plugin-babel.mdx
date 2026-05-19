@@ -243,21 +243,13 @@ pluginBabel({
 
 由于 Babel 编译存在性能开销，通过 `include` 来匹配部分文件可以减少 Babel 编译的模块数量，从而提升构建性能。
 
-比如，只对 `.custom.js` 文件进行编译，并忽略 `node_modules` 下的文件：
+比如，只对 `.custom.js` 文件进行编译：
 
 ```js
 pluginBabel({
   include: /\.custom\.js$/,
-  // 建议 exclude node_modules 目录以提升构建性能
-  exclude: /[\\/]node_modules[\\/]/,
 });
 ```
-
-:::tip
-当你配置 `include` 或 `exclude` 选项时，Rsbuild 会创建一条单独的 Rspack rule 来应用 babel-loader 和 swc-loader。
-
-这条单独的 rule 与 Rsbuild 内置的 SWC rule 是完全独立的，并且不会受到 [source.include](/config/source/include) 和 [source.exclude](/config/source/exclude) 的作用。
-:::
 
 ### exclude
 
@@ -267,6 +259,21 @@ pluginBabel({
 用于指定不需要 Babel 编译的文件。
 
 由于 Babel 编译存在性能开销，通过 `exclude` 来排除部分文件可以减少 Babel 编译的模块数量，从而提升构建性能。
+
+比如，忽略 `node_modules` 下的 `.js` 文件：
+
+```js
+pluginBabel({
+  // 排除 node_modules 下的 .js 文件以提升构建性能
+  exclude: /[\\/]node_modules[\\/].*\.js$/,
+});
+```
+
+:::tip
+当你配置 `include` 或 `exclude` 选项时，Rsbuild 会创建一条单独的 Rspack rule 来应用 babel-loader 和 swc-loader。
+
+这条单独的 rule 与 Rsbuild 内置的 SWC rule 是完全独立的，并且不会受到 [source.include](/config/source/include) 和 [source.exclude](/config/source/exclude) 的作用。
+:::
 
 ## 执行顺序
 
