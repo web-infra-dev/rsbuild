@@ -67,7 +67,7 @@ Rsbuild v2.0.7 及以上版本支持。
 
 #### 导入 npm 包中的 worker
 
-默认情况下，Rsbuild 不会编译 `node_modules` 中的 JavaScript 文件。如果 `?worker` 请求解析到 `node_modules` 中的 JavaScript 文件，并且该 worker 未按预期处理，可以将包含该 worker 文件的包加入 [source.include](/config/source/include)：
+默认情况下，Rsbuild 的 JavaScript 编译规则不会处理 `node_modules` 中的 JavaScript 文件。由于 `?worker` query 是在这条规则中处理的，因此当请求解析到 `node_modules` 中的 worker 文件时，无论导入语句写在应用代码中还是 npm 包内部，query 都不会生效。要让该 query 生效，可以将包含 worker 文件的包加入 [source.include](/config/source/include)：
 
 ```ts title="rsbuild.config.ts"
 export default {
