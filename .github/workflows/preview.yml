@@ -11,13 +11,14 @@ on:
         required: true
         default: 'main'
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
   preview:
     if: github.repository == 'web-infra-dev/rsbuild'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout

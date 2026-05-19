@@ -11,15 +11,14 @@ on:
         required: true
         default: 'main'
 
-permissions:
-  contents: write
-  issues: write
-  pull-requests: write
+permissions: {}
 
 jobs:
   changes:
     runs-on: ubuntu-latest
     if: github.repository == 'web-infra-dev/rsbuild' && github.event_name != 'workflow_dispatch'
+    permissions:
+      contents: read
     outputs:
       changed: ${{ steps.changes.outputs.changed }}
     steps:
@@ -37,10 +36,15 @@ jobs:
               - "!**/*.mdx"
               - "!**/_meta.json"
               - "!**/dictionary.txt"
+
   ecosystem_ci_dispatch:
     name: Dispatch ecosystem CI
     runs-on: ubuntu-latest
     if: github.repository == 'web-infra-dev/rsbuild' && github.event_name == 'workflow_dispatch'
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: read
     steps:
       - name: Trigger Ecosystem CI
         uses: rstackjs/rstack-ecosystem-ci/.github/actions/ecosystem_ci_dispatch@1345990b3128d94ee37afbb7607f9ddc9feadb49 # v0.3.0
@@ -51,11 +55,14 @@ jobs:
           workflow-file: rsbuild-ecosystem-ci-selected.yml
           client-payload: '{"ref":"${{ github.event.inputs.branch }}","repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'
           branch: ${{ github.event.inputs.branch }}
+
   ecosystem_ci_per_commit:
     name: Run ecosystem CI per commit
     needs: changes
     runs-on: ubuntu-latest
     if: github.repository == 'web-infra-dev/rsbuild' && github.event_name != 'workflow_dispatch' && needs.changes.outputs.changed == 'true'
+    permissions:
+      contents: read
     steps:
       - name: Trigger Ecosystem CI
         uses: rstackjs/rstack-ecosystem-ci/.github/actions/ecosystem_ci_per_commit@1345990b3128d94ee37afbb7607f9ddc9feadb49 # v0.3.0

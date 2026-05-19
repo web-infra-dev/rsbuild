@@ -4,14 +4,15 @@ on:
   issues:
     types: [labeled]
 
-permissions:
-  issues: write
+permissions: {}
 
 jobs:
   reply-labeled:
     name: Reply need reproduction
     runs-on: ubuntu-latest
     if: github.repository == 'web-infra-dev/rsbuild'
+    permissions:
+      issues: write
     steps:
       - name: need reproduction
         if: github.event.label.name == 'need reproduction'

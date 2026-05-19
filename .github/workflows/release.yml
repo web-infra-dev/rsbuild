@@ -19,9 +19,7 @@ on:
         required: true
         default: 'main'
 
-permissions:
-  # Provenance generation in GitHub Actions requires "write" access to the "id-token"
-  id-token: write
+permissions: {}
 
 jobs:
   release:
@@ -29,6 +27,9 @@ jobs:
     if: github.repository == 'web-infra-dev/rsbuild' && github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     environment: npm
+    permissions:
+      # Provenance generation in GitHub Actions requires "write" access to the "id-token"
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
