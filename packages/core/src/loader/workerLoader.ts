@@ -56,21 +56,25 @@ const getInlineWorkerWrapper = ({
 
   // Keep the generated wrapper code ES6-compatible since it will not go through transforms.
   return `const jsContent = ${JSON.stringify(stripSourceMappingURL(source))};
-const blob = typeof self !== "undefined" && self.Blob && new Blob([${JSON.stringify(
+const workerURL = typeof self !== "undefined" && (self.URL || self.webkitURL);
+const blob = workerURL && self.Blob && new Blob([${JSON.stringify(
     revokeCode,
   )}, jsContent], { type: "text/javascript;charset=utf-8" });
 
 export default function WorkerWrapper(options) {
   let objURL;
   try {
-    objURL = blob && (self.URL || self.webkitURL).createObjectURL(blob);
+    objURL = blob && workerURL.createObjectURL(blob);
     if (!objURL) throw "";
     const worker = new Worker(objURL, ${workerOptions});
     worker.addEventListener("error", () => {
-      (self.URL || self.webkitURL).revokeObjectURL(objURL);
+      workerURL.revokeObjectURL(objURL);
     });
     return worker;
   } catch (e) {
+    if (objURL) {
+      workerURL.revokeObjectURL(objURL);
+    }
     return new Worker(
       "data:text/javascript;charset=utf-8," + encodeURIComponent(jsContent),
       ${workerOptions}
