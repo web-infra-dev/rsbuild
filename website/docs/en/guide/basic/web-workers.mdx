@@ -39,45 +39,45 @@ worker.postMessage(10);
 
 Rspack supports multiple Worker syntaxes by default. See [Rspack - Web Workers](https://rspack.rs/guide/features/web-workers) for more information.
 
-### Using worker-loader
+### Import with query suffixes
 
-If your project already uses `worker-loader`, or you want to use the `inline` and other features provided by `worker-loader`, you can use [worker-rspack-loader](https://github.com/rstackjs/worker-rspack-loader) as an alternative to `worker-loader` in Rsbuild projects.
+You can also import a Web Worker script by appending `?worker` to the import request. The default export is a custom Worker constructor.
+
+```js title="index.js"
+import MyWorker from './worker.js?worker';
+
+const worker = new MyWorker();
+
+worker.postMessage(10);
+```
+
+By default, the worker script is emitted as a separate chunk in the production build. If you want to inline the worker script, add the `inline` query:
+
+```js title="index.js"
+import InlineWorker from './worker.js?worker&inline';
+
+const worker = new InlineWorker();
+
+worker.postMessage(10);
+```
+
+:::tip
+Supported in Rsbuild v2.0.7 and later.
+:::
+
+#### Importing package workers
+
+JavaScript files in `node_modules` are not compiled by Rsbuild by default. The `?worker` query is applied to the resolved worker file, so this can affect package workers whether the import is written in your app code or inside the package itself.
+
+If a `?worker` request resolves to a JavaScript file in `node_modules` and the worker is not handled as expected, add the package that contains the worker file to [source.include](/config/source/include):
 
 ```ts title="rsbuild.config.ts"
 export default {
-  tools: {
-    rspack: {
-      resolveLoader: {
-        alias: {
-          // Modify the resolution of worker-loader in the inline loader
-          // such as `worker-loader!pdfjs-dist/es5/build/pdf.worker.js`
-          'worker-loader': require.resolve('worker-rspack-loader'),
-        },
-      },
-      module: {
-        rules: [
-          {
-            test: /\.worker\.js$/,
-            loader: 'worker-rspack-loader',
-          },
-        ],
-      },
-    },
+  source: {
+    include: [/node_modules[\\/]some-package[\\/]/],
   },
 };
 ```
-
-When using `worker-rspack-loader`, load the Web Worker file with `import` instead of `new Worker('/path/to/worker.js')`.
-
-```js
-import Worker from './file.worker.js';
-
-const worker = new Worker();
-
-worker.postMessage({ a: 1 });
-```
-
-> `worker-loader` is no longer maintained. If you don't need to inline Web Workers, we recommend using the `new Worker()` syntax.
 
 ### Loading scripts from remote URLs
 

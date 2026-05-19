@@ -39,45 +39,45 @@ worker.postMessage(10);
 
 Rspack 默认支持多种 Worker 语法，查看 [Rspack - Web Workers](https://rspack.rs/zh/guide/features/web-workers) 了解更多。
 
-### 使用 worker-loader
+### 使用 query 后缀导入
 
-如果你的项目已经在使用 `worker-loader`，或者希望使用 `worker-loader` 的 `inline` 等能力，在 Rsbuild 项目中可以使用 `worker-loader` 的替代方案 [worker-rspack-loader](https://github.com/rstackjs/worker-rspack-loader)。
+你也可以通过在导入请求后添加 `?worker` 来导入 Web Worker 脚本。默认导出是一个自定义的 Worker 构造器。
+
+```js title="index.js"
+import MyWorker from './worker.js?worker';
+
+const worker = new MyWorker();
+
+worker.postMessage(10);
+```
+
+默认情况下，生产环境构建会将 worker 脚本输出成一个独立的 chunk。如果你希望内联 worker 脚本，可以添加 `inline` query：
+
+```js title="index.js"
+import InlineWorker from './worker.js?worker&inline';
+
+const worker = new InlineWorker();
+
+worker.postMessage(10);
+```
+
+:::tip
+Rsbuild v2.0.7 及以上版本支持。
+:::
+
+#### 导入 npm 包中的 worker
+
+默认情况下，Rsbuild 不会编译 `node_modules` 中的 JavaScript 文件。`?worker` query 是基于解析后的 worker 文件进行处理的，因此无论导入语句写在应用代码中，还是写在 npm 包内部，只要最终解析到 npm 包中的 worker 文件，都可能受到这个限制。
+
+如果 `?worker` 请求解析到 `node_modules` 中的 JavaScript 文件，并且该 worker 未按预期处理，可以将包含该 worker 文件的包加入 [source.include](/config/source/include)：
 
 ```ts title="rsbuild.config.ts"
 export default {
-  tools: {
-    rspack: {
-      resolveLoader: {
-        alias: {
-          // 修改内联 loader 中 worker-loader 的指向
-          // 如 `worker-loader!pdfjs-dist/es5/build/pdf.worker.js`
-          'worker-loader': require.resolve('worker-rspack-loader'),
-        },
-      },
-      module: {
-        rules: [
-          {
-            test: /\.worker\.js$/,
-            loader: 'worker-rspack-loader',
-          },
-        ],
-      },
-    },
+  source: {
+    include: [/node_modules[\\/]some-package[\\/]/],
   },
 };
 ```
-
-使用 `worker-rspack-loader` 时，需要使用 `import` 来引入 Web Worker 文件，而不是 `new Worker('/path/to/worker.js')`。
-
-```js
-import Worker from './file.worker.js';
-
-const worker = new Worker();
-
-worker.postMessage({ a: 1 });
-```
-
-> `worker-loader` 已不再维护，如果你没有内联 Web Workers 的需求，推荐使用 `new Worker()` 语法。
 
 ### 从远程 URL 加载脚本
 
