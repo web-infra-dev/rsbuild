@@ -229,6 +229,25 @@ Vite provides some preset type definitions through the `vite-env.d.ts` file. Whe
 /// <reference types="@rsbuild/core/types" />
 ```
 
+## Web Workers
+
+When migrating worker query imports from Vite, Rsbuild supports `?worker` and `?worker&inline`:
+
+```ts
+import Worker from './worker.ts?worker';
+import InlineWorker from './worker.ts?worker&inline';
+```
+
+Rsbuild does not support Vite's `?worker&url`, `?sharedworker`, `?sharedworker&inline`, or `?sharedworker&url` query suffixes. If you only use these queries to create a worker, migrate to the standard constructor syntax instead:
+
+```ts
+const worker = new Worker(new URL('./worker.ts', import.meta.url), {
+  type: 'module',
+});
+```
+
+The constructor syntax also lets you pass standard `WorkerOptions`, such as `name`, `type`, and `credentials`. See [Web Workers](/guide/basic/web-workers) for more details.
+
 ## Glob import
 
 Vite provides `import.meta.glob()` for importing multiple modules.
