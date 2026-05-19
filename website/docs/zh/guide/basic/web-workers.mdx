@@ -37,6 +37,15 @@ worker.onmessage = (event) => {
 worker.postMessage(10);
 ```
 
+你也可以将标准的 [`WorkerOptions`](https://developer.mozilla.org/zh-CN/docs/Web/API/Worker/Worker#options) 作为第二个参数传入。Rsbuild 会保留 `name`、`credentials` 等运行时选项，并根据 `type` 判断应该将 worker 作为 module worker 还是 classic worker 来处理。
+
+```js title="index.js"
+const worker = new Worker(new URL('./worker.js', import.meta.url), {
+  credentials: 'include',
+  type: 'module',
+});
+```
+
 Rspack 默认支持多种 Worker 语法，查看 [Rspack - Web Workers](https://rspack.rs/zh/guide/features/web-workers) 了解更多。
 
 ### 使用 worker-loader

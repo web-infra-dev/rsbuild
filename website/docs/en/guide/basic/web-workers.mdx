@@ -37,6 +37,15 @@ worker.onmessage = (event) => {
 worker.postMessage(10);
 ```
 
+You can also pass standard [`WorkerOptions`](https://developer.mozilla.org/en-US/docs/Web/API/Worker/Worker#options) as the second argument. Rsbuild preserves runtime options such as `name` and `credentials`, and uses `type` to determine whether the worker should be handled as a module worker or a classic worker.
+
+```js title="index.js"
+const worker = new Worker(new URL('./worker.js', import.meta.url), {
+  credentials: 'include',
+  type: 'module',
+});
+```
+
 Rspack supports multiple Worker syntaxes by default. See [Rspack - Web Workers](https://rspack.rs/guide/features/web-workers) for more information.
 
 ### Using worker-loader
