@@ -62,7 +62,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.repository == 'web-infra-dev/rsbuild' && github.event_name != 'workflow_dispatch' && needs.changes.outputs.changed == 'true'
     permissions:
-      contents: read
+      contents: write
     steps:
       - name: Trigger Ecosystem CI
         uses: rstackjs/rstack-ecosystem-ci/.github/actions/ecosystem_ci_per_commit@ca8d345a115158ea5ab3807378357f2162be7467 # main
