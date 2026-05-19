@@ -8,11 +8,7 @@ export const pluginWorker = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain({
       order: 'pre',
-      handler: (chain, { CHAIN_ID, isServer }) => {
-        if (isServer) {
-          return;
-        }
-
+      handler: (chain, { CHAIN_ID }) => {
         chain.module
           .rule(CHAIN_ID.RULE.JS)
           .oneOf(CHAIN_ID.ONE_OF.JS_WORKER)
