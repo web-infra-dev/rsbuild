@@ -244,21 +244,13 @@ Used to specify the files that need to be compiled by Babel.
 
 Due to the performance overhead of Babel compilation, matching only certain files through `include` can reduce the number of modules compiled by Babel, thereby improving build performance.
 
-For example, to only compile `.custom.js` files and ignore files under `node_modules`:
+For example, to only compile `.custom.js` files:
 
 ```js
 pluginBabel({
   include: /\.custom\.js$/,
-  // recommended to exclude the node_modules to improve build performance
-  exclude: /[\\/]node_modules[\\/]/,
 });
 ```
-
-:::tip
-When you configure the `include` or `exclude` options, Rsbuild will create a separate Rspack rule to apply babel-loader and swc-loader.
-
-This separate rule is completely independent of the SWC rule built into Rsbuild and is not affected by [source.include](/config/source/include) and [source.exclude](/config/source/exclude).
-:::
 
 ### exclude
 
@@ -268,6 +260,22 @@ This separate rule is completely independent of the SWC rule built into Rsbuild 
 Used to specify the files that do not need to be compiled by Babel.
 
 Due to the performance overhead of Babel compilation, excluding certain files through `exclude` can reduce the number of modules compiled by Babel, thereby improving build performance.
+
+For example, to ignore `.js` files under `node_modules`:
+
+```js
+pluginBabel({
+  include: /\.custom\.js$/,
+  // Exclude .js files under node_modules to improve build performance
+  exclude: /[\\/]node_modules[\\/].*\.js$/,
+});
+```
+
+:::tip
+When you configure the `include` or `exclude` options, Rsbuild will create a separate Rspack rule to apply babel-loader and swc-loader.
+
+This separate rule is completely independent of the SWC rule built into Rsbuild and is not affected by [source.include](/config/source/include) and [source.exclude](/config/source/exclude).
+:::
 
 ## Execution order
 
