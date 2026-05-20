@@ -1,15 +1,4 @@
-import { expect, test } from '@e2e/helper';
-
-const findDistFile = (
-  files: Record<string, string>,
-  matcher: (filename: string) => boolean,
-) => {
-  const matched = Object.entries(files).find(([filename]) => matcher(filename));
-
-  expect(matched).toBeTruthy();
-
-  return matched![1];
-};
+import { expect, getFileContent, test } from '@e2e/helper';
 
 test('should define import.meta.env.SSR based on environment target', async ({
   build,
@@ -17,12 +6,8 @@ test('should define import.meta.env.SSR based on environment target', async ({
   const rsbuild = await build();
   const files = rsbuild.getDistFiles();
 
-  const webBundle = findDistFile(files, (filename) =>
-    filename.endsWith('dist/static/js/index.js'),
-  );
-  const nodeBundle = findDistFile(files, (filename) =>
-    filename.endsWith('dist/node/index.js'),
-  );
+  const webBundle = getFileContent(files, 'dist/static/js/index.js');
+  const nodeBundle = getFileContent(files, 'dist/node/index.js');
 
   expect(webBundle).toContain('"SSR":false');
   expect(webBundle).toContain("console.log('direct SSR:', false);");
