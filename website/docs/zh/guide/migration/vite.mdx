@@ -238,7 +238,7 @@ import Worker from './worker.ts?worker';
 import InlineWorker from './worker.ts?worker&inline';
 ```
 
-Rsbuild 不支持 Vite 的 `?worker&url`、`?sharedworker`、`?sharedworker&inline` 或 `?sharedworker&url` query 后缀。如果你只是使用这些 query 来创建 worker，可以迁移为更标准的构造器语法：
+Rsbuild 不支持 Vite 的 `?worker&url` query 后缀。如果你使用它来创建 dedicated worker，可以迁移为标准的 `new Worker()` 构造器语法：
 
 ```ts
 const worker = new Worker(new URL('./worker.ts', import.meta.url), {
@@ -246,7 +246,15 @@ const worker = new Worker(new URL('./worker.ts', import.meta.url), {
 });
 ```
 
-构造器语法也允许你传入标准的 `WorkerOptions`，例如 `name`、`type` 和 `credentials`。更多用法请参考 [Web Workers](/guide/basic/web-workers)。
+Rsbuild 也不支持 Vite 的 `?sharedworker`、`?sharedworker&inline` 或 `?sharedworker&url` query 后缀。为了保留 shared worker 的行为，请使用标准的 `new SharedWorker()` 构造器语法：
+
+```ts
+const sharedWorker = new SharedWorker(new URL('./worker.ts', import.meta.url), {
+  type: 'module',
+});
+```
+
+构造器语法也允许你传入标准的 `WorkerOptions` 或 `SharedWorkerOptions`，例如 `name`、`type` 和 `credentials`。更多用法请参考 [Web Workers](/guide/basic/web-workers)。
 
 ## Glob import
 
