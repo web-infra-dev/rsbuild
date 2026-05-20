@@ -179,6 +179,44 @@ export default {
 };
 ```
 
+## 添加更多 manifest 字段
+
+`html.appIcon` 用于配置 Web 应用图标。如果你需要向 Web App Manifest 添加更多字段，请在 [public 目录](/guide/basic/static-assets#public-目录)下创建 `manifest.webmanifest` 文件，而不是使用 `html.appIcon` 来生成 manifest。
+
+```json title="public/manifest.webmanifest"
+{
+  "name": "My Website",
+  "short_name": "Website",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
+```
+
+`icons` 中引用的图标文件也需要放在 `public` 目录下。例如，`/icon-192.png` 对应项目中的 `public/icon-192.png`。
+
+使用 [html.tags](/config/html/tags) 来引用 manifest 文件：
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    tags: [
+      {
+        tag: 'link',
+        attrs: {
+          rel: 'manifest',
+          href: '/manifest.webmanifest',
+        },
+      },
+    ],
+  },
+};
+```
+
 ## 版本历史
 
 | 版本   | 变更内容                    |
