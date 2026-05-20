@@ -1086,8 +1086,8 @@ importers:
         specifier: ^2.0.11
         version: 2.0.11(@rspress/core@2.0.11)
       '@rstack-dev/doc-ui':
-        specifier: 1.13.3
-        version: 1.13.3
+        specifier: 1.14.0
+        version: 1.14.0(@rspress/core@2.0.11)
       '@shikijs/transformers':
         specifier: ^4.0.2
         version: 4.0.2
@@ -2512,8 +2512,13 @@ packages:
   '@rspress/shared@2.0.11':
     resolution: {integrity: sha512-7l5Pso4s597utJyisVEnd7n/40h053nfE8DwGQMeS8RLGtSwVgxFwNHsSrvQEGtFlLrg2aWWSITqnAVO1wfTew==}
 
-  '@rstack-dev/doc-ui@1.13.3':
-    resolution: {integrity: sha512-g9T8mG1I5ch3CHnzktl/PPFwJmxgRBLUi8NC6pGDwp3JQfKzaylDNK2LcPM4kjLP60+9fv2gFDSrLHE6jFu8uQ==}
+  '@rstack-dev/doc-ui@1.14.0':
+    resolution: {integrity: sha512-+hfBBuVkvYw9k/jAyhS8iAAF97gRi9YpMHlMmrwBngmZX/BWALILVW+Ykdf88A8lS702y7vmQCypxc5838hIBg==}
+    peerDependencies:
+      '@rspress/core': '>=2.0.0'
+    peerDependenciesMeta:
+      '@rspress/core':
+        optional: true
 
   '@rstest/adapter-rslib@0.10.0':
     resolution: {integrity: sha512-QNgVrFSP9190+VoZ+2IlzALxGE+Av46c+8qFFUwmCfGA/uxfJMiiyHX28gmdxGXIYcvjZBRij8a4QJq4Wke8jA==}
@@ -7390,7 +7395,9 @@ snapshots:
       - '@module-federation/runtime-tools'
       - core-js
 
-  '@rstack-dev/doc-ui@1.13.3': {}
+  '@rstack-dev/doc-ui@1.14.0(@rspress/core@2.0.11)':
+    optionalDependencies:
+      '@rspress/core': 2.0.11(@module-federation/runtime-tools@2.4.0)(@rspack/core@2.0.3)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2)
 
   '@rstest/adapter-rslib@0.10.0(@rslib/core@0.21.5)(@rstest/core@0.10.0)(typescript@6.0.3)':
     dependencies:
