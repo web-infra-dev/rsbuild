@@ -434,6 +434,22 @@ export default {
 };
 ```
 
+- Rsbuild 现在会对所有代理配置写法应用默认代理选项。在数组写法中，[`changeOrigin`](https://github.com/chimurai/http-proxy-middleware#httpxy-options) 现在默认值为 `true`，与对象写法保持一致。如果你依赖之前的 `false` 默认值，请显式设置：
+
+```diff title="rsbuild.config.ts"
+export default {
+  server: {
+    proxy: [
+      {
+        pathFilter: '/api',
+        target: 'https://example.com',
++       changeOrigin: false,
+      },
+    ],
+  },
+};
+```
+
 - 事件改为使用 `on` 统一配置：
 
 ```diff title="rsbuild.config.ts"

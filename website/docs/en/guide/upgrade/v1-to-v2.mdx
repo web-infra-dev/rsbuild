@@ -434,6 +434,22 @@ export default {
 };
 ```
 
+- Rsbuild now applies default proxy options to all config styles. In array-style proxy config, [`changeOrigin`](https://github.com/chimurai/http-proxy-middleware#httpxy-options) now defaults to `true`, matching the record-style config. If you relied on the previous `false` default, set it explicitly:
+
+```diff title="rsbuild.config.ts"
+export default {
+  server: {
+    proxy: [
+      {
+        pathFilter: '/api',
+        target: 'https://example.com',
++       changeOrigin: false,
+      },
+    ],
+  },
+};
+```
+
 - Proxy events are now configured in a unified way using the `on` option:
 
 ```diff title="rsbuild.config.ts"
