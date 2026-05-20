@@ -27,14 +27,14 @@ Rsbuild 0.7 已与 Rspack 0.7 同步发布！
 
 在 Rsbuild 0.7 中，值得关注的变更有：
 
-- [支持 Storybook](#支持-storybook)
-- [更快的 Sass 编译](#更快的-sass-编译)
-- [更好的 CSS 支持](#更好的-css-支持)
-- [CSS Modules 类型生成](#css-modules-类型生成)
-- [ESM/CJS 导出](#esmcjs-导出)
-- [不兼容更新](#不兼容更新)
+- [支持 Storybook](#support-for-storybook)
+- [更快的 Sass 编译](#faster-sass-compilation)
+- [更好的 CSS 支持](#better-css-supports)
+- [CSS Modules 类型生成](#typed-css-modules)
+- [ESM/CJS 导出](#esmcjs-exports)
+- [不兼容更新](#breaking-changes)
 
-## 支持 Storybook
+## 支持 Storybook \{#support-for-storybook}
 
 Rsbuild 现已支持 Storybook！
 
@@ -61,7 +61,7 @@ export default config;
 
 > 更多用法请参考 [storybook-rsbuild 仓库](https://github.com/rstackjs/storybook-rsbuild)。
 
-## 更快的 Sass 编译
+## 更快的 Sass 编译 \{#faster-sass-compilation}
 
 在 Rsbuild 0.7 中，**Sass 编译速度提高了 3~10 倍**，在大型项目项目中的性能提升尤为显著。
 
@@ -73,7 +73,7 @@ export default config;
 
 此外，Rsbuild 还启用了 `sass-loader` 最新的 [modern-compiler](https://github.com/webpack/sass-loader/releases/tag/v14.2.0) API，这能够开启 Sass 的 shared resources 能力，在编译多个文件时重复利用相同的 compiler 进程，从而提升构建速度。
 
-## 更好的 CSS 支持
+## 更好的 CSS 支持 \{#better-css-supports}
 
 Rsbuild 现在使用 [CssExtractRspackPlugin](https://rspack.rs/zh/plugins/rspack/css-extract-rspack-plugin) 来提取 CSS 到单独的文件中，而不是使用 [experiments.css](https://rspack.rs/zh/config/experiments#experimentscss) 配置来实现。
 
@@ -104,7 +104,7 @@ Rsbuild 现在使用 [CssExtractRspackPlugin](https://rspack.rs/zh/plugins/rspac
 - 支持更多的 CSS Modules 选项，如 [cssModules.exportGlobals](/config/output/css-modules#cssmodulesexportglobals)
 - 现在你可以使用 [tools.cssExtract](/config/tools/css-extract) 来配置 CssExtractRspackPlugin。
 
-## CSS Modules 类型生成
+## CSS Modules 类型生成 \{#typed-css-modules}
 
 Rsbuild 0.7 新增了 [Typed CSS Modules 插件](https://github.com/rstackjs/rsbuild-plugin-typed-css-modules)，用于为项目中的 CSS Modules 文件生成类型声明文件。
 
@@ -146,7 +146,7 @@ export default cssExports;
 
 此时再打开 `src/index.ts` 文件，可以看到 `styles` 对象已经具备了准确的类型。
 
-## ESM/CJS 导出
+## ESM/CJS 导出 \{#esmcjs-exports}
 
 现在，Rsbuild 的所有包均提供了 ES modules 和 CommonJS 两种格式的导出，并在 package.json 中声明了 ["type"="module"`](https://nodejs.org/api/packages.html#type)。
 
@@ -164,7 +164,7 @@ const { createRsbuild } = require('@rsbuild/core');
 
 ESM/CJS 互操作是一个棘手的问题，因此我们计划长期提供这两种格式，以便于更多用户使用。
 
-## 不兼容更新
+## 不兼容更新 \{#breaking-changes}
 
 ### 升级 Rspack 0.7
 

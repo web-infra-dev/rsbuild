@@ -4,7 +4,7 @@ description: 'Rsbuild 默认支持 现代浏览器，同时提供语法降级和
 
 # 浏览器兼容性
 
-Rsbuild 默认支持 [现代浏览器](/guide/advanced/browserslist#默认值)，同时提供语法降级和 API 降级能力，最低可以兼容到支持 ES5 的旧版浏览器（如 IE11）。
+Rsbuild 默认支持 [现代浏览器](/guide/advanced/browserslist#default-values)，同时提供语法降级和 API 降级能力，最低可以兼容到支持 ES5 的旧版浏览器（如 IE11）。
 
 本章节介绍如何使用 Rsbuild 提供的能力来处理浏览器兼容性问题。
 
@@ -170,7 +170,7 @@ export default {
 };
 ```
 
-### usage 方案
+### usage 方案 \{#usage-mode}
 
 当你开启 usage 方案时，Rsbuild 会分析项目中的源代码，并判断需要注入哪些 polyfill。
 
@@ -199,7 +199,7 @@ export default {
 };
 ```
 
-### entry 方案
+### entry 方案 \{#entry-mode}
 
 在使用 entry 方案时，Rsbuild 会根据当前项目设置的浏览器范围来计算需要注入哪些 `core-js` 方法，并在每个页面的入口文件中进行注入。这种方式注入的 polyfill 较为全面，不需要再担心项目源码和第三方依赖的 polyfill 问题，但是因为包含了一些没有用到的 polyfill 代码，所以最终的包大小可能会有所增加。
 

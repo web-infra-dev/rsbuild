@@ -2,7 +2,7 @@
 description: '本章节介绍 Rsbuild 插件可用的 hooks。'
 ---
 
-# 插件 hooks
+# 插件 hooks \{#plugin-hooks}
 
 本章节介绍 Rsbuild 插件可用的 hooks。
 
@@ -153,7 +153,7 @@ description: '本章节介绍 Rsbuild 插件可用的 hooks。'
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 
-## 回调函数顺序
+## 回调函数顺序 \{#callback-order}
 
 ### 默认行为
 
@@ -216,7 +216,7 @@ rsbuild.addPlugins([plugin1, plugin2]);
 修改传递给 Rsbuild 的配置项，你可以直接修改传入的 config 对象，也可以返回一个新的对象来替换传入的对象。
 
 :::warning
-`modifyRsbuildConfig` 为全局 hook。如果你希望你开发的插件支持[仅在特定的 environment 下生效](/guide/advanced/environments#为指定环境添加插件)，应避免使用 `modifyRsbuildConfig`，可使用 [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig) 代替。
+`modifyRsbuildConfig` 为全局 hook。如果你希望你开发的插件支持[仅在特定的 environment 下生效](/guide/advanced/environments#plugins-specified-environment)，应避免使用 `modifyRsbuildConfig`，可使用 [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig) 代替。
 :::
 
 - **类型：**
@@ -273,7 +273,7 @@ const myPlugin = () => ({
 ```
 
 :::tip
-`modifyRsbuildConfig` 不能用于注册额外的 Rsbuild 插件。这是因为在执行 `modifyRsbuildConfig` 时，Rsbuild 已经初始化了所有插件，并开始执行 hooks 的回调函数。详情可参考 [插件注册时机](/config/plugins#插件注册时机)。
+`modifyRsbuildConfig` 不能用于注册额外的 Rsbuild 插件。这是因为在执行 `modifyRsbuildConfig` 时，Rsbuild 已经初始化了所有插件，并开始执行 hooks 的回调函数。详情可参考 [插件注册时机](/config/plugins#plugin-registration-phase)。
 :::
 
 ### modifyEnvironmentConfig
@@ -389,7 +389,7 @@ const myPlugin = () => ({
 });
 ```
 
-回调函数的第二个参数 `utils` 是一个对象，包含了一些工具函数和属性，详见 [tools.rspack - 工具对象](/config/tools/rspack#工具对象)。
+回调函数的第二个参数 `utils` 是一个对象，包含了一些工具函数和属性，详见 [tools.rspack - 工具对象](/config/tools/rspack#utils)。
 
 ### modifyBundlerChain
 
@@ -443,7 +443,7 @@ const myPlugin = () => ({
 });
 ```
 
-回调函数的第二个参数 `utils` 是一个对象，包含了一些工具函数和属性，详见 [tools.bundlerChain - 工具对象](/config/tools/bundler-chain#工具对象)。
+回调函数的第二个参数 `utils` 是一个对象，包含了一些工具函数和属性，详见 [tools.bundlerChain - 工具对象](/config/tools/bundler-chain#utils)。
 
 ### modifyHTML
 

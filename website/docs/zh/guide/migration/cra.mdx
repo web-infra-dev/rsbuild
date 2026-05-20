@@ -177,7 +177,7 @@ export default {
 
 CRA 默认会使用 Babel 编译 node_modules 中的依赖，但 Rsbuild 则不会，这是为了避免二次编译带来的性能损耗和潜在的编译错误。
 
-如果你需要处理 node_modules 中依赖引起的语法兼容性问题，可以使用 [source.include](/config/source/include#编译-node_modules) 配置项来编译 node_modules。
+如果你需要处理 node_modules 中依赖引起的语法兼容性问题，可以使用 [source.include](/config/source/include#compile-node_modules) 配置项来编译 node_modules。
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -190,7 +190,7 @@ export default {
 
 ## 环境变量
 
-CRA 默认会将 `REACT_APP_` 开头的环境变量注入到 client 代码中，而 Rsbuild 默认会注入 `PUBLIC_` 开头的环境变量（参考 [public 变量](/guide/advanced/env-vars#public-变量)）。
+CRA 默认会将 `REACT_APP_` 开头的环境变量注入到 client 代码中，而 Rsbuild 默认会注入 `PUBLIC_` 开头的环境变量（参考 [public 变量](/guide/advanced/env-vars#public-variables)）。
 
 为了兼容 CRA 的行为，你可以手动调用 Rsbuild 提供的 [loadEnv](/api/javascript-api/core#loadenv) 方法来读取 `REACT_APP_` 开头的环境变量，并通过 [source.define](/config/source/define) 配置项注入到 client 代码中。
 

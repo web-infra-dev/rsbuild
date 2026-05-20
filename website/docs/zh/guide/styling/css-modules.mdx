@@ -52,7 +52,7 @@ export default () => {
 ```
 
 :::tip
-参考 [自定义类名](#自定义类名) 来修改生成类名的规则。
+参考 [自定义类名](#custom-class-names) 来修改生成类名的规则。
 :::
 
 ## 具名导入
@@ -106,7 +106,7 @@ import styles1 from './foo.module.css';
 import styles2 from './shared/bar.css';
 ```
 
-## 自定义类名
+## 自定义类名 \{#custom-class-names}
 
 自定义 CSS Modules 生成的类名也是我们比较常用的功能，你可以使用 [output.cssModules.localIdentName](/config/output/css-modules#cssmoduleslocalidentname) 来进行配置。
 
@@ -166,7 +166,7 @@ TS2307: Cannot find module './index.module.css' or its corresponding type declar
 
 此时你需要为 CSS Modules 添加类型声明文件，请在项目中创建 `src/env.d.ts` 文件，并添加相应的类型声明。
 
-- 方法一：如果项目里安装了 `@rsbuild/core` 包，你可以直接引用 `@rsbuild/core` 提供的 [预设类型](/guide/basic/typescript#预设类型)：
+- 方法一：如果项目里安装了 `@rsbuild/core` 包，你可以直接引用 `@rsbuild/core` 提供的 [预设类型](/guide/basic/typescript#preset-types)：
 
 ```ts
 /// <reference types="@rsbuild/core/types" />

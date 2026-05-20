@@ -44,7 +44,7 @@ export default {
 
 值得注意的是，当在 `externals` 中以字符串形式指定模块名时，匹配规则为精确匹配。因此需要显式声明 `react-dom/client` 等子路径导入。
 
-如果你需要匹配一组相似的导入形式，可以改用[正则表达式](#正则表达式)，或者使用函数来实现更灵活的匹配逻辑。
+如果你需要匹配一组相似的导入形式，可以改用[正则表达式](#regular-expressions)，或者使用函数来实现更灵活的匹配逻辑。
 
 ### 数组格式
 
@@ -97,7 +97,7 @@ export default {
 const response = await window.axios.get('/api/users');
 ```
 
-### 正则表达式
+### 正则表达式 \{#regular-expressions}
 
 使用正则表达式来匹配具有特定模式的多个模块：
 

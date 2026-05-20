@@ -24,11 +24,11 @@ const defaultEntry = {
 
 用于设置构建的入口模块。
 
-`source.entry` 的值是一个对象，key 是入口名称，value 是入口模块的路径，或是一个 [描述对象](#描述对象)。
+`source.entry` 的值是一个对象，key 是入口名称，value 是入口模块的路径，或是一个 [描述对象](#description-object)。
 
 当 value 为路径时，它可以为绝对路径或相对路径，相对路径会基于 [root](/config/root) 进行解析。
 
-## HTML 生成
+## HTML 生成 \{#html-generation}
 
 Rsbuild 会为 `source.entry` 中的每一个入口注册 [html-rspack-plugin](https://github.com/rstackjs/html-rspack-plugin)，并生成对应的 HTML 文件。
 
@@ -62,10 +62,10 @@ export default {
 
 如果你不需要生成 HTML 文件：
 
-- 将入口描述对象中的 [html](/config/source/entry#html-属性) 属性设置为 `false` 来禁用单个入口的 HTML 生成。
+- 将入口描述对象中的 [html](/config/source/entry#html-property) 属性设置为 `false` 来禁用单个入口的 HTML 生成。
 - 将 [tools.htmlPlugin](/config/tools/html-plugin) 设置为 `false` 来禁用所有入口的 HTML 生成。
 
-## 描述对象
+## 描述对象 \{#description-object}
 
 `source.entry` 同样支持 Rspack 的 entry 描述对象写法，比如：
 
@@ -86,7 +86,7 @@ export default {
 };
 ```
 
-### `html` 属性
+### `html` 属性 \{#html-property}
 
 Rsbuild 为描述对象添加了 `html` 属性，用于控制是否生成 HTML 文件。
 

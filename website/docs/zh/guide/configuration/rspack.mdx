@@ -100,7 +100,7 @@ export default {
 
 :::
 
-## 使用 Bundler chain
+## 使用 Bundler chain \{#use-bundler-chain}
 
 import RspackChain from '@zh/shared/rspackChain.mdx';
 
@@ -113,7 +113,7 @@ Rsbuild 提供了 [tools.bundlerChain](/config/tools/bundler-chain) 配置项来
 `tools.bundlerChain` 的值是一个函数，接收两个参数：
 
 - 第一个参数为 `rspack-chain` 实例，你可以通过它来修改默认的 Rspack 配置。
-- 第二个参数为一个[工具对象](/config/tools/bundler-chain#工具对象)，包括 `env`、`isProd`、`CHAIN_ID` 等。
+- 第二个参数为一个[工具对象](/config/tools/bundler-chain#utils)，包括 `env`、`isProd`、`CHAIN_ID` 等。
 
 下面是一个基本示例：
 
@@ -177,7 +177,7 @@ export default {
 
 ### 示例
 
-#### 自定义 loader
+#### 自定义 loader \{#custom-loader}
 
 下面是新增、修改和删除 Rspack loader 的示例。
 
@@ -289,7 +289,7 @@ export default {
 };
 ```
 
-#### 自定义 Plugin
+#### 自定义 Plugin \{#custom-plugin}
 
 下面是新增、修改和删除 Rspack 插件的示例。
 

@@ -45,7 +45,7 @@ type CreateRsbuildOptions = {
 ```
 
 - `cwd`：当前执行构建的根路径，默认值为 `process.cwd()`
-- `callerName`：当前调用者的名称，默认值为 `'rsbuild'`，详见 [指定调用者名称](#指定调用者名称)。
+- `callerName`：当前调用者的名称，默认值为 `'rsbuild'`，详见 [指定调用者名称](#specify-caller-name)。
 - `environment`：只构建指定的 [environments](/guide/advanced/environments)，如果未指定或传入空数组，则构建所有环境。
 - `loadEnv`：是否调用 [loadEnv](/api/javascript-api/core#loadenv) 方法来加载环境变量，并通过 [source.define](/config/source/define) 定义为全局变量。
 - `config`：Rsbuild 配置对象。参考 [配置总览](/config/) 查看所有可用的配置项。
@@ -97,7 +97,7 @@ const rsbuild = await createRsbuild({
 });
 ```
 
-### 指定调用者名称
+### 指定调用者名称 \{#specify-caller-name}
 
 你可以通过 `callerName` 选项来指定当前调用 Rsbuild 的框架或工具的名称，该名称可以被 Rsbuild 插件通过 [context.callerName](/api/javascript-api/instance#contextcallername) 访问到，并基于这个标识符来执行不同的逻辑。
 
@@ -223,7 +223,7 @@ export default defineConfig(({ meta }) => {
 
 ## loadEnv
 
-加载 [.env](/guide/advanced/env-vars#env-文件) 文件，并返回所有以 `prefixes` 开头的环境变量。
+加载 [.env](/guide/advanced/env-vars#env-file) 文件，并返回所有以 `prefixes` 开头的环境变量。
 
 - **类型：**
 
@@ -311,7 +311,7 @@ const mergedConfig = mergeRsbuildConfig(
 
 :::tip
 
-- Rsbuild CLI 会自动调用 `loadEnv()` 方法，如果你在使用 Rsbuild CLI，可以通过 [--env-mode](/guide/advanced/env-vars#env-模式) 选项来设置 `mode` 参数。
+- Rsbuild CLI 会自动调用 `loadEnv()` 方法，如果你在使用 Rsbuild CLI，可以通过 [--env-mode](/guide/advanced/env-vars#env-mode) 选项来设置 `mode` 参数。
 - [createRsbuild](#creatersbuild) 的 `loadEnv` 选项会帮助你调用 `loadEnv()` 方法，并处理相关操作。
 
 :::

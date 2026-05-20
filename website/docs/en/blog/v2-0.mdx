@@ -33,7 +33,7 @@ The main improvements in 2.0 include:
 - New features:
   - [Upgrade to Rspack 2.0](#upgrade-to-rspack-20)
   - [React Server Components support](#react-server-components-support)
-  - [Dev server and client communication](#dev-server-and-client-communication)
+  - [Dev server and client communication](#dev-server-client-communication)
   - [Extending the built-in server](#extending-the-built-in-server)
   - [Custom logger support](#custom-logger-support)
   - [Easier chunk splitting configuration](#easier-chunk-splitting-configuration)
@@ -89,7 +89,7 @@ The plugin is still experimental. It can already run the [React Router RSC examp
 
 We're also working with the [TanStack](https://tanstack.com/) team and plan to add support for [TanStack Start](https://tanstack.com/start) and [TanStack's RSC](https://tanstack.com/blog/react-server-components) in future releases. TanStack Start is a full-stack framework built on TanStack Router, and we're excited to explore more possibilities for RSC together.
 
-## Dev server and client communication
+## Dev server and client communication \{#dev-server-client-communication}
 
 While working on React Server Components support, we found that some scenarios require communication between the dev server and the browser. For example, after the server completes some work, it may need to actively notify the client to run related logic.
 

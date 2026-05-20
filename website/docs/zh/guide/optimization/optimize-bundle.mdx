@@ -48,7 +48,7 @@ npx yarn-deduplicate && yarn
 
 如果你需要找出项目中体积较大的三方库，可以使用 Rsdoctor 来分析产物体积，详见 [使用 Rsdoctor](/guide/debug/rsdoctor)。
 
-## 提升 Browserslist 范围
+## 提升 Browserslist 范围 \{#adjust-browserslist}
 
 Rsbuild 会根据项目的 Browserslist 配置范围进行代码编译，并注入相应的 Polyfill。如果项目不需要兼容旧版浏览器，可以根据实际情况来提升 Browserslist 范围，从而减少在语法和 Polyfill 上的编译开销。
 

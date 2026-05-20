@@ -19,7 +19,7 @@ Rsbuild 支持在代码中引用图片、字体、音频、视频等类型的静
 - **音频**：mp3、wav、flac、aac、m4a、opus。
 - **视频**：mp4、webm、ogg、mov。
 
-如果你需要引用其他格式的静态资源，请参考 [扩展静态资源类型](#扩展静态资源类型)。
+如果你需要引用其他格式的静态资源，请参考 [扩展静态资源类型](#extend-asset-types)。
 
 :::tip SVG 图片
 SVG 图片是一种特殊情况，Rsbuild 提供了 SVG 转 React 组件的能力，对 SVG 进行单独处理，详见 [SVGR 插件](/plugins/list/plugin-svgr)。
@@ -220,7 +220,7 @@ import logo from './static/logo.png';
 console.log(logo); // "https://example.com/static/logo.[hash].png"
 ```
 
-## public 目录
+## public 目录 \{#public-folder}
 
 项目根目录下的 public 目录可以用于放置一些静态资源，这些资源不会被 Rsbuild 构建，并且可以直接通过 URL 引用。
 
@@ -233,7 +233,7 @@ console.log(logo); // "https://example.com/static/logo.[hash].png"
 
 你可以通过 URL 来引用 public 目录下的文件。
 
-例如，在 HTML 模板中，`./public/favicon.ico` 文件可以被引用为 `/favicon.ico`，[BASE_URL](/guide/advanced/env-vars#processenvpublic_base_path) 对应服务端的基础路径。
+例如，在 HTML 模板中，`./public/favicon.ico` 文件可以被引用为 `/favicon.ico`，[BASE_URL](/guide/advanced/env-vars#processenvbase_url) 对应服务端的基础路径。
 
 ```html title="index.html"
 <link rel="icon" href="<%= process.env.BASE_URL %>/favicon.ico" />
@@ -287,7 +287,7 @@ TS2307: Cannot find module './logo.png' or its corresponding type declarations.
 
 此时你需要为静态资源添加类型声明文件，请在项目中创建 `src/env.d.ts` 文件，并添加相应的类型声明。
 
-- 方法一：如果项目里安装了 `@rsbuild/core` 包，你可以直接引用 `@rsbuild/core` 提供的 [预设类型](/guide/basic/typescript#预设类型)：
+- 方法一：如果项目里安装了 `@rsbuild/core` 包，你可以直接引用 `@rsbuild/core` 提供的 [预设类型](/guide/basic/typescript#preset-types)：
 
 ```ts
 /// <reference types="@rsbuild/core/types" />
@@ -305,7 +305,7 @@ declare module '*.png' {
 
 添加类型声明后，如果依然存在上述错误提示，请尝试重启当前 IDE，或者调整 `env.d.ts` 所在的目录，使 TypeScript 能够正确识别类型定义。
 
-## 扩展静态资源类型
+## 扩展静态资源类型 \{#extend-asset-types}
 
 如果 Rsbuild 内置的静态资源类型不能满足你的需求，可以通过以下方式扩展额外的静态资源类型。
 
