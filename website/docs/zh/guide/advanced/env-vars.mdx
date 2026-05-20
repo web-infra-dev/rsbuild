@@ -10,7 +10,7 @@ Rsbuild 支持在构建过程中向代码中注入环境变量或表达式，这
 
 ## 默认环境变量
 
-Rsbuild 默认通过 [source.define](#使用-define) 向代码中注入以下环境变量，它们会在构建时被替换为指定的值：
+Rsbuild 默认通过 [source.define](#using-define) 向代码中注入以下环境变量，它们会在构建时被替换为指定的值：
 
 `import.meta.env` 包含以下环境变量：
 
@@ -30,7 +30,7 @@ Rsbuild 默认通过 [source.define](#使用-define) 向代码中注入以下环
 ### import.meta.env.MODE
 
 - **类型：** `'production' | 'development' | 'none'`
-- **使用范围：** 源代码中可用，构建时通过 [define](/guide/advanced/env-vars#使用-define) 替换
+- **使用范围：** 源代码中可用，构建时通过 [define](/guide/advanced/env-vars#using-define) 替换
 
 你可以在 client 代码中使用 `import.meta.env.MODE` 来读取 [mode](/config/mode) 配置项的值。
 
@@ -61,7 +61,7 @@ if (false) {
 ### import.meta.env.DEV
 
 - **类型：** `boolean`
-- **使用范围：** 源代码中可用，构建时通过 [define](/guide/advanced/env-vars#使用-define) 替换
+- **使用范围：** 源代码中可用，构建时通过 [define](/guide/advanced/env-vars#using-define) 替换
 
 当 [mode](/config/mode) 为 `'development'` 时，值为 `true`，否则为 `false`。
 
@@ -74,7 +74,7 @@ if (import.meta.env.DEV) {
 ### import.meta.env.PROD
 
 - **类型：** `boolean`
-- **使用范围：** 源代码中可用，构建时通过 [define](/guide/advanced/env-vars#使用-define) 替换
+- **使用范围：** 源代码中可用，构建时通过 [define](/guide/advanced/env-vars#using-define) 替换
 
 当 [mode](/config/mode) 为 `'production'` 时，值为 `true`，否则为 `false`。
 
@@ -87,7 +87,7 @@ if (import.meta.env.PROD) {
 ### import.meta.env.SSR
 
 - **类型：** `boolean`
-- **使用范围：** 源代码中可用，构建时通过 [define](/guide/advanced/env-vars#使用-define) 替换
+- **使用范围：** 源代码中可用，构建时通过 [define](/guide/advanced/env-vars#using-define) 替换
 
 当 [output.target](/config/output/target) 为 `'node'` 时，值为 `true`，否则为 `false`。
 
@@ -100,9 +100,9 @@ if (import.meta.env.SSR) {
 ### import.meta.env.BASE_URL
 
 - **类型：** `string`
-- **使用范围：** 源代码中可用，构建时通过 [define](/guide/advanced/env-vars#使用-define) 替换
+- **使用范围：** 源代码中可用，构建时通过 [define](/guide/advanced/env-vars#using-define) 替换
 
-你可以在 client 代码中使用 `import.meta.env.BASE_URL` 来访问服务端的[基础路径](/guide/basic/server#服务端基础路径)，它由 [server.base](/config/server/base) 配置项决定，这有助于在代码中引用 [public 目录](/guide/basic/static-assets#public-目录) 下的资源。
+你可以在 client 代码中使用 `import.meta.env.BASE_URL` 来访问服务端的[基础路径](/guide/basic/server#base-path)，它由 [server.base](/config/server/base) 配置项决定，这有助于在代码中引用 [public 目录](/guide/basic/static-assets#public-folder) 下的资源。
 
 比如，我们通过 [server.base](/config/server/base) 配置，将服务端的基础路径设置为 `/foo`：
 
@@ -125,7 +125,7 @@ image.src = `${import.meta.env.BASE_URL}/favicon.ico`;
 ### import.meta.env.ASSET_PREFIX
 
 - **类型：** `string`
-- **使用范围：** 源代码中可用，构建时通过 [define](/guide/advanced/env-vars#使用-define) 替换
+- **使用范围：** 源代码中可用，构建时通过 [define](/guide/advanced/env-vars#using-define) 替换
 
 你可以在 client 代码中使用 `import.meta.env.ASSET_PREFIX` 来访问静态资源的前缀。
 
@@ -168,7 +168,7 @@ const Image = <img src={`https://example.com/static/icon.png`} />;
 ### process.env.BASE_URL
 
 - **类型：** `string`
-- **使用范围：** 源代码中可用，构建时通过 [define](/guide/advanced/env-vars#使用-define) 替换
+- **使用范围：** 源代码中可用，构建时通过 [define](/guide/advanced/env-vars#using-define) 替换
 
 Rsbuild 也允许使用 `process.env.BASE_URL`，它是 [import.meta.env.BASE_URL](#importmetaenvbase_url) 的别名。
 
@@ -182,7 +182,7 @@ Rsbuild 也允许使用 `process.env.BASE_URL`，它是 [import.meta.env.BASE_UR
 ### process.env.ASSET_PREFIX
 
 - **类型：** `string`
-- **使用范围：** 源代码中可用，构建时通过 [define](/guide/advanced/env-vars#使用-define) 替换
+- **使用范围：** 源代码中可用，构建时通过 [define](/guide/advanced/env-vars#using-define) 替换
 
 Rsbuild 也允许使用 `process.env.ASSET_PREFIX`，它是 [import.meta.env.ASSET_PREFIX](#importmetaenvasset_prefix) 的别名。
 
@@ -240,9 +240,9 @@ export default {
 };
 ```
 
-## `.env` 文件
+## `.env` 文件 \{#env-file}
 
-当项目根目录存在 `.env` 文件时，Rsbuild CLI 会自动使用 [dotenv](https://npmjs.com/package/dotenv) 来加载这些环境变量，并添加到当前 Node.js 进程中，其中的 [public 变量](#public-变量) 会被暴露在 `client` 代码中。
+当项目根目录存在 `.env` 文件时，Rsbuild CLI 会自动使用 [dotenv](https://npmjs.com/package/dotenv) 来加载这些环境变量，并添加到当前 Node.js 进程中，其中的 [public 变量](#public-variables) 会被暴露在 `client` 代码中。
 
 你可以通过 `import.meta.env.[name]` 或 `process.env.[name]` 来访问这些环境变量。
 
@@ -261,7 +261,7 @@ Rsbuild 支持读取以下 env 文件：
 
 如果同时存在上述的多个文件，那么多个文件都会被读取，并且表格下方的文件具有更高的优先级。
 
-### Env 模式
+### Env 模式 \{#env-mode}
 
 Rsbuild 也支持读取 `.env.[mode]` 和 `.env.[mode].local` 文件，你可以通过 CLI 的 `--env-mode <mode>` 选项来指定 env 模式。
 
@@ -287,7 +287,7 @@ Rsbuild 会按照以下顺序读取这些文件，并合并它们的内容。如
 
 #### 在 client 代码中访问
 
-Rsbuild 默认不会将 Env 模式注入到 client 代码中，但你可以通过 [source.define](#使用-define) 手动定义一个全局标识符，使其在 client 代码中可用：
+Rsbuild 默认不会将 Env 模式注入到 client 代码中，但你可以通过 [source.define](#using-define) 手动定义一个全局标识符，使其在 client 代码中可用：
 
 ```js title="rsbuild.config.js"
 export default ({ envMode }) => ({
@@ -307,7 +307,7 @@ if (ENV_MODE === 'my-mode') {
 }
 ```
 
-### Env 目录
+### Env 目录 \{#env-directory}
 
 默认情况下，`.env` 文件位于项目的根目录。你可以通过 CLI 的 `--env-dir <dir>` 选项来指定 env 目录。
 
@@ -381,7 +381,7 @@ npx rsbuild --no-env
 
 在使用 `--no-env` 选项时，Rsbuild CLI 不会读取任何 `.env` 文件，你可以自行使用其他工具来管理环境变量，例如 [dotenvx](https://dotenvx.com/)。
 
-## public 变量
+## public 变量 \{#public-variables}
 
 所有以 `PUBLIC_` 开头的环境变量可以在 client 代码中访问，比如定义了以下变量：
 
@@ -403,7 +403,7 @@ console.log(process.env.PASSWORD); // -> undefined
 :::tip
 
 - public 变量的内容会出现在你的 client 代码中，请避免在 public 变量中包含敏感信息。
-- public 变量是通过 [source.define](/config/source/define) 替换的，请阅读[「使用 define」](#使用-define)来了解 define 的原理和注意事项。
+- public 变量是通过 [source.define](/config/source/define) 替换的，请阅读[「使用 define」](#using-define)来了解 define 的原理和注意事项。
 
 :::
 
@@ -440,7 +440,7 @@ export default defineConfig({
 });
 ```
 
-## 使用 define
+## 使用 define \{#using-define}
 
 通过 [source.define](/config/source/define) 选项，你可以在构建时将代码中的全局标识符替换成其它值或者表达式。
 
@@ -538,7 +538,7 @@ declare const PUBLIC_FOO: string;
 
 ### import.meta.env
 
-Rsbuild 通过 [预设类型](/guide/basic/typescript#预设类型) 为 `import.meta.env` 提供了默认的 TypeScript 类型定义。
+Rsbuild 通过 [预设类型](/guide/basic/typescript#preset-types) 为 `import.meta.env` 提供了默认的 TypeScript 类型定义。
 
 ```ts title="src/env.d.ts"
 /// <reference types="@rsbuild/core/types" />

@@ -8,6 +8,8 @@ export default {
   ignoreRegExpList: [
     // ignore markdown anchors such as [modifyRsbuildConfig](#modifyrsbuildconfig)
     '#.*?\\)',
+    // ignore custom anchor declarations such as ## createRsbuild \{#creatersbuild}
+    '\\\\\\{#[^}]+\\}',
   ],
   ignorePaths: [
     'dist',

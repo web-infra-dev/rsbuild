@@ -123,7 +123,7 @@ export default {
 };
 ```
 
-## 构建指定环境
+## 构建指定环境 \{#build-a-specific-environment}
 
 默认情况下，当你执行 `rsbuild dev` 或 `rsbuild build` 时，Rsbuild 会构建所有 Rsbuild 配置中的环境。你可以通过 `--environment <name>` 仅构建指定环境。
 
@@ -141,7 +141,7 @@ rsbuild --environment web --environment node
 rsbuild --environment web,node
 ```
 
-## 为指定环境添加插件
+## 为指定环境添加插件 \{#plugins-specified-environment}
 
 通过 [plugins](/config/plugins) 字段配置的插件支持在所有环境下运行，如果你希望某个插件仅在指定环境下运行时，将该插件配置在特定 `environment` 下即可。
 
@@ -167,7 +167,7 @@ export default {
 };
 ```
 
-如果你是插件开发者，可查看 [开发 Environment 插件](/plugins/dev/index#environment-插件) 了解详情。
+如果你是插件开发者，可查看 [开发 Environment 插件](/plugins/dev/index#environment-plugin) 了解详情。
 
 ## 配置输出目录
 
@@ -247,7 +247,7 @@ const myPlugin = () => ({
 });
 ```
 
-## Environment 上下文
+## Environment 上下文 \{#environment-context}
 
 [Environment context](/api/javascript-api/environment-api#environment-context) 是一个只读对象，提供一些和当前环境有关的上下文信息。Rsbuild 支持在 plugin hook 中获取 environment context 信息。
 

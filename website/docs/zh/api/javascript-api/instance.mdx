@@ -79,7 +79,7 @@ type CachePath = string;
 
 ### context.callerName
 
-当前调用 Rsbuild 的框架或工具的名称，与 [createRsbuild](/api/javascript-api/core#creatersbuild) 方法中的 [callerName](/api/javascript-api/core#指定调用者名称) 选项相同。
+当前调用 Rsbuild 的框架或工具的名称，与 [createRsbuild](/api/javascript-api/core#creatersbuild) 方法中的 [callerName](/api/javascript-api/core#specify-caller-name) 选项相同。
 
 - **类型：** `string`
 - **默认值：** `'rsbuild'`
@@ -249,7 +249,7 @@ await rsbuild.build({
 });
 ```
 
-### 结束构建
+### 结束构建 \{#close-build}
 
 `rsbuild.build()` 返回一个 `close()` 方法，用于结束本次构建。
 
@@ -269,7 +269,7 @@ const buildResult = await rsbuild.build();
 await buildResult.close();
 ```
 
-### Stats 对象
+### Stats 对象 \{#stats-object}
 
 在非 watch 模式下，`rsbuild.build()` 会返回一个 Rspack 的 [stats](https://rspack.rs/zh/api/javascript-api/stats) 对象。
 
@@ -363,7 +363,7 @@ console.log(urls); // ['http://localhost:3000', 'http://192.168.0.1:3000']
 console.log(port); // 3000
 ```
 
-### 关闭 server
+### 关闭 server \{#close-server}
 
 调用 `server.close()` 方法会关闭开发服务器，触发 [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) 钩子，并执行必要的清理操作。
 
