@@ -17,6 +17,7 @@ Rsbuild 默认通过 [source.define](#使用-define) 向代码中注入以下环
 - [import.meta.env.MODE](#importmetaenvmode)
 - [import.meta.env.DEV](#importmetaenvdev)
 - [import.meta.env.PROD](#importmetaenvprod)
+- [import.meta.env.SSR](#importmetaenvssr)
 - [import.meta.env.BASE_URL](#importmetaenvbase_url)
 - [import.meta.env.ASSET_PREFIX](#importmetaenvasset_prefix)
 
@@ -80,6 +81,19 @@ if (import.meta.env.DEV) {
 ```ts
 if (import.meta.env.PROD) {
   console.log('this is production mode');
+}
+```
+
+### import.meta.env.SSR
+
+- **类型：** `boolean`
+- **使用范围：** 源代码中可用，构建时通过 [define](/guide/advanced/env-vars#使用-define) 替换
+
+当 [output.target](/config/output/target) 为 `'node'` 时，值为 `true`，否则为 `false`。
+
+```ts
+if (import.meta.env.SSR) {
+  console.log('this is the SSR build');
 }
 ```
 
