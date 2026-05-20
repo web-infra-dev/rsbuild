@@ -37,7 +37,7 @@ worker.onmessage = (event) => {
 worker.postMessage(10);
 ```
 
-你也可以将标准的 [`WorkerOptions`](https://developer.mozilla.org/zh-CN/docs/Web/API/Worker/Worker#options) 作为第二个参数传入。Rsbuild 会保留 `name`、`credentials` 等运行时选项，并根据 `type` 判断应该将 worker 作为 module worker 还是 classic worker 来处理。
+使用标准构造器语法时，你也可以将 [`WorkerOptions`](https://developer.mozilla.org/zh-CN/docs/Web/API/Worker/Worker#options) 作为第二个参数传入。Rsbuild 会保留 `name`、`credentials` 等运行时选项，并根据 `type` 判断应该将 worker 作为 module worker 还是 classic worker 来处理。
 
 ```js title="index.js"
 const worker = new Worker(new URL('./worker.js', import.meta.url), {
@@ -50,6 +50,10 @@ Rspack 默认支持多种 Worker 语法，查看 [Rspack - Web Workers](https://
 
 ### 使用 query 后缀导入
 
+Rsbuild 支持通过 query 后缀引入 Web Worker，此功能要求 Rsbuild v2.0.7 或更高版本。
+
+#### 基本用法
+
 你也可以通过在导入请求后添加 `?worker` 来导入 Web Worker 脚本。默认导出是一个自定义的 Worker 构造器。
 
 ```js title="index.js"
@@ -59,6 +63,25 @@ const worker = new MyWorker();
 
 worker.postMessage(10);
 ```
+
+#### Worker 选项
+
+`?worker` 生成的构造器只接受 `name` 选项，并将其传递给底层的 Worker，不会透传完整的 `WorkerOptions` 对象。如果你需要 `credentials`、`type` 等选项，请使用标准构造器语法：
+
+```js title="index.js"
+const worker = new Worker(new URL('./worker.js', import.meta.url), {
+  credentials: 'include',
+  type: 'module',
+});
+```
+
+#### Worker 类型
+
+对于 `?worker` 和 `?worker&inline`，Rsbuild 会根据 [output.module](/config/output/module) 判断是否创建 module worker。
+
+当 `output.module` 为 `true` 时，生成的 Worker 构造器会使用 `{ type: 'module' }`；否则会省略 `type`，由浏览器创建 classic worker。
+
+#### 内联 worker
 
 默认情况下，生产环境构建会将 worker 脚本输出成一个独立的 chunk。如果你希望内联 worker 脚本，可以添加 `inline` query：
 
@@ -70,13 +93,27 @@ const worker = new InlineWorker();
 worker.postMessage(10);
 ```
 
-:::tip
-Rsbuild v2.0.7 及以上版本支持。
-:::
+#### 类型声明
+
+当你在 TypeScript 代码中使用 `?worker` 导入 worker 时，TypeScript 可能会提示该模块缺少类型定义：
+
+```
+TS2307: Cannot find module './worker.ts?worker' or its corresponding type declarations.
+```
+
+此时你需要添加类型声明文件，例如创建 `src/env.d.ts`，并引用 `@rsbuild/core` 提供的 [预设类型](/guide/basic/typescript#预设类型)：
+
+```ts
+/// <reference types="@rsbuild/core/types" />
+```
+
+预设类型中已包含 `*?worker`、`*?worker&inline` 和 `*?inline&worker` 的类型声明。
 
 #### 导入 npm 包中的 worker
 
-默认情况下，Rsbuild 的 JavaScript 编译规则不会处理 `node_modules` 中的 JavaScript 文件。由于 `?worker` query 是在这条规则中处理的，因此当请求解析到 `node_modules` 中的 worker 文件时，无论导入语句写在应用代码中还是 npm 包内部，query 都不会生效。要让该 query 生效，可以将包含 worker 文件的包加入 [source.include](/config/source/include)：
+默认情况下，Rsbuild 的 JavaScript 编译规则不会处理 `node_modules` 中的 JavaScript 文件。由于 `?worker` query 是在这条规则中处理的，因此当请求解析到 `node_modules` 中的 worker 文件时，无论导入语句写在应用代码中还是 npm 包内部，query 都不会生效。
+
+要让该 query 生效，可以将包含 worker 文件的包加入 [source.include](/config/source/include)：
 
 ```ts title="rsbuild.config.ts"
 export default {
