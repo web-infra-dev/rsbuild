@@ -191,32 +191,7 @@ Rsbuild injects the following [environment variables](/guide/advanced/env-vars) 
 - `import.meta.env.BASE_URL`
 - `import.meta.env.PROD`
 - `import.meta.env.DEV`
-
-For `import.meta.env.SSR`, you can set it through the [environments](/config/environments) and [source.define](/config/source/define) configuration options:
-
-```ts title="rsbuild.config.ts"
-export default defineConfig({
-  environments: {
-    web: {
-      source: {
-        define: {
-          'import.meta.env.SSR': JSON.stringify(false),
-        },
-      },
-    },
-    node: {
-      source: {
-        define: {
-          'import.meta.env.SSR': JSON.stringify(true),
-        },
-      },
-      output: {
-        target: 'node',
-      },
-    },
-  },
-});
-```
+- `import.meta.env.SSR`
 
 ## Preset types
 

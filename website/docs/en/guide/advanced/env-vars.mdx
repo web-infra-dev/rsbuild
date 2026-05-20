@@ -17,6 +17,7 @@ By default, Rsbuild uses [source.define](#using-define) to inject environment va
 - [import.meta.env.MODE](#importmetaenvmode)
 - [import.meta.env.DEV](#importmetaenvdev)
 - [import.meta.env.PROD](#importmetaenvprod)
+- [import.meta.env.SSR](#importmetaenvssr)
 - [import.meta.env.BASE_URL](#importmetaenvbase_url)
 - [import.meta.env.ASSET_PREFIX](#importmetaenvasset_prefix)
 
@@ -80,6 +81,19 @@ If [mode](/config/mode) is `'production'`, the value is `true`; otherwise, it is
 ```ts
 if (import.meta.env.PROD) {
   console.log('this is production mode');
+}
+```
+
+### import.meta.env.SSR
+
+- **Type:** `boolean`
+- **Scope:** Available in source code, replaced at build time via [define](/guide/advanced/env-vars#using-define)
+
+If [output.target](/config/output/target) is `'node'`, the value is `true`; otherwise, it is `false`.
+
+```ts
+if (import.meta.env.SSR) {
+  console.log('this is the SSR build');
 }
 ```
 
