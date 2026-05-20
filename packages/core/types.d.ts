@@ -46,6 +46,14 @@ interface ImportMetaEnv extends Record<ImportMetaEnvFallbackKey, any> {
    */
   PROD: boolean;
   /**
+   * If `output.target` is `'node'`, the value is `true`; otherwise, it is `false`.
+   * @example
+   * if (import.meta.env.SSR) {
+   *   console.log('SSR build');
+   * }
+   */
+  SSR: boolean;
+  /**
    * The value of the `server.base` configuration.
    * @example
    * const image = new Image();

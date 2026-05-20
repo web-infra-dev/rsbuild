@@ -494,6 +494,7 @@ exports[`default bundler > should use Rspack by default 1`] = `
             "DEV": true,
             "MODE": "\\"development\\"",
             "PROD": false,
+            "SSR": false,
           },
           "process.env.ASSET_PREFIX": "\\"\\"",
           "process.env.BASE_URL": "\\"/\\"",

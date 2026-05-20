@@ -11,6 +11,7 @@ DefinePlugin {
         "DEV": false,
         "MODE": "\\"none\\"",
         "PROD": false,
+        "SSR": false,
       },
       "process.env.ASSET_PREFIX": "\\"\\"",
       "process.env.BASE_URL": "\\"/\\"",
