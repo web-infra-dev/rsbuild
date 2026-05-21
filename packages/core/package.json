@@ -65,6 +65,7 @@
     "cac": "^7.0.0",
     "chokidar": "^5.0.0",
     "connect-next": "4.0.1",
+    "core-js": "^3.49.0",
     "cors": "^2.8.6",
     "css-loader": "7.1.4",
     "deepmerge": "^4.3.1",
