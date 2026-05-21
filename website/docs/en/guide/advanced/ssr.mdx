@@ -70,11 +70,15 @@ export default {
       output: {
         // Use 'node' target for the Node.js outputs
         target: 'node',
+        // Let Node.js load runtime dependencies from node_modules
+        autoExternal: true,
       },
     },
   },
 };
 ```
+
+For SSR server bundles, [output.autoExternal](/config/output/auto-external) is usually a better default than manually listing dependencies in `output.externals`. It externalizes dependencies declared in your root `package.json`, including subpath imports such as `react/jsx-runtime`. If you need a fully standalone server bundle, or some dependencies are not available in the runtime environment, leave it disabled or customize the dependency types.
 
 ## Custom server
 

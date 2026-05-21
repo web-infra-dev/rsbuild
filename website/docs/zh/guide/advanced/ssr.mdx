@@ -70,11 +70,15 @@ export default {
       output: {
         // Node.js 产物的 target 类型为 'node'
         target: 'node',
+        // 由 Node.js 从 node_modules 加载运行时依赖
+        autoExternal: true,
       },
     },
   },
 };
 ```
+
+对于 SSR 服务端产物，通常建议优先使用 [output.autoExternal](/config/output/auto-external)，而不是在 `output.externals` 中手动列出依赖。它会自动 external 根目录 `package.json` 中声明的依赖，包括 `react/jsx-runtime` 这类子路径导入。如果你需要完全独立的服务端 bundle，或者某些依赖在运行时环境中不可用，可以不开启该选项，或按需配置依赖类型。
 
 ## 自定义 Server
 
