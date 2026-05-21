@@ -11,7 +11,14 @@ enum TracePreset {
 
 type TraceLayer = 'perfetto' | 'logger';
 
-function resolveLayer(value: TracePreset): string {
+const DEFAULT_RUST_TRACE_LOGGER_OUTPUT = 'rspack.log';
+const DEFAULT_RUST_TRACE_PERFETTO_OUTPUT = 'rspack.pftrace';
+
+function isTerminalTraceOutput(output: string) {
+  return output === 'stdout' || output === 'stderr';
+}
+
+function resolveLayer(value: string): string {
   const overviewTraceFilter = 'info';
   const allTraceFilter = 'trace';
 
@@ -38,7 +45,7 @@ async function ensureFileDir(outputFilePath: string) {
  */
 async function applyProfile(
   root: string,
-  filterValue: TracePreset,
+  filterValue: string,
   traceLayer: TraceLayer,
   traceOutput?: string,
 ) {
@@ -46,29 +53,36 @@ async function applyProfile(
     throw new Error(`unsupported trace layer: ${traceLayer}`);
   }
 
+  if (
+    traceOutput &&
+    traceLayer === 'perfetto' &&
+    isTerminalTraceOutput(traceOutput)
+  ) {
+    throw new Error(
+      'RSPACK_TRACE_OUTPUT=stdout|stderr is only supported for the logger trace layer. The perfetto trace layer requires a file path.',
+    );
+  }
+
+  const timestamp = Date.now();
+  const defaultOutputDir = path.join(
+    root,
+    `.rspack-profile-${timestamp}-${process.pid}`,
+  );
+
   if (!traceOutput) {
-    const timestamp = Date.now();
-    const defaultOutputDir = path.join(
-      root,
-      `.rspack-profile-${timestamp}-${process.pid}`,
-    );
-    const defaultRustTracePerfettoOutput = path.join(
-      defaultOutputDir,
-      'rspack.pftrace',
-    );
-    const defaultRustTraceLoggerOutput = 'stdout';
-
-    const defaultTraceOutput =
+    const defaultRustTraceOutput =
       traceLayer === 'perfetto'
-        ? defaultRustTracePerfettoOutput
-        : defaultRustTraceLoggerOutput;
+        ? DEFAULT_RUST_TRACE_PERFETTO_OUTPUT
+        : DEFAULT_RUST_TRACE_LOGGER_OUTPUT;
 
-    traceOutput = defaultTraceOutput;
+    traceOutput = path.resolve(defaultOutputDir, defaultRustTraceOutput);
+  } else if (!isTerminalTraceOutput(traceOutput)) {
+    traceOutput = path.resolve(root, traceOutput);
   }
 
   const filter = resolveLayer(filterValue);
 
-  if (traceLayer === 'perfetto') {
+  if (!isTerminalTraceOutput(traceOutput)) {
     await ensureFileDir(traceOutput);
   }
 
@@ -82,7 +96,7 @@ async function applyProfile(
 }
 
 // Referenced from Rspack CLI
-// https://github.com/web-infra-dev/rspack/blob/v1.3.9/packages/rspack-cli/src/utils/profile.ts
+// https://github.com/web-infra-dev/rspack/blob/main/packages/rspack-cli/src/utils/profile.ts
 export const pluginRspackProfile = (): RsbuildPlugin => ({
   name: 'rsbuild:rspack-profile',
 
@@ -97,7 +111,7 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
     const onStart = async () => {
       traceOutput = await applyProfile(
         api.context.rootPath,
-        RSPACK_PROFILE as TracePreset,
+        RSPACK_PROFILE,
         RSPACK_TRACE_LAYER as TraceLayer,
         process.env.RSPACK_TRACE_OUTPUT,
       );
@@ -117,7 +131,7 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
 
       rspack.experiments.globalTrace.cleanup();
 
-      if (RSPACK_TRACE_LAYER === 'perfetto') {
+      if (!isTerminalTraceOutput(traceOutput)) {
         const profileMessage = 'profile file saved to';
         api.logger.info(`${profileMessage} ${color.cyan(traceOutput)}`);
       }
