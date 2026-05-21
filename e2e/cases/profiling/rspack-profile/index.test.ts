@@ -84,6 +84,8 @@ test('should respect custom rspack profile output path', async ({
 
   await expectLog(PROFILE_LOG);
   const profileFile = getProfilePath(logs);
-  expect(profileFile?.replaceAll('\\', '/')).toContain(CUSTOM_PROFILE_LOG);
+  const normalizedProfileFile = profileFile?.replaceAll('\\', '/');
+  expect(normalizedProfileFile).toContain('/.rspack-profile-');
+  expect(normalizedProfileFile).toContain(CUSTOM_PROFILE_LOG);
   expect(fs.existsSync(profileFile!)).toBeTruthy();
 });
