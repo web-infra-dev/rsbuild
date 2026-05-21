@@ -20,8 +20,13 @@ const getProfilePath = (logs: string[]) =>
     ?.split(PROFILE_LOG)[1]
     ?.trim();
 
-// TODO: write logger trace info to file
-test.skip('should generate rspack profile as expected in dev', async ({
+const expectRspackProfileFile = (logs: string[]) => {
+  const profileFile = getProfilePath(logs);
+  expect(profileFile).toContain('rspack.log');
+  expect(fs.existsSync(profileFile!)).toBeTruthy();
+};
+
+test('should generate rspack profile as expected in dev', async ({
   exec,
   logHelper,
 }) => {
@@ -33,11 +38,10 @@ test.skip('should generate rspack profile as expected in dev', async ({
   const { logs, expectLog } = logHelper;
 
   await expectLog(PROFILE_LOG);
-  const profileFile = getProfilePath(logs);
-  expect(fs.existsSync(profileFile!)).toBeTruthy();
+  expectRspackProfileFile(logs);
 });
 
-test.skip('should generate rspack profile as expected in build', async ({
+test('should generate rspack profile as expected in build', async ({
   execCli,
   logHelper,
 }) => {
@@ -49,6 +53,17 @@ test.skip('should generate rspack profile as expected in build', async ({
   const { logs, expectLog } = logHelper;
 
   await expectLog(PROFILE_LOG);
-  const profileFile = getProfilePath(logs);
-  expect(fs.existsSync(profileFile!)).toBeTruthy();
+  expectRspackProfileFile(logs);
+});
+
+test('should write rspack profile to stdout', ({ execCliSync }) => {
+  const logs = execCliSync('build', {
+    env: {
+      RSPACK_PROFILE: 'rspack_binding_api=info',
+      RSPACK_TRACE_OUTPUT: 'stdout',
+    },
+  });
+
+  expect(logs).toContain('"target":"rspack_binding_api"');
+  expect(logs).not.toContain(PROFILE_LOG);
 });

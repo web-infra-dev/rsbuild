@@ -69,7 +69,7 @@ Because Windows does not support this syntax, you can use [cross-env](https://np
 }
 ```
 
-By default, Rspack writes the profile output to stdout through the `logger` trace layer.
+By default, Rspack uses the `logger` trace layer and writes the profile output to `.rspack-profile-${timestamp}-${pid}/rspack.log` under the project root. Set `RSPACK_TRACE_OUTPUT=stdout` or `RSPACK_TRACE_OUTPUT=stderr` explicitly if you need terminal output.
 
 :::tip
 
