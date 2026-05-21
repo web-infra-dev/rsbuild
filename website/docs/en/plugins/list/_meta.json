@@ -8,6 +8,5 @@
   "plugin-solid",
   "plugin-babel",
   "plugin-sass",
-  "plugin-less",
-  "plugin-stylus"
+  "plugin-less"
 ]

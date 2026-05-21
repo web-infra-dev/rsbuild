@@ -6,7 +6,6 @@ import { pluginLess } from '@rsbuild/plugin-less';
 import { pluginPreact } from '@rsbuild/plugin-preact';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSolid } from '@rsbuild/plugin-solid';
-import { pluginStylus } from '@rsbuild/plugin-stylus';
 
 const plugins = [
   pluginBabel(),
@@ -14,7 +13,6 @@ const plugins = [
   pluginPreact(),
   pluginReact(),
   pluginSolid(),
-  pluginStylus(),
 ];
 
 createRsbuild({
