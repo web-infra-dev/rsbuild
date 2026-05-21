@@ -55,14 +55,10 @@ describe('plugin-externals', () => {
     });
 
     expect(result).toEqual([
-      /^foo($|\/|\\)/,
-      /^foo\.bar($|\/|\\)/,
-      /^baz($|\/|\\)/,
-      /^@scope\/pkg($|\/|\\)/,
-      'foo',
-      'foo.bar',
-      'baz',
-      '@scope/pkg',
+      /^foo(?:$|[/\\])/,
+      /^foo\.bar(?:$|[/\\])/,
+      /^baz(?:$|[/\\])/,
+      /^@scope\/pkg(?:$|[/\\])/,
     ]);
   });
 
@@ -85,7 +81,7 @@ describe('plugin-externals', () => {
       },
     });
 
-    expect(result).toEqual([/^baz($|\/|\\)/, /^bar($|\/|\\)/, 'baz', 'bar']);
+    expect(result).toEqual([/^baz(?:$|[/\\])/, /^bar(?:$|[/\\])/]);
   });
 
   it('should not compose rules when autoExternal is disabled', () => {
@@ -115,7 +111,7 @@ describe('plugin-externals', () => {
       },
     });
 
-    expect(result).toEqual([/^bar($|\/|\\)/, 'bar']);
+    expect(result).toEqual([/^bar(?:$|[/\\])/]);
   });
 
   it('should apply autoExternal to Rspack externals', async () => {
@@ -146,12 +142,7 @@ describe('plugin-externals', () => {
 
     const [config] = await rsbuild.initConfigs();
 
-    expect(config.externals).toEqual([
-      /^foo($|\/|\\)/,
-      /^bar($|\/|\\)/,
-      'foo',
-      'bar',
-    ]);
+    expect(config.externals).toEqual([/^foo(?:$|[/\\])/, /^bar(?:$|[/\\])/]);
   });
 
   it('should keep user externals before autoExternal rules', async () => {
@@ -181,7 +172,7 @@ describe('plugin-externals', () => {
 
     const [config] = await rsbuild.initConfigs();
 
-    expect(config.externals).toEqual([userExternals, /^bar($|\/|\\)/, 'bar']);
+    expect(config.externals).toEqual([userExternals, /^bar(?:$|[/\\])/]);
   });
 
   it('should apply autoExternal before creating compiler for web worker target', async () => {
@@ -209,6 +200,6 @@ describe('plugin-externals', () => {
 
     // The final web worker externals are removed in the onBeforeCreateCompiler hook.
     // initConfigs only verifies the generated Rspack config before that hook runs.
-    expect(config.externals).toEqual([/^foo($|\/|\\)/, 'foo']);
+    expect(config.externals).toEqual([/^foo(?:$|[/\\])/]);
   });
 });

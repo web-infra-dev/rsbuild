@@ -3,13 +3,13 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "auto-external-pkg": "link:./fixtures/auto-external-pkg"
+    "@e2e/auto-external-pkg": "link:./fixtures/auto-external-pkg"
   },
   "peerDependencies": {
-    "auto-external-peer-pkg": "1.0.0"
+    "@e2e/auto-external-peer-pkg": "1.0.0"
   },
   "devDependencies": {
-    "auto-external-dev-pkg": "link:./fixtures/auto-external-dev-pkg",
-    "auto-external-peer-pkg": "link:./fixtures/auto-external-peer-pkg"
+    "@e2e/auto-external-dev-pkg": "link:./fixtures/auto-external-dev-pkg",
+    "@e2e/auto-external-peer-pkg": "link:./fixtures/auto-external-peer-pkg"
   }
 }

@@ -47,7 +47,7 @@ export const composeAutoExternalRules = (options: {
   autoExternal?: AutoExternal;
   pkgJson?: PackageJson;
   userExternals?: Externals;
-}): (string | RegExp)[] | undefined => {
+}): RegExp[] | undefined => {
   const { autoExternal, pkgJson, userExternals } = options;
   const externalOptions = resolveAutoExternalOptions(autoExternal);
 
@@ -73,20 +73,17 @@ export const composeAutoExternalRules = (options: {
 
   const uniqueExternals = Array.from(new Set(externals));
 
+  // Exclude dependencies and subpath imports, e.g. `react`, `react/jsx-runtime`.
   return uniqueExternals.length
-    ? [
-        // Exclude dependencies and subpath imports, e.g. `react`, `react/jsx-runtime`.
-        ...uniqueExternals.map(
-          (dep) => new RegExp(`^${escapeRegExp(dep)}($|\/|\\\\)`),
-        ),
-        ...uniqueExternals,
-      ]
+    ? uniqueExternals.map(
+        (dep) => new RegExp(`^${escapeRegExp(dep)}(?:$|[/\\\\])`),
+      )
     : undefined;
 };
 
 const mergeExternals = (
   userExternals: Externals | undefined,
-  autoExternalRules: (string | RegExp)[] | undefined,
+  autoExternalRules: RegExp[] | undefined,
 ): Externals | undefined => {
   if (!autoExternalRules?.length) {
     return userExternals;

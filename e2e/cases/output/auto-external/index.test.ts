@@ -22,9 +22,9 @@ test('should not auto externalize package.json dependencies by default', async (
   expect(content).toContain('subpath');
   expect(content).toContain('dev');
   expect(content).toContain('peer');
-  expect(content).not.toContain('external "auto-external-pkg"');
-  expect(content).not.toContain('external "auto-external-pkg/subpath"');
-  expect(content).not.toContain('external "auto-external-peer-pkg"');
+  expect(content).not.toContain('external "@e2e/auto-external-pkg"');
+  expect(content).not.toContain('external "@e2e/auto-external-pkg/subpath"');
+  expect(content).not.toContain('external "@e2e/auto-external-peer-pkg"');
 });
 
 test('should auto externalize dependencies and subpath imports', async ({
@@ -46,10 +46,10 @@ test('should auto externalize dependencies and subpath imports', async ({
   const files = rsbuild.getDistFiles();
   const content = getFileContent(files, '.js');
 
-  expect(content).toContain('external "auto-external-pkg"');
-  expect(content).toContain('external "auto-external-pkg/subpath"');
-  expect(content).toContain('external "auto-external-peer-pkg"');
-  expect(content).not.toContain('external "auto-external-dev-pkg"');
+  expect(content).toContain('external "@e2e/auto-external-pkg"');
+  expect(content).toContain('external "@e2e/auto-external-pkg/subpath"');
+  expect(content).toContain('external "@e2e/auto-external-peer-pkg"');
+  expect(content).not.toContain('external "@e2e/auto-external-dev-pkg"');
   expect(content).toContain('dev');
 });
 
@@ -74,5 +74,5 @@ test('should auto externalize devDependencies when enabled', async ({
   const files = rsbuild.getDistFiles();
   const content = getFileContent(files, '.js');
 
-  expect(content).toContain('external "auto-external-dev-pkg"');
+  expect(content).toContain('external "@e2e/auto-external-dev-pkg"');
 });

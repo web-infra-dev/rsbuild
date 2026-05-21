@@ -217,14 +217,14 @@ importers:
 
   e2e/cases/output/auto-external:
     dependencies:
-      auto-external-pkg:
+      '@e2e/auto-external-pkg':
         specifier: link:./fixtures/auto-external-pkg
         version: link:fixtures/auto-external-pkg
     devDependencies:
-      auto-external-dev-pkg:
+      '@e2e/auto-external-dev-pkg':
         specifier: link:./fixtures/auto-external-dev-pkg
         version: link:fixtures/auto-external-dev-pkg
-      auto-external-peer-pkg:
+      '@e2e/auto-external-peer-pkg':
         specifier: link:./fixtures/auto-external-peer-pkg
         version: link:fixtures/auto-external-peer-pkg
 
