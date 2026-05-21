@@ -65,6 +65,7 @@
     "cac": "^7.0.0",
     "chokidar": "^5.0.0",
     "connect-next": "4.0.1",
+    "core-js": "^3.49.0",
     "cors": "^2.8.6",
     "css-loader": "7.1.4",
     "deepmerge": "^4.3.1",
@@ -90,7 +91,6 @@
     "sirv": "^3.0.2",
     "stacktrace-parser": "^0.1.11",
     "style-loader": "^4.0.0",
-    "supports-color": "^10.2.2",
     "tinyglobby": "^0.2.16",
     "typescript": "^6.0.3",
     "ws": "^8.20.1"

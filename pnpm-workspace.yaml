@@ -19,6 +19,15 @@ allowBuilds:
 
 dedupePeers: true
 
+autoInstallPeers: false
+
+peerDependencyRules:
+  ignoreMissing:
+    - webpack
+    - '@algolia/client-search'
+    - algoliasearch
+    - search-insights
+
 engineStrict: true
 
 hoistPattern: []
