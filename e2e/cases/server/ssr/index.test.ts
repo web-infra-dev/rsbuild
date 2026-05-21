@@ -43,7 +43,7 @@ test('support SSR with autoExternal', async ({ page, devOnly }) => {
 });
 
 test('support SSR with esm target', async ({ page, devOnly }) => {
-  process.env.TEST_ESM_LIBRARY = '1';
+  process.env.TEST_ESM_LIBRARY = 'true';
 
   const rsbuild = await devOnly();
 
@@ -59,7 +59,7 @@ test('support SSR with esm target and autoExternal', async ({
   page,
   devOnly,
 }) => {
-  process.env.TEST_ESM_LIBRARY = '1';
+  process.env.TEST_ESM_LIBRARY = 'true';
 
   const rsbuild = await devOnly({
     config: {
@@ -79,8 +79,8 @@ test('support SSR with esm target and autoExternal', async ({
   await expect(page.locator('body')).toContainText('Rsbuild with React');
 
   const distContent = Object.values(rsbuild.getDistFiles()).join('\n');
-  expect(distContent).toContain('module.exports = require("react")');
-  expect(distContent).toContain('module.exports = require("react-dom/server")');
+  expect(distContent).toContain('import * as __rspack_external_react');
+  expect(distContent).toContain('from "react-dom/server"');
 
   delete process.env.TEST_ESM_LIBRARY;
 });
