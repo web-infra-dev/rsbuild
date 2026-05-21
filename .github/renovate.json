@@ -6,6 +6,7 @@
     "helpers:pinGitHubActionDigests",
     "github>rstackjs/renovate:security"
   ],
+  "ignorePaths": ["**/node_modules/**"],
   "rangeStrategy": "bump",
   "packageRules": [
     {
