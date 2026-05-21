@@ -16,7 +16,7 @@ export default defineConfig({
     solid: {
       plugins: [
         pluginBabel({
-          include: /\.(?:jsx|tsx)$/,
+          include: /\.(?:js|jsx|ts|tsx)$/,
         }),
         pluginSolid(),
       ],
