@@ -94,6 +94,14 @@ export default defineConfig({
           to: 'https://github.com/rstackjs/rsbuild-plugin-assets-retry',
         },
         {
+          from: '/plugins/list/plugin-stylus',
+          to: 'https://github.com/rstackjs/rsbuild-plugin-stylus',
+        },
+        {
+          from: '/zh/plugins/list/plugin-stylus',
+          to: 'https://github.com/rstackjs/rsbuild-plugin-stylus',
+        },
+        {
           from: '/guide/basic/css-usage',
           to: '/guide/styling/css-usage',
         },
