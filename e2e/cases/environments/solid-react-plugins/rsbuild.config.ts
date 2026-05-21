@@ -1,8 +1,7 @@
 import { defineConfig } from '@rsbuild/core';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginReact } from '@rsbuild/plugin-react';
-import { pluginVue } from '@rsbuild/plugin-vue';
-import { pluginVueJsx } from '@rsbuild/plugin-vue-jsx';
+import { pluginSolid } from '@rsbuild/plugin-solid';
 
 export default defineConfig({
   environments: {
@@ -14,17 +13,16 @@ export default defineConfig({
         },
       },
     },
-    vue: {
+    solid: {
       plugins: [
-        pluginVue(),
-        pluginVueJsx(),
         pluginBabel({
           include: /\.(?:jsx|tsx)$/,
         }),
+        pluginSolid(),
       ],
       source: {
         entry: {
-          vue: './src/vue/index.js',
+          solid: './src/solid/index.js',
         },
       },
     },
