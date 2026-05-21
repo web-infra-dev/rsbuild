@@ -134,3 +134,9 @@ export default {
 当 [output.target](/config/output/target) 为 `web-worker` 时，Rsbuild 会移除 `externals` 配置，因此 `output.autoExternal` 不会生效。这是因为 Web Worker 运行在独立的全局作用域中，无法访问主页面通过 CDN 脚本或宿主环境注入到 `window` 上的全局变量。
 
 :::
+
+## 版本历史
+
+| 版本   | 变更内容   |
+| ------ | ---------- |
+| v2.0.7 | 新增该选项 |
