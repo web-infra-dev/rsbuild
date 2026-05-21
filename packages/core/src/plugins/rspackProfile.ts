@@ -77,7 +77,7 @@ async function applyProfile(
 
     traceOutput = path.resolve(defaultOutputDir, defaultRustTraceOutput);
   } else if (!isTerminalTraceOutput(traceOutput)) {
-    traceOutput = path.resolve(defaultOutputDir, traceOutput);
+    traceOutput = path.resolve(root, traceOutput);
   }
 
   const filter = resolveLayer(filterValue);

@@ -10,9 +10,11 @@ test.afterAll(() => {
       fse.removeSync(join(import.meta.dirname, file));
     }
   }
+  fse.removeSync(join(import.meta.dirname, 'custom-profile'));
 });
 
 const PROFILE_LOG = 'profile file saved to';
+const CUSTOM_PROFILE_LOG = 'custom-profile/rspack.log';
 
 const getProfilePath = (logs: string[]) =>
   logs
@@ -66,4 +68,22 @@ test('should write rspack profile to stdout', ({ execCliSync }) => {
 
   expect(logs).toContain('"target":"rspack_binding_api"');
   expect(logs).not.toContain(PROFILE_LOG);
+});
+
+test('should respect custom rspack profile output path', async ({
+  execCli,
+  logHelper,
+}) => {
+  execCli('build', {
+    env: {
+      RSPACK_PROFILE: 'OVERVIEW',
+      RSPACK_TRACE_OUTPUT: CUSTOM_PROFILE_LOG,
+    },
+  });
+  const { logs, expectLog } = logHelper;
+
+  await expectLog(PROFILE_LOG);
+  const profileFile = getProfilePath(logs);
+  expect(profileFile).toContain(CUSTOM_PROFILE_LOG);
+  expect(fs.existsSync(profileFile!)).toBeTruthy();
 });
