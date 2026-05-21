@@ -56,6 +56,9 @@ importers:
       simple-git-hooks:
         specifier: ^2.13.1
         version: 2.13.1
+      skills-package-manager:
+        specifier: 0.10.0
+        version: 0.10.0
       typescript:
         specifier: ^6.0.3
         version: 6.0.3
@@ -5039,6 +5042,10 @@ packages:
     resolution: {integrity: sha512-2wcC/oGxHis/BoHkkPwldgiPSYcpZK3JU28WoMVv55yHJgcZ8rlXvuG9iZggz+sU1d4bRgIGASwyWqjxu3FM0g==}
     engines: {node: '>=18'}
 
+  skills-package-manager@0.10.0:
+    resolution: {integrity: sha512-6hhfRicZzUY45HQxBjXFT2CxFPy0SrWpTCLb44Wu7FvTn6YCiIZK2P+/+7TYIprEP48pSgX8kVMFB1G+6lJ+Hw==}
+    hasBin: true
+
   snake-case@3.0.4:
     resolution: {integrity: sha512-LAOh4z89bGQvl9pFfNF8V146i7o7/CqFPbqzYgP+yYzDIDeS9HaNFtXABamRW+AQzEVODcvE79ljJ+8a9YSdMg==}
 
@@ -9855,6 +9862,8 @@ snapshots:
       '@polka/url': 1.0.0-next.29
       mrmime: 2.0.1
       totalist: 3.0.1
+
+  skills-package-manager@0.10.0: {}
 
   snake-case@3.0.4:
     dependencies:

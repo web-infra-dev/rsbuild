@@ -33,3 +33,20 @@ test-temp-*
 
 # ignore directory for artifacts produced by tests
 test-results/
+
+# skills-package-manager
+.agents/skills/*
+
+# Keep local skills tracked
+!.agents/
+!.agents/skills/
+!.agents/skills/docs-en-improvement/
+!.agents/skills/docs-en-improvement/**
+!.agents/skills/release-core/
+!.agents/skills/release-core/**
+!.agents/skills/sync-zh-en-docs/
+!.agents/skills/sync-zh-en-docs/**
+!.agents/skills/upgrade-rspack/
+!.agents/skills/upgrade-rspack/**
+!.agents/skills/write-e2e-cases/
+!.agents/skills/write-e2e-cases/**

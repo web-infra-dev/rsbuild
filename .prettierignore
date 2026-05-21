@@ -3,6 +3,7 @@ dist
 compiled
 doc_build
 pnpm-lock.yaml
+skills-lock.yaml
 
 # Avoid syntax error
 e2e/cases/plugin-less/inline-js/src/*.less

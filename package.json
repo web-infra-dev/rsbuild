@@ -14,7 +14,7 @@
     "format": "prettier --experimental-cli --write . && heading-case --write",
     "lint": "rslint --type-check",
     "prebundle": "pnpm --parallel --filter \"./packages/*\" run prebundle",
-    "prepare": "simple-git-hooks && node --run prebundle && node --run build",
+    "prepare": "skills-package-manager install && simple-git-hooks && node --run prebundle && node --run build",
     "sort-package-json": "pnpx sort-package-json \"./package.json\" \"packages/*/package.json\"",
     "test": "rstest",
     "test:watch": "rstest watch"
@@ -43,6 +43,7 @@
     "nano-staged": "^1.0.2",
     "prettier": "^3.8.3",
     "simple-git-hooks": "^2.13.1",
+    "skills-package-manager": "0.10.0",
     "typescript": "^6.0.3"
   },
   "packageManager": "pnpm@10.33.4",

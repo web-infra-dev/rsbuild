@@ -17,6 +17,7 @@ export default {
     'compiled',
     'coverage',
     'doc_build',
+    '.agents',
     'node_modules',
     'pnpm-lock.yaml',
     'README.pt-BR.md',

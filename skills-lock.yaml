@@ -1,0 +1,58 @@
+lockfileVersion: "0.1"
+installDir: .agents/skills
+linkTargets: []
+skills:
+  pr-creator:
+    specifier: https://github.com/rstackjs/agent-skills.git#61c948b&path:/skills/pr-creator
+    resolution:
+      type: git
+      url: https://github.com/rstackjs/agent-skills.git
+      commit: 61c948b42512e223bad44b83af4080eba48b2677
+      path: /skills/pr-creator
+    digest: sha256-29163681948f6df290d06829b0af0067a78d51779069f521abd93252890123e8
+  rspress-description-generator:
+    specifier: https://github.com/rstackjs/agent-skills.git#61c948b&path:/skills/rspress-description-generator
+    resolution:
+      type: git
+      url: https://github.com/rstackjs/agent-skills.git
+      commit: 61c948b42512e223bad44b83af4080eba48b2677
+      path: /skills/rspress-description-generator
+    digest: sha256-cf14e250fe3ac06a2c02086abdd077673ede4fd0e7d463f22af3761614c38e65
+  create-draft-release-notes:
+    specifier: https://github.com/rstackjs/agent-skills.git#61c948b&path:/skills/create-draft-release-notes
+    resolution:
+      type: git
+      url: https://github.com/rstackjs/agent-skills.git
+      commit: 61c948b42512e223bad44b83af4080eba48b2677
+      path: /skills/create-draft-release-notes
+    digest: sha256-9f3e04c71241db089eb29df5766daf01d15a9735c393836c39ff38235e8df941
+  docs-en-improvement:
+    specifier: local:./.agents/skills/docs-en-improvement
+    resolution:
+      type: local
+      path: .agents/skills/docs-en-improvement
+    digest: ""
+  release-core:
+    specifier: local:./.agents/skills/release-core
+    resolution:
+      type: local
+      path: .agents/skills/release-core
+    digest: ""
+  sync-zh-en-docs:
+    specifier: local:./.agents/skills/sync-zh-en-docs
+    resolution:
+      type: local
+      path: .agents/skills/sync-zh-en-docs
+    digest: ""
+  upgrade-rspack:
+    specifier: local:./.agents/skills/upgrade-rspack
+    resolution:
+      type: local
+      path: .agents/skills/upgrade-rspack
+    digest: ""
+  write-e2e-cases:
+    specifier: local:./.agents/skills/write-e2e-cases
+    resolution:
+      type: local
+      path: .agents/skills/write-e2e-cases
+    digest: ""
