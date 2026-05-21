@@ -91,7 +91,6 @@
     "sirv": "^3.0.2",
     "stacktrace-parser": "^0.1.11",
     "style-loader": "^4.0.0",
-    "supports-color": "^10.2.2",
     "tinyglobby": "^0.2.16",
     "typescript": "^6.0.3",
     "ws": "^8.20.1"

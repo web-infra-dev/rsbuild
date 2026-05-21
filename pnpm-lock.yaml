@@ -572,7 +572,7 @@ importers:
         version: 6.1.8(@rspack/core@2.0.4)
       http-proxy-middleware:
         specifier: 4.0.0
-        version: 4.0.0(supports-color@10.2.2)
+        version: 4.0.0
       jiti:
         specifier: ^2.7.0
         version: 2.7.0
@@ -630,9 +630,6 @@ importers:
       style-loader:
         specifier: ^4.0.0
         version: 4.0.0
-      supports-color:
-        specifier: ^10.2.2
-        version: 10.2.2
       tinyglobby:
         specifier: ^0.2.16
         version: 0.2.16
@@ -5141,10 +5138,6 @@ packages:
     engines: {node: '>=16'}
     hasBin: true
 
-  supports-color@10.2.2:
-    resolution: {integrity: sha512-SS+jx45GF1QjgEXQx4NJZV9ImqmO2NPz5FNsIHrsDjh2YsHnawpan7SNQ1o8NuhrbHZy9AZhIoCUiCeaW/C80g==}
-    engines: {node: '>=18'}
-
   supports-color@7.2.0:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
     engines: {node: '>=8'}
@@ -5560,7 +5553,7 @@ snapshots:
       '@babel/types': 7.29.0
       '@jridgewell/remapping': 2.3.5
       convert-source-map: 2.0.0
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -5742,7 +5735,7 @@ snapshots:
       '@babel/parser': 7.29.3
       '@babel/template': 7.28.6
       '@babel/types': 7.29.0
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
 
@@ -7929,11 +7922,9 @@ snapshots:
     dependencies:
       ms: 2.1.3
 
-  debug@4.4.3(supports-color@10.2.2):
+  debug@4.4.3:
     dependencies:
       ms: 2.1.3
-    optionalDependencies:
-      supports-color: 10.2.2
 
   decode-named-character-reference@1.3.0:
     dependencies:
@@ -8020,7 +8011,7 @@ snapshots:
       base64id: 2.0.0
       cookie: 0.7.2
       cors: 2.8.6
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3
       engine.io-parser: 5.2.3
       ws: 8.18.3
     transitivePeerDependencies:
@@ -8390,9 +8381,9 @@ snapshots:
       domutils: 3.2.2
       entities: 6.0.1
 
-  http-proxy-middleware@4.0.0(supports-color@10.2.2):
+  http-proxy-middleware@4.0.0:
     dependencies:
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3
       httpxy: 0.5.1
       is-glob: 4.0.3
       is-plain-obj: 4.1.0
@@ -9127,7 +9118,7 @@ snapshots:
   micromark@4.0.2:
     dependencies:
       '@types/debug': 4.1.13
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3
       decode-named-character-reference: 1.3.0
       devlop: 1.1.0
       micromark-core-commonmark: 2.0.3
@@ -9872,7 +9863,7 @@ snapshots:
 
   socket.io-adapter@2.5.6:
     dependencies:
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3
       ws: 8.18.3
     transitivePeerDependencies:
       - bufferutil
@@ -9882,7 +9873,7 @@ snapshots:
   socket.io-parser@4.2.6:
     dependencies:
       '@socket.io/component-emitter': 3.1.2
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
 
@@ -9983,14 +9974,12 @@ snapshots:
   stylus@0.64.0:
     dependencies:
       '@adobe/css-tools': 4.3.3
-      debug: 4.4.3(supports-color@10.2.2)
+      debug: 4.4.3
       glob: 10.5.0
       sax: 1.4.4
       source-map: 0.7.6
     transitivePeerDependencies:
       - supports-color
-
-  supports-color@10.2.2: {}
 
   supports-color@7.2.0:
     dependencies:
