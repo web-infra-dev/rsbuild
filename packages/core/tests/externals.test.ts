@@ -88,12 +88,14 @@ describe('plugin-externals', () => {
     const result = composeAutoExternalRules({
       autoExternal: {
         devDependencies: true,
-        exclude: ['foo', /^@scope\//],
+        exclude: ['foo', /^@scope\//g],
       },
       pkgJson: {
         dependencies: {
           foo: '1.0.0',
           baz: '1.0.0',
+          '@scope/one': '1.0.0',
+          '@scope/two': '1.0.0',
         },
         devDependencies: {
           bar: '1.0.0',
