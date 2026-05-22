@@ -1317,6 +1317,8 @@ export type CleanDistPathObject = {
 
 export type CleanDistPath = boolean | 'auto' | CleanDistPathObject;
 
+export type AutoExternalExclude = OneOrMany<string | RegExp>;
+
 export type AutoExternal =
   | boolean
   | {
@@ -1340,6 +1342,12 @@ export type AutoExternal =
        * @default false
        */
       devDependencies?: boolean;
+      /**
+       * Prevent matched packages from being automatically externalized.
+       * Strings match package names exactly, and regular expressions test package names.
+       * @default undefined
+       */
+      exclude?: AutoExternalExclude;
     };
 
 export interface OutputConfig {

@@ -47,6 +47,7 @@ export type {
   AppIcon,
   AppIconItem,
   AutoExternal,
+  AutoExternalExclude,
   Build,
   BuildOptions,
   BuildResult,

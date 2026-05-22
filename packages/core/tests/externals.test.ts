@@ -84,6 +84,29 @@ describe('plugin-externals', () => {
     expect(result).toEqual([/^baz(?:$|[/\\])/, /^bar(?:$|[/\\])/]);
   });
 
+  it('should support exclude in autoExternal config', () => {
+    const result = composeAutoExternalRules({
+      autoExternal: {
+        devDependencies: true,
+        exclude: ['foo', /^@scope\//],
+      },
+      pkgJson: {
+        dependencies: {
+          foo: '1.0.0',
+          baz: '1.0.0',
+        },
+        devDependencies: {
+          bar: '1.0.0',
+        },
+        optionalDependencies: {
+          '@scope/pkg': '1.0.0',
+        },
+      },
+    });
+
+    expect(result).toEqual([/^baz(?:$|[/\\])/, /^bar(?:$|[/\\])/]);
+  });
+
   it('should not compose rules when autoExternal is disabled', () => {
     expect(
       composeAutoExternalRules({

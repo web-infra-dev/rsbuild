@@ -1,5 +1,16 @@
 import { expect, getFileContent, test } from '@e2e/helper';
 
+const expectBundledExport = (
+  content: string,
+  exportName: 'dep' | 'dev' | 'peer',
+) => {
+  expect(content).toContain(JSON.stringify(exportName));
+};
+
+const expectBundledSubpath = (content: string) => {
+  expect(content).toContain("const subpath = 'subpath';");
+};
+
 test('should not auto externalize package.json dependencies by default', async ({
   build,
 }) => {
@@ -18,10 +29,10 @@ test('should not auto externalize package.json dependencies by default', async (
   const files = rsbuild.getDistFiles();
   const content = getFileContent(files, '.js');
 
-  expect(content).toContain('dep');
-  expect(content).toContain('subpath');
-  expect(content).toContain('dev');
-  expect(content).toContain('peer');
+  expectBundledExport(content, 'dep');
+  expectBundledSubpath(content);
+  expectBundledExport(content, 'dev');
+  expectBundledExport(content, 'peer');
   expect(content).not.toContain('external "@e2e/auto-external-pkg"');
   expect(content).not.toContain('external "@e2e/auto-external-pkg/subpath"');
   expect(content).not.toContain('external "@e2e/auto-external-peer-pkg"');
@@ -50,7 +61,7 @@ test('should auto externalize dependencies and subpath imports', async ({
   expect(content).toContain('external "@e2e/auto-external-pkg/subpath"');
   expect(content).toContain('external "@e2e/auto-external-peer-pkg"');
   expect(content).not.toContain('external "@e2e/auto-external-dev-pkg"');
-  expect(content).toContain('dev');
+  expectBundledExport(content, 'dev');
 });
 
 test('should auto externalize devDependencies when enabled', async ({
@@ -75,4 +86,88 @@ test('should auto externalize devDependencies when enabled', async ({
   const content = getFileContent(files, '.js');
 
   expect(content).toContain('external "@e2e/auto-external-dev-pkg"');
+});
+
+test('should not auto externalize packages matched by string exclude', async ({
+  build,
+}) => {
+  const rsbuild = await build({
+    config: {
+      source: {
+        entry: {
+          index: './src/index.js',
+        },
+      },
+      output: {
+        target: 'node',
+        autoExternal: {
+          exclude: '@e2e/auto-external-pkg',
+        },
+      },
+    },
+  });
+  const files = rsbuild.getDistFiles();
+  const content = getFileContent(files, '.js');
+
+  expectBundledExport(content, 'dep');
+  expectBundledSubpath(content);
+  expect(content).not.toContain('external "@e2e/auto-external-pkg"');
+  expect(content).not.toContain('external "@e2e/auto-external-pkg/subpath"');
+  expect(content).toContain('external "@e2e/auto-external-peer-pkg"');
+});
+
+test('should not auto externalize packages matched by regexp exclude', async ({
+  build,
+}) => {
+  const rsbuild = await build({
+    config: {
+      source: {
+        entry: {
+          index: './src/index.js',
+        },
+      },
+      output: {
+        target: 'node',
+        autoExternal: {
+          exclude: /^@e2e\/auto-external-peer-pkg$/,
+        },
+      },
+    },
+  });
+  const files = rsbuild.getDistFiles();
+  const content = getFileContent(files, '.js');
+
+  expect(content).toContain('external "@e2e/auto-external-pkg"');
+  expect(content).toContain('external "@e2e/auto-external-pkg/subpath"');
+  expect(content).not.toContain('external "@e2e/auto-external-peer-pkg"');
+  expectBundledExport(content, 'peer');
+});
+
+test('should not auto externalize packages matched by mixed exclude', async ({
+  build,
+}) => {
+  const rsbuild = await build({
+    config: {
+      source: {
+        entry: {
+          index: './src/index.js',
+        },
+      },
+      output: {
+        target: 'node',
+        autoExternal: {
+          exclude: ['@e2e/auto-external-pkg', /^@e2e\/auto-external-peer-pkg$/],
+        },
+      },
+    },
+  });
+  const files = rsbuild.getDistFiles();
+  const content = getFileContent(files, '.js');
+
+  expect(content).not.toContain('external "@e2e/auto-external-pkg"');
+  expect(content).not.toContain('external "@e2e/auto-external-pkg/subpath"');
+  expect(content).not.toContain('external "@e2e/auto-external-peer-pkg"');
+  expectBundledExport(content, 'dep');
+  expectBundledSubpath(content);
+  expectBundledExport(content, 'peer');
 });
