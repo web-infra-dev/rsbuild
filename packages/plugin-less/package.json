@@ -28,19 +28,19 @@
     "prebundle": "prebundle"
   },
   "dependencies": {
-    "deepmerge": "^4.3.1",
-    "less": "^4.6.4",
-    "less-loader": "^12.3.2",
-    "reduce-configs": "^1.1.2"
+    "deepmerge": "catalog:",
+    "less": "catalog:",
+    "less-loader": "catalog:",
+    "reduce-configs": "catalog:"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/core-v1": "npm:@rsbuild/core@^1.7.5",
-    "@rslib/core": "0.21.5",
+    "@rsbuild/core-v1": "catalog:",
+    "@rslib/core": "catalog:",
     "@scripts/test-helper": "workspace:*",
-    "@types/less": "^3.0.8",
-    "prebundle": "1.6.4",
-    "typescript": "^6.0.3"
+    "@types/less": "catalog:",
+    "prebundle": "catalog:",
+    "typescript": "catalog:"
   },
   "peerDependencies": {
     "@rsbuild/core": "^1.3.0 || ^2.0.0-0"

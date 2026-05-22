@@ -4,6 +4,6 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "html-loader": "^5.1.0"
+    "html-loader": "catalog:"
   }
 }

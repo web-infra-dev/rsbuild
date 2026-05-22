@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "lit": "^3.3.2",
-    "typescript": "^6.0.3"
+    "lit": "catalog:",
+    "typescript": "catalog:"
   }
 }

@@ -16,9 +16,9 @@
   },
   "dependencies": {
     "@rsbuild/core": "workspace:*",
-    "@types/node": "^24.12.4",
-    "path-serializer": "0.6.0",
-    "typescript": "^6.0.3"
+    "@types/node": "catalog:",
+    "path-serializer": "catalog:",
+    "typescript": "catalog:"
   },
   "publishConfig": {
     "access": "public",
