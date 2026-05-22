@@ -78,3 +78,9 @@ Rsbuild provides Module Federation example projects you can explore:
 
 - [Module Federation v2.0 Example](https://github.com/rstackjs/rstack-examples/tree/main/rsbuild/module-federation-enhanced)
 - [Module Federation v1.5 Example](https://github.com/rstackjs/rstack-examples/tree/main/rsbuild/module-federation)
+
+## Limitations
+
+Module Federation is currently incompatible with [output.module](/config/output/module).
+
+The Module Federation runtime does not yet support ESM output. Avoid setting `output.module: true` in a Module Federation application; otherwise, loading may fail at runtime.
