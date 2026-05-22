@@ -1,4 +1,4 @@
-import { expect, test } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 
 test('support SSR', async ({ page, devOnly }) => {
   const rsbuild = await devOnly();
@@ -14,13 +14,14 @@ test('support SSR', async ({ page, devOnly }) => {
   expect(rsbuild.logs.filter((log) => log.includes('load SSR')).length).toBe(1);
 });
 
-test('support SSR with external', async ({ page, devOnly }) => {
+test('support SSR with autoExternal', async ({ page, devOnly }) => {
   const rsbuild = await devOnly({
     config: {
-      output: {
-        externals: {
-          react: 'react',
-          'react-dom': 'react-dom',
+      environments: {
+        node: {
+          output: {
+            autoExternal: true,
+          },
         },
       },
     },
@@ -31,6 +32,11 @@ test('support SSR with external', async ({ page, devOnly }) => {
   await page.goto(url.href);
   await expect(page.locator('body')).toContainText('Rsbuild with React');
 
+  const files = rsbuild.getDistFiles();
+  const content = getFileContent(files, 'dist/index.js');
+  expect(content).toContain('module.exports = require("react")');
+  expect(content).toContain('module.exports = require("react-dom/server")');
+
   await page.goto(url.href);
 
   // bundle result should cacheable and only load once.
@@ -38,7 +44,7 @@ test('support SSR with external', async ({ page, devOnly }) => {
 });
 
 test('support SSR with esm target', async ({ page, devOnly }) => {
-  process.env.TEST_ESM_LIBRARY = '1';
+  process.env.TEST_ESM_LIBRARY = 'true';
 
   const rsbuild = await devOnly();
 
@@ -50,15 +56,19 @@ test('support SSR with esm target', async ({ page, devOnly }) => {
   delete process.env.TEST_ESM_LIBRARY;
 });
 
-test('support SSR with esm target & external', async ({ page, devOnly }) => {
-  process.env.TEST_ESM_LIBRARY = '1';
+test('support SSR with esm target and autoExternal', async ({
+  page,
+  devOnly,
+}) => {
+  process.env.TEST_ESM_LIBRARY = 'true';
 
   const rsbuild = await devOnly({
     config: {
-      output: {
-        externals: {
-          react: 'react',
-          'react-dom': 'react-dom',
+      environments: {
+        node: {
+          output: {
+            autoExternal: true,
+          },
         },
       },
     },
@@ -68,6 +78,11 @@ test('support SSR with esm target & external', async ({ page, devOnly }) => {
 
   await page.goto(url1.href);
   await expect(page.locator('body')).toContainText('Rsbuild with React');
+
+  const files = rsbuild.getDistFiles();
+  const content = getFileContent(files, 'dist/index.mjs');
+  expect(content).toContain('import * as __rspack_external_react');
+  expect(content).toContain('from "react-dom/server"');
 
   delete process.env.TEST_ESM_LIBRARY;
 });
