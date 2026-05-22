@@ -1,5 +1,5 @@
 import type { Externals } from '@rspack/core';
-import { isPlainObject } from '../helpers';
+import { castArray, isPlainObject } from '../helpers';
 import { readPackageJson, type PackageJson } from '../helpers/packageJson';
 import type { AutoExternal, RsbuildPlugin } from '../types';
 
@@ -43,6 +43,28 @@ const resolveAutoExternalOptions = (autoExternal?: AutoExternal) => {
 const escapeRegExp = (str: string): string =>
   str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
 
+const matchAutoExternalExclude = (
+  packageName: string,
+  conditions: unknown[],
+): boolean => {
+  return conditions.some((condition) => {
+    if (typeof condition === 'string') {
+      return condition === packageName;
+    }
+
+    if (condition instanceof RegExp) {
+      // Clone stateful regexps to avoid mutating user config via `lastIndex`.
+      const regexp =
+        condition.global || condition.sticky
+          ? new RegExp(condition)
+          : condition;
+      return regexp.test(packageName);
+    }
+
+    return false;
+  });
+};
+
 export const composeAutoExternalRules = (options: {
   autoExternal?: AutoExternal;
   pkgJson?: PackageJson;
@@ -60,6 +82,9 @@ export const composeAutoExternalRules = (options: {
   const userExternalKeys = isPlainObject(userExternals)
     ? Object.keys(userExternals)
     : [];
+  const excludeConditions = externalOptions.exclude
+    ? castArray(externalOptions.exclude)
+    : undefined;
 
   const externals = dependencyTypes
     .reduce<string[]>((prev, type) => {
@@ -69,7 +94,12 @@ export const composeAutoExternalRules = (options: {
       }
       return prev;
     }, [])
-    .filter((name) => !userExternalKeys.includes(name));
+    .filter(
+      (name) =>
+        !userExternalKeys.includes(name) &&
+        (!excludeConditions ||
+          !matchAutoExternalExclude(name, excludeConditions)),
+    );
 
   const uniqueExternals = Array.from(new Set(externals));
 

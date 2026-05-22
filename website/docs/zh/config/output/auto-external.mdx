@@ -14,6 +14,7 @@ type AutoExternal =
       optionalDependencies?: boolean;
       devDependencies?: boolean;
       peerDependencies?: boolean;
+      exclude?: string | RegExp | (string | RegExp)[];
     };
 ```
 
@@ -107,6 +108,33 @@ export default {
 };
 ```
 
+## 选项
+
+### exclude
+
+- **类型：**
+
+```ts
+type Exclude = string | RegExp | (string | RegExp)[];
+```
+
+- **默认值：** `undefined`
+
+使用 `exclude` 可以从 `output.autoExternal` 自动生成的 external 规则中排除指定包。它支持包名、正则表达式或由两者组成的数组。字符串会精确匹配包名；如果某个包被排除，它的子路径导入也不会被 external。
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'node',
+    autoExternal: {
+      exclude: ['react', /^@scope\//],
+    },
+  },
+};
+```
+
+> `autoExternal.exclude` 只会过滤 `output.autoExternal` 自动生成的规则，不会覆盖 `output.externals`；被 `output.externals` 匹配的包仍然会被 external。
+
 ## 与 output.externals 的关系
 
 `output.externals` 的优先级高于 `output.autoExternal`。你可以通过 `output.externals` 手动定制特定包的 external 格式，再通过 `output.autoExternal` 自动处理 `package.json` 中剩余的依赖。
@@ -137,6 +165,7 @@ export default {
 
 ## 版本历史
 
-| 版本   | 变更内容   |
-| ------ | ---------- |
-| v2.0.7 | 新增该选项 |
+| 版本   | 变更内容                        |
+| ------ | ------------------------------- |
+| v2.0.7 | 新增 `output.autoExternal` 选项 |
+| v2.0.8 | 新增 `exclude`                  |
