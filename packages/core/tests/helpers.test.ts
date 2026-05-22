@@ -3,16 +3,17 @@ import { tmpdir } from 'node:os';
 import { join, sep } from 'node:path';
 import { isPlainObject, isWebTarget, pick, prettyTime } from '../src/helpers';
 import { dedupeNestedPaths, getCommonParentPath } from '../src/helpers/path';
-import { readPackageJson } from '../src/helpers/packageJson';
+import { readPackageJsonByPath } from '../src/helpers/packageJson';
 import { ensureAssetPrefix } from '../src/helpers/url';
 import { getRoutes, normalizeUrl } from '../src/server/helper';
 import type { InternalContext, RsbuildTarget } from '../src/types';
 
-describe('readPackageJson', () => {
-  it('should read package.json from root path', async () => {
+describe('readPackageJsonByPath', () => {
+  it('should read package.json from specified path', async () => {
     const root = mkdtempSync(join(tmpdir(), 'rsbuild-package-json-'));
+    const packageJsonPath = join(root, 'package.json');
     writeFileSync(
-      join(root, 'package.json'),
+      packageJsonPath,
       JSON.stringify({
         name: 'test-package',
         dependencies: {
@@ -21,7 +22,7 @@ describe('readPackageJson', () => {
       }),
     );
 
-    await expect(readPackageJson(root)).resolves.toEqual({
+    await expect(readPackageJsonByPath(packageJsonPath)).resolves.toEqual({
       name: 'test-package',
       dependencies: {
         foo: '1.0.0',
@@ -30,12 +31,16 @@ describe('readPackageJson', () => {
   });
 
   it('should return undefined when package.json does not exist or is invalid', async () => {
-    const missingRoot = mkdtempSync(join(tmpdir(), 'rsbuild-package-json-'));
-    await expect(readPackageJson(missingRoot)).resolves.toBeUndefined();
+    const missingPath = join(
+      mkdtempSync(join(tmpdir(), 'rsbuild-package-json-')),
+      'package.json',
+    );
+    await expect(readPackageJsonByPath(missingPath)).resolves.toBeUndefined();
 
     const invalidRoot = mkdtempSync(join(tmpdir(), 'rsbuild-package-json-'));
-    writeFileSync(join(invalidRoot, 'package.json'), '{ invalid json');
-    await expect(readPackageJson(invalidRoot)).resolves.toBeUndefined();
+    const invalidPath = join(invalidRoot, 'package.json');
+    writeFileSync(invalidPath, '{ invalid json');
+    await expect(readPackageJsonByPath(invalidPath)).resolves.toBeUndefined();
   });
 });
 

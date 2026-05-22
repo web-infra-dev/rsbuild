@@ -14,13 +14,14 @@ type AutoExternal =
       optionalDependencies?: boolean;
       devDependencies?: boolean;
       peerDependencies?: boolean;
+      packageJson?: string | string[];
       exclude?: string | RegExp | (string | RegExp)[];
     };
 ```
 
 - **Default:** `false`
 
-Automatically externalize dependencies declared in the root `package.json`. When enabled, Rsbuild reads the dependency fields from `<root>/package.json` and converts the matched package names into [output.externals](/config/output/externals) rules.
+Automatically externalize dependencies declared in `package.json`. When enabled, Rsbuild reads the dependency fields from `<root>/package.json` by default and converts the matched package names into [output.externals](/config/output/externals) rules.
 
 This is useful for Node.js or SSR bundles where some dependencies should be loaded by the runtime instead of being bundled, such as observability SDKs, native addons, or dependencies that rely on runtime instrumentation.
 
@@ -123,7 +124,7 @@ When `output.autoExternal` is configured as an object, omitted options use the s
 - **Type:** `boolean`
 - **Default:** `true`
 
-Whether to automatically externalize packages declared in the `dependencies` field of the root `package.json`.
+Whether to automatically externalize packages declared in the `dependencies` field of the configured `package.json` file(s).
 
 When this option is `true`, Rsbuild converts each package name in `dependencies` into an externalization rule. Subpath imports of these packages are also externalized.
 
@@ -132,7 +133,7 @@ When this option is `true`, Rsbuild converts each package name in `dependencies`
 - **Type:** `boolean`
 - **Default:** `true`
 
-Whether to automatically externalize packages declared in the `optionalDependencies` field of the root `package.json`.
+Whether to automatically externalize packages declared in the `optionalDependencies` field of the configured `package.json` file(s).
 
 This is useful when optional dependencies are installed and loaded by the runtime environment instead of being bundled into the output.
 
@@ -141,7 +142,7 @@ This is useful when optional dependencies are installed and loaded by the runtim
 - **Type:** `boolean`
 - **Default:** `false`
 
-Whether to automatically externalize packages declared in the `devDependencies` field of the root `package.json`.
+Whether to automatically externalize packages declared in the `devDependencies` field of the configured `package.json` file(s).
 
 `devDependencies` are not externalized by default because they are usually only needed during local development, testing, or build-time tooling. Enable this option only when the build output needs to load packages from `devDependencies` at runtime.
 
@@ -150,9 +151,34 @@ Whether to automatically externalize packages declared in the `devDependencies` 
 - **Type:** `boolean`
 - **Default:** `true`
 
-Whether to automatically externalize packages declared in the `peerDependencies` field of the root `package.json`.
+Whether to automatically externalize packages declared in the `peerDependencies` field of the configured `package.json` file(s).
 
 This is useful for library-like or framework-integrated bundles where peer dependencies are expected to be provided by the host application or runtime.
+
+### packageJson
+
+- **Type:**
+
+```ts
+type PackageJson = string | string[];
+```
+
+- **Default:** `'<root>/package.json'`
+
+Specify the `package.json` file path(s) used to collect dependencies. Relative paths are resolved from the Rsbuild root directory.
+
+When multiple files are specified, Rsbuild merges their dependency fields and de-duplicates package names.
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'node',
+    autoExternal: {
+      packageJson: ['./package.json', './apps/server/package.json'],
+    },
+  },
+};
+```
 
 ### exclude
 
@@ -209,7 +235,7 @@ If [output.target](/config/output/target) is `web-worker`, Rsbuild removes the `
 
 ## Version history
 
-| Version | Changes                            |
-| ------- | ---------------------------------- |
-| v2.0.7  | Added `output.autoExternal` option |
-| v2.0.8  | Added `exclude` option             |
+| Version | Changes                                   |
+| ------- | ----------------------------------------- |
+| v2.0.7  | Added `output.autoExternal` option        |
+| v2.0.8  | Added `exclude` and `packageJson` options |

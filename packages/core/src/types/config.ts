@@ -1343,6 +1343,12 @@ export type AutoExternal =
        */
       devDependencies?: boolean;
       /**
+       * Specify the package.json file path(s) used to collect dependencies.
+       * Relative paths are resolved from the Rsbuild root directory.
+       * @default '<root>/package.json'
+       */
+      packageJson?: string | string[];
+      /**
        * Prevent matched packages from being automatically externalized.
        * Strings match package names exactly, and regular expressions test package names.
        * @default undefined
