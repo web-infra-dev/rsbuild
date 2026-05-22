@@ -154,7 +154,7 @@ Rsbuild 会在构建时自动注入 `<script>` 标签到生成的 HTML 文件中
 | build.assetsInlineLimit               | [output.dataUriLimit](/config/output/data-uri-limit)                                              |
 | build.cssMinify                       | [output.minify](/config/output/minify)                                                            |
 | build.sourcemap                       | [output.sourceMap](/config/output/source-map)                                                     |
-| build.lib                             | 使用 [Rslib](https://github.com/web-infra-dev/rslib)                                               |
+| build.lib                             | 使用 [Rslib](https://github.com/web-infra-dev/rslib)                                              |
 | build.manifest                        | [output.manifest](/config/output/manifest)                                                        |
 | build.ssrEmitAssets                   | [output.emitAssets](/config/output/emit-assets)                                                   |
 | build.minify, build.terserOptions     | [output.minify](/config/output/minify)                                                            |
@@ -162,6 +162,7 @@ Rsbuild 会在构建时自动注入 `<script>` 标签到生成的 HTML 文件中
 | build.copyPublicDir                   | [server.publicDir](/config/server/public-dir)                                                     |
 | build.reportCompressedSize            | [performance.printFileSize](/config/performance/print-file-size)                                  |
 | ssr.external                          | [output.autoExternal](/config/output/auto-external), [output.externals](/config/output/externals) |
+| ssr.noExternal                        | [output.autoExternal.exclude](/config/output/auto-external#exclude)                               |
 | ssr, worker                           | [environments](/config/environments)                                                              |
 
 说明：
