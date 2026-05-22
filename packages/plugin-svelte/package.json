@@ -25,17 +25,17 @@
     "dev": "rslib -w"
   },
   "dependencies": {
-    "svelte-loader": "3.2.4",
-    "svelte-preprocess": "^6.0.3"
+    "svelte-loader": "catalog:",
+    "svelte-preprocess": "catalog:"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/core-v1": "npm:@rsbuild/core@^1.7.5",
-    "@rslib/core": "0.21.5",
+    "@rsbuild/core-v1": "catalog:",
+    "@rslib/core": "catalog:",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^24.12.4",
-    "svelte": "^5.55.7",
-    "typescript": "^6.0.3"
+    "@types/node": "catalog:",
+    "svelte": "catalog:",
+    "typescript": "catalog:"
   },
   "peerDependencies": {
     "@rsbuild/core": "^1.4.0 || ^2.0.0-0"

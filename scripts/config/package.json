@@ -4,9 +4,9 @@
   "version": "1.0.0",
   "private": true,
   "devDependencies": {
-    "@rslib/core": "0.21.5",
-    "@types/node": "^24.12.4",
-    "rsbuild-plugin-arethetypeswrong": "0.3.1",
-    "typescript": "^6.0.3"
+    "@rslib/core": "catalog:",
+    "@types/node": "catalog:",
+    "rsbuild-plugin-arethetypeswrong": "catalog:",
+    "typescript": "catalog:"
   }
 }

@@ -25,20 +25,20 @@
   },
   "dependencies": {
     "@rsbuild/plugin-react": "workspace:^2.0.0",
-    "@svgr/core": "8.1.0",
-    "@svgr/plugin-jsx": "8.1.0",
-    "@svgr/plugin-svgo": "8.1.0",
-    "deepmerge": "^4.3.1",
-    "loader-utils": "^3.3.1"
+    "@svgr/core": "catalog:",
+    "@svgr/plugin-jsx": "catalog:",
+    "@svgr/plugin-svgo": "catalog:",
+    "deepmerge": "catalog:",
+    "loader-utils": "catalog:"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/core-v1": "npm:@rsbuild/core@^1.7.5",
-    "@rslib/core": "0.21.5",
+    "@rsbuild/core-v1": "catalog:",
+    "@rslib/core": "catalog:",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^24.12.4",
-    "svgo": "^3.3.3",
-    "typescript": "^6.0.3"
+    "@types/node": "catalog:",
+    "svgo": "catalog:",
+    "typescript": "catalog:"
   },
   "peerDependencies": {
     "@rsbuild/core": "^2.0.0-0"

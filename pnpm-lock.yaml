@@ -5,6 +5,391 @@ settings:
   dedupePeers: true
   excludeLinksFromLockfile: false
 
+catalogs:
+  default:
+    '@babel/core':
+      specifier: ^7.29.0
+      version: 7.29.0
+    '@babel/plugin-proposal-decorators':
+      specifier: ^7.29.0
+      version: 7.29.0
+    '@babel/plugin-transform-class-properties':
+      specifier: ^7.28.6
+      version: 7.28.6
+    '@babel/preset-typescript':
+      specifier: ^7.28.5
+      version: 7.28.5
+    '@hono/node-server':
+      specifier: ^2.0.2
+      version: 2.0.2
+    '@jridgewell/remapping':
+      specifier: ^2.3.5
+      version: 2.3.5
+    '@jridgewell/trace-mapping':
+      specifier: ^0.3.31
+      version: 0.3.31
+    '@module-federation/enhanced':
+      specifier: 2.4.0
+      version: 2.4.0
+    '@module-federation/rsbuild-plugin':
+      specifier: 2.4.0
+      version: 2.4.0
+    '@module-federation/runtime-tools':
+      specifier: 2.4.0
+      version: 2.4.0
+    '@playwright/test':
+      specifier: 1.60.0
+      version: 1.60.0
+    '@prefresh/core':
+      specifier: ^1.5.10
+      version: 1.5.10
+    '@prefresh/utils':
+      specifier: ^1.2.1
+      version: 1.2.1
+    '@rsbuild/core-v1':
+      specifier: npm:@rsbuild/core@^1.7.5
+      version: 1.7.5
+    '@rsbuild/plugin-check-syntax':
+      specifier: ^1.6.1
+      version: 1.6.1
+    '@rsbuild/plugin-rem':
+      specifier: ^1.0.5
+      version: 1.0.5
+    '@rsbuild/plugin-type-check':
+      specifier: ^1.3.4
+      version: 1.3.4
+    '@rsdoctor/rspack-plugin':
+      specifier: 1.5.11
+      version: 1.5.11
+    '@rslib/core':
+      specifier: 0.21.5
+      version: 0.21.5
+    '@rslint/core':
+      specifier: ^0.5.3
+      version: 0.5.3
+    '@rspack/core':
+      specifier: ~2.0.4
+      version: 2.0.4
+    '@rspack/plugin-preact-refresh':
+      specifier: ^1.1.5
+      version: 1.1.5
+    '@rspack/plugin-react-refresh':
+      specifier: 2.0.0
+      version: 2.0.0
+    '@rspress/core':
+      specifier: ^2.0.11
+      version: 2.0.11
+    '@rspress/plugin-algolia':
+      specifier: ^2.0.11
+      version: 2.0.11
+    '@rspress/plugin-client-redirects':
+      specifier: ^2.0.11
+      version: 2.0.11
+    '@rspress/plugin-rss':
+      specifier: ^2.0.11
+      version: 2.0.11
+    '@rspress/plugin-sitemap':
+      specifier: ^2.0.11
+      version: 2.0.11
+    '@rstack-dev/doc-ui':
+      specifier: 1.14.0
+      version: 1.14.0
+    '@rstest/adapter-rslib':
+      specifier: ^0.10.0
+      version: 0.10.0
+    '@rstest/core':
+      specifier: ^0.10.0
+      version: 0.10.0
+    '@shikijs/transformers':
+      specifier: ^4.0.2
+      version: 4.0.2
+    '@svgr/core':
+      specifier: 8.1.0
+      version: 8.1.0
+    '@svgr/plugin-jsx':
+      specifier: 8.1.0
+      version: 8.1.0
+    '@svgr/plugin-svgo':
+      specifier: 8.1.0
+      version: 8.1.0
+    '@swc/helpers':
+      specifier: ^0.5.21
+      version: 0.5.21
+    '@swc/plugin-prefresh':
+      specifier: ^12.9.0
+      version: 12.9.0
+    '@swc/plugin-remove-console':
+      specifier: ^12.9.0
+      version: 12.9.0
+    '@tailwindcss/postcss':
+      specifier: ^4.3.0
+      version: 4.3.0
+    '@tailwindcss/webpack':
+      specifier: ^4.3.0
+      version: 4.3.0
+    '@types/babel__core':
+      specifier: ^7.20.5
+      version: 7.20.5
+    '@types/cors':
+      specifier: ^2.8.19
+      version: 2.8.19
+    '@types/fs-extra':
+      specifier: ^11.0.4
+      version: 11.0.4
+    '@types/less':
+      specifier: ^3.0.8
+      version: 3.0.8
+    '@types/node':
+      specifier: ^24.12.4
+      version: 24.12.4
+    '@types/on-finished':
+      specifier: 2.3.5
+      version: 2.3.5
+    '@types/range-parser':
+      specifier: ^1.2.7
+      version: 1.2.7
+    '@types/react':
+      specifier: ^19.2.14
+      version: 19.2.14
+    '@types/react-dom':
+      specifier: ^19.2.3
+      version: 19.2.3
+    '@types/sass-loader':
+      specifier: ^8.0.10
+      version: 8.0.10
+    '@types/ws':
+      specifier: ^8.18.1
+      version: 8.18.1
+    '@typescript/native-preview':
+      specifier: 7.0.0-dev.20260516.1
+      version: 7.0.0-dev.20260516.1
+    babel-loader:
+      specifier: 10.1.1
+      version: 10.1.1
+    babel-plugin-react-compiler:
+      specifier: ^1.0.0
+      version: 1.0.0
+    babel-preset-solid:
+      specifier: ^1.9.12
+      version: 1.9.12
+    browserslist-load-config:
+      specifier: 1.0.1
+      version: 1.0.1
+    cac:
+      specifier: ^7.0.0
+      version: 7.0.0
+    chokidar:
+      specifier: ^5.0.0
+      version: 5.0.0
+    connect-next:
+      specifier: 4.0.1
+      version: 4.0.1
+    core-js:
+      specifier: ^3.49.0
+      version: 3.49.0
+    cors:
+      specifier: ^2.8.6
+      version: 2.8.6
+    create-rstack:
+      specifier: 2.1.2
+      version: 2.1.2
+    cross-env:
+      specifier: ^10.1.0
+      version: 10.1.0
+    cspell-ban-words:
+      specifier: ^0.0.4
+      version: 0.0.4
+    css-loader:
+      specifier: 7.1.4
+      version: 7.1.4
+    deepmerge:
+      specifier: ^4.3.1
+      version: 4.3.1
+    dotenv-expand:
+      specifier: 13.0.0
+      version: 13.0.0
+    fast-glob:
+      specifier: ^3.3.3
+      version: 3.3.3
+    fs-extra:
+      specifier: ^11.3.5
+      version: 11.3.5
+    heading-case:
+      specifier: ^1.1.0
+      version: 1.1.0
+    hono:
+      specifier: ^4.12.19
+      version: 4.12.19
+    html-loader:
+      specifier: ^5.1.0
+      version: 5.1.0
+    html-rspack-plugin:
+      specifier: 6.1.8
+      version: 6.1.8
+    http-proxy-middleware:
+      specifier: 4.0.0
+      version: 4.0.0
+    jiti:
+      specifier: ^2.7.0
+      version: 2.7.0
+    launch-editor-middleware:
+      specifier: ^2.13.2
+      version: 2.13.2
+    less:
+      specifier: ^4.6.4
+      version: 4.6.4
+    less-loader:
+      specifier: ^12.3.2
+      version: 12.3.2
+    lit:
+      specifier: ^3.3.2
+      version: 3.3.2
+    loader-utils:
+      specifier: ^3.3.1
+      version: 3.3.1
+    memfs:
+      specifier: ^4.57.2
+      version: 4.57.2
+    mrmime:
+      specifier: ^2.0.1
+      version: 2.0.1
+    nano-staged:
+      specifier: ^1.0.2
+      version: 1.0.2
+    on-finished:
+      specifier: 2.4.1
+      version: 2.4.1
+    open:
+      specifier: ^11.0.0
+      version: 11.0.0
+    path-serializer:
+      specifier: 0.6.0
+      version: 0.6.0
+    playwright:
+      specifier: 1.60.0
+      version: 1.60.0
+    postcss:
+      specifier: ^8.5.14
+      version: 8.5.14
+    postcss-load-config:
+      specifier: 6.0.1
+      version: 6.0.1
+    postcss-loader:
+      specifier: 8.2.1
+      version: 8.2.1
+    preact:
+      specifier: ^10.29.1
+      version: 10.29.1
+    prebundle:
+      specifier: 1.6.4
+      version: 1.6.4
+    prettier:
+      specifier: ^3.8.3
+      version: 3.8.3
+    range-parser:
+      specifier: ^1.2.1
+      version: 1.2.1
+    react:
+      specifier: ^19.2.6
+      version: 19.2.6
+    react-dom:
+      specifier: ^19.2.6
+      version: 19.2.6
+    react-refresh:
+      specifier: ^0.18.0
+      version: 0.18.0
+    reduce-configs:
+      specifier: ^1.1.2
+      version: 1.1.2
+    resolve-url-loader:
+      specifier: ^5.0.0
+      version: 5.0.0
+    rsbuild-plugin-arethetypeswrong:
+      specifier: 0.3.1
+      version: 0.3.1
+    rsbuild-plugin-google-analytics:
+      specifier: ^1.0.5
+      version: 1.0.5
+    rsbuild-plugin-open-graph:
+      specifier: ^1.1.2
+      version: 1.1.2
+    rslog:
+      specifier: ^2.1.1
+      version: 2.1.1
+    rspack-chain:
+      specifier: ^2.0.1
+      version: 2.0.1
+    rspack-manifest-plugin:
+      specifier: 5.2.1
+      version: 5.2.1
+    rspack-merge:
+      specifier: 0.1.1
+      version: 0.1.1
+    rspack-vue-loader:
+      specifier: ^17.5.0
+      version: 17.5.0
+    rspress-plugin-font-open-sans:
+      specifier: ^1.0.3
+      version: 1.0.3
+    sass:
+      specifier: ^1.99.0
+      version: 1.99.0
+    sass-embedded:
+      specifier: ^1.99.0
+      version: 1.99.0
+    sass-loader:
+      specifier: ^16.0.8
+      version: 16.0.8
+    simple-git-hooks:
+      specifier: ^2.13.1
+      version: 2.13.1
+    sirv:
+      specifier: ^3.0.2
+      version: 3.0.2
+    solid-js:
+      specifier: ^1.9.13
+      version: 1.9.13
+    solid-refresh:
+      specifier: ^0.7.8
+      version: 0.7.8
+    stacktrace-parser:
+      specifier: ^0.1.11
+      version: 0.1.11
+    style-loader:
+      specifier: ^4.0.0
+      version: 4.0.0
+    svelte:
+      specifier: ^5.55.7
+      version: 5.55.7
+    svelte-loader:
+      specifier: 3.2.4
+      version: 3.2.4
+    svelte-preprocess:
+      specifier: ^6.0.3
+      version: 6.0.3
+    svgo:
+      specifier: ^3.3.3
+      version: 3.3.3
+    tailwindcss:
+      specifier: ^4.3.0
+      version: 4.3.0
+    tinyglobby:
+      specifier: ^0.2.16
+      version: 0.2.16
+    typescript:
+      specifier: ^6.0.3
+      version: 6.0.3
+    vue:
+      specifier: ^3.5.34
+      version: 3.5.34
+    ws:
+      specifier: ^8.20.1
+      version: 8.20.1
+  loader-utils-2:
+    loader-utils:
+      specifier: ^2.0.4
+      version: 2.0.4
+
 patchedDependencies:
   css-loader@7.1.4:
     hash: b504d70330b6625a20bc0cb1428c9787350fe6413c2947f42bd88ff22123a019
@@ -18,13 +403,13 @@ importers:
   .:
     devDependencies:
       '@rslint/core':
-        specifier: ^0.5.3
+        specifier: 'catalog:'
         version: 0.5.3(jiti@2.7.0)
       '@rstest/adapter-rslib':
-        specifier: ^0.10.0
+        specifier: 'catalog:'
         version: 0.10.0(@rslib/core@0.21.5)(@rstest/core@0.10.0)(typescript@6.0.3)
       '@rstest/core':
-        specifier: ^0.10.0
+        specifier: 'catalog:'
         version: 0.10.0(@module-federation/runtime-tools@2.4.0)(core-js@3.49.0)
       '@scripts/config':
         specifier: workspace:*
@@ -33,55 +418,55 @@ importers:
         specifier: workspace:*
         version: link:scripts/test-helper
       '@types/node':
-        specifier: ^24.12.4
+        specifier: 'catalog:'
         version: 24.12.4
       '@typescript/native-preview':
-        specifier: 7.0.0-dev.20260516.1
+        specifier: 'catalog:'
         version: 7.0.0-dev.20260516.1
       cross-env:
-        specifier: ^10.1.0
+        specifier: 'catalog:'
         version: 10.1.0
       cspell-ban-words:
-        specifier: ^0.0.4
+        specifier: 'catalog:'
         version: 0.0.4
       heading-case:
-        specifier: ^1.1.0
+        specifier: 'catalog:'
         version: 1.1.0
       nano-staged:
-        specifier: ^1.0.2
+        specifier: 'catalog:'
         version: 1.0.2
       prettier:
-        specifier: ^3.8.3
+        specifier: 'catalog:'
         version: 3.8.3
       simple-git-hooks:
-        specifier: ^2.13.1
+        specifier: 'catalog:'
         version: 2.13.1
       typescript:
-        specifier: ^6.0.3
+        specifier: 'catalog:'
         version: 6.0.3
 
   e2e:
     dependencies:
       '@module-federation/runtime-tools':
-        specifier: 2.4.0
+        specifier: 'catalog:'
         version: 2.4.0(node-fetch@2.7.0)
       core-js:
-        specifier: ^3.49.0
+        specifier: 'catalog:'
         version: 3.49.0
       preact:
-        specifier: ^10.29.1
+        specifier: 'catalog:'
         version: 10.29.1
       react:
-        specifier: ^19.2.6
+        specifier: 'catalog:'
         version: 19.2.6
       react-dom:
-        specifier: ^19.2.6
+        specifier: 'catalog:'
         version: 19.2.6(react@19.2.6)
       solid-js:
-        specifier: ^1.9.13
+        specifier: 'catalog:'
         version: 1.9.13
       vue:
-        specifier: ^3.5.34
+        specifier: 'catalog:'
         version: 3.5.34(typescript@6.0.3)
     devDependencies:
       '@e2e/assets':
@@ -91,16 +476,16 @@ importers:
         specifier: workspace:*
         version: link:helper
       '@hono/node-server':
-        specifier: ^2.0.2
+        specifier: 'catalog:'
         version: 2.0.2(hono@4.12.19)
       '@module-federation/enhanced':
-        specifier: 2.4.0
+        specifier: 'catalog:'
         version: 2.4.0(@rspack/core@2.0.4)(node-fetch@2.7.0)(typescript@6.0.3)
       '@module-federation/rsbuild-plugin':
-        specifier: 2.4.0
+        specifier: 'catalog:'
         version: 2.4.0(@rsbuild/core@packages+core)(@rspack/core@2.0.4)(node-fetch@2.7.0)(typescript@6.0.3)
       '@playwright/test':
-        specifier: 1.60.0
+        specifier: 'catalog:'
         version: 1.60.0
       '@rsbuild/core':
         specifier: workspace:*
@@ -109,7 +494,7 @@ importers:
         specifier: workspace:*
         version: link:../packages/plugin-babel
       '@rsbuild/plugin-check-syntax':
-        specifier: ^1.6.1
+        specifier: 'catalog:'
         version: 1.6.1(@rsbuild/core@packages+core)
       '@rsbuild/plugin-less':
         specifier: workspace:*
@@ -121,7 +506,7 @@ importers:
         specifier: workspace:*
         version: link:../packages/plugin-react
       '@rsbuild/plugin-rem':
-        specifier: ^1.0.5
+        specifier: 'catalog:'
         version: 1.0.5(@rsbuild/core@packages+core)
       '@rsbuild/plugin-sass':
         specifier: workspace:*
@@ -136,55 +521,55 @@ importers:
         specifier: workspace:*
         version: link:../packages/plugin-svgr
       '@rsbuild/plugin-type-check':
-        specifier: ^1.3.4
-        version: 1.3.4(@rsbuild/core@packages+core)(@rspack/core@2.0.4)(typescript@6.0.3)
+        specifier: 'catalog:'
+        version: 1.3.4(@rsbuild/core@packages+core)(typescript@6.0.3)
       '@rsbuild/plugin-vue':
         specifier: workspace:*
         version: link:../packages/plugin-vue
       '@rsdoctor/rspack-plugin':
-        specifier: 1.5.11
-        version: 1.5.11(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rsbuild/core@packages+core)(@rspack/core@2.0.4)
+        specifier: 'catalog:'
+        version: 1.5.11(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rsbuild/core@packages+core)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../scripts/test-helper
       '@tailwindcss/postcss':
-        specifier: ^4.3.0
+        specifier: 'catalog:'
         version: 4.3.0
       '@tailwindcss/webpack':
-        specifier: ^4.3.0
+        specifier: 'catalog:'
         version: 4.3.0
       '@types/fs-extra':
-        specifier: ^11.0.4
+        specifier: 'catalog:'
         version: 11.0.4
       '@types/node':
-        specifier: ^24.12.4
+        specifier: 'catalog:'
         version: 24.12.4
       '@types/react':
-        specifier: ^19.2.14
+        specifier: 'catalog:'
         version: 19.2.14
       '@types/react-dom':
-        specifier: ^19.2.3
+        specifier: 'catalog:'
         version: 19.2.3(@types/react@19.2.14)
       create-rsbuild:
         specifier: workspace:*
         version: link:../packages/create-rsbuild
       fast-glob:
-        specifier: ^3.3.3
+        specifier: 'catalog:'
         version: 3.3.3
       fs-extra:
-        specifier: ^11.3.5
+        specifier: 'catalog:'
         version: 11.3.5
       hono:
-        specifier: ^4.12.19
+        specifier: 'catalog:'
         version: 4.12.19
       playwright:
-        specifier: 1.60.0
+        specifier: 'catalog:'
         version: 1.60.0
       tailwindcss:
-        specifier: ^4.3.0
+        specifier: 'catalog:'
         version: 4.3.0
       typescript:
-        specifier: ^6.0.3
+        specifier: 'catalog:'
         version: 6.0.3
 
   e2e/assets: {}
@@ -206,7 +591,7 @@ importers:
   e2e/cases/html/html-loader:
     dependencies:
       html-loader:
-        specifier: ^5.1.0
+        specifier: 'catalog:'
         version: 5.1.0
 
   e2e/cases/output/auto-external:
@@ -231,33 +616,33 @@ importers:
   e2e/cases/plugin-react/react-compiler-babel:
     dependencies:
       react:
-        specifier: ^19.2.6
+        specifier: 'catalog:'
         version: 19.2.6
       react-dom:
-        specifier: ^19.2.6
+        specifier: 'catalog:'
         version: 19.2.6(react@19.2.6)
     devDependencies:
       babel-plugin-react-compiler:
-        specifier: ^1.0.0
+        specifier: 'catalog:'
         version: 1.0.0
 
   e2e/cases/plugin-svelte:
     dependencies:
       svelte:
-        specifier: ^5.55.7
+        specifier: 'catalog:'
         version: 5.55.7
     devDependencies:
       less:
-        specifier: ^4.6.4
+        specifier: 'catalog:'
         version: 4.6.4
       sass:
-        specifier: ^1.99.0
+        specifier: 'catalog:'
         version: 1.99.0
 
   e2e/cases/plugin-vue:
     dependencies:
       vue:
-        specifier: ^3.5.34
+        specifier: 'catalog:'
         version: 3.5.34(typescript@6.0.3)
 
   e2e/cases/resolve/condition-names/package-foo: {}
@@ -275,10 +660,10 @@ importers:
   e2e/cases/server/ssr:
     dependencies:
       react:
-        specifier: ^19.2.6
+        specifier: 'catalog:'
         version: 19.2.6
       react-dom:
-        specifier: ^19.2.6
+        specifier: 'catalog:'
         version: 19.2.6(react@19.2.6)
     devDependencies:
       '@rsbuild/core':
@@ -294,13 +679,13 @@ importers:
   e2e/cases/swc/swc-plugin:
     dependencies:
       '@swc/plugin-remove-console':
-        specifier: ^12.9.0
+        specifier: 'catalog:'
         version: 12.9.0
 
   e2e/helper:
     dependencies:
       '@jridgewell/trace-mapping':
-        specifier: ^0.3.31
+        specifier: 'catalog:'
         version: 0.3.31
 
   e2e/type-tests/resolution-bundler: {}
@@ -313,26 +698,26 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       lit:
-        specifier: ^3.3.2
+        specifier: 'catalog:'
         version: 3.3.2
       typescript:
-        specifier: ^6.0.3
+        specifier: 'catalog:'
         version: 6.0.3
 
   examples/module-federation-v2/host:
     dependencies:
       react:
-        specifier: ^19.2.5
+        specifier: 'catalog:'
         version: 19.2.6
       react-dom:
-        specifier: ^19.2.5
+        specifier: 'catalog:'
         version: 19.2.6(react@19.2.6)
     devDependencies:
       '@module-federation/enhanced':
-        specifier: 2.4.0
+        specifier: 'catalog:'
         version: 2.4.0(@rspack/core@2.0.4)(node-fetch@2.7.0)(typescript@6.0.3)
       '@module-federation/rsbuild-plugin':
-        specifier: 2.4.0
+        specifier: 'catalog:'
         version: 2.4.0(@rsbuild/core@packages+core)(@rspack/core@2.0.4)(node-fetch@2.7.0)(typescript@6.0.3)
       '@rsbuild/core':
         specifier: workspace:*
@@ -344,17 +729,17 @@ importers:
   examples/module-federation-v2/remote:
     dependencies:
       react:
-        specifier: ^19.2.5
+        specifier: 'catalog:'
         version: 19.2.6
       react-dom:
-        specifier: ^19.2.5
+        specifier: 'catalog:'
         version: 19.2.6(react@19.2.6)
     devDependencies:
       '@module-federation/enhanced':
-        specifier: 2.4.0
+        specifier: 'catalog:'
         version: 2.4.0(@rspack/core@2.0.4)(node-fetch@2.7.0)(typescript@6.0.3)
       '@module-federation/rsbuild-plugin':
-        specifier: 2.4.0
+        specifier: 'catalog:'
         version: 2.4.0(@rsbuild/core@packages+core)(@rspack/core@2.0.4)(node-fetch@2.7.0)(typescript@6.0.3)
       '@rsbuild/core':
         specifier: workspace:*
@@ -366,13 +751,13 @@ importers:
   examples/module-federation/host:
     dependencies:
       '@module-federation/runtime-tools':
-        specifier: 2.4.0
+        specifier: 'catalog:'
         version: 2.4.0(node-fetch@2.7.0)
       react:
-        specifier: ^19.2.5
+        specifier: 'catalog:'
         version: 19.2.6
       react-dom:
-        specifier: ^19.2.5
+        specifier: 'catalog:'
         version: 19.2.6(react@19.2.6)
     devDependencies:
       '@rsbuild/core':
@@ -385,13 +770,13 @@ importers:
   examples/module-federation/remote:
     dependencies:
       '@module-federation/runtime-tools':
-        specifier: 2.4.0
+        specifier: 'catalog:'
         version: 2.4.0(node-fetch@2.7.0)
       react:
-        specifier: ^19.2.5
+        specifier: 'catalog:'
         version: 19.2.6
       react-dom:
-        specifier: ^19.2.5
+        specifier: 'catalog:'
         version: 19.2.6(react@19.2.6)
     devDependencies:
       '@rsbuild/core':
@@ -407,16 +792,16 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       '@types/node':
-        specifier: ^24.12.2
+        specifier: 'catalog:'
         version: 24.12.4
       typescript:
-        specifier: ^6.0.3
+        specifier: 'catalog:'
         version: 6.0.3
 
   examples/preact:
     dependencies:
       preact:
-        specifier: ^10.29.1
+        specifier: 'catalog:'
         version: 10.29.1
     devDependencies:
       '@rsbuild/core':
@@ -426,16 +811,16 @@ importers:
         specifier: workspace:*
         version: link:../../packages/plugin-preact
       typescript:
-        specifier: ^6.0.3
+        specifier: 'catalog:'
         version: 6.0.3
 
   examples/react:
     dependencies:
       react:
-        specifier: ^19.2.5
+        specifier: 'catalog:'
         version: 19.2.6
       react-dom:
-        specifier: ^19.2.5
+        specifier: 'catalog:'
         version: 19.2.6(react@19.2.6)
     devDependencies:
       '@rsbuild/core':
@@ -445,19 +830,19 @@ importers:
         specifier: workspace:*
         version: link:../../packages/plugin-react
       '@types/react':
-        specifier: ^19.2.14
+        specifier: 'catalog:'
         version: 19.2.14
       '@types/react-dom':
-        specifier: ^19.2.3
+        specifier: 'catalog:'
         version: 19.2.3(@types/react@19.2.14)
       typescript:
-        specifier: ^6.0.3
+        specifier: 'catalog:'
         version: 6.0.3
 
   examples/solid:
     dependencies:
       solid-js:
-        specifier: ^1.9.12
+        specifier: 'catalog:'
         version: 1.9.13
     devDependencies:
       '@rsbuild/core':
@@ -473,7 +858,7 @@ importers:
   examples/svelte:
     dependencies:
       svelte:
-        specifier: ^5.55.4
+        specifier: 'catalog:'
         version: 5.55.7
     devDependencies:
       '@rsbuild/core':
@@ -489,13 +874,13 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       typescript:
-        specifier: ^6.0.3
+        specifier: 'catalog:'
         version: 6.0.3
 
   examples/vue:
     dependencies:
       vue:
-        specifier: ^3.5.32
+        specifier: 'catalog:'
         version: 3.5.34(typescript@6.0.3)
     devDependencies:
       '@rsbuild/core':
@@ -508,140 +893,140 @@ importers:
   packages/core:
     dependencies:
       '@rspack/core':
-        specifier: ~2.0.4
+        specifier: 'catalog:'
         version: 2.0.4(@module-federation/runtime-tools@2.4.0)(@swc/helpers@0.5.21)
       '@swc/helpers':
-        specifier: ^0.5.21
+        specifier: 'catalog:'
         version: 0.5.21
     devDependencies:
       '@jridgewell/remapping':
-        specifier: ^2.3.5
+        specifier: 'catalog:'
         version: 2.3.5
       '@jridgewell/trace-mapping':
-        specifier: ^0.3.31
+        specifier: 'catalog:'
         version: 0.3.31
       '@rslib/core':
-        specifier: 0.21.5
+        specifier: 'catalog:'
         version: 0.21.5(@module-federation/runtime-tools@2.4.0)(@typescript/native-preview@7.0.0-dev.20260516.1)(core-js@3.49.0)(typescript@6.0.3)
       '@types/cors':
-        specifier: ^2.8.19
+        specifier: 'catalog:'
         version: 2.8.19
       '@types/node':
-        specifier: ^24.12.4
+        specifier: 'catalog:'
         version: 24.12.4
       '@types/on-finished':
-        specifier: 2.3.5
+        specifier: 'catalog:'
         version: 2.3.5
       '@types/range-parser':
-        specifier: ^1.2.7
+        specifier: 'catalog:'
         version: 1.2.7
       '@types/ws':
-        specifier: ^8.18.1
+        specifier: 'catalog:'
         version: 8.18.1
       browserslist-load-config:
-        specifier: 1.0.1
+        specifier: 'catalog:'
         version: 1.0.1
       cac:
-        specifier: ^7.0.0
+        specifier: 'catalog:'
         version: 7.0.0
       chokidar:
-        specifier: ^5.0.0
+        specifier: 'catalog:'
         version: 5.0.0
       connect-next:
-        specifier: 4.0.1
+        specifier: 'catalog:'
         version: 4.0.1
       core-js:
-        specifier: ^3.49.0
+        specifier: 'catalog:'
         version: 3.49.0
       cors:
-        specifier: ^2.8.6
+        specifier: 'catalog:'
         version: 2.8.6
       css-loader:
-        specifier: 7.1.4
+        specifier: 'catalog:'
         version: 7.1.4(patch_hash=b504d70330b6625a20bc0cb1428c9787350fe6413c2947f42bd88ff22123a019)(@rspack/core@2.0.4)
       deepmerge:
-        specifier: ^4.3.1
+        specifier: 'catalog:'
         version: 4.3.1
       dotenv-expand:
-        specifier: 13.0.0
+        specifier: 'catalog:'
         version: 13.0.0
       html-rspack-plugin:
-        specifier: 6.1.8
+        specifier: 'catalog:'
         version: 6.1.8(@rspack/core@2.0.4)
       http-proxy-middleware:
-        specifier: 4.0.0
+        specifier: 'catalog:'
         version: 4.0.0
       jiti:
-        specifier: ^2.7.0
+        specifier: 'catalog:'
         version: 2.7.0
       launch-editor-middleware:
-        specifier: ^2.13.2
+        specifier: 'catalog:'
         version: 2.13.2
       memfs:
-        specifier: ^4.57.2
+        specifier: 'catalog:'
         version: 4.57.2
       mrmime:
-        specifier: ^2.0.1
+        specifier: 'catalog:'
         version: 2.0.1
       on-finished:
-        specifier: 2.4.1
+        specifier: 'catalog:'
         version: 2.4.1
       open:
-        specifier: ^11.0.0
+        specifier: 'catalog:'
         version: 11.0.0
       postcss:
-        specifier: ^8.5.14
+        specifier: 'catalog:'
         version: 8.5.14
       postcss-load-config:
-        specifier: 6.0.1
+        specifier: 'catalog:'
         version: 6.0.1(jiti@2.7.0)(postcss@8.5.14)
       postcss-loader:
-        specifier: 8.2.1
+        specifier: 'catalog:'
         version: 8.2.1(patch_hash=4829849d58d8366cd82cbdab1947d15f9e6d33e70f1e3d5310daffff152dff14)(@rspack/core@2.0.4)(postcss@8.5.14)(typescript@6.0.3)
       prebundle:
-        specifier: 1.6.4
+        specifier: 'catalog:'
         version: 1.6.4(typescript@6.0.3)
       range-parser:
-        specifier: ^1.2.1
+        specifier: 'catalog:'
         version: 1.2.1
       reduce-configs:
-        specifier: ^1.1.2
+        specifier: 'catalog:'
         version: 1.1.2
       rslog:
-        specifier: ^2.1.1
+        specifier: 'catalog:'
         version: 2.1.1
       rspack-chain:
-        specifier: ^2.0.1
+        specifier: 'catalog:'
         version: 2.0.1(@rspack/core@2.0.4)
       rspack-manifest-plugin:
-        specifier: 5.2.1
+        specifier: 'catalog:'
         version: 5.2.1(@rspack/core@2.0.4)
       rspack-merge:
-        specifier: 0.1.1
+        specifier: 'catalog:'
         version: 0.1.1
       sirv:
-        specifier: ^3.0.2
+        specifier: 'catalog:'
         version: 3.0.2
       stacktrace-parser:
-        specifier: ^0.1.11
+        specifier: 'catalog:'
         version: 0.1.11
       style-loader:
-        specifier: ^4.0.0
+        specifier: 'catalog:'
         version: 4.0.0
       tinyglobby:
-        specifier: ^0.2.16
+        specifier: 'catalog:'
         version: 0.2.16
       typescript:
-        specifier: ^6.0.3
+        specifier: 'catalog:'
         version: 6.0.3
       ws:
-        specifier: ^8.20.1
+        specifier: 'catalog:'
         version: 8.20.1
 
   packages/create-rsbuild:
     dependencies:
       create-rstack:
-        specifier: 2.1.2
+        specifier: 'catalog:'
         version: 2.1.2
     devDependencies:
       '@rsbuild/core':
@@ -666,204 +1051,204 @@ importers:
         specifier: workspace:*
         version: link:../plugin-vue
       '@rslib/core':
-        specifier: 0.21.5
+        specifier: 'catalog:'
         version: 0.21.5(@module-federation/runtime-tools@2.4.0)(@typescript/native-preview@7.0.0-dev.20260516.1)(core-js@3.49.0)(typescript@6.0.3)
       '@types/node':
-        specifier: ^24.12.4
+        specifier: 'catalog:'
         version: 24.12.4
       typescript:
-        specifier: ^6.0.3
+        specifier: 'catalog:'
         version: 6.0.3
 
   packages/plugin-babel:
     dependencies:
       '@babel/core':
-        specifier: ^7.29.0
+        specifier: 'catalog:'
         version: 7.29.0
       '@babel/plugin-proposal-decorators':
-        specifier: ^7.29.0
+        specifier: 'catalog:'
         version: 7.29.0(@babel/core@7.29.0)
       '@babel/plugin-transform-class-properties':
-        specifier: ^7.28.6
+        specifier: 'catalog:'
         version: 7.28.6(@babel/core@7.29.0)
       '@babel/preset-typescript':
-        specifier: ^7.28.5
+        specifier: 'catalog:'
         version: 7.28.5(@babel/core@7.29.0)
       '@types/babel__core':
-        specifier: ^7.20.5
+        specifier: 'catalog:'
         version: 7.20.5
       reduce-configs:
-        specifier: ^1.1.2
+        specifier: 'catalog:'
         version: 1.1.2
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
       '@rsbuild/core-v1':
-        specifier: npm:@rsbuild/core@^1.7.5
+        specifier: 'catalog:'
         version: '@rsbuild/core@1.7.5'
       '@rslib/core':
-        specifier: 0.21.5
+        specifier: 'catalog:'
         version: 0.21.5(@module-federation/runtime-tools@2.4.0)(@typescript/native-preview@7.0.0-dev.20260516.1)(core-js@3.49.0)(typescript@6.0.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^24.12.4
+        specifier: 'catalog:'
         version: 24.12.4
       babel-loader:
-        specifier: 10.1.1
+        specifier: 'catalog:'
         version: 10.1.1(@babel/core@7.29.0)(@rspack/core@2.0.4)
       prebundle:
-        specifier: 1.6.4
+        specifier: 'catalog:'
         version: 1.6.4(typescript@6.0.3)
       typescript:
-        specifier: ^6.0.3
+        specifier: 'catalog:'
         version: 6.0.3
 
   packages/plugin-less:
     dependencies:
       deepmerge:
-        specifier: ^4.3.1
+        specifier: 'catalog:'
         version: 4.3.1
       less:
-        specifier: ^4.6.4
+        specifier: 'catalog:'
         version: 4.6.4
       less-loader:
-        specifier: ^12.3.2
+        specifier: 'catalog:'
         version: 12.3.2(@rspack/core@2.0.4)(less@4.6.4)
       reduce-configs:
-        specifier: ^1.1.2
+        specifier: 'catalog:'
         version: 1.1.2
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
       '@rsbuild/core-v1':
-        specifier: npm:@rsbuild/core@^1.7.5
+        specifier: 'catalog:'
         version: '@rsbuild/core@1.7.5'
       '@rslib/core':
-        specifier: 0.21.5
+        specifier: 'catalog:'
         version: 0.21.5(@module-federation/runtime-tools@2.4.0)(@typescript/native-preview@7.0.0-dev.20260516.1)(core-js@3.49.0)(typescript@6.0.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/less':
-        specifier: ^3.0.8
+        specifier: 'catalog:'
         version: 3.0.8
       prebundle:
-        specifier: 1.6.4
+        specifier: 'catalog:'
         version: 1.6.4(typescript@6.0.3)
       typescript:
-        specifier: ^6.0.3
+        specifier: 'catalog:'
         version: 6.0.3
 
   packages/plugin-preact:
     dependencies:
       '@prefresh/core':
-        specifier: ^1.5.10
+        specifier: 'catalog:'
         version: 1.5.10(preact@10.29.1)
       '@prefresh/utils':
-        specifier: ^1.2.1
+        specifier: 'catalog:'
         version: 1.2.1
       '@rspack/plugin-preact-refresh':
-        specifier: ^1.1.5
+        specifier: 'catalog:'
         version: 1.1.5(@prefresh/core@1.5.10)(@prefresh/utils@1.2.1)
       '@swc/plugin-prefresh':
-        specifier: ^12.9.0
+        specifier: 'catalog:'
         version: 12.9.0
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.21.5
+        specifier: 'catalog:'
         version: 0.21.5(@module-federation/runtime-tools@2.4.0)(@typescript/native-preview@7.0.0-dev.20260516.1)(core-js@3.49.0)(typescript@6.0.3)
       '@types/node':
-        specifier: ^24.12.4
+        specifier: 'catalog:'
         version: 24.12.4
       preact:
-        specifier: ^10.29.1
+        specifier: 'catalog:'
         version: 10.29.1
       typescript:
-        specifier: ^6.0.3
+        specifier: 'catalog:'
         version: 6.0.3
 
   packages/plugin-react:
     dependencies:
       '@rspack/plugin-react-refresh':
-        specifier: 2.0.0
+        specifier: 'catalog:'
         version: 2.0.0(@rspack/core@2.0.4)(react-refresh@0.18.0)
       react-refresh:
-        specifier: ^0.18.0
+        specifier: 'catalog:'
         version: 0.18.0
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
       '@rsbuild/core-v1':
-        specifier: npm:@rsbuild/core@^1.7.5
+        specifier: 'catalog:'
         version: '@rsbuild/core@1.7.5'
       '@rslib/core':
-        specifier: 0.21.5
+        specifier: 'catalog:'
         version: 0.21.5(@module-federation/runtime-tools@2.4.0)(@typescript/native-preview@7.0.0-dev.20260516.1)(core-js@3.49.0)(typescript@6.0.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^24.12.4
+        specifier: 'catalog:'
         version: 24.12.4
       typescript:
-        specifier: ^6.0.3
+        specifier: 'catalog:'
         version: 6.0.3
 
   packages/plugin-sass:
     dependencies:
       deepmerge:
-        specifier: ^4.3.1
+        specifier: 'catalog:'
         version: 4.3.1
       loader-utils:
-        specifier: ^2.0.4
+        specifier: catalog:loader-utils-2
         version: 2.0.4
       postcss:
-        specifier: ^8.5.14
+        specifier: 'catalog:'
         version: 8.5.14
       reduce-configs:
-        specifier: ^1.1.2
+        specifier: 'catalog:'
         version: 1.1.2
       sass-embedded:
-        specifier: ^1.99.0
+        specifier: 'catalog:'
         version: 1.99.0
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
       '@rsbuild/core-v1':
-        specifier: npm:@rsbuild/core@^1.7.5
+        specifier: 'catalog:'
         version: '@rsbuild/core@1.7.5'
       '@rslib/core':
-        specifier: 0.21.5
+        specifier: 'catalog:'
         version: 0.21.5(@module-federation/runtime-tools@2.4.0)(@typescript/native-preview@7.0.0-dev.20260516.1)(core-js@3.49.0)(typescript@6.0.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^24.12.4
+        specifier: 'catalog:'
         version: 24.12.4
       '@types/sass-loader':
-        specifier: ^8.0.10
+        specifier: 'catalog:'
         version: 8.0.10
       prebundle:
-        specifier: 1.6.4
+        specifier: 'catalog:'
         version: 1.6.4(typescript@6.0.3)
       resolve-url-loader:
-        specifier: ^5.0.0
+        specifier: 'catalog:'
         version: 5.0.0
       sass-loader:
-        specifier: ^16.0.8
+        specifier: 'catalog:'
         version: 16.0.8(@rspack/core@2.0.4)(sass-embedded@1.99.0)(sass@1.99.0)
       typescript:
-        specifier: ^6.0.3
+        specifier: 'catalog:'
         version: 6.0.3
 
   packages/plugin-solid:
@@ -872,57 +1257,57 @@ importers:
         specifier: workspace:*
         version: link:../plugin-babel
       babel-preset-solid:
-        specifier: ^1.9.12
+        specifier: 'catalog:'
         version: 1.9.12(@babel/core@7.29.0)(solid-js@1.9.13)
       solid-refresh:
-        specifier: ^0.7.8
+        specifier: 'catalog:'
         version: 0.7.8(solid-js@1.9.13)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.21.5
+        specifier: 'catalog:'
         version: 0.21.5(@module-federation/runtime-tools@2.4.0)(@typescript/native-preview@7.0.0-dev.20260516.1)(core-js@3.49.0)(typescript@6.0.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/babel__core':
-        specifier: ^7.20.5
+        specifier: 'catalog:'
         version: 7.20.5
       typescript:
-        specifier: ^6.0.3
+        specifier: 'catalog:'
         version: 6.0.3
 
   packages/plugin-svelte:
     dependencies:
       svelte-loader:
-        specifier: 3.2.4
+        specifier: 'catalog:'
         version: 3.2.4(svelte@5.55.7)
       svelte-preprocess:
-        specifier: ^6.0.3
+        specifier: 'catalog:'
         version: 6.0.3(@babel/core@7.29.0)(less@4.6.4)(postcss-load-config@6.0.1)(postcss@8.5.14)(sass@1.99.0)(svelte@5.55.7)(typescript@6.0.3)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
       '@rsbuild/core-v1':
-        specifier: npm:@rsbuild/core@^1.7.5
+        specifier: 'catalog:'
         version: '@rsbuild/core@1.7.5'
       '@rslib/core':
-        specifier: 0.21.5
+        specifier: 'catalog:'
         version: 0.21.5(@module-federation/runtime-tools@2.4.0)(@typescript/native-preview@7.0.0-dev.20260516.1)(core-js@3.49.0)(typescript@6.0.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^24.12.4
+        specifier: 'catalog:'
         version: 24.12.4
       svelte:
-        specifier: ^5.55.7
+        specifier: 'catalog:'
         version: 5.55.7
       typescript:
-        specifier: ^6.0.3
+        specifier: 'catalog:'
         version: 6.0.3
 
   packages/plugin-svgr:
@@ -931,84 +1316,84 @@ importers:
         specifier: workspace:^2.0.0
         version: link:../plugin-react
       '@svgr/core':
-        specifier: 8.1.0
+        specifier: 'catalog:'
         version: 8.1.0(typescript@6.0.3)
       '@svgr/plugin-jsx':
-        specifier: 8.1.0
+        specifier: 'catalog:'
         version: 8.1.0(@svgr/core@8.1.0)
       '@svgr/plugin-svgo':
-        specifier: 8.1.0
+        specifier: 'catalog:'
         version: 8.1.0(@svgr/core@8.1.0)(typescript@6.0.3)
       deepmerge:
-        specifier: ^4.3.1
+        specifier: 'catalog:'
         version: 4.3.1
       loader-utils:
-        specifier: ^3.3.1
+        specifier: 'catalog:'
         version: 3.3.1
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
       '@rsbuild/core-v1':
-        specifier: npm:@rsbuild/core@^1.7.5
+        specifier: 'catalog:'
         version: '@rsbuild/core@1.7.5'
       '@rslib/core':
-        specifier: 0.21.5
+        specifier: 'catalog:'
         version: 0.21.5(@module-federation/runtime-tools@2.4.0)(@typescript/native-preview@7.0.0-dev.20260516.1)(core-js@3.49.0)(typescript@6.0.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^24.12.4
+        specifier: 'catalog:'
         version: 24.12.4
       svgo:
-        specifier: ^3.3.3
+        specifier: 'catalog:'
         version: 3.3.3
       typescript:
-        specifier: ^6.0.3
+        specifier: 'catalog:'
         version: 6.0.3
 
   packages/plugin-vue:
     dependencies:
       rspack-vue-loader:
-        specifier: ^17.5.0
+        specifier: 'catalog:'
         version: 17.5.0(@rspack/core@2.0.4)(vue@3.5.34)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
       '@rsbuild/core-v1':
-        specifier: npm:@rsbuild/core@^1.7.5
+        specifier: 'catalog:'
         version: '@rsbuild/core@1.7.5'
       '@rslib/core':
-        specifier: 0.21.5
+        specifier: 'catalog:'
         version: 0.21.5(@module-federation/runtime-tools@2.4.0)(@typescript/native-preview@7.0.0-dev.20260516.1)(core-js@3.49.0)(typescript@6.0.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^24.12.4
+        specifier: 'catalog:'
         version: 24.12.4
       typescript:
-        specifier: ^6.0.3
+        specifier: 'catalog:'
         version: 6.0.3
       vue:
-        specifier: ^3.5.34
+        specifier: 'catalog:'
         version: 3.5.34(typescript@6.0.3)
 
   scripts/config:
     devDependencies:
       '@rslib/core':
-        specifier: 0.21.5
+        specifier: 'catalog:'
         version: 0.21.5(@module-federation/runtime-tools@2.4.0)(@typescript/native-preview@7.0.0-dev.20260516.1)(core-js@3.49.0)(typescript@6.0.3)
       '@types/node':
-        specifier: ^24.12.4
+        specifier: 'catalog:'
         version: 24.12.4
       rsbuild-plugin-arethetypeswrong:
-        specifier: 0.3.1
+        specifier: 'catalog:'
         version: 0.3.1(@rsbuild/core@2.0.7)(typescript@6.0.3)
       typescript:
-        specifier: ^6.0.3
+        specifier: 'catalog:'
         version: 6.0.3
 
   scripts/test-helper:
@@ -1017,13 +1402,13 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       '@types/node':
-        specifier: ^24.12.4
+        specifier: 'catalog:'
         version: 24.12.4
       path-serializer:
-        specifier: 0.6.0
+        specifier: 'catalog:'
         version: 0.6.0
       typescript:
-        specifier: ^6.0.3
+        specifier: 'catalog:'
         version: 6.0.3
 
   website:
@@ -1035,55 +1420,55 @@ importers:
         specifier: workspace:*
         version: link:../packages/plugin-sass
       '@rspress/core':
-        specifier: ^2.0.11
+        specifier: 'catalog:'
         version: 2.0.11(@module-federation/runtime-tools@2.4.0)(@rspack/core@2.0.4)(@types/mdast@4.0.4)(@types/react@19.2.14)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2)
       '@rspress/plugin-algolia':
-        specifier: ^2.0.11
+        specifier: 'catalog:'
         version: 2.0.11(@rspress/core@2.0.11)(@types/react@19.2.14)(react-dom@19.2.6)(react@19.2.6)
       '@rspress/plugin-client-redirects':
-        specifier: ^2.0.11
+        specifier: 'catalog:'
         version: 2.0.11(@rspress/core@2.0.11)
       '@rspress/plugin-rss':
-        specifier: ^2.0.11
+        specifier: 'catalog:'
         version: 2.0.11(@rspress/core@2.0.11)
       '@rspress/plugin-sitemap':
-        specifier: ^2.0.11
+        specifier: 'catalog:'
         version: 2.0.11(@rspress/core@2.0.11)
       '@rstack-dev/doc-ui':
-        specifier: 1.14.0
+        specifier: 'catalog:'
         version: 1.14.0(@rspress/core@2.0.11)
       '@shikijs/transformers':
-        specifier: ^4.0.2
+        specifier: 'catalog:'
         version: 4.0.2
       '@types/node':
-        specifier: ^24.12.4
+        specifier: 'catalog:'
         version: 24.12.4
       '@types/react':
-        specifier: ^19.2.14
+        specifier: 'catalog:'
         version: 19.2.14
       '@types/react-dom':
-        specifier: ^19.2.3
+        specifier: 'catalog:'
         version: 19.2.3(@types/react@19.2.14)
       fast-glob:
-        specifier: ^3.3.3
+        specifier: 'catalog:'
         version: 3.3.3
       react:
-        specifier: ^19.2.6
+        specifier: 'catalog:'
         version: 19.2.6
       react-dom:
-        specifier: ^19.2.6
+        specifier: 'catalog:'
         version: 19.2.6(react@19.2.6)
       rsbuild-plugin-google-analytics:
-        specifier: ^1.0.5
+        specifier: 'catalog:'
         version: 1.0.5(@rsbuild/core@packages+core)
       rsbuild-plugin-open-graph:
-        specifier: ^1.1.2
+        specifier: 'catalog:'
         version: 1.1.2(@rsbuild/core@packages+core)
       rspress-plugin-font-open-sans:
-        specifier: ^1.0.3
+        specifier: 'catalog:'
         version: 1.0.3(@rspress/core@2.0.11)
       typescript:
-        specifier: ^6.0.3
+        specifier: 'catalog:'
         version: 6.0.3
 
 packages:
@@ -6085,12 +6470,12 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': link:packages/core
 
-  '@rsbuild/plugin-type-check@1.3.4(@rsbuild/core@packages+core)(@rspack/core@2.0.4)(typescript@6.0.3)':
+  '@rsbuild/plugin-type-check@1.3.4(@rsbuild/core@packages+core)(typescript@6.0.3)':
     dependencies:
       deepmerge: 4.3.1
       json5: 2.2.3
       reduce-configs: 1.1.2
-      ts-checker-rspack-plugin: 1.3.0(@rspack/core@2.0.4)(typescript@6.0.3)
+      ts-checker-rspack-plugin: 1.3.0(typescript@6.0.3)
     optionalDependencies:
       '@rsbuild/core': link:packages/core
     transitivePeerDependencies:
@@ -6099,13 +6484,13 @@ snapshots:
 
   '@rsdoctor/client@1.5.11': {}
 
-  '@rsdoctor/core@1.5.11(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rsbuild/core@packages+core)(@rspack/core@2.0.4)':
+  '@rsdoctor/core@1.5.11(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rsbuild/core@packages+core)':
     dependencies:
       '@rsbuild/plugin-check-syntax': 1.6.1(@rsbuild/core@packages+core)
-      '@rsdoctor/graph': 1.5.11(@rspack/core@2.0.4)
-      '@rsdoctor/sdk': 1.5.11(@rspack/core@2.0.4)
-      '@rsdoctor/types': 1.5.11(@rspack/core@2.0.4)
-      '@rsdoctor/utils': 1.5.11(@rspack/core@2.0.4)
+      '@rsdoctor/graph': 1.5.11
+      '@rsdoctor/sdk': 1.5.11
+      '@rsdoctor/types': 1.5.11
+      '@rsdoctor/utils': 1.5.11
       '@rspack/resolver': 0.2.8(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
       browserslist-load-config: 1.0.1
       es-toolkit: 1.46.1
@@ -6123,10 +6508,10 @@ snapshots:
       - utf-8-validate
       - webpack
 
-  '@rsdoctor/graph@1.5.11(@rspack/core@2.0.4)':
+  '@rsdoctor/graph@1.5.11':
     dependencies:
-      '@rsdoctor/types': 1.5.11(@rspack/core@2.0.4)
-      '@rsdoctor/utils': 1.5.11(@rspack/core@2.0.4)
+      '@rsdoctor/types': 1.5.11
+      '@rsdoctor/utils': 1.5.11
       es-toolkit: 1.46.1
       path-browserify: 1.0.1
       source-map: 0.7.6
@@ -6134,15 +6519,13 @@ snapshots:
       - '@rspack/core'
       - webpack
 
-  '@rsdoctor/rspack-plugin@1.5.11(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rsbuild/core@packages+core)(@rspack/core@2.0.4)':
+  '@rsdoctor/rspack-plugin@1.5.11(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rsbuild/core@packages+core)':
     dependencies:
-      '@rsdoctor/core': 1.5.11(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rsbuild/core@packages+core)(@rspack/core@2.0.4)
-      '@rsdoctor/graph': 1.5.11(@rspack/core@2.0.4)
-      '@rsdoctor/sdk': 1.5.11(@rspack/core@2.0.4)
-      '@rsdoctor/types': 1.5.11(@rspack/core@2.0.4)
-      '@rsdoctor/utils': 1.5.11(@rspack/core@2.0.4)
-    optionalDependencies:
-      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.4.0)(@swc/helpers@0.5.21)
+      '@rsdoctor/core': 1.5.11(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@rsbuild/core@packages+core)
+      '@rsdoctor/graph': 1.5.11
+      '@rsdoctor/sdk': 1.5.11
+      '@rsdoctor/types': 1.5.11
+      '@rsdoctor/utils': 1.5.11
     transitivePeerDependencies:
       - '@emnapi/core'
       - '@emnapi/runtime'
@@ -6152,12 +6535,12 @@ snapshots:
       - utf-8-validate
       - webpack
 
-  '@rsdoctor/sdk@1.5.11(@rspack/core@2.0.4)':
+  '@rsdoctor/sdk@1.5.11':
     dependencies:
       '@rsdoctor/client': 1.5.11
-      '@rsdoctor/graph': 1.5.11(@rspack/core@2.0.4)
-      '@rsdoctor/types': 1.5.11(@rspack/core@2.0.4)
-      '@rsdoctor/utils': 1.5.11(@rspack/core@2.0.4)
+      '@rsdoctor/graph': 1.5.11
+      '@rsdoctor/types': 1.5.11
+      '@rsdoctor/utils': 1.5.11
       launch-editor: 2.13.2
       safer-buffer: 2.1.2
       socket.io: 4.8.1
@@ -6169,19 +6552,17 @@ snapshots:
       - utf-8-validate
       - webpack
 
-  '@rsdoctor/types@1.5.11(@rspack/core@2.0.4)':
+  '@rsdoctor/types@1.5.11':
     dependencies:
       '@types/connect': 3.4.38
       '@types/estree': 1.0.5
       '@types/tapable': 2.3.0
       source-map: 0.7.6
-    optionalDependencies:
-      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.4.0)(@swc/helpers@0.5.21)
 
-  '@rsdoctor/utils@1.5.11(@rspack/core@2.0.4)':
+  '@rsdoctor/utils@1.5.11':
     dependencies:
       '@babel/code-frame': 7.26.2
-      '@rsdoctor/types': 1.5.11(@rspack/core@2.0.4)
+      '@rsdoctor/types': 1.5.11
       '@types/estree': 1.0.5
       acorn: 8.16.0
       acorn-import-attributes: 1.9.5(acorn@8.16.0)
@@ -9394,15 +9775,13 @@ snapshots:
 
   trough@2.2.0: {}
 
-  ts-checker-rspack-plugin@1.3.0(@rspack/core@2.0.4)(typescript@6.0.3):
+  ts-checker-rspack-plugin@1.3.0(typescript@6.0.3):
     dependencies:
       '@rspack/lite-tapable': 1.1.0
       chokidar: 3.6.0
       memfs: 4.57.2
       picocolors: 1.1.1
       typescript: 6.0.3
-    optionalDependencies:
-      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.4.0)(@swc/helpers@0.5.21)
 
   tslib@2.8.1: {}
 

@@ -7,9 +7,9 @@
     "build": "rsbuild build"
   },
   "dependencies": {
-    "@module-federation/runtime-tools": "2.4.0",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "@module-federation/runtime-tools": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",

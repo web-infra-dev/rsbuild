@@ -24,16 +24,16 @@
     "dev": "rslib -w"
   },
   "dependencies": {
-    "@rspack/plugin-react-refresh": "2.0.0",
-    "react-refresh": "^0.18.0"
+    "@rspack/plugin-react-refresh": "catalog:",
+    "react-refresh": "catalog:"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/core-v1": "npm:@rsbuild/core@^1.7.5",
-    "@rslib/core": "0.21.5",
+    "@rsbuild/core-v1": "catalog:",
+    "@rslib/core": "catalog:",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^24.12.4",
-    "typescript": "^6.0.3"
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
   },
   "peerDependencies": {
     "@rsbuild/core": "^2.0.0-0"

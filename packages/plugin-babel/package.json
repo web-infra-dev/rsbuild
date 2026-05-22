@@ -27,22 +27,22 @@
     "prebundle": "prebundle"
   },
   "dependencies": {
-    "@babel/core": "^7.29.0",
-    "@babel/plugin-proposal-decorators": "^7.29.0",
-    "@babel/plugin-transform-class-properties": "^7.28.6",
-    "@babel/preset-typescript": "^7.28.5",
-    "@types/babel__core": "^7.20.5",
-    "reduce-configs": "^1.1.2"
+    "@babel/core": "catalog:",
+    "@babel/plugin-proposal-decorators": "catalog:",
+    "@babel/plugin-transform-class-properties": "catalog:",
+    "@babel/preset-typescript": "catalog:",
+    "@types/babel__core": "catalog:",
+    "reduce-configs": "catalog:"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/core-v1": "npm:@rsbuild/core@^1.7.5",
-    "@rslib/core": "0.21.5",
+    "@rsbuild/core-v1": "catalog:",
+    "@rslib/core": "catalog:",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^24.12.4",
-    "babel-loader": "10.1.1",
-    "prebundle": "1.6.4",
-    "typescript": "^6.0.3"
+    "@types/node": "catalog:",
+    "babel-loader": "catalog:",
+    "prebundle": "catalog:",
+    "typescript": "catalog:"
   },
   "peerDependencies": {
     "@rsbuild/core": "^1.0.0 || ^2.0.0-0"

@@ -15,6 +15,6 @@
     }
   },
   "dependencies": {
-    "@jridgewell/trace-mapping": "^0.3.31"
+    "@jridgewell/trace-mapping": "catalog:"
   }
 }
