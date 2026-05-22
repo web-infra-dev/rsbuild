@@ -273,13 +273,6 @@ importers:
   e2e/cases/server/custom-server: {}
 
   e2e/cases/server/ssr:
-    dependencies:
-      react:
-        specifier: ^19.2.6
-        version: 19.2.6
-      react-dom:
-        specifier: ^19.2.6
-        version: 19.2.6(react@19.2.6)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
