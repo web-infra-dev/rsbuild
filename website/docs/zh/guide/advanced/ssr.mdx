@@ -78,7 +78,7 @@ export default {
 };
 ```
 
-对于 SSR 服务端产物，通常建议优先使用 [output.autoExternal](/config/output/auto-external)，而不是在 `output.externals` 中手动列出依赖。它会自动 external 根目录 `package.json` 中声明的依赖，包括 `react/jsx-runtime` 这类子路径导入。如果你需要完全独立的服务端 bundle，或者某些依赖在运行时环境中不可用，可以不开启该选项，或按需配置依赖类型。
+在 SSR 场景中，服务端产物通常运行在 Node.js 中，并与 `node_modules` 一起部署。此时建议优先使用 [output.autoExternal](/config/output/auto-external)，而不是在 `output.externals` 中手动维护依赖列表。开启后，Rsbuild 会将根目录 `package.json` 中声明的依赖标记为 external，并覆盖 `react/jsx-runtime` 这类子路径导入，使运行时依赖、原生模块以及依赖运行时插桩的库可以由 Node.js 直接加载。如果你需要生成完全独立的服务端 bundle，或者部署环境不会安装这些被 external 的依赖，可以保持该选项关闭，或按需配置需要 external 的依赖类型。
 
 ## 自定义 Server
 
