@@ -70,6 +70,8 @@ import { jsx } from 'react/jsx-runtime';
 
 ### 开启自动 external
 
+将 `autoExternal` 设置为 `true`，即可 external `package.json` 中默认的依赖类型。
+
 ```ts title="rsbuild.config.ts"
 export default {
   output: {
@@ -80,6 +82,8 @@ export default {
 ```
 
 ### 自定义依赖类型
+
+使用对象写法可以控制哪些依赖字段会被 external。
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -97,6 +101,8 @@ export default {
 
 ### 关闭某类依赖
 
+将某个依赖字段设置为 `false`，可以让该字段中的包继续被打进 bundle。
+
 ```ts title="rsbuild.config.ts"
 export default {
   output: {
@@ -109,6 +115,44 @@ export default {
 ```
 
 ## 选项
+
+当 `output.autoExternal` 配置为对象时，未配置的选项会使用与 `autoExternal: true` 相同的默认值。
+
+### dependencies
+
+- **类型：** `boolean`
+- **默认值：** `true`
+
+是否自动 external 根目录 `package.json` 的 `dependencies` 字段中声明的包。
+
+当该选项为 `true` 时，Rsbuild 会将 `dependencies` 中的每个包名转换为 external 规则。这些包的子路径导入也会被 external。
+
+### optionalDependencies
+
+- **类型：** `boolean`
+- **默认值：** `true`
+
+是否自动 external 根目录 `package.json` 的 `optionalDependencies` 字段中声明的包。
+
+这个选项适用于可选依赖由运行时环境安装和加载，而不是被打进产物的场景。
+
+### devDependencies
+
+- **类型：** `boolean`
+- **默认值：** `false`
+
+是否自动 external 根目录 `package.json` 的 `devDependencies` 字段中声明的包。
+
+`devDependencies` 默认不会被 external，因为它们通常只在本地开发、测试或构建工具链中使用。仅当构建产物需要在运行时加载 `devDependencies` 中的包时，才需要开启该选项。
+
+### peerDependencies
+
+- **类型：** `boolean`
+- **默认值：** `true`
+
+是否自动 external 根目录 `package.json` 的 `peerDependencies` 字段中声明的包。
+
+这个选项适用于类库或框架集成场景，peer dependencies 通常应由宿主应用或运行时提供。
 
 ### exclude
 

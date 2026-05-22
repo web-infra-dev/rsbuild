@@ -70,6 +70,8 @@ import { jsx } from 'react/jsx-runtime';
 
 ### Enable auto externalization
 
+Set `autoExternal` to `true` to externalize the default dependency types from `package.json`.
+
 ```ts title="rsbuild.config.ts"
 export default {
   output: {
@@ -80,6 +82,8 @@ export default {
 ```
 
 ### Customize dependency types
+
+Use object syntax to decide which dependency fields should be externalized.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -97,6 +101,8 @@ export default {
 
 ### Disable a dependency type
 
+Set a dependency field to `false` to keep packages from that field bundled.
+
 ```ts title="rsbuild.config.ts"
 export default {
   output: {
@@ -109,6 +115,44 @@ export default {
 ```
 
 ## Options
+
+When `output.autoExternal` is configured as an object, omitted options use the same defaults as `autoExternal: true`.
+
+### dependencies
+
+- **Type:** `boolean`
+- **Default:** `true`
+
+Whether to automatically externalize packages declared in the `dependencies` field of the root `package.json`.
+
+When this option is `true`, Rsbuild converts each package name in `dependencies` into an externalization rule. Subpath imports of these packages are also externalized.
+
+### optionalDependencies
+
+- **Type:** `boolean`
+- **Default:** `true`
+
+Whether to automatically externalize packages declared in the `optionalDependencies` field of the root `package.json`.
+
+This is useful when optional dependencies are installed and loaded by the runtime environment instead of being bundled into the output.
+
+### devDependencies
+
+- **Type:** `boolean`
+- **Default:** `false`
+
+Whether to automatically externalize packages declared in the `devDependencies` field of the root `package.json`.
+
+`devDependencies` are not externalized by default because they are usually only needed during local development, testing, or build-time tooling. Enable this option only when the build output needs to load packages from `devDependencies` at runtime.
+
+### peerDependencies
+
+- **Type:** `boolean`
+- **Default:** `true`
+
+Whether to automatically externalize packages declared in the `peerDependencies` field of the root `package.json`.
+
+This is useful for library-like or framework-integrated bundles where peer dependencies are expected to be provided by the host application or runtime.
 
 ### exclude
 
