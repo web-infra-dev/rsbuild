@@ -1,4 +1,4 @@
-import { expect, test } from '@e2e/helper';
+import { expect, getFileContent, test } from '@e2e/helper';
 
 test('support SSR', async ({ page, devOnly }) => {
   const rsbuild = await devOnly();
@@ -32,9 +32,10 @@ test('support SSR with autoExternal', async ({ page, devOnly }) => {
   await page.goto(url.href);
   await expect(page.locator('body')).toContainText('Rsbuild with React');
 
-  const distContent = Object.values(rsbuild.getDistFiles()).join('\n');
-  expect(distContent).toContain('module.exports = require("react")');
-  expect(distContent).toContain('module.exports = require("react-dom/server")');
+  const files = rsbuild.getDistFiles();
+  const content = getFileContent(files, 'dist/index.js');
+  expect(content).toContain('module.exports = require("react")');
+  expect(content).toContain('module.exports = require("react-dom/server")');
 
   await page.goto(url.href);
 
@@ -78,9 +79,10 @@ test('support SSR with esm target and autoExternal', async ({
   await page.goto(url1.href);
   await expect(page.locator('body')).toContainText('Rsbuild with React');
 
-  const distContent = Object.values(rsbuild.getDistFiles()).join('\n');
-  expect(distContent).toContain('import * as __rspack_external_react');
-  expect(distContent).toContain('from "react-dom/server"');
+  const files = rsbuild.getDistFiles();
+  const content = getFileContent(files, 'dist/index.mjs');
+  expect(content).toContain('import * as __rspack_external_react');
+  expect(content).toContain('from "react-dom/server"');
 
   delete process.env.TEST_ESM_LIBRARY;
 });
