@@ -13,11 +13,6 @@ const getConfig = (output: RsbuildConfig['output']): RsbuildConfig => ({
   resolve: {
     alias: resolveAlias,
   },
-  source: {
-    entry: {
-      index: './src/index.js',
-    },
-  },
   output,
 });
 
