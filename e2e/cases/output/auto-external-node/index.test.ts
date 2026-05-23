@@ -1,20 +1,4 @@
-import { join } from 'node:path';
 import { expect, getFileContent, test } from '@e2e/helper';
-import type { RsbuildConfig } from '@rsbuild/core';
-
-const fixtures = join(import.meta.dirname, '../auto-external-fixtures');
-const resolveAlias = {
-  '@e2e/auto-external-pkg': join(fixtures, 'auto-external-pkg'),
-  '@e2e/auto-external-dev-pkg': join(fixtures, 'auto-external-dev-pkg'),
-  '@e2e/auto-external-peer-pkg': join(fixtures, 'auto-external-peer-pkg'),
-};
-
-const getConfig = (output: RsbuildConfig['output']): RsbuildConfig => ({
-  resolve: {
-    alias: resolveAlias,
-  },
-  output,
-});
 
 const expectBundledExport = (
   content: string,
@@ -31,9 +15,11 @@ test('should not auto externalize package.json dependencies by default', async (
   build,
 }) => {
   const rsbuild = await build({
-    config: getConfig({
-      target: 'node',
-    }),
+    config: {
+      output: {
+        target: 'node',
+      },
+    },
   });
   const files = rsbuild.getDistFiles();
   const content = getFileContent(files, '.js');
@@ -51,10 +37,12 @@ test('should auto externalize dependencies and subpath imports', async ({
   build,
 }) => {
   const rsbuild = await build({
-    config: getConfig({
-      target: 'node',
-      autoExternal: true,
-    }),
+    config: {
+      output: {
+        target: 'node',
+        autoExternal: true,
+      },
+    },
   });
   const files = rsbuild.getDistFiles();
   const content = getFileContent(files, '.js');
@@ -70,13 +58,15 @@ test('should allow output.externals to override autoExternal rules', async ({
   build,
 }) => {
   const rsbuild = await build({
-    config: getConfig({
-      target: 'node',
-      autoExternal: true,
-      externals: {
-        '@e2e/auto-external-pkg': '@e2e/auto-external-overridden-pkg',
+    config: {
+      output: {
+        target: 'node',
+        autoExternal: true,
+        externals: {
+          '@e2e/auto-external-pkg': '@e2e/auto-external-overridden-pkg',
+        },
       },
-    }),
+    },
   });
   const files = rsbuild.getDistFiles();
   const content = getFileContent(files, '.js');
@@ -91,12 +81,14 @@ test('should auto externalize devDependencies when enabled', async ({
   build,
 }) => {
   const rsbuild = await build({
-    config: getConfig({
-      target: 'node',
-      autoExternal: {
-        devDependencies: true,
+    config: {
+      output: {
+        target: 'node',
+        autoExternal: {
+          devDependencies: true,
+        },
       },
-    }),
+    },
   });
   const files = rsbuild.getDistFiles();
   const content = getFileContent(files, '.js');
@@ -108,13 +100,15 @@ test('should auto externalize dependencies from custom packageJson path', async 
   build,
 }) => {
   const rsbuild = await build({
-    config: getConfig({
-      target: 'node',
-      autoExternal: {
-        packageJson:
-          '../auto-external-fixtures/_node_modules/package-json-dev/package.json',
+    config: {
+      output: {
+        target: 'node',
+        autoExternal: {
+          packageJson:
+            '../auto-external-fixtures/_node_modules/package-json-dev/package.json',
+        },
       },
-    }),
+    },
   });
   const files = rsbuild.getDistFiles();
   const content = getFileContent(files, '.js');
@@ -132,15 +126,17 @@ test('should auto externalize dependencies from multiple packageJson paths', asy
   build,
 }) => {
   const rsbuild = await build({
-    config: getConfig({
-      target: 'node',
-      autoExternal: {
-        packageJson: [
-          '../auto-external-fixtures/_node_modules/package-json-dep/package.json',
-          '../auto-external-fixtures/_node_modules/package-json-peer/package.json',
-        ],
+    config: {
+      output: {
+        target: 'node',
+        autoExternal: {
+          packageJson: [
+            '../auto-external-fixtures/_node_modules/package-json-dep/package.json',
+            '../auto-external-fixtures/_node_modules/package-json-peer/package.json',
+          ],
+        },
       },
-    }),
+    },
   });
   const files = rsbuild.getDistFiles();
   const content = getFileContent(files, '.js');
@@ -156,12 +152,14 @@ test('should not auto externalize packages matched by string exclude', async ({
   build,
 }) => {
   const rsbuild = await build({
-    config: getConfig({
-      target: 'node',
-      autoExternal: {
-        exclude: '@e2e/auto-external-pkg',
+    config: {
+      output: {
+        target: 'node',
+        autoExternal: {
+          exclude: '@e2e/auto-external-pkg',
+        },
       },
-    }),
+    },
   });
   const files = rsbuild.getDistFiles();
   const content = getFileContent(files, '.js');
@@ -177,12 +175,14 @@ test('should not auto externalize packages matched by regexp exclude', async ({
   build,
 }) => {
   const rsbuild = await build({
-    config: getConfig({
-      target: 'node',
-      autoExternal: {
-        exclude: /^@e2e\/auto-external-peer-pkg$/,
+    config: {
+      output: {
+        target: 'node',
+        autoExternal: {
+          exclude: /^@e2e\/auto-external-peer-pkg$/,
+        },
       },
-    }),
+    },
   });
   const files = rsbuild.getDistFiles();
   const content = getFileContent(files, '.js');
@@ -197,12 +197,14 @@ test('should not auto externalize packages matched by mixed exclude', async ({
   build,
 }) => {
   const rsbuild = await build({
-    config: getConfig({
-      target: 'node',
-      autoExternal: {
-        exclude: ['@e2e/auto-external-pkg', /^@e2e\/auto-external-peer-pkg$/],
+    config: {
+      output: {
+        target: 'node',
+        autoExternal: {
+          exclude: ['@e2e/auto-external-pkg', /^@e2e\/auto-external-peer-pkg$/],
+        },
       },
-    }),
+    },
   });
   const files = rsbuild.getDistFiles();
   const content = getFileContent(files, '.js');
