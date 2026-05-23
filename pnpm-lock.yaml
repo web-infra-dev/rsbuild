@@ -594,24 +594,37 @@ importers:
         specifier: 'catalog:'
         version: 5.1.0
 
-  e2e/cases/output/auto-external:
+  e2e/cases/output/auto-external-fixtures/auto-external-dev-pkg: {}
+
+  e2e/cases/output/auto-external-fixtures/auto-external-peer-pkg: {}
+
+  e2e/cases/output/auto-external-fixtures/auto-external-pkg: {}
+
+  e2e/cases/output/auto-external-node:
     dependencies:
       '@e2e/auto-external-pkg':
-        specifier: link:./fixtures/auto-external-pkg
-        version: link:fixtures/auto-external-pkg
+        specifier: workspace:*
+        version: link:../auto-external-fixtures/auto-external-pkg
     devDependencies:
       '@e2e/auto-external-dev-pkg':
-        specifier: link:./fixtures/auto-external-dev-pkg
-        version: link:fixtures/auto-external-dev-pkg
+        specifier: workspace:*
+        version: link:../auto-external-fixtures/auto-external-dev-pkg
       '@e2e/auto-external-peer-pkg':
-        specifier: link:./fixtures/auto-external-peer-pkg
-        version: link:fixtures/auto-external-peer-pkg
+        specifier: workspace:*
+        version: link:../auto-external-fixtures/auto-external-peer-pkg
 
-  e2e/cases/output/auto-external/fixtures/auto-external-dev-pkg: {}
-
-  e2e/cases/output/auto-external/fixtures/auto-external-peer-pkg: {}
-
-  e2e/cases/output/auto-external/fixtures/auto-external-pkg: {}
+  e2e/cases/output/auto-external-web:
+    dependencies:
+      '@e2e/auto-external-pkg':
+        specifier: workspace:*
+        version: link:../auto-external-fixtures/auto-external-pkg
+    devDependencies:
+      '@e2e/auto-external-dev-pkg':
+        specifier: workspace:*
+        version: link:../auto-external-fixtures/auto-external-dev-pkg
+      '@e2e/auto-external-peer-pkg':
+        specifier: workspace:*
+        version: link:../auto-external-fixtures/auto-external-peer-pkg
 
   e2e/cases/plugin-react/react-compiler-babel:
     dependencies:

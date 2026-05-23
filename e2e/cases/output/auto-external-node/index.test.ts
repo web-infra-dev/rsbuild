@@ -16,11 +16,6 @@ test('should not auto externalize package.json dependencies by default', async (
 }) => {
   const rsbuild = await build({
     config: {
-      source: {
-        entry: {
-          index: './src/index.js',
-        },
-      },
       output: {
         target: 'node',
       },
@@ -43,11 +38,6 @@ test('should auto externalize dependencies and subpath imports', async ({
 }) => {
   const rsbuild = await build({
     config: {
-      source: {
-        entry: {
-          index: './src/index.js',
-        },
-      },
       output: {
         target: 'node',
         autoExternal: true,
@@ -69,11 +59,6 @@ test('should allow output.externals to override autoExternal rules', async ({
 }) => {
   const rsbuild = await build({
     config: {
-      source: {
-        entry: {
-          index: './src/index.js',
-        },
-      },
       output: {
         target: 'node',
         autoExternal: true,
@@ -97,11 +82,6 @@ test('should auto externalize devDependencies when enabled', async ({
 }) => {
   const rsbuild = await build({
     config: {
-      source: {
-        entry: {
-          index: './src/index.js',
-        },
-      },
       output: {
         target: 'node',
         autoExternal: {
@@ -121,15 +101,10 @@ test('should auto externalize dependencies from custom packageJson path', async 
 }) => {
   const rsbuild = await build({
     config: {
-      source: {
-        entry: {
-          index: './src/index.js',
-        },
-      },
       output: {
         target: 'node',
         autoExternal: {
-          packageJson: './fixtures/_node_modules/package-json-dev/package.json',
+          packageJson: '../auto-external-fixtures/package-json-dev.json',
         },
       },
     },
@@ -151,17 +126,12 @@ test('should auto externalize dependencies from multiple packageJson paths', asy
 }) => {
   const rsbuild = await build({
     config: {
-      source: {
-        entry: {
-          index: './src/index.js',
-        },
-      },
       output: {
         target: 'node',
         autoExternal: {
           packageJson: [
-            './fixtures/_node_modules/package-json-dep/package.json',
-            './fixtures/_node_modules/package-json-peer/package.json',
+            '../auto-external-fixtures/package-json-dep.json',
+            '../auto-external-fixtures/package-json-peer.json',
           ],
         },
       },
@@ -182,11 +152,6 @@ test('should not auto externalize packages matched by string exclude', async ({
 }) => {
   const rsbuild = await build({
     config: {
-      source: {
-        entry: {
-          index: './src/index.js',
-        },
-      },
       output: {
         target: 'node',
         autoExternal: {
@@ -210,11 +175,6 @@ test('should not auto externalize packages matched by regexp exclude', async ({
 }) => {
   const rsbuild = await build({
     config: {
-      source: {
-        entry: {
-          index: './src/index.js',
-        },
-      },
       output: {
         target: 'node',
         autoExternal: {
@@ -237,11 +197,6 @@ test('should not auto externalize packages matched by mixed exclude', async ({
 }) => {
   const rsbuild = await build({
     config: {
-      source: {
-        entry: {
-          index: './src/index.js',
-        },
-      },
       output: {
         target: 'node',
         autoExternal: {
