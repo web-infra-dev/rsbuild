@@ -116,6 +116,67 @@ test('should auto externalize devDependencies when enabled', async ({
   expect(content).toContain('external "@e2e/auto-external-dev-pkg"');
 });
 
+test('should auto externalize dependencies from custom packageJson path', async ({
+  build,
+}) => {
+  const rsbuild = await build({
+    config: {
+      source: {
+        entry: {
+          index: './src/index.js',
+        },
+      },
+      output: {
+        target: 'node',
+        autoExternal: {
+          packageJson: './fixtures/_node_modules/package-json-dev/package.json',
+        },
+      },
+    },
+  });
+  const files = rsbuild.getDistFiles();
+  const content = getFileContent(files, '.js');
+
+  expect(content).toContain('external "@e2e/auto-external-dev-pkg"');
+  expect(content).not.toContain('external "@e2e/auto-external-pkg"');
+  expect(content).not.toContain('external "@e2e/auto-external-pkg/subpath"');
+  expect(content).not.toContain('external "@e2e/auto-external-peer-pkg"');
+  expectBundledExport(content, 'dep');
+  expectBundledSubpath(content);
+  expectBundledExport(content, 'peer');
+});
+
+test('should auto externalize dependencies from multiple packageJson paths', async ({
+  build,
+}) => {
+  const rsbuild = await build({
+    config: {
+      source: {
+        entry: {
+          index: './src/index.js',
+        },
+      },
+      output: {
+        target: 'node',
+        autoExternal: {
+          packageJson: [
+            './fixtures/_node_modules/package-json-dep/package.json',
+            './fixtures/_node_modules/package-json-peer/package.json',
+          ],
+        },
+      },
+    },
+  });
+  const files = rsbuild.getDistFiles();
+  const content = getFileContent(files, '.js');
+
+  expect(content).toContain('external "@e2e/auto-external-pkg"');
+  expect(content).toContain('external "@e2e/auto-external-pkg/subpath"');
+  expect(content).toContain('external "@e2e/auto-external-peer-pkg"');
+  expect(content).not.toContain('external "@e2e/auto-external-dev-pkg"');
+  expectBundledExport(content, 'dev');
+});
+
 test('should not auto externalize packages matched by string exclude', async ({
   build,
 }) => {

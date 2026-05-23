@@ -14,13 +14,14 @@ type AutoExternal =
       optionalDependencies?: boolean;
       devDependencies?: boolean;
       peerDependencies?: boolean;
+      packageJson?: string | string[];
       exclude?: string | RegExp | (string | RegExp)[];
     };
 ```
 
 - **默认值：** `false`
 
-用于自动 external 根目录 `package.json` 中声明的依赖。开启后，Rsbuild 会读取 `<root>/package.json` 中的依赖字段，并将匹配到的包名转换为 [output.externals](/config/output/externals) 规则。
+用于自动 external `package.json` 中声明的依赖。开启后，Rsbuild 默认会读取 `<root>/package.json` 中的依赖字段，并将匹配到的包名转换为 [output.externals](/config/output/externals) 规则。
 
 这个能力适用于 Node.js 或 SSR bundle 场景。例如，一些依赖需要由运行时加载，而不是被打进 bundle，包括观测 SDK、原生插件，或依赖运行时 instrumentation 的包。
 
@@ -123,7 +124,7 @@ export default {
 - **类型：** `boolean`
 - **默认值：** `true`
 
-是否自动 external 根目录 `package.json` 的 `dependencies` 字段中声明的包。
+是否自动 external 配置的 `package.json` 文件中 `dependencies` 字段声明的包。
 
 当该选项为 `true` 时，Rsbuild 会将 `dependencies` 中的每个包名转换为 external 规则。这些包的子路径导入也会被 external。
 
@@ -132,7 +133,7 @@ export default {
 - **类型：** `boolean`
 - **默认值：** `true`
 
-是否自动 external 根目录 `package.json` 的 `optionalDependencies` 字段中声明的包。
+是否自动 external 配置的 `package.json` 文件中 `optionalDependencies` 字段声明的包。
 
 这个选项适用于可选依赖由运行时环境安装和加载，而不是被打进产物的场景。
 
@@ -141,7 +142,7 @@ export default {
 - **类型：** `boolean`
 - **默认值：** `false`
 
-是否自动 external 根目录 `package.json` 的 `devDependencies` 字段中声明的包。
+是否自动 external 配置的 `package.json` 文件中 `devDependencies` 字段声明的包。
 
 `devDependencies` 默认不会被 external，因为它们通常只在本地开发、测试或构建工具链中使用。仅当构建产物需要在运行时加载 `devDependencies` 中的包时，才需要开启该选项。
 
@@ -150,9 +151,34 @@ export default {
 - **类型：** `boolean`
 - **默认值：** `true`
 
-是否自动 external 根目录 `package.json` 的 `peerDependencies` 字段中声明的包。
+是否自动 external 配置的 `package.json` 文件中 `peerDependencies` 字段声明的包。
 
 这个选项适用于类库或框架集成场景，peer dependencies 通常应由宿主应用或运行时提供。
+
+### packageJson
+
+- **类型：**
+
+```ts
+type PackageJson = string | string[];
+```
+
+- **默认值：** `'<root>/package.json'`
+
+指定用于收集依赖的 `package.json` 文件路径。相对路径会基于 Rsbuild 根目录解析。
+
+当指定多个文件时，Rsbuild 会合并它们的依赖字段，并对包名去重。
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    target: 'node',
+    autoExternal: {
+      packageJson: ['./package.json', './apps/server/package.json'],
+    },
+  },
+};
+```
 
 ### exclude
 
@@ -209,7 +235,7 @@ export default {
 
 ## 版本历史
 
-| 版本   | 变更内容                        |
-| ------ | ------------------------------- |
-| v2.0.7 | 新增 `output.autoExternal` 选项 |
-| v2.0.8 | 新增 `exclude`                  |
+| 版本   | 变更内容                             |
+| ------ | ------------------------------------ |
+| v2.0.7 | 新增 `output.autoExternal` 选项      |
+| v2.0.8 | 新增 `exclude` 和 `packageJson` 选项 |

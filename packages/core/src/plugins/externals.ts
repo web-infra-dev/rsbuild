@@ -1,6 +1,10 @@
+import { resolve } from 'node:path';
 import type { Externals } from '@rspack/core';
 import { castArray, isPlainObject } from '../helpers';
-import { readPackageJson, type PackageJson } from '../helpers/packageJson';
+import {
+  readPackageJsonByPath,
+  type PackageJson,
+} from '../helpers/packageJson';
 import type { AutoExternal, RsbuildPlugin } from '../types';
 
 type DependencyType =
@@ -42,6 +46,59 @@ const resolveAutoExternalOptions = (autoExternal?: AutoExternal) => {
 
 const escapeRegExp = (str: string): string =>
   str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
+
+const resolvePackageJsonPaths = (
+  rootPath: string,
+  packageJson?: string | string[],
+): string[] => {
+  return castArray(packageJson ?? 'package.json').map((path) =>
+    resolve(rootPath, path),
+  );
+};
+
+const mergePackageJsonList = (
+  packageJsonList: PackageJson[],
+): PackageJson | undefined => {
+  if (!packageJsonList.length) {
+    return undefined;
+  }
+
+  return dependencyTypes.reduce<PackageJson>((merged, type) => {
+    for (const pkgJson of packageJsonList) {
+      const deps = pkgJson[type];
+
+      if (isPlainObject(deps)) {
+        merged[type] = {
+          ...merged[type],
+          ...deps,
+        };
+      }
+    }
+
+    return merged;
+  }, {});
+};
+
+const readPackageJsonList = async (
+  paths: string[],
+  cache: Map<string, PackageJson | undefined>,
+): Promise<PackageJson | undefined> => {
+  const packageJsonList = await Promise.all(
+    paths.map(async (path) => {
+      if (!cache.has(path)) {
+        cache.set(path, await readPackageJsonByPath(path));
+      }
+
+      return cache.get(path);
+    }),
+  );
+
+  return mergePackageJsonList(
+    packageJsonList.filter((pkgJson): pkgJson is PackageJson =>
+      Boolean(pkgJson),
+    ),
+  );
+};
 
 const matchAutoExternalExclude = (
   packageName: string,
@@ -132,17 +189,23 @@ export function pluginExternals(): RsbuildPlugin {
   return {
     name: 'rsbuild:externals',
     setup(api) {
-      let pkgJson: PackageJson | undefined;
-      let hasReadPackageJson = false;
+      const packageJsonCache = new Map<string, PackageJson | undefined>();
       let hasWarnedReadPackageJsonFailed = false;
 
       api.modifyBundlerChain(async (chain, { environment }) => {
         const { autoExternal, externals } = environment.config.output;
         const externalOptions = resolveAutoExternalOptions(autoExternal);
+        let pkgJson: PackageJson | undefined;
 
-        if (externalOptions && !hasReadPackageJson) {
-          pkgJson = await readPackageJson(api.context.rootPath);
-          hasReadPackageJson = true;
+        if (externalOptions) {
+          const packageJsonPaths = resolvePackageJsonPaths(
+            api.context.rootPath,
+            externalOptions.packageJson,
+          );
+          pkgJson = await readPackageJsonList(
+            packageJsonPaths,
+            packageJsonCache,
+          );
         }
 
         if (externalOptions && !pkgJson && !hasWarnedReadPackageJsonFailed) {
