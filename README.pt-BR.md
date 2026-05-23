@@ -84,11 +84,15 @@ Venha e converse conosco no [Discord](https://discord.gg/XsaKEEk4mW)! O time do 
 
 ## 🙏 Créditos
 
-O Rsbuild foi inspirado por vários projetos excepcionais da comunidade. Gostaríamos de reconhecer e expressar nossa sincera gratidão aos seguintes projetos:
+Partes do Rsbuild foram derivadas ou inspiradas por excelentes projetos open source. Agradecemos sinceramente pelo trabalho desses projetos e pelas ideias que eles compartilharam com a comunidade:
 
-- Várias implementações de plugins foram inspiradas pelo [create-react-app](https://github.com/facebook/create-react-app)
-- Múltiplas funções utilitárias foram adaptadas do [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)
-- Vários padrões de design de API foram influenciados pelo [Vite](https://github.com/vitejs/vite)
+- [create-react-app](https://github.com/react/create-react-app)
+- [Vite](https://github.com/vitejs/vite)
+- [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)
+- [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware)
+- [connect-history-api-fallback](https://github.com/bripkens/connect-history-api-fallback)
+- [preload-webpack-plugin](https://github.com/vuejs/preload-webpack-plugin)
+- [dotenv](https://github.com/motdotla/dotenv)
 
 ## 📖 Licença
 
