@@ -104,8 +104,7 @@ test('should auto externalize dependencies from custom packageJson path', async 
       output: {
         target: 'node',
         autoExternal: {
-          packageJson:
-            '../auto-external-fixtures/_node_modules/package-json-dev/package.json',
+          packageJson: '../auto-external-fixtures/package-json-dev.json',
         },
       },
     },
@@ -131,8 +130,8 @@ test('should auto externalize dependencies from multiple packageJson paths', asy
         target: 'node',
         autoExternal: {
           packageJson: [
-            '../auto-external-fixtures/_node_modules/package-json-dep/package.json',
-            '../auto-external-fixtures/_node_modules/package-json-peer/package.json',
+            '../auto-external-fixtures/package-json-dep.json',
+            '../auto-external-fixtures/package-json-peer.json',
           ],
         },
       },
