@@ -25,11 +25,15 @@ type AutoExternal =
 
 这个能力适用于 Node.js 或 SSR bundle 场景。例如，一些依赖需要由运行时加载，而不是被打进 bundle，包括观测 SDK、原生插件，或依赖运行时 instrumentation 的包。
 
-:::tip
+## 何时使用
 
-`output.autoExternal` 默认关闭。在普通 Web 应用构建中，依赖通常需要被打进 bundle，浏览器才能直接运行产物。如果你在 Web target 中开启 `output.autoExternal`，需要确保被 external 的依赖能在运行时被提供，例如通过 CDN、import map 或宿主环境注入。
+当构建产物可以在运行时直接加载外部依赖时，适合使用 `output.autoExternal`：
 
-:::
+- 适合用于 ESM 产物，例如 `output.module: true`。external 的依赖会保留为 `import` 语句，可以由宿主环境提供。
+- 适合用于 CommonJS 产物。external 的依赖会输出为 `require()` 调用，可以由 Node.js 或 CommonJS 类库运行时加载。
+- 避免用于默认的 Web 产物。Rsbuild 默认输出 IIFE bundle，而 IIFE externals 需要明确的浏览器全局变量名。`output.autoExternal` 只能从 `package.json` 中读取包名，无法可靠推导这些全局变量名。
+
+对于使用默认 IIFE 产物的 Web 应用，建议手动配置 [output.externals](/config/output/externals)，这样可以显式设置浏览器全局变量名。对于 `@scope/pkg/button` 或 `react-dom/client` 这类 scoped package 和子路径导入，这一点尤其重要。
 
 ## 默认行为
 
@@ -60,7 +64,7 @@ export default {
 
 ## 子路径导入
 
-Rsbuild 也会 external 匹配依赖的子路径导入。例如，如果 `react` 声明在 `dependencies` 中，下面两个导入都会被 external：
+当 `output.autoExternal` 生效时，Rsbuild 也会 external 匹配依赖的子路径导入。例如，如果 `react` 声明在 `dependencies` 中，下面两个导入都会被 external：
 
 ```ts
 import React from 'react';
