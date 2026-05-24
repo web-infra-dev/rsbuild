@@ -33,6 +33,8 @@ const externals: Rspack.Configuration['externals'] = [
   'tsx/cjs/api',
   // allow to `require('events')`
   { events: 'node-commonjs node:events' },
+  // allow `debug` to require its optional peer dependency
+  { 'supports-color': 'node-commonjs supports-color' },
   // externalize pre-bundled dependencies
   ({ request }, callback) => {
     const entries = Object.entries(regexpMap);
