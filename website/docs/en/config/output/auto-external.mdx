@@ -31,6 +31,16 @@ This is useful for Node.js or SSR bundles where some dependencies should be load
 
 :::
 
+## When to use
+
+Use `output.autoExternal` when the build output can load external dependencies directly at runtime:
+
+- Use it for ESM output, such as `output.module: true`. Externalized dependencies stay as `import` statements, so they can be provided by import maps or the host environment.
+- Use it for CommonJS output. Externalized dependencies become `require()` calls, so they can be loaded by Node.js or a CommonJS library runtime.
+- Avoid using it for the default web output. Rsbuild emits an IIFE bundle by default, and IIFE externals need explicit browser global variable names. `output.autoExternal` only reads package names from `package.json`, so it cannot infer those globals reliably.
+
+For web apps that use the default IIFE output, configure [output.externals](/config/output/externals) manually so you can set the browser global name explicitly. This is especially important for scoped packages and subpath imports such as `@scope/pkg/button` or `react-dom/client`.
+
 ## Default behavior
 
 When `output.autoExternal` is `true`, the following dependency types are externalized by default:
@@ -60,7 +70,7 @@ export default {
 
 ## Subpath imports
 
-Rsbuild also externalizes subpath imports of matched dependencies. For example, if `react` is declared in `dependencies`, both of the following imports will be externalized:
+When `output.autoExternal` is applied, Rsbuild also externalizes subpath imports of matched dependencies. For example, if `react` is declared in `dependencies`, both of the following imports will be externalized:
 
 ```ts
 import React from 'react';
