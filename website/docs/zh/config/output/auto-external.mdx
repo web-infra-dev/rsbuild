@@ -35,7 +35,7 @@ type AutoExternal =
 
 当构建产物可以在运行时直接加载外部依赖时，适合使用 `output.autoExternal`：
 
-- 适合用于 ESM 产物，例如 `output.module: true`。external 的依赖会保留为 `import` 语句，可以由 import maps 或宿主环境提供。
+- 适合用于 ESM 产物，例如 `output.module: true`。external 的依赖会保留为 `import` 语句，可以由宿主环境提供。
 - 适合用于 CommonJS 产物。external 的依赖会输出为 `require()` 调用，可以由 Node.js 或 CommonJS 类库运行时加载。
 - 避免用于默认的 Web 产物。Rsbuild 默认输出 IIFE bundle，而 IIFE externals 需要明确的浏览器全局变量名。`output.autoExternal` 只能从 `package.json` 中读取包名，无法可靠推导这些全局变量名。
 
