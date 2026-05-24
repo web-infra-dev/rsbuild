@@ -13,8 +13,6 @@ type DependencyType =
   | 'peerDependencies'
   | 'devDependencies';
 
-type ExternalItem = Extract<Externals, unknown[]>[number];
-
 const dependencyTypes: DependencyType[] = [
   'dependencies',
   'peerDependencies',
@@ -160,12 +158,14 @@ export const composeAutoExternalRules = (options: {
 
   const uniqueExternals = Array.from(new Set(externals));
 
+  if (!uniqueExternals.length) {
+    return undefined;
+  }
+
   // Exclude dependencies and subpath imports, e.g. `react`, `react/jsx-runtime`.
-  return uniqueExternals.length
-    ? uniqueExternals.map(
-        (dep) => new RegExp(`^${escapeRegExp(dep)}(?:$|[/\\\\])`),
-      )
-    : undefined;
+  return uniqueExternals.map(
+    (dep) => new RegExp(`^${escapeRegExp(dep)}(?:$|[/\\\\])`),
+  );
 };
 
 const mergeExternals = (
@@ -181,8 +181,8 @@ const mergeExternals = (
   }
 
   return Array.isArray(userExternals)
-    ? [...(userExternals as ExternalItem[]), ...autoExternalRules]
-    : [userExternals as ExternalItem, ...autoExternalRules];
+    ? [...userExternals, ...autoExternalRules]
+    : [userExternals, ...autoExternalRules];
 };
 
 export function pluginExternals(): RsbuildPlugin {
@@ -220,6 +220,7 @@ export function pluginExternals(): RsbuildPlugin {
           pkgJson,
           userExternals: externals,
         });
+
         const mergedExternals = mergeExternals(externals, autoExternalRules);
 
         if (mergedExternals) {
