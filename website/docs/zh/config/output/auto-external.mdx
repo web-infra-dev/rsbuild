@@ -25,12 +25,6 @@ type AutoExternal =
 
 这个能力适用于 Node.js 或 SSR bundle 场景。例如，一些依赖需要由运行时加载，而不是被打进 bundle，包括观测 SDK、原生插件，或依赖运行时 instrumentation 的包。
 
-:::tip
-
-`output.autoExternal` 默认关闭。在普通 Web 应用构建中，依赖通常需要被打进 bundle，浏览器才能直接运行产物。如果你在 Web target 中开启 `output.autoExternal`，需要确保被 external 的依赖能在运行时被提供，例如通过 CDN、import map 或宿主环境注入。
-
-:::
-
 ## 何时使用
 
 当构建产物可以在运行时直接加载外部依赖时，适合使用 `output.autoExternal`：

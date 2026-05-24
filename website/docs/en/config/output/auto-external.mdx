@@ -25,12 +25,6 @@ Automatically externalize dependencies declared in `package.json`. When enabled,
 
 This is useful for Node.js or SSR bundles where some dependencies should be loaded by the runtime instead of being bundled, such as observability SDKs, native addons, or dependencies that rely on runtime instrumentation.
 
-:::tip
-
-`output.autoExternal` is disabled by default. In normal web app builds, dependencies are usually bundled so that the browser can run the output directly. If you enable `output.autoExternal` for a web target, make sure the externalized dependencies are available at runtime, for example through a CDN, import map, or host environment.
-
-:::
-
 ## When to use
 
 Use `output.autoExternal` when the build output can load external dependencies directly at runtime:
