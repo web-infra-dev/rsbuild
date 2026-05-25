@@ -5,7 +5,7 @@ type TailwindUrlResult = {
   styleUrl: string;
 };
 
-test('should return transformed Tailwind CSS URL with `?url`', async ({
+test('should return transformed Tailwind CSS URL with plugin and `?url`', async ({
   page,
   runBothServe,
 }) => {
