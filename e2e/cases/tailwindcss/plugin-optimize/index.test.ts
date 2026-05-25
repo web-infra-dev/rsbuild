@@ -1,19 +1,23 @@
 import { expect, getFileContent, test } from '@e2e/helper';
 import { pluginTailwindcss } from '@rsbuild/plugin-tailwindcss';
 
+const commonConfig = {
+  html: {
+    template: './src/index.html',
+  },
+  output: {
+    minify: false,
+  },
+  tools: {
+    lightningcssLoader: false,
+  },
+};
+
 test('should disable Tailwind optimization by default', async ({ build }) => {
   const rsbuild = await build({
     config: {
-      html: {
-        template: './src/index.html',
-      },
-      output: {
-        minify: false,
-      },
+      ...commonConfig,
       plugins: [pluginTailwindcss()],
-      tools: {
-        lightningcssLoader: false,
-      },
     },
   });
 
@@ -26,16 +30,8 @@ test('should enable Tailwind minify when optimize is true', async ({
 }) => {
   const rsbuild = await build({
     config: {
-      html: {
-        template: './src/index.html',
-      },
-      output: {
-        minify: false,
-      },
+      ...commonConfig,
       plugins: [pluginTailwindcss({ optimize: true })],
-      tools: {
-        lightningcssLoader: false,
-      },
     },
   });
 
@@ -49,16 +45,8 @@ test('should keep Tailwind minify disabled when optimize minify is omitted', asy
 }) => {
   const rsbuild = await build({
     config: {
-      html: {
-        template: './src/index.html',
-      },
-      output: {
-        minify: false,
-      },
+      ...commonConfig,
       plugins: [pluginTailwindcss({ optimize: {} })],
-      tools: {
-        lightningcssLoader: false,
-      },
     },
   });
 
@@ -75,16 +63,8 @@ test('should enable Tailwind minify when optimize minify is true', async ({
 }) => {
   const rsbuild = await build({
     config: {
-      html: {
-        template: './src/index.html',
-      },
-      output: {
-        minify: false,
-      },
+      ...commonConfig,
       plugins: [pluginTailwindcss({ optimize: { minify: true } })],
-      tools: {
-        lightningcssLoader: false,
-      },
     },
   });
 
