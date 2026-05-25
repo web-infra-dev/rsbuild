@@ -51,6 +51,7 @@ export const pluginTailwindcss = (): RsbuildPlugin => ({
       };
 
       const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
+      addTailwindLoader(cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_URL));
       addTailwindLoader(cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_MAIN));
       addTailwindLoader(cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_INLINE));
     });
