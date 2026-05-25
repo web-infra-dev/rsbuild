@@ -1,6 +1,6 @@
 import { expect, getFileContent, test } from '@e2e/helper';
 
-test('should generate tailwindcss utilities correctly with loader', async ({
+test('should generate tailwindcss utilities correctly with plugin', async ({
   build,
 }) => {
   const rsbuild = await build();

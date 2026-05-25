@@ -1,0 +1,49 @@
+{
+  "name": "@rsbuild/plugin-tailwindcss",
+  "version": "1.0.0",
+  "description": "Tailwind CSS plugin for Rsbuild",
+  "homepage": "https://rsbuild.rs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/plugin-tailwindcss"
+  },
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rslib",
+    "dev": "rslib -w"
+  },
+  "dependencies": {
+    "@tailwindcss/webpack": "catalog:"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "workspace:*",
+    "@rslib/core": "catalog:",
+    "@scripts/test-helper": "workspace:*",
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "@rsbuild/core": "^2.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@rsbuild/core": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}
