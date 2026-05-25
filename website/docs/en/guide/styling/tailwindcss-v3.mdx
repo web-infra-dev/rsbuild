@@ -18,7 +18,7 @@ import { PackageManagerTabs } from '@theme';
 
 ## Configuring PostCSS
 
-You can register the `tailwindcss` PostCSS plugin through [postcss.config.cjs](https://npmjs.com/package/postcss-loader#config) or [tools.postcss](/config/tools/postcss).
+You can register the `tailwindcss` PostCSS plugin through a [PostCSS configuration file](https://npmjs.com/package/postcss-loader#config) or [tools.postcss](/config/tools/postcss).
 
 ```js title="postcss.config.cjs"
 module.exports = {
@@ -65,7 +65,7 @@ module.exports = {
 
 ### Other configuration methods
 
-- You can directly pass the Tailwind CSS configuration to `postcss.config.cjs`:
+- You can directly pass the Tailwind CSS configuration to the PostCSS configuration file:
 
 ```js title="postcss.config.cjs"
 module.exports = {
