@@ -18,7 +18,7 @@ import { PackageManagerTabs } from '@theme';
 
 ## 配置 PostCSS
 
-你可以通过 [postcss.config.cjs](https://npmjs.com/package/postcss-loader#config) 或 [tools.postcss](/config/tools/postcss) 来注册 `tailwindcss` 的 PostCSS 插件。
+你可以通过 [PostCSS 配置文件](https://npmjs.com/package/postcss-loader#config) 或 [tools.postcss](/config/tools/postcss) 来注册 `tailwindcss` 的 PostCSS 插件。
 
 ```js title="postcss.config.cjs"
 module.exports = {
@@ -65,7 +65,7 @@ module.exports = {
 
 ### 其他配置方式
 
-- 你可以在 `postcss.config.cjs` 中直接传入 Tailwind CSS 的配置：
+- 你可以在 PostCSS 配置文件中直接传入 Tailwind CSS 的配置：
 
 ```js title="postcss.config.cjs"
 module.exports = {
