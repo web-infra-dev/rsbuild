@@ -5,6 +5,27 @@ const require = createRequire(import.meta.url);
 
 export const PLUGIN_TAILWINDCSS_NAME = 'rsbuild:tailwindcss';
 
+export type PluginTailwindcssOptions = {
+  /**
+   * Enable Tailwind CSS's built-in Lightning CSS optimization.
+   *
+   * This overlaps with Rsbuild's built-in Lightning CSS optimization. It is
+   * recommended to enable this option only when Rsbuild's built-in Lightning
+   * CSS optimization is disabled.
+   *
+   * @default false
+   */
+  optimize?:
+    | boolean
+    | {
+        /**
+         * Enable minification in Tailwind CSS's built-in Lightning CSS optimization.
+         * @default false
+         */
+        minify?: boolean;
+      };
+};
+
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   value !== null && typeof value === 'object' && !Array.isArray(value);
 
@@ -30,7 +51,9 @@ const incrementCssImportLoaders = (
   });
 };
 
-export const pluginTailwindcss = (): RsbuildPlugin => ({
+export const pluginTailwindcss = (
+  options: PluginTailwindcssOptions = {},
+): RsbuildPlugin => ({
   name: PLUGIN_TAILWINDCSS_NAME,
 
   setup(api) {
@@ -39,7 +62,12 @@ export const pluginTailwindcss = (): RsbuildPlugin => ({
         return;
       }
 
-      const emitCss = environment.config.output.emitCss ?? target === 'web';
+      const { output } = environment.config;
+      const tailwindOptions = {
+        base: api.context.rootPath,
+        optimize: options.optimize ?? false,
+      };
+      const emitCss = output.emitCss ?? target === 'web';
 
       const addTailwindLoader = (rule: RspackChain.Rule<unknown>) => {
         incrementCssImportLoaders(rule, CHAIN_ID.USE.CSS);
@@ -47,9 +75,7 @@ export const pluginTailwindcss = (): RsbuildPlugin => ({
         rule
           .use('tailwindcss')
           .loader(require.resolve('@tailwindcss/webpack'))
-          .options({
-            base: api.context.rootPath,
-          });
+          .options(tailwindOptions);
       };
 
       const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
