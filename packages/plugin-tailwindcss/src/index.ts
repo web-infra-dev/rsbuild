@@ -34,10 +34,12 @@ export const pluginTailwindcss = (): RsbuildPlugin => ({
   name: PLUGIN_TAILWINDCSS_NAME,
 
   setup(api) {
-    api.modifyBundlerChain((chain, { CHAIN_ID }) => {
+    api.modifyBundlerChain((chain, { CHAIN_ID, environment, target }) => {
       if (!chain.module.rules.has(CHAIN_ID.RULE.CSS)) {
         return;
       }
+
+      const emitCss = environment.config.output.emitCss ?? target === 'web';
 
       const addTailwindLoader = (rule: RspackChain.Rule<unknown>) => {
         incrementCssImportLoaders(rule, CHAIN_ID.USE.CSS);
@@ -52,7 +54,9 @@ export const pluginTailwindcss = (): RsbuildPlugin => ({
 
       const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
       addTailwindLoader(cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_URL));
-      addTailwindLoader(cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_MAIN));
+      if (emitCss) {
+        addTailwindLoader(cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_MAIN));
+      }
       addTailwindLoader(cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_INLINE));
     });
   },
