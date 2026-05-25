@@ -34,6 +34,7 @@
     "@rsbuild/plugin-solid": "workspace:*",
     "@rsbuild/plugin-svelte": "workspace:*",
     "@rsbuild/plugin-svgr": "workspace:*",
+    "@rsbuild/plugin-tailwindcss": "workspace:*",
     "@rsbuild/plugin-type-check": "catalog:",
     "@rsbuild/plugin-vue": "workspace:*",
     "@rsdoctor/rspack-plugin": "catalog:",

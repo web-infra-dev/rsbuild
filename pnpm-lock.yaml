@@ -520,6 +520,9 @@ importers:
       '@rsbuild/plugin-svgr':
         specifier: workspace:*
         version: link:../packages/plugin-svgr
+      '@rsbuild/plugin-tailwindcss':
+        specifier: workspace:*
+        version: link:../packages/plugin-tailwindcss
       '@rsbuild/plugin-type-check':
         specifier: 'catalog:'
         version: 1.3.4(@rsbuild/core@packages+core)(typescript@6.0.3)
@@ -1362,6 +1365,28 @@ importers:
       svgo:
         specifier: 'catalog:'
         version: 3.3.3
+      typescript:
+        specifier: 'catalog:'
+        version: 6.0.3
+
+  packages/plugin-tailwindcss:
+    dependencies:
+      '@tailwindcss/webpack':
+        specifier: 'catalog:'
+        version: 4.3.0
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../core
+      '@rslib/core':
+        specifier: 'catalog:'
+        version: 0.21.5(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260516.1)(core-js@3.49.0)(typescript@6.0.3)
+      '@scripts/test-helper':
+        specifier: workspace:*
+        version: link:../../scripts/test-helper
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.12.4
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
