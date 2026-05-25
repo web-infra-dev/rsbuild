@@ -19,10 +19,6 @@ Rsbuild is a modern build tool for web applications, powered by [Rspack](https:/
 
 It delivers fast builds and optimized production output, while keeping configuration simple, consistent, and extensible through plugins.
 
-> [!NOTE]
-> The `main` branch is under active development for **Rsbuild 2.0**.  
-> The stable **1.x** releases are maintained in the [v1.x](https://github.com/web-infra-dev/rsbuild/tree/v1.x) branch.
-
 ## 🔥 Features
 
 Rsbuild has the following features:
