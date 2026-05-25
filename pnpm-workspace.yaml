@@ -93,7 +93,7 @@ catalog:
   'jiti': '^2.7.0'
   'launch-editor-middleware': '^2.13.2'
   'less': '^4.6.4'
-  'less-loader': '^12.3.2'
+  'less-loader': '^13.0.0'
   'lit': '^3.3.2'
   'loader-utils': '^3.3.1'
   'memfs': '^4.57.2'

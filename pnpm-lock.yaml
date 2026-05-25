@@ -239,8 +239,8 @@ catalogs:
       specifier: ^4.6.4
       version: 4.6.4
     less-loader:
-      specifier: ^12.3.2
-      version: 12.3.2
+      specifier: ^13.0.0
+      version: 13.0.0
     lit:
       specifier: ^3.3.2
       version: 3.3.2
@@ -1129,7 +1129,7 @@ importers:
         version: 4.6.4
       less-loader:
         specifier: 'catalog:'
-        version: 12.3.2(@rspack/core@2.0.4)(less@4.6.4)
+        version: 13.0.0(@rspack/core@2.0.4)(less@4.6.4)
       reduce-configs:
         specifier: 'catalog:'
         version: 1.1.2
@@ -4068,9 +4068,9 @@ packages:
   launch-editor@2.13.2:
     resolution: {integrity: sha512-4VVDnbOpLXy/s8rdRCSXb+zfMeFR0WlJWpET1iA9CQdlZDfwyLjUuGQzXU4VeOoey6AicSAluWan7Etga6Kcmg==}
 
-  less-loader@12.3.2:
-    resolution: {integrity: sha512-uLV5c702ff2jBvO7qewpkLRzkh/I9QW07ur2NKkv8TVTrtX2lrKjEbEU/LLXAn7cgpCIBbkfyUm4qYXCQs5/+w==}
-    engines: {node: '>= 18.12.0'}
+  less-loader@13.0.0:
+    resolution: {integrity: sha512-TIa8d6znKH634Mg+7OU3jevZT6KeOhh0amW+YeMPD0GM9buUn5Y7HvtyCR5pUDdLaFfqLA8AX5PTSIHMNSexEA==}
+    engines: {node: '>= 22.11.0'}
     peerDependencies:
       '@rspack/core': 0.x || ^1.0.0 || ^2.0.0-0
       less: ^3.5.0 || ^4.0.0
@@ -8303,8 +8303,9 @@ snapshots:
       picocolors: 1.1.1
       shell-quote: 1.8.3
 
-  less-loader@12.3.2(@rspack/core@2.0.4)(less@4.6.4):
+  less-loader@13.0.0(@rspack/core@2.0.4)(less@4.6.4):
     dependencies:
+      '@types/less': 3.0.8
       less: 4.6.4
     optionalDependencies:
       '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.21)
