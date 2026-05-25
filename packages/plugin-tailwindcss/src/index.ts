@@ -5,8 +5,6 @@ const require = createRequire(import.meta.url);
 
 export const PLUGIN_TAILWINDCSS_NAME = 'rsbuild:tailwindcss';
 
-const TAILWINDCSS_LOADER = 'tailwindcss';
-
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   value !== null && typeof value === 'object' && !Array.isArray(value);
 
@@ -37,18 +35,24 @@ export const pluginTailwindcss = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain((chain, { CHAIN_ID }) => {
-      const cssMainRule = chain.module
-        .rule(CHAIN_ID.RULE.CSS)
-        .oneOf(CHAIN_ID.ONE_OF.CSS_MAIN);
+      if (!chain.module.rules.has(CHAIN_ID.RULE.CSS)) {
+        return;
+      }
 
-      incrementCssImportLoaders(cssMainRule, CHAIN_ID.USE.CSS);
+      const addTailwindLoader = (rule: RspackChain.Rule<unknown>) => {
+        incrementCssImportLoaders(rule, CHAIN_ID.USE.CSS);
 
-      cssMainRule
-        .use(TAILWINDCSS_LOADER)
-        .loader(require.resolve('@tailwindcss/webpack'))
-        .options({
-          base: api.context.rootPath,
-        });
+        rule
+          .use('tailwindcss')
+          .loader(require.resolve('@tailwindcss/webpack'))
+          .options({
+            base: api.context.rootPath,
+          });
+      };
+
+      const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
+      addTailwindLoader(cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_MAIN));
+      addTailwindLoader(cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_INLINE));
     });
   },
 });
