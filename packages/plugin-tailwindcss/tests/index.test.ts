@@ -1,12 +1,12 @@
 import { createRsbuild } from '@rsbuild/core';
 import { matchRules } from '@scripts/test-helper';
-import { pluginTailwindCSS } from '../src';
+import { pluginTailwindcss } from '../src';
 
 describe('plugin-tailwindcss', () => {
   it('should add tailwindcss loader to CSS rule', async () => {
     const rsbuild = await createRsbuild({
       config: {
-        plugins: [pluginTailwindCSS()],
+        plugins: [pluginTailwindcss()],
       },
     });
 

@@ -32,7 +32,7 @@ const incrementCssImportLoaders = (
   });
 };
 
-export const pluginTailwindCSS = (): RsbuildPlugin => ({
+export const pluginTailwindcss = (): RsbuildPlugin => ({
   name: PLUGIN_TAILWINDCSS_NAME,
 
   setup(api) {
