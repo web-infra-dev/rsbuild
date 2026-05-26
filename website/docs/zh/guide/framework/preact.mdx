@@ -1,14 +1,14 @@
 ---
-description: '在这篇文档中，你可以了解到如何基于 Rsbuild 来构建一个 Preact 应用。'
+description: '本文介绍如何基于 Rsbuild 构建 Preact 应用。'
 ---
 
 # Preact
 
-在这篇文档中，你可以了解到如何基于 Rsbuild 来构建一个 Preact 应用。
+本文介绍如何基于 Rsbuild 构建 Preact 应用。
 
 ## 创建 Preact 应用
 
-使用 [create-rsbuild](/guide/start/quick-start#create-an-rsbuild-application) 来创建一个基于 Rsbuild 的 Preact 应用，运行以下命令：
+使用 [create-rsbuild](/guide/start/quick-start#create-an-rsbuild-application) 创建基于 Rsbuild 的 Preact 应用：
 
 import { PackageManagerTabs } from '@theme';
 
@@ -25,9 +25,9 @@ import { PackageManagerTabs } from '@theme';
 
 ## 在已有项目中使用 Preact
 
-为了能够编译 Preact，你需要注册 Rsbuild 的 [Preact 插件](/plugins/list/plugin-preact)，插件会自动添加 Preact 构建所需的配置。
+要编译 Preact，需注册 Rsbuild 的 [Preact 插件](/plugins/list/plugin-preact)，插件会自动添加 Preact 构建所需的配置。
 
-例如，在 `rsbuild.config.ts` 中注册：
+例如，在 Rsbuild 配置中注册：
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';

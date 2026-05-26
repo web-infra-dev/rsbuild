@@ -16,7 +16,7 @@ import { SourceCode } from '@theme';
 
 ### 安装插件
 
-你可以通过如下的命令安装插件:
+执行以下命令安装插件：
 
 import { PackageManagerTabs } from '@theme';
 
@@ -24,7 +24,7 @@ import { PackageManagerTabs } from '@theme';
 
 ### 注册插件
 
-你可以在 `rsbuild.config.ts` 文件中注册插件：
+在 Rsbuild 配置中注册插件：
 
 ```ts title="rsbuild.config.ts"
 import { pluginReact } from '@rsbuild/plugin-react';
@@ -39,7 +39,7 @@ export default {
 
 ### 默认用法
 
-注册插件后，当你在 **JS 文件**中引用 SVG 资源时，如果导入的路径包含 `?react` 后缀，Rsbuild 会调用 SVGR，将 SVG 图片转换为一个 React 组件。
+注册后，在 **JS 文件**中引用带有 `?react` 后缀的 SVG 资源时，Rsbuild 会调用 SVGR 将 SVG 图片转换为 React 组件。
 
 ```jsx title="App.jsx"
 import Logo from './logo.svg?react';

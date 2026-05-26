@@ -55,7 +55,7 @@ Webpack projects often include complex `webpack.config.js` configuration files.
 
 After migrating to Rsbuild, most webpack configurations (such as output, resolve, and module.rules) are built-in and no longer require manual setup.
 
-For the few webpack configurations that need to be migrated, you can choose the following options:
+For the few webpack configurations that need to be migrated, choose from the following options:
 
 - Use the [tools.rspack](/config/tools/rspack) option (Rspack and webpack configurations are basically equivalent).
 
@@ -75,7 +75,7 @@ export default {
 
 ### Build entry
 
-webpack uses the `entry` field to set the build entry. In Rsbuild, you can use [source.entry](/config/source/entry) to set it.
+webpack uses the `entry` field to set the build entry. In Rsbuild, use [source.entry](/config/source/entry) to set it.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -111,7 +111,7 @@ The above list covers only some removable dependencies. Real-world webpack proje
 
 ### Using plugins
 
-Rsbuild offers a rich set of plugins that provide out-of-the-box support for common scenarios. You can refer to the [Plugin List](/plugins/list/index) documentation to learn about these plugins.
+Rsbuild offers a rich set of plugins that provide out-of-the-box support for common scenarios. See the [Plugin list](/plugins/list/index) documentation to learn about these plugins.
 
 For example, in a React project, you can integrate Rsbuild plugins as follows. First, remove React-related build dependencies that the Rsbuild React plugin already includes, such as:
 
@@ -166,7 +166,7 @@ Rsbuild uses SWC by default, so most commonly used Babel plugins are no longer r
 
 `@babel/preset-env` is no longer required, Rsbuild will automatically downgrade code based on the [browserslist](/guide/advanced/browserslist) configuration.
 
-Note that Rsbuild does not inject polyfill by default. You can refer to [Polyfill mode](/guide/advanced/browser-compatibility#polyfills) for how to inject.
+Note that Rsbuild does not inject polyfill by default. See [Polyfill mode](/guide/advanced/browser-compatibility#polyfills) to learn how to inject polyfills.
 
 ### @babel/preset-typescript
 
@@ -211,7 +211,7 @@ export default {
 
 ## Validating results
 
-After completing the above steps, you have completed the basic migration from webpack to Rsbuild. You can now run the `npm run dev` command to try starting the dev server.
+After completing the above steps, you have completed the basic migration from webpack to Rsbuild. Run `npm run dev` to start the dev server.
 
 If you encounter any issues during the build process, please debug according to the error log, or check the webpack configuration to see if there are any necessary configurations that have not been migrated to Rsbuild.
 

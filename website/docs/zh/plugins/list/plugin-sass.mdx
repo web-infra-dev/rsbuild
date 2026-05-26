@@ -14,7 +14,7 @@ import { SourceCode } from '@theme';
 
 ### 安装插件
 
-你可以通过如下的命令安装插件:
+执行以下命令安装插件：
 
 import { PackageManagerTabs } from '@theme';
 
@@ -29,7 +29,7 @@ import { PackageManagerTabs } from '@theme';
 
 ### 注册插件
 
-你可以在 `rsbuild.config.ts` 文件中注册插件：
+在 Rsbuild 配置中注册插件：
 
 ```ts title="rsbuild.config.ts"
 import { pluginSass } from '@rsbuild/plugin-sass';
@@ -39,7 +39,7 @@ export default {
 };
 ```
 
-注册插件后，你可以在代码中引入 `*.scss`，`*.sass`，`*.module.scss` 或 `*.module.sass` 文件，无须添加其他配置。
+注册后，即可在代码中引入 `*.scss`，`*.sass`，`*.module.scss` 或 `*.module.sass` 文件，无须添加其他配置。
 
 ## 选项
 

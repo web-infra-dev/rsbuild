@@ -16,7 +16,7 @@ With the SVGR plugin, Rsbuild supports transforming SVG to React components via 
 
 ### Install plugin
 
-You can install the plugin using the following command:
+Run the following command:
 
 import { PackageManagerTabs } from '@theme';
 
@@ -24,7 +24,7 @@ import { PackageManagerTabs } from '@theme';
 
 ### Register plugin
 
-You can register the plugin in the `rsbuild.config.ts` file:
+Register the plugin in Rsbuild config:
 
 ```ts title="rsbuild.config.ts"
 import { pluginReact } from '@rsbuild/plugin-react';
@@ -39,7 +39,7 @@ export default {
 
 ### Default usage
 
-After registering the plugin, when you import an SVG in a JavaScript file, if the imported path includes the `?react` suffix, Rsbuild will call SVGR to transform the SVG into a React component.
+After registration, when a JavaScript import references an SVG with the `?react` suffix, Rsbuild calls SVGR to transform the SVG into a React component.
 
 ```jsx title="App.jsx"
 import Logo from './logo.svg?react';

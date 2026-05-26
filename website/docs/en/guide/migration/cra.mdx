@@ -15,7 +15,7 @@ After ejecting a CRA project, it becomes more like a project directly using webp
 
 ## Using Agent Skills
 
-If you are using a coding agent that supports Skills, install the [migrate-cra-to-rsbuild](https://github.com/rstackjs/agent-skills#migrate-cra-to-rsbuild) skill to help with the migration process.
+For coding agents that support Skills, install the [migrate-cra-to-rsbuild](https://github.com/rstackjs/agent-skills#migrate-cra-to-rsbuild) skill to help with the migration process.
 
 ```bash
 npx skills add rstackjs/agent-skills --skill migrate-cra-to-rsbuild
@@ -25,7 +25,7 @@ After installation, let the coding agent guide you through the migration process
 
 ## Installing dependencies
 
-First, you need to replace the npm dependencies of CRA with Rsbuild's dependencies.
+First, replace the npm dependencies of CRA with Rsbuild's dependencies.
 
 import { PackageManagerTabs } from '@theme';
 
@@ -41,7 +41,7 @@ import { PackageManagerTabs } from '@theme';
 
 ## Updating npm scripts
 
-Next, you need to update the npm scripts in package.json to Rsbuild's CLI commands.
+Next, update the npm scripts in package.json to Rsbuild's CLI commands.
 
 ```json title="package.json"
 {
@@ -57,7 +57,7 @@ Next, you need to update the npm scripts in package.json to Rsbuild's CLI comman
 ```
 
 :::tip
-Rsbuild doesn't include built-in testing frameworks, so it does not provide a command to replace `react-scripts test`. You can directly use testing frameworks such as [Rstest](https://github.com/web-infra-dev/rstest), Jest or Vitest. Check the [Testing](/guide/advanced/testing) section for more details.
+Rsbuild doesn't include built-in testing frameworks, so it does not provide a command to replace `react-scripts test`. Use testing frameworks such as [Rstest](https://github.com/web-infra-dev/rstest), Jest or Vitest directly. Check the [Testing](/guide/advanced/testing) section for more details.
 :::
 
 ## Creating configuration file
@@ -85,7 +85,7 @@ export default defineConfig({
 });
 ```
 
-In the HTML template, if you are using the `%PUBLIC_URL%` variable from CRA, replace it with Rsbuild's [assetPrefix variable](/config/html/template-parameters) and use a forward slash for concatenation:
+In the HTML template, replace CRA's `%PUBLIC_URL%` variable with Rsbuild's [assetPrefix variable](/config/html/template-parameters) and use a forward slash for concatenation:
 
 ```html
 <!-- [!code --] -->
@@ -100,7 +100,7 @@ This completes the basic migration from CRA to Rsbuild. You can now run the `npm
 
 By default, CRA outputs to the `build` directory, while Rsbuild's default output directory is `dist`.
 
-You can configure Rsbuild's [output.distPath.root](/config/output/dist-path) option to change the directory to `build`, in line with CRA:
+Configure Rsbuild's [output.distPath.root](/config/output/dist-path) option to change the directory to `build`, in line with CRA:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -124,7 +124,7 @@ Rsbuild supports CSS preprocessors such as Sass and Less through plugins. Please
 
 ## Using SVGR
 
-If you are using the "SVG to React Component" feature of CRA (i.e., [SVGR](https://react-svgr.com/)), you also need to install the SVGR plugin for Rsbuild.
+If your CRA project uses the "SVG to React Component" feature (i.e., [SVGR](https://react-svgr.com/)), also install the SVGR plugin for Rsbuild.
 
 For example, if you are using the following usage:
 
@@ -306,9 +306,9 @@ export default {
 
 ## Setup ESLint
 
-CRA uses ESLint to lint the code by default. Rsbuild does not include linting by default, but you can add a separate npm script to run ESLint in `package.json`.
+CRA uses ESLint to lint the code by default. Rsbuild does not include linting by default, but ESLint can be run through a separate npm script in `package.json`.
 
-First, install [eslint](https://eslint.org/) and [eslint-config-react-app](https://npmjs.com/package/eslint-config-react-app), you need to install ESLint v8 to keep consistent with CRA:
+First, install [eslint](https://eslint.org/) and [eslint-config-react-app](https://npmjs.com/package/eslint-config-react-app). Use ESLint v8 to stay consistent with CRA:
 
 <PackageManagerTabs command="add eslint@8 eslint-config-react-app -D" />
 
@@ -325,11 +325,11 @@ Then, add the `lint` command in `package.json`, and confirm that the project con
 }
 ```
 
-Then, you can use the `npm run lint` command to run ESLint.
+Then run `npm run lint` to run ESLint.
 
 ### Run ESLint during the build
 
-In addition to adding the `lint` command in `package.json`, you can also add the [@rsbuild/plugin-eslint](https://github.com/rstackjs/rsbuild-plugin-eslint) plugin to maintain the same behavior as CRA.
+In addition to adding the `lint` command in `package.json`, add the [@rsbuild/plugin-eslint](https://github.com/rstackjs/rsbuild-plugin-eslint) plugin to maintain the same behavior as CRA.
 
 `@rsbuild/plugin-eslint` allows you to run ESLint during the build process.
 
@@ -341,7 +341,7 @@ export default {
 };
 ```
 
-After registering the plugin, ESLint will run automatically during development (`npm run dev`) and production builds (`npm run build`). The plugin will display ESLint warnings and errors in the console output.
+After registration, ESLint runs automatically during development (`npm run dev`) and production builds (`npm run build`). The plugin displays ESLint warnings and errors in the console output.
 
 :::warning
 We do not recommend using the `@rsbuild/plugin-eslint` plugin, as running ESLint during the build process will significantly increase the build time. Instead, we recommend using a separate `lint` command to run ESLint checks.
