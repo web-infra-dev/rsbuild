@@ -179,6 +179,7 @@ minimumReleaseAgeExclude:
   - '@rsdoctor/*'
   - '@rslint/*'
   - '@rstack-dev/doc-ui'
+  - 'rsbuild-plugin-*'
   - '@swc/*'
 
 patchedDependencies:
