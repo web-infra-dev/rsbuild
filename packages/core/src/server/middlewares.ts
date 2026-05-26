@@ -6,7 +6,12 @@ import { addTrailingSlash } from '../helpers/url';
 import { isVerbose, type Logger } from '../logger';
 import type { Connect, EnvironmentAPI, RequestHandler, Rspack } from '../types';
 import type { BuildManager } from './buildManager';
-import { HttpCode, joinUrlSegments, stripBase } from './helper';
+import {
+  HttpCode,
+  isUrlPathUnderBase,
+  joinUrlPath,
+  removeBasePath,
+} from './helper';
 
 export const faviconFallbackMiddleware: RequestHandler = (req, res, next) => {
   if (req.url === '/favicon.ico') {
@@ -177,14 +182,14 @@ export const getBaseUrlMiddleware: (params: {
     const url = req.url!;
     const pathname = getUrlPathname(url);
 
-    if (pathname.startsWith(base)) {
-      req.url = stripBase(url, base);
+    if (isUrlPathUnderBase(pathname, base)) {
+      req.url = removeBasePath(url, base);
       next();
       return;
     }
 
     const redirectPath =
-      addTrailingSlash(url) !== base ? joinUrlSegments(base, url) : base;
+      addTrailingSlash(url) !== base ? joinUrlPath(base, url) : base;
 
     if (pathname === '/' || pathname === '/index.html') {
       // redirect root visit to based url with search and hash

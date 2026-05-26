@@ -34,6 +34,13 @@ test('should apply server.base in dev', async ({ page, dev }) => {
     'The server is configured with a base URL of /base',
   );
 
+  // should not treat paths that only share the base prefix as based URLs
+  const similarPrefixRes = await page.goto(
+    `http://localhost:${rsbuild.port}/baseball`,
+  );
+  expect(similarPrefixRes?.status()).toBe(404);
+  expect(await page.content()).toContain('href="/base/baseball"');
+
   // should visit public dir correctly with base prefix
   await page.goto(`http://localhost:${rsbuild.port}/base/aaa.txt`);
 

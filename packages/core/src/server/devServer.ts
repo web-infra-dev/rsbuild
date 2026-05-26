@@ -36,10 +36,10 @@ import {
   getRoutes,
   getServerTerminator,
   printServerURLs,
+  removeBasePath,
   type RsbuildServerBase,
   resolvePort,
   type StartDevServerResult,
-  stripBase,
 } from './helper';
 import { createHttpServer } from './httpServer';
 import { notFoundMiddleware, optionsFallbackMiddleware } from './middlewares';
@@ -173,7 +173,7 @@ export async function createDevServer<
     context.publicPathnames = publicPaths
       .map(getPathnameFromUrl)
       .map((prefix) =>
-        base && base !== '/' ? stripBase(prefix, base) : prefix,
+        base && base !== '/' ? removeBasePath(prefix, base) : prefix,
       );
 
     compiler?.hooks.watchRun.tap('rsbuild:watchRun', () => {

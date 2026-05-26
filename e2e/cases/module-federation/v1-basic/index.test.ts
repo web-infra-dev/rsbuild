@@ -81,6 +81,7 @@ test('should run module federation in dev with server.base', async ({
   const remotePort = await getRandomPort();
 
   process.env.REMOTE_PORT = remotePort.toString();
+  process.env.REMOTE_BASE = '/remote';
 
   const remoteApp = await devOnly({
     cwd: remote,
@@ -98,6 +99,7 @@ test('should run module federation in dev with server.base', async ({
       },
     },
   });
+  delete process.env.REMOTE_BASE;
 
   await gotoPage(page, remoteApp);
   await expect(page.locator('#title')).toHaveText('Remote');

@@ -1,7 +1,13 @@
 import { rspack } from '@rspack/core';
 import { defaultAllowedOrigins } from '../src/defaultConfig';
 import { isClientCompiler } from '../src/server/assets-middleware';
-import { formatRoutes, printServerURLs } from '../src/server/helper';
+import {
+  formatRoutes,
+  isUrlPathUnderBase,
+  joinUrlPath,
+  printServerURLs,
+  removeBasePath,
+} from '../src/server/helper';
 import { createHttpServer } from '../src/server/httpServer';
 import type { Connect } from '../src/types';
 import { logger } from '../src';
@@ -163,6 +169,24 @@ test('should format routes correctly', () => {
       pathname: '/html/index',
     },
   ]);
+});
+
+test('should handle URL path helpers correctly', () => {
+  expect(joinUrlPath('', '')).toBe('');
+  expect(joinUrlPath('', '/main')).toBe('/main');
+  expect(joinUrlPath('/base', '')).toBe('/base');
+  expect(joinUrlPath('/base', '/')).toBe('/base/');
+  expect(joinUrlPath('/base', '/main')).toBe('/base/main');
+  expect(joinUrlPath('/base/', '/main')).toBe('/base/main');
+
+  expect(removeBasePath('/base', '/base')).toBe('/');
+  expect(removeBasePath('/base/', '/base')).toBe('/');
+  expect(removeBasePath('/base/foo', '/base')).toBe('/foo');
+  expect(removeBasePath('/baseball', '/base')).toBe('/baseball');
+
+  expect(isUrlPathUnderBase('/base', '/base')).toBe(true);
+  expect(isUrlPathUnderBase('/base/foo', '/base')).toBe(true);
+  expect(isUrlPathUnderBase('/baseball', '/base')).toBe(false);
 });
 
 test('should print server URLs correctly', () => {
