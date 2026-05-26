@@ -14,7 +14,7 @@ Solid 插件提供了对 Solid 的支持，插件内部集成了 [babel-preset-s
 
 ### 安装插件
 
-你可以通过如下的命令安装插件:
+执行以下命令安装插件：
 
 import { PackageManagerTabs } from '@theme';
 
@@ -22,7 +22,7 @@ import { PackageManagerTabs } from '@theme';
 
 ### 注册插件
 
-你可以在 `rsbuild.config.ts` 文件中注册插件：
+在 Rsbuild 配置中注册插件：
 
 ```ts title="rsbuild.config.ts"
 import { pluginBabel } from '@rsbuild/plugin-babel';
@@ -38,7 +38,7 @@ export default {
 };
 ```
 
-注册插件后，你可以直接进行 Solid 开发。
+注册后，即可进行 Solid 开发。
 
 :::tip
 由于 Solid 的 JSX 依赖 Babel 进行编译，因此你需要额外添加 [Babel 插件](/plugins/list/plugin-babel)。

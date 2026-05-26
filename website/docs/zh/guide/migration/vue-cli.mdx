@@ -8,7 +8,7 @@ description: '本章节介绍如何将 Vue CLI 项目迁移到 Rsbuild。'
 
 ## 安装依赖
 
-首先你需要把 Vue CLI 的 npm 依赖替换为 Rsbuild 的依赖。
+首先，将 Vue CLI 的 npm 依赖替换为 Rsbuild 的依赖。
 
 import { PackageManagerTabs } from '@theme';
 
@@ -26,7 +26,7 @@ import { PackageManagerTabs } from '@theme';
 
 ## 更新 npm scripts
 
-下一步，你需要把 package.json 中的 npm scripts 更新为 Rsbuild 的 CLI 命令。
+下一步，将 package.json 中的 npm scripts 更新为 Rsbuild 的 CLI 命令。
 
 ```json title="package.json"
 {
@@ -41,7 +41,7 @@ import { PackageManagerTabs } from '@theme';
 ```
 
 :::tip
-Rsbuild 未集成 ESLint，因此没有提供用于替换 `vue-cli-service lint` 的命令，你可以直接使用 ESLint 的 [CLI 命令](https://eslint.org/docs/latest/use/command-line-interface) 作为替代。
+Rsbuild 未集成 ESLint，因此没有提供用于替换 `vue-cli-service lint` 的命令，可直接使用 ESLint 的 [CLI 命令](https://eslint.org/docs/latest/use/command-line-interface) 作为替代。
 :::
 
 ## 创建配置文件
@@ -69,7 +69,7 @@ export default defineConfig({
 
 ## HTML 模板
 
-Vue CLI 默认使用 `public/index.html` 文件作为 HTML 模板。在 Rsbuild 中，你可以通过 [html.template](/config/html/template) 来指定 HTML 模板：
+Vue CLI 默认使用 `public/index.html` 文件作为 HTML 模板。在 Rsbuild 中，通过 [html.template](/config/html/template) 指定 HTML 模板：
 
 ```ts title="rsbuild.config.ts"
 export default defineConfig({
@@ -88,7 +88,7 @@ export default defineConfig({
 <!-- [!code ++] -->
 ```
 
-这样就完成了从 Vue CLI 到 Rsbuild 的基本迁移，此时你可以执行 `npm run serve` 命令来尝试启动开发服务器。
+至此，已完成从 Vue CLI 到 Rsbuild 的基本迁移。运行 `npm run serve` 启动开发服务器。
 
 ## 配置迁移
 
@@ -118,7 +118,7 @@ export default defineConfig({
 
 Vue CLI 默认会将 `VUE_APP_` 开头的环境变量注入到 client 代码中，而 Rsbuild 默认会注入 `PUBLIC_` 开头的环境变量（参考 [public 变量](/guide/advanced/env-vars#public-variables)）。
 
-为了兼容 Vue CLI 的行为，你可以手动调用 Rsbuild 提供的 [loadEnv](/api/javascript-api/core#loadenv) 方法来读取 `VUE_APP_` 开头的环境变量，并通过 [source.define](/config/source/define) 配置项注入到 client 代码中。
+为了兼容 Vue CLI 的行为，可手动调用 Rsbuild 提供的 [loadEnv](/api/javascript-api/core#loadenv) 方法来读取 `VUE_APP_` 开头的环境变量，并通过 [source.define](/config/source/define) 配置项注入到 client 代码中。
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig, loadEnv } from '@rsbuild/core';

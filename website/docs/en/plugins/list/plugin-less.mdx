@@ -14,7 +14,7 @@ Use [Less](https://lesscss.org/) as the CSS preprocessor, implemented based on [
 
 ### Install plugin
 
-You can install the plugin using the following command:
+Run the following command:
 
 import { PackageManagerTabs } from '@theme';
 
@@ -29,7 +29,7 @@ import { PackageManagerTabs } from '@theme';
 
 ### Register plugin
 
-You can register the plugin in the `rsbuild.config.ts` file:
+Register the plugin in Rsbuild config:
 
 ```ts title="rsbuild.config.ts"
 import { pluginLess } from '@rsbuild/plugin-less';
@@ -39,7 +39,7 @@ export default {
 };
 ```
 
-After registering the plugin, you can import `*.less` or `*.module.less` files into the code without adding other configs.
+After registration, you can import `*.less` or `*.module.less` files without additional config.
 
 ## Options
 

@@ -14,7 +14,7 @@ Use [Sass](https://sass-lang.com/) as the CSS preprocessor, implemented based on
 
 ### Install plugin
 
-Install the plugin using this command:
+Run the following command:
 
 import { PackageManagerTabs } from '@theme';
 
@@ -29,7 +29,7 @@ import { PackageManagerTabs } from '@theme';
 
 ### Register plugin
 
-Register the plugin in your `rsbuild.config.ts` file:
+Register the plugin in Rsbuild config:
 
 ```ts title="rsbuild.config.ts"
 import { pluginSass } from '@rsbuild/plugin-sass';
@@ -39,7 +39,7 @@ export default {
 };
 ```
 
-After registering the plugin, you can import `*.scss`, `*.sass`, `*.module.scss` or `*.module.sass` files into the code without adding other configs.
+After registration, you can import `*.scss`, `*.sass`, `*.module.scss`, or `*.module.sass` files without additional config.
 
 ## Options
 
