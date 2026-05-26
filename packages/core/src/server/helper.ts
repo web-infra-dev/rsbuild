@@ -6,7 +6,11 @@ import { posix, relative, sep } from 'node:path';
 import { ALL_INTERFACES_IPV4, LOCALHOST } from '../constants';
 import { color, isFunction } from '../helpers';
 import { getCommonParentPath } from '../helpers/path';
-import { addTrailingSlash, removeLeadingSlash } from '../helpers/url';
+import {
+  addTrailingSlash,
+  removeLeadingSlash,
+  removeTailingSlash,
+} from '../helpers/url';
 import type { Logger } from '../logger';
 import type {
   Connect,
@@ -73,23 +77,38 @@ const formatPrefix = (input: string | undefined) => {
 };
 
 // /a + /b => /a/b
-export const joinUrlSegments = (s1: string, s2: string): string => {
-  if (!s1 || !s2) {
-    return s1 || s2 || '';
+export const joinUrlPath = (basePath: string, pathname: string): string => {
+  if (basePath === '') {
+    return pathname;
   }
 
-  return addTrailingSlash(s1) + removeLeadingSlash(s2);
+  if (pathname === '') {
+    return basePath;
+  }
+
+  return addTrailingSlash(basePath) + removeLeadingSlash(pathname);
 };
 
-export const stripBase = (path: string, base: string): string => {
-  if (path === base) {
+export const isUrlPathUnderBase = (pathname: string, base: string): boolean => {
+  const basePath = removeTailingSlash(base);
+  return (
+    basePath === '' ||
+    pathname === basePath ||
+    pathname.startsWith(`${basePath}/`)
+  );
+};
+
+export const removeBasePath = (url: string, base: string): string => {
+  const basePath = removeTailingSlash(base);
+  if (basePath === '') {
+    return url;
+  }
+
+  if (url === basePath) {
     return '/';
   }
-  const trailingSlashBase = addTrailingSlash(base);
 
-  return path.startsWith(trailingSlashBase)
-    ? path.slice(trailingSlashBase.length - 1)
-    : path;
+  return url.startsWith(`${basePath}/`) ? url.slice(basePath.length) : url;
 };
 
 export const getRoutes = (context: InternalContext): Routes => {
@@ -127,7 +146,7 @@ export const formatRoutes = (
   distPathPrefix: string | undefined,
   outputStructure: OutputStructure | undefined,
 ): Routes => {
-  const prefix = joinUrlSegments(base, formatPrefix(distPathPrefix));
+  const prefix = joinUrlPath(base, formatPrefix(distPathPrefix));
 
   return (
     Object.keys(entry)

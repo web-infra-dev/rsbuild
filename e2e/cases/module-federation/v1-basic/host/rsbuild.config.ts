@@ -7,7 +7,7 @@ export default defineConfig({
     options: {
       name: 'host',
       remotes: {
-        remote: `remote@http://localhost:${process.env.REMOTE_PORT || 3002}/remoteEntry.js`,
+        remote: `remote@http://localhost:${process.env.REMOTE_PORT || 3002}${process.env.REMOTE_BASE || ''}/remoteEntry.js`,
       },
       shared: {
         react: {
