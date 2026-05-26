@@ -62,6 +62,27 @@ Now you can use Tailwind's utility classes in your HTML or framework components:
 Tailwind CSS v4 is not designed to be used with CSS preprocessors like Sass, Less, or Stylus. You need to place the `@import 'tailwindcss';` statement at the beginning of a `.css` file. See [Tailwind CSS - Compatibility](https://tailwindcss.com/docs/compatibility#sass-less-and-stylus) for more details.
 :::
 
+## Scan scope
+
+By default, this plugin uses the [Rsbuild root directory](/config/root) as Tailwind CSS's scan base, which defaults to `process.cwd()`.
+
+Tailwind CSS automatically detects class names from files under the scan base. You can narrow or customize the scan scope with Tailwind CSS's `source(...)` function and [`@source` directive](https://tailwindcss.com/docs/detecting-classes-in-source-files#explicitly-registering-sources) in your CSS entry file:
+
+```css title="src/index.css"
+@import 'tailwindcss' source('./');
+```
+
+You can also disable automatic source detection and explicitly register source files:
+
+```css title="src/index.css"
+@import 'tailwindcss' source(none);
+
+@source './pages/**/*.html';
+@source './components/**/*.{js,ts,jsx,tsx}';
+```
+
+Relative paths in `source(...)` and `@source` are resolved from the CSS file that contains them.
+
 ## Options
 
 ### optimize
