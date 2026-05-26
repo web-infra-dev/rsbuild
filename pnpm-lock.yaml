@@ -173,7 +173,7 @@ catalogs:
       specifier: ^1.9.12
       version: 1.9.12
     browserslist-load-config:
-      specifier: 1.0.1
+      specifier: ^1.0.1
       version: 1.0.1
     cac:
       specifier: ^7.0.0
@@ -206,7 +206,7 @@ catalogs:
       specifier: ^4.3.1
       version: 4.3.1
     dotenv-expand:
-      specifier: 13.0.0
+      specifier: ^13.0.0
       version: 13.0.0
     fast-glob:
       specifier: ^3.3.3
@@ -215,8 +215,8 @@ catalogs:
       specifier: ^11.3.5
       version: 11.3.5
     heading-case:
-      specifier: ^1.1.0
-      version: 1.1.0
+      specifier: ^1.1.1
+      version: 1.1.1
     hono:
       specifier: ^4.12.22
       version: 4.12.22
@@ -431,7 +431,7 @@ importers:
         version: 0.0.4
       heading-case:
         specifier: 'catalog:'
-        version: 1.1.0
+        version: 1.1.1
       nano-staged:
         specifier: 'catalog:'
         version: 1.0.2
@@ -3893,8 +3893,8 @@ packages:
   hastscript@9.0.1:
     resolution: {integrity: sha512-g7df9rMFX/SPi34tyGCyUBREQoKkapwdY/T04Qn9TDWfHhAYt4/I0gMVirzK5wEzeUqIjEB+LXC/ypb7Aqno5w==}
 
-  heading-case@1.1.0:
-    resolution: {integrity: sha512-VNNu8W4V3Sc64VyLgeQU3uB5PIq0CM4yyD+OKq0zKgMMOOQGftNfCiwDahpFasKYN+RNY9+29jBZUBW8x9O/8A==}
+  heading-case@1.1.1:
+    resolution: {integrity: sha512-pLoUf2saaUO1BsMLb6Ug8GHIeW8sUkgzho89LDNeWQgOm4fJwwC/PtpoMlaoUnR79mSZyUyxSNkUDVIC7QbqjA==}
     hasBin: true
 
   homedir-polyfill@1.0.3:
@@ -8170,7 +8170,7 @@ snapshots:
       property-information: 7.1.0
       space-separated-tokens: 2.0.2
 
-  heading-case@1.1.0: {}
+  heading-case@1.1.1: {}
 
   homedir-polyfill@1.0.3:
     dependencies:

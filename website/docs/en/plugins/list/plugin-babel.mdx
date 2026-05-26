@@ -276,6 +276,31 @@ When you configure the `include` or `exclude` options, Rsbuild will create a sep
 This separate rule is completely independent of the SWC rule built into Rsbuild and is not affected by [source.include](/config/source/include) and [source.exclude](/config/source/exclude).
 :::
 
+### Configure multiple Babel plugins
+
+By using the `include` and `exclude` options, you can register multiple Babel plugins and specify different Babel transformations for different files.
+
+For example:
+
+```ts
+export default {
+  plugins: [
+    pluginBabel({
+      exclude: /\.legacy\.js$/,
+      babelLoaderOptions: {
+        plugins: ['babel-plugin-modern'],
+      },
+    }),
+    pluginBabel({
+      include: /\.legacy\.js$/,
+      babelLoaderOptions: {
+        plugins: ['babel-plugin-legacy'],
+      },
+    }),
+  ],
+};
+```
+
 ## Execution order
 
 After using `@rsbuild/plugin-babel`, Rsbuild will use both `babel-loader` and `builtin:swc-loader` to compile JavaScript files, with Babel running before SWC.
