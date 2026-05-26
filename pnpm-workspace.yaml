@@ -51,7 +51,7 @@ catalog:
   '@svgr/core': '8.1.0'
   '@svgr/plugin-jsx': '8.1.0'
   '@svgr/plugin-svgo': '8.1.0'
-  '@swc/helpers': '^0.5.21'
+  '@swc/helpers': '^0.5.22'
   '@swc/plugin-prefresh': '^12.10.0'
   '@swc/plugin-remove-console': '^12.10.0'
   '@tailwindcss/postcss': '^4.3.0'
@@ -179,8 +179,8 @@ minimumReleaseAgeExclude:
   - '@rsdoctor/*'
   - '@rslint/*'
   - '@rstack-dev/doc-ui'
-  # Renovate security update: svelte@5.55.7
-  - svelte@5.55.7
+  - 'rsbuild-plugin-*'
+  - '@swc/*'
 
 patchedDependencies:
   css-loader@7.1.4: patches/css-loader@7.1.4.patch
