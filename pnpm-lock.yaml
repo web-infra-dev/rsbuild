@@ -465,6 +465,9 @@ importers:
       solid-js:
         specifier: 'catalog:'
         version: 1.9.13
+      svelte:
+        specifier: 'catalog:'
+        version: 5.55.9
       vue:
         specifier: 'catalog:'
         version: 3.5.34(typescript@6.0.3)
