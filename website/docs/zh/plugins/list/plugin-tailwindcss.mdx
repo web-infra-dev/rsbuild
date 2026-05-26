@@ -62,6 +62,27 @@ import './index.css';
 Tailwind CSS v4 不能与 Sass、Less 或 Stylus 等 CSS 预处理器一起使用，你需要将 `@import 'tailwindcss';` 语句放在 `.css` 文件的开头，详见 [Tailwind CSS - Compatibility](https://tailwindcss.com/docs/compatibility#sass-less-and-stylus)。
 :::
 
+## 扫描范围
+
+默认情况下，该插件会使用 [Rsbuild 根目录](/config/root) 作为 Tailwind CSS 的扫描基准目录（默认为 `process.cwd()`）。
+
+Tailwind CSS 会自动从扫描基准目录下的文件中检测类名。你可以在 CSS 入口文件中使用 Tailwind CSS 的 `source(...)` 函数和 [`@source` 指令](https://tailwindcss.com/docs/detecting-classes-in-source-files#explicitly-registering-sources) 来收窄或自定义扫描范围：
+
+```css title="src/index.css"
+@import 'tailwindcss' source('./');
+```
+
+也可以禁用自动源文件检测，并显式注册需要扫描的源文件：
+
+```css title="src/index.css"
+@import 'tailwindcss' source(none);
+
+@source './pages/**/*.html';
+@source './components/**/*.{js,ts,jsx,tsx}';
+```
+
+`source(...)` 和 `@source` 中的相对路径会基于声明它们的 CSS 文件进行解析。
+
 ## 选项
 
 ### optimize
