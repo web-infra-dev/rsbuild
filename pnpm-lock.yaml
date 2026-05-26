@@ -113,8 +113,8 @@ catalogs:
       specifier: 8.1.0
       version: 8.1.0
     '@swc/helpers':
-      specifier: ^0.5.21
-      version: 0.5.21
+      specifier: ^0.5.22
+      version: 0.5.22
     '@swc/plugin-prefresh':
       specifier: ^12.10.0
       version: 12.10.0
@@ -913,10 +913,10 @@ importers:
     dependencies:
       '@rspack/core':
         specifier: 'catalog:'
-        version: 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.21)
+        version: 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.22)
       '@swc/helpers':
         specifier: 'catalog:'
-        version: 0.5.21
+        version: 0.5.22
     devDependencies:
       '@jridgewell/remapping':
         specifier: 'catalog:'
@@ -2879,6 +2879,9 @@ packages:
 
   '@swc/helpers@0.5.21':
     resolution: {integrity: sha512-jI/VAmtdjB/RnI8GTnokyX7Ug8c+g+ffD6QRLa6XQewtnGyukKkKSk3wLTM3b5cjt1jNh9x0jfVlagdN2gDKQg==}
+
+  '@swc/helpers@0.5.22':
+    resolution: {integrity: sha512-/e2Ly3Docn9kYByap6TV4oquJ3wQuz3c+kC74riqtkwU9CwTMeuj6t2rW+bRr4pyOx/CYQM4wr0RgaKQwGEz0A==}
 
   '@swc/plugin-prefresh@12.10.0':
     resolution: {integrity: sha512-QGxS9IVAggBEB+6fXJcsHYXDRPg2762J9HqhHVAryoPxT4hObWAX1nyOhp0/kWLN77SGu665DY/xlFdLWiVCDw==}
@@ -6245,7 +6248,7 @@ snapshots:
       '@module-federation/manifest': 2.5.0(node-fetch@2.7.0)(typescript@6.0.3)
       '@module-federation/runtime-tools': 2.5.0(node-fetch@2.7.0)
       '@module-federation/sdk': 2.5.0(node-fetch@2.7.0)
-      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.21)
+      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.22)
     optionalDependencies:
       typescript: 6.0.3
     transitivePeerDependencies:
@@ -6499,8 +6502,8 @@ snapshots:
 
   '@rsbuild/core@2.0.7(@module-federation/runtime-tools@2.5.0)(core-js@3.49.0)':
     dependencies:
-      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.21)
-      '@swc/helpers': 0.5.21
+      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.22)
+      '@swc/helpers': 0.5.22
     optionalDependencies:
       core-js: 3.49.0
     transitivePeerDependencies:
@@ -6784,12 +6787,12 @@ snapshots:
     optionalDependencies:
       '@swc/helpers': 0.5.21
 
-  '@rspack/core@2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.21)':
+  '@rspack/core@2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.22)':
     dependencies:
       '@rspack/binding': 2.0.4
     optionalDependencies:
       '@module-federation/runtime-tools': 2.5.0(node-fetch@2.7.0)
-      '@swc/helpers': 0.5.21
+      '@swc/helpers': 0.5.22
 
   '@rspack/lite-tapable@1.1.0': {}
 
@@ -6802,7 +6805,7 @@ snapshots:
     dependencies:
       react-refresh: 0.18.0
     optionalDependencies:
-      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.21)
+      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.22)
 
   '@rspack/resolver-binding-darwin-arm64@0.2.8':
     optional: true
@@ -7120,6 +7123,10 @@ snapshots:
   '@swc/counter@0.1.3': {}
 
   '@swc/helpers@0.5.21':
+    dependencies:
+      tslib: 2.8.1
+
+  '@swc/helpers@0.5.22':
     dependencies:
       tslib: 2.8.1
 
@@ -7519,7 +7526,7 @@ snapshots:
       '@babel/core': 7.29.0
       find-up: 5.0.0
     optionalDependencies:
-      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.21)
+      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.22)
 
   babel-plugin-jsx-dom-expressions@0.40.6(@babel/core@7.29.0):
     dependencies:
@@ -7732,7 +7739,7 @@ snapshots:
       postcss-value-parser: 4.2.0
       semver: 7.7.4
     optionalDependencies:
-      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.21)
+      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.22)
 
   css-select@5.2.2:
     dependencies:
@@ -8194,7 +8201,7 @@ snapshots:
     dependencies:
       '@rspack/lite-tapable': 1.1.0
     optionalDependencies:
-      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.21)
+      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.22)
 
   html-void-elements@3.0.0: {}
 
@@ -8339,7 +8346,7 @@ snapshots:
     dependencies:
       less: 4.6.4
     optionalDependencies:
-      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.21)
+      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.22)
 
   less@4.6.4:
     dependencies:
@@ -9126,7 +9133,7 @@ snapshots:
       postcss: 8.5.15
       semver: 7.7.4
     optionalDependencies:
-      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.21)
+      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.22)
     transitivePeerDependencies:
       - typescript
 
@@ -9463,13 +9470,13 @@ snapshots:
 
   rspack-chain@2.0.1(@rspack/core@2.0.4):
     optionalDependencies:
-      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.21)
+      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.22)
 
   rspack-manifest-plugin@5.2.1(@rspack/core@2.0.4):
     dependencies:
       '@rspack/lite-tapable': 1.1.0
     optionalDependencies:
-      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.21)
+      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.22)
 
   rspack-merge@0.1.1: {}
 
@@ -9478,7 +9485,7 @@ snapshots:
       '@rspack/lite-tapable': 1.1.0
       chalk: 4.1.2
     optionalDependencies:
-      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.21)
+      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.22)
       vue: 3.5.34(typescript@6.0.3)
 
   rspress-plugin-font-open-sans@1.0.3(@rspress/core@2.0.12):
@@ -9588,7 +9595,7 @@ snapshots:
     dependencies:
       neo-async: 2.6.2
     optionalDependencies:
-      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.21)
+      '@rspack/core': 2.0.4(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.22)
       sass: 1.100.0
       sass-embedded: 1.100.0
 
