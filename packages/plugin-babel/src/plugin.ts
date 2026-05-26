@@ -8,7 +8,7 @@ import type {
   RsbuildContext,
   RsbuildPlugin,
 } from '@rsbuild/core';
-import { applyUserBabelConfig, BABEL_JS_RULE, castArray } from './helper.js';
+import { applyUserBabelConfig, castArray, getBabelRuleId } from './helper.js';
 import type { BabelLoaderOptions, PluginBabelOptions } from './types.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -138,7 +138,7 @@ export const pluginBabel = (
 
         if (include || exclude) {
           const rule = chain.module
-            .rule(BABEL_JS_RULE)
+            .rule(getBabelRuleId(chain))
             // run babel loader before the builtin JS rule
             // https://stackoverflow.com/questions/32234329/what-is-the-loader-order-for-webpack
             .after(CHAIN_ID.RULE.JS);

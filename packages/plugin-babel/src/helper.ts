@@ -14,6 +14,26 @@ import type {
 
 export const BABEL_JS_RULE = 'babel-js';
 
+export const getBabelRuleId = (chain: RspackChain): string => {
+  let id = BABEL_JS_RULE;
+  let index = 0;
+  while (chain.module.rules.has(id)) {
+    id = `${BABEL_JS_RULE}-${++index}`;
+  }
+  return id;
+};
+
+const isBabelRuleId = (id: string) =>
+  id === BABEL_JS_RULE || id.startsWith(`${BABEL_JS_RULE}-`);
+
+const getBabelRules = (chain: RspackChain) => {
+  const ruleIds = Object.keys(chain.module.rules.entries()).filter(
+    isBabelRuleId,
+  );
+
+  return ruleIds.map((id) => chain.module.rules.get(id));
+};
+
 export const castArray = <T>(arr?: T | T[]): T[] => {
   if (arr === undefined) {
     return [];
@@ -193,7 +213,7 @@ export const modifyBabelLoaderOptions = ({
       .get(CHAIN_ID.RULE.JS)
       .oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN),
     chain.module.rules.get(CHAIN_ID.RULE.JS_DATA_URI),
-    chain.module.rules.get(BABEL_JS_RULE),
+    ...getBabelRules(chain),
   ].filter(Boolean);
 
   for (const rule of rules) {

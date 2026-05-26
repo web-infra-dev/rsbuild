@@ -145,4 +145,32 @@ describe('plugins/babel', () => {
     const configs = await rsbuild.initConfigs();
     expect(matchRules(configs[0], 'a.tsx')[0]).toMatchSnapshot();
   });
+
+  it('should allow to add multiple babel rules', async () => {
+    const rsbuild = await createRsbuild({
+      cwd: import.meta.dirname,
+      config: {
+        plugins: [
+          pluginBabel({
+            include: /a\.js$/,
+            babelLoaderOptions: {
+              plugins: ['babel-plugin-a'],
+            },
+          }),
+          pluginBabel({
+            include: /b\.js$/,
+            babelLoaderOptions: {
+              plugins: ['babel-plugin-b'],
+            },
+          }),
+        ],
+        performance: {
+          buildCache: false,
+        },
+      },
+    });
+
+    const configs = await rsbuild.initConfigs();
+    expect(matchRules(configs[0], 'a.js')).toMatchSnapshot();
+  });
 });
