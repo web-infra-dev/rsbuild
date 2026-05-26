@@ -276,9 +276,9 @@ When you configure the `include` or `exclude` options, Rsbuild will create a sep
 This separate rule is completely independent of the SWC rule built into Rsbuild and is not affected by [source.include](/config/source/include) and [source.exclude](/config/source/exclude).
 :::
 
-### Configure multiple Babel plugins
+### Configure multiple Babel rules
 
-By using the `include` and `exclude` options, you can register multiple Babel plugins and specify different Babel transformations for different files.
+By using the `include` and `exclude` options, you can register multiple `@rsbuild/plugin-babel` instances and create separate Babel rules for different files.
 
 For example:
 
