@@ -44,6 +44,7 @@ import type {
 } from './thirdParty';
 import type {
   ConfigChain,
+  ConfigChainAsyncWithContext,
   ConfigChainMergeContext,
   ConfigChainWithContext,
   LiteralUnion,
@@ -1796,7 +1797,7 @@ export interface HtmlConfig {
    * Define the parameters in the HTML template,
    * corresponding to the `templateParameters` config of [html-rspack-plugin](https://github.com/rstackjs/html-rspack-plugin).
    */
-  templateParameters?: ConfigChainWithContext<
+  templateParameters?: ConfigChainAsyncWithContext<
     Record<string, unknown>,
     { entryName: string }
   >;

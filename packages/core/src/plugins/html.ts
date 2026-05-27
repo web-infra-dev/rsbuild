@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path, { isAbsolute } from 'node:path';
 import type { EntryDescription } from '@rspack/core';
 import {
+  reduceConfigsAsyncWithContext,
   reduceConfigsMergeContext,
   reduceConfigsWithContext,
 } from 'reduce-configs';
@@ -129,7 +130,7 @@ function getTemplateParameters(
   config: NormalizedEnvironmentConfig,
   assetPrefix: string,
 ): HtmlRspackPlugin.Options['templateParameters'] {
-  return (compilation, assets, assetTags, pluginOptions) => {
+  return async (compilation, assets, assetTags, pluginOptions) => {
     const { mountId, templateParameters } = config.html;
     const rspackConfig = compilation.options;
     const htmlPlugin = {
@@ -147,7 +148,7 @@ function getTemplateParameters(
       rspackConfig,
     };
 
-    return reduceConfigsWithContext({
+    return reduceConfigsAsyncWithContext({
       initial: defaultOptions,
       config: templateParameters,
       ctx: { entryName },
