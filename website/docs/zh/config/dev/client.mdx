@@ -273,22 +273,24 @@ export default {
 以下是一个自定义 transport 模块的示例，它从脚本自身的 URL 推导 WebSocket 地址：
 
 ```js title="client/customTransport.js"
-let cachedUrl = null;
+let cachedBaseUrl = null;
 
 export default function createWebSocket(url) {
-  if (!cachedUrl) {
-    const { protocol, host, pathname } = new URL(document.currentScript.src);
-    const wsPath =
-      pathname.slice(0, pathname.lastIndexOf('/')) + '/rsbuild-hmr';
-    const wsProtocol = protocol === 'https:' ? 'wss:' : 'ws:';
-    cachedUrl = `${wsProtocol}//${host}${wsPath}`;
+  if (!cachedBaseUrl) {
+    const scriptUrl = new URL(document.currentScript.src);
+    const wsProtocol = scriptUrl.protocol === 'https:' ? 'wss:' : 'ws:';
+    cachedBaseUrl = `${wsProtocol}//${scriptUrl.host}/rsbuild-hmr`;
   }
-  return new WebSocket(cachedUrl);
+  // 保留原始 URL 中的 token 用于身份验证
+  const token = new URL(url).searchParams.get('token');
+  return new WebSocket(`${cachedBaseUrl}?token=${token}`);
 }
 ```
 
 :::tip
 工厂函数在每次建立 WebSocket 连接时都会被调用，包括断线重连。由于 `document.currentScript` 仅在脚本同步执行期间可用，你需要在首次调用时缓存计算结果（如上面的示例所示）。
+
+`url` 参数包含 Rsbuild 用于标识 environment 的 `token` 查询参数，构造自定义 URL 时需要保留它。
 :::
 
 ## 版本历史
@@ -299,4 +301,3 @@ export default function createWebSocket(url) {
 | v1.7.0  | 新增 `overlay.runtime` 选项           |
 | v2.0.3  | 新增 `overlay.errors` 选项            |
 | v2.0.4  | 支持为 `overlay.runtime` 配置过滤函数 |
-| NEXT    | 新增 `webSocketTransport` 选项        |

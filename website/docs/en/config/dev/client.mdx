@@ -275,22 +275,24 @@ export default {
 Example of a custom transport module that derives the WebSocket URL from the script's own location:
 
 ```js title="client/customTransport.js"
-let cachedUrl = null;
+let cachedBaseUrl = null;
 
 export default function createWebSocket(url) {
-  if (!cachedUrl) {
-    const { protocol, host, pathname } = new URL(document.currentScript.src);
-    const wsPath =
-      pathname.slice(0, pathname.lastIndexOf('/')) + '/rsbuild-hmr';
-    const wsProtocol = protocol === 'https:' ? 'wss:' : 'ws:';
-    cachedUrl = `${wsProtocol}//${host}${wsPath}`;
+  if (!cachedBaseUrl) {
+    const scriptUrl = new URL(document.currentScript.src);
+    const wsProtocol = scriptUrl.protocol === 'https:' ? 'wss:' : 'ws:';
+    cachedBaseUrl = `${wsProtocol}//${scriptUrl.host}/rsbuild-hmr`;
   }
-  return new WebSocket(cachedUrl);
+  // Preserve the token from the original URL for authentication
+  const token = new URL(url).searchParams.get('token');
+  return new WebSocket(`${cachedBaseUrl}?token=${token}`);
 }
 ```
 
 :::tip
 The factory function is called each time a WebSocket connection is established, including reconnection attempts. Since `document.currentScript` is only available during synchronous script execution, you should cache the computed URL on the first call (as shown above).
+
+The `url` parameter contains a `token` query parameter used by Rsbuild to identify the environment. You should preserve it when constructing a custom URL.
 :::
 
 ## Version history
@@ -301,4 +303,3 @@ The factory function is called each time a WebSocket connection is established, 
 | v1.7.0  | Added `overlay.runtime` option                          |
 | v2.0.3  | Added `overlay.errors` option                           |
 | v2.0.4  | Added support for filter functions in `overlay.runtime` |
-| NEXT    | Added `webSocketTransport` option                       |

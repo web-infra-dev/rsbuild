@@ -1,7 +1,7 @@
 import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 
-test('HMR should work with custom webSocketTransport', async ({
+test('HMR should work when webSocketTransport derives URL from script src', async ({
   page,
   dev,
   editFile,
@@ -19,16 +19,16 @@ test('HMR should work with custom webSocketTransport', async ({
     },
   });
 
-  // Verify custom transport was used
-  const transportUsed = await page.evaluate(
-    () => (window as any).__CUSTOM_TRANSPORT_USED__,
-  );
-  expect(transportUsed).toBe(true);
-
-  // Verify HMR works
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
 
+  // Verify custom transport derived URL from document.currentScript.src
+  const transportUrl = await page.evaluate(
+    () => (window as any).__CUSTOM_TRANSPORT_URL__,
+  );
+  expect(transportUrl).toMatch(/^wss?:\/\/.+\/rsbuild-hmr\?token=/);
+
+  // Verify HMR works with the custom transport
   await editFile(join(tempSrc, 'App.tsx'), (code) =>
     code.replace('Hello Rsbuild', 'Hello Test'),
   );
