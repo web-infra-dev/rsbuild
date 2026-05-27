@@ -11,3 +11,4 @@ declare module '@rspack/core' {
 }
 
 export type RspackRule = Rspack.RuleSetRules[number];
+export type RspackPlugin = NonNullable<Rspack.Configuration['plugins']>[number];

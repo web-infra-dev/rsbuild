@@ -345,9 +345,7 @@ export default {
 - **Type:** `
 
 ```ts
-function prependPlugins(
-  plugins: Rspack.RspackPluginInstance | Rspack.RspackPluginInstance[],
-): void;
+function prependPlugins(plugins: Rspack.Plugin | Rspack.Plugin[]): void;
 ```
 
 Add additional plugins to the head of the internal Rspack plugins array, and the plugin will be executed first.
@@ -371,9 +369,7 @@ export default {
 - **Type:**
 
 ```ts
-function appendPlugins(
-  plugins: Rspack.RspackPluginInstance | Rspack.RspackPluginInstance[],
-): void;
+function appendPlugins(plugins: Rspack.Plugin | Rspack.Plugin[]): void;
 ```
 
 Add additional plugins at the end of the internal Rspack plugins array, the plugin will be executed last.
@@ -383,7 +379,7 @@ export default {
   tools: {
     rspack: (config, { appendPlugins }) => {
       // add a single plugin
-      appendPlugins([new PluginA()]);
+      appendPlugins(new PluginA());
 
       // Add multiple plugins
       appendPlugins([new PluginA(), new PluginB()]);
