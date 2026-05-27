@@ -18,8 +18,8 @@ cleanupUnusedCatalogs: true
 catalog:
   '@babel/core': '^7.29.0'
   '@babel/plugin-proposal-decorators': '^7.29.0'
-  '@babel/plugin-transform-class-properties': '^7.28.6'
-  '@babel/preset-typescript': '^7.28.5'
+  '@babel/plugin-transform-class-properties': '^7.29.7'
+  '@babel/preset-typescript': '^7.29.7'
   '@hono/node-server': '^2.0.3'
   '@jridgewell/remapping': '^2.3.5'
   '@jridgewell/trace-mapping': '^0.3.31'
