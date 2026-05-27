@@ -31,7 +31,7 @@ import type {
 } from './hooks';
 import type { RsbuildPlugins } from './plugin';
 import type { RsbuildEntry, RsbuildMode, RsbuildTarget } from './rsbuild';
-import type { Rspack, RspackRule } from './rspack';
+import type { Rspack, RspackPlugin, RspackRule } from './rspack';
 import type {
   Connect,
   CSSExtractOptions,
@@ -100,12 +100,8 @@ export type RspackMerge = (
 export type ModifyRspackConfigUtils = ModifyChainUtils & {
   addRules: (rules: RspackRule | RspackRule[]) => void;
   appendRules: (rules: RspackRule | RspackRule[]) => void;
-  prependPlugins: (
-    plugins: Rspack.RspackPluginInstance | Rspack.RspackPluginInstance[],
-  ) => void;
-  appendPlugins: (
-    plugins: Rspack.RspackPluginInstance | Rspack.RspackPluginInstance[],
-  ) => void;
+  prependPlugins: (plugins: OneOrMany<RspackPlugin>) => void;
+  appendPlugins: (plugins: OneOrMany<RspackPlugin>) => void;
   removePlugin: (pluginName: string) => void;
   mergeConfig: RspackMerge;
 };
