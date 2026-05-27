@@ -201,22 +201,23 @@ function applyHMREntry({
     config.dev.liveReload,
   );
 
-  const clientConfig = { ...config.dev.client };
-  if (clientConfig.port === '<port>') {
-    clientConfig.port = resolvedPort;
+  const { webSocketTransport, ...clientConfigRest } = { ...config.dev.client };
+  if (clientConfigRest.port === '<port>') {
+    clientConfigRest.port = resolvedPort;
   }
 
   const hmrEntry = `import { init } from '${toPosixPath(join(CLIENT_PATH, 'hmr.js'))}';
 ${isOverlayEnabled(config.dev.client.overlay) ? `import '${toPosixPath(join(CLIENT_PATH, 'overlay.js'))}';` : ''}
+${webSocketTransport ? `import __rsbuild_ws_transport from '${toPosixPath(webSocketTransport)}';` : ''}
 init(
   '${token}',
-  ${JSON.stringify(clientConfig)},
+  ${JSON.stringify(clientConfigRest)},
   ${JSON.stringify(resolvedHost)},
   ${resolvedPort},
   ${JSON.stringify(config.server.base)},
   ${liveReloadEnabled},
   ${Boolean(config.dev.browserLogs)},
-  ${JSON.stringify(config.dev.client.logLevel)}
+  ${JSON.stringify(config.dev.client.logLevel)}${webSocketTransport ? ',\n  __rsbuild_ws_transport' : ''}
 )
 `;
 

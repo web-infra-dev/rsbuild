@@ -1956,11 +1956,16 @@ export type ClientConfig = {
    * @default 'info'
    */
   logLevel?: 'info' | 'warn' | 'error' | 'silent';
+  /**
+   * The path to a custom WebSocket transport module.
+   * The module should default export a function: `(url: string) => WebSocket`.
+   */
+  webSocketTransport?: string;
 };
 
 export type NormalizedClientConfig = Optional<
   Required<ClientConfig>,
-  'protocol'
+  'protocol' | 'webSocketTransport'
 >;
 
 export type { ChokidarOptions };

@@ -24,6 +24,8 @@ type Client = {
   overlay?: boolean | OverlayOptions;
   // Controls the log level for client-side logging in the browser console
   logLevel?: 'info' | 'warn' | 'error' | 'silent';
+  // Path to a custom WebSocket transport module
+  webSocketTransport?: string;
 };
 ```
 
@@ -249,6 +251,48 @@ export default {
 
 Setting this value to `0` disables automatic reconnection. In this case, the connection can only be restored by manually refreshing the page.
 
+### webSocketTransport
+
+- **Type:** `string`
+- **Default:** `undefined`
+
+The path to a custom WebSocket transport module. The module should default export a factory function with the signature `(url: string) => WebSocket`. The function receives the WebSocket URL computed by Rsbuild and should return a standard `WebSocket` instance.
+
+This is useful in micro-frontend or reverse proxy scenarios where the page origin differs from the dev server origin. By providing a custom transport, you can override the WebSocket URL resolution logic.
+
+```ts title="rsbuild.config.ts"
+import { join } from 'node:path';
+
+export default {
+  dev: {
+    client: {
+      webSocketTransport: join(__dirname, './client/customTransport.js'),
+    },
+  },
+};
+```
+
+Example of a custom transport module that derives the WebSocket URL from the script's own location:
+
+```js title="client/customTransport.js"
+let cachedUrl = null;
+
+export default function createWebSocket(url) {
+  if (!cachedUrl) {
+    const { protocol, host, pathname } = new URL(document.currentScript.src);
+    const wsPath =
+      pathname.slice(0, pathname.lastIndexOf('/')) + '/rsbuild-hmr';
+    const wsProtocol = protocol === 'https:' ? 'wss:' : 'ws:';
+    cachedUrl = `${wsProtocol}//${host}${wsPath}`;
+  }
+  return new WebSocket(cachedUrl);
+}
+```
+
+:::tip
+The factory function is called each time a WebSocket connection is established, including reconnection attempts. Since `document.currentScript` is only available during synchronous script execution, you should cache the computed URL on the first call (as shown above).
+:::
+
 ## Version history
 
 | Version | Changes                                                 |
@@ -257,3 +301,4 @@ Setting this value to `0` disables automatic reconnection. In this case, the con
 | v1.7.0  | Added `overlay.runtime` option                          |
 | v2.0.3  | Added `overlay.errors` option                           |
 | v2.0.4  | Added support for filter functions in `overlay.runtime` |
+| NEXT    | Added `webSocketTransport` option                       |

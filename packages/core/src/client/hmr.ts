@@ -94,6 +94,7 @@ export function init(
   liveReload: boolean,
   browserLogs: boolean,
   logLevel: LogLevel,
+  createWebSocket?: (url: string) => WebSocket,
 ): void {
   logger.level = logLevel;
 
@@ -416,7 +417,9 @@ export function init(
     }
 
     const socketUrl = formatURL(fallback);
-    socket = new WebSocket(socketUrl);
+    socket = createWebSocket
+      ? createWebSocket(socketUrl)
+      : new WebSocket(socketUrl);
     socket.addEventListener('open', onOpen);
     // Attempt to reconnect after disconnection
     socket.addEventListener('close', onClose);
