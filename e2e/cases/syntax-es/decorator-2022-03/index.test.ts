@@ -27,6 +27,23 @@ test('should run stage 3 decorators correctly with babel-plugin', async ({
   expect(await page.evaluate('window.field')).toBe('message');
 });
 
+test('should return correct initializers in 2022-03 decorator helper', async ({
+  page,
+  buildPreview,
+}) => {
+  await buildPreview({
+    config: {
+      source: {
+        entry: {
+          index: './src/initializer-order.js',
+        },
+      },
+    },
+  });
+
+  expect(await page.evaluate('window.message')).toEqual(123);
+});
+
 test.fail(
   'stage 3 decorators do not support decoratorBeforeExport',
   async ({ page, buildPreview }) => {
