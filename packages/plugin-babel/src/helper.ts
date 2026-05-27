@@ -13,6 +13,7 @@ import type {
 } from './types.js';
 
 export const BABEL_JS_RULE = 'babel-js';
+const BABEL_JS_RULE_REGEXP = /^babel-js(?:-\d+)?$/;
 
 export const getBabelRuleId = (chain: RspackChain): string => {
   let id = BABEL_JS_RULE;
@@ -23,8 +24,7 @@ export const getBabelRuleId = (chain: RspackChain): string => {
   return id;
 };
 
-const isBabelRuleId = (id: string) =>
-  id === BABEL_JS_RULE || id.startsWith(`${BABEL_JS_RULE}-`);
+const isBabelRuleId = (id: string) => BABEL_JS_RULE_REGEXP.test(id);
 
 const getBabelRules = (chain: RspackChain) => {
   const ruleIds = Object.keys(chain.module.rules.entries()).filter(
