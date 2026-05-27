@@ -31,7 +31,7 @@ import type {
 } from './hooks';
 import type { RsbuildPlugins } from './plugin';
 import type { RsbuildEntry, RsbuildMode, RsbuildTarget } from './rsbuild';
-import type { Rspack, RspackPlugin, RspackRule } from './rspack';
+import type { Rspack, RspackRule } from './rspack';
 import type {
   Connect,
   CSSExtractOptions,
@@ -98,10 +98,10 @@ export type RspackMerge = (
 ) => Rspack.Configuration;
 
 export type ModifyRspackConfigUtils = ModifyChainUtils & {
-  addRules: (rules: RspackRule | RspackRule[]) => void;
-  appendRules: (rules: RspackRule | RspackRule[]) => void;
-  prependPlugins: (plugins: OneOrMany<RspackPlugin>) => void;
-  appendPlugins: (plugins: OneOrMany<RspackPlugin>) => void;
+  addRules: (rules: OneOrMany<RspackRule>) => void;
+  appendRules: (rules: OneOrMany<RspackRule>) => void;
+  prependPlugins: (plugins: OneOrMany<Rspack.Plugin>) => void;
+  appendPlugins: (plugins: OneOrMany<Rspack.Plugin>) => void;
   removePlugin: (pluginName: string) => void;
   mergeConfig: RspackMerge;
 };
@@ -141,7 +141,7 @@ export type NarrowedRspackConfig = Omit<
   /**
    * Plugins to use during compilation.
    */
-  plugins: NonNullable<Rspack.Configuration['plugins']>;
+  plugins: Rspack.Plugin[];
   /**
    * Options for module configuration.
    */
