@@ -39,7 +39,7 @@ export default {
 type TitleFunction = (context: {
   value: string;
   entryName: string;
-}) => string | void;
+}) => string | void | Promise<string | void>;
 ```
 
 当 `html.title` 为 Function 类型时，函数接收一个对象作为入参，对象的值包括：
@@ -74,3 +74,9 @@ export default {
   },
 };
 ```
+
+## 版本历史
+
+| 版本   | 变更内容                           |
+| ------ | ---------------------------------- |
+| v2.0.8 | 新增对 `html.title` 异步函数的支持 |

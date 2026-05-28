@@ -99,7 +99,7 @@ export default {
 type FaviconFunction = (context: {
   value: string;
   entryName: string;
-}) => string | void;
+}) => string | void | Promise<string | void>;
 ```
 
 当 `html.favicon` 为 Function 类型时，函数接收一个对象作为入参，对象的值包括：
@@ -127,4 +127,5 @@ export default {
 
 | 版本   | 变更内容                                  |
 | ------ | ----------------------------------------- |
+| v2.0.8 | 新增对 `html.favicon` 异步函数的支持      |
 | v1.6.0 | 新增自动检测 public 目录下的 favicon 文件 |

@@ -39,7 +39,7 @@ The `title` tag generated in HTML will be:
 type TitleFunction = (context: {
   value: string;
   entryName: string;
-}) => string | void;
+}) => string | void | Promise<string | void>;
 ```
 
 When `html.title` is of type Function, the function receives an object as the argument, and the object's values include:
@@ -74,3 +74,9 @@ export default {
   },
 };
 ```
+
+## Version history
+
+| Version | Changes                                           |
+| ------- | ------------------------------------------------- |
+| v2.0.8  | Added support for async functions in `html.title` |
