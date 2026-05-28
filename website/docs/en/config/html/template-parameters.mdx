@@ -69,15 +69,17 @@ The compiled HTML code will be:
 - **Type:**
 
 ```ts
+type MaybePromise<T> = T | Promise<T>;
+
 type TemplateParametersFunction = (
   defaultValue: Record<string, unknown>,
   utils: { entryName: string },
-) => Record<string, unknown> | void;
+) => MaybePromise<Record<string, unknown> | void>;
 ```
 
 When `html.templateParameters` is of type Function, the function receives two parameters:
 
-- `value`: Default `templateParameters` configuration of Rsbuild.
+- `defaultValue`: Default `templateParameters` configuration of Rsbuild.
 - `utils`: An object containing the `entryName` field, corresponding to the name of the current entry.
 
 In the context of a multi-page application (MPA), you can set different `templateParameters` based on the entry name:
@@ -102,3 +104,28 @@ export default {
   },
 };
 ```
+
+You can also use an async function to load template parameters:
+
+```ts title="rsbuild.config.ts"
+import fs from 'node:fs/promises';
+
+export default {
+  html: {
+    async templateParameters(defaultValue) {
+      const version = await fs.readFile('./VERSION', 'utf-8');
+
+      return {
+        ...defaultValue,
+        version: version.trim(),
+      };
+    },
+  },
+};
+```
+
+## Version history
+
+| Version | Changes                                                        |
+| ------- | -------------------------------------------------------------- |
+| v2.0.8  | Added support for async functions in `html.templateParameters` |
