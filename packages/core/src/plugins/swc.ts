@@ -111,7 +111,10 @@ export const pluginSwc = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain({
       order: 'pre',
-      handler: (chain, { CHAIN_ID, isDev, isProd, target, environment }) => {
+      handler: async (
+        chain,
+        { CHAIN_ID, isDev, isProd, target, environment },
+      ) => {
         const { config, browserslist } = environment;
         const cacheRoot = path.join(api.context.cachePath, '.swc');
 
@@ -176,7 +179,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
           }
         }
 
-        const mergedConfig = reduceConfigs({
+        const mergedConfig = await reduceConfigs({
           initial: swcConfig,
           config: config.tools.swc,
           mergeFn: deepmerge,
