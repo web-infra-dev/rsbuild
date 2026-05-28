@@ -31,6 +31,37 @@ test('should set template via function correctly', async ({ build }) => {
   expect(indexHtml).toContain('<div id="test-template">text</div>');
 });
 
+test('should set template via async function correctly', async ({ build }) => {
+  const rsbuild = await build({
+    config: {
+      source: {
+        entry: {
+          index: './src/index.js',
+          foo: './src/foo.js',
+        },
+      },
+      html: {
+        async template({ entryName }) {
+          return entryName === 'index'
+            ? './static/index.html'
+            : './static/foo.html';
+        },
+        templateParameters: {
+          foo: 'foo',
+          type: 'type',
+        },
+      },
+    },
+  });
+  const files = rsbuild.getDistFiles();
+
+  const fooHtml = getFileContent(files, 'foo.html');
+  expect(fooHtml).toContain('<div id="test-template">foo</div>');
+
+  const indexHtml = getFileContent(files, 'index.html');
+  expect(indexHtml).toContain('<div id="test-template">text</div>');
+});
+
 test('should allow to access templateParameters', async ({
   page,
   buildPreview,

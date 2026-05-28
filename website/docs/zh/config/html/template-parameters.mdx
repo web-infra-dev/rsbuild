@@ -69,12 +69,10 @@ export default {
 - **类型：**
 
 ```ts
-type MaybePromise<T> = T | Promise<T>;
-
 type TemplateParametersFunction = (
   defaultValue: Record<string, unknown>,
   utils: { entryName: string },
-) => MaybePromise<Record<string, unknown> | void>;
+) => Record<string, unknown> | void | Promise<Record<string, unknown> | void>;
 ```
 
 当 `html.templateParameters` 为 Function 类型时，函数接收两个参数：

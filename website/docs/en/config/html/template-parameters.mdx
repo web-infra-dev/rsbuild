@@ -69,12 +69,10 @@ The compiled HTML code will be:
 - **Type:**
 
 ```ts
-type MaybePromise<T> = T | Promise<T>;
-
 type TemplateParametersFunction = (
   defaultValue: Record<string, unknown>,
   utils: { entryName: string },
-) => MaybePromise<Record<string, unknown> | void>;
+) => Record<string, unknown> | void | Promise<Record<string, unknown> | void>;
 ```
 
 When `html.templateParameters` is of type Function, the function receives two parameters:

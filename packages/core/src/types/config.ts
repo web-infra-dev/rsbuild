@@ -45,7 +45,6 @@ import type {
 import type {
   ConfigChain,
   ConfigChainAsyncWithContext,
-  ConfigChainMergeContext,
   ConfigChainWithContext,
   LiteralUnion,
   MaybePromise,
@@ -1680,7 +1679,9 @@ export type HtmlTagHandler = (
 
 export type HtmlTagDescriptor = HtmlTag | HtmlTagHandler;
 
-type ChainedHtmlOption<O> = ConfigChainMergeContext<O, { entryName: string }>;
+type ChainedHtmlOption<O> = OneOrMany<
+  O | ((context: { value: O; entryName: string }) => MaybePromise<O | void>)
+>;
 
 export type AppIconItem = {
   /**

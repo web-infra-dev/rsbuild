@@ -40,7 +40,7 @@ export default {
 type TemplateFunction = (context: {
   value: string;
   entryName: string;
-}) => string | void;
+}) => string | void | Promise<string | void>;
 ```
 
 When `html.template` is of type Function, the function receives an object as an argument, with the following properties:
@@ -63,3 +63,26 @@ export default {
   },
 };
 ```
+
+You can also use an async function to load the template path:
+
+```ts title="rsbuild.config.ts"
+import fs from 'node:fs/promises';
+
+export default {
+  html: {
+    async template({ entryName }) {
+      const templates = JSON.parse(
+        await fs.readFile('./templates.json', 'utf-8'),
+      ) as Record<string, string>;
+      return templates[entryName] || './static/index.html';
+    },
+  },
+};
+```
+
+## Version history
+
+| Version | Changes                                              |
+| ------- | ---------------------------------------------------- |
+| v2.0.8  | Added support for async functions in `html.template` |
