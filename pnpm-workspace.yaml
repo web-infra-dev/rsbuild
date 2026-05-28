@@ -36,7 +36,7 @@ catalog:
   '@rsdoctor/rspack-plugin': '1.5.11'
   '@rslib/core': '0.21.5'
   '@rslint/core': '^0.5.3'
-  '@rspack/core': '~2.0.4'
+  '@rspack/core': '~2.0.5'
   '@rspack/plugin-preact-refresh': '^1.1.5'
   '@rspack/plugin-react-refresh': '2.0.0'
   '@rspress/core': '^2.0.12'
