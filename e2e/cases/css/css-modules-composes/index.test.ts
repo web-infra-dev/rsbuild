@@ -1,4 +1,3 @@
-import path from 'node:path';
 import { expect, getFileContent, test } from '@e2e/helper';
 
 test('should compile CSS Modules composes correctly', async ({ build }) => {
@@ -17,7 +16,7 @@ test('should compile CSS Modules composes with external correctly', async ({
     config: {
       source: {
         entry: {
-          external: path.resolve(import.meta.dirname, './src/external.js'),
+          external: './src/external.js',
         },
       },
     },

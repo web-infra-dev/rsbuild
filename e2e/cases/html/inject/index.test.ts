@@ -1,4 +1,3 @@
-import path from 'node:path';
 import { expect, getFileContent, normalizeNewlines, test } from '@e2e/helper';
 import { pluginRem } from '@rsbuild/plugin-rem';
 
@@ -36,8 +35,8 @@ test('should set inject via function correctly', async ({ build }) => {
     config: {
       source: {
         entry: {
-          index: path.resolve(import.meta.dirname, './src/index.js'),
-          foo: path.resolve(import.meta.dirname, './src/foo.js'),
+          index: './src/index.js',
+          foo: './src/foo.js',
         },
       },
       output: {
