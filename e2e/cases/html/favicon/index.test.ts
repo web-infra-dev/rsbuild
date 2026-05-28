@@ -96,8 +96,8 @@ test('should generate favicon via function correctly', async ({ build }) => {
     config: {
       source: {
         entry: {
-          foo: path.resolve(import.meta.dirname, './src/foo.js'),
-          bar: path.resolve(import.meta.dirname, './src/foo.js'),
+          foo: './src/foo.js',
+          bar: './src/foo.js',
         },
       },
       html: {

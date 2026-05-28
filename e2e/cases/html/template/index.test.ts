@@ -1,5 +1,3 @@
-import path from 'node:path';
-
 import { expect, getFileContent, test } from '@e2e/helper';
 
 test('should set template via function correctly', async ({ build }) => {
@@ -7,8 +5,8 @@ test('should set template via function correctly', async ({ build }) => {
     config: {
       source: {
         entry: {
-          index: path.resolve(import.meta.dirname, './src/index.js'),
-          foo: path.resolve(import.meta.dirname, './src/foo.js'),
+          index: './src/index.js',
+          foo: './src/foo.js',
         },
       },
       html: {
@@ -62,8 +60,8 @@ test('should allow templateParameters to be a function', async ({ build }) => {
     config: {
       source: {
         entry: {
-          index: path.resolve(import.meta.dirname, './src/index.js'),
-          foo: path.resolve(import.meta.dirname, './src/foo.js'),
+          index: './src/index.js',
+          foo: './src/foo.js',
         },
       },
       html: {
@@ -98,8 +96,8 @@ test('should allow templateParameters to be an async function', async ({
     config: {
       source: {
         entry: {
-          index: path.resolve(import.meta.dirname, './src/index.js'),
-          foo: path.resolve(import.meta.dirname, './src/foo.js'),
+          index: './src/index.js',
+          foo: './src/foo.js',
         },
       },
       html: {
@@ -134,8 +132,8 @@ test('should set template via tools.htmlPlugin correctly', async ({
     config: {
       source: {
         entry: {
-          index: path.resolve(import.meta.dirname, './src/index.js'),
-          foo: path.resolve(import.meta.dirname, './src/foo.js'),
+          index: './src/index.js',
+          foo: './src/foo.js',
         },
       },
       tools: {
