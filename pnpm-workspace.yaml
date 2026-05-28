@@ -26,7 +26,6 @@ catalog:
   '@module-federation/enhanced': '2.5.1'
   '@module-federation/rsbuild-plugin': '2.5.1'
   '@module-federation/runtime-tools': '2.5.1'
-  '@playwright/test': '1.61.0'
   '@prefresh/core': '^1.5.10'
   '@prefresh/utils': '^1.2.1'
   '@rsbuild/core-v1': 'npm:@rsbuild/core@^1.7.5'

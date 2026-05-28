@@ -7,8 +7,25 @@ import {
 } from 'node:child_process';
 import { constants as fsConstants, promises } from 'node:fs';
 import path from 'node:path';
-import base, { expect } from '@playwright/test';
+import {
+  afterAll as rstestAfterAll,
+  afterEach as rstestAfterEach,
+  beforeAll as rstestBeforeAll,
+  beforeEach as rstestBeforeEach,
+  describe as rstestDescribe,
+  expect as rstestExpect,
+  test as base,
+} from '@rstest/core';
+import type { Assertion, ExpectStatic } from '@rstest/core';
 import fse from 'fs-extra';
+import { chromium, request as playwrightRequest } from 'playwright';
+import type {
+  APIRequestContext,
+  Browser,
+  BrowserContext,
+  Locator,
+  Page,
+} from 'playwright';
 import { RSBUILD_BIN_PATH } from './constants.ts';
 import {
   type Build,
@@ -21,6 +38,9 @@ import {
   type DevResult,
 } from './jsApi.ts';
 import { type ExtendedLogHelper, proxyConsole } from './logs.ts';
+
+const DEFAULT_EXPECT_TIMEOUT = 5000;
+const EXPECT_POLL_INTERVAL = 50;
 
 function makeBox(title: string) {
   const header = `╭────────────  Logs from: "${title}" ────────────╮`;
@@ -166,7 +186,336 @@ type RsbuildFixture = {
 
 type Close = DevResult['close'];
 
-const setupExecOptions = <T extends ExecOptions | ExecSyncOptions>(options: T, cwd: string): T => {
+type BrowserFixture = {
+  browser: Browser;
+  context: BrowserContext;
+  page: Page;
+  request: APIRequestContext;
+};
+
+type E2EFixture = RsbuildFixture & BrowserFixture;
+
+type TextMatcher = string | RegExp;
+type TextExpectation = TextMatcher | TextMatcher[];
+type MatcherOptions = {
+  timeout?: number;
+};
+
+type LocatorAssertions = {
+  readonly not: LocatorAssertions;
+  toBeAttached: (options?: MatcherOptions) => Promise<void>;
+  toContainText: (
+    expected: TextMatcher,
+    options?: MatcherOptions,
+  ) => Promise<void>;
+  toHaveCSS: (
+    propertyName: string,
+    expected: string,
+    options?: MatcherOptions,
+  ) => Promise<void>;
+  toHaveCount: (expected: number, options?: MatcherOptions) => Promise<void>;
+  toHaveText: (
+    expected: TextExpectation,
+    options?: MatcherOptions,
+  ) => Promise<void>;
+};
+
+type PageAssertions = {
+  readonly not: PageAssertions;
+  toHaveTitle: (
+    expected: TextMatcher,
+    options?: MatcherOptions,
+  ) => Promise<void>;
+};
+
+type E2EAssertion<T> = Assertion<T> & LocatorAssertions & PageAssertions;
+
+type E2EExpectStatic = Omit<ExpectStatic, 'soft'> & {
+  <T>(actual: T, message?: string): E2EAssertion<T>;
+  soft: <T>(actual: T, message?: string) => E2EAssertion<T>;
+};
+
+let browserPromise: Promise<Browser> | undefined;
+
+const getBrowser = () => {
+  browserPromise ??= chromium.launch({
+    // Preserve the previous Playwright CI behavior.
+    channel: process.env.CI ? 'chrome' : undefined,
+  });
+  return browserPromise;
+};
+
+const closeBrowser = async () => {
+  if (!browserPromise) {
+    return;
+  }
+  const browser = await browserPromise;
+  browserPromise = undefined;
+  await browser.close();
+};
+
+rstestAfterAll(closeBrowser);
+
+const sleep = (ms: number) =>
+  new Promise<void>((resolve) => {
+    setTimeout(resolve, ms);
+  });
+
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null;
+
+const hasFunction = <K extends string>(
+  value: unknown,
+  key: K,
+): value is Record<K, (...args: never[]) => unknown> =>
+  isRecord(value) && typeof value[key] === 'function';
+
+const isLocator = (value: unknown): value is Locator =>
+  hasFunction(value, 'count') &&
+  hasFunction(value, 'evaluate') &&
+  hasFunction(value, 'textContent');
+
+const isPage = (value: unknown): value is Page =>
+  hasFunction(value, 'goto') &&
+  hasFunction(value, 'locator') &&
+  hasFunction(value, 'title');
+
+const normalizeText = (text: string) => text.replace(/\s+/g, ' ').trim();
+
+const formatValue = (value: unknown) =>
+  typeof value === 'string' ? JSON.stringify(value) : String(value);
+
+const matchesText = (
+  actual: string,
+  expected: TextMatcher,
+  mode: 'exact' | 'contain',
+) => {
+  if (expected instanceof RegExp) {
+    expected.lastIndex = 0;
+    return expected.test(actual);
+  }
+
+  const normalizedActual = normalizeText(actual);
+  const normalizedExpected = normalizeText(expected);
+
+  return mode === 'exact'
+    ? normalizedActual === normalizedExpected
+    : normalizedActual.includes(normalizedExpected);
+};
+
+const getLocatorTextContent = async (locator: Locator) => {
+  const texts = await getLocatorTextContents(locator);
+  return texts.join('');
+};
+
+const getLocatorTextContents = (locator: Locator) =>
+  locator.evaluateAll((elements) => {
+    const getDeepTextContent = (node: Node): string => {
+      let text = '';
+
+      if (node.nodeType === Node.TEXT_NODE) {
+        return node.textContent ?? '';
+      }
+
+      if (node instanceof Element && node.shadowRoot) {
+        text += getDeepTextContent(node.shadowRoot);
+      }
+
+      for (const child of node.childNodes) {
+        text += getDeepTextContent(child);
+      }
+
+      return text;
+    };
+
+    return elements.map((element) => getDeepTextContent(element));
+  });
+
+const assertExpectation = (
+  pass: boolean,
+  isNot: boolean,
+  defaultMessage: string,
+  customMessage?: string,
+) => {
+  const shouldThrow = isNot ? pass : !pass;
+  if (!shouldThrow) {
+    return;
+  }
+  throw new Error(
+    customMessage ? `${customMessage}\n${defaultMessage}` : defaultMessage,
+  );
+};
+
+const waitForExpectation = async (
+  check: () => Promise<void>,
+  options?: MatcherOptions,
+) => {
+  const timeout = options?.timeout ?? DEFAULT_EXPECT_TIMEOUT;
+  const start = Date.now();
+  let lastError: unknown;
+
+  while (Date.now() - start <= timeout) {
+    try {
+      await check();
+      return;
+    } catch (error) {
+      lastError = error;
+      await sleep(EXPECT_POLL_INTERVAL);
+    }
+  }
+
+  if (lastError instanceof Error) {
+    throw lastError;
+  }
+  throw new Error(String(lastError));
+};
+
+const createLocatorAssertions = (
+  locator: Locator,
+  isNot: boolean,
+  message?: string,
+): LocatorAssertions => ({
+  get not() {
+    return createLocatorAssertions(locator, !isNot, message);
+  },
+
+  async toBeAttached(options) {
+    await waitForExpectation(async () => {
+      const count = await locator.count();
+      const pass = count > 0;
+      assertExpectation(
+        pass,
+        isNot,
+        `Expected locator ${isNot ? 'not ' : ''}to be attached, received count ${count}.`,
+        message,
+      );
+    }, options);
+  },
+
+  async toContainText(expected, options) {
+    await waitForExpectation(async () => {
+      const actual = await getLocatorTextContent(locator);
+      const pass = matchesText(actual, expected, 'contain');
+      assertExpectation(
+        pass,
+        isNot,
+        `Expected locator ${isNot ? 'not ' : ''}to contain text ${formatValue(
+          expected,
+        )}, received ${formatValue(actual)}.`,
+        message,
+      );
+    }, options);
+  },
+
+  async toHaveCSS(propertyName, expected, options) {
+    await waitForExpectation(async () => {
+      const actual = await locator.evaluate(
+        (element, property) =>
+          getComputedStyle(element).getPropertyValue(property),
+        propertyName,
+      );
+      const pass = actual === expected;
+      assertExpectation(
+        pass,
+        isNot,
+        `Expected locator ${isNot ? 'not ' : ''}to have CSS ${propertyName}: ${formatValue(
+          expected,
+        )}, received ${formatValue(actual)}.`,
+        message,
+      );
+    }, options);
+  },
+
+  async toHaveCount(expected, options) {
+    await waitForExpectation(async () => {
+      const actual = await locator.count();
+      const pass = actual === expected;
+      assertExpectation(
+        pass,
+        isNot,
+        `Expected locator ${isNot ? 'not ' : ''}to have count ${expected}, received ${actual}.`,
+        message,
+      );
+    }, options);
+  },
+
+  async toHaveText(expected, options) {
+    await waitForExpectation(async () => {
+      if (Array.isArray(expected)) {
+        const actual = await getLocatorTextContents(locator);
+        const pass =
+          actual.length === expected.length &&
+          actual.every((item, index) =>
+            matchesText(item, expected[index], 'exact'),
+          );
+        assertExpectation(
+          pass,
+          isNot,
+          `Expected locator ${isNot ? 'not ' : ''}to have text ${formatValue(
+            expected,
+          )}, received ${formatValue(actual)}.`,
+          message,
+        );
+        return;
+      }
+
+      const actual = await getLocatorTextContent(locator);
+      const pass = matchesText(actual, expected, 'exact');
+      assertExpectation(
+        pass,
+        isNot,
+        `Expected locator ${isNot ? 'not ' : ''}to have text ${formatValue(
+          expected,
+        )}, received ${formatValue(actual)}.`,
+        message,
+      );
+    }, options);
+  },
+});
+
+const createPageAssertions = (
+  page: Page,
+  isNot: boolean,
+  message?: string,
+): PageAssertions => ({
+  get not() {
+    return createPageAssertions(page, !isNot, message);
+  },
+
+  async toHaveTitle(expected, options) {
+    await waitForExpectation(async () => {
+      const actual = await page.title();
+      const pass = matchesText(actual, expected, 'exact');
+      assertExpectation(
+        pass,
+        isNot,
+        `Expected page ${isNot ? 'not ' : ''}to have title ${formatValue(
+          expected,
+        )}, received ${formatValue(actual)}.`,
+        message,
+      );
+    }, options);
+  },
+});
+
+const expectImpl = (<T>(actual: T, message?: string) => {
+  if (isLocator(actual)) {
+    return createLocatorAssertions(actual, false, message);
+  }
+
+  if (isPage(actual)) {
+    return createPageAssertions(actual, false, message);
+  }
+
+  return rstestExpect(actual, message);
+}) as E2EExpectStatic;
+
+Object.assign(expectImpl, rstestExpect);
+
+const setupExecOptions = <T extends ExecOptions | ExecSyncOptions>(
+  options: T,
+  cwd: string,
+): T => {
   // inherit process.env from current process
   const { NODE_ENV: _, ...restEnv } = process.env;
   options.env ||= {};
@@ -175,23 +524,57 @@ const setupExecOptions = <T extends ExecOptions | ExecSyncOptions>(options: T, c
   return options;
 };
 
-export const test = base.extend<RsbuildFixture>({
-  // rslint-disable-next-line no-empty-pattern
-  cwd: async ({}, use, { file }) => {
-    const cwd = path.dirname(file);
+const rsbuildTest = base.extend<E2EFixture>({
+  browser: async (_context, use) => {
+    const browser = await getBrowser();
+    await use(browser);
+  },
+
+  context: async ({ browser }, use) => {
+    const context = await browser.newContext();
+    try {
+      await use(context);
+    } finally {
+      await context.close();
+    }
+  },
+
+  page: async ({ context }, use) => {
+    const page = await context.newPage();
+    try {
+      await use(page);
+    } finally {
+      await page.close();
+    }
+  },
+
+  request: async (_context, use) => {
+    const request = await playwrightRequest.newContext();
+    try {
+      await use(request);
+    } finally {
+      await request.dispose();
+    }
+  },
+
+  cwd: async ({ expect: currentExpect }, use) => {
+    const testPath = currentExpect.getState().testPath;
+    if (!testPath) {
+      throw new Error('Failed to resolve current test file path.');
+    }
+    const cwd = path.dirname(testPath);
     await use(cwd);
   },
 
   logHelper: [
-    // rslint-disable-next-line no-empty-pattern
-    async ({}, use, testInfo) => {
+    async ({ task }, use) => {
       const logHelper = proxyConsole();
       await use(logHelper);
       logHelper.restore();
 
       // If the test failed, log the console output for debugging
-      if (testInfo.status !== testInfo.expectedStatus && logHelper.logs.length) {
-        const { header, footer } = makeBox(testInfo.title);
+      if (task.result?.status === 'fail' && logHelper.logs.length) {
+        const { header, footer } = makeBox(task.name);
         console.log(header);
         logHelper.printCapturedLogs();
         console.log(footer);
@@ -363,4 +746,34 @@ export const test = base.extend<RsbuildFixture>({
   },
 });
 
-export { expect };
+type Callable<T> = T extends (...args: infer Args) => infer Return
+  ? (...args: Args) => Return
+  : never;
+
+type E2ETestSkip = Callable<typeof rsbuildTest.skip> &
+  (() => void) &
+  Omit<typeof rsbuildTest.skip, 'skip'> & {
+    skip: E2ETestSkip;
+  };
+
+type E2ETest = Callable<typeof rsbuildTest> &
+  Omit<typeof rsbuildTest, 'skip'> & {
+    afterAll: typeof rstestAfterAll;
+    afterEach: typeof rstestAfterEach;
+    beforeAll: typeof rstestBeforeAll;
+    beforeEach: typeof rstestBeforeEach;
+    describe: typeof rstestDescribe;
+    fail: typeof rsbuildTest.fails;
+    skip: E2ETestSkip;
+  };
+
+export const test = Object.assign(rsbuildTest, {
+  afterAll: rstestAfterAll,
+  afterEach: rstestAfterEach,
+  beforeAll: rstestBeforeAll,
+  beforeEach: rstestBeforeEach,
+  describe: rstestDescribe,
+  fail: rsbuildTest.fails,
+}) as E2ETest;
+
+export const expect = expectImpl;

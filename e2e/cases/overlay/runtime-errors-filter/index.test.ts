@@ -1,4 +1,4 @@
-import type { Page } from '@playwright/test';
+import type { Page } from 'playwright';
 import { expect, HMR_CONNECTED_LOG, OVERLAY_ID, test } from '@e2e/helper';
 
 const triggerRuntimeError = async (page: Page, name: string, message: string) => {
