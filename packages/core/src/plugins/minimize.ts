@@ -114,7 +114,7 @@ export const pluginMinimize = (): RsbuildPlugin => ({
   name: 'rsbuild:minimize',
 
   setup(api) {
-    api.modifyBundlerChain((chain, { environment, CHAIN_ID, rspack }) => {
+    api.modifyBundlerChain(async (chain, { environment, CHAIN_ID, rspack }) => {
       const { config } = environment;
       const { minifyJs, minifyCss, jsOptions, cssOptions } =
         parseMinifyOptions(config);
@@ -131,7 +131,7 @@ export const pluginMinimize = (): RsbuildPlugin => ({
       }
 
       if (minifyCss) {
-        const loaderOptions = getLightningCSSLoaderOptions(
+        const loaderOptions = await getLightningCSSLoaderOptions(
           config,
           environment.browserslist,
           true,

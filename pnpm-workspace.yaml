@@ -178,6 +178,7 @@ minimumReleaseAgeExclude:
   - '@rstest/*'
   - '@rsdoctor/*'
   - '@rslint/*'
+  - 'reduce-configs'
   - '@rstack-dev/doc-ui'
   - 'rsbuild-plugin-*'
   - '@swc/*'

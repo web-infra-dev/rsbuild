@@ -2,8 +2,7 @@ import fs from 'node:fs';
 import path, { isAbsolute } from 'node:path';
 import type { EntryDescription } from '@rspack/core';
 import {
-  reduceConfigsAsyncWithContext,
-  reduceConfigsMergeContext,
+  reduceConfigsWithMergedContext,
   reduceConfigsWithContext,
 } from 'reduce-configs';
 import { castArray, color, isPlainObject } from '../helpers';
@@ -24,7 +23,7 @@ import type {
 } from '../types';
 
 function getTitle(entryName: string, config: NormalizedEnvironmentConfig) {
-  return reduceConfigsMergeContext({
+  return reduceConfigsWithMergedContext({
     initial: '',
     config: config.html.title,
     ctx: { entryName },
@@ -32,7 +31,7 @@ function getTitle(entryName: string, config: NormalizedEnvironmentConfig) {
 }
 
 function getInject(entryName: string, config: NormalizedEnvironmentConfig) {
-  return reduceConfigsMergeContext({
+  return reduceConfigsWithMergedContext({
     initial: 'head',
     config: config.html.inject,
     ctx: { entryName },
@@ -52,7 +51,7 @@ export async function getTemplate(
   | { templatePath: string; templateContent?: string }
   | { templatePath: undefined; templateContent: string }
 > {
-  const templatePath = reduceConfigsMergeContext({
+  const templatePath = await reduceConfigsWithMergedContext({
     initial: '',
     config: config.html.template,
     ctx: { entryName },
@@ -95,19 +94,19 @@ function getFavicon(
     html: HtmlConfig;
   },
 ) {
-  return reduceConfigsMergeContext({
+  return reduceConfigsWithMergedContext({
     initial: '',
     config: config.html.favicon,
     ctx: { entryName },
   });
 }
 
-function getMetaTags(
+async function getMetaTags(
   entryName: string,
   config: { html: HtmlConfig },
   templateContent?: string,
 ) {
-  const metaTags = reduceConfigsMergeContext({
+  const metaTags = await reduceConfigsWithMergedContext({
     initial: {},
     config: config.html.meta,
     ctx: { entryName },
@@ -148,7 +147,7 @@ function getTemplateParameters(
       rspackConfig,
     };
 
-    return reduceConfigsAsyncWithContext({
+    return reduceConfigsWithContext({
       initial: defaultOptions,
       config: templateParameters,
       ctx: { entryName },
@@ -248,7 +247,7 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
           entryNames.map(async (entryName) => {
             const entryValue = entries[entryName].values();
             const chunks = getChunks(entryName, entryValue);
-            const inject = getInject(entryName, config);
+            const inject = await getInject(entryName, config);
             const filename = htmlPaths[entryName];
             const { templatePath, templateContent } = await getTemplate(
               entryName,
@@ -261,7 +260,11 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
               assetPrefix,
             );
 
-            const metaTags = getMetaTags(entryName, config, templateContent);
+            const metaTags = await getMetaTags(
+              entryName,
+              config,
+              templateContent,
+            );
 
             const pluginOptions: HtmlRspackPlugin.Options = {
               meta: metaTags,
@@ -302,15 +305,15 @@ export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
               extraData.tagConfig = tagConfig;
             }
 
-            pluginOptions.title = getTitle(entryName, config);
+            pluginOptions.title = await getTitle(entryName, config);
 
             const favicon =
-              getFavicon(entryName, config) || resolveDefaultFavicon();
+              (await getFavicon(entryName, config)) || resolveDefaultFavicon();
             if (favicon) {
               extraData.favicon = favicon;
             }
 
-            const finalOptions = reduceConfigsWithContext({
+            const finalOptions = await reduceConfigsWithContext({
               initial: pluginOptions,
               config:
                 typeof config.tools.htmlPlugin === 'boolean'

@@ -1,14 +1,12 @@
 import { rspack } from '@rspack/core';
-import {
-  type ConfigChainAsyncWithContext,
-  reduceConfigsAsyncWithContext,
-} from 'reduce-configs';
+import { reduceConfigsWithContext } from 'reduce-configs';
 import { merge } from 'rspack-merge';
 import { CHAIN_ID, modifyBundlerChain } from './configChain';
 import { castArray, color, getNodeEnv } from './helpers';
 import type { Logger } from './logger';
 import { getHTMLPlugin } from './pluginHelper';
 import type {
+  ConfigChainAsyncWithContext,
   EnvironmentContext,
   InternalContext,
   ModifyChainUtils,
@@ -44,7 +42,7 @@ async function modifyRspackConfig(
       ModifyRspackConfigUtils
     >;
 
-    currentConfig = await reduceConfigsAsyncWithContext({
+    currentConfig = await reduceConfigsWithContext({
       initial: currentConfig as NarrowedRspackConfig,
       config: toolsRspackConfig,
       ctx: utils,

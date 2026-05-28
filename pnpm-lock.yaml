@@ -1005,8 +1005,8 @@ importers:
         specifier: 'catalog:'
         version: 1.2.1
       reduce-configs:
-        specifier: 'catalog:'
-        version: 1.1.2
+        specifier: ^2.0.0
+        version: 2.0.0
       rslog:
         specifier: 'catalog:'
         version: 2.1.1
@@ -4885,6 +4885,9 @@ packages:
 
   reduce-configs@1.1.2:
     resolution: {integrity: sha512-AgBP55V8FC7NaqoOP2RCbTpu6LE+YuX3LUZkNAoitcfyS3/PIC8Obg/TJrBzTkJ+lDvZv0TTAeDpLkzjTtYlbw==}
+
+  reduce-configs@2.0.0:
+    resolution: {integrity: sha512-oKMHUDY3TBSsyv4AzzQBpB3lRgmCIcNb3Ax3cAmJWCyRkHLYh3BcwP2Ari3aVsw8N6hoft1qW9hxvnKBnSlqNw==}
 
   regex-parser@2.3.1:
     resolution: {integrity: sha512-yXLRqatcCuKtVHsWrNg0JL3l1zGfdXeEvDa0bdu4tCDQw0RpMDZsqbkyRTUnKMR0tXF627V2oEWjBEaEdqTwtQ==}
@@ -9470,6 +9473,8 @@ snapshots:
       vfile: 6.0.3
 
   reduce-configs@1.1.2: {}
+
+  reduce-configs@2.0.0: {}
 
   regex-parser@2.3.1: {}
 
