@@ -1,6 +1,6 @@
 # @rsbuild/e2e
 
-This folder contains the E2E test cases of Rsbuild. The E2E suite is powered by [Playwright](https://github.com/microsoft/playwright).
+This folder contains the E2E test cases of Rsbuild. The E2E suite is powered by [Rstest](https://rstest.rs) and uses [Playwright](https://github.com/microsoft/playwright) for browser automation.
 
 ## Directory structure
 
@@ -32,7 +32,7 @@ npx rsbuild build
 ## Add test cases
 
 ```ts
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@e2e/helper';
 
 test('test 1 + 1', () => {
   expect(1 + 1).toBe(2);
