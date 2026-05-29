@@ -236,19 +236,7 @@ const sharedWorker = new SharedWorker(new URL('./worker.ts', import.meta.url), {
 
 ## Glob import
 
-Vite 提供了 `import.meta.glob()` 来批量导入模块。
-
-Rsbuild >= 2.0.8 已兼容 [import.meta.glob()](https://rspack.rs/zh/api/runtime-api/module-variables#importmetaglob)，因此在大多数情况下，从 Vite 迁移到 Rsbuild 时可以保留原有代码：
-
-```js
-const modules = import.meta.glob('./dir/*.js');
-
-for (const path in modules) {
-  modules[path]().then((mod) => {
-    console.log(path, mod);
-  });
-}
-```
+Rsbuild >= 2.0.8 已兼容 [import.meta.glob()](https://rspack.rs/zh/api/runtime-api/module-variables#importmetaglob)，因此从 Vite 迁移到 Rsbuild 时可以保留原有代码。
 
 ## vite-tsconfig-paths
 

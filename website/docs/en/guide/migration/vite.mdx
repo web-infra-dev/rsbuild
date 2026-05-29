@@ -236,19 +236,7 @@ The constructor syntax also lets you pass standard `WorkerOptions` or `SharedWor
 
 ## Glob import
 
-Vite provides `import.meta.glob()` for importing multiple modules.
-
-Rsbuild >= 2.0.8 is compatible with [import.meta.glob()](https://rspack.rs/api/runtime-api/module-variables#importmetaglob), so in most cases you can keep the Vite code unchanged when migrating to Rsbuild:
-
-```js
-const modules = import.meta.glob('./dir/*.js');
-
-for (const path in modules) {
-  modules[path]().then((mod) => {
-    console.log(path, mod);
-  });
-}
-```
+Rsbuild >= 2.0.8 is compatible with [import.meta.glob()](https://rspack.rs/api/runtime-api/module-variables#importmetaglob), so you can keep the Vite code unchanged when migrating to Rsbuild.
 
 ## vite-tsconfig-paths
 
