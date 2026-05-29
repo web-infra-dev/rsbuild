@@ -36,7 +36,6 @@
     "@rstest/core": "catalog:",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "catalog:",
-    "@typescript/native-preview": "catalog:",
     "cross-env": "catalog:",
     "cspell-ban-words": "catalog:",
     "heading-case": "catalog:",

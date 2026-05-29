@@ -182,8 +182,7 @@ export default defineConfig({
         },
       },
       dts: {
-        build: true,
-        tsgo: true,
+        isolated: true,
         alias: {
           // alias to pre-bundled types as they are public API
           cors: './compiled/cors',

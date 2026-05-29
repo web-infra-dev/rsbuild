@@ -24,8 +24,7 @@ export const nodeMinifyConfig: Rsbuild.Minify = {
 export const esmConfig: LibConfig = {
   syntax: 'es2023',
   dts: {
-    build: true,
-    tsgo: true,
+    isolated: true,
   },
   output: {
     minify: nodeMinifyConfig,
