@@ -67,7 +67,6 @@ catalog:
   '@types/react-dom': '^19.2.3'
   '@types/sass-loader': '^8.0.10'
   '@types/ws': '^8.18.1'
-  '@typescript/native-preview': '7.0.0-dev.20260524.1'
   'babel-loader': '10.1.1'
   'babel-plugin-react-compiler': '^1.0.0'
   'babel-preset-solid': '^1.9.12'
