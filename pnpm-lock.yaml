@@ -62,8 +62,8 @@ catalogs:
       specifier: 1.5.11
       version: 1.5.11
     '@rslib/core':
-      specifier: 0.21.5
-      version: 0.21.5
+      specifier: 0.22.0
+      version: 0.22.0
     '@rslint/core':
       specifier: ^0.5.3
       version: 0.5.3
@@ -403,7 +403,7 @@ importers:
         version: 0.5.3(jiti@2.7.0)
       '@rstest/adapter-rslib':
         specifier: 'catalog:'
-        version: 0.10.2(@rslib/core@0.21.5)(@rstest/core@0.10.2)(typescript@6.0.3)
+        version: 0.10.2(@rslib/core@0.22.0)(@rstest/core@0.10.2)(typescript@6.0.3)
       '@rstest/core':
         specifier: 'catalog:'
         version: 0.10.2(@module-federation/runtime-tools@2.5.0)(core-js@3.49.0)
@@ -922,7 +922,7 @@ importers:
         version: 0.3.31
       '@rslib/core':
         specifier: 'catalog:'
-        version: 0.21.5(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
+        version: 0.22.0(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
       '@types/cors':
         specifier: 'catalog:'
         version: 2.8.19
@@ -1067,7 +1067,7 @@ importers:
         version: link:../plugin-vue
       '@rslib/core':
         specifier: 'catalog:'
-        version: 0.21.5(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
+        version: 0.22.0(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
       '@types/node':
         specifier: 'catalog:'
         version: 24.12.4
@@ -1104,7 +1104,7 @@ importers:
         version: '@rsbuild/core@1.7.5'
       '@rslib/core':
         specifier: 'catalog:'
-        version: 0.21.5(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
+        version: 0.22.0(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1144,7 +1144,7 @@ importers:
         version: '@rsbuild/core@1.7.5'
       '@rslib/core':
         specifier: 'catalog:'
-        version: 0.21.5(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
+        version: 0.22.0(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1178,7 +1178,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 'catalog:'
-        version: 0.21.5(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
+        version: 0.22.0(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
       '@types/node':
         specifier: 'catalog:'
         version: 24.12.4
@@ -1206,7 +1206,7 @@ importers:
         version: '@rsbuild/core@1.7.5'
       '@rslib/core':
         specifier: 'catalog:'
-        version: 0.21.5(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
+        version: 0.22.0(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1243,7 +1243,7 @@ importers:
         version: '@rsbuild/core@1.7.5'
       '@rslib/core':
         specifier: 'catalog:'
-        version: 0.21.5(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
+        version: 0.22.0(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1283,7 +1283,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 'catalog:'
-        version: 0.21.5(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
+        version: 0.22.0(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1311,7 +1311,7 @@ importers:
         version: '@rsbuild/core@1.7.5'
       '@rslib/core':
         specifier: 'catalog:'
-        version: 0.21.5(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
+        version: 0.22.0(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1354,7 +1354,7 @@ importers:
         version: '@rsbuild/core@1.7.5'
       '@rslib/core':
         specifier: 'catalog:'
-        version: 0.21.5(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
+        version: 0.22.0(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1379,7 +1379,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 'catalog:'
-        version: 0.21.5(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
+        version: 0.22.0(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1404,7 +1404,7 @@ importers:
         version: '@rsbuild/core@1.7.5'
       '@rslib/core':
         specifier: 'catalog:'
-        version: 0.21.5(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
+        version: 0.22.0(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1422,13 +1422,13 @@ importers:
     devDependencies:
       '@rslib/core':
         specifier: 'catalog:'
-        version: 0.21.5(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
+        version: 0.22.0(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
       '@types/node':
         specifier: 'catalog:'
         version: 24.12.4
       rsbuild-plugin-arethetypeswrong:
         specifier: 'catalog:'
-        version: 0.3.1(@rsbuild/core@2.0.7)(typescript@6.0.3)
+        version: 0.3.1(@rsbuild/core@2.0.8)(typescript@6.0.3)
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -2437,6 +2437,16 @@ packages:
       core-js:
         optional: true
 
+  '@rsbuild/core@2.0.8':
+    resolution: {integrity: sha512-V5Bhn3zqljsaB5grw9oMkSk6XZFvMkr6UpIYPZnDmOWsRAT1fNQ6XF6cn8fVUKv/KILblBrKLUZf0DpvDt3exw==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    hasBin: true
+    peerDependencies:
+      core-js: '>= 3.0.0'
+    peerDependenciesMeta:
+      core-js:
+        optional: true
+
   '@rsbuild/plugin-check-syntax@1.6.1':
     resolution: {integrity: sha512-26xtEYN0QjZYoyt0lWnvIztBWjEZJvcfw7MN4f5B4SpNggmnF7F7aNPrgkY3EccXVFx1VGQBhnCkBV//OoS07Q==}
     peerDependencies:
@@ -2503,8 +2513,8 @@ packages:
   '@rsdoctor/utils@1.5.11':
     resolution: {integrity: sha512-+dKVriL1//G1JiG3iPzqX1C0Up6S2CfnqfTDTH4SeMgfJ10aKI/XWpvtyqdAS7jEJuZXGSrOzDv8Ph6wAoRwLQ==}
 
-  '@rslib/core@0.21.5':
-    resolution: {integrity: sha512-KPWR8gcodSIw8txfJ+KbgF5NoL7CxX0AljHiJk1VWDiClrN94jYmF5iGCFgaDraOBV9jJhpIIwPOfu09ild8eA==}
+  '@rslib/core@0.22.0':
+    resolution: {integrity: sha512-DGTMBDTSdILac0SmeBWvdYf/ZDn09vXgbJQ3/N1J7i6vBpFGWCCKjARoz1R5jYqr1Z9tLJ1OfOVZktbNY/XXuA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -5063,8 +5073,8 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  rsbuild-plugin-dts@0.21.5:
-    resolution: {integrity: sha512-tRSqSCmaY2Ef/FTxcLUw26jQxM/HJHAFqTsqngXnXnfic0BHlSCKzJuwjGoGUYimb3RdH6qnC7jzkXuoe+ZXOA==}
+  rsbuild-plugin-dts@0.22.0:
+    resolution: {integrity: sha512-Oyiu5oJDHWOnBv7yRr8eAGfoEddwxfPqUbAX6HvcJxrnR/h6Zd0VgTBWVTgqALYhLcL2ZdyZ2vwnqfhan4krwA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       '@microsoft/api-extractor': ^7
@@ -6778,6 +6788,15 @@ snapshots:
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
 
+  '@rsbuild/core@2.0.8(@module-federation/runtime-tools@2.5.0)(core-js@3.49.0)':
+    dependencies:
+      '@rspack/core': 2.0.5(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.23)
+      '@swc/helpers': 0.5.23
+    optionalDependencies:
+      core-js: 3.49.0
+    transitivePeerDependencies:
+      - '@module-federation/runtime-tools'
+
   '@rsbuild/plugin-check-syntax@1.6.1(@rsbuild/core@packages+core)':
     dependencies:
       acorn: 8.16.0
@@ -6914,10 +6933,10 @@ snapshots:
       - '@rspack/core'
       - webpack
 
-  '@rslib/core@0.21.5(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)':
+  '@rslib/core@0.22.0(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)':
     dependencies:
-      '@rsbuild/core': 2.0.7(@module-federation/runtime-tools@2.5.0)(core-js@3.49.0)
-      rsbuild-plugin-dts: 0.21.5(@rsbuild/core@2.0.7)(@typescript/native-preview@7.0.0-dev.20260524.1)(typescript@6.0.3)
+      '@rsbuild/core': 2.0.8(@module-federation/runtime-tools@2.5.0)(core-js@3.49.0)
+      rsbuild-plugin-dts: 0.22.0(@rsbuild/core@2.0.8)(@typescript/native-preview@7.0.0-dev.20260524.1)(typescript@6.0.3)
     optionalDependencies:
       typescript: 6.0.3
     transitivePeerDependencies:
@@ -7270,9 +7289,9 @@ snapshots:
     optionalDependencies:
       '@rspress/core': 2.0.12(@module-federation/runtime-tools@2.5.0)(@rspack/core@2.0.5)(@types/mdast@4.0.4)(@types/react@19.2.15)(core-js@3.49.0)(micromark-util-types@2.0.2)(micromark@4.0.2)
 
-  '@rstest/adapter-rslib@0.10.2(@rslib/core@0.21.5)(@rstest/core@0.10.2)(typescript@6.0.3)':
+  '@rstest/adapter-rslib@0.10.2(@rslib/core@0.22.0)(@rstest/core@0.10.2)(typescript@6.0.3)':
     dependencies:
-      '@rslib/core': 0.21.5(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
+      '@rslib/core': 0.22.0(@module-federation/runtime-tools@2.5.0)(@typescript/native-preview@7.0.0-dev.20260524.1)(core-js@3.49.0)(typescript@6.0.3)
       '@rstest/core': 0.10.2(@module-federation/runtime-tools@2.5.0)(core-js@3.49.0)
     optionalDependencies:
       typescript: 6.0.3
@@ -9763,16 +9782,16 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.60.2
       fsevents: 2.3.3
 
-  rsbuild-plugin-arethetypeswrong@0.3.1(@rsbuild/core@2.0.7)(typescript@6.0.3):
+  rsbuild-plugin-arethetypeswrong@0.3.1(@rsbuild/core@2.0.8)(typescript@6.0.3):
     dependencies:
       typescript: 6.0.3
     optionalDependencies:
-      '@rsbuild/core': 2.0.7(@module-federation/runtime-tools@2.5.0)(core-js@3.49.0)
+      '@rsbuild/core': 2.0.8(@module-federation/runtime-tools@2.5.0)(core-js@3.49.0)
 
-  rsbuild-plugin-dts@0.21.5(@rsbuild/core@2.0.7)(@typescript/native-preview@7.0.0-dev.20260524.1)(typescript@6.0.3):
+  rsbuild-plugin-dts@0.22.0(@rsbuild/core@2.0.8)(@typescript/native-preview@7.0.0-dev.20260524.1)(typescript@6.0.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
-      '@rsbuild/core': 2.0.7(@module-federation/runtime-tools@2.5.0)(core-js@3.49.0)
+      '@rsbuild/core': 2.0.8(@module-federation/runtime-tools@2.5.0)(core-js@3.49.0)
     optionalDependencies:
       '@typescript/native-preview': 7.0.0-dev.20260524.1
       typescript: 6.0.3
