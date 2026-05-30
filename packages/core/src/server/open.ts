@@ -64,15 +64,15 @@ async function openBrowser(url: string, logger: Logger): Promise<boolean> {
   // a Chromium browser with AppleScript. This lets us reuse an
   // existing tab when possible instead of creating a new one.
   if (shouldTryAppleScript(browser, browserArgs)) {
-    const { exec, execFile } = await import('node:child_process');
+    const { execFile } = await import('node:child_process');
     const { promisify } = await import('node:util');
+    const execFileAsync = promisify(execFile);
 
     /**
      * Find the browser that is currently running
      */
     const getDefaultBrowserForAppleScript = async () => {
-      const execAsync = promisify(exec);
-      const { stdout: ps } = await execAsync('ps cax');
+      const { stdout: ps } = await execFileAsync('ps', ['cax']);
       return supportedChromiumBrowsers.find((b) => ps.includes(b));
     };
 
@@ -82,7 +82,6 @@ async function openBrowser(url: string, logger: Logger): Promise<boolean> {
         : await getDefaultBrowserForAppleScript();
 
       if (chromiumBrowser) {
-        const execFileAsync = promisify(execFile);
         // Try to reuse existing tab with AppleScript
         await execFileAsync(
           'osascript',
