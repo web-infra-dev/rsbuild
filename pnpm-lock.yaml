@@ -320,8 +320,8 @@ catalogs:
       specifier: 5.2.1
       version: 5.2.1
     rspack-merge:
-      specifier: 0.1.1
-      version: 0.1.1
+      specifier: 1.0.1
+      version: 1.0.1
     rspack-vue-loader:
       specifier: ^17.5.0
       version: 17.5.0
@@ -1012,7 +1012,7 @@ importers:
         version: 5.2.1(@rspack/core@2.0.5)
       rspack-merge:
         specifier: 'catalog:'
-        version: 0.1.1
+        version: 1.0.1
       sirv:
         specifier: 'catalog:'
         version: 3.0.2
@@ -5107,8 +5107,8 @@ packages:
       '@rspack/core':
         optional: true
 
-  rspack-merge@0.1.1:
-    resolution: {integrity: sha512-RHKi8nECjP0lM1V7RnM+8G8dRvWgrsnntzfogJQz7oSHo104ca4jsL3KN/0gru233n/lVGrqDPDNlCA4x0UNlg==}
+  rspack-merge@1.0.1:
+    resolution: {integrity: sha512-W/mzCdxfV+EXOdpfwcLWc2TZ9EYa2LYumAMgpTn27bSEOO0BQz/SA8qfnJRCMkJyNST2URxmwqBmQbh5tLFwsg==}
 
   rspack-vue-loader@17.5.0:
     resolution: {integrity: sha512-hJrL2+jytfTs6ORHBOKTh5lU7BVZvmv7afELuQfyEpGC1ll7MKj1BxlgAIbhd6pZwoEwfdH79Lewtwe4VOlfCQ==}
@@ -9802,7 +9802,7 @@ snapshots:
     optionalDependencies:
       '@rspack/core': 2.0.5(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.23)
 
-  rspack-merge@0.1.1: {}
+  rspack-merge@1.0.1: {}
 
   rspack-vue-loader@17.5.0(@rspack/core@2.0.5)(vue@3.5.34):
     dependencies:
