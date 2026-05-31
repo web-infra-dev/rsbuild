@@ -230,8 +230,8 @@ catalogs:
       specifier: ^2.7.0
       version: 2.7.0
     launch-editor-middleware:
-      specifier: ^2.13.2
-      version: 2.13.2
+      specifier: ^2.14.0
+      version: 2.14.0
     less:
       specifier: ^4.6.4
       version: 4.6.4
@@ -970,7 +970,7 @@ importers:
         version: 2.7.0
       launch-editor-middleware:
         specifier: 'catalog:'
-        version: 2.13.2
+        version: 2.14.0
       memfs:
         specifier: 'catalog:'
         version: 4.57.2
@@ -1422,7 +1422,7 @@ importers:
         version: 24.12.4
       rsbuild-plugin-arethetypeswrong:
         specifier: 'catalog:'
-        version: 0.3.1(@rsbuild/core@2.0.8)(typescript@6.0.3)
+        version: 0.3.1(@rsbuild/core@2.0.9)(typescript@6.0.3)
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
@@ -2433,6 +2433,16 @@ packages:
 
   '@rsbuild/core@2.0.8':
     resolution: {integrity: sha512-V5Bhn3zqljsaB5grw9oMkSk6XZFvMkr6UpIYPZnDmOWsRAT1fNQ6XF6cn8fVUKv/KILblBrKLUZf0DpvDt3exw==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    hasBin: true
+    peerDependencies:
+      core-js: '>= 3.0.0'
+    peerDependenciesMeta:
+      core-js:
+        optional: true
+
+  '@rsbuild/core@2.0.9':
+    resolution: {integrity: sha512-lK2bMNuwh3TuLXLskS7nG3fnQk+6eaLeeZiquJWcna4JZx9iaI59JSd+iLcg5TeZLjEVygkwn/HcE+yuYDQRAw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -4232,11 +4242,14 @@ packages:
   jsonfile@6.2.1:
     resolution: {integrity: sha512-zwOTdL3rFQ/lRdBnntKVOX6k5cKJwEc1HdilT71BWEu7J41gXIB2MRp+vxduPSwZJPWBxEzv4yH1wYLJGUHX4Q==}
 
-  launch-editor-middleware@2.13.2:
-    resolution: {integrity: sha512-kI7VqA9g6mhoeQ6YdNgd+gKLaeuWHAUR8oDM8vFtt924wG8HbI2XO0n/hSX2ML4hcJbTgUihuPHfpnPjIKMdJg==}
+  launch-editor-middleware@2.14.0:
+    resolution: {integrity: sha512-uoiQum17RpaGQprvEmI9SoJq1SCEXDOwFAPG1VmsmLtH/cMvv8Mh0T97OgFfuPfcxxz12WYobiJqSUZdU6N+4w==}
 
   launch-editor@2.13.2:
     resolution: {integrity: sha512-4VVDnbOpLXy/s8rdRCSXb+zfMeFR0WlJWpET1iA9CQdlZDfwyLjUuGQzXU4VeOoey6AicSAluWan7Etga6Kcmg==}
+
+  launch-editor@2.14.0:
+    resolution: {integrity: sha512-Pj3ZOx9dD1BClS7YcSQx0An1PCF9wz4JpvbEmKvDxQtm0jxlkk5NhW8x0SBAKA/acHBKZaqdd5FFOWlXo500JA==}
 
   less-loader@12.3.3:
     resolution: {integrity: sha512-F0+ErFFDj3Pt+nVrCN6VlEGEzocv9s7x/aR9v2riI+WM83UAfTYBDBjGPJnT55lBLR6JSI4fmWblt+aA2JN6/w==}
@@ -5345,6 +5358,10 @@ packages:
 
   shell-quote@1.8.3:
     resolution: {integrity: sha512-ObmnIF4hXNg1BqhnHmgbDETF8dLPCggZWBjkQfhZpbszZnYur5DUljTcCHii5LC3J5E0yeO/1LIMyH+UvHQgyw==}
+    engines: {node: '>= 0.4'}
+
+  shell-quote@1.8.4:
+    resolution: {integrity: sha512-VsC6n6vz1ihYYyZZwX7YZSF5l5x36ca17OC+a69h94YqB7X6XLwf+5MOgynYir2SLFUbl8gIYvBo8K8RoNQ6bQ==}
     engines: {node: '>= 0.4'}
 
   shiki@4.0.2:
@@ -6775,6 +6792,16 @@ snapshots:
       core-js: 3.49.0
     transitivePeerDependencies:
       - '@module-federation/runtime-tools'
+
+  '@rsbuild/core@2.0.9(@module-federation/runtime-tools@2.5.0)(core-js@3.49.0)':
+    dependencies:
+      '@rspack/core': 2.0.5(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.23)
+      '@swc/helpers': 0.5.23
+    optionalDependencies:
+      core-js: 3.49.0
+    transitivePeerDependencies:
+      - '@module-federation/runtime-tools'
+    optional: true
 
   '@rsbuild/plugin-check-syntax@1.6.1(@rsbuild/core@packages+core)':
     dependencies:
@@ -8656,14 +8683,19 @@ snapshots:
     optionalDependencies:
       graceful-fs: 4.2.11
 
-  launch-editor-middleware@2.13.2:
+  launch-editor-middleware@2.14.0:
     dependencies:
-      launch-editor: 2.13.2
+      launch-editor: 2.14.0
 
   launch-editor@2.13.2:
     dependencies:
       picocolors: 1.1.1
       shell-quote: 1.8.3
+
+  launch-editor@2.14.0:
+    dependencies:
+      picocolors: 1.1.1
+      shell-quote: 1.8.4
 
   less-loader@12.3.3(@rspack/core@2.0.5)(less@4.6.4):
     dependencies:
@@ -9767,11 +9799,11 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.60.2
       fsevents: 2.3.3
 
-  rsbuild-plugin-arethetypeswrong@0.3.1(@rsbuild/core@2.0.8)(typescript@6.0.3):
+  rsbuild-plugin-arethetypeswrong@0.3.1(@rsbuild/core@2.0.9)(typescript@6.0.3):
     dependencies:
       typescript: 6.0.3
     optionalDependencies:
-      '@rsbuild/core': 2.0.8(@module-federation/runtime-tools@2.5.0)(core-js@3.49.0)
+      '@rsbuild/core': 2.0.9(@module-federation/runtime-tools@2.5.0)(core-js@3.49.0)
 
   rsbuild-plugin-dts@0.22.0(@rsbuild/core@2.0.8)(typescript@6.0.3):
     dependencies:
@@ -9978,6 +10010,8 @@ snapshots:
   shebang-regex@3.0.0: {}
 
   shell-quote@1.8.3: {}
+
+  shell-quote@1.8.4: {}
 
   shiki@4.0.2:
     dependencies:
