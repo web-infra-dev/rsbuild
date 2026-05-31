@@ -12,7 +12,6 @@ test('should not re-compile templates when the template is not changed', async (
   let count = 0;
 
   const tempSrc = await copySrcDir();
-  console.log('[template-cache] tempSrc', tempSrc);
 
   await dev({
     config: {
@@ -30,9 +29,8 @@ test('should not re-compile templates when the template is not changed', async (
         {
           name: 'test-plugin',
           setup(api) {
-            api.transform({ test: /\.html$/ }, ({ code, resource }) => {
+            api.transform({ test: /\.html$/ }, ({ code }) => {
               count++;
-              console.log('[template-cache] transform', count, resource);
               return `export default \`${code}\`;`;
             });
           },
@@ -42,7 +40,6 @@ test('should not re-compile templates when the template is not changed', async (
   });
 
   await expect(page.locator('#root')).toHaveText('foo');
-  console.log('[template-cache] after first compile', count);
   expect(count).toEqual(2);
 
   // Re-compile the template when the template is changed
@@ -50,7 +47,6 @@ test('should not re-compile templates when the template is not changed', async (
     code.replace('foo', 'foo2'),
   );
   await expect(page.locator('#root')).toHaveText('foo2');
-  console.log('[template-cache] after html edit', count);
   // The count will be 4 as the childCompiler in html-rspack-plugin
   // will compile all the templates
   expect(count).toEqual(4);
@@ -59,7 +55,6 @@ test('should not re-compile templates when the template is not changed', async (
     code.replace('foo', 'foo3'),
   );
   await expect(page.locator('#content')).toHaveText('foo3');
-  console.log('[template-cache] after js edit', count);
   // The count should not change if the templates are not changed
   expect(count).toEqual(4);
 });
