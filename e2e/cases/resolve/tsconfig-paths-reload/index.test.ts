@@ -8,10 +8,6 @@ test('should watch tsconfig.json and reload the server when it changes', async (
   editFile,
   execCli,
 }) => {
-  if (process.platform === 'win32') {
-    return;
-  }
-
   const dist = join(import.meta.dirname, 'dist');
 
   await fse.remove(dist);
