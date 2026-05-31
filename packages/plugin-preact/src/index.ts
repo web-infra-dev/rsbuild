@@ -44,11 +44,6 @@ export const pluginPreact = (
       ...userOptions,
     };
 
-    // @rspack/plugin-preact-refresh does not support Windows yet
-    if (process.platform === 'win32') {
-      options.prefreshEnabled = false;
-    }
-
     api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
       const isDev = config.mode === 'development';
       const isV1 = api.context.version.startsWith('1.');
