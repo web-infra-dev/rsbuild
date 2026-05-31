@@ -90,7 +90,7 @@ catalog:
   'html-rspack-plugin': '6.1.8'
   'http-proxy-middleware': '4.0.0'
   'jiti': '^2.7.0'
-  'launch-editor-middleware': '^2.13.2'
+  'launch-editor-middleware': '^2.14.0'
   'less': '^4.6.4'
   'less-loader': '^12.3.3'
   'lit': '^3.3.3'
