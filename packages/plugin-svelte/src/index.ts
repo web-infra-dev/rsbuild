@@ -1,6 +1,5 @@
-import { promises } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
-import path from 'node:path';
 import type { EnvironmentConfig, RsbuildPlugin } from '@rsbuild/core';
 import type { CompileOptions } from 'svelte/compiler';
 import { sveltePreprocess } from 'svelte-preprocess';
@@ -40,14 +39,29 @@ export type PluginSvelteOptions = {
 
 export const PLUGIN_SVELTE_NAME = 'rsbuild:svelte';
 
-const isSvelte5 = async (sveltePath: string) => {
+const validateSvelteVersion = (rootPath: string) => {
+  let pkgPath: string;
+
   try {
-    const pkgPath = path.join(sveltePath, 'package.json');
-    const pkgRaw = await promises.readFile(pkgPath, 'utf-8');
-    const pkgJson = JSON.parse(pkgRaw);
-    return pkgJson.version.startsWith('5.');
-  } catch {
-    return false;
+    // Resolve `svelte` package path from the project directory
+    pkgPath = require.resolve('svelte/package.json', {
+      paths: [rootPath],
+    });
+  } catch (err) {
+    throw new Error(
+      'Cannot resolve `svelte` package under the project directory, did you forget to install it?',
+      { cause: err },
+    );
+  }
+
+  const { version } = JSON.parse(readFileSync(pkgPath, 'utf-8')) as {
+    version?: string;
+  };
+  const majorVersion = version ? Number(version.split('.')[0]) : 0;
+  if (!(majorVersion >= 5)) {
+    throw new Error(
+      `"@rsbuild/plugin-svelte" requires svelte >= 5.0.0, but found ${version || 'unknown'}.`,
+    );
   }
 };
 
@@ -56,22 +70,7 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
     name: PLUGIN_SVELTE_NAME,
 
     setup(api) {
-      let sveltePath = '';
-      try {
-        // Resolve `svelte` package path from the project directory
-        sveltePath = path.dirname(
-          require.resolve('svelte/package.json', {
-            paths: [api.context.rootPath],
-          }),
-        );
-      } catch (err) {
-        api.logger.error(
-          'Cannot resolve `svelte` package under the project directory, did you forget to install it?',
-        );
-        throw new Error('[rsbuild:svelte] Failed to resolve `svelte` package', {
-          cause: err,
-        });
-      }
+      validateSvelteVersion(api.context.rootPath);
 
       api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
         const extraConfig: EnvironmentConfig = {
@@ -85,17 +84,8 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
       });
 
       api.modifyBundlerChain(
-        async (chain, { CHAIN_ID, environment, isDev, isProd }) => {
-          const svelte5 = await isSvelte5(sveltePath);
-
+        (chain, { CHAIN_ID, environment, isDev, isProd }) => {
           const environmentConfig = environment.config;
-
-          if (!svelte5) {
-            chain.resolve.alias.set(
-              'svelte',
-              path.join(sveltePath, 'src/runtime'),
-            );
-          }
 
           chain.resolve.extensions.add('.svelte');
           chain.resolve.mainFields.add('svelte').add('...');
@@ -132,12 +122,10 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
             .rule(CHAIN_ID.RULE.SVELTE)
             .test(/\.svelte$/);
 
-          if (svelte5 && jsRule) {
-            svelteRule
-              .use(CHAIN_ID.USE.SWC)
-              .loader(swcUse.get('loader'))
-              .options(swcUse.get('options'));
-          }
+          svelteRule
+            .use(CHAIN_ID.USE.SWC)
+            .loader(swcUse.get('loader'))
+            .options(swcUse.get('options'));
 
           svelteRule
             .use(CHAIN_ID.USE.SVELTE)
@@ -145,22 +133,20 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
             .options(svelteLoaderOptions)
             .end();
 
-          if (svelte5 && jsRule) {
-            const regexp = /\.(?:svelte\.js|svelte\.ts)$/;
+          const regexp = /\.(?:svelte\.js|svelte\.ts)$/;
 
-            jsRule.exclude.add(regexp);
+          jsRule.exclude.add(regexp);
 
-            chain.module
-              .rule('svelte-js')
-              .test(regexp)
-              .use(CHAIN_ID.USE.SVELTE)
-              .loader(loaderPath)
-              .options(svelteLoaderOptions)
-              .end()
-              .use(CHAIN_ID.USE.SWC)
-              .loader(swcUse.get('loader'))
-              .options(swcUse.get('options'));
-          }
+          chain.module
+            .rule('svelte-js')
+            .test(regexp)
+            .use(CHAIN_ID.USE.SVELTE)
+            .loader(loaderPath)
+            .options(svelteLoaderOptions)
+            .end()
+            .use(CHAIN_ID.USE.SWC)
+            .loader(swcUse.get('loader'))
+            .options(swcUse.get('options'));
         },
       );
     },
