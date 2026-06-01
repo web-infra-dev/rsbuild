@@ -71,12 +71,7 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
     name: PLUGIN_SVELTE_NAME,
 
     setup(api) {
-      try {
-        validateSvelteVersion(api.context.rootPath);
-      } catch (err) {
-        api.logger.error(err);
-        throw err;
-      }
+      validateSvelteVersion(api.context.rootPath);
 
       api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
         const extraConfig: EnvironmentConfig = {
