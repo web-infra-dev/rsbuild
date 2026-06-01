@@ -60,7 +60,7 @@ const validateSvelteVersion = (rootPath: string) => {
   const majorVersion = version ? Number(version.split('.')[0]) : 0;
   if (!(majorVersion >= 5)) {
     throw new Error(
-      `[rsbuild:svelte] @rsbuild/plugin-svelte requires svelte >= 5.0.0, but found ${version || 'unknown'}.`,
+      `"@rsbuild/plugin-svelte" requires svelte >= 5.0.0, but found ${version || 'unknown'}.`,
     );
   }
 };
