@@ -37,7 +37,7 @@
   },
   "peerDependencies": {
     "@rsbuild/core": "^2.0.0",
-    "svelte": ">=5.0.0"
+    "svelte": "^5.0.0"
   },
   "peerDependenciesMeta": {
     "@rsbuild/core": {
