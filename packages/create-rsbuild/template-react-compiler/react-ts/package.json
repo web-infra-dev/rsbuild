@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@rsbuild/plugin-babel": "^1.2.0",
+    "@rsbuild/plugin-babel": "^1.2.1",
     "babel-plugin-react-compiler": "^1.0.0"
   }
 }
