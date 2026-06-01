@@ -36,7 +36,7 @@
     "typescript": "catalog:"
   },
   "peerDependencies": {
-    "@rsbuild/core": "^2.0.0-0"
+    "@rsbuild/core": "^2.0.0"
   },
   "peerDependenciesMeta": {
     "@rsbuild/core": {
