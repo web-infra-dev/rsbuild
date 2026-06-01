@@ -102,6 +102,8 @@ Rsbuild 会在构建时自动注入 `<script>` 标签到生成的 HTML 文件中
 | [vite-plugin-node-polyfills](https://npmjs.com/package/vite-plugin-node-polyfills)         | [@rsbuild/plugin-node-polyfill](https://github.com/rstackjs/rsbuild-plugin-node-polyfill) |
 | [vite-plugin-solid](https://npmjs.com/package/vite-plugin-solid)                           | [@rsbuild/plugin-solid](/plugins/list/plugin-solid)                                       |
 | [@preact/preset-vite](https://npmjs.com/package/@preact/preset-vite)                       | [@rsbuild/plugin-preact](/plugins/list/plugin-preact)                                     |
+| [@tanstack/router-plugin/vite](https://npmjs.com/package/@tanstack/router-plugin)          | [@tanstack/router-plugin/rsbuild](https://npmjs.com/package/@tanstack/router-plugin)      |
+| [@sentry/vite-plugin](https://npmjs.com/package/@sentry/vite-plugin)                       | [@sentry/webpack-plugin](https://npmjs.com/package/@sentry/webpack-plugin)                |
 | [vite-plugin-full-reload](https://npmjs.com/package/vite-plugin-full-reload)               | [dev.watchFiles](/config/dev/watch-files)                                                 |
 | [vite-plugin-html](https://npmjs.com/package/vite-plugin-html)                             | [html.template](/config/html/template)                                                    |
 | [vite-plugin-css-injected-by-js](https://npmjs.com/package/vite-plugin-css-injected-by-js) | [output.injectStyles](/config/output/inject-styles)                                       |
@@ -169,6 +171,18 @@ Rsbuild 会在构建时自动注入 `<script>` 标签到生成的 HTML 文件中
 说明：
 
 - 上述表格尚未覆盖到 Vite 的所有配置，欢迎补充。
+
+## 服务器端口
+
+Vite 开发服务器的默认端口是 `5173`，而 Rsbuild 的默认端口是 `3000`。如果你的项目依赖 `5173`，可以通过以下配置保持 Vite 原有的端口：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    port: 5173,
+  },
+};
+```
 
 ## 环境变量
 
