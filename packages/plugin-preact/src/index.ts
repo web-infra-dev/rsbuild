@@ -37,7 +37,6 @@ export const pluginPreact = (
 
   setup(api) {
     const options = {
-      include: /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/,
       exclude: /[\\/]node_modules[\\/]/,
       prefreshEnabled: true,
       reactAliasesEnabled: true,
@@ -117,16 +116,16 @@ export const pluginPreact = (
         return;
       }
 
-      const { default: PreactRefreshPlugin } =
+      const { PreactRefreshRspackPlugin } =
         await import('@rspack/plugin-preact-refresh');
 
       const preactPath = require.resolve('preact', {
         paths: [api.context.rootPath],
       });
 
-      chain.plugin('preact-refresh').use(PreactRefreshPlugin, [
+      chain.plugin('preact-refresh').use(PreactRefreshRspackPlugin, [
         {
-          include: options.include,
+          ...(options.include === undefined ? {} : { test: options.include }),
           exclude: options.exclude,
           preactPath,
         },

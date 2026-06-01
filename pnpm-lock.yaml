@@ -71,8 +71,8 @@ catalogs:
       specifier: ~2.0.5
       version: 2.0.5
     '@rspack/plugin-preact-refresh':
-      specifier: ^1.1.6
-      version: 1.1.6
+      specifier: ^2.0.0
+      version: 2.0.0
     '@rspack/plugin-react-refresh':
       specifier: 2.0.1
       version: 2.0.1
@@ -1162,7 +1162,7 @@ importers:
         version: 1.2.1
       '@rspack/plugin-preact-refresh':
         specifier: 'catalog:'
-        version: 1.1.6(@prefresh/core@1.5.10)(@prefresh/utils@1.2.1)
+        version: 2.0.0(@prefresh/core@1.5.10)(@prefresh/utils@1.2.1)
       '@swc/plugin-prefresh':
         specifier: 'catalog:'
         version: 12.12.0
@@ -2702,8 +2702,8 @@ packages:
   '@rspack/lite-tapable@1.1.0':
     resolution: {integrity: sha512-E2B0JhYFmVAwdDiG14+DW0Di4Ze4Jg10Pc4/lILUrd5DRCaklduz2OvJ5HYQ6G+hd+WTzqQb3QnDNfK4yvAFYw==}
 
-  '@rspack/plugin-preact-refresh@1.1.6':
-    resolution: {integrity: sha512-aW6H+IXw4TpeovHb382idyxPMzjoXrBfR+VWZmjZcVIjVF9NqGVwhSg9LEkKHUugK8Z0QBS+D2yt5bd0S1q8ow==}
+  '@rspack/plugin-preact-refresh@2.0.0':
+    resolution: {integrity: sha512-zzpgqFcFyNRquY/pK7xayuCY/c5DbclgPTPlDuYyaTDRa/+1bimxIrWgaaTJD/rbf3aegA9ZkhfP/nnqHkLjTg==}
     peerDependencies:
       '@prefresh/core': ^1.5.0
       '@prefresh/utils': ^1.2.0
@@ -7031,7 +7031,7 @@ snapshots:
 
   '@rspack/lite-tapable@1.1.0': {}
 
-  '@rspack/plugin-preact-refresh@1.1.6(@prefresh/core@1.5.10)(@prefresh/utils@1.2.1)':
+  '@rspack/plugin-preact-refresh@2.0.0(@prefresh/core@1.5.10)(@prefresh/utils@1.2.1)':
     dependencies:
       '@prefresh/core': 1.5.10(preact@10.29.2)
       '@prefresh/utils': 1.2.1
