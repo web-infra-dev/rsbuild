@@ -1,5 +1,4 @@
-import { createRsbuild, type Rspack } from '@rsbuild/core';
-import { createRsbuild as createRsbuildV1 } from '@rsbuild/core-v1';
+import { createRsbuild } from '@rsbuild/core';
 import { matchRules } from '@scripts/test-helper';
 import { pluginSvelte } from '../src';
 
@@ -18,21 +17,6 @@ describe('plugin-svelte', () => {
 
     const rspackConfigs = await rsbuild.initConfigs();
     expect(matchRules(rspackConfigs[0], 'a.svelte')).toMatchSnapshot();
-    expect(rspackConfigs[0].resolve).toMatchSnapshot();
-  });
-
-  it('should add svelte loader and resolve config properly for Rsbuild v1', async () => {
-    const rsbuild = await createRsbuildV1({
-      cwd: __dirname,
-      config: {
-        plugins: [pluginSvelte()],
-      },
-    });
-
-    const rspackConfigs = await rsbuild.initConfigs();
-    expect(
-      matchRules(rspackConfigs[0] as Rspack.Configuration, 'a.svelte'),
-    ).toMatchSnapshot();
     expect(rspackConfigs[0].resolve).toMatchSnapshot();
   });
 

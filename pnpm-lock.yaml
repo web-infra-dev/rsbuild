@@ -1300,9 +1300,6 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
-      '@rsbuild/core-v1':
-        specifier: 'catalog:'
-        version: '@rsbuild/core@1.7.5'
       '@rslib/core':
         specifier: 'catalog:'
         version: 0.22.0(@module-federation/runtime-tools@2.5.0)(core-js@3.49.0)(typescript@6.0.3)

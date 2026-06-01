@@ -29,7 +29,6 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/core-v1": "catalog:",
     "@rslib/core": "catalog:",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "catalog:",
@@ -37,7 +36,7 @@
     "typescript": "catalog:"
   },
   "peerDependencies": {
-    "@rsbuild/core": "^1.4.0 || ^2.0.0"
+    "@rsbuild/core": "^2.0.0"
   },
   "peerDependenciesMeta": {
     "@rsbuild/core": {
