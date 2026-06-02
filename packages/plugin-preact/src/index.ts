@@ -1,31 +1,8 @@
 import { createRequire } from 'node:module';
 import type { EnvironmentConfig, RsbuildPlugin, Rspack } from '@rsbuild/core';
+import type { PluginOptions as PreactRefreshOptions } from '@rspack/plugin-preact-refresh';
 
 const require = createRequire(import.meta.url);
-
-export type PreactRefreshOptions = {
-  /**
-   * Specifies which files should be processed by the Preact Refresh loader.
-   * The value is the same as Rspack's `rule.test` option.
-   */
-  test?: Rspack.RuleSetCondition;
-  /**
-   * Include files to be processed by the Preact Refresh loader.
-   * The value is the same as Rspack's `rule.include` option.
-   */
-  include?: Rspack.RuleSetCondition | null;
-  /**
-   * Exclude files from being processed by the Preact Refresh loader.
-   * The value is the same as Rspack's `rule.exclude` option.
-   */
-  exclude?: Rspack.RuleSetCondition | null;
-  /**
-   * Configure the error overlay.
-   */
-  overlay?: {
-    module: string;
-  };
-};
 
 export type PluginPreactOptions = {
   /**

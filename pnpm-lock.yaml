@@ -71,10 +71,10 @@ catalogs:
       specifier: ~2.0.5
       version: 2.0.5
     '@rspack/plugin-preact-refresh':
-      specifier: ^2.0.0
-      version: 2.0.0
+      specifier: ^2.0.1
+      version: 2.0.1
     '@rspack/plugin-react-refresh':
-      specifier: 2.0.1
+      specifier: ^2.0.1
       version: 2.0.1
     '@rspress/core':
       specifier: ^2.0.13
@@ -1162,7 +1162,7 @@ importers:
         version: 1.2.1
       '@rspack/plugin-preact-refresh':
         specifier: 'catalog:'
-        version: 2.0.0(@prefresh/core@1.5.10)(@prefresh/utils@1.2.1)
+        version: 2.0.1(@prefresh/core@1.5.10)(@prefresh/utils@1.2.1)(@rspack/core@2.0.5)
       '@swc/plugin-prefresh':
         specifier: 'catalog:'
         version: 12.12.0
@@ -2702,11 +2702,15 @@ packages:
   '@rspack/lite-tapable@1.1.0':
     resolution: {integrity: sha512-E2B0JhYFmVAwdDiG14+DW0Di4Ze4Jg10Pc4/lILUrd5DRCaklduz2OvJ5HYQ6G+hd+WTzqQb3QnDNfK4yvAFYw==}
 
-  '@rspack/plugin-preact-refresh@2.0.0':
-    resolution: {integrity: sha512-zzpgqFcFyNRquY/pK7xayuCY/c5DbclgPTPlDuYyaTDRa/+1bimxIrWgaaTJD/rbf3aegA9ZkhfP/nnqHkLjTg==}
+  '@rspack/plugin-preact-refresh@2.0.1':
+    resolution: {integrity: sha512-tQ3WRBVaJ5JVy4jQHaYpYqeQrPStc7WrIJlVMrY/2mJMe5D1Ma4EO6K7J0v4Zx3HZMoJ1xeaqfCI9E8UHFE9yQ==}
     peerDependencies:
       '@prefresh/core': ^1.5.0
       '@prefresh/utils': ^1.2.0
+      '@rspack/core': ^2.0.0
+    peerDependenciesMeta:
+      '@rspack/core':
+        optional: true
 
   '@rspack/plugin-react-refresh@2.0.0':
     resolution: {integrity: sha512-Cf6CxBStNDJbiXMc/GmsvG1G8PRlUpa0MSfWsMTI+e8npzuTN/p8nwLs3shriBZOLciqgkSZpBtPTd10BLpj1g==}
@@ -7031,10 +7035,12 @@ snapshots:
 
   '@rspack/lite-tapable@1.1.0': {}
 
-  '@rspack/plugin-preact-refresh@2.0.0(@prefresh/core@1.5.10)(@prefresh/utils@1.2.1)':
+  '@rspack/plugin-preact-refresh@2.0.1(@prefresh/core@1.5.10)(@prefresh/utils@1.2.1)(@rspack/core@2.0.5)':
     dependencies:
       '@prefresh/core': 1.5.10(preact@10.29.2)
       '@prefresh/utils': 1.2.1
+    optionalDependencies:
+      '@rspack/core': 2.0.5(@module-federation/runtime-tools@2.5.0)(@swc/helpers@0.5.23)
 
   '@rspack/plugin-react-refresh@2.0.0(@rspack/core@2.0.5)(react-refresh@0.18.0)':
     dependencies:
