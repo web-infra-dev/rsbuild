@@ -20,6 +20,8 @@ Overview of the main features supported by Rsbuild.
 | Babel compilation    | Optional feature, use Babel to transform JavaScript and TypeScript code                                   | <ul><li>[Babel plugin](/plugins/list/plugin-babel)</li></ul>                                                                        |
 | Node outputs         | Optional feature, build bundles that run in Node.js environment                                           | <ul><li>[Node target](/config/output/target#node-target)</li></ul>                                                                  |
 | Web Workers          | Optional feature, use Web Workers                                                                         | <ul><li>[Web Workers](/guide/basic/web-workers)</li></ul>                                                                           |
+| Glob import          | Optional feature, import multiple modules using `import.meta.glob`                                        | <ul><li>[import.meta.glob](https://rspack.rs/api/runtime-api/module-variables#importmetaglob)</li></ul>                             |
+| JSON import          | JSON files can be imported by default, and YAML/TOML can be imported with plugins                         | <ul><li>[JSON](/guide/basic/json-files)</li></ul>                                                                                   |
 | Browserslist         | Optional feature, use browserslist to specify which browsers should be supported in your web application. | <ul><li>[Browserslist](/guide/advanced/browserslist)</li></ul>                                                                      |
 | Compatibility check  | Optional feature, scan build outputs for advanced syntax that isn't supported by the target browsers      | <ul><li>[@rsbuild/plugin-check-syntax](https://github.com/rstackjs/rsbuild-plugin-check-syntax)</li></ul>                           |
 | Environment variable | Optional feature, inject environment variables or expressions into the code                               | <ul><li>[Environment variables](/guide/advanced/env-vars)</li></ul>                                                                 |
@@ -58,14 +60,16 @@ Overview of the main features supported by Rsbuild.
 
 ## Server
 
-| Features          | Description                                                               | Links                                                           |
-| ----------------- | ------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| Public dir        | Serves public assets from the `public` directory by default               | <ul><li>[server.publicDir](/config/server/public-dir)</li></ul> |
-| SSR               | Optional feature, implement server-side rendering                         | <ul><li>[SSR](/guide/advanced/ssr)</li></ul>                    |
-| Proxy             | Optional feature, proxy requests to the specified service                 | <ul><li>[server.proxy](/config/server/proxy)</li></ul>          |
-| Open page         | Optional feature, automatically open page in browser when starting server | <ul><li>[server.open](/config/server/open)</li></ul>            |
-| HTTPS             | Optional feature, enable HTTPS server                                     | <ul><li>[server.https](/config/server/https)</li></ul>          |
-| Custom middleware | Optional feature, use custom middleware                                   | <ul><li>[Middleware](/guide/basic/server#middleware)</li></ul>  |
+| Features          | Description                                                               | Links                                                                                              |
+| ----------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Public dir        | Serves public assets from the `public` directory by default               | <ul><li>[server.publicDir](/config/server/public-dir)</li></ul>                                    |
+| HMR               | HMR is enabled by default in development mode                             | <ul><li>[Hot module replacement](/guide/advanced/hmr)</li><li>[dev.hmr](/config/dev/hmr)</li></ul> |
+| Watch files       | Optional feature, watch files and trigger page reloads or server restarts | <ul><li>[dev.watchFiles](/config/dev/watch-files)</li></ul>                                        |
+| SSR               | Optional feature, implement server-side rendering                         | <ul><li>[SSR](/guide/advanced/ssr)</li></ul>                                                       |
+| Proxy             | Optional feature, proxy requests to the specified service                 | <ul><li>[server.proxy](/config/server/proxy)</li></ul>                                             |
+| Open page         | Optional feature, automatically open page in browser when starting server | <ul><li>[server.open](/config/server/open)</li></ul>                                               |
+| HTTPS             | Optional feature, enable HTTPS server                                     | <ul><li>[server.https](/config/server/https)</li></ul>                                             |
+| Custom middleware | Optional feature, use custom middleware                                   | <ul><li>[Middleware](/guide/basic/server#middleware)</li></ul>                                     |
 
 ## UI framework
 
@@ -103,6 +107,7 @@ Overview of the main features supported by Rsbuild.
 | Print file size            | After the production build, all bundle sizes are displayed by default                                                        | <ul><li>[performance.printFileSize](/config/performance/print-file-size)</li></ul>                   |
 | Analyze build process      | Optional feature, use Rsdoctor to analyze build process                                                                      | <ul><li>[Use Rsdoctor](/guide/debug/rsdoctor)</li></ul>                                              |
 | Analyze bundle size        | Optional feature, analyze bundle size through Rsdoctor                                                                       | <ul><li>[Use Rsdoctor](/guide/debug/rsdoctor)</li></ul>                                              |
+| Lazy compilation           | Compile entry or async modules on demand in development for faster startup                                                   | <ul><li>[dev.lazyCompilation](/config/dev/lazy-compilation)</li></ul>                                |
 | Remove console             | Optional feature, remove `console.[methodName]` in code                                                                      | <ul><li>[performance.removeConsole](/config/performance/remove-console)</li ></ul>                   |
 | Dedupe packages            | Optional feature, remove duplicate npm packages                                                                              | <ul><li>[resolve.dedupe](/config/resolve/dedupe)</li></ul>                                           |
 | Component on-demand import | Optional feature, selectively import code and styles from component libraries                                                | <ul><li>[source.transformImport](/config/source/transform-import)</li></ul>                          |
