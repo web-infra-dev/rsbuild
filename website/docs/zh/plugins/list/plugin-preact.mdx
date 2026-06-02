@@ -65,30 +65,43 @@ pluginPreact({
 });
 ```
 
-### include
+### preactRefreshOptions
 
-指定要由 [@rspack/plugin-preact-refresh](https://github.com/rstackjs/rspack-plugin-preact-refresh) 插件处理的文件。这个值与 Rspack 中的 [rules[].test](https://rspack.rs/zh/config/module-rules#rulestest) 选项相同。
+设置 [@rspack/plugin-preact-refresh](https://github.com/rstackjs/rspack-plugin-preact-refresh) 的选项。该值会传递给 Rspack 插件，其中 `preactPath` 会由 Rsbuild 自动配置。
 
-- **类型：** [Rspack.RuleSetCondition](https://rspack.rs/zh/config/module-rules#condition)
-- **默认值：** `/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/`
-- **版本：** `>= v1.1.0`
+- **类型：**
 
 ```ts
-pluginPreact({
-  include: [/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/, /some-other-module/],
-});
+type PreactRefreshOptions = {
+  // @link https://rspack.rs/zh/config/module-rules#condition
+  test?: Rspack.RuleSetCondition;
+  include?: Rspack.RuleSetCondition | null;
+  exclude?: Rspack.RuleSetCondition | null;
+  overlay?: {
+    module: string;
+  };
+};
 ```
 
-### exclude
+- **默认值：**
 
-排除 [@rspack/plugin-preact-refresh](https://github.com/rstackjs/rspack-plugin-preact-refresh) 插件处理的文件。这个值与 Rspack 中的 [rules[].exclude](https://rspack.rs/zh/config/module-rules#rulesexclude) 选项相同。
+默认值与 `@rspack/plugin-preact-refresh` 保持一致：
 
-- **类型：** [Rspack.RuleSetCondition](https://rspack.rs/zh/config/module-rules#condition)
-- **默认值：** `/[\\/]node_modules[\\/]/`
-- **版本：** `>= v1.1.0`
+```js
+const defaultOptions = {
+  test: /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/,
+  exclude: /node_modules/,
+};
+```
+
+- **示例：**
 
 ```ts
 pluginPreact({
-  exclude: [/[\\/]node_modules[\\/]/, /some-other-module/],
+  preactRefreshOptions: {
+    test: /\.(?:jsx|tsx)$/,
+    include: /src/,
+    exclude: /node_modules/,
+  },
 });
 ```

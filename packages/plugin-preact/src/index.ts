@@ -1,5 +1,6 @@
 import { createRequire } from 'node:module';
 import type { EnvironmentConfig, RsbuildPlugin, Rspack } from '@rsbuild/core';
+import type { PluginOptions as PreactRefreshOptions } from '@rspack/plugin-preact-refresh';
 
 const require = createRequire(import.meta.url);
 
@@ -15,17 +16,10 @@ export type PluginPreactOptions = {
    */
   prefreshEnabled?: boolean;
   /**
-   * Include files to be processed by the `@rspack/plugin-preact-refresh` plugin.
-   * The value is the same as the `rules[].test` option in Rspack.
-   * @default /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/
+   * Options passed to `@rspack/plugin-preact-refresh`.
+   * @see https://github.com/rstackjs/rspack-plugin-preact-refresh
    */
-  include?: Rspack.RuleSetCondition;
-  /**
-   * Exclude files from being processed by the `@rspack/plugin-preact-refresh` plugin.
-   * The value is the same as the `rules[].exclude` option in Rspack.
-   * @default /[\\/]node_modules[\\/]/
-   */
-  exclude?: Rspack.RuleSetCondition;
+  preactRefreshOptions?: PreactRefreshOptions;
 };
 
 export const PLUGIN_PREACT_NAME = 'rsbuild:preact';
@@ -37,7 +31,6 @@ export const pluginPreact = (
 
   setup(api) {
     const options = {
-      exclude: /[\\/]node_modules[\\/]/,
       prefreshEnabled: true,
       reactAliasesEnabled: true,
       ...userOptions,
@@ -125,8 +118,7 @@ export const pluginPreact = (
 
       chain.plugin('preact-refresh').use(PreactRefreshRspackPlugin, [
         {
-          ...(options.include === undefined ? {} : { test: options.include }),
-          exclude: options.exclude,
+          ...options.preactRefreshOptions,
           preactPath,
         },
       ]);
