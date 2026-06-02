@@ -20,6 +20,8 @@ description: '在这里，你可以了解到 Rsbuild 支持的主要功能。'
 | Babel 编译     | 可选功能，通过 Babel 对 JavaScript 和 TypeScript 代码进行转译    | <ul><li>[Babel 插件](/plugins/list/plugin-babel)</li></ul>                                                                 |
 | Node 产物      | 可选功能，构建运行在 Node.js 环境的产物                          | <ul><li>[Node 产物](/config/output/target#node-target)</li></ul>                                                           |
 | Web Workers    | 可选功能，使用 Web Workers                                       | <ul><li>[Web Workers](/guide/basic/web-workers)</li></ul>                                                                  |
+| Glob 导入      | 可选功能，通过 `import.meta.glob` 批量导入模块                   | <ul><li>[import.meta.glob](https://rspack.rs/zh/api/runtime-api/module-variables#importmetaglob)</li></ul>                 |
+| JSON 导入      | 默认支持导入 JSON 文件，也可通过插件导入 YAML 和 TOML 文件       | <ul><li>[JSON](/guide/basic/json-files)</li></ul>                                                                          |
 | 浏览器范围     | 可选功能，通过 browserslist 来设置 Web 应用需要兼容的浏览器范围  | <ul><li>[浏览器范围](/guide/advanced/browserslist)</li></ul>                                                               |
 | 兼容性检查     | 可选功能，分析构建产物中是否存在当前浏览器范围下不兼容的高级语法 | <ul><li>[@rsbuild/plugin-check-syntax](https://github.com/rstackjs/rsbuild-plugin-check-syntax)</li></ul>                  |
 | 注入环境变量   | 可选功能，向代码中注入环境变量或表达式                           | <ul><li>[环境变量](/guide/advanced/env-vars)</li></ul>                                                                     |
@@ -58,14 +60,16 @@ description: '在这里，你可以了解到 Rsbuild 支持的主要功能。'
 
 ## Server
 
-| 功能         | 描述                                             | 相关链接                                                        |
-| ------------ | ------------------------------------------------ | --------------------------------------------------------------- |
-| Public 目录  | 默认将 public 目录作为静态资源服务的文件夹       | <ul><li>[server.publicDir](/config/server/public-dir)</li></ul> |
-| SSR          | 可选功能，实现服务端渲染                         | <ul><li>[服务端渲染](/guide/advanced/ssr)</li></ul>             |
-| 请求代理     | 可选功能，将请求代理到指定的服务上               | <ul><li>[server.proxy](/config/server/proxy)</li></ul>          |
-| 打开页面     | 可选功能，在启动 server 时自动在浏览器中打开页面 | <ul><li>[server.open](/config/server/open)</li></ul>            |
-| HTTPS        | 可选功能，开启 server 对 HTTPS 的支持            | <ul><li>[server.https](/config/server/https)</li></ul>          |
-| 自定义中间件 | 可选功能，使用自定义的中间件                     | <ul><li>[中间件](/guide/basic/server#middleware)</li></ul>      |
+| 功能         | 描述                                             | 相关链接                                                                               |
+| ------------ | ------------------------------------------------ | -------------------------------------------------------------------------------------- |
+| Public 目录  | 默认将 public 目录作为静态资源服务的文件夹       | <ul><li>[server.publicDir](/config/server/public-dir)</li></ul>                        |
+| 模块热更新   | 默认在开发模式下启用 HMR                         | <ul><li>[模块热更新](/guide/advanced/hmr)</li><li>[dev.hmr](/config/dev/hmr)</li></ul> |
+| 监听文件     | 可选功能，监听指定文件并触发页面刷新或重启服务   | <ul><li>[dev.watchFiles](/config/dev/watch-files)</li></ul>                            |
+| SSR          | 可选功能，实现服务端渲染                         | <ul><li>[服务端渲染](/guide/advanced/ssr)</li></ul>                                    |
+| 请求代理     | 可选功能，将请求代理到指定的服务上               | <ul><li>[server.proxy](/config/server/proxy)</li></ul>                                 |
+| 打开页面     | 可选功能，在启动 server 时自动在浏览器中打开页面 | <ul><li>[server.open](/config/server/open)</li></ul>                                   |
+| HTTPS        | 可选功能，开启 server 对 HTTPS 的支持            | <ul><li>[server.https](/config/server/https)</li></ul>                                 |
+| 自定义中间件 | 可选功能，使用自定义的中间件                     | <ul><li>[中间件](/guide/basic/server#middleware)</li></ul>                             |
 
 ## UI 框架
 
@@ -103,6 +107,7 @@ description: '在这里，你可以了解到 Rsbuild 支持的主要功能。'
 | 展示产物体积   | 在生产模式构建后，默认展示所有静态资源的体积信息               | <ul><li>[performance.printFileSize](/config/performance/print-file-size)</li></ul>                 |
 | 分析构建流程   | 可选功能，使用 Rsdoctor 分析构建流程                           | <ul><li>[使用 Rsdoctor](/guide/debug/rsdoctor)</li></ul>                                           |
 | 分析产物体积   | 可选功能，通过 Rsdoctor 分析产物体积                           | <ul><li>[使用 Rsdoctor](/guide/debug/rsdoctor)</li></ul>                                           |
+| 按需编译       | 开发模式下按需编译入口或异步模块，提升启动性能                 | <ul><li>[dev.lazyCompilation](/config/dev/lazy-compilation)</li></ul>                              |
 | 移除 console   | 可选功能，移除代码中的 `console.[methodName]`                  | <ul><li>[performance.removeConsole](/config/performance/remove-console)</li></ul>                  |
 | 移除重复包     | 可选功能，移除重复引用的 npm 包                                | <ul><li>[resolve.dedupe](/config/resolve/dedupe)</li></ul>                                         |
 | 组件库按需引入 | 可选功能，按需引入组件库的代码和样式                           | <ul><li>[source.transformImport](/config/source/transform-import)</li></ul>                        |
