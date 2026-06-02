@@ -105,23 +105,3 @@ pluginPreact({
   },
 });
 ```
-
-如果你之前使用了顶层 `include` 或 `exclude` 选项，请将其迁移到 `preactRefreshOptions`：
-
-```ts
-// 迁移前
-pluginPreact({
-  include: /\.(?:jsx|tsx)$/,
-  exclude: /node_modules/,
-});
-
-// 迁移后
-pluginPreact({
-  preactRefreshOptions: {
-    test: /\.(?:jsx|tsx)$/,
-    exclude: /node_modules/,
-  },
-});
-```
-
-新的 `preactRefreshOptions.include` 选项与 Rspack 的 `rule.include` 选项语义相同。
