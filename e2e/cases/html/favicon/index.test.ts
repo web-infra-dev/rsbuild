@@ -16,7 +16,7 @@ test('should emit local favicon to dist path', async ({ build }) => {
   expect(icon.endsWith('/icon.png')).toBeTruthy();
 
   const html = getFileContent(files, 'index.html');
-  expect(html).toContain('<link rel="icon" href="/icon.png">');
+  expect(html).toContain('<link href="/icon.png" rel="icon">');
 });
 
 test('should allow `html.favicon` to be an absolute path', async ({
@@ -35,7 +35,7 @@ test('should allow `html.favicon` to be an absolute path', async ({
   expect(icon.endsWith('/icon.png')).toBeTruthy();
 
   const html = getFileContent(files, 'index.html');
-  expect(html).toContain('<link rel="icon" href="/icon.png">');
+  expect(html).toContain('<link href="/icon.png" rel="icon">');
 });
 
 test('should add type attribute for SVG favicon', async ({ build }) => {
@@ -53,7 +53,7 @@ test('should add type attribute for SVG favicon', async ({ build }) => {
 
   const html = getFileContent(files, 'index.html');
   expect(html).toContain(
-    '<link rel="icon" href="/mobile.svg" type="image/svg+xml">',
+    '<link href="/mobile.svg" rel="icon" type="image/svg+xml">',
   );
 });
 
@@ -73,7 +73,7 @@ test('should apply asset prefix to favicon URL', async ({ build }) => {
   const html = getFileContent(files, 'index.html');
 
   expect(html).toContain(
-    '<link rel="icon" href="https://www.example.com/icon.png">',
+    '<link href="https://www.example.com/icon.png" rel="icon">',
   );
 });
 
@@ -88,7 +88,7 @@ test('should allow favicon to be a CDN URL', async ({ build }) => {
 
   const files = rsbuild.getDistFiles();
   const html = getFileContent(files, 'index.html');
-  expect(html).toContain('<link rel="icon" href="https://foo.com/icon.png">');
+  expect(html).toContain('<link href="https://foo.com/icon.png" rel="icon">');
 });
 
 test('should generate favicon via function correctly', async ({ build }) => {
@@ -116,12 +116,12 @@ test('should generate favicon via function correctly', async ({ build }) => {
 
   const fooHtml = getFileContent(files, 'foo.html');
   expect(fooHtml).toContain(
-    '<link rel="icon" href="https://example.com/foo.ico">',
+    '<link href="https://example.com/foo.ico" rel="icon">',
   );
 
   const barHtml = getFileContent(files, 'bar.html');
   expect(barHtml).toContain(
-    '<link rel="icon" href="https://example.com/bar.ico">',
+    '<link href="https://example.com/bar.ico" rel="icon">',
   );
 });
 
@@ -146,7 +146,7 @@ test('should allow to custom favicon dist path with a relative path', async ({
   expect(faviconFile.endsWith('/static/favicon/icon.png')).toBeTruthy();
 
   const html = getFileContent(files, 'index.html');
-  expect(html).toContain('<link rel="icon" href="/static/favicon/icon.png">');
+  expect(html).toContain('<link href="/static/favicon/icon.png" rel="icon">');
 });
 
 test('should allow to custom favicon dist path with a relative path starting with ./', async ({
@@ -170,7 +170,7 @@ test('should allow to custom favicon dist path with a relative path starting wit
   expect(faviconFile.endsWith('/custom/icon.png')).toBeTruthy();
 
   const html = getFileContent(files, 'index.html');
-  expect(html).toContain('<link rel="icon" href="/custom/icon.png">');
+  expect(html).toContain('<link href="/custom/icon.png" rel="icon">');
 });
 
 for (const filename of ['favicon.ico', 'favicon.png', 'favicon.svg']) {
@@ -195,6 +195,6 @@ for (const filename of ['favicon.ico', 'favicon.png', 'favicon.svg']) {
     expect(faviconFile.endsWith(`/${filename}`)).toBeTruthy();
 
     const html = getFileContent(files, 'index.html');
-    expect(html).toContain(`<link rel="icon" href="/${filename}"`);
+    expect(html).toContain(`<link href="/${filename}" rel="icon"`);
   });
 }
