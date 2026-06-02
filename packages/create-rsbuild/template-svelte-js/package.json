@@ -13,6 +13,6 @@
   },
   "devDependencies": {
     "@rsbuild/core": "^2.0.9",
-    "@rsbuild/plugin-svelte": "^1.1.2"
+    "@rsbuild/plugin-svelte": "^2.0.0"
   }
 }
