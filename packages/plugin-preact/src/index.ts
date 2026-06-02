@@ -24,12 +24,22 @@ export type PluginPreactOptions = {
 
 export const PLUGIN_PREACT_NAME = 'rsbuild:preact';
 
+function assertCoreVersion(version: string): void {
+  if (version.split('.')[0] === '1') {
+    throw new Error(
+      `"@rsbuild/plugin-preact" v2 requires "@rsbuild/core" >= 2.0. Please upgrade "@rsbuild/core" or use "@rsbuild/plugin-preact" v1.`,
+    );
+  }
+}
+
 export const pluginPreact = (
   userOptions: PluginPreactOptions = {},
 ): RsbuildPlugin => ({
   name: PLUGIN_PREACT_NAME,
 
   setup(api) {
+    assertCoreVersion(api.context.version);
+
     const options = {
       prefreshEnabled: true,
       reactAliasesEnabled: true,
@@ -38,7 +48,6 @@ export const pluginPreact = (
 
     api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
       const isDev = config.mode === 'development';
-      const isV1 = api.context.version.startsWith('1.');
       const usePrefresh =
         isDev &&
         options.prefreshEnabled &&
@@ -56,15 +65,6 @@ export const pluginPreact = (
         tools: {
           swc: {
             jsc: {
-              ...(isV1
-                ? {
-                    parser: {
-                      syntax: 'typescript',
-                      // enable supports for JSX/TSX compilation
-                      tsx: true,
-                    },
-                  }
-                : {}),
               experimental: {
                 plugins: usePrefresh
                   ? [[require.resolve('@swc/plugin-prefresh'), {}]]
