@@ -3,6 +3,30 @@ import type { EnvironmentConfig, RsbuildPlugin, Rspack } from '@rsbuild/core';
 
 const require = createRequire(import.meta.url);
 
+export type PreactRefreshOptions = {
+  /**
+   * Specifies which files should be processed by the Preact Refresh loader.
+   * The value is the same as Rspack's `rule.test` option.
+   */
+  test?: Rspack.RuleSetCondition;
+  /**
+   * Include files to be processed by the Preact Refresh loader.
+   * The value is the same as Rspack's `rule.include` option.
+   */
+  include?: Rspack.RuleSetCondition | null;
+  /**
+   * Exclude files from being processed by the Preact Refresh loader.
+   * The value is the same as Rspack's `rule.exclude` option.
+   */
+  exclude?: Rspack.RuleSetCondition | null;
+  /**
+   * Configure the error overlay.
+   */
+  overlay?: {
+    module: string;
+  };
+};
+
 export type PluginPreactOptions = {
   /**
    * Whether to aliases `react`, `react-dom` to `preact/compat`
@@ -15,17 +39,10 @@ export type PluginPreactOptions = {
    */
   prefreshEnabled?: boolean;
   /**
-   * Include files to be processed by the `@rspack/plugin-preact-refresh` plugin.
-   * The value is the same as the `rules[].test` option in Rspack.
-   * @default /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/
+   * Options passed to `@rspack/plugin-preact-refresh`.
+   * @see https://github.com/rstackjs/rspack-plugin-preact-refresh
    */
-  include?: Rspack.RuleSetCondition;
-  /**
-   * Exclude files from being processed by the `@rspack/plugin-preact-refresh` plugin.
-   * The value is the same as the `rules[].exclude` option in Rspack.
-   * @default /[\\/]node_modules[\\/]/
-   */
-  exclude?: Rspack.RuleSetCondition;
+  preactRefreshOptions?: PreactRefreshOptions;
 };
 
 export const PLUGIN_PREACT_NAME = 'rsbuild:preact';
@@ -37,7 +54,6 @@ export const pluginPreact = (
 
   setup(api) {
     const options = {
-      exclude: /[\\/]node_modules[\\/]/,
       prefreshEnabled: true,
       reactAliasesEnabled: true,
       ...userOptions,
@@ -125,8 +141,7 @@ export const pluginPreact = (
 
       chain.plugin('preact-refresh').use(PreactRefreshRspackPlugin, [
         {
-          ...(options.include === undefined ? {} : { test: options.include }),
-          exclude: options.exclude,
+          ...options.preactRefreshOptions,
           preactPath,
         },
       ]);
