@@ -18,6 +18,7 @@ function createReadStreamOrReadFileSync(
   outputFileSystem: Rspack.OutputFileSystem,
   start: number,
   end: number,
+  byteLength: number,
 ): { bufferOrStream: Buffer | ReadStream; byteLength: number } {
   const bufferOrStream = (
     outputFileSystem.createReadStream as (
@@ -28,7 +29,6 @@ function createReadStreamOrReadFileSync(
     start,
     end,
   });
-  const byteLength = end === 0 ? 0 : end - start + 1;
 
   return { bufferOrStream, byteLength };
 }
@@ -442,6 +442,7 @@ export function createMiddleware(
           outputFileSystem,
           start,
           end,
+          len,
         ));
       } catch {
         await goNext();
