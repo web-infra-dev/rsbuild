@@ -1,10 +1,12 @@
-import { getPathnameFromUrl } from '../helpers/path';
+import fs from 'node:fs';
+import { isWebTarget } from '../helpers';
 import { isVerbose } from '../logger';
 import type {
   InternalContext,
   NormalizedConfig,
   PreviewOptions,
 } from '../types';
+import { createAssetsMiddleware } from './assets-middleware/middleware';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
 import {
   registerCleanup,
@@ -16,6 +18,7 @@ import {
   getAddressUrls,
   getRoutes,
   getServerTerminator,
+  isUrlPathUnderBase,
   printServerURLs,
   type RsbuildServerBase,
   resolvePort,
@@ -31,10 +34,25 @@ import {
   optionsFallbackMiddleware,
 } from './middlewares';
 import { open } from './open';
+import { getPublicPathnames } from './publicPathnames';
 import { createProxyMiddleware } from './proxy';
 import { applyServerSetup } from './serverSetup';
 
 export type RsbuildPreviewServer = RsbuildServerBase;
+
+const getPreviewAssetContext = (context: InternalContext): InternalContext => {
+  const environmentList = context.environmentList.filter((environment) =>
+    isWebTarget(environment.config.output.target),
+  );
+
+  return {
+    ...context,
+    environmentList,
+    publicPathnames: environmentList.map(
+      (environment) => context.publicPathnames[environment.index],
+    ),
+  };
+};
 
 export async function startPreviewServer(
   context: InternalContext,
@@ -52,6 +70,12 @@ export async function startPreviewServer(
   const serverConfig = config.server;
   const { host, headers, proxy, historyApiFallback, compress, base, cors } =
     serverConfig;
+
+  const assetPrefixes = context.environmentList.map(
+    (environment) => environment.config.output.assetPrefix,
+  );
+  context.publicPathnames = getPublicPathnames(assetPrefixes, base);
+
   const isHttps = Boolean(serverConfig.https);
   const protocol = isHttps ? 'https' : 'http';
   const routes = getRoutes(context);
@@ -127,6 +151,13 @@ export async function startPreviewServer(
     const { default: sirv } = await import(
       /* webpackChunkName: "sirv" */ 'sirv'
     );
+    const previewAssetContext = getPreviewAssetContext(context);
+
+    const diskAssetsMiddleware = createAssetsMiddleware(
+      previewAssetContext,
+      (callback) => callback(),
+      fs,
+    );
 
     const assetsMiddleware = sirv(context.distPath, {
       etag: true,
@@ -135,25 +166,34 @@ export async function startPreviewServer(
       single: serverConfig.htmlFallback === 'index',
     });
 
-    const assetPrefixes = context.environmentList.map((e) =>
-      getPathnameFromUrl(e.config.output.assetPrefix),
-    );
+    const assetPrefixes = previewAssetContext.publicPathnames;
 
     middlewares.use(function staticAssetMiddleware(req, res, next) {
-      const { url } = req;
-      const assetPrefix =
-        url && assetPrefixes.find((prefix) => url.startsWith(prefix));
+      diskAssetsMiddleware(req, res, (err) => {
+        if (err) {
+          next(err);
+          return;
+        }
 
-      // handling assetPrefix
-      if (assetPrefix && url?.startsWith(assetPrefix)) {
-        req.url = url.slice(assetPrefix.length);
-        assetsMiddleware(req, res, (...args: unknown[]) => {
-          req.url = url;
-          next(...args);
-        });
-      } else {
-        assetsMiddleware(req, res, next);
-      }
+        const { url } = req;
+        const assetPrefix =
+          url &&
+          assetPrefixes.find(
+            (prefix) =>
+              prefix && prefix !== '/' && isUrlPathUnderBase(url, prefix),
+          );
+
+        // handling assetPrefix
+        if (assetPrefix) {
+          req.url = url.slice(assetPrefix.length);
+          assetsMiddleware(req, res, (...args: unknown[]) => {
+            req.url = url;
+            next(...args);
+          });
+        } else {
+          assetsMiddleware(req, res, next);
+        }
+      });
     });
   };
 
