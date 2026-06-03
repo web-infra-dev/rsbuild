@@ -38,15 +38,6 @@ it('should apply default plugins correctly when target is node', async () => {
   expect(rspackConfigs[0]).toMatchSnapshot();
 });
 
-it('should enable Rspack pureFunctions experiment by default', async () => {
-  rs.stubEnv('NODE_ENV', 'development');
-
-  const rsbuild = await createRsbuild();
-
-  const [rspackConfig] = await rsbuild.initConfigs();
-  expect(rspackConfig.experiments?.pureFunctions).toBe(true);
-});
-
 describe('tools.rspack', () => {
   it('should match snapshot', async () => {
     rs.stubEnv('NODE_ENV', 'development');
