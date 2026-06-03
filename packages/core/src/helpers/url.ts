@@ -5,7 +5,8 @@ import { DEFAULT_ASSET_PREFIX } from '../constants';
 import type { Rspack } from '../types';
 
 export const removeLeadingSlash = (s: string): string => s.replace(/^\/+/, '');
-export const removeTailingSlash = (s: string): string => s.replace(/\/+$/, '');
+export const removeTailingSlash = (s: string): string =>
+  s.endsWith('/') ? s.replace(/\/+$/, '') : s;
 export const addTrailingSlash = (s: string): string =>
   s.endsWith('/') ? s : `${s}/`;
 
