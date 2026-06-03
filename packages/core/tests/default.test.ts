@@ -39,6 +39,8 @@ it('should apply default plugins correctly when target is node', async () => {
 });
 
 it('should enable Rspack pureFunctions experiment by default', async () => {
+  rs.stubEnv('NODE_ENV', 'development');
+
   const rsbuild = await createRsbuild();
 
   const [rspackConfig] = await rsbuild.initConfigs();
