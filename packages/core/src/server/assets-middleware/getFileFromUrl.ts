@@ -2,7 +2,7 @@ import type { Stats as FSStats } from 'node:fs';
 import path from 'node:path';
 import { getPathnameFromUrl } from '../../helpers/path';
 import type { InternalContext, Rspack } from '../../types';
-import { HttpCode } from '../helper';
+import { HttpCode, isUrlPathUnderBase } from '../helper';
 
 const UP_PATH_REGEXP = /(?:^|[\\/])\.\.(?:[\\/]|$)/;
 
@@ -58,7 +58,7 @@ export async function getFileFromUrl(
   // First, add paths that match the public prefix for more accurate resolution
   for (const [index, distPath] of distPaths.entries()) {
     const prefix = publicPathnames[index];
-    if (prefix && prefix !== '/' && pathname.startsWith(prefix)) {
+    if (prefix && prefix !== '/' && isUrlPathUnderBase(pathname, prefix)) {
       // Strip the `pathname` property from the `publicPath` option from the start
       // of requested url. (`/prefix/foo.js` => `foo.js`)
       // And add outputPath (`foo.js` => `/home/user/my-project/dist/foo.js`)
