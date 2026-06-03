@@ -4,7 +4,7 @@ import { join, sep } from 'node:path';
 import { isPlainObject, isWebTarget, pick, prettyTime } from '../src/helpers';
 import { dedupeNestedPaths, getCommonParentPath } from '../src/helpers/path';
 import { readPackageJsonByPath } from '../src/helpers/packageJson';
-import { ensureAssetPrefix } from '../src/helpers/url';
+import { ensureAssetPrefix, removeTailingSlash } from '../src/helpers/url';
 import { getRoutes, normalizeUrl } from '../src/server/helper';
 import type { InternalContext, RsbuildTarget } from '../src/types';
 
@@ -191,6 +191,14 @@ it('should normalize URLs correctly', () => {
   expect(normalizeUrl('https://www.example.com/static/')).toBe(
     'https://www.example.com/static/',
   );
+});
+
+it('should remove trailing slashes correctly', () => {
+  expect(removeTailingSlash('/base')).toBe('/base');
+  expect(removeTailingSlash('/base/')).toBe('/base');
+  expect(removeTailingSlash('/base///')).toBe('/base');
+  expect(removeTailingSlash('/')).toBe('');
+  expect(removeTailingSlash('')).toBe('');
 });
 
 describe('ensureAssetPrefix', () => {

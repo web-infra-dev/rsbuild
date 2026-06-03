@@ -111,6 +111,31 @@ test('should apply server.base in preview', async ({ page, buildPreview }) => {
   expect(await page.content()).toContain('aaaa');
 });
 
+test('should serve preview requests with query under server.base', async ({
+  page,
+  buildPreview,
+}) => {
+  const rsbuild = await buildPreview({
+    config: {
+      server: {
+        base: '/base',
+        htmlFallback: false,
+      },
+    },
+  });
+
+  const res = await page.goto(`http://localhost:${rsbuild.port}/base?foo=1`);
+  expect(res?.status()).toBe(200);
+
+  await expect(page.locator('#test')).toHaveText('Hello Rsbuild!');
+
+  const publicRes = await fetch(
+    `http://localhost:${rsbuild.port}/base/aaa.txt?foo=1`,
+  );
+  expect(publicRes.status).toBe(200);
+  expect((await publicRes.text()).trim()).toBe('aaaa');
+});
+
 test('should serve resource correctly when assetPrefix is a subPath of server.base', async ({
   page,
   dev,

@@ -100,15 +100,25 @@ export const isUrlPathUnderBase = (pathname: string, base: string): boolean => {
 
 export const removeBasePath = (url: string, base: string): string => {
   const basePath = removeTailingSlash(base);
-  if (basePath === '') {
+  if (basePath === '' || !url.startsWith(basePath)) {
     return url;
   }
 
-  if (url === basePath) {
+  const nextChar = url[basePath.length];
+
+  if (nextChar === undefined) {
     return '/';
   }
 
-  return url.startsWith(`${basePath}/`) ? url.slice(basePath.length) : url;
+  if (nextChar === '/') {
+    return url.slice(basePath.length);
+  }
+
+  if (nextChar === '?' || nextChar === '#') {
+    return `/${url.slice(basePath.length)}`;
+  }
+
+  return url;
 };
 
 export const getRoutes = (context: InternalContext): Routes => {

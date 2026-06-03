@@ -180,8 +180,11 @@ test('should handle URL path helpers correctly', () => {
   expect(joinUrlPath('/base/', '/main')).toBe('/base/main');
 
   expect(removeBasePath('/base', '/base')).toBe('/');
+  expect(removeBasePath('/base?foo=1', '/base')).toBe('/?foo=1');
+  expect(removeBasePath('/base#foo', '/base')).toBe('/#foo');
   expect(removeBasePath('/base/', '/base')).toBe('/');
   expect(removeBasePath('/base/foo', '/base')).toBe('/foo');
+  expect(removeBasePath('/base/foo?foo=1', '/base')).toBe('/foo?foo=1');
   expect(removeBasePath('/baseball', '/base')).toBe('/baseball');
 
   expect(isUrlPathUnderBase('/base', '/base')).toBe(true);
