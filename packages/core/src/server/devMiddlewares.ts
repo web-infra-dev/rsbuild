@@ -190,8 +190,9 @@ const applyDefaultMiddlewares = async ({
   if (buildManager) {
     middlewares.use(
       getHtmlCompletionMiddleware({
-        buildManager,
-        distPath: context.distPath,
+        assetsMiddleware: buildManager.assetsMiddleware,
+        distPaths: [context.distPath],
+        outputFileSystem: buildManager.outputFileSystem,
       }),
     );
   }
@@ -238,9 +239,10 @@ const applyDefaultMiddlewares = async ({
   if (buildManager && server.htmlFallback) {
     middlewares.use(
       getHtmlFallbackMiddleware({
-        buildManager,
-        distPath: context.distPath,
+        assetsMiddleware: buildManager.assetsMiddleware,
+        distPaths: [context.distPath],
         logger,
+        outputFileSystem: buildManager.outputFileSystem,
       }),
     );
   }
