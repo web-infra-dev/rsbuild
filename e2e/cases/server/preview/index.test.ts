@@ -94,4 +94,10 @@ test('should serve multi-environment assets before returned setup middleware', a
   );
   expect(serverBundleRes.status).toBe(404);
   expect(await serverBundleRes.text()).toBe('<html>SSR fallback</html>');
+
+  const nestedServerBundleRes = await fetch(
+    `http://localhost:${result.port}/server/index.js`,
+  );
+  expect(nestedServerBundleRes.status).toBe(404);
+  expect(await nestedServerBundleRes.text()).toBe('<html>SSR fallback</html>');
 });

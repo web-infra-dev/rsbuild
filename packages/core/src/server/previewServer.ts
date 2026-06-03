@@ -18,7 +18,6 @@ import {
   getAddressUrls,
   getRoutes,
   getServerTerminator,
-  isUrlPathUnderBase,
   printServerURLs,
   type RsbuildServerBase,
   resolvePort,
@@ -29,6 +28,8 @@ import { createHttpServer } from './httpServer';
 import {
   faviconFallbackMiddleware,
   getBaseUrlMiddleware,
+  getHtmlCompletionMiddleware,
+  getHtmlFallbackMiddleware,
   getRequestLoggerMiddleware,
   notFoundMiddleware,
   optionsFallbackMiddleware,
@@ -147,54 +148,18 @@ export async function startPreviewServer(
     environments: context.environments,
   });
 
-  const applyStaticAssetMiddleware = async () => {
-    const { default: sirv } = await import(
-      /* webpackChunkName: "sirv" */ 'sirv'
-    );
-    const previewAssetContext = getPreviewAssetContext(context);
-
-    const diskAssetsMiddleware = createAssetsMiddleware(
-      previewAssetContext,
-      (callback) => callback(),
-      fs,
-    );
-
-    const assetsMiddleware = sirv(context.distPath, {
-      etag: true,
-      dev: true,
-      ignores: ['favicon.ico'],
-      single: serverConfig.htmlFallback === 'index',
-    });
-
-    const assetPrefixes = previewAssetContext.publicPathnames;
-
-    middlewares.use(function staticAssetMiddleware(req, res, next) {
-      diskAssetsMiddleware(req, res, (err) => {
-        if (err) {
-          next(err);
-          return;
-        }
-
-        const { url } = req;
-        const assetPrefix =
-          url &&
-          assetPrefixes.find(
-            (prefix) =>
-              prefix && prefix !== '/' && isUrlPathUnderBase(url, prefix),
-          );
-
-        // handling assetPrefix
-        if (assetPrefix) {
-          req.url = url.slice(assetPrefix.length);
-          assetsMiddleware(req, res, (...args: unknown[]) => {
-            req.url = url;
-            next(...args);
-          });
-        } else {
-          assetsMiddleware(req, res, next);
-        }
-      });
-    });
+  const assetContext = getPreviewAssetContext(context);
+  const assetsMiddleware = createAssetsMiddleware(
+    assetContext,
+    (callback) => callback(),
+    fs,
+  );
+  const htmlMiddlewareOptions = {
+    assetsMiddleware,
+    distPaths: assetContext.environmentList.map(
+      (environment) => environment.distPath,
+    ),
+    outputFileSystem: fs,
   };
 
   if (isVerbose(logger)) {
@@ -249,7 +214,8 @@ export async function startPreviewServer(
     middlewares.use(getBaseUrlMiddleware({ base }));
   }
 
-  await applyStaticAssetMiddleware();
+  middlewares.use(assetsMiddleware);
+  middlewares.use(getHtmlCompletionMiddleware(htmlMiddlewareOptions));
 
   if (historyApiFallback) {
     middlewares.use(
@@ -259,12 +225,21 @@ export async function startPreviewServer(
       ),
     );
 
-    // ensure fallback request can be handled by sirv
-    await applyStaticAssetMiddleware();
+    // ensure fallback request can be handled by the built asset middleware
+    middlewares.use(assetsMiddleware);
   }
 
   for (const callback of postSetupCallbacks) {
     await callback();
+  }
+
+  if (serverConfig.htmlFallback) {
+    middlewares.use(
+      getHtmlFallbackMiddleware({
+        ...htmlMiddlewareOptions,
+        logger,
+      }),
+    );
   }
 
   middlewares.use(faviconFallbackMiddleware);
