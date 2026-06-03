@@ -140,7 +140,7 @@ function sendError(res: ServerResponse, code: number): void {
   res.end(document);
 }
 
-export function createMiddleware(
+export function createAssetsMiddleware(
   context: InternalContext,
   ready: (callback: () => void) => void,
   outputFileSystem: Rspack.OutputFileSystem,

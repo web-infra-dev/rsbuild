@@ -29,7 +29,7 @@ import type {
 } from '../../types';
 import { resolveHostname } from './../hmrFallback';
 import type { SocketServer } from '../socketServer';
-import { createMiddleware } from './middleware';
+import { createAssetsMiddleware } from './middleware';
 import { setupOutputFileSystem } from './setupOutputFileSystem';
 import { resolveWriteToDiskConfig, setupWriteToDisk } from './setupWriteToDisk';
 
@@ -314,7 +314,7 @@ export const assetsMiddleware = async ({
     }
   };
 
-  const instance = createMiddleware(
+  const instance = createAssetsMiddleware(
     context,
     ready,
     outputFileSystem,

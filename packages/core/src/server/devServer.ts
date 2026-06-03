@@ -5,7 +5,6 @@ import {
   getPublicPathFromCompiler,
   isMultiCompiler,
 } from '../helpers/compiler';
-import { getPathnameFromUrl } from '../helpers/path';
 import { onBeforeRestartServer, restartDevServer } from '../restart';
 import type {
   CreateCompiler,
@@ -36,7 +35,6 @@ import {
   getRoutes,
   getServerTerminator,
   printServerURLs,
-  removeBasePath,
   type RsbuildServerBase,
   resolvePort,
   type StartDevServerResult,
@@ -44,6 +42,7 @@ import {
 import { createHttpServer } from './httpServer';
 import { notFoundMiddleware, optionsFallbackMiddleware } from './middlewares';
 import { open } from './open';
+import { getPublicPathnames } from './publicPathnames';
 import { applyServerSetup } from './serverSetup';
 import type { ServerMessage } from './socketServer';
 import { setupWatchFiles, type WatchFilesResult } from './watchFiles';
@@ -169,12 +168,10 @@ export async function createDevServer<
       ? compiler.compilers.map(getPublicPathFromCompiler)
       : [getPublicPathFromCompiler(compiler)];
 
-    const { base } = config.server;
-    context.publicPathnames = publicPaths
-      .map(getPathnameFromUrl)
-      .map((prefix) =>
-        base && base !== '/' ? removeBasePath(prefix, base) : prefix,
-      );
+    context.publicPathnames = getPublicPathnames(
+      publicPaths,
+      config.server.base,
+    );
 
     compiler?.hooks.watchRun.tap('rsbuild:watchRun', () => {
       resetWaitLastCompileDone();
