@@ -1,4 +1,5 @@
 import { expect, test } from '@e2e/helper';
+import type { RsbuildPlugin } from '@rsbuild/core';
 
 test('should allow to use `new URL` to reference styles as assets', async ({
   page,
@@ -33,5 +34,41 @@ test('should allow to use `new URL` to reference styles as assets', async ({
   );
   expect(await page.evaluate('window.test3')).toBe(
     `http://localhost:${rsbuild.port}/static/assets/test3.scss`,
+  );
+});
+
+test('should serve one-byte assets', async ({ page, runBothServe }) => {
+  const emitOneByteAssetPlugin: RsbuildPlugin = {
+    name: 'emit-one-byte-asset',
+    setup(api) {
+      api.processAssets(
+        {
+          stage: 'additional',
+        },
+        ({ compilation, sources }) => {
+          compilation.emitAsset(
+            'static/assets/one-byte.txt',
+            new sources.RawSource('a'),
+          );
+        },
+      );
+    },
+  };
+
+  await runBothServe(
+    async ({ result }) => {
+      const res = await page.goto(
+        `http://localhost:${result.port}/static/assets/one-byte.txt`,
+      );
+
+      expect(res?.status()).toBe(200);
+      expect(res?.headers()['content-length']).toBe('1');
+      expect((await res?.body())?.toString()).toBe('a');
+    },
+    {
+      config: {
+        plugins: [emitOneByteAssetPlugin],
+      },
+    },
   );
 });
