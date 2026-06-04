@@ -206,14 +206,14 @@ function applyHMREntry({
     clientConfig.port = resolvedPort;
   }
 
-  const resolvePath =
+  const resolverPath =
     webSocketUrlResolver && !isAbsolute(webSocketUrlResolver)
       ? join(compiler.context, webSocketUrlResolver)
       : webSocketUrlResolver;
 
   const hmrEntry = `import { init } from '${toPosixPath(join(CLIENT_PATH, 'hmr.js'))}';
 ${isOverlayEnabled(config.dev.client.overlay) ? `import '${toPosixPath(join(CLIENT_PATH, 'overlay.js'))}';` : ''}
-${resolvePath ? `import urlResolver from ${JSON.stringify(toPosixPath(resolvePath))};` : ''}
+${resolverPath ? `import urlResolver from ${JSON.stringify(toPosixPath(resolverPath))};` : ''}
 init(
   '${token}',
   ${JSON.stringify(clientConfig)},
@@ -222,7 +222,7 @@ init(
   ${JSON.stringify(config.server.base)},
   ${liveReloadEnabled},
   ${Boolean(config.dev.browserLogs)},
-  ${JSON.stringify(config.dev.client.logLevel)}${resolvePath ? ',\n  urlResolver' : ''}
+  ${JSON.stringify(config.dev.client.logLevel)}${resolverPath ? ',\n  urlResolver' : ''}
 )
 `;
 

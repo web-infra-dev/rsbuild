@@ -1,8 +1,6 @@
 import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 
-const caseDir = import.meta.dirname;
-
 test('HMR should work with webSocketUrlResolver', async ({
   page,
   dev,
@@ -21,19 +19,17 @@ test('HMR should work with webSocketUrlResolver', async ({
       dev: {
         client: {
           host: 'example.com',
-          webSocketUrlResolver: join(caseDir, 'resolveWebSocketUrl.ts'),
+          webSocketUrlResolver: join(
+            import.meta.dirname,
+            'resolveWebSocketUrl.ts',
+          ),
         },
       },
     },
   });
 
   const resolvedURL = await page.evaluate(
-    () =>
-      (
-        window as unknown as {
-          __RSBUILD_WEBSOCKET_URL__?: string;
-        }
-      ).__RSBUILD_WEBSOCKET_URL__,
+    () => window.__RSBUILD_WEBSOCKET_URL__,
   );
 
   expect(resolvedURL).toContain(`://${new URL(page.url()).host}/rsbuild-hmr?`);
