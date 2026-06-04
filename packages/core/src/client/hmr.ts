@@ -6,7 +6,11 @@ import type {
   ServerMessageFullReload,
   ServerMessageResolvedClientError,
 } from '../server/socketServer';
-import type { LogLevel, NormalizedClientConfig } from '../types';
+import type {
+  LogLevel,
+  NormalizedClientConfig,
+  WebSocketUrlResolver,
+} from '../types';
 import { logger } from './log';
 
 let createOverlay: undefined | ((title: string, content: string) => void);
@@ -94,6 +98,7 @@ export function init(
   liveReload: boolean,
   browserLogs: boolean,
   logLevel: LogLevel,
+  resolveWebSocketUrl?: WebSocketUrlResolver,
 ): void {
   logger.level = logLevel;
 
@@ -129,6 +134,11 @@ export function init(
     // compatible with IE11
     const colon = protocol.indexOf(':') === -1 ? ':' : '';
     return `${protocol}${colon}//${hostname}:${port}${pathname}?token=${token}`;
+  }
+
+  function getSocketURL(fallback?: boolean) {
+    const url = formatURL(fallback);
+    return resolveWebSocketUrl ? resolveWebSocketUrl(url) : url;
   }
 
   function clearBuildErrors() {
@@ -361,7 +371,11 @@ export function init(
   }
 
   function onSocketError() {
-    if (formatURL() !== formatURL(true)) {
+    if (resolveWebSocketUrl) {
+      return;
+    }
+
+    if (getSocketURL() !== getSocketURL(true)) {
       logger.error(
         '[rsbuild] WebSocket connection failed. Trying direct connection fallback.',
       );
@@ -415,7 +429,7 @@ export function init(
       logger.info('[rsbuild] WebSocket connecting...');
     }
 
-    const socketUrl = formatURL(fallback);
+    const socketUrl = getSocketURL(fallback);
     socket = new WebSocket(socketUrl);
     socket.addEventListener('open', onOpen);
     // Attempt to reconnect after disconnection

@@ -24,6 +24,8 @@ type Client = {
   overlay?: boolean | OverlayOptions;
   // 控制浏览器控制台中日志的级别
   logLevel?: 'info' | 'warn' | 'error' | 'silent';
+  // 解析 WebSocket URL 的浏览器端模块路径
+  webSocketUrlResolver?: string;
 };
 ```
 
@@ -40,6 +42,9 @@ const defaultConfig = {
   protocol: undefined,
   reconnect: 100,
   overlay: true,
+  // 继承根级 logLevel，默认为 'info'
+  logLevel: 'info',
+  webSocketUrlResolver: undefined,
 };
 ```
 
@@ -82,6 +87,46 @@ export default {
   },
 };
 ```
+
+### WebSocket URL resolver
+
+如果 WebSocket URL 需要在浏览器运行时动态解析，可以使用 `dev.client.webSocketUrlResolver` 配置一个浏览器端模块。
+
+- **类型：** `string`
+- **默认值：** `undefined`
+
+该模块需要 default export 一个函数，签名为 `(url: string) => string`。Rsbuild 会传入生成好的 WebSocket URL，函数需要返回最终使用的 WebSocket URL 字符串。
+
+当 HMR WebSocket 地址依赖运行时信息时，可以使用该配置，比如根据当前页面 URL 或脚本 URL 计算代理路径。
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      webSocketUrlResolver: './src/resolveWebSocketUrl.ts',
+    },
+  },
+};
+```
+
+```ts title="src/resolveWebSocketUrl.ts"
+export default function resolveWebSocketUrl(url: string): string {
+  const resolved = new URL(url);
+  const script = document.currentScript as HTMLScriptElement | null;
+
+  if (script?.src) {
+    const scriptURL = new URL(script.src);
+    resolved.protocol = scriptURL.protocol === 'https:' ? 'wss:' : 'ws:';
+    resolved.host = scriptURL.host;
+  }
+
+  return resolved.toString();
+}
+```
+
+:::tip
+传入的 URL 包含 Rsbuild 所需的查询参数，比如 `token`。改写 URL 时，请保留已有 query string，除非你明确需要覆盖它们。
+:::
 
 ## hot-update 文件
 
