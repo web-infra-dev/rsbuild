@@ -17,6 +17,7 @@ export const loadBundle = async <T>(
     all: false,
     chunks: true,
     entrypoints: true,
+    ids: true,
     outputPath: true,
   });
 
@@ -31,9 +32,9 @@ export const loadBundle = async <T>(
   const { chunks: entryChunks = [] } = entrypoints[entryName];
 
   // find main entryChunk from chunks
-  const files = entryChunks.reduce<string[]>((prev, entryChunkName) => {
+  const files = entryChunks.reduce<string[]>((prev, entryChunkId) => {
     const chunk = chunks?.find(
-      (chunk) => chunk.entry && chunk.names?.includes(String(entryChunkName)),
+      (chunk) => chunk.entry && chunk.id === entryChunkId,
     );
 
     return chunk?.files
