@@ -129,7 +129,7 @@ catalog:
   'simple-git-hooks': '^2.13.1'
   'sirv': '^3.0.2'
   'solid-js': '^1.9.13'
-  'solid-refresh': '^0.7.8'
+  'solid-refresh': '^0.6.3'
   'stacktrace-parser': '^0.1.11'
   'style-loader': '^4.0.0'
   'svelte': '^5.55.9'
