@@ -13,11 +13,45 @@ const commonConfig = {
   },
 };
 
-test('should disable Tailwind optimization by default', async ({ build }) => {
+test('should enable Tailwind optimization by default in production mode', async ({
+  build,
+}) => {
   const rsbuild = await build({
     config: {
       ...commonConfig,
       plugins: [pluginTailwindcss()],
+    },
+  });
+
+  const css = getFileContent(rsbuild.getDistFiles(), 'index.css');
+  expect(css).toContain('.card .title');
+  expect(css).toMatch(
+    /\.underline \{\n\s+text-decoration-line: underline;\n\s+\}/,
+  );
+  expect(css).not.toContain('.underline{text-decoration-line:underline}');
+});
+
+test('should disable Tailwind optimization by default in development mode', async ({
+  dev,
+}) => {
+  const rsbuild = await dev({
+    config: {
+      ...commonConfig,
+      plugins: [pluginTailwindcss()],
+    },
+  });
+
+  const css = getFileContent(rsbuild.getDistFiles(), 'index.css');
+  expect(css).toContain('& .title');
+});
+
+test('should disable Tailwind optimization when optimize is false', async ({
+  build,
+}) => {
+  const rsbuild = await build({
+    config: {
+      ...commonConfig,
+      plugins: [pluginTailwindcss({ optimize: false })],
     },
   });
 
