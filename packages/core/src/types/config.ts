@@ -1954,12 +1954,19 @@ export type ClientConfig = {
    * @default 'info'
    */
   logLevel?: 'info' | 'warn' | 'error' | 'silent';
+  /**
+   * The path to a browser-side module that resolves the WebSocket URL.
+   * The module should default export a function: `(url: string) => string`.
+   */
+  webSocketUrlResolver?: string;
 };
 
 export type NormalizedClientConfig = Optional<
   Required<ClientConfig>,
-  'protocol'
+  'protocol' | 'webSocketUrlResolver'
 >;
+
+export type WebSocketUrlResolver = (url: string) => string;
 
 export type { ChokidarOptions };
 

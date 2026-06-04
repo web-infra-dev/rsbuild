@@ -209,4 +209,5 @@ export type {
   TransformHook,
   TransformImport,
   WatchFiles,
+  WebSocketUrlResolver,
 } from './types';
