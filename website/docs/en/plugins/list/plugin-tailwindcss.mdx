@@ -89,7 +89,7 @@ Relative paths in `source(...)` and `@source` are resolved from the CSS file tha
 
 Enable Tailwind CSS's built-in Lightning CSS optimization.
 
-This overlaps with Rsbuild's built-in [Lightning CSS optimization](/guide/styling/css-usage#lightning-css). It is recommended to enable this option only when Rsbuild's built-in Lightning CSS optimization is disabled.
+By default, this option is enabled in production mode and disabled in development mode.
 
 - **Type:**
 
@@ -101,9 +101,19 @@ type Optimize =
     };
 ```
 
-- **Default:** `false`
+- **Default:** `true` in production mode, `false` in development mode
 
-When `optimize` is `false`, Tailwind CSS still compiles Tailwind directives and generates utilities, but skips Tailwind's built-in Lightning CSS optimization step.
+In production mode, Tailwind CSS's built-in minification follows Rsbuild's CSS minification config. For example, setting [`output.minify`](/config/output/minify) to `false` disables Tailwind CSS's built-in minification in the default configuration.
+
+When `optimize` is `false`, Tailwind CSS still compiles Tailwind directives and generates utilities, but skips Tailwind CSS's built-in Lightning CSS optimization step:
+
+```ts title="rsbuild.config.ts"
+pluginTailwindcss({
+  optimize: false,
+});
+```
+
+If you want to always enable Tailwind CSS's built-in optimization and minification, set `optimize` to `true`:
 
 ```ts title="rsbuild.config.ts"
 pluginTailwindcss({
@@ -130,7 +140,3 @@ pluginTailwindcss({
   },
 });
 ```
-
-:::tip
-For most Rsbuild projects, keep `optimize` disabled and use Rsbuild's built-in [Lightning CSS optimization](/guide/styling/css-usage#lightning-css). Enable this option when you have disabled Rsbuild's built-in Lightning CSS optimization and want Tailwind CSS to perform that optimization step instead.
-:::
