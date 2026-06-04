@@ -73,39 +73,31 @@ export default defineConfig({
         },
       },
       tools: {
-        rspack: (config) => {
-          if (process.env.TEST_ESM_LIBRARY) {
-            return {
-              ...config,
+        rspack: process.env.TEST_ESM_LIBRARY
+          ? {
               output: {
-                ...config.output,
                 filename: '[name].mjs',
                 chunkFilename: '[name].mjs',
               },
-            };
-          }
-
-          if (process.env.TEST_SPLIT_CHUNK) {
-            return {
-              ...config,
-              optimization: {
-                runtimeChunk: true,
-                splitChunks: {
-                  chunks: 'all',
-                  minSize: 0,
-                  cacheGroups: {
-                    'lib-react': {
-                      test: /node_modules[\\/](react|react-dom|scheduler|react-refresh|@rspack[\\/]plugin-react-refresh)[\\/]/,
-                      priority: 0,
-                      name: 'lib-react',
+            }
+          : process.env.TEST_SPLIT_CHUNK
+            ? {
+                optimization: {
+                  runtimeChunk: true,
+                  splitChunks: {
+                    chunks: 'all',
+                    minSize: 0,
+                    cacheGroups: {
+                      'lib-react': {
+                        test: /node_modules[\\/](react|react-dom|scheduler|react-refresh|@rspack[\\/]plugin-react-refresh)[\\/]/,
+                        priority: 0,
+                        name: 'lib-react',
+                      },
                     },
                   },
                 },
-              },
-            };
-          }
-          return config;
-        },
+              }
+            : {},
       },
     },
   },
