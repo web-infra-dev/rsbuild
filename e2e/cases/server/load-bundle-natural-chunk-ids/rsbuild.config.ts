@@ -30,13 +30,7 @@ export default defineConfig({
     },
   },
   environments: {
-    web: {
-      source: {
-        entry: {
-          index: './src/index.js',
-        },
-      },
-    },
+    web: {},
     node: {
       output: {
         target: 'node',
@@ -47,26 +41,22 @@ export default defineConfig({
         },
       },
       tools: {
-        rspack: (config) => {
-          return {
-            ...config,
-            optimization: {
-              ...config.optimization,
-              chunkIds: 'natural',
-              runtimeChunk: true,
-              splitChunks: {
-                chunks: 'all',
-                minSize: 0,
-                cacheGroups: {
-                  shared: {
-                    test: /shared/,
-                    name: 'shared',
-                    enforce: true,
-                  },
+        rspack: {
+          optimization: {
+            chunkIds: 'natural',
+            runtimeChunk: true,
+            splitChunks: {
+              chunks: 'all',
+              minSize: 0,
+              cacheGroups: {
+                shared: {
+                  test: /shared/,
+                  name: 'shared',
+                  enforce: true,
                 },
               },
             },
-          };
+          },
         },
       },
     },
