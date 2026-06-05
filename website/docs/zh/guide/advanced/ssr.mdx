@@ -269,3 +269,40 @@ export const myPlugin = () => ({
   },
 });
 ```
+
+## 保持资源 URL 一致
+
+在多环境 SSR 中，建议保持服务端和客户端构建的 [output.assetPrefix](/config/output/asset-prefix) 和静态资源的 [output.distPath](/config/output/dist-path) 配置一致。这有助于保障服务端使用 `?url` 等 query 时，拿到与客户端一致的资源路径。
+
+```ts title="rsbuild.config.ts"
+const assetPaths = {
+  css: 'assets/css',
+  image: 'assets/image',
+};
+
+export default {
+  output: {
+    assetPrefix: '/',
+  },
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+        distPath: {
+          root: 'dist/client',
+          ...assetPaths,
+        },
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+        distPath: {
+          root: 'dist/server',
+          ...assetPaths,
+        },
+      },
+    },
+  },
+};
+```
