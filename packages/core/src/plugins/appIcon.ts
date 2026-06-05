@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { lookup } from 'mrmime';
 import { color, pick } from '../helpers';
 import {
   addCompilationError,
@@ -88,8 +89,6 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
         if (!appIcon) {
           return;
         }
-
-        const { lookup } = await import('mrmime');
 
         const distDir = config.output.distPath.image;
         const manifestFile = appIcon.filename ?? 'manifest.webmanifest';

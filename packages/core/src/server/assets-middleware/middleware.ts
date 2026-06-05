@@ -1,5 +1,6 @@
 import type { Stats as FSStats, ReadStream } from 'node:fs';
 import type { ServerResponse } from 'node:http';
+import { lookup } from 'mrmime';
 import onFinished from 'on-finished';
 import type { Range, Result as RangeResult, Ranges } from 'range-parser';
 import type { InternalContext, RequestHandler, Rspack } from '../../types';
@@ -33,8 +34,7 @@ function createReadStreamOrReadFileSync(
   return { bufferOrStream, byteLength };
 }
 
-async function getContentType(str: string): Promise<false | string> {
-  const { lookup } = await import('mrmime');
+function getContentType(str: string): false | string {
   let mime = lookup(str);
   if (!mime) {
     return false;
@@ -101,8 +101,6 @@ const parseRangeHeaders = async (
   });
 };
 
-const acceptedMethods = ['GET', 'HEAD'];
-
 function sendError(res: ServerResponse, code: number): void {
   const errorMessages: Record<number, string> = {
     [HttpCode.BadRequest]: 'Bad Request',
@@ -156,7 +154,7 @@ export function createAssetsMiddleware(
       });
     }
 
-    if (req.method && !acceptedMethods.includes(req.method)) {
+    if (req.method && req.method !== 'GET' && req.method !== 'HEAD') {
       await goNext();
       return;
     }
@@ -338,7 +336,7 @@ export function createAssetsMiddleware(
       let offset = 0;
 
       if (!res.getHeader('Content-Type')) {
-        const contentType = await getContentType(filename);
+        const contentType = getContentType(filename);
         if (contentType) {
           res.setHeader('Content-Type', contentType);
         }
