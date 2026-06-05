@@ -133,6 +133,14 @@ export default defineConfig({
           from: '/guide/basic/configure-swc',
           to: '/guide/configuration/swc',
         },
+        {
+          from: '/guide/basic/static-deploy',
+          to: '/guide/basic/deployment',
+        },
+        {
+          from: '/zh/guide/basic/static-deploy',
+          to: '/zh/guide/basic/deployment',
+        },
         ...[
           'v0-1',
           'v0-2',
