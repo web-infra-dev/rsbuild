@@ -212,8 +212,8 @@ catalogs:
       specifier: ^11.3.5
       version: 11.3.5
     heading-case:
-      specifier: ^1.1.2
-      version: 1.1.2
+      specifier: ^1.1.3
+      version: 1.1.3
     hono:
       specifier: ^4.12.23
       version: 4.12.23
@@ -421,7 +421,7 @@ importers:
         version: 0.0.4
       heading-case:
         specifier: 'catalog:'
-        version: 1.1.2
+        version: 1.1.3
       nano-staged:
         specifier: 'catalog:'
         version: 1.0.2
@@ -4035,8 +4035,8 @@ packages:
   hastscript@9.0.1:
     resolution: {integrity: sha512-g7df9rMFX/SPi34tyGCyUBREQoKkapwdY/T04Qn9TDWfHhAYt4/I0gMVirzK5wEzeUqIjEB+LXC/ypb7Aqno5w==}
 
-  heading-case@1.1.2:
-    resolution: {integrity: sha512-lqWWmCd289iZEjO/RLUSx5rDlFM5XcdszFAZk5OzAbyVfOXss8h5Dr7SuPXzjIaA9rXlBKmA8fMdiOnSSL6oBg==}
+  heading-case@1.1.3:
+    resolution: {integrity: sha512-YwTSvHDNLKDwoBjbzt4w3USGcnUnUK9fjKbb9jNoAOop/z1Ldpp+2k+VxrzRYOIlslg2Dq3nSttGQ7sIdEtWxw==}
     hasBin: true
 
   homedir-polyfill@1.0.3:
@@ -8512,7 +8512,7 @@ snapshots:
       property-information: 7.1.0
       space-separated-tokens: 2.0.2
 
-  heading-case@1.1.2: {}
+  heading-case@1.1.3: {}
 
   homedir-polyfill@1.0.3:
     dependencies:
