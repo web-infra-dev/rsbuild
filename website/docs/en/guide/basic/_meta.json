@@ -8,5 +8,5 @@
   "wasm-assets",
   "typescript",
   "web-workers",
-  "static-deploy"
+  "deployment"
 ]
