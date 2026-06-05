@@ -1,10 +1,10 @@
 ---
-description: 'This section explains how to deploy Rsbuild build outputs as a static site.'
+description: 'This section explains how to deploy Rsbuild projects to static hosting and runtime platforms.'
 ---
 
-# Deploy static site
+# Deploy Rsbuild applications
 
-This section explains how to deploy Rsbuild build outputs as a static site.
+This section explains how to deploy Rsbuild projects to static hosting and runtime platforms.
 
 ## Background information
 
@@ -90,7 +90,11 @@ The following sections describe how to deploy on several common platforms.
 
 > Platform names are listed in alphabetical order.
 
-### Cloudflare Pages
+### Cloudflare
+
+Cloudflare provides several ways to deploy Rsbuild projects. Use Cloudflare Pages when you only need static hosting for the generated output. Use Cloudflare Workers when your application needs to run in the Workers runtime.
+
+#### Cloudflare Pages
 
 [Cloudflare Pages](https://developers.cloudflare.com/pages/) is a static site hosting platform provided by Cloudflare.
 
@@ -103,9 +107,9 @@ When configuring, complete the following fields under "Build settings":
 
 Then click the **Save and Deploy** button to start the deployment.
 
-:::tip
-For Rsbuild projects deployed to Cloudflare Workers, [rsbuild-cloudflare](https://github.com/Nsttt/rsbuild-cloudflare) is an experimental plugin that reads Wrangler configuration, serves development requests through Miniflare, and emits deployable Worker output.
-:::
+#### Cloudflare workers
+
+Cloudflare Workers is a runtime deployment target rather than static hosting. For Rsbuild projects that need to run in the Cloudflare Workers runtime, [rsbuild-cloudflare](https://github.com/Nsttt/rsbuild-cloudflare) is an experimental plugin that reads Wrangler configuration, serves development requests through Miniflare, and emits deployable Worker output.
 
 ### GitHub pages
 

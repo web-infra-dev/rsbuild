@@ -1,10 +1,10 @@
 ---
-description: '本章节介绍如何将 Rsbuild 的构建产物部署为静态站点。'
+description: '本章节介绍如何将 Rsbuild 项目部署到静态托管平台或运行时平台。'
 ---
 
-# 部署静态站点
+# 部署 Rsbuild 应用
 
-本章节介绍如何将 Rsbuild 的构建产物部署为静态站点。
+本章节介绍如何将 Rsbuild 项目部署到静态托管平台或运行时平台。
 
 ## 背景信息
 
@@ -90,7 +90,11 @@ export default defineConfig({
 
 > 平台名称按照字母顺序排列。
 
-### Cloudflare Pages
+### Cloudflare
+
+Cloudflare 提供了多种部署 Rsbuild 项目的方式。如果只需要托管生成的静态产物，可以使用 Cloudflare Pages；如果应用需要运行在 Workers runtime 中，可以使用 Cloudflare Workers。
+
+#### Cloudflare Pages
 
 [Cloudflare Pages](https://developers.cloudflare.com/pages/) 是一个由 Cloudflare 提供的静态网站托管平台。
 
@@ -103,9 +107,9 @@ export default defineConfig({
 
 然后点击 **Save and Deploy** 按钮，就可以开始部署了。
 
-:::tip
-对于部署到 Cloudflare Workers 的 Rsbuild 项目，[rsbuild-cloudflare](https://github.com/Nsttt/rsbuild-cloudflare) 是一个实验性插件，可以读取 Wrangler 配置、通过 Miniflare 提供开发服务，并生成可部署的 Worker 产物。
-:::
+#### Cloudflare workers
+
+Cloudflare Workers 属于运行时部署目标，而不是静态托管。对于需要运行在 Cloudflare Workers runtime 中的 Rsbuild 项目，[rsbuild-cloudflare](https://github.com/Nsttt/rsbuild-cloudflare) 是一个实验性插件，可以读取 Wrangler 配置、通过 Miniflare 提供开发服务，并生成可部署的 Worker 产物。
 
 ### GitHub Pages
 
