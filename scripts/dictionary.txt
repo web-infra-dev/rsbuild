@@ -71,6 +71,7 @@ Mergeable
 microfrontend
 microfrontends
 minifiers
+miniflare
 modularly
 mrmime
 mYbzBtlg6o
