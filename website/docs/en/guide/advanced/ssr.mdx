@@ -269,3 +269,40 @@ export const myPlugin = () => ({
   },
 });
 ```
+
+## Keep asset URLs consistent
+
+In multi-environment SSR, keep [output.assetPrefix](/config/output/asset-prefix) and public asset [output.distPath](/config/output/dist-path) values consistent between server and client builds. This helps ensure that the server gets the same asset path as the client when using queries such as `?url`.
+
+```ts title="rsbuild.config.ts"
+const assetPaths = {
+  css: 'assets/css',
+  image: 'assets/image',
+};
+
+export default {
+  output: {
+    assetPrefix: '/',
+  },
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+        distPath: {
+          root: 'dist/client',
+          ...assetPaths,
+        },
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+        distPath: {
+          root: 'dist/server',
+          ...assetPaths,
+        },
+      },
+    },
+  },
+};
+```
