@@ -172,8 +172,12 @@ const applyDefaultMiddlewares = async ({
   };
 
   middlewares.use('/__open-in-editor', async (req, res, next) => {
-    const handler = await getLaunchEditorHandler();
-    handler(req, res, next);
+    try {
+      const handler = await getLaunchEditorHandler();
+      handler(req, res, next);
+    } catch (err) {
+      next(err);
+    }
   });
 
   middlewares.use(
