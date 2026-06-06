@@ -1,9 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('should use SVGR and override SVGO plugin options', async ({
-  page,
-  buildPreview,
-}) => {
+test('should use SVGR and override SVGO plugin options', async ({ page, buildPreview }) => {
   await buildPreview();
 
   await expect(

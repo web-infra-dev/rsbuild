@@ -20,9 +20,7 @@ async function getLocalhostResolvedAddress(): Promise<string | undefined> {
   return match ? undefined : defaultLookup.address;
 }
 
-export async function resolveHostname(
-  host: string | undefined = LOCALHOST,
-): Promise<string> {
+export async function resolveHostname(host: string | undefined = LOCALHOST): Promise<string> {
   if (host === LOCALHOST) {
     const resolvedAddress = await getLocalhostResolvedAddress();
     if (resolvedAddress) {

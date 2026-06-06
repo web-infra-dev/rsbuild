@@ -116,17 +116,14 @@ export const pluginMinimize = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain(async (chain, { environment, CHAIN_ID, rspack }) => {
       const { config } = environment;
-      const { minifyJs, minifyCss, jsOptions, cssOptions } =
-        parseMinifyOptions(config);
+      const { minifyJs, minifyCss, jsOptions, cssOptions } = parseMinifyOptions(config);
 
       chain.optimization.minimize(minifyJs || minifyCss);
 
       if (minifyJs) {
         chain.optimization
           .minimizer(CHAIN_ID.MINIMIZER.JS)
-          .use(rspack.SwcJsMinimizerRspackPlugin, [
-            getSwcMinimizerOptions(config, jsOptions),
-          ])
+          .use(rspack.SwcJsMinimizerRspackPlugin, [getSwcMinimizerOptions(config, jsOptions)])
           .end();
       }
 
@@ -158,10 +155,7 @@ export const pluginMinimize = (): RsbuildPlugin => ({
         };
 
         const mergedOptions = cssOptions
-          ? deepmerge<LightningCssMinimizerRspackPluginOptions>(
-              defaultOptions,
-              cssOptions,
-            )
+          ? deepmerge<LightningCssMinimizerRspackPluginOptions>(defaultOptions, cssOptions)
           : defaultOptions;
 
         chain.optimization

@@ -9,18 +9,12 @@ function writeDuplicatedPackage(flag: string) {
     join(fooPath, 'package.json'),
     JSON.stringify({ name: 'foo', version: '1.0.0' }),
   );
-  fse.outputFileSync(
-    join(fooPath, 'index.js'),
-    'import React from "react";export default React;',
-  );
+  fse.outputFileSync(join(fooPath, 'index.js'), 'import React from "react";export default React;');
   fse.outputFileSync(
     join(fooPath, 'node_modules', 'react', 'package.json'),
     JSON.stringify({ name: 'react', version: '1.0.0' }),
   );
-  fse.outputFileSync(
-    join(fooPath, 'node_modules', 'react', 'index.js'),
-    `console.log("${flag}");`,
-  );
+  fse.outputFileSync(join(fooPath, 'node_modules', 'react', 'index.js'), `console.log("${flag}");`);
 }
 
 test('should dedupe specified packages as expected', async ({ build }) => {

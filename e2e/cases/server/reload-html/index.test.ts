@@ -13,9 +13,7 @@ test('should reload page when HTML template changed', async ({
 
   await expect(page).toHaveTitle('Foo');
 
-  await editFile(join(tempSrc, 'index.html'), (code) =>
-    code.replace('Foo', 'Bar'),
-  );
+  await editFile(join(tempSrc, 'index.html'), (code) => code.replace('Foo', 'Bar'));
   // expect page title to be 'Bar' after HTML template changed
   await expect(page).toHaveTitle('Bar');
 });
@@ -42,9 +40,7 @@ test('should not reload page when HTML live reload is disabled', async ({
   await expect(page).toHaveTitle('Foo');
 
   logHelper.clearLogs();
-  await editFile(join(tempSrc, 'index.html'), (code) =>
-    code.replace('Foo', 'Bar'),
-  );
+  await editFile(join(tempSrc, 'index.html'), (code) => code.replace('Foo', 'Bar'));
   await logHelper.expectBuildEnd();
   // Title unchanged
   await expect(page).toHaveTitle('Foo');

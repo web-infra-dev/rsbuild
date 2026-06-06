@@ -73,9 +73,7 @@ export class CommonJsRunner extends BasicRunner {
       });
 
       // rslint-disable-next-line @typescript-eslint/no-require-imports
-      return require(
-        resolvedPath.startsWith('node:') ? resolvedPath.slice(5) : resolvedPath,
-      );
+      return require(resolvedPath.startsWith('node:') ? resolvedPath.slice(5) : resolvedPath);
     };
   }
 
@@ -98,19 +96,12 @@ export class CommonJsRunner extends BasicRunner {
         exports: {},
       };
       requireCache[file.path] = m;
-      const currentModuleScope = this.createModuleScope(
-        this.getRequire(),
-        m,
-        file,
-      );
+      const currentModuleScope = this.createModuleScope(this.getRequire(), m, file);
 
       const args = Object.keys(currentModuleScope);
       const argValues = args.map((arg) => currentModuleScope[arg]);
       this.preExecute(file.content, file);
-      const dynamicImport = new Function(
-        'specifier',
-        'return import(specifier)',
-      );
+      const dynamicImport = new Function('specifier', 'return import(specifier)');
       const fn = vm.compileFunction(file.content, args, {
         filename: file.path,
         // Specify how the modules should be loaded during the evaluation of this script when `import()` is called.

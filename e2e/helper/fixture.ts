@@ -31,10 +31,7 @@ function makeBox(title: string) {
   };
 }
 
-type EditFile = (
-  filename: string,
-  replacer: (code: string) => string,
-) => Promise<void>;
+type EditFile = (filename: string, replacer: (code: string) => string) => Promise<void>;
 
 type Exec = (
   command: string,
@@ -160,10 +157,7 @@ type RsbuildFixture = {
 
 type Close = DevResult['close'];
 
-const setupExecOptions = <T extends ExecOptions | ExecSyncOptions>(
-  options: T,
-  cwd: string,
-): T => {
+const setupExecOptions = <T extends ExecOptions | ExecSyncOptions>(options: T, cwd: string): T => {
   // inherit process.env from current process
   const { NODE_ENV: _, ...restEnv } = process.env;
   options.env ||= {};
@@ -187,10 +181,7 @@ export const test = base.extend<RsbuildFixture>({
       logHelper.restore();
 
       // If the test failed, log the console output for debugging
-      if (
-        testInfo.status !== testInfo.expectedStatus &&
-        logHelper.logs.length
-      ) {
+      if (testInfo.status !== testInfo.expectedStatus && logHelper.logs.length) {
         const { header, footer } = makeBox(testInfo.title);
         console.log(header);
         logHelper.printCapturedLogs();
@@ -288,9 +279,7 @@ export const test = base.extend<RsbuildFixture>({
 
   editFile: async ({ cwd }, use) => {
     const editFile: EditFile = async (filename, replacer) => {
-      const resolvedFilename = path.isAbsolute(filename)
-        ? filename
-        : path.resolve(cwd, filename);
+      const resolvedFilename = path.isAbsolute(filename) ? filename : path.resolve(cwd, filename);
       const code = await promises.readFile(resolvedFilename, 'utf-8');
       return promises.writeFile(resolvedFilename, replacer(code));
     };

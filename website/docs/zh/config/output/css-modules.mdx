@@ -20,11 +20,7 @@ Rsbuild 的 CSS Modules 功能是基于 css-loader 的 `modules` 选项实现的
 type Auto =
   | boolean
   | RegExp
-  | ((
-      resourcePath: string,
-      resourceQuery: string,
-      resourceFragment: string,
-    ) => boolean);
+  | ((resourcePath: string, resourceQuery: string, resourceFragment: string) => boolean);
 ```
 
 - **默认值：** `true`
@@ -69,12 +65,7 @@ export default {
 - **类型：**
 
 ```ts
-type CSSModulesLocalsConvention =
-  | 'asIs'
-  | 'camelCase'
-  | 'camelCaseOnly'
-  | 'dashes'
-  | 'dashesOnly';
+type CSSModulesLocalsConvention = 'asIs' | 'camelCase' | 'camelCaseOnly' | 'dashes' | 'dashesOnly';
 ```
 
 - **默认值：** `'camelCase'`

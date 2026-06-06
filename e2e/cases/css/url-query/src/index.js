@@ -21,13 +21,9 @@ window.getCssUrlResult = async () => ({
   externalStyleUrl,
   styleUrl,
   styleContent: await fetch(styleUrl).then((res) => res.text()),
-  urlLeadingQueryContent: await fetch(urlLeadingQueryUrl).then((res) =>
-    res.text(),
-  ),
+  urlLeadingQueryContent: await fetch(urlLeadingQueryUrl).then((res) => res.text()),
   urlLeadingQueryUrl,
-  urlTrailingQueryContent: await fetch(urlTrailingQueryUrl).then((res) =>
-    res.text(),
-  ),
+  urlTrailingQueryContent: await fetch(urlTrailingQueryUrl).then((res) => res.text()),
   urlTrailingQueryUrl,
   urlValueQueryContent: await fetch(urlValueQueryUrl).then((res) => res.text()),
   urlValueQueryUrl,

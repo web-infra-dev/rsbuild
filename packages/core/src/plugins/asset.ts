@@ -1,8 +1,5 @@
 import path from 'node:path';
-import type {
-  AssetModuleFilename,
-  GeneratorOptionsByModuleType,
-} from '@rspack/core';
+import type { AssetModuleFilename, GeneratorOptionsByModuleType } from '@rspack/core';
 import { CHAIN_ID } from '../configChain';
 import {
   AUDIO_EXTENSIONS,
@@ -47,16 +44,10 @@ const chainStaticAssetRule = ({
     .set('generator', generatorOptions);
 
   // get inlined base64 content: "foo.png?inline"
-  rule
-    .oneOf(`${assetType}-asset-inline`)
-    .type('asset/inline')
-    .resourceQuery(INLINE_QUERY_REGEX);
+  rule.oneOf(`${assetType}-asset-inline`).type('asset/inline').resourceQuery(INLINE_QUERY_REGEX);
 
   // get raw content: "foo.png?raw"
-  rule
-    .oneOf(`${assetType}-asset-raw`)
-    .type('asset/source')
-    .resourceQuery(RAW_QUERY_REGEX);
+  rule.oneOf(`${assetType}-asset-raw`).type('asset/source').resourceQuery(RAW_QUERY_REGEX);
 
   rule
     .oneOf(`${assetType}-asset`)
@@ -80,10 +71,7 @@ export function getRegExpForExts(exts: string[]): RegExp {
 
   const matcher = normalizedExts.join('|');
 
-  return new RegExp(
-    normalizedExts.length === 1 ? `\\.${matcher}$` : `\\.(?:${matcher})$`,
-    'i',
-  );
+  return new RegExp(normalizedExts.length === 1 ? `\\.${matcher}$` : `\\.(?:${matcher})$`, 'i');
 }
 
 export const pluginAsset = (): RsbuildPlugin => ({
@@ -116,10 +104,7 @@ export const pluginAsset = (): RsbuildPlugin => ({
       ) => {
         const regExp = getRegExpForExts(exts);
         const { dataUriLimit } = config.output;
-        const maxSize =
-          typeof dataUriLimit === 'number'
-            ? dataUriLimit
-            : dataUriLimit[assetType];
+        const maxSize = typeof dataUriLimit === 'number' ? dataUriLimit : dataUriLimit[assetType];
         const rule = chain.module.rule(assetType).test(regExp);
 
         chainStaticAssetRule({
@@ -140,11 +125,7 @@ export const pluginAsset = (): RsbuildPlugin => ({
       createAssetRule(CHAIN_ID.RULE.SVG, ['svg'], emitAssets);
 
       // media
-      createAssetRule(
-        CHAIN_ID.RULE.MEDIA,
-        [...VIDEO_EXTENSIONS, ...AUDIO_EXTENSIONS],
-        emitAssets,
-      );
+      createAssetRule(CHAIN_ID.RULE.MEDIA, [...VIDEO_EXTENSIONS, ...AUDIO_EXTENSIONS], emitAssets);
 
       // font
       createAssetRule(CHAIN_ID.RULE.FONT, FONT_EXTENSIONS, emitAssets);
@@ -153,10 +134,7 @@ export const pluginAsset = (): RsbuildPlugin => ({
       // Rspack has built-in rule for JSON, so we only need to handle imports with query
       // get raw content: "foo.json?raw"
       const rule = chain.module.rule(CHAIN_ID.RULE.JSON).test(/\.json$/i);
-      rule
-        .oneOf('json-asset-raw')
-        .type('asset/source')
-        .resourceQuery(RAW_QUERY_REGEX);
+      rule.oneOf('json-asset-raw').type('asset/source').resourceQuery(RAW_QUERY_REGEX);
 
       // assets
       const assetsFilename = getMergedFilename('assets');
@@ -169,11 +147,8 @@ export const pluginAsset = (): RsbuildPlugin => ({
       const { assetsInclude } = config.source;
       if (assetsInclude) {
         const { dataUriLimit } = config.output;
-        const rule = chain.module
-          .rule(CHAIN_ID.RULE.ADDITIONAL_ASSETS)
-          .test(assetsInclude);
-        const maxSize =
-          typeof dataUriLimit === 'number' ? dataUriLimit : dataUriLimit.assets;
+        const rule = chain.module.rule(CHAIN_ID.RULE.ADDITIONAL_ASSETS).test(assetsInclude);
+        const maxSize = typeof dataUriLimit === 'number' ? dataUriLimit : dataUriLimit.assets;
 
         chainStaticAssetRule({
           emit: emitAssets,

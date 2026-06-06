@@ -97,15 +97,9 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
       return normalizeExtractOptions(sourceMap.extract);
     };
 
-    const applyExtractRule = (
-      chain: RspackChain,
-      extractConfig: ExtractRuleConfig,
-    ) => {
+    const applyExtractRule = (chain: RspackChain, extractConfig: ExtractRuleConfig) => {
       const { name, test, target } = extractConfig;
-      const rule = chain.module
-        .rule(name)
-        .test(test)
-        .set('extractSourceMap', true);
+      const rule = chain.module.rule(name).test(test).set('extractSourceMap', true);
 
       const { include, exclude } = target;
       if (include) {
@@ -141,8 +135,7 @@ export const pluginSourceMap = (): RsbuildPlugin => ({
       // - Prevents leaking absolute system paths
       // - Keeps maps portable across environments
       // - Matches source map spec and debugger expectations
-      let sourceMapTemplate: Rspack.DevtoolModuleFilenameTemplate =
-        '[relative-resource-path]';
+      let sourceMapTemplate: Rspack.DevtoolModuleFilenameTemplate = '[relative-resource-path]';
       let sourceMapFallbackTemplate: Rspack.DevtoolFallbackModuleFilenameTemplate =
         '[relative-resource-path]?[hash]';
 

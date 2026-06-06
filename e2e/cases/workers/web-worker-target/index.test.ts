@@ -16,9 +16,7 @@ test('should build web-worker target correctly', async ({ build }) => {
   expect(jsFiles[0].includes('index')).toBeTruthy();
 });
 
-test('should build web-worker target with dynamicImport correctly', async ({
-  build,
-}) => {
+test('should build web-worker target with dynamicImport correctly', async ({ build }) => {
   const rsbuild = await build({
     config: {
       source: {

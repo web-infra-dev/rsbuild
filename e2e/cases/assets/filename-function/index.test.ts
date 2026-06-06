@@ -8,49 +8,33 @@ test('should allow to custom filename by function', async ({ build }) => {
 
   // JS
   expect(
-    filenames.some((filename) =>
-      filename.includes('dist/static/js/my-index.js'),
-    ),
+    filenames.some((filename) => filename.includes('dist/static/js/my-index.js')),
   ).toBeTruthy();
   expect(
-    filenames.some((filename) =>
-      filename.includes('dist/static/js/async/some-path/foo.js'),
-    ),
+    filenames.some((filename) => filename.includes('dist/static/js/async/some-path/foo.js')),
   ).toBeTruthy();
 
   // CSS
   expect(
-    filenames.some((filename) =>
-      filename.includes('dist/static/css/my-index.css'),
-    ),
+    filenames.some((filename) => filename.includes('dist/static/css/my-index.css')),
   ).toBeTruthy();
   expect(
-    filenames.some((filename) =>
-      filename.includes('dist/static/css/async/some-path/foo.css'),
-    ),
+    filenames.some((filename) => filename.includes('dist/static/css/async/some-path/foo.css')),
   ).toBeTruthy();
 
   // Image
   expect(
-    filenames.some((filename) =>
-      filename.includes('dist/static/image/my-icon.png'),
-    ),
+    filenames.some((filename) => filename.includes('dist/static/image/my-icon.png')),
   ).toBeTruthy();
   expect(
-    filenames.some((filename) =>
-      filename.includes('dist/static/image/some-path/image.png'),
-    ),
+    filenames.some((filename) => filename.includes('dist/static/image/some-path/image.png')),
   ).toBeTruthy();
 
   // SVG
   expect(
-    filenames.some((filename) =>
-      filename.includes('dist/static/svg/my-circle.svg'),
-    ),
+    filenames.some((filename) => filename.includes('dist/static/svg/my-circle.svg')),
   ).toBeTruthy();
   expect(
-    filenames.some((filename) =>
-      filename.includes('dist/static/svg/some-path/mobile.svg'),
-    ),
+    filenames.some((filename) => filename.includes('dist/static/svg/some-path/mobile.svg')),
   ).toBeTruthy();
 });

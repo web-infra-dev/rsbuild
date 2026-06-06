@@ -1,10 +1,7 @@
 import { expect, test } from '@e2e/helper';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 
-test('should run stage 3 decorators correctly', async ({
-  page,
-  buildPreview,
-}) => {
+test('should run stage 3 decorators correctly', async ({ page, buildPreview }) => {
   await buildPreview();
 
   expect(await page.evaluate('window.message')).toBe('hello');
@@ -65,9 +62,7 @@ test.fail(
 
     expect(
       rsbuild.logs.find((log) =>
-        log.includes(
-          'Using the export keyword between a decorator and a class is not allowed',
-        ),
+        log.includes('Using the export keyword between a decorator and a class is not allowed'),
       ),
     ).toBeTruthy();
   },

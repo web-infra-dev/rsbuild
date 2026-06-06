@@ -54,65 +54,59 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
 
         // Prefer Solid-specific exports while preserving user conditions or Rspack defaults.
         config.resolve.conditionNames = [
-          ...new Set([
-            'solid',
-            ...(useDevRuntime ? ['development'] : []),
-            ...conditionNames,
-          ]),
+          ...new Set(['solid', ...(useDevRuntime ? ['development'] : []), ...conditionNames]),
         ];
       });
 
-      api.modifyBundlerChain(
-        (chain, { CHAIN_ID, environment, isProd, target }) => {
-          const environmentConfig = environment.config;
+      api.modifyBundlerChain((chain, { CHAIN_ID, environment, isProd, target }) => {
+        const environmentConfig = environment.config;
 
-          modifyBabelLoaderOptions({
-            chain,
-            CHAIN_ID,
-            modifier: (babelOptions) => {
-              // Apply SSR defaults before user options so explicit values can override them.
-              const defaultPresetOptions: SolidPresetOptions = ssr
-                ? target === 'node'
-                  ? { generate: 'ssr', hydratable: true }
-                  : { generate: 'dom', hydratable: true }
-                : {};
+        modifyBabelLoaderOptions({
+          chain,
+          CHAIN_ID,
+          modifier: (babelOptions) => {
+            // Apply SSR defaults before user options so explicit values can override them.
+            const defaultPresetOptions: SolidPresetOptions = ssr
+              ? target === 'node'
+                ? { generate: 'ssr', hydratable: true }
+                : { generate: 'dom', hydratable: true }
+              : {};
 
-              babelOptions.presets = [
-                [
-                  require.resolve('babel-preset-solid'),
-                  {
-                    ...defaultPresetOptions,
-                    ...solidPresetOptions,
-                    ...solid,
-                  },
-                ],
-              ];
-              babelOptions.parserOpts = { plugins: ['jsx', 'typescript'] };
+            babelOptions.presets = [
+              [
+                require.resolve('babel-preset-solid'),
+                {
+                  ...defaultPresetOptions,
+                  ...solidPresetOptions,
+                  ...solid,
+                },
+              ],
+            ];
+            babelOptions.parserOpts = { plugins: ['jsx', 'typescript'] };
 
-              // `refresh.disabled` only disables Solid Refresh transforms; Rsbuild HMR can stay enabled.
-              const usingHMR =
-                options.refresh?.disabled !== true &&
-                !isProd &&
-                environmentConfig.dev.hmr &&
-                target === 'web';
-              if (usingHMR) {
-                babelOptions.plugins ??= [];
-                babelOptions.plugins.push([
-                  require.resolve('solid-refresh/babel'),
-                  { bundler: 'rspack-esm' },
-                ]);
+            // `refresh.disabled` only disables Solid Refresh transforms; Rsbuild HMR can stay enabled.
+            const usingHMR =
+              options.refresh?.disabled !== true &&
+              !isProd &&
+              environmentConfig.dev.hmr &&
+              target === 'web';
+            if (usingHMR) {
+              babelOptions.plugins ??= [];
+              babelOptions.plugins.push([
+                require.resolve('solid-refresh/babel'),
+                { bundler: 'rspack-esm' },
+              ]);
 
-                chain.resolve.alias.set(
-                  'solid-refresh',
-                  require.resolve('solid-refresh/dist/solid-refresh.mjs'),
-                );
-              }
+              chain.resolve.alias.set(
+                'solid-refresh',
+                require.resolve('solid-refresh/dist/solid-refresh.mjs'),
+              );
+            }
 
-              return babelOptions;
-            },
-          });
-        },
-      );
+            return babelOptions;
+          },
+        });
+      });
     },
   };
 }

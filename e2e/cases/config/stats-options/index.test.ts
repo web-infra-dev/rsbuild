@@ -8,9 +8,7 @@ test('should log warning by default', async ({ build }) => {
   await rsbuild.expectLog(WARNING_MSG);
 });
 
-test('should not log warning when set stats.warnings false', async ({
-  build,
-}) => {
+test('should not log warning when set stats.warnings false', async ({ build }) => {
   const rsbuild = await build({
     config: {
       tools: {

@@ -4,9 +4,7 @@ import fse from 'fs-extra';
 
 const distDir = path.join(import.meta.dirname, 'dist');
 
-test('should support exporting a function from the config file', async ({
-  execCliSync,
-}) => {
+test('should support exporting a function from the config file', async ({ execCliSync }) => {
   await fse.remove(distDir);
   execCliSync('build');
   const files = await readDirContents(distDir);

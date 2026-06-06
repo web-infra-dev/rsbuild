@@ -1,18 +1,9 @@
 import { posix } from 'node:path';
-import {
-  ALL_INTERFACES_IPV4,
-  DEFAULT_ASSET_PREFIX,
-  DEFAULT_PORT,
-  LOCALHOST,
-} from '../constants';
+import { ALL_INTERFACES_IPV4, DEFAULT_ASSET_PREFIX, DEFAULT_PORT, LOCALHOST } from '../constants';
 import { getFilename } from '../helpers';
 import { formatPublicPath, urlJoin } from '../helpers/url';
 import { replacePortPlaceholder } from '../server/open';
-import type {
-  NormalizedEnvironmentConfig,
-  RsbuildContext,
-  RsbuildPlugin,
-} from '../types';
+import type { NormalizedEnvironmentConfig, RsbuildContext, RsbuildPlugin } from '../types';
 
 function getPublicPath({
   isDev,
@@ -57,11 +48,7 @@ function getPublicPath({
   return formatPublicPath(replacePortPlaceholder(publicPath, port));
 }
 
-const getJsAsyncPath = (
-  jsPath: string,
-  isServer: boolean,
-  jsAsync?: string,
-) => {
+const getJsAsyncPath = (jsPath: string, isServer: boolean, jsAsync?: string) => {
   if (jsAsync !== undefined) {
     return jsAsync;
   }
@@ -77,10 +64,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(
-      (
-        chain,
-        { CHAIN_ID, isDev, isProd, isServer, environment, rspack, target },
-      ) => {
+      (chain, { CHAIN_ID, isDev, isProd, isServer, environment, rspack, target }) => {
         const { distPath, config } = environment;
 
         const publicPath = getPublicPath({
@@ -91,11 +75,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
 
         // js output
         const jsPath = config.output.distPath.js;
-        const jsAsyncPath = getJsAsyncPath(
-          jsPath,
-          isServer,
-          config.output.distPath.jsAsync,
-        );
+        const jsAsyncPath = getJsAsyncPath(jsPath, isServer, config.output.distPath.jsAsync);
         const jsFilename = getFilename(config, 'js', isProd, isServer);
         const isJsFilenameFn = typeof jsFilename === 'function';
 
@@ -149,9 +129,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
           const { copy } = config.output;
           const options = Array.isArray(copy) ? { patterns: copy } : copy;
 
-          chain
-            .plugin(CHAIN_ID.PLUGIN.COPY)
-            .use(rspack.CopyRspackPlugin, [options]);
+          chain.plugin(CHAIN_ID.PLUGIN.COPY).use(rspack.CopyRspackPlugin, [options]);
         }
       },
     );

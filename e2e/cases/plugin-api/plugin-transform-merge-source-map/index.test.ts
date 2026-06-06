@@ -1,18 +1,9 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
-import {
-  expect,
-  getDistFiles,
-  getFileContent,
-  mapSourceMapPositions,
-  test,
-} from '@e2e/helper';
+import { expect, getDistFiles, getFileContent, mapSourceMapPositions, test } from '@e2e/helper';
 
 const expectSourceMap = async (files: Record<string, string>) => {
-  const sourceCode = readFileSync(
-    path.join(import.meta.dirname, 'src/index.ts'),
-    'utf-8',
-  );
+  const sourceCode = readFileSync(path.join(import.meta.dirname, 'src/index.ts'), 'utf-8');
   const outputCode = getFileContent(files, 'index.js');
   const sourceMap = getFileContent(files, 'index.js.map');
 
@@ -47,18 +38,14 @@ const expectSourceMap = async (files: Record<string, string>) => {
   ]);
 };
 
-test('should merge source map when plugin transforms code in build', async ({
-  build,
-}) => {
+test('should merge source map when plugin transforms code in build', async ({ build }) => {
   const rsbuild = await build();
   const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   await expectSourceMap(files);
 });
 
-test('should merge source map when plugin transforms code in dev', async ({
-  dev,
-}) => {
+test('should merge source map when plugin transforms code in dev', async ({ dev }) => {
   const rsbuild = await dev();
   const files = await getDistFiles(rsbuild.distPath, true);
 

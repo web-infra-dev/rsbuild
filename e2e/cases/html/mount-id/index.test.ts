@@ -3,10 +3,7 @@ import { join } from 'node:path';
 import { expect, gotoPage, test } from '@e2e/helper';
 
 test.describe('should render mountId correctly', () => {
-  test('should render content into the configured mountId', async ({
-    page,
-    build,
-  }) => {
+  test('should render content into the configured mountId', async ({ page, build }) => {
     const rsbuild = await build({
       runServer: true,
       config: {
@@ -39,11 +36,7 @@ test.describe('should render mountId correctly', () => {
     const pagePath = join(rsbuild.distPath, 'index.html');
     const content = await fs.promises.readFile(pagePath, 'utf-8');
 
-    expect(
-      /<head>[\s\S]*<script[\s\S]*>[\s\S]*<\/head>/.test(content),
-    ).toBeTruthy();
-    expect(
-      /<body>[\s\S]*<script[\s\S]*>[\s\S]*<\/body>/.test(content),
-    ).toBeFalsy();
+    expect(/<head>[\s\S]*<script[\s\S]*>[\s\S]*<\/head>/.test(content)).toBeTruthy();
+    expect(/<body>[\s\S]*<script[\s\S]*>[\s\S]*<\/body>/.test(content)).toBeFalsy();
   });
 });

@@ -1,9 +1,7 @@
 import { basename } from 'node:path';
 import { expect, findFile, test } from '@e2e/helper';
 
-test('should generate chunks for each package when preset is "per-package"', async ({
-  build,
-}) => {
+test('should generate chunks for each package when preset is "per-package"', async ({ build }) => {
   const rsbuild = await build({
     config: {},
   });

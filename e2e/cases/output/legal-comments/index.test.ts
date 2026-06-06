@@ -13,10 +13,7 @@ test('legalComments linked (default)', async ({ page, buildPreview }) => {
 
   const files = rsbuild.getDistFiles();
 
-  const LicenseContent = getFileContent(
-    files,
-    'static/js/index.js.LICENSE.txt',
-  );
+  const LicenseContent = getFileContent(files, 'static/js/index.js.LICENSE.txt');
 
   expect(LicenseContent.includes('@preserve AAAA')).toBeTruthy();
   expect(LicenseContent.includes('@license BBB')).toBeTruthy();

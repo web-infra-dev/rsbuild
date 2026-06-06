@@ -3,9 +3,7 @@ import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 import type { RsbuildPluginAPI } from '@rsbuild/core';
 
-test('should allow plugin to process assets by environments', async ({
-  build,
-}) => {
+test('should allow plugin to process assets by environments', async ({ build }) => {
   const rsbuild = await build();
   expect(existsSync(join(rsbuild.distPath, 'static/index.js'))).toBeFalsy();
   expect(existsSync(join(rsbuild.distPath, 'server/index.js'))).toBeTruthy();

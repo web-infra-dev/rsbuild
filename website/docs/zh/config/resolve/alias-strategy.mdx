@@ -97,10 +97,7 @@ export default {
 export default {
   resolve: {
     alias: {
-      '@common':
-        process.env.NODE_ENV === 'production'
-          ? './src/common-prod'
-          : './src/common-dev',
+      '@common': process.env.NODE_ENV === 'production' ? './src/common-prod' : './src/common-dev',
     },
   },
 };

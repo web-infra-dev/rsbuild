@@ -7,10 +7,7 @@ description: '用来控制是否用 style 标签将产物中的 style 文件（.
 - **类型：**
 
 ```ts
-type InlineChunkTestFunction = (params: {
-  size: number;
-  name: string;
-}) => boolean;
+type InlineChunkTestFunction = (params: { size: number; name: string }) => boolean;
 
 type InlineChunkTest = RegExp | InlineChunkTestFunction;
 

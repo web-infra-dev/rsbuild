@@ -41,11 +41,7 @@ describe('plugin-solid', () => {
       },
     });
     const config = await rsbuild.initConfigs();
-    expect(config[0].resolve?.conditionNames).toEqual([
-      'solid',
-      'development',
-      '...',
-    ]);
+    expect(config[0].resolve?.conditionNames).toEqual(['solid', 'development', '...']);
   });
 
   it('should preserve user resolve condition names', async () => {
@@ -60,12 +56,7 @@ describe('plugin-solid', () => {
       },
     });
     const config = await rsbuild.initConfigs();
-    expect(config[0].resolve?.conditionNames).toEqual([
-      'solid',
-      'development',
-      'custom',
-      'import',
-    ]);
+    expect(config[0].resolve?.conditionNames).toEqual(['solid', 'development', 'custom', 'import']);
   });
 
   it('should allow disabling solid development condition', async () => {
@@ -101,11 +92,7 @@ describe('plugin-solid', () => {
       },
     });
     const config = await rsbuild.initConfigs();
-    expect(config[0].resolve?.conditionNames).toEqual([
-      'solid',
-      'development',
-      '...',
-    ]);
+    expect(config[0].resolve?.conditionNames).toEqual(['solid', 'development', '...']);
   });
 
   it('should allow disabling solid refresh via refresh.disabled', async () => {
@@ -117,11 +104,9 @@ describe('plugin-solid', () => {
     });
     const config = await rsbuild.initConfigs();
 
-    expect(
-      JSON.stringify(matchRules(config[0], 'a.tsx')[0]).includes(
-        'solid-refresh',
-      ),
-    ).toEqual(false);
+    expect(JSON.stringify(matchRules(config[0], 'a.tsx')[0]).includes('solid-refresh')).toEqual(
+      false,
+    );
   });
 
   it('should use hydratable dom output for ssr option on web target', async () => {

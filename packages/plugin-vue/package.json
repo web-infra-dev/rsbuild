@@ -3,13 +3,17 @@
   "version": "1.2.9",
   "description": "Vue 3 plugin of Rsbuild",
   "homepage": "https://rsbuild.rs",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
     "directory": "packages/plugin-vue"
   },
-  "license": "MIT",
+  "files": [
+    "dist"
+  ],
   "type": "module",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -17,10 +21,10 @@
       "require": "./dist/index.cjs"
     }
   },
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "build": "rslib",
     "dev": "rslib -w"
@@ -44,9 +48,5 @@
     "@rsbuild/core": {
       "optional": true
     }
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
   }
 }

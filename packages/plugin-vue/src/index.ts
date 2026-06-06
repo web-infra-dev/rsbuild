@@ -94,8 +94,7 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
         const vueLoaderOptions = {
           // Always treat this as a client build when invoked from Rstest,
           // since tests are executed in a DOM-based environment.
-          isServerBuild:
-            api.context.callerName === 'rstest' ? false : undefined,
+          isServerBuild: api.context.callerName === 'rstest' ? false : undefined,
           // Keep non-emitting targets on the original SFC resource so CSS Modules
           // hashes match the client build during SSR hydration.
           experimentalInlineMatchResource: emitCss,

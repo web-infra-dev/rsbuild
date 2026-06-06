@@ -28,10 +28,7 @@ export type PluginTailwindcssOptions = {
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   value !== null && typeof value === 'object' && !Array.isArray(value);
 
-const incrementCssImportLoaders = (
-  rule: RspackChain.Rule<unknown>,
-  cssUseId: string,
-) => {
+const incrementCssImportLoaders = (rule: RspackChain.Rule<unknown>, cssUseId: string) => {
   if (!rule.uses.has(cssUseId)) {
     return;
   }
@@ -45,8 +42,7 @@ const incrementCssImportLoaders = (
 
   cssLoader.options({
     ...options,
-    importLoaders:
-      typeof options.importLoaders === 'number' ? options.importLoaders + 1 : 1,
+    importLoaders: typeof options.importLoaders === 'number' ? options.importLoaders + 1 : 1,
   });
 };
 
@@ -58,51 +54,47 @@ const isCssMinifyEnabled = (minify: Minify | undefined, isProd: boolean) => {
   return minify.css !== false && (minify.css === 'always' || isProd);
 };
 
-export const pluginTailwindcss = (
-  options: PluginTailwindcssOptions = {},
-): RsbuildPlugin => ({
+export const pluginTailwindcss = (options: PluginTailwindcssOptions = {}): RsbuildPlugin => ({
   name: PLUGIN_TAILWINDCSS_NAME,
 
   setup(api) {
-    api.modifyBundlerChain(
-      (chain, { CHAIN_ID, environment, isProd, target }) => {
-        if (!chain.module.rules.has(CHAIN_ID.RULE.CSS)) {
-          return;
+    api.modifyBundlerChain((chain, { CHAIN_ID, environment, isProd, target }) => {
+      if (!chain.module.rules.has(CHAIN_ID.RULE.CSS)) {
+        return;
+      }
+
+      const { output } = environment.config;
+
+      let { optimize } = options;
+      if (optimize === undefined) {
+        if (isProd) {
+          optimize = { minify: isCssMinifyEnabled(output.minify, isProd) };
+        } else {
+          optimize = false;
         }
+      }
 
-        const { output } = environment.config;
+      const tailwindOptions = {
+        base: api.context.rootPath,
+        optimize,
+      };
+      const emitCss = output.emitCss ?? target === 'web';
 
-        let { optimize } = options;
-        if (optimize === undefined) {
-          if (isProd) {
-            optimize = { minify: isCssMinifyEnabled(output.minify, isProd) };
-          } else {
-            optimize = false;
-          }
-        }
+      const addTailwindLoader = (rule: RspackChain.Rule<unknown>) => {
+        incrementCssImportLoaders(rule, CHAIN_ID.USE.CSS);
 
-        const tailwindOptions = {
-          base: api.context.rootPath,
-          optimize,
-        };
-        const emitCss = output.emitCss ?? target === 'web';
+        rule
+          .use('tailwindcss')
+          .loader(require.resolve('@tailwindcss/webpack'))
+          .options(tailwindOptions);
+      };
 
-        const addTailwindLoader = (rule: RspackChain.Rule<unknown>) => {
-          incrementCssImportLoaders(rule, CHAIN_ID.USE.CSS);
-
-          rule
-            .use('tailwindcss')
-            .loader(require.resolve('@tailwindcss/webpack'))
-            .options(tailwindOptions);
-        };
-
-        const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
-        addTailwindLoader(cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_URL));
-        if (emitCss) {
-          addTailwindLoader(cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_MAIN));
-        }
-        addTailwindLoader(cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_INLINE));
-      },
-    );
+      const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
+      addTailwindLoader(cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_URL));
+      if (emitCss) {
+        addTailwindLoader(cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_MAIN));
+      }
+      addTailwindLoader(cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_INLINE));
+    });
   },
 });

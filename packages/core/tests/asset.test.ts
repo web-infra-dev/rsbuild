@@ -7,9 +7,7 @@ describe('getRegExpForExts', () => {
   it('should return the correct RegExp for extensions', () => {
     expect(getRegExpForExts(['woff'])).toEqual(/\.woff$/i);
 
-    expect(getRegExpForExts(FONT_EXTENSIONS)).toEqual(
-      /\.(?:woff|woff2|eot|ttf|otf|ttc)$/i,
-    );
+    expect(getRegExpForExts(FONT_EXTENSIONS)).toEqual(/\.(?:woff|woff2|eot|ttf|otf|ttc)$/i);
   });
 });
 

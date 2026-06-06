@@ -7,9 +7,7 @@ const EXPECTED_LOG = `Import traces (entry → error):
   ./src/child5.js
   ./src/child6.js ×`;
 
-test('should truncate long import trace and show hidden count', async ({
-  runBoth,
-}) => {
+test('should truncate long import trace and show hidden count', async ({ runBoth }) => {
   await runBoth(
     async ({ mode, result }) => {
       if (mode === 'build') {

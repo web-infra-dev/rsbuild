@@ -175,9 +175,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@request':
-        process.env.NODE_ENV === 'development'
-          ? './src/request.dev.js'
-          : './src/request.prod.js',
+        process.env.NODE_ENV === 'development' ? './src/request.dev.js' : './src/request.prod.js',
     },
   },
 });

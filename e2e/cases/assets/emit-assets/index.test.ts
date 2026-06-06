@@ -12,9 +12,7 @@ test('should disable asset emission for the node target', async ({ build }) => {
 
   expect(isIncludeFile(filenames, 'dist/static/image/icon.png')).toBeTruthy();
 
-  expect(
-    isIncludeFile(filenames, 'dist/server/static/image/icon.png'),
-  ).toBeFalsy();
+  expect(isIncludeFile(filenames, 'dist/server/static/image/icon.png')).toBeFalsy();
 });
 
 test('should disable asset emission for JSON assets', async ({ build }) => {
@@ -25,7 +23,5 @@ test('should disable asset emission for JSON assets', async ({ build }) => {
 
   expect(isIncludeFile(filenames, 'dist/static/assets/test.json')).toBeTruthy();
 
-  expect(
-    isIncludeFile(filenames, 'dist/server/static/assets/test.json'),
-  ).toBeFalsy();
+  expect(isIncludeFile(filenames, 'dist/server/static/assets/test.json')).toBeFalsy();
 });

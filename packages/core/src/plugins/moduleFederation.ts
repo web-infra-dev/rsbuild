@@ -51,10 +51,7 @@ export function pluginModuleFederation(): RsbuildPlugin {
 
         // Module Federation runtime uses ES6+ syntax,
         // adding to include and let SWC transform it
-        config.source.include = [
-          ...(config.source.include || []),
-          /@module-federation[\\/]/,
-        ];
+        config.source.include = [...(config.source.include || []), /@module-federation[\\/]/];
       });
 
       api.modifyBundlerChain((chain, { CHAIN_ID, target, environment }) => {

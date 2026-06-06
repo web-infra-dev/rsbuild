@@ -137,9 +137,7 @@ export async function watchFilesForRestart({
     if (restarted) {
       await watcher.close();
     } else {
-      rsbuild.logger.error(
-        isBuildWatch ? 'Restart build failed.' : 'Restart server failed.',
-      );
+      rsbuild.logger.error(isBuildWatch ? 'Restart build failed.' : 'Restart server failed.');
     }
 
     restarting = false;

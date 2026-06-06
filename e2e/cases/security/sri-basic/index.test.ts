@@ -31,8 +31,6 @@ test('should not generate integrity attributes for script and style tags in dev'
   await expect(testEl).toHaveText('Hello Rsbuild!');
 
   expect(
-    await page.evaluate(
-      'document.querySelector("script")?.getAttribute("integrity")',
-    ),
+    await page.evaluate('document.querySelector("script")?.getAttribute("integrity")'),
   ).toEqual(null);
 });

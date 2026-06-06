@@ -122,8 +122,7 @@ export default {
 Rsbuild 默认设置了 charset 和 viewport meta 标签：
 
 ```html
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="utf-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 ```
 
 你也可以添加自定义的 meta 标签，比如设置 description：
@@ -395,9 +394,7 @@ Rsbuild 通过插件来支持 [Pug](https://pugjs.org/) 模板引擎，详见 [@
 ```ts title="rsbuild.config.ts"
 export default {
   html: {
-    tags: [
-      { tag: 'script', attrs: { src: 'https://cdn.example.com/my-script.js' } },
-    ],
+    tags: [{ tag: 'script', attrs: { src: 'https://cdn.example.com/my-script.js' } }],
   },
 };
 ```

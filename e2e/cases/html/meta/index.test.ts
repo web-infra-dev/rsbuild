@@ -1,8 +1,6 @@
 import { expect, getFileContent, normalizeNewlines, test } from '@e2e/helper';
 
-test('should not inject charset meta if template already contains it', async ({
-  build,
-}) => {
+test('should not inject charset meta if template already contains it', async ({ build }) => {
   const rsbuild = await build();
   const files = rsbuild.getDistFiles();
 
@@ -20,9 +18,7 @@ test('should not inject charset meta if template already contains it', async ({
 `);
 });
 
-test('should generate meta tags via function for each entry', async ({
-  build,
-}) => {
+test('should generate meta tags via function for each entry', async ({ build }) => {
   const rsbuild = await build({
     config: {
       source: {

@@ -14,9 +14,7 @@ test('should generate default title correctly', async ({ build }) => {
   expect(html).toContain('<title>Rsbuild App</title>');
 });
 
-test('should allow setting empty title to unset the default title', async ({
-  build,
-}) => {
+test('should allow setting empty title to unset the default title', async ({ build }) => {
   const rsbuild = await build({
     config: {
       source: {
@@ -50,9 +48,7 @@ test('should generate title correctly', async ({ build }) => {
   expect(html).toContain('<title>foo</title>');
 });
 
-test('should generate title correctly when using custom HTML template', async ({
-  build,
-}) => {
+test('should generate title correctly when using custom HTML template', async ({ build }) => {
   const rsbuild = await build({
     config: {
       source: {
@@ -70,9 +66,7 @@ test('should generate title correctly when using custom HTML template', async ({
   expect(html).toContain('<title>foo</title>');
 });
 
-test('should generate title correctly when using htmlPlugin.options.title', async ({
-  build,
-}) => {
+test('should generate title correctly when using htmlPlugin.options.title', async ({ build }) => {
   const rsbuild = await build({
     config: {
       source: {
@@ -115,9 +109,7 @@ test('should generate title via function correctly', async ({ build }) => {
   expect(barHtml).toContain('<title>bar</title>');
 });
 
-test('should not inject title if template already contains a title', async ({
-  build,
-}) => {
+test('should not inject title if template already contains a title', async ({ build }) => {
   const rsbuild = await build({
     config: {
       source: {

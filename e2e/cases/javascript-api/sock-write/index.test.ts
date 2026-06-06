@@ -1,9 +1,7 @@
 import { expect, gotoPage, test } from '@e2e/helper';
 import { createRsbuild } from '@rsbuild/core';
 
-test('should allow to call `sockWrite` after creating dev server', async ({
-  page,
-}) => {
+test('should allow to call `sockWrite` after creating dev server', async ({ page }) => {
   const rsbuild = await createRsbuild({
     cwd: import.meta.dirname,
   });
@@ -41,9 +39,7 @@ test('should allow to call `sockWrite` after creating dev server', async ({
   await server.close();
 });
 
-test('should only reload the matching html page when path is provided', async ({
-  page,
-}) => {
+test('should only reload the matching html page when path is provided', async ({ page }) => {
   const rsbuild = await createRsbuild({
     cwd: import.meta.dirname,
     config: {

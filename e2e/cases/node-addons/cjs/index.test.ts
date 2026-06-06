@@ -6,9 +6,7 @@ import fse from 'fs-extra';
 
 const require = createRequire(import.meta.url);
 
-test('should compile Node addons correctly for CJS output', async ({
-  build,
-}) => {
+test('should compile Node addons correctly for CJS output', async ({ build }) => {
   const rsbuild = await build();
   const files = rsbuild.getDistFiles();
   const addonFile = findFile(files, 'test.darwin.node');
@@ -21,9 +19,7 @@ test('should compile Node addons correctly for CJS output', async ({
   }
 });
 
-test('should compile Node addons in the node_modules for CJS output', async ({
-  build,
-}) => {
+test('should compile Node addons in the node_modules for CJS output', async ({ build }) => {
   const pkgDir = join(import.meta.dirname, 'node_modules', 'node-addon-pkg');
 
   await fse.remove(pkgDir);

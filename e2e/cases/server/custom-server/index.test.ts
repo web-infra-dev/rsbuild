@@ -17,12 +17,8 @@ test('should support a custom dev server', async ({ page }) => {
   await close();
 });
 
-test('should support a custom dev server without compilation', async ({
-  page,
-}) => {
-  const { startDevServerPure } = await import(
-    './scripts/pureServer.js' as string
-  );
+test('should support a custom dev server without compilation', async ({ page }) => {
+  const { startDevServerPure } = await import('./scripts/pureServer.js' as string);
   const { config, close } = await startDevServerPure(import.meta.dirname);
   const indexRes = await gotoPage(page, config);
 

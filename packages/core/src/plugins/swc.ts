@@ -3,20 +3,8 @@ import path from 'node:path';
 import type { SwcLoaderOptions } from '@rspack/core';
 import deepmerge from 'deepmerge';
 import { reduceConfigs } from 'reduce-configs';
-import {
-  NODE_MODULES_REGEX,
-  PLUGIN_SWC_NAME,
-  RAW_QUERY_REGEX,
-  SCRIPT_REGEX,
-} from '../constants';
-import {
-  castArray,
-  cloneDeep,
-  color,
-  isFunction,
-  isWebTarget,
-  require,
-} from '../helpers';
+import { NODE_MODULES_REGEX, PLUGIN_SWC_NAME, RAW_QUERY_REGEX, SCRIPT_REGEX } from '../constants';
+import { castArray, cloneDeep, color, isFunction, isWebTarget, require } from '../helpers';
 import { normalizeRuleConditionPath } from '../helpers/path';
 import type {
   NormalizedEnvironmentConfig,
@@ -111,10 +99,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain({
       order: 'pre',
-      handler: async (
-        chain,
-        { CHAIN_ID, isDev, isProd, target, environment },
-      ) => {
+      handler: async (chain, { CHAIN_ID, isDev, isProd, target, environment }) => {
         const { config, browserslist } = environment;
         const cacheRoot = path.join(api.context.cachePath, '.swc');
 
@@ -126,21 +111,14 @@ export const pluginSwc = (): RsbuildPlugin => ({
           .dependency({ not: 'url' });
 
         // Support for `import rawJs from "a.js?raw"`
-        rule
-          .oneOf(CHAIN_ID.ONE_OF.JS_RAW)
-          .resourceQuery(RAW_QUERY_REGEX)
-          .type('asset/source');
+        rule.oneOf(CHAIN_ID.ONE_OF.JS_RAW).resourceQuery(RAW_QUERY_REGEX).type('asset/source');
 
         // Transform TypeScript/JSX/ESNext code
-        const mainRule = rule
-          .oneOf(CHAIN_ID.ONE_OF.JS_MAIN)
-          .type('javascript/auto');
+        const mainRule = rule.oneOf(CHAIN_ID.ONE_OF.JS_MAIN).type('javascript/auto');
 
-        const dataUriRule = chain.module
-          .rule(CHAIN_ID.RULE.JS_DATA_URI)
-          .mimetype({
-            or: ['text/javascript', 'application/javascript'],
-          });
+        const dataUriRule = chain.module.rule(CHAIN_ID.RULE.JS_DATA_URI).mimetype({
+          or: ['text/javascript', 'application/javascript'],
+        });
 
         applyScriptCondition({
           rule,
@@ -166,11 +144,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
           if (polyfill !== 'off') {
             swcConfig.env!.mode = polyfill;
 
-            const coreJsDir = applyCoreJs(
-              swcConfig,
-              polyfill,
-              api.context.rootPath,
-            );
+            const coreJsDir = applyCoreJs(swcConfig, polyfill, api.context.rootPath);
             if (coreJsDir) {
               for (const item of [mainRule, dataUriRule]) {
                 item.resolve.alias.set('core-js', coreJsDir);
@@ -195,10 +169,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
           delete mergedConfig.env;
         }
 
-        mainRule
-          .use(CHAIN_ID.USE.SWC)
-          .loader(builtinSwcLoaderName)
-          .options(mergedConfig);
+        mainRule.use(CHAIN_ID.USE.SWC).loader(builtinSwcLoaderName).options(mergedConfig);
 
         /**
          * If a script is imported with data URI, it can be compiled by babel too.
@@ -241,18 +212,12 @@ const resolveCoreJsPath = (rootPath: string) => {
     throw new Error(
       `${color.dim('[rsbuild:polyfill]')} Failed to resolve ${color.yellow(
         'core-js',
-      )} dependency. Install ${color.yellow(
-        'core-js >= 3.0.0',
-      )} to use polyfills.`,
+      )} dependency. Install ${color.yellow('core-js >= 3.0.0')} to use polyfills.`,
     );
   }
 };
 
-function applyCoreJs(
-  swcConfig: SwcLoaderOptions,
-  polyfillMode: Polyfill,
-  rootPath: string,
-) {
+function applyCoreJs(swcConfig: SwcLoaderOptions, polyfillMode: Polyfill, rootPath: string) {
   const coreJsPath = resolveCoreJsPath(rootPath);
   const version = getCoreJsVersion(coreJsPath);
   const coreJsDir = path.dirname(coreJsPath);
@@ -320,9 +285,7 @@ function applySwcDecoratorConfig(
       break;
     default:
       throw new Error(
-        `${color.dim('[rsbuild:swc]')} Unknown decorators version: ${color.yellow(
-          version,
-        )}`,
+        `${color.dim('[rsbuild:swc]')} Unknown decorators version: ${color.yellow(version)}`,
       );
   }
 }

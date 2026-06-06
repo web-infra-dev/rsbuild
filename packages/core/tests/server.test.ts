@@ -366,9 +366,7 @@ test('should match local origins correctly', () => {
   expect(defaultAllowedOrigins.test('http://[::1]')).toBeTruthy();
 
   // Multi-level subdomains
-  expect(
-    defaultAllowedOrigins.test('http://test.dev.localhost:8000'),
-  ).toBeTruthy();
+  expect(defaultAllowedOrigins.test('http://test.dev.localhost:8000')).toBeTruthy();
 
   // High port
   expect(defaultAllowedOrigins.test('http://localhost:65535')).toBeTruthy();

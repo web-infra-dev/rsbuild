@@ -81,14 +81,7 @@ export const PLUGIN_SWC_NAME = 'rsbuild:swc';
 export const PLUGIN_CSS_NAME = 'rsbuild:css';
 
 // Extensions
-export const FONT_EXTENSIONS: string[] = [
-  'woff',
-  'woff2',
-  'eot',
-  'ttf',
-  'otf',
-  'ttc',
-];
+export const FONT_EXTENSIONS: string[] = ['woff', 'woff2', 'eot', 'ttf', 'otf', 'ttc'];
 export const IMAGE_EXTENSIONS: string[] = [
   'png',
   'jpg',
@@ -107,14 +100,7 @@ export const IMAGE_EXTENSIONS: string[] = [
   'cur',
 ];
 export const VIDEO_EXTENSIONS: string[] = ['mp4', 'webm', 'ogg', 'mov'];
-export const AUDIO_EXTENSIONS: string[] = [
-  'mp3',
-  'wav',
-  'flac',
-  'aac',
-  'm4a',
-  'opus',
-];
+export const AUDIO_EXTENSIONS: string[] = ['mp3', 'wav', 'flac', 'aac', 'm4a', 'opus'];
 
 export const LAZY_COMPILATION_IDENTIFIER = 'lazy-compilation-proxy';
 

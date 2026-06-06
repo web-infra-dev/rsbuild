@@ -28,10 +28,7 @@ const expectRspackProfileFile = (logs: string[]) => {
   expect(fs.existsSync(profileFile!)).toBeTruthy();
 };
 
-test('should generate rspack profile as expected in dev', async ({
-  exec,
-  logHelper,
-}) => {
+test('should generate rspack profile as expected in dev', async ({ exec, logHelper }) => {
   exec('node ./dev.js', {
     env: {
       RSPACK_PROFILE: 'OVERVIEW',
@@ -43,10 +40,7 @@ test('should generate rspack profile as expected in dev', async ({
   expectRspackProfileFile(logs);
 });
 
-test('should generate rspack profile as expected in build', async ({
-  execCli,
-  logHelper,
-}) => {
+test('should generate rspack profile as expected in build', async ({ execCli, logHelper }) => {
   execCli('build', {
     env: {
       RSPACK_PROFILE: 'OVERVIEW',
@@ -70,10 +64,7 @@ test('should write rspack profile to stdout', ({ execCliSync }) => {
   expect(logs).not.toContain(PROFILE_LOG);
 });
 
-test('should respect custom rspack profile output path', async ({
-  execCli,
-  logHelper,
-}) => {
+test('should respect custom rspack profile output path', async ({ execCli, logHelper }) => {
   execCli('build', {
     env: {
       RSPACK_PROFILE: 'OVERVIEW',

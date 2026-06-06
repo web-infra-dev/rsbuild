@@ -1,8 +1,6 @@
 import { expect, getFileContent, test } from '@e2e/helper';
 
-test('should allow to disable the built-in lightningcss loader', async ({
-  build,
-}) => {
+test('should allow to disable the built-in lightningcss loader', async ({ build }) => {
   const rsbuild = await build();
   const files = rsbuild.getDistFiles();
 

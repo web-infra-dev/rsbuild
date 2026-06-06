@@ -2,14 +2,8 @@ import path from 'node:path';
 import { test } from '@e2e/helper';
 import fse from 'fs-extra';
 
-test('should use customLogger for restart logs', async ({
-  execCli,
-  logHelper,
-}) => {
-  const tempConfig = path.join(
-    import.meta.dirname,
-    'test-temp-rsbuild.config.mjs',
-  );
+test('should use customLogger for restart logs', async ({ execCli, logHelper }) => {
+  const tempConfig = path.join(import.meta.dirname, 'test-temp-rsbuild.config.mjs');
   const configCode = `import { createLogger, defineConfig } from '@rsbuild/core';
 
 const customLogger = createLogger();

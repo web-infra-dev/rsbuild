@@ -36,10 +36,7 @@ export const cases: Parameters<typeof shareTest>[] = [
   ],
 ];
 
-export function findEntry(
-  files: Record<string, string>,
-  name = 'index',
-): string {
+export function findEntry(files: Record<string, string>, name = 'index'): string {
   for (const key of Reflect.ownKeys(files) as string[]) {
     if (key.includes(`dist/static/js/${name}`) && key.endsWith('.js')) {
       return key;
@@ -53,20 +50,12 @@ export function copyPkgToNodeModules() {
   const nodeModules = path.resolve(import.meta.dirname, 'node_modules');
 
   fse.ensureDirSync(nodeModules);
-  fs.cpSync(
-    path.resolve(import.meta.dirname, 'foo'),
-    path.resolve(nodeModules, 'foo'),
-    {
-      recursive: true,
-    },
-  );
+  fs.cpSync(path.resolve(import.meta.dirname, 'foo'), path.resolve(nodeModules, 'foo'), {
+    recursive: true,
+  });
 }
 
-export function shareTest(
-  msg: string,
-  entry: string,
-  transformImport: TransformImport,
-) {
+export function shareTest(msg: string, entry: string, transformImport: TransformImport) {
   const config: RsbuildConfig = {
     source: {
       entry: {

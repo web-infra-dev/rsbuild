@@ -10,16 +10,10 @@ declare global {
 
 fse.copy(
   join(import.meta.dirname, 'package-foo'),
-  join(
-    import.meta.dirname,
-    'node_modules/@e2e/resolve-main-fields-package-foo',
-  ),
+  join(import.meta.dirname, 'node_modules/@e2e/resolve-main-fields-package-foo'),
 );
 
-test('should apply resolve.mainFields as expected', async ({
-  page,
-  runBothServe,
-}) => {
+test('should apply resolve.mainFields as expected', async ({ page, runBothServe }) => {
   await runBothServe(
     async () => {
       expect(await page.evaluate(() => window.test)).toBe('custom');

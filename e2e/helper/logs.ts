@@ -18,11 +18,7 @@ type MatchPatternOptions = {
   posix?: boolean;
 };
 
-const matchPattern = (
-  log: string,
-  pattern: LogPattern,
-  options: MatchPatternOptions = {},
-) => {
+const matchPattern = (log: string, pattern: LogPattern, options: MatchPatternOptions = {}) => {
   const logToCheck = options.posix ? toPosixPath(log) : log;
   if (typeof pattern === 'string') {
     return options.strict
@@ -61,10 +57,7 @@ export const createLogHelper = () => {
     }
   };
 
-  const expectLog = async (
-    pattern: LogPattern,
-    options: MatchPatternOptions = {},
-  ) => {
+  const expectLog = async (pattern: LogPattern, options: MatchPatternOptions = {}) => {
     if (logs.some((log) => matchPattern(log, pattern, options))) {
       return true;
     }
@@ -76,11 +69,7 @@ export const createLogHelper = () => {
           'Timeout: Expected log not found within 5 seconds.',
         );
         const expect = styleText('yellow', pattern.toString());
-        reject(
-          new Error(
-            `${title}\nExpect: ${expect}\nGet:\n${originalLogs.join('\n')}`,
-          ),
-        );
+        reject(new Error(`${title}\nExpect: ${expect}\nGet:\n${originalLogs.join('\n')}`));
       }, 5000);
 
       const patternEntry = {
@@ -97,18 +86,13 @@ export const createLogHelper = () => {
     });
   };
 
-  const expectNoLog = (
-    pattern: LogPattern,
-    options: MatchPatternOptions = {},
-  ) => {
+  const expectNoLog = (pattern: LogPattern, options: MatchPatternOptions = {}) => {
     const result = logs.some((log) => matchPattern(log, pattern, options));
 
     if (result) {
       const title = styleText(['bold', 'red'], 'Unexpected log found.');
       const unexpected = styleText('yellow', pattern.toString());
-      throw new Error(
-        `${title}\nUnexpected: ${unexpected}\nGet:\n${originalLogs.join('\n')}`,
-      );
+      throw new Error(`${title}\nUnexpected: ${unexpected}\nGet:\n${originalLogs.join('\n')}`);
     }
   };
 

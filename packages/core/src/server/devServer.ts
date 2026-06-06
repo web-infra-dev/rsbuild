@@ -1,10 +1,7 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
 import { color } from '../helpers';
-import {
-  getPublicPathFromCompiler,
-  isMultiCompiler,
-} from '../helpers/compiler';
+import { getPublicPathFromCompiler, isMultiCompiler } from '../helpers/compiler';
 import { onBeforeRestartServer, restartDevServer } from '../restart';
 import type {
   CreateCompiler,
@@ -16,20 +13,9 @@ import type {
 } from '../types';
 import { BuildManager } from './buildManager';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
-import {
-  type GetDevMiddlewaresResult,
-  getDevMiddlewares,
-} from './devMiddlewares';
-import {
-  createCacheableFunction,
-  getTransformedHtml,
-  loadBundle,
-} from './environment';
-import {
-  registerCleanup,
-  removeCleanup,
-  setupGracefulShutdown,
-} from './gracefulShutdown';
+import { type GetDevMiddlewaresResult, getDevMiddlewares } from './devMiddlewares';
+import { createCacheableFunction, getTransformedHtml, loadBundle } from './environment';
+import { registerCleanup, removeCleanup, setupGracefulShutdown } from './gracefulShutdown';
 import {
   getAddressUrls,
   getRoutes,
@@ -49,10 +35,12 @@ import { setupWatchFiles, type WatchFilesResult } from './watchFiles';
 
 type HTTPServer = Server | Http2SecureServer;
 
-type ExtractSocketMessageData<T extends ServerMessage['type']> =
-  'data' extends keyof Extract<ServerMessage, { type: T }>
-    ? Extract<ServerMessage, { type: T }>['data']
-    : undefined;
+type ExtractSocketMessageData<T extends ServerMessage['type']> = 'data' extends keyof Extract<
+  ServerMessage,
+  { type: T }
+>
+  ? Extract<ServerMessage, { type: T }>['data']
+  : undefined;
 
 export type HotSend = <T extends ServerMessage['type']>(
   type: T,
@@ -159,19 +147,14 @@ export async function createDevServer<
     const compiler = await createCompiler();
 
     if (!compiler) {
-      throw new Error(
-        `${color.dim('[rsbuild:server]')} Failed to get compiler instance.`,
-      );
+      throw new Error(`${color.dim('[rsbuild:server]')} Failed to get compiler instance.`);
     }
 
     const publicPaths = isMultiCompiler(compiler)
       ? compiler.compilers.map(getPublicPathFromCompiler)
       : [getPublicPathFromCompiler(compiler)];
 
-    context.publicPathnames = getPublicPathnames(
-      publicPaths,
-      config.server.base,
-    );
+    context.publicPathnames = getPublicPathnames(publicPaths, config.server.base);
 
     compiler?.hooks.watchRun.tap('rsbuild:watchRun', () => {
       resetWaitLastCompileDone();
@@ -224,9 +207,7 @@ export async function createDevServer<
     buildManager?: BuildManager;
   } = {};
 
-  const cleanupGracefulShutdown = middlewareMode
-    ? null
-    : setupGracefulShutdown();
+  const cleanupGracefulShutdown = middlewareMode ? null : setupGracefulShutdown();
 
   let closingPromise: Promise<void> | null = null;
 
@@ -237,10 +218,7 @@ export async function createDevServer<
         removeCleanup(closeServer);
         cleanupGracefulShutdown?.();
         await context.hooks.onCloseDevServer.callBatch();
-        await Promise.all([
-          state.devMiddlewares?.close(),
-          state.fileWatcher?.close(),
-        ]);
+        await Promise.all([state.devMiddlewares?.close(), state.fileWatcher?.close()]);
       })();
     }
     return closingPromise;
@@ -255,9 +233,7 @@ export async function createDevServer<
 
     if (cliShortcutsEnabled) {
       const shortcutsOptions =
-        typeof config.dev.cliShortcuts === 'boolean'
-          ? {}
-          : config.dev.cliShortcuts;
+        typeof config.dev.cliShortcuts === 'boolean' ? {} : config.dev.cliShortcuts;
 
       const cleanup = await setupCliShortcuts({
         openPage,
@@ -277,8 +253,8 @@ export async function createDevServer<
   };
 
   const cacheableLoadBundle = createCacheableFunction(loadBundle);
-  const cacheableTransformedHtml = createCacheableFunction<string>(
-    (_stats, entryName, utils) => getTransformedHtml(entryName, utils),
+  const cacheableTransformedHtml = createCacheableFunction<string>((_stats, entryName, utils) =>
+    getTransformedHtml(entryName, utils),
   );
 
   const environmentAPI: EnvironmentAPI = {};
@@ -334,9 +310,7 @@ export async function createDevServer<
     };
   });
 
-  const { connect } = await import(
-    /* webpackChunkName: "connect-next" */ 'connect-next'
-  );
+  const { connect } = await import(/* webpackChunkName: "connect-next" */ 'connect-next');
   const middlewares = connect();
 
   const httpServer = middlewareMode

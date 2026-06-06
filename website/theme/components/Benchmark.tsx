@@ -1,8 +1,5 @@
 import { useI18n } from '@rspress/core/runtime';
-import {
-  Benchmark as BaseBenchmark,
-  type BenchmarkData,
-} from '@rstack-dev/doc-ui/benchmark';
+import { Benchmark as BaseBenchmark, type BenchmarkData } from '@rstack-dev/doc-ui/benchmark';
 import {
   containerStyle,
   descStyle,

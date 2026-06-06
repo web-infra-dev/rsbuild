@@ -6,9 +6,7 @@ test('should allow to use html-loader', async ({ runBoth }) => {
     const filenames = Object.keys(files);
 
     expect(
-      filenames.some((filename) =>
-        filename.includes('dist/static/image/image.png'),
-      ),
+      filenames.some((filename) => filename.includes('dist/static/image/image.png')),
     ).toBeTruthy();
 
     const htmlFile = filenames.find((filename) => filename.endsWith('.html'));

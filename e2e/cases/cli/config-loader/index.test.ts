@@ -1,9 +1,7 @@
 import path from 'node:path';
 import { expect, readDirContents, test } from '@e2e/helper';
 
-test('should use Node.js native loader to load config', async ({
-  execCliSync,
-}) => {
+test('should use Node.js native loader to load config', async ({ execCliSync }) => {
   if (!process.features.typescript) {
     return;
   }
@@ -14,26 +12,20 @@ test('should use Node.js native loader to load config', async ({
     },
   });
 
-  const outputs = await readDirContents(
-    path.join(import.meta.dirname, 'dist-custom'),
-  );
+  const outputs = await readDirContents(path.join(import.meta.dirname, 'dist-custom'));
   const outputFiles = Object.keys(outputs);
 
   expect(outputFiles.length > 1).toBeTruthy();
 });
 
-test('should fallback to jiti when config loader set to auto', async ({
-  execCliSync,
-}) => {
+test('should fallback to jiti when config loader set to auto', async ({ execCliSync }) => {
   execCliSync('build --config-loader auto --config rsbuild.config.auto.mts', {
     env: {
       NODE_OPTIONS: '--experimental-strip-types',
     },
   });
 
-  const outputs = await readDirContents(
-    path.join(import.meta.dirname, 'dist-auto'),
-  );
+  const outputs = await readDirContents(path.join(import.meta.dirname, 'dist-auto'));
   const outputFiles = Object.keys(outputs);
 
   expect(outputFiles.length > 1).toBeTruthy();

@@ -3,9 +3,7 @@ import { join } from 'node:path';
 
 import { expect, test } from '@e2e/helper';
 
-test('should allow to use tools.htmlPlugin to modify HTML plugin options', async ({
-  build,
-}) => {
+test('should allow to use tools.htmlPlugin to modify HTML plugin options', async ({ build }) => {
   const rsbuild = await build({
     config: {
       tools: {
@@ -23,14 +21,10 @@ test('should allow to use tools.htmlPlugin to modify HTML plugin options', async
 
   const allScripts = /(<script [\s\S]*?>)/g.exec(content);
 
-  expect(
-    allScripts?.every((data) => data.includes('type="module"')),
-  ).toBeTruthy();
+  expect(allScripts?.every((data) => data.includes('type="module"'))).toBeTruthy();
 });
 
-test('should allow to use tools.htmlPlugin to return a new config object', async ({
-  build,
-}) => {
+test('should allow to use tools.htmlPlugin to return a new config object', async ({ build }) => {
   const rsbuild = await build({
     config: {
       html: {

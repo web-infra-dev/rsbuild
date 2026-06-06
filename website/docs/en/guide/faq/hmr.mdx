@@ -78,10 +78,7 @@ Setting filename hashes in development mode can cause HMR to fail, especially fo
 export default {
   output: {
     filename: {
-      css:
-        process.env.NODE_ENV === 'production'
-          ? '[name].[contenthash:10].css'
-          : '[name].css',
+      css: process.env.NODE_ENV === 'production' ? '[name].[contenthash:10].css' : '[name].css',
     },
   },
 };

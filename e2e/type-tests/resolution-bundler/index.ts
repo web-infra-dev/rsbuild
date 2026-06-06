@@ -7,13 +7,7 @@ import { pluginPreact } from '@rsbuild/plugin-preact';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSolid } from '@rsbuild/plugin-solid';
 
-const plugins = [
-  pluginBabel(),
-  pluginLess(),
-  pluginPreact(),
-  pluginReact(),
-  pluginSolid(),
-];
+const plugins = [pluginBabel(), pluginLess(), pluginPreact(), pluginReact(), pluginSolid()];
 
 createRsbuild({
   config: {

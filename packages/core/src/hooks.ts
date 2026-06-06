@@ -83,11 +83,7 @@ export function createEnvironmentAsyncHook<
 
     for (const callback of callbacks) {
       // If this callback is not a global callback, the environment info should match
-      if (
-        environment &&
-        callback.environment &&
-        callback.environment !== environment
-      ) {
+      if (environment && callback.environment && callback.environment !== environment) {
         continue;
       }
 
@@ -117,11 +113,7 @@ export function createEnvironmentAsyncHook<
 
     for (const callback of callbacks) {
       // If this callback is not a global callback, the environment info should match
-      if (
-        environment &&
-        callback.environment &&
-        callback.environment !== environment
-      ) {
+      if (environment && callback.environment && callback.environment !== environment) {
         continue;
       }
 
@@ -142,9 +134,7 @@ export function createEnvironmentAsyncHook<
   };
 }
 
-export function createAsyncHook<
-  Callback extends (...args: any[]) => any,
->(): AsyncHook<Callback> {
+export function createAsyncHook<Callback extends (...args: any[]) => any>(): AsyncHook<Callback> {
   const preGroup: Callback[] = [];
   const postGroup: Callback[] = [];
   const defaultGroup: Callback[] = [];
@@ -238,12 +228,9 @@ export function initHooks(): {
     modifyRspackConfig: createEnvironmentAsyncHook<ModifyRspackConfigFn>(),
     modifyBundlerChain: createEnvironmentAsyncHook<ModifyBundlerChainFn>(),
     modifyRsbuildConfig: createAsyncHook<ModifyRsbuildConfigFn>(),
-    modifyEnvironmentConfig:
-      createEnvironmentAsyncHook<ModifyEnvironmentConfigFn>(),
-    onBeforeEnvironmentCompile:
-      createEnvironmentAsyncHook<OnBeforeEnvironmentCompileFn>(),
-    onAfterEnvironmentCompile:
-      createEnvironmentAsyncHook<OnAfterEnvironmentCompileFn>(),
+    modifyEnvironmentConfig: createEnvironmentAsyncHook<ModifyEnvironmentConfigFn>(),
+    onBeforeEnvironmentCompile: createEnvironmentAsyncHook<OnBeforeEnvironmentCompileFn>(),
+    onAfterEnvironmentCompile: createEnvironmentAsyncHook<OnAfterEnvironmentCompileFn>(),
   };
 }
 

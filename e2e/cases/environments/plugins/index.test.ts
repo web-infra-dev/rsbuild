@@ -1,9 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('should add single environment plugin correctly', async ({
-  page,
-  buildPreview,
-}) => {
+test('should add single environment plugin correctly', async ({ page, buildPreview }) => {
   const rsbuild = await buildPreview();
 
   const button = page.locator('#test');
@@ -19,13 +16,9 @@ test('should add single environment plugin correctly', async ({
   const filenames = Object.keys(files);
 
   expect(
-    filenames.some((filename) =>
-      filename.includes('dist/static/js/lib-react.js'),
-    ),
+    filenames.some((filename) => filename.includes('dist/static/js/lib-react.js')),
   ).toBeTruthy();
   expect(
-    filenames.some((filename) =>
-      filename.includes('dist/web1/static/js/lib-react.js'),
-    ),
+    filenames.some((filename) => filename.includes('dist/web1/static/js/lib-react.js')),
   ).toBeFalsy();
 });

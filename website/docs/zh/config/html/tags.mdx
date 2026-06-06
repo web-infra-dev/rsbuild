@@ -345,10 +345,7 @@ type HtmlTagContext = {
   publicPath: string;
 };
 
-type HtmlTagHandler = (
-  tags: HtmlTag[],
-  context: HtmlTagContext,
-) => HtmlTag[] | void;
+type HtmlTagHandler = (tags: HtmlTag[], context: HtmlTagContext) => HtmlTag[] | void;
 ```
 
 `html.tags` 也支持传入回调函数，通过在回调中编写逻辑可以任意修改标签列表，常用于**修改标签列表**或是**在插入标签的同时确保其相对位置**。

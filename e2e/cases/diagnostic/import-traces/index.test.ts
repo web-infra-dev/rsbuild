@@ -6,9 +6,7 @@ const EXPECTED_LOG = `Import traces (entry → error):
   ./src/child2.js
   ./src/child3.js ×`;
 
-test('should print import traces if module build failed', async ({
-  runBoth,
-}) => {
+test('should print import traces if module build failed', async ({ runBoth }) => {
   await runBoth(
     async ({ mode, result }) => {
       if (mode === 'build') {

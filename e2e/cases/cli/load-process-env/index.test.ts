@@ -24,18 +24,14 @@ test('should load .env.local with higher priority', async ({ execCliSync }) => {
   expect(fs.existsSync(path.join(import.meta.dirname, 'dist/2'))).toBeTruthy();
 });
 
-test('should load .env.production.local with higher priority', async ({
-  execCliSync,
-}) => {
+test('should load .env.production.local with higher priority', async ({ execCliSync }) => {
   fse.outputFileSync(localFile, 'FOO=2');
   fse.outputFileSync(prodLocalFile, 'FOO=3');
   execCliSync('build');
   expect(fs.existsSync(path.join(import.meta.dirname, 'dist/3'))).toBeTruthy();
 });
 
-test('should support specifying env mode via --env-mode', async ({
-  execCliSync,
-}) => {
+test('should support specifying env mode via --env-mode', async ({ execCliSync }) => {
   execCliSync('build --env-mode test');
   expect(fs.existsSync(path.join(import.meta.dirname, 'dist/5'))).toBeTruthy();
 });

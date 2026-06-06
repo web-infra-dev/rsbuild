@@ -6,7 +6,5 @@ test('should print Sass plugin hints as expected', async ({ build }) => {
   });
 
   expect(rsbuild.buildError).toBeTruthy();
-  await rsbuild.expectLog(
-    'To enable support for Sass, use "@rsbuild/plugin-sass"',
-  );
+  await rsbuild.expectLog('To enable support for Sass, use "@rsbuild/plugin-sass"');
 });

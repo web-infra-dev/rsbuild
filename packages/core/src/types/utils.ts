@@ -15,16 +15,12 @@ export type LiteralUnion<T extends U, U> = T | (U & Record<never, never>);
 export type TwoLevelReadonly<T> = keyof T extends never
   ? T
   : {
-      readonly [k in keyof T]: T[k] extends object
-        ? { readonly [p in keyof T[k]]: T[k][p] }
-        : T[k];
+      readonly [k in keyof T]: T[k] extends object ? { readonly [p in keyof T[k]]: T[k][p] } : T[k];
     };
 
 export type ConfigChain<T> = OneOrMany<T | ((config: T) => T | void)>;
 
-export type ConfigChainWithContext<T, Ctx> = OneOrMany<
-  T | ((config: T, ctx: Ctx) => T | void)
->;
+export type ConfigChainWithContext<T, Ctx> = OneOrMany<T | ((config: T, ctx: Ctx) => T | void)>;
 
 export type ConfigChainAsyncWithContext<T, Ctx> = OneOrMany<
   T | ((config: T, ctx: Ctx) => MaybePromise<T | void>)

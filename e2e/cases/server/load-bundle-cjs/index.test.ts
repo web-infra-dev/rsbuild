@@ -1,9 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('should load CJS bundle with runtime globals', async ({
-  devOnly,
-  request,
-}) => {
+test('should load CJS bundle with runtime globals', async ({ devOnly, request }) => {
   const rsbuild = await devOnly();
   const baseUrl = `http://localhost:${rsbuild.port}`;
 
@@ -14,7 +11,5 @@ test('should load CJS bundle with runtime globals', async ({
   expect(await response1.text()).toBe('index.js:function');
   expect(await response2.text()).toBe('index.js:function');
 
-  expect(
-    rsbuild.logs.filter((log) => log.includes('load bundle cjs')).length,
-  ).toBe(1);
+  expect(rsbuild.logs.filter((log) => log.includes('load bundle cjs')).length).toBe(1);
 });

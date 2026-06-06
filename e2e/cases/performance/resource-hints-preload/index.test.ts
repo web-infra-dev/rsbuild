@@ -4,9 +4,7 @@ import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = import.meta.dirname;
 
-test('should generate preload link when preload is defined', async ({
-  build,
-}) => {
+test('should generate preload link when preload is defined', async ({ build }) => {
   const rsbuild = await build({
     config: {
       plugins: [pluginReact()],
@@ -58,10 +56,7 @@ test('should generate preload link with duplicate', async ({ build }) => {
 
   const files = rsbuild.getDistFiles();
 
-  const initialFileName = findFile(
-    files,
-    /\/static\/js\/(?!async\/)[^/]+\.js$/,
-  );
+  const initialFileName = findFile(files, /\/static\/js\/(?!async\/)[^/]+\.js$/);
   const content = getFileContent(files, '.html');
 
   expect(
@@ -111,9 +106,7 @@ test('should generate preload link with crossOrigin', async ({ build }) => {
   ).toBeTruthy();
 });
 
-test('should generate preload link without crossOrigin when same origin', async ({
-  build,
-}) => {
+test('should generate preload link without crossOrigin when same origin', async ({ build }) => {
   const rsbuild = await build({
     config: {
       plugins: [pluginReact()],
@@ -216,9 +209,7 @@ test('should generate preload link with include array', async ({ build }) => {
   ).toBeTruthy();
 });
 
-test('should not generate preload link for inlined assets', async ({
-  build,
-}) => {
+test('should not generate preload link for inlined assets', async ({ build }) => {
   const rsbuild = await build({
     config: {
       plugins: [pluginReact()],
@@ -244,9 +235,7 @@ test('should not generate preload link for inlined assets', async ({
   expect(content.match(/rel="preload" as="/g)?.length).toBe(1);
 });
 
-test('should not generate preload link for inlined assets with test option', async ({
-  build,
-}) => {
+test('should not generate preload link for inlined assets with test option', async ({ build }) => {
   const rsbuild = await build({
     config: {
       plugins: [pluginReact()],

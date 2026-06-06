@@ -1,14 +1,8 @@
 import type { ConfigChainWithContext, Rspack } from '@rsbuild/core';
-import type {
-  LegacyOptions as LegacySassOptions,
-  Options as SassOptions,
-} from 'sass-embedded';
+import type { LegacyOptions as LegacySassOptions, Options as SassOptions } from 'sass-embedded';
 import type { LoaderOptions } from '../compiled/sass-loader/index.js';
 
-export type SassLoaderOptions = Omit<
-  LoaderOptions,
-  'api' | 'sassOptions' | 'additionalData'
-> &
+export type SassLoaderOptions = Omit<LoaderOptions, 'api' | 'sassOptions' | 'additionalData'> &
   (
     | {
         api?: 'modern' | 'modern-compiler';
@@ -23,10 +17,7 @@ export type SassLoaderOptions = Omit<
     // see https://github.com/web-infra-dev/rsbuild/pull/2708
     additionalData?:
       | string
-      | ((
-          content: string | Buffer,
-          loaderContext: Rspack.LoaderContext,
-        ) => string);
+      | ((content: string | Buffer, loaderContext: Rspack.LoaderContext) => string);
   };
 
 export type PluginSassOptions = {

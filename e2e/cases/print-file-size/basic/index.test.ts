@@ -14,9 +14,7 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
                               Total:   X.X kB   X.X kB`);
 });
 
-test('should print size of multiple environments correctly', async ({
-  build,
-}) => {
+test('should print size of multiple environments correctly', async ({ build }) => {
   const rsbuild = await build({
     config: {
       output: {
@@ -60,9 +58,7 @@ test('should not print logs when printFileSize is false', async ({ build }) => {
   expect(extractFileSizeLogs(rsbuild.logs)).toEqual('');
 });
 
-test('should not print details when printFileSize.detail is false', async ({
-  build,
-}) => {
+test('should not print details when printFileSize.detail is false', async ({ build }) => {
   const rsbuild = await build({
     config: {
       performance: {
@@ -97,9 +93,7 @@ dist/static/image/icon.[[hash]].png    X.X kB
 dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB`);
 });
 
-test('should print dist folder correctly if it is not a subdir of root', async ({
-  build,
-}) => {
+test('should print dist folder correctly if it is not a subdir of root', async ({ build }) => {
   const rsbuild = await build({
     config: {
       output: {
@@ -179,8 +173,7 @@ test('should allow to custom exclude function', async ({ build }) => {
       performance: {
         printFileSize: {
           exclude: (asset) =>
-            /\.(?:map|LICENSE\.txt)$/.test(asset.name) ||
-            /\.html$/.test(asset.name),
+            /\.(?:map|LICENSE\.txt)$/.test(asset.name) || /\.html$/.test(asset.name),
         },
       },
     },
@@ -195,9 +188,7 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
                               Total:   X.X kB   X.X kB`);
 });
 
-test('should not calculate gzip size if the asset is not compressible', async ({
-  build,
-}) => {
+test('should not calculate gzip size if the asset is not compressible', async ({ build }) => {
   const rsbuild = await build();
 
   expect(extractFileSizeLogs(rsbuild.logs)).toEqual(`
@@ -210,9 +201,7 @@ dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
                               Total:   X.X kB   X.X kB`);
 });
 
-test('should respect a custom total function for printFileSize', async ({
-  build,
-}) => {
+test('should respect a custom total function for printFileSize', async ({ build }) => {
   const rsbuild = await build({
     config: {
       performance: {

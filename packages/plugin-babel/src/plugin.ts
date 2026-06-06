@@ -32,9 +32,7 @@ const DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS = {
 
 function getCacheDirectory(context: RsbuildContext, cacheDirectory?: string) {
   if (cacheDirectory) {
-    return isAbsolute(cacheDirectory)
-      ? cacheDirectory
-      : join(context.rootPath, cacheDirectory);
+    return isAbsolute(cacheDirectory) ? cacheDirectory : join(context.rootPath, cacheDirectory);
   }
   return join(context.cachePath);
 }
@@ -66,22 +64,14 @@ export function getDefaultBabelOptions(
     configFile: false,
     compact: config.mode === 'production',
     plugins: [
-      [
-        require.resolve('@babel/plugin-proposal-decorators'),
-        { ...config.source.decorators },
-      ],
+      [require.resolve('@babel/plugin-proposal-decorators'), { ...config.source.decorators }],
       // If you are using @babel/preset-env and legacy decorators, you must ensure the class elements transform is enabled regardless of your targets, because Babel only supports compiling legacy decorators when also compiling class properties:
       // see https://babeljs.io/docs/babel-plugin-proposal-decorators#legacy
-      ...(isLegacyDecorators
-        ? [require.resolve('@babel/plugin-transform-class-properties')]
-        : []),
+      ...(isLegacyDecorators ? [require.resolve('@babel/plugin-transform-class-properties')] : []),
     ],
     presets: [
       // TODO: only apply preset-typescript for ts file (isTSX & allExtensions false)
-      [
-        require.resolve('@babel/preset-typescript'),
-        { ...DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS },
-      ],
+      [require.resolve('@babel/preset-typescript'), { ...DEFAULT_BABEL_PRESET_TYPESCRIPT_OPTIONS }],
     ],
   };
 
@@ -103,9 +93,7 @@ export function getDefaultBabelOptions(
   return options;
 }
 
-export const pluginBabel = (
-  options: PluginBabelOptions = {},
-): RsbuildPlugin => ({
+export const pluginBabel = (options: PluginBabelOptions = {}): RsbuildPlugin => ({
   name: PLUGIN_BABEL_NAME,
 
   setup(api) {
@@ -113,10 +101,7 @@ export const pluginBabel = (
       const { config } = environment;
       const baseOptions = getDefaultBabelOptions(config, api.context);
 
-      const mergedOptions = applyUserBabelConfig(
-        baseOptions,
-        options.babelLoaderOptions,
-      );
+      const mergedOptions = applyUserBabelConfig(baseOptions, options.babelLoaderOptions);
 
       // calculate cacheIdentifier with the merged options
       if (mergedOptions.cacheDirectory && !mergedOptions.cacheIdentifier) {
@@ -130,10 +115,7 @@ export const pluginBabel = (
       order: 'pre',
       handler: async (chain, { CHAIN_ID, environment }) => {
         const babelOptions = await getBabelOptions(environment);
-        const babelLoader = path.resolve(
-          __dirname,
-          '../compiled/babel-loader/index.js',
-        );
+        const babelLoader = path.resolve(__dirname, '../compiled/babel-loader/index.js');
         const { include, exclude } = options;
 
         if (include || exclude) {
@@ -154,18 +136,12 @@ export const pluginBabel = (
             }
           }
 
-          rule
-            .test(SCRIPT_REGEX)
-            .use(CHAIN_ID.USE.BABEL)
-            .loader(babelLoader)
-            .options(babelOptions);
+          rule.test(SCRIPT_REGEX).use(CHAIN_ID.USE.BABEL).loader(babelLoader).options(babelOptions);
         } else {
           // Compatibility for Rsbuild v1
           const isV1 = api.context.version.startsWith('1.');
           const jsRule = chain.module.rule(CHAIN_ID.RULE.JS).test(SCRIPT_REGEX);
-          const jsMainRule = isV1
-            ? jsRule
-            : jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
+          const jsMainRule = isV1 ? jsRule : jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
           jsMainRule
             .use(CHAIN_ID.USE.BABEL)
             .after(CHAIN_ID.USE.SWC)

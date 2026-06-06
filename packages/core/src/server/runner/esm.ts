@@ -80,13 +80,9 @@ export class EsmRunner extends CommonJsRunner {
       return (async () => {
         await esm.link(async (specifier, referencingModule) => {
           return asModule(
-            await _require(
-              path.dirname(referencingModule.identifier),
-              specifier,
-              {
-                esmMode: EsmMode.Unlinked,
-              },
-            ),
+            await _require(path.dirname(referencingModule.identifier), specifier, {
+              esmMode: EsmMode.Unlinked,
+            }),
             referencingModule.context,
             true,
           );

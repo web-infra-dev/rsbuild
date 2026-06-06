@@ -1,10 +1,4 @@
-import {
-  createLogger,
-  createRsbuild,
-  logger,
-  type Logger,
-  type RsbuildPlugin,
-} from '../src';
+import { createLogger, createRsbuild, logger, type Logger, type RsbuildPlugin } from '../src';
 
 const initialGlobalLogLevel = logger.level;
 
@@ -89,7 +83,5 @@ it('should use the custom console for debug override', () => {
   customLogger.debug('hello');
 
   expect(customConsole.log).toHaveBeenCalledTimes(1);
-  expect(customConsole.log).toHaveBeenCalledWith(
-    expect.stringContaining('hello'),
-  );
+  expect(customConsole.log).toHaveBeenCalledWith(expect.stringContaining('hello'));
 });

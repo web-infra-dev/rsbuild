@@ -139,9 +139,7 @@ export type OnBeforeCreateCompilerFn = (params: {
   environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;
 
-export type OnAfterCreateCompilerFn<
-  Compiler = Rspack.Compiler | Rspack.MultiCompiler,
-> = (params: {
+export type OnAfterCreateCompilerFn<Compiler = Rspack.Compiler | Rspack.MultiCompiler> = (params: {
   compiler: Compiler;
   /**
    * Context information for all environments.
@@ -171,10 +169,7 @@ export type ModifyHTMLContext = {
   environment: EnvironmentContext;
 };
 
-export type ModifyHTMLFn = (
-  html: string,
-  context: ModifyHTMLContext,
-) => MaybePromise<string>;
+export type ModifyHTMLFn = (html: string, context: ModifyHTMLContext) => MaybePromise<string>;
 
 type HTMLTags = {
   headTags: HtmlBasicTag[];

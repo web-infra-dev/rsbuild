@@ -72,9 +72,10 @@ import fs from 'node:fs/promises';
 export default {
   html: {
     async template({ entryName }) {
-      const templates = JSON.parse(
-        await fs.readFile('./templates.json', 'utf-8'),
-      ) as Record<string, string>;
+      const templates = JSON.parse(await fs.readFile('./templates.json', 'utf-8')) as Record<
+        string,
+        string
+      >;
       return templates[entryName] || './static/index.html';
     },
   },

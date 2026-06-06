@@ -1,8 +1,4 @@
-import type {
-  OutgoingHttpHeader,
-  OutgoingHttpHeaders,
-  ServerResponse,
-} from 'node:http';
+import type { OutgoingHttpHeader, OutgoingHttpHeaders, ServerResponse } from 'node:http';
 import zlib from 'node:zlib';
 import type { CompressOptions, RequestHandler } from '../types';
 
@@ -10,13 +6,9 @@ const ENCODING_REGEX = /\bgzip\b/;
 const CONTENT_TYPE_REGEX = /text|javascript|\/json|xml/i;
 type WriteHeadHeaders = OutgoingHttpHeaders | OutgoingHttpHeader[];
 
-const getMimeType = (contentType: string) =>
-  contentType.split(';', 1)[0].trim().toLowerCase();
+const getMimeType = (contentType: string) => contentType.split(';', 1)[0].trim().toLowerCase();
 
-const setWriteHeadHeaders = (
-  res: ServerResponse,
-  headers: WriteHeadHeaders,
-) => {
+const setWriteHeadHeaders = (res: ServerResponse, headers: WriteHeadHeaders) => {
   if (Array.isArray(headers)) {
     const seen = new Set<string>();
 

@@ -13,10 +13,7 @@ test.beforeEach(() => {
   }
 });
 
-test('should handle writeToDisk correctly across multiple environments', async ({
-  page,
-  dev,
-}) => {
+test('should handle writeToDisk correctly across multiple environments', async ({ page, dev }) => {
   await dev({
     config: {
       dev: {

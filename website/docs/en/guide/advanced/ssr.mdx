@@ -200,12 +200,8 @@ async function renderHtmlPage(): Promise<string> {
 
   const { js, css } = entries['index'].initial;
 
-  const scriptTags = js
-    .map((url) => `<script src="${url}" defer></script>`)
-    .join('\n');
-  const styleTags = css
-    .map((file) => `<link rel="stylesheet" href="${file}">`)
-    .join('\n');
+  const scriptTags = js.map((url) => `<script src="${url}" defer></script>`).join('\n');
+  const styleTags = css.map((file) => `<link rel="stylesheet" href="${file}">`).join('\n');
 
   return `
     <!DOCTYPE html>

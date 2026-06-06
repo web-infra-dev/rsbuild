@@ -37,11 +37,7 @@ export class BuildManager {
     this.compiler = compiler;
     this.resolvedPort = resolvedPort;
     this.outputFileSystem = fs;
-    this.socketServer = new SocketServer(
-      context,
-      config.dev,
-      () => this.outputFileSystem,
-    );
+    this.socketServer = new SocketServer(context, config.dev, () => this.outputFileSystem);
     this.context.socketServer = this.socketServer;
   }
 
@@ -89,10 +85,7 @@ export class BuildManager {
       // bundle require needs a synchronous method. Rspack's OutputFileSystem type only
       // declares the async API, but most implementations still provide readFileSync,
       // for example `node:fs` or `memfs`.
-      return (this.outputFileSystem as typeof fs).readFileSync(
-        fileName,
-        'utf-8',
-      );
+      return (this.outputFileSystem as typeof fs).readFileSync(fileName, 'utf-8');
     }
     return fs.readFileSync(fileName, 'utf-8');
   };

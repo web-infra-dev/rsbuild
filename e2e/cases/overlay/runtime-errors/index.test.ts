@@ -42,9 +42,7 @@ test('should show runtime errors on overlay', async ({
 
   // expect overlay to show runtime error
   await expect(errorOverlay.locator('.title')).toHaveText('Runtime errors');
-  await expect(
-    errorOverlay.getByText('Uncaught Error: Runtime error occurred'),
-  ).toBeAttached();
+  await expect(errorOverlay.getByText('Uncaught Error: Runtime error occurred')).toBeAttached();
 
   // expect stack trace to be shown fully
   await expect(errorOverlay.getByText('at App')).toBeAttached();

@@ -14,9 +14,7 @@ const parseInlineSourceMap = (code: string): { sources: string[] } => {
   };
 };
 
-test('should replace source map filename templates in inline source map', async ({
-  devOnly,
-}) => {
+test('should replace source map filename templates in inline source map', async ({ devOnly }) => {
   const rsbuild = await devOnly({
     config: {
       output: {
@@ -38,8 +36,6 @@ test('should replace source map filename templates in inline source map', async 
   expect(indexJs).not.toContain('[relative-resource-path]');
   expect(sourceMap.sources).toContain('../src/index.js');
   expect(
-    sourceMap.sources.some((source) =>
-      source.includes('[relative-resource-path]'),
-    ),
+    sourceMap.sources.some((source) => source.includes('[relative-resource-path]')),
   ).toBeFalsy();
 });

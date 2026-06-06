@@ -35,9 +35,7 @@ test('should allow to create multiple HMR connections', async ({
   const keepNum1 = await locatorKeep1.innerHTML();
   const keepNum2 = await locatorKeep2.innerHTML();
 
-  await editFile(join(tempSrc, 'App.tsx'), (code) =>
-    code.replace('Hello Rsbuild', 'Hello Test'),
-  );
+  await editFile(join(tempSrc, 'App.tsx'), (code) => code.replace('Hello Rsbuild', 'Hello Test'));
 
   await expect(locator1).toHaveText('Hello Test!');
   await expect(locator2).toHaveText('Hello Test!');

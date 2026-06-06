@@ -1,9 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('should apply resolve.extensions as expected', async ({
-  page,
-  buildPreview,
-}) => {
+test('should apply resolve.extensions as expected', async ({ page, buildPreview }) => {
   await buildPreview({
     config: {
       resolve: {

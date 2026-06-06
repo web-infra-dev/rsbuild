@@ -28,8 +28,7 @@ describe('ansiHTML', () => {
     expect(ansiHTML(magentaInput)).toEqual(magentaExpected);
 
     const lightgreyInput = '\x1B[37mHello, World!\x1B[0m';
-    const lightgreyExpected =
-      '<span style="color:#f0f0f0;">Hello, World!</span>';
+    const lightgreyExpected = '<span style="color:#f0f0f0;">Hello, World!</span>';
     expect(ansiHTML(lightgreyInput)).toEqual(lightgreyExpected);
 
     const darkgreyInput = '\x1B[90mHello, World!\x1B[0m';
@@ -64,8 +63,7 @@ describe('ansiHTML', () => {
 
   it('should convert ANSI delete codes to HTML', () => {
     const input = '\x1B[9mHello, World!\x1B[0m';
-    const expected =
-      '<span style="text-decoration:line-through;">Hello, World!</span>';
+    const expected = '<span style="text-decoration:line-through;">Hello, World!</span>';
     expect(ansiHTML(input)).toEqual(expected);
   });
 
@@ -89,8 +87,7 @@ describe('ansiHTML', () => {
     expect(ansiHTML(bgRedInput)).toEqual(bgRedExpected);
 
     const bgBlueInput = '\x1B[44;1mHello, World!\x1B[0m';
-    const bgBlueExpected =
-      '<span style="font-weight:bold;">Hello, World!</span>';
+    const bgBlueExpected = '<span style="font-weight:bold;">Hello, World!</span>';
     expect(ansiHTML(bgBlueInput)).toEqual(bgBlueExpected);
   });
 
@@ -174,8 +171,7 @@ describe('convertLinksInHtml', () => {
   });
 
   it('should not convert Rspack runtime modules', () => {
-    const input =
-      'at __webpack_require__.O (webpack/runtime/on_chunk_loaded:1:1)';
+    const input = 'at __webpack_require__.O (webpack/runtime/on_chunk_loaded:1:1)';
     expect(convertLinksInHtml(ansiHTML(input))).toEqual(input);
   });
 
@@ -186,8 +182,7 @@ describe('convertLinksInHtml', () => {
     }
 
     const root = 'C:\\Users\\username\\project';
-    const input =
-      '[\u001b[36;1;4mC:\\Users\\username\\project\\src\\index.js\u001b[0m:4:1]\n';
+    const input = '[\u001b[36;1;4mC:\\Users\\username\\project\\src\\index.js\u001b[0m:4:1]\n';
     const expected =
       '[<span style="color:#6eecf7;font-weight:bold;text-decoration:underline;text-underline-offset:3px;"><a class="file-link" data-file="C:\\Users\\username\\project\\src\\index.js:4:1">.\\src\\index.js:4:1</a></span>]\n';
     expect(convertLinksInHtml(ansiHTML(input), root)).toEqual(expected);
@@ -226,13 +221,10 @@ describe('convertLinksInHtml', () => {
 
 describe('formatDisplayPath', () => {
   it('formats normal node_modules path', () => {
-    const input =
-      '/project/node_modules/react-dom/cjs/react-dom-client.development.js:1:2';
+    const input = '/project/node_modules/react-dom/cjs/react-dom-client.development.js:1:2';
 
     const out = formatDisplayPath(input, true, '/project');
-    expect(out).toBe(
-      'node_modules/react-dom/cjs/react-dom-client.development.js:1:2',
-    );
+    expect(out).toBe('node_modules/react-dom/cjs/react-dom-client.development.js:1:2');
   });
 
   it('formats pnpm nested node_modules path', () => {
@@ -240,9 +232,7 @@ describe('formatDisplayPath', () => {
       '/project/node_modules/.pnpm/react-dom@19.0.0_react@19.0.0/node_modules/react-dom/cjs/react-dom-client.development.js:1:1';
 
     const out = formatDisplayPath(input, true, '/project');
-    expect(out).toBe(
-      'node_modules/react-dom/cjs/react-dom-client.development.js:1:1',
-    );
+    expect(out).toBe('node_modules/react-dom/cjs/react-dom-client.development.js:1:1');
   });
 
   it('formats nested node_modules path on Windows', () => {
@@ -250,18 +240,12 @@ describe('formatDisplayPath', () => {
       'C:\\project\\node_modules\\.pnpm\\react-dom@19.0.0_react@19.0.0\\node_modules\\react-dom\\cjs\\react-dom-client.development.js:1:1';
 
     const out = formatDisplayPath(input, true, 'C:\\project');
-    expect(out).toBe(
-      'node_modules\\react-dom\\cjs\\react-dom-client.development.js:1:1',
-    );
+    expect(out).toBe('node_modules\\react-dom\\cjs\\react-dom-client.development.js:1:1');
   });
 
   it('returns relative path when not a node_modules path', () => {
     const input = '/project/src/App.tsx:1:1';
     const out = formatDisplayPath(input, true, '/project');
-    expect(out).toBe(
-      process.platform === 'win32'
-        ? '.\\src\\App.tsx:1:1'
-        : './src/App.tsx:1:1',
-    );
+    expect(out).toBe(process.platform === 'win32' ? '.\\src\\App.tsx:1:1' : './src/App.tsx:1:1');
   });
 });

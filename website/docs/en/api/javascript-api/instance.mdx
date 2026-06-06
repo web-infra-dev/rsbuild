@@ -318,9 +318,7 @@ type StartDevServerResult = {
   server: RsbuildDevServer;
 };
 
-function StartDevServer(
-  options?: StartDevServerOptions,
-): Promise<StartDevServerResult>;
+function StartDevServer(options?: StartDevServerOptions): Promise<StartDevServerResult>;
 ```
 
 - **Example:**
@@ -399,9 +397,7 @@ type CreateDevServerOptions = {
   runCompile?: boolean;
 };
 
-function createDevServer(
-  options?: CreateDevServerOptions,
-): Promise<RsbuildDevServer>;
+function createDevServer(options?: CreateDevServerOptions): Promise<RsbuildDevServer>;
 ```
 
 Rsbuild includes a built-in dev server designed to improve the development experience. When you run the `rsbuild dev` command, the server starts automatically and provides features such as page preview, routing, and hot module reloading.
@@ -519,10 +515,7 @@ This method needs to be called before compiling. If it is called after compiling
 ```ts
 type AddPluginsOptions = { before?: string; environment?: string };
 
-function AddPlugins(
-  plugins: Array<RsbuildPlugin | Falsy>,
-  options?: AddPluginsOptions,
-): void;
+function AddPlugins(plugins: Array<RsbuildPlugin | Falsy>, options?: AddPluginsOptions): void;
 ```
 
 - **Example:**
@@ -982,10 +975,7 @@ rsbuild.onAfterDevCompile(({ isFirstCompile }) => {
 
 ```ts
 rsbuild.onBeforeEnvironmentCompile(({ bundlerConfig, environment }) => {
-  console.log(
-    `the bundler config for the ${environment.name} is `,
-    bundlerConfig,
-  );
+  console.log(`the bundler config for the ${environment.name} is `, bundlerConfig);
 });
 ```
 

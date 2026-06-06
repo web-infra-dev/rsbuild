@@ -1,8 +1,4 @@
-import type {
-  NormalizedEnvironmentConfig,
-  RsbuildPluginAPI,
-  Rspack,
-} from '@rsbuild/core';
+import type { NormalizedEnvironmentConfig, RsbuildPluginAPI, Rspack } from '@rsbuild/core';
 import type { SplitReactChunkOptions } from './index.js';
 
 const isDefaultPreset = (config: NormalizedEnvironmentConfig) => {
@@ -23,16 +19,11 @@ export function applySplitChunksRule(
 ): void {
   api.modifyBundlerChain((chain, { environment, isProd }) => {
     const { config } = environment;
-    if (
-      !isDefaultPreset(config) ||
-      config.output.target !== 'web' ||
-      options === false
-    ) {
+    if (!isDefaultPreset(config) || config.output.target !== 'web' || options === false) {
       return;
     }
 
-    const normalizedOptions =
-      options === true ? { react: true, router: true } : options;
+    const normalizedOptions = options === true ? { react: true, router: true } : options;
 
     const currentConfig =
       chain.optimization.splitChunks.values() as Rspack.Optimization['splitChunks'];
@@ -40,10 +31,7 @@ export function applySplitChunksRule(
       return;
     }
 
-    const extraGroups: Record<
-      string,
-      Rspack.OptimizationSplitChunksCacheGroup
-    > = {};
+    const extraGroups: Record<string, Rspack.OptimizationSplitChunksCacheGroup> = {};
 
     if (normalizedOptions.react) {
       extraGroups.react = {

@@ -18,10 +18,7 @@ By default, Rsbuild's built-in [swc-loader](https://rspack.rs/guide/features/bui
 The default value of `source.include` can be expressed as:
 
 ```ts
-const defaultInclude = [
-  { not: /[\\/]node_modules[\\/]/ },
-  /\.(?:ts|tsx|jsx|mts|cts)$/,
-];
+const defaultInclude = [{ not: /[\\/]node_modules[\\/]/ }, /\.(?:ts|tsx|jsx|mts|cts)$/];
 ```
 
 ## Usage
@@ -84,10 +81,7 @@ Take `query-string` for example, it depends on the `decode-uri-component` packag
 ```ts title="rsbuild.config.ts"
 export default {
   source: {
-    include: [
-      /node_modules[\\/]query-string[\\/]/,
-      /node_modules[\\/]decode-uri-component[\\/]/,
-    ],
+    include: [/node_modules[\\/]query-string[\\/]/, /node_modules[\\/]decode-uri-component[\\/]/],
   },
 };
 ```

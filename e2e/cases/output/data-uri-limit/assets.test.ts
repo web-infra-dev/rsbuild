@@ -49,15 +49,11 @@ for (const item of cases) {
 
     if (item.expected === 'url') {
       await expect(
-        page.evaluate(
-          `document.getElementById('test-img').src.includes('static/image/icon')`,
-        ),
+        page.evaluate(`document.getElementById('test-img').src.includes('static/image/icon')`),
       ).resolves.toBeTruthy();
     } else {
       await expect(
-        page.evaluate(
-          `document.getElementById('test-img').src.startsWith('data:image/png')`,
-        ),
+        page.evaluate(`document.getElementById('test-img').src.startsWith('data:image/png')`),
       ).resolves.toBeTruthy();
     }
   });

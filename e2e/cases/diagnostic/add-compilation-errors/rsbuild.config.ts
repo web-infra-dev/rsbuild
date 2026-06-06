@@ -6,12 +6,9 @@ export default defineConfig({
       plugins: [
         {
           apply: (compiler: Rspack.Compiler) => {
-            compiler.hooks.thisCompilation.tap(
-              'ThisCompilationPlugin',
-              (compilation) => {
-                compilation.errors.push(new Error('Something went wrong'));
-              },
-            );
+            compiler.hooks.thisCompilation.tap('ThisCompilationPlugin', (compilation) => {
+              compilation.errors.push(new Error('Something went wrong'));
+            });
           },
         },
       ],

@@ -1,9 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('should compile svelte component with sass', async ({
-  page,
-  runBothServe,
-}) => {
+test('should compile svelte component with sass', async ({ page, runBothServe }) => {
   await runBothServe(async () => {
     const title = page.locator('#title');
     await expect(title).toHaveText('Hello world!');

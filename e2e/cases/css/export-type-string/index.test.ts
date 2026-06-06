@@ -16,14 +16,10 @@ test('should allow to configure `cssLoader.exportType` as `string`', async ({
 
     if (mode === 'dev') {
       expect(
-        (await page.evaluate<string>('window.b')).includes(
-          '.src-b-module__the-b-class',
-        ),
+        (await page.evaluate<string>('window.b')).includes('.src-b-module__the-b-class'),
       ).toBeTruthy();
     } else {
-      expect(
-        (await page.evaluate<string>('window.b')).includes('.the-b-class-'),
-      ).toBeTruthy();
+      expect((await page.evaluate<string>('window.b')).includes('.the-b-class-')).toBeTruthy();
     }
   });
 });

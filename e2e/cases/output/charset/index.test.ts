@@ -28,9 +28,7 @@ test('should set output.charset to ascii', async ({ page, runBothServe }) => {
         expect(content.includes(asciiStr)).toBeTruthy();
       } else {
         const content = await result.getIndexBundle();
-        expect(
-          content.includes(`\\u4F60\\u597D world! I'm \\u{1F980}`),
-        ).toBeTruthy();
+        expect(content.includes(`\\u4F60\\u597D world! I'm \\u{1F980}`)).toBeTruthy();
       }
     },
     {

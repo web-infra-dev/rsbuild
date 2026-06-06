@@ -1,9 +1,6 @@
 import { expect, getFileContent, test } from '@e2e/helper';
 
-test('generate integrity using multiple algorithms', async ({
-  page,
-  buildPreview,
-}) => {
+test('generate integrity using multiple algorithms', async ({ page, buildPreview }) => {
   const rsbuild = await buildPreview();
 
   const files = rsbuild.getDistFiles();

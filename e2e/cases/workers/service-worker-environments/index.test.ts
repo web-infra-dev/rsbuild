@@ -33,16 +33,11 @@ const waitForServiceWorker = async (page: Page) => {
   expect(swState.state).toBe('activated');
 };
 
-test('should compile service worker in build', async ({
-  page,
-  buildPreview,
-}) => {
+test('should compile service worker in build', async ({ page, buildPreview }) => {
   const rsbuild = await buildPreview();
   const files = rsbuild.getDistFiles();
   const filenames = Object.keys(files);
-  expect(
-    filenames.some((filename) => filename.endsWith('dist/sw.js')),
-  ).toBeTruthy();
+  expect(filenames.some((filename) => filename.endsWith('dist/sw.js'))).toBeTruthy();
   await waitForServiceWorker(page);
 });
 

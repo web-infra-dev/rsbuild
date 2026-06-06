@@ -7,9 +7,5 @@ test('should run allow to specify base path', async ({ execCliSync }) => {
   const outputs = await readDirContents(path.join(import.meta.dirname, 'dist'));
   const outputFiles = Object.keys(outputs);
 
-  expect(
-    outputFiles.find((item) =>
-      outputs[item].includes('/test/static/js/index.'),
-    ),
-  ).toBeTruthy();
+  expect(outputFiles.find((item) => outputs[item].includes('/test/static/js/index.'))).toBeTruthy();
 });

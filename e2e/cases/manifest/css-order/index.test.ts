@@ -2,15 +2,12 @@ import { expect, test } from '@e2e/helper';
 import type { ManifestData } from '@rsbuild/core';
 
 // https://github.com/web-infra-dev/rsbuild/issues/6187
-test('should generate manifest with initial chunks in correct order', async ({
-  build,
-}) => {
+test('should generate manifest with initial chunks in correct order', async ({ build }) => {
   const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();
   const filenames = Object.keys(files);
-  const manifestContent =
-    files[filenames.find((file) => file.endsWith('manifest.json'))!];
+  const manifestContent = files[filenames.find((file) => file.endsWith('manifest.json'))!];
   const manifest: ManifestData = JSON.parse(manifestContent);
 
   for (const entry of Object.values(manifest.entries)) {
@@ -25,8 +22,7 @@ test('should generate manifest with initial chunks in correct order', async ({
       })
       .filter(Boolean);
 
-    const linkMatches =
-      html.match(/<link[^>]*href="([^"]+)"[^>]*rel="stylesheet"/g) || [];
+    const linkMatches = html.match(/<link[^>]*href="([^"]+)"[^>]*rel="stylesheet"/g) || [];
     const htmlCssOrder = linkMatches
       .map((match) => {
         const hrefMatch = match.match(/href="([^"]+)"/);

@@ -1,8 +1,6 @@
 import { expect, getFileContent, test } from '@e2e/helper';
 
-test('should allow to set development mode when building', async ({
-  build,
-}) => {
+test('should allow to set development mode when building', async ({ build }) => {
   const rsbuild = await build({
     config: {
       mode: 'development',
@@ -70,11 +68,9 @@ test('should allow to set production mode when starting dev server', async ({
   const files = rsbuild.getDistFiles({ sourceMaps: true });
 
   // should have filename hash in build
-  const indexJs = getFileContent(
-    files,
-    (key) => /static\/js\/index\.\w+\.js/.test(key),
-    { ignoreHash: false },
-  );
+  const indexJs = getFileContent(files, (key) => /static\/js\/index\.\w+\.js/.test(key), {
+    ignoreHash: false,
+  });
 
   // should replace `process.env.NODE_ENV` with `'production'`
   expect(indexJs).toContain('this is production mode!');

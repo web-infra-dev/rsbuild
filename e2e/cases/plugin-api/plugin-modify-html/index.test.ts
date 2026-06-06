@@ -30,9 +30,7 @@ test('should allow plugin to modify HTML content', async ({ build }) => {
   expect(html.includes('<div>assets: 2</div>')).toBeTruthy();
 });
 
-test('should run modifyHTML hook after modifyHTMLTags hook', async ({
-  build,
-}) => {
+test('should run modifyHTML hook after modifyHTMLTags hook', async ({ build }) => {
   const myPlugin: RsbuildPlugin = {
     name: 'my-plugin',
     setup(api) {

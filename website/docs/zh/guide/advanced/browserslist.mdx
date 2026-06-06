@@ -84,13 +84,7 @@ safari >= 16
 
 ```json title="package.json"
 {
-  "browserslist": [
-    "iOS >= 9",
-    "Android >= 4.4",
-    "last 2 versions",
-    "> 0.2%",
-    "not dead"
-  ]
+  "browserslist": ["iOS >= 9", "Android >= 4.4", "last 2 versions", "> 0.2%", "not dead"]
 }
 ```
 
@@ -119,17 +113,8 @@ not dead
 ```json title="package.json"
 {
   "browserslist": {
-    "production": [
-      "chrome >= 107",
-      "edge >= 107",
-      "firefox >= 104",
-      "safari >= 16"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "production": ["chrome >= 107", "edge >= 107", "firefox >= 104", "safari >= 16"],
+    "development": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"]
   }
 }
 ```
@@ -158,13 +143,7 @@ last 1 safari version
 ```ts title="rsbuild.config.ts"
 export default {
   output: {
-    overrideBrowserslist: [
-      'iOS >= 9',
-      'Android >= 4.4',
-      'last 2 versions',
-      '> 0.2%',
-      'not dead',
-    ],
+    overrideBrowserslist: ['iOS >= 9', 'Android >= 4.4', 'last 2 versions', '> 0.2%', 'not dead'],
   },
 };
 ```

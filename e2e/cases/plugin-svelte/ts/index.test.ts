@@ -1,9 +1,6 @@
 import { expect, gotoPage, test } from '@e2e/helper';
 
-test('should build svelte component with typescript', async ({
-  page,
-  buildPreview,
-}) => {
+test('should build svelte component with typescript', async ({ page, buildPreview }) => {
   const rsbuild = await buildPreview();
 
   await gotoPage(page, rsbuild);

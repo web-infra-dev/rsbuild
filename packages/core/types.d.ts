@@ -17,8 +17,9 @@ interface RsbuildTypeOptions {}
 /**
  * import.meta
  */
-type ImportMetaEnvFallbackKey =
-  'strictImportMetaEnv' extends keyof RsbuildTypeOptions ? never : string;
+type ImportMetaEnvFallbackKey = 'strictImportMetaEnv' extends keyof RsbuildTypeOptions
+  ? never
+  : string;
 
 interface ImportMetaEnv extends Record<ImportMetaEnvFallbackKey, any> {
   /**

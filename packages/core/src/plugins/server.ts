@@ -34,8 +34,7 @@ export const pluginServer = (): RsbuildPlugin => ({
       }
       const config = api.getNormalizedConfig();
 
-      for (const { name: publicDir, copyOnBuild, ignore } of config.server
-        .publicDir) {
+      for (const { name: publicDir, copyOnBuild, ignore } of config.server.publicDir) {
         if (copyOnBuild === false) {
           continue;
         }
@@ -48,8 +47,7 @@ export const pluginServer = (): RsbuildPlugin => ({
           Object.values(environments)
             .filter(
               ({ config }) =>
-                copyOnBuild === true ||
-                (copyOnBuild === 'auto' && config.output.target !== 'node'),
+                copyOnBuild === true || (copyOnBuild === 'auto' && config.output.target !== 'node'),
             )
             .map(({ distPath }) => distPath),
         );
@@ -68,9 +66,7 @@ export const pluginServer = (): RsbuildPlugin => ({
           });
 
           const ignoredSet = new Set(
-            ignoredList.map((item) =>
-              item.replace(/\\/g, '/').replace(/\/$/, ''),
-            ), // normalize path separators for Windows
+            ignoredList.map((item) => item.replace(/\\/g, '/').replace(/\/$/, '')), // normalize path separators for Windows
           );
 
           shouldCopy = (source: string) => {

@@ -4,11 +4,7 @@ import { toRelativePath } from '../helpers/path';
 import { ansiHTML } from './ansiHTML';
 import { escapeHtml } from './helper';
 
-export function formatDisplayPath(
-  filePath: string,
-  isAbsolute: boolean,
-  root?: string,
-): string {
+export function formatDisplayPath(filePath: string, isAbsolute: boolean, root?: string): string {
   // Format node_modules paths
   // Input: /project/node_modules/.pnpm/foo@1.0.0/node_modules/foo/dist/index.js:0:0
   // Output: node_modules/foo/dist/index.js:0:0
@@ -43,8 +39,7 @@ export function convertLinksInHtml(text: string, root?: string): string {
   const PATH_RE =
     /(?:\.\.?[/\\]|(file:\/\/\/)?[a-zA-Z]:\\|(file:\/\/)?\/|[A-Za-z0-9._-]+[/\\])[^\s:]*:\d+:\d+/g;
 
-  const URL_RE =
-    /(https?:\/\/(?:[\w-]+\.)+[a-z0-9](?:[\w-.~:/?#[\]@!$&'*+,;=])*)/gi;
+  const URL_RE = /(https?:\/\/(?:[\w-]+\.)+[a-z0-9](?:[\w-.~:/?#[\]@!$&'*+,;=])*)/gi;
 
   const NODE_INTERNAL_RE = /node:internal[/\\]/;
   const RSPACK_RUNTIME_RE = /webpack\/runtime\//;
@@ -78,13 +73,11 @@ export function convertLinksInHtml(text: string, root?: string): string {
 
       // If the file contains `</span>`, it means the file path contains ANSI codes.
       // We need to move the `</span>` to the end of the file path.
-      const hasClosingSpan =
-        file.includes('</span>') && !file.includes('<span');
+      const hasClosingSpan = file.includes('</span>') && !file.includes('<span');
       const filePath = hasClosingSpan ? file.replace('</span>', '') : file;
       const suffix = hasClosingSpan ? '</span>' : '';
       const isAbsolute = path.isAbsolute(filePath);
-      const absolutePath =
-        root && !isAbsolute ? path.join(root, filePath) : filePath;
+      const absolutePath = root && !isAbsolute ? path.join(root, filePath) : filePath;
       const displayPath = formatDisplayPath(filePath, isAbsolute, root);
 
       return `<a class="file-link" data-file="${absolutePath}">${displayPath}</a>${suffix}`;

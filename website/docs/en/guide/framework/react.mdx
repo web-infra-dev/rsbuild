@@ -159,10 +159,7 @@ export default defineConfig({
       include: /\.[jt]sx?$/,
       exclude: [/[\\/]node_modules[\\/]/],
       babelLoaderOptions(opts) {
-        opts.plugins?.unshift([
-          'babel-plugin-react-compiler',
-          ReactCompilerConfig,
-        ]);
+        opts.plugins?.unshift(['babel-plugin-react-compiler', ReactCompilerConfig]);
       },
     }),
   ],

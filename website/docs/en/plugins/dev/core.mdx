@@ -298,10 +298,7 @@ You can match files by module path, query, or other conditions, and apply custom
 - **Type:**
 
 ```ts
-function Transform(
-  descriptor: TransformDescriptor,
-  handler: TransformHandler,
-): void;
+function Transform(descriptor: TransformDescriptor, handler: TransformHandler): void;
 ```
 
 `api.transform` accepts two params:
@@ -472,9 +469,7 @@ type TransformResult =
       map?: string | Rspack.sources.RawSourceMap | null;
     };
 
-type TransformHandler = (
-  context: TransformContext,
-) => MaybePromise<TransformResult>;
+type TransformHandler = (context: TransformContext) => MaybePromise<TransformResult>;
 ```
 
 The `handler` function provides the following params:
@@ -495,15 +490,12 @@ The `handler` function provides the following params:
 For example:
 
 ```js
-api.transform(
-  { test: /\.md$/ },
-  ({ code, resource, resourcePath, resourceQuery }) => {
-    console.log(code); // -> some code
-    console.log(resource); // -> '/home/user/project/src/template.pug?foo=123'
-    console.log(resourcePath); // -> '/home/user/project/src/template.pug'
-    console.log(resourceQuery); // -> '?foo=123'
-  },
-);
+api.transform({ test: /\.md$/ }, ({ code, resource, resourcePath, resourceQuery }) => {
+  console.log(code); // -> some code
+  console.log(resource); // -> '/home/user/project/src/template.pug?foo=123'
+  console.log(resourcePath); // -> '/home/user/project/src/template.pug'
+  console.log(resourceQuery); // -> '?foo=123'
+});
 ```
 
 ### Difference with loader
@@ -581,10 +573,7 @@ Modify assets before emitting, the same as Rspack's [compilation.hooks.processAs
 - **Type:**
 
 ```ts
-function processAssets(
-  descriptor: ProcessAssetsDescriptor,
-  handler: ProcessAssetsHandler,
-): void;
+function processAssets(descriptor: ProcessAssetsDescriptor, handler: ProcessAssetsHandler): void;
 ```
 
 `api.processAssets` accepts two params:
@@ -597,33 +586,27 @@ function processAssets(
 - Emit a new asset in the `additional` stage:
 
 ```js
-api.processAssets(
-  { stage: 'additional' },
-  ({ assets, sources, compilation }) => {
-    const source = new sources.RawSource('This is a new asset!');
-    compilation.emitAsset('new-asset.txt', source);
-  },
-);
+api.processAssets({ stage: 'additional' }, ({ assets, sources, compilation }) => {
+  const source = new sources.RawSource('This is a new asset!');
+  compilation.emitAsset('new-asset.txt', source);
+});
 ```
 
 - Updating an existing asset:
 
 ```js
-api.processAssets(
-  { stage: 'additions' },
-  ({ assets, sources, compilation }) => {
-    const asset = assets['foo.js'];
-    if (!asset) {
-      return;
-    }
+api.processAssets({ stage: 'additions' }, ({ assets, sources, compilation }) => {
+  const asset = assets['foo.js'];
+  if (!asset) {
+    return;
+  }
 
-    const oldContent = asset.source();
-    const newContent = oldContent + '\nconsole.log("hello world!")';
-    const source = new sources.RawSource(newContent);
+  const oldContent = asset.source();
+  const newContent = oldContent + '\nconsole.log("hello world!")';
+  const source = new sources.RawSource(newContent);
 
-    compilation.updateAsset(assetName, source);
-  },
-);
+  compilation.updateAsset(assetName, source);
+});
 ```
 
 - Removing an asset:
@@ -672,12 +655,9 @@ api.processAssets({ stage: 'additional', targets: ['web'] }, ({ assets }) => {
 - `environments`: matches the Rsbuild [environment](/guide/advanced/environments) name, and applies the current processAssets function only to the matched environments.
 
 ```js
-api.processAssets(
-  { stage: 'additional', environments: ['web'] },
-  ({ assets }) => {
-    // ...
-  },
-);
+api.processAssets({ stage: 'additional', environments: ['web'] }, ({ assets }) => {
+  // ...
+});
 ```
 
 ### Handler param

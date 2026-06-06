@@ -13,9 +13,7 @@ test('should split react chunks correctly', async ({ build }) => {
   expect(filesNames.find((file) => file.includes('lib-react'))).toBeTruthy();
 });
 
-test('should not split react chunks when strategy is `all-in-one`', async ({
-  build,
-}) => {
+test('should not split react chunks when strategy is `all-in-one`', async ({ build }) => {
   const rsbuild = await build({
     config: {
       plugins: [pluginReact()],
@@ -32,9 +30,7 @@ test('should not split react chunks when strategy is `all-in-one`', async ({
   expect(filesNames.find((file) => file.includes('lib-react'))).toBeFalsy();
 });
 
-test('should not split react chunks when splitChunks is disabled', async ({
-  build,
-}) => {
+test('should not split react chunks when splitChunks is disabled', async ({ build }) => {
   const rsbuild = await build({
     config: {
       plugins: [
