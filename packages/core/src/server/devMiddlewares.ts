@@ -145,11 +145,27 @@ const applyDefaultMiddlewares = async ({
     middlewares.use(getBaseUrlMiddleware({ base: server.base }));
   }
 
-  const { default: launchEditorMiddleware } = await import(
-    /* webpackChunkName: "launch-editor-middleware" */
-    'launch-editor-middleware'
-  );
-  middlewares.use('/__open-in-editor', launchEditorMiddleware());
+  let launchEditorHandlerPromise: Promise<RequestHandler> | undefined;
+  const getLaunchEditorHandler = () => {
+    launchEditorHandlerPromise ??= (async () => {
+      const { default: launchEditorMiddleware } = await import(
+        /* webpackChunkName: "launch-editor-middleware" */
+        'launch-editor-middleware'
+      );
+      return launchEditorMiddleware();
+    })();
+
+    return launchEditorHandlerPromise;
+  };
+
+  middlewares.use('/__open-in-editor', async (req, res, next) => {
+    try {
+      const handler = await getLaunchEditorHandler();
+      handler(req, res, next);
+    } catch (err) {
+      next(err);
+    }
+  });
 
   middlewares.use(
     viewingServedFilesMiddleware({
