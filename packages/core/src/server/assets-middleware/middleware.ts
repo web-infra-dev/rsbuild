@@ -14,6 +14,10 @@ function getEtag(stat: FSStats): string {
   return `W/"${size}-${mtime}"`;
 }
 
+// Large dev bundles pay noticeable overhead when streamed in many small chunks.
+// Use a larger read buffer while still keeping responses streamed with backpressure.
+const READ_STREAM_HIGH_WATER_MARK = 512 * 1024;
+
 function createReadStreamOrReadFileSync(
   filename: string,
   outputFileSystem: Rspack.OutputFileSystem,
@@ -21,14 +25,15 @@ function createReadStreamOrReadFileSync(
   end: number,
   byteLength: number,
 ): { bufferOrStream: Buffer | ReadStream; byteLength: number } {
-  const bufferOrStream = (
-    outputFileSystem.createReadStream as (
-      p: string,
-      opts: { start: number; end: number },
-    ) => ReadStream
-  )(filename, {
+  const createReadStream = outputFileSystem.createReadStream as unknown as (
+    p: string,
+    opts: { start: number; end: number; highWaterMark: number },
+  ) => ReadStream;
+
+  const bufferOrStream = createReadStream(filename, {
     start,
     end,
+    highWaterMark: READ_STREAM_HIGH_WATER_MARK,
   });
 
   return { bufferOrStream, byteLength };
