@@ -18,25 +18,23 @@ function getEtag(stat: FSStats): string {
 // Use a larger read buffer while still keeping responses streamed with backpressure.
 const READ_STREAM_HIGH_WATER_MARK = 512 * 1024;
 
-function createReadStreamOrReadFileSync(
+function createReadStream(
   filename: string,
   outputFileSystem: Rspack.OutputFileSystem,
   start: number,
   end: number,
-  byteLength: number,
-): { bufferOrStream: Buffer | ReadStream; byteLength: number } {
-  const createReadStream = outputFileSystem.createReadStream as unknown as (
-    p: string,
-    opts: { start: number; end: number; highWaterMark: number },
-  ) => ReadStream;
+): ReadStream {
+  const createOutputReadStream =
+    outputFileSystem.createReadStream as unknown as (
+      p: string,
+      opts: { start: number; end: number; highWaterMark: number },
+    ) => ReadStream;
 
-  const bufferOrStream = createReadStream(filename, {
+  return createOutputReadStream(filename, {
     start,
     end,
     highWaterMark: READ_STREAM_HIGH_WATER_MARK,
   });
-
-  return { bufferOrStream, byteLength };
 }
 
 function getContentType(str: string): false | string {
@@ -434,25 +432,18 @@ export function createAssetsMiddleware(
         }
       }
 
-      let bufferOrStream: undefined | Buffer | ReadStream;
-      let byteLength: number;
+      let readStream: ReadStream;
 
       const [start, end] = calcStartAndEnd(offset, len);
 
       try {
-        ({ bufferOrStream, byteLength } = createReadStreamOrReadFileSync(
-          filename,
-          outputFileSystem,
-          start,
-          end,
-          len,
-        ));
+        readStream = createReadStream(filename, outputFileSystem, start, end);
       } catch {
         await goNext();
         return;
       }
 
-      res.setHeader('Content-Length', byteLength);
+      res.setHeader('Content-Length', len);
 
       if (req.method === 'HEAD') {
         if (res.statusCode === HttpCode.NotFound) {
@@ -462,37 +453,26 @@ export function createAssetsMiddleware(
         return;
       }
 
-      const isPipeSupports =
-        typeof (bufferOrStream as ReadStream).pipe === 'function';
-
-      if (!isPipeSupports) {
-        res.end(bufferOrStream as Buffer);
-        return;
-      }
-
       const cleanup = () => {
-        destroyStream(bufferOrStream as ReadStream, true);
+        destroyStream(readStream, true);
       };
 
-      (bufferOrStream as ReadStream).on(
-        'error',
-        (error: NodeJS.ErrnoException) => {
-          cleanup();
-          // rslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
-          switch (error.code) {
-            case 'ENAMETOOLONG':
-            case 'ENOENT':
-            case 'ENOTDIR':
-              sendError(res, HttpCode.NotFound);
-              break;
-            default:
-              sendError(res, HttpCode.InternalServerError);
-              break;
-          }
-        },
-      );
+      readStream.on('error', (error: NodeJS.ErrnoException) => {
+        cleanup();
+        // rslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
+        switch (error.code) {
+          case 'ENAMETOOLONG':
+          case 'ENOENT':
+          case 'ENOTDIR':
+            sendError(res, HttpCode.NotFound);
+            break;
+          default:
+            sendError(res, HttpCode.InternalServerError);
+            break;
+        }
+      });
 
-      (bufferOrStream as ReadStream).pipe(res);
+      readStream.pipe(res);
 
       onFinished(res, cleanup);
     }
