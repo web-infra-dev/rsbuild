@@ -11,7 +11,7 @@
     "check-spell": "pnpx cspell && heading-case",
     "doc": "cd website && node --run dev",
     "e2e": "cd ./e2e && pnpm e2e",
-    "format": "prettier --experimental-cli --write . && heading-case --write",
+    "format": "oxfmt . && heading-case --write",
     "lint": "rslint --type-check",
     "prebundle": "pnpm --parallel --filter \"./packages/*\" run prebundle",
     "prepare": "simple-git-hooks && node --run prebundle && node --run build",
@@ -23,10 +23,10 @@
     "pre-commit": "pnpm exec nano-staged"
   },
   "nano-staged": {
-    "*.{md,mdx,json,css,less,scss}": "prettier --experimental-cli --write",
+    "*.{md,mdx,json,css,less,scss}": "oxfmt --no-error-on-unmatched-pattern",
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
       "rslint --type-check",
-      "prettier --experimental-cli --write"
+      "oxfmt --no-error-on-unmatched-pattern"
     ]
   },
   "devDependencies": {
@@ -40,7 +40,7 @@
     "cspell-ban-words": "catalog:",
     "heading-case": "catalog:",
     "nano-staged": "catalog:",
-    "prettier": "catalog:",
+    "oxfmt": "catalog:",
     "simple-git-hooks": "catalog:",
     "typescript": "catalog:"
   },

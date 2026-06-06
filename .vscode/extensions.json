@@ -2,7 +2,7 @@
   "recommendations": [
     "rstack.rslint",
     "rstack.rstest",
-    "esbenp.prettier-vscode",
+    "oxc.oxc-vscode",
     "unifiedjs.vscode-mdx"
   ]
 }

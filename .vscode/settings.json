@@ -14,7 +14,7 @@
     "**/.DS_Store": true
   },
   "mdx.validate.validateFileLinks": "ignore",
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "oxc.oxc-vscode",
   "js/ts.tsdk.path": "node_modules/typescript/lib",
   "json.schemas": [
     {
