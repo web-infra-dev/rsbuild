@@ -9,10 +9,7 @@ export const pluginWasm = (): RsbuildPlugin => ({
     api.modifyBundlerChain((chain, { CHAIN_ID, environment, isProd }) => {
       const { config } = environment;
       const distPath = config.output.distPath.wasm;
-      const filename = posix.join(
-        distPath,
-        getFilename(config, 'wasm', isProd),
-      );
+      const filename = posix.join(distPath, getFilename(config, 'wasm', isProd));
 
       chain.output.webassemblyModuleFilename(filename);
 

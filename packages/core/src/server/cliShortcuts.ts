@@ -7,8 +7,7 @@ export const isCliShortcutsEnabled = (config: NormalizedConfig): boolean =>
 
 // Normalize user input so shortcuts are case-insensitive
 // and still work with accidental surrounding whitespace.
-export const normalizeShortcutInput = (input: string): string =>
-  input.trim().toLowerCase();
+export const normalizeShortcutInput = (input: string): string => input.trim().toLowerCase();
 
 export async function setupCliShortcuts({
   help = true,

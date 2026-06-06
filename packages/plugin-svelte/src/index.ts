@@ -6,9 +6,7 @@ import { sveltePreprocess } from 'svelte-preprocess';
 
 const require = createRequire(import.meta.url);
 
-export type AutoPreprocessOptions = NonNullable<
-  Parameters<typeof sveltePreprocess>[0]
->;
+export type AutoPreprocessOptions = NonNullable<Parameters<typeof sveltePreprocess>[0]>;
 
 export interface SvelteLoaderOptions {
   compilerOptions?: Omit<CompileOptions, 'filename' | 'format' | 'generate'>;
@@ -83,72 +81,64 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
         return mergeEnvironmentConfig(extraConfig, config);
       });
 
-      api.modifyBundlerChain(
-        (chain, { CHAIN_ID, environment, isDev, isProd }) => {
-          const environmentConfig = environment.config;
+      api.modifyBundlerChain((chain, { CHAIN_ID, environment, isDev, isProd }) => {
+        const environmentConfig = environment.config;
 
-          chain.resolve.extensions.add('.svelte');
-          chain.resolve.mainFields.add('svelte').add('...');
-          chain.resolve.conditionNames.add('svelte').add('...');
+        chain.resolve.extensions.add('.svelte');
+        chain.resolve.mainFields.add('svelte').add('...');
+        chain.resolve.conditionNames.add('svelte').add('...');
 
-          const loaderPath = require.resolve('svelte-loader');
+        const loaderPath = require.resolve('svelte-loader');
 
-          // We need to set an alias from `svelte-loader` to its realpath.
-          // Because with `emitCss` option on, the loader generates css
-          // imports with inline loader reference like `!svelte-loader...`,
-          // which would cause the bundler failed to resolve the loader.
-          // See https://github.com/sveltejs/svelte-loader/blob/344f00744b06a98ff5ee7e7a04d5e04ac496988c/index.js#L128
-          chain.resolveLoader.alias.set('svelte-loader', loaderPath);
+        // We need to set an alias from `svelte-loader` to its realpath.
+        // Because with `emitCss` option on, the loader generates css
+        // imports with inline loader reference like `!svelte-loader...`,
+        // which would cause the bundler failed to resolve the loader.
+        // See https://github.com/sveltejs/svelte-loader/blob/344f00744b06a98ff5ee7e7a04d5e04ac496988c/index.js#L128
+        chain.resolveLoader.alias.set('svelte-loader', loaderPath);
 
-          const userLoaderOptions = options.svelteLoaderOptions ?? {};
-          const svelteLoaderOptions = {
-            preprocess: sveltePreprocess(options.preprocessOptions),
-            // NOTE emitCss: true is currently not supported with HMR
-            // See https://github.com/web-infra-dev/rsbuild/issues/2744
-            emitCss: isProd && !environmentConfig.output.injectStyles,
-            hotReload: isDev && environmentConfig.dev.hmr,
-            ...userLoaderOptions,
-            compilerOptions: {
-              dev: isDev,
-              ...userLoaderOptions.compilerOptions,
-            },
-          };
+        const userLoaderOptions = options.svelteLoaderOptions ?? {};
+        const svelteLoaderOptions = {
+          preprocess: sveltePreprocess(options.preprocessOptions),
+          // NOTE emitCss: true is currently not supported with HMR
+          // See https://github.com/web-infra-dev/rsbuild/issues/2744
+          emitCss: isProd && !environmentConfig.output.injectStyles,
+          hotReload: isDev && environmentConfig.dev.hmr,
+          ...userLoaderOptions,
+          compilerOptions: {
+            dev: isDev,
+            ...userLoaderOptions.compilerOptions,
+          },
+        };
 
-          const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
-          const jsMainRule = jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
-          const swcUse = jsMainRule.uses.get(CHAIN_ID.USE.SWC);
+        const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
+        const jsMainRule = jsRule.oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN);
+        const swcUse = jsMainRule.uses.get(CHAIN_ID.USE.SWC);
 
-          const svelteRule = chain.module
-            .rule(CHAIN_ID.RULE.SVELTE)
-            .test(/\.svelte$/);
+        const svelteRule = chain.module.rule(CHAIN_ID.RULE.SVELTE).test(/\.svelte$/);
 
-          svelteRule
-            .use(CHAIN_ID.USE.SWC)
-            .loader(swcUse.get('loader'))
-            .options(swcUse.get('options'));
+        svelteRule
+          .use(CHAIN_ID.USE.SWC)
+          .loader(swcUse.get('loader'))
+          .options(swcUse.get('options'));
 
-          svelteRule
-            .use(CHAIN_ID.USE.SVELTE)
-            .loader(loaderPath)
-            .options(svelteLoaderOptions)
-            .end();
+        svelteRule.use(CHAIN_ID.USE.SVELTE).loader(loaderPath).options(svelteLoaderOptions).end();
 
-          const regexp = /\.(?:svelte\.js|svelte\.ts)$/;
+        const regexp = /\.(?:svelte\.js|svelte\.ts)$/;
 
-          jsRule.exclude.add(regexp);
+        jsRule.exclude.add(regexp);
 
-          chain.module
-            .rule('svelte-js')
-            .test(regexp)
-            .use(CHAIN_ID.USE.SVELTE)
-            .loader(loaderPath)
-            .options(svelteLoaderOptions)
-            .end()
-            .use(CHAIN_ID.USE.SWC)
-            .loader(swcUse.get('loader'))
-            .options(swcUse.get('options'));
-        },
-      );
+        chain.module
+          .rule('svelte-js')
+          .test(regexp)
+          .use(CHAIN_ID.USE.SVELTE)
+          .loader(loaderPath)
+          .options(svelteLoaderOptions)
+          .end()
+          .use(CHAIN_ID.USE.SWC)
+          .loader(swcUse.get('loader'))
+          .options(swcUse.get('options'));
+      });
     },
   };
 }

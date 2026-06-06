@@ -7,10 +7,7 @@ description: 'Whether to inline output scripts files (.js files) into HTML with 
 - **Type:**
 
 ```ts
-type InlineChunkTestFunction = (params: {
-  size: number;
-  name: string;
-}) => boolean;
+type InlineChunkTestFunction = (params: { size: number; name: string }) => boolean;
 
 type InlineChunkTest = RegExp | InlineChunkTestFunction;
 

@@ -24,11 +24,10 @@ function createReadStream(
   start: number,
   end: number,
 ): ReadStream {
-  const createOutputReadStream =
-    outputFileSystem.createReadStream as unknown as (
-      p: string,
-      opts: { start: number; end: number; highWaterMark: number },
-    ) => ReadStream;
+  const createOutputReadStream = outputFileSystem.createReadStream as unknown as (
+    p: string,
+    opts: { start: number; end: number; highWaterMark: number },
+  ) => ReadStream;
 
   return createOutputReadStream(filename, {
     start,
@@ -54,15 +53,8 @@ function getContentType(str: string): false | string {
 
 const BYTES_RANGE_REGEXP = /^ *bytes/i;
 
-function getValueContentRangeHeader(
-  type: string,
-  size: number,
-  range?: Range,
-): string {
-  return `${type} ${range ? `${range.start}-${range.end}` : '*'}:${size}`.replace(
-    ':',
-    '/',
-  );
+function getValueContentRangeHeader(type: string, size: number, range?: Range): string {
+  return `${type} ${range ? `${range.start}-${range.end}` : '*'}:${size}`.replace(':', '/');
 }
 
 function parseHttpDate(date: string): number {
@@ -91,9 +83,7 @@ function destroyStream(stream: ReadStream, suppress: boolean): void {
   }
 }
 
-const parseRangeHeaders = async (
-  value: string,
-): Promise<RangeResult | Ranges> => {
+const parseRangeHeaders = async (value: string): Promise<RangeResult | Ranges> => {
   const { default: rangeParser } = await import(
     /* webpackChunkName: "range-parser" */
     'range-parser'
@@ -181,10 +171,7 @@ export function createAssetsMiddleware(
           !etag ||
           (ifMatch !== '*' &&
             parseTokenList(ifMatch).every(
-              (match: string) =>
-                match !== etag &&
-                match !== `W/${etag}` &&
-                `W/${match}` !== etag,
+              (match: string) => match !== etag && match !== `W/${etag}` && `W/${match}` !== etag,
             ))
         );
       }
@@ -193,9 +180,7 @@ export function createAssetsMiddleware(
       if (ifUnmodifiedSince) {
         const unmodifiedSince = parseHttpDate(ifUnmodifiedSince);
         if (!Number.isNaN(unmodifiedSince)) {
-          const lastModified = parseHttpDate(
-            String(res.getHeader('Last-Modified')),
-          );
+          const lastModified = parseHttpDate(String(res.getHeader('Last-Modified')));
           return Number.isNaN(lastModified) || lastModified > unmodifiedSince;
         }
       }
@@ -205,8 +190,7 @@ export function createAssetsMiddleware(
 
     function isCachable(): boolean {
       return (
-        (res.statusCode >= 200 && res.statusCode < 300) ||
-        res.statusCode === HttpCode.NotModified
+        (res.statusCode >= 200 && res.statusCode < 300) || res.statusCode === HttpCode.NotModified
       );
     }
 
@@ -256,10 +240,7 @@ export function createAssetsMiddleware(
       if (modifiedSince) {
         const lastModified = resHeaders['last-modified'];
         const modifiedStale =
-          !lastModified ||
-          !(
-            parseHttpDate(String(lastModified)) <= parseHttpDate(modifiedSince)
-          );
+          !lastModified || !(parseHttpDate(String(lastModified)) <= parseHttpDate(modifiedSince));
 
         if (modifiedStale) {
           return false;
@@ -372,9 +353,7 @@ export function createAssetsMiddleware(
           isCachable() &&
           isFresh({
             etag: res.getHeader('ETag') as string | undefined,
-            'last-modified': res.getHeader('Last-Modified') as
-              | string
-              | undefined,
+            'last-modified': res.getHeader('Last-Modified') as string | undefined,
           })
         ) {
           res.statusCode = HttpCode.NotModified;
@@ -399,14 +378,9 @@ export function createAssetsMiddleware(
         }
 
         if (parsedRanges === -1) {
-          logger.error(
-            "[rsbuild:middleware] Unsatisfiable range for 'Range' header.",
-          );
+          logger.error("[rsbuild:middleware] Unsatisfiable range for 'Range' header.");
 
-          res.setHeader(
-            'Content-Range',
-            getValueContentRangeHeader('bytes', size),
-          );
+          res.setHeader('Content-Range', getValueContentRangeHeader('bytes', size));
 
           sendError(res, HttpCode.RangeNotSatisfiable);
           return;

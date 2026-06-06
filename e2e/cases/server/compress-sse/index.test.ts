@@ -6,14 +6,11 @@ test('should not gzip SSE responses after internal middleware', async ({
 }) => {
   await runBothServe(
     async ({ result }) => {
-      const response = await request.get(
-        `http://localhost:${result.port}/api/sse`,
-        {
-          headers: {
-            'accept-encoding': 'gzip',
-          },
+      const response = await request.get(`http://localhost:${result.port}/api/sse`, {
+        headers: {
+          'accept-encoding': 'gzip',
         },
-      );
+      });
       const headers = response.headers();
       const text = (await response.body()).toString('utf8');
 

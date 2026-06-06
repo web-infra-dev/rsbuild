@@ -1,11 +1,6 @@
 import { createRequire } from 'node:module';
 import path from 'node:path';
-import type {
-  RsbuildConfig,
-  RsbuildPlugin,
-  RsbuildPluginAPI,
-  Rspack,
-} from '@rsbuild/core';
+import type { RsbuildConfig, RsbuildPlugin, RsbuildPluginAPI, Rspack } from '@rsbuild/core';
 import type { PluginOptions as ReactRefreshOptions } from '@rspack/plugin-react-refresh';
 import { applySplitChunksRule } from './splitChunks.js';
 
@@ -130,9 +125,7 @@ function applyReactProfiler(api: RsbuildPluginAPI): void {
   });
 }
 
-export const pluginReact = (
-  options: PluginReactOptions = {},
-): RsbuildPlugin => ({
+export const pluginReact = (options: PluginReactOptions = {}): RsbuildPlugin => ({
   name: PLUGIN_REACT_NAME,
 
   setup(api) {
@@ -149,14 +142,11 @@ export const pluginReact = (
       ...options,
     };
 
-    const reactRefreshPath = finalOptions.fastRefresh
-      ? require.resolve('react-refresh')
-      : '';
+    const reactRefreshPath = finalOptions.fastRefresh ? require.resolve('react-refresh') : '';
 
     api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
       const isDev = config.mode === 'development';
-      const usingHMR =
-        isDev && config.dev.hmr && config.output.target === 'web';
+      const usingHMR = isDev && config.dev.hmr && config.output.target === 'web';
 
       const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
         development: isDev,
@@ -191,37 +181,29 @@ export const pluginReact = (
       });
     }
 
-    api.modifyBundlerChain(
-      async (chain, { CHAIN_ID, environment, isDev, target }) => {
-        const { config } = environment;
-        const usingHMR = isDev && config.dev.hmr && target === 'web';
-        if (!usingHMR || !finalOptions.fastRefresh) {
-          return;
-        }
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment, isDev, target }) => {
+      const { config } = environment;
+      const usingHMR = isDev && config.dev.hmr && target === 'web';
+      if (!usingHMR || !finalOptions.fastRefresh) {
+        return;
+      }
 
-        chain.resolve.alias.set(
-          'react-refresh',
-          path.dirname(reactRefreshPath),
-        );
+      chain.resolve.alias.set('react-refresh', path.dirname(reactRefreshPath));
 
-        const { ReactRefreshRspackPlugin } =
-          await import('@rspack/plugin-react-refresh');
+      const { ReactRefreshRspackPlugin } = await import('@rspack/plugin-react-refresh');
 
-        const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
+      const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
 
-        chain
-          .plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)
-          .use(ReactRefreshRspackPlugin, [
-            {
-              test: jsRule.get('test'),
-              include: jsRule.include.values(),
-              exclude: jsRule.exclude.values(),
-              resourceQuery: { not: /^\?raw$/ },
-              ...finalOptions.reactRefreshOptions,
-            },
-          ]);
-      },
-    );
+      chain.plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH).use(ReactRefreshRspackPlugin, [
+        {
+          test: jsRule.get('test'),
+          include: jsRule.include.values(),
+          exclude: jsRule.exclude.values(),
+          resourceQuery: { not: /^\?raw$/ },
+          ...finalOptions.reactRefreshOptions,
+        },
+      ]);
+    });
 
     applySplitChunksRule(api, finalOptions.splitChunks);
 

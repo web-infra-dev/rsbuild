@@ -217,9 +217,7 @@ export async function open({
     }
   } else {
     urls.push(
-      ...targets.map((target) =>
-        resolveUrl(replacePortPlaceholder(target, port), baseUrl),
-      ),
+      ...targets.map((target) => resolveUrl(replacePortPlaceholder(target, port), baseUrl)),
     );
   }
 

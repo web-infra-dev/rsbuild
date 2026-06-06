@@ -1,5 +1,4 @@
-const pathname =
-  typeof window === 'undefined' ? '/' : window.location.pathname || '/';
+const pathname = typeof window === 'undefined' ? '/' : window.location.pathname || '/';
 
 const renderPage = () => {
   if (pathname === '/a') {

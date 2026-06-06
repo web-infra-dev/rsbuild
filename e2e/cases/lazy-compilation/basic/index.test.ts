@@ -3,10 +3,7 @@ import { expect, gotoPage, test } from '@e2e/helper';
 const BUILD_PAGE1 = 'building src/page1/index.js';
 const BUILD_PAGE2 = 'building src/page2/index.js';
 
-test('should render pages correctly when using lazy compilation', async ({
-  page,
-  dev,
-}) => {
+test('should render pages correctly when using lazy compilation', async ({ page, dev }) => {
   const rsbuild = await dev({
     config: {
       dev: {
@@ -34,10 +31,7 @@ test('should render pages correctly when using lazy compilation', async ({
   await expect(page.locator('#test')).toHaveText('Page 2');
 });
 
-test('should allow to configure `tools.rspack.lazyCompilation`', async ({
-  page,
-  dev,
-}) => {
+test('should allow to configure `tools.rspack.lazyCompilation`', async ({ page, dev }) => {
   const rsbuild = await dev({
     config: {
       tools: {

@@ -2,10 +2,7 @@ import fs from 'node:fs';
 import { join } from 'node:path';
 import { expect, test } from '@e2e/helper';
 
-test('should allow to import TS files with .js extension', async ({
-  page,
-  buildPreview,
-}) => {
+test('should allow to import TS files with .js extension', async ({ page, buildPreview }) => {
   await buildPreview();
   expect(await page.evaluate(() => window.test)).toBe('ts');
 });

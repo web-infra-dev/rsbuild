@@ -7,7 +7,5 @@ test('should print Less plugin hints as expected', async ({ build }) => {
 
   expect(rsbuild.buildError).toBeTruthy();
 
-  await rsbuild.expectLog(
-    'To enable support for Less, use "@rsbuild/plugin-less"',
-  );
+  await rsbuild.expectLog('To enable support for Less, use "@rsbuild/plugin-less"');
 });

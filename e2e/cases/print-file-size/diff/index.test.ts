@@ -3,12 +3,7 @@ import { expect, test } from '@e2e/helper';
 import fse from 'fs-extra';
 import { extractFileSizeLogs } from '../helper';
 
-test('should print file size diff as expected', async ({
-  cwd,
-  build,
-  editFile,
-  copySrcDir,
-}) => {
+test('should print file size diff as expected', async ({ cwd, build, editFile, copySrcDir }) => {
   const cacheDir = join(cwd, 'node_modules/.cache');
   await fse.remove(cacheDir);
   const srcDir = await copySrcDir();

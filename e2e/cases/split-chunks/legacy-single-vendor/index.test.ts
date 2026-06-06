@@ -1,9 +1,7 @@
 import { basename } from 'node:path';
 import { expect, findFile, test } from '@e2e/helper';
 
-test('should generate vendor chunk when chunkSplit is "single-vendor"', async ({
-  build,
-}) => {
+test('should generate vendor chunk when chunkSplit is "single-vendor"', async ({ build }) => {
   const rsbuild = await build();
 
   const files = rsbuild.getDistFiles();

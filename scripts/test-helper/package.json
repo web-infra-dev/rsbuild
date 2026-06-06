@@ -1,12 +1,12 @@
 {
   "name": "@scripts/test-helper",
-  "private": true,
   "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild"
   },
-  "license": "MIT",
   "type": "module",
   "exports": {
     ".": {
@@ -14,14 +14,14 @@
       "default": "./src/index.ts"
     }
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "dependencies": {
     "@rsbuild/core": "workspace:*",
     "@types/node": "catalog:",
     "path-serializer": "catalog:",
     "typescript": "catalog:"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
   }
 }

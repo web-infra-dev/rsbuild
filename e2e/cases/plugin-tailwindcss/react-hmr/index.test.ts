@@ -26,9 +26,7 @@ test('should support Tailwind CSS HMR in React components', async ({
   await button.click();
   await expect(button).toHaveText('count: 1');
 
-  await editFile(join(tempSrc, 'App.tsx'), (code) =>
-    code.replace('bg-[#123456]', 'bg-[#654321]'),
-  );
+  await editFile(join(tempSrc, 'App.tsx'), (code) => code.replace('bg-[#123456]', 'bg-[#654321]'));
 
   await expect(button).toHaveText('count: 1');
   await expect(button).toHaveCSS('background-color', 'rgb(101, 67, 33)');

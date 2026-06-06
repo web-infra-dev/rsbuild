@@ -10,8 +10,7 @@ export const pluginSri = (): RsbuildPlugin => ({
     api.modifyBundlerChain((chain, { environment, CHAIN_ID, rspack }) => {
       const { config } = environment;
       const { sri } = config.security;
-      const enable =
-        sri.enable === 'auto' ? config.mode === 'production' : sri.enable;
+      const enable = sri.enable === 'auto' ? config.mode === 'production' : sri.enable;
 
       if (!enable) {
         return;
@@ -26,20 +25,11 @@ export const pluginSri = (): RsbuildPlugin => ({
       const { algorithm = 'sha384' } = sri;
       const pluginOptions: Rspack.SubresourceIntegrityPluginOptions = {
         enabled: true,
-        hashFuncNames: castArray(algorithm) as [
-          SriAlgorithm,
-          ...SriAlgorithm[],
-        ],
+        hashFuncNames: castArray(algorithm) as [SriAlgorithm, ...SriAlgorithm[]],
       };
 
-      if (
-        config.html.implementation === 'js' &&
-        config.tools.htmlPlugin !== false
-      ) {
-        pluginOptions.htmlPlugin = path.join(
-          COMPILED_PATH,
-          'html-rspack-plugin/index.js',
-        );
+      if (config.html.implementation === 'js' && config.tools.htmlPlugin !== false) {
+        pluginOptions.htmlPlugin = path.join(COMPILED_PATH, 'html-rspack-plugin/index.js');
       }
 
       chain

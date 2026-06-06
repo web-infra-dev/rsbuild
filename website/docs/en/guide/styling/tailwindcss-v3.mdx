@@ -52,10 +52,7 @@ Note that the `content` option should include the paths to all source files that
 ```js title="tailwind.config.js"
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    './src/**/*.{html,js,ts,jsx,tsx}',
-    '../../lib1/src/**/*.{js,ts,jsx,tsx}',
-  ],
+  content: ['./src/**/*.{html,js,ts,jsx,tsx}', '../../lib1/src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {},
   },

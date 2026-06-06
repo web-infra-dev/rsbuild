@@ -23,9 +23,7 @@ describe('plugin-sass', () => {
     });
 
     const rspackConfigs = await rsbuild.initConfigs();
-    expect(
-      matchRules(rspackConfigs[0] as Rspack.Configuration, 'a.scss'),
-    ).toMatchSnapshot();
+    expect(matchRules(rspackConfigs[0] as Rspack.Configuration, 'a.scss')).toMatchSnapshot();
   });
 
   it('should add sass-loader and css-loader when injectStyles', async () => {

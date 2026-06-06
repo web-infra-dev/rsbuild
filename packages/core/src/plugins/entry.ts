@@ -42,8 +42,7 @@ export const pluginEntry = (): RsbuildPlugin => ({
         }
 
         const isModuleFederationPlugin = (plugin: Rspack.Plugin) =>
-          isObject(plugin) &&
-          plugin.constructor.name === 'ModuleFederationPlugin';
+          isObject(plugin) && plugin.constructor.name === 'ModuleFederationPlugin';
 
         const hasModuleFederation = bundlerConfigs.some(({ plugins }) =>
           plugins?.some(isModuleFederationPlugin),
@@ -60,9 +59,7 @@ export const pluginEntry = (): RsbuildPlugin => ({
         throw new Error(
           `${color.dim('[rsbuild:config]')} Could not find any entry module, please make sure that ${color.yellow(
             'src/index.(ts|js|tsx|jsx|mts|cts|mjs|cjs)',
-          )} exists, or customize entry through the ${color.yellow(
-            'source.entry',
-          )} configuration.`,
+          )} exists, or customize entry through the ${color.yellow('source.entry')} configuration.`,
         );
       },
     });

@@ -3,16 +3,12 @@ import { Buffer } from 'node:buffer';
 import type { Rspack } from '@rsbuild/core';
 import { interpolateName } from 'loader-utils';
 
-type FilenameTemplate =
-  | string
-  | ((resourcePath: string, resourceQuery?: string) => string);
+type FilenameTemplate = string | ((resourcePath: string, resourceQuery?: string) => string);
 
 export type SvgAssetLoaderOptions = {
   limit: number;
   name: FilenameTemplate;
-  publicPath?:
-    | string
-    | ((url: string, resourcePath: string, context: string) => string);
+  publicPath?: string | ((url: string, resourcePath: string, context: string) => string);
 };
 
 type RawLoaderDefinition<OptionsType = {}> = ((
@@ -27,13 +23,9 @@ const HASH_TEMPLATE_REGEX = /\[(?:[^:\]]+:)?(?:hash|contenthash)(?::[^\]]+)?]/i;
 
 const normalizePath = (value: string) => value.replace(/\\/g, '/');
 
-const assetLoader: RawLoaderDefinition<SvgAssetLoaderOptions> = function (
-  content,
-) {
+const assetLoader: RawLoaderDefinition<SvgAssetLoaderOptions> = function (content) {
   const { limit, name, publicPath } = this.getOptions();
-  const buffer = Buffer.isBuffer(content)
-    ? content
-    : Buffer.from(content, 'utf8');
+  const buffer = Buffer.isBuffer(content) ? content : Buffer.from(content, 'utf8');
 
   if (buffer.length <= limit) {
     const dataUrl = `data:${SVG_MIME_TYPE};base64,${buffer.toString('base64')}`;
@@ -49,9 +41,7 @@ const assetLoader: RawLoaderDefinition<SvgAssetLoaderOptions> = function (
     immutable?: true;
     sourceFilename: string;
   } = {
-    sourceFilename: normalizePath(
-      path.relative(this.rootContext, this.resourcePath),
-    ),
+    sourceFilename: normalizePath(path.relative(this.rootContext, this.resourcePath)),
   };
 
   if (typeof name === 'string' && HASH_TEMPLATE_REGEX.test(name)) {
@@ -66,13 +56,9 @@ const assetLoader: RawLoaderDefinition<SvgAssetLoaderOptions> = function (
    */
   const publicPathCode =
     typeof publicPath === 'function'
-      ? JSON.stringify(
-          publicPath(filename, this.resourcePath, this.rootContext),
-        )
+      ? JSON.stringify(publicPath(filename, this.resourcePath, this.rootContext))
       : typeof publicPath === 'string'
-        ? JSON.stringify(
-            `${publicPath.endsWith('/') ? publicPath : `${publicPath}/`}${filename}`,
-          )
+        ? JSON.stringify(`${publicPath.endsWith('/') ? publicPath : `${publicPath}/`}${filename}`)
         : `__webpack_public_path__ + ${JSON.stringify(filename)}`;
 
   return `export default ${publicPathCode};`;

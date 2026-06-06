@@ -11,14 +11,10 @@ type CheckResult = {
 };
 
 test.beforeAll(() => {
-  cpSync(
-    join(import.meta.dirname, '_node_modules'),
-    join(import.meta.dirname, 'node_modules'),
-    {
-      force: true,
-      recursive: true,
-    },
-  );
+  cpSync(join(import.meta.dirname, '_node_modules'), join(import.meta.dirname, 'node_modules'), {
+    force: true,
+    recursive: true,
+  });
 });
 
 test('should align loadBundle ESM default import with native Node.js', async ({

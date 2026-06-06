@@ -26,15 +26,10 @@ import type {
 } from '../types';
 import { parseMinifyOptions } from './minimize';
 
-const getCSSModulesLocalIdentName = (
-  config: NormalizedEnvironmentConfig,
-  isProd: boolean,
-) =>
+const getCSSModulesLocalIdentName = (config: NormalizedEnvironmentConfig, isProd: boolean) =>
   config.output.cssModules.localIdentName ||
   // Using shorter classname in production to reduce bundle size
-  (isProd
-    ? '[local]-[hash:base64:6]'
-    : '[path][name]__[local]-[hash:base64:6]');
+  (isProd ? '[local]-[hash:base64:6]' : '[path][name]__[local]-[hash:base64:6]');
 
 export async function getLightningCSSLoaderOptions(
   config: NormalizedEnvironmentConfig,
@@ -42,9 +37,7 @@ export async function getLightningCSSLoaderOptions(
   minify: boolean,
 ): Promise<Rspack.LightningcssLoaderOptions> {
   const userOptions =
-    typeof config.tools.lightningcssLoader === 'object'
-      ? config.tools.lightningcssLoader
-      : {};
+    typeof config.tools.lightningcssLoader === 'object' ? config.tools.lightningcssLoader : {};
 
   const initialOptions: Rspack.LightningcssLoaderOptions = {
     targets,
@@ -133,9 +126,7 @@ async function loadUserPostcssrc(
   });
 }
 
-const isPostcssPluginCreator = (
-  plugin: AcceptedPlugin,
-): plugin is PluginCreator<unknown> =>
+const isPostcssPluginCreator = (plugin: AcceptedPlugin): plugin is PluginCreator<unknown> =>
   typeof plugin === 'function' && (plugin as PluginCreator<unknown>).postcss;
 
 const getPostcssLoaderOptions = async ({
@@ -258,10 +249,7 @@ const getCSSLoaderOptions = async ({
     mergeFn: deepmerge,
   });
 
-  const cssLoaderOptions = normalizeCssLoaderOptions(
-    mergedCssLoaderOptions,
-    !emitCss,
-  );
+  const cssLoaderOptions = normalizeCssLoaderOptions(mergedCssLoaderOptions, !emitCss);
 
   return cssLoaderOptions;
 };
@@ -275,10 +263,7 @@ export const pluginCss = (): RsbuildPlugin => ({
 
     api.modifyBundlerChain({
       order: 'pre',
-      handler: async (
-        chain,
-        { target, isProd, CHAIN_ID, environment, environments },
-      ) => {
+      handler: async (chain, { target, isProd, CHAIN_ID, environment, environments }) => {
         const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
         const { config } = environment;
 
@@ -289,12 +274,8 @@ export const pluginCss = (): RsbuildPlugin => ({
           .dependency({ not: 'url' });
 
         // Support for `import cssUrl from "a.css?url"`
-        const urlRule = cssRule
-          .oneOf(CHAIN_ID.ONE_OF.CSS_URL)
-          .resourceQuery(URL_QUERY_REGEX);
-        urlRule
-          .use(CHAIN_ID.USE.CSS_URL)
-          .loader(path.join(LOADER_PATH, 'cssUrlLoader.mjs'));
+        const urlRule = cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_URL).resourceQuery(URL_QUERY_REGEX);
+        urlRule.use(CHAIN_ID.USE.CSS_URL).loader(path.join(LOADER_PATH, 'cssUrlLoader.mjs'));
 
         // Support for `import inlineCss from "a.css?inline"`
         const inlineRule = cssRule
@@ -302,10 +283,7 @@ export const pluginCss = (): RsbuildPlugin => ({
           .resourceQuery(INLINE_QUERY_REGEX);
 
         // Support for `import rawCss from "a.css?raw"`
-        cssRule
-          .oneOf(CHAIN_ID.ONE_OF.CSS_RAW)
-          .type('asset/source')
-          .resourceQuery(RAW_QUERY_REGEX);
+        cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_RAW).type('asset/source').resourceQuery(RAW_QUERY_REGEX);
 
         // Default CSS handling
         const mainRule = cssRule.oneOf(CHAIN_ID.ONE_OF.CSS_MAIN);
@@ -390,10 +368,7 @@ export const pluginCss = (): RsbuildPlugin => ({
             async (rule, type) => {
               // Inline styles are not processed by Rspack's minimizers,
               // so we need to minify them via `builtin:lightningcss-loader`
-              const inlineStyle =
-                type === 'inline' ||
-                type === 'url' ||
-                config.output.injectStyles;
+              const inlineStyle = type === 'inline' || type === 'url' || config.output.injectStyles;
               const minify = inlineStyle && minifyCss;
 
               const lightningcssOptions = await getLightningCSSLoaderOptions(
@@ -491,10 +466,7 @@ export const pluginCss = (): RsbuildPlugin => ({
         });
 
         const isStringExport = cssLoaderOptions.exportType === 'string';
-        if (
-          isStringExport &&
-          mainRule.uses.has(CHAIN_ID.USE.MINI_CSS_EXTRACT)
-        ) {
+        if (isStringExport && mainRule.uses.has(CHAIN_ID.USE.MINI_CSS_EXTRACT)) {
           mainRule.uses.delete(CHAIN_ID.USE.MINI_CSS_EXTRACT);
         }
 
@@ -507,28 +479,25 @@ export const pluginCss = (): RsbuildPlugin => ({
           const isCssFilenameFn = typeof cssFilename === 'function';
 
           const cssAsyncPath =
-            config.output.distPath.cssAsync ??
-            (cssPath ? `${cssPath}/async` : 'async');
+            config.output.distPath.cssAsync ?? (cssPath ? `${cssPath}/async` : 'async');
 
-          chain
-            .plugin(CHAIN_ID.PLUGIN.MINI_CSS_EXTRACT)
-            .use(rspack.CssExtractRspackPlugin, [
-              {
-                filename: isCssFilenameFn
-                  ? (...args) => {
-                      const name = cssFilename(...args);
-                      return posix.join(cssPath, name);
-                    }
-                  : posix.join(cssPath, cssFilename),
-                chunkFilename: isCssFilenameFn
-                  ? (...args) => {
-                      const name = cssFilename(...args);
-                      return posix.join(cssAsyncPath, name);
-                    }
-                  : posix.join(cssAsyncPath, cssFilename),
-                ...extractPluginOptions,
-              },
-            ]);
+          chain.plugin(CHAIN_ID.PLUGIN.MINI_CSS_EXTRACT).use(rspack.CssExtractRspackPlugin, [
+            {
+              filename: isCssFilenameFn
+                ? (...args) => {
+                    const name = cssFilename(...args);
+                    return posix.join(cssPath, name);
+                  }
+                : posix.join(cssPath, cssFilename),
+              chunkFilename: isCssFilenameFn
+                ? (...args) => {
+                    const name = cssFilename(...args);
+                    return posix.join(cssAsyncPath, name);
+                  }
+                : posix.join(cssAsyncPath, cssFilename),
+              ...extractPluginOptions,
+            },
+          ]);
         }
       },
     });

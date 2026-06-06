@@ -1,8 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('should respect custom JS output filename for worker query imports', async ({
-  build,
-}) => {
+test('should respect custom JS output filename for worker query imports', async ({ build }) => {
   const result = await build();
 
   const files = result.getDistFiles();

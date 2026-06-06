@@ -1,10 +1,7 @@
 import { join } from 'node:path';
 import { expect, findFile, getFileContent, test } from '@e2e/helper';
 
-test('should inline style when `injectStyles` is enabled', async ({
-  page,
-  buildPreview,
-}) => {
+test('should inline style when `injectStyles` is enabled', async ({ page, buildPreview }) => {
   const rsbuild = await buildPreview();
 
   // injectStyles worked
@@ -16,9 +13,7 @@ test('should inline style when `injectStyles` is enabled', async ({
 
   expect(indexJs.includes('html,body{margin:0;padding:0}')).toBeTruthy();
   expect(
-    indexJs.includes(
-      '.description{text-align:center;font-size:16px;line-height:1.5}',
-    ),
+    indexJs.includes('.description{text-align:center;font-size:16px;line-height:1.5}'),
   ).toBeTruthy();
 
   // scss worked
@@ -59,9 +54,7 @@ test('HMR should work well when `injectStyles` is enabled', async ({
   const locatorKeep = page.locator('#test-keep');
   const keepNum = await locatorKeep.innerHTML();
 
-  await editFile(join(tempSrc, 'App.module.less'), (code) =>
-    code.replace('20px', '40px'),
-  );
+  await editFile(join(tempSrc, 'App.module.less'), (code) => code.replace('20px', '40px'));
 
   // CSS HMR works well
   await expect(title).toHaveCSS('font-size', '40px');

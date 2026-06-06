@@ -52,10 +52,7 @@ export abstract class BasicRunner implements Runner {
     }
     this.baseModuleScope = this.createBaseModuleScope();
     this.createRunner();
-    const res = this.getRequire()(
-      this._options.dist,
-      file.startsWith('./') ? file : `./${file}`,
-    );
+    const res = this.getRequire()(this._options.dist, file.startsWith('./') ? file : `./${file}`);
     if (res && typeof res === 'object' && 'then' in res) {
       return res as Promise<unknown>;
     }
@@ -65,9 +62,7 @@ export abstract class BasicRunner implements Runner {
   getRequire(): RunnerRequirer {
     const entryRequire = this.requirers.get('entry')!;
     return (currentDirectory, modulePath, context = {}) => {
-      const p = Array.isArray(modulePath)
-        ? modulePath
-        : modulePath.split('?')[0];
+      const p = Array.isArray(modulePath) ? modulePath : modulePath.split('?')[0];
       return entryRequire(currentDirectory, p, context);
     };
   }
@@ -119,11 +114,8 @@ export abstract class BasicRunner implements Runner {
   protected postExecute(_m: ModuleObject, _file: BasicRunnerFile): void {}
 
   protected createRunner(): void {
-    this.requirers.set(
-      'entry',
-      (_currentDirectory, _modulePath, _context = {}) => {
-        throw new Error(`${color.dim('[rsbuild:runner]')} Not implemented`);
-      },
-    );
+    this.requirers.set('entry', (_currentDirectory, _modulePath, _context = {}) => {
+      throw new Error(`${color.dim('[rsbuild:runner]')} Not implemented`);
+    });
   }
 }

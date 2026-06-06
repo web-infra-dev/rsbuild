@@ -1,10 +1,5 @@
 import path from 'node:path';
-import type {
-  ConfigChainWithContext,
-  RsbuildPlugin,
-  Rspack,
-  RspackChain,
-} from '@rsbuild/core';
+import type { ConfigChainWithContext, RsbuildPlugin, Rspack, RspackChain } from '@rsbuild/core';
 import deepmerge from 'deepmerge';
 import { reduceConfigsWithContext } from 'reduce-configs';
 import { createRequire } from 'node:module';
@@ -12,11 +7,7 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 
 export const isPlainObject = (obj: unknown): obj is Record<string, unknown> => {
-  return (
-    obj !== null &&
-    typeof obj === 'object' &&
-    Object.getPrototypeOf(obj) === Object.prototype
-  );
+  return obj !== null && typeof obj === 'object' && Object.getPrototypeOf(obj) === Object.prototype;
 };
 
 export const PLUGIN_LESS_NAME = 'rsbuild:less';
@@ -171,9 +162,7 @@ const findRuleId = (chain: RspackChain, defaultId: string) => {
   return id;
 };
 
-export const pluginLess = (
-  pluginOptions: PluginLessOptions = {},
-): RsbuildPlugin => ({
+export const pluginLess = (pluginOptions: PluginLessOptions = {}): RsbuildPlugin => ({
   name: PLUGIN_LESS_NAME,
 
   setup(api) {
@@ -208,11 +197,7 @@ export const pluginLess = (
         if (isV1) {
           return chain.module.rule(id);
         }
-        return (
-          id.startsWith('less')
-            ? lessRule
-            : chain.module.rule(CHAIN_ID.RULE.CSS)
-        ).oneOf(id);
+        return (id.startsWith('less') ? lessRule : chain.module.rule(CHAIN_ID.RULE.CSS)).oneOf(id);
       };
 
       const cssRule = chain.module.rule(CHAIN_ID.RULE.CSS);
@@ -226,9 +211,7 @@ export const pluginLess = (
       const lessInlineRule = getRule(LESS_INLINE);
 
       // Raw Less for `?raw` imports
-      getRule(LESS_RAW)
-        .type('asset/source')
-        .resourceQuery(getRule(CSS_RAW).get('resourceQuery'));
+      getRule(LESS_RAW).type('asset/source').resourceQuery(getRule(CSS_RAW).get('resourceQuery'));
 
       // Main Less transform
       const lessMainRule = getRule(LESS_MAIN);
@@ -284,10 +267,7 @@ export const pluginLess = (
           rule.use(id).loader(loader.get('loader')).options(clonedOptions);
         }
 
-        const loader = rule
-          .use(CHAIN_ID.USE.LESS)
-          .loader(lessLoaderPath)
-          .options(options);
+        const loader = rule.use(CHAIN_ID.USE.LESS).loader(lessLoaderPath).options(options);
 
         if (parallel) {
           loader.parallel(true);

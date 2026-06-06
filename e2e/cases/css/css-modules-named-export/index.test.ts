@@ -1,9 +1,6 @@
 import { expect, getFileContent, test } from '@e2e/helper';
 
-test('should compile CSS Modules with named exports correctly', async ({
-  page,
-  buildPreview,
-}) => {
+test('should compile CSS Modules with named exports correctly', async ({ page, buildPreview }) => {
   const rsbuild = await buildPreview();
   const files = rsbuild.getDistFiles();
   const content = getFileContent(files, 'index.css');

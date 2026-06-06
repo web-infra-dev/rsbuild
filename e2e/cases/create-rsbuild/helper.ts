@@ -4,10 +4,7 @@ import path from 'node:path';
 import { CREATE_RSBUILD_BIN_PATH, expect } from '@e2e/helper';
 import fse from 'fs-extra';
 
-export const expectPackageJson = (
-  pkgJson: Record<string, any>,
-  name: string,
-) => {
+export const expectPackageJson = (pkgJson: Record<string, any>, name: string) => {
   expect(pkgJson.name).toBe(name);
   expect(pkgJson.scripts.dev).toBe('rsbuild --open');
   expect(pkgJson.scripts.build).toBe('rsbuild build');

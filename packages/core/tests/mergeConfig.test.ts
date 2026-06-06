@@ -4,22 +4,14 @@ import { mergeRsbuildConfig } from '../src/mergeConfig';
 describe('mergeRsbuildConfig', () => {
   it('should use `false` to replace empty object', () => {
     expect(
-      mergeRsbuildConfig(
-        { tools: { htmlPlugin: {} } },
-        { tools: { htmlPlugin: false } },
-      ),
+      mergeRsbuildConfig({ tools: { htmlPlugin: {} } }, { tools: { htmlPlugin: false } }),
     ).toEqual({
       tools: { htmlPlugin: false },
     });
   });
 
   test('should set value when target value is not undefined', () => {
-    expect(
-      mergeRsbuildConfig(
-        { resolve: { alias: {} } },
-        { output: { minify: false } },
-      ),
-    ).toEqual({
+    expect(mergeRsbuildConfig({ resolve: { alias: {} } }, { output: { minify: false } })).toEqual({
       resolve: {
         alias: {},
       },

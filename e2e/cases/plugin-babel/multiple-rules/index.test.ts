@@ -2,10 +2,7 @@ import { expect, test } from '@e2e/helper';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { firstBabelPlugin, secondBabelPlugin } from './babelPlugins.ts';
 
-test('should apply different babel plugins to matched files', async ({
-  page,
-  buildPreview,
-}) => {
+test('should apply different babel plugins to matched files', async ({ page, buildPreview }) => {
   await buildPreview({
     config: {
       plugins: [

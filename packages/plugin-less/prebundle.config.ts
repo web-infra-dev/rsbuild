@@ -2,10 +2,7 @@ import fs from 'node:fs';
 import { join } from 'node:path';
 import type { Config } from 'prebundle';
 
-function replaceFileContent(
-  filePath: string,
-  replaceFn: (content: string) => string,
-) {
+function replaceFileContent(filePath: string, replaceFn: (content: string) => string) {
   const content = fs.readFileSync(filePath, 'utf-8');
   const newContent = replaceFn(content);
   if (newContent !== content) {
@@ -25,10 +22,7 @@ export default {
         replaceFileContent(
           join(process.cwd(), 'node_modules/@types/less/index.d.ts'),
           (content) =>
-            `${content.replace(
-              /declare module "less" {\s+export = less;\s+}/,
-              'export = Less;',
-            )}`,
+            `${content.replace(/declare module "less" {\s+export = less;\s+}/, 'export = Less;')}`,
         );
       },
     },

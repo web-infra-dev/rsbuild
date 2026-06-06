@@ -9,15 +9,9 @@ test('should allow to use `new URL` to reference script as assets', async ({
   const files = rsbuild.getDistFiles();
   const filenames = Object.keys(files);
 
-  const test1 = filenames.find((filename) =>
-    filename.includes('dist/static/assets/test1.js'),
-  );
-  const test2 = filenames.find((filename) =>
-    filename.includes('dist/static/assets/test2.ts'),
-  );
-  const test3 = filenames.find((filename) =>
-    filename.includes('dist/static/assets/test3.mjs'),
-  );
+  const test1 = filenames.find((filename) => filename.includes('dist/static/assets/test1.js'));
+  const test2 = filenames.find((filename) => filename.includes('dist/static/assets/test2.ts'));
+  const test3 = filenames.find((filename) => filename.includes('dist/static/assets/test3.mjs'));
 
   expect(test1).toBeDefined();
   expect(test2).toBeDefined();

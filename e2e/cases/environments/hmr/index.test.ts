@@ -59,17 +59,13 @@ test('should perform multiple environments HMR', async ({
   const keepNum = await locatorKeep.innerHTML();
 
   // web1 live reload correctly and should not trigger index update
-  await editFile(join(tempSrc, 'web1.js'), (code) =>
-    code.replace('(web1)', '(web1-new)'),
-  );
+  await editFile(join(tempSrc, 'web1.js'), (code) => code.replace('(web1)', '(web1-new)'));
 
   await expect(locator1).toHaveText('Hello Rsbuild (web1)!');
   expect(await locatorKeep.innerHTML()).toBe(keepNum);
 
   // index HMR correctly
-  await editFile(join(tempSrc, 'App.tsx'), (code) =>
-    code.replace('Hello Rsbuild', 'Hello Test'),
-  );
+  await editFile(join(tempSrc, 'App.tsx'), (code) => code.replace('Hello Rsbuild', 'Hello Test'));
 
   await expect(locator).toHaveText('Hello Test!');
 

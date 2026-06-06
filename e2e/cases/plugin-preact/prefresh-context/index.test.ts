@@ -2,11 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { expect, test } from '@e2e/helper';
 
-test('HMR should work properly with `createContext`', async ({
-  page,
-  dev,
-  editFile,
-}) => {
+test('HMR should work properly with `createContext`', async ({ page, dev, editFile }) => {
   const root = import.meta.dirname;
   const compFilePath = path.join(root, 'src/test-temp-B.jsx');
   const compSourceCode = `const B = (props) => {

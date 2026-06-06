@@ -1,9 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('should exclude matched SVG files from SVGR processing', async ({
-  page,
-  buildPreview,
-}) => {
+test('should exclude matched SVG files from SVGR processing', async ({ page, buildPreview }) => {
   await buildPreview();
 
   await expect(
@@ -11,8 +8,6 @@ test('should exclude matched SVG files from SVGR processing', async ({
   ).resolves.toBeTruthy();
 
   await expect(
-    page.evaluate(
-      `document.getElementById('bar').src.startsWith('data:image/svg')`,
-    ),
+    page.evaluate(`document.getElementById('bar').src.startsWith('data:image/svg')`),
   ).resolves.toBeTruthy();
 });

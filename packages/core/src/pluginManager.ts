@@ -29,9 +29,7 @@ function validatePlugin(plugin: unknown) {
       (plugin as Rspack.RspackPluginInstance).constructor || {};
 
     const messages = [
-      `${color.yellow(
-        name,
-      )} looks like a webpack or Rspack plugin, please use ${color.yellow(
+      `${color.yellow(name)} looks like a webpack or Rspack plugin, please use ${color.yellow(
         '`tools.rspack`',
       )} to register it:`,
       color.green(`
@@ -63,8 +61,7 @@ function validatePlugin(plugin: unknown) {
 export const isEnvironmentMatch = (
   pluginEnvironment?: string,
   specifiedEnvironment?: string,
-): boolean =>
-  pluginEnvironment === specifiedEnvironment || pluginEnvironment === undefined;
+): boolean => pluginEnvironment === specifiedEnvironment || pluginEnvironment === undefined;
 
 export function createPluginManager(logger: Logger): PluginManager {
   let plugins: PluginMeta[] = [];
@@ -80,9 +77,7 @@ export function createPluginManager(logger: Logger): PluginManager {
       validatePlugin(newPlugin);
 
       if (before) {
-        const index = plugins.findIndex(
-          (item) => item.instance.name === before,
-        );
+        const index = plugins.findIndex((item) => item.instance.name === before);
         if (index === -1) {
           logger.warn(`Plugin "${before}" does not exist.`);
           plugins.push({
@@ -104,10 +99,7 @@ export function createPluginManager(logger: Logger): PluginManager {
     }
   };
 
-  const removePlugins = (
-    pluginNames: string[],
-    options: { environment?: string } = {},
-  ) => {
+  const removePlugins = (pluginNames: string[], options: { environment?: string } = {}) => {
     plugins = plugins.filter(
       (plugin) =>
         !(
@@ -117,10 +109,7 @@ export function createPluginManager(logger: Logger): PluginManager {
     );
   };
 
-  const isPluginExists = (
-    pluginName: string,
-    options: { environment?: string } = {},
-  ) =>
+  const isPluginExists = (pluginName: string, options: { environment?: string } = {}) =>
     plugins.some(
       (plugin) =>
         plugin.instance.name === pluginName &&
@@ -129,9 +118,7 @@ export function createPluginManager(logger: Logger): PluginManager {
 
   const getPlugins = (options: { environment?: string } = {}) => {
     return plugins
-      .filter((plugin) =>
-        isEnvironmentMatch(plugin.environment, options.environment),
-      )
+      .filter((plugin) => isEnvironmentMatch(plugin.environment, options.environment))
       .map(({ instance }) => instance);
   };
 
@@ -172,18 +159,14 @@ export const sortPluginsByEnforce = (plugins: PluginMeta[]): PluginMeta[] => {
  * Uses the `pre` and `post` properties of plugins to determine the correct
  * execution order.
  */
-export const sortPluginsByDependencies = (
-  plugins: PluginMeta[],
-): PluginMeta[] => {
+export const sortPluginsByDependencies = (plugins: PluginMeta[]): PluginMeta[] => {
   let allLines: [string, string][] = [];
 
   function getPlugin(name: string) {
     const targets = plugins.filter((item) => item.instance.name === name);
     if (!targets.length) {
       throw new Error(
-        `${color.dim('[rsbuild:plugin]')} Plugin "${color.yellow(
-          name,
-        )}" not existed`,
+        `${color.dim('[rsbuild:plugin]')} Plugin "${color.yellow(name)}" not existed`,
       );
     }
     return targets;
@@ -208,9 +191,7 @@ export const sortPluginsByDependencies = (
   }
 
   // search the zero input plugin
-  let zeroEndPoints = plugins.filter(
-    (item) => !allLines.find((l) => l[1] === item.instance.name),
-  );
+  let zeroEndPoints = plugins.filter((item) => !allLines.find((l) => l[1] === item.instance.name));
 
   const sortedPoint: PluginMeta[] = [];
 
@@ -218,17 +199,12 @@ export const sortPluginsByDependencies = (
     const zep = zeroEndPoints.shift()!;
     const pluginInstances = getPlugin(zep.instance.name);
     sortedPoint.push(...pluginInstances);
-    allLines = allLines.filter(
-      (l) => l[0] !== pluginInstances[0].instance.name,
-    );
+    allLines = allLines.filter((l) => l[0] !== pluginInstances[0].instance.name);
 
     const restPoints = plugins.filter(
-      (item) =>
-        !sortedPoint.find((sp) => sp.instance.name === item.instance.name),
+      (item) => !sortedPoint.find((sp) => sp.instance.name === item.instance.name),
     );
-    zeroEndPoints = restPoints.filter(
-      (item) => !allLines.find((l) => l[1] === item.instance.name),
-    );
+    zeroEndPoints = restPoints.filter((item) => !allLines.find((l) => l[1] === item.instance.name));
   }
 
   // if has ring, throw error
@@ -283,10 +259,7 @@ export async function initPlugins({
 
   for (const { instance, environment } of plugins) {
     const { name, setup } = instance;
-    if (
-      removedPlugins.has(name) ||
-      (environment && removedEnvPlugins[environment]?.has(name))
-    ) {
+    if (removedPlugins.has(name) || (environment && removedEnvPlugins[environment]?.has(name))) {
       continue;
     }
 

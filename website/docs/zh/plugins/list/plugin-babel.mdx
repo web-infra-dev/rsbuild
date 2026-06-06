@@ -362,10 +362,7 @@ pluginBabel({
   babelLoaderOptions: (config, { addPlugins }) => {
     addPlugins([
       ['babel-plugin-import', { libraryName: 'antd', libraryDirectory: 'es' }],
-      [
-        'babel-plugin-import',
-        { libraryName: 'antd-mobile', libraryDirectory: 'es' },
-      ],
+      ['babel-plugin-import', { libraryName: 'antd-mobile', libraryDirectory: 'es' }],
     ]);
   },
 });
@@ -376,11 +373,7 @@ pluginBabel({
 pluginBabel({
   babelLoaderOptions: (config, { addPlugins }) => {
     addPlugins([
-      [
-        'babel-plugin-import',
-        { libraryName: 'antd', libraryDirectory: 'es' },
-        'antd',
-      ],
+      ['babel-plugin-import', { libraryName: 'antd', libraryDirectory: 'es' }, 'antd'],
       [
         'babel-plugin-import',
         { libraryName: 'antd-mobile', libraryDirectory: 'es' },

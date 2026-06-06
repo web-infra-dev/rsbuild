@@ -7,10 +7,7 @@ description: 'Reference for the Rsbuild tools.bundler-chain option, including be
 - **Type:**
 
 ```ts
-type BundlerChainFn = (
-  chain: RspackChain,
-  utils: ModifyBundlerChainUtils,
-) => Promise<void> | void;
+type BundlerChainFn = (chain: RspackChain, utils: ModifyBundlerChainUtils) => Promise<void> | void;
 ```
 
 - **Default:** `undefined`

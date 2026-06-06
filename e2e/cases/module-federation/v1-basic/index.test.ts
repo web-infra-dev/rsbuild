@@ -42,10 +42,7 @@ test('should run module federation in dev', async ({ page, devOnly }) => {
   await expect(page.locator('#button')).toHaveText('Button from remote');
 });
 
-test('should allow to set `server.cors` config', async ({
-  request,
-  devOnly,
-}) => {
+test('should allow to set `server.cors` config', async ({ request, devOnly }) => {
   writeButtonCode();
 
   const remotePort = await getRandomPort();
@@ -59,23 +56,14 @@ test('should allow to set `server.cors` config', async ({
   });
 
   // Check CORS headers
-  const remoteResponse = await request.get(
-    `http://localhost:${remoteApp.port}`,
-  );
-  expect(remoteResponse.headers()['access-control-allow-origin']).toEqual(
-    'https://localhost',
-  );
+  const remoteResponse = await request.get(`http://localhost:${remoteApp.port}`);
+  expect(remoteResponse.headers()['access-control-allow-origin']).toEqual('https://localhost');
 
   const hostResponse = await request.get(`http://localhost:${hostApp.port}`);
-  expect(hostResponse.headers()['access-control-allow-origin']).toEqual(
-    'https://localhost',
-  );
+  expect(hostResponse.headers()['access-control-allow-origin']).toEqual('https://localhost');
 });
 
-test('should run module federation in dev with server.base', async ({
-  page,
-  devOnly,
-}) => {
+test('should run module federation in dev with server.base', async ({ page, devOnly }) => {
   writeButtonCode();
 
   const remotePort = await getRandomPort();
@@ -136,9 +124,7 @@ test('should allow remote module to perform HMR', async ({ page, devOnly }) => {
   await expect(page.locator('#button')).toHaveText('Button from remote (HMR)');
 });
 
-test('should transform module federation runtime with SWC', async ({
-  build,
-}) => {
+test('should transform module federation runtime with SWC', async ({ build }) => {
   writeButtonCode();
 
   const remotePort = await getRandomPort();

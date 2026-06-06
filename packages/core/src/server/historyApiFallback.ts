@@ -25,12 +25,7 @@ export function historyApiFallbackMiddleware(
     }
 
     if (req.method !== 'GET' && req.method !== 'HEAD') {
-      logger.debug(
-        'Not rewriting',
-        req.method,
-        req.url,
-        'because the method is not GET or HEAD.',
-      );
+      logger.debug('Not rewriting', req.method, req.url, 'because the method is not GET or HEAD.');
       next();
       return;
     }
@@ -47,12 +42,7 @@ export function historyApiFallbackMiddleware(
     }
 
     if (headers.accept.startsWith('application/json')) {
-      logger.debug(
-        'Not rewriting',
-        req.method,
-        req.url,
-        'because the client prefers JSON.',
-      );
+      logger.debug('Not rewriting', req.method, req.url, 'because the client prefers JSON.');
       next();
       return;
     }
@@ -89,10 +79,7 @@ export function historyApiFallbackMiddleware(
       }
 
       const rule = rewrite.to;
-      rewriteTarget =
-        typeof rule === 'string'
-          ? rule
-          : rule({ parsedUrl, match, request: req });
+      rewriteTarget = typeof rule === 'string' ? rule : rule({ parsedUrl, match, request: req });
 
       if (!rewriteTarget.startsWith('/')) {
         logger.debug(

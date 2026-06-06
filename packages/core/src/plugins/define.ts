@@ -73,9 +73,7 @@ export const pluginDefine = (): RsbuildPlugin => ({
 
       checkProcessEnvSecurity(mergedDefine, api.logger);
 
-      chain
-        .plugin(CHAIN_ID.PLUGIN.DEFINE)
-        .use(rspack.DefinePlugin, [mergedDefine]);
+      chain.plugin(CHAIN_ID.PLUGIN.DEFINE).use(rspack.DefinePlugin, [mergedDefine]);
     });
   },
 });

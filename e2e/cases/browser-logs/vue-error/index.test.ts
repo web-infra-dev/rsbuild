@@ -1,9 +1,6 @@
 import { gotoPage, test } from '@e2e/helper';
 
-test('should forward Vue runtime error logs to terminal', async ({
-  devOnly,
-  page,
-}) => {
+test('should forward Vue runtime error logs to terminal', async ({ devOnly, page }) => {
   const rsbuild = await devOnly();
 
   // On Windows, Vue SFC compiler generates source maps with duplicate sources.

@@ -23,9 +23,7 @@ describe('plugin-less', () => {
     });
 
     const rspackConfigs = await rsbuild.initConfigs();
-    expect(
-      matchRules(rspackConfigs[0] as Rspack.Configuration, 'a.less'),
-    ).toMatchSnapshot();
+    expect(matchRules(rspackConfigs[0] as Rspack.Configuration, 'a.less')).toMatchSnapshot();
   });
 
   it('should add less-loader and css-loader when injectStyles', async () => {

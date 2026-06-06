@@ -6,11 +6,7 @@ const MyContext = createContext();
 
 export const MyProvider = ({ children }) => {
   const [value, setValue] = useState(0);
-  return (
-    <MyContext.Provider value={{ value, setValue }}>
-      {children}
-    </MyContext.Provider>
-  );
+  return <MyContext.Provider value={{ value, setValue }}>{children}</MyContext.Provider>;
 };
 
 const App = () => {

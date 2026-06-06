@@ -6,11 +6,7 @@ import { posix, relative, sep } from 'node:path';
 import { ALL_INTERFACES_IPV4, LOCALHOST } from '../constants';
 import { color, isFunction } from '../helpers';
 import { getCommonParentPath } from '../helpers/path';
-import {
-  addTrailingSlash,
-  removeLeadingSlash,
-  removeTailingSlash,
-} from '../helpers/url';
+import { addTrailingSlash, removeLeadingSlash, removeTailingSlash } from '../helpers/url';
 import type { Logger } from '../logger';
 import type {
   Connect,
@@ -28,11 +24,7 @@ import type { RsbuildPreviewServer } from './previewServer';
 /**
  * It used to subscribe http upgrade event
  */
-export type UpgradeEvent = (
-  req: IncomingMessage,
-  socket: Socket,
-  head: any,
-) => void;
+export type UpgradeEvent = (req: IncomingMessage, socket: Socket, head: any) => void;
 
 export type ServerStartResult<T> = {
   /**
@@ -54,8 +46,7 @@ export type StartDevServerResult = ServerStartResult<RsbuildDevServer>;
 export type StartPreviewServerResult = ServerStartResult<RsbuildPreviewServer>;
 
 // remove repeat '/'
-export const normalizeUrl = (url: string): string =>
-  url.replace(/([^:]\/)\/+/g, '$1');
+export const normalizeUrl = (url: string): string => url.replace(/([^:]\/)\/+/g, '$1');
 
 /**
  * Make sure there is slash before and after prefix
@@ -91,11 +82,7 @@ export const joinUrlPath = (basePath: string, pathname: string): string => {
 
 export const isUrlPathUnderBase = (pathname: string, base: string): boolean => {
   const basePath = removeTailingSlash(base);
-  return (
-    basePath === '' ||
-    pathname === basePath ||
-    pathname.startsWith(`${basePath}/`)
-  );
+  return basePath === '' || pathname === basePath || pathname.startsWith(`${basePath}/`);
 };
 
 export const removeBasePath = (url: string, base: string): string => {
@@ -129,9 +116,7 @@ export const getRoutes = (context: InternalContext): Routes => {
     return [];
   }
 
-  const commonDistPath = getCommonParentPath(
-    environmentWithHtml.map((item) => item.distPath),
-  );
+  const commonDistPath = getCommonParentPath(environmentWithHtml.map((item) => item.distPath));
 
   return environmentWithHtml.reduce<Routes>((prev, environmentContext) => {
     const { distPath, config } = environmentContext;
@@ -174,15 +159,10 @@ export const formatRoutes = (
   );
 };
 
-function getURLMessages(
-  urls: { url: string; label: string }[],
-  routes: Routes,
-) {
+function getURLMessages(urls: { url: string; label: string }[], routes: Routes) {
   if (routes.length <= 1) {
     const pathname = routes.length ? routes[0].pathname : '';
-    const maxTrimmedLength = Math.max(
-      ...urls.map((u) => u.label.trimEnd().length),
-    );
+    const maxTrimmedLength = Math.max(...urls.map((u) => u.label.trimEnd().length));
     const padWidth = Math.max(maxTrimmedLength + 2, 10);
     return urls
       .map(({ label, url }) => {
@@ -403,10 +383,7 @@ const getIpv4Interfaces = () => {
       // 'IPv4' is in Node <= 17, from 18 it's a number 4 or 6
       const familyV4Value = typeof detail.family === 'string' ? 'IPv4' : 4;
 
-      if (
-        detail.family === familyV4Value &&
-        !ipv4Interfaces.has(detail.address)
-      ) {
+      if (detail.family === familyV4Value && !ipv4Interfaces.has(detail.address)) {
         ipv4Interfaces.set(detail.address, detail);
       }
     }
@@ -446,15 +423,8 @@ export const getHostInUrl = async (host: string): Promise<string> => {
   return host;
 };
 
-const concatUrl = ({
-  host,
-  port,
-  protocol,
-}: {
-  host: string;
-  port: number;
-  protocol: string;
-}) => `${protocol}://${host}:${port}`;
+const concatUrl = ({ host, port, protocol }: { host: string; port: number; protocol: string }) =>
+  `${protocol}://${host}:${port}`;
 
 const LOCAL_LABEL = 'Local:  ';
 const NETWORK_LABEL = 'Network:  ';
@@ -521,9 +491,7 @@ export const getAddressUrls = async ({
   return addressUrls;
 };
 
-export function getServerTerminator(
-  server: Server | Http2SecureServer,
-): () => Promise<void> {
+export function getServerTerminator(server: Server | Http2SecureServer): () => Promise<void> {
   let listened = false;
   const pendingSockets = new Set<Socket>();
 
@@ -602,10 +570,7 @@ export type RsbuildServerBase = {
    * - Will be `Http2SecureServer` if `server.https` config is used.
    * - Will be `null` if `server.middlewareMode` is enabled.
    */
-  httpServer:
-    | import('node:http').Server
-    | import('node:http2').Http2SecureServer
-    | null;
+  httpServer: import('node:http').Server | import('node:http2').Http2SecureServer | null;
   /**
    * The `connect` app instance.
    * Can be used to attach custom middlewares to the server.

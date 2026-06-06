@@ -1,8 +1,6 @@
 import { expect, getFileContent, test } from '@e2e/helper';
 
-test('should define import.meta.env.SSR based on environment target', async ({
-  build,
-}) => {
+test('should define import.meta.env.SSR based on environment target', async ({ build }) => {
   const rsbuild = await build();
   const files = rsbuild.getDistFiles();
 

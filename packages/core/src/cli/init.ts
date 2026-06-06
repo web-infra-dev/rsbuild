@@ -91,18 +91,14 @@ export async function init({
 
   // Build multiple environments can be shortened to: --environment name1,name2
   if (commonOpts.environment?.some((env) => env.includes(','))) {
-    commonOpts.environment = commonOpts.environment.flatMap((env) =>
-      env.split(','),
-    );
+    commonOpts.environment = commonOpts.environment.flatMap((env) => env.split(','));
   }
 
   let logger = defaultLogger;
 
   try {
     const cwd = process.cwd();
-    const root = commonOpts.root
-      ? ensureAbsolutePath(cwd, commonOpts.root)
-      : cwd;
+    const root = commonOpts.root ? ensureAbsolutePath(cwd, commonOpts.root) : cwd;
 
     const rsbuild = await createRsbuild({
       cwd: root,

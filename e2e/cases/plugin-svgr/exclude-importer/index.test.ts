@@ -11,8 +11,6 @@ test('should exclude matched SVG files from SVGR processing (importer)', async (
   ).resolves.toBeTruthy();
 
   await expect(
-    page.evaluate(
-      `document.getElementById('bar').src.startsWith('data:image/svg')`,
-    ),
+    page.evaluate(`document.getElementById('bar').src.startsWith('data:image/svg')`),
   ).resolves.toBeTruthy();
 });

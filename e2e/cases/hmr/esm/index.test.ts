@@ -26,17 +26,12 @@ test('should perform HMR and preserve state when `output.module` is enabled', as
   const locatorKeep = page.locator('#test-keep');
   const keepNum = await locatorKeep.innerHTML();
 
-  await editFile(join(tempSrc, 'App.tsx'), (code) =>
-    code.replace('Hello Rsbuild', 'Hello Test'),
-  );
+  await editFile(join(tempSrc, 'App.tsx'), (code) => code.replace('Hello Rsbuild', 'Hello Test'));
 
   await expect(locator).toHaveText('Hello Test!');
   // #test-keep should remain unchanged when app.tsx HMR
   expect(await locatorKeep.innerHTML()).toBe(keepNum);
 
-  await editFile(
-    join(tempSrc, 'App.css'),
-    () => `#test { color: rgb(0, 0, 255); }`,
-  );
+  await editFile(join(tempSrc, 'App.css'), () => `#test { color: rgb(0, 0, 255); }`);
   await expect(locator).toHaveCSS('color', 'rgb(0, 0, 255)');
 });

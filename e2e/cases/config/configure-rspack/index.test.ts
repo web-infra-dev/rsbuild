@@ -1,9 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('should allow to use tools.rspack to configure Rspack', async ({
-  page,
-  runBothServe,
-}) => {
+test('should allow to use tools.rspack to configure Rspack', async ({ page, runBothServe }) => {
   await runBothServe(
     async () => {
       const testEl = page.locator('#test-el');
@@ -55,10 +52,7 @@ test('should allow to use async tools.rspack to configure Rspack', async ({
   );
 });
 
-test('should allow tools.rspack to be an array', async ({
-  page,
-  runBothServe,
-}) => {
+test('should allow tools.rspack to be an array', async ({ page, runBothServe }) => {
   await runBothServe(
     async () => {
       const testEl = page.locator('#test-el');

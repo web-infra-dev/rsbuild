@@ -36,8 +36,7 @@ async function modifyRspackConfig(
   });
 
   if (utils.environment.config.tools?.rspack) {
-    const toolsRspackConfig = utils.environment.config.tools
-      .rspack as ConfigChainAsyncWithContext<
+    const toolsRspackConfig = utils.environment.config.tools.rspack as ConfigChainAsyncWithContext<
       NarrowedRspackConfig,
       ModifyRspackConfigUtils
     >;
@@ -151,12 +150,7 @@ function validateRspackConfig(config: Rspack.Configuration, logger: Logger) {
   // validate plugins
   if (config.plugins) {
     for (const plugin of config.plugins) {
-      if (
-        plugin &&
-        plugin.apply === undefined &&
-        'name' in plugin &&
-        'setup' in plugin
-      ) {
+      if (plugin && plugin.apply === undefined && 'name' in plugin && 'setup' in plugin) {
         const name = color.bold(color.yellow(plugin.name));
         throw new Error(
           `${color.dim('[rsbuild:plugin]')} "${color.yellow(name)}" appears to be an Rsbuild plugin. It cannot be used as an Rspack plugin.`,

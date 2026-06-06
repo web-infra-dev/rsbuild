@@ -7,13 +7,7 @@ import { color, isObject } from '../helpers';
 import { formatStatsError } from '../helpers/format';
 import { isRuntimeOverlayEnabled } from '../helpers/overlayConfig';
 import { getStatsErrors, getStatsWarnings } from '../helpers/stats';
-import type {
-  ClientConfig,
-  DevConfig,
-  InternalContext,
-  RsbuildStatsItem,
-  Rspack,
-} from '../types';
+import type { ClientConfig, DevConfig, InternalContext, RsbuildStatsItem, Rspack } from '../types';
 import { type CachedTraceMap, formatBrowserErrorLog } from './browserLogs';
 import { renderErrorToHtml } from './overlay';
 
@@ -167,19 +161,13 @@ export class SocketServer {
   }
 
   // subscribe upgrade event to handle socket
-  public upgrade = (
-    req: IncomingMessage,
-    socket: Socket,
-    head: Buffer,
-  ): void => {
+  public upgrade = (req: IncomingMessage, socket: Socket, head: Buffer): void => {
     if (!this.wsServer.shouldHandle(req)) {
       return;
     }
 
     const query = parseQueryString(req);
-    const tokens = this.context.environmentList.map(
-      ({ webSocketToken }) => webSocketToken,
-    );
+    const tokens = this.context.environmentList.map(({ webSocketToken }) => webSocketToken);
 
     // If the request does not contain a valid token, reject the request.
     if (!tokens.includes(query.token)) {
@@ -209,10 +197,7 @@ export class SocketServer {
 
     // Schedule next check only if timer hasn't been cleared
     if (this.heartbeatTimer !== null) {
-      this.heartbeatTimer = setTimeout(
-        this.checkSockets,
-        CHECK_SOCKETS_INTERVAL,
-      ).unref();
+      this.heartbeatTimer = setTimeout(this.checkSockets, CHECK_SOCKETS_INTERVAL).unref();
     }
   };
 
@@ -238,10 +223,7 @@ export class SocketServer {
       this.context.logger.error(err);
     });
 
-    this.heartbeatTimer = setTimeout(
-      this.checkSockets,
-      CHECK_SOCKETS_INTERVAL,
-    ).unref();
+    this.heartbeatTimer = setTimeout(this.checkSockets, CHECK_SOCKETS_INTERVAL).unref();
 
     this.wsServer.on('connection', (socket, req) => {
       // /rsbuild-hmr?token=...
@@ -277,15 +259,9 @@ export class SocketServer {
     const overlay = environment?.config.dev.client.overlay;
     let overlayErrors = formattedErrors;
 
-    if (
-      overlay &&
-      typeof overlay === 'object' &&
-      typeof overlay.errors === 'function'
-    ) {
+    if (overlay && typeof overlay === 'object' && typeof overlay.errors === 'function') {
       const { errors: filter } = overlay;
-      overlayErrors = formattedErrors.filter((error) =>
-        filter(new Error(error)),
-      );
+      overlayErrors = formattedErrors.filter((error) => filter(new Error(error)));
     }
 
     const html = overlayErrors
@@ -310,12 +286,7 @@ export class SocketServer {
    */
   public sendWarning(warnings: Rspack.StatsError[], token: string): void {
     const formattedWarnings = warnings.map((item) =>
-      formatStatsError(
-        item,
-        this.context.rootPath,
-        'warning',
-        this.context.logger,
-      ),
+      formatStatsError(item, this.context.rootPath, 'warning', this.context.logger),
     );
     this.sendMessage(
       {
@@ -420,8 +391,7 @@ export class SocketServer {
           browserLogs
         ) {
           const stackTrace =
-            (isObject(browserLogs) && browserLogs.stackTrace) ||
-            DEFAULT_STACK_TRACE;
+            (isObject(browserLogs) && browserLogs.stackTrace) || DEFAULT_STACK_TRACE;
           const outputFs = this.getOutputFileSystem();
 
           const stackFrames = payload.stack ? parseStack(payload.stack) : null;
@@ -438,9 +408,7 @@ export class SocketServer {
 
           if (!this.reportedBrowserLogs.has(log)) {
             this.reportedBrowserLogs.add(log);
-            this.context.logger.error(
-              `${color.cyan(BROWSER_LOG_PREFIX)} ${log}`,
-            );
+            this.context.logger.error(`${color.cyan(BROWSER_LOG_PREFIX)} ${log}`);
           }
 
           // Render runtime errors in overlay
@@ -503,9 +471,7 @@ export class SocketServer {
   }
 
   private getEnvironmentByToken(token: string) {
-    return this.context.environmentList.find(
-      ({ webSocketToken }) => webSocketToken === token,
-    );
+    return this.context.environmentList.find(({ webSocketToken }) => webSocketToken === token);
   }
 
   private getInitialChunks(stats: RsbuildStatsItem) {
@@ -540,10 +506,7 @@ export class SocketServer {
 
       const result = this.getStats(webSocketToken);
       if (result) {
-        this.initialChunksMap.set(
-          webSocketToken,
-          this.getInitialChunks(result.stats),
-        );
+        this.initialChunksMap.set(webSocketToken, this.getInitialChunks(result.stats));
       }
     }
   }
@@ -576,13 +539,7 @@ export class SocketServer {
   }
 
   // determine what message should send by stats
-  private sendStats({
-    force = false,
-    token,
-  }: {
-    token: string;
-    force?: boolean;
-  }) {
+  private sendStats({ force = false, token }: { token: string; force?: boolean }) {
     const result = this.getStats(token);
     if (!result) {
       return null;
@@ -597,9 +554,7 @@ export class SocketServer {
 
     const initialChunks = this.initialChunksMap.get(token);
     const shouldReload =
-      stats.entrypoints &&
-      initialChunks &&
-      !isEqualSet(initialChunks, newInitialChunks);
+      stats.entrypoints && initialChunks && !isEqualSet(initialChunks, newInitialChunks);
 
     this.initialChunksMap.set(token, newInitialChunks);
 
@@ -614,12 +569,7 @@ export class SocketServer {
 
       // If build hash is not changed and there is no error or warning,
       // skip the other messages
-      if (
-        !force &&
-        errors.length === 0 &&
-        warnings.length === 0 &&
-        prevHash === stats.hash
-      ) {
+      if (!force && errors.length === 0 && warnings.length === 0 && prevHash === stats.hash) {
         this.sendMessage({ type: 'ok' }, token);
         return;
       }

@@ -1,9 +1,6 @@
 import { expect, getFileContent, test } from '@e2e/helper';
 
-const expectBundledExport = (
-  content: string,
-  exportName: 'dep' | 'dev' | 'peer',
-) => {
+const expectBundledExport = (content: string, exportName: 'dep' | 'dev' | 'peer') => {
   expect(content).toContain(JSON.stringify(exportName));
 };
 
@@ -11,9 +8,7 @@ const expectBundledSubpath = (content: string) => {
   expect(content).toContain("const subpath = 'subpath';");
 };
 
-test('should not auto externalize package.json dependencies by default', async ({
-  build,
-}) => {
+test('should not auto externalize package.json dependencies by default', async ({ build }) => {
   const rsbuild = await build({
     config: {
       output: {
@@ -33,9 +28,7 @@ test('should not auto externalize package.json dependencies by default', async (
   expect(content).not.toContain('external "@e2e/auto-external-peer-pkg"');
 });
 
-test('should auto externalize dependencies and subpath imports', async ({
-  build,
-}) => {
+test('should auto externalize dependencies and subpath imports', async ({ build }) => {
   const rsbuild = await build({
     config: {
       output: {
@@ -54,9 +47,7 @@ test('should auto externalize dependencies and subpath imports', async ({
   expectBundledExport(content, 'dev');
 });
 
-test('should allow output.externals to override autoExternal rules', async ({
-  build,
-}) => {
+test('should allow output.externals to override autoExternal rules', async ({ build }) => {
   const rsbuild = await build({
     config: {
       output: {
@@ -77,9 +68,7 @@ test('should allow output.externals to override autoExternal rules', async ({
   expect(content).toContain('external "@e2e/auto-external-peer-pkg"');
 });
 
-test('should auto externalize devDependencies when enabled', async ({
-  build,
-}) => {
+test('should auto externalize devDependencies when enabled', async ({ build }) => {
   const rsbuild = await build({
     config: {
       output: {
@@ -96,9 +85,7 @@ test('should auto externalize devDependencies when enabled', async ({
   expect(content).toContain('external "@e2e/auto-external-dev-pkg"');
 });
 
-test('should auto externalize dependencies from custom packageJson path', async ({
-  build,
-}) => {
+test('should auto externalize dependencies from custom packageJson path', async ({ build }) => {
   const rsbuild = await build({
     config: {
       output: {
@@ -121,9 +108,7 @@ test('should auto externalize dependencies from custom packageJson path', async 
   expectBundledExport(content, 'peer');
 });
 
-test('should auto externalize dependencies from multiple packageJson paths', async ({
-  build,
-}) => {
+test('should auto externalize dependencies from multiple packageJson paths', async ({ build }) => {
   const rsbuild = await build({
     config: {
       output: {
@@ -147,9 +132,7 @@ test('should auto externalize dependencies from multiple packageJson paths', asy
   expectBundledExport(content, 'dev');
 });
 
-test('should not auto externalize packages matched by string exclude', async ({
-  build,
-}) => {
+test('should not auto externalize packages matched by string exclude', async ({ build }) => {
   const rsbuild = await build({
     config: {
       output: {
@@ -170,9 +153,7 @@ test('should not auto externalize packages matched by string exclude', async ({
   expect(content).toContain('external "@e2e/auto-external-peer-pkg"');
 });
 
-test('should not auto externalize packages matched by regexp exclude', async ({
-  build,
-}) => {
+test('should not auto externalize packages matched by regexp exclude', async ({ build }) => {
   const rsbuild = await build({
     config: {
       output: {
@@ -192,9 +173,7 @@ test('should not auto externalize packages matched by regexp exclude', async ({
   expectBundledExport(content, 'peer');
 });
 
-test('should not auto externalize packages matched by mixed exclude', async ({
-  build,
-}) => {
+test('should not auto externalize packages matched by mixed exclude', async ({ build }) => {
   const rsbuild = await build({
     config: {
       output: {

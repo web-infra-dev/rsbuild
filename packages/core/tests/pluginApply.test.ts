@@ -18,11 +18,7 @@ describe('pluginApply', () => {
       {
         name: 'plugin-test3',
         apply(config, { action }) {
-          return (
-            config.mode === 'development' ||
-            action === 'build' ||
-            action === 'dev'
-          );
+          return config.mode === 'development' || action === 'build' || action === 'dev';
         },
         setup,
       },
@@ -117,9 +113,7 @@ describe('pluginApply', () => {
 
     await rsbuild.initConfigs({ action: 'dev' });
 
-    await expect(() =>
-      rsbuild.initConfigs({ action: 'build' }),
-    ).rejects.toThrow(
+    await expect(() => rsbuild.initConfigs({ action: 'build' })).rejects.toThrow(
       `[rsbuild] initConfigs() can only be called with the same action type.
   - Expected: dev
   - Actual: build`,

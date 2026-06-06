@@ -29,10 +29,7 @@ test('should allow dev.assetPrefix to be true', async ({ page, dev }) => {
   await expect(testEl).toHaveText(`http://localhost:${result.port}`);
 });
 
-test('should allow dev.assetPrefix to have <port> placeholder', async ({
-  page,
-  dev,
-}) => {
+test('should allow dev.assetPrefix to have <port> placeholder', async ({ page, dev }) => {
   const result = await dev({
     config: {
       dev: {
@@ -48,10 +45,7 @@ test('should allow dev.assetPrefix to have <port> placeholder', async ({
   await expect(testEl2).toHaveText(`http://localhost:${result.port}`);
 });
 
-test('should allow output.assetPrefix to be `auto`', async ({
-  page,
-  buildPreview,
-}) => {
+test('should allow output.assetPrefix to be `auto`', async ({ page, buildPreview }) => {
   await buildPreview({
     config: {
       output: {

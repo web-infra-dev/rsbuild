@@ -81,10 +81,7 @@ const getDefaultDevConfig = (): NormalizedDevConfig => ({
 export const defaultAllowedOrigins: RegExp =
   /^https?:\/\/(?:(?:[^:]+\.)?localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/;
 
-const getDefaultServerConfig = (): Omit<
-  NormalizedServerConfig,
-  'publicDir'
-> => ({
+const getDefaultServerConfig = (): Omit<NormalizedServerConfig, 'publicDir'> => ({
   port: DEFAULT_PORT,
   host: LOCALHOST,
   open: false,
@@ -309,34 +306,23 @@ export const withDefaultConfig = async (
  * Normalizes the user configuration by merging it with defaults and ensuring
  * consistent structure.
  */
-export const normalizeConfig = (
-  config: RsbuildConfig,
-  rootPath: string,
-): NormalizedConfig => {
+export const normalizeConfig = (config: RsbuildConfig, rootPath: string): NormalizedConfig => {
   const getMode = (): RsbuildMode => {
     if (config.mode) {
       return config.mode;
     }
     const nodeEnv = getNodeEnv();
-    return nodeEnv === 'production' || nodeEnv === 'development'
-      ? nodeEnv
-      : 'none';
+    return nodeEnv === 'production' || nodeEnv === 'development' ? nodeEnv : 'none';
   };
 
   config.server ||= {};
   config.server.host = normalizeHost(config.server.host);
-  config.server.publicDir = normalizePublicDirs(
-    rootPath,
-    config.server.publicDir,
-  );
+  config.server.publicDir = normalizePublicDirs(rootPath, config.server.publicDir);
 
   const defaultConfig = createDefaultConfig();
   defaultConfig.mode = getMode();
 
-  const mergedConfig = mergeRsbuildConfig(
-    defaultConfig,
-    config,
-  ) as NormalizedConfig;
+  const mergedConfig = mergeRsbuildConfig(defaultConfig, config) as NormalizedConfig;
 
   return mergedConfig;
 };
@@ -370,9 +356,7 @@ const normalizePublicDirs = (
 
   const mergeWithDefault = (options: PublicDirOptions) => {
     if (options.name === '') {
-      throw new Error(
-        '[rsbuild:config] `publicDir.name` cannot be empty string.',
-      );
+      throw new Error('[rsbuild:config] `publicDir.name` cannot be empty string.');
     }
 
     const merged = {

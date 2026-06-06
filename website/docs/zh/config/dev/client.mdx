@@ -194,8 +194,7 @@ export default {
   dev: {
     client: {
       overlay: {
-        runtime: (error) =>
-          error.name !== 'AbortError' && error.message.includes('Foo'),
+        runtime: (error) => error.name !== 'AbortError' && error.message.includes('Foo'),
       },
     },
   },

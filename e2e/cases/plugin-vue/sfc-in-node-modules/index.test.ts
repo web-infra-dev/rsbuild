@@ -2,9 +2,7 @@ import path from 'node:path';
 import { expect, test } from '@e2e/helper';
 import fse from 'fs-extra';
 
-test('should transpile Vue SFC in node_modules correctly', async ({
-  build,
-}) => {
+test('should transpile Vue SFC in node_modules correctly', async ({ build }) => {
   fse.outputFileSync(
     path.resolve(import.meta.dirname, 'node_modules/foo/package.json'),
     JSON.stringify({

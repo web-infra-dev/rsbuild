@@ -1,12 +1,9 @@
 import { join, relative } from 'node:path';
 import { test, toPosixPath } from '@e2e/helper';
 
-const EXPECTED_LOG =
-  'error   [browser] Uncaught Error: test (src/index.js:1:0)';
+const EXPECTED_LOG = 'error   [browser] Uncaught Error: test (src/index.js:1:0)';
 
-test('should parse source map correctly if source path is absolute', async ({
-  dev,
-}) => {
+test('should parse source map correctly if source path is absolute', async ({ dev }) => {
   const rsbuild = await dev({
     config: {
       tools: {
@@ -33,9 +30,7 @@ test('should parse source map correctly if source path is relative to source map
         rspack: {
           output: {
             devtoolModuleFilenameTemplate(info) {
-              return toPosixPath(
-                relative(sourceMapPath, info.absoluteResourcePath),
-              );
+              return toPosixPath(relative(sourceMapPath, info.absoluteResourcePath));
             },
           },
         },

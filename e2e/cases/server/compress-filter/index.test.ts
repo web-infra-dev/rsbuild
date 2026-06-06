@@ -1,14 +1,9 @@
 import { expect, test } from '@e2e/helper';
 
-test('should support configuring the compression filter in dev', async ({
-  request,
-  dev,
-}) => {
+test('should support configuring the compression filter in dev', async ({ request, dev }) => {
   const rsbuild = await dev();
 
-  const indexJsResponse = await request.get(
-    `http://localhost:${rsbuild.port}/static/js/index.js`,
-  );
+  const indexJsResponse = await request.get(`http://localhost:${rsbuild.port}/static/js/index.js`);
   expect(indexJsResponse.headers()['content-encoding']).toEqual(undefined);
 
   const asyncJsResponse = await request.get(
@@ -23,9 +18,7 @@ test('should support configuring the compression filter in preview mode', async 
 }) => {
   const rsbuild = await buildPreview();
 
-  const indexJsResponse = await request.get(
-    `http://localhost:${rsbuild.port}/static/js/index.js`,
-  );
+  const indexJsResponse = await request.get(`http://localhost:${rsbuild.port}/static/js/index.js`);
   expect(indexJsResponse.headers()['content-encoding']).toEqual(undefined);
 
   const asyncJsResponse = await request.get(

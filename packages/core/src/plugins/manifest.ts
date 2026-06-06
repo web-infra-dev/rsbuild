@@ -44,10 +44,7 @@ const generateManifest =
         const entryNames = recursiveChunkEntryNames(file.chunk);
 
         for (const entryName of entryNames) {
-          chunkEntries.set(entryName, [
-            file,
-            ...(chunkEntries.get(entryName) || []),
-          ]);
+          chunkEntries.set(entryName, [file, ...(chunkEntries.get(entryName) || [])]);
         }
       }
 
@@ -176,9 +173,7 @@ const generateManifest =
 type NormalizedManifestConfig = ManifestObjectConfig &
   Required<Pick<ManifestObjectConfig, 'prefix' | 'filename'>>;
 
-function normalizeManifestObjectConfig(
-  manifest?: ManifestConfig,
-): NormalizedManifestConfig {
+function normalizeManifestObjectConfig(manifest?: ManifestConfig): NormalizedManifestConfig {
   const defaultOptions: NormalizedManifestConfig = {
     prefix: true,
     filename: 'manifest.json',
@@ -226,8 +221,7 @@ export const pluginManifest = (): RsbuildPlugin => ({
 
       // Exclude `*.LICENSE.txt` files by default
       const filter =
-        manifestOptions.filter ??
-        ((file: FileDescriptor) => !file.name.endsWith('.LICENSE.txt'));
+        manifestOptions.filter ?? ((file: FileDescriptor) => !file.name.endsWith('.LICENSE.txt'));
 
       manifestFilenames.set(environment.name, manifestOptions.filename);
 
@@ -242,9 +236,7 @@ export const pluginManifest = (): RsbuildPlugin => ({
         pluginOptions.publicPath = '';
       }
 
-      chain
-        .plugin(CHAIN_ID.PLUGIN.MANIFEST)
-        .use(RspackManifestPlugin, [pluginOptions]);
+      chain.plugin(CHAIN_ID.PLUGIN.MANIFEST).use(RspackManifestPlugin, [pluginOptions]);
     });
 
     // validate duplicated manifest filenames and throw a warning

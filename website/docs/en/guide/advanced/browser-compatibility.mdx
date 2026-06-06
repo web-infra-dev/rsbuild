@@ -111,9 +111,7 @@ To address the lack of `replaceAll` in older browsers, we can extend the `String
 if (!String.prototype.replaceAll) {
   String.prototype.replaceAll = function (str, newStr) {
     // If a regex pattern
-    if (
-      Object.prototype.toString.call(str).toLowerCase() === '[object regexp]'
-    ) {
+    if (Object.prototype.toString.call(str).toLowerCase() === '[object regexp]') {
       return this.replace(str, newStr);
     }
     // If a string

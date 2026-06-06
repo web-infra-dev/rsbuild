@@ -6,18 +6,11 @@ export const getPublicPathname = (publicPath: string): string => {
     return '';
   }
 
-  return getPathnameFromUrl(
-    publicPath.endsWith('/') ? publicPath : `${publicPath}/`,
-  );
+  return getPathnameFromUrl(publicPath.endsWith('/') ? publicPath : `${publicPath}/`);
 };
 
-export const getPublicPathnames = (
-  publicPaths: string[],
-  base: string,
-): string[] => {
+export const getPublicPathnames = (publicPaths: string[], base: string): string[] => {
   return publicPaths
     .map(getPublicPathname)
-    .map((prefix) =>
-      base && base !== '/' ? removeBasePath(prefix, base) : prefix,
-    );
+    .map((prefix) => (base && base !== '/' ? removeBasePath(prefix, base) : prefix));
 };

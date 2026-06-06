@@ -16,12 +16,7 @@
  * limitations under the License.
  */
 
-import type {
-  Chunk,
-  Compilation,
-  Compiler,
-  RspackPluginInstance,
-} from '@rspack/core';
+import type { Chunk, Compilation, Compiler, RspackPluginInstance } from '@rspack/core';
 import { castArray, isFunction, upperFirst } from '../../helpers';
 import { ensureAssetPrefix } from '../../helpers/url';
 import type {
@@ -122,9 +117,7 @@ function filterResourceHints(
 ): HtmlRspackPlugin.HtmlTagObject[] {
   return resourceHints.filter(
     (resourceHint) =>
-      !scripts.find(
-        (script) => script.attributes.src === resourceHint.attributes.href,
-      ),
+      !scripts.find((script) => script.attributes.src === resourceHint.attributes.href),
   );
 }
 
@@ -173,11 +166,7 @@ function generateLinks(
     });
 
   const uniqueFiles = new Set<string>(allFiles);
-  const filteredFiles = applyFilter(
-    [...uniqueFiles],
-    options.include,
-    options.exclude,
-  );
+  const filteredFiles = applyFilter([...uniqueFiles], options.include, options.exclude);
 
   // Sort to ensure the output is predictable.
   const sortedFilteredFiles = filteredFiles.sort();
@@ -211,8 +200,7 @@ function generateLinks(
           crossOriginLoading &&
           !(crossOriginLoading !== 'use-credentials' && publicPath === '/')
         ) {
-          attributes.crossorigin =
-            crossOriginLoading === 'anonymous' ? '' : crossOriginLoading;
+          attributes.crossorigin = crossOriginLoading === 'anonymous' ? '' : crossOriginLoading;
         }
       }
     }

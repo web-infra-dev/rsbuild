@@ -8,10 +8,7 @@ test('should preview dist files correctly', async ({ page, buildPreview }) => {
   await expect(rootEl).toHaveText('Hello Rsbuild!');
 });
 
-test('should allow plugin to modify preview server config', async ({
-  page,
-  buildPreview,
-}) => {
+test('should allow plugin to modify preview server config', async ({ page, buildPreview }) => {
   const PORT = await getRandomPort();
   const plugin: RsbuildPlugin = {
     name: 'test',
@@ -70,14 +67,9 @@ test('should serve multi-environment assets before returned setup middleware', a
     },
   });
 
-  const assetFile = findFile(
-    result.getDistFiles(),
-    /\/dist\/client\/static\/js\/.+\.js$/,
-  );
+  const assetFile = findFile(result.getDistFiles(), /\/dist\/client\/static\/js\/.+\.js$/);
 
-  const res = await fetch(
-    `http://localhost:${result.port}/app/static/js/${basename(assetFile)}`,
-  );
+  const res = await fetch(`http://localhost:${result.port}/app/static/js/${basename(assetFile)}`);
 
   expect(res.status).toBe(200);
   expect(res.headers.get('content-type')).toContain('javascript');
@@ -89,15 +81,11 @@ test('should serve multi-environment assets before returned setup middleware', a
   expect(siblingPrefixRes.status).toBe(404);
   expect(await siblingPrefixRes.text()).toBe('<html>SSR fallback</html>');
 
-  const serverBundleRes = await fetch(
-    `http://localhost:${result.port}/index.js`,
-  );
+  const serverBundleRes = await fetch(`http://localhost:${result.port}/index.js`);
   expect(serverBundleRes.status).toBe(404);
   expect(await serverBundleRes.text()).toBe('<html>SSR fallback</html>');
 
-  const nestedServerBundleRes = await fetch(
-    `http://localhost:${result.port}/server/index.js`,
-  );
+  const nestedServerBundleRes = await fetch(`http://localhost:${result.port}/server/index.js`);
   expect(nestedServerBundleRes.status).toBe(404);
   expect(await nestedServerBundleRes.text()).toBe('<html>SSR fallback</html>');
 });

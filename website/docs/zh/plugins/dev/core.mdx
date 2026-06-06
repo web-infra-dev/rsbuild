@@ -298,10 +298,7 @@ export default () => ({
 - **类型：**
 
 ```ts
-function Transform(
-  descriptor: TransformDescriptor,
-  handler: TransformHandler,
-): void;
+function Transform(descriptor: TransformDescriptor, handler: TransformHandler): void;
 ```
 
 `api.transform` 接受两个参数：
@@ -472,9 +469,7 @@ type TransformResult =
       map?: string | Rspack.sources.RawSourceMap | null;
     };
 
-type TransformHandler = (
-  context: TransformContext,
-) => MaybePromise<TransformResult>;
+type TransformHandler = (context: TransformContext) => MaybePromise<TransformResult>;
 ```
 
 handler 函数提供以下参数：
@@ -495,15 +490,12 @@ handler 函数提供以下参数：
 比如：
 
 ```js
-api.transform(
-  { test: /\.md$/ },
-  ({ code, resource, resourcePath, resourceQuery }) => {
-    console.log(code); // -> some code
-    console.log(resource); // -> '/home/user/project/src/template.pug?foo=123'
-    console.log(resourcePath); // -> '/home/user/project/src/template.pug'
-    console.log(resourceQuery); // -> '?foo=123'
-  },
-);
+api.transform({ test: /\.md$/ }, ({ code, resource, resourcePath, resourceQuery }) => {
+  console.log(code); // -> some code
+  console.log(resource); // -> '/home/user/project/src/template.pug?foo=123'
+  console.log(resourcePath); // -> '/home/user/project/src/template.pug'
+  console.log(resourceQuery); // -> '?foo=123'
+});
 ```
 
 ### 与 loader 的区别
@@ -581,10 +573,7 @@ handler 函数提供以下参数：
 - **类型：**
 
 ```ts
-function processAssets(
-  descriptor: ProcessAssetsDescriptor,
-  handler: ProcessAssetsHandler,
-): void;
+function processAssets(descriptor: ProcessAssetsDescriptor, handler: ProcessAssetsHandler): void;
 ```
 
 `api.processAssets` 接受两个参数：
@@ -597,33 +586,27 @@ function processAssets(
 - 在 `additional` 阶段输出一个新的 asset：
 
 ```js
-api.processAssets(
-  { stage: 'additional' },
-  ({ assets, sources, compilation }) => {
-    const source = new sources.RawSource('This is a new asset!');
-    compilation.emitAsset('new-asset.txt', source);
-  },
-);
+api.processAssets({ stage: 'additional' }, ({ assets, sources, compilation }) => {
+  const source = new sources.RawSource('This is a new asset!');
+  compilation.emitAsset('new-asset.txt', source);
+});
 ```
 
 - 更新一个已经存在的 asset：
 
 ```js
-api.processAssets(
-  { stage: 'additions' },
-  ({ assets, sources, compilation }) => {
-    const asset = assets['foo.js'];
-    if (!asset) {
-      return;
-    }
+api.processAssets({ stage: 'additions' }, ({ assets, sources, compilation }) => {
+  const asset = assets['foo.js'];
+  if (!asset) {
+    return;
+  }
 
-    const oldContent = asset.source();
-    const newContent = oldContent + '\nconsole.log("hello world!")';
-    const source = new sources.RawSource(newContent);
+  const oldContent = asset.source();
+  const newContent = oldContent + '\nconsole.log("hello world!")';
+  const source = new sources.RawSource(newContent);
 
-    compilation.updateAsset(assetName, source);
-  },
-);
+  compilation.updateAsset(assetName, source);
+});
 ```
 
 - 移除一个 asset：
@@ -672,12 +655,9 @@ api.processAssets({ stage: 'additional', targets: ['web'] }, ({ assets }) => {
 - `environments`：匹配 Rsbuild [environment](/guide/advanced/environments) name，仅对匹配的 environments 应用当前 processAssets 函数。
 
 ```js
-api.processAssets(
-  { stage: 'additional', environments: ['web'] },
-  ({ assets }) => {
-    // ...
-  },
-);
+api.processAssets({ stage: 'additional', environments: ['web'] }, ({ assets }) => {
+  // ...
+});
 ```
 
 ### handler 参数

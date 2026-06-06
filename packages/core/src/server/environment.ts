@@ -23,9 +23,7 @@ export const loadBundle = async <T>(
 
   if (!entrypoints?.[entryName]) {
     throw new Error(
-      `${color.dim('[rsbuild:loadBundle]')} Can't find entry: ${color.yellow(
-        entryName,
-      )}`,
+      `${color.dim('[rsbuild:loadBundle]')} Can't find entry: ${color.yellow(entryName)}`,
     );
   }
 
@@ -33,13 +31,9 @@ export const loadBundle = async <T>(
 
   // find main entryChunk from chunks
   const files = entryChunks.reduce<string[]>((prev, entryChunkId) => {
-    const chunk = chunks?.find(
-      (chunk) => chunk.entry && chunk.id === entryChunkId,
-    );
+    const chunk = chunks?.find((chunk) => chunk.entry && chunk.id === entryChunkId);
 
-    return chunk?.files
-      ? prev.concat(chunk.files.filter((file) => !file.endsWith('.css')))
-      : prev;
+    return chunk?.files ? prev.concat(chunk.files.filter((file) => !file.endsWith('.css'))) : prev;
   }, []);
 
   if (files.length === 0) {
@@ -60,8 +54,7 @@ export const loadBundle = async <T>(
   }
 
   const allChunkFiles =
-    chunks?.flatMap((c) => c.files).map((file) => join(outputPath!, file!)) ||
-    [];
+    chunks?.flatMap((c) => c.files).map((file) => join(outputPath!, file!)) || [];
 
   const res = await run<T>({
     bundlePath: files[0],
@@ -74,10 +67,7 @@ export const loadBundle = async <T>(
   return res;
 };
 
-export const getTransformedHtml = (
-  entryName: string,
-  utils: ServerUtils,
-): string => {
+export const getTransformedHtml = (entryName: string, utils: ServerUtils): string => {
   const { htmlPaths, distPath } = utils.environment;
   const htmlPath = htmlPaths[entryName];
 
@@ -97,19 +87,11 @@ export const getTransformedHtml = (
 };
 
 export const createCacheableFunction = <T>(
-  getter: (
-    stats: Rspack.Stats,
-    entryName: string,
-    utils: ServerUtils,
-  ) => Promise<T> | T,
+  getter: (stats: Rspack.Stats, entryName: string, utils: ServerUtils) => Promise<T> | T,
 ) => {
   const cache = new WeakMap<Rspack.Stats, Record<string, T>>();
 
-  return async (
-    stats: Rspack.Stats,
-    entryName: string,
-    utils: ServerUtils,
-  ): Promise<T> => {
+  return async (stats: Rspack.Stats, entryName: string, utils: ServerUtils): Promise<T> => {
     const cachedEntries = cache.get(stats);
     if (cachedEntries?.[entryName]) {
       return cachedEntries[entryName];

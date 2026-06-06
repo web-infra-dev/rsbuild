@@ -77,11 +77,7 @@ const getEnvironmentHTMLPaths = (
     const entryValue = entry[key];
 
     // Should not generate HTML file for the entry if `html` is false
-    if (
-      typeof entryValue === 'string' ||
-      Array.isArray(entryValue) ||
-      entryValue.html !== false
-    ) {
+    if (typeof entryValue === 'string' || Array.isArray(entryValue) || entryValue.html !== false) {
       prev[key] = getHTMLPathByEntry(key, config, logger);
     }
 
@@ -100,8 +96,7 @@ export async function updateEnvironmentContext(
 
     const { entry = {}, tsconfigPath } = config.source;
     const htmlPaths = getEnvironmentHTMLPaths(entry, config, context.logger);
-    const webSocketToken =
-      context.action === 'dev' ? await hash(context.rootPath + name) : '';
+    const webSocketToken = context.action === 'dev' ? await hash(context.rootPath + name) : '';
 
     const environmentContext: EnvironmentContext = {
       index,
@@ -137,17 +132,13 @@ export async function updateEnvironmentContext(
   }
 }
 
-export function updateContextByNormalizedConfig(
-  context: InternalContext,
-): void {
+export function updateContextByNormalizedConfig(context: InternalContext): void {
   // Try to get the parent dist path from all environments
   const distPaths = context.environmentList.map((item) => item.distPath);
   context.distPath = getCommonParentPath(distPaths);
 }
 
-export function createPublicContext(
-  context: InternalContext,
-): Readonly<RsbuildContext> {
+export function createPublicContext(context: InternalContext): Readonly<RsbuildContext> {
   const exposedKeys: (keyof RsbuildContext)[] = [
     'action',
     'version',
@@ -168,9 +159,7 @@ export function createPublicContext(
       return undefined;
     },
     set(target, prop: keyof RsbuildContext) {
-      target.logger.error(
-        `Context is readonly, you can not assign to the "context.${prop}" prop.`,
-      );
+      target.logger.error(`Context is readonly, you can not assign to the "context.${prop}" prop.`);
       return true;
     },
   });
@@ -186,16 +175,12 @@ export async function createContext(
   logger: Logger,
 ): Promise<InternalContext> {
   const { cwd } = options;
-  const rootPath = userConfig.root
-    ? ensureAbsolutePath(cwd, userConfig.root)
-    : cwd;
+  const rootPath = userConfig.root ? ensureAbsolutePath(cwd, userConfig.root) : cwd;
   const rsbuildConfig = await withDefaultConfig(rootPath, userConfig);
   const cachePath = join(rootPath, 'node_modules', '.cache');
 
   const specifiedEnvironments =
-    options.environment && options.environment.length > 0
-      ? options.environment
-      : undefined;
+    options.environment && options.environment.length > 0 ? options.environment : undefined;
 
   return {
     version: RSBUILD_VERSION,

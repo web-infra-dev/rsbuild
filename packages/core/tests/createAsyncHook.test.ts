@@ -101,10 +101,7 @@ describe('createAsyncHook', () => {
 
     await hook.callChain('original message');
 
-    expect(logs).toEqual([
-      'first: original message',
-      'second: modified message',
-    ]);
+    expect(logs).toEqual(['first: original message', 'second: modified message']);
   });
 
   test('should collect all callBatch callback results', async () => {
@@ -120,9 +117,6 @@ describe('createAsyncHook', () => {
 
     const results = await hook.callBatch('test message');
 
-    expect(results).toEqual([
-      'result 1: test message',
-      'result 2: test message',
-    ]);
+    expect(results).toEqual(['result 1: test message', 'result 2: test message']);
   });
 });

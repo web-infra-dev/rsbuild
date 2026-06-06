@@ -19,9 +19,7 @@ export const pluginNonce = (): RsbuildPlugin => ({
 
       applyToCompiler(compiler, (compiler, index) => {
         const nonce = nonces[index];
-        const environment = environmentList.find(
-          (item) => item.index === index,
-        );
+        const environment = environmentList.find((item) => item.index === index);
         const hasHTML = Object.keys(environment?.htmlPaths ?? {}).length;
 
         if (!hasHTML || !nonce) {
@@ -30,9 +28,7 @@ export const pluginNonce = (): RsbuildPlugin => ({
 
         // apply __webpack_nonce__
         // https://rspack.rs/api/runtime-api/module-variables#__webpack_nonce__
-        const injectCode = createVirtualModule(
-          `__webpack_nonce__ = "${nonce}";`,
-        );
+        const injectCode = createVirtualModule(`__webpack_nonce__ = "${nonce}";`);
         new rspack.EntryPlugin(compiler.context, injectCode, {
           name: undefined,
         }).apply(compiler);
@@ -52,9 +48,7 @@ export const pluginNonce = (): RsbuildPlugin => ({
             if (
               tag.tag === 'script' ||
               tag.tag === 'style' ||
-              (tag.tag === 'link' &&
-                tag.attrs?.rel === 'preload' &&
-                tag.attrs?.as === 'script')
+              (tag.tag === 'link' && tag.attrs?.rel === 'preload' && tag.attrs?.as === 'script')
             ) {
               tag.attrs ??= {};
               tag.attrs.nonce = nonce;

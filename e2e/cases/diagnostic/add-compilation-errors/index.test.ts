@@ -9,9 +9,7 @@ test('should print `compilation.errors` by default', async ({ dev }) => {
   rsbuild.expectNoLog(ERROR_STACK);
 });
 
-test('should print `compilation.errors` with stack trace in debug mode', async ({
-  dev,
-}) => {
+test('should print `compilation.errors` with stack trace in debug mode', async ({ dev }) => {
   const restore = enableDebugMode();
   const rsbuild = await dev();
   await rsbuild.expectLog(ERROR_MESSAGE);

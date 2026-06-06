@@ -105,8 +105,5 @@ export type PluginBabelOptions = {
    * Options passed to `babel-loader`.
    * @see https://github.com/babel/babel-loader
    */
-  babelLoaderOptions?: ConfigChainWithContext<
-    BabelLoaderOptions,
-    BabelConfigUtils
-  >;
+  babelLoaderOptions?: ConfigChainWithContext<BabelLoaderOptions, BabelConfigUtils>;
 };

@@ -204,25 +204,20 @@ describe('plugin-html', () => {
     });
     const configs = await rsbuild.initConfigs();
 
-    expect(
-      configs.map((config) => matchPlugin(config, 'HtmlRspackPlugin')),
-    ).toMatchSnapshot();
+    expect(configs.map((config) => matchPlugin(config, 'HtmlRspackPlugin'))).toMatchSnapshot();
   });
 
   it.each<{ value: HtmlConfig['inject']; message: string }>([
     { value: false, message: 'false' },
     { value: () => false, message: '() => false' },
-  ])(
-    'should stop injecting script tag if inject is $message',
-    async ({ value }) => {
-      const rsbuild = await createRsbuild({
-        config: {
-          ...defaultEntryConfig,
-          html: { inject: value },
-        },
-      });
-      const config = (await rsbuild.initConfigs())[0];
-      expect(matchPlugin(config, 'HtmlRspackPlugin')).toMatchSnapshot();
-    },
-  );
+  ])('should stop injecting script tag if inject is $message', async ({ value }) => {
+    const rsbuild = await createRsbuild({
+      config: {
+        ...defaultEntryConfig,
+        html: { inject: value },
+      },
+    });
+    const config = (await rsbuild.initConfigs())[0];
+    expect(matchPlugin(config, 'HtmlRspackPlugin')).toMatchSnapshot();
+  });
 });

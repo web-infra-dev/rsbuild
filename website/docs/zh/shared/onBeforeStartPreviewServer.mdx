@@ -18,7 +18,5 @@ type OnBeforeStartPreviewServerFn = (params: {
   environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;
 
-function OnBeforeStartPreviewServer(
-  callback: OnBeforeStartPreviewServerFn,
-): void;
+function OnBeforeStartPreviewServer(callback: OnBeforeStartPreviewServerFn): void;
 ```

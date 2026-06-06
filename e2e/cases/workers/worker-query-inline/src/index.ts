@@ -34,11 +34,6 @@ runWorker(
   (data) => `${data.text} ${data.name} ${data.marker}`,
 );
 
-runWorker(
-  new InlineWorkerReordered(),
-  'reordered',
-  '#reordered',
-  (data) => data.text,
-);
+runWorker(new InlineWorkerReordered(), 'reordered', '#reordered', (data) => data.text);
 
 runWorker(new InlineWorker(), 'unicode', '#unicode', (data) => data.text);

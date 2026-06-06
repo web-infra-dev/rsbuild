@@ -1,8 +1,6 @@
 import { expect, test } from '@e2e/helper';
 
-test('should allow to set different dev.client for multiple environments', async ({
-  dev,
-}) => {
+test('should allow to set different dev.client for multiple environments', async ({ dev }) => {
   const rsbuild = await dev();
 
   const files = rsbuild.getDistFiles();

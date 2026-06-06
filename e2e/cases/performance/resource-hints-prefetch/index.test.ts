@@ -4,9 +4,7 @@ import { pluginReact } from '@rsbuild/plugin-react';
 
 const fixtures = import.meta.dirname;
 
-test('should generate prefetch link when prefetch is defined', async ({
-  build,
-}) => {
+test('should generate prefetch link when prefetch is defined', async ({ build }) => {
   const rsbuild = await build({
     config: {
       plugins: [pluginReact()],
@@ -177,9 +175,7 @@ test('should generate prefetch link with exclude array', async ({ build }) => {
   ).toBeTruthy();
 });
 
-test('should generate prefetch link by config (distinguish html)', async ({
-  build,
-}) => {
+test('should generate prefetch link by config (distinguish html)', async ({ build }) => {
   const rsbuild = await build({
     config: {
       plugins: [pluginReact()],
@@ -246,9 +242,7 @@ test('should not generate prefetch link for linked legal comment assets in all-a
   expect(content.includes('.LICENSE.txt')).toBeFalsy();
 });
 
-test('should not generate prefetch link for inlined assets', async ({
-  build,
-}) => {
+test('should not generate prefetch link for inlined assets', async ({ build }) => {
   const rsbuild = await build({
     config: {
       plugins: [pluginReact()],
@@ -274,9 +268,7 @@ test('should not generate prefetch link for inlined assets', async ({
   expect(content.match(/rel="prefetch"/g)?.length).toBe(1);
 });
 
-test('should not generate prefetch link for inlined assets with test option', async ({
-  build,
-}) => {
+test('should not generate prefetch link for inlined assets with test option', async ({ build }) => {
   const rsbuild = await build({
     config: {
       plugins: [pluginReact()],

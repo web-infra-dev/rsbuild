@@ -23,19 +23,13 @@ test('HMR should work after fixing compilation error', async ({
   await expect(locator).toHaveText('Hello Rsbuild!');
 
   await editFile(join(tempSrc, 'App.tsx'), (code) =>
-    code.replace(
-      '<div id="test">Hello Rsbuild!</div>',
-      '<div id="test">Hello Rsbuild!</div',
-    ),
+    code.replace('<div id="test">Hello Rsbuild!</div>', '<div id="test">Hello Rsbuild!</div'),
   );
 
   await rsbuild.expectLog(MODULE_BUILD_FAILED_LOG);
 
   await editFile(join(tempSrc, 'App.tsx'), (code) =>
-    code.replace(
-      '<div id="test">Hello Rsbuild!</div',
-      '<div id="test">Hello Rsbuild2!</div>',
-    ),
+    code.replace('<div id="test">Hello Rsbuild!</div', '<div id="test">Hello Rsbuild2!</div>'),
   );
 
   await expect(locator).toHaveText('Hello Rsbuild2!');

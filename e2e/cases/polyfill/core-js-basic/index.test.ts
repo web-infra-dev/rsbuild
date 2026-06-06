@@ -9,10 +9,7 @@ const EXPECT_VALUE = {
   '2': [{ type: '2', value: 3 }],
 };
 
-test('should add polyfill when set polyfill entry (default)', async ({
-  page,
-  buildPreview,
-}) => {
+test('should add polyfill when set polyfill entry (default)', async ({ page, buildPreview }) => {
   const rsbuild = await buildPreview({
     config: {
       output: {
@@ -34,10 +31,7 @@ test('should add polyfill when set polyfill entry (default)', async ({
   expect(content.includes('object.has-own.js')).toBeTruthy();
 });
 
-test('should add polyfill when set polyfill usage', async ({
-  page,
-  buildPreview,
-}) => {
+test('should add polyfill when set polyfill usage', async ({ page, buildPreview }) => {
   const rsbuild = await buildPreview({
     config: {
       output: {

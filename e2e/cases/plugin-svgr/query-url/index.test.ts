@@ -8,9 +8,7 @@ test('should import svg with SVGR plugin and query URL correctly', async ({
 
   // test SVG asset
   await expect(
-    page.evaluate(
-      `document.getElementById('test-img').src.includes('static/svg/mobile')`,
-    ),
+    page.evaluate(`document.getElementById('test-img').src.includes('static/svg/mobile')`),
   ).resolves.toBeTruthy();
 
   // test SVG asset in CSS

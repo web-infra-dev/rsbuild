@@ -5,8 +5,6 @@ test('should set `output.distPath` to a string', async ({ build }) => {
   const files = rsbuild.getDistFiles();
   const filenames = Object.keys(files);
   expect(
-    filenames.some((filename) =>
-      filename.includes('dist-custom/static/js/index.js'),
-    ),
+    filenames.some((filename) => filename.includes('dist-custom/static/js/index.js')),
   ).toBeTruthy();
 });

@@ -10,15 +10,9 @@ test('should allow to use `new URL` to reference styles as assets', async ({
   const files = rsbuild.getDistFiles();
   const filenames = Object.keys(files);
 
-  const test1 = filenames.find((filename) =>
-    filename.includes('dist/static/assets/test1.css'),
-  );
-  const test2 = filenames.find((filename) =>
-    filename.includes('dist/static/assets/test2.less'),
-  );
-  const test3 = filenames.find((filename) =>
-    filename.includes('dist/static/assets/test3.scss'),
-  );
+  const test1 = filenames.find((filename) => filename.includes('dist/static/assets/test1.css'));
+  const test2 = filenames.find((filename) => filename.includes('dist/static/assets/test2.less'));
+  const test3 = filenames.find((filename) => filename.includes('dist/static/assets/test3.scss'));
 
   expect(test1).toBeDefined();
   expect(test2).toBeDefined();
@@ -46,10 +40,7 @@ test('should serve one-byte assets', async ({ page, runBothServe }) => {
           stage: 'additional',
         },
         ({ compilation, sources }) => {
-          compilation.emitAsset(
-            'static/assets/one-byte.txt',
-            new sources.RawSource('a'),
-          );
+          compilation.emitAsset('static/assets/one-byte.txt', new sources.RawSource('a'));
         },
       );
     },
@@ -57,9 +48,7 @@ test('should serve one-byte assets', async ({ page, runBothServe }) => {
 
   await runBothServe(
     async ({ result }) => {
-      const res = await page.goto(
-        `http://localhost:${result.port}/static/assets/one-byte.txt`,
-      );
+      const res = await page.goto(`http://localhost:${result.port}/static/assets/one-byte.txt`);
 
       expect(res?.status()).toBe(200);
       expect(res?.headers()['content-length']).toBe('1');

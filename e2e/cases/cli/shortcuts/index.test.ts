@@ -1,9 +1,6 @@
 import { test } from '@e2e/helper';
 
-test('should display shortcuts as expected in dev', async ({
-  exec,
-  logHelper,
-}) => {
+test('should display shortcuts as expected in dev', async ({ exec, logHelper }) => {
   const { childProcess } = exec('node ./dev.js');
   const { expectLog, clearLogs } = logHelper;
 
@@ -24,10 +21,7 @@ test('should display shortcuts as expected in dev', async ({
   await expectLog('➜  Local:    http://localhost:');
 });
 
-test('should display shortcuts as expected in preview', async ({
-  exec,
-  logHelper,
-}) => {
+test('should display shortcuts as expected in preview', async ({ exec, logHelper }) => {
   const { childProcess } = exec('node ./preview.js');
   const { expectLog, clearLogs } = logHelper;
 
@@ -53,10 +47,7 @@ test('should support custom shortcuts in dev', async ({ exec, logHelper }) => {
   await expectLog('hello world!');
 });
 
-test('should support custom shortcuts in preview', async ({
-  exec,
-  logHelper,
-}) => {
+test('should support custom shortcuts in preview', async ({ exec, logHelper }) => {
   const { childProcess } = exec('node ./previewCustom.js');
   const { expectLog, clearLogs } = logHelper;
 

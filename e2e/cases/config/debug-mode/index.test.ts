@@ -8,9 +8,7 @@ const getRsbuildConfig = (dist: string) =>
 const getBundlerConfig = (dist: string) =>
   path.resolve(import.meta.dirname, `./${dist}/.rsbuild/rspack.config.web.mjs`);
 
-test('should generate config files in debug mode when build', async ({
-  build,
-}) => {
+test('should generate config files in debug mode when build', async ({ build }) => {
   const restore = enableDebugMode();
   const distRoot = 'dist-1';
   const rsbuild = await build({
@@ -29,10 +27,7 @@ test('should generate config files in debug mode when build', async ({
   restore();
 });
 
-test('should generate config files in debug mode when dev', async ({
-  page,
-  dev,
-}) => {
+test('should generate config files in debug mode when dev', async ({ page, dev }) => {
   const restore = enableDebugMode();
   const distRoot = 'dist-2';
   const rsbuild = await dev({

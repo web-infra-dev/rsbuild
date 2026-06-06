@@ -27,9 +27,7 @@ export const getBabelRuleId = (chain: RspackChain): string => {
 const isBabelRuleId = (id: string) => BABEL_JS_RULE_REGEXP.test(id);
 
 const getBabelRules = (chain: RspackChain) => {
-  const ruleIds = Object.keys(chain.module.rules.entries()).filter(
-    isBabelRuleId,
-  );
+  const ruleIds = Object.keys(chain.module.rules.entries()).filter(isBabelRuleId);
 
   return ruleIds.map((id) => chain.module.rules.get(id));
 };
@@ -80,10 +78,7 @@ const addPresets = (presets: BabelPlugin[], config: BabelTransformOptions) => {
   }
 };
 
-const removePlugins = (
-  plugins: string | string[],
-  config: BabelTransformOptions,
-) => {
+const removePlugins = (plugins: string | string[], config: BabelTransformOptions) => {
   if (!config.plugins) {
     return;
   }
@@ -99,10 +94,7 @@ const removePlugins = (
   });
 };
 
-const removePresets = (
-  presets: string | string[],
-  config: BabelTransformOptions,
-) => {
+const removePresets = (presets: string | string[], config: BabelTransformOptions) => {
   if (!config.presets) {
     return;
   }
@@ -118,37 +110,25 @@ const removePresets = (
   });
 };
 
-const modifyPresetOptions = <T>(
-  presetName: string,
-  options: T,
-  presets: BabelPlugin[] = [],
-) => {
+const modifyPresetOptions = <T>(presetName: string, options: T, presets: BabelPlugin[] = []) => {
   presets.forEach((preset: BabelPlugin, index) => {
     // 1. ['@babel/preset-env', ...]
     if (Array.isArray(preset)) {
-      if (
-        typeof preset[0] === 'string' &&
-        normalizeToPosixPath(preset[0]).includes(presetName)
-      ) {
+      if (typeof preset[0] === 'string' && normalizeToPosixPath(preset[0]).includes(presetName)) {
         preset[1] = {
           ...(preset[1] || {}),
           ...options,
           // `options` is specific to different presets
         } as BabelPluginOptions;
       }
-    } else if (
-      typeof preset === 'string' &&
-      normalizeToPosixPath(preset).includes(presetName)
-    ) {
+    } else if (typeof preset === 'string' && normalizeToPosixPath(preset).includes(presetName)) {
       // 2. '@babel/preset-env'
       presets[index] = [preset, options];
     }
   });
 };
 
-export const getBabelUtils = (
-  config: BabelTransformOptions,
-): BabelConfigUtils => {
+export const getBabelUtils = (config: BabelTransformOptions): BabelConfigUtils => {
   const noop = () => {};
 
   return {
@@ -209,9 +189,7 @@ export const modifyBabelLoaderOptions = ({
   modifier: (config: BabelTransformOptions) => BabelTransformOptions;
 }): void => {
   const rules = [
-    chain.module.rules
-      .get(CHAIN_ID.RULE.JS)
-      .oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN),
+    chain.module.rules.get(CHAIN_ID.RULE.JS).oneOfs.get(CHAIN_ID.ONE_OF.JS_MAIN),
     chain.module.rules.get(CHAIN_ID.RULE.JS_DATA_URI),
     ...getBabelRules(chain),
   ].filter(Boolean);

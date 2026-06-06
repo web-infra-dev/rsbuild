@@ -7,10 +7,7 @@ description: 'source.entry is an object where the key is the entry name and the 
 - **Type:**
 
 ```ts
-type Entry = Record<
-  string,
-  string | string[] | (Rspack.EntryDescription & { html?: boolean })
->;
+type Entry = Record<string, string | string[] | (Rspack.EntryDescription & { html?: boolean })>;
 ```
 
 - **Default:**

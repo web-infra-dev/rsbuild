@@ -2,10 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { expectFileWithContent, getRandomPort, test } from '@e2e/helper';
 
-test('should restart dev server when .env file is changed', async ({
-  execCli,
-  logHelper,
-}) => {
+test('should restart dev server when .env file is changed', async ({ execCli, logHelper }) => {
   const dist = path.join(import.meta.dirname, 'dist');
   const configFile = path.join(import.meta.dirname, 'rsbuild.config.mjs');
   const envLocalFile = path.join(import.meta.dirname, '.env.local');

@@ -122,8 +122,7 @@ You can set meta tags using the [html.meta](/config/html/meta) config.
 Rsbuild defaults to setting the charset and viewport meta tags:
 
 ```html
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="utf-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 ```
 
 You can also add custom meta tags, like a description:
@@ -395,9 +394,7 @@ The `html.tags` config allows you to modify HTML tags by updating these tag vari
 ```ts title="rsbuild.config.ts"
 export default {
   html: {
-    tags: [
-      { tag: 'script', attrs: { src: 'https://cdn.example.com/my-script.js' } },
-    ],
+    tags: [{ tag: 'script', attrs: { src: 'https://cdn.example.com/my-script.js' } }],
   },
 };
 ```

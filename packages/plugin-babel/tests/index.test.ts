@@ -39,9 +39,7 @@ describe('plugins/babel', () => {
     });
 
     const config = await rsbuild.initConfigs();
-    expect(
-      matchRules(config[0] as Rspack.Configuration, 'a.tsx')[0],
-    ).toMatchSnapshot();
+    expect(matchRules(config[0] as Rspack.Configuration, 'a.tsx')[0]).toMatchSnapshot();
   });
 
   it('should apply environment config correctly', async () => {

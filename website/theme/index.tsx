@@ -10,10 +10,7 @@ import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
 import { HomeLayout } from './pages';
 import './index.scss';
 import { useLang, usePage } from '@rspress/core/runtime';
-import {
-  Search as PluginAlgoliaSearch,
-  ZH_LOCALES,
-} from '@rspress/plugin-algolia/runtime';
+import { Search as PluginAlgoliaSearch, ZH_LOCALES } from '@rspress/plugin-algolia/runtime';
 
 // Enable announcement when we have something to announce
 // const ANNOUNCEMENT_URL = '/blog/v2-0';
@@ -27,11 +24,7 @@ const DocLayout = (props: DocLayoutProps) => {
       {...props}
       beforeDocContent={
         <>
-          <BlogBackButton
-            pathname={page.routePath}
-            lang={lang}
-            LinkComp={Link}
-          />
+          <BlogBackButton pathname={page.routePath} lang={lang} LinkComp={Link} />
           {props.beforeDocContent}
         </>
       }

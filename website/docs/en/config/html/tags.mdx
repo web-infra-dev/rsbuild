@@ -345,10 +345,7 @@ type HtmlTagContext = {
   publicPath: string;
 };
 
-type HtmlTagHandler = (
-  tags: HtmlTag[],
-  context: HtmlTagContext,
-) => HtmlTag[] | void;
+type HtmlTagHandler = (tags: HtmlTag[], context: HtmlTagContext) => HtmlTag[] | void;
 ```
 
 `html.tags` can also accept functions that can arbitrarily modify tags by writing logic to the callback, often used to ensure the relative position of tags while inserting them.

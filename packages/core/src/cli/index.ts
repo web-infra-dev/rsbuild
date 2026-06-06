@@ -7,9 +7,7 @@ const { argv } = process;
 function initNodeEnv(command: string | undefined) {
   if (!process.env.NODE_ENV) {
     process.env.NODE_ENV =
-      command === 'build' || command === 'preview'
-        ? 'production'
-        : 'development';
+      command === 'build' || command === 'preview' ? 'production' : 'development';
   }
 }
 
@@ -17,8 +15,7 @@ function showGreeting() {
   // Ensure consistent spacing before the greeting message.
   // Different package managers handle output formatting differently - some automatically
   // add a blank line before command output, while others do not.
-  const { npm_execpath, npm_lifecycle_event, NODE_RUN_SCRIPT_NAME } =
-    process.env;
+  const { npm_execpath, npm_lifecycle_event, NODE_RUN_SCRIPT_NAME } = process.env;
   const isNpx = npm_lifecycle_event === 'npx';
   const isBun = npm_execpath?.includes('.bun');
   const isNodeRun = Boolean(NODE_RUN_SCRIPT_NAME);
@@ -32,9 +29,7 @@ function setupLogLevel() {
     return;
   }
 
-  const logLevelIndex = argv.findIndex(
-    (item) => item === '--log-level' || item === '--logLevel',
-  );
+  const logLevelIndex = argv.findIndex((item) => item === '--log-level' || item === '--logLevel');
   if (logLevelIndex !== -1) {
     const level = process.argv[logLevelIndex + 1];
     if (level && ['warn', 'error', 'silent'].includes(level) && !isDebug()) {

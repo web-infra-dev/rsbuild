@@ -41,10 +41,7 @@ export const pluginLazyCompilation = (): RsbuildPlugin => ({
       ) {
         chain.lazyCompilation({
           ...options,
-          serverUrl: replacePortPlaceholder(
-            options.serverUrl,
-            api.context.devServer.port,
-          ),
+          serverUrl: replacePortPlaceholder(options.serverUrl, api.context.devServer.port),
         });
         return;
       }

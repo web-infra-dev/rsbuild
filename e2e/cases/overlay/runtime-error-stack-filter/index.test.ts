@@ -1,9 +1,6 @@
 import { expect, OVERLAY_ID, test } from '@e2e/helper';
 
-test('should hide Rspack runtime stack when user stack exists', async ({
-  page,
-  dev,
-}) => {
+test('should hide Rspack runtime stack when user stack exists', async ({ page, dev }) => {
   await dev();
 
   const content = page.locator(OVERLAY_ID).locator('.content');

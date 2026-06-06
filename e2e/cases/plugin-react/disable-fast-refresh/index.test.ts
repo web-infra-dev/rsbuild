@@ -23,8 +23,6 @@ test('HMR should work when Fast Refresh is disabled', async ({
   await expect(locator).toHaveText('Hello Rsbuild!');
   await expect(locator).toHaveCSS('color', 'rgb(255, 0, 0)');
 
-  await editFile(join(tempSrc, 'App.tsx'), (code) =>
-    code.replace('Hello Rsbuild', 'Hello Test'),
-  );
+  await editFile(join(tempSrc, 'App.tsx'), (code) => code.replace('Hello Rsbuild', 'Hello Test'));
   await expect(locator).toHaveText('Hello Test!');
 });

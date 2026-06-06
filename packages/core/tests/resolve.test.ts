@@ -55,9 +55,7 @@ describe('plugin-resolve', () => {
     });
     const rspackConfigs = await rsbuild.initConfigs();
 
-    expect(
-      (rspackConfigs[0].resolve?.alias as Record<string, string>)?.foo,
-    ).toEqual('bar');
+    expect((rspackConfigs[0].resolve?.alias as Record<string, string>)?.foo).toEqual('bar');
   });
 
   it('should allow resolve.alias to be a function', async () => {

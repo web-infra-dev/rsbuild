@@ -13,10 +13,7 @@ import type { Page } from 'playwright';
 import type { LogHelper } from './logs.ts';
 import { getRandomPort, gotoPage, noop, toPosixPath } from './utils.ts';
 
-const updateConfigForTest = async (
-  originalConfig: RsbuildConfig,
-  cwd: string = process.cwd(),
-) => {
+const updateConfigForTest = async (originalConfig: RsbuildConfig, cwd: string = process.cwd()) => {
   const { loadConfig, mergeRsbuildConfig } = await import('@rsbuild/core');
   const { content: loadedConfig } = await loadConfig({
     cwd,
@@ -32,11 +29,7 @@ const updateConfigForTest = async (
     },
   };
 
-  const mergedConfig = mergeRsbuildConfig(
-    baseConfig,
-    loadedConfig,
-    originalConfig,
-  );
+  const mergedConfig = mergeRsbuildConfig(baseConfig, loadedConfig, originalConfig);
 
   return mergedConfig;
 };
@@ -74,9 +67,7 @@ const collectOutputFiles = (rsbuild: RsbuildInstance) => {
             continue;
           }
           const outputPath = compilation.options.output.path;
-          const assetPath = toPosixPath(
-            outputPath ? join(outputPath, asset.name) : asset.name,
-          );
+          const assetPath = toPosixPath(outputPath ? join(outputPath, asset.name) : asset.name);
           outputFiles[assetPath] = asset.source.source().toString();
         }
       });

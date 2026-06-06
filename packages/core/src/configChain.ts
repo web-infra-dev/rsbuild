@@ -9,11 +9,10 @@ export async function modifyBundlerChain(
 
   const rspackChain = new RspackChain();
 
-  const [modifiedBundlerChain] =
-    await context.hooks.modifyBundlerChain.callChain({
-      environment: utils.environment.name,
-      args: [rspackChain, utils],
-    });
+  const [modifiedBundlerChain] = await context.hooks.modifyBundlerChain.callChain({
+    environment: utils.environment.name,
+    args: [rspackChain, utils],
+  });
 
   if (utils.environment.config.tools?.bundlerChain) {
     for (const item of castArray(utils.environment.config.tools.bundlerChain)) {
