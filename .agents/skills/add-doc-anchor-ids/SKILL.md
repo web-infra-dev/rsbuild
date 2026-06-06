@@ -74,7 +74,7 @@ Use this skill for Rspress docs mirrored under `website/docs/en` and `website/do
    changed_docs=$(git diff --name-only -- '*.md' '*.mdx')
    if [ -n "$changed_docs" ]; then
      printf '%s\n' "$changed_docs" | xargs pnpm dlx cspell --no-progress
-     printf '%s\n' "$changed_docs" | xargs pnpm exec prettier --write
+     printf '%s\n' "$changed_docs" | xargs pnpm exec oxfmt
    fi
    ```
 

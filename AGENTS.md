@@ -42,6 +42,6 @@ website/                    # docs site
 
 ## Code style
 
-- Use single quotes and existing Prettier conventions.
+- Use single quotes and existing Oxfmt conventions.
 - Keep TypeScript strict-safe; avoid `any`.
 - Naming: camelCase (functions/files), PascalCase (types/classes).
