@@ -79,7 +79,7 @@
     "postcss-loader": "catalog:",
     "prebundle": "catalog:",
     "range-parser": "catalog:",
-    "reduce-configs": "^2.0.0",
+    "reduce-configs": "^2.0.1",
     "rslog": "catalog:",
     "rspack-chain": "catalog:",
     "rspack-manifest-plugin": "catalog:",
