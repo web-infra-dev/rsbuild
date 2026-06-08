@@ -37,7 +37,7 @@ worker.onmessage = (event) => {
 worker.postMessage(10);
 ```
 
-使用标准构造器语法时，你也可以将 [`WorkerOptions`](https://developer.mozilla.org/zh-CN/docs/Web/API/Worker/Worker#options) 作为第二个参数传入。Rsbuild 会保留 `name`、`credentials` 等运行时选项，并根据 `type` 判断应该将 worker 作为 module worker 还是 classic worker 来处理。
+使用标准构造器语法时，你也可以将 [`WorkerOptions`](https://developer.mozilla.org/zh-CN/docs/Web/API/Worker/Worker#参数) 作为第二个参数传入。Rsbuild 会保留 `name`、`credentials` 等运行时选项，并根据 `type` 判断应该将 worker 作为 module worker 还是 classic worker 来处理。
 
 ```js title="index.js"
 const worker = new Worker(new URL('./worker.js', import.meta.url), {

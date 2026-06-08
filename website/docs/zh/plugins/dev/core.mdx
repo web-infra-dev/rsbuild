@@ -389,7 +389,7 @@ api.transform({ test: /\.node$/, raw: true }, ({ code }) => {
 });
 ```
 
-- `layer`：标识匹配的模块的 [layer](https://rspack.rs/zh/config/experiments#experimentslayers)，可以将一组模块聚合到一个 layer 中，等同于 Rspack 的 [rules[].layer](https://rspack.rs/zh/config/module-rules#ruleslayer)。
+- `layer`：标识匹配的模块的 [layer](https://rspack.rs/zh/guide/features/layer#layer)，可以将一组模块聚合到一个 layer 中，等同于 Rspack 的 [rules[].layer](https://rspack.rs/zh/config/module-rules#ruleslayer)。
 
 ```js
 api.transform({ test: /\.md$/, layer: 'foo' }, ({ code }) => {
@@ -397,7 +397,7 @@ api.transform({ test: /\.md$/, layer: 'foo' }, ({ code }) => {
 });
 ```
 
-- `issuerLayer`：与"引入当前模块"的模块的 [layer](https://rspack.rs/zh/config/experiments#experimentslayers) 进行匹配，等同于 Rspack 的 [rules[].issuerLayer](https://rspack.rs/zh/config/module-rules#rulesissuerlayer)。
+- `issuerLayer`：与"引入当前模块"的模块的 [layer](https://rspack.rs/zh/guide/features/layer#layer) 进行匹配，等同于 Rspack 的 [rules[].issuerLayer](https://rspack.rs/zh/config/module-rules#rulesissuerlayer)。
 
 ```js
 api.transform({ test: /\.md$/, issuerLayer: 'foo' }, ({ code }) => {
