@@ -33,11 +33,6 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Install Pnpm
-        run: |
-          npm install -g corepack@latest --force
-          corepack enable
-
       - uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1
         id: changes
         with:
@@ -55,6 +50,12 @@ jobs:
         with:
           node-version: 24.16.0
           package-manager-cache: false
+
+      - name: Install Pnpm
+        if: steps.changes.outputs.changed == 'true'
+        uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
+        with:
+          run_install: false
 
       - name: Install Dependencies
         if: steps.changes.outputs.changed == 'true'
@@ -80,11 +81,6 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Install Pnpm
-        run: |
-          npm install -g corepack@latest --force
-          corepack enable
-
       - uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1
         id: changes
         with:
@@ -102,6 +98,12 @@ jobs:
         with:
           node-version: 24.16.0
           package-manager-cache: false
+
+      - name: Install Pnpm
+        if: steps.changes.outputs.changed == 'true'
+        uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
+        with:
+          run_install: false
 
       - name: Install Dependencies
         if: steps.changes.outputs.changed == 'true'
