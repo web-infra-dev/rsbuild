@@ -1,5 +1,5 @@
 import type { Stats as FSStats, ReadStream } from 'node:fs';
-import type { ServerResponse } from 'node:http';
+import type { IncomingHttpHeaders, OutgoingHttpHeaders, ServerResponse } from 'node:http';
 import { lookup } from 'mrmime';
 import onFinished from 'on-finished';
 import type { Range, Result as RangeResult, Ranges } from 'range-parser';
@@ -63,6 +63,148 @@ function parseHttpDate(date: string): number {
 }
 
 const CACHE_CONTROL_NO_CACHE_REGEXP = /(?:^|,)\s*?no-cache\s*?(?:,|$)/;
+
+function getRequestHeader(headers: IncomingHttpHeaders, name: string): string | undefined {
+  const value = headers[name];
+  return Array.isArray(value) ? value.join(',') : value;
+}
+
+function isConditionalGET(headers: IncomingHttpHeaders): boolean {
+  return Boolean(
+    headers['if-match'] ||
+    headers['if-unmodified-since'] ||
+    headers['if-none-match'] ||
+    headers['if-modified-since'],
+  );
+}
+
+function isPreconditionFailure(headers: IncomingHttpHeaders, res: ServerResponse): boolean {
+  const ifMatch = getRequestHeader(headers, 'if-match');
+
+  if (ifMatch) {
+    const etag = res.getHeader('ETag');
+
+    return (
+      !etag ||
+      (ifMatch !== '*' &&
+        parseTokenList(ifMatch).every(
+          (match: string) => match !== etag && match !== `W/${etag}` && `W/${match}` !== etag,
+        ))
+    );
+  }
+
+  const ifUnmodifiedSince = getRequestHeader(headers, 'if-unmodified-since');
+  if (ifUnmodifiedSince) {
+    const unmodifiedSince = parseHttpDate(ifUnmodifiedSince);
+    if (!Number.isNaN(unmodifiedSince)) {
+      const lastModified = parseHttpDate(String(res.getHeader('Last-Modified')));
+      return Number.isNaN(lastModified) || lastModified > unmodifiedSince;
+    }
+  }
+
+  return false;
+}
+
+function isCachable(statusCode: number): boolean {
+  return (statusCode >= 200 && statusCode < 300) || statusCode === HttpCode.NotModified;
+}
+
+function isFresh(headers: IncomingHttpHeaders, resHeaders: OutgoingHttpHeaders): boolean {
+  const cacheControl = getRequestHeader(headers, 'cache-control');
+
+  if (cacheControl && CACHE_CONTROL_NO_CACHE_REGEXP.test(cacheControl)) {
+    return false;
+  }
+
+  const noneMatch = getRequestHeader(headers, 'if-none-match');
+  const modifiedSince = getRequestHeader(headers, 'if-modified-since');
+
+  if (!noneMatch && !modifiedSince) {
+    return false;
+  }
+
+  if (noneMatch && noneMatch !== '*') {
+    if (!resHeaders.etag) {
+      return false;
+    }
+
+    const matches = parseTokenList(noneMatch);
+    let etagStale = true;
+
+    for (let i = 0; i < matches.length; i++) {
+      const match = matches[i];
+      if (
+        match === resHeaders.etag ||
+        match === `W/${resHeaders.etag}` ||
+        `W/${match}` === resHeaders.etag
+      ) {
+        etagStale = false;
+        break;
+      }
+    }
+
+    if (etagStale) {
+      return false;
+    }
+  }
+
+  if (noneMatch) {
+    return true;
+  }
+
+  if (modifiedSince) {
+    const lastModified = resHeaders['last-modified'];
+    const modifiedStale =
+      !lastModified || !(parseHttpDate(String(lastModified)) <= parseHttpDate(modifiedSince));
+
+    if (modifiedStale) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function isRangeFresh(headers: IncomingHttpHeaders, res: ServerResponse): boolean {
+  const ifRange = getRequestHeader(headers, 'if-range');
+
+  if (!ifRange) {
+    return true;
+  }
+
+  if (ifRange.indexOf('"') !== -1) {
+    const etag = res.getHeader('ETag') as string | undefined;
+    if (!etag) {
+      return true;
+    }
+    return Boolean(etag && ifRange.indexOf(etag) !== -1);
+  }
+
+  const lastModified = res.getHeader('Last-Modified') as string | undefined;
+  if (!lastModified) {
+    return true;
+  }
+
+  return parseHttpDate(lastModified) <= parseHttpDate(ifRange);
+}
+
+function getRangeHeader(headers: IncomingHttpHeaders): string | undefined {
+  const range = getRequestHeader(headers, 'range');
+  if (range && BYTES_RANGE_REGEXP.test(range)) {
+    return range;
+  }
+}
+
+function getOffsetAndLenFromRange(range: Range): [number, number] {
+  const { start, end } = range;
+  const len = end - start + 1;
+  return [start, len];
+}
+
+function calcStartAndEnd(start: number, len: number): [number, number] {
+  const end = Math.max(start, start + len - 1);
+  return [start, end];
+}
 
 function destroyStream(stream: ReadStream, suppress: boolean): void {
   if (typeof stream.destroy === 'function') {
@@ -137,6 +279,7 @@ export function createAssetsMiddleware(
   outputFileSystem: Rspack.OutputFileSystem,
 ): RequestHandler {
   const { logger } = context;
+
   return async function assetsMiddleware(req, res, next) {
     async function goNext() {
       return new Promise<void>((resolve) => {
@@ -150,145 +293,6 @@ export function createAssetsMiddleware(
     if (req.method && req.method !== 'GET' && req.method !== 'HEAD') {
       await goNext();
       return;
-    }
-
-    function isConditionalGET() {
-      return (
-        req.headers['if-match'] ||
-        req.headers['if-unmodified-since'] ||
-        req.headers['if-none-match'] ||
-        req.headers['if-modified-since']
-      );
-    }
-
-    function isPreconditionFailure() {
-      const ifMatch = req.headers['if-match'];
-
-      if (ifMatch) {
-        const etag = res.getHeader('ETag');
-
-        return (
-          !etag ||
-          (ifMatch !== '*' &&
-            parseTokenList(ifMatch).every(
-              (match: string) => match !== etag && match !== `W/${etag}` && `W/${match}` !== etag,
-            ))
-        );
-      }
-
-      const ifUnmodifiedSince = req.headers['if-unmodified-since'];
-      if (ifUnmodifiedSince) {
-        const unmodifiedSince = parseHttpDate(ifUnmodifiedSince);
-        if (!Number.isNaN(unmodifiedSince)) {
-          const lastModified = parseHttpDate(String(res.getHeader('Last-Modified')));
-          return Number.isNaN(lastModified) || lastModified > unmodifiedSince;
-        }
-      }
-
-      return false;
-    }
-
-    function isCachable(): boolean {
-      return (
-        (res.statusCode >= 200 && res.statusCode < 300) || res.statusCode === HttpCode.NotModified
-      );
-    }
-
-    function isFresh(resHeaders: import('http').OutgoingHttpHeaders): boolean {
-      const cacheControl = req.headers['cache-control'];
-
-      if (cacheControl && CACHE_CONTROL_NO_CACHE_REGEXP.test(cacheControl)) {
-        return false;
-      }
-
-      const noneMatch = req.headers['if-none-match'];
-      const modifiedSince = req.headers['if-modified-since'];
-
-      if (!noneMatch && !modifiedSince) {
-        return false;
-      }
-
-      if (noneMatch && noneMatch !== '*') {
-        if (!resHeaders.etag) {
-          return false;
-        }
-
-        const matches = parseTokenList(noneMatch);
-        let etagStale = true;
-
-        for (let i = 0; i < matches.length; i++) {
-          const match = matches[i];
-          if (
-            match === resHeaders.etag ||
-            match === `W/${resHeaders.etag}` ||
-            `W/${match}` === resHeaders.etag
-          ) {
-            etagStale = false;
-            break;
-          }
-        }
-
-        if (etagStale) {
-          return false;
-        }
-      }
-
-      if (noneMatch) {
-        return true;
-      }
-
-      if (modifiedSince) {
-        const lastModified = resHeaders['last-modified'];
-        const modifiedStale =
-          !lastModified || !(parseHttpDate(String(lastModified)) <= parseHttpDate(modifiedSince));
-
-        if (modifiedStale) {
-          return false;
-        }
-      }
-
-      return true;
-    }
-
-    function isRangeFresh() {
-      const ifRange = req.headers['if-range'] as string | undefined;
-
-      if (!ifRange) {
-        return true;
-      }
-
-      if (ifRange.indexOf('"') !== -1) {
-        const etag = res.getHeader('ETag') as string | undefined;
-        if (!etag) {
-          return true;
-        }
-        return Boolean(etag && ifRange.indexOf(etag) !== -1);
-      }
-
-      const lastModified = res.getHeader('Last-Modified') as string | undefined;
-      if (!lastModified) {
-        return true;
-      }
-
-      return parseHttpDate(lastModified) <= parseHttpDate(ifRange);
-    }
-
-    function getRangeHeader(): string | undefined {
-      const { range } = req.headers;
-      if (range && BYTES_RANGE_REGEXP.test(range)) {
-        return range;
-      }
-    }
-
-    function getOffsetAndLenFromRange(range: Range): [number, number] {
-      const { start, end } = range;
-      const len = end - start + 1;
-      return [start, len];
-    }
-
-    function calcStartAndEnd(start: number, len: number): [number, number] {
-      const end = Math.max(start, start + len - 1);
-      return [start, end];
     }
 
     async function processRequest() {
@@ -330,7 +334,7 @@ export function createAssetsMiddleware(
         res.setHeader('Accept-Ranges', 'bytes');
       }
 
-      const rangeHeader = getRangeHeader();
+      const rangeHeader = getRangeHeader(req.headers);
 
       if (!res.getHeader('ETag')) {
         if (fsStats) {
@@ -339,8 +343,8 @@ export function createAssetsMiddleware(
         }
       }
 
-      if (isConditionalGET()) {
-        if (isPreconditionFailure()) {
+      if (isConditionalGET(req.headers)) {
+        if (isPreconditionFailure(req.headers, res)) {
           sendError(res, HttpCode.PreconditionFailed);
           return;
         }
@@ -350,8 +354,8 @@ export function createAssetsMiddleware(
         }
 
         if (
-          isCachable() &&
-          isFresh({
+          isCachable(res.statusCode) &&
+          isFresh(req.headers, {
             etag: res.getHeader('ETag') as string | undefined,
             'last-modified': res.getHeader('Last-Modified') as string | undefined,
           })
@@ -373,7 +377,7 @@ export function createAssetsMiddleware(
           `${size}|${rangeHeader}`,
         );
 
-        if (!isRangeFresh()) {
+        if (!isRangeFresh(req.headers, res)) {
           parsedRanges = [];
         }
 
