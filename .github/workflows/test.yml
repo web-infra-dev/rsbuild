@@ -55,11 +55,7 @@ jobs:
         if: steps.changes.outputs.changed == 'true'
         uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
         with:
-          run_install: false
-
-      - name: Install Dependencies
-        if: steps.changes.outputs.changed == 'true'
-        run: pnpm install
+          run_install: true
 
       - name: Unit Test
         if: steps.changes.outputs.changed == 'true'
@@ -103,11 +99,7 @@ jobs:
         if: steps.changes.outputs.changed == 'true'
         uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
         with:
-          run_install: false
-
-      - name: Install Dependencies
-        if: steps.changes.outputs.changed == 'true'
-        run: pnpm install
+          run_install: true
 
       - name: Run E2E tests
         if: steps.changes.outputs.changed == 'true'

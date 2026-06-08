@@ -46,16 +46,7 @@ jobs:
       - name: Setup Pnpm
         uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
         with:
-          run_install: false
-
-      # Update npm to the latest version to enable OIDC
-      - name: Update npm
-        run: |
-          npm install -g npm@latest
-          npm --version
-
-      - name: Install Dependencies
-        run: pnpm install
+          run_install: true
 
       - name: Publish to npm
         run: |
