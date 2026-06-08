@@ -177,7 +177,12 @@ function isRangeFresh(headers: IncomingHttpHeaders, res: ServerResponse): boolea
     if (!etag) {
       return true;
     }
-    return Boolean(etag && ifRange.indexOf(etag) !== -1);
+    // If-Range entity-tags require strong comparison. Weak validators should
+    // fall back to the full response instead of serving partial content.
+    if (ifRange.startsWith('W/') || etag.startsWith('W/')) {
+      return false;
+    }
+    return ifRange === etag;
   }
 
   const lastModified = res.getHeader('Last-Modified') as string | undefined;
