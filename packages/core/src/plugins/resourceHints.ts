@@ -35,6 +35,22 @@ const getInlineExcludes = (config: NormalizedEnvironmentConfig): RegExp[] => {
   return [...scriptTests, ...styleTests].filter((item) => isRegExp(item));
 };
 
+const appendExcludes = <T extends PrefetchOptions | PreloadOptions>(
+  options: T | T[],
+  excludes: RegExp[],
+): T | T[] => {
+  if (!excludes.length) {
+    return options;
+  }
+
+  const optionsList = castArray(options).map((option) => ({
+    ...option,
+    exclude: option.exclude ? [...castArray(option.exclude), ...excludes] : excludes,
+  }));
+
+  return Array.isArray(options) ? optionsList : optionsList[0];
+};
+
 export const pluginResourceHints = (): RsbuildPlugin => ({
   name: 'rsbuild:resource-hints',
 
@@ -81,13 +97,10 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
       const excludes = getInlineExcludes(config);
 
       if (prefetch) {
-        const options: PrefetchOptions = prefetch === true ? {} : prefetch;
-
-        if (excludes.length) {
-          options.exclude = options.exclude
-            ? [...castArray(options.exclude), ...excludes]
-            : excludes;
-        }
+        const options = appendExcludes<PrefetchOptions>(
+          prefetch === true ? {} : prefetch,
+          excludes,
+        );
 
         chain
           .plugin(CHAIN_ID.PLUGIN.HTML_PREFETCH)
@@ -101,13 +114,7 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
       }
 
       if (preload) {
-        const options: PreloadOptions = preload === true ? {} : preload;
-
-        if (excludes.length) {
-          options.exclude = options.exclude
-            ? [...castArray(options.exclude), ...excludes]
-            : excludes;
-        }
+        const options = appendExcludes<PreloadOptions>(preload === true ? {} : preload, excludes);
 
         chain
           .plugin(CHAIN_ID.PLUGIN.HTML_PRELOAD)

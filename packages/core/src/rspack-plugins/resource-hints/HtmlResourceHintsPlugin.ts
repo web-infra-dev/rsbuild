@@ -36,12 +36,19 @@ const defaultOptions: ResourceHintsOptions = {
 
 type LinkType = 'preload' | 'prefetch';
 
+type ResourceHintsInputOptions = ResourceHintsOptions | ResourceHintsOptions[];
+
 interface Attributes {
   [attributeName: string]: string | boolean | null | undefined;
   href: string;
   rel: LinkType;
   as?: ResourceType;
   crossorigin?: string;
+}
+
+interface ResourceHintGroup {
+  links: HtmlRspackPlugin.HtmlTagObject[];
+  dedupe: boolean;
 }
 
 const applyFilter = (
@@ -119,6 +126,34 @@ function filterResourceHints(
     (resourceHint) =>
       !scripts.find((script) => script.attributes.src === resourceHint.attributes.href),
   );
+}
+
+function getResourceHintKey(resourceHint: HtmlRspackPlugin.HtmlTagObject): string {
+  return `${resourceHint.attributes.rel}:${resourceHint.attributes.href}`;
+}
+
+function mergeResourceHints(
+  resourceHintGroups: ResourceHintGroup[],
+  scripts: HtmlRspackPlugin.HtmlTagObject[],
+): HtmlRspackPlugin.HtmlTagObject[] {
+  const links: HtmlRspackPlugin.HtmlTagObject[] = [];
+  const seen = new Set<string>();
+
+  for (const { links: groupLinks, dedupe } of resourceHintGroups) {
+    const filteredLinks = dedupe ? filterResourceHints(groupLinks, scripts) : groupLinks;
+
+    for (const link of filteredLinks) {
+      const key = getResourceHintKey(link);
+      if (seen.has(key)) {
+        continue;
+      }
+
+      seen.add(key);
+      links.push(link);
+    }
+  }
+
+  return links;
 }
 
 function generateLinks(
@@ -217,11 +252,11 @@ function generateLinks(
 }
 
 export class HtmlResourceHintsPlugin implements RspackPluginInstance {
-  readonly options: ResourceHintsOptions;
+  readonly options: ResourceHintsOptions[];
 
   name = 'HtmlResourceHintsPlugin';
 
-  resourceHints: HtmlRspackPlugin.HtmlTagObject[] = [];
+  resourceHints: ResourceHintGroup[] = [];
 
   type: LinkType;
 
@@ -232,13 +267,13 @@ export class HtmlResourceHintsPlugin implements RspackPluginInstance {
   getHTMLPlugin: () => typeof HtmlRspackPlugin;
 
   constructor(
-    options: ResourceHintsOptions,
+    options: ResourceHintsInputOptions,
     type: LinkType,
     HTMLCount: number,
     isDev: boolean,
     getHTMLPlugin: () => typeof HtmlRspackPlugin,
   ) {
-    this.options = { ...defaultOptions, ...options };
+    this.options = castArray(options).map((option) => ({ ...defaultOptions, ...option }));
     this.type = type;
     this.HTMLCount = HTMLCount;
     this.isDev = isDev;
@@ -251,24 +286,18 @@ export class HtmlResourceHintsPlugin implements RspackPluginInstance {
       const pluginName = `HTML${upperFirst(this.type)}Plugin`;
 
       pluginHooks.beforeAssetTagGeneration.tap(pluginName, (data) => {
-        this.resourceHints = generateLinks(
-          this.options,
-          this.type,
-          compilation,
-          data,
-          this.HTMLCount,
-          this.isDev,
-        );
+        this.resourceHints = this.options.map((option) => ({
+          links: generateLinks(option, this.type, compilation, data, this.HTMLCount, this.isDev),
+          dedupe: option.dedupe !== false,
+        }));
 
         return data;
       });
 
       pluginHooks.alterAssetTags.tap(pluginName, (data) => {
-        if (this.resourceHints) {
+        if (this.resourceHints.length) {
           data.assetTags.styles = [
-            ...(this.options.dedupe
-              ? filterResourceHints(this.resourceHints, data.assetTags.scripts)
-              : this.resourceHints),
+            ...mergeResourceHints(this.resourceHints, data.assetTags.scripts),
             ...data.assetTags.styles,
           ];
         }
