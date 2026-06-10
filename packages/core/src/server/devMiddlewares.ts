@@ -84,7 +84,7 @@ const applyDefaultMiddlewares = async ({
   const { logger } = context;
 
   if (server.cors) {
-    const { default: corsMiddleware } = await import(/* webpackChunkName: "cors" */ 'cors');
+    const { default: corsMiddleware } = await import(/* rspackChunkName: "cors" */ 'cors');
     middlewares.use(corsMiddleware(typeof server.cors === 'boolean' ? {} : server.cors));
   }
 
@@ -149,7 +149,7 @@ const applyDefaultMiddlewares = async ({
   const getLaunchEditorHandler = () => {
     launchEditorHandlerPromise ??= (async () => {
       const { default: launchEditorMiddleware } = await import(
-        /* webpackChunkName: "launch-editor-middleware" */
+        /* rspackChunkName: "launch-editor-middleware" */
         'launch-editor-middleware'
       );
       return launchEditorMiddleware();
@@ -201,7 +201,7 @@ const applyDefaultMiddlewares = async ({
   }
 
   if (server.publicDir.length) {
-    const { default: sirv } = await import(/* webpackChunkName: "sirv" */ 'sirv');
+    const { default: sirv } = await import(/* rspackChunkName: "sirv" */ 'sirv');
     for (const { name } of server.publicDir) {
       const sirvMiddleware = sirv(name, {
         etag: true,

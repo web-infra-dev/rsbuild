@@ -57,7 +57,7 @@ const parseFrame = async (
   }
 
   const { TraceMap, originalPositionFor } = await import(
-    /* webpackChunkName: "trace-mapping" */
+    /* rspackChunkName: "trace-mapping" */
     '@jridgewell/trace-mapping'
   );
 

@@ -100,7 +100,7 @@ async function openBrowser(url: string, logger: Logger): Promise<boolean> {
   }
 
   const { apps, default: baseOpen } = await import(
-    /* webpackChunkName: "open" */
+    /* rspackChunkName: "open" */
     'open'
   );
 

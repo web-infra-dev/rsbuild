@@ -16,7 +16,7 @@ const mergeSourceMap = async (
   }
 
   const { default: remapping } = await import(
-    /* webpackChunkName: "remapping" */ '@jridgewell/remapping'
+    /* rspackChunkName: "remapping" */ '@jridgewell/remapping'
   );
   return remapping(
     [generatedSourceMap, originalSourceMap] as SourceMapInput[],

@@ -49,7 +49,7 @@ export async function createProxyMiddleware(
   const middlewares: Middleware[] = [];
 
   const { createProxyMiddleware: baseMiddleware } = await import(
-    /* webpackChunkName: "http-proxy-middleware" */ 'http-proxy-middleware'
+    /* rspackChunkName: "http-proxy-middleware" */ 'http-proxy-middleware'
   );
 
   for (const opts of formattedOptions) {
