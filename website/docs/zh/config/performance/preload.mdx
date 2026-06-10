@@ -4,9 +4,11 @@ description: '为 Rsbuild 构建生成的静态资源注入 link 标签。'
 
 # performance.preload
 
-- **类型：** `undefined | true | PreloadOptions`
+- **类型：**
 
 ```ts
+type Preload = undefined | true | PreloadOptions | PreloadOptions[];
+
 interface PreloadOptions {
   type?: ResourceHintsIncludeType;
   include?: ResourceHintsFilter;
@@ -85,11 +87,16 @@ export default {
 
 ## 选项
 
-`performance.preload` 可以设置为一个对象来指定选项。
+`performance.preload` 可以设置为一个对象或对象数组来指定选项。
 
 ### preload.type
 
-- **类型：** ` 'async-chunks' | 'initial' | 'all-assets' | 'all-chunks'`
+- **类型：**
+
+```ts
+type ResourceHintsIncludeType = 'async-chunks' | 'initial' | 'all-assets' | 'all-chunks';
+```
+
 - **默认值：** `'async-chunks'`
 
 指定哪些类型的资源会被包含，目前支持的值如下：
@@ -108,6 +115,24 @@ export default {
       type: 'all-chunks',
       include: [/\.png$/],
     },
+  },
+};
+```
+
+你也可以将 `performance.preload` 设置为数组来应用多条 preload 规则，匹配到的资源会被合并并去重：
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    preload: [
+      {
+        include: /\.js$/,
+      },
+      {
+        type: 'all-chunks',
+        include: /\.png$/,
+      },
+    ],
   },
 };
 ```
@@ -211,3 +236,9 @@ export default {
   },
 };
 ```
+
+## 版本历史
+
+| 版本    | 变更内容                                |
+| ------- | --------------------------------------- |
+| v2.0.12 | 支持将 `performance.preload` 设置为数组 |
