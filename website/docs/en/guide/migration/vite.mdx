@@ -212,13 +212,14 @@ Rsbuild injects the following [environment variables](/guide/advanced/env-vars) 
 
 ## Preset types
 
-Vite provides some preset type definitions through the `vite-env.d.ts` file. When migrating to Rsbuild, you can use the [preset types](/guide/basic/typescript#preset-types) provided by `@rsbuild/core`:
+Vite provides some preset type definitions through `vite/client`. When migrating to Rsbuild, replace it with the [preset types](/guide/basic/typescript#preset-types) provided by `@rsbuild/core`:
 
-```ts title="src/env.d.ts"
-// [!code --]
-/// <reference types="vite/client" />
-// [!code ++]
-/// <reference types="@rsbuild/core/types" />
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "types": ["@rsbuild/core/types"]
+  }
+}
 ```
 
 ## Web Workers
