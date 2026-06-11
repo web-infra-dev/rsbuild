@@ -10,9 +10,9 @@ description: 'Controls whether code minification is enabled, and provides config
 type Minify =
   | boolean
   | {
-      js?: boolean;
+      js?: boolean | 'always';
       jsOptions?: Rspack.SwcJsMinimizerRspackPluginOptions;
-      css?: boolean;
+      css?: boolean | 'always';
       cssOptions?: Rspack.LightningcssMinimizerRspackPluginOptions;
     };
 ```
