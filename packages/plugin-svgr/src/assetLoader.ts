@@ -11,7 +11,7 @@ export type SvgAssetLoaderOptions = {
   publicPath?: string | ((url: string, resourcePath: string, context: string) => string);
 };
 
-type RawLoaderDefinition<OptionsType = {}> = ((
+type RawLoaderDefinition<OptionsType> = ((
   this: Rspack.LoaderContext<OptionsType>,
   content: Buffer | string,
 ) => string | Buffer | void | Promise<string | Buffer | void>) & {

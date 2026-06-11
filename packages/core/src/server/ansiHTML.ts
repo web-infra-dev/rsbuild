@@ -30,6 +30,7 @@ export function ansiHTML(text: string): string {
   // Cache opened sequence
   const ansiCodes: string[] = [];
   // Replace with markup
+  // rslint-disable-next-line no-control-regex
   let ret = text.replace(/\x1B\[([0-9;]+)m/g, (_match: string, sequences: string): string => {
     let style = '';
     for (const seq of sequences.split(';')) {
