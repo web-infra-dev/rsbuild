@@ -5,7 +5,7 @@
     "target": "ES2020",
     "noEmit": true,
     "skipLibCheck": true,
-    "types": ["@rsbuild/core/types"],
+    "types": ["@rsbuild/core/types", "node"],
     "jsxImportSource": "solid-js",
     "useDefineForClassFields": true,
 

@@ -4,7 +4,7 @@
     "target": "ES2022",
     "noEmit": true,
     "skipLibCheck": true,
-    "types": ["@rsbuild/core/types", "svelte"],
+    "types": ["@rsbuild/core/types", "node", "svelte"],
     "useDefineForClassFields": true,
 
     /* modules */
