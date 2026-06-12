@@ -69,12 +69,6 @@ export default {
 };
 ```
 
-## hot-update files
-
-During the HMR process, the page will make GET requests to get hot-update files, including `*.hot-update.json` and `*.hot-update.js`. These files contain the necessary information for hot updates, such as the updated modules and their code.
-
-Hot-update files are considered to be static assets. If you need to configure the URL for hot-update files, please use the [dev.assetPrefix](/config/dev/asset-prefix) option.
-
 ## Options
 
 ### path
@@ -364,6 +358,12 @@ export default function resolveWebSocketUrl(url: string): string {
 :::tip
 The input URL contains query parameters required by Rsbuild, such as `token`. When rewriting the URL, preserve the existing query string unless you intentionally want to override it.
 :::
+
+## hot-update files
+
+During the HMR process, the page will make GET requests to get hot-update files, including `*.hot-update.json` and `*.hot-update.js`. These files contain the necessary information for hot updates, such as the updated modules and their code.
+
+Hot-update files are considered to be static assets. If you need to configure the URL for hot-update files, please use the [dev.assetPrefix](/config/dev/asset-prefix) option.
 
 ## Version history
 
