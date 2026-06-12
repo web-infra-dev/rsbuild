@@ -140,7 +140,13 @@ export default {
 
 ### Server URL
 
-通过 [lazyCompilation.serverUrl](https://rspack.rs/zh/config/lazy-compilation#lazycompilationserverurl) 指定 client 需要请求的 server URL：
+通过 [lazyCompilation.serverUrl](https://rspack.rs/zh/config/lazy-compilation#lazycompilationserverurl) 可以指定 client 需要请求的 server URL。
+
+如果未配置 `lazyCompilation.serverUrl`，并且设置了 `dev.client.host` 或 `dev.client.port`，Rsbuild 会将 `dev.client` 对应的 URL 作为默认的 `serverUrl`。
+
+如果显式配置了 `lazyCompilation.serverUrl`，该配置始终优先于从 `dev.client` 推导出的默认值。
+
+示例如下：
 
 ```ts title="rsbuild.config.ts"
 export default {
