@@ -279,6 +279,82 @@ The following formats are supported:
 
 Customize the transformed style path, the usage is consistent with `customName`.
 
+### ignoreEsComponent
+
+- **Type:** `string[]`
+- **Default:** `undefined`
+
+Specify named imports that should not be transformed to subpath imports. The values should match the names in the original import statement.
+
+For example:
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    transformImport: [
+      {
+        libraryName: 'foo',
+        libraryDirectory: 'lib',
+        style: true,
+        ignoreEsComponent: ['Icon'],
+      },
+    ],
+  },
+};
+```
+
+The source code is:
+
+```js
+import { Button, Icon } from 'foo';
+```
+
+Will be transformed to:
+
+```js
+import Button from 'foo/lib/button';
+import 'foo/lib/button/style';
+import { Icon } from 'foo';
+```
+
+### ignoreStyleComponent
+
+- **Type:** `string[]`
+- **Default:** `undefined`
+
+Specify named imports that should not import related styles. Their JavaScript import paths are still transformed. The values should match the names in the original import statement.
+
+For example:
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    transformImport: [
+      {
+        libraryName: 'foo',
+        libraryDirectory: 'lib',
+        style: true,
+        ignoreStyleComponent: ['Button'],
+      },
+    ],
+  },
+};
+```
+
+The source code is:
+
+```js
+import { Button, Alert } from 'foo';
+```
+
+Will be transformed to:
+
+```js
+import Button from 'foo/lib/button';
+import Alert from 'foo/lib/alert';
+import 'foo/lib/alert/style';
+```
+
 ## Function type
 
 The `transformImport` can be a function, it will accept the previous value, and you can modify it.

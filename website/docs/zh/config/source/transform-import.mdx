@@ -281,6 +281,82 @@ export default {
 
 自定义转换后的样式导入路径，用法与 `customName` 一致。
 
+### ignoreEsComponent
+
+- **类型：** `string[]`
+- **默认值：** `undefined`
+
+指定不需要转换为子路径导入的导入项。数组中的值需要与原始 import 语句中的导入名称一致。
+
+例如：
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    transformImport: [
+      {
+        libraryName: 'foo',
+        libraryDirectory: 'lib',
+        style: true,
+        ignoreEsComponent: ['Icon'],
+      },
+    ],
+  },
+};
+```
+
+源代码如下：
+
+```js
+import { Button, Icon } from 'foo';
+```
+
+会被转换成：
+
+```js
+import Button from 'foo/lib/button';
+import 'foo/lib/button/style';
+import { Icon } from 'foo';
+```
+
+### ignoreStyleComponent
+
+- **类型：** `string[]`
+- **默认值：** `undefined`
+
+指定不需要引入相关样式的导入项。对应的 JavaScript 导入路径仍然会被转换。数组中的值需要与原始 import 语句中的导入名称一致。
+
+例如：
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    transformImport: [
+      {
+        libraryName: 'foo',
+        libraryDirectory: 'lib',
+        style: true,
+        ignoreStyleComponent: ['Button'],
+      },
+    ],
+  },
+};
+```
+
+源代码如下：
+
+```js
+import { Button, Alert } from 'foo';
+```
+
+会被转换成：
+
+```js
+import Button from 'foo/lib/button';
+import Alert from 'foo/lib/alert';
+import 'foo/lib/alert/style';
+```
+
 ## Function 类型
 
 `transformImport` 的值定义为函数时，可以接受原本的 transformImport 配置，并对其进行修改。
