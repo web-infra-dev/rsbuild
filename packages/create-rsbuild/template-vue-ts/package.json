@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "rsbuild build",
+    "build": "vue-tsc && rsbuild build",
     "dev": "rsbuild --open",
     "preview": "rsbuild preview"
   },
@@ -14,6 +14,7 @@
   "devDependencies": {
     "@rsbuild/core": "^2.0.11",
     "@rsbuild/plugin-vue": "^1.2.9",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vue-tsc": "^3.3.3"
   }
 }

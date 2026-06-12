@@ -123,6 +123,7 @@ test('should create Vue project with ESLint as expected', async () => {
     name: 'test-temp-vue-eslint',
     tools: ['eslint'],
     clean: false,
+    expectedBuildScript: 'vue-tsc && rsbuild build',
   });
   expect(pkgJson.devDependencies.eslint).toBeTruthy();
   expect(pkgJson.devDependencies['eslint-plugin-vue']).toBeTruthy();
