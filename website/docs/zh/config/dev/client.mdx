@@ -69,25 +69,6 @@ export default {
 };
 ```
 
-### 端口号占位符
-
-Rsbuild server 监听的端口号可能会发生变更。比如，当端口被占用时，Rsbuild 会自动递增端口号，直至找到一个可用端口。
-
-为了避免端口变化导致 `client.port` 失效，你可以使用以下方法之一：
-
-- 开启 [server.strictPort](/config/server/strict-port)。
-- 使用 `<port>` 占位符来指代当前端口号，Rsbuild 会将占位符替换为实际监听的端口号。
-
-```ts title="rsbuild.config.ts"
-export default {
-  dev: {
-    client: {
-      port: '<port>',
-    },
-  },
-};
-```
-
 ## hot-update 文件
 
 在热更新过程中，页面会发起 GET 请求来获取 hot-update 文件，包括 `*.hot-update.json` 和 `*.hot-update.js`。这些文件包含了热更新所需的信息，比如被更新的模块、模块的代码等。
@@ -122,13 +103,32 @@ export default {
 
 用于设置 HMR WebSocket 请求的端口号。
 
-默认值为空字符串，浏览器会使用当前页面的 `location.port`。你可以设置固定端口号，也可以使用 `<port>` 占位符指代 Rsbuild dev server 实际监听的端口号。
+默认值为空字符串，浏览器会使用当前页面的 `location.port`。
+
+你可以设置固定端口号：
 
 ```ts title="rsbuild.config.ts"
 export default {
   dev: {
     client: {
       port: 3000,
+    },
+  },
+};
+```
+
+Rsbuild server 监听的端口号可能会发生变更。比如，当端口被占用时，Rsbuild 会自动递增端口号，直至找到一个可用端口。
+
+为了避免端口变化导致 `client.port` 失效，你可以：
+
+- 开启 [server.strictPort](/config/server/strict-port)。
+- 使用 `<port>` 占位符来指代当前端口号，Rsbuild 会将占位符替换为实际监听的端口号。
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      port: '<port>',
     },
   },
 };

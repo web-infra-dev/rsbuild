@@ -69,25 +69,6 @@ export default {
 };
 ```
 
-### Port placeholder
-
-The port number that Rsbuild server listens on may change. For example, if the port is in use, Rsbuild will automatically increment the port number until it finds an available port.
-
-To avoid `client.port` becoming invalid due to port changes, you can use one of the following methods:
-
-- Enable [server.strictPort](/config/server/strict-port).
-- Use the `<port>` placeholder to refer to the current port number. Rsbuild will replace the placeholder with the actual port number it is listening on.
-
-```ts title="rsbuild.config.ts"
-export default {
-  dev: {
-    client: {
-      port: '<port>',
-    },
-  },
-};
-```
-
 ## hot-update files
 
 During the HMR process, the page will make GET requests to get hot-update files, including `*.hot-update.json` and `*.hot-update.js`. These files contain the necessary information for hot updates, such as the updated modules and their code.
@@ -122,13 +103,32 @@ export default {
 
 Sets the port for HMR WebSocket requests.
 
-Default is an empty string, so the browser uses the current page's `location.port`. You can set a fixed port, or use `<port>` to refer to the port used by the Rsbuild dev server.
+Default is an empty string, so the browser uses the current page's `location.port`.
+
+You can set a fixed port:
 
 ```ts title="rsbuild.config.ts"
 export default {
   dev: {
     client: {
       port: 3000,
+    },
+  },
+};
+```
+
+The port that the Rsbuild server listens on may change. For example, if the port is in use, Rsbuild will automatically increment the port number until it finds an available port.
+
+To avoid `client.port` becoming invalid due to port changes, you can:
+
+- Enable [server.strictPort](/config/server/strict-port).
+- Use the `<port>` placeholder to refer to the current port number. Rsbuild will replace the placeholder with the actual port number it is listening on.
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      port: '<port>',
     },
   },
 };
