@@ -567,7 +567,7 @@ interface ImportMeta {
 
 如果希望获得更严格的类型安全，你可以通过扩展 `RsbuildTypeOptions` interface 来开启 `strictImportMetaEnv` 选项。开启后，只有 Rsbuild 预定义或你在项目中明确声明的属性才能被访问，访问其他属性会导致 TypeScript 类型错误。
 
-你可以在 `src/env.d.ts` 文件中添加以下代码。请确保已经在 `tsconfig.json` 中引入了 Rsbuild 预设类型。
+你可以在 `src/env.d.ts` 文件中添加以下代码。请确保已经在 `tsconfig.json` 中引入了 [Rsbuild 预设类型](/guide/basic/typescript#preset-types)。
 
 ```ts title="src/env.d.ts"
 interface RsbuildTypeOptions {
