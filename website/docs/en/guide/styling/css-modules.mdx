@@ -164,12 +164,16 @@ When you import CSS Modules in TypeScript code, TypeScript may prompt that the m
 TS2307: Cannot find module './index.module.css' or its corresponding type declarations.
 ```
 
-To fix this, you need to add a type declaration file for CSS Modules. Create a `src/env.d.ts` file and add the corresponding type declaration.
+To fix this, use one of the following methods:
 
-- Method 1: If the `@rsbuild/core` package is installed, you can reference the [preset types](/guide/basic/typescript#preset-types) provided by `@rsbuild/core`:
+- Method 1: If the `@rsbuild/core` package is installed, you can add the [preset types](/guide/basic/typescript#preset-types) provided by `@rsbuild/core` to `tsconfig.json`:
 
-```ts
-/// <reference types="@rsbuild/core/types" />
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "types": ["@rsbuild/core/types"]
+  }
+}
 ```
 
 - Method 2: Manually add the required type declarations:

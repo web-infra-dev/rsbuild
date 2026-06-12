@@ -538,11 +538,17 @@ declare const PUBLIC_FOO: string;
 
 ### import.meta.env
 
-Rsbuild 通过 [预设类型](/guide/basic/typescript#preset-types) 为 `import.meta.env` 提供了默认的 TypeScript 类型定义。
+Rsbuild 通过 [预设类型](/guide/basic/typescript#preset-types) 为 `import.meta.env` 提供了默认的 TypeScript 类型定义。你可以在 `tsconfig.json` 中添加：
 
-```ts title="src/env.d.ts"
-/// <reference types="@rsbuild/core/types" />
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "types": ["@rsbuild/core/types"]
+  }
+}
 ```
+
+如果你的项目中已经配置了 `compilerOptions.types`，请将 `@rsbuild/core/types` 追加到已有列表中。
 
 如果你自定义了以 `import.meta.env` 开头的环境变量，可以通过扩展 `ImportMetaEnv` interface 来实现：
 
@@ -561,11 +567,9 @@ interface ImportMeta {
 
 如果希望获得更严格的类型安全，你可以通过扩展 `RsbuildTypeOptions` interface 来开启 `strictImportMetaEnv` 选项。开启后，只有 Rsbuild 预定义或你在项目中明确声明的属性才能被访问，访问其他属性会导致 TypeScript 类型错误。
 
-你可以在 `src/env.d.ts` 文件中添加以下代码：
+你可以在 `src/env.d.ts` 文件中添加以下代码。请确保已经在 `tsconfig.json` 中引入了 [Rsbuild 预设类型](/guide/basic/typescript#preset-types)。
 
 ```ts title="src/env.d.ts"
-/// <reference types="@rsbuild/core/types" />
-
 interface RsbuildTypeOptions {
   strictImportMetaEnv: true;
 }
