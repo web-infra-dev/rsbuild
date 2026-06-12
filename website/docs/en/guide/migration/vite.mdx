@@ -217,7 +217,8 @@ Vite provides some preset type definitions through `vite/client`. When migrating
 ```json title="tsconfig.json"
 {
   "compilerOptions": {
-    "types": ["@rsbuild/core/types"]
+    "types": ["vite/client"], // [!code --]
+    "types": ["@rsbuild/core/types"] // [!code ++]
   }
 }
 ```

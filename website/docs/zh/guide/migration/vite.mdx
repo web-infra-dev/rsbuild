@@ -217,7 +217,8 @@ Vite 通过 `vite/client` 提供了一些预设的类型定义，迁移到 Rsbui
 ```json title="tsconfig.json"
 {
   "compilerOptions": {
-    "types": ["@rsbuild/core/types"]
+    "types": ["vite/client"], // [!code --]
+    "types": ["@rsbuild/core/types"] // [!code ++]
   }
 }
 ```

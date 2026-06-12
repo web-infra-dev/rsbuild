@@ -546,6 +546,8 @@ Rsbuild provides default TypeScript type definitions for `import.meta.env` throu
 }
 ```
 
+If your project already has `compilerOptions.types`, append `@rsbuild/core/types` to the existing list.
+
 If you have customized environment variables starting with `import.meta.env`, you can extend the `ImportMetaEnv` interface:
 
 ```ts title="src/env.d.ts"
