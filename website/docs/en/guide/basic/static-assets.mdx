@@ -285,16 +285,12 @@ When you import static assets in TypeScript code, TypeScript may prompt that the
 TS2307: Cannot find module './logo.png' or its corresponding type declarations.
 ```
 
-To fix this, use one of the following methods:
+To fix this, you need to add a type declaration file for the static assets, please create a `src/env.d.ts` file, and add the corresponding type declaration.
 
-- Method 1: If the `@rsbuild/core` package is installed, you can add the [preset types](/guide/basic/typescript#preset-types) provided by `@rsbuild/core` to `tsconfig.json`:
+- Method 1: If the `@rsbuild/core` package is installed, you can reference the [preset types](/guide/basic/typescript#preset-types) provided by `@rsbuild/core`:
 
-```json title="tsconfig.json"
-{
-  "compilerOptions": {
-    "types": ["@rsbuild/core/types"]
-  }
-}
+```ts
+/// <reference types="@rsbuild/core/types" />
 ```
 
 - Method 2: Manually add the required type declarations:

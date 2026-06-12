@@ -101,14 +101,10 @@ When you import workers with `?worker` in TypeScript code, TypeScript may prompt
 TS2307: Cannot find module './worker.ts?worker' or its corresponding type declarations.
 ```
 
-To fix this, add the [preset types](/guide/basic/typescript#preset-types) provided by `@rsbuild/core` to `tsconfig.json`:
+To fix this, add a type declaration file, such as `src/env.d.ts`, and reference the [preset types](/guide/basic/typescript#preset-types) provided by `@rsbuild/core`:
 
-```json title="tsconfig.json"
-{
-  "compilerOptions": {
-    "types": ["@rsbuild/core/types"]
-  }
-}
+```ts
+/// <reference types="@rsbuild/core/types" />
 ```
 
 The preset types include declarations for `*?worker`, `*?worker&inline`, and `*?inline&worker`.
