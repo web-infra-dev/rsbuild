@@ -536,10 +536,14 @@ declare const PUBLIC_FOO: string;
 
 ### import.meta.env
 
-Rsbuild provides default TypeScript type definitions for `import.meta.env` through [Preset types](/guide/basic/typescript#preset-types).
+Rsbuild provides default TypeScript type definitions for `import.meta.env` through [Preset types](/guide/basic/typescript#preset-types). Add them to `tsconfig.json`:
 
-```ts title="src/env.d.ts"
-/// <reference types="@rsbuild/core/types" />
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "types": ["@rsbuild/core/types"]
+  }
+}
 ```
 
 If you have customized environment variables starting with `import.meta.env`, you can extend the `ImportMetaEnv` interface:
@@ -559,11 +563,9 @@ By default, Rsbuild's preset types allow you to access any property on `import.m
 
 For stricter type safety, you can enable the `strictImportMetaEnv` option by extending the `RsbuildTypeOptions` interface. When this option is enabled, only properties predefined by Rsbuild or explicitly declared in your project can be accessed. Accessing any other property will cause a TypeScript type error.
 
-You can add the following code to your `src/env.d.ts` file:
+You can add the following code to your `src/env.d.ts` file. Make sure the Rsbuild preset types are already included in `tsconfig.json`.
 
 ```ts title="src/env.d.ts"
-/// <reference types="@rsbuild/core/types" />
-
 interface RsbuildTypeOptions {
   strictImportMetaEnv: true;
 }
