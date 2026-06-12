@@ -101,9 +101,9 @@ Hot-update files are considered to be static assets. If you need to configure th
 - **Type:** `string`
 - **Default:** `'/rsbuild-hmr'`
 
-The `dev.client.path` option sets the path for the WebSocket request used by HMR.
+Sets the path for HMR WebSocket requests.
 
-By default, Rsbuild connects to the dev server through `/rsbuild-hmr`, so the WebSocket URL is generated as `ws://<host>:<port>/rsbuild-hmr`.
+By default, Rsbuild connects through `/rsbuild-hmr`, generating `ws://<host>:<port>/rsbuild-hmr`.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -120,9 +120,9 @@ export default {
 - **Type:** `string | number`
 - **Default:** `''`
 
-The `dev.client.port` option sets the port number for the WebSocket request used by HMR.
+Sets the port for HMR WebSocket requests.
 
-By default, this option is an empty string, which means the browser uses `location.port` from the current page. You can set a fixed port number, or use the `<port>` placeholder to refer to the port that the Rsbuild dev server is listening on.
+Default is an empty string, so the browser uses the current page's `location.port`. You can set a fixed port, or use `<port>` to refer to the port used by the Rsbuild dev server.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -139,9 +139,9 @@ export default {
 - **Type:** `string`
 - **Default:** `''`
 
-The `dev.client.host` option sets the host for the WebSocket request used by HMR.
+Sets the host for HMR WebSocket requests.
 
-By default, this option is an empty string, which means the browser uses `location.hostname` from the current page.
+Default is an empty string, so the browser uses the current page's `location.hostname`.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -158,9 +158,9 @@ export default {
 - **Type:** `'ws' | 'wss'`
 - **Default:** `undefined`
 
-The `dev.client.protocol` option sets the protocol for the WebSocket request used by HMR.
+Sets the protocol for HMR WebSocket requests.
 
-By default, Rsbuild selects `wss` when the current page uses HTTPS, and selects `ws` otherwise.
+By default, Rsbuild uses `wss` for HTTPS pages and `ws` otherwise.
 
 ```ts title="rsbuild.config.ts"
 export default {
