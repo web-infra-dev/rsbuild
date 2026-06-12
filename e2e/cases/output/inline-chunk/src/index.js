@@ -3,7 +3,7 @@ import './style.css';
 window.test = 'aaaa';
 
 import(
-  /* webpackChunkName: "foo" */
+  /* rspackChunkName: "foo" */
   './foo'
 ).then(({ foo }) => {
   window.answer = foo();

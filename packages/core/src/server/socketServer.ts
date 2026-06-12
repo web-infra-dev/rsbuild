@@ -212,7 +212,7 @@ export class SocketServer {
   public async prepare(): Promise<void> {
     this.clearHeartbeatTimer();
 
-    const { WebSocketServer } = await import(/* webpackChunkName: "ws" */ 'ws');
+    const { WebSocketServer } = await import(/* rspackChunkName: "ws" */ 'ws');
 
     this.wsServer = new WebSocketServer({
       noServer: true,

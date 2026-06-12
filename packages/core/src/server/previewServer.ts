@@ -53,7 +53,7 @@ export async function startPreviewServer(
   { getPortSilently }: PreviewOptions = {},
 ): Promise<StartPreviewServerResult> {
   const { logger } = context;
-  const { connect } = await import(/* webpackChunkName: "connect-next" */ 'connect-next');
+  const { connect } = await import(/* rspackChunkName: "connect-next" */ 'connect-next');
   const middlewares = connect();
 
   const { port, portTip } = await resolvePort(config);
@@ -150,7 +150,7 @@ export async function startPreviewServer(
   }
 
   if (cors) {
-    const { default: corsMiddleware } = await import(/* webpackChunkName: "cors" */ 'cors');
+    const { default: corsMiddleware } = await import(/* rspackChunkName: "cors" */ 'cors');
     middlewares.use(corsMiddleware(typeof cors === 'boolean' ? {} : cors));
   }
 

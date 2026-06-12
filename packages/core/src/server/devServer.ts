@@ -310,7 +310,7 @@ export async function createDevServer<
     };
   });
 
-  const { connect } = await import(/* webpackChunkName: "connect-next" */ 'connect-next');
+  const { connect } = await import(/* rspackChunkName: "connect-next" */ 'connect-next');
   const middlewares = connect();
 
   const httpServer = middlewareMode
